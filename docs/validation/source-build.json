@@ -1,0 +1,18 @@
+{
+  "kind": "source-only-dos-uart-diagnostic",
+  "binary": "build/standalone/SERIAL.EXE",
+  "binary_sha256": "fabf948e16d7fac9e99fb27d7e029abfcba18e094ee2a46ec8a340e22e5c2b22",
+  "sources": {
+    "reconstruction/uart/core.asm": "430dc38de88bf231e2eb341849680539b7032e524b259c1aea795541e4100beb",
+    "standalone/data.asm": "0482da62b3fc19238a9d1befd4565f45c3a98e7a5ec6ea6f1bbb9a7121013e12",
+    "standalone/services.asm": "8ce571a9ab3f94919d8770ef0b4f2255e73c4f0768ebec70651dd8400fdcdc6c",
+    "standalone/serial.asm": "c068ae00508a9c5b226366c4777d13543fd86adccf82e529720b9835c023f40a",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/uart/layout.inc": "2af5d257ad5a19d493ec8a50faacfe348ce17671fa8db5892ea631d5eb9c394a"
+  },
+  "limitations": [
+    "Serial module diagnostic; not the complete PCPlus application.",
+    "Host services implement DOS seconds; presentation callbacks intentionally do nothing.",
+    "COM1 IRQ4, 38400 8N1; original serial behavior retained."
+  ]
+}

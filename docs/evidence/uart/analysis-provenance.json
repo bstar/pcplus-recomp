@@ -1,0 +1,11 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "derived_sha256": "71bcecd70b11f83396779d3f0edf3d045ed00228c1fcca46b2403b4ebebdfbbc",
+  "change": "MZ entry changed to original UART interrupt handler for static discovery; never execute this analysis image",
+  "changed_offsets": [
+    20,
+    21,
+    22,
+    23
+  ]
+}

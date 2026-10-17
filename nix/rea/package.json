@@ -1,0 +1,6 @@
+{
+  "name": "pcplus-analysis-toolchain",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": { "rea-agents": "6.5.0" }
+}

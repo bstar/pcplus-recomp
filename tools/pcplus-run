@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+pcplus_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+cd "$pcplus_root"
+exec "$pcplus_root/tools/dev" --command python3 reconstruction/run_pcplus.py "$@"

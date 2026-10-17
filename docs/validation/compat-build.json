@@ -1,0 +1,88 @@
+{
+  "kind": "partial-source-rebuild-with-compatibility-patch",
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "candidate_sha256": "06708fec7663ad2122ca37947d45e88f4f5766ad70f99f40bac6340a15fa8a00",
+  "changed_file_offsets": [
+    96067,
+    96068
+  ],
+  "historical_recipe": "analysis/archived-support/dp201/tech_net.dtp",
+  "source_archive_url": "https://aspectscripting.com/support/pcplus2/dp201.exe",
+  "rebuilt_source_units": [
+    {
+      "source": "reconstruction/uart/core.asm",
+      "file_offset": 48220,
+      "bytes": 1099,
+      "sha256": "fb777d13cb7f974b0363df2a28da7ed70f039683d085128907b6c776d9cac4d6",
+      "original_relocation_sites": [
+        44220
+      ],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/uart/receive_timeout.asm",
+      "file_offset": 28320,
+      "bytes": 46,
+      "sha256": "cac3b64b4124d89b51def2913c187db7517d1ae30e2903f47f8ff2366779e7e5",
+      "original_relocation_sites": [],
+      "matched_original": true
+    }
+  ],
+  "original_bytes_rebuilt_from_source": 1145,
+  "handler_replay_tests": [
+    {
+      "case": "baseline-q-one-parameter",
+      "instructions": 18,
+      "receive_calls": 0,
+      "simulated_bios_ticks": 1,
+      "reached_handler_epilogue": true
+    },
+    {
+      "case": "baseline-q-two-parameters",
+      "instructions": 11851,
+      "receive_calls": 20,
+      "simulated_bios_ticks": 740,
+      "reached_handler_epilogue": true
+    },
+    {
+      "case": "candidate-q-one-parameter",
+      "instructions": 19,
+      "receive_calls": 0,
+      "simulated_bios_ticks": 1,
+      "reached_handler_epilogue": true
+    },
+    {
+      "case": "candidate-q-two-parameters",
+      "instructions": 19,
+      "receive_calls": 0,
+      "simulated_bios_ticks": 1,
+      "reached_handler_epilogue": true
+    },
+    {
+      "case": "baseline-CSI-5n",
+      "serial_reply_hex": "1b5b306e",
+      "matched_expected": true
+    },
+    {
+      "case": "baseline-CSI-6n",
+      "serial_reply_hex": "1b5b31303b323052",
+      "matched_expected": true
+    },
+    {
+      "case": "candidate-CSI-5n",
+      "serial_reply_hex": "1b5b306e",
+      "matched_expected": true
+    },
+    {
+      "case": "candidate-CSI-6n",
+      "serial_reply_hex": "1b5b31303b323052",
+      "matched_expected": true
+    }
+  ],
+  "limitations": [
+    "This build embeds recovered source units in the original executable container; the complete source project is not recovered.",
+    "CPU replay supplies BIOS ticks. Full DOSBox integration results are separate in reconstruction/lab.",
+    "Not tested on a physical Wi-Fi modem or a public BBS.",
+    "The mounted card and its installed PCPlus are unchanged."
+  ]
+}

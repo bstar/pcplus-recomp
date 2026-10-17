@@ -1,0 +1,16 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "start": 43612,
+  "end": 44711,
+  "bytes": 1099,
+  "decoded_instructions": 466,
+  "scratch_data_bytes": 6,
+  "alignment_bytes": 1,
+  "exact_encoding_macros": 36,
+  "block_sha256": "fb777d13cb7f974b0363df2a28da7ed70f039683d085128907b6c776d9cac4d6",
+  "matched_original": true,
+  "limitations": [
+    "Generated assembly with analyst-selected code/data boundaries and names.",
+    "This is one resident module, not the full PCPlus source project."
+  ]
+}

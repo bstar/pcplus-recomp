@@ -1,0 +1,19 @@
+{
+  "mode": "none",
+  "passed": true,
+  "checks": {
+    "ready": true,
+    "binary_echo_across_ring_wrap": true,
+    "dos_exit_and_irq_ring_checks": true
+  },
+  "seconds": 12.183,
+  "events": [
+    {
+      "payload_bytes": 4352,
+      "received_bytes": 4352,
+      "sha256": "4043ab3659cd61351795c186762a045221774893a97dcc74f6ba3deade65ac03"
+    }
+  ],
+  "binary_sha256": "fabf948e16d7fac9e99fb27d7e029abfcba18e094ee2a46ec8a340e22e5c2b22",
+  "scope": "Source-only DOS executable, emulated UART/PIC/keyboard, loopback TCP; no original PCPlus binary."
+}
