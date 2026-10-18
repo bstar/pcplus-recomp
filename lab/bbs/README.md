@@ -5,6 +5,10 @@ and Mystic servers. Downloaded server programs, source checkouts, user databases
 wire captures and DOS snapshots stay under ignored `build/bbs-lab/`.
 All listeners must bind loopback. Accounts and messages are synthetic.
 
+See the [current Synchronet and ENiGMA compatibility checkpoint](modern-compatibility.md)
+for current editor results, the paired modem-buffering experiment, and which
+menu/transfer results belong to earlier executable builds.
+
 Use the pinned Nix toolchains:
 
 ```sh

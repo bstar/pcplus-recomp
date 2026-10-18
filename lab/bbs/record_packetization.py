@@ -30,7 +30,15 @@ def main():
  for k in ['configuration','keyboard','serial']:assert b[k]==c[k],k
  assert b['buffered_write_count'] and all(b['home_insert_in_individual_writes'].values())
  result={'recorded':True,'binary_sha256':b['experiment']['binary_sha256'],'scope':'Paired actual DOS/stock ENiGMA local editor experiments. Same executable, keyboard recipe, serial settings and PRM; explicit modem packet delay differs. Server/user state was not reset between sequential runs. No physical Wi-Fi modem or general TCP boundary guarantee. Current immediate compatibility aggregate remains separate and unchanged.','buffered_editor_passed':b['experiment']['editor_passed'],'immediate_editor_passed':c['experiment']['editor_passed'],'runs':runs}
- target=ROOT/'docs/validation/bbs-enigma-packetization.json';target.write_text(json.dumps(result,indent=2)+'\n')
+ target=ROOT/'docs/validation/bbs-enigma-packetization.json'
+ if target.exists():
+  previous=read(target)
+  history=previous.pop('prior_experiments',[])
+  previous_labels={k:v['label'] for k,v in previous['runs'].items()}
+  current_labels={k:v['label'] for k,v in result['runs'].items()}
+  if previous_labels!=current_labels:history.append(previous)
+  if history:result['prior_experiments']=history
+ target.write_text(json.dumps(result,indent=2)+'\n')
  for source,target_name in [('build/bbs-lab/packetization/result.json','bbs-modem-packetization.json'),('build/bbs-lab/protocol/result.json','bbs-modem-protocol.json')]:
   data=read(ROOT/source);assert data['passed'] and data['modem_source_sha256']==sha(ROOT/'lab/bbs/modem.py')
   (ROOT/'docs/validation'/target_name).write_text(json.dumps(data,indent=2)+'\n')
