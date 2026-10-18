@@ -1,0 +1,467 @@
+{
+  "passed": true,
+  "binary_sha256": "79af2e9265f8817b1d23bd3b9be81595e16575b95d5da056a61f8264bf2ade7e",
+  "editor_sha256": "1dd49405f285b85a4d438be6cd67ebbc3d7cd76a5d81e74cc91106383463f31e",
+  "memory_layout": {
+    "near_bytes": 53312,
+    "near_spare_bytes": 12224,
+    "near_relative_segment": 4287,
+    "far_relative_segment": 8369,
+    "shadow_offset": 2000,
+    "history_offset": 10192,
+    "far_bytes": 12288,
+    "far_end_linear": 148192,
+    "stack_end_linear": 121904,
+    "loaded_module_bytes": 97854,
+    "minimum_allocated_module_bytes": 148208,
+    "retained_parent_paragraphs": 9278,
+    "far_pointer_relocations_verified": true,
+    "snapshot_relative_segment": 8369,
+    "snapshot_image_offset": 0,
+    "snapshot_bytes": 2000,
+    "snapshot_end_linear": 135904,
+    "ui_screen_buffers": {
+      "browser_screen": {
+        "relative_segment": 7619,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 121904,
+        "end_linear": 125904
+      },
+      "ed_screen": {
+        "relative_segment": 7619,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 125904,
+        "end_linear": 129904
+      },
+      "program_screen": {
+        "relative_segment": 7619,
+        "offset": 8000,
+        "bytes": 4000,
+        "start_linear": 129904,
+        "end_linear": 133904
+      }
+    },
+    "far_ui_storage_bytes": 12000,
+    "controller_bridge_pairs_verified": 22,
+    "modem_bridge_pairs_verified": 22,
+    "configuration_bridge_pairs_verified": 14,
+    "resident_code_bytes": 61828,
+    "resident_code_spare_bytes": 3708,
+    "code_segments": [
+      {
+        "name": "_TEXT",
+        "kind": "CODE",
+        "relative_segment": 0,
+        "offset": 0,
+        "bytes": 61828
+      },
+      {
+        "name": "CONFIG_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 3865,
+        "offset": 0,
+        "bytes": 3823
+      },
+      {
+        "name": "MODEM_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4104,
+        "offset": 0,
+        "bytes": 1467
+      },
+      {
+        "name": "PRINT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4196,
+        "offset": 0,
+        "bytes": 1449
+      }
+    ],
+    "far_code_bridge_pairs_verified": 58
+  },
+  "terminal_regression": {
+    "passed": true,
+    "binary_sha256": "79af2e9265f8817b1d23bd3b9be81595e16575b95d5da056a61f8264bf2ade7e",
+    "commands": [
+      {
+        "command": "python3 standalone/build_terminal.py",
+        "exit_code": 0,
+        "seconds": 0.765
+      },
+      {
+        "command": "python3 standalone/build_setup.py",
+        "exit_code": 0,
+        "seconds": 0.064
+      },
+      {
+        "command": "python3 standalone/build_live_configuration.py",
+        "exit_code": 0,
+        "seconds": 0.064
+      },
+      {
+        "command": "python3 standalone/check_setup_startup.py",
+        "exit_code": 0,
+        "seconds": 0.164
+      },
+      {
+        "command": "python3 standalone/test_setup_startup_dos.py",
+        "exit_code": 0,
+        "seconds": 19.744
+      },
+      {
+        "command": "python3 standalone/check_setup_live.py",
+        "exit_code": 0,
+        "seconds": 0.364
+      },
+      {
+        "command": "python3 standalone/test_setup_live_dos.py",
+        "exit_code": 0,
+        "seconds": 13.235
+      },
+      {
+        "command": "python3 standalone/check_config_far_live.py",
+        "exit_code": 0,
+        "seconds": 0.164
+      },
+      {
+        "command": "python3 standalone/check_live_configuration.py --terminal",
+        "exit_code": 0,
+        "seconds": 31.968
+      },
+      {
+        "command": "python3 standalone/check_modem_far_live.py",
+        "exit_code": 0,
+        "seconds": 8.478
+      },
+      {
+        "command": "python3 standalone/check_terminal_break_live.py",
+        "exit_code": 0,
+        "seconds": 1.216
+      },
+      {
+        "command": "python3 standalone/check_ui_screen_far.py",
+        "exit_code": 0,
+        "seconds": 1.166
+      },
+      {
+        "command": "python3 standalone/check_far_code_live.py",
+        "exit_code": 0,
+        "seconds": 0.314
+      },
+      {
+        "command": "python3 standalone/check_terminal_print_controller_live.py",
+        "exit_code": 0,
+        "seconds": 4.271
+      },
+      {
+        "command": "python3 standalone/check_terminal_screen_print_live.py",
+        "exit_code": 0,
+        "seconds": 10.532
+      },
+      {
+        "command": "python3 standalone/check_terminal_printer_live.py",
+        "exit_code": 0,
+        "seconds": 0.765
+      },
+      {
+        "command": "python3 standalone/check_terminal_monitor_live.py",
+        "exit_code": 0,
+        "seconds": 1.366
+      },
+      {
+        "command": "python3 standalone/check_terminal_snapshot_live.py",
+        "exit_code": 0,
+        "seconds": 1.566
+      },
+      {
+        "command": "python3 standalone/check_terminal_capture_live.py",
+        "exit_code": 0,
+        "seconds": 0.915
+      },
+      {
+        "command": "python3 standalone/check_far_storage_live.py",
+        "exit_code": 0,
+        "seconds": 0.315
+      },
+      {
+        "command": "python3 standalone/test_far_storage_dos.py",
+        "exit_code": 0,
+        "seconds": 7.475
+      },
+      {
+        "command": "python3 standalone/check_terminal_transfer_live.py",
+        "exit_code": 0,
+        "seconds": 3.72
+      },
+      {
+        "command": "python3 standalone/check_terminal_upload_live.py",
+        "exit_code": 0,
+        "seconds": 22.703
+      },
+      {
+        "command": "python3 standalone/check_program_actions_live.py",
+        "exit_code": 0,
+        "seconds": 1.066
+      },
+      {
+        "command": "python3 standalone/check_terminal_reset_live.py",
+        "exit_code": 0,
+        "seconds": 0.414
+      },
+      {
+        "command": "python3 standalone/test_program_actions_dos.py",
+        "exit_code": 0,
+        "seconds": 34.47
+      },
+      {
+        "command": "python3 standalone/test_terminal_reset_live_dos.py",
+        "exit_code": 0,
+        "seconds": 9.832
+      },
+      {
+        "command": "python3 standalone/check_transport.py",
+        "exit_code": 0,
+        "seconds": 1.366
+      },
+      {
+        "command": "python3 standalone/check_key_output.py",
+        "exit_code": 0,
+        "seconds": 1.867
+      },
+      {
+        "command": "python3 standalone/check_key_live.py",
+        "exit_code": 0,
+        "seconds": 0.765
+      },
+      {
+        "command": "python3 standalone/check_meta_actions_live.py",
+        "exit_code": 0,
+        "seconds": 2.418
+      },
+      {
+        "command": "python3 standalone/check_character_edit_live.py",
+        "exit_code": 0,
+        "seconds": 0.665
+      },
+      {
+        "command": "python3 standalone/test_meta_actions_dos.py",
+        "exit_code": 0,
+        "seconds": 19.796
+      },
+      {
+        "command": "python3 standalone/check_line_edit_live.py",
+        "exit_code": 0,
+        "seconds": 0.465
+      },
+      {
+        "command": "python3 standalone/check_terminal_options.py --binary build/terminal/TERMINAL.EXE --map build/terminal/terminal.map",
+        "exit_code": 0,
+        "seconds": 0.415
+      },
+      {
+        "command": "python3 lab/bbs/check_formfeed.py",
+        "exit_code": 0,
+        "seconds": 0.214
+      },
+      {
+        "command": "python3 lab/bbs/check_enigma_controls.py",
+        "exit_code": 0,
+        "seconds": 0.114
+      },
+      {
+        "command": "python3 standalone/check_terminal_ui.py",
+        "exit_code": 0,
+        "seconds": 0.064
+      },
+      {
+        "command": "python3 standalone/test_terminal.py",
+        "exit_code": 0,
+        "seconds": 16.297
+      },
+      {
+        "command": "python3 standalone/test_terminal_keys.py",
+        "exit_code": 0,
+        "seconds": 24.21
+      },
+      {
+        "command": "python3 standalone/check_terminal_config.py",
+        "exit_code": 0,
+        "seconds": 0.365
+      },
+      {
+        "command": "python3 standalone/check_startup_import.py --check-invalid-abi",
+        "exit_code": 0,
+        "seconds": 0.314
+      },
+      {
+        "command": "python3 standalone/check_connection.py",
+        "exit_code": 0,
+        "seconds": 1.266
+      },
+      {
+        "command": "python3 standalone/check_directory_live.py",
+        "exit_code": 0,
+        "seconds": 3.12
+      },
+      {
+        "command": "python3 standalone/check_directory_context.py",
+        "exit_code": 0,
+        "seconds": 19.446
+      },
+      {
+        "command": "python3 standalone/test_directory_context_terminal.py",
+        "exit_code": 0,
+        "seconds": 7.226
+      },
+      {
+        "command": "python3 standalone/check_directory_actions.py",
+        "exit_code": 0,
+        "seconds": 0.364
+      },
+      {
+        "command": "python3 standalone/test_terminal_config.py",
+        "exit_code": 0,
+        "seconds": 14.442
+      },
+      {
+        "command": "python3 standalone/test_connection_dos.py",
+        "exit_code": 0,
+        "seconds": 27.266
+      },
+      {
+        "command": "python3 standalone/test_directory_terminal.py",
+        "exit_code": 0,
+        "seconds": 58.277
+      }
+    ],
+    "seconds": 377.879,
+    "complete": true
+  },
+  "source_rebuild": {
+    "report": "docs/validation/application-components-source-build.json",
+    "source_snapshot_sha256": "22494bd7589dfa767fafff9eed46e003e608f84cb00d28bbc3d7773999ae7793",
+    "output_count": 60
+  },
+  "source_sha256": {
+    "standalone/record_setup_live.py": "7147faa30e5cae57854c4583a789737adb4b428f86d6363d677fb854d649aefd",
+    "standalone/check_setup_live.py": "3bc5c698e060feee8c8161a8730e2cd070aaf8752d98799c1bd97019b3761bfd",
+    "standalone/test_setup_live_dos.py": "f2d9bbfa12919cf1e4780becc5d6f0b17db9c7c4127e846e1fa823704fb1e5c1",
+    "standalone/check_program_actions_live.py": "2b38ea2624a4ebc936238174e4e6f2586950dedd465ee3a704ad4df5400fda70",
+    "standalone/test_setup_startup_dos.py": "2825e4d142e05c2a1865bec729584b45971bc2190f1092a6498dd72b6ccb271c",
+    "standalone/check_live_configuration.py": "8e440a5137891eef6c10fe02b88e372407e4155acef563181cb3ebdefc0c0ca3",
+    "standalone/check_config_far_live.py": "62be592db5cdfb9c10573a81df99e4a3c50dc5469744f94e0f99aa13cf4f30b0",
+    "standalone/check_directory_live.py": "eed1d99ce4d62a2160f4576601fc94690df9a16ba9694218ab6660f92a4f6a46",
+    "standalone/check_directory_context.py": "e2fc0d831d82242fa88eeaef449baf5948efa70045a02f61a4653f1729f2132e",
+    "standalone/test_far_storage_dos.py": "5f45f0a9dab866411f88cc3cd683c7a4b09c9148412443f6f95078d18e533936",
+    "standalone/far_storage_child.asm": "ea9323c8d67ef3c416c65ffa2e5f029d2d2800c684e42d7f73a112419cc411b4",
+    "standalone/terminal_memory.py": "90a296e560f919c710d393d6bf323415df83ac985a4004b102cb1626ebf49737",
+    "standalone/build_terminal.py": "51b15c2599b105b0ea232a4dc2caea6e1aa5369fb65260963afd45312113a90b"
+  },
+  "retained_artifacts": {
+    "build/terminal/config-far-regression.json": "486e2436e3054f5e1613adff6cf383bfd50d03b62c3de3b7c15c8f3c6e0622f7",
+    "build/terminal/config-far-regression.log": "0770649179794775722a1639939b16533c685f6c804445aa4748f4cdaa20b0d1",
+    "build/terminal/setup-live-checks.json": "14a94a787b01e9eabd0ee0e5ec1679fbd641f088f4d8f0ea6e7f00fba1cd8267",
+    "build/setup-startup/live-checks.json": "52e3d928345a9fa0079cf0069f77ebc5df89ed22af8cee65f6c56573a0a6369b",
+    "build/terminal/config-far-checks.json": "96ec3f4559350266f7fbacb23c545ea3fbe43fca4ea387e8111452f39674b2e5",
+    "build/live-configuration/terminal-checks.json": "3bd0ad202652b0cad4bb047196c0890419c88dac116bd385663a6125db6d2f59",
+    "build/terminal/directory-live-checks.json": "d728450aa730cc4363fe4b83e9ba881605d75ffc50bcb8a97761aad171386916",
+    "build/terminal/directory-context-checks.json": "72447a76e57cc6719d7b6fdc074056984a4e6b941b49a4a04b3719057a14a0fb",
+    "build/far-storage-dos/checks.json": "da15765112409730a6cdb6a500ba47f58ee0045480e64c7e9143465369c4a2b3"
+  },
+  "linked": {
+    "passed": true,
+    "inputs": 32,
+    "cases": [
+      {
+        "case": "AltF10-queues-direct-local-child-exact-tail-and-restores-full-parent",
+        "inputs": 4,
+        "passed": true
+      },
+      {
+        "case": "absent-explicit-config-and-invalid-or-shell-like-paths-never-queue",
+        "inputs": 14,
+        "passed": true
+      },
+      {
+        "case": "existing-local-owners-and-connection-negotiation-reject-reentrant-setup",
+        "inputs": 7,
+        "passed": true
+      },
+      {
+        "case": "Escape-and-AltX-cancel-pending-setup-without-EXEC",
+        "inputs": 2,
+        "passed": true
+      },
+      {
+        "case": "direct-EXEC-failure-restores-connection-video-and-startup-hardware-baseline",
+        "inputs": 3,
+        "passed": true
+      },
+      {
+        "case": "failed-editor-exit-is-reported-without-exiting-terminal",
+        "inputs": 1,
+        "passed": true
+      },
+      {
+        "case": "software-peer-pause-waits-for-physical-TEMT-and-resumes-once",
+        "inputs": 1,
+        "passed": true
+      }
+    ],
+    "binary_sha256": "79af2e9265f8817b1d23bd3b9be81595e16575b95d5da056a61f8264bf2ade7e",
+    "scope": "Actual linked AltF10 scheduler, direct process_run, child handoff, flow, UART IRQ/vector/format and video restoration. Kernel/BIOS/UART modeled. Editor saves are adopted on next startup; live candidate commit remains separate unfinished work."
+  },
+  "actual_DOS": {
+    "passed": true,
+    "cases": [
+      {
+        "case": "live-editor-cancel",
+        "passed": true,
+        "checks": {
+          "expected_DOS_exit": true,
+          "hardware_restored": true,
+          "no_peer_errors": true,
+          "no_recovery_files": true,
+          "actual_terminal_ready_reply": true,
+          "actual_terminal_cursor_reply": true,
+          "both_peer_checks_seen": true,
+          "actual_video_ready": true,
+          "independent_timer_samples": true,
+          "actual_configured_UART_divisor": true,
+          "exact_expected_PRM_after_live_child": true,
+          "ordinary_typed_bytes_resume_after_editor": true
+        },
+        "expected_exit": 0,
+        "arguments": "@TEST.PRM",
+        "observed_errors": []
+      },
+      {
+        "case": "live-editor-save",
+        "passed": true,
+        "checks": {
+          "expected_DOS_exit": true,
+          "hardware_restored": true,
+          "no_peer_errors": true,
+          "no_recovery_files": true,
+          "actual_terminal_ready_reply": true,
+          "actual_terminal_cursor_reply": true,
+          "both_peer_checks_seen": true,
+          "actual_video_ready": true,
+          "independent_timer_samples": true,
+          "actual_configured_UART_divisor": true,
+          "exact_expected_PRM_after_live_child": true,
+          "ordinary_typed_bytes_resume_after_editor": true
+        },
+        "expected_exit": 0,
+        "arguments": "@TEST.PRM",
+        "observed_errors": []
+      }
+    ],
+    "terminal_sha256": "79af2e9265f8817b1d23bd3b9be81595e16575b95d5da056a61f8264bf2ade7e",
+    "editor_sha256": "1dd49405f285b85a4d438be6cd67ebbc3d7cd76a5d81e74cc91106383463f31e",
+    "scope": "Actual DOS terminal AltF10 to production PRMEDIT.EXE, staged cancel/save with exact opaque PRM preservation, return to same terminal display, initial serial replies and ordinary typed bytes delivered after editor return, independent active-UART and final hardware/vector samples. Saved baud change remains on disk for next startup; current connection retains original baud."
+  },
+  "scope": "AltF10 direct production settings child during an existing terminal session, staged file editing, safe PROGRAM UART/IRQ/video handoff and restoration. Saves currently apply on next startup. No runtime candidate commit, original PCSETUP shared parent ABI, complete settings/application or physical modem claim."
+}

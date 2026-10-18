@@ -33,6 +33,10 @@ or defaults, or implement the missing original PCSETUP child. The editor's
 staging/recovery policy is described in [SETUP_EDITOR.md](SETUP_EDITOR.md).
 The complete application feature gates remain open.
 
+The separate [Alt-F10 workflow](SETUP_LIVE.md) now invokes the maintained editor
+after terminal startup. It currently saves for the next startup rather than
+applying settings to the active connection.
+
 ## Evidence
 
 `standalone/check_setup_startup.py` replays the linked8086 scheduler with only

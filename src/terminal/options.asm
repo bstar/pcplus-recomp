@@ -650,6 +650,7 @@ terminal_usage:
  db 'Keyboard BIOS: /B:AUTO (default), /B:STANDARD or /B:ENHANCED.',13,10
  db 'ANSI CSI M: /A:NETWORK (delete lines, default) or /A:ORIGINAL (wait).',13,10
  db 'Setup: /S @FILE.PRM runs local PRMEDIT.EXE before connecting; 8.3 leaf only.',13,10
+ db 'Alt-F10 opens PRMEDIT for an explicit @8.3 leaf; saved changes apply next startup.',13,10
  db 'PRM path: explicit only, max 63 bytes; no spaces, quotes or wildcards.',13,10
  db 'Serial: 7/8 data, N/O/E/M/S parity, 1/2 stop; e.g. 8N1. Any option order.',13,10
  db 'Baud: 300 1200 2400 4800 9600 19200 38400 57600 115200',13,10

@@ -84,3 +84,46 @@
 %macro FAR_CDECL_SERVICE 3
  FAR_SERVICE %1
 %endmacro
+
+; Explicit near-cdecl -> far wrapper -> near-C implementation. Both wrappers
+; copy only declared argument words, retaining DS=SS and caller-owned slots.
+; Separate entry family supports these known1..9-word APIs; it does not change
+; the modem callback family's1..4-word contract or accept variadic/RET N APIs.
+%macro NEAR_CDECL_ENTRY 2
+ %if %2 < 1 || %2 > 9
+  %error Only explicitly declared1..9-word entries are supported
+ %endif
+ extern %1 %+ _far
+ global %1
+ %1:
+ push bp
+ mov bp,sp
+ %assign %%argument %2-1
+ %rep %2
+  push word [bp+4+2*%%argument]
+  %assign %%argument %%argument-1
+ %endrep
+ call far %1 %+ _far
+ lea sp,[bp]
+ pop bp
+ ret
+%endmacro
+%macro FAR_CDECL_ENTRY 2
+ %if %2 < 1 || %2 > 9
+  %error Only explicitly declared1..9-word entries are supported
+ %endif
+ extern %1 %+ _impl
+ global %1 %+ _far
+ %1 %+ _far:
+ push bp
+ mov bp,sp
+ %assign %%argument %2-1
+ %rep %2
+  push word [bp+6+2*%%argument]
+  %assign %%argument %%argument-1
+ %endrep
+ call %1 %+ _impl
+ lea sp,[bp]
+ pop bp
+ retf
+%endmacro

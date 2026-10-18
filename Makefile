@@ -60,11 +60,15 @@ test-config-replace: config-replace
 terminal:
 	python3 standalone/build_terminal.py
 
-test-terminal: setup
+test-terminal: setup live-configuration
 
 test-terminal: terminal
 	python3 standalone/check_setup_startup.py
 	python3 standalone/test_setup_startup_dos.py
+	python3 standalone/check_setup_live.py
+	python3 standalone/test_setup_live_dos.py
+	python3 standalone/check_config_far_live.py
+	python3 standalone/check_live_configuration.py --terminal
 	python3 standalone/check_modem_far_live.py
 	python3 standalone/check_terminal_break_live.py
 	python3 standalone/check_ui_screen_far.py
@@ -313,8 +317,9 @@ all: live-configuration
 test: test-live-configuration
 live-configuration:
 	python3 standalone/build_live_configuration.py
-test-live-configuration: live-configuration
+test-live-configuration: live-configuration terminal
 	python3 standalone/check_live_configuration.py
+	python3 standalone/check_live_configuration.py --terminal
 
 .PHONY: directory-context test-directory-context
 all: directory-context

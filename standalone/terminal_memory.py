@@ -145,6 +145,49 @@ def inspect_terminal_memory(binary,map_path):
   assert modem_bridges==22,'Incomplete modem ABI validation'
   bridges+=modem_bridges
   extra['modem_bridge_pairs_verified']=modem_bridges
+ if 'terminal_config_code_start' in symbols:
+  assert any(c['name']=='CONFIG_CODE' for c in code_segments),'Configuration segment missing from executable map'
+  config_code=next(c for c in code_segments if c['name']=='CONFIG_CODE')
+  config_seg=config_code['relative_segment']
+  assert config_code['kind']=='FARCODE' and config_code['offset']==0
+  assert all(c['relative_segment']!=config_seg for c in code_segments if c['name']!='CONFIG_CODE'),'Configuration CS aliases other code'
+  assert address('terminal_config_code_start')==config_seg*16
+  assert address('terminal_config_code_end')-address('terminal_config_code_start')==config_code['bytes'],'Incomplete configuration extent'
+  abi=Path(__file__).resolve().parents[1]/'src/terminal/config_abi.inc'
+  config_bridges=0
+  def cdecl_prefix(count,first):
+   return b'\x55\x89\xe5'+b''.join(bytes([0xff,0x76,first+2*i]) for i in reversed(range(count)))
+  for line in abi.read_text().splitlines():
+   if not line or line.startswith(';'):continue
+   fields=line.replace(',',' ').split();kind,name=fields[:2]
+   if kind=='CONFIG_ENTRY':
+    assert len(fields)==3
+    count=int(fields[2]);assert 1<=count<=9
+    assert symbols[name][0]==near_code['relative_segment']
+    assert symbols[name+'_far'][0]==symbols[name+'_impl'][0]==config_seg
+    prefix=cdecl_prefix(count,4);suffix=b'\x8d\x66\x00\x5d\xc3'
+    code=raw(name,len(prefix)+5+len(suffix))
+    assert code==prefix+b'\x9a'+struct.pack('<HH',symbols[name+'_far'][1],config_seg)+suffix,(name,'entry arguments/far target/return')
+    assert address(name)+len(prefix)+3 in relocations,(name,'missing entry relocation')
+    near_call(name+'_far',name+'_impl',prefix=cdecl_prefix(count,6),suffix=b'\x8d\x66\x00\x5d\xcb')
+   else:
+    assert kind in ('CONFIG_REGISTER','CONFIG_CDECL')
+    target=fields[2]
+    service=name if kind=='CONFIG_REGISTER' else name+'_service'
+    assert symbols[service][0]==config_seg
+    assert symbols[name+'_resident'][0]==symbols[target][0]==near_code['relative_segment']
+    far_call(service,name+'_resident')
+    prefix=b'';suffix=b'\xcb'
+    if kind=='CONFIG_CDECL':
+     assert len(fields)==4
+     count=int(fields[3]);assert 1<=count<=4
+     prefix=cdecl_prefix(count,8);suffix=b'\x8d\x66\x00\x5d\xcb'
+    else:assert len(fields)==3
+    near_call(name+'_resident',target,prefix=prefix,suffix=suffix)
+   config_bridges+=1
+  assert config_bridges==14,'Incomplete configuration ABI validation'
+  bridges+=config_bridges
+  extra['configuration_bridge_pairs_verified']=config_bridges
  extra.update(resident_code_bytes=near_code['bytes'],resident_code_spare_bytes=65536-near_code['bytes'],code_segments=code_segments,far_code_bridge_pairs_verified=bridges)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'

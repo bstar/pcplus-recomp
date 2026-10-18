@@ -75,6 +75,13 @@ start:
  call modem_sum
  mov [result+52],ax
  mov ax,[result+2]
+ add ax,16+CONFIG_SEG
+ mov es,ax
+ mov [result+56],ax
+ mov word [result+58],CONFIG_BYTES
+ call config_sum
+ mov [result+60],ax
+ mov ax,[result+2]
  add ax,16+UI_SEG
  mov es,ax
  mov [result+34],ax
@@ -137,6 +144,12 @@ start:
  cmp ax,[result+52]
  jne .free
  or word [result],32
+ mov es,[result+56]
+ call config_sum
+ mov [result+62],ax
+ cmp ax,[result+60]
+ jne .free
+ or word [result],64
  mov es,[result+34]
  mov si,BROWSER_OFF
  call ui_sum
@@ -176,14 +189,14 @@ start:
  jc .exit
  mov bx,ax
  mov dx,result
- mov cx,56
+ mov cx,64
  mov ah,0x40
  int 0x21
  mov ah,0x3e
  int 0x21
 .exit:
  mov ax,0x4c01
- cmp word [result],63
+ cmp word [result],127
  jne .terminate
  xor al,al
 .terminate:
@@ -198,6 +211,10 @@ modem_sum:
  mov si,MODEM_START
  mov cx,MODEM_BYTES
  jmp sum_bytes
+config_sum:
+ mov si,CONFIG_START
+ mov cx,CONFIG_BYTES
+ jmp sum_bytes
 ui_sum:
  mov cx,4000
 sum_bytes:
@@ -211,7 +228,7 @@ sum_bytes:
  mov ax,bx
  ret
 output: db 'D:\FARTEST.BIN',0
-result: times 28 dw 0
+result: times 32 dw 0
 
 align 2
  times 1024 db 0

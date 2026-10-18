@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Actual DOS16 candidate transaction: precedence, changes and failure atomicity."""
-import hashlib,json,os,struct,subprocess
+import argparse,hashlib,json,os,struct,subprocess
 from pathlib import Path
 from unicorn import UC_HOOK_CODE,UC_HOOK_INTR,UC_HOOK_INSN
-from unicorn.x86_const import UC_X86_INS_IN,UC_X86_INS_OUT,UC_X86_REG_ES,UC_X86_REG_SP,UC_X86_REG_SS,UC_X86_REG_BP,UC_X86_REG_SI,UC_X86_REG_DI
+from unicorn.x86_const import UC_X86_INS_IN,UC_X86_INS_OUT,UC_X86_REG_ES,UC_X86_REG_SP,UC_X86_REG_SS,UC_X86_REG_BP,UC_X86_REG_SI,UC_X86_REG_DI,UC_X86_REG_EFLAGS
 from dos_image import DosImage
 from check_setup_model import image
 from check_directory_live import record,serial_expected,plan_expected,text,word
@@ -12,10 +12,24 @@ from check_startup_import import terminal_expected
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/live-configuration';SIZE=624
 MAX_STACK=[0]
 class Model(DosImage):
+ terminal=False
  def __init__(self,directory=False):
-  super().__init__(OUT/'LIVE.EXE',OUT/'live.map');self.directory=directory
-  self.im=self.offset('_live_image');self.sel=self.offset('_live_selection');self.active=self.offset('_live_active');self.dest=self.offset('_live_candidate');self.result=self.offset('_live_result')
-  self.serial=self.offset('_live_serial');self.modem=self.offset('_live_modem');self.plan=self.offset('_live_directory');self.dr=self.offset('_live_directory_result')
+  host=ROOT/'build/terminal' if self.terminal else OUT
+  super().__init__(host/('TERMINAL.EXE' if self.terminal else 'LIVE.EXE'),host/('terminal.map' if self.terminal else 'live.map'));self.directory=directory
+  self.stack_top=self.offset('terminal_stack_top') if self.terminal else 0xe000
+  if self.terminal:
+   # Test caller owns the bottom of the actual 8 KiB stack, never a product
+   # global or memory beyond DGROUP. DosImage checks every executed instruction
+   # for collision with the complete fixture; remaining stack is >4 KiB.
+   assert self.stack_bytes==8192
+   pointer=self.stack_top-self.stack_bytes+16
+   for name,size in [('im',1264),('sel',366),('active',624),('dest',624),('result',4),('serial',40),('modem',368),('plan',214),('dr',10)]:
+    setattr(self,name,pointer);pointer+=size
+   self.fixture_scratch_end=pointer
+   assert pointer<self.stack_top-self.stack_bytes//2
+  else:
+   self.im=self.offset('_live_image');self.sel=self.offset('_live_selection');self.active=self.offset('_live_active');self.dest=self.offset('_live_candidate');self.result=self.offset('_live_result')
+   self.serial=self.offset('_live_serial');self.modem=self.offset('_live_modem');self.plan=self.offset('_live_directory');self.dr=self.offset('_live_directory_result')
   self.raw=image();self.record=record();self.header=bytes(250);self.entry=17
   self.uc.reg_write(UC_X86_REG_ES,self.ds)
   self.uc.hook_add(UC_HOOK_CODE,self.stack)
@@ -24,9 +38,21 @@ class Model(DosImage):
   assert self.decode(initial=True)[0]==0;self.baseline=self.output();self.uc.mem_write(self.data_base+self.active,self.baseline)
  def stack(self,uc,address,size,_):
   assert uc.reg_read(UC_X86_REG_SS)==self.ds
-  used=0xe000-uc.reg_read(UC_X86_REG_SP);MAX_STACK[0]=max(MAX_STACK[0],used)
+  used=self.stack_top-uc.reg_read(UC_X86_REG_SP);MAX_STACK[0]=max(MAX_STACK[0],used)
   assert 0<=used<8192,'Candidate API exceeds the parent terminal stack budget'
  def forbid(self,*args):raise AssertionError('Pure candidate decoder attempted interrupt/DOS/UART IO')
+ def call(self,name,arguments=(),limit=100000):
+  if not self.terminal:return super().call(name,arguments,limit)
+  entry=[None];returned_flags=[]
+  def observe(uc,address,size,_):
+   if address==self.symbols[name+'_impl']:entry[0]=uc.reg_read(UC_X86_REG_SP)
+   if entry[0] is not None and uc.reg_read(UC_X86_REG_SP)==entry[0] and bytes(uc.mem_read(address,1))==b'\xc3':returned_flags.append(uc.reg_read(UC_X86_REG_EFLAGS))
+  hook=self.uc.hook_add(UC_HOOK_CODE,observe)
+  try:status=super().call(name,arguments,limit)
+  finally:self.uc.hook_del(hook)
+  assert len(returned_flags)==1 and returned_flags[0]==self.uc.reg_read(UC_X86_REG_EFLAGS),'Entry bridge changed actual implementation RET flags'
+  assert bytes(self.uc.mem_read(self.data_base+self.stack_top-len(arguments)*2,len(arguments)*2))==struct.pack('<'+'H'*len(arguments),*arguments),'Entry bridge changed original caller argument slots'
+  return status
  def output(self):return bytes(self.uc.mem_read(self.data_base+self.dest,SIZE))
  def inputs(self):return bytes(self.uc.mem_read(self.data_base+self.im,1264)),bytes(self.uc.mem_read(self.data_base+self.sel,366)),bytes(self.uc.mem_read(self.data_base+self.active,SIZE))
  def decode(self,mask=0,codes=0,initial=False,args=None):
@@ -35,12 +61,16 @@ class Model(DosImage):
   before=self.inputs()
   values=[self.im,self.sel if self.directory else 0,codes,mask,0 if initial else self.active,self.dest,self.result] if args is None else args
   status=self.call('_live_configuration_decode',values,limit=2000000)
+  assert bytes(self.uc.mem_read(self.data_base+self.stack_top-len(values)*2,len(values)*2))==struct.pack('<'+'H'*len(values),*values),'Caller argument slots changed'
   assert self.inputs()==before
   for reg,value in [(UC_X86_REG_BP,0xbabe),(UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678),(UC_X86_REG_ES,self.ds)]:assert self.uc.reg_read(reg)==value
   if status:assert self.output()==b'\xcc'*SIZE
   return status,struct.unpack('<2H',self.uc.mem_read(self.data_base+self.result,4))
  def change(self):return struct.unpack_from('<H',self.output(),622)[0]
 def main():
+ parser=argparse.ArgumentParser();parser.add_argument('--terminal',action='store_true',help='Replay the normal terminal far-C implementation with caller-owned stack fixtures')
+ Model.terminal=parser.parse_args().terminal
+ MAX_STACK[0]=0
  cases=[]
  def done(name,n):cases.append(dict(case=name,inputs=n,passed=True));print(name,n,flush=True)
  for directory in (False,True):
@@ -133,6 +163,7 @@ def main():
  assert original=={n:hashlib.sha256((OUT/n).read_bytes()).hexdigest() for n in original}
  done('actual-DOS-file-owner-equals-pure-decode-and-no-fixture-rewrites',1)
  inputs=['src/config/live_configuration.c','src/config/live_configuration.h','src/directory/directory_live.c','src/directory/directory_live.h','standalone/check_live_configuration.py','standalone/live_configuration_host.c','standalone/check_setup_model.py','standalone/check_directory_live.py','standalone/check_modem_import.py','standalone/check_startup_import.py','standalone/dos_image.py','src/directory/codec.py','standalone/terminal_config_fixtures.py']
- result={'passed':True,'inputs':sum(c['inputs'] for c in cases),'cases':cases,'binary_sha256':hashlib.sha256((OUT/'LIVE.EXE').read_bytes()).hexdigest(),'maximum_CPU_call_stack_bytes':MAX_STACK[0],'DOS_fixture_sha256':original,'sources':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in inputs},'scope':'Actual source-built DOS8086 pure candidate decoder and shared directory transaction. All interrupts/IN/OUT forbidden during CPU replay; separate DOS C-runtime/file-owner equivalence test uses synthetic PRM/DIR only. Candidate/active/source atomicity and classification, not live application commit, UART/profile handoff or setup invocation.'}
- (OUT/'checks.json').write_text(json.dumps(result,indent=2)+'\n');print('Candidate checks passed',result['inputs'])
+ binary=ROOT/'build/terminal/TERMINAL.EXE' if Model.terminal else OUT/'LIVE.EXE'
+ result={'passed':True,'inputs':sum(c['inputs'] for c in cases),'cases':cases,'binary_sha256':hashlib.sha256(binary.read_bytes()).hexdigest(),'host':'terminal-far-C' if Model.terminal else 'standalone-near-C','maximum_CPU_call_stack_bytes':MAX_STACK[0],'DOS_fixture_sha256':original,'DOS_equivalence_binary_sha256':hashlib.sha256((OUT/'LIVE.EXE').read_bytes()).hexdigest(),'sources':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in inputs},'scope':'Actual source-built DOS8086 pure candidate decoder and shared directory transaction. All interrupts/IN/OUT forbidden during CPU replay; separate diagnostic DOS C-runtime/file-owner equivalence test uses synthetic PRM/DIR only. Candidate/active/source atomicity and classification, not live application commit, UART/profile handoff or setup invocation.'}
+ (OUT/('terminal-checks.json' if Model.terminal else 'checks.json')).write_text(json.dumps(result,indent=2)+'\n');print('Candidate checks passed',result['inputs'])
 if __name__=='__main__':main()

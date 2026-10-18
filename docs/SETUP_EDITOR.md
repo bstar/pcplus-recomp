@@ -2,10 +2,12 @@
 
 `PRMEDIT.EXE` edits the 44 currently mapped fields in an existing PCPlus2.01
 PRM image. It builds entirely from maintained source with the pinned Nix
-Open Watcom8086 toolchain. It is an offline settings editor: save the file,
-exit, then start the terminal with that explicit file. The terminal also offers
+Open Watcom8086 toolchain. Save the file, exit, then start the terminal with that
+explicit file. The terminal also offers
 [setup before connecting](SETUP_STARTUP.md) with `/S @PCPLUS.PRM`. It is not the original
-PCSETUP shared-memory child. The recovered parent protocol and missing child
+PCSETUP shared-memory child. [Alt-F10](SETUP_LIVE.md) also opens the editor from
+the running terminal, with saved changes taking effect on the next startup.
+The recovered parent protocol and missing child
 consumer are documented in [SETUP_NATIVE.md](SETUP_NATIVE.md).
 
 Build and verify from the repository:

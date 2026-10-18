@@ -14,7 +14,10 @@ Build and check with the pinned Nix DOS8086 toolchain:
 
 `build/live-configuration/LIVE.EXE` is a source-only diagnostic, not the user
 settings editor. Existing `PRMEDIT` and `TERMINAL /S @PCPLUS.PRM` remain the
-supported offline and setup-before-connect workflows.
+supported offline and setup-before-connect workflows. [Alt-F10](SETUP_LIVE.md)
+now opens the editor from the running terminal; saves currently affect the next
+startup. The candidate decoder is also linked in the normal terminal's separate
+[configuration code segment](CONFIGURATION_FAR_CODE.md).
 
 ## Shared directory semantics
 
@@ -36,7 +39,7 @@ A future live caller can retain the already-selected header/record instead of
 silently rereading a changed directory or reentering the browser while connected.
 The caller still owns that selection's lifetime and identity. The terminal now
 [retains the complete header and logical request context](DIRECTORY_CONTEXT.md).
-The candidate API is still diagnostic-only; a live owner must bind that context
+The candidate API is now linked in the terminal; a live owner must bind that context
 and coordinate namespace and hardware ownership before committing edits.
 
 ## Candidate and change classification
@@ -98,10 +101,11 @@ from this new diagnostic. No original executable, private file, live UART or
 physical modem is an input to the candidate replay.
 
 
-The current checkpoint passes389 candidate/API inputs in10 groups and311
+The original staging checkpoint passes389 candidate/API inputs in10 groups and311
 existing directory inputs. Maximum observed candidate-call stack use is2992
 bytes. All43 terminal regression commands pass on terminal12bdea77, and the
 isolated checkout reproduces59 byte-identical outputs, including the separate
 candidate diagnostic065c93ba. Hash-bound combined evidence is recorded in
-`validation/live-configuration-plan.json`. The candidate API remains outside
-the terminal executable; its shared pure directory decoder is integrated.
+`validation/live-configuration-plan.json`. Those hashes describe that historical
+checkpoint. The newer configuration-segment tests execute the candidate API
+inside the normal terminal as well; see [CONFIGURATION_FAR_CODE.md](CONFIGURATION_FAR_CODE.md).

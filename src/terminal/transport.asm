@@ -22,6 +22,7 @@ extern terminal_monitor_key
 extern terminal_controller_key
 extern terminal_break_start,terminal_break_poll,terminal_break_cancel
 extern terminal_printer_toggle
+extern terminal_setup_start
 global terminal_poll_io,terminal_enqueue_al,terminal_tick_low,terminal_clock_ticks
 global ansi_next_byte,ansi_unread_byte,csi_transmit_byte,csi_transmit_string
 
@@ -229,6 +230,11 @@ terminal_poll_io:
  call terminal_program_cancel
  jmp .done
 .meta_key:
+ cmp ax,0x7100 ;Alt-F10: direct maintained settings editor.
+ jne .ordinary_meta
+ call terminal_setup_start
+ jmp .done
+.ordinary_meta:
  or al,al
  jnz .classify
  cmp ah,0x78

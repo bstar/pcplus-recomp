@@ -19,6 +19,9 @@ def main():
  modem_seg,modem_off=symbols['terminal_modem_code_start'];modem_endseg,modem_endoff=symbols['terminal_modem_code_end'];assert modem_seg==modem_endseg and modem_seg!=code_seg
  required=max(required,16+(modem_seg*16+modem_endoff+15)//16)
  defines.update(MODEM_SEG=modem_seg,MODEM_START=modem_off,MODEM_BYTES=modem_endoff-modem_off)
+ config_seg,config_off=symbols['terminal_config_code_start'];config_endseg,config_endoff=symbols['terminal_config_code_end'];assert config_seg==config_endseg and config_seg not in (code_seg,modem_seg)
+ required=max(required,16+(config_seg*16+config_endoff+15)//16)
+ defines.update(CONFIG_SEG=config_seg,CONFIG_START=config_off,CONFIG_BYTES=config_endoff-config_off)
  ui_seg,browser_off=symbols['browser_screen'];ed_seg,ed_off=symbols['ed_screen'];program_seg,program_off=symbols['program_screen'];assert ui_seg==ed_seg==program_seg
  required=max(required,16+(ui_seg*16+max(browser_off,ed_off,program_off)+4000+15)//16)
  defines['REQUIRED_PARAS']=required
@@ -34,9 +37,9 @@ def main():
  folder=ROOT/'build/connection-dos/far-storage';folder.mkdir(parents=True,exist_ok=True);(folder/'FARTEST.BIN').unlink(missing_ok=True)
  proof=test_connection_dos.run('far-storage','success','p3000 a-1 p2000 space p1200 a-x',prm=fixture(timeout=5),arguments='@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 HARD',files={'TEST.KEY':bytes(keys),'FARTEST.COM':child.read_bytes()})
  sample=(folder/'FARTEST.BIN').read_bytes() if (folder/'FARTEST.BIN').exists() else b''
- checks=proof['checks'];checks['owned_child_found_parent_and_retained_far_extent']=len(sample)==56 and struct.unpack_from('<H',sample)[0]==63
- if len(sample)==56:
-  status,parent,retained,observed_required,segment,allocated,*markers=struct.unpack('<28H',sample)
+ checks=proof['checks'];checks['owned_child_found_parent_and_retained_far_extent']=len(sample)==64 and struct.unpack_from('<H',sample)[0]==127
+ if len(sample)==64:
+  status,parent,retained,observed_required,segment,allocated,*markers=struct.unpack('<32H',sample)
   checks['MCB_covers_far_end_after_STACK']=retained>=observed_required==required
   checks['new_DOS_allocation_disjoint_from_all_retained_parent_storage']=allocated>=parent+required or allocated+0x400<=parent
   checks['new_DOS_allocation_does_not_overlap_far_parent']=not(parent+16+far<=allocated<parent+required)
@@ -44,7 +47,8 @@ def main():
   checks['snapshot_canaries_survive_child_allocation_fill']=markers[4:7]==[parent+16+snapseg,0x1122,0x3344]
   checks['far_code_sum_and_extent_survive_child_allocation_fill']=markers[7]==markers[8] and markers[9:11]==[parent+16+code_seg,code_endoff-code_off]
   checks['modem_far_code_sum_and_extent_survive_child_allocation_fill']=markers[18:20]==[parent+16+modem_seg,modem_endoff-modem_off] and markers[20]==markers[21]
+  checks['configuration_far_code_sum_and_full_C_extent_survive_child_allocation_fill']=markers[22:24]==[parent+16+config_seg,config_endoff-config_off] and markers[24]==markers[25]
   checks['all_three_far_UI_screen_buffers_survive_child_allocation_fill']=markers[11]==parent+16+ui_seg and all(markers[i]==markers[i+1] for i in (12,14,16))
- proof['passed']=all(checks.values());proof['binary_sha256']=hashlib.sha256(a.binary.read_bytes()).hexdigest();proof['sample_hex']=sample.hex();proof['linker_defines']=defines;proof['scope']='Actual DOS livePROGRAM/COMSPEC owned child locates parent PSP, checks retainedMCB throughfarend afterSTACK and FARCODE, allocates/fills16KB separateDOSmemory and verifies full-sizedshadow/history and frozen-screen endpointcanaries plus the full controller and modem far-code byte-sums before/after allocation and sums of all three full4000-byte far UI screen owners. Parent resumes actual far controller polling after child return. NormalUART/vector cleanup verified by existing sampler. No physical modem claim.'
+ proof['passed']=all(checks.values());proof['binary_sha256']=hashlib.sha256(a.binary.read_bytes()).hexdigest();proof['sample_hex']=sample.hex();proof['linker_defines']=defines;proof['scope']='Actual DOS livePROGRAM/COMSPEC owned child locates parent PSP, checks retainedMCB throughfarend afterSTACK and FARCODE, allocates/fills16KB separateDOSmemory and verifies full-sizedshadow/history and frozen-screen endpointcanaries plus the full controller, modem and configuration C far-code byte-sums before/after allocation and sums of all three full4000-byte far UI screen owners. Parent resumes actual far controller polling after child return. NormalUART/vector cleanup verified by existing sampler. No physical modem claim.'
  (out/'checks.json').write_text(json.dumps(proof,indent=2)+'\n');print(json.dumps(proof,indent=2));return 0 if proof['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

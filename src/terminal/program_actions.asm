@@ -21,6 +21,7 @@ extern terminal_connection_notice,terminal_connection_notice_restore
 extern terminal_capture_before_program
 extern terminal_monitor_active
 extern terminal_controller_active
+extern _process_run,terminal_setup_tail
 global terminal_program_initialize,terminal_program_start,terminal_program_poll
 global terminal_program_cancel
 
@@ -122,6 +123,7 @@ terminal_program_start:
  cld
  rep movsb
  mov word [terminal_program_pending],1
+ mov word [terminal_program_kind],0
  mov word [terminal_program_status],1
  mov byte [program_pause_sent],0
  mov ax,[terminal_macro_tx_epoch]
@@ -260,10 +262,29 @@ terminal_program_poll:
  add sp,2
  mov ax,terminal_program_result
  push ax
+ cmp word [terminal_program_kind],1
+ je .setup_child
  mov ax,terminal_program_command
  push ax
  call _program_execute
  add sp,4
+ jmp .child_status
+.setup_child:
+ mov ax,terminal_setup_tail
+ push ax
+ mov ax,program_setup_executable
+ push ax
+ call _process_run
+ add sp,6
+.child_status:
+ or ax,ax
+ jnz .record_status
+ cmp word [terminal_program_kind],1
+ jne .record_status
+ cmp word [terminal_program_result+4],0
+ je .record_status
+ mov ax,1
+.record_status:
  or ax,ax
  mov word [terminal_program_status],4
  jz .child_finished
@@ -272,12 +293,15 @@ terminal_program_poll:
  ; A child may leave its UART ISR/interrupt-enable state behind. Quiet that
  ; port and restore its baseline vector before drawing or waiting for a key.
  call program_quiet_uart
- mov ax,[terminal_program_result]
  ; Original PROGRAM asks for a local key after the command. BIOS output avoids
  ; introducing DOS text-output/CTRL-C checks while the port is handed off.
  mov si,program_return_prompt
- or ax,ax
- jz .prompt
+ cmp word [terminal_program_kind],1
+ jne .check_error
+ mov si,program_setup_prompt
+.check_error:
+ cmp word [terminal_program_status],5
+ jne .prompt
  mov si,program_error_prompt
 .prompt:
  lodsb
@@ -444,6 +468,7 @@ terminal_program_cancel:
  mov word [terminal_program_status],3
 .clear:
  mov word [terminal_program_pending],0
+ mov word [terminal_program_kind],0
  call program_resume_flow
  push ds
  pop es
@@ -473,6 +498,8 @@ program_progress:
 SEGMENT _DATA public align=16 class=DATA use16
 global terminal_program_pending,terminal_program_active,terminal_program_status
 global terminal_program_command,terminal_program_result
+global terminal_program_kind
+terminal_program_kind: dw 0 ;0 PROGRAM/COMSPEC,1 direct maintained settings editor.
 terminal_program_pending: dw 0
 terminal_program_active: dw 0
 terminal_program_status: dw 0
@@ -489,6 +516,8 @@ global program_screen_segment
 program_screen_segment: dw seg program_screen
 program_return_prompt: db 13,10,'Press a key to return to the terminal.',0
 program_error_prompt: db 13,10,'Program could not run. Press a key to return.',0
+program_setup_executable: db 'PRMEDIT.EXE',0
+program_setup_prompt: db 13,10,'Setup closed. Press a key to return to the terminal.',0
 program_busy_notice: db 'Program busy',0
 program_view_notice: db 'Program view',0
 

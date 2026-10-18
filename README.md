@@ -337,3 +337,7 @@ For an existing2.01 PRM in the current DOS directory, build both applications
 with `./tools/build terminal setup`, then run `TERMINAL /S @PCPLUS.PRM` in DOS.
 This opens setup before connecting; see [setup startup](docs/SETUP_STARTUP.md)
 for save/cancel, path limits and CLI precedence.
+
+From the running terminal, **Alt-F10** opens the same editor for an explicit
+`@` current-directory8.3 PRM. Saved changes currently apply on the next startup;
+the connection resumes with its existing settings. See [setup from the terminal](docs/SETUP_LIVE.md).
