@@ -9,7 +9,7 @@ CPU 8086
 SEGMENT _TEXT public class=CODE use16
 extern _directory_dos_page
 extern terminal_directory_path,terminal_directory_entry,terminal_directory_codes
-extern pcplus_screen_save,pcplus_screen_restore,text_video_segment
+extern terminal_screen_save_far,terminal_screen_restore_far,text_video_segment
 extern terminal_directory_edit_selected
 global terminal_directory_choose
 terminal_directory_choose:
@@ -51,12 +51,13 @@ terminal_directory_choose:
  call browser_bios
  mov [browser_cursor],dx
  mov [browser_shape],cx
- mov ax,browser_screen
- push ax
- push word [browser_video_offset]
+ mov ax,[browser_screen_segment]
+ mov es,ax
+ mov di,browser_screen
+ mov dx,[browser_video_offset]
  mov ax,2000
- push ax
- call pcplus_screen_save
+ call terminal_screen_save_far
+ jc .restore_segment
  mov byte [browser_saved],1
  mov word [browser_selected],0
  mov ax,[terminal_directory_entry]
@@ -184,12 +185,12 @@ terminal_directory_choose:
 .restore:
  cmp byte [browser_saved],0
  je .restore_segment
- mov ax,browser_screen
- push ax
- push word [browser_video_offset]
+ mov ax,[browser_screen_segment]
+ mov es,ax
+ mov si,browser_screen
+ mov dx,[browser_video_offset]
  mov ax,2000
- push ax
- call pcplus_screen_restore
+ call terminal_screen_restore_far
  mov cx,[browser_shape]
  mov ah,1
  call browser_bios
@@ -392,4 +393,10 @@ browser_error_notice: db 'Save failed. Check directory and recovery files.',0
 browser_warning_notice: db 'Entry installed; recovery files retained. Check before another save.',0
 browser_io: times DD_RESULT_SIZE db 0
 browser_page_data: times DD_PAGE_SIZE db 0
-browser_screen: times 4000 db 0
+global browser_screen_segment
+browser_screen_segment: dw seg browser_screen
+SEGMENT UI_STORAGE public align=16 class=FAR_DATA use16
+GROUP UI_GROUP UI_STORAGE
+global browser_screen,browser_screen_end
+browser_screen: resb 4000
+browser_screen_end:

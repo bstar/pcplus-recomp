@@ -153,6 +153,17 @@ physical modem compatibility or close the remaining application gates below.
       linked YMODEM inputs; a fresh source-only checkout reproduces57 outputs.
       Dynamic overlays, broader code/data
       migration, resource startup and complete F01 coverage remain open.
+      Private browser/editor/PROGRAM screens now move to a distinct far UI
+      group, retaining three4000-byte owners and their formats. Shared
+      data/stack falls to52,368 bytes with13,168 available. Builder guards check
+      extents, nonaliasing and relocated segment words; PROGRAM retains every
+      frame end. Actual DOS child allocation/fill preserves all three samples.
+      The8b38144e checkpoint passes37 terminal commands,11 standalone UI DOS
+      cases and14 dedicated-print DOS cases. Six linked UI groups/2031 inputs,
+      including eight malformed-layout rejections, cover private ownership/bounds;
+      source-only rebuilding reproduces57 outputs. BBS editor results retain
+      their separate bdeb347c identity.
+      See `docs/UI_FAR_STORAGE.md` for source and verification boundaries.
 - [ ] Reconstruct configuration persistence, dialing directory and application UI.
       Progress: original-code replay proves the 1,264-byte PRM load/save block
       and ten-byte serial prefix; a partial lossless host codec preserves unknown

@@ -26,7 +26,7 @@ transmit. Two keyboard Escapes exit: the first is transmitted, the second is
 consumed locally. Alt-X/hang-up stop the controller before their ordinary
 cleanup. Nested capture/snapshot/macro/PROGRAM/transfer owners are denied.
 
-The frozen build also passes all36 commands from the terminal regression
+The frozen build also passes all37 commands from the terminal regression
 target and23 linked YMODEM inputs. A fresh source-only checkout reproduces
 all57 component outputs byte for byte. See
 [terminal regression evidence](validation/terminal-far-code.json)
@@ -49,7 +49,7 @@ compares virtual PRN bytes exactly, validates active/held capture contents,
 samples B800 and BIOS cursor/geometry, and compares UART/PIC/IRQ before/after.
 **All 14 actual DOS cases passed**, with no failed live attempts, on frozen
 source-built terminal
-`bdeb347c99168c8f745c312abfd40468250959ffdfd82af562476a6d29bea2c8`.
+`8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d`.
 Exact output includes all 254 retained values from the all256 fixture, one
 literal DC4, unknown escape replay and no terminating-sequence bytes. The
 keyboard case verifies exactly one Escape forwarded before normal CPR/DSR
@@ -58,10 +58,10 @@ borrowed copy owner remain usable, and sampled video/cursor/UART/PIC/IRQ
 state checks pass.
 
 Current artifacts are retained under
-`build/terminal-print-controller-dos/farcode-bdeb`. The earlier batches remain
-under `initial-560b`, `carrier-51b9` and `farcode-ad58` as history, not attributed
-to the current executable. The report selects fourteen current passes from56
-retained actual DOS runs; all four batches passed. The controller now executes
+`build/terminal-print-controller-dos/ui-storage-8b38`. Earlier batches remain
+under `initial-560b`, `carrier-51b9`, `farcode-ad58` and `farcode-bdeb` as history,
+not attributed to the current executable. The report selects fourteen current
+passes from70 retained actual DOS runs; all five batches passed. The controller now executes
 through [static far-code bridges](FAR_CODE.md); printer behavior is unchanged.
 The hash-bound public index is `docs/validation/terminal-print-controller-live.json`,
 including the independent linked checker's eleven groups / 300 inputs. It keeps
@@ -80,11 +80,12 @@ The passive-COM DOS suite above does not simulate that connection-engine race.
 
 ```sh
 ./tools/dev --command python3 standalone/test_terminal_print_controller_dos.py \
-  --sha256 bdeb347c99168c8f745c312abfd40468250959ffdfd82af562476a6d29bea2c8 \
+  --sha256 8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d \
   --label fresh-controller-proof
 ./tools/dev --command python3 standalone/record_printer.py \
   --controller-dos-label initial-560b --controller-dos-label carrier-51b9 \
-  --controller-dos-label farcode-ad58 --controller-dos-label farcode-bdeb
+  --controller-dos-label farcode-ad58 --controller-dos-label farcode-bdeb \
+  --controller-dos-label ui-storage-8b38
 ```
 
 The recorder requires selected live cases, linked checks, current executable

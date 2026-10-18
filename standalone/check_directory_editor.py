@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Actual linked editor+original snapshots, explicit BIOS keys/video fixtures."""
+"""Actual linked editor+far snapshots, explicit BIOS keys/video fixtures."""
 from pathlib import Path
 import hashlib,json,struct
 from unicorn import UC_HOOK_INTR,UC_HOOK_INSN
@@ -82,6 +82,6 @@ def main():
   for mode,page in [(3,2),(7,1)]:assert Editor([ESC],mode,page).run()[0]==0
   a=Editor([],0x13);assert a.run()[0]==0 and not a.rendered
  check('active-pages-monochrome-unsupported-mode-and-complete-display-restore',context)
- result={'passed':True,'binary_sha256':hashlib.sha256((OUT/'EDITOR.EXE').read_bytes()).hexdigest(),'cases':cases,'scope':'Actual linked maintained editor and original snapshots. Explicit BIOS keyboard/video fixture, all DOS/port IO forbidden. Caller114bytes checked unchanged before everykey; synthetic secrets only.'}
+ result={'passed':True,'binary_sha256':hashlib.sha256((OUT/'EDITOR.EXE').read_bytes()).hexdigest(),'cases':cases,'scope':'Actual linked maintained editor, maintained far snapshots and recovered packed cells. Explicit BIOS keyboard/video fixture, all DOS/port IO forbidden. Caller114bytes checked unchanged before everykey; synthetic secrets only.'}
  (OUT/'checks.json').write_text(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':main()

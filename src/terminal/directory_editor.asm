@@ -8,7 +8,7 @@ BITS 16
 CPU 8086
 %include "directory_dos.inc"
 SEGMENT _TEXT public class=CODE use16
-extern pcplus_screen_save,pcplus_screen_restore,text_video_segment
+extern terminal_screen_save_far,terminal_screen_restore_far,text_video_segment
 global terminal_directory_edit
 terminal_directory_edit:
  push bp
@@ -59,12 +59,13 @@ terminal_directory_edit:
  call ed_bios
  mov [ed_old_cursor],dx
  mov [ed_old_shape],cx
- mov ax,ed_screen
- push ax
- push word [ed_video_offset]
+ mov ax,[ed_screen_segment]
+ mov es,ax
+ mov di,ed_screen
+ mov dx,[ed_video_offset]
  mov ax,2000
- push ax
- call pcplus_screen_save
+ call terminal_screen_save_far
+ jc .restore_segment
  mov byte [ed_saved],1
  mov word [ed_field],0
  mov byte [ed_insert],0
@@ -182,12 +183,12 @@ terminal_directory_edit:
 .restore:
  cmp byte [ed_saved],0
  je .restore_segment
- mov ax,ed_screen
- push ax
- push word [ed_video_offset]
+ mov ax,[ed_screen_segment]
+ mov es,ax
+ mov si,ed_screen
+ mov dx,[ed_video_offset]
  mov ax,2000
- push ax
- call pcplus_screen_restore
+ call terminal_screen_restore_far
  mov cx,[ed_old_shape]
  mov ah,1
  call ed_bios
@@ -767,4 +768,10 @@ ed_protocol: db 'Protocol 0..255',0
 ed_mode: db 'Mode 0/1',0
 ed_port: db 'Port 0..8',0
 ed_stage: times DD_RECORD_SIZE db 0
-ed_screen: times 4000 db 0
+global ed_screen_segment
+ed_screen_segment: dw seg ed_screen
+SEGMENT UI_STORAGE public align=16 class=FAR_DATA use16
+GROUP UI_GROUP UI_STORAGE
+global ed_screen,ed_screen_end
+ed_screen: resb 4000
+ed_screen_end:

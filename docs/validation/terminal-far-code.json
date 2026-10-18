@@ -1,37 +1,62 @@
 {
   "passed": true,
-  "binary_sha256": "bdeb347c99168c8f745c312abfd40468250959ffdfd82af562476a6d29bea2c8",
+  "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
   "memory_layout": {
-    "near_bytes": 64368,
-    "near_relative_segment": 4004,
-    "far_relative_segment": 8027,
+    "near_bytes": 52368,
+    "near_spare_bytes": 13168,
+    "near_relative_segment": 4018,
+    "far_relative_segment": 8041,
     "shadow_offset": 2000,
     "history_offset": 10192,
     "far_bytes": 12288,
-    "far_end_linear": 142720,
-    "stack_end_linear": 128432,
-    "loaded_module_bytes": 104874,
-    "minimum_allocated_module_bytes": 142736,
-    "retained_parent_paragraphs": 8936,
+    "far_end_linear": 142944,
+    "stack_end_linear": 116656,
+    "loaded_module_bytes": 93098,
+    "minimum_allocated_module_bytes": 142960,
+    "retained_parent_paragraphs": 8950,
     "far_pointer_relocations_verified": true,
-    "snapshot_relative_segment": 8027,
+    "snapshot_relative_segment": 8041,
     "snapshot_image_offset": 0,
     "snapshot_bytes": 2000,
-    "snapshot_end_linear": 130432,
-    "resident_code_bytes": 62604,
-    "resident_code_spare_bytes": 2932,
+    "snapshot_end_linear": 130656,
+    "ui_screen_buffers": {
+      "browser_screen": {
+        "relative_segment": 7291,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 116656,
+        "end_linear": 120656
+      },
+      "ed_screen": {
+        "relative_segment": 7291,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 120656,
+        "end_linear": 124656
+      },
+      "program_screen": {
+        "relative_segment": 7291,
+        "offset": 8000,
+        "bytes": 4000,
+        "start_linear": 124656,
+        "end_linear": 128656
+      }
+    },
+    "far_ui_storage_bytes": 12000,
+    "resident_code_bytes": 62828,
+    "resident_code_spare_bytes": 2708,
     "code_segments": [
       {
         "name": "_TEXT",
         "kind": "CODE",
         "relative_segment": 0,
         "offset": 0,
-        "bytes": 62604
+        "bytes": 62828
       },
       {
         "name": "PRINT_CODE",
         "kind": "FARCODE",
-        "relative_segment": 3913,
+        "relative_segment": 3927,
         "offset": 0,
         "bytes": 1449
       }
@@ -40,43 +65,68 @@
   },
   "linked_checks": {
     "passed": true,
-    "binary_sha256": "bdeb347c99168c8f745c312abfd40468250959ffdfd82af562476a6d29bea2c8",
+    "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
     "cases": [
       {
         "case": "MZ-relocations-22-bridge-pairs-and-six-invalid-images-rejected",
         "passed": true,
         "detail": {
           "layout": {
-            "near_bytes": 64368,
-            "near_relative_segment": 4004,
-            "far_relative_segment": 8027,
+            "near_bytes": 52368,
+            "near_spare_bytes": 13168,
+            "near_relative_segment": 4018,
+            "far_relative_segment": 8041,
             "shadow_offset": 2000,
             "history_offset": 10192,
             "far_bytes": 12288,
-            "far_end_linear": 142720,
-            "stack_end_linear": 128432,
-            "loaded_module_bytes": 104874,
-            "minimum_allocated_module_bytes": 142736,
-            "retained_parent_paragraphs": 8936,
+            "far_end_linear": 142944,
+            "stack_end_linear": 116656,
+            "loaded_module_bytes": 93098,
+            "minimum_allocated_module_bytes": 142960,
+            "retained_parent_paragraphs": 8950,
             "far_pointer_relocations_verified": true,
-            "snapshot_relative_segment": 8027,
+            "snapshot_relative_segment": 8041,
             "snapshot_image_offset": 0,
             "snapshot_bytes": 2000,
-            "snapshot_end_linear": 130432,
-            "resident_code_bytes": 62604,
-            "resident_code_spare_bytes": 2932,
+            "snapshot_end_linear": 130656,
+            "ui_screen_buffers": {
+              "browser_screen": {
+                "relative_segment": 7291,
+                "offset": 0,
+                "bytes": 4000,
+                "start_linear": 116656,
+                "end_linear": 120656
+              },
+              "ed_screen": {
+                "relative_segment": 7291,
+                "offset": 4000,
+                "bytes": 4000,
+                "start_linear": 120656,
+                "end_linear": 124656
+              },
+              "program_screen": {
+                "relative_segment": 7291,
+                "offset": 8000,
+                "bytes": 4000,
+                "start_linear": 124656,
+                "end_linear": 128656
+              }
+            },
+            "far_ui_storage_bytes": 12000,
+            "resident_code_bytes": 62828,
+            "resident_code_spare_bytes": 2708,
             "code_segments": [
               {
                 "name": "_TEXT",
                 "kind": "CODE",
                 "relative_segment": 0,
                 "offset": 0,
-                "bytes": 62604
+                "bytes": 62828
               },
               {
                 "name": "PRINT_CODE",
                 "kind": "FARCODE",
-                "relative_segment": 3913,
+                "relative_segment": 3927,
                 "offset": 0,
                 "bytes": 1449
               }
@@ -117,7 +167,7 @@
           "actual_IRQ_frames": [
             [
               469,
-              8009,
+              8023,
               514
             ],
             [
@@ -126,14 +176,14 @@
               514
             ]
           ],
-          "far_CS": 8009,
+          "far_CS": 8023,
           "printed_hex": "4152"
         }
       }
     ],
     "source_sha256": {
       "standalone/check_far_code_live.py": "a03af09c9a445d59459c6db9238a28b73c73be1166266b3b3cdd412e554da0aa",
-      "standalone/terminal_memory.py": "ceef0b71c241397c5f5c83ff8f748344b1cb0f9912450e470411f129043edfb1",
+      "standalone/terminal_memory.py": "1049f75d87c8eb6203e84b83243a7b87f516bf5a7a879262dc69e4c68e2bd36c",
       "standalone/dos_image.py": "2e8b0bd03cd4370b9b9633ebe3a76eed30ab0250ba8d26f4ec90eea49a5eb8e9",
       "standalone/check_transport.py": "55cf5fabdae9f6d5f56085d9127e5e81656c2651283042fb81473c56b4c45b69",
       "standalone/check_terminal_capture_live.py": "e9140d084d577cfea1727582b7607aeb6a22c0518e1a408bc68378674f6b3b5a"
@@ -158,44 +208,54 @@
       "immediate_banner_not_dropped": true,
       "owned_child_found_parent_and_retained_far_extent": true,
       "MCB_covers_far_end_after_STACK": true,
+      "new_DOS_allocation_disjoint_from_all_retained_parent_storage": true,
       "new_DOS_allocation_does_not_overlap_far_parent": true,
       "shadow_and_history_canaries_survive_child_allocation_fill": true,
       "snapshot_canaries_survive_child_allocation_fill": true,
-      "far_code_sum_and_extent_survive_child_allocation_fill": true
+      "far_code_sum_and_extent_survive_child_allocation_fill": true,
+      "all_three_far_UI_screen_buffers_survive_child_allocation_fill": true
     },
     "commands": [
       "ATZ",
       "ATDCaseTest:23"
     ],
     "errors": [],
-    "seconds": 7.325,
-    "binary_sha256": "bdeb347c99168c8f745c312abfd40468250959ffdfd82af562476a6d29bea2c8",
+    "seconds": 7.326,
+    "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
     "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 HARD",
     "expected_exit": 0,
-    "scope": "Actual DOS livePROGRAM/COMSPEC owned child locates parent PSP, checks retainedMCB throughfarend afterSTACK and FARCODE, allocates/fills16KB separateDOSmemory and verifies full-sizedshadow/history and frozen-screen endpointcanaries plus the full far-code byte-sum before/after allocation. Parent resumes actual far controller polling after child return. NormalUART/vector cleanup verified by existing sampler. No physical modem claim.",
-    "sample_hex": "0f001408e822e8227f27422cfecaefbeaddebeba7f2722114433f320f3206d17a905",
+    "scope": "Actual DOS livePROGRAM/COMSPEC owned child locates parent PSP, checks retainedMCB throughfarend afterSTACK and FARCODE, allocates/fills16KB separateDOSmemory and verifies full-sizedshadow/history and frozen-screen endpointcanaries plus the full far-code byte-sum before/after allocation and sums of all three full4000-byte far UI screen owners. Parent resumes actual far controller polling after child return. NormalUART/vector cleanup verified by existing sampler. No physical modem claim.",
+    "sample_hex": "1f001408f622f6228d27572cfecaefbeaddebeba8d27221144334cfe4cfe7b17a9059f240000000000000000eb32eb32",
     "linker_defines": {
-      "DGROUP_SEG": 4004,
-      "FAR_SEG": 8027,
+      "DGROUP_SEG": 4018,
+      "FAR_SEG": 8041,
       "SHADOW_OFFSET": 2000,
       "HISTORY_OFFSET": 10192,
       "FAR_END_OFFSET": 14288,
       "PROCESS_PSP_OFFSET": 448,
-      "SHADOW_SEGMENT_OFFSET": 23877,
-      "HISTORY_POINTER_OFFSET": 25293,
-      "SNAPSHOT_SEG": 8027,
+      "SHADOW_SEGMENT_OFFSET": 11877,
+      "HISTORY_POINTER_OFFSET": 13293,
+      "SNAPSHOT_SEG": 8041,
       "SNAPSHOT_OFFSET": 0,
-      "REQUIRED_PARAS": 8936,
-      "CODE_SEG": 3913,
+      "REQUIRED_PARAS": 8950,
+      "CODE_SEG": 3927,
       "CODE_START": 0,
       "CODE_BYTES": 1449,
-      "CODE_FIRST": 20565
+      "CODE_FIRST": 20565,
+      "UI_SEG": 7291,
+      "BROWSER_OFF": 0,
+      "EDITOR_OFF": 4000,
+      "PROGRAM_OFF": 8000
     }
   },
   "terminal_regression": {
-    "binary_sha256": "bdeb347c99168c8f745c312abfd40468250959ffdfd82af562476a6d29bea2c8",
+    "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
     "passed": true,
     "commands": [
+      {
+        "command": "python3 standalone/check_ui_screen_far.py",
+        "exit_code": 0
+      },
       {
         "command": "python3 standalone/check_far_code_live.py",
         "exit_code": 0
@@ -345,18 +405,18 @@
   "YMODEM_inputs": 23,
   "source_rebuild": {
     "report": "docs/validation/terminal-source-build.json",
-    "binary_sha256": "bdeb347c99168c8f745c312abfd40468250959ffdfd82af562476a6d29bea2c8",
-    "source_snapshot_sha256": "97bd8e2c1fac486de0c38163e3c220e42ae33cd559f88766ced6a43a1d71a7e3"
+    "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
+    "source_snapshot_sha256": "650a1d84c47e34129b17c82484de7edd48207b6dd899900aa2385892e10d54de"
   },
   "source_sha256": {
-    "standalone/record_far_code.py": "c1a0d4f05d30b32eb7b8822e383595ba40a97be48f4f9f94c6161920cc7bb8ba",
+    "standalone/record_far_code.py": "f8b1fc9d3b50b70c5eacda0f14e57828f09413a0924f49532e133b5470cee7f7",
     "standalone/check_far_code_live.py": "a03af09c9a445d59459c6db9238a28b73c73be1166266b3b3cdd412e554da0aa",
-    "standalone/terminal_memory.py": "ceef0b71c241397c5f5c83ff8f748344b1cb0f9912450e470411f129043edfb1",
+    "standalone/terminal_memory.py": "1049f75d87c8eb6203e84b83243a7b87f516bf5a7a879262dc69e4c68e2bd36c",
     "standalone/dos_image.py": "2e8b0bd03cd4370b9b9633ebe3a76eed30ab0250ba8d26f4ec90eea49a5eb8e9",
     "standalone/check_transport.py": "55cf5fabdae9f6d5f56085d9127e5e81656c2651283042fb81473c56b4c45b69",
     "standalone/check_terminal_capture_live.py": "e9140d084d577cfea1727582b7607aeb6a22c0518e1a408bc68378674f6b3b5a",
-    "standalone/far_storage_child.asm": "333be9593136f20c5e60e04b287ac63cb809b73774b160a4ae386e2f14f820ed",
-    "standalone/test_far_storage_dos.py": "c8108337c5ad7e081f238865c192b451092469d528126652cb8a997736226b15",
+    "standalone/far_storage_child.asm": "1e794802a4974b3588594c48583f4d960cee7e8254fd571b5ef77e8c64fe14cd",
+    "standalone/test_far_storage_dos.py": "eca8ebadc4fdd97185885c7bca06396eddb77301f6a31276c845d49b4b65119c",
     "standalone/build_terminal.py": "2620079958d1394b6f41f096eb2c2636eb91e670af48d33f2208e639ace7296b",
     "src/terminal/far_bridge.inc": "80a8642bdc126168e8f65c6a4452c97c3ec0f362f0b2dec21bc3dfe534fbac94",
     "src/terminal/controller_abi.inc": "33de629fa3bbb35914c9070e067514c9520d16ff5d7ae7d9ea41173e72454c4e",
@@ -364,13 +424,13 @@
     "src/terminal/print_controller.asm": "e7af0782119e00d8563c214c1a469fd548f547f332f6c6e663dfe9594f792d92"
   },
   "retained_artifacts": {
-    "build/terminal/far-code-live-checks.json": "93b17597b8247b437468e71d04b949c2664fbf0ec4dd828723270d5171d1f932",
-    "build/far-storage-dos/checks.json": "61bb9597135ea024b16c90fb0ef4715f12e709b0fd5f50e8c9da9ef16e643577",
-    "build/far-storage-dos/FARTEST.COM": "0f53b6f19d1e002866c5d786baaeff6d198e782ec63edd6085a7db42cb2b45e8",
-    "build/connection-dos/far-storage/FARTEST.BIN": "0acae44b2915425bead92dde16e47067fdb457df6850afed993fb1b3d1fe4456",
-    "build/terminal/far-code-final-regression.json": "10115e5e1526e79f7e9a8f7d425b43ac60db4cad59fd7574967eb85ecc937dcb",
-    "build/terminal/far-code-final-regression.log": "7269eefa0fc4d8ef7e9fb35770c180bcecb42645f202515dd2b5681891074898",
-    "build/terminal/terminal-ymodem-live-checks.json": "6cd61a25ea31917146f5d1728b87075011d533d0267642c87ec3258ee78ac61d"
+    "build/terminal/far-code-live-checks.json": "4831cf55c739b5eaac6623bccb668eb007282d7872492af1561bf61bf98f56b0",
+    "build/far-storage-dos/checks.json": "f46b7dc1a004f98d8f7e9c8cb9c092572c19b76d10679f8d164fcf0e000146d0",
+    "build/far-storage-dos/FARTEST.COM": "b286b2e42ee3efa725988f177e8c1261711ec45f8e939c279263ce382436e3b2",
+    "build/connection-dos/far-storage/FARTEST.BIN": "126cc58cc89a9587646ac19511d5294ddf2b4561625a708b867655f69cff1ae4",
+    "build/terminal/far-code-final-regression.json": "3bee722d63f706529c40e8b1a1ac1935cd49fd0328f06ed9a5e48dc5e243a7ee",
+    "build/terminal/far-code-final-regression.log": "2aa45bad24820f3f9ea4b0200d2ba83e65c1601ddf80a5dfacd75821de9e6759",
+    "build/terminal/terminal-ymodem-live-checks.json": "665dad378a51ea4e700e675f975f3c3fe349b78f6248421949779a79aaa6e814"
   },
   "development_findings": [
     {

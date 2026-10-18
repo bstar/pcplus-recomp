@@ -41,6 +41,6 @@ c:
   assert missing or (directory/'NORMAL.DIR').read_bytes()==data
   cases.append({'case':name,'passed':True,'status':status,'entry':entry,'BIOS_cursor':proof[2],'screen_shape_and_video_segment_restored':True,'legacy':legacy,'directory_unchanged':not missing})
   print(name,'passed',flush=True)
- result={'passed':True,'binary_sha256':digest,'cases':cases,'scope':'Actual DOSBox-X BIOS keyboard/video, complete compiled DOS directory reader and recovered snapshots. Synthetic directory only; no UART or original/private data.'}
+ result={'passed':True,'binary_sha256':digest,'cases':cases,'scope':'Actual DOSBox-X BIOS keyboard/video, complete compiled DOS directory reader and maintained far snapshots. Synthetic directory only; no UART or original/private data.'}
  (OUT/'dos-results.json').write_text(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':main()

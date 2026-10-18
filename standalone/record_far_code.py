@@ -19,7 +19,9 @@ def main():
  ymodem=read('build/terminal/terminal-ymodem-live-checks.json')
  source=read('docs/validation/terminal-source-build.json')
  for data in (cpu,child,regression,ymodem,source):assert data['passed'] and data['binary_sha256']==runtime
- assert len(regression['commands'])==36 and all(c['exit_code']==0 for c in regression['commands'])
+ expected=(ROOT/'Makefile').read_text().split('test-terminal: terminal\n',1)[1].split('\n\n',1)[0].splitlines()
+ assert [c['command'] for c in regression['commands']]==[c.strip() for c in expected]
+ assert all(c['exit_code']==0 for c in regression['commands'])
  assert child['checks']['far_code_sum_and_extent_survive_child_allocation_fill']
  assert source['matches_workspace_manifest'] and source['matches_workspace_binary']
  inputs=['standalone/record_far_code.py','standalone/check_far_code_live.py','standalone/terminal_memory.py','standalone/dos_image.py','standalone/check_transport.py','standalone/check_terminal_capture_live.py','standalone/far_storage_child.asm','standalone/test_far_storage_dos.py','standalone/build_terminal.py','src/terminal/far_bridge.inc','src/terminal/controller_abi.inc','src/terminal/controller_bridge.asm','src/terminal/print_controller.asm']

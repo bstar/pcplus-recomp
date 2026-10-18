@@ -43,6 +43,24 @@ def inspect_terminal_memory(binary,map_path):
   assert address('terminal_snapshot_image_segment') in relocations
   static_end=max(static_end,frozen_end)
   extra={'snapshot_relative_segment':frozen_seg,'snapshot_image_offset':frozen_off,'snapshot_bytes':2000,'snapshot_end_linear':frozen_end}
+ # Independent full-screen owners must never alias across nested UI/EXEC.
+ ui_buffers={}
+ for name in ('browser_screen','ed_screen','program_screen'):
+  if name not in symbols:continue
+  lo=address(name);hi=address(name+'_end');seg,off=symbols[name]
+  assert hi-lo==4000 and off+4000<=65536,(name,'invalid UI screen extent')
+  assert hi<=near_start or lo>=near_start+near_size,(name,'UI screen overlapsDGROUP')
+  assert hi<=shadow or lo>=far_end,(name,'UI screen overlaps native far storage')
+  if 'terminal_snapshot_image' in symbols:assert hi<=frozen or lo>=frozen_end,(name,'UI screen overlaps frozen screen')
+  for other in ui_buffers.values():assert hi<=other['start_linear'] or lo>=other['end_linear'],(name,'nested owners alias')
+  assert lo>=module_bytes,(name,'UI buffer unexpectedly serialized in MZ')
+  assert word(name+'_segment')==seg and address(name+'_segment') in relocations,(name,'invalid relocated segment pointer')
+  ui_buffers[name]=dict(relative_segment=seg,offset=off,bytes=4000,start_linear=lo,end_linear=hi)
+  static_end=max(static_end,hi)
+ if ui_buffers:
+  assert len(ui_buffers)==3,'Incomplete terminal UI screen ownership'
+  assert len({b['relative_segment'] for b in ui_buffers.values()})==1
+  extra.update(ui_screen_buffers=ui_buffers,far_ui_storage_bytes=12000)
  # All executable segments must fit their real-mode segment and survive EXEC.
  code_segments=[]
  for name,kind,group,cseg,coff,csize in re.findall(r'^(\w+)\s+(CODE|FARCODE)\s+(\S+)\s+([0-9a-f]{4}):([0-9a-f]{4})\s+([0-9a-f]+)',listing,re.M|re.I):
@@ -52,6 +70,7 @@ def inspect_terminal_memory(binary,map_path):
   assert hi<=module_bytes,(name,'code absent from loaded image')
   assert hi<=near_start or lo>=near_start+near_size,(name,'code overlapsDGROUP')
   assert hi<=shadow or lo>=far_end,(name,'code overlaps shadow/history')
+  for buf in ui_buffers.values():assert hi<=buf['start_linear'] or lo>=buf['end_linear'],(name,'code overlaps UI screen')
   assert hi<=static_end,(name,'PROGRAM would release executable code')
   code_segments.append(dict(name=name,kind=kind,relative_segment=seg,offset=off,bytes=length))
  near_code=next(c for c in code_segments if c['name']=='_TEXT')
@@ -92,4 +111,4 @@ def inspect_terminal_memory(binary,map_path):
  assert allocated>=static_end,'MZ minimum allocation does not cover static storage'
  assert header[7]*16+header[8]==stack_end,'MZ SS:SP differs from linkedSTACK'
  assert retained+16<0xa000,'Static DOS parent cannot fit conventional memory'
- return {'near_bytes':near_size,'near_relative_segment':ds,'far_relative_segment':far_seg,'shadow_offset':shadow_off,'history_offset':history_off,'far_bytes':12288,'far_end_linear':far_end,'stack_end_linear':stack_end,'loaded_module_bytes':module_bytes,'minimum_allocated_module_bytes':allocated,'retained_parent_paragraphs':retained+16,'far_pointer_relocations_verified':True,**extra}
+ return {'near_bytes':near_size,'near_spare_bytes':65536-near_size,'near_relative_segment':ds,'far_relative_segment':far_seg,'shadow_offset':shadow_off,'history_offset':history_off,'far_bytes':12288,'far_end_linear':far_end,'stack_end_linear':stack_end,'loaded_module_bytes':module_bytes,'minimum_allocated_module_bytes':allocated,'retained_parent_paragraphs':retained+16,'far_pointer_relocations_verified':True,**extra}

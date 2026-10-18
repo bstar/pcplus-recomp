@@ -6,7 +6,7 @@ The source-built DOS terminal is tested against owned loopback instances of
 COM2/19200/8N1/HARD through the modeled Hayes/Telnet modem. Nix supplies the
 toolchains. These results do not establish physical Wi-Fi modem compatibility.
 
-## Current editor build
+## Latest editor-tested build
 
 DOS executable SHA-256:
 `bdeb347c99168c8f745c312abfd40468250959ffdfd82af562476a6d29bea2c8`.
@@ -54,6 +54,10 @@ editor and reproduced Home/Insert failure after the concurrent DOS regression
 finished. This does not establish why the earlier navigation failed. Both
 attempts are retained in the editor report. Paired recording now requires actual
 stock-editor entry on both sides before accepting a comparison.
+
+The later private-UI-storage build is covered by [its own tests](../../docs/UI_FAR_STORAGE.md).
+The editor comparisons above retain bdeb347c as their tested runtime; they have
+not been relabeled as new editor runs for the UI storage migration.
 
 ## Other verified workflows
 

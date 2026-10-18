@@ -5,7 +5,7 @@ CPU 8086
 SEGMENT _TEXT public class=CODE use16
 extern process_psp,process_keep_paragraphs,process_minimum_paragraphs
 extern terminal_stack_top,terminal_far_storage_end,_program_execute
-extern terminal_snapshot_image_end
+extern terminal_snapshot_image_end,browser_screen_end,ed_screen_end
 extern terminal_clock_ticks,terminal_macro_tx_epoch,terminal_tx_count
 extern terminal_quit,terminal_exit_code,connection_state
 extern uart_port_lsr,uart_port_thr,uart_port_lcr,uart_port_ier,uart_port_mcr
@@ -35,23 +35,22 @@ terminal_program_initialize:
  mov bx,terminal_stack_top
  call .paragraphs
  add dx,bx
- mov ax,seg terminal_far_storage_end
- mov bx,terminal_far_storage_end
+ %macro keep_static_end 1
+ mov ax,seg %1
+ mov bx,%1
  call .paragraphs
  add ax,bx
  cmp ax,dx
- jae .highest
- mov ax,dx
-.highest:
+ jbe %%done
  mov dx,ax
- mov ax,seg terminal_snapshot_image_end
- mov bx,terminal_snapshot_image_end
- call .paragraphs
- add ax,bx
- cmp ax,dx
- jae .snapshot_highest
+%%done:
+ %endmacro
+ keep_static_end terminal_far_storage_end
+ keep_static_end terminal_snapshot_image_end
+ keep_static_end browser_screen_end
+ keep_static_end ed_screen_end
+ keep_static_end program_screen_end
  mov ax,dx
-.snapshot_highest:
  sub ax,[process_psp]
  mov [process_keep_paragraphs],ax
  mov [process_minimum_paragraphs],ax
@@ -224,7 +223,7 @@ terminal_program_poll:
  mov [program_shape],cx
  push ds
  push es
- mov ax,ds
+ mov ax,[program_screen_segment]
  mov es,ax
  mov di,program_screen
  mov ax,0xb800
@@ -294,11 +293,15 @@ terminal_program_poll:
  int 0x10
  mov ax,0xb800
  mov es,ax
+ push ds
+ mov ax,[program_screen_segment]
+ mov ds,ax
  mov si,program_screen
  xor di,di
  mov cx,2000
  cld
  rep movsw
+ pop ds
  mov cx,[program_shape]
  mov ah,1
  int 0x10
@@ -479,8 +482,15 @@ program_pause_sent: db 0
 program_mcr: db 0
 program_cursor: dw 0
 program_shape: dw 0
-program_screen: times 4000 db 0
+global program_screen_segment
+program_screen_segment: dw seg program_screen
 program_return_prompt: db 13,10,'Press a key to return to the terminal.',0
 program_error_prompt: db 13,10,'Program could not run. Press a key to return.',0
 program_busy_notice: db 'Program busy',0
 program_view_notice: db 'Program view',0
+
+SEGMENT UI_STORAGE public align=16 class=FAR_DATA use16
+GROUP UI_GROUP UI_STORAGE
+global program_screen,program_screen_end
+program_screen: resb 4000
+program_screen_end:

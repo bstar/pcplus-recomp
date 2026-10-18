@@ -6,12 +6,14 @@ so the resident parser, keyboard router, shutdown path and other modules do not
 need a different calling convention. The source remains8086-compatible and the
 shared near C data/stack invariant remains DS=SS.
 
-The previous51b94da6 executable used63,836 resident code bytes. This checkpoint
-uses62,604, freeing1,232 bytes and leaving2,932 bytes in the resident code
-segment. The controller's separate code segment contains1,449 bytes. This frees
-address space for continued reconstruction; the extra bridge instructions do
-not reduce total code size. Near data/stack still occupies64,368 bytes and needs
-further work before substantially larger shared data can be added.
+The first far-code checkpoint, bdeb347c, reduced resident code from63,836 to
+62,604 bytes and placed1,449 controller bytes in the new segment. The later
+[UI far-storage migration](UI_FAR_STORAGE.md) adds224 resident helper bytes:
+current resident code is62,828 bytes, with2,708 bytes available. The controller
+segment remains1,449 bytes. Near data/stack now occupies52,368 bytes, leaving
+13,168 available after moving three private UI frames. These changes free
+segmented address space; they do not eliminate the application's total memory
+requirements or complete its memory architecture.
 
 ## Explicit bridge contracts
 

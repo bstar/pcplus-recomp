@@ -67,6 +67,19 @@ start:
  jne .save
  call code_sum
  mov [result+26],ax
+ mov ax,[result+2]
+ add ax,16+UI_SEG
+ mov es,ax
+ mov [result+34],ax
+ mov si,BROWSER_OFF
+ call ui_sum
+ mov [result+36],ax
+ mov si,EDITOR_OFF
+ call ui_sum
+ mov [result+40],ax
+ mov si,PROGRAM_OFF
+ call ui_sum
+ mov [result+44],ax
  mov bx,0x400
  mov ah,0x48
  int 0x21
@@ -111,6 +124,23 @@ start:
  cmp ax,[result+26]
  jne .free
  or word [result],8
+ mov es,[result+34]
+ mov si,BROWSER_OFF
+ call ui_sum
+ mov [result+38],ax
+ cmp ax,[result+36]
+ jne .free
+ mov si,EDITOR_OFF
+ call ui_sum
+ mov [result+42],ax
+ cmp ax,[result+40]
+ jne .free
+ mov si,PROGRAM_OFF
+ call ui_sum
+ mov [result+46],ax
+ cmp ax,[result+44]
+ jne .free
+ or word [result],16
 .free:
  mov es,[result+10]
  mov ah,0x49
@@ -133,14 +163,14 @@ start:
  jc .exit
  mov bx,ax
  mov dx,result
- mov cx,34
+ mov cx,48
  mov ah,0x40
  int 0x21
  mov ah,0x3e
  int 0x21
 .exit:
  mov ax,0x4c01
- cmp word [result],15
+ cmp word [result],31
  jne .terminate
  xor al,al
 .terminate:
@@ -150,6 +180,10 @@ start:
 code_sum:
  mov si,CODE_START
  mov cx,CODE_BYTES
+ jmp sum_bytes
+ui_sum:
+ mov cx,4000
+sum_bytes:
  xor bx,bx
 .loop:
  xor ax,ax
@@ -160,7 +194,7 @@ code_sum:
  mov ax,bx
  ret
 output: db 'D:\FARTEST.BIN',0
-result: times 17 dw 0
+result: times 24 dw 0
 
 align 2
  times 1024 db 0

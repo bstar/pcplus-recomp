@@ -92,6 +92,6 @@ def main():
   a=Browser([],error=True);assert a.choose()==2 and a.opens==1 and not a.closes
   a=Browser([],mode=0x13);assert a.choose()==2 and not a.opens
  check('file-error-and-unsupported-mode-restore-with-no-selection',errors)
- result={'passed':True,'binary_sha256':hashlib.sha256((OUT/'BROWSER.EXE').read_bytes()).hexdigest(),'cases':cases,'scope':'Actual linked browser, original snapshots and real compiled directory reader. BIOS keys/video and DOS read-only filecalls are explicit OS fixtures; no UART or private files.'}
+ result={'passed':True,'binary_sha256':hashlib.sha256((OUT/'BROWSER.EXE').read_bytes()).hexdigest(),'cases':cases,'scope':'Actual linked browser, maintained far snapshots, recovered packed cells and real compiled directory reader. BIOS keys/video and DOS read-only filecalls are explicit OS fixtures; no UART or private files.'}
  (OUT/'checks.json').write_text(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':main()

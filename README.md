@@ -38,7 +38,10 @@ No original executable is required to build the standalone diagnostic.
 The terminal now supports [static far code](docs/FAR_CODE.md), starting with
 the dedicated-print controller. Resident near-call interfaces and DS=SS remain
 compatible; the builder checks far-call relocations, segment bounds and retained
-code across PROGRAM. Full application and dynamic-overlay work remains open.
+code across PROGRAM. [Private UI screens](docs/UI_FAR_STORAGE.md) also live
+in far storage: browser, nested editor and PROGRAM retain separate full frames,
+leaving13,168 bytes of capacity for more shared data/stack definitions. Full application
+and dynamic-overlay work remains open.
 
 ## Build and run in DOS
 

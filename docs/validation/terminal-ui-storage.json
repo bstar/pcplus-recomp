@@ -1,0 +1,580 @@
+{
+  "passed": true,
+  "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
+  "memory_layout": {
+    "near_bytes": 52368,
+    "near_spare_bytes": 13168,
+    "near_relative_segment": 4018,
+    "far_relative_segment": 8041,
+    "shadow_offset": 2000,
+    "history_offset": 10192,
+    "far_bytes": 12288,
+    "far_end_linear": 142944,
+    "stack_end_linear": 116656,
+    "loaded_module_bytes": 93098,
+    "minimum_allocated_module_bytes": 142960,
+    "retained_parent_paragraphs": 8950,
+    "far_pointer_relocations_verified": true,
+    "snapshot_relative_segment": 8041,
+    "snapshot_image_offset": 0,
+    "snapshot_bytes": 2000,
+    "snapshot_end_linear": 130656,
+    "ui_screen_buffers": {
+      "browser_screen": {
+        "relative_segment": 7291,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 116656,
+        "end_linear": 120656
+      },
+      "ed_screen": {
+        "relative_segment": 7291,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 120656,
+        "end_linear": 124656
+      },
+      "program_screen": {
+        "relative_segment": 7291,
+        "offset": 8000,
+        "bytes": 4000,
+        "start_linear": 124656,
+        "end_linear": 128656
+      }
+    },
+    "far_ui_storage_bytes": 12000,
+    "resident_code_bytes": 62828,
+    "resident_code_spare_bytes": 2708,
+    "code_segments": [
+      {
+        "name": "_TEXT",
+        "kind": "CODE",
+        "relative_segment": 0,
+        "offset": 0,
+        "bytes": 62828
+      },
+      {
+        "name": "PRINT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 3927,
+        "offset": 0,
+        "bytes": 1449
+      }
+    ],
+    "far_code_bridge_pairs_verified": 22
+  },
+  "baseline": {
+    "commit": "57ebcd3",
+    "binary_sha256": "bdeb347c99168c8f745c312abfd40468250959ffdfd82af562476a6d29bea2c8",
+    "near_bytes": 64368,
+    "loaded_module_bytes": 104874,
+    "image_bytes": 105050
+  },
+  "near_bytes_freed": 12000,
+  "loaded_module_bytes_saved": 11776,
+  "image_bytes": 93290,
+  "image_bytes_saved": 11760,
+  "linked_checks": {
+    "passed": true,
+    "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
+    "cases": [
+      {
+        "case": "all2000-raw-character-attribute-cells-native-packed-order-NUL-SUB-highbytes",
+        "inputs": 2000,
+        "passed": true
+      },
+      {
+        "case": "independent-browser-editor-far-owners-restore-nested-LIFO-without-alias",
+        "inputs": 2,
+        "passed": true
+      },
+      {
+        "case": "active-page-monochrome-exact64K-video-end-and-native-CGA-polling",
+        "inputs": 5,
+        "passed": true
+      },
+      {
+        "case": "allocated-caller-far-buffer-ending-at64K-no-wrap-or-canary-write",
+        "inputs": 2,
+        "passed": true
+      },
+      {
+        "case": "count-video-buffer-wrap-denied-before-I-O-and-zero-count-noop",
+        "inputs": 14,
+        "passed": true
+      },
+      {
+        "case": "three-relocated-private-owners-and-eight-invalid-layouts-rejected",
+        "inputs": 8,
+        "passed": true
+      }
+    ],
+    "source_sha256": {
+      "standalone/check_ui_screen_far.py": "b0a2864002fcd7395d1c76860346073a1bb68d9f71229fdacad88629f57765a8",
+      "src/terminal/ui_screen_far.asm": "876b4b10ced4d03d4616c89e4861333c522d3747f2e15d01ef3a4413ad03d736"
+    },
+    "scope": "Real linked far screen helpers and recovered packed-cell read/write routines with modeled memory/CGA ports; all registers and DS=SS ABI checked. Literal cells, nested owners, pages, monochrome and exact64K/overflow boundaries verified. Actual DOS browser/editor/PROGRAM and retained allocation are separate tests; physical CGA timing is not established."
+  },
+  "DOS_child": {
+    "case": "far-storage",
+    "passed": true,
+    "checks": {
+      "DOS_expected_exit": true,
+      "hardware_restored": true,
+      "PRM_unchanged": true,
+      "binary_unchanged": true,
+      "no_peer_errors": true,
+      "no_unexpected_commands": true,
+      "fixture_unchanged_TEST.KEY": true,
+      "fixture_unchanged_FARTEST.COM": true,
+      "actual_init_and_dial": true,
+      "actual_DOS_CPR": true,
+      "actual_DOS_DA": true,
+      "immediate_banner_not_dropped": true,
+      "owned_child_found_parent_and_retained_far_extent": true,
+      "MCB_covers_far_end_after_STACK": true,
+      "new_DOS_allocation_disjoint_from_all_retained_parent_storage": true,
+      "new_DOS_allocation_does_not_overlap_far_parent": true,
+      "shadow_and_history_canaries_survive_child_allocation_fill": true,
+      "snapshot_canaries_survive_child_allocation_fill": true,
+      "far_code_sum_and_extent_survive_child_allocation_fill": true,
+      "all_three_far_UI_screen_buffers_survive_child_allocation_fill": true
+    },
+    "commands": [
+      "ATZ",
+      "ATDCaseTest:23"
+    ],
+    "errors": [],
+    "seconds": 7.326,
+    "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
+    "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 HARD",
+    "expected_exit": 0,
+    "scope": "Actual DOS livePROGRAM/COMSPEC owned child locates parent PSP, checks retainedMCB throughfarend afterSTACK and FARCODE, allocates/fills16KB separateDOSmemory and verifies full-sizedshadow/history and frozen-screen endpointcanaries plus the full far-code byte-sum before/after allocation and sums of all three full4000-byte far UI screen owners. Parent resumes actual far controller polling after child return. NormalUART/vector cleanup verified by existing sampler. No physical modem claim.",
+    "sample_hex": "1f001408f622f6228d27572cfecaefbeaddebeba8d27221144334cfe4cfe7b17a9059f240000000000000000eb32eb32",
+    "linker_defines": {
+      "DGROUP_SEG": 4018,
+      "FAR_SEG": 8041,
+      "SHADOW_OFFSET": 2000,
+      "HISTORY_OFFSET": 10192,
+      "FAR_END_OFFSET": 14288,
+      "PROCESS_PSP_OFFSET": 448,
+      "SHADOW_SEGMENT_OFFSET": 11877,
+      "HISTORY_POINTER_OFFSET": 13293,
+      "SNAPSHOT_SEG": 8041,
+      "SNAPSHOT_OFFSET": 0,
+      "REQUIRED_PARAS": 8950,
+      "CODE_SEG": 3927,
+      "CODE_START": 0,
+      "CODE_BYTES": 1449,
+      "CODE_FIRST": 20565,
+      "UI_SEG": 7291,
+      "BROWSER_OFF": 0,
+      "EDITOR_OFF": 4000,
+      "PROGRAM_OFF": 8000
+    }
+  },
+  "components": {
+    "directory-editor": {
+      "binary_sha256": "0158e88c0db97faf16872873b9917a7b29519ede7ccdfdd79e345effe37d849c",
+      "CPU_checks": {
+        "passed": true,
+        "binary_sha256": "0158e88c0db97faf16872873b9917a7b29519ede7ccdfdd79e345effe37d849c",
+        "cases": [
+          {
+            "case": "accept-cancel-full114-atomicity-opaque-tails-and-field-navigation",
+            "passed": true
+          },
+          {
+            "case": "insert-overwrite-delete-backspace-home-end-bounds-and-keypad-ASCII",
+            "passed": true
+          },
+          {
+            "case": "all-text-fields-bounded-password-always-masked",
+            "passed": true
+          },
+          {
+            "case": "all-numeric-ranges-overflow-and-invalid-input-never-accepted",
+            "passed": true
+          },
+          {
+            "case": "untouched-malformed-storage-rejected-unless-cancelled",
+            "passed": true
+          },
+          {
+            "case": "active-pages-monochrome-unsupported-mode-and-complete-display-restore",
+            "passed": true
+          }
+        ],
+        "scope": "Actual linked maintained editor, maintained far snapshots and recovered packed cells. Explicit BIOS keyboard/video fixture, all DOS/port IO forbidden. Caller114bytes checked unchanged before everykey; synthetic secrets only."
+      },
+      "DOS_checks": {
+        "passed": true,
+        "binary_sha256": "0158e88c0db97faf16872873b9917a7b29519ede7ccdfdd79e345effe37d849c",
+        "cases": [
+          {
+            "case": "cancel",
+            "passed": true,
+            "status": 0,
+            "caller_record_exact": true,
+            "screen_cursor_shape_segment_restored": true
+          },
+          {
+            "case": "accept-name",
+            "passed": true,
+            "status": 1,
+            "caller_record_exact": true,
+            "screen_cursor_shape_segment_restored": true
+          },
+          {
+            "case": "text-edit",
+            "passed": true,
+            "status": 1,
+            "caller_record_exact": true,
+            "screen_cursor_shape_segment_restored": true
+          },
+          {
+            "case": "port-eight",
+            "passed": true,
+            "status": 1,
+            "caller_record_exact": true,
+            "screen_cursor_shape_segment_restored": true
+          },
+          {
+            "case": "invalid-numeric",
+            "passed": true,
+            "status": 0,
+            "caller_record_exact": true,
+            "screen_cursor_shape_segment_restored": true
+          },
+          {
+            "case": "masked-password",
+            "passed": true,
+            "status": 1,
+            "caller_record_exact": true,
+            "screen_cursor_shape_segment_restored": true
+          }
+        ],
+        "scope": "Actual DOSBox-X keyboard/video +source editor +recovered snapshots; no UART or user/private records. Diagnostic writes only its own118-byte result; editor does no DOS IO."
+      },
+      "manifest": {
+        "kind": "maintained-source-only-DOS-record-editor-with-far-snapshots",
+        "binary_sha256": "0158e88c0db97faf16872873b9917a7b29519ede7ccdfdd79e345effe37d849c",
+        "sources": {
+          "src/terminal/directory_editor.asm": "8361e42aedbdceae88d5bc2d9d0072c835349ef34616941aac4a9e1096e2850d",
+          "standalone/directory_editor_host.asm": "21b75343751d0298d32c19906edf71114c414bcc6b14ac586a6630c92b24eeef",
+          "src/terminal/ui_screen_far.asm": "876b4b10ced4d03d4616c89e4861333c522d3747f2e15d01ef3a4413ad03d736",
+          "reconstruction/ui_windows/save.asm": "1f3c835a2cc40bab9c5441f660f340303848a8c086c629c0369d2c9e9706d085",
+          "reconstruction/ui_windows/restore.asm": "9f1fb0e3f1ea5e231c7f3fba786f70772fd879c46298d870fe8d43ff46207e4e",
+          "reconstruction/ui_windows/read_byte.asm": "fc7cc46379666140e7082a0a3a8504b616495cc04c82488d2ffd3c69253a5d76",
+          "reconstruction/ui_windows/read_packed.asm": "e13f437b0faff65ea5cc8646b7c53959323fd9fd3197f33ea2141734386f75ff",
+          "reconstruction/text/packed.asm": "cc41e79f46e3ccb38538b0b3b4fffcbe32e5c9e75a20f1d408724f7554f391b0",
+          "reconstruction/text/cga_sync.asm": "f25ab8dae04c08d47f9a1410d4470e1ea36f6be6a0bda2fbb2122520c3226b37",
+          "src/directory/directory_dos.inc": "aa272682259fe6bceb65d73a55d3fdf6f2a718fa8adc6a6f002fad0bf6ab9773"
+        },
+        "ABI": "terminal_directory_edit(record_DS_offset) nearcdecl caller2, AX0cancel/1accept; DS=SS DF0 BP/SI/DI/ES preserved; caller114bytes mutateonlyF10; noDOS/file/UARTIO",
+        "ownership": "Maintained UI/private114stage; Native packed cells in private far snapshots. Active80coltextmode2/3/7,screen/cursor/shape/oldsegment restored. Passwordmaskonly;date/calls/tails readonly."
+      }
+    },
+    "directory-browser": {
+      "binary_sha256": "5fd4c103817f6134893f4a0d623147725c574c2cdd492692ca34ad1f18967cbd",
+      "CPU_checks": {
+        "passed": true,
+        "binary_sha256": "5fd4c103817f6134893f4a0d623147725c574c2cdd492692ca34ad1f18967cbd",
+        "cases": [
+          {
+            "case": "all-navigation-keys-real-reader-pages-sanitized-fields-no-password",
+            "passed": true
+          },
+          {
+            "case": "cancel-color-monochrome-active-page-and-cursor-shape-restore",
+            "passed": true
+          },
+          {
+            "case": "home-end-and-page-edges-clamp-without-entry-zero-or201",
+            "passed": true
+          },
+          {
+            "case": "file-error-and-unsupported-mode-restore-with-no-selection",
+            "passed": true
+          }
+        ],
+        "scope": "Actual linked browser, maintained far snapshots, recovered packed cells and real compiled directory reader. BIOS keys/video and DOS read-only filecalls are explicit OS fixtures; no UART or private files."
+      },
+      "DOS_checks": {
+        "passed": true,
+        "binary_sha256": "5fd4c103817f6134893f4a0d623147725c574c2cdd492692ca34ad1f18967cbd",
+        "cases": [
+          {
+            "case": "navigation",
+            "passed": true,
+            "status": 0,
+            "entry": 11,
+            "BIOS_cursor": 1809,
+            "screen_shape_and_video_segment_restored": true,
+            "legacy": false,
+            "directory_unchanged": true
+          },
+          {
+            "case": "cancel",
+            "passed": true,
+            "status": 1,
+            "entry": 0,
+            "BIOS_cursor": 1809,
+            "screen_shape_and_video_segment_restored": true,
+            "legacy": false,
+            "directory_unchanged": true
+          },
+          {
+            "case": "last-entry",
+            "passed": true,
+            "status": 0,
+            "entry": 200,
+            "BIOS_cursor": 1809,
+            "screen_shape_and_video_segment_restored": true,
+            "legacy": false,
+            "directory_unchanged": true
+          },
+          {
+            "case": "legacy",
+            "passed": true,
+            "status": 0,
+            "entry": 2,
+            "BIOS_cursor": 1809,
+            "screen_shape_and_video_segment_restored": true,
+            "legacy": true,
+            "directory_unchanged": true
+          },
+          {
+            "case": "file-error",
+            "passed": true,
+            "status": 2,
+            "entry": 0,
+            "BIOS_cursor": 1809,
+            "screen_shape_and_video_segment_restored": true,
+            "legacy": false,
+            "directory_unchanged": false
+          }
+        ],
+        "scope": "Actual DOSBox-X BIOS keyboard/video, complete compiled DOS directory reader and maintained far snapshots. Synthetic directory only; no UART or original/private data."
+      },
+      "manifest": {
+        "kind": "source-only-maintained-directory-browser-with-real-DOS-reader-and-far-snapshots",
+        "binary_sha256": "5fd4c103817f6134893f4a0d623147725c574c2cdd492692ca34ad1f18967cbd",
+        "sources": {
+          "src/terminal/directory_browser.asm": "a499fbb56fde85ab4f106f87b2290b078663100077f3fa4571bb2815b4bd8f23",
+          "standalone/directory_browser_host.asm": "c8aabf877e88d2f1d74966ba00d22374f09f5733f1e73e5bb847983249a5bdb7",
+          "src/terminal/directory_editor.asm": "8361e42aedbdceae88d5bc2d9d0072c835349ef34616941aac4a9e1096e2850d",
+          "src/terminal/directory_edit_save.asm": "926235807dd032aec6662bd1bed44b05e25ec07b9f70ee9ab9081c8b787841fd",
+          "reconstruction/directory_accounting/patch.asm": "3ed899cd9515303cf7906d572ee87d0a884a7dca90b8cf14ac1ff316b30200ac",
+          "src/terminal/ui_screen_far.asm": "876b4b10ced4d03d4616c89e4861333c522d3747f2e15d01ef3a4413ad03d736",
+          "reconstruction/ui_windows/save.asm": "1f3c835a2cc40bab9c5441f660f340303848a8c086c629c0369d2c9e9706d085",
+          "reconstruction/ui_windows/restore.asm": "9f1fb0e3f1ea5e231c7f3fba786f70772fd879c46298d870fe8d43ff46207e4e",
+          "reconstruction/ui_windows/read_byte.asm": "fc7cc46379666140e7082a0a3a8504b616495cc04c82488d2ffd3c69253a5d76",
+          "reconstruction/ui_windows/read_packed.asm": "e13f437b0faff65ea5cc8646b7c53959323fd9fd3197f33ea2141734386f75ff",
+          "reconstruction/text/packed.asm": "cc41e79f46e3ccb38538b0b3b4fffcbe32e5c9e75a20f1d408724f7554f391b0",
+          "reconstruction/text/cga_sync.asm": "f25ab8dae04c08d47f9a1410d4470e1ea36f6be6a0bda2fbb2122520c3226b37",
+          "src/directory/directory_dos.c": "2e39893159d4c3744c58047500a528089607671555af98ba85475950c5a9b887",
+          "src/directory/directory_actions.c": "84c0a31b735f2fd3ee63f5edde7083dbacae938f1471cd0336d2f37e94adf0ad",
+          "src/directory/directory_replace.c": "86607d3bd46fe3f86cdf669dc7aa483af3633672fa48a2e7d848b4a790ec669b",
+          "src/directory/directory_replace_fs.c": "ea94c7e30ede691ac090cdff6ebfab9afb80c45e87b3603d85d19e4c7bffad5c",
+          "src/directory/directory_actions.h": "e7363dad30620b97c6b7fd799d70d386439aa178c5b9d23659b6f2b9c3a423f5",
+          "src/directory/directory_dos.h": "4e5c3d971839de9899f2c0927d1bf8c5723ae14d2a123590381fd5706db5e72b",
+          "src/directory/directory_live.h": "f3b0712b97a2f023a8dc2b61dbe769a710d17820d7ec9d83370ce0d000f9dd43",
+          "src/directory/directory_replace.h": "62f65615c0b1aeafa967658a0a122e3ed18e55d44412d8420b6603d098f13b45",
+          "src/directory/directory_replace_fs.h": "9702aba7c5d55548dc5ba38289a0c5f1409a2769459904445d9a64c8bc88da9b",
+          "src/directory/directory_dos.inc": "aa272682259fe6bceb65d73a55d3fdf6f2a718fa8adc6a6f002fad0bf6ab9773",
+          "src/directory/directory_live.inc": "d540af9fb64d2da5f5fc0abbca6ede6bc1689edfdb8fbdc01d07f0c28f758a6e",
+          "src/directory/directory_replace.inc": "f36f1ad48ad9bee207270cecb8d6685ed3ebfdd0e44e41899b5fcef29e56a85c"
+        },
+        "ABI": {
+          "terminal_directory_choose": "AX0 selected/1cancel/2IOorvideoerror; DS=SS,DF0; BP/SI/DI/ES preserved; noUART; selectioncommitsonlyEnter",
+          "video": "80columntext modes2/3/7; activepageoffset readfromBDA004e; screen,cursor,shape,previousvideo_segmentrestored",
+          "display": "10rowpages; boundedname24/number20; control0..31+127sanitize; highCP437preserved; neverpassword/script/KEY/META"
+        },
+        "limitations": [
+          "Maintained browser/editor UI, not original modal window reconstruction.",
+          "Page reads are read-only. Explicit editor acceptance can replace the selected DIR through validated staging and backup; no configurations or defaults are created.",
+          "Dialing and live record compatibility checks occur later in the caller. Replacement does not guarantee crash atomicity or concurrent-writer exclusion."
+        ]
+      }
+    }
+  },
+  "terminal_regression": {
+    "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
+    "passed": true,
+    "commands": [
+      {
+        "command": "python3 standalone/check_ui_screen_far.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_far_code_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_terminal_print_controller_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_terminal_screen_print_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_terminal_printer_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_terminal_monitor_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_terminal_snapshot_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_terminal_capture_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_far_storage_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/test_far_storage_dos.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_terminal_transfer_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_terminal_upload_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_program_actions_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_terminal_reset_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/test_program_actions_dos.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/test_terminal_reset_live_dos.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_transport.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_key_output.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_key_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_meta_actions_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_character_edit_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/test_meta_actions_dos.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_line_edit_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_terminal_options.py --binary build/terminal/TERMINAL.EXE --map build/terminal/terminal.map",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 lab/bbs/check_formfeed.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 lab/bbs/check_enigma_controls.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_terminal_ui.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/test_terminal.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/test_terminal_keys.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_terminal_config.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_startup_import.py --check-invalid-abi",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_connection.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_directory_live.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/check_directory_actions.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/test_terminal_config.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/test_connection_dos.py",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 standalone/test_directory_terminal.py",
+        "exit_code": 0
+      }
+    ]
+  },
+  "source_rebuild": {
+    "report": "docs/validation/terminal-source-build.json",
+    "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
+    "source_snapshot_sha256": "650a1d84c47e34129b17c82484de7edd48207b6dd899900aa2385892e10d54de"
+  },
+  "source_sha256": {
+    "standalone/record_ui_storage.py": "306717a4a3328c66099743d7036301291d355e5ac17f41f8aa991c39bb03f86e",
+    "standalone/check_ui_screen_far.py": "b0a2864002fcd7395d1c76860346073a1bb68d9f71229fdacad88629f57765a8",
+    "standalone/terminal_memory.py": "1049f75d87c8eb6203e84b83243a7b87f516bf5a7a879262dc69e4c68e2bd36c",
+    "standalone/test_far_storage_dos.py": "eca8ebadc4fdd97185885c7bca06396eddb77301f6a31276c845d49b4b65119c",
+    "standalone/far_storage_child.asm": "1e794802a4974b3588594c48583f4d960cee7e8254fd571b5ef77e8c64fe14cd",
+    "standalone/check_directory_browser.py": "1469819f447fae4eb3343d0888cf34d2169463d2d1e7886038fbf052863f9af2",
+    "standalone/check_directory_editor.py": "9f811be59d71c1cb1d5a1454e2534aaedff1c8eab9a288259df2de453218b65c",
+    "standalone/test_directory_browser_dos.py": "c1544e5e15891dc14d23b008f0438d0ccd2eb758c51c820c99bf5ae2acca4f3f",
+    "standalone/test_directory_editor_dos.py": "59ebe2a17ea8a866d299fe413415cf89e0ed72fa97cb8d2a9e81f354ac5331ad"
+  },
+  "retained_artifacts": {
+    "build/terminal/ui-screen-far-checks.json": "f72c8c57fcbdf8746f95a66538f11f0ab0e3f246a463d90d630cdf81c0e3df8d",
+    "build/far-storage-dos/checks.json": "f46b7dc1a004f98d8f7e9c8cb9c092572c19b76d10679f8d164fcf0e000146d0",
+    "build/connection-dos/far-storage/FARTEST.BIN": "126cc58cc89a9587646ac19511d5294ddf2b4561625a708b867655f69cff1ae4",
+    "build/terminal/far-code-final-regression.json": "3bee722d63f706529c40e8b1a1ac1935cd49fd0328f06ed9a5e48dc5e243a7ee",
+    "build/terminal/far-code-final-regression.log": "2aa45bad24820f3f9ea4b0200d2ba83e65c1601ddf80a5dfacd75821de9e6759"
+  },
+  "scope": "Three distinct4000-byte far screen owners, packed browser/editor formats and raw PROGRAM frame. Actual linked helper ABI, bounds, CGA port models and layout-rejection tests; standalone actual DOS browser/editor keyboard/video plus parent/child allocation/fill. Full terminal regressions include nested browser/edit/save and PROGRAM handoff. Source rebuild is separate; no physical CGA/386/modem, full original UI or whole-application completion claim."
+}
