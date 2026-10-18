@@ -61,6 +61,7 @@ terminal:
 	python3 standalone/build_terminal.py
 
 test-terminal: terminal
+	python3 standalone/check_far_code_live.py
 	python3 standalone/check_terminal_print_controller_live.py
 	python3 standalone/check_terminal_screen_print_live.py
 	python3 standalone/check_terminal_printer_live.py

@@ -26,10 +26,10 @@ transmit. Two keyboard Escapes exit: the first is transmitted, the second is
 consumed locally. Alt-X/hang-up stop the controller before their ordinary
 cleanup. Nested capture/snapshot/macro/PROGRAM/transfer owners are denied.
 
-The frozen build also passes all35 commands from the terminal regression
+The frozen build also passes all36 commands from the terminal regression
 target and23 linked YMODEM inputs. A fresh source-only checkout reproduces
 all57 component outputs byte for byte. See
-[terminal regression evidence](validation/terminal-controller-regression.json)
+[terminal regression evidence](validation/terminal-far-code.json)
 and [source rebuild evidence](validation/terminal-source-build.json).
 
 ## Independent actual DOS harness
@@ -49,7 +49,7 @@ compares virtual PRN bytes exactly, validates active/held capture contents,
 samples B800 and BIOS cursor/geometry, and compares UART/PIC/IRQ before/after.
 **All 14 actual DOS cases passed**, with no failed live attempts, on frozen
 source-built terminal
-`51b94da6b6c8f489fa646a220e7d7a77457459f96e73bec98687b19a1f338c90`.
+`bdeb347c99168c8f745c312abfd40468250959ffdfd82af562476a6d29bea2c8`.
 Exact output includes all 254 retained values from the all256 fixture, one
 literal DC4, unknown escape replay and no terminating-sequence bytes. The
 keyboard case verifies exactly one Escape forwarded before normal CPR/DSR
@@ -58,10 +58,11 @@ borrowed copy owner remain usable, and sampled video/cursor/UART/PIC/IRQ
 state checks pass.
 
 Current artifacts are retained under
-`build/terminal-print-controller-dos/carrier-51b9`. The earlier fourteen passing
-cases on560bb5b9 remain under `initial-560b` and are included as history, not
-attributed to the current executable. The report selects fourteen current
-passes from28 retained actual DOS runs; neither batch had a live failure.
+`build/terminal-print-controller-dos/farcode-bdeb`. The earlier batches remain
+under `initial-560b`, `carrier-51b9` and `farcode-ad58` as history, not attributed
+to the current executable. The report selects fourteen current passes from56
+retained actual DOS runs; all four batches passed. The controller now executes
+through [static far-code bridges](FAR_CODE.md); printer behavior is unchanged.
 The hash-bound public index is `docs/validation/terminal-print-controller-live.json`,
 including the independent linked checker's eleven groups / 300 inputs. It keeps
 these evidence scopes separate: the actual DOS timeout case waits2.3seconds
@@ -79,10 +80,11 @@ The passive-COM DOS suite above does not simulate that connection-engine race.
 
 ```sh
 ./tools/dev --command python3 standalone/test_terminal_print_controller_dos.py \
-  --sha256 51b94da6b6c8f489fa646a220e7d7a77457459f96e73bec98687b19a1f338c90 \
+  --sha256 bdeb347c99168c8f745c312abfd40468250959ffdfd82af562476a6d29bea2c8 \
   --label fresh-controller-proof
 ./tools/dev --command python3 standalone/record_printer.py \
-  --controller-dos-label initial-560b --controller-dos-label carrier-51b9
+  --controller-dos-label initial-560b --controller-dos-label carrier-51b9 \
+  --controller-dos-label farcode-ad58 --controller-dos-label farcode-bdeb
 ```
 
 The recorder requires selected live cases, linked checks, current executable

@@ -43,6 +43,49 @@ def inspect_terminal_memory(binary,map_path):
   assert address('terminal_snapshot_image_segment') in relocations
   static_end=max(static_end,frozen_end)
   extra={'snapshot_relative_segment':frozen_seg,'snapshot_image_offset':frozen_off,'snapshot_bytes':2000,'snapshot_end_linear':frozen_end}
+ # All executable segments must fit their real-mode segment and survive EXEC.
+ code_segments=[]
+ for name,kind,group,cseg,coff,csize in re.findall(r'^(\w+)\s+(CODE|FARCODE)\s+(\S+)\s+([0-9a-f]{4}):([0-9a-f]{4})\s+([0-9a-f]+)',listing,re.M|re.I):
+  seg,off,length=int(cseg,16),int(coff,16),int(csize,16)
+  lo=seg*16+off;hi=lo+length
+  assert off+length<=65536,(name,'code segment exceeds64KiB')
+  assert hi<=module_bytes,(name,'code absent from loaded image')
+  assert hi<=near_start or lo>=near_start+near_size,(name,'code overlapsDGROUP')
+  assert hi<=shadow or lo>=far_end,(name,'code overlaps shadow/history')
+  assert hi<=static_end,(name,'PROGRAM would release executable code')
+  code_segments.append(dict(name=name,kind=kind,relative_segment=seg,offset=off,bytes=length))
+ near_code=next(c for c in code_segments if c['name']=='_TEXT')
+ bridges=0
+ if any(c['name']=='PRINT_CODE' for c in code_segments):
+  far_code=next(c for c in code_segments if c['name']=='PRINT_CODE')
+  controller_seg=far_code['relative_segment']
+  assert controller_seg!=near_code['relative_segment'] and far_code['offset']==0,'Far code must have its own paragraph-aligned CS'
+  assert address('terminal_controller_code_start')==controller_seg*16
+  assert address('terminal_controller_code_end')-address('terminal_controller_code_start')==far_code['bytes']
+  def raw(name,n):return image[start+address(name):start+address(name)+n]
+  def far_call(source,target):
+   assert raw(source,6)==b'\x9a'+struct.pack('<HH',symbols[target][1],symbols[target][0])+b'\xc3',(source,'far target/return')
+   assert address(source)+3 in relocations,(source,'missing far-call relocation')
+  def near_call(source,target,prefix=b'',suffix=b'\xcb'):
+   code=raw(source,len(prefix)+3+len(suffix));assert code[:len(prefix)]==prefix
+   at=len(prefix);assert code[at]==0xe8 and code[at+3:]==suffix,(source,'near call/return')
+   displacement=struct.unpack_from('<h',code,at+1)[0]
+   assert symbols[source][0]==symbols[target][0]
+   assert (symbols[source][1]+at+3+displacement)&65535==symbols[target][1],(source,'wrong near target')
+  abi=Path(__file__).resolve().parents[1]/'src/terminal/controller_abi.inc'
+  for kind,name in re.findall(r'^CONTROLLER_(ENTRY|SERVICE|STACK_SERVICE) (\w+)$',abi.read_text(),re.M):
+   if kind=='ENTRY':
+    assert symbols[name][0]==near_code['relative_segment']
+    assert symbols[name+'_far'][0]==symbols[name+'_impl'][0]==controller_seg
+    far_call(name,name+'_far');near_call(name+'_far',name+'_impl')
+   else:
+    assert symbols[name+'_service'][0]==controller_seg
+    assert symbols[name+'_resident'][0]==symbols[name][0]==near_code['relative_segment']
+    far_call(name+'_service',name+'_resident')
+    near_call(name+'_resident',name,prefix=b'\x50' if kind=='STACK_SERVICE' else b'',suffix=b'\x58\xcb' if kind=='STACK_SERVICE' else b'\xcb')
+   bridges+=1
+  assert bridges==22,'Incomplete controller ABI validation'
+ extra.update(resident_code_bytes=near_code['bytes'],resident_code_spare_bytes=65536-near_code['bytes'],code_segments=code_segments,far_code_bridge_pairs_verified=bridges)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'
  allocated=((module_bytes+15)//16+header[5])*16

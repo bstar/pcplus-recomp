@@ -35,6 +35,11 @@ Original executables, dialing/configuration files, disk images, downloaded
 support archives and generated disassembler databases are excluded from Git.
 No original executable is required to build the standalone diagnostic.
 
+The terminal now supports [static far code](docs/FAR_CODE.md), starting with
+the dedicated-print controller. Resident near-call interfaces and DS=SS remain
+compatible; the builder checks far-call relocations, segment bounds and retained
+code across PROGRAM. Full application and dynamic-overlay work remains open.
+
 ## Build and run in DOS
 
 Requires Nix with flakes; the wrapper enables its required experimental features.

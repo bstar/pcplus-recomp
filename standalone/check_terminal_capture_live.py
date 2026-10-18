@@ -70,8 +70,7 @@ class Capture(LiveTransfer):
   u.reg_write(UC_X86_REG_AX,error or answer)
   flags=u.reg_read(UC_X86_REG_EFLAGS);u.reg_write(UC_X86_REG_EFLAGS,flags|1 if error else flags&~1)
  def begin(self,path=b'LOG.TXT',tick=0):
-  pointer=self.offset('terminal_stack_top')+16
-  self.uc.mem_write(self.data_base+pointer,path+b'\0')
+  pointer=self.stage_near(path+b'\0')
   return self.call('_capture_session_begin',[pointer,tick&65535,tick>>16])
  def path(self,segment,offset):
   name=super().path(segment,offset)

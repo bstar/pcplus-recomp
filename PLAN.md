@@ -143,6 +143,16 @@ physical modem compatibility or close the remaining application gates below.
       16-gate completeness matrix in `docs/FEATURES.md`; continue auditing for
       additional features as native tracing proceeds.
 - [ ] Recover startup, memory/overlay behavior and application services.
+      Progress: `docs/FAR_CODE.md` establishes one static far-code module with
+      seven resident entry interfaces,15 service bridges and an explicit PRN
+      stack-argument adapter. MZ/map guards verify22 bridge pairs, distinct CS,
+      relocations and PROGRAM retention. It frees1,232 resident code bytes;
+      near data/stack remains64,368 bytes. Actual DOS allocation/fill preserves
+      far-code samples and parent operation. The bdeb347c checkpoint passes
+      all36 terminal regression commands,14 dedicated-print DOS cases and23
+      linked YMODEM inputs; a fresh source-only checkout reproduces57 outputs.
+      Dynamic overlays, broader code/data
+      migration, resource startup and complete F01 coverage remain open.
 - [ ] Reconstruct configuration persistence, dialing directory and application UI.
       Progress: original-code replay proves the 1,264-byte PRM load/save block
       and ten-byte serial prefix; a partial lossless host codec preserves unknown

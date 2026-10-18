@@ -15,7 +15,7 @@ class SafeStack:
   for register,value in [(UC_X86_REG_CS,self.base_segment),(UC_X86_REG_DS,self.ds),(UC_X86_REG_SS,self.ds),(UC_X86_REG_ES,0xb800),(UC_X86_REG_EFLAGS,0x202),(UC_X86_REG_BP,0xbabe),(UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678),(UC_X86_REG_AX,ax)]:u.reg_write(register,value)
   words=([self.return_offset,self.base_segment,0x202] if irq else [self.return_offset])+list(arguments)
   sp=self.offset('terminal_stack_top')-len(words)*2;u.mem_write(self.data_base+sp,struct.pack('<'+'H'*len(words),*words));u.reg_write(UC_X86_REG_SP,sp)
-  self.returned=False;u.emu_start(self.symbols[name],self.base+0x10000,count=limit);assert self.returned,(name,'instruction bound')
+  self.returned=False;u.emu_start(self.symbols[name],0,count=limit);assert self.returned,(name,'instruction bound')
   assert u.reg_read(UC_X86_REG_SP)==sp+(6 if irq else 2)+cleanup,(name,'stack')
   return u.reg_read(UC_X86_REG_AX)
 class FarProgram(SafeStack,LiveProgram):

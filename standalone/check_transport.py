@@ -61,7 +61,7 @@ class Transport(DosImage):
    (UC_X86_REG_BP,0xbabe),(UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678),(UC_X86_REG_AX,ax)]:uc.reg_write(register,value)
   words=([self.return_offset,self.base_segment,0x202] if irq else [self.return_offset])+list(arguments)
   sp=(self.offset('terminal_stack_top') if 'terminal_stack_top' in self.symbols else 0xe000)-len(words)*2;uc.mem_write(self.data_base+sp,struct.pack('<'+'H'*len(words),*words));uc.reg_write(UC_X86_REG_SP,sp)
-  self.returned=False;uc.emu_start(self.symbols[name],self.base+0x10000,count=limit)
+  self.returned=False;uc.emu_start(self.symbols[name],0,count=limit)
   assert self.returned,(name,'did not finish within',limit)
   assert uc.reg_read(UC_X86_REG_SP)==sp+(6 if irq else 2)+cleanup,(name,'stack cleanup')
   if name in ('terminal_poll_io','terminal_enqueue_al','ansi_next_byte','ansi_unread_byte','csi_transmit_byte','csi_transmit_string'):
@@ -71,11 +71,8 @@ class Transport(DosImage):
   self.rx.extend(data);self.call('uart_receive_interrupt',irq=True)
   assert not self.rx
  def enqueue(self,data):
-  # Caller-owned near test buffer; distinct from live rings and artificial stack.
   assert len(data)<=2048
-  pointer=self.offset('terminal_stack_top')+16
-  assert pointer+len(data)+1<=65536,'No unowned near fixture space above application stack'
-  self.uc.mem_write(self.data_base+pointer,data+b'\0')
+  pointer=self.stage_near(data+b'\0')
   self.call('csi_transmit_string',[pointer],cleanup=2)
  def drain(self):
   for _ in range(1030):

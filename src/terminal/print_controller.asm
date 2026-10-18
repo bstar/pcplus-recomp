@@ -2,7 +2,10 @@
 ; Every callback is bounded. The serviced modal wrapper preserves CSI order.
 BITS 16
 CPU 8086
-SEGMENT _TEXT public class=CODE use16
+SEGMENT PRINT_CODE public align=16 class=FARCODE use16
+GROUP PRINT_GROUP PRINT_CODE
+global terminal_controller_code_start,terminal_controller_code_end
+terminal_controller_code_start:
 extern _printer_device_begin,_printer_device_close,_printer_device_result
 extern terminal_printer_poll,terminal_printer_put_raw,terminal_printer_failure
 extern terminal_printer_count,terminal_printer_closing,terminal_printer_fault_epoch
@@ -18,9 +21,9 @@ extern terminal_program_pending,terminal_program_active,terminal_macro_active
 extern terminal_ansi_wait_active,connection_state
 extern text_cga_status_port,text_video_segment,screen_viewport_enabled
 extern terminal_input_mode_8fe8,render_linefeed_suppression_enabled,csi_terminal_id
-global terminal_controller_start,terminal_controller_run,terminal_controller_key
-global terminal_controller_filter,terminal_controller_poll
-global terminal_controller_receive_hold,terminal_controller_shutdown
+global terminal_controller_start_impl,terminal_controller_run_impl,terminal_controller_key_impl
+global terminal_controller_filter_impl,terminal_controller_poll_impl
+global terminal_controller_receive_hold_impl,terminal_controller_shutdown_impl
 %macro save 0
  push bp
  push ax
@@ -43,7 +46,7 @@ global terminal_controller_receive_hold,terminal_controller_shutdown
  ret
 %endmacro
 
-terminal_controller_start:
+terminal_controller_start_impl:
  save
  cmp word [terminal_controller_active],0
  jne .done
@@ -99,7 +102,7 @@ terminal_controller_start:
  mov word [controller_replay_on_stop],0
  mov word [controller_carrier_seen],0
  call controller_reset_prefix
- call terminal_connection_notice_restore
+ call terminal_connection_notice_restore_service
  mov ah,3
  xor bh,bh
  int 0x10
@@ -114,19 +117,19 @@ terminal_controller_start:
  je .done
 .notice:
  mov si,controller_notice
- call terminal_connection_notice
+ call terminal_connection_notice_service
 .done:
  restore
 
 controller_acquire:
  cmp word [_printer_device_result+10],0
  jne .opened
- call _printer_device_begin
+ call _printer_device_begin_service
  or ax,ax
  jz .temporary
  cmp ax,5
  je .denied
- call terminal_printer_failure
+ call terminal_printer_failure_service
  jmp controller_failed
 .denied:
  mov word [terminal_controller_last_action],3
@@ -138,29 +141,29 @@ controller_acquire:
  mov word [terminal_controller_active],1
  ret
 
-terminal_controller_run:
+terminal_controller_run_impl:
  save
- call terminal_controller_start
+ call terminal_controller_start_impl
 .loop:
  cmp word [terminal_controller_active],0
  je .done
- call terminal_poll_io
+ call terminal_poll_io_service
  cmp word [terminal_quit],0
  jne .shutdown
- call terminal_capture_poll
- call terminal_printer_poll
- call terminal_controller_poll
+ call terminal_capture_poll_service
+ call terminal_printer_poll_service
+ call terminal_controller_poll_impl
  cmp word [terminal_quit],0
  jne .shutdown
  cmp word [terminal_controller_active],0
  je .done
- call terminal_controller_receive_hold
+ call terminal_controller_receive_hold_impl
  or ax,ax
  jnz .idle
- call uart_receive_byte
+ call uart_receive_byte_service
  cmp ax,0xffff
  je .idle
- call terminal_controller_filter
+ call terminal_controller_filter_impl
  jmp .loop
 .idle:
  cmp word [terminal_tx_count],0
@@ -169,11 +172,11 @@ terminal_controller_run:
  hlt
  jmp .loop
 .shutdown:
- call terminal_controller_shutdown
+ call terminal_controller_shutdown_impl
 .done:
  restore
 
-terminal_controller_receive_hold:
+terminal_controller_receive_hold_impl:
  xor ax,ax
  cmp word [terminal_controller_active],0
  je .done
@@ -186,7 +189,7 @@ terminal_controller_receive_hold:
 .done: ret
 
 ; AX is an actual dequeued byte. Never invent an EOF/sentinel byte.
-terminal_controller_filter:
+terminal_controller_filter_impl:
  save
  cmp word [terminal_controller_active],0
  je .normal
@@ -210,7 +213,7 @@ terminal_controller_filter:
  jne .literal
  mov byte [controller_buffer],27
  mov word [terminal_controller_buffer_count],1
- call terminal_clock_ticks
+ call terminal_clock_ticks_service
  mov [controller_prefix_tick],ax
  mov [controller_prefix_tick+2],dx
  jmp .consumed
@@ -289,9 +292,7 @@ terminal_controller_filter:
  restore
 
 controller_put:
- push ax
- call terminal_printer_put_raw
- add sp,2
+ call terminal_printer_put_raw_service
  ret
 controller_reset_prefix:
  mov word [terminal_controller_buffer_count],0
@@ -311,7 +312,7 @@ controller_replay:
 .done:
  jmp controller_reset_prefix
 
-terminal_controller_poll:
+terminal_controller_poll_impl:
  save
  cmp word [terminal_controller_active],0
  je .done
@@ -356,7 +357,7 @@ terminal_controller_poll:
  cmp word [_printer_device_result+10],0
  jne .present
  mov ax,4
- call terminal_printer_failure
+ call terminal_printer_failure_service
  jmp .failed
 .present:
  cmp word [terminal_controller_active],2
@@ -386,10 +387,10 @@ terminal_controller_poll:
  jne .done
  cmp word [controller_temporary],0
  je .release
- call _printer_device_close
+ call _printer_device_close_service
  or ax,ax
  jz .release
- call terminal_printer_failure
+ call terminal_printer_failure_service
 .failed:
  call controller_failed
  jmp .done
@@ -418,11 +419,11 @@ controller_release:
  mov cx,[controller_cursor_shape]
  mov ah,1
  int 0x10
- call terminal_connection_notice_restore
+ call terminal_connection_notice_restore_service
  ret
 
 ; Consume nested local/KEY owners; normal literals/network slots retain TX.
-terminal_controller_key:
+terminal_controller_key_impl:
  save
  cmp word [terminal_controller_active],0
  je .normal
@@ -439,22 +440,22 @@ terminal_controller_key:
  mov word [controller_last_escape],1
  cmp word [terminal_controller_active],1
  jne .consumed
- call terminal_enqueue_al ;BIOS011B and normalized001B both mean literalESC.
+ call terminal_enqueue_al_service ;BIOS011B and normalized001B both mean literalESC.
  jmp .consumed
 .other:
  mov word [controller_last_escape],0
 .transmit:
  cmp word [terminal_controller_active],1
  jne .consumed
- call keyboard_classify_raw
+ call keyboard_classify_raw_service
  cmp ax,79
  jb .binding
  cmp ah,1
  jne .consumed
- call terminal_enqueue_al
+ call terminal_enqueue_al_service
  jmp .consumed
 .binding:
- call terminal_enqueue_key_slot
+ call terminal_enqueue_key_slot_service
  jmp .consumed
 .cancel:
  call controller_cancel
@@ -468,7 +469,7 @@ terminal_controller_key:
  restore
 
 controller_elapsed:
- call terminal_clock_ticks
+ call terminal_clock_ticks_service
  sub ax,[si]
  sbb dx,[si+2]
  jnc .done
@@ -478,18 +479,18 @@ controller_elapsed:
 
 ; Shutdown is bounded independently of per-byte progress. No device close is
 ; retried after an uncertain outcome. The caller subsequently shuts PRN down.
-terminal_controller_shutdown:
+terminal_controller_shutdown_impl:
  save
  cmp word [terminal_controller_active],0
  je .done
  call controller_cancel
- call terminal_clock_ticks
+ call terminal_clock_ticks_service
  mov [controller_shutdown_tick],ax
  mov [controller_shutdown_tick+2],dx
 .drain:
- call uart_poll_flow
- call terminal_printer_poll
- call terminal_controller_poll
+ call uart_poll_flow_service
+ call terminal_printer_poll_service
+ call terminal_controller_poll_impl
  cmp word [terminal_controller_active],0
  je .done
  mov si,controller_shutdown_tick
@@ -500,10 +501,18 @@ terminal_controller_shutdown:
  jb .drain
 .timeout:
  mov ax,14
- call terminal_printer_failure
+ call terminal_printer_failure_service
  call controller_failed
 .done:
  restore
+
+; Register ABI across segments; PRN byte output explicitly stages one stack word.
+%include "far_bridge.inc"
+%define CONTROLLER_ENTRY FAR_ENTRY
+%define CONTROLLER_SERVICE FAR_SERVICE
+%define CONTROLLER_STACK_SERVICE FAR_SERVICE
+%include "controller_abi.inc"
+terminal_controller_code_end:
 
 SEGMENT _DATA public class=DATA use16
 global terminal_controller_active,terminal_controller_last_action

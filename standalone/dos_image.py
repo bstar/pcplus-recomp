@@ -39,6 +39,9 @@ class DosImage:
         self.data_base = self.ds * 16
         self.symbols = {name: self.base + int(seg, 16) * 16 + int(off, 16)
             for seg, off, name in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$', listing, re.M | re.I)}
+        self.fixture_scratch_end = None
+        stack = re.search(r'^STACK\s+STACK\s+DGROUP\s+[0-9a-f]+:[0-9a-f]+\s+([0-9a-f]+)', listing, re.M | re.I)
+        self.stack_bytes = int(stack[1],16) if stack else None
         self.returned = False
         self.uc.hook_add(UC_HOOK_CODE, self._stop)
 
@@ -51,8 +54,20 @@ class DosImage:
     def offset(self, name):
         return self.symbols[name] - self.data_base
 
+    def stage_near(self, data):
+        # Model caller-owned data inside the unused bottom of the real stack.
+        # Beyond STACK is another application segment, never fixture storage.
+        assert self.stack_bytes and len(data)<=2049
+        pointer=self.offset('terminal_stack_top')-self.stack_bytes+16
+        self.fixture_scratch_end=pointer+len(data)
+        self.uc.mem_write(self.data_base+pointer,data)
+        return pointer
+
     def _stop(self, uc, address, size, _):
-        if address == self.base + self.return_offset:
+        if self.fixture_scratch_end is not None and uc.reg_read(UC_X86_REG_SS)==self.ds:
+            bottom=self.offset('terminal_stack_top')-self.stack_bytes
+            assert not bottom<=uc.reg_read(UC_X86_REG_SP)<self.fixture_scratch_end,'Actual stack entered caller fixture'
+        if address == self.base + self.return_offset and uc.reg_read(UC_X86_REG_CS)==self.base_segment:
             self.returned = True
             uc.emu_stop()
 
@@ -67,7 +82,7 @@ class DosImage:
         uc.mem_write(self.data_base + sp,struct.pack('<' + 'H' * len(words),*words))
         uc.reg_write(UC_X86_REG_SP,sp)
         self.returned = False
-        uc.emu_start(self.symbols[name],self.base + 0x10000,count=limit)
+        uc.emu_start(self.symbols[name],0,count=limit)
         assert self.returned,f'{name} failed to return within {limit} instructions'
         assert uc.reg_read(UC_X86_REG_SP) == sp + 2,f'{name} corrupted the stack'
         return uc.reg_read(UC_X86_REG_AX)

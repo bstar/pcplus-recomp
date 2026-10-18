@@ -12,7 +12,10 @@ def main():
  snapseg,snapoff=symbols['terminal_snapshot_image'];snapendseg,snapendoff=symbols['terminal_snapshot_image_end'];assert snapseg==snapendseg and snapendoff-snapoff==2000
  required=16+(max(endseg*16+endoff,snapendseg*16+snapendoff,symbols['terminal_stack_top'][0]*16+symbols['terminal_stack_top'][1])+15)//16
  defines={'DGROUP_SEG':dg,'FAR_SEG':far,'SHADOW_OFFSET':shadow,'HISTORY_OFFSET':history,'FAR_END_OFFSET':endoff,'PROCESS_PSP_OFFSET':near('process_psp'),'SHADOW_SEGMENT_OFFSET':near('erase_shadow_segment'),'HISTORY_POINTER_OFFSET':near('terminal_history_pointer')}
- defines.update(SNAPSHOT_SEG=snapseg,SNAPSHOT_OFFSET=snapoff,REQUIRED_PARAS=required)
+ code_seg,code_off=symbols['terminal_controller_code_start'];code_endseg,code_endoff=symbols['terminal_controller_code_end'];assert code_seg==code_endseg
+ image=a.binary.read_bytes();header=struct.unpack_from('<14H',image);first=struct.unpack_from('<H',image,header[4]*16+code_seg*16+code_off)[0]
+ required=max(required,16+(code_seg*16+code_endoff+15)//16)
+ defines.update(SNAPSHOT_SEG=snapseg,SNAPSHOT_OFFSET=snapoff,REQUIRED_PARAS=required,CODE_SEG=code_seg,CODE_START=code_off,CODE_BYTES=code_endoff-code_off,CODE_FIRST=first)
  out=ROOT/'build/far-storage-dos';out.mkdir(parents=True,exist_ok=True);child=out/'FARTEST.COM'
  subprocess.run(['nasm','-fbin',*[f'-D{k}={v}' for k,v in defines.items()],str(ROOT/'standalone/far_storage_child.asm'),'-o',str(child)],check=True)
  import test_connection_dos
@@ -24,13 +27,14 @@ def main():
  folder=ROOT/'build/connection-dos/far-storage';folder.mkdir(parents=True,exist_ok=True);(folder/'FARTEST.BIN').unlink(missing_ok=True)
  proof=test_connection_dos.run('far-storage','success','p3000 a-1 p2000 space p1200 a-x',prm=fixture(timeout=5),arguments='@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 HARD',files={'TEST.KEY':bytes(keys),'FARTEST.COM':child.read_bytes()})
  sample=(folder/'FARTEST.BIN').read_bytes() if (folder/'FARTEST.BIN').exists() else b''
- checks=proof['checks'];checks['owned_child_found_parent_and_retained_far_extent']=len(sample)==26 and struct.unpack_from('<H',sample)[0]==7
- if len(sample)==26:
-  status,parent,retained,observed_required,segment,allocated,*markers=struct.unpack('<13H',sample)
+ checks=proof['checks'];checks['owned_child_found_parent_and_retained_far_extent']=len(sample)==34 and struct.unpack_from('<H',sample)[0]==15
+ if len(sample)==34:
+  status,parent,retained,observed_required,segment,allocated,*markers=struct.unpack('<17H',sample)
   checks['MCB_covers_far_end_after_STACK']=retained>=observed_required==required
   checks['new_DOS_allocation_does_not_overlap_far_parent']=not(parent+16+far<=allocated<parent+required)
   checks['shadow_and_history_canaries_survive_child_allocation_fill']=markers[:4]==[0xcafe,0xbeef,0xdead,0xbabe]
-  checks['snapshot_canaries_survive_child_allocation_fill']=markers[4:]==[parent+16+snapseg,0x1122,0x3344]
- proof['passed']=all(checks.values());proof['binary_sha256']=hashlib.sha256(a.binary.read_bytes()).hexdigest();proof['sample_hex']=sample.hex();proof['linker_defines']=defines;proof['scope']='Actual DOS livePROGRAM/COMSPEC owned child locates parent PSP, checks retainedMCB throughfarend afterSTACK, allocates/fills16KB separateDOSmemory and verifies full-sizedshadow/history and frozen-screen endpointcanaries. NormalUART/vector cleanup verified by existing sampler. No physical modem claim.'
+  checks['snapshot_canaries_survive_child_allocation_fill']=markers[4:7]==[parent+16+snapseg,0x1122,0x3344]
+  checks['far_code_sum_and_extent_survive_child_allocation_fill']=markers[7]==markers[8] and markers[9:]==[parent+16+code_seg,code_endoff-code_off]
+ proof['passed']=all(checks.values());proof['binary_sha256']=hashlib.sha256(a.binary.read_bytes()).hexdigest();proof['sample_hex']=sample.hex();proof['linker_defines']=defines;proof['scope']='Actual DOS livePROGRAM/COMSPEC owned child locates parent PSP, checks retainedMCB throughfarend afterSTACK and FARCODE, allocates/fills16KB separateDOSmemory and verifies full-sizedshadow/history and frozen-screen endpointcanaries plus the full far-code byte-sum before/after allocation. Parent resumes actual far controller polling after child return. NormalUART/vector cleanup verified by existing sampler. No physical modem claim.'
  (out/'checks.json').write_text(json.dumps(proof,indent=2)+'\n');print(json.dumps(proof,indent=2));return 0 if proof['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

@@ -58,6 +58,15 @@ start:
  mov es,ax
  mov word [es:SNAPSHOT_OFFSET],0x1122
  mov word [es:SNAPSHOT_OFFSET+1998],0x3344
+ mov ax,[result+2]
+ add ax,16+CODE_SEG
+ mov es,ax
+ mov [result+30],ax
+ mov word [result+32],CODE_BYTES
+ cmp word [es:CODE_START],CODE_FIRST
+ jne .save
+ call code_sum
+ mov [result+26],ax
  mov bx,0x400
  mov ah,0x48
  int 0x21
@@ -96,6 +105,12 @@ start:
  cmp ax,0x3344
  jne .free
  or word [result],4
+ mov es,[result+30]
+ call code_sum
+ mov [result+28],ax
+ cmp ax,[result+26]
+ jne .free
+ or word [result],8
 .free:
  mov es,[result+10]
  mov ah,0x49
@@ -118,20 +133,34 @@ start:
  jc .exit
  mov bx,ax
  mov dx,result
- mov cx,26
+ mov cx,34
  mov ah,0x40
  int 0x21
  mov ah,0x3e
  int 0x21
 .exit:
  mov ax,0x4c01
- cmp word [result],7
+ cmp word [result],15
  jne .terminate
  xor al,al
 .terminate:
  int 0x21
+; Byte sum includes every relocated far-code byte; independent before/after
+; samples establish that child allocation did not reuse the parent code extent.
+code_sum:
+ mov si,CODE_START
+ mov cx,CODE_BYTES
+ xor bx,bx
+.loop:
+ xor ax,ax
+ mov al,[es:si]
+ add bx,ax
+ inc si
+ loop .loop
+ mov ax,bx
+ ret
 output: db 'D:\FARTEST.BIN',0
-result: times 13 dw 0
+result: times 17 dw 0
 
 align 2
  times 1024 db 0
