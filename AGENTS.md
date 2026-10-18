@@ -1,8 +1,8 @@
 # PCPlus reconstruction
 
 Use the pinned Nix toolchain through `./tools/build` or `./tools/dev --command`.
-The default build produces source-only DOS UART, parameter-parser and BIOS
-keyboard diagnostics. It must not read any
+The default build produces source-only DOS UART, parser/CSI, BIOS keyboard,
+cursor, attributes, text, erase and reporting diagnostics. It must not read any
 original executable, original install or generated REA database.
 
 `./tools/build test` exercises the standalone linked DOS programs. The separate

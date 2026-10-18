@@ -1,0 +1,49 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "ranges": [
+    {
+      "name": "csi_primary_attributes",
+      "start": "0xdd58",
+      "end_exclusive": "0xdd74",
+      "file_offset": 92680,
+      "size": 28,
+      "sha256": "bb3daca4b50ed5247c97646df2f8a50828df1c5fcd3e48d2a6e8daaee74b1762",
+      "evidence_id": "ev_ab5318fe68f41fede6731c413af39f89c3843f703e873c5ae7f32b44fb7ef2b8"
+    },
+    {
+      "name": "csi_device_status",
+      "start": "0xde04",
+      "end_exclusive": "0xde98",
+      "file_offset": 92852,
+      "size": 148,
+      "sha256": "3e459e956a02fdc72d27684d5f7b701978251e9053d9a8dec058e8948f684cd1",
+      "evidence_id": "ev_16a244810326f654e59b5a1aff906672de376618f911787c949e6e34c2c1c327"
+    }
+  ],
+  "state": {
+    "0xcb3c": "ansi_parameters",
+    "0x904c": "csi_report_private_prefix",
+    "0xceac": "ansi_private",
+    "0x399c": "screen_cursor_row",
+    "0x399e": "screen_cursor_column",
+    "0xceb0": "csi_origin_row",
+    "0xcf2c": "csi_report_buffer",
+    "0x3984": "csi_printer_ready",
+    "0x1d18": "csi_terminal_id",
+    "0x3234": "csi_attributes_table",
+    "0x7503": "csi_attributes_prefix",
+    "0x7507": "csi_status_ok",
+    "0x750c": "csi_cursor_prefix",
+    "0x750f": "csi_printer_ok",
+    "0x7516": "csi_printer_unavailable"
+  },
+  "interfaces": {
+    "0xabac": "csi_transmit_string",
+    "0xab0b": "csi_transmit_byte",
+    "0x8e6c": "csi_report_decimal"
+  },
+  "limitations": [
+    "Decimal conversion and protocol resource arrangement are maintained source implementations; exact recovery applies to core routines.",
+    "Transmit services remain external real output interfaces."
+  ]
+}

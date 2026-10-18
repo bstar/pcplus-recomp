@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "71302310542277d7d1bffdb5d0674f1a850cea6c94b688f5adcf7652bbef1fa3",
+  "scope": "Source-only DOS executable checks cursor positioning, right/down movement and DOS return in DOSBox-X; no original executable or modem."
+}

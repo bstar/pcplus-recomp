@@ -1,0 +1,73 @@
+{
+  "kind": "source-only-dos-text-diagnostic",
+  "binary_sha256": "e2b4e630040e8f5ea258c5912684f6cf570736c8da711b165a88ed669003deff",
+  "baseline_regions": [
+    {
+      "file": "reconstruction/text/fill.asm",
+      "start": 27680,
+      "end": 27722,
+      "bytes": 42,
+      "instructions": 17,
+      "sha256": "08ea48781227a85522ff2a3f6938525b9f5d52ca6f12b262cd167949e39b7e00",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/text/bios.asm",
+      "start": 27722,
+      "end": 27742,
+      "bytes": 20,
+      "instructions": 9,
+      "sha256": "f0411eccace4f0edb9eac343ad0f7ceb4f04c76f635d07ad94ae771ac155e8b9",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/text/cell.asm",
+      "start": 27742,
+      "end": 27779,
+      "bytes": 37,
+      "instructions": 16,
+      "sha256": "c8093759496a039bc5ad01ce322200dbeaedf6e8a6471f46141c7a4199f90edf",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/text/char.asm",
+      "start": 27780,
+      "end": 27827,
+      "bytes": 47,
+      "instructions": 23,
+      "sha256": "2e800efd0916e83873500ec7575d08c0e89c024f047bfb276e4075bb6939b8bf",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/text/packed.asm",
+      "start": 27828,
+      "end": 27864,
+      "bytes": 36,
+      "instructions": 14,
+      "sha256": "824cbac888a2dbb3b696604640283795555e4eb6ec80fa96413cc2ef09d571c7",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/text/cga_sync.asm",
+      "start": 32288,
+      "end": 32307,
+      "bytes": 19,
+      "instructions": 14,
+      "sha256": "7bab9cb56a22ca9a320334852827b48aeee7cb8ab1f6e43ead984650d07060b1",
+      "matched_original": true
+    }
+  ],
+  "sources": {
+    "reconstruction/text/fill.asm": "f511a93dd8659be87a5bc98cae45219c4e47ce9b2241a3f05504c84bce1765b2",
+    "reconstruction/text/bios.asm": "e1539c5f6904ac727c435133b14ba5244e5862b33fa0042b75ad75a9595afc57",
+    "reconstruction/text/cell.asm": "e0468b270562f4ac6df89768ef2224ca4757cb5f9d6b34917713a5cb7b7711ed",
+    "reconstruction/text/char.asm": "dafe4c306ed6d6f1bace9c0a4651258fe601cf0360e8400c1bb582eba1c2d41f",
+    "reconstruction/text/packed.asm": "cc41e79f46e3ccb38538b0b3b4fffcbe32e5c9e75a20f1d408724f7554f391b0",
+    "reconstruction/text/cga_sync.asm": "f25ab8dae04c08d47f9a1410d4470e1ea36f6be6a0bda2fbb2122520c3226b37",
+    "src/text/api.asm": "bf6928e94d20f6397f5fae6cceb28be9ac37b2fa71d0043fdfaa05f22337b969",
+    "standalone/text_host.asm": "9d8de3f20ac8629a965d06279784227c9bc4a7f91c7e20dd830e40f7849b966f"
+  },
+  "limitations": [
+    "Host supplies video segment/status-port configuration; complete high-level character path not linked."
+  ]
+}

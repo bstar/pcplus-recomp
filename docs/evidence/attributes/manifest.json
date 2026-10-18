@@ -1,0 +1,32 @@
+{
+  "kind": "source-only-dos-attribute-diagnostic",
+  "binary_sha256": "5e78392550fbc90fe03c7a97f558a4ec48f9bc3544a5315caac0055b63397563",
+  "baseline_regions": [
+    {
+      "file": "reconstruction/attributes/core.asm",
+      "start": 7308,
+      "end": 7560,
+      "bytes": 252,
+      "instructions": 91,
+      "sha256": "211feb2bc0a91bbb40cb9112b557712009d866e281e351e6cf98d2d19e8dace0",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/attributes/reset.asm",
+      "start": 9434,
+      "end": 9441,
+      "bytes": 7,
+      "instructions": 3,
+      "sha256": "abf604a981a3b7ef2890d0d2bc83215f2e2472dff97d2a0a5a218d5d479a40ea",
+      "matched_original": true
+    }
+  ],
+  "sources": {
+    "reconstruction/attributes/core.asm": "7a1e1f4fb23cb2656e7a66ee9f81006fbcd3484f202e3c0736fa85ea267fbb82",
+    "reconstruction/attributes/reset.asm": "1c582dcc4dbc7ac9cd0715a02e69b9bd0013f16833e6d42f4a6da089b578b1c5",
+    "standalone/attributes_host.asm": "ede1b5c5e3998f31f9f0db4d923554d2007c08914b4e23739f8833ea96895b79"
+  },
+  "limitations": [
+    "Host supplies representative configuration defaults; complete terminal parser and display not linked."
+  ]
+}

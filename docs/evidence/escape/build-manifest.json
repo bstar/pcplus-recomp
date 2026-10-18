@@ -1,0 +1,16 @@
+{
+  "kind": "isolated-source-only-escape-control-flow-fixture",
+  "binary_sha256": "63ddeabee202d0d896f414c99fed688cb0666460ecd60a5d07cea1aed64a61ed",
+  "baseline_sha256": "edd26bb97e8bf4968ff7e016d4baccd18f1ba2528c84ebbc0615246530008280",
+  "sources": {
+    "reconstruction/ansi/escape.asm": "b1a8405c4984b311775efa6cb6af2e6452a89a11937a299c75de85ecf2e6d2d2",
+    "standalone/escape_host.asm": "78d0c2676e18b0037a682e9639cb5952718946e4461c2fb05be2326deb1fcc52",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/ansi/escape-provenance.json": "1f61890c91b4afbd3a1d701f3a960b9ce9d335ce2be22742a751659184b3f8b8"
+  },
+  "limitations": [
+    "Fixture records screen/application calls; it does not implement their behavior.",
+    "Parameter parser/transition/dispatcher return fixture tokens; this test does not prove end-to-end CSI parsing.",
+    "Original legacy loops are unchanged."
+  ]
+}

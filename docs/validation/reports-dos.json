@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "0edc5ad6e222491d7b1009e9f303d76ec85efd04ea34fd3566e84355d18b993e",
+  "scope": "Source-only reporting executable produces ESC[0n in captured output under DOSBox-X; output capture does not exercise serial hardware."
+}

@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "e2b4e630040e8f5ea258c5912684f6cf570736c8da711b165a88ed669003deff",
+  "scope": "Source-only DOS executable checks direct character/attribute writes, fills and BIOS output in DOSBox-X; no original executable or modem."
+}

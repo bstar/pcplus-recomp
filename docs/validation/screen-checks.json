@@ -1,0 +1,38 @@
+{
+  "binary_sha256": "71302310542277d7d1bffdb5d0674f1a850cea6c94b688f5adcf7652bbef1fa3",
+  "cases": [
+    {
+      "case": "absolute-and-relative-buffer-offsets-with-bios-position",
+      "passed": true
+    },
+    {
+      "case": "single-step-directions-and-configured-margins",
+      "passed": true
+    },
+    {
+      "case": "double-width-row-steps-and-width-transitions",
+      "passed": true
+    },
+    {
+      "case": "original-double-width-odd-column-underflow-characterized",
+      "passed": true
+    },
+    {
+      "case": "reverse-wrap-and-forward-wrap-dependency",
+      "passed": true
+    },
+    {
+      "case": "horizontal-viewport-boundary-remains-explicit",
+      "passed": true
+    },
+    {
+      "case": "direct-crtc-output-and-bios-data-area",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "CPU replay of linked source-built DOS diagnostic; physical video hardware not tested.",
+    "Forward wrap, viewport manipulation, and attribute-boundary correction are unresolved dependencies and trap.",
+    "Odd-column double-width left underflow is characterized, not fixed or declared valid."
+  ]
+}

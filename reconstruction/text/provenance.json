@@ -1,0 +1,68 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/text/fill.asm",
+      "start": 27680,
+      "end": 27722,
+      "bytes": 42,
+      "instructions": 17,
+      "sha256": "08ea48781227a85522ff2a3f6938525b9f5d52ca6f12b262cd167949e39b7e00",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/text/bios.asm",
+      "start": 27722,
+      "end": 27742,
+      "bytes": 20,
+      "instructions": 9,
+      "sha256": "f0411eccace4f0edb9eac343ad0f7ceb4f04c76f635d07ad94ae771ac155e8b9",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/text/cell.asm",
+      "start": 27742,
+      "end": 27779,
+      "bytes": 37,
+      "instructions": 16,
+      "sha256": "c8093759496a039bc5ad01ce322200dbeaedf6e8a6471f46141c7a4199f90edf",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/text/char.asm",
+      "start": 27780,
+      "end": 27827,
+      "bytes": 47,
+      "instructions": 23,
+      "sha256": "2e800efd0916e83873500ec7575d08c0e89c024f047bfb276e4075bb6939b8bf",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/text/packed.asm",
+      "start": 27828,
+      "end": 27864,
+      "bytes": 36,
+      "instructions": 14,
+      "sha256": "824cbac888a2dbb3b696604640283795555e4eb6ec80fa96413cc2ef09d571c7",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/text/cga_sync.asm",
+      "start": 32288,
+      "end": 32307,
+      "bytes": 19,
+      "instructions": 14,
+      "sha256": "7bab9cb56a22ca9a320334852827b48aeee7cb8ab1f6e43ead984650d07060b1",
+      "matched_original": true
+    }
+  ],
+  "state": {
+    "7a78": "text_video_segment",
+    "7a92": "text_bios_output",
+    "7a8e": "text_cga_status_port"
+  },
+  "services": {},
+  "limitations": [
+    "Recovered names are analyst annotations. State names are analyst annotations; actual configuration initial values are host-provided."
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/screen/set_cursor.asm",
+      "start": 7102,
+      "end": 7270,
+      "bytes": 168,
+      "instructions": 55,
+      "sha256": "9179803a66c2930f0c5de1c4da03a6be5ade8aeaba273e54dcb65090c637399a",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/screen/down.asm",
+      "start": 7692,
+      "end": 7727,
+      "bytes": 35,
+      "instructions": 13,
+      "sha256": "be5a68455e99ad63a089edda5e8aa17dedaa9699746b9bfea68a480c1a5d7e62",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/screen/left.asm",
+      "start": 7728,
+      "end": 7839,
+      "bytes": 111,
+      "instructions": 41,
+      "sha256": "fe7b2e4d9717815aefb8a775d8d2d7e0cdaa0abeb9644216d9acd3c5d17389b6",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/screen/right.asm",
+      "start": 7840,
+      "end": 7932,
+      "bytes": 92,
+      "instructions": 34,
+      "sha256": "c83a00a7d76308e20ed4a9d34ceeeb0661d486edf8fa12e4e25758b20be55604",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/screen/up.asm",
+      "start": 7932,
+      "end": 8021,
+      "bytes": 89,
+      "instructions": 32,
+      "sha256": "42e70ff779d66c5cd612da2452e1fec770368baa66b87243d30c9913473d4cac",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/screen/width_transition.asm",
+      "start": 10896,
+      "end": 10972,
+      "bytes": 76,
+      "instructions": 31,
+      "sha256": "1d30ea2b6d6be48e4f40c88ee5b03378b78a29e35b75c8fa9684a72e0e385816",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/screen/cursor_pack.asm",
+      "start": 28262,
+      "end": 28279,
+      "bytes": 17,
+      "instructions": 7,
+      "sha256": "65b633274e9f3e50d2ce204ac5e905e638488e36d6476e5e0b2b2283b9451c10",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/screen/cursor_output.asm",
+      "start": 28280,
+      "end": 28354,
+      "bytes": 74,
+      "instructions": 32,
+      "sha256": "743e345fcdb471636b2dbbb1c007f1daf3db6fc552104c2d1b7e00aeb60cb847",
+      "matched_original": true
+    }
+  ],
+  "state": {
+    "cdfa": "screen_viewport_enabled",
+    "ce2e": "screen_viewport_left",
+    "3256": "screen_viewport_active",
+    "39a4": "screen_viewport_offset",
+    "7a7e": "screen_viewport_right",
+    "39a0": "screen_visible_column",
+    "3344": "screen_video_offset",
+    "3348": "screen_previous_column",
+    "3346": "screen_attribute_offset",
+    "399e": "screen_cursor_column",
+    "39a2": "screen_previous_row",
+    "7a7a": "screen_video_row_bytes",
+    "325a": "screen_attribute_row_bytes",
+    "399c": "screen_cursor_row",
+    "ceb0": "screen_top_margin",
+    "d122": "screen_doublewidth_enabled",
+    "ce3a": "screen_last_row",
+    "9018": "screen_vertical_attribute_check",
+    "3734": "screen_attribute_checks",
+    "39c4": "screen_attributes_base",
+    "cee4": "screen_bottom_margin",
+    "3258": "screen_last_column",
+    "cf86": "screen_line_flags",
+    "900c": "screen_cursor_wrap",
+    "ce0e": "screen_first_row",
+    "9038": "screen_reverse_wrap_blocked",
+    "7a66": "screen_use_bios_cursor",
+    "7a72": "screen_columns"
+  },
+  "services": {
+    "482a": "screen_viewport_enter",
+    "4850": "screen_viewport_leave",
+    "2fb8": "screen_viewport_refresh",
+    "2adc": "screen_adjust_attribute_boundary",
+    "12c8": "screen_wrap_forward"
+  },
+  "limitations": [
+    "Recovered names are analyst annotations. External viewport, attribute and wrap implementations remain required."
+  ]
+}

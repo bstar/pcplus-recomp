@@ -1,0 +1,40 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/attributes/core.asm",
+      "start": 7308,
+      "end": 7560,
+      "bytes": 252,
+      "instructions": 91,
+      "sha256": "211feb2bc0a91bbb40cb9112b557712009d866e281e351e6cf98d2d19e8dace0",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/attributes/reset.asm",
+      "start": 9434,
+      "end": 9441,
+      "bytes": 7,
+      "instructions": 3,
+      "sha256": "abf604a981a3b7ef2890d0d2bc83215f2e2472dff97d2a0a5a218d5d479a40ea",
+      "matched_original": true
+    }
+  ],
+  "state": {
+    "397e": "attributes_blink_active",
+    "397c": "attributes_bold_active",
+    "8ff6": "attributes_monochrome",
+    "1f70": "attributes_current",
+    "321c": "attributes_reverse_active",
+    "d122": "attributes_color_mode",
+    "1d32": "attributes_normal_value",
+    "1d34": "attributes_bold_value",
+    "1d36": "attributes_preset_value",
+    "1d38": "attributes_reverse_value",
+    "1d3a": "attributes_underline_value"
+  },
+  "services": {},
+  "limitations": [
+    "Recovered names are analyst annotations. State names are analyst annotations; actual configuration initial values are host-provided."
+  ]
+}

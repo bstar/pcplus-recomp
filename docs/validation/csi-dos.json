@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "82adc5004d90f244e32f4c0c8ca524e2ee18649a9ae5c095e4b64936de2fd2d1",
+  "scope": "Combined recovered escape/parser/dispatcher/attributes/cursor self-test plus parser-driven CSI2J BIOS erase of all 2000 text cells in DOSBox-X; memory input and no modem or ordinary text renderer."
+}

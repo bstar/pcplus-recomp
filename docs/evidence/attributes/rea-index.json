@@ -1,0 +1,40 @@
+[
+  {
+    "address": "0x11c8c",
+    "evidence_id": "ev_1c37a9ba0c5347af95a1f510a8e3e0b4b1cce0a4e1a63b538ed4402c54796388",
+    "source": "/home/bstar/projects/DOS/analysis/pcplus-main/functions/0x11c8c-asm.json",
+    "kind": "REA Ghidra retained assembly"
+  },
+  {
+    "address": "0x11caa",
+    "kind": "verified original byte range with NDISASM, not discovered by existing REA export"
+  },
+  {
+    "address": "0x11cb2",
+    "kind": "verified original byte range with NDISASM, not discovered by existing REA export"
+  },
+  {
+    "address": "0x11cce",
+    "kind": "verified original byte range with NDISASM, not discovered by existing REA export"
+  },
+  {
+    "address": "0x11ce4",
+    "kind": "verified original byte range with NDISASM, not discovered by existing REA export"
+  },
+  {
+    "address": "0x11cf0",
+    "evidence_id": "ev_e11d836b748d64ce055c71fa33b3e51bde3bd450437cdca2cabf148e85e2d5f5",
+    "source": "/home/bstar/projects/DOS/analysis/pcplus-main/functions/0x11cf0-asm.json",
+    "kind": "REA Ghidra retained assembly"
+  },
+  {
+    "address": "0x11d6c",
+    "kind": "verified original byte range with NDISASM, not discovered by existing REA export"
+  },
+  {
+    "address": "0x124da",
+    "evidence_id": "ev_505199ee3b913b3131645f64ae5ecd9241f0385cf48e151572551da2f9535b50",
+    "source": "/home/bstar/projects/DOS/analysis/pcplus-main/functions/0x124da-asm.json",
+    "kind": "REA Ghidra retained assembly"
+  }
+]

@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "binary_sha256": "82adc5004d90f244e32f4c0c8ca524e2ee18649a9ae5c095e4b64936de2fd2d1",
+  "cases": [
+    {
+      "case": "real-parser-to-dispatch-to-bios-cursor-and-buffer-offsets",
+      "passed": true
+    },
+    {
+      "case": "real-sgr-table-and-recovered-attribute-helpers",
+      "passed": true
+    },
+    {
+      "case": "scroll-region-and-shared-origin-state",
+      "passed": true
+    },
+    {
+      "case": "secondary-device-attributes-output-abi",
+      "passed": true
+    },
+    {
+      "case": "malformed-input-aborts-before-screen-services",
+      "passed": true
+    },
+    {
+      "case": "maintained-csi-q-does-not-consume-next-payload",
+      "passed": true
+    },
+    {
+      "case": "real-csi-j-k-x-through-recovered-erase-to-video-memory",
+      "passed": true
+    },
+    {
+      "case": "maintained-csi-x-default-and-row-boundary-guards",
+      "passed": true
+    },
+    {
+      "case": "real-primary-attributes-status-and-cursor-report-output",
+      "passed": true
+    },
+    {
+      "case": "unrecovered-protected-erase-boundary-fails-explicitly",
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked escape/parameter/transition/dispatcher/attribute/cursor/report/erase instructions; explicit BIOS text-video model plus memory input/output, unresolved application services trap. No live modem/full renderer."
+}

@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "binary_sha256": "63ddeabee202d0d896f414c99fed688cb0666460ecd60a5d07cea1aed64a61ed",
+  "scope": "Linked recovered escape routine with recording callbacks and controlled parser tokens; no rendered terminal behavior is claimed.",
+  "cases": [
+    {
+      "case": "single-character-and-eight-bit-service-routing",
+      "passed": true
+    },
+    {
+      "case": "ignored-bytes-unknown-command-and-space-putback",
+      "passed": true
+    },
+    {
+      "case": "G0-G1-charset-flags-and-zero-byte-skip",
+      "passed": true
+    },
+    {
+      "case": "CSI-token-loop-reset-and-G2-G3-legacy-entry",
+      "passed": true
+    }
+  ]
+}

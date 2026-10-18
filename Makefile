@@ -1,6 +1,17 @@
-.PHONY: all serial parser keyboard test test-driver test-parser test-keyboard test-parser-compat compat test-compat test-modem clean
+MODULES := escape attributes screen text reports erase csi
+.PHONY: all serial parser keyboard $(MODULES) $(addprefix test-,$(MODULES)) test test-driver test-parser test-keyboard test-parser-compat test-csi-relocation compat test-compat test-modem clean
 
-all: serial parser keyboard
+all: serial parser keyboard $(MODULES)
+
+$(MODULES):
+	python3 standalone/build_$@.py
+
+$(addprefix test-,$(MODULES)): test-%: %
+	python3 standalone/check_$*.py
+	python3 standalone/test_$*_dos.py
+
+test-csi-relocation: csi
+	python3 standalone/check_csi_relocation.py
 
 serial:
 	python3 standalone/build.py
@@ -22,7 +33,7 @@ test-parser: parser
 	python3 standalone/check_ansi.py
 	python3 standalone/test_parser_dos.py
 
-test: test-driver test-parser test-keyboard
+test: test-driver test-parser test-keyboard $(addprefix test-,$(MODULES)) test-csi-relocation
 	python3 standalone/test_serial.py
 
 test-parser-compat: parser compat
@@ -38,4 +49,4 @@ test-modem:
 	$(MAKE) -C reconstruction test-modem
 
 clean:
-	rm -rf build/standalone build/ansi build/keyboard
+	rm -rf build/standalone build/ansi build/keyboard build/csi-relocation $(addprefix build/,$(MODULES))

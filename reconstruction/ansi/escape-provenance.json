@@ -1,0 +1,47 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "provider": {
+    "id": "ghidra",
+    "name": "Ghidra",
+    "version": "12.1.2"
+  },
+  "evidence_id": "ev_4dbb054036a16fc2025ebb01aca68bfa584affa2d7443650f9a1c1743780466d",
+  "entry_cs_relative": "0xecd2",
+  "entry_rea_linear": "0x1ecd2",
+  "end_exclusive_cs_relative": "0xeeaf",
+  "original_file_offset": 100386,
+  "size": 477,
+  "sha256": "edd26bb97e8bf4968ff7e016d4baccd18f1ba2528c84ebbc0615246530008280",
+  "services": {
+    "0x5ca0": "ansi_next_byte",
+    "0xabde": "ansi_unread_byte",
+    "0xe3f2": "ansi_read_parameter",
+    "0xe4a2": "ansi_parameter_transition",
+    "0xe4b2": "ansi_dispatch_command",
+    "0xe0f8": "ansi_escape_service_e0f8",
+    "0xdd74": "ansi_escape_service_dd74",
+    "0xddbc": "ansi_escape_service_ddbc",
+    "0xda46": "ansi_escape_service_da46",
+    "0x12c8": "ansi_escape_service_12c8",
+    "0xdac6": "ansi_escape_service_dac6",
+    "0xda84": "ansi_escape_service_da84",
+    "0xec94": "ansi_escape_service_ec94",
+    "0xdd58": "ansi_escape_service_dd58",
+    "0x20a4": "ansi_escape_service_20a4"
+  },
+  "state": {
+    "0xcb5c": "ansi_parameter_count",
+    "0xcb3c": "ansi_parameters",
+    "0xceac": "ansi_private",
+    "0xcee2": "ansi_secondary",
+    "0xcde0": "ansi_charset_g0_flag_a",
+    "0xcdec": "ansi_charset_g0_flag_graphics",
+    "0xcde8": "ansi_charset_g1_flag_a",
+    "0xcdf0": "ansi_charset_g1_flag_graphics"
+  },
+  "limitations": [
+    "Names are analyst annotations, not original source.",
+    "External screen/application callbacks remain integration interfaces.",
+    "Legacy zero/repeated-escape loops are unchanged."
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "fcd319dcc830eafaa93e8971f02736e76fd9bfd041feab23c1b5c669e20d8eef",
+  "scope": "Source-only DOS executable checks BIOS rectangle erase in video memory, unchanged adjacent cells and DOS return in DOSBox-X; no original executable or modem."
+}

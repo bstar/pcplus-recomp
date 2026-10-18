@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "binary_sha256": "5e78392550fbc90fe03c7a97f558a4ec48f9bc3544a5315caac0055b63397563",
+  "cases": [
+    {
+      "case": "normal-reset-and-monochrome-override",
+      "passed": true
+    },
+    {
+      "case": "configured-presets-and-underline",
+      "passed": true
+    },
+    {
+      "case": "bold-and-blink-in-color-and-preset-modes",
+      "passed": true
+    },
+    {
+      "case": "all-256-reverse-values-and-repeat-latch",
+      "passed": true
+    },
+    {
+      "case": "default-nibble-transform-all-byte-values",
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked recovered helpers in Unicorn; representative host state, no original binary."
+}

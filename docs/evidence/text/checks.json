@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "binary_sha256": "e2b4e630040e8f5ea258c5912684f6cf570736c8da711b165a88ed669003deff",
+  "cases": [
+    {
+      "case": "all-character-and-attribute-bytes",
+      "passed": true
+    },
+    {
+      "case": "char-preserves-attribute-and-packed-swaps-bytes",
+      "passed": true
+    },
+    {
+      "case": "zero-and-multiple-cell-fill-with-canaries",
+      "passed": true
+    },
+    {
+      "case": "actual-cga-synchronization-paths",
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked recovered video store/CGA instructions in Unicorn; synthetic CGA status port alternates low/high. BIOS output separately tested in DOSBox-X."
+}

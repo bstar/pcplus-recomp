@@ -1,0 +1,60 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "cases": [
+    {
+      "count": null,
+      "original_rectangle": {
+        "attribute": 7,
+        "bottom": 2322,
+        "top": 2323,
+        "scroll": 0
+      }
+    },
+    {
+      "count": 0,
+      "original_rectangle": {
+        "attribute": 7,
+        "bottom": 2322,
+        "top": 2323,
+        "scroll": 0
+      }
+    },
+    {
+      "count": 65535,
+      "original_rectangle": {
+        "attribute": 7,
+        "bottom": 2321,
+        "top": 2323,
+        "scroll": 0
+      }
+    },
+    {
+      "count": 999,
+      "original_rectangle": {
+        "attribute": 7,
+        "bottom": 3065,
+        "top": 2323,
+        "scroll": 0
+      }
+    },
+    {
+      "count": 61,
+      "original_rectangle": {
+        "attribute": 7,
+        "bottom": 2383,
+        "top": 2323,
+        "scroll": 0
+      }
+    },
+    {
+      "count": 62,
+      "original_rectangle": {
+        "attribute": 7,
+        "bottom": 2384,
+        "top": 2323,
+        "scroll": 0
+      }
+    }
+  ],
+  "scope": "Actual original overlay12 dispatcher instructions, synthetic parser/screen state, rectangle call intercepted before rendering; this does not establish BIOS reaction to invalid rectangles."
+}

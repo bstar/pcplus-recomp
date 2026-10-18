@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "binary_sha256": "0edc5ad6e222491d7b1009e9f303d76ec85efd04ea34fd3566e84355d18b993e",
+  "cases": [
+    {
+      "case": "ordinary-status-cursor-printer-and-unknown-queries",
+      "passed": true
+    },
+    {
+      "case": "origin-relative-coordinates-and-private-prefix-gating",
+      "passed": true
+    },
+    {
+      "case": "maintained-signed-decimal-bounds-and-coordinate-wrap",
+      "passed": true
+    },
+    {
+      "case": "all-supported-original-device-attribute-profiles",
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked report instructions, maintained decimal, captured bytes; no UART or rendered terminal."
+}

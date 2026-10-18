@@ -1,0 +1,161 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/erase/line_before.asm",
+      "start": 55364,
+      "end": 55390,
+      "source_file_offset": 91380,
+      "bytes": 26,
+      "instructions": 11,
+      "sha256": "b49595b7d67ea0fffa614b20048e7bedca314a0cc9891d422c02a6129bc6ae69",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/erase/display_before.asm",
+      "start": 55390,
+      "end": 55477,
+      "source_file_offset": 91406,
+      "bytes": 87,
+      "instructions": 34,
+      "sha256": "2f6d4bc738e11dbccc81fcb8e38ef03c46ed75230be9c0a0ec1761361c884a69",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/erase/display_after.asm",
+      "start": 55478,
+      "end": 55825,
+      "source_file_offset": 91494,
+      "bytes": 347,
+      "instructions": 128,
+      "sha256": "2afd8fcd9ecf53d56a20b6a062076f5245215482d20a3b3026d21d0278661e1f",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/erase/rectangle.asm",
+      "start": 9520,
+      "end": 10217,
+      "source_file_offset": 14128,
+      "bytes": 697,
+      "instructions": 257,
+      "sha256": "1edf39bb547ec3f54b9736127966b8b8f070700f98ed29f79d86492bf7d347ae",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/erase/scroll_up.asm",
+      "start": 28380,
+      "end": 28405,
+      "source_file_offset": 32988,
+      "bytes": 25,
+      "instructions": 11,
+      "sha256": "030b69e0c6597681f4d67663a739e8edf5d5ef943b7ac556ee5114d97283d8d1",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/erase/scroll_down.asm",
+      "start": 28354,
+      "end": 28379,
+      "source_file_offset": 32962,
+      "bytes": 25,
+      "instructions": 11,
+      "sha256": "3d9ddc9a60f6e91b5b7dcd5487d9c2f761d9d0a40052d253fd04d4e03d94f146",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/erase/far_fill.asm",
+      "start": 25594,
+      "end": 25618,
+      "source_file_offset": 30202,
+      "bytes": 24,
+      "instructions": 10,
+      "sha256": "83b43677112a634b81dfcf291dbbfb9b46f427ccd5d8320228af4cf87b2b13af",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/erase/far_move.asm",
+      "start": 25618,
+      "end": 25675,
+      "source_file_offset": 30226,
+      "bytes": 57,
+      "instructions": 31,
+      "sha256": "619a6c9bab699c1a68cf621770cce1a67b87c24d4d52c3f026362eb166fd7a45",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/erase/move_bytes.asm",
+      "start": 34228,
+      "end": 34300,
+      "source_file_offset": 38836,
+      "bytes": 72,
+      "instructions": 39,
+      "sha256": "8f2d99034340eacf7ddcbe1a27e39d854b79bd600525001cb9979524a7d74fb6",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/erase/default_attribute.asm",
+      "start": 11576,
+      "end": 11596,
+      "source_file_offset": 16184,
+      "bytes": 20,
+      "instructions": 8,
+      "sha256": "9a24c2dd2a967e15d97b897490d44ac2019deea27a39a0cba17b3367fa81d180",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/erase/previous_attribute.asm",
+      "start": 11596,
+      "end": 11628,
+      "source_file_offset": 16204,
+      "bytes": 32,
+      "instructions": 15,
+      "sha256": "25f355e2712d0e280d8e1364d77e61de4c8c22566342d91bf38e6a6664f94caf",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/erase/scan_attributes.asm",
+      "start": 11628,
+      "end": 11672,
+      "source_file_offset": 16236,
+      "bytes": 44,
+      "instructions": 22,
+      "sha256": "a1cdcb63c9e74f8913b29be82afe9dfa4c4c605486c4255abe6e53de79c80636",
+      "matched_original": true
+    }
+  ],
+  "state": {
+    "3342": "csi_wrap_pending",
+    "399c": "screen_cursor_row",
+    "399e": "screen_cursor_column",
+    "1d32": "attributes_normal_value",
+    "3258": "screen_last_column",
+    "3260": "erase_lineflags_enabled",
+    "cf86": "screen_line_flags",
+    "8ff6": "attributes_monochrome",
+    "1f70": "attributes_current",
+    "900c": "screen_cursor_wrap",
+    "3734": "screen_attribute_checks",
+    "3346": "screen_attribute_offset",
+    "39c4": "screen_attributes_base",
+    "325a": "screen_attribute_row_bytes",
+    "3736": "erase_protection_mode",
+    "325c": "erase_cell_count",
+    "39c2": "erase_attribute_values_base",
+    "ce3a": "screen_last_row",
+    "334a": "csi_last_row",
+    "cdfa": "screen_viewport_enabled",
+    "ce2e": "screen_viewport_left",
+    "7a72": "screen_columns",
+    "3256": "screen_viewport_active",
+    "7a7e": "screen_viewport_right",
+    "5dea": "erase_shadow_offset",
+    "5dec": "erase_shadow_segment",
+    "d008": "csi_erase_attribute"
+  },
+  "services": {
+    "d05f": "erase_complex_protected",
+    "2d98": "erase_repair_attributes"
+  },
+  "limitations": [
+    "Recovered names are analyst annotations. Complex protected erase and attribute repair remain external dependencies."
+  ]
+}

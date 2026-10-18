@@ -24,8 +24,22 @@ def build_units(original):
         # Overlay 12 has no relocations. Offset verified by its loader manifest.
         ("ansi/parameters.asm", 0xe3f2, 0xe4a1, 94370, False),
         ("ansi/transition.asm", 0xe4a2, 0xe4b2, 94546, False),
+        ("ansi/dispatch.asm", 0xe4b2, 0xec94, 94562, False),
+        ("ansi/escape.asm", 0xecd2, 0xeeaf, 100386, False),
     ]
     specifications = [(*item, []) for item in specifications]
+    for module in ("screen", "attributes", "erase", "text"):
+        provenance = json.loads((ROOT / f"reconstruction/{module}/provenance.json").read_text())
+        for unit in provenance["units"]:
+            lower, upper = unit["start"], unit["end"]
+            offset = unit.get("source_file_offset", header_bytes + lower)
+            specifications.append((unit["file"].removeprefix("reconstruction/"), lower, upper,
+                                   offset, offset == header_bytes + lower, []))
+    reports = json.loads((ROOT / "reconstruction/reports/provenance.json").read_text())
+    for index, region in enumerate(reports["ranges"]):
+        specifications.append(("reports/core.asm", int(region["start"], 16),
+                               int(region["end_exclusive"], 16), region["file_offset"],
+                               False, [f"REPORTS_REGION={index}"]))
     keyboard = json.loads((ROOT / "reconstruction/keyboard/provenance.json").read_text())
     for index, region in enumerate(keyboard["ranges"]):
         lower = int(region["start"], 16)
@@ -36,6 +50,7 @@ def build_units(original):
         suffix = "-" + "-".join(defines).replace("=", "-") if defines else ""
         target = directory / (source.replace("/", "-").removesuffix(".asm") + suffix + ".bin")
         subprocess.run(["nasm", "-f", "bin", "-I", str(ROOT / "reconstruction/uart") + "/",
+                        "-I", str(ROOT / "reconstruction/ansi") + "/",
                         *["-D" + definition for definition in defines],
                         "-o", str(target), str(ROOT / "reconstruction" / source)], check=True)
         rebuilt = target.read_bytes()

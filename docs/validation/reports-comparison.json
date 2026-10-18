@@ -1,0 +1,2257 @@
+{
+  "passed": true,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "source_sha256": "0edc5ad6e222491d7b1009e9f303d76ec85efd04ea34fd3566e84355d18b993e",
+  "case_count": 182,
+  "scope": "Original resident/overlay instructions and UART writes compared with source-built reporting fixture; not full parser or hardware.",
+  "cases": [
+    {
+      "state": {
+        "ansi_parameters": 0,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 0,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 1,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 1,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 2,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 2,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 3,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 3,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 4,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 4,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 5,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "1b5b306e",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 5,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "1b5b306e",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "1b5b31303b323052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b31303b323052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 7,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 7,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 8,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 8,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 9,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 9,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 10,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 10,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 11,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 11,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 12,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 12,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 13,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 13,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 14,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 14,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 15,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "1b5b3f31336e",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 15,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "1b5b3f31306e",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 16,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "csi_printer_ready": 0
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 16,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "csi_printer_ready": 1
+      },
+      "attributes": false,
+      "reply_hex": "",
+      "matched": true
+    },
+    {
+      "state": {
+        "csi_terminal_id": 2
+      },
+      "attributes": true,
+      "reply_hex": "1b5b3f313b3263",
+      "matched": true
+    },
+    {
+      "state": {
+        "csi_terminal_id": 3
+      },
+      "attributes": true,
+      "reply_hex": "1b5b3f3663",
+      "matched": true
+    },
+    {
+      "state": {
+        "csi_terminal_id": 4
+      },
+      "attributes": true,
+      "reply_hex": "1b5b3f36323b3263",
+      "matched": true
+    },
+    {
+      "state": {
+        "csi_terminal_id": 5
+      },
+      "attributes": true,
+      "reply_hex": "1b5b3f36333b3263",
+      "matched": true
+    },
+    {
+      "state": {
+        "csi_terminal_id": 6
+      },
+      "attributes": true,
+      "reply_hex": "1b5b3f313b3263",
+      "matched": true
+    },
+    {
+      "state": {
+        "csi_terminal_id": 7
+      },
+      "attributes": true,
+      "reply_hex": "1b5b3f313b3263",
+      "matched": true
+    },
+    {
+      "state": {
+        "csi_terminal_id": 8
+      },
+      "attributes": true,
+      "reply_hex": "1b5b3f313b3063",
+      "matched": true
+    },
+    {
+      "state": {
+        "csi_terminal_id": 9
+      },
+      "attributes": true,
+      "reply_hex": "1b5b3f373b353b3163",
+      "matched": true
+    },
+    {
+      "state": {
+        "csi_terminal_id": 10
+      },
+      "attributes": true,
+      "reply_hex": "1b5b3f313b3263",
+      "matched": true
+    },
+    {
+      "state": {
+        "csi_terminal_id": 11
+      },
+      "attributes": true,
+      "reply_hex": "1b5b3f36323b3263",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 9,
+        "screen_cursor_column": 19,
+        "csi_origin_row": 0
+      },
+      "attributes": false,
+      "reply_hex": "1b5b31303b323052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 9,
+        "screen_cursor_column": 19,
+        "csi_origin_row": 0
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b31303b323052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 0,
+        "screen_cursor_column": 0,
+        "csi_origin_row": 0
+      },
+      "attributes": false,
+      "reply_hex": "1b5b313b3152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 0,
+        "screen_cursor_column": 0,
+        "csi_origin_row": 0
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b313b3152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 65535,
+        "screen_cursor_column": 32767,
+        "csi_origin_row": 1
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d313b2d333237363852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 65535,
+        "screen_cursor_column": 32767,
+        "csi_origin_row": 1
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d313b2d333237363852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 32767,
+        "screen_cursor_column": 65535,
+        "csi_origin_row": 0
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d33323736383b3052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 32767,
+        "screen_cursor_column": 65535,
+        "csi_origin_row": 0
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d33323736383b3052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 0,
+        "screen_cursor_column": 0,
+        "csi_origin_row": 32768
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d33323736373b3152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 0,
+        "screen_cursor_column": 0,
+        "csi_origin_row": 32768
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d33323736373b3152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 8795,
+        "screen_cursor_column": 42676,
+        "csi_origin_row": 55095
+      },
+      "attributes": false,
+      "reply_hex": "1b5b31393233373b2d323238353952",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 8795,
+        "screen_cursor_column": 42676,
+        "csi_origin_row": 55095
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b31393233373b2d323238353952",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 481,
+        "screen_cursor_column": 37066,
+        "csi_origin_row": 42753
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32333236353b2d323834363952",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 481,
+        "screen_cursor_column": 37066,
+        "csi_origin_row": 42753
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32333236353b2d323834363952",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 61587,
+        "screen_cursor_column": 35481,
+        "csi_origin_row": 59116
+      },
+      "attributes": false,
+      "reply_hex": "1b5b323437323b2d333030353452",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 61587,
+        "screen_cursor_column": 35481,
+        "csi_origin_row": 59116
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b323437323b2d333030353452",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 63202,
+        "screen_cursor_column": 62145,
+        "csi_origin_row": 18301
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d32303633343b2d3333393052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 63202,
+        "screen_cursor_column": 62145,
+        "csi_origin_row": 18301
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d32303633343b2d3333393052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 62492,
+        "screen_cursor_column": 8161,
+        "csi_origin_row": 30097
+      },
+      "attributes": false,
+      "reply_hex": "1b5b33323339363b3831363252",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 62492,
+        "screen_cursor_column": 8161,
+        "csi_origin_row": 30097
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b33323339363b3831363252",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 28190,
+        "screen_cursor_column": 24751,
+        "csi_origin_row": 1803
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32363338383b323437353252",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 28190,
+        "screen_cursor_column": 24751,
+        "csi_origin_row": 1803
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32363338383b323437353252",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 39257,
+        "screen_cursor_column": 14087,
+        "csi_origin_row": 31407
+      },
+      "attributes": false,
+      "reply_hex": "1b5b373835313b313430383852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 39257,
+        "screen_cursor_column": 14087,
+        "csi_origin_row": 31407
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b373835313b313430383852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 34979,
+        "screen_cursor_column": 23691,
+        "csi_origin_row": 63203
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d32383232333b323336393252",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 34979,
+        "screen_cursor_column": 23691,
+        "csi_origin_row": 63203
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d32383232333b323336393252",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 3987,
+        "screen_cursor_column": 10237,
+        "csi_origin_row": 53395
+      },
+      "attributes": false,
+      "reply_hex": "1b5b31363132393b313032333852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 3987,
+        "screen_cursor_column": 10237,
+        "csi_origin_row": 53395
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b31363132393b313032333852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 38463,
+        "screen_cursor_column": 63597,
+        "csi_origin_row": 12386
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32363037383b2d3139333852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 38463,
+        "screen_cursor_column": 63597,
+        "csi_origin_row": 12386
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32363037383b2d3139333852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 40915,
+        "screen_cursor_column": 45523,
+        "csi_origin_row": 49381
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d383436353b2d323030313252",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 40915,
+        "screen_cursor_column": 45523,
+        "csi_origin_row": 49381
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d383436353b2d323030313252",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 24581,
+        "screen_cursor_column": 3925,
+        "csi_origin_row": 53888
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d32393330363b3339323652",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 24581,
+        "screen_cursor_column": 3925,
+        "csi_origin_row": 53888
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d32393330363b3339323652",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 57769,
+        "screen_cursor_column": 5336,
+        "csi_origin_row": 54885
+      },
+      "attributes": false,
+      "reply_hex": "1b5b323838353b3533333752",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 57769,
+        "screen_cursor_column": 5336,
+        "csi_origin_row": 54885
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b323838353b3533333752",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 35413,
+        "screen_cursor_column": 1758,
+        "csi_origin_row": 26471
+      },
+      "attributes": false,
+      "reply_hex": "1b5b383934333b3137353952",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 35413,
+        "screen_cursor_column": 1758,
+        "csi_origin_row": 26471
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b383934333b3137353952",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 54224,
+        "screen_cursor_column": 18301,
+        "csi_origin_row": 32597
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32313632383b313833303252",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 54224,
+        "screen_cursor_column": 18301,
+        "csi_origin_row": 32597
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32313632383b313833303252",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 1630,
+        "screen_cursor_column": 32997,
+        "csi_origin_row": 41786
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32353338313b2d333235333852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 1630,
+        "screen_cursor_column": 32997,
+        "csi_origin_row": 41786
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32353338313b2d333235333852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 14043,
+        "screen_cursor_column": 35198,
+        "csi_origin_row": 44871
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d33303832373b2d333033333752",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 14043,
+        "screen_cursor_column": 35198,
+        "csi_origin_row": 44871
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d33303832373b2d333033333752",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 25151,
+        "screen_cursor_column": 39572,
+        "csi_origin_row": 4534
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32303631383b2d323539363352",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 25151,
+        "screen_cursor_column": 39572,
+        "csi_origin_row": 4534
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32303631383b2d323539363352",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 23578,
+        "screen_cursor_column": 64217,
+        "csi_origin_row": 56885
+      },
+      "attributes": false,
+      "reply_hex": "1b5b33323233303b2d3133313852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 23578,
+        "screen_cursor_column": 64217,
+        "csi_origin_row": 56885
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b33323233303b2d3133313852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 38375,
+        "screen_cursor_column": 782,
+        "csi_origin_row": 9559
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32383831373b37383352",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 38375,
+        "screen_cursor_column": 782,
+        "csi_origin_row": 9559
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32383831373b37383352",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 48843,
+        "screen_cursor_column": 23433,
+        "csi_origin_row": 10208
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d32363930303b323334333452",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 48843,
+        "screen_cursor_column": 23433,
+        "csi_origin_row": 10208
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d32363930303b323334333452",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 26624,
+        "screen_cursor_column": 4897,
+        "csi_origin_row": 47532
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d32303930373b3438393852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 26624,
+        "screen_cursor_column": 4897,
+        "csi_origin_row": 47532
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d32303930373b3438393852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 64102,
+        "screen_cursor_column": 59345,
+        "csi_origin_row": 322
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d313735353b2d3631393052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 64102,
+        "screen_cursor_column": 59345,
+        "csi_origin_row": 322
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d313735353b2d3631393052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 4302,
+        "screen_cursor_column": 28686,
+        "csi_origin_row": 64671
+      },
+      "attributes": false,
+      "reply_hex": "1b5b353136383b323836383752",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 4302,
+        "screen_cursor_column": 28686,
+        "csi_origin_row": 64671
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b353136383b323836383752",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 60450,
+        "screen_cursor_column": 46554,
+        "csi_origin_row": 45330
+      },
+      "attributes": false,
+      "reply_hex": "1b5b31353132313b2d313839383152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 60450,
+        "screen_cursor_column": 46554,
+        "csi_origin_row": 45330
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b31353132313b2d313839383152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 53896,
+        "screen_cursor_column": 22454,
+        "csi_origin_row": 7493
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d31393133323b323234353552",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 53896,
+        "screen_cursor_column": 22454,
+        "csi_origin_row": 7493
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d31393133323b323234353552",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 21207,
+        "screen_cursor_column": 60057,
+        "csi_origin_row": 2996
+      },
+      "attributes": false,
+      "reply_hex": "1b5b31383231323b2d3534373852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 21207,
+        "screen_cursor_column": 60057,
+        "csi_origin_row": 2996
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b31383231323b2d3534373852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 14795,
+        "screen_cursor_column": 27986,
+        "csi_origin_row": 43976
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d32393138303b323739383752",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 14795,
+        "screen_cursor_column": 27986,
+        "csi_origin_row": 43976
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d32393138303b323739383752",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 286,
+        "screen_cursor_column": 46974,
+        "csi_origin_row": 56850
+      },
+      "attributes": false,
+      "reply_hex": "1b5b383937333b2d313835363152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 286,
+        "screen_cursor_column": 46974,
+        "csi_origin_row": 56850
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b383937333b2d313835363152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 2674,
+        "screen_cursor_column": 624,
+        "csi_origin_row": 44645
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32333536363b36323552",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 2674,
+        "screen_cursor_column": 624,
+        "csi_origin_row": 44645
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32333536363b36323552",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 26921,
+        "screen_cursor_column": 39996,
+        "csi_origin_row": 6441
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32303438313b2d323535333952",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 26921,
+        "screen_cursor_column": 39996,
+        "csi_origin_row": 6441
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32303438313b2d323535333952",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 55564,
+        "screen_cursor_column": 20150,
+        "csi_origin_row": 24451
+      },
+      "attributes": false,
+      "reply_hex": "1b5b33313131343b323031353152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 55564,
+        "screen_cursor_column": 20150,
+        "csi_origin_row": 24451
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b33313131343b323031353152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 52835,
+        "screen_cursor_column": 59874,
+        "csi_origin_row": 31172
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32313636343b2d3536363152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 52835,
+        "screen_cursor_column": 59874,
+        "csi_origin_row": 31172
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32313636343b2d3536363152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 55782,
+        "screen_cursor_column": 18329,
+        "csi_origin_row": 32518
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32333236353b313833333052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 55782,
+        "screen_cursor_column": 18329,
+        "csi_origin_row": 32518
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32333236353b313833333052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 31358,
+        "screen_cursor_column": 22969,
+        "csi_origin_row": 5259
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32363130303b323239373052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 31358,
+        "screen_cursor_column": 22969,
+        "csi_origin_row": 5259
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32363130303b323239373052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 8605,
+        "screen_cursor_column": 18868,
+        "csi_origin_row": 50875
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32333236373b313838363952",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 8605,
+        "screen_cursor_column": 18868,
+        "csi_origin_row": 50875
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32333236373b313838363952",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 21789,
+        "screen_cursor_column": 39176,
+        "csi_origin_row": 46122
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d32343333323b2d323633353952",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 21789,
+        "screen_cursor_column": 39176,
+        "csi_origin_row": 46122
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d32343333323b2d323633353952",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 40805,
+        "screen_cursor_column": 18110,
+        "csi_origin_row": 5741
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d33303437313b313831313152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 40805,
+        "screen_cursor_column": 18110,
+        "csi_origin_row": 5741
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d33303437313b313831313152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 3904,
+        "screen_cursor_column": 12172,
+        "csi_origin_row": 25555
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d32313635303b313231373352",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 3904,
+        "screen_cursor_column": 12172,
+        "csi_origin_row": 25555
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d32313635303b313231373352",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 37657,
+        "screen_cursor_column": 36634,
+        "csi_origin_row": 17484
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32303137343b2d323839303152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 37657,
+        "screen_cursor_column": 36634,
+        "csi_origin_row": 17484
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32303137343b2d323839303152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 48693,
+        "screen_cursor_column": 62504,
+        "csi_origin_row": 22065
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32363632393b2d3330333152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 48693,
+        "screen_cursor_column": 62504,
+        "csi_origin_row": 22065
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32363632393b2d3330333152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 56285,
+        "screen_cursor_column": 1952,
+        "csi_origin_row": 1968
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d31313231383b3139353352",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 56285,
+        "screen_cursor_column": 1952,
+        "csi_origin_row": 1968
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d31313231383b3139353352",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 54095,
+        "screen_cursor_column": 49367,
+        "csi_origin_row": 13383
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d32343832333b2d313631363852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 54095,
+        "screen_cursor_column": 49367,
+        "csi_origin_row": 13383
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d32343832333b2d313631363852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 18954,
+        "screen_cursor_column": 22884,
+        "csi_origin_row": 10872
+      },
+      "attributes": false,
+      "reply_hex": "1b5b383038333b323238383552",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 18954,
+        "screen_cursor_column": 22884,
+        "csi_origin_row": 10872
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b383038333b323238383552",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 35361,
+        "screen_cursor_column": 13232,
+        "csi_origin_row": 63291
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d32373932393b313332333352",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 35361,
+        "screen_cursor_column": 13232,
+        "csi_origin_row": 63291
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d32373932393b313332333352",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 63737,
+        "screen_cursor_column": 14133,
+        "csi_origin_row": 29490
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d33313238383b313431333452",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 63737,
+        "screen_cursor_column": 14133,
+        "csi_origin_row": 29490
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d33313238383b313431333452",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 38608,
+        "screen_cursor_column": 33585,
+        "csi_origin_row": 3477
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d33303430343b2d333139353052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 38608,
+        "screen_cursor_column": 33585,
+        "csi_origin_row": 3477
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d33303430343b2d333139353052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 64273,
+        "screen_cursor_column": 29642,
+        "csi_origin_row": 1818
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d333038303b323936343352",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 64273,
+        "screen_cursor_column": 29642,
+        "csi_origin_row": 1818
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d333038303b323936343352",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 39256,
+        "screen_cursor_column": 43457,
+        "csi_origin_row": 28826
+      },
+      "attributes": false,
+      "reply_hex": "1b5b31303433313b2d323230373852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 39256,
+        "screen_cursor_column": 43457,
+        "csi_origin_row": 28826
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b31303433313b2d323230373852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 53470,
+        "screen_cursor_column": 4390,
+        "csi_origin_row": 105
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d31323137303b3433393152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 53470,
+        "screen_cursor_column": 4390,
+        "csi_origin_row": 105
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d31323137303b3433393152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 24738,
+        "screen_cursor_column": 34693,
+        "csi_origin_row": 39114
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d31343337353b2d333038343252",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 24738,
+        "screen_cursor_column": 34693,
+        "csi_origin_row": 39114
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d31343337353b2d333038343252",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 24377,
+        "screen_cursor_column": 14081,
+        "csi_origin_row": 50402
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d32363032343b313430383252",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 24377,
+        "screen_cursor_column": 14081,
+        "csi_origin_row": 50402
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d32363032343b313430383252",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 56837,
+        "screen_cursor_column": 41207,
+        "csi_origin_row": 47142
+      },
+      "attributes": false,
+      "reply_hex": "1b5b393639363b2d323433323852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 56837,
+        "screen_cursor_column": 41207,
+        "csi_origin_row": 47142
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b393639363b2d323433323852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 40125,
+        "screen_cursor_column": 48869,
+        "csi_origin_row": 7512
+      },
+      "attributes": false,
+      "reply_hex": "1b5b33323631343b2d313636363652",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 40125,
+        "screen_cursor_column": 48869,
+        "csi_origin_row": 7512
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b33323631343b2d313636363652",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 30762,
+        "screen_cursor_column": 52322,
+        "csi_origin_row": 5170
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32353539333b2d313332313352",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 30762,
+        "screen_cursor_column": 52322,
+        "csi_origin_row": 5170
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32353539333b2d313332313352",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 7935,
+        "screen_cursor_column": 58484,
+        "csi_origin_row": 44371
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32393130313b2d3730353152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 7935,
+        "screen_cursor_column": 58484,
+        "csi_origin_row": 44371
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32393130313b2d3730353152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 840,
+        "screen_cursor_column": 8423,
+        "csi_origin_row": 14073
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d31333233323b3834323452",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 840,
+        "screen_cursor_column": 8423,
+        "csi_origin_row": 14073
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d31333233323b3834323452",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 55408,
+        "screen_cursor_column": 6467,
+        "csi_origin_row": 19819
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d32393934363b3634363852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 55408,
+        "screen_cursor_column": 6467,
+        "csi_origin_row": 19819
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d32393934363b3634363852",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 19360,
+        "screen_cursor_column": 31783,
+        "csi_origin_row": 608
+      },
+      "attributes": false,
+      "reply_hex": "1b5b31383735333b333137383452",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 19360,
+        "screen_cursor_column": 31783,
+        "csi_origin_row": 608
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b31383735333b333137383452",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 59352,
+        "screen_cursor_column": 48604,
+        "csi_origin_row": 14679
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d32303836323b2d313639333152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 59352,
+        "screen_cursor_column": 48604,
+        "csi_origin_row": 14679
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d32303836323b2d313639333152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 58622,
+        "screen_cursor_column": 26685,
+        "csi_origin_row": 32305
+      },
+      "attributes": false,
+      "reply_hex": "1b5b32363331383b323636383652",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 58622,
+        "screen_cursor_column": 26685,
+        "csi_origin_row": 32305
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b32363331383b323636383652",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 11505,
+        "screen_cursor_column": 1731,
+        "csi_origin_row": 61474
+      },
+      "attributes": false,
+      "reply_hex": "1b5b31353536383b3137333252",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 11505,
+        "screen_cursor_column": 1731,
+        "csi_origin_row": 61474
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b31353536383b3137333252",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 41215,
+        "screen_cursor_column": 31250,
+        "csi_origin_row": 38289
+      },
+      "attributes": false,
+      "reply_hex": "1b5b323932373b333132353152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 41215,
+        "screen_cursor_column": 31250,
+        "csi_origin_row": 38289
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b323932373b333132353152",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 0,
+        "csi_report_private_prefix": 0,
+        "screen_cursor_row": 45619,
+        "screen_cursor_column": 63495,
+        "csi_origin_row": 57920
+      },
+      "attributes": false,
+      "reply_hex": "1b5b2d31323330303b2d3230343052",
+      "matched": true
+    },
+    {
+      "state": {
+        "ansi_parameters": 6,
+        "ansi_private": 1,
+        "csi_report_private_prefix": 1,
+        "screen_cursor_row": 45619,
+        "screen_cursor_column": 63495,
+        "csi_origin_row": 57920
+      },
+      "attributes": false,
+      "reply_hex": "1b5b303b2d31323330303b2d3230343052",
+      "matched": true
+    }
+  ]
+}

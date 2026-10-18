@@ -1,0 +1,20 @@
+{
+  "kind": "source-only-recovered-cursor-diagnostic",
+  "binary_sha256": "71302310542277d7d1bffdb5d0674f1a850cea6c94b688f5adcf7652bbef1fa3",
+  "sources": {
+    "reconstruction/screen/cursor_output.asm": "b6583f7648c0f47a565e6361ef58481e3ac64e4bd571ebd4aa98e9873e65dd05",
+    "reconstruction/screen/cursor_pack.asm": "d35d5a306548a99526d13a0833aa3c781cf649b51662aa5a49a6fff80affd353",
+    "reconstruction/screen/down.asm": "250d05ec52e27c50533aab8e81ee8264886125a3f70efd9df228f978cc030af1",
+    "reconstruction/screen/left.asm": "812e101942c99411726283d892c5501edd040daab67edb3098f7dc427841dc9e",
+    "reconstruction/screen/right.asm": "1ef4422d5be97996b70d47e35af92818ac42b7c2b2c1207a26b6fa1d82930851",
+    "reconstruction/screen/set_cursor.asm": "db96a18c8f1d9a928800bf82f329cd57f74032fe920c2123e9de3dd9c8ae07b6",
+    "reconstruction/screen/up.asm": "18722137d743c36c5079d1ebee26ab622c654a0b99f4fc0d67fd9c8f24af4384",
+    "reconstruction/screen/width_transition.asm": "e62505bfb2b67280abe8b035819b69906f61f3eaeb9acbafb8f19ba06ef943a8",
+    "standalone/screen_host.asm": "c69110d7fc4831f71681aaf6b63a4a16b91dcc0a9e7a5a4e4c1e2f357b4c2190",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919"
+  },
+  "limitations": [
+    "Cursor operations only; unresolved viewport/attribute-boundary/wrap services trap in this diagnostic.",
+    "Does not implement screen rendering, scrolling or all CSI commands."
+  ]
+}

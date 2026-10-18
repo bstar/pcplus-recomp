@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "5e78392550fbc90fe03c7a97f558a4ec48f9bc3544a5315caac0055b63397563",
+  "scope": "Source-only DOS executable checks normal, bold, blink, reverse and repeated reverse in DOSBox-X; no original executable or modem."
+}

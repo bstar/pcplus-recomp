@@ -1,0 +1,38 @@
+{
+  "binary_sha256": "fcd319dcc830eafaa93e8971f02736e76fd9bfd041feab23c1b5c669e20d8eef",
+  "cases": [
+    {
+      "case": "rectangle-clear-exact-inclusive-bounds",
+      "passed": true
+    },
+    {
+      "case": "positive-negative-multiline-scroll-and-fill",
+      "passed": true
+    },
+    {
+      "case": "line-and-display-before-cursor",
+      "passed": true
+    },
+    {
+      "case": "line-and-display-after-with-monochrome-attribute",
+      "passed": true
+    },
+    {
+      "case": "overlapping-lineflag-move-and-clearing",
+      "passed": true
+    },
+    {
+      "case": "offscreen-viewport-shadow-fill-without-visible-write",
+      "passed": true
+    },
+    {
+      "case": "attribute-plane-updates-and-explicit-protected-dependency",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Linked CPU replay uses an explicit INT10 text-video model; independent DOSBox smoke validates a real BIOS rectangle.",
+    "Complex protected erase and attribute repair remain unimplemented and trap.",
+    "Does not establish all viewport/video modes, physical adapters or complete parser integration."
+  ]
+}

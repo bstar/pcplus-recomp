@@ -11,6 +11,8 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 | `build/standalone/SERIAL.EXE` | Maintained assembly source only | Independently linked DOS diagnostic exercising the recovered UART module |
 | `build/ansi/PARSER.EXE` | Maintained assembly source only | Independently linked parameter-reader diagnostic with bounds checks |
 | `build/keyboard/KEYBOARD.EXE` | Maintained assembly source only | Recovered BIOS keyboard acquisition/normalization diagnostic |
+| `build/csi/CSI.EXE` | Maintained assembly source only | Combined ESC, parameter, CSI, attribute and cursor self-check |
+| `build/{escape,attributes,screen,text,reports,erase}/` | Maintained assembly source only | Separate DOS diagnostics for each recovered component |
 | `reconstruction/dist/tech-net-candidate/PCPLUS.EXE` | Recovered source plus a locally supplied original executable | Full application with the historical CSI-q lockup fix |
 
 Original executables, dialing/configuration files, disk images, downloaded
@@ -74,6 +76,11 @@ It covers acquisition and normalization, not terminal-specific escape-sequence
 mapping. See `docs/KEYBOARD.md`. The full application acceptance inventory is
 tracked in `docs/FEATURES.md`, including non-terminal features and dependencies.
 
+The combined ANSI path and separate screen/reporting components build and test
+through `./tools/build test-csi`, `test-screen`, `test-attributes`, `test-text`,
+`test-erase`, `test-reports` and `test-escape`. The default `test` target includes
+these diagnostics. See [docs/CSI.md](docs/CSI.md) for integration scope and gaps.
+
 ## Full-application compatibility build
 
 To use this optional path, supply your own original PCPlus 2.01 executable with
@@ -90,7 +97,7 @@ place your supporting installation files, including ASPCOMP.EXE, in
 ./tools/pcplus-run
 ```
 
-The compatibility build verifies and inserts 1,567 serial/parser/keyboard source bytes into the
+The compatibility build verifies and inserts 6,816 recovered source bytes into the
 original container, then replaces exactly two bytes using the archived Datastorm
 TECH_NET recipe. It retains the original program's other code and resources.
 The launcher uses a separate private installation under `reconstruction/lab`.

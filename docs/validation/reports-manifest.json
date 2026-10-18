@@ -1,0 +1,37 @@
+{
+  "kind": "source-only-recovered-reports-with-maintained-decimal-and-captured-output",
+  "binary_sha256": "0edc5ad6e222491d7b1009e9f303d76ec85efd04ea34fd3566e84355d18b993e",
+  "baseline_ranges": [
+    {
+      "name": "csi_primary_attributes",
+      "start": "0xdd58",
+      "end_exclusive": "0xdd74",
+      "file_offset": 92680,
+      "size": 28,
+      "sha256": "bb3daca4b50ed5247c97646df2f8a50828df1c5fcd3e48d2a6e8daaee74b1762",
+      "evidence_id": "ev_ab5318fe68f41fede6731c413af39f89c3843f703e873c5ae7f32b44fb7ef2b8"
+    },
+    {
+      "name": "csi_device_status",
+      "start": "0xde04",
+      "end_exclusive": "0xde98",
+      "file_offset": 92852,
+      "size": 148,
+      "sha256": "3e459e956a02fdc72d27684d5f7b701978251e9053d9a8dec058e8948f684cd1",
+      "evidence_id": "ev_16a244810326f654e59b5a1aff906672de376618f911787c949e6e34c2c1c327"
+    }
+  ],
+  "sources": {
+    "reconstruction/reports/core.asm": "581e2f218f091c87022f4ca45ba913f451d43c7dea325c2c3017c333536f1c15",
+    "src/reports/decimal.asm": "b2c63251711f71a8e573f6dea242db38ca259dde998ca35277df7ef138357a48",
+    "src/reports/data.asm": "9159d8947d3c963f7c0122c46ca4ae194112595811c5a6a85875a1319bf358d1",
+    "standalone/reports_host.asm": "5efad22a40503917139904f08d241e9db1ea007ea7910e1779936c7e44932b73",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/reports/provenance.json": "641655c64b8b54d100ea8a4a70b35341e1f876a3ef60526b95868700eedda5f6"
+  },
+  "limitations": [
+    "Output capture is a fixture; these tests do not exercise live serial transmission.",
+    "Signed decimal and protocol resource layout are maintained sources, not original runtime source.",
+    "DA terminal IDs2..11 supported;0/1 empty placeholders, higher IDs invalid."
+  ]
+}

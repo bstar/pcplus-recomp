@@ -23,9 +23,12 @@ requires an attached DOS machine/modem and must not be inferred from emulation.
 ## 2. ANSI parser and keyboard — active
 
 - [ ] Recover the complete input/parser state machine and its calls/state from REA evidence.
-      Progress: the 175-byte parameter reader and 16-byte transition helper are
-      recovered exactly, linked independently and regression-tested; the outer
-      CSI token loop is traced. See `docs/ANSI.md`.
+      Progress: the parameter reader, transition helper, 477-byte ESC entry and
+      complete 2,018-byte CSI dispatcher are recovered exactly. The linked
+      ESC-to-CSI-to-cursor/attribute path passes CPU and DOSBox-X self-checks.
+      Screen erase, text output and reporting units also pass independent checks;
+      remaining application services still prevent complete parser coverage.
+      See `docs/ANSI.md`, `docs/CSI.md` and component documentation.
 - [ ] Reconstruct independently buildable complete parser and keyboard modules.
       The parameter-reader and BIOS keyboard acquisition/normalization submodules
       build without original artifacts. Terminal-specific key maps remain open.

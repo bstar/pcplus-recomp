@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "flat_sha256": "3a1524f4c69e7e9da59fd67babc99c94dfdcff097c337dfd79f198705f4535b5",
+  "cases": [
+    {
+      "code_padding": 0,
+      "data_padding": 0,
+      "dispatcher_offset": 743,
+      "parameter_offset": 188,
+      "binary_sha256": "82adc5004d90f244e32f4c0c8ca524e2ee18649a9ae5c095e4b64936de2fd2d1",
+      "passed": true
+    },
+    {
+      "code_padding": 311,
+      "data_padding": 593,
+      "dispatcher_offset": 1054,
+      "parameter_offset": 796,
+      "binary_sha256": "2a518fa87fb5a69c41952aa5f78d2e949dba43c1c648ec7b5094a63238aad192",
+      "passed": true
+    },
+    {
+      "code_padding": 8503,
+      "data_padding": 4660,
+      "dispatcher_offset": 9246,
+      "parameter_offset": 4860,
+      "binary_sha256": "623c335d30adb465171253a56cd6928c33d9ed44bfbc454612c8eccd193a0acb",
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked dispatcher jump tables, indexed SGR data, cursor commands and immediate DS string pointers at independently shifted code/data offsets; no original binary required."
+}

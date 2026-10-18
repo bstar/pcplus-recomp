@@ -1,0 +1,74 @@
+[
+  {
+    "address": "0x1d844",
+    "evidence_id": "ev_8329eb43adf9e7a2a7bc8324b282f0bd5a7b16b4955dba1c356452328c0b5e24",
+    "local_source": "pcplus-overlay-anchored-12/functions/0x1d844.asm",
+    "unit": "reconstruction/erase/line_before.asm"
+  },
+  {
+    "address": "0x1d85e",
+    "evidence_id": "ev_8e71c454cb9274f35580582709ab894ad688e7346ce53f764919aff58a9efe2d",
+    "local_source": "pcplus-overlay-anchored-12/functions/0x1d85e.asm",
+    "unit": "reconstruction/erase/display_before.asm"
+  },
+  {
+    "address": "0x1d8b6",
+    "evidence_id": "ev_78c7ce31a7e939363799bf562cad696bdcd9e216193be19e9a82febea8ec03fe",
+    "local_source": "pcplus-overlay-anchored-12/functions/0x1d8b6.asm",
+    "unit": "reconstruction/erase/display_after.asm"
+  },
+  {
+    "address": "0x12530",
+    "evidence_id": "ev_09dd4af1249e8240762b397b3674679789c6daee1ed1811e4e867018942ac064",
+    "local_source": "pcplus-main/functions/0x12530.asm",
+    "unit": "reconstruction/erase/rectangle.asm"
+  },
+  {
+    "address": "0x16edc",
+    "evidence_id": "ev_598feb9561f320188ee5979f49a116aca1e269480070294829df2f867a1ae750",
+    "local_source": "pcplus-main/functions/0x16edc.asm",
+    "unit": "reconstruction/erase/scroll_up.asm"
+  },
+  {
+    "address": "0x16ec2",
+    "evidence_id": "ev_24a3703bd08103288264b64ce94ff9adb8a9046cda1609768cc858887b7a83d2",
+    "local_source": "pcplus-main/functions/0x16ec2.asm",
+    "unit": "reconstruction/erase/scroll_down.asm"
+  },
+  {
+    "address": "0x163fa",
+    "evidence_id": "ev_00fd6ea8b005708b559f7beb03ac7575758db8cf28a2b5298f3656dd8dcea899",
+    "local_source": "pcplus-main/functions/0x163fa.asm",
+    "unit": "reconstruction/erase/far_fill.asm"
+  },
+  {
+    "address": "0x16412",
+    "evidence_id": "ev_7f7f59ad5dfdf10c6407bec8ea2491c461d4864d95aa8505d8de06b3aa450284",
+    "local_source": "pcplus-main/functions/0x16412.asm",
+    "unit": "reconstruction/erase/far_move.asm"
+  },
+  {
+    "address": "0x185b4",
+    "evidence_id": "ev_b567ea364ede99ec601af61830228b5859d219514290626e3c4f857879b80e17",
+    "local_source": "pcplus-main/functions/0x185b4.asm",
+    "unit": "reconstruction/erase/move_bytes.asm"
+  },
+  {
+    "address": "0x12d38",
+    "evidence_id": "ev_eb88462b1d6df2a14772d8711dcebb110e347dd8eadbf03010ee09409b297a28",
+    "local_source": "pcplus-main/functions/0x12d38.asm",
+    "unit": "reconstruction/erase/default_attribute.asm"
+  },
+  {
+    "address": "0x12d4c",
+    "evidence_id": "ev_5a9a94d3452b216921f758dc39edcee2a66c00491abefa2df1ddea3c839dc26f",
+    "local_source": "pcplus-main/functions/0x12d4c.asm",
+    "unit": "reconstruction/erase/previous_attribute.asm"
+  },
+  {
+    "address": "0x12d6c",
+    "evidence_id": "ev_3709222e39df8dea3fe5cabbac40f63a2c1f0bb945f153e5c9ce5553e9b2fdf9",
+    "local_source": "pcplus-main/functions/0x12d6c.asm",
+    "unit": "reconstruction/erase/scan_attributes.asm"
+  }
+]
