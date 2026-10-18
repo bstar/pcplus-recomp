@@ -26,6 +26,13 @@ class DosImage:
             value = struct.unpack('<H', self.uc.mem_read(at, 2))[0]
             self.uc.mem_write(at, struct.pack('<H', (value + self.base_segment) & 0xffff))
         listing = Path(map_path).read_text()
+        code = re.search(r'^_TEXT\s+CODE\s+\S+\s+0000:([0-9a-f]+)\s+([0-9a-f]+)', listing, re.M | re.I)
+        assert code, 'Expected one near code segment'
+        code_end = int(code[1], 16) + int(code[2], 16)
+        # The growing live application can occupy F000. Never let a test
+        # return hook silently stop execution in the middle of product code.
+        self.return_offset = 0xf000 if code_end <= 0xf000 else 0xfffe
+        assert code_end <= self.return_offset, 'No unused near return sentinel'
         group = re.search(r'^DGROUP\s+([0-9a-f]+):([0-9a-f]+)', listing, re.M | re.I)
         assert group
         self.ds = self.base_segment + int(group[1], 16)
@@ -45,7 +52,7 @@ class DosImage:
         return self.symbols[name] - self.data_base
 
     def _stop(self, uc, address, size, _):
-        if address == self.base + 0xf000:
+        if address == self.base + self.return_offset:
             self.returned = True
             uc.emu_stop()
 
@@ -55,7 +62,7 @@ class DosImage:
             (UC_X86_REG_SS,self.ds), (UC_X86_REG_EFLAGS,0x202),
             (UC_X86_REG_BP,0xbabe), (UC_X86_REG_SI,0x1234), (UC_X86_REG_DI,0x5678)]:
             uc.reg_write(register,value)
-        words = [0xf000] + list(arguments)
+        words = [self.return_offset] + list(arguments)
         sp = (self.offset('terminal_stack_top') if 'terminal_stack_top' in self.symbols else 0xe000) - len(words) * 2
         uc.mem_write(self.data_base + sp,struct.pack('<' + 'H' * len(words),*words))
         uc.reg_write(UC_X86_REG_SP,sp)

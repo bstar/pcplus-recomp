@@ -88,10 +88,6 @@ global render_font_output
 render_font_output:
  mov ax,0xbb53
  jmp csi_unimplemented
-global terminal_sink_36fc
-terminal_sink_36fc:
- mov ax,0x36fc
- jmp csi_unimplemented
 global terminal_escape_b98b
 terminal_escape_b98b:
  mov ax,0xb98b

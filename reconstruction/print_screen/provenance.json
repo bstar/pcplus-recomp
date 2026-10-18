@@ -1,0 +1,90 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "source": "media_copy.asm",
+      "start": "0xe084",
+      "end_exclusive": "0xe0f8",
+      "bytes": 116,
+      "source_file_offset": 93492,
+      "sha256": "3668d6602e287d7e3a361cac373b08c5d8bb164763fe79fa12923791d8e77761",
+      "region": "overlay12"
+    },
+    {
+      "source": "screen.asm",
+      "start": "0xe2f8",
+      "end_exclusive": "0xe3c9",
+      "bytes": 209,
+      "source_file_offset": 94120,
+      "sha256": "320a65dcace3aea2f9eb143d4d07a37219807198380fe2bfee13f28f6de7c1a4",
+      "region": "overlay12"
+    },
+    {
+      "source": "selection.asm",
+      "start": "0xe3ca",
+      "end_exclusive": "0xe3f2",
+      "bytes": 40,
+      "source_file_offset": 94330,
+      "sha256": "074345ba3c67d914c1a6c133cb8708c5cccc25390fd0ad7db1257c86c78995eb",
+      "region": "overlay12"
+    }
+  ],
+  "state": {
+    "0xcb5c": "print_parameter_count",
+    "0xcb3c": "print_parameters",
+    "0xceac": "print_copy_policy",
+    "0x3988": "printer_enabled",
+    "0x3982": "print_region_mode",
+    "0x3980": "print_formfeed",
+    "0x2b7c": "print_status_text",
+    "0x7522": "print_text_mode",
+    "0x1d50": "printer_device",
+    "0x8ff0": "printer_stream",
+    "0x399c": "print_cursor_row",
+    "0x399e": "print_cursor_column",
+    "0x334c": "print_row_limit",
+    "0xce0e": "print_region_top",
+    "0xce3a": "print_region_bottom",
+    "0x3344": "print_video_offset",
+    "0x3258": "print_last_column"
+  },
+  "boundaries": {
+    "0xe084": "print_media_copy_original",
+    "0xe2f8": "print_screen_original",
+    "0xe3ca": "print_selection_original",
+    "0x1a76": "printer_toggle_original",
+    "0xd0d0": "print_copy_fallback",
+    "0x3226": "print_status_message",
+    "0x841a": "printer_open",
+    "0x1bbe": "print_set_cursor",
+    "0x6fa0": "ui_read_byte",
+    "0x8436": "printer_putc",
+    "0x8c54": "printer_flush",
+    "0x8318": "printer_close",
+    "0x2fb8": "printer_status",
+    "0x36fc": "printer_byte_original"
+  },
+  "reused_sources": [
+    "reconstruction/printer/byte.asm",
+    "reconstruction/printer/toggle.asm",
+    "reconstruction/ui_windows/read_byte.asm"
+  ],
+  "supporting_evidence": [
+    {
+      "export": "analysis/pcplus-overlay-anchored-12/functions/0x1e084-asm.json",
+      "evidence_id": "ev_2f719bdb438c8bc4be6d045eefdb5891b0e9439a983e0197cd8fcef6d3b35987"
+    },
+    {
+      "export": "analysis/pcplus-overlay-anchored-12/functions/0x1e2f8-asm.json",
+      "evidence_id": "ev_e93d8b17d34c8a6d6de8681c47ca87d75edf0feb2859696d55402e512a275e0b"
+    },
+    {
+      "export": "analysis/pcplus-overlay-anchored-12/functions/0x1e3ca-asm.json",
+      "evidence_id": "ev_be9ebd36f995696b314f779b0ee5314a5e078a2aae90bc1b6a63b8c9536ee2ce"
+    }
+  ],
+  "limitations": [
+    "Diagnostic CRT/UI/cursor boundaries are explicit fixtures, not a live printer.",
+    "Native null-open, ignored IO errors, shared FILE overwrite and formfeed after close are preserved."
+  ]
+}

@@ -200,6 +200,8 @@ terminal_program_poll:
  jmp .done ; Wait for this XOFF's physical shift-register completion too.
 .launch:
  call terminal_capture_before_program
+ cmp ax,2
+ je .printer_wait
  or ax,ax
  jnz .cancel
  call terminal_connection_notice_restore
@@ -304,6 +306,11 @@ terminal_program_poll:
  call program_restore_uart
  mov word [terminal_program_active],0
  call program_resume_flow
+ jmp .done
+.printer_wait:
+ ; Printer has its own bounded progress timer; keep the UART handoff deadline
+ ; fresh while the foreground main loop drains it before DOS EXEC.
+ call program_progress
  jmp .done
 .cancel:
  call terminal_program_cancel

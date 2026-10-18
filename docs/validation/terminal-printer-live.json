@@ -1,0 +1,715 @@
+{
+  "passed": true,
+  "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328",
+  "linked_checks": {
+    "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328",
+    "passed": true,
+    "groups": [
+      {
+        "case": "all256-byte-queue-ringwrap-max16-write-poll-preserved-registers-mode-restore",
+        "inputs": 256,
+        "passed": true
+      },
+      {
+        "case": "actual09b6-printerCR-LF-FF-DEL-textcapture-and-rawmonitor-coexistence",
+        "inputs": 2,
+        "passed": true
+      },
+      {
+        "case": "receive-backpressure-reserves-two-native-output-bytes-busy-keeps-queue",
+        "inputs": 3,
+        "passed": true
+      },
+      {
+        "case": "18-full-BIOS-tick-no-progress-lowword-and-midnight-timeout",
+        "inputs": 3,
+        "passed": true
+      },
+      {
+        "case": "ready-short-write-restore-close-errors-firststicky-no-retry-child-uncertainty",
+        "inputs": 6,
+        "passed": true
+      },
+      {
+        "case": "denied-open-UI-only-acquired-identity-mode-errors-sticky-close-once",
+        "inputs": 4,
+        "passed": true
+      },
+      {
+        "case": "transfer-barrier-preserves-enabled-PROGRAM-drains-closes-shutdown-bounded",
+        "inputs": 3,
+        "passed": true
+      },
+      {
+        "case": "actual-AltL-key-route-and-owner-admission-no-printer-IO-on-denial",
+        "inputs": 9,
+        "passed": true
+      },
+      {
+        "case": "actual-PROGRAM-safe-point-AX2-retry-drain-close-before-EXEC-uncertain-cancels",
+        "inputs": 3,
+        "passed": true
+      },
+      {
+        "case": "actual-pending-transfer-poll-printer-barrier-before-UI-state-DOS-or-wire",
+        "inputs": 3,
+        "passed": true
+      },
+      {
+        "case": "queue-overflow-explicit-sticky-never-overwrites-or-writes-prefix",
+        "inputs": 1,
+        "passed": true
+      }
+    ],
+    "scope": "Actual linked native logger, live queue/foreground policy, checked C owner and DOS IOCTL boundary instructions. Only DOS device/filesystem, BIOS ticks/keyboard and UART hardware modeled; no physical PRN or driver timing claim."
+  },
+  "device_backend_checks": {
+    "passed": true,
+    "checks": {
+      "DOS_exits": true,
+      "NORMAL": true,
+      "CLOSE": true,
+      "BOTH": true
+    },
+    "cases": {
+      "NORMAL": [
+        "PASS before-init rejection leaves dirty BSS and kernel unchanged",
+        "PASS DATA cookie initializes exact32B ABI",
+        "PASS fixture never discards unresolved owner",
+        "PASS failed open acquires nothing",
+        "PASS denied open cleanup makes no close",
+        "PASS fixture never discards unresolved owner",
+        "PASS failed identity closes acquired handle without mode mutation",
+        "PASS fixture never discards unresolved owner",
+        "PASS regular-file identity never written or set raw",
+        "PASS fixture never discards unresolved owner",
+        "PASS reserved device mode bit fails closed",
+        "PASS fixture never discards unresolved owner",
+        "PASS failed raw set attempts original restoration once then closes",
+        "PASS fixture never discards unresolved owner",
+        "PASS raw setup preserves low driver flags with DH0 contract",
+        "PASS active initialize and rebegin cannot orphan handle",
+        "PASS busy device does not write or poison owner",
+        "PASS all256 binary bytes written exactly once after fresh readiness",
+        "PASS invalid word cannot become another byte",
+        "PASS restore original mode precedes physical close",
+        "PASS resolved repeated cleanup never closes reused handle",
+        "PASS fixture never discards unresolved owner",
+        "PASS already raw mode needs no mutation or restore",
+        "PASS fixture never discards unresolved owner",
+        "PASS prepare readiness error",
+        "PASS readiness error poisons without write",
+        "PASS readiness first failure survives close",
+        "PASS fixture never discards unresolved owner",
+        "PASS prepare malformed readiness",
+        "PASS nonstandard status fails closed",
+        "PASS malformed readiness owner closes",
+        "PASS fixture never discards unresolved owner",
+        "PASS prepare positive short singlebyte failure",
+        "PASS short singlebyte write never retried",
+        "PASS short failure retained after close",
+        "PASS fixture never discards unresolved owner",
+        "PASS prepare error with accepted byte",
+        "PASS error accounting retains actual accepted byte",
+        "PASS write DOS error survives checked close",
+        "PASS fixture never discards unresolved owner",
+        "PASS prepare counter overflow",
+        "PASS DWORD accepted overflow prevents IO",
+        "PASS overflow failure stays first",
+        "CASES 43"
+      ],
+      "CLOSE": [
+        "PASS before-init rejection leaves dirty BSS and kernel unchanged",
+        "PASS DATA cookie initializes exact32B ABI",
+        "PASS fixture never discards unresolved owner",
+        "PASS uncertain fixture admitted",
+        "PASS ambiguous close retains physical ownership and first status",
+        "PASS ambiguous cannot reset reopen restore write or close again",
+        "PASS restore and close errors remain independently visible",
+        "CASES 7"
+      ],
+      "BOTH": [
+        "PASS before-init rejection leaves dirty BSS and kernel unchanged",
+        "PASS DATA cookie initializes exact32B ABI",
+        "PASS fixture never discards unresolved owner",
+        "PASS uncertain fixture admitted",
+        "PASS ambiguous close retains physical ownership and first status",
+        "PASS ambiguous cannot reset reopen restore write or close again",
+        "PASS restore and close errors remain independently visible",
+        "CASES 7"
+      ]
+    },
+    "binaries": {
+      "PRINTER.EXE": "07308264cb1d4c6ec70ed46e103d288027b1d33227d00d040fd824da9d87ef52"
+    },
+    "sources": {
+      "src/printer/printer_device.c": "86be953e09835415339ad4bf5f8728139fe503777c0413c12dec8da9d735b27f",
+      "src/printer/printer_device.h": "c7a354b7002c64ae1855d75e16ccf99017f768746d64c1c710e48dfa7b37b42e",
+      "src/printer/printer_fs.c": "cb481610c346892f4b8bbdd8579978b9654df3853be9afd51755f1717d7db773",
+      "src/printer/printer_fs.h": "4d6bbea942d3bae1c96886fea456087927a52ab71bd614284c1e8f3b1d70690c",
+      "standalone/check_printer_device.py": "78c920dab84176d37b6c292f37d06f924a547bb5ad06aab79444a4368b991ba6",
+      "standalone/printer_device_host.c": "f89a08fb20756fa5db630067b025d67a4cd7acf7409734b0719dcb10eb831528"
+    },
+    "module_segments": {
+      "printer_device": {
+        "_TEXT": {
+          "class": "CODE",
+          "bytes": 613
+        },
+        "CONST": {
+          "class": "DATA",
+          "bytes": 0
+        },
+        "CONST2": {
+          "class": "DATA",
+          "bytes": 0
+        },
+        "_DATA": {
+          "class": "DATA",
+          "bytes": 4
+        },
+        "_BSS": {
+          "class": "BSS",
+          "bytes": 32
+        }
+      },
+      "printer_fs": {
+        "_TEXT": {
+          "class": "CODE",
+          "bytes": 180
+        },
+        "CONST": {
+          "class": "DATA",
+          "bytes": 4
+        },
+        "CONST2": {
+          "class": "DATA",
+          "bytes": 0
+        },
+        "_DATA": {
+          "class": "DATA",
+          "bytes": 0
+        }
+      }
+    },
+    "static_state_bytes": 36,
+    "snapshot_abi_bytes": 32,
+    "minimum_kernel_contract": "DOS openPRN write-only3D,4400/4401 character/raw info withDH0,4407 readiness,40h exactbyte,3Eh close",
+    "scope": "Actual8086 DOS execution of checked source device owner with explicit mocked DOS kernel boundaries; no actual PRN driver or physical output exercised. Driver calls are not timing bounded. Reference https://www.pcjs.org/documents/books/mspl13/msdos/dosref33/"
+  },
+  "device_probe": [
+    {
+      "passed": true,
+      "checks": {
+        "DOS_exit": true,
+        "report_extent": true,
+        "actual_PRN_open": true,
+        "character_device": true,
+        "binary_set": true,
+        "ready": true,
+        "write_count": true,
+        "close_ok": true,
+        "exact_all256": true
+      },
+      "mode": "file",
+      "returncode": 0,
+      "words": [
+        29186,
+        5,
+        29186,
+        32928,
+        32928,
+        29190,
+        17568,
+        29190,
+        17663,
+        29254,
+        256,
+        29190,
+        15873
+      ],
+      "raw_size": 256,
+      "raw_sha256": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+      "exact_all256": true
+    },
+    {
+      "passed": true,
+      "checks": {
+        "DOS_exit": true,
+        "report_extent": true,
+        "unavailable_open": true,
+        "no_output": true
+      },
+      "mode": "disabled",
+      "returncode": 0,
+      "words": [
+        29187,
+        2,
+        65535,
+        65535,
+        65535,
+        65535,
+        65535,
+        65535,
+        65535,
+        65535,
+        65535,
+        65535,
+        65535
+      ],
+      "raw_size": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_all256": false
+    }
+  ],
+  "device_probe_artifacts": {
+    "build/terminal-printer-dos/parallel-key-probe-3/disabled/PROBE.BIN": "1475d67ecc4637ebf677ec628bb6a7dbdd491e83149ba05292969ee5a0f6cbe6",
+    "build/terminal-printer-dos/parallel-key-probe-3/disabled/PROBE.COM": "f0e1a9b189c54839c4a5c8e75f8a6a30fc135505ec032b357df92c5019ed8de5",
+    "build/terminal-printer-dos/parallel-key-probe-3/disabled/PROBE.asm": "1599059651e5e21d9e8075444ae7816273f639b78577d9e0ca5398466f071e74",
+    "build/terminal-printer-dos/parallel-key-probe-3/disabled/dosbox.conf": "93ba258d6f5e82a86737024985b719ddfe5dad15ddd8cfc60631cdfd6421f3de",
+    "build/terminal-printer-dos/parallel-key-probe-3/disabled/dosbox.log": "fa63509bfe5dbb57f43087f98e386d27cf871334323fb6050aa2f9dfceda701e",
+    "build/terminal-printer-dos/parallel-key-probe-3/disabled/result.json": "2bc9f9d973eb968a101ebb9e8f198d12e137c1d1a2732d2e839429a2e27dd1a6",
+    "build/terminal-printer-dos/parallel-key-probe-3/file/PRINTER.RAW": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+    "build/terminal-printer-dos/parallel-key-probe-3/file/PROBE.BIN": "6ff6fcd3d23a29ace83188e542f03fa14496dbe2ce1fc914180f2e782cf2e02d",
+    "build/terminal-printer-dos/parallel-key-probe-3/file/PROBE.COM": "f0e1a9b189c54839c4a5c8e75f8a6a30fc135505ec032b357df92c5019ed8de5",
+    "build/terminal-printer-dos/parallel-key-probe-3/file/PROBE.asm": "1599059651e5e21d9e8075444ae7816273f639b78577d9e0ca5398466f071e74",
+    "build/terminal-printer-dos/parallel-key-probe-3/file/dosbox.conf": "37e362b6a2c5520af7cdd088a35e0259fe68adb216cb55aa898cbab06fe4e397",
+    "build/terminal-printer-dos/parallel-key-probe-3/file/dosbox.log": "2fa55743e031ebe49149edb0f30e96dbcbec1bfde57738d19e6ab3a42bcf3bc5",
+    "build/terminal-printer-dos/parallel-key-probe-3/file/result.json": "c8fb479c5529066b6702ad4dba876d5d2cd73f3a5606681574d521384a8a0457",
+    "build/terminal-printer-dos/parallel-key-probe-3/key/KEY.BIN": "eb397f6553d3485bc197003a6be3e81c6f696675467b648f0791a8be05de1230",
+    "build/terminal-printer-dos/parallel-key-probe-3/key/KEY.COM": "c8eb3b9c9a61e8e4b482a859fd7e47e82028162520abb5e9ca5c516fe8591362",
+    "build/terminal-printer-dos/parallel-key-probe-3/key/KEY.asm": "266e00f27bb4c13c2c04e7f2cb186e7b027fb07997c1711c852ee4230308db45",
+    "build/terminal-printer-dos/parallel-key-probe-3/key/dosbox.conf": "59a2c03fb1fa1b56fd778a7ac0edb47c43b3035f7b7e4d066213e128a7b5241c",
+    "build/terminal-printer-dos/parallel-key-probe-3/key/dosbox.log": "8b184b43ae6ec53fcac81db15243f7bacaced1a91bc570d92ae93faaff633d26",
+    "build/terminal-printer-dos/parallel-key-probe-3/probe.json": "c6cf856f8e3539fe1246c37ee9516555d3f5271e8fc55d0536b49c1c38fc00d1"
+  },
+  "runs": [
+    {
+      "passed": true,
+      "case": "plain-native-filter-and-close",
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_normal_parser_DSR": true,
+        "processed_stream_answered_DSR": true,
+        "normal_parser_and_keyboard_after_close": true,
+        "actual_ready": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "no_peer_errors": true,
+        "exact_virtual_PRN_bytes": true,
+        "required_postclose_parser_keyboard": true,
+        "no_unexpected_files": true
+      },
+      "errors": [],
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328",
+      "seconds": 5.574,
+      "keys": "p1500 a-l p500 m 1 p1700 a-l p500 m 4 p700 r e a d y p500 a-x",
+      "scope": "ActualDOS PRN handle/IOCTL/write/close with DOSBox-X file-only virtualparallel. No physicalprinter/readinessstall/devicewritefault claim.",
+      "label": "initial-f2c7",
+      "retained_artifacts": {
+        "build/terminal-printer-dos/initial-f2c7/plain-native-filter-and-close/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/plain-native-filter-and-close/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/plain-native-filter-and-close/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-printer-dos/initial-f2c7/plain-native-filter-and-close/PRINTER.RAW": "bf5f870def0012ec928186c5f42ec4c7e91265eec5012d4ec0cd2636117d4200",
+        "build/terminal-printer-dos/initial-f2c7/plain-native-filter-and-close/SCREEN.BIN": "dee57f8b822a135d7632c6cf3838abf0557460349ca0102f0f3b71b6241ba8d1",
+        "build/terminal-printer-dos/initial-f2c7/plain-native-filter-and-close/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-printer-dos/initial-f2c7/plain-native-filter-and-close/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-printer-dos/initial-f2c7/plain-native-filter-and-close/dosbox.conf": "96b3be5b9a1d04448d192dd2d60080c53ef0b09c2fe5fb1075e61aac88ccd6dd",
+        "build/terminal-printer-dos/initial-f2c7/plain-native-filter-and-close/dosbox.log": "1e2e8e119a55e84dabce546871006a0d2ca5ce1ba132fff757a5a8437368afb2",
+        "build/terminal-printer-dos/initial-f2c7/plain-native-filter-and-close/events.json": "879de38d9879d5985c93c38dc0fe75e9fe68f0488027a028710684cc6c49d6a6",
+        "build/terminal-printer-dos/initial-f2c7/plain-native-filter-and-close/expected-printer.bin": "bf5f870def0012ec928186c5f42ec4c7e91265eec5012d4ec0cd2636117d4200",
+        "build/terminal-printer-dos/initial-f2c7/plain-native-filter-and-close/peer.bin": "e9cf6576a1a8af8b985caced4393de988f3cccead77a4097c4f1e71c4107537b",
+        "build/terminal-printer-dos/initial-f2c7/plain-native-filter-and-close/result.json": "09c8bf293c45fcc06680efbb44e688721dd00db2d1f785123e08b38eb7910655",
+        "build/terminal-printer-dos/initial-f2c7/plain-native-filter-and-close/screen.txt": "c31783af1d5fae3d1bf9c88f53e0cf2ce1fde35d0deb7a3e67b790484d163071",
+        "build/terminal-printer-dos/initial-f2c7/plain-native-filter-and-close/serial.bin": "c7ba1ee38165fa1b504729ce967cf0d74dad3ae4e6fd2f6360edb4244941a8a6"
+      }
+    },
+    {
+      "passed": true,
+      "case": "shutdown-closes-active",
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_normal_parser_DSR": true,
+        "processed_stream_answered_DSR": true,
+        "actual_shutdown_closed_serial": true,
+        "actual_ready": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "no_peer_errors": true,
+        "exact_virtual_PRN_bytes": true,
+        "required_actual_shutdown_closed_serial": true,
+        "no_unexpected_files": true
+      },
+      "errors": [],
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328",
+      "seconds": 3.82,
+      "keys": "p1500 a-l p500 m 1 p1700 a-x",
+      "scope": "ActualDOS PRN handle/IOCTL/write/close with DOSBox-X file-only virtualparallel. No physicalprinter/readinessstall/devicewritefault claim.",
+      "label": "initial-f2c7",
+      "retained_artifacts": {
+        "build/terminal-printer-dos/initial-f2c7/shutdown-closes-active/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/shutdown-closes-active/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/shutdown-closes-active/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-printer-dos/initial-f2c7/shutdown-closes-active/PRINTER.RAW": "bf5f870def0012ec928186c5f42ec4c7e91265eec5012d4ec0cd2636117d4200",
+        "build/terminal-printer-dos/initial-f2c7/shutdown-closes-active/SCREEN.BIN": "b51a46d7db3b8033ba131146e093c648df023e55e93014ad53ca60500b89075d",
+        "build/terminal-printer-dos/initial-f2c7/shutdown-closes-active/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-printer-dos/initial-f2c7/shutdown-closes-active/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-printer-dos/initial-f2c7/shutdown-closes-active/dosbox.conf": "5ed8f5670e701bbad829bddf332c237a9da98cfa74bd65a1d39e649bd656eeea",
+        "build/terminal-printer-dos/initial-f2c7/shutdown-closes-active/dosbox.log": "dc8fe9d05ad68ea2781e1dde6191c8d97ac24616b81fa30d0ef709986dd06d6a",
+        "build/terminal-printer-dos/initial-f2c7/shutdown-closes-active/events.json": "9188e9571dd8eebeef21320c24efde547ec5d86c09705e83c2b4a02f47c3ac58",
+        "build/terminal-printer-dos/initial-f2c7/shutdown-closes-active/expected-printer.bin": "bf5f870def0012ec928186c5f42ec4c7e91265eec5012d4ec0cd2636117d4200",
+        "build/terminal-printer-dos/initial-f2c7/shutdown-closes-active/peer.bin": "e62bce92f2c184ae2835bf5d422bcedf3e7d033f8979a075a343d95d4a3e56e1",
+        "build/terminal-printer-dos/initial-f2c7/shutdown-closes-active/result.json": "29d249a4f4f03914a6d5293c0d95ff3fb2f24e47fa6f86797b98f3eecd486d94",
+        "build/terminal-printer-dos/initial-f2c7/shutdown-closes-active/screen.txt": "3d1e0a7b1a8c93ae6bfe19e2b8aff5567bad791aa43c93fde2be4aeb2a905c5d",
+        "build/terminal-printer-dos/initial-f2c7/shutdown-closes-active/serial.bin": "13f24fa43bddac85888dd2755de4b5ae0cf188b563471e20fa0cec823c358ad2"
+      }
+    },
+    {
+      "passed": true,
+      "case": "CR-adds-LF",
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_normal_parser_DSR": true,
+        "processed_stream_answered_DSR": true,
+        "normal_parser_and_keyboard_after_close": true,
+        "actual_ready": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "no_peer_errors": true,
+        "exact_virtual_PRN_bytes": true,
+        "required_postclose_parser_keyboard": true,
+        "no_unexpected_files": true
+      },
+      "errors": [],
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328",
+      "seconds": 5.872,
+      "keys": "p1500 a-f3 p300 a-l p500 m 1 p1700 a-l p500 m 4 p700 r e a d y p500 a-x",
+      "scope": "ActualDOS PRN handle/IOCTL/write/close with DOSBox-X file-only virtualparallel. No physicalprinter/readinessstall/devicewritefault claim.",
+      "label": "initial-f2c7",
+      "retained_artifacts": {
+        "build/terminal-printer-dos/initial-f2c7/CR-adds-LF/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/CR-adds-LF/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/CR-adds-LF/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-printer-dos/initial-f2c7/CR-adds-LF/PRINTER.RAW": "e38deb0ad3e5abdae518e21513245c2567abd99f3ac3f80252d5f6bf940029fe",
+        "build/terminal-printer-dos/initial-f2c7/CR-adds-LF/SCREEN.BIN": "31759116d3fd97fb7e6aabd219d1318d271a96591e9853447121702e6bc94d0c",
+        "build/terminal-printer-dos/initial-f2c7/CR-adds-LF/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-printer-dos/initial-f2c7/CR-adds-LF/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-printer-dos/initial-f2c7/CR-adds-LF/dosbox.conf": "d32897eea4f4da19039f538d0430269b76b90dd9d207c032323d2b7b50cbfcad",
+        "build/terminal-printer-dos/initial-f2c7/CR-adds-LF/dosbox.log": "ddbc01eb85980122920e64105471e7977bd38e742415dc0896dc84dad26086f2",
+        "build/terminal-printer-dos/initial-f2c7/CR-adds-LF/events.json": "1c97efdbf735abcb5bdd8bfa4e1743454cb50201cd494f4fc687d04574b002c6",
+        "build/terminal-printer-dos/initial-f2c7/CR-adds-LF/expected-printer.bin": "e38deb0ad3e5abdae518e21513245c2567abd99f3ac3f80252d5f6bf940029fe",
+        "build/terminal-printer-dos/initial-f2c7/CR-adds-LF/peer.bin": "e9cf6576a1a8af8b985caced4393de988f3cccead77a4097c4f1e71c4107537b",
+        "build/terminal-printer-dos/initial-f2c7/CR-adds-LF/result.json": "cee7a5456cbfed2a6bbccc7c827726a9058869ad84f18bcb5373e6af71c59cb5",
+        "build/terminal-printer-dos/initial-f2c7/CR-adds-LF/screen.txt": "6cb8b22bc55fafc7c51fa98a7ba916b1d4607f029dd9d39e2154cb0484018557",
+        "build/terminal-printer-dos/initial-f2c7/CR-adds-LF/serial.bin": "c7ba1ee38165fa1b504729ce967cf0d74dad3ae4e6fd2f6360edb4244941a8a6"
+      }
+    },
+    {
+      "passed": true,
+      "case": "close-reopen-appends",
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_normal_parser_DSR": true,
+        "processed_stream_answered_DSR": true,
+        "normal_parser_and_keyboard_after_close": true,
+        "actual_ready": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "no_peer_errors": true,
+        "exact_virtual_PRN_bytes": true,
+        "required_postclose_parser_keyboard": true,
+        "no_unexpected_files": true
+      },
+      "errors": [],
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328",
+      "seconds": 7.175,
+      "keys": "p1500 a-l p500 m 1 p1700 a-l p300 a-l p300 m 2 p1000 a-l p500 m 4 p700 r e a d y p500 a-x",
+      "scope": "ActualDOS PRN handle/IOCTL/write/close with DOSBox-X file-only virtualparallel. No physicalprinter/readinessstall/devicewritefault claim.",
+      "label": "initial-f2c7",
+      "retained_artifacts": {
+        "build/terminal-printer-dos/initial-f2c7/close-reopen-appends/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/close-reopen-appends/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/close-reopen-appends/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-printer-dos/initial-f2c7/close-reopen-appends/PRINTER.RAW": "d800f708c06140869ec32f6944862aae3744a0086eb5e5aeb532714595b495f5",
+        "build/terminal-printer-dos/initial-f2c7/close-reopen-appends/SCREEN.BIN": "7df7c1b8899b00eada35609d61bfc4d049db88641bd282cec9a029f92224157c",
+        "build/terminal-printer-dos/initial-f2c7/close-reopen-appends/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-printer-dos/initial-f2c7/close-reopen-appends/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-printer-dos/initial-f2c7/close-reopen-appends/dosbox.conf": "0e631c28ef53b7887b28d0e5f8ecbe806566f91e25980ad0bab4fe2c06ee64fc",
+        "build/terminal-printer-dos/initial-f2c7/close-reopen-appends/dosbox.log": "9aaaedd17da8b3e25737ee60f1581bd46f5803b6da307d78679dc69384731fa0",
+        "build/terminal-printer-dos/initial-f2c7/close-reopen-appends/events.json": "64ac019831f8c38e6da2d4dbe23db671a2ad040340c2b711bda4d804cc66d3ac",
+        "build/terminal-printer-dos/initial-f2c7/close-reopen-appends/expected-printer.bin": "d800f708c06140869ec32f6944862aae3744a0086eb5e5aeb532714595b495f5",
+        "build/terminal-printer-dos/initial-f2c7/close-reopen-appends/peer.bin": "c8b1ba511774beccab02b70d37e0cf13df44566e135f7c48af39f17d5fb5c595",
+        "build/terminal-printer-dos/initial-f2c7/close-reopen-appends/result.json": "3667e1379d6e20aebf12eaffeb2c7e8922f4caeb17f6ebcbfe9530d493abb35f",
+        "build/terminal-printer-dos/initial-f2c7/close-reopen-appends/screen.txt": "e36d0398e743cced4ba11dd9b03609b7e655acf45e4bb5f9a498992d999d551e",
+        "build/terminal-printer-dos/initial-f2c7/close-reopen-appends/serial.bin": "f3a2379ac8e48a09d3eaa4345c52d33e7c1ba1bf0ae7be4c3f4de98c5ebea046"
+      }
+    },
+    {
+      "passed": true,
+      "case": "large-finite-queue",
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_normal_parser_DSR": true,
+        "processed_stream_answered_DSR": true,
+        "normal_parser_and_keyboard_after_close": true,
+        "actual_ready": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "no_peer_errors": true,
+        "exact_virtual_PRN_bytes": true,
+        "required_postclose_parser_keyboard": true,
+        "no_unexpected_files": true
+      },
+      "errors": [],
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328",
+      "seconds": 5.574,
+      "keys": "p1500 a-l p500 m 1 p1700 a-l p500 m 4 p700 r e a d y p500 a-x",
+      "scope": "ActualDOS PRN handle/IOCTL/write/close with DOSBox-X file-only virtualparallel. No physicalprinter/readinessstall/devicewritefault claim.",
+      "label": "initial-f2c7",
+      "retained_artifacts": {
+        "build/terminal-printer-dos/initial-f2c7/large-finite-queue/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/large-finite-queue/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/large-finite-queue/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-printer-dos/initial-f2c7/large-finite-queue/PRINTER.RAW": "49da64b05c878236d93faa7d27ff5644eeaea6a29bf17d56f840afd56021c7b3",
+        "build/terminal-printer-dos/initial-f2c7/large-finite-queue/SCREEN.BIN": "31a5b7f499baf31557f648221a7d778ccadc0765ef54c61c573e537afbbec784",
+        "build/terminal-printer-dos/initial-f2c7/large-finite-queue/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-printer-dos/initial-f2c7/large-finite-queue/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-printer-dos/initial-f2c7/large-finite-queue/dosbox.conf": "2c0f4a224dcc95ea42ac5c3eb5c1c9cb55fe3b694128f48ded27143efa9f1fbe",
+        "build/terminal-printer-dos/initial-f2c7/large-finite-queue/dosbox.log": "23058dfe598e5fb1613d7636175b79b557eb52be1897dadbb8ad4c61c7fb92f7",
+        "build/terminal-printer-dos/initial-f2c7/large-finite-queue/events.json": "10215df15ba4f3e17cf7e13922ebcf0284fbad5c96097cf5872ae356ef91769b",
+        "build/terminal-printer-dos/initial-f2c7/large-finite-queue/expected-printer.bin": "49da64b05c878236d93faa7d27ff5644eeaea6a29bf17d56f840afd56021c7b3",
+        "build/terminal-printer-dos/initial-f2c7/large-finite-queue/peer.bin": "17c0d6a261bb492847339d6c961dbff30a96e9e2c86d96773eea9a3edbb0c2c9",
+        "build/terminal-printer-dos/initial-f2c7/large-finite-queue/result.json": "82b6cc0646d2bf0fb9ae30a136f0d47e505f56be92f185b4e4bf4aaa12539143",
+        "build/terminal-printer-dos/initial-f2c7/large-finite-queue/screen.txt": "7062d9c4d50ecfed8c7cf75ce8b35368c5c596847702886d53027ede046e3c71",
+        "build/terminal-printer-dos/initial-f2c7/large-finite-queue/serial.bin": "c7ba1ee38165fa1b504729ce967cf0d74dad3ae4e6fd2f6360edb4244941a8a6"
+      }
+    },
+    {
+      "passed": true,
+      "case": "capture-active-independent",
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_normal_parser_DSR": true,
+        "processed_stream_answered_DSR": true,
+        "normal_parser_and_keyboard_after_close": true,
+        "actual_ready": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "no_peer_errors": true,
+        "exact_virtual_PRN_bytes": true,
+        "required_postclose_parser_keyboard": true,
+        "independent_capture_bytes": true,
+        "no_unexpected_files": true
+      },
+      "errors": [],
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328",
+      "seconds": 6.524,
+      "keys": "p1500 a-f1 p300 D : \\ C A P . L O G enter p300 a-l p500 m 1 p1700 a-l p500 m 4 p700 a-f1 p300 r e a d y p500 a-x",
+      "scope": "ActualDOS PRN handle/IOCTL/write/close with DOSBox-X file-only virtualparallel. No physicalprinter/readinessstall/devicewritefault claim.",
+      "label": "initial-f2c7",
+      "retained_artifacts": {
+        "build/terminal-printer-dos/initial-f2c7/capture-active-independent/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/capture-active-independent/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/capture-active-independent/CAP.LOG": "2f7ad2db93ac7e57df15372e2f055732ba868b9cd524fad339c89016a1258227",
+        "build/terminal-printer-dos/initial-f2c7/capture-active-independent/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-printer-dos/initial-f2c7/capture-active-independent/PRINTER.RAW": "bf5f870def0012ec928186c5f42ec4c7e91265eec5012d4ec0cd2636117d4200",
+        "build/terminal-printer-dos/initial-f2c7/capture-active-independent/SCREEN.BIN": "606556f7addb98caadfeca33be8a78de86e9321e0275195f5fee0dacfcb81642",
+        "build/terminal-printer-dos/initial-f2c7/capture-active-independent/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-printer-dos/initial-f2c7/capture-active-independent/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-printer-dos/initial-f2c7/capture-active-independent/dosbox.conf": "24015742b72834e795a68790514dffa002ef63fe038fd23cead898ede2226a10",
+        "build/terminal-printer-dos/initial-f2c7/capture-active-independent/dosbox.log": "e0428400d8eb8b07214c864b1d73a0a9f9c619afce63b1abd1033820e3c30ae8",
+        "build/terminal-printer-dos/initial-f2c7/capture-active-independent/events.json": "101f64d3903fac4558fa0a2b0a84428d5fa441dc6f18663d3919b0b950d786a6",
+        "build/terminal-printer-dos/initial-f2c7/capture-active-independent/expected-printer.bin": "bf5f870def0012ec928186c5f42ec4c7e91265eec5012d4ec0cd2636117d4200",
+        "build/terminal-printer-dos/initial-f2c7/capture-active-independent/peer.bin": "e9cf6576a1a8af8b985caced4393de988f3cccead77a4097c4f1e71c4107537b",
+        "build/terminal-printer-dos/initial-f2c7/capture-active-independent/result.json": "76bf39841d0b2d4da6803e17cff85c1cc8eb9206b8bcb6a76f072321233bcd94",
+        "build/terminal-printer-dos/initial-f2c7/capture-active-independent/screen.txt": "0f2e2e18b004dfe6a9d252b9fc8484eb60d2ac54e24c9bd01fc654f49aff4dba",
+        "build/terminal-printer-dos/initial-f2c7/capture-active-independent/serial.bin": "c7ba1ee38165fa1b504729ce967cf0d74dad3ae4e6fd2f6360edb4244941a8a6"
+      }
+    },
+    {
+      "passed": true,
+      "case": "capture-held-independent",
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_normal_parser_DSR": true,
+        "processed_stream_answered_DSR": true,
+        "normal_parser_and_keyboard_after_close": true,
+        "actual_ready": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "no_peer_errors": true,
+        "exact_virtual_PRN_bytes": true,
+        "required_postclose_parser_keyboard": true,
+        "independent_capture_bytes": true,
+        "no_unexpected_files": true
+      },
+      "errors": [],
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328",
+      "seconds": 6.824,
+      "keys": "p1500 a-f1 p300 D : \\ C A P . L O G enter p300 a-f2 p300 a-l p500 m 1 p1700 a-l p500 m 4 p700 a-f1 p300 r e a d y p500 a-x",
+      "scope": "ActualDOS PRN handle/IOCTL/write/close with DOSBox-X file-only virtualparallel. No physicalprinter/readinessstall/devicewritefault claim.",
+      "label": "initial-f2c7",
+      "retained_artifacts": {
+        "build/terminal-printer-dos/initial-f2c7/capture-held-independent/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/capture-held-independent/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/capture-held-independent/CAP.LOG": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "build/terminal-printer-dos/initial-f2c7/capture-held-independent/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-printer-dos/initial-f2c7/capture-held-independent/PRINTER.RAW": "bf5f870def0012ec928186c5f42ec4c7e91265eec5012d4ec0cd2636117d4200",
+        "build/terminal-printer-dos/initial-f2c7/capture-held-independent/SCREEN.BIN": "606556f7addb98caadfeca33be8a78de86e9321e0275195f5fee0dacfcb81642",
+        "build/terminal-printer-dos/initial-f2c7/capture-held-independent/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-printer-dos/initial-f2c7/capture-held-independent/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-printer-dos/initial-f2c7/capture-held-independent/dosbox.conf": "befd5a311df5462202a2083862b80f7d08c85e98b04781bdc27001d3ea9b953c",
+        "build/terminal-printer-dos/initial-f2c7/capture-held-independent/dosbox.log": "9e7afb00d0f6703cac39e4ec3291ca0d8c43bf7849f93ff3323e619bb2513e60",
+        "build/terminal-printer-dos/initial-f2c7/capture-held-independent/events.json": "0dd9c3679ef5c43f32e27d0a7dd2954efa574ee0b1b8115705a67c173f012b5b",
+        "build/terminal-printer-dos/initial-f2c7/capture-held-independent/expected-printer.bin": "bf5f870def0012ec928186c5f42ec4c7e91265eec5012d4ec0cd2636117d4200",
+        "build/terminal-printer-dos/initial-f2c7/capture-held-independent/peer.bin": "e9cf6576a1a8af8b985caced4393de988f3cccead77a4097c4f1e71c4107537b",
+        "build/terminal-printer-dos/initial-f2c7/capture-held-independent/result.json": "19bd2dc50c99691dcb9d93ce85ce7dffe4fd98368ef424693690c6319e2e2e5a",
+        "build/terminal-printer-dos/initial-f2c7/capture-held-independent/screen.txt": "0f2e2e18b004dfe6a9d252b9fc8484eb60d2ac54e24c9bd01fc654f49aff4dba",
+        "build/terminal-printer-dos/initial-f2c7/capture-held-independent/serial.bin": "c7ba1ee38165fa1b504729ce967cf0d74dad3ae4e6fd2f6360edb4244941a8a6"
+      }
+    },
+    {
+      "passed": true,
+      "case": "raw-monitor-bypass",
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_normal_parser_DSR": true,
+        "processed_stream_answered_DSR": true,
+        "normal_parser_and_keyboard_after_close": true,
+        "actual_ready": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "no_peer_errors": true,
+        "exact_virtual_PRN_bytes": true,
+        "required_postclose_parser_keyboard": true,
+        "no_unexpected_files": true
+      },
+      "errors": [],
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328",
+      "seconds": 8.876,
+      "keys": "p1500 a-l p500 m 1 p1700 c-\\ p300 n p300 m 2 p1200 escape p500 m 3 p1000 a-l p500 m 4 p700 r e a d y p500 a-x",
+      "scope": "ActualDOS PRN handle/IOCTL/write/close with DOSBox-X file-only virtualparallel. No physicalprinter/readinessstall/devicewritefault claim.",
+      "label": "initial-f2c7",
+      "retained_artifacts": {
+        "build/terminal-printer-dos/initial-f2c7/raw-monitor-bypass/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/raw-monitor-bypass/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/raw-monitor-bypass/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-printer-dos/initial-f2c7/raw-monitor-bypass/PRINTER.RAW": "32c1343f1b865ed9991fd8b88a9618d44dc2b01dd5cfab25d773f7f62d983e36",
+        "build/terminal-printer-dos/initial-f2c7/raw-monitor-bypass/SCREEN.BIN": "39d7d9e2122deb3556031d39a8c4aa4e5a29ae8a1ef1f0c8b01a7c4fa7f07fdd",
+        "build/terminal-printer-dos/initial-f2c7/raw-monitor-bypass/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-printer-dos/initial-f2c7/raw-monitor-bypass/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-printer-dos/initial-f2c7/raw-monitor-bypass/dosbox.conf": "9e9876dec60535ef693e4d088fd034e06e081bd7ec98661d40655984fd4fd7fe",
+        "build/terminal-printer-dos/initial-f2c7/raw-monitor-bypass/dosbox.log": "884b2a5bdc73ff584d071e6de604a97ea44ccd8085d064c59d1f9afae12fbadd",
+        "build/terminal-printer-dos/initial-f2c7/raw-monitor-bypass/events.json": "d3e8b02a9f907d9f531156d9789e4b06c95cc0bcd23d523229cccad0cb882062",
+        "build/terminal-printer-dos/initial-f2c7/raw-monitor-bypass/expected-printer.bin": "32c1343f1b865ed9991fd8b88a9618d44dc2b01dd5cfab25d773f7f62d983e36",
+        "build/terminal-printer-dos/initial-f2c7/raw-monitor-bypass/peer.bin": "8a2f3e5b6b255914c4c19312f5f447c1a00142860ad8aeda6e9c6904c0a65467",
+        "build/terminal-printer-dos/initial-f2c7/raw-monitor-bypass/result.json": "06ec1190a592d2d696bedc1f18919e5de5d62d3d759507c04316cac94a3cd58c",
+        "build/terminal-printer-dos/initial-f2c7/raw-monitor-bypass/screen.txt": "7183823d5889f26b500e692a9e8d8667947b85e4b45897eb31781498ad6adb0a",
+        "build/terminal-printer-dos/initial-f2c7/raw-monitor-bypass/serial.bin": "f0f26566470bb23b569aad103c45184ac05ff553c8acaeb470e1bcb429691525"
+      }
+    },
+    {
+      "passed": true,
+      "case": "unavailable-PRN-nonfatal",
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_normal_parser_DSR": true,
+        "processed_stream_answered_DSR": true,
+        "normal_parser_and_keyboard_after_close": true,
+        "actual_ready": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "no_peer_errors": true,
+        "exact_virtual_PRN_bytes": true,
+        "required_postclose_parser_keyboard": true,
+        "no_unexpected_files": true
+      },
+      "errors": [],
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328",
+      "seconds": 5.572,
+      "keys": "p1500 a-l p500 m 1 p1700 a-l p500 m 4 p700 r e a d y p500 a-x",
+      "scope": "ActualDOS PRN handle/IOCTL/write/close with DOSBox-X file-only virtualparallel. No physicalprinter/readinessstall/devicewritefault claim.",
+      "label": "initial-f2c7",
+      "retained_artifacts": {
+        "build/terminal-printer-dos/initial-f2c7/unavailable-PRN-nonfatal/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/unavailable-PRN-nonfatal/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-printer-dos/initial-f2c7/unavailable-PRN-nonfatal/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-printer-dos/initial-f2c7/unavailable-PRN-nonfatal/SCREEN.BIN": "86f8c741199602f3f4ec6378fd5a6ce893f50b4c49dfca489ded4eb8324cf9d7",
+        "build/terminal-printer-dos/initial-f2c7/unavailable-PRN-nonfatal/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-printer-dos/initial-f2c7/unavailable-PRN-nonfatal/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-printer-dos/initial-f2c7/unavailable-PRN-nonfatal/dosbox.conf": "0c44749dda591e196370833cad6fa791bc86d0c6e4d315d1c74b394f970382c8",
+        "build/terminal-printer-dos/initial-f2c7/unavailable-PRN-nonfatal/dosbox.log": "0a9aa50a30776b9d3e06adfa6c6d07967f874c552410e158b9585310ac7390b7",
+        "build/terminal-printer-dos/initial-f2c7/unavailable-PRN-nonfatal/events.json": "41c54f411d43bc9b0e61a8690427cae7d617dc71e8bfa3202a4a4ab61d9de234",
+        "build/terminal-printer-dos/initial-f2c7/unavailable-PRN-nonfatal/expected-printer.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "build/terminal-printer-dos/initial-f2c7/unavailable-PRN-nonfatal/peer.bin": "e9cf6576a1a8af8b985caced4393de988f3cccead77a4097c4f1e71c4107537b",
+        "build/terminal-printer-dos/initial-f2c7/unavailable-PRN-nonfatal/result.json": "502eb04c7da9735250d5c440b1c9a3e26efeb23605e2226c4a333d268b0619c1",
+        "build/terminal-printer-dos/initial-f2c7/unavailable-PRN-nonfatal/screen.txt": "e03aa147f0894ab32e95012fd47afba36c95bc63f00a60d228223b7f3cafdf02",
+        "build/terminal-printer-dos/initial-f2c7/unavailable-PRN-nonfatal/serial.bin": "c7ba1ee38165fa1b504729ce967cf0d74dad3ae4e6fd2f6360edb4244941a8a6"
+      }
+    }
+  ],
+  "latest_selected_cases": {
+    "plain-native-filter-and-close": {
+      "label": "initial-f2c7",
+      "passed": true,
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328"
+    },
+    "shutdown-closes-active": {
+      "label": "initial-f2c7",
+      "passed": true,
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328"
+    },
+    "CR-adds-LF": {
+      "label": "initial-f2c7",
+      "passed": true,
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328"
+    },
+    "close-reopen-appends": {
+      "label": "initial-f2c7",
+      "passed": true,
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328"
+    },
+    "large-finite-queue": {
+      "label": "initial-f2c7",
+      "passed": true,
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328"
+    },
+    "capture-active-independent": {
+      "label": "initial-f2c7",
+      "passed": true,
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328"
+    },
+    "capture-held-independent": {
+      "label": "initial-f2c7",
+      "passed": true,
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328"
+    },
+    "raw-monitor-bypass": {
+      "label": "initial-f2c7",
+      "passed": true,
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328"
+    },
+    "unavailable-PRN-nonfatal": {
+      "label": "initial-f2c7",
+      "passed": true,
+      "binary_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328"
+    }
+  },
+  "latest_selected_cases_passed": true,
+  "all_recorded_cases_passed": true,
+  "evidence_source_sha256": {
+    "standalone/test_terminal_printer_dos.py": "8bc1c36942e4fd6058bae08c8aef57060cb8168ffb45e4e9b5edb1a940edb266",
+    "standalone/check_terminal_printer_live.py": "3a8aea82397f1bd9ba8330d8e1426cfb2ef605aa7120699bbe9e185f06112d35",
+    "standalone/record_printer.py": "a9ce0ba08ad3c5d172c9cc00751ac7b519361b3d78f07c388be0ac5eefb799a5"
+  },
+  "scope": "Nine actualDOS live AltL PRN tests use file-only DOSBox-X parallel output, actual BIOS/UART/PRN calls, independent processed-byte oracle, capture/monitor coexistence and hardware restoration. The backend diagnostic uses explicit fault-driver boundaries; the separate source-built device probe delivers all256 bytes and verifies AltL2600. No physical printer, hostile-driver call-time bounds, processed SUB control1248, live disk/device faults or complete UI parity claim."
+}

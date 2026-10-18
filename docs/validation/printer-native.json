@@ -2311,7 +2311,7 @@
     "standalone/check_printer.py": "d884d95e6744de7a125703f4335b953a6fda2f556003df7c4cbf43f3e0ed37ad",
     "standalone/printer_host.asm": "c011b7d6a224ac9fd84f5b792a5b5eb90a0beabb911f5d9c68f1e1bf6e7f5322",
     "standalone/test_printer_dos.py": "3833fae25e9e721ca204cd9cdbddeada70c33400dbabbeef4955622e63d2c876",
-    "standalone/record_printer.py": "d57fbeeeafcecc104986ef707e5d445780d0951090edb55adbc65e707fd82a46"
+    "standalone/record_printer.py": "a9ce0ba08ad3c5d172c9cc00751ac7b519361b3d78f07c388be0ac5eefb799a5"
   },
   "scope": "Source-built native printer toggle and per-character wrappers, composed with the previously recovered logger. CRT/device operations are explicit memory fixtures. This establishes native instruction behavior and ABI on synthetic data, not live Alt-L integration, DOS printer drivers, physical printer availability or safe failure handling in the maintained application."
 }

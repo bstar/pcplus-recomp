@@ -101,11 +101,16 @@ replaces `PCPLUS.DMP` with binary received bytes; N/Enter/Escape selects view-on
 Escape inside the monitor returns to normal ANSI processing. Existing text
 capture stays open or held and excludes received monitor bytes.
 
+Alt-L toggles [processed printer copy](docs/LIVE_PRINTER.md) through a checked
+DOS `PRN` owner. A bounded queue keeps serial service active; failures retain
+an errorlevel12 status, and PROGRAM closes the device before child execution.
+The virtual printer tests do not establish physical printer compatibility.
+
 The separate [native printer diagnostic](docs/PRINTER_NATIVE.md) reconstructs
 printer-copy instructions with explicit memory-device fixtures. The
 [raw-monitor ledger](docs/RAW_MONITOR_NATIVE.md) maps Ctrl-\\ and the binary DMP
 path. The exact native monitor remains a separate diagnostic; full original
-monitor/UI/HOOK modes and live printer integration remain unfinished.
+monitor/UI/HOOK modes remain unfinished.
 Global `/T:MYKEYS.KEY` imports ten Meta actions; Alt-1..Alt-0 execute
 nonblocking TEXT or maintained PROGRAM actions. PROGRAM passes a validated
 1..51-byte stored command through COMSPEC `/c`, suspends terminal UART ownership

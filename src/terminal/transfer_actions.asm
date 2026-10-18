@@ -20,6 +20,7 @@ extern terminal_upload_accepted_bytes
 extern _transfer_native_open,_transfer_native_write,_transfer_native_close,_transfer_download_result
 extern session_setjmp,session_longjmp,session_blocks_accepted
 extern terminal_monitor_active
+extern terminal_printer_barrier
 GLOBAL terminal_transfer_start,terminal_transfer_poll,terminal_transfer_service
 GLOBAL terminal_upload_start,terminal_transfer_direction
 GLOBAL terminal_transfer_filter,terminal_transfer_shutdown
@@ -78,6 +79,9 @@ terminal_transfer_poll:
  push es
  cmp word [terminal_transfer_pending],0
  je .done
+ call terminal_printer_barrier
+ or ax,ax
+ jnz .done ;Main polls printer before retry; keep binary transfer out of sink.
  mov word [terminal_transfer_pending],0
  mov word [terminal_transfer_active],1
  mov word [terminal_transfer_phase],0

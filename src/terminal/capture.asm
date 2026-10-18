@@ -13,6 +13,7 @@ extern terminal_clock_ticks,terminal_poll_serial,terminal_read_key,keyboard_poll
 extern terminal_connection_notice,terminal_connection_notice_restore
 extern terminal_quit,terminal_exit_code,uart_rx_dropped,connection_state
 extern terminal_macro_active,terminal_program_pending,terminal_ansi_wait_active
+extern terminal_printer_before_program
 global terminal_capture_toggle,terminal_capture_pause,terminal_capture_crlf
 global terminal_capture_poll,terminal_capture_flush,terminal_capture_before_program
 global terminal_sink_8436,terminal_sink_427f,terminal_sink_bb23
@@ -116,7 +117,8 @@ terminal_capture_poll:
  restore
 ; Close before DOS EXEC: no child may inherit this owner's file handle. A close
 ; whose outcome is uncertain cancels launch; the terminal can still disconnect.
-; AX=0 resolved, AX=1 uncertain. Does not erase the sticky session failure.
+; AX=0 resolved, AX=1 owned/uncertain, AX=2 printer drain pending.
+; Does not erase the sticky session failure.
 terminal_capture_before_program:
  push bp
  push si
@@ -132,6 +134,9 @@ terminal_capture_before_program:
  jne .snapshot_owned
  cmp word [_snapshot_file_result+12],0
  jne .snapshot_owned
+ call terminal_printer_before_program
+ or ax,ax
+ jnz .done
  cmp word [terminal_sink_398a_enabled],0
  je .check
  call _capture_session_stop

@@ -61,6 +61,7 @@ terminal:
 	python3 standalone/build_terminal.py
 
 test-terminal: terminal
+	python3 standalone/check_terminal_printer_live.py
 	python3 standalone/check_terminal_monitor_live.py
 	python3 standalone/check_terminal_snapshot_live.py
 	python3 standalone/check_terminal_capture_live.py
@@ -224,6 +225,15 @@ test-batch-header: batch-header
 .PHONY: test-capture-file test-capture-session
 .PHONY: test-capture-owners snapshot test-snapshot
 .PHONY: printer test-printer
+.PHONY: print-screen test-print-screen test-printer-device
+all: print-screen
+test: test-print-screen test-printer-device
+print-screen:
+	python3 standalone/build_print_screen.py
+test-print-screen: print-screen
+	python3 standalone/check_print_screen.py
+test-printer-device:
+	python3 standalone/check_printer_device.py
 .PHONY: monitor test-monitor test-monitor-file
 all: monitor
 test: test-monitor test-monitor-file

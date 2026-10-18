@@ -18,7 +18,7 @@ class Windows(DosImage):
  def invoke(self,name,args,callee_cleanup=True):
   uc=self.uc
   for reg,value in [(UC_X86_REG_CS,self.base_segment),(UC_X86_REG_DS,self.ds),(UC_X86_REG_SS,self.ds),(UC_X86_REG_EFLAGS,0x202),(UC_X86_REG_BP,0xbabe),(UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678)]:uc.reg_write(reg,value)
-  words=[0xf000]+list(args);sp=0xe000-len(words)*2
+  words=[self.return_offset]+list(args);sp=0xe000-len(words)*2
   uc.mem_write(self.data_base+sp,struct.pack('<'+'H'*len(words),*words));uc.reg_write(UC_X86_REG_SP,sp)
   self.returned=False;uc.emu_start(self.symbols[name],self.base+0x10000,count=500000)
   assert self.returned and uc.reg_read(UC_X86_REG_SP)==(0xe000 if callee_cleanup else sp+2),(name,'RET cleanup')

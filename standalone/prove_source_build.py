@@ -25,9 +25,11 @@ builds=['terminal','config_dos','config_replace','config_abi','ui_windows','mode
 builds.append('snapshot')
 builds.append('printer')
 builds.append('monitor')
+builds.append('print_screen')
 program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/build_{name}.py'],check=True)\n" for name in builds)
 owner_checks=['standalone/check_batch_download.py','standalone/check_batch_upload.py','standalone/check_capture_file.py','standalone/check_capture_session.py','standalone/check_capture_owners.py']
 owner_checks.append('standalone/check_monitor_file.py')
+owner_checks.append('standalone/check_printer_device.py')
 program+=''.join(f"subprocess.run(['python3',{name!r}],check=True)\n" for name in owner_checks)
 with (OUT/'build.log').open('w') as log:
  subprocess.run([str(SNAP/'tools/dev'),'--command','python3','-c',program],cwd=SNAP,stdout=log,stderr=log,check=True,timeout=300)
@@ -36,6 +38,7 @@ outputs += ['batch-download/BATCHDL.EXE','batch-download/BDFAULT.EXE','batch-upl
 outputs += ['capture-file/CAPTURE.EXE','capture-file/CAPFAULT.EXE','capture-session/CAPSESS.EXE','capture-session/CSFAULT.EXE']
 outputs += ['snapshot/SNAPSHOT.EXE','capture-owners/OWNERS.EXE','capture-owners/OWFAULT.EXE']
 outputs += ['printer/PRINTER.EXE']
+outputs += ['print_screen/PRINTSCR.EXE','printer-device/PRINTER.EXE']
 outputs += ['monitor/MONITOR.EXE','monitor-file/MONITOR.EXE','monitor-file/MOFAULT.EXE']
 results={}
 for rel in outputs:

@@ -82,7 +82,7 @@ the initial schedule's incomplete menu workflow is retained with its failed audi
 still fails Home/Insert despite correct outgoing bytes (docs/validation/bbs-matrix.json
 and bbs-editors.json). An explicit byte-transparent modem packet-buffering
 experiment is tracked separately in `lab/bbs/packetization.md`: Home/Insert pass
-with30ms grouping and fail again in the immediate control on the same fd68875e
+with30ms grouping and fail again in the immediate control on the same9d90aa1a
 DOS build. It does not replace the immediate-bridge failure or establish physical
 modem compatibility. An
 isolated maintained-source snapshot builds the identical interactive executable
@@ -245,11 +245,21 @@ physical modem compatibility or close the remaining application gates below.
       adds503 exact bytes,27 original comparisons and an8086 DOS diagnostic.
       Current Synchronet editing passes; ENiGMA immediate Home/Insert still fail.
       See `docs/LIVE_MONITOR.md` and `docs/validation/terminal-monitor-dos.json`.
-      Full F10 still requires live printer, remaining snapshot/monitor geometry,
+      The f2c75bf7 checkpoint adds Alt-L processed printer copy with the native
+      logger, a checked fixed-PRN device owner and128-byte queue. Main RX dequeue
+      reserves two queue slots;16-write polling and18-full-tick no-progress
+      bounds keep busy devices serviced. PROGRAM waits for a checked close;
+      transfer entry waits for queued text without logging protocol bytes.
+      Eleven linked groups/293 inputs and nine actual DOS virtual-PRN cases pass.
+      The backend adds57 fault assertions; native screen/media printing adds365
+      exact bytes and38 CPU/original comparisons as a separate diagnostic.
+      The33-command terminal regression and23 linked YMODEM inputs also pass.
+      See `docs/LIVE_PRINTER.md` and `docs/PRINT_SCREEN_NATIVE.md`.
+      Full F10 still requires live screen printing, remaining snapshot/monitor geometry,
       complete settings/status UI, ASPECT/HOOK and physical validation. See
       `docs/CAPTURE_NATIVE_INVENTORY.md`, `docs/LIVE_CAPTURE.md` and
       `docs/validation/terminal-capture-dos.json`.
-      The fresh maintained-source snapshot now reproduces54 byte-identical
+      The fresh maintained-source snapshot reproduces56 byte-identical
       component/diagnostic outputs, including the current interactive executable
       and capture/owner/screen/printer/monitor diagnostics, with originals/install/REA
       databases absent. This checkpoint does not close the full application gate.

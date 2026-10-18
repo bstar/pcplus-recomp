@@ -1,0 +1,1190 @@
+{
+  "passed": true,
+  "manifest": {
+    "binary_sha256": "4383b3799c4c6dc0bda05daf447d80bb5d09af2c7a1fcb14921f592b1eca1201",
+    "exact_print_screen_bytes": 365,
+    "borrowed_sources": [
+      "reconstruction/printer/byte.asm",
+      "reconstruction/printer/toggle.asm",
+      "reconstruction/ui_windows/read_byte.asm"
+    ],
+    "sources": {
+      "reconstruction/print_screen/media_copy.asm": "ea637b7e3c683e0a989db7a9173775c3ff7ba0535fa1ae3a6560d2ecc70658b1",
+      "reconstruction/print_screen/screen.asm": "e5ce8b16d61e6574efd6397c8478971e7e5548130f5519e188104243e87795e1",
+      "reconstruction/print_screen/selection.asm": "37f2bae8c61c922a0a94fee307fc2cd690edfecdcebaf4f2db383388945c657c",
+      "reconstruction/printer/byte.asm": "2bed7378588e712d4510118f5523d823335854e80fd79110fff4ea6ba293b499",
+      "reconstruction/printer/toggle.asm": "98d854f2bb981359a8867dd30a24c745097873da3d787d912935f54db473353e",
+      "reconstruction/ui_windows/read_byte.asm": "fc7cc46379666140e7082a0a3a8504b616495cc04c82488d2ffd3c69253a5d76",
+      "standalone/print_screen_host.asm": "1ecd101dd252deea97c4a1041a50c2e3b4f70ad7be25495f706509b7ba11809c"
+    },
+    "scope": "Exact native print_screen byte/toggle plus reused byte/toggle/video helpers; explicit CRT open/putc/flush/close/status memory fixtures only. Native unsafe shared FILE lifecycle preserved; no live or physical printer support."
+  },
+  "native_provenance": {
+    "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "units": [
+      {
+        "source": "media_copy.asm",
+        "start": "0xe084",
+        "end_exclusive": "0xe0f8",
+        "bytes": 116,
+        "source_file_offset": 93492,
+        "sha256": "3668d6602e287d7e3a361cac373b08c5d8bb164763fe79fa12923791d8e77761",
+        "region": "overlay12"
+      },
+      {
+        "source": "screen.asm",
+        "start": "0xe2f8",
+        "end_exclusive": "0xe3c9",
+        "bytes": 209,
+        "source_file_offset": 94120,
+        "sha256": "320a65dcace3aea2f9eb143d4d07a37219807198380fe2bfee13f28f6de7c1a4",
+        "region": "overlay12"
+      },
+      {
+        "source": "selection.asm",
+        "start": "0xe3ca",
+        "end_exclusive": "0xe3f2",
+        "bytes": 40,
+        "source_file_offset": 94330,
+        "sha256": "074345ba3c67d914c1a6c133cb8708c5cccc25390fd0ad7db1257c86c78995eb",
+        "region": "overlay12"
+      }
+    ],
+    "state": {
+      "0xcb5c": "print_parameter_count",
+      "0xcb3c": "print_parameters",
+      "0xceac": "print_copy_policy",
+      "0x3988": "printer_enabled",
+      "0x3982": "print_region_mode",
+      "0x3980": "print_formfeed",
+      "0x2b7c": "print_status_text",
+      "0x7522": "print_text_mode",
+      "0x1d50": "printer_device",
+      "0x8ff0": "printer_stream",
+      "0x399c": "print_cursor_row",
+      "0x399e": "print_cursor_column",
+      "0x334c": "print_row_limit",
+      "0xce0e": "print_region_top",
+      "0xce3a": "print_region_bottom",
+      "0x3344": "print_video_offset",
+      "0x3258": "print_last_column"
+    },
+    "boundaries": {
+      "0xe084": "print_media_copy_original",
+      "0xe2f8": "print_screen_original",
+      "0xe3ca": "print_selection_original",
+      "0x1a76": "printer_toggle_original",
+      "0xd0d0": "print_copy_fallback",
+      "0x3226": "print_status_message",
+      "0x841a": "printer_open",
+      "0x1bbe": "print_set_cursor",
+      "0x6fa0": "ui_read_byte",
+      "0x8436": "printer_putc",
+      "0x8c54": "printer_flush",
+      "0x8318": "printer_close",
+      "0x2fb8": "printer_status",
+      "0x36fc": "printer_byte_original"
+    },
+    "reused_sources": [
+      "reconstruction/printer/byte.asm",
+      "reconstruction/printer/toggle.asm",
+      "reconstruction/ui_windows/read_byte.asm"
+    ],
+    "supporting_evidence": [
+      {
+        "export": "analysis/pcplus-overlay-anchored-12/functions/0x1e084-asm.json",
+        "evidence_id": "ev_2f719bdb438c8bc4be6d045eefdb5891b0e9439a983e0197cd8fcef6d3b35987"
+      },
+      {
+        "export": "analysis/pcplus-overlay-anchored-12/functions/0x1e2f8-asm.json",
+        "evidence_id": "ev_e93d8b17d34c8a6d6de8681c47ca87d75edf0feb2859696d55402e512a275e0b"
+      },
+      {
+        "export": "analysis/pcplus-overlay-anchored-12/functions/0x1e3ca-asm.json",
+        "evidence_id": "ev_be9ebd36f995696b314f779b0ee5314a5e078a2aae90bc1b6a63b8c9536ee2ce"
+      }
+    ],
+    "limitations": [
+      "Diagnostic CRT/UI/cursor boundaries are explicit fixtures, not a live printer.",
+      "Native null-open, ignored IO errors, shared FILE overwrite and formfeed after close are preserved."
+    ]
+  },
+  "CPU_checks": {
+    "passed": true,
+    "binary_sha256": "4383b3799c4c6dc0bda05daf447d80bb5d09af2c7a1fcb14921f592b1eca1201",
+    "linked_cases": 38,
+    "original_cases": 38,
+    "cases": [
+      {
+        "case": {
+          "kind": "screen",
+          "mode": 1,
+          "opened": 0,
+          "errors": 0
+        },
+        "wire_hex": "001aff200d0a414243440d0a454647480d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 18,
+          "fixture_flush_calls": 3,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 18,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 0,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "screen",
+          "mode": 1,
+          "opened": 0,
+          "errors": 65535
+        },
+        "wire_hex": "001aff200d0a414243440d0a454647480d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 18,
+          "fixture_flush_calls": 3,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 18,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 0,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "screen",
+          "mode": 1,
+          "opened": 4369,
+          "errors": 0
+        },
+        "wire_hex": "001aff200d0a414243440d0a454647480d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 18,
+          "fixture_flush_calls": 3,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 18,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "screen",
+          "mode": 1,
+          "opened": 4369,
+          "errors": 65535
+        },
+        "wire_hex": "001aff200d0a414243440d0a454647480d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 18,
+          "fixture_flush_calls": 3,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 18,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "screen",
+          "mode": 2,
+          "opened": 0,
+          "errors": 0
+        },
+        "wire_hex": "414243440d0a454647480d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 12,
+          "fixture_flush_calls": 2,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 12,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 0,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "screen",
+          "mode": 2,
+          "opened": 0,
+          "errors": 65535
+        },
+        "wire_hex": "414243440d0a454647480d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 12,
+          "fixture_flush_calls": 2,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 12,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 0,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "screen",
+          "mode": 2,
+          "opened": 4369,
+          "errors": 0
+        },
+        "wire_hex": "414243440d0a454647480d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 12,
+          "fixture_flush_calls": 2,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 12,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "screen",
+          "mode": 2,
+          "opened": 4369,
+          "errors": 65535
+        },
+        "wire_hex": "414243440d0a454647480d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 12,
+          "fixture_flush_calls": 2,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 12,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "screen",
+          "mode": 3,
+          "opened": 0,
+          "errors": 0
+        },
+        "wire_hex": "414243440d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 6,
+          "fixture_flush_calls": 1,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 6,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 0,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "screen",
+          "mode": 3,
+          "opened": 0,
+          "errors": 65535
+        },
+        "wire_hex": "414243440d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 6,
+          "fixture_flush_calls": 1,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 6,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 0,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "screen",
+          "mode": 3,
+          "opened": 4369,
+          "errors": 0
+        },
+        "wire_hex": "414243440d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 6,
+          "fixture_flush_calls": 1,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 6,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "screen",
+          "mode": 3,
+          "opened": 4369,
+          "errors": 65535
+        },
+        "wire_hex": "414243440d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 6,
+          "fixture_flush_calls": 1,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 6,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "selection",
+          "region": 0,
+          "ff": 0
+        },
+        "wire_hex": "001aff200d0a414243440d0a454647480d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 18,
+          "fixture_flush_calls": 3,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 18,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "selection",
+          "region": 0,
+          "ff": 1
+        },
+        "wire_hex": "001aff200d0a414243440d0a454647480d0a0c",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 19,
+          "fixture_flush_calls": 4,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 19,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 1,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "selection",
+          "region": 1,
+          "ff": 0
+        },
+        "wire_hex": "414243440d0a454647480d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 12,
+          "fixture_flush_calls": 2,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 12,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "selection",
+          "region": 1,
+          "ff": 1
+        },
+        "wire_hex": "414243440d0a454647480d0a0c",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 13,
+          "fixture_flush_calls": 3,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 13,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 1,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [],
+          "policy": 0
+        },
+        "wire_hex": "001aff200d0a414243440d0a454647480d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 18,
+          "fixture_flush_calls": 3,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 18,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            0
+          ],
+          "policy": 0
+        },
+        "wire_hex": "001aff200d0a414243440d0a454647480d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 18,
+          "fixture_flush_calls": 3,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 18,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            1
+          ],
+          "policy": 0
+        },
+        "wire_hex": "414243440d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 6,
+          "fixture_flush_calls": 1,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 6,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            2
+          ],
+          "policy": 0
+        },
+        "wire_hex": "",
+        "state": {
+          "fixture_open_calls": 0,
+          "fixture_close_calls": 0,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 0,
+          "fixture_status_calls": 0,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 8738,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 0
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            3
+          ],
+          "policy": 0
+        },
+        "wire_hex": "",
+        "state": {
+          "fixture_open_calls": 0,
+          "fixture_close_calls": 0,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 0,
+          "fixture_status_calls": 0,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 8738,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 0
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            4
+          ],
+          "policy": 0
+        },
+        "wire_hex": "",
+        "state": {
+          "fixture_open_calls": 0,
+          "fixture_close_calls": 0,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 0,
+          "fixture_status_calls": 0,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 8738,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 0
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            5
+          ],
+          "policy": 0
+        },
+        "wire_hex": "",
+        "state": {
+          "fixture_open_calls": 0,
+          "fixture_close_calls": 0,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_fallback_calls": 1,
+          "fixture_message_calls": 0,
+          "fixture_status_calls": 0,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 8738,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 0
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            6
+          ],
+          "policy": 0
+        },
+        "wire_hex": "",
+        "state": {
+          "fixture_open_calls": 0,
+          "fixture_close_calls": 0,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 0,
+          "fixture_status_calls": 0,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 8738,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 0
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            4,
+            5
+          ],
+          "policy": 0
+        },
+        "wire_hex": "",
+        "state": {
+          "fixture_open_calls": 0,
+          "fixture_close_calls": 0,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_fallback_calls": 1,
+          "fixture_message_calls": 0,
+          "fixture_status_calls": 0,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 8738,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 0
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            5,
+            4
+          ],
+          "policy": 0
+        },
+        "wire_hex": "",
+        "state": {
+          "fixture_open_calls": 0,
+          "fixture_close_calls": 0,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_fallback_calls": 1,
+          "fixture_message_calls": 0,
+          "fixture_status_calls": 0,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 8738,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 0
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            1,
+            1
+          ],
+          "policy": 0
+        },
+        "wire_hex": "414243440d0a414243440d0a",
+        "state": {
+          "fixture_open_calls": 2,
+          "fixture_close_calls": 2,
+          "fixture_putc_calls": 12,
+          "fixture_flush_calls": 2,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 2,
+          "fixture_status_calls": 2,
+          "fixture_wire_count": 12,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 6,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [],
+          "policy": 1
+        },
+        "wire_hex": "001aff200d0a414243440d0a454647480d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 18,
+          "fixture_flush_calls": 3,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 18,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            0
+          ],
+          "policy": 1
+        },
+        "wire_hex": "001aff200d0a414243440d0a454647480d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 18,
+          "fixture_flush_calls": 3,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 18,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            1
+          ],
+          "policy": 1
+        },
+        "wire_hex": "414243440d0a",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 6,
+          "fixture_flush_calls": 1,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 6,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            2
+          ],
+          "policy": 1
+        },
+        "wire_hex": "",
+        "state": {
+          "fixture_open_calls": 0,
+          "fixture_close_calls": 0,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 0,
+          "fixture_status_calls": 0,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 8738,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 0
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            3
+          ],
+          "policy": 1
+        },
+        "wire_hex": "",
+        "state": {
+          "fixture_open_calls": 0,
+          "fixture_close_calls": 0,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 0,
+          "fixture_status_calls": 0,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 8738,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 0
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            4
+          ],
+          "policy": 1
+        },
+        "wire_hex": "",
+        "state": {
+          "fixture_open_calls": 0,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 0,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 8738,
+          "printer_enabled": 0,
+          "printer_stream": 8738,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 0
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            5
+          ],
+          "policy": 1
+        },
+        "wire_hex": "",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 0,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 0,
+          "fixture_status_calls": 1,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 0
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            6
+          ],
+          "policy": 1
+        },
+        "wire_hex": "",
+        "state": {
+          "fixture_open_calls": 0,
+          "fixture_close_calls": 0,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 0,
+          "fixture_status_calls": 0,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 0,
+          "printer_enabled": 1,
+          "printer_stream": 8738,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 0
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            4,
+            5
+          ],
+          "policy": 1
+        },
+        "wire_hex": "",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 0,
+          "fixture_status_calls": 2,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 8738,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 0
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            5,
+            4
+          ],
+          "policy": 1
+        },
+        "wire_hex": "",
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 0,
+          "fixture_status_calls": 2,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "fixture_putc_after_close": 0,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 0,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 0
+        }
+      },
+      {
+        "case": {
+          "kind": "media",
+          "params": [
+            1,
+            1
+          ],
+          "policy": 1
+        },
+        "wire_hex": "414243440d0a414243440d0a",
+        "state": {
+          "fixture_open_calls": 2,
+          "fixture_close_calls": 2,
+          "fixture_putc_calls": 12,
+          "fixture_flush_calls": 2,
+          "fixture_fallback_calls": 0,
+          "fixture_message_calls": 2,
+          "fixture_status_calls": 2,
+          "fixture_wire_count": 12,
+          "fixture_last_handle": 4369,
+          "fixture_putc_after_close": 6,
+          "fixture_closed_handle": 4369,
+          "printer_enabled": 1,
+          "printer_stream": 4369,
+          "print_cursor_row": 1,
+          "print_cursor_column": 2,
+          "print_video_offset": 12
+        }
+      }
+    ],
+    "scope": "Real recovered instructions and native video reads; explicit cursor/CRT/UI fixtures, no physical printer or original application execution."
+  },
+  "DOS_checks": {
+    "passed": true,
+    "checks": {
+      "actual8086_DOS_pass": true,
+      "selfcheck_output": true,
+      "diagnostic_unchanged": true
+    },
+    "binary_sha256": "4383b3799c4c6dc0bda05daf447d80bb5d09af2c7a1fcb14921f592b1eca1201",
+    "stdout": "PRINTSCREEN PASS\r\n",
+    "scope": "Source-built recovered printscreen actual8086 DOS selfcheck. CRT/PRN calls are explicit memory boundaries; actual native video reader reads B800; no physical printer and no complete live AltP claim.",
+    "artifacts": {
+      "build/terminal-printer-dos/native-printscreen-8086/dosbox.conf": "cf09d646e01bc3d462c7d945f5471655d9cbbfd158cb4222cc2cc016d268aee5",
+      "build/terminal-printer-dos/native-printscreen-8086/dosbox.log": "552929c15c6bab9b0b78902f164a13f399219dc3bf06e9888eae90f1910382fe",
+      "build/terminal-printer-dos/native-printscreen-8086/OUTPUT.TXT": "5c338a88b1eeb7ffcc3f326a2e6344a5c6a6ff2fcec2fcf5d97961f8cc6f4974",
+      "build/terminal-printer-dos/native-printscreen-8086/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c"
+    }
+  },
+  "evidence_source_sha256": {
+    "standalone/build_print_screen.py": "77e01d4128056f845be6ce2817c7e5da0a78c81f7fe6d7aac4f75108115f7a7d",
+    "standalone/check_print_screen.py": "84045400bf95a0c8af577034643c4202bf64879858e81851c511b5eb7f3e0b09",
+    "standalone/record_print_screen.py": "725ad596a3bd686388b88abeb7d8f5f3de78bc984fea3b3feecd65e307655fe9"
+  },
+  "scope": "365 exact recovered native bytes; 38 linked/original instruction comparisons and actual8086 DOS diagnostic with explicit CRT/device/cursor/UI fixtures. Native unsafe ownership and ignored errors retained for evidence. No live screen-print command or physical printer validation."
+}

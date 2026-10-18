@@ -25,7 +25,7 @@ class LiveTransfer(LiveProgram):
     self.tick=(self.tick+1)%DAY
    u.mem_write(0x46c,struct.pack('<I',self.tick))
   # Model real maskable hardware IRQ delivery, executing the actual ISR/IRET.
-  if self.rx and not self.irq_in_service and not self.pic&(1<<(self.get('terminal_irq_vector')-8)) and address!=self.base+0xf000 and u.reg_read(UC_X86_REG_EFLAGS)&0x200:
+  if self.rx and not self.irq_in_service and not self.pic&(1<<(self.get('terminal_irq_vector')-8)) and address!=self.base+self.return_offset and u.reg_read(UC_X86_REG_EFLAGS)&0x200:
    self.irq_in_service=True
    sp=u.reg_read(UC_X86_REG_SP);ss=u.reg_read(UC_X86_REG_SS)
    frame=struct.pack('<3H',u.reg_read(UC_X86_REG_IP),u.reg_read(UC_X86_REG_CS),u.reg_read(UC_X86_REG_EFLAGS)&65535)

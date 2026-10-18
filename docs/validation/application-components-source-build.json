@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "a27f89d917619cc7f41bf686d10fedcf0b82de92777796949387384478d3ea3b",
-  "source_file_count": 1129,
+  "source_snapshot_sha256": "63cd32a2d3a9d06069f31b8327c309b4445d1a0f09fd6f5b792c03aa380335e9",
+  "source_file_count": 1156,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,19 +16,19 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "078707b1ad0453bc75a0f58dd0f7bb4b7758bff675e00efd0e4dfcac8e0d7edd",
+  "build_log_sha256": "111008c0916f3e77658174673d8ae03a0cc4b03532940e1bb31aa64d0e82fbed",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.lxrVcH/pcplus-source-proof-846y5l9j/checkout",
+  "source_checkout": "/tmp/nix-shell.jurHHC/pcplus-source-proof-1g3ngov2/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
-  "scope": "54 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
-  "output_count": 54,
+  "scope": "56 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+  "output_count": 56,
   "outputs": {
     "terminal/TERMINAL.EXE": {
-      "sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
+      "sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328",
       "matches_workspace": true,
-      "workspace_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e"
+      "workspace_sha256": "f2c75bf79f0aa88fe8411eb82da3866a18ac44410de0e40492d0f7ec6d0e4328"
     },
     "config-dos/CONFIG.EXE": {
       "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
@@ -280,6 +280,16 @@
       "matches_workspace": true,
       "workspace_sha256": "2b699e0a2646abdf9b61c50277725d69932a6d29afdd8fb77308aa5d268eec90"
     },
+    "print_screen/PRINTSCR.EXE": {
+      "sha256": "4383b3799c4c6dc0bda05daf447d80bb5d09af2c7a1fcb14921f592b1eca1201",
+      "matches_workspace": true,
+      "workspace_sha256": "4383b3799c4c6dc0bda05daf447d80bb5d09af2c7a1fcb14921f592b1eca1201"
+    },
+    "printer-device/PRINTER.EXE": {
+      "sha256": "07308264cb1d4c6ec70ed46e103d288027b1d33227d00d040fd824da9d87ef52",
+      "matches_workspace": true,
+      "workspace_sha256": "07308264cb1d4c6ec70ed46e103d288027b1d33227d00d040fd824da9d87ef52"
+    },
     "monitor/MONITOR.EXE": {
       "sha256": "766e8cb46c6edb3269cee3ea2a7896c03628f37e6fcfe7fc17938f834e13b377",
       "matches_workspace": true,
@@ -332,11 +342,13 @@
     "standalone/build_snapshot.py",
     "standalone/build_printer.py",
     "standalone/build_monitor.py",
+    "standalone/build_print_screen.py",
     "standalone/check_batch_download.py",
     "standalone/check_batch_upload.py",
     "standalone/check_capture_file.py",
     "standalone/check_capture_session.py",
     "standalone/check_capture_owners.py",
-    "standalone/check_monitor_file.py"
+    "standalone/check_monitor_file.py",
+    "standalone/check_printer_device.py"
   ]
 }
