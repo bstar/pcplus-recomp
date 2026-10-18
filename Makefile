@@ -1,7 +1,7 @@
 MODULES := escape attributes screen text reports erase cursor_state cursor_shape scroll modes render input_dispatch csi
-.PHONY: all serial parser keyboard $(MODULES) $(addprefix test-,$(MODULES)) test test-driver test-parser test-keyboard test-config test-parser-compat test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services compat test-compat test-modem clean
+.PHONY: all serial parser keyboard config-dos $(MODULES) $(addprefix test-,$(MODULES)) test test-driver test-parser test-keyboard test-config test-config-dos test-parser-compat test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services compat test-compat test-modem clean
 
-all: serial parser keyboard $(MODULES)
+all: serial parser keyboard $(MODULES) config-dos
 
 $(MODULES):
 	python3 standalone/build_$@.py
@@ -25,6 +25,12 @@ test-terminal-services: csi
 test-config:
 	python3 -m unittest discover -s src/config -p 'test_*.py' -v
 
+config-dos:
+	python3 standalone/build_config_dos.py
+
+test-config-dos: config-dos
+	python3 standalone/test_config_dos.py
+
 serial:
 	python3 standalone/build.py
 
@@ -45,7 +51,7 @@ test-parser: parser
 	python3 standalone/check_ansi.py
 	python3 standalone/test_parser_dos.py
 
-test: test-driver test-parser test-keyboard $(addprefix test-,$(MODULES)) test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services test-config
+test: test-driver test-parser test-keyboard $(addprefix test-,$(MODULES)) test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services test-config test-config-dos
 	python3 standalone/test_serial.py
 
 test-parser-compat: parser compat
@@ -61,4 +67,4 @@ test-modem:
 	$(MAKE) -C reconstruction test-modem
 
 clean:
-	rm -rf build/standalone build/ansi build/keyboard build/csi-relocation build/cursor-state build/cursor-shape $(addprefix build/,$(MODULES))
+	rm -rf build/standalone build/ansi build/keyboard build/csi-relocation build/cursor-state build/cursor-shape build/config-dos $(addprefix build/,$(MODULES))

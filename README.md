@@ -90,8 +90,11 @@ text/ESC/CR/LF/TAB/BS through the recovered input, renderer and history paths.
 Selected controls and ANSI profiles are implemented; this diagnostic uses a
 memory byte provider. See [docs/INPUT_DISPATCH.md](docs/INPUT_DISPATCH.md).
 `./tools/build test-config` verifies a partial lossless host codec for proved PRM
-settings. It preserves unknown bytes and uses synthetic data; DOS configuration
-loading, complete defaults and the full settings UI remain work in progress.
+settings. It preserves unknown bytes and uses synthetic data.
+`./tools/build test-config-dos` builds source-owned DOS load/save routines with
+Open Watcom and tests real files plus injected I/O failures in DOSBox-X.
+Complete defaults, transactional replacement and the full settings UI remain
+work in progress.
 See [docs/CONFIGURATION.md](docs/CONFIGURATION.md).
 
 ## Full-application compatibility build

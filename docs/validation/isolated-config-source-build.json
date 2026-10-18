@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "source_tree": "b052c5954911476808f10aeabd4e68a28e72678b",
+  "command": "./tools/build all test-config test-config-dos",
+  "original_executable_present": false,
+  "original_install_present": false,
+  "log_sha256": "636daada2448e693b62ad846f783ed4f8bdac1f451ee8bd6c1c1672e945586bb",
+  "dos_results": {
+    "passed": true,
+    "returncode": 0,
+    "binary_sha256": "b232e7581b482c2eaaf2c603ca16fe8a7f8e691c5f7073c5bf4654434af6e3c1",
+    "fault_binary_sha256": "df3f366d4185dfb345b745a78486e680260012c7cfb2c3274210f8cb79def32e",
+    "normal_cases": [
+      "PASS save exact synthetic bytes",
+      "PASS load exact synthetic bytes",
+      "PASS optional result pointer",
+      "PASS missing read leaves destination unchanged",
+      "PASS short read leaves destination unchanged",
+      "PASS oversized read leaves destination unchanged",
+      "PASS empty read leaves destination unchanged",
+      "PASS save missing-directory failure",
+      "PASS save directory failure",
+      "PASS argument validation",
+      "PASS repeated failures release handles",
+      "PASS source remains unchanged",
+      "PASS read-only save rejection"
+    ],
+    "fault_cases": [
+      "PASS open failure has no handle to close",
+      "PASS read error closes and leaves destination unchanged",
+      "PASS read close error prevents destination commit",
+      "PASS primary read and secondary close errors both retained",
+      "PASS oversized probe leaves destination unchanged",
+      "PASS fragmented reads assemble exact opaque image",
+      "PASS write error closes handle",
+      "PASS short successful write reported as failure",
+      "PASS save close error propagated",
+      "PASS successful save preserves exact bytes"
+    ],
+    "scope": "Source-owned DOS backend; real synthetic filesystem and separately injected DOS service errors. No user config or original executable used."
+  },
+  "scope": "Build all current diagnostics from an isolated tracked-source archive; host codec tests and real DOS/fault config backend tests. Complete application startup/defaults/schema/UI remain open."
+}

@@ -68,6 +68,7 @@ Verified source-built subcases, with every whole-feature gate still open:
 | F04 | Low-level direct/BIOS character, packed-cell and fill output | `TEXT.md` and `evidence/text`; the recovered high-level renderer now wraps/scrolls, with 531 original-comparison operations; continuous input/ESC/CR/LF/BS/TAB/history now passes DOS and 330 original-comparison operations; specialized controls/mode/font paths remain open. |
 | F04 | Full-state versus position-only cursor save/restore | `CURSOR_STATE.md` and `validation/cursor-state-*.json`; standalone source instructions match 48 original scenarios. Unknown saved-state semantics and complete terminal integration remain open. |
 | F05 | BIOS keyboard acquisition, normalization and queue access | `KEYBOARD.md`; terminal key maps, macros and persistent mapping formats remain open. |
+| F06 | Proved PRM block/prefix layout, partial lossless host codec and maintained DOS load/save backend | `CONFIGURATION.md`, original call-path replay, synthetic codec and real-file/fault DOS tests; complete defaults/schema, transactional replacement, startup and UI integration remain open. |
 | F16 | Source-only builds of current diagnostics through pinned Nix tooling | `validation/isolated-source-build.json`; the complete application still depends on unrecovered code/resources and has no source-only whole-application build. |
 
 E2 advertises TTY; DEC VT52/100/102/220/320; ANSI X3.64; IBM

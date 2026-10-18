@@ -50,6 +50,15 @@ requires an attached DOS machine/modem and must not be inferred from emulation.
 
 ## 3. Usable terminal integration
 
+Next implementation priority: wire the recovered continuous input entry to the
+real UART and keyboard in an interactive DOS executable. Replace memory byte
+fixtures with a bounded receive provider, service transmit/flow/keyboard while
+parsing fragmented escapes, and restore UART/vector state on every exit/error.
+Use source-owned initial settings and the proved configuration subset; do not
+require original install files. Validate against a synthetic BBS peer with
+rendered menus, DSR replies, DECCKM arrow keys, stalled links and Alt-X cleanup.
+This terminal milestone does not close the remaining application gates below.
+
 - [ ] Combine the source driver, parser, screen and keyboard into a DOS terminal.
 - [ ] Support dialing/connect/hang-up and configurable serial/modem settings.
 - [ ] Capture representative BBS sessions and verify interaction, display and transfers.
@@ -64,8 +73,10 @@ requires an attached DOS machine/modem and must not be inferred from emulation.
 - [ ] Reconstruct configuration persistence, dialing directory and application UI.
       Progress: original-code replay proves the 1,264-byte PRM load/save block
       and ten-byte serial prefix; a partial lossless host codec preserves unknown
-      fields and validates proved serial settings with synthetic tests. DOS
-      load/save, complete defaults/schema, directory and UI remain open.
+      fields and validates proved serial settings with synthetic tests. A
+      maintained DOS backend also passes strict load/save and failure-path
+      tests. Complete defaults/schema, transactional replacement, directory
+      and UI integration remain open.
       See `docs/CONFIGURATION.md`.
 - [ ] Reconstruct file transfers, capture/logging and supporting tools used by the app.
 - [ ] Reconstruct scripting interfaces and required interpreter/compiler integration.

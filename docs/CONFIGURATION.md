@@ -6,8 +6,8 @@ bytes only. The serial prefix, port tables and selected terminal/attribute field
 are now mapped from instructions; the rest remains opaque. No installed or
 user-customized `.PRM` contents were opened for this investigation.
 
-This is a partial format recovery, not a complete configuration subsystem or a
-DOS configuration implementation. `src/config/prm.py` is a source-only host-side
+This is a partial format recovery and maintained DOS I/O backend, not a complete
+configuration subsystem. `src/config/prm.py` is a source-only host-side
 lossless codec with a validated serial editor. It preserves unknown bytes and
 performs no file IO. It does not generate a complete usable default configuration.
 
@@ -114,6 +114,82 @@ Remaining recovery is field/schema coverage beyond the proved words, string and
 modem-command layouts, PCSETUP's shared-memory/command ABI, conversion/version
 rules in PCINSTAL, complete defaults/startup order, actual DOS persistence/error
 handling, and integration into source-built application configuration services.
-A maintained loader should reject malformed files without the original implicit
-rewrite behavior, but that deliberate change is not implemented as a DOS loader
-by this host codec.
+The maintained DOS backend below now rejects malformed files without the
+original implicit rewrite behavior; the host codec remains separate from those
+DOS filesystem operations.
+
+
+## Maintained DOS I/O backend
+
+`src/config/prm_dos.c/.h` now provides source-owned, executable DOS load/save
+services for the proved opaque 1,264-byte layout. This is a deliberate maintained
+implementation, not recovered original instructions or a complete initialization,
+settings editor, schema validator or upgrade converter. It contains no original
+configuration bytes and performs no automatic missing-file creation or repair.
+
+```sh
+./tools/dev --command python3 standalone/build_config_dos.py
+./tools/dev --command python3 standalone/test_config_dos.py
+```
+
+The Nix-managed Open Watcom build targets DOS/8086 small model (`-bt=dos -0 -ms`),
+with compiler warnings treated as errors. Outputs are `build/config-dos/CONFIG.EXE`
+and a separate fault-injected `CFGFAULT.EXE`. The normal executable links actual
+DOS handle operations; the second recompiles the same backend against named
+injected services to test failures that mapped emulator files cannot reliably
+produce. These injected operations are test boundaries, not production DOS code.
+
+Public API:
+
+```c
+prm_dos_status __cdecl prm_dos_load(
+    const char *path, prm_dos_image *destination, prm_dos_result *result);
+prm_dos_status __cdecl prm_dos_save(
+    const char *path, const prm_dos_image *source, prm_dos_result *result);
+```
+
+Use near data pointers with DS=SS; the explicit 16-bit C calling convention places
+three pointer words on the stack, right to left, and the caller removes six
+argument bytes. The return enum is in AX. `result` may be NULL. `prm_dos_image`
+contains exactly 1,264 opaque bytes; no interpreted field is changed during I/O.
+`prm_dos_result` reports status, primary DOS error, close error and bytes processed.
+Load uses a 1,264-byte stack staging buffer plus its frame/runtime calls; integration
+must budget stack space accordingly. The diagnostic reserves an 8-KB stack.
+Ordinary Open Watcom C callee preservation rules apply; no exact original PCPlus
+register ABI is implied by these new C functions.
+
+Load opens read-only, handles fragmented reads, requires exactly 1,264 bytes,
+probes for an extra byte, and attempts close on every path after successful open.
+Only a complete exact-size read **and successful close** commits the staging
+buffer to the caller's destination. Missing, empty, truncated, oversized, read-error
+and close-error paths leave the destination unchanged and never rewrite the input
+file. This intentionally replaces the original zero-element-read rewrite behavior.
+A matching size is still not a signature or version check; typed field validation
+and selecting a known-compatible format remain higher-level requirements.
+
+Save creates/truncates the requested file, writes the exact opaque image, checks
+both the DOS result and actual written-byte count, and attempts close. A short
+write is an explicit failure even when DOS returns no error code. Primary I/O
+errors and a secondary close error are both retained. Close failure cannot be
+claimed as a successful durable save. **Direct-save failure can leave a partial
+or truncated destination**; transactional replacement/backup is separate
+application integration work, not silently promised by this API. No user file
+was used to test this behavior.
+
+DOSBox-X passes thirteen real-filesystem cases: exact save/load and optional
+result pointer; missing/short/long/empty loads with unchanged destination;
+missing-directory and directory save rejection; argument validation; 48 repeated
+failed loads followed by a successful open to catch handle leaks; source
+preservation; and DOS read-only-file save rejection. The host runner also verifies
+that short/long/empty fixture bytes remain untouched and the saved output matches
+the complete synthetic payload.
+
+Ten additional DOS-executed injected-error cases pass: failed open without a
+spurious close, failed read with cleanup, read-close failure preventing commit,
+primary read plus secondary close errors, oversized probe, fragmented reads,
+write error with cleanup, short-write failure, save-close failure and exact
+successful write. Error-close cases verify the cleanup attempt/reporting contract;
+a returned DOS close error cannot itself prove the OS released a handle.
+`build/config-dos/{manifest,result}.json` records exact binaries, source identities,
+all case results and limits. Physical disks, disk-full persistence, transactional
+replacement and full application configuration integration remain unverified.
