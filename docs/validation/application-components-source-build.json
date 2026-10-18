@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "da85833ebafee020e6a0b1153977cc9260739f9fde5ef4a3d1d93bca3d9b0298",
-  "source_file_count": 733,
+  "source_snapshot_sha256": "96b79fa32e1bab58e2df24771d00071c0b3f2880903aaba0e45a7b4d8bd12615",
+  "source_file_count": 837,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,19 +16,19 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "08735c3e2d38adcc32f379face9b56e944900e8e5c1d46143bd77f68adfe6c40",
+  "build_log_sha256": "bc7b3c3f59d570668073ebb8c4e6454224d912cceb02e0c2758e2f22390bfe1d",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.CBufzS/pcplus-source-proof-7qjl6woz/checkout",
+  "source_checkout": "/tmp/nix-shell.UqzYVp/pcplus-source-proof-lia7rk_a/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
-  "scope": "Current interactive terminal and19 application/component diagnostic outputs; complete PCPlus application remains unfinished.",
-  "output_count": 19,
+  "scope": "27 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+  "output_count": 27,
   "outputs": {
     "terminal/TERMINAL.EXE": {
-      "sha256": "36b14af2281a4921c0da210cfb3ceed22c3c33d82c9b40f2877850bea169d5f4",
+      "sha256": "7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a",
       "matches_workspace": true,
-      "workspace_sha256": "36b14af2281a4921c0da210cfb3ceed22c3c33d82c9b40f2877850bea169d5f4"
+      "workspace_sha256": "7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a"
     },
     "config-dos/CONFIG.EXE": {
       "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
@@ -119,6 +119,46 @@
       "sha256": "ff8c65cea099092ba50908d0b6b4e5bb1901509b9303b744ee0191f7bcaa82f6",
       "matches_workspace": true,
       "workspace_sha256": "ff8c65cea099092ba50908d0b6b4e5bb1901509b9303b744ee0191f7bcaa82f6"
+    },
+    "process/PROCESS.EXE": {
+      "sha256": "7da5229e3cbc16de2c994fadaf5556c34a105afa4813ce64646fa5b543892a05",
+      "matches_workspace": true,
+      "workspace_sha256": "7da5229e3cbc16de2c994fadaf5556c34a105afa4813ce64646fa5b543892a05"
+    },
+    "process/PROGRAM.EXE": {
+      "sha256": "c9d32557bc40fd4542ea888b0181c111edee7abffc324ffd2242eb17cc7abeaa",
+      "matches_workspace": true,
+      "workspace_sha256": "c9d32557bc40fd4542ea888b0181c111edee7abffc324ffd2242eb17cc7abeaa"
+    },
+    "process/CHILD.COM": {
+      "sha256": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f",
+      "matches_workspace": true,
+      "workspace_sha256": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f"
+    },
+    "program-exec/EXECUTOR.EXE": {
+      "sha256": "aec4daeba2e9d9fd49a0df325455c25a8bd95c3015f797dc4123169b0c3bbe0b",
+      "matches_workspace": true,
+      "workspace_sha256": "aec4daeba2e9d9fd49a0df325455c25a8bd95c3015f797dc4123169b0c3bbe0b"
+    },
+    "program-exec/CHILD.COM": {
+      "sha256": "fccf1fea18c1c5f803d4d3331ce845eab9bd2cae7659797e2bf909723c871c24",
+      "matches_workspace": true,
+      "workspace_sha256": "fccf1fea18c1c5f803d4d3331ce845eab9bd2cae7659797e2bf909723c871c24"
+    },
+    "terminal-reset/RESET.EXE": {
+      "sha256": "4e7cd57c0f73ad6a84642eedc3f4823548aa4ba0d5968f711c4c62310d52b72e",
+      "matches_workspace": true,
+      "workspace_sha256": "4e7cd57c0f73ad6a84642eedc3f4823548aa4ba0d5968f711c4c62310d52b72e"
+    },
+    "transfer-blocks/BLOCKS.EXE": {
+      "sha256": "b9eecad4fce1ea76e5f870d7706ce449ca00db99c1ffa99b03e14334ab54d3a1",
+      "matches_workspace": true,
+      "workspace_sha256": "b9eecad4fce1ea76e5f870d7706ce449ca00db99c1ffa99b03e14334ab54d3a1"
+    },
+    "transfer-receive/RECEIVE.EXE": {
+      "sha256": "7f2da1865bcd4b7bbe1fa466e9bfc2e759de514109787516c330a28797f26e8e",
+      "matches_workspace": true,
+      "workspace_sha256": "7f2da1865bcd4b7bbe1fa466e9bfc2e759de514109787516c330a28797f26e8e"
     }
   },
   "build_scripts": [
@@ -138,6 +178,11 @@
     "standalone/build_keyboard_detection.py",
     "standalone/build_line_edit.py",
     "standalone/build_meta_keys.py",
-    "standalone/build_character_edit.py"
+    "standalone/build_character_edit.py",
+    "standalone/build_process.py",
+    "standalone/build_program_exec.py",
+    "standalone/build_terminal_reset.py",
+    "standalone/build_transfer_blocks.py",
+    "standalone/build_transfer_receive.py"
   ]
 }

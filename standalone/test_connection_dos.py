@@ -6,7 +6,7 @@ from modem_fixtures import fixture
 from test_terminal import SAMPLER
 from directory_test_support import accounting_check
 ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EXE'
-def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None):
+def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None):
  out=ROOT/'build/connection-dos'/name;out.mkdir(parents=True,exist_ok=True)
  for p in ('PASS.TXT','FAIL.TXT','BEFORE.BIN','AFTER.BIN','SCREEN.BIN'):(out/p).unlink(missing_ok=True)
  # These are owned synthetic fixture directories, never a user's directory.
@@ -61,7 +61,7 @@ def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,
        online=True
        # Same TCP write as CONNECT: prove main retains bytes after a match
        # while the sender finishes its final inter-character delay.
-       conn.sendall(b'CONNECT\r\n\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0c')
+       conn.sendall(b'CONNECT\r\n'+(banner if banner is not None else b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0c'))
       else:checks['unexpected_modem_command']=True
   except (OSError,AssertionError) as error:errors.append(str(error))
  thread=threading.Thread(target=peer,daemon=True);thread.start()

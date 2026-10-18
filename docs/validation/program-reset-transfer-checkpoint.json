@@ -1,0 +1,717 @@
+{
+  "passed": true,
+  "terminal_sha256": "7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a",
+  "checks": {
+    "build/process/checks.json": {
+      "sha256": "43a4b653ce248102f2d7787bf18855ea963cce40d2797628df9476d3d700797e",
+      "result": {
+        "passed": true,
+        "inputs": 68,
+        "cases": [
+          {
+            "case": "actual-instructions-DOS-parameter-block-inherited-env-child-status-and-clobbered-context",
+            "inputs": 10,
+            "passed": true
+          },
+          {
+            "case": "DOS-resize-and-EXEC-errors-preserve-first-error-no-stale-child-and-no-child-after-resize-failure",
+            "inputs": 9,
+            "passed": true
+          },
+          {
+            "case": "empty-max-CP437-CR-LF-overlong-null-path-wrapping-result-and-invalid-host-state-before-IO",
+            "inputs": 17,
+            "passed": true
+          },
+          {
+            "case": "near-region-aliases-owned-backend-state-last-byte-NUL-and-exact-64K-result-edge",
+            "inputs": 28,
+            "passed": true
+          },
+          {
+            "case": "repeated-execution-resizes-once-optional-pointers-cleared-tail-and-failed-child-recovery",
+            "inputs": 4,
+            "passed": true
+          }
+        ],
+        "binary_sha256": "7da5229e3cbc16de2c994fadaf5556c34a105afa4813ce64646fa5b543892a05",
+        "scope": "Actual linked maintained near EXEC/bounds/context code; only DOS4A/29/4B/4D kernel boundary modeled. Context-clobber model changes DS/ES/SS/SP/registers before real restoration instructions. Real DOS/FCB/child execution separately tested; no live UART handoff."
+      }
+    },
+    "build/process/program-checks.json": {
+      "sha256": "660cf90c0c9a70a1a9090b3457a75f2900a47df3813a77a973f9a86fdc2f9c46",
+      "result": {
+        "passed": true,
+        "inputs": 57,
+        "cases": [
+          {
+            "case": "COMSPEC-literal-command-no-TEXT-expansion-full-status-and-clobbered-context",
+            "inputs": 12,
+            "passed": true
+          },
+          {
+            "case": "native-errno-equivalent-DOS2-3-5-fallback-PATH-relative-forms-case-sensitive-names-and-missing-processor",
+            "inputs": 16,
+            "passed": true
+          },
+          {
+            "case": "owned-environment-MCB-string-terminator-and-128-byte-path-capacity-bounds",
+            "inputs": 10,
+            "passed": true
+          },
+          {
+            "case": "near-arguments-overlap-wrap-long-command-CR-LF-and-busy-before-child",
+            "inputs": 19,
+            "passed": true
+          }
+        ],
+        "binary_sha256": "c9d32557bc40fd4542ea888b0181c111edee7abffc324ffd2242eb17cc7abeaa",
+        "scope": "Actual linked C/8086 COMSPEC/environment/PATH policy and maintainedEXEC backend. Synthetic parentMCB/environment and explicitDOSkernel callbacks only; no product service replaced. Missing-processor/path-order tested independently of DOSBoxvirtualCOMMAND.COM. Native recovered executor is a separate exact-byte diagnostic; live UI/UART handoff not included."
+      }
+    },
+    "build/process/dos-results.json": {
+      "sha256": "ca6032e71e60d3c9190ba21970d858b6f1d1b3c1b6bba419f65bfa6eff129adb",
+      "result": {
+        "passed": true,
+        "checks": {
+          "actual_DOS_parent_checks": true,
+          "child_exact_tail": true,
+          "child_environment_inherited": true,
+          "child_actual_FCB_parse": true
+        },
+        "outputs": {
+          "PROCESS.EXE": "7da5229e3cbc16de2c994fadaf5556c34a105afa4813ce64646fa5b543892a05",
+          "CHILD.COM": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f"
+        },
+        "scope": "Actual DOS8086 parent memory shrink/MCB, repeated successful EXEC with exit37, inherited synthetic environment, DOSFCBs/tails, missing child, invalid input, real resize error8 and subsequent recovery. No user program or live UART handoff."
+      }
+    },
+    "build/program-process-dos/checks.json": {
+      "sha256": "665c6267719f48cee0320950b57e59b1d8effe43dfca5f5f8aee6a1b01640b90",
+      "result": {
+        "passed": true,
+        "cases": [
+          {
+            "case": "COMSPEC",
+            "passed": true,
+            "checks": {
+              "expected_DOS_exit": true,
+              "command_processor_delivered_exact_child_arguments": true,
+              "child_environment": true,
+              "raw_command_processor_result": true
+            },
+            "raw_result": [
+              0,
+              0,
+              0,
+              668
+            ]
+          },
+          {
+            "case": "missing-COMSPEC-PATH",
+            "passed": true,
+            "checks": {
+              "expected_DOS_exit": true,
+              "command_processor_delivered_exact_child_arguments": true,
+              "child_environment": true,
+              "raw_command_processor_result": true
+            },
+            "raw_result": [
+              0,
+              0,
+              0,
+              668
+            ]
+          },
+          {
+            "case": "invalid-COMSPEC-fallback",
+            "passed": true,
+            "checks": {
+              "expected_DOS_exit": true,
+              "command_processor_delivered_exact_child_arguments": true,
+              "child_environment": true,
+              "raw_command_processor_result": true
+            },
+            "raw_result": [
+              0,
+              0,
+              0,
+              668
+            ]
+          },
+          {
+            "case": "drive-relative-PATH",
+            "passed": true,
+            "checks": {
+              "expected_DOS_exit": true,
+              "command_processor_delivered_exact_child_arguments": true,
+              "child_environment": true,
+              "raw_command_processor_result": true
+            },
+            "raw_result": [
+              0,
+              0,
+              0,
+              668
+            ]
+          },
+          {
+            "case": "DOSBox-internal-processor",
+            "passed": true,
+            "checks": {
+              "expected_DOS_exit": true,
+              "command_processor_delivered_exact_child_arguments": true,
+              "child_environment": true,
+              "raw_command_processor_result": true
+            },
+            "raw_result": [
+              0,
+              0,
+              0,
+              668
+            ]
+          }
+        ],
+        "outputs": {
+          "PROGRAM.EXE": "c9d32557bc40fd4542ea888b0181c111edee7abffc324ffd2242eb17cc7abeaa",
+          "CHILD.COM": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f"
+        },
+        "scope": "Actual DOS8086 COMSPEC /c and fallback with isolated synthetic DOS media/source-owned nested child. DOSBox virtualCOMMAND.COM resolves even with emptyCOMSPEC/PATH; candidate search order and missing-processor are separately tested under explicit DOSkernel model. Its command processor returns0 although nestedCHILD returns37. No live UART or vendor UI."
+      }
+    },
+    "build/program-exec/cpu-results.json": {
+      "sha256": "3ae12d995fb5b91771cd0a0ad884c669b4034c1a13f87aeb082d1de47d3dc481",
+      "result": {
+        "passed": true,
+        "binary_sha256": "aec4daeba2e9d9fd49a0df325455c25a8bd95c3015f797dc4123169b0c3bbe0b",
+        "cases": 55,
+        "genuine_original_comparisons": 0,
+        "groups": [
+          "actual-environment-builder-argv-tail125-byte-boundary-and-CR",
+          "actual-case-sensitive-environment-name-equals-matching",
+          "actual-EXEC-mode-child-return-DOSerror-CS-stack-DS-pair-restoration",
+          "COMSPEC-shell-c-switch-default-and-only-errno2-or13-fallback",
+          "application-routing-UI-wait-save-serial-resume-and-busy-name-guards"
+        ],
+        "fixtures": "DOS21 functions modeled; unresolved nearheap allocator/free and UI/mouse/vector/serial services explicitly recorded. No synthetic original executable launched.",
+        "limitations": [
+          "Original runtime heap allocation/free/farheap, UI/screen/mouse/vector/serial services remain explicit dependencies.",
+          "Standalone actualDOS diagnostic calls original EXEC core with maintained startup memory shrink and source-built synthetic child, not complete application executor.",
+          "Original command-tail builder rejects concatenated arguments exceeding125bytes; environment and heap behavior retains legacy assumptions."
+        ]
+      }
+    },
+    "build/program-exec/dos-results.json": {
+      "sha256": "eda2b2ff996a53cad81f652e39f5edde086180e37ca60ace1d13afcba3de3d11",
+      "result": {
+        "passed": true,
+        "binary_sha256": "aec4daeba2e9d9fd49a0df325455c25a8bd95c3015f797dc4123169b0c3bbe0b",
+        "checks": [
+          "Actual original6a22 4B00 DOSexec and4D childexit37",
+          "Child verifies its9byte commandtail+CR",
+          "Child verifies explicitLABVAR=OWNED environment",
+          "Child writes ownedCHILD.OUT proving it actually ran",
+          "Parent resumes with DS002e/0030 pair andexecactive restored",
+          "ActualDOS missingABSENT.COM reportsFFFF/errno2/DOSerror2 andreturns safely"
+        ],
+        "scope": "Actual DOSBox-X8086 native recovered EXEC instructions; only source-owned synthetic CHILD.COM launched. Maintained diagnostic startup shrinks ownPSPblock. CRT heap/path/UI/serial gaps not exercised."
+      }
+    },
+    "build/terminal-reset/checks.json": {
+      "sha256": "e3af98d24452f0b752e3710d4018f07e369bfe3e19544c6f7de9fc12f2f14d10",
+      "result": {
+        "passed": true,
+        "binary_sha256": "4e7cd57c0f73ad6a84642eedc3f4823548aa4ba0d5968f711c4c62310d52b72e",
+        "cases": [
+          {
+            "case": "complete-soft-reset-stable-80column-hidden-status-real-clear-home-geometry-tabs",
+            "passed": true
+          },
+          {
+            "case": "all-profile-derived-prefix-flags-and-honest-mandatory-KEY-dependency",
+            "passed": true
+          },
+          {
+            "case": "actual-80-and132-width-state-helper",
+            "passed": true
+          },
+          {
+            "case": "geometry-wide-transition-exposes-real-far-allocation-boundary",
+            "passed": true
+          },
+          {
+            "case": "actual-CRTC-underline-register-and-BDA-height-contract",
+            "passed": true
+          },
+          {
+            "case": "native-special-zero-reset-preserves-screen-attribute-and-saved-cursor",
+            "passed": true
+          },
+          {
+            "case": "actual-far-shadow-clear-uses-configured-normal-attribute",
+            "passed": true
+          },
+          {
+            "case": "native-default-cursor-shape-through-real-BIOS-helper",
+            "passed": true
+          }
+        ],
+        "genuine_original_comparisons": 0,
+        "scope": "Full native soft-reset only for stable80-column geometry/status-hidden synthetic state. Nonzero profile prefix stops explicitly at original mandatory KEY loader; far allocation/UI/repair are not fake no-ops. Only video/CRTC hardware modeled."
+      }
+    },
+    "build/terminal-reset/dos-results.json": {
+      "sha256": "58b7ca62b9b63642acb045786c39cb93a50feaa73545d54b76d1546100dc6934",
+      "result": {
+        "passed": true,
+        "binary_sha256": "4e7cd57c0f73ad6a84642eedc3f4823548aa4ba0d5968f711c4c62310d52b72e",
+        "checks": [
+          "native terminal_reset(0) returns on stable80-column/status-hidden configuration",
+          "real video rectangle cleared and cursor homed",
+          "current attribute reset and default tabs generated"
+        ],
+        "scope": "Actual DOSBox-X8086 soft-reset path only. Full profile reset still requires explicit KEY loader; no no-op dependency replacement."
+      }
+    },
+    "build/transfer-blocks/checks.json": {
+      "sha256": "bda76d8bc251a54713b65ba420757ad507de6bdb21fe5df86f58492c2ec4a3a6",
+      "result": {
+        "passed": true,
+        "binary_sha256": "b9eecad4fce1ea76e5f870d7706ce449ca00db99c1ffa99b03e14334ab54d3a1",
+        "cases": [
+          {
+            "case": "CRC-reference-empty-known-binary-random-and32768-byte-boundary",
+            "inputs": 70,
+            "passed": true
+          },
+          {
+            "case": "SOH-STX-block-complement-checksum-and-big-endian-CRC",
+            "inputs": 20,
+            "passed": true
+          },
+          {
+            "case": "overlapping-framing-buffers-stage-before-commit",
+            "inputs": 4,
+            "passed": true
+          },
+          {
+            "case": "invalid-count-mode-capacity-and-extents-no-output-mutation",
+            "inputs": 11,
+            "passed": true
+          }
+        ],
+        "scope": "Actual linked93byte CRC and maintained bounded memory-only frame encoder; independent binascii/poly oracle. Optional original explicitly SHAverified; no private data/UART/files/peer transfer."
+      }
+    },
+    "build/transfer-blocks-dos/result.json": {
+      "sha256": "9127179ee3bcc8c7689fb3514c0bcd00be9d7f3da5b1ff936d98f2abaa163f6f",
+      "result": {
+        "passed": true,
+        "returncode": 0,
+        "binary_sha256": "b9eecad4fce1ea76e5f870d7706ce449ca00db99c1ffa99b03e14334ab54d3a1",
+        "scope": "Actual source-only DOS original CRC31c3 check and bounded128byte CRC frame header; memory-only, no UART/file transfer."
+      }
+    },
+    "build/transfer-receive/checks.json": {
+      "sha256": "0950e450d32bd4d6b735828fdb3c9b224c07a15429b83cb9c0cd2293cadb3edc",
+      "result": {
+        "passed": true,
+        "binary_sha256": "7f2da1865bcd4b7bbe1fa466e9bfc2e759de514109787516c330a28797f26e8e",
+        "cases": [
+          {
+            "case": "actual-frame-payload-CRC-checksum-sequence-duplicate-complement-timeout-EOT",
+            "inputs": 265,
+            "passed": true
+          },
+          {
+            "case": "bounded-fixture-invalid-input-no-UART-effect",
+            "inputs": 6,
+            "passed": true
+          }
+        ],
+        "scope": "Exact source receiver fragments and real CRC/ACK/NAK instructions, explicitly modeled memory UART/time/UI. Not a complete transfer, live peer or DOS file write."
+      }
+    },
+    "build/transfer-receive-dos/result.json": {
+      "sha256": "635ef5f947f3c9c25baca3d93a25ff9927cbebffcd9323a4de6972ad2c5febc0",
+      "result": {
+        "passed": true,
+        "returncode": 0,
+        "binary_sha256": "7f2da1865bcd4b7bbe1fa466e9bfc2e759de514109787516c330a28797f26e8e",
+        "scope": "Actual source-only DOS exact receiver with modeled UART/time/UI: accepted CRC payload, bad CRC, duplicate ACK, complement/sequence NAK, truncated data, EOT NAK/ACK and double-CAN event. No live UART/files/session."
+      }
+    },
+    "build/terminal/program-actions-live-checks.json": {
+      "sha256": "720126ee1da59fe40082f59881a7c3c4ed94adf31ed49cd7a8564b413eafae4d",
+      "result": {
+        "passed": true,
+        "binary_sha256": "7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a",
+        "inputs": 56,
+        "cases": [
+          {
+            "case": "allten-PROGRAM-indices-defer-DOS-to-safe-poll-literal-tail-realrestore-noRBRdiscard",
+            "inputs": 10,
+            "passed": true
+          },
+          {
+            "case": "SOFT-XOFF-physical-TEMT-drain-fulltick-wrap-and-owned-XON-resume",
+            "inputs": 3,
+            "passed": true
+          },
+          {
+            "case": "36tick-blocked-TEMT-deadline-midnight-and-long-reply-progress",
+            "inputs": 4,
+            "passed": true
+          },
+          {
+            "case": "pending-Escape-AltX-AltH-AltD-FIFO-cancel-and-real-carrierloss",
+            "inputs": 5,
+            "passed": true
+          },
+          {
+            "case": "EXEC-error-recovery-unsupported-view-before-child-and-recordedRXoverflow",
+            "inputs": 6,
+            "passed": true
+          },
+          {
+            "case": "resize-environment-rejection-no-child-and-empty-environment-command-fallback",
+            "inputs": 5,
+            "passed": true
+          },
+          {
+            "case": "driver-vs-program-flowownership-postchild-overrun-startupbaseline-FIFO-and-invalidcommands",
+            "inputs": 9,
+            "passed": true
+          },
+          {
+            "case": "actual-AltX-shutdown-XON-independent-CTS-peerpause-and-bounded-fulltick-timeout",
+            "inputs": 14,
+            "passed": true
+          }
+        ],
+        "scope": "Actual linked maintained PROGRAMscheduler, C COMSPEC policy, processbackend, snapshots, keyboard/UART/IRQ/format/vector restoration. OnlyDOSkernel/BIOS/hardware boundaries modeled; no productcallbacks skipped.",
+        "limitations": [
+          "Kernel/BIOS/UART model, not physicaladapter or realDOSchild proof; rootseparate actualDOSdiagnostics coverkernel/child behavior.",
+          "NONEflow cannot guarantee remotepause; modeledLSR overrun boundary is explicit."
+        ]
+      }
+    },
+    "build/terminal/terminal-reset-live-checks.json": {
+      "sha256": "c2c0e10b98fba23810c809ac85dd32a11ed66fa2ee115b663caed872e47a86e5",
+      "result": {
+        "passed": true,
+        "binary_sha256": "7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a",
+        "cases": [
+          {
+            "case": "both-profiles-all-named-state-dirty-margins-pointers-protection-and-full-metadata",
+            "passed": true
+          },
+          {
+            "case": "real-UART-parser-RIS-after-margins-origin-SGR-wrap-and-hidden-cursor",
+            "passed": true
+          },
+          {
+            "case": "DECCKM-then-RIS-restores-all79-slots-including-explicit-binary-KBD-baseline",
+            "passed": true
+          },
+          {
+            "case": "nondefault-imported-palette-wrap-scroll-restored-as-configured-not-hardcoded",
+            "passed": true
+          },
+          {
+            "case": "UART-flow-TX-source-settings-connection-sinks-translation-and-history-preserved",
+            "passed": true
+          },
+          {
+            "case": "cdecl-argument-not-consumed-and-near-BP-SI-DI-arbitrary-ES-preserved",
+            "passed": true
+          },
+          {
+            "case": "unsupported-profile-or-uncaptured-baseline-remains-explicit",
+            "passed": true
+          }
+        ],
+        "scope": "Maintained current-profile RIS policy, actual linked input/ESC/clear-home/erase/cursor/UART code, hardware-only video/keyboard/UART oracle. Startup baseline restored without file IO. No native20a4 equivalence or full profile-loader claim."
+      }
+    },
+    "build/terminal/meta-actions-live-checks.json": {
+      "sha256": "1a7c71f8cff268da19166dec89a647e4f172a308548b72ac7050d9f5802924a6",
+      "result": {
+        "passed": true,
+        "binary_sha256": "7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a",
+        "inputs": 343,
+        "cases": [
+          {
+            "case": "actual-caret-operands-FF-to-wire-NUL-embedded-NUL-stop-and-51-byte-bound",
+            "inputs": 262,
+            "passed": true
+          },
+          {
+            "case": "unsafe-text-invalid-index-kind-first-empty-and-busy-atomicity",
+            "inputs": 41,
+            "passed": true
+          },
+          {
+            "case": "ten-full-BIOS-tick-pauses-lowword-wrap-midnight-and-FF-precedence",
+            "inputs": 5,
+            "passed": true
+          },
+          {
+            "case": "actual-CTS-THRE-XOFF-no-progress-timeout-and-XON-recovery",
+            "inputs": 10,
+            "passed": true
+          },
+          {
+            "case": "normal-reply-ring-and-flowcontrol-priority-progress-epoch-and-binary-RX",
+            "inputs": 3,
+            "passed": true
+          },
+          {
+            "case": "macro-before-keystrokes-FIFO-wrap-full-explicit-exit-without-drop",
+            "inputs": 5,
+            "passed": true
+          },
+          {
+            "case": "Escape-AltX-AltH-AltD-cancel-clear-FIFO-and-modem-ownership",
+            "inputs": 10,
+            "passed": true
+          },
+          {
+            "case": "actual-carrier-loss-and-configured-start-cancel-clear-macro-preserve-AX",
+            "inputs": 7,
+            "passed": true
+          }
+        ],
+        "scope": "Actual linked live macro/start/poll/cancel/deferredFIFO, recovered caret expander, transport, BIOS keyboard reader, UART IRQ/flow and physical-write instructions. Only hardware registers, BIOSkeys and BIOSdayticks modeled. No runtime callback substituted.",
+        "limitations": [
+          "No DOSfilesystem/KEYreader or physical UART/modem/BBS validation in this CPUtest.",
+          "Cancellation cannot retract physically accepted bytes from earlier foreground polls.",
+          "Original calibrated character-delay units are retained metadata; live TEXT uses the maintained fast pacing policy. No calibrated live timing claim."
+        ]
+      }
+    },
+    "build/program-actions-dos/checks.json": {
+      "sha256": "bbcb8282d6cf5244cf8a88384d5605e3d0fe97486e2a0ed5138259aca4eb5c96",
+      "result": {
+        "passed": true,
+        "cases": [
+          {
+            "case": "program-COM1-HARD",
+            "passed": true,
+            "checks": {
+              "DOS_expected_exit": true,
+              "hardware_restored": true,
+              "PRM_unchanged": true,
+              "binary_unchanged": true,
+              "no_peer_errors": true,
+              "no_unexpected_commands": true,
+              "fixture_unchanged_TEST.KEY": true,
+              "fixture_unchanged_CHILD.COM": true,
+              "actual_init_and_dial": true,
+              "actual_DOS_CPR": true,
+              "actual_DOS_DA": true,
+              "immediate_banner_not_dropped": true,
+              "normal_keys_resume": true,
+              "PROGRAM_not_sent_to_modem": true,
+              "child_ran_with_released_IRQ": true,
+              "child_kept_DTR_paused_RTS_and_IER": true,
+              "configured_format_inherited": true,
+              "child_exact_arguments": true
+            },
+            "commands": [
+              "ATZ",
+              "ATDCaseTest:23"
+            ],
+            "errors": [],
+            "seconds": 8.527,
+            "binary_sha256": "7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a",
+            "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 HARD",
+            "expected_exit": 0,
+            "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+          },
+          {
+            "case": "program-COM2-HARD",
+            "passed": true,
+            "checks": {
+              "DOS_expected_exit": true,
+              "hardware_restored": true,
+              "PRM_unchanged": true,
+              "binary_unchanged": true,
+              "no_peer_errors": true,
+              "no_unexpected_commands": true,
+              "fixture_unchanged_TEST.KEY": true,
+              "fixture_unchanged_CHILD.COM": true,
+              "actual_init_and_dial": true,
+              "actual_DOS_CPR": true,
+              "actual_DOS_DA": true,
+              "immediate_banner_not_dropped": true,
+              "normal_keys_resume": true,
+              "PROGRAM_not_sent_to_modem": true,
+              "child_ran_with_released_IRQ": true,
+              "child_kept_DTR_paused_RTS_and_IER": true,
+              "configured_format_inherited": true,
+              "child_exact_arguments": true
+            },
+            "commands": [
+              "ATZ",
+              "ATDCaseTest:23"
+            ],
+            "errors": [],
+            "seconds": 8.526,
+            "binary_sha256": "7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a",
+            "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM2 19200 HARD",
+            "expected_exit": 0,
+            "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+          },
+          {
+            "case": "program-COM1-SOFT",
+            "passed": true,
+            "checks": {
+              "DOS_expected_exit": true,
+              "hardware_restored": true,
+              "PRM_unchanged": true,
+              "binary_unchanged": true,
+              "no_peer_errors": true,
+              "no_unexpected_commands": true,
+              "fixture_unchanged_TEST.KEY": true,
+              "fixture_unchanged_CHILD.COM": true,
+              "actual_init_and_dial": true,
+              "actual_DOS_CPR": true,
+              "actual_DOS_DA": true,
+              "immediate_banner_not_dropped": true,
+              "normal_keys_resume": true,
+              "PROGRAM_not_sent_to_modem": true,
+              "child_ran_with_released_IRQ": true,
+              "child_kept_DTR_paused_RTS_and_IER": true,
+              "configured_format_inherited": true,
+              "child_exact_arguments": true,
+              "software_peer_pause_resume": true
+            },
+            "commands": [
+              "ATZ",
+              "ATDCaseTest:23"
+            ],
+            "errors": [],
+            "seconds": 8.526,
+            "binary_sha256": "7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a",
+            "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 SOFT",
+            "expected_exit": 0,
+            "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+          },
+          {
+            "case": "program-missing-nested-command",
+            "passed": true,
+            "checks": {
+              "DOS_expected_exit": true,
+              "hardware_restored": true,
+              "PRM_unchanged": true,
+              "binary_unchanged": true,
+              "no_peer_errors": true,
+              "no_unexpected_commands": true,
+              "fixture_unchanged_TEST.KEY": true,
+              "fixture_unchanged_CHILD.COM": true,
+              "actual_init_and_dial": true,
+              "actual_DOS_CPR": true,
+              "actual_DOS_DA": true,
+              "immediate_banner_not_dropped": true,
+              "normal_keys_resume": true,
+              "PROGRAM_not_sent_to_modem": true,
+              "missing_child_not_created": true
+            },
+            "commands": [
+              "ATZ",
+              "ATDCaseTest:23"
+            ],
+            "errors": [],
+            "seconds": 8.527,
+            "binary_sha256": "7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a",
+            "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 HARD",
+            "expected_exit": 0,
+            "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+          }
+        ],
+        "binary_sha256": "7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a",
+        "scope": "Actual DOS MetaPROGRAM COMSPEC /c with source-owned child, UARTIRQ released, DTRkept/RTSpaused/IERoff observed, childchangedUART/IRQ/video thenparentrestored, ordinarykeydelivery and finalIRQ/UART/PIC exact restoration. Nullmodem has CTSready, no physicalflow timing proof. No ASPECT/HOOK executor or vendorUI claim."
+      }
+    },
+    "build/terminal-reset-live-dos/checks.json": {
+      "sha256": "e41b2b13747e7eb816e2c46c04ea8e375390c9230e24451d9375753bf19d7ce6",
+      "result": {
+        "passed": true,
+        "cases": [
+          {
+            "case": "RIS-profile-6",
+            "passed": true,
+            "checks": {
+              "DOS_expected_exit": true,
+              "hardware_restored": true,
+              "PRM_unchanged": true,
+              "binary_unchanged": true,
+              "no_peer_errors": true,
+              "no_unexpected_commands": true,
+              "fixture_unchanged_TEST.KBD": true,
+              "actual_init_and_dial": true,
+              "actual_DOS_CPR": true,
+              "actual_DOS_DA": true,
+              "immediate_banner_not_dropped": true,
+              "imported_map_restored_after_DECCKM": true,
+              "configured_normal_restored": true
+            },
+            "commands": [
+              "ATZ",
+              "ATDCaseTest:23"
+            ],
+            "errors": [],
+            "seconds": 4.872,
+            "binary_sha256": "7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a",
+            "command": "@D:\\TEST.PRM /D:CaseTest:23 /K:D:\\TEST.KBD",
+            "expected_exit": 0,
+            "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+          },
+          {
+            "case": "RIS-profile-4",
+            "passed": true,
+            "checks": {
+              "DOS_expected_exit": true,
+              "hardware_restored": true,
+              "PRM_unchanged": true,
+              "binary_unchanged": true,
+              "no_peer_errors": true,
+              "no_unexpected_commands": true,
+              "fixture_unchanged_TEST.KBD": true,
+              "actual_init_and_dial": true,
+              "actual_DOS_CPR": true,
+              "actual_DOS_DA": true,
+              "immediate_banner_not_dropped": true,
+              "imported_map_restored_after_DECCKM": true,
+              "configured_normal_restored": true
+            },
+            "commands": [
+              "ATZ",
+              "ATDCaseTest:23"
+            ],
+            "errors": [],
+            "seconds": 4.821,
+            "binary_sha256": "7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a",
+            "command": "@D:\\TEST.PRM /D:CaseTest:23 /K:D:\\TEST.KBD",
+            "expected_exit": 0,
+            "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+          }
+        ],
+        "binary_sha256": "7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a",
+        "scope": "Actual DOS startup configured state/KBD capture, UART ESCc after dirtySGR/scroll/origin/DECCKM, restored profileDA/CPR, configured normalcolor and exact selected imported keyslots, unchangedfiles and IRQ/UART/PIC restoration. Supported4/6 maintainedRIS policy; not nativeprofileloader/fullreset."
+      }
+    }
+  },
+  "scope": "Source-only linked CPU tests with declared hardware/DOS models and actual DOSBox-X diagnostics. Recovered native routines and maintained process/handoff/reset policies are distinguished in their individual results. No live transfer session, complete application or physical modem claim.",
+  "commands": [
+    {
+      "command": "./tools/build test-process test-program_exec test-terminal_reset test-transfer_blocks test-transfer_receive",
+      "exit_code": 0
+    },
+    {
+      "command": "./tools/build test-terminal",
+      "exit_code": 0
+    }
+  ]
+}

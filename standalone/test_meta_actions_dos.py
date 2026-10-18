@@ -22,10 +22,10 @@ def main():
  check('Alt1-Alt0-caret-binary',table(b'ONE^@^^^~END^M',b'ZERO^^^M'), 'p3000 a-1 p120 x p1500 a-0 p1500 a-x', b'ONE\0^END\rxZERO^M')
  check('embedded-decoded-NUL',table(b'A^`HIDDEN'), 'p3000 a-1 p600 z p500 a-x', b'Az')
  check('unsafe-dangling-caret',table(b'DONT-SEND^'), 'p3000 a-1', expected=4)
- check('unsupported-program',table(b'NOEXEC.EXE',kind=1), 'p3000 a-1',expected=4)
+ check('unsupported-ASPECT',table(b'NOEXEC.ASX',kind=0), 'p3000 a-1',expected=4)
  for name,data in [('short',bytes(539)),('suffix',bytes(541)),('bad-kind',table(kind=4)),('unterminated',struct.pack('<H',3)+b'X'*52+table()[54:])]:
   check(name,data,'p500 a-x',expected=7,mode='reject')
- summary={'passed':all(c['passed'] for c in cases),'cases':cases,'binary_sha256':hashlib.sha256(BINARY.read_bytes()).hexdigest(),'scope':'Actual DOS startup KEY validation, BIOS Alt1/Alt0, bounded recovered caret expansion, pause and deferred ordinary key, wire NUL and UART/IRQ restoration. Synthetic records only; no physical modem or ASPECT/PROGRAM/HOOK executor.'}
+ summary={'passed':all(c['passed'] for c in cases),'cases':cases,'binary_sha256':hashlib.sha256(BINARY.read_bytes()).hexdigest(),'scope':'Actual DOS startup KEY validation, BIOS Alt1/Alt0, bounded recovered caret expansion, pause and deferred ordinary key, wire NUL and UART/IRQ restoration. Synthetic records only; no physical modem or executor validation in this TEXT diagnostic. PROGRAM has separate live/DOS tests; ASPECT/HOOK remain unsupported.'}
  out=ROOT/'build/meta-actions-dos';out.mkdir(parents=True,exist_ok=True);(out/'checks.json').write_text(json.dumps(summary,indent=2)+'\n')
  return 0 if summary['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

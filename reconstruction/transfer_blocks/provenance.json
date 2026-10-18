@@ -1,0 +1,74 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "source": "crc_update.asm",
+      "start": "0x5c42",
+      "end_exclusive": "0x5c5c",
+      "bytes": 26,
+      "source_file_offset": 28226,
+      "sha256": "381cce8b41004b2cab84c96bfbeaafc0d1c18bdec3085b4e257ecc2ea76fa84e",
+      "evidence_id": "ev_28dcee694db321d46a2a01a48e5b9d5104c57f75af1c7f8687f259efc220d4d8"
+    },
+    {
+      "source": "crc_finish.asm",
+      "start": "0x5c5c",
+      "end_exclusive": "0x5c77",
+      "bytes": 27,
+      "source_file_offset": 28252,
+      "sha256": "b3bce89b3165e19f00e67f705deb0fc30d5d85d23a85b9f9eeae0cec81d38cd7",
+      "evidence_id": "ev_89ad8c15efa2033e445d025cffa5d4cf860f56400b5e67813ed46bb73e89dbbb"
+    },
+    {
+      "source": "crc_buffer.asm",
+      "start": "0x5c77",
+      "end_exclusive": "0x5c9f",
+      "bytes": 40,
+      "source_file_offset": 28279,
+      "sha256": "a2dacdaf8b964a7a5ad0421bba760ddeb7dbe62b693400c971a1b8d2ebdb2e94",
+      "evidence_id": "ev_23bbfb7129947abde78cea20793cf03aba6a9a7826b078d408c7f69c80a7b773"
+    }
+  ],
+  "crc_table": {
+    "source_ds": "0x39fc",
+    "source_file_offset": 168780,
+    "bytes": 512,
+    "sha256": "ea5f177f22d32b7e80c132b498ee4b92882484f891f43f1897075f28bb3da4d9",
+    "origin": "Independently generated polynomial0x1021 table; exact match against selected original, no raworiginal data embedded"
+  },
+  "boundaries": [
+    "CRC/frame primitives only; full sender/receiver/retries/DOS/UI/physicalpeer remain open."
+  ],
+  "supporting_evidence": [
+    {
+      "name": "resident-upload-router",
+      "export": "analysis/pcplus-main/functions/0x1596c-asm.json",
+      "evidence_id": "ev_80d786295d071fe326233d73b0dbed9e6ed93ac3d5330b422b5c56bba33f42dd"
+    },
+    {
+      "name": "resident-download-router",
+      "export": "analysis/pcplus-main/functions/0x15a54-asm.json",
+      "evidence_id": "ev_49006949ff37b2b4e6b8e0a6ee76da9b2a7ea74ff6863870e8100eaf0589852c"
+    },
+    {
+      "name": "protocol-selector",
+      "export": "analysis/pcplus-main/functions/0x1548c-asm.json",
+      "evidence_id": "ev_00b9be661a2272d30a5ad7ca1470bb8daa4a27d60ea14bde9cee4f87e339f1df"
+    },
+    {
+      "name": "shared-transfer-controller",
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1d0d0-asm.json",
+      "evidence_id": "ev_7d193548db8b42c6f44afba9eed51ec6c952ce54f8caa04e22a6cf0a91493c84"
+    },
+    {
+      "name": "block-receiver",
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1d6a4-asm.json",
+      "evidence_id": "ev_5627e54d9f87691801201530328b3cd53d294b87c896a38d9c5b1d3c1e62851b"
+    },
+    {
+      "name": "block-transmitter",
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1de58-asm.json",
+      "evidence_id": "ev_c9beb57caf28b9f7acfdde54f6d78d941a7bcac553e5126c5277ef8f25aee23b"
+    }
+  ]
+}

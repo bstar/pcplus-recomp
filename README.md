@@ -8,6 +8,9 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 
 | Output | Inputs | Current purpose |
 | --- | --- | --- |
+| `build/transfer-blocks/BLOCKS.EXE`, `build/transfer-receive/RECEIVE.EXE` | Recovered and maintained source only | CRC/framing and receiver validation diagnostics; UART/time/file-session boundaries remain explicit |
+| `build/program-exec/EXECUTOR.EXE`, `build/terminal-reset/RESET.EXE` | Recovered and maintained source only | Native PROGRAM/EXEC and terminal-reset diagnostics with unresolved application services |
+| `build/process/PROCESS.EXE`, `build/process/PROGRAM.EXE` | Maintained source only | Bounded DOS process execution and owned-child diagnostics |
 | `build/ui-windows/WINDOWS.EXE` | Recovered and maintained assembly source only | Packed window snapshots and original flow-message service |
 | `build/modem-commands/MODEMCMD.EXE` | Recovered and maintained assembly source only | Original caret decoder with bounded source-owned wrapper |
 | `build/modem-responses/MODEMRSP.EXE` | Maintained and recovered assembly source only | Response matching and classification; dial-attempt object remains unlinked |
@@ -67,8 +70,15 @@ bounded serviced historical alternate wait. See
 [live line editing](docs/LIVE_LINE_EDIT.md). This executable does not yet provide the
 complete original menus, directory cycles, file transfers or scripting engine.
 Global `/T:MYKEYS.KEY` imports ten Meta actions; Alt-1..Alt-0 execute
-nonblocking TEXT with bounded caret expansion and cancellation. See
-[live TEXT actions](docs/LIVE_META_KEYS.md). Stored passwords remain metadata
+nonblocking TEXT or maintained PROGRAM actions. PROGRAM passes a validated
+1..51-byte stored command through COMSPEC `/c`, suspends terminal UART ownership
+while the child runs, then restores serial/video state and resumes queued keys.
+Its flow handoff is tested with synthetic children; NONE flow cannot ensure a
+remote peer pauses. ASPECT and HOOK actions remain explicit unsupported actions.
+See [TEXT actions](docs/LIVE_META_KEYS.md) and
+[native PROGRAM evidence](docs/PROGRAM_EXEC.md). ESC c uses a separate
+[maintained startup-state reset](docs/LIVE_TERMINAL_RESET.md) for profiles 4/6,
+including the imported keymap, without file IO or redialing. Stored passwords remain metadata
 and are never automatically sent; directory SCRIPT/KEY/META bindings remain unsupported. An exit-time accounting save problem reports
 errorlevel9 unless a prior application error exists; inspect retained
 `PCPSTG.$$$` / `PCPBAK.$$$` recovery files as described in the editing guide.
@@ -77,8 +87,8 @@ Local Synchronet, ENiGMA½ and Mystic interoperability work is documented in
 
 The initial key defaults are authored for network use; they are not recovered
 factory KBD tables. KBD slot strings and KEY action/macro files are different
-formats. ASPECT/PROGRAM/HOOK execution, settings, transfers and original application menus
-remain part of the reconstruction goal.
+formats. Complete ASPECT/HOOK execution, original PROGRAM application services,
+settings, transfer sessions and original menus remain part of the reconstruction goal.
 
 Copy `build/standalone/SERIAL.EXE` to DOS and run:
 
@@ -169,6 +179,25 @@ recovered action/character helpers. `test-terminal` also runs linked keyboard,
 TEXT and line/character-policy regressions plus actual DOS delivery/import. See
 [mapping evidence](docs/KEYBOARD_MAPPING.md), [file formats](docs/KEY_MAPPING.md)
 and [line recovery](docs/LINE_EDIT.md).
+
+Native recovery now includes 93 exact CRC instruction bytes plus an independently
+generated, original-verified 512-byte polynomial table, and 886 exact receiver
+bytes. `./tools/build test-transfer_blocks test-transfer_receive` exercises
+block framing, payload/trailer validation, duplicate ACK, sequence/integrity NAK,
+EOT and double-CAN paths. Optional original comparison is explicit; ordinary
+builds need no original files. The receiver diagnostic models UART/time/UI
+boundaries and stops before file commit. It does not yet transfer files between
+peers. See [block primitives](docs/TRANSFER_BLOCKS.md) and
+[receiver recovery](docs/TRANSFER_RECEIVE.md).
+
+`./tools/build test-program_exec test-terminal_reset test-process` checks
+3,102 native PROGRAM/EXEC bytes, 2,301 native reset bytes and the separate bounded
+DOS process backend. Native PROGRAM still depends on unrecovered heap and
+application handoff services; native nonzero reset still stops at its KEY/profile
+loader. The maintained live PROGRAM/process and RIS policies close selected
+terminal use cases without claiming those native pipelines are complete.
+Current live checkpoint `7b9ca14b` passes linked PROGRAM handoff regressions;
+actual DOS owned-child and reset checks have separate artifact identities.
 
 ## Full-application compatibility build
 

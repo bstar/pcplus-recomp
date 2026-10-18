@@ -7,9 +7,10 @@ closes the file, then commits the table. There is no implicit default-file searc
 or file creation. Omitting `/T` supplies ten empty TEXT actions.
 
 Alt-1 through Alt-9 select records0..8; Alt-0 selects record9. Kind3 executes
-TEXT. Kinds0/1/2 (ASPECT, PROGRAM, HOOK) remain explicit unsupported actions,
-including empty definitions. They stop with errorlevel4 rather than invoking a
-command processor, interpreter or substitute shell. Empty TEXT is a no-op.
+TEXT. Kind1 executes a local DOS PROGRAM through a maintained safe-point
+scheduler; see [LIVE_PROGRAM.md](LIVE_PROGRAM.md). Kinds0/2 (ASPECT, HOOK) remain
+explicit unsupported actions, including empty definitions, and stop with
+errorlevel4. Empty TEXT is a no-op; empty PROGRAM is rejected.
 Directory KEY/META bindings remain unsupported; `/T` is a global explicit import.
 
 The recovered caret decoder runs through the existing bounded adapter with a
@@ -45,5 +46,5 @@ from this maintained scheduling and validation policy. `check_meta_actions_live.
 executes linked product instructions with modeled hardware, and
 `test_meta_actions_dos.py` exercises real DOS file import, BIOS Alt-digit events,
 binary UART delivery, pauses and hardware restoration using synthetic files.
-Complete scripting, command execution, key editing, translation/font selection,
+Complete scripting, key editing, translation/font selection,
 physical modem timing and the full PCPlus application remain open.

@@ -1,0 +1,490 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/program_exec/executor.asm",
+      "start": 17213,
+      "end": 17770,
+      "bytes": 557,
+      "instructions": 210,
+      "sha256": "a1d0a832d46d7d4ee0e08316fad6300d20e43fd9e2e5cbaa7e05bea3180b0370",
+      "matched_original": true,
+      "file_offset": 21821
+    },
+    {
+      "file": "reconstruction/program_exec/system.asm",
+      "start": 35178,
+      "end": 35321,
+      "bytes": 143,
+      "instructions": 57,
+      "sha256": "a5c86acf197abd68ffeb438e9a30ba890fb8b69f1a8af5112c476bda8ca5eb95",
+      "matched_original": true,
+      "file_offset": 39786
+    },
+    {
+      "file": "reconstruction/program_exec/getenv.asm",
+      "start": 36370,
+      "end": 36459,
+      "bytes": 89,
+      "instructions": 44,
+      "sha256": "47da130f504a3997dffedea1d88185004e7acf774dd2cb22ad328a0b6215921f",
+      "matched_original": true,
+      "file_offset": 40978
+    },
+    {
+      "file": "reconstruction/program_exec/environment_tail.asm",
+      "start": 26058,
+      "end": 26698,
+      "bytes": 640,
+      "instructions": 270,
+      "sha256": "8248f6fe028be0d80e79770ef75c549e49c5ad08a33f05ab70e403e7220d0aeb",
+      "matched_original": true,
+      "file_offset": 30666
+    },
+    {
+      "file": "reconstruction/program_exec/spawn_extension.asm",
+      "start": 26698,
+      "end": 26862,
+      "bytes": 164,
+      "instructions": 69,
+      "sha256": "7be1387e66402e612b38250334eea78c9e1da28ee201eca4ac02a37dab844fd2",
+      "matched_original": true,
+      "file_offset": 31306
+    },
+    {
+      "file": "reconstruction/program_exec/spawnv.asm",
+      "start": 26862,
+      "end": 27159,
+      "bytes": 297,
+      "instructions": 128,
+      "sha256": "ae5d475c8505677bb3ac9cacd66f3128c5363f2339d9eed5e6657101d9de4ded",
+      "matched_original": true,
+      "file_offset": 31470
+    },
+    {
+      "file": "reconstruction/program_exec/exec.asm",
+      "start": 27170,
+      "end": 27402,
+      "bytes": 232,
+      "instructions": 88,
+      "sha256": "0ba5c9dfa9868aba85005dfb19fc377fbbdf5150aaaa6b20b460f90475139035",
+      "matched_original": true,
+      "file_offset": 31778
+    },
+    {
+      "file": "reconstruction/program_exec/spawnl.asm",
+      "start": 36148,
+      "end": 36168,
+      "bytes": 20,
+      "instructions": 10,
+      "sha256": "2e2f7adf077be8e9154e73982f62e58f4a563679d99880df64f0b3f8a091254a",
+      "matched_original": true,
+      "file_offset": 40756
+    },
+    {
+      "file": "reconstruction/program_exec/spawnlp.asm",
+      "start": 42574,
+      "end": 42602,
+      "bytes": 28,
+      "instructions": 12,
+      "sha256": "5b30bb0f408913fad4ebbc0b448b2d37459b4705c74f0ae602b0797e88abeedc",
+      "matched_original": true,
+      "file_offset": 47182
+    },
+    {
+      "file": "reconstruction/program_exec/spawn_search.asm",
+      "start": 42150,
+      "end": 42472,
+      "bytes": 322,
+      "instructions": 132,
+      "sha256": "1b93fd24bfae1a1ba8d4c2c6f920bdd4f0da3d1ee8adc5d603f6d0264d16181e",
+      "matched_original": true,
+      "file_offset": 46758
+    },
+    {
+      "file": "reconstruction/program_exec/stack_probe.asm",
+      "start": 43196,
+      "end": 43219,
+      "bytes": 23,
+      "instructions": 11,
+      "sha256": "bd1aca3d721c157cdd142ad90f8cba35aa7cceebb1dc145964f91f9425d5c960",
+      "matched_original": true,
+      "file_offset": 47804
+    },
+    {
+      "file": "reconstruction/program_exec/access.asm",
+      "start": 37802,
+      "end": 37833,
+      "bytes": 31,
+      "instructions": 13,
+      "sha256": "acde85238ef93d618fc0de979240083b191b9df671ff205afd4f6520f3e82984",
+      "matched_original": true,
+      "file_offset": 42410
+    },
+    {
+      "file": "reconstruction/program_exec/error_access.asm",
+      "start": 37920,
+      "end": 37928,
+      "bytes": 8,
+      "instructions": 5,
+      "sha256": "82df84fbae801403c8ca1b1dc46f4c69f34e8e05a794afed0833def65240f3d0",
+      "matched_original": true,
+      "file_offset": 42528
+    },
+    {
+      "file": "reconstruction/program_exec/error_exec.asm",
+      "start": 37941,
+      "end": 37954,
+      "bytes": 13,
+      "instructions": 7,
+      "sha256": "a081dcb2bee0f638efa1f7024f1d61f19f6184c74d901c572d83593df8893930",
+      "matched_original": true,
+      "file_offset": 42549
+    },
+    {
+      "file": "reconstruction/program_exec/map_error.asm",
+      "start": 37960,
+      "end": 38005,
+      "bytes": 45,
+      "instructions": 21,
+      "sha256": "11faaf8dc3b7e95852ada932b1c7347ffa88c3d7ac2f3f86f3a50425c812237e",
+      "matched_original": true,
+      "file_offset": 42568
+    },
+    {
+      "file": "reconstruction/program_exec/strcpy.asm",
+      "start": 33384,
+      "end": 33434,
+      "bytes": 50,
+      "instructions": 26,
+      "sha256": "353e318feb16fbe3f0d4351c433976bb22913a51bdef8bc36a85be96f0509f26",
+      "matched_original": true,
+      "file_offset": 37992
+    },
+    {
+      "file": "reconstruction/program_exec/strcat.asm",
+      "start": 35818,
+      "end": 35881,
+      "bytes": 63,
+      "instructions": 30,
+      "sha256": "0aac00553b07b350f4e89e58af55407468ad315950b1cd4b41514f87d06a2a81",
+      "matched_original": true,
+      "file_offset": 40426
+    },
+    {
+      "file": "reconstruction/program_exec/strlen.asm",
+      "start": 36120,
+      "end": 36147,
+      "bytes": 27,
+      "instructions": 15,
+      "sha256": "feaf2f2cbbdb93b3dcb85e3c8584eaf239cb48d619549f99e746423641c62a9d",
+      "matched_original": true,
+      "file_offset": 40728
+    },
+    {
+      "file": "reconstruction/program_exec/strchr.asm",
+      "start": 35882,
+      "end": 35924,
+      "bytes": 42,
+      "instructions": 24,
+      "sha256": "5f75e040b310c90655f98a393c981cfcfb030ce2377c86090da3259d9be46a16",
+      "matched_original": true,
+      "file_offset": 40490
+    },
+    {
+      "file": "reconstruction/program_exec/strrchr.asm",
+      "start": 33734,
+      "end": 33777,
+      "bytes": 43,
+      "instructions": 26,
+      "sha256": "5f6ab9e1351300b25837034129bf0c0d84e402143defc9c2c693e0e658190ed9",
+      "matched_original": true,
+      "file_offset": 38342
+    },
+    {
+      "file": "reconstruction/program_exec/strcmpi.asm",
+      "start": 37854,
+      "end": 37920,
+      "bytes": 66,
+      "instructions": 34,
+      "sha256": "bb8e1e5bdee061f59e841a05341de62cfd10bc7d50c1311d54c8a7cead089911",
+      "matched_original": true,
+      "file_offset": 42462
+    },
+    {
+      "file": "reconstruction/program_exec/strncmp.asm",
+      "start": 39942,
+      "end": 40000,
+      "bytes": 58,
+      "instructions": 32,
+      "sha256": "add13f77f634b2e1728faaa50c7ab13b40dfc138e3317bb96b60f7374c650406",
+      "matched_original": true,
+      "file_offset": 44550
+    },
+    {
+      "file": "reconstruction/program_exec/path_component.asm",
+      "start": 43238,
+      "end": 43312,
+      "bytes": 74,
+      "instructions": 36,
+      "sha256": "be87ee2c9086c87158baff1c6d4999bed83fd095e7b35e12b83868e08eaf89d9",
+      "matched_original": true,
+      "file_offset": 47846
+    },
+    {
+      "file": "reconstruction/program_exec/validate_name.asm",
+      "start": 18248,
+      "end": 18282,
+      "bytes": 34,
+      "instructions": 15,
+      "sha256": "045973c78cbca18dcdd723455d7d058e7e2a3c2f86341fdc68a26f650b1eb596",
+      "matched_original": true,
+      "file_offset": 22856
+    },
+    {
+      "file": "reconstruction/program_exec/get_ds.asm",
+      "start": 30384,
+      "end": 30387,
+      "bytes": 3,
+      "instructions": 2,
+      "sha256": "62c8c8f666f7746933e2ce364cafa0b6c9d1013a45019ccb6140d287a60cbb87",
+      "matched_original": true,
+      "file_offset": 34992
+    },
+    {
+      "file": "reconstruction/program_exec/scratch.asm",
+      "start": 27160,
+      "end": 27170,
+      "file_offset": 31768,
+      "bytes": 10,
+      "instructions": 0,
+      "sha256": "01d448afd928065458cf670b60f5a594d735af0172c8d67f22a81680132681ca",
+      "matched_original": true,
+      "kind": "CS-owned writable save cells, not instructions"
+    },
+    {
+      "file": "reconstruction/program_exec/error_lookup.asm",
+      "start": 31574,
+      "end": 31594,
+      "file_offset": 185510,
+      "bytes": 20,
+      "instructions": 0,
+      "sha256": "e54227eaec51d70b2278c5771501d26a8cc3245ebfcfa3f1b1058d62dd9d0ced",
+      "matched_original": true,
+      "kind": "overlay32 DSdata table, not resident instructions"
+    }
+  ],
+  "state": {
+    "6a18": "program_saved_sp",
+    "6a1a": "program_saved_ss",
+    "6a1c": "program_saved_pair_low",
+    "6a1e": "program_saved_pair_high",
+    "6a20": "program_saved_ds",
+    "002e": "program_pair_low",
+    "0030": "program_pair_high",
+    "333c": "program_busy",
+    "7b43": "program_environ",
+    "7b1c": "program_errno",
+    "7b27": "program_dos_error",
+    "7b56": "program_error_map",
+    "7b24": "program_dos_major",
+    "7dc4": "program_path_name",
+    "7ae8": "program_comspec_name",
+    "7af0": "program_switch_c",
+    "7af3": "program_default_shell",
+    "5e14": "program_batch_prefix",
+    "5e18": "program_comspec_name2",
+    "5e30": "program_extensions",
+    "5e32": "program_extension1",
+    "5e34": "program_extension2",
+    "5e20": "program_ext_bat",
+    "5e25": "program_ext_exe",
+    "5e2a": "program_ext_com",
+    "5e36": "program_exec_block",
+    "5e38": "program_exec_tail",
+    "5e3a": "program_exec_tail_segment",
+    "5e3c": "program_exec_fcb1",
+    "5e3e": "program_exec_fcb1_segment",
+    "5e40": "program_exec_fcb2",
+    "5e42": "program_exec_fcb2_segment",
+    "5e44": "program_fcb1",
+    "5e54": "program_fcb2",
+    "7b4a": "program_exec_active",
+    "8e24": "program_overlay_gate",
+    "8e26": "program_overlay_callback",
+    "9062": "program_fallback_environment",
+    "7b54": "program_heap_mode",
+    "7a6c": "program_state_7a6c",
+    "7a88": "program_state_7a88",
+    "7a8a": "program_state_7a8a",
+    "7a74": "program_state_7a74",
+    "7a72": "program_state_7a72",
+    "2b8a": "program_state_2b8a",
+    "3252": "program_state_3252",
+    "2c12": "program_state_2c12",
+    "cee6": "program_state_cee6",
+    "2bae": "program_state_2bae",
+    "1d4c": "program_state_1d4c",
+    "2068": "program_state_2068",
+    "206a": "program_state_206a",
+    "42cc": "program_state_42cc",
+    "42c6": "program_state_42c6",
+    "42c4": "program_state_42c4",
+    "42c8": "program_state_42c8",
+    "42ca": "program_state_42ca",
+    "42ce": "program_state_42ce",
+    "7b52": "program_state_7b52",
+    "7b29": "program_state_7b29",
+    "7b2a": "program_state_7b2a",
+    "e462": "program_state_e462",
+    "e45e": "program_state_e45e",
+    "e460": "program_state_e460",
+    "7b2b": "program_state_7b2b",
+    "7b00": "program_state_7b00",
+    "7dc9": "program_state_7dc9",
+    "7dd6": "program_state_7dd6",
+    "4416": "program_state_4416"
+  },
+  "services": {
+    "6b5a": "program_service_6b5a",
+    "76b4": "program_service_76b4",
+    "6bbe": "program_service_6bbe",
+    "6f60": "program_service_6f60",
+    "6e78": "program_service_6e78",
+    "6dca": "program_service_6dca",
+    "758a": "program_service_758a",
+    "40c9": "program_service_40c9",
+    "3745": "program_service_3745",
+    "03a7": "program_service_03a7",
+    "7508": "program_service_7508",
+    "40df": "program_service_40df",
+    "6d1a": "program_service_6d1a",
+    "4870": "program_service_4870",
+    "6b42": "program_service_6b42",
+    "427f": "program_service_427f",
+    "85fc": "program_service_85fc",
+    "1c66": "program_service_1c66",
+    "2eaa": "program_service_2eaa",
+    "76ea": "program_service_76ea",
+    "82b6": "program_service_82b6",
+    "6e5a": "program_service_6e5a",
+    "92a8": "program_service_92a8",
+    "860f": "program_service_860f",
+    "9286": "program_service_9286",
+    "92a4": "program_service_92a4",
+    "93ca": "program_service_93ca",
+    "8224": "program_service_8224"
+  },
+  "limitations": [
+    "Original runtime heap allocation/free/farheap, UI/screen/mouse/vector/serial services remain explicit dependencies.",
+    "Standalone actualDOS diagnostic calls original EXEC core with maintained startup memory shrink and source-built synthetic child, not complete application executor.",
+    "Original command-tail builder rejects concatenated arguments exceeding125bytes; environment and heap behavior retains legacy assumptions."
+  ],
+  "rea_evidence": {
+    "0x433d": {
+      "evidence_id": "ev_a5c189826e129ae1c8a59c464a4fb7be362d61aaeadcb2317f2c1b78b19768ad",
+      "saved_export": "analysis/pcplus-main/functions/0x1433d-asm.json"
+    },
+    "0x896a": {
+      "evidence_id": "ev_67d722c592a8e1895efd01397c9afe70c5620cc158225c521d8ba2c24f941fd0",
+      "saved_export": "analysis/pcplus-main/functions/0x1896a-asm.json"
+    },
+    "0x8e12": {
+      "evidence_id": "ev_37ebcf71a44f517dc6e28701fa1a0e06f4d7815123f6afaabdeee56d1d8f84db",
+      "saved_export": "analysis/pcplus-main/functions/0x18e12-asm.json"
+    },
+    "0x65ca": {
+      "evidence_id": "ev_82bb269d504574be861a5035336ab5e3340081fba03629135fefb05784cf78d8",
+      "saved_export": "analysis/pcplus-main/functions/0x165ca-asm.json"
+    },
+    "0x684a": {
+      "evidence_id": "ev_2d8ef548e499092ae01ae6c480191f248f22cb971645ec2e702a841c9fc86802",
+      "saved_export": "analysis/pcplus-main/functions/0x1684a-asm.json"
+    },
+    "0x68ee": {
+      "evidence_id": "ev_656e1bbb47b002a3d9087c445812c4f7a5519dddea372d23fcd52c164f0fd319",
+      "saved_export": "analysis/pcplus-main/functions/0x168ee-asm.json"
+    },
+    "0x6a22": {
+      "evidence_id": "ev_9f941d3453b6171221a7e708d17f2865fe383265f41d1677002ac5dbdf5b672f",
+      "saved_export": "analysis/pcplus-main/functions/0x16a22-asm.json"
+    },
+    "0x8d34": {
+      "evidence_id": "ev_de5819d32c6d35228e970d084b8a870d2c3ad8139172da166a4e5d029869cb50",
+      "saved_export": "analysis/pcplus-main/functions/0x18d34-asm.json"
+    },
+    "0xa64e": {
+      "evidence_id": "ev_7001908404e014708325924705bd1370b7ac18560a1c43332076692f9790a280",
+      "saved_export": "analysis/pcplus-main/functions/0x1a64e-asm.json"
+    },
+    "0xa4a6": {
+      "evidence_id": "ev_e3b49ca6b6b84633d78eb6e944cbb87ac6cf59ce95e451a639084f96f6d01b13",
+      "saved_export": "analysis/pcplus-main/functions/0x1a4a6-asm.json"
+    },
+    "0xa8bc": {
+      "evidence_id": "ev_8119a72537853752ac4e8619a97b65d17e5f7da1f87cd619a20b858a230715ba",
+      "saved_export": "analysis/pcplus-main/functions/0x1a8bc-asm.json"
+    },
+    "0x93aa": {
+      "evidence_id": "ev_34572e371546edc77d77793c00a308bf423b74af934738467185d1a4e2161b0d",
+      "saved_export": "analysis/pcplus-main/functions/0x193aa-asm.json"
+    },
+    "0x9420": {
+      "evidence_id": "ev_3fbe91dc8725d0b25458514431de80ad5f089cf30ca6b5039662d684504c3fde",
+      "saved_export": "analysis/pcplus-main/functions/0x19420-asm.json"
+    },
+    "0x9435": {
+      "evidence_id": "ev_2370152cddebd749b6bdb9326e5472fbb1ddec7b7541ab7dc547c9f0cc2878af",
+      "saved_export": "analysis/pcplus-main/functions/0x19435-asm.json"
+    },
+    "0x9448": {
+      "evidence_id": "ev_957e9f3d14653859b151eb5fa2214e55d655f7fb44bdde92d6a2bcb5ef1c0368",
+      "saved_export": "analysis/pcplus-main/functions/0x19448-asm.json"
+    },
+    "0x8268": {
+      "evidence_id": "ev_d6e0c4bd6527e1e7d2ecdae43c0dd944d38c2ceaf25ea36b81fa9fd58ae53b12",
+      "saved_export": "analysis/pcplus-main/functions/0x18268-asm.json"
+    },
+    "0x8bea": {
+      "evidence_id": "ev_0f5ebe9ea4c53ceeb1dfb8dc0410ec165212b0db488fd30168d11873594a0c3b",
+      "saved_export": "analysis/pcplus-main/functions/0x18bea-asm.json"
+    },
+    "0x8d18": {
+      "evidence_id": "ev_f401e44089e25be23b63e87a5be6d4b200eb349a0b2f52ed115931ad96b2e0e2",
+      "saved_export": "analysis/pcplus-main/functions/0x18d18-asm.json"
+    },
+    "0x8c2a": {
+      "evidence_id": "ev_2dceb0d153073f9184cbacdb0ef5cea137475a21be000b45cc7f4648c04b960c",
+      "saved_export": "analysis/pcplus-main/functions/0x18c2a-asm.json"
+    },
+    "0x83c6": {
+      "evidence_id": "ev_7131cf318ffd5f6fd12cafcf38ac07dd80de0773f15d4823db46672ff19e02f8",
+      "saved_export": "analysis/pcplus-main/functions/0x183c6-asm.json"
+    },
+    "0x93de": {
+      "evidence_id": "ev_894312ef372f30f1579d57f43e616b19769308f16106a77f9fa12a80b4ecc2ec",
+      "saved_export": "analysis/pcplus-main/functions/0x193de-asm.json"
+    },
+    "0x9c06": {
+      "evidence_id": "ev_cf3a259031810a87ffc7db285b7c0c64e881550c44648f801c91bcad08666661",
+      "saved_export": "analysis/pcplus-main/functions/0x19c06-asm.json"
+    },
+    "0xa8e6": {
+      "evidence_id": "ev_fb7ec8f474ebe360d4e4ec14819fe73967fdea72814dbc546a0611dcb74c82e8",
+      "saved_export": "analysis/pcplus-main/functions/0x1a8e6-asm.json"
+    },
+    "0x4748": {
+      "evidence_id": "ev_6ef646e1aeb3fb4f66aacf93fc2cd5d4568d154f42c5abb89d1f5576f84d7a3e",
+      "saved_export": "analysis/pcplus-main/functions/0x14748-asm.json"
+    },
+    "0x76b0": {
+      "evidence_id": "ev_dbc4fc5446117d676b8d36125be1c028d30f8561943520620c3e18e0fd063d32",
+      "saved_export": "analysis/pcplus-main/functions/0x176b0-asm.json"
+    }
+  },
+  "current_rea_queries": {
+    "433d": "ev_a5c189826e129ae1c8a59c464a4fb7be362d61aaeadcb2317f2c1b78b19768ad",
+    "6a22": "ev_9f941d3453b6171221a7e708d17f2865fe383265f41d1677002ac5dbdf5b672f",
+    "65ca": "ev_82bb269d504574be861a5035336ab5e3340081fba03629135fefb05784cf78d8"
+  }
+}

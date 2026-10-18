@@ -6,6 +6,7 @@ SEGMENT _TEXT public class=CODE use16
 extern terminal_option_mask,terminal_actions_path,_key_actions_dos_read
 extern modem_expand_bounded,terminal_clock_ticks,uart_try_write
 extern terminal_quit,terminal_exit_code,connection_state
+extern terminal_program_start,terminal_program_pending,terminal_program_active
 global terminal_load_actions,terminal_macro_start,terminal_macro_poll
 global terminal_macro_cancel,terminal_defer_key,terminal_take_deferred_key
 
@@ -62,12 +63,18 @@ terminal_macro_start:
  push es
  cmp word [terminal_macro_active],0
  jne .busy
+ cmp word [terminal_program_pending],0
+ jne .busy
+ cmp word [terminal_program_active],0
+ jne .busy
  cmp ax,10
  jae .bad_index
  mov bx,54
  mul bx
  mov si,terminal_action_definitions
  add si,ax
+ cmp word [si],1
+ je .program
  cmp word [si],3
  jne .unsupported
  cmp byte [si+2],0
@@ -93,6 +100,16 @@ terminal_macro_start:
  mov word [macro_paused],0
  mov word [terminal_macro_active],1
  mov word [terminal_macro_status],1
+ jmp .success
+.program:
+ add si,2
+ mov ax,si
+ call terminal_program_start
+ or ax,ax
+ jz .success
+ cmp ax,2
+ je .busy
+ jmp .bad_text
 .success:
  xor ax,ax
  jmp .done

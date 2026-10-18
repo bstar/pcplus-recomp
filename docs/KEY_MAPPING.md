@@ -109,9 +109,10 @@ escapes: `^@` becomes storedff, then serialNUL. Sender48cc compares the expanded
 byte against pause setting DS1d66 (PRM offset01e2h) before ff conversion; a match
 uses BIOS delay6b98 with argument9. Other bytes use the original pacing1d68.
 See `MODEM_CONFIGURATION.md` and `MODEM_SEND.md` for exact caret/pause behavior and
-bounded maintained policies. This confirms a consumer distinction, not complete
-ASPECT/PROGRAM/HOOK or macro execution in the live terminal. The independent
-keyboard execution recovery owns remaining routing and invocation boundaries.
+bounded maintained policies. The live terminal supports bounded TEXT and local
+PROGRAM through explicit `/T:FILE.KEY`; see [LIVE_META_KEYS.md](LIVE_META_KEYS.md)
+and [LIVE_PROGRAM.md](LIVE_PROGRAM.md). ASPECT/HOOK remain unsupported. Exact
+native routing and executor recovery remain separate from the maintained runtime.
 
 ## Selection, precedence and defaults provenance
 
@@ -245,5 +246,5 @@ KEY, and missing-KEY default initialization/file creation. It executes the actua
 original loader/save/default instructions; only FILE/path/UI services are modeled.
 
 The explicit reader supplies a safe pre-UART import boundary. Complete keymap
-editing, historical per-profile defaults, ASPECT/PROGRAM/HOOK execution, the
+editing, historical per-profile defaults, ASPECT/HOOK execution, the
 complete original keyboard UI and remaining application features remain open.

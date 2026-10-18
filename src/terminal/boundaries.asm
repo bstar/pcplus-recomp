@@ -8,12 +8,6 @@ extern screen_wrap_forward,screen_linefeed,scroll_up,scroll_index,scroll_reverse
 ansi_escape_service_12c8:
 csi_service_12c8:
  jmp screen_wrap_forward
-global ansi_escape_service_20a4
-global csi_reset_terminal
-ansi_escape_service_20a4:
-csi_reset_terminal:
- mov ax,0x20a4
- jmp csi_unimplemented
 extern csi_clear_tabs
 extern csi_reset_scroll_region
 global screen_adjust_attribute_boundary

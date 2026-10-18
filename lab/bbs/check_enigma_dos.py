@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import re
+from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -16,6 +17,8 @@ def audit(label):
     with (SERVER / 'logs/enigma-bbs.log').open('rb') as stream:
         stream.seek(start)
         rows = [json.loads(line) for line in stream if line.strip()]
+    end_time = (out / 'result.json').stat().st_mtime
+    rows = [row for row in rows if datetime.fromisoformat(row['time'].replace('Z', '+00:00')).timestamp() <= end_time]
     sessions = {row['sessionId'] for row in rows if row.get('menuName') == 'telnetConnected'}
     assert len(sessions) == 1, f'Expected one isolated lab session: {sessions}'
     session = sessions.pop()

@@ -189,3 +189,15 @@ but Home and Insert behavior fail again while all8 key sequences reach wire.
 No post was saved. See current `docs/validation/bbs-editors.json` and its retained
 previous-runtime cases. The separate current ENiGMA matrix/menu test also fails;
 its earlier successful menu tests remain historical evidence only.
+
+## PROGRAM/reset checkpoint
+
+Frozen terminal `7b9ca14b` repeats the real DOS editor checks on COM2/19200/HARD.
+`editor-program-reset` passes Synchronet's12 behavior checks and8 wire-key
+checks, including Ctrl-Q abort. ENiGMA's initial `editor-program-reset` and
+configured-uppercase-N retry `editor-program-reset-casefix` both reach the
+stock editor and emit all8 expected key sequences; Home positioning and Insert
+mode still fail. Both close unsaved and the server records no new post.
+The current editor aggregate remains false. Hardware restoration and synthetic
+PRM preservation pass in both servers. The separate menu matrix passes after
+its retained ENiGMA timed-workflow retry; that does not make editing pass.

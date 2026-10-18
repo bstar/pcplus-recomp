@@ -178,7 +178,7 @@ def run(case):
     elif case=='partial':
      connection.sendall(b'PARTIAL\x1b[');times['partial_seconds']=round(time.monotonic()-start,3)
     elif case=='unsupported':
-     connection.sendall(b'\x1bc');times['unsupported_seconds']=round(time.monotonic()-start,3)
+     connection.sendall(b'\x1b[5i');times['unsupported_seconds']=round(time.monotonic()-start,3)
     while not stop.wait(0.05):pass
   except (OSError,AssertionError) as error:events.append({'peer_error':str(error)})
 

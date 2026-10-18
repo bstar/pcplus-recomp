@@ -63,20 +63,20 @@ def main():
    m=Meta();assert m.start(index)==1 and not m.tx
   for index in range(10):
    m=Meta();m.record(index,bytes([65+index]));assert m.start(index)==0;m.finish();assert bytes(m.tx)==bytes([65+index])
-  for kind in (0,1,2,4,0xffff):
+  for kind in (0,2,4,0xffff):
    for text in (b'',b'not-TEXT'):
     m=Meta();m.record(0,text,kind);assert m.start()==2,(kind,text)
     assert not m.get('terminal_macro_active') and not m.tx and not m.get('terminal_tx_count')
   for index in range(10):
    m=Meta([(0x78+index)<<8]);m.record(index,bytes([65+index]));m.poll();m.finish()
    assert bytes(m.tx)==bytes([65+index]) and not m.keys and not m.get('terminal_quit')
-  for kind in (0,1,2):
+  for kind in (0,2):
    for text in (b'',b'unsupported'):
     m=Meta([0x7800]);m.record(0,text,kind);m.poll()
     assert (m.get('terminal_exit_code'),m.get('terminal_quit'))==(4,1) and not m.tx and not m.get('terminal_macro_active')
   m=Meta();m.record(0,b'');assert m.start()==0 and not m.get('terminal_macro_active')
   m.record(0,b'A');assert m.start()==0 and m.start()==4;m.finish();assert bytes(m.tx)==b'A'
-  return 3+4+10+10+2+10+6
+  return 3+4+10+8+2+10+4
  check('unsafe-text-invalid-index-kind-first-empty-and-busy-atomicity',invalid)
  def pauses():
   for initial in (0,0xfffb,DAY-5):

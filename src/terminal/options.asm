@@ -577,7 +577,7 @@ terminal_usage:
  db 'Directory: /E:FILE.DIR [/N:1..200]; omit /N to choose an entry.',13,10
  db 'Directory codes: /C:LITERAL (default) or /C:LEGACY (A..J substitutions).',13,10
  db 'Keyboard: /K:FILE.KBD imports the selected profile; explicit path only.',13,10
- db 'Meta actions: /T:FILE.KEY; Alt-1..Alt-0 invoke TEXT; Esc cancels TEXT.',13,10
+ db 'Meta actions: /T:FILE.KEY; Alt-1..Alt-0 run TEXT/PROGRAM; Esc cancels queued action.',13,10
  db 'Keyboard BIOS: /B:AUTO (default), /B:STANDARD or /B:ENHANCED.',13,10
  db 'ANSI CSI M: /A:NETWORK (delete lines, default) or /A:ORIGINAL (wait).',13,10
  db 'PRM path: explicit only, max 63 bytes; no spaces, quotes or wildcards.',13,10

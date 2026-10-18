@@ -132,10 +132,11 @@ expand:
  popf
  ret
 
-extern terminal_macro_cancel
+extern terminal_macro_cancel,terminal_program_cancel
 terminal_connection_start:
  save
  call terminal_macro_cancel
+ call terminal_program_cancel
  cmp byte [connection_enabled],0
  je .done
  mov word [terminal_tx_count],0
@@ -303,6 +304,7 @@ terminal_connection_poll:
  cmp byte [connection_carrier_seen],0
  je .done
  call terminal_macro_cancel
+ call terminal_program_cancel
  mov word [connection_status],6
  mov word [connection_state],0
  mov word [terminal_tx_count],0
@@ -384,6 +386,7 @@ terminal_connection_poll:
 terminal_connection_cancel:
  save
  call terminal_macro_cancel
+ call terminal_program_cancel
  cmp byte [connection_enabled],0
  je .done
  cmp word [connection_state],0

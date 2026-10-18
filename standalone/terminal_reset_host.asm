@@ -1,0 +1,884 @@
+BITS 16
+CPU 8086
+SEGMENT _TEXT public class=CODE use16
+GROUP DGROUP _DATA STACK
+extern terminal_reset_native,screen_set_cursor
+global terminal_reset_test_initialize
+..start:
+ mov ax,DGROUP
+ mov ds,ax
+ cli
+ mov ss,ax
+ mov sp,stack_top
+ sti
+ mov ax,3
+ int 0x10
+ call terminal_reset_test_initialize
+ mov ax,5
+ mov dx,17
+ call screen_set_cursor
+ xor ax,ax
+ push ax
+ call terminal_reset_native
+ add sp,2
+ cmp word [screen_cursor_row],0
+ jne .failed
+ cmp word [screen_cursor_column],0
+ jne .failed
+ cmp word [attributes_current],7
+ jne .failed
+ cmp byte [terminal_tab_stops+1],8
+ jne .failed
+ mov ax,0xb800
+ mov es,ax
+ cmp word [es:0],0x0720
+ jne .failed
+ cmp word [es:3998],0x0720
+ jne .failed
+ mov ax,0x4c00
+ int 0x21
+.failed:
+ mov ax,0x4c01
+ int 0x21
+terminal_reset_test_initialize:
+ push es
+ push di
+ push ds
+ pop es
+ cld
+ xor ax,ax
+ mov di,reset_data_image
+ mov cx,0xd600
+ rep stosb
+ mov word [csi_terminal_id],6
+ mov word [attributes_normal_value],7
+ mov word [attributes_current],30
+ mov word [screen_last_column],79
+ mov word [screen_attribute_row_bytes],80
+ mov word [screen_columns],80
+ mov word [screen_video_row_bytes],160
+ mov word [csi_last_row],24
+ mov word [screen_last_row],24
+ mov word [screen_bottom_margin],24
+ mov word [screen_use_bios_cursor],1
+ mov word [erase_cell_count],2000
+ mov word [text_video_segment],47104
+ mov word [reset_video_cells],2000
+ mov word [reset_status_hidden],1
+ mov word [cursor_shape_start_scanline],6
+ mov word [cursor_shape_end_scanline],7
+ mov word [screen_attributes_base],screen_attribute_cells
+ mov word [erase_attribute_values_base],erase_attribute_values
+ pop di
+ pop es
+ ret
+global erase_complex_protected
+erase_complex_protected:
+ mov ax,0xd05f
+ mov [reset_unimplemented_service],ax
+ int 3
+ mov ax,0x4c02
+ int 0x21
+global erase_repair_attributes
+erase_repair_attributes:
+ mov ax,0x2d98
+ mov [reset_unimplemented_service],ax
+ int 3
+ mov ax,0x4c02
+ int 0x21
+global screen_adjust_attribute_boundary
+screen_adjust_attribute_boundary:
+ mov ax,0x2adc
+ mov [reset_unimplemented_service],ax
+ int 3
+ mov ax,0x4c02
+ int 0x21
+global screen_viewport_enter
+screen_viewport_enter:
+ mov ax,0x482a
+ mov [reset_unimplemented_service],ax
+ int 3
+ mov ax,0x4c02
+ int 0x21
+global screen_viewport_leave
+screen_viewport_leave:
+ mov ax,0x4850
+ mov [reset_unimplemented_service],ax
+ int 3
+ mov ax,0x4c02
+ int 0x21
+global screen_viewport_refresh
+extern terminal_reset_status_refresh
+screen_viewport_refresh: jmp terminal_reset_status_refresh
+global terminal_reset_allocate_far
+terminal_reset_allocate_far:
+ mov ax,0x860f
+ mov [reset_unimplemented_service],ax
+ int 3
+ mov ax,0x4c02
+ int 0x21
+global terminal_reset_application_error
+terminal_reset_application_error:
+ mov ax,0x427f
+ mov [reset_unimplemented_service],ax
+ int 3
+ mov ax,0x4c02
+ int 0x21
+global terminal_reset_free_far
+terminal_reset_free_far:
+ mov ax,0x85fc
+ mov [reset_unimplemented_service],ax
+ int 3
+ mov ax,0x4c02
+ int 0x21
+global terminal_reset_input_attribute
+terminal_reset_input_attribute:
+ mov ax,0xbb8f
+ mov [reset_unimplemented_service],ax
+ int 3
+ mov ax,0x4c02
+ int 0x21
+global terminal_reset_input_plain
+terminal_reset_input_plain:
+ mov ax,0xbb9b
+ mov [reset_unimplemented_service],ax
+ int 3
+ mov ax,0x4c02
+ int 0x21
+global terminal_reset_load_keymap
+terminal_reset_load_keymap:
+ mov ax,0xcd2
+ mov [reset_unimplemented_service],ax
+ int 3
+ mov ax,0x4c02
+ int 0x21
+global terminal_reset_sprintf
+terminal_reset_sprintf:
+ mov ax,0x82b6
+ mov [reset_unimplemented_service],ax
+ int 3
+ mov ax,0x4c02
+ int 0x21
+global terminal_reset_status_message
+terminal_reset_status_message:
+ mov ax,0x3226
+ mov [reset_unimplemented_service],ax
+ int 3
+ mov ax,0x4c02
+ int 0x21
+global terminal_reset_uart_status
+terminal_reset_uart_status:
+ mov ax,0xaa5c
+ mov [reset_unimplemented_service],ax
+ int 3
+ mov ax,0x4c02
+ int 0x21
+global terminal_reset_ui_75e8
+terminal_reset_ui_75e8:
+ mov ax,0x75e8
+ mov [reset_unimplemented_service],ax
+ int 3
+ mov ax,0x4c02
+ int 0x21
+global terminal_reset_ui_7630
+terminal_reset_ui_7630:
+ mov ax,0x7630
+ mov [reset_unimplemented_service],ax
+ int 3
+ mov ax,0x4c02
+ int 0x21
+SEGMENT _DATA public class=DATA use16
+ times 256 db 0
+global reset_data_image
+reset_data_image: resb 0xd600
+global ansi_charset_g0_flag_a
+ansi_charset_g0_flag_a equ reset_data_image+0xcde0
+global ansi_charset_g0_flag_graphics
+ansi_charset_g0_flag_graphics equ reset_data_image+0xcdec
+global ansi_charset_g1_flag_a
+ansi_charset_g1_flag_a equ reset_data_image+0xcde8
+global ansi_charset_g1_flag_graphics
+ansi_charset_g1_flag_graphics equ reset_data_image+0xcdf0
+global attributes_blink_active
+attributes_blink_active equ reset_data_image+0x397e
+global attributes_bold_active
+attributes_bold_active equ reset_data_image+0x397c
+global attributes_bold_value
+attributes_bold_value equ reset_data_image+0x1d34
+global attributes_color_mode
+attributes_color_mode equ reset_data_image+0xd122
+global attributes_current
+attributes_current equ reset_data_image+0x1f70
+global attributes_monochrome
+attributes_monochrome equ reset_data_image+0x8ff6
+global attributes_normal_value
+attributes_normal_value equ reset_data_image+0x1d32
+global attributes_preset_value
+attributes_preset_value equ reset_data_image+0x1d36
+global attributes_reverse_active
+attributes_reverse_active equ reset_data_image+0x321c
+global attributes_reverse_value
+attributes_reverse_value equ reset_data_image+0x1d38
+global attributes_underline_value
+attributes_underline_value equ reset_data_image+0x1d3a
+global csi_erase_attribute
+csi_erase_attribute equ reset_data_image+0xd008
+global csi_last_column
+csi_last_column equ reset_data_image+0x3258
+global csi_last_row
+csi_last_row equ reset_data_image+0x334a
+global csi_origin_row
+csi_origin_row equ reset_data_image+0xceb0
+global csi_scroll_bottom
+csi_scroll_bottom equ reset_data_image+0xce3a
+global csi_scroll_top
+csi_scroll_top equ reset_data_image+0xce0e
+global csi_terminal_id
+csi_terminal_id equ reset_data_image+0x1d18
+global csi_wrap_pending
+csi_wrap_pending equ reset_data_image+0x3342
+global cursor_shape_end_scanline
+cursor_shape_end_scanline equ reset_data_image+0x7a8a
+global cursor_shape_start_scanline
+cursor_shape_start_scanline equ reset_data_image+0x7a88
+global cursor_shape_visibility_state
+cursor_shape_visibility_state equ reset_data_image+0x7a6c
+global cursor_state_value_cdfc
+cursor_state_value_cdfc equ reset_data_image+0xcdfc
+global cursor_state_value_ce04
+cursor_state_value_ce04 equ reset_data_image+0xce04
+global erase_attribute_flags
+erase_attribute_flags equ reset_data_image+0x5000
+global erase_attribute_values
+erase_attribute_values equ reset_data_image+0x6000
+global erase_attribute_values_base
+erase_attribute_values_base equ reset_data_image+0x39c2
+global erase_cell_count
+erase_cell_count equ reset_data_image+0x325c
+global erase_lineflags_enabled
+erase_lineflags_enabled equ reset_data_image+0x3260
+global erase_protection_mode
+erase_protection_mode equ reset_data_image+0x3736
+global erase_shadow_offset
+erase_shadow_offset equ reset_data_image+0x5dea
+global erase_shadow_segment
+erase_shadow_segment equ reset_data_image+0x5dec
+global keyboard_dispatch_table
+keyboard_dispatch_table equ reset_data_image+0x44e0
+global keyboard_mapping_hook_character
+keyboard_mapping_hook_character equ reset_data_image+0x1d70
+global keyboard_mapping_hook_enabled
+keyboard_mapping_hook_enabled equ reset_data_image+0x1d6e
+global keyboard_mapping_key
+keyboard_mapping_key equ reset_data_image+0xcffa
+global keyboard_mapping_scrollback_mode
+keyboard_mapping_scrollback_mode equ reset_data_image+0x1d74
+global keyboard_state_1d18
+keyboard_state_1d18 equ reset_data_image+0x1d18
+global keyboard_state_1d1a
+keyboard_state_1d1a equ reset_data_image+0x1d1a
+global keyboard_state_1d4e
+keyboard_state_1d4e equ reset_data_image+0x1d4e
+global keyboard_state_1d68
+keyboard_state_1d68 equ reset_data_image+0x1d68
+global keyboard_state_2070
+keyboard_state_2070 equ reset_data_image+0x2070
+global keyboard_state_3150
+keyboard_state_3150 equ reset_data_image+0x3150
+global keyboard_state_3174
+keyboard_state_3174 equ reset_data_image+0x3174
+global keyboard_state_31e0
+keyboard_state_31e0 equ reset_data_image+0x31e0
+global keyboard_state_3252
+keyboard_state_3252 equ reset_data_image+0x3252
+global keyboard_state_3262
+keyboard_state_3262 equ reset_data_image+0x3262
+global keyboard_state_333e
+keyboard_state_333e equ reset_data_image+0x333e
+global keyboard_state_3384
+keyboard_state_3384 equ reset_data_image+0x3384
+global keyboard_state_3390
+keyboard_state_3390 equ reset_data_image+0x3390
+global keyboard_state_339c
+keyboard_state_339c equ reset_data_image+0x339c
+global keyboard_state_33a8
+keyboard_state_33a8 equ reset_data_image+0x33a8
+global keyboard_state_33b4
+keyboard_state_33b4 equ reset_data_image+0x33b4
+global keyboard_state_33c0
+keyboard_state_33c0 equ reset_data_image+0x33c0
+global keyboard_state_33cc
+keyboard_state_33cc equ reset_data_image+0x33cc
+global keyboard_state_33d8
+keyboard_state_33d8 equ reset_data_image+0x33d8
+global keyboard_state_33e4
+keyboard_state_33e4 equ reset_data_image+0x33e4
+global keyboard_state_33f0
+keyboard_state_33f0 equ reset_data_image+0x33f0
+global keyboard_state_33fc
+keyboard_state_33fc equ reset_data_image+0x33fc
+global keyboard_state_3408
+keyboard_state_3408 equ reset_data_image+0x3408
+global keyboard_state_3414
+keyboard_state_3414 equ reset_data_image+0x3414
+global keyboard_state_3420
+keyboard_state_3420 equ reset_data_image+0x3420
+global keyboard_state_342c
+keyboard_state_342c equ reset_data_image+0x342c
+global keyboard_state_34b0
+keyboard_state_34b0 equ reset_data_image+0x34b0
+global keyboard_state_34bc
+keyboard_state_34bc equ reset_data_image+0x34bc
+global keyboard_state_34c8
+keyboard_state_34c8 equ reset_data_image+0x34c8
+global keyboard_state_34d4
+keyboard_state_34d4 equ reset_data_image+0x34d4
+global keyboard_state_34e0
+keyboard_state_34e0 equ reset_data_image+0x34e0
+global keyboard_state_34ec
+keyboard_state_34ec equ reset_data_image+0x34ec
+global keyboard_state_34f8
+keyboard_state_34f8 equ reset_data_image+0x34f8
+global keyboard_state_3504
+keyboard_state_3504 equ reset_data_image+0x3504
+global keyboard_state_3510
+keyboard_state_3510 equ reset_data_image+0x3510
+global keyboard_state_351c
+keyboard_state_351c equ reset_data_image+0x351c
+global keyboard_state_3528
+keyboard_state_3528 equ reset_data_image+0x3528
+global keyboard_state_3534
+keyboard_state_3534 equ reset_data_image+0x3534
+global keyboard_state_35b8
+keyboard_state_35b8 equ reset_data_image+0x35b8
+global keyboard_state_35c4
+keyboard_state_35c4 equ reset_data_image+0x35c4
+global keyboard_state_35d0
+keyboard_state_35d0 equ reset_data_image+0x35d0
+global keyboard_state_35dc
+keyboard_state_35dc equ reset_data_image+0x35dc
+global keyboard_state_35e8
+keyboard_state_35e8 equ reset_data_image+0x35e8
+global keyboard_state_35f4
+keyboard_state_35f4 equ reset_data_image+0x35f4
+global keyboard_state_3600
+keyboard_state_3600 equ reset_data_image+0x3600
+global keyboard_state_360c
+keyboard_state_360c equ reset_data_image+0x360c
+global keyboard_state_3618
+keyboard_state_3618 equ reset_data_image+0x3618
+global keyboard_state_3624
+keyboard_state_3624 equ reset_data_image+0x3624
+global keyboard_state_3630
+keyboard_state_3630 equ reset_data_image+0x3630
+global keyboard_state_363c
+keyboard_state_363c equ reset_data_image+0x363c
+global keyboard_state_36c0
+keyboard_state_36c0 equ reset_data_image+0x36c0
+global keyboard_state_36cc
+keyboard_state_36cc equ reset_data_image+0x36cc
+global keyboard_state_36d8
+keyboard_state_36d8 equ reset_data_image+0x36d8
+global keyboard_state_36e4
+keyboard_state_36e4 equ reset_data_image+0x36e4
+global keyboard_state_36f0
+keyboard_state_36f0 equ reset_data_image+0x36f0
+global keyboard_state_36fc
+keyboard_state_36fc equ reset_data_image+0x36fc
+global keyboard_state_3708
+keyboard_state_3708 equ reset_data_image+0x3708
+global keyboard_state_3714
+keyboard_state_3714 equ reset_data_image+0x3714
+global keyboard_state_3720
+keyboard_state_3720 equ reset_data_image+0x3720
+global keyboard_state_373c
+keyboard_state_373c equ reset_data_image+0x373c
+global keyboard_state_3756
+keyboard_state_3756 equ reset_data_image+0x3756
+global keyboard_state_3758
+keyboard_state_3758 equ reset_data_image+0x3758
+global keyboard_state_3976
+keyboard_state_3976 equ reset_data_image+0x3976
+global keyboard_state_4210
+keyboard_state_4210 equ reset_data_image+0x4210
+global keyboard_state_4675
+keyboard_state_4675 equ reset_data_image+0x4675
+global keyboard_state_467b
+keyboard_state_467b equ reset_data_image+0x467b
+global keyboard_state_4afe
+keyboard_state_4afe equ reset_data_image+0x4afe
+global keyboard_state_4b02
+keyboard_state_4b02 equ reset_data_image+0x4b02
+global keyboard_state_7ac4
+keyboard_state_7ac4 equ reset_data_image+0x7ac4
+global keyboard_state_900c
+keyboard_state_900c equ reset_data_image+0x900c
+global keyboard_state_ce6a
+keyboard_state_ce6a equ reset_data_image+0xce6a
+global keyboard_state_cee6
+keyboard_state_cee6 equ reset_data_image+0xcee6
+global keyboard_state_cffb
+keyboard_state_cffb equ reset_data_image+0xcffb
+global meta_actions
+meta_actions equ reset_data_image+0x3756
+global meta_actions_text0
+meta_actions_text0 equ reset_data_image+0x3758
+global meta_hook_exchange_a
+meta_hook_exchange_a equ reset_data_image+0xd126
+global meta_hook_exchange_b
+meta_hook_exchange_b equ reset_data_image+0xd13a
+global meta_hook_prefix
+meta_hook_prefix equ reset_data_image+0x4765
+global meta_hook_result
+meta_hook_result equ reset_data_image+0xd124
+global meta_hook_space_a
+meta_hook_space_a equ reset_data_image+0x476e
+global meta_hook_space_b
+meta_hook_space_b equ reset_data_image+0x4770
+global meta_hook_space_c
+meta_hook_space_c equ reset_data_image+0x4772
+global meta_hook_space_d
+meta_hook_space_d equ reset_data_image+0x4774
+global meta_local_echo
+meta_local_echo equ reset_data_image+0x1d1a
+global meta_missing_name_message
+meta_missing_name_message equ reset_data_image+0x4416
+global meta_normalized_scan
+meta_normalized_scan equ reset_data_image+0xcffa
+global meta_pace_calibration
+meta_pace_calibration equ reset_data_image+0x7ac4
+global meta_pace_counter
+meta_pace_counter equ reset_data_image+0x7a4e
+global meta_pacing
+meta_pacing equ reset_data_image+0x1d68
+global meta_pause_byte
+meta_pause_byte equ reset_data_image+0x1d66
+global meta_prm_image
+meta_prm_image equ reset_data_image+0x1b84
+global meta_script_active
+meta_script_active equ reset_data_image+0x4b02
+global meta_script_busy_message
+meta_script_busy_message equ reset_data_image+0x4430
+global program_batch_prefix
+program_batch_prefix equ reset_data_image+0x5e14
+global program_busy
+program_busy equ reset_data_image+0x333c
+global program_comspec_name
+program_comspec_name equ reset_data_image+0x7ae8
+global program_comspec_name2
+program_comspec_name2 equ reset_data_image+0x5e18
+global program_default_shell
+program_default_shell equ reset_data_image+0x7af3
+global program_dos_error
+program_dos_error equ reset_data_image+0x7b27
+global program_dos_major
+program_dos_major equ reset_data_image+0x7b24
+global program_environ
+program_environ equ reset_data_image+0x7b43
+global program_errno
+program_errno equ reset_data_image+0x7b1c
+global program_error_map
+program_error_map equ reset_data_image+0x7b56
+global program_exec_active
+program_exec_active equ reset_data_image+0x7b4a
+global program_exec_block
+program_exec_block equ reset_data_image+0x5e36
+global program_exec_fcb1
+program_exec_fcb1 equ reset_data_image+0x5e3c
+global program_exec_fcb1_segment
+program_exec_fcb1_segment equ reset_data_image+0x5e3e
+global program_exec_fcb2
+program_exec_fcb2 equ reset_data_image+0x5e40
+global program_exec_fcb2_segment
+program_exec_fcb2_segment equ reset_data_image+0x5e42
+global program_exec_tail
+program_exec_tail equ reset_data_image+0x5e38
+global program_exec_tail_segment
+program_exec_tail_segment equ reset_data_image+0x5e3a
+global program_ext_bat
+program_ext_bat equ reset_data_image+0x5e20
+global program_ext_com
+program_ext_com equ reset_data_image+0x5e2a
+global program_ext_exe
+program_ext_exe equ reset_data_image+0x5e25
+global program_extension1
+program_extension1 equ reset_data_image+0x5e32
+global program_extension2
+program_extension2 equ reset_data_image+0x5e34
+global program_extensions
+program_extensions equ reset_data_image+0x5e30
+global program_fallback_environment
+program_fallback_environment equ reset_data_image+0x9062
+global program_fcb1
+program_fcb1 equ reset_data_image+0x5e44
+global program_fcb2
+program_fcb2 equ reset_data_image+0x5e54
+global program_heap_mode
+program_heap_mode equ reset_data_image+0x7b54
+global program_overlay_callback
+program_overlay_callback equ reset_data_image+0x8e26
+global program_overlay_gate
+program_overlay_gate equ reset_data_image+0x8e24
+global program_pair_high
+program_pair_high equ reset_data_image+0x30
+global program_pair_low
+program_pair_low equ reset_data_image+0x2e
+global program_path_name
+program_path_name equ reset_data_image+0x7dc4
+global program_saved_ds
+program_saved_ds equ reset_data_image+0x6a20
+global program_saved_pair_high
+program_saved_pair_high equ reset_data_image+0x6a1e
+global program_saved_pair_low
+program_saved_pair_low equ reset_data_image+0x6a1c
+global program_saved_sp
+program_saved_sp equ reset_data_image+0x6a18
+global program_saved_ss
+program_saved_ss equ reset_data_image+0x6a1a
+global program_state_1d4c
+program_state_1d4c equ reset_data_image+0x1d4c
+global program_state_2068
+program_state_2068 equ reset_data_image+0x2068
+global program_state_206a
+program_state_206a equ reset_data_image+0x206a
+global program_state_2b8a
+program_state_2b8a equ reset_data_image+0x2b8a
+global program_state_2bae
+program_state_2bae equ reset_data_image+0x2bae
+global program_state_2c12
+program_state_2c12 equ reset_data_image+0x2c12
+global program_state_3252
+program_state_3252 equ reset_data_image+0x3252
+global program_state_42c4
+program_state_42c4 equ reset_data_image+0x42c4
+global program_state_42c6
+program_state_42c6 equ reset_data_image+0x42c6
+global program_state_42c8
+program_state_42c8 equ reset_data_image+0x42c8
+global program_state_42ca
+program_state_42ca equ reset_data_image+0x42ca
+global program_state_42cc
+program_state_42cc equ reset_data_image+0x42cc
+global program_state_42ce
+program_state_42ce equ reset_data_image+0x42ce
+global program_state_4416
+program_state_4416 equ reset_data_image+0x4416
+global program_state_7a6c
+program_state_7a6c equ reset_data_image+0x7a6c
+global program_state_7a72
+program_state_7a72 equ reset_data_image+0x7a72
+global program_state_7a74
+program_state_7a74 equ reset_data_image+0x7a74
+global program_state_7a88
+program_state_7a88 equ reset_data_image+0x7a88
+global program_state_7a8a
+program_state_7a8a equ reset_data_image+0x7a8a
+global program_state_7b00
+program_state_7b00 equ reset_data_image+0x7b00
+global program_state_7b29
+program_state_7b29 equ reset_data_image+0x7b29
+global program_state_7b2a
+program_state_7b2a equ reset_data_image+0x7b2a
+global program_state_7b2b
+program_state_7b2b equ reset_data_image+0x7b2b
+global program_state_7b52
+program_state_7b52 equ reset_data_image+0x7b52
+global program_state_7dc9
+program_state_7dc9 equ reset_data_image+0x7dc9
+global program_state_7dd6
+program_state_7dd6 equ reset_data_image+0x7dd6
+global program_state_cee6
+program_state_cee6 equ reset_data_image+0xcee6
+global program_switch_c
+program_switch_c equ reset_data_image+0x7af0
+global render_autowrap
+render_autowrap equ reset_data_image+0x1d20
+global render_deferred_column
+render_deferred_column equ reset_data_image+0xd120
+global render_deferred_row
+render_deferred_row equ reset_data_image+0xd116
+global render_direct_output
+render_direct_output equ reset_data_image+0x9056
+global render_graphics_map
+render_graphics_map equ reset_data_image+0x459b
+global render_linefeed_suppression_enabled
+render_linefeed_suppression_enabled equ reset_data_image+0x9004
+global render_translation_base
+render_translation_base equ reset_data_image+0x9036
+global render_translation_enabled
+render_translation_enabled equ reset_data_image+0x372e
+global render_translation_mask
+render_translation_mask equ reset_data_image+0x902d
+global reset_configured_wide
+reset_configured_wide equ reset_data_image+0x1d2e
+global reset_crtc_port
+reset_crtc_port equ reset_data_image+0x7a90
+global reset_data_1b86
+reset_data_1b86 equ reset_data_image+0x1b86
+global reset_data_1b88
+reset_data_1b88 equ reset_data_image+0x1b88
+global reset_data_1b8a
+reset_data_1b8a equ reset_data_image+0x1b8a
+global reset_data_1b8c
+reset_data_1b8c equ reset_data_image+0x1b8c
+global reset_data_1d48
+reset_data_1d48 equ reset_data_image+0x1d48
+global reset_data_1f6c
+reset_data_1f6c equ reset_data_image+0x1f6c
+global reset_data_299c
+reset_data_299c equ reset_data_image+0x299c
+global reset_data_29de
+reset_data_29de equ reset_data_image+0x29de
+global reset_data_2c54
+reset_data_2c54 equ reset_data_image+0x2c54
+global reset_data_332c
+reset_data_332c equ reset_data_image+0x332c
+global reset_data_334e
+reset_data_334e equ reset_data_image+0x334e
+global reset_data_3350
+reset_data_3350 equ reset_data_image+0x3350
+global reset_data_3730
+reset_data_3730 equ reset_data_image+0x3730
+global reset_data_3732
+reset_data_3732 equ reset_data_image+0x3732
+global reset_data_3980
+reset_data_3980 equ reset_data_image+0x3980
+global reset_data_3982
+reset_data_3982 equ reset_data_image+0x3982
+global reset_data_399a
+reset_data_399a equ reset_data_image+0x399a
+global reset_data_42b2
+reset_data_42b2 equ reset_data_image+0x42b2
+global reset_data_42b4
+reset_data_42b4 equ reset_data_image+0x42b4
+global reset_data_42b6
+reset_data_42b6 equ reset_data_image+0x42b6
+global reset_data_4324
+reset_data_4324 equ reset_data_image+0x4324
+global reset_data_432e
+reset_data_432e equ reset_data_image+0x432e
+global reset_data_4336
+reset_data_4336 equ reset_data_image+0x4336
+global reset_data_433e
+reset_data_433e equ reset_data_image+0x433e
+global reset_data_4346
+reset_data_4346 equ reset_data_image+0x4346
+global reset_data_4350
+reset_data_4350 equ reset_data_image+0x4350
+global reset_data_462c
+reset_data_462c equ reset_data_image+0x462c
+global reset_data_46c1
+reset_data_46c1 equ reset_data_image+0x46c1
+global reset_data_46c4
+reset_data_46c4 equ reset_data_image+0x46c4
+global reset_data_46ce
+reset_data_46ce equ reset_data_image+0x46ce
+global reset_data_46d0
+reset_data_46d0 equ reset_data_image+0x46d0
+global reset_data_46d2
+reset_data_46d2 equ reset_data_image+0x46d2
+global reset_data_7a7c
+reset_data_7a7c equ reset_data_image+0x7a7c
+global reset_data_7a80
+reset_data_7a80 equ reset_data_image+0x7a80
+global reset_data_9032
+reset_data_9032 equ reset_data_image+0x9032
+global reset_data_9048
+reset_data_9048 equ reset_data_image+0x9048
+global reset_data_cb30
+reset_data_cb30 equ reset_data_image+0xcb30
+global reset_data_cc53
+reset_data_cc53 equ reset_data_image+0xcc53
+global reset_data_cc5c
+reset_data_cc5c equ reset_data_image+0xcc5c
+global reset_data_cc65
+reset_data_cc65 equ reset_data_image+0xcc65
+global reset_data_cc6e
+reset_data_cc6e equ reset_data_image+0xcc6e
+global reset_data_cc77
+reset_data_cc77 equ reset_data_image+0xcc77
+global reset_data_cc80
+reset_data_cc80 equ reset_data_image+0xcc80
+global reset_data_cc89
+reset_data_cc89 equ reset_data_image+0xcc89
+global reset_data_cc9e
+reset_data_cc9e equ reset_data_image+0xcc9e
+global reset_data_cd24
+reset_data_cd24 equ reset_data_image+0xcd24
+global reset_data_cd2c
+reset_data_cd2c equ reset_data_image+0xcd2c
+global reset_data_cd36
+reset_data_cd36 equ reset_data_image+0xcd36
+global reset_data_cd84
+reset_data_cd84 equ reset_data_image+0xcd84
+global reset_data_cdd2
+reset_data_cdd2 equ reset_data_image+0xcdd2
+global reset_data_cdd4
+reset_data_cdd4 equ reset_data_image+0xcdd4
+global reset_data_ceae
+reset_data_ceae equ reset_data_image+0xceae
+global reset_data_d004
+reset_data_d004 equ reset_data_image+0xd004
+global reset_duplex
+reset_duplex equ reset_data_image+0x1d26
+global reset_geometry_initialized
+reset_geometry_initialized equ reset_data_image+0x469a
+global reset_saved_duplex
+reset_saved_duplex equ reset_data_image+0x903c
+global reset_saved_scroll
+reset_saved_scroll equ reset_data_image+0x9016
+global reset_scratch
+reset_scratch equ reset_data_image+0xcc4a
+global reset_shadow_bytes
+reset_shadow_bytes equ reset_data_image+0xce02
+global reset_status_hidden
+reset_status_hidden equ reset_data_image+0x1d46
+global reset_underline_enabled
+reset_underline_enabled equ reset_data_image+0x1d2c
+global reset_underline_supported
+reset_underline_supported equ reset_data_image+0x7a6e
+global reset_underline_suppressed
+reset_underline_suppressed equ reset_data_image+0x7a86
+global reset_unimplemented_service
+reset_unimplemented_service equ reset_data_image+0xd500
+global reset_video_cells
+reset_video_cells equ reset_data_image+0x7a8c
+global reset_wide_mode
+reset_wide_mode equ reset_data_image+0x3254
+global screen_attribute_cells
+screen_attribute_cells equ reset_data_image+0x5000
+global screen_attribute_checks
+screen_attribute_checks equ reset_data_image+0x3734
+global screen_attribute_offset
+screen_attribute_offset equ reset_data_image+0x3346
+global screen_attribute_row_bytes
+screen_attribute_row_bytes equ reset_data_image+0x325a
+global screen_attributes_base
+screen_attributes_base equ reset_data_image+0x39c4
+global screen_bottom_margin
+screen_bottom_margin equ reset_data_image+0xcee4
+global screen_columns
+screen_columns equ reset_data_image+0x7a72
+global screen_cursor_column
+screen_cursor_column equ reset_data_image+0x399e
+global screen_cursor_row
+screen_cursor_row equ reset_data_image+0x399c
+global screen_cursor_wrap
+screen_cursor_wrap equ reset_data_image+0x900c
+global screen_doublewidth_enabled
+screen_doublewidth_enabled equ reset_data_image+0xd122
+global screen_first_row
+screen_first_row equ reset_data_image+0xce0e
+global screen_last_column
+screen_last_column equ reset_data_image+0x3258
+global screen_last_row
+screen_last_row equ reset_data_image+0xce3a
+global screen_line_flags
+screen_line_flags equ reset_data_image+0xcf86
+global screen_previous_column
+screen_previous_column equ reset_data_image+0x3348
+global screen_previous_row
+screen_previous_row equ reset_data_image+0x39a2
+global screen_reverse_wrap_blocked
+screen_reverse_wrap_blocked equ reset_data_image+0x9038
+global screen_top_margin
+screen_top_margin equ reset_data_image+0xceb0
+global screen_use_bios_cursor
+screen_use_bios_cursor equ reset_data_image+0x7a66
+global screen_vertical_attribute_check
+screen_vertical_attribute_check equ reset_data_image+0x9018
+global screen_video_offset
+screen_video_offset equ reset_data_image+0x3344
+global screen_video_row_bytes
+screen_video_row_bytes equ reset_data_image+0x7a7a
+global screen_viewport_active
+screen_viewport_active equ reset_data_image+0x3256
+global screen_viewport_enabled
+screen_viewport_enabled equ reset_data_image+0xcdfa
+global screen_viewport_left
+screen_viewport_left equ reset_data_image+0xce2e
+global screen_viewport_offset
+screen_viewport_offset equ reset_data_image+0x39a4
+global screen_viewport_right
+screen_viewport_right equ reset_data_image+0x7a7e
+global screen_visible_column
+screen_visible_column equ reset_data_image+0x39a0
+global scroll_enabled
+scroll_enabled equ reset_data_image+0x1d22
+global scroll_skip_attribute_scan
+scroll_skip_attribute_scan equ reset_data_image+0x904c
+global scroll_suppress_next_linefeed
+scroll_suppress_next_linefeed equ reset_data_image+0x3340
+global terminal_backspace_erases
+terminal_backspace_erases equ reset_data_image+0x1d26
+global terminal_backspace_mode_9058
+terminal_backspace_mode_9058 equ reset_data_image+0x9058
+global terminal_c1_enabled
+terminal_c1_enabled equ reset_data_image+0x1d30
+global terminal_control_dispatch_table
+terminal_control_dispatch_table equ reset_data_image+0x44a0
+global terminal_control_mode_1fb0
+terminal_control_mode_1fb0 equ reset_data_image+0x1fb0
+global terminal_control_mode_9026
+terminal_control_mode_9026 equ reset_data_image+0x9026
+global terminal_cr_adds_lf
+terminal_cr_adds_lf equ reset_data_image+0x1d24
+global terminal_dec_keys
+terminal_dec_keys equ reset_data_image+0x8fe8
+global terminal_escape_dispatch_table
+terminal_escape_dispatch_table equ reset_data_image+0x445e
+global terminal_history_end
+terminal_history_end equ reset_data_image+0x4ec6
+global terminal_history_pending
+terminal_history_pending equ reset_data_image+0x4ecc
+global terminal_history_pointer
+terminal_history_pointer equ reset_data_image+0x4ebe
+global terminal_history_start
+terminal_history_start equ reset_data_image+0x4eba
+global terminal_history_wrapped
+terminal_history_wrapped equ reset_data_image+0x4ec8
+global terminal_input_mode_8fe8
+terminal_input_mode_8fe8 equ reset_data_image+0x8fe8
+global terminal_keymap
+terminal_keymap equ reset_data_image+0x3378
+global terminal_keymap_end
+terminal_keymap_end equ reset_data_image+0x372c
+global terminal_mode_372c
+terminal_mode_372c equ reset_data_image+0x372c
+global terminal_newline_mode_9020
+terminal_newline_mode_9020 equ reset_data_image+0x9020
+global terminal_sink_3988_enabled
+terminal_sink_3988_enabled equ reset_data_image+0x3988
+global terminal_sink_398a_enabled
+terminal_sink_398a_enabled equ reset_data_image+0x398a
+global terminal_sink_398c_disabled
+terminal_sink_398c_disabled equ reset_data_image+0x398c
+global terminal_sink_error_state
+terminal_sink_error_state equ reset_data_image+0x418a
+global terminal_sink_handle
+terminal_sink_handle equ reset_data_image+0xd114
+global terminal_tab_mode_8ff8
+terminal_tab_mode_8ff8 equ reset_data_image+0x8ff8
+global terminal_tab_stops
+terminal_tab_stops equ reset_data_image+0xce10
+global terminal_tab_wrap
+terminal_tab_wrap equ reset_data_image+0x903e
+global text_bios_output
+text_bios_output equ reset_data_image+0x7a92
+global text_cga_status_port
+text_cga_status_port equ reset_data_image+0x7a8e
+global text_video_segment
+text_video_segment equ reset_data_image+0x7a78
+global ui_flow_attribute
+ui_flow_attribute equ reset_data_image+0x1f6e
+global ui_flow_coordinate_base
+ui_flow_coordinate_base equ reset_data_image+0x7a84
+global ui_flow_region_cells
+ui_flow_region_cells equ reset_data_image+0x3250
+global ui_flow_suppressed
+ui_flow_suppressed equ reset_data_image+0x1d46
+global ui_flow_video_base
+ui_flow_video_base equ reset_data_image+0x7a82
+SEGMENT STACK stack class=STACK use16
+ resb 4096
+stack_top:

@@ -1,0 +1,138 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "overlay": 21,
+  "receiver_evidence_id": "ev_5627e54d9f87691801201530328b3cd53d294b87c896a38d9c5b1d3c1e62851b",
+  "units": [
+    {
+      "source": "validate.asm",
+      "start": "0xd8e8",
+      "end_exclusive": "0xda31",
+      "bytes": 329,
+      "source_file_offset": 129944,
+      "sha256": "5d402bb84dde64fca19238defe8009966ff9d896e83324564e85c578956a81b0"
+    },
+    {
+      "source": "accept.asm",
+      "start": "0xdaea",
+      "end_exclusive": "0xdb2a",
+      "bytes": 64,
+      "source_file_offset": 130458,
+      "sha256": "0eee940c64db6d003ef0ac8f934f2765ced56657cd0067bf0b98254e8c578eed"
+    },
+    {
+      "source": "reject.asm",
+      "start": "0xdbbc",
+      "end_exclusive": "0xdc28",
+      "bytes": 108,
+      "source_file_offset": 130668,
+      "sha256": "6a8ccc9c408599dfc03c4d11a12b88c07c3e35d647e9404859e527e34272fc59"
+    },
+    {
+      "source": "header.asm",
+      "start": "0xdc6a",
+      "end_exclusive": "0xdcfd",
+      "bytes": 147,
+      "source_file_offset": 130842,
+      "sha256": "cd4052cb6878cefee3f7007671982464068a02a907b4c27676b2d8eb1faac567"
+    },
+    {
+      "source": "ack.asm",
+      "start": "0x40b1",
+      "end_exclusive": "0x40c1",
+      "bytes": 16,
+      "source_file_offset": 21169,
+      "sha256": "35ef796521b3206207d9a88746414997eb2751d6c7d7eb298a49ac8673940efa"
+    },
+    {
+      "source": "drain.asm",
+      "start": "0xf03e",
+      "end_exclusive": "0xf050",
+      "bytes": 18,
+      "source_file_offset": 135918,
+      "sha256": "3411c6a8d6e7200ac26c4d64b2be5ca6e2dc3f90ae83c9dc7d550d72317a0a7a"
+    },
+    {
+      "source": "eot.asm",
+      "start": "0xdd4a",
+      "end_exclusive": "0xddf6",
+      "bytes": 172,
+      "source_file_offset": 131066,
+      "sha256": "e680e8d11b129601615e624a5fcc3b3db04df0ba3909c2b1ae0393c9a6b6193a"
+    },
+    {
+      "source": "cancel.asm",
+      "start": "0xf050",
+      "end_exclusive": "0xf070",
+      "bytes": 32,
+      "source_file_offset": 135936,
+      "sha256": "f38eb063e5128a75136b1f19c82988cda3d12d009d0a28e00ede10570869c344"
+    }
+  ],
+  "state": {
+    "0x3996": "receive_protocol",
+    "0x39c0": "receive_buffer_pointer",
+    "0x8e20": "receive_queued_count",
+    "0x8ffa": "receive_total_low",
+    "0x8ffc": "receive_total_high",
+    "0xcb2c": "receive_session_low",
+    "0xcb2e": "receive_session_high",
+    "0xcb5e": "receive_block_size",
+    "0xcbae": "receive_crc_high",
+    "0xcbb2": "receive_crc_low",
+    "0xcc46": "receive_wire_high",
+    "0xcc94": "receive_wire_low",
+    "0xcc9a": "receive_last_block",
+    "0xcc9c": "receive_wire_block",
+    "0xcd32": "receive_wire_complement",
+    "0xcd34": "receive_buffer_used",
+    "0xcd80": "receive_blocks_accepted",
+    "0xcd8a": "receive_error_count",
+    "0xcdcc": "receive_streaming_mode",
+    "0xcd94": "receive_event_queue"
+  },
+  "boundaries": {
+    "0x5c42": "transfer_crc_update_original",
+    "0x5c5c": "transfer_crc_finish_original",
+    "0xaad9": "receive_timed_byte",
+    "0x5ca0": "receive_header_byte",
+    "0xabca": "receive_flush_input",
+    "0x40b9": "receive_nak",
+    "0x40b1": "receive_ack",
+    "0xe498": "receive_status",
+    "0xf03e": "receive_drain",
+    "0xe322": "receive_progress",
+    "0xab0b": "receive_transmit_byte",
+    "0x6b72": "receive_delay",
+    "0xf050": "receive_control_status",
+    "0x9065": "receive_post_event",
+    "0xda31": "receive_validated",
+    "0xdb2a": "receive_buffer_full",
+    "0xdc28": "receive_complete",
+    "0xdcf1": "receive_retry_limit",
+    "0xd734": "receive_unsupported_control",
+    "0xdd4a": "receive_other_control",
+    "0xddf6": "receive_disk_commit"
+  },
+  "supporting_evidence": [
+    {
+      "name": "input-drain",
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1f03e-asm.json",
+      "evidence_id": "ev_0e782875a0747cda224a66d1b03b087502ad6545afd099c9611df3e822f8034f"
+    },
+    {
+      "name": "double-CAN-event",
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1f050-asm.json",
+      "evidence_id": "ev_3343401c1e6f056fc6c94618eee27ef21ddc84522dcda8103ece4f49da1ef7b3"
+    },
+    {
+      "name": "header-timeout-reader",
+      "export": "analysis/pcplus-main/functions/0x15ca0-asm.json",
+      "evidence_id": "ev_5e9b2a5c6803fb0f53c20c417ee7fb18a78a012a1384deaec9f58b8b253d6393"
+    }
+  ],
+  "limitations": [
+    "Exact fragments preserve original behavior; OMF-only fallthrough jumps expose explicit diagnostic checkpoints.",
+    "The standalone host is a bounded memory UART/time/UI fixture, not a production transfer implementation.",
+    "Continued session, file flush/close, batch metadata application and original UI/cancellation event consumption are not implemented."
+  ]
+}

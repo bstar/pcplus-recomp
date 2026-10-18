@@ -18,6 +18,9 @@ extern terminal_select_directory
 extern terminal_directory_flush_accounting
 extern terminal_load_keyboard
 extern terminal_load_actions,terminal_macro_cancel
+extern terminal_program_initialize,terminal_program_poll,terminal_program_cancel,terminal_program_pending
+extern terminal_reset_capture
+extern terminal_release_flow,terminal_cleanup_flow_failed
 extern terminal_connection_start,terminal_connection_receive
 extern connection_state,connection_result
 ; Open Watcom small-code consistency marker for the near-C DOS IO subset.
@@ -32,6 +35,7 @@ _small_code_:
  mov sp,terminal_stack_top
  sti
  cld
+ call terminal_program_initialize
  call terminal_parse_options
  jnc .configured
  cmp ax,1
@@ -111,12 +115,23 @@ _small_code_:
  call csi_clear_tabs
  add sp,2
  call terminal_clear_home
+ call terminal_reset_capture
+ or ax,ax
+ jz .reset_ready
+ mov ax,0x20a4
+ jmp terminal_abort
+.reset_ready:
  call uart_enable
  call terminal_connection_start
 .loop:
  call terminal_poll_io
  cmp word [terminal_quit],0
  jne terminal_shutdown
+ call terminal_program_poll
+ cmp word [terminal_quit],0
+ jne terminal_shutdown
+ cmp word [terminal_program_pending],0
+ jne .idle
  cmp word [uart_rx_dropped],0
  jne .overflow
  ; Leave post-match bytes in the actual RX ring while final command pacing
@@ -177,8 +192,11 @@ terminal_shutdown:
  mov ss,ax
  mov sp,terminal_stack_top
  sti
+ call terminal_macro_cancel
+ call terminal_program_cancel
  cmp byte [hardware_active],0
  je .exit
+ call terminal_release_flow
  call uart_disable
  cmp byte [vector_active],0
  je .restore
@@ -189,7 +207,6 @@ terminal_shutdown:
  call uart_restore_hardware_state
  mov byte [hardware_active],0
 .exit:
- call terminal_macro_cancel
  call terminal_directory_flush_accounting
  or ax,ax
  jz .application_error
@@ -197,6 +214,12 @@ terminal_shutdown:
  mov ah,9
  int 0x21
 .application_error:
+ cmp word [terminal_cleanup_flow_failed],0
+ je .macro_error
+ mov dx,flow_cleanup_failed
+ mov ah,9
+ int 0x21
+.macro_error:
  cmp word [terminal_exit_code],10
  jne .keyboard_error
  mov dx,macro_failed
@@ -227,6 +250,7 @@ vector_active: db 0
 missing_port: db 'Selected COM port is not listed by the BIOS.',13,10,'$'
 unsupported: db 13,10,'Unsupported terminal function; terminal stopped.',13,10,'$'
 unsupported_keyboard: db 13,10,'Unsupported keyboard binding or local command; terminal stopped.',13,10,'$'
+flow_cleanup_failed: db 13,10,'Could not resume software flow before exit.',13,10,'$'
 macro_failed: db 13,10,'TEXT action timed out; terminal stopped.',13,10,'$'
 accounting_failed: db 13,10,'Call statistics save needs attention. Check directory recovery files.',13,10,'$'
 configuration_messages: dw configuration_io,configuration_serial,configuration_flow

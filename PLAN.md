@@ -61,10 +61,11 @@ a malformed stock theme's metadata. Those handlers are now recovered and tested;
 the source-owned defaults select the proved original ANSI profile. Earlier
 checkpoints passed all three local servers through login and menu navigation through a modeled Hayes/Telnet
 modem; Mystic also passes indexed-screen arrows and Escape return. The current
-36b14af2 checkpoint passes Synchronet/Mystic menus and Synchronet FSEditor,
-but retains ENiGMA matrix-arrow and editor failures (docs/validation/bbs-matrix.json
-and bbs-editors.json). Direct ENiGMA login reaches the editor; correct outgoing
-key sequences do not establish working server interaction. An
+7b9ca14b checkpoint passes Synchronet/Mystic menus and Synchronet FSEditor.
+ENiGMA login-matrix arrows and message/file menus pass in the configured-N retry;
+the initial timed run's incomplete menu workflow is retained. Its real editor
+still fails Home/Insert despite correct outgoing bytes (docs/validation/bbs-matrix.json
+and bbs-editors.json). An
 isolated maintained-source snapshot builds the identical interactive executable
 with no original executables or installation present. These tests do not establish
 physical modem compatibility or close the remaining application gates below.
@@ -73,8 +74,13 @@ physical modem compatibility or close the remaining application gates below.
       Native keyboard integration now includes all79 recovered raw binding slots,
       maintained network defaults, strict explicit `/K` import and `/B` automatic
       BDA/manual BIOS selection. Low-E0 keypad aliases are maintained compatibility
-      behavior. Ten actual DOS key cases and95 linked inputs pass. Global /T KEY import and nonblocking TEXT now work; ASPECT/PROGRAM/HOOK
-      execution, directory bindings, historical defaults and physical BIOS testing remain open.
+      behavior. Ten actual DOS key cases and95 linked inputs pass.
+      Global /T KEY import supports nonblocking TEXT and maintained PROGRAM
+      command-processor execution with bounded UART/child handoff. ASPECT/HOOK,
+      original PROGRAM heap/UI services, directory bindings, historical defaults
+      and physical BIOS testing remain open. ESC c restores captured startup
+      state for profiles 4/6 through a maintained RAM-only policy; the native
+      nonzero reset KEY/profile-loading pipeline remains unresolved.
       Recovered line helpers are live through `/A:NETWORK` bounded line editing
       or `/A:ORIGINAL` serviced36-tick discard wait. Eight synthetic policy groups
       pass; complex attribute repair remains an explicit2d98 boundary and full
@@ -130,10 +136,29 @@ physical modem compatibility or close the remaining application gates below.
       DOS diagnostic, distinct from the maintained nonblocking live controller.
       See `docs/CONFIGURATION.md`.
 - [ ] Reconstruct file transfers, capture/logging and supporting tools used by the app.
+      Progress: native protocol selection/handler routing is mapped; 93 exact CRC
+      bytes plus a generated original-verified 512-byte table and 886 exact receiver
+      bytes are source-built. Framing/checksum/CRC, duplicate ACK, sequence and
+      integrity NAK, EOT and double-CAN event paths pass source/original replay
+      and actual DOS diagnostics. UART/time/UI remain explicit receiver fixtures;
+      buffered file commit, full session/retries/cancellation ownership, batch
+      metadata and every advertised built-in/external protocol remain open.
+      Capture/logging and F09 helper integration are not closed by these modules.
+      See `docs/TRANSFER_BLOCKS.md` and `docs/TRANSFER_RECEIVE.md`.
 - [ ] Reconstruct scripting interfaces and required interpreter/compiler integration.
       Keyboard file structures and original TEXT caret/pause consumers are proved,
       and explicit global /T KEY import now supports bounded nonblocking TEXT.
-      ASPECT/PROGRAM/HOOK execution, directory bindings and editing remain open. Unimplemented original local keyboard commands stop explicitly
+      Maintained PROGRAM now executes stored commands through COMSPEC `/c` and a
+      bounded source-owned DOS process backend, with serial/vector/video handoff.
+      Current checkpoint `7b9ca14b` linked regressions and separate actual DOS synthetic-child
+      tests cover restoration and failures. Native PROGRAM has 3,102 exact bytes,
+      including its EXEC/environment/PATH core, but heap and broader application
+      services remain external; native reset has 2,301 exact bytes with its
+      nonzero KEY/profile-loader boundary preserved. Complete ASPECT/HOOK,
+      original PROGRAM integration, directory bindings and editing remain open.
+      See `docs/PROGRAM_EXEC.md`, `docs/TERMINAL_RESET.md` and
+      `docs/LIVE_TERMINAL_RESET.md`. Unimplemented original local keyboard
+      commands stop explicitly
       with errorlevel4; unmapped/no-op keys remain ignored.
 - [ ] Recover required resources without embedding original executable code/data as
       a substitute for source reconstruction.

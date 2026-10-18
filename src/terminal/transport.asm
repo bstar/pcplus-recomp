@@ -13,6 +13,7 @@ extern terminal_connection_poll,terminal_connection_cancel,terminal_connection_s
 extern terminal_connection_exit,connection_state,connection_enabled
 extern terminal_macro_active,terminal_macro_start,terminal_macro_poll,terminal_macro_cancel
 extern terminal_macro_tx_allowed,terminal_macro_tx_epoch,terminal_defer_key,terminal_take_deferred_key
+extern terminal_program_pending,terminal_program_cancel
 global terminal_poll_io,terminal_enqueue_al,terminal_tick_low,terminal_clock_ticks
 global ansi_next_byte,ansi_unread_byte,csi_transmit_byte,csi_transmit_string
 
@@ -53,6 +54,8 @@ ansi_next_byte:
  jne .timeout
  call terminal_poll_io
  cmp word [terminal_quit],0
+ jne .timeout
+ cmp word [terminal_program_pending],0
  jne .timeout
  cmp word [connection_state],0
  je .receive
@@ -178,6 +181,8 @@ terminal_poll_io:
 .keyboard:
  cmp word [terminal_macro_active],0
  jne .bios_key
+ cmp word [terminal_program_pending],0
+ jne .bios_key
  call terminal_take_deferred_key
  jnc .key_ready
 .bios_key:
@@ -212,13 +217,17 @@ terminal_poll_io:
  jmp .done
 .terminal_key:
  cmp word [terminal_macro_active],0
+ jne .defer
+ cmp word [terminal_program_pending],0
  je .meta_key
+.defer:
  cmp al,27
  je .cancel_macro
  call terminal_defer_key
  jmp .done
 .cancel_macro:
  call terminal_macro_cancel
+ call terminal_program_cancel
  jmp .done
 .meta_key:
  or al,al
@@ -256,15 +265,18 @@ terminal_poll_io:
  jmp .done
 .quit:
  call terminal_macro_cancel
+ call terminal_program_cancel
  call terminal_connection_exit
  jmp .done
 .hangup:
  call terminal_macro_cancel
+ call terminal_program_cancel
  mov ax,1
  call terminal_connection_cancel
  jmp .done
 .redial:
  call terminal_macro_cancel
+ call terminal_program_cancel
  cmp word [connection_state],0
  jne .done
  cmp byte [connection_enabled],0

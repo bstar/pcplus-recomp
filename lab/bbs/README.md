@@ -36,28 +36,32 @@ syntax for login/menu workflows; `--label` retains separate runs. A normal DOS
 exit is a transport/cleanup check; successful login and menu interaction require
 separate evidence from the screen, response bytes and server logs.
 
-## Current checkpoint: interaction failures retained
+## Current checkpoint: menus pass; ENiGMA editor failure retained
 
-Terminal `36b14af2281a4921c0da210cfb3ceed22c3c33d82c9b40f2877850bea169d5f4`
-is tested under label `meta-character-network` and editor label
-`editor-meta-character`. Synchronet and Mystic menu audits pass. Synchronet's
-editor passes all12 semantic checks. All completed runs restore sampled hardware.
+Terminal `7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a`
+was tested from an immutable executable copy with COM2/19200/8N1/HARD.
+Synchronet and Mystic menu workflows pass under `program-reset-network`.
+ENiGMA's `program-reset-network-casefix` retry passes login-matrix Down/Up,
+authentication, Main → Messages → Main → Files, real device/cursor replies and
+unchanged stock artwork. The first timed ENiGMA workflow logged in but entered
+newscan and reached Main too late for the scheduled menu keys. Its failed
+semantic audit is retained alongside the retry; it is not proof of an identical
+cause to the earlier matrix-arrow failure.
 
-ENiGMA's menu audit now **fails**: the actual Down/Up wire sequences at the
-login matrix lead to `newUserApplicationPre` instead of returning to Login.
-The subsequent scheduled credentials therefore miss their intended fields.
-Direct Enter login in the separate editor run succeeds and reaches the real
-editor, where Home and Insert still fail despite correct outgoing sequences.
-That editor run closes unsaved and the server confirms no post. Fragmented
-escape handling is independently reproduced; the new matrix failure is consistent
-with that boundary but has not independently established the identical cause.
-The current matrix and editor aggregate results are both false.
+Synchronet's `editor-program-reset` passes all12 behavior checks and eight
+key-wire checks, including Ctrl-Q abort. ENiGMA's actual editor still receives
+all eight expected key sequences but fails Home positioning and Insert mode.
+Runs close unsaved and the server confirms no new message. The editor aggregate
+therefore remains false. All completed runs restore the sampled IRQ/UART/PIC
+state and preserve their synthetic PRM files.
 
-An initial ENiGMA retry used a70-second timeout for an83-second workflow.
-Its incomplete files stay in `meta-character-network-timeout70/` with an
-`incomplete.json` marker; it is not compatibility evidence. The completed retry
-uses140 seconds. Harness timeout cleanup now escalates to kill after5 seconds.
-Keep the stock server and immediate modem model unchanged when reproducing.
+The stock ENiGMA decoder and immediate modem model remain unchanged. An
+independent complete-versus-split escape probe reproduces the server's handling
+of TCP chunks without partial escape state. Physical modem buffering/timing,
+transfers and remaining application features still require separate testing.
+
+The earlier `meta-character-network` ENiGMA matrix failure and its incomplete
+70-second timeout attempt remain historical evidence, with explicit limitations.
 
 ## Earlier verified results
 

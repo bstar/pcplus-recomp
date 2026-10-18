@@ -152,3 +152,18 @@ under `build/bbs-lab/enigma/probe/`.
 Remaining scope includes file transfers, full-screen editors, doors, advanced
 fonts/UTF8/mouse protocols, all control/emulation families and physical Wi-Fi
 modem firmware. A successful login/menu run does not establish these features.
+
+## PROGRAM/reset checkpoint
+
+The source-only terminal `7b9ca14b` is tested with COM2/19200/8N1/HARD.
+The `program-reset-network-casefix` retry completes Login → Main → Messages →
+Main → Files, including Down/Up in the login matrix. It sends the configured
+uppercase `N` at the newscan prompt. The earlier `program-reset-network` run
+logged in but entered newscan and reached Main too late for the scheduled menu
+keys. That failed timed workflow is retained; this retry does not establish
+that uppercase alone explains every timing difference.
+
+Keep full-screen editor results separate. The unchanged immediate modem bridge
+still exposes split escape-sequence handling; correct DOS wire bytes alone do
+not make editing pass. No stock server decoder, theme or modem coalescing policy
+was patched for these tests. Physical RS-232 Wi-Fi hardware remains untested.
