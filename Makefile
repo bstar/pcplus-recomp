@@ -173,7 +173,7 @@ test-modem:
 	$(MAKE) -C reconstruction test-modem
 
 clean:
-	rm -rf build/standalone build/ansi build/keyboard build/keyboard-mapping build/keyboard-detection build/keyboard-detection-dos build/line-edit build/keymap-dos build/terminal-keys build/csi-relocation build/cursor-state build/cursor-shape build/config-dos build/config-replace build/config-abi build/ui-windows build/ui-windows-dos build/modem-commands build/modem-commands-dos build/modem-responses build/modem-responses-dos build/modem-send build/modem-send-dos build/modem-import build/connection-dos build/directory-dial build/directory-dial-dos build/directory-accounting build/directory-accounting-dos build/directory-browser build/directory-browser-dos build/directory-editor build/directory-replace build/directory-dos build/directory-terminal build/terminal build/terminal-tests build/terminal-options build/process build/download-file build/transfer-send build/transfer-metadata build/transfer-metadata-dos build/batch-header build/batch-download build/batch-upload build/transfer-files build/transfer-session build/transfer-session-composite build/transfer-storage build/transfer-uart $(addprefix build/,$(MODULES))
+	rm -rf build/setup build/setup-model build/standalone build/ansi build/keyboard build/keyboard-mapping build/keyboard-detection build/keyboard-detection-dos build/line-edit build/keymap-dos build/terminal-keys build/csi-relocation build/cursor-state build/cursor-shape build/config-dos build/config-replace build/config-abi build/ui-windows build/ui-windows-dos build/modem-commands build/modem-commands-dos build/modem-responses build/modem-responses-dos build/modem-send build/modem-send-dos build/modem-import build/connection-dos build/directory-dial build/directory-dial-dos build/directory-accounting build/directory-accounting-dos build/directory-browser build/directory-browser-dos build/directory-editor build/directory-replace build/directory-dos build/directory-terminal build/terminal build/terminal-tests build/terminal-options build/process build/download-file build/transfer-send build/transfer-metadata build/transfer-metadata-dos build/batch-header build/batch-download build/batch-upload build/transfer-files build/transfer-session build/transfer-session-composite build/transfer-storage build/transfer-uart $(addprefix build/,$(MODULES))
 
 .PHONY: process test-process
 process:
@@ -287,3 +287,12 @@ test-batch-upload:
 
 test-terminal-ymodem-live: terminal
 	python3 standalone/check_terminal_ymodem_live.py
+
+.PHONY: setup test-setup
+all: setup
+test: test-setup
+setup:
+	python3 standalone/build_setup.py
+test-setup: setup
+	python3 standalone/check_setup_model.py
+	python3 standalone/test_setup_dos.py

@@ -1,0 +1,60 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "all44-fields-get-set-byte-identical-with-opaque-tail-data",
+      "inputs": 44,
+      "passed": true
+    },
+    {
+      "case": "serial-profile-and-BREAK-values-agree-with-existing-importers",
+      "inputs": 32,
+      "passed": true
+    },
+    {
+      "case": "invalid-numeric-parity-and-unterminated-edits-entire-image-atomic",
+      "inputs": 80,
+      "passed": true
+    },
+    {
+      "case": "six-command-caret-grammar-capacities-tail-preservation-and-revert",
+      "inputs": 48,
+      "passed": true
+    },
+    {
+      "case": "11-expanded-response-slots-lossless-hex-and-invalid-input-atomic",
+      "inputs": 121,
+      "passed": true
+    },
+    {
+      "case": "malformed-loaded-fields-view-without-normalizing-and-explicit-repair",
+      "inputs": 41,
+      "passed": true
+    },
+    {
+      "case": "near-cdecl-null-overlap-capacity-and-segment-wrap",
+      "inputs": 16,
+      "passed": true
+    },
+    {
+      "case": "actual-DOS-c-runtime-model-and-no-file-rewrites",
+      "inputs": 1,
+      "passed": true
+    }
+  ],
+  "binary_sha256": "10af23b7c87e8284e414fbfdbf99dbe8886af2a20c0925e955a0ea9976cf8891",
+  "sources": {
+    "src/config/setup_model.c": "cb09ee57b5be080b2403e3d0114bce17b3bfeee70f7311b4efeef4ed000c51c1",
+    "src/config/terminal_import.c": "8ec3056f74ab9b37594500bf0ea2b7a34388a2674af72eec716f1c829c31d66d",
+    "src/config/modem_import.c": "aa984d766d561ab15e6fd067757953c856eb054a61dc8f4cb9c58c58f5df2a4b",
+    "src/config/prm_dos.c": "e4d0386d3fb40e225cbc34ec7f989286f67ec9ffcff29a6f50eb77d7b24ee021",
+    "standalone/setup_model_host.c": "9cd92b0005e6a4f9a7d275d62759666e7b33eba600af8cbc0ebba6450ff3c280",
+    "src/config/setup_model.h": "50dcbf3cf73b16032888fd6b8330a70c801786c717901486b0938090ebff5c3f",
+    "src/config/terminal_import.h": "1a4356026ff7aeece24a8b6437942d08bab611aaa82c14233a5ce7c9e895e6c5",
+    "src/config/modem_import.h": "7ef5213025c1d58c9dc8f4ec89197c4ca2d6ed67d8f2ea4ddeeb89350e9bfcb0",
+    "src/config/prm_dos.h": "3a6f8f27e13f5fc97e290b95def601e49ce93b54f729d1bc3ddc527ba39de20c",
+    "standalone/check_setup_model.py": "a2c449a19f42227626b0dda71f374c92d8dd0b8d7453ed74f6ecc4622ac1294f"
+  },
+  "scope": "Actual source-built DOS8086 C. Synthetic settings only. Pure API replay forbids interrupts and port I/O; separate DOS run checks C runtime and no rewrite. Field model only, no settings UI, save ownership or original PCSETUP child compatibility.",
+  "artifact": "build/setup-model/checks.json"
+}

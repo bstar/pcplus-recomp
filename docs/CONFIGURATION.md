@@ -30,7 +30,7 @@ code overlay 3, not an identically addressed routine in another overlay.
 | Overlay 3 `d647` | Resolves PCPLUS.PRM. A successful current-directory text-mode `r` open is accepted, then current-directory path is expanded. Otherwise shared path helper353d searches its configured environment fallback; that branch checks file length equals04f0 before accepting it. | `ev_0b7e0098ca824727703a9c43e5df54c85c2b94a7564b9ae9830451d095e2ce34` |
 | Resident `353d` | Tries requested filename, otherwise gets environment name through DS324c; that initialized pointer names `PCPLUS`. Appends path separator/name when appropriate. | `ev_1cd43dbde8697560fddafd763fd3ab56971d91bd6badd8b88553d8e1cc1d6417` |
 | Overlay 20 `f260` | Opens resolved configuration `r+b`; writes one ten-byte element from DS1b84; closes. Failed open follows a UI/error path427f. Write result is not checked here. | `ev_d52db527211bf1c3ffed8dd5924051027974ff1fcd63bd9dc4f05d7bc3e0211e` |
-| Overlay 3 `d4d0` | Launches PCSETUP.EXE with a constructed command containing the PCPlus path and a converted DS:1b84 address; snapshots selected live settings and reapplies changed screen/terminal/other state after the child returns. | `ev_dd1d40e9cbad7523a355eeea9364e2483b3b2d79e4a051b4911a7905b8eda450` |
+| Overlay 3 `d4d0` | Launches PCSETUP.EXE with a constructed command containing the current PRM path, literal PCPLUS and an unsigned decimal packed DS:1b84 address (see SETUP_NATIVE.md); snapshots selected live settings and reapplies changed screen/terminal/other state after the child returns. | `ev_dd1d40e9cbad7523a355eeea9364e2483b3b2d79e4a051b4911a7905b8eda450` |
 | Resident `033e`, `0366` | Uses baud selector, parity/data/stop words, selected port's I/O base and IRQ table entries to configure actual recovered UART code. | `ev_25025ce97e87aa22d04eb4d6b2903b39d9c15b68e3fc91a5aaf4ed75e06d23a1`, `ev_29b4f4536b443b5d3ee7209840b7c813c466c488e71d287a8ca20f7cfb8c806a` |
 
 No new native session was
@@ -269,3 +269,10 @@ callers receive the documented AX value. C callers retain the named status
 constants and result layout. The live terminal now imports a validated read-only subset through `@FILE.PRM`;
 see [startup configuration](STARTUP_CONFIGURATION.md). Complete application
 settings, defaults and configuration UI remain open.
+
+
+The maintained offline [PRMEDIT editor](SETUP_EDITOR.md) now stages and validates
+44 mapped fields and saves through the checked DOS replacement backend. It does
+not implement PCSETUP's original parent-memory consumer protocol, which remains
+unavailable; see [native invocation evidence](SETUP_NATIVE.md). Complete schema,
+defaults, path precedence and live setup integration remain open.

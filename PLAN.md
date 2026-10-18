@@ -353,3 +353,20 @@ physical modem compatibility or close the remaining application gates below.
 Use `./tools/build` and `./tools/build test` for the source diagnostic. Optional
 compatibility targets continue to require ignored local originals. Record newly
 verified work here; do not check an item based on static inference alone.
+
+
+## Current offline setup component
+
+`PRMEDIT.EXE` now provides five DOS pages covering the44 mapped settings, typed
+validation, lossless staging, explicit malformed-field repair and checked save
+ownership. See `docs/SETUP_EDITOR.md` and `docs/SETUP_NATIVE.md`. Source-only Nix
+build, DOS filesystem/keyboard/video and independent field-model evidence cover
+this component. F02/F06 remain open for complete menus/help/schema/defaults,
+path/environment precedence, live terminal integration and the original missing
+PCSETUP child consumer. Offline editing does not close the full application goal.
+
+The current isolated checkout reproduces58 byte-identical outputs, including
+PRMEDIT. Its model passes383 synthetic inputs in8 groups;10 real-DOS workflow
+groups include39 document-owner assertions, production save and independently
+checked video restoration. These counts are component evidence, not closure of
+any full-application feature gate.
