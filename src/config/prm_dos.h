@@ -5,10 +5,13 @@
 #define PRM_DOS_IMAGE_SIZE 1264U
 
 typedef struct prm_dos_image { unsigned char bytes[PRM_DOS_IMAGE_SIZE]; } prm_dos_image;
-typedef enum prm_dos_status {
+/* A DOS unsigned is16 bits. Do not use a small enum as the return type:
+ * Open Watcom otherwise returns the code in AL with unspecified AH. */
+typedef unsigned prm_dos_status;
+enum {
  PRM_DOS_OK=0, PRM_DOS_ARGUMENT, PRM_DOS_OPEN, PRM_DOS_READ,
  PRM_DOS_SIZE, PRM_DOS_WRITE, PRM_DOS_CLOSE
-} prm_dos_status;
+};
 typedef struct prm_dos_result {
  prm_dos_status status;
  unsigned dos_error;

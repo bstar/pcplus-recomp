@@ -107,7 +107,7 @@ normal process exit alone cannot prove interactive compatibility.
 ./tools/dev --command python3 lab/bbs/check_modem.py
 ```
 
-Five groups exercise fragmented negotiation/subnegotiation, escaped IAC,
+Six groups exercise selected-baud CONNECT/TSPEED behavior, fragmented negotiation/subnegotiation, escaped IAC,
 unsupported options, option withdrawal, bounded incomplete subnegotiation,
 all-byte transport and unchanged ANSI/CPR/DA streams. A real localhost socket
 unit fixture verifies that the modem waits for the serial client's CPR rather

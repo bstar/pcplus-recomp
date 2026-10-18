@@ -1,0 +1,81 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "format": "PCPlus 2.01 PCPLUS.DIR, external identification required",
+  "verification_scope": "Optional original-instruction replay against synthetic memory-only FILE; host codec source-only tests are independent of original",
+  "io_units": [
+    {
+      "overlay": 8,
+      "start": "0xe812",
+      "end_exclusive": "0xe8ce",
+      "source_file_offset": 77714,
+      "bytes": 188,
+      "sha256": "ae8d6de3e736109005edd36b419450da0c3a9eecd194a49e2a90c004de36322d"
+    },
+    {
+      "overlay": 8,
+      "start": "0xe8ce",
+      "end_exclusive": "0xe92a",
+      "source_file_offset": 77902,
+      "bytes": 92,
+      "sha256": "533d46b37c11673591c6971ba5a6f118f5e0dd9f61dc72f0d442a61d8b3b5055"
+    },
+    {
+      "overlay": 4,
+      "start": "0xdd28",
+      "end_exclusive": "0xdd94",
+      "source_file_offset": 66344,
+      "bytes": 108,
+      "sha256": "6129257632e2c70613b48d170ead6a565c2afee0a41019531613124a36f4c2ae"
+    },
+    {
+      "overlay": 4,
+      "start": "0xdd94",
+      "end_exclusive": "0xddb6",
+      "source_file_offset": 66452,
+      "bytes": 34,
+      "sha256": "e23de3f4b31b4963d16492b9eaf0a2df465bf0b4298f1b10c96cef418286ce56"
+    },
+    {
+      "overlay": 4,
+      "start": "0xddb6",
+      "end_exclusive": "0xdde1",
+      "source_file_offset": 66486,
+      "bytes": 43,
+      "sha256": "9ec9b06811fd731257f7917cc2cfef033ef94ed6c08a42c40dca753524cdf678"
+    }
+  ],
+  "startup_data": {
+    "source_file_offset": 153936,
+    "bytes": 60080,
+    "sha256": "41b5e49c3f2bc40b7007d311af4282d9724b4cf0b11a696ca2bd6062ef4132c7",
+    "default_record_ds": "0x6f58",
+    "dial_codes_ds": "0xe484"
+  },
+  "rea_exports": [
+    {
+      "overlay": 8,
+      "function": "0x1e812",
+      "evidence_id": "ev_36985b594d8e25c20004d5ebbf185166ec86cfb60646baf80e9cf558a06bfd92"
+    },
+    {
+      "overlay": 8,
+      "function": "0x1e8ce",
+      "evidence_id": "ev_98267dd8422f580b90314c017d69da1e7d72b48da10221bc8680d29ca0ec65d5"
+    },
+    {
+      "overlay": 6,
+      "function": "0x1e3b0",
+      "evidence_id": "ev_add4411b457add6ba0111ef78d18ae96d73d223f94a375ca9e971907756f1871"
+    },
+    {
+      "overlay": 5,
+      "function": "0x1e5e3",
+      "evidence_id": "ev_8ba2d8666959230ceb936d342b926a5e63ebf33ee1d6e86277105ab92181cf55"
+    },
+    {
+      "resident": true,
+      "function": "0x10cd2",
+      "evidence_id": "ev_93022b689fd7163953c9a30dc4921d8f7fe9c1fcf7fa334691bd3f77328a9de1"
+    }
+  ]
+}

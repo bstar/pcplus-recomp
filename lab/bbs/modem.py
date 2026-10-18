@@ -8,8 +8,8 @@ import asyncio,json,time
 from pathlib import Path
 IAC,SB,SE,WILL,WONT,DO,DONT=255,250,240,251,252,253,254
 class Telnet:
- def __init__(self):
-  self.pending=bytearray();self.local=set();self.remote=set();self.refused_local=set();self.refused_remote=set();self.events=[]
+ def __init__(self,baud=38400):
+  self.baud=baud;self.pending=bytearray();self.local=set();self.remote=set();self.refused_local=set();self.refused_remote=set();self.events=[]
  def feed(self,data):
   self.pending.extend(data);out=bytearray();reply=bytearray();i=0
   while i<len(self.pending):
@@ -46,7 +46,7 @@ class Telnet:
     if not complete:break
     self.events.append({'subnegotiation':payload.hex()})
     if bytes(payload)==b'\x18\x01':reply.extend(bytes([IAC,SB,24,0])+b'ANSI-BBS'+bytes([IAC,SE]))
-    elif bytes(payload)==b'\x20\x01':reply.extend(bytes([IAC,SB,32,0])+b'38400,38400'+bytes([IAC,SE]))
+    elif bytes(payload)==b'\x20\x01':reply.extend(bytes([IAC,SB,32,0])+f'{self.baud},{self.baud}'.encode('ascii')+bytes([IAC,SE]))
     i=j;continue
    # Two-byte Telnet commands are modem control, not terminal display bytes.
    self.events.append({'command':command});i+=2
@@ -60,7 +60,7 @@ class Modem:
  def __init__(self,host,port,output,*,soft=False,baud=38400,raw=False):
   assert host in ('127.0.0.1','localhost','::1'),'Lab endpoints must be loopback'
   self.host,self.port,self.output=host,port,Path(output);self.soft,self.baud,self.raw=soft,baud,raw
-  self.output.mkdir(parents=True,exist_ok=True);self.ready=asyncio.Event();self.done=asyncio.Event();self.events=[];self.codec=Telnet()
+  self.output.mkdir(parents=True,exist_ok=True);self.ready=asyncio.Event();self.done=asyncio.Event();self.events=[];self.codec=Telnet(baud)
   self.display=bytearray();self.keyboard=bytearray();self.wire_in=bytearray();self.wire_out=bytearray();self.serial_out=bytearray()
   self.pause=asyncio.Event();self.pause.set();self.start=time.monotonic();self.connected=False
  def event(self,kind,**values):self.events.append({'seconds':round(time.monotonic()-self.start,3),'kind':kind,**values})
@@ -79,7 +79,7 @@ class Modem:
        self.event('modem-command',command=command.decode('ascii','replace'))
        if command.startswith(b'ATD'):
         up_reader,up_writer=await asyncio.open_connection(self.host,self.port)
-        writer.write(b'\r\nCONNECT 38400\r\n');await writer.drain();self.event('bbs-connected')
+        writer.write(f'\r\nCONNECT {self.baud}\r\n'.encode('ascii'));await writer.drain();self.event('bbs-connected')
         task=asyncio.create_task(self.downstream(up_reader,up_writer,writer))
        elif command in (b'AT',b'ATZ',b'ATE1',b'ATE0'):writer.write(b'\r\nOK\r\n')
        else:writer.write(b'\r\nERROR\r\n')

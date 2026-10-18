@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "synthetic_expansion_cases": 516,
+  "sender_plan_cases": 64,
+  "scope": "Actual original4934/48cc instructions with synthetic strings and modeled transmit/calibrated-delay/BIOS-delay boundaries. No original data/PRM or physical timing read."
+}

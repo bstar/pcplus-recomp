@@ -98,6 +98,35 @@ remained unchanged throughout. Evidence lives in
 video dump, wire transcripts and restoration snapshots. This verifies these
 menu paths; file transfers and the remaining feature areas are still untested.
 
+## UI integration regression
+
+The current UI-integrated executable was retested through the same actual DOS
+login/menu recipe without restarting the owned server. Session `KMU7ym9r61W`
+authenticated and the authoritative server log recorded `mainMenu →
+messageBaseMainMenu → mainMenu → fileBaseMainMenu`. The video dump shows the
+stock File Base menu. All six harness checks passed in 64.409 seconds, including
+normal exit, unchanged executable and exact IRQ/UART/divisor/PIC restoration.
+
+This run used executable SHA-256
+`9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f`.
+Evidence is retained in `build/bbs-lab/results/enigma/ui-integrated/`, including
+`server-menus.json`, the isolated `server-session.jsonl`, keyboard recipe,
+wire transcripts, screen and hardware snapshots. The stock theme art remained
+unchanged. Device/cursor replies came from the DOS program (`ESC[?1;2c` and
+`ESC[1;1R`); the bridge handled only modem/Telnet negotiation. These checks cover
+login and the named menu paths, with the same transfer/editor/door limitations
+as the earlier run.
+
+A separate serial-configuration regression used **COM2, 19200, 8N1, HARD** with
+longer login/art pauses. It passed in 81.402 seconds on the same executable.
+Authoritative session `4xUL4V5X0BB` traversed main → messages → main → files;
+all six harness checks passed, including exact restoration of COM2 UART,
+interrupt vector and PIC state. Evidence is in
+`build/bbs-lab/results/enigma/com2-hardware/`, including session/menu JSON and
+the full keyboard recipe. DOSBox-X nullmodem holds CTS ready: this verifies the
+selected port/rate and hardware-flow code path under ready CTS, without claiming
+physical handshake stalls or timing behavior.
+
 ## Negotiation and capability evidence
 
 Actual server negotiation requested terminal type, NAWS and NEW_ENVIRON,

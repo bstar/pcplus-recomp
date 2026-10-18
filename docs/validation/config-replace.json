@@ -51,8 +51,8 @@
     "PASS optional result pointer"
   ],
   "binaries": {
-    "REPLACE.EXE": "27e7757f81fff8ad0af65b926492d67a507bc13e5e216a06737338214fe8ed51",
-    "REPFAULT.EXE": "48cbdea3cd635f33bd654abc7ec2114c6219e5fbc90f42e84f1462e232517cd1"
+    "REPLACE.EXE": "14daea33ed04c9639633f4ede3c951745c2c4ef36cf10f7b9d790265facb11a6",
+    "REPFAULT.EXE": "cc19bb968bb1ea389c6841f9ae935bdd69960841cb6a604b53eb003ee12fbc46"
   },
   "scope": "Maintained staged DOS configuration replacement. Real synthetic filesystem plus state-based injected DOS failures/concurrent destination appearance; not physical disk power-loss or complete application settings integration."
 }

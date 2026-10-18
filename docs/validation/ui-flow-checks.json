@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "binary_sha256": "fbf6cabd1539075134062d99e4477c7eb7a229325e6fa50791adc11867420671",
+  "cases": [
+    {
+      "case": "zero-duration-leaves-real-string-overlay-with-CGA-blanking",
+      "passed": true
+    },
+    {
+      "case": "timed-message-restores-original-cells-and-wraps-BDA-lowword",
+      "passed": true
+    },
+    {
+      "case": "suppressed-original-branch-performs-no-video-or-delay-I-O",
+      "passed": true
+    },
+    {
+      "case": "configured-bottom-row-and-maximum-fitting-message",
+      "passed": true
+    },
+    {
+      "case": "actual-delay-input-zero-and-duration-plus-one-legacy-semantics",
+      "passed": true
+    }
+  ],
+  "fixtures": [
+    "BDA tick lowword advances every three reads and crosses ffff->0.",
+    "CGA status alternates0/9; actual IN/OUT and blank/unblank code executes."
+  ],
+  "scope": "Actual recovered original flow-message and complete dependencies; no menu fixtures/no-op rendering."
+}

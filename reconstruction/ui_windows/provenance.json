@@ -1,0 +1,183 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/ui_windows/read_byte.asm",
+      "start": 28576,
+      "end": 28623,
+      "bytes": 47,
+      "instructions": 23,
+      "sha256": "57301f1aaf386d6b48cd18376a06363cf0c6cd5f382266d39123fb4d6040212a",
+      "matched_original": true,
+      "file_offset": 33184
+    },
+    {
+      "file": "reconstruction/ui_windows/read_packed.asm",
+      "start": 28624,
+      "end": 28651,
+      "bytes": 27,
+      "instructions": 14,
+      "sha256": "d9be4a117144b6beb26f8c7adfc7d271a772733d9899248501511607da3c82f6",
+      "matched_original": true,
+      "file_offset": 33232
+    },
+    {
+      "file": "reconstruction/ui_windows/save.asm",
+      "start": 30300,
+      "end": 30338,
+      "bytes": 38,
+      "instructions": 21,
+      "sha256": "108fbf563b5b47b35ab154988b8f5ff9afe91e595cdc2485e66379a8b5b29e86",
+      "matched_original": true,
+      "file_offset": 34908
+    },
+    {
+      "file": "reconstruction/ui_windows/restore.asm",
+      "start": 30338,
+      "end": 30384,
+      "bytes": 46,
+      "instructions": 25,
+      "sha256": "10d04c85a822aa19089813bbab34081f4f55a41be1194dd2fc13d123db76c47f",
+      "matched_original": true,
+      "file_offset": 34946
+    },
+    {
+      "file": "reconstruction/ui_windows/flow_message.asm",
+      "start": 12731,
+      "end": 12838,
+      "bytes": 107,
+      "instructions": 47,
+      "sha256": "bbf6abd27e7f9fec26f25a34f31cda98eb42c6ab51ea8db8c5ee94141ad99b04",
+      "matched_original": true,
+      "file_offset": 17339
+    },
+    {
+      "file": "reconstruction/ui_windows/tick_delay.asm",
+      "start": 27544,
+      "end": 27574,
+      "bytes": 30,
+      "instructions": 14,
+      "sha256": "fa59db2a50e7f0250255dfed7bfe8de20edc5a3b6ed22f96cf8d8b3cc98f27a9",
+      "matched_original": true,
+      "file_offset": 32152
+    },
+    {
+      "file": "reconstruction/ui_windows/write_string.asm",
+      "start": 27632,
+      "end": 27679,
+      "bytes": 47,
+      "instructions": 24,
+      "sha256": "b7316b90d4d2929a9485278892dca5718a0c0551d7c40613f7435e557c0a16f0",
+      "matched_original": true,
+      "file_offset": 32240
+    },
+    {
+      "file": "reconstruction/ui_windows/coordinate.asm",
+      "start": 32258,
+      "end": 32270,
+      "bytes": 12,
+      "instructions": 6,
+      "sha256": "2f6af5067d295e49ffc695ccab98323358719eda2ea5e33efb4e012f763a6a76",
+      "matched_original": true,
+      "file_offset": 36866
+    },
+    {
+      "file": "reconstruction/ui_windows/cga_blank.asm",
+      "start": 30654,
+      "end": 30674,
+      "bytes": 20,
+      "instructions": 10,
+      "sha256": "2cc6e3631df4700f866b38ea1f726e830474355ea81536da84aca5593cd1ab0f",
+      "matched_original": true,
+      "file_offset": 35262
+    },
+    {
+      "file": "reconstruction/ui_windows/cga_unblank.asm",
+      "start": 30638,
+      "end": 30653,
+      "bytes": 15,
+      "instructions": 7,
+      "sha256": "aeb0332b6f43a6fbd8a691b197b2036c863ea3c5832b0602ac5ae8e44024288d",
+      "matched_original": true,
+      "file_offset": 35246
+    }
+  ],
+  "state": {
+    "7a78": "text_video_segment",
+    "7a8e": "text_cga_status_port",
+    "7a72": "screen_columns",
+    "3250": "ui_flow_region_cells",
+    "7a82": "ui_flow_video_base",
+    "7a84": "ui_flow_coordinate_base",
+    "1d46": "ui_flow_suppressed",
+    "1f6e": "ui_flow_attribute"
+  },
+  "services": {
+    "6cb4": "text_write_packed",
+    "6c20": "text_fill_cells"
+  },
+  "limitations": [
+    "Recovered names are analyst annotations. State names are analyst annotations; actual configuration initial values are host-provided."
+  ],
+  "rea_evidence": {
+    "0x16fa0": {
+      "evidence_id": "ev_06dc9856b7d051159e303126bfab6f253d4031a5e270010e5d04edcbff1db560",
+      "saved_export": "analysis/pcplus-main/functions/0x16fa0.asm"
+    },
+    "0x16fd0": {
+      "evidence_id": "ev_ec9d640e7062be820008cbe35d0b044a881cefdb598f617f0a664b4a2a2617c0",
+      "saved_export": "analysis/pcplus-main/functions/0x16fd0.asm"
+    },
+    "0x1765c": {
+      "evidence_id": "ev_6128b7fe5104e59f516f28909641cc4ae8c2694a508233ce486442188fee24f2",
+      "saved_export": "analysis/pcplus-main/functions/0x1765c.asm"
+    },
+    "0x17682": {
+      "evidence_id": "ev_9f38d336031de05a67dfec408f2135ae80b4323787fbbf9d61cdcc63956d8a87",
+      "saved_export": "analysis/pcplus-main/functions/0x17682.asm"
+    },
+    "0x131bb": {
+      "evidence_id": "ev_6d4ad57fcdd5d16c208d76fa27c045e22f937f987575756684fb8eba14158f30",
+      "saved_export": "analysis/pcplus-main/functions/0x131bb.asm"
+    },
+    "0x14647": {
+      "evidence_id": "ev_c8343a27e20a6c3d565a4eb08db0e099537e05f4278dbc553984f858a369e987",
+      "saved_export": "analysis/pcplus-main/functions/0x14647.asm"
+    },
+    "0x16b98": {
+      "evidence_id": "ev_cc5df7fd3b4baa1350abfad9245198f09d55989c263134af069ea519ff7a51f9",
+      "saved_export": "analysis/pcplus-main/functions/0x16b98.asm"
+    },
+    "0x16bf0": {
+      "evidence_id": "ev_9edf357a6c15a2c7bdb17423583011b3d730808f9852f054be4a3fb4eee9137c",
+      "saved_export": "analysis/pcplus-main/functions/0x16bf0.asm"
+    },
+    "0x17e02": {
+      "evidence_id": "ev_fb98044e5d2c393d79ba6e03fab46c65ffc8df806d1f270cf916f718a9c4ccb8",
+      "saved_export": "analysis/pcplus-main/functions/0x17e02.asm"
+    },
+    "0x177be": {
+      "evidence_id": "ev_c43082a7dc48a9b3f0ae81f668650d020422ffdb6633b93dd20ecaa1aaef3a06",
+      "saved_export": "analysis/pcplus-main/functions/0x177be.asm"
+    },
+    "0x177ae": {
+      "evidence_id": "ev_ba097dc8042b5fdd581c14b780e0f3f2e177bfd405a026654fd88b209d83e7af",
+      "saved_export": "analysis/pcplus-main/functions/0x177ae.asm"
+    }
+  },
+  "callers": {
+    "save": [
+      "0x131bb",
+      "0x14647",
+      "0x1ac0e"
+    ],
+    "restore": [
+      "0x131bb",
+      "0x14647",
+      "0x1ac0e"
+    ],
+    "save_evidence_id": "ev_8c52162e841ddde4985edc5d1639c8d8d99d4532ea0555034020f489d5943a37",
+    "restore_evidence_id": "ev_6fa85bbb1c99e891948a77e89afc9d784476a79e6cbbd8f923a5a97549d91e96",
+    "scope": "Resolved calls in resident original; appended overlays and unresolved indirect callers outside coverage."
+  }
+}

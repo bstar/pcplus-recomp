@@ -2,8 +2,9 @@
 
 Actual PCPlus 2.01 code establishes a **1,264-byte (`04f0h`) binary memory-image
 format**, copied to/from DS `1b84h..2073h`. A separate command saves its first ten
-bytes only. The serial prefix, port tables and selected terminal/attribute fields
-are now mapped from instructions; the rest remains opaque. No installed or
+bytes only. The serial prefix, port tables, selected terminal/attribute fields, modem
+commands and selected dialing/flow settings are mapped from instructions;
+the rest remains opaque. No installed or
 user-customized `.PRM` contents were opened for this investigation.
 
 This is a partial format recovery and maintained DOS I/O backend, not a complete
@@ -110,8 +111,9 @@ parsing does not silently normalize invalid serial words. Editing serial setting
 validates supported UI values, while raw proved-word edits validate only uint16
 storage. Synthetic fixture images are **not bootable startup defaults**.
 
-Remaining recovery is field/schema coverage beyond the proved words, string and
-modem-command layouts, PCSETUP's shared-memory/command ABI, conversion/version
+Modem command/response layouts and selected dialing settings are now proved;
+see [MODEM_CONFIGURATION.md](MODEM_CONFIGURATION.md). Remaining recovery is
+additional schema coverage, PCSETUP's shared-memory/command ABI, conversion/version
 rules in PCINSTAL, complete defaults/startup order, actual DOS persistence/error
 handling, and integration into source-built application configuration services.
 The maintained DOS backend below now rejects malformed files without the
@@ -150,7 +152,9 @@ prm_dos_status __cdecl prm_dos_save(
 
 Use near data pointers with DS=SS; the explicit 16-bit C calling convention places
 three pointer words on the stack, right to left, and the caller removes six
-argument bytes. The return enum is in AX. `result` may be NULL. `prm_dos_image`
+argument bytes. Status typedefs are explicit DOS16-bit unsigned values,
+returned in the full AX register; small compiler enums would leave AH
+unspecified. `result` may be NULL. `prm_dos_image`
 contains exactly 1,264 opaque bytes; no interpreted field is changed during I/O.
 `prm_dos_result` reports status, primary DOS error, close error and bytes processed.
 Load uses a 1,264-byte stack staging buffer plus its frame/runtime calls; integration
@@ -246,3 +250,21 @@ concurrent appearance of destination names. Fixtures use synthetic bytes only,
 including an old file of a different size. Results and executable hashes are
 recorded in `docs/validation/config-replace.json`; local files remain under
 ignored `build/config-replace/`.
+
+
+## Assembly-owned startup and C ABI
+
+`./tools/build test-config-abi` links the real C load/save/replacement APIs into
+a source-owned NASM DOS entry with DS=SS and an8-KiB stack. It checks complete
+16-bit AX statuses, near-pointer argument order, preserved registers, caller
+cleanup and an actual1264-byte DOS save/load roundtrip. It explicitly links
+Open Watcom's small-model library subset without invoking C startup; this proves
+the DOS-handle/string subset used here, not arbitrary C runtime initialization.
+Offset zero is reserved as the C NULL near pointer. Future integration must not
+pass a legitimate assembly allocation at DS:0000 as a C pointer.
+
+This test exposed the compiler's small-enum return convention before terminal
+integration. The APIs now use explicit unsigned status typedefs so assembly
+callers receive the documented AX value. C callers retain the named status
+constants and result layout. Configuration loading into the live terminal
+and complete application settings remain separate work.

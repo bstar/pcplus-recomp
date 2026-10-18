@@ -67,6 +67,10 @@ physical modem compatibility or close the remaining application gates below.
 
 - [x] Combine the source driver, parser, screen and keyboard into a DOS terminal.
 - [ ] Support dialing/connect/hang-up and configurable serial/modem settings.
+      Next: import the proved PRM serial/flow/profile fields with validation and
+      explicit CLI precedence before UART access; connect the bounded DOS modem
+      decoder to a cancellable connection state machine. Preserve the full
+      settings/directory/UI/transfer/script/Host scope below.
 - [ ] Capture representative BBS sessions and verify interaction, display and transfers.
 - [ ] Validate on the actual modem and failing BBS/key sequence supplied by the user.
 
@@ -83,8 +87,12 @@ physical modem compatibility or close the remaining application gates below.
       maintained DOS backend also passes strict load/save and failure-path
       tests. A staged DOS replacement backend now preserves the prior file on
       tested write/install failures and reports rollback/cleanup recovery state.
-      Complete defaults/schema, restart recovery, directory and UI integration
-      remain open.
+      A lossless host directory codec now covers the proved200-record format;
+      PRM modem fields and the original caret decoder are also mapped/tested.
+      Original window snapshots and flow-message services are recovered and
+      linked into the terminal. DOS C status returns are verified from an
+      assembly-owned startup. Complete defaults/schema, restart recovery,
+      settings/directory UI and modem connection integration remain open.
       See `docs/CONFIGURATION.md`.
 - [ ] Reconstruct file transfers, capture/logging and supporting tools used by the app.
 - [ ] Reconstruct scripting interfaces and required interpreter/compiler integration.

@@ -1,8 +1,8 @@
 {
   "passed": true,
   "returncode": 0,
-  "binary_sha256": "b232e7581b482c2eaaf2c603ca16fe8a7f8e691c5f7073c5bf4654434af6e3c1",
-  "fault_binary_sha256": "df3f366d4185dfb345b745a78486e680260012c7cfb2c3274210f8cb79def32e",
+  "binary_sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
+  "fault_binary_sha256": "e0a307b0c064cdb210889c8e57cead17f5bf4dde523b8679e5e96a5cfa9cd82a",
   "normal_cases": [
     "PASS save exact synthetic bytes",
     "PASS load exact synthetic bytes",

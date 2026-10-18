@@ -1,0 +1,17 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "region": "resident",
+  "ranges": [
+    {
+      "start": 18740,
+      "end": 18827,
+      "size": 87,
+      "sha256": "008b9051520b45049c2a7c95767686eb48fa3951da532a8abc18de9ead0f9b43"
+    }
+  ],
+  "assembly_evidence": "ev_059b2b6f9c5a4c8603920897ea8ceb541feea65be2c5787a294ab008abf9155d",
+  "limitations": [
+    "Original near C ABI has no bounds checks.",
+    "Bounded wrapper is maintained code; no UART/DOS sender or timing is recovered by this module."
+  ]
+}

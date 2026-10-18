@@ -47,6 +47,10 @@ The same source-built ANSI executable passed all three local workflows:
 | Mystic 1.12 A48 | Login, indexed file/message screens, Up/Down and Escape return | [Mystic](mystic.md) |
 
 Every final run restored the independently sampled IRQ/UART/PIC state exactly.
+All three workflows also pass on COM2 at19200/8N1 with hardware flow selected.
+Use `--com 2 --baud 19200 --flow HARD` to select that case. The sampler follows
+the selected UART; the bridge reports matching CONNECT/TSPEED rates. DOSBox
+nullmodem holds CTS ready, so this does not exercise physical handshake stalls.
 The initial Synchronet/Mystic runs exposed missing FF handling. ENiGMA½ exposed
 SOH/VT/CAN controls inside a malformed bundled theme's SAUCE metadata. Recovered
 original handlers and the proved ANSI initialization now pass those cases.

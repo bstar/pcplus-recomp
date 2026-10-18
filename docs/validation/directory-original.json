@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "checks": [
+    "original-creator-e8ce-matches-source-blank-byte-for-byte",
+    "original-reader-e812-header-and200records-synthetic-random-bytes",
+    "original-ddb6-dd94-load-store-dd28-full-and11byte-date-count-writes-at1-97-200",
+    "original-reader-rejects-short-final-record-in-nondialog-mode"
+  ],
+  "scope": "Actual original e812/e8ce/ddb6/dd94/dd28 instructions. Synthetic memory-only FILE; modeled C path/stdio and far copy; no original directory or private content read."
+}

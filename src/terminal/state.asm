@@ -4,6 +4,15 @@ BITS 16
 CPU 8086
 GROUP DGROUP _DATA _BSS STACK
 SEGMENT _DATA public align=16 class=DATA use16
+; Source-owned geometry for the recovered UART's bottom-row status service.
+global ui_window_rows,ui_flow_region_cells,ui_flow_video_base
+global ui_flow_coordinate_base,ui_flow_suppressed,ui_flow_attribute
+ui_window_rows: dw 25
+ui_flow_region_cells: dw 80
+ui_flow_video_base: dw 0x0f00
+ui_flow_coordinate_base: dw 0x1800
+ui_flow_suppressed: dw 0
+ui_flow_attribute: dw 0x001e
 global csi_saved_row
 csi_saved_row: dw 0
 global csi_saved_column

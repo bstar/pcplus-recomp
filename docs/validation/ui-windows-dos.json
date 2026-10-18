@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "fbf6cabd1539075134062d99e4477c7eb7a229325e6fa50791adc11867420671",
+  "scope": "Source-only DOS executable validates nested B800 snapshots, persistent and timed original flow messages with actual BIOS tick progress, and unchanged BIOS cursor."
+}

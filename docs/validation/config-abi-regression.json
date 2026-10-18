@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "baseline_source_commit": "172c97a",
+  "baseline_small_enum_failed_full_AX_test": true,
+  "current_unsigned16_passed_same_test": true,
+  "baseline_diagnostic_sha256": "736b83e3eceaf604eb4523c72d262d4613f184d687d3c19e06079929f10090e1",
+  "fixed_diagnostic_sha256": "ee150a767d6072441b8727c246040f4fb02676c435ff7dd0104de46125b3adbe",
+  "scope": "Exact same assembly ABI test against old maintained C API types and corrected unsigned16 types, actual DOSBox-X. This tests our backend ABI, not the original PCPlus executable."
+}

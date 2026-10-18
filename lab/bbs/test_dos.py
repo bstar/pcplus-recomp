@@ -13,12 +13,16 @@ async def run(args):
  output=ROOT/'build/bbs-lab/results'/args.name/args.label
  output.mkdir(parents=True,exist_ok=True)
  for name in ('PASS.TXT','FAIL.TXT','BEFORE.BIN','AFTER.BIN','SCREEN.BIN'):(output/name).unlink(missing_ok=True)
- (output/'sampler.asm').write_text(SAMPLER)
+ base=[0x3f8,0x2f8,0x3e8,0x2e8][args.com-1]
+ sampler=SAMPLER
+ for offset in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+offset),hex(base+offset))
+ (output/'sampler.asm').write_text(sampler)
  subprocess.run(['nasm','-f','bin',str(output/'sampler.asm'),'-o',str(output/'SNAP.COM')],check=True)
- modem=Modem('127.0.0.1',args.port,output,soft=True)
+ modem=Modem('127.0.0.1',args.port,output,soft=args.flow=='SOFT',baud=args.baud)
  server=await asyncio.start_server(modem.accept,'127.0.0.1',0)
  port=server.sockets[0].getsockname()[1]
  keys='p1000 a t d enter '+args.keys+f' p{args.wait*1000} a-x'
+ serial='\n'.join(f'serial{i}='+ (f'nullmodem server:127.0.0.1 port:{port} transparent:1 rxdelay:200 txdelay:1' if i==args.com else 'disabled') for i in range(1,5))
  config=f'''[sdl]
 output=surface
 [dosbox]
@@ -30,10 +34,7 @@ cycles=fixed 6000
 [mixer]
 nosound=true
 [serial]
-serial1=nullmodem server:127.0.0.1 port:{port} transparent:1 rxdelay:200 txdelay:1
-serial2=disabled
-serial3=disabled
-serial4=disabled
+{serial}
 [autoexec]
 @echo off
 mount c "{binary.parent}"
@@ -41,7 +42,7 @@ mount d "{output}"
 c:
 D:\\SNAP B
 ADDKEY {keys}
-TERMINAL SOFT
+TERMINAL COM{args.com} {args.baud} {args.flow}
 if errorlevel 1 goto failed
 echo PASS>D:\\PASS.TXT
 goto capture
@@ -69,11 +70,12 @@ exit
  after=(output/'AFTER.BIN').read_bytes() if (output/'AFTER.BIN').exists() else b''
  checks={'dos_normal_exit':code==0 and (output/'PASS.TXT').exists(),'hardware_restored':len(before)==42 and before==after,'screen_captured':len(screen)==4000,'bbs_connected':any(e['kind']=='bbs-connected' for e in modem.events),'bbs_display_received':bool(modem.display)}
  checks['binary_unchanged_during_run']=hashlib.sha256(binary.read_bytes()).hexdigest()==digest
- result={'name':args.name,'label':args.label,'checks':checks,'passed':all(checks.values()),'seconds':round(time.monotonic()-start,3),'binary_sha256':digest,'keyboard':keys,'scope':'Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.'}
+ result={'name':args.name,'label':args.label,'checks':checks,'passed':all(checks.values()),'seconds':round(time.monotonic()-start,3),'binary_sha256':digest,'keyboard':keys,'serial':{'com':args.com,'baud':args.baud,'line':'8N1','flow':args.flow,'hardware_scope':'DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.'},'scope':'Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.'}
  (output/'result.json').write_text(json.dumps(result,indent=2)+'\n')
  print(json.dumps(result,indent=2));print(text)
  return 0 if result['passed'] else 1
 
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('name');p.add_argument('--port',type=int,required=True);p.add_argument('--label',default='probe');p.add_argument('--keys',default='');p.add_argument('--wait',type=int,default=12);p.add_argument('--timeout',type=int,default=70)
+ p.add_argument('--com',type=int,choices=range(1,5),default=1);p.add_argument('--baud',type=int,choices=[300,1200,2400,4800,9600,19200,38400,57600,115200],default=38400);p.add_argument('--flow',choices=['NONE','SOFT','HARD'],default='SOFT')
  raise SystemExit(asyncio.run(run(p.parse_args())))

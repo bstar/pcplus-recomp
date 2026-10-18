@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "checks": {
+    "assembly_call_return_checks": true,
+    "exact_synthetic_save_load": true
+  },
+  "binary_sha256": "ee150a767d6072441b8727c246040f4fb02676c435ff7dd0104de46125b3adbe",
+  "scope": "Assembly-owned DOS startup, actual near-C load/save/replacement validation, unsigned16 AX status, preservation/caller cleanup and synthetic file roundtrip. No original or user files."
+}

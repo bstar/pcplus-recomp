@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "binary_sha256": "fbf6cabd1539075134062d99e4477c7eb7a229325e6fa50791adc11867420671",
+  "cases": [
+    {
+      "case": "original-flat-ABI-full-screen-packed-order-zero-count",
+      "passed": true
+    },
+    {
+      "case": "nested-rectangles-stride-edges-LIFO-and-buffer-canaries",
+      "passed": true
+    },
+    {
+      "case": "invalid-overflow-small-buffer-and-invalid-screen-rejected-before-I-O",
+      "passed": true
+    },
+    {
+      "case": "real-recovered-CGA-byte-read-and-word-write-polling",
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked recovered cell helpers plus maintained rectangle checks. CGA input fixture alternates low/high; cursor BIOS ownership checked separately in DOS."
+}

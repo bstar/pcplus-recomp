@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "IAC-options-subnegotiation-at-every-split-and-random-fragmentation",
+      "passed": true
+    },
+    {
+      "case": "negotiation-withdrawal-reenable-no-loops-and-unsupported-refusal",
+      "passed": true
+    },
+    {
+      "case": "escaped-IAC-in-subnegotiation-control-stripping-and-incomplete-frame-bound",
+      "passed": true
+    },
+    {
+      "case": "all-byte-IAC-escaping-and-ANSI-CPR-DA-passthrough-without-replies",
+      "passed": true
+    },
+    {
+      "case": "loopback-Hayes-Telnet-socket-awaits-real-serial-CPR-and-escapes-FF",
+      "passed": true
+    },
+    {
+      "case": "selected-baud-in-modem-CONNECT-and-Telnet-TSPEED",
+      "passed": true
+    }
+  ],
+  "modem_source_sha256": "a66008cc15b580ae194d56e5a553a450d19d399867b2369a9dd9fddfcd9e47e3",
+  "references": [
+    "https://www.rfc-editor.org/rfc/rfc854",
+    "https://www.rfc-editor.org/rfc/rfc1091",
+    "https://www.rfc-editor.org/rfc/rfc1073"
+  ],
+  "scope": "Protocol unit checks and isolated socket fixture only; actual vendor BBS/DOS compatibility evidence is separate. ANSI requests/replies are not fabricated by the modem."
+}

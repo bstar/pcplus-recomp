@@ -118,3 +118,23 @@ The timed keyboard recipe assumes the configured synthetic board; slow hosts
 may require longer waits. Captures and account/server logs are local ignored
 evidence. `provenance` re-verifies local archive digests and records server
 version without rewriting runtime configuration.
+
+The same actual DOS workflow was rerun after integrating recovered flow/status
+UI and screen snapshot services. Run `ui-integrated` passed in43.223seconds on
+SHA256 `9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f`.
+All eight navigation checks passed again, including real ANSI identification,
+file/message interactions, final B800 main menu and exact hardware restoration.
+Evidence is `build/bbs-lab/results/synchronet/ui-integrated/`, with
+`result.json` and `navigation-checks.json`. No shared binary was rebuilt during
+that run.
+
+A further actual DOS run `com2-hardware` repeats the same login/file/message
+workflow on COM2,19200,8N1,HARD, with the same `9a4308db…` executable. It passed
+in43.210seconds with all eight navigation assertions and exact COM2 hardware
+restoration. Reproduce by adding `--com 2 --baud 19200 --flow HARD` to the DOS
+command above and selecting `--label com2-hardware` for both run and checker.
+DOSBox-X nullmodem holds CTS ready: this validates that configured port/rate/
+flow path and menu interaction, not physical CTS stalls or handshake timing.
+All accounts and commands are the synthetic lab fixtures; no user configuration
+was imported. Captures/metadata are under
+`build/bbs-lab/results/synchronet/com2-hardware/`.

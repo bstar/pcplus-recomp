@@ -4,7 +4,7 @@ from pathlib import Path
 import hashlib,json,re,subprocess
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'build/terminal';OUT.mkdir(parents=True,exist_ok=True)
-modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text']
+modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows']
 sources=[]
 for module in modules:
  sources += sorted((ROOT/'reconstruction'/module).glob('*.asm'))

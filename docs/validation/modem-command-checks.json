@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "binary_sha256": "f7bcd936b4a8966c2b79352147db4c3d4f3250630f7703852291b78020f7e9e3",
+  "cases": [
+    {
+      "case": "actual-recovered-core-via-bounded-near-abi-all-caret-bytes-and-random-inputs",
+      "passed": true,
+      "inputs": 516
+    },
+    {
+      "case": "validation-errors-leave-destination-unchanged",
+      "passed": true,
+      "inputs": 8
+    },
+    {
+      "case": "exact-source-and-destination-capacity-edges",
+      "passed": true,
+      "inputs": 6
+    },
+    {
+      "case": "overlapping-source-destination-rejected-before-mutation",
+      "passed": true,
+      "inputs": 4
+    }
+  ],
+  "scope": "Actual relocated source-only DOS87-byte original decoder plus maintained bounded wrapper. Synthetic inputs and CPU execution; no UART or DOS side effects."
+}

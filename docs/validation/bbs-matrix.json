@@ -1,13 +1,13 @@
 {
   "scope": "Actual loopback vendor BBS software via modeled Hayes/Telnet Wi-Fi modem, DOSBox-X UART/keyboard/video and source-built DOS terminal. Not a complete PCPlus application or physical-modem validation.",
   "passed": true,
-  "binary_sha256": "aca82619ad87a7e9aa259c4716a75eebb9483c204cbd0da17ab8c8b8a7d77029",
+  "binary_sha256": "9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f",
   "servers": {
     "synchronet": {
       "version": "3.22a official development snapshot 9de2c48d0265b07e1a8406d8a55d31df4fad7ee8",
       "result": {
         "name": "synchronet",
-        "label": "ansi-navigation",
+        "label": "ui-integrated",
         "checks": {
           "dos_normal_exit": true,
           "hardware_restored": true,
@@ -17,8 +17,8 @@
           "binary_unchanged_during_run": true
         },
         "passed": true,
-        "seconds": 43.204,
-        "binary_sha256": "aca82619ad87a7e9aa259c4716a75eebb9483c204cbd0da17ab8c8b8a7d77029",
+        "seconds": 43.223,
+        "binary_sha256": "9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f",
         "keyboard": "p1000 a t d enter p7000 L A B U S E R enter p2000 L A B P A S S 4 2 enter p8000 space p3000 Q enter p5000 space p3000 T p4000 Q p3000 R p3000 Q p4000 a-x",
         "scope": "Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction."
       },
@@ -34,25 +34,85 @@
           "final_dos_video_is_main_menu": true,
           "no_unrecognized_command": true
         },
-        "binary_sha256": "aca82619ad87a7e9aa259c4716a75eebb9483c204cbd0da17ab8c8b8a7d77029",
+        "binary_sha256": "9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f",
         "scope": "Actual DOS ANSI profile login, file section, return, read empty message area, dismiss pause and final main menu. No transfer/message writes or physical modem claim."
       },
       "retained_artifacts": {
-        "build/bbs-lab/results/synchronet/ansi-navigation/bbs-wire.bin": "ece26d29d6701904e35c4657a849719a1c6ba65fabf0278b1846db92af1f20e8",
-        "build/bbs-lab/results/synchronet/ansi-navigation/bbs-sent.bin": "64970f7c74566e2a420abf04ec345849511e31b3302b9154980726f37740409c",
-        "build/bbs-lab/results/synchronet/ansi-navigation/display.bin": "b9db2f0e2f8efa57cbbe3b3ab82b7aa453577ffda63f3aeb305d32108d4a659e",
-        "build/bbs-lab/results/synchronet/ansi-navigation/serial-received.bin": "91fb5c4cd05f7671d1bd60b568d5c278e5d33c90c31e55a436f6b35402d05765",
-        "build/bbs-lab/results/synchronet/ansi-navigation/serial-sent.bin": "b9db2f0e2f8efa57cbbe3b3ab82b7aa453577ffda63f3aeb305d32108d4a659e",
-        "build/bbs-lab/results/synchronet/ansi-navigation/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "build/bbs-lab/results/synchronet/ansi-navigation/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "build/bbs-lab/results/synchronet/ansi-navigation/SCREEN.BIN": "3d7085f92e33cf2b03fb001a695e8dd50c4a6c15562b21682ab75ea76c572cc6"
-      }
+        "build/bbs-lab/results/synchronet/ui-integrated/bbs-wire.bin": "95a7db3c11b0e6c066e3971907064156467f838cdecc9e8f2f7ea825f7a5d780",
+        "build/bbs-lab/results/synchronet/ui-integrated/bbs-sent.bin": "64970f7c74566e2a420abf04ec345849511e31b3302b9154980726f37740409c",
+        "build/bbs-lab/results/synchronet/ui-integrated/display.bin": "7cd31a33fb8e03dc1993e1a756d935d1b522f56a7082e5f95b4101796ee073ca",
+        "build/bbs-lab/results/synchronet/ui-integrated/serial-received.bin": "91fb5c4cd05f7671d1bd60b568d5c278e5d33c90c31e55a436f6b35402d05765",
+        "build/bbs-lab/results/synchronet/ui-integrated/serial-sent.bin": "7cd31a33fb8e03dc1993e1a756d935d1b522f56a7082e5f95b4101796ee073ca",
+        "build/bbs-lab/results/synchronet/ui-integrated/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/synchronet/ui-integrated/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/synchronet/ui-integrated/SCREEN.BIN": "f8ad05b86da6011c351d9348146ee45720b1b3ae07060f65e178627855f1690e"
+      },
+      "additional_serial_cases": [
+        {
+          "result": {
+            "name": "synchronet",
+            "label": "com2-hardware",
+            "checks": {
+              "dos_normal_exit": true,
+              "hardware_restored": true,
+              "screen_captured": true,
+              "bbs_connected": true,
+              "bbs_display_received": true,
+              "binary_unchanged_during_run": true
+            },
+            "passed": true,
+            "seconds": 43.21,
+            "binary_sha256": "9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f",
+            "keyboard": "p1000 a t d enter p7000 L A B U S E R enter p2000 L A B P A S S 4 2 enter p8000 space p3000 Q enter p5000 space p3000 T p4000 Q p3000 R p3000 Q p4000 a-x",
+            "serial": {
+              "com": 2,
+              "baud": 19200,
+              "line": "8N1",
+              "flow": "HARD",
+              "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+            },
+            "scope": "Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction."
+          },
+          "semantic_evidence": {
+            "passed": true,
+            "checks": {
+              "run_and_hardware_checks": true,
+              "real_ansi_device_attributes": true,
+              "input_commands_reached_wire": true,
+              "file_section_reached": true,
+              "returned_then_read_empty_message_area": true,
+              "returned_to_main_after_message_pause": true,
+              "final_dos_video_is_main_menu": true,
+              "no_unrecognized_command": true
+            },
+            "binary_sha256": "9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f",
+            "serial": {
+              "com": 2,
+              "baud": 19200,
+              "line": "8N1",
+              "flow": "HARD",
+              "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+            },
+            "scope": "Actual DOS ANSI profile login, file section, return, read empty message area, dismiss pause and final main menu. No transfer/message writes or physical modem claim."
+          },
+          "artifact_hashes": {
+            "build/bbs-lab/results/synchronet/com2-hardware/bbs-wire.bin": "14187a67e55982a23f69fb5296dab6fae6a5d92eb6c61b031ca6c7fcdb807680",
+            "build/bbs-lab/results/synchronet/com2-hardware/bbs-sent.bin": "92ff7da93edca2c62db8a5b7beea90180c3d2e15ee5333e616e18c294fa747c5",
+            "build/bbs-lab/results/synchronet/com2-hardware/display.bin": "f412b611a0dc691728e7a24455fe737089f5ee920edea8e297f4725de1452dbb",
+            "build/bbs-lab/results/synchronet/com2-hardware/serial-received.bin": "91fb5c4cd05f7671d1bd60b568d5c278e5d33c90c31e55a436f6b35402d05765",
+            "build/bbs-lab/results/synchronet/com2-hardware/serial-sent.bin": "f412b611a0dc691728e7a24455fe737089f5ee920edea8e297f4725de1452dbb",
+            "build/bbs-lab/results/synchronet/com2-hardware/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+            "build/bbs-lab/results/synchronet/com2-hardware/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+            "build/bbs-lab/results/synchronet/com2-hardware/SCREEN.BIN": "f9b9f716093be4431225a66cea2ad5c8da7623b29b50395658831cfef2c7619b"
+          }
+        }
+      ]
     },
     "enigma": {
       "version": "0.5.1-beta source commit 6c25317168b762f7d9088a54d3f8295438827a0e",
       "result": {
         "name": "enigma",
-        "label": "menus-ansi6",
+        "label": "ui-integrated",
         "checks": {
           "dos_normal_exit": true,
           "hardware_restored": true,
@@ -62,8 +122,8 @@
           "binary_unchanged_during_run": true
         },
         "passed": true,
-        "seconds": 64.393,
-        "binary_sha256": "aca82619ad87a7e9aa259c4716a75eebb9483c204cbd0da17ab8c8b8a7d77029",
+        "seconds": 64.409,
+        "binary_sha256": "9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f",
         "keyboard": "p1000 a t d enter p8000 down p600 up p600 enter p5000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p7000 enter p4000 enter p4000 enter p4000 escape p2500 n p4000 enter p6000 M enter p5000 Q enter p5000 F enter p5000 a-x",
         "scope": "Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction."
       },
@@ -71,62 +131,63 @@
         "server": "ENiGMA\u00bd",
         "version": "0.5.1-beta",
         "commit": "6c25317168b762f7d9088a54d3f8295438827a0e",
-        "session_id": "zOUO8Wlz2yE",
+        "session_id": "KMU7ym9r61W",
         "authenticated": true,
         "menus": [
           {
             "menu": "telnetConnected",
-            "time": "2026-10-18T01:36:03.873Z"
+            "time": "2026-10-18T01:51:10.793Z"
           },
           {
             "menu": "matrix",
-            "time": "2026-10-18T01:36:05.374Z"
+            "time": "2026-10-18T01:51:12.295Z"
           },
           {
             "menu": "login",
-            "time": "2026-10-18T01:36:10.576Z"
+            "time": "2026-10-18T01:51:17.496Z"
           },
           {
             "menu": "fullLoginSequenceLoginArt",
-            "time": "2026-10-18T01:36:18.181Z"
+            "time": "2026-10-18T01:51:25.109Z"
           },
           {
             "menu": "fullLoginSequenceLastCallers",
-            "time": "2026-10-18T01:36:25.128Z"
+            "time": "2026-10-18T01:51:32.048Z"
           },
           {
             "menu": "fullLoginSequenceWhosOnline",
-            "time": "2026-10-18T01:36:29.130Z"
+            "time": "2026-10-18T01:51:36.051Z"
           },
           {
             "menu": "fullLoginSequenceOnelinerz",
-            "time": "2026-10-18T01:36:33.132Z"
+            "time": "2026-10-18T01:51:40.053Z"
           },
           {
             "menu": "fullLoginSequenceNewScanConfirm",
-            "time": "2026-10-18T01:36:37.134Z"
+            "time": "2026-10-18T01:51:44.055Z"
           },
           {
             "menu": "fullLoginSequenceUserStats",
-            "time": "2026-10-18T01:36:39.637Z"
+            "time": "2026-10-18T01:51:46.557Z"
           },
           {
             "menu": "mainMenu",
-            "time": "2026-10-18T01:36:43.639Z"
+            "time": "2026-10-18T01:51:50.559Z"
           },
           {
             "menu": "messageBaseMainMenu",
-            "time": "2026-10-18T01:36:49.643Z"
+            "time": "2026-10-18T01:51:56.565Z"
           },
           {
             "menu": "mainMenu",
-            "time": "2026-10-18T01:36:54.650Z"
+            "time": "2026-10-18T01:52:01.571Z"
           },
           {
             "menu": "fileBaseMainMenu",
-            "time": "2026-10-18T01:36:59.656Z"
+            "time": "2026-10-18T01:52:06.577Z"
           }
         ],
+        "requested_menu_sequence_verified": true,
         "actual_dos_queries": [
           "\u001b[0c",
           "\u001b[6n"
@@ -135,28 +196,148 @@
           "\u001b[1;1R",
           "\u001b[?1;2c"
         ],
-        "display_bytes": 47181,
-        "display_sha256": "f769a67eaeba8b9f0f6f00b3924e645aa65b8817ad7b25e4c04ef986d94c2895",
-        "terminal_sha256": "aca82619ad87a7e9aa259c4716a75eebb9483c204cbd0da17ab8c8b8a7d77029",
+        "display_bytes": 46734,
+        "display_sha256": "a7b164e5afc561a8acb3b023ba9c455d29e25eaf35b2a398e14dd1b1cd8c3384",
+        "terminal_sha256": "9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f",
         "original_stock_art_unchanged": true,
         "scope": "Authoritative actual server log transitions plus DOS/modem captures; no public boards, messages, transfers or physical modem tests."
       },
       "retained_artifacts": {
-        "build/bbs-lab/results/enigma/menus-ansi6/bbs-wire.bin": "f5b8bebc1d8d903846bf69e35ca35c96ff7c484298e7d88bbc011926289def02",
-        "build/bbs-lab/results/enigma/menus-ansi6/bbs-sent.bin": "4dbc4679b9b22a18c3c9688a01ec2abbe36485c7564a73f2c7059f33ba34da69",
-        "build/bbs-lab/results/enigma/menus-ansi6/display.bin": "f769a67eaeba8b9f0f6f00b3924e645aa65b8817ad7b25e4c04ef986d94c2895",
-        "build/bbs-lab/results/enigma/menus-ansi6/serial-received.bin": "a7f0929efbd9eb3258eab009a3d045ec08ea1c436ac8ddc4e867780cab3060c0",
-        "build/bbs-lab/results/enigma/menus-ansi6/serial-sent.bin": "f769a67eaeba8b9f0f6f00b3924e645aa65b8817ad7b25e4c04ef986d94c2895",
-        "build/bbs-lab/results/enigma/menus-ansi6/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "build/bbs-lab/results/enigma/menus-ansi6/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "build/bbs-lab/results/enigma/menus-ansi6/SCREEN.BIN": "cfb3d612317bb337befd55037d87facaebb28314af392638fbe8cf933ed1b87c"
-      }
+        "build/bbs-lab/results/enigma/ui-integrated/bbs-wire.bin": "dde916a4ad6388bb96c9567d223a7c70c99f4db1bdb42b1dd54f64469e03c541",
+        "build/bbs-lab/results/enigma/ui-integrated/bbs-sent.bin": "4dbc4679b9b22a18c3c9688a01ec2abbe36485c7564a73f2c7059f33ba34da69",
+        "build/bbs-lab/results/enigma/ui-integrated/display.bin": "a7b164e5afc561a8acb3b023ba9c455d29e25eaf35b2a398e14dd1b1cd8c3384",
+        "build/bbs-lab/results/enigma/ui-integrated/serial-received.bin": "a7f0929efbd9eb3258eab009a3d045ec08ea1c436ac8ddc4e867780cab3060c0",
+        "build/bbs-lab/results/enigma/ui-integrated/serial-sent.bin": "a7b164e5afc561a8acb3b023ba9c455d29e25eaf35b2a398e14dd1b1cd8c3384",
+        "build/bbs-lab/results/enigma/ui-integrated/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/ui-integrated/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/ui-integrated/SCREEN.BIN": "0cfdb16fcab64d1c1678b37463dcd1c3077b7a3ae5150f2c588b0b0847b9fa6f"
+      },
+      "additional_serial_cases": [
+        {
+          "result": {
+            "name": "enigma",
+            "label": "com2-hardware",
+            "checks": {
+              "dos_normal_exit": true,
+              "hardware_restored": true,
+              "screen_captured": true,
+              "bbs_connected": true,
+              "bbs_display_received": true,
+              "binary_unchanged_during_run": true
+            },
+            "passed": true,
+            "seconds": 81.402,
+            "binary_sha256": "9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f",
+            "keyboard": "p1000 a t d enter p12000 down p600 up p600 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 n p6000 enter p6000 M enter p5000 Q enter p5000 F enter p7000 a-x",
+            "serial": {
+              "com": 2,
+              "baud": 19200,
+              "line": "8N1",
+              "flow": "HARD",
+              "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+            },
+            "scope": "Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction."
+          },
+          "semantic_evidence": {
+            "server": "ENiGMA\u00bd",
+            "version": "0.5.1-beta",
+            "commit": "6c25317168b762f7d9088a54d3f8295438827a0e",
+            "session_id": "4xUL4V5X0BB",
+            "authenticated": true,
+            "menus": [
+              {
+                "menu": "telnetConnected",
+                "time": "2026-10-18T01:56:12.192Z"
+              },
+              {
+                "menu": "matrix",
+                "time": "2026-10-18T01:56:13.693Z"
+              },
+              {
+                "menu": "login",
+                "time": "2026-10-18T01:56:22.895Z"
+              },
+              {
+                "menu": "fullLoginSequenceLoginArt",
+                "time": "2026-10-18T01:56:32.504Z"
+              },
+              {
+                "menu": "fullLoginSequenceLastCallers",
+                "time": "2026-10-18T01:56:43.447Z"
+              },
+              {
+                "menu": "fullLoginSequenceWhosOnline",
+                "time": "2026-10-18T01:56:48.450Z"
+              },
+              {
+                "menu": "fullLoginSequenceOnelinerz",
+                "time": "2026-10-18T01:56:53.452Z"
+              },
+              {
+                "menu": "fullLoginSequenceNewScanConfirm",
+                "time": "2026-10-18T01:56:58.454Z"
+              },
+              {
+                "menu": "fullLoginSequenceUserStats",
+                "time": "2026-10-18T01:57:00.956Z"
+              },
+              {
+                "menu": "mainMenu",
+                "time": "2026-10-18T01:57:06.958Z"
+              },
+              {
+                "menu": "messageBaseMainMenu",
+                "time": "2026-10-18T01:57:12.964Z"
+              },
+              {
+                "menu": "mainMenu",
+                "time": "2026-10-18T01:57:17.970Z"
+              },
+              {
+                "menu": "fileBaseMainMenu",
+                "time": "2026-10-18T01:57:22.976Z"
+              }
+            ],
+            "requested_menu_sequence_verified": true,
+            "actual_dos_queries": [
+              "\u001b[0c",
+              "\u001b[6n"
+            ],
+            "actual_dos_replies": [
+              "\u001b[1;1R",
+              "\u001b[?1;2c"
+            ],
+            "display_bytes": 46683,
+            "display_sha256": "ed19d75541a2b387b0fdb8c201971a3f8af4ae0b92cc9c0443b08e91d2cddcdf",
+            "terminal_sha256": "9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f",
+            "serial": {
+              "com": 2,
+              "baud": 19200,
+              "line": "8N1",
+              "flow": "HARD",
+              "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+            },
+            "original_stock_art_unchanged": true,
+            "scope": "Authoritative actual server log transitions plus DOS/modem captures; no public boards, messages, transfers or physical modem tests."
+          },
+          "artifact_hashes": {
+            "build/bbs-lab/results/enigma/com2-hardware/bbs-wire.bin": "0f95f519883451f376514de0f2f66613ec4bac728e7236d965636daa6dc212f6",
+            "build/bbs-lab/results/enigma/com2-hardware/bbs-sent.bin": "4dbc4679b9b22a18c3c9688a01ec2abbe36485c7564a73f2c7059f33ba34da69",
+            "build/bbs-lab/results/enigma/com2-hardware/display.bin": "ed19d75541a2b387b0fdb8c201971a3f8af4ae0b92cc9c0443b08e91d2cddcdf",
+            "build/bbs-lab/results/enigma/com2-hardware/serial-received.bin": "a7f0929efbd9eb3258eab009a3d045ec08ea1c436ac8ddc4e867780cab3060c0",
+            "build/bbs-lab/results/enigma/com2-hardware/serial-sent.bin": "ed19d75541a2b387b0fdb8c201971a3f8af4ae0b92cc9c0443b08e91d2cddcdf",
+            "build/bbs-lab/results/enigma/com2-hardware/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+            "build/bbs-lab/results/enigma/com2-hardware/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+            "build/bbs-lab/results/enigma/com2-hardware/SCREEN.BIN": "f6cf5de9384086adc0a11fb0b6bd74dbfe123d983bfbdeb1ac0ca5855c39d674"
+          }
+        }
+      ]
     },
     "mystic": {
       "version": "1.12 A48 Linux64",
       "result": {
         "name": "mystic",
-        "label": "menu-navigation-final",
+        "label": "ui-integrated",
         "checks": {
           "dos_normal_exit": true,
           "hardware_restored": true,
@@ -166,8 +347,8 @@
           "binary_unchanged_during_run": true
         },
         "passed": true,
-        "seconds": 33.283,
-        "binary_sha256": "aca82619ad87a7e9aa259c4716a75eebb9483c204cbd0da17ab8c8b8a7d77029",
+        "seconds": 33.301,
+        "binary_sha256": "9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f",
         "keyboard": "p1000 a t d enter p4000 p c p l u s l a b enter p1500 s-l o s-c t e s t 4 2 enter p2000 n p1000 n p2000 f p2000 i p3000 down p500 up p500 escape p2000 q p2000 m p2000 i p3000 down p800 up p800 escape p5000 a-x",
         "scope": "Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction."
       },
@@ -183,7 +364,7 @@
           "escape_return_to_message_menu": true,
           "no_unsupported_terminal_failure": true
         },
-        "DOS_binary_sha256": "aca82619ad87a7e9aa259c4716a75eebb9483c204cbd0da17ab8c8b8a7d77029",
+        "DOS_binary_sha256": "9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f",
         "vendor_archive_sha256": "fb427b57d9627ef93008c561df807991bdd288b4a1fc1757dfb5bb5434f286a3",
         "endpoint": "127.0.0.1:23232",
         "terminal_reports": [
@@ -198,15 +379,79 @@
         "scope": "Actual vendor Mystic login and read-only file/message indexed-menu navigation through source-built DOS executable; no public BBS or physical modem."
       },
       "retained_artifacts": {
-        "build/bbs-lab/results/mystic/menu-navigation-final/bbs-wire.bin": "51251f0cd090009a52e7fed14d445b49a623ebfdbaf0682e4f4ba35525e89f73",
-        "build/bbs-lab/results/mystic/menu-navigation-final/bbs-sent.bin": "b2bd0c0648fb7c1b652cda0db7fac651ae18819d8ad6f954b72210f587fbf1eb",
-        "build/bbs-lab/results/mystic/menu-navigation-final/display.bin": "3a12321e3b8c494fc4715bc65cee89eb90bbb935cd78a2f945ab370038352e32",
-        "build/bbs-lab/results/mystic/menu-navigation-final/serial-received.bin": "6a1520bd9d6fa7af55cea898a4d20aaffc65cb6d23e0bd3ab1b63ce1ba3a8c5a",
-        "build/bbs-lab/results/mystic/menu-navigation-final/serial-sent.bin": "3a12321e3b8c494fc4715bc65cee89eb90bbb935cd78a2f945ab370038352e32",
-        "build/bbs-lab/results/mystic/menu-navigation-final/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "build/bbs-lab/results/mystic/menu-navigation-final/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "build/bbs-lab/results/mystic/menu-navigation-final/SCREEN.BIN": "8849001dba6a2a832b6d6b1dd790615441dda8c6f930b73a8c6d639e5473970f"
-      }
+        "build/bbs-lab/results/mystic/ui-integrated/bbs-wire.bin": "51251f0cd090009a52e7fed14d445b49a623ebfdbaf0682e4f4ba35525e89f73",
+        "build/bbs-lab/results/mystic/ui-integrated/bbs-sent.bin": "b2bd0c0648fb7c1b652cda0db7fac651ae18819d8ad6f954b72210f587fbf1eb",
+        "build/bbs-lab/results/mystic/ui-integrated/display.bin": "3a12321e3b8c494fc4715bc65cee89eb90bbb935cd78a2f945ab370038352e32",
+        "build/bbs-lab/results/mystic/ui-integrated/serial-received.bin": "6a1520bd9d6fa7af55cea898a4d20aaffc65cb6d23e0bd3ab1b63ce1ba3a8c5a",
+        "build/bbs-lab/results/mystic/ui-integrated/serial-sent.bin": "3a12321e3b8c494fc4715bc65cee89eb90bbb935cd78a2f945ab370038352e32",
+        "build/bbs-lab/results/mystic/ui-integrated/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/mystic/ui-integrated/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/mystic/ui-integrated/SCREEN.BIN": "8849001dba6a2a832b6d6b1dd790615441dda8c6f930b73a8c6d639e5473970f"
+      },
+      "additional_serial_cases": [
+        {
+          "result": {
+            "name": "mystic",
+            "label": "com2-hardware",
+            "checks": {
+              "dos_normal_exit": true,
+              "hardware_restored": true,
+              "screen_captured": true,
+              "bbs_connected": true,
+              "bbs_display_received": true,
+              "binary_unchanged_during_run": true
+            },
+            "passed": true,
+            "seconds": 35.286,
+            "binary_sha256": "9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f",
+            "keyboard": "p1000 a t d enter p6000 p c p l u s l a b enter p1500 s-l o s-c t e s t 4 2 enter p2000 n p1000 n p2000 f p2000 i p3000 down p500 up p500 escape p2000 q p2000 m p2000 i p3000 down p800 up p800 escape p5000 a-x",
+            "serial": {
+              "com": 2,
+              "baud": 19200,
+              "line": "8N1",
+              "flow": "HARD",
+              "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+            },
+            "scope": "Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction."
+          },
+          "semantic_evidence": {
+            "passed": true,
+            "checks": {
+              "generic_DOS_hardware_and_connection_checks": true,
+              "actual_vendor_banner": true,
+              "actual_DOS_CPR_response": true,
+              "authenticated_input_and_prompts": true,
+              "file_and_message_indexed_screens_in_order": true,
+              "actual_DOS_arrow_pairs": true,
+              "escape_return_to_message_menu": true,
+              "no_unsupported_terminal_failure": true
+            },
+            "DOS_binary_sha256": "9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f",
+            "vendor_archive_sha256": "fb427b57d9627ef93008c561df807991bdd288b4a1fc1757dfb5bb5434f286a3",
+            "endpoint": "127.0.0.1:23232",
+            "terminal_reports": [
+              "\u001b[25;80R"
+            ],
+            "menu_markers": {
+              "Indexed File Lister": 2775,
+              "File Base Listings": 3471,
+              "Indexed Message Reader": 5782,
+              "Message Base Listings": 6629
+            },
+            "scope": "Actual vendor Mystic login and read-only file/message indexed-menu navigation through source-built DOS executable; no public BBS or physical modem."
+          },
+          "artifact_hashes": {
+            "build/bbs-lab/results/mystic/com2-hardware/bbs-wire.bin": "51251f0cd090009a52e7fed14d445b49a623ebfdbaf0682e4f4ba35525e89f73",
+            "build/bbs-lab/results/mystic/com2-hardware/bbs-sent.bin": "b2bd0c0648fb7c1b652cda0db7fac651ae18819d8ad6f954b72210f587fbf1eb",
+            "build/bbs-lab/results/mystic/com2-hardware/display.bin": "3a12321e3b8c494fc4715bc65cee89eb90bbb935cd78a2f945ab370038352e32",
+            "build/bbs-lab/results/mystic/com2-hardware/serial-received.bin": "6a1520bd9d6fa7af55cea898a4d20aaffc65cb6d23e0bd3ab1b63ce1ba3a8c5a",
+            "build/bbs-lab/results/mystic/com2-hardware/serial-sent.bin": "3a12321e3b8c494fc4715bc65cee89eb90bbb935cd78a2f945ab370038352e32",
+            "build/bbs-lab/results/mystic/com2-hardware/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+            "build/bbs-lab/results/mystic/com2-hardware/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+            "build/bbs-lab/results/mystic/com2-hardware/SCREEN.BIN": "8849001dba6a2a832b6d6b1dd790615441dda8c6f930b73a8c6d639e5473970f"
+          }
+        }
+      ]
     }
   },
   "remaining": [
@@ -214,5 +459,6 @@
     "Specific user-reported public board/screen/key sequence",
     "File transfers, full-screen editing, doors, mouse/advanced font/Unicode protocols",
     "Complete PCPlus UI/configuration/dialing/scripts/Host reconstruction"
-  ]
+  ],
+  "serial_scope": "COM1/38400/SOFT and COM2/19200/HARD. Hardware mode uses DOSBox-X nullmodem CTS ready; physical handshake changes are not modeled."
 }

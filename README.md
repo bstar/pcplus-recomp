@@ -8,6 +8,8 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 
 | Output | Inputs | Current purpose |
 | --- | --- | --- |
+| `build/ui-windows/WINDOWS.EXE` | Recovered and maintained assembly source only | Packed window snapshots and original flow-message service |
+| `build/modem-commands/MODEMCMD.EXE` | Recovered and maintained assembly source only | Original caret decoder with bounded source-owned wrapper |
 | `build/terminal/TERMINAL.EXE` | Maintained and recovered assembly source only | First interactive serial terminal; modern BBS interoperability under test |
 | `build/standalone/SERIAL.EXE` | Maintained assembly source only | Independently linked DOS diagnostic exercising the recovered UART module |
 | `build/ansi/PARSER.EXE` | Maintained assembly source only | Independently linked parameter-reader diagnostic with bounds checks |
@@ -112,6 +114,13 @@ Open Watcom and tests real files plus injected I/O failures in DOSBox-X.
 reported recovery states under DOS I/O failures. Complete defaults, restart
 recovery and the full settings UI remain work in progress.
 See [docs/CONFIGURATION.md](docs/CONFIGURATION.md).
+`./tools/build test-config-abi` verifies the actual DOS C APIs from assembly-owned
+startup. `test-directory` checks the recovered lossless directory codec, and
+`test-modem_commands` checks the source-built modem decoder. The UI window and
+flow services pass `test-ui_windows test-ui-flow` and are linked into the
+interactive terminal. Full settings/directory menus and the modem connection
+state machine remain open. See [directory](docs/DIRECTORY.md),
+[modem settings](docs/MODEM_CONFIGURATION.md) and [window services](docs/UI_WINDOWS.md).
 
 ## Full-application compatibility build
 

@@ -1,0 +1,233 @@
+{
+  "passed": true,
+  "case_count": 32,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "source_sha256": "fbf6cabd1539075134062d99e4477c7eb7a229325e6fa50791adc11867420671",
+  "cases": [
+    {
+      "cga": false,
+      "bottom_row": false,
+      "suppressed": false,
+      "duration": 0,
+      "matched": true
+    },
+    {
+      "cga": false,
+      "bottom_row": false,
+      "suppressed": false,
+      "duration": 1,
+      "matched": true
+    },
+    {
+      "cga": false,
+      "bottom_row": false,
+      "suppressed": false,
+      "duration": 3,
+      "matched": true
+    },
+    {
+      "cga": false,
+      "bottom_row": false,
+      "suppressed": false,
+      "duration": 65535,
+      "matched": true
+    },
+    {
+      "cga": false,
+      "bottom_row": false,
+      "suppressed": true,
+      "duration": 0,
+      "matched": true
+    },
+    {
+      "cga": false,
+      "bottom_row": false,
+      "suppressed": true,
+      "duration": 1,
+      "matched": true
+    },
+    {
+      "cga": false,
+      "bottom_row": false,
+      "suppressed": true,
+      "duration": 3,
+      "matched": true
+    },
+    {
+      "cga": false,
+      "bottom_row": false,
+      "suppressed": true,
+      "duration": 65535,
+      "matched": true
+    },
+    {
+      "cga": false,
+      "bottom_row": true,
+      "suppressed": false,
+      "duration": 0,
+      "matched": true
+    },
+    {
+      "cga": false,
+      "bottom_row": true,
+      "suppressed": false,
+      "duration": 1,
+      "matched": true
+    },
+    {
+      "cga": false,
+      "bottom_row": true,
+      "suppressed": false,
+      "duration": 3,
+      "matched": true
+    },
+    {
+      "cga": false,
+      "bottom_row": true,
+      "suppressed": false,
+      "duration": 65535,
+      "matched": true
+    },
+    {
+      "cga": false,
+      "bottom_row": true,
+      "suppressed": true,
+      "duration": 0,
+      "matched": true
+    },
+    {
+      "cga": false,
+      "bottom_row": true,
+      "suppressed": true,
+      "duration": 1,
+      "matched": true
+    },
+    {
+      "cga": false,
+      "bottom_row": true,
+      "suppressed": true,
+      "duration": 3,
+      "matched": true
+    },
+    {
+      "cga": false,
+      "bottom_row": true,
+      "suppressed": true,
+      "duration": 65535,
+      "matched": true
+    },
+    {
+      "cga": true,
+      "bottom_row": false,
+      "suppressed": false,
+      "duration": 0,
+      "matched": true
+    },
+    {
+      "cga": true,
+      "bottom_row": false,
+      "suppressed": false,
+      "duration": 1,
+      "matched": true
+    },
+    {
+      "cga": true,
+      "bottom_row": false,
+      "suppressed": false,
+      "duration": 3,
+      "matched": true
+    },
+    {
+      "cga": true,
+      "bottom_row": false,
+      "suppressed": false,
+      "duration": 65535,
+      "matched": true
+    },
+    {
+      "cga": true,
+      "bottom_row": false,
+      "suppressed": true,
+      "duration": 0,
+      "matched": true
+    },
+    {
+      "cga": true,
+      "bottom_row": false,
+      "suppressed": true,
+      "duration": 1,
+      "matched": true
+    },
+    {
+      "cga": true,
+      "bottom_row": false,
+      "suppressed": true,
+      "duration": 3,
+      "matched": true
+    },
+    {
+      "cga": true,
+      "bottom_row": false,
+      "suppressed": true,
+      "duration": 65535,
+      "matched": true
+    },
+    {
+      "cga": true,
+      "bottom_row": true,
+      "suppressed": false,
+      "duration": 0,
+      "matched": true
+    },
+    {
+      "cga": true,
+      "bottom_row": true,
+      "suppressed": false,
+      "duration": 1,
+      "matched": true
+    },
+    {
+      "cga": true,
+      "bottom_row": true,
+      "suppressed": false,
+      "duration": 3,
+      "matched": true
+    },
+    {
+      "cga": true,
+      "bottom_row": true,
+      "suppressed": false,
+      "duration": 65535,
+      "matched": true
+    },
+    {
+      "cga": true,
+      "bottom_row": true,
+      "suppressed": true,
+      "duration": 0,
+      "matched": true
+    },
+    {
+      "cga": true,
+      "bottom_row": true,
+      "suppressed": true,
+      "duration": 1,
+      "matched": true
+    },
+    {
+      "cga": true,
+      "bottom_row": true,
+      "suppressed": true,
+      "duration": 3,
+      "matched": true
+    },
+    {
+      "cga": true,
+      "bottom_row": true,
+      "suppressed": true,
+      "duration": 65535,
+      "matched": true
+    }
+  ],
+  "scope": "Actual resident original flow message+complete original dependencies compared with linked recovery. Text video,stack ABI,preserved registers,BDA read counts,CGA IN/OUT match. Explicit synthetic clock/port fixtures on both sides."
+}

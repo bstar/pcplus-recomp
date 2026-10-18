@@ -1,12 +1,12 @@
 {
   "kind": "maintained-source-only-dos-prm-io-diagnostic",
-  "binary_sha256": "b232e7581b482c2eaaf2c603ca16fe8a7f8e691c5f7073c5bf4654434af6e3c1",
-  "fault_binary_sha256": "df3f366d4185dfb345b745a78486e680260012c7cfb2c3274210f8cb79def32e",
+  "binary_sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
+  "fault_binary_sha256": "e0a307b0c064cdb210889c8e57cead17f5bf4dde523b8679e5e96a5cfa9cd82a",
   "sources": {
     "src/config/prm_dos.c": "e4d0386d3fb40e225cbc34ec7f989286f67ec9ffcff29a6f50eb77d7b24ee021",
     "standalone/config_dos_host.c": "6b8c1e8499a695d9407190b4045a4174af4b350471ddf8305168d068e81954f6",
     "standalone/config_dos_faults.c": "f4bb61120a178024f355f8092304e64b56a5c49f1bd47a62ad5607d0471e53f0",
-    "src/config/prm_dos.h": "20efeb1a676154505a26f5484f8bd2ebfa08fab6b589800f518e44fb3a22bc74"
+    "src/config/prm_dos.h": "3a6f8f27e13f5fc97e290b95def601e49ce93b54f729d1bc3ddc527ba39de20c"
   },
   "limitations": [
     "Maintained opaque1264-byte IO, not original recovered configuration routines or complete defaults/schema/UI.",

@@ -43,7 +43,7 @@ wordvar uart_irq_enable_masks, 0xff
 wordvar uart_irq_disable_masks, 0
  dw 0, 0, 8, 0x10, 0, 0, 0
 global uart_flow_message
-uart_flow_message: db 'Waiting for XON', 0
+uart_flow_message: db 'Wait for XON', 0 ; Must fit the original14-character region.
 SEGMENT _BSS public align=16 class=BSS use16
 global uart_rx_buffer, uart_flow_screen_save
 uart_rx_buffer: resb 4096
