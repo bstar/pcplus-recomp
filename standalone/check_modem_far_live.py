@@ -29,12 +29,20 @@ class Modem(Connection):
   words=[sentinel,*args];sp=self.offset('terminal_stack_top')-2*len(words)
   u.mem_write(self.data_base+sp,struct.pack('<'+'H'*len(words),*words));u.reg_write(UC_X86_REG_SP,sp)
   returned=[False];self.returned=False
+  targets={'connection_expand_service':'modem_expand_bounded','connection_responses_feed_service':'modem_responses_feed_bounded','connection_classify_service':'modem_response_classify','connection_set_baud_service':'uart_set_baud_divisor'}
+  target=targets.get(name,name);entry=[None];target_flags=[]
+  def observe_target(cpu,address,size,_):
+   if address==self.symbols[target]:entry[0]=cpu.reg_read(UC_X86_REG_SP)
+   if entry[0] is not None and cpu.reg_read(UC_X86_REG_CS)==self.base_segment and cpu.reg_read(UC_X86_REG_SP)==entry[0] and bytes(cpu.mem_read(address,1))==b'\xc3':target_flags.append(cpu.reg_read(UC_X86_REG_EFLAGS))
+  target_hook=u.hook_add(UC_HOOK_CODE,observe_target)
   def stop(cpu,address,size,_):
    if cpu.reg_read(UC_X86_REG_CS)==cs and address==cs*16+sentinel:returned[0]=True;cpu.emu_stop()
   hook=u.hook_add(UC_HOOK_CODE,stop) if far else None
   try:u.emu_start(self.symbols[name],0,count=300000)
   finally:
    if hook is not None:u.hook_del(hook)
+   u.hook_del(target_hook)
+  if target in targets.values():assert len(target_flags)==1 and target_flags[0]==u.reg_read(UC_X86_REG_EFLAGS),'Bridge changed actual target return FLAGS'
   assert (returned[0] if far else self.returned) and u.reg_read(UC_X86_REG_CS)==cs
   assert u.reg_read(UC_X86_REG_SP)==sp+2
   assert bytes(u.mem_read(self.data_base+sp+2,len(args)*2))==struct.pack('<'+'H'*len(args),*args),'Original caller argument slots mutated'
@@ -52,7 +60,11 @@ def main():
     m=Modem();src=m.stage_near(text);dst=m.offset('terminal_tx_buffer');m.uc.mem_write(m.data_base+dst,b'\xcc'*129)
     results.append(m.invoke('connection_expand_service' if far else 'modem_expand_bounded',[src,dst,cap,outcap],far))
     outputs.append(bytes(m.uc.mem_read(m.data_base+dst,129)))
-   assert results[0]==results[1] and outputs[0]==outputs[1],(text,results)
+   # The expander guarantees CF, not PF/AF/etc. Its internal ADD SP,4
+   # produces frame-address-dependent incidental flags. Compare the declared
+   # CF result across DIFFERENT target frames; invoke separately proves that
+   # each actual target's complete return FLAGS survive its bridge unchanged.
+   assert results[0][:-1]==results[1][:-1] and (results[0][-1]^results[1][-1])&1==0 and outputs[0]==outputs[1],(text,results)
    samples.append(dict(source_hex=text.hex(),status=results[1][0],carry=bool(results[1][-1]&1)))
   for value in (0,ord('C'),255,256,65535):
    answers=[];cursors=[]
@@ -74,7 +86,7 @@ def main():
     # Baud setter's BX is volatile and retains a byte of its actual frame SP.
     registers.append(result[:1]+result[2:]);values.append((m.dll,m.dlm,m.lcr))
    assert values[0]==values[1]==((115200//baud)&255,(115200//baud)>>8,3) and registers[0]==registers[1],(baud,values,registers)
-  return dict(copied_word_counts=[1,2,3,4],expansion_samples=samples,classification_inputs=390,response_inputs=5,baud_inputs=9,returned_registers='AX/BX/CX/DX/BP/SI/DI/ES/FLAGS identical to direct target; volatile BX excluded for UART divisor setter',original_argument_slots_unchanged=True)
+  return dict(copied_word_counts=[1,2,3,4],expansion_samples=samples,classification_inputs=390,response_inputs=5,baud_inputs=9,returned_registers='AX/BX/CX/DX/BP/SI/DI/ES identical across direct and bridged calls, except volatile baud BX. Expander compares declared CF across frames; other targets compare all FLAGS. Every actual target RET separately proves complete FLAGS preservation through the bridge.',original_argument_slots_unchanged=True)
  check('real-one-through-four-word-adapters-arguments-errors-registers-FLAGS',frames)
  def runtime():
   m=Modem(autobaud=1);seen=set();minimum=[m.offset('terminal_stack_top')]

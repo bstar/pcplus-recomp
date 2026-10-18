@@ -236,6 +236,19 @@ def main():
   assert o.parse(b'/T:NEW.KEY /?')==(1,1) and o.snapshot()==before;count[0]+=1
   assert o.parse(b'')==(0,0);o.expected();count[0]+=1
  check('KEY-actions-path-wordmask7680-bounds-atomic-rollback-and-reset',actions_path)
+ def startup_setup():
+  o=Options(binary,map_path)
+  for tail in [b'/S @PCPLUS.PRM',b'@pcplus.prm /s',b'/s @A',b'@12345678.123 /S',b'@A-B_2.PRM /S']:
+   assert o.parse(tail)==(0,0),tail
+   path=next(t[1:].upper() for t in tail.split() if t.startswith(b'@'))
+   o.expected(mask=8208,path=path);count[0]+=1
+  assert o.parse(b'/S @KEEP.PRM COM2 19200 HARD')==(0,0)
+  o.expected(port=2,rate=19200,flow='HARD',mask=8219,path=b'KEEP.PRM');before=o.snapshot();count[0]+=1
+  for tail in [b'/S',b'/S @NEW.PRM /s',b'/S @C:\\NEW.PRM',b'/S @..\\NEW.PRM',b'/S @.PRM',b'/S @TOOLONG99.PRM',b'/S @A.LONG',b'/S @A.',b'/S @A..B',b'/S @A&B.PRM',b'/S @A/B.PRM',b'/S @A;B.PRM',b'/S @A.PRM JUNK']:
+   assert o.parse(tail)==(2,1) and o.snapshot()==before,tail;count[0]+=1
+  assert o.parse(b'/S /?')==(1,1) and o.snapshot()==before;count[0]+=1
+  assert o.parse(b'@KEEP.PRM')==(0,0);o.expected(mask=16,path=b'KEEP.PRM');count[0]+=1
+ check('setup-before-connect-explicit-leaf-dependency-atomic-rollback-and-reset',startup_setup)
  out=ROOT/'build/terminal-options';out.mkdir(parents=True,exist_ok=True)
  result={'binary_sha256':hashlib.sha256(binary.read_bytes()).hexdigest(),'options_source_sha256':hashlib.sha256((ROOT/'src/terminal/options.asm').read_bytes()).hexdigest(),'passed':True,'cases':cases,'inputs':count[0],'scope':'Actual linked source-only 8086 option parser; command tails synthetic, every interrupt/port-IO forbidden, no UART installation.'}
  (out/'checks.json').write_text(json.dumps(result,indent=2)+'\n')

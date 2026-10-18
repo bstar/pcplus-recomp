@@ -2,29 +2,97 @@
   "passed": true,
   "recipe_checks": {
     "passed": true,
-    "canonical_input_characters": 369,
-    "complete_ADDKEY_characters": 392,
+    "canonical_input_characters": 377,
+    "complete_ADDKEY_characters": 400,
     "no_enter_after_body": true,
-    "source_sha256": "faa58bd92ccb0fa6d390b4e7af82df727278d8080fd9b19d0bdb177e457f3989",
+    "source_sha256": "72777d66ae84bd488f551cdb367deadbb47d4a4405f921f0d1ab0d578b1a3649",
     "scope": "Canonical local unsaved ENiGMA keyboard recipe, independent of mutable run reports. All exercised key aliases and complete DOS command length checked; generated wrapper accumulation reproduced separately. Actual editor behavior is tested by DOS/server runs."
   },
-  "prerequisite_failure": {
-    "label": "editor-modem-7a0e-immediate",
-    "binary_sha256": "7a0ea9d33995ebf177f43865c440f5c7082c1508c3403c91a597e87357228d62",
-    "stage": "Preflight before executing the maintained DOS harness",
-    "reason": "Recorded generated keyboard output was reused as input; repeated prefixes/exit retries exceeded the DOSBox ADDKEY bound.",
-    "DOS_launched": false,
-    "BBS_connection_attempted": false,
-    "retained_artifacts": {
-      "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate/audit.log": "ee96cf6b36a95edf9931eb97b5e9b614561b2943cd1fd9d03e70cd0438df6570",
-      "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate/harness.log": "c2b123cbf2651611398caf9f56f9616ad697572f787c29a55f4b4d207cf456aa"
+  "prerequisite_failures": [
+    {
+      "label": "editor-modem-7a0e-immediate",
+      "binary_sha256": "7a0ea9d33995ebf177f43865c440f5c7082c1508c3403c91a597e87357228d62",
+      "stage": "Preflight before executing the maintained DOS harness",
+      "reason": "Recorded generated keyboard output was reused as input; repeated prefixes/exit retries exceeded the DOSBox ADDKEY bound.",
+      "DOS_launched": false,
+      "BBS_connection_attempted": false,
+      "retained_artifacts": {
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate/audit.log": "ee96cf6b36a95edf9931eb97b5e9b614561b2943cd1fd9d03e70cd0438df6570",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate/harness.log": "c2b123cbf2651611398caf9f56f9616ad697572f787c29a55f4b4d207cf456aa"
+      }
+    },
+    {
+      "label": "editor-setup-0fea-immediate",
+      "binary_sha256": "0fea93eccc614d71b3f74976cd24973a9806b1d171ad76895f2d816ba45bcec2",
+      "stage": "Login prerequisite before entering the stock editor",
+      "reason": "New-scan confirmation defaulted to yes and found synthetic messages/files, diverting scheduled editor navigation. Explicit N now bypasses user-state-dependent scan lists.",
+      "DOS_launched": true,
+      "BBS_connection_attempted": true,
+      "stock_editor_entered": false,
+      "retained_artifacts": {
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/SCREEN.BIN": "aadde63fd26fa8747c2df0be21748e4ae3c34e01de88571921dae66042f5aeff",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/TEST.PRM": "bd115d52fe3f86ce2ca28282b35c2c25f8d3608b345dcb4a44e9869c66b3f0f3",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/audit.log": "e2904c2bdd4e59967c0723c014b20b1f394668561cdfdc4cb2ea30e9dc511c15",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/bbs-sent.bin": "c3acd7b0764e66408a1340319976b2cf2924326389ef9a282b5f65261a131ee3",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/bbs-wire.bin": "2955a8397ede73741a43cf36528d83d1c14045c7a3a24e1953d1a16244c6175c",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/display.bin": "39f7a09f486d15a885cb88cb83a8bc5cd0ea0d7354b5aab1c1bb2a223920a65b",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/dosbox.conf": "9dbf3e13a5e0ef86fd7b5be95411ecf3dd15cb54410203354951f61d9376e63c",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/dosbox.log": "8d610edfa0601a2008e4bd846f49d9d0a59097ba98338d8437836a8c085c034c",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/experiment.json": "8e978d9f7a3817be337d11805cc14c2f227752f6e63adf2ad7863ba5fdfd9038",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/harness.log": "78769d254f517e574fdad20b22412770035fddf86741a95d2db2c19a5473bb93",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/modem.json": "3d16ca8c35c4ecc6b45b015a11592c01ccd83aba8e06e84714c52f2caa7a632b",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/result.json": "177832e47dceab610419415b7cb5d2b4a1058a5e65ece367a44cd999b4a15f68",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/screen.txt": "cb07bbae1b731bb834b46fa5fca1ec1e81562390b46e4b217c1f0848dd8081b2",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/semantic-audit.json": "e2904c2bdd4e59967c0723c014b20b1f394668561cdfdc4cb2ea30e9dc511c15",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/serial-received.bin": "1b1dcac81b75f73b89ccd5f98415c70daed19bbc42b12f69468df81650f7cfa6",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/serial-sent.bin": "d71edba997d05ccfaab71a191adf86af032e449376558004c3348fcfec63e70e",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/server-log-start.json": "98be6fc5b6b39e154ddc0ff505cb7928686649e786783cec901a7df17edc20f1",
+        "build/bbs-lab/results/enigma/editor-setup-0fea-immediate/server-session.jsonl": "7662ab1670d62ac38b0c86a2b178b56822d7040c61e804bef6cf8f27906258c9"
+      }
     }
-  },
+  ],
   "source_sha256": {
     "lab/bbs/check_editor_recipes.py": "0185b05cc727dd482441ce7cc08077e7a84e419c29e63cbabca236a69f78fd9b",
-    "lab/bbs/editor-recipes.json": "faa58bd92ccb0fa6d390b4e7af82df727278d8080fd9b19d0bdb177e457f3989",
+    "lab/bbs/editor-recipes.json": "72777d66ae84bd488f551cdb367deadbb47d4a4405f921f0d1ab0d578b1a3649",
     "lab/bbs/packetization_editor_probe.py": "d6af1572c46014cc1be9c300d38c029ae8552d1cd6d5cae9c6857e4a7125a411",
     "lab/bbs/test_dos.py": "e35f9e1622cd50b004782786d9d569723ecff83dd4fdd1c683e489e2ab8ba49d"
   },
-  "scope": "Canonical synthetic unsaved ENiGMA input independently checked for complete DOSBox command length, exercised aliases and no Enter after body. Failed preflight retained separately from actual DOS/server compatibility evidence. Historical generated keyboard sequences remain intact; input is no longer read from mutable reports."
+  "prior_recipe_reports": [
+    {
+      "passed": true,
+      "recipe_checks": {
+        "passed": true,
+        "canonical_input_characters": 369,
+        "complete_ADDKEY_characters": 392,
+        "no_enter_after_body": true,
+        "source_sha256": "faa58bd92ccb0fa6d390b4e7af82df727278d8080fd9b19d0bdb177e457f3989",
+        "scope": "Canonical local unsaved ENiGMA keyboard recipe, independent of mutable run reports. All exercised key aliases and complete DOS command length checked; generated wrapper accumulation reproduced separately. Actual editor behavior is tested by DOS/server runs."
+      },
+      "prerequisite_failure": {
+        "label": "editor-modem-7a0e-immediate",
+        "binary_sha256": "7a0ea9d33995ebf177f43865c440f5c7082c1508c3403c91a597e87357228d62",
+        "stage": "Preflight before executing the maintained DOS harness",
+        "reason": "Recorded generated keyboard output was reused as input; repeated prefixes/exit retries exceeded the DOSBox ADDKEY bound.",
+        "DOS_launched": false,
+        "BBS_connection_attempted": false,
+        "retained_artifacts": {
+          "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate/audit.log": "ee96cf6b36a95edf9931eb97b5e9b614561b2943cd1fd9d03e70cd0438df6570",
+          "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate/harness.log": "c2b123cbf2651611398caf9f56f9616ad697572f787c29a55f4b4d207cf456aa"
+        }
+      },
+      "source_sha256": {
+        "lab/bbs/check_editor_recipes.py": "0185b05cc727dd482441ce7cc08077e7a84e419c29e63cbabca236a69f78fd9b",
+        "lab/bbs/editor-recipes.json": "faa58bd92ccb0fa6d390b4e7af82df727278d8080fd9b19d0bdb177e457f3989",
+        "lab/bbs/packetization_editor_probe.py": "d6af1572c46014cc1be9c300d38c029ae8552d1cd6d5cae9c6857e4a7125a411",
+        "lab/bbs/test_dos.py": "e35f9e1622cd50b004782786d9d569723ecff83dd4fdd1c683e489e2ab8ba49d"
+      },
+      "scope": "Canonical synthetic unsaved ENiGMA input independently checked for complete DOSBox command length, exercised aliases and no Enter after body. Failed preflight retained separately from actual DOS/server compatibility evidence. Historical generated keyboard sequences remain intact; input is no longer read from mutable reports."
+    }
+  ],
+  "scope": "Current canonical unsaved local ENiGMA input: safe aliases, complete DOS command bound and no Enter after body. Explicit login new-scan decline removes a user-state-dependent prerequisite. Historical preflight and login failures remain separate from actual editor behavior."
 }

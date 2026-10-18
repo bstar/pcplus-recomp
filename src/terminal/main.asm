@@ -14,6 +14,7 @@ extern uart_receive_byte,uart_rx_dropped,uart_port_rbr
 extern terminal_baud_low,terminal_baud_high,terminal_parity,terminal_data_bits,terminal_stop_bits
 extern terminal_irq_vector,terminal_port_number,csi_unimplemented_service
 extern screen_attribute_cells,erase_attribute_values,erase_shadow_cells
+extern terminal_run_startup_setup
 extern terminal_load_configuration
 extern terminal_select_directory
 extern terminal_directory_flush_accounting
@@ -81,6 +82,9 @@ _small_code_:
  mov word [terminal_exit_code],0
  jmp terminal_shutdown
 .load_configuration:
+ call terminal_run_startup_setup
+ or ax,ax
+ jnz .configuration_error
  call terminal_load_configuration
  or ax,ax
  jnz .configuration_error
@@ -219,7 +223,7 @@ _small_code_:
  jmp terminal_shutdown
 .configuration_error:
  mov dx,configuration_argument
- cmp ax,10
+ cmp ax,11
  ja .configuration_message
  mov bx,ax
  dec bx
@@ -364,6 +368,8 @@ configuration_messages: dw configuration_io,configuration_serial,configuration_f
  dw configuration_directory
  dw configuration_keyboard
  dw configuration_actions
+ dw configuration_setup
+configuration_setup: db 'Could not run PRMEDIT setup successfully. Check PRMEDIT.EXE and the PRM file.',13,10,'$'
 configuration_io: db 'Could not read the requested PCPLUS 2.01 configuration.',13,10,'$'
 configuration_serial: db 'Configuration has unsupported serial port or line settings.',13,10,'$'
 configuration_flow: db 'Configuration flow-control values must be 0 or 1.',13,10,'$'

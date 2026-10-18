@@ -402,3 +402,16 @@ The first ENiGMA attempt failed before DOS launch because report-derived
 keyboard wrappers accumulated past the ADDKEY limit. It is retained separately.
 The current pair uses canonical checked-in input; it does not keep extending
 historical generated output. See [current results and recipe provenance](modern-compatibility.md).
+
+
+## Setup-startup checkpoint
+
+Build0fea93ec repeats all12 Synchronet checks and eight wire checks in
+`editor-setup-0fea`. ENiGMA `editor-setup-0fea-immediate-noscan` enters the editor
+and fails Home/Insert with all eight sequences present; the paired
+`editor-setup-0fea-buffer30-noscan` passes all seven checks. Both disconnect
+without posting. The initial immediate run was diverted by login new-item
+scanning, while its following buffered run reached the editor. They are retained
+as separate preparation evidence, not accepted as a pair. The canonical input
+now explicitly selects N at the scan prompt, then dismisses User Stats. See
+[the current checkpoint](modern-compatibility.md) for hashes and retained runs.

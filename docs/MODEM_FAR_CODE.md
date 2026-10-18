@@ -76,9 +76,13 @@ sampled UART/PIC/IRQ state.
 `check_modem_far_live.py` compares the actual far-service path with each actual
 resident target for successful/error expansion,390 classification inputs,
 five response-byte boundaries and nine baud settings. It checks returned
-registers/FLAGS, original argument slots and stack balance. The baud setter's
-volatile BX retains part of its actual stack address, so only that irrelevant
-value is excluded from direct/bridged equality. Existing independent connection
+registers, original argument slots and stack balance. The expander guarantees
+CF; its internal ADD SP,4 leaves other arithmetic flags dependent on its actual
+frame address. Direct/bridged expansion therefore compares CF. Independently,
+every actual target RET is observed and its full FLAGS must survive the bridge
+unchanged. This catches flag-clobbering adapters without assuming undocumented
+flags are equal across distinct frames. The baud setter's volatile BX retains
+part of its actual stack address and is excluded from direct/bridged equality. Existing independent connection
 tests verify the command/response policy and actual divisor behavior.
 
 Other linked cases visit all eight public entries, dial/connect/autobaud/hangup,

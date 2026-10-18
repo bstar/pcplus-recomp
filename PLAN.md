@@ -370,3 +370,17 @@ PRMEDIT. Its model passes383 synthetic inputs in8 groups;10 real-DOS workflow
 groups include39 document-owner assertions, production save and independently
 checked video restoration. These counts are component evidence, not closure of
 any full-application feature gate.
+
+
+The terminal now offers `/S @PCPLUS.PRM` to run the maintained editor before
+connection. Direct child execution precedes configuration import and UART
+acquisition; process/child failures stop startup, and successful return preserves
+normal validation and CLI-category overrides. See `docs/SETUP_STARTUP.md`.
+Live setup during a connection and complete PCSETUP reconstruction remain open.
+
+This setup-startup checkpoint passes47 linked scheduler inputs,585 CLI parser
+inputs,12 DOS setup workflows and all43 terminal regression commands. A fresh
+checkout reproduces58 identical outputs. Modern editor reruns retain Synchronet
+success and ENiGMA immediate Home/Insert failure versus the30ms-buffered pass;
+login new-scan prerequisite failures and the explicit-decline retry remain in
+history. See `docs/validation/setup-startup.json` and the BBS checkpoint reports.

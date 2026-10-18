@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "all-process-statuses-and-normal-abnormal-child-exits",
+      "inputs": 42,
+      "passed": true
+    },
+    {
+      "case": "direct-tail-argument-order-bounded-copy-and-preserved-callee-registers",
+      "inputs": 3,
+      "passed": true
+    },
+    {
+      "case": "unterminated-path-guard-and-disabled-option-no-EXEC",
+      "inputs": 2,
+      "passed": true
+    }
+  ],
+  "binary_sha256": "0fea93eccc614d71b3f74976cd24973a9806b1d171ad76895f2d816ba45bcec2",
+  "sources": {
+    "src/terminal/setup_startup.asm": "6f0e39c27edef7d769711a82af0766f8e6d7a67d785ab3b0e02a09ecc2277328",
+    "standalone/check_setup_startup.py": "18d9a87cb40b3e0ab55a092fad940c212862810f4b26092b8c51c63c2cd2f3b3",
+    "standalone/dos_image.py": "2e8b0bd03cd4370b9b9633ebe3a76eed30ab0250ba8d26f4ec90eea49a5eb8e9"
+  },
+  "scope": "Actual linked 8086 setup scheduler with mocked EXEC only; all interrupts/IN/OUT forbidden. Tests near-cdecl arguments, status gate, caller cleanup and callee registers. Actual editor/EXEC/serial and startup ordering are checked by the separate DOS suite."
+}

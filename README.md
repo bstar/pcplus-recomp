@@ -331,3 +331,9 @@ settings/UI and physical modem transfers remain open. See
 [session contracts](docs/TRANSFER_SESSION.md),
 [download storage](docs/DOWNLOAD_STORAGE.md), [sender](docs/TRANSFER_SEND.md),
 [native file behavior](docs/TRANSFER_FILES.md) and [UART callbacks](docs/TRANSFER_UART.md).
+
+
+For an existing2.01 PRM in the current DOS directory, build both applications
+with `./tools/build terminal setup`, then run `TERMINAL /S @PCPLUS.PRM` in DOS.
+This opens setup before connecting; see [setup startup](docs/SETUP_STARTUP.md)
+for save/cancel, path limits and CLI precedence.

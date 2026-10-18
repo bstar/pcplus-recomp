@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "enigma_unsaved": {
-    "keyboard_input": "p12000 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 n p6000 enter p6000 M enter p5000 P enter p5000 enter p700 K E Y T E S T enter p1800 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p3000 a-x",
-    "derived_from": "Historical editor-network-immediate run, with its single harness-added leading p1000 removed. Closing Alt-X retained; no report-derived prefixes/exit retries are reused.",
+    "keyboard_input": "p12000 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 n p6000 n p3000 enter p6000 M enter p5000 P enter p5000 enter p700 K E Y T E S T enter p1800 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p3000 a-x",
+    "derived_from": "Historical editor-network-immediate run, with its single harness-added leading p1000 removed. Closing Alt-X retained; no report-derived prefixes/exit retries are reused. Updated after setup-0fea prerequisite failures: decline loginGlobalNewScan with N, then dismiss User Stats before M. Stock loc-login.hjson routes promptValue1 to fullLoginSequenceUserStats; this avoids user-state-dependent message/file scan lists.",
     "scope": "Owned local stock editor; type unsaved synthetic draft and disconnect. No Enter after body editing begins."
   }
 }

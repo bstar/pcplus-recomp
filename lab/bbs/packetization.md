@@ -112,3 +112,13 @@ failed preflight and is excluded from the paired comparison. The recipe now
 comes from `editor-recipes.json`, independently of mutable run reports.
 `make test-bbs-modem` checks its aliases, safety and complete ADDKEY length.
 See [the current checkpoint](modern-compatibility.md) for provenance and limits.
+
+
+The setup-startup0fea93ec pair also reproduces the result with explicit
+new-scan decline: `editor-setup-0fea-buffer30-noscan` passes seven editor checks,
+while `editor-setup-0fea-immediate-noscan` enters the editor but fails Home and
+Insert. The original setup immediate run did not reach the editor because of a
+login new-items scan and is excluded from the paired comparison. The following
+buffered run passed but is retained separately because its counterpart missed
+the prerequisite. Current canonical input is377 characters; complete ADDKEY is
+400 characters. No Enter follows draft-body input. See the current checkpoint.

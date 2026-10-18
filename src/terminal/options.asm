@@ -127,6 +127,63 @@ terminal_parse_options:
  jc .return
  jmp .skip
 .commit:
+ ; Setup is an explicit pre-connect child, with the offline editor's leaf path
+ ; contract. Validate this dependency before committing ANY live option.
+ test word [options_seen],8192
+ jz .setup_valid
+ test word [options_seen],16
+ jz .invalid
+ mov si,options_config_stage
+ xor bx,bx
+ xor dx,dx
+ xor cx,cx
+.setup_name:
+ lodsb
+ or al,al
+ jz .setup_end
+ cmp al,'.'
+ je .setup_dot
+ cmp al,'A'
+ jb .setup_digit
+ cmp al,'Z'
+ jbe .setup_character
+.setup_digit:
+ cmp al,'0'
+ jb .setup_punctuation
+ cmp al,'9'
+ jbe .setup_character
+.setup_punctuation:
+ cmp al,'_'
+ je .setup_character
+ cmp al,'-'
+ jne .invalid
+.setup_character:
+ or dx,dx
+ jnz .setup_extension
+ inc bx
+ cmp bx,8
+ ja .invalid
+ jmp .setup_name
+.setup_extension:
+ inc cx
+ cmp cx,3
+ ja .invalid
+ jmp .setup_name
+.setup_dot:
+ or bx,bx
+ jz .invalid
+ or dx,dx
+ jnz .invalid
+ inc dx
+ jmp .setup_name
+.setup_end:
+ or bx,bx
+ jz .invalid
+ or dx,dx
+ jz .setup_valid
+ or cx,cx
+ jz .invalid
+.setup_valid:
  mov ax,[options_port]
  mov [terminal_port_number],ax
  dec ax
@@ -261,6 +318,15 @@ options_process_token:
  or word [options_seen],dx
  jmp .good
 .help_start:
+ cmp word [options_token],'/S'
+ jne .meta_option
+ cmp byte [options_token+2],0
+ jne .meta_option
+ test word [options_seen],8192
+ jnz .bad
+ or word [options_seen],8192
+ jmp .good
+.meta_option:
  cmp word [options_token],'/T'
  jne .ansi_option
  cmp byte [options_token+2],':'
@@ -583,6 +649,7 @@ terminal_usage:
  db 'Monitor: Ctrl-backslash; Y replaces PCPLUS.DMP; Escape returns.',13,10
  db 'Keyboard BIOS: /B:AUTO (default), /B:STANDARD or /B:ENHANCED.',13,10
  db 'ANSI CSI M: /A:NETWORK (delete lines, default) or /A:ORIGINAL (wait).',13,10
+ db 'Setup: /S @FILE.PRM runs local PRMEDIT.EXE before connecting; 8.3 leaf only.',13,10
  db 'PRM path: explicit only, max 63 bytes; no spaces, quotes or wildcards.',13,10
  db 'Serial: 7/8 data, N/O/E/M/S parity, 1/2 stop; e.g. 8N1. Any option order.',13,10
  db 'Baud: 300 1200 2400 4800 9600 19200 38400 57600 115200',13,10
