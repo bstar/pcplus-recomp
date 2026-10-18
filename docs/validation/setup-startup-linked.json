@@ -17,7 +17,7 @@
       "passed": true
     }
   ],
-  "binary_sha256": "4557259887c7d0f0a4a535b90e53a459077b414caf17e570edfd8e0ac77b942c",
+  "binary_sha256": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
   "sources": {
     "src/terminal/setup_startup.asm": "6f0e39c27edef7d769711a82af0766f8e6d7a67d785ab3b0e02a09ecc2277328",
     "standalone/check_setup_startup.py": "18d9a87cb40b3e0ab55a092fad940c212862810f4b26092b8c51c63c2cd2f3b3",

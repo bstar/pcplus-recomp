@@ -1,0 +1,32 @@
+{
+  "user": "LABUSER",
+  "number": 1,
+  "level": 50,
+  "logons_today": 63,
+  "bit": 2048,
+  "before": 0,
+  "active": 2048,
+  "restored": true,
+  "scope": "Temporary synthetic-account daily-logon exemption only; editor/server quota policy unchanged.",
+  "after": 0,
+  "run_label": "editor-ymodem-far-18b9-hard",
+  "binary_sha256": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
+  "independent_persisted_readback": {
+    "number": 1,
+    "level": 50,
+    "exemptions": 0,
+    "logons_today": 65
+  },
+  "retained_artifacts": {
+    "build/bbs-lab/results/synchronet/ymodem-far-editor-18b9-logon.begin.js": "ad90cb4ebc013c400b082fd07adf936ed4531132d161333483884911cd0f58c9",
+    "build/bbs-lab/results/synchronet/ymodem-far-editor-18b9-logon.begin.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/bbs-lab/results/synchronet/ymodem-far-editor-18b9-logon.begin.stdout": "8f479f6536ab8316903707074c766b687ccc1113bad63227d15edf5b08842d02",
+    "build/bbs-lab/results/synchronet/ymodem-far-editor-18b9-logon.end.js": "5b8bdf067ac469a753d8c205c8eb732e04a4eaab2e2760b1a3d182ae7338fb1b",
+    "build/bbs-lab/results/synchronet/ymodem-far-editor-18b9-logon.end.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/bbs-lab/results/synchronet/ymodem-far-editor-18b9-logon.end.stdout": "ae918cb8479e63f58dee4e407f9ac6079c74cdbdbc139e6fa4831205b833f74b",
+    "build/bbs-lab/results/synchronet/ymodem-far-editor-18b9-logon.json": "97fd17bd63011578fc74003239b0d2321b0d54668f46bf0c673f1d538c3f5fdd",
+    "build/bbs-lab/results/synchronet/ymodem-far-editor-18b9-logon.verify.js": "951a1840905417a1dcc67f898465a80265249b9ce50f8df7651f3e3f2f4e66e4",
+    "build/bbs-lab/results/synchronet/ymodem-far-editor-18b9-logon.verify.json": "8590167292259cd657e7340ead892b76de85492c21d3ed331002de2c75c12749",
+    "build/bbs-lab/results/synchronet/ymodem-far-editor-18b9-logon.verify.stdout": "4bfc3c1c55ae8798319cd6280c079f37d9b10234dd307b0922b79fe46d9bfa2f"
+  }
+}

@@ -6,4 +6,6 @@ SEGMENT _TEXT public class=CODE use16
 %define CONFIG_ENTRY NEAR_CDECL_ENTRY
 %define CONFIG_REGISTER NEAR_NAMED_SERVICE
 %define CONFIG_CDECL NEAR_CDECL_SERVICE
+; Explicit zero-argument cdecl callbacks use the plain register-free frame.
+%define CONFIG_ZERO NEAR_NAMED_SERVICE
 %include "config_abi.inc"

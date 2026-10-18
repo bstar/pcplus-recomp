@@ -11,8 +11,8 @@ def main():
  for path,digest in manifest['sources'].items():assert sha(path)==digest,path
  memory=manifest['memory_layout']
  assert memory['resident_code_bytes']<65536 and memory['resident_code_spare_bytes']==65536-memory['resident_code_bytes']
- assert memory['near_bytes']<65536 and memory['configuration_bridge_pairs_verified']==38
- assert memory['far_code_bridge_pairs_verified']==87
+ assert memory['near_bytes']<65536 and memory['configuration_bridge_pairs_verified']==60
+ assert memory['far_code_bridge_pairs_verified']==109
  linked=read('build/terminal/program-actions-live-checks.json')
  dos=read('build/program-actions-dos/checks.json')
  retention=read('build/far-storage-dos/checks.json')
@@ -21,7 +21,7 @@ def main():
  assert linked['inputs']==60 and len(linked['cases'])==9
  assert linked['cases'][0]['inputs']==4 and linked['cases'][0]['passed']
  assert len(dos['cases'])==4 and all(all(c['checks'].values()) for c in dos['cases'])
- assert all(retention['checks'].values()) and len(frames['rejected_mutations'])==187
+ assert all(retention['checks'].values()) and len(frames['rejected_mutations'])==269
  regression=read('build/terminal/setup-profile-regression.json')
  expected=subprocess.check_output(['make','-n','test-terminal'],cwd=ROOT,text=True).splitlines()
  assert len(expected)==77 and regression['passed'] and regression['complete'] and regression['binary_sha256']==runtime
@@ -30,7 +30,7 @@ def main():
  assert proof['passed'] and proof['output_count']==64 and proof['outputs']['terminal/TERMINAL.EXE']['sha256']==runtime
  sources=['src/process/program.c','src/process/dos_exec.h','src/process/dos_exec.asm','src/terminal/config_abi.inc','src/terminal/program_actions.asm','standalone/build_terminal.py','standalone/terminal_memory.py','standalone/check_program_actions_live.py','standalone/test_program_actions_dos.py','standalone/record_program_far.py']
  artifacts=['build/terminal/program-actions-live-checks.json','build/program-actions-dos/checks.json','build/far-storage-dos/checks.json','build/terminal/config-far-checks.json','build/terminal/setup-profile-regression.json']
- result=dict(passed=True,binary_sha256=runtime,memory_layout=memory,linked=linked,actual_DOS=dos,retention=retention,call_frames=frames,terminal_regression=regression,sources={p:sha(p) for p in sources},retained_artifacts={p:sha(p) for p in artifacts},source_rebuild=dict(report='docs/validation/application-components-source-build.json',source_snapshot_sha256=proof['source_snapshot_sha256'],output_count=64),scope='Maintained PROGRAM command policy placement in CONFIG_CODE with unchanged near-cdecl API and resident DOS EXEC backend. Four actual C-return FLAGS observations include child-context clobber, EXEC failures and resize failure;60 linked inputs,4 actual DOS workflows,retained far-code child allocation,187 rejected bridge/layout mutations,77 terminal commands and64 byte-identical Nix outputs. Complete original PROGRAM/ASPECT/UI and physical hardware remain open.')
+ result=dict(passed=True,binary_sha256=runtime,memory_layout=memory,linked=linked,actual_DOS=dos,retention=retention,call_frames=frames,terminal_regression=regression,sources={p:sha(p) for p in sources},retained_artifacts={p:sha(p) for p in artifacts},source_rebuild=dict(report='docs/validation/application-components-source-build.json',source_snapshot_sha256=proof['source_snapshot_sha256'],output_count=64),scope='Maintained PROGRAM command policy placement in CONFIG_CODE with unchanged near-cdecl API and resident DOS EXEC backend. Four actual C-return FLAGS observations include child-context clobber, EXEC failures and resize failure;60 linked inputs,4 actual DOS workflows,retained far-code child allocation,269 rejected bridge/layout mutations,77 terminal commands and64 byte-identical Nix outputs. Complete original PROGRAM/ASPECT/UI and physical hardware remain open.')
  (ROOT/'docs/validation/program-far-code.json').write_text(json.dumps(result,indent=2)+'\n')
  print('Recorded PROGRAM far-code checkpoint',runtime)
 if __name__=='__main__':main()

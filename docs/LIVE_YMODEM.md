@@ -15,7 +15,8 @@ recovered ordinary native sender/receiver and the exact native metadata
 diagnostic. It links the recovered CRC routine and bounded metadata codec. It
 uses the existing exclusive native arena for working/header/last-frame buffers,
 preserving the far shadow/history and DS=SS near ABI. No originals are build
-inputs.
+inputs. The maintained engine and codec now use explicit static far-code
+adapters; see [code placement and verification](YMODEM_FAR_CODE.md).
 
 Block0 accepts CRC128/1024 metadata, safe DOS8.3 basenames and the documented
 optional fields. Paths, devices, malformed strings and numeric overflow reject.

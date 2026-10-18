@@ -609,3 +609,40 @@ experiment passes. Temporary synthetic Synchronet logon exemptions were restored
 and independently read back. No message was saved. Resident CS has238 bytes
 spare, so further resident features require extending the existing far-code
 placement work. The full application/hardware checklist remains open.
+
+### Resident code capacity for remaining application work
+
+The maintained YMODEM engine and header codec now occupy CONFIG_CODE with four
+explicit near entry pairs and eighteen resident callbacks. Their C protocol
+sources are unchanged from `245e681`. Source-owned adapters include distinct
+zero-argument callbacks and local Watcom DWORD arithmetic thunks; a checked
+build step changes only global import names in the freshly compiled OMF object.
+See `docs/YMODEM_FAR_CODE.md` for the contracts and transformation boundary.
+
+The `18b99f97` build frees3,328 resident code bytes, leaving3,566 available.
+Near data/stack stays64,480 bytes. Retained parent memory including PSP grows
+by464 bytes to315,200; this creates segment capacity rather than reducing total
+RAM. There are60 configuration bridge pairs and109 total. The focused suite
+passes413 linked inputs and269 malformed-image rejections. A fresh checkout
+reproduces64 outputs; its413 linked migration checks use no historical build
+artifacts, original executables or installation data. The baseline's297 compiled
+input hashes are independently authenticated against the published source commit.
+
+The77-command terminal regression and all30 independent actual DOS YMODEM
+recipes pass. The hash-bound report is `docs/validation/ymodem-far-code.json`.
+Four actual DOS menu cases, six clipboard/transfer workflows, eleven table
+reload workflows and the controlled parser-split menu probe also pass. The same
+executable passes selected menu/clipboard downloads on both stock servers,
+including ENiGMA post-download search. Synchronet editor checks pass. Immediate
+ENiGMA Home still fails while Insert passes in this run; the explicit30ms
+buffered experiment passes both. No draft was saved. The synthetic Synchronet
+account's temporary logon exemption is restored and independently read back.
+Dedicated live XLTEDIT is the next application action enabled by
+this capacity. Its current offline editor accepts only an8.3 leaf, whereas live
+selection remembers an absolute path up to63 bytes, including an environment
+fallback. Integration must preserve that actual selected source and same-parent
+replacement/recovery ownership, retain the existing drained UART/EXEC handoff,
+and offer checked acceptance after return. Merely opening a current-directory
+file with the same leaf would edit the wrong table for valid fallback sources.
+The complete feature gates, remaining terminal emulations,
+protocols, ASPECT, Host, packaging and physical target validation remain open.

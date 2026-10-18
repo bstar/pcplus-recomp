@@ -80,11 +80,12 @@ isolated source identities are retained separately. The harness records
 expected file mutations explicitly; other fixtures retain
 their unchanged-file assertions. No test child or original executable is used.
 
-The command adds two checked configuration entry pairs: 38 configuration pairs,
-87 total. Independent damaged-frame/layout rejection now covers 187 mutations.
-Near data/stack is 64,480 bytes; resident code is 65,298 bytes with 238 spare.
-The parent retains 314,736 bytes including PSP. New owner logic remains in the
-existing CONFIG_CODE module; the active path adds bounded near storage.
+The command added two checked configuration entry pairs at the `45572598`
+checkpoint. The subsequent [YMODEM code migration](YMODEM_FAR_CODE.md) brings the
+current build to 60 configuration pairs and 109 total, with 269 rejected
+frame/layout mutations. Near data/stack remains 64,480 bytes; resident code is
+61,970 bytes with 3,566 spare. The parent retains 315,200 bytes including PSP.
+Reload logic remains in CONFIG_CODE; its selected canonical path stays near.
 
 Opening XLTEDIT as a dedicated terminal command, full original settings/UI and
 physical UART/Wi-Fi modem validation remain open. This component does not close

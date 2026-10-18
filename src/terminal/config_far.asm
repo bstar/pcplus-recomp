@@ -16,4 +16,7 @@ terminal_config_code_start:
  ret
 %endmacro
 %define CONFIG_CDECL FAR_CDECL_SERVICE
+%macro CONFIG_ZERO 2
+ FAR_SERVICE %1
+%endmacro
 %include "config_abi.inc"

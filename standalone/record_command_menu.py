@@ -51,11 +51,11 @@ def main():
   artifacts.extend(p.relative_to(ROOT) for p in sorted((ROOT/folder).rglob('*')) if p.is_file())
  artifacts.extend(p.relative_to(ROOT) for p in sorted((ROOT/dos_path.parent).iterdir()) if p.is_file())
  memory=manifest['memory_layout'];assert memory['command_menu_far_code_verified']
- assert memory['far_code_bridge_pairs_verified']==87 and memory['configuration_bridge_pairs_verified']==38
- assert memory['near_bytes']==64480 and memory['resident_code_bytes']==65298
+ assert memory['far_code_bridge_pairs_verified']==109 and memory['configuration_bridge_pairs_verified']==60
+ assert memory['near_bytes']==64480 and memory['resident_code_bytes']==61970
  pending=read('build/terminal/menu-pending-checks.json');assert pending['passed'] and pending['binary_sha256']==runtime and pending['inputs']==36
  sources(pending);artifacts.append(Path('build/terminal/menu-pending-checks.json'))
- frames=read('build/terminal/config-far-checks.json');assert frames['passed'] and frames['binary_sha256']==runtime and len(frames['rejected_mutations'])==187
+ frames=read('build/terminal/config-far-checks.json');assert frames['passed'] and frames['binary_sha256']==runtime and len(frames['rejected_mutations'])==269
  regression=read('build/terminal/setup-profile-regression.json');commands=subprocess.check_output(['make','-n','test-terminal'],cwd=ROOT,text=True).splitlines()
  assert len(commands)==77 and regression['passed'] and regression['complete'] and regression['binary_sha256']==runtime
  assert commands==[r['command'] for r in regression['commands']] and all(r['exit_code']==0 for r in regression['commands'])

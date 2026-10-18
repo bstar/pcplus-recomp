@@ -169,6 +169,10 @@ def inspect_terminal_memory(binary,map_path):
    for name in ('_command_menu_active','_command_menu_action'):
     assert near_start<=address(name)<near_start+near_size-1,(name,'menu state outside DGROUP')
    extra['command_menu_far_code_verified']=True
+  for name in ('_ymodem_run_impl','_batch_header_end_impl','_batch_header_encode_impl','_batch_header_decode_impl'):
+   assert symbols[name][0]==config_seg,(name,'batch code outside CONFIG_CODE')
+  assert near_start<=address('_ymodem_current') and address('_ymodem_current')+32<=near_start+near_size
+  extra['ymodem_far_code_verified']=True
   abi=Path(__file__).resolve().parents[1]/'src/terminal/config_abi.inc'
   config_bridges=0
   def cdecl_prefix(count,first):
@@ -187,7 +191,7 @@ def inspect_terminal_memory(binary,map_path):
     assert address(name)+len(prefix)+3 in relocations,(name,'missing entry relocation')
     near_call(name+'_far',name+'_impl',prefix=cdecl_prefix(count,6),suffix=b'\x8d\x66\x00\x5d\xcb')
    else:
-    assert kind in ('CONFIG_REGISTER','CONFIG_CDECL')
+    assert kind in ('CONFIG_REGISTER','CONFIG_CDECL','CONFIG_ZERO')
     target=fields[2]
     service=name if kind=='CONFIG_REGISTER' else name+'_service'
     assert symbols[service][0]==config_seg
@@ -201,7 +205,7 @@ def inspect_terminal_memory(binary,map_path):
     else:assert len(fields)==3
     near_call(name+'_resident',target,prefix=prefix,suffix=suffix)
    config_bridges+=1
-  assert config_bridges==38,'Incomplete configuration ABI validation'
+  assert config_bridges==60,'Incomplete configuration ABI validation'
   bridges+=config_bridges
   extra['configuration_bridge_pairs_verified']=config_bridges
  redisplay_bridges=0

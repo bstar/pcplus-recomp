@@ -19,6 +19,10 @@ CONFIG_ENTRY _xlt_live_initialize,5
 CONFIG_ENTRY _xlt_live_reload,3
 CONFIG_ENTRY _redisplay_event,3
 CONFIG_ENTRY _program_execute,2
+CONFIG_ENTRY _ymodem_run,2
+CONFIG_ENTRY _batch_header_end,2
+CONFIG_ENTRY _batch_header_encode,6
+CONFIG_ENTRY _batch_header_decode,3
 ; Compiler-default register ABI for these four small-model CRT functions.
 CONFIG_REGISTER config_memcpy_service_,memcpy_
 CONFIG_REGISTER config_memset_service_,memset_
@@ -40,3 +44,23 @@ CONFIG_CDECL _config_history_file,_history_file_event,3
 
 CONFIG_REGISTER config_strcmp_service_,strcmp_
 CONFIG_CDECL _config_clipboard_transport,_clipboard_transport,3
+
+; Migrated batch framing/metadata: explicit UART, CRC and file-owner callbacks.
+CONFIG_REGISTER config_u4div_service_,__U4D
+CONFIG_REGISTER config_u4mul_service_,__U4M
+CONFIG_CDECL _config_ym_crc,_transfer_crc_buffer_original,2
+CONFIG_CDECL _config_ym_read,_ymodem_io_read,1
+CONFIG_CDECL _config_ym_put,_ymodem_io_put,1
+CONFIG_CDECL _config_ym_unread,_ymodem_io_unread,1
+CONFIG_ZERO _config_ym_poll,_ymodem_io_poll
+CONFIG_ZERO _config_ym_progress,_ymodem_io_progress
+CONFIG_CDECL _config_bd_begin,_batch_download_begin,1
+CONFIG_CDECL _config_bd_open,_batch_download_open,1
+CONFIG_CDECL _config_bd_append,_batch_download_append,2
+CONFIG_ZERO _config_bd_finish,_batch_download_finish
+CONFIG_ZERO _config_bd_cleanup,_batch_download_cleanup
+CONFIG_CDECL _config_bu_begin,_batch_upload_begin,1
+CONFIG_CDECL _config_bu_read,_batch_upload_read,3
+CONFIG_ZERO _config_bu_next,_batch_upload_next
+CONFIG_ZERO _config_bu_close,_batch_upload_close
+CONFIG_ZERO _config_bu_abort,_batch_upload_abort

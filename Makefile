@@ -367,6 +367,11 @@ test-batch-upload:
 test-terminal-ymodem-live: terminal
 	python3 standalone/check_terminal_ymodem_live.py
 
+.PHONY: test-ymodem-far
+test-ymodem-far: terminal
+	python3 standalone/check_config_far_live.py
+	python3 standalone/check_ymodem_far_live.py
+
 .PHONY: setup test-setup
 all: setup
 test: test-setup
