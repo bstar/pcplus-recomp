@@ -5,7 +5,7 @@
  * file I/O, parent-process memory protocol or UART access. DS=SS, near cdecl.
  * Caller owns a baseline and a separate staged image. All APIs reject overlap
  * and segment wrap before mutation. Unknown bytes remain opaque. */
-#define SETUP_FIELD_COUNT 45U
+#define SETUP_FIELD_COUNT 46U
 #define SETUP_TEXT_SIZE 64U
 #define SETUP_NO_FIELD 65535U
 
@@ -29,7 +29,7 @@ setup_status __cdecl setup_get(const prm_dos_image *image,unsigned index,
  * Rejected edits leave the entire staged image untouched. */
 setup_status __cdecl setup_set(const prm_dos_image *baseline,
  prm_dos_image *staged,unsigned index,const char *text);
-/* Checks all 45 mapped fields, then both existing decoder contracts. The
+/* Checks all 46 mapped fields, then both existing decoder contracts. The
  * first bad field is returned; no changes to image. Does not identify version. */
 setup_status __cdecl setup_validate(const prm_dos_image *image,unsigned *bad_field);
 #endif

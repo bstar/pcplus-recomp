@@ -28,15 +28,17 @@ def main():
   entry=editors['servers'][name];folder=ROOT/'build/bbs-lab/results'/name/(args.enigma_editors if name=='enigma' and args.enigma_editors else args.editors)
   run=read(folder/'result.json');audit=read(folder/'semantic-audit.json');assert run['binary_sha256']==audit['binary_sha256']==digest
   prior={key:entry[key] for key in ('run','semantic_evidence','retained_artifacts')}
-  entry.setdefault('prior_runtime_cases',[]).append(prior)
+  selected=dict(run=run,semantic_evidence=audit,retained_artifacts=artifacts(folder))
+  if prior!=selected:entry.setdefault('prior_runtime_cases',[]).append(prior)
   if name in ('enigma','synchronet'):
    for label in (args.prior_enigma_editors if name=='enigma' else args.prior_synchronet_editors):
     assert label and all(c.isalnum() or c in '-_' for c in label)
     earlier=ROOT/'build/bbs-lab/results'/name/label
     earlier_run=read(earlier/'result.json');earlier_audit=read(earlier/'semantic-audit.json')
     assert earlier_run['binary_sha256']==earlier_audit['binary_sha256']==digest
-    entry['prior_runtime_cases'].append(dict(run=earlier_run,semantic_evidence=earlier_audit,retained_artifacts=artifacts(earlier)))
-  entry.update(run=run,semantic_evidence=audit,retained_artifacts=artifacts(folder))
+    retained=dict(run=earlier_run,semantic_evidence=earlier_audit,retained_artifacts=artifacts(earlier))
+    if retained not in entry.setdefault('prior_runtime_cases',[]):entry['prior_runtime_cases'].append(retained)
+  entry.update(selected)
  editors.update(binary_sha256=digest,passed=all(s['run']['passed'] and s['semantic_evidence']['passed'] for s in editors['servers'].values()))
  if not args.editors_only:(ROOT/'docs/validation/bbs-matrix.json').write_text(json.dumps(matrix,indent=2)+'\n')
  (ROOT/'docs/validation/bbs-editors.json').write_text(json.dumps(editors,indent=2)+'\n')

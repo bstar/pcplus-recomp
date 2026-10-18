@@ -1,0 +1,34 @@
+{
+  "user": "LABUSER",
+  "number": 1,
+  "level": 50,
+  "logons_today": 51,
+  "bit": 2048,
+  "before": 0,
+  "active": 2048,
+  "restored": true,
+  "scope": "Temporary synthetic-account daily-logon exemption only; editor/server quota policy unchanged.",
+  "after": 0,
+  "run_label": "editor-clipcfg-b79d-hard",
+  "independent_persisted_readback": {
+    "number": 1,
+    "level": 50,
+    "exemptions": 0,
+    "logons_today": 52
+  },
+  "source_sha256": {
+    "lab/bbs/synchronet_logon_fixture.py": "49cde21b111c4481c7610fce63de9f07e38f1f50f41cfece4d1d30b00b895594"
+  },
+  "retained_artifacts": {
+    "build/bbs-lab/results/synchronet/clipcfg-logon-fixture-b79d.begin.js": "ad90cb4ebc013c400b082fd07adf936ed4531132d161333483884911cd0f58c9",
+    "build/bbs-lab/results/synchronet/clipcfg-logon-fixture-b79d.begin.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/bbs-lab/results/synchronet/clipcfg-logon-fixture-b79d.begin.stdout": "1bc93d7be0b52086607ef7953d493469e22861cc4bfbd0419f3dfe2587f90836",
+    "build/bbs-lab/results/synchronet/clipcfg-logon-fixture-b79d.end.js": "addc45eb7a52daeeb01ed92c80c776829923220cc2fea8b7d29656a62e1d5401",
+    "build/bbs-lab/results/synchronet/clipcfg-logon-fixture-b79d.end.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/bbs-lab/results/synchronet/clipcfg-logon-fixture-b79d.end.stdout": "d62de32ee0c7f651daa737606f89391ae9054f68e98224620a080b3f1799c52b",
+    "build/bbs-lab/results/synchronet/clipcfg-logon-fixture-b79d.json": "e36621aa5eb101942a8dbf9eb1b6d7c8e10cc40c9fc7ae41c1f9a71ec92192f8",
+    "build/bbs-lab/results/synchronet/clipcfg-logon-fixture-b79d.verify.js": "951a1840905417a1dcc67f898465a80265249b9ce50f8df7651f3e3f2f4e66e4",
+    "build/bbs-lab/results/synchronet/clipcfg-logon-fixture-b79d.verify.json": "d65fc543dc55449590676c865f5db4cb23c53656e525f4c04b77a88c9d6fb154",
+    "build/bbs-lab/results/synchronet/clipcfg-logon-fixture-b79d.verify.stdout": "0bdb79540dbf99b834df3c4a75aab4fdf4f9ff838e61460637978fd7bf1c2ad4"
+  }
+}

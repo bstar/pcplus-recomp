@@ -74,7 +74,8 @@ Alt-=; a separate historical `clipkey.dtp` patch changes it to Alt--.
 The saved separator word is PRM offset04EAh: DS:206Eh lies within the1264-byte
 DS:1B84h..2073h payload read/written by overlay19 E8E4h through DDE3h/DE3Ah
 (`ev_c365a56c6527a5303a8baa2df06bd32c5a8a1b950085051bf86358892d97e7ee`).
-Its exact Setup control and maintained persistence remain unresolved.
+Its exact original Setup control remains unresolved; maintained import, editor
+persistence and live adoption are implemented in [saved settings](CLIPBOARD_SETTINGS.md).
 
 Original editing through resident79D4h/3F9Ch preserves case and accepts duplicate
 or empty entries without changing allocated count; add remains uppercase and
@@ -86,5 +87,5 @@ The original screen scanner supports up to132 columns, but the precise refusal
 threshold and video/UI behavior remain unrecovered;80x25 is a maintained gate.
 Help describes pasting to remote prompts before single/batch protocols, rather
 than injecting names into a local transfer dialog or active protocol stream.
-Exercise those end-to-end workflows, saved separator, complete original UI and
+Exercise those end-to-end workflows, complete original UI and
 other geometries before closing F11; physical validation remains open.

@@ -248,7 +248,7 @@ _small_code_:
  jmp terminal_shutdown
 .configuration_error:
  mov dx,configuration_argument
- cmp ax,12
+ cmp ax,13
  ja .configuration_message
  mov bx,ax
  dec bx
@@ -414,6 +414,8 @@ configuration_messages: dw configuration_io,configuration_serial,configuration_f
  dw configuration_actions
  dw configuration_setup
  dw configuration_translation
+ dw configuration_clipboard
+configuration_clipboard: db 'Configuration clipboard separator must be 0..255.',13,10,'$'
 configuration_translation: db 'Invalid input translation mode or 256-byte XLT table.',13,10,'$'
 configuration_setup: db 'Could not run PRMEDIT setup successfully. Check PRMEDIT.EXE and the PRM file.',13,10,'$'
 configuration_io: db 'Could not read the requested PCPLUS 2.01 configuration.',13,10,'$'

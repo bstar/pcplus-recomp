@@ -6,7 +6,7 @@ ROOT=Path(__file__).resolve().parents[2]
 def read(p):return json.loads(p.read_text())
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--buffered',required=True);p.add_argument('--control',required=True);a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--buffered',required=True);p.add_argument('--control',required=True);p.add_argument('--prior-prerequisite',action='append',default=[],help='Retain a same-runtime DOS-harness pass that did not reach the editor; never use it as a compatibility run');a=p.parse_args()
  runs={}
  for kind,label in [('buffered',a.buffered),('immediate',a.control)]:
   assert label and all(c.isalnum() or c in '-_' for c in label)
@@ -31,6 +31,17 @@ def main():
  for k in ['configuration','keyboard','serial']:assert b[k]==c[k],k
  assert b['buffered_write_count'] and all(b['home_insert_in_individual_writes'].values())
  result={'recorded':True,'binary_sha256':b['experiment']['binary_sha256'],'scope':'Paired actual DOS/stock ENiGMA local editor experiments. Same executable, keyboard recipe, serial settings and PRM; explicit modem packet delay differs. Server/user state was not reset between sequential runs. No physical Wi-Fi modem or general TCP boundary guarantee. Current immediate compatibility aggregate remains separate and unchanged.','buffered_editor_passed':b['experiment']['editor_passed'],'immediate_editor_passed':c['experiment']['editor_passed'],'runs':runs}
+ prerequisites=[]
+ for label in a.prior_prerequisite:
+  assert label and all(c.isalnum() or c in '-_' for c in label)
+  folder=ROOT/'build/bbs-lab/results/enigma'/label
+  earlier=read(folder/'result.json');audit=read(folder/'semantic-audit.json');experiment=read(folder/'experiment.json')
+  assert earlier['binary_sha256']==audit['binary_sha256']==experiment['binary_sha256']==result['binary_sha256']
+  assert earlier['passed'] and not audit['checks']['stock_editor_entered'] and audit['checks']['no_post_saved']
+  assert experiment['source_sha256']==b['experiment']['source_sha256']
+  assert all(earlier[k]==b[k] for k in ['configuration','keyboard','serial'])
+  prerequisites.append(dict(label=label,reason='Stock editor prerequisite not reached; excluded from paired editor compatibility.',run=earlier,semantic_evidence=audit,experiment=experiment,retained_artifacts={str(q.relative_to(ROOT)):sha(q) for q in sorted(folder.iterdir()) if q.is_file()}))
+ if prerequisites:result['prerequisite_failures']=prerequisites
  target=ROOT/'docs/validation/bbs-enigma-packetization.json'
  if target.exists():
   previous=read(target)

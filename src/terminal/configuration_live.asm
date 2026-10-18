@@ -1,5 +1,5 @@
 ; Apply validated configured display/mapping values without resetting the
-; parser, screen, cursor, peer SGR/DEC modes, keymap or transport. AX TI42.
+; parser, screen, cursor, peer SGR/DEC modes, keymap or transport. AX TI44.
 BITS 16
 CPU 8086
 %include "terminal_import.inc"
@@ -10,6 +10,7 @@ extern attributes_reverse_value,attributes_underline_value,attributes_current
 extern attributes_bold_active,attributes_blink_active,attributes_reverse_active
 extern cursor_state_saved_1f70,csi_erase_attribute,csi_wrap_pending
 extern render_autowrap,scroll_enabled
+extern _clipboard_separator
 extern terminal_macro_pause_character,terminal_macro_character_delay_units
 global terminal_apply_live_configuration
 terminal_apply_live_configuration:
@@ -63,6 +64,8 @@ terminal_apply_live_configuration:
  mov [terminal_macro_pause_character],al
  mov ax,[bp+TI_MAPPING_DELAY]
  mov [terminal_macro_character_delay_units],ax
+ mov ax,[bp+TI_CLIPBOARD]
+ mov [_clipboard_separator],ax
  mov si,bp
  mov di,terminal_configuration_values
  push ds

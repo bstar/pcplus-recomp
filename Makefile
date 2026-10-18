@@ -177,6 +177,8 @@ test-terminal: terminal
 	python3 standalone/test_clipboard_dos.py
 	python3 standalone/check_clipboard_live.py
 	python3 standalone/test_clipboard_live_dos.py
+	python3 standalone/check_clipboard_settings.py
+	python3 standalone/test_clipboard_settings_dos.py
 
 test-bbs-modem:
 	python3 lab/bbs/check_editor_recipes.py
@@ -409,3 +411,8 @@ test-clipboard-original: clipboard
 all: clipboard
 test: test-clipboard
 test-terminal: clipboard
+
+.PHONY: test-clipboard-settings
+test-clipboard-settings: terminal setup
+	python3 standalone/check_clipboard_settings.py
+	python3 standalone/test_clipboard_settings_dos.py

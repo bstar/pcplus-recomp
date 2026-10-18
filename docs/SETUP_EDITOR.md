@@ -1,6 +1,6 @@
 # Maintained DOS settings editor
 
-`PRMEDIT.EXE` edits the 45 currently mapped fields in an existing PCPlus2.01
+`PRMEDIT.EXE` edits the 46 currently mapped fields in an existing PCPlus2.01
 PRM image. It builds entirely from maintained source with the pinned Nix
 Open Watcom8086 toolchain. Save the file, exit, then start the terminal with that
 explicit file. The terminal also offers
@@ -46,6 +46,9 @@ that port's standard base/IRQ; other table entries are preserved. Custom UART
 bases/IRQs are not supported by the current terminal importer. Profiles4 and6
 remain partial VT220/ANSI implementations, not claims of complete emulation.
 
+The Terminal page includes a decimal0..255 clipboard separator at PRM04EA;
+see [startup and live settings](CLIPBOARD_SETTINGS.md).
+
 Six command strings use native caret notation. Eleven response slots hold
 already-expanded bytes, so their editor uses hex pairs, for example
 `43 4F 4E 4E 45 43 54` for CONNECT. This permits lossless controls and CP437;
@@ -82,7 +85,7 @@ These remain parts of F02/F06 and the overall application plan.
 
 `standalone/check_setup_model.py` builds the actualDOS16 C model and replays its
 near-cdecl APIs with DS=SS. All interrupts and IN/OUT instructions are forbidden
-in this replay. Cases cover all45 lossless round trips, importer agreement,
+in this replay. Cases cover all46 lossless round trips, importer agreement,
 rejected edits without any staged mutation, string capacities/caret boundaries,
 all11 response slots, malformed loaded-value repair, pointer overlap, segment
 wrap and output capacity. A separate DOS run checks C-runtime behavior without

@@ -2,10 +2,10 @@
 #include <stddef.h>
 #include <string.h>
 typedef char word_abi[sizeof(unsigned)==2?1:-1];
-typedef char plan_abi[sizeof(live_configuration_plan)==626?1:-1];
-typedef char modem_abi[offsetof(live_configuration_plan,modem)==42?1:-1];
-typedef char directory_abi[offsetof(live_configuration_plan,directory)==410?1:-1];
-typedef char mask_abi[offsetof(live_configuration_plan,change_mask)==624?1:-1];
+typedef char plan_abi[sizeof(live_configuration_plan)==628?1:-1];
+typedef char modem_abi[offsetof(live_configuration_plan,modem)==44?1:-1];
+typedef char directory_abi[offsetof(live_configuration_plan,directory)==412?1:-1];
+typedef char mask_abi[offsetof(live_configuration_plan,change_mask)==626?1:-1];
 static unsigned extent(const void *p,unsigned n)
 { return p && (unsigned long)(unsigned)p+n<=65536UL; }
 static unsigned disjoint(const void *a,unsigned n,const void *b,unsigned m)
@@ -20,7 +20,7 @@ static unsigned valid_serial(const terminal_import_settings *s)
   s->software_flow>1 || s->hardware_flow>1 || (s->terminal_id!=4 && s->terminal_id!=6) ||
   s->normal_attribute>255 || s->bold_attribute>255 || s->preset_attribute>255 ||
   s->reverse_attribute>255 || s->underline_attribute>255 || s->autowrap>1 ||
-  s->scroll_enabled>1 || s->mapping_pause_character>255 || s->translation_mode>2)return 0;
+  s->scroll_enabled>1 || s->mapping_pause_character>255 || s->translation_mode>2 || s->clipboard_separator>255)return 0;
  if(s->io_base!=bases[s->port_number-1] || s->irq!=irqs[s->port_number-1])return 0;
  rate=s->baud_low|((unsigned long)s->baud_high<<16);
  for(i=0;i<9;++i)if(rate==rates[i])return 1;
@@ -53,6 +53,7 @@ static unsigned differences(const live_configuration_plan *a,const live_configur
  if(x->software_flow!=y->software_flow || x->hardware_flow!=y->hardware_flow)mask|=LIVE_CHANGE_FLOW;
  if(x->terminal_id!=y->terminal_id)mask|=LIVE_CHANGE_PROFILE;
  if(x->translation_mode!=y->translation_mode)mask|=LIVE_CHANGE_TRANSLATION;
+ if(x->clipboard_separator!=y->clipboard_separator)mask|=LIVE_CHANGE_CLIPBOARD;
  if(x->normal_attribute!=y->normal_attribute || x->bold_attribute!=y->bold_attribute ||
   x->preset_attribute!=y->preset_attribute || x->reverse_attribute!=y->reverse_attribute ||
   x->underline_attribute!=y->underline_attribute || x->autowrap!=y->autowrap ||

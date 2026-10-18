@@ -27,13 +27,13 @@ def main(original=False):
         for mode in (0, 1, 2):
             m = Import()
             status, data = m.decode(image(translation=mode))
-            assert status == 0 and len(data) == 42 and struct.unpack_from('<H', data, 40)[0] == mode
+            assert status == 0 and len(data) == 44 and struct.unpack_from('<H', data, 40)[0] == mode
         for mode in (3, 127, 256, 65535):
             m = Import()
             status, data = m.decode(image(translation=mode))
-            assert status == 12 and data == b'\xcc' * 42
+            assert status == 12 and data == b'\xcc' * 44
         return 7
-    check('PRM-offset1e0-three-modes-exact42-byte-plan-and-invalid-atomic-rejection', decoding)
+    check('PRM-offset1e0-three-modes-exact44-byte-plan-and-invalid-atomic-rejection', decoding)
 
     def startup():
         mapping = bytearray(range(256));mapping[ord('x')] = ord('y')
@@ -162,7 +162,7 @@ def main(original=False):
                   inputs=sum(g['inputs'] for g in groups), cases=groups, original_cases=native,
                   original_sha256='6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904' if original else None,
                   sources={'standalone/' + name: hashlib.sha256((ROOT / 'standalone' / name).read_bytes()).hexdigest() for name in helpers},
-                  scope='Actual linked42-byte PRM validator,626-byte candidate/owner,45-field editor, driver, monitor, RIS and transfer gates. Hardware/DOS modeled except editor diagnostic compilation. Optional genuine-original overlay3 comparison uses controlled CRT boundaries; no synthetic analysis EXE executes. Invalid native selections default to identity; maintained validator deliberately rejects them.')
+                  scope='Actual linked44-byte PRM validator,628-byte candidate/owner,46-field editor, driver, monitor, RIS and transfer gates. Hardware/DOS modeled except editor diagnostic compilation. Optional genuine-original overlay3 comparison uses controlled CRT boundaries; no synthetic analysis EXE executes. Invalid native selections default to identity; maintained validator deliberately rejects them.')
     (ROOT / 'build/terminal/translation-mode-checks.json').write_text(json.dumps(result, indent=2) + '\n')
 
 

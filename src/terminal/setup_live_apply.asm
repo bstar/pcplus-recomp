@@ -23,7 +23,7 @@ extern terminal_setup_profile_bind,terminal_setup_profile_stage
 extern terminal_setup_profile_status,terminal_setup_profile_ready
 extern terminal_connection_prepare,terminal_apply_live_configuration
 extern terminal_program_status,terminal_exit_code,terminal_quit
-extern terminal_translation_mode
+extern terminal_translation_mode,_clipboard_separator
 extern terminal_setup_translation_bind,terminal_setup_translation_choice,terminal_setup_translation_commit
 extern terminal_setup_translation_status
 global terminal_setup_bind,terminal_setup_prepare,terminal_setup_complete
@@ -106,6 +106,7 @@ terminal_setup_prepare:
  actual TI_IO_BASE,uart_port_rbr
  actual TI_IRQ,uart_irq_indices
  actual TI_TRANSLATION,terminal_translation_mode
+ actual TI_CLIPBOARD,_clipboard_separator
  mov si,terminal_modem_settings
  mov cx,MI_SIZE/2
  rep movsw
@@ -115,7 +116,7 @@ terminal_setup_prepare:
  mov cx,DL_SIZE/2
  rep movsw
  xor ax,ax
- stosw ;626-byte plan ends in the change mask.
+ stosw ;628-byte plan ends in the change mask.
  mov ax,terminal_dial_target
  push ax
  push word [terminal_option_mask]

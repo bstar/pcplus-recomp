@@ -31,7 +31,7 @@ def main():
  frames=bound('build/terminal/config-far-checks.json',runtime)
  assert frames['configuration_bridge_pairs_verified']==36 and len(frames['rejected_mutations'])==173
  candidate=bound('build/live-configuration/terminal-checks.json',runtime)
- assert candidate['host']=='terminal-far-C' and candidate['inputs']==389 and candidate['maximum_CPU_call_stack_bytes']<8192-3520-16
+ assert candidate['host']=='terminal-far-C' and candidate['inputs']==389 and candidate['maximum_CPU_call_stack_bytes']<8192-3526-16
  directory=bound('build/terminal/directory-live-checks.json',runtime);assert directory['inputs']==311
  context=bound('build/terminal/directory-context-checks.json',runtime);assert context['inputs']==507
  retained=bound('build/far-storage-dos/checks.json',runtime)

@@ -6,6 +6,7 @@
 typedef unsigned short word;
 typedef unsigned char byte;
 clipboard_state clipboard_list;
+unsigned clipboard_separator=13;
 unsigned clipboard_ui_active=0,clipboard_paste_pending=0,clipboard_ui_visible=0;
 static unsigned painted;
 static word initialized,selected,phase,field_size,scan,match,mode,notice;
@@ -91,6 +92,7 @@ unsigned __cdecl clipboard_ui_event(unsigned event,unsigned key,const word __far
  word i,n;byte ch=(byte)key;
  if(event==0){
   if(!initialized){clip_initialize(&clipboard_list);initialized=1;}
+  clipboard_list.separator=clipboard_separator;
   frame=underlay;painted=0;clipboard_ui_active=1;phase=notice=0;selected=0;paint();return 1;
  }
  if(!clipboard_ui_active)return 0;
@@ -108,7 +110,7 @@ unsigned __cdecl clipboard_ui_event(unsigned event,unsigned key,const word __far
   else if(key==0x4b00 || key==0x4be0 || key==0x4800 || key==0x48e0)find(1);
  }else if(phase){
   if(ch==13){
-   if(phase==4){n=0;for(i=0;i<field_size;++i)n=n*10+field[i]-'0';if(!field_size || n>255){paint();return 1;}clip_change(&clipboard_list,CLIP_SEPARATOR,n,0);}
+   if(phase==4){n=0;for(i=0;i<field_size;++i)n=n*10+field[i]-'0';if(!field_size || n>255){paint();return 1;}clip_change(&clipboard_list,CLIP_SEPARATOR,n,0);clipboard_separator=clipboard_list.separator;}
    else notice=clip_change(&clipboard_list,phase==1?CLIP_ADD:CLIP_EDIT,selected,field)?4:0;
    phase=0;
   }else if(ch==8){if(field_size)field[--field_size]=0;}

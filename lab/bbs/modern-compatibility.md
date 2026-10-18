@@ -8,7 +8,7 @@ toolchains. These results do not establish physical Wi-Fi modem compatibility.
 
 ## Latest editor-tested build
 
-This runtime includes the serviced filename clipboard, 63 KB redisplay and frozen-history export, confirmed live input-mode changes, bounded default-XLT
+This runtime includes saved clipboard separator settings and the serviced filename clipboard, 63 KB redisplay and frozen-history export, confirmed live input-mode changes, bounded default-XLT
 PCPLUS directory lookup, saved translation modes, explicit XLT input translation,
 confirmed idle COM switching and supported profile changes. The BBS probes use
 saved mode0 (identity) without /X.
@@ -18,29 +18,42 @@ proved separately in [the live settings report](../../docs/validation/setup-live
 Ctrl-PgUp browsing is exercised separately in [the redisplay report](../../docs/validation/redisplay-live.json).
 W export is exercised separately in [the history report](../../docs/validation/history-export.json).
 [Clipboard validation](../../docs/validation/clipboard.json) binds46 linked inputs,
-two actual DOS workflows, the75-command regression and64 reproducible outputs.
+two actual DOS workflows; [saved settings](../../docs/validation/clipboard-settings.json)
+add805 linked inputs, seven actual DOS workflows,14 codec units, the77-command
+regression and64 reproducible outputs.
 The editor probes use ordinary editing without opening redisplay or clipboard.
 
-The first Synchronet clipboard-build attempt hit the synthetic account's50-logon
+The earlier clipboard-build Synchronet attempt hit the synthetic account's50-logon
 daily limit before editor entry. The retry temporarily enabled only that account's
 logon exemption and then restored it; an independent fresh User API process
 verified the persisted exemption word is zero. The failed attempt remains in
-history. See [the fixture record](../../docs/validation/bbs-clipboard-logon-fixture.json).
+history. See [the earlier fixture record](../../docs/validation/bbs-clipboard-logon-fixture.json).
+The saved-settings build used the same declared temporary exemption upfront;
+[the new record](../../docs/validation/bbs-clipboard-settings-logon-fixture.json)
+independently verifies restoration to zero after its passing run.
+
+The first buffered ENiGMA saved-settings run completed the DOS harness but never
+entered the editor: its fixed-time login recipe reached the scan/statistics pages
+out of alignment, and body keys arrived at Main. It is retained as
+`editor-clipcfg-b79d-buffer30` in both editor history and the paired report's
+`prerequisite_failures`, excluded from the compatibility pair. The identical
+recipe retry enters the editor and passes; the input recipe and decoder were
+unchanged. Failed prerequisites do not become buffering passes.
 
 DOS executable SHA-256:
-`7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab`.
+`b79debbe9b35c1207eabf876bce84a10b6e1c7141988376f5680af991c6806a7`.
 
 | Server / modem forwarding | Result | Evidence |
 | --- | --- | --- |
-| Synchronet 3.22a development snapshot / HARD COM2/19200, immediate | All 12 audit checks and eight key-wire checks pass; draft aborted | `editor-clipboard-7aa4-hard-retry`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
+| Synchronet 3.22a development snapshot / HARD COM2/19200, immediate | All 12 audit checks and eight key-wire checks pass; draft aborted | `editor-clipcfg-b79d-hard`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
 | ENiGMA½ 0.5.1-beta / immediate | Correct outgoing keys; Home and Insert/overtype fail | Current paired experiment below |
 | Same ENiGMA / explicit 30 ms buffering | All seven audited checks and eight key-wire checks pass; closes unsaved | Current paired experiment below |
 
 The ENiGMA pair uses the same DOS executable, keyboard recipe, synthetic PRM,
 serial settings and unchanged stock decoder. Only the modem's explicit
 `packet_delay_ms` differs. Server/user state is not reset between runs.
-Retained labels are `editor-clipboard-7aa4-buffer30` and
-`editor-clipboard-7aa4-immediate`; full hashes and checks are in
+Retained labels are `editor-clipcfg-b79d-buffer30-retry` and
+`editor-clipcfg-b79d-immediate`; full hashes and checks are in
 [the paired report](../../docs/validation/bbs-enigma-packetization.json).
 
 The checked ENiGMA source, commit

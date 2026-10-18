@@ -1,6 +1,6 @@
 # Configuration C in a separate DOS code segment
 
-The normal terminal links the directory transaction, pure626-byte settings
+The normal terminal links the directory transaction, pure628-byte settings
 candidate decoder, live setup owner, checked XLT reader, default-table owner and
 bounded environment-directory helper, live table stager and maintained redisplay, filename clipboard core/UI and PROGRAM command policy in `CONFIG_CODE`, with a distinct CS and `CONFIG_GROUP`.
 Their data, constants and pointers remain in DGROUP with DS=SS. All eleven C modules
@@ -44,12 +44,12 @@ PROGRAM's retained parent allocation. Together with PRINT/MODEM this validates
 and layouts. The independent311 directory and507 context cases execute normal
 terminal entry points across the bridge. `check_live_configuration.py --terminal`
 replays the same389 independently specified candidate cases against the normal
-terminal binary. Caller fixtures occupy3520 bytes at the bottom of the actual
+terminal binary. Caller fixtures occupy3526 bytes at the bottom of the actual
 8KiB stack; every executed instruction is checked for stack collision. No
 product scratch globals or memory beyond the real stack are borrowed. The
 standalone near-C diagnostic remains available for independent comparison.
 
-The current terminal candidate replay uses at most3046 bytes of call stack,
+The current terminal candidate replay uses at most3050 bytes of call stack,
 leaving the caller fixture and execution stack disjoint. It observes each
 actual implementation RET to require full FLAGS preservation through both
 entry wrappers, separately from the API's semantic return-value checks.
@@ -111,6 +111,10 @@ resident transport callback and a named MODEM_CODE abort service. The latter is
 required when connection owners discard TX: a near cross-segment call is invalid
 and the actual DOS development run caught that mistake. Current layout checks
 verify36 configuration,23 modem,22 printer and4 redisplay bridge pairs. The current
-terminal uses64,756 resident code bytes,64,048 near data/stack bytes and304,784
+terminal uses64,796 resident code bytes,64,128 near data/stack bytes and304,992
 retained parent bytes including PSP. Clipboard core/UI code shares CONFIG_CODE;
 no extra full-screen frame is allocated. See [clipboard](FILENAME_CLIPBOARD.md).
+
+The saved separator explicitly extends the serial plan to44 bytes and the
+candidate to628 without changing bridge argument counts. Live setup tracks its
+saved baseline separately from session R; see [clipboard settings](CLIPBOARD_SETTINGS.md).

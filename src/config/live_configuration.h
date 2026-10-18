@@ -16,6 +16,7 @@
 #define LIVE_CHANGE_BREAK 512U
 #define LIVE_CHANGE_TARGET 1024U
 #define LIVE_CHANGE_TRANSLATION 2048U
+#define LIVE_CHANGE_CLIPBOARD 4096U
 #define LIVE_CHANGE_TRANSPORT 15U
 
 typedef struct live_configuration_plan {

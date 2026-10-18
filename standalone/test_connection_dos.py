@@ -6,7 +6,7 @@ from modem_fixtures import fixture
 from test_terminal import SAMPLER
 from directory_test_support import accounting_check
 ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EXE'
-def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=()):
+def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=()):
  assert working_drive in ("c","d")
  assert observer is None or (observer.isalnum() and observer.isupper() and len(observer)<=8 and observer+'.COM' in (files or {}))
  observer_start=('D:\\'+observer+' T') if observer else ''
@@ -120,7 +120,7 @@ exit
  before=(out/'BEFORE.BIN').read_bytes() if (out/'BEFORE.BIN').exists() else b''
  after=(out/'AFTER.BIN').read_bytes() if (out/'AFTER.BIN').exists() else b''
  screen=(out/'SCREEN.BIN').read_bytes() if (out/'SCREEN.BIN').exists() else b''
- checks.update({'DOS_expected_exit':result.returncode==0 and (out/'PASS.TXT').exists() and not (out/'FAIL.TXT').exists(),'hardware_restored':len(before)==42 and before==after,'PRM_unchanged':(out/'TEST.PRM').read_bytes()==payload,'binary_unchanged':digest==hashlib.sha256(BINARY.read_bytes()).hexdigest(),'no_peer_errors':not errors,'no_unexpected_commands':not checks.pop('unexpected_modem_command',False)})
+ checks.update({'DOS_expected_exit':result.returncode==0 and (out/'PASS.TXT').exists() and not (out/'FAIL.TXT').exists(),'hardware_restored':len(before)==42 and before==after,('PRM_expected_bytes' if prm_expected is not None else 'PRM_unchanged'):(out/'TEST.PRM').read_bytes()==(payload if prm_expected is None else prm_expected),'binary_unchanged':digest==hashlib.sha256(BINARY.read_bytes()).hexdigest(),'no_peer_errors':not errors,'no_unexpected_commands':not checks.pop('unexpected_modem_command',False)})
  if directory is not None:
   delta=int(mode in ('success','hangup','redial','direct')) if accounting_delta is None else accounting_delta
   checks['directory_expected_updates_only']=accounting_check(directory if directory_expected is None else directory_expected,(out/'TEST.DIR').read_bytes(),directory_entry,delta)

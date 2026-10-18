@@ -21,7 +21,7 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 | `build/modem-commands/MODEMCMD.EXE` | Recovered and maintained assembly source only | Original caret decoder with bounded source-owned wrapper |
 | `build/modem-responses/MODEMRSP.EXE` | Maintained and recovered assembly source only | Response matching and classification; dial-attempt object remains unlinked |
 | `build/xlt-editor/XLTEDIT.EXE` | Maintained C source only | Offline 256-byte translation-table editor with checked save/recovery; see [XLT editor](docs/XLT_EDITOR.md) |
-| `build/setup/PRMEDIT.EXE` | Maintained C source only | Offline five-page editor for45 mapped PRM fields with staged validation and checked replacement; see [setup editor](docs/SETUP_EDITOR.md) |
+| `build/setup/PRMEDIT.EXE` | Maintained C source only | Offline five-page editor for46 mapped PRM fields with staged validation and checked replacement; see [setup editor](docs/SETUP_EDITOR.md) |
 | `build/terminal/TERMINAL.EXE` | Maintained C and recovered/maintained assembly source only | Serial terminal with PRM startup, directory editing, staged saves and bounded modem dialing |
 | `build/standalone/SERIAL.EXE` | Maintained assembly source only | Independently linked DOS diagnostic exercising the recovered UART module |
 | `build/ansi/PARSER.EXE` | Maintained assembly source only | Independently linked parameter-reader diagnostic with bounds checks |
@@ -54,7 +54,7 @@ returns to the updated terminal. **W** appends the frozen history to a DOS file
 while incoming data continues; see [history export](docs/HISTORY_EXPORT.md) for
 path, cancellation and partial-write behavior. Alt-= opens the filename clipboard;
 C enters it from redisplay. A/E/D/U edit the list, Space tags, C selects screen
-filenames, R changes the separator, and P/S/T paste all/one/tagged entries.
+filenames, R changes the session separator (PRMEDIT saves its default), and P/S/T paste all/one/tagged entries.
 Single removal follows actual UART writes; Escape cancels unsent bytes. See
 [filename clipboard](docs/FILENAME_CLIPBOARD.md) for behavior and current limits.
 

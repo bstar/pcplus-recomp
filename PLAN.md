@@ -15,7 +15,7 @@ with checked one/all/tagged serial output. All sixteen whole-application gates i
 remain open. The numbered sections below retain earlier component evidence and
 historical checkpoints; their old run counts are not the current binary identity.
 
-The remaining work includes saved clipboard settings/transfer-prompt workflows,
+The remaining work includes clipboard transfer-prompt workflows,
 main menus/contextual help
 and complete settings/key editing; other terminal emulations and font/resource
 paths; remaining transfer families/external helpers; complete directory cycles
@@ -484,3 +484,21 @@ the explicit30ms control passes7 behavior/8 wire checks, with no post saved.
 The first Synchronet run was rejected by the synthetic account's daily quota;
 its temporary retry-only logon exemption was restored and independently read
 back. Reports retain that failed prerequisite rather than calling it a pass.
+
+
+### Saved clipboard separator
+
+The maintained importer validates PRM04EA as0..255. PRMEDIT adds its46th field,
+and startup/live setup apply the same value. A separate accepted-source baseline
+keeps session R across canceled/no-op/unrelated saves and recognizes explicit
+saved reverts after acknowledgement. The serial ABI is explicitly44 bytes and
+the candidate628; all existing offsets before the appended field remain stable.
+805 linked inputs,7 production DOS workflows and14 codec units pass. The expanded
+77-command application regression and64-output clean-source proof pass. See `docs/CLIPBOARD_SETTINGS.md`. Original menu parity, transfer-prompt
+workflows, other geometries, physical UART/modem and all F01–F16 gates remain open.
+
+Stock editor rechecks pass Synchronet12/eight wire and ENiGMA buffered seven/eight
+wire; immediate ENiGMA retains Home/Insert failures. The first buffered run missed
+editor entry after timed-login misalignment; its unchanged-input retry passes,
+and both attempts remain explicit. The synthetic Synchronet account exemption
+was restored and independently verified. All whole-application gates remain open.

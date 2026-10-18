@@ -7,7 +7,7 @@ typedef struct live_setup_result {
 enum { LIVE_SETUP_OK=0,LIVE_SETUP_ARGUMENT,LIVE_SETUP_UNBOUND,
  LIVE_SETUP_IDENTITY,LIVE_SETUP_IO,LIVE_SETUP_DECODE,LIVE_SETUP_COMMAND,
  LIVE_SETUP_STATE };
-/* Bind the DOS canonical startup identity and original source baud, before
+/* Bind the DOS canonical startup identity and original source baud and clipboard separator, before
  * autobaud changes the effective transport. No fallback on canonical errors.
  * A failed valid bind invalidates any previous binding/pending transaction. */
 unsigned __cdecl live_setup_bind(const char *path,
@@ -23,10 +23,10 @@ unsigned __cdecl live_setup_begin(const char *path,
 /* Read only the bound absolute PRM after child success. Keep selected directory
  * bytes frozen; no reread/accounting commit. Validate/classify into a merged
  * candidate: transport/profile/translation/selection/target stay active and are deferred;
- * display/mapping/modem/BREAK can be adopted by the foreground owner. Native
+ * display/mapping/modem/BREAK/clipboard can be adopted by the foreground owner. Native
  * command expansion is checked before any caller output commit. A failed
  * finish leaves destination intact and consumes the pending transaction.
- * Required result8 and destination626 must be disjoint from each other and
+ * Required result8 and destination628 must be disjoint from each other and
  * this module's storage. No active globals or hardware are changed here. */
 unsigned __cdecl live_setup_finish(live_configuration_plan *destination,
  live_setup_result *result);
@@ -41,7 +41,9 @@ unsigned __cdecl live_setup_finish(live_configuration_plan *destination,
 unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
  live_setup_result *result,unsigned permitted_link_mask);
 /* Acknowledge only a successfully committed baud change (mask2), or clear an
- * offer (mask0). This advances the source-rate baseline for future autobaud
+ * offer (mask0). A successful foreground commit also acknowledges the saved
+ * separator baseline. Session R survives a cancel/no-op/unrelated save until
+ * the stored separator changes. This advances the source-rate baseline for future autobaud
  * preservation, so reverting a previously applied rate is not ignored. */
 unsigned __cdecl live_setup_acknowledge(unsigned committed_baud_mask);
 unsigned __cdecl live_setup_abort(unsigned unused);

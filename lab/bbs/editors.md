@@ -543,3 +543,23 @@ explicit30ms `editor-clipboard-7aa4-buffer30` control passes all seven behavior
 checks and eight wire checks. Both close without saving a post. The pair keeps
 the same executable, recipe and serial configuration; TCP-boundary and physical
 modem limits remain. Both current reports preserve the preceding runtime cases.
+
+## Saved clipboard settings checkpoint
+
+Terminal `b79debbe9b35c1207eabf876bce84a10b6e1c7141988376f5680af991c6806a7`
+imports PRM04EA and adds the46th editor field, using44-byte serial and628-byte
+candidate layouts.77 terminal commands,805 settings inputs, seven new actual DOS
+workflows,14 codec units and64 fresh-source outputs pass. Current stock-editor
+checks remain ordinary editing; they do not exercise the separator setting.
+
+Synchronet `editor-clipcfg-b79d-hard` passes12 behavior/eight wire checks and
+aborts. Its declared temporary synthetic-account logon exemption is restored
+and independently read back. ENiGMA `editor-clipcfg-b79d-immediate` enters the
+editor and emits all eight measured sequences, retaining Home/Insert failures.
+The first30ms `editor-clipcfg-b79d-buffer30` misses editor entry after its timed
+login recipe falls out of alignment. It remains a failed prerequisite, without
+saving a post. The identical-input `editor-clipcfg-b79d-buffer30-retry` passes all
+seven editor/eight wire checks and closes unsaved. No decoder or recipe changed.
+`record_packetization.py --prior-prerequisite` retains that failed prerequisite
+separately while preserving the editor-entry requirement for both selected runs.
+The editor recorder now avoids duplicating identical selected/history entries.

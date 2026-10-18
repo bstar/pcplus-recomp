@@ -20,4 +20,5 @@
 %define TI_MAPPING_PAUSE 36
 %define TI_MAPPING_DELAY 38
 %define TI_TRANSLATION 40
-%define TI_SIZE 42
+%define TI_CLIPBOARD 42
+%define TI_SIZE 44

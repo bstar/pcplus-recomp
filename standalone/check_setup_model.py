@@ -11,7 +11,7 @@ SOURCES=['src/config/setup_model.c','src/config/terminal_import.c','src/config/m
 RATES=[300,1200,2400,4800,9600,19200,38400,57600,115200]
 def image():
  raw=bytearray(fixture())
- for at,v in [(0,0),(2,1),(4,0),(6,1),(8,8),(0x1e0,0),(0x194,4),(0x198,0),(0x19a,1),(0x19c,1),(0x19e,1),*[(0x1ae+i*2,7+i) for i in range(5)],*[(0x174+i*2,v) for i,v in enumerate([0x3f8,0x2f8,0x3e8,0x2e8])],*[(0x184+i*2,v) for i,v in enumerate([4,3,4,3])]]:struct.pack_into('<H',raw,at,v)
+ for at,v in [(0,0),(2,1),(4,0),(6,1),(8,8),(0x1e0,0),(0x4ea,13),(0x194,4),(0x198,0),(0x19a,1),(0x19c,1),(0x19e,1),*[(0x1ae+i*2,7+i) for i in range(5)],*[(0x174+i*2,v) for i,v in enumerate([0x3f8,0x2f8,0x3e8,0x2e8])],*[(0x184+i*2,v) for i,v in enumerate([4,3,4,3])]]:struct.pack_into('<H',raw,at,v)
  return bytes(raw)
 def build():
  OUT.mkdir(parents=True,exist_ok=True)
@@ -55,10 +55,10 @@ def main():
  build();m=Model();cases=[]
  def record(name,n):cases.append({'case':name,'inputs':n,'passed':True});print(name,n,flush=True)
  assert m.validate()==(0,65535)
- for i in range(45):
+ for i in range(46):
   m.reset();status,text=m.get(i);assert status==0,(i,status)
   assert m.set(i,text)==0 and m.raw()==image(),i
- record('all45-fields-get-set-byte-identical-with-opaque-tail-data',45)
+ record('all46-fields-get-set-byte-identical-with-opaque-tail-data',46)
  for index,values in [(0,[b'1',b'2',b'3',b'4']),(1,[str(v).encode() for v in RATES]),(2,[b'7',b'8']),(3,[bytes([c]) for c in b'NOEMSnoems']),(4,[b'1',b'2']),(9,[b'4',b'6']),(26,[b'0',b'350',b'65535'])]:
   for text in values:
    m.reset();assert m.set(index,text)==0,(index,text)
@@ -67,14 +67,14 @@ def main():
     # Match existing decoder's real rate, not just a round-trip in the editor.
     ptr=m.t
     assert m.call('_terminal_import_decode',[m.b,ptr])==0
-    plan=bytes(m.uc.mem_read(m.data_base+ptr,42));assert struct.unpack_from('<I',plan,2)[0]==int(text)
+    plan=bytes(m.uc.mem_read(m.data_base+ptr,44));assert struct.unpack_from('<I',plan,2)[0]==int(text)
  record('serial-profile-and-BREAK-values-agree-with-existing-importers',32)
  invalid={0:[b'0',b'5',b'-1'],1:[b'600',b'57601',b'4294967296'],2:[b'6',b'9'],3:[b'X',b'NN'],4:[b'0',b'3'],5:[b'2'],6:[b'2'],7:[b'2F8',b'FFFF'],8:[b'3',b'0'],9:[b'5'],10:[b'2'],11:[b'2'],12:[b'100',b'GG'],17:[b'0',b'32768'],18:[b'32768'],19:[b'2'],20:[b'2'],21:[b'256'],22:[b'2'],23:[b'32768'],24:[b'32768'],25:[b'256'],26:[b'65536',b'115200',b'99999999999999999999']}
  count=0
  for i,values in invalid.items():
   for text in values:
    m.reset();assert m.set(i,text)==2,(i,text);count+=1
- for i in range(45):
+ for i in range(46):
   m.reset();assert m.set(i,b'Z'*64)==2;count+=1
  record('invalid-numeric-parity-and-unterminated-edits-entire-image-atomic',count)
  count=0
@@ -113,9 +113,9 @@ def main():
   assert m.set(i,original)==0 and m.validate()==(0,65535);count+=1
  record('malformed-loaded-fields-view-without-normalizing-and-explicit-repair',count)
  m.reset()
- for args in [(0,m.b,0,m.t),(m.a,m.a,0,m.t),(m.a,m.b,0,m.b),(m.a,m.b,0,0xffe0),(m.a,m.b,45,m.t),(0xfc00,m.b,0,m.t)]:
+ for args in [(0,m.b,0,m.t),(m.a,m.a,0,m.t),(m.a,m.b,0,m.b),(m.a,m.b,0,0xffe0),(m.a,m.b,46,m.t),(0xfc00,m.b,0,m.t)]:
   before=m.raw();assert m.call('_setup_set',args)==1 and m.raw()==before
- for args in [(0,0,m.t,64),(m.b,0,m.b,64),(m.b,0,m.t,0),(m.b,0,m.t,1),(m.b,0,0xffe0,64),(m.b,45,m.t,64)]:assert m.call('_setup_get',args)==1
+ for args in [(0,0,m.t,64),(m.b,0,m.b,64),(m.b,0,m.t,0),(m.b,0,m.t,1),(m.b,0,0xffe0,64),(m.b,46,m.t,64)]:assert m.call('_setup_get',args)==1
  for args in [(0,m.bad),(m.b,m.b),(m.b,0),(m.b,0xffff)]:assert m.call('_setup_validate',args)==1
  record('near-cdecl-null-overlap-capacity-and-segment-wrap',16)
  (OUT/'VALID.PRM').write_bytes(image());before=hashlib.sha256(image()).hexdigest()

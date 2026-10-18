@@ -7,7 +7,8 @@ extern unsigned __cdecl live_modem_expand(const unsigned char *,unsigned char *,
 typedef char result_abi[sizeof(live_setup_result)==8?1:-1];
 typedef struct setup_owner {
  unsigned bound,pending,has_context,option_mask;
- unsigned source_baud_low,source_baud_high;
+ unsigned source_baud_low,source_baud_high,source_clipboard_separator;
+ unsigned offered_clipboard_separator;
  unsigned offered_mask,offered_baud_low,offered_baud_high;
  char path[64],canonical[128];
  directory_live_context context;
@@ -39,6 +40,7 @@ unsigned __cdecl live_setup_bind(const char *path,
  if(!external(path,64) || !external(source,sizeof(*source)) ||
   (context && !external(context,sizeof(*context))))return LIVE_SETUP_ARGUMENT;
  owner.bound=owner.pending=owner.offered_mask=0;
+ if(source->clipboard_separator>255)return LIVE_SETUP_ARGUMENT;
  size=string_size(path,64);if(size<2)return LIVE_SETUP_ARGUMENT;
  if(context && !directory_live_context_matches(context,path,context->directory_path,
   context->selection.entry_number,context->codes))return LIVE_SETUP_IDENTITY;
@@ -48,6 +50,7 @@ unsigned __cdecl live_setup_bind(const char *path,
  memcpy(owner.canonical,canonical,128);owner.has_context=context!=0;
  if(context)memcpy(&owner.context,context,sizeof(*context));
  owner.source_baud_low=source->baud_low;owner.source_baud_high=source->baud_high;
+ owner.source_clipboard_separator=owner.offered_clipboard_separator=source->clipboard_separator;
  owner.bound=1;return LIVE_SETUP_OK;
 }
 unsigned __cdecl live_setup_begin(const char *path,
@@ -66,7 +69,8 @@ unsigned __cdecl live_setup_begin(const char *path,
  memset(canonical,0,sizeof(canonical));
  if(capture_fs_canonical(path,canonical) || !same(canonical,owner.canonical,128))return LIVE_SETUP_IDENTITY;
  memcpy(&owner.active,active,sizeof(*active));memcpy(owner.target,target,64);
- owner.option_mask=option_mask;owner.offered_mask=0;owner.pending=1;return LIVE_SETUP_OK;
+ owner.option_mask=option_mask;owner.offered_mask=0;
+ owner.offered_clipboard_separator=owner.source_clipboard_separator;owner.pending=1;return LIVE_SETUP_OK;
 }
 static unsigned command_valid(const live_configuration_plan *plan)
 {
@@ -88,7 +92,7 @@ unsigned __cdecl live_setup_finish(live_configuration_plan *destination,live_set
 unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
  live_setup_result *result,unsigned permitted_link_mask)
 {
- live_configuration_result decoded;prm_dos_result io;unsigned mask,status,deferred;
+ live_configuration_result decoded;prm_dos_result io;unsigned mask,status,deferred,saved_clipboard_separator;
  if((permitted_link_mask&~(31U|LIVE_CHANGE_TRANSLATION)) || !external(destination,sizeof(*destination)) || !external(result,sizeof(*result)) ||
   !separate(destination,sizeof(*destination),result,sizeof(*result)))return LIVE_SETUP_ARGUMENT;
  memset(result,0,sizeof(*result));
@@ -118,6 +122,13 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
    owner.has_context?owner.context.codes:0,mask|2,&owner.active,&owner.stage,&decoded);
   if(status){result->status=LIVE_SETUP_DECODE;result->source_status=status;return result->status;}
  }
+ saved_clipboard_separator=owner.stage.serial.clipboard_separator;
+ /* Session R is independent of the saved file. A cancel/no-op or unrelated
+  * save must not restore its old stored separator. Adopt only a file edit. */
+ if(owner.stage.serial.clipboard_separator==owner.source_clipboard_separator){
+  owner.stage.serial.clipboard_separator=owner.active.serial.clipboard_separator;
+  owner.stage.change_mask&=~LIVE_CHANGE_CLIPBOARD;
+ }
  if(!command_valid(&owner.stage)){result->status=LIVE_SETUP_COMMAND;return result->status;}
  /* Explicit /X fixes the effective table mode, after raw PRM validation.
   * Other mode changes require explicit permission and a foreground handoff. */
@@ -127,6 +138,7 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
  }
  if((owner.stage.change_mask&LIVE_CHANGE_PORT) && !(permitted_link_mask&LIVE_CHANGE_PORT))permitted_link_mask&=~31U;
  deferred=owner.stage.change_mask&(((LIVE_CHANGE_TRANSPORT|LIVE_CHANGE_PROFILE|LIVE_CHANGE_TRANSLATION)&~permitted_link_mask)|LIVE_CHANGE_DIRECTORY|LIVE_CHANGE_TARGET);
+ owner.offered_clipboard_separator=saved_clipboard_separator;
  owner.offered_mask=owner.stage.change_mask;
  owner.offered_baud_low=owner.stage.serial.baud_low;owner.offered_baud_high=owner.stage.serial.baud_high;
  if(!(permitted_link_mask&LIVE_CHANGE_PORT)){
@@ -150,12 +162,13 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
  memcpy(destination,&owner.stage,sizeof(*destination));return LIVE_SETUP_OK;
 }
 unsigned __cdecl live_setup_abort(unsigned unused)
-{(void)unused;owner.pending=owner.offered_mask=0;return LIVE_SETUP_OK;}
+{(void)unused;owner.pending=owner.offered_mask=0;owner.offered_clipboard_separator=owner.source_clipboard_separator;return LIVE_SETUP_OK;}
 unsigned __cdecl live_setup_acknowledge(unsigned committed_baud_mask)
 {
  if(committed_baud_mask!=0 && committed_baud_mask!=LIVE_CHANGE_BAUD)return LIVE_SETUP_ARGUMENT;
  if(owner.bound!=1)return LIVE_SETUP_UNBOUND;
  if(committed_baud_mask && !(owner.offered_mask&LIVE_CHANGE_BAUD))return LIVE_SETUP_STATE;
  if(committed_baud_mask){owner.source_baud_low=owner.offered_baud_low;owner.source_baud_high=owner.offered_baud_high;}
+ owner.source_clipboard_separator=owner.offered_clipboard_separator;
  owner.offered_mask=0;return LIVE_SETUP_OK;
 }

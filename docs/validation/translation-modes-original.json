@@ -1,10 +1,10 @@
 {
   "passed": true,
-  "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
+  "binary_sha256": "b79debbe9b35c1207eabf876bce84a10b6e1c7141988376f5680af991c6806a7",
   "inputs": 561,
   "cases": [
     {
-      "case": "PRM-offset1e0-three-modes-exact42-byte-plan-and-invalid-atomic-rejection",
+      "case": "PRM-offset1e0-three-modes-exact44-byte-plan-and-invalid-atomic-rejection",
       "inputs": 7,
       "passed": true
     },
@@ -68,17 +68,17 @@
   ],
   "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
   "sources": {
-    "standalone/check_translation_modes.py": "4a89b740bd940a0f360e7f348d3408b4b07d5ba1e1f3ca9caef674427efe0445",
+    "standalone/check_translation_modes.py": "a019009190488e9bb9c85c08fc490c8a4c8d4f03d6e20bdc8d3e0d4162520d93",
     "standalone/check_translation_live.py": "b84c878c3ca83fa27422631dd782a880b95e4e465b08386c4fa9cbed7905a08e",
-    "standalone/check_terminal_config.py": "fae4d0735ace207c27aaeb80aaeb84c18b858e5954fc29e6e8ed99a47c36a8d1",
-    "standalone/terminal_config_fixtures.py": "124f1e1c187e88b61cdeef065897ae545ee3a35c5088123b62e1c07f3da0b5fe",
-    "standalone/check_live_configuration.py": "6eed48ba3424ebff0714e759b0dc81a78e49afad9428c307f13561fb4efa0fc8",
-    "standalone/check_live_setup_owner.py": "b8708c21e3e2ac493bcdec8dc57ce91ab8f48b79256df4c4632a817f1bbb58fb",
-    "standalone/check_setup_model.py": "4006e95d96cc780a9e951bc9c59a495be62a2ff5ad0bd6c25cae24fcbc3764b5",
-    "standalone/check_live_setup_apply.py": "0418b67a6c655cbbcf012d5be873e2102117cf0244c6038bea19df1c54ed8c4c",
+    "standalone/check_terminal_config.py": "1e90aad1970cfe5faaa9dfc8bdb79d3692a92902729ad96a3975e5c73c0649e3",
+    "standalone/terminal_config_fixtures.py": "8d9dedd32f8abaeb42c8ed561055b35e77437ed3132950f94f0f80435fd85eaa",
+    "standalone/check_live_configuration.py": "d22f96bb07d095011744c9f530535756bc5f15e6fee31d1f8fd36c99ec6352b7",
+    "standalone/check_live_setup_owner.py": "3b71002c0164241b07c6f999aedfb0a4fa36e993551fa54c20d47bef4ce4a17e",
+    "standalone/check_setup_model.py": "9db01a381fed9a6951e9d17639320d48be0dd0657c15849ce53a987206d59676",
+    "standalone/check_live_setup_apply.py": "3e13cce060f48d3d754fd43c77b532dc95fc013b1340fe191a14adbf57338b73",
     "standalone/live_setup_kernel.py": "b36cec472912401a60de34c051284e16922c86594614190c426e57611e415618",
     "standalone/check_translation.py": "4236af225d0710754d807fba4abcea853d9dccbf117a833e9c2bf9899bfecbcb",
     "standalone/check_terminal_transfer_live.py": "7080c84249b3296463cac411e3b5ec0ec4cbf4ac6183fed7d557753eaf16b020"
   },
-  "scope": "Actual linked42-byte PRM validator,626-byte candidate/owner,45-field editor, driver, monitor, RIS and transfer gates. Hardware/DOS modeled except editor diagnostic compilation. Optional genuine-original overlay3 comparison uses controlled CRT boundaries; no synthetic analysis EXE executes. Invalid native selections default to identity; maintained validator deliberately rejects them."
+  "scope": "Actual linked44-byte PRM validator,628-byte candidate/owner,46-field editor, driver, monitor, RIS and transfer gates. Hardware/DOS modeled except editor diagnostic compilation. Optional genuine-original overlay3 comparison uses controlled CRT boundaries; no synthetic analysis EXE executes. Invalid native selections default to identity; maintained validator deliberately rejects them."
 }

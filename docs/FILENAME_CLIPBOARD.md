@@ -34,8 +34,10 @@ placing a separator after **each** selected entry and one final CR if any entry
 was selected. Single sends the first allocated name plus CR, including an edited
 empty first name. The maximum packet is196 bytes. Empty list/tag selection sends
 nothing. Default separator is CR; R changes the session value. PRM offset04EA
-contains the recovered original saved word, but maintained import/persistence
-and its original Setup control remain unfinished.
+contains the recovered original saved word. The validated startup importer,
+46th PRMEDIT field and live adoption now support it; see
+[saved settings](CLIPBOARD_SETTINGS.md). The original Setup control remains
+unrecovered.
 
 ## Serviced output and cancellation
 
@@ -86,7 +88,7 @@ regression caught a header spilling into the first content row after adding the
 clipboard shortcut; its label was shortened to fit within the header row.
 
 This is maintained clipboard integration, not completion of F11. Original menu
-and field-navigation parity, saved separator adoption, other geometries, clipboard
+and field-navigation parity, other geometries, clipboard
 prompt workflows surrounding batch/single transfers and physical UART/modem
 validation remain open. Clipboard local ownership excludes active protocol byte
 streams; it does not inject filenames into binary transfers.

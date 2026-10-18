@@ -15,12 +15,12 @@ ROOT=Path(__file__).resolve().parents[1]
 BINARY=ROOT/'build/terminal/TERMINAL.EXE';MAP=ROOT/'build/terminal/terminal.map'
 def fixture():
  raw=bytearray(modem_fixture());serial=terminal_fixture()
- for at,size in [(0,10),(0x174,32),(0x194,12),(0x1ae,10),(0x1e0,2)]:raw[at:at+size]=serial[at:at+size]
+ for at,size in [(0,10),(0x174,32),(0x194,12),(0x1ae,10),(0x1e0,2),(0x4ea,2)]:raw[at:at+size]=serial[at:at+size]
  return bytes(raw)
 def terminal_expected(raw):
  words=lambda at:struct.unpack_from('<H',raw,at)[0]
  port=words(0);rate=RATES[words(2)]
- return struct.pack('<21H',port+1,rate&65535,rate>>16,words(4),words(8),words(6),words(0x198),words(0x19a),words(0x194),*(words(at) for at in (0x1ae,0x1b0,0x1b2,0x1b4,0x1b6,0x19c,0x19e)),words(0x174+port*2),words(0x184+port*2),raw[0x1e2],words(0x1e4),words(0x1e0))
+ return struct.pack('<22H',port+1,rate&65535,rate>>16,words(4),words(8),words(6),words(0x198),words(0x19a),words(0x194),*(words(at) for at in (0x1ae,0x1b0,0x1b2,0x1b4,0x1b6,0x19c,0x19e)),words(0x174+port*2),words(0x184+port*2),raw[0x1e2],words(0x1e4),words(0x1e0),words(0x4ea))
 class Startup(Options):
  def __init__(self):
   super().__init__(BINARY,MAP);self.calls=[];self.payload=fixture();self.load_status=0
@@ -36,9 +36,9 @@ class Startup(Options):
   if not self.load_status:u.mem_write(self.data_base+image,self.payload)
   if io:u.mem_write(self.data_base+io,struct.pack('<4H',self.load_status,5 if self.load_status else 0,0,0 if self.load_status else 1264))
   u.reg_write(UC_X86_REG_AX,self.load_status);u.reg_write(UC_X86_REG_SP,sp+2);u.reg_write(UC_X86_REG_IP,ret)
- def plans(self):return bytes(self.uc.mem_read(self.data_base+self.serial,42)),bytes(self.uc.mem_read(self.data_base+self.modem,368))
+ def plans(self):return bytes(self.uc.mem_read(self.data_base+self.serial,44)),bytes(self.uc.mem_read(self.data_base+self.modem,368))
  def poison(self):
-  self.uc.mem_write(self.data_base+self.serial,b'\xcc'*42);self.uc.mem_write(self.data_base+self.modem,b'\xdd'*368)
+  self.uc.mem_write(self.data_base+self.serial,b'\xcc'*44);self.uc.mem_write(self.data_base+self.modem,b'\xdd'*368)
  def startup(self,arguments=None):
   self.uc.reg_write(UC_X86_REG_ES,self.ds)
   status=self.call('_terminal_startup_read',arguments or [self.path,self.serial,self.modem,self.result],limit=300000)

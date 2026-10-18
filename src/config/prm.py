@@ -26,6 +26,7 @@ WORD_FIELDS={
  'underline_attribute':0x1d3a-ORIGINAL_DS_BASE,
  'current_attribute':0x1f70-ORIGINAL_DS_BASE,
  'translation_mode':0x1d64-ORIGINAL_DS_BASE,
+ 'clipboard_separator':0x206e-ORIGINAL_DS_BASE,
 }
 
 @dataclass(frozen=True)

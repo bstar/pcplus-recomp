@@ -13,8 +13,8 @@ WORD_ABI(normal_attribute,18);WORD_ABI(bold_attribute,20);WORD_ABI(preset_attrib
 WORD_ABI(reverse_attribute,24);WORD_ABI(underline_attribute,26);
 WORD_ABI(autowrap,28);WORD_ABI(scroll_enabled,30);WORD_ABI(io_base,32);WORD_ABI(irq,34);
 WORD_ABI(mapping_pause_character,36);WORD_ABI(mapping_character_delay_units,38);
-WORD_ABI(translation_mode,40);
-typedef char abi_settings_size[sizeof(terminal_import_settings)==42 ? 1 : -1];
+WORD_ABI(translation_mode,40);WORD_ABI(clipboard_separator,42);
+typedef char abi_settings_size[sizeof(terminal_import_settings)==44 ? 1 : -1];
 static unsigned word(const prm_dos_image *image,unsigned at)
 { return image->bytes[at]|((unsigned)image->bytes[at+1]<<8); }
 terminal_import_status __cdecl terminal_import_decode(const prm_dos_image *image,
@@ -55,6 +55,8 @@ terminal_import_status __cdecl terminal_import_decode(const prm_dos_image *image
  candidate.mapping_character_delay_units=word(image,0x1e4);
  candidate.translation_mode=word(image,OFFSET(0x1d64));
  if(candidate.translation_mode>2)return TERMINAL_IMPORT_TRANSLATION;
+ candidate.clipboard_separator=word(image,0x4ea);
+ if(candidate.clipboard_separator>255)return TERMINAL_IMPORT_CLIPBOARD;
  if(candidate.normal_attribute>255 || candidate.bold_attribute>255 ||
   candidate.preset_attribute>255 || candidate.reverse_attribute>255 ||
   candidate.underline_attribute>255 || candidate.autowrap>1 ||

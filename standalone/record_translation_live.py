@@ -38,7 +38,7 @@ def main():
     for report in (modes, original_modes):
         for name, digest in report['sources'].items():
             assert sha(name) == digest, name
-    assert regression['complete'] and len(regression['commands']) == 75
+    assert regression['complete'] and len(regression['commands']) == 77
     assert all(command['exit_code'] == 0 for command in regression['commands'])
     proof = read('docs/validation/terminal-source-build.json')
     assert proof['passed'] and proof['binary_sha256'] == binary
@@ -91,9 +91,9 @@ def main():
                   retained_artifacts={name: sha(name) for name in artifacts},
                   resource_lookup=dict(report='docs/validation/resource-lookup.json', linked_inputs=117, generic_DOS_assertions=30, actual_DOS_cases=12),
                   confirmed_live_adoption=dict(report='docs/validation/live-translation.json', linked_inputs=331, actual_DOS_cases=10),
-                  scope='Saved PRM modes0/1/2, checked current-directory then bounded PCPLUS-environment default table lookup and explicit /X override, driver7-bit mask and binary-transfer rejection,42-byte serial/626-byte candidate ABI,45-field mode editor, default/decline deferral and confirmed live adoption. Linked561 mode inputs, five genuine-original selector cases,783 prior translation inputs,12 actual DOS translation and12 offline editor cases, full75-command terminal regression and isolated source rebuild. Offline XLTEDIT provides checked table editing/save/reload. Confirmed live changes bind namespaces, stage tables and commit mode/table/mask during the foreground handoff. Same-mode reload, a dedicated terminal XLT editor action, lookup for other resources and physical UART remain open.')
+                  scope='Saved PRM modes0/1/2, checked current-directory then bounded PCPLUS-environment default table lookup and explicit /X override, driver7-bit mask and binary-transfer rejection,44-byte serial/628-byte candidate ABI,46-field mode editor, default/decline deferral and confirmed live adoption. Linked561 mode inputs, five genuine-original selector cases,783 prior translation inputs,12 actual DOS translation and12 offline editor cases, full77-command terminal regression and isolated source rebuild. Offline XLTEDIT provides checked table editing/save/reload. Confirmed live changes bind namespaces, stage tables and commit mode/table/mask during the foreground handoff. Same-mode reload, a dedicated terminal XLT editor action, lookup for other resources and physical UART remain open.')
     (ROOT / 'docs/validation/translation-live.json').write_text(json.dumps(result, indent=2) + '\n')
-    print('Recorded saved XLT modes:', modes['inputs'], 'mode inputs,12 DOS cases,75 regression commands')
+    print('Recorded saved XLT modes:', modes['inputs'], 'mode inputs,12 DOS cases,77 regression commands')
 
 
 if __name__ == '__main__':

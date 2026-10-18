@@ -155,8 +155,11 @@ terminal_load_configuration:
 
 ; Validated structure only, startup before UART ownership. AX/BX/CX/DX scratch.
 ; CLI category selection wins even when it explicitly selects a default value.
+extern _clipboard_separator
 extern terminal_break_delay_units
 terminal_apply_configuration:
+ mov ax,[terminal_configuration_values+TI_CLIPBOARD]
+ mov [_clipboard_separator],ax
  test word [terminal_option_mask],96
  jz .serial_settings
  mov ax,[terminal_modem_settings+MI_BREAK_DELAY]

@@ -31,6 +31,17 @@ class PrmTests(unittest.TestCase):
    self.assertEqual(output.to_bytes()[:0x1e0],data[:0x1e0])
    self.assertEqual(output.to_bytes()[0x1e0:0x1e2],struct.pack('<H',mode))
    self.assertEqual(output.to_bytes()[0x1e2:],data[0x1e2:])
+ def test_clipboard_word_location_and_lossless_opaque_neighbors(self):
+  data=bytes((i*31+11)&255 for i in range(IMAGE_SIZE));prm=LegacyPrm201(data)
+  # The lossless codec also represents malformed raw words. Application
+  # validation separately rejects values above255 without altering the image.
+  for value in (*range(256),256,65535):
+   output=prm.with_word('clipboard_separator',value).to_bytes()
+   self.assertEqual(output[:0x4ea],data[:0x4ea])
+   self.assertEqual(output[0x4ea:0x4ec],struct.pack('<H',value))
+   self.assertEqual(output[0x4ec:],data[0x4ec:])
+   self.assertEqual(LegacyPrm201(output).word('clipboard_separator'),value)
+  self.assertEqual(prm.to_bytes(),data)
  def test_verified_word_and_port_array_locations(self):
   data=bytearray(IMAGE_SIZE)
   struct.pack_into('<H',data,0x194,6);struct.pack_into('<H',data,0x1ae,0x17)
