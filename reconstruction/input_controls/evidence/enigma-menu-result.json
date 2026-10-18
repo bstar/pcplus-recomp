@@ -1,0 +1,74 @@
+{
+  "server": "ENiGMA\u00bd",
+  "version": "0.5.1-beta",
+  "commit": "6c25317168b762f7d9088a54d3f8295438827a0e",
+  "session_id": "zOUO8Wlz2yE",
+  "authenticated": true,
+  "menus": [
+    {
+      "menu": "telnetConnected",
+      "time": "2026-10-18T01:36:03.873Z"
+    },
+    {
+      "menu": "matrix",
+      "time": "2026-10-18T01:36:05.374Z"
+    },
+    {
+      "menu": "login",
+      "time": "2026-10-18T01:36:10.576Z"
+    },
+    {
+      "menu": "fullLoginSequenceLoginArt",
+      "time": "2026-10-18T01:36:18.181Z"
+    },
+    {
+      "menu": "fullLoginSequenceLastCallers",
+      "time": "2026-10-18T01:36:25.128Z"
+    },
+    {
+      "menu": "fullLoginSequenceWhosOnline",
+      "time": "2026-10-18T01:36:29.130Z"
+    },
+    {
+      "menu": "fullLoginSequenceOnelinerz",
+      "time": "2026-10-18T01:36:33.132Z"
+    },
+    {
+      "menu": "fullLoginSequenceNewScanConfirm",
+      "time": "2026-10-18T01:36:37.134Z"
+    },
+    {
+      "menu": "fullLoginSequenceUserStats",
+      "time": "2026-10-18T01:36:39.637Z"
+    },
+    {
+      "menu": "mainMenu",
+      "time": "2026-10-18T01:36:43.639Z"
+    },
+    {
+      "menu": "messageBaseMainMenu",
+      "time": "2026-10-18T01:36:49.643Z"
+    },
+    {
+      "menu": "mainMenu",
+      "time": "2026-10-18T01:36:54.650Z"
+    },
+    {
+      "menu": "fileBaseMainMenu",
+      "time": "2026-10-18T01:36:59.656Z"
+    }
+  ],
+  "actual_dos_queries": [
+    "\u001b[0c",
+    "\u001b[6n"
+  ],
+  "actual_dos_replies": [
+    "\u001b[1;1R",
+    "\u001b[?1;2c"
+  ],
+  "display_bytes": 47181,
+  "display_sha256": "f769a67eaeba8b9f0f6f00b3924e645aa65b8817ad7b25e4c04ef986d94c2895",
+  "terminal_sha256": "aca82619ad87a7e9aa259c4716a75eebb9483c204cbd0da17ab8c8b8a7d77029",
+  "original_stock_art_unchanged": true,
+  "scope": "Authoritative actual server log transitions plus DOS/modem captures; no public boards, messages, transfers or physical modem tests."
+}

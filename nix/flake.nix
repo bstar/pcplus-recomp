@@ -57,6 +57,17 @@
         cp probe.exe "$out/"
       '';
       devShells.${system} = {
+        bbs = pkgs.mkShell {
+          packages = with pkgs; [
+            nodejs_24 python3 gcc gnumake pkg-config git curl
+            nspr libarchive ncurses perl unzip zip patch
+            autoconf automake libtool patchelf mosquitto
+          ];
+          LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+            pkgs.stdenv.cc.cc.lib pkgs.nspr pkgs.libarchive
+            pkgs.ncurses pkgs.mosquitto
+          ];
+        };
         analysis = pkgs.mkShell {
           packages = [ rea python pkgs.jq pkgs.nasm pkgs.lhasa ];
         };

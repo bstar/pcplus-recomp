@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "binary_sha256": "aca82619ad87a7e9aa259c4716a75eebb9483c204cbd0da17ab8c8b8a7d77029",
+  "baseline_bytes": 240,
+  "cases": [
+    {
+      "case": "soh-original-mode-gated-home",
+      "passed": true
+    },
+    {
+      "case": "vt-original-linefeed-high-profile-up-encoded-row-and-ignore",
+      "passed": true
+    },
+    {
+      "case": "can-original-default-and-mode-gated-cursor-right",
+      "passed": true
+    },
+    {
+      "case": "nondefault-emulation-and-protocol-services-remain-explicit",
+      "passed": true
+    },
+    {
+      "case": "synthetic-malformed-sauce-control-byte-fixture",
+      "passed": true
+    },
+    {
+      "case": "optional-actual-enigma-captured-wire-consumed",
+      "passed": true
+    }
+  ],
+  "optional_wire_sha256": "7bc91749f357a11a792c2a342cdf494b1af8f672df57d3330069138f85955c9a",
+  "scope": "Actual linked recovered control/cursor/render/history code; declared BIOS model. Synthetic public fixture; optional local capture is not a required test input."
+}

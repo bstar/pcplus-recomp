@@ -50,16 +50,22 @@ requires an attached DOS machine/modem and must not be inferred from emulation.
 
 ## 3. Usable terminal integration
 
-Next implementation priority: wire the recovered continuous input entry to the
-real UART and keyboard in an interactive DOS executable. Replace memory byte
-fixtures with a bounded receive provider, service transmit/flow/keyboard while
-parsing fragmented escapes, and restore UART/vector state on every exit/error.
-Use source-owned initial settings and the proved configuration subset; do not
-require original install files. Validate against a synthetic BBS peer with
-rendered menus, DSR replies, DECCKM arrow keys, stalled links and Alt-X cleanup.
-This terminal milestone does not close the remaining application gates below.
+The first source-only interactive `TERMINAL.EXE` connects the recovered UART,
+keyboard, parser and display engine. Its synthetic DOSBox-X tests verify actual
+video memory, DSR replies, both DECCKM arrow modes, stalled/partial input and
+Alt-X cleanup, including independent before/after UART/PIC/vector snapshots.
+Command options validate COM1..4, baud, line format and flow control before
+touching hardware. Real Synchronet and Mystic login/navigation tests exposed a
+missing form-feed handler; deeper ENiGMA½ testing exposed SOH/VT/CAN controls in
+a malformed stock theme's metadata. Those handlers are now recovered and tested;
+the source-owned defaults select the proved original ANSI profile. All three
+local servers pass login and menu navigation through a modeled Hayes/Telnet
+modem; Mystic also passes indexed-screen arrows and Escape return. An
+isolated maintained-source snapshot builds the identical interactive executable
+with no original executables or installation present. These tests do not establish
+physical modem compatibility or close the remaining application gates below.
 
-- [ ] Combine the source driver, parser, screen and keyboard into a DOS terminal.
+- [x] Combine the source driver, parser, screen and keyboard into a DOS terminal.
 - [ ] Support dialing/connect/hang-up and configurable serial/modem settings.
 - [ ] Capture representative BBS sessions and verify interaction, display and transfers.
 - [ ] Validate on the actual modem and failing BBS/key sequence supplied by the user.

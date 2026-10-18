@@ -8,6 +8,7 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 
 | Output | Inputs | Current purpose |
 | --- | --- | --- |
+| `build/terminal/TERMINAL.EXE` | Maintained and recovered assembly source only | First interactive serial terminal; modern BBS interoperability under test |
 | `build/standalone/SERIAL.EXE` | Maintained assembly source only | Independently linked DOS diagnostic exercising the recovered UART module |
 | `build/ansi/PARSER.EXE` | Maintained assembly source only | Independently linked parameter-reader diagnostic with bounds checks |
 | `build/keyboard/KEYBOARD.EXE` | Maintained assembly source only | Recovered BIOS keyboard acquisition/normalization diagnostic |
@@ -30,6 +31,20 @@ some time, particularly Open Watcom.
 ```sh
 ./tools/build
 ```
+
+The interactive milestone can be built and tested separately:
+
+```sh
+./tools/build terminal test-terminal
+```
+
+In DOS, `TERMINAL COM1 38400 8N1 SOFT` selects software flow control.
+Use `HARD` for RTS/CTS or `NONE` to disable flow control; match the modem's
+settings. Alt-X exits. ASCII keys and four cursor keys are connected to the
+recovered serial and ANSI engine. This executable does not yet provide the
+full menus, dialing directory, file transfers or scripting engine.
+Local Synchronet, ENiGMA½ and Mystic interoperability work is documented in
+[lab/bbs/README.md](lab/bbs/README.md).
 
 Copy `build/standalone/SERIAL.EXE` to DOS and run:
 

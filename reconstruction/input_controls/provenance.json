@@ -1,0 +1,64 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/input_controls/start_heading.asm",
+      "start": 3682,
+      "end": 3696,
+      "bytes": 14,
+      "instructions": 6,
+      "sha256": "83ce1321fc8c5ea4145976015dd883b2bd9f6dc4435aaa7c6aa704355cf8a0b3",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/input_controls/vertical_tab.asm",
+      "start": 3938,
+      "end": 4016,
+      "bytes": 78,
+      "instructions": 30,
+      "sha256": "7101ed61c4294672ab02a95750153406b5a0d3ca9592cabb6cb543aba6ef6171",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/input_controls/cancel.asm",
+      "start": 4520,
+      "end": 4668,
+      "bytes": 148,
+      "instructions": 61,
+      "sha256": "c03ba8dc253cd662c4e1737901860fec220ae7114a90e648e720922a6062932b",
+      "matched_original": true
+    }
+  ],
+  "state": {
+    "9026": "terminal_control_mode_9026",
+    "1d18": "csi_terminal_id",
+    "399c": "screen_cursor_row",
+    "399e": "screen_cursor_column",
+    "8fe8": "terminal_dec_keys",
+    "9020": "terminal_newline_mode_9020",
+    "903e": "terminal_tab_wrap",
+    "1fb0": "terminal_control_mode_1fb0",
+    "1f70": "attributes_current"
+  },
+  "services": {
+    "1bbe": "screen_set_cursor",
+    "1efc": "screen_cursor_up",
+    "5ca0": "ansi_next_byte",
+    "1d88": "screen_linefeed",
+    "ba33": "terminal_control_ba33",
+    "b9eb": "terminal_control_b9eb",
+    "6dca": "terminal_control_6dca",
+    "1ea0": "screen_cursor_right",
+    "aad9": "terminal_control_aad9",
+    "1e30": "screen_cursor_left",
+    "6c4a": "text_write_bios",
+    "0dae": "terminal_control_0dae",
+    "bb83": "terminal_control_bb83",
+    "abde": "ansi_unread_byte"
+  },
+  "entry_evidence": "Actual startupcontroltable44a0+retainedresident0610dispatchassembly; decodedverifiedoriginalranges.",
+  "limitations": [
+    "State/service names are analyst annotations. Nondefault emulation and protocol-detection branches remain external dependencies.",
+    "SOH/VT/CAN default branches are original behavior, not maintained no-op substitutions."
+  ]
+}
