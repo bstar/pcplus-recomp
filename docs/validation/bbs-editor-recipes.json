@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "recipe_checks": {
+    "passed": true,
+    "canonical_input_characters": 369,
+    "complete_ADDKEY_characters": 392,
+    "no_enter_after_body": true,
+    "source_sha256": "faa58bd92ccb0fa6d390b4e7af82df727278d8080fd9b19d0bdb177e457f3989",
+    "scope": "Canonical local unsaved ENiGMA keyboard recipe, independent of mutable run reports. All exercised key aliases and complete DOS command length checked; generated wrapper accumulation reproduced separately. Actual editor behavior is tested by DOS/server runs."
+  },
+  "prerequisite_failure": {
+    "label": "editor-modem-7a0e-immediate",
+    "binary_sha256": "7a0ea9d33995ebf177f43865c440f5c7082c1508c3403c91a597e87357228d62",
+    "stage": "Preflight before executing the maintained DOS harness",
+    "reason": "Recorded generated keyboard output was reused as input; repeated prefixes/exit retries exceeded the DOSBox ADDKEY bound.",
+    "DOS_launched": false,
+    "BBS_connection_attempted": false,
+    "retained_artifacts": {
+      "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate/audit.log": "ee96cf6b36a95edf9931eb97b5e9b614561b2943cd1fd9d03e70cd0438df6570",
+      "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate/harness.log": "c2b123cbf2651611398caf9f56f9616ad697572f787c29a55f4b4d207cf456aa"
+    }
+  },
+  "source_sha256": {
+    "lab/bbs/check_editor_recipes.py": "0185b05cc727dd482441ce7cc08077e7a84e419c29e63cbabca236a69f78fd9b",
+    "lab/bbs/editor-recipes.json": "faa58bd92ccb0fa6d390b4e7af82df727278d8080fd9b19d0bdb177e457f3989",
+    "lab/bbs/packetization_editor_probe.py": "d6af1572c46014cc1be9c300d38c029ae8552d1cd6d5cae9c6857e4a7125a411",
+    "lab/bbs/test_dos.py": "e35f9e1622cd50b004782786d9d569723ecff83dd4fdd1c683e489e2ab8ba49d"
+  },
+  "scope": "Canonical synthetic unsaved ENiGMA input independently checked for complete DOSBox command length, exercised aliases and no Enter after body. Failed preflight retained separately from actual DOS/server compatibility evidence. Historical generated keyboard sequences remain intact; input is no longer read from mutable reports."
+}

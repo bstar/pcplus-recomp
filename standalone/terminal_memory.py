@@ -72,8 +72,21 @@ def inspect_terminal_memory(binary,map_path):
   assert hi<=shadow or lo>=far_end,(name,'code overlaps shadow/history')
   for buf in ui_buffers.values():assert hi<=buf['start_linear'] or lo>=buf['end_linear'],(name,'code overlaps UI screen')
   assert hi<=static_end,(name,'PROGRAM would release executable code')
+  for other in code_segments:
+   other_lo=other['relative_segment']*16+other['offset']
+   assert hi<=other_lo or lo>=other_lo+other['bytes'],(name,'code segments overlap')
   code_segments.append(dict(name=name,kind=kind,relative_segment=seg,offset=off,bytes=length))
  near_code=next(c for c in code_segments if c['name']=='_TEXT')
+ def raw(name,n):return image[start+address(name):start+address(name)+n]
+ def far_call(source,target):
+  assert raw(source,6)==b'\x9a'+struct.pack('<HH',symbols[target][1],symbols[target][0])+b'\xc3',(source,'far target/return')
+  assert address(source)+3 in relocations,(source,'missing far-call relocation')
+ def near_call(source,target,prefix=b'',suffix=b'\xcb'):
+  code=raw(source,len(prefix)+3+len(suffix));assert code[:len(prefix)]==prefix
+  at=len(prefix);assert code[at]==0xe8 and code[at+3:]==suffix,(source,'near call/return')
+  displacement=struct.unpack_from('<h',code,at+1)[0]
+  assert symbols[source][0]==symbols[target][0]
+  assert (symbols[source][1]+at+3+displacement)&65535==symbols[target][1],(source,'wrong near target')
  bridges=0
  if any(c['name']=='PRINT_CODE' for c in code_segments):
   far_code=next(c for c in code_segments if c['name']=='PRINT_CODE')
@@ -81,16 +94,6 @@ def inspect_terminal_memory(binary,map_path):
   assert controller_seg!=near_code['relative_segment'] and far_code['offset']==0,'Far code must have its own paragraph-aligned CS'
   assert address('terminal_controller_code_start')==controller_seg*16
   assert address('terminal_controller_code_end')-address('terminal_controller_code_start')==far_code['bytes']
-  def raw(name,n):return image[start+address(name):start+address(name)+n]
-  def far_call(source,target):
-   assert raw(source,6)==b'\x9a'+struct.pack('<HH',symbols[target][1],symbols[target][0])+b'\xc3',(source,'far target/return')
-   assert address(source)+3 in relocations,(source,'missing far-call relocation')
-  def near_call(source,target,prefix=b'',suffix=b'\xcb'):
-   code=raw(source,len(prefix)+3+len(suffix));assert code[:len(prefix)]==prefix
-   at=len(prefix);assert code[at]==0xe8 and code[at+3:]==suffix,(source,'near call/return')
-   displacement=struct.unpack_from('<h',code,at+1)[0]
-   assert symbols[source][0]==symbols[target][0]
-   assert (symbols[source][1]+at+3+displacement)&65535==symbols[target][1],(source,'wrong near target')
   abi=Path(__file__).resolve().parents[1]/'src/terminal/controller_abi.inc'
   for kind,name in re.findall(r'^CONTROLLER_(ENTRY|SERVICE|STACK_SERVICE) (\w+)$',abi.read_text(),re.M):
    if kind=='ENTRY':
@@ -104,6 +107,44 @@ def inspect_terminal_memory(binary,map_path):
     near_call(name+'_resident',name,prefix=b'\x50' if kind=='STACK_SERVICE' else b'',suffix=b'\x58\xcb' if kind=='STACK_SERVICE' else b'\xcb')
    bridges+=1
   assert bridges==22,'Incomplete controller ABI validation'
+  extra['controller_bridge_pairs_verified']=bridges
+ if 'terminal_modem_code_start' in symbols:
+  assert any(c['name']=='MODEM_CODE' for c in code_segments),'Modem segment missing from executable map'
+ if any(c['name']=='MODEM_CODE' for c in code_segments):
+  modem_code=next(c for c in code_segments if c['name']=='MODEM_CODE')
+  modem_seg=modem_code['relative_segment']
+  assert modem_seg!=near_code['relative_segment'] and modem_code['offset']==0,'Modem code needs a distinct paragraph-aligned CS'
+  assert all(c['relative_segment']!=modem_seg for c in code_segments if c['name']!='MODEM_CODE'),'Modem CS aliases other code'
+  assert address('terminal_modem_code_start')==modem_seg*16
+  assert address('terminal_modem_code_end')-address('terminal_modem_code_start')==modem_code['bytes']
+  abi=Path(__file__).resolve().parents[1]/'src/terminal/modem_abi.inc'
+  modem_bridges=0
+  for line in abi.read_text().splitlines():
+   if not line or line.startswith(';'):continue
+   fields=line.replace(',',' ').split();kind,name=fields[:2]
+   if kind=='MODEM_ENTRY':
+    assert len(fields)==2
+    assert symbols[name][0]==near_code['relative_segment']
+    assert symbols[name+'_far'][0]==symbols[name+'_impl'][0]==modem_seg
+    far_call(name,name+'_far');near_call(name+'_far',name+'_impl')
+   else:
+    assert kind in ('MODEM_SERVICE','MODEM_CDECL_SERVICE')
+    target=fields[2]
+    assert symbols[name+'_service'][0]==modem_seg
+    assert symbols[name+'_resident'][0]==symbols[target][0]==near_code['relative_segment']
+    far_call(name+'_service',name+'_resident')
+    prefix=b'';suffix=b'\xcb'
+    if kind=='MODEM_CDECL_SERVICE':
+     assert len(fields)==4
+     count=int(fields[3]);assert 1<=count<=4
+     prefix=b'\x55\x89\xe5'+b''.join(bytes([0xff,0x76,8+2*i]) for i in reversed(range(count)))
+     suffix=b'\x8d\x66\x00\x5d\xcb'
+    else:assert len(fields)==3
+    near_call(name+'_resident',target,prefix=prefix,suffix=suffix)
+   modem_bridges+=1
+  assert modem_bridges==22,'Incomplete modem ABI validation'
+  bridges+=modem_bridges
+  extra['modem_bridge_pairs_verified']=modem_bridges
  extra.update(resident_code_bytes=near_code['bytes'],resident_code_spare_bytes=65536-near_code['bytes'],code_segments=code_segments,far_code_bridge_pairs_verified=bridges)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'

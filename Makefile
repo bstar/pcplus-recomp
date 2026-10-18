@@ -61,6 +61,7 @@ terminal:
 	python3 standalone/build_terminal.py
 
 test-terminal: terminal
+	python3 standalone/check_modem_far_live.py
 	python3 standalone/check_terminal_break_live.py
 	python3 standalone/check_ui_screen_far.py
 	python3 standalone/check_far_code_live.py
@@ -101,6 +102,7 @@ test-terminal: terminal
 	python3 standalone/test_directory_terminal.py
 
 test-bbs-modem:
+	python3 lab/bbs/check_editor_recipes.py
 	python3 lab/bbs/check_modem.py
 	python3 lab/bbs/check_packetization.py
 

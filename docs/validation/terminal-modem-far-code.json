@@ -1,0 +1,631 @@
+{
+  "passed": true,
+  "binary_sha256": "7a0ea9d33995ebf177f43865c440f5c7082c1508c3403c91a597e87357228d62",
+  "baseline": {
+    "commit": "30585e2",
+    "binary_sha256": "c0a9cbaa6c129cc7473b6ddfcc9dc599369634b09ae6dfef946fe8b6ee9b686d",
+    "resident_code_bytes": 63490,
+    "loaded_module_bytes": 93786,
+    "near_bytes": 52384
+  },
+  "memory_layout": {
+    "near_bytes": 52384,
+    "near_spare_bytes": 13152,
+    "near_relative_segment": 4078,
+    "far_relative_segment": 8102,
+    "shadow_offset": 2000,
+    "history_offset": 10192,
+    "far_bytes": 12288,
+    "far_end_linear": 143920,
+    "stack_end_linear": 117632,
+    "loaded_module_bytes": 94074,
+    "minimum_allocated_module_bytes": 143936,
+    "retained_parent_paragraphs": 9011,
+    "far_pointer_relocations_verified": true,
+    "snapshot_relative_segment": 8102,
+    "snapshot_image_offset": 0,
+    "snapshot_bytes": 2000,
+    "snapshot_end_linear": 131632,
+    "ui_screen_buffers": {
+      "browser_screen": {
+        "relative_segment": 7352,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 117632,
+        "end_linear": 121632
+      },
+      "ed_screen": {
+        "relative_segment": 7352,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 121632,
+        "end_linear": 125632
+      },
+      "program_screen": {
+        "relative_segment": 7352,
+        "offset": 8000,
+        "bytes": 4000,
+        "start_linear": 125632,
+        "end_linear": 129632
+      }
+    },
+    "far_ui_storage_bytes": 12000,
+    "controller_bridge_pairs_verified": 22,
+    "modem_bridge_pairs_verified": 22,
+    "resident_code_bytes": 62306,
+    "resident_code_spare_bytes": 3230,
+    "code_segments": [
+      {
+        "name": "_TEXT",
+        "kind": "CODE",
+        "relative_segment": 0,
+        "offset": 0,
+        "bytes": 62306
+      },
+      {
+        "name": "MODEM_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 3895,
+        "offset": 0,
+        "bytes": 1467
+      },
+      {
+        "name": "PRINT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 3987,
+        "offset": 0,
+        "bytes": 1449
+      }
+    ],
+    "far_code_bridge_pairs_verified": 44
+  },
+  "resident_code_bytes_freed": 1184,
+  "loaded_module_bytes_added": 288,
+  "modem_linked_checks": {
+    "passed": true,
+    "binary_sha256": "7a0ea9d33995ebf177f43865c440f5c7082c1508c3403c91a597e87357228d62",
+    "groups": [
+      {
+        "case": "real-one-through-four-word-adapters-arguments-errors-registers-FLAGS",
+        "passed": true,
+        "detail": {
+          "copied_word_counts": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "expansion_samples": [
+            {
+              "source_hex": "41545e4d00",
+              "status": 3,
+              "carry": false
+            },
+            {
+              "source_hex": "5e405e5e5e00",
+              "status": 2,
+              "carry": false
+            },
+            {
+              "source_hex": "41414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414100",
+              "status": 51,
+              "carry": false
+            },
+            {
+              "source_hex": "4241445e00",
+              "status": 3,
+              "carry": true
+            },
+            {
+              "source_hex": "4e4f2d4e554c",
+              "status": 2,
+              "carry": true
+            },
+            {
+              "source_hex": "41545e4d00",
+              "status": 4,
+              "carry": true
+            }
+          ],
+          "classification_inputs": 390,
+          "response_inputs": 5,
+          "baud_inputs": 9,
+          "returned_registers": "AX/BX/CX/DX/BP/SI/DI/ES/FLAGS identical to direct target; volatile BX excluded for UART divisor setter",
+          "original_argument_slots_unchanged": true
+        }
+      },
+      {
+        "case": "all-eight-public-entry-frames-real-dial-response-autobaud-hangup",
+        "passed": true,
+        "detail": {
+          "far_entries": [
+            "terminal_connection_cancel",
+            "terminal_connection_exit",
+            "terminal_connection_poll",
+            "terminal_connection_prepare",
+            "terminal_connection_receive",
+            "terminal_connection_start",
+            "terminal_modem_send_poll",
+            "terminal_modem_send_start"
+          ],
+          "observed_stack_bytes": 48,
+          "actual_command_prefix": true
+        }
+      },
+      {
+        "case": "nested-print-resident-modem-CS-and-real-UART-ISR-IRET",
+        "passed": true,
+        "detail": {
+          "actual_IRQ_frames": [
+            [
+              441,
+              7991,
+              582
+            ]
+          ],
+          "modem_CS": 7991,
+          "controller_CS": 8083,
+          "resumed_near_CS": 4096
+        }
+      },
+      {
+        "case": "nine-malformed-modem-frames-relocations-and-layouts-rejected",
+        "passed": true,
+        "detail": {
+          "rejected": [
+            "terminal_connection_poll",
+            "terminal_connection_poll_far",
+            "connection_expand_resident",
+            "connection_classify_resident",
+            "connection_set_baud_resident",
+            "connection_responses_feed_resident",
+            "missing-modem-MZ-relocation",
+            "oversized",
+            "missing-class"
+          ]
+        }
+      }
+    ],
+    "source_sha256": {
+      "standalone/check_modem_far_live.py": "0a59e6ef6841f6b2d9af3d5ada20a6d3265d4607b0e3b0de33ef3fd3aace7308",
+      "standalone/terminal_memory.py": "9e0746b60475289e6a66984e1e982de285919a800c935c1d564293f853ce98c1",
+      "src/terminal/far_bridge.inc": "f606d360ad6d011bd81dc4cb0991564ffc1a712f53c9fedb6d404867853f33fe",
+      "src/terminal/modem_abi.inc": "7088021f9fd00cd6d164fbd7477d7789a7ff9725d47c3c7ba00303cd4dc9f327",
+      "src/terminal/modem_bridge.asm": "59c7ad22f397e9aac5acd302c9d49e5b68c3806d8d86e10d598c17cec9aa50e3",
+      "src/terminal/connection.asm": "6f67a2fccbd79b413d24c8e7569ced0d049b271c4a1000420147e104bcdb830d",
+      "src/terminal/modem_sender.asm": "82ec6ea7b4160e6b60a936ec5d4c2cc916116ecd755c41b5e984602fe9c9d53a"
+    },
+    "scope": "Actual linked static modem CS, near public entries, named resident callbacks and explicit1..4-word caller-cleaned adapters. Direct-target comparisons isolate ABI effects; existing independent connection tests supply behavior oracles. Nested PRINT/MODEM transitions and actual UART ISR/IRET execute under modeled hardware; DOS child retention remains separate. No general C callback/function-pointer ABI, callee-cleaned stack forwarding, dynamic overlays or physical modem proof."
+  },
+  "printer_linked_checks": {
+    "passed": true,
+    "binary_sha256": "7a0ea9d33995ebf177f43865c440f5c7082c1508c3403c91a597e87357228d62",
+    "cases": [
+      {
+        "case": "MZ-relocations-44-bridge-pairs-and-six-invalid-images-rejected",
+        "passed": true,
+        "detail": {
+          "layout": {
+            "near_bytes": 52384,
+            "near_spare_bytes": 13152,
+            "near_relative_segment": 4078,
+            "far_relative_segment": 8102,
+            "shadow_offset": 2000,
+            "history_offset": 10192,
+            "far_bytes": 12288,
+            "far_end_linear": 143920,
+            "stack_end_linear": 117632,
+            "loaded_module_bytes": 94074,
+            "minimum_allocated_module_bytes": 143936,
+            "retained_parent_paragraphs": 9011,
+            "far_pointer_relocations_verified": true,
+            "snapshot_relative_segment": 8102,
+            "snapshot_image_offset": 0,
+            "snapshot_bytes": 2000,
+            "snapshot_end_linear": 131632,
+            "ui_screen_buffers": {
+              "browser_screen": {
+                "relative_segment": 7352,
+                "offset": 0,
+                "bytes": 4000,
+                "start_linear": 117632,
+                "end_linear": 121632
+              },
+              "ed_screen": {
+                "relative_segment": 7352,
+                "offset": 4000,
+                "bytes": 4000,
+                "start_linear": 121632,
+                "end_linear": 125632
+              },
+              "program_screen": {
+                "relative_segment": 7352,
+                "offset": 8000,
+                "bytes": 4000,
+                "start_linear": 125632,
+                "end_linear": 129632
+              }
+            },
+            "far_ui_storage_bytes": 12000,
+            "controller_bridge_pairs_verified": 22,
+            "modem_bridge_pairs_verified": 22,
+            "resident_code_bytes": 62306,
+            "resident_code_spare_bytes": 3230,
+            "code_segments": [
+              {
+                "name": "_TEXT",
+                "kind": "CODE",
+                "relative_segment": 0,
+                "offset": 0,
+                "bytes": 62306
+              },
+              {
+                "name": "MODEM_CODE",
+                "kind": "FARCODE",
+                "relative_segment": 3895,
+                "offset": 0,
+                "bytes": 1467
+              },
+              {
+                "name": "PRINT_CODE",
+                "kind": "FARCODE",
+                "relative_segment": 3987,
+                "offset": 0,
+                "bytes": 1449
+              }
+            ],
+            "far_code_bridge_pairs_verified": 44
+          },
+          "rejected_mutations": [
+            "terminal_controller_start",
+            "terminal_controller_start_far",
+            "terminal_printer_put_raw_resident",
+            "missing-MZ-far-call-relocation",
+            "oversized-code-segment",
+            "far-code-merged-into-resident-CS"
+          ]
+        }
+      },
+      {
+        "case": "all-seven-far-entry-paths-real-PRN-stack-adapter-and-DS-equals-SS",
+        "passed": true,
+        "detail": {
+          "visited": [
+            "far",
+            "terminal_controller_filter_far",
+            "terminal_controller_key_far",
+            "terminal_controller_poll_far",
+            "terminal_controller_receive_hold_far",
+            "terminal_controller_run_far",
+            "terminal_controller_shutdown_far",
+            "terminal_controller_start_far"
+          ],
+          "observed_stack_bytes": 302
+        }
+      },
+      {
+        "case": "actual-UART-ISR-and-IRET-return-to-interrupted-far-code",
+        "passed": true,
+        "detail": {
+          "actual_IRQ_frames": [
+            [
+              469,
+              8083,
+              514
+            ],
+            [
+              17926,
+              4096,
+              514
+            ]
+          ],
+          "far_CS": 8083,
+          "printed_hex": "4152"
+        }
+      }
+    ],
+    "source_sha256": {
+      "standalone/check_far_code_live.py": "4f2c551349307008888dc7db41adc51eca571325e31f2f876bce3e937e84c0c3",
+      "standalone/terminal_memory.py": "9e0746b60475289e6a66984e1e982de285919a800c935c1d564293f853ce98c1",
+      "standalone/dos_image.py": "2e8b0bd03cd4370b9b9633ebe3a76eed30ab0250ba8d26f4ec90eea49a5eb8e9",
+      "standalone/check_transport.py": "55cf5fabdae9f6d5f56085d9127e5e81656c2651283042fb81473c56b4c45b69",
+      "standalone/check_terminal_capture_live.py": "e9140d084d577cfea1727582b7607aeb6a22c0518e1a408bc68378674f6b3b5a"
+    },
+    "scope": "Actual linked near/far bridges, controller, PRN queue and UART ISR; kernel/hardware modeled. MZ pointer/return/relocation and segment bounds checked independently, including rejection mutations. DOS child memory retention is a separate actual DOS test. Not arbitrary C stack-argument bridging or full application segmentation."
+  },
+  "DOS_child": {
+    "case": "far-storage",
+    "passed": true,
+    "checks": {
+      "DOS_expected_exit": true,
+      "hardware_restored": true,
+      "PRM_unchanged": true,
+      "binary_unchanged": true,
+      "no_peer_errors": true,
+      "no_unexpected_commands": true,
+      "fixture_unchanged_TEST.KEY": true,
+      "fixture_unchanged_FARTEST.COM": true,
+      "actual_init_and_dial": true,
+      "actual_DOS_CPR": true,
+      "actual_DOS_DA": true,
+      "immediate_banner_not_dropped": true,
+      "owned_child_found_parent_and_retained_far_extent": true,
+      "MCB_covers_far_end_after_STACK": true,
+      "new_DOS_allocation_disjoint_from_all_retained_parent_storage": true,
+      "new_DOS_allocation_does_not_overlap_far_parent": true,
+      "shadow_and_history_canaries_survive_child_allocation_fill": true,
+      "snapshot_canaries_survive_child_allocation_fill": true,
+      "far_code_sum_and_extent_survive_child_allocation_fill": true,
+      "modem_far_code_sum_and_extent_survive_child_allocation_fill": true,
+      "all_three_far_UI_screen_buffers_survive_child_allocation_fill": true
+    },
+    "commands": [
+      "ATZ",
+      "ATDCaseTest:23"
+    ],
+    "errors": [],
+    "seconds": 7.377,
+    "binary_sha256": "7a0ea9d33995ebf177f43865c440f5c7082c1508c3403c91a597e87357228d62",
+    "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 HARD",
+    "expected_exit": 0,
+    "scope": "Actual DOS livePROGRAM/COMSPEC owned child locates parent PSP, checks retainedMCB throughfarend afterSTACK and FARCODE, allocates/fills16KB separateDOSmemory and verifies full-sizedshadow/history and frozen-screen endpointcanaries plus the full controller and modem far-code byte-sums before/after allocation and sums of all three full4000-byte far UI screen owners. Parent resumes actual far controller polling after child return. NormalUART/vector cleanup verified by existing sampler. No physical modem claim.",
+    "sample_hex": "3f00140833233323ca27982cfecaefbeaddebebaca2722114433c1f8c1f8b717a905dc240000000000000000eb32eb325b17bb051d1f1d1f",
+    "linker_defines": {
+      "DGROUP_SEG": 4078,
+      "FAR_SEG": 8102,
+      "SHADOW_OFFSET": 2000,
+      "HISTORY_OFFSET": 10192,
+      "FAR_END_OFFSET": 14288,
+      "PROCESS_PSP_OFFSET": 448,
+      "SHADOW_SEGMENT_OFFSET": 11893,
+      "HISTORY_POINTER_OFFSET": 13309,
+      "SNAPSHOT_SEG": 8102,
+      "SNAPSHOT_OFFSET": 0,
+      "REQUIRED_PARAS": 9011,
+      "CODE_SEG": 3987,
+      "CODE_START": 0,
+      "CODE_BYTES": 1449,
+      "CODE_FIRST": 20565,
+      "MODEM_SEG": 3895,
+      "MODEM_START": 0,
+      "MODEM_BYTES": 1467,
+      "UI_SEG": 7352,
+      "BROWSER_OFF": 0,
+      "EDITOR_OFF": 4000,
+      "PROGRAM_OFF": 8000
+    }
+  },
+  "terminal_regression": {
+    "passed": true,
+    "binary_sha256": "7a0ea9d33995ebf177f43865c440f5c7082c1508c3403c91a597e87357228d62",
+    "commands": [
+      {
+        "command": "python3 standalone/check_modem_far_live.py",
+        "exit_code": 0,
+        "seconds": 9.49
+      },
+      {
+        "command": "python3 standalone/check_terminal_break_live.py",
+        "exit_code": 0,
+        "seconds": 1.384
+      },
+      {
+        "command": "python3 standalone/check_ui_screen_far.py",
+        "exit_code": 0,
+        "seconds": 1.185
+      },
+      {
+        "command": "python3 standalone/check_far_code_live.py",
+        "exit_code": 0,
+        "seconds": 0.289
+      },
+      {
+        "command": "python3 standalone/check_terminal_print_controller_live.py",
+        "exit_code": 0,
+        "seconds": 4.394
+      },
+      {
+        "command": "python3 standalone/check_terminal_screen_print_live.py",
+        "exit_code": 0,
+        "seconds": 10.602
+      },
+      {
+        "command": "python3 standalone/check_terminal_printer_live.py",
+        "exit_code": 0,
+        "seconds": 0.794
+      },
+      {
+        "command": "python3 standalone/check_terminal_monitor_live.py",
+        "exit_code": 0,
+        "seconds": 1.379
+      },
+      {
+        "command": "python3 standalone/check_terminal_snapshot_live.py",
+        "exit_code": 0,
+        "seconds": 1.578
+      },
+      {
+        "command": "python3 standalone/check_terminal_capture_live.py",
+        "exit_code": 0,
+        "seconds": 0.939
+      },
+      {
+        "command": "python3 standalone/check_far_storage_live.py",
+        "exit_code": 0,
+        "seconds": 0.284
+      },
+      {
+        "command": "python3 standalone/test_far_storage_dos.py",
+        "exit_code": 0,
+        "seconds": 7.43
+      },
+      {
+        "command": "python3 standalone/check_terminal_transfer_live.py",
+        "exit_code": 0,
+        "seconds": 3.655
+      },
+      {
+        "command": "python3 standalone/check_terminal_upload_live.py",
+        "exit_code": 0,
+        "seconds": 22.667
+      },
+      {
+        "command": "python3 standalone/check_program_actions_live.py",
+        "exit_code": 0,
+        "seconds": 1.094
+      },
+      {
+        "command": "python3 standalone/check_terminal_reset_live.py",
+        "exit_code": 0,
+        "seconds": 0.424
+      },
+      {
+        "command": "python3 standalone/test_program_actions_dos.py",
+        "exit_code": 0,
+        "seconds": 34.375
+      },
+      {
+        "command": "python3 standalone/test_terminal_reset_live_dos.py",
+        "exit_code": 0,
+        "seconds": 9.88
+      },
+      {
+        "command": "python3 standalone/check_transport.py",
+        "exit_code": 0,
+        "seconds": 1.343
+      },
+      {
+        "command": "python3 standalone/check_key_output.py",
+        "exit_code": 0,
+        "seconds": 1.895
+      },
+      {
+        "command": "python3 standalone/check_key_live.py",
+        "exit_code": 0,
+        "seconds": 0.762
+      },
+      {
+        "command": "python3 standalone/check_meta_actions_live.py",
+        "exit_code": 0,
+        "seconds": 2.554
+      },
+      {
+        "command": "python3 standalone/check_character_edit_live.py",
+        "exit_code": 0,
+        "seconds": 0.699
+      },
+      {
+        "command": "python3 standalone/test_meta_actions_dos.py",
+        "exit_code": 0,
+        "seconds": 20.358
+      },
+      {
+        "command": "python3 standalone/check_line_edit_live.py",
+        "exit_code": 0,
+        "seconds": 0.481
+      },
+      {
+        "command": "python3 standalone/check_terminal_options.py --binary build/terminal/TERMINAL.EXE --map build/terminal/terminal.map",
+        "exit_code": 0,
+        "seconds": 0.396
+      },
+      {
+        "command": "python3 lab/bbs/check_formfeed.py",
+        "exit_code": 0,
+        "seconds": 0.192
+      },
+      {
+        "command": "python3 lab/bbs/check_enigma_controls.py",
+        "exit_code": 0,
+        "seconds": 0.103
+      },
+      {
+        "command": "python3 standalone/check_terminal_ui.py",
+        "exit_code": 0,
+        "seconds": 0.049
+      },
+      {
+        "command": "python3 standalone/test_terminal.py",
+        "exit_code": 0,
+        "seconds": 16.178
+      },
+      {
+        "command": "python3 standalone/test_terminal_keys.py",
+        "exit_code": 0,
+        "seconds": 24.156
+      },
+      {
+        "command": "python3 standalone/check_terminal_config.py",
+        "exit_code": 0,
+        "seconds": 0.437
+      },
+      {
+        "command": "python3 standalone/check_startup_import.py --check-invalid-abi",
+        "exit_code": 0,
+        "seconds": 0.355
+      },
+      {
+        "command": "python3 standalone/check_connection.py",
+        "exit_code": 0,
+        "seconds": 1.412
+      },
+      {
+        "command": "python3 standalone/check_directory_live.py",
+        "exit_code": 0,
+        "seconds": 2.687
+      },
+      {
+        "command": "python3 standalone/check_directory_actions.py",
+        "exit_code": 0,
+        "seconds": 0.38
+      },
+      {
+        "command": "python3 standalone/test_terminal_config.py",
+        "exit_code": 0,
+        "seconds": 14.255
+      },
+      {
+        "command": "python3 standalone/test_connection_dos.py",
+        "exit_code": 0,
+        "seconds": 27.175
+      },
+      {
+        "command": "python3 standalone/test_directory_terminal.py",
+        "exit_code": 0,
+        "seconds": 58.219
+      }
+    ],
+    "seconds": 285.931
+  },
+  "source_rebuild": {
+    "report": "docs/validation/terminal-source-build.json",
+    "binary_sha256": "7a0ea9d33995ebf177f43865c440f5c7082c1508c3403c91a597e87357228d62",
+    "source_snapshot_sha256": "d5560e2833eb09380512dec749505ac58ba228b37886a59129114f44868271bc"
+  },
+  "source_sha256": {
+    "standalone/record_modem_far.py": "0e148c127221f3f87037989d00b52526f065e02ec91766f8398013a2f99baa4e",
+    "standalone/check_modem_far_live.py": "0a59e6ef6841f6b2d9af3d5ada20a6d3265d4607b0e3b0de33ef3fd3aace7308",
+    "standalone/terminal_memory.py": "9e0746b60475289e6a66984e1e982de285919a800c935c1d564293f853ce98c1",
+    "standalone/dos_image.py": "2e8b0bd03cd4370b9b9633ebe3a76eed30ab0250ba8d26f4ec90eea49a5eb8e9",
+    "standalone/check_connection.py": "9098b1ffa848dd82739484ac37841180f0e83880b3da1894b0389632fb307fb7",
+    "standalone/check_transport.py": "55cf5fabdae9f6d5f56085d9127e5e81656c2651283042fb81473c56b4c45b69",
+    "standalone/test_far_storage_dos.py": "a785f54670f5e38a51ea99790914949e0eb885660eb7ac0e453db145aff47d95",
+    "standalone/far_storage_child.asm": "ae77327e532356e084d52e99403402087823e6bb42ac8dc4dfbe34577ede9d9c",
+    "standalone/build_terminal.py": "2620079958d1394b6f41f096eb2c2636eb91e670af48d33f2208e639ace7296b",
+    "src/terminal/far_bridge.inc": "f606d360ad6d011bd81dc4cb0991564ffc1a712f53c9fedb6d404867853f33fe",
+    "src/terminal/modem_abi.inc": "7088021f9fd00cd6d164fbd7477d7789a7ff9725d47c3c7ba00303cd4dc9f327",
+    "src/terminal/modem_bridge.asm": "59c7ad22f397e9aac5acd302c9d49e5b68c3806d8d86e10d598c17cec9aa50e3",
+    "src/terminal/connection.asm": "6f67a2fccbd79b413d24c8e7569ced0d049b271c4a1000420147e104bcdb830d",
+    "src/terminal/modem_sender.asm": "82ec6ea7b4160e6b60a936ec5d4c2cc916116ecd755c41b5e984602fe9c9d53a"
+  },
+  "retained_artifacts": {
+    "build/terminal/modem-far-checks.json": "8ad3d4ab7bc79bb1112ecb3da1e6cfaed10e36baa00e0b3a771d914796252f26",
+    "build/terminal/far-code-live-checks.json": "d781043b021b476410e2a44079bae8f547c934a86ff137da52ae5e6819f2fe76",
+    "build/far-storage-dos/checks.json": "f4839ca17f10da00a4e7ddcb272147c3b61c05b097d3ead226728e29ebf77b38",
+    "build/far-storage-dos/FARTEST.COM": "372808ea9f9163ea48605d9207369e6d4a4e71ddf605fdd3a6562e061822430f",
+    "build/connection-dos/far-storage/FARTEST.BIN": "2239e4101c91003dc45699896f3a21e66b40672a233875d219c188cecefa0ecb",
+    "build/terminal/modem-far-final-regression.json": "3afa5d1ea53de57b067997470cde71fe2408b65e5ad5599951b68741593db716",
+    "build/terminal/modem-far-final-regression.log": "56041caee3d72a0b8ed6e93023d1b59bdeb10627b69281552facf0c1e700fb2f"
+  },
+  "scope": "Separate static real-mode modem controller/sender CS with unchanged near public names and DS=SS data ABI. Eight entries, ten namespaced register callbacks and four declared1..4-word cdecl adapters; actual target equality/error/FLAGS checks, nested printer/resident/modem calls, real ISR/IRET and malformed-image rejection. Actual DOS child allocation/fill preserves both complete relocated code sums, native storage and three UI screens. Full current terminal regression and independent source-only rebuild are separate evidence. No generic callbacks, callee-cleaned forwarding, dynamic overlays, complete application or physical modem claim."
+}

@@ -97,3 +97,13 @@ These records distinguish linked hardware/kernel models from actual DOS runs.
 This is one static segmented module. Full application startup/resources,
 additional emulations and protocols, settings/UI, ASPECT, Host, original overlay
 coverage and physical modem/386 validation remain open in `FEATURES.md`.
+
+## Modem service extension
+
+[MODEM_FAR_CODE.md](MODEM_FAR_CODE.md) extends this mechanism with a separate
+modem CS, namespaced register services and four explicitly declared caller-cleaned
+word-argument adapters. The current build verifies44 bridge pairs across the
+printer and modem modules; the original22-pair controller checkpoint above
+remains historical evidence. The DOS child now records56 bytes and verifies
+both code sums before/after allocation. General C callbacks and dynamic overlays
+remain outside the implemented ABI.

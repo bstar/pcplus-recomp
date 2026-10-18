@@ -159,3 +159,9 @@ was established by this pass. The active install is therefore evidence of what
 this machine contains, not the complete PCPlus distribution. Revisit this
 inventory when code/resource tracing discovers additional features; do not treat
 the initial matrix as permission to omit them.
+
+The modem segmentation checkpoint in `MODEM_FAR_CODE.md` extends F01 with a
+separate controller/sender CS and explicit caller-cleaned stack adapters. It
+frees1,184 resident code bytes and validates44 bridge pairs plus retained modem
+code under DOS allocation. This is additional F01 progress; it does not close
+the complete startup/overlay/UI or source-only whole-application gates.

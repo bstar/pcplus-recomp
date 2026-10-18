@@ -16,16 +16,18 @@ def main():
  a=p.parse_args()
  assert a.label and all(c.isalnum() or c in '-_' for c in a.label),'Simple unique label required'
  out=ROOT/'build/bbs-lab/results/enigma'/a.label
- assert not (out/'result.json').exists(),'Preserve previous results; select a new label'
- recipe=json.loads((ROOT/'docs/validation/bbs-editors.json').read_text())['servers']['enigma']['run']['keyboard']
+ assert not out.exists(),'Preserve previous attempt folders; select a new label'
+ recipe_path=ROOT/'lab/bbs/editor-recipes.json'
+ recipe=json.loads(recipe_path.read_text())['enigma_unsaved']['keyboard_input']
  # Stop after typing UNSAVED and disconnect. A changed recipe requires review.
  assert 'U N S A V E D p3000 a-x' in recipe and recipe[recipe.index('A B C D E'):].count('enter')==0
  binary=a.binary.resolve();digest=sha(binary)
- sources=['lab/bbs/modem.py','lab/bbs/test_dos.py','lab/bbs/check_editor_dos.py','lab/bbs/editor_dos_probe.py','lab/bbs/packetization_editor_probe.py']
+ sources=['lab/bbs/modem.py','lab/bbs/test_dos.py','lab/bbs/check_editor_dos.py','lab/bbs/editor_dos_probe.py','lab/bbs/packetization_editor_probe.py','lab/bbs/editor-recipes.json']
  hashes={s:sha(ROOT/s) for s in sources}
  command=[sys.executable,str(ROOT/'lab/bbs/editor_dos_probe.py'),str(binary),'enigma','--port','23233','--label',a.label,'--com','2','--baud','19200','--flow','HARD','--dial-fixture','--packet-delay-ms',str(a.delay_ms),'--timeout','160','--wait','2','--keys',recipe]
- out.mkdir(parents=True,exist_ok=True)
+ out.mkdir(parents=True,exist_ok=False)
  with (out/'harness.log').open('w') as log:code=subprocess.call(command,cwd=ROOT,stdout=log,stderr=subprocess.STDOUT)
+ assert code==0 and (out/'result.json').is_file(),'DOS harness failed; see retained harness.log. No editor comparison recorded.'
  with (out/'audit.log').open('w') as log:audit_code=subprocess.call([sys.executable,str(ROOT/'lab/bbs/check_editor_dos.py'),'enigma','--label',a.label,'--disconnect-unsaved'],cwd=ROOT,stdout=log,stderr=subprocess.STDOUT)
  assert sha(binary)==digest and hashes=={s:sha(ROOT/s) for s in sources},'Inputs changed during experiment'
  run=json.loads((out/'result.json').read_text());audit=json.loads((out/'semantic-audit.json').read_text())

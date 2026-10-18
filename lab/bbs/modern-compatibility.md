@@ -9,19 +9,19 @@ toolchains. These results do not establish physical Wi-Fi modem compatibility.
 ## Latest editor-tested build
 
 DOS executable SHA-256:
-`8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d`.
+`7a0ea9d33995ebf177f43865c440f5c7082c1508c3403c91a597e87357228d62`.
 
 | Server / modem forwarding | Result | Evidence |
 | --- | --- | --- |
-| Synchronet 3.22a development snapshot / immediate | All 12 behavior checks and eight key-wire checks pass; draft aborted | `editor-ui-8b38`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
+| Synchronet 3.22a development snapshot / immediate | All 12 behavior checks and eight key-wire checks pass; draft aborted | `editor-modem-7a0e`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
 | ENiGMA½ 0.5.1-beta / immediate | Correct outgoing keys; Home and Insert behavior fail | Current paired experiment below |
 | Same ENiGMA / explicit 30 ms buffering | All seven audited checks and eight key-wire checks pass; closes unsaved | Current paired experiment below |
 
 The ENiGMA pair uses the same DOS executable, keyboard recipe, synthetic PRM,
 serial settings and unchanged stock decoder. Only the modem's explicit
 `packet_delay_ms` differs. Server/user state is not reset between runs.
-Retained labels are `editor-ui-8b38-buffer30` and
-`editor-ui-8b38-immediate`; full hashes and checks are in
+Retained labels are `editor-modem-7a0e-buffer30-recipe` and
+`editor-modem-7a0e-immediate-recipe`; full hashes and checks are in
 [the paired report](../../docs/validation/bbs-enigma-packetization.json).
 
 The checked ENiGMA source, commit
@@ -55,12 +55,27 @@ finished. This does not establish why the earlier navigation failed. Both
 attempts are retained in the editor report. Paired recording now requires actual
 stock-editor entry on both sides before accepting a comparison.
 
-The editor runs above execute the private-UI-storage build from an immutable
-copy at `build/bbs-lab/frozen/editor-ui-8b38/TERMINAL.EXE`; they repeat the
-actual DOS/server workflows after the [UI storage migration](../../docs/UI_FAR_STORAGE.md).
-The older bdeb347c far-code comparison and its navigation failure remain in
-the reports' histories. All three new runs preserve the synthetic PRM and
-restore the independently sampled IRQ/UART/PIC state.
+The editor runs above execute the [separate modem-CS build](../../docs/MODEM_FAR_CODE.md)
+from an immutable copy at `build/bbs-lab/frozen/editor-modem-7a0e/TERMINAL.EXE`.
+All three preserve the synthetic PRM and restore the independently sampled
+IRQ/UART/PIC state. The earlier8b38144e UI-storage and bdeb347c far-controller
+comparisons remain in the reports' histories.
+
+The initial ENiGMA label `editor-modem-7a0e-immediate` failed preflight before
+DOS or a BBS connection: repeatedly reusing the report's generated keyboard
+output had accumulated startup waits and exit retries beyond the ADDKEY bound.
+It is retained as a harness prerequisite failure, not an editor result. The
+runner now uses the checked-in `editor-recipes.json` input, derived from the
+historical `editor-network-immediate` body with its single automatic startup
+prefix removed. New run metadata records `keyboard_input` separately from the
+complete generated `keyboard` string; old run sequences are unchanged.
+The new pair uses that same canonical369-character input and392-character
+complete ADDKEY command, rather than accumulating prior wrappers. Earlier and
+current checkpoints therefore have different preparation/exit schedules;
+the current immediate/buffered comparison itself has identical keys/settings.
+The dedicated [recipe report](../../docs/validation/bbs-editor-recipes.json)
+records the preflight failure and safety/length checks. No Enter is submitted
+after draft-body editing begins; both completed ENiGMA runs close unsaved.
 
 ## Other verified workflows
 

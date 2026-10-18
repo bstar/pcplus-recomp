@@ -36,7 +36,8 @@ support archives and generated disassembler databases are excluded from Git.
 No original executable is required to build the standalone diagnostic.
 
 The terminal now supports [static far code](docs/FAR_CODE.md), starting with
-the dedicated-print controller. Resident near-call interfaces and DS=SS remain
+the dedicated-print controller and [modem services](docs/MODEM_FAR_CODE.md).
+Resident near-call interfaces and DS=SS remain
 compatible; the builder checks far-call relocations, segment bounds and retained
 code across PROGRAM. [Private UI screens](docs/UI_FAR_STORAGE.md) also live
 in far storage: browser, nested editor and PROGRAM retain separate full frames,

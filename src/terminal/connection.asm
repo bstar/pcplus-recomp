@@ -4,21 +4,20 @@
 BITS 16
 CPU 8086
 %include "modem_import.inc"
-SEGMENT _TEXT public class=CODE use16
+SEGMENT MODEM_CODE public align=16 class=FARCODE use16
+GROUP MODEM_GROUP MODEM_CODE
+global terminal_modem_code_start
+terminal_modem_code_start:
 extern terminal_option_mask,terminal_dial_target,terminal_modem_settings
 extern terminal_directory_mode
-extern terminal_directory_note_connected
-extern terminal_clock_ticks,terminal_modem_send_start,terminal_modem_send_poll
-extern modem_expand_bounded,modem_response_slots
-extern modem_responses_reset_bounded,modem_responses_feed_bounded
-extern modem_response_classify
-extern terminal_connection_notice,terminal_connection_notice_restore
-extern uart_port_msr,uart_port_mcr,uart_try_write,uart_clear_receive_buffer
-extern uart_set_baud_divisor,terminal_baud_low,terminal_baud_high
+extern terminal_modem_send_start_impl,terminal_modem_send_poll_impl
+extern modem_response_slots
+extern uart_port_msr,uart_port_mcr
+extern terminal_baud_low,terminal_baud_high
 extern terminal_quit,terminal_tx_count,terminal_tx_head,terminal_tx_tail
-global terminal_connection_prepare,terminal_connection_start
-global terminal_connection_poll,terminal_connection_receive,terminal_connection_cancel
-global terminal_connection_exit
+global terminal_connection_prepare_impl,terminal_connection_start_impl
+global terminal_connection_poll_impl,terminal_connection_receive_impl,terminal_connection_cancel_impl
+global terminal_connection_exit_impl
 
 %macro save 0
  push bp
@@ -36,7 +35,7 @@ global terminal_connection_exit
 
 ; Called only after complete C validation, before hardware access.
 ; Build every outgoing command before any transmission; CF1 means prepare error.
-terminal_connection_prepare:
+terminal_connection_prepare_impl:
  save
  test word [terminal_option_mask],96
  jz .success
@@ -72,7 +71,7 @@ terminal_connection_prepare:
  mov di,modem_response_slots
  mov cx,176
  rep movsb
- call modem_responses_reset_bounded
+ call connection_responses_reset_service
  jc .done
 .find_rate:
  xor bx,bx
@@ -124,7 +123,7 @@ expand:
  push cx
  push di
  push si
- call modem_expand_bounded
+ call connection_expand_service
  pushf
  pop dx
  add sp,8
@@ -132,13 +131,11 @@ expand:
  popf
  ret
 
-extern terminal_break_cancel
-extern terminal_macro_cancel,terminal_program_cancel
-terminal_connection_start:
+terminal_connection_start_impl:
  save
- call terminal_break_cancel
- call terminal_macro_cancel
- call terminal_program_cancel
+ call connection_break_cancel_service
+ call connection_macro_cancel_service
+ call connection_program_cancel_service
  cmp byte [connection_enabled],0
  je .done
  mov word [terminal_tx_count],0
@@ -149,18 +146,18 @@ terminal_connection_start:
  mov word [connection_state],6
  mov word [connection_status],1
  mov byte [connection_carrier_seen],0
- call terminal_directory_note_connected
- call terminal_connection_notice_restore
+ call connection_note_connected_service
+ call connection_notice_restore_service
  jmp .done
 .modem:
- call uart_clear_receive_buffer
- call modem_responses_reset_bounded
+ call connection_uart_clear_service
+ call connection_responses_reset_service
  call reset_clock
  mov word [connection_result],0xffff
  mov byte [connection_carrier_seen],0
  mov word [connection_state],1
  mov si,message_initializing
- call terminal_connection_notice
+ call connection_notice_service
  mov si,connection_init
  cmp word [terminal_modem_settings+MI_INITIALIZE_CONNECTED],0
  jne .send
@@ -171,12 +168,12 @@ terminal_connection_start:
  call start_dial
  jmp .done
 .send:
- call terminal_modem_send_start
+ call terminal_modem_send_start_impl
 .done:
  restore
 
 reset_clock:
- call terminal_clock_ticks
+ call connection_clock_ticks_service
  mov [connection_last_tick],ax
  mov [connection_last_tick+2],dx
  mov word [connection_elapsed],0
@@ -201,23 +198,23 @@ reset_clock:
  mov [connection_deadline+2],cx
  ret
 start_dial:
- call uart_clear_receive_buffer
- call modem_responses_reset_bounded
+ call connection_uart_clear_service
+ call connection_responses_reset_service
  mov word [connection_result],0xffff
  mov word [connection_state],2
  mov si,message_dialing
- call terminal_connection_notice
+ call connection_notice_service
  mov si,connection_dial
- call terminal_modem_send_start
+ call terminal_modem_send_start_impl
  ret
 
-terminal_connection_poll:
+terminal_connection_poll_impl:
  save
  cmp word [connection_state],0
  je .done
  cmp word [connection_state],6
  je .carrier
- call terminal_clock_ticks
+ call connection_clock_ticks_service
  mov cx,ax
  mov bx,dx
  sub ax,[connection_last_tick]
@@ -245,7 +242,7 @@ terminal_connection_poll:
 .state:
  cmp word [connection_state],5
  je .response
- call terminal_modem_send_poll
+ call terminal_modem_send_poll_impl
  or ax,ax
  jz .done
  cmp word [connection_state],1
@@ -257,7 +254,7 @@ terminal_connection_poll:
  je .drop_dtr
  mov word [connection_state],5
  mov si,message_waiting
- call terminal_connection_notice
+ call connection_notice_service
 .response:
  mov ax,[connection_result]
  cmp ax,0xffff
@@ -266,7 +263,7 @@ terminal_connection_poll:
  push bx
  push word [connection_baud_index]
  push ax
- call modem_response_classify
+ call connection_classify_service
  pushf
  pop cx
  add sp,6
@@ -287,13 +284,13 @@ terminal_connection_poll:
  mov [terminal_baud_high],dx
  push dx
  push ax
- call uart_set_baud_divisor
+ call connection_set_baud_service
  add sp,4
 .connected:
  mov word [connection_state],6
  mov word [connection_status],1
- call terminal_directory_note_connected
- call terminal_connection_notice_restore
+ call connection_note_connected_service
+ call connection_notice_restore_service
  jmp .done
 .carrier:
  mov dx,[uart_port_msr]
@@ -305,26 +302,26 @@ terminal_connection_poll:
 .carrier_low:
  cmp byte [connection_carrier_seen],0
  je .done
- call terminal_break_cancel
- call terminal_macro_cancel
- call terminal_program_cancel
+ call connection_break_cancel_service
+ call connection_macro_cancel_service
+ call connection_program_cancel_service
  mov word [connection_status],6
  mov word [connection_state],0
  mov word [terminal_tx_count],0
  mov word [terminal_tx_head],0
  mov word [terminal_tx_tail],0
  mov si,message_offline
- call terminal_connection_notice
+ call connection_notice_service
  jmp .done
 .timeout:
  mov word [connection_status],3
  mov si,message_timeout
- call terminal_connection_notice
+ call connection_notice_service
  jmp .begin_abort
 .failure:
  mov word [connection_status],2
  mov si,message_failed
- call terminal_connection_notice
+ call connection_notice_service
  jmp .begin_abort
 .internal:
  mov word [connection_status],7
@@ -336,7 +333,7 @@ terminal_connection_poll:
  mov ax,[terminal_modem_settings+MI_ABORT_CHARACTER]
  or al,al
  jz .drop_dtr
- call uart_try_write
+ call connection_uart_write_service
  jc .abort_stalled
  jmp .drop_dtr
 .abort_stalled:
@@ -370,12 +367,12 @@ terminal_connection_poll:
  or al,bl
  out dx,al
 .finished:
- call uart_clear_receive_buffer
+ call connection_uart_clear_service
  mov word [connection_state],0
  cmp word [connection_status],5
  jne .done
  mov si,message_disconnected
- call terminal_connection_notice
+ call connection_notice_service
 .done:
  cmp byte [connection_exit_pending],0
  je .return
@@ -386,11 +383,11 @@ terminal_connection_poll:
  restore
 
 ; AX0 cancels an attempt; AX1 sends configured hangup on an established session.
-terminal_connection_cancel:
+terminal_connection_cancel_impl:
  save
- call terminal_break_cancel
- call terminal_macro_cancel
- call terminal_program_cancel
+ call connection_break_cancel_service
+ call connection_macro_cancel_service
+ call connection_program_cancel_service
  cmp byte [connection_enabled],0
  je .done
  cmp word [connection_state],0
@@ -407,12 +404,12 @@ terminal_connection_cancel:
  mov word [connection_state],0
  mov word [connection_status],5
  mov si,message_disconnected
- call terminal_connection_notice
+ call connection_notice_service
  jmp .done
 .modem:
  mov word [connection_status],4
  mov si,message_cancelled
- call terminal_connection_notice
+ call connection_notice_service
  cmp ax,1
  jne .cancel
  cmp word [connection_state],6
@@ -420,9 +417,9 @@ terminal_connection_cancel:
  mov word [connection_status],5
  mov word [connection_state],9
  mov si,message_hangup
- call terminal_connection_notice
+ call connection_notice_service
  mov si,connection_hangup
- call terminal_modem_send_start
+ call terminal_modem_send_start_impl
  call reset_clock
  jmp .done
 .cancel:
@@ -431,8 +428,8 @@ terminal_connection_cancel:
 .done:
  restore
 
-terminal_connection_exit:
- call terminal_break_cancel
+terminal_connection_exit_impl:
+ call connection_break_cancel_service
  cmp byte [connection_exit_pending],0
  jne .immediate
  cmp byte [connection_enabled],0
@@ -441,14 +438,14 @@ terminal_connection_exit:
  je .immediate
  mov byte [connection_exit_pending],1
  xor ax,ax
- jmp terminal_connection_cancel
+ jmp terminal_connection_cancel_impl
 .immediate:
  mov word [terminal_quit],1
  ret
 
 ; AL RX byte from actual recovered UART. CF1 consumes modem control traffic;
 ; CF0 passes online/raw bytes to the ANSI engine. First complete match wins.
-terminal_connection_receive:
+terminal_connection_receive_impl:
  save
  cmp word [connection_state],0
  je .pass
@@ -462,7 +459,7 @@ terminal_connection_receive:
  jne .consume
  and ax,255
  push ax
- call modem_responses_feed_bounded
+ call connection_responses_feed_service
  pop bx
  jc .bad_matcher
  cmp ax,0xffff
@@ -480,6 +477,13 @@ terminal_connection_receive:
  clc
 .done:
  restore
+
+; All entries and callbacks below are plain near frames inside MODEM_CODE.
+%include "far_bridge.inc"
+%define MODEM_ENTRY FAR_ENTRY
+%define MODEM_SERVICE FAR_NAMED_SERVICE
+%define MODEM_CDECL_SERVICE FAR_CDECL_SERVICE
+%include "modem_abi.inc"
 
 SEGMENT _DATA public class=DATA use16
 global terminal_modem_pause,connection_state,connection_status,connection_result

@@ -1,20 +1,21 @@
 {
   "recorded": true,
-  "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
+  "binary_sha256": "7a0ea9d33995ebf177f43865c440f5c7082c1508c3403c91a597e87357228d62",
   "scope": "Paired actual DOS/stock ENiGMA local editor experiments. Same executable, keyboard recipe, serial settings and PRM; explicit modem packet delay differs. Server/user state was not reset between sequential runs. No physical Wi-Fi modem or general TCP boundary guarantee. Current immediate compatibility aggregate remains separate and unchanged.",
   "buffered_editor_passed": true,
   "immediate_editor_passed": false,
   "runs": {
     "buffered": {
-      "label": "editor-ui-8b38-buffer30",
+      "label": "editor-modem-7a0e-buffer30-recipe",
       "experiment": {
-        "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
+        "binary_sha256": "7a0ea9d33995ebf177f43865c440f5c7082c1508c3403c91a597e87357228d62",
         "source_sha256": {
           "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
-          "lab/bbs/test_dos.py": "0e0acb51cf07f4b487a57698225ca9527e0a579a2ecdf99fb4026188cb2c89cc",
+          "lab/bbs/test_dos.py": "e35f9e1622cd50b004782786d9d569723ecff83dd4fdd1c683e489e2ab8ba49d",
           "lab/bbs/check_editor_dos.py": "ec8960304bbce89950c74225f98c3d9434eeef52c77f8d1644d941818c64c832",
           "lab/bbs/editor_dos_probe.py": "e151b915529b28aa293408114feed5617f0a41099cdf83c059e743869f58a932",
-          "lab/bbs/packetization_editor_probe.py": "c9fd44cc16e775c0ed861594f82ab1dee6a4b5f98eb401d8e68b6778041e8340"
+          "lab/bbs/packetization_editor_probe.py": "d6af1572c46014cc1be9c300d38c029ae8552d1cd6d5cae9c6857e4a7125a411",
+          "lab/bbs/editor-recipes.json": "faa58bd92ccb0fa6d390b4e7af82df727278d8080fd9b19d0bdb177e457f3989"
         },
         "packet_delay_ms": 30,
         "DOS_harness_passed": true,
@@ -45,12 +46,12 @@
         "automatic_dial": true,
         "mode": "explicit synthetic partial PRM",
         "command": "TERMINAL @D:\\TEST.PRM /D:lab.local:23233",
-        "sha256": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
+        "sha256": "bd115d52fe3f86ce2ca28282b35c2c25f8d3608b345dcb4a44e9869c66b3f0f3",
         "directory_entry": null,
         "directory_browser": false,
         "directory_sha256": null
       },
-      "keyboard": "p1000 p1000 p1000 p1000 p1000 p1000 p12000 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 N p6000 enter p6000 M enter p5000 P enter p5000 enter p700 K E Y T E S T enter p1800 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p3000 a-x p1000 a-x p1000 a-x p1000 a-x p2000 a-x p2000 a-x p2000 a-x p2000 a-x p2000 a-x",
+      "keyboard": "p1000 p12000 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 n p6000 enter p6000 M enter p5000 P enter p5000 enter p700 K E Y T E S T enter p1800 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p3000 a-x p2000 a-x",
       "serial": {
         "com": 2,
         "baud": 19200,
@@ -79,7 +80,7 @@
           "tab": true,
           "delete_line_ctrl_y": true
         },
-        "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
+        "binary_sha256": "7a0ea9d33995ebf177f43865c440f5c7082c1508c3403c91a597e87357228d62",
         "serial": {
           "com": 2,
           "baud": 19200,
@@ -88,7 +89,7 @@
           "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
         },
         "authority": {
-          "session_id": "N1UqWBJwrgb",
+          "session_id": "W7UdpNByWx9",
           "menus": [
             "telnetConnected",
             "matrix",
@@ -197,41 +198,42 @@
         "insert": true
       },
       "retained_artifacts": {
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/SCREEN.BIN": "95ed5f6c1ff5557e5ccd75735358b0f28810fd5303e28e5f275064d8eef1dbec",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/TEST.PRM": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/audit.log": "5df13c2ce4d35f1defbeffde76000a40b85b1a318ee7827432aa9243611e14d0",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/bbs-sent.bin": "f116486d51ffdab5a742675fe33b53f949004930c153a1d38a71a60df06730c5",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/bbs-wire.bin": "58f78ae8437030c70e451deb04e09293ea389d766fdd1b9666695698b30dd33b",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/display.bin": "7eda8bb3063cedc7c699eb7aa277f5af44d4b7c9f1e8dfb3b2df18a985742fa4",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/dosbox.conf": "cadd144f402043bb095307c59ea12c6ccbef1158e1b6b1e65fc5d7e64643fc6d",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/dosbox.log": "e30833276913b6576ea547cd3a9ab4192449e8982ca0fdbb4a31207ab345b09a",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/experiment.json": "f8ac467e076cc6e4e6fed1ee1eb991ea96dc66227b8f7e8fc403f1c902903622",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/harness.log": "42b26639f0158a30ca29c6845655c6f50c711bd44f1c56d3f1d41955acecc6af",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/modem.json": "590ac0012d84cdd9221c27c0f2c5b4c7b3539cf2eec6559303618642e444d580",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/result.json": "ee0567dce99ff2e025c9f4fabc8e4d37fffa1bd64ac33b07f234987aef035369",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/screen.txt": "a4a43bf10d1d0b1f429239e9ecd2a58ecde5cffce7e3d75a1587d3059adee74c",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/semantic-audit.json": "5df13c2ce4d35f1defbeffde76000a40b85b1a318ee7827432aa9243611e14d0",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/serial-received.bin": "17ed93deb3008f72c3538439b2a5f069fe10ed8a5f642fe9ef4a8b85d58edf06",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/serial-sent.bin": "7eda8bb3063cedc7c699eb7aa277f5af44d4b7c9f1e8dfb3b2df18a985742fa4",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/server-log-start.json": "d3838dcdf3aac796d0ce91deb68139743624bd876f4b9f32bb7f801224541623",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/server-session.jsonl": "9a5b5434d8b81070d75729459262b9443cd71192eb899239e23c4decfc776333"
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/SCREEN.BIN": "95ed5f6c1ff5557e5ccd75735358b0f28810fd5303e28e5f275064d8eef1dbec",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/TEST.PRM": "bd115d52fe3f86ce2ca28282b35c2c25f8d3608b345dcb4a44e9869c66b3f0f3",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/audit.log": "8b66b58ab4b7715a19f1447f698f7524f7768ed5ce7df4c271e9f1cd33078277",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/bbs-sent.bin": "9baa4372f53701595dad98c439fc056af04d0219c029835f1a06384460e2bfbf",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/bbs-wire.bin": "44c73cedff2c2f246b23afb73fe54daa0d61345f80ec01ac90b6060990c78a51",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/display.bin": "b74a44e6fb0652e75f6c3dbb717a07076dc4ef26ba125072c2017f4a5077362b",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/dosbox.conf": "3bfa803a9bf16910c23e063db9c36da1c45b5fbfb07cfdc9e14a9ea4f4108c19",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/dosbox.log": "f76605033cea4fd7c5f8f81b242609bef7a6a8b7c44a4a8940b51aa8cbddfeba",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/experiment.json": "f4e975e9f236b175b6a04542ee80755ba0ed4bc69ff9202905041c8a3dda5a99",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/harness.log": "6fdd4af7cd4753a040e21823c363f5414d062f8ca7fd5a16d1efbedb10dbd43f",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/modem.json": "c38bacf0fbdff11097ee3b90343f2aa80c63734cf7fc92521767209df79fa5d2",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/result.json": "688bb7d84f4770534530f88f957c469ba8fcc7cc1702992a0b353d68f7db98e1",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/screen.txt": "a4a43bf10d1d0b1f429239e9ecd2a58ecde5cffce7e3d75a1587d3059adee74c",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/semantic-audit.json": "8b66b58ab4b7715a19f1447f698f7524f7768ed5ce7df4c271e9f1cd33078277",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/serial-received.bin": "6c478dcd66b0bfbaab74825d73eacd95bbc13f97407ce316ba59aeed613dc5d1",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/serial-sent.bin": "b74a44e6fb0652e75f6c3dbb717a07076dc4ef26ba125072c2017f4a5077362b",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/server-log-start.json": "86991c0c938e29093e009ac1327b2a414ce90a73162656c05c81dcf3eed42bcd",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-buffer30-recipe/server-session.jsonl": "f6e9184891b54b3ad3ecbb531da195c3f1cd2c222561b1197bcd7524844a0124"
       }
     },
     "immediate": {
-      "label": "editor-ui-8b38-immediate",
+      "label": "editor-modem-7a0e-immediate-recipe",
       "experiment": {
-        "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
+        "binary_sha256": "7a0ea9d33995ebf177f43865c440f5c7082c1508c3403c91a597e87357228d62",
         "source_sha256": {
           "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
-          "lab/bbs/test_dos.py": "0e0acb51cf07f4b487a57698225ca9527e0a579a2ecdf99fb4026188cb2c89cc",
+          "lab/bbs/test_dos.py": "e35f9e1622cd50b004782786d9d569723ecff83dd4fdd1c683e489e2ab8ba49d",
           "lab/bbs/check_editor_dos.py": "ec8960304bbce89950c74225f98c3d9434eeef52c77f8d1644d941818c64c832",
           "lab/bbs/editor_dos_probe.py": "e151b915529b28aa293408114feed5617f0a41099cdf83c059e743869f58a932",
-          "lab/bbs/packetization_editor_probe.py": "c9fd44cc16e775c0ed861594f82ab1dee6a4b5f98eb401d8e68b6778041e8340"
+          "lab/bbs/packetization_editor_probe.py": "d6af1572c46014cc1be9c300d38c029ae8552d1cd6d5cae9c6857e4a7125a411",
+          "lab/bbs/editor-recipes.json": "faa58bd92ccb0fa6d390b4e7af82df727278d8080fd9b19d0bdb177e457f3989"
         },
         "packet_delay_ms": 0,
         "DOS_harness_passed": true,
@@ -262,12 +264,12 @@
         "automatic_dial": true,
         "mode": "explicit synthetic partial PRM",
         "command": "TERMINAL @D:\\TEST.PRM /D:lab.local:23233",
-        "sha256": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
+        "sha256": "bd115d52fe3f86ce2ca28282b35c2c25f8d3608b345dcb4a44e9869c66b3f0f3",
         "directory_entry": null,
         "directory_browser": false,
         "directory_sha256": null
       },
-      "keyboard": "p1000 p1000 p1000 p1000 p1000 p1000 p12000 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 N p6000 enter p6000 M enter p5000 P enter p5000 enter p700 K E Y T E S T enter p1800 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p3000 a-x p1000 a-x p1000 a-x p1000 a-x p2000 a-x p2000 a-x p2000 a-x p2000 a-x p2000 a-x",
+      "keyboard": "p1000 p12000 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 n p6000 enter p6000 M enter p5000 P enter p5000 enter p700 K E Y T E S T enter p1800 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p3000 a-x p2000 a-x",
       "serial": {
         "com": 2,
         "baud": 19200,
@@ -296,7 +298,7 @@
           "tab": true,
           "delete_line_ctrl_y": true
         },
-        "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
+        "binary_sha256": "7a0ea9d33995ebf177f43865c440f5c7082c1508c3403c91a597e87357228d62",
         "serial": {
           "com": 2,
           "baud": 19200,
@@ -305,7 +307,7 @@
           "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
         },
         "authority": {
-          "session_id": "4xUL8pOwn4p",
+          "session_id": "zOUOdQz7DA1",
           "menus": [
             "telnetConnected",
             "matrix",
@@ -351,23 +353,27 @@
             ],
             [
               1,
+              8
+            ],
+            [
+              1,
               9
             ],
             [
               1,
-              10
+              103
             ],
             [
               1,
-              113
+              11
             ],
             [
               1,
-              12
+              122
             ],
             [
               1,
-              132
+              13
             ],
             [
               1,
@@ -376,10 +382,6 @@
             [
               1,
               15
-            ],
-            [
-              1,
-              16
             ],
             [
               1,
@@ -395,11 +397,11 @@
             ],
             [
               1,
-              206
+              20
             ],
             [
               1,
-              21
+              20
             ]
           ]
         },
@@ -411,29 +413,29 @@
       "buffered_write_count": 0,
       "home_insert_in_individual_writes": {},
       "retained_artifacts": {
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/SCREEN.BIN": "17c00ffcf3edb2566c34f02c14c791503cb6d3394a791fdcc780d6bf51668a92",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/TEST.PRM": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/audit.log": "2c241ff3d2af784ef03b37d8484ee1b380b12b0710f73f2bbaab745510cfa4d8",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/bbs-sent.bin": "b052c4f581546109a0ea6ad014ab43cb41f0957592aefe9c516c556a331c2024",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/bbs-wire.bin": "8f959af81bc7a44c1d9b5a9e8028c17f7eb945747801ddde3c19c778e1486d1f",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/display.bin": "7533a8dc42a6d7c5cc6b5fafd670b642532e5849bbd22f812981da877fb63c23",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/dosbox.conf": "f9504d7fd12c9abbc5d633720fc00b381290199c6ffc5375b47c964193b7c1c3",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/dosbox.log": "e926f3b61d136e921ab8db127f61c88163e4a579a621a8c0ef1062116093afb8",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/experiment.json": "0478643fd3bdf8a106a9886e1fa032937424ba0972764e1199e069c76333ec1a",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/harness.log": "f12393e648d8280fec0fd42c9f2a6ae626af35d4537232dde9cf8cd9feb59020",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/modem.json": "85481bdbe5c2449a04b6ff4e6629c240a2e5a4c3519699c1ed3bd761343dd38e",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/result.json": "ce6ba477c3a33a76ecec9e86f7e74aa27c31d0f29a06ab3ad9c3cb423c503d5d",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/screen.txt": "1aabd7c42daa9940df62cbb2556650b2674ebb89a2d224fc03ad1bc20eb78d16",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/semantic-audit.json": "2c241ff3d2af784ef03b37d8484ee1b380b12b0710f73f2bbaab745510cfa4d8",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/serial-received.bin": "218b467d919ac4230d51b6b82d08157fcf4a69b80f465981d9ca895b4aab81b9",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/serial-sent.bin": "7533a8dc42a6d7c5cc6b5fafd670b642532e5849bbd22f812981da877fb63c23",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/server-log-start.json": "c3885a2fc2ab81e45b3ead20ae7a67eb6c488c33348e5c297dda75a96bd3cef7",
-        "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/server-session.jsonl": "707fe4270d0e60ef3ba3ed65a35e9bdd29e54512b7a4d92dbbd4bcfbb17741c3"
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/SCREEN.BIN": "17c00ffcf3edb2566c34f02c14c791503cb6d3394a791fdcc780d6bf51668a92",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/TEST.PRM": "bd115d52fe3f86ce2ca28282b35c2c25f8d3608b345dcb4a44e9869c66b3f0f3",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/audit.log": "57813a333e35233892cf220d02b6164a98a0c6d3671fbb123b7e0c8944611989",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/bbs-sent.bin": "c3acd7b0764e66408a1340319976b2cf2924326389ef9a282b5f65261a131ee3",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/bbs-wire.bin": "099b0d728521f93fdf9fbb064600fb89d03fab246918f5cd17581a80156f7bbe",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/display.bin": "580598c4f832e8fedaa5e6e19102c9fb502f5421e1f0f3b4cb3e10a6e4c74bc1",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/dosbox.conf": "f374b8c7cf053240ddc859c1ec6e25c8236809f2b4420518b231f637b8a09861",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/dosbox.log": "066cfd422d617bfe5fff99129414329f6ef27855760f6a1c35eabdba697bde73",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/experiment.json": "616ef84181becd8ecdcaeb9e247f660b53d4fb699c7d48b84e8881aeff774026",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/harness.log": "607f29e98a4a47694d15cb4940524ae7e3845bcd87303c5c0005e78f009b5178",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/modem.json": "53d14dae297bab19d8207c4a5c436e12ea865589c6008e02db1ce3ca729a7934",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/result.json": "3cd4f437e285e19022caeec49cb24f31fd4d8ae589bb7ff6516692476652e473",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/screen.txt": "1aabd7c42daa9940df62cbb2556650b2674ebb89a2d224fc03ad1bc20eb78d16",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/semantic-audit.json": "57813a333e35233892cf220d02b6164a98a0c6d3671fbb123b7e0c8944611989",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/serial-received.bin": "1b1dcac81b75f73b89ccd5f98415c70daed19bbc42b12f69468df81650f7cfa6",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/serial-sent.bin": "580598c4f832e8fedaa5e6e19102c9fb502f5421e1f0f3b4cb3e10a6e4c74bc1",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/server-log-start.json": "1bcd4f4d209f9b7195b71aa857deb6689484ff845d31d64bf3cfb84d7e04b298",
+        "build/bbs-lab/results/enigma/editor-modem-7a0e-immediate-recipe/server-session.jsonl": "dcb448de14388e6be0a34cd63f8f4d4ff49445b536901a54f1c6e6ffabe76408"
       }
     }
   },
@@ -2634,6 +2636,446 @@
             "build/bbs-lab/results/enigma/editor-farcode-bdeb-immediate-retry/serial-sent.bin": "b81df60570ea0adff4f0a7cd66174bcac58b14305495f2b572e0973554ea0d78",
             "build/bbs-lab/results/enigma/editor-farcode-bdeb-immediate-retry/server-log-start.json": "9bf603ba955602afba39974f92addbf958edbe518dd2a8c2e69eb10f43387ef0",
             "build/bbs-lab/results/enigma/editor-farcode-bdeb-immediate-retry/server-session.jsonl": "428fde145e90bba83f0e1d6ae5114222670c937aa58bd25e86b2c7e2da8a106b"
+          }
+        }
+      }
+    },
+    {
+      "recorded": true,
+      "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
+      "scope": "Paired actual DOS/stock ENiGMA local editor experiments. Same executable, keyboard recipe, serial settings and PRM; explicit modem packet delay differs. Server/user state was not reset between sequential runs. No physical Wi-Fi modem or general TCP boundary guarantee. Current immediate compatibility aggregate remains separate and unchanged.",
+      "buffered_editor_passed": true,
+      "immediate_editor_passed": false,
+      "runs": {
+        "buffered": {
+          "label": "editor-ui-8b38-buffer30",
+          "experiment": {
+            "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
+            "source_sha256": {
+              "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+              "lab/bbs/test_dos.py": "0e0acb51cf07f4b487a57698225ca9527e0a579a2ecdf99fb4026188cb2c89cc",
+              "lab/bbs/check_editor_dos.py": "ec8960304bbce89950c74225f98c3d9434eeef52c77f8d1644d941818c64c832",
+              "lab/bbs/editor_dos_probe.py": "e151b915529b28aa293408114feed5617f0a41099cdf83c059e743869f58a932",
+              "lab/bbs/packetization_editor_probe.py": "c9fd44cc16e775c0ed861594f82ab1dee6a4b5f98eb401d8e68b6778041e8340"
+            },
+            "packet_delay_ms": 30,
+            "DOS_harness_passed": true,
+            "editor_passed": true,
+            "audit_exit_code": 0,
+            "checks": {
+              "DOS_harness": true,
+              "typed_draft_sent": true,
+              "all_exercised_keys_emitted": true,
+              "stock_editor_entered": true,
+              "no_post_saved": true,
+              "insert_toggled_overtype": true,
+              "home_moves_before_marker": true
+            },
+            "observed_key_wire": {
+              "home": true,
+              "end": true,
+              "insert": true,
+              "delete": true,
+              "page_up": true,
+              "page_down": true,
+              "tab": true,
+              "delete_line_ctrl_y": true
+            },
+            "scope": "Stock local ENiGMA, same retained key recipe and actual DOS executable. Explicit byte-transparent modem buffering experiment; no physical firmware or guaranteed TCP boundaries. Immediate baseline reports remain unchanged."
+          },
+          "configuration": {
+            "automatic_dial": true,
+            "mode": "explicit synthetic partial PRM",
+            "command": "TERMINAL @D:\\TEST.PRM /D:lab.local:23233",
+            "sha256": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
+            "directory_entry": null,
+            "directory_browser": false,
+            "directory_sha256": null
+          },
+          "keyboard": "p1000 p1000 p1000 p1000 p1000 p1000 p12000 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 N p6000 enter p6000 M enter p5000 P enter p5000 enter p700 K E Y T E S T enter p1800 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p3000 a-x p1000 a-x p1000 a-x p1000 a-x p2000 a-x p2000 a-x p2000 a-x p2000 a-x p2000 a-x",
+          "serial": {
+            "com": 2,
+            "baud": 19200,
+            "line": "8N1",
+            "flow": "HARD",
+            "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+          },
+          "semantic_evidence": {
+            "passed": true,
+            "checks": {
+              "DOS_harness": true,
+              "typed_draft_sent": true,
+              "all_exercised_keys_emitted": true,
+              "stock_editor_entered": true,
+              "no_post_saved": true,
+              "insert_toggled_overtype": true,
+              "home_moves_before_marker": true
+            },
+            "observed_key_wire": {
+              "home": true,
+              "end": true,
+              "insert": true,
+              "delete": true,
+              "page_up": true,
+              "page_down": true,
+              "tab": true,
+              "delete_line_ctrl_y": true
+            },
+            "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
+            "serial": {
+              "com": 2,
+              "baud": 19200,
+              "line": "8N1",
+              "flow": "HARD",
+              "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+            },
+            "authority": {
+              "session_id": "N1UqWBJwrgb",
+              "menus": [
+                "telnetConnected",
+                "matrix",
+                "login",
+                "fullLoginSequenceLoginArt",
+                "fullLoginSequenceLastCallers",
+                "fullLoginSequenceWhosOnline",
+                "fullLoginSequenceOnelinerz",
+                "fullLoginSequenceNewScanConfirm",
+                "fullLoginSequenceUserStats",
+                "mainMenu",
+                "messageBaseMainMenu",
+                "messageBaseNewPost"
+              ],
+              "first_body_cursor_positions": [
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  1,
+                  4
+                ],
+                [
+                  1,
+                  5
+                ],
+                [
+                  1,
+                  6
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  7
+                ],
+                [
+                  1,
+                  8
+                ],
+                [
+                  1,
+                  7
+                ],
+                [
+                  1,
+                  7
+                ],
+                [
+                  1,
+                  7
+                ],
+                [
+                  1,
+                  8
+                ],
+                [
+                  1,
+                  9
+                ],
+                [
+                  1,
+                  10
+                ],
+                [
+                  1,
+                  10
+                ],
+                [
+                  1,
+                  10
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ]
+              ]
+            },
+            "scope": "Actual loopback stock editor draft and captured DOS keyboard wire. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim. Explicit modem buffering experiment; does not replace immediate-bridge failures or prove physical firmware compatibility.",
+            "exit_mode": "close_unsaved_connection",
+            "unexercised_keys": [],
+            "modem_packet_delay_ms": 30
+          },
+          "buffered_write_count": 33,
+          "home_insert_in_individual_writes": {
+            "home": true,
+            "insert": true
+          },
+          "retained_artifacts": {
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/SCREEN.BIN": "95ed5f6c1ff5557e5ccd75735358b0f28810fd5303e28e5f275064d8eef1dbec",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/TEST.PRM": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/audit.log": "5df13c2ce4d35f1defbeffde76000a40b85b1a318ee7827432aa9243611e14d0",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/bbs-sent.bin": "f116486d51ffdab5a742675fe33b53f949004930c153a1d38a71a60df06730c5",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/bbs-wire.bin": "58f78ae8437030c70e451deb04e09293ea389d766fdd1b9666695698b30dd33b",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/display.bin": "7eda8bb3063cedc7c699eb7aa277f5af44d4b7c9f1e8dfb3b2df18a985742fa4",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/dosbox.conf": "cadd144f402043bb095307c59ea12c6ccbef1158e1b6b1e65fc5d7e64643fc6d",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/dosbox.log": "e30833276913b6576ea547cd3a9ab4192449e8982ca0fdbb4a31207ab345b09a",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/experiment.json": "f8ac467e076cc6e4e6fed1ee1eb991ea96dc66227b8f7e8fc403f1c902903622",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/harness.log": "42b26639f0158a30ca29c6845655c6f50c711bd44f1c56d3f1d41955acecc6af",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/modem.json": "590ac0012d84cdd9221c27c0f2c5b4c7b3539cf2eec6559303618642e444d580",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/result.json": "ee0567dce99ff2e025c9f4fabc8e4d37fffa1bd64ac33b07f234987aef035369",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/screen.txt": "a4a43bf10d1d0b1f429239e9ecd2a58ecde5cffce7e3d75a1587d3059adee74c",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/semantic-audit.json": "5df13c2ce4d35f1defbeffde76000a40b85b1a318ee7827432aa9243611e14d0",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/serial-received.bin": "17ed93deb3008f72c3538439b2a5f069fe10ed8a5f642fe9ef4a8b85d58edf06",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/serial-sent.bin": "7eda8bb3063cedc7c699eb7aa277f5af44d4b7c9f1e8dfb3b2df18a985742fa4",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/server-log-start.json": "d3838dcdf3aac796d0ce91deb68139743624bd876f4b9f32bb7f801224541623",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-buffer30/server-session.jsonl": "9a5b5434d8b81070d75729459262b9443cd71192eb899239e23c4decfc776333"
+          }
+        },
+        "immediate": {
+          "label": "editor-ui-8b38-immediate",
+          "experiment": {
+            "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
+            "source_sha256": {
+              "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+              "lab/bbs/test_dos.py": "0e0acb51cf07f4b487a57698225ca9527e0a579a2ecdf99fb4026188cb2c89cc",
+              "lab/bbs/check_editor_dos.py": "ec8960304bbce89950c74225f98c3d9434eeef52c77f8d1644d941818c64c832",
+              "lab/bbs/editor_dos_probe.py": "e151b915529b28aa293408114feed5617f0a41099cdf83c059e743869f58a932",
+              "lab/bbs/packetization_editor_probe.py": "c9fd44cc16e775c0ed861594f82ab1dee6a4b5f98eb401d8e68b6778041e8340"
+            },
+            "packet_delay_ms": 0,
+            "DOS_harness_passed": true,
+            "editor_passed": false,
+            "audit_exit_code": 1,
+            "checks": {
+              "DOS_harness": true,
+              "typed_draft_sent": true,
+              "all_exercised_keys_emitted": true,
+              "stock_editor_entered": true,
+              "no_post_saved": true,
+              "insert_toggled_overtype": false,
+              "home_moves_before_marker": false
+            },
+            "observed_key_wire": {
+              "home": true,
+              "end": true,
+              "insert": true,
+              "delete": true,
+              "page_up": true,
+              "page_down": true,
+              "tab": true,
+              "delete_line_ctrl_y": true
+            },
+            "scope": "Stock local ENiGMA, same retained key recipe and actual DOS executable. Explicit byte-transparent modem buffering experiment; no physical firmware or guaranteed TCP boundaries. Immediate baseline reports remain unchanged."
+          },
+          "configuration": {
+            "automatic_dial": true,
+            "mode": "explicit synthetic partial PRM",
+            "command": "TERMINAL @D:\\TEST.PRM /D:lab.local:23233",
+            "sha256": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
+            "directory_entry": null,
+            "directory_browser": false,
+            "directory_sha256": null
+          },
+          "keyboard": "p1000 p1000 p1000 p1000 p1000 p1000 p12000 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 N p6000 enter p6000 M enter p5000 P enter p5000 enter p700 K E Y T E S T enter p1800 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p3000 a-x p1000 a-x p1000 a-x p1000 a-x p2000 a-x p2000 a-x p2000 a-x p2000 a-x p2000 a-x",
+          "serial": {
+            "com": 2,
+            "baud": 19200,
+            "line": "8N1",
+            "flow": "HARD",
+            "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+          },
+          "semantic_evidence": {
+            "passed": false,
+            "checks": {
+              "DOS_harness": true,
+              "typed_draft_sent": true,
+              "all_exercised_keys_emitted": true,
+              "stock_editor_entered": true,
+              "no_post_saved": true,
+              "insert_toggled_overtype": false,
+              "home_moves_before_marker": false
+            },
+            "observed_key_wire": {
+              "home": true,
+              "end": true,
+              "insert": true,
+              "delete": true,
+              "page_up": true,
+              "page_down": true,
+              "tab": true,
+              "delete_line_ctrl_y": true
+            },
+            "binary_sha256": "8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d",
+            "serial": {
+              "com": 2,
+              "baud": 19200,
+              "line": "8N1",
+              "flow": "HARD",
+              "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+            },
+            "authority": {
+              "session_id": "4xUL8pOwn4p",
+              "menus": [
+                "telnetConnected",
+                "matrix",
+                "login",
+                "fullLoginSequenceLoginArt",
+                "fullLoginSequenceLastCallers",
+                "fullLoginSequenceWhosOnline",
+                "fullLoginSequenceOnelinerz",
+                "fullLoginSequenceNewScanConfirm",
+                "fullLoginSequenceUserStats",
+                "mainMenu",
+                "messageBaseMainMenu",
+                "messageBaseNewPost"
+              ],
+              "first_body_cursor_positions": [
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  1,
+                  4
+                ],
+                [
+                  1,
+                  5
+                ],
+                [
+                  1,
+                  6
+                ],
+                [
+                  1,
+                  7
+                ],
+                [
+                  1,
+                  8
+                ],
+                [
+                  1,
+                  9
+                ],
+                [
+                  1,
+                  10
+                ],
+                [
+                  1,
+                  113
+                ],
+                [
+                  1,
+                  12
+                ],
+                [
+                  1,
+                  132
+                ],
+                [
+                  1,
+                  14
+                ],
+                [
+                  1,
+                  15
+                ],
+                [
+                  1,
+                  16
+                ],
+                [
+                  1,
+                  17
+                ],
+                [
+                  1,
+                  185
+                ],
+                [
+                  1,
+                  19
+                ],
+                [
+                  1,
+                  206
+                ],
+                [
+                  1,
+                  21
+                ]
+              ]
+            },
+            "scope": "Actual loopback stock editor draft and captured DOS keyboard wire. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim.",
+            "exit_mode": "close_unsaved_connection",
+            "unexercised_keys": [],
+            "modem_packet_delay_ms": 0
+          },
+          "buffered_write_count": 0,
+          "home_insert_in_individual_writes": {},
+          "retained_artifacts": {
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/SCREEN.BIN": "17c00ffcf3edb2566c34f02c14c791503cb6d3394a791fdcc780d6bf51668a92",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/TEST.PRM": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/audit.log": "2c241ff3d2af784ef03b37d8484ee1b380b12b0710f73f2bbaab745510cfa4d8",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/bbs-sent.bin": "b052c4f581546109a0ea6ad014ab43cb41f0957592aefe9c516c556a331c2024",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/bbs-wire.bin": "8f959af81bc7a44c1d9b5a9e8028c17f7eb945747801ddde3c19c778e1486d1f",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/display.bin": "7533a8dc42a6d7c5cc6b5fafd670b642532e5849bbd22f812981da877fb63c23",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/dosbox.conf": "f9504d7fd12c9abbc5d633720fc00b381290199c6ffc5375b47c964193b7c1c3",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/dosbox.log": "e926f3b61d136e921ab8db127f61c88163e4a579a621a8c0ef1062116093afb8",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/experiment.json": "0478643fd3bdf8a106a9886e1fa032937424ba0972764e1199e069c76333ec1a",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/harness.log": "f12393e648d8280fec0fd42c9f2a6ae626af35d4537232dde9cf8cd9feb59020",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/modem.json": "85481bdbe5c2449a04b6ff4e6629c240a2e5a4c3519699c1ed3bd761343dd38e",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/result.json": "ce6ba477c3a33a76ecec9e86f7e74aa27c31d0f29a06ab3ad9c3cb423c503d5d",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/screen.txt": "1aabd7c42daa9940df62cbb2556650b2674ebb89a2d224fc03ad1bc20eb78d16",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/semantic-audit.json": "2c241ff3d2af784ef03b37d8484ee1b380b12b0710f73f2bbaab745510cfa4d8",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/serial-received.bin": "218b467d919ac4230d51b6b82d08157fcf4a69b80f465981d9ca895b4aab81b9",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/serial-sent.bin": "7533a8dc42a6d7c5cc6b5fafd670b642532e5849bbd22f812981da877fb63c23",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/server-log-start.json": "c3885a2fc2ab81e45b3ead20ae7a67eb6c488c33348e5c297dda75a96bd3cef7",
+            "build/bbs-lab/results/enigma/editor-ui-8b38-immediate/server-session.jsonl": "707fe4270d0e60ef3ba3ed65a35e9bdd29e54512b7a4d92dbbd4bcfbb17741c3"
           }
         }
       }

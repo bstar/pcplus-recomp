@@ -387,3 +387,18 @@ the same executable, synthetic PRM, serial settings and retained unsaved
 keyboard recipe. See
 [current outcomes and limits](modern-compatibility.md) and the hash-bound
 paired report; older attempts remain historical evidence.
+
+## Separate modem-CS checkpoint
+
+The7a0ea9d3 runtime repeats actual stock editors after moving the controller
+and paced sender into MODEM_CODE. Synchronet `editor-modem-7a0e` passes all12
+behavior checks and eight wire checks, including draft abort. ENiGMA
+`editor-modem-7a0e-immediate-recipe` reaches the editor, emits all eight keys,
+but fails Home/Insert again. The matching30ms
+`editor-modem-7a0e-buffer30-recipe` passes all seven audited checks. No post is
+saved. Hardware/configuration restoration passes for all completed runs.
+
+The first ENiGMA attempt failed before DOS launch because report-derived
+keyboard wrappers accumulated past the ADDKEY limit. It is retained separately.
+The current pair uses canonical checked-in input; it does not keep extending
+historical generated output. See [current results and recipe provenance](modern-compatibility.md).

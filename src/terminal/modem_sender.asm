@@ -5,14 +5,15 @@
 ; Original calibrated units are retained in the configuration, not reinterpreted.
 BITS 16
 CPU 8086
-SEGMENT _TEXT public class=CODE use16
-extern uart_try_write,connection_elapsed,terminal_modem_pause
-global terminal_modem_send_start,terminal_modem_send_poll
-terminal_modem_send_start:
+SEGMENT MODEM_CODE public align=16 class=FARCODE use16
+GROUP MODEM_GROUP MODEM_CODE
+extern connection_uart_write_service,connection_elapsed,terminal_modem_pause
+global terminal_modem_send_start_impl,terminal_modem_send_poll_impl
+terminal_modem_send_start_impl:
  mov [sender_cursor],si
  mov word [sender_delay],0
  ret
-terminal_modem_send_poll:
+terminal_modem_send_poll_impl:
  push bx
  push cx
  push dx
@@ -31,13 +32,13 @@ terminal_modem_send_poll:
  je .pause
  cmp al,0xff
  je .nul
- call uart_try_write
+ call connection_uart_write_service
  jc .busy
  mov word [sender_delay],1
  jmp .accepted
 .nul:
  xor al,al
- call uart_try_write
+ call connection_uart_write_service
  jc .busy
  mov word [sender_delay],0
  jmp .accepted
@@ -58,6 +59,8 @@ terminal_modem_send_poll:
  pop bx
  clc
  ret
+global terminal_modem_code_end
+terminal_modem_code_end:
 SEGMENT _DATA public class=DATA use16
 sender_cursor: dw 0
 sender_tick: dw 0

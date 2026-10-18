@@ -172,6 +172,14 @@ physical modem compatibility or close the remaining application gates below.
       buffering passes the paired checks. Later runtime identities remain
       separate in the hash-bound reports.
       See `docs/UI_FAR_STORAGE.md` for source and verification boundaries.
+      The modem controller/sender now share another static code segment with
+      eight near public entries, ten namespaced register callbacks and four
+      explicit1..4-word caller-cleaned adapters. Resident CODE falls to62,306
+      bytes, leaving3,230; DATA/STACK remains52,384. Build guards validate44
+      bridge pairs and disjoint CS ranges. Actual linked ABI/error/IRQ tests
+      and a56-byte DOS child sample cover modem code retention alongside the
+      existing printer/native/UI owners. See `docs/MODEM_FAR_CODE.md`.
+      Full dynamic overlays, startup, settings/UI and F01 remain open.
 - [ ] Reconstruct configuration persistence, dialing directory and application UI.
       Progress: original-code replay proves the 1,264-byte PRM load/save block
       and ten-byte serial prefix; a partial lossless host codec preserves unknown

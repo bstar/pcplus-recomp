@@ -102,3 +102,13 @@ emit all eight expected key sequences, preserve the synthetic PRM, restore
 sampled hardware and close without saving a post. Current hashes and
 artifacts are in the paired JSON report; prior experiments remain in its
 history. See [the current checkpoint](modern-compatibility.md).
+
+The separate modem-CS7a0ea9d3 checkpoint repeats the result with canonical
+checked-in editor input: `editor-modem-7a0e-buffer30-recipe` passes all seven
+audited checks; `editor-modem-7a0e-immediate-recipe` fails Home/Insert despite
+all eight outgoing keys. Both enter the editor, restore hardware/configuration
+and close without posting. The initial `editor-modem-7a0e-immediate` label
+failed preflight and is excluded from the paired comparison. The recipe now
+comes from `editor-recipes.json`, independently of mutable run reports.
+`make test-bbs-modem` checks its aliases, safety and complete ADDKEY length.
+See [the current checkpoint](modern-compatibility.md) for provenance and limits.
