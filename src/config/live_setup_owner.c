@@ -89,7 +89,7 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
  live_setup_result *result,unsigned permitted_link_mask)
 {
  live_configuration_result decoded;prm_dos_result io;unsigned mask,status,deferred;
- if((permitted_link_mask&~14U) || !external(destination,sizeof(*destination)) || !external(result,sizeof(*result)) ||
+ if((permitted_link_mask&~30U) || !external(destination,sizeof(*destination)) || !external(result,sizeof(*result)) ||
   !separate(destination,sizeof(*destination),result,sizeof(*result)))return LIVE_SETUP_ARGUMENT;
  memset(result,0,sizeof(*result));
  if(owner.bound!=1 || owner.pending!=1){result->status=LIVE_SETUP_STATE;return result->status;}
@@ -119,7 +119,7 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
  }
  if(!command_valid(&owner.stage)){result->status=LIVE_SETUP_COMMAND;return result->status;}
  if(owner.stage.change_mask&LIVE_CHANGE_PORT)permitted_link_mask=0;
- deferred=owner.stage.change_mask&((LIVE_CHANGE_TRANSPORT&~permitted_link_mask)|LIVE_CHANGE_PROFILE|LIVE_CHANGE_DIRECTORY|LIVE_CHANGE_TARGET);
+ deferred=owner.stage.change_mask&(((LIVE_CHANGE_TRANSPORT|LIVE_CHANGE_PROFILE)&~permitted_link_mask)|LIVE_CHANGE_DIRECTORY|LIVE_CHANGE_TARGET);
  owner.offered_mask=owner.stage.change_mask;
  owner.offered_baud_low=owner.stage.serial.baud_low;owner.offered_baud_high=owner.stage.serial.baud_high;
  owner.stage.serial.port_number=owner.active.serial.port_number;
@@ -132,7 +132,7 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
  if(!(permitted_link_mask&LIVE_CHANGE_FLOW)){
   owner.stage.serial.software_flow=owner.active.serial.software_flow;owner.stage.serial.hardware_flow=owner.active.serial.hardware_flow;
  }
- owner.stage.serial.terminal_id=owner.active.serial.terminal_id;
+ if(!(permitted_link_mask&LIVE_CHANGE_PROFILE))owner.stage.serial.terminal_id=owner.active.serial.terminal_id;
  owner.stage.serial.io_base=owner.active.serial.io_base;
  owner.stage.serial.irq=owner.active.serial.irq;
  memcpy(&owner.stage.directory,&owner.active.directory,sizeof(owner.stage.directory));

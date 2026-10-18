@@ -7,7 +7,8 @@ explicit file. The terminal also offers
 [setup before connecting](SETUP_STARTUP.md) with `/S @PCPLUS.PRM`. It is not the original
 PCSETUP shared-memory child. [Alt-F10](SETUP_LIVE.md) also opens the editor from
 the running terminal, with validated display/pacing/modem/BREAK adoption and
-confirmed same-port serial application. COM/profile changes still require restart.
+confirmed same-port serial application. Profiles4/6 offer a separate confirmed
+keyboard/view reset; COM changes still require restart.
 The recovered parent protocol and missing child
 consumer are documented in [SETUP_NATIVE.md](SETUP_NATIVE.md).
 

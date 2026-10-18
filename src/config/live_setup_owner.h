@@ -31,7 +31,7 @@ unsigned __cdecl live_setup_begin(const char *path,
 unsigned __cdecl live_setup_finish(live_configuration_plan *destination,
  live_setup_result *result);
 /* Same transaction with explicitly permitted SAME-port baud/line/flow bits
- * (subset of14). A port change defers all serial categories together. The
+ * and supported profile bits (subset of30). A port change defers these together. The
  * foreground owner still must obtain the user's choice and perform handoff. */
 unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
  live_setup_result *result,unsigned permitted_link_mask);

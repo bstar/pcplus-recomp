@@ -15,10 +15,9 @@ Build and check with the pinned Nix DOS8086 toolchain:
 `build/live-configuration/LIVE.EXE` is a source-only diagnostic, not the user
 settings editor. Existing `PRMEDIT` and `TERMINAL /S @PCPLUS.PRM` remain the
 supported offline and setup-before-connect workflows. [Alt-F10](SETUP_LIVE.md)
-now opens the editor from the running terminal. COM/profile changes apply at
-the next startup. Display/pacing/modem/BREAK
-changes apply during the session; same-port baud/line/flow changes offer a
-separate Y/N confirmation. The candidate decoder is linked in the normal
+now opens the editor from the running terminal. COM changes apply at the next startup. Supported4/6 profile switches have a
+separate confirmed keyboard/view reset. Display/pacing/modem/BREAK
+changes apply during the session; same-port baud/line/flow changes also offer a separate Y/N confirmation. The candidate decoder is linked in the normal
 terminal's separate
 [configuration code segment](CONFIGURATION_FAR_CODE.md).
 
@@ -43,7 +42,8 @@ silently rereading a changed directory or reentering the browser while connected
 The caller still owns that selection's lifetime and identity. The terminal now
 [retains the complete header and logical request context](DIRECTORY_CONTEXT.md).
 The integrated live owner binds that context and the canonical startup PRM
-identity, validates after child return and applies independent settings with a confirmed same-port serial handoff while deferring COM/profile changes. See [SETUP_LIVE.md](SETUP_LIVE.md).
+identity, validates after child return and applies independent settings with confirmed same-port serial and supported4/6 profile changes while deferring
+COM migration. See [SETUP_LIVE.md](SETUP_LIVE.md).
 
 ## Candidate and change classification
 

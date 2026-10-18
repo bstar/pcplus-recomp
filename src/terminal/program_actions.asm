@@ -24,6 +24,7 @@ extern terminal_controller_active
 extern _process_run,terminal_setup_tail
 extern terminal_setup_prepare,terminal_setup_complete,terminal_setup_return_prompt
 extern terminal_setup_key_consumed,terminal_setup_link_status
+extern terminal_setup_profile_finish
 global terminal_program_initialize,terminal_program_start,terminal_program_poll
 global terminal_program_cancel
 global terminal_program_prepare_link
@@ -355,6 +356,10 @@ terminal_program_poll:
  xor bh,bh
  mov ah,2
  int 0x10
+ cmp word [terminal_program_kind],1
+ jne .restore_port
+ call terminal_setup_profile_finish
+.restore_port:
  call program_restore_uart
  mov word [terminal_program_active],0
  call program_resume_flow

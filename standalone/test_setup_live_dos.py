@@ -26,6 +26,20 @@ def main():
   assert screen[22:32:2]==b' LIVE' and screen[23:33:2]==bytes([want])*5,(name,screen[:34])
   proof['checks']['new_remote_characters_use_expected_live_attribute']=True
   cases.append(proof)
- result=dict(passed=True,cases=cases,terminal_sha256=hashlib.sha256(BINARY.read_bytes()).hexdigest(),editor_sha256=hashlib.sha256(EDITOR.read_bytes()).hexdigest(),scope='Actual DOS AltF10 production editor: cancel, declined baud save, live color, accepted baud and accepted7E2 line save. Post-child typed bytes, remote display bytes and fresh cursor reply verify resumed duplex operation. Independent INT1C divisor/LCR bitmaps observe old/new UART formats; final UART/PIC/vector samples equal startup. Emulated serial peer does not enforce a physical matching baud/parity; hardware validation remains open.')
+ keyboard=b''.join(b''.join(('P%d-%02d'%(profile,slot)).encode().ljust(12,b'\0') for slot in range(79)) for profile in range(7))
+ for name,answer,kbd,profile,clear,key_bytes in [
+  ('live-editor-apply-profile','y',None,6,True,None),
+  ('live-editor-decline-profile','space',None,4,False,None),
+  ('live-editor-profile-explicit','y',keyboard,6,True,b'P6-16'),
+  ('live-editor-profile-missing-block','y',keyboard[:5*948],4,False,b'P4-16')]:
+  keys='p2000 a-f10 p500 pgdown home del 6 f10 escape '+answer+' r e a d y'+(' f1' if kbd is not None else '')
+  proof,actual=run(name,keys=keys,arguments='@TEST.PRM'+(' /K:TEST.KBD' if kbd is not None else ''),post_echo=True,rate_mask=1,line_mask=1,expected_profile=profile,profile_clear=clear,keyboard_file=kbd)
+  assert actual==word(image(),0x194,6);proof['checks']['exact_expected_PRM_after_live_child']=True
+  wire=(OUT/name/'serial.bin').read_bytes();assert b'ready' in wire
+  if key_bytes is not None:assert key_bytes in wire;proof['checks']['correct_profile_F1_mapping_reached_peer']=True
+  screen=(OUT/name/'SCREEN.BIN').read_bytes();start=0 if clear else 22
+  assert screen[start:start+10:2]==b' LIVE' and screen[start+1:start+11:2]==b'\x07'*5
+  proof['checks']['clear_or_preserve_screen_matches_profile_choice']=True;cases.append(proof)
+ result=dict(passed=True,cases=cases,terminal_sha256=hashlib.sha256(BINARY.read_bytes()).hexdigest(),editor_sha256=hashlib.sha256(EDITOR.read_bytes()).hexdigest(),scope='Actual DOS AltF10 production editor: cancel, baud decline/accept, color,7E2, flow and profile choices. Fresh post-child CPR/DA and cell attributes verify resumed duplex operation and profile clear/preservation. Explicit KBD target mapping reaches the peer through F1; a missing target block retains the old mapping/profile. Independent INT1C divisor/LCR samples and exact final UART/PIC/vector restoration pass. Physical UART/firmware timing remains unverified.')
  (OUT/'live-checks.json').write_text(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':main()

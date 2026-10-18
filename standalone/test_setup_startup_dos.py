@@ -37,11 +37,12 @@ def probe_child():
  subprocess.run(['nasm','-f','obj',str(OUT/'probe.asm'),'-o',str(OUT/'probe.obj')],check=True)
  subprocess.run(['wlink','system','dos','option','quiet','name',str(OUT/'PROBE.EXE'),'file',str(OUT/'probe.obj')],check=True)
  return (OUT/'PROBE.EXE').read_bytes()
-def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate=1200,expected=0,ready=True,post_echo=False,rate_mask=None,line_mask=None):
+def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate=1200,expected=0,ready=True,post_echo=False,rate_mask=None,line_mask=None,expected_profile=None,profile_clear=False,keyboard_file=None):
  directory=OUT/name
  if directory.exists():shutil.rmtree(directory)
  directory.mkdir(parents=True);data=image() if payload is None else payload
  (directory/'TEST.PRM').write_bytes(data);shutil.copyfile(BINARY,directory/'TERMINAL.EXE')
+ if keyboard_file is not None:(directory/'TEST.KBD').write_bytes(keyboard_file)
  if child=='editor':shutil.copyfile(EDITOR,directory/'PRMEDIT.EXE')
  elif child=='probe':shutil.copyfile(OUT/'PROBE.EXE',directory/'PRMEDIT.EXE')
  elif child=='fail':
@@ -81,8 +82,9 @@ def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate
     wire.extend(block)
     if b'\x1b[1;12R' in wire:peer_checks['actual_terminal_cursor_reply']=True
     if post_echo and not post_sent and b'ready' in wire:
-     conn.sendall(b' LIVE\x1b[6n');post_sent=True
-    if post_echo and b'\x1b[1;17R' in wire:peer_checks['post_editor_receive_render_and_cursor_reply']=True
+     conn.sendall(b' LIVE\x1b[6n'+(b'\x1b[0c' if expected_profile is not None else b''));post_sent=True
+    if post_echo and (b'\x1b[1;6R' if profile_clear else b'\x1b[1;17R') in wire:peer_checks['post_editor_receive_render_and_cursor_reply']=True
+    if expected_profile is not None and (b'\x1b[?1;2c' if expected_profile==6 else b'\x1b[?62;2c') in wire:peer_checks['post_editor_profile_device_reply']=True
   except OSError as error:
    if not stop.is_set():errors.append(str(error))
   finally:
@@ -131,8 +133,8 @@ exit
  before=(directory/'BEFORE.BIN').read_bytes();after=(directory/'AFTER.BIN').read_bytes();screen=(directory/'SCREEN.BIN').read_bytes()
  checks={'expected_DOS_exit':proc.returncode==0 and (directory/'PASS.TXT').exists() and not (directory/'FAIL.TXT').exists(),'hardware_restored':len(before)==42 and before==after,'no_peer_errors':not errors,'no_recovery_files':not (directory/'PRMEDIT.BAK').exists() and not (directory/'PRMEDIT.$$$').exists()}
  if ready:
-  checks.update(peer_checks);checks['both_peer_checks_seen']=len(peer_checks)==(3 if post_echo else 2)
-  checks['actual_video_ready']=screen[:22:2]==b'SETUP READY'
+  checks.update(peer_checks);checks['both_peer_checks_seen']=len(peer_checks)==(3 if post_echo else 2)+(expected_profile is not None)
+  checks['actual_video_ready']=screen[:10:2]==b' LIVE' if profile_clear else screen[:22:2]==b'SETUP READY'
  else:checks['no_serial_output']=not wire
  if child=='probe' and ready:
   checks['child_entry_hardware_unchanged']=(directory/'CHILDHW.BIN').read_bytes()==before
@@ -143,6 +145,7 @@ exit
  if ready:checks['actual_configured_UART_divisor']=samples[2]==({1200:1,115200:2,19200:4}[rate] if rate_mask is None else rate_mask) and samples[4]>0
  else:checks['UART_never_observed_enabled']=samples[4]==0
  if line_mask is not None:checks['actual_configured_UART_line_format']=samples[5]==line_mask
+ if keyboard_file is not None:checks['keyboard_fixture_unchanged']=(directory/'TEST.KBD').read_bytes()==keyboard_file
  (directory/'serial.bin').write_bytes(wire)
  result={'case':name,'passed':all(checks.values()),'checks':checks,'expected_exit':expected,'arguments':arguments,'observed_errors':errors}
  (directory/'result.json').write_text(json.dumps(result,indent=2)+'\n');assert result['passed'],result

@@ -24,7 +24,7 @@ extern attributes_color_mode,terminal_dec_keys,terminal_backspace_mode_9058
 extern attributes_bold_active,attributes_blink_active,attributes_reverse_active
 extern terminal_macro_pause_character,terminal_macro_character_delay_units
 
-global terminal_load_configuration,terminal_apply_configuration
+global terminal_load_configuration,terminal_apply_configuration,terminal_apply_display_configuration
 global terminal_select_directory
 ; AX0 continue / AX1 user cancelled / AX8 invalid selectors or browser error.
 ; No UART access. The optional browser owns and restores its text window.
@@ -208,6 +208,7 @@ terminal_apply_configuration:
  mov ax,[terminal_configuration_values+TI_HARD]
  mov [uart_hardware_flow],ax
 .display:
+terminal_apply_display_configuration:
  mov word [attributes_color_mode],1
  mov word [terminal_dec_keys],1
  mov word [terminal_backspace_mode_9058],1

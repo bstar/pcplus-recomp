@@ -28,13 +28,15 @@ consumed. The peer must independently match the selected format. A busy
 transmitter keeps the old serial settings and leaves a visible acknowledgment
 prompt. Independent display/modem/BREAK changes can still be adopted.
 
-A COM/base/IRQ change defers all serial categories together, so the new port's
-baud/format cannot accidentally be installed on the old port. Terminal profile
-changes remain deferred until restart. CLI category overrides retain precedence.
+A COM/base/IRQ change defers all serial categories and the profile together,
+so the new port's settings cannot accidentally be installed on the old port.
+Supported profiles4/6 now offer their own Y/N choice, with staged target keyboard
+validation and a clean view/reset baseline; see [PROFILE_LIVE.md](PROFILE_LIVE.md). CLI category overrides retain precedence.
 Negotiated autobaud is preserved on unrelated saves. Successfully applying a
 new source rate advances the remembered source baseline, allowing a later edit
 to revert the rate without mistaking it for an unrelated autobaud change.
-Full port/profile migration remains unfinished; see [SERIAL_LIVE.md](SERIAL_LIVE.md).
+Cross-port migration and the broader emulation collection remain unfinished;
+see [SERIAL_LIVE.md](SERIAL_LIVE.md).
 
 Configured display defaults are separate from transient BBS state. Unedited
 wrap/scroll fields preserve the peer's current modes. Palette changes preserve
@@ -42,7 +44,8 @@ active SGR; a currently plain normal attribute can adopt the new normal color,
 while other attributes take effect at the next relevant SGR operation. Only
 changed configured defaults are patched into RIS state: applying settings does
 not capture the current cursor, margins, modes, SGR, tabs or keymap as defaults.
-The existing screen is retained; newly received characters use the active values.
+Unless a profile switch is explicitly confirmed, the existing screen is retained;
+newly received characters use the active values.
 No initialization, dialing or hang-up command is transmitted merely by saving.
 
 Read, close, size, decoder or native-command-expansion errors leave active
@@ -88,11 +91,13 @@ canonical/PRM file boundaries modeled. `check_live_setup_apply.py` runs27 actual
 foreground application cases using kernel/BIOS/UART boundaries, plus the real
 renderer/RIS code. `check_setup_live.py` retains32 invocation/handoff cases.
 The production DOS editor test covers cancel, a declined baud save, live
-normal color and accepted baud,7E2 line and software-flow saves. After each return the peer receives typed bytes, sends
+normal color and accepted baud,7E2 line and software-flow saves. Four additional
+profile cases check accepted/declined switches, explicit target F1 mapping and
+missing-target-block preservation. After each return the peer receives typed bytes, sends
 new display bytes and receives a fresh cursor reply. Exact screen attributes prove display adoption. An independent INT1C sampler
 observes old/new divisor and LCR bitmaps; UART/vector/PIC samples prove final
-restoration. The dedicated policy and link suites additionally exercise19
-candidate-policy inputs and53 actual foreground handoff inputs.
+restoration. The dedicated suites additionally exercise27 candidate-policy inputs,53 actual
+foreground serial handoff inputs and32 profile cases.
 
 Run these through `./tools/build test-terminal`. The pure staging API is described
 in [LIVE_CONFIGURATION_PLAN.md](LIVE_CONFIGURATION_PLAN.md); the full feature

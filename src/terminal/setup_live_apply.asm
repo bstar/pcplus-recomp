@@ -18,6 +18,8 @@ extern terminal_parity,terminal_data_bits,terminal_stop_bits,terminal_break_dela
 extern uart_software_flow,uart_hardware_flow,uart_port_rbr,uart_irq_indices
 extern uart_tx_paused,uart_xoff_sent,uart_flow_pending,uart_rts_lowered,uart_rx_count
 extern terminal_program_prepare_link
+extern terminal_setup_profile_bind,terminal_setup_profile_stage
+extern terminal_setup_profile_status,terminal_setup_profile_ready
 extern terminal_connection_prepare,terminal_apply_live_configuration
 extern terminal_program_status,terminal_exit_code,terminal_quit
 global terminal_setup_bind,terminal_setup_prepare,terminal_setup_complete
@@ -52,6 +54,7 @@ terminal_setup_bind:
  call _live_setup_bind
  add sp,6
  mov [terminal_setup_binding_status],ax
+ call terminal_setup_profile_bind
 .done:
  restore
 setup_context_pointer:
@@ -70,6 +73,8 @@ terminal_setup_prepare:
  mov word [terminal_setup_apply_status],0
  mov word [terminal_setup_link_status],0
  mov word [terminal_setup_key_consumed],0
+ mov word [terminal_setup_profile_status],0
+ mov word [terminal_setup_profile_ready],0
  mov word [terminal_setup_outcome],0
  mov word [terminal_setup_outcome+2],0
  mov word [terminal_setup_outcome+4],0
@@ -132,7 +137,7 @@ terminal_setup_complete:
  mov di,setup_previous_serial
  mov cx,TI_SIZE/2
  rep movsw
- mov ax,14
+ mov ax,30
  push ax
  mov ax,terminal_setup_outcome
  push ax
@@ -143,6 +148,7 @@ terminal_setup_complete:
  mov [terminal_setup_apply_status],ax
  or ax,ax
  jnz .done
+ call setup_profile_choice
  call setup_serial_choice
  test word [terminal_setup_outcome+4],128|14
  jz .apply
@@ -183,6 +189,8 @@ terminal_setup_complete:
  mov word [terminal_exit_code],7
  mov word [terminal_quit],1 ;Cannot continue with unprepared active commands.
 .failed:
+ mov word [terminal_setup_profile_status],0
+ mov word [terminal_setup_profile_ready],0
  mov word [terminal_setup_apply_status],6
  mov word [terminal_setup_outcome],6
  mov word [terminal_setup_outcome+4],0
@@ -210,6 +218,47 @@ terminal_setup_complete:
  add sp,2
 .done:
  restore
+
+setup_profile_choice:
+ test word [terminal_setup_outcome+4],16
+ jz .done
+ mov ax,[terminal_setup_plan+TI_PROFILE]
+ call terminal_setup_profile_stage
+ or ax,ax
+ jnz .failed
+ mov si,setup_profile_question
+.text:
+ lodsb
+ or al,al
+ jz .key
+ mov ah,0x0e
+ xor bh,bh
+ mov bl,7
+ int 0x10
+ jmp .text
+.key:
+ xor ax,ax
+ int 0x16
+ mov word [terminal_setup_key_consumed],1
+ cmp al,'Y'
+ je .accept
+ cmp al,'y'
+ je .accept
+ mov word [terminal_setup_profile_status],2
+ jmp .defer
+.accept:
+ mov word [terminal_setup_profile_status],1
+ ret
+.failed:
+ mov word [terminal_setup_profile_status],3
+.defer:
+ and word [terminal_setup_outcome+4],~16
+ or word [terminal_setup_outcome+6],16
+ mov ax,[setup_previous_serial+TI_PROFILE]
+ mov [terminal_setup_plan+TI_PROFILE],ax
+ mov word [terminal_setup_profile_ready],0
+.done:
+ ret
 
 setup_serial_choice:
  test word [terminal_setup_outcome+4],14
@@ -324,6 +373,12 @@ terminal_setup_return_prompt:
  mov si,setup_apply_failed
  cmp word [terminal_setup_apply_status],0
  jne .done
+ mov si,setup_profile_failed
+ cmp word [terminal_setup_profile_status],3
+ jne .check_link
+ mov word [terminal_setup_key_consumed],0
+ ret
+.check_link:
  mov si,setup_link_busy
  cmp word [terminal_setup_link_status],3
  je .done
@@ -356,6 +411,8 @@ setup_mixed: db 13,10,'Settings applied; link/profile changes need restart. Pres
 setup_apply_failed: db 13,10,'Could not validate saved settings. Active settings unchanged. Press a key.',0
 setup_serial_question: db 13,10,'Apply current-port baud/line/flow now? Peer must match. Y applies; other keys keep link.',0
 setup_link_busy: db 13,10,'Line busy; kept current serial settings. Press a key to return.',0
+setup_profile_question: db 13,10,'Switch profile, reset keys/modes and clear screen? Y switches; other keys keep profile.',0
+setup_profile_failed: db 13,10,'Could not load profile keyboard; kept current profile. Press a key.',0
 SEGMENT _BSS public align=2 class=BSS use16
 global terminal_setup_plan
 terminal_setup_plan: resb 624

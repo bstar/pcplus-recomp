@@ -7,10 +7,10 @@ available for later application/startup. The answer itself returns to the
 terminal, preserving the next ordinary key for transmission. A peer must match
 the selected rate and format; the application does not renegotiate modem firmware.
 
-COM/base/IRQ changes defer the entire serial group. Profile changes also remain
-deferred. This implementation deliberately retains the same port, IRQ vector
-and original hardware snapshot; cross-port restoration/migration and complete
-profile switching remain separate application work. Existing CLI categories
+COM/base/IRQ changes defer the entire serial/profile group. Supported profile
+changes have a separate [confirmation/reset workflow](PROFILE_LIVE.md). This implementation deliberately retains the same port, IRQ vector
+and original hardware snapshot; cross-port restoration/migration and other emulations remain separate
+application work. Existing CLI categories
 retain precedence and modem negotiation/competing owners still block setup.
 
 ## Foreground handoff
@@ -54,7 +54,7 @@ Declines, failed gates and superseded offers do not advance that baseline.
 
 ## Evidence and limits
 
-`check_live_setup_policy.py` checks19 independent policy/lifetime inputs.
+`check_live_setup_policy.py` checks27 independent policy/lifetime inputs, including profile permission.
 `check_live_setup_link.py` executes53 actual linked foreground cases, covering
 changed supported rates, every changed7/8-bit parity/stop combination, flow
 transitions, old-format control bytes before new-rate payload, high receive
@@ -63,7 +63,7 @@ and an established modem session with pending input. Kernel/BIOS/UART boundaries
 are modeled; product validators, native setters, flow code and restore paths run.
 
 The production DOS editor suite independently observes1200/115200 divisor
-transitions and8N1/7E2 LCR transitions using an INT1C sampler. Six actual DOS cases
+transitions and8N1/7E2 LCR transitions using an INT1C sampler. Six serial/settings DOS cases
 also cover decline, display color and newly enabled SOFT's XON before typed
 payload. The peer sends fresh display bytes and receives a fresh cursor reply
 after each return. Final42-byte UART/PIC/vector snapshots equal startup.

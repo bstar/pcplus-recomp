@@ -35,8 +35,9 @@ The complete application feature gates remain open.
 
 The separate [Alt-F10 workflow](SETUP_LIVE.md) now invokes the maintained editor
 after terminal startup. It now applies validated display/pacing/modem/BREAK
-changes, with a separate confirmation for same-port baud/line/flow. COM/profile
-changes still require restart.
+changes, with a separate confirmation for same-port baud/line/flow. COM
+migration still requires restart; supported profiles4/6 have a separate confirmed
+keyboard/view reset during the session.
 
 ## Evidence
 

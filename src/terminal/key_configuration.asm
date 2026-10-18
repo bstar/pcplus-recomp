@@ -9,6 +9,7 @@ extern keyboard_bios_mode,keyboard_detect_bios_mode,terminal_keyboard_bios_selec
 extern keyboard_read
 global terminal_load_keyboard,terminal_initialize_keymap,terminal_select_keyboard_bios
 global terminal_read_key
+global terminal_build_keymap
 
 ; AX0 success, AX9 keymap failure. Raw reader status/result retained privately.
 ; DS=SS, preserve BP/SI/DI/ES. Explicit /K replaces defaults only after complete
@@ -96,6 +97,11 @@ terminal_read_key:
 ; Common defaults work with the supported ANSI and VT220 display profiles;
 ; importing an explicit KBD can replace each byte, including CR/BS/Tab.
 terminal_initialize_keymap:
+ mov ax,terminal_keymap
+ jmp terminal_build_keymap
+; AX caller-owned948-byte near destination. Same maintained defaults; no
+; global keymap mutation when staging a new profile. AX0 success/1 bad extent.
+terminal_build_keymap:
  push bp
  push si
  push di
@@ -103,8 +109,13 @@ terminal_initialize_keymap:
  push ds
  pop es
  cld
+ or ax,ax
+ jz .bad
+ cmp ax,65536-948
+ ja .bad
+ mov bp,ax
+ mov di,ax
  xor ax,ax
- mov di,terminal_keymap
  mov cx,948
  rep stosb
  mov si,keyboard_network_defaults
@@ -117,7 +128,7 @@ terminal_initialize_keymap:
  jae .bad
  mov bx,12
  mul bx
- mov di,terminal_keymap
+ mov di,bp
  add di,ax
  mov cx,12
 .byte:
