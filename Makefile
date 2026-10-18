@@ -17,6 +17,12 @@ xlt-editor:
 test-xlt-editor: xlt-editor
 	python3 standalone/test_xlt_editor_dos.py
 
+.PHONY: keyboard-profiles test-keyboard-profiles
+keyboard-profiles:
+	python3 standalone/build_keyboard_profiles.py
+test-keyboard-profiles: keyboard-profiles terminal
+	python3 standalone/check_keyboard_profiles.py
+
 test-translation: translation
 	python3 standalone/check_translation.py
 

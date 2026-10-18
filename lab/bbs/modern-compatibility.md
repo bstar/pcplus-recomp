@@ -41,6 +41,12 @@ workaround for this local case. TCP can still split a buffered write, so this
 is not a general guarantee. A server-side incremental decoder is the robust
 fix; no upstream decoder modification is included here.
 
+An additional [control-alias keymap experiment](keymap-aliases.md) was rejected:
+although the multi-line view offers Ctrl-A for Home, the stock compose form
+intercepts it to change the subject. The actual DOS candidate emits the expected
+controls but fails editing checks. Its paired report remains separate from the
+default and packet-buffering results; it is not a supported BBS profile.
+
 An earlier screen-print checkpoint’s first Synchronet run was ended by a forced
 maintenance event before the editor opened. That prerequisite failure is retained. The current run retains
 the lab's corrected event-disable policy, preserving stock editor code and

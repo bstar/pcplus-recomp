@@ -1,0 +1,207 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "profile": 4,
+      "bios_key": "0x4700",
+      "wire": "01",
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "bios_key": "0x47e0",
+      "wire": "01",
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "bios_key": "0x4f00",
+      "wire": "05",
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "bios_key": "0x4fe0",
+      "wire": "05",
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "bios_key": "0x5200",
+      "wire": "16",
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "bios_key": "0x52e0",
+      "wire": "16",
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "bios_key": "0x4800",
+      "wire": "1b5b41",
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "bios_key": "0x50e0",
+      "wire": "1b5b42",
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "bios_key": "0x4b00",
+      "wire": "1b5b44",
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "bios_key": "0x4de0",
+      "wire": "1b5b43",
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "bios_key": "0x5300",
+      "wire": "1b5b337e",
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "bios_key": "0x53e0",
+      "wire": "1b5b337e",
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "bios_key": "0x4900",
+      "wire": "1b5b357e",
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "bios_key": "0x51e0",
+      "wire": "1b5b367e",
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "bios_key": "0x9",
+      "wire": "09",
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "bios_key": "0xd",
+      "wire": "0d",
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "bios_key": "0x4700",
+      "wire": "01",
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "bios_key": "0x47e0",
+      "wire": "01",
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "bios_key": "0x4f00",
+      "wire": "05",
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "bios_key": "0x4fe0",
+      "wire": "05",
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "bios_key": "0x5200",
+      "wire": "16",
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "bios_key": "0x52e0",
+      "wire": "16",
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "bios_key": "0x4800",
+      "wire": "1b5b41",
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "bios_key": "0x50e0",
+      "wire": "1b5b42",
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "bios_key": "0x4b00",
+      "wire": "1b5b44",
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "bios_key": "0x4de0",
+      "wire": "1b5b43",
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "bios_key": "0x5300",
+      "wire": "1b5b337e",
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "bios_key": "0x53e0",
+      "wire": "1b5b337e",
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "bios_key": "0x4900",
+      "wire": "1b5b357e",
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "bios_key": "0x51e0",
+      "wire": "1b5b367e",
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "bios_key": "0x9",
+      "wire": "09",
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "bios_key": "0xd",
+      "wire": "0d",
+      "passed": true
+    }
+  ],
+  "binary_sha256": "e212df15d29a76880ae0e6f1633ba63c715af2ee94eae6efc8c30569b6c5498b",
+  "kbd_sha256": {
+    "NETWORK.KBD": "a5906e5a8f6bce7c961008d1355929dd6945b9e3932a5e2aac23eea3eb301091",
+    "ENIGMA.KBD": "80937094b683f5539cafc675e6f201b025576dcb4c4b519f4a5701629421daed"
+  },
+  "sources": {
+    "standalone/check_keyboard_profiles.py": "4761e5069cc00647f1bf0e591d4130a7293bcf0592d43c4e1b55363a000b911d",
+    "standalone/build_keyboard_profiles.py": "7a6df4fcefc34f10d62de1f176e68f891d487ac7511e7e7d8a02c32bfd0c30da"
+  },
+  "scope": "Generated defaults match actual linked builder; 32 physical-key inputs through actual linked BIOS normalization, keyboard mapping and UART transmit. BIOS/ports modeled; explicit KBD DOS import and stock editor behavior tested separately."
+}

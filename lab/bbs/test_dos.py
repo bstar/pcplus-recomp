@@ -37,6 +37,12 @@ async def run(args):
    command+=' /E:D:\\TEST.DIR'
    if not args.directory_browser:command+=f' /N:{args.entry}'
   elif args.dial_fixture:command+=f' /D:lab.local:{args.port}'
+ keymap=None
+ if args.keymap_fixture:
+  keymap=args.keymap_fixture.read_bytes()
+  assert keymap and len(keymap)%948==0,'Whole native KBD profile blocks required'
+  (output/'BOARD.KBD').write_bytes(keymap)
+  command+=' /K:D:\\BOARD.KBD'
  base=[0x3f8,0x2f8,0x3e8,0x2e8][args.com-1]
  sampler=SAMPLER
  for offset in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+offset),hex(base+offset))
@@ -105,10 +111,12 @@ exit
  after=(output/'AFTER.BIN').read_bytes() if (output/'AFTER.BIN').exists() else b''
  checks={'dos_normal_exit':code==0 and (output/'PASS.TXT').exists(),'hardware_restored':len(before)==42 and before==after,'screen_captured':len(screen)==4000,'bbs_connected':any(e['kind']=='bbs-connected' for e in modem.events),'bbs_display_received':bool(modem.display)}
  if fixture is not None:checks['configuration_unchanged']=(output/'TEST.PRM').read_bytes()==fixture
+ if keymap is not None:checks['keyboard_profile_unchanged']=(output/'BOARD.KBD').read_bytes()==keymap
  if directory_fixture is not None:checks['directory_accounting_exact']=accounting_check(directory_fixture,(output/'TEST.DIR').read_bytes(),args.entry)
  checks['binary_unchanged_during_run']=hashlib.sha256(binary.read_bytes()).hexdigest()==digest
  result={'name':args.name,'label':args.label,'checks':checks,'passed':all(checks.values()),'seconds':round(time.monotonic()-start,3),'binary_sha256':digest,'keyboard':keys,'keyboard_input':args.keys,'serial':{'com':args.com,'baud':args.baud,'line':'8N1','flow':args.flow,'hardware_scope':'DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.'},'scope':'Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.'}
  result['modem_packet_delay_ms']=args.packet_delay_ms
+ result['keyboard_profile']={'sha256':hashlib.sha256(keymap).hexdigest(),'file':'BOARD.KBD'} if keymap is not None else None
  result['configuration']={'automatic_dial':automatic,'mode':'explicit synthetic partial PRM' if fixture is not None else 'CLI serial options','command':command,'sha256':hashlib.sha256(fixture).hexdigest() if fixture is not None else None,'directory_entry':args.entry if directory_fixture is not None else None,'directory_browser':args.directory_browser,'directory_sha256':hashlib.sha256(directory_fixture).hexdigest() if directory_fixture is not None else None}
  (output/'result.json').write_text(json.dumps(result,indent=2)+'\n')
  print(json.dumps(result,indent=2));print(text)
@@ -117,6 +125,7 @@ exit
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('name');p.add_argument('--port',type=int,required=True);p.add_argument('--label',default='probe');p.add_argument('--keys',default='');p.add_argument('--wait',type=int,default=12);p.add_argument('--timeout',type=int,default=70)
  p.add_argument('--dial-fixture',action='store_true',help='Exercise configured automatic modem initialization/dialing inside DOS')
+ p.add_argument('--keymap-fixture',type=Path,help='Copy an explicit source-owned KBD fixture to the owned DOS test drive and load with /K')
  p.add_argument('--packet-delay-ms',type=int,choices=range(101),default=0,help='Explicit byte-transparent modem buffering experiment, NONE/HARD only; default immediate')
  p.add_argument('--directory-fixture',action='store_true',help='Load an actual synthetic directory record and dial it inside DOS')
  p.add_argument('--directory-browser',action='store_true',help='Choose the fixture entry through native DOS browser keys')
