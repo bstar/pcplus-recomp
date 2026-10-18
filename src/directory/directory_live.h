@@ -8,6 +8,8 @@ typedef struct directory_live_plan {
  unsigned entry_number,dialing_mode,protocol_index,duplex,codes;
  unsigned char name[25];
  unsigned char target[64];
+ unsigned char reserved;
+ unsigned char record[114];
 } directory_live_plan;
 typedef struct directory_live_result {
  unsigned status,source_status,dos_error,close_error,bytes_processed;
@@ -24,7 +26,8 @@ enum {
  * Unknown directory bytes remain untouched on disk. This API never writes.
  * codes0 preserves literal network targets; codes1 uses original A..J semantics.
  * Protocol selection is retained as metadata until transfer UI is implemented.
- * Unsupported script/password/KEY/META bindings and HALF fail before UART.
+ * Unsupported script/KEY/META bindings and HALF fail before UART. Stored
+ * password bytes remain metadata; they are never automatically transmitted.
  * DIRECT accepts an empty number and needs no modem command configuration.
  */
 directory_live_status __cdecl directory_live_read(const char *prm_path,

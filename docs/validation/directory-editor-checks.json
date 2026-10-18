@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "binary_sha256": "5f71e54cb4648e35bf686c75106aafefd5c2f0c6fd864034e66db604536d37cc",
+  "cases": [
+    {
+      "case": "accept-cancel-full114-atomicity-opaque-tails-and-field-navigation",
+      "passed": true
+    },
+    {
+      "case": "insert-overwrite-delete-backspace-home-end-bounds-and-keypad-ASCII",
+      "passed": true
+    },
+    {
+      "case": "all-text-fields-bounded-password-always-masked",
+      "passed": true
+    },
+    {
+      "case": "all-numeric-ranges-overflow-and-invalid-input-never-accepted",
+      "passed": true
+    },
+    {
+      "case": "untouched-malformed-storage-rejected-unless-cancelled",
+      "passed": true
+    },
+    {
+      "case": "active-pages-monochrome-unsupported-mode-and-complete-display-restore",
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked maintained editor and original snapshots. Explicit BIOS keyboard/video fixture, all DOS/port IO forbidden. Caller114bytes checked unchanged before everykey; synthetic secrets only."
+}

@@ -1,0 +1,63 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "ranges": [
+    {
+      "source": "success_fragment.asm",
+      "start": "0xd943",
+      "end_exclusive": "0xd96d",
+      "source_file_offset": 65347,
+      "size": 42,
+      "sha256": "ecff25eb23937cc9a282e4224d22c9cc9cd86a1bd0adc1e770c7c121618c37b9",
+      "rea_export": "analysis/pcplus-overlay-anchored-04/functions/0x1d4d0.asm",
+      "evidence_id": "ev_f036ab3465803d9a80443a35288a0b90a521ce636c225f4f110b7c49cf621ac4"
+    },
+    {
+      "source": "write_original.asm",
+      "start": "0xdd28",
+      "end_exclusive": "0xdd94",
+      "source_file_offset": 66344,
+      "size": 108,
+      "sha256": "6129257632e2c70613b48d170ead6a565c2afee0a41019531613124a36f4c2ae",
+      "rea_export": "analysis/pcplus-overlay-anchored-04/functions/0x1dd28.asm",
+      "evidence_id": "ev_e7dc1bd3cab58ced75beb8618158fc86d34ee7a440fb0c39a6dcd168b7eadbec"
+    },
+    {
+      "source": "date_original.asm",
+      "start": "0x36d4",
+      "end_exclusive": "0x36fc",
+      "source_file_offset": 18644,
+      "size": 40,
+      "sha256": "b85ce0504418a3b647a751542b04995fe16ed0555cc9a04496171138a57a0225",
+      "rea_export": "analysis/pcplus-main/functions/0x136d4.asm",
+      "evidence_id": "ev_314051101d4154d8f16a1f5153a9fc1482e6ecad053288c1f8ec00748c1ccefc"
+    },
+    {
+      "source": "getdate_original.asm",
+      "start": "0x776e",
+      "end_exclusive": "0x778c",
+      "source_file_offset": 35182,
+      "size": 30,
+      "sha256": "fcc85f1197bc6e4851e3fcfb4b25b112deed815f51678e40ecbf9d8493c72776",
+      "rea_export": "analysis/pcplus-main/functions/0x1776e.asm",
+      "evidence_id": "ev_d1adf6f6fa7166dd018656811762659276908d6a7447742cb4c65dd72c14139e"
+    }
+  ],
+  "limitations": [
+    "success_fragment is an internal span requiring caller BP locals; OMF adds explicit RET bridge.",
+    "Original stdlib/record/cache/FILE services are external; no fake live IO."
+  ],
+  "supporting_evidence": [
+    {
+      "export": "analysis/pcplus-overlay-anchored-06/functions/0x1e3b0-asm.json",
+      "evidence_id": "ev_a670247eb182152abfa485c376d9a8e080d3f2c4d36e8b37505cc8e8e5f7ea3b"
+    },
+    {
+      "export": "analysis/pcplus-overlay-anchored-16/functions/0x1daba-asm.json",
+      "evidence_id": "ev_e3f650bfffab60992c118fde98500ec7182b528142bbcef50917e23047679b87"
+    },
+    {
+      "export": "analysis/pcplus-overlay-anchored-16/functions/0x1da83-asm.json",
+      "evidence_id": "ev_fd97b786da4f20c25feede9d635c6f46d8d5afc91ab5c53f51eb0c8702faf115"
+    }
+  ]
+}

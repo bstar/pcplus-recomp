@@ -72,8 +72,11 @@ physical modem compatibility or close the remaining application gates below.
       maintained live controller now initializes/dials an explicit target,
       cancels, times out, hangs up and applies response/autobaud decisions through
       actual UART code. BIOS midnight, flow stalls and first-banner preservation
-      are tested. Read-only directory selection/browser now applies entry
-      settings and supports MODEM/DIRECT plus explicit literal/legacy targets.
+      are tested. Directory selection/browser now applies entry settings and
+      supports MODEM/DIRECT plus explicit literal/legacy targets. Native record
+      editing uses staged save; successful-call accounting persists after UART
+      restoration. Passwords remain metadata and are never automatically sent;
+      unsupported SCRIPT/KEY/META bindings still fail before hardware access.
       Directory-driven cycles, full modem policy and settings UI remain open.
       Preserve the full
       settings/directory/UI/transfer/script/Host scope below.
@@ -95,13 +98,19 @@ physical modem compatibility or close the remaining application gates below.
       tested write/install failures and reports rollback/cleanup recovery state.
       A lossless host directory codec now covers the proved200-record format;
       a DOS streaming selection/page reader and native startup browser now
-      connect supported entries without changing their files. Accounting,
-      editing, automation/key bindings and automatic selection cycles remain open.
+      connect supported entries. Native staged record editing and expected-record
+      replacement preserve other directory bytes and expose recovery failures.
+      Successful-call date/count updates accumulate in RAM and flush after UART
+      restoration; the maintained patch fixes the original year2000 counter-byte
+      overwrite. Exit9 reports accounting save trouble unless a prior error
+      exists. Complete original directory commands, automatic restart recovery,
+      automation/key bindings and selection cycles remain open. See
+      `docs/DIRECTORY_EDITING.md` and `docs/DIRECTORY_ACCOUNTING.md`.
       PRM modem fields and the original caret decoder are also mapped/tested.
       Original window snapshots and flow-message services are recovered and
       linked into the terminal. DOS C status returns are verified from an
       assembly-owned startup. Complete defaults/schema, restart recovery,
-      full settings/directory editing UI and complete modem policy remain open. The response matcher and dial-attempt
+      full settings/original directory UI and complete modem policy remain open. The response matcher and dial-attempt
       instructions are recovered; only the bounded matcher diagnostic is linked,
       with full-attempt service dependencies still explicit. The original
       sender/calibrated/BIOS-delay routines also have exact source and a real-UART

@@ -11,7 +11,7 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 | `build/ui-windows/WINDOWS.EXE` | Recovered and maintained assembly source only | Packed window snapshots and original flow-message service |
 | `build/modem-commands/MODEMCMD.EXE` | Recovered and maintained assembly source only | Original caret decoder with bounded source-owned wrapper |
 | `build/modem-responses/MODEMRSP.EXE` | Maintained and recovered assembly source only | Response matching and classification; dial-attempt object remains unlinked |
-| `build/terminal/TERMINAL.EXE` | Maintained C and recovered/maintained assembly source only | Interactive serial terminal with explicit PRM startup and bounded modem dialing |
+| `build/terminal/TERMINAL.EXE` | Maintained C and recovered/maintained assembly source only | Serial terminal with PRM startup, directory editing, staged saves and bounded modem dialing |
 | `build/standalone/SERIAL.EXE` | Maintained assembly source only | Independently linked DOS diagnostic exercising the recovered UART module |
 | `build/ansi/PARSER.EXE` | Maintained assembly source only | Independently linked parameter-reader diagnostic with bounds checks |
 | `build/keyboard/KEYBOARD.EXE` | Maintained assembly source only | Recovered BIOS keyboard acquisition/normalization diagnostic |
@@ -47,13 +47,20 @@ In DOS, `TERMINAL COM1 38400 8N1 SOFT` selects software flow control.
 [startup configuration](docs/STARTUP_CONFIGURATION.md).
 `TERMINAL @PCPLUS.PRM /D:bbs.example:23` uses validated configured initialization,
 dial prefix/suffix and response strings. `TERMINAL @PCPLUS.PRM /E:PCPLUS.DIR` opens a native
-read-only directory browser and uses the selected entry; see
+directory browser and uses the selected entry. Press E to edit, F10 to accept/save
+or Escape to discard the edit. Successful directory connections save date/count
+after UART restoration at exit; the PRM remains read-only. See
+[directory editing and recovery](docs/DIRECTORY_EDITING.md) and
 [live directory selection](docs/DIRECTORY_LIVE.md). Escape cancels, Alt-H hangs up, and
 Alt-D repeats the target after cleanup. See [connection management](docs/CONNECTION.md).
 Use `HARD` for RTS/CTS or `NONE` to disable flow control; match the modem's
 settings. Alt-X exits. ASCII keys and four cursor keys are connected to the
 recovered serial and ANSI engine. This executable does not yet provide the
-full menus, dialing directory, file transfers or scripting engine.
+complete original menus, directory cycles, file transfers or scripting engine.
+Stored passwords remain metadata and are never automatically sent; SCRIPT/KEY/
+META bindings remain unsupported. An exit-time accounting save problem reports
+errorlevel9 unless a prior application error exists; inspect retained
+`PCPSTG.$$$` / `PCPBAK.$$$` recovery files as described in the editing guide.
 Local Synchronet, ENiGMA½ and Mystic interoperability work is documented in
 [lab/bbs/README.md](lab/bbs/README.md).
 
@@ -131,7 +138,11 @@ interactive terminal. `test-modem_responses` tests the response matcher separate
 see [response recovery](docs/MODEM_RESPONSES.md). `test-modem_send` checks the
 recovered original sender and real UART; `test-modem-import` checks the DOS
 settings decoder. The maintained [connection controller](docs/CONNECTION.md) now
-dials explicit targets. Full settings/directory menus and automatic cycles remain open. See [directory](docs/DIRECTORY.md),
+dials explicit or selected-directory targets. A native storage editor, staged
+record replacement and deferred date/count accounting are integrated; the
+maintained date patch fixes the original year2000 counter overwrite. Full
+settings/original directory menus and automatic cycles remain open. See
+[editing and accounting](docs/DIRECTORY_EDITING.md), [directory](docs/DIRECTORY.md),
 [modem settings](docs/MODEM_CONFIGURATION.md) and [window services](docs/UI_WINDOWS.md).
 
 ## Full-application compatibility build

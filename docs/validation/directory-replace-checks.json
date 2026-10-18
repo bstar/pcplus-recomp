@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "real_DOS_checks": 21,
+  "fault_checks": 34,
+  "full_target_matches_exact_three_record_patch": true,
+  "other_fixtures_unchanged": true,
+  "recovery_files_absent_after_success": true,
+  "binary_sha256": {
+    "DRREAL.EXE": "4122d4c48e471db880c359edd8f3aee73ed0d19208709971ac3a8d7f0f43a2df",
+    "DRFAULT.EXE": "4510ad5dbbc80584654171bb93e5cf61c0a60e48ecee0ea3ff9b894fdcbf6309"
+  },
+  "sources": {
+    "src/directory/directory_replace.c": "86607d3bd46fe3f86cdf669dc7aa483af3633672fa48a2e7d848b4a790ec669b",
+    "src/directory/directory_replace.h": "62f65615c0b1aeafa967658a0a122e3ed18e55d44412d8420b6603d098f13b45",
+    "src/directory/directory_replace.inc": "f36f1ad48ad9bee207270cecb8d6685ed3ebfdd0e44e41899b5fcef29e56a85c",
+    "src/directory/directory_replace_fs.c": "ea94c7e30ede691ac090cdff6ebfab9afb80c45e87b3603d85d19e4c7bffad5c",
+    "src/directory/directory_replace_fs.h": "9702aba7c5d55548dc5ba38289a0c5f1409a2769459904445d9a64c8bc88da9b",
+    "standalone/check_directory_replace.py": "388a311c9803176d45d945c3620b8d1f2a020e2d71ee3b8f7d21b871e0d86fa1"
+  },
+  "scope": "Actual source-built DOS streaming replacement at absolute same-parent paths; synthetic files only. Separate declared DOS/rename/delete fault injection exercises recovery states. No original/private files, crash-atomic or concurrent-writer guarantee."
+}

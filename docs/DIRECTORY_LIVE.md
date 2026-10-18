@@ -1,10 +1,11 @@
 # Live DOS directory selection
 
 The source-built terminal can now read an explicitly selected2.01 PCPLUS.DIR,
-browse its entries in DOS, and connect using a selected record. The directory
-and PRM remain read-only. This closes a concrete integration gap; it does not
-reconstruct the complete original directory/settings UI, statistics writes,
-automatic selection cycles or script/key/transfer subsystems.
+browse and edit its entries in DOS, and connect using a selected record. The PRM
+remains read-only. Accepted record edits use staged directory replacement;
+successful-call date/count updates are saved after UART restoration at exit.
+See [editing and recovery](DIRECTORY_EDITING.md). Complete original directory/
+settings menus, selection cycles and script/key/transfer subsystems remain open.
 
 ```text
 TERMINAL @PCPLUS.PRM /E:PCPLUS.DIR
@@ -31,9 +32,11 @@ position/shape, selected video segment and caller registers restore on selection
 cancellation or error. Supported80-column text modes are2,3,7; active-page video
 offset comes from BIOS data. The browser updates its page with one strict,
 streamed file read, rather than allocating the entire directory in near memory.
-This is a startup browser; it does not yet open over an active BBS session or edit
-records. `/C` selects the interpretation before browsing; its footer shows the
-current mode.
+Press E to edit the highlighted record. F10 validates and attempts a staged save;
+Escape discards the edit. Save failures and installed-but-cleanup warnings appear
+in the browser. This is a startup browser; it does not open over an active BBS
+session. `/C` selects the interpretation before browsing; its footer shows the
+current mode. The editor's storage ranges can exceed the live supported subset.
 
 ## Target interpretation
 
@@ -59,7 +62,8 @@ prefix/suffix syntax and permissive16-bit integer quirks are not offered by
 The combined loader reads one PRM and one exact23,050-byte directory, stages the
 serial/display, modem and selected-entry plans, and commits only after validation.
 The directory reader accepts no suffix and requires successful close. Errors do
-not partially commit the three plans. No source application file is changed.
+not partially commit the three plans. Loading itself does not change either
+file; explicit edits and deferred accounting can subsequently update the DIR.
 
 Selected port0 means retain the PRM port;1..4 choose standard COM1..4. All other
 entry serial fields apply regardless of DEFAULT port: baud, parity, data bits,
@@ -75,13 +79,19 @@ and enters online mode without AT commands, result waiting or a required modem
 command subset. An empty number is valid for DIRECT. Direct disconnect returns
 to raw mode without sending modem hang-up commands or pulsing DTR.
 
-Nonblank script/password/KEY/META bindings currently fail explicitly before UART
-access, as does HALF duplex. They must not be silently dropped on selection.
+Nonblank SCRIPT/KEY/META bindings currently fail explicitly before UART access,
+as does HALF duplex. They must not be silently dropped on selection.
 Blank follows the observed original first-byte NUL/space test, with bounded
 termination still required. Protocol index is retained as metadata until transfer
-selection is implemented; it is never used as an unchecked table index. Notes,
-last-call dates, counters, padding and unknown storage remain untouched on disk.
-The complete original postconnect binding/statistics behavior remains open.
+selection is implemented; it is never used as an unchecked table index. A stored
+password remains metadata: it is preserved, masked in the editor and never
+automatically sent. The original script password accessor is documented in
+[accounting evidence](DIRECTORY_ACCOUNTING.md), without claiming script support.
+Notes, padding and opaque storage are preserved. Successful calls update only
+the selected date/count through exit-time staged replacement; errorlevel9 reports
+an accounting-save problem unless an earlier application error already exists.
+Recovery files can remain even when a replacement was installed. See
+[save/recovery behavior](DIRECTORY_EDITING.md).
 
 ## DOS APIs and verification
 
@@ -97,21 +107,23 @@ Both preserve raw storage and commit after exact EOF and close. They stream
 through bounded buffers under the existing8-KiB stack, validate near extents
 and disjoint buffers, and report primary/secondary DOS errors separately.
 `directory_live_read` additionally stages the validated36-byte serial plan,
-366-byte modem plan and100-byte selected plan. Its10-byte result includes semantic
+366-byte modem plan and214-byte selected plan, including the raw114-byte record
+at offset100 for metadata and expected-record comparison. Its10-byte result includes semantic
 status and underlying I/O error detail; byte counts describe failed I/O paths.
 Headers and NASM includes enforce16-bit offsets with C compile-time assertions.
 
 Validation includes all200 selected entries and page starts under actual DOS,
 short/suffix files, fragmented reads, failed reads/closes, pointer guards and
-unchanged destinations. Independent actual-linked integration tests cover308
-inputs including serial/profile combinations, all16 CLI overrides, literal/legacy
+unchanged destinations. Independent actual-linked integration tests cover
+serial/profile combinations, all16 CLI overrides, literal/legacy
 targets, DIRECT and atomic semantic failures. The standalone browser has four CPU
 groups and five DOS paths with exact4,000-byte screen/cursor restoration.
 
-`standalone/test_directory_terminal.py` exercises seventeen actual DOS startup
-paths, including browser selection/cancellation, entry200, CLI overrides,
-literal/legacy dialing, DIRECT and rejection of unsupported bindings. Synthetic
-PRM/DIR hashes and independent42-byte hardware snapshots remain unchanged.
+`standalone/test_directory_terminal.py` exercises actual DOS startup paths,
+including browser editing/save/cancel/conflict, entry200, CLI overrides,
+literal/legacy dialing, DIRECT, deferred accounting and unsupported bindings.
+Synthetic PRM hashes stay unchanged; directory changes must match exact expected
+record/date/count patches. Independent42-byte hardware snapshots restore.
 Real local Synchronet, ENiGMA½ and Mystic tests additionally choose entry3 through
 the browser before modem dialing and full message/file menu navigation.
 
@@ -122,6 +134,6 @@ the browser before modem dialing and full message/file menu navigation.
 
 The public evidence is in `docs/validation`; large runtime files stay under
 ignored `build/`. No installed directory, password or private modem profile is
-needed by these tests. Physical UART/modem behavior, complete menus/editing,
-accounting persistence, automatic retry cycles, transfers, keyboard/META,
+needed by these tests. Physical UART/modem behavior, complete original menus,
+settings UI, automatic restart recovery, retry cycles, transfers, keyboard/META,
 ASPECT and Host integration remain in the full [plan](../PLAN.md).

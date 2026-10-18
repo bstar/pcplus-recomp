@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "8dbe12f0b2b365cd1d6d986b82122251c22230f0e973e22faaf2fb51807faae4",
+  "scope": "Actual source-only DOS date/count patch self-check, year2000/2026, modular wrap and invalid-date atomicity; no file writes from helper or UART."
+}

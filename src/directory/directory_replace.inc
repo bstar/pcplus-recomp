@@ -1,0 +1,26 @@
+; DOS16 near-cdecl seven-argument replacement result ABI.
+%define DR_STATUS 0
+%define DR_DOS_ERROR 2
+%define DR_CLOSE_ERROR 4
+%define DR_CLEANUP_ERROR 6
+%define DR_ROLLBACK_ERROR 8
+%define DR_BYTES_PROCESSED 10
+%define DR_INSTALLED 12
+%define DR_ORIGINAL_IN_BACKUP 14
+%define DR_STAGE_EXISTS 16
+%define DR_SOURCE_BYTES 18
+%define DR_RESULT_SIZE 20
+%define DR_OK 0
+%define DR_ARGUMENT 1
+%define DR_CONFLICT 2
+%define DR_INSPECT 3
+%define DR_SOURCE_OPEN 4
+%define DR_STAGE_OPEN 5
+%define DR_READ 6
+%define DR_SIZE 7
+%define DR_STALE 8
+%define DR_WRITE 9
+%define DR_CLOSE 10
+%define DR_MOVE_OLD 11
+%define DR_INSTALL 12
+%define DR_CLEANUP 13

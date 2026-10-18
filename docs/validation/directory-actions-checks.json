@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+  "inputs": 34,
+  "cases": [
+    {
+      "case": "actual-C-and-patch-ASM-install-status-calendar-modular-count-and-baseline-commit",
+      "inputs": 10,
+      "passed": true
+    },
+    {
+      "case": "near-C-null-extent-alias-invalid-date-and-optional-result",
+      "inputs": 14,
+      "passed": true
+    },
+    {
+      "case": "non-directory-session-never-captures-calendar-or-persists",
+      "inputs": 1,
+      "passed": true
+    },
+    {
+      "case": "RAM-only-success-notes-capture-latest-date-and-flush-one-aggregate-delta-once",
+      "inputs": 1,
+      "passed": true
+    },
+    {
+      "case": "failed-install-preserves-baseline-pending-delta-and-existing-errorlevel-until-successful-retry",
+      "inputs": 2,
+      "passed": true
+    },
+    {
+      "case": "installed-cleanup-warning-consumes-pending-and-cannot-double-increment",
+      "inputs": 1,
+      "passed": true
+    },
+    {
+      "case": "pending-delta-wrap-preserves-original-modular-counter-and-updates-date",
+      "inputs": 1,
+      "passed": true
+    },
+    {
+      "case": "actual-MODEM-DIRECT-success-transitions-note-once-per-connection-and-never-on-failure",
+      "inputs": 4,
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked C save helpers, pure date/count patch ASM and deferred accounting ASM. Only transactional replacement entry and DOS get-calendar boundary modeled; pure-action tests forbid other interrupts/port IO. Additional actual MODEM/DIRECT controller tests reuse declared UART/keyboard/tick hardware models. Source-only synthetic records; real DOS backend tested separately."
+}

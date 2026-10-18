@@ -1,0 +1,49 @@
+{
+  "passed": true,
+  "binary_sha256": "5f71e54cb4648e35bf686c75106aafefd5c2f0c6fd864034e66db604536d37cc",
+  "cases": [
+    {
+      "case": "cancel",
+      "passed": true,
+      "status": 0,
+      "caller_record_exact": true,
+      "screen_cursor_shape_segment_restored": true
+    },
+    {
+      "case": "accept-name",
+      "passed": true,
+      "status": 1,
+      "caller_record_exact": true,
+      "screen_cursor_shape_segment_restored": true
+    },
+    {
+      "case": "text-edit",
+      "passed": true,
+      "status": 1,
+      "caller_record_exact": true,
+      "screen_cursor_shape_segment_restored": true
+    },
+    {
+      "case": "port-eight",
+      "passed": true,
+      "status": 1,
+      "caller_record_exact": true,
+      "screen_cursor_shape_segment_restored": true
+    },
+    {
+      "case": "invalid-numeric",
+      "passed": true,
+      "status": 0,
+      "caller_record_exact": true,
+      "screen_cursor_shape_segment_restored": true
+    },
+    {
+      "case": "masked-password",
+      "passed": true,
+      "status": 1,
+      "caller_record_exact": true,
+      "screen_cursor_shape_segment_restored": true
+    }
+  ],
+  "scope": "Actual DOSBox-X keyboard/video +source editor +recovered snapshots; no UART or user/private records. Diagnostic writes only its own118-byte result; editor does no DOS IO."
+}

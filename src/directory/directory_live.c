@@ -7,7 +7,8 @@ unsigned __cdecl directory_number_expand(const unsigned char *number,
 #define ABI(member,at) typedef char abi_##member[(offsetof(directory_live_plan,member)==at)?1:-1]
 ABI(entry_number,0);ABI(dialing_mode,2);ABI(protocol_index,4);ABI(duplex,6);
 ABI(codes,8);ABI(name,10);ABI(target,35);
-typedef char abi_plan[sizeof(directory_live_plan)==100?1:-1];
+ABI(reserved,99);ABI(record,100);
+typedef char abi_plan[sizeof(directory_live_plan)==214?1:-1];
 typedef char abi_result[sizeof(directory_live_result)==10?1:-1];
 typedef char abi_word[sizeof(unsigned)==2?1:-1];
 static unsigned extent(const void *pointer,unsigned length)
@@ -71,8 +72,8 @@ directory_live_status __cdecl directory_live_read(const char *prm_path,
  directory_live_plan plan_stage;
  const unsigned char *record;
  unsigned prm_length,directory_length,status,i,port;
- static const unsigned binding_offsets[]={0x34,0x4b,0x56,0x5f};
- static const unsigned binding_sizes[]={9,11,9,9};
+ static const unsigned binding_offsets[]={0x34,0x56,0x5f};
+ static const unsigned binding_sizes[]={9,9,9};
  prm_length=path_size(prm_path);directory_length=path_size(directory_path);
  if(!prm_length || !directory_length || !entry || entry>200 || codes>1 ||
   !extent(serial,sizeof(*serial)) || !extent(modem,sizeof(*modem)) ||
@@ -101,7 +102,8 @@ directory_live_status __cdecl directory_live_read(const char *prm_path,
  }
  record=selection.record;
  if(!bounded(record,25) || !bounded(record+0x19,21)){status=DIRECTORY_LIVE_RECORD;goto done;}
- for(i=0;i<4;++i){
+ if(!bounded(record+0x4b,11)){status=DIRECTORY_LIVE_RECORD;goto done;}
+ for(i=0;i<3;++i){
   if(!bounded(record+binding_offsets[i],binding_sizes[i])){status=DIRECTORY_LIVE_RECORD;goto done;}
   if(!blank(record+binding_offsets[i])){status=DIRECTORY_LIVE_BINDING;goto done;}
  }
@@ -118,6 +120,7 @@ directory_live_status __cdecl directory_live_read(const char *prm_path,
  plan_stage.entry_number=entry;plan_stage.dialing_mode=record[0x4a];
  plan_stage.protocol_index=record[0x48];plan_stage.duplex=record[0x33];plan_stage.codes=codes;
  memcpy(plan_stage.name,record,25);
+ memcpy(plan_stage.record,record,114);
  memset(&modem_stage,0,sizeof(modem_stage));
  if(!plan_stage.dialing_mode){
   if(modem_import_decode(&image,&modem_stage)!=MODEM_IMPORT_OK){status=DIRECTORY_LIVE_MODEM;goto done;}

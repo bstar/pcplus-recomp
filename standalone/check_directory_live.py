@@ -23,7 +23,7 @@ def serial_expected(prm,raw):
  for at,value in [(0,port-1 if port else int.from_bytes(prm[:2],'little')),(2,int.from_bytes(raw[0x2e:0x30],'little')),(4,raw[0x30]),(6,raw[0x32]),(8,raw[0x31]),(0x194,raw[0x49])]:struct.pack_into('<H',prm,at,value)
  return terminal_expected(prm)
 def plan_expected(entry,raw,codes,target):
- name=raw[:25];return struct.pack('<5H',entry,raw[0x4a],raw[0x48],raw[0x33],codes)+name+target+bytes(64-len(target))+b'\0'
+ name=raw[:25];return struct.pack('<5H',entry,raw[0x4a],raw[0x48],raw[0x33],codes)+name+target+bytes(64-len(target))+b'\0'+raw
 class Live(Options):
  def __init__(self):
   super().__init__(BINARY,MAP);self.prm=prm_fixture();self.record=record();self.header=bytes(250);self.entry=1;self.codes=0;self.prm_status=0;self.directory_status=0;self.calls=[];self.modem_calls=0;self.number_calls=0
@@ -50,8 +50,8 @@ class Live(Options):
    u.mem_write(self.data_base+io,struct.pack('<4H',status,5 if status else 0,6 if status else 0,456 if status else 23050))
   u.reg_write(UC_X86_REG_AX,status);u.reg_write(UC_X86_REG_SP,sp+2);u.reg_write(UC_X86_REG_IP,ret)
  def poison(self):
-  for at,size,value in ((self.serial,36,0xaa),(self.modem,366,0xbb),(self.plan,100,0xcc)):self.uc.mem_write(self.data_base+at,bytes([value])*size)
- def outputs(self):return tuple(bytes(self.uc.mem_read(self.data_base+at,size)) for at,size in ((self.serial,36),(self.modem,366),(self.plan,100)))
+  for at,size,value in ((self.serial,36,0xaa),(self.modem,366,0xbb),(self.plan,214,0xcc)):self.uc.mem_write(self.data_base+at,bytes([value])*size)
+ def outputs(self):return tuple(bytes(self.uc.mem_read(self.data_base+at,size)) for at,size in ((self.serial,36),(self.modem,366),(self.plan,214)))
  def arguments(self):return [self.prm_path,self.directory_path,self.entry,self.codes,self.serial,self.modem,self.plan,self.result]
  def read(self,args=None):
   self.uc.reg_write(UC_X86_REG_ES,self.ds);status=self.call('_directory_live_read',self.arguments() if args is None else args,limit=400000)
@@ -90,8 +90,10 @@ def main():
  c=Live();raw=bytearray(c.record);raw[0x4a]=1;raw[25:46]=bytes(21);c.record=bytes(raw);bad=bytearray(c.prm);bad[0x18:0x47]=b'X'*47;bad[0xc4:0xd4]=b'X'*16;c.prm=bytes(bad);assert c.read()==0
  assert c.modem_calls==0 and c.number_calls==0 and c.outputs()[1]==bytes(366) and c.outputs()[2]==plan_expected(1,c.record,0,b'')
  done('DIRECT-empty-target-skips-modem-decode-and-number-expansion',1)
- mutations=[(0x2e,b'\x09\0',4),(0x30,b'\x05',4),(0x31,b'\x06',4),(0x32,b'\0',4),(0x49,b'\x07',4),(0x68,b'\x05',4),(0x4a,b'\x02',9),(0x33,b'\x01',10),(0x33,b'\xff',10),(0,b'X'*25,6),(25,b'X'*21,6)]
- for offset,size in ((0x34,9),(0x4b,11),(0x56,9),(0x5f,9)):
+ c=Live();c.record=text(c.record,0x4b,11,b'Private42');assert c.read()==0 and c.outputs()[2][100:]==c.record
+ done('stored-password-remains-private-metadata-with-no-automatic-send',1)
+ mutations=[(0x4b,b'X'*11,6),(0x2e,b'\x09\0',4),(0x30,b'\x05',4),(0x31,b'\x06',4),(0x32,b'\0',4),(0x49,b'\x07',4),(0x68,b'\x05',4),(0x4a,b'\x02',9),(0x33,b'\x01',10),(0x33,b'\xff',10),(0,b'X'*25,6),(25,b'X'*21,6)]
+ for offset,size in ((0x34,9),(0x56,9),(0x5f,9)):
   mutations.extend([(offset,b'X\0',7),(offset,b'X'*size,6)])
  for at,value,want in mutations:
   c=Live();raw=bytearray(c.record);raw[at:at+len(value)]=value;c.record=bytes(raw);c.poison();before=c.outputs();assert c.read()==want and c.outputs()==before,(at,value,want)

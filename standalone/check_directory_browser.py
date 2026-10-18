@@ -76,7 +76,7 @@ def main():
  def navigation():
   a=Browser([0x4f00,0x4900,0x4700,0x5000,0x5100,0x4800,0x1c0d]);assert a.choose()==0 and a.get('terminal_directory_entry')==11
   assert a.pages==[1,191,181,1,11] and a.opens==a.closes==5
-  assert b'SECRET-PW!' not in a.rendered and b'READ ONLY // LITERAL' in a.rendered
+  assert b'SECRET-PW!' not in a.rendered and b'LITERAL targets // E edits selected entry' in a.rendered
   assert b'\x1b' not in a.rendered and b'\xdb' in a.rendered
  check('all-navigation-keys-real-reader-pages-sanitized-fields-no-password',navigation)
  def cancel():

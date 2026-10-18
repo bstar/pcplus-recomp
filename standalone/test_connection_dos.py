@@ -4,10 +4,14 @@ import hashlib,json,os,socket,subprocess,threading,time
 from pathlib import Path
 from modem_fixtures import fixture
 from test_terminal import SAMPLER
+from directory_test_support import accounting_check
 ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EXE'
-def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0):
+def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False):
  out=ROOT/'build/connection-dos'/name;out.mkdir(parents=True,exist_ok=True)
  for p in ('PASS.TXT','FAIL.TXT','BEFORE.BIN','AFTER.BIN','SCREEN.BIN'):(out/p).unlink(missing_ok=True)
+ # These are owned synthetic fixture directories, never a user's directory.
+ for p in ('PCPSTG.$$$','PCPBAK.$$$'):(out/p).unlink(missing_ok=True)
+ if recovery_conflict:(out/'PCPBAK.$$$').write_bytes(b'SYNTHETIC RECOVERY CONFLICT')
  payload=prm if prm is not None else fixture(timeout=2 if mode=='silence' else 5)
  (out/'TEST.PRM').write_bytes(payload)
  if directory is not None:(out/'TEST.DIR').write_bytes(directory)
@@ -98,7 +102,10 @@ exit
  after=(out/'AFTER.BIN').read_bytes() if (out/'AFTER.BIN').exists() else b''
  screen=(out/'SCREEN.BIN').read_bytes() if (out/'SCREEN.BIN').exists() else b''
  checks.update({'DOS_expected_exit':result.returncode==0 and (out/'PASS.TXT').exists() and not (out/'FAIL.TXT').exists(),'hardware_restored':len(before)==42 and before==after,'PRM_unchanged':(out/'TEST.PRM').read_bytes()==payload,'binary_unchanged':digest==hashlib.sha256(BINARY.read_bytes()).hexdigest(),'no_peer_errors':not errors,'no_unexpected_commands':not checks.pop('unexpected_modem_command',False)})
- if directory is not None:checks['directory_unchanged']=(out/'TEST.DIR').read_bytes()==directory
+ if directory is not None:
+  delta=int(mode in ('success','hangup','redial','direct')) if accounting_delta is None else accounting_delta
+  checks['directory_expected_updates_only']=accounting_check(directory if directory_expected is None else directory_expected,(out/'TEST.DIR').read_bytes(),directory_entry,delta)
+ if recovery_conflict:checks['recovery_file_preserved']=(out/'PCPBAK.$$$').read_bytes()==b'SYNTHETIC RECOVERY CONFLICT'
  if mode in ('direct','reject','cancel'):checks['no_modem_commands']=not commands and (not wire if mode!='direct' else b'ATD' not in wire and b'ATZ' not in wire)
  else:checks['actual_init_and_dial']=commands[:2]==['ATZ',('ATD'+target.decode('ascii'))]
  if mode in ('success','hangup','redial','direct'):

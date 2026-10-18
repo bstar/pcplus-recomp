@@ -15,6 +15,7 @@ extern terminal_irq_vector,terminal_port_number,csi_unimplemented_service
 extern screen_attribute_cells,erase_attribute_values,erase_shadow_cells
 extern terminal_load_configuration
 extern terminal_select_directory
+extern terminal_directory_flush_accounting
 extern terminal_connection_start,terminal_connection_receive
 extern connection_state,connection_result
 ; Open Watcom small-code consistency marker for the near-C DOS IO subset.
@@ -180,6 +181,13 @@ terminal_shutdown:
  call uart_restore_hardware_state
  mov byte [hardware_active],0
 .exit:
+ call terminal_directory_flush_accounting
+ or ax,ax
+ jz .application_error
+ mov dx,accounting_failed
+ mov ah,9
+ int 0x21
+.application_error:
  cmp word [terminal_exit_code],2
  jne .dos_exit
  mov dx,unsupported
@@ -195,6 +203,7 @@ hardware_active: db 0
 vector_active: db 0
 missing_port: db 'Selected COM port is not listed by the BIOS.',13,10,'$'
 unsupported: db 13,10,'Unsupported terminal function; terminal stopped.',13,10,'$'
+accounting_failed: db 13,10,'Call statistics save needs attention. Check directory recovery files.',13,10,'$'
 configuration_messages: dw configuration_io,configuration_serial,configuration_flow
  dw configuration_profile,configuration_display,configuration_argument,configuration_modem
  dw configuration_directory

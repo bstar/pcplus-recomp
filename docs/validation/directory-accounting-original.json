@@ -1,0 +1,198 @@
+{
+  "passed": true,
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "cases": [
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 1980,
+      "old_count": 0,
+      "stored_count": 1,
+      "date_and_count_hex": "31302f31372f3830000100"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 1980,
+      "old_count": 1,
+      "stored_count": 2,
+      "date_and_count_hex": "31302f31372f3830000200"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 1980,
+      "old_count": 255,
+      "stored_count": 256,
+      "date_and_count_hex": "31302f31372f3830000001"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 1980,
+      "old_count": 256,
+      "stored_count": 257,
+      "date_and_count_hex": "31302f31372f3830000101"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 1980,
+      "old_count": 65535,
+      "stored_count": 0,
+      "date_and_count_hex": "31302f31372f3830000000"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 1999,
+      "old_count": 0,
+      "stored_count": 1,
+      "date_and_count_hex": "31302f31372f3939000100"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 1999,
+      "old_count": 1,
+      "stored_count": 2,
+      "date_and_count_hex": "31302f31372f3939000200"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 1999,
+      "old_count": 255,
+      "stored_count": 256,
+      "date_and_count_hex": "31302f31372f3939000001"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 1999,
+      "old_count": 256,
+      "stored_count": 257,
+      "date_and_count_hex": "31302f31372f3939000101"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 1999,
+      "old_count": 65535,
+      "stored_count": 0,
+      "date_and_count_hex": "31302f31372f3939000000"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 2000,
+      "old_count": 0,
+      "stored_count": 0,
+      "date_and_count_hex": "31302f31372f3130300000"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 2000,
+      "old_count": 1,
+      "stored_count": 0,
+      "date_and_count_hex": "31302f31372f3130300000"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 2000,
+      "old_count": 255,
+      "stored_count": 256,
+      "date_and_count_hex": "31302f31372f3130300001"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 2000,
+      "old_count": 256,
+      "stored_count": 256,
+      "date_and_count_hex": "31302f31372f3130300001"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 2000,
+      "old_count": 65535,
+      "stored_count": 0,
+      "date_and_count_hex": "31302f31372f3130300000"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 2026,
+      "old_count": 0,
+      "stored_count": 0,
+      "date_and_count_hex": "31302f31372f3132360000"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 2026,
+      "old_count": 1,
+      "stored_count": 0,
+      "date_and_count_hex": "31302f31372f3132360000"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 2026,
+      "old_count": 255,
+      "stored_count": 256,
+      "date_and_count_hex": "31302f31372f3132360001"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 2026,
+      "old_count": 256,
+      "stored_count": 256,
+      "date_and_count_hex": "31302f31372f3132360001"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 2026,
+      "old_count": 65535,
+      "stored_count": 0,
+      "date_and_count_hex": "31302f31372f3132360000"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 2099,
+      "old_count": 0,
+      "stored_count": 0,
+      "date_and_count_hex": "31302f31372f3139390000"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 2099,
+      "old_count": 1,
+      "stored_count": 0,
+      "date_and_count_hex": "31302f31372f3139390000"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 2099,
+      "old_count": 255,
+      "stored_count": 256,
+      "date_and_count_hex": "31302f31372f3139390001"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 2099,
+      "old_count": 256,
+      "stored_count": 256,
+      "date_and_count_hex": "31302f31372f3139390001"
+    },
+    {
+      "case": "original-success-date-and-partial-write",
+      "year": 2099,
+      "old_count": 65535,
+      "stored_count": 0,
+      "date_and_count_hex": "31302f31372f3139390000"
+    },
+    {
+      "case": "zero-or-cancel-bypasses-accounting",
+      "selected_return": 0
+    },
+    {
+      "case": "zero-or-cancel-bypasses-accounting",
+      "selected_return": 65535
+    },
+    {
+      "case": "writer-full-vs-partial",
+      "flag": 0
+    },
+    {
+      "case": "writer-full-vs-partial",
+      "flag": 1
+    }
+  ],
+  "scope": "Actual original date/getdate/sprintf/strcpy, successful accounting fragment and dd28 writer instructions. DOS date interrupt and in-memory cache/FILE services explicitly modeled; no private DIR/PRM or disk writes."
+}

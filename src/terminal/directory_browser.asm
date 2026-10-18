@@ -10,6 +10,7 @@ SEGMENT _TEXT public class=CODE use16
 extern _directory_dos_page
 extern terminal_directory_path,terminal_directory_entry,terminal_directory_codes
 extern pcplus_screen_save,pcplus_screen_restore,text_video_segment
+extern terminal_directory_edit_selected
 global terminal_directory_choose
 terminal_directory_choose:
  push bp
@@ -18,6 +19,7 @@ terminal_directory_choose:
  push es
  cld
  mov word [browser_result],2
+ mov word [browser_notice],0
  mov byte [browser_saved],0
  mov ah,0x0f
  call browser_bios
@@ -103,6 +105,10 @@ terminal_directory_choose:
  je .cancel
  cmp al,13
  je .select
+ cmp al,'e'
+ je .edit
+ cmp al,'E'
+ je .edit
  cmp ah,0x48
  je .up
  cmp ah,0x50
@@ -116,6 +122,26 @@ terminal_directory_choose:
  cmp ah,0x4f
  je .end
  jmp .key
+.edit:
+ mov ax,[browser_selected]
+ inc ax
+ sub ax,[browser_first]
+ mov bx,114
+ mul bx
+ add ax,browser_page_data+DD_PAGE_RECORDS
+ push ax
+ mov ax,[browser_selected]
+ inc ax
+ push ax
+ call terminal_directory_edit_selected
+ add sp,4
+ mov [browser_notice],ax
+ or ax,ax
+ jz .paint
+ cmp ax,2
+ je .paint
+ mov word [browser_first],0
+ jmp .refresh
 .up:
  cmp word [browser_selected],0
  je .key
@@ -250,6 +276,19 @@ browser_paint:
  mov si,browser_legacy
 .mode:
  call browser_string
+ mov word [browser_position],0x1402
+ mov si,browser_no_notice
+ cmp word [browser_notice],0
+ je .notice
+ mov si,browser_saved_notice
+ cmp word [browser_notice],1
+ je .notice
+ mov si,browser_error_notice
+ cmp word [browser_notice],2
+ je .notice
+ mov si,browser_warning_notice
+.notice:
+ call browser_string
  ret
 ; Field SI,CX is raw storage: bounded scan, NUL pads remainder, controls sanitize.
 ; SI remains unchanged so row stepping cannot drift into password fields.
@@ -329,6 +368,7 @@ browser_character:
 
 SEGMENT _DATA public class=DATA use16
 browser_result: dw 2
+browser_notice: dw 0
 browser_saved: db 0
 browser_page: db 0
 browser_old_segment: dw 0
@@ -343,9 +383,13 @@ browser_character_value: db 0
 browser_digits: times 4 db 0
 browser_title: db 'PCPLUS // DIRECTORY',0
 browser_columns: db 'ENTRY NAME                       NUMBER',0
-browser_keys: db 'Up/Down  PgUp/PgDn  Home/End  Enter select  Esc cancel',0
-browser_literal: db 'READ ONLY // LITERAL targets // 200 entries',0
-browser_legacy: db 'READ ONLY // LEGACY A..J codes // 200 entries',0
+browser_keys: db 'Up/Down PgUp/PgDn Home/End  E edit  Enter select  Esc cancel',0
+browser_literal: db 'LITERAL targets // E edits selected entry // 200 entries',0
+browser_legacy: db 'LEGACY A..J codes // E edits selected entry // 200 entries',0
+browser_no_notice: db 0
+browser_saved_notice: db 'Entry saved.',0
+browser_error_notice: db 'Save failed. Check directory and recovery files.',0
+browser_warning_notice: db 'Entry installed; recovery files retained. Check before another save.',0
 browser_io: times DD_RESULT_SIZE db 0
 browser_page_data: times DD_PAGE_SIZE db 0
 browser_screen: times 4000 db 0

@@ -5,5 +5,6 @@
 %define DL_CODES 8
 %define DL_NAME 10
 %define DL_TARGET 35
-%define DL_SIZE 100
+%define DL_RECORD 100
+%define DL_SIZE 214
 %define DL_RESULT_SIZE 10

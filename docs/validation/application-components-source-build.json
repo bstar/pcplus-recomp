@@ -1,10 +1,19 @@
 {
   "passed": true,
-  "scope": "Current interactive terminal and application building blocks only; complete PCPlus application remains unfinished.",
-  "source_snapshot": "Maintained public source with original EXE/install/analysis databases absent.",
+  "scope": "Current interactive terminal and14 application component/diagnostic outputs; complete PCPlus application remains unfinished.",
+  "source_snapshot": "Maintained public source snapshot including current unstaged application source; original EXE/install/analysis databases and previous build outputs absent.",
+  "source_snapshot_sha256": "d54ef8fc2fc3f9a277cf66cb50c7741d3964f9403f6efa446131bb8faead71a0",
+  "source_file_count": 609,
+  "original_executable_present": false,
+  "original_install_present": false,
+  "REA_database_present": false,
+  "previous_build_outputs_present": false,
+  "build_log_sha256": "08cdd0eabdffad41c69dd35fd014b95399a45bd06d14830d239e5108c31963e2",
+  "toolchain": "Pinned Nix development shell (nix/flake.lock); NASM/Open Watcom DOS8086 small model where applicable.",
+  "output_count": 14,
   "outputs": {
     "terminal/TERMINAL.EXE": {
-      "sha256": "c7478d44faf5978f86f91af7cc2f25bf94a688b32e77c92afd07025e3670ba78",
+      "sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
       "matches_workspace": true
     },
     "config-dos/CONFIG.EXE": {
@@ -48,8 +57,48 @@
       "matches_workspace": true
     },
     "directory-browser/BROWSER.EXE": {
-      "sha256": "8bd6d778913e33b8e9263e6dfbeecaba16d9c02e0e1231ce24f6891616b6c9de",
+      "sha256": "53251800047d9e13d0df3934df8f4b1662dd0d068e636636ebdf825589e85a7f",
       "matches_workspace": true
+    },
+    "directory-editor/EDITOR.EXE": {
+      "sha256": "5f71e54cb4648e35bf686c75106aafefd5c2f0c6fd864034e66db604536d37cc",
+      "matches_workspace": true
+    },
+    "directory-accounting/DIRSTATS.EXE": {
+      "sha256": "8dbe12f0b2b365cd1d6d986b82122251c22230f0e973e22faaf2fb51807faae4",
+      "matches_workspace": true
+    }
+  },
+  "build_scripts": [
+    "standalone/build_terminal.py",
+    "standalone/build_config_dos.py",
+    "standalone/build_config_replace.py",
+    "standalone/build_config_abi.py",
+    "standalone/build_ui_windows.py",
+    "standalone/build_modem_commands.py",
+    "standalone/build_modem_responses.py",
+    "standalone/build_modem_send.py",
+    "standalone/build_directory_dial.py",
+    "standalone/build_directory_browser.py",
+    "standalone/build_directory_editor.py",
+    "standalone/build_directory_accounting.py"
+  ],
+  "terminal_metadata_reconciliation": {
+    "scope": "Terminal-only rebuild after a limitation-string whitespace correction; the original 14-output proof remains recorded separately.",
+    "builder_before_sha256": "97011c0b7c56dfc60c6aeb216755ee51703948b0e8d1bd150da152d407ec7f83",
+    "builder_after_sha256": "9fa613b50e98c8e240ca855df165629ba0654bb26a353ed0edf593b381919c31",
+    "passed": true,
+    "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+    "matches_workspace_binary": true,
+    "matches_workspace_manifest": true,
+    "data_stack_bytes": 51440,
+    "rebuild_log_sha256": "a2873c330c30b6625749de5988452de039128537a7d53e2439700fd61fde01cf",
+    "other_outputs_rebuilt": false,
+    "only_source_change": {
+      "file": "standalone/build_terminal.py",
+      "before": "Native16-field",
+      "after": "Native 16-field",
+      "effect": "Limitation description whitespace only; no build inputs or commands changed."
     }
   }
 }

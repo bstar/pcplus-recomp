@@ -7,6 +7,7 @@ CPU 8086
 SEGMENT _TEXT public class=CODE use16
 extern terminal_option_mask,terminal_dial_target,terminal_modem_settings
 extern terminal_directory_mode
+extern terminal_directory_note_connected
 extern terminal_clock_ticks,terminal_modem_send_start,terminal_modem_send_poll
 extern modem_expand_bounded,modem_response_slots
 extern modem_responses_reset_bounded,modem_responses_feed_bounded
@@ -143,6 +144,7 @@ terminal_connection_start:
  mov word [connection_state],6
  mov word [connection_status],1
  mov byte [connection_carrier_seen],0
+ call terminal_directory_note_connected
  call terminal_connection_notice_restore
  jmp .done
 .modem:
@@ -285,6 +287,7 @@ terminal_connection_poll:
 .connected:
  mov word [connection_state],6
  mov word [connection_status],1
+ call terminal_directory_note_connected
  call terminal_connection_notice_restore
  jmp .done
 .carrier:

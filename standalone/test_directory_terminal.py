@@ -9,20 +9,30 @@ def main():
  def check(name,mode,*,payload=None,settings=None,args=None,keys='p4500 a-x',**kwargs):
   cases.append(run('directory-'+name,mode,keys,directory=directory() if payload is None else payload,prm=prm() if settings is None else settings,arguments=args or '@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1',**kwargs))
  check('literal','success')
- check('entry200-serial-profile','success',payload=directory(entry=200,port=2,baud=5,profile=4),args='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:200',com=2,profile=4)
+ check('entry200-serial-profile','success',payload=directory(entry=200,port=2,baud=5,profile=4),args='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:200',com=2,profile=4,directory_entry=200)
  check('CLI-port-override','success',payload=directory(port=2,baud=5),args='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 COM3 38400 NONE',com=3)
  check('legacy-codes','success',payload=directory(target=b'a555'),args='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /C:LEGACY',target=b'9,555')
  direct=bytearray(prm());struct.pack_into('<H',direct,10,0)
  check('direct-no-modem','direct',payload=directory(direct=1,target=b''),settings=bytes(direct))
- check('browser-selection','success',payload=directory(entry=3),args='@D:\\TEST.PRM /E:D:\\TEST.DIR',keys='p500 down p100 down p100 enter p4500 a-x')
+ check('browser-selection','success',payload=directory(entry=3),args='@D:\\TEST.PRM /E:D:\\TEST.DIR',keys='p500 down p100 down p100 enter p4500 a-x',directory_entry=3)
+ edited=bytearray(directory());edited[250]=ord('Z')
+ check('browser-edit-save','success',args='@D:\\TEST.PRM /E:D:\\TEST.DIR',keys='p500 e p400 s-z p120 f10 p600 enter p4500 a-x',directory_expected=bytes(edited))
+ check('browser-edit-cancel','cancel',args='@D:\\TEST.PRM /E:D:\\TEST.DIR',keys='p500 e p400 x p120 escape p300 escape')
+ check('browser-edit-conflict','cancel',args='@D:\\TEST.PRM /E:D:\\TEST.DIR',keys='p500 e p400 s-z p120 f10 p600 escape',recovery_conflict=True)
+ check('accounting-conflict','success',recovery_conflict=True,expected=9,accounting_delta=0)
  check('browser-cancel','cancel',args='@D:\\TEST.PRM /E:D:\\TEST.DIR',keys='p500 escape')
  check('short-file','reject',payload=directory()[:-1],expected=7)
  check('suffix-file','reject',payload=directory()+b'X',expected=7)
- for name,offset,value in [('profile',73,7),('port',104,5),('HALF',51,1),('script',52,ord('X')),('password',75,ord('X')),('keyboard',86,ord('X')),('META',95,ord('X'))]:
+ private=bytearray(directory());private[250+75:250+84]=b'Private42'
+ check('stored-password-metadata','success',payload=bytes(private))
+ password_case=cases[-1];password_out=ROOT/'build/connection-dos/directory-stored-password-metadata'
+ password_case['checks']['password_never_transmitted_or_displayed']=all(b'Private42' not in (password_out/name).read_bytes() for name in ('serial.bin','screen.txt'))
+ password_case['passed']=all(password_case['checks'].values())
+ for name,offset,value in [('profile',73,7),('port',104,5),('HALF',51,1),('script',52,ord('X')),('keyboard',86,ord('X')),('META',95,ord('X'))]:
   data=bytearray(directory());data[250+offset]=value
   check('unsupported-'+name,'reject',payload=bytes(data),expected=7)
  check('conflicting-targets','reject',args='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /D:Other:23',expected=7)
  out=ROOT/'build/directory-terminal';out.mkdir(parents=True,exist_ok=True)
- result={'passed':all(c['passed'] for c in cases),'binary_sha256':hashlib.sha256(BINARY.read_bytes()).hexdigest(),'cases':cases,'scope':'Actual DOS strict directory/PRM file IO, browser keys, entry settings and modem/direct controller through real emulated UART; synthetic files unchanged, independent IRQ/UART/PIC sampler.'}
+ result={'passed':all(c['passed'] for c in cases),'binary_sha256':hashlib.sha256(BINARY.read_bytes()).hexdigest(),'cases':cases,'scope':'Actual DOS directory IO, browser/editor keys, staged save/conflict, deferred call accounting, entry settings and modem/direct controller through emulated UART; exact expected file changes and independent IRQ/UART/PIC sampler.'}
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())
