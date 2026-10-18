@@ -14,6 +14,7 @@ extern terminal_connection_notice
 global terminal_printer_toggle,terminal_printer_poll,terminal_sink_36fc
 global terminal_printer_receive_hold,terminal_printer_barrier
 global terminal_printer_before_program,terminal_printer_shutdown
+global terminal_printer_put_raw,terminal_printer_failure
 %macro save 0
  push bp
  push ax
@@ -100,11 +101,15 @@ terminal_printer_toggle:
 ; near cdecl(c). Native ignores return value. Maximum two queued bytes per
 ; received character (CR plus optional LF); main stops RX dequeue at127.
 terminal_sink_36fc:
+ cmp word [terminal_sink_3988_enabled],0
+ jne terminal_printer_put_raw
+ ret
+; Internal byte admission for a separately owned screen-print operation. This
+; bypasses processed-character filtering and does not turn stream copying on.
+terminal_printer_put_raw:
  push bp
  mov bp,sp
  push bx
- cmp word [terminal_sink_3988_enabled],0
- je .done
  cmp word [terminal_printer_count],128
  jae .overflow
  mov bx,[terminal_printer_tail]
@@ -246,7 +251,9 @@ printer_elapsed:
 
 ; AX is the first app/backend error. Drop remaining bytes explicitly on fault;
 ; don't retry a possibly partially accepted write or uncertain close.
+terminal_printer_failure:
 printer_failure:
+ inc word [terminal_printer_fault_epoch]
  cmp word [terminal_printer_sticky],0
  jne .close
  mov [terminal_printer_sticky],ax
@@ -309,6 +316,8 @@ terminal_printer_shutdown:
 SEGMENT _DATA public class=DATA use16
 global terminal_printer_count,terminal_printer_head,terminal_printer_tail
 global terminal_printer_buffer,terminal_printer_closing,terminal_printer_sticky
+global terminal_printer_fault_epoch
+terminal_printer_fault_epoch: dw 0
 terminal_printer_count: dw 0
 terminal_printer_head: dw 0
 terminal_printer_tail: dw 0

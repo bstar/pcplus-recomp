@@ -31,8 +31,10 @@ once; otherwise each parameter is processed in order:
 |5, CEAC zero|Call overlay12:D0D0, an explicit unresolved application boundary|
 |Other|No action|
 
-The routine does not itself inspect a CSI private-prefix flag. It trusts its
-parameter array/count and is not a bounded public input parser. Signed count
+The word named `print_copy_policy` in this diagnostic aliases `ansi_private`
+(CEAC), the current CSI question-mark prefix flag. It selects the4/5 branches;
+0/1 printing accepts either prefix. The routine trusts its parameter
+array/count and is not a bounded public input parser. Signed count
 comparisons and callers' parser validation remain part of its original ABI.
 The existing keyboard table independently proves Alt-L scan26h calls1a76:
 that toggles stream copying, not screen printing. A distinct local key route to

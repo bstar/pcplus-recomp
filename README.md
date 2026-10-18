@@ -105,6 +105,10 @@ Alt-L toggles [processed printer copy](docs/LIVE_PRINTER.md) through a checked
 DOS `PRN` owner. A bounded queue keeps serial service active; failures retain
 an errorlevel12 status, and PROGRAM closes the device before child execution.
 The virtual printer tests do not establish physical printer compatibility.
+Incoming ANSI media-copy commands now print the full screen, scroll region or
+current row through the same checked owner. Modes18/19 retain their recovered
+form-feed and region behavior. See [screen printing](docs/LIVE_SCREEN_PRINT.md)
+for exact commands, cancellation and the remaining dedicated-print boundary.
 
 The separate [native printer diagnostic](docs/PRINTER_NATIVE.md) reconstructs
 printer-copy instructions with explicit memory-device fixtures. The

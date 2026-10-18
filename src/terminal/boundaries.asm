@@ -58,10 +58,6 @@ global modes_screen_width
 modes_screen_width:
  mov ax,0x2a6e
  jmp csi_unimplemented
-global csi_media_copy
-csi_media_copy:
- mov ax,0xe084
- jmp csi_unimplemented
 global ansi_escape_service_e0f8
 ansi_escape_service_e0f8:
  mov ax,0xe0f8

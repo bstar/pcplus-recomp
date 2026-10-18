@@ -255,7 +255,16 @@ physical modem compatibility or close the remaining application gates below.
       exact bytes and38 CPU/original comparisons as a separate diagnostic.
       The33-command terminal regression and23 linked YMODEM inputs also pass.
       See `docs/LIVE_PRINTER.md` and `docs/PRINT_SCREEN_NATIVE.md`.
-      Full F10 still requires live screen printing, remaining snapshot/monitor geometry,
+      The d4cfa4dc checkpoint adds serviced screen printing via incoming CSI0/1
+      and private4/5, using native mode18/19 state and an immutable2000-byte
+      far character frame. It preserves active printer copy or closes its own
+      temporary PRN, queues FF before close, defers ordinary local keys and
+      supports Escape/Alt-X. Nine linked groups/2037 inputs,11 actual DOS
+      screen-print cases and3 stream-copy regressions pass; the34-command
+      terminal target and23 linked YMODEM inputs also pass. Native CEAC is now correctly identified as the transient private-prefix flag.
+      See `docs/LIVE_SCREEN_PRINT.md` and `docs/SCREEN_PRINT_POLICY.md`.
+      Full F10 still requires dedicated printer-controller mode, a proved local
+      screen-print binding, remaining snapshot/monitor geometry,
       complete settings/status UI, ASPECT/HOOK and physical validation. See
       `docs/CAPTURE_NATIVE_INVENTORY.md`, `docs/LIVE_CAPTURE.md` and
       `docs/validation/terminal-capture-dos.json`.
