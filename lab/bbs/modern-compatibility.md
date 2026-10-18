@@ -9,19 +9,19 @@ toolchains. These results do not establish physical Wi-Fi modem compatibility.
 ## Latest editor-tested build
 
 DOS executable SHA-256:
-`bdeb347c99168c8f745c312abfd40468250959ffdfd82af562476a6d29bea2c8`.
+`8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d`.
 
 | Server / modem forwarding | Result | Evidence |
 | --- | --- | --- |
-| Synchronet 3.22a development snapshot / immediate | All 12 behavior checks and eight key-wire checks pass; draft aborted | `editor-farcode-bdeb`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
+| Synchronet 3.22a development snapshot / immediate | All 12 behavior checks and eight key-wire checks pass; draft aborted | `editor-ui-8b38`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
 | ENiGMA½ 0.5.1-beta / immediate | Correct outgoing keys; Home and Insert behavior fail | Current paired experiment below |
 | Same ENiGMA / explicit 30 ms buffering | All seven audited checks and eight key-wire checks pass; closes unsaved | Current paired experiment below |
 
 The ENiGMA pair uses the same DOS executable, keyboard recipe, synthetic PRM,
 serial settings and unchanged stock decoder. Only the modem's explicit
 `packet_delay_ms` differs. Server/user state is not reset between runs.
-Retained labels are `editor-farcode-bdeb-buffer30` and
-`editor-farcode-bdeb-immediate-retry`; full hashes and checks are in
+Retained labels are `editor-ui-8b38-buffer30` and
+`editor-ui-8b38-immediate`; full hashes and checks are in
 [the paired report](../../docs/validation/bbs-enigma-packetization.json).
 
 The checked ENiGMA source, commit
@@ -55,9 +55,12 @@ finished. This does not establish why the earlier navigation failed. Both
 attempts are retained in the editor report. Paired recording now requires actual
 stock-editor entry on both sides before accepting a comparison.
 
-The later private-UI-storage build is covered by [its own tests](../../docs/UI_FAR_STORAGE.md).
-The editor comparisons above retain bdeb347c as their tested runtime; they have
-not been relabeled as new editor runs for the UI storage migration.
+The editor runs above execute the private-UI-storage build from an immutable
+copy at `build/bbs-lab/frozen/editor-ui-8b38/TERMINAL.EXE`; they repeat the
+actual DOS/server workflows after the [UI storage migration](../../docs/UI_FAR_STORAGE.md).
+The older bdeb347c far-code comparison and its navigation failure remain in
+the reports' histories. All three new runs preserve the synthetic PRM and
+restore the independently sampled IRQ/UART/PIC state.
 
 ## Other verified workflows
 

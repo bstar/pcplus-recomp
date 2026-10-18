@@ -94,3 +94,11 @@ The static far-code bdeb347c checkpoint repeats the result: buffered
 Home/Insert with all eight wire sequences present. The initial immediate label
 missed editor navigation and is retained as a prerequisite failure. Paired
 recording rejects that attempt; see [current results](modern-compatibility.md).
+
+The private UI-storage checkpoint repeats the paired test on8b38144e:
+`editor-ui-8b38-buffer30` passes all seven audited editor checks;
+`editor-ui-8b38-immediate` reaches the editor but fails Home/Insert. Both
+emit all eight expected key sequences, preserve the synthetic PRM, restore
+sampled hardware and close without saving a post. Current hashes and
+artifacts are in the paired JSON report; prior experiments remain in its
+history. See [the current checkpoint](modern-compatibility.md).

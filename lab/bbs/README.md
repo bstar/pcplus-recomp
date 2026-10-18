@@ -40,7 +40,7 @@ syntax for login/menu workflows; `--label` retains separate runs. A normal DOS
 exit is a transport/cleanup check; successful login and menu interaction require
 separate evidence from the screen, response bytes and server logs.
 
-## Current checkpoint: menus pass; ENiGMA editor failure retained
+## Earlier upload-ack checkpoint: menus pass; ENiGMA editor failure retained
 
 Terminal `036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad`
 was tested from an immutable executable copy with COM2/19200/8N1/HARD.

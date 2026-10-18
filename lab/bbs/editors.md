@@ -371,3 +371,19 @@ rejects any run that did not enter the stock editor.
 Both public current reports bind the full runtime hash
 `bdeb347c99168c8f745c312abfd40468250959ffdfd82af562476a6d29bea2c8`.
 The menu and transfer matrices retain their separate earlier runtime identities.
+
+## Private UI-storage checkpoint
+
+The immutable `8b38144e6c1a62ed0c41967acfe56b6f2c310b9f8a1f27504eb0c7494955964d`
+DOS runtime repeats the actual server editor recipes after moving independent
+browser, editor and PROGRAM screen frames outside DGROUP. Synchronet
+`editor-ui-8b38` passes all 12 behavior checks and eight outgoing-key checks,
+including actual FSEditor entry and Ctrl-Q draft abort. ENiGMA
+`editor-ui-8b38-immediate` reaches its stock editor and emits all eight keys,
+but again fails Home positioning and Insert behavior. No post is saved.
+The explicit 30 ms `editor-ui-8b38-buffer30` comparison passes all seven
+audited checks and eight outgoing-key checks without saving a post. It uses
+the same executable, synthetic PRM, serial settings and retained unsaved
+keyboard recipe. See
+[current outcomes and limits](modern-compatibility.md) and the hash-bound
+paired report; older attempts remain historical evidence.
