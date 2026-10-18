@@ -51,11 +51,22 @@ def main():
  result['checks'].update(canceled_editor_preserves_exact_PRM=actual==image(),
   keyboard_after_child_and_reopened_menu=b'ready' in (SETUP_OUT/name/'serial.bin').read_bytes())
  result['passed']=all(result['checks'].values());cases.append(result)
+ result,folder=terminal_case('split-parser',
+  'p2000 a-z p300 right p300 right p1500 escape p500 r e a d y p500 a-x',
+  [(.4,b'\x1b['),(2.1,b'31mPARTIAL\r\n\x1b[6n')])
+ raw=(folder/'MVIEW.BIN').read_bytes();assert len(raw)==10246
+ magic,count,ticks=struct.unpack_from('<3H',raw);assert magic==0x4d43 and count<=32
+ frames=[raw[6+i*320:6+(i+1)*320] for i in range(count)]
+ wire=(folder/'serial.bin').read_bytes();screen=(folder/'SCREEN.BIN').read_bytes()
+ result['checks'].update(menu_observed_after_split=ticks>5 and any(b'Redisplay history' in f[:80] for f in frames),
+  queued_arrows_stay_local=b'\x1b[C' not in wire,parser_finishes_and_replies=b'\x1b[2;1R' in wire,
+  live_partial_text_restored=b'PARTIAL' in screen[::2],ordinary_keyboard_after_menu=b'ready' in wire)
+ result['passed']=all(result['checks'].values());result['observed_frames']=[f.decode('cp437') for f in frames];cases.append(result)
  for case in cases:
   (out/(case.get('case',case.get('name','case'))+'.json')).write_text(json.dumps(case,indent=2)+'\n')
  result=dict(passed=all(c['passed'] for c in cases),binary_sha256=digest,editor_sha256=hashlib.sha256(EDITOR.read_bytes()).hexdigest(),cases=cases,
   sources={s:hashlib.sha256((ROOT/s).read_bytes()).hexdigest() for s in ['standalone/test_command_menu_dos.py','standalone/command_menu_watch.asm','standalone/test_connection_dos.py','standalone/test_setup_startup_dos.py','src/redisplay/command_menu.c','src/redisplay/command_menu.h','src/redisplay/redisplay.c','src/terminal/redisplay.asm']},
-  scope='Actual production DOS menu/help with independent timer/video observer, remote updates/replies, processed capture and screen file, canceled transfer prompts and real PRMEDIT child handoff. Synthetic owned fixtures; no physical modem or original menu equivalence.')
+  scope='Actual production DOS menu/help with independent timer/video observer, remote updates/replies, processed capture and screen file, canceled transfer prompts, hangup/redial, real PRMEDIT child and parser-split deferred entry. No product state observed by this harness. Synthetic owned fixtures; no physical modem or original menu equivalence.')
  (out/'checks.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2));assert result['passed']
 
 if __name__=='__main__':main()

@@ -24,6 +24,9 @@ extern terminal_break_start,terminal_break_poll,terminal_break_cancel
 extern terminal_printer_toggle
 extern terminal_setup_start
 extern terminal_redisplay_key,terminal_clipboard_remaining
+extern terminal_menu_pending,terminal_deferred_count,terminal_deferred_head,terminal_deferred_tail
+extern terminal_parser_active,_redisplay_active,_command_menu_active
+global terminal_menu_pending_poll
 global terminal_poll_io,terminal_enqueue_al,terminal_tick_low,terminal_clock_ticks
 global ansi_next_byte,ansi_unread_byte,csi_transmit_byte,csi_transmit_string
 
@@ -159,7 +162,11 @@ terminal_poll_io:
  call terminal_poll_serial
  cmp word [terminal_quit],0
  jne .done
+ ; Keep request service distinct from every possible BIOS key, including AX0.
+ call terminal_menu_pending_poll
 .keyboard:
+ cmp word [terminal_menu_pending],0
+ jne .bios_key
  cmp word [terminal_macro_active],0
  jne .bios_key
  cmp word [terminal_program_pending],0
@@ -174,6 +181,27 @@ terminal_poll_io:
  ; the private application queue is disabled and BIOS has one foreground reader.
  call terminal_read_key
 .key_ready:
+ cmp word [terminal_menu_pending],0
+ je .dispatch_key
+ cmp ax,0x2c00
+ je .done ; Repeated request/typematic is idempotent, not typeahead.
+ cmp ax,0x2d00
+ je .cancel_menu_then_dispatch
+ cmp ax,0x2300
+ je .cancel_menu_then_dispatch
+ cmp al,27
+ je .cancel_menu
+ call terminal_defer_key
+ cmp word [terminal_quit],0
+ jne .cancel_menu
+ jmp .done
+.cancel_menu_then_dispatch:
+ call menu_pending_cancel
+ jmp .dispatch_key
+.cancel_menu:
+ call menu_pending_cancel
+ jmp .done
+.dispatch_key:
  call terminal_redisplay_key
  jc .done
  cmp ax,0x3000 ; Native Alt-B, including dedicated/raw controller mode.
@@ -322,6 +350,37 @@ terminal_poll_io:
  pop di
  pop si
  pop bp
+ ret
+
+; No macro execution state is changed: only the pending menu's typeahead is
+; discarded. Escape remains local; Alt-X/Alt-H continue through normal dispatch.
+menu_pending_cancel:
+ mov word [terminal_menu_pending],0
+ mov word [terminal_deferred_count],0
+ mov word [terminal_deferred_head],0
+ mov word [terminal_deferred_tail],0
+ ret
+
+; Private resident request service. Preserve AX and the ordinary key ABI;
+; dispatch the actual Alt-Z only after parsing yields and no view owns keys.
+terminal_menu_pending_poll:
+ push ax
+ cmp word [terminal_menu_pending],0
+ je .done
+ cmp word [terminal_parser_active],0
+ jne .done
+ cmp word [_redisplay_active],0
+ jne .cancel
+ mov ax,0x2c00
+ call terminal_redisplay_key
+ cmp word [_command_menu_active],0
+ je .cancel
+ mov word [terminal_menu_pending],0
+ jmp .done
+.cancel:
+ call menu_pending_cancel
+.done:
+ pop ax
  ret
 
 ; UART/modem/TX service without consuming a BIOS key. Used by capture prompt.

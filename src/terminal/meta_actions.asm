@@ -312,6 +312,12 @@ terminal_take_deferred_key:
  ret
 
 SEGMENT _DATA public class=DATA use16
+; Shared bounded foreground typeahead. A pending menu owns these same queued
+; keys until its parser-safe opening; aliases expose storage, not new callbacks.
+global terminal_deferred_count,terminal_deferred_head,terminal_deferred_tail
+terminal_deferred_count equ macro_pending_count
+terminal_deferred_head equ macro_pending_head
+terminal_deferred_tail equ macro_pending_tail
 global terminal_action_definitions,terminal_actions_status,terminal_actions_io
 global terminal_macro_active,terminal_macro_status,terminal_macro_pause_character
 global terminal_macro_character_delay_units,terminal_macro_tx_allowed,terminal_macro_tx_epoch

@@ -122,7 +122,14 @@ saved baseline separately from session R; see [clipboard settings](CLIPBOARD_SET
 
 The maintained [command menu/help](COMMAND_MENU.md) adds a twelfth C module,
 with code-based names/prose/table and48 bytes of near state/query storage.
-Current near data/stack is64,176 bytes and the retained parent including PSP is
+At that menu checkpoint near data/stack is64,176 bytes and the retained parent including PSP is
 312,640 bytes. Resident code remains64,796 bytes and the same85 bridge pairs are
 checked. The linker verifier separately requires the menu entry in CONFIG_CODE
 and its mutable state in DGROUP. No additional full-screen frame is allocated.
+
+Parser-safe [pending menu entry](MENU_PENDING.md) adds a two-byte flag and reuses
+the32-word foreground typeahead. Current near data/stack is64,192 bytes, resident
+code64,932 bytes and retained parent312,848 bytes. The85 bridges and their
+argument counts remain unchanged; a distinct resident service dispatches the
+retained request through the existing key entry. Real AX0 BIOS keys retain their
+ordinary meaning. No new buffer or far callback is added.

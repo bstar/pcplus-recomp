@@ -15,7 +15,7 @@ def main():
  assert manifest['binary_sha256']==runtime
  linked=read('build/terminal/command-menu-checks.json');dos_path=Path('build/command-menu-dos')/a.label/'checks.json';dos=read(dos_path)
  for r in (linked,dos):assert r['passed'] and r['binary_sha256']==runtime;sources(r)
- assert linked['inputs']==149 and len(linked['cases'])==5 and len(dos['cases'])==3
+ assert linked['inputs']==149 and len(linked['cases'])==5 and len(dos['cases'])==4
  assert dos['editor_sha256']==sha('build/setup/PRMEDIT.EXE')
  artifacts=[dos_path,Path('build/terminal/command-menu-checks.json'),Path('build/terminal/manifest.json')]
  for i,case in enumerate(dos['cases']):
@@ -38,14 +38,23 @@ def main():
    assert b'CAPTURELINE' in snapshot and b'Command Menu' not in snapshot and b'Receive files' not in snapshot
    assert wire.count(b'ATZ\r')==wire.count(b'ATDCaseTest:23\r')==2 and b'+++ATH\r' in wire
    assert b'\x15' not in wire and b'\x18' not in wire
-  else:
+  elif i==2:
    assert sha(folder/'TERMINAL.EXE')==runtime and sha(folder/'PRMEDIT.EXE')==dos['editor_sha256']
    assert (ROOT/folder/'TEST.PRM').read_bytes()==image()
+  else:
+   raw=(ROOT/folder/'MVIEW.BIN').read_bytes();magic,count,ticks=struct.unpack_from('<3H',raw)
+   assert len(raw)==10246 and magic==0x4d43 and 0<count<=32 and ticks>5
+   frames=[raw[6+n*320:6+(n+1)*320] for n in range(count)]
+   assert [f.decode('cp437') for f in frames]==case['observed_frames']
+   assert any(b'Redisplay history' in f[:80] for f in frames)
+   assert b'\x1b[C' not in wire and b'\x1b[2;1R' in wire
   artifacts.extend(p.relative_to(ROOT) for p in sorted((ROOT/folder).rglob('*')) if p.is_file())
  artifacts.extend(p.relative_to(ROOT) for p in sorted((ROOT/dos_path.parent).iterdir()) if p.is_file())
  memory=manifest['memory_layout'];assert memory['command_menu_far_code_verified']
  assert memory['far_code_bridge_pairs_verified']==85 and memory['configuration_bridge_pairs_verified']==36
- assert memory['near_bytes']==64176 and memory['resident_code_bytes']==64796
+ assert memory['near_bytes']==64192 and memory['resident_code_bytes']==64932
+ pending=read('build/terminal/menu-pending-checks.json');assert pending['passed'] and pending['binary_sha256']==runtime and pending['inputs']==36
+ sources(pending);artifacts.append(Path('build/terminal/menu-pending-checks.json'))
  frames=read('build/terminal/config-far-checks.json');assert frames['passed'] and frames['binary_sha256']==runtime and len(frames['rejected_mutations'])==173
  regression=read('build/terminal/setup-profile-regression.json');commands=subprocess.check_output(['make','-n','test-terminal'],cwd=ROOT,text=True).splitlines()
  assert len(commands)==77 and regression['passed'] and regression['complete'] and regression['binary_sha256']==runtime
@@ -63,7 +72,7 @@ def main():
  assert editors['binary_sha256']==packet['binary_sha256']==runtime
  assert editors['servers']['synchronet']['semantic_evidence']['passed'] and packet['buffered_editor_passed']
  artifacts.extend(map(Path,[stock_path,editors_path,packet_path]))
- result=dict(passed=True,binary_sha256=runtime,linked=linked,actual_DOS=dos,memory_layout=memory,
+ result=dict(passed=True,binary_sha256=runtime,linked=linked,pending_entry=pending,actual_DOS=dos,memory_layout=memory,
   call_frames=frames,terminal_regression=regression,runtime_sources=manifest['sources'],
   sources={p:sha(p) for p in ['standalone/record_command_menu.py','standalone/check_setup_model.py']},
   retained_artifacts={str(p):sha(p) for p in artifacts},
@@ -72,6 +81,6 @@ def main():
    selected_menu_clipboard_downloads_passed=True,all_recorded_attempts_passed=stock['all_recorded_runs_passed']),
   stock_editor_regression=dict(report=editors_path,synchronet_passed=True,
    enigma_immediate_passed=packet['immediate_editor_passed'],enigma_buffered_passed=packet['buffered_editor_passed'],packetization_report=packet_path),
-  scope='Maintained Alt-Z command menu,18 items/five groups, contextual topic help and31-character ASCII prose search. Shared live/frozen screen owner and existing-command dispatch after close.149 linked inputs,three actual DOS observer/file/PRMEDIT workflows;77-command terminal regression and64 byte-identical source-only outputs. Original layout/mouse/full settings, other geometries and physical modem remain open; no whole-application gate is closed.')
+  scope='Maintained Alt-Z command menu,18 items/five groups, contextual topic help and31-character ASCII prose search. Shared live/frozen screen owner and existing-command dispatch after close.149 menu and36 pending-entry linked inputs, four actual DOS observer/file/PRMEDIT/partial-CSI workflows;77-command terminal regression and64 byte-identical source-only outputs. Original layout/mouse/full settings, other geometries and physical modem remain open; no whole-application gate is closed.')
  (ROOT/'docs/validation/command-menu.json').write_text(json.dumps(result,indent=2)+'\n');print('Recorded command menu',runtime)
 if __name__=='__main__':main()

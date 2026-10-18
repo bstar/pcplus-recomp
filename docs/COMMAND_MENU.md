@@ -37,18 +37,23 @@ to the BBS.
 A selected command first closes the menu and restores the live screen. Its BIOS
 key value then re-enters the existing command dispatcher. Redisplay/clipboard
 commands acquire their ordinary guarded owner through the same path. No key is
-injected into the BIOS queue or sent to the UART for this handoff. Active parser,
-transfer, child/PROGRAM, macro, monitor/controller, BREAK, snapshot and modem
-control ownership prevent a new menu. The existing mode3/page0/80x25 geometry
-checks apply.
+injected into the BIOS queue or sent to the UART for this handoff. An otherwise
+eligible Alt-Z during normal parsing now waits for a safe foreground opening;
+following keys stay in bounded typeahead. Transfer, child/PROGRAM, macro,
+monitor/controller, ANSI discard-wait, BREAK, snapshot and modem-control owners
+retain refusal. The existing mode3/page0/80x25 geometry checks are rechecked.
+See [deferred entry](MENU_PENDING.md) for cancellation and the controlled
+before/after reproduction.
 
 Menu logic is another CONFIG_CODE-local C module. Its constant names, help and
 item table use Watcom's segment-constant objects based on the default code
 segment. This places them in CONFIG_CODE under this build's compiler options,
 before uninitialized far storage. Watcom documents this placement through
 [`__based(__segname("_CODE"))`](https://open-watcom.github.io/open-watcom-v2-wikidocs/cguide.html#Segment_Constant_Based_Pointers_and_Objects).
-Only48 added bytes of bounded state/query storage consume DGROUP. Existing
-resident code and the85 checked far bridge pairs are unchanged. The linker/MZ
+The initial menu added48 bytes of bounded state/query storage in DGROUP. Deferred
+entry adds a two-byte flag and alignment, bringing near data/stack to64,192
+bytes. Resident code is64,932 bytes; the85 checked far bridge pairs and their
+argument contracts are unchanged. The linker/MZ
 verifier checks menu entry placement, near state, retained code and uninitialized
 screen/history extents; the real DOS PRMEDIT workflow exercises that retention.
 
@@ -64,7 +69,7 @@ and closes it through the normal drain/poll service.
 An open capture also exercises menu hold/resume and close, verifying that held
 text is omitted and resumed text reaches the checked file owner.
 
-`standalone/test_command_menu_dos.py` runs three production DOS workflows on fresh
+`standalone/test_command_menu_dos.py` runs four production DOS workflows on fresh
 synthetic media. An independent INT1C observer samples actual menu/help rows and
 the footer. The first workflow verifies groups, help search and a new remote
 screen/status query during browsing. The second verifies exact processed
@@ -72,7 +77,9 @@ capture, a screen file containing live text rather than menu text, and canceled
 receive/send prompts, then hangs up and dials the same selected target again
 through menu commands. The third runs the real PRMEDIT child, checks that cancel
 preserves the full PRM image, then reopens the menu and resumes typed serial
-output. All cases include the independent UART/vector/PIC restoration checks
+output. The fourth completes a delayed partial ANSI sequence while a pending
+request retains the two Right keys; the timer observer sees the resulting View
+group and the peer sees no leaked arrows. All cases include independent UART/vector/PIC restoration checks
 from their existing harnesses.
 
 ```sh
@@ -86,15 +93,17 @@ ignored local artifacts. Linked tests also exposed an incorrect conditional
 conversion of code-based string pointers in the footer. Explicit branches now
 pass the named code-segment objects to the far-pointer renderer.
 
-[`validation/command-menu.json`](validation/command-menu.json) binds the149 linked
-inputs, three DOS workflows, full77-command terminal regression and64-output
+[`validation/command-menu.json`](validation/command-menu.json) binds149 menu and36
+pending-entry linked inputs, four DOS workflows, full77-command regression and64-output
 source-only rebuild to the frozen executable. It retains the actual observer,
 wire, file, PRM and child artifacts by hash.
 
 The same frozen executable passes selected stock Synchronet and ENiGMA menu-to-
 clipboard/download workflows; ENiGMA also reopens it for the post-transfer file
-search. `bbs-clipboard-transfers.json` retains a refused early Synchronet attempt
-separately from its settled retry. The exact transient acquisition failure is
+search. `bbs-clipboard-transfers.json` retains a refused earlier Synchronet attempt
+separately from its settled retry and the current original-timing pass. A current
+ENiGMA achievement-popup interruption remains failed alongside an identical-recipe
+retry that passes the post-transfer search. The exact earlier acquisition failure is
 unproven, so this does not claim menu availability during every parser/owner
 state. The stock editor recheck passes Synchronet and ENiGMA with an explicit30ms
 buffering control; immediate ENiGMA retains Home/Insert failures. No BBS post is

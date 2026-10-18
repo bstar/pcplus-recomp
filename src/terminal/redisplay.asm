@@ -17,7 +17,8 @@ FAR_ENTRY terminal_redisplay_idle
 FAR_ENTRY terminal_redisplay_stop
 
 extern _redisplay_event_impl,_redisplay_active
-extern _command_menu_action
+extern _command_menu_action,_command_menu_active
+extern terminal_deferred_count,terminal_deferred_head,terminal_deferred_tail
 extern terminal_history_pointer,terminal_history_start,terminal_history_end,terminal_history_wrapped
 extern terminal_parser_active,terminal_transfer_pending,terminal_transfer_active
 extern terminal_program_pending,terminal_program_active,terminal_macro_active
@@ -39,8 +40,7 @@ terminal_redisplay_key_impl:
  jne .pass
 .open:
  push ax
- mov ax,[terminal_parser_active]
- or ax,[terminal_transfer_pending]
+ mov ax,[terminal_transfer_pending]
  or ax,[terminal_transfer_active]
  or ax,[terminal_program_pending]
  or ax,[terminal_program_active]
@@ -60,9 +60,21 @@ terminal_redisplay_key_impl:
  cmp word [screen_video_row_bytes],160
  jne .denied
  cmp word [connection_state],0
- je .bind
+ je .parser
  cmp word [connection_state],6
  jne .denied
+.parser:
+ cmp word [terminal_parser_active],0
+ je .bind
+ pop ax
+ cmp ax,0x2c00
+ jne .refused
+ ; Only an otherwise eligible Alt-Z is deferred. Other viewer keys retain
+ ; their existing refusal policy, and other owners never become menu requests.
+ mov word [terminal_menu_pending],1
+.refused:
+ stc
+ ret
 .bind:
  mov ax,[terminal_history_start]
  mov [context+16],ax
@@ -121,6 +133,16 @@ terminal_redisplay_idle_impl:
  mov dx,3
  jmp redisplay_event
 terminal_redisplay_stop_impl:
+ cmp word [terminal_menu_pending],0
+ jne .cancel
+ cmp word [_command_menu_active],0
+ je .event
+.cancel:
+ mov word [terminal_menu_pending],0
+ mov word [terminal_deferred_count],0
+ mov word [terminal_deferred_head],0
+ mov word [terminal_deferred_tail],0
+.event:
  mov dx,4
 redisplay_event:
  cmp word [_redisplay_active],0
@@ -155,6 +177,8 @@ context:
  dw redisplay_live,seg redisplay_live
  dw redisplay_view,seg redisplay_view
  times 4 dw 0
+global terminal_menu_pending
+terminal_menu_pending: dw 0
 SEGMENT UI_STORAGE public align=16 class=FAR_DATA use16
 global redisplay_live,redisplay_live_end,redisplay_view,redisplay_view_end
 redisplay_live: resb 4000

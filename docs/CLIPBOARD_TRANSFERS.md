@@ -108,22 +108,39 @@ color codes. The last two attempts completed the real transfer, but failed their
 post-menu assertions. Neither is relabeled as a passing run. The aggregate report
 therefore remains false while its two latest selected workflows pass.
 
-The command-menu runtime now enters the clipboard through Alt-Z, View and F
+The command-menu runtime enters the clipboard through Alt-Z, View and F
 on both servers, including ENiGMA's second search after the download. The report
-verifies the menu's right-arrow keys do not reach the remote prompt. The first
-Synchronet attempt failed this acquisition prerequisite: arrows and lowercase
+verifies the menu's right-arrow keys do not reach the remote prompt. At the
+earlier c0d64834 checkpoint, the first Synchronet attempt failed this
+acquisition prerequisite: arrows and lowercase
 local-edit text reached Filespec. A linked replay leaves stable opening guards
 clear; the exact transient refusal was not established. Increasing the settling
-interval before Alt-Z from1500ms to3000ms passes. Both attempts remain explicit.
+interval before Alt-Z from1500ms to3000ms passed. Both attempts remain in the
+prior-runtime report. The parser-safe entry checkpoint passes the original
+1500ms recipe; its separate controlled split-CSI reproduction is documented in
+[MENU_PENDING.md](MENU_PENDING.md). That reproduction does not establish the
+cause of the earlier stock refusal.
+
+The current ENiGMA checkpoint retains another failed post-transfer search.
+The stock server displayed its ten-download achievement after the search
+command, consuming the first two characters of the following filename. The
+wire contains both complete uppercase filename packets, but the search form
+echoes XTEST.BIN and returns no results. Protocol framing/final ACK and an
+independent exact DOS-file comparison pass; the overall workflow remains failed.
+Its retained diagnosis binds the popup, stock achievement configuration and
+cross-direction timing to the raw artifacts. A fresh session with the identical
+keyboard recipe passes the full search. No server setting, assertion or terminal
+code changed for that retry. The current aggregate therefore remains false while
+both latest selected workflows pass.
 
 The BBS evidence recorder takes explicit current attempts and preserves earlier
 runtime reports separately:
 
 ```sh
 ./tools/dev --command python3 lab/bbs/record_clipboard_transfers.py \
-  --run synchronet:menu-clipboard-download-c0d6-1 \
-  --run synchronet:menu-clipboard-download-c0d6-2 \
-  --run enigma:menu-clipboard-search-download-c0d6-1
+  --run synchronet:pending-clipboard-download-0072-1 \
+  --run enigma:pending-clipboard-search-download-0072-1 \
+  --run enigma:pending-clipboard-search-download-0072-2
 ```
 
 These are selected Single/download integrations on owned loopback servers.

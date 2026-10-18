@@ -12,7 +12,7 @@ with confirmed idle serial/profile/translation changes, XMODEM/YMODEM transfers,
 capture/snapshots/printer/monitor and serviced63,000-character redisplay with
 incremental search, serviced append/CRLF history export and a filename clipboard
 with checked one/all/tagged serial output. Alt-Z adds a source-owned command menu,
-contextual help and bounded topic search. All sixteen whole-application gates in `docs/FEATURES.md`
+contextual help, bounded topic search and parser-safe deferred entry. All sixteen whole-application gates in `docs/FEATURES.md`
 remain open. The numbered sections below retain earlier component evidence and
 historical checkpoints; their old run counts are not the current binary identity.
 
@@ -548,3 +548,25 @@ An early Synchronet menu-acquisition failure is retained alongside its settled
 retry; its exact transient refusal is unresolved. Stock editor rechecks pass
 Synchronet and buffered ENiGMA while immediate ENiGMA still fails Home/Insert.
 All synthetic logon exemptions were restored and independently read back.
+
+### Parser-safe command entry
+
+A controlled DOS split-CSI case reproduced parser-busy Alt-Z refusal on the
+earlier c0d64834 build. The maintained request now waits for a foreground poll,
+rechecks all guards and replays the existing32-word typeahead FIFO locally.
+Repeated Alt-Z coalesces; Escape cancels locally and Alt-X/Alt-H retain their
+ordinary paths. Late failure/stop discards owned typeahead without touching UART
+replies.36 linked inputs and a fourth independent timer/video/peer DOS workflow
+cover this behavior. The read-only guard diagnostic separately authenticates
+the old compiled inputs against ebe18b1. Its instrumented stock attempt passed,
+so it does not establish the cause of the earlier isolated BBS refusal. See
+`docs/MENU_PENDING.md`; no whole-application gate is closed.
+
+The parser-safe checkpoint passes all77 terminal regression commands, reproduces
+64 source-only outputs and passes selected stock menu-to-clipboard downloads on
+both servers. Synchronet uses the original1500ms acquisition interval. ENiGMA's
+first post-transfer search was interrupted by its stock ten-download achievement;
+the exact file and protocol checks pass, but that workflow remains failed. The
+same keyboard recipe in a fresh session passes, with both attempts retained.
+Synchronet editor checks pass; immediate ENiGMA still fails Home/Insert and the
+explicit30ms packet-buffering experiment passes. No post was saved.

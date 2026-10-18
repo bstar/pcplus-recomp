@@ -1,9 +1,9 @@
 {
   "passed": true,
-  "binary_sha256": "c0d6483427ed2b81d86a3c3243c3aa83d8af968c7ed8fef1a61fb34670085641",
+  "binary_sha256": "007280021f117def5448fde5a5a88730b7d781b84a532d47816c277a901540b5",
   "actual_DOS": {
     "passed": true,
-    "binary_sha256": "c0d6483427ed2b81d86a3c3243c3aa83d8af968c7ed8fef1a61fb34670085641",
+    "binary_sha256": "007280021f117def5448fde5a5a88730b7d781b84a532d47816c277a901540b5",
     "cases": [
       {
         "passed": true,
@@ -38,102 +38,102 @@
           "independent_clipboard_observer": true
         },
         "errors": [],
-        "binary_sha256": "c0d6483427ed2b81d86a3c3243c3aa83d8af968c7ed8fef1a61fb34670085641",
+        "binary_sha256": "007280021f117def5448fde5a5a88730b7d781b84a532d47816c277a901540b5",
         "keys": "p1500 a-= p300 c p250 enter p200 enter p200 escape p200 s p250 a-r p250 escape p300 a-r p300 a-= c-pgup p200 R E C V \\ O N E . B p100 I N enter p1200 a-= c-pgup p s t p9000 a-= p350 s p400 escape p300 r e a d y p600 a-x",
         "observed_keys": [
           {
             "key": 33536,
-            "tick": 7982,
+            "tick": 10192,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 7999,
+            "tick": 10209,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 8051,
-            "tick": 8003,
+            "tick": 10213,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 4864,
-            "tick": 8008,
+            "tick": 10218,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 8012,
+            "tick": 10222,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 4864,
-            "tick": 8018,
+            "tick": 10228,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 33536,
-            "tick": 8023,
+            "tick": 10233,
             "header": "File names:                                                                     ",
             "footer": " Download: XMODEM   [F2] Protocol   [Enter] Start   [Esc] Cancel                "
           },
           {
             "key": 34016,
-            "tick": 8023,
+            "tick": 10233,
             "header": "File names:                                                                     ",
             "footer": " Download: XMODEM   [F2] Protocol   [Enter] Start   [Esc] Cancel                "
           },
           {
             "key": 33536,
-            "tick": 8052,
+            "tick": 10262,
             "header": "File names:                                                                     ",
             "footer": " Receiving XMODEM   [Esc] Cancel                    Blocks:       00016         "
           },
           {
             "key": 34016,
-            "tick": 8052,
+            "tick": 10262,
             "header": "File names:                                                                     ",
             "footer": " Receiving XMODEM   [Esc] Cancel                    Blocks:       00016         "
           },
           {
             "key": 6512,
-            "tick": 8052,
+            "tick": 10262,
             "header": "File names:                                                                     ",
             "footer": " Receiving XMODEM   [Esc] Cancel                    Blocks:       00016         "
           },
           {
             "key": 8051,
-            "tick": 8052,
+            "tick": 10262,
             "header": "File names:                                                                     ",
             "footer": " Receiving XMODEM   [Esc] Cancel                    Blocks:       00016         "
           },
           {
             "key": 5236,
-            "tick": 8052,
+            "tick": 10262,
             "header": "File names:                                                                     ",
             "footer": " Receiving XMODEM   [Esc] Cancel                    Blocks:       00016         "
           },
           {
             "key": 33536,
-            "tick": 8216,
+            "tick": 10426,
             "header": "                                                                                ",
             "footer": "                                                                                "
           },
           {
             "key": 8051,
-            "tick": 8222,
+            "tick": 10432,
             "header": "           PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 8229,
+            "tick": 10439,
             "header": "           PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           }
@@ -183,96 +183,96 @@
           "independent_clipboard_observer": true
         },
         "errors": [],
-        "binary_sha256": "c0d6483427ed2b81d86a3c3243c3aa83d8af968c7ed8fef1a61fb34670085641",
+        "binary_sha256": "007280021f117def5448fde5a5a88730b7d781b84a532d47816c277a901540b5",
         "keys": "p1500 a-= p300 c p250 enter p200 enter p200 escape p200 s p250 a-r p250 escape p300 a-s p300 a-= c-pgup p200 S E N D \\ O N E . B p100 I N enter p1200 a-= c-pgup p s t p9000 a-= p350 s p400 escape p300 r e a d y p600 a-x",
         "observed_keys": [
           {
             "key": 33536,
-            "tick": 8291,
+            "tick": 10484,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 8308,
+            "tick": 10501,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 8051,
-            "tick": 8312,
+            "tick": 10505,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 4864,
-            "tick": 8317,
+            "tick": 10510,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 8321,
+            "tick": 10514,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 33536,
-            "tick": 8332,
+            "tick": 10525,
             "header": "File names:                                                                     ",
             "footer": " Upload: XMODEM/1K   [F2] Protocol   [Enter] Start   [Esc] Cancel               "
           },
           {
             "key": 34016,
-            "tick": 8332,
+            "tick": 10525,
             "header": "File names:                                                                     ",
             "footer": " Upload: XMODEM/1K   [F2] Protocol   [Enter] Start   [Esc] Cancel               "
           },
           {
             "key": 33536,
-            "tick": 8361,
+            "tick": 10554,
             "header": "File names:                                                                     ",
             "footer": " Sending XMODEM/1K  [Esc] Cancel                    Blocks:       00001         "
           },
           {
             "key": 34016,
-            "tick": 8361,
+            "tick": 10554,
             "header": "File names:                                                                     ",
             "footer": " Sending XMODEM/1K  [Esc] Cancel                    Blocks:       00001         "
           },
           {
             "key": 6512,
-            "tick": 8361,
+            "tick": 10554,
             "header": "File names:                                                                     ",
             "footer": " Sending XMODEM/1K  [Esc] Cancel                    Blocks:       00001         "
           },
           {
             "key": 8051,
-            "tick": 8361,
+            "tick": 10554,
             "header": "File names:                                                                     ",
             "footer": " Sending XMODEM/1K  [Esc] Cancel                    Blocks:       00001         "
           },
           {
             "key": 5236,
-            "tick": 8361,
+            "tick": 10554,
             "header": "File names:                                                                     ",
             "footer": " Sending XMODEM/1K  [Esc] Cancel                    Blocks:       00001         "
           },
           {
             "key": 33536,
-            "tick": 8525,
+            "tick": 10718,
             "header": "                                                                                ",
             "footer": "                                                                                "
           },
           {
             "key": 8051,
-            "tick": 8531,
+            "tick": 10724,
             "header": "           PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 8538,
+            "tick": 10731,
             "header": "           PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           }
@@ -321,102 +321,102 @@
           "independent_clipboard_observer": true
         },
         "errors": [],
-        "binary_sha256": "c0d6483427ed2b81d86a3c3243c3aa83d8af968c7ed8fef1a61fb34670085641",
+        "binary_sha256": "007280021f117def5448fde5a5a88730b7d781b84a532d47816c277a901540b5",
         "keys": "p1500 a-= p300 c p250 enter p200 enter p200 enter p200 escape p200 space down space r 3 2 enter p200 t p250 a-r p250 escape p300 a-r p300 a-= c-pgup p200 f2 p200 R E C V \\ enter p1200 a-= c-pgup p s t p9000 a-= p350 t p400 escape p300 r e a d y p600 a-x",
         "observed_keys": [
           {
             "key": 33536,
-            "tick": 8583,
+            "tick": 10793,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 8604,
+            "tick": 10814,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 5236,
-            "tick": 8614,
+            "tick": 10824,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 4864,
-            "tick": 8616,
+            "tick": 10826,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 8621,
+            "tick": 10831,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 4864,
-            "tick": 8626,
+            "tick": 10836,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 33536,
-            "tick": 8632,
+            "tick": 10842,
             "header": "File names:                                                                     ",
             "footer": " Download: XMODEM   [F2] Protocol   [Enter] Start   [Esc] Cancel                "
           },
           {
             "key": 34016,
-            "tick": 8632,
+            "tick": 10842,
             "header": "File names:                                                                     ",
             "footer": " Download: XMODEM   [F2] Protocol   [Enter] Start   [Esc] Cancel                "
           },
           {
             "key": 33536,
-            "tick": 8662,
+            "tick": 10872,
             "header": "File names:                                                                     ",
             "footer": " Receiving YMODEM  [Esc] Cancel                    Blocks:        00014         "
           },
           {
             "key": 34016,
-            "tick": 8662,
+            "tick": 10872,
             "header": "File names:                                                                     ",
             "footer": " Receiving YMODEM  [Esc] Cancel                    Blocks:        00014         "
           },
           {
             "key": 6512,
-            "tick": 8662,
+            "tick": 10872,
             "header": "File names:                                                                     ",
             "footer": " Receiving YMODEM  [Esc] Cancel                    Blocks:        00014         "
           },
           {
             "key": 8051,
-            "tick": 8662,
+            "tick": 10872,
             "header": "File names:                                                                     ",
             "footer": " Receiving YMODEM  [Esc] Cancel                    Blocks:        00014         "
           },
           {
             "key": 5236,
-            "tick": 8662,
+            "tick": 10872,
             "header": "File names:                                                                     ",
             "footer": " Receiving YMODEM  [Esc] Cancel                    Blocks:        00014         "
           },
           {
             "key": 33536,
-            "tick": 8826,
+            "tick": 11036,
             "header": "                                                                                ",
             "footer": "                                                                                "
           },
           {
             "key": 5236,
-            "tick": 8832,
+            "tick": 11042,
             "header": "           PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 8839,
+            "tick": 11049,
             "header": "           PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           }
@@ -465,96 +465,96 @@
           "independent_clipboard_observer": true
         },
         "errors": [],
-        "binary_sha256": "c0d6483427ed2b81d86a3c3243c3aa83d8af968c7ed8fef1a61fb34670085641",
+        "binary_sha256": "007280021f117def5448fde5a5a88730b7d781b84a532d47816c277a901540b5",
         "keys": "p1500 a-= p300 c p250 enter p200 enter p200 escape p200 p p250 a-r p250 escape p300 a-s p300 a-= c-pgup p200 f2 p200 S E N D \\ * . B I N enter p1200 a-= c-pgup p s t p9000 a-= p350 p p400 escape p300 r e a d y p600 a-x",
         "observed_keys": [
           {
             "key": 33536,
-            "tick": 8892,
+            "tick": 11084,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 8909,
+            "tick": 11101,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 6512,
-            "tick": 8913,
+            "tick": 11105,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 4864,
-            "tick": 8918,
+            "tick": 11110,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 8922,
+            "tick": 11114,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 33536,
-            "tick": 8933,
+            "tick": 11125,
             "header": "File names:                                                                     ",
             "footer": " Upload: XMODEM/1K   [F2] Protocol   [Enter] Start   [Esc] Cancel               "
           },
           {
             "key": 34016,
-            "tick": 8933,
+            "tick": 11125,
             "header": "File names:                                                                     ",
             "footer": " Upload: XMODEM/1K   [F2] Protocol   [Enter] Start   [Esc] Cancel               "
           },
           {
             "key": 33536,
-            "tick": 8963,
+            "tick": 11155,
             "header": "File names:                                                                     ",
             "footer": " Sending YMODEM    [Esc] Cancel                    Blocks:        00001         "
           },
           {
             "key": 34016,
-            "tick": 8963,
+            "tick": 11155,
             "header": "File names:                                                                     ",
             "footer": " Sending YMODEM    [Esc] Cancel                    Blocks:        00001         "
           },
           {
             "key": 6512,
-            "tick": 8963,
+            "tick": 11155,
             "header": "File names:                                                                     ",
             "footer": " Sending YMODEM    [Esc] Cancel                    Blocks:        00001         "
           },
           {
             "key": 8051,
-            "tick": 8963,
+            "tick": 11155,
             "header": "File names:                                                                     ",
             "footer": " Sending YMODEM    [Esc] Cancel                    Blocks:        00001         "
           },
           {
             "key": 5236,
-            "tick": 8963,
+            "tick": 11155,
             "header": "File names:                                                                     ",
             "footer": " Sending YMODEM    [Esc] Cancel                    Blocks:        00001         "
           },
           {
             "key": 33536,
-            "tick": 9127,
+            "tick": 11319,
             "header": "                                                                                ",
             "footer": "                                                                                "
           },
           {
             "key": 6512,
-            "tick": 9134,
+            "tick": 11326,
             "header": "           PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 9141,
+            "tick": 11333,
             "header": "           PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           }
@@ -606,108 +606,108 @@
           "empty_list_paste_attempt_observed": true
         },
         "errors": [],
-        "binary_sha256": "c0d6483427ed2b81d86a3c3243c3aa83d8af968c7ed8fef1a61fb34670085641",
+        "binary_sha256": "007280021f117def5448fde5a5a88730b7d781b84a532d47816c277a901540b5",
         "keys": "p1500 a-= p300 c p250 enter p200 enter p200 escape p200 s p600 s p250 a-r p250 escape p300 a-r p300 a-= c-pgup p200 R E C V \\ T W O . B p100 I N enter p1200 a-= c-pgup p s t p9000 a-= p350 s p400 escape p300 r e a d y p600 a-x",
         "observed_keys": [
           {
             "key": 33536,
-            "tick": 9183,
+            "tick": 11394,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 9200,
+            "tick": 11411,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 8051,
-            "tick": 9204,
+            "tick": 11415,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 8051,
-            "tick": 9215,
+            "tick": 11426,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 4864,
-            "tick": 9220,
+            "tick": 11431,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 9224,
+            "tick": 11435,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 4864,
-            "tick": 9230,
+            "tick": 11441,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 33536,
-            "tick": 9235,
+            "tick": 11446,
             "header": "File names:                                                                     ",
             "footer": " Download: XMODEM   [F2] Protocol   [Enter] Start   [Esc] Cancel                "
           },
           {
             "key": 34016,
-            "tick": 9235,
+            "tick": 11446,
             "header": "File names:                                                                     ",
             "footer": " Download: XMODEM   [F2] Protocol   [Enter] Start   [Esc] Cancel                "
           },
           {
             "key": 33536,
-            "tick": 9264,
+            "tick": 11475,
             "header": "File names:                                                                     ",
             "footer": " Receiving XMODEM   [Esc] Cancel                    Blocks:       00016         "
           },
           {
             "key": 34016,
-            "tick": 9264,
+            "tick": 11475,
             "header": "File names:                                                                     ",
             "footer": " Receiving XMODEM   [Esc] Cancel                    Blocks:       00016         "
           },
           {
             "key": 6512,
-            "tick": 9264,
+            "tick": 11475,
             "header": "File names:                                                                     ",
             "footer": " Receiving XMODEM   [Esc] Cancel                    Blocks:       00016         "
           },
           {
             "key": 8051,
-            "tick": 9264,
+            "tick": 11475,
             "header": "File names:                                                                     ",
             "footer": " Receiving XMODEM   [Esc] Cancel                    Blocks:       00016         "
           },
           {
             "key": 5236,
-            "tick": 9264,
+            "tick": 11475,
             "header": "File names:                                                                     ",
             "footer": " Receiving XMODEM   [Esc] Cancel                    Blocks:       00016         "
           },
           {
             "key": 33536,
-            "tick": 9428,
+            "tick": 11639,
             "header": "                                                                                ",
             "footer": "                                                                                "
           },
           {
             "key": 8051,
-            "tick": 9434,
+            "tick": 11645,
             "header": "           PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 9441,
+            "tick": 11652,
             "header": "           PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           }
@@ -765,144 +765,144 @@
           "empty_list_paste_attempt_observed": true
         },
         "errors": [],
-        "binary_sha256": "c0d6483427ed2b81d86a3c3243c3aa83d8af968c7ed8fef1a61fb34670085641",
+        "binary_sha256": "007280021f117def5448fde5a5a88730b7d781b84a532d47816c277a901540b5",
         "keys": "p1500 a-= p300 c p250 enter p200 enter p200 escape p200 s p250 a-r p250 escape p300 a-r p300 a-= c-pgup p500 escape p900 a-= p250 s p400 escape p300 a-r p300 a-= c-pgup p200 R E C V \\ T W O . B p100 I N enter p1200 a-= c-pgup p s t p9000 a-= p350 s p400 escape p300 r e a d y p600 a-x",
         "observed_keys": [
           {
             "key": 33536,
-            "tick": 9493,
+            "tick": 11685,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 9510,
+            "tick": 11702,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 8051,
-            "tick": 9514,
+            "tick": 11706,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 4864,
-            "tick": 9519,
+            "tick": 11711,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 9523,
+            "tick": 11715,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 4864,
-            "tick": 9529,
+            "tick": 11721,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 33536,
-            "tick": 9534,
+            "tick": 11726,
             "header": "File names:                                                                     ",
             "footer": " Download: XMODEM   [F2] Protocol   [Enter] Start   [Esc] Cancel                "
           },
           {
             "key": 34016,
-            "tick": 9534,
+            "tick": 11726,
             "header": "File names:                                                                     ",
             "footer": " Download: XMODEM   [F2] Protocol   [Enter] Start   [Esc] Cancel                "
           },
           {
             "key": 283,
-            "tick": 9543,
+            "tick": 11735,
             "header": "File names:                                                                     ",
             "footer": " Download: XMODEM   [F2] Protocol   [Enter] Start   [Esc] Cancel                "
           },
           {
             "key": 33536,
-            "tick": 9560,
+            "tick": 11752,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 8051,
-            "tick": 9565,
+            "tick": 11757,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 9572,
+            "tick": 11764,
             "header": "File nam   PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 4864,
-            "tick": 9577,
+            "tick": 11769,
             "header": "File names:                                                                     ",
             "footer": "                                                                                "
           },
           {
             "key": 33536,
-            "tick": 9583,
+            "tick": 11775,
             "header": "File names:                                                                     ",
             "footer": " Download: XMODEM   [F2] Protocol   [Enter] Start   [Esc] Cancel                "
           },
           {
             "key": 34016,
-            "tick": 9583,
+            "tick": 11775,
             "header": "File names:                                                                     ",
             "footer": " Download: XMODEM   [F2] Protocol   [Enter] Start   [Esc] Cancel                "
           },
           {
             "key": 33536,
-            "tick": 9611,
+            "tick": 11803,
             "header": "File names:                                                                     ",
             "footer": " Receiving XMODEM   [Esc] Cancel                    Blocks:       00016         "
           },
           {
             "key": 34016,
-            "tick": 9611,
+            "tick": 11803,
             "header": "File names:                                                                     ",
             "footer": " Receiving XMODEM   [Esc] Cancel                    Blocks:       00016         "
           },
           {
             "key": 6512,
-            "tick": 9611,
+            "tick": 11803,
             "header": "File names:                                                                     ",
             "footer": " Receiving XMODEM   [Esc] Cancel                    Blocks:       00016         "
           },
           {
             "key": 8051,
-            "tick": 9611,
+            "tick": 11803,
             "header": "File names:                                                                     ",
             "footer": " Receiving XMODEM   [Esc] Cancel                    Blocks:       00016         "
           },
           {
             "key": 5236,
-            "tick": 9611,
+            "tick": 11803,
             "header": "File names:                                                                     ",
             "footer": " Receiving XMODEM   [Esc] Cancel                    Blocks:       00016         "
           },
           {
             "key": 33536,
-            "tick": 9775,
+            "tick": 11967,
             "header": "                                                                                ",
             "footer": "                                                                                "
           },
           {
             "key": 8051,
-            "tick": 9782,
+            "tick": 11974,
             "header": "           PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           },
           {
             "key": 283,
-            "tick": 9789,
+            "tick": 11981,
             "header": "           PCPLUS  Filename Clipboard                                           ",
             "footer": "                                                                                "
           }
@@ -1102,7 +1102,7 @@
     "src/terminal/keyboard_data.asm": "05a64cd482cf50e2cc6d5eee18220b4b493cd4e7498aaa8adeb77b1ad1c56d1a",
     "src/terminal/line_edit.asm": "8d1201cb9e6174db02aa1eedc04b57a5df1f4d1b89fac7d0d18ca931200d7c31",
     "src/terminal/main.asm": "0b2342a47801cfc22c04a5a169b9afce1249f54f3849af99ddfb396b22689b1f",
-    "src/terminal/meta_actions.asm": "0dad150cd0ab18fb6497f6080871f763a3e1e0e413b394995373820712ce6655",
+    "src/terminal/meta_actions.asm": "373e5ba77e1a1cb0f90c7446d136d9dc876eee24bf56e1d9c67d808cd1ae7281",
     "src/terminal/modem_bridge.asm": "59c7ad22f397e9aac5acd302c9d49e5b68c3806d8d86e10d598c17cec9aa50e3",
     "src/terminal/modem_sender.asm": "82ec6ea7b4160e6b60a936ec5d4c2cc916116ecd755c41b5e984602fe9c9d53a",
     "src/terminal/monitor.asm": "1ddd0d2c442396c6776fd7f7ab5941f1a4dcd78345037821339c1aec06ad2993",
@@ -1111,7 +1111,7 @@
     "src/terminal/print_controller.asm": "e7af0782119e00d8563c214c1a469fd548f547f332f6c6e663dfe9594f792d92",
     "src/terminal/printer.asm": "70ac5cb8b90bc2d7a4ec1ee1a071a6c2f1a351e37ac2bbd49dc2e629674b629b",
     "src/terminal/program_actions.asm": "ca318033ced3e35427f3b09faf48be0c88a565731f8aefd3c0d6f4e6567c8bb8",
-    "src/terminal/redisplay.asm": "c1bf427946602d28a66b0439d9753bf992281275b01006d47a3c417c264745d1",
+    "src/terminal/redisplay.asm": "00d3e4f90c9cf26b4ea700d6be157c9f9ad682f66c9c47090112589085c5ffe1",
     "src/terminal/screen_print.asm": "b26ee7e09cbb66d7da311083b1c8c53e5fa6016e9c9f00e3ebb7238df2658f5a",
     "src/terminal/services.asm": "cfc5f50208990db802f79d4f809560618e5579ff0ca8b5c74501ba46975c1546",
     "src/terminal/setup_expand.asm": "7120447f8ea5b5a779437a9e215b6ec59054eff4540fc0848470e907942b5979",
@@ -1129,7 +1129,7 @@
     "src/terminal/transfer_sender_state.asm": "ca81106b44d8184e866db66b570981f23ba1a3465aee739f2713c34029479e15",
     "src/terminal/transfer_ui.asm": "bf1cbbde3ab6351788fe8c7e3d856e767d92501b22ecdfffbccb1509c0fea230",
     "src/terminal/translation.asm": "6ae4ae66fd6a6aeccb10dee806e28921667e50556f8232b4da7abb53aca40657",
-    "src/terminal/transport.asm": "c32f207af12711224a16c6891ea4009c4334092c716d391cb5e5cf0e8792ec73",
+    "src/terminal/transport.asm": "3c3d77882df668ee8c70710b270d34ee048dc37a1eb42835d9b8c01fedbe6230",
     "src/terminal/uart_data.asm": "4c37a129341e01667df80f17940791946667f4b0c081accd4e18230f29904789",
     "src/terminal/ui_screen_far.asm": "876b4b10ced4d03d4616c89e4861333c522d3747f2e15d01ef3a4413ad03d736",
     "src/terminal/upload_actions.asm": "512f26336ead890f022f463d86d555320f40cfd47eac508928588e407e5cbfb5",
@@ -1276,137 +1276,137 @@
     "standalone/record_clipboard_transfers.py": "a53151a27e2b0c358a72213489b4a32f0b10dfeaf21284e0f0e1704973ff9385"
   },
   "retained_artifacts": {
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/checks.json": "27c3fa777719dd296b79ec7110724f4046708ad939aa9fdb0d71a3c4ca9dfa2b",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/CLWATCH.COM": "843fb8ddae45f7ca4d1fa8b4f232c4c885a4fd5e021fd44fdab28771522936ed",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/CLWATCH.asm": "841a9a65807ca28529955f3ac1f29e87718c2c99327443d4514cf54c072924e3",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/CWATCH.BIN": "d63639f9cb4204c86840df657ee343e6a9ba5493b285920ef32b3a6e264fdd8a",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/KWATCH.BIN": "b3b6d296dc7a4c8a9ac89ebfbc3e3ea4c84a702a4b7a55d196880f1b35e01bda",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/KWATCH.COM": "458c8cd8c979c112adecca71eab8d99623b54e8c9eacdfc0a537bb1a6088f6a0",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/KWATCH.asm": "d9375bc70fb727d483696c393d52b7e71a30704438bf3c70b629a1a26cc6e84f",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/RECV/ONE.BIN": "61e61e6e5ff9ef4ca9d959c26fe4fbbcf12543e49dc470a40e417f494a04bdf3",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/SCREEN.BIN": "bbcbaee164da6794acd1e54c48a415da14c027c2a6fdb06ec44d1054e1e8e9fc",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/dosbox.conf": "d234d5cc130e4f134eb25ae37b451d86e28289a4ff16fd16779f6ef188aa2ec3",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/dosbox.log": "0e18188eba33f014fab8c23e6ccbee1f276b8cfa5dfe39eb7c4f28fb25ee0f4b",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/events.json": "1cd568357ea47298470548ac53e95e199c8e82ece2cdf020aecdf96c76a74d29",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/key-events.json": "57f1a6001a3675857c3a50f133231e5e85205a11bf76985831a7c0cb566afa03",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/peer.bin": "efdb10bb366dfd6c596f3a0896430651e597d27b923abbe395b15ff4edd4173e",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/result.json": "8b40940fc32939482f834b8ef3e92995279f8207c80cd6ed41b6cdf00fa60762",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/selections.json": "ff8c0abf2e228500324a99f59b63a1fb2364c68ce6d665d9fed6768a1533c0bf",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-single/serial.bin": "8ea0a10a2583a5e50d05a1bb66da6b345546cf5511060904ac56f1c9fe56db4a",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/CLWATCH.COM": "843fb8ddae45f7ca4d1fa8b4f232c4c885a4fd5e021fd44fdab28771522936ed",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/CLWATCH.asm": "841a9a65807ca28529955f3ac1f29e87718c2c99327443d4514cf54c072924e3",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/CWATCH.BIN": "d63639f9cb4204c86840df657ee343e6a9ba5493b285920ef32b3a6e264fdd8a",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/KWATCH.BIN": "07260771cc730c473881d36de457f5f8b6a1f2fc13fe1eb851b6742e71cc4090",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/KWATCH.COM": "458c8cd8c979c112adecca71eab8d99623b54e8c9eacdfc0a537bb1a6088f6a0",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/KWATCH.asm": "d9375bc70fb727d483696c393d52b7e71a30704438bf3c70b629a1a26cc6e84f",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/SCREEN.BIN": "bbcbaee164da6794acd1e54c48a415da14c027c2a6fdb06ec44d1054e1e8e9fc",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/SEND/ONE.BIN": "61e61e6e5ff9ef4ca9d959c26fe4fbbcf12543e49dc470a40e417f494a04bdf3",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/dosbox.conf": "671ccb3667a4fd706086218622c789a3bb16d01f58d53ffa03d76bf70b76e9ec",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/dosbox.log": "dfd1324165fdb557009922f9da8618968652173318008a9b82b51dd9fc291245",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/events.json": "78006aa7291920acdbf86a5ae0fc65ee3a4016e34a243f5d14192fb4c9729bc4",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/key-events.json": "81d93b77bdc67b47c42cc2fc853f9c6b99131c16f3abe8d68000be46c8259f98",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/peer.bin": "6e1b75930d858f89025690114cfccab413fdb9cc36601de28590cc5b4ea9b6d5",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/result.json": "1afac2907af63690673d75e9532dfe20d556bfbe4587da06309c8bb1d88b8af3",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/selections.json": "ff8c0abf2e228500324a99f59b63a1fb2364c68ce6d665d9fed6768a1533c0bf",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-tx-single/serial.bin": "045092764b112b30dd8ed357bdcadd3bbdbefcd2ff77504793a1725fd0db980d",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/CLWATCH.COM": "843fb8ddae45f7ca4d1fa8b4f232c4c885a4fd5e021fd44fdab28771522936ed",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/CLWATCH.asm": "841a9a65807ca28529955f3ac1f29e87718c2c99327443d4514cf54c072924e3",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/CWATCH.BIN": "fbe75db7a88ccd7df26be10d987e1878166dd5e12df7a5345030cad9f79cdf76",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/KWATCH.BIN": "e0cbd0d218f3d1da2bf3d1d5858eb8490273fc9350d8d96b95a6890b0b893623",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/KWATCH.COM": "458c8cd8c979c112adecca71eab8d99623b54e8c9eacdfc0a537bb1a6088f6a0",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/KWATCH.asm": "d9375bc70fb727d483696c393d52b7e71a30704438bf3c70b629a1a26cc6e84f",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/RECV/ONE.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/RECV/TWO.BIN": "720a73240195c6d76727dee8599bf30853a8ea0b489e25c078a95bba0aa38194",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/SCREEN.BIN": "bbcbaee164da6794acd1e54c48a415da14c027c2a6fdb06ec44d1054e1e8e9fc",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/dosbox.conf": "f47cd775ba0d4ec91b75096c6e56304e6c7aeea4c006f0c8007f77fb0259cac7",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/dosbox.log": "5e1c8c018ecfc269c6a676725ca3d77903b9ec7f9c8e8787dbac9e7c3a5d1e36",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/events.json": "e139d661d8d481d034c84b6949728f3aa5824c0a5700c95881c133b849e481eb",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/key-events.json": "03497bf4f792c1e777f7d975f4672ce1cb3651b6238028a37071fcc54c264896",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/peer.bin": "8a449c14985dd3ed058908d930c0c7ead0adbce6064e669a8d6e6be56145be3e",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/result.json": "a4e645fd60cc2c4f9d8315ba94e45cf98d3ce888feadbbcf665c5279b78509e6",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/selections.json": "8bc6c4ed24e02e539d67bafc98cb91c11b1caf377611b6400d67255cd6dbacd5",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-rx-tagged/serial.bin": "5f7a10a61488345e7aa54e22d4e9b79bff5ac43d60c9ad3f2e55742aa9af6bf0",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/CLWATCH.COM": "843fb8ddae45f7ca4d1fa8b4f232c4c885a4fd5e021fd44fdab28771522936ed",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/CLWATCH.asm": "841a9a65807ca28529955f3ac1f29e87718c2c99327443d4514cf54c072924e3",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/CWATCH.BIN": "0f479c8cd3e4b0a72925c422c6b67ae30cd20402e10c902b93eb3a636405f4f2",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/KWATCH.BIN": "ce3c629011a2f411c9a0593957b4e16fd7c66e7d570df6ed928ce4797a2fd741",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/KWATCH.COM": "458c8cd8c979c112adecca71eab8d99623b54e8c9eacdfc0a537bb1a6088f6a0",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/KWATCH.asm": "d9375bc70fb727d483696c393d52b7e71a30704438bf3c70b629a1a26cc6e84f",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/SCREEN.BIN": "bbcbaee164da6794acd1e54c48a415da14c027c2a6fdb06ec44d1054e1e8e9fc",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/SEND/ONE.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/SEND/TWO.BIN": "720a73240195c6d76727dee8599bf30853a8ea0b489e25c078a95bba0aa38194",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/dosbox.conf": "e0530eb8bc688fb087544658aa94ccdb136c6b0f7eb79134f242817354afc9d7",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/dosbox.log": "962248d0e94e0564cb67dac5f24165fd0d30de135e624384078196e0a5047ad2",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/events.json": "4fbe896c35117614189ad4a80fd4b003d017b2367a3312f985f430df78238647",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/key-events.json": "806901797e94c4a9654a176952c8fe2fad8bd5afabe7ca7e373eb8274ad522f0",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/peer.bin": "b5c4c7f315aec8db96e67a9964ec3b5921b5c5e524ccaefd8c4e6b74b68061f6",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/result.json": "1213bbde2e5839a4e2bdaeaee92354f047afc0418d5658f2b39750ac6378f83d",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/selections.json": "bceff797e7f3db5467bb1350507bedbbcf1edf8fe4bc36440675e721da422481",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/ymodem-tx-all/serial.bin": "d04a7e037cdc2e6c7f20f5a722b374edf29f8f089f1911e520ee31b7bd61ea5e",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/CLWATCH.COM": "843fb8ddae45f7ca4d1fa8b4f232c4c885a4fd5e021fd44fdab28771522936ed",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/CLWATCH.asm": "841a9a65807ca28529955f3ac1f29e87718c2c99327443d4514cf54c072924e3",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/CWATCH.BIN": "d318319bc4a60964b27b45753669ef5dfb7f016222d402863866b180cfe3a32d",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/KWATCH.BIN": "84c09caa67f82eef026558ade8f7d597aac788dae9ec7dcac9eb085d1279740d",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/KWATCH.COM": "458c8cd8c979c112adecca71eab8d99623b54e8c9eacdfc0a537bb1a6088f6a0",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/KWATCH.asm": "d9375bc70fb727d483696c393d52b7e71a30704438bf3c70b629a1a26cc6e84f",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/RECV/TWO.BIN": "8e9ab85ac379e1cc762a46c8b45081ae3e08898449bc439af15c3d1f95549b14",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/SCREEN.BIN": "bbcbaee164da6794acd1e54c48a415da14c027c2a6fdb06ec44d1054e1e8e9fc",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/dosbox.conf": "2bf15ba7616a1f3520bd8c7c072ab9581c0830b5f0020bcdc7543346abb1573d",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/dosbox.log": "99cd7a1edd668d59c0a56eb4f5c06f9778a19f599b4437af3cf10803538a0932",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/events.json": "4df7d14661ab2a33fe96041b6c8beae5f8f1b026550366a1ddac29ed2d68e017",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/key-events.json": "f1c7a77f3a3e360871a14503057e2a2d0f511824293538b17f3dfc33276a9ecc",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/peer.bin": "da159e84726371b32ff7f84454e2e3b8be9f7c3dd4c9f67e9acf40a4003efe6d",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/result.json": "b03e1ebf8df7086d465dd3c6bbda8f72aafce1632588faf05a0221e87b399c07",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/selections.json": "254bb2a9485043991b134317829915ad38917ff8c5e836c19486da32922ea498",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-stale/serial.bin": "e8eb80e036dd5757dbd0ae331ff1922288edea6b880b0047e7f3ebda6f2327f6",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/CLWATCH.COM": "843fb8ddae45f7ca4d1fa8b4f232c4c885a4fd5e021fd44fdab28771522936ed",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/CLWATCH.asm": "841a9a65807ca28529955f3ac1f29e87718c2c99327443d4514cf54c072924e3",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/CWATCH.BIN": "4077d75864758e4ae5950a8b248e4d060bc43237a82a5f9a49a409b306aa34fa",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/KWATCH.BIN": "71fa62daeb307b2a653b08b75db99d3d5218406c76dffae14c1f1af0d5f61c1c",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/KWATCH.COM": "458c8cd8c979c112adecca71eab8d99623b54e8c9eacdfc0a537bb1a6088f6a0",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/KWATCH.asm": "d9375bc70fb727d483696c393d52b7e71a30704438bf3c70b629a1a26cc6e84f",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/RECV/TWO.BIN": "8e9ab85ac379e1cc762a46c8b45081ae3e08898449bc439af15c3d1f95549b14",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/SCREEN.BIN": "bbcbaee164da6794acd1e54c48a415da14c027c2a6fdb06ec44d1054e1e8e9fc",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/dosbox.conf": "58303d0f953d3d4fc6089cce17097db13a3280acdc6ff1c70c886882382c5a05",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/dosbox.log": "e0a1d4185eb9798a9d5d64e12ceb534407e34cbca8dd72336753c0a7ece2df87",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/events.json": "6d9cb2f09055e98d4a3578e22af783552505524fc28f7d1bed6f9f3e99dde510",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/key-events.json": "73f947623c8bc4f5614f4e804dd960db471a9807dee946e17edcd0340d0617cd",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/peer.bin": "545bf5b70fa8fe2dbd3bfa81f6f74ae8ed571e7b02043a3f3e45433f615ce0c9",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/result.json": "73ccdd520e613c87bb47638ed5bcc72b6bda100f06e969bec91713725c75b0f4",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/selections.json": "c745caed964f11e3041fc21bd91b1dec60f2af83119ca5dc9d2f410a48216e24",
-    "build/clipboard-transfer-dos/prompts-menu-c0d6/xmodem-rx-prompt-cancel/serial.bin": "3ef9e23570c025b2424d303d9e0469c47e9b15d7dd66300ef8d8ae6fb8d36400",
-    "build/terminal/manifest.json": "253971cb8eb6ef653ebc11ffcb57139d7741bfb67e0e7bd636e220863217c9b8",
-    "build/terminal/setup-profile-regression.json": "d8e3861e4d01bfdb81bc73ef87d65fbed24699f640efc5aabe69b3206a487bb2"
+    "build/clipboard-transfer-dos/prompts-menu-0072/checks.json": "ce15aa3786bf445e37f2b5677068b55e4d841d9733a7f2010b75d36e9381eea6",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/CLWATCH.COM": "843fb8ddae45f7ca4d1fa8b4f232c4c885a4fd5e021fd44fdab28771522936ed",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/CLWATCH.asm": "841a9a65807ca28529955f3ac1f29e87718c2c99327443d4514cf54c072924e3",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/CWATCH.BIN": "d63639f9cb4204c86840df657ee343e6a9ba5493b285920ef32b3a6e264fdd8a",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/KWATCH.BIN": "1abcd6970a134d36c23ad2236a77f8a4086ce9cb1399a01ab01ee9712e52c277",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/KWATCH.COM": "458c8cd8c979c112adecca71eab8d99623b54e8c9eacdfc0a537bb1a6088f6a0",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/KWATCH.asm": "d9375bc70fb727d483696c393d52b7e71a30704438bf3c70b629a1a26cc6e84f",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/RECV/ONE.BIN": "61e61e6e5ff9ef4ca9d959c26fe4fbbcf12543e49dc470a40e417f494a04bdf3",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/SCREEN.BIN": "bbcbaee164da6794acd1e54c48a415da14c027c2a6fdb06ec44d1054e1e8e9fc",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/dosbox.conf": "9369a11983c3bda8d43e73ac5e05b2d361ea3e5fdf1d0ac874d4df04e95137cd",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/dosbox.log": "aad47dbc3a0f2b19c0ce5ffc4005788abf93ff87345c8e8fb1943e312c6ba6b4",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/events.json": "e3f12ddff84fd7c38a96190fc440c3b5f4dca7578fa596d432bc9e44e287cdf5",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/key-events.json": "a738195d2a9185bd1411ab7178e4b45a36227d63be6f0458be64749793517ff6",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/peer.bin": "efdb10bb366dfd6c596f3a0896430651e597d27b923abbe395b15ff4edd4173e",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/result.json": "39856fb2490fbf220910be839a465a1bc06274efa2f4154bd96854ad22e5f1a7",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/selections.json": "ff8c0abf2e228500324a99f59b63a1fb2364c68ce6d665d9fed6768a1533c0bf",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-single/serial.bin": "8ea0a10a2583a5e50d05a1bb66da6b345546cf5511060904ac56f1c9fe56db4a",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/CLWATCH.COM": "843fb8ddae45f7ca4d1fa8b4f232c4c885a4fd5e021fd44fdab28771522936ed",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/CLWATCH.asm": "841a9a65807ca28529955f3ac1f29e87718c2c99327443d4514cf54c072924e3",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/CWATCH.BIN": "d63639f9cb4204c86840df657ee343e6a9ba5493b285920ef32b3a6e264fdd8a",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/KWATCH.BIN": "3e48a82ee40610fe1ca869a3129acad61f49ccfc16088b9750ec6a0d30381a4a",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/KWATCH.COM": "458c8cd8c979c112adecca71eab8d99623b54e8c9eacdfc0a537bb1a6088f6a0",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/KWATCH.asm": "d9375bc70fb727d483696c393d52b7e71a30704438bf3c70b629a1a26cc6e84f",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/SCREEN.BIN": "bbcbaee164da6794acd1e54c48a415da14c027c2a6fdb06ec44d1054e1e8e9fc",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/SEND/ONE.BIN": "61e61e6e5ff9ef4ca9d959c26fe4fbbcf12543e49dc470a40e417f494a04bdf3",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/dosbox.conf": "6e58b75f3680f77a85fd10b0c0a355ddf9e7b8d570825fbe1387d7a7379153cc",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/dosbox.log": "3de5b4a105d885c1ed40769cde6323213451eeaa03fb7bb93fd6db6550981579",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/events.json": "b6d9c82c39911bc03f0914f0053c51611d6c977cc47b8de8ebe0816837253fc2",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/key-events.json": "becdd81a4fce2e9ebf980a071cf7c0b9165ab8f882c7b2464cda98b51c37c022",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/peer.bin": "6e1b75930d858f89025690114cfccab413fdb9cc36601de28590cc5b4ea9b6d5",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/result.json": "3b155d3edca6bd371863f55ad3fd9cf3c12714add96a3553c35460390239accf",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/selections.json": "ff8c0abf2e228500324a99f59b63a1fb2364c68ce6d665d9fed6768a1533c0bf",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-tx-single/serial.bin": "045092764b112b30dd8ed357bdcadd3bbdbefcd2ff77504793a1725fd0db980d",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/CLWATCH.COM": "843fb8ddae45f7ca4d1fa8b4f232c4c885a4fd5e021fd44fdab28771522936ed",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/CLWATCH.asm": "841a9a65807ca28529955f3ac1f29e87718c2c99327443d4514cf54c072924e3",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/CWATCH.BIN": "fbe75db7a88ccd7df26be10d987e1878166dd5e12df7a5345030cad9f79cdf76",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/KWATCH.BIN": "197832909045e3629454ca30417e658a7404a04cab5fdab6a74ef567b65005e6",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/KWATCH.COM": "458c8cd8c979c112adecca71eab8d99623b54e8c9eacdfc0a537bb1a6088f6a0",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/KWATCH.asm": "d9375bc70fb727d483696c393d52b7e71a30704438bf3c70b629a1a26cc6e84f",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/RECV/ONE.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/RECV/TWO.BIN": "720a73240195c6d76727dee8599bf30853a8ea0b489e25c078a95bba0aa38194",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/SCREEN.BIN": "bbcbaee164da6794acd1e54c48a415da14c027c2a6fdb06ec44d1054e1e8e9fc",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/dosbox.conf": "5d0f626126047f50c6269aafb1021489de7b10fed54aa64fd1ce2aa4ef00dd8c",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/dosbox.log": "137a372388e829e7a285a4ab1b0064034667810958fb48e987e53332d3cea7e1",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/events.json": "12b3cdbbccd38bedc74d1c61a16f342702fb81b63dc9a7d596bec498245e4085",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/key-events.json": "7f973128facdf87c500a2df917b3ecc81c6031565383a786a77e46c37d8e24c5",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/peer.bin": "8a449c14985dd3ed058908d930c0c7ead0adbce6064e669a8d6e6be56145be3e",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/result.json": "814f20513d52f0f38e132ad96572872faff468e31589ff0db7ad0eb472f6d6d6",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/selections.json": "8bc6c4ed24e02e539d67bafc98cb91c11b1caf377611b6400d67255cd6dbacd5",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-rx-tagged/serial.bin": "5f7a10a61488345e7aa54e22d4e9b79bff5ac43d60c9ad3f2e55742aa9af6bf0",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/CLWATCH.COM": "843fb8ddae45f7ca4d1fa8b4f232c4c885a4fd5e021fd44fdab28771522936ed",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/CLWATCH.asm": "841a9a65807ca28529955f3ac1f29e87718c2c99327443d4514cf54c072924e3",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/CWATCH.BIN": "0f479c8cd3e4b0a72925c422c6b67ae30cd20402e10c902b93eb3a636405f4f2",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/KWATCH.BIN": "deda857be19d31e1a0de96cd1c4135c210ed19706bc4654eade8703beab69bfe",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/KWATCH.COM": "458c8cd8c979c112adecca71eab8d99623b54e8c9eacdfc0a537bb1a6088f6a0",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/KWATCH.asm": "d9375bc70fb727d483696c393d52b7e71a30704438bf3c70b629a1a26cc6e84f",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/SCREEN.BIN": "bbcbaee164da6794acd1e54c48a415da14c027c2a6fdb06ec44d1054e1e8e9fc",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/SEND/ONE.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/SEND/TWO.BIN": "720a73240195c6d76727dee8599bf30853a8ea0b489e25c078a95bba0aa38194",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/dosbox.conf": "f22ec2388f918c8ff3f542768524cfc19f4038dfb57f8b1f0f6340496724caae",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/dosbox.log": "65bbdbee9cee55e41788e24d07f88d886501a09794ac1ce6ecb68143b6999706",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/events.json": "c4370a44b5e9b3b18e7f78a6469006d2298d82f96c3667934e0152584e12316e",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/key-events.json": "43da3a881d85f8402ca999e9d49652e5882a38f88d06737fb3c8f424bb342fc6",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/peer.bin": "b5c4c7f315aec8db96e67a9964ec3b5921b5c5e524ccaefd8c4e6b74b68061f6",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/result.json": "96b65815b6030bf65404e4412973672fdbcfd7c3791bbc041b41c8808e0c870a",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/selections.json": "bceff797e7f3db5467bb1350507bedbbcf1edf8fe4bc36440675e721da422481",
+    "build/clipboard-transfer-dos/prompts-menu-0072/ymodem-tx-all/serial.bin": "d04a7e037cdc2e6c7f20f5a722b374edf29f8f089f1911e520ee31b7bd61ea5e",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/CLWATCH.COM": "843fb8ddae45f7ca4d1fa8b4f232c4c885a4fd5e021fd44fdab28771522936ed",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/CLWATCH.asm": "841a9a65807ca28529955f3ac1f29e87718c2c99327443d4514cf54c072924e3",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/CWATCH.BIN": "d318319bc4a60964b27b45753669ef5dfb7f016222d402863866b180cfe3a32d",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/KWATCH.BIN": "8e116621e904f017c916a32d07640d350d5b4ddd6965f1fbae13704e2980dcda",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/KWATCH.COM": "458c8cd8c979c112adecca71eab8d99623b54e8c9eacdfc0a537bb1a6088f6a0",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/KWATCH.asm": "d9375bc70fb727d483696c393d52b7e71a30704438bf3c70b629a1a26cc6e84f",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/RECV/TWO.BIN": "8e9ab85ac379e1cc762a46c8b45081ae3e08898449bc439af15c3d1f95549b14",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/SCREEN.BIN": "bbcbaee164da6794acd1e54c48a415da14c027c2a6fdb06ec44d1054e1e8e9fc",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/dosbox.conf": "a6eade0746eb353e19580898daf1cda39f90f670a4a2fd55e30f18ca600566e2",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/dosbox.log": "879b98ed8c504eeebf5bb1773c21f68e63b6876378a99755ccd4a6f80c1d230b",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/events.json": "4b86f99238b05b760cb7c7c41f5af5acaf8002c74e0864470d804393a1a6fb0e",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/key-events.json": "6f2c39bd24c4e469c665256ebedd5822782e8c2ad5d071386c8d12f5de2a589a",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/peer.bin": "da159e84726371b32ff7f84454e2e3b8be9f7c3dd4c9f67e9acf40a4003efe6d",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/result.json": "03e5d4c75b7b635ece96b8f7c710412f76db6d7db32fc9154c95123903adaa9c",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/selections.json": "254bb2a9485043991b134317829915ad38917ff8c5e836c19486da32922ea498",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-stale/serial.bin": "e8eb80e036dd5757dbd0ae331ff1922288edea6b880b0047e7f3ebda6f2327f6",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/CLWATCH.COM": "843fb8ddae45f7ca4d1fa8b4f232c4c885a4fd5e021fd44fdab28771522936ed",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/CLWATCH.asm": "841a9a65807ca28529955f3ac1f29e87718c2c99327443d4514cf54c072924e3",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/CWATCH.BIN": "4077d75864758e4ae5950a8b248e4d060bc43237a82a5f9a49a409b306aa34fa",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/KWATCH.BIN": "05df14bf709cf6e08f5664a5e1f03a786220499e864bbb893c94954cc72c4686",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/KWATCH.COM": "458c8cd8c979c112adecca71eab8d99623b54e8c9eacdfc0a537bb1a6088f6a0",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/KWATCH.asm": "d9375bc70fb727d483696c393d52b7e71a30704438bf3c70b629a1a26cc6e84f",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/RECV/TWO.BIN": "8e9ab85ac379e1cc762a46c8b45081ae3e08898449bc439af15c3d1f95549b14",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/SCREEN.BIN": "bbcbaee164da6794acd1e54c48a415da14c027c2a6fdb06ec44d1054e1e8e9fc",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/SNAP.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/dosbox.conf": "248afe0e4f0e942ebd84f9d037eb22941a486ba0e75b44b1c780877de3e22061",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/dosbox.log": "f1241615c512b20b986f2a3413402662d9e5e1940dc7842dc314510d48f13786",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/events.json": "32db795fbc1c09bc28e37e8d2c965f7916fcd828400b1b3272952ee59d3674a5",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/key-events.json": "83ae8a7d9697455b9edbdea468ad19e9244c393b03531f8a9a23ca6497321536",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/peer.bin": "545bf5b70fa8fe2dbd3bfa81f6f74ae8ed571e7b02043a3f3e45433f615ce0c9",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/result.json": "38904733145850d75c4f6be17768d26e737c754d897f8ab2be0761e6eab8a788",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/selections.json": "c745caed964f11e3041fc21bd91b1dec60f2af83119ca5dc9d2f410a48216e24",
+    "build/clipboard-transfer-dos/prompts-menu-0072/xmodem-rx-prompt-cancel/serial.bin": "3ef9e23570c025b2424d303d9e0469c47e9b15d7dd66300ef8d8ae6fb8d36400",
+    "build/terminal/manifest.json": "df1f02ebf1799d9043d6672d2795e68797a11379c93ef792ad58143de450d0b5",
+    "build/terminal/setup-profile-regression.json": "62d8d9915b2418e458fed61d1cc624f109be0dd113b665b6ff98e77cd3e69a5f"
   },
   "terminal_regression": {
     "commands": 77,
@@ -1415,7 +1415,7 @@
   "source_rebuild": {
     "report": "docs/validation/application-components-source-build.json",
     "output_count": 64,
-    "source_snapshot_sha256": "0ac93bb25528b763e5215189f371ce4391b58a9bb63a7e8527d24dd5a039999f"
+    "source_snapshot_sha256": "8b67ceb2b911a01d5541ba6e16b5054b693a137c97efa44de99e87a2d05834d5"
   },
   "scope": "Six production DOS clipboard filename/prompt/XMODEM/YMODEM workflows. Independent strict framing peers and BIOS key/video observers; exact received files, unchanged upload sources, post-transfer clipboard reuse, stale-name and canceled-local-prompt recovery. These are controlled peers, not stock BBS or physical RS-232 Wi-Fi modem validation. Full F11 and all whole-application gates remain open."
 }

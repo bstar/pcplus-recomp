@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "0ac93bb25528b763e5215189f371ce4391b58a9bb63a7e8527d24dd5a039999f",
-  "source_file_count": 1404,
+  "source_snapshot_sha256": "8b67ceb2b911a01d5541ba6e16b5054b693a137c97efa44de99e87a2d05834d5",
+  "source_file_count": 1415,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,113 +16,113 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "7c446de51a1ccdfb6f88cf2cbdbccbfa9d0db6d6ee8db226f18db13d2005bd33",
+  "build_log_sha256": "2e448603657f98c771d8760f1dee73c13fbffb40c866aaccb627306c69523ce1",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.x2xMu2/pcplus-source-proof-u_hedscu/checkout",
+  "source_checkout": "/tmp/nix-shell.6HceXl/pcplus-source-proof-vmwp7bgs/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
   "scope": "Source-only interactive DOS terminal with imported keyboard/action settings, directory UI, recovered line/character editing, maintained current-profile RIS, bounded process handoff, retained far shadow/history and live checked XMODEM receive/send and maintained CRC YMODEM batch ownership; full PCPlus application remains incomplete.",
-  "binary_sha256": "c0d6483427ed2b81d86a3c3243c3aa83d8af968c7ed8fef1a61fb34670085641",
+  "binary_sha256": "007280021f117def5448fde5a5a88730b7d781b84a532d47816c277a901540b5",
   "matches_workspace_binary": true,
   "matches_workspace_manifest": true,
   "manifest": {
     "kind": "source-only-interactive-dos-terminal",
-    "binary_sha256": "c0d6483427ed2b81d86a3c3243c3aa83d8af968c7ed8fef1a61fb34670085641",
-    "data_stack_bytes": 64176,
+    "binary_sha256": "007280021f117def5448fde5a5a88730b7d781b84a532d47816c277a901540b5",
+    "data_stack_bytes": 64192,
     "memory_layout": {
-      "near_bytes": 64176,
-      "near_spare_bytes": 1360,
-      "near_relative_segment": 5750,
-      "far_relative_segment": 15074,
+      "near_bytes": 64192,
+      "near_spare_bytes": 1344,
+      "near_relative_segment": 5762,
+      "far_relative_segment": 15087,
       "shadow_offset": 0,
       "history_offset": 0,
       "far_bytes": 71192,
-      "history_relative_segment": 15586,
+      "history_relative_segment": 15599,
       "history_bytes": 63000,
-      "far_end_linear": 312376,
-      "stack_end_linear": 156176,
-      "loaded_module_bytes": 124735,
-      "minimum_allocated_module_bytes": 312384,
-      "retained_parent_paragraphs": 19540,
+      "far_end_linear": 312584,
+      "stack_end_linear": 156384,
+      "loaded_module_bytes": 124943,
+      "minimum_allocated_module_bytes": 312592,
+      "retained_parent_paragraphs": 19553,
       "far_pointer_relocations_verified": true,
-      "snapshot_relative_segment": 11011,
+      "snapshot_relative_segment": 11024,
       "snapshot_image_offset": 63008,
       "snapshot_bytes": 2000,
-      "snapshot_end_linear": 241184,
+      "snapshot_end_linear": 241392,
       "ui_screen_buffers": {
         "browser_screen": {
-          "relative_segment": 9761,
+          "relative_segment": 9774,
           "offset": 0,
           "bytes": 4000,
-          "start_linear": 156176,
-          "end_linear": 160176
+          "start_linear": 156384,
+          "end_linear": 160384
         },
         "ed_screen": {
-          "relative_segment": 9761,
+          "relative_segment": 9774,
           "offset": 4000,
           "bytes": 4000,
-          "start_linear": 160176,
-          "end_linear": 164176
+          "start_linear": 160384,
+          "end_linear": 164384
         },
         "program_screen": {
-          "relative_segment": 9761,
+          "relative_segment": 9774,
           "offset": 8000,
           "bytes": 4000,
-          "start_linear": 164176,
-          "end_linear": 168176
+          "start_linear": 164384,
+          "end_linear": 168384
         },
         "redisplay_live": {
-          "relative_segment": 9761,
+          "relative_segment": 9774,
           "offset": 12000,
           "bytes": 4000,
-          "start_linear": 168176,
-          "end_linear": 172176
+          "start_linear": 168384,
+          "end_linear": 172384
         },
         "redisplay_view": {
-          "relative_segment": 9761,
+          "relative_segment": 9774,
           "offset": 16000,
           "bytes": 4000,
-          "start_linear": 172176,
-          "end_linear": 176176
+          "start_linear": 172384,
+          "end_linear": 176384
         }
       },
       "far_ui_storage_bytes": 20000,
       "redisplay_snapshot_bytes": 63000,
-      "redisplay_snapshot_end_linear": 239176,
+      "redisplay_snapshot_end_linear": 239384,
       "controller_bridge_pairs_verified": 22,
       "modem_bridge_pairs_verified": 23,
       "command_menu_far_code_verified": true,
       "configuration_bridge_pairs_verified": 36,
       "redisplay_bridge_pairs_verified": 4,
-      "resident_code_bytes": 64796,
-      "resident_code_spare_bytes": 740,
+      "resident_code_bytes": 64932,
+      "resident_code_spare_bytes": 604,
       "code_segments": [
         {
           "name": "_TEXT",
           "kind": "CODE",
           "relative_segment": 0,
           "offset": 0,
-          "bytes": 64796
+          "bytes": 64932
         },
         {
           "name": "CONFIG_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4050,
+          "relative_segment": 4059,
           "offset": 0,
-          "bytes": 24241
+          "bytes": 24296
         },
         {
           "name": "MODEM_CODE",
           "kind": "FARCODE",
-          "relative_segment": 5566,
+          "relative_segment": 5578,
           "offset": 0,
           "bytes": 1483
         },
         {
           "name": "PRINT_CODE",
           "kind": "FARCODE",
-          "relative_segment": 5659,
+          "relative_segment": 5671,
           "offset": 0,
           "bytes": 1449
         }
@@ -257,7 +257,7 @@
       "src/terminal/keyboard_data.asm": "05a64cd482cf50e2cc6d5eee18220b4b493cd4e7498aaa8adeb77b1ad1c56d1a",
       "src/terminal/line_edit.asm": "8d1201cb9e6174db02aa1eedc04b57a5df1f4d1b89fac7d0d18ca931200d7c31",
       "src/terminal/main.asm": "0b2342a47801cfc22c04a5a169b9afce1249f54f3849af99ddfb396b22689b1f",
-      "src/terminal/meta_actions.asm": "0dad150cd0ab18fb6497f6080871f763a3e1e0e413b394995373820712ce6655",
+      "src/terminal/meta_actions.asm": "373e5ba77e1a1cb0f90c7446d136d9dc876eee24bf56e1d9c67d808cd1ae7281",
       "src/terminal/modem_bridge.asm": "59c7ad22f397e9aac5acd302c9d49e5b68c3806d8d86e10d598c17cec9aa50e3",
       "src/terminal/modem_sender.asm": "82ec6ea7b4160e6b60a936ec5d4c2cc916116ecd755c41b5e984602fe9c9d53a",
       "src/terminal/monitor.asm": "1ddd0d2c442396c6776fd7f7ab5941f1a4dcd78345037821339c1aec06ad2993",
@@ -266,7 +266,7 @@
       "src/terminal/print_controller.asm": "e7af0782119e00d8563c214c1a469fd548f547f332f6c6e663dfe9594f792d92",
       "src/terminal/printer.asm": "70ac5cb8b90bc2d7a4ec1ee1a071a6c2f1a351e37ac2bbd49dc2e629674b629b",
       "src/terminal/program_actions.asm": "ca318033ced3e35427f3b09faf48be0c88a565731f8aefd3c0d6f4e6567c8bb8",
-      "src/terminal/redisplay.asm": "c1bf427946602d28a66b0439d9753bf992281275b01006d47a3c417c264745d1",
+      "src/terminal/redisplay.asm": "00d3e4f90c9cf26b4ea700d6be157c9f9ad682f66c9c47090112589085c5ffe1",
       "src/terminal/screen_print.asm": "b26ee7e09cbb66d7da311083b1c8c53e5fa6016e9c9f00e3ebb7238df2658f5a",
       "src/terminal/services.asm": "cfc5f50208990db802f79d4f809560618e5579ff0ca8b5c74501ba46975c1546",
       "src/terminal/setup_expand.asm": "7120447f8ea5b5a779437a9e215b6ec59054eff4540fc0848470e907942b5979",
@@ -284,7 +284,7 @@
       "src/terminal/transfer_sender_state.asm": "ca81106b44d8184e866db66b570981f23ba1a3465aee739f2713c34029479e15",
       "src/terminal/transfer_ui.asm": "bf1cbbde3ab6351788fe8c7e3d856e767d92501b22ecdfffbccb1509c0fea230",
       "src/terminal/translation.asm": "6ae4ae66fd6a6aeccb10dee806e28921667e50556f8232b4da7abb53aca40657",
-      "src/terminal/transport.asm": "c32f207af12711224a16c6891ea4009c4334092c716d391cb5e5cf0e8792ec73",
+      "src/terminal/transport.asm": "3c3d77882df668ee8c70710b270d34ee048dc37a1eb42835d9b8c01fedbe6230",
       "src/terminal/uart_data.asm": "4c37a129341e01667df80f17940791946667f4b0c081accd4e18230f29904789",
       "src/terminal/ui_screen_far.asm": "876b4b10ced4d03d4616c89e4861333c522d3747f2e15d01ef3a4413ad03d736",
       "src/terminal/upload_actions.asm": "512f26336ead890f022f463d86d555320f40cfd47eac508928588e407e5cbfb5",
@@ -444,7 +444,8 @@
       "AltR receives ordinary XMODEM CRC/checksum128/1024 using the real UART and checked staged DOS storage. HARD/NONE only; SOFT rejects before staging. FinalACK follows checked installation. AltS uses the native ordinary sender with checked read-only DOS source files and automatic1K blocks; only actual ACKs advance maintained progress. F2 inside the transfer prompt selects maintained CRC YMODEM batch transfer with checked per-file ownership and exact declared lengths. Window/streaming/other protocols, full transfer settings/UI and physical peers remain unfinished.",
       "CtrlPgUp opens a maintained63000-byte frozen history viewer in80x25 BIOS mode3/page0 with local line/page/Home/End navigation, ASCII case-insensitive incremental search/F3 and Escape return to the updated live screen. UART/parser/history/capture/replies continue, with frame swaps at top-level receive/idle and64 search candidates per turn. W appends the frozen snapshot through a fourth checked file owner, expanding CR to CRLF in128-source-byte foreground chunks. Append/create, short writes, cancellation, close ambiguity and DOS child inheritance are checked. Alt-= opens a maintained filename clipboard and C enters it from redisplay. The15-entry list supports bounded extraction, add/edit/delete/purge, tags, runtime decimal separator and one/all/tagged paste. Whole-packet TX admission requires an empty queue; cancellation removes only the unsent prefix and preserves later parser replies. Single removal waits for actual UART acceptance, and connection queue resets retain the entry as interrupted. PRM04EA imports a validated0..255 separator through the44-byte settings plan; PRMEDIT offers46 fields. Live setup applies deliberate saved separator edits and preserves session R across canceled/no-op/unrelated returns using an acknowledged source baseline in the628-byte candidate owner. Full native UI, transfer-prompt workflows and other geometries remain unfinished.",
       "PROGRAM preserves DTR, pauses configured flow and releases its UART IRQ during child execution; NONE cannot guarantee incoming-data preservation while a child owns the machine. No physical UART/modem/public BBS validation. ENiGMA editor escape-fragmentation behavior remains a server/packetization compatibility boundary.",
-      "Alt-Z opens a source-owned five-group command menu, contextual help and bounded ASCII help search. Existing commands run only after the shared redisplay owner restores the live screen; history/clipboard re-enter their usual guards. Incoming UART/parser/history/replies continue while browsing. Menu code and read-only text reside in CONFIG_CODE, with only bounded state/query bytes near. Original pull-down layout, advertised mouse paths, full settings/key editing and other video geometries remain unfinished."
+      "Alt-Z opens a source-owned five-group command menu, contextual help and bounded ASCII help search. Existing commands run only after the shared redisplay owner restores the live screen; history/clipboard re-enter their usual guards. Incoming UART/parser/history/replies continue while browsing. Menu code and read-only text reside in CONFIG_CODE, with only bounded state/query bytes near. Original pull-down layout, advertised mouse paths, full settings/key editing and other video geometries remain unfinished.",
+      "An otherwise eligible Alt-Z read during normal parser ownership is retained until a distinct resident foreground service can recheck all guards. All BIOS key values, including AX0, retain their key meaning. Subsequent keys remain in the existing32-word typeahead FIFO; repeated Alt-Z coalesces. Escape cancels locally; Alt-X/Alt-H cancel then use normal dispatch. Changed owners/geometry or foreground stop discard the owned pending typeahead. Overflow retains the existing explicit exit3 policy. This is maintained behavior; it does not identify the cause of the earlier unobserved Synchronet refusal."
     ]
   }
 }
