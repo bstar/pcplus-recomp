@@ -1,10 +1,11 @@
 # PCPlus reconstruction
 
 Use the pinned Nix toolchain through `./tools/build` or `./tools/dev --command`.
-The default build is the source-only DOS UART diagnostic. It must not read any
+The default build produces source-only DOS UART, parameter-parser and BIOS
+keyboard diagnostics. It must not read any
 original executable, original install or generated REA database.
 
-`./tools/build test` exercises the standalone linked DOS program. The separate
+`./tools/build test` exercises the standalone linked DOS programs. The separate
 `compat`, `test-compat` and `test-modem` targets require ignored local originals.
 Preserve exact baseline comparison in the flat UART build. Intentional behavior
 changes need explicit regressions and must remain distinguishable from recovery.

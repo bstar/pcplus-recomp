@@ -1,0 +1,41 @@
+{
+  "kind": "source-only-dos-keyboard-diagnostic",
+  "binary_sha256": "929aad6a4e5b3ac921cb5d73974b9381c24889c4dcb51b8f898d60b993d40976",
+  "baseline_regions": [
+    {
+      "start": "0x64fe",
+      "end_exclusive": "0x6553",
+      "size": 85,
+      "sha256": "941b394851a067c2fc835c85b5c415a7160b8cab679f0c0b84a6926e25dcf2e8"
+    },
+    {
+      "start": "0x77d2",
+      "end_exclusive": "0x77fd",
+      "size": 43,
+      "sha256": "4575c0d57d8ebd385741a2f7d63834920268dd32f1fe28cb0d2bf3751da22a2a"
+    },
+    {
+      "start": "0x7836",
+      "end_exclusive": "0x7880",
+      "size": 74,
+      "sha256": "440baa8de6478677c811ae8df4488f44425b140738b4743178b727155a663d3d"
+    },
+    {
+      "start": "0x7fe2",
+      "end_exclusive": "0x7fff",
+      "size": 29,
+      "sha256": "5abf79079784887129ff2059a8c9645d1decffa2d4a7265e04a86ed3b1c4f862"
+    }
+  ],
+  "sources": {
+    "reconstruction/keyboard/core.asm": "312a80488ff41165b235f08ca3de53aff22ea6057fe6f67747aeefbf4b5908bc",
+    "standalone/keyboard_host.asm": "88375138d84beb62a215d9ca716c2ceed231f54f25a076277b2d5adb284816bf",
+    "src/keyboard/api.asm": "3734878b67d1e0b282f99a0e35ccb6210873a76e48dd8dab00d35be988038690",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/keyboard/provenance.json": "607480ca125ab544f93a46c3d094685acbe4057d283365c88e3221b020d75aa4"
+  },
+  "limitations": [
+    "Does not reconstruct terminal-emulation-specific outbound sequences.",
+    "Queue producer and debug callback are not recovered; host callback only counts invocations."
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "binary_sha256": "1a5c49274ff670f747eb38413dca9405f1f047044f73a64a194106dfdd1d1fd6",
+  "cases": [
+    {
+      "case": "ordinary-empty-and-word-sized-parameters",
+      "passed": true
+    },
+    {
+      "case": "private-and-secondary-prefixes",
+      "passed": true
+    },
+    {
+      "case": "embedded-controls-and-escape-putback",
+      "passed": true
+    },
+    {
+      "case": "input-provider-fragment-boundaries",
+      "passed": true
+    },
+    {
+      "case": "digit-value-parameter-and-timeout-bounds",
+      "passed": true
+    },
+    {
+      "case": "unsigned-decimal-regression-vectors",
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked parameter-reader/decimal/fixture-host code in Unicorn; no original executable or live modem."
+}

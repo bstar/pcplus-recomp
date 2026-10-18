@@ -34,13 +34,66 @@ flag and returns `D`; ordinary parameter/terminator completion returns `S`.
 Those token names describe return values; the complete outer state machine is
 still being traced.
 
-The instructions do not bound DI before writing digits or their trailing NUL,
-and do not bound the parameter count before its indexed write. The next word
-after the 16-word area beginning at cb3c is the count itself. Caller-side bounds
-and malformed-input behavior have not yet been verified. These are specific
-boundaries to test, not a claim of an observed live BBS failure.
+## Linked maintained module and deliberate fixes
 
-Next work: recover the outer parser and its state transitions; add original vs
-reconstructed parser replays; build a relocatable maintained reader with explicit
-input/parameter bounds; then link it to screen and keyboard services. A byte-exact
-parameter routine alone does not constitute an independently working ANSI parser.
+The same reader now supports `ANSI_OMF`. All state and host services become
+linker symbols; a checked decimal converter is maintained in `src/ansi/decimal.asm`.
+`standalone/ansi_host.asm` provides a memory byte fixture and control-call recorder.
+NASM and Open Watcom link them into `build/ansi/PARSER.EXE` without original files.
+The executable performs its own ordinary-input and digit-overflow checks in DOS.
+It is a parameter-parser diagnostic, not a complete terminal.
+
+The original instructions do not bound DI before writing digits or their trailing
+NUL, or the parameter count before its indexed write. Original-code replay now
+reproduces the faults: 32 zero digits overwrite saved BP (babe becomes ba00), and
+17 empty parameters overwrite the count at cb5c, leaving count 1 instead of 17.
+This is fixture-driven native instruction evidence, not a live BBS observation.
+
+Maintained mode limits digit storage to 31 bytes plus NUL, accepts unsigned values
+0..65535, and limits the array to 16 words. Overflow returns token `A`, leaves
+existing parameters intact and records `ansi_parse_error`:
+
+| Error | Meaning |
+| --- | --- |
+| 0 | None; an ordinary ESC putback can still return `A` |
+| 1 | Digit run exceeds its buffer |
+| 2 | Decimal value exceeds one word |
+| 3 | Parameter array is full |
+| 4 | Input provider reports timeout |
+
+Digit overflow consumes the remaining digits through their terminator before
+returning; array overflow aborts at the excess parameter's delimiter. The future
+outer/event parser must explicitly resynchronize after an error. This fixture
+provider reports end-of-buffer as timeout; it does not implement a modem clock.
+The preserved original wraps 65536 to zero and stores a partial number with
+command ffff on timeout. Maintained mode rejects those cases deliberately.
+
+`standalone/check_ansi.py` tests actual linked instructions, frame/register
+preservation, adjacent array canaries, maximum digit/word/count cases, control
+characters, prefixes and input-provider fragmentation. Seventy unsigned-decimal
+vectors include deterministic random values. `test_parser_dos.py` executes the
+program's built-in checks inside DOSBox-X. The optional original comparison runs
+the original reader, original decimal converter and original transition helper;
+receive/unreceive and control presentation are fixture callbacks. Eleven normal
+cases match, with four documented deliberate differences. It does not establish
+full screen behavior, escape timing or BBS compatibility.
+
+## Confirmed outer state transitions
+
+A focused REA session analyzed the overlay-14 context including parent overlay 12.
+Its escape entry at CS:ecd2 resets count, first parameter and prefix flags for CSI,
+then runs a token loop: `D` calls the parameter reader, `S` calls the transition
+helper, and `L` calls the command dispatcher. Other tokens return from this loop.
+The shared transition helper at CS:e4a2 returns `D` for semicolon, `L` otherwise.
+Its 16 original bytes are recovered exactly and also linked in maintained mode.
+
+Evidence `ev_affa93fbfa603209be50ad0dfe0c499e94c70ee8819a6fab2f66b066eec914dc`
+identifies the helper; escape-entry Evidence is
+`ev_11f20bd04542aced412c36c7eb3b31ad664d7138536c41bde318852fbeb544c3`.
+Exports are under `docs/evidence/ansi`; all created native sessions were closed.
+The analysis image is synthetic and was used only for static analysis.
+
+Next work: recover and independently link the full escape entry and CSI command
+dispatcher with actual screen services; add bounded event input and complete error
+resynchronization; integrate keyboard and UART services. Other terminal emulations
+and the remaining PCPlus application are still unreconstructed.

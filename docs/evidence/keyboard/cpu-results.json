@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "binary_sha256": "929aad6a4e5b3ac921cb5d73974b9381c24889c4dcb51b8f898d60b993d40976",
+  "cases": [
+    {
+      "case": "callee-cleanup-normalization-through-caller-cleanup-ABI",
+      "passed": true
+    },
+    {
+      "case": "standard-and-enhanced-BIOS-read-peek-and-empty-sentinel",
+      "passed": true
+    },
+    {
+      "case": "queue-distinct-peek-dequeue-bases-and-state",
+      "passed": true
+    },
+    {
+      "case": "debug-hotkey-consumption-and-gating",
+      "passed": true
+    },
+    {
+      "case": "enhanced-E0-arrow-end-to-end-normalization",
+      "passed": true
+    }
+  ]
+}

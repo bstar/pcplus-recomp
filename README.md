@@ -4,11 +4,13 @@ An incremental source reconstruction of ProComm Plus 2.01, focused first on
 serial communication, ANSI terminal handling and BBS compatibility.
 The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 
-**This is not yet a complete PCPlus source rebuild.** There are two outputs:
+**This is not yet a complete PCPlus source rebuild.** Current outputs:
 
 | Output | Inputs | Current purpose |
 | --- | --- | --- |
 | `build/standalone/SERIAL.EXE` | Maintained assembly source only | Independently linked DOS diagnostic exercising the recovered UART module |
+| `build/ansi/PARSER.EXE` | Maintained assembly source only | Independently linked parameter-reader diagnostic with bounds checks |
+| `build/keyboard/KEYBOARD.EXE` | Maintained assembly source only | Recovered BIOS keyboard acquisition/normalization diagnostic |
 | `reconstruction/dist/tech-net-candidate/PCPLUS.EXE` | Recovered source plus a locally supplied original executable | Full application with the historical CSI-q lockup fix |
 
 Original executables, dialing/configuration files, disk images, downloaded
@@ -52,6 +54,26 @@ boundary in DOSBox-X, checks XON/XOFF transmit pause/resume and checks DOS exit,
 IRQ restoration and ring invariants. Use `./tools/build test-driver` for replay only. Emulator results do not establish physical modem/BBS compatibility.
 Test artifacts and exact executable hashes are recorded under `build/serial-tests`.
 
+The build also produces `build/ansi/PARSER.EXE`, which runs self-checks for the
+linked parameter reader when started in DOS. Run its replay and DOS tests with:
+
+```sh
+./tools/build test-parser
+```
+
+Original-vs-maintained parser comparison is optional and requires local originals:
+`./tools/build test-parser-compat`. See `docs/ANSI.md` for exact scope and fixes.
+
+The keyboard unit has its own source-only DOS diagnostic and injected-key tests:
+
+```sh
+./tools/build test-keyboard
+```
+
+It covers acquisition and normalization, not terminal-specific escape-sequence
+mapping. See `docs/KEYBOARD.md`. The full application acceptance inventory is
+tracked in `docs/FEATURES.md`, including non-terminal features and dependencies.
+
 ## Full-application compatibility build
 
 To use this optional path, supply your own original PCPlus 2.01 executable with
@@ -68,7 +90,7 @@ place your supporting installation files, including ASPCOMP.EXE, in
 ./tools/pcplus-run
 ```
 
-The compatibility build verifies and inserts 1,320 serial/parser source bytes into the
+The compatibility build verifies and inserts 1,567 serial/parser/keyboard source bytes into the
 original container, then replaces exactly two bytes using the archived Datastorm
 TECH_NET recipe. It retains the original program's other code and resources.
 The launcher uses a separate private installation under `reconstruction/lab`.
@@ -81,7 +103,8 @@ startup script and executable are refreshed on launch.
   baseline and relocatable OMF modes sharing the same instruction source.
 - `reconstruction/uart/layout.inc`: original DS addresses versus linkable symbols.
 - `src/uart/api.asm`: bounded transmit and foreground flow-control service.
-- `reconstruction/ansi/parameters.asm`: 175-byte exact recovery of the ANSI parameter reader.
+- `reconstruction/ansi/parameters.asm`: exact original recovery plus maintained OMF mode with bounds checks.
+- `reconstruction/ansi/transition.asm`: shared parameter-to-dispatch state transition.
 - `standalone/`: newly written DOS host, state allocation, host services and tests.
 - `docs/UART.md`: interfaces, observed behavior, evidence and known limitations.
 - `analysis/`: REA MCP client, binary/overlay analysis scripts and evaluation.

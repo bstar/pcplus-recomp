@@ -13,6 +13,7 @@
       "source": "reconstruction/uart/core.asm",
       "file_offset": 48220,
       "bytes": 1099,
+      "assembly_defines": [],
       "sha256": "fb777d13cb7f974b0363df2a28da7ed70f039683d085128907b6c776d9cac4d6",
       "original_relocation_sites": [
         44220
@@ -23,6 +24,7 @@
       "source": "reconstruction/uart/receive_timeout.asm",
       "file_offset": 28320,
       "bytes": 46,
+      "assembly_defines": [],
       "sha256": "cac3b64b4124d89b51def2913c187db7517d1ae30e2903f47f8ff2366779e7e5",
       "original_relocation_sites": [],
       "matched_original": true
@@ -31,12 +33,66 @@
       "source": "reconstruction/ansi/parameters.asm",
       "file_offset": 94370,
       "bytes": 175,
+      "assembly_defines": [],
       "sha256": "203cb1003edbf4c3992609fb9c3c41389e585b3ad7631675f31d71a535cf5c92",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/ansi/transition.asm",
+      "file_offset": 94546,
+      "bytes": 16,
+      "assembly_defines": [],
+      "sha256": "9902583d2248879bfac69512562429e94b89cbc5ae198a6bc0459b210b3160d6",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/keyboard/core.asm",
+      "file_offset": 30462,
+      "bytes": 85,
+      "assembly_defines": [
+        "KEYBOARD_REGION=0"
+      ],
+      "sha256": "941b394851a067c2fc835c85b5c415a7160b8cab679f0c0b84a6926e25dcf2e8",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/keyboard/core.asm",
+      "file_offset": 35282,
+      "bytes": 43,
+      "assembly_defines": [
+        "KEYBOARD_REGION=1"
+      ],
+      "sha256": "4575c0d57d8ebd385741a2f7d63834920268dd32f1fe28cb0d2bf3751da22a2a",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/keyboard/core.asm",
+      "file_offset": 35382,
+      "bytes": 74,
+      "assembly_defines": [
+        "KEYBOARD_REGION=2"
+      ],
+      "sha256": "440baa8de6478677c811ae8df4488f44425b140738b4743178b727155a663d3d",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/keyboard/core.asm",
+      "file_offset": 37346,
+      "bytes": 29,
+      "assembly_defines": [
+        "KEYBOARD_REGION=3"
+      ],
+      "sha256": "5abf79079784887129ff2059a8c9645d1decffa2d4a7265e04a86ed3b1c4f862",
       "original_relocation_sites": [],
       "matched_original": true
     }
   ],
-  "original_bytes_rebuilt_from_source": 1320,
+  "original_bytes_rebuilt_from_source": 1567,
   "handler_replay_tests": [
     {
       "case": "baseline-q-one-parameter",

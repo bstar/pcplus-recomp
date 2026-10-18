@@ -109,3 +109,13 @@ UART block as OMF and links it with a new DOS host. `./tools/build test` runs
 three full-DOS driver cases. Neither command needs a source PCPlus executable;
 see the root README and `standalone/`. The original compatibility build remains
 a separate target, `./tools/build compat`, requiring local ignored originals.
+
+The default source build also links `build/ansi/PARSER.EXE`. Its parameter-reader,
+transition and checked decimal routines require no original artifacts. Use
+`./tools/build test-parser` for native replay plus actual DOS self-checks, or
+`./tools/build test-parser-compat` for optional original-code comparison.
+
+`KEYBOARD.EXE` is the third source-only diagnostic. `./tools/build test-keyboard`
+runs linked CPU tests and a DOSBox-X test with injected keys. The default build
+and aggregate test include UART, parser and keyboard units. The full application
+remains a separate reconstruction objective; see `../PLAN.md`.

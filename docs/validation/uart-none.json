@@ -6,7 +6,7 @@
     "binary_echo_across_ring_wrap": true,
     "dos_exit_and_irq_ring_checks": true
   },
-  "seconds": 12.134,
+  "seconds": 12.136,
   "events": [
     {
       "payload_bytes": 4352,

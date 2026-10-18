@@ -1,0 +1,159 @@
+{
+  "passed": true,
+  "matched_cases": [
+    {
+      "input_hex": "31323b333448",
+      "behavior_matched": true
+    },
+    {
+      "input_hex": "3b3471",
+      "behavior_matched": true
+    },
+    {
+      "input_hex": "6d",
+      "behavior_matched": true
+    },
+    {
+      "input_hex": "306d",
+      "behavior_matched": true
+    },
+    {
+      "input_hex": "313b3b336d",
+      "behavior_matched": true
+    },
+    {
+      "input_hex": "363535333548",
+      "behavior_matched": true
+    },
+    {
+      "input_hex": "3f323568",
+      "behavior_matched": true
+    },
+    {
+      "input_hex": "3e3063",
+      "behavior_matched": true
+    },
+    {
+      "input_hex": "31007f083248",
+      "behavior_matched": true
+    },
+    {
+      "input_hex": "31321b5b48",
+      "behavior_matched": true
+    },
+    {
+      "input_hex": "3030303030303030303030303030303030303030303030303030303030303048",
+      "behavior_matched": true
+    }
+  ],
+  "intentional_differences": [
+    {
+      "reason": "32-digit stack-frame overwrite",
+      "original": {
+        "token": "S",
+        "command": 72,
+        "parameters": [
+          0
+        ],
+        "private": 0,
+        "secondary": 0,
+        "count": 1,
+        "saved_bp": 47616
+      },
+      "maintained": {
+        "token": "A",
+        "command": 72,
+        "parameters": [],
+        "error": 1,
+        "private": 0,
+        "secondary": 0
+      }
+    },
+    {
+      "reason": "17th parameter overwrites count",
+      "original": {
+        "token": "S",
+        "command": 72,
+        "parameters": [
+          0
+        ],
+        "private": 0,
+        "secondary": 0,
+        "count": 1,
+        "saved_bp": 47806
+      },
+      "maintained": {
+        "token": "A",
+        "command": 59,
+        "parameters": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "error": 3,
+        "private": 0,
+        "secondary": 0
+      }
+    },
+    {
+      "reason": "word overflow wraps the original numeric value",
+      "original": {
+        "token": "S",
+        "command": 72,
+        "parameters": [
+          0
+        ],
+        "private": 0,
+        "secondary": 0,
+        "count": 1,
+        "saved_bp": 47806
+      },
+      "maintained": {
+        "token": "A",
+        "command": 72,
+        "parameters": [],
+        "error": 2,
+        "private": 0,
+        "secondary": 0
+      }
+    },
+    {
+      "reason": "timeout after partial parameter",
+      "original": {
+        "token": "S",
+        "command": 65535,
+        "parameters": [
+          12
+        ],
+        "private": 0,
+        "secondary": 0,
+        "count": 1,
+        "saved_bp": 47806
+      },
+      "maintained": {
+        "token": "A",
+        "command": 65535,
+        "parameters": [],
+        "error": 4,
+        "private": 0,
+        "secondary": 0
+      }
+    }
+  ],
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "linked_parser_sha256": "1a5c49274ff670f747eb38413dca9405f1f047044f73a64a194106dfdd1d1fd6",
+  "scope": "Original and source-linked parameter/decimal/transition instructions in Unicorn; receive and control presentation are fixture callbacks, no live BBS."
+}

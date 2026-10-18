@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "929aad6a4e5b3ac921cb5d73974b9381c24889c4dcb51b8f898d60b993d40976",
+  "scope": "Source-only DOS executable reads injected k, up, right and Alt-X through the recovered BIOS keyboard path; no original executable or modem."
+}

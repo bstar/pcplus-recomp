@@ -1,0 +1,77 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "mapping": "File offset = 0x1200 + resident CS-relative address; REA linear = 0x10000 + address.",
+  "ranges": [
+    {
+      "start": "0x64fe",
+      "end_exclusive": "0x6553",
+      "size": 85,
+      "sha256": "941b394851a067c2fc835c85b5c415a7160b8cab679f0c0b84a6926e25dcf2e8"
+    },
+    {
+      "start": "0x77d2",
+      "end_exclusive": "0x77fd",
+      "size": 43,
+      "sha256": "4575c0d57d8ebd385741a2f7d63834920268dd32f1fe28cb0d2bf3751da22a2a"
+    },
+    {
+      "start": "0x7836",
+      "end_exclusive": "0x7880",
+      "size": 74,
+      "sha256": "440baa8de6478677c811ae8df4488f44425b140738b4743178b727155a663d3d"
+    },
+    {
+      "start": "0x7fe2",
+      "end_exclusive": "0x7fff",
+      "size": 29,
+      "sha256": "5abf79079784887129ff2059a8c9645d1decffa2d4a7265e04a86ed3b1c4f862"
+    }
+  ],
+  "procedures": [
+    {
+      "entry": "0x64fe",
+      "name": "keyboard_read",
+      "evidence_id": "ev_a0803ef1cf06eceb0e6ac4bb68eaa1be812e5057c364829c740ea0b7a4c7a479"
+    },
+    {
+      "entry": "0x651a",
+      "name": "keyboard_peek",
+      "evidence_id": "ev_48d6c28112f790241be86ebec067721a418d9ec212038de6cac7db98e3c85f4f"
+    },
+    {
+      "entry": "0x6530",
+      "name": "keyboard_poll",
+      "evidence_id": "ev_f068e7ff28145081cb89976d9e59818dda36b27f1e902dcc5fc2cd19fc56f095"
+    },
+    {
+      "entry": "0x77d2",
+      "name": "keyboard_normalize_bios",
+      "evidence_id": "ev_4b970fc67b05c1a94fecbbcc0070e3204040ad0c6c8093599ecdda8e2eff19c2"
+    },
+    {
+      "entry": "0x7836",
+      "name": "keyboard_bios_read",
+      "evidence_id": "ev_10adc1dd371002ad1e09c318dd86be78aeac16334cfff1a2ddb2975918c0decc"
+    },
+    {
+      "entry": "0x7842",
+      "name": "keyboard_bios_peek",
+      "evidence_id": "ev_f4cb5f36c1b098b06b477c53552e7fcc5d3215171f7c22073afbcd16d8385cb6"
+    },
+    {
+      "entry": "0x7858",
+      "name": "keyboard_queue_read",
+      "evidence_id": "ev_83294f37c82ae73cb3b6d1fe2f43dc903fac5c40ab63f3aef85fcd830072dcc0"
+    },
+    {
+      "entry": "0x7878",
+      "name": "keyboard_read_extended",
+      "evidence_id": "ev_38ea187a5a61f078c1ed80592f7963ab0b07dd4f6883b0542f59dd221fb4760f"
+    },
+    {
+      "entry": "0x7fe2",
+      "name": "keyboard_normalize_extended",
+      "evidence_id": "ev_5f9e0e1ab14c85bb8c2667d06439710db0e9f2bdf4d1787dd53cb5988cbb938d"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "overlay": 12,
+  "file_offset": 94546,
+  "start": 58530,
+  "end": 58546,
+  "bytes": 16,
+  "sha256": "9902583d2248879bfac69512562429e94b89cbc5ae198a6bc0459b210b3160d6",
+  "matched_original": true,
+  "evidence_id": "ev_affa93fbfa603209be50ad0dfe0c499e94c70ee8819a6fab2f66b066eec914dc",
+  "scope": "Shared parameter-to-dispatch transition; REA analysis in overlay-14 context with parent overlay 12."
+}

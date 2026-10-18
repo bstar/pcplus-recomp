@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "1a5c49274ff670f747eb38413dca9405f1f047044f73a64a194106dfdd1d1fd6",
+  "scope": "Source-only DOS executable checks ordinary parameters and digit-overflow rejection in DOSBox-X; no original executable or modem."
+}

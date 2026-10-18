@@ -1,0 +1,17 @@
+{
+  "kind": "source-only-dos-ansi-parameter-diagnostic",
+  "binary": "build/ansi/PARSER.EXE",
+  "binary_sha256": "1a5c49274ff670f747eb38413dca9405f1f047044f73a64a194106dfdd1d1fd6",
+  "sources": {
+    "reconstruction/ansi/transition.asm": "9d63cc672672472aea208f63b5e57cc94aba7ff55af7a18776cb8d647395025d",
+    "reconstruction/ansi/parameters.asm": "930d4558c2989d1c3ba97dde3ee1b4989e48cc53854796018369367a350d8832",
+    "src/ansi/decimal.asm": "5fab112c62b01ed885dc17238c89b8274c1caf2c6f6dc6b2a175e9ec63187c5f",
+    "standalone/ansi_host.asm": "dc03091431f908255b3c71c5aeec338d90c14c06985e2625064061958b660e17",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919"
+  },
+  "limitations": [
+    "Recovered parameter reader only; the full ANSI state machine is not yet linked.",
+    "Byte provider uses a memory fixture, not a live serial modem.",
+    "Maintained mode rejects oversized digits, numeric overflow, excess parameters and timeout."
+  ]
+}

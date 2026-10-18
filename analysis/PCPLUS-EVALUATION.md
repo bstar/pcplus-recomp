@@ -204,3 +204,27 @@ build now reassembles 1,320 total bytes across three units; its final executable
 still differs from the original only at the historical two-byte CSI-q patch.
 This parameter reader is not yet an independently linked complete parser.
 See `../docs/ANSI.md` and `../PLAN.md` for remaining work and evidence limits.
+
+## Independent parser and keyboard units
+
+The ANSI parameter reader now links as OMF together with the recovered 16-byte
+transition helper, a checked decimal converter and an explicit memory input host.
+`PARSER.EXE` passes linked CPU regressions and built-in DOSBox-X checks. Eleven
+normal cases agree with the original parameter/decimal/transition instructions;
+four deliberate differences reject a reproduced saved-frame overwrite, parameter
+count overwrite, word overflow and incomplete input at timeout. The full escape
+entry was traced through REA, but its CSI dispatcher and screen integration are
+not yet reconstructed. Details and exact evidence are in `../docs/ANSI.md`.
+
+Nine resident keyboard routines (231 bytes across four original ranges) now link
+into `KEYBOARD.EXE`. CPU tests cover BIOS selection, normalization, queue state
+and callback gating; DOSBox injects k, Up, Right and Alt-X through the actual BIOS
+path. The queue producer, terminal-specific maps and full event loop remain open.
+See `../docs/KEYBOARD.md`. The original comparison build now reassembles 1,567
+bytes across serial, parser and keyboard units, with unchanged final candidate
+hash and the same two-byte historical patch.
+
+`../docs/FEATURES.md` inventories the broader application with 16 acceptance
+gates, including other emulations, transfers, ASPECT, Host mode, resource/config
+formats, DOS integration and memory behavior. Advertised features are not marked
+implemented from strings or help text. The complete source rebuild remains open.

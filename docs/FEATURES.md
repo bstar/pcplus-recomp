@@ -1,0 +1,139 @@
+# Full application reconstruction checklist
+
+This inventory preserves the scope of a maintained, source-built PCPlus 2.01
+application for DOS. A serial diagnostic, an ANSI terminal, and a patched original
+are useful milestones; none satisfies this checklist alone. The application build
+must eventually stop reading the original executable, installation, proprietary
+resources, and REA databases. Missing original helpers require recovered or newly
+implemented source equivalents, with behavior differences documented.
+
+This is an initial feature inventory, not a claim that every feature has been
+found or implemented. A help heading or executable string establishes an
+advertised surface, not working code or observed runtime behavior. Runtime
+verification below must use source-built modules where it claims reconstruction.
+
+## Evidence register
+
+| ID | Artifact and search boundary | What it establishes |
+| --- | --- | --- |
+| E1 | Original `PCPLUS-main-2.01.EXE`, 214,016 bytes, SHA-256 `6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904` | Selected baseline identity. File offsets below refer to this image, never Ghidra addresses. |
+| E2 | Original `PCPLUS-main.HLP`, 23,558 bytes, SHA-256 `6aa2a38b1bae7c81d082d4efae4c7cd2becaf048bbdb93af4467b74bba9543d5` | Condensed help: 47 fixed-width topic records at file offset `0x0003`, 38 bytes each; 32-byte NUL-padded title, two-byte count, four-byte text offset. The meaning of the count field is not established here. Text begins at `0x06fe`. Many topics contain only an unavailable-content notice. |
+| E3 | Original `PCPLUS-2.01-READ.ME`, 4,777 bytes, SHA-256 `c7b2f81fdcfab8ec0eb2f27c6efa60b8b2812912d37537ff233d87c4f793226b` | Vendor installation, upgrade, memory restrictions, external helper names, and modem database notes. Documentation claims, not reproduced runtime guarantees. |
+| E4 | Local `analysis/pcplus-install/inventory.json` and filename/size comparison against its directory | The private active installation contains 32 files. Contents of dialing, host-user, and customized configuration files were not used for this inventory. An installed filename alone does not prove its format or role. |
+| E5 | Local `analysis/pcplus-overlays/manifest.json`, `analysis/pcplus-main/functions/0x1b081-asm.json`, `0x1afba-asm.json`, `0x1b106-asm.json` | Target-specific loader analysis validates 31 code overlays, one startup-data overlay, and 502 unique exported entries. Loader assembly Evidence IDs: `ev_53e06cc9c3281f158eda3f282a442269d91c0cff17d87638b666cdb17c87c56d`, `ev_7915864172378f8b10c23a93718d7731503c165e0faca362d59a530d4f69739f`, `ev_85caa95f12a4e3af9cfe656ab210956e3c02814837163abbcffeb0c75d7fba58`. |
+| E6 | [UART ledger](UART.md), [ANSI ledger](ANSI.md), [validation summaries](validation), and [evaluation](../analysis/PCPLUS-EVALUATION.md) | Existing reconstruction and test coverage, with explicit original-versus-maintained distinctions. These documents must be updated as coverage grows; their existence is not a whole-application pass. |
+
+E1 strings cited here were read directly from the verified original, including
+startup-data overlay 32 at file offset `0x25950` (60,080 initialized bytes).
+They complement the saved REA exports; this inventory did not start a duplicate
+native analysis session. The local originals and generated exports are ignored
+by Git. Public evidence includes identities, offsets, paraphrases, recovered
+source provenance, and test summaries; it must exclude private entries, passwords,
+license data, and full copied help/manual text.
+
+## Feature and acceptance matrix
+
+All gates are open unless their exact covered subcase is supported by E6. Each
+gate needs an automated regression or a repeatable DOS interaction transcript,
+input/output artifacts, and an executable/source/toolchain identity. Static
+discovery alone cannot close a functional gate.
+
+| ID | Surface and evidence | Completion checks |
+| --- | --- | --- |
+| F01 | Startup, memory, exit, and overlays: E1/E5; E3 low-memory section; E1 references `PROFILE.ASX` at `0x29964` and `PCPLUS.PRM` at `0x2b810` | Recover entry initialization, segment/stack invariants, allocation and overlay lifetime, interrupt ownership, resource lookup and failure unwinding. Build from source; start and exit repeatedly in DOS; prove vectors/serial state restored after success, allocation failure, failed child execution and user cancellation. Exercise cold startup, missing/invalid configuration, missing resources and optional startup script. Account for every required original overlay/export or document its replacement, including data/resources. Synthetic analysis executables must never run. |
+| F02 | UI and desktop services: E1 menu strings `0x25f50..0x26216`; E2 Menu Line `0x3227`, Setup `0x46ae`, Terminal Help `0x4f05`, help navigation `0x55f1` | Reconstruct main commands, pull-downs, popups, hotkeys, field editing, window save/restore, status toggles and contextual help. Test keyboard-only paths and advertised mouse paths, focus/escape behavior, error prompts, nested windows and return to terminal without display or connection loss. Help must be source-owned content with topic navigation/search rather than copied proprietary text. |
+| F03 | Serial configuration and modem: E2 Line/Port Setup `0x309d`; modem topic headings; E1 current-settings format `0x26246`; E6 UART tests | Recover supported COM selection, baud/parity/data/stop-bit mappings, UART/IRQ setup and flow control; initialization, result parsing, direct/modem distinction, auto-answer, break, carrier loss, hang-up and timeouts. Validate malformed settings and unsupported UARTs without lockup. Exercise sustained traffic and stall recovery in DOS, then actual target UART/modem. Emulated baud is not physical throughput evidence. |
+| F04 | Terminal emulations and screen engine: E2 terminal description `0x5355`; E1 model labels `0x2669a..0x267ba`; E6 partial ANSI work | Inventory each advertised emulation, state transitions, supported controls and keyboard profile. Reconstruct screen/cursor/attributes/erase/scroll/modes/terminal replies, reset, duplex, CR/CR-LF conversion, translation and monitor behavior. Test chunked input, malformed/oversized sequences, timeout/cancellation, display boundaries and known CSI-q lockup. ANSI alone does not close this gate; each other advertised emulation needs implementation plus fixtures or an explicit unresolved deviation. |
+| F05 | Keyboard, Meta keys, translations and fonts: E2 Key Mapping/Meta Keys/Translation headings and `0x54cf`; E1 `PCPLUS.KEY` at `0x27b28`, `.KBD` at `0x28bb2`, `.FON` at `0x28c70`, `.XLT` at `0x274bf` | Recover field layouts, key binding precedence, control/Alt/function/extended keys, terminal-specific sequences, macro expansion and any font selection/loading behavior actually used. Test mappings per emulation, literal control bytes, changed/invalid mappings, saved/reloaded selections and raw-input/monitor paths. Determine whether companion keymap/font tooling is required to edit every supported setting. |
+| F06 | Configuration persistence and setup: E2 Setup `0x46ae`; E3 `PCSETUP`, upgrade/reconfigure notes; E1 save error `0x2622d` and `.PRM` references | Define all settings with ranges/defaults/encoding; reconstruct load/save, cancel versus accept, paths/environment precedence, per-session overrides and external setup integration. Round-trip sanitized synthetic files and recover safely from wrong version, truncation, write failure and invalid fields. Define whether original configuration import is supported; do not silently overwrite user files. |
+| F07 | Dialing directory and call accounting: E2 directory `0x15b4`, revision `0x261b`, dialing codes `0x12b5`; E1 sorting prompt `0x2c798`, directory name `0x2c022` | Recover 200-entry directory behavior, add/revise/delete/load/save/print, sorting and display modes, per-entry line/emulation/key/script/protocol options and credentials, manual dialing, up to 15 selected entries, retry/cancel and ten dialing-code substitutions. Test successful/busy/no-carrier/error outcomes, accounting and persistence with synthetic contacts only. Preserve original data/import behavior where established; prevent credentials entering capture/test/public output. |
+| F08 | Transfers and protocol selection: E2 Receive `0x371f`, Send `0x446a`; E1 protocol menus `0x26d8a..0x27119`, host menu `0x2a8d9..0x2a9c2`; E3 external Kermit/B+ notes | Recover per-protocol framing, CRC/checksum, retries/timeouts, batch names/metadata, progress, abort, auto-download and free-space/path handling. Verify byte-for-byte upload/download against an independent peer, including binary/control bytes, empty/large files, cancel, bad blocks, line loss, duplicate names and disk-full. Complete every advertised built-in and external-protocol integration, not only ZMODEM. |
+| F09 | External protocol/helper execution: E2 External Protocol heading; E1 runtime names at `0x2a0a1`, `0x2a0ac`, `0x2a2ce`, `0x2a2d8`; E3 low-memory restrictions | Recover command construction, environment/handle sharing, serial/vector handoff, child return/error handling and memory release/reacquisition. Provide source-built equivalents or compatible interfaces for required helpers. Test a successful and failing child, missing executable, low memory and cancellation; resume terminal without lost ownership or corrupted state. Never infer an executable interface from its filename alone. |
+| F10 | Capture, logging, snapshots and printer: E1 commands `0x26081..0x260c7`, `PCPLUS.LOG` at `0x2776e`, log error `0x29970`; E2 status description `0x5059` | Recover open/close/pause/resume, append/overwrite behavior, data versus screen capture, snapshot format, printer toggle/device output and any timestamp/control filtering. Verify exact bytes and failure behavior under pause, disk-full, unavailable printer and lost carrier; status display must agree with actual capture state. |
+| F11 | Redisplay, screen search and clipboard: E2 Redisplay `0x3e1f`, Clipboard `0x0973` | Reconstruct advertised up-to-63,000-character scrollback, line/page/end navigation, case-insensitive search, buffer write and snapshot behavior. Recover filename extraction, list editing, one/tagged/all paste and separators. Test wrap, long lines, control sequences, stale filenames and clipboard use during batch and single-file transfers. |
+| F12 | Chat, elapsed time, monitor and miscellaneous terminal actions: E1 `0x25f95..0x26037`, `0x261e3..0x26205`; E2 Chat `0x0842`, elapsed/monitor headings | Recover split-screen chat and its send modes, screen clear/reset/pause, elapsed timer, incoming/outgoing monitoring and status/line-count toggles. Test no dropped serial input while navigating modes, correct local/remote panes, exit behavior and timer rollover. Some controls are currently known only by labels and require call/data tracing before expected semantics can be fixed. |
+| F13 | ASPECT scripts and recorder: E2 Script Selection `0x41af`, Record `0x3c69`; E1 startup script at `0x29964`, errors `0x2a16f..0x2a2ea`; E6 full-original startup/compiler test | Recover compiled format, VM/interpreter, types/variables/control flow, command inventory, I/O/timing/UI/transfer bindings, invocation arguments, compiler diagnostics, cancellation and recorded-script generation. Supply a source-built compiler/interpreter or an explicitly compatible source toolchain; original `ASPCOMP.EXE` cannot be the final build/runtime dependency. Test startup/manual/per-directory scripts, `.ASX` selection and PCPLUS environment search, recorded script compilation/replay, blocking input and terminal scheduling. A working three-command startup script does not prove language completeness. |
+| F14 | Host mode: E2 Host headings (body omitted); E1 commands/status `0x2a830..0x2b031`, resource names `0x2cc7a..0x2ce19` | Recover inbound answering, authentication/new-user/sysop roles, permissions/time limits, caller state, file listing/view/transfers, chat/page, read/leave mail, shell/remote shutdown authorization, idle timeout and recycle/disconnect. Recover host storage/resources from formats/code using synthetic users. Test two independent callers, privilege boundaries, invalid login, dropped connections and persistence. Host mode remains in full application scope despite not being needed for outgoing BBS dialing. |
+| F15 | DOS/filesystem/editor integration: E2 Change Directory `0x076c`, File Directory/View/PCEDIT headings; E1 `0x26167..0x261ae`, `PCEDIT /N` at `0x27872`; E3 helper and DOS Gateway notes | Recover file picker/viewer, drive/path changes, default upload/download paths, external/internal editing contract and DOS Gateway spawn/resume. Test DOS path/drive semantics, wildcards, 8.3 names, absent media, read-only files, invalid paths, child exit codes and resource/IRQ restoration. Keep file operations confined to test media during validation. |
+| F16 | Compatibility and build distribution: E3 memory/upgrade notes; E1/E5 image layout; E6 pinned Nix toolchain | Establish supported CPU/DOS/video/memory configurations and produce buildable source/resources, DOS executable(s), packaging and run instructions. Verify clean checkout with originals physically unavailable, reproducible input/toolchain identity, no embedded original executable blobs and every linked dependency accounted for. Test conventional-memory behavior, font/video variants and target DOS hardware; publish measured limits and unresolved compatibility instead of claiming the old requirements were met by an 8-MB emulator run. |
+
+## Named terminal and protocol coverage
+
+E2 advertises TTY; DEC VT52/100/102/220/320; ANSI X3.64; IBM
+3101/3161/3270/PC; TeleVideo 910/912/920/922/925/950/955; DG 100/200/210;
+ADDS 60/90; ADM 3A/5/31; Wyse 50/75/100; ATT 605/4410; Heath 19; and
+ESPRIT 3. E1 labels the 3270 selection `3270/950`, so its precise relationship
+to IBM 3270 is unresolved. Menu labels and help are not a protocol specification;
+compare dispatch code and original runtime fixtures before assigning behavior.
+
+E1 protocol labels advertise XMODEM, 1K-XMODEM, WXMODEM, 1K-XMODEM-G, YMODEM,
+YMODEM-G, ZMODEM, KERMIT, COMPUSERVE B+, ASCII, RAW ASCII, TELINK, MODEM7,
+and IMODEM. The Host menu additionally names SEALINK. External protocol slots
+are visible at `0x270f6..0x27119`. Map selection values to actual handlers and
+resources before treating any label as implemented. Record any directional
+restrictions or differences between terminal and Host transfers in the matrix.
+
+## Supporting artifact inventory
+
+The table describes required investigation, not permission to redistribute
+original files. Keep all installed user/configuration data private. Required
+default resources should be generated or authored from source; compatibility
+with a user's original resource can be an optional, documented path.
+
+| Artifact/interface | Local evidence and state | Work required |
+| --- | --- | --- |
+| `PCPLUS.EXE` | E1/E4 present; resident module plus overlays (E5) | Recover full application or explicit maintained equivalents, including generated resources; remove original from final inputs. |
+| `.PRM`, `.DIR`, `.KEY`, `.KBD`, `.XLT` | Named in E1/E3; corresponding active-install files present | Format-aware parsers/serializers with synthetic fixtures, version/error handling and private-data exclusions. E3 says upgrade can convert older formats; exact format/version distinctions remain unknown. |
+| `PCPLUS.FON` | E1 reference; E4 present, 144,365 bytes | Trace format and supported video/font paths; source-build required font resources or document supported alternatives. The extension alone does not establish its contents. |
+| `PCPLUS.HLP`, `PCHELP.RTE` | E2 plus E1 names at `0x27dfc`, `0x27e22`; both installed | Recover help index/access/runtime integration; author maintainable help without publishing the original text. |
+| `PCSETUP.EXE` | E3/E1; installed | Reconstruct settings coverage and invocation/persistence interface; decide integrated versus separate maintained executable after tracing. |
+| `PCKEYMAP.EXE`, `PCEDIT` | E1/E3; not found among the 32 active-install filenames | Recover interfaces/features; absence from one copied install does not establish unsupported original behavior. `TINYEDIT.EXE` is installed but has not been established as the configured substitute. |
+| `ASPCOMP.EXE`, `.ASP`, `.ASX`, `FLOAT.RTE` | E1 names; compiler installed; floating runtime not in active install | Compiler/VM format and full command surface remain open. Trace when FLOAT.RTE is required; no assumption that startup-script success covers floating operations. |
+| `KERMIT.RTE`, `CISB.RTE` | E1 names and E3 external-protocol note; not in active install | Recover loader/protocol interface and source equivalents; test missing-module behavior and actual transfers. |
+| `HCOMMAND.RTE`, host `.HPM/.HRM/.HST/.HXM/.NWS/.USR/.NUF/.HDR/.MSG/.HDL/.HHP/.ULD/.HMM` | E1 names; `.HST/.NWS/.HDR/.MSG` installed, other listed filenames absent | Trace format and purpose per file; do not assign roles merely from extensions or inspect private user/message content. Build synthetic host fixtures and source-owned prompts/help/defaults. |
+| `PCPLUS.LOG`, `.SCR`, `.DMP` | E1 names; `.SCR` installed, other two absent from copy | Establish produced-file format and consumers without publishing captured sessions. |
+| `PCINSTAL`, `MODEMS.DAT` | E3 references; absent from active install | Determine initialization/upgrade obligations and modem-profile schema. A maintained installer need not reproduce old distribution disks, but must generate valid initial resources without proprietary inputs. |
+| Custom wrappers and utilities | E4 includes `.BAT` wrappers, TXZM, TINYEDIT, SNIPPER, Greek text and an archive | User-install additions, not established core PCPlus components. Inspect command/handle contracts separately, preserve configured integrations or identify incompatibility. Do not claim every adjacent utility is a required original product feature. |
+
+## Memory and compatibility evidence to preserve
+
+E3 claims a 192-KB-free-memory limited configuration and recommends 295 KB for
+the full original configuration. Below 295 KB it describes restrictions on
+external setup/keymap/editor/compiler invocation, Kermit/B+ modules, DOS Gateway,
+help, redisplay size and video modes. It names 25-by-80 operation and warns
+against 132-column software emulation in the limited configuration. E1 also has
+a 132-column allocation-failure message at `0x285a4` and the candidate token
+`NOEMS` at `0x29c22`; no complete command-line or EMS contract is established by
+that token. Recover option parsing and memory/video services before asserting
+compatibility, and distinguish required historical behavior from documented new
+limits. Low-memory external execution must fail cleanly even if the maintained
+application eventually has different measured memory needs.
+
+## Evidence gaps and next actions
+
+1. Map every menu selection, help topic, terminal type and protocol selector to
+   entrypoints, state and external dependencies. The 502 export-entry inventory
+   is a useful finite audit set; exported-function count does not measure feature
+   completion. Keep overlay-parent/lifetime constraints in that map.
+2. Trace `.PRM` and default initialization first, followed by `.KBD/.KEY/.XLT`
+   and `.DIR`. Record fields read/written and validation branches, then create
+   synthetic fixtures. Do not derive defaults from this user's customized files.
+3. Capture sanitized original runtime scenarios for the features with condensed
+   help bodies. UI screen captures, serial streams and DOS child-process traces
+   should identify exact inputs and expected outcomes; do not contact real
+   callers or BBS accounts as an incidental inventory step.
+4. Enumerate the ASPECT interpreter dispatch and compiler format, protocol
+   handlers and Host command loop. Identify required missing helpers explicitly;
+   a successful minimal original install launch does not establish feature
+   availability or full dependency closure.
+5. Add one implementation/evidence row per feature as source modules land. Close
+   F01–F16 only against verified source-built behavior and clean-input builds.
+   Physical UART/Wi-Fi modem/BBS and original DOS-hardware checks remain open
+   until the actual setup is available and exercised.
+
+No original source/build project, complete uncondensed manual, distribution disk
+inventory, documented companion-module ABI, or complete behavioral specification
+was established by this pass. The active install is therefore evidence of what
+this machine contains, not the complete PCPlus distribution. Revisit this
+inventory when code/resource tracing discovers additional features; do not treat
+the initial matrix as permission to omit them.

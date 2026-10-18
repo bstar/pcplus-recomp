@@ -23,12 +23,17 @@ requires an attached DOS machine/modem and must not be inferred from emulation.
 ## 2. ANSI parser and keyboard — active
 
 - [ ] Recover the complete input/parser state machine and its calls/state from REA evidence.
-      Progress: the 175-byte parameter reader is recovered exactly; its state,
-      external calls and boundary risks are documented in `docs/ANSI.md`.
-- [ ] Reconstruct independently buildable parser and keyboard modules.
+      Progress: the 175-byte parameter reader and 16-byte transition helper are
+      recovered exactly, linked independently and regression-tested; the outer
+      CSI token loop is traced. See `docs/ANSI.md`.
+- [ ] Reconstruct independently buildable complete parser and keyboard modules.
+      The parameter-reader and BIOS keyboard acquisition/normalization submodules
+      build without original artifacts. Terminal-specific key maps remain open.
 - [ ] Test cursor movement, erase/scroll, attributes, modes, terminal replies,
       split/malformed sequences, escape timing, keyboard mappings and known CSI-q fault.
-- [ ] Verify reconstructed behavior against the original and document deliberate fixes.
+- [ ] Verify complete reconstructed parser behavior against the original.
+      Parameter-reader replay matches 11 ordinary cases and documents four
+      deliberate bounds/timeout fixes.
 
 ## 3. Usable terminal integration
 
@@ -39,7 +44,9 @@ requires an attached DOS machine/modem and must not be inferred from emulation.
 
 ## 4. Remaining application reconstruction
 
-- [ ] Inventory original features/resources and define explicit completeness checks.
+- [x] Inventory advertised original features/resources and define an initial
+      16-gate completeness matrix in `docs/FEATURES.md`; continue auditing for
+      additional features as native tracing proceeds.
 - [ ] Recover startup, memory/overlay behavior and application services.
 - [ ] Reconstruct configuration persistence, dialing directory and application UI.
 - [ ] Reconstruct file transfers, capture/logging and supporting tools used by the app.
