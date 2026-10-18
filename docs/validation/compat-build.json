@@ -66,6 +66,15 @@
       "matched_original": true
     },
     {
+      "source": "reconstruction/cursor_state/core.asm",
+      "file_offset": 92708,
+      "bytes": 144,
+      "assembly_defines": [],
+      "sha256": "feb2f73af939bbfa318e421a2e1a13bf4c0b74a671189db0ba79d9438c83f543",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
       "source": "reconstruction/screen/set_cursor.asm",
       "file_offset": 11710,
       "bytes": 168,
@@ -384,7 +393,7 @@
       "matched_original": true
     }
   ],
-  "original_bytes_rebuilt_from_source": 6816,
+  "original_bytes_rebuilt_from_source": 6960,
   "handler_replay_tests": [
     {
       "case": "baseline-q-one-parameter",

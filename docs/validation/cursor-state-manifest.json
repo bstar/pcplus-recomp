@@ -1,0 +1,43 @@
+{
+  "kind": "source-only-recovered-cursor-state-with-real-screen-services",
+  "binary_sha256": "ae1cab3c38f4b0d13e4b1173c40536e946707fb116609b4b83100982df3fa79f",
+  "baseline_ranges": [
+    {
+      "name": "csi_save_cursor",
+      "start": "0xdd74",
+      "end_exclusive": "0xddbc",
+      "file_offset": 92708,
+      "size": 72,
+      "sha256": "20f83c4d99397ab546d08c8ff84798a81245c862be313301da682c55426852d0",
+      "evidence_id": "ev_936a475567737b1457c4ced808703dca858a805b2b8e989c7634e9a6cfa460c3"
+    },
+    {
+      "name": "csi_restore_cursor",
+      "start": "0xddbc",
+      "end_exclusive": "0xde04",
+      "file_offset": 92780,
+      "size": 72,
+      "sha256": "7bc21604bd4837216771d6f32c1c1d83c1c00280488ea51de1d5ac333f329f98",
+      "evidence_id": "ev_3470839f10738918db4114163164e3476fdd4e4d8acbab4fa9ead76b05bcfdb9"
+    }
+  ],
+  "sources": {
+    "reconstruction/cursor_state/core.asm": "3c7d834144ebf19c2849375cb79a1dc4dacd17d3b97ca569c9bfc09e26799f84",
+    "reconstruction/screen/cursor_output.asm": "b6583f7648c0f47a565e6361ef58481e3ac64e4bd571ebd4aa98e9873e65dd05",
+    "reconstruction/screen/cursor_pack.asm": "d35d5a306548a99526d13a0833aa3c781cf649b51662aa5a49a6fff80affd353",
+    "reconstruction/screen/down.asm": "250d05ec52e27c50533aab8e81ee8264886125a3f70efd9df228f978cc030af1",
+    "reconstruction/screen/left.asm": "812e101942c99411726283d892c5501edd040daab67edb3098f7dc427841dc9e",
+    "reconstruction/screen/right.asm": "1ef4422d5be97996b70d47e35af92818ac42b7c2b2c1207a26b6fa1d82930851",
+    "reconstruction/screen/set_cursor.asm": "db96a18c8f1d9a928800bf82f329cd57f74032fe920c2123e9de3dd9c8ae07b6",
+    "reconstruction/screen/up.asm": "18722137d743c36c5079d1ebee26ab622c654a0b99f4fc0d67fd9c8f24af4384",
+    "reconstruction/screen/width_transition.asm": "e62505bfb2b67280abe8b035819b69906f61f3eaeb9acbafb8f19ba06ef943a8",
+    "standalone/cursor_state_host.asm": "cb30bc53c77b42d6b0722cd363f5bde46e8918450a3d73566afbe72e251d81aa",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/cursor_state/provenance.json": "efebc28cbd563d4e48544b86f9f7d574d14bb6e9d27e067e2beac48db602267b"
+  },
+  "limitations": [
+    "Unknown live state semantics retain address-based names.",
+    "Unrecovered optional screen viewport/attribute/wrap helpers trap.",
+    "No text rendering or UART output is exercised."
+  ]
+}

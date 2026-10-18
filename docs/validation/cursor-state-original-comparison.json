@@ -1,0 +1,393 @@
+{
+  "passed": true,
+  "case_count": 48,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "source_sha256": "ae1cab3c38f4b0d13e4b1173c40536e946707fb116609b4b83100982df3fa79f",
+  "cases": [
+    {
+      "routine": "csi_save_cursor",
+      "mode": 0,
+      "iteration": 0,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 0,
+      "iteration": 1,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 0,
+      "iteration": 2,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 0,
+      "iteration": 3,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 0,
+      "iteration": 4,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 0,
+      "iteration": 5,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 0,
+      "iteration": 6,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 0,
+      "iteration": 7,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 1,
+      "iteration": 0,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 1,
+      "iteration": 1,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 1,
+      "iteration": 2,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 1,
+      "iteration": 3,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 1,
+      "iteration": 4,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 1,
+      "iteration": 5,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 1,
+      "iteration": 6,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 1,
+      "iteration": 7,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 65535,
+      "iteration": 0,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 65535,
+      "iteration": 1,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 65535,
+      "iteration": 2,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 65535,
+      "iteration": 3,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 65535,
+      "iteration": 4,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 65535,
+      "iteration": 5,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 65535,
+      "iteration": 6,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_save_cursor",
+      "mode": 65535,
+      "iteration": 7,
+      "matched": true,
+      "BIOS_positions": []
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 0,
+      "iteration": 0,
+      "matched": true,
+      "BIOS_positions": [
+        5668
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 0,
+      "iteration": 1,
+      "matched": true,
+      "BIOS_positions": [
+        1542
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 0,
+      "iteration": 2,
+      "matched": true,
+      "BIOS_positions": [
+        326
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 0,
+      "iteration": 3,
+      "matched": true,
+      "BIOS_positions": [
+        4890
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 0,
+      "iteration": 4,
+      "matched": true,
+      "BIOS_positions": [
+        5703
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 0,
+      "iteration": 5,
+      "matched": true,
+      "BIOS_positions": [
+        2383
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 0,
+      "iteration": 6,
+      "matched": true,
+      "BIOS_positions": [
+        15
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 0,
+      "iteration": 7,
+      "matched": true,
+      "BIOS_positions": [
+        3894
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 1,
+      "iteration": 0,
+      "matched": true,
+      "BIOS_positions": [
+        4913
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 1,
+      "iteration": 1,
+      "matched": true,
+      "BIOS_positions": [
+        2106
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 1,
+      "iteration": 2,
+      "matched": true,
+      "BIOS_positions": [
+        579
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 1,
+      "iteration": 3,
+      "matched": true,
+      "BIOS_positions": [
+        587
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 1,
+      "iteration": 4,
+      "matched": true,
+      "BIOS_positions": [
+        1853
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 1,
+      "iteration": 5,
+      "matched": true,
+      "BIOS_positions": [
+        4674
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 1,
+      "iteration": 6,
+      "matched": true,
+      "BIOS_positions": [
+        3375
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 1,
+      "iteration": 7,
+      "matched": true,
+      "BIOS_positions": [
+        569
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 65535,
+      "iteration": 0,
+      "matched": true,
+      "BIOS_positions": [
+        1807
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 65535,
+      "iteration": 1,
+      "matched": true,
+      "BIOS_positions": [
+        3858
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 65535,
+      "iteration": 2,
+      "matched": true,
+      "BIOS_positions": [
+        5152
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 65535,
+      "iteration": 3,
+      "matched": true,
+      "BIOS_positions": [
+        5695
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 65535,
+      "iteration": 4,
+      "matched": true,
+      "BIOS_positions": [
+        1549
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 65535,
+      "iteration": 5,
+      "matched": true,
+      "BIOS_positions": [
+        4383
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 65535,
+      "iteration": 6,
+      "matched": true,
+      "BIOS_positions": [
+        2057
+      ]
+    },
+    {
+      "routine": "csi_restore_cursor",
+      "mode": 65535,
+      "iteration": 7,
+      "matched": true,
+      "BIOS_positions": [
+        3343
+      ]
+    }
+  ],
+  "scope": "Save/restore plus actual original/source screen cursor path; state words and BIOS positions compared. No renderer or hardware."
+}

@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "ae1cab3c38f4b0d13e4b1173c40536e946707fb116609b4b83100982df3fa79f",
+  "scope": "Source-only cursor-state DOS executable saves/restores position and an attribute word through actual recovered screen code and BIOS in DOSBox-X."
+}

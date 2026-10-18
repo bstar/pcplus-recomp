@@ -1,4 +1,4 @@
-MODULES := escape attributes screen text reports erase csi
+MODULES := escape attributes screen text reports erase cursor_state csi
 .PHONY: all serial parser keyboard $(MODULES) $(addprefix test-,$(MODULES)) test test-driver test-parser test-keyboard test-parser-compat test-csi-relocation compat test-compat test-modem clean
 
 all: serial parser keyboard $(MODULES)
@@ -49,4 +49,4 @@ test-modem:
 	$(MAKE) -C reconstruction test-modem
 
 clean:
-	rm -rf build/standalone build/ansi build/keyboard build/csi-relocation $(addprefix build/,$(MODULES))
+	rm -rf build/standalone build/ansi build/keyboard build/csi-relocation build/cursor-state $(addprefix build/,$(MODULES))

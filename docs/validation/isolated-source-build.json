@@ -1,8 +1,8 @@
 {
   "passed": true,
-  "source_tree": "69376da67d7f8a1db0b2a540fd81c2a28eeb1ee1",
-  "command": "./tools/build all test-csi test-csi-relocation",
+  "source_tree": "41558eb1e22865766159b4914ec9b894b1aedad2",
+  "command": "./tools/build all test-csi test-csi-relocation test-cursor_state",
   "original_executable_present": false,
   "original_install_present": false,
-  "scope": "Isolated tracked-source archive build of every diagnostic plus combined CSI CPU/DOS/relocation tests; not whole application reconstruction."
+  "scope": "Isolated tracked-source archive build of every diagnostic plus combined CSI and cursor-state CPU/DOS/relocation tests; not whole application reconstruction."
 }

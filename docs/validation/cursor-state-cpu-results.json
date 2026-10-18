@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "binary_sha256": "ae1cab3c38f4b0d13e4b1173c40536e946707fb116609b4b83100982df3fa79f",
+  "cases": [
+    {
+      "case": "save-full-versus-position-only-mode-and-caller-cleanup",
+      "passed": true
+    },
+    {
+      "case": "restore-full-versus-position-only-through-real-screen-and-BIOS",
+      "passed": true
+    },
+    {
+      "case": "repeated-edge-and-middle-position-full-state-roundtrips",
+      "passed": true
+    }
+  ],
+  "scope": "Actual recovered save/restore and linked screen instructions; BIOS position calls recorded, optional unresolved screen services trap."
+}

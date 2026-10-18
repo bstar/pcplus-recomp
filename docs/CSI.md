@@ -2,7 +2,7 @@
 
 The combined diagnostic links the recovered ESC entry, parameter reader,
 parameter transition, complete CSI dispatcher, attribute helpers and cursor
-routines, reporting core and erase services. The dispatcher contains 2,018
+routines, reporting core, cursor save/restore and erase services. The dispatcher contains 2,018
 original bytes, 615 instructions and two
 explicit word tables (48 SGR entries and 94 command entries). Analyst names and
 interfaces are maintained source, not recovered original identifiers.
@@ -24,7 +24,7 @@ read original binaries.
 `build/csi/CSI.EXE` is a source-only DOS self-check, not the full application.
 `standalone/check_csi.py` drives real linked instructions with memory byte input,
 records BIOS cursor calls and checks parser-to-screen state, SGR colors,
-scroll/origin handling, replies, J/K/X video updates, malformed input and CSI-q
+scroll/origin handling, replies, J/K/X video updates, ESC/CSI save/restore, malformed input and CSI-q
 payload preservation.
 `standalone/test_csi_dos.py` also runs the executable inside DOSBox-X. Manifests
 and results record the exact executable hash under `build/csi` and
@@ -53,7 +53,7 @@ right-edge cases against video memory. The flat original path remains unchanged.
 
 External application services remain explicit interfaces. Unrecovered services
 trap with their original service address rather than silently succeed. Terminal
-modes, tab handling, save/restore cursor, viewport/protected attributes, ordinary
+modes, tab handling, viewport/protected attributes, ordinary
 character rendering, serial input/output and terminal-specific keyboard maps
 still need complete application integration. Passing the diagnostic does not
 establish a complete terminal, physical modem compatibility or full PCPlus

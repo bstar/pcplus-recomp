@@ -59,6 +59,17 @@ discovery alone cannot close a functional gate.
 
 ## Named terminal and protocol coverage
 
+Verified source-built subcases, with every whole-feature gate still open:
+
+| Gate | Implemented subcase | Evidence and remaining boundary |
+| --- | --- | --- |
+| F03 | UART receive ring, bounded transmit, software/hardware flow service and restoration | `UART.md`, source-driver replay and DOSBox serial tests; configurable modem workflow and physical UART remain open. |
+| F04 | ESC/CSI parsing, cursor positioning, SGR helpers, J/K/X erase and status/device replies | `CSI.md`, component ledgers, `validation/csi-*.json`; memory I/O and modeled BIOS in CPU tests, real BIOS erase in DOSBox. Full modes, protected attributes, other emulations and continuous serial terminal integration remain open. |
+| F04 | Low-level direct/BIOS character, packed-cell and fill output | `TEXT.md` and `evidence/text`; full character-dispatch/scroll/capture/font integration remains open. |
+| F04 | Full-state versus position-only cursor save/restore | `CURSOR_STATE.md` and `validation/cursor-state-*.json`; standalone source instructions match 48 original scenarios. Unknown saved-state semantics and complete terminal integration remain open. |
+| F05 | BIOS keyboard acquisition, normalization and queue access | `KEYBOARD.md`; terminal key maps, macros and persistent mapping formats remain open. |
+| F16 | Source-only builds of current diagnostics through pinned Nix tooling | `validation/isolated-source-build.json`; the complete application still depends on unrecovered code/resources and has no source-only whole-application build. |
+
 E2 advertises TTY; DEC VT52/100/102/220/320; ANSI X3.64; IBM
 3101/3161/3270/PC; TeleVideo 910/912/920/922/925/950/955; DG 100/200/210;
 ADDS 60/90; ADM 3A/5/31; Wyse 50/75/100; ATT 605/4410; Heath 19; and

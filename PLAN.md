@@ -26,7 +26,9 @@ requires an attached DOS machine/modem and must not be inferred from emulation.
       Progress: the parameter reader, transition helper, 477-byte ESC entry and
       complete 2,018-byte CSI dispatcher are recovered exactly. The linked
       ESC-to-CSI-to-cursor/attribute path passes CPU and DOSBox-X self-checks.
-      Screen erase, text output and reporting units also pass independent checks;
+      Screen erase and reporting also pass through the combined parser; full
+      ESC cursor/state and position-only CSI save/restore are linked and tested.
+      The independent text-output backend passes CPU and DOSBox checks;
       remaining application services still prevent complete parser coverage.
       See `docs/ANSI.md`, `docs/CSI.md` and component documentation.
 - [ ] Reconstruct independently buildable complete parser and keyboard modules.

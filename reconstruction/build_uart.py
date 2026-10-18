@@ -26,6 +26,7 @@ def build_units(original):
         ("ansi/transition.asm", 0xe4a2, 0xe4b2, 94546, False),
         ("ansi/dispatch.asm", 0xe4b2, 0xec94, 94562, False),
         ("ansi/escape.asm", 0xecd2, 0xeeaf, 100386, False),
+        ("cursor_state/core.asm", 0xdd74, 0xde04, 92708, False),
     ]
     specifications = [(*item, []) for item in specifications]
     for module in ("screen", "attributes", "erase", "text"):

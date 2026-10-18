@@ -153,6 +153,33 @@ def main():
             assert output==want,(ready,output,want)
     check('real-primary-attributes-status-and-cursor-report-output',reports)
 
+    def cursor_state():
+        live=['ansi_charset_g1_flag_graphics','ansi_charset_g0_flag_graphics',
+              'cursor_state_value_cdfc','cursor_state_value_ce04','attributes_current',
+              'cursor_state_value_1d20','csi_origin_mode','csi_wrap_pending']
+        saved=['cursor_state_saved_cdf0','cursor_state_saved_cdec',
+               'cursor_state_saved_cdfc','cursor_state_saved_ce04','cursor_state_saved_1f70',
+               'cursor_state_saved_1d20','cursor_state_saved_cdd2','cursor_state_saved_3342']
+        for save,restore,full in [(b'7',b'8',True),(b'[s',b'[u',False)]:
+            c=Csi();assert c.sequence(b'[10;20H')==(9,19)
+            original=[1,1,0x1234,0x5678,0x8c,0x4321,1,1]
+            for name,value in zip(live,original):c.put(name,value)
+            c.sequence(save)
+            assert (c.get('csi_saved_row'),c.get('csi_saved_column'))==(9,19)
+            assert [c.get(name) for name in saved]==(original if full else [0]*8)
+            # Change cursor with origin disabled before selecting a different state.
+            c.put('csi_origin_mode',0)
+            assert c.sequence(b'[3;4H')==(2,3)
+            current=[0,0,0x2468,0x1357,7,0x1111,0,0]
+            for name,value in zip(live,current):c.put(name,value)
+            assert c.sequence(restore)==(9,19)
+            assert [c.get(name) for name in live]==(original if full else current)
+            assert c.positions[-1]==0x0913
+            assert c.get('screen_video_offset')==9*160+19*2
+            assert c.get('screen_attribute_offset')==9*80+19
+            assert c.get('csi_unimplemented_service')==0
+    check('real-esc7-8-full-state-and-csi-s-u-position-only-restore',cursor_state)
+
     def missing():
         c=Csi();c.put('screen_cursor_wrap',1);c.put('screen_attribute_checks',1)
         try:c.sequence(b'[K')
@@ -161,7 +188,7 @@ def main():
     check('unrecovered-protected-erase-boundary-fails-explicitly',missing)
 
     result={'passed':True,'binary_sha256':hashlib.sha256((ROOT/'build/csi/CSI.EXE').read_bytes()).hexdigest(),
-        'cases':cases,'scope':'Actual linked escape/parameter/transition/dispatcher/attribute/cursor/report/erase instructions; explicit BIOS text-video model plus memory input/output, unresolved application services trap. No live modem/full renderer.'}
+        'cases':cases,'scope':'Actual linked escape/parameter/transition/dispatcher/attribute/cursor/report/erase/save-restore instructions; explicit BIOS text-video model plus memory input/output, unresolved application services trap. No live modem/full renderer.'}
     (ROOT/'build/csi/csi-results.json').write_text(json.dumps(result,indent=2)+'\n')
 
 if __name__=='__main__':main()

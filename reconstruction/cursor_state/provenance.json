@@ -1,0 +1,65 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "ranges": [
+    {
+      "name": "csi_save_cursor",
+      "start": "0xdd74",
+      "end_exclusive": "0xddbc",
+      "file_offset": 92708,
+      "size": 72,
+      "sha256": "20f83c4d99397ab546d08c8ff84798a81245c862be313301da682c55426852d0",
+      "evidence_id": "ev_936a475567737b1457c4ced808703dca858a805b2b8e989c7634e9a6cfa460c3"
+    },
+    {
+      "name": "csi_restore_cursor",
+      "start": "0xddbc",
+      "end_exclusive": "0xde04",
+      "file_offset": 92780,
+      "size": 72,
+      "sha256": "7bc21604bd4837216771d6f32c1c1d83c1c00280488ea51de1d5ac333f329f98",
+      "evidence_id": "ev_3470839f10738918db4114163164e3476fdd4e4d8acbab4fa9ead76b05bcfdb9"
+    }
+  ],
+  "state": {
+    "0x399c": "screen_cursor_row",
+    "0x399e": "screen_cursor_column",
+    "0x334e": "csi_saved_row",
+    "0x3350": "csi_saved_column",
+    "0xcdf0": "ansi_charset_g1_flag_graphics",
+    "0xcdec": "ansi_charset_g0_flag_graphics",
+    "0xcdfc": "cursor_state_value_cdfc",
+    "0xce04": "cursor_state_value_ce04",
+    "0x1f70": "attributes_current",
+    "0x1d20": "cursor_state_value_1d20",
+    "0xcdd2": "csi_origin_mode",
+    "0x3342": "csi_wrap_pending",
+    "0xcc96": "cursor_state_saved_cdf0",
+    "0xcc48": "cursor_state_saved_cdec",
+    "0xcbb0": "cursor_state_saved_cdfc",
+    "0xcbb4": "cursor_state_saved_ce04",
+    "0xcdd4": "cursor_state_saved_1f70",
+    "0xcd24": "cursor_state_saved_1d20",
+    "0xcd2c": "cursor_state_saved_cdd2",
+    "0xd110": "cursor_state_saved_3342"
+  },
+  "pairs": {
+    "ansi_charset_g1_flag_graphics": "cursor_state_saved_cdf0",
+    "ansi_charset_g0_flag_graphics": "cursor_state_saved_cdec",
+    "cursor_state_value_cdfc": "cursor_state_saved_cdfc",
+    "cursor_state_value_ce04": "cursor_state_saved_ce04",
+    "attributes_current": "cursor_state_saved_1f70",
+    "cursor_state_value_1d20": "cursor_state_saved_1d20",
+    "csi_origin_mode": "cursor_state_saved_cdd2",
+    "csi_wrap_pending": "cursor_state_saved_3342"
+  },
+  "dependencies": {
+    "screen_set_cursor": {
+      "address": "0x1bbe",
+      "abi": "AX=row,DX=column; near call"
+    }
+  },
+  "limitations": [
+    "Three live states retain address-based names because full semantics are unresolved.",
+    "Restores raw attribute/charset words; no additional rendering callbacks are invented."
+  ]
+}

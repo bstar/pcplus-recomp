@@ -169,18 +169,13 @@ global ansi_escape_service_dd58
 extern csi_primary_attributes,csi_device_status
 ansi_escape_service_dd58:
  jmp csi_primary_attributes
-global ansi_escape_service_dd74
-global csi_save_cursor
+global ansi_escape_service_dd74,ansi_escape_service_ddbc
+extern csi_save_cursor,csi_restore_cursor
+; Tail jumps preserve the caller-cleanup mode argument beneath the return address.
 ansi_escape_service_dd74:
-csi_save_cursor:
- mov ax,0xdd74
- jmp csi_unimplemented
-global ansi_escape_service_ddbc
-global csi_restore_cursor
+ jmp csi_save_cursor
 ansi_escape_service_ddbc:
-csi_restore_cursor:
- mov ax,0xddbc
- jmp csi_unimplemented
+ jmp csi_restore_cursor
 global csi_set_modes
 csi_set_modes:
  mov ax,0xde98
@@ -213,6 +208,12 @@ csi_unimplemented:
  int 3
  mov ax,0x4c02
  int 0x21
+%macro selftest_sequence 2
+ mov word [ansi_input_pointer],%1
+ mov word [ansi_input_length],%2
+ call ansi_reset
+ call ansi_escape_entry
+%endmacro
 ..start:
  mov ax,DGROUP
  mov ds,ax
@@ -248,6 +249,38 @@ csi_unimplemented:
  jne .failed
  cmp word [csi_unimplemented_service],0
  jne .failed
+ ; Parse ESC7/8: full state save/restore, including the actual BIOS cursor.
+ selftest_sequence esc_save_sample,1
+ selftest_sequence reset_sgr_sample,reset_sgr_end-reset_sgr_sample
+ selftest_sequence default_sample,default_end-default_sample
+ selftest_sequence esc_restore_sample,1
+ cmp word [screen_cursor_row],7
+ jne .failed
+ cmp word [screen_cursor_column],19
+ jne .failed
+ cmp word [attributes_current],0x8c
+ jne .failed
+ mov ah,3
+ xor bh,bh
+ int 0x10
+ cmp dx,0x0713
+ jne .failed
+ ; Parse CSIs/u: position restores while the newly chosen attribute stays.
+ selftest_sequence csi_save_sample,csi_save_end-csi_save_sample
+ selftest_sequence reset_sgr_sample,reset_sgr_end-reset_sgr_sample
+ selftest_sequence default_sample,default_end-default_sample
+ selftest_sequence csi_restore_sample,csi_restore_end-csi_restore_sample
+ cmp word [screen_cursor_row],7
+ jne .failed
+ cmp word [screen_cursor_column],19
+ jne .failed
+ cmp word [attributes_current],7
+ jne .failed
+ mov ah,3
+ xor bh,bh
+ int 0x10
+ cmp dx,0x0713
+ jne .failed
  ; Exercise real CSI 2J through recovered rectangle code and the DOS BIOS.
  mov ax,3
  int 0x10
@@ -275,6 +308,32 @@ csi_unimplemented:
  mov ax,0x4c01
  int 0x21
 SEGMENT _DATA public align=16 class=DATA use16
+global csi_saved_row
+csi_saved_row: dw 0
+global csi_saved_column
+csi_saved_column: dw 0
+global cursor_state_value_cdfc
+cursor_state_value_cdfc: dw 0
+global cursor_state_value_ce04
+cursor_state_value_ce04: dw 0
+global cursor_state_value_1d20
+cursor_state_value_1d20: dw 0
+global cursor_state_saved_cdf0
+cursor_state_saved_cdf0: dw 0
+global cursor_state_saved_cdec
+cursor_state_saved_cdec: dw 0
+global cursor_state_saved_cdfc
+cursor_state_saved_cdfc: dw 0
+global cursor_state_saved_ce04
+cursor_state_saved_ce04: dw 0
+global cursor_state_saved_1f70
+cursor_state_saved_1f70: dw 0
+global cursor_state_saved_1d20
+cursor_state_saved_1d20: dw 0
+global cursor_state_saved_cdd2
+cursor_state_saved_cdd2: dw 0
+global cursor_state_saved_3342
+cursor_state_saved_3342: dw 0
 global csi_terminal_id
 csi_terminal_id:
  dw 4
@@ -483,6 +542,14 @@ global csi_output_length
 csi_output_length: dw 0
 global csi_unimplemented_service
 csi_unimplemented_service: dw 0
+esc_save_sample: db '7'
+esc_restore_sample: db '8'
+csi_save_sample: db '[s'
+csi_save_end:
+csi_restore_sample: db '[u'
+csi_restore_end:
+reset_sgr_sample: db '[0m'
+reset_sgr_end:
 default_sample: db '[10;20H'
 default_end:
 sgr_sample: db '[31;1;5m'

@@ -78,7 +78,7 @@ tracked in `docs/FEATURES.md`, including non-terminal features and dependencies.
 
 The combined ANSI path and separate screen/reporting components build and test
 through `./tools/build test-csi`, `test-screen`, `test-attributes`, `test-text`,
-`test-erase`, `test-reports` and `test-escape`. The default `test` target includes
+`test-erase`, `test-reports`, `test-cursor_state` and `test-escape`. The default `test` target includes
 these diagnostics. See [docs/CSI.md](docs/CSI.md) for integration scope and gaps.
 
 ## Full-application compatibility build
@@ -97,7 +97,7 @@ place your supporting installation files, including ASPCOMP.EXE, in
 ./tools/pcplus-run
 ```
 
-The compatibility build verifies and inserts 6,816 recovered source bytes into the
+The compatibility build verifies and inserts 6,960 recovered source bytes into the
 original container, then replaces exactly two bytes using the archived Datastorm
 TECH_NET recipe. It retains the original program's other code and resources.
 The launcher uses a separate private installation under `reconstruction/lab`.
