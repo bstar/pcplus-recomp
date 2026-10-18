@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "ownership-bounds-normal",
+      "passed": true,
+      "return": 0
+    },
+    {
+      "case": "enumeration-error-not-EOF",
+      "passed": true,
+      "return": 0
+    },
+    {
+      "case": "oversized-source-close",
+      "passed": true,
+      "return": 0
+    },
+    {
+      "case": "shrink-abort",
+      "passed": true,
+      "return": 0
+    },
+    {
+      "case": "uncertain-close-no-repeat",
+      "passed": true,
+      "return": 0
+    },
+    {
+      "case": "read-error-abort",
+      "passed": true,
+      "return": 0
+    },
+    {
+      "case": "actual8086DOS209files-binary-empty-DTA-hidden-system-readonly-abort",
+      "passed": true,
+      "details": "PASS209binaryemptyDTA\n"
+    }
+  ],
+  "binary_sha256": "bf7c5ba885edf57435c5acaf6e4253876cb2771edc0907232c87b7660b742888",
+  "sources": {
+    "src/transfer/batch_upload.c": "4abfb9c2bd00dff63bf8eac59f8f052c075a75c5de534ff4168e616d5b4c8008",
+    "src/transfer/upload_file.c": "6d6172f356456f703d7c5eba63433ff34cb63394ffe8d118f64dccb23c48e0e2",
+    "src/transfer/batch_upload_fs.c": "bcbf8fe35d713c6229dcf0bd3cf713e55570eca76cb5827088cc449f359310fe",
+    "src/transfer/upload_fs.c": "4072232a95249177aad523bc7e326a4261d97a582cd6b96e7c9cc6922419b8cb",
+    "src/transfer/batch_upload.h": "876ef64ab8dce57c5be9434668b83b5525c78d629e62fba97354563517eeff95",
+    "src/transfer/batch_upload_fs.h": "f52485e843dd2f59551244be20a6d1839e91e6bddbe0db73764393430a6b3c11",
+    "standalone/check_batch_upload.py": "d503a327d5e83c393fdf0b5263ed30dd67a8f43418404906f8de10238731d30f"
+  },
+  "watcom_DTA_evidence": "Pinned OpenWatcom bld/clib/_dos/c/finddos.c _M_I86 near-data __dos_find_first_dta/__dos_find_next_dta sets but does not restore DTA. FS wrapper savesINT21/2F and restoresINT21/1A; actualDOS verifies restoration and interleaved continuation.",
+  "scope": "Actual maintained batch owner and existing upload_source code. Linked fault groups substitute only filesystem operations; actualDOS group uses realWatcom/DOS search/read/close and209owned sources. No public BBS or original/private inputs."
+}

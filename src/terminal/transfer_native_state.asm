@@ -250,7 +250,8 @@ session_integrity_labels:
 global session_open_mode
 session_open_mode:
  db 'wb',0
-global session_payload
+global session_payload,_terminal_batch_buffer
+_terminal_batch_buffer:
 session_payload:
  times 11264 db 0
 terminal_transfer_checksum_label: db 'Checksum',0

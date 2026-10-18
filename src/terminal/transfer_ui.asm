@@ -6,6 +6,7 @@ extern terminal_transfer_service,terminal_transfer_fault,terminal_quit
 extern keyboard_poll,terminal_read_key,terminal_transfer_filename
 extern session_blocks_accepted
 extern terminal_transfer_direction,terminal_upload_blocks_accepted
+extern terminal_transfer_protocol,_ymodem_current
 GLOBAL terminal_transfer_ui_open,terminal_transfer_ui_restore,terminal_transfer_ui_progress
 GLOBAL terminal_transfer_ui_receiving
 terminal_transfer_ui_open:
@@ -45,13 +46,7 @@ terminal_transfer_ui_open:
  mov ax,0x1f20
  mov cx,160
  rep stosw
- mov si,transfer_ui_title
- cmp word [terminal_transfer_direction],1
- jne .title
- mov si,transfer_ui_upload_title
-.title:
- mov di,3680
- call ui_text
+ call ui_title
  mov word [transfer_ui_length],0
  mov byte [terminal_transfer_filename],0
  mov cx,0x0607
@@ -66,6 +61,8 @@ terminal_transfer_ui_open:
  or ax,ax
  jz .input
  call terminal_read_key
+ cmp ax,0x3c00 ;F2 toggles protocol, typed field retained
+ je .protocol
  cmp ax,0x2d00
  je .quit
  cmp al,27
@@ -90,6 +87,10 @@ terminal_transfer_ui_open:
  inc bx
  mov [transfer_ui_length],bx
  mov byte [terminal_transfer_filename+bx],0
+ jmp .input
+.protocol:
+ xor word [terminal_transfer_protocol],1
+ call ui_title
  jmp .input
 .backspace:
  mov bx,[transfer_ui_length]
@@ -134,6 +135,26 @@ ui_cursor:
  mov ah,2
  int 0x10
  ret
+ui_title:
+ mov ax,0x1f20
+ mov di,3680
+ mov cx,80
+ rep stosw
+ mov si,transfer_ui_title
+ cmp word [terminal_transfer_direction],1
+ jne .protocol
+ mov si,transfer_ui_upload_title
+.protocol:
+ cmp word [terminal_transfer_protocol],1
+ jne .draw
+ mov si,transfer_ui_batch_title
+ cmp word [terminal_transfer_direction],1
+ jne .draw
+ mov si,transfer_ui_batch_upload_title
+.draw:
+ mov di,3680
+ call ui_text
+ ret
 ui_text:
  lodsb
  or al,al
@@ -159,6 +180,13 @@ terminal_transfer_ui_receiving:
  jne .running
  mov si,transfer_ui_upload_running
 .running:
+ cmp word [terminal_transfer_protocol],1
+ jne .draw
+ mov si,transfer_ui_batch_running
+ cmp word [terminal_transfer_direction],1
+ jne .draw
+ mov si,transfer_ui_batch_upload_running
+.draw:
  mov di,3680
  call ui_text
  pop es
@@ -182,6 +210,10 @@ terminal_transfer_ui_progress:
  jne .count
  mov ax,[terminal_upload_blocks_accepted]
 .count:
+ cmp word [terminal_transfer_protocol],1
+ jne .digits
+ mov ax,[_ymodem_current+6] ;fixed nearC word blocks
+.digits:
  mov bx,10
  mov cx,5
 .digit:
@@ -238,7 +270,11 @@ transfer_ui_cursor: dw 0
 transfer_ui_shape: dw 0
 transfer_ui_length: dw 0
 transfer_ui_visible: db 0
-transfer_ui_title: db ' Download: XMODEM   [Enter] Start   [Esc] Cancel',0
+transfer_ui_title: db ' Download: XMODEM   [F2] Protocol   [Enter] Start   [Esc] Cancel',0
 transfer_ui_running: db ' Receiving XMODEM   [Esc] Cancel                    Blocks:',0
-transfer_ui_upload_title: db ' Upload: XMODEM/1K   [Enter] Start   [Esc] Cancel',0
+transfer_ui_upload_title: db ' Upload: XMODEM/1K   [F2] Protocol   [Enter] Start   [Esc] Cancel',0
 transfer_ui_upload_running: db ' Sending XMODEM/1K  [Esc] Cancel                    Blocks:',0
+transfer_ui_batch_title: db ' YMODEM directory:  [F2] Protocol   [Enter] Start   [Esc] Cancel',0
+transfer_ui_batch_upload_title: db ' YMODEM filespec:   [F2] Protocol   [Enter] Start   [Esc] Cancel',0
+transfer_ui_batch_running: db ' Receiving YMODEM  [Esc] Cancel                    Blocks:',0
+transfer_ui_batch_upload_running: db ' Sending YMODEM    [Esc] Cancel                    Blocks:',0

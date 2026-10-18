@@ -1,5 +1,9 @@
 # Actual BBS file transfers
 
+This page retains the ordinary XMODEM checkpoint. The later maintained CRC
+YMODEM batch runs, final-ACK compatibility finding and current runtime are in
+[YMODEM workflows](ymodem.md).
+
 These tests connect the source-built DOS terminal to the owned loopback
 Synchronet and ENiGMA½ servers. The BBS's actual SE/X/Y/Z helper is the protocol
 peer. The modem bridge handles Hayes/Telnet transport; it does not acknowledge

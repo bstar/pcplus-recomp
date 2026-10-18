@@ -82,6 +82,11 @@ See [live transfer policy and recovery](docs/TRANSFER_INTEGRATION.md).
 Alt-S uploads an existing file through checked read-only DOS IO and the native
 ordinary sender, with automatic1K blocks and actual-ACK progress.
 See [upload behavior and limits](docs/LIVE_UPLOAD.md).
+Press F2 inside either transfer prompt to select CRC YMODEM. For downloads,
+enter an existing directory, such as `D:\RECV\`. For uploads, enter a DOS8.3
+filespec, such as `D:\SEND\*.BIN`. Select YMODEM on the BBS as well. Files are
+checked individually; earlier installed files survive a later batch failure.
+See [batch transfer behavior](docs/LIVE_YMODEM.md).
 Global `/T:MYKEYS.KEY` imports ten Meta actions; Alt-1..Alt-0 execute
 nonblocking TEXT or maintained PROGRAM actions. PROGRAM passes a validated
 1..51-byte stored command through COMSPEC `/c`, suspends terminal UART ownership
@@ -274,8 +279,10 @@ and mixed128/1024-byte blocks at the flush boundary. Native sender and real UART
 component tests also pass. The terminal now has live Alt-R/Alt-S ordinary
 XMODEM receive/send; actual DOS uploads/downloads pass against local Synchronet
 and ENiGMA servers with the documented lab configuration. The new native batch
-metadata module and maintained codec pass independently; full batch ownership,
-remaining advertised protocols and physical modem transfers remain open. See
+metadata module and maintained codec are complemented by checked batch owners
+and live CRC YMODEM receive/send. Remaining advertised protocols, the complete
+settings/UI and physical modem transfers remain open. See
+[live YMODEM](docs/LIVE_YMODEM.md),
 [batch metadata](docs/TRANSFER_METADATA.md), [BBS transfers](lab/bbs/transfers.md),
 [session contracts](docs/TRANSFER_SESSION.md),
 [download storage](docs/DOWNLOAD_STORAGE.md), [sender](docs/TRANSFER_SEND.md),

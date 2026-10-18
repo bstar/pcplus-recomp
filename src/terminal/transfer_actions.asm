@@ -13,6 +13,8 @@ extern terminal_transfer_ui_open,terminal_transfer_ui_restore,terminal_transfer_
 extern terminal_transfer_ui_progress,terminal_connection_notice,terminal_connection_notice_restore
 extern _terminal_transfer_store,_terminal_transfer_receive,_terminal_transfer_cleanup
 extern _terminal_upload_store,_terminal_transfer_send,_terminal_upload_cleanup
+extern _terminal_batch_store
+extern _ymodem_current
 extern terminal_upload_blocks_accepted
 extern terminal_upload_accepted_bytes
 extern _transfer_native_open,_transfer_native_write,_transfer_native_close,_transfer_download_result
@@ -148,6 +150,8 @@ terminal_transfer_poll:
  call terminal_clock_ticks
  mov [transfer_progress_tick],ax
  mov [transfer_progress_tick+2],dx
+ cmp word [terminal_transfer_protocol],1
+ je .batch
  cmp word [terminal_transfer_direction],1
  jne .receive
  call _terminal_upload_store
@@ -156,6 +160,19 @@ terminal_transfer_poll:
  cmp word [terminal_transfer_fault],0
  jne .failed
  mov si,transfer_note_success
+ jmp .notice
+.batch:
+ call _terminal_batch_store
+ cmp ax,2
+ je .batch_unconfirmed
+ or ax,ax
+ jnz .failed
+ cmp word [terminal_transfer_fault],0
+ jne .failed
+ mov si,transfer_note_success
+ jmp .notice
+.batch_unconfirmed:
+ mov si,transfer_note_batch_ack
  jmp .notice
 .receive:
  call _terminal_transfer_store
@@ -188,6 +205,16 @@ terminal_transfer_poll:
  jne .recovery_note
  cmp word [terminal_transfer_direction],1
  je .error_note
+ cmp word [terminal_transfer_protocol],1
+ jne .ordinary_saved
+ cmp word [terminal_transfer_phase],2
+ jne .error_note
+ mov ax,[_ymodem_current+10] ;DWORD completed files in this batch
+ or ax,[_ymodem_current+12]
+ jz .error_note
+ mov si,transfer_note_batch_partial
+ jmp .notice
+.ordinary_saved:
  cmp word [_transfer_download_result],3
  jne .error_note
  cmp word [terminal_transfer_fault],0
@@ -500,6 +527,8 @@ terminal_transfer_timed_byte:
 .wait:
  call terminal_transfer_service
  call transfer_maybe_unwind
+ cmp word [terminal_transfer_fault],0
+ jne .timeout
  call uart_receive_byte
  cmp ax,0xffff
  jne .done
@@ -720,9 +749,13 @@ GLOBAL _terminal_transfer_fault,terminal_transfer_cleanup_status,_terminal_trans
 GLOBAL terminal_transfer_eot_deferred,_terminal_transfer_eot_deferred
 GLOBAL terminal_transfer_native_status,_terminal_transfer_native_status
 GLOBAL terminal_transfer_filename,_terminal_transfer_filename
+GLOBAL terminal_transfer_protocol,_terminal_transfer_protocol,_terminal_transfer_direction
 terminal_transfer_pending: dw 0
 terminal_transfer_active: dw 0
+_terminal_transfer_direction:
 terminal_transfer_direction: dw 0
+_terminal_transfer_protocol:
+terminal_transfer_protocol: dw 0 ;0ordinary XMODEM,1maintained CRC YMODEM
 terminal_transfer_phase: dw 0
 _terminal_transfer_fault:
 terminal_transfer_fault: dw 0
@@ -757,3 +790,5 @@ transfer_note_stall: db 'RX TX stalled',0
 transfer_note_file: db 'RX file error',0
 transfer_note_recovery: db 'RX recovery!',0
 transfer_note_ack: db 'RX saved; ACK?',0
+transfer_note_batch_ack: db 'TX batch sent; ACK?',0
+transfer_note_batch_partial: db 'RX batch partial',0

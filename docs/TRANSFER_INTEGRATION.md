@@ -89,7 +89,8 @@ Initial harness failures are retained separately from corrected runs.
 
 These peers are synthetic and local. They do not establish physical Wi-Fi modem
 compatibility or file transfer against the BBS packages. Ordinary uploads now use the native sender and checked read-only source
-ownership; see [LIVE_UPLOAD.md](LIVE_UPLOAD.md). Batch/window/streaming and other
-protocol families, full transfer UI/settings, additional
+ownership; see [LIVE_UPLOAD.md](LIVE_UPLOAD.md). Maintained CRC YMODEM is
+available through F2 inside either transfer prompt; see [LIVE_YMODEM.md](LIVE_YMODEM.md).
+Window/streaming and other protocol families, full transfer UI/settings, additional
 emulations and physical DOS hardware remain part of the full application goal.
 BBS navigation/editor results are recorded separately in `lab/bbs/README.md`.

@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "b5f51ffaa3ed63dac02c94d2e85181ebe30212d5ea4209fd310bfa164e4e0d1e",
-  "source_file_count": 1009,
+  "source_snapshot_sha256": "2c089fbcefedced4516b24821b3dbb107e408a854c4f6bb936f216c2dc216882",
+  "source_file_count": 1038,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,19 +16,19 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "256d9e1bd67696ef7e9bb830c564d01ca1be78b55611ce2ca3a81f6f70130e5f",
+  "build_log_sha256": "b785136c9c081153c071838f3b9a33ab29e86d58405d5577955a531e02784c81",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.HAodz6/pcplus-source-proof-3o5_c2p7/checkout",
+  "source_checkout": "/tmp/nix-shell.dEgeVb/pcplus-source-proof-7ns5kxh2/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
-  "scope": "39 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
-  "output_count": 39,
+  "scope": "43 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+  "output_count": 43,
   "outputs": {
     "terminal/TERMINAL.EXE": {
-      "sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
+      "sha256": "2dafc08b51450faf183e06f68d253eec410572cbfadedec5ab388e9e28b7aed6",
       "matches_workspace": true,
-      "workspace_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad"
+      "workspace_sha256": "2dafc08b51450faf183e06f68d253eec410572cbfadedec5ab388e9e28b7aed6"
     },
     "config-dos/CONFIG.EXE": {
       "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
@@ -219,6 +219,26 @@
       "sha256": "5fc883e06f588b13f7d61a3704e8fbdab789d69f10cf998a25d79abe60e06524",
       "matches_workspace": true,
       "workspace_sha256": "5fc883e06f588b13f7d61a3704e8fbdab789d69f10cf998a25d79abe60e06524"
+    },
+    "batch-download/BATCHDL.EXE": {
+      "sha256": "ade257f91099a563355c245dffc5a40b7efdc12c5326f2f185dcddec5dbfa3f7",
+      "matches_workspace": true,
+      "workspace_sha256": "ade257f91099a563355c245dffc5a40b7efdc12c5326f2f185dcddec5dbfa3f7"
+    },
+    "batch-download/BDFAULT.EXE": {
+      "sha256": "cb42deb342a5bfa62f367b05b541ef813306fa6610dd900c4121538c82a45c85",
+      "matches_workspace": true,
+      "workspace_sha256": "cb42deb342a5bfa62f367b05b541ef813306fa6610dd900c4121538c82a45c85"
+    },
+    "batch-upload/BATCH.EXE": {
+      "sha256": "bf7c5ba885edf57435c5acaf6e4253876cb2771edc0907232c87b7660b742888",
+      "matches_workspace": true,
+      "workspace_sha256": "bf7c5ba885edf57435c5acaf6e4253876cb2771edc0907232c87b7660b742888"
+    },
+    "batch-upload/BUFAULT.EXE": {
+      "sha256": "f9471764bc92c38ba22529d21a77bf50a0902aa721b0f1e8a31002aacf002d59",
+      "matches_workspace": true,
+      "workspace_sha256": "f9471764bc92c38ba22529d21a77bf50a0902aa721b0f1e8a31002aacf002d59"
     }
   },
   "build_scripts": [
@@ -253,6 +273,8 @@
     "standalone/build_transfer_storage.py",
     "standalone/build_upload_file.py",
     "standalone/build_transfer_metadata.py",
-    "standalone/build_batch_header.py"
+    "standalone/build_batch_header.py",
+    "standalone/check_batch_download.py",
+    "standalone/check_batch_upload.py"
   ]
 }

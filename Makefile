@@ -145,7 +145,7 @@ test-parser: parser
 	python3 standalone/check_ansi.py
 	python3 standalone/test_parser_dos.py
 
-test: test-transfer-metadata test-batch-header test-upload-file test-transfer-session-composite test-transfer-storage test-download-file test-process test-driver test-parser test-keyboard $(addprefix test-,$(MODULES)) test-keyboard-mapping-raw test-keymap test-keymap-dos test-key-actions-dos test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services test-config test-modem-import test-config-dos test-config-replace test-config-abi test-directory test-directory-dos test-directory-browser test-directory-editor test-directory-replace test-ui-flow test-terminal test-bbs-modem
+test: test-transfer-metadata test-batch-header test-batch-download test-batch-upload test-upload-file test-transfer-session-composite test-transfer-storage test-download-file test-process test-driver test-parser test-keyboard $(addprefix test-,$(MODULES)) test-keyboard-mapping-raw test-keymap test-keymap-dos test-key-actions-dos test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services test-config test-modem-import test-config-dos test-config-replace test-config-abi test-directory test-directory-dos test-directory-browser test-directory-editor test-directory-replace test-ui-flow test-terminal test-terminal-ymodem-live test-bbs-modem
 	python3 standalone/test_serial.py
 
 test-parser-compat: parser compat
@@ -161,7 +161,7 @@ test-modem:
 	$(MAKE) -C reconstruction test-modem
 
 clean:
-	rm -rf build/standalone build/ansi build/keyboard build/keyboard-mapping build/keyboard-detection build/keyboard-detection-dos build/line-edit build/keymap-dos build/terminal-keys build/csi-relocation build/cursor-state build/cursor-shape build/config-dos build/config-replace build/config-abi build/ui-windows build/ui-windows-dos build/modem-commands build/modem-commands-dos build/modem-responses build/modem-responses-dos build/modem-send build/modem-send-dos build/modem-import build/connection-dos build/directory-dial build/directory-dial-dos build/directory-accounting build/directory-accounting-dos build/directory-browser build/directory-browser-dos build/directory-editor build/directory-replace build/directory-dos build/directory-terminal build/terminal build/terminal-tests build/terminal-options build/process build/download-file build/transfer-send build/transfer-metadata build/transfer-metadata-dos build/batch-header build/transfer-files build/transfer-session build/transfer-session-composite build/transfer-storage build/transfer-uart $(addprefix build/,$(MODULES))
+	rm -rf build/standalone build/ansi build/keyboard build/keyboard-mapping build/keyboard-detection build/keyboard-detection-dos build/line-edit build/keymap-dos build/terminal-keys build/csi-relocation build/cursor-state build/cursor-shape build/config-dos build/config-replace build/config-abi build/ui-windows build/ui-windows-dos build/modem-commands build/modem-commands-dos build/modem-responses build/modem-responses-dos build/modem-send build/modem-send-dos build/modem-import build/connection-dos build/directory-dial build/directory-dial-dos build/directory-accounting build/directory-accounting-dos build/directory-browser build/directory-browser-dos build/directory-editor build/directory-replace build/directory-dos build/directory-terminal build/terminal build/terminal-tests build/terminal-options build/process build/download-file build/transfer-send build/transfer-metadata build/transfer-metadata-dos build/batch-header build/batch-download build/batch-upload build/transfer-files build/transfer-session build/transfer-session-composite build/transfer-storage build/transfer-uart $(addprefix build/,$(MODULES))
 
 .PHONY: process test-process
 process:
@@ -215,3 +215,13 @@ batch-header:
 
 test-batch-header: batch-header
 	python3 standalone/check_batch_header.py
+
+.PHONY: test-batch-download test-batch-upload test-terminal-ymodem-live
+test-batch-download:
+	python3 standalone/check_batch_download.py
+
+test-batch-upload:
+	python3 standalone/check_batch_upload.py
+
+test-terminal-ymodem-live: terminal
+	python3 standalone/check_terminal_ymodem_live.py
