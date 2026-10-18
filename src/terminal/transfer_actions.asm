@@ -12,12 +12,23 @@ extern keyboard_poll,terminal_read_key,terminal_baud_low,terminal_baud_high
 extern terminal_transfer_ui_open,terminal_transfer_ui_restore,terminal_transfer_ui_receiving
 extern terminal_transfer_ui_progress,terminal_connection_notice,terminal_connection_notice_restore
 extern _terminal_transfer_store,_terminal_transfer_receive,_terminal_transfer_cleanup
+extern _terminal_upload_store,_terminal_transfer_send,_terminal_upload_cleanup
+extern terminal_upload_blocks_accepted
+extern terminal_upload_accepted_bytes
 extern _transfer_native_open,_transfer_native_write,_transfer_native_close,_transfer_download_result
 extern session_setjmp,session_longjmp,session_blocks_accepted
 GLOBAL terminal_transfer_start,terminal_transfer_poll,terminal_transfer_service
+GLOBAL terminal_upload_start,terminal_transfer_direction
 GLOBAL terminal_transfer_filter,terminal_transfer_shutdown
+GLOBAL transfer_emit,transfer_maybe_unwind,transfer_protocol_started
+GLOBAL terminal_transfer_accepted_progress
 
 terminal_transfer_start:
+ xor ax,ax
+ jmp transfer_start_direction
+terminal_upload_start:
+ mov ax,1
+transfer_start_direction:
  push bp
  push si
  push di
@@ -33,12 +44,18 @@ terminal_transfer_start:
  cmp word [connection_state],6
  jne .done
 .start:
+ mov [terminal_transfer_direction],ax
  call terminal_macro_cancel
  call terminal_program_cancel
  mov word [terminal_transfer_pending],1
  mov word [terminal_transfer_grace],0
  jmp .done
 .soft:
+ mov byte [transfer_note_soft],'R'
+ or ax,ax
+ jz .soft_note
+ mov byte [transfer_note_soft],'T'
+.soft_note:
  mov si,transfer_note_soft
  call terminal_connection_notice
 .done:
@@ -67,6 +84,9 @@ terminal_transfer_poll:
  mov word [transfer_context_active],0
  mov word [transfer_last_blocks],0
  mov word [transfer_carrier_seen],0
+ mov word [terminal_upload_blocks_accepted],0
+ mov word [terminal_upload_accepted_bytes],0
+ mov word [terminal_upload_accepted_bytes+2],0
  mov word [transfer_progress_budget],540 ;30seconds; lowbaud gets120seconds
  cmp word [terminal_baud_high],0
  jne .budget_ready
@@ -128,6 +148,16 @@ terminal_transfer_poll:
  call terminal_clock_ticks
  mov [transfer_progress_tick],ax
  mov [transfer_progress_tick+2],dx
+ cmp word [terminal_transfer_direction],1
+ jne .receive
+ call _terminal_upload_store
+ or ax,ax
+ jnz .failed
+ cmp word [terminal_transfer_fault],0
+ jne .failed
+ mov si,transfer_note_success
+ jmp .notice
+.receive:
  call _terminal_transfer_store
  or ax,ax
  jnz .failed
@@ -156,6 +186,8 @@ terminal_transfer_poll:
  mov si,transfer_note_cancel
  cmp word [terminal_transfer_cleanup_status],0
  jne .recovery_note
+ cmp word [terminal_transfer_direction],1
+ je .error_note
  cmp word [_transfer_download_result],3
  jne .error_note
  cmp word [terminal_transfer_fault],0
@@ -194,6 +226,11 @@ terminal_transfer_poll:
  jb .notice
  mov si,transfer_note_file
 .notice:
+ mov byte [si],'R'
+ cmp word [terminal_transfer_direction],1
+ jne .draw_notice
+ mov byte [si],'T'
+.draw_notice:
  call terminal_transfer_ui_restore
  mov word [terminal_transfer_phase],0
  mov word [terminal_transfer_active],0
@@ -319,7 +356,13 @@ _terminal_transfer_native_call:
  jnz .unwound
  mov word [transfer_context_active],1
  push word [bp+4]
+ cmp word [terminal_transfer_direction],1
+ je .send
  call _terminal_transfer_receive
+ jmp .returned
+.send:
+ call _terminal_transfer_send
+.returned:
  add sp,2
  mov word [transfer_context_active],0
  jmp .done
@@ -579,6 +622,16 @@ terminal_transfer_status:
  pop bp
  ret
 terminal_transfer_clock: jmp terminal_clock_ticks
+; An actual accepted block, never a legacy attempted-block counter.
+terminal_transfer_accepted_progress:
+ push ax
+ push dx
+ call terminal_clock_ticks
+ mov [transfer_progress_tick],ax
+ mov [transfer_progress_tick+2],dx
+ pop dx
+ pop ax
+ ret
 
 GLOBAL terminal_transfer_file_open,terminal_transfer_file_write,terminal_transfer_file_close
 terminal_transfer_file_open: jmp _transfer_native_open
@@ -651,6 +704,10 @@ terminal_transfer_filter:
  ret
 terminal_transfer_shutdown:
  call _terminal_transfer_cleanup
+ push ax
+ call _terminal_upload_cleanup
+ pop bx
+ or ax,bx
  or ax,ax
  jz .done
  cmp word [terminal_exit_code],0
@@ -665,6 +722,7 @@ GLOBAL terminal_transfer_native_status,_terminal_transfer_native_status
 GLOBAL terminal_transfer_filename,_terminal_transfer_filename
 terminal_transfer_pending: dw 0
 terminal_transfer_active: dw 0
+terminal_transfer_direction: dw 0
 terminal_transfer_phase: dw 0
 _terminal_transfer_fault:
 terminal_transfer_fault: dw 0

@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "binary_sha256": "039af95d39c0041af756cdee160cc92e6b399aa76d43bdc0ad6f187d159e5563",
+  "cases": [
+    {
+      "case": "fault-matrix",
+      "passed": true
+    },
+    {
+      "case": "ambiguous-close-no-repeat",
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked maintained upload_file.c and C filesystem-fault driver; no source ownership helper substituted. Mocked FS only; physical DOSIO is separately executed in test_upload_file_dos.py. Compile-time 16bitword/92bytes/offsetof assertions included."
+}

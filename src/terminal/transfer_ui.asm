@@ -5,6 +5,7 @@ SEGMENT _TEXT public class=CODE use16
 extern terminal_transfer_service,terminal_transfer_fault,terminal_quit
 extern keyboard_poll,terminal_read_key,terminal_transfer_filename
 extern session_blocks_accepted
+extern terminal_transfer_direction,terminal_upload_blocks_accepted
 GLOBAL terminal_transfer_ui_open,terminal_transfer_ui_restore,terminal_transfer_ui_progress
 GLOBAL terminal_transfer_ui_receiving
 terminal_transfer_ui_open:
@@ -45,6 +46,10 @@ terminal_transfer_ui_open:
  mov cx,160
  rep stosw
  mov si,transfer_ui_title
+ cmp word [terminal_transfer_direction],1
+ jne .title
+ mov si,transfer_ui_upload_title
+.title:
  mov di,3680
  call ui_text
  mov word [transfer_ui_length],0
@@ -150,6 +155,10 @@ terminal_transfer_ui_receiving:
  mov cx,80
  rep stosw
  mov si,transfer_ui_running
+ cmp word [terminal_transfer_direction],1
+ jne .running
+ mov si,transfer_ui_upload_running
+.running:
  mov di,3680
  call ui_text
  pop es
@@ -169,6 +178,10 @@ terminal_transfer_ui_progress:
  mov es,ax
  mov di,3680+70*2
  mov ax,[session_blocks_accepted]
+ cmp word [terminal_transfer_direction],1
+ jne .count
+ mov ax,[terminal_upload_blocks_accepted]
+.count:
  mov bx,10
  mov cx,5
 .digit:
@@ -227,3 +240,5 @@ transfer_ui_length: dw 0
 transfer_ui_visible: db 0
 transfer_ui_title: db ' Download: XMODEM   [Enter] Start   [Esc] Cancel',0
 transfer_ui_running: db ' Receiving XMODEM   [Esc] Cancel                    Blocks:',0
+transfer_ui_upload_title: db ' Upload: XMODEM/1K   [Enter] Start   [Esc] Cancel',0
+transfer_ui_upload_running: db ' Sending XMODEM/1K  [Esc] Cancel                    Blocks:',0

@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "checks": {
+    "DOS_normal_and_fault_programs_pass": true,
+    "all_synthetic_source_files_and_binaries_unchanged": true
+  },
+  "hashes": {
+    "SAMPLE.BIN": "ecd7a5361f281019734a90ec8a3d5e4029b8145a85c5e0c5802f02f81bdfc070",
+    "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "UPLOAD.EXE": "da4e63040af9c58f93968f57e1a348e2496c3a7754b6485b2ed61f33704f2ff7",
+    "UPFAULT.EXE": "039af95d39c0041af756cdee160cc92e6b399aa76d43bdc0ad6f187d159e5563"
+  },
+  "scope": "ActualDOS8086 read-only physical open/seekEND/rewind/read70013binarybytes incl1Ah/EOF/close,emptyfile,missingpath/directory and immutable sources. Separate linked filesystem-fault driver tests open/seek/read/shortread/close errors, near bounds/alias and repeated ownership cleanup. No live sender/UART/wireEOT assertion."
+}

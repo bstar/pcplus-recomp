@@ -1,409 +1,101 @@
 {
   "passed": true,
-  "binary_sha256": "29da4799847e45ec1144195412a8ed0ceff74136878ffe86617375538de1b196",
-  "actual_DOS_runs": 6,
-  "distinct_scenarios": 5,
+  "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
   "cases": [
     {
       "case": "crc1024",
-      "command": "COM1 38400 8N1 HARD",
-      "result_path": "build/terminal-transfer-dos/final-29da/crc1024/result.json",
-      "result_sha256": "59eb380eaf4131b2d70e05a4a501f0171346f4f5c3ff5d5d18c1364959f7f4bf",
-      "artifacts": {
-        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "RECV.BIN": "85c1a4ba1d2345309bd0038e835f0536a88851fbd14c7ed266b958bd5180898f",
-        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "serial.bin": "7cfd6647dc02422d5c2ad52af77c7021520e177aebab0a4cafd107933ad96e4a",
-        "peer.bin": "5725b1415c97e879381abd69e9114486a444e231f852392d7f4424c0ef07a6ed",
-        "events.json": "035dd11815a939f12dd07b91f0ce321533c8f18a2142ddd277c8760c7c613d7e"
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "negotiated_requested_integrity": true,
+        "complete_EOT_handshake": true,
+        "file_installed_before_final_ACK": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "required_terminal_ready": true,
+        "required_actual_negotiation": true,
+        "required_final_ACK": true,
+        "required_install_before_ACK": true,
+        "required_posttransfer_DSR": true,
+        "required_posttransfer_keyboard": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "no_peer_errors": true,
+        "binary_unchanged": true,
+        "exact_received_file": true,
+        "posttransfer_screen": true,
+        "no_leftover_stage_files": true
       },
-      "passed": true
+      "errors": [],
+      "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
+      "command": "COM1 38400 8N1 HARD",
+      "keys": "p1500 a-r p300 D : \\ R E C V . B I N enter p6000 r e a d y p1500 a-x",
+      "seconds": 9.48,
+      "scope": "Actual source-built DOS terminal, BIOS AltR/UI, native receive engine, real UART/IRQ and DOS files. Independent loopback peer supplies no terminal-generated responses. Synthetic media only; no physical modem/timing claim."
     },
     {
       "case": "mixed128-1024-128",
-      "command": "COM1 38400 8N1 HARD",
-      "result_path": "build/terminal-transfer-dos/final-29da/mixed128-1024-128/result.json",
-      "result_sha256": "922099726f34a603d35d545a2c49eccfda5cb68db82b008178fd17b6e0566ea8",
-      "artifacts": {
-        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "RECV.BIN": "a7a616f7e6600b7a9f9351af682e517c852254b234a7e92178e9b36131082a4c",
-        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "serial.bin": "37c660fdd0fd845d3d69e7113a92ea73563fb559200c8f6c553cfb29149b8a35",
-        "peer.bin": "a974448a7651878733deffea7e7387556a07753794f27c417bff672d135411aa",
-        "events.json": "e26cd0a5685de867e02ce26f3ae61ac6a3f0c9495c880beb7482ace904b5c095"
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "negotiated_requested_integrity": true,
+        "complete_EOT_handshake": true,
+        "file_installed_before_final_ACK": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "required_terminal_ready": true,
+        "required_actual_negotiation": true,
+        "required_final_ACK": true,
+        "required_install_before_ACK": true,
+        "required_posttransfer_DSR": true,
+        "required_posttransfer_keyboard": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "no_peer_errors": true,
+        "binary_unchanged": true,
+        "exact_received_file": true,
+        "posttransfer_screen": true,
+        "no_leftover_stage_files": true
       },
-      "passed": true
-    },
-    {
-      "case": "badCRC-retry",
+      "errors": [],
+      "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
       "command": "COM1 38400 8N1 HARD",
-      "result_path": "build/terminal-transfer-dos/final-29da/badCRC-retry/result.json",
-      "result_sha256": "e6f10f9e63bf9ef968fffbfdeb7b11224a03fa94484526a787fad3fd57f5eddc",
-      "artifacts": {
-        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "RECV.BIN": "44d942056dd7041cfe6a1bbcb1a1f3afc385bb951b5efd787e71f514f29e1ddc",
-        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "serial.bin": "dbea1370acbe3d68be9f91a7b6d81c05a37fbc9ebe38c0951d7fd5ac136a64d0",
-        "peer.bin": "e32901419a360bdd3d2bc00ea3d42de649d1c98e6da9a987149cba5205777f36",
-        "events.json": "5a0a690e2ac6879a62a6dfcdd37a5911dbd7820be96f96f65a232c5cb5b03a0d"
-      },
-      "passed": true
+      "keys": "p1500 a-r p300 D : \\ R E C V . B I N enter p6000 r e a d y p1500 a-x",
+      "seconds": 9.478,
+      "scope": "Actual source-built DOS terminal, BIOS AltR/UI, native receive engine, real UART/IRQ and DOS files. Independent loopback peer supplies no terminal-generated responses. Synthetic media only; no physical modem/timing claim."
     },
     {
       "case": "local-Escape-partial",
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "negotiated_requested_integrity": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "required_terminal_ready": true,
+        "required_actual_negotiation": true,
+        "required_posttransfer_DSR": true,
+        "required_posttransfer_keyboard": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "no_peer_errors": true,
+        "binary_unchanged": true,
+        "failed_transfer_not_installed": true,
+        "posttransfer_screen": true,
+        "no_leftover_stage_files": true
+      },
+      "errors": [],
+      "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
       "command": "COM1 38400 8N1 HARD",
-      "result_path": "build/terminal-transfer-dos/final-29da/local-Escape-partial/result.json",
-      "result_sha256": "299025f1bbbe3dba936a4759d95a7f7915ee9dabb6df9e741b90e087c7e0f156",
-      "artifacts": {
-        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "serial.bin": "b8c472ad154b548674fe1d37f624105fcd1d8dbadf82498201b8df84e87d33c1",
-        "peer.bin": "60f70fb125b5da80d204d0cf2f5b4f18c7953f2ff2b3f3f1b9fb307a6c5a2645",
-        "events.json": "a0ddaa1c0a8fd63e042424eab6559d3701d227470e5f306d61af9e4eb40c8c99"
-      },
-      "passed": true
-    },
-    {
-      "case": "checksum1024",
-      "command": "COM1 38400 8N1 HARD",
-      "result_path": "build/terminal-transfer-dos/final-29da/checksum1024/result.json",
-      "result_sha256": "fe373c858c70dbcb3ffa647a49475cb4ccd7b2d01e2c94e59dac06cc34471c43",
-      "artifacts": {
-        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "RECV.BIN": "85c1a4ba1d2345309bd0038e835f0536a88851fbd14c7ed266b958bd5180898f",
-        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "serial.bin": "7f57fbca1f3c20f960e69513b70b1427d8a18ebc71925c376744f0a69a5c8c5a",
-        "peer.bin": "ce8a2f9120472968fed98ecd2ece6aff566c34ae87847cbf8c964a606f69491d",
-        "events.json": "a5b8cd6abaff7e4e3b2b325e2d7ae2a998316d6baa93254effa77bc65e7f4820"
-      },
-      "passed": true
-    },
-    {
-      "case": "crc1024",
-      "command": "COM2 38400 8N1 NONE",
-      "result_path": "build/terminal-transfer-dos/final-29da-com2-none/crc1024/result.json",
-      "result_sha256": "c30777c875e929c7dbce45d2c510c434d52dd5b6ee7b00eb3c0a11f3eb3bb313",
-      "artifacts": {
-        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "RECV.BIN": "85c1a4ba1d2345309bd0038e835f0536a88851fbd14c7ed266b958bd5180898f",
-        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "serial.bin": "7cfd6647dc02422d5c2ad52af77c7021520e177aebab0a4cafd107933ad96e4a",
-        "peer.bin": "65b40ca8775918b9773e7420769ca0e4c83aa7b10045326149160f080856a44b",
-        "events.json": "6e04195e646700c379f130bc4d865beaab8018196a4d11a5b43d01aa059ba397"
-      },
-      "passed": true
+      "keys": "p1500 a-r p300 D : \\ R E C V . B I N enter p1500 escape p6000 r e a d y p1500 a-x",
+      "seconds": 10.981,
+      "scope": "Actual source-built DOS terminal, BIOS AltR/UI, native receive engine, real UART/IRQ and DOS files. Independent loopback peer supplies no terminal-generated responses. Synthetic media only; no physical modem/timing claim."
     }
   ],
-  "previous_full_suite": {
-    "path": "build/terminal-transfer-dos/frozen-816e-checks.json",
-    "sha256": "291a7cc344c1c8adb9f1d3ca18d42f6e5ffaf639dcb88578b921a7fc9129165d",
-    "scope": "17 distinct scenarios +COM2/NONE representative on816e; retained separately, not claimed rerun on29da"
-  },
-  "limitations": [
-    "DOSBox loopback peer, no physicalCTS/DCD/cable timing proof.",
-    "Synthetic ownedmedia only; no original executable or private drive/config execution.",
-    "Final29da representative subset: CRC1024,mixed128/1024,badCRC retry,partialEscape rollback,checksum1024 fallback,alternateCOM2/NONE."
-  ],
-  "prior_full_suite": {
-    "passed": true,
-    "binary_sha256": "816e160ec623f540ae7437d615a0d3f7e52befa144a0c91bdbf6d66c595500bf",
-    "actual_DOS_runs": 18,
-    "distinct_scenarios": 17,
-    "cases": [
-      {
-        "case": "crc128",
-        "command": "COM1 38400 8N1 HARD",
-        "result_path": "build/terminal-transfer-dos/crc128/result.json",
-        "result_sha256": "48e437844fb5525dbc1e6f513c8e7858175605b4baf4242b78ec6f4148900a16",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "RECV.BIN": "44d942056dd7041cfe6a1bbcb1a1f3afc385bb951b5efd787e71f514f29e1ddc",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "2ca2ecd66b79a2c02209b8f3fa5b1e8d068983309546665608c3f397ecd7e7f8",
-          "peer.bin": "b4ce3d65fbecd99f9f35a42f79839f94168cbaf8a540c69d574f3bab28e3c7ce",
-          "events.json": "6968b0a8b8ebed87fb2a8c3d788cc54b59a210009623876618c5ba22d9ae25fd"
-        },
-        "passed": true
-      },
-      {
-        "case": "empty",
-        "command": "COM1 38400 8N1 HARD",
-        "result_path": "build/terminal-transfer-dos/empty/result.json",
-        "result_sha256": "c565f7ac2576d37e8c12a1feb4ff9fb409238e29717eec1831fafcac01e84be2",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "RECV.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "a534602b13db11d921a314a1a22a1ae98ae7b862da36ee3f769fd1932322dc1d",
-          "peer.bin": "3f425d0dbf57d06dde5d8c932e9ba624375eaed523136713ee015b2d7bdf7562",
-          "events.json": "4d7d0c671ffe2b4c202a405cc8259b409585ba113d24c111ab732cd736936df9"
-        },
-        "passed": true
-      },
-      {
-        "case": "crc1024",
-        "command": "COM1 38400 8N1 HARD",
-        "result_path": "build/terminal-transfer-dos/crc1024/result.json",
-        "result_sha256": "9e3a68ae1061a9aab7ea63fdd8a250b2fc027b50bc679643aa0b3736adf86999",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "RECV.BIN": "85c1a4ba1d2345309bd0038e835f0536a88851fbd14c7ed266b958bd5180898f",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "7cfd6647dc02422d5c2ad52af77c7021520e177aebab0a4cafd107933ad96e4a",
-          "peer.bin": "5725b1415c97e879381abd69e9114486a444e231f852392d7f4424c0ef07a6ed",
-          "events.json": "58a4ffd883f99a853639c8b235cc508932f1548aa33cbb867f6197f29efaf90b"
-        },
-        "passed": true
-      },
-      {
-        "case": "mixed128-1024-128",
-        "command": "COM1 38400 8N1 HARD",
-        "result_path": "build/terminal-transfer-dos/mixed128-1024-128/result.json",
-        "result_sha256": "49e2fc647766ec880fdac61eeb8ef06c95443cdd4c64d949d6d03b0c9bf29570",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "RECV.BIN": "a7a616f7e6600b7a9f9351af682e517c852254b234a7e92178e9b36131082a4c",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "37c660fdd0fd845d3d69e7113a92ea73563fb559200c8f6c553cfb29149b8a35",
-          "peer.bin": "a974448a7651878733deffea7e7387556a07753794f27c417bff672d135411aa",
-          "events.json": "09bc7737109b545dd7256f5fc7f0dae53c6ccb2ff8a904bd75140ae55655e6e1"
-        },
-        "passed": true
-      },
-      {
-        "case": "peer-doubleCAN",
-        "command": "COM1 38400 8N1 HARD",
-        "result_path": "build/terminal-transfer-dos/peer-doubleCAN/result.json",
-        "result_sha256": "5d3ccd6e5b030dbddf128c7bd28ae9f9a4b7c5dd0c9e9f0d1d5d9722d5c59439",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "ef98d1e8328f7dd6a6bb17e89ddd66fcf8073749e8e00b3e755c2eed0f510389",
-          "peer.bin": "ebc33fc7d85aa0f6f405a75f2ba59fc35eda2c2bdef1da6626ace80dd2defc82",
-          "events.json": "ee529d54c23ce79d75c3ca18ca6095e31c37679166490340adf1e13d2a720e56"
-        },
-        "passed": true
-      },
-      {
-        "case": "duplicate",
-        "command": "COM1 38400 8N1 HARD",
-        "result_path": "build/terminal-transfer-dos/verified/duplicate/result.json",
-        "result_sha256": "d7016c6e6f53d9037f45577094bc94ce24c897247742561eebbf07cb6901b7f4",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "RECV.BIN": "ab5d6c084cadf4896267f764d791f31c4ac6cc009fb0aab4367fb99428b64bf0",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "d7a1b3d08f5df6a00dce36ce16e6717d622347a00d11f8ee320362065c326205",
-          "peer.bin": "d8db4112a3dce32048b83b3c2ce85b3e67f709976740edd7fcec348bbc02c750",
-          "events.json": "5b43e31457626cabd06abb45c76bd48bdbd67270e6273879f513732bfbc9df76"
-        },
-        "passed": true
-      },
-      {
-        "case": "badCRC-retry",
-        "command": "COM1 38400 8N1 HARD",
-        "result_path": "build/terminal-transfer-dos/verified/badCRC-retry/result.json",
-        "result_sha256": "70ab1cd8e1c328e83584093790aa65fee896a9cc5c303f821db46e271f0ded6f",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "RECV.BIN": "44d942056dd7041cfe6a1bbcb1a1f3afc385bb951b5efd787e71f514f29e1ddc",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "dbea1370acbe3d68be9f91a7b6d81c05a37fbc9ebe38c0951d7fd5ac136a64d0",
-          "peer.bin": "e32901419a360bdd3d2bc00ea3d42de649d1c98e6da9a987149cba5205777f36",
-          "events.json": "5bf6bbf3c14281c6bed1a7bc1eb8575b065db03c724632f83c5969aa638ca3ef"
-        },
-        "passed": true
-      },
-      {
-        "case": "bad-sequence-retry",
-        "command": "COM1 38400 8N1 HARD",
-        "result_path": "build/terminal-transfer-dos/verified/bad-sequence-retry/result.json",
-        "result_sha256": "3e2b5b7401085d25c7eeead7f8e47aa6594315fc73d2658abc72c73cdb6ba5e0",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "RECV.BIN": "44d942056dd7041cfe6a1bbcb1a1f3afc385bb951b5efd787e71f514f29e1ddc",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "dbea1370acbe3d68be9f91a7b6d81c05a37fbc9ebe38c0951d7fd5ac136a64d0",
-          "peer.bin": "c05009c5e2478639d829791947dcfd552bcd2d1c28804af234c897addf8cf9cb",
-          "events.json": "7a3da89ae59350ec8e95079e849f11df706729a081416ff3fdc2969b175ecbd3"
-        },
-        "passed": true
-      },
-      {
-        "case": "peer-doubleCAN-partial",
-        "command": "COM1 38400 8N1 HARD",
-        "result_path": "build/terminal-transfer-dos/verified/peer-doubleCAN-partial/result.json",
-        "result_sha256": "86f68729b195005df3ca36b712f05f67475bbb9873c9459a05f4ade5515c00a5",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "b8c472ad154b548674fe1d37f624105fcd1d8dbadf82498201b8df84e87d33c1",
-          "peer.bin": "0e3530fa667ecf40356483bceeabf9c5eb154b09ee0eb760bc3ce4b14b403292",
-          "events.json": "b38d64cd5aef0f607ac9691f98018f866501298738c8c09c3d43057cf0a31b30"
-        },
-        "passed": true
-      },
-      {
-        "case": "local-Escape",
-        "command": "COM1 38400 8N1 HARD",
-        "result_path": "build/terminal-transfer-dos/verified/local-Escape/result.json",
-        "result_sha256": "a999ee08abe0f84adff972a8f6e8c927075fa1f0d15feb0205b3b6edf8db098f",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "ef98d1e8328f7dd6a6bb17e89ddd66fcf8073749e8e00b3e755c2eed0f510389",
-          "peer.bin": "6f94898f123f90370106e50af54e37d2a762fdc9ae7ac41da651b90a0a5979e7",
-          "events.json": "19735981b4a22630495e57abb5b9b2424a0001c853eb241ae4d577aad8266294"
-        },
-        "passed": true
-      },
-      {
-        "case": "local-Escape-partial",
-        "command": "COM1 38400 8N1 HARD",
-        "result_path": "build/terminal-transfer-dos/verified/local-Escape-partial/result.json",
-        "result_sha256": "4547b942a41fc0c780a700a6b0199e95295bd9e56656d815093deea32f1d2da1",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "b8c472ad154b548674fe1d37f624105fcd1d8dbadf82498201b8df84e87d33c1",
-          "peer.bin": "60f70fb125b5da80d204d0cf2f5b4f18c7953f2ff2b3f3f1b9fb307a6c5a2645",
-          "events.json": "0daf8a1a634aaa5177376d4d747cc3cdd996e7f62efbca68f6cb4ac2b11d41fe"
-        },
-        "passed": true
-      },
-      {
-        "case": "local-AltX",
-        "command": "COM1 38400 8N1 HARD",
-        "result_path": "build/terminal-transfer-dos/verified/local-AltX/result.json",
-        "result_sha256": "9e2bdbe5abb9b5d07c964c5f2c2b8b1cf15ecb034f7a9e8b27e1a32c611380d2",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "SCREEN.BIN": "66489e239ef986c5a211a59526c15446f0e7a85a88b2ede3a47d1cb709e0521e",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "75074031461276ab086aa05c52f54d0a605ff97fe27eadcb2be992ef8c9d966f",
-          "peer.bin": "f0a36fb568377977f61bbd4c05d1968d32503ed5372207dc78df57eaa99e4b57",
-          "events.json": "fda8144de540913129f87785e2bf498e46e858e15c492200bb3cbe5ddf6f0762"
-        },
-        "passed": true
-      },
-      {
-        "case": "existing-destination",
-        "command": "COM1 38400 8N1 HARD",
-        "result_path": "build/terminal-transfer-dos/verified/existing-destination/result.json",
-        "result_sha256": "de6ad03f1582b3b3932099cd45c08bc71f05910458ed99f9f60c966e34370102",
-        "artifacts": {
-          "RECV.BIN": "ddcd1527ef5379d88517ce70aec0866c44ad9d8760ec6ba48986fb177250890b",
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "0dd07f228e3e7d0da88975c2ec31c3e41b91391b20149e314d59e2062f685e7b",
-          "peer.bin": "4e11f36471e2b6aa2e999c9d702299fa5a654d7ecbb3a6d912717367b39628af",
-          "events.json": "dd55d6d4a4b26724b7516bf9da1df1b80664b9f81798073974c9710d27a251de"
-        },
-        "passed": true
-      },
-      {
-        "case": "SOFT-rejected",
-        "command": "COM1 38400 8N1 SOFT",
-        "result_path": "build/terminal-transfer-dos/verified/SOFT-rejected/result.json",
-        "result_sha256": "05f8a508e8fcd744e9ff7afa67ce3ca63e377405774a706ac17f31573db8561c",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "365b38ebe0ac2f5567500bbc4ec4bf5f5e3d0f9eba9b6f9169fca2d8b15401d0",
-          "peer.bin": "66c12add56ed100d359af9d87b5fb08fb172363e31eaf788c7e4bd354c0e7d5c",
-          "events.json": "5873e098ca1b309a0986a7ea0324cfe15ab2836043a6b156f2aace603d39136f"
-        },
-        "passed": true
-      },
-      {
-        "case": "checksum128",
-        "command": "COM1 38400 8N1 HARD",
-        "result_path": "build/terminal-transfer-dos/fallback-timeout/checksum128/result.json",
-        "result_sha256": "c43049e42389a080d5a46f3ca1caaae42ed8f6b83d3bd43d382b9d96196d0d90",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "RECV.BIN": "44d942056dd7041cfe6a1bbcb1a1f3afc385bb951b5efd787e71f514f29e1ddc",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "7f57fbca1f3c20f960e69513b70b1427d8a18ebc71925c376744f0a69a5c8c5a",
-          "peer.bin": "dd0f3743965bdcd6beeed89ff4c7c60e90fe421d1af4cba450faadcb70a51b19",
-          "events.json": "f9cceaa17f90afca6b384749053d8e69b704f5505e07ecaeeade7aeba3081152"
-        },
-        "passed": true
-      },
-      {
-        "case": "checksum1024",
-        "command": "COM1 38400 8N1 HARD",
-        "result_path": "build/terminal-transfer-dos/fallback-timeout/checksum1024/result.json",
-        "result_sha256": "c5cb05833e42796a7e245828bc657e8cdba30699dbaf7254984cd7fbd635c653",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "RECV.BIN": "85c1a4ba1d2345309bd0038e835f0536a88851fbd14c7ed266b958bd5180898f",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "7f57fbca1f3c20f960e69513b70b1427d8a18ebc71925c376744f0a69a5c8c5a",
-          "peer.bin": "ce8a2f9120472968fed98ecd2ece6aff566c34ae87847cbf8c964a606f69491d",
-          "events.json": "a83f23fd009b303161a2ae54902d6eb6794a0d91bb3718afac5db3c694c6ebe1"
-        },
-        "passed": true
-      },
-      {
-        "case": "no-peer-timeout",
-        "command": "COM1 38400 8N1 HARD",
-        "result_path": "build/terminal-transfer-dos/fallback-timeout/no-peer-timeout/result.json",
-        "result_sha256": "0649a4929394c9e8f1fd11a6c1a998aa1f031773170817c3d56abdaa8b99f4ee",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "5034705e3bb3b5ec6f56309ca368fc38e97f26685fe7c15616aeab3dbd6f139e",
-          "peer.bin": "1fec0468801558e065facd86be79357ae7483d18d8b3d2b9777ab90d186f0968",
-          "events.json": "abb649bb12824279e00837ef5ed67b43ce5e2493e79ef5b81ca51e426babda16"
-        },
-        "passed": true
-      },
-      {
-        "case": "crc1024",
-        "command": "COM2 38400 8N1 NONE",
-        "result_path": "build/terminal-transfer-dos/com2-none/crc1024/result.json",
-        "result_sha256": "e95aa00b24ec02338a45a107ebad99bb31a015cf6085c74f471a4a7bc6e133a3",
-        "artifacts": {
-          "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "RECV.BIN": "85c1a4ba1d2345309bd0038e835f0536a88851fbd14c7ed266b958bd5180898f",
-          "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
-          "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-          "serial.bin": "7cfd6647dc02422d5c2ad52af77c7021520e177aebab0a4cafd107933ad96e4a",
-          "peer.bin": "65b40ca8775918b9773e7420769ca0e4c83aa7b10045326149160f080856a44b",
-          "events.json": "cfeff6f76ff8fe285a56e2ddc912a3e9c125ebd4a37178ebba28ec6f33a1e221"
-        },
-        "passed": true
-      }
-    ],
-    "limitations": [
-      "DOSBox loopback serialpeer; no physicalCTS/DCD/cable timing proof.",
-      "All media are synthetic owned build directories; no user disk or originalbinary execution.",
-      "InitialDSR-interleaving false-negative runs and invalidesc injected-key trial retained outside this verified index.",
-      "PROGRAM farretention was a map-only concern already covered by frozen816e source max(stack,farend) and root actualDOS canary; no runtimebug was established."
-    ]
-  },
-  "scope_note": "Final29da representative runs follow a slow-link drain-timer fix and help text addition. The complete17-scenario suite ran on prior816e; it is retained with its own hash, not attributed to29da. Final linked CPU checks separately exercise slow transmission and wrap/midnight deadlines."
+  "prior_checkpoint": {
+    "commit": "b3bfe8e",
+    "binary_sha256": "29da4799847e45ec1144195412a8ed0ceff74136878ffe86617375538de1b196",
+    "validation_path": "docs/validation/terminal-transfer-dos.json",
+    "scope": "Prior6 representativeDOSdownloads and the earlier17-scenario suite are attributed to their own hashes, not this3-case regression."
+  }
 }

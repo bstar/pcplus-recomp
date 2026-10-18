@@ -584,6 +584,7 @@ terminal_usage:
  db 'Serial: 7/8 data, N/O/E/M/S parity, 1/2 stop; e.g. 8N1. Any option order.',13,10
  db 'Baud: 300 1200 2400 4800 9600 19200 38400 57600 115200',13,10
  db 'Alt-R: XMODEM download (HARD/NONE). Escape cancels. Alt-X exits.',13,10
+ db 'Alt-S: XMODEM upload, automatic 1K blocks (HARD/NONE).',13,10
  db 'Defaults: COM1 38400 8N1 NONE. /? shows this help.',13,10,'$'
 options_defaults: dw 1,38400,0,0,8,1,0,0
 options_stage:

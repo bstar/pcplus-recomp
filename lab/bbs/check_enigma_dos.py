@@ -41,7 +41,9 @@ def audit(label):
         'actual_DOS_device_attributes_reply': b'\x1b[?1;2c' in sent,
         'actual_DOS_cursor_position_reply': bool(re.search(rb'\x1b\[[0-9]+;[0-9]+R', sent)),
         'actual_DOS_arrow_keys': b'\x1b[B' in sent and b'\x1b[A' in sent,
-        'final_file_menu_visible': 'file base' in screen.lower(),
+        # Main also contains a "file base" link. Require the actual page's
+        # heading and authoritative final module, not that incidental label.
+        'final_file_menu_visible': 'file base >>' in screen.lower() and bool(menus) and menus[-1] == 'fileBaseMainMenu',
         'stock_problematic_art_unchanged': hashlib.sha256(stock.read_bytes()).hexdigest() == '2adc57a2fd56e0862d1ab206d8d988e2f7454158457abc98303f43ca90ca80c9',
         'no_unsupported_terminal_failure': 'unsupported terminal' not in screen.lower(),
     }

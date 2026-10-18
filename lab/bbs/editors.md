@@ -213,3 +213,12 @@ unsaved and the server confirms no post. Both runs restore sampled hardware
 and preserve the synthetic PRM. The prior816e runs are retained separately.
 Neither normal DOS exit nor correct outgoing key bytes make the ENiGMA editor
 a pass. The immediate modem model and stock server decoder remain unchanged.
+
+## Ordinary upload checkpoint
+
+Frozen `036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad`
+repeats both DOS editor recipes under `editor-upload-ack-final`. Synchronet again
+passes12 behavior and eight wire checks; ENiGMA still fails Home/Insert behavior
+with all eight wire sequences present. It closes unsaved with no post. The
+unchanged immediate bridge/stock decoder boundary remains visible. Separate
+ordinary upload tests do not make editor compatibility pass.

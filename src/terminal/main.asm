@@ -23,6 +23,7 @@ extern terminal_reset_capture
 extern terminal_release_flow,terminal_cleanup_flow_failed
 extern terminal_transfer_poll,terminal_transfer_filter,terminal_transfer_shutdown
 extern _terminal_transfer_initialize
+extern _terminal_upload_initialize
 extern terminal_connection_start,terminal_connection_receive
 extern connection_state,connection_result
 ; Open Watcom small-code consistency marker for the near-C DOS IO subset.
@@ -40,6 +41,7 @@ _small_code_:
  call terminal_program_initialize
  push ax
  call _terminal_transfer_initialize
+ call _terminal_upload_initialize
  pop ax
  call terminal_parse_options
  jnc .configured

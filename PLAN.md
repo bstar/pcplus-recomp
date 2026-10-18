@@ -67,9 +67,9 @@ a malformed stock theme's metadata. Those handlers are now recovered and tested;
 the source-owned defaults select the proved original ANSI profile. Earlier
 checkpoints passed all three local servers through login and menu navigation through a modeled Hayes/Telnet
 modem; Mystic also passes indexed-screen arrows and Escape return. The current
-29da4799 checkpoint passes Synchronet/Mystic menus and Synchronet FSEditor.
-ENiGMA login-matrix arrows and message/file menus pass with the configured-N recipe;
-the initial timed run's incomplete menu workflow is retained. Its real editor
+036a8092 checkpoint passes Synchronet/Mystic menus and Synchronet FSEditor.
+ENiGMA login-matrix arrows and message/file menus pass with the paced retry;
+the initial schedule's incomplete menu workflow is retained with its failed audit. Its real editor
 still fails Home/Insert despite correct outgoing bytes (docs/validation/bbs-matrix.json
 and bbs-editors.json). An
 isolated maintained-source snapshot builds the identical interactive executable
@@ -159,19 +159,22 @@ physical modem compatibility or close the remaining application gates below.
       filename/progress UI, services bounded waits/cancellation and suppresses
       the final ACK until checked installation. HARD/NONE binary reception and
       actual DOS owned-peer tests are documented in TRANSFER_INTEGRATION.md.
-      Source-file upload integration, physical peers,
+      Alt-S now connects the native ordinary sender to checked read-only DOS sources,
+      bounded live UART callbacks and actual-ACK progress. Physical peers,
       batch metadata, every protocol family, capture/logging and F09 remain open.
       See `docs/TRANSFER_SESSION.md`, `docs/DOWNLOAD_STORAGE.md`,
       `docs/TRANSFER_SEND.md`, `docs/TRANSFER_FILES.md`, `docs/TRANSFER_UART.md`.
-      `docs/TRANSFER_INTEGRATION.md` records the audited far-shadow/history
-      relocation, PROGRAM retention floor and serviced binary-UART owner needed
-      next; those runtime changes remain unimplemented.
+      `docs/TRANSFER_INTEGRATION.md` records the implemented far-shadow/history
+      relocation, PROGRAM retention floor and serviced binary-UART owner.
+      LIVE_UPLOAD.md adds ordinary source-file uploads through the native sender
+      and checked read-only DOS source ownership; remaining protocol families,
+      capture/logging and application gates stay open.
 - [ ] Reconstruct scripting interfaces and required interpreter/compiler integration.
       Keyboard file structures and original TEXT caret/pause consumers are proved,
       and explicit global /T KEY import now supports bounded nonblocking TEXT.
       Maintained PROGRAM now executes stored commands through COMSPEC `/c` and a
       bounded source-owned DOS process backend, with serial/vector/video handoff.
-      Current checkpoint `29da4799` linked regressions and separate actual DOS synthetic-child
+      Current checkpoint `036a8092` linked regressions and separate actual DOS synthetic-child
       tests cover restoration and failures. Native PROGRAM has 3,102 exact bytes,
       including its EXEC/environment/PATH core, but heap and broader application
       services remain external; native reset has 2,301 exact bytes with its

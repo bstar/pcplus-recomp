@@ -1,0 +1,488 @@
+{
+  "passed": true,
+  "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
+  "actual_DOS_runs": 23,
+  "distinct_scenarios": 22,
+  "harness_source": {
+    "path": "standalone/test_terminal_upload_dos.py",
+    "sha256": "1f48fa1d53faf70cd95c1824bf70ea54663c7088953ec74aa429b21417c0a55d"
+  },
+  "cases": [
+    {
+      "case": "NAK-retry",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 128,
+      "accepted_blocks": 1,
+      "validated_frames": 2,
+      "result_path": "build/terminal-upload-dos/final-036a/NAK-retry/result.json",
+      "result_sha256": "49a7b3d89753ba0c0b8047187bb048327a10a45bab332e4d9f41f2989b985e72",
+      "artifacts": {
+        "SEND.BIN": "44d942056dd7041cfe6a1bbcb1a1f3afc385bb951b5efd787e71f514f29e1ddc",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "c68c66bcdd6138e2f88a8dd92a624eb9ba91d755a3907b332780418c2f29f4f7",
+        "peer.bin": "47cbca31669d8e29e86b18c5a6ce6d36cfabe21a3c1d0d25214f5fe86a1b3bf6",
+        "events.json": "52f0da488123128a4f78f1f0982abf5a3a2ff8660387310f619e1655ca0714c8",
+        "frames.json": "b6c6a3b00f0ea1a1ee3d88fcc565a1f6ce3019cec05f49047e1e0ec48f3c8de7"
+      },
+      "passed": true
+    },
+    {
+      "case": "SOFT-rejected",
+      "command": "COM1 38400 8N1 SOFT",
+      "source_size": 128,
+      "accepted_blocks": 0,
+      "validated_frames": 0,
+      "result_path": "build/terminal-upload-dos/final-036a/SOFT-rejected/result.json",
+      "result_sha256": "e6520e34c7c8844bc0a61ce869f2074d45e50f84cf37c537d1cead8c69a6e287",
+      "artifacts": {
+        "SEND.BIN": "44d942056dd7041cfe6a1bbcb1a1f3afc385bb951b5efd787e71f514f29e1ddc",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "cc109d6780900feae4721a7462a2f45bc3ef0bde0c29630ff487d9b8a45bc36b",
+        "peer.bin": "57f214eec2405311e66f7a83ccd35c6925639dff4ec4eeba5f45cf0eabeb4a14",
+        "events.json": "5873e098ca1b309a0986a7ea0324cfe15ab2836043a6b156f2aace603d39136f",
+        "frames.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "passed": true
+    },
+    {
+      "case": "block-rollover",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 263169,
+      "accepted_blocks": 258,
+      "validated_frames": 258,
+      "result_path": "build/terminal-upload-dos/final-036a/block-rollover/result.json",
+      "result_sha256": "33e42b96a02a677d3a16774326a875c533d35d52aded321dce28173c3af5ef9c",
+      "artifacts": {
+        "SEND.BIN": "e01d776633752fcf0a295a38acfdf9b0281b4b7eac7249794a4989088744e222",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "4fcc6929deab528300ffd9b3502607e134408fc7355e915f88a50716a28febdf",
+        "peer.bin": "16d2a29a9783054a5c9d0d1231b8ab1b5531fc93f46697557200e99d69b5325e",
+        "events.json": "369be94ebe325bc3ad4e8fa60e7126b391d0506a116ecff7582a48780c5668da",
+        "frames.json": "1406d7a4269bbf7089ad0d9d248c3627a69fb2fb0dfda0a2f7ee086355aeb270"
+      },
+      "passed": true
+    },
+    {
+      "case": "checksum1024",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 1024,
+      "accepted_blocks": 1,
+      "validated_frames": 1,
+      "result_path": "build/terminal-upload-dos/final-036a/checksum1024/result.json",
+      "result_sha256": "09de30b847e53801f9c213239c1a0f03c804d19d85e0f444634a17d9ac6ea653",
+      "artifacts": {
+        "SEND.BIN": "85c1a4ba1d2345309bd0038e835f0536a88851fbd14c7ed266b958bd5180898f",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "2c59be89df483471a9a29d2371cb75b413ec9030859359eae500245e2f68450b",
+        "peer.bin": "e506b2f458dfdac565f63d699741522535eb9b8c471c100bc4eaef68afa440a7",
+        "events.json": "7999672a750127afc1cba8e375c4524e582a8fee1e3c69ee2bcbf54a0d59e31d",
+        "frames.json": "18bb9a96d935099b6188e7333d2ff5f1d1c3586b022e1c98c716563d3b5bd1d0"
+      },
+      "passed": true
+    },
+    {
+      "case": "checksum128",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 128,
+      "accepted_blocks": 1,
+      "validated_frames": 1,
+      "result_path": "build/terminal-upload-dos/final-036a/checksum128/result.json",
+      "result_sha256": "4650c332f4134469609069f0cba65db729aedf50cf13757c8adf35a895df03c9",
+      "artifacts": {
+        "SEND.BIN": "44d942056dd7041cfe6a1bbcb1a1f3afc385bb951b5efd787e71f514f29e1ddc",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "a8487b64b2494155c5b93e6f8ad13aaf7368c69ce813c16caf30041302cf9d24",
+        "peer.bin": "e506b2f458dfdac565f63d699741522535eb9b8c471c100bc4eaef68afa440a7",
+        "events.json": "8aabd0fa16f623119c75a898e2152f039513ead7b27922d9ed19be9e1343fe00",
+        "frames.json": "aa4213d27f2ae971c95dab9866ca04f223406a71ac6d78076618d13c87084c5b"
+      },
+      "passed": true
+    },
+    {
+      "case": "crc1024",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 1024,
+      "accepted_blocks": 1,
+      "validated_frames": 1,
+      "result_path": "build/terminal-upload-dos/final-036a/crc1024/result.json",
+      "result_sha256": "8a13483fa6ab7c3bfa505d2c7bf2c677ad165e76f56329390385b89fe18c698d",
+      "artifacts": {
+        "SEND.BIN": "85c1a4ba1d2345309bd0038e835f0536a88851fbd14c7ed266b958bd5180898f",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "4893cd3a6c990a02384fd545aca8c639d1291d200615d47ffbb973b569bde39a",
+        "peer.bin": "70af121c488bbf353243e5b1b74160c676855218c98fa34c30aa6aea19c8c32b",
+        "events.json": "c750c5f899e68f7a422ec480773946109a6f5de715f8b65001fe56bd691afd4b",
+        "frames.json": "8da130948fb5785dffe70381427bcb995e7d6ead7246f83558221c3102714a10"
+      },
+      "passed": true
+    },
+    {
+      "case": "crc128",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 128,
+      "accepted_blocks": 1,
+      "validated_frames": 1,
+      "result_path": "build/terminal-upload-dos/final-036a/crc128/result.json",
+      "result_sha256": "2cfc45bf7fda38973905a9cc022646070acca43550a61c742ea1b36fb4ca2429",
+      "artifacts": {
+        "SEND.BIN": "44d942056dd7041cfe6a1bbcb1a1f3afc385bb951b5efd787e71f514f29e1ddc",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "84a9496384276c9d740222fb87c4fbfdf46476261192978909e3b6c3282b666b",
+        "peer.bin": "70af121c488bbf353243e5b1b74160c676855218c98fa34c30aa6aea19c8c32b",
+        "events.json": "be68f5d84b1686145c9d2cc7a1898549409fd67007f3388e5daa43ba30a9810c",
+        "frames.json": "291aa55cdb237c4367fa0c0f8519ca643a76bf60cdc42d2cfd8d3e9cd27f22a7"
+      },
+      "passed": true
+    },
+    {
+      "case": "device-source",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": null,
+      "accepted_blocks": 0,
+      "validated_frames": 0,
+      "result_path": "build/terminal-upload-dos/final-036a/device-source/result.json",
+      "result_sha256": "8a5619ee9505c0646022efe0449ad2669916fc5f4df90d5d1fa9d29e43ecc91a",
+      "artifacts": {
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "365b38ebe0ac2f5567500bbc4ec4bf5f5e3d0f9eba9b6f9169fca2d8b15401d0",
+        "peer.bin": "d85505cbb78b5f770602644e14c8277db68dde7eeb88957b368457e29d3976d7",
+        "events.json": "8b4c312d0933fd1a027aa5460c0bd7232738cc2e0c307dba405166544f5f1c2d",
+        "frames.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "passed": true
+    },
+    {
+      "case": "directory-source",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": null,
+      "accepted_blocks": 0,
+      "validated_frames": 0,
+      "result_path": "build/terminal-upload-dos/final-036a/directory-source/result.json",
+      "result_sha256": "f35232efb3ab413be2e02e47cec5fd303a853c0032654fac94f3b71f75000fc3",
+      "artifacts": {
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "365b38ebe0ac2f5567500bbc4ec4bf5f5e3d0f9eba9b6f9169fca2d8b15401d0",
+        "peer.bin": "d85505cbb78b5f770602644e14c8277db68dde7eeb88957b368457e29d3976d7",
+        "events.json": "3f94b247853f1c8107a22b75435798b693c45c5ad58bdb05099bccb46f1251d8",
+        "frames.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "passed": true
+    },
+    {
+      "case": "dropped-ACK",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 128,
+      "accepted_blocks": 1,
+      "validated_frames": 2,
+      "result_path": "build/terminal-upload-dos/final-036a/dropped-ACK/result.json",
+      "result_sha256": "9a2d23071ca06dbea7031e62a3ed0edc3ff2041997d4b172b7937160aca14d66",
+      "artifacts": {
+        "SEND.BIN": "44d942056dd7041cfe6a1bbcb1a1f3afc385bb951b5efd787e71f514f29e1ddc",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "8fbfcc47fb59b8da41a6906805ddb18f86876593bd3c852f76552a7650e832c0",
+        "peer.bin": "39f03f33c0ba49ea535dc201e4f5150ed8e3050eafd740a3a80152b3fa1611f7",
+        "events.json": "3bc1d33ebd6c39687a84fd4fa0b8bfc8f534b2267a9f7b59e816d8fc94f59900",
+        "frames.json": "b6c6a3b00f0ea1a1ee3d88fcc565a1f6ce3019cec05f49047e1e0ec48f3c8de7"
+      },
+      "passed": true
+    },
+    {
+      "case": "empty",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 0,
+      "accepted_blocks": 0,
+      "validated_frames": 0,
+      "result_path": "build/terminal-upload-dos/final-036a/empty/result.json",
+      "result_sha256": "714f75a03bb8b8fe67cef4c609ae2694aa14ef8d2f9510c773bd832315b14a1b",
+      "artifacts": {
+        "SEND.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "ff04ed2c0d38306a8cf81e37ecb281e8068f7b563450a9c1ab40c2b9ce761ba4",
+        "peer.bin": "965ffd06720f1a121cb9118aff1ce4b18625f92826dd089f430787a52f93a01a",
+        "events.json": "0322a7c58fd7c685a2017496401bfd9889d877fe625f7f926aea34c30aad48e8",
+        "frames.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "passed": true
+    },
+    {
+      "case": "invalid-path",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": null,
+      "accepted_blocks": 0,
+      "validated_frames": 0,
+      "result_path": "build/terminal-upload-dos/final-036a/invalid-path/result.json",
+      "result_sha256": "43d757b7db93f909da893e413b9a21bda39900ff547d6d894f92083afd2b986c",
+      "artifacts": {
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "365b38ebe0ac2f5567500bbc4ec4bf5f5e3d0f9eba9b6f9169fca2d8b15401d0",
+        "peer.bin": "d85505cbb78b5f770602644e14c8277db68dde7eeb88957b368457e29d3976d7",
+        "events.json": "5dff3a6822ca280b3e8e4e70dad46e2c7ae466e44b207f6d0aa31dfd4c2d2e2f",
+        "frames.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "passed": true
+    },
+    {
+      "case": "local-AltX",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 128,
+      "accepted_blocks": 0,
+      "validated_frames": 1,
+      "result_path": "build/terminal-upload-dos/final-036a/local-AltX/result.json",
+      "result_sha256": "b2cb4ba785a904c9bd03cb8dd791959a9842a3665b3a3af4a7c4dc909208a66b",
+      "artifacts": {
+        "SEND.BIN": "44d942056dd7041cfe6a1bbcb1a1f3afc385bb951b5efd787e71f514f29e1ddc",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "94aa74ce27ffdd5be9d45c7442c3c4311f968fb81a92a28924fede6a3f7384ff",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "debc82139c374f07b0abf5811ad761e53094c773fe78eaf9ef933c951a8f163f",
+        "peer.bin": "68768b77dbdc42b3893b84d9a078a03ab18490a577bcb8dada83f4c6485c8612",
+        "events.json": "1c9bb3194688cec592d4424263083bd14f014dd9052e5ab39b38e90897ba0268",
+        "frames.json": "291aa55cdb237c4367fa0c0f8519ca643a76bf60cdc42d2cfd8d3e9cd27f22a7"
+      },
+      "passed": true
+    },
+    {
+      "case": "local-Escape",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 128,
+      "accepted_blocks": 0,
+      "validated_frames": 1,
+      "result_path": "build/terminal-upload-dos/final-036a/local-Escape/result.json",
+      "result_sha256": "4d82293f145aa886694fe287c95c273b137cd01a7a6d2ad0cc1b6df00929c2b2",
+      "artifacts": {
+        "SEND.BIN": "44d942056dd7041cfe6a1bbcb1a1f3afc385bb951b5efd787e71f514f29e1ddc",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "9c10eed786eae90b865ef5bc14bdaecc764ec37aabe4fb5fcaa31b3e18b10e08",
+        "peer.bin": "97606c61a80a5b43321135bf12cb3e2c7c9ac2f97d01b1aa5a970f5722071c61",
+        "events.json": "af879e24b9a74333593ef388449a9d8642e3eb4eddb206ac15ce3493927cb79e",
+        "frames.json": "291aa55cdb237c4367fa0c0f8519ca643a76bf60cdc42d2cfd8d3e9cd27f22a7"
+      },
+      "passed": true
+    },
+    {
+      "case": "missing-source",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": null,
+      "accepted_blocks": 0,
+      "validated_frames": 0,
+      "result_path": "build/terminal-upload-dos/final-036a/missing-source/result.json",
+      "result_sha256": "c88a3b08f6d347612168568fef789c9353d2429e285351529f0b10f5a0017aad",
+      "artifacts": {
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "365b38ebe0ac2f5567500bbc4ec4bf5f5e3d0f9eba9b6f9169fca2d8b15401d0",
+        "peer.bin": "d85505cbb78b5f770602644e14c8277db68dde7eeb88957b368457e29d3976d7",
+        "events.json": "dd55d6d4a4b26724b7516bf9da1df1b80664b9f81798073974c9710d27a251de",
+        "frames.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "passed": true
+    },
+    {
+      "case": "mixed-over10K",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 11521,
+      "accepted_blocks": 14,
+      "validated_frames": 14,
+      "result_path": "build/terminal-upload-dos/final-036a/mixed-over10K/result.json",
+      "result_sha256": "6235112455b90bb460a69d89a68733928010f392760083e05c8258adfde45b53",
+      "artifacts": {
+        "SEND.BIN": "7ce51a14505efa4b1baa89573960d91c6ca7cf9c170825ae428e870dd9e0182b",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "72214c9633f0e6e79b1fe086e150f3f3c8604c3e46fb29ccb672c3778893aef0",
+        "peer.bin": "1078db09d86eebda3821ed42ba8426813b61b3b7418613131686a47f1178d250",
+        "events.json": "50adaa03970a9d99f2563947bad5ad17d93482db25eb723c9b1cfbfc44e78ea8",
+        "frames.json": "4ddfcd66efff1717bf0c766e56d9a53a574de9e15289122a31f0ddf8a47b4292"
+      },
+      "passed": true
+    },
+    {
+      "case": "over64K",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 70001,
+      "accepted_blocks": 71,
+      "validated_frames": 71,
+      "result_path": "build/terminal-upload-dos/final-036a/over64K/result.json",
+      "result_sha256": "9d3223d1a24139ca9c0b127a45ed97fffd44c2f10f4c0a28c9bf8441ca495e0f",
+      "artifacts": {
+        "SEND.BIN": "ffb2d8256254eebc799a59d8059363572691c33496834a3c32ff28b070a176dd",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "6de3769658fd5833171fc4f58f7420ea5e35e5c82ad831bf79b0ed2c55ccba44",
+        "peer.bin": "96ca1f681f3585566a112e17cffa3f664a85e61b489f1ed33062d32c7defb721",
+        "events.json": "fe5d13a5ae5700c49feac0755a3c0d1bb564171ab7b4664dbb654267085c22eb",
+        "frames.json": "c6317b1b16ea47818cedf01c3dba6c03660a6214c69d05df159436aa46903a34"
+      },
+      "passed": true
+    },
+    {
+      "case": "partial-binary",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 123,
+      "accepted_blocks": 1,
+      "validated_frames": 1,
+      "result_path": "build/terminal-upload-dos/final-036a/partial-binary/result.json",
+      "result_sha256": "f79efc1c87deef85b5219ebb3cde46890478f143abb64d9fb9ab0aff8b6c7c29",
+      "artifacts": {
+        "SEND.BIN": "dd3f8ef872e2911547640a3b81155bace3c63e01d4e3e068afbd7b2d502db511",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "bee74c5870eeae1be3f1355cc641b2025db9ab88ff52bc21ed52643ed8381ea0",
+        "peer.bin": "70af121c488bbf353243e5b1b74160c676855218c98fa34c30aa6aea19c8c32b",
+        "events.json": "ed277ea271847ff600902036ad692e657afa21edcddba35bc91ceeae7828b53f",
+        "frames.json": "c89635bc7514b76443131dc4b2e47f42d3be2bd71265e021d32bf28f9e272cef"
+      },
+      "passed": true
+    },
+    {
+      "case": "peer-CAN",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 128,
+      "accepted_blocks": 0,
+      "validated_frames": 1,
+      "result_path": "build/terminal-upload-dos/final-036a/peer-CAN/result.json",
+      "result_sha256": "4cad6888afcde560571f5250a8b98f622eb59be3a2e4e0e5c3f7d1e80174b190",
+      "artifacts": {
+        "SEND.BIN": "44d942056dd7041cfe6a1bbcb1a1f3afc385bb951b5efd787e71f514f29e1ddc",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "ece773edd6e657f5953735ac6371dc3b60e3cba5d276016b6874d0a1a83fde75",
+        "peer.bin": "a2a2811715849c0edbf8cc6066395cfeb0b16e79d0b9cd1b8b58d8d7779ecf99",
+        "events.json": "ffe73ca5bb6a7ecf69945fbae5873c18dc1ea2ee574f614fa5fd6c70cf873893",
+        "frames.json": "291aa55cdb237c4367fa0c0f8519ca643a76bf60cdc42d2cfd8d3e9cd27f22a7"
+      },
+      "passed": true
+    },
+    {
+      "case": "peer-CAN-over10K",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 11521,
+      "accepted_blocks": 0,
+      "validated_frames": 1,
+      "result_path": "build/terminal-upload-dos/final-036a/peer-CAN-over10K/result.json",
+      "result_sha256": "5c00bd2a400a3e4c5909310a2efd305f70285c23e22e1bb69bf09245e2a3eb5d",
+      "artifacts": {
+        "SEND.BIN": "7ce51a14505efa4b1baa89573960d91c6ca7cf9c170825ae428e870dd9e0182b",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "6deec712669b5d68d6cf60ebcdccf704aa0470eb23813099b30d8a3dc6483ae9",
+        "peer.bin": "242aeef1748f612b2d9c222ba959e3202d1841db9797812fdeadf7ad8fa49e79",
+        "events.json": "707c100b69e094da2d1eecb29055f4f5a650995ba18083ecd499557bb0a17b65",
+        "frames.json": "8da130948fb5785dffe70381427bcb995e7d6ead7246f83558221c3102714a10"
+      },
+      "passed": true
+    },
+    {
+      "case": "tail896",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 1920,
+      "accepted_blocks": 8,
+      "validated_frames": 8,
+      "result_path": "build/terminal-upload-dos/final-036a/tail896/result.json",
+      "result_sha256": "ee42f4d22a1e4a4eafbd46fd48f83bf6e4c23141193f9cf5ea45ad4e7b44a724",
+      "artifacts": {
+        "SEND.BIN": "a19dba5b7f8a5a11c5f75cfafe4c17dac5de6008cdd1aa8efcd9d44a3fa7a05a",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "e38dab84fa06cea0bdf5306a08167378d613b720d2c38e7c35b2472f7fe62b92",
+        "peer.bin": "00e0c171b72bc7dc27ffab321f6f72f70960b82463c754036989f9871d4a9feb",
+        "events.json": "0c9f19c2e6457e83e838be9198117eccaea9f7f53891d965f751385567eb14d9",
+        "frames.json": "b8cf2fc21c9425f812898d303cf0958fb5453a7fa8c01d2b331d336db0e80b2f"
+      },
+      "passed": true
+    },
+    {
+      "case": "tail897",
+      "command": "COM1 38400 8N1 HARD",
+      "source_size": 1921,
+      "accepted_blocks": 2,
+      "validated_frames": 2,
+      "result_path": "build/terminal-upload-dos/final-036a/tail897/result.json",
+      "result_sha256": "7492dd86ab82d06ce670417f79d802707004687c2b841efc3b603db1eea48f94",
+      "artifacts": {
+        "SEND.BIN": "f6cac15e4704cec47b6842ab20646451ec0e716984fcf78084bbb74f7cd8297c",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "4cf327d54f866ac422273ab147afd8202a0d8c40156408be8fca7a2a4e68994a",
+        "peer.bin": "b797b28831d6cf408b89ad5d563e62f530d7c5eccf500c050b29068afe9ba97d",
+        "events.json": "281b23b007ccced5d5e68f6fa1ddddd137919661ae6f3b72a4ff85a1185d5366",
+        "frames.json": "0db7f483157c584c5d8663804187a384f2b14e1108700fde272f1e4756b0fda0"
+      },
+      "passed": true
+    },
+    {
+      "case": "crc1024",
+      "command": "COM2 38400 8N1 NONE",
+      "source_size": 1024,
+      "accepted_blocks": 1,
+      "validated_frames": 1,
+      "result_path": "build/terminal-upload-dos/final-036a-com2-none/crc1024/result.json",
+      "result_sha256": "4429864cafb1fa8f7c9b05c9db6a2a8d40cedc548ae93ddf512339a21cecc60b",
+      "artifacts": {
+        "SEND.BIN": "85c1a4ba1d2345309bd0038e835f0536a88851fbd14c7ed266b958bd5180898f",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "4893cd3a6c990a02384fd545aca8c639d1291d200615d47ffbb973b569bde39a",
+        "peer.bin": "70af121c488bbf353243e5b1b74160c676855218c98fa34c30aa6aea19c8c32b",
+        "events.json": "756bad2a6c1436f856cb45996c6e80bdb39fb2eadd797e5632aa6d6d015976d6",
+        "frames.json": "8da130948fb5785dffe70381427bcb995e7d6ead7246f83558221c3102714a10"
+      },
+      "passed": true
+    }
+  ],
+  "experimental_history": [
+    {
+      "path": "build/terminal-upload-dos/experimental-30d-checks.json",
+      "sha256": "6dddd3024caafe372cac9c6b22b30b8bc938f810f6a3659a5180e086f3965b8e"
+    },
+    {
+      "path": "build/terminal-upload-dos/final-0187/partial-matrix.json",
+      "sha256": "1ce68d21c9b198b1ab1404ffd203c7ce6060eb8c835686938275c56f5ef69d23"
+    },
+    {
+      "path": "build/terminal-upload-dos/final-806a/partial-matrix.json",
+      "sha256": "ac60a6b4dc71ddc622845e6f007847ca46a10dcf3274e7e347adcf483b21db5e"
+    }
+  ],
+  "limitations": [
+    "DOSBox loopback UART peer, CTS-ready; no physicalmodem, cable or hardware-stall proof.",
+    "Transient UI error classification is proved separately by normative linkedCPU tests; this DOS harness validates actual protocol/cancel/cleanup/resume behavior.",
+    "All sources and media are synthetic ownedfiles; no private drive/config/original executable used.",
+    "Previous experimental passes and interrupted matrices are retained independently and not attributed to final036a."
+  ]
+}

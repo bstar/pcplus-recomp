@@ -15,6 +15,7 @@ extern terminal_macro_active,terminal_macro_start,terminal_macro_poll,terminal_m
 extern terminal_macro_tx_allowed,terminal_macro_tx_epoch,terminal_defer_key,terminal_take_deferred_key
 extern terminal_program_pending,terminal_program_cancel
 extern terminal_transfer_start
+extern terminal_upload_start
 global terminal_poll_io,terminal_enqueue_al,terminal_tick_low,terminal_clock_ticks
 global ansi_next_byte,ansi_unread_byte,csi_transmit_byte,csi_transmit_string
 
@@ -196,6 +197,8 @@ terminal_poll_io:
 .key_ready:
  cmp ax,0x1300 ;Alt-R: exclusive ordinaryXMODEM receive owner
  je .receive_file
+ cmp ax,0x1f00 ;Alt-S: exclusive ordinaryXMODEM send owner
+ je .send_file
  cmp ax,0x2d00
  je .quit
  cmp ax,0x2300 ; Alt-H: configured hang-up
@@ -268,6 +271,9 @@ terminal_poll_io:
  jmp .done
 .receive_file:
  call terminal_transfer_start
+ jmp .done
+.send_file:
+ call terminal_upload_start
  jmp .done
 .quit:
  call terminal_macro_cancel

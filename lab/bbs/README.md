@@ -38,28 +38,31 @@ separate evidence from the screen, response bytes and server logs.
 
 ## Current checkpoint: menus pass; ENiGMA editor failure retained
 
-Terminal `29da4799847e45ec1144195412a8ed0ceff74136878ffe86617375538de1b196`
+Terminal `036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad`
 was tested from an immutable executable copy with COM2/19200/8N1/HARD.
-Synchronet and Mystic menu workflows pass under `live-receive-final`.
-ENiGMA's `live-receive-final` run passes login-matrix Down/Up,
+Synchronet and Mystic menu workflows pass under `upload-ack-final`.
+ENiGMA's `upload-ack-menu-paced` retry passes login-matrix Down/Up,
 authentication, Main → Messages → Main → Files, real device/cursor replies and
-unchanged stock artwork. The first timed ENiGMA workflow logged in but entered
-newscan and reached Main too late for the scheduled menu keys. Its failed
-semantic audit is retained alongside the retry; it is not proof of an identical
-cause to the earlier matrix-arrow failure.
+unchanged stock artwork. The first `upload-ack-final` schedule logged in but
+remained at Main with QF in the command field. Its ordered-menu audit fails and
+is retained in `docs/validation/enigma-upload-menu-initial.json`. Outgoing serial
+bytes match the preceding0187 passing run; this does not establish identical
+TCP chunks or server input-readiness. The retry lengthens waits and separates
+menu letters from Enter without changing the DOS binary, server or modem model.
+The audit now requires the actual File Base heading and final server module;
+the Main menu's file-base link cannot satisfy that check.
 
-Synchronet's `editor-live-receive-final` passes all12 behavior checks and eight
-key-wire checks, including Ctrl-Q abort. ENiGMA's actual editor still receives
-all eight expected key sequences but fails Home positioning and Insert mode.
-Runs close unsaved and the server confirms no new message. The editor aggregate
-therefore remains false. All completed runs restore the sampled IRQ/UART/PIC
-state and preserve their synthetic PRM files.
+Synchronet's `editor-upload-ack-final` passes all12 behavior checks and eight
+key-wire checks. ENiGMA's same editor label still receives all eight expected key
+sequences but fails Home positioning and Insert mode. Runs close unsaved and
+the server confirms no new message. The editor aggregate remains false. All
+completed runs restore sampled IRQ/UART/PIC state and preserve synthetic PRMs.
 
 The stock ENiGMA decoder and immediate modem model remain unchanged. An
 independent complete-versus-split escape probe reproduces the server's handling
 of TCP chunks without partial escape state. Physical modem buffering/timing and remaining application features still
-require separate testing. Live XMODEM receives now have independent owned-peer
-DOS tests (`docs/TRANSFER_INTEGRATION.md`); transfers against these BBS servers
+require separate testing. Live XMODEM receives and ordinary uploads now have independent owned-peer
+DOS tests (`docs/TRANSFER_INTEGRATION.md`, `docs/LIVE_UPLOAD.md`); transfers against these BBS servers
 remain untested.
 
 The earlier `meta-character-network` ENiGMA matrix failure and its incomplete

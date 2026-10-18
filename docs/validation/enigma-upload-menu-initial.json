@@ -1,0 +1,106 @@
+{
+  "passed": false,
+  "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
+  "run": {
+    "name": "enigma",
+    "label": "upload-ack-final",
+    "checks": {
+      "dos_normal_exit": true,
+      "hardware_restored": true,
+      "screen_captured": true,
+      "bbs_connected": true,
+      "bbs_display_received": true,
+      "configuration_unchanged": true,
+      "directory_accounting_exact": true,
+      "binary_unchanged_during_run": true
+    },
+    "passed": true,
+    "seconds": 83.07,
+    "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
+    "keyboard": "p500 down p100 down p100 enter p1000 p12000 down p600 up p600 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 N p6000 enter p6000 M enter p5000 Q enter p5000 F enter p7000 a-x p1000 a-x",
+    "serial": {
+      "com": 2,
+      "baud": 19200,
+      "line": "8N1",
+      "flow": "HARD",
+      "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+    },
+    "scope": "Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.",
+    "configuration": {
+      "automatic_dial": true,
+      "mode": "explicit synthetic partial PRM",
+      "command": "TERMINAL @D:\\TEST.PRM /E:D:\\TEST.DIR",
+      "sha256": "ae57ce85727e7d12b74621f1d6b84d5f23266c67c96c3deeef65b6f481d021ef",
+      "directory_entry": 3,
+      "directory_browser": true,
+      "directory_sha256": "71cf5d3b64f51f353bbd5a6ec871855e7697afd731e6d5d6288a83ede8391695"
+    }
+  },
+  "semantic_audit": {
+    "passed": false,
+    "checks": {
+      "DOS_connection_hardware_and_directory_checks": true,
+      "server_confirmed_login": true,
+      "server_confirmed_main_messages_main_files": false,
+      "actual_DOS_device_attributes_reply": true,
+      "actual_DOS_cursor_position_reply": true,
+      "actual_DOS_arrow_keys": true,
+      "final_file_menu_visible": false,
+      "stock_problematic_art_unchanged": true,
+      "no_unsupported_terminal_failure": true
+    },
+    "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
+    "session_id": "80Ue5wVlq2z",
+    "menus": [
+      "telnetConnected",
+      "matrix",
+      "login",
+      "fullLoginSequenceLoginArt",
+      "fullLoginSequenceLastCallers",
+      "fullLoginSequenceWhosOnline",
+      "fullLoginSequenceOnelinerz",
+      "fullLoginSequenceNewScanConfirm",
+      "fullLoginSequenceUserStats",
+      "mainMenu",
+      "mainMenu"
+    ],
+    "serial": {
+      "com": 2,
+      "baud": 19200,
+      "line": "8N1",
+      "flow": "HARD",
+      "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+    },
+    "terminal_queries": [
+      "\u001b[0c",
+      "\u001b[6n"
+    ],
+    "scope": "Actual local ENiGMA login and named menu paths, authoritative server log and DOS UART/video. No physical modem, transfers, doors or full-screen editor claim."
+  },
+  "serial_bytes_match_prior_pass": true,
+  "comparison_scope": "Same serializedDOSoutgoingbytes as preceding0187pass, not proof of same TCP chunks or server input-readiness. Keep failedmenuworkflow; a separatelylabelledpacedretry changes waits/keyspacing only. No stockserver/modemcoalescing changes.",
+  "retained_artifacts": {
+    "build/bbs-lab/results/enigma/upload-ack-final/TEST.PRM": "ae57ce85727e7d12b74621f1d6b84d5f23266c67c96c3deeef65b6f481d021ef",
+    "build/bbs-lab/results/enigma/upload-ack-final/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+    "build/bbs-lab/results/enigma/upload-ack-final/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+    "build/bbs-lab/results/enigma/upload-ack-final/dosbox.conf": "37eacaf2dbee2e7005f071d97d2207ae0ff92c770434dc30dd03b2db16a76682",
+    "build/bbs-lab/results/enigma/upload-ack-final/server-log-start.json": "2cff5ecb29a5628d34778bfa07530976e4ba9c718f0284ec331c8a1641ea5bf5",
+    "build/bbs-lab/results/enigma/upload-ack-final/dosbox.log": "55cd46a61608de0bbf75ee663850a82dd2f3efd50ec12b2dbba72409fa35dd75",
+    "build/bbs-lab/results/enigma/upload-ack-final/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/bbs-lab/results/enigma/upload-ack-final/TEST.DIR": "1ecf3b7d23649da245a2534e4bad6fecaedfe91a64df25b7a113b16369525b65",
+    "build/bbs-lab/results/enigma/upload-ack-final/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/bbs-lab/results/enigma/upload-ack-final/SCREEN.BIN": "189ab1507cdac54d6e9bf7b6a7e97062d8a0c41ce67dfe0a1668fbda33ac2af0",
+    "build/bbs-lab/results/enigma/upload-ack-final/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/bbs-lab/results/enigma/upload-ack-final/bbs-wire.bin": "7f6bbf212548a685674966f0d528c41fbe720ada6dbff8b30147b9d1dcf6d659",
+    "build/bbs-lab/results/enigma/upload-ack-final/bbs-sent.bin": "6e8156c2e5a108db84129fab273e66dc0f4e7c9e1864a2e8abe4fe8e89b10e27",
+    "build/bbs-lab/results/enigma/upload-ack-final/display.bin": "8de7d6276616cc088eb15bfd9023c4d23450731e065fea77cc8fff678fd7b4df",
+    "build/bbs-lab/results/enigma/upload-ack-final/serial-received.bin": "60b56a67cae8f1249c5a879d6f3091d55bb0a1a33669db99747b00ea92f5954f",
+    "build/bbs-lab/results/enigma/upload-ack-final/serial-sent.bin": "8de7d6276616cc088eb15bfd9023c4d23450731e065fea77cc8fff678fd7b4df",
+    "build/bbs-lab/results/enigma/upload-ack-final/modem.json": "17d5e38f4b8bbb0cc1cf15ab9e87b903bb6eaeb0c6912d474056b2f071cb1e4d",
+    "build/bbs-lab/results/enigma/upload-ack-final/screen.txt": "75908f7b9009333cb8e6fc004d2747cc34845fccc3b360f7880dc46ea3ce5780",
+    "build/bbs-lab/results/enigma/upload-ack-final/result.json": "370adaeeaed97b92cb7598aa3614494dad6859817cda1d2484b67762ef394436",
+    "build/bbs-lab/results/enigma/upload-ack-final/server-session.jsonl": "f5690ee4b91316327dbc0db25c73637a3ed35253927744389876d7ad4951f6d3",
+    "build/bbs-lab/results/enigma/upload-ack-final/semantic-audit.json": "9c08d9dabc6dc5415273dd3e7538f9dafb3f9a15a961b27e0dbe6e967f7f18f9",
+    "build/bbs-lab/results/enigma/upload-ack-final/semantic-audit-initial.json": "178944aa7c17d2ae951a696162b175d6312c20b01a698acde030619858493828"
+  }
+}

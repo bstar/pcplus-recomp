@@ -1,0 +1,61 @@
+{
+  "passed": true,
+  "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
+  "inputs": 54,
+  "cases": [
+    {
+      "case": "SOFT-and-modem-owned-state-reject-before-source-open",
+      "inputs": 9,
+      "passed": true
+    },
+    {
+      "case": "binary-empty-CRC-checksum-mixed-over10240-and-DWORD-over64K",
+      "inputs": 7,
+      "passed": true
+    },
+    {
+      "case": "NAK-retransmit-and15failed-native-count-not-maintained-accepted",
+      "inputs": 3,
+      "passed": true
+    },
+    {
+      "case": "read-only-open-seek-read-shrink-close-errors-no-EOT",
+      "inputs": 6,
+      "passed": true
+    },
+    {
+      "case": "outer-context-Escape-AltX-carrier-before-native-checkpoint",
+      "inputs": 9,
+      "passed": true
+    },
+    {
+      "case": "CTS-THRE-physical-TX-stall-midnight-bounded",
+      "inputs": 6,
+      "passed": true
+    },
+    {
+      "case": "no-ACK-whole-owner-watchdog-lowword-wrap-midnight",
+      "inputs": 3,
+      "passed": true
+    },
+    {
+      "case": "same-instance-success-size-change-read-failure-success-Escape-success-no-reinitialize",
+      "inputs": 6,
+      "passed": true
+    },
+    {
+      "case": "same-instance-ambiguous-close-seek-read-cleanup-close-retry-no-DOS-no-forgotten-error",
+      "inputs": 3,
+      "passed": true
+    },
+    {
+      "case": "peer-double-CAN-real-ISR-native11-is-cancel-not-timeout-no-EOT",
+      "inputs": 2,
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked upload owner/native sender/read-only storage/UI/UARTISR. Independent peer checks physical frame/padding/sequence/checksumCRC. Only hardware/BIOS and DOSkernel boundaries modeled.",
+  "limitations": [
+    "Synthetic peers and kernel, not physicalmodem or actualDOSproof; sourceguardchanges after frozenbinary are not implicitly tested."
+  ]
+}

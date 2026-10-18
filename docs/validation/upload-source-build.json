@@ -1,0 +1,20 @@
+{
+  "kind": "maintained-readonly-upload-source-DOS-and-fault-diagnostics",
+  "outputs": {
+    "UPLOAD.EXE": "da4e63040af9c58f93968f57e1a348e2496c3a7754b6485b2ed61f33704f2ff7",
+    "UPFAULT.EXE": "039af95d39c0041af756cdee160cc92e6b399aa76d43bdc0ad6f187d159e5563"
+  },
+  "sources": {
+    "src/transfer/upload_file.c": "6d6172f356456f703d7c5eba63433ff34cb63394ffe8d118f64dccb23c48e0e2",
+    "src/transfer/upload_fs.c": "4072232a95249177aad523bc7e326a4261d97a582cd6b96e7c9cc6922419b8cb",
+    "standalone/upload_file_normal.c": "5e30d84e8b6a7fdcb2cd5b7bec6555f98c658220d2194c7ee3b53bbbc17f7077",
+    "standalone/upload_file_fault.c": "6b8c793c219d73e63c88935d82e2ecf0d3327ee818555b663a5500bed95d275c",
+    "src/transfer/upload_file.h": "2792cc583f9599d9d2e6c27994efd1d7a9ba379d198afbc90b2410db28431a63",
+    "src/transfer/upload_fs.h": "4866db43a52c4fd3f0472c4e952824f4bdab443731b4ba5f617aa533dcb674a8"
+  },
+  "limitations": [
+    "Read-only DOS backend and mocked DOS failures; not a live sender/session/peer test.",
+    "Initial length snapshot only; concurrent equal-length content replacement is not detected.",
+    "Tokens1/2 are scoped to one foreground session, not generation-tagged across sessions."
+  ]
+}

@@ -38,6 +38,9 @@ SS3 forms; this applies to custom imported slots as well. It does not transform
 arbitrary longer or unrelated escape sequences. ASCII keys otherwise follow
 the recovered classifier rather than being treated as KBD slot numbers.
 
+Alt-R starts ordinary XMODEM download and Alt-S starts ordinary XMODEM/1K
+upload, using explicit filename prompts and HARD/NONE binary flow. See
+[LIVE_UPLOAD.md](LIVE_UPLOAD.md) and [TRANSFER_INTEGRATION.md](TRANSFER_INTEGRATION.md).
 Alt-X exits, Alt-H invokes configured hang-up and Alt-D retries the selected
 target after cleanup. These live commands take precedence over imported
 bindings. A recognized original local command that requires an unreconstructed

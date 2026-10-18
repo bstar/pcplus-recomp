@@ -1,7 +1,7 @@
 MODULES := escape attributes screen text reports erase cursor_state cursor_shape scroll modes render input_dispatch csi ui_windows modem_commands modem_responses modem_send directory_dial directory_accounting keyboard_mapping keyboard_detection line_edit meta_keys character_edit program_exec terminal_reset transfer_blocks transfer_receive transfer_send transfer_files transfer_session transfer_uart
 .PHONY: all serial parser keyboard config-dos $(MODULES) $(addprefix test-,$(MODULES)) test test-driver test-parser test-keyboard test-config test-config-dos test-parser-compat test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services compat test-compat test-modem clean
 
-all: serial parser keyboard $(MODULES) config-dos config-replace config-abi directory-browser directory-editor process download-file transfer-session-composite transfer-storage terminal
+all: serial parser keyboard $(MODULES) config-dos config-replace config-abi directory-browser directory-editor process download-file upload-file transfer-session-composite transfer-storage terminal
 
 .PHONY: config-abi test-config-abi test-directory test-ui-flow directory-browser test-directory-browser directory-editor test-directory-editor test-directory-replace test-directory-dos
 .PHONY: test-keymap test-keymap-dos test-key-actions-dos test-keyboard-mapping-raw
@@ -64,6 +64,7 @@ test-terminal: terminal
 	python3 standalone/check_far_storage_live.py
 	python3 standalone/test_far_storage_dos.py
 	python3 standalone/check_terminal_transfer_live.py
+	python3 standalone/check_terminal_upload_live.py
 	python3 standalone/check_program_actions_live.py
 	python3 standalone/check_terminal_reset_live.py
 	python3 standalone/test_program_actions_dos.py
@@ -144,7 +145,7 @@ test-parser: parser
 	python3 standalone/check_ansi.py
 	python3 standalone/test_parser_dos.py
 
-test: test-transfer-session-composite test-transfer-storage test-download-file test-process test-driver test-parser test-keyboard $(addprefix test-,$(MODULES)) test-keyboard-mapping-raw test-keymap test-keymap-dos test-key-actions-dos test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services test-config test-modem-import test-config-dos test-config-replace test-config-abi test-directory test-directory-dos test-directory-browser test-directory-editor test-directory-replace test-ui-flow test-terminal test-bbs-modem
+test: test-upload-file test-transfer-session-composite test-transfer-storage test-download-file test-process test-driver test-parser test-keyboard $(addprefix test-,$(MODULES)) test-keyboard-mapping-raw test-keymap test-keymap-dos test-key-actions-dos test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services test-config test-modem-import test-config-dos test-config-replace test-config-abi test-directory test-directory-dos test-directory-browser test-directory-editor test-directory-replace test-ui-flow test-terminal test-bbs-modem
 	python3 standalone/test_serial.py
 
 test-parser-compat: parser compat
@@ -192,3 +193,11 @@ transfer-storage:
 
 test-transfer-storage: transfer-storage
 	python3 standalone/test_transfer_storage_dos.py
+
+.PHONY: upload-file test-upload-file
+upload-file:
+	python3 standalone/build_upload_file.py
+
+test-upload-file: upload-file
+	python3 standalone/check_upload_file.py
+	python3 standalone/test_upload_file_dos.py

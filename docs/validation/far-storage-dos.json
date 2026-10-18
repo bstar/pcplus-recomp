@@ -25,19 +25,19 @@
   ],
   "errors": [],
   "seconds": 7.326,
-  "binary_sha256": "29da4799847e45ec1144195412a8ed0ceff74136878ffe86617375538de1b196",
+  "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
   "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 HARD",
   "expected_exit": 0,
   "scope": "Actual DOS livePROGRAM/COMSPEC owned child locates parent PSP, checks retainedMCB throughfarend afterSTACK, allocates/fills16KB separateDOSmemory and verifies full-sizedshadow/history endpointcanaries. NormalUART/vector cleanup verified by existing sampler. No physical modem claim.",
-  "sample_hex": "07001408171c171c2b216725fecaefbeaddebeba",
+  "sample_hex": "070014082b1d2b1d3f227b26fecaefbeaddebeba",
   "linker_defines": {
-    "DGROUP_SEG": 2655,
-    "FAR_SEG": 6407,
+    "DGROUP_SEG": 2906,
+    "FAR_SEG": 6683,
     "SHADOW_OFFSET": 0,
     "HISTORY_OFFSET": 8192,
     "FAR_END_OFFSET": 12288,
     "PROCESS_PSP_OFFSET": 448,
-    "SHADOW_SEGMENT_OFFSET": 21925,
-    "HISTORY_POINTER_OFFSET": 23341
+    "SHADOW_SEGMENT_OFFSET": 21989,
+    "HISTORY_POINTER_OFFSET": 23405
   }
 }

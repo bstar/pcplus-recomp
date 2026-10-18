@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
+  "command": "./tools/dev --command make -o terminal test-terminal",
+  "exit_code": 0,
+  "log_path": "build/terminal/upload-current-regressions.log",
+  "log_sha256": "50300982d39a65267f953e8b70f513334d7a8899ee4f0a0b9607d3cb9c9d55e5",
+  "scope": "Full current test-terminal target: live receive/upload CPU tests, far storage/PROGRAM and RIS checks, transport/keyboard/ANSI policies, actualDOS terminal/key/configuration/connection/directory regressions. Separate actualDOS upload/download and BBS evidence have their own case lists. No physical modem or complete application claim."
+}

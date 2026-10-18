@@ -9,6 +9,7 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 | Output | Inputs | Current purpose |
 | --- | --- | --- |
 | `build/transfer-storage/TRANSFER.EXE` | Recovered and maintained source only | One native receive owner through actual staged DOS storage; UART/time are controlled peer fixtures |
+| `build/upload-file/{UPLOAD,UPFAULT}.EXE` | Maintained source only | Read-only binary upload sources, DWORD length/read accounting and close/failure diagnostics |
 | `build/download-file/{DOWNLOAD,DLFAULT}.EXE` | Maintained source only | Streaming binary storage, checked close/install and deterministic failure/recovery diagnostics |
 | `build/transfer-{send,files,session,uart}/` | Recovered and maintained source only | Sender, CRT file handling, nonlocal session ownership and real UART transfer-component diagnostics |
 | `build/transfer-blocks/BLOCKS.EXE`, `build/transfer-receive/RECEIVE.EXE` | Recovered and maintained source only | CRC/framing and receiver validation diagnostics; UART/time/file-session boundaries remain explicit |
@@ -76,6 +77,9 @@ Alt-R receives ordinary XMODEM CRC/checksum128/1024 downloads into an explicit
 new DOS8.3 destination, with checked staging/close/install before the final ACK.
 Use HARD or NONE; SOFT rejects binary reception before staging. Escape cancels.
 See [live transfer policy and recovery](docs/TRANSFER_INTEGRATION.md).
+Alt-S uploads an existing file through checked read-only DOS IO and the native
+ordinary sender, with automatic1K blocks and actual-ACK progress.
+See [upload behavior and limits](docs/LIVE_UPLOAD.md).
 Global `/T:MYKEYS.KEY` imports ten Meta actions; Alt-1..Alt-0 execute
 nonblocking TEXT or maintained PROGRAM actions. PROGRAM passes a validated
 1..51-byte stored command through COMSPEC `/c`, suspends terminal UART ownership
@@ -203,7 +207,7 @@ DOS process backend. Native PROGRAM still depends on unrecovered heap and
 application handoff services; native nonzero reset still stops at its KEY/profile
 loader. The maintained live PROGRAM/process and RIS policies close selected
 terminal use cases without claiming those native pipelines are complete.
-Current live checkpoint `7b9ca14b` passes linked PROGRAM handoff regressions;
+Current live checkpoint `036a8092` passes linked PROGRAM handoff regressions;
 actual DOS owned-child and reset checks have separate artifact identities.
 
 ## Full-application compatibility build

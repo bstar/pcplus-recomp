@@ -163,3 +163,15 @@ It has all serial ports disabled. No real file transfer, physical modem, remote
 BBS upload, batch metadata, upload menu or complete PCPlus UI is claimed.
 `recover.py` is an explicit analyst-only regeneration tool requiring the ignored
 SHA-verified original; normal build/check/DOS paths never invoke it.
+
+## Live ordinary sender integration
+
+The interactive terminal now links this session and cancel code alongside the
+receiver, reusing its exact CRC/checkpoint helpers and near arena. Maintained
+Alt-S, read-only DOS ownership and serviced UART/UI callbacks replace the
+diagnostic fixtures for the live path. Independent DWORD ACKed-byte progress
+gates successful completion; native attempted-block counters stay unchanged.
+Protocol abort closes a partly prefetched source without inventing a disk error.
+The exact diagnostic and its baseline limitations above remain separate. See
+[LIVE_UPLOAD.md](LIVE_UPLOAD.md) and [UPLOAD_SOURCE.md](UPLOAD_SOURCE.md) for
+current runtime evidence, safety differences and remaining protocol scope.
