@@ -266,3 +266,41 @@ ENiGMA emits all eight expected sequences but still fails Home/Insert behavior.
 It closes unsaved with no new post. Both restore sampled hardware and preserve
 the synthetic PRM. The separate buffered fd68875e experiment above remains
 historical evidence and is not a current immediate-editor pass.
+
+## Current source-built screen-print checkpoint
+
+Frozen terminal
+`d4cfa4dcb27edd375195ccd9345dd1513844855840f3e673ab9a2ac7288cf16a`
+was copied read-only to
+`build/bbs-lab/frozen/editor-screen-print-current/TERMINAL.EXE`.
+The current Synchronet `editor-screen-print-eventfix` run passes all12 semantic
+checks and all eight exercised key-wire checks, including actual FSEditor
+entry and Ctrl-Q abort. ENiGMA's immediate `editor-screen-print-immediate` run
+still fails Home positioning and Insert-mode behavior: five of seven semantic
+checks pass, all eight key sequences are emitted, and no post is saved.
+The corresponding30ms buffered run passes all seven behavior checks. Both
+use the same executable, retained unsaved recipe, synthetic PRM and
+COM2/19200/8N1/HARD; DOSBox's virtual CTS remains ready. This is a local
+packetization experiment, not physical modem validation or a blanket editor
+compatibility pass.
+
+`docs/validation/bbs-editors.json` selects only the new Synchronet run and
+immediate ENiGMA run, preserving older runtime cases. The earlier menu matrix
+retains its own executable identity and was not rewritten. The separate paired
+report retains older buffering experiments; see [packetization.md](packetization.md).
+
+The initial current Synchronet attempt reached login but was immediately
+logged off with “Time's up” after a forced05:00 MSGMAINT event shortened its
+time. `NO_EVENTS` prevented event execution, but the pinned stock
+`src/sbbs3/data.cpp:getnextevent()` still considered forced events unless their
+`EVENT_DISABLED` bit was set. That server prerequisite failure remains under
+`editor-screen-print-current`, separately classified from editor compatibility.
+
+`lab/bbs/synchronet_event_policy.py --apply` now sets only `EVENT_DISABLED`
+(bit3/value8) on scheduled events in the owned lab's copied `ctrl/xtrn.ini`.
+It preserves every other flag and backs up changed config before/after with
+hashes. The normal lab setup and serve commands apply this idempotent policy,
+so the existing `NO_EVENTS` intent also covers time-left calculations. The
+owned listener was gracefully restarted before the fresh passing retry.
+No account quota, stock editor/server executable or remote/public BBS was
+changed. Evidence and source hashes are included in the current editor report.

@@ -27,9 +27,9 @@ retained unsaved editor recipe twice through the pinned Nix toolchain:
 ```sh
 ./tools/bbs-dev --command python3 lab/bbs/enigma.py start
 ./tools/dev --command python3 lab/bbs/packetization_editor_probe.py \
-  --delay-ms 30 --label editor-packet30-frozen
+  --delay-ms 30 --label editor-screen-print-buffer30
 ./tools/dev --command python3 lab/bbs/packetization_editor_probe.py \
-  --delay-ms 0 --label editor-packet0-control
+  --delay-ms 0 --label editor-screen-print-immediate
 ```
 
 Use new labels for subsequent runs; existing result folders are preserved.
@@ -61,22 +61,23 @@ remain unverified.
 
 ## Observed comparison
 
-The frozen fd68875e DOS executable passes all seven ENiGMA editor checks with
-30ms buffering under `editor-packet30-frozen`. With immediate forwarding,
-`editor-packet0-control` fails Home positioning and Insert mode again. Both
+The frozen d4cfa4dc DOS executable passes all seven ENiGMA editor checks with
+30ms buffering under `editor-screen-print-buffer30`. With immediate forwarding,
+`editor-screen-print-immediate` fails Home positioning and Insert mode again. Both
 emit all eight expected key sequences, restore the sampled UART/PIC/IRQ state,
-preserve the synthetic PRM and close without saving a post. The buffered run's
-33 writes include complete Home and Insert sequences in individual writes.
+preserve the synthetic PRM and close without saving a post. The buffered run includes complete Home and Insert sequences in individual
+writes; its exact write count is retained in the paired JSON report.
 The executable, test-source hashes, keyboard recipe and serial/PRM settings
 match across runs. The stock server/user state was not reset between runs.
 This supports modem buffering as a possible workaround for this local case;
 it does not establish that every modem or remote TCP path will behave the same.
 
-See `docs/validation/bbs-enigma-packetization.json` for both runs and artifact
-hashes. The six packetization fixtures and seven modem protocol/socket checks
+See `docs/validation/bbs-enigma-packetization.json` for both current runs and
+artifact hashes. Prior runtime pairs, including fd68875e and9d90aa1a, remain
+in `prior_experiments`; their outcomes are not attributed to the current build. The six packetization fixtures and seven modem protocol/socket checks
 are recorded separately. Re-record a new pair with:
 
 ```sh
 ./tools/dev --command python3 lab/bbs/record_packetization.py \
-  --buffered editor-packet30-frozen --control editor-packet0-control
+  --buffered editor-screen-print-buffer30 --control editor-screen-print-immediate
 ```

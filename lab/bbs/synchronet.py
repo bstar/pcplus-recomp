@@ -4,7 +4,7 @@
 Run through nix develop ./nix#bbs --command python3 lab/bbs/synchronet.py ...
 Downloaded code/default data and captures stay in ignored build/bbs-lab.
 """
-import argparse,hashlib,json,os,re,shutil,socket,subprocess,time,urllib.request
+import argparse,hashlib,json,os,re,shutil,socket,subprocess,sys,time,urllib.request
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 LAB=ROOT/'build/bbs-lab/synchronet';RUNTIME=LAB/'runtime'
@@ -31,6 +31,7 @@ def setup():
  script=RUNTIME/'exec/lab_setup.js'
  script.write_text("require('userdefs.js','USER_ANSI');\nvar u=new User(system.matchuser('LABUSER'));\nu.handle='LABUSER';u.name='Local Tester';u.address='Local Test';u.location='Local Lab';u.zipcode='00000';u.phone='0000000000';u.birthdate='19900101';u.gender='M';u.netmail='labuser@example.invalid';u.security.password='LABPASS42';u.security.level=50;\nu.settings |= USER_ANSI|USER_COLOR|USER_AUTOTERM;\n")
  subprocess.run([str(RUNTIME/'exec/jsexec'),'-n',str(script)],env=ENV(),check=True)
+ subprocess.run([sys.executable,str(ROOT/'lab/bbs/synchronet_event_policy.py'),'--apply'],check=True)
  provenance()
 
 def provenance():
@@ -148,6 +149,9 @@ def main():
  elif a.action=='provenance':provenance()
  elif a.action=='check-dos':check_dos(a.label)
  elif a.action=='serve':
+  # NO_EVENTS stops execution; disable configured events as well so the stock
+  # forced-event time-left calculation cannot evict synthetic lab users.
+  subprocess.run([sys.executable,str(ROOT/'lab/bbs/synchronet_event_policy.py'),'--apply'],check=True)
   os.environ.update(ENV());os.execv(str(RUNTIME/'exec/sbbs'),['sbbs','nd','t!','ne','nh',str(RUNTIME/'ctrl')])
  else:probe()
 if __name__=='__main__':main()

@@ -9,19 +9,19 @@ toolchains. These results do not establish physical Wi-Fi modem compatibility.
 ## Current editor build
 
 DOS executable SHA-256:
-`9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e`.
+`d4cfa4dcb27edd375195ccd9345dd1513844855840f3e673ab9a2ac7288cf16a`.
 
 | Server / modem forwarding | Result | Evidence |
 | --- | --- | --- |
-| Synchronet 3.22a development snapshot / immediate | All 12 behavior checks and eight key-wire checks pass; draft aborted | `editor-monitor-final`, re-audited for this checkpoint; [editor report](../../docs/validation/bbs-editors.json) |
+| Synchronet 3.22a development snapshot / immediate | All 12 behavior checks and eight key-wire checks pass; draft aborted | `editor-screen-print-eventfix`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
 | ENiGMA½ 0.5.1-beta / immediate | Correct outgoing keys; Home and Insert behavior fail | Current paired experiment below |
 | Same ENiGMA / explicit 30 ms buffering | All seven audited checks and eight key-wire checks pass; closes unsaved | Current paired experiment below |
 
 The ENiGMA pair uses the same DOS executable, keyboard recipe, synthetic PRM,
 serial settings and unchanged stock decoder. Only the modem's explicit
 `packet_delay_ms` differs. Server/user state is not reset between runs.
-Retained labels are `editor-user-request-buffer30-9d90` and
-`editor-user-request-immediate-9d90`; full hashes and checks are in
+Retained labels are `editor-screen-print-buffer30` and
+`editor-screen-print-immediate`; full hashes and checks are in
 [the paired report](../../docs/validation/bbs-enigma-packetization.json).
 
 The checked ENiGMA source, commit
@@ -33,6 +33,11 @@ complete and split keys. The current DOS pair supports modem buffering as a
 workaround for this local case. TCP can still split a buffered write, so this
 is not a general guarantee. A server-side incremental decoder is the robust
 fix; no upstream decoder modification is included here.
+
+The first Synchronet run was ended by a forced maintenance event before the
+editor opened. That prerequisite failure is retained. The passing retry uses
+the lab's corrected event-disable policy, preserving stock editor code and
+account quotas; see [the event restriction and retry](editors.md#current-source-built-screen-print-checkpoint).
 
 ## Other verified workflows
 
