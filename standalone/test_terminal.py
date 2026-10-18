@@ -177,16 +177,16 @@ def run(case):
      checks['xon_xoff_withholds_typed_q']=b'q' not in pending
     elif case=='partial':
      connection.sendall(b'PARTIAL\x1b[');times['partial_seconds']=round(time.monotonic()-start,3)
-    elif case=='unsupported':
-     connection.sendall(b'\x1b[5i');times['unsupported_seconds']=round(time.monotonic()-start,3)
+    elif case=='controller-disabled':
+     # CSI5i is implemented; unavailable PRN must deny admission cleanly.
+     connection.sendall(b'\x1b[5i');times['controller_disabled_seconds']=round(time.monotonic()-start,3)
     while not stop.wait(0.05):pass
   except (OSError,AssertionError) as error:events.append({'peer_error':str(error)})
 
  thread=threading.Thread(target=peer,daemon=True);thread.start()
- keyboard={'normal':'p1800 up p1500 up p800 q p1000 a-x','software':'p1000 q p1000 a-x','partial':'p1000 a-x','unsupported':'p3000 a-x'}[case]
+ keyboard={'normal':'p1800 up p1500 up p800 q p1000 a-x','software':'p1000 q p1000 a-x','partial':'p1000 a-x','controller-disabled':'p3000 a-x'}[case]
  arguments=' SOFT' if case=='software' else ''
- expected=2 if case=='unsupported' else 0
- branch=('if errorlevel 3 goto failed\nif errorlevel 2 goto expected\ngoto failed' if expected==2 else 'if errorlevel 1 goto failed\ngoto expected')
+ branch='if errorlevel 1 goto failed\ngoto expected'
  config=f'''[sdl]
 output=surface
 [dosbox]
@@ -197,6 +197,10 @@ cputype=386
 cycles=fixed 6000
 [mixer]
 nosound=true
+[parallel]
+parallel1=disabled
+parallel2=disabled
+parallel3=disabled
 [serial]
 serial1=nullmodem server:127.0.0.1 port:{server.getsockname()[1]} transparent:1 rxdelay:200 txdelay:1
 serial2=disabled
@@ -253,7 +257,7 @@ exit
  if case=='partial':checks['alt_x_interrupts_partial_escape_before_parser_deadline']=elapsed-times.get('partial_seconds',0)<1.8
  if case=='software':checks['alt_x_exits_while_transmit_paused']=elapsed<3.5
  required=['terminal_ready_via_actual_dsr','expected_dos_exit_and_capture','hardware_irq_vectors_restored','uart_and_pic_restored','screen_captured']
- required+= {'normal':['fragmented_menu_and_cursor_report','application_cursor_up','normal_cursor_up','typed_ascii_q','actual_video_menu_text_and_sgr'],'software':['xon_xoff_withholds_typed_q','alt_x_exits_while_transmit_paused'],'partial':['alt_x_interrupts_partial_escape_before_parser_deadline'],'unsupported':[]}[case]
+ required+= {'normal':['fragmented_menu_and_cursor_report','application_cursor_up','normal_cursor_up','typed_ascii_q','actual_video_menu_text_and_sgr'],'software':['xon_xoff_withholds_typed_q','alt_x_exits_while_transmit_paused'],'partial':['alt_x_interrupts_partial_escape_before_parser_deadline'],'controller-disabled':[]}[case]
  result={'case':case,'passed':all(checks.get(key,False) for key in required),'checks':checks,'seconds':round(elapsed,3),'timing':times,'events':events,'binary_sha256':digest,'received_hex':wire.hex(),'scope':'Source-only DOS terminal, actual emulated UART/PIC/keyboard/BIOS video and private loopback TCP peer; independent DOS hardware/vector/video sampler. No original PCPlus executable or public BBS.'}
  (output/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2),flush=True)
  return result['passed']
@@ -261,12 +265,12 @@ exit
 
 def main():
  parser=argparse.ArgumentParser(description=__doc__)
- parser.add_argument('--case',choices=['normal','software','partial','unsupported','all'],default='all')
+ parser.add_argument('--case',choices=['normal','software','partial','controller-disabled','all'],default='all')
  args=parser.parse_args()
  directory=ROOT/'build/terminal-tests';directory.mkdir(parents=True,exist_ok=True)
  with (directory/'.lock').open('w') as lock:
   fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
-  cases=['normal','software','partial','unsupported'] if args.case=='all' else [args.case]
+  cases=['normal','software','partial','controller-disabled'] if args.case=='all' else [args.case]
   results=[run(case) for case in cases]
  return 0 if all(results) else 1
 if __name__=='__main__':raise SystemExit(main())

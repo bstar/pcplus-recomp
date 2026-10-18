@@ -11,6 +11,7 @@ extern terminal_monitor_active,terminal_parser_active,terminal_ansi_wait_active
 extern terminal_macro_active,terminal_program_pending,connection_state
 extern terminal_transfer_active,terminal_transfer_pending
 extern terminal_connection_notice
+extern terminal_controller_active
 global terminal_printer_toggle,terminal_printer_poll,terminal_sink_36fc
 global terminal_printer_receive_hold,terminal_printer_barrier
 global terminal_printer_before_program,terminal_printer_shutdown
@@ -38,6 +39,8 @@ global terminal_printer_put_raw,terminal_printer_failure
 %endmacro
 terminal_printer_toggle:
  save
+ cmp word [terminal_controller_active],0
+ jne .denied
  cmp word [terminal_sink_3988_enabled],0
  je .open
  ; Stop new admission immediately; poll drains before closing the owner.

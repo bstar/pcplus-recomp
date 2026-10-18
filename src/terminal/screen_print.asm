@@ -21,6 +21,7 @@ extern terminal_printer_count,terminal_printer_closing
 extern terminal_printer_put_raw,terminal_printer_poll,terminal_printer_shutdown
 extern terminal_sink_3988_enabled,terminal_printer_failure
 extern terminal_printer_fault_epoch,terminal_abort
+extern terminal_controller_run,terminal_controller_active,terminal_controller_last_action
 global csi_media_copy,terminal_screen_print
 %macro save 0
  push bp
@@ -98,10 +99,13 @@ csi_media_copy:
  call terminal_connection_notice
  jmp .advance
 .controller:
- ; Unprefixed5 owns dedicated raw printer input, not ordinary copy. Preserve
- ; its distinct unresolved application boundary instead of remapping it.
- mov ax,0xd0d0
- jmp terminal_abort
+ call terminal_controller_run
+ cmp word [terminal_quit],0
+ jne .finished
+ cmp word [terminal_controller_last_action],5
+ jne .advance
+.finished:
+ restore
 
 ; AX1=full,2=scroll region,3=current row. Preserve all caller registers.
 terminal_screen_print:
@@ -110,6 +114,8 @@ terminal_screen_print:
  jne .return
  mov word [terminal_screen_print_action],2
  mov word [terminal_screen_print_bytes],0
+ cmp word [terminal_controller_active],0
+ jne .return
  mov [screen_print_mode],ax
  call screen_print_geometry
  jc .return

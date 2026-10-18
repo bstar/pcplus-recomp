@@ -108,7 +108,11 @@ The virtual printer tests do not establish physical printer compatibility.
 Incoming ANSI media-copy commands now print the full screen, scroll region or
 current row through the same checked owner. Modes18/19 retain their recovered
 form-feed and region behavior. See [screen printing](docs/LIVE_SCREEN_PRINT.md)
-for exact commands, cancellation and the remaining dedicated-print boundary.
+for exact commands and cancellation. Unprefixed CSI5i enters the
+[dedicated printer controller](docs/LIVE_PRINT_CONTROLLER.md): received bytes
+go to checked PRN without rendering or capture until the native stop grammar
+or local cancellation returns to the terminal. It preserves a borrowed copy
+owner, bounds escape buffering and services serial/keyboard/capture timers.
 
 The separate [native printer diagnostic](docs/PRINTER_NATIVE.md) reconstructs
 printer-copy instructions with explicit memory-device fixtures. The

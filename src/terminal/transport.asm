@@ -19,6 +19,7 @@ extern terminal_upload_start
 extern terminal_capture_toggle,terminal_capture_pause,terminal_capture_crlf,terminal_capture_flush
 extern terminal_snapshot_start
 extern terminal_monitor_key
+extern terminal_controller_key
 extern terminal_printer_toggle
 global terminal_poll_io,terminal_enqueue_al,terminal_tick_low,terminal_clock_ticks
 global ansi_next_byte,ansi_unread_byte,csi_transmit_byte,csi_transmit_string
@@ -170,6 +171,8 @@ terminal_poll_io:
  ; the private application queue is disabled and BIOS has one foreground reader.
  call terminal_read_key
 .key_ready:
+ call terminal_controller_key
+ jc .done
  call terminal_monitor_key
  jc .done
  cmp ax,0x2200 ;Native Alt-G screen-file snapshot

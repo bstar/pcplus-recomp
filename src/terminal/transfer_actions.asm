@@ -20,6 +20,7 @@ extern terminal_upload_accepted_bytes
 extern _transfer_native_open,_transfer_native_write,_transfer_native_close,_transfer_download_result
 extern session_setjmp,session_longjmp,session_blocks_accepted
 extern terminal_monitor_active
+extern terminal_controller_active
 extern terminal_printer_barrier
 GLOBAL terminal_transfer_start,terminal_transfer_poll,terminal_transfer_service
 GLOBAL terminal_upload_start,terminal_transfer_direction
@@ -37,6 +38,8 @@ transfer_start_direction:
  push si
  push di
  push es
+ cmp word [terminal_controller_active],0
+ jne .done
  cmp word [terminal_monitor_active],0
  jne .done
  cmp word [terminal_transfer_pending],0

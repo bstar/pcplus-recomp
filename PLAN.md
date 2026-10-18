@@ -267,8 +267,18 @@ physical modem compatibility or close the remaining application gates below.
       comparisons and an actual8086 DOS diagnostic. Its raw-byte filtering,
       buffered escape grammar, unchecked CRT errors and unbounded wait are
       preserved as evidence in `docs/PRINT_CONTROLLER_NATIVE.md`.
-      Full F10 still requires maintained dedicated printer-controller mode, a proved local
-      screen-print binding, remaining snapshot/monitor geometry,
+      Maintained CSI5i dedicated mode now uses a bounded32-byte prefix,
+      checked PRN ownership and serviced modal polling. Literal raw output
+      bypasses rendering/capture; double Escape cancels after sending the first.
+      Connected-on-entry state closes the carrier-loss-before-first-poll race.
+      Fourteen actual DOS cases and11 linked groups/300 inputs pass on51b94da6;
+      all35 terminal commands and23 linked YMODEM inputs pass. Synchronet
+      passes12 editor behavior checks; ENiGMA still fails Home/Insert with
+      immediate forwarding and passes7 checks with explicit30ms buffering.
+      See `docs/LIVE_PRINT_CONTROLLER.md` and
+      `lab/bbs/modern-compatibility.md` for current hash-bound validation.
+      Full F10 still requires a proved local screen-print binding,
+      remaining snapshot/monitor geometry,
       complete settings/status UI, ASPECT/HOOK and physical validation. See
       `docs/CAPTURE_NATIVE_INVENTORY.md`, `docs/LIVE_CAPTURE.md` and
       `docs/validation/terminal-capture-dos.json`.

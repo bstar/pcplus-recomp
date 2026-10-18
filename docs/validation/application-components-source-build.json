@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "49e3db9b57224a1260c56933d0f1ead4cb7f4d4e1cfb6bc670022d243fa619ed",
-  "source_file_count": 1172,
+  "source_snapshot_sha256": "a2f37aab5431bbadb37408bd3f735b1445d78e7dec7a18b911137ec91d94e9c7",
+  "source_file_count": 1180,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,19 +16,19 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "113d2f4de10869f3a169a86169d364007a1a0c93c4a272cff8be7ca9ca76d2d2",
+  "build_log_sha256": "7475f3398229fd4845f0e8a7ba9293fa6cd442cda58a3934fa9e8d34c9b17d63",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.67k11f/pcplus-source-proof-u8ygvoh3/checkout",
+  "source_checkout": "/tmp/nix-shell.l8Zlwx/pcplus-source-proof-edwamein/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
   "scope": "57 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
   "output_count": 57,
   "outputs": {
     "terminal/TERMINAL.EXE": {
-      "sha256": "d4cfa4dcb27edd375195ccd9345dd1513844855840f3e673ab9a2ac7288cf16a",
+      "sha256": "51b94da6b6c8f489fa646a220e7d7a77457459f96e73bec98687b19a1f338c90",
       "matches_workspace": true,
-      "workspace_sha256": "d4cfa4dcb27edd375195ccd9345dd1513844855840f3e673ab9a2ac7288cf16a"
+      "workspace_sha256": "51b94da6b6c8f489fa646a220e7d7a77457459f96e73bec98687b19a1f338c90"
     },
     "config-dos/CONFIG.EXE": {
       "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",

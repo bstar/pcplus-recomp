@@ -14,6 +14,7 @@ extern terminal_connection_notice,terminal_connection_notice_restore
 extern terminal_quit,terminal_exit_code,uart_rx_dropped,connection_state
 extern terminal_macro_active,terminal_program_pending,terminal_ansi_wait_active
 extern terminal_printer_before_program
+extern terminal_controller_active
 global terminal_capture_toggle,terminal_capture_pause,terminal_capture_crlf
 global terminal_capture_poll,terminal_capture_flush,terminal_capture_before_program
 global terminal_sink_8436,terminal_sink_427f,terminal_sink_bb23
@@ -41,6 +42,8 @@ global terminal_capture_native_refresh
 %endmacro
 terminal_capture_toggle:
  save
+ cmp word [terminal_controller_active],0
+ jne .denied
  cmp word [terminal_monitor_active],0
  jne .denied
  cmp word [terminal_sink_398a_enabled],0
@@ -124,6 +127,8 @@ terminal_capture_before_program:
  push si
  push di
  push es
+ cmp word [terminal_controller_active],0
+ jne .snapshot_owned
  cmp word [terminal_monitor_active],0
  jne .snapshot_owned
  cmp word [_monitor_file_result+10],0

@@ -79,13 +79,11 @@ def main():
   assert m.device_bytes==b'PREFIX'+m.expected(0,1)+b'SUFFIX' and m.owner()[10]==1
   calls=list(m.device_calls);m.csi(b'\x1b[?4i');assert m.device_calls==calls
   m=ScreenPrint();m.csi(b'\x1b[4i');assert not m.device_calls
-  m=ScreenPrint()
-  try:m.csi(b'\x1b[5i')
-  except ExplicitGap as gap:assert gap.args[0]==0xd0d0
-  else:assert m.get('csi_unimplemented_service')==0xd0d0
-  assert not m.device_calls
+  m=ScreenPrint();m.csi(b'\x1b[5iRAW\x1b[4i')
+  assert m.device_bytes==b'RAW' and not m.device_live
+  assert not m.get('terminal_controller_active') and not m.get('csi_unimplemented_service')
   return 6
- check('real-CSI-private-copy-onoff-idempotence-existing-queue-order-and-standard5-gap',stream)
+ check('real-CSI-private-copy-onoff-idempotence-existing-queue-order-and-dedicated5',stream)
  def geometry():
   vectors=[('mode',0x13),('columns',40),('page',1),('text_cga_status_port',0x3da),('text_video_segment',0xb000),('screen_video_row_bytes',158),('screen_columns',79),('csi_row_count',24),('screen_viewport_enabled',1)]
   for name,value in vectors:

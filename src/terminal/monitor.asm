@@ -15,6 +15,7 @@ extern terminal_transfer_pending,terminal_transfer_active,terminal_snapshot_acti
 extern connection_state,text_cga_status_port,text_video_segment
 extern screen_viewport_enabled,screen_attribute_row_bytes,screen_video_row_bytes
 extern ui_flow_region_cells,keyboard_classify_raw,terminal_enqueue_key_slot,terminal_enqueue_al
+extern terminal_controller_active
 global terminal_monitor_start,terminal_monitor_key,terminal_monitor_filter
 GLOBAL terminal_monitor_poll,terminal_monitor_stop,terminal_monitor_shutdown
 GLOBAL terminal_monitor_active,terminal_monitor_logging,terminal_monitor_failed
@@ -42,6 +43,8 @@ GLOBAL terminal_monitor_last_action,terminal_monitor_buffer_count
 %endmacro
 terminal_monitor_start:
  save
+ cmp word [terminal_controller_active],0
+ jne .denied
  cmp word [terminal_monitor_active],0
  jne .done
  cmp word [terminal_parser_active],0

@@ -32,6 +32,8 @@ extern _monitor_file_initialize,terminal_monitor_poll,terminal_monitor_filter
 extern terminal_monitor_active,terminal_monitor_shutdown
 extern _printer_device_initialize,terminal_printer_poll
 extern terminal_printer_receive_hold,terminal_printer_shutdown
+extern terminal_controller_poll,terminal_controller_filter
+extern terminal_controller_receive_hold,terminal_controller_shutdown
 extern terminal_connection_start,terminal_connection_receive
 extern connection_state,connection_result
 ; Open Watcom small-code consistency marker for the near-C DOS IO subset.
@@ -155,6 +157,7 @@ _small_code_:
  jne terminal_shutdown
  call terminal_capture_poll
  call terminal_printer_poll
+ call terminal_controller_poll
  call terminal_monitor_poll
  call terminal_transfer_poll
  cmp word [terminal_quit],0
@@ -175,6 +178,9 @@ _small_code_:
 .receive:
  cmp word [terminal_monitor_active],2
  je .idle ;Prompt owns keyboard; leave all incoming bytes in actual RX ring.
+ call terminal_controller_receive_hold
+ or ax,ax
+ jnz .idle
  call terminal_printer_receive_hold
  or ax,ax
  jnz .idle ;Reserve two queue slots for native CR plus optional LF.
@@ -184,6 +190,8 @@ _small_code_:
  call terminal_connection_receive
  jc .loop
  call terminal_monitor_filter
+ jc .loop
+ call terminal_controller_filter
  jc .loop
  call terminal_transfer_filter
  jc .loop
@@ -237,6 +245,7 @@ terminal_shutdown:
  sti
  call terminal_macro_cancel
  call terminal_program_cancel
+ call terminal_controller_shutdown
  call terminal_printer_shutdown
  or ax,ax
  jz .printer_closed
