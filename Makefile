@@ -222,6 +222,14 @@ test-batch-header: batch-header
 .PHONY: test-batch-download test-batch-upload test-terminal-ymodem-live
 .PHONY: test-capture-file test-capture-session
 .PHONY: test-capture-owners snapshot test-snapshot
+.PHONY: printer test-printer
+all: printer
+test: test-printer
+printer:
+	python3 standalone/build_printer.py
+test-printer: printer
+	python3 standalone/check_printer.py
+	python3 standalone/test_printer_dos.py
 all: snapshot
 test: test-capture-owners test-snapshot
 snapshot:

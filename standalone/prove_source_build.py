@@ -23,6 +23,7 @@ snapshot={'source_checkout':str(SNAP),'files':files,'file_count':len(files),'sha
 builds=['terminal','config_dos','config_replace','config_abi','ui_windows','modem_commands','modem_responses','modem_send','directory_dial','directory_browser','directory_editor','directory_accounting','keyboard_mapping','keyboard_detection','line_edit','meta_keys','character_edit','process','program_exec','terminal_reset','transfer_blocks','transfer_receive','transfer_send','transfer_files','transfer_session','transfer_uart','download_file','transfer_session_composite','transfer_storage','upload_file','transfer_metadata','batch_header']
 # All commands execute inside the fresh checkout's pinned Nix shell.
 builds.append('snapshot')
+builds.append('printer')
 program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/build_{name}.py'],check=True)\n" for name in builds)
 owner_checks=['standalone/check_batch_download.py','standalone/check_batch_upload.py','standalone/check_capture_file.py','standalone/check_capture_session.py','standalone/check_capture_owners.py']
 program+=''.join(f"subprocess.run(['python3',{name!r}],check=True)\n" for name in owner_checks)
@@ -32,6 +33,7 @@ outputs=['terminal/TERMINAL.EXE','config-dos/CONFIG.EXE','config-dos/CFGFAULT.EX
 outputs += ['batch-download/BATCHDL.EXE','batch-download/BDFAULT.EXE','batch-upload/BATCH.EXE','batch-upload/BUFAULT.EXE']
 outputs += ['capture-file/CAPTURE.EXE','capture-file/CAPFAULT.EXE','capture-session/CAPSESS.EXE','capture-session/CSFAULT.EXE']
 outputs += ['snapshot/SNAPSHOT.EXE','capture-owners/OWNERS.EXE','capture-owners/OWFAULT.EXE']
+outputs += ['printer/PRINTER.EXE']
 results={}
 for rel in outputs:
  path=SNAP/'build'/rel;workspace=ROOT/'build'/rel

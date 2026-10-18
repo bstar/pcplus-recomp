@@ -225,13 +225,19 @@ physical modem compatibility or close the remaining application gates below.
       wait; unsupported CGA geometry now returns without entering that path.
       Synchronet's current full-screen editor probe passes; ENiGMA still fails
       Home/Insert despite correct outgoing bytes. Those failures remain visible.
-      Full F10 still requires printer, remaining snapshot/viewport modes, raw
+      Native printer recovery now adds79 exact bytes and reuses the132-byte
+      logger. Sixty-six CPU/original comparisons and an actual8086 DOS memory-CRT
+      diagnostic pass; native ignored errors remain explicit, not live policy.
+      The Ctrl-backslash raw-monitor and binaryDMP route is now mapped from
+      retained REA assembly, including byte transformations and modal ownership.
+      See `docs/PRINTER_NATIVE.md` and `docs/RAW_MONITOR_NATIVE.md`.
+      Full F10 still requires live printer, remaining snapshot/viewport modes, raw
       monitoring, complete settings/status UI, ASPECT and physical validation. See
       `docs/CAPTURE_NATIVE_INVENTORY.md`, `docs/LIVE_CAPTURE.md` and
       `docs/validation/terminal-capture-dos.json`.
-      The fresh maintained-source snapshot now reproduces50 byte-identical
+      The fresh maintained-source snapshot now reproduces51 byte-identical
       component/diagnostic outputs, including the current interactive executable
-      and capture/owner/native-screen diagnostics, with originals/install/REA
+      and capture/owner/native-screen/printer diagnostics, with originals/install/REA
       databases absent. This checkpoint does not close the full application gate.
 - [ ] Reconstruct scripting interfaces and required interpreter/compiler integration.
       Keyboard file structures and original TEXT caret/pause consumers are proved,

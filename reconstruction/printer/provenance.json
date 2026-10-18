@@ -1,0 +1,53 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "source": "byte.asm",
+      "start": "0x36fc",
+      "end_exclusive": "0x3717",
+      "bytes": 27,
+      "source_file_offset": 18684,
+      "sha256": "3fcb2ef101b1f1285af7967279c3007e2e4657d50345843940ca05844362401a",
+      "region": "resident"
+    },
+    {
+      "source": "toggle.asm",
+      "start": "0x1a76",
+      "end_exclusive": "0x1aaa",
+      "bytes": 52,
+      "source_file_offset": 11382,
+      "sha256": "f2d448629c2552b3871dea92dc1a4aa6c466f034587daf8bcb0ee6e1408fb223",
+      "region": "resident"
+    }
+  ],
+  "state": {
+    "0x3988": "printer_enabled",
+    "0x8ff0": "printer_stream",
+    "0x1d50": "printer_device",
+    "0x4688": "printer_binary_mode"
+  },
+  "boundaries": {
+    "0x36fc": "printer_byte_original",
+    "0x1a76": "printer_toggle_original",
+    "0x8436": "printer_putc",
+    "0x8c54": "printer_flush",
+    "0x841a": "printer_open",
+    "0x8318": "printer_close",
+    "0x2fb8": "printer_status"
+  },
+  "supporting_evidence": [
+    {
+      "export": "analysis/pcplus-main/functions/0x136fc-asm.json",
+      "evidence_id": "ev_77f724fb00c1f481d308bbf610897fcc3ba64a77116a9d47f527765f1082a447"
+    }
+  ],
+  "toggle_provenance": "Original resident1a76..1aa9 decoded from SHA-verified original; keyboard DS44e0 scan26h verified entry1a76. No resident Listing export for this exact entry was retained at generation time.",
+  "reused_sources": [
+    "reconstruction/input_dispatch/logging.asm"
+  ],
+  "limitations": [
+    "Exact79 native printer instruction bytes; borrowed132-byte logger is not included in the recovery count.",
+    "CRT open/putc/flush/close and status services are explicit memory fixtures, not live DOS printer support.",
+    "Native enabling-before-null-open and ignored putc/flush/close errors are preserved for comparison, not a recommended maintained policy."
+  ]
+}

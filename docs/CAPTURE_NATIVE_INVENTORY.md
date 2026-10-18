@@ -1,9 +1,16 @@
 # Native capture, snapshot and printer inventory
 
 This F10 ledger describes original PCPlus2.01 behavior established from retained
-REA assembly and SHA-verified original bytes. It does not implement capture in
-the maintained terminal. No new REA session, original application execution,
+REA assembly and SHA-verified original bytes. It records native behavior rather
+than the current maintained implementation; see [LIVE_CAPTURE.md](LIVE_CAPTURE.md)
+and [LIVE_SNAPSHOT.md](LIVE_SNAPSHOT.md) for implemented live owners. No new REA session, original application execution,
 BBS session, captured private text or customized configuration was used.
+
+Follow-up recovery is recorded in [PRINTER_NATIVE.md](PRINTER_NATIVE.md) and
+[RAW_MONITOR_NATIVE.md](RAW_MONITOR_NATIVE.md). The latter proves a separate
+Ctrl-\\ monitor and optional binary `PCPLUS.DMP` writer; it is not the screen
+snapshot path. Those follow-up ledgers supersede the unresolved route questions
+below within their stated search boundaries.
 
 Baseline EXE:214016 bytes, SHA256
 `6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904`.
@@ -204,8 +211,9 @@ pause/resume and active-close; ANSI/plain input and exact CR/LF/FF/DEL bytes;
 text-EOF existing log; partial/disk-full writes and close failure; truthful
 status on failed printer open; snapshot row trimming, repeat append, video
 versus shadow; lost carrier and cleanup; script and ongoing transfer coexistence.
-No current live capture/printer/snapshot implementation or these runtime
-results are claimed by this inventory.
+This initial native inventory does not itself establish those runtime results.
+The linked live-owner ledgers above now supply capture and screen-file evidence;
+printer-device and full raw-monitor integration remain separate open work.
 
 ## Evidence register
 
