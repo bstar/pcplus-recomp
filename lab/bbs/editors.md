@@ -267,7 +267,7 @@ It closes unsaved with no new post. Both restore sampled hardware and preserve
 the synthetic PRM. The separate buffered fd68875e experiment above remains
 historical evidence and is not a current immediate-editor pass.
 
-## Current source-built screen-print checkpoint
+## Source-built screen-print checkpoint
 
 Frozen terminal
 `d4cfa4dcb27edd375195ccd9345dd1513844855840f3e673ab9a2ac7288cf16a`
@@ -304,3 +304,37 @@ so the existing `NO_EVENTS` intent also covers time-left calculations. The
 owned listener was gracefully restarted before the fresh passing retry.
 No account quota, stock editor/server executable or remote/public BBS was
 changed. Evidence and source hashes are included in the current editor report.
+
+## Dedicated-controller checkpoint
+
+The immutable source-built DOS terminal
+`51b94da6b6c8f489fa646a220e7d7a77457459f96e73bec98687b19a1f338c90`
+repeats the retained editor recipes on the same owned stock servers. Synchronet
+`editor-controller-51b9-rerun` passes all12 behavior checks and all eight key-wire
+checks, including real FSEditor entry and Ctrl-Q abort. ENiGMA
+`editor-controller-51b9-immediate` still fails Home and Insert behavior despite
+all eight outgoing keys being present; no post is saved. Its paired
+`editor-controller-51b9-buffer30-rerun` passes all seven behavior checks with
+explicit30ms modem buffering. Both use the same DOS executable, synthetic PRM,
+keyboard recipe and COM2/19200/8N1/HARD. The server/user state was not reset
+between these sequential runs. Physical modem/CTS timing and arbitrary TCP
+chunk boundaries remain outside this result.
+
+Initial controller-label attempts used the server-only Nix shell, which lacks
+NASM, and stopped before DOS launch. Their setup logs remain separate from the
+selected successful harness runs. DOS probes use `./tools/dev`; server setup
+uses `./tools/bbs-dev`. The editor-only recording command preserves the menu
+matrix and its independently tested executable identities:
+
+```sh
+./tools/dev --command python3 lab/bbs/record_checkpoint.py --editors-only \
+  --editors editor-controller-51b9-rerun \
+  --enigma-editors editor-controller-51b9-immediate
+./tools/dev --command python3 lab/bbs/record_packetization.py \
+  --buffered editor-controller-51b9-buffer30-rerun \
+  --control editor-controller-51b9-immediate
+```
+
+The public editor aggregate remains false. Current hash-bound evidence appears
+in `docs/validation/bbs-editors.json` and `bbs-enigma-packetization.json`; prior
+checkpoints remain in their histories.

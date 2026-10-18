@@ -81,3 +81,9 @@ are recorded separately. Re-record a new pair with:
 ./tools/dev --command python3 lab/bbs/record_packetization.py \
   --buffered editor-screen-print-buffer30 --control editor-screen-print-immediate
 ```
+
+The dedicated-controller checkpoint repeats this comparison on51b94da6:
+`editor-controller-51b9-buffer30-rerun` passes all seven editor checks;
+`editor-controller-51b9-immediate` fails Home/Insert again while preserving
+all eight outgoing key sequences. Both close unsaved. The paired report retains
+the older screen-print checkpoint as history; see [current results](modern-compatibility.md).
