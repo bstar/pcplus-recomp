@@ -6,7 +6,8 @@ Open Watcom8086 toolchain. Save the file, exit, then start the terminal with tha
 explicit file. The terminal also offers
 [setup before connecting](SETUP_STARTUP.md) with `/S @PCPLUS.PRM`. It is not the original
 PCSETUP shared-memory child. [Alt-F10](SETUP_LIVE.md) also opens the editor from
-the running terminal, with saved changes taking effect on the next startup.
+the running terminal, with validated display/pacing/modem/BREAK adoption and
+explicit link/profile deferral until the next startup.
 The recovered parent protocol and missing child
 consumer are documented in [SETUP_NATIVE.md](SETUP_NATIVE.md).
 

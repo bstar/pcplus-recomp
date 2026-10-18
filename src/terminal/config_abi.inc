@@ -4,14 +4,20 @@ CONFIG_ENTRY _directory_live_read,8
 CONFIG_ENTRY _directory_live_read_context,9
 CONFIG_ENTRY _directory_live_context_matches,5
 CONFIG_ENTRY _live_configuration_decode,7
+CONFIG_ENTRY _live_setup_bind,3
+CONFIG_ENTRY _live_setup_begin,5
+CONFIG_ENTRY _live_setup_finish,2
+CONFIG_ENTRY _live_setup_abort,1
 ; Compiler-default register ABI for these four small-model CRT functions.
 CONFIG_REGISTER config_memcpy_service_,memcpy_
 CONFIG_REGISTER config_memset_service_,memset_
 CONFIG_REGISTER config_memcmp_service_,memcmp_
 CONFIG_REGISTER config_strchr_service_,strchr_
+CONFIG_REGISTER config_canonical_service_,capture_fs_canonical_
 ; Ordinary near-cdecl resident callbacks; named separately from other modules.
 CONFIG_CDECL _config_terminal_decode,_terminal_import_decode,2
 CONFIG_CDECL _config_modem_decode,_modem_import_decode,2
 CONFIG_CDECL _config_prm_read,_prm_dos_load,3
 CONFIG_CDECL _config_directory_read,_directory_dos_read,4
 CONFIG_CDECL _config_number_expand,_directory_number_expand,4
+CONFIG_CDECL _config_live_expand,_live_modem_expand,4

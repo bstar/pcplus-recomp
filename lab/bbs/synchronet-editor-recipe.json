@@ -1,0 +1,6 @@
+{
+  "schema": 1,
+  "keyboard_input": "p13000 L A B U S E R enter p2000 L A B P A S S 4 2 enter p8000 space p3000 Q enter p5000 space p4000 P p2000 K E Y T E S T enter p3000 c-y p400 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p400 c-q p1800 space p3000 a-x",
+  "derived_from": "The setup-0fea successful HARD COM2/19200 keyboard_input, with an explicit Ctrl-Y at draft-body entry. The live-7f48 SOFT probe left a one-line autosaved UNSAVED draft; the following HARD attempt resumed it and invalidated blank-line column assertions. Clear that owned synthetic line before the measured ABCDE input.",
+  "scope": "Owned local stock FSEditor, unsaved synthetic draft with explicit Ctrl-Q abort. No Enter after body editing begins."
+}

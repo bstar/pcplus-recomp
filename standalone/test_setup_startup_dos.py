@@ -37,7 +37,7 @@ def probe_child():
  subprocess.run(['nasm','-f','obj',str(OUT/'probe.asm'),'-o',str(OUT/'probe.obj')],check=True)
  subprocess.run(['wlink','system','dos','option','quiet','name',str(OUT/'PROBE.EXE'),'file',str(OUT/'probe.obj')],check=True)
  return (OUT/'PROBE.EXE').read_bytes()
-def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate=1200,expected=0,ready=True):
+def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate=1200,expected=0,ready=True,post_echo=False):
  directory=OUT/name
  if directory.exists():shutil.rmtree(directory)
  directory.mkdir(parents=True);data=image() if payload is None else payload
@@ -56,6 +56,7 @@ def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate
  def peer():
   conn=None
   try:
+   post_sent=False
    while not stop.is_set():
     try:conn,_=server.accept();break
     except socket.timeout:pass
@@ -79,6 +80,9 @@ def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate
     if not block:break
     wire.extend(block)
     if b'\x1b[1;12R' in wire:peer_checks['actual_terminal_cursor_reply']=True
+    if post_echo and not post_sent and b'ready' in wire:
+     conn.sendall(b' LIVE\x1b[6n');post_sent=True
+    if post_echo and b'\x1b[1;17R' in wire:peer_checks['post_editor_receive_render_and_cursor_reply']=True
   except OSError as error:
    if not stop.is_set():errors.append(str(error))
   finally:
@@ -127,7 +131,7 @@ exit
  before=(directory/'BEFORE.BIN').read_bytes();after=(directory/'AFTER.BIN').read_bytes();screen=(directory/'SCREEN.BIN').read_bytes()
  checks={'expected_DOS_exit':proc.returncode==0 and (directory/'PASS.TXT').exists() and not (directory/'FAIL.TXT').exists(),'hardware_restored':len(before)==42 and before==after,'no_peer_errors':not errors,'no_recovery_files':not (directory/'PRMEDIT.BAK').exists() and not (directory/'PRMEDIT.$$$').exists()}
  if ready:
-  checks.update(peer_checks);checks['both_peer_checks_seen']=len(peer_checks)==2
+  checks.update(peer_checks);checks['both_peer_checks_seen']=len(peer_checks)==(3 if post_echo else 2)
   checks['actual_video_ready']=screen[:22:2]==b'SETUP READY'
  else:checks['no_serial_output']=not wire
  if child=='probe' and ready:

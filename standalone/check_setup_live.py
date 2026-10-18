@@ -1,19 +1,14 @@
 #!/usr/bin/env python3
 """Direct settings child through the actual keyboard/UART/video/EXEC owner."""
 import hashlib,json,struct
-from unicorn.x86_const import UC_X86_REG_BP,UC_X86_REG_SI,UC_X86_REG_DI,UC_X86_REG_ES,UC_X86_REG_AX
-from check_program_actions_live import LiveProgram,ROOT,BINARY
+from unicorn.x86_const import UC_X86_REG_BP,UC_X86_REG_SI,UC_X86_REG_DI,UC_X86_REG_ES
+from check_program_actions_live import ROOT,BINARY
+from live_setup_kernel import LiveSettings
 
-class SetupProgram(LiveProgram):
- def __init__(self,**kw):
-  self.local_text=bytearray();super().__init__(**kw)
- def interrupt(self,uc,number,data):
-  ax=uc.reg_read(UC_X86_REG_AX)
-  if number==0x10 and ax>>8==14:self.local_text.append(ax&255)
-  return super().interrupt(uc,number,data)
+SetupProgram=LiveSettings
 
 def model(path=b'TEST.PRM',**kw):
- m=SetupProgram(child_status=0,**kw)
+ m=SetupProgram(path=path,**kw)
  m.put('terminal_option_mask',16)
  m.uc.mem_write(m.symbols['terminal_config_path'],path.ljust(64,b'\0'))
  return m
@@ -62,6 +57,6 @@ def main():
  m.poll();assert bytes(m.tx)==b'\x13\x11';m.restored()
  done('software-peer-pause-waits-for-physical-TEMT-and-resumes-once',1)
  for reg,value in [(UC_X86_REG_BP,0xbabe),(UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678),(UC_X86_REG_ES,0xb800)]:assert m.uc.reg_read(reg)==value
- result=dict(passed=True,inputs=sum(c['inputs'] for c in cases),cases=cases,binary_sha256=hashlib.sha256(BINARY.read_bytes()).hexdigest(),scope='Actual linked AltF10 scheduler, direct process_run, child handoff, flow, UART IRQ/vector/format and video restoration. Kernel/BIOS/UART modeled. Editor saves are adopted on next startup; live candidate commit remains separate unfinished work.')
+ result=dict(passed=True,inputs=sum(c['inputs'] for c in cases),cases=cases,binary_sha256=hashlib.sha256(BINARY.read_bytes()).hexdigest(),scope='Actual linked AltF10 scheduler, direct process_run, child handoff, flow, UART IRQ/vector/format and video restoration. Kernel/BIOS/UART modeled. Selective live application is tested separately; link/profile changes remain deferred.')
  (ROOT/'build/terminal/setup-live-checks.json').write_text(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':main()

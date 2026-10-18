@@ -5,6 +5,7 @@ CPU 8086
 GROUP DGROUP _DATA _BSS STACK
 SEGMENT _TEXT public class=CODE use16
 global terminal_reset_capture,ansi_escape_service_20a4,csi_reset_terminal
+global terminal_reset_patch_word,terminal_reset_patch_byte
 extern terminal_clear_home,terminal_abort
 extern terminal_keymap,terminal_tab_stops,ansi_parameters,screen_line_flags
 extern screen_attribute_cells,erase_attribute_values,erase_shadow_cells
@@ -165,6 +166,56 @@ terminal_reset_capture:
  pop di
  pop si
  pop bp
+ ret
+
+; Update one configured reset default without capturing the peer's current
+; cursor, modes, SGR, tabs or keymap. AX address, DX new value; preserve all
+; registers. Unknown addresses or uncaptured baseline are intentionally no-op.
+terminal_reset_patch_word:
+ push si
+ push di
+ push cx
+ cmp word [reset_ready],1
+ jne .done
+ mov si,reset_word_addresses
+ mov di,reset_words
+ mov cx,RESET_WORD_COUNT
+.find:
+ cmp ax,[si]
+ je .patch
+ add si,2
+ add di,2
+ loop .find
+ jmp .done
+.patch:
+ mov [di],dx
+.done:
+ pop cx
+ pop di
+ pop si
+ ret
+terminal_reset_patch_byte:
+ push si
+ push di
+ push cx
+ cmp word [reset_ready],1
+ jne .done
+ mov si,reset_byte_addresses
+ mov di,reset_bytes
+ mov cx,RESET_BYTE_COUNT
+.find:
+ cmp ax,[si]
+ je .patch
+ add si,2
+ inc di
+ loop .find
+ jmp .done
+.patch:
+ mov [di],dl
+.done:
+ pop cx
+ pop di
+ pop si
  ret
 
 ansi_escape_service_20a4:

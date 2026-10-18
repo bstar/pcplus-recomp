@@ -15,6 +15,7 @@ extern terminal_baud_low,terminal_baud_high,terminal_parity,terminal_data_bits,t
 extern terminal_irq_vector,terminal_port_number,csi_unimplemented_service
 extern screen_attribute_cells,erase_attribute_values,erase_shadow_cells
 extern terminal_run_startup_setup
+extern terminal_setup_bind
 extern terminal_load_configuration
 extern terminal_select_directory
 extern terminal_directory_flush_accounting
@@ -94,6 +95,7 @@ _small_code_:
  call terminal_load_actions
  or ax,ax
  jnz .configuration_error
+ call terminal_setup_bind
  ; Require a standard BIOS-listed serial port before changing its registers.
  mov bx,[terminal_port_number]
  dec bx

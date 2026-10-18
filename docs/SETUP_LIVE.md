@@ -1,61 +1,92 @@
-# Opening settings from the terminal
+# Settings during a terminal session
 
-With `TERMINAL.EXE`, `PRMEDIT.EXE` and an existing, externally identified2.01
-`PCPLUS.PRM` in the current DOS directory, run:
+Place the source-built `TERMINAL.EXE`, `PRMEDIT.EXE` and an existing, externally
+identified2.01 `PCPLUS.PRM` in the current DOS directory, then run:
 
 ```dos
 TERMINAL @PCPLUS.PRM
 ```
 
-Alt-F10 opens the maintained settings editor after the terminal has started.
-Tab and PageUp/PageDown navigate fields/pages; F10 validates and saves; Escape
-closes the editor, with confirmation before discarding unsaved edits. Press a
-key at the return prompt to resume the same terminal session.
+Alt-F10 opens the maintained editor. Tab and PageUp/PageDown navigate fields
+and pages; F10 validates and saves; Escape closes, confirming before discarding
+unsaved edits. The parent then validates the file on disk and reports the result
+at a key prompt before resuming the terminal.
 
-**Saved changes currently take effect on the next terminal startup.** The open
-connection keeps its existing configuration. The candidate decoder is now linked
-in the terminal, but adopting its staged settings during the session is still
-unfinished. The shortcut is the editor invocation step of that workflow, not a
-claim that live configuration application or F02/F06 is complete.
+## Applying settings
 
-The shortcut requires an explicit `@` current-directory8.3 leaf using letters,
-digits, `_` or `-`; it accepts upper/lowercase. Drive-qualified and longer paths
-remain supported by normal startup import but cannot open this editor yet. The
-editor independently rejects DOS devices and recovery names before file I/O.
-Unsupported requests leave the terminal running; the scheduler records status1
-for an unavailable path,2 for a busy owner,0 for a queued request. These paths
-still need a visible explanatory prompt in the eventual complete settings UI.
+The foreground owner can now adopt these settings during the session:
 
-The launch is deferred to the foreground main loop. It uses the existing
-PROGRAM owner to drain pending terminal replies and physical TEMT, send an
-owned XOFF where configured, close capture, preserve DTR, lower RTS, release
-the UART IRQ, retain all parent storage and execute local `PRMEDIT.EXE` directly.
-It passes only a leading space and the bounded filename; COMSPEC and shell
-command parsing are not involved. On return it restores the80x25 screen,
-cursor/shape, configured UART format and ISR without discarding pending RBR,
-then releases only its own software pause. A failed EXEC or nonzero editor exit
-returns through the same restoration path and reports the failure at the key
-prompt. NONE flow cannot guarantee incoming-data preservation during a child.
+- Five configured attributes, autowrap and scrolling.
+- Key/command pause character and character pacing.
+- Modem numeric settings, commands and response strings for future actions.
+- BREAK duration for the next Alt-B operation.
 
-An active macro, child, BREAK, monitor, print controller or modem negotiation
-prevents a second setup owner. Escape/Alt-X cancel a pending launch before EXEC.
-The original Alt-S upload shortcut remains available. This is a maintained
-Alt-F10 binding rather than a claim to reproduce the original Setup menu ABI.
+Port/base/IRQ, baud, parity/data/stop, software/hardware flow and terminal profile
+changes remain deferred until the next startup. A mixed save applies its
+independent settings and explicitly reports that link/profile changes need a
+restart. CLI serial-category overrides retain precedence. A negotiated autobaud
+rate is preserved when the PRM's configured source baud has not changed;
+deliberate pending baud edits retain their deferred status across later saves.
+Full transport/profile handoff remains unfinished rather than silently switching
+an active link or claiming that F02/F06 is complete.
 
-`check_setup_live.py` executes the real linked scheduling, transport, process
-and restoration code under modeled kernel/BIOS/UART boundaries. Its32 inputs
-cover direct tails, unsupported paths, competing owners, cancel, failed EXEC,
-failed child and physical TEMT/XOFF/XON ordering. `test_setup_live_dos.py` opens
-the production editor from the running DOS terminal, checks cancel and an exact
-baud-save image, then verifies the original terminal display, serial replies
-and final UART/vector/PIC restoration. Synthetic PRMs and a loopback serial peer
-are used throughout; this does not establish physical modem behavior.
+Configured display defaults are separate from transient BBS state. Unedited
+wrap/scroll fields preserve the peer's current modes. Palette changes preserve
+active SGR; a currently plain normal attribute can adopt the new normal color,
+while other attributes take effect at the next relevant SGR operation. Only
+changed configured defaults are patched into RIS state: applying settings does
+not capture the current cursor, margins, modes, SGR, tabs or keymap as defaults.
+The existing screen is retained; newly received characters use the active values.
+No initialization, dialing or hang-up command is transmitted merely by saving.
 
-Run both as part of `./tools/build test-terminal`. The editor's save/recovery
-policy is in [SETUP_EDITOR.md](SETUP_EDITOR.md); staged runtime validation is in
-[LIVE_CONFIGURATION_PLAN.md](LIVE_CONFIGURATION_PLAN.md).
+Read, close, size, decoder or native-command-expansion errors leave active
+settings unchanged and report failure. The child may have saved a file that
+cannot be adopted; the parent does not undo or rewrite that file. The editor's
+own checked replacement/recovery policy is in [SETUP_EDITOR.md](SETUP_EDITOR.md).
 
-This checkpoint passes all50 terminal regression commands and reproduces60
-byte-identical outputs from a fresh maintained-source checkout. The actual DOS
-cases additionally check that ordinary typed bytes reach the serial peer after
-editor return. Hash-bound evidence is in [validation/setup-live.json](validation/setup-live.json).
+## Identity and ownership
+
+The shortcut requires an explicit current-directory8.3 `@` leaf using letters,
+digits, `_` or `-`. Normal startup still accepts supported drive-qualified and
+longer PRM paths, but this editor workflow does not yet support those paths.
+The editor rejects DOS devices and reserved recovery names before file I/O.
+
+Startup binds the DOS canonical absolute PRM identity and original source baud.
+Immediately before EXEC, the owner verifies the current lexical/canonical request
+and retained directory context. A changed working directory cannot redirect the
+editor to another same-named PRM. After child success the parent reads only the
+bound absolute path, even if the child changed the current directory. Failed
+canonicalization has no lexical fallback; unverifiable binding prevents setup
+from starting while leaving the terminal usable. This is DOS namespace binding,
+not a file-generation lock or protection against concurrent filesystem remapping.
+
+Directory header/record selection stays frozen. It is never reread or replaced
+while adopting PRM changes. Deferred accounting retains its separate live record
+baseline; an accounting update does not create a spurious settings change.
+
+The existing PROGRAM owner drains replies and physical TEMT, sends its owned
+XOFF when configured, closes capture, preserves DTR, lowers RTS and releases the
+UART IRQ before direct local EXEC. The child receives only the bounded filename;
+COMSPEC/shell parsing is not involved. After validation/application, the owner
+restores the screen/cursor/shape, UART format and ISR without discarding pending
+RBR, then releases only its own software pause. NONE flow still cannot guarantee
+incoming-data preservation while a child owns the machine. Competing local
+owners and modem negotiation deny a second setup; Escape/Alt-X cancel a pending
+launch. Unsupported-path/busy shortcut requests still need a complete visible
+menu/error UI. Alt-S remains the upload shortcut.
+
+## Evidence
+
+`check_live_setup_owner.py` runs76 actual-terminal transaction cases with only
+canonical/PRM file boundaries modeled. `check_live_setup_apply.py` runs27 actual
+foreground application cases using kernel/BIOS/UART boundaries, plus the real
+renderer/RIS code. `check_setup_live.py` retains32 invocation/handoff cases.
+The production DOS editor test now covers cancel, a deferred baud save and a
+live normal-color save. After each return the peer receives typed bytes, sends
+new display bytes and receives a fresh cursor reply. Exact screen attributes
+prove adoption, while independent UART/vector/PIC samples prove restoration.
+
+Run these through `./tools/build test-terminal`. The pure staging API is described
+in [LIVE_CONFIGURATION_PLAN.md](LIVE_CONFIGURATION_PLAN.md); the full feature
+inventory remains in [FEATURES.md](FEATURES.md). Hash-bound checkpoint evidence
+is recorded in [validation/setup-live.json](validation/setup-live.json).

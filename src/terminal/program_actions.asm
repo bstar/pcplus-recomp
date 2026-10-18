@@ -22,6 +22,7 @@ extern terminal_capture_before_program
 extern terminal_monitor_active
 extern terminal_controller_active
 extern _process_run,terminal_setup_tail
+extern terminal_setup_prepare,terminal_setup_complete,terminal_setup_return_prompt
 global terminal_program_initialize,terminal_program_start,terminal_program_poll
 global terminal_program_cancel
 
@@ -270,12 +271,18 @@ terminal_program_poll:
  add sp,4
  jmp .child_status
 .setup_child:
+ call terminal_setup_prepare
+ or ax,ax
+ jnz .setup_denied
  mov ax,terminal_setup_tail
  push ax
  mov ax,program_setup_executable
  push ax
  call _process_run
  add sp,6
+ jmp .child_status
+.setup_denied:
+ add sp,2 ;Release only the already-pushed result pointer; no EXEC happened.
 .child_status:
  or ax,ax
  jnz .record_status
@@ -293,12 +300,16 @@ terminal_program_poll:
  ; A child may leave its UART ISR/interrupt-enable state behind. Quiet that
  ; port and restore its baseline vector before drawing or waiting for a key.
  call program_quiet_uart
+ cmp word [terminal_program_kind],1
+ jne .return_prompt
+ call terminal_setup_complete
+.return_prompt:
  ; Original PROGRAM asks for a local key after the command. BIOS output avoids
  ; introducing DOS text-output/CTRL-C checks while the port is handed off.
  mov si,program_return_prompt
  cmp word [terminal_program_kind],1
  jne .check_error
- mov si,program_setup_prompt
+ call terminal_setup_return_prompt
 .check_error:
  cmp word [terminal_program_status],5
  jne .prompt
@@ -517,7 +528,6 @@ program_screen_segment: dw seg program_screen
 program_return_prompt: db 13,10,'Press a key to return to the terminal.',0
 program_error_prompt: db 13,10,'Program could not run. Press a key to return.',0
 program_setup_executable: db 'PRMEDIT.EXE',0
-program_setup_prompt: db 13,10,'Setup closed. Press a key to return to the terminal.',0
 program_busy_notice: db 'Program busy',0
 program_view_notice: db 'Program view',0
 

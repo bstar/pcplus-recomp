@@ -8,20 +8,24 @@ toolchains. These results do not establish physical Wi-Fi modem compatibility.
 
 ## Latest editor-tested build
 
+This runtime includes selective live settings adoption. The editor probes below
+exercise ordinary BBS editing with that binary; actual Alt-F10 application is
+proved separately in [the live settings report](../../docs/validation/setup-live.json).
+
 DOS executable SHA-256:
-`0fea93eccc614d71b3f74976cd24973a9806b1d171ad76895f2d816ba45bcec2`.
+`7f481c92daa1755f002bb7943f92dd420a823d4ec1eb2884405f09c8b301683d`.
 
 | Server / modem forwarding | Result | Evidence |
 | --- | --- | --- |
-| Synchronet 3.22a development snapshot / immediate | All 12 behavior checks and eight key-wire checks pass; draft aborted | `editor-setup-0fea`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
+| Synchronet 3.22a development snapshot / HARD COM2/19200, immediate | All 12 audit checks and eight key-wire checks pass; draft aborted | `editor-live-7f48-hard-clean`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
 | ENiGMA½ 0.5.1-beta / immediate | Correct outgoing keys; Home and Insert behavior fail | Current paired experiment below |
 | Same ENiGMA / explicit 30 ms buffering | All seven audited checks and eight key-wire checks pass; closes unsaved | Current paired experiment below |
 
 The ENiGMA pair uses the same DOS executable, keyboard recipe, synthetic PRM,
 serial settings and unchanged stock decoder. Only the modem's explicit
 `packet_delay_ms` differs. Server/user state is not reset between runs.
-Retained labels are `editor-setup-0fea-buffer30-noscan` and
-`editor-setup-0fea-immediate-noscan`; full hashes and checks are in
+Retained labels are `editor-live-7f48-buffer30` and
+`editor-live-7f48-immediate`; full hashes and checks are in
 [the paired report](../../docs/validation/bbs-enigma-packetization.json).
 
 The checked ENiGMA source, commit
@@ -109,3 +113,31 @@ control, and exact failing board screen. Compare immediate versus buffered
 serial forwarding before changing key mappings. Then repeat on the physical
 386 and modem. Multiline paging, complete editor coverage and arbitrary public
 BBS configurations remain unverified.
+
+
+## Live-settings checkpoint preparation and flow boundary
+
+The first Synchronet run, `editor-live-7f48`, used SOFT COM1/38400. Eleven
+audit checks passed, but Ctrl-Q did not reach the server: the raw serial capture
+contains one11h byte, the BBS-bound capture contains none, and the modeled modem
+records the corresponding XON event. The editor abort therefore failed. This
+is a measured software-flow boundary of the local bridge, not physical Wi-Fi
+firmware validation. The HARD run also differs in port/baud, so these are not
+a controlled comparison with flow as the sole changed parameter. See
+[the exact flow observation](../../docs/validation/bbs-synchronet-software-flow.json).
+
+The following HARD attempt, `editor-live-7f48-hard`, successfully aborted but
+resumed the prior synthetic autosaved `UNSAVED` line. Its End/Delete/Tab column
+assertions expected an empty line and were invalid preparation for that attempt.
+Both attempts remain in the public editor report's history. The accepted HARD
+run explicitly clears the draft body with Ctrl-Y before the measured ABCDE
+sequence; all12 audit checks then pass. The separate canonical
+`synchronet-editor-recipe.json` and `synchronet_editor_dos_probe.py` preserve
+that preparation and the previously validated HARD COM2/19200 profile. No Enter
+follows the measured draft-body input.
+
+The ENiGMA pair still uses the unchanged shared canonical recipe. It again
+enters the editor in both runs, preserves all eight outgoing key sequences,
+fails Home/Insert with immediate forwarding and passes all seven checks with
+explicit30ms buffering. Neither run saves a post. Earlier menu/transfer hashes
+remain separate; these probes do not upgrade those older runtime claims.

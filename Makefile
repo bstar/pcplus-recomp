@@ -66,6 +66,8 @@ test-terminal: terminal
 	python3 standalone/check_setup_startup.py
 	python3 standalone/test_setup_startup_dos.py
 	python3 standalone/check_setup_live.py
+	python3 standalone/check_live_setup_owner.py
+	python3 standalone/check_live_setup_apply.py
 	python3 standalone/test_setup_live_dos.py
 	python3 standalone/check_config_far_live.py
 	python3 standalone/check_live_configuration.py --terminal

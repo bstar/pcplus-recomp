@@ -415,3 +415,16 @@ scanning, while its following buffered run reached the editor. They are retained
 as separate preparation evidence, not accepted as a pair. The canonical input
 now explicitly selects N at the scan prompt, then dismisses User Stats. See
 [the current checkpoint](modern-compatibility.md) for hashes and retained runs.
+
+
+## Live-settings checkpoint
+
+Build7f481c92 passes all12 stock Synchronet audit checks with HARD COM2/19200
+in `editor-live-7f48-hard-clean`. The canonical test now clears a synthetic
+autosaved body line before its measured key sequence. Prior SOFT and resumed-
+draft attempts remain recorded: SOFT consumed Ctrl-Q as XON; the first HARD
+retry inherited that draft and invalidated empty-line column expectations.
+The current ENiGMA immediate/buffer30 pair repeats the known Home/Insert
+boundary: all eight key sequences are present, immediate forwarding fails those
+two behavior checks, and30ms buffering passes all seven. No ENiGMA post is saved;
+the accepted Synchronet draft is aborted. See [current evidence](modern-compatibility.md).

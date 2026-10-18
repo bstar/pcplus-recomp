@@ -122,3 +122,11 @@ login new-items scan and is excluded from the paired comparison. The following
 buffered run passed but is retained separately because its counterpart missed
 the prerequisite. Current canonical input is377 characters; complete ADDKEY is
 400 characters. No Enter follows draft-body input. See the current checkpoint.
+
+
+The live-settings7f481c92 pair repeats the same ENiGMA result in
+`editor-live-7f48-immediate` and `editor-live-7f48-buffer30`. Both enter the
+stock editor and send all eight measured key sequences. Immediate forwarding
+fails Home/Insert; explicit30ms buffering passes all seven audit checks. Both
+close without saving. The binary also includes live settings application,
+tested separately; this pair exercises ordinary editor interaction.

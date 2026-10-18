@@ -4,7 +4,7 @@ The maintained DOS candidate decoder validates an in-memory PRM and optional
 retained directory selection, then produces one624-byte candidate. It does not
 modify active settings, launch setup or acquire/reconfigure the UART. This is
 the staging boundary needed before the running terminal can apply setup edits;
-that UI/hardware handoff is still open.
+the selective owner is now integrated, with full transport/profile handoff still open.
 
 Build and check with the pinned Nix DOS8086 toolchain:
 
@@ -15,8 +15,9 @@ Build and check with the pinned Nix DOS8086 toolchain:
 `build/live-configuration/LIVE.EXE` is a source-only diagnostic, not the user
 settings editor. Existing `PRMEDIT` and `TERMINAL /S @PCPLUS.PRM` remain the
 supported offline and setup-before-connect workflows. [Alt-F10](SETUP_LIVE.md)
-now opens the editor from the running terminal; saves currently affect the next
-startup. The candidate decoder is also linked in the normal terminal's separate
+now opens the editor from the running terminal. Link/profile changes apply at
+the next startup; validated display/pacing/modem/BREAK changes apply during the
+session. The candidate decoder is linked in the normal terminal's separate
 [configuration code segment](CONFIGURATION_FAR_CODE.md).
 
 ## Shared directory semantics
@@ -39,8 +40,9 @@ A future live caller can retain the already-selected header/record instead of
 silently rereading a changed directory or reentering the browser while connected.
 The caller still owns that selection's lifetime and identity. The terminal now
 [retains the complete header and logical request context](DIRECTORY_CONTEXT.md).
-The candidate API is now linked in the terminal; a live owner must bind that context
-and coordinate namespace and hardware ownership before committing edits.
+The integrated live owner binds that context and the canonical startup PRM
+identity, validates after child return and applies independent settings while
+deferring transport/profile changes. See [SETUP_LIVE.md](SETUP_LIVE.md).
 
 ## Candidate and change classification
 

@@ -1,0 +1,128 @@
+#include "live_setup_owner.h"
+#include <string.h>
+/* Register-ABI DOS canonicalizer and explicit cdecl native-expansion adapter.
+ * Both are declared named resident services in config_abi.inc. */
+extern unsigned capture_fs_canonical(const char *,char *);
+extern unsigned __cdecl live_modem_expand(const unsigned char *,unsigned char *,unsigned,unsigned);
+typedef char result_abi[sizeof(live_setup_result)==8?1:-1];
+typedef struct setup_owner {
+ unsigned bound,pending,has_context,option_mask;
+ unsigned source_baud_low,source_baud_high;
+ char path[64],canonical[128];
+ directory_live_context context;
+ unsigned char target[64];
+ live_configuration_plan active,stage;
+ prm_dos_image image;
+} setup_owner;
+static setup_owner owner;
+static unsigned extent(const void *p,unsigned n)
+{return p && (unsigned long)(unsigned)p+n<=65536UL;}
+static unsigned separate(const void *a,unsigned n,const void *b,unsigned m)
+{return (unsigned long)(unsigned)a+n<=(unsigned)b || (unsigned long)(unsigned)b+m<=(unsigned)a;}
+static unsigned external(const void *p,unsigned n)
+{return extent(p,n) && separate(p,n,&owner,sizeof(owner));}
+static unsigned string_size(const char *p,unsigned cap)
+{unsigned i;if(!extent(p,cap))return 0;for(i=0;i<cap;++i)if(!p[i])return i+1;return 0;}
+static unsigned same(const char *a,const char *b,unsigned cap)
+{
+ unsigned i,x,y;
+ for(i=0;i<cap;++i){x=(unsigned char)a[i];y=(unsigned char)b[i];
+  if(x>='a' && x<='z')x-=32;if(y>='a' && y<='z')y-=32;
+  if(x!=y)return 0;if(!x)return 1;}
+ return 0;
+}
+unsigned __cdecl live_setup_bind(const char *path,
+ const directory_live_context *context,const terminal_import_settings *source)
+{
+ char canonical[128];unsigned size;
+ if(!external(path,64) || !external(source,sizeof(*source)) ||
+  (context && !external(context,sizeof(*context))))return LIVE_SETUP_ARGUMENT;
+ owner.bound=owner.pending=0;
+ size=string_size(path,64);if(size<2)return LIVE_SETUP_ARGUMENT;
+ if(context && !directory_live_context_matches(context,path,context->directory_path,
+  context->selection.entry_number,context->codes))return LIVE_SETUP_IDENTITY;
+ memset(canonical,0,sizeof(canonical));
+ if(capture_fs_canonical(path,canonical) || string_size(canonical,128)<2)return LIVE_SETUP_IDENTITY;
+ memset(owner.path,0,64);memcpy(owner.path,path,size);
+ memcpy(owner.canonical,canonical,128);owner.has_context=context!=0;
+ if(context)memcpy(&owner.context,context,sizeof(*context));
+ owner.source_baud_low=source->baud_low;owner.source_baud_high=source->baud_high;
+ owner.bound=1;return LIVE_SETUP_OK;
+}
+unsigned __cdecl live_setup_begin(const char *path,
+ const directory_live_context *context,const live_configuration_plan *active,
+ unsigned option_mask,const unsigned char *target)
+{
+ char canonical[128];
+ if(!external(path,64) || !external(active,sizeof(*active)) || !external(target,64) ||
+  (context && !external(context,sizeof(*context))))return LIVE_SETUP_ARGUMENT;
+ if(owner.bound!=1)return LIVE_SETUP_UNBOUND;
+ if(owner.pending==1)return LIVE_SETUP_STATE;
+ if(string_size(path,64)<2 || !same(path,owner.path,64) ||
+  (context!=0)!=owner.has_context || ((option_mask&64)!=0)!=owner.has_context ||
+  !(option_mask&16) || !string_size((const char *)target,64))return LIVE_SETUP_IDENTITY;
+ if(context && memcmp(context,&owner.context,sizeof(*context)))return LIVE_SETUP_IDENTITY;
+ memset(canonical,0,sizeof(canonical));
+ if(capture_fs_canonical(path,canonical) || !same(canonical,owner.canonical,128))return LIVE_SETUP_IDENTITY;
+ memcpy(&owner.active,active,sizeof(*active));memcpy(owner.target,target,64);
+ owner.option_mask=option_mask;owner.pending=1;return LIVE_SETUP_OK;
+}
+static unsigned command_valid(const live_configuration_plan *plan)
+{
+ unsigned char buffer[129];unsigned i;
+ const unsigned char *commands[5];unsigned caps[5];
+ if(!(owner.option_mask&96) || (owner.has_context && plan->directory.dialing_mode==1))return 1;
+ commands[0]=plan->modem.initialization;caps[0]=47;
+ commands[1]=plan->modem.hangup;caps[1]=25;
+ commands[2]=plan->modem.dial_prefix;caps[2]=25;
+ commands[3]=owner.target;caps[3]=64;
+ commands[4]=plan->modem.dial_suffix;caps[4]=25;
+ /* Each expansion cannot exceed its input. The concatenated dial command
+  * fits24+63+24=111 bytes in the existing129-byte destination. */
+ for(i=0;i<5;++i)if(live_modem_expand(commands[i],buffer,caps[i],129))return 0;
+ return 1;
+}
+unsigned __cdecl live_setup_finish(live_configuration_plan *destination,live_setup_result *result)
+{
+ live_configuration_result decoded;prm_dos_result io;unsigned mask,status,deferred;
+ if(!external(destination,sizeof(*destination)) || !external(result,sizeof(*result)) ||
+  !separate(destination,sizeof(*destination),result,sizeof(*result)))return LIVE_SETUP_ARGUMENT;
+ memset(result,0,sizeof(*result));
+ if(owner.bound!=1 || owner.pending!=1){result->status=LIVE_SETUP_STATE;return result->status;}
+ owner.pending=0;
+ status=prm_dos_load(owner.canonical,&owner.image,&io);
+ if(status){result->status=LIVE_SETUP_IO;result->source_status=status;return result->status;}
+ mask=owner.option_mask&15;
+ /* Directory accounting updates a different record baseline. Compare against
+  * the frozen logical selection, never replace the active accounting record. */
+ if(owner.has_context){
+  status=directory_live_decode(&owner.image,&owner.context.selection,owner.context.codes,
+   &owner.stage.serial,&owner.stage.modem,&owner.stage.directory,0);
+  if(status){result->status=LIVE_SETUP_DECODE;result->source_status=status;return result->status;}
+  memcpy(&owner.active.directory,&owner.stage.directory,sizeof(owner.stage.directory));
+ }
+ status=live_configuration_decode(&owner.image,owner.has_context?&owner.context.selection:0,
+  owner.has_context?owner.context.codes:0,mask,&owner.active,&owner.stage,&decoded);
+ if(status){result->status=LIVE_SETUP_DECODE;result->source_status=status;return result->status;}
+ /* A negotiated rate is not an implicit request to restore the PRM's old
+  * source rate on every unrelated save. Pending deliberate rate edits retain
+  * their deferred classification across repeated editor invocations. */
+ if(!(mask&2) && owner.stage.serial.baud_low==owner.source_baud_low &&
+  owner.stage.serial.baud_high==owner.source_baud_high){
+  status=live_configuration_decode(&owner.image,owner.has_context?&owner.context.selection:0,
+   owner.has_context?owner.context.codes:0,mask|2,&owner.active,&owner.stage,&decoded);
+  if(status){result->status=LIVE_SETUP_DECODE;result->source_status=status;return result->status;}
+ }
+ if(!command_valid(&owner.stage)){result->status=LIVE_SETUP_COMMAND;return result->status;}
+ deferred=owner.stage.change_mask&(LIVE_CHANGE_TRANSPORT|LIVE_CHANGE_PROFILE|LIVE_CHANGE_DIRECTORY|LIVE_CHANGE_TARGET);
+ /* Defer all link/profile ownership changes. Foreground application adopts
+  * only configured display/mapping/modem/BREAK; it never copies directory. */
+ memcpy(&owner.stage.serial,&owner.active.serial,18);
+ owner.stage.serial.io_base=owner.active.serial.io_base;
+ owner.stage.serial.irq=owner.active.serial.irq;
+ memcpy(&owner.stage.directory,&owner.active.directory,sizeof(owner.stage.directory));
+ result->deferred_mask=deferred;result->applied_mask=owner.stage.change_mask&~deferred;
+ memcpy(destination,&owner.stage,sizeof(*destination));return LIVE_SETUP_OK;
+}
+unsigned __cdecl live_setup_abort(unsigned unused)
+{(void)unused;owner.pending=0;return LIVE_SETUP_OK;}

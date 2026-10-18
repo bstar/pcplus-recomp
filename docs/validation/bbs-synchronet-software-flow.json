@@ -1,0 +1,86 @@
+{
+  "recorded": true,
+  "binary_sha256": "7f481c92daa1755f002bb7943f92dd420a823d4ec1eb2884405f09c8b301683d",
+  "label": "editor-live-7f48",
+  "serial": {
+    "com": 1,
+    "baud": 38400,
+    "line": "8N1",
+    "flow": "SOFT",
+    "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+  },
+  "editor_passed": false,
+  "semantic_evidence": {
+    "passed": false,
+    "checks": {
+      "DOS_harness": true,
+      "typed_draft_sent": true,
+      "all_exercised_keys_emitted": true,
+      "stock_editor_entered": true,
+      "draft_aborted": false,
+      "insert_toggled_overtype": true,
+      "home_marker_at_line_start": true,
+      "end_marker_at_line_end": true,
+      "delete_erases_final_character": true,
+      "tab_advances_to_next_stop": true,
+      "page_keys_report_document_boundaries": true,
+      "ctrl_y_delete_line_response": true
+    },
+    "observed_key_wire": {
+      "home": true,
+      "end": true,
+      "insert": true,
+      "delete": true,
+      "page_up": true,
+      "page_down": true,
+      "tab": true,
+      "delete_line_ctrl_y": true
+    },
+    "binary_sha256": "7f481c92daa1755f002bb7943f92dd420a823d4ec1eb2884405f09c8b301683d",
+    "serial": {
+      "com": 1,
+      "baud": 38400,
+      "line": "8N1",
+      "flow": "SOFT",
+      "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+    },
+    "authority": {},
+    "scope": "Actual loopback stock editor draft and captured DOS keyboard wire. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim.",
+    "exit_mode": "editor_discard_or_abort",
+    "unexercised_keys": [],
+    "modem_packet_delay_ms": 0
+  },
+  "raw_serial_CtrlQ_count": 1,
+  "BBS_wire_CtrlQ_count": 0,
+  "observed_XON_events": [
+    {
+      "seconds": 47.361,
+      "kind": "serial-flow",
+      "value": 17
+    }
+  ],
+  "modem_source_sha256": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+  "retained_artifacts": {
+    "build/bbs-lab/results/synchronet/editor-live-7f48/harness.log": "2bfb84270b49c1c26e260e090ada8302eb7102bb5c509c28e3d7bc40d3faef64",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/TEST.PRM": "97259bbf8dd3b51a853cef77f3ece2177d5307cb1569d390d2119c5259324941",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/dosbox.conf": "132af3f464da2449f6ac20157cab97f8350266ad8cea2ecd90dcc19f7084e261",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/dosbox.log": "e59701f94c45e037edd291e03ad87e7939ffe7964da972119cf2a6a046c1c918",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/SCREEN.BIN": "36cb94274b6622d622d7ae5bf02f0fca41c59413df2380bf0fcf9b181190e314",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/bbs-wire.bin": "e21894f1eb3b43e5bb6941603e069fc071432ab120c9849adf0b1d2ba5182505",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/bbs-sent.bin": "9d2dddfe776311a11d93e99c464cfe7c3b73640b1347ab78e65ce956bb2e405c",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/display.bin": "249f3b204dadebd9bd10ff14686adab2785a02e11358e567f8cbeb7658e1ef25",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/serial-received.bin": "a015e50f0d94df4bebfe7d21cb0acfd8640031a8443703fca413ad9331474e71",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/serial-sent.bin": "249f3b204dadebd9bd10ff14686adab2785a02e11358e567f8cbeb7658e1ef25",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/modem.json": "74e2d3679a631343671cc3390a6cac8e90806b837766ca4da739b405cbc70e54",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/screen.txt": "91e14d5a953384ce995c1818793261ba33d49a546146f4b6284c72d0bc0ea769",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/result.json": "6bfcd8d58f248060355ad1437ce7a432d37eb047faf3d09f5fbadf87c13e0375",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/audit.log": "24815025f169f6ed77686278971ad859806a5f932db8b34c32568fc36d9d9c71",
+    "build/bbs-lab/results/synchronet/editor-live-7f48/semantic-audit.json": "24815025f169f6ed77686278971ad859806a5f932db8b34c32568fc36d9d9c71"
+  },
+  "scope": "Observed local modem-model SOFT-flow consumption of literal Ctrl-Q (XON), preventing the stock Synchronet editor abort. The key reached the serial bridge but was not forwarded upstream. Other parameters differ from the HARD attempt, so this is not an isolated flow-comparison pair; the bridge event and exact byte captures establish this specific boundary. Draft abort failed; no successful cancellation or physical Wi-Fi firmware claim."
+}

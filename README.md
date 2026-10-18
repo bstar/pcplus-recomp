@@ -339,5 +339,6 @@ This opens setup before connecting; see [setup startup](docs/SETUP_STARTUP.md)
 for save/cancel, path limits and CLI precedence.
 
 From the running terminal, **Alt-F10** opens the same editor for an explicit
-`@` current-directory8.3 PRM. Saved changes currently apply on the next startup;
-the connection resumes with its existing settings. See [setup from the terminal](docs/SETUP_LIVE.md).
+`@` current-directory8.3 PRM. Valid display, pacing, future modem settings and
+BREAK edits apply during the session; link/profile changes are reported as
+deferred until the next startup. See [setup from the terminal](docs/SETUP_LIVE.md).
