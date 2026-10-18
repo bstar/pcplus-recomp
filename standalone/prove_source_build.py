@@ -29,6 +29,7 @@ builds.append('print_screen')
 builds.append('print_controller')
 builds.append('setup')
 builds.append('live_configuration')
+builds.append('directory_context')
 program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/build_{name}.py'],check=True)\n" for name in builds)
 owner_checks=['standalone/check_batch_download.py','standalone/check_batch_upload.py','standalone/check_capture_file.py','standalone/check_capture_session.py','standalone/check_capture_owners.py']
 owner_checks.append('standalone/check_monitor_file.py')
@@ -45,6 +46,7 @@ outputs += ['print_screen/PRINTSCR.EXE','printer-device/PRINTER.EXE']
 outputs += ['print_controller/PRINTCTL.EXE']
 outputs += ['setup/PRMEDIT.EXE']
 outputs += ['live-configuration/LIVE.EXE']
+outputs += ['directory-context/CONTEXT.EXE']
 outputs += ['monitor/MONITOR.EXE','monitor-file/MONITOR.EXE','monitor-file/MOFAULT.EXE']
 results={}
 for rel in outputs:

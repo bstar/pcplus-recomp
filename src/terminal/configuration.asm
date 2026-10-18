@@ -1,13 +1,14 @@
 ; Maintained startup-only partial PRM import. Full validation precedes UART IO.
 BITS 16
 CPU 8086
+GROUP DGROUP _DATA _BSS
 %include "terminal_import.inc"
 %include "modem_import.inc"
 %include "directory_live.inc"
 SEGMENT _TEXT public class=CODE use16
 extern _terminal_import_read,terminal_config_path,terminal_option_mask
 extern _terminal_startup_read,terminal_connection_prepare
-extern _directory_live_read,terminal_directory_choose
+extern _directory_live_read_context,terminal_directory_choose
 extern terminal_directory_path,terminal_directory_entry,terminal_directory_codes
 extern terminal_dial_target
 extern terminal_port_number,terminal_baud_low,terminal_baud_high
@@ -58,6 +59,7 @@ terminal_load_configuration:
  push di
  push es
  mov word [terminal_configuration_status],0
+ mov word [terminal_directory_context_valid],0
  test word [terminal_option_mask],16
  jnz .read
  test word [terminal_option_mask],32
@@ -85,6 +87,8 @@ terminal_load_configuration:
  add sp,8
  jmp .loaded
 .directory:
+ mov ax,terminal_directory_context
+ push ax
  mov ax,terminal_directory_io
  push ax
  mov ax,terminal_directory_plan
@@ -99,14 +103,15 @@ terminal_load_configuration:
  push ax
  mov ax,terminal_config_path
  push ax
- call _directory_live_read
- add sp,16
+ call _directory_live_read_context
+ add sp,18
  mov [terminal_directory_status],ax
  or ax,ax
  jz .directory_loaded
  mov ax,8
  jmp .loaded
 .directory_loaded:
+ mov word [terminal_directory_context_valid],1
  push ds
  pop es
  cld
@@ -137,6 +142,7 @@ terminal_load_configuration:
  jnc .success
  mov ax,7
  mov [terminal_configuration_status],ax
+ mov word [terminal_directory_context_valid],0
  jmp .done
 .success:
  xor ax,ax
@@ -253,3 +259,11 @@ terminal_directory_io: times DL_RESULT_SIZE db 0
 terminal_directory_status: dw 0
 terminal_directory_mode: dw 0
 terminal_directory_protocol: dw 0
+
+; Opaque context is valid only after successful current directory decoding.
+; Not modified by deferred accounting's separate record baseline.
+global terminal_directory_context_valid
+terminal_directory_context_valid: dw 0
+SEGMENT _BSS public align=2 class=BSS use16
+global terminal_directory_context
+terminal_directory_context: resb DLC_SIZE

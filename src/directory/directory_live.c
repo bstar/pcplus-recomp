@@ -9,6 +9,10 @@ ABI(entry_number,0);ABI(dialing_mode,2);ABI(protocol_index,4);ABI(duplex,6);
 ABI(codes,8);ABI(name,10);ABI(target,35);
 ABI(reserved,99);ABI(record,100);
 typedef char abi_plan[sizeof(directory_live_plan)==214?1:-1];
+typedef char abi_context_size[sizeof(directory_live_context)==496?1:-1];
+typedef char abi_context_codes[offsetof(directory_live_context,codes)==366?1:-1];
+typedef char abi_context_prm[offsetof(directory_live_context,prm_path)==368?1:-1];
+typedef char abi_context_directory[offsetof(directory_live_context,directory_path)==432?1:-1];
 typedef char abi_result[sizeof(directory_live_result)==10?1:-1];
 typedef char abi_word[sizeof(unsigned)==2?1:-1];
 static unsigned extent(const void *pointer,unsigned length)
@@ -133,12 +137,13 @@ done:
 
 /* File owner retains the original read order and error details. Pure decoding
  * never opens files; live callers can retain their current selected record. */
-directory_live_status __cdecl directory_live_read(const char *prm_path,
+directory_live_status __cdecl directory_live_read_context(const char *prm_path,
  const char *directory_path,unsigned entry,unsigned codes,
  terminal_import_settings *serial,modem_import_settings *modem,
- directory_live_plan *plan,directory_live_result *result)
+ directory_live_plan *plan,directory_live_result *result,directory_live_context *context)
 {
  prm_dos_image image;
+ directory_live_context context_stage;
  directory_dos_selection selection;
  directory_dos_result directory_io;
  prm_dos_result prm_io;
@@ -156,6 +161,18 @@ directory_live_status __cdecl directory_live_read(const char *prm_path,
   !disjoint(result,sizeof(*result),plan,sizeof(*plan)) ||
   !disjoint(result,sizeof(*result),prm_path,prm_length) ||
   !disjoint(result,sizeof(*result),directory_path,directory_length)))return DIRECTORY_LIVE_ARGUMENT;
+ if(context && (!extent(context,sizeof(*context)) ||
+  !disjoint(context,sizeof(*context),prm_path,prm_length) ||
+  !disjoint(context,sizeof(*context),directory_path,directory_length) ||
+  !disjoint(context,sizeof(*context),serial,sizeof(*serial)) ||
+  !disjoint(context,sizeof(*context),modem,sizeof(*modem)) ||
+  !disjoint(context,sizeof(*context),plan,sizeof(*plan)) ||
+  (result && !disjoint(context,sizeof(*context),result,sizeof(*result)))))return DIRECTORY_LIVE_ARGUMENT;
+ if(context){
+  memset(&context_stage,0,sizeof(context_stage));context_stage.codes=codes;
+  memcpy(context_stage.prm_path,prm_path,prm_length);
+  memcpy(context_stage.directory_path,directory_path,directory_length);
+ }
  if(result)memset(result,0,sizeof(*result));
  status=prm_dos_load(prm_path,&image,&prm_io);
  if(status!=PRM_DOS_OK){
@@ -170,8 +187,42 @@ directory_live_status __cdecl directory_live_read(const char *prm_path,
    result->close_error=directory_io.close_error;result->bytes_processed=directory_io.bytes_processed;}
   status=DIRECTORY_LIVE_DIRECTORY_IO;goto done;
  }
- return directory_live_decode(&image,&selection,codes,serial,modem,plan,result);
+ if(selection.entry_number!=entry){status=DIRECTORY_LIVE_RECORD;goto done;}
+ if(context)memcpy(&context_stage.selection,&selection,sizeof(selection));
+ status=directory_live_decode(&image,&selection,codes,serial,modem,plan,result);
+ if(status==DIRECTORY_LIVE_OK && context)memcpy(context,&context_stage,sizeof(*context));
+ return status;
 done:
  if(result)result->status=status;
  return status;
+}
+
+/* Eight-argument compatibility owner; context capture is opt-in. */
+directory_live_status __cdecl directory_live_read(const char *prm_path,
+ const char *directory_path,unsigned entry,unsigned codes,
+ terminal_import_settings *serial,modem_import_settings *modem,
+ directory_live_plan *plan,directory_live_result *result)
+{
+ return directory_live_read_context(prm_path,directory_path,entry,codes,
+  serial,modem,plan,result,0);
+}
+static unsigned same_path(const char *a,const char *b)
+{
+ unsigned i,x,y;
+ for(i=0;i<64;++i){
+  x=(unsigned char)a[i];y=(unsigned char)b[i];
+  if(x>='a' && x<='z')x-=32;if(y>='a' && y<='z')y-=32;
+  if(x!=y)return 0;if(!x)return 1;
+ }
+ return 0;
+}
+unsigned __cdecl directory_live_context_matches(const directory_live_context *context,
+ const char *prm_path,const char *directory_path,unsigned entry,unsigned codes)
+{
+ if(!extent(context,sizeof(*context)) || !path_size(prm_path) ||
+  !path_size(directory_path) || !entry || entry>200 || codes>1 ||
+  context->selection.entry_number!=entry || context->codes!=codes ||
+  !bounded((const unsigned char *)context->prm_path,64) ||
+  !bounded((const unsigned char *)context->directory_path,64))return 0;
+ return same_path(context->prm_path,prm_path) && same_path(context->directory_path,directory_path);
 }

@@ -395,6 +395,19 @@ this component does not close F02/F06 or claim live setup is available.
 
 This candidate checkpoint passes389 pure API inputs,311 existing directory
 inputs and all43 terminal regression commands;59 isolated outputs match. The
-candidate API remains diagnostic-only. Current parent context lacks the full
-250-byte directory header, so retaining it and binding selection identity is
-required before wiring the UI and applying legacy-code edits during a session.
+candidate API remains diagnostic-only. At that checkpoint the parent lacked the full250-byte header, motivating the
+retained-context integration below.
+
+
+Directory context retention is now integrated into startup:496-byte raw selected
+header/record, entry/code mode and original request paths, published only after
+successful decoding. Logical identity checks, failure rollback and independent
+actual DOS PROGRAM-child allocation/fill cover retention. See
+`docs/DIRECTORY_CONTEXT.md`. Canonical namespace ownership, active-generation
+binding, live editor UI and serial/profile commit remain open.
+
+The retention checkpoint passes507 linked context inputs,24 actual DOS
+file/accounting assertions, an actual terminal PROGRAM-child context/allocation
+check and all45 terminal regression commands. The candidate still passes389
+inputs; a fresh checkout reproduces60 identical outputs. Live setup/commit and
+canonical namespace/generation ownership remain explicit subsequent work.

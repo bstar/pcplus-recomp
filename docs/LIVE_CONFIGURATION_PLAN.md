@@ -34,10 +34,10 @@ or private configuration is needed by either build.
 
 A future live caller can retain the already-selected header/record instead of
 silently rereading a changed directory or reentering the browser while connected.
-The caller still owns that selection's lifetime and identity. The current
-terminal retains the record and expanded target, but not the complete250-byte
-header. Parent-side header retention must therefore be added before this API
-can support legacy-code live edits without rereading a directory.
+The caller still owns that selection's lifetime and identity. The terminal now
+[retains the complete header and logical request context](DIRECTORY_CONTEXT.md).
+The candidate API is still diagnostic-only; a live owner must bind that context
+and coordinate namespace and hardware ownership before committing edits.
 
 ## Candidate and change classification
 

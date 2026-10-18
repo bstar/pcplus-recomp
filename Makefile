@@ -100,6 +100,8 @@ test-terminal: terminal
 	python3 standalone/check_startup_import.py --check-invalid-abi
 	python3 standalone/check_connection.py
 	python3 standalone/check_directory_live.py
+	python3 standalone/check_directory_context.py
+	python3 standalone/test_directory_context_terminal.py
 	python3 standalone/check_directory_actions.py
 	python3 standalone/test_terminal_config.py
 	python3 standalone/test_connection_dos.py
@@ -177,7 +179,7 @@ test-modem:
 	$(MAKE) -C reconstruction test-modem
 
 clean:
-	rm -rf build/live-configuration build/setup-startup build/setup build/setup-model build/standalone build/ansi build/keyboard build/keyboard-mapping build/keyboard-detection build/keyboard-detection-dos build/line-edit build/keymap-dos build/terminal-keys build/csi-relocation build/cursor-state build/cursor-shape build/config-dos build/config-replace build/config-abi build/ui-windows build/ui-windows-dos build/modem-commands build/modem-commands-dos build/modem-responses build/modem-responses-dos build/modem-send build/modem-send-dos build/modem-import build/connection-dos build/directory-dial build/directory-dial-dos build/directory-accounting build/directory-accounting-dos build/directory-browser build/directory-browser-dos build/directory-editor build/directory-replace build/directory-dos build/directory-terminal build/terminal build/terminal-tests build/terminal-options build/process build/download-file build/transfer-send build/transfer-metadata build/transfer-metadata-dos build/batch-header build/batch-download build/batch-upload build/transfer-files build/transfer-session build/transfer-session-composite build/transfer-storage build/transfer-uart $(addprefix build/,$(MODULES))
+	rm -rf build/directory-context build/live-configuration build/setup-startup build/setup build/setup-model build/standalone build/ansi build/keyboard build/keyboard-mapping build/keyboard-detection build/keyboard-detection-dos build/line-edit build/keymap-dos build/terminal-keys build/csi-relocation build/cursor-state build/cursor-shape build/config-dos build/config-replace build/config-abi build/ui-windows build/ui-windows-dos build/modem-commands build/modem-commands-dos build/modem-responses build/modem-responses-dos build/modem-send build/modem-send-dos build/modem-import build/connection-dos build/directory-dial build/directory-dial-dos build/directory-accounting build/directory-accounting-dos build/directory-browser build/directory-browser-dos build/directory-editor build/directory-replace build/directory-dos build/directory-terminal build/terminal build/terminal-tests build/terminal-options build/process build/download-file build/transfer-send build/transfer-metadata build/transfer-metadata-dos build/batch-header build/batch-download build/batch-upload build/transfer-files build/transfer-session build/transfer-session-composite build/transfer-storage build/transfer-uart $(addprefix build/,$(MODULES))
 
 .PHONY: process test-process
 process:
@@ -313,3 +315,13 @@ live-configuration:
 	python3 standalone/build_live_configuration.py
 test-live-configuration: live-configuration
 	python3 standalone/check_live_configuration.py
+
+.PHONY: directory-context test-directory-context
+all: directory-context
+test: test-directory-context
+directory-context:
+	python3 standalone/build_directory_context.py
+test-directory-context: terminal directory-context
+	python3 standalone/check_directory_context.py
+	python3 standalone/test_directory_context_dos.py
+	python3 standalone/test_directory_context_terminal.py

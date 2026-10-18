@@ -14,6 +14,13 @@ typedef struct directory_live_plan {
 typedef struct directory_live_result {
  unsigned status,source_status,dos_error,close_error,bytes_processed;
 } directory_live_result;
+/* Retained logical selection identity and original header/record. Paths are
+ * request spellings, not canonical filesystem identities or namespace locks. */
+typedef struct directory_live_context {
+ directory_dos_selection selection;
+ unsigned codes;
+ char prm_path[64],directory_path[64];
+} directory_live_context;
 typedef unsigned directory_live_status;
 enum {
  DIRECTORY_LIVE_OK=0,DIRECTORY_LIVE_ARGUMENT,DIRECTORY_LIVE_PRM_IO,
@@ -43,4 +50,19 @@ directory_live_status __cdecl directory_live_read(const char *prm_path,
  const char *directory_path,unsigned entry,unsigned codes,
  terminal_import_settings *serial,modem_import_settings *modem,
  directory_live_plan *plan,directory_live_result *result);
+/* Same read order/status policy, plus optional496-byte context. On failure
+ * context and all three plans stay unchanged. The context must not overlap
+ * paths, plans or result. Paths may otherwise alias ordinary output plans:
+ * path spelling is captured before any commit. NULL context preserves read().
+ * A reader-selection tag inconsistent with requested entry rejects as RECORD. */
+directory_live_status __cdecl directory_live_read_context(const char *prm_path,
+ const char *directory_path,unsigned entry,unsigned codes,
+ terminal_import_settings *serial,modem_import_settings *modem,
+ directory_live_plan *plan,directory_live_result *result,
+ directory_live_context *context);
+/* Pure logical request match: same entry/codes and ASCII case-insensitive path
+ * spellings. No alias/dot/CWD canonicalization or record integrity proof.
+ * Read-only arguments may alias each other; invalid extents/strings return0. */
+unsigned __cdecl directory_live_context_matches(const directory_live_context *context,
+ const char *prm_path,const char *directory_path,unsigned entry,unsigned codes);
 #endif
