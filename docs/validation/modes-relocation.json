@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "code_padding": 0,
+      "data_padding": 0,
+      "mode_entry": 0,
+      "parameter_offset": 4282,
+      "binary_sha256": "af11e2cc511006232a842ecf43fdc1b5910916608bd3edd3d28e589cf134e1b9",
+      "passed": true
+    },
+    {
+      "code_padding": 311,
+      "data_padding": 593,
+      "mode_entry": 311,
+      "parameter_offset": 4875,
+      "binary_sha256": "3bcfdefa881144813e1ac153c07e5de794f3301d94738d814db631cbf8a218c4",
+      "passed": true
+    },
+    {
+      "code_padding": 8503,
+      "data_padding": 4660,
+      "mode_entry": 8503,
+      "parameter_offset": 8942,
+      "binary_sha256": "270a68876aa856d9174951eed89db50d389fdc5d4b3be18dfe53818f3a678e63",
+      "passed": true
+    }
+  ],
+  "scope": "Actual recovered mode switch table relocations, parameter pointers,state writes,BIOS cursor calls and explicit dependency boundaries at independent code/data offsets."
+}

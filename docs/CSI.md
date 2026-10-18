@@ -2,7 +2,8 @@
 
 The combined diagnostic links the recovered ESC entry, parameter reader,
 parameter transition, complete CSI dispatcher, attribute helpers and cursor
-routines, reporting core, cursor save/restore and erase services. The dispatcher contains 2,018
+routines, reporting core, cursor save/restore, erase/scroll services, mode handlers,
+BIOS cursor shape and the ordinary character renderer. The dispatcher contains 2,018
 original bytes, 615 instructions and two
 explicit word tables (48 SGR entries and 94 command entries). Analyst names and
 interfaces are maintained source, not recovered original identifiers.
@@ -53,8 +54,17 @@ right-edge cases against video memory. The flat original path remains unchanged.
 
 External application services remain explicit interfaces. Unrecovered services
 trap with their original service address rather than silently succeed. Terminal
-modes, tab handling, viewport/protected attributes, ordinary
-character rendering, serial input/output and terminal-specific keyboard maps
+full reset/width/viewport/protected-attribute services, complete character
+control dispatch, serial input/output and full terminal-specific keyboard maps
 still need complete application integration. Passing the diagnostic does not
 establish a complete terminal, physical modem compatibility or full PCPlus
 feature coverage; those requirements remain in `../PLAN.md` and `FEATURES.md`.
+
+The combined path now exercises DECCKM against the real key-table rewrite,
+origin mode and wrap state, mode25 through the actual BIOS cursor-shape
+implementation, tab clearing, scroll-region reset and ESC D/E/M video updates.
+Ordinary rendering shares that state: SGR colors reach actual cell writers,
+DSR reads the advanced cursor and autowrap scrolls actual text memory.
+Complex mode/attribute/font paths still fail explicitly. The DOS self-check
+also exercises the ordinary renderer after clear/home. See `MODES.md`,
+`SCROLL.md`, `RENDER.md`, `CURSOR_SHAPE.md` and `TERMINAL_SERVICES.md`.

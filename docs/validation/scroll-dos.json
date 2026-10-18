@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "515108e66d540799b57a12e36e9f5ee246c6ad7fdff4112b9b8d5565efa3f9a5",
+  "scope": "Source-only DOS executable checks actual screen scrolling, reverse-index, wrap, video-memory preservation and DOS return in DOSBox-X; no original executable or modem."
+}

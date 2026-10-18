@@ -1,0 +1,36 @@
+{
+  "records": [
+    {
+      "address": "0x1246c",
+      "evidence_id": "ev_85224615a81654601a90f59cac12f56cd330ed19a3f01e8c27730e232a4cff4f",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.2"
+      },
+      "sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904"
+    },
+    {
+      "address": "0x10b4e",
+      "evidence_id": "ev_e45c15025904c0fc2bf6ac5c76a3773b1782478a3ac891c01ac8550449616d78",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.2"
+      },
+      "sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904"
+    }
+  ],
+  "additional_ranges": [
+    {
+      "start": "0x24e2",
+      "end": "0x2506",
+      "method": "Verified original instruction bytes decoded with NDISASM; no retained individual REA function record."
+    },
+    {
+      "start": "0x250a",
+      "end": "0x2517",
+      "method": "Verified original instruction bytes decoded with NDISASM; no retained individual REA function record."
+    }
+  ]
+}

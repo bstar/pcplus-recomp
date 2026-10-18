@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "binary_sha256": "4823cf56b1800c50e784d5718963e214ad943ad1403c214a85124cd3cbd8fc5f",
+  "cases": [
+    {
+      "case": "all-256-character-attribute-values-and-cursor-offsets",
+      "passed": true
+    },
+    {
+      "case": "deferred-wrap-and-autowrap-disabled",
+      "passed": true
+    },
+    {
+      "case": "immediate-wrap-and-bottom-with-scrolling-disabled",
+      "passed": true
+    },
+    {
+      "case": "british-pound-graphics-and-configured-translation-paths",
+      "passed": true
+    },
+    {
+      "case": "lineflag-two-cell-output-through-real-fill-and-packed-writers",
+      "passed": true
+    },
+    {
+      "case": "unrecovered-mode-and-attribute-boundaries-fail-fast",
+      "passed": true
+    },
+    {
+      "case": "bottom-margin-deferred-wrap-through-real-scroll-service",
+      "passed": true
+    }
+  ],
+  "scope": "Actual recovered highlevel character/cursor/video instructions with host-supplied configuration and glyph-map fixtures; unresolved services trap."
+}

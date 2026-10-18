@@ -1,0 +1,67 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/render/character.asm",
+      "start": 1840,
+      "end": 2486,
+      "bytes": 646,
+      "instructions": 235,
+      "sha256": "b8b25b8fd4196e2aab10cbb49049e0c99d064a5062c90f37e350f978b0a64943",
+      "matched_original": true
+    }
+  ],
+  "state": {
+    "3342": "csi_wrap_pending",
+    "1d20": "render_autowrap",
+    "399c": "screen_cursor_row",
+    "d116": "render_deferred_row",
+    "399e": "screen_cursor_column",
+    "d120": "render_deferred_column",
+    "ce3a": "screen_last_row",
+    "1d22": "scroll_enabled",
+    "334a": "csi_last_row",
+    "372c": "terminal_mode_372c",
+    "d122": "attributes_color_mode",
+    "cde0": "ansi_charset_g0_flag_a",
+    "cdfc": "cursor_state_value_cdfc",
+    "cde8": "ansi_charset_g1_flag_a",
+    "ce04": "cursor_state_value_ce04",
+    "cdf0": "ansi_charset_g1_flag_graphics",
+    "cdec": "ansi_charset_g0_flag_graphics",
+    "459b": "render_graphics_map",
+    "cf86": "screen_line_flags",
+    "1f70": "attributes_current",
+    "3344": "screen_video_offset",
+    "900c": "screen_cursor_wrap",
+    "3340": "scroll_suppress_next_linefeed",
+    "372e": "render_translation_enabled",
+    "902d": "render_translation_mask",
+    "9036": "render_translation_base",
+    "9056": "render_direct_output",
+    "3346": "screen_attribute_offset",
+    "3734": "screen_attribute_checks",
+    "39c4": "screen_attributes_base",
+    "3736": "erase_protection_mode",
+    "3258": "screen_last_column",
+    "9004": "render_linefeed_suppression_enabled"
+  },
+  "services": {
+    "1fc4": "scroll_up",
+    "1bbe": "screen_set_cursor",
+    "b9f7": "render_service_b9f7",
+    "6cb4": "text_write_packed",
+    "6c20": "text_fill_cells",
+    "2adc": "screen_adjust_attribute_boundary",
+    "6c84": "text_write_char",
+    "bb53": "render_font_output",
+    "2d98": "erase_repair_attributes",
+    "2d4c": "erase_previous_attribute",
+    "6c5e": "text_write_cell"
+  },
+  "rea_evidence_id": "ev_9c6a5e39afa954b0ee6e1ccd4e0b1e9a0875c99f4ca252e5a1fa2e8cd62b53ec",
+  "limitations": [
+    "State/service names are analyst annotations. DS372c meaning and serviceb9f7 semantics remain unresolved.",
+    "Original character code recovered; startup configuration, original glyph map contents, complex attributes, alternate-font output and viewport services remain separate work."
+  ]
+}

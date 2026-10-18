@@ -1,8 +1,32 @@
 {
   "passed": true,
-  "source_tree": "41558eb1e22865766159b4914ec9b894b1aedad2",
-  "command": "./tools/build all test-csi test-csi-relocation test-cursor_state",
+  "source_tree": "de234b2731803803bc406980f1e40ec5a0a906db",
+  "command": "./tools/build all test",
   "original_executable_present": false,
   "original_install_present": false,
-  "scope": "Isolated tracked-source archive build of every diagnostic plus combined CSI and cursor-state CPU/DOS/relocation tests; not whole application reconstruction."
+  "log_sha256": "4dd2f834cc464b5fc84ed491ea9f29fdf4454247eba28c0ffe41b8135a3ebb75",
+  "executables": {
+    "build/csi/CSI.EXE": "49024e13096565bfd8d7bdb9cdacdfcaa3b7fef20e77a99122d25394385c31cc",
+    "build/render/RENDER.EXE": "4823cf56b1800c50e784d5718963e214ad943ad1403c214a85124cd3cbd8fc5f",
+    "build/modes/MODES.EXE": "e2ac4febe207ae4f225ca3af99f0578fb645731cad7d6a6b2b613db6848df368",
+    "build/scroll/SCROLL.EXE": "515108e66d540799b57a12e36e9f5ee246c6ad7fdff4112b9b8d5565efa3f9a5",
+    "build/cursor-shape/CURSOR.EXE": "c0f5a20b213184dc4738d09d854f4ee1291c4cf211f68e6aeea820251ee3ff0e",
+    "build/cursor-state/CSTATE.EXE": "ae1cab3c38f4b0d13e4b1173c40536e946707fb116609b4b83100982df3fa79f",
+    "build/erase/ERASE.EXE": "fcd319dcc830eafaa93e8971f02736e76fd9bfd041feab23c1b5c669e20d8eef",
+    "build/reports/REPORTS.EXE": "0edc5ad6e222491d7b1009e9f303d76ec85efd04ea34fd3566e84355d18b993e",
+    "build/text/TEXT.EXE": "e2b4e630040e8f5ea258c5912684f6cf570736c8da711b165a88ed669003deff",
+    "build/screen/SCREEN.EXE": "71302310542277d7d1bffdb5d0674f1a850cea6c94b688f5adcf7652bbef1fa3",
+    "build/attributes/ATTRIB.EXE": "5e78392550fbc90fe03c7a97f558a4ec48f9bc3544a5315caac0055b63397563",
+    "build/escape/ESCAPE.EXE": "63ddeabee202d0d896f414c99fed688cb0666460ecd60a5d07cea1aed64a61ed",
+    "build/keyboard/KEYBOARD.EXE": "929aad6a4e5b3ac921cb5d73974b9381c24889c4dcb51b8f898d60b993d40976",
+    "build/ansi/PARSER.EXE": "1a5c49274ff670f747eb38413dca9405f1f047044f73a64a194106dfdd1d1fd6",
+    "build/standalone/SERIAL.EXE": "a6fd6cd685b5777b06766cbadf458428eae05f099e10f5e13540630c41b2937f",
+    "build/csi-relocation/2137-1234/CSI.EXE": "9269afe3d183a87f6e1f0cf20b9666c49f60f6a3ecf3de1d6fb0b4f0c24e521a",
+    "build/csi-relocation/137-251/CSI.EXE": "0457b43fbf8666a6e5726f11a88af9e1b1022b6570fa9143f4e099c20841d353",
+    "build/csi-relocation/0-0/CSI.EXE": "49024e13096565bfd8d7bdb9cdacdfcaa3b7fef20e77a99122d25394385c31cc",
+    "build/modes-relocation/2137-1234/MODES.EXE": "270a68876aa856d9174951eed89db50d389fdc5d4b3be18dfe53818f3a678e63",
+    "build/modes-relocation/137-251/MODES.EXE": "3bcfdefa881144813e1ac153c07e5de794f3301d94738d814db631cbf8a218c4",
+    "build/modes-relocation/0-0/MODES.EXE": "af11e2cc511006232a842ecf43fdc1b5910916608bd3edd3d28e589cf134e1b9"
+  },
+  "scope": "Isolated tracked-source archive builds and exercises every current diagnostic plus host configuration codec; includes CPU, DOSBox, relocation and loopback-serial tests. Not a complete PCPlus application."
 }

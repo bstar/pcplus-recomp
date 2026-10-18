@@ -1,0 +1,103 @@
+{
+  "kind": "source-only-recovered-modes-with-real-cursor-and-explicit-dependencies",
+  "binary_sha256": "e2ac4febe207ae4f225ca3af99f0578fb645731cad7d6a6b2b613db6848df368",
+  "baseline_ranges": [
+    {
+      "name": "csi_set_modes",
+      "start": "0xde98",
+      "end_exclusive": "0xdf7e",
+      "file_offset": 93000,
+      "size": 230,
+      "sha256": "862e8df64d67197fc56ef07cc70abe66f69c8d47b710b6146adc7e44946a6fe6",
+      "evidence_id": "ev_8806c34ee3e415d806b020a85fb83f0d3fc246d8ecca9e69b8d946a8e9522f36",
+      "table": {
+        "start": "0xdec6",
+        "entries": [
+          "0xdef8",
+          "0xdf6f",
+          "0xdf02",
+          "0xdf12",
+          "0xdf6f",
+          "0xdf22",
+          "0xdf3c",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf44",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf50",
+          "0xdf58",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf60"
+        ]
+      }
+    },
+    {
+      "name": "csi_reset_modes",
+      "start": "0xdf7e",
+      "end_exclusive": "0xe084",
+      "file_offset": 93230,
+      "size": 262,
+      "sha256": "7ec72270f55641f582c992a99f5a278e262fc1503e26d2f126dc0a5b16e3e8ba",
+      "evidence_id": "ev_a1760badbd5de19b96d1f92d716efe7338c29f5dc3ae8f18acc2586c11627625",
+      "table": {
+        "start": "0xdfac",
+        "entries": [
+          "0xdfde",
+          "0xdfe8",
+          "0xe004",
+          "0xe014",
+          "0xe075",
+          "0xe024",
+          "0xe03a",
+          "0xe075",
+          "0xe075",
+          "0xe075",
+          "0xe075",
+          "0xe044",
+          "0xe075",
+          "0xe075",
+          "0xe075",
+          "0xe075",
+          "0xe075",
+          "0xe056",
+          "0xe05e",
+          "0xe075",
+          "0xe075",
+          "0xe075",
+          "0xe075",
+          "0xe075",
+          "0xe066"
+        ]
+      }
+    }
+  ],
+  "sources": {
+    "reconstruction/modes/core.asm": "d84cfc76d177315a3f209f9651f98288bbb41b647ee0f59db1f7b8af51809700",
+    "reconstruction/screen/cursor_output.asm": "b6583f7648c0f47a565e6361ef58481e3ac64e4bd571ebd4aa98e9873e65dd05",
+    "reconstruction/screen/cursor_pack.asm": "d35d5a306548a99526d13a0833aa3c781cf649b51662aa5a49a6fff80affd353",
+    "reconstruction/screen/down.asm": "250d05ec52e27c50533aab8e81ee8264886125a3f70efd9df228f978cc030af1",
+    "reconstruction/screen/left.asm": "812e101942c99411726283d892c5501edd040daab67edb3098f7dc427841dc9e",
+    "reconstruction/screen/right.asm": "1ef4422d5be97996b70d47e35af92818ac42b7c2b2c1207a26b6fa1d82930851",
+    "reconstruction/screen/set_cursor.asm": "db96a18c8f1d9a928800bf82f329cd57f74032fe920c2123e9de3dd9c8ae07b6",
+    "reconstruction/screen/up.asm": "18722137d743c36c5079d1ebee26ab622c654a0b99f4fc0d67fd9c8f24af4384",
+    "reconstruction/screen/width_transition.asm": "e62505bfb2b67280abe8b035819b69906f61f3eaeb9acbafb8f19ba06ef943a8",
+    "standalone/modes_host.asm": "d951eaf5e409d705e0c4ef4916d621553643022c794deef7eefd0d9d8633cd0f",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/modes/provenance.json": "4a1f3d2b12902b417d9d04ab4c9f51c40d8eb278ad2d0e3564eee69e7194995c"
+  },
+  "limitations": [
+    "Unrecovered mode side-effect services trap; no silent implementations.",
+    "Original mode handlers assume validated parameter count and storage.",
+    "Ordinary mode6 links real BIOS cursor services; optional screen dependencies trap."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "binary_sha256": "e2ac4febe207ae4f225ca3af99f0578fb645731cad7d6a6b2b613db6848df368",
+  "cases": [
+    {
+      "case": "direct-mode-state-private-gates-and-wrap-clear",
+      "passed": true
+    },
+    {
+      "case": "mode6-real-origin-state-screen-offsets-and-BIOS",
+      "passed": true
+    },
+    {
+      "case": "parameter-array-iteration-empty-signed-count-gate-and-unsupported-modes",
+      "passed": true
+    },
+    {
+      "case": "explicit-mode-side-effect-boundaries-and-original-argument-ABI",
+      "passed": true
+    }
+  ],
+  "scope": "Actual recovered mode handler/table/state instructions plus actual screen cursor; unresolved mode effects trap rather than succeed."
+}

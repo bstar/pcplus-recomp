@@ -1,0 +1,49 @@
+{
+  "passed": true,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "linked_binary_sha256": "4823cf56b1800c50e784d5718963e214ad943ad1403c214a85124cd3cbd8fc5f",
+  "compared_operations": 531,
+  "cases": [
+    {
+      "case": "all-byte-character-outputs",
+      "passed": true
+    },
+    {
+      "case": "deferred-wrap",
+      "passed": true
+    },
+    {
+      "case": "autowrap-disabled",
+      "passed": true
+    },
+    {
+      "case": "immediate-wrap",
+      "passed": true
+    },
+    {
+      "case": "bottom-no-scroll",
+      "passed": true
+    },
+    {
+      "case": "pound-glyph",
+      "passed": true
+    },
+    {
+      "case": "graphics-glyph",
+      "passed": true
+    },
+    {
+      "case": "translation",
+      "passed": true
+    },
+    {
+      "case": "two-cell-line",
+      "passed": true
+    },
+    {
+      "case": "bottom-with-real-scroll",
+      "passed": true
+    }
+  ],
+  "scope": "Original resident and linked source high-level renderer/cursor/video instructions under Unicorn, identical public configuration/map fixtures; full4000-byte screen and cursor/deferredwrap fields checked after every operation."
+}

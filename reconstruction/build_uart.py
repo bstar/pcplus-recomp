@@ -27,9 +27,10 @@ def build_units(original):
         ("ansi/dispatch.asm", 0xe4b2, 0xec94, 94562, False),
         ("ansi/escape.asm", 0xecd2, 0xeeaf, 100386, False),
         ("cursor_state/core.asm", 0xdd74, 0xde04, 92708, False),
+        ("modes/core.asm", 0xde98, 0xe084, 93000, False),
     ]
     specifications = [(*item, []) for item in specifications]
-    for module in ("screen", "attributes", "erase", "text"):
+    for module in ("screen", "attributes", "erase", "text", "terminal_services", "scroll", "render", "cursor_shape"):
         provenance = json.loads((ROOT / f"reconstruction/{module}/provenance.json").read_text())
         for unit in provenance["units"]:
             lower, upper = unit["start"], unit["end"]

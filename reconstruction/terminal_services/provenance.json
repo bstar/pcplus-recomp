@@ -1,0 +1,69 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/terminal_services/keyboard_mode.asm",
+      "start": 2894,
+      "end": 3008,
+      "bytes": 114,
+      "instructions": 46,
+      "sha256": "6d92ff11b786907cef26fcb8394ab4ae6fe87dbcc488e7a4968bb1f06ffd4dea",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/terminal_services/tabs.asm",
+      "start": 9324,
+      "end": 9434,
+      "bytes": 110,
+      "instructions": 51,
+      "sha256": "ed2ad9d4731cfac39ce37fcd67ba5d822f9fe106918d06df39b8cfd3b9c453e0",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/terminal_services/clear_home.asm",
+      "start": 9442,
+      "end": 9478,
+      "bytes": 36,
+      "instructions": 15,
+      "sha256": "71c273b2fa2230ac0966ad155a14831e746478a34a7b05c36ebccd2e2cf39db7",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/terminal_services/reset_region.asm",
+      "start": 9482,
+      "end": 9495,
+      "bytes": 13,
+      "instructions": 4,
+      "sha256": "e40fe11e74da2bde00250101ef00a429d237c41ab6958a836e84bee0e3377ff9",
+      "matched_original": true
+    }
+  ],
+  "state": {
+    "8fe8": "terminal_dec_keys",
+    "3378": "terminal_keymap",
+    "372c": "terminal_keymap_end",
+    "ce10": "terminal_tab_stops",
+    "325a": "screen_attribute_row_bytes",
+    "399e": "screen_cursor_column",
+    "334a": "csi_last_row",
+    "3258": "csi_last_column",
+    "1d32": "attributes_normal_value",
+    "ceb0": "csi_origin_row",
+    "ce0e": "csi_scroll_top",
+    "ce3a": "csi_scroll_bottom"
+  },
+  "derived_aliases": {
+    "terminal_tab_stops_next": {
+      "base": "terminal_tab_stops",
+      "offset": 1
+    }
+  },
+  "services": {
+    "2530": "csi_service_2530",
+    "24da": "attributes_reset",
+    "1bbe": "screen_set_cursor"
+  },
+  "limitations": [
+    "Recovered names are analyst annotations. Tab initialization assumes a valid column count and an FE-terminated 30-byte table; tested column counts are 0,1,8,80,132. Keyboard mappings are caller-provided; this does not reconstruct the KBD file loader."
+  ]
+}

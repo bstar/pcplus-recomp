@@ -75,6 +75,15 @@
       "matched_original": true
     },
     {
+      "source": "reconstruction/modes/core.asm",
+      "file_offset": 93000,
+      "bytes": 492,
+      "assembly_defines": [],
+      "sha256": "1c7f15a965269a7afe74d9e6cc80e78a8334031a5852f57b25b2d8ef6f4421c4",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
       "source": "reconstruction/screen/set_cursor.asm",
       "file_offset": 11710,
       "bytes": 168,
@@ -327,6 +336,132 @@
       "matched_original": true
     },
     {
+      "source": "reconstruction/terminal_services/keyboard_mode.asm",
+      "file_offset": 7502,
+      "bytes": 114,
+      "assembly_defines": [],
+      "sha256": "6d92ff11b786907cef26fcb8394ab4ae6fe87dbcc488e7a4968bb1f06ffd4dea",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/terminal_services/tabs.asm",
+      "file_offset": 13932,
+      "bytes": 110,
+      "assembly_defines": [],
+      "sha256": "ed2ad9d4731cfac39ce37fcd67ba5d822f9fe106918d06df39b8cfd3b9c453e0",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/terminal_services/clear_home.asm",
+      "file_offset": 14050,
+      "bytes": 36,
+      "assembly_defines": [],
+      "sha256": "71c273b2fa2230ac0966ad155a14831e746478a34a7b05c36ebccd2e2cf39db7",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/terminal_services/reset_region.asm",
+      "file_offset": 14090,
+      "bytes": 13,
+      "assembly_defines": [],
+      "sha256": "e40fe11e74da2bde00250101ef00a429d237c41ab6958a836e84bee0e3377ff9",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/scroll/wrap_forward.asm",
+      "file_offset": 9416,
+      "bytes": 9,
+      "assembly_defines": [],
+      "sha256": "ec51461cc1ed9251111e4d10895704836f63e3ece0f6620ca296f931ee1616d0",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/scroll/linefeed.asm",
+      "file_offset": 12168,
+      "bytes": 132,
+      "assembly_defines": [],
+      "sha256": "aaa21b94d35b148d0209012eea5c0f3d413644b97be4f4bb4e7dc41325363909",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/scroll/scroll_up.asm",
+      "file_offset": 12740,
+      "bytes": 223,
+      "assembly_defines": [],
+      "sha256": "70711c76457db349b21c9108436bdc9e6bbf5dc676d214597290515e1106de62",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/scroll/index.asm",
+      "file_offset": 91894,
+      "bytes": 62,
+      "assembly_defines": [],
+      "sha256": "2f88c80d1d93944da6da34cbf4fc59d20b81c45908a897e3b7d731517831c092",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/scroll/reverse_index.asm",
+      "file_offset": 91956,
+      "bytes": 65,
+      "assembly_defines": [],
+      "sha256": "9af0393e140d52388234869b7f9be7bcb15dced361162c502037e6bb2872e08a",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/render/character.asm",
+      "file_offset": 6448,
+      "bytes": 646,
+      "assembly_defines": [],
+      "sha256": "b8b25b8fd4196e2aab10cbb49049e0c99d064a5062c90f37e350f978b0a64943",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/cursor_shape/shape.asm",
+      "file_offset": 16760,
+      "bytes": 64,
+      "assembly_defines": [],
+      "sha256": "543664f344505292161b8a48218b9b53e3200a2c3987dd446c6879ee5da2fdc5",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/cursor_shape/show.asm",
+      "file_offset": 32714,
+      "bytes": 19,
+      "assembly_defines": [],
+      "sha256": "64da9d24154f1b20e9e1ae07c98d0ec0802a01367b7edc291be9528b96745351",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/cursor_shape/hide.asm",
+      "file_offset": 32858,
+      "bytes": 12,
+      "assembly_defines": [],
+      "sha256": "7995e95e734d0e93a0b95b4c402fb887bafbe6c38d60ec9e1269a6c8e3f789fa",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/cursor_shape/bios.asm",
+      "file_offset": 36952,
+      "bytes": 25,
+      "assembly_defines": [],
+      "sha256": "de802fd846d4032fdfd13e6897a69544fa736996d5ee2bc8d8225d6fb61ad250",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
       "source": "reconstruction/reports/core.asm",
       "file_offset": 92680,
       "bytes": 28,
@@ -393,7 +528,7 @@
       "matched_original": true
     }
   ],
-  "original_bytes_rebuilt_from_source": 6960,
+  "original_bytes_rebuilt_from_source": 8982,
   "handler_replay_tests": [
     {
       "case": "baseline-q-one-parameter",

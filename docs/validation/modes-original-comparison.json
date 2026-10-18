@@ -1,0 +1,1619 @@
+{
+  "passed": true,
+  "case_count": 136,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "source_sha256": "e2ac4febe207ae4f225ca3af99f0578fb645731cad7d6a6b2b613db6848df368",
+  "cases": [
+    {
+      "parameters": [
+        0
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        1
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [
+        2894,
+        79
+      ],
+      "matched": true
+    },
+    {
+      "parameters": [
+        2
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        3
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        4
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        5
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        6
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        7
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        8
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        9
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        10
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        11
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        12
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [
+        12216,
+        null
+      ],
+      "matched": true
+    },
+    {
+      "parameters": [
+        13
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        14
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        15
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        16
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        17
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        18
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        19
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        20
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        21
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        22
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        23
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        24
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        25
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [
+        12152,
+        42247
+      ],
+      "matched": true
+    },
+    {
+      "parameters": [
+        26
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        27
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        65535
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        4,
+        7,
+        18,
+        19,
+        0,
+        65535
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        7
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 1,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        7
+      ],
+      "private": 0,
+      "reset": false,
+      "gate": 0,
+      "count_override": 65535,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        0
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        1
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [
+        2894,
+        79
+      ],
+      "matched": true
+    },
+    {
+      "parameters": [
+        2
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        3
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [
+        10862,
+        1
+      ],
+      "matched": true
+    },
+    {
+      "parameters": [
+        4
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        5
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        6
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        7
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        8
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        9
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        10
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        11
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        12
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [
+        12216,
+        null
+      ],
+      "matched": true
+    },
+    {
+      "parameters": [
+        13
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        14
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        15
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        16
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        17
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        18
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        19
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        20
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        21
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        22
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        23
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        24
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        25
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [
+        12152,
+        42247
+      ],
+      "matched": true
+    },
+    {
+      "parameters": [
+        26
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        27
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        65535
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        4,
+        7,
+        18,
+        19,
+        0,
+        65535
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        7
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 1,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        7
+      ],
+      "private": 1,
+      "reset": false,
+      "gate": 0,
+      "count_override": 65535,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        0
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        1
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [
+        2894,
+        91
+      ],
+      "matched": true
+    },
+    {
+      "parameters": [
+        2
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        3
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        4
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        5
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        6
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        7
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        8
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        9
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        10
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        11
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        12
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [
+        12216,
+        null
+      ],
+      "matched": true
+    },
+    {
+      "parameters": [
+        13
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        14
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        15
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        16
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        17
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        18
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        19
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        20
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        21
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        22
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        23
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        24
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        25
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [
+        12152,
+        42243
+      ],
+      "matched": true
+    },
+    {
+      "parameters": [
+        26
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        27
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        65535
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        4,
+        7,
+        18,
+        19,
+        0,
+        65535
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        7
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 1,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        7
+      ],
+      "private": 0,
+      "reset": true,
+      "gate": 0,
+      "count_override": 65535,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        0
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        1
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [
+        2894,
+        91
+      ],
+      "matched": true
+    },
+    {
+      "parameters": [
+        2
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [
+        8356,
+        1
+      ],
+      "matched": true
+    },
+    {
+      "parameters": [
+        3
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [
+        10862,
+        0
+      ],
+      "matched": true
+    },
+    {
+      "parameters": [
+        4
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        5
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        6
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        7
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        8
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        9
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        10
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        11
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        12
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        13
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        14
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        15
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        16
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        17
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        18
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        19
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        20
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        21
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        22
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        23
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        24
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        25
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [
+        12152,
+        42243
+      ],
+      "matched": true
+    },
+    {
+      "parameters": [
+        26
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        27
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        65535
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        4,
+        7,
+        18,
+        19,
+        0,
+        65535
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        7
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 1,
+      "count_override": null,
+      "effect_boundary": [],
+      "matched": true
+    },
+    {
+      "parameters": [
+        7
+      ],
+      "private": 1,
+      "reset": true,
+      "gate": 0,
+      "count_override": 65535,
+      "effect_boundary": [],
+      "matched": true
+    }
+  ],
+  "scope": "Actual original/source mode handlers and real screen path compare state, BIOS positions and unresolved effect arguments; stop before external effects rather than claiming them implemented."
+}

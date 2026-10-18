@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "e2ac4febe207ae4f225ca3af99f0578fb645731cad7d6a6b2b613db6848df368",
+  "scope": "Source-only recovered mode7 toggles plus mode6 set/reset actual screen path; DOSBox-X BIOS cursor readback verifies origin row4 then row0."
+}

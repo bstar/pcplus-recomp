@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "4823cf56b1800c50e784d5718963e214ad943ad1403c214a85124cd3cbd8fc5f",
+  "scope": "Source-only DOS executable checks actual high-level renderer/cell writes/cursor advancement/deferred wrap in DOSBox-X; no original executable or modem."
+}

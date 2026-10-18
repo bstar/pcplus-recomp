@@ -1,0 +1,16 @@
+{
+  "kind": "source-only-recovered-cursor-shape-diagnostic",
+  "binary_sha256": "c0f5a20b213184dc4738d09d854f4ee1291c4cf211f68e6aeea820251ee3ff0e",
+  "sources": {
+    "reconstruction/cursor_shape/bios.asm": "da4363012141bcead3d607705604ea2450602182834e91810d22474f5d24a5e4",
+    "reconstruction/cursor_shape/hide.asm": "7ba563e8f67b7c6f270e5a10cad96a7ecc03275919692d8ce2ae4fcd8d488a10",
+    "reconstruction/cursor_shape/shape.asm": "d2468c655a47e4ebd0f1f52e90486710559b4ac87e256c3972d713095d5e0f8e",
+    "reconstruction/cursor_shape/show.asm": "2408058ab078df08a0722dfc12ac538af0806d06e09060868e36d0c48132453b",
+    "standalone/cursor_shape_host.asm": "01eb349cd4c13db1c95093fce6daf50af93e8f263d965f5edfdfacc00f2ebbee",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919"
+  },
+  "limitations": [
+    "Actual BIOS shape and visibility code; requires valid font scanline configuration.",
+    "Physical adapter and complete terminal-mode integration remain separate."
+  ]
+}

@@ -29,6 +29,10 @@ requires an attached DOS machine/modem and must not be inferred from emulation.
       Screen erase and reporting also pass through the combined parser; full
       ESC cursor/state and position-only CSI save/restore are linked and tested.
       The independent text-output backend passes CPU and DOSBox checks;
+      the recovered high-level character renderer also wraps and scrolls, with
+      531 operations matched against the original. Scroll/index and mode
+      handlers, keyboard-mode/tab/reset helpers and BIOS cursor-shape routines
+      now build and pass independent tests; combined integration continues.
       remaining application services still prevent complete parser coverage.
       See `docs/ANSI.md`, `docs/CSI.md` and component documentation.
 - [ ] Reconstruct independently buildable complete parser and keyboard modules.
@@ -54,6 +58,11 @@ requires an attached DOS machine/modem and must not be inferred from emulation.
       additional features as native tracing proceeds.
 - [ ] Recover startup, memory/overlay behavior and application services.
 - [ ] Reconstruct configuration persistence, dialing directory and application UI.
+      Progress: original-code replay proves the 1,264-byte PRM load/save block
+      and ten-byte serial prefix; a partial lossless host codec preserves unknown
+      fields and validates proved serial settings with synthetic tests. DOS
+      load/save, complete defaults/schema, directory and UI remain open.
+      See `docs/CONFIGURATION.md`.
 - [ ] Reconstruct file transfers, capture/logging and supporting tools used by the app.
 - [ ] Reconstruct scripting interfaces and required interpreter/compiler integration.
 - [ ] Recover required resources without embedding original executable code/data as

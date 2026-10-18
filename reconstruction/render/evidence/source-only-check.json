@@ -1,0 +1,4 @@
+{
+  "passed": true,
+  "scope": "Copied only source modules and test harness into temporary directory without analysis/original executable; normal build, linked tests and DOSBox-X self-test all passed."
+}

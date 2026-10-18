@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "c0f5a20b213184dc4738d09d854f4ee1291c4cf211f68e6aeea820251ee3ff0e",
+  "scope": "Source-only DOS executable checks actual BIOS cursor block/hidden/half/underline shape readback and restoration and DOS return in DOSBox-X; no original executable or modem."
+}

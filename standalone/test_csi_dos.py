@@ -57,7 +57,7 @@ exit
                 code=-1
         passed=code==0 and (output/'PASS.TXT').exists() and not (output/'FAIL.TXT').exists()
         result={'passed':passed,'returncode':code,'binary_sha256':digest,
-                'scope':'Combined recovered escape/parser/dispatcher/attributes/cursor self-test including ESC7/8 and CSIs/u save/restore with BIOS cursor readback plus parser-driven CSI2J BIOS erase of all 2000 text cells in DOSBox-X; memory input and no modem or ordinary text renderer.'}
+                'scope':'Combined recovered escape/parser/dispatcher/attributes/cursor self-test including ESC7/8 and CSIs/u save/restore with BIOS cursor readback plus parser-driven CSI2J BIOS erase of all 2000 text cells and actual parser-driven DECCKM arrow-table rewriting, mode7 toggles, mode6 origin with BIOS cursor readback, mode25 actual BIOS block/hidden/half/underline cursor-shape readback, and ESC D/M/E scrolling/reverse-index/next-line with video-memory checks in DOSBox-X; ordinary renderer/video-writer output plus key-map/tab/clear-home helpers; memory input and no live modem.'}
         (output/'result.json').write_text(json.dumps(result,indent=2)+'\n')
         print(json.dumps(result,indent=2),flush=True)
         return 0 if passed else 1

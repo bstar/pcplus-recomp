@@ -1,0 +1,37 @@
+{
+  "binary_sha256": "515108e66d540799b57a12e36e9f5ee246c6ad7fdff4112b9b8d5565efa3f9a5",
+  "cases": [
+    {
+      "case": "linefeed-wrap-and-one-shot-suppression",
+      "passed": true
+    },
+    {
+      "case": "bottom-scroll-disabled-and-wrap-modes",
+      "passed": true
+    },
+    {
+      "case": "index-reverse-index-with-scroll-region-outside-preservation",
+      "passed": true
+    },
+    {
+      "case": "scroll-fill-attribute-and-pending-wrap-reset",
+      "passed": true
+    },
+    {
+      "case": "wrap-mode-attribute-planes-shift-overlap-and-last-row-fill",
+      "passed": true
+    },
+    {
+      "case": "protection-triggered-attribute-repair-remains-explicit",
+      "passed": true
+    },
+    {
+      "case": "linefeed-double-width-coordinate-transition-and-abi",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Linked CPU replay with explicit INT10 text-video model; separate real DOSBox video-memory checks cover basic scroll/reverse-index/wrap.",
+    "Complex attribute repair, viewport services and physical adapters remain unresolved or unvalidated."
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "ranges": [
+    {
+      "name": "csi_set_modes",
+      "start": "0xde98",
+      "end_exclusive": "0xdf7e",
+      "file_offset": 93000,
+      "size": 230,
+      "sha256": "862e8df64d67197fc56ef07cc70abe66f69c8d47b710b6146adc7e44946a6fe6",
+      "evidence_id": "ev_8806c34ee3e415d806b020a85fb83f0d3fc246d8ecca9e69b8d946a8e9522f36",
+      "table": {
+        "start": "0xdec6",
+        "entries": [
+          "0xdef8",
+          "0xdf6f",
+          "0xdf02",
+          "0xdf12",
+          "0xdf6f",
+          "0xdf22",
+          "0xdf3c",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf44",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf50",
+          "0xdf58",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf6f",
+          "0xdf60"
+        ]
+      }
+    },
+    {
+      "name": "csi_reset_modes",
+      "start": "0xdf7e",
+      "end_exclusive": "0xe084",
+      "file_offset": 93230,
+      "size": 262,
+      "sha256": "7ec72270f55641f582c992a99f5a278e262fc1503e26d2f126dc0a5b16e3e8ba",
+      "evidence_id": "ev_a1760badbd5de19b96d1f92d716efe7338c29f5dc3ae8f18acc2586c11627625",
+      "table": {
+        "start": "0xdfac",
+        "entries": [
+          "0xdfde",
+          "0xdfe8",
+          "0xe004",
+          "0xe014",
+          "0xe075",
+          "0xe024",
+          "0xe03a",
+          "0xe075",
+          "0xe075",
+          "0xe075",
+          "0xe075",
+          "0xe044",
+          "0xe075",
+          "0xe075",
+          "0xe075",
+          "0xe075",
+          "0xe075",
+          "0xe056",
+          "0xe05e",
+          "0xe075",
+          "0xe075",
+          "0xe075",
+          "0xe075",
+          "0xe075",
+          "0xe066"
+        ]
+      }
+    }
+  ],
+  "state": {
+    "0x904c": "csi_report_private_prefix",
+    "0xcb5c": "ansi_parameter_count",
+    "0xcb3c": "ansi_parameters",
+    "0xceac": "ansi_private",
+    "0x372c": "terminal_mode_372c",
+    "0xce3a": "csi_scroll_bottom",
+    "0xcee4": "csi_origin_bottom",
+    "0xcdd2": "csi_origin_mode",
+    "0xce0e": "csi_scroll_top",
+    "0xceb0": "csi_origin_row",
+    "0x1d20": "cursor_state_value_1d20",
+    "0x1d1a": "modes_value_1d1a",
+    "0x3980": "modes_value_3980",
+    "0x3982": "modes_value_3982",
+    "0x333e": "modes_cursor_flags",
+    "0x1d18": "csi_terminal_id",
+    "0x321e": "csi_previous_terminal_id",
+    "0x334a": "csi_last_row",
+    "0x3342": "csi_wrap_pending"
+  },
+  "services": {
+    "0xb4e": "modes_keyboard_map",
+    "0x2a6e": "modes_screen_width",
+    "0x1bbe": "screen_set_cursor",
+    "0x2fb8": "screen_viewport_refresh",
+    "0x2f78": "modes_cursor_shape",
+    "0x20a4": "csi_reset_terminal"
+  },
+  "limitations": [
+    "Mode side-effect services remain explicit external interfaces.",
+    "Original signed count loop assumes a validated parameter array."
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/scroll/wrap_forward.asm",
+      "start": 4808,
+      "end": 4817,
+      "source_file_offset": 9416,
+      "bytes": 9,
+      "instructions": 2,
+      "sha256": "ec51461cc1ed9251111e4d10895704836f63e3ece0f6620ca296f931ee1616d0",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/scroll/linefeed.asm",
+      "start": 7560,
+      "end": 7692,
+      "source_file_offset": 12168,
+      "bytes": 132,
+      "instructions": 46,
+      "sha256": "aaa21b94d35b148d0209012eea5c0f3d413644b97be4f4bb4e7dc41325363909",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/scroll/scroll_up.asm",
+      "start": 8132,
+      "end": 8355,
+      "source_file_offset": 12740,
+      "bytes": 223,
+      "instructions": 86,
+      "sha256": "70711c76457db349b21c9108436bdc9e6bbf5dc676d214597290515e1106de62",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/scroll/index.asm",
+      "start": 55878,
+      "end": 55940,
+      "source_file_offset": 91894,
+      "bytes": 62,
+      "instructions": 24,
+      "sha256": "2f88c80d1d93944da6da34cbf4fc59d20b81c45908a897e3b7d731517831c092",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/scroll/reverse_index.asm",
+      "start": 55940,
+      "end": 56005,
+      "source_file_offset": 91956,
+      "bytes": 65,
+      "instructions": 24,
+      "sha256": "9af0393e140d52388234869b7f9be7bcb15dced361162c502037e6bb2872e08a",
+      "matched_original": true
+    }
+  ],
+  "state": {
+    "3342": "csi_wrap_pending",
+    "3340": "scroll_suppress_next_linefeed",
+    "399c": "screen_cursor_row",
+    "399e": "screen_cursor_column",
+    "1d32": "attributes_normal_value",
+    "3258": "screen_last_column",
+    "8ff6": "attributes_monochrome",
+    "1f70": "attributes_current",
+    "900c": "screen_cursor_wrap",
+    "3734": "screen_attribute_checks",
+    "3346": "screen_attribute_offset",
+    "39c4": "screen_attributes_base",
+    "325a": "screen_attribute_row_bytes",
+    "325c": "erase_cell_count",
+    "39c2": "erase_attribute_values_base",
+    "ce3a": "screen_last_row",
+    "ce0e": "screen_first_row",
+    "334a": "csi_last_row",
+    "d008": "csi_erase_attribute",
+    "d122": "screen_doublewidth_enabled",
+    "9018": "screen_vertical_attribute_check",
+    "904c": "scroll_skip_attribute_scan",
+    "1d22": "scroll_enabled"
+  },
+  "services": {
+    "1bbe": "screen_set_cursor",
+    "2a90": "screen_width_transition",
+    "2adc": "screen_adjust_attribute_boundary",
+    "2530": "csi_service_2530",
+    "2d4c": "erase_previous_attribute",
+    "2d6c": "erase_scan_attributes",
+    "85b4": "erase_move_bytes",
+    "2d98": "erase_repair_attributes"
+  },
+  "limitations": [
+    "Recovered names are analyst annotations. Viewport and attribute-boundary/repair helpers remain required external services."
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/cursor_shape/shape.asm",
+      "start": 12152,
+      "end": 12216,
+      "bytes": 64,
+      "instructions": 32,
+      "sha256": "543664f344505292161b8a48218b9b53e3200a2c3987dd446c6879ee5da2fdc5",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/cursor_shape/show.asm",
+      "start": 28106,
+      "end": 28125,
+      "bytes": 19,
+      "instructions": 6,
+      "sha256": "64da9d24154f1b20e9e1ae07c98d0ec0802a01367b7edc291be9528b96745351",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/cursor_shape/hide.asm",
+      "start": 28250,
+      "end": 28262,
+      "bytes": 12,
+      "instructions": 3,
+      "sha256": "7995e95e734d0e93a0b95b4c402fb887bafbe6c38d60ec9e1269a6c8e3f789fa",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/cursor_shape/bios.asm",
+      "start": 32344,
+      "end": 32369,
+      "bytes": 25,
+      "instructions": 12,
+      "sha256": "de802fd846d4032fdfd13e6897a69544fa736996d5ee2bc8d8225d6fb61ad250",
+      "matched_original": true
+    }
+  ],
+  "state": {
+    "7a88": "cursor_shape_start_scanline",
+    "7a8a": "cursor_shape_end_scanline",
+    "7a6c": "cursor_shape_visibility_state"
+  },
+  "services": {},
+  "limitations": [
+    "Recovered names are analyst annotations. Requires valid configured cursor scanlines; original show suppression semantics retained."
+  ]
+}

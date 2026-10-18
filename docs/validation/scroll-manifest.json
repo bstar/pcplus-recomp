@@ -1,0 +1,37 @@
+{
+  "kind": "source-only-recovered-scroll-diagnostic",
+  "binary_sha256": "515108e66d540799b57a12e36e9f5ee246c6ad7fdff4112b9b8d5565efa3f9a5",
+  "sources": {
+    "reconstruction/screen/cursor_output.asm": "b6583f7648c0f47a565e6361ef58481e3ac64e4bd571ebd4aa98e9873e65dd05",
+    "reconstruction/screen/cursor_pack.asm": "d35d5a306548a99526d13a0833aa3c781cf649b51662aa5a49a6fff80affd353",
+    "reconstruction/screen/down.asm": "250d05ec52e27c50533aab8e81ee8264886125a3f70efd9df228f978cc030af1",
+    "reconstruction/screen/left.asm": "812e101942c99411726283d892c5501edd040daab67edb3098f7dc427841dc9e",
+    "reconstruction/screen/right.asm": "1ef4422d5be97996b70d47e35af92818ac42b7c2b2c1207a26b6fa1d82930851",
+    "reconstruction/screen/set_cursor.asm": "db96a18c8f1d9a928800bf82f329cd57f74032fe920c2123e9de3dd9c8ae07b6",
+    "reconstruction/screen/up.asm": "18722137d743c36c5079d1ebee26ab622c654a0b99f4fc0d67fd9c8f24af4384",
+    "reconstruction/screen/width_transition.asm": "e62505bfb2b67280abe8b035819b69906f61f3eaeb9acbafb8f19ba06ef943a8",
+    "reconstruction/erase/default_attribute.asm": "5d366fde862b74ebf6c7264a8c5b814bba230978831cb2b8b02006a3ef27e8eb",
+    "reconstruction/erase/display_after.asm": "8cd45a7ba21fa72b5d75f5b86936d331e45738db7526ca566b4ba6c5c52b2e13",
+    "reconstruction/erase/display_before.asm": "4bb56387041fb952c127571bcbe9b4190236a76ef62f5178300cc8caa949d913",
+    "reconstruction/erase/far_fill.asm": "ff686277384a6f4b6f702e3b8893b3f4ad77f74506db173e0e089b667e0dcfad",
+    "reconstruction/erase/far_move.asm": "3a89f8954adfdded079657f383c5aaec38c27166eb7e0e0485c015b7990c0b11",
+    "reconstruction/erase/line_before.asm": "3fa9a753094d1f37ba8bd84dd758f71fb91e31d3a014e41ded069cada950d940",
+    "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b",
+    "reconstruction/erase/previous_attribute.asm": "515cfccc074a11cafba547e51e26be1f754d70f01bdd43e475fc1d49caafa394",
+    "reconstruction/erase/rectangle.asm": "14931378fad57d57dde425df3d5898c95a2982a981a6d9d4ac005127e0fe5551",
+    "reconstruction/erase/scan_attributes.asm": "ceaeac65bbd73338edc538453c82133067fe52e005f8bcb78ea87bcef165b536",
+    "reconstruction/erase/scroll_down.asm": "3acbec5891434ce0cb16b4658169474ee0ce8ca620b30e14edcef07484293f9e",
+    "reconstruction/erase/scroll_up.asm": "405ce8a6fd866638df1c861ffce453620442f8d5e56ec6198ade45adea237842",
+    "reconstruction/scroll/index.asm": "806d2530c5192a36d0bad8bf58e47a759b246ac87a021170de33d02e3ebb9357",
+    "reconstruction/scroll/linefeed.asm": "1d2fa195557ee8bd39a481c8ec71c2a64dc01dd332ba5c94fc7fcfe3a8bb5077",
+    "reconstruction/scroll/reverse_index.asm": "52ee566efb3b6044964ea02f2f495cb58264f3eed41ac3036ec98f679b358f9f",
+    "reconstruction/scroll/scroll_up.asm": "d21cd669acebbabd1e2d59fa7cd2e96bd0af6f9519ef4fd83fe1b61ff326af0e",
+    "reconstruction/scroll/wrap_forward.asm": "de8624cb290e4d00066cbad8a69954368a63e63410be5de13499660c577892b9",
+    "standalone/scroll_host.asm": "f573bce74ebcf4e09eb2573f301d4effafd151ba23b927c1df8e1e4f922a66cd",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919"
+  },
+  "limitations": [
+    "Actual scroll/linefeed/index/reverse-index code with unresolved viewport/complex attribute services trapped.",
+    "Full parser/renderer integration remains separate."
+  ]
+}

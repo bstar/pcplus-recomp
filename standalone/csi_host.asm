@@ -4,6 +4,7 @@ CPU 8086
 SEGMENT _TEXT public class=CODE use16
 GROUP DGROUP _DATA _BSS STACK
 extern ansi_escape_entry
+extern terminal_keyboard_mode,terminal_clear_home,render_character
 global ansi_next_byte, ansi_unread_byte, ansi_control_character, ansi_reset
 ansi_next_byte:
  inc word [csi_receive_calls]
@@ -89,28 +90,19 @@ csi_append_output:
 csi_output_overflow:
  mov ax,0xfffe
  jmp csi_unimplemented
-global ansi_escape_service_12c8
-global csi_service_12c8
-global screen_wrap_forward
+global ansi_escape_service_12c8,csi_service_12c8
+extern screen_wrap_forward,screen_linefeed,scroll_up,scroll_index,scroll_reverse_index
 ansi_escape_service_12c8:
 csi_service_12c8:
-screen_wrap_forward:
- mov ax,0x12c8
- jmp csi_unimplemented
+ jmp screen_wrap_forward
 global ansi_escape_service_20a4
 global csi_reset_terminal
 ansi_escape_service_20a4:
 csi_reset_terminal:
  mov ax,0x20a4
  jmp csi_unimplemented
-global csi_clear_tabs
-csi_clear_tabs:
- mov ax,0x246c
- jmp csi_unimplemented
-global csi_reset_scroll_region
-csi_reset_scroll_region:
- mov ax,0x250a
- jmp csi_unimplemented
+extern csi_clear_tabs
+extern csi_reset_scroll_region
 global screen_adjust_attribute_boundary
 screen_adjust_attribute_boundary:
  mov ax,0x2adc
@@ -149,14 +141,12 @@ csi_service_da12:
  jmp csi_unimplemented
 global ansi_escape_service_da46
 ansi_escape_service_da46:
- mov ax,0xda46
- jmp csi_unimplemented
+ jmp scroll_index
 global ansi_escape_service_da84
 global csi_service_da84
 ansi_escape_service_da84:
 csi_service_da84:
- mov ax,0xda84
- jmp csi_unimplemented
+ jmp scroll_reverse_index
 global ansi_escape_service_dac6
 ansi_escape_service_dac6:
  mov ax,0xdac6
@@ -176,13 +166,13 @@ ansi_escape_service_dd74:
  jmp csi_save_cursor
 ansi_escape_service_ddbc:
  jmp csi_restore_cursor
-global csi_set_modes
-csi_set_modes:
- mov ax,0xde98
- jmp csi_unimplemented
-global csi_reset_modes
-csi_reset_modes:
- mov ax,0xdf7e
+extern csi_set_modes,csi_reset_modes
+global modes_keyboard_map
+modes_keyboard_map:
+ jmp terminal_keyboard_mode
+global modes_screen_width
+modes_screen_width:
+ mov ax,0x2a6e
  jmp csi_unimplemented
 global csi_media_copy
 csi_media_copy:
@@ -202,6 +192,13 @@ erase_complex_protected:
  jmp csi_unimplemented
 erase_repair_attributes:
  mov ax,0x2d98
+ jmp csi_unimplemented
+global render_service_b9f7,render_font_output
+render_service_b9f7:
+ mov ax,0xb9f7
+ jmp csi_unimplemented
+render_font_output:
+ mov ax,0xbb53
  jmp csi_unimplemented
 csi_unimplemented:
  mov [csi_unimplemented_service],ax
@@ -302,6 +299,140 @@ csi_unimplemented:
  mov cx,2000
  repe scasw
  jne .failed
+ ; Real keyboard-mode rewrite, tab reset and clear/home support.
+ mov word [terminal_dec_keys],1
+ mov word [terminal_keymap],0x4f1b
+ mov word [terminal_keymap+2],0x0041
+ mov ax,'['
+ push ax
+ call terminal_keyboard_mode
+ add sp,2
+ cmp byte [terminal_keymap+1],'['
+ jne .failed
+ selftest_sequence modes_keys_set,modes_keys_set_end-modes_keys_set
+ cmp byte [terminal_keymap+1],'O'
+ jne .failed
+ selftest_sequence modes_keys_reset,modes_keys_reset_end-modes_keys_reset
+ cmp byte [terminal_keymap+1],'['
+ jne .failed
+ mov ax,1
+ push ax
+ call csi_clear_tabs
+ add sp,2
+ cmp byte [terminal_tab_stops],0
+ jne .failed
+ cmp byte [terminal_tab_stops+1],8
+ jne .failed
+ cmp byte [terminal_tab_stops+10],0xfe
+ jne .failed
+ mov word [attributes_current],0x4f
+ call terminal_clear_home
+ cmp word [screen_cursor_row],0
+ jne .failed
+ cmp word [screen_cursor_column],0
+ jne .failed
+ cmp word [attributes_current],7
+ jne .failed
+ ; Actual parser mode7 and origin-mode set/reset, with BIOS readback.
+ selftest_sequence modes_wrap_set,modes_wrap_set_end-modes_wrap_set
+ cmp word [cursor_state_value_1d20],1
+ jne .failed
+ selftest_sequence modes_wrap_reset,modes_wrap_reset_end-modes_wrap_reset
+ cmp word [cursor_state_value_1d20],0
+ jne .failed
+ mov word [csi_scroll_top],4
+ mov word [csi_scroll_bottom],19
+ selftest_sequence modes_origin_set,modes_origin_set_end-modes_origin_set
+ cmp word [csi_origin_mode],1
+ jne .failed
+ mov ah,3
+ xor bh,bh
+ int 0x10
+ cmp dx,0x0400
+ jne .failed
+ selftest_sequence modes_origin_reset,modes_origin_reset_end-modes_origin_reset
+ cmp word [csi_origin_mode],0
+ jne .failed
+ mov ah,3
+ xor bh,bh
+ int 0x10
+ or dx,dx
+ jne .failed
+ call csi_reset_scroll_region
+ ; Actual mode25 parser path through recovered shape code and BIOS readback.
+ mov word [modes_cursor_flags],0
+ selftest_sequence modes_cursor_set,modes_cursor_set_end-modes_cursor_set
+ mov ah,3
+ xor bh,bh
+ int 0x10
+ cmp cx,0x000f
+ jne .failed
+ selftest_sequence modes_cursor_reset,modes_cursor_reset_end-modes_cursor_reset
+ mov ah,3
+ xor bh,bh
+ int 0x10
+ test ch,0x20
+ jz .failed
+ cmp cl,15
+ jne .failed
+ mov word [modes_cursor_flags],2
+ selftest_sequence modes_cursor_set,modes_cursor_set_end-modes_cursor_set
+ mov ah,3
+ xor bh,bh
+ int 0x10
+ cmp cx,0x080f
+ jne .failed
+ mov word [modes_cursor_flags],1
+ selftest_sequence modes_cursor_set,modes_cursor_set_end-modes_cursor_set
+ mov ah,3
+ xor bh,bh
+ int 0x10
+ cmp cx,0x0e0f
+ jne .failed
+ ; Actual ESC D/M/E routes: video scroll, reverse-index and next line.
+ mov ax,0xb800
+ mov es,ax
+ xor di,di
+ mov ax,0x0741
+.scroll_fill:
+ mov cx,80
+ rep stosw
+ inc ax
+ cmp al,'Z'
+ jne .scroll_fill
+ selftest_sequence scroll_bottom_sample,scroll_bottom_end-scroll_bottom_sample
+ selftest_sequence index_sample,1
+ mov ax,0xb800
+ mov es,ax
+ cmp word [es:0],0x0742
+ jne .failed
+ cmp word [es:3840],0x0720
+ jne .failed
+ selftest_sequence scroll_top_sample,scroll_top_end-scroll_top_sample
+ selftest_sequence reverse_index_sample,1
+ mov ax,0xb800
+ mov es,ax
+ cmp word [es:0],0x0720
+ jne .failed
+ cmp word [es:160],0x0742
+ jne .failed
+ selftest_sequence next_line_sample,1
+ cmp word [screen_cursor_row],1
+ jne .failed
+ cmp word [screen_cursor_column],0
+ jne .failed
+ ; Actual ordinary renderer shares the state changed by CSI commands.
+ call terminal_clear_home
+ mov ax,'A'
+ push ax
+ call render_character
+ add sp,2
+ mov ax,0xb800
+ mov es,ax
+ cmp word [es:0],0x0741
+ jne .failed
+ cmp word [screen_cursor_column],1
+ jne .failed
  mov ax,0x4c00
  int 0x21
 .failed:
@@ -317,6 +448,8 @@ cursor_state_value_cdfc: dw 0
 global cursor_state_value_ce04
 cursor_state_value_ce04: dw 0
 global cursor_state_value_1d20
+global render_autowrap
+render_autowrap:
 cursor_state_value_1d20: dw 0
 global cursor_state_saved_cdf0
 cursor_state_saved_cdf0: dw 0
@@ -334,11 +467,25 @@ global cursor_state_saved_cdd2
 cursor_state_saved_cdd2: dw 0
 global cursor_state_saved_3342
 cursor_state_saved_3342: dw 0
+global modes_value_1d1a
+modes_value_1d1a: dw 0
+global modes_value_3980
+modes_value_3980: dw 0
+global modes_value_3982
+modes_value_3982: dw 0
+global modes_cursor_flags
+modes_cursor_flags: dw 0
+global cursor_shape_start_scanline,cursor_shape_end_scanline,cursor_shape_visibility_state
+cursor_shape_start_scanline: dw 6
+cursor_shape_end_scanline: dw 15
+cursor_shape_visibility_state: dw 1
 global csi_terminal_id
 csi_terminal_id:
  dw 4
 global csi_report_private_prefix,csi_printer_ready
-csi_report_private_prefix: dw 0
+global scroll_skip_attribute_scan
+csi_report_private_prefix:
+scroll_skip_attribute_scan: dw 0
 csi_printer_ready: dw 0
 global attributes_normal_value
 attributes_normal_value:
@@ -558,6 +705,9 @@ up_sample: db '[2A'
 up_end:
 q_sample: db '[;4qNEXT'
 q_end:
+global scroll_enabled,scroll_suppress_next_linefeed
+scroll_enabled: dw 1
+scroll_suppress_next_linefeed: dw 0
 global erase_lineflags_enabled,erase_protection_mode,erase_cell_count
 erase_lineflags_enabled: dw 0
 erase_protection_mode: dw 0
@@ -566,8 +716,65 @@ global erase_attribute_values_base,erase_shadow_offset,erase_shadow_segment
 erase_attribute_values_base: dw erase_attribute_values
 erase_shadow_offset: dw erase_shadow_cells
 erase_shadow_segment: dw seg erase_shadow_cells
+scroll_bottom_sample: db '[25;20H'
+scroll_bottom_end:
+scroll_top_sample: db '[1;20H'
+scroll_top_end:
+index_sample: db 'D'
+reverse_index_sample: db 'M'
+next_line_sample: db 'E'
+modes_cursor_set: db '[?25h'
+modes_cursor_set_end:
+modes_cursor_reset: db '[?25l'
+modes_cursor_reset_end:
+modes_keys_set: db '[?1h'
+modes_keys_set_end:
+modes_keys_reset: db '[?1l'
+modes_keys_reset_end:
+modes_wrap_set: db '[?7h'
+modes_wrap_set_end:
+modes_wrap_reset: db '[?7l'
+modes_wrap_reset_end:
+modes_origin_set: db '[?6h'
+modes_origin_set_end:
+modes_origin_reset: db '[?6l'
+modes_origin_reset_end:
 erase_sample: db '[2J'
 erase_end:
+global terminal_dec_keys,terminal_tab_stops,terminal_keymap,terminal_keymap_end,terminal_mode_372c
+terminal_dec_keys: dw 0
+terminal_tab_stops: times 30 db 0xfe
+terminal_keymap: times 948 db 0
+terminal_keymap_end:
+terminal_mode_372c: dw 0
+global render_deferred_row,render_deferred_column,render_translation_enabled
+render_deferred_row: dw 0
+render_deferred_column: dw 0
+render_translation_enabled: dw 0
+global render_translation_mask,render_translation_base,render_direct_output
+render_translation_mask: db 0xff
+render_translation_base: dw render_translation_map
+render_direct_output: dw 0
+global render_linefeed_suppression_enabled
+render_linefeed_suppression_enabled: dw 0
+global text_video_segment,text_bios_output,text_cga_status_port
+text_video_segment: dw 0xb800
+text_bios_output: dw 0
+text_cga_status_port: dw 0
+global render_graphics_map,render_translation_map
+; Diagnostic identity-map fixtures, not recovered original glyph resources.
+render_graphics_map:
+%assign glyph 0
+%rep 256
+ db glyph
+%assign glyph glyph+1
+%endrep
+render_translation_map:
+%assign glyph 0
+%rep 256
+ db glyph
+%assign glyph glyph+1
+%endrep
 SEGMENT _BSS public align=16 class=BSS use16
 global ansi_input_buffer,csi_output_buffer,screen_attribute_cells
 ansi_input_buffer: resb 2048

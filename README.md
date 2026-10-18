@@ -13,6 +13,7 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 | `build/keyboard/KEYBOARD.EXE` | Maintained assembly source only | Recovered BIOS keyboard acquisition/normalization diagnostic |
 | `build/csi/CSI.EXE` | Maintained assembly source only | Combined ESC, parameter, CSI, attribute and cursor self-check |
 | `build/{escape,attributes,screen,text,reports,erase}/` | Maintained assembly source only | Separate DOS diagnostics for each recovered component |
+| `build/{scroll,modes,render,cursor-shape}/` | Maintained assembly source only | Scroll, mode, character-rendering and BIOS cursor-style diagnostics |
 | `reconstruction/dist/tech-net-candidate/PCPLUS.EXE` | Recovered source plus a locally supplied original executable | Full application with the historical CSI-q lockup fix |
 
 Original executables, dialing/configuration files, disk images, downloaded
@@ -80,6 +81,14 @@ The combined ANSI path and separate screen/reporting components build and test
 through `./tools/build test-csi`, `test-screen`, `test-attributes`, `test-text`,
 `test-erase`, `test-reports`, `test-cursor_state` and `test-escape`. The default `test` target includes
 these diagnostics. See [docs/CSI.md](docs/CSI.md) for integration scope and gaps.
+Additional targets `test-scroll`, `test-modes`, `test-render`, `test-cursor_shape`
+and `test-terminal-services` verify real scrolling, terminal modes, ordinary
+character output, cursor visibility/style and key-map/tab/reset helpers. These
+are source-built components; a complete interactive application remains open.
+`./tools/build test-config` verifies a partial lossless host codec for proved PRM
+settings. It preserves unknown bytes and uses synthetic data; DOS configuration
+loading, complete defaults and the full settings UI remain work in progress.
+See [docs/CONFIGURATION.md](docs/CONFIGURATION.md).
 
 ## Full-application compatibility build
 
@@ -97,7 +106,7 @@ place your supporting installation files, including ASPCOMP.EXE, in
 ./tools/pcplus-run
 ```
 
-The compatibility build verifies and inserts 6,960 recovered source bytes into the
+The compatibility build verifies and inserts 8,982 recovered source bytes into the
 original container, then replaces exactly two bytes using the archived Datastorm
 TECH_NET recipe. It retains the original program's other code and resources.
 The launcher uses a separate private installation under `reconstruction/lab`.

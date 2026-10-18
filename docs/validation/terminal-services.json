@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "binary_sha256": "49024e13096565bfd8d7bdb9cdacdfcaa3b7fef20e77a99122d25394385c31cc",
+  "recovered_bytes": 273,
+  "cases": [
+    {
+      "case": "application-cursor-prefix-rewrite-preserves-custom-bindings-and-boundaries",
+      "passed": true
+    },
+    {
+      "case": "default-tab-stops-and-real-csi-tab-clear",
+      "passed": true
+    },
+    {
+      "case": "real-scroll-region-reset-and-clear-home-bios-video",
+      "passed": true
+    }
+  ],
+  "scope": "Exact support-unit hashes; actual linked key-table rewrite, tabs, region reset and clear/home; fixture key bindings, BIOS video model and no live modem."
+}

@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "binary_sha256": "fd75f6c37d4c1d59cb2e7c15b06707e446c03d62648074cf36bf465583c82279",
+  "binary_sha256": "49024e13096565bfd8d7bdb9cdacdfcaa3b7fef20e77a99122d25394385c31cc",
   "cases": [
     {
       "case": "real-parser-to-dispatch-to-bios-cursor-and-buffer-offsets",
@@ -43,9 +43,33 @@
       "passed": true
     },
     {
+      "case": "real-esc-index-nextline-reverseindex-and-bottom-wrap-video",
+      "passed": true
+    },
+    {
+      "case": "real-parser-mode-state-origin-home-and-private-gates",
+      "passed": true
+    },
+    {
+      "case": "real-decckm-parser-to-arrow-keymap-rewrite-preserves-custom-bindings",
+      "passed": true
+    },
+    {
+      "case": "real-mode25-parser-to-cursor-visibility-and-scanline-BIOS",
+      "passed": true
+    },
+    {
+      "case": "unrecovered-mode-side-effects-fail-explicitly-after-real-state-updates",
+      "passed": true
+    },
+    {
+      "case": "shared-parser-renderer-color-report-wrap-and-scroll-state",
+      "passed": true
+    },
+    {
       "case": "unrecovered-protected-erase-boundary-fails-explicitly",
       "passed": true
     }
   ],
-  "scope": "Actual linked escape/parameter/transition/dispatcher/attribute/cursor/report/erase/save-restore instructions; explicit BIOS text-video model plus memory input/output, unresolved application services trap. No live modem/full renderer."
+  "scope": "Actual linked escape/parameter/transition/dispatcher/attribute/cursor/report/erase/scroll/save-restore/modes/cursor-shape instructions; explicit BIOS text-video model plus memory input/output, unresolved application services trap. Ordinary text uses recovered renderer/video writers with fixture glyph resources; no live modem or complete application."
 }

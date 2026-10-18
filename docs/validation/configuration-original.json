@@ -1,0 +1,231 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "configuration_ds_start": 7044,
+  "configuration_bytes": 1264,
+  "cases": [
+    {
+      "case": "whole-image-save",
+      "calls": [
+        {
+          "operation": "open",
+          "mode": "wb",
+          "path": "PCPLUS.PRM"
+        },
+        {
+          "operation": "write",
+          "source": 7044,
+          "size": 1264,
+          "count": 1,
+          "sha256": "f47bae102769c142f1577cb386f3abb56a3b387f88732cd91d946a13bbdf2c54"
+        },
+        {
+          "operation": "close"
+        }
+      ],
+      "fatal": false,
+      "returned": true
+    },
+    {
+      "case": "whole-image-load",
+      "calls": [
+        {
+          "operation": "open",
+          "mode": "rb",
+          "path": "TEST.PRM"
+        },
+        {
+          "operation": "read",
+          "destination": 7044,
+          "size": 1264,
+          "count": 1,
+          "returned_elements": 1,
+          "synthetic_bytes": 1264
+        },
+        {
+          "operation": "close"
+        }
+      ],
+      "fatal": false,
+      "returned": true
+    },
+    {
+      "case": "zero-element-read-rewrites-current-memory",
+      "synthetic_input_bytes": 0,
+      "calls": [
+        {
+          "operation": "open",
+          "mode": "rb",
+          "path": "TEST.PRM"
+        },
+        {
+          "operation": "read",
+          "destination": 7044,
+          "size": 1264,
+          "count": 1,
+          "returned_elements": 0,
+          "synthetic_bytes": 0
+        },
+        {
+          "operation": "close"
+        },
+        {
+          "operation": "open",
+          "mode": "wb",
+          "path": "TEST.PRM"
+        },
+        {
+          "operation": "write",
+          "source": 7044,
+          "size": 1264,
+          "count": 1,
+          "sha256": "f47bae102769c142f1577cb386f3abb56a3b387f88732cd91d946a13bbdf2c54"
+        },
+        {
+          "operation": "close"
+        }
+      ],
+      "fatal": false,
+      "returned": true
+    },
+    {
+      "case": "zero-element-read-rewrites-current-memory",
+      "synthetic_input_bytes": 7,
+      "calls": [
+        {
+          "operation": "open",
+          "mode": "rb",
+          "path": "TEST.PRM"
+        },
+        {
+          "operation": "read",
+          "destination": 7044,
+          "size": 1264,
+          "count": 1,
+          "returned_elements": 0,
+          "synthetic_bytes": 7
+        },
+        {
+          "operation": "close"
+        },
+        {
+          "operation": "open",
+          "mode": "wb",
+          "path": "TEST.PRM"
+        },
+        {
+          "operation": "write",
+          "source": 7044,
+          "size": 1264,
+          "count": 1,
+          "sha256": "31036b205235879537ca1f59378c06c2e3f47ff248e23e9cfc4430cf48ef21c3"
+        },
+        {
+          "operation": "close"
+        }
+      ],
+      "fatal": false,
+      "returned": true
+    },
+    {
+      "case": "write-open-fatal-error",
+      "calls": [
+        {
+          "operation": "open",
+          "mode": "wb",
+          "path": "PCPLUS.PRM"
+        },
+        {
+          "operation": "fatal",
+          "code": 1,
+          "message": "Error creating .PRM file"
+        }
+      ],
+      "fatal": true,
+      "returned": false
+    },
+    {
+      "case": "serial-prefix-save",
+      "calls": [
+        {
+          "operation": "open",
+          "mode": "r+b",
+          "path": "PCPLUS.PRM"
+        },
+        {
+          "operation": "write",
+          "source": 7044,
+          "size": 10,
+          "count": 1,
+          "sha256": "e58fed7a11be6fc432149d8d00e370fc43f65fbf69a16cd7d04288e41127cc8b"
+        },
+        {
+          "operation": "close"
+        }
+      ],
+      "fatal": false,
+      "returned": true
+    }
+  ],
+  "evidence": [
+    {
+      "address": "0x1d4d0",
+      "context": "pcplus-overlay-anchored-03",
+      "evidence_id": "ev_dd1d40e9cbad7523a355eeea9364e2483b3b2d79e4a051b4911a7905b8eda450"
+    },
+    {
+      "address": "0x1d5f8",
+      "context": "pcplus-overlay-anchored-03",
+      "evidence_id": "ev_6e41f4315160eed484c6985434e0c2e36cd741f5c39358a4cfed577bd8937e40"
+    },
+    {
+      "address": "0x1d60c",
+      "context": "pcplus-overlay-anchored-03",
+      "evidence_id": "ev_39cec3eeeb0684b87998dd63fdacb5e25ecc38140de5a9226de9d84532418bab"
+    },
+    {
+      "address": "0x1d647",
+      "context": "pcplus-overlay-anchored-03",
+      "evidence_id": "ev_0b7e0098ca824727703a9c43e5df54c85c2b94a7564b9ae9830451d095e2ce34"
+    },
+    {
+      "address": "0x1d734",
+      "context": "pcplus-overlay-anchored-03",
+      "evidence_id": "ev_45e3897063c74080373317d5c7421f5f9cf03ff252df70c61a29e4c5641afde9"
+    },
+    {
+      "address": "0x1f260",
+      "context": "pcplus-overlay-anchored-20",
+      "evidence_id": "ev_d52db527211bf1c3ffed8dd5924051027974ff1fcd63bd9dc4f05d7bc3e0211e"
+    },
+    {
+      "address": "0x1f05c",
+      "context": "pcplus-overlay-anchored-20",
+      "evidence_id": "ev_d7f2fc242e462dd12849254b6bbfdcd58b5b54250ccfb45a8a76649ed6579b7a"
+    },
+    {
+      "address": "0x1f1fa",
+      "context": "pcplus-overlay-anchored-20",
+      "evidence_id": "ev_8c0df54528020eff4ed07227d19c5490c4b357d975b6065fd517b270973687b6"
+    },
+    {
+      "address": "0x1033e",
+      "context": "pcplus-main",
+      "evidence_id": "ev_25025ce97e87aa22d04eb4d6b2903b39d9c15b68e3fc91a5aaf4ed75e06d23a1"
+    },
+    {
+      "address": "0x10366",
+      "context": "pcplus-main",
+      "evidence_id": "ev_29b4f4536b443b5d3ee7209840b7c813c466c488e71d287a8ca20f7cfb8c806a"
+    },
+    {
+      "address": "0x1353d",
+      "context": "pcplus-main",
+      "evidence_id": "ev_1cd43dbde8697560fddafd763fd3ab56971d91bd6badd8b88553d8e1cc1d6417"
+    }
+  ],
+  "limitations": [
+    "Actual original code with explicitly modeled stdio; no real DOS filesystem operations or user configuration read.",
+    "Read-failure fallback is demonstrated at caller boundary; short-read memory copying is modeled from the fread contract.",
+    "No complete PRM field schema, format-version signature or complete startup/default initializer has been recovered."
+  ]
+}

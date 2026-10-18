@@ -1,5 +1,5 @@
-MODULES := escape attributes screen text reports erase cursor_state csi
-.PHONY: all serial parser keyboard $(MODULES) $(addprefix test-,$(MODULES)) test test-driver test-parser test-keyboard test-parser-compat test-csi-relocation compat test-compat test-modem clean
+MODULES := escape attributes screen text reports erase cursor_state cursor_shape scroll modes render csi
+.PHONY: all serial parser keyboard $(MODULES) $(addprefix test-,$(MODULES)) test test-driver test-parser test-keyboard test-config test-parser-compat test-csi-relocation test-modes-relocation test-terminal-services compat test-compat test-modem clean
 
 all: serial parser keyboard $(MODULES)
 
@@ -12,6 +12,15 @@ $(addprefix test-,$(MODULES)): test-%: %
 
 test-csi-relocation: csi
 	python3 standalone/check_csi_relocation.py
+
+test-modes-relocation: modes
+	python3 standalone/check_modes_relocation.py
+
+test-terminal-services: csi
+	python3 standalone/check_terminal_services.py
+
+test-config:
+	python3 -m unittest discover -s src/config -p 'test_*.py' -v
 
 serial:
 	python3 standalone/build.py
@@ -33,7 +42,7 @@ test-parser: parser
 	python3 standalone/check_ansi.py
 	python3 standalone/test_parser_dos.py
 
-test: test-driver test-parser test-keyboard $(addprefix test-,$(MODULES)) test-csi-relocation
+test: test-driver test-parser test-keyboard $(addprefix test-,$(MODULES)) test-csi-relocation test-modes-relocation test-terminal-services test-config
 	python3 standalone/test_serial.py
 
 test-parser-compat: parser compat
@@ -49,4 +58,4 @@ test-modem:
 	$(MAKE) -C reconstruction test-modem
 
 clean:
-	rm -rf build/standalone build/ansi build/keyboard build/csi-relocation build/cursor-state $(addprefix build/,$(MODULES))
+	rm -rf build/standalone build/ansi build/keyboard build/csi-relocation build/cursor-state build/cursor-shape $(addprefix build/,$(MODULES))

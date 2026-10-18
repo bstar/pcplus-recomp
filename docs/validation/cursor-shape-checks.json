@@ -1,0 +1,22 @@
+{
+  "binary_sha256": "c0f5a20b213184dc4738d09d854f4ee1291c4cf211f68e6aeea820251ee3ff0e",
+  "cases": [
+    {
+      "case": "visibility-style-and-halfheight-precedence",
+      "passed": true
+    },
+    {
+      "case": "configured-font-scanline-shape-calculation",
+      "passed": true
+    },
+    {
+      "case": "signed-show-suppression-gate-and-unconditional-hide",
+      "passed": true
+    },
+    {
+      "case": "repeated-style-and-visibility-transitions-preserve-bp-si",
+      "passed": true
+    }
+  ],
+  "scope": "Actual recovered linked instructions through BIOS AH01 boundary; fake BIOS deliberately clobbers BP to verify wrapper restoration. Independent DOSBox test performs actual BIOS set/readback."
+}
