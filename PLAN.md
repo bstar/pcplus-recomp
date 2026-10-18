@@ -68,9 +68,12 @@ physical modem compatibility or close the remaining application gates below.
 - [x] Combine the source driver, parser, screen and keyboard into a DOS terminal.
 - [ ] Support dialing/connect/hang-up and configurable serial/modem settings.
       Progress: explicit read-only PRM import now validates serial/flow/profile and
-      display settings before UART access, with tested CLI precedence. Next:
-      connect the bounded DOS modem decoder and recovered response matcher to
-      a cancellable connection state machine. Preserve the full
+      display settings before UART access, with tested CLI precedence. The
+      maintained live controller now initializes/dials an explicit target,
+      cancels, times out, hangs up and applies response/autobaud decisions through
+      actual UART code. BIOS midnight, flow stalls and first-banner preservation
+      are tested. Directory-driven cycles, full modem policy and UI remain open.
+      Preserve the full
       settings/directory/UI/transfer/script/Host scope below.
 - [ ] Capture representative BBS sessions and verify interaction, display and transfers.
 - [ ] Validate on the actual modem and failing BBS/key sequence supplied by the user.
@@ -95,7 +98,9 @@ physical modem compatibility or close the remaining application gates below.
       assembly-owned startup. Complete defaults/schema, restart recovery,
       settings/directory UI and modem connection integration remain open. The response matcher and dial-attempt
       instructions are recovered; only the bounded matcher diagnostic is linked,
-      with full-attempt service dependencies still explicit.
+      with full-attempt service dependencies still explicit. The original
+      sender/calibrated/BIOS-delay routines also have exact source and a real-UART
+      DOS diagnostic, distinct from the maintained nonblocking live controller.
       See `docs/CONFIGURATION.md`.
 - [ ] Reconstruct file transfers, capture/logging and supporting tools used by the app.
 - [ ] Reconstruct scripting interfaces and required interpreter/compiler integration.

@@ -1,0 +1,35 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "region": "resident",
+  "ranges": [
+    {
+      "source": "send.asm",
+      "start": 18636,
+      "end": 18740,
+      "size": 104,
+      "sha256": "e007929f4330589b441dd73a6e2c1356e470a269d9a1f1c7dd2650620deb1fbb",
+      "assembly_evidence": "ev_3a29c9753cf6188658686eb46944e813fddeb172758c9bded7dc265f9aeac907"
+    },
+    {
+      "source": "delay_calibrated.asm",
+      "start": 27506,
+      "end": 27544,
+      "size": 38,
+      "sha256": "a7149212d6d9857e43f3e86112c258c9e11c2aeae0d292ef964a908b43beb850",
+      "assembly_evidence": "ev_a30bfa2cee5690318dc8252472fd4570367e365219605a4b4a1e2253170377fc"
+    },
+    {
+      "source": "delay_bios.asm",
+      "start": 27544,
+      "end": 27574,
+      "size": 30,
+      "sha256": "fa59db2a50e7f0250255dfed7bfe8de20edc5a3b6ed22f96cf8d8b3cc98f27a9",
+      "assembly_evidence": "ev_cc5df7fd3b4baa1350abfad9245198f09d55989c263134af069ea519ff7a51f9"
+    }
+  ],
+  "limitations": [
+    "Original sender is blocking and assumes a safe NUL-terminated command.",
+    "No intrinsic sender deadline/cancellation; UART and BIOS waits retain original blocking behavior.",
+    "Echo0610 implementation remains an explicit external application service."
+  ]
+}

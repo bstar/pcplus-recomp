@@ -4,7 +4,7 @@
   "source_snapshot": "Maintained public source with original EXE/install/analysis databases absent.",
   "outputs": {
     "terminal/TERMINAL.EXE": {
-      "sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+      "sha256": "c2ece351584cc4a85c570bb35662f7c091742d197ec62b310a0a62f5dd4fc366",
       "matches_workspace": true
     },
     "config-dos/CONFIG.EXE": {
@@ -37,6 +37,10 @@
     },
     "modem-responses/MODEMRSP.EXE": {
       "sha256": "ee2c7450aff4d1a8df36e9e3040d187a1db14f0463f93958a8dfeaaadc573414",
+      "matches_workspace": true
+    },
+    "modem-send/MODEMSND.EXE": {
+      "sha256": "e7cfa5511c5a0fa10b1158f6137eeb585fef1aa8c20bf3b206e435aef14f4809",
       "matches_workspace": true
     }
   }

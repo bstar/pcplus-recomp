@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "inputs": 165,
+  "cases": [
+    {
+      "case": "C-sizeof-and-offset-assertions-plus-NASM-layout-agreement",
+      "inputs": 1,
+      "passed": true
+    },
+    {
+      "case": "all-six-command-capacities-and-real-caret-boundaries",
+      "inputs": 60,
+      "passed": true
+    },
+    {
+      "case": "all11-raw-response-slots-not-reexpanded",
+      "inputs": 55,
+      "passed": true
+    },
+    {
+      "case": "Boolean-and-maintained-numeric-policy-boundaries-atomic",
+      "inputs": 36,
+      "passed": true
+    },
+    {
+      "case": "null-wraparound-and-overlap-arguments-atomic",
+      "inputs": 6,
+      "passed": true
+    },
+    {
+      "case": "real-DOS-loader-valid-missing-short-invalid-argument-noresult-and-no-rewrites",
+      "inputs": 7,
+      "passed": true
+    }
+  ],
+  "binary_sha256": "5995060de5aaed9e95334cdbfa9a8a0759e80e4375e7dff63b1f5bd39e5c4d7e",
+  "settings_bytes": 366,
+  "sources": {
+    "src/config/modem_import.c": "7607580567d865eb064255697ac3cea5c865c32f00310f0a2c170fbf483402bf",
+    "src/config/modem_import.h": "7e8f5e72dedf6111dc26801b9c938050928b110e702bd71d485d2de5e2f5901a",
+    "src/config/modem_import.inc": "b6bb190938ca94404b1bbb2cf8fa296e17dc3312552e59663c66b0d723aa806a",
+    "src/config/prm_dos.c": "e4d0386d3fb40e225cbc34ec7f989286f67ec9ffcff29a6f50eb77d7b24ee021",
+    "src/config/prm_dos.h": "3a6f8f27e13f5fc97e290b95def601e49ce93b54f729d1bc3ddc527ba39de20c",
+    "standalone/check_modem_import.py": "d67c55bcea0a05011847cee031cbc18a12f17645ee5c699292b8c3312a30afca"
+  },
+  "scope": "Source-built DOS8086 C decoder/loader, synthetic PRMs only. CPU tests forbid all interrupts and port IO during decode; separate DOS run executes read-only loader. No modem defaults, dialing, live UART, original executable or private config inputs."
+}

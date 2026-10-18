@@ -3,9 +3,10 @@
 The existing lossless PCPlus2.01 PRM codec now maps six modem command buffers,
 eleven response slots and selected dialing/control settings from original
 instructions. It can read/edit these fields without normalizing the opaque
-remainder. This is a tested host decoder and pure command-event plan, not an
-integrated DOS modem state machine, full startup initializer or complete modem
-configuration UI. No customized PRM/dialing files were read.
+remainder. This is a tested host decoder and pure command-event plan, not the
+full startup initializer or complete modem configuration UI. The maintained
+DOS controller now imports the proved subset and performs explicit-target
+dialing; see [CONNECTION.md](CONNECTION.md). No customized PRM/dialing files were read.
 
 The source identity is the verified214,016-byte executable, SHA256
 `6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904`.
@@ -153,15 +154,13 @@ reaffirmed the same evidence. No global tool/configuration changes were made.
 | Resident6b98 BIOS delay | `ev_cc5df7fd3b4baa1350abfad9245198f09d55989c263134af069ea519ff7a51f9` |
 | Resident6b72 calibrated delay | `ev_a30bfa2cee5690318dc8252472fd4570367e365219605a4b4a1e2253170377fc` |
 
-The next concrete DOS step is a bounded event-driven command sender linked to
-the existing real UART queue, with injectable clock and explicit cancellation.
-It must preserve the proved marker/pacing rules and validate the whole string
-before UART side effects. Then connect synthetic response parsing/timeouts,
-DTR/hang-up and dial-cycle state, and exercise them through the local modem/BBS
-lab. Mixed-flow behavior, calibrated pacing
-units, full modem installer/database schema, alternate result policies and
-Host-mode integration remain unresolved. No live terminal auto-import of
-private PRM settings is introduced by this codec extension.
+The bounded live sender and explicit-target connection controller are now linked
+to the actual UART and covered by DOS and real local BBS workflows. The original
+blocking sender/delay routines are separately recovered and tested. See
+[CONNECTION.md](CONNECTION.md) and [MODEM_SEND.md](MODEM_SEND.md). Automatic dial
+cycles, complete modem UI/database, modern result policies, calibrated pacing
+units and physical mixed-flow behavior remain unresolved. Public tests use only
+synthetic PRMs, never an installed/private modem configuration.
 
 ## Source-built DOS expansion module
 

@@ -1,0 +1,127 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "fast-connect-banner",
+      "passed": true,
+      "checks": {
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true
+      },
+      "commands": [
+        "ATZ",
+        "ATDCaseTest:23"
+      ],
+      "errors": [],
+      "seconds": 5.073,
+      "binary_sha256": "c2ece351584cc4a85c570bb35662f7c091742d197ec62b310a0a62f5dd4fc366",
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "busy-abort",
+      "passed": true,
+      "checks": {
+        "configured_abort_reached_wire": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true
+      },
+      "commands": [
+        "ATZ",
+        "ATDCaseTest:23"
+      ],
+      "errors": [],
+      "seconds": 4.121,
+      "binary_sha256": "c2ece351584cc4a85c570bb35662f7c091742d197ec62b310a0a62f5dd4fc366",
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "timeout-abort",
+      "passed": true,
+      "checks": {
+        "configured_abort_reached_wire": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true
+      },
+      "commands": [
+        "ATZ",
+        "ATDCaseTest:23"
+      ],
+      "errors": [],
+      "seconds": 4.121,
+      "binary_sha256": "c2ece351584cc4a85c570bb35662f7c091742d197ec62b310a0a62f5dd4fc366",
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "configured-hangup",
+      "passed": true,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true
+      },
+      "commands": [
+        "ATZ",
+        "ATDCaseTest:23"
+      ],
+      "errors": [],
+      "seconds": 5.323,
+      "binary_sha256": "c2ece351584cc4a85c570bb35662f7c091742d197ec62b310a0a62f5dd4fc366",
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "explicit-redial",
+      "passed": true,
+      "checks": {
+        "configured_abort_reached_wire": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "second_configured_attempt": true
+      },
+      "commands": [
+        "ATZ",
+        "ATDCaseTest:23",
+        "ATZ",
+        "ATDCaseTest:23"
+      ],
+      "errors": [],
+      "seconds": 8.077,
+      "binary_sha256": "c2ece351584cc4a85c570bb35662f7c091742d197ec62b310a0a62f5dd4fc366",
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    }
+  ],
+  "binary_sha256": "c2ece351584cc4a85c570bb35662f7c091742d197ec62b310a0a62f5dd4fc366"
+}

@@ -178,3 +178,12 @@ named by their original addresses when their meaning remains unresolved.
 Original seconds-change timeout behavior and response overlap quirks need
 explicit modern policy choices. No terminal build/Makefile or live binary was
 changed by this recovery.
+
+## Live integration
+
+The maintained [connection controller](CONNECTION.md) now passes bytes received
+from the actual UART to the bounded byte-feed API and applies the classifier.
+The one-byte adapter remains an owned matcher boundary, not a fake replacement
+for a serial routine. Physical command writes use the bounded real UART API.
+The original full-attempt OMF object remains unlinked with explicit dependencies;
+its directory/UI/retry behavior is not implied by this integration.

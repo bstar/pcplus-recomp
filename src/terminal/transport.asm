@@ -7,7 +7,9 @@ SEGMENT _TEXT public class=CODE use16
 extern uart_receive_byte,uart_unreceive_byte,uart_try_write,uart_poll_flow
 extern keyboard_poll,keyboard_read_extended
 extern terminal_keymap,terminal_quit,terminal_exit_code
-global terminal_poll_io,terminal_enqueue_al,terminal_tick_low
+extern terminal_connection_poll,terminal_connection_cancel,terminal_connection_start
+extern terminal_connection_exit,connection_state,connection_enabled
+global terminal_poll_io,terminal_enqueue_al,terminal_tick_low,terminal_clock_ticks
 global ansi_next_byte,ansi_unread_byte,csi_transmit_byte,csi_transmit_string
 
 ; Read only the low BIOS tick word. Unsigned subtraction handles 16-bit wrap.
@@ -17,6 +19,19 @@ terminal_tick_low:
  mov ax,0x40
  mov es,ax
  mov ax,[es:0x6c]
+ pop es
+ ret
+
+; Atomic full BIOS day-tick snapshot, DX:AX. Preserve the caller's IF and ES.
+terminal_clock_ticks:
+ push es
+ pushf
+ cli
+ mov ax,0x40
+ mov es,ax
+ mov ax,[es:0x6c]
+ mov dx,[es:0x6e]
+ popf
  pop es
  ret
 
@@ -35,6 +50,11 @@ ansi_next_byte:
  call terminal_poll_io
  cmp word [terminal_quit],0
  jne .timeout
+ cmp word [connection_state],0
+ je .receive
+ cmp word [connection_state],6
+ jne .timeout ; Yield a partial parser to modem control ownership.
+.receive:
  call uart_receive_byte
  cmp ax,0xffff
  jne .done
@@ -121,7 +141,15 @@ terminal_poll_io:
  push es
  cmp word [terminal_quit],0
  jne .done
+ call terminal_connection_poll
+ cmp word [terminal_quit],0
+ jne .done
  call uart_poll_flow
+ cmp word [connection_state],0
+ je .transmit
+ cmp word [connection_state],6
+ jne .keyboard
+.transmit:
  cmp word [terminal_tx_count],0
  je .keyboard
  mov bx,[terminal_tx_head]
@@ -143,6 +171,20 @@ terminal_poll_io:
  call keyboard_read_extended
  cmp ax,0x2d00
  je .quit
+ cmp ax,0x2300 ; Alt-H: configured hang-up
+ je .hangup
+ cmp ax,0x2000 ; Alt-D: repeat explicitly selected target
+ je .redial
+ cmp word [connection_state],0
+ je .terminal_key
+ cmp word [connection_state],6
+ je .terminal_key
+ cmp al,27
+ jne .done
+ xor ax,ax
+ call terminal_connection_cancel
+ jmp .done
+.terminal_key:
  or al,al
  jz .scan
  call terminal_enqueue_al
@@ -181,7 +223,18 @@ terminal_poll_io:
  call terminal_enqueue_al
  jmp .send_arrow
 .quit:
- mov word [terminal_quit],1
+ call terminal_connection_exit
+ jmp .done
+.hangup:
+ mov ax,1
+ call terminal_connection_cancel
+ jmp .done
+.redial:
+ cmp word [connection_state],0
+ jne .done
+ cmp byte [connection_enabled],0
+ je .done
+ call terminal_connection_start
 .done:
  pop es
  pop di

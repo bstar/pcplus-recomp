@@ -30,6 +30,9 @@ terminal_parse_options:
  xor ax,ax
  mov cx,32
  rep stosw
+ mov di,options_dial_stage
+ mov cx,32
+ rep stosw
  mov es,dx
  xor cx,cx
  mov cl,[es:0x80]
@@ -37,7 +40,10 @@ terminal_parse_options:
  ja .invalid
  mov si,0x81
 .skip:
- jcxz .commit
+ or cx,cx
+ jnz .nonempty
+ jmp .commit
+.nonempty:
  mov al,[es:si]
  cmp al,' '
  je .separator
@@ -60,8 +66,9 @@ terminal_parse_options:
  jb .invalid
  cmp al,0x7e
  ja .invalid
- cmp di,64
+ cmp di,66
  jae .invalid
+ mov [options_raw_token+di],al
  cmp al,'a'
  jb .store
  cmp al,'z'
@@ -75,9 +82,19 @@ terminal_parse_options:
  jmp .copy
 .token_done:
  mov byte [options_token+di],0
+ mov byte [options_raw_token+di],0
  cmp byte [options_token],'@'
+ je .config_size
+ cmp word [options_token],'/D'
+ jne .ordinary_size
+ cmp byte [options_token+2],':'
  je .process
+.ordinary_size:
  cmp di,15
+ ja .invalid
+ jmp .process
+.config_size:
+ cmp di,64
  ja .invalid
 .process:
  push cx
@@ -130,6 +147,10 @@ terminal_parse_options:
  pop es
  mov si,options_config_stage
  mov di,terminal_config_path
+ mov cx,32
+ rep movsw
+ mov si,options_dial_stage
+ mov di,terminal_dial_target
  mov cx,32
  rep movsw
  xor ax,ax
@@ -196,6 +217,50 @@ options_process_token:
  or byte [options_seen],16
  jmp .good
 .help_start:
+ cmp word [options_token],'/D'
+ jne .help_table
+ cmp byte [options_token+2],':'
+ jne .help_table
+ test byte [options_seen],32
+ jnz .bad
+ mov si,options_raw_token+3
+ mov di,options_dial_stage
+ cmp byte [si],0
+ je .bad
+.dial_copy:
+ lodsb
+ or al,al
+ jz .dial_done
+ cmp al,'0'
+ jb .dial_punctuation
+ cmp al,'9'
+ jbe .dial_store
+ cmp al,'A'
+ jb .dial_punctuation
+ cmp al,'Z'
+ jbe .dial_store
+ cmp al,'a'
+ jb .dial_punctuation
+ cmp al,'z'
+ jbe .dial_store
+.dial_punctuation:
+ mov bx,options_dial_punctuation
+.dial_punctuation_loop:
+ cmp byte [bx],0
+ je .bad
+ cmp al,[bx]
+ je .dial_store
+ inc bx
+ jmp .dial_punctuation_loop
+.dial_store:
+ mov [di],al
+ inc di
+ jmp .dial_copy
+.dial_done:
+ mov byte [di],0
+ or byte [options_seen],32
+ jmp .good
+.help_table:
  mov si,options_help_table
 .help_loop:
  lodsw
@@ -310,12 +375,14 @@ options_process_token:
  ret
 
 SEGMENT _DATA public class=DATA use16
-global terminal_usage,terminal_config_path,terminal_option_mask
+global terminal_usage,terminal_config_path,terminal_option_mask,terminal_dial_target
 terminal_config_path: times 64 db 0
+terminal_dial_target: times 64 db 0
 terminal_option_mask: dw 0
 terminal_usage:
  db 'PCPLUS terminal lab',13,10
- db 'Usage: TERMINAL [@FILE.PRM] [COM1..COM4] [baud] [serial] [NONE|SOFT|HARD]',13,10
+ db 'Usage: TERMINAL [@FILE.PRM] [/D:target] [COM1..COM4] [baud] [serial] [flow]',13,10
+ db 'Dial target: explicit, max 63 bytes; case preserved. Flow: NONE|SOFT|HARD.',13,10
  db 'PRM path: explicit only, max 63 bytes; no spaces, quotes or wildcards.',13,10
  db 'Serial: 7/8 data, N/O/E/M/S parity, 1/2 stop; e.g. 8N1. Any option order.',13,10
  db 'Baud: 300 1200 2400 4800 9600 19200 38400 57600 115200',13,10
@@ -331,8 +398,11 @@ options_stop: dw 0
 options_soft: dw 0
 options_hard: dw 0
 options_seen: db 0
-options_token: times 65 db 0
+options_token: times 67 db 0
+options_raw_token: times 67 db 0
 options_config_stage: times 64 db 0
+options_dial_stage: times 64 db 0
+options_dial_punctuation: db '.:/-_@[]%?=&',0
 options_parities: db 'NOEMS'
 options_bases: dw 0x3f8,0x2f8,0x3e8,0x2e8
 options_irqs: dw 4,3,4,3

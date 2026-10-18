@@ -2,8 +2,10 @@
 BITS 16
 CPU 8086
 %include "terminal_import.inc"
+%include "modem_import.inc"
 SEGMENT _TEXT public class=CODE use16
 extern _terminal_import_read,terminal_config_path,terminal_option_mask
+extern _terminal_startup_read,terminal_connection_prepare
 extern terminal_port_number,terminal_baud_low,terminal_baud_high
 extern terminal_parity,terminal_data_bits,terminal_stop_bits,terminal_irq_vector
 extern uart_port_index,uart_irq_indices,uart_port_rbr,uart_port_thr,uart_port_ier
@@ -24,23 +26,47 @@ terminal_load_configuration:
  push es
  mov word [terminal_configuration_status],0
  test word [terminal_option_mask],16
+ jnz .read
+ test word [terminal_option_mask],32
  jz .success
+ mov ax,7
+ jmp .failure
+.read:
  ; The supported C DOS/string subset expects near pointers and DS=SS, DF=0.
  push ds
  pop es
  cld
  mov ax,terminal_configuration_io
  push ax
+ test word [terminal_option_mask],32
+ jz .serial_only
+ mov ax,terminal_modem_settings
+ push ax
+ mov ax,terminal_configuration_values
+ push ax
+ mov ax,terminal_config_path
+ push ax
+ call _terminal_startup_read
+ add sp,8
+ jmp .loaded
+.serial_only:
  mov ax,terminal_configuration_values
  push ax
  mov ax,terminal_config_path
  push ax
  call _terminal_import_read
  add sp,6
+.loaded:
+.failure:
  mov [terminal_configuration_status],ax
  or ax,ax
  jnz .done
  call terminal_apply_configuration
+ call terminal_connection_prepare
+ jnc .success
+ mov ax,7
+ mov [terminal_configuration_status],ax
+ jmp .done
 .success:
  xor ax,ax
 .done:
@@ -134,6 +160,8 @@ terminal_apply_configuration:
 
 SEGMENT _DATA public class=DATA use16
 global terminal_configuration_status,terminal_configuration_io,terminal_configuration_values
+global terminal_modem_settings
 terminal_configuration_status: dw 0
 terminal_configuration_io: times 8 db 0
 terminal_configuration_values: times TI_SIZE db 0
+terminal_modem_settings: times MI_SIZE db 0

@@ -73,3 +73,13 @@ loads private dialing or installed configuration data. Current results and
 historical executable hashes are distinguished in
 [`bbs-matrix.json`](../../docs/validation/bbs-matrix.json). Physical modem timing,
 transfers and the complete PCPlus application remain outside these results.
+
+## Automatic dialing regression
+
+`--dial-fixture` builds a synthetic modem+serial PRM and launches
+`TERMINAL @D:\TEST.PRM /D:lab.local:port`. The DOS controller expands and sends
+configured ATZ and ATD commands; the keyboard schedule contains no typed ATD.
+Current primary cases in the matrix cover all three real local servers through
+this path. The retained serial capture proves the command prefix; server/menu
+audits verify successful navigation rather than assuming normal exit is enough.
+See [connection controller](../../docs/CONNECTION.md) for policy and boundaries.

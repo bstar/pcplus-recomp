@@ -6,7 +6,7 @@ installation, or disassembler database. Its manifest records each source hash,
 executable hash and DS/SS group size.
 
 ```
-TERMINAL [@FILE.PRM] [COM1..COM4] [baud] [8N1] [NONE|SOFT|HARD]
+TERMINAL [@FILE.PRM] [/D:target] [COM1..COM4] [baud] [8N1] [NONE|SOFT|HARD]
 ```
 
 Options may appear in any order, once per category. Defaults are COM1, 38400,
@@ -30,9 +30,10 @@ ASCII and raw CP437 bytes are displayed through the recovered renderer. The
 four arrow keys use the recovered key-map/DECCKM path. Other extended/function
 keys and full persistent keyboard profiles remain open. ANSI replies originate
 in the DOS reporting engine. Specialized mode/font/control services remain
-explicit boundaries. The program presently has no status/menu UI, dialing
-manager, automatic modem setup, carrier-loss workflow, transfers, scripts or
-Host mode. The explicit PRM option imports the validated serial, flow, ANSI/VT220,
+explicit boundaries. The explicit `/D:target` controller supports configured initialization/dialing,
+cancellation, hang-up and observed carrier loss; see [connection management](CONNECTION.md).
+Full menu/status UI, directory management, automatic retry cycles, transfers,
+scripts and Host mode remain open. The explicit PRM option imports the validated serial, flow, ANSI/VT220,
 attribute, wrap and scrolling subset; complete PRM/application startup remains open.
 
 ## Validation
@@ -42,7 +43,7 @@ attribute, wrap and scrolling subset; complete PRM/application startup remains o
 * Actual linked transport instructions under a modeled UART/BIOS exercise
   binary RX/unread, full-capacity TX ring wrap/overflow, CTS/XON/XOFF, key
   acquisition/mapping, caller-cleanup conventions, timeout wrap and Alt-X.
-* Command-tail replay checks 175 inputs, all serial/flow combinations and
+* Command-tail replay checks 233 inputs, all serial/flow combinations and
   rejection without partial state mutation.
 * Recovered FF, SOH, VT and CAN controls have synthetic instruction-level tests,
   including ANSI erase/home, VT220 differences, mode-dependent branches and

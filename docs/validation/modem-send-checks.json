@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "binary_sha256": "e7cfa5511c5a0fa10b1158f6137eeb585fef1aa8c20bf3b206e435aef14f4809",
+  "cases": [
+    {
+      "case": "actual-uart-byte-order-sentinel-pause-priority-and-calibrated-delay",
+      "inputs": 7,
+      "passed": true
+    },
+    {
+      "case": "local-echo-only-ordinary-bytes-not-pause-or-sentinel",
+      "inputs": 2,
+      "passed": true
+    },
+    {
+      "case": "all-caret-control-values-through-recovered-expander-and-real-uart",
+      "inputs": 254,
+      "passed": true
+    },
+    {
+      "case": "actual-bios-tick-wrap-and-explicit-calibration-loop-counts",
+      "inputs": 3,
+      "passed": true
+    },
+    {
+      "case": "original-transmitter-not-ready-remains-blocking",
+      "inputs": 1,
+      "passed": true
+    },
+    {
+      "case": "cts-escape-bypasses-wait-and-pause-has-no-cancel-or-stalled-clock-deadline",
+      "inputs": 3,
+      "passed": true
+    }
+  ],
+  "scope": "Actual recovered sender+expansion+delays+UART instructions with port/BIOS echo/tick hardware modeled. No UART routine or delay routine skipped; original echo renderer replaced by explicit diagnostic BIOS service."
+}

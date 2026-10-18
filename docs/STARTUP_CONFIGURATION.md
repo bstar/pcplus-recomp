@@ -218,3 +218,9 @@ initialization. Default builds read no original program or private configuration
 `./tools/build test-terminal` includes115 CPU import cases and15 DOS filesystem/
 UART cases. Optional `src/config/check_startup_original.py` separately replays
 SHA-verified original startup fragments and is never a default build input.
+
+With `/D:target`, the assembly loader instead invokes `terminal_startup_read`,
+which reads once and stages both serial/display and modem plans before committing
+either. An invalid modem subset does not partially commit serial settings.
+The [connection controller](CONNECTION.md) documents the bounded live policy;
+complete legacy startup and the original modal dial-attempt remain unfinished.

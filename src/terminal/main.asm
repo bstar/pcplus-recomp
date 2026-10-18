@@ -14,6 +14,8 @@ extern terminal_baud_low,terminal_baud_high,terminal_parity,terminal_data_bits,t
 extern terminal_irq_vector,terminal_port_number,csi_unimplemented_service
 extern screen_attribute_cells,erase_attribute_values,erase_shadow_cells
 extern terminal_load_configuration
+extern terminal_connection_start,terminal_connection_receive
+extern connection_state,connection_result
 ; Open Watcom small-code consistency marker for the near-C DOS IO subset.
 global _small_code_
 _small_code_:
@@ -92,15 +94,25 @@ _small_code_:
  add sp,2
  call terminal_clear_home
  call uart_enable
+ call terminal_connection_start
 .loop:
  call terminal_poll_io
  cmp word [terminal_quit],0
  jne terminal_shutdown
  cmp word [uart_rx_dropped],0
  jne .overflow
+ ; Leave post-match bytes in the actual RX ring while final command pacing
+ ; finishes. A fast CONNECT+banner burst must not lose its first data bytes.
+ cmp word [connection_state],2
+ jne .receive
+ cmp word [connection_result],0xffff
+ jne .idle
+.receive:
  call uart_receive_byte
  cmp ax,0xffff
  je .idle
+ call terminal_connection_receive
+ jc .loop
  push ax
  call terminal_receive_character
  add sp,2
@@ -122,7 +134,7 @@ _small_code_:
  jmp terminal_shutdown
 .configuration_error:
  mov dx,configuration_argument
- cmp ax,6
+ cmp ax,7
  ja .configuration_message
  mov bx,ax
  dec bx
@@ -175,12 +187,13 @@ vector_active: db 0
 missing_port: db 'Selected COM port is not listed by the BIOS.',13,10,'$'
 unsupported: db 13,10,'Unsupported terminal function; terminal stopped.',13,10,'$'
 configuration_messages: dw configuration_io,configuration_serial,configuration_flow
- dw configuration_profile,configuration_display,configuration_argument
+ dw configuration_profile,configuration_display,configuration_argument,configuration_modem
 configuration_io: db 'Could not read the requested PCPLUS 2.01 configuration.',13,10,'$'
 configuration_serial: db 'Configuration has unsupported serial port or line settings.',13,10,'$'
 configuration_flow: db 'Configuration flow-control values must be 0 or 1.',13,10,'$'
 configuration_profile: db 'Configuration terminal profile must be ANSI or VT220.',13,10,'$'
 configuration_display: db 'Configuration has unsupported display settings.',13,10,'$'
 configuration_argument: db 'Invalid configuration request.',13,10,'$'
+configuration_modem: db 'Dialing requires a valid explicit modem configuration.',13,10,'$'
 SEGMENT _BSS public align=16 class=BSS use16
 SEGMENT STACK stack align=16 class=STACK use16

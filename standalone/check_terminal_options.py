@@ -35,11 +35,11 @@ class Options(DosImage):
   assert self.uc.reg_read(UC_X86_REG_BP)==0xbabe and self.uc.reg_read(UC_X86_REG_SI)==0x1234 and self.uc.reg_read(UC_X86_REG_DI)==0x5678
   assert self.uc.reg_read(UC_X86_REG_ES)==0x6666
   return status,self.uc.reg_read(UC_X86_REG_EFLAGS)&1
- def snapshot(self):return {**{name:self.get(name) for name in FIELDS},'terminal_config_path':bytes(self.uc.mem_read(self.symbols['terminal_config_path'],64))}
- def expected(self,port=1,rate=38400,parity=0,bits=8,stop=1,flow='NONE',mask=0,path=b''):
+ def snapshot(self):return {**{name:self.get(name) for name in FIELDS},'terminal_config_path':bytes(self.uc.mem_read(self.symbols['terminal_config_path'],64)),'terminal_dial_target':bytes(self.uc.mem_read(self.symbols['terminal_dial_target'],64))}
+ def expected(self,port=1,rate=38400,parity=0,bits=8,stop=1,flow='NONE',mask=0,path=b'',dial=b''):
   base=[0x3f8,0x2f8,0x3e8,0x2e8][port-1];irq=[4,3,4,3][port-1]
   expected=dict(zip(SERIAL_FIELDS,[rate&65535,rate>>16,parity,bits,stop,irq+8,port,0,irq,base,base,base+1,base+3,base+4,base+5,base+6,int(flow=='SOFT'),int(flow=='HARD')]))
-  expected.update(terminal_option_mask=mask,terminal_config_path=path+bytes(64-len(path)))
+  expected.update(terminal_option_mask=mask,terminal_config_path=path+bytes(64-len(path)),terminal_dial_target=dial+bytes(64-len(dial)))
   assert self.snapshot()==expected,(self.snapshot(),expected)
 
 def main():
@@ -73,6 +73,7 @@ def main():
   o=Options(binary,map_path)
   for index,name in enumerate(FIELDS):o.put(name,0xa500+index)
   o.uc.mem_write(o.symbols['terminal_config_path'],bytes(range(64)))
+  o.uc.mem_write(o.symbols['terminal_dial_target'],bytes(range(64,128)))
   before=o.snapshot()
   for data in [b'COM0',b'COM5',b'COM11',b'14400',b'0',b'9601',b'8Z1',b'6N1',b'8N0',b'8N3',b'SOFTWARE',b'NONE HARD',b'COM2 COM3',b'9600 300',b'8N1 7E2',b'COM2 115200 8N1 JUNK',b'x'*16,b'\0',b'\r',b'\xff',b'--unknown',b'/COM2']:
    assert o.parse(data)==(2,1),(data,o.parse(data));assert o.snapshot()==before;count[0]+=1
@@ -113,6 +114,34 @@ def main():
   # A failed stage cannot leak to a subsequent valid parse.
   assert o.parse(b'19200')==(0,0);o.expected(rate=19200,mask=2);count[0]+=1
  check('PRM-invalid-duplicate-help-and-full-state-rollback',config_rollback)
+ def dial_targets():
+  o=Options(binary,map_path)
+  assert o.snapshot()['terminal_dial_target']==bytes(64)
+  targets=[b'bbs.example:23',b'Example_BBS-2.net:2323',b'[2001:db8::1]:23',b'telnet://Bbs.Example/CaseSensitive@Path?x=AB%20cd&mode=Hi',b'0123456789',b'A'*62+b'z']
+  for target in targets:
+   for selector in [b'/D:',b'/d:']:
+    assert o.parse(selector+target)==(0,0);o.expected(mask=32,dial=target);count[0]+=1
+   assert o.parse(b'@local.prm COM2 19200 HARD /d:'+target)==(0,0)
+   o.expected(port=2,rate=19200,flow='HARD',mask=59,path=b'LOCAL.PRM',dial=target);count[0]+=1
+  tail=b'/D:'+b'x'*63+b' '*61
+  assert len(tail)==127 and o.parse(tail)==(0,0);o.expected(mask=32,dial=b'x'*63);count[0]+=1
+  assert o.parse(b'@A.PRM /D:OldCase')==(0,0);count[0]+=1
+  assert o.parse(b'@B.PRM')==(0,0);o.expected(mask=16,path=b'B.PRM');count[0]+=1
+  assert o.parse(b'')==(0,0);o.expected();count[0]+=1
+ check('dial-target-case-prefix-punctuation-max63-and-reset',dial_targets)
+ def dial_rollback():
+  o=Options(binary,map_path)
+  assert o.parse(b'COM4 @KEEP.PRM /d:KeepCase 115200 7O2 SOFT')==(0,0)
+  before=o.snapshot()
+  bad=[b'/D:',b'/D:'+b'a'*64,b'/D:host /d:other',b'/D:host /D:host',b'/D:good COM2 COM3',b'@NEW.PRM /D:Good JUNK',b'/D:bad name',b'/D:bad\tname',b'/D:bad\rname',b'/D:bad\0name',b'/D:bad\xffname',b'/D:bad\x7fname']
+  for byte in b"\"'^~;,|<>+!#$(){}\\`*":bad.append(b'/D:bad'+bytes([byte])+b'Host')
+  for tail in bad:
+   assert o.parse(tail)==(2,1),(tail,'unexpected result')
+   assert o.snapshot()==before,tail;count[0]+=1
+  for tail in [b'/D:NewCase /?',b'@NEW.PRM /D:NewCase HELP',b'COM1 --help /D:NewCase']:
+   assert o.parse(tail)==(1,1) and o.snapshot()==before;count[0]+=1
+  assert o.parse(b'8N1')==(0,0);o.expected(mask=4);count[0]+=1
+ check('dial-duplicates-unsafe-input-help-atomic-global-rollback',dial_rollback)
  out=ROOT/'build/terminal-options';out.mkdir(parents=True,exist_ok=True)
  result={'binary_sha256':hashlib.sha256(binary.read_bytes()).hexdigest(),'options_source_sha256':hashlib.sha256((ROOT/'src/terminal/options.asm').read_bytes()).hexdigest(),'passed':True,'cases':cases,'inputs':count[0],'scope':'Actual linked source-only 8086 option parser; command tails synthetic, every interrupt/port-IO forbidden, no UART installation.'}
  (out/'checks.json').write_text(json.dumps(result,indent=2)+'\n')

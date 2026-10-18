@@ -1,4 +1,4 @@
-MODULES := escape attributes screen text reports erase cursor_state cursor_shape scroll modes render input_dispatch csi ui_windows modem_commands modem_responses
+MODULES := escape attributes screen text reports erase cursor_state cursor_shape scroll modes render input_dispatch csi ui_windows modem_commands modem_responses modem_send
 .PHONY: all serial parser keyboard config-dos $(MODULES) $(addprefix test-,$(MODULES)) test test-driver test-parser test-keyboard test-config test-config-dos test-parser-compat test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services compat test-compat test-modem clean
 
 all: serial parser keyboard $(MODULES) config-dos config-replace config-abi terminal
@@ -23,7 +23,7 @@ config-replace:
 test-config-replace: config-replace
 	python3 standalone/test_config_replace.py
 
-.PHONY: terminal test-terminal test-bbs-modem
+.PHONY: terminal test-terminal test-bbs-modem test-modem-import
 terminal:
 	python3 standalone/build_terminal.py
 
@@ -35,7 +35,10 @@ test-terminal: terminal
 	python3 standalone/check_terminal_ui.py
 	python3 standalone/test_terminal.py
 	python3 standalone/check_terminal_config.py
+	python3 standalone/check_startup_import.py --check-invalid-abi
+	python3 standalone/check_connection.py
 	python3 standalone/test_terminal_config.py
+	python3 standalone/test_connection_dos.py
 
 test-bbs-modem:
 	python3 lab/bbs/check_modem.py
@@ -58,6 +61,9 @@ test-input-relocation: input_dispatch
 
 test-terminal-services: csi
 	python3 standalone/check_terminal_services.py
+
+test-modem-import:
+	python3 standalone/check_modem_import.py
 
 test-config:
 	python3 -m unittest discover -s src/config -p 'test_*.py' -v
@@ -88,7 +94,7 @@ test-parser: parser
 	python3 standalone/check_ansi.py
 	python3 standalone/test_parser_dos.py
 
-test: test-driver test-parser test-keyboard $(addprefix test-,$(MODULES)) test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services test-config test-config-dos test-config-replace test-config-abi test-directory test-ui-flow test-terminal test-bbs-modem
+test: test-driver test-parser test-keyboard $(addprefix test-,$(MODULES)) test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services test-config test-modem-import test-config-dos test-config-replace test-config-abi test-directory test-ui-flow test-terminal test-bbs-modem
 	python3 standalone/test_serial.py
 
 test-parser-compat: parser compat
@@ -104,4 +110,4 @@ test-modem:
 	$(MAKE) -C reconstruction test-modem
 
 clean:
-	rm -rf build/standalone build/ansi build/keyboard build/csi-relocation build/cursor-state build/cursor-shape build/config-dos build/config-replace build/config-abi build/ui-windows build/ui-windows-dos build/modem-commands build/modem-commands-dos build/terminal build/terminal-tests build/terminal-options $(addprefix build/,$(MODULES))
+	rm -rf build/standalone build/ansi build/keyboard build/csi-relocation build/cursor-state build/cursor-shape build/config-dos build/config-replace build/config-abi build/ui-windows build/ui-windows-dos build/modem-commands build/modem-commands-dos build/modem-responses build/modem-responses-dos build/modem-send build/modem-send-dos build/modem-import build/connection-dos build/terminal build/terminal-tests build/terminal-options $(addprefix build/,$(MODULES))

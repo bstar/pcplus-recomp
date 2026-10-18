@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "binary_sha256": "c2ece351584cc4a85c570bb35662f7c091742d197ec62b310a0a62f5dd4fc366",
+  "cases": [
+    {
+      "case": "actual-port-command-wire-partial-connect-and-DCD-transition",
+      "passed": true,
+      "inputs": 2
+    },
+    {
+      "case": "four-failure-responses-timeout-and-CTS-stalled-bounded-cleanup",
+      "passed": true,
+      "inputs": 6
+    },
+    {
+      "case": "actual-BIOS-Escape-AltX-AltH-AltD-through-stalled-sender-and-hangup",
+      "passed": true,
+      "inputs": 8
+    },
+    {
+      "case": "original-response-autobaud-policy-and-actual-UART-divisor-setter",
+      "passed": true,
+      "inputs": 15
+    },
+    {
+      "case": "TX-ownership-and-real-recovered-XOFF-CTS-backpressure",
+      "passed": true,
+      "inputs": 4
+    },
+    {
+      "case": "live-pause-sentinel-expanded-zero-and-THRE-deadline",
+      "passed": true,
+      "inputs": 4
+    },
+    {
+      "case": "full-32bit-PIT-derived-deadlines-and-low-tick-wrap",
+      "passed": true,
+      "inputs": 6
+    },
+    {
+      "case": "notice-exact-cell-restore-and-partial-parser-yields-modem-RX",
+      "passed": true,
+      "inputs": 1
+    }
+  ],
+  "scope": "Actual linked connection state machine, decoder, expansion, matcher, keyboard and UART instructions; only port/BIOS clock/keyboard hardware boundaries modeled. Live main/RX/postmatch behavior additionally needs real DOS tests."
+}

@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "binary_sha256": "c2ece351584cc4a85c570bb35662f7c091742d197ec62b310a0a62f5dd4fc366",
+  "inputs": 42,
+  "cases": [
+    {
+      "case": "actual-combined-C-one-load-both-plans-exact-and-cdecl-preserved",
+      "inputs": 1,
+      "passed": true
+    },
+    {
+      "case": "serial-modem-IO-rejections-leave-both-destinations-unchanged",
+      "inputs": 16,
+      "passed": true
+    },
+    {
+      "case": "null-plan-arguments-rejected-before-loading",
+      "inputs": 2,
+      "passed": true
+    },
+    {
+      "case": "actual-ASM-loader-prepare-and-all16-CLI-category-overrides",
+      "inputs": 16,
+      "passed": true
+    },
+    {
+      "case": "dial-requires-selector-while-serial-only-does-not-decode-unused-modem",
+      "inputs": 2,
+      "passed": true
+    },
+    {
+      "case": "invalid-near-extents-and-overlapping-output-IO-buffers-rejected",
+      "inputs": 5,
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked combined C + assembly configuration/connection preparation and CLI parser. Only exact-size PRM load is explicitly modeled with synthetic bytes; no original/private data or interrupts/UART/DOS IO. Read backend separately tested under DOS.",
+  "invalid_abi_guards_required": true
+}
