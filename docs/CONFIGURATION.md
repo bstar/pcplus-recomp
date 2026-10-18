@@ -193,3 +193,56 @@ a returned DOS close error cannot itself prove the OS released a handle.
 `build/config-dos/{manifest,result}.json` records exact binaries, source identities,
 all case results and limits. Physical disks, disk-full persistence, transactional
 replacement and full application configuration integration remain unverified.
+
+## Staged DOS replacement
+
+`src/config/prm_replace.c/.h` adds maintained replacement of the opaque image.
+It writes a new, exclusive staging file and checks the exact byte count and
+close result before moving the previous target to a backup. DOS rename then
+installs the staging file. Failed installation attempts restore the backup;
+failed rollback retains the original in that backup and reports its location
+through explicit state flags. Successful installation removes the backup.
+The separate `prm_replace_fs.c` uses DOS interrupt21h functions56h/41h for
+rename/delete, preserving actual DOS error numbers and no-overwrite behavior.
+
+```c
+prm_replace_status __cdecl prm_dos_replace(
+    const char *target, const char *stage, const char *backup,
+    const prm_dos_image *image, prm_replace_result *result);
+```
+
+All three names must be distinct ASCII8.3 leaf names in the current directory.
+The routine rejects case aliases, device names, separators, wildcards, malformed
+names, existing recovery files and read-only/directory targets. It never removes
+an existing staging/backup file to make a retry succeed. The caller must choose
+recovery names, keep the directory stable during the call, and handle the
+reported recovery state. Supporting other directories and complete application
+settings integration remain work in progress.
+
+`result` may be NULL. A supplied result records primary DOS error, close error,
+cleanup error, rollback error, written bytes and three state flags: `installed`,
+`original_in_backup`, `stage_exists`. An error after installation can mean the
+new image is installed and the old backup remains; callers must inspect those
+flags rather than blindly repeat the save. Stage cleanup is attempted after
+failure, with any secondary error retained. A close error does not prove the
+handle closed or the data reached stable media.
+
+This protects the previous file across the tested operation failures; it is
+**not a crash-atomic FAT transaction**. There is a rename interval during which
+the original is in the backup and the target is absent. Power loss, filesystem
+corruption, arbitrary concurrent modifications, multi-directory replacement,
+attribute preservation and automatic recovery after restart are not proved.
+Direct `prm_dos_save()` remains a separate create/truncate operation.
+
+```sh
+./tools/build test-config-replace
+```
+
+The diagnostic runs fifteen real DOS-filesystem checks and twenty-three
+state-based fault cases. They verify exact installation, preservation of
+preexisting recovery files, actual no-overwrite rename behavior, short/write/
+close failures, backup/install failures, failed rollback, cleanup failures and
+concurrent appearance of destination names. Fixtures use synthetic bytes only,
+including an old file of a different size. Results and executable hashes are
+recorded in `docs/validation/config-replace.json`; local files remain under
+ignored `build/config-replace/`.

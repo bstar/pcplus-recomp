@@ -108,8 +108,9 @@ memory byte provider. See [docs/INPUT_DISPATCH.md](docs/INPUT_DISPATCH.md).
 settings. It preserves unknown bytes and uses synthetic data.
 `./tools/build test-config-dos` builds source-owned DOS load/save routines with
 Open Watcom and tests real files plus injected I/O failures in DOSBox-X.
-Complete defaults, transactional replacement and the full settings UI remain
-work in progress.
+`./tools/build test-config-replace` verifies staged replacement, rollback and
+reported recovery states under DOS I/O failures. Complete defaults, restart
+recovery and the full settings UI remain work in progress.
 See [docs/CONFIGURATION.md](docs/CONFIGURATION.md).
 
 ## Full-application compatibility build

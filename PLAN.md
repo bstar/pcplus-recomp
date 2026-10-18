@@ -81,8 +81,10 @@ physical modem compatibility or close the remaining application gates below.
       and ten-byte serial prefix; a partial lossless host codec preserves unknown
       fields and validates proved serial settings with synthetic tests. A
       maintained DOS backend also passes strict load/save and failure-path
-      tests. Complete defaults/schema, transactional replacement, directory
-      and UI integration remain open.
+      tests. A staged DOS replacement backend now preserves the prior file on
+      tested write/install failures and reports rollback/cleanup recovery state.
+      Complete defaults/schema, restart recovery, directory and UI integration
+      remain open.
       See `docs/CONFIGURATION.md`.
 - [ ] Reconstruct file transfers, capture/logging and supporting tools used by the app.
 - [ ] Reconstruct scripting interfaces and required interpreter/compiler integration.

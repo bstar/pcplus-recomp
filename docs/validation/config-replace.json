@@ -1,0 +1,58 @@
+{
+  "passed": true,
+  "checks": {
+    "normal_and_fault_DOS_exit": true,
+    "reported_cases_pass": true,
+    "both_targets_exact": true,
+    "existing_recovery_files_unchanged": true,
+    "rename_destination_preserved": true,
+    "owned_scratch_removed": true
+  },
+  "normal_cases": [
+    "PASS create synthetic old target",
+    "PASS replace existing opaque target",
+    "PASS new target has exact source image",
+    "PASS success removes stage and backup",
+    "PASS create preexisting stage fixture",
+    "PASS exclusive stage creation preserves existing file",
+    "PASS create preexisting backup fixture",
+    "PASS existing backup prevents replacement",
+    "PASS new target installation and optional result pointer",
+    "PASS create real DOS rename collision fixtures",
+    "PASS DOS rename never overwrites existing destination",
+    "PASS owned scratch delete uses actual DOS error contract",
+    "PASS read-only target rejected",
+    "PASS case alias rejected",
+    "PASS null source rejected"
+  ],
+  "fault_cases": [
+    "PASS replacement installs exact bytes and removes owned recovery files",
+    "PASS new target installation",
+    "PASS target inspection failure changes no file",
+    "PASS backup inspection failure changes no file",
+    "PASS exclusive stage creation failure leaves old target",
+    "PASS write error leaves original and cleans owned stage",
+    "PASS short successful write cannot replace original",
+    "PASS close error cannot install staged image",
+    "PASS failed backup rename leaves target intact",
+    "PASS failed install rolls original back",
+    "PASS failed rollback retains original backup and reports recovery state",
+    "PASS installed image and retained backup distinguished on cleanup failure",
+    "PASS primary write and secondary cleanup errors both retained",
+    "PASS concurrent target appearance never overwritten by rollback",
+    "PASS concurrent backup appearance never overwritten",
+    "PASS close and stage cleanup failures preserve original and recovery flags",
+    "PASS read-only target rejected before stage creation",
+    "PASS directory target rejected",
+    "PASS preexisting stage never truncated or removed",
+    "PASS preexisting backup never replaced or removed",
+    "PASS case-folded alias rejected before IO",
+    "PASS invalid aliases devices and non-leaf names rejected without IO",
+    "PASS optional result pointer"
+  ],
+  "binaries": {
+    "REPLACE.EXE": "27e7757f81fff8ad0af65b926492d67a507bc13e5e216a06737338214fe8ed51",
+    "REPFAULT.EXE": "48cbdea3cd635f33bd654abc7ec2114c6219e5fbc90f42e84f1462e232517cd1"
+  },
+  "scope": "Maintained staged DOS configuration replacement. Real synthetic filesystem plus state-based injected DOS failures/concurrent destination appearance; not physical disk power-loss or complete application settings integration."
+}
