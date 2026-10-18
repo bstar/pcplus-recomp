@@ -4,7 +4,18 @@ MODULES := escape attributes screen text reports erase cursor_state cursor_shape
 all: serial parser keyboard $(MODULES) config-dos config-replace config-abi directory-browser directory-editor process download-file upload-file transfer-metadata batch-header transfer-session-composite transfer-storage terminal
 
 .PHONY: config-abi test-config-abi test-directory test-ui-flow directory-browser test-directory-browser directory-editor test-directory-editor test-directory-replace test-directory-dos
-.PHONY: test-keymap test-keymap-dos test-key-actions-dos test-keyboard-mapping-raw
+.PHONY: test-keymap test-keymap-dos test-key-actions-dos test-keyboard-mapping-raw translation test-translation test-translation-dos
+
+translation:
+	python3 standalone/build_translation.py
+
+test-translation: translation
+	python3 standalone/check_translation.py
+
+test-translation-dos:
+	python3 standalone/check_xlt_dos.py
+
+test: test-translation test-translation-dos
 
 test-keymap:
 	python3 -m unittest discover -s src/key_mapping -p 'test_*.py' -v

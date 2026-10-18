@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "checks": {
+    "REAL": 9,
+    "FAULT": 22
+  },
+  "sources": {
+    "standalone/check_xlt_dos.py": "89bb2c3970161ae24a72d5b25eb56cb5ea1bcd227f1440a37c7e967f46236284",
+    "src/translation/xlt_dos.c": "46fc55c20b1f359850f8b4056c0fb4d4a07a6517b46c4d8826ccacfb83b2a6dd",
+    "src/translation/xlt_dos.h": "87238a638bc9446a173dd60552372ecdb181b65b2192f327fb8ddfe8622ef219"
+  },
+  "binaries": {
+    "REAL.EXE": "f9f8b369221b23947f69be23e6316c1983f4e51b9c358c53b8ae889b3dceb09d",
+    "FAULT.EXE": "997c4f49bd9d2c00e519194d744db987cc709e57a5ff69db0cf844f5140ced8b"
+  },
+  "fixtures_unchanged": {
+    "NORMAL.XLT": "8e5ed1e6474d39bf1594411085e7a50c15aabaa768e633ebf0960ce20e84e336",
+    "ZERO.XLT": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1",
+    "EMPTY.XLT": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ONE.XLT": "ca358758f6d27e6cf45272937977a748fd88391db679ceda7dc7bf1f005ee879",
+    "SHORT.XLT": "42f5fe97765b12bc209ece37707b623c2c78f5d0f0109b352a28d0244e39f3b8",
+    "SUFFIX.XLT": "96ef8f41b4d76ec3767446a6c678504a174165d32282bca1b3c620379534fad2",
+    "LONG.XLT": "bb7716e01fcab7234aaf2cd80c31d71a42069579f7284254ad20d548a9044ef7"
+  },
+  "scope": "Actual DOSBox-X 8086 strict loader and separate declared DOS error/short-read model; no live terminal integration."
+}

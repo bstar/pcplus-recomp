@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "byte_identical_outputs": {
+    "build/translation/files.bin": "88a2b329e1cce60d3b5728631bfd77a3fecab9c2f3cab7d2eb6d5e202f15701e",
+    "build/translation/receive.bin": "93cb24fd1411d027e85d590a5fa13b824093f97fa411e64b5ccfa34f4239038e",
+    "build/translation/files.obj": "f7a12baf81b780860c412aa6fd321fa9041010559d1516ae7a76b3df2a384761",
+    "build/translation/receive.obj": "967edfdad71a95e48a92830f0e510024f7b6b0a7bc1970518f4bfad0a0d7fc33",
+    "build/translation-dos/REAL.EXE": "f9f8b369221b23947f69be23e6316c1983f4e51b9c358c53b8ae889b3dceb09d",
+    "build/translation-dos/FAULT.EXE": "997c4f49bd9d2c00e519194d744db987cc709e57a5ff69db0cf844f5140ced8b"
+  },
+  "sources": {
+    "reconstruction/translation/files.asm": "3c2711b4cf285022e472a891e7a2f4b104902891a732ecb851955d3ce621a02e",
+    "reconstruction/translation/receive.asm": "27617fcff6755fb6fe037699e85bc4f4a84e33fdcb6a5a5d9ead401955a7f23a",
+    "reconstruction/translation/provenance.json": "d59f2ef60aa8de6c75e088e7997ff5efec00f7038ce5ec13a48695eca7b6e6d9",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "src/translation/xlt_dos.c": "46fc55c20b1f359850f8b4056c0fb4d4a07a6517b46c4d8826ccacfb83b2a6dd",
+    "src/translation/xlt_dos.h": "87238a638bc9446a173dd60552372ecdb181b65b2192f327fb8ddfe8622ef219",
+    "standalone/build_translation.py": "f9b7da84a0778a62e9c9f2966892a386ee295a26fc5ea39f314cfe1ebadb93b7",
+    "standalone/check_translation.py": "4236af225d0710754d807fba4abcea853d9dccbf117a833e9c2bf9899bfecbcb",
+    "standalone/check_xlt_dos.py": "89bb2c3970161ae24a72d5b25eb56cb5ea1bcd227f1440a37c7e967f46236284"
+  },
+  "proof_script_sha256": "c4c713570431307eaced5c56b39f40265e97bf8ec455fdc266b8ca2b03ef08d6",
+  "toolchain_inputs": {
+    "nix/flake.nix": "47e7589937614795ed5f1a76ab5df5441467ecc4864381987cfd74834f18ddab",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+  },
+  "tool_paths": {
+    "nasm": "/nix/store/l54xicbgjfxvqiv1x4jk83i0nhfrrz38-nasm-3.02/bin/nasm",
+    "wcl": "/nix/store/wks50wdhsyxs7wx9gvqlwjgavhkkdag1-open-watcom-v2-0-unstable-2026-04-11/bin/wcl",
+    "wlink": "/nix/store/wks50wdhsyxs7wx9gvqlwjgavhkkdag1-open-watcom-v2-0-unstable-2026-04-11/bin/wlink",
+    "dosbox-x": "/nix/store/cb0mas86nyk9lgzjas06nr688dpwbs86-dosbox-x-2026.07.02/bin/dosbox-x"
+  },
+  "original_inputs": [],
+  "scope": "Only recovered XLT flat/OMF units and checked-loader DOS diagnostics; isolated CPU and DOS tests pass. Not the full interactive application."
+}

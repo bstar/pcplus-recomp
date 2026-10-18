@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "cases": 2082,
+  "original_comparisons": 2082,
+  "exact_bytes": 176,
+  "flat_binaries": {
+    "files": "88a2b329e1cce60d3b5728631bfd77a3fecab9c2f3cab7d2eb6d5e202f15701e",
+    "receive": "93cb24fd1411d027e85d590a5fa13b824093f97fa411e64b5ccfa34f4239038e"
+  },
+  "inputs": {
+    "standalone/check_translation.py": "4236af225d0710754d807fba4abcea853d9dccbf117a833e9c2bf9899bfecbcb",
+    "reconstruction/translation/provenance.json": "d59f2ef60aa8de6c75e088e7997ff5efec00f7038ce5ec13a48695eca7b6e6d9",
+    "standalone/build_translation.py": "f9b7da84a0778a62e9c9f2966892a386ee295a26fc5ea39f314cfe1ebadb93b7",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/translation/files.asm": "3c2711b4cf285022e472a891e7a2f4b104902891a732ecb851955d3ce621a02e",
+    "reconstruction/translation/receive.asm": "27617fcff6755fb6fe037699e85bc4f4a84e33fdcb6a5a5d9ead401955a7f23a"
+  },
+  "scope": "Actual 8086 instructions, controlled CRT/receive/script/dispatch boundaries; not DOS filesystem or live terminal integration.",
+  "observed_native_quirks": [
+    "Partial reads retain the old suffix",
+    "Extra input is ignored after 256 bytes",
+    "Open/read/write/close failures are unchecked"
+  ]
+}

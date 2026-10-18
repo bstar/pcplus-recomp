@@ -1,0 +1,52 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/translation/files.asm",
+      "start": 13734,
+      "end": 13846,
+      "file_offset": 18342,
+      "bytes": 112,
+      "sha256": "88a2b329e1cce60d3b5728631bfd77a3fecab9c2f3cab7d2eb6d5e202f15701e"
+    },
+    {
+      "file": "reconstruction/translation/receive.asm",
+      "start": 19572,
+      "end": 19636,
+      "file_offset": 24180,
+      "bytes": 64,
+      "sha256": "93cb24fd1411d027e85d590a5fa13b824093f97fa411e64b5ccfa34f4239038e"
+    }
+  ],
+  "rea_evidence": {
+    "xlt_loader": {
+      "evidence_id": "ev_74527c74cce230ad18971a3796e87c3c6e4adb6c2e7567fdffe5adf188e192e3",
+      "target_sha256": "5b91b8cb4ee099d8b6e8a330fc788160fbaded87fdd2ffca7fe3a3d8b4c76dd1"
+    },
+    "xlt_0x135d7": {
+      "evidence_id": "ev_bd83366d60f16eed685688c4a6ed37630b252e28a690394bd01085147b87d0f2",
+      "target_sha256": "46c5a45c3a654b3059b73182332f698f9ab119314010c18edd9ca7fa181ce879"
+    },
+    "xlt_0x13608": {
+      "evidence_id": "ev_899d99d0ae59e35316637b9f7ee1c3ceb7623ba8830fdc96b3f5e4dab2ca4837",
+      "target_sha256": "46c5a45c3a654b3059b73182332f698f9ab119314010c18edd9ca7fa181ce879"
+    },
+    "xlt_0x10566": {
+      "evidence_id": "ev_5446486dc4042e1716d69d14f8715789b709588ed6f73c873b8fd63a8c4a936d",
+      "target_sha256": "46c5a45c3a654b3059b73182332f698f9ab119314010c18edd9ca7fa181ce879"
+    },
+    "xlt_0x14c74": {
+      "evidence_id": "ev_7351891973c993c7668f722c09ba787f8e0c061d57192aec3f2945c44523d123",
+      "target_sha256": "46c5a45c3a654b3059b73182332f698f9ab119314010c18edd9ca7fa181ce879"
+    },
+    "xlt_0x15ca0": {
+      "evidence_id": "ev_861ae207bb7f834d6cd318ff78aa17b5c49445bf5dc70093e6448f73d28dbb2a",
+      "target_sha256": "46c5a45c3a654b3059b73182332f698f9ab119314010c18edd9ca7fa181ce879"
+    }
+  },
+  "limitations": [
+    "Exact recovered units retain unchecked CRT file errors.",
+    "Original 5ca0 parser continuation returns raw post-driver bytes; translation there is not established and must not be added merely for consistency.",
+    "OMF objects expose unresolved CRT, script and dispatcher dependencies. They are not a complete application."
+  ]
+}

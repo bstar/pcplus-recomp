@@ -244,6 +244,12 @@ TEXT and line/character-policy regressions plus actual DOS delivery/import. See
 [mapping evidence](docs/KEYBOARD_MAPPING.md), [file formats](docs/KEY_MAPPING.md)
 and [line recovery](docs/LINE_EDIT.md).
 
+`./tools/build test-translation test-translation-dos` builds176 exact native
+XLT instruction bytes and tests a separate checked256-byte DOS table loader.
+There are2,082 CPU cases with optional genuine-original comparison, nine actual
+DOS filesystem checks and22 declared API fault checks. Interactive XLT selection
+and application remain open; see [translation recovery](docs/TRANSLATION.md).
+
 Native recovery now includes 93 exact CRC instruction bytes plus an independently
 generated, original-verified 512-byte polynomial table, and 886 exact receiver
 bytes. `./tools/build test-transfer_blocks test-transfer_receive` exercises
