@@ -11,13 +11,14 @@ The maintained terminal now includes directory editing/accounting, live settings
 with confirmed idle serial/profile/translation changes, XMODEM/YMODEM transfers,
 capture/snapshots/printer/monitor and serviced63,000-character redisplay with
 incremental search, serviced append/CRLF history export and a filename clipboard
-with checked one/all/tagged serial output. All sixteen whole-application gates in `docs/FEATURES.md`
+with checked one/all/tagged serial output. Alt-Z adds a source-owned command menu,
+contextual help and bounded topic search. All sixteen whole-application gates in `docs/FEATURES.md`
 remain open. The numbered sections below retain earlier component evidence and
 historical checkpoints; their old run counts are not the current binary identity.
 
 The remaining work includes complete clipboard UI and wider stock BBS transfer-prompt workflows,
-main menus/contextual help
-and complete settings/key editing; other terminal emulations and font/resource
+complete original menus/mouse paths
+and full settings/key editing; other terminal emulations and font/resource
 paths; remaining transfer families/external helpers; complete directory cycles
 and bindings; ASPECT compiler/interpreter/recorder; Host mode and storage; complete
 startup/schema/default generation, packaging and target hardware validation.
@@ -526,3 +527,24 @@ restored and independently read back. Four failed ENiGMA fixture attempts remain
 in the report; the latest two selected server workflows pass, while the aggregate
 attempt history remains false. Stock-server uploads/multi-name conventions,
 original UI parity and physical modem validation remain open.
+
+### Maintained command menu and contextual help
+
+Alt-Z now opens five command groups with18 entries, source-owned contextual help,
+topic navigation and bounded ASCII prose search. Selected commands close the
+shared redisplay frame before normal dispatch; history and clipboard reacquire
+their existing guards. Incoming UART/parser/history/capture/replies continue.
+The menu implementation and code-based text/table reside in CONFIG_CODE, adding
+only48 bytes of near state. Resident code and85 bridge pairs remain unchanged.
+Five linked groups/149 declared inputs and three production DOS observer/file/
+PRMEDIT workflows pass. The isolated Nix build reproduces64 byte-identical
+outputs. See `docs/COMMAND_MENU.md`. Original layout, mouse paths, full settings/
+key editing and other geometries remain open; F02 and all other whole-application
+gates remain open.
+
+The frozen menu runtime passes the77-command application regression and selected
+stock menu-to-clipboard XMODEM/YMODEM downloads, including ENiGMA's second search.
+An early Synchronet menu-acquisition failure is retained alongside its settled
+retry; its exact transient refusal is unresolved. Stock editor rechecks pass
+Synchronet and buffered ENiGMA while immediate ENiGMA still fails Home/Insert.
+All synthetic logon exemptions were restored and independently read back.

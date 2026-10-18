@@ -40,8 +40,11 @@ def main():
         argv = read(invocation)
         # The remote filename must come from a local clipboard add + Single;
         # the local DOS destination remains separately typed in the recipe.
-        recipe = 'a-= p300 a p c x t e s t . b i n enter p300 s p400 escape'
-        assert recipe in result['keys']
+        edit = 'a p c x t e s t . b i n enter p300 s p400 escape'
+        recipe = 'a-= p300 ' + edit
+        menu_recipe = 'a-z p300 right p200 right p200 f p300 ' + edit
+        via_menu = menu_recipe in result['keys']
+        assert recipe in result['keys'] or via_menu
         row = dict(server=server, label=label, result=result)
         if server == 'synchronet':
             provenance_path = Path('build/bbs-lab/synchronet/provenance.json')
@@ -112,6 +115,10 @@ def main():
             row['clipboard_selection'] = dict(packet_hex=packet.hex(), wire_offset=at,
                                              observed_before_first_protocol_frame=True,
                                              lowercase_local_edit_not_sent=True)
+            if via_menu:
+                assert b'\x1b[C' not in prefix
+                row['clipboard_selection'].update(command_menu_View_F_handoff=True,
+                                                  local_menu_arrow_sequences_not_transmitted=True)
             if server == 'enigma':
                 assert post == b'S\r'
                 again = wire.find(packet, post_at + len(post))
@@ -155,7 +162,17 @@ def main():
                         'Passive audit replay and exact DOS destination bytes. Synthetic owned '
                         'accounts/media, loopback Hayes/Telnet bridge; no physical modem claim, '
                         'complete clipboard UI parity or whole-application completion.')
-    (ROOT / 'docs/validation/bbs-clipboard-transfers.json').write_text(json.dumps(report, indent=2) + '\n')
+    destination = ROOT / 'docs/validation/bbs-clipboard-transfers.json'
+    history = []
+    if destination.exists():
+        previous = json.loads(destination.read_text())
+        history = previous.get('prior_runtime_reports', [])
+        if previous['binary_sha256'] != runtime:
+            previous = {key: value for key, value in previous.items() if key != 'prior_runtime_reports'}
+            if previous not in history:
+                history.append(previous)
+    report['prior_runtime_reports'] = history
+    destination.write_text(json.dumps(report, indent=2) + '\n')
     print('Recorded', len(rows), 'stock BBS clipboard transfer attempts')
 
 

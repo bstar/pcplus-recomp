@@ -2,8 +2,9 @@
 
 The normal terminal links the directory transaction, pure628-byte settings
 candidate decoder, live setup owner, checked XLT reader, default-table owner and
-bounded environment-directory helper, live table stager and maintained redisplay, filename clipboard core/UI and PROGRAM command policy in `CONFIG_CODE`, with a distinct CS and `CONFIG_GROUP`.
-Their data, constants and pointers remain in DGROUP with DS=SS. All eleven C modules
+bounded environment-directory helper, live table stager and maintained redisplay, filename clipboard core/UI, command menu/help and PROGRAM command policy in `CONFIG_CODE`, with a distinct CS and `CONFIG_GROUP`.
+Mutable data and ordinary pointers remain in DGROUP with DS=SS. The command menu
+explicitly places its read-only text/table in the code segment. All twelve C modules
 still use Open Watcom's small model and ordinary near calls; only their code
 placement and named external imports change. This frees resident code space for
 the settings workflow without changing the public near-cdecl API.
@@ -34,7 +35,7 @@ caller state are checked. See [live translation](LIVE_TRANSLATION.md).
 `config_abi.inc` declares all36 bridge pairs. `terminal_memory.py` validates
 their exact instructions, argument offsets/counts, near/far targets, return
 forms and required MZ relocations. It also checks an end marker linked after
-all eleven C objects, ensuring the extent covers the implementations rather than just
+all twelve C objects, ensuring the extent covers the implementations rather than just
 the assembly wrappers. All code must fit its own64KiB segment, be present in
 the loaded MZ, be disjoint from other code/data owners and remain covered by
 PROGRAM's retained parent allocation. Together with PRINT/MODEM this validates
@@ -110,11 +111,18 @@ The filename clipboard adds a compiler-register strcmp import, a three-word
 resident transport callback and a named MODEM_CODE abort service. The latter is
 required when connection owners discard TX: a near cross-segment call is invalid
 and the actual DOS development run caught that mistake. Current layout checks
-verify36 configuration,23 modem,22 printer and4 redisplay bridge pairs. The current
-terminal uses64,796 resident code bytes,64,128 near data/stack bytes and304,992
+verify36 configuration,23 modem,22 printer and4 redisplay bridge pairs. That
+clipboard checkpoint used64,796 resident code bytes,64,128 near data/stack bytes and304,992
 retained parent bytes including PSP. Clipboard core/UI code shares CONFIG_CODE;
 no extra full-screen frame is allocated. See [clipboard](FILENAME_CLIPBOARD.md).
 
 The saved separator explicitly extends the serial plan to44 bytes and the
 candidate to628 without changing bridge argument counts. Live setup tracks its
 saved baseline separately from session R; see [clipboard settings](CLIPBOARD_SETTINGS.md).
+
+The maintained [command menu/help](COMMAND_MENU.md) adds a twelfth C module,
+with code-based names/prose/table and48 bytes of near state/query storage.
+Current near data/stack is64,176 bytes and the retained parent including PSP is
+312,640 bytes. Resident code remains64,796 bytes and the same85 bridge pairs are
+checked. The linker verifier separately requires the menu entry in CONFIG_CODE
+and its mutable state in DGROUP. No additional full-screen frame is allocated.

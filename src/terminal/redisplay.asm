@@ -17,6 +17,7 @@ FAR_ENTRY terminal_redisplay_idle
 FAR_ENTRY terminal_redisplay_stop
 
 extern _redisplay_event_impl,_redisplay_active
+extern _command_menu_action
 extern terminal_history_pointer,terminal_history_start,terminal_history_end,terminal_history_wrapped
 extern terminal_parser_active,terminal_transfer_pending,terminal_transfer_active
 extern terminal_program_pending,terminal_program_active,terminal_macro_active
@@ -28,6 +29,8 @@ extern screen_attribute_row_bytes,screen_video_row_bytes,connection_state
 terminal_redisplay_key_impl:
  cmp word [_redisplay_active],0
  jne .key
+ cmp ax,0x2c00 ; Alt-Z, maintained command menu and contextual help.
+ je .open
  cmp ax,0x8300 ; Alt-=, local filename clipboard.
  je .open
  cmp ax,0x8400 ; Ctrl-PgUp, local redisplay.
@@ -100,6 +103,15 @@ terminal_redisplay_key_impl:
  stc
  ret
 .pass:
+ cmp word [_command_menu_action],0
+ je .ordinary
+ mov ax,[_command_menu_action]
+ mov word [_command_menu_action],0
+ ; Redispatch only after the old view has restored the live screen. Viewer
+ ; commands acquire their normal guarded owner; other commands return to the
+ ; existing transport dispatcher. No synthetic key reaches the BIOS/UART.
+ jmp terminal_redisplay_key_impl
+.ordinary:
  clc
  ret
 terminal_redisplay_before_impl:

@@ -47,6 +47,11 @@ leaving13,152 bytes of capacity for more shared data/stack definitions. Full app
 and dynamic-overlay work remains open.
 
 
+Alt-Z opens the [command menu](docs/COMMAND_MENU.md), with File, Connection,
+View, Setup and Help groups. Use arrows/Tab, Enter or a listed letter; F1 shows
+contextual help and `/` searches topics. Escape returns to the live terminal.
+Incoming data continues while browsing.
+
 Ctrl-PgUp now opens [serviced redisplay](docs/LIVE_REDISPLAY.md): 63,000 characters
 of history, line/page navigation, case-insensitive search and a preserved live
 screen. Incoming input and terminal replies continue while browsing. Escape

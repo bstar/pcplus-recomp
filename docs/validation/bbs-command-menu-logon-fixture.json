@@ -1,0 +1,32 @@
+{
+  "user": "LABUSER",
+  "number": 1,
+  "level": 50,
+  "logons_today": 53,
+  "bit": 2048,
+  "before": 0,
+  "active": 2048,
+  "restored": true,
+  "scope": "Temporary synthetic-account daily-logon exemption only; editor/server quota policy unchanged.",
+  "after": 0,
+  "run_label": "editor-menu-c0d6-hard",
+  "independent_persisted_readback": {
+    "number": 1,
+    "level": 50,
+    "exemptions": 0,
+    "logons_today": 54
+  },
+  "binary_sha256": "c0d6483427ed2b81d86a3c3243c3aa83d8af968c7ed8fef1a61fb34670085641",
+  "retained_artifacts": {
+    "build/bbs-lab/results/synchronet/menu-editor-c0d6-logon.begin.js": "ad90cb4ebc013c400b082fd07adf936ed4531132d161333483884911cd0f58c9",
+    "build/bbs-lab/results/synchronet/menu-editor-c0d6-logon.begin.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/bbs-lab/results/synchronet/menu-editor-c0d6-logon.begin.stdout": "f4befb5ba2b1a460bc306ec0c90c8f4556c4bbca5ac351f5f8c39a3d7e9303c0",
+    "build/bbs-lab/results/synchronet/menu-editor-c0d6-logon.end.js": "dbf4ea7a769c57289bf1bbfeaaaa8b3c9081275e31bda0f207f3d88c66439369",
+    "build/bbs-lab/results/synchronet/menu-editor-c0d6-logon.end.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/bbs-lab/results/synchronet/menu-editor-c0d6-logon.end.stdout": "34855488f9cedd8397a10a4727e66446d017096e158402b5905bdecfb483b268",
+    "build/bbs-lab/results/synchronet/menu-editor-c0d6-logon.json": "3a390a3b418f94bf27d4549c3e31ed9d7627a64d516aa62d674fac3ac11783fc",
+    "build/bbs-lab/results/synchronet/menu-editor-c0d6-logon.verify.js": "951a1840905417a1dcc67f898465a80265249b9ce50f8df7651f3e3f2f4e66e4",
+    "build/bbs-lab/results/synchronet/menu-editor-c0d6-logon.verify.json": "707529a51a266f82dc3baa0fa71f7b495f7e800767bea4d4188aac2d70d9090a",
+    "build/bbs-lab/results/synchronet/menu-editor-c0d6-logon.verify.stdout": "5b58711f03fc70cb9131974b297d819a16c9e5bf5cee7508f7c47f2fc7c9ed0f"
+  }
+}

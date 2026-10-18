@@ -99,7 +99,8 @@ exit and a subsequent file list to this session. Both servers' file metadata is
 checked through their official read APIs, and their source identities/helper
 hashes are retained.
 
-Four unsuccessful ENiGMA fixture attempts remain explicit: returning to the
+Four earlier unsuccessful ENiGMA fixture attempts remain explicit in the prior
+runtime report: returning to the
 search form instead of the file menu; incorrectly trying to clear an already
 empty new-session queue; expecting the requested file first in a general listing
 sorted by date; and searching raw ANSI bytes for a caption containing intervening
@@ -107,16 +108,22 @@ color codes. The last two attempts completed the real transfer, but failed their
 post-menu assertions. Neither is relabeled as a passing run. The aggregate report
 therefore remains false while its two latest selected workflows pass.
 
-The BBS evidence recorder takes explicit attempts, including failed prerequisites:
+The command-menu runtime now enters the clipboard through Alt-Z, View and F
+on both servers, including ENiGMA's second search after the download. The report
+verifies the menu's right-arrow keys do not reach the remote prompt. The first
+Synchronet attempt failed this acquisition prerequisite: arrows and lowercase
+local-edit text reached Filespec. A linked replay leaves stable opening guards
+clear; the exact transient refusal was not established. Increasing the settling
+interval before Alt-Z from1500ms to3000ms passes. Both attempts remain explicit.
+
+The BBS evidence recorder takes explicit current attempts and preserves earlier
+runtime reports separately:
 
 ```sh
 ./tools/dev --command python3 lab/bbs/record_clipboard_transfers.py \
-  --run synchronet:clipboard-download-b79d-1 \
-  --run enigma:clipboard-search-download-b79d-1 \
-  --run enigma:clipboard-search-download-b79d-2 \
-  --run enigma:clipboard-search-download-b79d-3 \
-  --run enigma:clipboard-search-download-b79d-4 \
-  --run enigma:clipboard-search-download-b79d-5
+  --run synchronet:menu-clipboard-download-c0d6-1 \
+  --run synchronet:menu-clipboard-download-c0d6-2 \
+  --run enigma:menu-clipboard-search-download-c0d6-1
 ```
 
 These are selected Single/download integrations on owned loopback servers.

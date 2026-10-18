@@ -3,6 +3,7 @@
 #include <dos.h>
 #include "../capture/capture_file.h"
 #include "../clipboard/clipboard_ui.h"
+#include "command_menu.h"
 typedef unsigned short word;
 typedef unsigned char byte;
 typedef struct context {
@@ -190,14 +191,21 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   snapshot=(byte __far *)MK_FP(c->snapshot_seg,c->snapshot_off);
   live=(word __far *)MK_FP(c->live_seg,c->live_off);
   view=(word __far *)MK_FP(c->view_seg,c->view_off);
-  direct_clipboard=key==0x8300;
+  direct_clipboard=key==0x2c00?2:key==0x8300;
   length=direct_clipboard?0:(c->wrapped?63000U:c->head-c->start);p=c->wrapped?c->head:c->start;
   for(i=0;i<length;++i){snapshot[i]=source[p];if(++p==c->end)p=c->start;}
   cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));
   redisplay_search_pending=redisplay_export_pending=0;export_edit=export_notice=0;oldest_skip=c->wrapped && length && snapshot[0]==13;query_size=query_edit=0;query[0]=0;found=1;last_match=65535U;visible=1;clipboard_ui_visible=1;redisplay_active=1;index_rows();bottom();
-  if(direct_clipboard){copy(view,live);clipboard_ui_event(0,0,view);}else draw();return 1;
+  if(direct_clipboard==2){command_menu_event(0,0,view);copy((word __far *)MK_FP(0xb800,0),view);hide();}
+  else if(direct_clipboard){copy(view,live);clipboard_ui_event(0,0,view);}else draw();return 1;
  }
  if(!redisplay_active)return 0;
+ if(command_menu_active && (event==1 || event==4)){
+  if(command_menu_event(event,key,view)){if(visible){copy((word __far *)MK_FP(0xb800,0),view);hide();}return 1;}
+  if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();}
+  redisplay_search_pending=redisplay_export_pending=0;redisplay_active=visible=0;
+  return command_menu_action?0:1;
+ }
  if(clipboard_ui_active && (event==1 || event==4)){
   if(clipboard_ui_event(event,key,view))return 1;
   if(!direct_clipboard && event==1 && key!=0x2d00){if(visible){copy((word __far *)MK_FP(0xb800,0),view);hide();}return 1;}

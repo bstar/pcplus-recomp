@@ -164,6 +164,11 @@ def inspect_terminal_memory(binary,map_path):
   assert all(c['relative_segment']!=config_seg for c in code_segments if c['name']!='CONFIG_CODE'),'Configuration CS aliases other code'
   assert address('terminal_config_code_start')==config_seg*16
   assert address('terminal_config_code_end')-address('terminal_config_code_start')==config_code['bytes'],'Incomplete configuration extent'
+  if '_command_menu_event' in symbols:
+   assert symbols['_command_menu_event'][0]==config_seg,'Command menu is outside CONFIG_CODE'
+   for name in ('_command_menu_active','_command_menu_action'):
+    assert near_start<=address(name)<near_start+near_size-1,(name,'menu state outside DGROUP')
+   extra['command_menu_far_code_verified']=True
   abi=Path(__file__).resolve().parents[1]/'src/terminal/config_abi.inc'
   config_bridges=0
   def cdecl_prefix(count,first):
