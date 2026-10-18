@@ -62,11 +62,12 @@ consumer, not a public semantic range beyond a16-bit word.
 then repeats this busy-loop for the supplied DX units. Zero units skips it.
 It does not read BIOS ticks, PIT time, wall-clock milliseconds or cancel/carrier
 state. Machine calibration and initialization of those two words determine its
-physical duration. Existing MODEM_SEND/MODEM_CONFIGURATION documentation correctly
-leaves these units unproved. Neither default350 nor the bit40h operation proves
-**250ms**, **350ms**, or a BIOS-tick conversion. Do not import01A4h as milliseconds
-or rename it `break_duration_ms` without further calibration-source evidence.
-A lossless codec may expose `break_delay_units` with precisely this limitation.
+physical duration. The further calibration investigation below now establishes
+its startup initialization and nominal55 subdivisions per BIOS tick. This
+upgrades the earlier unknown-unit ledger to a derived millisecond-style intent;
+it still does not establish exact **350ms** on a particular machine or any
+**250ms** default. Keep a lossless field named `break_delay_units`, distinguishing
+native calibrated intent from a separately chosen maintained timer policy.
 
 | Retained helper | Evidence |
 | --- | --- |
@@ -78,6 +79,81 @@ A lossless codec may expose `break_delay_units` with precisely this limitation.
 These correspond to ignored retained assembly under `analysis/pcplus-main/`
 and `analysis/pcplus-overlay-anchored-19/`; normal source builds need none of
 those artifacts.
+
+## Startup calibration: observed mechanism and timing limits
+
+The retained startup routine overlay3:D7A6 calls7956 atD7AE,793A atD7B1,
+6CD8 atD7B4 and enhanced-keyboard detection7916 atD7BB. Thus the calibration
+is reached in original startup, not merely unused library code. Assembly
+Evidence `ev_010f4b1aba1b5e1663beb661884ee38b3cf578c480c658a095be0412661f557b`
+is retained at `analysis/pcplus-overlay-anchored-03/functions/0x1d7a6-asm.json`.
+
+Resident7956..798D is56 bytes, original file8B56h..8B8Dh, SHA256
+`880dc8d068d86442c2b8a6f6d98f5743e037f73aeee6d81a43220c3959908777`.
+Its exact sequence:
+
+1. CLI; read and save master-PIC mask from port21h; writeFEh to that port;
+   STI. This leaves IRQ0 unmasked while masking the other master-PIC lines.
+2. Set AX=DX=0, ES=0 and BX=046Ch (the BIOS low tick word at physical046Ch).
+   Snapshot it in CX and wait for a change, aligning measurement to a tick edge.
+3. Snapshot the new tick. Repeatedly ADD AX,1; ADC DX,0; compare CX with
+   ES:[BX]; repeat while equal. DX:AX counts iterations until the next tick.
+4. Divide that unsigned32-bit count by0037h, **55 decimal**. Store quotientAX
+   atDS7AC4. There is no overflow/zero-result validation in this routine.
+5. Restore the saved PIC mask through port21h underCLI, then STI and return.
+   It does not preserve a caller's initially clearedIF as a general API would.
+
+Original initializedDS7A4E is0000h andDS7AC4 is0000h.7956 replaces7AC4;
+it never changes7A4E. A literal-address scan of the original resident and
+appended bytes found only the6B72 operand referring directly to7A4E, and the
+calibrator is the identified direct7AC4 writer. This does not exclude indirect
+aliases, overlapping writes, a changed executable or later runtime modification.
+
+With floor0 and a nonzero calibrated quotient,6B72 executes approximately
+`floor(measured_iterations_per_tick / 55)` comparable inner iterations per
+argument unit. Its SUB-CX/ADC-AX/compare/JNZ body closely matches the calibrator's
+ADD-AX/ADC-DX/compare/JZ measurement loop. The **derived nominal duration is
+one55th of a BIOS tick per unit**. Under the ordinary approximately55ms BIOS
+tick interpretation, that is consistent with millisecond-style intent and a
+nominal roughly350ms default. This is a timing inference from the observed
+calibration, not a measured electrical BREAK duration or original source-level
+unit declaration. It is not a direct mapping of350 to350 BIOS ticks.
+
+The physical guarantee remains limited by integer truncation, instruction and
+prefetch timing, IRQ0 service time, other interrupt load during the later delay,
+CPU/emulator speed changes after startup, unusual BIOS tick rates and hardware
+behavior. A quotient0 causes the decrement-to-zero loop to wrap through65536
+iterations; an excessive32-bit count can overflow the16-bit DIV quotient.
+The routine supplies no guard for either case. A maintained owner should not
+copy its PIC manipulation, IF behavior or unbounded busy-loop policy.
+
+### REA corroboration and provenance
+
+The actual REA MCP session was inspected before opening: no target was open.
+Ghidra12.1.2 opened the SHA-verified original, but its default analysis left7956
+undecoded (Evidence `ev_37a44d83550bae2bf4917889d00066d8e0966c3e0ad203c24723e0d52154269f`).
+An ignored **analysis-only** carrier changed only the MZ initialIP to7956 and
+initialCS to0; all original load-module/code bytes were retained verbatim and
+checked. Carrier SHA256 is
+`af0539581b44f631e0ae7e847e7d31146b37da202eb32311b8969c2f19c929f8`.
+It was never executed. This is explicitly derived analysis evidence rather
+than a claim that an altered header was the shipped program's entry point.
+
+Focused MCP `analyze_function(0x17956)` returned the full56-byte body and
+assembly under Evidence
+`ev_301b59d7d428ffc4e6d2e203d2b7d941d769914f04c6aeec63f1d5bfb7f25f71`;
+`procedure_assembly` independently retained it as
+`ev_2536be74379b7cdb2cd5aa7c841a6f2cf9be8ba099569cd51f0a1c8d029a9f5e`.
+The decompiler incorrectly folds the BIOS tick-memory loop into an infinite
+loop and labels later blocks unreachable; the complete assembly, not that
+pseudocode, establishes the calibration and store. Ghidra does not emulate
+the BIOS counter or device timing.
+
+Ignored local evidence, carrier derivation and exported MCP bundle are under
+`analysis/break-calibration/`; they are not normal build inputs or public
+original data. The session was exported and closed. No original execution,
+physical timing experiment, private configuration read, runtime edit or REA
+configuration/global update occurred.
 
 ## Maintained implementation boundary
 
