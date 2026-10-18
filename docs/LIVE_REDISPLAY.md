@@ -36,7 +36,7 @@ The live ring, frozen copy and two raw screen frames are distinct far owners.
 They do not alias the native shadow, snapshot or the three existing packed UI
 frames. MZ/map checks validate segment extents, relocated pointers and four
 near/far viewer entries. PROGRAM retains every new allocation. The current build
-retains 297,136 bytes including the PSP before DOS/environment overhead; this is
+retains 297,184 bytes including the PSP before DOS/environment overhead; this is
 not evidence for the original product's 192 KB limited configuration or a full
 295 KB application configuration. Physical UART throughput and video hardware
 remain unverified.
@@ -88,3 +88,6 @@ child allocation/fill separately checks retained native-history endpoints.
 History export, clipboard filename extraction/list editing/paste, full original
 redisplay commands and other video geometries remain open. This implementation
 does not close F11 or the full-application checklist.
+
+[Export and clipboard recovery](REDISPLAY_CLIPBOARD_RECOVERY.md) records original
+append/CRLF output and the15-entry filename clipboard behavior for the next work.

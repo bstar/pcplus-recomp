@@ -437,3 +437,13 @@ while browsing; Escape restores the updated live screen. Independent actual DOS
 video/timer and peer evidence complements the linked native writer/viewer checks.
 See `docs/LIVE_REDISPLAY.md`. History export, filename clipboard and full F11
 remain open; no whole application gate is closed by this checkpoint.
+
+### PROGRAM policy segmentation
+
+The maintained PROGRAM command processor policy now runs in CONFIG_CODE with
+a two-word near-cdecl public entry and a three-word resident DOS EXEC callback.
+This frees1,114 resident code bytes (64,288 used,1,248 spare) without changing
+DOS command handling. Near data/stack stays61,712 bytes. The expanded ABI checks
+validate33 configuration bridge pairs,81 total, and164 damaged frames/layouts.
+This is preparation for the remaining history export/clipboard work; all sixteen
+whole-application feature gates remain open.

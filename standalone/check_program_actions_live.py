@@ -6,6 +6,7 @@ execute normally; none is substituted, patched, skipped or manually completed.
 """
 import hashlib,json,struct
 from unicorn.x86_const import *
+from unicorn import UC_HOOK_CODE
 from check_meta_actions_live import Meta,DAY,ROOT,BINARY
 from check_process import Kernel
 class LiveProgram(Meta):
@@ -126,6 +127,31 @@ class LiveProgram(Meta):
 def main():
  digest=hashlib.sha256(BINARY.read_bytes()).hexdigest();cases=[]
  def check(name,fn):n=fn();cases.append({'case':name,'inputs':n,'passed':True});print(name,'passed',n,flush=True)
+ def far_frames():
+  # Observe the real C implementation RET and both unmodified adapter returns.
+  # The child deliberately clobbers SS/SP/DS; the resident backend restores it
+  # before unwinding through the nested far callback and public far entry.
+  for options in ({}, {'exec_error':2}, {'exec_error':8}, {'resize_error':8}):
+   m=LiveProgram(mutate_child=False,**options);observed=[]
+   entry=m.symbols['_program_execute'];far=m.symbols['_program_execute_far']
+   config_cs=m.symbols['terminal_config_code_start']//16
+   far_return=far-config_cs*16+12
+   def watch(u,address,size,unused):
+    if u.mem_read(address,1)!=b'\xc3':return
+    flags=u.reg_read(UC_X86_REG_EFLAGS)
+    if address==entry+18:
+     assert len(observed)==1 and flags==observed[0],('C FLAGS changed across PROGRAM entry adapters',observed,flags)
+     observed.append(flags)
+    elif u.reg_read(UC_X86_REG_CS)==config_cs:
+     stack=u.reg_read(UC_X86_REG_SS)*16+u.reg_read(UC_X86_REG_SP)
+     if int.from_bytes(u.mem_read(stack,2),'little')==far_return:observed.append(flags)
+   m.uc.hook_add(UC_HOOK_CODE,watch)
+   assert m.queue()==0;m.safe()
+   assert len(observed)==2,observed
+   assert m.get('terminal_program_status')==(5 if options else 4)
+   m.restored()
+  return 4
+ check('PROGRAM-near-far-cdecl-frames-preserve-actual-C-return-FLAGS-after-clobbered-child-and-errors',far_frames)
  def safepoint():
   for index in range(10):
    m=LiveProgram();m.record(index,b'ECHO ^M~^@ LITERAL',1);m.keys.append((0x78+index)<<8);m.poll()

@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "486f2c34f157abcc2fa669b4759cb1ad29b076836e11063c57e84cc617630f74",
-  "source_file_count": 1359,
+  "source_snapshot_sha256": "9a2220920a59241f56afb1cfcfdf0481df6d03486acdbcbb6883e66e1992c851",
+  "source_file_count": 1362,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,117 +16,117 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "67aaa91bee34b50cbe8c189abaded0072539d22f73bb4403ca639e99a4a9214d",
+  "build_log_sha256": "9dd31bab555ebfa695abe5c9cf5953cd5142ceb75af8616e4cb7a9ec14d84712",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.gMinE5/pcplus-source-proof-fp3d9ua5/checkout",
+  "source_checkout": "/tmp/pcplus-source-proof-rdlzocs9/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
   "scope": "Source-only interactive DOS terminal with imported keyboard/action settings, directory UI, recovered line/character editing, maintained current-profile RIS, bounded process handoff, retained far shadow/history and live checked XMODEM receive/send and maintained CRC YMODEM batch ownership; full PCPlus application remains incomplete.",
-  "binary_sha256": "27df52265883ec63702e40e38d3feadde787459cdd2cf89c084d30dc3ef9577b",
+  "binary_sha256": "ca09ea8fe91dab0ae93fbc7343db62ef44f57b63f1c0dfd51a98dda40d5344b6",
   "matches_workspace_binary": true,
   "matches_workspace_manifest": true,
   "manifest": {
     "kind": "source-only-interactive-dos-terminal",
-    "binary_sha256": "27df52265883ec63702e40e38d3feadde787459cdd2cf89c084d30dc3ef9577b",
+    "binary_sha256": "ca09ea8fe91dab0ae93fbc7343db62ef44f57b63f1c0dfd51a98dda40d5344b6",
     "data_stack_bytes": 61712,
     "memory_layout": {
       "near_bytes": 61712,
       "near_spare_bytes": 3824,
-      "near_relative_segment": 4935,
-      "far_relative_segment": 14105,
+      "near_relative_segment": 4938,
+      "far_relative_segment": 14108,
       "shadow_offset": 0,
       "history_offset": 0,
       "far_bytes": 71192,
-      "history_relative_segment": 14617,
+      "history_relative_segment": 14620,
       "history_bytes": 63000,
-      "far_end_linear": 296872,
-      "stack_end_linear": 140672,
-      "loaded_module_bytes": 110249,
-      "minimum_allocated_module_bytes": 296880,
-      "retained_parent_paragraphs": 18571,
+      "far_end_linear": 296920,
+      "stack_end_linear": 140720,
+      "loaded_module_bytes": 110297,
+      "minimum_allocated_module_bytes": 296928,
+      "retained_parent_paragraphs": 18574,
       "far_pointer_relocations_verified": true,
-      "snapshot_relative_segment": 10042,
+      "snapshot_relative_segment": 10045,
       "snapshot_image_offset": 63008,
       "snapshot_bytes": 2000,
-      "snapshot_end_linear": 225680,
+      "snapshot_end_linear": 225728,
       "ui_screen_buffers": {
         "browser_screen": {
-          "relative_segment": 8792,
+          "relative_segment": 8795,
           "offset": 0,
           "bytes": 4000,
-          "start_linear": 140672,
-          "end_linear": 144672
+          "start_linear": 140720,
+          "end_linear": 144720
         },
         "ed_screen": {
-          "relative_segment": 8792,
+          "relative_segment": 8795,
           "offset": 4000,
           "bytes": 4000,
-          "start_linear": 144672,
-          "end_linear": 148672
+          "start_linear": 144720,
+          "end_linear": 148720
         },
         "program_screen": {
-          "relative_segment": 8792,
+          "relative_segment": 8795,
           "offset": 8000,
           "bytes": 4000,
-          "start_linear": 148672,
-          "end_linear": 152672
+          "start_linear": 148720,
+          "end_linear": 152720
         },
         "redisplay_live": {
-          "relative_segment": 8792,
+          "relative_segment": 8795,
           "offset": 12000,
           "bytes": 4000,
-          "start_linear": 152672,
-          "end_linear": 156672
+          "start_linear": 152720,
+          "end_linear": 156720
         },
         "redisplay_view": {
-          "relative_segment": 8792,
+          "relative_segment": 8795,
           "offset": 16000,
           "bytes": 4000,
-          "start_linear": 156672,
-          "end_linear": 160672
+          "start_linear": 156720,
+          "end_linear": 160720
         }
       },
       "far_ui_storage_bytes": 20000,
       "redisplay_snapshot_bytes": 63000,
-      "redisplay_snapshot_end_linear": 223672,
+      "redisplay_snapshot_end_linear": 223720,
       "controller_bridge_pairs_verified": 22,
       "modem_bridge_pairs_verified": 22,
-      "configuration_bridge_pairs_verified": 31,
+      "configuration_bridge_pairs_verified": 33,
       "redisplay_bridge_pairs_verified": 4,
-      "resident_code_bytes": 65402,
-      "resident_code_spare_bytes": 134,
+      "resident_code_bytes": 64288,
+      "resident_code_spare_bytes": 1248,
       "code_segments": [
         {
           "name": "_TEXT",
           "kind": "CODE",
           "relative_segment": 0,
           "offset": 0,
-          "bytes": 65402
+          "bytes": 64288
         },
         {
           "name": "CONFIG_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4088,
+          "relative_segment": 4018,
           "offset": 0,
-          "bytes": 10616
+          "bytes": 11786
         },
         {
           "name": "MODEM_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4752,
+          "relative_segment": 4755,
           "offset": 0,
           "bytes": 1467
         },
         {
           "name": "PRINT_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4844,
+          "relative_segment": 4847,
           "offset": 0,
           "bytes": 1449
         }
       ],
-      "far_code_bridge_pairs_verified": 79
+      "far_code_bridge_pairs_verified": 81
     },
     "sources": {
       "reconstruction/ansi/dispatch.asm": "f037a6b35fd49eed12c6ff266654de9b3e74cb08a598c987ddac71507f4056d0",
@@ -397,13 +397,13 @@
       "reconstruction/transfer_files/provenance.json": "153d0b6718ca60f34b65f9c91bae7a018467771f49cd69c53a3743e6273ee359",
       "reconstruction/transfer_blocks/provenance.json": "d208524987aa9e314c71a0320cda9da46da26da4eb3455bb7b73783ebce8c608",
       "src/transfer/native_link.py": "b36aea74a0961141f301f1d4275d077f3ec27ca04ea2685384a0110477bd588f",
-      "standalone/terminal_memory.py": "35cb30efbd64704c8505470278b8849f59a7ea94ead261b9786b3256cb471e07",
+      "standalone/terminal_memory.py": "250386c67b19f2cc23d92fd6bedf70d9b13dee5ad7d3732b579d9f56f52b2595",
       "reconstruction/transfer_send/session.asm": "559f40abb2abd6724e22f71580c52fd8d15ec773b51347ac91bda02e045b220b",
       "reconstruction/transfer_send/cancel.asm": "9324066078aff11935a1bc5e315598344b182c1fae8077611e2c4af1aa652762",
       "reconstruction/transfer_blocks/crc_buffer.asm": "00083b3c0f6143b8b0119f0c5690f32b54b2c981f474ed5ce1529336d8db1ad4",
       "reconstruction/transfer_send/provenance.json": "99f92f7daba16a6a4ea2ba1a9465cb81a5f0b917cf351bf70794542e6defb0da",
       "src/transfer/native_sender_link.py": "0eff16fe2149432b60807fdc3d7c480caedd04138d4184090c8417ace1f43f3e",
-      "src/terminal/config_abi.inc": "a432c4ba89b97b78ed7337bb51dc308ed1f83481d03e130d4b481a27762edff3",
+      "src/terminal/config_abi.inc": "033d7dbadda1e8faf4627e427288fefb499f9c920f5373603c2867e428fcebfd",
       "src/terminal/controller_abi.inc": "33de629fa3bbb35914c9070e067514c9520d16ff5d7ae7d9ea41173e72454c4e",
       "src/terminal/far_bridge.inc": "fecaf08907a2a5e78e7f870166a91fbc7295df5708aac682d3320a3e09e764c5",
       "src/terminal/modem_abi.inc": "7088021f9fd00cd6d164fbd7477d7789a7ff9725d47c3c7ba00303cd4dc9f327",

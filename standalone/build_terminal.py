@@ -45,12 +45,14 @@ config_sources.add(ROOT/'src/translation/xlt_dos.c')
 config_sources.update({ROOT/'src/translation/xlt_default.c',ROOT/'src/config/resource_path.c'})
 config_sources.add(ROOT/'src/translation/xlt_live.c')
 config_sources.add(ROOT/'src/redisplay/redisplay.c')
+config_sources.add(ROOT/'src/process/program.c')
 config_aliases={name:name+'_impl' for name in ['directory_live_decode','directory_live_read','directory_live_read_context','directory_live_context_matches','live_configuration_decode','live_setup_bind','live_setup_begin','live_setup_finish','live_setup_abort','live_setup_finish_policy','live_setup_acknowledge']}
 config_aliases.update({name:'config_'+name+'_service' for name in ['memcpy','memset','memcmp','strchr']})
 config_aliases.update({'terminal_import_decode':'config_terminal_decode_service','modem_import_decode':'config_modem_decode_service','prm_dos_load':'config_prm_read_service','directory_dos_read':'config_directory_read_service','directory_number_expand':'config_number_expand_service'})
 config_aliases.update({'capture_fs_canonical':'config_canonical_service','live_modem_expand':'config_live_expand_service'})
 config_aliases.update({'xlt_dos_read':'xlt_dos_read_impl',
  'xlt_dos_read_default':'xlt_dos_read_default_impl',
+ 'program_execute':'program_execute_impl','process_run':'config_process_run_service',
  'redisplay_event':'redisplay_event_impl','xlt_live_bind':'xlt_live_bind_impl','xlt_live_stage':'xlt_live_stage_impl','xlt_live_commit':'xlt_live_commit_impl',
  'xlt_fs_open':'config_xlt_open_service','xlt_fs_read':'config_xlt_read_service',
  'xlt_fs_close':'config_xlt_close_service'})

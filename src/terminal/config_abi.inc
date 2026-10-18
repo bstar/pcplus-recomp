@@ -16,6 +16,7 @@ CONFIG_ENTRY _xlt_live_bind,1
 CONFIG_ENTRY _xlt_live_stage,2
 CONFIG_ENTRY _xlt_live_commit,2
 CONFIG_ENTRY _redisplay_event,3
+CONFIG_ENTRY _program_execute,2
 ; Compiler-default register ABI for these four small-model CRT functions.
 CONFIG_REGISTER config_memcpy_service_,memcpy_
 CONFIG_REGISTER config_memset_service_,memset_
@@ -32,3 +33,4 @@ CONFIG_CDECL _config_prm_read,_prm_dos_load,3
 CONFIG_CDECL _config_directory_read,_directory_dos_read,4
 CONFIG_CDECL _config_number_expand,_directory_number_expand,4
 CONFIG_CDECL _config_live_expand,_live_modem_expand,4
+CONFIG_CDECL _config_process_run,_process_run,3

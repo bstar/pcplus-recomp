@@ -2,13 +2,13 @@
 
 The normal terminal links the directory transaction, pure626-byte settings
 candidate decoder, live setup owner, checked XLT reader, default-table owner and
-bounded environment-directory helper, live table stager and maintained redisplay in `CONFIG_CODE`, with a distinct CS and `CONFIG_GROUP`.
-Their data, constants and pointers remain in DGROUP with DS=SS. All eight C modules
+bounded environment-directory helper, live table stager and maintained redisplay and PROGRAM command policy in `CONFIG_CODE`, with a distinct CS and `CONFIG_GROUP`.
+Their data, constants and pointers remain in DGROUP with DS=SS. All nine C modules
 still use Open Watcom's small model and ordinary near calls; only their code
 placement and named external imports change. This frees resident code space for
 the settings workflow without changing the public near-cdecl API.
 
-Seventeen resident entry stubs preserve the public names. They copy only
+Eighteen resident entry stubs preserve the public names. They copy only
 their declared1,2,3,5,7,8 or9 word arguments into a far call. The far wrapper copies
 those arguments into an ordinary near-C frame and calls the renamed local
 implementation. Both frames use LEA/POP to release copies, retaining the
@@ -18,9 +18,9 @@ remain owned by the caller. These are not variadic, RET-N or callback adapters.
 The C implementations call each other directly within CONFIG_CODE. Five
 explicit register-ABI imports (`memcpy`, `memset`, `memcmp`, `strchr` and the DOS
 canonicalizer) use named near thunks to far-call their resident counterparts.
-Nine more callbacks
+Ten more callbacks
 copy1..4 cdecl words to the resident terminal/modem decoders, PRM/directory
-readers, bounded number expander, native command-expansion status adapter and the checked XLT open/read/close adapters. Register imports retain the compiler's
+readers, bounded number expander, native command-expansion status adapter and the checked XLT open/read/close adapters, plus the DOS EXEC process boundary. Register imports retain the compiler's
 trailing underscore symbol convention; they cannot use the cdecl adapters.
 The modem callback family's existing1..4-word contract is unchanged.
 
@@ -31,16 +31,16 @@ stack arguments must survive the additional far frames. Actual linked reads,
 EOF probes and failed reads exercise these adapters; all256 input bytes and
 caller state are checked. See [live translation](LIVE_TRANSLATION.md).
 
-`config_abi.inc` declares all31 bridge pairs. `terminal_memory.py` validates
+`config_abi.inc` declares all33 bridge pairs. `terminal_memory.py` validates
 their exact instructions, argument offsets/counts, near/far targets, return
 forms and required MZ relocations. It also checks an end marker linked after
-all eight C objects, ensuring the extent covers the implementations rather than just
+all nine C objects, ensuring the extent covers the implementations rather than just
 the assembly wrappers. All code must fit its own64KiB segment, be present in
 the loaded MZ, be disjoint from other code/data owners and remain covered by
 PROGRAM's retained parent allocation. Together with PRINT/MODEM this validates
-79 bridge pairs including four viewer register entries.
+81 bridge pairs including four viewer register entries.
 
-`check_config_far_live.py` rejects154 intentionally damaged frames, relocations
+`check_config_far_live.py` rejects164 intentionally damaged frames, relocations
 and layouts. The independent311 directory and507 context cases execute normal
 terminal entry points across the bridge. `check_live_configuration.py --terminal`
 replays the same389 independently specified candidate cases against the normal
@@ -75,3 +75,25 @@ The checkpoint's68-command terminal regression,63-output isolated source
 rebuild,389 terminal candidate inputs,311 directory inputs,507 retained-context
 inputs and actual DOS child retention are bound together in
 [validation/configuration-far-code.json](validation/configuration-far-code.json).
+
+## PROGRAM command policy placement
+
+The maintained `program.c` implementation now executes in CONFIG_CODE. Its
+public two-word `program_execute` entry retains the near-cdecl API; a separate
+three-word `config_process_run` callback copies the pathname, command-tail and
+result pointers to the existing resident DOS EXEC backend. DS=SS keeps the
+local environment/path buffers and child result valid across both bridges.
+The DOS backend and its CS-relative saved execution context remain resident.
+No command parsing, COMSPEC/PATH order, child lifecycle or serial ownership
+policy changes. This moves 1,114 net bytes out of the resident segment, leaving
+1,248 bytes available for further application services; resident code is
+64,288 bytes and near data/stack remains61,712 bytes. PROGRAM retention continues
+to cover the complete CONFIG_CODE extent during child allocation. Total retained
+parent allocation is297,184 bytes including PSP; bridge/alignment overhead adds
+48 bytes relative to the preceding checkpoint.
+
+[PROGRAM placement validation](validation/program-far-code.json) binds60 linked
+inputs and four actual DOS command workflows to the current binary. Four new
+observations compare FLAGS at the actual C implementation RET and the public
+entry RET after normal execution, fallback, EXEC failure and resize failure.
+The tests do not replace product instructions or callbacks.

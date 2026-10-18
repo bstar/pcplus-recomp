@@ -103,7 +103,7 @@ The linked suite covers783 inputs: all256 mapping outputs through normal and
 fragmented DOS reads, disabled/no-I/O startup, nine error cases, mapped ESC and
 ordinary characters, raw continuation/replies/typed output, processed capture,
 RIS retention and all256 raw monitor dump bytes. Only DOS/BIOS/UART boundaries
-are modeled; no application callback is skipped. The far-code suite rejects154
+are modeled; no application callback is skipped. The far-code suite rejects164
 damaged call frames, targets, returns, relocations and segment layouts, including
 the startup and three live XLT entries plus three DOS adapters.
 

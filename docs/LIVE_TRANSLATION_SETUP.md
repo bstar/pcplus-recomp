@@ -65,7 +65,7 @@ concurrent-writer lock or a physical modem flow-control guarantee.
 ```
 
 [Live mode validation](validation/live-translation.json) binds 331 linked inputs,
-10 actual DOS workflows, all 154 damaged configuration-frame/layout cases,
+10 actual DOS workflows, all 164 damaged configuration-frame/layout cases,
 the 68-command terminal regression and a 63-output fresh public-source rebuild.
 The linked tests run the actual owner, parser/driver, namespace resolver, DOS
 reader and cdecl/far adapters; only DOS/BIOS/UART boundaries are modeled.
