@@ -25,7 +25,7 @@ terminal_parse_options:
  mov cx,8
  cld
  rep movsw
- mov byte [options_seen],0
+ mov word [options_seen],0
  mov di,options_config_stage
  xor ax,ax
  mov cx,32
@@ -33,6 +33,11 @@ terminal_parse_options:
  mov di,options_dial_stage
  mov cx,32
  rep stosw
+ mov di,options_directory_stage
+ mov cx,32
+ rep stosw
+ mov word [options_entry_stage],0
+ mov word [options_codes_stage],0
  mov es,dx
  xor cx,cx
  mov cl,[es:0x80]
@@ -86,7 +91,12 @@ terminal_parse_options:
  cmp byte [options_token],'@'
  je .config_size
  cmp word [options_token],'/D'
+ je .selector_size
+ cmp word [options_token],'/E'
+ je .selector_size
+ cmp word [options_token],'/N'
  jne .ordinary_size
+.selector_size:
  cmp byte [options_token+2],':'
  je .process
 .ordinary_size:
@@ -153,8 +163,16 @@ terminal_parse_options:
  mov di,terminal_dial_target
  mov cx,32
  rep movsw
+ mov si,options_directory_stage
+ mov di,terminal_directory_path
+ mov cx,32
+ rep movsw
+ mov ax,[options_entry_stage]
+ mov [terminal_directory_entry],ax
+ mov ax,[options_codes_stage]
+ mov [terminal_directory_codes],ax
  xor ax,ax
- mov al,[options_seen]
+ mov ax,[options_seen]
  mov [terminal_option_mask],ax
  xor ax,ax
  clc
@@ -194,10 +212,12 @@ options_equal:
 options_process_token:
  cmp byte [options_token],'@'
  jne .help_start
- test byte [options_seen],16
+ test word [options_seen],16
  jnz .bad
  mov si,options_token+1
  mov di,options_config_stage
+ mov dx,16
+.path_start:
  cmp byte [si],0
  je .bad
 .config_copy:
@@ -214,14 +234,79 @@ options_process_token:
  inc di
  or al,al
  jnz .config_copy
- or byte [options_seen],16
+ or word [options_seen],dx
  jmp .good
 .help_start:
+ cmp word [options_token],'/E'
+ jne .entry_option
+ cmp byte [options_token+2],':'
+ jne .entry_option
+ test word [options_seen],64
+ jnz .bad
+ mov si,options_token+3
+ mov di,options_directory_stage
+ mov dx,64
+ jmp .path_start
+.entry_option:
+ cmp word [options_token],'/N'
+ jne .dial_option
+ cmp byte [options_token+2],':'
+ jne .dial_option
+ test word [options_seen],128
+ jnz .bad
+ mov si,options_token+3
+ cmp byte [si],0
+ je .bad
+ xor bx,bx
+.entry_digit:
+ lodsb
+ or al,al
+ jz .entry_done
+ sub al,'0'
+ cmp al,9
+ ja .bad
+ xor ah,ah
+ mov cx,ax
+ mov ax,bx
+ mov dx,10
+ mul dx
+ add ax,cx
+ cmp ax,200
+ ja .bad
+ mov bx,ax
+ jmp .entry_digit
+.entry_done:
+ or bx,bx
+ jz .bad
+ mov [options_entry_stage],bx
+ or word [options_seen],128
+ jmp .good
+.dial_option:
+ cmp word [options_token],'/C'
+ jne .dial_selector
+ cmp byte [options_token+2],':'
+ jne .dial_selector
+ test word [options_seen],256
+ jnz .bad
+ mov ax,options_codes_literal
+ call options_equal
+ jnc .codes_literal
+ mov ax,options_codes_legacy
+ call options_equal
+ jc .bad
+ mov word [options_codes_stage],1
+ jmp .codes_done
+.codes_literal:
+ mov word [options_codes_stage],0
+.codes_done:
+ or word [options_seen],256
+ jmp .good
+.dial_selector:
  cmp word [options_token],'/D'
  jne .help_table
  cmp byte [options_token+2],':'
  jne .help_table
- test byte [options_seen],32
+ test word [options_seen],32
  jnz .bad
  mov si,options_raw_token+3
  mov di,options_dial_stage
@@ -258,7 +343,7 @@ options_process_token:
  jmp .dial_copy
 .dial_done:
  mov byte [di],0
- or byte [options_seen],32
+ or word [options_seen],32
  jmp .good
 .help_table:
  mov si,options_help_table
@@ -285,9 +370,9 @@ options_process_token:
  jb .bad
  cmp al,'4'
  ja .bad
- test byte [options_seen],1
+ test word [options_seen],1
  jnz .bad
- or byte [options_seen],1
+ or word [options_seen],1
  sub al,'0'
  xor ah,ah
  mov [options_port],ax
@@ -303,9 +388,9 @@ options_process_token:
  add bx,6
  jmp .baud_loop
 .baud_found:
- test byte [options_seen],2
+ test word [options_seen],2
  jnz .bad
- or byte [options_seen],2
+ or word [options_seen],2
  mov ax,[bx+2]
  mov [options_baud_low],ax
  mov ax,[bx+4]
@@ -322,9 +407,9 @@ options_process_token:
  add bx,6
  jmp .flow_loop
 .flow_found:
- test byte [options_seen],8
+ test word [options_seen],8
  jnz .bad
- or byte [options_seen],8
+ or word [options_seen],8
  mov ax,[bx+2]
  mov [options_soft],ax
  mov ax,[bx+4]
@@ -361,9 +446,9 @@ options_process_token:
  jb .parity_loop
  jmp .bad
 .parity_ok:
- test byte [options_seen],4
+ test word [options_seen],4
  jnz .bad
- or byte [options_seen],4
+ or word [options_seen],4
  mov [options_parity],bx
 .good:
  xor ax,ax
@@ -376,13 +461,19 @@ options_process_token:
 
 SEGMENT _DATA public class=DATA use16
 global terminal_usage,terminal_config_path,terminal_option_mask,terminal_dial_target
+global terminal_directory_path,terminal_directory_entry,terminal_directory_codes
 terminal_config_path: times 64 db 0
 terminal_dial_target: times 64 db 0
+terminal_directory_path: times 64 db 0
+terminal_directory_entry: dw 0
+terminal_directory_codes: dw 0
 terminal_option_mask: dw 0
 terminal_usage:
  db 'PCPLUS terminal lab',13,10
  db 'Usage: TERMINAL [@FILE.PRM] [/D:target] [COM1..COM4] [baud] [serial] [flow]',13,10
  db 'Dial target: explicit, max 63 bytes; case preserved. Flow: NONE|SOFT|HARD.',13,10
+ db 'Directory: /E:FILE.DIR [/N:1..200]; omit /N to choose an entry.',13,10
+ db 'Directory codes: /C:LITERAL (default) or /C:LEGACY (A..J substitutions).',13,10
  db 'PRM path: explicit only, max 63 bytes; no spaces, quotes or wildcards.',13,10
  db 'Serial: 7/8 data, N/O/E/M/S parity, 1/2 stop; e.g. 8N1. Any option order.',13,10
  db 'Baud: 300 1200 2400 4800 9600 19200 38400 57600 115200',13,10
@@ -397,11 +488,16 @@ options_data: dw 0
 options_stop: dw 0
 options_soft: dw 0
 options_hard: dw 0
-options_seen: db 0
+options_seen: dw 0
 options_token: times 67 db 0
 options_raw_token: times 67 db 0
 options_config_stage: times 64 db 0
 options_dial_stage: times 64 db 0
+options_directory_stage: times 64 db 0
+options_entry_stage: dw 0
+options_codes_stage: dw 0
+options_codes_literal: db '/C:LITERAL',0
+options_codes_legacy: db '/C:LEGACY',0
 options_dial_punctuation: db '.:/-_@[]%?=&',0
 options_parities: db 'NOEMS'
 options_bases: dw 0x3f8,0x2f8,0x3e8,0x2e8

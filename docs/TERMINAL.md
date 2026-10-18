@@ -6,7 +6,7 @@ installation, or disassembler database. Its manifest records each source hash,
 executable hash and DS/SS group size.
 
 ```
-TERMINAL [@FILE.PRM] [/D:target] [COM1..COM4] [baud] [8N1] [NONE|SOFT|HARD]
+TERMINAL [@FILE.PRM] [/D:target | /E:FILE.DIR [/N:1..200]] [/C:LITERAL|LEGACY] [COM1..COM4] [baud] [8N1] [NONE|SOFT|HARD]
 ```
 
 Options may appear in any order, once per category. Defaults are COM1, 38400,
@@ -43,7 +43,7 @@ attribute, wrap and scrolling subset; complete PRM/application startup remains o
 * Actual linked transport instructions under a modeled UART/BIOS exercise
   binary RX/unread, full-capacity TX ring wrap/overflow, CTS/XON/XOFF, key
   acquisition/mapping, caller-cleanup conventions, timeout wrap and Alt-X.
-* Command-tail replay checks 233 inputs, all serial/flow combinations and
+* Command-tail replay checks 513 inputs, all serial/flow combinations and
   rejection without partial state mutation.
 * Recovered FF, SOH, VT and CAN controls have synthetic instruction-level tests,
   including ANSI erase/home, VT220 differences, mode-dependent branches and
@@ -81,3 +81,12 @@ profiles4 (VT220) and6 (ANSI), standard COM1..4 bindings and independent boolean
 flow flags, including both enabled. Other legacy bytes remain opaque.
 
 See [startup evidence and boundaries](STARTUP_CONFIGURATION.md).
+
+Directory selection is also available before UART startup:
+
+```text
+TERMINAL @PCPLUS.PRM /E:PCPLUS.DIR
+```
+
+See [live directory selection](DIRECTORY_LIVE.md) for browser controls, explicit
+literal/legacy targets, entry settings, DIRECT mode and unsupported bindings.

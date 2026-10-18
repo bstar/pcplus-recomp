@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "binary_sha256": "c2ece351584cc4a85c570bb35662f7c091742d197ec62b310a0a62f5dd4fc366",
+  "binary_sha256": "c7478d44faf5978f86f91af7cc2f25bf94a688b32e77c92afd07025e3670ba78",
   "inputs": 42,
   "cases": [
     {

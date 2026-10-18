@@ -6,6 +6,7 @@ CPU 8086
 %include "modem_import.inc"
 SEGMENT _TEXT public class=CODE use16
 extern terminal_option_mask,terminal_dial_target,terminal_modem_settings
+extern terminal_directory_mode
 extern terminal_clock_ticks,terminal_modem_send_start,terminal_modem_send_poll
 extern modem_expand_bounded,modem_response_slots
 extern modem_responses_reset_bounded,modem_responses_feed_bounded
@@ -36,10 +37,12 @@ global terminal_connection_exit
 ; Build every outgoing command before any transmission; CF1 means prepare error.
 terminal_connection_prepare:
  save
- test word [terminal_option_mask],32
+ test word [terminal_option_mask],96
  jz .success
  mov ax,ds
  mov es,ax
+ cmp word [terminal_directory_mode],1
+ je .find_rate
  mov al,[terminal_modem_settings+MI_PAUSE_CHARACTER]
  mov [terminal_modem_pause],al
  mov si,terminal_modem_settings+MI_INITIALIZATION
@@ -57,13 +60,9 @@ terminal_connection_prepare:
  call append_command
  jc .done
  mov si,terminal_dial_target
-.target:
- lodsb
- or al,al
- jz .suffix
- stosb
- jmp .target
-.suffix:
+ mov cx,64
+ call append_text
+ jc .done
  mov si,terminal_modem_settings+MI_DIAL_SUFFIX
  call append_command
  jc .done
@@ -74,6 +73,7 @@ terminal_connection_prepare:
  rep movsb
  call modem_responses_reset_bounded
  jc .done
+.find_rate:
  xor bx,bx
 .rate:
  mov ax,[connection_rates+bx]
@@ -101,9 +101,10 @@ terminal_connection_prepare:
  restore
 ; Source known bounded by decoded PRM. DI advances over expanded content only.
 append_command:
+ mov cx,25
+append_text:
  push di
  mov di,connection_scratch
- mov cx,25
  call expand
  pop di
  jc .return
@@ -137,6 +138,14 @@ terminal_connection_start:
  mov word [terminal_tx_count],0
  mov word [terminal_tx_head],0
  mov word [terminal_tx_tail],0
+ cmp word [terminal_directory_mode],1
+ jne .modem
+ mov word [connection_state],6
+ mov word [connection_status],1
+ mov byte [connection_carrier_seen],0
+ call terminal_connection_notice_restore
+ jmp .done
+.modem:
  call uart_clear_receive_buffer
  call modem_responses_reset_bounded
  call reset_clock
@@ -352,6 +361,10 @@ terminal_connection_poll:
 .finished:
  call uart_clear_receive_buffer
  mov word [connection_state],0
+ cmp word [connection_status],5
+ jne .done
+ mov si,message_disconnected
+ call terminal_connection_notice
 .done:
  cmp byte [connection_exit_pending],0
  je .return
@@ -375,6 +388,14 @@ terminal_connection_cancel:
  mov word [terminal_tx_count],0
  mov word [terminal_tx_head],0
  mov word [terminal_tx_tail],0
+ cmp word [terminal_directory_mode],1
+ jne .modem
+ mov word [connection_state],0
+ mov word [connection_status],5
+ mov si,message_disconnected
+ call terminal_connection_notice
+ jmp .done
+.modem:
  mov word [connection_status],4
  mov si,message_cancelled
  call terminal_connection_notice
@@ -475,3 +496,4 @@ message_failed: db 'Dial failed',0
 message_cancelled: db 'Cancelled',0
 message_hangup: db 'Hanging up',0
 message_offline: db 'Carrier lost',0
+message_disconnected: db 'Disconnected',0

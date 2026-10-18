@@ -1,0 +1,9 @@
+%define DL_ENTRY 0
+%define DL_MODE 2
+%define DL_PROTOCOL 4
+%define DL_DUPLEX 6
+%define DL_CODES 8
+%define DL_NAME 10
+%define DL_TARGET 35
+%define DL_SIZE 100
+%define DL_RESULT_SIZE 10

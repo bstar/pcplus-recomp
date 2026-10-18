@@ -1,0 +1,827 @@
+{
+  "passed": true,
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "cases": [
+    {
+      "case": "quickdial",
+      "token_hex": "",
+      "return_index": 0,
+      "output_length": 45
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "30",
+      "return_index": 0,
+      "output_length": 60
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "31",
+      "return_index": 1,
+      "output_length": 24
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "613162",
+      "return_index": 1,
+      "output_length": 33
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "323030",
+      "return_index": 200,
+      "output_length": 6
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "323031",
+      "return_index": 201,
+      "output_length": 0
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "2d31",
+      "return_index": 201,
+      "output_length": 0
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3635353337",
+      "return_index": 1,
+      "output_length": 20
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3635353336",
+      "return_index": 0,
+      "output_length": 60
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "203142",
+      "return_index": 1,
+      "output_length": 11
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313a4142",
+      "return_index": 1,
+      "output_length": 12
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "414231434a",
+      "return_index": 1,
+      "output_length": 58
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "4142",
+      "return_index": 0,
+      "output_length": 60
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "315a42",
+      "return_index": 1,
+      "output_length": 29
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "2b3142",
+      "return_index": 1,
+      "output_length": 8
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3137",
+      "return_index": 17,
+      "output_length": 9
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313832",
+      "return_index": 182,
+      "output_length": 11
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3833",
+      "return_index": 83,
+      "output_length": 18
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313037",
+      "return_index": 107,
+      "output_length": 22
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "30",
+      "return_index": 0,
+      "output_length": 29
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313939",
+      "return_index": 199,
+      "output_length": 18
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3732",
+      "return_index": 72,
+      "output_length": 17
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3833",
+      "return_index": 83,
+      "output_length": 7
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313932",
+      "return_index": 192,
+      "output_length": 26
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313739",
+      "return_index": 179,
+      "output_length": 6
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313737",
+      "return_index": 177,
+      "output_length": 14
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313734",
+      "return_index": 174,
+      "output_length": 11
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313230",
+      "return_index": 120,
+      "output_length": 5
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313538",
+      "return_index": 158,
+      "output_length": 8
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313932",
+      "return_index": 192,
+      "output_length": 12
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3639",
+      "return_index": 69,
+      "output_length": 19
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313135",
+      "return_index": 115,
+      "output_length": 7
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313233",
+      "return_index": 123,
+      "output_length": 13
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313433",
+      "return_index": 143,
+      "output_length": 23
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313536",
+      "return_index": 156,
+      "output_length": 17
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313231",
+      "return_index": 121,
+      "output_length": 24
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3335",
+      "return_index": 35,
+      "output_length": 9
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313435",
+      "return_index": 145,
+      "output_length": 18
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313232",
+      "return_index": 122,
+      "output_length": 6
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3135",
+      "return_index": 15,
+      "output_length": 13
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313337",
+      "return_index": 137,
+      "output_length": 20
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3538",
+      "return_index": 58,
+      "output_length": 20
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3535",
+      "return_index": 55,
+      "output_length": 16
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313737",
+      "return_index": 177,
+      "output_length": 21
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3438",
+      "return_index": 48,
+      "output_length": 12
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "33",
+      "return_index": 3,
+      "output_length": 27
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3736",
+      "return_index": 76,
+      "output_length": 8
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3237",
+      "return_index": 27,
+      "output_length": 19
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3631",
+      "return_index": 61,
+      "output_length": 6
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313432",
+      "return_index": 142,
+      "output_length": 12
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3638",
+      "return_index": 68,
+      "output_length": 8
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3436",
+      "return_index": 46,
+      "output_length": 7
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313637",
+      "return_index": 167,
+      "output_length": 20
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313932",
+      "return_index": 192,
+      "output_length": 13
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313233",
+      "return_index": 123,
+      "output_length": 29
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313730",
+      "return_index": 170,
+      "output_length": 28
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313833",
+      "return_index": 183,
+      "output_length": 26
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "37",
+      "return_index": 7,
+      "output_length": 28
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313437",
+      "return_index": 147,
+      "output_length": 5
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3139",
+      "return_index": 19,
+      "output_length": 13
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313934",
+      "return_index": 194,
+      "output_length": 7
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313634",
+      "return_index": 164,
+      "output_length": 6
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313834",
+      "return_index": 184,
+      "output_length": 5
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313034",
+      "return_index": 104,
+      "output_length": 27
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313238",
+      "return_index": 128,
+      "output_length": 17
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313337",
+      "return_index": 137,
+      "output_length": 22
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313934",
+      "return_index": 194,
+      "output_length": 14
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313939",
+      "return_index": 199,
+      "output_length": 29
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313432",
+      "return_index": 142,
+      "output_length": 15
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313734",
+      "return_index": 174,
+      "output_length": 20
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313930",
+      "return_index": 190,
+      "output_length": 24
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3735",
+      "return_index": 75,
+      "output_length": 26
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313234",
+      "return_index": 124,
+      "output_length": 18
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3234",
+      "return_index": 24,
+      "output_length": 7
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313935",
+      "return_index": 195,
+      "output_length": 5
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313439",
+      "return_index": 149,
+      "output_length": 5
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3739",
+      "return_index": 79,
+      "output_length": 14
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313336",
+      "return_index": 136,
+      "output_length": 8
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3838",
+      "return_index": 88,
+      "output_length": 28
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313433",
+      "return_index": 143,
+      "output_length": 25
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3936",
+      "return_index": 96,
+      "output_length": 22
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3438",
+      "return_index": 48,
+      "output_length": 24
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "37",
+      "return_index": 7,
+      "output_length": 11
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313035",
+      "return_index": 105,
+      "output_length": 26
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313132",
+      "return_index": 112,
+      "output_length": 19
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313831",
+      "return_index": 181,
+      "output_length": 9
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3130",
+      "return_index": 10,
+      "output_length": 9
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313037",
+      "return_index": 107,
+      "output_length": 23
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3639",
+      "return_index": 69,
+      "output_length": 13
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "33",
+      "return_index": 3,
+      "output_length": 18
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3531",
+      "return_index": 51,
+      "output_length": 25
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313035",
+      "return_index": 105,
+      "output_length": 14
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3335",
+      "return_index": 35,
+      "output_length": 11
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313832",
+      "return_index": 182,
+      "output_length": 25
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3633",
+      "return_index": 63,
+      "output_length": 19
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313239",
+      "return_index": 129,
+      "output_length": 24
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "33",
+      "return_index": 3,
+      "output_length": 27
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3634",
+      "return_index": 64,
+      "output_length": 24
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313730",
+      "return_index": 170,
+      "output_length": 19
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313531",
+      "return_index": 151,
+      "output_length": 16
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313630",
+      "return_index": 160,
+      "output_length": 23
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3831",
+      "return_index": 81,
+      "output_length": 20
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3237",
+      "return_index": 27,
+      "output_length": 21
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313738",
+      "return_index": 178,
+      "output_length": 22
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3638",
+      "return_index": 68,
+      "output_length": 19
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3837",
+      "return_index": 87,
+      "output_length": 29
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3439",
+      "return_index": 49,
+      "output_length": 22
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3737",
+      "return_index": 77,
+      "output_length": 7
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313530",
+      "return_index": 150,
+      "output_length": 16
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "38",
+      "return_index": 8,
+      "output_length": 20
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313937",
+      "return_index": 197,
+      "output_length": 9
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "3436",
+      "return_index": 46,
+      "output_length": 19
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313235",
+      "return_index": 125,
+      "output_length": 9
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313131",
+      "return_index": 111,
+      "output_length": 8
+    },
+    {
+      "case": "quickdial",
+      "token_hex": "313531",
+      "return_index": 151,
+      "output_length": 28
+    },
+    {
+      "case": "serial-apply",
+      "override": 0,
+      "events": [
+        [
+          "configure",
+          [
+            2,
+            6,
+            2,
+            2,
+            7,
+            1
+          ]
+        ]
+      ]
+    },
+    {
+      "case": "serial-apply",
+      "override": 3,
+      "events": [
+        [
+          "configure",
+          [
+            2,
+            6,
+            2,
+            2,
+            7,
+            1
+          ]
+        ]
+      ]
+    },
+    {
+      "case": "serial-apply",
+      "override": 4,
+      "events": [
+        [
+          "close",
+          [
+            2,
+            1,
+            0,
+            1,
+            8,
+            0
+          ]
+        ],
+        [
+          "configure",
+          [
+            3,
+            6,
+            2,
+            2,
+            7,
+            1
+          ]
+        ]
+      ]
+    },
+    {
+      "case": "serial-apply",
+      "override": 255,
+      "events": [
+        [
+          "close",
+          [
+            2,
+            1,
+            0,
+            1,
+            8,
+            0
+          ]
+        ],
+        [
+          "configure",
+          [
+            65534,
+            6,
+            2,
+            2,
+            7,
+            1
+          ]
+        ]
+      ]
+    },
+    {
+      "case": "modem-direct-control",
+      "stored_mode": 0,
+      "attempt_result": 0,
+      "actual_result": 0
+    },
+    {
+      "case": "modem-direct-control",
+      "stored_mode": 0,
+      "attempt_result": 1,
+      "actual_result": 1
+    },
+    {
+      "case": "modem-direct-control",
+      "stored_mode": 1,
+      "attempt_result": 0,
+      "actual_result": 1
+    },
+    {
+      "case": "modem-direct-control",
+      "stored_mode": 255,
+      "attempt_result": 0,
+      "actual_result": 1
+    },
+    {
+      "case": "postconnect-bindings",
+      "flags": 0
+    },
+    {
+      "case": "postconnect-bindings",
+      "flags": 3
+    },
+    {
+      "case": "postconnect-bindings",
+      "flags": 0
+    },
+    {
+      "case": "postconnect-bindings",
+      "flags": 2
+    }
+  ],
+  "scope": "Actual original ec61/stdlib, selected serial apply and postconnection binding fragments with synthetic records/codes. Record lookup, port services and two UI calls modeled; no private DIR/PRM or hardware."
+}

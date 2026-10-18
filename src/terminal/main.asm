@@ -14,6 +14,7 @@ extern terminal_baud_low,terminal_baud_high,terminal_parity,terminal_data_bits,t
 extern terminal_irq_vector,terminal_port_number,csi_unimplemented_service
 extern screen_attribute_cells,erase_attribute_values,erase_shadow_cells
 extern terminal_load_configuration
+extern terminal_select_directory
 extern terminal_connection_start,terminal_connection_receive
 extern connection_state,connection_result
 ; Open Watcom small-code consistency marker for the near-C DOS IO subset.
@@ -42,6 +43,14 @@ _small_code_:
  int 0x21
  jmp terminal_shutdown
 .configured:
+ call terminal_select_directory
+ or ax,ax
+ jz .load_configuration
+ cmp ax,1
+ jne .configuration_error
+ mov word [terminal_exit_code],0
+ jmp terminal_shutdown
+.load_configuration:
  call terminal_load_configuration
  or ax,ax
  jnz .configuration_error
@@ -134,7 +143,7 @@ _small_code_:
  jmp terminal_shutdown
 .configuration_error:
  mov dx,configuration_argument
- cmp ax,7
+ cmp ax,8
  ja .configuration_message
  mov bx,ax
  dec bx
@@ -188,6 +197,7 @@ missing_port: db 'Selected COM port is not listed by the BIOS.',13,10,'$'
 unsupported: db 13,10,'Unsupported terminal function; terminal stopped.',13,10,'$'
 configuration_messages: dw configuration_io,configuration_serial,configuration_flow
  dw configuration_profile,configuration_display,configuration_argument,configuration_modem
+ dw configuration_directory
 configuration_io: db 'Could not read the requested PCPLUS 2.01 configuration.',13,10,'$'
 configuration_serial: db 'Configuration has unsupported serial port or line settings.',13,10,'$'
 configuration_flow: db 'Configuration flow-control values must be 0 or 1.',13,10,'$'
@@ -195,5 +205,6 @@ configuration_profile: db 'Configuration terminal profile must be ANSI or VT220.
 configuration_display: db 'Configuration has unsupported display settings.',13,10,'$'
 configuration_argument: db 'Invalid configuration request.',13,10,'$'
 configuration_modem: db 'Dialing requires a valid explicit modem configuration.',13,10,'$'
+configuration_directory: db 'Could not select a supported directory entry.',13,10,'$'
 SEGMENT _BSS public align=16 class=BSS use16
 SEGMENT STACK stack align=16 class=STACK use16

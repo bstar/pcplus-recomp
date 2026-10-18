@@ -7,7 +7,7 @@ from unicorn.x86_const import UC_X86_REG_AX,UC_X86_REG_ES,UC_X86_REG_EFLAGS,UC_X
 from dos_image import DosImage
 ROOT=Path(__file__).resolve().parents[1]
 SERIAL_FIELDS=['terminal_baud_low','terminal_baud_high','terminal_parity','terminal_data_bits','terminal_stop_bits','terminal_irq_vector','terminal_port_number','uart_port_index','uart_irq_indices','uart_port_rbr','uart_port_thr','uart_port_ier','uart_port_lcr','uart_port_mcr','uart_port_lsr','uart_port_msr','uart_software_flow','uart_hardware_flow']
-FIELDS=SERIAL_FIELDS+['terminal_option_mask']
+FIELDS=SERIAL_FIELDS+['terminal_option_mask','terminal_directory_entry','terminal_directory_codes']
 RATES=[300,1200,2400,4800,9600,19200,38400,57600,115200]
 
 def fixture():
@@ -35,11 +35,11 @@ class Options(DosImage):
   assert self.uc.reg_read(UC_X86_REG_BP)==0xbabe and self.uc.reg_read(UC_X86_REG_SI)==0x1234 and self.uc.reg_read(UC_X86_REG_DI)==0x5678
   assert self.uc.reg_read(UC_X86_REG_ES)==0x6666
   return status,self.uc.reg_read(UC_X86_REG_EFLAGS)&1
- def snapshot(self):return {**{name:self.get(name) for name in FIELDS},'terminal_config_path':bytes(self.uc.mem_read(self.symbols['terminal_config_path'],64)),'terminal_dial_target':bytes(self.uc.mem_read(self.symbols['terminal_dial_target'],64))}
- def expected(self,port=1,rate=38400,parity=0,bits=8,stop=1,flow='NONE',mask=0,path=b'',dial=b''):
+ def snapshot(self):return {**{name:self.get(name) for name in FIELDS},'terminal_config_path':bytes(self.uc.mem_read(self.symbols['terminal_config_path'],64)),'terminal_dial_target':bytes(self.uc.mem_read(self.symbols['terminal_dial_target'],64)),'terminal_directory_path':bytes(self.uc.mem_read(self.symbols['terminal_directory_path'],64))}
+ def expected(self,port=1,rate=38400,parity=0,bits=8,stop=1,flow='NONE',mask=0,path=b'',dial=b'',directory=b'',entry=0,codes=0):
   base=[0x3f8,0x2f8,0x3e8,0x2e8][port-1];irq=[4,3,4,3][port-1]
   expected=dict(zip(SERIAL_FIELDS,[rate&65535,rate>>16,parity,bits,stop,irq+8,port,0,irq,base,base,base+1,base+3,base+4,base+5,base+6,int(flow=='SOFT'),int(flow=='HARD')]))
-  expected.update(terminal_option_mask=mask,terminal_config_path=path+bytes(64-len(path)),terminal_dial_target=dial+bytes(64-len(dial)))
+  expected.update(terminal_option_mask=mask,terminal_config_path=path+bytes(64-len(path)),terminal_dial_target=dial+bytes(64-len(dial)),terminal_directory_path=directory+bytes(64-len(directory)),terminal_directory_entry=entry,terminal_directory_codes=codes)
   assert self.snapshot()==expected,(self.snapshot(),expected)
 
 def main():
@@ -74,6 +74,7 @@ def main():
   for index,name in enumerate(FIELDS):o.put(name,0xa500+index)
   o.uc.mem_write(o.symbols['terminal_config_path'],bytes(range(64)))
   o.uc.mem_write(o.symbols['terminal_dial_target'],bytes(range(64,128)))
+  o.uc.mem_write(o.symbols['terminal_directory_path'],bytes(range(128,192)))
   before=o.snapshot()
   for data in [b'COM0',b'COM5',b'COM11',b'14400',b'0',b'9601',b'8Z1',b'6N1',b'8N0',b'8N3',b'SOFTWARE',b'NONE HARD',b'COM2 COM3',b'9600 300',b'8N1 7E2',b'COM2 115200 8N1 JUNK',b'x'*16,b'\0',b'\r',b'\xff',b'--unknown',b'/COM2']:
    assert o.parse(data)==(2,1),(data,o.parse(data));assert o.snapshot()==before;count[0]+=1
@@ -142,6 +143,60 @@ def main():
    assert o.parse(tail)==(1,1) and o.snapshot()==before;count[0]+=1
   assert o.parse(b'8N1')==(0,0);o.expected(mask=4);count[0]+=1
  check('dial-duplicates-unsafe-input-help-atomic-global-rollback',dial_rollback)
+ def directories():
+  o=Options(binary,map_path)
+  assert o.get('terminal_directory_entry')==0 and o.snapshot()['terminal_directory_path']==bytes(64)
+  paths=[b'PCPLUS.DIR',b'C:\\PCPLUS\\BBS.DIR',b'D:FILE.DIR',b'.\\LOCAL.DIR',b'..\\OLD\\PCPLUS.DIR',b'/LOCAL/BBS.DIR',b'X'*59+b'.DIR']
+  for path in paths:
+   for selector in [b'/E:',b'/e:']:
+    assert o.parse(selector+path.lower())==(0,0);o.expected(mask=64,directory=path);count[0]+=1
+   assert o.parse(b'@local.prm /e:'+path.lower()+b' /n:0200 COM2 19200 HARD')==(0,0)
+   o.expected(port=2,rate=19200,flow='HARD',mask=219,path=b'LOCAL.PRM',directory=path,entry=200);count[0]+=1
+  for value in range(1,201):
+   assert o.parse(f'/N:{value}'.encode())==(0,0);o.expected(mask=128,entry=value);count[0]+=1
+  for token in [b'/n:00001',b'/N:'+b'0'*62+b'1']:
+   assert o.parse(token)==(0,0);o.expected(mask=128,entry=1);count[0]+=1
+  assert o.parse(b'/E:'+b'x'*63+b' '*61)==(0,0);o.expected(mask=64,directory=b'X'*63);count[0]+=1
+  # All eight mask bits remain representable in the exported WORD. Prerequisite
+  # and selector conflict rules belong to the later application validation.
+  assert o.parse(b'COM1 38400 8N1 NONE @A.PRM /D:Case /E:B.DIR /N:1')==(0,0)
+  o.expected(mask=255,path=b'A.PRM',dial=b'Case',directory=b'B.DIR',entry=1);count[0]+=1
+  assert o.parse(b'/E:B.DIR')==(0,0);o.expected(mask=64,directory=b'B.DIR');count[0]+=1
+  assert o.parse(b'')==(0,0);o.expected();count[0]+=1
+ check('directory-path-bounds-all200-indices-browser-default-and-full-mask',directories)
+ def directory_rollback():
+  o=Options(binary,map_path)
+  assert o.parse(b'@KEEP.PRM /E:KEEP.DIR /N:199 /D:KeepCase SOFT')==(0,0)
+  before=o.snapshot()
+  bad=[b'/E:',b'/E:'+b'A'*64,b'/E:*.DIR',b'/E:FILE?.DIR',b'/E:"BAD.DIR"',b"/E:'BAD.DIR'",b'/E:bad name.dir',b'/E:bad\0.dir',b'/E:bad\x7f.dir',b'/E:bad\xff.dir',b'/E:A.DIR /e:B.DIR',b'/E:A.DIR /N:1 /N:2',b'/N:',b'/N:0',b'/N:0000',b'/N:201',b'/N:65536',b'/N:65537',b'/N:999999999999999999999999999999999999999999999999999999999999999',b'/N:99999999999999999999999999999999999999999999999999999999999999',b'/N:-1',b'/N:+1',b'/N:1a',b'/N:1.0',b'/N:1:2',b'COM2 /E:NEW.DIR /N:200 JUNK']
+  for tail in bad:
+   assert o.parse(tail)==(2,1),(tail,'unexpected result')
+   assert o.snapshot()==before,tail;count[0]+=1
+  for tail in [b'/E:NEW.DIR /N:1 /?',b'COM3 @NEW.PRM /E:NEW.DIR /N:200 HELP']:
+   assert o.parse(tail)==(1,1) and o.snapshot()==before;count[0]+=1
+  assert o.parse(b'/N:200')==(0,0);o.expected(mask=128,entry=200);count[0]+=1
+ check('directory-index-invalid-duplicate-overflow-help-and-atomic-rollback',directory_rollback)
+ def directory_codes():
+  o=Options(binary,map_path)
+  assert o.get('terminal_directory_codes')==0
+  for token,codes in [(b'/C:LITERAL',0),(b'/c:literal',0),(b'/C:LEGACY',1),(b'/c:LeGaCy',1)]:
+   assert o.parse(token)==(0,0);o.expected(mask=256,codes=codes);count[0]+=1
+   assert o.parse(b'@A.PRM /E:B.DIR /N:2 '+token)==(0,0)
+   o.expected(mask=464,path=b'A.PRM',directory=b'B.DIR',entry=2,codes=codes);count[0]+=1
+  assert o.parse(b'COM1 38400 8N1 NONE @A.PRM /D:Case /E:B.DIR /N:1 /C:LEGACY')==(0,0)
+  o.expected(mask=511,path=b'A.PRM',dial=b'Case',directory=b'B.DIR',entry=1,codes=1);count[0]+=1
+  assert o.parse(b'38400 8N1 NONE @A.PRM /D:Case /E:B.DIR /N:1 /C:LEGACY')==(0,0)
+  o.expected(mask=510,path=b'A.PRM',dial=b'Case',directory=b'B.DIR',entry=1,codes=1);count[0]+=1
+  assert o.parse(b'/E:B.DIR')==(0,0);o.expected(mask=64,directory=b'B.DIR');count[0]+=1
+  assert o.parse(b'')==(0,0);o.expected();count[0]+=1
+  assert o.parse(b'/E:KEEP.DIR /N:200 /C:LEGACY @KEEP.PRM /D:KeepCase HARD')==(0,0)
+  before=o.snapshot()
+  for token in [b'/C:',b'/C:OTHER',b'/C:0',b'/C:1',b'/C:LITERAL /C:LEGACY',b'/C:LEGACY /c:legacy',b'/C:legacy junk',b'@NEW.PRM /E:NEW.DIR /C:literal /N:0',b'/C:legacY!']:
+   assert o.parse(token)==(2,1) and o.snapshot()==before;count[0]+=1
+  for token in [b'/C:LITERAL /?',b'/E:NEW.DIR /C:literal HELP']:
+   assert o.parse(token)==(1,1) and o.snapshot()==before;count[0]+=1
+  assert o.parse(b'/D:Case')==(0,0);o.expected(mask=32,dial=b'Case');count[0]+=1
+ check('literal-default-legacy-explicit-wordmask511-rollback-and-reset',directory_codes)
  out=ROOT/'build/terminal-options';out.mkdir(parents=True,exist_ok=True)
  result={'binary_sha256':hashlib.sha256(binary.read_bytes()).hexdigest(),'options_source_sha256':hashlib.sha256((ROOT/'src/terminal/options.asm').read_bytes()).hexdigest(),'passed':True,'cases':cases,'inputs':count[0],'scope':'Actual linked source-only 8086 option parser; command tails synthetic, every interrupt/port-IO forbidden, no UART installation.'}
  (out/'checks.json').write_text(json.dumps(result,indent=2)+'\n')

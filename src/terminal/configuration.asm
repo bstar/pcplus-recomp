@@ -3,9 +3,13 @@ BITS 16
 CPU 8086
 %include "terminal_import.inc"
 %include "modem_import.inc"
+%include "directory_live.inc"
 SEGMENT _TEXT public class=CODE use16
 extern _terminal_import_read,terminal_config_path,terminal_option_mask
 extern _terminal_startup_read,terminal_connection_prepare
+extern _directory_live_read,terminal_directory_choose
+extern terminal_directory_path,terminal_directory_entry,terminal_directory_codes
+extern terminal_dial_target
 extern terminal_port_number,terminal_baud_low,terminal_baud_high
 extern terminal_parity,terminal_data_bits,terminal_stop_bits,terminal_irq_vector
 extern uart_port_index,uart_irq_indices,uart_port_rbr,uart_port_thr,uart_port_ier
@@ -19,6 +23,34 @@ extern attributes_color_mode,terminal_dec_keys,terminal_backspace_mode_9058
 extern attributes_bold_active,attributes_blink_active,attributes_reverse_active
 
 global terminal_load_configuration,terminal_apply_configuration
+global terminal_select_directory
+; AX0 continue / AX1 user cancelled / AX8 invalid selectors or browser error.
+; No UART access. The optional browser owns and restores its text window.
+terminal_select_directory:
+ test word [terminal_option_mask],64
+ jnz .directory
+ test word [terminal_option_mask],384
+ jnz .invalid
+ xor ax,ax
+ ret
+.directory:
+ test word [terminal_option_mask],16
+ jz .invalid
+ test word [terminal_option_mask],32
+ jnz .invalid
+ cmp word [terminal_directory_entry],0
+ jne .selected
+ call terminal_directory_choose
+ cmp ax,2
+ jae .invalid
+ ret
+.selected:
+ xor ax,ax
+ ret
+.invalid:
+ mov ax,8
+ ret
+
 terminal_load_configuration:
  push bp
  push si
@@ -36,6 +68,8 @@ terminal_load_configuration:
  push ds
  pop es
  cld
+ test word [terminal_option_mask],64
+ jnz .directory
  mov ax,terminal_configuration_io
  push ax
  test word [terminal_option_mask],32
@@ -48,6 +82,42 @@ terminal_load_configuration:
  push ax
  call _terminal_startup_read
  add sp,8
+ jmp .loaded
+.directory:
+ mov ax,terminal_directory_io
+ push ax
+ mov ax,terminal_directory_plan
+ push ax
+ mov ax,terminal_modem_settings
+ push ax
+ mov ax,terminal_configuration_values
+ push ax
+ push word [terminal_directory_codes]
+ push word [terminal_directory_entry]
+ mov ax,terminal_directory_path
+ push ax
+ mov ax,terminal_config_path
+ push ax
+ call _directory_live_read
+ add sp,16
+ mov [terminal_directory_status],ax
+ or ax,ax
+ jz .directory_loaded
+ mov ax,8
+ jmp .loaded
+.directory_loaded:
+ push ds
+ pop es
+ cld
+ mov ax,[terminal_directory_plan+DL_MODE]
+ mov [terminal_directory_mode],ax
+ mov ax,[terminal_directory_plan+DL_PROTOCOL]
+ mov [terminal_directory_protocol],ax
+ mov si,terminal_directory_plan+DL_TARGET
+ mov di,terminal_dial_target
+ mov cx,32
+ rep movsw
+ xor ax,ax
  jmp .loaded
 .serial_only:
  mov ax,terminal_configuration_values
@@ -161,7 +231,14 @@ terminal_apply_configuration:
 SEGMENT _DATA public class=DATA use16
 global terminal_configuration_status,terminal_configuration_io,terminal_configuration_values
 global terminal_modem_settings
+global terminal_directory_plan,terminal_directory_io,terminal_directory_status
+global terminal_directory_mode,terminal_directory_protocol
 terminal_configuration_status: dw 0
 terminal_configuration_io: times 8 db 0
 terminal_configuration_values: times TI_SIZE db 0
 terminal_modem_settings: times MI_SIZE db 0
+terminal_directory_plan: times DL_SIZE db 0
+terminal_directory_io: times DL_RESULT_SIZE db 0
+terminal_directory_status: dw 0
+terminal_directory_mode: dw 0
+terminal_directory_protocol: dw 0

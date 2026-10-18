@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "84f502735fd9e87ff4d22ff58702bdedf01847e6c53b3b4442902d490a77a0f2",
+  "scope": "Actual source-only DOS original quickdial and bounded literal/legacy number expansion; no UART or timing."
+}

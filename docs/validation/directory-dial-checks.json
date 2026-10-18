@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "binary_sha256": "84f502735fd9e87ff4d22ff58702bdedf01847e6c53b3b4442902d490a77a0f2",
+  "cases": [
+    {
+      "case": "cdecl-literal-and-legacy-random-atomic-expansion",
+      "inputs": 512,
+      "passed": true
+    },
+    {
+      "case": "uppercase-code-range-nonrecursive-content-and-sixty-byte-boundary",
+      "inputs": 4,
+      "passed": true
+    },
+    {
+      "case": "malformed-mode-overflow-pointer-errors-and-literal-unused-header",
+      "inputs": 8,
+      "passed": true
+    },
+    {
+      "case": "actual-original-quickdial-prefix-record-number-suffix-and-inplace-uppercase",
+      "inputs": 1,
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked original quickdial plus bounded maintained C ABI number helper; synthetic in-memory records, no directory/PRM/UART."
+}

@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "selection_bytes": 366,
+  "page_bytes": 1394,
+  "real_DOS_checks": 10,
+  "injected_service_checks": 34,
+  "selected_entries_tested": 200,
+  "page_start_positions_tested": 200,
+  "sources": {
+    "src/directory/directory_dos.c": "2e39893159d4c3744c58047500a528089607671555af98ba85475950c5a9b887",
+    "src/directory/directory_dos.h": "4e5c3d971839de9899f2c0927d1bf8c5723ae14d2a123590381fd5706db5e72b",
+    "src/directory/directory_dos.inc": "aa272682259fe6bceb65d73a55d3fdf6f2a718fa8adc6a6f002fad0bf6ab9773",
+    "standalone/check_directory_dos.py": "76f9509f2165b1e3cd19bf768c7426694df066e738681e54e2919f8853079dc9"
+  },
+  "binary_sha256": {
+    "DIRREAL.EXE": "ad5ccee29b431477aaf42b61d0a0c5786f9e3bb4cf3299a667920f1ce1b75eee",
+    "DIRFAULT.EXE": "115047190a04cd5ff00f5f48b7b2fc95aaf39ebc458c4fa0d336f798c1bc6a25"
+  },
+  "synthetic_files_unchanged": {
+    "NORMAL.DIR": "f3247147cc3cbade686171f0c1479b68a9deaa6ccb2a32ba19012b652df97458",
+    "SHORT.DIR": "92bb54b14b4edbc50181b2cda5586019b86d35745e1e85dacb64c38833c7fb7f",
+    "LONG.DIR": "ad56c55e95864d4f24d1a4c18630d8158b5ca7a9b85f18b974da53d3d111e0b8",
+    "EMPTY.DIR": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "scope": "Actual DOS8086 streaming selected-entry/page IO with synthetic files; separate actual compiled backend has declared injected DOS open/read/close faults. No originals, private directories, semantic/UI/password display or file writes from reader."
+}

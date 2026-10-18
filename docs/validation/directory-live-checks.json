@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "binary_sha256": "c7478d44faf5978f86f91af7cc2f25bf94a688b32e77c92afd07025e3670ba78",
+  "inputs": 308,
+  "cases": [
+    {
+      "case": "all200-entry-numbers-eight-cdecl-arguments-and-exact-three-plan-bytes",
+      "inputs": 200,
+      "passed": true
+    },
+    {
+      "case": "record-overrides-all-line-settings-and-DEFAULT-retains-only-PRM-port",
+      "inputs": 25,
+      "passed": true
+    },
+    {
+      "case": "actual-ASM-number-helper-literal-case-and-explicit-legacy-sixty-byte-expansion",
+      "inputs": 3,
+      "passed": true
+    },
+    {
+      "case": "DIRECT-empty-target-skips-modem-decode-and-number-expansion",
+      "inputs": 1,
+      "passed": true
+    },
+    {
+      "case": "unsupported-bindings-half-mode-serial-malformed-fields-target-and-modem-atomic-rejections",
+      "inputs": 27,
+      "passed": true
+    },
+    {
+      "case": "both-file-boundary-status-details-close-errors-and-three-plan-rollback",
+      "inputs": 11,
+      "passed": true
+    },
+    {
+      "case": "null-near-wrap-and-overlapping-output-result-path-guards-plus-optional-result",
+      "inputs": 21,
+      "passed": true
+    },
+    {
+      "case": "actual-CLI-plus-directory-loader-and-all16-category-override-combinations",
+      "inputs": 16,
+      "passed": true
+    },
+    {
+      "case": "per-digit-entry-range-check-rejects-long-or-out-of-range-numbers",
+      "inputs": 4,
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked directory_live C, serial/modem validators, bounded number ASM, CLI and configuration/connection preparation. Only explicit PRM/directory IO calls modeled; synthetic records/header/PRM, every interrupt and port IO forbidden. Real DOS readers/browser tested separately."
+}

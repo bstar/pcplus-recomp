@@ -5,7 +5,7 @@
       "case": "fast-connect-banner",
       "passed": true,
       "checks": {
-        "DOS_normal_exit": true,
+        "DOS_expected_exit": true,
         "hardware_restored": true,
         "PRM_unchanged": true,
         "binary_unchanged": true,
@@ -21,8 +21,10 @@
         "ATDCaseTest:23"
       ],
       "errors": [],
-      "seconds": 5.073,
-      "binary_sha256": "c2ece351584cc4a85c570bb35662f7c091742d197ec62b310a0a62f5dd4fc366",
+      "seconds": 5.075,
+      "binary_sha256": "c7478d44faf5978f86f91af7cc2f25bf94a688b32e77c92afd07025e3670ba78",
+      "command": "@D:\\TEST.PRM /D:CaseTest:23",
+      "expected_exit": 0,
       "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
     },
     {
@@ -30,7 +32,7 @@
       "passed": true,
       "checks": {
         "configured_abort_reached_wire": true,
-        "DOS_normal_exit": true,
+        "DOS_expected_exit": true,
         "hardware_restored": true,
         "PRM_unchanged": true,
         "binary_unchanged": true,
@@ -43,8 +45,10 @@
         "ATDCaseTest:23"
       ],
       "errors": [],
-      "seconds": 4.121,
-      "binary_sha256": "c2ece351584cc4a85c570bb35662f7c091742d197ec62b310a0a62f5dd4fc366",
+      "seconds": 4.122,
+      "binary_sha256": "c7478d44faf5978f86f91af7cc2f25bf94a688b32e77c92afd07025e3670ba78",
+      "command": "@D:\\TEST.PRM /D:CaseTest:23",
+      "expected_exit": 0,
       "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
     },
     {
@@ -52,7 +56,7 @@
       "passed": true,
       "checks": {
         "configured_abort_reached_wire": true,
-        "DOS_normal_exit": true,
+        "DOS_expected_exit": true,
         "hardware_restored": true,
         "PRM_unchanged": true,
         "binary_unchanged": true,
@@ -65,8 +69,10 @@
         "ATDCaseTest:23"
       ],
       "errors": [],
-      "seconds": 4.121,
-      "binary_sha256": "c2ece351584cc4a85c570bb35662f7c091742d197ec62b310a0a62f5dd4fc366",
+      "seconds": 4.122,
+      "binary_sha256": "c7478d44faf5978f86f91af7cc2f25bf94a688b32e77c92afd07025e3670ba78",
+      "command": "@D:\\TEST.PRM /D:CaseTest:23",
+      "expected_exit": 0,
       "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
     },
     {
@@ -74,7 +80,7 @@
       "passed": true,
       "checks": {
         "configured_hangup_reached_wire": true,
-        "DOS_normal_exit": true,
+        "DOS_expected_exit": true,
         "hardware_restored": true,
         "PRM_unchanged": true,
         "binary_unchanged": true,
@@ -90,8 +96,10 @@
         "ATDCaseTest:23"
       ],
       "errors": [],
-      "seconds": 5.323,
-      "binary_sha256": "c2ece351584cc4a85c570bb35662f7c091742d197ec62b310a0a62f5dd4fc366",
+      "seconds": 5.324,
+      "binary_sha256": "c7478d44faf5978f86f91af7cc2f25bf94a688b32e77c92afd07025e3670ba78",
+      "command": "@D:\\TEST.PRM /D:CaseTest:23",
+      "expected_exit": 0,
       "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
     },
     {
@@ -99,7 +107,7 @@
       "passed": true,
       "checks": {
         "configured_abort_reached_wire": true,
-        "DOS_normal_exit": true,
+        "DOS_expected_exit": true,
         "hardware_restored": true,
         "PRM_unchanged": true,
         "binary_unchanged": true,
@@ -118,10 +126,12 @@
         "ATDCaseTest:23"
       ],
       "errors": [],
-      "seconds": 8.077,
-      "binary_sha256": "c2ece351584cc4a85c570bb35662f7c091742d197ec62b310a0a62f5dd4fc366",
+      "seconds": 8.08,
+      "binary_sha256": "c7478d44faf5978f86f91af7cc2f25bf94a688b32e77c92afd07025e3670ba78",
+      "command": "@D:\\TEST.PRM /D:CaseTest:23",
+      "expected_exit": 0,
       "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
     }
   ],
-  "binary_sha256": "c2ece351584cc4a85c570bb35662f7c091742d197ec62b310a0a62f5dd4fc366"
+  "binary_sha256": "c7478d44faf5978f86f91af7cc2f25bf94a688b32e77c92afd07025e3670ba78"
 }

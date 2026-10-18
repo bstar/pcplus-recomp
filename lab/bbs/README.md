@@ -83,3 +83,13 @@ Current primary cases in the matrix cover all three real local servers through
 this path. The retained serial capture proves the command prefix; server/menu
 audits verify successful navigation rather than assuming normal exit is enough.
 See [connection controller](../../docs/CONNECTION.md) for policy and boundaries.
+
+## Native directory regression
+
+`--directory-fixture --directory-browser --entry 3` launches the native
+read-only chooser with no `/N` or `/D`, then selects entry3 using Down/Down/Enter.
+The synthetic PRM uses COM1/38400 while that record selects COM2/19200. Current
+primary matrix cases prove actual configured ATZ/ATD output and subsequent
+message/file navigation on all three local servers. Both input-file hashes and
+independent hardware snapshots remain unchanged. `--directory-fixture` without
+`--directory-browser` instead uses explicit `/N` selection.

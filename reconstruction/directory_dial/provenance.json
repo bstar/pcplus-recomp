@@ -1,0 +1,97 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "ranges": [
+    {
+      "source": "expand_original.asm",
+      "context": "overlay5",
+      "start": 60513,
+      "end": 60913,
+      "size": 400,
+      "sha256": "2ba00c96f6b78ee23ed89b603bab70123f1c64c6801db2b34d49aa5c47bceb89",
+      "source_file_offset": 70241
+    },
+    {
+      "source": "uppercase.asm",
+      "context": "resident",
+      "start": 37160,
+      "end": 37190,
+      "size": 30,
+      "sha256": "3299a60b2a07441474a86c70a338c58e3cf407df6850dc9799822b8dd9610210",
+      "source_file_offset": 41768
+    },
+    {
+      "source": "length.asm",
+      "context": "resident",
+      "start": 36120,
+      "end": 36147,
+      "size": 27,
+      "sha256": "feaf2f2cbbdb93b3dcb85e3c8584eaf239cb48d619549f99e746423641c62a9d",
+      "source_file_offset": 40728
+    },
+    {
+      "source": "integer.asm",
+      "context": "resident",
+      "start": 42958,
+      "end": 43042,
+      "size": 84,
+      "sha256": "ca547c2d88206de485e20f717617be4af319036d63c65a0c2c54c1227719f612",
+      "source_file_offset": 47566
+    },
+    {
+      "source": "append.asm",
+      "context": "resident",
+      "start": 38994,
+      "end": 39047,
+      "size": 53,
+      "sha256": "7e1708e3d7f38acfe476ff201246c2051008ee1574a071d7cc4e48ae032d0726",
+      "method": "Nix ndisasm of verified original; no retained Ghidra function at entry.",
+      "source_file_offset": 43602
+    },
+    {
+      "source": "apply_fragment.asm",
+      "context": "overlay5",
+      "start": 59114,
+      "end": 59180,
+      "size": 66,
+      "sha256": "f4e6d574a8e46e9a11a8c083dcdca4108cf8f91481f3a8c78992b45050e02e11",
+      "omf_bridge": "Adds maintained RET after exact internal span.",
+      "source_file_offset": 68842
+    }
+  ],
+  "limitations": [
+    "Original ec61 mutates quick token and selected number, relies on external selected-record load and NUL-terminated buffers.",
+    "Maintained bounded number expansion is separate and rejects overflow instead of original truncation."
+  ],
+  "rea_exports": [
+    {
+      "context": "pcplus-overlay-anchored-05",
+      "entry": "0x1ec61",
+      "evidence_id": "ev_31c74a3a2ee99b7b7f9df548c1d0c0c0365ef6e32fdade436978005929fd3b6b"
+    },
+    {
+      "context": "pcplus-overlay-anchored-05",
+      "entry": "0x1e5e3",
+      "evidence_id": "ev_39a79d6b6cc8461be5670ec966b27debcb038be51912017ad7373672722d08c6"
+    },
+    {
+      "context": "pcplus-overlay-anchored-04",
+      "entry": "0x1d4d0",
+      "evidence_id": "ev_f036ab3465803d9a80443a35288a0b90a521ce636c225f4f110b7c49cf621ac4"
+    },
+    {
+      "context": "pcplus-main",
+      "entry": "0x19128",
+      "evidence_id": "ev_af474791eca9acf2db71969ff3c292523e8ed769a7f02f274f430beb977ddc2c"
+    },
+    {
+      "context": "pcplus-main",
+      "entry": "0x18d18",
+      "evidence_id": "ev_f401e44089e25be23b63e87a5be6d4b200eb349a0b2f52ed115931ad96b2e0e2"
+    },
+    {
+      "context": "pcplus-main",
+      "entry": "0x1a7ce",
+      "evidence_id": "ev_2030bb33ad7970609e50089dbf88652ffca72d3de0d1526dd5bd0d6358f9e69e"
+    }
+  ]
+}

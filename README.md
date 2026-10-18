@@ -46,7 +46,9 @@ In DOS, `TERMINAL COM1 38400 8N1 SOFT` selects software flow control.
 2.01 configuration; serial CLI categories override it. See
 [startup configuration](docs/STARTUP_CONFIGURATION.md).
 `TERMINAL @PCPLUS.PRM /D:bbs.example:23` uses validated configured initialization,
-dial prefix/suffix and response strings. Escape cancels, Alt-H hangs up, and
+dial prefix/suffix and response strings. `TERMINAL @PCPLUS.PRM /E:PCPLUS.DIR` opens a native
+read-only directory browser and uses the selected entry; see
+[live directory selection](docs/DIRECTORY_LIVE.md). Escape cancels, Alt-H hangs up, and
 Alt-D repeats the target after cleanup. See [connection management](docs/CONNECTION.md).
 Use `HARD` for RTS/CTS or `NONE` to disable flow control; match the modem's
 settings. Alt-X exits. ASCII keys and four cursor keys are connected to the

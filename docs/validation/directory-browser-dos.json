@@ -1,0 +1,57 @@
+{
+  "passed": true,
+  "binary_sha256": "8bd6d778913e33b8e9263e6dfbeecaba16d9c02e0e1231ce24f6891616b6c9de",
+  "cases": [
+    {
+      "case": "navigation",
+      "passed": true,
+      "status": 0,
+      "entry": 11,
+      "BIOS_cursor": 1809,
+      "screen_shape_and_video_segment_restored": true,
+      "legacy": false,
+      "directory_unchanged": true
+    },
+    {
+      "case": "cancel",
+      "passed": true,
+      "status": 1,
+      "entry": 0,
+      "BIOS_cursor": 1809,
+      "screen_shape_and_video_segment_restored": true,
+      "legacy": false,
+      "directory_unchanged": true
+    },
+    {
+      "case": "last-entry",
+      "passed": true,
+      "status": 0,
+      "entry": 200,
+      "BIOS_cursor": 1809,
+      "screen_shape_and_video_segment_restored": true,
+      "legacy": false,
+      "directory_unchanged": true
+    },
+    {
+      "case": "legacy",
+      "passed": true,
+      "status": 0,
+      "entry": 2,
+      "BIOS_cursor": 1809,
+      "screen_shape_and_video_segment_restored": true,
+      "legacy": true,
+      "directory_unchanged": true
+    },
+    {
+      "case": "file-error",
+      "passed": true,
+      "status": 2,
+      "entry": 0,
+      "BIOS_cursor": 1809,
+      "screen_shape_and_video_segment_restored": true,
+      "legacy": false,
+      "directory_unchanged": false
+    }
+  ],
+  "scope": "Actual DOSBox-X BIOS keyboard/video, complete compiled DOS directory reader and recovered snapshots. Synthetic directory only; no UART or original/private data."
+}

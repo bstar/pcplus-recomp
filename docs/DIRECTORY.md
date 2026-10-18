@@ -6,8 +6,10 @@ string terminators, unrecognized enum values and explicitly accepted trailing
 data. It does not read files implicitly. No user's dialing directory, telephone
 numbers, passwords or DTP contents were used to recover or test this layout.
 
-This is a host-side format recovery, not the original DOS directory UI, dialing
-engine, script interpreter or their integration into TERMINAL.EXE. DTP compatibility
+The raw codec is a host-side format recovery. A maintained DOS streaming reader,
+startup browser and selected-entry connection path are now integrated into
+TERMINAL.EXE; see [live directory selection](DIRECTORY_LIVE.md). Complete original
+directory editing, accounting and script/key integration remain open. DTP compatibility
 has not been established. There is no proved signature/version field: file length
 alone cannot identify this revision or distinguish a directory from unrelated data.
 
@@ -150,8 +152,9 @@ Saved exports are under ignored `analysis/pcplus-overlay-anchored-{04,05,06,08}`
 and`analysis/pcplus-main`; original startup data mapping begins at file 153936.
 Only hashes, the inferred schema and newly authored code are public inputs.
 
-Remaining work includes a DOS-side lossless IO adapter and directory selection UI,
-connection/redial state machine, date/count update integration, supported protocol
-and terminal validation, note and keyboard editors, META file support and ASPECT
+The maintained DOS adapter and startup browser now select supported records,
+apply serial/profile fields and connect in MODEM or DIRECT mode. Remaining work
+includes full directory editing, automatic redial cycles, date/count updates,
+complete protocol/terminal coverage, note/keyboard editors, META and ASPECT
 script/password bindings. Other PCPlus versions or DTP layouts require independent
 identification and proof. No private directory was modified.

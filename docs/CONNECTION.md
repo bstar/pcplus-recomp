@@ -121,3 +121,8 @@ Physical UART/modem testing, automatic selected-number redial cycles,
 directory/settings UI, complete initialization/carrier policy, configurable
 modern pacing, transfers, scripts and Host mode remain open. See the full
 [plan](../PLAN.md); passing these tests does not complete PCPlus reconstruction.
+
+The terminal also supports [read-only directory selection](DIRECTORY_LIVE.md):
+selected records override PRM serial/profile settings, support MODEM or DIRECT,
+and choose literal/legacy target interpretation explicitly. Original automatic
+selection cycles and the complete directory/settings editor remain open.
