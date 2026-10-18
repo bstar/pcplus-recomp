@@ -37,7 +37,7 @@ def probe_child():
  subprocess.run(['nasm','-f','obj',str(OUT/'probe.asm'),'-o',str(OUT/'probe.obj')],check=True)
  subprocess.run(['wlink','system','dos','option','quiet','name',str(OUT/'PROBE.EXE'),'file',str(OUT/'probe.obj')],check=True)
  return (OUT/'PROBE.EXE').read_bytes()
-def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate=1200,expected=0,ready=True,post_echo=False):
+def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate=1200,expected=0,ready=True,post_echo=False,rate_mask=None,line_mask=None):
  directory=OUT/name
  if directory.exists():shutil.rmtree(directory)
  directory.mkdir(parents=True);data=image() if payload is None else payload
@@ -140,8 +140,9 @@ exit
   checks['exact_direct_child_tail']=tail[:len(expected_tail)+2]==bytes([len(expected_tail)])+expected_tail+b'\r'
  samples=struct.unpack('<6H',(directory/'WATCH.BIN').read_bytes())
  checks['independent_timer_samples']=samples[0]==0x5355 and samples[1]>0
- if ready:checks['actual_configured_UART_divisor']=samples[2]=={1200:1,115200:2,19200:4}[rate] and samples[4]>0
+ if ready:checks['actual_configured_UART_divisor']=samples[2]==({1200:1,115200:2,19200:4}[rate] if rate_mask is None else rate_mask) and samples[4]>0
  else:checks['UART_never_observed_enabled']=samples[4]==0
+ if line_mask is not None:checks['actual_configured_UART_line_format']=samples[5]==line_mask
  (directory/'serial.bin').write_bytes(wire)
  result={'case':name,'passed':all(checks.values()),'checks':checks,'expected_exit':expected,'arguments':arguments,'observed_errors':errors}
  (directory/'result.json').write_text(json.dumps(result,indent=2)+'\n');assert result['passed'],result

@@ -7,7 +7,7 @@ explicit file. The terminal also offers
 [setup before connecting](SETUP_STARTUP.md) with `/S @PCPLUS.PRM`. It is not the original
 PCSETUP shared-memory child. [Alt-F10](SETUP_LIVE.md) also opens the editor from
 the running terminal, with validated display/pacing/modem/BREAK adoption and
-explicit link/profile deferral until the next startup.
+confirmed same-port serial application. COM/profile changes still require restart.
 The recovered parent protocol and missing child
 consumer are documented in [SETUP_NATIVE.md](SETUP_NATIVE.md).
 
@@ -72,7 +72,9 @@ This is failure-aware replacement, not a concurrent-writer lock or a guarantee
 against power loss during FAT updates. There remains a comparison-to-replacement
 race. No file-version signature is known; matching length alone does not prove
 2.01 compatibility. No default constructor, automatic repair, complete schema,
-path/environment precedence or live UART/parent reconfiguration is provided.
+or complete path/environment precedence is provided. Standalone PRMEDIT never
+changes the UART; the maintained parent can apply validated independent settings
+and confirmed same-port serial changes through [SETUP_LIVE.md](SETUP_LIVE.md).
 These remain parts of F02/F06 and the overall application plan.
 
 ## Verification

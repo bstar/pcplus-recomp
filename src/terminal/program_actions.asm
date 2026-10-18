@@ -23,8 +23,10 @@ extern terminal_monitor_active
 extern terminal_controller_active
 extern _process_run,terminal_setup_tail
 extern terminal_setup_prepare,terminal_setup_complete,terminal_setup_return_prompt
+extern terminal_setup_key_consumed,terminal_setup_link_status
 global terminal_program_initialize,terminal_program_start,terminal_program_poll
 global terminal_program_cancel
+global terminal_program_prepare_link
 
 ; AX startup PSP. Retain every static segment, including far metadata/history.
 ; Preserve all registers, including AX needed by command-tail parsing next.
@@ -324,8 +326,14 @@ terminal_program_poll:
  int 0x10
  jmp .prompt
 .key:
+ cmp word [terminal_program_kind],1
+ jne .read_return_key
+ cmp word [terminal_setup_key_consumed],1
+ je .restore_screen
+.read_return_key:
  xor ax,ax
  int 0x16
+.restore_screen:
  ; Recreate the supported video mode even if a child left graphics or new fonts.
  mov ax,3
  int 0x10
@@ -436,6 +444,12 @@ program_restore_uart:
  add sp,2
  ; Do not call uart_enable here: it reads/discards RBR. Preserve pending input.
  mov al,[program_mcr]
+ cmp word [terminal_program_kind],1
+ jne .old_rts
+ cmp word [terminal_setup_link_status],1
+ jne .old_rts
+ or al,2 ;An accepted flow change must release the old port's lowered RTS.
+.old_rts:
  cmp word [uart_hardware_flow],0
  je .mcr
  cmp byte [uart_rts_lowered],0
@@ -454,6 +468,83 @@ program_restore_uart:
  shl bx,1
  and ax,[uart_irq_enable_masks+bx]
  out 0x21,al
+ ret
+
+; UART remains IRQ-masked, IER0 and RTS-low. Restore the old effective framing
+; after a child, wait for TEMT, and release a software pause at that OLD format
+; before the caller changes baud/line/flow globals. AX0 ready,1 deadline/overrun.
+; No startup snapshot is overwritten and no RBR byte is read.
+terminal_program_prepare_link:
+ push bp
+ push si
+ push di
+ push es
+ push word [terminal_baud_high]
+ push word [terminal_baud_low]
+ call uart_set_baud_divisor
+ add sp,4
+ push word [terminal_stop_bits]
+ push word [terminal_data_bits]
+ push word [terminal_parity]
+ call uart_set_line_control
+ add sp,6
+ call program_now
+ call program_progress
+ xor di,di ;0 before XON,1 waiting for its physical completion.
+.wait:
+ mov dx,[uart_port_lsr]
+ in al,dx
+ test al,2
+ jnz .overrun
+ and al,0x60
+ cmp al,0x60
+ jne .deadline
+ or di,di
+ jnz .ready
+ cmp word [uart_software_flow],0
+ je .ready
+ cmp byte [uart_xoff_sent],0
+ jne .xon
+ cmp byte [uart_flow_pending],0x11
+ jne .ready
+.xon:
+ mov dx,[uart_port_thr]
+ mov al,0x11
+ out dx,al
+ mov byte [uart_flow_pending],0
+ mov byte [uart_xoff_sent],0
+ mov byte [program_pause_sent],0
+ inc di
+ jmp .wait
+.deadline:
+ call program_now
+ mov ax,[program_now_tick]
+ mov dx,[program_now_tick+2]
+ sub ax,[program_progress_tick]
+ sbb dx,[program_progress_tick+2]
+ jnc .elapsed
+ add ax,0x00b0
+ adc dx,0x0018
+.elapsed:
+ or dx,dx
+ jnz .failed
+ cmp ax,36
+ jb .wait
+ jmp .failed
+.overrun:
+ cmp word [uart_rx_dropped],0xffff
+ je .failed
+ inc word [uart_rx_dropped]
+.failed:
+ mov ax,1
+ jmp .done
+.ready:
+ xor ax,ax
+.done:
+ pop es
+ pop di
+ pop si
+ pop bp
  ret
 
 ; Release only this launch's added XOFF. Existing ring watermarks remain owned

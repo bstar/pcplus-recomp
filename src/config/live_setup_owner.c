@@ -8,6 +8,7 @@ typedef char result_abi[sizeof(live_setup_result)==8?1:-1];
 typedef struct setup_owner {
  unsigned bound,pending,has_context,option_mask;
  unsigned source_baud_low,source_baud_high;
+ unsigned offered_mask,offered_baud_low,offered_baud_high;
  char path[64],canonical[128];
  directory_live_context context;
  unsigned char target[64];
@@ -37,7 +38,7 @@ unsigned __cdecl live_setup_bind(const char *path,
  char canonical[128];unsigned size;
  if(!external(path,64) || !external(source,sizeof(*source)) ||
   (context && !external(context,sizeof(*context))))return LIVE_SETUP_ARGUMENT;
- owner.bound=owner.pending=0;
+ owner.bound=owner.pending=owner.offered_mask=0;
  size=string_size(path,64);if(size<2)return LIVE_SETUP_ARGUMENT;
  if(context && !directory_live_context_matches(context,path,context->directory_path,
   context->selection.entry_number,context->codes))return LIVE_SETUP_IDENTITY;
@@ -65,7 +66,7 @@ unsigned __cdecl live_setup_begin(const char *path,
  memset(canonical,0,sizeof(canonical));
  if(capture_fs_canonical(path,canonical) || !same(canonical,owner.canonical,128))return LIVE_SETUP_IDENTITY;
  memcpy(&owner.active,active,sizeof(*active));memcpy(owner.target,target,64);
- owner.option_mask=option_mask;owner.pending=1;return LIVE_SETUP_OK;
+ owner.option_mask=option_mask;owner.offered_mask=0;owner.pending=1;return LIVE_SETUP_OK;
 }
 static unsigned command_valid(const live_configuration_plan *plan)
 {
@@ -83,9 +84,12 @@ static unsigned command_valid(const live_configuration_plan *plan)
  return 1;
 }
 unsigned __cdecl live_setup_finish(live_configuration_plan *destination,live_setup_result *result)
+{return live_setup_finish_policy(destination,result,0);}
+unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
+ live_setup_result *result,unsigned permitted_link_mask)
 {
  live_configuration_result decoded;prm_dos_result io;unsigned mask,status,deferred;
- if(!external(destination,sizeof(*destination)) || !external(result,sizeof(*result)) ||
+ if((permitted_link_mask&~14U) || !external(destination,sizeof(*destination)) || !external(result,sizeof(*result)) ||
   !separate(destination,sizeof(*destination),result,sizeof(*result)))return LIVE_SETUP_ARGUMENT;
  memset(result,0,sizeof(*result));
  if(owner.bound!=1 || owner.pending!=1){result->status=LIVE_SETUP_STATE;return result->status;}
@@ -114,10 +118,21 @@ unsigned __cdecl live_setup_finish(live_configuration_plan *destination,live_set
   if(status){result->status=LIVE_SETUP_DECODE;result->source_status=status;return result->status;}
  }
  if(!command_valid(&owner.stage)){result->status=LIVE_SETUP_COMMAND;return result->status;}
- deferred=owner.stage.change_mask&(LIVE_CHANGE_TRANSPORT|LIVE_CHANGE_PROFILE|LIVE_CHANGE_DIRECTORY|LIVE_CHANGE_TARGET);
- /* Defer all link/profile ownership changes. Foreground application adopts
-  * only configured display/mapping/modem/BREAK; it never copies directory. */
- memcpy(&owner.stage.serial,&owner.active.serial,18);
+ if(owner.stage.change_mask&LIVE_CHANGE_PORT)permitted_link_mask=0;
+ deferred=owner.stage.change_mask&((LIVE_CHANGE_TRANSPORT&~permitted_link_mask)|LIVE_CHANGE_PROFILE|LIVE_CHANGE_DIRECTORY|LIVE_CHANGE_TARGET);
+ owner.offered_mask=owner.stage.change_mask;
+ owner.offered_baud_low=owner.stage.serial.baud_low;owner.offered_baud_high=owner.stage.serial.baud_high;
+ owner.stage.serial.port_number=owner.active.serial.port_number;
+ if(!(permitted_link_mask&LIVE_CHANGE_BAUD)){
+  owner.stage.serial.baud_low=owner.active.serial.baud_low;owner.stage.serial.baud_high=owner.active.serial.baud_high;
+ }
+ if(!(permitted_link_mask&LIVE_CHANGE_LINE)){
+  owner.stage.serial.parity=owner.active.serial.parity;owner.stage.serial.data_bits=owner.active.serial.data_bits;owner.stage.serial.stop_bits=owner.active.serial.stop_bits;
+ }
+ if(!(permitted_link_mask&LIVE_CHANGE_FLOW)){
+  owner.stage.serial.software_flow=owner.active.serial.software_flow;owner.stage.serial.hardware_flow=owner.active.serial.hardware_flow;
+ }
+ owner.stage.serial.terminal_id=owner.active.serial.terminal_id;
  owner.stage.serial.io_base=owner.active.serial.io_base;
  owner.stage.serial.irq=owner.active.serial.irq;
  memcpy(&owner.stage.directory,&owner.active.directory,sizeof(owner.stage.directory));
@@ -125,4 +140,12 @@ unsigned __cdecl live_setup_finish(live_configuration_plan *destination,live_set
  memcpy(destination,&owner.stage,sizeof(*destination));return LIVE_SETUP_OK;
 }
 unsigned __cdecl live_setup_abort(unsigned unused)
-{(void)unused;owner.pending=0;return LIVE_SETUP_OK;}
+{(void)unused;owner.pending=owner.offered_mask=0;return LIVE_SETUP_OK;}
+unsigned __cdecl live_setup_acknowledge(unsigned committed_baud_mask)
+{
+ if(committed_baud_mask!=0 && committed_baud_mask!=LIVE_CHANGE_BAUD)return LIVE_SETUP_ARGUMENT;
+ if(owner.bound!=1)return LIVE_SETUP_UNBOUND;
+ if(committed_baud_mask && !(owner.offered_mask&LIVE_CHANGE_BAUD))return LIVE_SETUP_STATE;
+ if(committed_baud_mask){owner.source_baud_low=owner.offered_baud_low;owner.source_baud_high=owner.offered_baud_high;}
+ owner.offered_mask=0;return LIVE_SETUP_OK;
+}

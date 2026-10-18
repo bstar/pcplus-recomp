@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Bind direct settings invocation and configuration segmentation to evidence."""
-import hashlib,json,subprocess
+import hashlib,json,struct,subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 def sha(path):return hashlib.sha256((ROOT/path).read_bytes()).hexdigest()
@@ -16,11 +16,13 @@ def main():
  linked=bound('build/terminal/setup-live-checks.json',runtime);assert linked['inputs']==32
  dos=read('build/setup-startup/live-checks.json')
  assert dos['passed'] and dos['terminal_sha256']==runtime and dos['editor_sha256']==editor
- assert len(dos['cases'])==3 and all(c['passed'] and all(c['checks'].values()) for c in dos['cases'])
+ assert len(dos['cases'])==6 and all(c['passed'] and all(c['checks'].values()) for c in dos['cases'])
  owner=bound('build/terminal/live-setup-owner-checks.json',runtime);assert owner['inputs']==76
  apply=bound('build/terminal/live-setup-apply-checks.json',runtime);assert apply['inputs']==27
+ policy=bound('build/terminal/live-setup-policy-checks.json',runtime);assert policy['inputs']==19
+ link=bound('build/terminal/live-setup-link-checks.json',runtime);assert link['inputs']==53
  frames=bound('build/terminal/config-far-checks.json',runtime)
- assert frames['configuration_bridge_pairs_verified']==20 and len(frames['rejected_mutations'])==89
+ assert frames['configuration_bridge_pairs_verified']==22 and len(frames['rejected_mutations'])==103
  candidate=bound('build/live-configuration/terminal-checks.json',runtime)
  assert candidate['host']=='terminal-far-C' and candidate['inputs']==389 and candidate['maximum_CPU_call_stack_bytes']<8192-3514-16
  directory=bound('build/terminal/directory-live-checks.json',runtime);assert directory['inputs']==311
@@ -28,7 +30,7 @@ def main():
  retained=bound('build/far-storage-dos/checks.json',runtime)
  assert all(retained['checks'].values()) and len(bytes.fromhex(retained['sample_hex']))==64
  assert retained['checks']['configuration_far_code_sum_and_full_C_extent_survive_child_allocation_fill']
- regression=read('build/terminal/setup-apply-regression.json')
+ regression=read('build/terminal/setup-link-regression.json')
  assert regression['passed'] and regression['complete'] and regression['binary_sha256']==runtime
  commands=subprocess.check_output(['make','-n','test-terminal'],cwd=ROOT,text=True).splitlines()
  assert [r['command'] for r in regression['commands']]==commands and all(r['exit_code']==0 for r in regression['commands'])
@@ -36,9 +38,21 @@ def main():
  for path,digest in [('terminal/TERMINAL.EXE',runtime),('setup/PRMEDIT.EXE',editor)]:assert proof['outputs'][path]['sha256']==digest and proof['outputs'][path]['matches_workspace']
  scripts=['standalone/record_setup_live.py','standalone/check_setup_live.py','standalone/test_setup_live_dos.py','standalone/check_program_actions_live.py','standalone/test_setup_startup_dos.py','standalone/check_live_configuration.py','standalone/check_config_far_live.py','standalone/check_directory_live.py','standalone/check_directory_context.py','standalone/test_far_storage_dos.py','standalone/far_storage_child.asm','standalone/terminal_memory.py','standalone/build_terminal.py']
  scripts+=['standalone/check_live_setup_owner.py','standalone/check_live_setup_apply.py','standalone/live_setup_kernel.py']
- artifacts=['build/terminal/setup-apply-regression.json','build/terminal/setup-apply-regression.log','build/terminal/setup-live-checks.json','build/setup-startup/live-checks.json','build/terminal/config-far-checks.json','build/live-configuration/terminal-checks.json','build/terminal/directory-live-checks.json','build/terminal/directory-context-checks.json','build/far-storage-dos/checks.json','build/terminal/live-setup-owner-checks.json','build/terminal/live-setup-apply-checks.json']
+ scripts+=['standalone/check_live_setup_policy.py','standalone/check_live_setup_link.py','standalone/setup_watch.asm']
+ artifacts=['build/terminal/setup-link-regression.json','build/terminal/setup-link-regression.log','build/terminal/setup-live-checks.json','build/setup-startup/live-checks.json','build/terminal/config-far-checks.json','build/live-configuration/terminal-checks.json','build/terminal/directory-live-checks.json','build/terminal/directory-context-checks.json','build/far-storage-dos/checks.json','build/terminal/live-setup-owner-checks.json','build/terminal/live-setup-apply-checks.json','build/terminal/live-setup-policy-checks.json','build/terminal/live-setup-link-checks.json']
+ uart_samples={}
+ for case in dos['cases']:
+  name=case['case'];assert Path(name).name==name
+  folder='build/setup-startup/'+name
+  sample=struct.unpack('<6H',(ROOT/folder/'WATCH.BIN').read_bytes())
+  assert sample[0]==0x5355 and sample[4]>0
+  assert sample[2]==(3 if name.endswith('apply-baud') else 1)
+  assert sample[5]==(3 if name.endswith('apply-line') else 1)
+  assert (ROOT/folder/'BEFORE.BIN').read_bytes()==(ROOT/folder/'AFTER.BIN').read_bytes()
+  uart_samples[name]=dict(active_timer_samples=sample[4],divisor_bitmap=sample[2],last_divisor=sample[3],line_bitmap=sample[5])
+  artifacts += [folder+'/'+f for f in ['WATCH.BIN','BEFORE.BIN','AFTER.BIN','SCREEN.BIN','TEST.PRM','serial.bin']]
  common=dict(passed=True,binary_sha256=runtime,editor_sha256=editor,memory_layout=manifest['memory_layout'],terminal_regression=regression,source_rebuild=dict(report='docs/validation/application-components-source-build.json',source_snapshot_sha256=proof['source_snapshot_sha256'],output_count=proof['output_count']),source_sha256={p:sha(p) for p in scripts},retained_artifacts={p:sha(p) for p in artifacts})
- setup={**common,'linked':linked,'transaction_owner':owner,'selective_application':apply,'actual_DOS':dos,'scope':'AltF10 production editor with canonical startup identity, retained directory selection, current effective transport/autobaud snapshot and native expansion validation before selective display/mapping/modem/BREAK application. Actual DOS post-child remote text attributes and fresh cursor reply prove a live color save; baud save remains deferred with independent UART/vector samples. Link/profile ownership changes, original PCSETUP shared ABI, complete settings/application and physical modem remain open.'}
+ setup={**common,'linked':linked,'transaction_owner':owner,'selective_application':apply,'same_port_policy':policy,'same_port_handoff':link,'actual_DOS':dos,'DOS_uart_samples':uart_samples,'scope':'AltF10 canonical bound editor/candidate owner with selective independent settings and explicit Y/N same-port baud/line/flow handoff. Old-format XON/TEMT, native setters, flow-owner reconciliation and original shutdown baseline are checked. Real DOS timer bitmaps independently observe accepted1200-to115200 and8N1-to7E2 transitions; duplex post-child traffic and exact final hardware restoration pass. COM/profile migration, original PCSETUP shared ABI, complete application and physical modem remain open.'}
  config={**common,'call_frame_validation':frames,'terminal_candidate':candidate,'transaction_owner_inputs':owner['inputs'],'selective_application_inputs':apply['inputs'],'directory_inputs':directory['inputs'],'context_inputs':context['inputs'],'DOS_retention':retained,'scope':'Small-model C directory/candidate/setup-owner functions in a separately retained CS with explicit near-cdecl entries and register/cdecl resident callbacks. Independent actual-terminal CPU behavior, damaged MZ/frame rejection and real DOS allocation retention. General callbacks, dynamic overlays, full transport/profile handoff and complete application remain open.'}
  for name,value in [('setup-live.json',setup),('configuration-far-code.json',config)]:
   (ROOT/'docs/validation'/name).write_text(json.dumps(value,indent=2)+'\n')

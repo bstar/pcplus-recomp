@@ -30,5 +30,14 @@ unsigned __cdecl live_setup_begin(const char *path,
  * this module's storage. No active globals or hardware are changed here. */
 unsigned __cdecl live_setup_finish(live_configuration_plan *destination,
  live_setup_result *result);
+/* Same transaction with explicitly permitted SAME-port baud/line/flow bits
+ * (subset of14). A port change defers all serial categories together. The
+ * foreground owner still must obtain the user's choice and perform handoff. */
+unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
+ live_setup_result *result,unsigned permitted_link_mask);
+/* Acknowledge only a successfully committed baud change (mask2), or clear an
+ * offer (mask0). This advances the source-rate baseline for future autobaud
+ * preservation, so reverting a previously applied rate is not ignored. */
+unsigned __cdecl live_setup_acknowledge(unsigned committed_baud_mask);
 unsigned __cdecl live_setup_abort(unsigned unused);
 #endif

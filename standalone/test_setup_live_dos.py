@@ -7,19 +7,25 @@ from check_directory_live import word
 
 def main():
  cases=[]
- for name,keys,expected in [
-  ('live-editor-cancel','p2000 a-f10 p500 escape space r e a d y',image()),
-  ('live-editor-save','p2000 a-f10 p500 tab home del del del del 1 1 5 2 0 0 f10 escape space r e a d y',image()[:2]+b'\x08\0'+image()[4:]),
-  ('live-editor-apply-color','p2000 a-f10 p500 pgdown tab tab tab home del del 1 e f10 escape space r e a d y',word(image(),0x1ae,30))]:
-  proof,actual=run(name,keys=keys,arguments='@TEST.PRM',post_echo=True)
+ for name,keys,expected,rate_mask,line_mask in [
+  ('live-editor-cancel','p2000 a-f10 p500 escape space r e a d y',image(),1,1),
+  ('live-editor-save','p2000 a-f10 p500 tab home del del del del 1 1 5 2 0 0 f10 escape space r e a d y',image()[:2]+b'\x08\0'+image()[4:],1,1),
+  ('live-editor-apply-color','p2000 a-f10 p500 pgdown tab tab tab home del del 1 e f10 escape space r e a d y',word(image(),0x1ae,30),1,1),
+  ('live-editor-apply-baud','p2000 a-f10 p500 tab home del del del del 1 1 5 2 0 0 f10 escape y r e a d y',word(image(),2,8),3,1),
+  ('live-editor-apply-line','p2000 a-f10 p500 tab tab home del 7 tab home del e tab home del 2 f10 escape y r e a d y',word(word(word(image(),4,2),6,2),8,7),1,3),
+  ('live-editor-apply-flow','p2000 a-f10 p500 tab tab tab tab tab home del 1 tab home del 0 f10 escape y r e a d y',word(word(image(),0x198,1),0x19a,0),1,1)]:
+  proof,actual=run(name,keys=keys,arguments='@TEST.PRM',post_echo=True,rate_mask=rate_mask,line_mask=line_mask)
   assert actual==expected,(name,actual[:12],expected[:12])
   proof['checks']['exact_expected_PRM_after_live_child']=True
   assert b'ready' in (OUT/name/'serial.bin').read_bytes(),name
   proof['checks']['ordinary_typed_bytes_resume_after_editor']=True
+  if name.endswith('apply-flow'):
+   wire=(OUT/name/'serial.bin').read_bytes();assert wire.count(b'\x11')==1 and wire.index(b'\x11')<wire.index(b'ready')
+   proof['checks']['new_software_flow_announces_XON_before_ordinary_data']=True
   screen=(OUT/name/'SCREEN.BIN').read_bytes();want=30 if name.endswith('apply-color') else 7
   assert screen[22:32:2]==b' LIVE' and screen[23:33:2]==bytes([want])*5,(name,screen[:34])
   proof['checks']['new_remote_characters_use_expected_live_attribute']=True
   cases.append(proof)
- result=dict(passed=True,cases=cases,terminal_sha256=hashlib.sha256(BINARY.read_bytes()).hexdigest(),editor_sha256=hashlib.sha256(EDITOR.read_bytes()).hexdigest(),scope='Actual DOS terminal AltF10 to production PRMEDIT.EXE, cancel and exact opaque baud/color saves. After editor return the peer receives typed bytes, sends new display bytes and gets a fresh cursor reply; new cells prove the saved normal attribute was adopted live. Independent active-UART and final hardware/vector samples show baud-only save stays deferred and the connection retains its original rate.')
+ result=dict(passed=True,cases=cases,terminal_sha256=hashlib.sha256(BINARY.read_bytes()).hexdigest(),editor_sha256=hashlib.sha256(EDITOR.read_bytes()).hexdigest(),scope='Actual DOS AltF10 production editor: cancel, declined baud save, live color, accepted baud and accepted7E2 line save. Post-child typed bytes, remote display bytes and fresh cursor reply verify resumed duplex operation. Independent INT1C divisor/LCR bitmaps observe old/new UART formats; final UART/PIC/vector samples equal startup. Emulated serial peer does not enforce a physical matching baud/parity; hardware validation remains open.')
  (OUT/'live-checks.json').write_text(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':main()

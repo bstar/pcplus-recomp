@@ -6,7 +6,7 @@ CPU 8086
 ORG 0x100
 jmp start
 old_vector: dw 0,0
-sample: dw 0x5355,0,0,0,0,0 ; magic,total,divisor-bitmask,last-divisor,active-ticks,reserved
+sample: dw 0x5355,0,0,0,0,0 ; magic,total,divisor-bitmask,last-divisor,active-ticks,LCR-bitmap
 handler:
  pushf
  cli
@@ -27,6 +27,18 @@ handler:
  test al,1
  jz .done
  inc word [sample+8]
+ cmp bl,3
+ jne .format7e2
+ or word [sample+10],1
+ jmp .divisor
+.format7e2:
+ cmp bl,0x1e
+ jne .other_format
+ or word [sample+10],2
+ jmp .divisor
+.other_format:
+ or word [sample+10],4
+.divisor:
  mov dx,0x3fb
  mov al,bl
  or al,0x80

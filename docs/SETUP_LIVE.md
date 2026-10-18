@@ -21,14 +21,20 @@ The foreground owner can now adopt these settings during the session:
 - Modem numeric settings, commands and response strings for future actions.
 - BREAK duration for the next Alt-B operation.
 
-Port/base/IRQ, baud, parity/data/stop, software/hardware flow and terminal profile
-changes remain deferred until the next startup. A mixed save applies its
-independent settings and explicitly reports that link/profile changes need a
-restart. CLI serial-category overrides retain precedence. A negotiated autobaud
-rate is preserved when the PRM's configured source baud has not changed;
-deliberate pending baud edits retain their deferred status across later saves.
-Full transport/profile handoff remains unfinished rather than silently switching
-an active link or claiming that F02/F06 is complete.
+Baud, parity/data/stop and software/hardware flow changes on the current port
+now offer a separate confirmation: **Y** applies them, and any other key keeps
+the current link. That choice also returns to the terminal; no extra key is
+consumed. The peer must independently match the selected format. A busy
+transmitter keeps the old serial settings and leaves a visible acknowledgment
+prompt. Independent display/modem/BREAK changes can still be adopted.
+
+A COM/base/IRQ change defers all serial categories together, so the new port's
+baud/format cannot accidentally be installed on the old port. Terminal profile
+changes remain deferred until restart. CLI category overrides retain precedence.
+Negotiated autobaud is preserved on unrelated saves. Successfully applying a
+new source rate advances the remembered source baseline, allowing a later edit
+to revert the rate without mistaking it for an unrelated autobaud change.
+Full port/profile migration remains unfinished; see [SERIAL_LIVE.md](SERIAL_LIVE.md).
 
 Configured display defaults are separate from transient BBS state. Unedited
 wrap/scroll fields preserve the peer's current modes. Palette changes preserve
@@ -81,10 +87,12 @@ menu/error UI. Alt-S remains the upload shortcut.
 canonical/PRM file boundaries modeled. `check_live_setup_apply.py` runs27 actual
 foreground application cases using kernel/BIOS/UART boundaries, plus the real
 renderer/RIS code. `check_setup_live.py` retains32 invocation/handoff cases.
-The production DOS editor test now covers cancel, a deferred baud save and a
-live normal-color save. After each return the peer receives typed bytes, sends
-new display bytes and receives a fresh cursor reply. Exact screen attributes
-prove adoption, while independent UART/vector/PIC samples prove restoration.
+The production DOS editor test covers cancel, a declined baud save, live
+normal color and accepted baud,7E2 line and software-flow saves. After each return the peer receives typed bytes, sends
+new display bytes and receives a fresh cursor reply. Exact screen attributes prove display adoption. An independent INT1C sampler
+observes old/new divisor and LCR bitmaps; UART/vector/PIC samples prove final
+restoration. The dedicated policy and link suites additionally exercise19
+candidate-policy inputs and53 actual foreground handoff inputs.
 
 Run these through `./tools/build test-terminal`. The pure staging API is described
 in [LIVE_CONFIGURATION_PLAN.md](LIVE_CONFIGURATION_PLAN.md); the full feature

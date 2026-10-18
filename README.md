@@ -340,5 +340,5 @@ for save/cancel, path limits and CLI precedence.
 
 From the running terminal, **Alt-F10** opens the same editor for an explicit
 `@` current-directory8.3 PRM. Valid display, pacing, future modem settings and
-BREAK edits apply during the session; link/profile changes are reported as
-deferred until the next startup. See [setup from the terminal](docs/SETUP_LIVE.md).
+BREAK edits apply during the session. A separate Y/N choice applies baud,
+line format and flow on the current port; COM/profile changes remain deferred. See [setup from the terminal](docs/SETUP_LIVE.md).

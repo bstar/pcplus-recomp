@@ -8,6 +8,8 @@ CONFIG_ENTRY _live_setup_bind,3
 CONFIG_ENTRY _live_setup_begin,5
 CONFIG_ENTRY _live_setup_finish,2
 CONFIG_ENTRY _live_setup_abort,1
+CONFIG_ENTRY _live_setup_finish_policy,3
+CONFIG_ENTRY _live_setup_acknowledge,1
 ; Compiler-default register ABI for these four small-model CRT functions.
 CONFIG_REGISTER config_memcpy_service_,memcpy_
 CONFIG_REGISTER config_memset_service_,memset_
