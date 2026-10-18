@@ -428,3 +428,21 @@ The current ENiGMA immediate/buffer30 pair repeats the known Home/Insert
 boundary: all eight key sequences are present, immediate forwarding fails those
 two behavior checks, and30ms buffering passes all seven. No ENiGMA post is saved;
 the accepted Synchronet draft is aborted. See [current evidence](modern-compatibility.md).
+
+## COM-switching checkpoint
+
+Build0666c496 repeats stock editor tests after confirmed COM/profile changes.
+Synchronet passes all12 behavior and eight key-wire checks under HARD
+COM2/19200, including prepared body-line clearing and actual Ctrl-Q abort.
+The matched SOFT control keeps the same COM/baud/line, runtime, recipe and PRM
+except flow flags:11/12 behavior checks pass, but the modeled modem consumes
+the one outgoing Ctrl-Q as XON, leaving no Ctrl-Q at the BBS and no abort.
+The following HARD control delivers it and aborts. This isolates flow selection
+in the local model; the earlier7f48 comparison also differed in port and rate.
+Server/user state was not reset. See [flow-control.md](flow-control.md).
+
+The current ENiGMA immediate/buffer30 pair reaches the stock message editor in
+both runs, emits all eight measured keys and closes without posting. Immediate
+forwarding fails Home and Insert behavior;30ms buffering passes all seven
+audited checks. The immediate aggregate remains failed. Physical UART/firmware,
+multiline scrolling and complete BBS feature coverage remain open.

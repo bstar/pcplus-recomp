@@ -130,3 +130,13 @@ stock editor and send all eight measured key sequences. Immediate forwarding
 fails Home/Insert; explicit30ms buffering passes all seven audit checks. Both
 close without saving. The binary also includes live settings application,
 tested separately; this pair exercises ordinary editor interaction.
+
+The COM-switching0666c496 checkpoint repeats the unchanged-source comparison
+under `editor-com-0666-immediate` and `editor-com-0666-buffer30`. Both enter the
+stock editor, emit all eight measured keys, preserve the PRM, restore sampled
+hardware and close without saving. Immediate forwarding fails Home/Insert;
+the explicit30ms buffer passes all seven audited checks. Runtime, recipe,
+serial settings and PRM match across the pair; only packet delay differs.
+The current paired report retains all earlier experiments. This remains a
+local workaround with uncontrolled TCP receive boundaries, not a physical
+firmware result or a replacement for the failed immediate aggregate.

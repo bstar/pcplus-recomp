@@ -145,7 +145,9 @@ and are never automatically sent; directory SCRIPT/KEY/META bindings remain unsu
 errorlevel9 unless a prior application error exists; inspect retained
 `PCPSTG.$$$` / `PCPBAK.$$$` recovery files as described in the editing guide.
 Local Synchronet, ENiGMA½ and Mystic interoperability work is documented in
-[lab/bbs/README.md](lab/bbs/README.md).
+[lab/bbs/README.md](lab/bbs/README.md). The current
+[matched flow comparison](lab/bbs/flow-control.md) isolates the software-XON
+conflict with Synchronet Ctrl-Q; HARD passes that editor workflow.
 
 The initial key defaults are authored for network use; they are not recovered
 factory KBD tables. KBD slot strings and KEY action/macro files are different

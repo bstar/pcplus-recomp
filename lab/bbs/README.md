@@ -7,7 +7,9 @@ All listeners must bind loopback. Accounts and messages are synthetic.
 
 See the [current Synchronet and ENiGMA compatibility checkpoint](modern-compatibility.md)
 for current editor results, the paired modem-buffering experiment, and which
-menu/transfer results belong to earlier executable builds.
+menu/transfer results belong to earlier executable builds. The matched
+[serial flow comparison](flow-control.md) isolates Ctrl-Q consumption under SOFT
+from the passing HARD editor configuration.
 
 Use the pinned Nix toolchains:
 
