@@ -15,7 +15,7 @@ with checked one/all/tagged serial output. All sixteen whole-application gates i
 remain open. The numbered sections below retain earlier component evidence and
 historical checkpoints; their old run counts are not the current binary identity.
 
-The remaining work includes clipboard transfer-prompt workflows,
+The remaining work includes complete clipboard UI and wider stock BBS transfer-prompt workflows,
 main menus/contextual help
 and complete settings/key editing; other terminal emulations and font/resource
 paths; remaining transfer families/external helpers; complete directory cycles
@@ -502,3 +502,27 @@ wire; immediate ENiGMA retains Home/Insert failures. The first buffered run miss
 editor entry after timed-login misalignment; its unchanged-input retry passes,
 and both attempts remain explicit. The synthetic Synchronet account exemption
 was restored and independently verified. All whole-application gates remain open.
+
+### Clipboard selection across transfers
+
+Six actual DOS workflows now carry Single/Tagged/All filename packets through
+strict independent XMODEM/YMODEM peers, verify exact download bytes and unchanged
+upload sources, and reuse retained clipboard entries afterward. Stale remote
+filenames and local filename-prompt cancellation recover before a subsequent
+successful receive. External BIOS key/video observers verify transfer keyboard
+ownership, nested-command exclusion and the empty-list notice. See
+`docs/CLIPBOARD_TRANSFERS.md` and `docs/validation/clipboard-transfers.json`.
+This adds test evidence without changing the runtime already covered by the
+77-command regression and64-output source rebuild. Wider stock BBS prompt integration,
+original UI parity, other geometries and physical hardware remain open; none of
+F01–F16 is closed by these selected workflows.
+
+Selected stock-server Single/download workflows also pass: Synchronet Filespec
+clipboard selection followed by XMODEM, and ENiGMA filename search followed by
+YMODEM and a second clipboard search after completion. Passive wire replay, exact
+DOS bytes, official source-file metadata and ordered server/menu evidence bind
+these to the same runtime. The Synchronet synthetic-account logon exemption was
+restored and independently read back. Four failed ENiGMA fixture attempts remain
+in the report; the latest two selected server workflows pass, while the aggregate
+attempt history remains false. Stock-server uploads/multi-name conventions,
+original UI parity and physical modem validation remain open.

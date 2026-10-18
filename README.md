@@ -57,6 +57,9 @@ C enters it from redisplay. A/E/D/U edit the list, Space tags, C selects screen
 filenames, R changes the session separator (PRMEDIT saves its default), and P/S/T paste all/one/tagged entries.
 Single removal follows actual UART writes; Escape cancels unsent bytes. See
 [filename clipboard](docs/FILENAME_CLIPBOARD.md) for behavior and current limits.
+The [clipboard transfer checks](docs/CLIPBOARD_TRANSFERS.md) cover filename
+selection, XMODEM/YMODEM ownership and reuse after transfers, with separate
+stock BBS evidence.
 
 ## Build and run in DOS
 

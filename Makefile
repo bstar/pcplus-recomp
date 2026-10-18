@@ -416,3 +416,8 @@ test-terminal: clipboard
 test-clipboard-settings: terminal setup
 	python3 standalone/check_clipboard_settings.py
 	python3 standalone/test_clipboard_settings_dos.py
+
+# Run against the explicitly frozen existing terminal; each run owns fresh files.
+.PHONY: test-clipboard-transfers
+test-clipboard-transfers:
+	python3 standalone/test_clipboard_transfer_dos.py --label "prompts-$$(date -u +%Y%m%dT%H%M%S%N)" --sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)"
