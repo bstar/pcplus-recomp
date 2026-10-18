@@ -338,3 +338,36 @@ matrix and its independently tested executable identities:
 The public editor aggregate remains false. Current hash-bound evidence appears
 in `docs/validation/bbs-editors.json` and `bbs-enigma-packetization.json`; prior
 checkpoints remain in their histories.
+
+## Static far-code checkpoint
+
+The bdeb347c source-built runtime moves the dedicated controller into a separate
+CS and preserves the resident keyboard/serial interfaces. Actual DOS editor
+recipes are repeated against the same owned servers. Synchronet
+`editor-farcode-bdeb` passes12 behavior checks and all eight outgoing key checks;
+Ctrl-Q abort succeeds. ENiGMA `editor-farcode-bdeb-buffer30` passes all seven
+behavior checks with explicit30ms buffering. Its immediate control
+`editor-farcode-bdeb-immediate-retry` reaches the stock message editor, emits all
+eight expected keys and again fails Home/Insert behavior. No post is saved.
+
+The first immediate attempt, `editor-farcode-bdeb-immediate`, reached the page/
+private-mail flow instead of the message editor. It saved no post and restores
+hardware normally, but its Home/Insert failures cannot characterize the intended
+editor. The same recipe was retried after the concurrent DOS regression ended;
+that ordering does not prove CPU contention caused the navigation failure. The
+public editor history retains the failed prerequisite. The paired recorder now
+rejects any run that did not enter the stock editor.
+
+```sh
+./tools/dev --command python3 lab/bbs/record_checkpoint.py --editors-only \
+  --editors editor-farcode-bdeb \
+  --enigma-editors editor-farcode-bdeb-immediate-retry \
+  --prior-enigma-editors editor-farcode-bdeb-immediate
+./tools/dev --command python3 lab/bbs/record_packetization.py \
+  --buffered editor-farcode-bdeb-buffer30 \
+  --control editor-farcode-bdeb-immediate-retry
+```
+
+Both public current reports bind the full runtime hash
+`bdeb347c99168c8f745c312abfd40468250959ffdfd82af562476a6d29bea2c8`.
+The menu and transfer matrices retain their separate earlier runtime identities.

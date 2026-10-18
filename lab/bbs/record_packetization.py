@@ -16,6 +16,7 @@ def main():
   assert experiment['binary_sha256']==run['binary_sha256']==audit['binary_sha256']
   assert experiment['packet_delay_ms']==run['modem_packet_delay_ms']==audit['modem_packet_delay_ms']==modem['packet_delay_ms']
   assert experiment['DOS_harness_passed'] and audit['checks']['no_post_saved']
+  assert audit['checks']['stock_editor_entered'],'Editor prerequisite failed; preserve this run and use a fresh label'
   writes=[e for e in modem['events'] if e['kind']=='buffered-serial-write']
   wire=(folder/'bbs-sent.bin').read_bytes()
   key_packets={}

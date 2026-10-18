@@ -7,7 +7,7 @@ def read(path):return json.loads(path.read_text())
 def artifacts(folder):
  return {str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(folder.iterdir()) if p.is_file()}
 def main():
- parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--menus');parser.add_argument('--editors',required=True);parser.add_argument('--editors-only',action='store_true',help='Update only editor evidence; preserve separately tested menu runtimes');parser.add_argument('--enigma-menus');parser.add_argument('--enigma-editors');args=parser.parse_args()
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--menus');parser.add_argument('--editors',required=True);parser.add_argument('--editors-only',action='store_true',help='Update only editor evidence; preserve separately tested menu runtimes');parser.add_argument('--enigma-menus');parser.add_argument('--enigma-editors');parser.add_argument('--prior-enigma-editors',action='append',default=[],help='Retain additional same-runtime editor attempts before selecting the current run');args=parser.parse_args()
  assert args.editors_only or args.menus,'--menus is required unless --editors-only is selected'
  digest=hashlib.sha256((ROOT/'build/terminal/TERMINAL.EXE').read_bytes()).hexdigest()
  if not args.editors_only:
@@ -27,6 +27,13 @@ def main():
   run=read(folder/'result.json');audit=read(folder/'semantic-audit.json');assert run['binary_sha256']==audit['binary_sha256']==digest
   prior={key:entry[key] for key in ('run','semantic_evidence','retained_artifacts')}
   entry.setdefault('prior_runtime_cases',[]).append(prior)
+  if name=='enigma':
+   for label in args.prior_enigma_editors:
+    assert label and all(c.isalnum() or c in '-_' for c in label)
+    earlier=ROOT/'build/bbs-lab/results'/name/label
+    earlier_run=read(earlier/'result.json');earlier_audit=read(earlier/'semantic-audit.json')
+    assert earlier_run['binary_sha256']==earlier_audit['binary_sha256']==digest
+    entry['prior_runtime_cases'].append(dict(run=earlier_run,semantic_evidence=earlier_audit,retained_artifacts=artifacts(earlier)))
   entry.update(run=run,semantic_evidence=audit,retained_artifacts=artifacts(folder))
  editors.update(binary_sha256=digest,passed=all(s['run']['passed'] and s['semantic_evidence']['passed'] for s in editors['servers'].values()))
  if not args.editors_only:(ROOT/'docs/validation/bbs-matrix.json').write_text(json.dumps(matrix,indent=2)+'\n')

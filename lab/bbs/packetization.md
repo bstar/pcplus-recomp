@@ -87,3 +87,10 @@ The dedicated-controller checkpoint repeats this comparison on51b94da6:
 `editor-controller-51b9-immediate` fails Home/Insert again while preserving
 all eight outgoing key sequences. Both close unsaved. The paired report retains
 the older screen-print checkpoint as history; see [current results](modern-compatibility.md).
+
+The static far-code bdeb347c checkpoint repeats the result: buffered
+`editor-farcode-bdeb-buffer30` passes seven editor checks; immediate
+`editor-farcode-bdeb-immediate-retry` enters the message editor but fails
+Home/Insert with all eight wire sequences present. The initial immediate label
+missed editor navigation and is retained as a prerequisite failure. Paired
+recording rejects that attempt; see [current results](modern-compatibility.md).

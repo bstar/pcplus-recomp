@@ -9,19 +9,19 @@ toolchains. These results do not establish physical Wi-Fi modem compatibility.
 ## Current editor build
 
 DOS executable SHA-256:
-`51b94da6b6c8f489fa646a220e7d7a77457459f96e73bec98687b19a1f338c90`.
+`bdeb347c99168c8f745c312abfd40468250959ffdfd82af562476a6d29bea2c8`.
 
 | Server / modem forwarding | Result | Evidence |
 | --- | --- | --- |
-| Synchronet 3.22a development snapshot / immediate | All 12 behavior checks and eight key-wire checks pass; draft aborted | `editor-controller-51b9-rerun`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
+| Synchronet 3.22a development snapshot / immediate | All 12 behavior checks and eight key-wire checks pass; draft aborted | `editor-farcode-bdeb`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
 | ENiGMA½ 0.5.1-beta / immediate | Correct outgoing keys; Home and Insert behavior fail | Current paired experiment below |
 | Same ENiGMA / explicit 30 ms buffering | All seven audited checks and eight key-wire checks pass; closes unsaved | Current paired experiment below |
 
 The ENiGMA pair uses the same DOS executable, keyboard recipe, synthetic PRM,
 serial settings and unchanged stock decoder. Only the modem's explicit
 `packet_delay_ms` differs. Server/user state is not reset between runs.
-Retained labels are `editor-controller-51b9-buffer30-rerun` and
-`editor-controller-51b9-immediate`; full hashes and checks are in
+Retained labels are `editor-farcode-bdeb-buffer30` and
+`editor-farcode-bdeb-immediate-retry`; full hashes and checks are in
 [the paired report](../../docs/validation/bbs-enigma-packetization.json).
 
 The checked ENiGMA source, commit
@@ -45,6 +45,15 @@ retained under `editor-controller-51b9` (Synchronet) and
 `editor-controller-51b9-buffer30` (ENiGMA). The selected reruns above use
 `./tools/dev`, which provides NASM and DOSBox-X; neither failed setup attempt is
 an editor compatibility result.
+
+The first far-code immediate run, `editor-farcode-bdeb-immediate`, missed
+message-editor navigation and reached the page/private-mail flow. It emitted all
+eight key sequences, restored DOS hardware and saved no post, but it is not
+editor-behavior evidence. The unchanged recipe's retry above reached the message
+editor and reproduced Home/Insert failure after the concurrent DOS regression
+finished. This does not establish why the earlier navigation failed. Both
+attempts are retained in the editor report. Paired recording now requires actual
+stock-editor entry on both sides before accepting a comparison.
 
 ## Other verified workflows
 
