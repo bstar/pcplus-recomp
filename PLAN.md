@@ -50,6 +50,12 @@ requires an attached DOS machine/modem and must not be inferred from emulation.
 
 ## 3. Usable terminal integration
 
+Live receive integration now adds Alt-R XMODEM CRC/checksum128/1024 with
+checked DOS staging and final ACK after installation. The full-sized shadow and
+history arrays move far while the receiver arena stays near; PROGRAM retains
+both static extents. Physical modem, uploads and remaining protocol/application
+gates remain open. See `docs/TRANSFER_INTEGRATION.md` for ownership and evidence.
+
 The first source-only interactive `TERMINAL.EXE` connects the recovered UART,
 keyboard, parser and display engine. Its synthetic DOSBox-X tests verify actual
 video memory, DSR replies, both DECCKM arrow modes, stalled/partial input and
@@ -61,8 +67,8 @@ a malformed stock theme's metadata. Those handlers are now recovered and tested;
 the source-owned defaults select the proved original ANSI profile. Earlier
 checkpoints passed all three local servers through login and menu navigation through a modeled Hayes/Telnet
 modem; Mystic also passes indexed-screen arrows and Escape return. The current
-7b9ca14b checkpoint passes Synchronet/Mystic menus and Synchronet FSEditor.
-ENiGMA login-matrix arrows and message/file menus pass in the configured-N retry;
+29da4799 checkpoint passes Synchronet/Mystic menus and Synchronet FSEditor.
+ENiGMA login-matrix arrows and message/file menus pass with the configured-N recipe;
 the initial timed run's incomplete menu workflow is retained. Its real editor
 still fails Home/Insert despite correct outgoing bytes (docs/validation/bbs-matrix.json
 and bbs-editors.json). An
@@ -149,9 +155,11 @@ physical modem compatibility or close the remaining application gates below.
       and79x128+1024 at the flush threshold. Its UART/time remain peer fixtures;
       a separate real-UART DOS test sends1,024 exact binary bytes.
       Native final EOT write/close results are ignored; the maintained owner
-      independently gates installation. Native ACK-before-final-commit needs a
-      separate wire policy. Terminal UI/UART session integration, source-file
-      upload integration, full deadline/cancellation services, physical peers,
+      independently gates installation. Live Alt-R now connects the real UART and
+      filename/progress UI, services bounded waits/cancellation and suppresses
+      the final ACK until checked installation. HARD/NONE binary reception and
+      actual DOS owned-peer tests are documented in TRANSFER_INTEGRATION.md.
+      Source-file upload integration, physical peers,
       batch metadata, every protocol family, capture/logging and F09 remain open.
       See `docs/TRANSFER_SESSION.md`, `docs/DOWNLOAD_STORAGE.md`,
       `docs/TRANSFER_SEND.md`, `docs/TRANSFER_FILES.md`, `docs/TRANSFER_UART.md`.
@@ -163,7 +171,7 @@ physical modem compatibility or close the remaining application gates below.
       and explicit global /T KEY import now supports bounded nonblocking TEXT.
       Maintained PROGRAM now executes stored commands through COMSPEC `/c` and a
       bounded source-owned DOS process backend, with serial/vector/video handoff.
-      Current checkpoint `7b9ca14b` linked regressions and separate actual DOS synthetic-child
+      Current checkpoint `29da4799` linked regressions and separate actual DOS synthetic-child
       tests cover restoration and failures. Native PROGRAM has 3,102 exact bytes,
       including its EXEC/environment/PATH core, but heap and broader application
       services remain external; native reset has 2,301 exact bytes with its

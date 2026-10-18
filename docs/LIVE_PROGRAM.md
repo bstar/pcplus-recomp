@@ -51,7 +51,9 @@ for the resumed real IRQ handler; it cannot recover bytes lost while the parent
 was absent.
 
 The maintained process backend shrinks the static parent allocation through
-its stack top and restores SS/SP/DS across EXEC. COMSPEC/PATH selection, exact
+the higher of STACK and FAR_STORAGE ends and restores SS/SP/DS across EXEC.
+An actual DOS child allocation checks shadow/history canaries after the shrink.
+COMSPEC/PATH selection, exact
 API limits, DOS result meanings and DOSBox command-processor behavior are in
 [PROCESS.md](PROCESS.md). These maintained services are distinct from the3102
 exact recovered bytes documented in [PROGRAM_EXEC.md](PROGRAM_EXEC.md).

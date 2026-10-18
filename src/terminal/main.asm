@@ -21,6 +21,8 @@ extern terminal_load_actions,terminal_macro_cancel
 extern terminal_program_initialize,terminal_program_poll,terminal_program_cancel,terminal_program_pending
 extern terminal_reset_capture
 extern terminal_release_flow,terminal_cleanup_flow_failed
+extern terminal_transfer_poll,terminal_transfer_filter,terminal_transfer_shutdown
+extern _terminal_transfer_initialize
 extern terminal_connection_start,terminal_connection_receive
 extern connection_state,connection_result
 ; Open Watcom small-code consistency marker for the near-C DOS IO subset.
@@ -36,6 +38,9 @@ _small_code_:
  sti
  cld
  call terminal_program_initialize
+ push ax
+ call _terminal_transfer_initialize
+ pop ax
  call terminal_parse_options
  jnc .configured
  cmp ax,1
@@ -105,9 +110,15 @@ _small_code_:
  mov di,erase_attribute_values
  mov cx,2048
  rep stosw
+ mov ax,seg erase_shadow_cells
+ mov es,ax
+ xor ax,ax
  mov di,erase_shadow_cells
- mov cx,4096
+ ; FAR_STORAGE is contiguous8192-byte shadow plus4096-byte history.
+ mov cx,6144
  rep stosw
+ push ds
+ pop es
  mov ax,3
  int 0x10
  mov ax,1
@@ -125,6 +136,9 @@ _small_code_:
  call terminal_connection_start
 .loop:
  call terminal_poll_io
+ cmp word [terminal_quit],0
+ jne terminal_shutdown
+ call terminal_transfer_poll
  cmp word [terminal_quit],0
  jne terminal_shutdown
  call terminal_program_poll
@@ -145,6 +159,8 @@ _small_code_:
  cmp ax,0xffff
  je .idle
  call terminal_connection_receive
+ jc .loop
+ call terminal_transfer_filter
  jc .loop
  push ax
  call terminal_receive_character
@@ -207,6 +223,7 @@ terminal_shutdown:
  call uart_restore_hardware_state
  mov byte [hardware_active],0
 .exit:
+ call terminal_transfer_shutdown
  call terminal_directory_flush_accounting
  or ax,ax
  jz .application_error

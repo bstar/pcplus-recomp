@@ -38,17 +38,17 @@ separate evidence from the screen, response bytes and server logs.
 
 ## Current checkpoint: menus pass; ENiGMA editor failure retained
 
-Terminal `7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a`
+Terminal `29da4799847e45ec1144195412a8ed0ceff74136878ffe86617375538de1b196`
 was tested from an immutable executable copy with COM2/19200/8N1/HARD.
-Synchronet and Mystic menu workflows pass under `program-reset-network`.
-ENiGMA's `program-reset-network-casefix` retry passes login-matrix Down/Up,
+Synchronet and Mystic menu workflows pass under `live-receive-final`.
+ENiGMA's `live-receive-final` run passes login-matrix Down/Up,
 authentication, Main → Messages → Main → Files, real device/cursor replies and
 unchanged stock artwork. The first timed ENiGMA workflow logged in but entered
 newscan and reached Main too late for the scheduled menu keys. Its failed
 semantic audit is retained alongside the retry; it is not proof of an identical
 cause to the earlier matrix-arrow failure.
 
-Synchronet's `editor-program-reset` passes all12 behavior checks and eight
+Synchronet's `editor-live-receive-final` passes all12 behavior checks and eight
 key-wire checks, including Ctrl-Q abort. ENiGMA's actual editor still receives
 all eight expected key sequences but fails Home positioning and Insert mode.
 Runs close unsaved and the server confirms no new message. The editor aggregate
@@ -57,8 +57,10 @@ state and preserve their synthetic PRM files.
 
 The stock ENiGMA decoder and immediate modem model remain unchanged. An
 independent complete-versus-split escape probe reproduces the server's handling
-of TCP chunks without partial escape state. Physical modem buffering/timing,
-transfers and remaining application features still require separate testing.
+of TCP chunks without partial escape state. Physical modem buffering/timing and remaining application features still
+require separate testing. Live XMODEM receives now have independent owned-peer
+DOS tests (`docs/TRANSFER_INTEGRATION.md`); transfers against these BBS servers
+remain untested.
 
 The earlier `meta-character-network` ENiGMA matrix failure and its incomplete
 70-second timeout attempt remain historical evidence, with explicit limitations.

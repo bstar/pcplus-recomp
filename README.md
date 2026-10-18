@@ -71,7 +71,11 @@ commands without an implemented handler stop explicitly with errorlevel4.
 `/A:NETWORK` is the default CSI M delete-line policy; `/A:ORIGINAL` selects the
 bounded serviced historical alternate wait. See
 [live line editing](docs/LIVE_LINE_EDIT.md). This executable does not yet provide the
-complete original menus, directory cycles, file transfers or scripting engine.
+complete original menus, directory cycles, advanced transfers or scripting engine.
+Alt-R receives ordinary XMODEM CRC/checksum128/1024 downloads into an explicit
+new DOS8.3 destination, with checked staging/close/install before the final ACK.
+Use HARD or NONE; SOFT rejects binary reception before staging. Escape cancels.
+See [live transfer policy and recovery](docs/TRANSFER_INTEGRATION.md).
 Global `/T:MYKEYS.KEY` imports ten Meta actions; Alt-1..Alt-0 execute
 nonblocking TEXT or maintained PROGRAM actions. PROGRAM passes a validated
 1..51-byte stored command through COMSPEC `/c`, suspends terminal UART ownership
@@ -91,7 +95,7 @@ Local Synchronet, ENiGMA½ and Mystic interoperability work is documented in
 The initial key defaults are authored for network use; they are not recovered
 factory KBD tables. KBD slot strings and KEY action/macro files are different
 formats. Complete ASPECT/HOOK execution, original PROGRAM application services,
-settings, transfer sessions and original menus remain part of the reconstruction goal.
+settings, remaining transfer protocols and original menus remain part of the reconstruction goal.
 
 Copy `build/standalone/SERIAL.EXE` to DOS and run:
 

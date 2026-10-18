@@ -1,0 +1,229 @@
+; Maintained80x25 transfer prompt/progress. Own bottomtwo rows only; no DOSIO.
+BITS 16
+CPU 8086
+SEGMENT _TEXT public class=CODE use16
+extern terminal_transfer_service,terminal_transfer_fault,terminal_quit
+extern keyboard_poll,terminal_read_key,terminal_transfer_filename
+extern session_blocks_accepted
+GLOBAL terminal_transfer_ui_open,terminal_transfer_ui_restore,terminal_transfer_ui_progress
+GLOBAL terminal_transfer_ui_receiving
+terminal_transfer_ui_open:
+ push bp
+ push bx
+ push si
+ push di
+ push es
+ mov ah,0x0f
+ int 0x10
+ cmp al,3
+ jne .bad_view
+ cmp ah,80
+ jne .bad_view
+ or bh,bh
+ jnz .bad_view
+ mov ah,3
+ xor bh,bh
+ int 0x10
+ mov [transfer_ui_cursor],dx
+ mov [transfer_ui_shape],cx
+ push ds
+ mov ax,0xb800
+ mov ds,ax
+ mov si,3680
+ pop es
+ mov di,transfer_ui_saved
+ mov cx,160
+ cld
+ rep movsw
+ push es
+ pop ds
+ mov byte [transfer_ui_visible],1
+ mov ax,0xb800
+ mov es,ax
+ mov di,3680
+ mov ax,0x1f20
+ mov cx,160
+ rep stosw
+ mov si,transfer_ui_title
+ mov di,3680
+ call ui_text
+ mov word [transfer_ui_length],0
+ mov byte [terminal_transfer_filename],0
+ mov cx,0x0607
+ mov ah,1
+ int 0x10
+.input:
+ call ui_cursor
+ call terminal_transfer_service
+ cmp word [terminal_transfer_fault],0
+ jne .cancel
+ call keyboard_poll
+ or ax,ax
+ jz .input
+ call terminal_read_key
+ cmp ax,0x2d00
+ je .quit
+ cmp al,27
+ je .cancel
+ cmp al,13
+ je .accept
+ cmp al,8
+ je .backspace
+ cmp al,32
+ jb .input
+ cmp al,126
+ ja .input
+ mov bx,[transfer_ui_length]
+ cmp bx,63
+ jae .input
+ mov [terminal_transfer_filename+bx],al
+ mov di,bx
+ shl di,1
+ add di,3840
+ mov ah,0x1f
+ mov [es:di],ax
+ inc bx
+ mov [transfer_ui_length],bx
+ mov byte [terminal_transfer_filename+bx],0
+ jmp .input
+.backspace:
+ mov bx,[transfer_ui_length]
+ or bx,bx
+ jz .input
+ dec bx
+ mov [transfer_ui_length],bx
+ mov byte [terminal_transfer_filename+bx],0
+ mov di,bx
+ shl di,1
+ add di,3840
+ mov word [es:di],0x1f20
+ jmp .input
+.accept:
+ cmp word [transfer_ui_length],0
+ je .input
+ mov ax,1
+ jmp .done
+.quit:
+ mov word [terminal_quit],1
+.cancel:
+ cmp word [terminal_transfer_fault],0
+ jne .canceled
+ mov word [terminal_transfer_fault],2
+.canceled:
+ xor ax,ax
+ jmp .done
+.bad_view:
+ mov word [terminal_transfer_fault],8
+ xor ax,ax
+.done:
+ pop es
+ pop di
+ pop si
+ pop bx
+ pop bp
+ ret
+ui_cursor:
+ mov dx,[transfer_ui_length]
+ mov dh,24
+ xor bh,bh
+ mov ah,2
+ int 0x10
+ ret
+ui_text:
+ lodsb
+ or al,al
+ jz .done
+ mov ah,0x1f
+ stosw
+ jmp ui_text
+.done: ret
+terminal_transfer_ui_receiving:
+ push ax
+ push cx
+ push si
+ push di
+ push es
+ mov ax,0xb800
+ mov es,ax
+ mov di,3680
+ mov ax,0x1f20
+ mov cx,80
+ rep stosw
+ mov si,transfer_ui_running
+ mov di,3680
+ call ui_text
+ pop es
+ pop di
+ pop si
+ pop cx
+ pop ax
+ ret
+terminal_transfer_ui_progress:
+ push ax
+ push bx
+ push cx
+ push dx
+ push di
+ push es
+ mov ax,0xb800
+ mov es,ax
+ mov di,3680+70*2
+ mov ax,[session_blocks_accepted]
+ mov bx,10
+ mov cx,5
+.digit:
+ xor dx,dx
+ div bx
+ add dl,'0'
+ mov dh,0x1f
+ mov [es:di],dx
+ sub di,2
+ loop .digit
+ pop es
+ pop di
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ ret
+terminal_transfer_ui_restore:
+ push ax
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push es
+ cmp byte [transfer_ui_visible],0
+ je .done
+ mov ax,0xb800
+ mov es,ax
+ mov si,transfer_ui_saved
+ mov di,3680
+ mov cx,160
+ rep movsw
+ mov cx,[transfer_ui_shape]
+ mov ah,1
+ int 0x10
+ mov dx,[transfer_ui_cursor]
+ xor bh,bh
+ mov ah,2
+ int 0x10
+ mov byte [transfer_ui_visible],0
+.done:
+ pop es
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ ret
+SEGMENT _DATA public class=DATA use16
+transfer_ui_saved: times 320 db 0
+transfer_ui_cursor: dw 0
+transfer_ui_shape: dw 0
+transfer_ui_length: dw 0
+transfer_ui_visible: db 0
+transfer_ui_title: db ' Download: XMODEM   [Enter] Start   [Esc] Cancel',0
+transfer_ui_running: db ' Receiving XMODEM   [Esc] Cancel                    Blocks:',0

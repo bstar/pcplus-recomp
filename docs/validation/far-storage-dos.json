@@ -1,0 +1,43 @@
+{
+  "case": "far-storage",
+  "passed": true,
+  "checks": {
+    "DOS_expected_exit": true,
+    "hardware_restored": true,
+    "PRM_unchanged": true,
+    "binary_unchanged": true,
+    "no_peer_errors": true,
+    "no_unexpected_commands": true,
+    "fixture_unchanged_TEST.KEY": true,
+    "fixture_unchanged_FARTEST.COM": true,
+    "actual_init_and_dial": true,
+    "actual_DOS_CPR": true,
+    "actual_DOS_DA": true,
+    "immediate_banner_not_dropped": true,
+    "owned_child_found_parent_and_retained_far_extent": true,
+    "MCB_covers_far_end_after_STACK": true,
+    "new_DOS_allocation_does_not_overlap_far_parent": true,
+    "shadow_and_history_canaries_survive_child_allocation_fill": true
+  },
+  "commands": [
+    "ATZ",
+    "ATDCaseTest:23"
+  ],
+  "errors": [],
+  "seconds": 7.326,
+  "binary_sha256": "29da4799847e45ec1144195412a8ed0ceff74136878ffe86617375538de1b196",
+  "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 HARD",
+  "expected_exit": 0,
+  "scope": "Actual DOS livePROGRAM/COMSPEC owned child locates parent PSP, checks retainedMCB throughfarend afterSTACK, allocates/fills16KB separateDOSmemory and verifies full-sizedshadow/history endpointcanaries. NormalUART/vector cleanup verified by existing sampler. No physical modem claim.",
+  "sample_hex": "07001408171c171c2b216725fecaefbeaddebeba",
+  "linker_defines": {
+    "DGROUP_SEG": 2655,
+    "FAR_SEG": 6407,
+    "SHADOW_OFFSET": 0,
+    "HISTORY_OFFSET": 8192,
+    "FAR_END_OFFSET": 12288,
+    "PROCESS_PSP_OFFSET": 448,
+    "SHADOW_SEGMENT_OFFSET": 21925,
+    "HISTORY_POINTER_OFFSET": 23341
+  }
+}

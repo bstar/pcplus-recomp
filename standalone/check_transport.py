@@ -60,7 +60,7 @@ class Transport(DosImage):
    (UC_X86_REG_SS,self.ds),(UC_X86_REG_ES,0xb800),(UC_X86_REG_EFLAGS,0x202),
    (UC_X86_REG_BP,0xbabe),(UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678),(UC_X86_REG_AX,ax)]:uc.reg_write(register,value)
   words=([0xf000,self.base_segment,0x202] if irq else [0xf000])+list(arguments)
-  sp=0xe000-len(words)*2;uc.mem_write(self.data_base+sp,struct.pack('<'+'H'*len(words),*words));uc.reg_write(UC_X86_REG_SP,sp)
+  sp=(self.offset('terminal_stack_top') if 'terminal_stack_top' in self.symbols else 0xe000)-len(words)*2;uc.mem_write(self.data_base+sp,struct.pack('<'+'H'*len(words),*words));uc.reg_write(UC_X86_REG_SP,sp)
   self.returned=False;uc.emu_start(self.symbols[name],self.base+0x10000,count=limit)
   assert self.returned,(name,'did not finish within',limit)
   assert uc.reg_read(UC_X86_REG_SP)==sp+(6 if irq else 2)+cleanup,(name,'stack cleanup')

@@ -279,9 +279,15 @@ terminal_mode_372c: dw 0
 SEGMENT _BSS public align=16 class=BSS use16
 global screen_attribute_cells
 screen_attribute_cells: resb 4096
-global erase_attribute_values,erase_shadow_cells
+global erase_attribute_values
 erase_attribute_values: resb 4096
+; Native consumers already use segment:offset pointers to these full buffers.
+; Keep this segment outside DGROUP so DS=SS near callers retain their ABI.
+SEGMENT FAR_STORAGE public align=16 class=FAR_DATA use16
+global erase_shadow_cells,terminal_history_buffer,terminal_far_storage_end
 erase_shadow_cells: resb 8192
+terminal_history_buffer: resb 4096
+terminal_far_storage_end:
 global render_autowrap,terminal_input_mode_8fe8
 render_autowrap equ cursor_state_value_1d20
 terminal_input_mode_8fe8 equ terminal_dec_keys
@@ -359,7 +365,6 @@ terminal_history_pointer: dw terminal_history_buffer,seg terminal_history_buffer
 terminal_history_end: dw terminal_history_buffer+4096
 terminal_history_wrapped: dw 0
 terminal_history_pending: db 0
-terminal_history_buffer: times 4096 db 0
 
 SEGMENT _DATA
 global terminal_quit,terminal_exit_code,terminal_irq_vector,terminal_port_number

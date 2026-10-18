@@ -1,0 +1,701 @@
+; Maintained exclusive live ordinary-XMODEM owner over recovered native engine.
+; No fixture callbacks. DS=SS, foreground only; ISR remains recovered UART code.
+BITS 16
+CPU 8086
+SEGMENT _TEXT public class=CODE use16
+extern terminal_clock_ticks,terminal_quit,terminal_exit_code,connection_state
+extern terminal_tx_count,terminal_tx_head,terminal_tx_buffer,terminal_macro_tx_epoch
+extern terminal_macro_cancel,terminal_program_cancel,terminal_program_pending
+extern uart_software_flow,uart_rx_count,uart_rx_dropped,uart_port_lsr,uart_port_msr
+extern uart_receive_byte,uart_unreceive_byte,uart_try_write,uart_poll_flow
+extern keyboard_poll,terminal_read_key,terminal_baud_low,terminal_baud_high
+extern terminal_transfer_ui_open,terminal_transfer_ui_restore,terminal_transfer_ui_receiving
+extern terminal_transfer_ui_progress,terminal_connection_notice,terminal_connection_notice_restore
+extern _terminal_transfer_store,_terminal_transfer_receive,_terminal_transfer_cleanup
+extern _transfer_native_open,_transfer_native_write,_transfer_native_close,_transfer_download_result
+extern session_setjmp,session_longjmp,session_blocks_accepted
+GLOBAL terminal_transfer_start,terminal_transfer_poll,terminal_transfer_service
+GLOBAL terminal_transfer_filter,terminal_transfer_shutdown
+
+terminal_transfer_start:
+ push bp
+ push si
+ push di
+ push es
+ cmp word [terminal_transfer_pending],0
+ jne .done
+ cmp word [terminal_transfer_active],0
+ jne .done
+ cmp word [uart_software_flow],0
+ jne .soft
+ cmp word [connection_state],0
+ je .start
+ cmp word [connection_state],6
+ jne .done
+.start:
+ call terminal_macro_cancel
+ call terminal_program_cancel
+ mov word [terminal_transfer_pending],1
+ mov word [terminal_transfer_grace],0
+ jmp .done
+.soft:
+ mov si,transfer_note_soft
+ call terminal_connection_notice
+.done:
+ pop es
+ pop di
+ pop si
+ pop bp
+ ret
+
+terminal_transfer_poll:
+ push bp
+ push bx
+ push si
+ push di
+ push es
+ cmp word [terminal_transfer_pending],0
+ je .done
+ mov word [terminal_transfer_pending],0
+ mov word [terminal_transfer_active],1
+ mov word [terminal_transfer_phase],0
+ mov word [terminal_transfer_fault],0
+ mov word [terminal_transfer_cleanup_status],0
+ mov word [terminal_transfer_eot_deferred],0
+ mov word [terminal_transfer_native_status],0
+ mov word [transfer_protocol_started],0
+ mov word [transfer_context_active],0
+ mov word [transfer_last_blocks],0
+ mov word [transfer_carrier_seen],0
+ mov word [transfer_progress_budget],540 ;30seconds; lowbaud gets120seconds
+ cmp word [terminal_baud_high],0
+ jne .budget_ready
+ cmp word [terminal_baud_low],1200
+ jae .budget_ready
+ mov word [transfer_progress_budget],2160
+.budget_ready:
+ call terminal_connection_notice_restore
+ call terminal_clock_ticks
+ mov [transfer_progress_tick],ax
+ mov [transfer_progress_tick+2],dx
+ mov [transfer_wait_tick],ax
+ mov [transfer_wait_tick+2],dx
+.drain:
+ call terminal_transfer_service
+ cmp word [terminal_transfer_fault],0
+ jne .finish
+ cmp word [terminal_tx_count],0
+ je .physical
+ mov bx,[terminal_tx_head]
+ mov al,[terminal_tx_buffer+bx]
+ call uart_try_write
+ jc .drain_wait
+ mov bx,[terminal_tx_head]
+ inc bx
+ and bx,1023
+ mov [terminal_tx_head],bx
+ dec word [terminal_tx_count]
+ inc word [terminal_macro_tx_epoch]
+ ; A slow line can legitimately drain for longer than36ticks. Bound lack
+ ; of UART acceptance, not total queued text duration; never refresh on busy.
+ call terminal_clock_ticks
+ mov [transfer_wait_tick],ax
+ mov [transfer_wait_tick+2],dx
+ jmp .drain
+.physical:
+ mov dx,[uart_port_lsr]
+ in al,dx
+ and al,0x60
+ cmp al,0x60
+ je .prompt
+.drain_wait:
+ mov si,transfer_wait_tick
+ call transfer_elapsed
+ cmp dx,0
+ jne .drain_failed
+ cmp ax,36
+ jb .drain
+.drain_failed:
+ mov word [terminal_transfer_fault],6
+ jmp .finish
+.prompt:
+ mov word [terminal_transfer_phase],1
+ call terminal_transfer_ui_open
+ or ax,ax
+ jz .finish
+ call terminal_transfer_ui_receiving
+ mov word [terminal_transfer_phase],2
+ call terminal_clock_ticks
+ mov [transfer_progress_tick],ax
+ mov [transfer_progress_tick+2],dx
+ call _terminal_transfer_store
+ or ax,ax
+ jnz .failed
+ cmp word [terminal_transfer_fault],0
+ jne .failed
+ ; The native finalACK was suppressed. Publish it only after exactwrite,
+ ; checkedclose and no-overwrite installation have all succeeded.
+ mov al,6
+ call transfer_emit
+ jc .failed
+ mov word [terminal_transfer_grace],1
+ call terminal_clock_ticks
+ mov [transfer_grace_tick],ax
+ mov [transfer_grace_tick+2],dx
+ mov si,transfer_note_success
+ jmp .notice
+.failed:
+ cmp word [transfer_protocol_started],0
+ je .finish
+ ; Best-effort bounded CAN pair; never unwind through a dead native frame.
+ mov al,0x18
+ call transfer_emit_cancel
+ mov al,0x18
+ call transfer_emit_cancel
+.finish:
+ mov si,transfer_note_cancel
+ cmp word [terminal_transfer_cleanup_status],0
+ jne .recovery_note
+ cmp word [_transfer_download_result],3
+ jne .error_note
+ cmp word [terminal_transfer_fault],0
+ je .success_note
+ mov si,transfer_note_ack
+ jmp .notice
+.success_note:
+ mov si,transfer_note_success
+ jmp .notice
+.recovery_note:
+ mov si,transfer_note_recovery
+ jmp .notice
+.error_note:
+ mov ax,[terminal_transfer_fault]
+ cmp ax,3
+ jne .not_timeout
+ mov si,transfer_note_timeout
+ jmp .notice
+.not_timeout:
+ cmp ax,4
+ jne .not_carrier
+ mov si,transfer_note_carrier
+ jmp .notice
+.not_carrier:
+ cmp ax,5
+ jne .not_overflow
+ mov si,transfer_note_overflow
+ jmp .notice
+.not_overflow:
+ cmp ax,6
+ jne .not_stall
+ mov si,transfer_note_stall
+ jmp .notice
+.not_stall:
+ cmp ax,7
+ jb .notice
+ mov si,transfer_note_file
+.notice:
+ call terminal_transfer_ui_restore
+ mov word [terminal_transfer_phase],0
+ mov word [terminal_transfer_active],0
+ call terminal_connection_notice
+.done:
+ pop es
+ pop di
+ pop si
+ pop bx
+ pop bp
+ ret
+
+; AX=elapsed full BIOSdayticks from DS:SI, normalized across midnight.
+transfer_elapsed:
+ call terminal_clock_ticks
+ sub ax,[si]
+ sbb dx,[si+2]
+ jnc .done
+ add ax,0x00b0
+ adc dx,0x0018
+.done: ret
+
+; Serviced transfer-only poll. During filename entry the prompt owns BIOS keys.
+; No parser/macro/PROGRAM/dial callbacks run while this owner is active.
+terminal_transfer_service:
+ push ax
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push es
+ call uart_poll_flow
+ cmp word [terminal_quit],0
+ je .rx
+ mov ax,2
+ jmp .fault
+.rx:
+ cmp word [uart_rx_dropped],0
+ je .carrier
+ mov ax,5
+ jmp .fault
+.carrier:
+ mov dx,[uart_port_msr]
+ in al,dx
+ test al,0x80
+ jz .carrier_low
+ mov word [transfer_carrier_seen],1
+ jmp .clock
+.carrier_low:
+ cmp word [transfer_carrier_seen],0
+ je .clock
+ mov ax,4
+ jmp .fault
+.clock:
+ cmp word [terminal_transfer_phase],2
+ jne .keys
+ mov si,transfer_progress_tick
+ call transfer_elapsed
+ or dx,dx
+ jnz .timeout
+ cmp ax,[transfer_progress_budget]
+ jb .keys
+.timeout:
+ mov ax,3
+ jmp .fault
+.keys:
+ cmp word [terminal_transfer_phase],1
+ je .done
+ call keyboard_poll
+ or ax,ax
+ jz .done
+ call terminal_read_key
+ cmp ax,0x2d00
+ jne .escape
+ mov word [terminal_quit],1
+ mov ax,2
+ jmp .fault
+.escape:
+ cmp al,27
+ jne .done
+ mov ax,2
+.fault:
+ cmp word [terminal_transfer_fault],0
+ jne .done
+ mov [terminal_transfer_fault],ax
+.done:
+ pop es
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ ret
+
+; Fail from a foreground callback only. Context is established BEFORE the native
+; handshake, so CTS/cancel/deadline failures cannot jump through an empty context.
+transfer_maybe_unwind:
+ cmp word [terminal_transfer_fault],0
+ je .done
+ cmp word [transfer_context_active],0
+ je .done
+ mov ax,1
+ push ax
+ mov ax,transfer_outer_context
+ push ax
+ call session_longjmp
+.done: ret
+GLOBAL _terminal_transfer_native_call
+_terminal_transfer_native_call:
+ push bp
+ mov bp,sp
+ push bx
+ push si
+ push di
+ push es
+ mov ax,transfer_outer_context
+ push ax
+ call session_setjmp
+ add sp,2
+ or ax,ax
+ jnz .unwound
+ mov word [transfer_context_active],1
+ push word [bp+4]
+ call _terminal_transfer_receive
+ add sp,2
+ mov word [transfer_context_active],0
+ jmp .done
+.unwound:
+ mov word [transfer_context_active],0
+ xor ax,ax
+.done:
+ pop es
+ pop di
+ pop si
+ pop bx
+ pop bp
+ ret
+
+; AL raw byte, CF busy/failure.36tick physical/flow stall bound perbyte.
+transfer_emit:
+ push bp
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push es
+ mov bl,al
+ call terminal_clock_ticks
+ mov [transfer_tx_tick],ax
+ mov [transfer_tx_tick+2],dx
+.wait:
+ call terminal_transfer_service
+ cmp word [terminal_transfer_fault],0
+ jne .failed
+ mov al,bl
+ call uart_try_write
+ jnc .success
+ mov si,transfer_tx_tick
+ call transfer_elapsed
+ or dx,dx
+ jnz .timeout
+ cmp ax,36
+ jb .wait
+.timeout:
+ mov word [terminal_transfer_fault],6
+.failed:
+ stc
+ jmp .done
+.success:
+ clc
+.done:
+ pop es
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop bp
+ ret
+
+; Cancellation control does not mistake the already-latched failure for a new
+; send failure. No parser or DOS calls, finite36ticks even when CTS/THRE stall.
+transfer_emit_cancel:
+ push ax
+ push bx
+ push dx
+ push si
+ mov bl,al
+ call terminal_clock_ticks
+ mov [transfer_tx_tick],ax
+ mov [transfer_tx_tick+2],dx
+.wait:
+ call uart_poll_flow
+ mov al,bl
+ call uart_try_write
+ jnc .done
+ mov si,transfer_tx_tick
+ call transfer_elapsed
+ or dx,dx
+ jnz .done
+ cmp ax,36
+ jb .wait
+.done:
+ pop si
+ pop dx
+ pop bx
+ pop ax
+ ret
+
+GLOBAL terminal_transfer_transmit_byte
+terminal_transfer_transmit_byte:
+ ; Native BP remains its58h-frame here (receive_ack does not changeBP).
+ cmp word [ss:bp-0x10],4
+ jne .emit
+ mov bx,sp
+ cmp word [ss:bx+2],6
+ jne .emit
+ mov word [terminal_transfer_eot_deferred],1
+ ret 2
+.emit:
+ push bp
+ mov bp,sp
+ mov ax,[bp+4]
+ call transfer_emit
+ jc .failed
+ mov word [transfer_protocol_started],1
+.failed:
+ call transfer_maybe_unwind
+ pop bp
+ ret 2
+
+GLOBAL terminal_transfer_timed_byte,terminal_transfer_header_byte
+terminal_transfer_header_byte:
+ mov ax,2
+ push ax
+ call terminal_transfer_timed_byte
+ ret
+terminal_transfer_timed_byte:
+ push bp
+ mov bp,sp
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push es
+ mov bx,[bp+4]
+ cmp bx,30
+ jbe .bounded
+ mov bx,30
+.bounded:
+ mov ax,19
+ mul bx
+ mov di,ax ;conservative bounded BIOS ticks per requested second
+ call terminal_clock_ticks
+ mov [transfer_read_tick],ax
+ mov [transfer_read_tick+2],dx
+.wait:
+ call terminal_transfer_service
+ call transfer_maybe_unwind
+ call uart_receive_byte
+ cmp ax,0xffff
+ jne .done
+ mov si,transfer_read_tick
+ call transfer_elapsed
+ or dx,dx
+ jnz .timeout
+ cmp ax,di
+ jb .wait
+.timeout:
+ mov ax,0xffff
+.done:
+ pop es
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop bp
+ ret 2
+
+GLOBAL terminal_transfer_delay_ticks,terminal_transfer_delay_legacy
+terminal_transfer_delay_ticks:
+ push bp
+ mov bp,sp
+ push ax
+ mov ax,[bp+4]
+ cmp ax,10
+ jbe .bounded
+ mov ax,10
+.bounded:
+ inc ax ;explicit native BIOS tick-change wait: argument+1
+ call transfer_delay
+ pop ax
+ pop bp
+ ret 2
+terminal_transfer_delay_legacy:
+ push ax
+ mov ax,2 ;maintained two-BIOS-tick quiet interval, NOT calibrated units
+ call transfer_delay
+ pop ax
+ ret 2
+transfer_delay:
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ mov di,ax
+ call terminal_clock_ticks
+ mov [transfer_delay_tick],ax
+ mov [transfer_delay_tick+2],dx
+.wait:
+ call terminal_transfer_service
+ call transfer_maybe_unwind
+ mov si,transfer_delay_tick
+ call transfer_elapsed
+ or dx,dx
+ jnz .done
+ cmp ax,di
+ jb .wait
+.done:
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ ret
+
+GLOBAL terminal_transfer_flush_input
+terminal_transfer_flush_input:
+ push ax
+ push cx
+ mov cx,[uart_rx_count] ;discard only the bounded snapshot, not future arrivals
+.next:
+ jcxz .done
+ call uart_receive_byte ;real lowwater/RTS ownership maintained by driver
+ loop .next
+.done:
+ pop cx
+ pop ax
+ ret
+GLOBAL terminal_transfer_local_cancel,terminal_transfer_carrier_present
+terminal_transfer_local_cancel:
+ call terminal_transfer_service
+ call transfer_maybe_unwind
+ mov ax,[terminal_transfer_fault]
+ ret
+terminal_transfer_carrier_present:
+ call terminal_transfer_service
+ call transfer_maybe_unwind
+ mov ax,1
+ cmp word [terminal_transfer_fault],0
+ je .done
+ xor ax,ax
+.done: ret
+GLOBAL terminal_transfer_progress,terminal_transfer_status,terminal_transfer_clock
+terminal_transfer_progress:
+ push ax
+ push dx
+ mov ax,[session_blocks_accepted]
+ cmp ax,[transfer_last_blocks]
+ je .draw
+ mov [transfer_last_blocks],ax
+ call terminal_clock_ticks
+ mov [transfer_progress_tick],ax
+ mov [transfer_progress_tick+2],dx
+.draw:
+ call terminal_transfer_ui_progress
+ call terminal_transfer_service
+ call transfer_maybe_unwind
+ pop dx
+ pop ax
+ ret
+terminal_transfer_status:
+ push bp
+ mov bp,sp
+ mov ax,[bp+4]
+ mov [terminal_transfer_native_status],ax
+ pop bp
+ ret
+terminal_transfer_clock: jmp terminal_clock_ticks
+
+GLOBAL terminal_transfer_file_open,terminal_transfer_file_write,terminal_transfer_file_close
+terminal_transfer_file_open: jmp _transfer_native_open
+terminal_transfer_file_write: jmp _transfer_native_write
+terminal_transfer_file_close: jmp _transfer_native_close
+GLOBAL terminal_transfer_path_test,terminal_transfer_display_path
+terminal_transfer_path_test:
+ xor ax,ax ;validated explicit stage path, no native prefix search
+ ret
+terminal_transfer_display_path:
+ push bp
+ mov bp,sp
+ mov ax,[bp+4]
+ pop bp
+ ret
+GLOBAL terminal_transfer_ui_print,terminal_transfer_setflow,terminal_transfer_timestamp
+terminal_transfer_ui_print:
+ call terminal_transfer_ui_progress ;native labels reflected by live receive UI
+ ret 6
+terminal_transfer_setflow:
+ call uart_poll_flow ;nativegateis0 here; ISRownsactualHARDwatermarks
+ ret
+terminal_transfer_timestamp:
+ xor ax,ax ;ordinaryXMODEM has no remote timestamp; keep DOScreated timestamp
+ ret
+GLOBAL terminal_transfer_unsupported
+terminal_transfer_unsupported:
+ mov word [terminal_transfer_fault],10
+ call transfer_maybe_unwind
+ ; No unsupported protocol may silently return success.
+ extern terminal_abort
+ mov ax,0xfa08
+ jmp terminal_abort
+
+; Main's post-session input filter. Retransmitted EOT receives ACK for10seconds
+; until first non-EOT application byte; no file IO or reinstall happens here.
+terminal_transfer_filter:
+ push ax
+ push bx
+ push dx
+ push si
+ cmp word [terminal_transfer_grace],0
+ je .pass
+ mov bx,ax
+ mov si,transfer_grace_tick
+ call transfer_elapsed
+ or dx,dx
+ jnz .expire
+ cmp ax,190
+ jae .expire
+ cmp bx,4
+ jne .expire
+ mov al,6
+ extern terminal_enqueue_al
+ call terminal_enqueue_al
+ pop si
+ pop dx
+ pop bx
+ pop ax
+ stc
+ ret
+.expire:
+ mov word [terminal_transfer_grace],0
+.pass:
+ pop si
+ pop dx
+ pop bx
+ pop ax
+ clc
+ ret
+terminal_transfer_shutdown:
+ call _terminal_transfer_cleanup
+ or ax,ax
+ jz .done
+ cmp word [terminal_exit_code],0
+ jne .done
+ mov word [terminal_exit_code],12
+.done: ret
+SEGMENT _DATA public class=DATA use16
+GLOBAL terminal_transfer_pending,terminal_transfer_active,terminal_transfer_fault
+GLOBAL _terminal_transfer_fault,terminal_transfer_cleanup_status,_terminal_transfer_cleanup_status
+GLOBAL terminal_transfer_eot_deferred,_terminal_transfer_eot_deferred
+GLOBAL terminal_transfer_native_status,_terminal_transfer_native_status
+GLOBAL terminal_transfer_filename,_terminal_transfer_filename
+terminal_transfer_pending: dw 0
+terminal_transfer_active: dw 0
+terminal_transfer_phase: dw 0
+_terminal_transfer_fault:
+terminal_transfer_fault: dw 0
+_terminal_transfer_cleanup_status:
+terminal_transfer_cleanup_status: dw 0
+_terminal_transfer_eot_deferred:
+terminal_transfer_eot_deferred: dw 0
+_terminal_transfer_native_status:
+terminal_transfer_native_status: dw 0
+_terminal_transfer_filename:
+terminal_transfer_filename: times 64 db 0
+terminal_transfer_grace: dw 0
+transfer_grace_tick: dd 0
+transfer_progress_tick: dd 0
+transfer_wait_tick: dd 0
+transfer_tx_tick: dd 0
+transfer_read_tick: dd 0
+transfer_delay_tick: dd 0
+transfer_progress_budget: dw 540
+transfer_last_blocks: dw 0
+transfer_carrier_seen: dw 0
+transfer_context_active: dw 0
+transfer_outer_context: times 10 db 0
+transfer_protocol_started: dw 0
+transfer_note_success: db 'RX complete',0
+transfer_note_cancel: db 'RX canceled',0
+transfer_note_soft: db 'RX: HARD/NONE',0
+transfer_note_timeout: db 'RX timeout',0
+transfer_note_carrier: db 'RX carrier lost',0
+transfer_note_overflow: db 'RX overflow',0
+transfer_note_stall: db 'RX TX stalled',0
+transfer_note_file: db 'RX file error',0
+transfer_note_recovery: db 'RX recovery!',0
+transfer_note_ack: db 'RX saved; ACK?',0

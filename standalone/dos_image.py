@@ -56,7 +56,7 @@ class DosImage:
             (UC_X86_REG_BP,0xbabe), (UC_X86_REG_SI,0x1234), (UC_X86_REG_DI,0x5678)]:
             uc.reg_write(register,value)
         words = [0xf000] + list(arguments)
-        sp = 0xe000 - len(words) * 2
+        sp = (self.offset('terminal_stack_top') if 'terminal_stack_top' in self.symbols else 0xe000) - len(words) * 2
         uc.mem_write(self.data_base + sp,struct.pack('<' + 'H' * len(words),*words))
         uc.reg_write(UC_X86_REG_SP,sp)
         self.returned = False

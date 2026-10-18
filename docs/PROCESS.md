@@ -35,9 +35,10 @@ code is distinct from an EXEC failure.
 The host initializes `process_psp`, `process_keep_paragraphs` and
 `process_minimum_paragraphs`. Before the first child, AH4Ah shrinks that PSP
 allocation to the retained count. Later calls reuse that allocation. The live
-terminal computes the count through its statically allocated stack top, rounded
-up to a paragraph; this covers its code/data/BSS/stack without a heap or runtime
-overlays. This policy cannot be reused unchanged by a host which allocates
+terminal computes the count through the higher of STACK and FAR_STORAGE ends,
+rounded up to a paragraph. This covers code/data/BSS/stack and the full far
+shadow/history arrays, including linker placement after STACK. It uses no heap
+or runtime overlays. This policy cannot be reused unchanged by a host which allocates
 objects above that boundary. A successful shrink is not grown back afterward.
 
 The backend constructs the length-prefixed DOS tail and final CR, prepares two

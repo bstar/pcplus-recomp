@@ -201,3 +201,15 @@ mode still fail. Both close unsaved and the server records no new post.
 The current editor aggregate remains false. Hardware restoration and synthetic
 PRM preservation pass in both servers. The separate menu matrix passes after
 its retained ENiGMA timed-workflow retry; that does not make editing pass.
+
+## Live receive checkpoint
+
+Frozen `29da4799847e45ec1144195412a8ed0ceff74136878ffe86617375538de1b196`
+repeats both actual DOS recipes under `editor-live-receive-final`, after the
+far-storage and live receive integration. Synchronet passes12 behavior checks
+and all eight key-wire checks. ENiGMA emits all eight expected sequences and
+enters the stock editor, but Home and Insert behavior still fail; it closes
+unsaved and the server confirms no post. Both runs restore sampled hardware
+and preserve the synthetic PRM. The prior816e runs are retained separately.
+Neither normal DOS exit nor correct outgoing key bytes make the ENiGMA editor
+a pass. The immediate modem model and stock server decoder remain unchanged.

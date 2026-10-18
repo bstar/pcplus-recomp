@@ -1,90 +1,94 @@
-# Remaining live transfer integration
+# Live XMODEM receive integration
 
-The native owner/file/UART components and actual DOS storage composition are
-verified separately. The interactive terminal still has no live transfer command.
-This audit identifies the next required work; it is a design plan, not completed
-runtime evidence. The terminal checkpoint remains `7b9ca14b`, with DGROUP/SS
-59,408 bytes and separate BBS validation.
+Alt-R opens a DOS filename prompt and starts one foreground XMODEM download.
+Use HARD or NONE to match the modem. SOFT is rejected before prompting or
+creating a file: the original software-flow ISR consumes valid binary11h/13h
+bytes. This is a maintained live receive policy built around the recovered
+native engine; it is not a complete transfer/settings implementation.
 
-## Preserve memory rather than discard application state
+## Files and completion
 
-A11264-byte near receive arena cannot simply be added to the current DGROUP.
-Its native pointer is near/DS-relative, as are the maintained storage callback
-buffers; moving the receive arena far would break those ABIs.
+Enter an explicit normalized DOS8.3 destination of at most63 bytes, including
+its path. The destination must not exist. `PCRX.$$$` in the same directory is
+created exclusively; a preexisting stage is never adopted or removed. The
+native engine writes through the checked DOS bridge into that prepared stage.
+Close seals it; checked no-overwrite rename installs the completed file.
+Ordinary XMODEM has no exact-length metadata: received128/1024-byte blocks,
+including sender padding, are retained without guessing the original length.
 
-The8192-byte erase shadow already uses the segment:offset fields
-`erase_shadow_segment/offset`. Recovered rectangle paths272b/2785, ICHd30a and
-DCHd51c/d520 load that far address. The4096-byte history ring likewise already
-uses LES through `terminal_history_pointer`; its bounds are offsets. They can
-move together into a separate ungrouped FAR_STORAGE segment, retaining all
-history/metadata. This would leave58,384 DGROUP bytes after adding the11264-byte
-receive arena, before further adapter/control state (7,152 bytes of headroom).
-No such relocation has been made in this checkpoint.
+The recovered engine normally ACKs EOT before final file IO and ignores final
+write/close results. Its exact diagnostic remains unchanged. The live adapter
+suppresses that final ACK until the maintained owner independently verifies
+writes, close and installation. Failed or uncertain storage never receives a
+success ACK. A complete stage whose rename failed is retained for recovery;
+an uncertain close is never retried against a possibly recycled handle. Inspect
+`PCRX.$$$` after an RX recovery notice; do not delete an unfamiliar existing
+stage. A saved file whose final ACK cannot be sent remains saved and reports
+`RX saved; ACK?`.
 
-The live direct near shadow clears in `src/terminal/main.asm` and
-`terminal_reset.asm` must become ES:DI clears of the actual shadow segment.
-Preserve ES around them. History pointer/bound initialization must retain proper
-linker OFFSET/SEG relocations; it has no other live direct near accesses.
-Keep a far end marker covering both arrays.
+## Ownership and waits
 
-PROGRAM's current resize floor derives from DS and the stack end. Once there
-is storage outside DGROUP, it must retain the maximum of the stack end and far
-storage end, expressed in paragraphs relative to PSP. Set both process keep and
-minimum floors. Never assume Wlink orders the far segment before STACK. Verify
-map/MZ memory extents and use a child memory-pressure/far-canary regression so
-DOS EXEC cannot overwrite released application state.
+One native receive invocation owns its BP frame, receiver state and11264-byte
+near arena. Its queued-byte aliases use the actual UART receive count. The live
+callbacks service UART flow, cancellation, carrier loss and receive overflow;
+they do not run the ordinary parser, macros, PROGRAM or dial controller while
+binary reception owns the link. Escape cancels; Alt-X cancels and exits through
+normal hardware cleanup. The maintained outer setjmp context exists before
+the first native handshake, allowing safe cancellation even before the native
+receiver establishes its inner context. No ISR performs a nonlocal unwind.
 
-## One owner, actual shared state
+Prior queued text drains before negotiation. Only actual transmission progress
+refreshes the36-tick stall deadline. Native timed reads use19 BIOS ticks per
+requested second, clipped to30 seconds. A separate no-progress deadline is540
+BIOS ticks, extended to2160 below1200baud. Midnight wrap is handled explicitly.
+The unresolved native calibrated delay6b72 is replaced by a serviced two-tick
+quiet interval; this is a documented maintained timing choice, not recovered
+original timing. The native6b98 BIOS-tick wait remains a distinct callback.
 
-Compose the native receiver once per transfer with one live BP frame and
-setjmp context; keep it active until return. Use the actual UART ring/count
-aliases rather than duplicate diagnostic words. Protocol ID4 means XMODEM and
-is independent of terminal profile4/6. The native baud table index is not the
-actual baud word; supply bounded initialization or an explicit source-owned
-rate table. Preserve all near-C/callee-cleanup differences documented in the
-individual modules.
+The first EOT receives NAK, followed by the second EOT and checked installation.
+For190 ticks after completion a repeated EOT is ACKed without reopening or
+rewriting the file. The first non-EOT byte returns to normal parsing unchanged.
+Failure always returns storage ownership to the maintained cleanup path, even
+when the native timeout returns with its file logically open.
 
-The standalone IO adapters are controlled fixtures. Replace their UART/time,
-carrier, keyboard, UI and file callbacks explicitly; do not turn fixture defaults
-into production success stubs. Connect the real DOS bridge using prepared stage
-names, empty/bounded native prefix and the independent completion/error gate.
+## Memory and PROGRAM
 
-## Serviced waits and binary flow
+The8192-byte erase shadow and4096-byte history ring retain their full sizes in
+an ungrouped FAR_STORAGE segment. Original helpers already use far pointers;
+startup/RIS clearing now loads the actual segment. History survives RIS.
+The11264-byte receive arena stays near to preserve the recovered ABI.
 
-The raw original timed reader/header helpers and transmitter have blocking or
-unbounded waits, and do not service the maintained foreground. Use independent
-full-clock deadlines and service transfer cancellation/Alt-X, UART RX/TX and
-flow while waiting. Do not call the ordinary `terminal_poll_io` wholesale:
-it also runs macros, PROGRAM, bindings, redial/hangup and parser ownership paths.
-Suspend those producers while the transfer owns the transport. Drain prior TX
-before starting C/NAK negotiation. Treat RX overflow as transfer failure and
-preserve bytes queued after completion instead of blindly flushing the ring.
+`standalone/terminal_memory.py` verifies the map, serialized far pointers and
+MZ relocation/allocation records at build time. DS equals SS and DGROUP must
+remain below64KiB. PROGRAM retains the higher of STACK end and FAR_STORAGE end,
+even when Wlink places far storage after STACK. Linked tests cover original far
+movers, history wrap, RIS and parent memory retention. An actual DOS child
+allocates/fills its own16KiB block and checks parent shadow/history canaries.
 
-The UART SOFT ISR consumes incoming11h/13h before storing binary payload. An
-ordinary binary transfer under that mode would lose valid file bytes. Initially
-reject SOFT (including simultaneous SOFT+HARD) before file/stage acquisition,
-unless an explicit end-to-end binary flow policy is implemented. HARD/NONE
-preserve byte values; their stall/overflow and modem compatibility still need
-actual owned-peer and physical validation. The separate TUART test uses NONE.
+## Validation and remaining scope
 
-Native double-CAN/local/carrier cancellation uses the foreground nonlocal
-context, never an ISR/DOS-interrupt longjmp. Timeout exhaustion can leave the
-native FILE open, so the maintained owner must always abort/close on failure.
-A successful native close only seals a stage; only the independent maintained
-success/error checks authorize installation.
+`standalone/check_terminal_transfer_live.py` executes actual linked owner,
+native receiver, C storage, UI and UART ISR instructions. Only hardware,
+BIOS and DOS filesystem syscalls are modeled. It covers binary block receipt,
+installation-before-ACK, bounded stalls/wrap, early cancellation, storage
+faults and ownership/ABI guards.
 
-## EOT and validation
+The independent actual DOS peer uses the real Alt-R prompt, IRQ/UART path and
+DOS files. Run against an explicitly frozen build:
 
-The exact owner ACKs EOT before final file IO and ignores final write/close
-results. Current actual-DOS composition prevents failed installation, but cannot
-retract an ACK already sent. Define and test the live EOT policy explicitly;
-never claim wire success implies installed data. Preserve exact baseline tests
-and distinguish intentional safe maintained behavior.
+```sh
+./tools/dev --command python3 standalone/test_terminal_transfer_dos.py \
+  --sha256 SHA256_OF_TERMINAL_EXE --label my-owned-run
+```
 
-After these changes, test the combined terminal, real UART and real file backend
-against an independent owned peer: binary CRC/checksum,128/1024 and mixed blocks,
-sequence rollover, duplicate/retry/corruption, flow stalls, cancellation,
-carrier loss, timeout, disk/close/install failures and exact target bytes.
-Recheck BBS navigation and PROGRAM restoration on the new terminal hash. Batch,
-window/streaming protocols, uploads, all advertised protocol families and complete
-transfer/settings UI remain part of the full application goal.
+Retained tests cover CRC/checksum128/1024, mixed blocks, duplicates, bad CRC and
+sequence retries, peer/local cancellation, existing destinations, SOFT rejection,
+no-peer timeout, exact file bytes, post-transfer parser/keyboard/video use and
+sampled hardware restoration. Check each result's executable hash and scope.
+Initial harness failures are retained separately from corrected runs.
+
+These peers are synthetic and local. They do not establish physical Wi-Fi modem
+compatibility or file transfer against the BBS packages. Uploads, batch/window/
+streaming and other protocol families, full transfer UI/settings, additional
+emulations and physical DOS hardware remain part of the full application goal.
+BBS navigation/editor results are recorded separately in `lab/bbs/README.md`.

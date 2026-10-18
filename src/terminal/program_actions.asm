@@ -4,7 +4,7 @@ BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
 extern process_psp,process_keep_paragraphs,process_minimum_paragraphs
-extern terminal_stack_top,_program_execute
+extern terminal_stack_top,terminal_far_storage_end,_program_execute
 extern terminal_clock_ticks,terminal_macro_tx_epoch,terminal_tx_count
 extern terminal_quit,terminal_exit_code,connection_state
 extern uart_port_lsr,uart_port_thr,uart_port_lcr,uart_port_ier,uart_port_mcr
@@ -19,7 +19,7 @@ extern terminal_connection_notice,terminal_connection_notice_restore
 global terminal_program_initialize,terminal_program_start,terminal_program_poll
 global terminal_program_cancel
 
-; AX startup PSP. This static parent has no heap/overlay allocations above stack.
+; AX startup PSP. Retain every static segment, including far metadata/history.
 ; Preserve all registers, including AX needed by command-tail parsing next.
 terminal_program_initialize:
  push ax
@@ -27,24 +27,37 @@ terminal_program_initialize:
  push cx
  push dx
  mov [process_psp],ax
- mov dx,ax
- mov ax,ds
- sub ax,dx
+ mov dx,ds
  mov bx,terminal_stack_top
- mov dx,bx
- mov cl,4
- shr bx,cl
- and dx,15
- jz .rounded
- inc bx
-.rounded:
+ call .paragraphs
+ add dx,bx
+ mov ax,seg terminal_far_storage_end
+ mov bx,terminal_far_storage_end
+ call .paragraphs
  add ax,bx
+ cmp ax,dx
+ jae .highest
+ mov ax,dx
+.highest:
+ sub ax,[process_psp]
  mov [process_keep_paragraphs],ax
  mov [process_minimum_paragraphs],ax
  pop dx
  pop cx
  pop bx
  pop ax
+ ret
+.paragraphs:
+ ; Round OFFSET upward without overflowing a near16-bit addition.
+ mov cx,bx
+ shr bx,1
+ shr bx,1
+ shr bx,1
+ shr bx,1
+ and cx,15
+ jz .rounded
+ inc bx
+.rounded:
  ret
 
 ; AX near stored command1..51.0 queued,1 invalid,2 busy,3 modem owns RX.

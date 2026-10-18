@@ -227,9 +227,14 @@ csi_reset_terminal:
  mov di,erase_attribute_values
  mov cx,2048
  rep stosw
+ mov ax,seg erase_shadow_cells
+ mov es,ax
+ xor ax,ax
  mov di,erase_shadow_cells
  mov cx,4096
  rep stosw
+ push ds
+ pop es
  ; Startup protection/viewport gates and owned pointers have been restored.
  ; This actual recovered helper clears the full video rectangle and homes.
  call terminal_clear_home
