@@ -1,0 +1,256 @@
+{
+  "passed": true,
+  "binary_sha256": "36b14af2281a4921c0da210cfb3ceed22c3c33d82c9b40f2877850bea169d5f4",
+  "scope": "Frozen maintained source terminal CPU and actual DOS regression checkpoint; real local BBS evidence is separately recorded and includes ENiGMA failures. No complete application or physical modem claim.",
+  "checks": {
+    "build/terminal/character-edit-live-checks.json": {
+      "passed": true,
+      "sha256": "31f2f65d6a2310324a38f82c57e888907d47844b77b930e69bfb0b17d34d6602",
+      "cases": 9,
+      "inputs": null,
+      "scope": "Actual linked UART IRQ, input/CSI/ESC dispatcher, maintained bounds and recovered character helpers/video/movers; hardware-only BIOS video/keyboard/UART/tick oracle. Fixed80x25 live geometry; complex attribute repair rejected before mutation, viewport support remains diagnostic-only."
+    },
+    "build/terminal/config-checks.json": {
+      "passed": true,
+      "sha256": "86590001a1317347967bfc646a07a50105f97c8ed58e0609607487c5a7504657",
+      "cases": 6,
+      "inputs": null,
+      "scope": "Actual terminal-linked C validation and assembly application, opaque synthetic PRMs, existing CLI parser; interrupts and port IO forbidden. Real DOS loading/IRQ/video tested separately."
+    },
+    "build/terminal/connection-checks.json": {
+      "passed": true,
+      "sha256": "04c7b2779e0d09e7268d4da0360040ead0f86ff17f976d3ed2bf20583abb1173",
+      "cases": 8,
+      "inputs": null,
+      "scope": "Actual linked connection state machine, decoder, expansion, matcher, keyboard and UART instructions; only port/BIOS clock/keyboard hardware boundaries modeled. Live main/RX/postmatch behavior additionally needs real DOS tests."
+    },
+    "build/terminal/directory-actions-checks.json": {
+      "passed": true,
+      "sha256": "07e721b264efc3c3015ade54153f79c11692fc12372e9aee3d17526e4876f138",
+      "cases": 8,
+      "inputs": 34,
+      "scope": "Actual linked C save helpers, pure date/count patch ASM and deferred accounting ASM. Only transactional replacement entry and DOS get-calendar boundary modeled; pure-action tests forbid other interrupts/port IO. Additional actual MODEM/DIRECT controller tests reuse declared UART/keyboard/tick hardware models. Source-only synthetic records; real DOS backend tested separately."
+    },
+    "build/terminal/directory-live-checks.json": {
+      "passed": true,
+      "sha256": "3ed972b4ff4aad9ba02171faec8789392313fd75413c9c3958eb4404f2a176d5",
+      "cases": 10,
+      "inputs": 311,
+      "scope": "Actual linked directory_live C, serial/modem validators, bounded number ASM, CLI and configuration/connection preparation. Only explicit PRM/directory IO calls modeled; synthetic records/header/PRM, every interrupt and port IO forbidden. Real DOS readers/browser tested separately."
+    },
+    "build/terminal/key-live-checks.json": {
+      "passed": true,
+      "sha256": "32b96487410e8cdbbcf5a8800021e4d3c31bf1b52f49af19de5fabecdb054e0f",
+      "cases": 4,
+      "inputs": null,
+      "scope": "Actual linked BIOS acquisition/normalization, raw classifier, binding sender, TX ring and UART. Only hardware keyboard/ports/BDA modeled; no routine substituted."
+    },
+    "build/terminal/key-output-checks.json": {
+      "passed": true,
+      "sha256": "9ae2b6fb0d0e9c1f65944bea535dded0227db5c05e4069b836da698e489f96d8",
+      "cases": 4,
+      "inputs": 91,
+      "scope": "Actual linked bounded key-slot sender, TX ring and recovered UART code. Hardware model only; no key-selection/default-profile or physical-modem claim."
+    },
+    "build/terminal/line-edit-live-checks.json": {
+      "passed": true,
+      "sha256": "7a85b149d7f618781d25d6f20893f411046dc23b2812d329fb310dfc6d42f3ea",
+      "cases": 8,
+      "inputs": null,
+      "scope": "Actual linked live line policy, recovered line/erase/cursor and UART/keyboard instructions. Hardware-only video/UART/BIOS keyboard/tick oracle; no product service stub. NETWORK is intentional maintained compatibility policy; ORIGINAL alternate wait bounded36ticks. No physical modem or complete terminal claim."
+    },
+    "build/terminal/meta-actions-live-checks.json": {
+      "passed": true,
+      "sha256": "15ba68c4a29b0c499fd8f5d6e44f28f139a6b3ab015662b56f414a18f8b62281",
+      "cases": 8,
+      "inputs": 347,
+      "scope": "Actual linked live macro/start/poll/cancel/deferredFIFO, recovered caret expander, transport, BIOS keyboard reader, UART IRQ/flow and physical-write instructions. Only hardware registers, BIOSkeys and BIOSdayticks modeled. No runtime callback substituted."
+    },
+    "build/terminal/startup-import-checks.json": {
+      "passed": true,
+      "sha256": "33d01949cf9bdb2bc618a6eb84683716c42fb4970a05dbbc390c6d9b5db9a229",
+      "cases": 6,
+      "inputs": 45,
+      "scope": "Actual linked combined C + assembly configuration/connection preparation and CLI parser. Only exact-size PRM load is explicitly modeled with synthetic bytes; no original/private data or interrupts/UART/DOS IO. Read backend separately tested under DOS."
+    },
+    "build/terminal/ui-checks.json": {
+      "passed": true,
+      "sha256": "f0789d7d1c67ec46e2ba3eb04f830e280321a6367da0609b23685ed9c367bb70",
+      "cases": 0,
+      "inputs": null,
+      "scope": "Actual terminal-linked recovered screen snapshots and flow writer, real source-owned bottom-row geometry/message. Logical cursor/attributes/CSI saved state preserved; raw packed snapshot and full video restored."
+    },
+    "build/terminal/transport-results.json": {
+      "passed": true,
+      "sha256": "b6674e2fb7aad985750bf4e8db05f35f6e646a27e7c2d19ab47d880af21c7486",
+      "cases": 6,
+      "inputs": null,
+      "scope": "Actual linked live transport, recovered UART IRQ/foreground APIs and recovered BIOS keyboard routines. Hardware ports/BIOS keyboard/tick advances are modeled; no runtime routine is mocked. No physical modem proof."
+    },
+    "build/terminal-options/checks.json": {
+      "passed": true,
+      "sha256": "518d998b35b60db86851d60755487a8ebae825254519d8c866385641b6e70c8e",
+      "cases": 15,
+      "inputs": 564,
+      "scope": "Actual linked source-only 8086 option parser; command tails synthetic, every interrupt/port-IO forbidden, no UART installation."
+    },
+    "build/meta-actions-dos/checks.json": {
+      "passed": true,
+      "sha256": "41aeff59a508a081a71db8077083173f5fd7a4e748ad0b0ed06faa265620e620",
+      "cases": 8,
+      "inputs": null,
+      "scope": "Actual DOS startup KEY validation, BIOS Alt1/Alt0, bounded recovered caret expansion, pause and deferred ordinary key, wire NUL and UART/IRQ restoration. Synthetic records only; no physical modem or ASPECT/PROGRAM/HOOK executor."
+    },
+    "build/terminal-keys/result.json": {
+      "passed": true,
+      "sha256": "83de4b9132b3184e6935a83bec444b5a1e259f3ddac5ddda8f955a5431ebded1",
+      "cases": 10,
+      "inputs": null,
+      "scope": "Actual DOS BIOS events, startup profile selection, strict synthetic KBD import, FF-to-wire-NUL conversion, live sender/UART and restored IRQ/PIC/register state. No installed mappings or physical modem."
+    },
+    "build/directory-terminal/result.json": {
+      "passed": true,
+      "sha256": "ba251a54b62321420aac7c3035d4902599ac31f3f331cf233a899b3fff54d8e4",
+      "cases": 21,
+      "inputs": null,
+      "scope": "Actual DOS directory IO, browser/editor keys, staged save/conflict, deferred call accounting, entry settings and modem/direct controller through emulated UART; exact expected file changes and independent IRQ/UART/PIC sampler."
+    },
+    "build/connection-dos/result.json": {
+      "passed": true,
+      "sha256": "91b518564c5b75e79d2dafd09eea358279c9f7ccacdbf9ba226cd25c88f22589",
+      "cases": 5,
+      "inputs": null,
+      "scope": null
+    },
+    "build/terminal-tests/normal/result.json": {
+      "passed": true,
+      "sha256": "4049c33d5f1740e14cfad82a3392bac9dbadea3efa1aba3db11971b69083e9af",
+      "cases": 0,
+      "inputs": null,
+      "scope": "Source-only DOS terminal, actual emulated UART/PIC/keyboard/BIOS video and private loopback TCP peer; independent DOS hardware/vector/video sampler. No original PCPlus executable or public BBS."
+    },
+    "build/terminal-tests/partial/result.json": {
+      "passed": true,
+      "sha256": "852d9eddc20ee9820e9b39987c864deae15712e493b982874dbd82776e4bd3c4",
+      "cases": 0,
+      "inputs": null,
+      "scope": "Source-only DOS terminal, actual emulated UART/PIC/keyboard/BIOS video and private loopback TCP peer; independent DOS hardware/vector/video sampler. No original PCPlus executable or public BBS."
+    },
+    "build/terminal-tests/software/result.json": {
+      "passed": true,
+      "sha256": "890a3fd0317a9a66aa21fdf8300a8ef3ce350a896f132cafe3765f7b74d7d2f7",
+      "cases": 0,
+      "inputs": null,
+      "scope": "Source-only DOS terminal, actual emulated UART/PIC/keyboard/BIOS video and private loopback TCP peer; independent DOS hardware/vector/video sampler. No original PCPlus executable or public BBS."
+    },
+    "build/terminal-tests/unsupported/result.json": {
+      "passed": true,
+      "sha256": "d56aecbb9d317794680fbf322a64bbad667bf760b6f58df3e618ec8a73dbb3d9",
+      "cases": 0,
+      "inputs": null,
+      "scope": "Source-only DOS terminal, actual emulated UART/PIC/keyboard/BIOS video and private loopback TCP peer; independent DOS hardware/vector/video sampler. No original PCPlus executable or public BBS."
+    }
+  },
+  "live_TEXT": {
+    "passed": true,
+    "binary_sha256": "36b14af2281a4921c0da210cfb3ceed22c3c33d82c9b40f2877850bea169d5f4",
+    "inputs": 347,
+    "cases": [
+      {
+        "case": "actual-caret-operands-FF-to-wire-NUL-embedded-NUL-stop-and-51-byte-bound",
+        "inputs": 262,
+        "passed": true
+      },
+      {
+        "case": "unsafe-text-invalid-index-kind-first-empty-and-busy-atomicity",
+        "inputs": 45,
+        "passed": true
+      },
+      {
+        "case": "ten-full-BIOS-tick-pauses-lowword-wrap-midnight-and-FF-precedence",
+        "inputs": 5,
+        "passed": true
+      },
+      {
+        "case": "actual-CTS-THRE-XOFF-no-progress-timeout-and-XON-recovery",
+        "inputs": 10,
+        "passed": true
+      },
+      {
+        "case": "normal-reply-ring-and-flowcontrol-priority-progress-epoch-and-binary-RX",
+        "inputs": 3,
+        "passed": true
+      },
+      {
+        "case": "macro-before-keystrokes-FIFO-wrap-full-explicit-exit-without-drop",
+        "inputs": 5,
+        "passed": true
+      },
+      {
+        "case": "Escape-AltX-AltH-AltD-cancel-clear-FIFO-and-modem-ownership",
+        "inputs": 10,
+        "passed": true
+      },
+      {
+        "case": "actual-carrier-loss-and-configured-start-cancel-clear-macro-preserve-AX",
+        "inputs": 7,
+        "passed": true
+      }
+    ],
+    "scope": "Actual linked live macro/start/poll/cancel/deferredFIFO, recovered caret expander, transport, BIOS keyboard reader, UART IRQ/flow and physical-write instructions. Only hardware registers, BIOSkeys and BIOSdayticks modeled. No runtime callback substituted.",
+    "limitations": [
+      "No DOSfilesystem/KEYreader or physical UART/modem/BBS validation in this CPUtest.",
+      "Cancellation cannot retract physically accepted bytes from earlier foreground polls.",
+      "Original calibrated character-delay units are retained metadata; live TEXT uses the maintained fast pacing policy. No calibrated live timing claim."
+    ]
+  },
+  "live_character_editing": {
+    "passed": true,
+    "binary_sha256": "36b14af2281a4921c0da210cfb3ceed22c3c33d82c9b40f2877850bea169d5f4",
+    "cases": [
+      {
+        "case": "real-parser-ICH-DCH-profile-gates-counts-border-doublewidth-cursor",
+        "passed": true
+      },
+      {
+        "case": "omitted-zero-one-and-signed-high-bit-parameters-stay-one-cell",
+        "passed": true
+      },
+      {
+        "case": "character-edits-independent-of-vertical-scroll-margins",
+        "passed": true
+      },
+      {
+        "case": "invalid-geometry-offsets-viewports-and-doublewidth-pairs-no-op-bounded",
+        "passed": true
+      },
+      {
+        "case": "real-parser-and-known-metadata-planes-shift-through-actual-helpers",
+        "passed": true
+      },
+      {
+        "case": "repair-preflight-rejects-entire-span-before-any-mutation-and-invalid-pointers",
+        "passed": true
+      },
+      {
+        "case": "actual-protected-current-and-neighbor-boundaries-no-blanket-mode-skip",
+        "passed": true
+      },
+      {
+        "case": "real-escape-HTS-replacement-duplicate-and-invalid-geometry",
+        "passed": true
+      },
+      {
+        "case": "near-stack-BP-SI-DI-and-arbitrary-caller-ES-preserved",
+        "passed": true
+      }
+    ],
+    "scope": "Actual linked UART IRQ, input/CSI/ESC dispatcher, maintained bounds and recovered character helpers/video/movers; hardware-only BIOS video/keyboard/UART/tick oracle. Fixed80x25 live geometry; complex attribute repair rejected before mutation, viewport support remains diagnostic-only."
+  },
+  "actual_DOS_TEXT": {
+    "cases": 8,
+    "artifact": "build/meta-actions-dos/checks.json"
+  },
+  "source_only_rebuild": "application-components-source-build.json",
+  "test_change_note": "Unsupported-function DOS fixture now uses ESC c full reset: CSI P delete-character is implemented and no longer an unsupported boundary."
+}

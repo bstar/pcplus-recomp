@@ -17,4 +17,6 @@
 %define TI_SCROLL 30
 %define TI_IO_BASE 32
 %define TI_IRQ 34
-%define TI_SIZE 36
+%define TI_MAPPING_PAUSE 36
+%define TI_MAPPING_DELAY 38
+%define TI_SIZE 40

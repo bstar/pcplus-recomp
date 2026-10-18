@@ -17,6 +17,7 @@ extern terminal_load_configuration
 extern terminal_select_directory
 extern terminal_directory_flush_accounting
 extern terminal_load_keyboard
+extern terminal_load_actions,terminal_macro_cancel
 extern terminal_connection_start,terminal_connection_receive
 extern connection_state,connection_result
 ; Open Watcom small-code consistency marker for the near-C DOS IO subset.
@@ -57,6 +58,9 @@ _small_code_:
  or ax,ax
  jnz .configuration_error
  call terminal_load_keyboard
+ or ax,ax
+ jnz .configuration_error
+ call terminal_load_actions
  or ax,ax
  jnz .configuration_error
  ; Require a standard BIOS-listed serial port before changing its registers.
@@ -148,7 +152,7 @@ _small_code_:
  jmp terminal_shutdown
 .configuration_error:
  mov dx,configuration_argument
- cmp ax,9
+ cmp ax,10
  ja .configuration_message
  mov bx,ax
  dec bx
@@ -185,6 +189,7 @@ terminal_shutdown:
  call uart_restore_hardware_state
  mov byte [hardware_active],0
 .exit:
+ call terminal_macro_cancel
  call terminal_directory_flush_accounting
  or ax,ax
  jz .application_error
@@ -192,6 +197,13 @@ terminal_shutdown:
  mov ah,9
  int 0x21
 .application_error:
+ cmp word [terminal_exit_code],10
+ jne .keyboard_error
+ mov dx,macro_failed
+ mov ah,9
+ int 0x21
+ jmp .dos_exit
+.keyboard_error:
  cmp word [terminal_exit_code],4
  jne .terminal_error
  mov dx,unsupported_keyboard
@@ -215,11 +227,13 @@ vector_active: db 0
 missing_port: db 'Selected COM port is not listed by the BIOS.',13,10,'$'
 unsupported: db 13,10,'Unsupported terminal function; terminal stopped.',13,10,'$'
 unsupported_keyboard: db 13,10,'Unsupported keyboard binding or local command; terminal stopped.',13,10,'$'
+macro_failed: db 13,10,'TEXT action timed out; terminal stopped.',13,10,'$'
 accounting_failed: db 13,10,'Call statistics save needs attention. Check directory recovery files.',13,10,'$'
 configuration_messages: dw configuration_io,configuration_serial,configuration_flow
  dw configuration_profile,configuration_display,configuration_argument,configuration_modem
  dw configuration_directory
  dw configuration_keyboard
+ dw configuration_actions
 configuration_io: db 'Could not read the requested PCPLUS 2.01 configuration.',13,10,'$'
 configuration_serial: db 'Configuration has unsupported serial port or line settings.',13,10,'$'
 configuration_flow: db 'Configuration flow-control values must be 0 or 1.',13,10,'$'
@@ -229,5 +243,6 @@ configuration_argument: db 'Invalid configuration request.',13,10,'$'
 configuration_modem: db 'Dialing requires a valid explicit modem configuration.',13,10,'$'
 configuration_directory: db 'Could not select a supported directory entry.',13,10,'$'
 configuration_keyboard: db 'Could not load a valid keyboard profile from the requested KBD file.',13,10,'$'
+configuration_actions: db 'Could not load valid actions from the requested KEY file.',13,10,'$'
 SEGMENT _BSS public align=16 class=BSS use16
 SEGMENT STACK stack align=16 class=STACK use16

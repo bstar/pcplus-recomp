@@ -178,3 +178,14 @@ continues to identify the server's per-data-event parsing as a separate defect.
 The ENiGMA audit deliberately exits nonzero. These editor results do not change
 the narrower successful login/menu-navigation results, and do not establish
 multiline paging, message saving, transfers or physical modem behavior.
+
+
+## Meta/character checkpoint
+
+`editor-meta-character` repeats both actual DOS editor recipes on frozen
+terminal36b14af2. Synchronet passes12 semantic checks and8 key-wire checks,
+including Ctrl-Q abort. ENiGMA direct login succeeds and reaches the real editor,
+but Home and Insert behavior fail again while all8 key sequences reach wire.
+No post was saved. See current `docs/validation/bbs-editors.json` and its retained
+previous-runtime cases. The separate current ENiGMA matrix/menu test also fails;
+its earlier successful menu tests remain historical evidence only.

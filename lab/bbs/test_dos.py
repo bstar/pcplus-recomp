@@ -89,7 +89,11 @@ exit
  with (output/'dosbox.log').open('w') as log:
   process=await asyncio.create_subprocess_exec('dosbox-x','-fastlaunch','-nogui','-conf',str(output/'dosbox.conf'),cwd=output,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),stdout=log,stderr=log)
   try:code=await asyncio.wait_for(process.wait(),args.timeout)
-  except asyncio.TimeoutError:process.terminate();await process.wait();code=-1
+  except asyncio.TimeoutError:
+   process.terminate()
+   try:await asyncio.wait_for(process.wait(),5)
+   except asyncio.TimeoutError:process.kill();await process.wait()
+   code=-1
  server.close();await server.wait_closed()
  try:await asyncio.wait_for(modem.done.wait(),2)
  except asyncio.TimeoutError:pass

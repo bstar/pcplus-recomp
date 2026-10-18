@@ -183,11 +183,53 @@ serialization remains lossless. Setters replace only content/terminator (and
 KEY kind when requested), preserving opaque tails. Blank KBD fixtures are
 synthetic empty maps, not historical defaults.
 
+## Strict source-owned DOS KEY reader
+
+```c
+unsigned __cdecl key_actions_dos_read(const char *path,
+    unsigned char *destination540, key_actions_dos_result *result);
+```
+
+Compile `src/key_mapping/key_actions_dos.c` with its header include path. Near C
+caller cleanup6, DS=SS, full unsignedAX status. The optional8-byte result contains
+status0, primary DOS error2, close error4 and bytes processed6; the NASM include
+`key_actions_dos.inc` mirrors that ABI. Status0 is success;1 argument/extent/
+alias rejection;2 open;3 read;4 nonexact size;5 unknown kind;6 unterminated text;
+7 close after otherwise successful processing.
+
+The path is explicit and1..63 bytes. Invalid, wrapping or overlapping path,
+destination and result extents cause no IO or result mutation. The reader stages
+540 bytes, requires exact EOF, validates all ten16-bit kinds as0..3 and every
+52-byte text region for NUL, then closes before copying any destination byte.
+Partial reads are completed, but truncated or oversized files are rejected.
+Every opened path attempts close, and a close failure is recorded even after an
+earlier primary error. Failures preserve all540 destination bytes. Success
+preserves raw text, casing and opaque tails without normalization.
+
+There is no default-file search, creation, write, caret expansion or action
+execution in this API. Schema-valid ASPECT/PROGRAM/HOOK kinds do not establish
+live handlers; those remain application capability checks. In particular, a
+lone trailing caret is valid stored text but overruns the original TEXT decoder.
+The bounded live TEXT invocation must reject it before emitting command bytes.
+The reader intentionally does not confuse byte-layout validity with runtime
+macro validity. Double `^^` expands to1eh, while triple `^^^` emits a literal
+caret; these are consumer rules, not a KBD-slot escape grammar. Configured pause
+takes precedence over ff-to-NUL translation in the original TEXT sender.
+
+`standalone/check_key_actions_dos.py` passes11 real DOS groups and22 declared
+IO/close/schema/alias fault checks. Cases cover all four kinds, raw caret/pause
+shapes,51-byte valid text, stored trailing caret,539/541-byte files, last-record
+invalid kind/string, nonzero kind high byte, fragmented reads, EOF read failure,
+primary/secondary errors and48 repeated failures followed by a valid read. All
+synthetic files remain unchanged and a missing file is not created. Original
+KEY IO remains the separately replayed permissive behavior above.
+
 ## Checks and remaining gates
 
 ```sh
 ./tools/dev --command python3 -m unittest discover -s src/key_mapping -p 'test_*.py' -v
 ./tools/dev --command python3 standalone/check_keymap_dos.py
+./tools/dev --command python3 standalone/check_key_actions_dos.py
 # Optional explicit original; synthetic memory-only FILE/path/UI services:
 ./tools/dev --command python3 src/key_mapping/check_original.py \
   analysis/pcplus-originals/PCPLUS-main-2.01.EXE

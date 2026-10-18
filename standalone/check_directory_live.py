@@ -50,8 +50,8 @@ class Live(Options):
    u.mem_write(self.data_base+io,struct.pack('<4H',status,5 if status else 0,6 if status else 0,456 if status else 23050))
   u.reg_write(UC_X86_REG_AX,status);u.reg_write(UC_X86_REG_SP,sp+2);u.reg_write(UC_X86_REG_IP,ret)
  def poison(self):
-  for at,size,value in ((self.serial,36,0xaa),(self.modem,366,0xbb),(self.plan,214,0xcc)):self.uc.mem_write(self.data_base+at,bytes([value])*size)
- def outputs(self):return tuple(bytes(self.uc.mem_read(self.data_base+at,size)) for at,size in ((self.serial,36),(self.modem,366),(self.plan,214)))
+  for at,size,value in ((self.serial,40,0xaa),(self.modem,366,0xbb),(self.plan,214,0xcc)):self.uc.mem_write(self.data_base+at,bytes([value])*size)
+ def outputs(self):return tuple(bytes(self.uc.mem_read(self.data_base+at,size)) for at,size in ((self.serial,40),(self.modem,366),(self.plan,214)))
  def arguments(self):return [self.prm_path,self.directory_path,self.entry,self.codes,self.serial,self.modem,self.plan,self.result]
  def read(self,args=None):
   self.uc.reg_write(UC_X86_REG_ES,self.ds);status=self.call('_directory_live_read',self.arguments() if args is None else args,limit=400000)
@@ -108,14 +108,19 @@ def main():
    assert c.result_words()==(want,value,5,6,123 if kind=='prm' else 456)
    assert len(c.calls)==(1 if kind=='prm' else 2)
  done('both-file-boundary-status-details-close-errors-and-three-plan-rollback',11)
- badargs=[(0,0),(1,0),(2,0),(2,201),(3,2),(4,0),(5,0),(6,0),(4,0xfff0),(5,0xff00),(6,0xfff0),(7,0xfffc)]
+ badargs=[(0,0),(1,0),(2,0),(2,201),(3,2),(4,0),(5,0),(6,0),(4,0xfff0),(4,0xffdc),(5,0xff00),(6,0xfff0),(7,0xfffc)]
  for index,value in badargs:
   c=Live();c.poison();before=c.outputs();arguments=c.arguments();arguments[index]=value;assert c.read(arguments)==1 and c.outputs()==before and not c.calls,(index,value)
  for dst,source in ((4,5),(4,6),(5,6),(7,4),(7,5),(7,6),(7,0),(7,1)):
   c=Live();c.poison();before=c.outputs();arguments=c.arguments();arguments[dst]=arguments[source]
   assert c.read(arguments)==1 and c.outputs()==before and not c.calls,(dst,source)
  c=Live();arguments=c.arguments();arguments[7]=0;assert c.read(arguments)==0
- done('null-near-wrap-and-overlapping-output-result-path-guards-plus-optional-result',len(badargs)+9)
+ for kind in ('overlap-appended-metadata','io-overlap-appended-metadata'):
+  c=Live();c.poison();before=c.outputs();arguments=c.arguments()
+  if kind=='overlap-appended-metadata':arguments[4]=arguments[5]-36
+  else:arguments[7]=arguments[4]+36
+  assert c.read(arguments)==1 and c.outputs()==before and not c.calls,kind
+ done('null-near-wrap-and-overlapping-output-result-path-guards-plus-optional-result',len(badargs)+11)
  for mask in range(16):
   c=Live();tokens=[b'@SYN.PRM',b'/E:SYN.DIR',b'/N:97']+[token for bit,token in ((1,b'COM3'),(2,b'115200'),(4,b'8N1'),(8,b'NONE')) if mask&bit]
   assert c.parse(b' '.join(tokens))==(0,0);c.entry=97;c.poison();before_record=c.record

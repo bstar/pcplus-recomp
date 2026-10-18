@@ -35,11 +35,11 @@ class Options(DosImage):
   assert self.uc.reg_read(UC_X86_REG_BP)==0xbabe and self.uc.reg_read(UC_X86_REG_SI)==0x1234 and self.uc.reg_read(UC_X86_REG_DI)==0x5678
   assert self.uc.reg_read(UC_X86_REG_ES)==0x6666
   return status,self.uc.reg_read(UC_X86_REG_EFLAGS)&1
- def snapshot(self):return {**{name:self.get(name) for name in FIELDS},'terminal_config_path':bytes(self.uc.mem_read(self.symbols['terminal_config_path'],64)),'terminal_dial_target':bytes(self.uc.mem_read(self.symbols['terminal_dial_target'],64)),'terminal_directory_path':bytes(self.uc.mem_read(self.symbols['terminal_directory_path'],64)),'terminal_keyboard_path':bytes(self.uc.mem_read(self.symbols['terminal_keyboard_path'],64))}
- def expected(self,port=1,rate=38400,parity=0,bits=8,stop=1,flow='NONE',mask=0,path=b'',dial=b'',directory=b'',entry=0,codes=0,keyboard=b'',bios=2,ansi_m=0):
+ def snapshot(self):return {**{name:self.get(name) for name in FIELDS},'terminal_config_path':bytes(self.uc.mem_read(self.symbols['terminal_config_path'],64)),'terminal_dial_target':bytes(self.uc.mem_read(self.symbols['terminal_dial_target'],64)),'terminal_directory_path':bytes(self.uc.mem_read(self.symbols['terminal_directory_path'],64)),'terminal_keyboard_path':bytes(self.uc.mem_read(self.symbols['terminal_keyboard_path'],64)),'terminal_actions_path':bytes(self.uc.mem_read(self.symbols['terminal_actions_path'],64))}
+ def expected(self,port=1,rate=38400,parity=0,bits=8,stop=1,flow='NONE',mask=0,path=b'',dial=b'',directory=b'',entry=0,codes=0,keyboard=b'',bios=2,ansi_m=0,actions=b''):
   base=[0x3f8,0x2f8,0x3e8,0x2e8][port-1];irq=[4,3,4,3][port-1]
   expected=dict(zip(SERIAL_FIELDS,[rate&65535,rate>>16,parity,bits,stop,irq+8,port,0,irq,base,base,base+1,base+3,base+4,base+5,base+6,int(flow=='SOFT'),int(flow=='HARD')]))
-  expected.update(terminal_option_mask=mask,terminal_config_path=path+bytes(64-len(path)),terminal_dial_target=dial+bytes(64-len(dial)),terminal_directory_path=directory+bytes(64-len(directory)),terminal_keyboard_path=keyboard+bytes(64-len(keyboard)),terminal_directory_entry=entry,terminal_directory_codes=codes,terminal_keyboard_bios_selection=bios,terminal_ansi_m_policy=ansi_m)
+  expected.update(terminal_option_mask=mask,terminal_actions_path=actions+bytes(64-len(actions)),terminal_config_path=path+bytes(64-len(path)),terminal_dial_target=dial+bytes(64-len(dial)),terminal_directory_path=directory+bytes(64-len(directory)),terminal_keyboard_path=keyboard+bytes(64-len(keyboard)),terminal_directory_entry=entry,terminal_directory_codes=codes,terminal_keyboard_bios_selection=bios,terminal_ansi_m_policy=ansi_m)
   assert self.snapshot()==expected,(self.snapshot(),expected)
 
 def main():
@@ -225,6 +225,17 @@ def main():
    assert o.parse(token)==(1,1) and o.snapshot()==before;count[0]+=1
   assert o.parse(b'')==(0,0);o.expected();count[0]+=1
  check('BIOS-auto-standard-enhanced-and-ANSI-M-policy-atomic-selection',compatibility_options)
+ def actions_path():
+  o=Options(binary,map_path)
+  for path in [b'A.KEY',b'C:\\PCPLUS\\MACROS.KEY',b'X'*63]:
+   assert o.parse(b'/t:'+path.lower())==(0,0);o.expected(mask=4096,actions=path);count[0]+=1
+  assert o.parse(b'/K:A.KBD /T:B.KEY /B:ENHANCED /A:ORIGINAL')==(0,0)
+  o.expected(mask=7680,keyboard=b'A.KBD',actions=b'B.KEY',bios=1,ansi_m=1);before=o.snapshot();count[0]+=1
+  for token in [b'/T:',b'/T:'+b'A'*64,b'/T:*.KEY',b'/T:A.KEY /t:B.KEY',b'/T:bad name.key',b'/T:bad\0.key',b'/T:bad\xff.key',b'COM2 /T:NEW.KEY JUNK']:
+   assert o.parse(token)==(2,1) and o.snapshot()==before,token;count[0]+=1
+  assert o.parse(b'/T:NEW.KEY /?')==(1,1) and o.snapshot()==before;count[0]+=1
+  assert o.parse(b'')==(0,0);o.expected();count[0]+=1
+ check('KEY-actions-path-wordmask7680-bounds-atomic-rollback-and-reset',actions_path)
  out=ROOT/'build/terminal-options';out.mkdir(parents=True,exist_ok=True)
  result={'binary_sha256':hashlib.sha256(binary.read_bytes()).hexdigest(),'options_source_sha256':hashlib.sha256((ROOT/'src/terminal/options.asm').read_bytes()).hexdigest(),'passed':True,'cases':cases,'inputs':count[0],'scope':'Actual linked source-only 8086 option parser; command tails synthetic, every interrupt/port-IO forbidden, no UART installation.'}
  (out/'checks.json').write_text(json.dumps(result,indent=2)+'\n')

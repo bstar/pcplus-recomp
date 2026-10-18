@@ -21,6 +21,7 @@ extern attributes_reverse_value,attributes_underline_value,render_autowrap,scrol
 extern csi_erase_attribute,cursor_state_saved_1f70
 extern attributes_color_mode,terminal_dec_keys,terminal_backspace_mode_9058
 extern attributes_bold_active,attributes_blink_active,attributes_reverse_active
+extern terminal_macro_pause_character,terminal_macro_character_delay_units
 
 global terminal_load_configuration,terminal_apply_configuration
 global terminal_select_directory
@@ -226,6 +227,10 @@ terminal_apply_configuration:
  mov [render_autowrap],ax
  mov ax,[terminal_configuration_values+TI_SCROLL]
  mov [scroll_enabled],ax
+ mov ax,[terminal_configuration_values+TI_MAPPING_PAUSE]
+ mov [terminal_macro_pause_character],al
+ mov ax,[terminal_configuration_values+TI_MAPPING_DELAY]
+ mov [terminal_macro_character_delay_units],ax
  ret
 
 SEGMENT _DATA public class=DATA use16

@@ -43,7 +43,8 @@ target after cleanup. These live commands take precedence over imported
 bindings. A recognized original local command that requires an unreconstructed
 application service stops with **errorlevel4** and the message
 `Unsupported keyboard binding or local command; terminal stopped.` Examples
-include KEY-action hotkeys whose macro engine is not implemented. Original
+include unsupported ASPECT/PROGRAM/HOOK KEY actions. Alt-1..Alt-0 now invoke
+TEXT from an explicitly imported `/T:FILE.KEY`; see [LIVE_META_KEYS.md](LIVE_META_KEYS.md). Original
 no-op or unmapped keys remain ignored rather than being transmitted as arbitrary
 scan bytes. The complete original menus, scrollback commands, macros and
 settings UI remain open.

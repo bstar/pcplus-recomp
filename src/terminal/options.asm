@@ -39,6 +39,9 @@ terminal_parse_options:
  mov di,options_keyboard_stage
  mov cx,32
  rep stosw
+ mov di,options_actions_stage
+ mov cx,32
+ rep stosw
  mov word [options_entry_stage],0
  mov word [options_codes_stage],0
  mov word [options_keyboard_mode_stage],2
@@ -100,6 +103,8 @@ terminal_parse_options:
  cmp word [options_token],'/E'
  je .selector_size
  cmp word [options_token],'/K'
+ je .selector_size
+ cmp word [options_token],'/T'
  je .selector_size
  cmp word [options_token],'/N'
  jne .ordinary_size
@@ -178,6 +183,10 @@ terminal_parse_options:
  mov di,terminal_keyboard_path
  mov cx,32
  rep movsw
+ mov si,options_actions_stage
+ mov di,terminal_actions_path
+ mov cx,32
+ rep movsw
  mov ax,[options_entry_stage]
  mov [terminal_directory_entry],ax
  mov ax,[options_codes_stage]
@@ -252,6 +261,17 @@ options_process_token:
  or word [options_seen],dx
  jmp .good
 .help_start:
+ cmp word [options_token],'/T'
+ jne .ansi_option
+ cmp byte [options_token+2],':'
+ jne .ansi_option
+ test word [options_seen],4096
+ jnz .bad
+ mov si,options_token+3
+ mov di,options_actions_stage
+ mov dx,4096
+ jmp .path_start
+.ansi_option:
  cmp word [options_token],'/A'
  jne .bios_option
  cmp byte [options_token+2],':'
@@ -539,10 +559,12 @@ global terminal_directory_path,terminal_directory_entry,terminal_directory_codes
 global terminal_keyboard_path
 global terminal_keyboard_bios_selection
 global terminal_ansi_m_policy
+global terminal_actions_path
 terminal_config_path: times 64 db 0
 terminal_dial_target: times 64 db 0
 terminal_directory_path: times 64 db 0
 terminal_keyboard_path: times 64 db 0
+terminal_actions_path: times 64 db 0
 terminal_keyboard_bios_selection: dw 2
 terminal_ansi_m_policy: dw 0
 terminal_directory_entry: dw 0
@@ -555,6 +577,7 @@ terminal_usage:
  db 'Directory: /E:FILE.DIR [/N:1..200]; omit /N to choose an entry.',13,10
  db 'Directory codes: /C:LITERAL (default) or /C:LEGACY (A..J substitutions).',13,10
  db 'Keyboard: /K:FILE.KBD imports the selected profile; explicit path only.',13,10
+ db 'Meta actions: /T:FILE.KEY; Alt-1..Alt-0 invoke TEXT; Esc cancels TEXT.',13,10
  db 'Keyboard BIOS: /B:AUTO (default), /B:STANDARD or /B:ENHANCED.',13,10
  db 'ANSI CSI M: /A:NETWORK (delete lines, default) or /A:ORIGINAL (wait).',13,10
  db 'PRM path: explicit only, max 63 bytes; no spaces, quotes or wildcards.',13,10
@@ -578,6 +601,7 @@ options_config_stage: times 64 db 0
 options_dial_stage: times 64 db 0
 options_directory_stage: times 64 db 0
 options_keyboard_stage: times 64 db 0
+options_actions_stage: times 64 db 0
 options_keyboard_mode_stage: dw 2
 options_ansi_m_stage: dw 0
 options_ansi_network: db '/A:NETWORK',0

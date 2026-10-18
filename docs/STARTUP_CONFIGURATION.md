@@ -203,7 +203,7 @@ boot sequence or a full reconstructed application has been run.
 
 ## Implemented maintained boundary
 
-`src/config/terminal_import.c` validates the allowlist into a staged36-byte plan;
+`src/config/terminal_import.c` validates the allowlist into a staged40-byte plan;
 `src/terminal/configuration.asm` applies it before BIOS serial checks and UART
 acquisition. `@FILE.PRM` selects a read-only file explicitly; serial CLI categories
 override after whole-allowlist validation. Both flow flags enabled are accepted.
@@ -215,7 +215,7 @@ The near C boundary uses unsigned16-bit statuses, assembly-owned DS=SS startup,
 explicit DOS-library linking and an8-KiB stack. It does not establish general CRT
 initialization. Default builds read no original program or private configuration.
 
-`./tools/build test-terminal` includes115 CPU import cases and15 DOS filesystem/
+`./tools/build test-terminal` includes119 CPU import cases and15 DOS filesystem/
 UART cases. Optional `src/config/check_startup_original.py` separately replays
 SHA-verified original startup fragments and is never a default build input.
 
@@ -224,3 +224,7 @@ which reads once and stages both serial/display and modem plans before committin
 either. An invalid modem subset does not partially commit serial settings.
 The [connection controller](CONNECTION.md) documents the bounded live policy;
 complete legacy startup and the original modal dial-attempt remain unfinished.
+
+The40-byte plan retains TEXT pause byte (PRM01e2) and calibrated delay units
+(PRM01e4) at offsets36/38. Live TEXT uses the pause byte; ordinary-byte pacing
+is maintained fast policy, not an interpretation of calibrated units as milliseconds.

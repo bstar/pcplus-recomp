@@ -11,14 +11,14 @@ class Import(Options):
   super().__init__(BINARY,MAP);self.input=self.offset('screen_attribute_cells');self.output=self.input+1408
  def decode(self,payload):
   self.uc.mem_write(self.data_base+self.input,payload)
-  self.uc.mem_write(self.data_base+self.output-16,b'\xcc'*68)
+  self.uc.mem_write(self.data_base+self.output-16,b'\xcc'*72)
   self.uc.reg_write(UC_X86_REG_ES,self.ds)
   status=self.call('_terminal_import_decode',[self.input,self.output],limit=100000)
   assert self.uc.mem_read(self.data_base+self.input,1264)==payload
   assert self.uc.mem_read(self.data_base+self.output-16,16)==b'\xcc'*16
-  assert self.uc.mem_read(self.data_base+self.output+36,16)==b'\xcc'*16
+  assert self.uc.mem_read(self.data_base+self.output+40,16)==b'\xcc'*16
   for reg,want in [(UC_X86_REG_BP,0xbabe),(UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678)]:assert self.uc.reg_read(reg)==want
-  return status,bytes(self.uc.mem_read(self.data_base+self.output,36))
+  return status,bytes(self.uc.mem_read(self.data_base+self.output,40))
 def main():
  cases=[];counts={}
  def check(name,fn):counts[name]=fn();cases.append({'case':name,'passed':True,'inputs':counts[name]});print(name,'passed',counts[name])
@@ -26,16 +26,25 @@ def main():
   count=0
   for port,baud in itertools.product(range(1,5),range(9)):
    c=Import();status,data=c.decode(image(port=port,baud=baud));rate=RATES[baud]
-   assert status==0 and struct.unpack('<18H',data)==(port,rate&65535,rate>>16,0,8,1,0,1,6,0x1e,0x2f,0x3f,0x70,1,1,1,BASES[port-1],IRQS[port-1]);count+=1
+   assert status==0 and struct.unpack('<20H',data)==(port,rate&65535,rate>>16,0,8,1,0,1,6,0x1e,0x2f,0x3f,0x70,1,1,1,BASES[port-1],IRQS[port-1],165,0xa5a5);count+=1
   return count
  check('all-standard-port-and-32bit-rate-imports-with-opaque-sentinels',serial)
  def flags():
   count=0
   for profile,soft,hard,wrap,scroll in itertools.product([4,6],range(2),range(2),range(2),range(2)):
-   c=Import();status,data=c.decode(image(profile=profile,soft=soft,hard=hard,wrap=wrap,scroll=scroll));values=struct.unpack('<18H',data)
+   c=Import();status,data=c.decode(image(profile=profile,soft=soft,hard=hard,wrap=wrap,scroll=scroll));values=struct.unpack('<20H',data)
    assert status==0 and values[6:9]==(soft,hard,profile) and values[14:16]==(wrap,scroll);count+=1
   return count
  check('independent-flow-bools-two-profiles-and-live-wrap-scroll',flags)
+ def mapping_metadata():
+  for pause,delay in [(0,0),(255,65535),(94,32768),(165,0xa5a5)]:
+   raw=bytearray(image());raw[0x1e2]=pause;struct.pack_into('<H',raw,0x1e4,delay)
+   c=Import();status,data=c.decode(bytes(raw));assert status==0
+   assert struct.unpack('<20H',data)[18:]==(pause,delay)
+   baseline=bytearray(raw);baseline[0x1e2]=165;struct.pack_into('<H',baseline,0x1e4,0xa5a5)
+   other=Import();other_status,other_data=other.decode(bytes(baseline));assert other_status==0 and data[:36]==other_data[:36]
+  return 4
+ check('mapping-pause-byte-and-delay-word-preserved-without-serial-reinterpretation',mapping_metadata)
  def rejected():
   mutations=[(0,4,2),(0,65535,2),(2,9,2),(4,5,2),(6,0,2),(6,3,2),(8,6,2),(8,9,2),(0x176,0,2),(0x176,0x3f8,2)]
   mutations += [(0x186,irq,2) for irq in [0,2,5,8,65535]]
@@ -43,7 +52,7 @@ def main():
   mutations += [(0x194,p,4) for p in [0,5,7,65535]]
   mutations += [(off,256 if off>=0x1ae else 2,5) for off in [0x19c,0x19e,0x1ae,0x1b0,0x1b2,0x1b4,0x1b6]]
   for offset,value,want in mutations:
-   c=Import();status,data=c.decode(change(image(),offset,value));assert status==want and data==b'\xcc'*36,(offset,value,status,want)
+   c=Import();status,data=c.decode(change(image(),offset,value));assert status==want and data==b'\xcc'*40,(offset,value,status,want)
   c=Import();c.uc.reg_write(UC_X86_REG_ES,c.ds);assert c.call('_terminal_import_decode',[0,c.output])==6
   assert c.call('_terminal_import_decode',[c.input,0])==6
   return len(mutations)+2

@@ -32,14 +32,6 @@ global screen_viewport_leave
 screen_viewport_leave:
  mov ax,0x4850
  jmp csi_unimplemented
-global csi_service_d270
-csi_service_d270:
- mov ax,0xd270
- jmp csi_unimplemented
-global csi_service_d440
-csi_service_d440:
- mov ax,0xd440
- jmp csi_unimplemented
 global ansi_escape_service_da46
 ansi_escape_service_da46:
  jmp scroll_index
@@ -48,10 +40,6 @@ global csi_service_da84
 ansi_escape_service_da84:
 csi_service_da84:
  jmp scroll_reverse_index
-global ansi_escape_service_dac6
-ansi_escape_service_dac6:
- mov ax,0xdac6
- jmp csi_unimplemented
 global ansi_escape_service_dd58
 extern csi_primary_attributes,csi_device_status
 ansi_escape_service_dd58:

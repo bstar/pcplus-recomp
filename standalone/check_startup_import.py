@@ -20,7 +20,7 @@ def fixture():
 def terminal_expected(raw):
  words=lambda at:struct.unpack_from('<H',raw,at)[0]
  port=words(0);rate=RATES[words(2)]
- return struct.pack('<18H',port+1,rate&65535,rate>>16,words(4),words(8),words(6),words(0x198),words(0x19a),words(0x194),*(words(at) for at in (0x1ae,0x1b0,0x1b2,0x1b4,0x1b6,0x19c,0x19e)),words(0x174+port*2),words(0x184+port*2))
+ return struct.pack('<20H',port+1,rate&65535,rate>>16,words(4),words(8),words(6),words(0x198),words(0x19a),words(0x194),*(words(at) for at in (0x1ae,0x1b0,0x1b2,0x1b4,0x1b6,0x19c,0x19e)),words(0x174+port*2),words(0x184+port*2),raw[0x1e2],words(0x1e4))
 class Startup(Options):
  def __init__(self):
   super().__init__(BINARY,MAP);self.calls=[];self.payload=fixture();self.load_status=0
@@ -36,9 +36,9 @@ class Startup(Options):
   if not self.load_status:u.mem_write(self.data_base+image,self.payload)
   if io:u.mem_write(self.data_base+io,struct.pack('<4H',self.load_status,5 if self.load_status else 0,0,0 if self.load_status else 1264))
   u.reg_write(UC_X86_REG_AX,self.load_status);u.reg_write(UC_X86_REG_SP,sp+2);u.reg_write(UC_X86_REG_IP,ret)
- def plans(self):return bytes(self.uc.mem_read(self.data_base+self.serial,36)),bytes(self.uc.mem_read(self.data_base+self.modem,366))
+ def plans(self):return bytes(self.uc.mem_read(self.data_base+self.serial,40)),bytes(self.uc.mem_read(self.data_base+self.modem,366))
  def poison(self):
-  self.uc.mem_write(self.data_base+self.serial,b'\xcc'*36);self.uc.mem_write(self.data_base+self.modem,b'\xdd'*366)
+  self.uc.mem_write(self.data_base+self.serial,b'\xcc'*40);self.uc.mem_write(self.data_base+self.modem,b'\xdd'*366)
  def startup(self,arguments=None):
   self.uc.reg_write(UC_X86_REG_ES,self.ds)
   status=self.call('_terminal_startup_read',arguments or [self.path,self.serial,self.modem,self.result],limit=300000)
@@ -92,6 +92,13 @@ def main():
   for serial,modem,io in ((0xffff,None,None),(None,0xffff,None),(None,'serial',None),(None,None,'serial'),(None,None,'modem')):
    c=Startup();c.poison();before=c.plans();serial=c.serial if serial is None else serial;modem=c.modem if modem is None else (c.serial if modem=='serial' else modem);io=c.result if io is None else (c.serial if io=='serial' else c.modem)
    assert c.startup([c.path,serial,modem,io])==6 and c.plans()==before and not c.calls,(serial,modem,io)
+   count+=1
+  for kind in ('new40-wrap','overlap-appended-metadata','io-overlap-appended-metadata'):
+   c=Startup();c.poison();before=c.plans();serial,modem,io=c.serial,c.modem,c.result
+   if kind=='new40-wrap':serial=0xffdc
+   elif kind=='overlap-appended-metadata':serial=modem-36
+   else:io=serial+36
+   assert c.startup([c.path,serial,modem,io])==6 and c.plans()==before and not c.calls,kind
    count+=1
   done('invalid-near-extents-and-overlapping-output-IO-buffers-rejected',count)
  assert hashlib.sha256(BINARY.read_bytes()).hexdigest()==digest,'Shared executable changed during tests'

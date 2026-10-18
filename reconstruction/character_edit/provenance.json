@@ -1,0 +1,143 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/character_edit/insert_character.asm",
+      "start": 53872,
+      "end": 54336,
+      "source_file_offset": 89888,
+      "bytes": 464,
+      "instructions": 187,
+      "sha256": "d0d0bf6986b9d26e6c8dd43ee4a08aa74ee8b7db7bb5dccf439425a8b1984d52",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/character_edit/delete_character.asm",
+      "start": 54336,
+      "end": 54888,
+      "source_file_offset": 90352,
+      "bytes": 552,
+      "instructions": 208,
+      "sha256": "32df1f8170db837bc52001effd9d46008881fccb4e22008148654b28d80fc245",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/character_edit/set_tab.asm",
+      "start": 56006,
+      "end": 56050,
+      "source_file_offset": 92022,
+      "bytes": 44,
+      "instructions": 21,
+      "sha256": "a6a5c87fa6703aa35c8b0ac894cbac5fade4804af11c1f10e88d5895e00aea16",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/character_edit/cga_restore.asm",
+      "start": 30638,
+      "end": 30653,
+      "source_file_offset": 35246,
+      "bytes": 15,
+      "instructions": 7,
+      "sha256": "aeb0332b6f43a6fbd8a691b197b2036c863ea3c5832b0602ac5ae8e44024288d",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/character_edit/cga_disable.asm",
+      "start": 30654,
+      "end": 30674,
+      "source_file_offset": 35262,
+      "bytes": 20,
+      "instructions": 10,
+      "sha256": "2cc6e3631df4700f866b38ea1f726e830474355ea81536da84aca5593cd1ab0f",
+      "matched_original": true
+    }
+  ],
+  "state": {
+    "cdfa": "screen_viewport_enabled",
+    "ce2e": "screen_viewport_left",
+    "3256": "screen_viewport_active",
+    "39a4": "screen_viewport_offset",
+    "7a7e": "screen_viewport_right",
+    "39a0": "screen_visible_column",
+    "3344": "screen_video_offset",
+    "3348": "screen_previous_column",
+    "3346": "screen_attribute_offset",
+    "399e": "screen_cursor_column",
+    "39a2": "screen_previous_row",
+    "7a7a": "screen_video_row_bytes",
+    "325a": "screen_attribute_row_bytes",
+    "399c": "screen_cursor_row",
+    "ceb0": "screen_top_margin",
+    "d122": "screen_doublewidth_enabled",
+    "ce3a": "screen_last_row",
+    "9018": "screen_vertical_attribute_check",
+    "3734": "screen_attribute_checks",
+    "39c4": "screen_attributes_base",
+    "cee4": "screen_bottom_margin",
+    "3258": "screen_last_column",
+    "cf86": "screen_line_flags",
+    "900c": "screen_cursor_wrap",
+    "ce0e": "screen_first_row",
+    "9038": "screen_reverse_wrap_blocked",
+    "7a66": "screen_use_bios_cursor",
+    "7a72": "screen_columns",
+    "3342": "csi_wrap_pending",
+    "1d32": "attributes_normal_value",
+    "3260": "erase_lineflags_enabled",
+    "8ff6": "attributes_monochrome",
+    "1f70": "attributes_current",
+    "3736": "erase_protection_mode",
+    "325c": "erase_cell_count",
+    "39c2": "erase_attribute_values_base",
+    "334a": "csi_last_row",
+    "5dea": "erase_shadow_offset",
+    "5dec": "erase_shadow_segment",
+    "d008": "csi_erase_attribute",
+    "7a78": "text_video_segment",
+    "7a92": "text_bios_output",
+    "7a8e": "text_cga_status_port",
+    "3340": "scroll_suppress_next_linefeed",
+    "904c": "scroll_skip_attribute_scan",
+    "1d22": "scroll_enabled",
+    "ce10": "terminal_tab_stops"
+  },
+  "services": {
+    "6412": "erase_far_move",
+    "85b4": "erase_move_bytes",
+    "6c84": "text_write_char",
+    "2d98": "erase_repair_attributes"
+  },
+  "limitations": [
+    "Character helpers edit one cell (two in doublewidth) per call; repetition belongs to dispatcher.",
+    "Delete character nontrivial900c attribute repair2d98 remains explicit external dependency.",
+    "Set-tab44bytes verified from original plus focused REA entry-anchored static container; default Ghidra auto-analysis had left this tiny helper undecoded.",
+    "Original state/viewport ranges assumed; exact helpers contain no added range/count/cancellation policy."
+  ],
+  "rea_exports": {
+    "0xd270": {
+      "evidence_id": "ev_10827b79bc84bb408848b32fb39f00fe3b980b92b154a7d63f4aa89b62189a79",
+      "analysis_artifact_sha256": "c6662b84a2737e5f5bff14aa52c67dd0accc5a889d82f36d729483d3cc222651",
+      "scope": "Static analysis export; instructions independently verified at original-file offsets."
+    },
+    "0xd440": {
+      "evidence_id": "ev_d843149b4eaf006d4fca7f88e8fa8bc0dfbadb23d8fd06f7eb7718f1b6114666",
+      "analysis_artifact_sha256": "c6662b84a2737e5f5bff14aa52c67dd0accc5a889d82f36d729483d3cc222651",
+      "scope": "Static analysis export; instructions independently verified at original-file offsets."
+    },
+    "0x77ae": {
+      "evidence_id": "ev_ba097dc8042b5fdd581c14b780e0f3f2e177bfd405a026654fd88b209d83e7af",
+      "analysis_artifact_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+      "scope": "Static analysis export; instructions independently verified at original-file offsets."
+    },
+    "0x77be": {
+      "evidence_id": "ev_c43082a7dc48a9b3f0ae81f668650d020422ffdb6633b93dd20ecaa1aaef3a06",
+      "analysis_artifact_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+      "scope": "Static analysis export; instructions independently verified at original-file offsets."
+    },
+    "0xdac6": {
+      "evidence_id": "ev_32fb43d0a78a295d9dbeb716ca6b10c37bbcfecd663d7595fc72b6ba20bad5d7",
+      "analysis_artifact_sha256": "047a8dfbca68263bda807453eb1b0d8680828fd6711c3a7470d274e7059f8a57",
+      "scope": "Never-executed overlay12 analysis container with only MZ CS:IP changed to0:dac6; code bytes unchanged, independently verified against original."
+    }
+  }
+}

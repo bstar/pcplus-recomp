@@ -132,8 +132,10 @@ expand:
  popf
  ret
 
+extern terminal_macro_cancel
 terminal_connection_start:
  save
+ call terminal_macro_cancel
  cmp byte [connection_enabled],0
  je .done
  mov word [terminal_tx_count],0
@@ -300,6 +302,7 @@ terminal_connection_poll:
 .carrier_low:
  cmp byte [connection_carrier_seen],0
  je .done
+ call terminal_macro_cancel
  mov word [connection_status],6
  mov word [connection_state],0
  mov word [terminal_tx_count],0
@@ -380,6 +383,7 @@ terminal_connection_poll:
 ; AX0 cancels an attempt; AX1 sends configured hangup on an established session.
 terminal_connection_cancel:
  save
+ call terminal_macro_cancel
  cmp byte [connection_enabled],0
  je .done
  cmp word [connection_state],0

@@ -11,6 +11,8 @@ extern keyboard_classify_raw,terminal_enqueue_key_slot
 extern terminal_ansi_wait_active,terminal_ansi_wait_cancel
 extern terminal_connection_poll,terminal_connection_cancel,terminal_connection_start
 extern terminal_connection_exit,connection_state,connection_enabled
+extern terminal_macro_active,terminal_macro_start,terminal_macro_poll,terminal_macro_cancel
+extern terminal_macro_tx_allowed,terminal_macro_tx_epoch,terminal_defer_key,terminal_take_deferred_key
 global terminal_poll_io,terminal_enqueue_al,terminal_tick_low,terminal_clock_ticks
 global ansi_next_byte,ansi_unread_byte,csi_transmit_byte,csi_transmit_string
 
@@ -147,30 +149,45 @@ terminal_poll_io:
  cmp word [terminal_quit],0
  jne .done
  call uart_poll_flow
+ mov word [terminal_macro_tx_allowed],0
  cmp word [connection_state],0
  je .transmit
  cmp word [connection_state],6
- jne .keyboard
+ jne .macro
 .transmit:
  cmp word [terminal_tx_count],0
- je .keyboard
+ je .grant_macro
  mov bx,[terminal_tx_head]
  mov al,[terminal_tx_buffer+bx]
  call uart_try_write
- jc .keyboard
+ jc .macro
  ; try_write preserves AX/DX; keep head lookup independent of future API changes.
  mov bx,[terminal_tx_head]
  inc bx
  and bx,1023
  mov [terminal_tx_head],bx
  dec word [terminal_tx_count]
+ inc word [terminal_macro_tx_epoch]
+ jmp .macro
+.grant_macro:
+ mov word [terminal_macro_tx_allowed],1
+.macro:
+ call terminal_macro_poll
+ cmp word [terminal_quit],0
+ jne .done
 .keyboard:
+ cmp word [terminal_macro_active],0
+ jne .bios_key
+ call terminal_take_deferred_key
+ jnc .key_ready
+.bios_key:
  call keyboard_poll
  or ax,ax
  jz .done
  ; A successful peek makes this actual blocking read immediately satisfiable;
  ; the private application queue is disabled and BIOS has one foreground reader.
  call terminal_read_key
+.key_ready:
  cmp ax,0x2d00
  je .quit
  cmp ax,0x2300 ; Alt-H: configured hang-up
@@ -194,6 +211,30 @@ terminal_poll_io:
  call terminal_connection_cancel
  jmp .done
 .terminal_key:
+ cmp word [terminal_macro_active],0
+ je .meta_key
+ cmp al,27
+ je .cancel_macro
+ call terminal_defer_key
+ jmp .done
+.cancel_macro:
+ call terminal_macro_cancel
+ jmp .done
+.meta_key:
+ or al,al
+ jnz .classify
+ cmp ah,0x78
+ jb .classify
+ cmp ah,0x81
+ ja .classify
+ mov al,ah
+ xor ah,ah
+ sub ax,0x78
+ call terminal_macro_start
+ or ax,ax
+ jz .done
+ jmp .unsupported
+.classify:
  call keyboard_classify_raw
  cmp ax,79
  jb .binding
@@ -207,19 +248,23 @@ terminal_poll_io:
 .nonliteral:
  cmp ax,0xfffe
  jne .done ; Original no-op/unmapped key, no wire bytes.
+.unsupported:
  ; A recognized original local command needs application UI/services that have
  ; not been reconstructed. Keep this explicit instead of transmitting the key.
  mov word [terminal_exit_code],4
  mov word [terminal_quit],1
  jmp .done
 .quit:
+ call terminal_macro_cancel
  call terminal_connection_exit
  jmp .done
 .hangup:
+ call terminal_macro_cancel
  mov ax,1
  call terminal_connection_cancel
  jmp .done
 .redial:
+ call terminal_macro_cancel
  cmp word [connection_state],0
  jne .done
  cmp byte [connection_enabled],0

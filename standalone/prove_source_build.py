@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+"""Rebuild application components in a fresh public-source tree without originals."""
+from pathlib import Path
+import hashlib,json,os,shutil,subprocess,time,tempfile
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/application-source-proof';OUT.mkdir(parents=True,exist_ok=True);SNAP=Path(tempfile.mkdtemp(prefix='pcplus-source-proof-'))/'checkout'
+assert not SNAP.exists(),'Fresh destination required'
+paths=subprocess.check_output(['git','ls-files','--cached','--others','--exclude-standard','-z'],cwd=ROOT).split(b'\0')
+files={}
+excluded={'analysis','build','install','original','originals','.git'}
+for raw in sorted(set(paths)):
+ if not raw:continue
+ rel=Path(os.fsdecode(raw))
+ if rel.parts[0] in excluded or '__pycache__' in rel.parts:continue
+ if rel.suffix.lower() in {'.exe','.com','.obj','.bin','.zip','.img','.dtp','.cfg','.pyc','.db','.gpr','.gzf','.rep'}:raise AssertionError(f'Unexpected artifact in public-source list: {rel}')
+ source=ROOT/rel
+ assert source.is_file() and not source.is_symlink(),rel
+ data=source.read_bytes();target=SNAP/rel;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data);target.chmod(source.stat().st_mode)
+ files[str(rel)]=hashlib.sha256(data).hexdigest()
+assert not any((SNAP/name).exists() for name in excluded)
+canonical=json.dumps(files,sort_keys=True,separators=(',',':')).encode()
+snapshot={'source_checkout':str(SNAP),'files':files,'file_count':len(files),'sha256':hashlib.sha256(canonical).hexdigest(),'digest_recipe':'SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes','excluded_top_level_paths':sorted(excluded),'build_directory_present_before_build':False,'no_binary_artifacts_in_snapshot':True}
+(OUT/'snapshot.json').write_text(json.dumps(snapshot,indent=2)+'\n')
+builds=['terminal','config_dos','config_replace','config_abi','ui_windows','modem_commands','modem_responses','modem_send','directory_dial','directory_browser','directory_editor','directory_accounting','keyboard_mapping','keyboard_detection','line_edit','meta_keys','character_edit']
+# All commands execute inside the fresh checkout's pinned Nix shell.
+program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/build_{name}.py'],check=True)\n" for name in builds)
+with (OUT/'build.log').open('w') as log:
+ subprocess.run([str(SNAP/'tools/dev'),'--command','python3','-c',program],cwd=SNAP,stdout=log,stderr=log,check=True,timeout=300)
+outputs=['terminal/TERMINAL.EXE','config-dos/CONFIG.EXE','config-dos/CFGFAULT.EXE','config-replace/REPLACE.EXE','config-replace/REPFAULT.EXE','config-abi/ABI.EXE','ui-windows/WINDOWS.EXE','modem-commands/MODEMCMD.EXE','modem-responses/MODEMRSP.EXE','modem-send/MODEMSND.EXE','directory-dial/DIRDIAL.EXE','directory-browser/BROWSER.EXE','directory-editor/EDITOR.EXE','directory-accounting/DIRSTATS.EXE','keyboard-mapping/MAPPING.EXE','keyboard-detection/KBDMODE.EXE','line-edit/LINES.EXE','meta-keys/METAKEYS.EXE','character-edit/CHAREDIT.EXE']
+results={}
+for rel in outputs:
+ path=SNAP/'build'/rel;workspace=ROOT/'build'/rel
+ digest=hashlib.sha256(path.read_bytes()).hexdigest();expected=hashlib.sha256(workspace.read_bytes()).hexdigest()
+ results[rel]={'sha256':digest,'matches_workspace':digest==expected,'workspace_sha256':expected}
+assert all(r['matches_workspace'] for r in results.values()),results
+manifest=json.loads((SNAP/'build/terminal/manifest.json').read_text());workspace_manifest=json.loads((ROOT/'build/terminal/manifest.json').read_text())
+assert manifest==workspace_manifest,'Terminal manifests differ'
+for rel,digest in manifest['sources'].items():assert hashlib.sha256((ROOT/rel).read_bytes()).hexdigest()==digest,rel
+common={'passed':True,'source_snapshot':'Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.','source_snapshot_sha256':snapshot['sha256'],'source_file_count':len(files),'snapshot_digest_recipe':snapshot['digest_recipe'],'excluded_top_level_paths':snapshot['excluded_top_level_paths'],'original_executable_present':False,'original_install_present':False,'REA_database_present':False,'previous_build_outputs_present':False,'build_log_sha256':hashlib.sha256((OUT/'build.log').read_bytes()).hexdigest(),'toolchain':'Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.','proof_artifacts':'build/application-source-proof/{snapshot.json,build.log,result.json}','source_checkout':str(SNAP),'scope_note':'Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.','limitation':'Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.'}
+application={**common,'scope':'Current interactive terminal and19 application/component diagnostic outputs; complete PCPlus application remains unfinished.','output_count':len(outputs),'outputs':results,'build_scripts':[f'standalone/build_{name}.py' for name in builds]}
+terminal={**common,'scope':'Source-only interactive DOS terminal with all79 raw keyboard bindings, KBD/KEY import, TEXT, directory UI and recovered line/character editing; full PCPlus application remains incomplete.','binary_sha256':manifest['binary_sha256'],'matches_workspace_binary':True,'matches_workspace_manifest':True,'manifest':manifest}
+(OUT/'result.json').write_text(json.dumps({'application':application,'terminal':terminal},indent=2)+'\n')
+for name,result in [('application-components-source-build.json',application),('terminal-source-build.json',terminal)]:
+ (ROOT/'docs/validation'/name).write_text(json.dumps(result,indent=2)+'\n')
+print('Fresh source-only proof:19 byte-identical workspace outputs;',manifest['binary_sha256'],'DS/SS',manifest['data_stack_bytes'])

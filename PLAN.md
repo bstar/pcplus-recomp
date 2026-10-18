@@ -58,9 +58,13 @@ Command options validate COM1..4, baud, line format and flow control before
 touching hardware. Real Synchronet and Mystic login/navigation tests exposed a
 missing form-feed handler; deeper ENiGMA½ testing exposed SOH/VT/CAN controls in
 a malformed stock theme's metadata. Those handlers are now recovered and tested;
-the source-owned defaults select the proved original ANSI profile. All three
-local servers pass login and menu navigation through a modeled Hayes/Telnet
-modem; Mystic also passes indexed-screen arrows and Escape return. An
+the source-owned defaults select the proved original ANSI profile. Earlier
+checkpoints passed all three local servers through login and menu navigation through a modeled Hayes/Telnet
+modem; Mystic also passes indexed-screen arrows and Escape return. The current
+36b14af2 checkpoint passes Synchronet/Mystic menus and Synchronet FSEditor,
+but retains ENiGMA matrix-arrow and editor failures (docs/validation/bbs-matrix.json
+and bbs-editors.json). Direct ENiGMA login reaches the editor; correct outgoing
+key sequences do not establish working server interaction. An
 isolated maintained-source snapshot builds the identical interactive executable
 with no original executables or installation present. These tests do not establish
 physical modem compatibility or close the remaining application gates below.
@@ -69,10 +73,10 @@ physical modem compatibility or close the remaining application gates below.
       Native keyboard integration now includes all79 recovered raw binding slots,
       maintained network defaults, strict explicit `/K` import and `/B` automatic
       BDA/manual BIOS selection. Low-E0 keypad aliases are maintained compatibility
-      behavior. Ten actual DOS key cases and95 linked inputs pass; full KEY
-      macros, historical defaults and physical BIOS testing remain open.
+      behavior. Ten actual DOS key cases and95 linked inputs pass. Global /T KEY import and nonblocking TEXT now work; ASPECT/PROGRAM/HOOK
+      execution, directory bindings, historical defaults and physical BIOS testing remain open.
       Recovered line helpers are live through `/A:NETWORK` bounded line editing
-      or `/A:ORIGINAL` serviced36-tick discard wait. Seven synthetic policy groups
+      or `/A:ORIGINAL` serviced36-tick discard wait. Eight synthetic policy groups
       pass; complex attribute repair remains an explicit2d98 boundary and full
       editor interaction requires separate runtime evidence.
 - [ ] Support dialing/connect/hang-up and configurable serial/modem settings.
@@ -128,8 +132,8 @@ physical modem compatibility or close the remaining application gates below.
 - [ ] Reconstruct file transfers, capture/logging and supporting tools used by the app.
 - [ ] Reconstruct scripting interfaces and required interpreter/compiler integration.
       Keyboard file structures and original TEXT caret/pause consumers are proved,
-      but importing a KBD profile does not implement KEY/ASPECT/PROGRAM/HOOK
-      actions. Unimplemented original local keyboard commands stop explicitly
+      and explicit global /T KEY import now supports bounded nonblocking TEXT.
+      ASPECT/PROGRAM/HOOK execution, directory bindings and editing remain open. Unimplemented original local keyboard commands stop explicitly
       with errorlevel4; unmapped/no-op keys remain ignored.
 - [ ] Recover required resources without embedding original executable code/data as
       a substitute for source reconstruction.

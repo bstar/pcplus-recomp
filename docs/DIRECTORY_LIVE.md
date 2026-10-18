@@ -106,7 +106,7 @@ Recovery files can remain even when a replacement was installed. See
 Both preserve raw storage and commit after exact EOF and close. They stream
 through bounded buffers under the existing8-KiB stack, validate near extents
 and disjoint buffers, and report primary/secondary DOS errors separately.
-`directory_live_read` additionally stages the validated36-byte serial plan,
+`directory_live_read` additionally stages the validated40-byte serial plan,
 366-byte modem plan and214-byte selected plan, including the raw114-byte record
 at offset100 for metadata and expected-record comparison. Its10-byte result includes semantic
 status and underlying I/O error detail; byte counts describe failed I/O paths.

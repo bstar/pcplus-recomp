@@ -10,6 +10,7 @@ typedef struct terminal_import_settings {
  unsigned normal_attribute,bold_attribute,preset_attribute;
  unsigned reverse_attribute,underline_attribute,autowrap,scroll_enabled;
  unsigned io_base,irq;
+ unsigned mapping_pause_character,mapping_character_delay_units;
 } terminal_import_settings;
 typedef unsigned terminal_import_status;
 enum {

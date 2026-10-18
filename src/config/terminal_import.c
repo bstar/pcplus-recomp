@@ -12,7 +12,8 @@ WORD_ABI(software_flow,12);WORD_ABI(hardware_flow,14);WORD_ABI(terminal_id,16);
 WORD_ABI(normal_attribute,18);WORD_ABI(bold_attribute,20);WORD_ABI(preset_attribute,22);
 WORD_ABI(reverse_attribute,24);WORD_ABI(underline_attribute,26);
 WORD_ABI(autowrap,28);WORD_ABI(scroll_enabled,30);WORD_ABI(io_base,32);WORD_ABI(irq,34);
-typedef char abi_settings_size[sizeof(terminal_import_settings)==36 ? 1 : -1];
+WORD_ABI(mapping_pause_character,36);WORD_ABI(mapping_character_delay_units,38);
+typedef char abi_settings_size[sizeof(terminal_import_settings)==40 ? 1 : -1];
 static unsigned word(const prm_dos_image *image,unsigned at)
 { return image->bytes[at]|((unsigned)image->bytes[at+1]<<8); }
 terminal_import_status __cdecl terminal_import_decode(const prm_dos_image *image,
@@ -49,6 +50,8 @@ terminal_import_status __cdecl terminal_import_decode(const prm_dos_image *image
  candidate.underline_attribute=word(image,OFFSET(0x1d3a));
  candidate.autowrap=word(image,OFFSET(0x1d20));
  candidate.scroll_enabled=word(image,OFFSET(0x1d22));
+ candidate.mapping_pause_character=image->bytes[0x1e2];
+ candidate.mapping_character_delay_units=word(image,0x1e4);
  if(candidate.normal_attribute>255 || candidate.bold_attribute>255 ||
   candidate.preset_attribute>255 || candidate.reverse_attribute>255 ||
   candidate.underline_attribute>255 || candidate.autowrap>1 ||

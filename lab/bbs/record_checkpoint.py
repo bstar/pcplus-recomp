@@ -1,0 +1,33 @@
+#!/usr/bin/env python3
+"""Record one explicit local test label, retaining prior runtime evidence."""
+import argparse,hashlib,json
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[2]
+def read(path):return json.loads(path.read_text())
+def artifacts(folder):
+ return {str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(folder.iterdir()) if p.is_file()}
+def main():
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--menus',required=True);parser.add_argument('--editors',required=True);args=parser.parse_args()
+ digest=hashlib.sha256((ROOT/'build/terminal/TERMINAL.EXE').read_bytes()).hexdigest()
+ matrix=read(ROOT/'docs/validation/bbs-matrix.json')
+ for name in ('synchronet','enigma','mystic'):
+  entry=matrix['servers'][name];folder=ROOT/'build/bbs-lab/results'/name/args.menus
+  run=read(folder/'result.json');assert run['binary_sha256']==digest
+  audit=read(folder/({'synchronet':'navigation-checks.json','enigma':'semantic-audit.json','mystic':'mystic-audit.json'}[name]))
+  assert audit.get('binary_sha256',audit.get('DOS_binary_sha256'))==digest
+  prior={key:entry[key] for key in ('result','semantic_evidence','retained_artifacts')}
+  entry.setdefault('prior_runtime_cases',[]).append(prior)
+  entry.update(result=run,semantic_evidence=audit,retained_artifacts=artifacts(folder))
+ matrix.update(binary_sha256=digest,passed=all(s['result']['passed'] and s['semantic_evidence']['passed'] for s in matrix['servers'].values()))
+ editors=read(ROOT/'docs/validation/bbs-editors.json')
+ for name in ('synchronet','enigma'):
+  entry=editors['servers'][name];folder=ROOT/'build/bbs-lab/results'/name/args.editors
+  run=read(folder/'result.json');audit=read(folder/'semantic-audit.json');assert run['binary_sha256']==audit['binary_sha256']==digest
+  prior={key:entry[key] for key in ('run','semantic_evidence','retained_artifacts')}
+  entry.setdefault('prior_runtime_cases',[]).append(prior)
+  entry.update(run=run,semantic_evidence=audit,retained_artifacts=artifacts(folder))
+ editors.update(binary_sha256=digest,passed=all(s['run']['passed'] and s['semantic_evidence']['passed'] for s in editors['servers'].values()))
+ (ROOT/'docs/validation/bbs-matrix.json').write_text(json.dumps(matrix,indent=2)+'\n')
+ (ROOT/'docs/validation/bbs-editors.json').write_text(json.dumps(editors,indent=2)+'\n')
+ print('Recorded',digest,'menus',matrix['passed'],'editors',editors['passed'])
+if __name__=='__main__':main()

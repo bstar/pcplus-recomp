@@ -1,0 +1,9 @@
+%define KA_RECORDS 10
+%define KA_RECORD_SIZE 54
+%define KA_TEXT_SIZE 52
+%define KA_SIZE 540
+%define KA_STATUS 0
+%define KA_DOS_ERROR 2
+%define KA_CLOSE_ERROR 4
+%define KA_BYTES_PROCESSED 6
+%define KA_RESULT_SIZE 8

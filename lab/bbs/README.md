@@ -36,9 +36,33 @@ syntax for login/menu workflows; `--label` retains separate runs. A normal DOS
 exit is a transport/cleanup check; successful login and menu interaction require
 separate evidence from the screen, response bytes and server logs.
 
-## Verified results
+## Current checkpoint: interaction failures retained
 
-The same source-built ANSI executable passed all three local workflows:
+Terminal `36b14af2281a4921c0da210cfb3ceed22c3c33d82c9b40f2877850bea169d5f4`
+is tested under label `meta-character-network` and editor label
+`editor-meta-character`. Synchronet and Mystic menu audits pass. Synchronet's
+editor passes all12 semantic checks. All completed runs restore sampled hardware.
+
+ENiGMA's menu audit now **fails**: the actual Down/Up wire sequences at the
+login matrix lead to `newUserApplicationPre` instead of returning to Login.
+The subsequent scheduled credentials therefore miss their intended fields.
+Direct Enter login in the separate editor run succeeds and reaches the real
+editor, where Home and Insert still fail despite correct outgoing sequences.
+That editor run closes unsaved and the server confirms no post. Fragmented
+escape handling is independently reproduced; the new matrix failure is consistent
+with that boundary but has not independently established the identical cause.
+The current matrix and editor aggregate results are both false.
+
+An initial ENiGMA retry used a70-second timeout for an83-second workflow.
+Its incomplete files stay in `meta-character-network-timeout70/` with an
+`incomplete.json` marker; it is not compatibility evidence. The completed retry
+uses140 seconds. Harness timeout cleanup now escalates to kill after5 seconds.
+Keep the stock server and immediate modem model unchanged when reproducing.
+
+## Earlier verified results
+
+Earlier source-built ANSI checkpoints passed these local workflows; their exact
+hashes and artifacts remain in the matrix history:
 
 | Server | Actual DOS interaction verified | Recipe |
 | --- | --- | --- |
@@ -46,8 +70,8 @@ The same source-built ANSI executable passed all three local workflows:
 | ENiGMA½ 0.5.1-beta | Login, Main → Messages → Main → Files, including the original failing stock screen | [ENiGMA½](enigma.md) |
 | Mystic 1.12 A48 | Login, indexed file/message screens, Up/Down and Escape return | [Mystic](mystic.md) |
 
-Every final run restored the independently sampled IRQ/UART/PIC state exactly.
-All three workflows also pass on COM2 at19200/8N1 with hardware flow selected.
+Those completed runs restored the independently sampled IRQ/UART/PIC state exactly.
+Those workflows also passed on COM2 at19200/8N1 with hardware flow selected.
 Use `--com 2 --baud 19200 --flow HARD` to select that case. The sampler follows
 the selected UART; the bridge reports matching CONNECT/TSPEED rates. DOSBox
 nullmodem holds CTS ready, so this does not exercise physical handshake stalls.
@@ -81,7 +105,7 @@ from normal DOS exit or correct outgoing bytes. See
 
 ## PRM startup regression
 
-The current primary matrix repeats all three read-only workflows with
+The earlier PRM checkpoint repeated all three read-only workflows with
 `TERMINAL @D:\TEST.PRM` inside DOS. The synthetic partial configuration selects
 COM2/19200/8N1/HARD; no serial CLI option masks the import. The harness option
 `--config-fixture` creates this fixture and verifies it is unchanged. It never
@@ -95,7 +119,7 @@ transfers and the complete PCPlus application remain outside these results.
 `--dial-fixture` builds a synthetic modem+serial PRM and launches
 `TERMINAL @D:\TEST.PRM /D:lab.local:port`. The DOS controller expands and sends
 configured ATZ and ATD commands; the keyboard schedule contains no typed ATD.
-Current primary cases in the matrix cover all three real local servers through
+Retained automatic-dial cases in the matrix cover all three real local servers through
 this path. The retained serial capture proves the command prefix; server/menu
 audits verify successful navigation rather than assuming normal exit is enough.
 See [connection controller](../../docs/CONNECTION.md) for policy and boundaries.
@@ -104,8 +128,8 @@ See [connection controller](../../docs/CONNECTION.md) for policy and boundaries.
 
 `--directory-fixture --directory-browser --entry 3` launches the native
 chooser with no `/N` or `/D`, then selects entry3 using Down/Down/Enter.
-The synthetic PRM uses COM1/38400 while that record selects COM2/19200. Current
-primary matrix cases prove actual configured ATZ/ATD output and subsequent
+The synthetic PRM uses COM1/38400 while that record selects COM2/19200. Retained
+directory checkpoints prove actual configured ATZ/ATD output and subsequent
 message/file navigation on all three local servers. The PRM and independent
 hardware snapshots remain unchanged. On exit, successful-call accounting changes
 only the selected record's date/count bytes; the harness verifies the other
@@ -118,8 +142,8 @@ on all three servers. Synchronet verifies file-menu return and an empty message
 read; Mystic verifies indexed file/message screens with Up/Down and Escape;
 ENiGMA verifies Main → Messages → Main → Files against its authoritative session
 log, along with actual DOS device/cursor replies and arrow bytes. Historical
-results in the matrix retain their original executable hashes. Current primary
-`keyboard-network` menu runs repeat all three workflows on
+results in the matrix retain their original executable hashes. Earlier
+`keyboard-network` menu runs repeated all three workflows on
 `84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b`;
 the separate editor results retain ENiGMA's fragmentation failure.
 

@@ -1,0 +1,270 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/meta_keys/invoke.asm",
+      "start": 18358,
+      "end": 18454,
+      "bytes": 96,
+      "instructions": 46,
+      "sha256": "d6a6acab9be4c404980b7c991f89fc98e00dc621e4c79481c9c230213bb77af2",
+      "matched_original": true,
+      "file_offset": 22966
+    },
+    {
+      "file": "reconstruction/meta_keys/text.asm",
+      "start": 18636,
+      "end": 18740,
+      "bytes": 104,
+      "instructions": 46,
+      "sha256": "e007929f4330589b441dd73a6e2c1356e470a269d9a1f1c7dd2650620deb1fbb",
+      "matched_original": true,
+      "file_offset": 23244
+    },
+    {
+      "file": "reconstruction/meta_keys/caret.asm",
+      "start": 18740,
+      "end": 18827,
+      "bytes": 87,
+      "instructions": 41,
+      "sha256": "008b9051520b45049c2a7c95767686eb48fa3951da532a8abc18de9ead0f9b43",
+      "matched_original": true,
+      "file_offset": 23348
+    },
+    {
+      "file": "reconstruction/meta_keys/alt_digit.asm",
+      "start": 5524,
+      "end": 5558,
+      "bytes": 34,
+      "instructions": 14,
+      "sha256": "45b96a712fdff1dedaa31c43d9e50a250e5127c2de8e480f7d220e3d1000b76e",
+      "matched_original": true,
+      "file_offset": 10132
+    },
+    {
+      "file": "reconstruction/meta_keys/hook.asm",
+      "start": 16716,
+      "end": 17023,
+      "bytes": 307,
+      "instructions": 138,
+      "sha256": "87b3759a70fe6b46e20a413e87f6e485f9439258da14d1b03d00e046a2a9e155",
+      "matched_original": true,
+      "file_offset": 21324
+    },
+    {
+      "file": "reconstruction/meta_keys/validate_name.asm",
+      "start": 18248,
+      "end": 18282,
+      "bytes": 34,
+      "instructions": 15,
+      "sha256": "045973c78cbca18dcdd723455d7d058e7e2a3c2f86341fdc68a26f650b1eb596",
+      "matched_original": true,
+      "file_offset": 22856
+    },
+    {
+      "file": "reconstruction/meta_keys/get_ds.asm",
+      "start": 30384,
+      "end": 30387,
+      "bytes": 3,
+      "instructions": 2,
+      "sha256": "62c8c8f666f7746933e2ce364cafa0b6c9d1013a45019ccb6140d287a60cbb87",
+      "matched_original": true,
+      "file_offset": 34992
+    },
+    {
+      "file": "reconstruction/meta_keys/decimal32.asm",
+      "start": 35322,
+      "end": 35332,
+      "bytes": 10,
+      "instructions": 6,
+      "sha256": "859b77421ee6021029fa573672c24023677597e3173f5b2a268a7d667e8190db",
+      "matched_original": true,
+      "file_offset": 39930
+    },
+    {
+      "file": "reconstruction/meta_keys/decimal_core.asm",
+      "start": 42472,
+      "end": 42567,
+      "bytes": 95,
+      "instructions": 52,
+      "sha256": "aee8e26adbdc63381dbfee990f1087b8d98eed83783f635169093763b6e45623",
+      "matched_original": true,
+      "file_offset": 47080
+    },
+    {
+      "file": "reconstruction/meta_keys/decimal16.asm",
+      "start": 36460,
+      "end": 36487,
+      "bytes": 27,
+      "instructions": 13,
+      "sha256": "43983fe093078241e840dc0c2f6d7b31d7cd82a37eeff9063e0d036e6f133c33",
+      "matched_original": true,
+      "file_offset": 41068
+    },
+    {
+      "file": "reconstruction/meta_keys/strcpy.asm",
+      "start": 33384,
+      "end": 33434,
+      "bytes": 50,
+      "instructions": 26,
+      "sha256": "353e318feb16fbe3f0d4351c433976bb22913a51bdef8bc36a85be96f0509f26",
+      "matched_original": true,
+      "file_offset": 37992
+    },
+    {
+      "file": "reconstruction/meta_keys/strcat.asm",
+      "start": 35818,
+      "end": 35881,
+      "bytes": 63,
+      "instructions": 30,
+      "sha256": "0aac00553b07b350f4e89e58af55407468ad315950b1cd4b41514f87d06a2a81",
+      "matched_original": true,
+      "file_offset": 40426
+    },
+    {
+      "file": "reconstruction/meta_keys/tick_delay.asm",
+      "start": 27544,
+      "end": 27574,
+      "bytes": 30,
+      "instructions": 14,
+      "sha256": "fa59db2a50e7f0250255dfed7bfe8de20edc5a3b6ed22f96cf8d8b3cc98f27a9",
+      "matched_original": true,
+      "file_offset": 32152
+    },
+    {
+      "file": "reconstruction/meta_keys/pace.asm",
+      "start": 27506,
+      "end": 27544,
+      "bytes": 38,
+      "instructions": 15,
+      "sha256": "a7149212d6d9857e43f3e86112c258c9e11c2aeae0d292ef964a908b43beb850",
+      "matched_original": true,
+      "file_offset": 32114
+    }
+  ],
+  "state": {
+    "4b02": "meta_script_active",
+    "4430": "meta_script_busy_message",
+    "4416": "meta_missing_name_message",
+    "1d66": "meta_pause_byte",
+    "1d68": "meta_pacing",
+    "1d1a": "meta_local_echo",
+    "cffa": "meta_normalized_scan",
+    "3756": "meta_actions",
+    "3758": "meta_actions_text0",
+    "d124": "meta_hook_result",
+    "d126": "meta_hook_exchange_a",
+    "d13a": "meta_hook_exchange_b",
+    "1b84": "meta_prm_image",
+    "4765": "meta_hook_prefix",
+    "476e": "meta_hook_space_a",
+    "4770": "meta_hook_space_b",
+    "4772": "meta_hook_space_c",
+    "4774": "meta_hook_space_d",
+    "7a4e": "meta_pace_counter",
+    "7ac4": "meta_pace_calibration"
+  },
+  "services": {
+    "427f": "meta_keys_message",
+    "4b1f": "meta_keys_aspect_service",
+    "433d": "meta_keys_program_service",
+    "353d": "meta_keys_resolve_program",
+    "0610": "meta_keys_echo",
+    "ab0b": "meta_keys_transmit"
+  },
+  "limitations": [
+    "ASPECT interpreter, external program executor/resolver and message UI remain explicit external services.",
+    "Original caret parser and stack sender have no input bounds; malformed trailing caret can read beyond NUL.",
+    "Original TEXT pauses are blocking, count argument9 waits10 BIOS transitions; calibrated pacing separate."
+  ],
+  "rea_evidence": {
+    "0x147b6": {
+      "evidence_id": "ev_67be257bd0d48b0add66901375f076ebf431f22ea716cc697aa4eac51d7ed230",
+      "saved_export": "analysis/pcplus-main/functions/0x147b6.asm"
+    },
+    "0x148cc": {
+      "evidence_id": "ev_3a29c9753cf6188658686eb46944e813fddeb172758c9bded7dc265f9aeac907",
+      "saved_export": "analysis/pcplus-main/functions/0x148cc.asm"
+    },
+    "0x14934": {
+      "evidence_id": "ev_059b2b6f9c5a4c8603920897ea8ceb541feea65be2c5787a294ab008abf9155d",
+      "saved_export": "analysis/pcplus-main/functions/0x14934.asm"
+    },
+    "0x1414c": {
+      "evidence_id": "ev_8577afa849cd9ce96e9e01938bdba7ddb19a8a19dd44b7dada8d79c032bcd669",
+      "saved_export": "analysis/pcplus-main/functions/0x1414c.asm"
+    },
+    "0x14748": {
+      "evidence_id": "ev_6ef646e1aeb3fb4f66aacf93fc2cd5d4568d154f42c5abb89d1f5576f84d7a3e",
+      "saved_export": "analysis/pcplus-main/functions/0x14748.asm"
+    },
+    "0x115b6": {
+      "evidence_id": "ev_8bed2daf4c8d05dfed0c3e88649896d45bd7fc205731d66ae799e9277ec0e8dd",
+      "saved_export": "analysis/pcplus-main/functions/0x115b6.asm"
+    },
+    "0x176b0": {
+      "evidence_id": "ev_dbc4fc5446117d676b8d36125be1c028d30f8561943520620c3e18e0fd063d32",
+      "saved_export": "analysis/pcplus-main/functions/0x176b0.asm"
+    },
+    "0x189fa": {
+      "evidence_id": "ev_1af0ecd2c05917fe2dfd8c9ff440a7c8c597c00a2fde9c493d2d3a45f625d24b",
+      "saved_export": "analysis/pcplus-main/functions/0x189fa.asm"
+    },
+    "0x1a5e8": {
+      "evidence_id": "ev_cd0f272c3313e69c350752076d84da5068ba032605ba48b7f9b56a521630cf10",
+      "saved_export": "analysis/pcplus-main/functions/0x1a5e8.asm"
+    },
+    "0x18e6c": {
+      "evidence_id": "ev_7aeffc19984f751b0be0e7ffd55de40b61130c91c328d212c0d39628e32e16ca",
+      "saved_export": "analysis/pcplus-main/functions/0x18e6c.asm"
+    },
+    "0x18268": {
+      "evidence_id": "ev_d6e0c4bd6527e1e7d2ecdae43c0dd944d38c2ceaf25ea36b81fa9fd58ae53b12",
+      "saved_export": "analysis/pcplus-main/functions/0x18268.asm"
+    },
+    "0x18bea": {
+      "evidence_id": "ev_0f5ebe9ea4c53ceeb1dfb8dc0410ec165212b0db488fd30168d11873594a0c3b",
+      "saved_export": "analysis/pcplus-main/functions/0x18bea.asm"
+    },
+    "0x16b98": {
+      "evidence_id": "ev_cc5df7fd3b4baa1350abfad9245198f09d55989c263134af069ea519ff7a51f9",
+      "saved_export": "analysis/pcplus-main/functions/0x16b98.asm"
+    },
+    "0x16b72": {
+      "evidence_id": "ev_a30bfa2cee5690318dc8252472fd4570367e365219605a4b4a1e2253170377fc",
+      "saved_export": "analysis/pcplus-main/functions/0x16b72.asm"
+    },
+    "0x1433d": {
+      "evidence_id": "ev_a5c189826e129ae1c8a59c464a4fb7be362d61aaeadcb2317f2c1b78b19768ad",
+      "saved_export": "analysis/pcplus-main/functions/0x1433d.asm"
+    },
+    "0x1896a": {
+      "evidence_id": "ev_67d722c592a8e1895efd01397c9afe70c5620cc158225c521d8ba2c24f941fd0",
+      "saved_export": "analysis/pcplus-main/functions/0x1896a.asm"
+    },
+    "0x13745": {
+      "evidence_id": "ev_f6065692aa266621dd2d2adbbcf5a69c4daef7f16e24c2247be86d36878145eb",
+      "saved_export": "analysis/pcplus-main/functions/0x13745.asm"
+    },
+    "0x1353d": {
+      "evidence_id": "ev_1cd43dbde8697560fddafd763fd3ab56971d91bd6badd8b88553d8e1cc1d6417",
+      "saved_export": "analysis/pcplus-main/functions/0x1353d.asm"
+    }
+  },
+  "current_rea_queries": {
+    "0x1414c": "ev_8577afa849cd9ce96e9e01938bdba7ddb19a8a19dd44b7dada8d79c032bcd669",
+    "0x148cc": "ev_3a29c9753cf6188658686eb46944e813fddeb172758c9bded7dc265f9aeac907",
+    "0x14934": "ev_059b2b6f9c5a4c8603920897ea8ceb541feea65be2c5787a294ab008abf9155d"
+  },
+  "hook_command_protocol": {
+    "prefix": " PCPLUS ",
+    "unsigned_decimal": "Packed (DS << 16) | offset; not physical address or value read from that pointer",
+    "kind2_offsets": [
+      "d126",
+      "d13a",
+      "1b84"
+    ],
+    "context": "signed16 decimal, Alt digit caller passes3",
+    "PROGRAM_native_route": "433d third argument1 ->896a uses COMSPEC /c, fallback command.com; retained external service"
+  }
+}

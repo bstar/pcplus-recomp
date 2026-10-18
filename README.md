@@ -66,8 +66,10 @@ commands without an implemented handler stop explicitly with errorlevel4.
 bounded serviced historical alternate wait. See
 [live line editing](docs/LIVE_LINE_EDIT.md). This executable does not yet provide the
 complete original menus, directory cycles, file transfers or scripting engine.
-Stored passwords remain metadata and are never automatically sent; SCRIPT/KEY/
-META bindings remain unsupported. An exit-time accounting save problem reports
+Global `/T:MYKEYS.KEY` imports ten Meta actions; Alt-1..Alt-0 execute
+nonblocking TEXT with bounded caret expansion and cancellation. See
+[live TEXT actions](docs/LIVE_META_KEYS.md). Stored passwords remain metadata
+and are never automatically sent; directory SCRIPT/KEY/META bindings remain unsupported. An exit-time accounting save problem reports
 errorlevel9 unless a prior application error exists; inspect retained
 `PCPSTG.$$$` / `PCPBAK.$$$` recovery files as described in the editing guide.
 Local Synchronet, ENiGMA½ and Mystic interoperability work is documented in
@@ -75,7 +77,7 @@ Local Synchronet, ENiGMA½ and Mystic interoperability work is documented in
 
 The initial key defaults are authored for network use; they are not recovered
 factory KBD tables. KBD slot strings and KEY action/macro files are different
-formats. Full KEY macros, settings, transfers and original application menus
+formats. ASPECT/PROGRAM/HOOK execution, settings, transfers and original application menus
 remain part of the reconstruction goal.
 
 Copy `build/standalone/SERIAL.EXE` to DOS and run:
@@ -160,10 +162,11 @@ settings/original directory menus and automatic cycles remain open. See
 [modem settings](docs/MODEM_CONFIGURATION.md) and [window services](docs/UI_WINDOWS.md).
 
 `test-keyboard_mapping`, `test-keyboard-mapping-raw` and `test-keyboard_detection`
-check recovered classification and BIOS selection. `test-keymap test-keymap-dos`
+check recovered classification and BIOS selection. `test-keymap test-keymap-dos test-key-actions-dos`
 check lossless KBD/KEY codecs and strict DOS import. `test-line_edit` checks
-recovered line helpers; `test-terminal` also runs linked key output/raw-key and
-live line-policy regressions plus actual DOS key delivery. See
+recovered line helpers. `test-meta_keys test-character_edit` checks exact
+recovered action/character helpers. `test-terminal` also runs linked keyboard,
+TEXT and line/character-policy regressions plus actual DOS delivery/import. See
 [mapping evidence](docs/KEYBOARD_MAPPING.md), [file formats](docs/KEY_MAPPING.md)
 and [line recovery](docs/LINE_EDIT.md).
 
