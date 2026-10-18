@@ -1,13 +1,13 @@
 # Configuration C in a separate DOS code segment
 
 The normal terminal links the directory transaction, pure624-byte settings
-candidate decoder and live setup owner in `CONFIG_CODE`, with a distinct CS and `CONFIG_GROUP`.
-Their data, constants and pointers remain in DGROUP with DS=SS. All three C modules
+candidate decoder, live setup owner and checked XLT reader in `CONFIG_CODE`, with a distinct CS and `CONFIG_GROUP`.
+Their data, constants and pointers remain in DGROUP with DS=SS. All four C modules
 still use Open Watcom's small model and ordinary near calls; only their code
 placement and named external imports change. This frees resident code space for
 the settings workflow without changing the public near-cdecl API.
 
-Eleven resident entry stubs preserve the public names. They copy only
+Twelve resident entry stubs preserve the public names. They copy only
 their declared1,2,3,5,7,8 or9 word arguments into a far call. The far wrapper copies
 those arguments into an ordinary near-C frame and calls the renamed local
 implementation. Both frames use LEA/POP to release copies, retaining the
@@ -17,22 +17,29 @@ remain owned by the caller. These are not variadic, RET-N or callback adapters.
 The C implementations call each other directly within CONFIG_CODE. Five
 explicit register-ABI imports (`memcpy`, `memset`, `memcmp`, `strchr` and the DOS
 canonicalizer) use named near thunks to far-call their resident counterparts.
-Six more callbacks
+Nine more callbacks
 copy1..4 cdecl words to the resident terminal/modem decoders, PRM/directory
-readers, bounded number expander and native command-expansion status adapter. Register imports retain the compiler's
+readers, bounded number expander, native command-expansion status adapter and the checked XLT open/read/close adapters. Register imports retain the compiler's
 trailing underscore symbol convention; they cannot use the cdecl adapters.
 The modem callback family's existing1..4-word contract is unchanged.
 
-`config_abi.inc` declares all22 bridge pairs. `terminal_memory.py` validates
+The XLT adapter uses explicit near-cdecl3/4/1-word open/read/close services.
+Resident `xlt_dos_fs.c` owns the DOS CRT far-pointer/register ABI conversions.
+Direct register-only thunks are insufficient for this DOS read interface: its
+stack arguments must survive the additional far frames. Actual linked reads,
+EOF probes and failed reads exercise these adapters; all256 input bytes and
+caller state are checked. See [live translation](LIVE_TRANSLATION.md).
+
+`config_abi.inc` declares all26 bridge pairs. `terminal_memory.py` validates
 their exact instructions, argument offsets/counts, near/far targets, return
 forms and required MZ relocations. It also checks an end marker linked after
-all three C objects, ensuring the extent covers the implementations rather than just
+all four C objects, ensuring the extent covers the implementations rather than just
 the assembly wrappers. All code must fit its own64KiB segment, be present in
 the loaded MZ, be disjoint from other code/data owners and remain covered by
 PROGRAM's retained parent allocation. Together with PRINT/MODEM this validates
-66 bridge pairs.
+70 bridge pairs.
 
-`check_config_far_live.py` rejects103 intentionally damaged frames, relocations
+`check_config_far_live.py` rejects119 intentionally damaged frames, relocations
 and layouts. The independent311 directory and507 context cases execute normal
 terminal entry points across the bridge. `check_live_configuration.py --terminal`
 replays the same389 independently specified candidate cases against the normal
@@ -63,7 +70,7 @@ changes, confirmed idle COM ownership transfer and supported4/6 profile resets.
 See [SETUP_LIVE.md](SETUP_LIVE.md). Full transport/profile ownership changes and
 the complete application remain open.
 
-The checkpoint's58-command terminal regression,60-output isolated source
+The checkpoint's60-command terminal regression,60-output isolated source
 rebuild,389 terminal candidate inputs,311 directory inputs,507 retained-context
 inputs and actual DOS child retention are bound together in
 [validation/configuration-far-code.json](validation/configuration-far-code.json).

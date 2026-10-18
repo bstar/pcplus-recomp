@@ -29,7 +29,7 @@ def main():
  assert len(port_dos['cases'])==6
  for source,digest in port_dos['sources'].items():assert sha(source)==digest,source
  frames=bound('build/terminal/config-far-checks.json',runtime)
- assert frames['configuration_bridge_pairs_verified']==22 and len(frames['rejected_mutations'])==103
+ assert frames['configuration_bridge_pairs_verified']==26 and len(frames['rejected_mutations'])==119
  candidate=bound('build/live-configuration/terminal-checks.json',runtime)
  assert candidate['host']=='terminal-far-C' and candidate['inputs']==389 and candidate['maximum_CPU_call_stack_bytes']<8192-3514-16
  directory=bound('build/terminal/directory-live-checks.json',runtime);assert directory['inputs']==311

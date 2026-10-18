@@ -42,6 +42,9 @@ terminal_parse_options:
  mov di,options_actions_stage
  mov cx,32
  rep stosw
+ mov di,options_translation_stage
+ mov cx,32
+ rep stosw
  mov word [options_entry_stage],0
  mov word [options_codes_stage],0
  mov word [options_keyboard_mode_stage],2
@@ -105,6 +108,8 @@ terminal_parse_options:
  cmp word [options_token],'/K'
  je .selector_size
  cmp word [options_token],'/T'
+ je .selector_size
+ cmp word [options_token],'/X'
  je .selector_size
  cmp word [options_token],'/N'
  jne .ordinary_size
@@ -244,6 +249,10 @@ terminal_parse_options:
  mov di,terminal_actions_path
  mov cx,32
  rep movsw
+ mov si,options_translation_stage
+ mov di,terminal_translation_path
+ mov cx,32
+ rep movsw
  mov ax,[options_entry_stage]
  mov [terminal_directory_entry],ax
  mov ax,[options_codes_stage]
@@ -327,6 +336,17 @@ options_process_token:
  or word [options_seen],8192
  jmp .good
 .meta_option:
+ cmp word [options_token],'/X'
+ jne .actions_option
+ cmp byte [options_token+2],':'
+ jne .actions_option
+ test word [options_seen],16384
+ jnz .bad
+ mov si,options_token+3
+ mov di,options_translation_stage
+ mov dx,16384
+ jmp .path_start
+.actions_option:
  cmp word [options_token],'/T'
  jne .ansi_option
  cmp byte [options_token+2],':'
@@ -626,11 +646,13 @@ global terminal_keyboard_path
 global terminal_keyboard_bios_selection
 global terminal_ansi_m_policy
 global terminal_actions_path
+global terminal_translation_path
 terminal_config_path: times 64 db 0
 terminal_dial_target: times 64 db 0
 terminal_directory_path: times 64 db 0
 terminal_keyboard_path: times 64 db 0
 terminal_actions_path: times 64 db 0
+terminal_translation_path: times 64 db 0
 terminal_keyboard_bios_selection: dw 2
 terminal_ansi_m_policy: dw 0
 terminal_directory_entry: dw 0
@@ -643,6 +665,7 @@ terminal_usage:
  db 'Directory: /E:FILE.DIR [/N:1..200]; omit /N to choose an entry.',13,10
  db 'Directory codes: /C:LITERAL (default) or /C:LEGACY (A..J substitutions).',13,10
  db 'Keyboard: /K:FILE.KBD imports the selected profile; explicit path only.',13,10
+ db 'Input translation: /X:FILE.XLT loads exactly 256 bytes before connecting.',13,10
  db 'Meta actions: /T:FILE.KEY; Alt-1..Alt-0 run TEXT/PROGRAM; Esc cancels queued action.',13,10
  db 'Capture: Alt-F1 opens/appends or closes; Alt-F2 holds; Alt-F3 toggles CR+LF.',13,10
  db 'Screen file: Alt-G appends the current screen to PCPLUS.SCR.',13,10
@@ -675,6 +698,7 @@ options_dial_stage: times 64 db 0
 options_directory_stage: times 64 db 0
 options_keyboard_stage: times 64 db 0
 options_actions_stage: times 64 db 0
+options_translation_stage: times 64 db 0
 options_keyboard_mode_stage: dw 2
 options_ansi_m_stage: dw 0
 options_ansi_network: db '/A:NETWORK',0

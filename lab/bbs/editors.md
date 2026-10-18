@@ -446,3 +446,14 @@ both runs, emits all eight measured keys and closes without posting. Immediate
 forwarding fails Home and Insert behavior;30ms buffering passes all seven
 audited checks. The immediate aggregate remains failed. Physical UART/firmware,
 multiline scrolling and complete BBS feature coverage remain open.
+
+## Explicit XLT checkpoint
+
+Build2cdff8a2 repeats the stock editor probes after adding explicit XLT startup
+selection and a normal receive owner. These BBS runs use XLT disabled. Synchronet
+`editor-com-2cdf-hard` passes all12 semantic and eight key-wire checks, including
+Ctrl-Q abort. ENiGMA `editor-com-2cdf-immediate` again fails Home/Insert behavior
+while emitting all measured keys; `editor-com-2cdf-buffer30` passes all seven
+audited checks. Neither ENiGMA run saves a post. The immediate aggregate remains
+false, and the earlier COM/flow and packetization experiments remain retained.
+See [the current checkpoint](modern-compatibility.md).

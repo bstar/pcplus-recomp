@@ -1,89 +1,89 @@
 {
   "passed": true,
-  "binary_sha256": "0666c4968c8c69d26895c3505e069ccea4b3913d699f81a3a1e27276d0b650d8",
+  "binary_sha256": "2cdff8a2cb331c40caf331e2c5870e7100de285bbb43ac8b729f9a28f76d0635",
   "editor_sha256": "1dd49405f285b85a4d438be6cd67ebbc3d7cd76a5d81e74cc91106383463f31e",
   "memory_layout": {
-    "near_bytes": 59536,
-    "near_spare_bytes": 6000,
-    "near_relative_segment": 4561,
-    "far_relative_segment": 9032,
+    "near_bytes": 60064,
+    "near_spare_bytes": 5472,
+    "near_relative_segment": 4616,
+    "far_relative_segment": 9120,
     "shadow_offset": 2000,
     "history_offset": 10192,
     "far_bytes": 12288,
-    "far_end_linear": 158800,
-    "stack_end_linear": 132512,
-    "loaded_module_bytes": 103070,
-    "minimum_allocated_module_bytes": 158816,
-    "retained_parent_paragraphs": 9941,
+    "far_end_linear": 160208,
+    "stack_end_linear": 133920,
+    "loaded_module_bytes": 104478,
+    "minimum_allocated_module_bytes": 160224,
+    "retained_parent_paragraphs": 10029,
     "far_pointer_relocations_verified": true,
-    "snapshot_relative_segment": 9032,
+    "snapshot_relative_segment": 9120,
     "snapshot_image_offset": 0,
     "snapshot_bytes": 2000,
-    "snapshot_end_linear": 146512,
+    "snapshot_end_linear": 147920,
     "ui_screen_buffers": {
       "browser_screen": {
-        "relative_segment": 8282,
+        "relative_segment": 8370,
         "offset": 0,
         "bytes": 4000,
-        "start_linear": 132512,
-        "end_linear": 136512
+        "start_linear": 133920,
+        "end_linear": 137920
       },
       "ed_screen": {
-        "relative_segment": 8282,
+        "relative_segment": 8370,
         "offset": 4000,
         "bytes": 4000,
-        "start_linear": 136512,
-        "end_linear": 140512
+        "start_linear": 137920,
+        "end_linear": 141920
       },
       "program_screen": {
-        "relative_segment": 8282,
+        "relative_segment": 8370,
         "offset": 8000,
         "bytes": 4000,
-        "start_linear": 140512,
-        "end_linear": 144512
+        "start_linear": 141920,
+        "end_linear": 145920
       }
     },
     "far_ui_storage_bytes": 12000,
     "controller_bridge_pairs_verified": 22,
     "modem_bridge_pairs_verified": 22,
-    "configuration_bridge_pairs_verified": 22,
-    "resident_code_bytes": 64468,
-    "resident_code_spare_bytes": 1068,
+    "configuration_bridge_pairs_verified": 26,
+    "resident_code_bytes": 64764,
+    "resident_code_spare_bytes": 772,
     "code_segments": [
       {
         "name": "_TEXT",
         "kind": "CODE",
         "relative_segment": 0,
         "offset": 0,
-        "bytes": 64468
+        "bytes": 64764
       },
       {
         "name": "CONFIG_CODE",
         "kind": "FARCODE",
-        "relative_segment": 4030,
+        "relative_segment": 4048,
         "offset": 0,
-        "bytes": 5568
+        "bytes": 6150
       },
       {
         "name": "MODEM_CODE",
         "kind": "FARCODE",
-        "relative_segment": 4378,
+        "relative_segment": 4433,
         "offset": 0,
         "bytes": 1467
       },
       {
         "name": "PRINT_CODE",
         "kind": "FARCODE",
-        "relative_segment": 4470,
+        "relative_segment": 4525,
         "offset": 0,
         "bytes": 1449
       }
     ],
-    "far_code_bridge_pairs_verified": 66
+    "far_code_bridge_pairs_verified": 70
   },
   "terminal_regression": {
     "passed": true,
-    "binary_sha256": "0666c4968c8c69d26895c3505e069ccea4b3913d699f81a3a1e27276d0b650d8",
+    "binary_sha256": "2cdff8a2cb331c40caf331e2c5870e7100de285bbb43ac8b729f9a28f76d0635",
     "commands": [
       {
         "command": "python3 standalone/build_terminal.py",
@@ -101,6 +101,16 @@
         "seconds": 0.064
       },
       {
+        "command": "python3 standalone/check_translation_live.py",
+        "exit_code": 0,
+        "seconds": 0.465
+      },
+      {
+        "command": "python3 standalone/test_translation_live_dos.py",
+        "exit_code": 0,
+        "seconds": 12.833
+      },
+      {
         "command": "python3 standalone/check_setup_startup.py",
         "exit_code": 0,
         "seconds": 0.164
@@ -108,7 +118,7 @@
       {
         "command": "python3 standalone/test_setup_startup_dos.py",
         "exit_code": 0,
-        "seconds": 19.793
+        "seconds": 19.696
       },
       {
         "command": "python3 standalone/check_setup_live.py",
@@ -118,12 +128,12 @@
       {
         "command": "python3 standalone/check_live_setup_owner.py",
         "exit_code": 0,
-        "seconds": 7.126
+        "seconds": 7.275
       },
       {
         "command": "python3 standalone/check_live_setup_policy.py",
         "exit_code": 0,
-        "seconds": 4.17
+        "seconds": 4.27
       },
       {
         "command": "python3 standalone/check_live_setup_link.py",
@@ -148,7 +158,7 @@
       {
         "command": "python3 standalone/test_setup_port_dos.py",
         "exit_code": 0,
-        "seconds": 80.435
+        "seconds": 80.486
       },
       {
         "command": "python3 standalone/check_live_setup_apply.py",
@@ -158,7 +168,7 @@
       {
         "command": "python3 standalone/test_setup_live_dos.py",
         "exit_code": 0,
-        "seconds": 74.424
+        "seconds": 74.331
       },
       {
         "command": "python3 standalone/check_config_far_live.py",
@@ -168,12 +178,12 @@
       {
         "command": "python3 standalone/check_live_configuration.py --terminal",
         "exit_code": 0,
-        "seconds": 41.927
+        "seconds": 41.778
       },
       {
         "command": "python3 standalone/check_modem_far_live.py",
         "exit_code": 0,
-        "seconds": 8.628
+        "seconds": 8.678
       },
       {
         "command": "python3 standalone/check_terminal_break_live.py",
@@ -193,12 +203,12 @@
       {
         "command": "python3 standalone/check_terminal_print_controller_live.py",
         "exit_code": 0,
-        "seconds": 4.321
+        "seconds": 4.371
       },
       {
         "command": "python3 standalone/check_terminal_screen_print_live.py",
         "exit_code": 0,
-        "seconds": 10.631
+        "seconds": 10.579
       },
       {
         "command": "python3 standalone/check_terminal_printer_live.py",
@@ -218,7 +228,7 @@
       {
         "command": "python3 standalone/check_terminal_capture_live.py",
         "exit_code": 0,
-        "seconds": 0.965
+        "seconds": 0.915
       },
       {
         "command": "python3 standalone/check_far_storage_live.py",
@@ -233,12 +243,12 @@
       {
         "command": "python3 standalone/check_terminal_transfer_live.py",
         "exit_code": 0,
-        "seconds": 3.719
+        "seconds": 3.72
       },
       {
         "command": "python3 standalone/check_terminal_upload_live.py",
         "exit_code": 0,
-        "seconds": 22.497
+        "seconds": 22.6
       },
       {
         "command": "python3 standalone/check_program_actions_live.py",
@@ -253,12 +263,12 @@
       {
         "command": "python3 standalone/test_program_actions_dos.py",
         "exit_code": 0,
-        "seconds": 34.364
+        "seconds": 34.416
       },
       {
         "command": "python3 standalone/test_terminal_reset_live_dos.py",
         "exit_code": 0,
-        "seconds": 9.929
+        "seconds": 9.828
       },
       {
         "command": "python3 standalone/check_transport.py",
@@ -268,7 +278,7 @@
       {
         "command": "python3 standalone/check_key_output.py",
         "exit_code": 0,
-        "seconds": 1.867
+        "seconds": 1.917
       },
       {
         "command": "python3 standalone/check_key_live.py",
@@ -278,7 +288,7 @@
       {
         "command": "python3 standalone/check_meta_actions_live.py",
         "exit_code": 0,
-        "seconds": 2.368
+        "seconds": 2.418
       },
       {
         "command": "python3 standalone/check_character_edit_live.py",
@@ -288,17 +298,17 @@
       {
         "command": "python3 standalone/test_meta_actions_dos.py",
         "exit_code": 0,
-        "seconds": 19.845
+        "seconds": 19.844
       },
       {
         "command": "python3 standalone/check_line_edit_live.py",
         "exit_code": 0,
-        "seconds": 0.465
+        "seconds": 0.515
       },
       {
         "command": "python3 standalone/check_terminal_options.py --binary build/terminal/TERMINAL.EXE --map build/terminal/terminal.map",
         "exit_code": 0,
-        "seconds": 0.415
+        "seconds": 0.465
       },
       {
         "command": "python3 lab/bbs/check_formfeed.py",
@@ -318,7 +328,7 @@
       {
         "command": "python3 standalone/test_terminal.py",
         "exit_code": 0,
-        "seconds": 16.188
+        "seconds": 16.138
       },
       {
         "command": "python3 standalone/test_terminal_keys.py",
@@ -333,7 +343,7 @@
       {
         "command": "python3 standalone/check_startup_import.py --check-invalid-abi",
         "exit_code": 0,
-        "seconds": 0.314
+        "seconds": 0.364
       },
       {
         "command": "python3 standalone/check_connection.py",
@@ -343,12 +353,12 @@
       {
         "command": "python3 standalone/check_directory_live.py",
         "exit_code": 0,
-        "seconds": 3.119
+        "seconds": 3.169
       },
       {
         "command": "python3 standalone/check_directory_context.py",
         "exit_code": 0,
-        "seconds": 19.244
+        "seconds": 19.345
       },
       {
         "command": "python3 standalone/test_directory_context_terminal.py",
@@ -368,36 +378,36 @@
       {
         "command": "python3 standalone/test_connection_dos.py",
         "exit_code": 0,
-        "seconds": 27.104
+        "seconds": 27.055
       },
       {
         "command": "python3 standalone/test_directory_terminal.py",
         "exit_code": 0,
-        "seconds": 58.108
+        "seconds": 58.155
       }
     ],
-    "seconds": 547.315,
+    "seconds": 560.974,
     "complete": true
   },
   "source_rebuild": {
     "report": "docs/validation/application-components-source-build.json",
-    "source_snapshot_sha256": "a166fedb1cb33b5eb9fc223df809ff397c11b23a4661b8621925400589150755",
+    "source_snapshot_sha256": "8c9af5a26f53bb8f4ade9b41d0a9e44c2de58d551f471bbbbe7e009f5e29ee36",
     "output_count": 60
   },
   "source_sha256": {
-    "standalone/record_setup_live.py": "f51cc5613efb5d856120cedbe6556f5302b53cf0e8ba463658c2abe9a822b110",
+    "standalone/record_setup_live.py": "1fc46950fc11b666fc832ca1f1a58c5aedb884f8927314bdf1b90f7a070dfb65",
     "standalone/check_setup_live.py": "f1e273b58432a54dc4bd349e1085992075955eb390ae359b9c4e31be74096512",
     "standalone/test_setup_live_dos.py": "6813f31ee0f0a75fcf0c53f2448ec714191e97fde1d532f052f6580f98580389",
     "standalone/check_program_actions_live.py": "18b11fe8e74e1f156b65cfd26dfcc526b7fa2f7c793c0d7573ccd3d3c7c6bdbe",
     "standalone/test_setup_startup_dos.py": "ed11b7d7496f679448b9e2005b37b45391789dd2f4c46e240d0bb25704746bc7",
     "standalone/check_live_configuration.py": "8e440a5137891eef6c10fe02b88e372407e4155acef563181cb3ebdefc0c0ca3",
-    "standalone/check_config_far_live.py": "0a87506b91dc6b682e2a82efc1d3f1f32f3e09e8045ed26c5fafe10dcebffea2",
+    "standalone/check_config_far_live.py": "cd47b819d5a1c10c5708a9c1a0375c7328c1f58a760c5dbcbe918dfb0f2fb5f4",
     "standalone/check_directory_live.py": "eed1d99ce4d62a2160f4576601fc94690df9a16ba9694218ab6660f92a4f6a46",
     "standalone/check_directory_context.py": "e2fc0d831d82242fa88eeaef449baf5948efa70045a02f61a4653f1729f2132e",
     "standalone/test_far_storage_dos.py": "5f45f0a9dab866411f88cc3cd683c7a4b09c9148412443f6f95078d18e533936",
     "standalone/far_storage_child.asm": "ea9323c8d67ef3c416c65ffa2e5f029d2d2800c684e42d7f73a112419cc411b4",
-    "standalone/terminal_memory.py": "a28929c8a2db0c31181e1e240b69534eba9dee4cade576bcb7ff313d435fec74",
-    "standalone/build_terminal.py": "bae0f2689f299e434ff032824e0f85ebf05dd30ccdfba7087db74a46411018c0",
+    "standalone/terminal_memory.py": "45e5ace8e9e1a3e2ef5b7967647ea3be8913ad018c0e7a12bd1377bd18d99672",
+    "standalone/build_terminal.py": "5a975fe9a38b4545099b4e82702bde94fc0288658904ab076dc845cb592d4316",
     "standalone/check_live_setup_owner.py": "8ef367497ddea34a8e23822c3b14d8134355fef01e83781c09cbde12f15872ad",
     "standalone/check_live_setup_apply.py": "a4a792373deecaed3a9eebc62a84f77a35febd1e4622b1f37a86ded255584f18",
     "standalone/live_setup_kernel.py": "b36cec472912401a60de34c051284e16922c86594614190c426e57611e415618",
@@ -411,29 +421,29 @@
     "standalone/port_watch.asm": "712a12a99c746b85d42bdfa749735e4a3caf1b803f48f46939d9a1ed45aa1ae6"
   },
   "retained_artifacts": {
-    "build/terminal/setup-profile-regression.json": "17cc383b695864549ad426ed14ead7cd798c78c49c2f2f5f638e3cd8aaebec1c",
-    "build/terminal/setup-profile-regression.log": "7258cbaa38f32285a79a1ff8b915c58bb36d176b34c4fc950d9cb2dbb52a4e6c",
-    "build/terminal/setup-live-checks.json": "b209758d8f0f91e5d2ce1bcff957666427bd65272d9f29f459cc8996e10f92a0",
-    "build/setup-startup/live-checks.json": "925aba5774963d0b072acf2918f3c57c32ec3055110ad3f147a8057e25fe0b7f",
-    "build/terminal/config-far-checks.json": "23fc264e5a4b69c50ab380ae13ac45f7cbda0ab2607ed7377ea3c2e3680332db",
-    "build/live-configuration/terminal-checks.json": "a7d2e9eb654489a54387d98de1d4828b62eb40c387cf36f515aa6cb7730559d8",
-    "build/terminal/directory-live-checks.json": "97c330506ba2248f3f2531dbd5825477332d5689fd41799ad5c9beb4542a3534",
-    "build/terminal/directory-context-checks.json": "962f9620fec3761897c1eb71e87dc296c55b58b5a15c4db2922880f5294f950f",
-    "build/far-storage-dos/checks.json": "f35b59321ac98f9d20ac837930550880a3adda6c0910bf01a52e9adc9ae4b480",
-    "build/terminal/live-setup-owner-checks.json": "124a76abb348aadfa6b15846d92e426a27e13d07b66f250ef494d081ac5e5b38",
-    "build/terminal/live-setup-apply-checks.json": "16a4e265fabba0fda82fa213c2e28e3bdf577ee949ca0e5f5a7a5bfb79f10ae1",
-    "build/terminal/live-setup-policy-checks.json": "648b8e54d53a7565db8acfff49c330f6067903de442a3ec99bff4b1edeb10e25",
-    "build/terminal/live-setup-link-checks.json": "24069a94d9ef0a2433950f07a27bb2549fe226e455fc0fb4f8be2440e06efec8",
-    "build/terminal/live-setup-profile-checks.json": "24b58a94c75d5678bd2beb3979a3d2719296be1d85ea7b3d25c6d187f5caf78b",
-    "build/terminal/port-handoff-checks.json": "035ab4220d2fad6988fa09c435bb3b99310223a99737a2e7c23087292e0a194b",
-    "build/terminal/live-setup-port-checks.json": "6d4723b80d160bdeda8aad52cb9c207c4ec7c34d941ac64fa8f73a0bfbe890af",
-    "build/setup-port-dos/checks.json": "41ba481f8c09e0cebe88c5d3881fa96d42ab5dab063423f9cfaa3a8e04abdb8d",
+    "build/terminal/setup-profile-regression.json": "2bf6a7134fee4f5f8d1142a4c97dd8dc0a10c85edb1eb93d4361d4b358cc9482",
+    "build/terminal/setup-profile-regression.log": "c7f1d5ef19d3d85a43c06209bafa5aa3729ea9d042c5921bba5c7f4a384648b7",
+    "build/terminal/setup-live-checks.json": "902ed94102820f0894ccca0ae29d50770946d75bc8bb65ead2735c7d7e67127a",
+    "build/setup-startup/live-checks.json": "d8339f90c50d9f482aba8354bbcaef500f0f08fd5f106845e27a73b4803a6abd",
+    "build/terminal/config-far-checks.json": "5572a0f01b102f64ffaa3be22870363ad36f5562e7d1aa579778d46fbf95814c",
+    "build/live-configuration/terminal-checks.json": "1bf971326f0b898466cf0fecdc6895a4b5b518bc207ee06863a821759216e4b0",
+    "build/terminal/directory-live-checks.json": "92c0ff704157209b5403deea5ee5acb4b9ff53414384cc0fa53f04b5ba26b37a",
+    "build/terminal/directory-context-checks.json": "4cebf2d6264afc7c671c95f0e565628f97688a6b0fd9c68799f5087443d538c2",
+    "build/far-storage-dos/checks.json": "b8dede7274806a43e5bc6081975e89268aedd7d751d979254e98ae4ef03b39d2",
+    "build/terminal/live-setup-owner-checks.json": "27bc6f864a16605a75b86e8e636adfc47711030c872c8854dabce7015df5a16a",
+    "build/terminal/live-setup-apply-checks.json": "b79aa29a60ec7cbce1434f1ffdf7cef46417287eb5d3e55fe72769471e607b75",
+    "build/terminal/live-setup-policy-checks.json": "c581806671919df5e2e4f631dfbd3e4135668ee10b8c42e8e4624cc058e72a86",
+    "build/terminal/live-setup-link-checks.json": "d996bd9f7fed7da9cad67cecf238975da3762d20472db7ce69065086dc4d1614",
+    "build/terminal/live-setup-profile-checks.json": "0ec7a6cbf7375cf6c8a91bea26823974a7f2b0aa2329af385e6985caf4138870",
+    "build/terminal/port-handoff-checks.json": "7be6f6e7292f3550d4597179459b84974a44c1d3c76c05632bb268325e70117b",
+    "build/terminal/live-setup-port-checks.json": "580eb4db692dd2682340c71ad83444ca8d73b6e163b5368e9242b20092e870c6",
+    "build/setup-port-dos/checks.json": "935f9c7560f7364373c82d8d3cc592802edcb1f0c41b44d330f9bb5ac162fe6e",
     "build/setup-port-dos/move-1-to-2/WATCH.BIN": "13967162347c722adf6538e3e50f504391c3c42091cc5a899d7c6f1ea6fc76fd",
     "build/setup-port-dos/move-1-to-2/SCREEN.BIN": "86851ccc25ee26bf75070d4c70c67909d91a7f47066ff4336274663fdc5e0387",
     "build/setup-port-dos/move-1-to-2/TEST.PRM": "9e318381b8b4dd98c8d2204d75652af102902b166ecbcc2977dd8742ad9682d2",
     "build/setup-port-dos/move-1-to-2/serial.bin": "7792bc289281e6c50221dc47857da960f78a990b9dc7e533b1998c1819052e15",
-    "build/setup-port-dos/move-1-to-2/dosbox.conf": "367242fc1ec2b5f4881dab637042355ed32d1bce5050403ec0243839971538d3",
-    "build/setup-port-dos/move-1-to-2/result.json": "a2a9750e2089ed96fac6baec6a1d0917393c8dcfaa2168c952d9e89077b4f263",
+    "build/setup-port-dos/move-1-to-2/dosbox.conf": "b3c9f0b66986508d751eaee81c17a3324797fdfbca1eb1a6a577a6b1da6f0c79",
+    "build/setup-port-dos/move-1-to-2/result.json": "17448d45078ab7249e8c77d65dc2f6a113ee878186bc205b3d00f64550ce7228",
     "build/setup-port-dos/move-1-to-2/BEFORE1.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
     "build/setup-port-dos/move-1-to-2/AFTER1.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
     "build/setup-port-dos/move-1-to-2/BEFORE2.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
@@ -446,8 +456,8 @@
     "build/setup-port-dos/move-2-to-1/SCREEN.BIN": "86851ccc25ee26bf75070d4c70c67909d91a7f47066ff4336274663fdc5e0387",
     "build/setup-port-dos/move-2-to-1/TEST.PRM": "599e35a17837cca57e48892bc58f9bcfe0f9b57ec6c07660c18d2a958cb54390",
     "build/setup-port-dos/move-2-to-1/serial.bin": "7792bc289281e6c50221dc47857da960f78a990b9dc7e533b1998c1819052e15",
-    "build/setup-port-dos/move-2-to-1/dosbox.conf": "4cbc27fcc36a06b57d88baadd9bf2d58dedd34d6083468459f26c43ea63a74fa",
-    "build/setup-port-dos/move-2-to-1/result.json": "c13817e63a3a7f0b767b03f4f400d2f7ce23983a4752ef17fa1a74d39d072163",
+    "build/setup-port-dos/move-2-to-1/dosbox.conf": "e2a3519bc69a9491a33d62c7006100e83dbe2fbe82bf066f1c4d6fdead680d67",
+    "build/setup-port-dos/move-2-to-1/result.json": "85cb28a46c72939ed41c54a7d75ad689aec830c3414edd6086395a51718c1a68",
     "build/setup-port-dos/move-2-to-1/BEFORE1.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
     "build/setup-port-dos/move-2-to-1/AFTER1.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
     "build/setup-port-dos/move-2-to-1/BEFORE2.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
@@ -460,8 +470,8 @@
     "build/setup-port-dos/move-1-to-3-shared-IRQ/SCREEN.BIN": "86851ccc25ee26bf75070d4c70c67909d91a7f47066ff4336274663fdc5e0387",
     "build/setup-port-dos/move-1-to-3-shared-IRQ/TEST.PRM": "907f0dacfa5c4ecc2f0409e51f732695064db44010ade87e229aaa2e51feffd7",
     "build/setup-port-dos/move-1-to-3-shared-IRQ/serial.bin": "7792bc289281e6c50221dc47857da960f78a990b9dc7e533b1998c1819052e15",
-    "build/setup-port-dos/move-1-to-3-shared-IRQ/dosbox.conf": "ddd44f04e8c3ac6c2d51f18412ac2a6c199f590851328aa8d39f031ed04389b8",
-    "build/setup-port-dos/move-1-to-3-shared-IRQ/result.json": "d3b3a01c9944d2113f91f51819339324834888b2386e17a0173db058dec219e7",
+    "build/setup-port-dos/move-1-to-3-shared-IRQ/dosbox.conf": "5eb345f34b942ef99e52d6699c98f1ec98b31f7ba4d134853b865a02858bbf37",
+    "build/setup-port-dos/move-1-to-3-shared-IRQ/result.json": "acb8109f8b1bf8d70430f3e33bdb6a9079bdaef6c9e476d18ccf5880f062e5cb",
     "build/setup-port-dos/move-1-to-3-shared-IRQ/BEFORE1.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
     "build/setup-port-dos/move-1-to-3-shared-IRQ/AFTER1.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
     "build/setup-port-dos/move-1-to-3-shared-IRQ/BEFORE2.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
@@ -474,8 +484,8 @@
     "build/setup-port-dos/decline-1-to-2/SCREEN.BIN": "86851ccc25ee26bf75070d4c70c67909d91a7f47066ff4336274663fdc5e0387",
     "build/setup-port-dos/decline-1-to-2/TEST.PRM": "9e318381b8b4dd98c8d2204d75652af102902b166ecbcc2977dd8742ad9682d2",
     "build/setup-port-dos/decline-1-to-2/serial.bin": "7792bc289281e6c50221dc47857da960f78a990b9dc7e533b1998c1819052e15",
-    "build/setup-port-dos/decline-1-to-2/dosbox.conf": "f3ebed897e81fcb2ce6834767c4c75133bb9be902f1f7f0007d7599aab34af06",
-    "build/setup-port-dos/decline-1-to-2/result.json": "23007409ca1491d01edf6c4b262aa03249da7ec4ba643585095afa0ce724ac52",
+    "build/setup-port-dos/decline-1-to-2/dosbox.conf": "bbfb3907e0eed69ed367ab3345489bd7159df26b567ad112a2cab9cf9d12eb78",
+    "build/setup-port-dos/decline-1-to-2/result.json": "97ff955997255a9a68dcb6e535441e6d3e736dbe7098a8c4756c8b901879c363",
     "build/setup-port-dos/decline-1-to-2/BEFORE1.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
     "build/setup-port-dos/decline-1-to-2/AFTER1.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
     "build/setup-port-dos/decline-1-to-2/BEFORE2.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
@@ -488,8 +498,8 @@
     "build/setup-port-dos/reject-missing-COM4/SCREEN.BIN": "86851ccc25ee26bf75070d4c70c67909d91a7f47066ff4336274663fdc5e0387",
     "build/setup-port-dos/reject-missing-COM4/TEST.PRM": "d2127cf1457daaeceac93b3698a5762d3ec238f8e84ac594c746d2b83e9cd5c1",
     "build/setup-port-dos/reject-missing-COM4/serial.bin": "7792bc289281e6c50221dc47857da960f78a990b9dc7e533b1998c1819052e15",
-    "build/setup-port-dos/reject-missing-COM4/dosbox.conf": "cd9950351c4d3b75c9ca651988f3c90e3f49da4ae9b030a94fbcc7a088119d4f",
-    "build/setup-port-dos/reject-missing-COM4/result.json": "f574c084ead249b39a51cef5e115db953da798360ae292cbce01b535dfbe0caf",
+    "build/setup-port-dos/reject-missing-COM4/dosbox.conf": "1795c7842b60f9b0c0c15024eb3f91f442ee5425e8b1c54d2cf1f43f1b3292db",
+    "build/setup-port-dos/reject-missing-COM4/result.json": "eef786bad8fd9a8e8d0b5c193493c9d5d4268f6ab769a07311655fef1c841bca",
     "build/setup-port-dos/reject-missing-COM4/BEFORE1.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
     "build/setup-port-dos/reject-missing-COM4/AFTER1.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
     "build/setup-port-dos/reject-missing-COM4/BEFORE2.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
@@ -502,8 +512,8 @@
     "build/setup-port-dos/move-baud-profile/SCREEN.BIN": "86851ccc25ee26bf75070d4c70c67909d91a7f47066ff4336274663fdc5e0387",
     "build/setup-port-dos/move-baud-profile/TEST.PRM": "c8e66051a7ef732f81fa880a65c668de396bf96034af615ea65ffddb91b386a5",
     "build/setup-port-dos/move-baud-profile/serial.bin": "daa685f496348405713ef823820c2f1583baea422a57de1080951eda1de8745c",
-    "build/setup-port-dos/move-baud-profile/dosbox.conf": "10dea1f41108f715cb42f0a375fee3ba7ca26e20635a5a1ff8adedf87c0cf527",
-    "build/setup-port-dos/move-baud-profile/result.json": "eae3b7216877785d312dffd497b1c1e108fb1040c8022c00bd3f995ea3b7ac0f",
+    "build/setup-port-dos/move-baud-profile/dosbox.conf": "93fed9e71c045d04e9f02fcd61e2aa47eb352847ec2c7319a60cef7e4dcb694c",
+    "build/setup-port-dos/move-baud-profile/result.json": "b523380828d682192aaea447890c8160e92e77f3c3d563ca1e68c6643c111a60",
     "build/setup-port-dos/move-baud-profile/BEFORE1.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
     "build/setup-port-dos/move-baud-profile/AFTER1.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
     "build/setup-port-dos/move-baud-profile/BEFORE2.BIN": "23ad78dae9115a033883fbd894a2b1e5b297a1ed713c5e16a8bb019f53eeaa50",
@@ -577,8 +587,8 @@
   },
   "call_frame_validation": {
     "passed": true,
-    "binary_sha256": "0666c4968c8c69d26895c3505e069ccea4b3913d699f81a3a1e27276d0b650d8",
-    "configuration_bridge_pairs_verified": 22,
+    "binary_sha256": "2cdff8a2cb331c40caf331e2c5870e7100de285bbb43ac8b729f9a28f76d0635",
+    "configuration_bridge_pairs_verified": 26,
     "entry_argument_counts": [
       1,
       2,
@@ -655,6 +665,18 @@
       "_live_setup_acknowledge:far-argument-offset",
       "_live_setup_acknowledge:implementation-target",
       "_live_setup_acknowledge:far-return",
+      "_xlt_dos_read:near-argument-offset",
+      "_xlt_dos_read:far-target",
+      "_xlt_dos_read:near-return",
+      "_xlt_dos_read:far-argument-offset",
+      "_xlt_dos_read:implementation-target",
+      "_xlt_dos_read:far-return",
+      "_config_xlt_open:service-far-target",
+      "_config_xlt_open:resident-call-frame",
+      "_config_xlt_read:service-far-target",
+      "_config_xlt_read:resident-call-frame",
+      "_config_xlt_close:service-far-target",
+      "_config_xlt_close:resident-call-frame",
       "config_memcpy_service_:service-far-target",
       "config_memcpy_service_:resident-call-frame",
       "config_memset_service_:service-far-target",
@@ -677,6 +699,10 @@
       "_config_number_expand:resident-call-frame",
       "_config_live_expand:service-far-target",
       "_config_live_expand:resident-call-frame",
+      "_xlt_dos_read:missing-MZ-relocation",
+      "_config_xlt_open_service:missing-MZ-relocation",
+      "_config_xlt_read_service:missing-MZ-relocation",
+      "_config_xlt_close_service:missing-MZ-relocation",
       "_directory_live_read_context:missing-MZ-relocation",
       "_live_configuration_decode:missing-MZ-relocation",
       "config_memcpy_service_:missing-MZ-relocation",
@@ -694,85 +720,85 @@
       "incomplete-C-extent"
     ],
     "memory": {
-      "near_bytes": 59536,
-      "near_spare_bytes": 6000,
-      "near_relative_segment": 4561,
-      "far_relative_segment": 9032,
+      "near_bytes": 60064,
+      "near_spare_bytes": 5472,
+      "near_relative_segment": 4616,
+      "far_relative_segment": 9120,
       "shadow_offset": 2000,
       "history_offset": 10192,
       "far_bytes": 12288,
-      "far_end_linear": 158800,
-      "stack_end_linear": 132512,
-      "loaded_module_bytes": 103070,
-      "minimum_allocated_module_bytes": 158816,
-      "retained_parent_paragraphs": 9941,
+      "far_end_linear": 160208,
+      "stack_end_linear": 133920,
+      "loaded_module_bytes": 104478,
+      "minimum_allocated_module_bytes": 160224,
+      "retained_parent_paragraphs": 10029,
       "far_pointer_relocations_verified": true,
-      "snapshot_relative_segment": 9032,
+      "snapshot_relative_segment": 9120,
       "snapshot_image_offset": 0,
       "snapshot_bytes": 2000,
-      "snapshot_end_linear": 146512,
+      "snapshot_end_linear": 147920,
       "ui_screen_buffers": {
         "browser_screen": {
-          "relative_segment": 8282,
+          "relative_segment": 8370,
           "offset": 0,
           "bytes": 4000,
-          "start_linear": 132512,
-          "end_linear": 136512
+          "start_linear": 133920,
+          "end_linear": 137920
         },
         "ed_screen": {
-          "relative_segment": 8282,
+          "relative_segment": 8370,
           "offset": 4000,
           "bytes": 4000,
-          "start_linear": 136512,
-          "end_linear": 140512
+          "start_linear": 137920,
+          "end_linear": 141920
         },
         "program_screen": {
-          "relative_segment": 8282,
+          "relative_segment": 8370,
           "offset": 8000,
           "bytes": 4000,
-          "start_linear": 140512,
-          "end_linear": 144512
+          "start_linear": 141920,
+          "end_linear": 145920
         }
       },
       "far_ui_storage_bytes": 12000,
       "controller_bridge_pairs_verified": 22,
       "modem_bridge_pairs_verified": 22,
-      "configuration_bridge_pairs_verified": 22,
-      "resident_code_bytes": 64468,
-      "resident_code_spare_bytes": 1068,
+      "configuration_bridge_pairs_verified": 26,
+      "resident_code_bytes": 64764,
+      "resident_code_spare_bytes": 772,
       "code_segments": [
         {
           "name": "_TEXT",
           "kind": "CODE",
           "relative_segment": 0,
           "offset": 0,
-          "bytes": 64468
+          "bytes": 64764
         },
         {
           "name": "CONFIG_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4030,
+          "relative_segment": 4048,
           "offset": 0,
-          "bytes": 5568
+          "bytes": 6150
         },
         {
           "name": "MODEM_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4378,
+          "relative_segment": 4433,
           "offset": 0,
           "bytes": 1467
         },
         {
           "name": "PRINT_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4470,
+          "relative_segment": 4525,
           "offset": 0,
           "bytes": 1449
         }
       ],
-      "far_code_bridge_pairs_verified": 66
+      "far_code_bridge_pairs_verified": 70
     },
-    "scope": "Serialized DOS MZ and linker-map validation of eleven explicit near-cdecl entries, five compiler register callbacks and six resident cdecl callbacks; exact argument-copy frames, target calls/returns, relocations and full configuration C extent. Independent CPU candidate/directory/owner suites and actual DOS child allocation exercise behavior."
+    "scope": "Serialized DOS MZ and linker-map validation of twelve explicit near-cdecl entries, five compiler register callbacks and nine resident cdecl callbacks; exact argument-copy frames, target calls/returns, relocations and full configuration C extent. Independent CPU candidate/directory/owner suites and actual DOS child allocation exercise behavior."
   },
   "terminal_candidate": {
     "passed": true,
@@ -829,7 +855,7 @@
         "passed": true
       }
     ],
-    "binary_sha256": "0666c4968c8c69d26895c3505e069ccea4b3913d699f81a3a1e27276d0b650d8",
+    "binary_sha256": "2cdff8a2cb331c40caf331e2c5870e7100de285bbb43ac8b729f9a28f76d0635",
     "host": "terminal-far-C",
     "maximum_CPU_call_stack_bytes": 3042,
     "DOS_fixture_sha256": {
@@ -890,35 +916,35 @@
       "ATDCaseTest:23"
     ],
     "errors": [],
-    "seconds": 7.375,
-    "binary_sha256": "0666c4968c8c69d26895c3505e069ccea4b3913d699f81a3a1e27276d0b650d8",
+    "seconds": 7.376,
+    "binary_sha256": "2cdff8a2cb331c40caf331e2c5870e7100de285bbb43ac8b729f9a28f76d0635",
     "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 HARD",
     "expected_exit": 0,
     "scope": "Actual DOS livePROGRAM/COMSPEC owned child locates parent PSP, checks retainedMCB throughfarend afterSTACK and FARCODE, allocates/fills16KB separateDOSmemory and verifies full-sizedshadow/history and frozen-screen endpointcanaries plus the full controller, modem and configuration C far-code byte-sums before/after allocation and sums of all three full4000-byte far UI screen owners. Parent resumes actual far controller polling after child return. NormalUART/vector cleanup verified by existing sampler. No physical modem claim.",
-    "sample_hex": "7f001408d526d5266c2b3e30fecaefbeaddebeba6c2b22114433c204c2049a19a9057e280000000000000000eb32eb323e19bb052c2b2c2be217c015007b007b",
+    "sample_hex": "7f0014082d272d27c42b9630fecaefbeaddebebac42b22114433a709a709d119a905d6280000000000000000eb32eb327519bb0518291829f4170618e3a1e3a1",
     "linker_defines": {
-      "DGROUP_SEG": 4561,
-      "FAR_SEG": 9032,
+      "DGROUP_SEG": 4616,
+      "FAR_SEG": 9120,
       "SHADOW_OFFSET": 2000,
       "HISTORY_OFFSET": 10192,
       "FAR_END_OFFSET": 14288,
       "PROCESS_PSP_OFFSET": 448,
-      "SHADOW_SEGMENT_OFFSET": 13109,
-      "HISTORY_POINTER_OFFSET": 14525,
-      "SNAPSHOT_SEG": 9032,
+      "SHADOW_SEGMENT_OFFSET": 13365,
+      "HISTORY_POINTER_OFFSET": 14781,
+      "SNAPSHOT_SEG": 9120,
       "SNAPSHOT_OFFSET": 0,
-      "REQUIRED_PARAS": 9941,
-      "CODE_SEG": 4470,
+      "REQUIRED_PARAS": 10029,
+      "CODE_SEG": 4525,
       "CODE_START": 0,
       "CODE_BYTES": 1449,
       "CODE_FIRST": 20565,
-      "MODEM_SEG": 4378,
+      "MODEM_SEG": 4433,
       "MODEM_START": 0,
       "MODEM_BYTES": 1467,
-      "CONFIG_SEG": 4030,
+      "CONFIG_SEG": 4048,
       "CONFIG_START": 0,
-      "CONFIG_BYTES": 5568,
-      "UI_SEG": 8282,
+      "CONFIG_BYTES": 6150,
+      "UI_SEG": 8370,
       "BROWSER_OFF": 0,
       "EDITOR_OFF": 4000,
       "PROGRAM_OFF": 8000

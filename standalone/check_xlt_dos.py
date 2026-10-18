@@ -40,13 +40,13 @@ int main(void)
 FAULT = COMMON + r'''
 static unsigned mode,opens,closes,reads,position;
 static void reset(unsigned m){mode=m;opens=closes=reads=position=0;poison();memset(&result,0x97,sizeof(result));}
-unsigned xlt_fault_open(const char *path,unsigned flags,int *handle)
+unsigned __cdecl xlt_fault_open(const char *path,unsigned flags,int *handle)
 {(void)path;(void)flags;++opens;*handle=mode==10?0:9;return mode==1?2:0;}
-unsigned xlt_fault_close(int handle)
+unsigned __cdecl xlt_fault_close(int handle)
 {(void)handle;++closes;return mode==4 || mode==5?6:0;}
-unsigned xlt_fault_read(int handle,void __far *buffer,unsigned size,unsigned *count)
+unsigned __cdecl xlt_fault_read(int handle,void *buffer,unsigned size,unsigned *count)
 {
- unsigned i,n=size;unsigned char __far *out=buffer;(void)handle;++reads;*count=0;
+ unsigned i,n=size;unsigned char *out=buffer;(void)handle;++reads;*count=0;
  if(mode==2 || mode==5 || (mode==3 && reads==2))return 5;
  if(mode==7 && position>=32)return 0;
  if(mode==8 && position==256){out[0]=88;*count=1;++position;return 0;}
@@ -99,11 +99,11 @@ def main():
     for name, text in [('real', REAL), ('fault', FAULT)]:
         host = OUT / (name + '.c')
         host.write_text(text)
-        definitions = [] if name == 'real' else ['-d_dos_open=xlt_fault_open',
-            '-d_dos_read=xlt_fault_read', '-d_dos_close=xlt_fault_close']
+        definitions = [] if name == 'real' else ['-dxlt_fs_open=xlt_fault_open',
+            '-dxlt_fs_read=xlt_fault_read', '-dxlt_fs_close=xlt_fault_close']
         subprocess.run(['wcl', '-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-k8192',
                         '-i=' + str(MODULE), '-fe=' + name.upper() + '.EXE',
-                        *definitions, str(MODULE / 'xlt_dos.c'), str(host)], cwd=OUT, check=True)
+                        *definitions, str(MODULE / 'xlt_dos.c'), *([str(MODULE / 'xlt_dos_fs.c')] if name == 'real' else []), str(host)], cwd=OUT, check=True)
     for name in ('PASS.TXT', 'FAIL.TXT', 'REAL.TXT', 'FAULT.TXT'):
         (OUT / name).unlink(missing_ok=True)
     config = f'''[sdl]
@@ -145,7 +145,7 @@ exit
         counts[match[1]] = int(match[2])
     for name, blob in fixtures.items():
         assert (OUT / name).read_bytes() == blob
-    inputs = [Path(__file__).resolve(), MODULE / 'xlt_dos.c', MODULE / 'xlt_dos.h']
+    inputs = [Path(__file__).resolve(), *sorted(MODULE.glob('xlt_dos*'))]
     report = {'passed': True, 'checks': counts,
               'sources': {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs},
               'binaries': {name: hashlib.sha256((OUT / name).read_bytes()).hexdigest() for name in ('REAL.EXE', 'FAULT.EXE')},

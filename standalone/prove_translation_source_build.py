@@ -19,6 +19,7 @@ def main():
     files = ['reconstruction/translation/files.asm', 'reconstruction/translation/receive.asm',
              'reconstruction/translation/provenance.json', 'reconstruction/uart/encodings.inc',
              'src/translation/xlt_dos.c', 'src/translation/xlt_dos.h',
+             'src/translation/xlt_dos_fs.c', 'src/translation/xlt_dos_fs.h',
              'standalone/build_translation.py', 'standalone/check_translation.py',
              'standalone/check_xlt_dos.py']
     outputs = ['build/translation/files.bin', 'build/translation/receive.bin',

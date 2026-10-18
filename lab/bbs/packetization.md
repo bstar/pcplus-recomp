@@ -140,3 +140,12 @@ serial settings and PRM match across the pair; only packet delay differs.
 The current paired report retains all earlier experiments. This remains a
 local workaround with uncontrolled TCP receive boundaries, not a physical
 firmware result or a replacement for the failed immediate aggregate.
+
+The explicit-XLT2cdff8a2 checkpoint repeats the paired experiment using
+`editor-com-2cdf-immediate` and `editor-com-2cdf-buffer30`. XLT is disabled in
+both BBS runs. Both reach the stock editor and emit all eight measured keys;
+immediate forwarding fails Home/Insert and30ms buffering passes all seven
+audited checks. Both disconnect without posting. The source, executable, serial
+settings, PRM and recipe match; packet delay is the selected difference. Prior
+experiments remain in the paired report. This still does not guarantee remote
+TCP boundaries or establish physical modem behavior.

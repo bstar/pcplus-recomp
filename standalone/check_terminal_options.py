@@ -35,11 +35,11 @@ class Options(DosImage):
   assert self.uc.reg_read(UC_X86_REG_BP)==0xbabe and self.uc.reg_read(UC_X86_REG_SI)==0x1234 and self.uc.reg_read(UC_X86_REG_DI)==0x5678
   assert self.uc.reg_read(UC_X86_REG_ES)==0x6666
   return status,self.uc.reg_read(UC_X86_REG_EFLAGS)&1
- def snapshot(self):return {**{name:self.get(name) for name in FIELDS},'terminal_config_path':bytes(self.uc.mem_read(self.symbols['terminal_config_path'],64)),'terminal_dial_target':bytes(self.uc.mem_read(self.symbols['terminal_dial_target'],64)),'terminal_directory_path':bytes(self.uc.mem_read(self.symbols['terminal_directory_path'],64)),'terminal_keyboard_path':bytes(self.uc.mem_read(self.symbols['terminal_keyboard_path'],64)),'terminal_actions_path':bytes(self.uc.mem_read(self.symbols['terminal_actions_path'],64))}
- def expected(self,port=1,rate=38400,parity=0,bits=8,stop=1,flow='NONE',mask=0,path=b'',dial=b'',directory=b'',entry=0,codes=0,keyboard=b'',bios=2,ansi_m=0,actions=b''):
+ def snapshot(self):return {**{name:self.get(name) for name in FIELDS},'terminal_config_path':bytes(self.uc.mem_read(self.symbols['terminal_config_path'],64)),'terminal_dial_target':bytes(self.uc.mem_read(self.symbols['terminal_dial_target'],64)),'terminal_directory_path':bytes(self.uc.mem_read(self.symbols['terminal_directory_path'],64)),'terminal_keyboard_path':bytes(self.uc.mem_read(self.symbols['terminal_keyboard_path'],64)),'terminal_actions_path':bytes(self.uc.mem_read(self.symbols['terminal_actions_path'],64)),'terminal_translation_path':bytes(self.uc.mem_read(self.symbols['terminal_translation_path'],64))}
+ def expected(self,port=1,rate=38400,parity=0,bits=8,stop=1,flow='NONE',mask=0,path=b'',dial=b'',directory=b'',entry=0,codes=0,keyboard=b'',bios=2,ansi_m=0,actions=b'',translation=b''):
   base=[0x3f8,0x2f8,0x3e8,0x2e8][port-1];irq=[4,3,4,3][port-1]
   expected=dict(zip(SERIAL_FIELDS,[rate&65535,rate>>16,parity,bits,stop,irq+8,port,0,irq,base,base,base+1,base+3,base+4,base+5,base+6,int(flow=='SOFT'),int(flow=='HARD')]))
-  expected.update(terminal_option_mask=mask,terminal_actions_path=actions+bytes(64-len(actions)),terminal_config_path=path+bytes(64-len(path)),terminal_dial_target=dial+bytes(64-len(dial)),terminal_directory_path=directory+bytes(64-len(directory)),terminal_keyboard_path=keyboard+bytes(64-len(keyboard)),terminal_directory_entry=entry,terminal_directory_codes=codes,terminal_keyboard_bios_selection=bios,terminal_ansi_m_policy=ansi_m)
+  expected.update(terminal_translation_path=translation+bytes(64-len(translation)),terminal_option_mask=mask,terminal_actions_path=actions+bytes(64-len(actions)),terminal_config_path=path+bytes(64-len(path)),terminal_dial_target=dial+bytes(64-len(dial)),terminal_directory_path=directory+bytes(64-len(directory)),terminal_keyboard_path=keyboard+bytes(64-len(keyboard)),terminal_directory_entry=entry,terminal_directory_codes=codes,terminal_keyboard_bios_selection=bios,terminal_ansi_m_policy=ansi_m)
   assert self.snapshot()==expected,(self.snapshot(),expected)
 
 def main():
@@ -236,6 +236,18 @@ def main():
   assert o.parse(b'/T:NEW.KEY /?')==(1,1) and o.snapshot()==before;count[0]+=1
   assert o.parse(b'')==(0,0);o.expected();count[0]+=1
  check('KEY-actions-path-wordmask7680-bounds-atomic-rollback-and-reset',actions_path)
+ def translation_path():
+  o=Options(binary,map_path)
+  for path in [b'A.XLT',b'C:\\PCPLUS\\CUSTOM.XLT',b'X'*63]:
+   assert o.parse(b'/x:'+path.lower())==(0,0);o.expected(mask=16384,translation=path);count[0]+=1
+  assert o.parse(b'/X:KEEP.XLT /K:A.KBD /T:B.KEY COM2 HARD')==(0,0)
+  o.expected(port=2,flow='HARD',mask=16384|512|4096|1|8,translation=b'KEEP.XLT',keyboard=b'A.KBD',actions=b'B.KEY')
+  before=o.snapshot();count[0]+=1
+  for token in [b'/X:',b'/X:'+b'A'*64,b'/X:*.XLT',b'/X:F?.XLT',b'/X:"A.XLT"',b"/X:'A.XLT'",b'/X:A.XLT /x:B.XLT',b'/X:bad name.xlt',b'/X:bad\0.xlt',b'/X:bad\xff.xlt',b'COM2 /X:NEW.XLT JUNK']:
+   assert o.parse(token)==(2,1) and o.snapshot()==before,token;count[0]+=1
+  assert o.parse(b'/X:NEW.XLT /?')==(1,1) and o.snapshot()==before;count[0]+=1
+  assert o.parse(b'')==(0,0);o.expected();count[0]+=1
+ check('XLT-path-bounds-duplicate-help-whole-state-rollback-and-reset',translation_path)
  def startup_setup():
   o=Options(binary,map_path)
   for tail in [b'/S @PCPLUS.PRM',b'@pcplus.prm /s',b'/s @A',b'@12345678.123 /S',b'@A-B_2.PRM /S']:

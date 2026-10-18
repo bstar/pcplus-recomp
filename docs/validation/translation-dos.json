@@ -5,13 +5,15 @@
     "FAULT": 22
   },
   "sources": {
-    "standalone/check_xlt_dos.py": "89bb2c3970161ae24a72d5b25eb56cb5ea1bcd227f1440a37c7e967f46236284",
-    "src/translation/xlt_dos.c": "46fc55c20b1f359850f8b4056c0fb4d4a07a6517b46c4d8826ccacfb83b2a6dd",
-    "src/translation/xlt_dos.h": "87238a638bc9446a173dd60552372ecdb181b65b2192f327fb8ddfe8622ef219"
+    "standalone/check_xlt_dos.py": "7013b5c1375f19a4dde84fd0ad39dbd75ed908674feafd8a5e2f1c442d9fccd5",
+    "src/translation/xlt_dos.c": "b2383aa97088a59751412b71de9d5570fdd683c5ed3615025ecb810fe3258b4b",
+    "src/translation/xlt_dos.h": "87238a638bc9446a173dd60552372ecdb181b65b2192f327fb8ddfe8622ef219",
+    "src/translation/xlt_dos_fs.c": "459ea2c9d41515b0aa67e11eb9f178cd44404cba6b3eee69769b426124963a26",
+    "src/translation/xlt_dos_fs.h": "cb9e938aa83780f314947b75da7b99e491a8ea325839fa9f53991fde3543f7d9"
   },
   "binaries": {
-    "REAL.EXE": "f9f8b369221b23947f69be23e6316c1983f4e51b9c358c53b8ae889b3dceb09d",
-    "FAULT.EXE": "997c4f49bd9d2c00e519194d744db987cc709e57a5ff69db0cf844f5140ced8b"
+    "REAL.EXE": "cb3718f46626a0990d5df75fe8233450893562910935a3440195ba951347332b",
+    "FAULT.EXE": "347e5d52485328da6217d09463d36cef3e4f55e1d858c3c1fd1ea47f546c3b3d"
   },
   "fixtures_unchanged": {
     "NORMAL.XLT": "8e5ed1e6474d39bf1594411085e7a50c15aabaa768e633ebf0960ce20e84e336",

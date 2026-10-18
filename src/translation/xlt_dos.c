@@ -1,7 +1,7 @@
 /* Maintained checked loader for the recovered headerless256-byte format.
  * Deliberately rejects native partial reads and trailing data. */
 #include "xlt_dos.h"
-#include <dos.h>
+#include "xlt_dos_fs.h"
 #include <fcntl.h>
 #include <stddef.h>
 #include <string.h>
@@ -34,21 +34,21 @@ xlt_dos_status __cdecl xlt_dos_read(const char *path,
  int handle;
  if(!valid(path,destination,result))return XLT_DOS_ARGUMENT;
  memset(r,0,sizeof(*r));
- error=_dos_open(path,O_RDONLY,&handle);
+ error=xlt_fs_open(path,O_RDONLY,&handle);
  if(error){fail(r,XLT_DOS_OPEN,error);return r->status;}
  while(!r->status && done<XLT_TABLE_SIZE){
-  count=0;error=_dos_read(handle,stage+done,XLT_TABLE_SIZE-done,&count);
+  count=0;error=xlt_fs_read(handle,stage+done,XLT_TABLE_SIZE-done,&count);
   if(error){fail(r,XLT_DOS_READ,error);break;}
   r->bytes_read+=count;
   if(!count){fail(r,XLT_DOS_SIZE,0);break;}
   done+=count;
  }
  if(!r->status){
-  count=0;error=_dos_read(handle,&extra,1,&count);
+  count=0;error=xlt_fs_read(handle,&extra,1,&count);
   if(error)fail(r,XLT_DOS_READ,error);
   else {r->bytes_read+=count;if(count)fail(r,XLT_DOS_SIZE,0);}
  }
- error=_dos_close(handle);r->close_error=error;
+ error=xlt_fs_close(handle);r->close_error=error;
  if(error)fail(r,XLT_DOS_CLOSE,error);
  if(!r->status)memcpy(destination,stage,XLT_TABLE_SIZE);
  return r->status;

@@ -74,6 +74,8 @@ terminal:
 test-terminal: setup live-configuration
 
 test-terminal: terminal
+	python3 standalone/check_translation_live.py
+	python3 standalone/test_translation_live_dos.py
 	python3 standalone/check_setup_startup.py
 	python3 standalone/test_setup_startup_dos.py
 	python3 standalone/check_setup_live.py

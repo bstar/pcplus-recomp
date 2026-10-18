@@ -10,12 +10,16 @@ CONFIG_ENTRY _live_setup_finish,2
 CONFIG_ENTRY _live_setup_abort,1
 CONFIG_ENTRY _live_setup_finish_policy,3
 CONFIG_ENTRY _live_setup_acknowledge,1
+CONFIG_ENTRY _xlt_dos_read,3
 ; Compiler-default register ABI for these four small-model CRT functions.
 CONFIG_REGISTER config_memcpy_service_,memcpy_
 CONFIG_REGISTER config_memset_service_,memset_
 CONFIG_REGISTER config_memcmp_service_,memcmp_
 CONFIG_REGISTER config_strchr_service_,strchr_
 CONFIG_REGISTER config_canonical_service_,capture_fs_canonical_
+CONFIG_CDECL _config_xlt_open,_xlt_fs_open,3
+CONFIG_CDECL _config_xlt_read,_xlt_fs_read,4
+CONFIG_CDECL _config_xlt_close,_xlt_fs_close,1
 ; Ordinary near-cdecl resident callbacks; named separately from other modules.
 CONFIG_CDECL _config_terminal_decode,_terminal_import_decode,2
 CONFIG_CDECL _config_modem_decode,_modem_import_decode,2

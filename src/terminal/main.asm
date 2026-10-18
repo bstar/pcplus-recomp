@@ -20,6 +20,7 @@ extern terminal_load_configuration
 extern terminal_select_directory
 extern terminal_directory_flush_accounting
 extern terminal_load_keyboard
+extern terminal_load_translation,terminal_receive_input
 extern terminal_load_actions,terminal_macro_cancel
 extern terminal_program_initialize,terminal_program_poll,terminal_program_cancel,terminal_program_pending
 extern terminal_reset_capture
@@ -93,6 +94,9 @@ _small_code_:
  or ax,ax
  jnz .configuration_error
  call terminal_load_actions
+ or ax,ax
+ jnz .configuration_error
+ call terminal_load_translation
  or ax,ax
  jnz .configuration_error
  call terminal_setup_bind
@@ -202,11 +206,7 @@ _small_code_:
  jc .loop
  call terminal_transfer_filter
  jc .loop
- push ax
- inc word [terminal_parser_active]
- call terminal_receive_character
- dec word [terminal_parser_active]
- add sp,2
+ call terminal_receive_input
  jmp .loop
 .idle:
  cmp word [terminal_tx_count],0
@@ -225,7 +225,7 @@ _small_code_:
  jmp terminal_shutdown
 .configuration_error:
  mov dx,configuration_argument
- cmp ax,11
+ cmp ax,12
  ja .configuration_message
  mov bx,ax
  dec bx
@@ -371,6 +371,8 @@ configuration_messages: dw configuration_io,configuration_serial,configuration_f
  dw configuration_keyboard
  dw configuration_actions
  dw configuration_setup
+ dw configuration_translation
+configuration_translation: db 'Could not load the requested 256-byte XLT table.',13,10,'$'
 configuration_setup: db 'Could not run PRMEDIT setup successfully. Check PRMEDIT.EXE and the PRM file.',13,10,'$'
 configuration_io: db 'Could not read the requested PCPLUS 2.01 configuration.',13,10,'$'
 configuration_serial: db 'Configuration has unsupported serial port or line settings.',13,10,'$'

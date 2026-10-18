@@ -4,7 +4,7 @@ The selected PCPlus 2.01 uses a headerless256-byte table. Entry `n` is the
 replacement byte for input byte `n`; NUL, SUB, FF and repeated output values
 are valid data. This checkpoint recovers file operations, identity reset and
 one receive helper, and supplies a separate checked DOS loader. The interactive
-terminal does **not** load or apply XLT files yet.
+terminal now supports explicit `/X:FILE.XLT`; see [live translation](LIVE_TRANSLATION.md).
 
 ## Recovered behavior
 
@@ -80,15 +80,16 @@ error precedence, aliases, pointer wrap and optional result storage. Input files
 remain byte-identical. See `validation/translation-native.json` and
 `validation/translation-dos.json` for source and binary identities.
 
-The isolated build copies only nine declared source/provenance files into a
+The isolated build copies only eleven declared source/provenance files into a
 new temporary tree with no analysis directory or original artifacts. Its CPU
 and DOS checks pass and six flat/OMF/DOS outputs reproduce byte-identically;
 see `validation/translation-source-build.json`. Checkout-relative assembler
 input names keep absolute paths out of OMF module headers. This proof covers
 the XLT checkpoint only; it does not expand the earlier whole-terminal proof.
 
-This is no evidence of live terminal XLT selection, actual hardware operation,
-the full translation editor, other emulations or complete PCPlus reconstruction.
+These standalone checks do not establish live terminal behavior; separate live
+checks are documented in `LIVE_TRANSLATION.md`. Actual hardware, the full
+translation editor, other emulations and complete reconstruction remain open.
 
 ## REA evidence and mapping limits
 
@@ -115,13 +116,38 @@ genuine original; synthetic call edges are not runtime or original callers.
 | Raw continuation5ca0 | `ev_861ae207bb7f834d6cd318ff78aa17b5c49445bf5dc70093e6448f73d28dbb2a` |
 | Overlay3 selection ownerdef8 | `ev_b0a4d765907fddac1272d78c72eb1b69437991cd13a8e1bd5be06da3e5b9977f` |
 
+## Original editor and save invocation
+
+Additional REA inspection binds overlay31's static entry-anchor image to SHA-256
+`221471c855310d6cc21eb48639606dfc3e7b51d5535069ff836c4c8b77203958`.
+The code overlay itself is2,208 bytes at original file offset250a0h, loaded at
+CSd0d0; its SHA is `9e8e24ae3968ea2810a68b0a6d530c7efaa81bfd7bcd4d290ec15979a189ecdc`.
+These are static observations; neither synthetic image is executed.
+
+- Editor entryd662..d93a retains a page base, dirty flag and saved screen.
+  Digit input opens decimal source/replacement prompts. Source indices must lie
+  within the current0..127 or128..255 page; replacement values are0..255.
+  It writes a single byte at DSd00a+source and highlights nonidentity entries.
+- F1 (3b00) calls the save ownerd94c. F2 (3c00) toggles page base0/128.
+  F3 (3d00) optionally offers to save dirty changes, sets selection1d64=1,
+  then reloads through35d7 and returns to the first page. F4 (3e00) sets
+  selection0 and restores identity. Escape exits; selection0 restores identity
+  again. A complete interactive cancel/dirty policy has not been reconstructed.
+- Display helperd602..d662 renders128 source/replacement pairs as eight groups
+  of16 rows. Save ownerd94c..d963 calls a status helperd93a and6bb6, then35a6,
+  and clears the caller's dirty word without checking whether the write worked.
+  A maintained editor must retain dirty state on failure.
+
+Evidence IDs: editor `ev_3b67a42048b6055cdd22853e4e8248dd014b51b523d979381ce723313fadace7`,
+save owner `ev_09cd68c427796534677c8a1cd6ce58fb828e30fcf0e1450fdff09ce59e3d9e26`,
+display `ev_62d1b3b7cdb5cc4b6127b03239df29d1592f202bb1263e7691e6443911c96e05`.
+
 ## Remaining work
 
-Trace the translation editor and save invocation; map selection1d64 to the proved
-PRM format and settings UI. Resolve other emulation/script consumers and native
-monitor/transfer ownership before selecting maintained live boundaries. Add
-explicit startup selection and checked failure behavior, then test mapped controls,
-capture/history, raw monitor, partial escape input and binary transfers in the
-interactive executable. Runtime integration must distinguish any deliberate native
-deviation and fit the near-code/data segment budgets. Physical UART/modem testing
-remains separate.
+Recover or replace the table editor with checked persistence and explicit dirty
+state. Map saved selection1d64 into the validated PRM/settings transaction,
+including the7-bit alternative and changes during a session. Resolve remaining
+emulation/script consumers. Explicit startup selection, normal mapping, raw
+monitor/continuation and capture/RIS boundaries now have separate live tests;
+full settings/UI and physical UART/modem testing remain open. Integration must
+continue to respect the near-code/data segment budgets.
