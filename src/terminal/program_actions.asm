@@ -413,6 +413,8 @@ program_quiet_uart:
  add sp,2
  ret
 
+global terminal_program_restore_uart
+terminal_program_restore_uart:
 program_restore_uart:
  ; A child may change this port/vector. Keep it masked until our vector and
  ; configured format are restored. Never overwrite the saved startup baseline.
@@ -616,6 +618,8 @@ program_now_tick: dd 0
 program_progress_tick: dd 0
 program_tx_epoch: dw 0
 program_pause_sent: db 0
+global terminal_program_mcr
+terminal_program_mcr:
 program_mcr: db 0
 program_cursor: dw 0
 program_shape: dw 0

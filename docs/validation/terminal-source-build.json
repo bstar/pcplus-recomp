@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "1722847777c92b8cb432e44a6449a7ac77579a584d07e9e58eb9406156f79555",
-  "source_file_count": 1279,
+  "source_snapshot_sha256": "73290f453dabf78c1f8b89a57eb873c3eb6fae53de0f9065c71ae97c16acb370",
+  "source_file_count": 1283,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,93 +16,93 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "6913abdf74437fe501edbcd622b4ab937970d91a563a3282d812be0ab9074d19",
+  "build_log_sha256": "bd777a562c0c5f0ab31abe7c28f0c9e5fa4e322f1679cdbd96d8f801626ab3fc",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.GO8MdK/pcplus-source-proof-7_ez3ewp/checkout",
+  "source_checkout": "/tmp/nix-shell.iRtXTV/pcplus-source-proof-jft8nfyo/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
   "scope": "Source-only interactive DOS terminal with imported keyboard/action settings, directory UI, recovered line/character editing, maintained current-profile RIS, bounded process handoff, retained far shadow/history and live checked XMODEM receive/send and maintained CRC YMODEM batch ownership; full PCPlus application remains incomplete.",
-  "binary_sha256": "3c9059ab6b1944c64a87297b47d758f81f15b0f7ffeaec820b24aaf20abb200c",
+  "binary_sha256": "351e7634cac8fb3539220f1420bcfc911e4d36156adc916f45ebc364e19e3adf",
   "matches_workspace_binary": true,
   "matches_workspace_manifest": true,
   "manifest": {
     "kind": "source-only-interactive-dos-terminal",
-    "binary_sha256": "3c9059ab6b1944c64a87297b47d758f81f15b0f7ffeaec820b24aaf20abb200c",
+    "binary_sha256": "351e7634cac8fb3539220f1420bcfc911e4d36156adc916f45ebc364e19e3adf",
     "data_stack_bytes": 59360,
     "memory_layout": {
       "near_bytes": 59360,
       "near_spare_bytes": 6176,
-      "near_relative_segment": 4511,
-      "far_relative_segment": 8971,
+      "near_relative_segment": 4541,
+      "far_relative_segment": 9001,
       "shadow_offset": 2000,
       "history_offset": 10192,
       "far_bytes": 12288,
-      "far_end_linear": 157824,
-      "stack_end_linear": 131536,
-      "loaded_module_bytes": 102094,
-      "minimum_allocated_module_bytes": 157840,
-      "retained_parent_paragraphs": 9880,
+      "far_end_linear": 158304,
+      "stack_end_linear": 132016,
+      "loaded_module_bytes": 102574,
+      "minimum_allocated_module_bytes": 158320,
+      "retained_parent_paragraphs": 9910,
       "far_pointer_relocations_verified": true,
-      "snapshot_relative_segment": 8971,
+      "snapshot_relative_segment": 9001,
       "snapshot_image_offset": 0,
       "snapshot_bytes": 2000,
-      "snapshot_end_linear": 145536,
+      "snapshot_end_linear": 146016,
       "ui_screen_buffers": {
         "browser_screen": {
-          "relative_segment": 8221,
+          "relative_segment": 8251,
           "offset": 0,
           "bytes": 4000,
-          "start_linear": 131536,
-          "end_linear": 135536
+          "start_linear": 132016,
+          "end_linear": 136016
         },
         "ed_screen": {
-          "relative_segment": 8221,
+          "relative_segment": 8251,
           "offset": 4000,
           "bytes": 4000,
-          "start_linear": 135536,
-          "end_linear": 139536
+          "start_linear": 136016,
+          "end_linear": 140016
         },
         "program_screen": {
-          "relative_segment": 8221,
+          "relative_segment": 8251,
           "offset": 8000,
           "bytes": 4000,
-          "start_linear": 139536,
-          "end_linear": 143536
+          "start_linear": 140016,
+          "end_linear": 144016
         }
       },
       "far_ui_storage_bytes": 12000,
       "controller_bridge_pairs_verified": 22,
       "modem_bridge_pairs_verified": 22,
       "configuration_bridge_pairs_verified": 22,
-      "resident_code_bytes": 63696,
-      "resident_code_spare_bytes": 1840,
+      "resident_code_bytes": 64164,
+      "resident_code_spare_bytes": 1372,
       "code_segments": [
         {
           "name": "_TEXT",
           "kind": "CODE",
           "relative_segment": 0,
           "offset": 0,
-          "bytes": 63696
+          "bytes": 64164
         },
         {
           "name": "CONFIG_CODE",
           "kind": "FARCODE",
-          "relative_segment": 3981,
+          "relative_segment": 4011,
           "offset": 0,
           "bytes": 5543
         },
         {
           "name": "MODEM_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4328,
+          "relative_segment": 4358,
           "offset": 0,
           "bytes": 1467
         },
         {
           "name": "PRINT_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4420,
+          "relative_segment": 4450,
           "offset": 0,
           "bytes": 1449
         }
@@ -241,9 +241,10 @@
       "src/terminal/modem_sender.asm": "82ec6ea7b4160e6b60a936ec5d4c2cc916116ecd755c41b5e984602fe9c9d53a",
       "src/terminal/monitor.asm": "1ddd0d2c442396c6776fd7f7ab5941f1a4dcd78345037821339c1aec06ad2993",
       "src/terminal/options.asm": "5c07b32ba8e82e028d0e57db1479a688a58b8cc3a2fa54b9495ed86ab93a5a4f",
+      "src/terminal/port_handoff.asm": "bb4593336e859ddf95cc6908c41a4553d11870ef3cf5112607975a2acd32fe94",
       "src/terminal/print_controller.asm": "e7af0782119e00d8563c214c1a469fd548f547f332f6c6e663dfe9594f792d92",
       "src/terminal/printer.asm": "70ac5cb8b90bc2d7a4ec1ee1a071a6c2f1a351e37ac2bbd49dc2e629674b629b",
-      "src/terminal/program_actions.asm": "913825c6179c86d845e3b74eb874dc4993a4e6b3ea65ee9f36432be2546479bb",
+      "src/terminal/program_actions.asm": "1daa714c63fc4d4ffd8c755faa4376ae3867afc65f529d1bca37579249cee2ea",
       "src/terminal/screen_print.asm": "b26ee7e09cbb66d7da311083b1c8c53e5fa6016e9c9f00e3ebb7238df2658f5a",
       "src/terminal/services.asm": "cfc5f50208990db802f79d4f809560618e5579ff0ca8b5c74501ba46975c1546",
       "src/terminal/setup_expand.asm": "7120447f8ea5b5a779437a9e215b6ec59054eff4540fc0848470e907942b5979",

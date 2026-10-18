@@ -1,0 +1,140 @@
+{
+  "passed": true,
+  "binary_sha256": "351e7634cac8fb3539220f1420bcfc911e4d36156adc916f45ebc364e19e3adf",
+  "inputs": 61,
+  "cases": [
+    {
+      "case": "all-directed-port-pairs-shared-and-different-IRQs-native-traffic-and-final-full-restoration",
+      "inputs": 12,
+      "passed": true
+    },
+    {
+      "case": "repeated-roundtrips-recapture-original-state-without-a-per-port-snapshot-table",
+      "inputs": 8,
+      "passed": true
+    },
+    {
+      "case": "occupied-controller-TX-RX-and-unreleased-software-pause-do-not-transfer-resources",
+      "inputs": 6,
+      "passed": true
+    },
+    {
+      "case": "pending-hardware-data-carrier-TEMT-format-and-IRQ-ownership-gates-preserve-both-UARTs",
+      "inputs": 13,
+      "passed": true
+    },
+    {
+      "case": "acknowledged-old-or-target-LSR-overrun-counts-loss-with-saturation-and-rejects-switch",
+      "inputs": 6,
+      "passed": true
+    },
+    {
+      "case": "invalid-bounds-layout-same-port-and-foreground-owner-are-rejected",
+      "inputs": 13,
+      "passed": true
+    },
+    {
+      "case": "BIOS-absent-or-mismatched-target-is-never-probed",
+      "inputs": 3,
+      "passed": true
+    }
+  ],
+  "sources": {
+    "standalone/check_port_handoff.py": "cc6b6928711dc6cad9386a4330499f89620017b5a8a967364d4c369dde625206",
+    "src/terminal/port_handoff.asm": "bb4593336e859ddf95cc6908c41a4553d11870ef3cf5112607975a2acd32fe94",
+    "src/terminal/program_actions.asm": "1daa714c63fc4d4ffd8c755faa4376ae3867afc65f529d1bca37579249cee2ea"
+  },
+  "scope": "Actual linked foreground ownership primitive, native vector/snapshot routines, PROGRAM restoration, UART traffic and final shutdown with four independent modeled UARTs. Settings UI is not connected to this primitive. BIOS/DOS/hardware modeled; no actual DOS multiport or physical hardware claim.",
+  "memory_layout": {
+    "near_bytes": 59360,
+    "near_spare_bytes": 6176,
+    "near_relative_segment": 4541,
+    "far_relative_segment": 9001,
+    "shadow_offset": 2000,
+    "history_offset": 10192,
+    "far_bytes": 12288,
+    "far_end_linear": 158304,
+    "stack_end_linear": 132016,
+    "loaded_module_bytes": 102574,
+    "minimum_allocated_module_bytes": 158320,
+    "retained_parent_paragraphs": 9910,
+    "far_pointer_relocations_verified": true,
+    "snapshot_relative_segment": 9001,
+    "snapshot_image_offset": 0,
+    "snapshot_bytes": 2000,
+    "snapshot_end_linear": 146016,
+    "ui_screen_buffers": {
+      "browser_screen": {
+        "relative_segment": 8251,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 132016,
+        "end_linear": 136016
+      },
+      "ed_screen": {
+        "relative_segment": 8251,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 136016,
+        "end_linear": 140016
+      },
+      "program_screen": {
+        "relative_segment": 8251,
+        "offset": 8000,
+        "bytes": 4000,
+        "start_linear": 140016,
+        "end_linear": 144016
+      }
+    },
+    "far_ui_storage_bytes": 12000,
+    "controller_bridge_pairs_verified": 22,
+    "modem_bridge_pairs_verified": 22,
+    "configuration_bridge_pairs_verified": 22,
+    "resident_code_bytes": 64164,
+    "resident_code_spare_bytes": 1372,
+    "code_segments": [
+      {
+        "name": "_TEXT",
+        "kind": "CODE",
+        "relative_segment": 0,
+        "offset": 0,
+        "bytes": 64164
+      },
+      {
+        "name": "CONFIG_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4011,
+        "offset": 0,
+        "bytes": 5543
+      },
+      {
+        "name": "MODEM_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4358,
+        "offset": 0,
+        "bytes": 1467
+      },
+      {
+        "name": "PRINT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4450,
+        "offset": 0,
+        "bytes": 1449
+      }
+    ],
+    "far_code_bridge_pairs_verified": 66
+  },
+  "terminal_regression": {
+    "commands": 56,
+    "passed": true,
+    "report": "docs/validation/setup-live.json"
+  },
+  "source_rebuild": {
+    "report": "docs/validation/application-components-source-build.json",
+    "source_snapshot_sha256": "73290f453dabf78c1f8b89a57eb873c3eb6fae53de0f9065c71ae97c16acb370",
+    "output_count": 60
+  },
+  "settings_UI_connected": false,
+  "actual_DOS_multiport_verified": false,
+  "physical_UART_verified": false
+}

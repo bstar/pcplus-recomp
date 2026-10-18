@@ -7,7 +7,9 @@ available for later application/startup. The answer itself returns to the
 terminal, preserving the next ordinary key for transmission. A peer must match
 the selected rate and format; the application does not renegotiate modem firmware.
 
-COM/base/IRQ changes defer the entire serial/profile group. Supported profile
+COM/base/IRQ changes defer the entire serial/profile group. The separately
+tested ownership prerequisite in [PORT_HANDOFF.md](PORT_HANDOFF.md) is not yet
+connected to this settings workflow. Supported profile
 changes have a separate [confirmation/reset workflow](PROFILE_LIVE.md). This implementation deliberately retains the same port, IRQ vector
 and original hardware snapshot; cross-port restoration/migration and other emulations remain separate
 application work. Existing CLI categories

@@ -22,6 +22,7 @@ def main():
  policy=bound('build/terminal/live-setup-policy-checks.json',runtime);assert policy['inputs']==27
  link=bound('build/terminal/live-setup-link-checks.json',runtime);assert link['inputs']==53
  profile=bound('build/terminal/live-setup-profile-checks.json',runtime);assert profile['inputs']==32
+ port=bound('build/terminal/port-handoff-checks.json',runtime);assert port['inputs']==61
  frames=bound('build/terminal/config-far-checks.json',runtime)
  assert frames['configuration_bridge_pairs_verified']==22 and len(frames['rejected_mutations'])==103
  candidate=bound('build/live-configuration/terminal-checks.json',runtime)
@@ -41,7 +42,9 @@ def main():
  scripts+=['standalone/check_live_setup_owner.py','standalone/check_live_setup_apply.py','standalone/live_setup_kernel.py']
  scripts+=['standalone/check_live_setup_policy.py','standalone/check_live_setup_link.py','standalone/setup_watch.asm']
  scripts+=['standalone/check_live_setup_profile.py']
+ scripts+=['standalone/check_port_handoff.py']
  artifacts=['build/terminal/setup-profile-regression.json','build/terminal/setup-profile-regression.log','build/terminal/setup-live-checks.json','build/setup-startup/live-checks.json','build/terminal/config-far-checks.json','build/live-configuration/terminal-checks.json','build/terminal/directory-live-checks.json','build/terminal/directory-context-checks.json','build/far-storage-dos/checks.json','build/terminal/live-setup-owner-checks.json','build/terminal/live-setup-apply-checks.json','build/terminal/live-setup-policy-checks.json','build/terminal/live-setup-link-checks.json','build/terminal/live-setup-profile-checks.json']
+ artifacts+=['build/terminal/port-handoff-checks.json']
  uart_samples={}
  for case in dos['cases']:
   name=case['case'];assert Path(name).name==name
@@ -55,9 +58,14 @@ def main():
   artifacts += [folder+'/'+f for f in ['WATCH.BIN','BEFORE.BIN','AFTER.BIN','SCREEN.BIN','TEST.PRM','serial.bin']]
   if (ROOT/folder/'TEST.KBD').exists():artifacts.append(folder+'/TEST.KBD')
  common=dict(passed=True,binary_sha256=runtime,editor_sha256=editor,memory_layout=manifest['memory_layout'],terminal_regression=regression,source_rebuild=dict(report='docs/validation/application-components-source-build.json',source_snapshot_sha256=proof['source_snapshot_sha256'],output_count=proof['output_count']),source_sha256={p:sha(p) for p in scripts},retained_artifacts={p:sha(p) for p in artifacts})
- setup={**common,'linked':linked,'transaction_owner':owner,'selective_application':apply,'same_port_policy':policy,'same_port_handoff':link,'profile_switching':profile,'actual_DOS':dos,'DOS_uart_samples':uart_samples,'scope':'AltF10 canonical bound editor/candidate owner with selective settings, confirmed same-port serial handoff and confirmed maintained4/6 profile reset. Strict staged target KBD import, frozen keyboard namespace, clean reset/view/keymap baseline, fresh DA and later RIS are checked. Actual DOS includes accepted/declined profile choices, target F1 mapping and missing-target-block preservation, plus prior serial/color cases. COM migration, other/full emulations, original PCSETUP shared ABI, complete application and physical modem remain open.'}
+ setup={**common,'linked':linked,'transaction_owner':owner,'selective_application':apply,'same_port_policy':policy,'same_port_handoff':link,'profile_switching':profile,'port_ownership_primitive':port,'actual_DOS':dos,'DOS_uart_samples':uart_samples,'scope':'AltF10 canonical bound editor/candidate owner with selective settings, confirmed same-port serial handoff and confirmed maintained4/6 profile reset. Strict staged target KBD import, frozen keyboard namespace, clean reset/view/keymap baseline, fresh DA and later RIS are checked. Actual DOS includes accepted/declined profile choices, target F1 mapping and missing-target-block preservation, plus prior serial/color cases. The separate cross-port ownership primitive has modeled linked evidence only and is not connected to the settings UI. COM settings integration and actual DOS multiport, other/full emulations, original PCSETUP shared ABI, complete application and physical modem remain open.'}
  config={**common,'call_frame_validation':frames,'terminal_candidate':candidate,'transaction_owner_inputs':owner['inputs'],'selective_application_inputs':apply['inputs'],'directory_inputs':directory['inputs'],'context_inputs':context['inputs'],'DOS_retention':retained,'scope':'Small-model C directory/candidate/setup-owner functions in a separately retained CS with explicit near-cdecl entries and register/cdecl resident callbacks. Independent actual-terminal CPU behavior, damaged MZ/frame rejection and real DOS allocation retention. General callbacks, dynamic overlays, full transport/profile handoff and complete application remain open.'}
  for name,value in [('setup-live.json',setup),('configuration-far-code.json',config)]:
   (ROOT/'docs/validation'/name).write_text(json.dumps(value,indent=2)+'\n')
+ port_report={**port,'memory_layout':manifest['memory_layout'],
+  'terminal_regression':dict(commands=len(commands),passed=True,report='docs/validation/setup-live.json'),
+  'source_rebuild':common['source_rebuild'],
+  'settings_UI_connected':False,'actual_DOS_multiport_verified':False,'physical_UART_verified':False}
+ (ROOT/'docs/validation/port-handoff.json').write_text(json.dumps(port_report,indent=2)+'\n')
  print('Recorded direct setup and configuration CS:',len(commands),'regression commands;',candidate['inputs'],'terminal candidate inputs')
 if __name__=='__main__':main()
