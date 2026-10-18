@@ -26,6 +26,7 @@ builds.append('snapshot')
 builds.append('printer')
 builds.append('monitor')
 builds.append('print_screen')
+builds.append('print_controller')
 program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/build_{name}.py'],check=True)\n" for name in builds)
 owner_checks=['standalone/check_batch_download.py','standalone/check_batch_upload.py','standalone/check_capture_file.py','standalone/check_capture_session.py','standalone/check_capture_owners.py']
 owner_checks.append('standalone/check_monitor_file.py')
@@ -39,6 +40,7 @@ outputs += ['capture-file/CAPTURE.EXE','capture-file/CAPFAULT.EXE','capture-sess
 outputs += ['snapshot/SNAPSHOT.EXE','capture-owners/OWNERS.EXE','capture-owners/OWFAULT.EXE']
 outputs += ['printer/PRINTER.EXE']
 outputs += ['print_screen/PRINTSCR.EXE','printer-device/PRINTER.EXE']
+outputs += ['print_controller/PRINTCTL.EXE']
 outputs += ['monitor/MONITOR.EXE','monitor-file/MONITOR.EXE','monitor-file/MOFAULT.EXE']
 results={}
 for rel in outputs:

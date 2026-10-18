@@ -1,0 +1,952 @@
+{
+  "passed": true,
+  "manifest": {
+    "binary_sha256": "8095449ff1fbc10c718f9b3916c03ceec1dabe92b3e743004fd69fe129fa118b",
+    "exact_print_controller_bytes": 416,
+    "borrowed_sources": [
+      "reconstruction/printer/byte.asm"
+    ],
+    "sources": {
+      "reconstruction/print_controller/controller.asm": "22cda567b37dd8c76a1b078fd5b202f35033d36629d729de596b91c32c7fe7b6",
+      "reconstruction/printer/byte.asm": "2bed7378588e712d4510118f5523d823335854e80fd79110fff4ea6ba293b499",
+      "standalone/print_controller_host.asm": "d021d0d71f7ce35ece8dc6791b85a0e088b6739d73a0040f07a7c7cce1ccb7c7"
+    },
+    "scope": "Exact native dedicated-print controller plus reused byte wrapper; explicit CRT open/putc/flush/close/status memory fixtures only. Native unsafe blocking escape buffer and unchecked FILE errors preserved; no live or physical printer support."
+  },
+  "native_provenance": {
+    "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "units": [
+      {
+        "source": "controller.asm",
+        "start": "0xd0d0",
+        "end_exclusive": "0xd270",
+        "bytes": 416,
+        "source_file_offset": 89472,
+        "sha256": "c8e18c7c00f75067a2838d14af665b1ec8c1ba40a218cd949e41697ab250e17e",
+        "region": "overlay12"
+      }
+    ],
+    "state": {
+      "0x7a82": "controller_rows",
+      "0x7a72": "controller_columns",
+      "0x2b6c": "controller_status_text",
+      "0x7500": "controller_open_mode",
+      "0x1d50": "printer_device",
+      "0x8ff0": "printer_stream",
+      "0x8e20": "controller_rx_count",
+      "0x1d18": "controller_terminal_id",
+      "0x8fe8": "controller_dec_family",
+      "0x9004": "controller_other_family",
+      "0x333e": "controller_cursor_flags"
+    },
+    "boundaries": {
+      "0xd0d0": "print_controller_original",
+      "0x6e5a": "controller_hide_cursor",
+      "0x765c": "controller_save",
+      "0x7682": "controller_restore",
+      "0x3226": "controller_status",
+      "0x841a": "printer_open",
+      "0x6530": "controller_key_available",
+      "0x64fe": "controller_read_key",
+      "0x401": "controller_break",
+      "0xab0b": "controller_send_key",
+      "0xaa65": "controller_dequeue",
+      "0x36fc": "printer_byte_original",
+      "0x5ca0": "controller_next_byte",
+      "0x2f78": "controller_cursor_shape",
+      "0x8318": "printer_close"
+    },
+    "reused_sources": [
+      "reconstruction/printer/byte.asm"
+    ],
+    "supporting_evidence": [
+      {
+        "export": "analysis/pcplus-overlay-anchored-12/functions/0x1d0d0-asm.json",
+        "evidence_id": "ev_e54a45172d907f37b39b7223686bad0d0a773def52c44fa869371b05450501dc"
+      }
+    ],
+    "limitations": [
+      "Diagnostic CRT/UI/cursor boundaries are explicit fixtures, not a live printer.",
+      "Native null-open, ignored IO errors, blocking waits and unchecked escape buffering preserved."
+    ]
+  },
+  "CPU_checks": {
+    "passed": true,
+    "binary_sha256": "8095449ff1fbc10c718f9b3916c03ceec1dabe92b3e743004fd69fe129fa118b",
+    "linked_cases": 28,
+    "original_cases": 28,
+    "cases": [
+      {
+        "case": "all256 dequeued values",
+        "wire_hex": "0102030405060708090a0b0c0d0e0f10111213141415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+        "sent": [],
+        "branch_trace": [
+          "replay_buffer",
+          "reset_flags",
+          "saw[",
+          "saw4",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 4,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 255,
+          "fixture_flush_calls": 255,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 260,
+          "fixture_wire_count": 255,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "binary controls and double DC4",
+        "wire_hex": "410a0d1aff141442",
+        "sent": [],
+        "branch_trace": [
+          "saw[",
+          "saw4",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 3,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 8,
+          "fixture_flush_calls": 8,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 13,
+          "fixture_wire_count": 8,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "ANSI terminator retains following",
+        "wire_hex": "41",
+        "sent": [],
+        "branch_trace": [
+          "saw[",
+          "saw4",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 3,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 1,
+          "fixture_flush_calls": 1,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 5,
+          "fixture_wire_count": 1,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 4,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "enable sequence discarded",
+        "wire_hex": "41",
+        "sent": [],
+        "branch_trace": [
+          "saw[",
+          "reset_flags",
+          "saw[",
+          "saw4",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 6,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 1,
+          "fixture_flush_calls": 1,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 9,
+          "fixture_wire_count": 1,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "zero sequence discarded",
+        "wire_hex": "41",
+        "sent": [],
+        "branch_trace": [
+          "saw[",
+          "reset_flags",
+          "saw[",
+          "saw4",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 6,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 1,
+          "fixture_flush_calls": 1,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 9,
+          "fixture_wire_count": 1,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "unknown escape replay",
+        "wire_hex": "1b5a41",
+        "sent": [],
+        "branch_trace": [
+          "replay_buffer",
+          "reset_flags",
+          "saw[",
+          "saw4",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 4,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 3,
+          "fixture_flush_calls": 3,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 7,
+          "fixture_wire_count": 3,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "ignored NUL DEL in escape",
+        "wire_hex": "",
+        "sent": [],
+        "branch_trace": [
+          "saw[",
+          "saw4",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 5,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 6,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "digits without CSI introducer replay",
+        "wire_hex": "1b3469581b5b3469",
+        "sent": [
+          27
+        ],
+        "branch_trace": [
+          "saw4",
+          "replay_buffer",
+          "reset_flags",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 4,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 8,
+          "fixture_flush_calls": 8,
+          "fixture_key_index": 2,
+          "fixture_sent_count": 1,
+          "fixture_rx_index": 8,
+          "fixture_wire_count": 8,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "numeric substring4 accepted",
+        "wire_hex": "",
+        "sent": [],
+        "branch_trace": [
+          "saw[",
+          "saw4",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 4,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 5,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "controller_rx_count": 4,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "mixed4and5 accepted",
+        "wire_hex": "",
+        "sent": [],
+        "branch_trace": [
+          "saw[",
+          "saw4",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 5,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 6,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "controller_rx_count": 4,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "semicolon ignored while parsing",
+        "wire_hex": "",
+        "sent": [],
+        "branch_trace": [
+          "saw[",
+          "saw4",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 5,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 6,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "profile31 DC4 exits",
+        "wire_hex": "41",
+        "sent": [],
+        "branch_trace": [
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 0,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 1,
+          "fixture_flush_calls": 1,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 2,
+          "fixture_wire_count": 1,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 4,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "profile1 ESCX exits",
+        "wire_hex": "41",
+        "sent": [],
+        "branch_trace": [
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 1,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 1,
+          "fixture_flush_calls": 1,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 3,
+          "fixture_wire_count": 1,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 4,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "other profile ESCa exits",
+        "wire_hex": "41",
+        "sent": [],
+        "branch_trace": [
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 1,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 1,
+          "fixture_flush_calls": 1,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 3,
+          "fixture_wire_count": 1,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 4,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "a waits with family disabled",
+        "wire_hex": "1b615a",
+        "sent": [],
+        "branch_trace": [
+          "replay_buffer",
+          "reset_flags",
+          "saw[",
+          "saw4",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 5,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 3,
+          "fixture_flush_calls": 3,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 7,
+          "fixture_wire_count": 3,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "X waits with non1 profile",
+        "wire_hex": "1b5859",
+        "sent": [],
+        "branch_trace": [
+          "replay_buffer",
+          "reset_flags",
+          "saw[",
+          "saw4",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 5,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 3,
+          "fixture_flush_calls": 3,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 7,
+          "fixture_wire_count": 3,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "nonDEC i waits then replay",
+        "wire_hex": "1b5b6958ff",
+        "sent": [
+          27
+        ],
+        "branch_trace": [
+          "replay_buffer",
+          "reset_flags",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 4,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 5,
+          "fixture_flush_calls": 5,
+          "fixture_key_index": 2,
+          "fixture_sent_count": 1,
+          "fixture_rx_index": 4,
+          "fixture_wire_count": 5,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "native timeout sentinel forwarded",
+        "wire_hex": "1bff",
+        "sent": [
+          27
+        ],
+        "branch_trace": [
+          "replay_buffer",
+          "reset_flags",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 1,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 2,
+          "fixture_flush_calls": 2,
+          "fixture_key_index": 2,
+          "fixture_sent_count": 1,
+          "fixture_rx_index": 1,
+          "fixture_wire_count": 2,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "early keyboard cancel retains RX",
+        "wire_hex": "41",
+        "sent": [
+          27
+        ],
+        "branch_trace": [
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 0,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 1,
+          "fixture_flush_calls": 1,
+          "fixture_key_index": 2,
+          "fixture_sent_count": 1,
+          "fixture_rx_index": 1,
+          "fixture_wire_count": 1,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 1,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "ordinary keys and consecutive ESC",
+        "wire_hex": "41",
+        "sent": [
+          7777,
+          27
+        ],
+        "branch_trace": [
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 0,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 1,
+          "fixture_flush_calls": 1,
+          "fixture_key_index": 3,
+          "fixture_sent_count": 2,
+          "fixture_rx_index": 1,
+          "fixture_wire_count": 1,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "break forwarded",
+        "wire_hex": "",
+        "sent": [
+          12288,
+          27
+        ],
+        "branch_trace": [
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 1,
+          "fixture_next_calls": 0,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_key_index": 3,
+          "fixture_sent_count": 2,
+          "fixture_rx_index": 0,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "highword ESC not cancellation",
+        "wire_hex": "",
+        "sent": [
+          283,
+          27
+        ],
+        "branch_trace": [
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 0,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_key_index": 3,
+          "fixture_sent_count": 2,
+          "fixture_rx_index": 0,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "separated escapes do not exit",
+        "wire_hex": "",
+        "sent": [
+          27,
+          65,
+          27
+        ],
+        "branch_trace": [
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 0,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 0,
+          "fixture_flush_calls": 0,
+          "fixture_key_index": 4,
+          "fixture_sent_count": 3,
+          "fixture_rx_index": 0,
+          "fixture_wire_count": 0,
+          "fixture_last_handle": 0,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "ignored CRT errors",
+        "wire_hex": "41",
+        "sent": [],
+        "branch_trace": [
+          "saw[",
+          "saw4",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 3,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 1,
+          "fixture_flush_calls": 1,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 5,
+          "fixture_wire_count": 1,
+          "fixture_last_handle": 0,
+          "controller_rx_count": 0,
+          "printer_stream": 0
+        }
+      },
+      {
+        "case": "ignored CRT errors",
+        "wire_hex": "41",
+        "sent": [],
+        "branch_trace": [
+          "saw[",
+          "saw4",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 3,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 1,
+          "fixture_flush_calls": 1,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 5,
+          "fixture_wire_count": 1,
+          "fixture_last_handle": 0,
+          "controller_rx_count": 0,
+          "printer_stream": 0
+        }
+      },
+      {
+        "case": "ignored CRT errors",
+        "wire_hex": "41",
+        "sent": [],
+        "branch_trace": [
+          "saw[",
+          "saw4",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 3,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 1,
+          "fixture_flush_calls": 1,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 5,
+          "fixture_wire_count": 1,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "ignored CRT errors",
+        "wire_hex": "41",
+        "sent": [],
+        "branch_trace": [
+          "saw[",
+          "saw4",
+          "exit"
+        ],
+        "state": {
+          "fixture_save_calls": 1,
+          "fixture_restore_calls": 1,
+          "fixture_hide_calls": 1,
+          "fixture_status_calls": 1,
+          "fixture_shape_calls": 1,
+          "fixture_break_calls": 0,
+          "fixture_next_calls": 3,
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 1,
+          "fixture_putc_calls": 1,
+          "fixture_flush_calls": 1,
+          "fixture_key_index": 0,
+          "fixture_sent_count": 0,
+          "fixture_rx_index": 5,
+          "fixture_wire_count": 1,
+          "fixture_last_handle": 4369,
+          "controller_rx_count": 0,
+          "printer_stream": 4369
+        }
+      },
+      {
+        "case": "noinput has no bounded termination",
+        "instruction_budget": 10000,
+        "state": {
+          "fixture_open_calls": 1,
+          "fixture_close_calls": 0,
+          "fixture_restore_calls": 0,
+          "controller_rx_count": 0
+        }
+      }
+    ],
+    "scope": "Exact native controller and byte wrapper; memory UART/keyboard/CRT/UI boundaries, no real printer or original app execution."
+  },
+  "DOS_checks": {
+    "passed": true,
+    "checks": {
+      "DOS_normal_exit": true,
+      "selfcheck_reported_pass": true,
+      "within_timeout": true,
+      "diagnostic_unchanged": true,
+      "build_directory_names_unchanged": true,
+      "no_unexpected_fixture_files": true
+    },
+    "returncode": 0,
+    "seconds": 0.164,
+    "binary_sha256": "8095449ff1fbc10c718f9b3916c03ceec1dabe92b3e743004fd69fe129fa118b",
+    "run": "build/print-controller-dos/native-8086-final",
+    "selfcheck_stdout": "PRINTCTL PASS\r\n",
+    "build_manifest_sha256": "13172e260920162d6ccd0d8acb4a8bb39a77fe56f493d5df66df845cf3f16002",
+    "harness_sha256": "c026b0178b736074cc4fb0c57b6e6e7dd9ce3b89578142479a2537fcae89b5e0",
+    "scope": "Actual8086 DOS source-built native dedicated-print controller selfcheck. Device open/putc/flush/close/status are declared memory-FILE fixtures; no physicalPRN, serial modem, actual printerdriver errors or live dedicated printing claim.",
+    "artifacts": {
+      "build/print-controller-dos/native-8086-final/OUTPUT.TXT": "798ff63462612adb7f3d5d6557090de8a5c9d6ade0a79bfe977323373580c022",
+      "build/print-controller-dos/native-8086-final/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+      "build/print-controller-dos/native-8086-final/dosbox.conf": "df48474ce7c8ad70c2dfcefaa9944ee635059938c4bb83abb697c43c7348631c",
+      "build/print-controller-dos/native-8086-final/dosbox.log": "af24d6adaae7a73309d6f790dbad99549a4b31354caf9ab5027c0fc96fdde187"
+    }
+  },
+  "evidence_source_sha256": {
+    "standalone/build_print_controller.py": "b1736f974577d992272e0a026179edcfc4885b40768c4f6fabb125bbca906746",
+    "standalone/check_print_controller.py": "4ca6b5a0b97fd9ba4fed0b0ccb0f48cde9692830d5448419149022bc4d258dd5",
+    "standalone/test_print_controller_dos.py": "c026b0178b736074cc4fb0c57b6e6e7dd9ce3b89578142479a2537fcae89b5e0",
+    "standalone/record_print_controller.py": "134f1355e200b449d2457677b4e35c83930e9c1adee69beaba638999f7126c87"
+  },
+  "scope": "416 exact native dedicated-print controller bytes;28 linked/original instruction comparisons and actual8086 DOS selfcheck. UART, keyboard, CRT and UI are explicit fixtures. Native unchecked errors, blocking waits and quirks are evidence, not maintained policy; no live CSI5i controller or physical printer claim."
+}

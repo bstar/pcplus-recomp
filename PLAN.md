@@ -263,12 +263,16 @@ physical modem compatibility or close the remaining application gates below.
       screen-print cases and3 stream-copy regressions pass; the34-command
       terminal target and23 linked YMODEM inputs also pass. Native CEAC is now correctly identified as the transient private-prefix flag.
       See `docs/LIVE_SCREEN_PRINT.md` and `docs/SCREEN_PRINT_POLICY.md`.
-      Full F10 still requires dedicated printer-controller mode, a proved local
+      The dedicated native controller now adds416 exact bytes,28 CPU/original
+      comparisons and an actual8086 DOS diagnostic. Its raw-byte filtering,
+      buffered escape grammar, unchecked CRT errors and unbounded wait are
+      preserved as evidence in `docs/PRINT_CONTROLLER_NATIVE.md`.
+      Full F10 still requires maintained dedicated printer-controller mode, a proved local
       screen-print binding, remaining snapshot/monitor geometry,
       complete settings/status UI, ASPECT/HOOK and physical validation. See
       `docs/CAPTURE_NATIVE_INVENTORY.md`, `docs/LIVE_CAPTURE.md` and
       `docs/validation/terminal-capture-dos.json`.
-      The fresh maintained-source snapshot reproduces56 byte-identical
+      The fresh maintained-source snapshot reproduces57 byte-identical
       component/diagnostic outputs, including the current interactive executable
       and capture/owner/screen/printer/monitor diagnostics, with originals/install/REA
       databases absent. This checkpoint does not close the full application gate.

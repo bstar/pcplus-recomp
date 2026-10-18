@@ -1,0 +1,57 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "source": "controller.asm",
+      "start": "0xd0d0",
+      "end_exclusive": "0xd270",
+      "bytes": 416,
+      "source_file_offset": 89472,
+      "sha256": "c8e18c7c00f75067a2838d14af665b1ec8c1ba40a218cd949e41697ab250e17e",
+      "region": "overlay12"
+    }
+  ],
+  "state": {
+    "0x7a82": "controller_rows",
+    "0x7a72": "controller_columns",
+    "0x2b6c": "controller_status_text",
+    "0x7500": "controller_open_mode",
+    "0x1d50": "printer_device",
+    "0x8ff0": "printer_stream",
+    "0x8e20": "controller_rx_count",
+    "0x1d18": "controller_terminal_id",
+    "0x8fe8": "controller_dec_family",
+    "0x9004": "controller_other_family",
+    "0x333e": "controller_cursor_flags"
+  },
+  "boundaries": {
+    "0xd0d0": "print_controller_original",
+    "0x6e5a": "controller_hide_cursor",
+    "0x765c": "controller_save",
+    "0x7682": "controller_restore",
+    "0x3226": "controller_status",
+    "0x841a": "printer_open",
+    "0x6530": "controller_key_available",
+    "0x64fe": "controller_read_key",
+    "0x401": "controller_break",
+    "0xab0b": "controller_send_key",
+    "0xaa65": "controller_dequeue",
+    "0x36fc": "printer_byte_original",
+    "0x5ca0": "controller_next_byte",
+    "0x2f78": "controller_cursor_shape",
+    "0x8318": "printer_close"
+  },
+  "reused_sources": [
+    "reconstruction/printer/byte.asm"
+  ],
+  "supporting_evidence": [
+    {
+      "export": "analysis/pcplus-overlay-anchored-12/functions/0x1d0d0-asm.json",
+      "evidence_id": "ev_e54a45172d907f37b39b7223686bad0d0a773def52c44fa869371b05450501dc"
+    }
+  ],
+  "limitations": [
+    "Diagnostic CRT/UI/cursor boundaries are explicit fixtures, not a live printer.",
+    "Native null-open, ignored IO errors, blocking waits and unchecked escape buffering preserved."
+  ]
+}

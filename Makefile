@@ -227,6 +227,14 @@ test-batch-header: batch-header
 .PHONY: test-capture-owners snapshot test-snapshot
 .PHONY: printer test-printer
 .PHONY: print-screen test-print-screen test-printer-device
+.PHONY: print-controller test-print-controller
+all: print-controller
+test: test-print-controller
+print-controller:
+	python3 standalone/build_print_controller.py
+test-print-controller: print-controller
+	python3 standalone/check_print_controller.py
+	python3 standalone/test_print_controller_dos.py
 all: print-screen
 test: test-print-screen test-printer-device
 print-screen:
