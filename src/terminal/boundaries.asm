@@ -40,14 +40,6 @@ global csi_service_d440
 csi_service_d440:
  mov ax,0xd440
  jmp csi_unimplemented
-global csi_service_d668
-csi_service_d668:
- mov ax,0xd668
- jmp csi_unimplemented
-global csi_service_d73c
-csi_service_d73c:
- mov ax,0xd73c
- jmp csi_unimplemented
 global ansi_escape_service_da46
 ansi_escape_service_da46:
  jmp scroll_index
@@ -59,10 +51,6 @@ csi_service_da84:
 global ansi_escape_service_dac6
 ansi_escape_service_dac6:
  mov ax,0xdac6
- jmp csi_unimplemented
-global csi_service_daf2
-csi_service_daf2:
- mov ax,0xdaf2
  jmp csi_unimplemented
 global ansi_escape_service_dd58
 extern csi_primary_attributes,csi_device_status

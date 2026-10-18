@@ -1,0 +1,248 @@
+{
+  "passed": true,
+  "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+  "cases": [
+    {
+      "case": "keys-network-navigation",
+      "passed": true,
+      "checks": {
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "exact_key_output": true
+      },
+      "commands": [
+        "ATZ",
+        "ATDCaseTest:23"
+      ],
+      "errors": [],
+      "seconds": 6.176,
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+      "command": "@D:\\TEST.PRM /D:CaseTest:23",
+      "expected_exit": 0,
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "keys-function-modifiers",
+      "passed": true,
+      "checks": {
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "exact_key_output": true
+      },
+      "commands": [
+        "ATZ",
+        "ATDCaseTest:23"
+      ],
+      "errors": [],
+      "seconds": 5.475,
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+      "command": "@D:\\TEST.PRM /D:CaseTest:23",
+      "expected_exit": 0,
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "keys-KBD-profile-4",
+      "passed": true,
+      "checks": {
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_TEST.KBD": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "exact_key_output": true
+      },
+      "commands": [
+        "ATZ",
+        "ATDCaseTest:23"
+      ],
+      "errors": [],
+      "seconds": 5.424,
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+      "command": "@D:\\TEST.PRM /D:CaseTest:23 /K:D:\\TEST.KBD",
+      "expected_exit": 0,
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "keys-KBD-profile-6",
+      "passed": true,
+      "checks": {
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_TEST.KBD": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "exact_key_output": true
+      },
+      "commands": [
+        "ATZ",
+        "ATDCaseTest:23"
+      ],
+      "errors": [],
+      "seconds": 5.474,
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+      "command": "@D:\\TEST.PRM /D:CaseTest:23 /K:D:\\TEST.KBD",
+      "expected_exit": 0,
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "keys-invalid-empty",
+      "passed": true,
+      "checks": {
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_TEST.KBD": true,
+        "no_modem_commands": true,
+        "exact_key_output": true
+      },
+      "commands": [],
+      "errors": [],
+      "seconds": 0.165,
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+      "command": "/K:D:\\TEST.KBD",
+      "expected_exit": 7,
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "keys-invalid-short",
+      "passed": true,
+      "checks": {
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_TEST.KBD": true,
+        "no_modem_commands": true,
+        "exact_key_output": true
+      },
+      "commands": [],
+      "errors": [],
+      "seconds": 0.165,
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+      "command": "/K:D:\\TEST.KBD",
+      "expected_exit": 7,
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "keys-invalid-suffix",
+      "passed": true,
+      "checks": {
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_TEST.KBD": true,
+        "no_modem_commands": true,
+        "exact_key_output": true
+      },
+      "commands": [],
+      "errors": [],
+      "seconds": 0.165,
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+      "command": "/K:D:\\TEST.KBD",
+      "expected_exit": 7,
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "keys-invalid-missing-profile",
+      "passed": true,
+      "checks": {
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_TEST.KBD": true,
+        "no_modem_commands": true,
+        "exact_key_output": true
+      },
+      "commands": [],
+      "errors": [],
+      "seconds": 0.165,
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+      "command": "/K:D:\\TEST.KBD",
+      "expected_exit": 7,
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "keys-invalid-unterminated",
+      "passed": true,
+      "checks": {
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_TEST.KBD": true,
+        "no_modem_commands": true,
+        "exact_key_output": true
+      },
+      "commands": [],
+      "errors": [],
+      "seconds": 0.165,
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+      "command": "/K:D:\\TEST.KBD",
+      "expected_exit": 7,
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "keys-missing-file",
+      "passed": true,
+      "checks": {
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "no_modem_commands": true,
+        "exact_key_output": true
+      },
+      "commands": [],
+      "errors": [],
+      "seconds": 0.165,
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+      "command": "/K:D:\\NOFILE.KBD",
+      "expected_exit": 7,
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    }
+  ],
+  "scope": "Actual DOS BIOS events, startup profile selection, strict synthetic KBD import, FF-to-wire-NUL conversion, live sender/UART and restored IRQ/PIC/register state. No installed mappings or physical modem."
+}

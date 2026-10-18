@@ -7,7 +7,7 @@ from unicorn.x86_const import UC_X86_REG_AX,UC_X86_REG_ES,UC_X86_REG_EFLAGS,UC_X
 from dos_image import DosImage
 ROOT=Path(__file__).resolve().parents[1]
 SERIAL_FIELDS=['terminal_baud_low','terminal_baud_high','terminal_parity','terminal_data_bits','terminal_stop_bits','terminal_irq_vector','terminal_port_number','uart_port_index','uart_irq_indices','uart_port_rbr','uart_port_thr','uart_port_ier','uart_port_lcr','uart_port_mcr','uart_port_lsr','uart_port_msr','uart_software_flow','uart_hardware_flow']
-FIELDS=SERIAL_FIELDS+['terminal_option_mask','terminal_directory_entry','terminal_directory_codes']
+FIELDS=SERIAL_FIELDS+['terminal_option_mask','terminal_directory_entry','terminal_directory_codes','terminal_keyboard_bios_selection','terminal_ansi_m_policy']
 RATES=[300,1200,2400,4800,9600,19200,38400,57600,115200]
 
 def fixture():
@@ -35,11 +35,11 @@ class Options(DosImage):
   assert self.uc.reg_read(UC_X86_REG_BP)==0xbabe and self.uc.reg_read(UC_X86_REG_SI)==0x1234 and self.uc.reg_read(UC_X86_REG_DI)==0x5678
   assert self.uc.reg_read(UC_X86_REG_ES)==0x6666
   return status,self.uc.reg_read(UC_X86_REG_EFLAGS)&1
- def snapshot(self):return {**{name:self.get(name) for name in FIELDS},'terminal_config_path':bytes(self.uc.mem_read(self.symbols['terminal_config_path'],64)),'terminal_dial_target':bytes(self.uc.mem_read(self.symbols['terminal_dial_target'],64)),'terminal_directory_path':bytes(self.uc.mem_read(self.symbols['terminal_directory_path'],64))}
- def expected(self,port=1,rate=38400,parity=0,bits=8,stop=1,flow='NONE',mask=0,path=b'',dial=b'',directory=b'',entry=0,codes=0):
+ def snapshot(self):return {**{name:self.get(name) for name in FIELDS},'terminal_config_path':bytes(self.uc.mem_read(self.symbols['terminal_config_path'],64)),'terminal_dial_target':bytes(self.uc.mem_read(self.symbols['terminal_dial_target'],64)),'terminal_directory_path':bytes(self.uc.mem_read(self.symbols['terminal_directory_path'],64)),'terminal_keyboard_path':bytes(self.uc.mem_read(self.symbols['terminal_keyboard_path'],64))}
+ def expected(self,port=1,rate=38400,parity=0,bits=8,stop=1,flow='NONE',mask=0,path=b'',dial=b'',directory=b'',entry=0,codes=0,keyboard=b'',bios=2,ansi_m=0):
   base=[0x3f8,0x2f8,0x3e8,0x2e8][port-1];irq=[4,3,4,3][port-1]
   expected=dict(zip(SERIAL_FIELDS,[rate&65535,rate>>16,parity,bits,stop,irq+8,port,0,irq,base,base,base+1,base+3,base+4,base+5,base+6,int(flow=='SOFT'),int(flow=='HARD')]))
-  expected.update(terminal_option_mask=mask,terminal_config_path=path+bytes(64-len(path)),terminal_dial_target=dial+bytes(64-len(dial)),terminal_directory_path=directory+bytes(64-len(directory)),terminal_directory_entry=entry,terminal_directory_codes=codes)
+  expected.update(terminal_option_mask=mask,terminal_config_path=path+bytes(64-len(path)),terminal_dial_target=dial+bytes(64-len(dial)),terminal_directory_path=directory+bytes(64-len(directory)),terminal_keyboard_path=keyboard+bytes(64-len(keyboard)),terminal_directory_entry=entry,terminal_directory_codes=codes,terminal_keyboard_bios_selection=bios,terminal_ansi_m_policy=ansi_m)
   assert self.snapshot()==expected,(self.snapshot(),expected)
 
 def main():
@@ -197,6 +197,34 @@ def main():
    assert o.parse(token)==(1,1) and o.snapshot()==before;count[0]+=1
   assert o.parse(b'/D:Case')==(0,0);o.expected(mask=32,dial=b'Case');count[0]+=1
  check('literal-default-legacy-explicit-wordmask511-rollback-and-reset',directory_codes)
+ def keyboard_path():
+  o=Options(binary,map_path)
+  for path in [b'KEYS.KBD',b'C:\\PCPLUS\\CUSTOM.KBD',b'D:FILE.KBD',b'X'*63]:
+   assert o.parse(b'/k:'+path.lower())==(0,0)
+   o.expected(mask=512,keyboard=path);count[0]+=1
+  assert o.parse(b'COM1 38400 8N1 NONE @A.PRM /D:Case /E:B.DIR /N:1 /C:LEGACY /K:C.KBD')==(0,0)
+  o.expected(mask=1023,path=b'A.PRM',dial=b'Case',directory=b'B.DIR',entry=1,codes=1,keyboard=b'C.KBD');count[0]+=1
+  before=o.snapshot()
+  for token in [b'/K:',b'/K:'+b'A'*64,b'/K:*.KBD',b'/K:F?.KBD',b'/K:"A.KBD"',b"/K:'A.KBD'",b'/K:A.KBD /k:B.KBD',b'/K:bad name.kbd',b'/K:bad\0.kbd',b'/K:bad\x7f.kbd',b'/K:bad\xff.kbd',b'COM2 /K:NEW.KBD JUNK']:
+   assert o.parse(token)==(2,1) and o.snapshot()==before,token;count[0]+=1
+  for token in [b'/K:NEW.KBD /?',b'COM2 /K:NEW.KBD HELP']:
+   assert o.parse(token)==(1,1) and o.snapshot()==before;count[0]+=1
+  assert o.parse(b'')==(0,0);o.expected();count[0]+=1
+ check('explicit-KBD-selector-wordmask1023-path-bounds-rollback-and-reset',keyboard_path)
+ def compatibility_options():
+  o=Options(binary,map_path)
+  for token,value in [(b'AUTO',2),(b'STANDARD',0),(b'ENHANCED',1)]:
+   assert o.parse(b'/b:'+token.lower())==(0,0);o.expected(mask=1024,bios=value);count[0]+=1
+  for token,value in [(b'NETWORK',0),(b'ORIGINAL',1)]:
+   assert o.parse(b'/a:'+token.lower())==(0,0);o.expected(mask=2048,ansi_m=value);count[0]+=1
+  assert o.parse(b'/K:KEEP.KBD /B:ENHANCED /A:ORIGINAL')==(0,0)
+  o.expected(mask=3584,keyboard=b'KEEP.KBD',bios=1,ansi_m=1);before=o.snapshot();count[0]+=1
+  for token in [b'/B:',b'/B:1',b'/B:BAD',b'/B:AUTO /b:STANDARD',b'/A:',b'/A:BAD',b'/A:NETWORK /A:ORIGINAL',b'/B:STANDARD /K:NEW.KBD JUNK']:
+   assert o.parse(token)==(2,1) and o.snapshot()==before;count[0]+=1
+  for token in [b'/B:AUTO /?',b'/A:NETWORK /K:NEW.KBD HELP']:
+   assert o.parse(token)==(1,1) and o.snapshot()==before;count[0]+=1
+  assert o.parse(b'')==(0,0);o.expected();count[0]+=1
+ check('BIOS-auto-standard-enhanced-and-ANSI-M-policy-atomic-selection',compatibility_options)
  out=ROOT/'build/terminal-options';out.mkdir(parents=True,exist_ok=True)
  result={'binary_sha256':hashlib.sha256(binary.read_bytes()).hexdigest(),'options_source_sha256':hashlib.sha256((ROOT/'src/terminal/options.asm').read_bytes()).hexdigest(),'passed':True,'cases':cases,'inputs':count[0],'scope':'Actual linked source-only 8086 option parser; command tails synthetic, every interrupt/port-IO forbidden, no UART installation.'}
  (out/'checks.json').write_text(json.dumps(result,indent=2)+'\n')

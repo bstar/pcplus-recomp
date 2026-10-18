@@ -1,0 +1,185 @@
+{
+  "passed": true,
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "cases": [
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 0
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 1
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 2
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 3
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 4
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 5
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 6
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 7
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 8
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 9
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 10
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 11
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 12
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 13
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 14
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 15
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 16
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 17
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 18
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 19
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 20
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 21
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 22
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 23
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 24
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 25
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 26
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 27
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 28
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 29
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 30
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 31
+    },
+    {
+      "case": "profile-block-seek-and-read",
+      "profile": 32
+    },
+    {
+      "case": "missing-named-KBD-falls-back-to-PCPLUS"
+    },
+    {
+      "case": "KBD-short-read-unchecked-and-suffix-ignored",
+      "file_bytes": 0
+    },
+    {
+      "case": "KBD-short-read-unchecked-and-suffix-ignored",
+      "file_bytes": 1
+    },
+    {
+      "case": "KBD-short-read-unchecked-and-suffix-ignored",
+      "file_bytes": 947
+    },
+    {
+      "case": "KBD-short-read-unchecked-and-suffix-ignored",
+      "file_bytes": 948
+    },
+    {
+      "case": "KBD-short-read-unchecked-and-suffix-ignored",
+      "file_bytes": 949
+    },
+    {
+      "case": "KEY-record-read-short-unchecked-suffix-ignored",
+      "file_bytes": 0
+    },
+    {
+      "case": "KEY-record-read-short-unchecked-suffix-ignored",
+      "file_bytes": 1
+    },
+    {
+      "case": "KEY-record-read-short-unchecked-suffix-ignored",
+      "file_bytes": 539
+    },
+    {
+      "case": "KEY-record-read-short-unchecked-suffix-ignored",
+      "file_bytes": 540
+    },
+    {
+      "case": "KEY-record-read-short-unchecked-suffix-ignored",
+      "file_bytes": 541
+    },
+    {
+      "case": "missing-KEY-default-text-slots-preserve-tail-and-create540bytes"
+    }
+  ],
+  "scope": "Actual original KBD loader/KEY load-save-default routines over synthetic memory-only FILE/path/UI services. No installedKBD/KEY/PRM or private macros read; original errors intentionally demonstrated."
+}

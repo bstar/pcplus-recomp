@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "BDA_flag_cases": 256,
+  "standard_override_cases": 256,
+  "binary_sha256": "5e268db564750f1525016e4b89b3b64525a2dfb75587d755b9da5fcc93a813a0",
+  "scope": "Actual recovered36byte original detector with preserved maintained wrapper; synthetic physicalBDA read-only memory. BIOS/DOS interrupts forbidden; manualSTANDARD originalarg0 covered."
+}

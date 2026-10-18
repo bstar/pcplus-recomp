@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+  "inputs": 91,
+  "cases": [
+    {
+      "case": "all79-slots-empty-through11-bytes-and-FF-to-wire-NUL",
+      "inputs": 79,
+      "passed": true
+    },
+    {
+      "case": "invalid-slot-and-unterminated-binding-no-partial-queue-or-wire",
+      "inputs": 8,
+      "passed": true
+    },
+    {
+      "case": "exact-capacity-with-binary-NUL-and-whole-binding-overflow-atomicity",
+      "inputs": 2,
+      "passed": true
+    },
+    {
+      "case": "ring-progress-and-existing-stop-preservation",
+      "inputs": 2,
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked bounded key-slot sender, TX ring and recovered UART code. Hardware model only; no key-selection/default-profile or physical-modem claim."
+}

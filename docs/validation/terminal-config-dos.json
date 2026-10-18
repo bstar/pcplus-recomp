@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+  "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
   "cases": [
     {
       "case": "import-ANSI-COM2",
@@ -17,7 +17,7 @@
         "actual_imported_video_color": true,
         "all_protocol_checks_seen": true
       },
-      "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
       "command": "@D:\\TEST.PRM",
       "expected_exit": 0,
       "observed_errors": [],
@@ -38,7 +38,7 @@
         "actual_imported_video_color": true,
         "all_protocol_checks_seen": true
       },
-      "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
       "command": "@D:\\TEST.PRM",
       "expected_exit": 0,
       "observed_errors": [],
@@ -59,7 +59,7 @@
         "actual_imported_video_color": true,
         "all_protocol_checks_seen": true
       },
-      "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
       "command": "@D:\\TEST.PRM COM1 38400 8N1 SOFT",
       "expected_exit": 0,
       "observed_errors": [],
@@ -80,7 +80,7 @@
         "actual_imported_video_color": true,
         "all_protocol_checks_seen": true
       },
-      "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
       "command": "@D:\\TEST.PRM",
       "expected_exit": 0,
       "observed_errors": [],
@@ -101,7 +101,7 @@
         "actual_imported_video_color": true,
         "all_protocol_checks_seen": true
       },
-      "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
       "command": "@D:\\TEST.PRM",
       "expected_exit": 0,
       "observed_errors": [],
@@ -117,7 +117,7 @@
         "requested_file_unchanged": true,
         "binary_unchanged": true
       },
-      "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
       "command": "@D:\\TEST.PRM",
       "expected_exit": 7,
       "observed_errors": [],
@@ -133,7 +133,7 @@
         "requested_file_unchanged": true,
         "binary_unchanged": true
       },
-      "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
       "command": "@D:\\TEST.PRM",
       "expected_exit": 7,
       "observed_errors": [],
@@ -149,7 +149,7 @@
         "requested_file_unchanged": true,
         "binary_unchanged": true
       },
-      "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
       "command": "@D:\\TEST.PRM",
       "expected_exit": 7,
       "observed_errors": [],
@@ -165,7 +165,7 @@
         "requested_file_unchanged": true,
         "binary_unchanged": true
       },
-      "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
       "command": "@D:\\TEST.PRM",
       "expected_exit": 7,
       "observed_errors": [],
@@ -181,7 +181,7 @@
         "requested_file_unchanged": true,
         "binary_unchanged": true
       },
-      "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
       "command": "@D:\\TEST.PRM",
       "expected_exit": 7,
       "observed_errors": [],
@@ -197,7 +197,7 @@
         "requested_file_unchanged": true,
         "binary_unchanged": true
       },
-      "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
       "command": "@D:\\TEST.PRM",
       "expected_exit": 7,
       "observed_errors": [],
@@ -213,7 +213,7 @@
         "requested_file_unchanged": true,
         "binary_unchanged": true
       },
-      "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
       "command": "@D:\\TEST.PRM",
       "expected_exit": 7,
       "observed_errors": [],
@@ -229,7 +229,7 @@
         "requested_file_unchanged": true,
         "binary_unchanged": true
       },
-      "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
       "command": "@D:\\TEST.PRM COM1 38400 NONE",
       "expected_exit": 7,
       "observed_errors": [],
@@ -245,7 +245,7 @@
         "requested_file_unchanged": true,
         "binary_unchanged": true
       },
-      "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
       "command": "@D:\\TEST.PRM /?",
       "expected_exit": 0,
       "observed_errors": [],
@@ -261,7 +261,7 @@
         "requested_file_unchanged": true,
         "binary_unchanged": true
       },
-      "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+      "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
       "command": "@D:\\TEST.PRM BADOPTION",
       "expected_exit": 1,
       "observed_errors": [],

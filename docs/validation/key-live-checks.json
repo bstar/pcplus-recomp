@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+  "cases": [
+    {
+      "case": "all79-raw-keys-overridden-binding-and-wire-NUL",
+      "inputs": 79,
+      "passed": true
+    },
+    {
+      "case": "AUTO-STANDARD-ENHANCED-BDA-selection",
+      "inputs": 12,
+      "passed": true
+    },
+    {
+      "case": "alternate-keypad-representations-use-keypad-bindings",
+      "inputs": 2,
+      "passed": true
+    },
+    {
+      "case": "empty-enhanced-page-binding-retains-local-action-boundary",
+      "inputs": 2,
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked BIOS acquisition/normalization, raw classifier, binding sender, TX ring and UART. Only hardware keyboard/ports/BDA modeled; no routine substituted."
+}

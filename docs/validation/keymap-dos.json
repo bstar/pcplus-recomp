@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "real_DOS_checks": 9,
+  "declared_fault_checks": 22,
+  "profiles_tested": 80,
+  "destination_size": 948,
+  "result_size": 14,
+  "synthetic_files_unchanged": {
+    "NORMAL.KBD": "2b56014f997b4fa53dbb4dc58d5fc70a9facd1c3adfdf2e519f774e281f32234",
+    "BAD.KBD": "06383b1e5f0a8c1d8cd852b9c72937eff92c8917bf9628e3185dc426821c1d6f",
+    "SHORT.KBD": "a00bdf5ee639f22d0db63f6648361d089440b7feeb4ea5b6cea79d4fddc4be1a",
+    "SUFFIX.KBD": "7c6f2481d91d6ddefaeea40a1e8bf516d467d09a94ac9c300a98a3d9a5fa794e",
+    "EMPTY.KBD": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "sources": {
+    "src/key_mapping/keymap_dos.c": "296b9016d7d1212464e738389cbc33f459b7790057822e67aac04081c2d82422",
+    "src/key_mapping/keymap_dos.h": "934d66751a563a8c1d44aa17eaa8375e930cd3dfeb90c5d77e5a27fbe9f9969c",
+    "src/key_mapping/keymap_dos.inc": "a9e9e8f3a981411efa44fc4255f0bb03469d5de1285787efe2f1855b33ba4c8f",
+    "src/key_mapping/keymap_dos_fs.c": "847868ab30eed7257c360417abf08c04852196e04fa6ea0002b31b9a425c335b",
+    "src/key_mapping/keymap_dos_fs.h": "542038d5338a3b397f1251b09ae0d5b2978db7c20fcdb03b98f12c555e994fec",
+    "standalone/check_keymap_dos.py": "9641a30946775cf126ffc14a8c0a776051af0c5f4821820b976e634886e9f41f"
+  },
+  "binary_sha256": {
+    "KMREAL.EXE": "37d6245b6810212f13e3755af5af570fa062ccaa5a9cef80334e0cb52f04a040",
+    "KMFAULT.EXE": "dc7e3da0dd2a04b8c14fac041542b09f0111e789e43196146bab49b43b6b4c1b"
+  },
+  "scope": "Actual DOS source-only reader and separate declared DOS/seek fault model. Synthetic80profile files prove32bit seek/length; selected79strings validated, rawFF and tails preserved. No installed keymap/config/private macros."
+}

@@ -26,6 +26,7 @@ class Transport(DosImage):
   self.uc.hook_add(UC_HOOK_INSN,self.output_port,None,1,0,UC_X86_INS_OUT)
   self.put('uart_software_flow',0);self.put('uart_hardware_flow',0)
   self.put('terminal_quit',0);self.put('terminal_exit_code',0)
+  assert self.call('terminal_initialize_keymap')==0
  def tick_hook(self,uc,address,size,_):
   if address==self.symbols['terminal_tick_low']:
    self.tick_reads+=1
@@ -127,8 +128,8 @@ def main():
    for _ in range(4):m.call('terminal_poll_io')
    m.drain();prefix=b'O' if application else b'['
    assert bytes(m.tx)==b''.join(b'\x1b'+prefix+suffix for suffix in [b'A',b'B',b'C',b'D'])
-  m=Transport([0x3b00]);m.call('terminal_poll_io');assert m.get('terminal_tx_count')==0 and not m.get('terminal_quit')
-  m=Transport([0x4800]);m.uc.mem_write(m.symbols['terminal_keymap'],b'x'*12);m.call('terminal_poll_io')
+  m=Transport([0x3b00]);m.call('terminal_poll_io');m.drain();assert bytes(m.tx)==b'\x1bOP' and not m.get('terminal_quit')
+  m=Transport([0x4800]);m.uc.mem_write(m.symbols['terminal_keymap']+72*12,b'x'*12);m.call('terminal_poll_io')
   assert (m.get('terminal_quit'),m.get('terminal_exit_code'),m.get('terminal_tx_count'))==(1,4,0)
  check('actual-BIOS-ASCII-arrows-DECCKM-and-bounded-binding-validation',keys)
  def deadlines():

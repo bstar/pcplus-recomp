@@ -262,15 +262,18 @@ global terminal_dec_keys,terminal_tab_stops,terminal_keymap,terminal_keymap_end,
 terminal_dec_keys: dw 1
 terminal_tab_stops: times 30 db 0xfe
 terminal_keymap:
+ ; Proved original slots72..75 are Up/Down/Left/Right. Keep startup arrows
+ ; available to component callers; main initializes all maintained defaults.
+ times 72*12 db 0
  db 27,'[A',0
  times 8 db 0
  db 27,'[B',0
  times 8 db 0
- db 27,'[C',0
- times 8 db 0
  db 27,'[D',0
  times 8 db 0
- times (948-48) db 0
+ db 27,'[C',0
+ times 8 db 0
+ times 3*12 db 0
 terminal_keymap_end:
 terminal_mode_372c: dw 0
 SEGMENT _BSS public align=16 class=BSS use16

@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "binary_sha256": "7a10bc8c2a2883cdb447933dd1628647d2a61ba5fe133c94d5cbf21ec018a9b6",
+  "checks": [
+    "actual recovered insert-line shifts row5 down and clears it",
+    "actual recovered delete-line shifts row5 up and clears lastrow",
+    "outside rectangle unchanged",
+    "wait-control-N terminates using explicit UART14 fixture"
+  ],
+  "scope": "Actual DOSBox-X8086 video; wait-loop UART/keyboard are declared controlled fixtures; protected attribute repair unresolved."
+}

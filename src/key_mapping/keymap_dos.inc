@@ -1,0 +1,7 @@
+%define KM_PROFILE_SIZE 948
+%define KM_STATUS 0
+%define KM_DOS_ERROR 2
+%define KM_CLOSE_ERROR 4
+%define KM_BYTES_READ 6
+%define KM_FILE_BYTES 10
+%define KM_RESULT_SIZE 14

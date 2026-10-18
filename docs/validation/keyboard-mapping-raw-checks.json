@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "binary_sha256": "0816a43d53bb5e2602a00b8f56e795e50d40c8d8b8ad155aa827d74998e8f977",
+  "all_79_slots_covered": true,
+  "key_profile_mode_binding_cases": 632,
+  "original_comparisons": 632,
+  "unknown_alias_cases": 9,
+  "known_local_cases": 2,
+  "scope": "Actual linked raw classifier vs actual recovered OMF dispatcher and optional genuine-original instructions; capture at binding-emitter entry observes slots even when empty. UI/status callbacks are explicit boundaries."
+}

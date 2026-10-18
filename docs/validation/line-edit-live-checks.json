@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+  "cases": [
+    {
+      "case": "network-L-M-both-profile-gates-margins-count-clipping-column-preservation",
+      "passed": true
+    },
+    {
+      "case": "network-delete-line-omitted-zero-one-counts",
+      "passed": true
+    },
+    {
+      "case": "high-bit-counts-remain-bounded-and-preserve-outside-region",
+      "passed": true
+    },
+    {
+      "case": "outside-margins-invalid-bottom-and-protected-state-are-no-op",
+      "passed": true
+    },
+    {
+      "case": "unsupported-attribute-plane-remains-explicit-before-mutation",
+      "passed": true
+    },
+    {
+      "case": "original-policy-recovered-per-line-column-home-semantics",
+      "passed": true
+    },
+    {
+      "case": "original-alternate-wait-CtrlN-discard-Escape-AltX-timeout-wrap-modem-yield",
+      "passed": true
+    },
+    {
+      "case": "network-wrapper-near-stack-BP-SI-DI-ES-preservation",
+      "passed": true
+    },
+    {
+      "case": "explicit-actual-captured-stream-through-real-UART-input-and-video",
+      "passed": true
+    }
+  ],
+  "wire": "build/bbs-lab/results/synchronet/editor-baseline-keys/serial-sent.bin",
+  "scope": "Actual linked live line policy, recovered line/erase/cursor and UART/keyboard instructions. Hardware-only video/UART/BIOS keyboard/tick oracle; no product service stub. NETWORK is intentional maintained compatibility policy; ORIGINAL alternate wait bounded36ticks. No physical modem or complete terminal claim."
+}

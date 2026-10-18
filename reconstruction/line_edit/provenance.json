@@ -1,0 +1,93 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/line_edit/insert_line.asm",
+      "start": 54888,
+      "end": 55099,
+      "source_file_offset": 90904,
+      "bytes": 211,
+      "instructions": 83,
+      "sha256": "aa928474f8419c96d0c4ee715d31684fdb6f03a15397381a999dfdb5982ce2a0",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/line_edit/delete_line.asm",
+      "start": 55100,
+      "end": 55363,
+      "source_file_offset": 91116,
+      "bytes": 263,
+      "instructions": 100,
+      "sha256": "1c7220007031bd7359216e2088f63b0cbe638e3cbb796ed65b3d618c9c0f5a71",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/line_edit/wait_control_n.asm",
+      "start": 56050,
+      "end": 56080,
+      "source_file_offset": 92066,
+      "bytes": 30,
+      "instructions": 14,
+      "sha256": "501483fec4a845b44f0e97aaec870ebbe06db933515931816f0abe33b07feb8a",
+      "matched_original": true
+    }
+  ],
+  "state": {
+    "3342": "csi_wrap_pending",
+    "3340": "scroll_suppress_next_linefeed",
+    "399c": "screen_cursor_row",
+    "399e": "screen_cursor_column",
+    "1d32": "attributes_normal_value",
+    "3258": "screen_last_column",
+    "8ff6": "attributes_monochrome",
+    "1f70": "attributes_current",
+    "900c": "screen_cursor_wrap",
+    "3734": "screen_attribute_checks",
+    "3346": "screen_attribute_offset",
+    "39c4": "screen_attributes_base",
+    "325a": "screen_attribute_row_bytes",
+    "325c": "erase_cell_count",
+    "39c2": "erase_attribute_values_base",
+    "ce3a": "screen_last_row",
+    "ce0e": "screen_first_row",
+    "334a": "csi_last_row",
+    "d008": "csi_erase_attribute",
+    "d122": "screen_doublewidth_enabled",
+    "9018": "screen_vertical_attribute_check",
+    "904c": "scroll_skip_attribute_scan",
+    "1d22": "scroll_enabled"
+  },
+  "services": {
+    "1bbe": "screen_set_cursor",
+    "2530": "csi_service_2530",
+    "2d4c": "erase_previous_attribute",
+    "2d6c": "erase_scan_attributes",
+    "85b4": "erase_move_bytes",
+    "2d98": "erase_repair_attributes",
+    "aa65": "uart_receive_byte",
+    "651a": "keyboard_peek",
+    "64fe": "keyboard_read"
+  },
+  "limitations": [
+    "Delete-line attribute repair2d98 remains an explicit external dependency for nontrivial900c attribute mode.",
+    "Original helper uses fixed23-row attribute-plane shift; no silent bounds fixes. Counts belong to dispatcher; helper edits one line per call.",
+    "Wait-control-N blocks indefinitely consuming UART bytes until0e or local Escape; maintained application cancellation/timeouts are not added here."
+  ],
+  "rea_exports": {
+    "0xd668": {
+      "evidence_id": "ev_d2e24e218704f332464fc1502fd136e5d29652effb56c9469c72e8c7218f68e4",
+      "analysis_artifact_sha256": "c6662b84a2737e5f5bff14aa52c67dd0accc5a889d82f36d729483d3cc222651",
+      "scope": "Static overlay analysis container; never executed. Actual source bytes independently verified at original-file offsets."
+    },
+    "0xd73c": {
+      "evidence_id": "ev_ef9015e5ca6af45c5d7337c84e1747ad38dd3eab78e8b77d2a32b0f4154445ba",
+      "analysis_artifact_sha256": "c6662b84a2737e5f5bff14aa52c67dd0accc5a889d82f36d729483d3cc222651",
+      "scope": "Static overlay analysis container; never executed. Actual source bytes independently verified at original-file offsets."
+    },
+    "0xdaf2": {
+      "evidence_id": "ev_dcd8bf8088a4af33091ac7b07b00d38b5080a295fab1941258e145d9a85450b4",
+      "analysis_artifact_sha256": "c6662b84a2737e5f5bff14aa52c67dd0accc5a889d82f36d729483d3cc222651",
+      "scope": "Static overlay analysis container; never executed. Actual source bytes independently verified at original-file offsets."
+    }
+  }
+}

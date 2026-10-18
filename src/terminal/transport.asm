@@ -5,8 +5,10 @@ BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
 extern uart_receive_byte,uart_unreceive_byte,uart_try_write,uart_poll_flow
-extern keyboard_poll,keyboard_read_extended
-extern terminal_keymap,terminal_quit,terminal_exit_code
+extern keyboard_poll,terminal_read_key
+extern terminal_quit,terminal_exit_code
+extern keyboard_classify_raw,terminal_enqueue_key_slot
+extern terminal_ansi_wait_active,terminal_ansi_wait_cancel
 extern terminal_connection_poll,terminal_connection_cancel,terminal_connection_start
 extern terminal_connection_exit,connection_state,connection_enabled
 global terminal_poll_io,terminal_enqueue_al,terminal_tick_low,terminal_clock_ticks
@@ -168,13 +170,20 @@ terminal_poll_io:
  jz .done
  ; A successful peek makes this actual blocking read immediately satisfiable;
  ; the private application queue is disabled and BIOS has one foreground reader.
- call keyboard_read_extended
+ call terminal_read_key
  cmp ax,0x2d00
  je .quit
  cmp ax,0x2300 ; Alt-H: configured hang-up
  je .hangup
  cmp ax,0x2000 ; Alt-D: repeat explicitly selected target
  je .redial
+ cmp word [terminal_ansi_wait_active],0
+ je .connection_key
+ cmp al,27
+ jne .done ; Original wait consumes other local keys without transmission.
+ mov word [terminal_ansi_wait_cancel],1
+ jmp .done
+.connection_key:
  cmp word [connection_state],0
  je .terminal_key
  cmp word [connection_state],6
@@ -185,43 +194,24 @@ terminal_poll_io:
  call terminal_connection_cancel
  jmp .done
 .terminal_key:
- or al,al
- jz .scan
+ call keyboard_classify_raw
+ cmp ax,79
+ jb .binding
+ cmp ah,1
+ jne .nonliteral
  call terminal_enqueue_al
  jmp .done
-.scan:
- mov si,terminal_keymap
- cmp ah,0x48
- je .arrow
- add si,12
- cmp ah,0x50
- je .arrow
- add si,12
- cmp ah,0x4d
- je .arrow
- add si,12
- cmp ah,0x4b
- jne .done ; Other scan-only keys await configurable translation support.
-.arrow:
- ; Validate the complete12-byte slot before queueing it; never cross a slot.
- mov di,si
- mov cx,12
-.find_end:
- cmp byte [di],0
- je .send_arrow
- inc di
- loop .find_end
- mov word [terminal_exit_code],4 ; Invalid nonterminated binding.
+.binding:
+ call terminal_enqueue_key_slot
+ jmp .done
+.nonliteral:
+ cmp ax,0xfffe
+ jne .done ; Original no-op/unmapped key, no wire bytes.
+ ; A recognized original local command needs application UI/services that have
+ ; not been reconstructed. Keep this explicit instead of transmitting the key.
+ mov word [terminal_exit_code],4
  mov word [terminal_quit],1
  jmp .done
-.send_arrow:
- cmp si,di
- jae .done
- cmp word [terminal_quit],0
- jne .done
- lodsb
- call terminal_enqueue_al
- jmp .send_arrow
 .quit:
  call terminal_connection_exit
  jmp .done

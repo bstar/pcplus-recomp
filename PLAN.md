@@ -66,6 +66,15 @@ with no original executables or installation present. These tests do not establi
 physical modem compatibility or close the remaining application gates below.
 
 - [x] Combine the source driver, parser, screen and keyboard into a DOS terminal.
+      Native keyboard integration now includes all79 recovered raw binding slots,
+      maintained network defaults, strict explicit `/K` import and `/B` automatic
+      BDA/manual BIOS selection. Low-E0 keypad aliases are maintained compatibility
+      behavior. Ten actual DOS key cases and95 linked inputs pass; full KEY
+      macros, historical defaults and physical BIOS testing remain open.
+      Recovered line helpers are live through `/A:NETWORK` bounded line editing
+      or `/A:ORIGINAL` serviced36-tick discard wait. Seven synthetic policy groups
+      pass; complex attribute repair remains an explicit2d98 boundary and full
+      editor interaction requires separate runtime evidence.
 - [ ] Support dialing/connect/hang-up and configurable serial/modem settings.
       Progress: explicit read-only PRM import now validates serial/flow/profile and
       display settings before UART access, with tested CLI precedence. The
@@ -118,6 +127,10 @@ physical modem compatibility or close the remaining application gates below.
       See `docs/CONFIGURATION.md`.
 - [ ] Reconstruct file transfers, capture/logging and supporting tools used by the app.
 - [ ] Reconstruct scripting interfaces and required interpreter/compiler integration.
+      Keyboard file structures and original TEXT caret/pause consumers are proved,
+      but importing a KBD profile does not implement KEY/ASPECT/PROGRAM/HOOK
+      actions. Unimplemented original local keyboard commands stop explicitly
+      with errorlevel4; unmapped/no-op keys remain ignored.
 - [ ] Recover required resources without embedding original executable code/data as
       a substitute for source reconstruction.
 

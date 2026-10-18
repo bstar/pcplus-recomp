@@ -36,8 +36,13 @@ terminal_parse_options:
  mov di,options_directory_stage
  mov cx,32
  rep stosw
+ mov di,options_keyboard_stage
+ mov cx,32
+ rep stosw
  mov word [options_entry_stage],0
  mov word [options_codes_stage],0
+ mov word [options_keyboard_mode_stage],2
+ mov word [options_ansi_m_stage],0
  mov es,dx
  xor cx,cx
  mov cl,[es:0x80]
@@ -93,6 +98,8 @@ terminal_parse_options:
  cmp word [options_token],'/D'
  je .selector_size
  cmp word [options_token],'/E'
+ je .selector_size
+ cmp word [options_token],'/K'
  je .selector_size
  cmp word [options_token],'/N'
  jne .ordinary_size
@@ -167,10 +174,18 @@ terminal_parse_options:
  mov di,terminal_directory_path
  mov cx,32
  rep movsw
+ mov si,options_keyboard_stage
+ mov di,terminal_keyboard_path
+ mov cx,32
+ rep movsw
  mov ax,[options_entry_stage]
  mov [terminal_directory_entry],ax
  mov ax,[options_codes_stage]
  mov [terminal_directory_codes],ax
+ mov ax,[options_keyboard_mode_stage]
+ mov [terminal_keyboard_bios_selection],ax
+ mov ax,[options_ansi_m_stage]
+ mov [terminal_ansi_m_policy],ax
  xor ax,ax
  mov ax,[options_seen]
  mov [terminal_option_mask],ax
@@ -237,6 +252,65 @@ options_process_token:
  or word [options_seen],dx
  jmp .good
 .help_start:
+ cmp word [options_token],'/A'
+ jne .bios_option
+ cmp byte [options_token+2],':'
+ jne .bios_option
+ test word [options_seen],2048
+ jnz .bad
+ mov ax,options_ansi_network
+ call options_equal
+ jnc .ansi_network
+ mov ax,options_ansi_original
+ call options_equal
+ jc .bad
+ mov ax,1
+ jmp .ansi_done
+.ansi_network:
+ xor ax,ax
+.ansi_done:
+ mov [options_ansi_m_stage],ax
+ or word [options_seen],2048
+ jmp .good
+.bios_option:
+ cmp word [options_token],'/B'
+ jne .keyboard_option
+ cmp byte [options_token+2],':'
+ jne .keyboard_option
+ test word [options_seen],1024
+ jnz .bad
+ mov ax,options_bios_standard
+ call options_equal
+ jnc .bios_standard
+ mov ax,options_bios_enhanced
+ call options_equal
+ jnc .bios_enhanced
+ mov ax,options_bios_auto
+ call options_equal
+ jc .bad
+ mov ax,2
+ jmp .bios_done
+.bios_standard:
+ xor ax,ax
+ jmp .bios_done
+.bios_enhanced:
+ mov ax,1
+.bios_done:
+ mov [options_keyboard_mode_stage],ax
+ or word [options_seen],1024
+ jmp .good
+.keyboard_option:
+ cmp word [options_token],'/K'
+ jne .directory_option
+ cmp byte [options_token+2],':'
+ jne .directory_option
+ test word [options_seen],512
+ jnz .bad
+ mov si,options_token+3
+ mov di,options_keyboard_stage
+ mov dx,512
+ jmp .path_start
+.directory_option:
  cmp word [options_token],'/E'
  jne .entry_option
  cmp byte [options_token+2],':'
@@ -462,9 +536,15 @@ options_process_token:
 SEGMENT _DATA public class=DATA use16
 global terminal_usage,terminal_config_path,terminal_option_mask,terminal_dial_target
 global terminal_directory_path,terminal_directory_entry,terminal_directory_codes
+global terminal_keyboard_path
+global terminal_keyboard_bios_selection
+global terminal_ansi_m_policy
 terminal_config_path: times 64 db 0
 terminal_dial_target: times 64 db 0
 terminal_directory_path: times 64 db 0
+terminal_keyboard_path: times 64 db 0
+terminal_keyboard_bios_selection: dw 2
+terminal_ansi_m_policy: dw 0
 terminal_directory_entry: dw 0
 terminal_directory_codes: dw 0
 terminal_option_mask: dw 0
@@ -474,6 +554,9 @@ terminal_usage:
  db 'Dial target: explicit, max 63 bytes; case preserved. Flow: NONE|SOFT|HARD.',13,10
  db 'Directory: /E:FILE.DIR [/N:1..200]; omit /N to choose an entry.',13,10
  db 'Directory codes: /C:LITERAL (default) or /C:LEGACY (A..J substitutions).',13,10
+ db 'Keyboard: /K:FILE.KBD imports the selected profile; explicit path only.',13,10
+ db 'Keyboard BIOS: /B:AUTO (default), /B:STANDARD or /B:ENHANCED.',13,10
+ db 'ANSI CSI M: /A:NETWORK (delete lines, default) or /A:ORIGINAL (wait).',13,10
  db 'PRM path: explicit only, max 63 bytes; no spaces, quotes or wildcards.',13,10
  db 'Serial: 7/8 data, N/O/E/M/S parity, 1/2 stop; e.g. 8N1. Any option order.',13,10
  db 'Baud: 300 1200 2400 4800 9600 19200 38400 57600 115200',13,10
@@ -494,6 +577,14 @@ options_raw_token: times 67 db 0
 options_config_stage: times 64 db 0
 options_dial_stage: times 64 db 0
 options_directory_stage: times 64 db 0
+options_keyboard_stage: times 64 db 0
+options_keyboard_mode_stage: dw 2
+options_ansi_m_stage: dw 0
+options_ansi_network: db '/A:NETWORK',0
+options_ansi_original: db '/A:ORIGINAL',0
+options_bios_auto: db '/B:AUTO',0
+options_bios_standard: db '/B:STANDARD',0
+options_bios_enhanced: db '/B:ENHANCED',0
 options_entry_stage: dw 0
 options_codes_stage: dw 0
 options_codes_literal: db '/C:LITERAL',0

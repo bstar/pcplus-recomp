@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "binary_sha256": "0816a43d53bb5e2602a00b8f56e795e50d40c8d8b8ad155aa827d74998e8f977",
+  "classifier_cases": 345,
+  "original_cases": 614,
+  "groups": [
+    "ASCII-BIOS-specials-edit-navigation-and-register-ABI",
+    "F1-F12-three-modifier-banks-and-local-macro-boundaries",
+    "original-scrollback-and-hotkey-precedence",
+    "recovered-emitter-actual-instructions-FF-to-NUL-and-empty-bindings",
+    "optional-genuine-original-and-OMF-dispatch-key-to-slot-or-literal-comparison"
+  ],
+  "fixtures": "UART recording callee, status callbacks bypassed only for original observation; UI application routines not executed."
+}

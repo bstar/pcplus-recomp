@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "binary_sha256": "7a10bc8c2a2883cdb447933dd1628647d2a61ba5fe133c94d5cbf21ec018a9b6",
+  "groups": [
+    "insert-normal-margins-bottom-protection-attributeplanes-ABI",
+    "delete-normal-margins-bottom-protection-attributeplanes-ABI",
+    "wait-control-N-local-Escape-other-key-consumption-and-original-no-timeout",
+    "nontrivial-attribute-repair-remains-explicit-fail-fast"
+  ],
+  "original_comparisons": 12,
+  "limitations": [
+    "INT10 video oracle and explicit UART/keyboard wait fixtures; no physical serial hardware.",
+    "Helpers edit one line; count normalization belongs to existing CSI dispatcher.",
+    "No unsafe-state guard added to exact assembly; fixed23-row attribute copy preserved."
+  ]
+}

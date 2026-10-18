@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "binary_sha256": "0816a43d53bb5e2602a00b8f56e795e50d40c8d8b8ad155aa827d74998e8f977",
+  "classifier_vectors": 83,
+  "recovered_emitter": "A FF B stored produces A NUL B through explicitly declared recording UART fixture",
+  "scope": "Actual DOSBox-X8086 executable; original dispatcher local UI routines trap and are not exercised by diagnostic startup. No actual UART/BBS in this test."
+}

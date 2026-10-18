@@ -1,0 +1,65 @@
+{
+  "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+  "options_source_sha256": "c5d82557ebd4749e32d17a8d4bf1d701ebdd752d73bee2f0258926cc33fdd557",
+  "passed": true,
+  "cases": [
+    {
+      "case": "empty-and-whitespace-tails-select-documented-defaults",
+      "passed": true
+    },
+    {
+      "case": "all-com-base-irq-and-32bit-baud-selections",
+      "passed": true
+    },
+    {
+      "case": "all-parity-data-stop-flow-combinations-case-and-order",
+      "passed": true
+    },
+    {
+      "case": "invalid-and-duplicate-tokens-never-partially-commit",
+      "passed": true
+    },
+    {
+      "case": "help-returns-cleanly-before-settings-or-hardware-effects",
+      "passed": true
+    },
+    {
+      "case": "explicit-PRM-paths-max63-and-selection-mask-reset",
+      "passed": true
+    },
+    {
+      "case": "PRM-invalid-duplicate-help-and-full-state-rollback",
+      "passed": true
+    },
+    {
+      "case": "dial-target-case-prefix-punctuation-max63-and-reset",
+      "passed": true
+    },
+    {
+      "case": "dial-duplicates-unsafe-input-help-atomic-global-rollback",
+      "passed": true
+    },
+    {
+      "case": "directory-path-bounds-all200-indices-browser-default-and-full-mask",
+      "passed": true
+    },
+    {
+      "case": "directory-index-invalid-duplicate-overflow-help-and-atomic-rollback",
+      "passed": true
+    },
+    {
+      "case": "literal-default-legacy-explicit-wordmask511-rollback-and-reset",
+      "passed": true
+    },
+    {
+      "case": "explicit-KBD-selector-wordmask1023-path-bounds-rollback-and-reset",
+      "passed": true
+    },
+    {
+      "case": "BIOS-auto-standard-enhanced-and-ANSI-M-policy-atomic-selection",
+      "passed": true
+    }
+  ],
+  "inputs": 550,
+  "scope": "Actual linked source-only 8086 option parser; command tails synthetic, every interrupt/port-IO forbidden, no UART installation."
+}

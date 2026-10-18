@@ -1,0 +1,95 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "format_identification": "ExternalPCPlus2.01 identity required; no magic/version/CRC in traced KBD/KEY IO",
+  "ranges": [
+    {
+      "name": "KBD-profile-loader",
+      "overlay": null,
+      "start": "0xcd2",
+      "end_exclusive": "0xdad",
+      "source_file_offset": 7890,
+      "size": 219,
+      "sha256": "44bf9a89b100fda4b49039dd5c9b79781d317f0b14726056a83257365de1379d",
+      "rea_export": "analysis/pcplus-main/functions/0x10cd2-asm.json",
+      "evidence_id": "ev_9f1b7b55553b51a61d07c1adbb6ee3a739df0ed6922e33d8592f2a5221000b47"
+    },
+    {
+      "name": "KEY-reader",
+      "overlay": 3,
+      "start": "0xe1cc",
+      "end_exclusive": "0xe20b",
+      "source_file_offset": 63564,
+      "size": 63,
+      "sha256": "f4fba50ce739d3be5b04bdb3653a5b355b8b9b318639ccc2d7ce1a04699b282a",
+      "rea_export": "analysis/pcplus-overlay-anchored-03/functions/0x1e1cc-asm.json",
+      "evidence_id": "ev_f4c2ad11e41a42222e0c9e3c5c8e40e852991e110d724a9ac8b73611507c38df"
+    },
+    {
+      "name": "KEY-writer",
+      "overlay": 3,
+      "start": "0xe20b",
+      "end_exclusive": "0xe24a",
+      "source_file_offset": 63627,
+      "size": 63,
+      "sha256": "c11fffa898f8aa1284b604b81ec6b0beb6fdd70fa0c8b80f4fffdb0516e931bd",
+      "rea_export": "analysis/pcplus-overlay-anchored-03/functions/0x1e20b-asm.json",
+      "evidence_id": "ev_f3b5f1ef86a5db020687033888b2c08782428e99c14e5ee41bb948695722ec41"
+    },
+    {
+      "name": "KEY-semantic-defaults",
+      "overlay": 3,
+      "start": "0xe24a",
+      "end_exclusive": "0xe261",
+      "source_file_offset": 63690,
+      "size": 23,
+      "sha256": "4d660ed9bfe6274a93ec7749a3558941895d3bf69f6f28ef04e8ee96413e3dd6",
+      "rea_export": "analysis/pcplus-overlay-anchored-03/functions/0x1e24a-asm.json",
+      "evidence_id": "ev_4a167b9afed1f884b9ae6a8e61c9b7cecb7b541f7daab7f72dad9626cacdce81"
+    },
+    {
+      "name": "KBD-emitter",
+      "overlay": null,
+      "start": "0xa62",
+      "end_exclusive": "0xa8b",
+      "source_file_offset": 7266,
+      "size": 41,
+      "sha256": "6980c36e377c9a8f0710a1367cdc36f10181eeb58f504e907d6a0836f2cca406",
+      "rea_export": "analysis/pcplus-main/functions/0x10a62-asm.json",
+      "evidence_id": "ev_4d145749a61c4e011ef4cdfcde8c566e67a4df07e48d1b08662fc3df9efd5d77"
+    },
+    {
+      "name": "DECCKM-inplace-map-adjustment",
+      "overlay": null,
+      "start": "0xb4e",
+      "end_exclusive": "0xbc0",
+      "source_file_offset": 7502,
+      "size": 114,
+      "sha256": "6d92ff11b786907cef26fcb8394ab4ae6fe87dbcc488e7a4968bb1f06ffd4dea",
+      "rea_export": "analysis/pcplus-main/functions/0x10b4e-asm.json",
+      "evidence_id": "ev_e45c15025904c0fc2bf6ac5c76a3773b1782478a3ac891c01ac8550449616d78"
+    }
+  ],
+  "layout": {
+    "kbd_block_bytes": 948,
+    "kbd_slot_bytes": 12,
+    "kbd_slots_per_block": 79,
+    "kbd_profile_count_limit": null,
+    "key_record_bytes": 54,
+    "key_record_count": 10,
+    "key_kind_word": 0,
+    "key_text_offset": 2,
+    "key_text_capacity": 52,
+    "key_original_editor_limit": 50
+  },
+  "original_startup_fallback": {
+    "source_file_offset": 167112,
+    "bytes": 948,
+    "sha256": "962c019790cb0c5e9efe05d8c796416f1638255e8473b6d47478c1f295a995a5",
+    "limitation": "Genericstartup79slot fallback, not historical perprofile4/6 defaults; originaldata not copied into source"
+  },
+  "limitations": [
+    "InstalledKBD/KEY/PRM contents not read; inventorysize/hash does not establish factorydefaults.",
+    "Originalreader ignores short reads/suffix/close errors; maintainedhost/DOS boundaries are stricter.",
+    "KEY action labels proved but macro execution belongs separate keyboard mapping recovery."
+  ]
+}

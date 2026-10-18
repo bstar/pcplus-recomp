@@ -2,9 +2,10 @@
 
 The source-only `KEYBOARD.EXE` links nine recovered PCPlus 2.01 resident routines
 and a small maintained DOS host. It exercises the local keyboard acquisition and
-key-word normalization layer. Terminal-emulation-specific outbound escape
-sequences, key maps, macros, and the full application event loop remain separate
-reconstruction work.
+key-word normalization layer. The live terminal now integrates its original raw
+read path with a separate recovered79-slot classifier, strict explicit KBD import
+and a bounded UART sender; see [LIVE_KEYBOARD.md](LIVE_KEYBOARD.md). Full KEY
+macros and original application UI remain separate reconstruction work.
 
 Build and verify with the pinned toolchain:
 
@@ -59,6 +60,18 @@ functions. The normalizer retains special Backspace, scan-only and selected
 extended words while reducing most ordinary characters to their low byte. Its
 comparison with 372ah is **signed**, and this behavior is preserved.
 
+The recovered36-byte initialization helper7916 reads physical BDA0496 bit4 to
+select mode0/10h when passed a nonzero AUTO argument. Startup calls it with1;
+this is distinct from manually forcing enhanced services. The live `/B:AUTO`
+default uses that helper, while `/B:STANDARD` and `/B:ENHANCED` are maintained
+overrides. See [KEYBOARD_DETECTION.md](KEYBOARD_DETECTION.md).
+
+The live terminal uses `keyboard_read`, retaining E0 keypad identities as the
+original terminal dispatcher expects. It does not apply the second UI
+normalizer before raw classification. Alternate low-E0 keypad words1ce0/35e0
+map to e00d/e02f through explicit maintained aliases. The normalized API remains
+available for callers that need the original UI convention.
+
 The original queue peek base is DS:5df4h, while dequeue uses DS:5e00h, twelve
 bytes later. Neither read routine advances the queue index; the producer has
 not been reconstructed. The host preserves the separation and tests it rather
@@ -66,9 +79,19 @@ than assuming a conventional ring buffer. The host's debug callback only counts
 invocations; the original callback at 57aeh creates a diagnostic display and
 requires application UI services outside this unit.
 
-## Next integration
+## Integration and remaining scope
 
-Supply real application queue state and recover its producer before exposing a
-queue injection API. Recover key-to-terminal-byte translation and configurable
-maps before connecting keyboard output to the UART. Integrate the unit into the
-application event loop with the ANSI work, and repeat on physical DOS hardware.
+The live application disables the private queue and uses one foreground BIOS
+reader after a successful peek. Raw classification covers all79 slot identities;
+maintained network defaults and explicit `/K` profile import provide their
+contents. DECCKM updates matching arrow strings across the selected map, and
+the bounded sender validates complete bindings before queuing wire bytes.
+Detailed original table/consumer evidence is in
+[KEYBOARD_MAPPING.md](KEYBOARD_MAPPING.md) and [KEY_MAPPING.md](KEY_MAPPING.md).
+
+Ten actual DOS live-key cases pass for navigation, F11/F12 and Shift/Ctrl
+variants, synthetic ANSI/VT220 KBD import, binary NUL and invalid-file rejection.
+Original queue production, historical factory mapping tables, complete keymap
+editing and KEY macro execution remain open. Physical keyboard/BIOS validation
+is still required; DOSBox key delivery does not establish every XT/AT firmware
+combination.

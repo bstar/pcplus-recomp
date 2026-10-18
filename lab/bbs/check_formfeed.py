@@ -65,14 +65,17 @@ def main():
  def profiles():
   for profile,da in [(4,b'\x1b[?62;2c'),(6,b'\x1b[?1;2c')]:
    t=Terminal(a.binary,a.map);t.put('csi_terminal_id',profile);t.put('attributes_monochrome',int(profile==6));t.put('terminal_dec_keys',1)
+   t.call('terminal_initialize_keymap')
    t.position(9,19);t.feed(b'\x1b[0c\x1b[5n\x1b[6n')
    reply=bytes(t.uc.mem_read(t.symbols['terminal_tx_buffer'],t.get('terminal_tx_count')))
    assert reply==da+b'\x1b[0n\x1b[10;20R',(profile,reply)
    # Original startup calls keyboard_mode('['); both profiles are DEC-key enabled.
    t.call('terminal_keyboard_mode',[ord('[')])
-   assert bytes(t.uc.mem_read(t.symbols['terminal_keymap'],4))==b'\x1b[A\0'
-   t.feed(b'\x1b[?1h');assert bytes(t.uc.mem_read(t.symbols['terminal_keymap'],4))==b'\x1bOA\0'
-   t.feed(b'\x1b[?1l');assert bytes(t.uc.mem_read(t.symbols['terminal_keymap'],4))==b'\x1b[A\0'
+   for slot in (50,72):assert bytes(t.uc.mem_read(t.symbols['terminal_keymap']+slot*12,4))==b'\x1b[A\0'
+   t.feed(b'\x1b[?1h')
+   for slot in (50,72):assert bytes(t.uc.mem_read(t.symbols['terminal_keymap']+slot*12,4))==b'\x1bOA\0'
+   t.feed(b'\x1b[?1l')
+   for slot in (50,72):assert bytes(t.uc.mem_read(t.symbols['terminal_keymap']+slot*12,4))==b'\x1b[A\0'
  check('vt220-and-ansi-profile-da-status-cursor-and-decckm-real-paths',profiles)
  out=ROOT/'build/bbs-lab/synchronet/formfeed-build';out.mkdir(parents=True,exist_ok=True)
  result={'binary_sha256':hashlib.sha256(a.binary.read_bytes()).hexdigest(),'cases':cases,'wire_capture':str(a.wire) if a.wire else 'not selected; public tests use synthetic data','scope':'Actual linked input-dispatch/control/renderer DOS instructions and declared BIOS model. Profile4(VT220) FF linefeeds; profiles6/7(ANSI/IBM PC) clear the physical screen and home to origin. Source-owned state fixtures cover these specific branches; full profile initialization is not recovered.'}

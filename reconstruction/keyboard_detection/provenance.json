@@ -1,0 +1,21 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "start": "0x7916",
+  "end_exclusive": "0x793a",
+  "source_file_offset": 35606,
+  "bytes": 36,
+  "sha256": "800c3dec885db3487a7ad62f18488e2444b6cb968edb7e8d3be2fccc1590f08b",
+  "decoding": "ndisasm16 verified original routine; not present in saved automatic resident procedure exports",
+  "rea_caller": {
+    "overlay": 3,
+    "procedure": "0x1d7a6",
+    "call": "0x1d7bb",
+    "argument": 1,
+    "evidence_id": "ev_010f4b1aba1b5e1663beb661884ee38b3cf578c480c658a095be0412661f557b"
+  },
+  "state": {
+    "keyboard_bios_mode": "DS7ac0",
+    "detection": "physical0496 bit10h"
+  },
+  "reference_search": "Selected resident and31 code overlays searched for direct encoded7ac0 references; only mode read7836/7842 and writes791b/7932 found. This is not proof against indirect alias writes."
+}

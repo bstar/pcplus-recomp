@@ -1,72 +1,114 @@
 {
   "passed": true,
-  "scope": "Current interactive terminal and14 application component/diagnostic outputs; complete PCPlus application remains unfinished.",
-  "source_snapshot": "Maintained public source snapshot including current unstaged application source; original EXE/install/analysis databases and previous build outputs absent.",
-  "source_snapshot_sha256": "d54ef8fc2fc3f9a277cf66cb50c7741d3964f9403f6efa446131bb8faead71a0",
-  "source_file_count": 609,
+  "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
+  "source_snapshot_sha256": "f47d682d935e9a543d808471d3ed5ea4d3f61be7ef9e26642b15bc13bb2bf25c",
+  "source_file_count": 675,
+  "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
+  "excluded_top_level_paths": [
+    ".git",
+    "analysis",
+    "build",
+    "install",
+    "original",
+    "originals"
+  ],
   "original_executable_present": false,
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "08cdd0eabdffad41c69dd35fd014b95399a45bd06d14830d239e5108c31963e2",
-  "toolchain": "Pinned Nix development shell (nix/flake.lock); NASM/Open Watcom DOS8086 small model where applicable.",
-  "output_count": 14,
+  "build_log_sha256": "766ea15744af6bfbe33a0b83fb0404f5049378bb462d5898da86ac01757e6b7e",
+  "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
+  "proof_artifacts": "build/keyboard-application-source-proof/{snapshot.json,build.log,result.json}",
+  "source_checkout": "/tmp/pcplus-source-proof-84019437-z45zfnym/checkout",
+  "scope_note": "Snapshot taken after final runtime freeze84019437; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
+  "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
+  "scope": "Current interactive terminal and17 application/component diagnostic outputs; complete PCPlus application remains unfinished.",
+  "output_count": 17,
   "outputs": {
     "terminal/TERMINAL.EXE": {
-      "sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
-      "matches_workspace": true
+      "sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+      "matches_workspace": true,
+      "workspace_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b"
     },
     "config-dos/CONFIG.EXE": {
       "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
-      "matches_workspace": true
+      "matches_workspace": true,
+      "workspace_sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78"
     },
     "config-dos/CFGFAULT.EXE": {
       "sha256": "e0a307b0c064cdb210889c8e57cead17f5bf4dde523b8679e5e96a5cfa9cd82a",
-      "matches_workspace": true
+      "matches_workspace": true,
+      "workspace_sha256": "e0a307b0c064cdb210889c8e57cead17f5bf4dde523b8679e5e96a5cfa9cd82a"
     },
     "config-replace/REPLACE.EXE": {
       "sha256": "14daea33ed04c9639633f4ede3c951745c2c4ef36cf10f7b9d790265facb11a6",
-      "matches_workspace": true
+      "matches_workspace": true,
+      "workspace_sha256": "14daea33ed04c9639633f4ede3c951745c2c4ef36cf10f7b9d790265facb11a6"
     },
     "config-replace/REPFAULT.EXE": {
       "sha256": "cc19bb968bb1ea389c6841f9ae935bdd69960841cb6a604b53eb003ee12fbc46",
-      "matches_workspace": true
+      "matches_workspace": true,
+      "workspace_sha256": "cc19bb968bb1ea389c6841f9ae935bdd69960841cb6a604b53eb003ee12fbc46"
     },
     "config-abi/ABI.EXE": {
       "sha256": "ee150a767d6072441b8727c246040f4fb02676c435ff7dd0104de46125b3adbe",
-      "matches_workspace": true
+      "matches_workspace": true,
+      "workspace_sha256": "ee150a767d6072441b8727c246040f4fb02676c435ff7dd0104de46125b3adbe"
     },
     "ui-windows/WINDOWS.EXE": {
       "sha256": "fbf6cabd1539075134062d99e4477c7eb7a229325e6fa50791adc11867420671",
-      "matches_workspace": true
+      "matches_workspace": true,
+      "workspace_sha256": "fbf6cabd1539075134062d99e4477c7eb7a229325e6fa50791adc11867420671"
     },
     "modem-commands/MODEMCMD.EXE": {
       "sha256": "f7bcd936b4a8966c2b79352147db4c3d4f3250630f7703852291b78020f7e9e3",
-      "matches_workspace": true
+      "matches_workspace": true,
+      "workspace_sha256": "f7bcd936b4a8966c2b79352147db4c3d4f3250630f7703852291b78020f7e9e3"
     },
     "modem-responses/MODEMRSP.EXE": {
       "sha256": "ee2c7450aff4d1a8df36e9e3040d187a1db14f0463f93958a8dfeaaadc573414",
-      "matches_workspace": true
+      "matches_workspace": true,
+      "workspace_sha256": "ee2c7450aff4d1a8df36e9e3040d187a1db14f0463f93958a8dfeaaadc573414"
     },
     "modem-send/MODEMSND.EXE": {
       "sha256": "e7cfa5511c5a0fa10b1158f6137eeb585fef1aa8c20bf3b206e435aef14f4809",
-      "matches_workspace": true
+      "matches_workspace": true,
+      "workspace_sha256": "e7cfa5511c5a0fa10b1158f6137eeb585fef1aa8c20bf3b206e435aef14f4809"
     },
     "directory-dial/DIRDIAL.EXE": {
       "sha256": "84f502735fd9e87ff4d22ff58702bdedf01847e6c53b3b4442902d490a77a0f2",
-      "matches_workspace": true
+      "matches_workspace": true,
+      "workspace_sha256": "84f502735fd9e87ff4d22ff58702bdedf01847e6c53b3b4442902d490a77a0f2"
     },
     "directory-browser/BROWSER.EXE": {
       "sha256": "53251800047d9e13d0df3934df8f4b1662dd0d068e636636ebdf825589e85a7f",
-      "matches_workspace": true
+      "matches_workspace": true,
+      "workspace_sha256": "53251800047d9e13d0df3934df8f4b1662dd0d068e636636ebdf825589e85a7f"
     },
     "directory-editor/EDITOR.EXE": {
       "sha256": "5f71e54cb4648e35bf686c75106aafefd5c2f0c6fd864034e66db604536d37cc",
-      "matches_workspace": true
+      "matches_workspace": true,
+      "workspace_sha256": "5f71e54cb4648e35bf686c75106aafefd5c2f0c6fd864034e66db604536d37cc"
     },
     "directory-accounting/DIRSTATS.EXE": {
       "sha256": "8dbe12f0b2b365cd1d6d986b82122251c22230f0e973e22faaf2fb51807faae4",
-      "matches_workspace": true
+      "matches_workspace": true,
+      "workspace_sha256": "8dbe12f0b2b365cd1d6d986b82122251c22230f0e973e22faaf2fb51807faae4"
+    },
+    "keyboard-mapping/MAPPING.EXE": {
+      "sha256": "0816a43d53bb5e2602a00b8f56e795e50d40c8d8b8ad155aa827d74998e8f977",
+      "matches_workspace": true,
+      "workspace_sha256": "0816a43d53bb5e2602a00b8f56e795e50d40c8d8b8ad155aa827d74998e8f977"
+    },
+    "keyboard-detection/KBDMODE.EXE": {
+      "sha256": "5e268db564750f1525016e4b89b3b64525a2dfb75587d755b9da5fcc93a813a0",
+      "matches_workspace": true,
+      "workspace_sha256": "5e268db564750f1525016e4b89b3b64525a2dfb75587d755b9da5fcc93a813a0"
+    },
+    "line-edit/LINES.EXE": {
+      "sha256": "7a10bc8c2a2883cdb447933dd1628647d2a61ba5fe133c94d5cbf21ec018a9b6",
+      "matches_workspace": true,
+      "workspace_sha256": "7a10bc8c2a2883cdb447933dd1628647d2a61ba5fe133c94d5cbf21ec018a9b6"
     }
   },
   "build_scripts": [
@@ -81,24 +123,9 @@
     "standalone/build_directory_dial.py",
     "standalone/build_directory_browser.py",
     "standalone/build_directory_editor.py",
-    "standalone/build_directory_accounting.py"
-  ],
-  "terminal_metadata_reconciliation": {
-    "scope": "Terminal-only rebuild after a limitation-string whitespace correction; the original 14-output proof remains recorded separately.",
-    "builder_before_sha256": "97011c0b7c56dfc60c6aeb216755ee51703948b0e8d1bd150da152d407ec7f83",
-    "builder_after_sha256": "9fa613b50e98c8e240ca855df165629ba0654bb26a353ed0edf593b381919c31",
-    "passed": true,
-    "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
-    "matches_workspace_binary": true,
-    "matches_workspace_manifest": true,
-    "data_stack_bytes": 51440,
-    "rebuild_log_sha256": "a2873c330c30b6625749de5988452de039128537a7d53e2439700fd61fde01cf",
-    "other_outputs_rebuilt": false,
-    "only_source_change": {
-      "file": "standalone/build_terminal.py",
-      "before": "Native16-field",
-      "after": "Native 16-field",
-      "effect": "Limitation description whitespace only; no build inputs or commands changed."
-    }
-  }
+    "standalone/build_directory_accounting.py",
+    "standalone/build_keyboard_mapping.py",
+    "standalone/build_keyboard_detection.py",
+    "standalone/build_line_edit.py"
+  ]
 }

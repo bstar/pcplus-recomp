@@ -15,6 +15,8 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 | `build/standalone/SERIAL.EXE` | Maintained assembly source only | Independently linked DOS diagnostic exercising the recovered UART module |
 | `build/ansi/PARSER.EXE` | Maintained assembly source only | Independently linked parameter-reader diagnostic with bounds checks |
 | `build/keyboard/KEYBOARD.EXE` | Maintained assembly source only | Recovered BIOS keyboard acquisition/normalization diagnostic |
+| `build/keyboard-mapping/MAPPING.EXE`, `build/keyboard-detection/KBDMODE.EXE` | Recovered and maintained source only | Raw key mapping and BDA-based enhanced BIOS selection diagnostics |
+| `build/line-edit/LINES.EXE` | Recovered and maintained source only | Original insert/delete-line helpers and controlled historical wait diagnostic |
 | `build/csi/CSI.EXE` | Maintained assembly source only | Combined ESC, parameter, CSI, attribute and cursor self-check |
 | `build/{escape,attributes,screen,text,reports,erase}/` | Maintained assembly source only | Separate DOS diagnostics for each recovered component |
 | `build/{scroll,modes,render,cursor-shape}/` | Maintained assembly source only | Scroll, mode, character-rendering and BIOS cursor-style diagnostics |
@@ -54,8 +56,15 @@ after UART restoration at exit; the PRM remains read-only. See
 [live directory selection](docs/DIRECTORY_LIVE.md). Escape cancels, Alt-H hangs up, and
 Alt-D repeats the target after cleanup. See [connection management](docs/CONNECTION.md).
 Use `HARD` for RTS/CTS or `NONE` to disable flow control; match the modem's
-settings. Alt-X exits. ASCII keys and four cursor keys are connected to the
-recovered serial and ANSI engine. This executable does not yet provide the
+settings. Alt-X exits. Navigation, keypad and function/modifier keys now use all79
+recovered binding slots with maintained network defaults. `/K:MYKEYS.KBD`
+imports the effective profile from an explicit file; `/B:AUTO` detects enhanced
+BIOS support through the original BDA check, with STANDARD/ENHANCED overrides.
+See [live keyboard behavior](docs/LIVE_KEYBOARD.md). Recognized original local
+commands without an implemented handler stop explicitly with errorlevel4.
+`/A:NETWORK` is the default CSI M delete-line policy; `/A:ORIGINAL` selects the
+bounded serviced historical alternate wait. See
+[live line editing](docs/LIVE_LINE_EDIT.md). This executable does not yet provide the
 complete original menus, directory cycles, file transfers or scripting engine.
 Stored passwords remain metadata and are never automatically sent; SCRIPT/KEY/
 META bindings remain unsupported. An exit-time accounting save problem reports
@@ -63,6 +72,11 @@ errorlevel9 unless a prior application error exists; inspect retained
 `PCPSTG.$$$` / `PCPBAK.$$$` recovery files as described in the editing guide.
 Local Synchronet, ENiGMA½ and Mystic interoperability work is documented in
 [lab/bbs/README.md](lab/bbs/README.md).
+
+The initial key defaults are authored for network use; they are not recovered
+factory KBD tables. KBD slot strings and KEY action/macro files are different
+formats. Full KEY macros, settings, transfers and original application menus
+remain part of the reconstruction goal.
 
 Copy `build/standalone/SERIAL.EXE` to DOS and run:
 
@@ -144,6 +158,14 @@ maintained date patch fixes the original year2000 counter overwrite. Full
 settings/original directory menus and automatic cycles remain open. See
 [editing and accounting](docs/DIRECTORY_EDITING.md), [directory](docs/DIRECTORY.md),
 [modem settings](docs/MODEM_CONFIGURATION.md) and [window services](docs/UI_WINDOWS.md).
+
+`test-keyboard_mapping`, `test-keyboard-mapping-raw` and `test-keyboard_detection`
+check recovered classification and BIOS selection. `test-keymap test-keymap-dos`
+check lossless KBD/KEY codecs and strict DOS import. `test-line_edit` checks
+recovered line helpers; `test-terminal` also runs linked key output/raw-key and
+live line-policy regressions plus actual DOS key delivery. See
+[mapping evidence](docs/KEYBOARD_MAPPING.md), [file formats](docs/KEY_MAPPING.md)
+and [line recovery](docs/LINE_EDIT.md).
 
 ## Full-application compatibility build
 

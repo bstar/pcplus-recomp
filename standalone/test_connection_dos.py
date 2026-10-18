@@ -6,7 +6,7 @@ from modem_fixtures import fixture
 from test_terminal import SAMPLER
 from directory_test_support import accounting_check
 ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EXE'
-def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False):
+def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None):
  out=ROOT/'build/connection-dos'/name;out.mkdir(parents=True,exist_ok=True)
  for p in ('PASS.TXT','FAIL.TXT','BEFORE.BIN','AFTER.BIN','SCREEN.BIN'):(out/p).unlink(missing_ok=True)
  # These are owned synthetic fixture directories, never a user's directory.
@@ -15,6 +15,9 @@ def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,
  payload=prm if prm is not None else fixture(timeout=2 if mode=='silence' else 5)
  (out/'TEST.PRM').write_bytes(payload)
  if directory is not None:(out/'TEST.DIR').write_bytes(directory)
+ for filename,data in (files or {}).items():
+  assert Path(filename).name==filename and filename not in ('TEST.DIR','TEST.PRM')
+  (out/filename).write_bytes(data)
  sampler=SAMPLER;base=(0x3f8,0x2f8,0x3e8,0x2e8)[com-1]
  for offset in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+offset),hex(base+offset))
  (out/'sampler.asm').write_text(sampler)
@@ -106,6 +109,7 @@ exit
   delta=int(mode in ('success','hangup','redial','direct')) if accounting_delta is None else accounting_delta
   checks['directory_expected_updates_only']=accounting_check(directory if directory_expected is None else directory_expected,(out/'TEST.DIR').read_bytes(),directory_entry,delta)
  if recovery_conflict:checks['recovery_file_preserved']=(out/'PCPBAK.$$$').read_bytes()==b'SYNTHETIC RECOVERY CONFLICT'
+ for filename,data in (files or {}).items():checks['fixture_unchanged_'+filename]=(out/filename).read_bytes()==data
  if mode in ('direct','reject','cancel'):checks['no_modem_commands']=not commands and (not wire if mode!='direct' else b'ATD' not in wire and b'ATZ' not in wire)
  else:checks['actual_init_and_dial']=commands[:2]==['ATZ',('ATD'+target.decode('ascii'))]
  if mode in ('success','hangup','redial','direct'):

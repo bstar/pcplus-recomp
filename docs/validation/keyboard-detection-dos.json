@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "5e268db564750f1525016e4b89b3b64525a2dfb75587d755b9da5fcc93a813a0",
+  "scope": "Actual source-only DOS read-only BDA keyboard detection, AUTO versus current BDA and standard reset; no UART or enhanced INT16 probe."
+}
