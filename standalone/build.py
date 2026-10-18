@@ -8,7 +8,8 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 output = ROOT / 'build/standalone'
 output.mkdir(parents=True, exist_ok=True)
-sources = [('uart', ROOT / 'reconstruction/uart/core.asm'),
+sources = [('api', ROOT / 'src/uart/api.asm'),
+           ('uart', ROOT / 'reconstruction/uart/core.asm'),
            ('data', ROOT / 'standalone/data.asm'),
            ('services', ROOT / 'standalone/services.asm'),
            ('serial', ROOT / 'standalone/serial.asm')]
@@ -30,7 +31,7 @@ manifest = {
     'sources': {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs},
     'limitations': ['Serial module diagnostic; not the complete PCPlus application.',
                     'Host services implement DOS seconds; presentation callbacks intentionally do nothing.',
-                    'COM1 IRQ4, 38400 8N1; original serial behavior retained.'],
+                    'COM1 IRQ4, 38400 8N1; source-only fixes guard overflow and defer ISR flow transmission.'],
 }
 (output / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
 print('Built', manifest['binary'], manifest['binary_sha256'], flush=True)

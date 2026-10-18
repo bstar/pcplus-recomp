@@ -186,3 +186,21 @@ XOFF pause and XON resume. Hardware mode uses the emulator's asserted CTS;
 CTS stall/recovery and physical UART validation remain open. Summaries and exact
 binary hashes are committed in `../docs/validation`; full local logs are ignored.
 See `../docs/UART.md` for calling conventions and inherited limitations.
+
+## Driver edge cases and ANSI parameter recovery
+
+The maintained OMF driver now has controlled replay coverage for receive
+watermarks, overflow in all three flow modes, CTS recovery, bounded output under
+CTS/THRE/XOFF stalls, DOS-second rollover and UART/vector restoration. The tests
+reproduced an original hardware-flow overflow (count 4104 after eight excess
+bytes). Source-only builds guard every ring insertion, count drops and drain
+excess input. XON/XOFF transmission is queued for the foreground instead of
+waiting inside the ISR. The diagnostic now uses a bounded write API and remains
+responsive during output stalls. The exact baseline build is preserved.
+
+The overlay-12 ANSI parameter reader at CS:e3f2 was recovered as 175 bytes of
+NASM source and verified against original file offset 94370. The compatibility
+build now reassembles 1,320 total bytes across three units; its final executable
+still differs from the original only at the historical two-byte CSI-q patch.
+This parameter reader is not yet an independently linked complete parser.
+See `../docs/ANSI.md` and `../PLAN.md` for remaining work and evidence limits.

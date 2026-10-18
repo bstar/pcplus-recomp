@@ -26,9 +26,17 @@
       "sha256": "cac3b64b4124d89b51def2913c187db7517d1ae30e2903f47f8ff2366779e7e5",
       "original_relocation_sites": [],
       "matched_original": true
+    },
+    {
+      "source": "reconstruction/ansi/parameters.asm",
+      "file_offset": 94370,
+      "bytes": 175,
+      "sha256": "203cb1003edbf4c3992609fb9c3c41389e585b3ad7631675f31d71a535cf5c92",
+      "original_relocation_sites": [],
+      "matched_original": true
     }
   ],
-  "original_bytes_rebuilt_from_source": 1145,
+  "original_bytes_rebuilt_from_source": 1320,
   "handler_replay_tests": [
     {
       "case": "baseline-q-one-parameter",

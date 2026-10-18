@@ -15,11 +15,13 @@ wordvar uart_port_index, 0
 wordvar uart_software_flow, 0
 wordvar uart_hardware_flow, 0
 wordvar uart_tx_paused, 0
+bytevar uart_flow_pending, 0
 bytevar uart_xoff_sent, 0
 bytevar uart_rts_lowered, 0
 wordvar uart_rx_write, uart_rx_buffer
 wordvar uart_rx_read, uart_rx_buffer
 wordvar uart_rx_last, uart_rx_buffer+4095
+wordvar uart_rx_dropped, 0
 wordvar uart_rx_count, 0
 wordvar uart_rx_mask, 0xff
 wordvar uart_port_lcr, 0x3fb

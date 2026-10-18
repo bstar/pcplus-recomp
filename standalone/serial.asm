@@ -8,7 +8,7 @@ GROUP DGROUP _DATA _BSS STACK
 extern uart_save_hardware_state, uart_restore_hardware_state
 extern uart_install_interrupt, uart_restore_interrupt, uart_disable, uart_enable
 extern uart_clear_receive_buffer, uart_set_baud_divisor, uart_set_line_control
-extern uart_receive_byte, uart_transmit_byte, uart_transmit_cl
+extern uart_receive_byte, uart_try_write, uart_poll_flow
 extern uart_software_flow, uart_hardware_flow, stack_top
 extern uart_rx_write, uart_rx_read, uart_rx_count, uart_rx_buffer
 extern uart_tx_paused, uart_xoff_sent, uart_rts_lowered
@@ -73,21 +73,29 @@ extern uart_tx_paused, uart_xoff_sent, uart_rts_lowered
  mov si,ready
  call send_string
 .loop:
+ call uart_poll_flow
  mov ah,1
  int 0x16
  jz .receive
  mov ah,0
  int 0x16
  cmp al,27
- je .exit
+ je serial_exit
 .receive:
+ cmp byte [pending],0
+ jne .write
  call uart_receive_byte
  cmp ax,0xffff
  je .loop
- push ax
- call uart_transmit_byte
+ mov [pending_byte],al
+ mov byte [pending],1
+.write:
+ mov al,[pending_byte]
+ call uart_try_write
+ jc .loop
+ mov byte [pending],0
  jmp .loop
-.exit:
+serial_exit:
  call uart_disable
  mov ax,0x0c
  push ax
@@ -116,12 +124,31 @@ send_string:
  lodsb
  or al,al
  jz .done
- mov cl,al
- call uart_transmit_cl
- jmp send_string
+.retry:
+ call uart_try_write
+ jnc send_string
+ ; Remain responsive even if the UART never becomes ready at startup.
+ push ax
+ mov ah,1
+ int 0x16
+ jz .no_key
+ mov ah,0
+ int 0x16
+ cmp al,27
+ je .abort
+.no_key:
+ pop ax
+ jmp .retry
+.abort:
+ pop ax
+ ; Discard this subroutine's return address before the common cleanup.
+ add sp,2
+ jmp serial_exit
 .done:
  ret
 SEGMENT _DATA public class=DATA use16
+pending: db 0
+pending_byte: db 0
 previous_offset: dw 0
 previous_segment: dw 0
 ready: db 'LOC-UART-READY',13,0

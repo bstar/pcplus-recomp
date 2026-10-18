@@ -1,0 +1,16 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "overlay": 12,
+  "file_offset": 94370,
+  "start": 58354,
+  "end": 58529,
+  "bytes": 175,
+  "instructions": 77,
+  "sha256": "203cb1003edbf4c3992609fb9c3c41389e585b3ad7631675f31d71a535cf5c92",
+  "matched_original": true,
+  "evidence_id": "ev_eee26e941827e00c190eae7fd9e329a0be13e93287e5be2fd0722da4241d6207",
+  "limitations": [
+    "Exact original-address recovery; not yet an independently linked parser.",
+    "Original digit collection and parameter writes are unbounded; maintained module requires regressions and bounds."
+  ]
+}

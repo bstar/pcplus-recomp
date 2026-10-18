@@ -56,12 +56,21 @@ by its special second argument, not by truncating a 115200 literal.
   state and transmit. This inherited policy is not an indefinite XOFF wait.
 - The independent BIOS receive timeout counts 36 BIOS tick changes. These are
   distinct clocks; decompiler pseudocode incorrectly removed the BIOS wait path.
-- Several waits spin indefinitely if transmitter readiness or CTS never arrives
-  and no abort is supplied. The diagnostic's abort callback returns zero, leaving
-  keyboard handling to its main loop; it cannot escape a blocked hardware wait.
-- The original high-water flow branches and FIFO/IRQ behavior need further tests,
-  especially a peer that ignores backpressure. No claim of overflow robustness
-  or support for every UART is made.
+- The recovered legacy transmit entrypoints retain their original blocking waits.
+  The maintained diagnostic uses `uart_try_write` instead, so keyboard handling
+  remains active during CTS, XOFF and transmitter-ready stalls.
+- Controlled replay reproduced count 4104 after filling the ring and sending eight
+  extra bytes with hardware flow enabled. The maintained OMF build now guards
+  every ring insertion and drains/discards excess UART bytes without overwriting
+  unread data. `uart_rx_dropped` counts discarded bytes, saturating at 65535.
+  The exact flat build retains the original for comparison.
+- Maintained OMF receive paths queue XON/XOFF instead of spinning on THRE in the
+  interrupt. The foreground loop calls `uart_poll_flow` to send pending control.
+  A later XON supersedes a not-yet-sent XOFF when the buffer drains quickly.
+- Nine controlled replay cases now cover watermarks, overflow in all three modes,
+  CTS recovery, bounded CTS/THRE/XOFF stalls, deferred flow, DOS-second rollover,
+  divisor settings and hardware/vector restoration. Physical FIFO/IRQ behavior
+  remains unverified.
 
 The diagnostic's host services return DOS seconds and omit screen-save,
 message and bell presentation. They are explicitly new host implementations,
@@ -80,3 +89,18 @@ synthetic input. Selected exports are retained in `docs/evidence/uart`.
 Static exports establish original instructions; DOSBox-X tests establish only the
 specific exercised runtime paths. A full source rebuild and physical-device
 validation remain incomplete.
+
+## Maintained foreground API
+
+`src/uart/api.asm` exports two near-call services under the same DS=SS contract.
+`uart_try_write` takes AL and preserves AX/DX. CF=0 means the byte was submitted;
+CF=1 means CTS, software flow or transmitter readiness prevented it, with no
+submission. The caller retains the byte and returns to its event loop.
+`uart_poll_flow` preserves registers and FLAGS and performs one bounded attempt
+to send pending XON/XOFF. Call it regularly from the foreground even when normal
+output is blocked. The diagnostic keeps a pending output byte and continues to
+check the keyboard while retrying. Its startup banner also uses the bounded API.
+
+These source-only fixes are not inserted into the original-size compatibility
+candidate. That candidate retains original UART behavior and only the historical
+two-byte CSI-q fix. The maintained driver is intended for the full source rebuild.

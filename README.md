@@ -2,6 +2,7 @@
 
 An incremental source reconstruction of ProComm Plus 2.01, focused first on
 serial communication, ANSI terminal handling and BBS compatibility.
+The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 
 **This is not yet a complete PCPlus source rebuild.** There are two outputs:
 
@@ -44,9 +45,11 @@ Run the bounded, headless DOSBox-X integration suite:
 ./tools/build test
 ```
 
-The test sends binary data across the 4096-byte receive-ring boundary, checks
-XON/XOFF transmit pause/resume and checks DOS exit, IRQ restoration and ring
-invariants. Emulator results do not establish physical modem/BBS compatibility.
+The test first replays the linked driver with controlled UART/PIC/DOS state,
+including overflow, flow-control watermarks, CTS/transmitter stalls, timeouts and
+hardware restoration. It then sends binary data across the 4096-byte receive-ring
+boundary in DOSBox-X, checks XON/XOFF transmit pause/resume and checks DOS exit,
+IRQ restoration and ring invariants. Use `./tools/build test-driver` for replay only. Emulator results do not establish physical modem/BBS compatibility.
 Test artifacts and exact executable hashes are recorded under `build/serial-tests`.
 
 ## Full-application compatibility build
@@ -65,7 +68,7 @@ place your supporting installation files, including ASPCOMP.EXE, in
 ./tools/pcplus-run
 ```
 
-The compatibility build verifies and inserts 1,145 serial source bytes into the
+The compatibility build verifies and inserts 1,320 serial/parser source bytes into the
 original container, then replaces exactly two bytes using the archived Datastorm
 TECH_NET recipe. It retains the original program's other code and resources.
 The launcher uses a separate private installation under `reconstruction/lab`.
@@ -77,6 +80,8 @@ startup script and executable are refreshed on launch.
 - `reconstruction/uart/core.asm`: recovered resident UART block, with exact
   baseline and relocatable OMF modes sharing the same instruction source.
 - `reconstruction/uart/layout.inc`: original DS addresses versus linkable symbols.
+- `src/uart/api.asm`: bounded transmit and foreground flow-control service.
+- `reconstruction/ansi/parameters.asm`: 175-byte exact recovery of the ANSI parameter reader.
 - `standalone/`: newly written DOS host, state allocation, host services and tests.
 - `docs/UART.md`: interfaces, observed behavior, evidence and known limitations.
 - `analysis/`: REA MCP client, binary/overlay analysis scripts and evaluation.
@@ -87,8 +92,8 @@ deploy them. Decompiled pseudocode is evidence, not recovered original source.
 
 ## Next milestones
 
-1. Expand driver tests to flow-control watermarks, receive overflow and interrupt
-   edge cases; validate a physical UART and the intended Wi-Fi modem.
+1. Extend driver validation to physical UARTs and the intended Wi-Fi modem;
+   controlled watermark, overflow and stall regressions now pass.
 2. Recover the terminal parser and keyboard module behind explicit interfaces.
 3. Reconstruct application startup, settings, UI, dialing, transfers and scripting.
 4. Link the complete application from source, removing the original executable

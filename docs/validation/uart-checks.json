@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "binary_sha256": "a6fd6cd685b5777b06766cbadf458428eae05f099e10f5e13540630c41b2937f",
+  "cases": [
+    {
+      "case": "empty-binary-wrap-unreceive-clear",
+      "passed": true
+    },
+    {
+      "case": "software-flow-high-low-water-and-control-bytes",
+      "passed": true
+    },
+    {
+      "case": "hardware-flow-high-low-water-and-cts-recovery",
+      "passed": true
+    },
+    {
+      "case": "receive-overflow-none",
+      "passed": true
+    },
+    {
+      "case": "receive-overflow-software",
+      "passed": true
+    },
+    {
+      "case": "receive-overflow-hardware",
+      "passed": true
+    },
+    {
+      "case": "bounded-writes-and-flow-queue-under-cts-thre-xoff-stalls",
+      "passed": true
+    },
+    {
+      "case": "receive-and-xoff-timeouts-across-seconds-rollover",
+      "passed": true
+    },
+    {
+      "case": "baud-line-irq-and-hardware-restoration",
+      "passed": true
+    }
+  ],
+  "scope": "Linked source-only DOS code in Unicorn; controlled UART/PIC/DOS callbacks, no physical-device evidence."
+}

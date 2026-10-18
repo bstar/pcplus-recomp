@@ -17,20 +17,24 @@ def build_units(original):
     relocations = [struct.unpack_from("<HH", original, reloc_table + n * 4)
                    for n in range(reloc_count)]
     units = []
-    for source, lower, upper in [("core.asm", 0xaa5c, 0xaea7),
-                                  ("receive_timeout.asm", 0x5ca0, 0x5cce)]:
+    for source, lower, upper, file_offset, resident in [
+        ("uart/core.asm", 0xaa5c, 0xaea7, header_bytes + 0xaa5c, True),
+        ("uart/receive_timeout.asm", 0x5ca0, 0x5cce, header_bytes + 0x5ca0, True),
+        # Overlay 12 has no relocations. Offset verified by its loader manifest.
+        ("ansi/parameters.asm", 0xe3f2, 0xe4a1, 94370, False),
+    ]:
         target = directory / (Path(source).stem + ".bin")
         subprocess.run(["nasm", "-f", "bin", "-I", str(ROOT / "reconstruction/uart") + "/",
-                        "-o", str(target), str(ROOT / "reconstruction/uart" / source)], check=True)
+                        "-o", str(target), str(ROOT / "reconstruction" / source)], check=True)
         rebuilt = target.read_bytes()
-        expected = original[header_bytes + lower:header_bytes + upper]
+        expected = original[file_offset:file_offset + upper - lower]
         if rebuilt != expected:
             raise RuntimeError(f"Recovered source {source} no longer matches its baseline; review intentional changes separately")
-        units.append({"source": f"reconstruction/uart/{source}",
-                      "file_offset": header_bytes + lower, "bytes": len(rebuilt),
+        units.append({"source": f"reconstruction/{source}",
+                      "file_offset": file_offset, "bytes": len(rebuilt),
                       "sha256": hashlib.sha256(rebuilt).hexdigest(),
                       "original_relocation_sites": [seg * 16 + off for off, seg in relocations
-                                                     if lower <= seg * 16 + off < upper],
+                                                     if resident and lower <= seg * 16 + off < upper],
                       "matched_original": True, "blob": rebuilt})
         print(source, len(rebuilt), "bytes; exact baseline match")
     return units

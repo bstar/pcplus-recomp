@@ -62,9 +62,14 @@ def main():
             "relocation_records": relocations, "entrypoints": entrypoints,
             "sha256": hashlib.sha256(blob).hexdigest(),
         })
-    other = (ROOT / "pcplus-originals/PCPLUS-utils-2.01.EXE").read_bytes()
-    differences = [i for i, (a, b) in enumerate(zip(data, other)) if a != b]
-    assert len(other) == len(data)
+    other_file = ROOT / "pcplus-originals/PCPLUS-utils-2.01.EXE"
+    comparison = {"other": other_file.name, "status": "not-supplied"}
+    if other_file.exists():
+        other = other_file.read_bytes()
+        differences = [i for i, (a, b) in enumerate(zip(data, other)) if a != b]
+        comparison.update(status="compared", differing_offsets=differences,
+                          other_sha256=hashlib.sha256(other).hexdigest(),
+                          different_file_lengths=len(data) != len(other))
     manifest = {
         "source_sha256": EXPECTED, "source_file": str(SOURCE.relative_to(ROOT)),
         "resident_header_bytes": header[4] * 16,
@@ -73,19 +78,18 @@ def main():
         "loader_evidence_files": ["pcplus-main/functions/0x1b081-asm.json",
                                   "pcplus-main/functions/0x1afba-asm.json",
                                   "pcplus-main/functions/0x1b106-asm.json"],
-        "comparison": {"other": "PCPLUS-utils-2.01.EXE", "differing_offsets": differences,
-                       "different_file_lengths": len(data) != len(other)},
+        "comparison": comparison,
         "trampolines": trampolines, "overlays": overlays,
         "limitations": [
             "Overlay role names and source module names have not been recovered.",
             "Extracted bytes are original on-disk bytes; DOS segment relocations have not been applied.",
-            "Overlay routines have not yet been decompiled in their runtime parent/data context.",
+            "This parser does not perform decompilation or establish runtime behavior.",
             "The original source, object files, compiler identity and linker build script remain unknown.",
         ],
     }
     (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     print(f"Extracted {len(overlays)} overlays; validated all file boundaries and "
-          f"{len(trampolines)} entry trampolines. {len(differences)} differing bytes in second copy.")
+          f"{len(trampolines)} entry trampolines. Comparison: {comparison['status']}.")
 
 
 if __name__ == "__main__":

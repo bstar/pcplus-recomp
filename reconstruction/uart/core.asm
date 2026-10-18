@@ -6,6 +6,8 @@ BITS 16
 CPU 8086
 %ifdef UART_OMF
 SEGMENT _TEXT public class=CODE use16
+; Let NASM expand branches when maintained-code fixes change distances.
+%define short
 %else
 ORG 0xaa5c
 %endif
@@ -71,7 +73,11 @@ L_aaa6: jg short L_aa93                               ; original aaa6: jg 0xaa93
 L_aaa8: mov byte [uart_xoff_sent],0x0                         ; original aaa8: mov byte [0x7e17],0x0
 L_aaad: push ax                                       ; original aaad: push ax
 L_aaae: mov cl,0x11                                   ; original aaae: mov cl,0x11
+%ifdef UART_OMF
+    mov byte [uart_flow_pending],0x11
+%else
 L_aab0: call L_ad93                                   ; original aab0: call 0xad93
+%endif
 L_aab3: pop ax                                        ; original aab3: pop ax
 L_aab4: ret                                           ; original aab4: ret
 L_aab5: cmp byte [uart_rts_lowered],0x0                         ; original aab5: cmp byte [0x7e18],0x0
@@ -344,8 +350,23 @@ L_acd0: jnz short L_ad09                              ; original acd0: jnz 0xad0
 L_acd2: cmp word [uart_hardware_flow],0x0                         ; original acd2: cmp word [0x3356],0x0
 L_acd7: jnz short L_ad42                              ; original acd7: jnz 0xad42
 L_acd9: cmp word [uart_rx_count],0x1000                      ; original acd9: cmp word [0x8e20],0x1000
+%ifdef UART_OMF
+L_acdf: jz short L_ace1 ; Use the maintained overflow guard and counter.
+%else
 L_acdf: jz short L_acfa                               ; original acdf: jz 0xacfa
-L_ace1: mov [bx],al                                   ; original ace1: mov [bx],al
+%endif
+L_ace1:
+%ifdef UART_OMF
+    ; Source-build fix: RTS is advisory; never overwrite unread ring data.
+    cmp word [uart_rx_count],4096
+    jb omf_rx_store
+    cmp word [uart_rx_dropped],0xffff
+    je L_acf2
+    inc word [uart_rx_dropped]
+    jmp L_acf2
+omf_rx_store:
+%endif
+         mov [bx],al                                   ; original ace1: mov [bx],al
 L_ace3: inc word [uart_rx_count]                             ; original ace3: inc word [0x8e20]
 L_ace7: cmp bx,[uart_rx_last]                               ; original ace7: cmp bx,[0x7e1d]
 L_aceb: jz short L_ad04                               ; original aceb: jz 0xad04
@@ -377,7 +398,11 @@ L_ad22: jc short L_ace1                               ; original ad22: jc 0xace1
 L_ad24: push ax                                       ; original ad24: push ax
 L_ad25: mov byte [uart_xoff_sent],0x1                         ; original ad25: mov byte [0x7e17],0x1
 L_ad2a: mov cl,0x13                                   ; original ad2a: mov cl,0x13
+%ifdef UART_OMF
+    mov byte [uart_flow_pending],0x13
+%else
 L_ad2c: call L_ad93                                   ; original ad2c: call 0xad93
+%endif
 L_ad2f: pop ax                                        ; original ad2f: pop ax
 L_ad30: jmp short L_ace1                              ; original ad30: jmp 0xace1
 L_ad32: mov word [uart_tx_paused],0x1                         ; original ad32: mov word [0x39a6],0x1

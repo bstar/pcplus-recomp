@@ -3,6 +3,8 @@
 extern uart_port_index
 extern uart_software_flow
 extern uart_hardware_flow
+extern uart_rx_dropped
+extern uart_flow_pending
 extern uart_tx_paused
 extern uart_xoff_sent
 extern uart_rts_lowered
