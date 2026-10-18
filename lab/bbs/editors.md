@@ -518,3 +518,28 @@ keys but fails Home and Insert/overtype. The matched
 `editor-history-4ad7-buffer30` passes all seven audit and eight wire checks.
 Neither ENiGMA run saves a post. The buffering workaround is local evidence,
 with physical firmware and general TCP boundary guarantees still unverified.
+
+## Filename clipboard checkpoint
+
+Terminal `7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab`
+adds the serviced filename clipboard. Its75-command regression and64-output
+fresh-source proof pass. The independent clipboard tests exercise the feature;
+these stock editor rechecks use the unchanged ordinary editing recipes.
+
+Synchronet's first `editor-clipboard-7aa4-hard` attempt was rejected before
+editor entry because synthetic LABUSER had reached50 daily logons. Its DOS
+harness passed but editor audit failed, and both are retained. For
+`editor-clipboard-7aa4-hard-retry`, the lab temporarily added only the user's
+UEXEMPT_LOGONS bit through the stock User API, then restored the original zero
+exemption word. The retry passes all12 behavior and eight wire checks and aborts
+the draft. No editor implementation or security-level quota policy changed.
+[Fixture evidence](../../docs/validation/bbs-clipboard-logon-fixture.json) records
+before/active/restored values and source/artifact hashes. The helper is
+`synchronet_logon_fixture.py`; begin/end require a unique ignored lab record.
+
+ENiGMA `editor-clipboard-7aa4-immediate` enters the stock editor and emits all
+eight measured key sequences, but Home and Insert/overtype still fail. The
+explicit30ms `editor-clipboard-7aa4-buffer30` control passes all seven behavior
+checks and eight wire checks. Both close without saving a post. The pair keeps
+the same executable, recipe and serial configuration; TCP-boundary and physical
+modem limits remain. Both current reports preserve the preceding runtime cases.

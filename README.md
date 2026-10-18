@@ -52,7 +52,11 @@ of history, line/page navigation, case-insensitive search and a preserved live
 screen. Incoming input and terminal replies continue while browsing. Escape
 returns to the updated terminal. **W** appends the frozen history to a DOS file
 while incoming data continues; see [history export](docs/HISTORY_EXPORT.md) for
-path, cancellation and partial-write behavior. Filename clipboard remains open.
+path, cancellation and partial-write behavior. Alt-= opens the filename clipboard;
+C enters it from redisplay. A/E/D/U edit the list, Space tags, C selects screen
+filenames, R changes the separator, and P/S/T paste all/one/tagged entries.
+Single removal follows actual UART writes; Escape cancels unsent bytes. See
+[filename clipboard](docs/FILENAME_CLIPBOARD.md) for behavior and current limits.
 
 ## Build and run in DOS
 

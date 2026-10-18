@@ -2,6 +2,7 @@
  * DOS16 DS=SS; no heap, original resources, blocking input or UART ownership. */
 #include <dos.h>
 #include "../capture/capture_file.h"
+#include "../clipboard/clipboard_ui.h"
 typedef unsigned short word;
 typedef unsigned char byte;
 typedef struct context {
@@ -15,7 +16,7 @@ unsigned redisplay_export_pending=0;
 static byte __far *snapshot;
 static word __far *live;
 static word __far *view;
-static word length,top,visible,position,shape;
+static word length,top,visible,position,shape,direct_clipboard;
 static word query_size,query_edit,found,last_match;
 static char query[40];
 static word checkpoints[247];
@@ -118,7 +119,7 @@ static void draw(void)
  word i,p=top,row,col;byte b;
  for(i=0;i<2000;++i)view[i]=0x0720;
  for(i=0;i<80;++i)view[i]=view[1920+i]=0x1f20;
- label(1,"PCPLUS  Redisplay  |  Up/Down  PgUp/PgDn  Home/End  / Search  F3  W Write  Esc",0x1f00);
+ label(1,"PCPLUS  Redisplay | Up/Down PgUp/PgDn Home/End / Search F3 W Write C Clip Esc",0x1f00);
  for(row=1;row<24 && p<length;++row){col=0;
   while(p<length){b=snapshot[p++];if(b==13)break;
    if(b==9){col+=8-(col&7);}else{
@@ -189,12 +190,19 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   snapshot=(byte __far *)MK_FP(c->snapshot_seg,c->snapshot_off);
   live=(word __far *)MK_FP(c->live_seg,c->live_off);
   view=(word __far *)MK_FP(c->view_seg,c->view_off);
-  length=c->wrapped?63000U:c->head-c->start;p=c->wrapped?c->head:c->start;
+  direct_clipboard=key==0x8300;
+  length=direct_clipboard?0:(c->wrapped?63000U:c->head-c->start);p=c->wrapped?c->head:c->start;
   for(i=0;i<length;++i){snapshot[i]=source[p];if(++p==c->end)p=c->start;}
   cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));
-  redisplay_search_pending=redisplay_export_pending=0;export_edit=export_notice=0;oldest_skip=c->wrapped && length && snapshot[0]==13;query_size=query_edit=0;query[0]=0;found=1;last_match=65535U;visible=1;redisplay_active=1;index_rows();bottom();draw();return 1;
+  redisplay_search_pending=redisplay_export_pending=0;export_edit=export_notice=0;oldest_skip=c->wrapped && length && snapshot[0]==13;query_size=query_edit=0;query[0]=0;found=1;last_match=65535U;visible=1;clipboard_ui_visible=1;redisplay_active=1;index_rows();bottom();
+  if(direct_clipboard){copy(view,live);clipboard_ui_event(0,0,view);}else draw();return 1;
  }
  if(!redisplay_active)return 0;
+ if(clipboard_ui_active && (event==1 || event==4)){
+  if(clipboard_ui_event(event,key,view))return 1;
+  if(!direct_clipboard && event==1 && key!=0x2d00){if(visible){copy((word __far *)MK_FP(0xb800,0),view);hide();}return 1;}
+  key=key==0x2d00?key:27;
+ }
  if(event==1 && key==27 && (export_edit || redisplay_export_pending)){
   if(redisplay_export_pending)export_close(2);else{export_edit=0;export_notice=0;}
   draw();return 1;
@@ -205,8 +213,9 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();}
   export_edit=0;redisplay_search_pending=0;redisplay_active=visible=0;return key==0x2d00?0:1;
  }
- if(event==2){if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();visible=0;}return 0;}
- if(event==3){if(export_step() || search_step())draw();if(!visible){cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));visible=1;copy((word __far *)MK_FP(0xb800,0),view);hide();}return 0;}
+ if(event==2){if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();visible=0;clipboard_ui_visible=0;if(clipboard_ui_active)clipboard_ui_event(2,0,view);}return 0;}
+ if(event==3){if(export_step() || search_step())draw();if(!visible){cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));visible=1;copy((word __far *)MK_FP(0xb800,0),view);hide();}
+  clipboard_ui_visible=visible;if(clipboard_ui_active)clipboard_ui_event(3,0,view);return 0;}
  if(event!=1)return 0;
  if(redisplay_export_pending)return 1;
  if(export_edit){
@@ -230,6 +239,7 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   case 0x5100:case 0x51e0:for(i=0;i<23 && next(top)<length;++i)top=next(top);break;
   case 0x4700:case 0x47e0:top=0;break;
   case 0x4f00:case 0x4fe0:bottom();break;
+  case 'c':case 'C':clipboard_ui_event(0,0,view);return 1;
   case 'w':case 'W':
    if(length){export_edit=1;export_size=0;export_path[0]=0;export_notice=0;}else export_notice=5;
    break;

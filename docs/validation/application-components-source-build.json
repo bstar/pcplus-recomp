@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "cc4d358d8837018e2eefd0fd7d9ca89c44bf3113409a187be6a04f6b3fa00afa",
-  "source_file_count": 1366,
+  "source_snapshot_sha256": "34b82581fb93d6a80a778784158c4d21e787535f91561448c923859658ebbfd4",
+  "source_file_count": 1383,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,19 +16,19 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "63251293430b5732165575c22c45fad2142951f7d7f6987bcfbcabcb09126033",
+  "build_log_sha256": "10973fc97abee0914f068d75cd848ba896dc9f748c9333fe4ab9c5589c3f3133",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/pcplus-source-proof-gzi_mnwc/checkout",
+  "source_checkout": "/tmp/nix-shell.UeXTFQ/pcplus-source-proof-0rotks07/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
-  "scope": "63 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
-  "output_count": 63,
+  "scope": "64 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+  "output_count": 64,
   "outputs": {
     "terminal/TERMINAL.EXE": {
-      "sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
+      "sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
       "matches_workspace": true,
-      "workspace_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05"
+      "workspace_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab"
     },
     "config-dos/CONFIG.EXE": {
       "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
@@ -260,6 +260,11 @@
       "matches_workspace": true,
       "workspace_sha256": "5b630566b588e95652f1bd9a99c9c0d71c81102f4fe81692ff5deb1892e36b04"
     },
+    "clipboard/CLIPCORE.EXE": {
+      "sha256": "a14ecea00b50dc2ca0e2c3954bd9567884078220c34b595907035ea59f072ee8",
+      "matches_workspace": true,
+      "workspace_sha256": "a14ecea00b50dc2ca0e2c3954bd9567884078220c34b595907035ea59f072ee8"
+    },
     "snapshot/SNAPSHOT.EXE": {
       "sha256": "fdcc00355ace42b426cc320d779dc51c0b3ae8a0d47abf3a7bac3973417f69c9",
       "matches_workspace": true,
@@ -374,6 +379,7 @@
     "standalone/build_upload_file.py",
     "standalone/build_transfer_metadata.py",
     "standalone/build_batch_header.py",
+    "standalone/build_clipboard.py",
     "standalone/build_snapshot.py",
     "standalone/build_printer.py",
     "standalone/build_monitor.py",

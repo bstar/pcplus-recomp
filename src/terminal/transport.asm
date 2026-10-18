@@ -23,7 +23,7 @@ extern terminal_controller_key
 extern terminal_break_start,terminal_break_poll,terminal_break_cancel
 extern terminal_printer_toggle
 extern terminal_setup_start
-extern terminal_redisplay_key
+extern terminal_redisplay_key,terminal_clipboard_remaining
 global terminal_poll_io,terminal_enqueue_al,terminal_tick_low,terminal_clock_ticks
 global ansi_next_byte,ansi_unread_byte,csi_transmit_byte,csi_transmit_string
 
@@ -356,6 +356,10 @@ terminal_poll_serial:
  and bx,1023
  mov [terminal_tx_head],bx
  dec word [terminal_tx_count]
+ cmp word [terminal_clipboard_remaining],0
+ je .clipboard_done
+ dec word [terminal_clipboard_remaining]
+.clipboard_done:
  inc word [terminal_macro_tx_epoch]
  jmp .macro
 .grant_macro:

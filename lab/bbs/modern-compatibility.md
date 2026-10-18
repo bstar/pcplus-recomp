@@ -8,7 +8,7 @@ toolchains. These results do not establish physical Wi-Fi modem compatibility.
 
 ## Latest editor-tested build
 
-This runtime includes serviced 63 KB redisplay and frozen-history export, confirmed live input-mode changes, bounded default-XLT
+This runtime includes the serviced filename clipboard, 63 KB redisplay and frozen-history export, confirmed live input-mode changes, bounded default-XLT
 PCPLUS directory lookup, saved translation modes, explicit XLT input translation,
 confirmed idle COM switching and supported profile changes. The BBS probes use
 saved mode0 (identity) without /X.
@@ -16,22 +16,31 @@ The editor probes below exercise ordinary BBS editing with that binary; actual
 Alt-F10 application is
 proved separately in [the live settings report](../../docs/validation/setup-live.json).
 Ctrl-PgUp browsing is exercised separately in [the redisplay report](../../docs/validation/redisplay-live.json).
-W export is exercised separately in [the history report](../../docs/validation/history-export.json); the editor probes use ordinary editing without opening redisplay.
+W export is exercised separately in [the history report](../../docs/validation/history-export.json).
+[Clipboard validation](../../docs/validation/clipboard.json) binds46 linked inputs,
+two actual DOS workflows, the75-command regression and64 reproducible outputs.
+The editor probes use ordinary editing without opening redisplay or clipboard.
+
+The first Synchronet clipboard-build attempt hit the synthetic account's50-logon
+daily limit before editor entry. The retry temporarily enabled only that account's
+logon exemption and then restored it; an independent fresh User API process
+verified the persisted exemption word is zero. The failed attempt remains in
+history. See [the fixture record](../../docs/validation/bbs-clipboard-logon-fixture.json).
 
 DOS executable SHA-256:
-`4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05`.
+`7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab`.
 
 | Server / modem forwarding | Result | Evidence |
 | --- | --- | --- |
-| Synchronet 3.22a development snapshot / HARD COM2/19200, immediate | All 12 audit checks and eight key-wire checks pass; draft aborted | `editor-history-4ad7-hard`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
+| Synchronet 3.22a development snapshot / HARD COM2/19200, immediate | All 12 audit checks and eight key-wire checks pass; draft aborted | `editor-clipboard-7aa4-hard-retry`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
 | ENiGMA½ 0.5.1-beta / immediate | Correct outgoing keys; Home and Insert/overtype fail | Current paired experiment below |
 | Same ENiGMA / explicit 30 ms buffering | All seven audited checks and eight key-wire checks pass; closes unsaved | Current paired experiment below |
 
 The ENiGMA pair uses the same DOS executable, keyboard recipe, synthetic PRM,
 serial settings and unchanged stock decoder. Only the modem's explicit
 `packet_delay_ms` differs. Server/user state is not reset between runs.
-Retained labels are `editor-history-4ad7-buffer30` and
-`editor-history-4ad7-immediate`; full hashes and checks are in
+Retained labels are `editor-clipboard-7aa4-buffer30` and
+`editor-clipboard-7aa4-immediate`; full hashes and checks are in
 [the paired report](../../docs/validation/bbs-enigma-packetization.json).
 
 The checked ENiGMA source, commit

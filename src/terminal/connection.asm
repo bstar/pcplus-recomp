@@ -14,6 +14,7 @@ extern terminal_modem_send_start_impl,terminal_modem_send_poll_impl
 extern modem_response_slots
 extern uart_port_msr,uart_port_mcr
 extern terminal_baud_low,terminal_baud_high
+extern connection_clipboard_abort_service
 extern terminal_quit,terminal_tx_count,terminal_tx_head,terminal_tx_tail
 global terminal_connection_prepare_impl,terminal_connection_start_impl
 global terminal_connection_poll_impl,terminal_connection_receive_impl,terminal_connection_cancel_impl
@@ -138,6 +139,7 @@ terminal_connection_start_impl:
  call connection_program_cancel_service
  cmp byte [connection_enabled],0
  je .done
+ call connection_clipboard_abort_service
  mov word [terminal_tx_count],0
  mov word [terminal_tx_head],0
  mov word [terminal_tx_tail],0
@@ -307,6 +309,7 @@ terminal_connection_poll_impl:
  call connection_program_cancel_service
  mov word [connection_status],6
  mov word [connection_state],0
+ call connection_clipboard_abort_service
  mov word [terminal_tx_count],0
  mov word [terminal_tx_head],0
  mov word [terminal_tx_tail],0
@@ -396,6 +399,7 @@ terminal_connection_cancel_impl:
  je .done
  cmp word [connection_state],8
  je .done
+ call connection_clipboard_abort_service
  mov word [terminal_tx_count],0
  mov word [terminal_tx_head],0
  mov word [terminal_tx_tail],0

@@ -18,6 +18,7 @@ MODEM_SERVICE connection_uart_clear,uart_clear_receive_buffer
 MODEM_SERVICE connection_break_cancel,terminal_break_cancel
 MODEM_SERVICE connection_macro_cancel,terminal_macro_cancel
 MODEM_SERVICE connection_program_cancel,terminal_program_cancel
+MODEM_SERVICE connection_clipboard_abort,terminal_clipboard_abort
 ; Explicit caller-cleaned word counts, including the two original UART args.
 MODEM_CDECL_SERVICE connection_expand,modem_expand_bounded,4
 MODEM_CDECL_SERVICE connection_classify,modem_response_classify,3

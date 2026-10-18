@@ -153,7 +153,7 @@ def inspect_terminal_memory(binary,map_path):
     else:assert len(fields)==3
     near_call(name+'_resident',target,prefix=prefix,suffix=suffix)
    modem_bridges+=1
-  assert modem_bridges==22,'Incomplete modem ABI validation'
+  assert modem_bridges==23,'Incomplete modem ABI validation'
   bridges+=modem_bridges
   extra['modem_bridge_pairs_verified']=modem_bridges
  if 'terminal_config_code_start' in symbols:
@@ -196,7 +196,7 @@ def inspect_terminal_memory(binary,map_path):
     else:assert len(fields)==3
     near_call(name+'_resident',target,prefix=prefix,suffix=suffix)
    config_bridges+=1
-  assert config_bridges==34,'Incomplete configuration ABI validation'
+  assert config_bridges==36,'Incomplete configuration ABI validation'
   bridges+=config_bridges
   extra['configuration_bridge_pairs_verified']=config_bridges
  redisplay_bridges=0

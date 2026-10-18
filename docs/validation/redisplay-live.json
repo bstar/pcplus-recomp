@@ -1,107 +1,107 @@
 {
   "passed": true,
-  "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
+  "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
   "memory_layout": {
-    "near_bytes": 62848,
-    "near_spare_bytes": 2688,
-    "near_relative_segment": 4995,
-    "far_relative_segment": 14236,
+    "near_bytes": 64048,
+    "near_spare_bytes": 1488,
+    "near_relative_segment": 5267,
+    "far_relative_segment": 14583,
     "shadow_offset": 0,
     "history_offset": 0,
     "far_bytes": 71192,
-    "history_relative_segment": 14748,
+    "history_relative_segment": 15095,
     "history_bytes": 63000,
-    "far_end_linear": 298968,
-    "stack_end_linear": 142768,
-    "loaded_module_bytes": 111931,
-    "minimum_allocated_module_bytes": 298976,
-    "retained_parent_paragraphs": 18702,
+    "far_end_linear": 304520,
+    "stack_end_linear": 148320,
+    "loaded_module_bytes": 116937,
+    "minimum_allocated_module_bytes": 304528,
+    "retained_parent_paragraphs": 19049,
     "far_pointer_relocations_verified": true,
-    "snapshot_relative_segment": 10173,
+    "snapshot_relative_segment": 10520,
     "snapshot_image_offset": 63008,
     "snapshot_bytes": 2000,
-    "snapshot_end_linear": 227776,
+    "snapshot_end_linear": 233328,
     "ui_screen_buffers": {
       "browser_screen": {
-        "relative_segment": 8923,
+        "relative_segment": 9270,
         "offset": 0,
         "bytes": 4000,
-        "start_linear": 142768,
-        "end_linear": 146768
+        "start_linear": 148320,
+        "end_linear": 152320
       },
       "ed_screen": {
-        "relative_segment": 8923,
+        "relative_segment": 9270,
         "offset": 4000,
         "bytes": 4000,
-        "start_linear": 146768,
-        "end_linear": 150768
+        "start_linear": 152320,
+        "end_linear": 156320
       },
       "program_screen": {
-        "relative_segment": 8923,
+        "relative_segment": 9270,
         "offset": 8000,
         "bytes": 4000,
-        "start_linear": 150768,
-        "end_linear": 154768
+        "start_linear": 156320,
+        "end_linear": 160320
       },
       "redisplay_live": {
-        "relative_segment": 8923,
+        "relative_segment": 9270,
         "offset": 12000,
         "bytes": 4000,
-        "start_linear": 154768,
-        "end_linear": 158768
+        "start_linear": 160320,
+        "end_linear": 164320
       },
       "redisplay_view": {
-        "relative_segment": 8923,
+        "relative_segment": 9270,
         "offset": 16000,
         "bytes": 4000,
-        "start_linear": 158768,
-        "end_linear": 162768
+        "start_linear": 164320,
+        "end_linear": 168320
       }
     },
     "far_ui_storage_bytes": 20000,
     "redisplay_snapshot_bytes": 63000,
-    "redisplay_snapshot_end_linear": 225768,
+    "redisplay_snapshot_end_linear": 231320,
     "controller_bridge_pairs_verified": 22,
-    "modem_bridge_pairs_verified": 22,
-    "configuration_bridge_pairs_verified": 34,
+    "modem_bridge_pairs_verified": 23,
+    "configuration_bridge_pairs_verified": 36,
     "redisplay_bridge_pairs_verified": 4,
-    "resident_code_bytes": 64516,
-    "resident_code_spare_bytes": 1020,
+    "resident_code_bytes": 64756,
+    "resident_code_spare_bytes": 780,
     "code_segments": [
       {
         "name": "_TEXT",
         "kind": "CODE",
         "relative_segment": 0,
         "offset": 0,
-        "bytes": 64516
+        "bytes": 64756
       },
       {
         "name": "CONFIG_CODE",
         "kind": "FARCODE",
-        "relative_segment": 4033,
+        "relative_segment": 4048,
         "offset": 0,
-        "bytes": 12464
+        "bytes": 16546
       },
       {
         "name": "MODEM_CODE",
         "kind": "FARCODE",
-        "relative_segment": 4812,
+        "relative_segment": 5083,
         "offset": 0,
-        "bytes": 1467
+        "bytes": 1483
       },
       {
         "name": "PRINT_CODE",
         "kind": "FARCODE",
-        "relative_segment": 4904,
+        "relative_segment": 5176,
         "offset": 0,
         "bytes": 1449
       }
     ],
-    "far_code_bridge_pairs_verified": 82
+    "far_code_bridge_pairs_verified": 85
   },
   "linked": {
     "passed": true,
-    "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
+    "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
     "cases": [
       {
         "case": "actual-transport-key-entry-line-page-home-end-cursor-full-screen-return",
@@ -141,8 +141,8 @@
     ],
     "inputs": 39,
     "sources": {
-      "src/redisplay/redisplay.c": "3abb64f95f54c98d0ee530160da876abd9c3dd93401bf1f7bd2a93ae3f9db990",
-      "src/terminal/redisplay.asm": "eaa20849481363ea4f0ee90a8c455f61f76c60bf62f0adeb0b7ec37209f7202d",
+      "src/redisplay/redisplay.c": "3e680f12732d5dd2827d6e80d601be48f9412aabf0d9eb98f56f5251006a909f",
+      "src/terminal/redisplay.asm": "ad98e629bfd902c1fdec7eadeda0c621b7f28795cc76a8c69a694b76edeff8d1",
       "standalone/check_redisplay_live.py": "4306512425c1e13ed3ad94e865cb7f9c12af7cc908571144478af05615f224dd"
     },
     "scope": "Actual transport-key dispatch, far C viewer, native history and UART/parser. BIOS/video and UART hardware modeled; no product function skipped. Actual DOS workflow separate."
@@ -178,7 +178,7 @@
     ],
     "errors": [],
     "seconds": 8.478,
-    "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
+    "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
     "command": "@D:\\TEST.PRM /D:CaseTest:23",
     "expected_exit": 0,
     "working_drive": "c",
@@ -190,14 +190,15 @@
       "ROW021                                                                          ROW022                                                                          ROW023                                                                          ",
       "ROW021                                                                          ROW022                                                                          ROW023                                                                          ",
       "ROW021                                                                          ROW022                                                                          ROW023                                                                          ",
+      "ROW021                                                                          ROW022                                                                          ROW023                                                                          ",
       "ROW060 TARGET                                                                   ROW061                                                                          ROW062                                                                          "
     ],
     "sources": {
       "standalone/test_redisplay_dos.py": "9c79f8467e12739f0f5deaaf72ede562270652d065198dd4b6fbf1005de76f77",
       "standalone/redisplay_watch.asm": "20f0abe2911350b77f0a6b1b38685ae4739b50e7a20ba874d5577f76840fa300",
       "standalone/test_connection_dos.py": "f911f2c37b7df42fd08581ae8282502e1150ddd2c1ac38215473578519e01477",
-      "src/terminal/redisplay.asm": "eaa20849481363ea4f0ee90a8c455f61f76c60bf62f0adeb0b7ec37209f7202d",
-      "src/redisplay/redisplay.c": "3abb64f95f54c98d0ee530160da876abd9c3dd93401bf1f7bd2a93ae3f9db990"
+      "src/terminal/redisplay.asm": "ad98e629bfd902c1fdec7eadeda0c621b7f28795cc76a8c69a694b76edeff8d1",
+      "src/redisplay/redisplay.c": "3e680f12732d5dd2827d6e80d601be48f9412aabf0d9eb98f56f5251006a909f"
     }
   },
   "history_export": {
@@ -207,7 +208,7 @@
   },
   "native_history": {
     "passed": true,
-    "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
+    "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
     "cases": [
       {
         "case": "actual-linker-far-relocations-and-full-storage-extents-outside-DGROUP",
@@ -264,38 +265,38 @@
       "ATDCaseTest:23"
     ],
     "errors": [],
-    "seconds": 7.426,
-    "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
+    "seconds": 7.377,
+    "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
     "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 HARD",
     "expected_exit": 0,
     "working_drive": "c",
     "environment": {},
     "scope": "Actual DOS livePROGRAM/COMSPEC owned child locates parent PSP, checks retainedMCB throughfarend afterSTACK and FARCODE, allocates/fills16KB separateDOSmemory and verifies full-sizedshadow/history and frozen-screen endpointcanaries plus the full controller, modem and configuration C far-code byte-sums before/after allocation and sums of all three full4000-byte far UI screen owners. Parent resumes actual far controller polling after child return. NormalUART/vector cleanup verified by existing sampler. No physical modem claim.",
-    "sample_hex": "7f0014080e490e49c03f7952fecaefbeaddebebae12f22114433cf20cf204c1ba905ff2a0000000000000000eb32eb32f01abb05de2cde2ce517b030254d254d",
+    "sample_hex": "7f001408694a694a1b41d453fecaefbeaddebeba3c3122114433181e181e5c1ca9055a2c0000000000000000eb32eb32ff1bcb05c839c839f417a240dab5dab5",
     "linker_defines": {
-      "DGROUP_SEG": 4995,
-      "FAR_SEG": 14236,
+      "DGROUP_SEG": 5267,
+      "FAR_SEG": 14583,
       "SHADOW_OFFSET": 0,
       "HISTORY_OFFSET": 0,
-      "HISTORY_SEG": 14748,
+      "HISTORY_SEG": 15095,
       "FAR_END_OFFSET": 63000,
       "PROCESS_PSP_OFFSET": 448,
       "SHADOW_SEGMENT_OFFSET": 13621,
       "HISTORY_POINTER_OFFSET": 15037,
-      "SNAPSHOT_SEG": 10173,
+      "SNAPSHOT_SEG": 10520,
       "SNAPSHOT_OFFSET": 63008,
-      "REQUIRED_PARAS": 18702,
-      "CODE_SEG": 4904,
+      "REQUIRED_PARAS": 19049,
+      "CODE_SEG": 5176,
       "CODE_START": 0,
       "CODE_BYTES": 1449,
       "CODE_FIRST": 20565,
-      "MODEM_SEG": 4812,
+      "MODEM_SEG": 5083,
       "MODEM_START": 0,
-      "MODEM_BYTES": 1467,
-      "CONFIG_SEG": 4033,
+      "MODEM_BYTES": 1483,
+      "CONFIG_SEG": 4048,
       "CONFIG_START": 0,
-      "CONFIG_BYTES": 12464,
-      "UI_SEG": 8923,
+      "CONFIG_BYTES": 16546,
+      "UI_SEG": 9270,
       "BROWSER_OFF": 0,
       "EDITOR_OFF": 4000,
       "PROGRAM_OFF": 8000
@@ -303,8 +304,8 @@
   },
   "call_frames": {
     "passed": true,
-    "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
-    "configuration_bridge_pairs_verified": 34,
+    "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
+    "configuration_bridge_pairs_verified": 36,
     "entry_argument_counts": [
       1,
       2,
@@ -423,6 +424,10 @@
       "_program_execute:far-argument-offset",
       "_program_execute:implementation-target",
       "_program_execute:far-return",
+      "_config_clipboard_transport:service-far-target",
+      "_config_clipboard_transport:resident-call-frame",
+      "config_strcmp_service_:service-far-target",
+      "config_strcmp_service_:resident-call-frame",
       "_config_history_file:service-far-target",
       "_config_history_file:resident-call-frame",
       "_config_process_run:service-far-target",
@@ -455,6 +460,8 @@
       "_config_number_expand:resident-call-frame",
       "_config_live_expand:service-far-target",
       "_config_live_expand:resident-call-frame",
+      "_config_clipboard_transport_service:missing-MZ-relocation",
+      "config_strcmp_service_:missing-MZ-relocation",
       "_config_history_file_service:missing-MZ-relocation",
       "_program_execute:missing-MZ-relocation",
       "_config_process_run_service:missing-MZ-relocation",
@@ -484,108 +491,108 @@
       "incomplete-C-extent"
     ],
     "memory": {
-      "near_bytes": 62848,
-      "near_spare_bytes": 2688,
-      "near_relative_segment": 4995,
-      "far_relative_segment": 14236,
+      "near_bytes": 64048,
+      "near_spare_bytes": 1488,
+      "near_relative_segment": 5267,
+      "far_relative_segment": 14583,
       "shadow_offset": 0,
       "history_offset": 0,
       "far_bytes": 71192,
-      "history_relative_segment": 14748,
+      "history_relative_segment": 15095,
       "history_bytes": 63000,
-      "far_end_linear": 298968,
-      "stack_end_linear": 142768,
-      "loaded_module_bytes": 111931,
-      "minimum_allocated_module_bytes": 298976,
-      "retained_parent_paragraphs": 18702,
+      "far_end_linear": 304520,
+      "stack_end_linear": 148320,
+      "loaded_module_bytes": 116937,
+      "minimum_allocated_module_bytes": 304528,
+      "retained_parent_paragraphs": 19049,
       "far_pointer_relocations_verified": true,
-      "snapshot_relative_segment": 10173,
+      "snapshot_relative_segment": 10520,
       "snapshot_image_offset": 63008,
       "snapshot_bytes": 2000,
-      "snapshot_end_linear": 227776,
+      "snapshot_end_linear": 233328,
       "ui_screen_buffers": {
         "browser_screen": {
-          "relative_segment": 8923,
+          "relative_segment": 9270,
           "offset": 0,
           "bytes": 4000,
-          "start_linear": 142768,
-          "end_linear": 146768
+          "start_linear": 148320,
+          "end_linear": 152320
         },
         "ed_screen": {
-          "relative_segment": 8923,
+          "relative_segment": 9270,
           "offset": 4000,
           "bytes": 4000,
-          "start_linear": 146768,
-          "end_linear": 150768
+          "start_linear": 152320,
+          "end_linear": 156320
         },
         "program_screen": {
-          "relative_segment": 8923,
+          "relative_segment": 9270,
           "offset": 8000,
           "bytes": 4000,
-          "start_linear": 150768,
-          "end_linear": 154768
+          "start_linear": 156320,
+          "end_linear": 160320
         },
         "redisplay_live": {
-          "relative_segment": 8923,
+          "relative_segment": 9270,
           "offset": 12000,
           "bytes": 4000,
-          "start_linear": 154768,
-          "end_linear": 158768
+          "start_linear": 160320,
+          "end_linear": 164320
         },
         "redisplay_view": {
-          "relative_segment": 8923,
+          "relative_segment": 9270,
           "offset": 16000,
           "bytes": 4000,
-          "start_linear": 158768,
-          "end_linear": 162768
+          "start_linear": 164320,
+          "end_linear": 168320
         }
       },
       "far_ui_storage_bytes": 20000,
       "redisplay_snapshot_bytes": 63000,
-      "redisplay_snapshot_end_linear": 225768,
+      "redisplay_snapshot_end_linear": 231320,
       "controller_bridge_pairs_verified": 22,
-      "modem_bridge_pairs_verified": 22,
-      "configuration_bridge_pairs_verified": 34,
+      "modem_bridge_pairs_verified": 23,
+      "configuration_bridge_pairs_verified": 36,
       "redisplay_bridge_pairs_verified": 4,
-      "resident_code_bytes": 64516,
-      "resident_code_spare_bytes": 1020,
+      "resident_code_bytes": 64756,
+      "resident_code_spare_bytes": 780,
       "code_segments": [
         {
           "name": "_TEXT",
           "kind": "CODE",
           "relative_segment": 0,
           "offset": 0,
-          "bytes": 64516
+          "bytes": 64756
         },
         {
           "name": "CONFIG_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4033,
+          "relative_segment": 4048,
           "offset": 0,
-          "bytes": 12464
+          "bytes": 16546
         },
         {
           "name": "MODEM_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4812,
+          "relative_segment": 5083,
           "offset": 0,
-          "bytes": 1467
+          "bytes": 1483
         },
         {
           "name": "PRINT_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4904,
+          "relative_segment": 5176,
           "offset": 0,
           "bytes": 1449
         }
       ],
-      "far_code_bridge_pairs_verified": 82
+      "far_code_bridge_pairs_verified": 85
     },
-    "scope": "Serialized DOS MZ and linker-map validation of eighteen explicit near-cdecl entries, five compiler register callbacks and eleven resident cdecl callbacks; exact argument-copy frames, target calls/returns, relocations and full configuration C extent. Independent CPU candidate/directory/owner suites and actual DOS child allocation exercise behavior."
+    "scope": "Serialized DOS MZ and linker-map validation of eighteen explicit near-cdecl entries, six compiler register callbacks and twelve resident cdecl callbacks; exact argument-copy frames, target calls/returns, relocations and full configuration C extent. Independent CPU candidate/directory/owner suites and actual DOS child allocation exercise behavior."
   },
   "terminal_regression": {
     "passed": true,
-    "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
+    "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
     "commands": [
       {
         "command": "python3 standalone/build_terminal.py",
@@ -603,6 +610,11 @@
         "seconds": 0.064
       },
       {
+        "command": "python3 standalone/build_clipboard.py",
+        "exit_code": 0,
+        "seconds": 0.064
+      },
+      {
         "command": "python3 standalone/test_resource_path_dos.py",
         "exit_code": 0,
         "seconds": 0.265
@@ -615,7 +627,7 @@
       {
         "command": "python3 standalone/test_resource_lookup_dos.py",
         "exit_code": 0,
-        "seconds": 26.705
+        "seconds": 26.753
       },
       {
         "command": "python3 standalone/check_translation_live.py",
@@ -630,7 +642,7 @@
       {
         "command": "python3 standalone/test_translation_live_dos.py",
         "exit_code": 0,
-        "seconds": 24.253
+        "seconds": 24.301
       },
       {
         "command": "python3 standalone/check_live_translation.py",
@@ -640,7 +652,7 @@
       {
         "command": "python3 standalone/test_live_translation_dos.py",
         "exit_code": 0,
-        "seconds": 78.236
+        "seconds": 78.233
       },
       {
         "command": "python3 standalone/check_setup_startup.py",
@@ -650,7 +662,7 @@
       {
         "command": "python3 standalone/test_setup_startup_dos.py",
         "exit_code": 0,
-        "seconds": 19.694
+        "seconds": 19.598
       },
       {
         "command": "python3 standalone/check_setup_live.py",
@@ -660,7 +672,7 @@
       {
         "command": "python3 standalone/check_live_setup_owner.py",
         "exit_code": 0,
-        "seconds": 7.175
+        "seconds": 7.224
       },
       {
         "command": "python3 standalone/check_live_setup_policy.py",
@@ -690,17 +702,17 @@
       {
         "command": "python3 standalone/test_setup_port_dos.py",
         "exit_code": 0,
-        "seconds": 80.488
+        "seconds": 80.405
       },
       {
         "command": "python3 standalone/check_live_setup_apply.py",
         "exit_code": 0,
-        "seconds": 1.066
+        "seconds": 1.115
       },
       {
         "command": "python3 standalone/test_setup_live_dos.py",
         "exit_code": 0,
-        "seconds": 82.439
+        "seconds": 82.428
       },
       {
         "command": "python3 standalone/check_config_far_live.py",
@@ -710,12 +722,12 @@
       {
         "command": "python3 standalone/check_live_configuration.py --terminal",
         "exit_code": 0,
-        "seconds": 41.632
+        "seconds": 41.728
       },
       {
         "command": "python3 standalone/check_modem_far_live.py",
         "exit_code": 0,
-        "seconds": 8.828
+        "seconds": 9.029
       },
       {
         "command": "python3 standalone/check_terminal_break_live.py",
@@ -730,7 +742,7 @@
       {
         "command": "python3 standalone/check_far_code_live.py",
         "exit_code": 0,
-        "seconds": 0.314
+        "seconds": 0.315
       },
       {
         "command": "python3 standalone/check_terminal_print_controller_live.py",
@@ -740,7 +752,7 @@
       {
         "command": "python3 standalone/check_terminal_screen_print_live.py",
         "exit_code": 0,
-        "seconds": 10.581
+        "seconds": 10.68
       },
       {
         "command": "python3 standalone/check_terminal_printer_live.py",
@@ -755,52 +767,52 @@
       {
         "command": "python3 standalone/check_terminal_snapshot_live.py",
         "exit_code": 0,
-        "seconds": 1.617
+        "seconds": 1.616
       },
       {
         "command": "python3 standalone/check_terminal_capture_live.py",
         "exit_code": 0,
-        "seconds": 0.965
+        "seconds": 1.016
       },
       {
         "command": "python3 standalone/check_redisplay_live.py",
         "exit_code": 0,
-        "seconds": 24.602
+        "seconds": 24.401
       },
       {
         "command": "python3 standalone/test_redisplay_dos.py",
         "exit_code": 0,
-        "seconds": 8.528
+        "seconds": 8.526
       },
       {
         "command": "python3 standalone/check_history_export_live.py",
         "exit_code": 0,
-        "seconds": 43.178
+        "seconds": 43.679
       },
       {
         "command": "python3 standalone/test_history_export_dos.py",
         "exit_code": 0,
-        "seconds": 21.443
+        "seconds": 21.448
       },
       {
         "command": "python3 standalone/check_far_storage_live.py",
         "exit_code": 0,
-        "seconds": 2.417
+        "seconds": 2.468
       },
       {
         "command": "python3 standalone/test_far_storage_dos.py",
         "exit_code": 0,
-        "seconds": 7.524
+        "seconds": 7.475
       },
       {
         "command": "python3 standalone/check_terminal_transfer_live.py",
         "exit_code": 0,
-        "seconds": 3.669
+        "seconds": 3.72
       },
       {
         "command": "python3 standalone/check_terminal_upload_live.py",
         "exit_code": 0,
-        "seconds": 22.297
+        "seconds": 22.447
       },
       {
         "command": "python3 standalone/check_program_actions_live.py",
@@ -810,17 +822,17 @@
       {
         "command": "python3 standalone/check_terminal_reset_live.py",
         "exit_code": 0,
-        "seconds": 0.415
+        "seconds": 0.465
       },
       {
         "command": "python3 standalone/test_program_actions_dos.py",
         "exit_code": 0,
-        "seconds": 34.412
+        "seconds": 34.363
       },
       {
         "command": "python3 standalone/test_terminal_reset_live_dos.py",
         "exit_code": 0,
-        "seconds": 9.927
+        "seconds": 9.93
       },
       {
         "command": "python3 standalone/check_transport.py",
@@ -835,12 +847,12 @@
       {
         "command": "python3 standalone/check_key_live.py",
         "exit_code": 0,
-        "seconds": 0.765
+        "seconds": 0.815
       },
       {
         "command": "python3 standalone/check_meta_actions_live.py",
         "exit_code": 0,
-        "seconds": 2.467
+        "seconds": 2.518
       },
       {
         "command": "python3 standalone/check_character_edit_live.py",
@@ -850,7 +862,7 @@
       {
         "command": "python3 standalone/test_meta_actions_dos.py",
         "exit_code": 0,
-        "seconds": 19.793
+        "seconds": 19.794
       },
       {
         "command": "python3 standalone/check_line_edit_live.py",
@@ -865,7 +877,7 @@
       {
         "command": "python3 lab/bbs/check_formfeed.py",
         "exit_code": 0,
-        "seconds": 0.215
+        "seconds": 0.214
       },
       {
         "command": "python3 lab/bbs/check_enigma_controls.py",
@@ -880,12 +892,12 @@
       {
         "command": "python3 standalone/test_terminal.py",
         "exit_code": 0,
-        "seconds": 16.087
+        "seconds": 16.141
       },
       {
         "command": "python3 standalone/test_terminal_keys.py",
         "exit_code": 0,
-        "seconds": 24.153
+        "seconds": 24.101
       },
       {
         "command": "python3 standalone/check_terminal_config.py",
@@ -900,22 +912,22 @@
       {
         "command": "python3 standalone/check_connection.py",
         "exit_code": 0,
-        "seconds": 1.266
+        "seconds": 1.316
       },
       {
         "command": "python3 standalone/check_directory_live.py",
         "exit_code": 0,
-        "seconds": 3.169
+        "seconds": 3.269
       },
       {
         "command": "python3 standalone/check_directory_context.py",
         "exit_code": 0,
-        "seconds": 19.597
+        "seconds": 19.393
       },
       {
         "command": "python3 standalone/test_directory_context_terminal.py",
         "exit_code": 0,
-        "seconds": 7.226
+        "seconds": 7.225
       },
       {
         "command": "python3 standalone/check_directory_actions.py",
@@ -925,20 +937,40 @@
       {
         "command": "python3 standalone/test_terminal_config.py",
         "exit_code": 0,
-        "seconds": 13.985
+        "seconds": 14.086
       },
       {
         "command": "python3 standalone/test_connection_dos.py",
         "exit_code": 0,
-        "seconds": 27.057
+        "seconds": 27.056
       },
       {
         "command": "python3 standalone/test_directory_terminal.py",
         "exit_code": 0,
-        "seconds": 58.112
+        "seconds": 58.202
+      },
+      {
+        "command": "python3 standalone/check_clipboard.py",
+        "exit_code": 0,
+        "seconds": 26.153
+      },
+      {
+        "command": "python3 standalone/test_clipboard_dos.py",
+        "exit_code": 0,
+        "seconds": 1.016
+      },
+      {
+        "command": "python3 standalone/check_clipboard_live.py",
+        "exit_code": 0,
+        "seconds": 13.483
+      },
+      {
+        "command": "python3 standalone/test_clipboard_live_dos.py",
+        "exit_code": 0,
+        "seconds": 15.491
       }
     ],
-    "seconds": 422.612,
+    "seconds": 438.59,
     "complete": true,
     "execution_concurrency": 2,
     "execution_note": "Build prerequisites sequential; two independent test processes with isolated fixture directories/ephemeral peer ports. No BBS probes run concurrently."
@@ -1052,11 +1084,12 @@
     "src/terminal/break_actions.asm": "1f203505825f9175dc1df1c4397aecd198bddaab0094613cee30fb60e3b4c7a9",
     "src/terminal/capture.asm": "d2b7a1e4fbb3f70fc349c2b68acd5c3fb02e9ebad68ca8bfc88e23e688deca22",
     "src/terminal/character_edit.asm": "da72275f8e991eb168992f9a3407dee58ad356602505f8b91ccd26c0cfab4c16",
+    "src/terminal/clipboard.asm": "a43fbc09ff47f52461259cc109055b6a041a5022c584746945d177b83551741e",
     "src/terminal/config_bridge.asm": "0cf5490e72b02977e4fbfc4ce6d22d39d19451b8795911427f568225d67ddf1a",
     "src/terminal/config_far.asm": "4b446fc6a6640cae339f57d73ee266ed870e208422e02324f1d049f6784aa666",
     "src/terminal/configuration.asm": "35c5e203118f7941604ccb102df56cc66139b53911f51a5934fb87ce3278184d",
     "src/terminal/configuration_live.asm": "59f6d461c0ab0553580f1c5a6559e8562bf07e0e977ea68ddf5d49906838698b",
-    "src/terminal/connection.asm": "6f67a2fccbd79b413d24c8e7569ced0d049b271c4a1000420147e104bcdb830d",
+    "src/terminal/connection.asm": "452b38778eb6fbdb4f0c71fb9d06724b81c299669fc005ca4e302fb4941855ee",
     "src/terminal/connection_ui.asm": "5a62650fa81d4c4846c157721379eb1bdb2746b2bee60b58acdd52bd042ccebc",
     "src/terminal/control_clear_screen.asm": "735a3f228698fd5538cd4b7589ef448ca68f377509c5b66ebcbca33c898c85d5",
     "src/terminal/control_formfeed.asm": "b2f059f4359794e867921416d896574d6bee0f535be339870d94bb1490ace1f6",
@@ -1079,7 +1112,7 @@
     "src/terminal/print_controller.asm": "e7af0782119e00d8563c214c1a469fd548f547f332f6c6e663dfe9594f792d92",
     "src/terminal/printer.asm": "70ac5cb8b90bc2d7a4ec1ee1a071a6c2f1a351e37ac2bbd49dc2e629674b629b",
     "src/terminal/program_actions.asm": "ca318033ced3e35427f3b09faf48be0c88a565731f8aefd3c0d6f4e6567c8bb8",
-    "src/terminal/redisplay.asm": "eaa20849481363ea4f0ee90a8c455f61f76c60bf62f0adeb0b7ec37209f7202d",
+    "src/terminal/redisplay.asm": "ad98e629bfd902c1fdec7eadeda0c621b7f28795cc76a8c69a694b76edeff8d1",
     "src/terminal/screen_print.asm": "b26ee7e09cbb66d7da311083b1c8c53e5fa6016e9c9f00e3ebb7238df2658f5a",
     "src/terminal/services.asm": "cfc5f50208990db802f79d4f809560618e5579ff0ca8b5c74501ba46975c1546",
     "src/terminal/setup_expand.asm": "7120447f8ea5b5a779437a9e215b6ec59054eff4540fc0848470e907942b5979",
@@ -1097,7 +1130,7 @@
     "src/terminal/transfer_sender_state.asm": "ca81106b44d8184e866db66b570981f23ba1a3465aee739f2713c34029479e15",
     "src/terminal/transfer_ui.asm": "bf1cbbde3ab6351788fe8c7e3d856e767d92501b22ecdfffbccb1509c0fea230",
     "src/terminal/translation.asm": "6ae4ae66fd6a6aeccb10dee806e28921667e50556f8232b4da7abb53aca40657",
-    "src/terminal/transport.asm": "e9ee0b4166925928df3dd39460c0aeabc593021976a821f42138cae1a65aa918",
+    "src/terminal/transport.asm": "c32f207af12711224a16c6891ea4009c4334092c716d391cb5e5cf0e8792ec73",
     "src/terminal/uart_data.asm": "4c37a129341e01667df80f17940791946667f4b0c081accd4e18230f29904789",
     "src/terminal/ui_screen_far.asm": "876b4b10ced4d03d4616c89e4861333c522d3747f2e15d01ef3a4413ad03d736",
     "src/terminal/upload_actions.asm": "512f26336ead890f022f463d86d555320f40cfd47eac508928588e407e5cbfb5",
@@ -1123,7 +1156,9 @@
     "src/translation/xlt_default.c": "a9f3b1ba201063f4684ff25333846cfc2b7e915712017d09e245c643c7240932",
     "src/config/resource_path.c": "1afd131147061bc5d73871ac1354d0e63d3b9d08686401ca3a989d5fb8d154d5",
     "src/translation/xlt_live.c": "f223110405b08a880d0823fbac2bf379d2f3993435d4fa317710d209fe11b394",
-    "src/redisplay/redisplay.c": "3abb64f95f54c98d0ee530160da876abd9c3dd93401bf1f7bd2a93ae3f9db990",
+    "src/redisplay/redisplay.c": "3e680f12732d5dd2827d6e80d601be48f9412aabf0d9eb98f56f5251006a909f",
+    "src/clipboard/clipboard.c": "9547621a8ebce3c8707eceaa087a59735945523818a19f215b4e9027a224147a",
+    "src/clipboard/clipboard_ui.c": "fa1ae0c29f7cb852c22fe2a4e06309f1414b5537a4a6ed2d62f18c0052c512dd",
     "src/transfer/download_file.c": "ce8d41645e5fe4b3ab81c791f8aa6c3634d98bd0d5f8bb6afd698052391ade68",
     "src/transfer/download_fs.c": "60f29a5dcfc60eda2b4cd4a86397b62528b5eeceb68f5337d7bea1a6878d34e6",
     "src/transfer/native_file_bridge.c": "2d33493a85e26c587c2a6f281b4e9ed1b9224669a3a9f4c3f1b4344d2a76f7bf",
@@ -1168,6 +1203,8 @@
     "src/capture/capture_session.h": "ded5a4670adb5ab7ef3f14ea64d62824289b851568fa5d7185e64567e8647e71",
     "src/printer/printer_device.h": "c7a354b7002c64ae1855d75e16ccf99017f768746d64c1c710e48dfa7b37b42e",
     "src/printer/printer_fs.h": "4d6bbea942d3bae1c96886fea456087927a52ab71bd614284c1e8f3b1d70690c",
+    "src/clipboard/clipboard.h": "d4f7950b5a2d3c7200d0afa6ce42c7f00698e7e0e97c128fbf72918d06c3b316",
+    "src/clipboard/clipboard_ui.h": "74acc28aa9f4eea8f5a20a4610a90fc69b24313b4ceccd8cb2f4ad80c5eca17f",
     "src/transfer/download_file.h": "12793ce2eb2007ad499bbb1d9a43800a7eca28f9a26f82eef4edc4500315d6a0",
     "src/transfer/download_fs.h": "5ae3364e19981588631f3cb913c7eb3ad9e66937e37bfddb6fb3675dede22a92",
     "src/transfer/native_file_bridge.h": "4136f1481fa7f9acc1455b8ca81d25e08f47819a6dab6871615f1e033510763e",
@@ -1212,16 +1249,16 @@
     "reconstruction/transfer_files/provenance.json": "153d0b6718ca60f34b65f9c91bae7a018467771f49cd69c53a3743e6273ee359",
     "reconstruction/transfer_blocks/provenance.json": "d208524987aa9e314c71a0320cda9da46da26da4eb3455bb7b73783ebce8c608",
     "src/transfer/native_link.py": "b36aea74a0961141f301f1d4275d077f3ec27ca04ea2685384a0110477bd588f",
-    "standalone/terminal_memory.py": "d29757696a7d15cc098a39159f249b443e06511dde09f30301d54360161b4029",
+    "standalone/terminal_memory.py": "99c7dfe1f1336f74e1d703e73702ac68812aa06ee574cf11d3cdfb3c72a41424",
     "reconstruction/transfer_send/session.asm": "559f40abb2abd6724e22f71580c52fd8d15ec773b51347ac91bda02e045b220b",
     "reconstruction/transfer_send/cancel.asm": "9324066078aff11935a1bc5e315598344b182c1fae8077611e2c4af1aa652762",
     "reconstruction/transfer_blocks/crc_buffer.asm": "00083b3c0f6143b8b0119f0c5690f32b54b2c981f474ed5ce1529336d8db1ad4",
     "reconstruction/transfer_send/provenance.json": "99f92f7daba16a6a4ea2ba1a9465cb81a5f0b917cf351bf70794542e6defb0da",
     "src/transfer/native_sender_link.py": "0eff16fe2149432b60807fdc3d7c480caedd04138d4184090c8417ace1f43f3e",
-    "src/terminal/config_abi.inc": "d4c34d1b60e45873fc45c3ceecd94b0dafc73a2abeb4846d975e62cdb82e8578",
+    "src/terminal/config_abi.inc": "6d4975eba9ca60bb0db78caba2a528611d29d2206d361f08e3f98523f157cd77",
     "src/terminal/controller_abi.inc": "33de629fa3bbb35914c9070e067514c9520d16ff5d7ae7d9ea41173e72454c4e",
     "src/terminal/far_bridge.inc": "fecaf08907a2a5e78e7f870166a91fbc7295df5708aac682d3320a3e09e764c5",
-    "src/terminal/modem_abi.inc": "7088021f9fd00cd6d164fbd7477d7789a7ff9725d47c3c7ba00303cd4dc9f327",
+    "src/terminal/modem_abi.inc": "8e31794dee81e3bd23e205473038af44cf3ee9869cd0e32076f03bb08b857b7b",
     "src/translation/editor_document.h": "97de7b53fef15ac8c29b7b2c81694e7c3cc294ec9ca39b5761eae7b4bddb75cf",
     "src/translation/editor_fs.h": "a0115c8ce308758ab3a1212b9c39e771948f037f2aa9f1cbe1c8432e7bc12f2d",
     "src/translation/xlt_default.h": "2fedd74f0e4edf43e2fdc3766951221e0e8413d6429b1b4753ea5ba1d3735d47",
@@ -1235,7 +1272,7 @@
     "src/key_mapping/keymap_dos.inc": "a9e9e8f3a981411efa44fc4255f0bb03469d5de1285787efe2f1855b33ba4c8f"
   },
   "sources": {
-    "standalone/record_redisplay.py": "2aa06c43b95ae12d3a188df0bba5c837c0d2f8733394cd01a796af92f7f8271f",
+    "standalone/record_redisplay.py": "cde5c23d9edaab75e20b09782d108680558989ab30c384bf1c0b8d9305b974ba",
     "standalone/check_redisplay_live.py": "4306512425c1e13ed3ad94e865cb7f9c12af7cc908571144478af05615f224dd",
     "standalone/test_redisplay_dos.py": "9c79f8467e12739f0f5deaaf72ede562270652d065198dd4b6fbf1005de76f77",
     "standalone/redisplay_watch.asm": "20f0abe2911350b77f0a6b1b38685ae4739b50e7a20ba874d5577f76840fa300",
@@ -1243,35 +1280,35 @@
     "standalone/check_far_storage_live.py": "7a30a2c5a4b3499d2f1299d3bd01d2a683fec8c17551afc2dca922351c26ff8f",
     "standalone/test_far_storage_dos.py": "ada4849a01ed405f59d279e35647279da19598d83ea3a4617293ab16440f6c6d",
     "standalone/far_storage_child.asm": "9130a5575542442cc1f6dd123f743adc7e47d5fedfdc1ad5c0bbba9495ba127d",
-    "standalone/terminal_memory.py": "d29757696a7d15cc098a39159f249b443e06511dde09f30301d54360161b4029",
-    "standalone/build_terminal.py": "40915addc3de1964ccafed43e5d9c001ac996b43ccfc8e2d229c138a6f085a49"
+    "standalone/terminal_memory.py": "99c7dfe1f1336f74e1d703e73702ac68812aa06ee574cf11d3cdfb3c72a41424",
+    "standalone/build_terminal.py": "721ffda87069048dee3098c4077d28b3f1471e1821405a9ee95246ce86720649"
   },
   "retained_artifacts": {
-    "build/terminal/redisplay-checks.json": "8f2d0307564b5f77895dafe3ec2c5234325217f0ed2d6b9453163bcb7e7c8033",
-    "build/redisplay-dos/checks.json": "85de89055dc4e28177a69c3bc37f96d79ebb56d4b474bd57500494c2bd282a7e",
-    "build/far-storage/linked-checks.json": "2583330d12f1cbd30875de0c4ad087e931b2dda37ff5f60d79166c3322893525",
-    "build/far-storage-dos/checks.json": "7440e6b1fb524096de619e806be0ea7137962903ca713a82bdfbaed45cbec761",
-    "build/terminal/setup-profile-regression.json": "03255e58867715629839bc61ef9cd6cbf57a51da90362303ae4353f8673a8483",
-    "build/terminal/setup-profile-regression.log": "e7cb96e3aa1d70a9b1a681b5907fd0037f0e6d64436ee80aad44219ed2cdae90",
+    "build/terminal/redisplay-checks.json": "6c5afee1f6544a2da548a766a15be4b84c120f2b6668803bd8e820b9c400e0f6",
+    "build/redisplay-dos/checks.json": "53b93f815f184a5a922a064c3cfdcbde4e80ffc7a2c568319685ede9332de9ff",
+    "build/far-storage/linked-checks.json": "60d84c7e4f57c6d6d4fed9c8e12e0fd4146281c084ce8e060bfc62b5f0c57460",
+    "build/far-storage-dos/checks.json": "babbfd1bccc69123b4d70fe4b2c1be50e3b2e0b31d8de2d44411115bb3a72e3d",
+    "build/terminal/setup-profile-regression.json": "b16e9196c638513047e4748ce424e2041e5501eb8fcf84a3fb908108a1d304d0",
+    "build/terminal/setup-profile-regression.log": "7cedd5f6bd8ab3a0dc5f2bd2a59e9a000cdcfc07158888d9328069c03a0578dd",
     "build/connection-dos/redisplay-live/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
     "build/connection-dos/redisplay-live/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
     "build/connection-dos/redisplay-live/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/connection-dos/redisplay-live/RVIEW.BIN": "2c12e808d538987445f2cdf837055e37f2c60501f006aba37f8e4bb7304ae1b3",
+    "build/connection-dos/redisplay-live/RVIEW.BIN": "8ac6b837df3fb210f209fd3594bcc7c7c2f989950748938e620ded7a66619570",
     "build/connection-dos/redisplay-live/RVWATCH.COM": "7deade410707505c1b82cb0f3bc0f646f889e9f5507ee505f560ed04652298e8",
     "build/connection-dos/redisplay-live/SCREEN.BIN": "74ff23ffd96400ef28dd237b5e7966fc973bb780efe13ddf583fbafa083db254",
     "build/connection-dos/redisplay-live/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
     "build/connection-dos/redisplay-live/TEST.PRM": "6bc529a64ce8837177a3c6ada15be9d50ab82a1f9c8e00e7b6d8721299c420f6",
-    "build/connection-dos/redisplay-live/dosbox.conf": "569f298ac4923be42cd68f02a6c79d8a3d54c789dae5a3a914518fe9ff298dd4",
+    "build/connection-dos/redisplay-live/dosbox.conf": "c0b98dc2a5f96989096b57c4fbcccc2a83acd90f631ffe5c4967eba5dd704b79",
     "build/connection-dos/redisplay-live/dosbox.log": "216d65ff8da05c16f6fc249703e46d801667a02f980d5e09692b18da1eb93be9",
-    "build/connection-dos/redisplay-live/result.json": "05def8a5d78e07361376c430f5da2bb6551d97292edff1ee5158a0bf8c9e2ef5",
+    "build/connection-dos/redisplay-live/result.json": "490f6a537de9ccaaba6ef709c12e42df281de4681e096d247d975aee575ba458",
     "build/connection-dos/redisplay-live/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
     "build/connection-dos/redisplay-live/screen.txt": "081f0782985dee5bd993cf8e4d3e7e4d340c2db32bdcc82b82ae0874004f2cba",
     "build/connection-dos/redisplay-live/serial.bin": "794d7d1ee3315a989a729a01e1d34693c5950af002605ef07da492743e943931"
   },
   "source_rebuild": {
     "report": "docs/validation/application-components-source-build.json",
-    "source_snapshot_sha256": "cc4d358d8837018e2eefd0fd7d9ca89c44bf3113409a187be6a04f6b3fa00afa",
-    "output_count": 63
+    "source_snapshot_sha256": "34b82581fb93d6a80a778784158c4d21e787535f91561448c923859658ebbfd4",
+    "output_count": 64
   },
-  "scope": "Maintained live redisplay,63000-byte native ring and frozen copy, line/page/Home/End browsing, ASCII case-insensitive incremental search/F3, live input and cursor replies during browsing, cancellation and restoration.39 linked inputs, one independent actual DOS observer workflow, native full-capacity/wrap and DOS child allocation evidence,70-command terminal regression and63 byte-identical Nix outputs. Filename clipboard, original complete UI, other video modes and physical serial/video remain open; F11 is not closed."
+  "scope": "Maintained live redisplay,63000-byte native ring and frozen copy, line/page/Home/End browsing, ASCII case-insensitive incremental search/F3, live input and cursor replies during browsing, cancellation and restoration.39 linked inputs, one independent actual DOS observer workflow, native full-capacity/wrap and DOS child allocation evidence,75-command terminal regression and64 byte-identical Nix outputs. Clipboard saved settings/transfer prompts, original complete UI, other video modes and physical serial/video remain open; F11 is not closed."
 }

@@ -28,6 +28,8 @@ extern screen_attribute_row_bytes,screen_video_row_bytes,connection_state
 terminal_redisplay_key_impl:
  cmp word [_redisplay_active],0
  jne .key
+ cmp ax,0x8300 ; Alt-=, local filename clipboard.
+ je .open
  cmp ax,0x8400 ; Ctrl-PgUp, local redisplay.
  je .open
  cmp ax,0x84e0

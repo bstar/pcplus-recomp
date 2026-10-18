@@ -173,6 +173,10 @@ test-terminal: terminal
 	python3 standalone/test_terminal_config.py
 	python3 standalone/test_connection_dos.py
 	python3 standalone/test_directory_terminal.py
+	python3 standalone/check_clipboard.py
+	python3 standalone/test_clipboard_dos.py
+	python3 standalone/check_clipboard_live.py
+	python3 standalone/test_clipboard_live_dos.py
 
 test-bbs-modem:
 	python3 lab/bbs/check_editor_recipes.py
@@ -393,3 +397,15 @@ test-directory-context: terminal directory-context
 	python3 standalone/check_directory_context.py
 	python3 standalone/test_directory_context_dos.py
 	python3 standalone/test_directory_context_terminal.py
+
+.PHONY: clipboard test-clipboard test-clipboard-original
+clipboard:
+	python3 standalone/build_clipboard.py
+test-clipboard: clipboard
+	python3 standalone/check_clipboard.py
+	python3 standalone/test_clipboard_dos.py
+test-clipboard-original: clipboard
+	python3 standalone/check_clipboard.py --original
+all: clipboard
+test: test-clipboard
+test-terminal: clipboard

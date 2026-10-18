@@ -10,11 +10,13 @@ must exclude original executables and private install/configuration data.
 The maintained terminal now includes directory editing/accounting, live settings
 with confirmed idle serial/profile/translation changes, XMODEM/YMODEM transfers,
 capture/snapshots/printer/monitor and serviced63,000-character redisplay with
-incremental search and serviced append/CRLF history export. All sixteen whole-application gates in `docs/FEATURES.md`
+incremental search, serviced append/CRLF history export and a filename clipboard
+with checked one/all/tagged serial output. All sixteen whole-application gates in `docs/FEATURES.md`
 remain open. The numbered sections below retain earlier component evidence and
 historical checkpoints; their old run counts are not the current binary identity.
 
-The remaining work includes filename clipboard, main menus/contextual help
+The remaining work includes saved clipboard settings/transfer-prompt workflows,
+main menus/contextual help
 and complete settings/key editing; other terminal emulations and font/resource
 paths; remaining transfer families/external helpers; complete directory cycles
 and bindings; ASPECT compiler/interpreter/recorder; Host mode and storage; complete
@@ -458,3 +460,27 @@ foreground chunks keep receive/keyboard service between writes. Verification
 combines27 linked inputs, three actual DOS workflows,167 ABI mutations,70 terminal
 commands and63 reproducible Nix outputs. Filename clipboard/full redisplay UI,
 other geometry and physical validation remain open; all F01–F16 gates remain open.
+
+
+### Maintained filename clipboard integration
+
+Alt-= and redisplay C now share the frozen/live frame owner with a15-entry
+clipboard. The bounded core preserves recovered add/edit/empty-entry behavior,
+name extraction and one/all/tagged packet bytes. The serviced resident transport
+admits whole packets on an empty TX ring, removes Single only after actual UART
+writes, cancels only its unsent prefix and treats connection queue discard as
+failure. Linked46 inputs and two independent actual DOS workflows pass; the
+source-only core passes614 linked inputs,321 optional original comparisons and
+559 actual DOS assertions. See `docs/FILENAME_CLIPBOARD.md`.
+
+The75-command terminal regression and64-output fresh-source proof pass for
+this runtime. Saved separator/Setup adoption, complete original
+clipboard UI, transfer-prompt workflows, other geometries and physical hardware
+remain open. No F01–F16 gate is closed by this component.
+
+The clipboard checkpoint's stock editor rechecks pass Synchronet's12 behavior
+and8 wire checks. ENiGMA immediate forwarding retains its Home/Insert failures;
+the explicit30ms control passes7 behavior/8 wire checks, with no post saved.
+The first Synchronet run was rejected by the synthetic account's daily quota;
+its temporary retry-only logon exemption was restored and independently read
+back. Reports retain that failed prerequisite rather than calling it a pass.

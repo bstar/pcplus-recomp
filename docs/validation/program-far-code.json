@@ -1,107 +1,107 @@
 {
   "passed": true,
-  "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
+  "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
   "memory_layout": {
-    "near_bytes": 62848,
-    "near_spare_bytes": 2688,
-    "near_relative_segment": 4995,
-    "far_relative_segment": 14236,
+    "near_bytes": 64048,
+    "near_spare_bytes": 1488,
+    "near_relative_segment": 5267,
+    "far_relative_segment": 14583,
     "shadow_offset": 0,
     "history_offset": 0,
     "far_bytes": 71192,
-    "history_relative_segment": 14748,
+    "history_relative_segment": 15095,
     "history_bytes": 63000,
-    "far_end_linear": 298968,
-    "stack_end_linear": 142768,
-    "loaded_module_bytes": 111931,
-    "minimum_allocated_module_bytes": 298976,
-    "retained_parent_paragraphs": 18702,
+    "far_end_linear": 304520,
+    "stack_end_linear": 148320,
+    "loaded_module_bytes": 116937,
+    "minimum_allocated_module_bytes": 304528,
+    "retained_parent_paragraphs": 19049,
     "far_pointer_relocations_verified": true,
-    "snapshot_relative_segment": 10173,
+    "snapshot_relative_segment": 10520,
     "snapshot_image_offset": 63008,
     "snapshot_bytes": 2000,
-    "snapshot_end_linear": 227776,
+    "snapshot_end_linear": 233328,
     "ui_screen_buffers": {
       "browser_screen": {
-        "relative_segment": 8923,
+        "relative_segment": 9270,
         "offset": 0,
         "bytes": 4000,
-        "start_linear": 142768,
-        "end_linear": 146768
+        "start_linear": 148320,
+        "end_linear": 152320
       },
       "ed_screen": {
-        "relative_segment": 8923,
+        "relative_segment": 9270,
         "offset": 4000,
         "bytes": 4000,
-        "start_linear": 146768,
-        "end_linear": 150768
+        "start_linear": 152320,
+        "end_linear": 156320
       },
       "program_screen": {
-        "relative_segment": 8923,
+        "relative_segment": 9270,
         "offset": 8000,
         "bytes": 4000,
-        "start_linear": 150768,
-        "end_linear": 154768
+        "start_linear": 156320,
+        "end_linear": 160320
       },
       "redisplay_live": {
-        "relative_segment": 8923,
+        "relative_segment": 9270,
         "offset": 12000,
         "bytes": 4000,
-        "start_linear": 154768,
-        "end_linear": 158768
+        "start_linear": 160320,
+        "end_linear": 164320
       },
       "redisplay_view": {
-        "relative_segment": 8923,
+        "relative_segment": 9270,
         "offset": 16000,
         "bytes": 4000,
-        "start_linear": 158768,
-        "end_linear": 162768
+        "start_linear": 164320,
+        "end_linear": 168320
       }
     },
     "far_ui_storage_bytes": 20000,
     "redisplay_snapshot_bytes": 63000,
-    "redisplay_snapshot_end_linear": 225768,
+    "redisplay_snapshot_end_linear": 231320,
     "controller_bridge_pairs_verified": 22,
-    "modem_bridge_pairs_verified": 22,
-    "configuration_bridge_pairs_verified": 34,
+    "modem_bridge_pairs_verified": 23,
+    "configuration_bridge_pairs_verified": 36,
     "redisplay_bridge_pairs_verified": 4,
-    "resident_code_bytes": 64516,
-    "resident_code_spare_bytes": 1020,
+    "resident_code_bytes": 64756,
+    "resident_code_spare_bytes": 780,
     "code_segments": [
       {
         "name": "_TEXT",
         "kind": "CODE",
         "relative_segment": 0,
         "offset": 0,
-        "bytes": 64516
+        "bytes": 64756
       },
       {
         "name": "CONFIG_CODE",
         "kind": "FARCODE",
-        "relative_segment": 4033,
+        "relative_segment": 4048,
         "offset": 0,
-        "bytes": 12464
+        "bytes": 16546
       },
       {
         "name": "MODEM_CODE",
         "kind": "FARCODE",
-        "relative_segment": 4812,
+        "relative_segment": 5083,
         "offset": 0,
-        "bytes": 1467
+        "bytes": 1483
       },
       {
         "name": "PRINT_CODE",
         "kind": "FARCODE",
-        "relative_segment": 4904,
+        "relative_segment": 5176,
         "offset": 0,
         "bytes": 1449
       }
     ],
-    "far_code_bridge_pairs_verified": 82
+    "far_code_bridge_pairs_verified": 85
   },
   "linked": {
     "passed": true,
-    "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
+    "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
     "inputs": 60,
     "cases": [
       {
@@ -187,8 +187,8 @@
           "ATDCaseTest:23"
         ],
         "errors": [],
-        "seconds": 8.581,
-        "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
+        "seconds": 8.578,
+        "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
         "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 HARD",
         "expected_exit": 0,
         "working_drive": "c",
@@ -223,8 +223,8 @@
           "ATDCaseTest:23"
         ],
         "errors": [],
-        "seconds": 8.576,
-        "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
+        "seconds": 8.577,
+        "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
         "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM2 19200 HARD",
         "expected_exit": 0,
         "working_drive": "c",
@@ -260,8 +260,8 @@
           "ATDCaseTest:23"
         ],
         "errors": [],
-        "seconds": 8.577,
-        "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
+        "seconds": 8.578,
+        "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
         "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 SOFT",
         "expected_exit": 0,
         "working_drive": "c",
@@ -293,8 +293,8 @@
           "ATDCaseTest:23"
         ],
         "errors": [],
-        "seconds": 8.577,
-        "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
+        "seconds": 8.578,
+        "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
         "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 HARD",
         "expected_exit": 0,
         "working_drive": "c",
@@ -302,7 +302,7 @@
         "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
       }
     ],
-    "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
+    "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
     "scope": "Actual DOS MetaPROGRAM COMSPEC /c with source-owned child, UARTIRQ released, DTRkept/RTSpaused/IERoff observed, childchangedUART/IRQ/video thenparentrestored, ordinarykeydelivery and finalIRQ/UART/PIC exact restoration. Nullmodem has CTSready, no physicalflow timing proof. No ASPECT/HOOK executor or vendorUI claim."
   },
   "retention": {
@@ -337,38 +337,38 @@
       "ATDCaseTest:23"
     ],
     "errors": [],
-    "seconds": 7.426,
-    "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
+    "seconds": 7.377,
+    "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
     "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 HARD",
     "expected_exit": 0,
     "working_drive": "c",
     "environment": {},
     "scope": "Actual DOS livePROGRAM/COMSPEC owned child locates parent PSP, checks retainedMCB throughfarend afterSTACK and FARCODE, allocates/fills16KB separateDOSmemory and verifies full-sizedshadow/history and frozen-screen endpointcanaries plus the full controller, modem and configuration C far-code byte-sums before/after allocation and sums of all three full4000-byte far UI screen owners. Parent resumes actual far controller polling after child return. NormalUART/vector cleanup verified by existing sampler. No physical modem claim.",
-    "sample_hex": "7f0014080e490e49c03f7952fecaefbeaddebebae12f22114433cf20cf204c1ba905ff2a0000000000000000eb32eb32f01abb05de2cde2ce517b030254d254d",
+    "sample_hex": "7f001408694a694a1b41d453fecaefbeaddebeba3c3122114433181e181e5c1ca9055a2c0000000000000000eb32eb32ff1bcb05c839c839f417a240dab5dab5",
     "linker_defines": {
-      "DGROUP_SEG": 4995,
-      "FAR_SEG": 14236,
+      "DGROUP_SEG": 5267,
+      "FAR_SEG": 14583,
       "SHADOW_OFFSET": 0,
       "HISTORY_OFFSET": 0,
-      "HISTORY_SEG": 14748,
+      "HISTORY_SEG": 15095,
       "FAR_END_OFFSET": 63000,
       "PROCESS_PSP_OFFSET": 448,
       "SHADOW_SEGMENT_OFFSET": 13621,
       "HISTORY_POINTER_OFFSET": 15037,
-      "SNAPSHOT_SEG": 10173,
+      "SNAPSHOT_SEG": 10520,
       "SNAPSHOT_OFFSET": 63008,
-      "REQUIRED_PARAS": 18702,
-      "CODE_SEG": 4904,
+      "REQUIRED_PARAS": 19049,
+      "CODE_SEG": 5176,
       "CODE_START": 0,
       "CODE_BYTES": 1449,
       "CODE_FIRST": 20565,
-      "MODEM_SEG": 4812,
+      "MODEM_SEG": 5083,
       "MODEM_START": 0,
-      "MODEM_BYTES": 1467,
-      "CONFIG_SEG": 4033,
+      "MODEM_BYTES": 1483,
+      "CONFIG_SEG": 4048,
       "CONFIG_START": 0,
-      "CONFIG_BYTES": 12464,
-      "UI_SEG": 8923,
+      "CONFIG_BYTES": 16546,
+      "UI_SEG": 9270,
       "BROWSER_OFF": 0,
       "EDITOR_OFF": 4000,
       "PROGRAM_OFF": 8000
@@ -376,8 +376,8 @@
   },
   "call_frames": {
     "passed": true,
-    "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
-    "configuration_bridge_pairs_verified": 34,
+    "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
+    "configuration_bridge_pairs_verified": 36,
     "entry_argument_counts": [
       1,
       2,
@@ -496,6 +496,10 @@
       "_program_execute:far-argument-offset",
       "_program_execute:implementation-target",
       "_program_execute:far-return",
+      "_config_clipboard_transport:service-far-target",
+      "_config_clipboard_transport:resident-call-frame",
+      "config_strcmp_service_:service-far-target",
+      "config_strcmp_service_:resident-call-frame",
       "_config_history_file:service-far-target",
       "_config_history_file:resident-call-frame",
       "_config_process_run:service-far-target",
@@ -528,6 +532,8 @@
       "_config_number_expand:resident-call-frame",
       "_config_live_expand:service-far-target",
       "_config_live_expand:resident-call-frame",
+      "_config_clipboard_transport_service:missing-MZ-relocation",
+      "config_strcmp_service_:missing-MZ-relocation",
       "_config_history_file_service:missing-MZ-relocation",
       "_program_execute:missing-MZ-relocation",
       "_config_process_run_service:missing-MZ-relocation",
@@ -557,108 +563,108 @@
       "incomplete-C-extent"
     ],
     "memory": {
-      "near_bytes": 62848,
-      "near_spare_bytes": 2688,
-      "near_relative_segment": 4995,
-      "far_relative_segment": 14236,
+      "near_bytes": 64048,
+      "near_spare_bytes": 1488,
+      "near_relative_segment": 5267,
+      "far_relative_segment": 14583,
       "shadow_offset": 0,
       "history_offset": 0,
       "far_bytes": 71192,
-      "history_relative_segment": 14748,
+      "history_relative_segment": 15095,
       "history_bytes": 63000,
-      "far_end_linear": 298968,
-      "stack_end_linear": 142768,
-      "loaded_module_bytes": 111931,
-      "minimum_allocated_module_bytes": 298976,
-      "retained_parent_paragraphs": 18702,
+      "far_end_linear": 304520,
+      "stack_end_linear": 148320,
+      "loaded_module_bytes": 116937,
+      "minimum_allocated_module_bytes": 304528,
+      "retained_parent_paragraphs": 19049,
       "far_pointer_relocations_verified": true,
-      "snapshot_relative_segment": 10173,
+      "snapshot_relative_segment": 10520,
       "snapshot_image_offset": 63008,
       "snapshot_bytes": 2000,
-      "snapshot_end_linear": 227776,
+      "snapshot_end_linear": 233328,
       "ui_screen_buffers": {
         "browser_screen": {
-          "relative_segment": 8923,
+          "relative_segment": 9270,
           "offset": 0,
           "bytes": 4000,
-          "start_linear": 142768,
-          "end_linear": 146768
+          "start_linear": 148320,
+          "end_linear": 152320
         },
         "ed_screen": {
-          "relative_segment": 8923,
+          "relative_segment": 9270,
           "offset": 4000,
           "bytes": 4000,
-          "start_linear": 146768,
-          "end_linear": 150768
+          "start_linear": 152320,
+          "end_linear": 156320
         },
         "program_screen": {
-          "relative_segment": 8923,
+          "relative_segment": 9270,
           "offset": 8000,
           "bytes": 4000,
-          "start_linear": 150768,
-          "end_linear": 154768
+          "start_linear": 156320,
+          "end_linear": 160320
         },
         "redisplay_live": {
-          "relative_segment": 8923,
+          "relative_segment": 9270,
           "offset": 12000,
           "bytes": 4000,
-          "start_linear": 154768,
-          "end_linear": 158768
+          "start_linear": 160320,
+          "end_linear": 164320
         },
         "redisplay_view": {
-          "relative_segment": 8923,
+          "relative_segment": 9270,
           "offset": 16000,
           "bytes": 4000,
-          "start_linear": 158768,
-          "end_linear": 162768
+          "start_linear": 164320,
+          "end_linear": 168320
         }
       },
       "far_ui_storage_bytes": 20000,
       "redisplay_snapshot_bytes": 63000,
-      "redisplay_snapshot_end_linear": 225768,
+      "redisplay_snapshot_end_linear": 231320,
       "controller_bridge_pairs_verified": 22,
-      "modem_bridge_pairs_verified": 22,
-      "configuration_bridge_pairs_verified": 34,
+      "modem_bridge_pairs_verified": 23,
+      "configuration_bridge_pairs_verified": 36,
       "redisplay_bridge_pairs_verified": 4,
-      "resident_code_bytes": 64516,
-      "resident_code_spare_bytes": 1020,
+      "resident_code_bytes": 64756,
+      "resident_code_spare_bytes": 780,
       "code_segments": [
         {
           "name": "_TEXT",
           "kind": "CODE",
           "relative_segment": 0,
           "offset": 0,
-          "bytes": 64516
+          "bytes": 64756
         },
         {
           "name": "CONFIG_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4033,
+          "relative_segment": 4048,
           "offset": 0,
-          "bytes": 12464
+          "bytes": 16546
         },
         {
           "name": "MODEM_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4812,
+          "relative_segment": 5083,
           "offset": 0,
-          "bytes": 1467
+          "bytes": 1483
         },
         {
           "name": "PRINT_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4904,
+          "relative_segment": 5176,
           "offset": 0,
           "bytes": 1449
         }
       ],
-      "far_code_bridge_pairs_verified": 82
+      "far_code_bridge_pairs_verified": 85
     },
-    "scope": "Serialized DOS MZ and linker-map validation of eighteen explicit near-cdecl entries, five compiler register callbacks and eleven resident cdecl callbacks; exact argument-copy frames, target calls/returns, relocations and full configuration C extent. Independent CPU candidate/directory/owner suites and actual DOS child allocation exercise behavior."
+    "scope": "Serialized DOS MZ and linker-map validation of eighteen explicit near-cdecl entries, six compiler register callbacks and twelve resident cdecl callbacks; exact argument-copy frames, target calls/returns, relocations and full configuration C extent. Independent CPU candidate/directory/owner suites and actual DOS child allocation exercise behavior."
   },
   "terminal_regression": {
     "passed": true,
-    "binary_sha256": "4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05",
+    "binary_sha256": "7aa4b4f34b1a40cce88fdae5f7d79083f5b384be35f6157239750ec57dad69ab",
     "commands": [
       {
         "command": "python3 standalone/build_terminal.py",
@@ -676,6 +682,11 @@
         "seconds": 0.064
       },
       {
+        "command": "python3 standalone/build_clipboard.py",
+        "exit_code": 0,
+        "seconds": 0.064
+      },
+      {
         "command": "python3 standalone/test_resource_path_dos.py",
         "exit_code": 0,
         "seconds": 0.265
@@ -688,7 +699,7 @@
       {
         "command": "python3 standalone/test_resource_lookup_dos.py",
         "exit_code": 0,
-        "seconds": 26.705
+        "seconds": 26.753
       },
       {
         "command": "python3 standalone/check_translation_live.py",
@@ -703,7 +714,7 @@
       {
         "command": "python3 standalone/test_translation_live_dos.py",
         "exit_code": 0,
-        "seconds": 24.253
+        "seconds": 24.301
       },
       {
         "command": "python3 standalone/check_live_translation.py",
@@ -713,7 +724,7 @@
       {
         "command": "python3 standalone/test_live_translation_dos.py",
         "exit_code": 0,
-        "seconds": 78.236
+        "seconds": 78.233
       },
       {
         "command": "python3 standalone/check_setup_startup.py",
@@ -723,7 +734,7 @@
       {
         "command": "python3 standalone/test_setup_startup_dos.py",
         "exit_code": 0,
-        "seconds": 19.694
+        "seconds": 19.598
       },
       {
         "command": "python3 standalone/check_setup_live.py",
@@ -733,7 +744,7 @@
       {
         "command": "python3 standalone/check_live_setup_owner.py",
         "exit_code": 0,
-        "seconds": 7.175
+        "seconds": 7.224
       },
       {
         "command": "python3 standalone/check_live_setup_policy.py",
@@ -763,17 +774,17 @@
       {
         "command": "python3 standalone/test_setup_port_dos.py",
         "exit_code": 0,
-        "seconds": 80.488
+        "seconds": 80.405
       },
       {
         "command": "python3 standalone/check_live_setup_apply.py",
         "exit_code": 0,
-        "seconds": 1.066
+        "seconds": 1.115
       },
       {
         "command": "python3 standalone/test_setup_live_dos.py",
         "exit_code": 0,
-        "seconds": 82.439
+        "seconds": 82.428
       },
       {
         "command": "python3 standalone/check_config_far_live.py",
@@ -783,12 +794,12 @@
       {
         "command": "python3 standalone/check_live_configuration.py --terminal",
         "exit_code": 0,
-        "seconds": 41.632
+        "seconds": 41.728
       },
       {
         "command": "python3 standalone/check_modem_far_live.py",
         "exit_code": 0,
-        "seconds": 8.828
+        "seconds": 9.029
       },
       {
         "command": "python3 standalone/check_terminal_break_live.py",
@@ -803,7 +814,7 @@
       {
         "command": "python3 standalone/check_far_code_live.py",
         "exit_code": 0,
-        "seconds": 0.314
+        "seconds": 0.315
       },
       {
         "command": "python3 standalone/check_terminal_print_controller_live.py",
@@ -813,7 +824,7 @@
       {
         "command": "python3 standalone/check_terminal_screen_print_live.py",
         "exit_code": 0,
-        "seconds": 10.581
+        "seconds": 10.68
       },
       {
         "command": "python3 standalone/check_terminal_printer_live.py",
@@ -828,52 +839,52 @@
       {
         "command": "python3 standalone/check_terminal_snapshot_live.py",
         "exit_code": 0,
-        "seconds": 1.617
+        "seconds": 1.616
       },
       {
         "command": "python3 standalone/check_terminal_capture_live.py",
         "exit_code": 0,
-        "seconds": 0.965
+        "seconds": 1.016
       },
       {
         "command": "python3 standalone/check_redisplay_live.py",
         "exit_code": 0,
-        "seconds": 24.602
+        "seconds": 24.401
       },
       {
         "command": "python3 standalone/test_redisplay_dos.py",
         "exit_code": 0,
-        "seconds": 8.528
+        "seconds": 8.526
       },
       {
         "command": "python3 standalone/check_history_export_live.py",
         "exit_code": 0,
-        "seconds": 43.178
+        "seconds": 43.679
       },
       {
         "command": "python3 standalone/test_history_export_dos.py",
         "exit_code": 0,
-        "seconds": 21.443
+        "seconds": 21.448
       },
       {
         "command": "python3 standalone/check_far_storage_live.py",
         "exit_code": 0,
-        "seconds": 2.417
+        "seconds": 2.468
       },
       {
         "command": "python3 standalone/test_far_storage_dos.py",
         "exit_code": 0,
-        "seconds": 7.524
+        "seconds": 7.475
       },
       {
         "command": "python3 standalone/check_terminal_transfer_live.py",
         "exit_code": 0,
-        "seconds": 3.669
+        "seconds": 3.72
       },
       {
         "command": "python3 standalone/check_terminal_upload_live.py",
         "exit_code": 0,
-        "seconds": 22.297
+        "seconds": 22.447
       },
       {
         "command": "python3 standalone/check_program_actions_live.py",
@@ -883,17 +894,17 @@
       {
         "command": "python3 standalone/check_terminal_reset_live.py",
         "exit_code": 0,
-        "seconds": 0.415
+        "seconds": 0.465
       },
       {
         "command": "python3 standalone/test_program_actions_dos.py",
         "exit_code": 0,
-        "seconds": 34.412
+        "seconds": 34.363
       },
       {
         "command": "python3 standalone/test_terminal_reset_live_dos.py",
         "exit_code": 0,
-        "seconds": 9.927
+        "seconds": 9.93
       },
       {
         "command": "python3 standalone/check_transport.py",
@@ -908,12 +919,12 @@
       {
         "command": "python3 standalone/check_key_live.py",
         "exit_code": 0,
-        "seconds": 0.765
+        "seconds": 0.815
       },
       {
         "command": "python3 standalone/check_meta_actions_live.py",
         "exit_code": 0,
-        "seconds": 2.467
+        "seconds": 2.518
       },
       {
         "command": "python3 standalone/check_character_edit_live.py",
@@ -923,7 +934,7 @@
       {
         "command": "python3 standalone/test_meta_actions_dos.py",
         "exit_code": 0,
-        "seconds": 19.793
+        "seconds": 19.794
       },
       {
         "command": "python3 standalone/check_line_edit_live.py",
@@ -938,7 +949,7 @@
       {
         "command": "python3 lab/bbs/check_formfeed.py",
         "exit_code": 0,
-        "seconds": 0.215
+        "seconds": 0.214
       },
       {
         "command": "python3 lab/bbs/check_enigma_controls.py",
@@ -953,12 +964,12 @@
       {
         "command": "python3 standalone/test_terminal.py",
         "exit_code": 0,
-        "seconds": 16.087
+        "seconds": 16.141
       },
       {
         "command": "python3 standalone/test_terminal_keys.py",
         "exit_code": 0,
-        "seconds": 24.153
+        "seconds": 24.101
       },
       {
         "command": "python3 standalone/check_terminal_config.py",
@@ -973,22 +984,22 @@
       {
         "command": "python3 standalone/check_connection.py",
         "exit_code": 0,
-        "seconds": 1.266
+        "seconds": 1.316
       },
       {
         "command": "python3 standalone/check_directory_live.py",
         "exit_code": 0,
-        "seconds": 3.169
+        "seconds": 3.269
       },
       {
         "command": "python3 standalone/check_directory_context.py",
         "exit_code": 0,
-        "seconds": 19.597
+        "seconds": 19.393
       },
       {
         "command": "python3 standalone/test_directory_context_terminal.py",
         "exit_code": 0,
-        "seconds": 7.226
+        "seconds": 7.225
       },
       {
         "command": "python3 standalone/check_directory_actions.py",
@@ -998,20 +1009,40 @@
       {
         "command": "python3 standalone/test_terminal_config.py",
         "exit_code": 0,
-        "seconds": 13.985
+        "seconds": 14.086
       },
       {
         "command": "python3 standalone/test_connection_dos.py",
         "exit_code": 0,
-        "seconds": 27.057
+        "seconds": 27.056
       },
       {
         "command": "python3 standalone/test_directory_terminal.py",
         "exit_code": 0,
-        "seconds": 58.112
+        "seconds": 58.202
+      },
+      {
+        "command": "python3 standalone/check_clipboard.py",
+        "exit_code": 0,
+        "seconds": 26.153
+      },
+      {
+        "command": "python3 standalone/test_clipboard_dos.py",
+        "exit_code": 0,
+        "seconds": 1.016
+      },
+      {
+        "command": "python3 standalone/check_clipboard_live.py",
+        "exit_code": 0,
+        "seconds": 13.483
+      },
+      {
+        "command": "python3 standalone/test_clipboard_live_dos.py",
+        "exit_code": 0,
+        "seconds": 15.491
       }
     ],
-    "seconds": 422.612,
+    "seconds": 438.59,
     "complete": true,
     "execution_concurrency": 2,
     "execution_note": "Build prerequisites sequential; two independent test processes with isolated fixture directories/ephemeral peer ports. No BBS probes run concurrently."
@@ -1020,25 +1051,25 @@
     "src/process/program.c": "d92237a2108783243efdb55bb1b8cea401c3bab9ee35110a0835620d65a32ee3",
     "src/process/dos_exec.h": "62bcea65ffdaf95388d1ba54dc1e287943e431430f0ba1d789948009dc0dd6b9",
     "src/process/dos_exec.asm": "302abd206c9d127cdbb1f1d75487e72ecec8f1023051e37bbc066ab9b553433a",
-    "src/terminal/config_abi.inc": "d4c34d1b60e45873fc45c3ceecd94b0dafc73a2abeb4846d975e62cdb82e8578",
+    "src/terminal/config_abi.inc": "6d4975eba9ca60bb0db78caba2a528611d29d2206d361f08e3f98523f157cd77",
     "src/terminal/program_actions.asm": "ca318033ced3e35427f3b09faf48be0c88a565731f8aefd3c0d6f4e6567c8bb8",
-    "standalone/build_terminal.py": "40915addc3de1964ccafed43e5d9c001ac996b43ccfc8e2d229c138a6f085a49",
-    "standalone/terminal_memory.py": "d29757696a7d15cc098a39159f249b443e06511dde09f30301d54360161b4029",
+    "standalone/build_terminal.py": "721ffda87069048dee3098c4077d28b3f1471e1821405a9ee95246ce86720649",
+    "standalone/terminal_memory.py": "99c7dfe1f1336f74e1d703e73702ac68812aa06ee574cf11d3cdfb3c72a41424",
     "standalone/check_program_actions_live.py": "13c88e8322ac917d8e03cd70f679fd6d942d1cfffbc3b1fc64389d77eafeecae",
     "standalone/test_program_actions_dos.py": "59b7b76210313542e4d0fa6a0e92988ce63b79c0cb23034137d3221331ae1f66",
-    "standalone/record_program_far.py": "0b3f46e43f046410ff1ddb39c277b5f702fd07c32e3848074c2e52fb7f55184a"
+    "standalone/record_program_far.py": "c42c03ef2862df566b3ca296d3a942a021129993df7b5c532b7db395c3677430"
   },
   "retained_artifacts": {
-    "build/terminal/program-actions-live-checks.json": "b82b0b63c7c580587f3e2e6d0bacf92fbed5771d238c2d54f2776c562f062141",
-    "build/program-actions-dos/checks.json": "93b0ae65661f58bd9cbafef3ae912053b3aaecdc2257f444f3bee311db362daf",
-    "build/far-storage-dos/checks.json": "7440e6b1fb524096de619e806be0ea7137962903ca713a82bdfbaed45cbec761",
-    "build/terminal/config-far-checks.json": "4af1484897e440f4da7cf664c184c2a626ff47c6c35af2d038d8f3ae31e96b36",
-    "build/terminal/setup-profile-regression.json": "03255e58867715629839bc61ef9cd6cbf57a51da90362303ae4353f8673a8483"
+    "build/terminal/program-actions-live-checks.json": "ee01d470aca87c9756743a9bdee9db509724d834b9586d8bcd9e55dfbbe99133",
+    "build/program-actions-dos/checks.json": "16576899d65d81d15025b48ab2a6a1a3ca0711d8574376f9d77653b8f1c8a615",
+    "build/far-storage-dos/checks.json": "babbfd1bccc69123b4d70fe4b2c1be50e3b2e0b31d8de2d44411115bb3a72e3d",
+    "build/terminal/config-far-checks.json": "3a826542a4e5e8bd65bbec8cc35e8f702bb210d810da3cb872f1c712d00d35f5",
+    "build/terminal/setup-profile-regression.json": "b16e9196c638513047e4748ce424e2041e5501eb8fcf84a3fb908108a1d304d0"
   },
   "source_rebuild": {
     "report": "docs/validation/application-components-source-build.json",
-    "source_snapshot_sha256": "cc4d358d8837018e2eefd0fd7d9ca89c44bf3113409a187be6a04f6b3fa00afa",
-    "output_count": 63
+    "source_snapshot_sha256": "34b82581fb93d6a80a778784158c4d21e787535f91561448c923859658ebbfd4",
+    "output_count": 64
   },
-  "scope": "Maintained PROGRAM command policy placement in CONFIG_CODE with unchanged near-cdecl API and resident DOS EXEC backend. Four actual C-return FLAGS observations include child-context clobber, EXEC failures and resize failure;60 linked inputs,4 actual DOS workflows,retained far-code child allocation,167 rejected bridge/layout mutations,70 terminal commands and63 byte-identical Nix outputs. Complete original PROGRAM/ASPECT/UI and physical hardware remain open."
+  "scope": "Maintained PROGRAM command policy placement in CONFIG_CODE with unchanged near-cdecl API and resident DOS EXEC backend. Four actual C-return FLAGS observations include child-context clobber, EXEC failures and resize failure;60 linked inputs,4 actual DOS workflows,retained far-code child allocation,173 rejected bridge/layout mutations,75 terminal commands and64 byte-identical Nix outputs. Complete original PROGRAM/ASPECT/UI and physical hardware remain open."
 }

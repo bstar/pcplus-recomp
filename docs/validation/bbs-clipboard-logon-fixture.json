@@ -1,0 +1,35 @@
+{
+  "user": "LABUSER",
+  "number": 1,
+  "level": 50,
+  "logons_today": 50,
+  "bit": 2048,
+  "before": 0,
+  "active": 2048,
+  "restored": true,
+  "scope": "Temporary synthetic-account daily-logon exemption only; editor/server quota policy unchanged.",
+  "after": 0,
+  "failed_prerequisite_label": "editor-clipboard-7aa4-hard",
+  "retry_label": "editor-clipboard-7aa4-hard-retry",
+  "source_sha256": {
+    "lab/bbs/synchronet_logon_fixture.py": "49cde21b111c4481c7610fce63de9f07e38f1f50f41cfece4d1d30b00b895594"
+  },
+  "retained_artifacts": {
+    "build/bbs-lab/results/synchronet/logon-fixture-7aa4.begin.js": "ad90cb4ebc013c400b082fd07adf936ed4531132d161333483884911cd0f58c9",
+    "build/bbs-lab/results/synchronet/logon-fixture-7aa4.begin.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/bbs-lab/results/synchronet/logon-fixture-7aa4.begin.stdout": "2855a505de0e2191b66e252145ac6f0876a8eae39b54de8536b883eaec78f6f5",
+    "build/bbs-lab/results/synchronet/logon-fixture-7aa4.end.js": "25a963fe65faa515de39020593af752efdcef01367c5d7a583cdfa39c5e9c93b",
+    "build/bbs-lab/results/synchronet/logon-fixture-7aa4.end.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/bbs-lab/results/synchronet/logon-fixture-7aa4.end.stdout": "66de416e99a03fc8e95654753bdd81c9a69cf357d9584ce6d93e2edff76bf064",
+    "build/bbs-lab/results/synchronet/logon-fixture-7aa4.json": "7e31b5222eccc69f18bf819d8bec3a366b1214d4a0a329327ef8cf64bc6ef4c5",
+    "build/bbs-lab/results/synchronet/logon-fixture-7aa4.verify.js": "951a1840905417a1dcc67f898465a80265249b9ce50f8df7651f3e3f2f4e66e4",
+    "build/bbs-lab/results/synchronet/logon-fixture-7aa4.verify.json": "cff1dad1d20eca91f8b61ca0ac4cbc154d26f1c86fab0b6908b14c8a787c193c",
+    "build/bbs-lab/results/synchronet/logon-fixture-7aa4.verify.stdout": "584b755080f3d65a64d7af67e22f22aa4e7e447388db18c85ba979d698e1e972"
+  },
+  "independent_persisted_readback": {
+    "number": 1,
+    "level": 50,
+    "exemptions": 0,
+    "logons_today": 51
+  }
+}

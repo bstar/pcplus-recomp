@@ -2,7 +2,7 @@
 
 This ledger records static original-product observations for remaining F11 work.
 [Serviced export](HISTORY_EXPORT.md) now implements the maintained file path;
-the filename clipboard remains unfinished. This ledger records the original
+[the maintained filename clipboard](FILENAME_CLIPBOARD.md) now supplies the core/UI/output path. This ledger records the original
 static observations separately from those maintained behaviors.
 Original main executable SHA-256 is
 `6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904`.
@@ -37,7 +37,7 @@ not establish recovery of the complete original UI.
 | --- | --- | --- |
 | D0D0h | C cut, E edit, P paste all, S single, T tagged; Escape returns | `ev_ead52f25f79395b992a038ceda4cc115a4eb090f037604308a9dd143452994c4` |
 | D136h | Select detected screen filename; Enter copies, uppercases and rejects duplicate names | `ev_7e8f5f1564c9539da38c52b705a22fff1c79c5c455d136fa760453ce58f5ae72` |
-| D34Eh | All/tagged sends each name followed by separator, then final CR if anything sent; list retained | `ev_5daa740e3d4267513723a0bab04c0fa9d7ab4d603fdc0b4b158524b071feaac4` |
+| D34Eh | All/tagged traverses allocated count, including edited empty names; separator after each selected entry, final CR if any selected; list retained | `ev_5daa740e3d4267513723a0bab04c0fa9d7ab4d603fdc0b4b158524b071feaac4` |
 | D3D4h | Single sends first name and CR, removes it and compacts names/tags | `ev_c6db04f178b383933e36bc105b421b4bc9e2461bcf54c0bbf6ab8b1d6b03ba93` |
 | D411h | Uppercase candidate; compare all15 slots for duplicates | `ev_6deab914b444d1352825defffc1bd13bea01621b40032206ed2c5f74916878b2` |
 | D455h | Add/edit/delete/purge/tag, cursor movement and first-letter navigation;12-character field | `ev_cbd205914b5b142964d5d7e6c01cd6dbe2e2cf1ae42693e918817613e0d2570f` |
@@ -45,8 +45,9 @@ not establish recovery of the complete original UI.
 
 Names begin at DS:E798h, tags at DS:E85Ch and count at DS:7580h.
 The separator at DS:206Eh is initialized to CR (original file279BEh).
-All/tagged emits a separator after the final selected name as well as the final
-CR; an empty tag selection sends nothing. Help's wording about separators is
+The dispatch loops below allocated count, not all15 slots. Edited empty entries
+also emit separators; tagged skips only zero tags. All/tagged emits a separator
+after the final selected name as well as the final CR; an empty tag selection sends nothing. Help's wording about separators is
 less precise than this assembly. Single paste does not use that separator loop.
 
 Resident3859h scans screen rows for dots, up to132 columns
@@ -70,11 +71,20 @@ Alt-=; a separate historical `clipkey.dtp` patch changes it to Alt--.
 
 ## Remaining evidence and implementation
 
-Recover the separator's Setup/persistence binding and exact screen-size refusal.
-The original edit path does not visibly repeat add's uppercasing/duplicate checks;
-resolve that distinction rather than inferring they are identical. Implement and
-verify extraction,15-slot list mutations, selection and output scheduling against
-explicit independent byte vectors. Exercise stale remote filenames, empty/full
-lists, duplicate/edit behavior and single/tagged/all output during single-file
-and batch transfer workflows. Static observations do not prove coexistence with
-active transfers. F11 remains open.
+The saved separator word is PRM offset04EAh: DS:206Eh lies within the1264-byte
+DS:1B84h..2073h payload read/written by overlay19 E8E4h through DDE3h/DE3Ah
+(`ev_c365a56c6527a5303a8baa2df06bd32c5a8a1b950085051bf86358892d97e7ee`).
+Its exact Setup control and maintained persistence remain unresolved.
+
+Original editing through resident79D4h/3F9Ch preserves case and accepts duplicate
+or empty entries without changing allocated count; add remains uppercase and
+checks all15 slots. The maintained bounded core preserves that distinction and
+its packet quirks. The optional original replay now compares321 cases, including
+48 dispatch/packet/Single-compaction cases with allocated holes.
+
+The original screen scanner supports up to132 columns, but the precise refusal
+threshold and video/UI behavior remain unrecovered;80x25 is a maintained gate.
+Help describes pasting to remote prompts before single/batch protocols, rather
+than injecting names into a local transfer dialog or active protocol stream.
+Exercise those end-to-end workflows, saved separator, complete original UI and
+other geometries before closing F11; physical validation remains open.

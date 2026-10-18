@@ -2,8 +2,8 @@
 
 The normal terminal links the directory transaction, pure626-byte settings
 candidate decoder, live setup owner, checked XLT reader, default-table owner and
-bounded environment-directory helper, live table stager and maintained redisplay and PROGRAM command policy in `CONFIG_CODE`, with a distinct CS and `CONFIG_GROUP`.
-Their data, constants and pointers remain in DGROUP with DS=SS. All nine C modules
+bounded environment-directory helper, live table stager and maintained redisplay, filename clipboard core/UI and PROGRAM command policy in `CONFIG_CODE`, with a distinct CS and `CONFIG_GROUP`.
+Their data, constants and pointers remain in DGROUP with DS=SS. All eleven C modules
 still use Open Watcom's small model and ordinary near calls; only their code
 placement and named external imports change. This frees resident code space for
 the settings workflow without changing the public near-cdecl API.
@@ -15,12 +15,12 @@ implementation. Both frames use LEA/POP to release copies, retaining the
 actual target's return registers and FLAGS; original caller argument slots
 remain owned by the caller. These are not variadic, RET-N or callback adapters.
 
-The C implementations call each other directly within CONFIG_CODE. Five
-explicit register-ABI imports (`memcpy`, `memset`, `memcmp`, `strchr` and the DOS
+The C implementations call each other directly within CONFIG_CODE. Six
+explicit register-ABI imports (`memcpy`, `memset`, `memcmp`, `strchr`, `strcmp` and the DOS
 canonicalizer) use named near thunks to far-call their resident counterparts.
-Eleven more callbacks
+Twelve more callbacks
 copy1..4 cdecl words to the resident terminal/modem decoders, PRM/directory
-readers, bounded number expander, native command-expansion status adapter and the checked XLT open/read/close adapters, plus the DOS EXEC process boundary and the history file event owner. Register imports retain the compiler's
+readers, bounded number expander, native command-expansion status adapter and the checked XLT open/read/close adapters, plus the DOS EXEC process boundary and the history file event owner plus clipboard transport. Register imports retain the compiler's
 trailing underscore symbol convention; they cannot use the cdecl adapters.
 The modem callback family's existing1..4-word contract is unchanged.
 
@@ -31,16 +31,16 @@ stack arguments must survive the additional far frames. Actual linked reads,
 EOF probes and failed reads exercise these adapters; all256 input bytes and
 caller state are checked. See [live translation](LIVE_TRANSLATION.md).
 
-`config_abi.inc` declares all34 bridge pairs. `terminal_memory.py` validates
+`config_abi.inc` declares all36 bridge pairs. `terminal_memory.py` validates
 their exact instructions, argument offsets/counts, near/far targets, return
 forms and required MZ relocations. It also checks an end marker linked after
-all nine C objects, ensuring the extent covers the implementations rather than just
+all eleven C objects, ensuring the extent covers the implementations rather than just
 the assembly wrappers. All code must fit its own64KiB segment, be present in
 the loaded MZ, be disjoint from other code/data owners and remain covered by
 PROGRAM's retained parent allocation. Together with PRINT/MODEM this validates
-82 bridge pairs including four viewer register entries.
+85 bridge pairs including four viewer register entries.
 
-`check_config_far_live.py` rejects167 intentionally damaged frames, relocations
+`check_config_far_live.py` rejects173 intentionally damaged frames, relocations
 and layouts. The independent311 directory and507 context cases execute normal
 terminal entry points across the bridge. `check_live_configuration.py --terminal`
 replays the same389 independently specified candidate cases against the normal
@@ -99,8 +99,18 @@ entry RET after normal execution, fallback, EXEC failure and resize failure.
 The tests do not replace product instructions or callbacks.
 
 The serviced history writer adds a three-word resident callback for the fourth
-checked file owner. The current executable uses64,516 resident code bytes,
+checked file owner. That history checkpoint used64,516 resident code bytes,
 62,848 near data/stack bytes and299,232 retained parent bytes including PSP.
 Its DOS export tests exercise all three callback operations with actual files;
 see [history export](HISTORY_EXPORT.md). Earlier PROGRAM-only memory values
 above describe that migration checkpoint.
+
+
+The filename clipboard adds a compiler-register strcmp import, a three-word
+resident transport callback and a named MODEM_CODE abort service. The latter is
+required when connection owners discard TX: a near cross-segment call is invalid
+and the actual DOS development run caught that mistake. Current layout checks
+verify36 configuration,23 modem,22 printer and4 redisplay bridge pairs. The current
+terminal uses64,756 resident code bytes,64,048 near data/stack bytes and304,784
+retained parent bytes including PSP. Clipboard core/UI code shares CONFIG_CODE;
+no extra full-screen frame is allocated. See [clipboard](FILENAME_CLIPBOARD.md).
