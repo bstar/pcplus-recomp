@@ -32,7 +32,7 @@ def main():
  m=LiveSettings();before=snapshot(m);raw=bytearray(m.raw);raw[0x1e2]=ord('!');launch(m,bytes(raw))
  assert m.get('terminal_macro_pause_character',1)==ord('!') and m.get('terminal_modem_pause',1)==ord('!');intact(m,before)
  done('pause-character-adopted-by-both-key-mapping-and-prepared-modem',1)
- for at,value,mask in [(0,1,1),(2,8,2),(4,1,4),(0x198,1,8),(0x194,6,16)]:
+ for at,value,mask in [(0,1,3),(2,8,2),(4,1,4),(0x198,1,8),(0x194,6,16)]:
   m=LiveSettings();before=snapshot(m);raw=word(word(m.raw,at,value),0x1a4,65535);launch(m,raw)
   assert m.get('terminal_setup_apply_status')==0 and m.get('terminal_break_delay_units')==65535
   assert struct.unpack('<4H',m.uc.mem_read(m.symbols['terminal_setup_outcome'],8))==(0,0,512,mask)

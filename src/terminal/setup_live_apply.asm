@@ -18,6 +18,7 @@ extern terminal_parity,terminal_data_bits,terminal_stop_bits,terminal_break_dela
 extern uart_software_flow,uart_hardware_flow,uart_port_rbr,uart_irq_indices
 extern uart_tx_paused,uart_xoff_sent,uart_flow_pending,uart_rts_lowered,uart_rx_count
 extern terminal_program_prepare_link
+extern terminal_port_check,terminal_port_handoff
 extern terminal_setup_profile_bind,terminal_setup_profile_stage
 extern terminal_setup_profile_status,terminal_setup_profile_ready
 extern terminal_connection_prepare,terminal_apply_live_configuration
@@ -72,6 +73,7 @@ terminal_setup_prepare:
  save
  mov word [terminal_setup_apply_status],0
  mov word [terminal_setup_link_status],0
+ mov word [terminal_setup_port_requested],0
  mov word [terminal_setup_key_consumed],0
  mov word [terminal_setup_profile_status],0
  mov word [terminal_setup_profile_ready],0
@@ -137,7 +139,7 @@ terminal_setup_complete:
  mov di,setup_previous_serial
  mov cx,TI_SIZE/2
  rep movsw
- mov ax,30
+ mov ax,31
  push ax
  mov ax,terminal_setup_outcome
  push ax
@@ -148,9 +150,10 @@ terminal_setup_complete:
  mov [terminal_setup_apply_status],ax
  or ax,ax
  jnz .done
+ call setup_port_choice
  call setup_profile_choice
  call setup_serial_choice
- test word [terminal_setup_outcome+4],128|14
+ test word [terminal_setup_outcome+4],128|15
  jz .apply
  ; Prepare future dial/hangup commands only after native expansion validation.
  ; An unexpected prepare failure restores the old settings/commands before
@@ -166,13 +169,14 @@ terminal_setup_complete:
  mov cx,MI_SIZE/2
  rep movsw
 .serial_globals:
- test word [terminal_setup_outcome+4],14
+ test word [terminal_setup_outcome+4],15
  jz .prepare_modem
  mov si,terminal_setup_plan
  call setup_install_serial
 .prepare_modem:
  call terminal_connection_prepare
- jnc .serial_ready
+ jnc .port_commit
+.restore_commands:
  push ds
  pop es
  mov si,setup_previous_modem
@@ -195,8 +199,27 @@ terminal_setup_complete:
  mov word [terminal_setup_outcome],6
  mov word [terminal_setup_outcome+4],0
  jmp .done
+.port_commit:
+ test word [terminal_setup_outcome+4],1
+ jz .serial_ready
+ mov ax,terminal_setup_plan
+ call terminal_port_handoff
+ or ax,ax
+ jz .serial_ready
+ ; A byte or carrier can arrive while the profile question is displayed.
+ ; Acquisition has not touched resources. Restore the old serial globals and
+ ; rebuild future commands at that rate, retaining independent modem edits.
+ mov si,setup_previous_serial
+ call setup_install_serial
+ call setup_defer_serial
+ mov word [terminal_setup_link_status],3
+ mov word [terminal_setup_key_consumed],0
+ call setup_reconcile_flow
+ call terminal_connection_prepare
+ jc .restore_commands
+ jmp .apply
 .serial_ready:
- test word [terminal_setup_outcome+4],14
+ test word [terminal_setup_outcome+4],15
  jz .apply
  call setup_reconcile_flow
 .apply:
@@ -218,6 +241,49 @@ terminal_setup_complete:
  add sp,2
 .done:
  restore
+
+setup_port_choice:
+ test word [terminal_setup_outcome+4],1
+ jz .done
+ mov word [terminal_setup_port_requested],1
+ mov si,setup_port_question
+.text:
+ lodsb
+ or al,al
+ jz .key
+ mov ah,0x0e
+ xor bh,bh
+ mov bl,7
+ int 0x10
+ jmp .text
+.key:
+ xor ax,ax
+ int 0x16
+ mov word [terminal_setup_key_consumed],1
+ cmp al,'Y'
+ je .accept
+ cmp al,'y'
+ je .accept
+ mov word [terminal_setup_link_status],2
+ call setup_defer_port
+ ret
+.accept:
+ call terminal_program_prepare_link
+ or ax,ax
+ jnz .busy
+ mov ax,terminal_setup_plan
+ call terminal_port_check
+ or ax,ax
+ jnz .busy
+ mov word [terminal_setup_link_status],1
+ ret
+.busy:
+ call setup_defer_port
+ call setup_reconcile_flow ;Old XON may have been released before rejection.
+ mov word [terminal_setup_link_status],3
+ mov word [terminal_setup_key_consumed],0
+.done:
+ ret
 
 setup_profile_choice:
  test word [terminal_setup_outcome+4],16
@@ -261,6 +327,8 @@ setup_profile_choice:
  ret
 
 setup_serial_choice:
+ test word [terminal_setup_outcome+4],1
+ jnz .done ;COM confirmation already includes its baud/line/flow proposal.
  test word [terminal_setup_outcome+4],14
  jz .done
  mov si,setup_serial_question
@@ -297,6 +365,8 @@ setup_serial_choice:
 .done:
  ret
 setup_defer_serial:
+ test word [terminal_setup_outcome+4],1
+ jnz setup_defer_port
  mov ax,[terminal_setup_outcome+4]
  and ax,14
  or [terminal_setup_outcome+6],ax
@@ -315,8 +385,33 @@ setup_defer_serial:
  pop di
  pop si
  ret
+setup_defer_port:
+ mov ax,[terminal_setup_outcome+4]
+ and ax,31
+ or [terminal_setup_outcome+6],ax
+ and word [terminal_setup_outcome+4],~31
+ push si
+ push di
+ push cx
+ push ds
+ pop es
+ mov si,setup_previous_serial
+ mov di,terminal_setup_plan
+ mov cx,9 ;Port/baud/line/flow AND coupled profile.
+ cld
+ rep movsw
+ mov ax,[setup_previous_serial+TI_IO_BASE]
+ mov [terminal_setup_plan+TI_IO_BASE],ax
+ mov ax,[setup_previous_serial+TI_IRQ]
+ mov [terminal_setup_plan+TI_IRQ],ax
+ mov word [terminal_setup_profile_ready],0
+ mov word [terminal_setup_profile_status],0
+ pop cx
+ pop di
+ pop si
+ ret
 setup_install_serial:
- ; SI validated same-port serial plan; no I/O or baseline capture here.
+ ; SI validated serial plan; port ownership changes only in port_handoff.
  mov ax,[si+TI_BAUD_LOW]
  mov [terminal_baud_low],ax
  mov ax,[si+TI_BAUD_HIGH]
@@ -343,8 +438,11 @@ setup_reconcile_flow:
  mov byte [uart_xoff_sent],0
  jmp .hardware
 .software:
+ test word [terminal_setup_outcome+4],1
+ jnz .announce
  cmp word [setup_previous_serial+TI_SOFT],0
  jne .watermark
+.announce:
  mov word [uart_tx_paused],0
  mov byte [uart_flow_pending],0x11
 .watermark:
@@ -381,7 +479,12 @@ terminal_setup_return_prompt:
 .check_link:
  mov si,setup_link_busy
  cmp word [terminal_setup_link_status],3
+ jne .not_busy
+ cmp word [terminal_setup_port_requested],0
  je .done
+ mov si,setup_port_busy
+ ret
+.not_busy:
  mov si,setup_unchanged
  cmp word [terminal_setup_outcome+6],0
  jne .deferred
@@ -398,8 +501,9 @@ terminal_setup_return_prompt:
  ret
 SEGMENT _DATA public class=DATA use16
 global terminal_setup_binding_status,terminal_setup_apply_status,terminal_setup_outcome
-global terminal_setup_link_status,terminal_setup_key_consumed
+global terminal_setup_link_status,terminal_setup_key_consumed,terminal_setup_port_requested
 terminal_setup_link_status: dw 0 ;0 none,1 applied,2 declined,3 busy/failed.
+terminal_setup_port_requested: dw 0
 terminal_setup_key_consumed: dw 0
 terminal_setup_binding_status: dw 2
 terminal_setup_apply_status: dw 0
@@ -410,6 +514,8 @@ setup_deferred: db 13,10,'Link/profile changes saved for next startup. Press a k
 setup_mixed: db 13,10,'Settings applied; link/profile changes need restart. Press a key to return.',0
 setup_apply_failed: db 13,10,'Could not validate saved settings. Active settings unchanged. Press a key.',0
 setup_serial_question: db 13,10,'Apply current-port baud/line/flow now? Peer must match. Y applies; other keys keep link.',0
+setup_port_question: db 13,10,'Move to saved COM/baud/line/flow? Both ports must be idle. Y moves; other keys keep link.',0
+setup_port_busy: db 13,10,'COM not available. Hang up (Alt-H) and drain line, then retry. Press a key.',0
 setup_link_busy: db 13,10,'Line busy; kept current serial settings. Press a key to return.',0
 setup_profile_question: db 13,10,'Switch profile, reset keys/modes and clear screen? Y switches; other keys keep profile.',0
 setup_profile_failed: db 13,10,'Could not load profile keyboard; kept current profile. Press a key.',0

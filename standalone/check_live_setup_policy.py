@@ -31,7 +31,7 @@ def main():
  assert finish(m,14)==(0,(0,0,0,0)) and m.output()[2:6]==struct.pack('<HH',38400,0)
  assert acknowledge(m,0)==0 and acknowledge(m,2)==7
  done('acknowledged-rate-can-revert-and-subsequent-autobaud-remains-preserved',3)
- for allowed in [1,32,0x8000,65535]:
+ for allowed in [32,33,0x8000,65535]:
   m=Owner().ready();assert finish(m,allowed)[0]==1 and finish(m,14)[0]==0
  done('invalid-policy-rejects-before-pending-consumption',4)
  m=Owner().ready();m.raw=word(m.raw,2,8);assert finish(m,14)[0]==0
@@ -39,6 +39,18 @@ def main():
  assert m.begin()==0 and finish(m,14)==(0,(0,0,2,0))
  assert m.begin()==0 and acknowledge(m,2)==7 and finish(m,14)[0]==0 and acknowledge(m,2)==0
  done('decline-invalid-ack-and-superseded-offer-cannot-advance-rate-baseline',3)
+ for allowed in range(1,32,2):
+  m=Owner().ready()
+  for at,value in [(0,1),(2,8),(4,1),(6,2),(8,7),(0x198,1),(0x19a,0),(0x194,6)]:m.raw=word(m.raw,at,value)
+  assert finish(m,allowed)==(0,(0,0,allowed,31^allowed))
+  assert m.output()[:2]==b'\x02\0' and m.output()[32:36]==struct.pack('<HH',0x2f8,3)
+  assert m.output()[2:6]==(struct.pack('<HH',49664,1) if allowed&2 else m.initial[2:6])
+ done('every-explicit-port-permission-combination-stages-corresponding-categories',16)
+ for mask in [0,1,2,3]:
+  m=Owner();m.uc.mem_write(m.data_base+m.active,word(m.initial,2,38400));assert m.bind()==0 and m.begin(mask)==0
+  m.raw=word(m.raw,0,1);assert finish(m,31)==(0,(0,0,(1 if not mask&1 else 0)|(2 if not mask&2 and not mask&1 else 0),0))
+  assert m.output()[2:6]==struct.pack('<HH',1200 if not mask&3 else 38400,0)
+ done('new-port-uses-source-baud-while-CLI-port-or-baud-override-preserves-active-rate',4)
  result=dict(passed=True,binary_sha256=hashlib.sha256((OUT/'TERMINAL.EXE').read_bytes()).hexdigest(),inputs=sum(c['inputs'] for c in cases),cases=cases,scope='Actual far-C owner policy/acknowledgment APIs with independent byte/range oracles. Canonical/PRM reads modeled by Owner; native decoders/expansion and bridge code execute. Permission to stage a serial proposal is not UART application; foreground choice/hardware tests are separate.')
  (OUT/'live-setup-policy-checks.json').write_text(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':main()

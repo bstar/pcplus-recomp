@@ -7,7 +7,7 @@ current profile. The answer returns to the terminal without consuming the next
 ordinary key. A combined save asks independently about profile and same-port
 serial changes, so either choice can be declined without discarding the other.
 
-Changing COM still defers the profile and all serial settings together. These
+A [COM move](PORT_HANDOFF.md) is confirmed before the profile question. Declining or failing the COM move defers its serial/profile group together. Once the COM preflight passes, the profile can be accepted or declined separately; a new byte or carrier before commit cancels the move and coupled profile. These
 remain partial maintained implementations of profiles4/6. Other emulations,
 original factory profile resources and the full native loader are not supplied
 by this workflow.

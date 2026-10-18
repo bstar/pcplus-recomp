@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Linked single-owner COM migration with four independent modeled UARTs.
 
-The production settings UI deliberately does not call the new primitive yet.
 No application function is replaced: native snapshot/vector code, maintained
 handoff and PROGRAM restore execute against modeled DOS/BIOS/hardware boundaries.
 """
@@ -17,15 +16,34 @@ SAVED=['uart_saved_pic','uart_saved_lcr','uart_saved_mcr','uart_saved_ier',
        'uart_saved_dll','uart_saved_dlm','uart_previous_irq_offset','uart_previous_irq_segment']
 
 class Ports(LiveSettings):
+ # Hardware fixtures remain tied to their physical base when product globals
+ # change. Parent PROGRAM/BIOS checks observe whichever UART is now selected.
+ def field(name):
+  def get(self):
+   return self.devices[self.get('uart_port_rbr')][name] if self.devices is not None else getattr(self,'_'+name)
+  def put(self,value):
+   if self.devices is None:setattr(self,'_'+name,value)
+   else:self.devices[self.get('uart_port_rbr')][name]=value
+  return property(get,put)
+ lcr=field('lcr');mcr=field('mcr');ier=field('ier');dll=field('dll');dlm=field('dlm')
+ temt=field('temt');thre=field('thre');overrun=field('overrun');carrier=field('carrier');rx=field('rx')
+ @property
+ def vector(self):return self.get('terminal_irq_vector')
+ @vector.setter
+ def vector(self,value):pass
+ @property
+ def old_vector(self):return self.vectors[self.vector] if self.vectors is not None else self._old_vector
+ @old_vector.setter
+ def old_vector(self,value):self._old_vector=value
  def __init__(self):
-  self.devices=None
+  self.devices=None;self.vectors=None
   super().__init__(mutate_child=False)
   self.devices={base:dict(lcr=[3,0x1e,0x9b,7][i],mcr=[11,1,2,0][i],
     ier=[1,2,3,0][i],dll=[3,0x32,0x76,0x54][i],dlm=[0,0x12,0x34,0x56][i],
     temt=True,thre=True,overrun=False,carrier=False,rx=collections.deque()) for i,base in enumerate(BASES)}
   self.reads=[];self.writes=[];self.wire=[]
   self.uc.mem_write(0x400,struct.pack('<4H',*BASES))
-  self.vectors={12:self.old_vector,11:(0x2468,0x1357)}
+  self.vectors={12:self._old_vector,11:(0x2468,0x1357)}
   self.uc.mem_write(11*4,struct.pack('<HH',*self.vectors[11]))
   first=self.devices[BASES[0]].copy()
   for key in REGS:first[key]=self.baseline['uart_saved_'+key]
@@ -125,7 +143,7 @@ def main():
  for port in [2,3,4,1,4,3,2,1]:
   m.quiet();assert m.handoff(port)==0;m.resume()
  m.shutdown();done('repeated-roundtrips-recapture-original-state-without-a-per-port-snapshot-table',8)
- failures=[('connection_state',6),('connection_state',1),('terminal_tx_count',1),('uart_rx_count',1),
+ failures=[('connection_state',6),('connection_state',1),('terminal_parser_active',1),('terminal_tx_count',1),('uart_rx_count',1),
   ('uart_xoff_sent',1),('uart_flow_pending',17)]
  for name,value in failures:
   m=Ports();m.quiet();m.put(name,value,1 if name in ('uart_xoff_sent','uart_flow_pending') else 2)
@@ -173,10 +191,29 @@ def main():
   m=Ports();m.quiet();m.uc.mem_write(0x402,struct.pack('<H',bios));before=(len(m.reads),len(m.writes),m.saved())
   assert m.handoff(2)==1 and (len(m.reads),len(m.writes),m.saved())==before
  done('BIOS-absent-or-mismatched-target-is-never-probed',3)
+ for mcr in [0,1,2,3]:
+  m=Ports();m.quiet();base=BASES[1];m.devices[base]['mcr']=mcr;m.originals[base]['mcr']=mcr
+  ptr=m.candidate(2);before=(m.hardware(),m.saved(),m.pic,len(m.writes))
+  assert m.call('terminal_port_check',ax=ptr)==0
+  assert (m.hardware(),m.saved(),m.pic,len(m.writes))==before
+  assert m.call('terminal_port_handoff',ax=ptr)==0
+  assert all(value&1==mcr&1 for port,value in m.writes[before[3]:] if port==base+4)
+  assert not m.devices[base]['mcr']&2
+  m.resume();m.shutdown()
+ done('preflight-does-not-acquire-and-target-DTR-never-pulses-during-acquisition',4)
+ for problem in ['owner','bios','rx']:
+  m=Ports();m.quiet();ptr=m.candidate(2)
+  if problem=='owner':m.put('terminal_program_active',0)
+  elif problem=='bios':m.uc.mem_write(0x402,b'\0\0')
+  else:m.devices[BASES[1]]['rx'].append(ord('R'))
+  before=(m.hardware(),m.saved(),m.pic,len(m.writes))
+  assert m.call('terminal_port_check',ax=ptr)==(2 if problem=='rx' else 1)
+  assert (m.hardware(),m.saved(),m.pic,len(m.writes))==before and m.data_reads==0
+ done('preflight-failure-leaves-owner-and-queued-input-intact',3)
  result=dict(passed=True,binary_sha256=hashlib.sha256(BINARY.read_bytes()).hexdigest(),
   inputs=sum(c['inputs'] for c in cases),cases=cases,
   sources={p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in ['standalone/check_port_handoff.py','src/terminal/port_handoff.asm','src/terminal/program_actions.asm']},
-  scope='Actual linked foreground ownership primitive, native vector/snapshot routines, PROGRAM restoration, UART traffic and final shutdown with four independent modeled UARTs. Settings UI is not connected to this primitive. BIOS/DOS/hardware modeled; no actual DOS multiport or physical hardware claim.')
+  scope='Actual linked preflight/ownership primitive, native vector/snapshot routines, PROGRAM restoration, UART traffic and final shutdown with four independent modeled UARTs. Target DTR is preserved during acquisition. Settings UI integration has separate checks. BIOS/DOS/hardware modeled; no actual DOS multiport or physical hardware claim here.')
  (ROOT/'build/terminal/port-handoff-checks.json').write_text(json.dumps(result,indent=2)+'\n')
 
 if __name__=='__main__':main()

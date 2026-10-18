@@ -89,7 +89,7 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
  live_setup_result *result,unsigned permitted_link_mask)
 {
  live_configuration_result decoded;prm_dos_result io;unsigned mask,status,deferred;
- if((permitted_link_mask&~30U) || !external(destination,sizeof(*destination)) || !external(result,sizeof(*result)) ||
+ if((permitted_link_mask&~31U) || !external(destination,sizeof(*destination)) || !external(result,sizeof(*result)) ||
   !separate(destination,sizeof(*destination),result,sizeof(*result)))return LIVE_SETUP_ARGUMENT;
  memset(result,0,sizeof(*result));
  if(owner.bound!=1 || owner.pending!=1){result->status=LIVE_SETUP_STATE;return result->status;}
@@ -111,18 +111,23 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
  /* A negotiated rate is not an implicit request to restore the PRM's old
   * source rate on every unrelated save. Pending deliberate rate edits retain
   * their deferred classification across repeated editor invocations. */
- if(!(mask&2) && owner.stage.serial.baud_low==owner.source_baud_low &&
+ if(!(mask&2) && !((permitted_link_mask&LIVE_CHANGE_PORT) && (owner.stage.change_mask&LIVE_CHANGE_PORT)) &&
+  owner.stage.serial.baud_low==owner.source_baud_low &&
   owner.stage.serial.baud_high==owner.source_baud_high){
   status=live_configuration_decode(&owner.image,owner.has_context?&owner.context.selection:0,
    owner.has_context?owner.context.codes:0,mask|2,&owner.active,&owner.stage,&decoded);
   if(status){result->status=LIVE_SETUP_DECODE;result->source_status=status;return result->status;}
  }
  if(!command_valid(&owner.stage)){result->status=LIVE_SETUP_COMMAND;return result->status;}
- if(owner.stage.change_mask&LIVE_CHANGE_PORT)permitted_link_mask=0;
+ if((owner.stage.change_mask&LIVE_CHANGE_PORT) && !(permitted_link_mask&LIVE_CHANGE_PORT))permitted_link_mask=0;
  deferred=owner.stage.change_mask&(((LIVE_CHANGE_TRANSPORT|LIVE_CHANGE_PROFILE)&~permitted_link_mask)|LIVE_CHANGE_DIRECTORY|LIVE_CHANGE_TARGET);
  owner.offered_mask=owner.stage.change_mask;
  owner.offered_baud_low=owner.stage.serial.baud_low;owner.offered_baud_high=owner.stage.serial.baud_high;
- owner.stage.serial.port_number=owner.active.serial.port_number;
+ if(!(permitted_link_mask&LIVE_CHANGE_PORT)){
+  owner.stage.serial.port_number=owner.active.serial.port_number;
+  owner.stage.serial.io_base=owner.active.serial.io_base;
+  owner.stage.serial.irq=owner.active.serial.irq;
+ }
  if(!(permitted_link_mask&LIVE_CHANGE_BAUD)){
   owner.stage.serial.baud_low=owner.active.serial.baud_low;owner.stage.serial.baud_high=owner.active.serial.baud_high;
  }
@@ -133,8 +138,6 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
   owner.stage.serial.software_flow=owner.active.serial.software_flow;owner.stage.serial.hardware_flow=owner.active.serial.hardware_flow;
  }
  if(!(permitted_link_mask&LIVE_CHANGE_PROFILE))owner.stage.serial.terminal_id=owner.active.serial.terminal_id;
- owner.stage.serial.io_base=owner.active.serial.io_base;
- owner.stage.serial.irq=owner.active.serial.irq;
  memcpy(&owner.stage.directory,&owner.active.directory,sizeof(owner.stage.directory));
  result->deferred_mask=deferred;result->applied_mask=owner.stage.change_mask&~deferred;
  memcpy(destination,&owner.stage,sizeof(*destination));return LIVE_SETUP_OK;

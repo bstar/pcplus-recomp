@@ -28,14 +28,16 @@ consumed. The peer must independently match the selected format. A busy
 transmitter keeps the old serial settings and leaves a visible acknowledgment
 prompt. Independent display/modem/BREAK changes can still be adopted.
 
-A COM/base/IRQ change defers all serial categories and the profile together,
-so the new port's settings cannot accidentally be installed on the old port.
+A COM/base/IRQ change now offers a [confirmed idle-port move](PORT_HANDOFF.md).
+The old port is restored before acquiring the new one; target DTR is preserved.
+Declining or failing the move defers its serial/profile group together.
+Both ports are rechecked just before commit, including incoming data and carrier.
 Supported profiles4/6 now offer their own Y/N choice, with staged target keyboard
 validation and a clean view/reset baseline; see [PROFILE_LIVE.md](PROFILE_LIVE.md). CLI category overrides retain precedence.
 Negotiated autobaud is preserved on unrelated saves. Successfully applying a
 new source rate advances the remembered source baseline, allowing a later edit
 to revert the rate without mistaking it for an unrelated autobaud change.
-Cross-port migration and the broader emulation collection remain unfinished;
+Connected COM migration, physical validation and the broader emulation collection remain unfinished;
 see [SERIAL_LIVE.md](SERIAL_LIVE.md).
 
 Configured display defaults are separate from transient BBS state. Unedited
@@ -96,8 +98,10 @@ profile cases check accepted/declined switches, explicit target F1 mapping and
 missing-target-block preservation. After each return the peer receives typed bytes, sends
 new display bytes and receives a fresh cursor reply. Exact screen attributes prove display adoption. An independent INT1C sampler
 observes old/new divisor and LCR bitmaps; UART/vector/PIC samples prove final
-restoration. The dedicated suites additionally exercise27 candidate-policy inputs,53 actual
-foreground serial handoff inputs and32 profile cases.
+restoration. The dedicated suites additionally exercise47 candidate-policy inputs,53 foreground
+same-port serial handoff inputs and32 profile cases. COM coverage adds69 linked
+resource-owner cases,33 complete foreground transaction cases and six actual
+DOS production-editor scenarios with independent multiport sampling.
 
 Run these through `./tools/build test-terminal`. The pure staging API is described
 in [LIVE_CONFIGURATION_PLAN.md](LIVE_CONFIGURATION_PLAN.md); the full feature

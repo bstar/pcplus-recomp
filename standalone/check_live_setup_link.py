@@ -107,8 +107,8 @@ def main():
  from unicorn.x86_const import UC_X86_REG_EFLAGS
  assert not m.uc.reg_read(UC_X86_REG_EFLAGS)&1 and m.get('connection_state')==6
  done('established-session-retains-controller-state-and-pending-RX-after-accepted-baud',1)
- m=Link();raw=word(word(word(m.raw,0,1),2,8),4,2);m.launch(raw)
- assert m.get('terminal_setup_link_status')==0 and (m.dll,m.dlm,m.lcr)==(3,0,3)
+ m=Link();raw=word(word(word(m.raw,0,1),2,8),4,2);m.launch(raw,extra_ack=True)
+ assert m.get('terminal_setup_link_status')==3 and (m.dll,m.dlm,m.lcr)==(3,0,3)
  assert m.get('terminal_port_number')==1 and m.get('terminal_setup_outcome',8)>>48==7
  m.preserved();done('different-port-request-never-partially-applies-its-baud-or-line-to-old-port',1)
  result=dict(passed=True,binary_sha256=hashlib.sha256(BINARY.read_bytes()).hexdigest(),inputs=sum(c['inputs'] for c in cases),cases=cases,scope='Actual linked DOS foreground choice, C policy/acknowledgment, native UART setters, old-format XON/TEMT gate, ISR/video restoration and original baseline retention. Kernel/BIOS/UART are modeled. Same port only; port/profile remain deferred. Physical peer must independently match the chosen format; real DOS timer/serial tests are separate.')

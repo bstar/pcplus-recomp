@@ -71,6 +71,8 @@ test-terminal: terminal
 	python3 standalone/check_live_setup_link.py
 	python3 standalone/check_live_setup_profile.py
 	python3 standalone/check_port_handoff.py
+	python3 standalone/check_live_setup_port.py
+	python3 standalone/test_setup_port_dos.py
 	python3 standalone/check_live_setup_apply.py
 	python3 standalone/test_setup_live_dos.py
 	python3 standalone/check_config_far_live.py

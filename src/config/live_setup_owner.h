@@ -30,9 +30,11 @@ unsigned __cdecl live_setup_begin(const char *path,
  * this module's storage. No active globals or hardware are changed here. */
 unsigned __cdecl live_setup_finish(live_configuration_plan *destination,
  live_setup_result *result);
-/* Same transaction with explicitly permitted SAME-port baud/line/flow bits
- * and supported profile bits (subset of30). A port change defers these together. The
- * foreground owner still must obtain the user's choice and perform handoff. */
+/* Explicitly permitted transport/profile bits (subset of31). Without PORT
+ * permission a port change defers the entire coupled group as before. With
+ * PORT permission, the source PRM baud describes the new port, rather than
+ * retaining the old port's negotiated autobaud. The foreground owner must
+ * still obtain the user's choice and perform the checked resource handoff. */
 unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
  live_setup_result *result,unsigned permitted_link_mask);
 /* Acknowledge only a successfully committed baud change (mask2), or clear an

@@ -34,6 +34,8 @@ class LiveProgram(Meta):
   self.uc.mem_write(self.get('process_psp')*16+0x2c,struct.pack('<H',segment))
   if segment:
    self.uc.mem_write((segment-1)*16,b'M\0\0'+struct.pack('<H',(len(data)+15)//16));self.uc.mem_write(segment*16,data)
+ @property
+ def irq_mask(self):return 1<<(self.get('terminal_irq_vector')-8)
  def vector_value(self):return struct.unpack('<HH',self.uc.mem_read(self.vector*4,4))
  def input_port(self,u,port,size,data):
   if port==0x21:return self.pic
@@ -61,7 +63,7 @@ class LiveProgram(Meta):
  def interrupt(self,u,number,data):
   if number==0x16:
    if self.get('terminal_program_active'):
-    assert self.pic&0x10 or self.ier==0 or not self.mcr&8,'Child UART interrupts remain live during returnprompt'
+    assert self.pic&self.irq_mask or self.ier==0 or not self.mcr&8,'Child UART interrupts remain live during returnprompt'
    return super().interrupt(u,number,data)
   if number==0x10:
    ax=u.reg_read(UC_X86_REG_AX);ah=ax>>8;self.video_calls.append(ah)
@@ -74,7 +76,7 @@ class LiveProgram(Meta):
    if ah==2:self.cursor=u.reg_read(UC_X86_REG_DX);return
    if ah==14:
     if self.get('terminal_program_active'):
-     assert self.pic&0x10 and self.ier==0 and not self.lcr&0x80 and not self.mcr&2,'Child UART interrupts remain live before returnprompt'
+     assert self.pic&self.irq_mask and self.ier==0 and not self.lcr&0x80 and not self.mcr&2,'Child UART interrupts remain live before returnprompt'
      assert self.vector_value()==self.old_vector,'Child vector remains installed during returnprompt'
      if not self.prompt_key_sent:self.keys.append(0x1c0d);self.prompt_key_sent=True
     row,col=self.cursor>>8,self.cursor&255
@@ -94,12 +96,12 @@ class LiveProgram(Meta):
    u.mem_write((ax&255)*4,struct.pack('<HH',u.reg_read(UC_X86_REG_DX),u.reg_read(UC_X86_REG_DS)));self.calls.append(0x25);return
   if ax==0x4b00:
    assert self.vector_value()==self.old_vector,'Parent UART ISR was not released beforeEXEC'
-   assert self.ier==0 and self.mcr&1 and not self.mcr&2 and self.pic&0x10
+   assert self.ier==0 and self.mcr&1 and not self.mcr&2 and self.pic&self.irq_mask
    assert self.get('terminal_program_active')==1 and not self.get('terminal_program_pending')
    self.at_exec.append({'irq_released':True,'DTR_preserved':True,'RTS_lowered':True})
    Kernel.interrupt(self,u,number,data)
    if self.mutate_child and not self.exec_error:
-    self.lcr=0x9b;self.mcr=0xb;self.ier=0xff;self.dll=0x77;self.dlm=0x88;self.pic&=~0x10
+    self.lcr=0x9b;self.mcr=0xb;self.ier=0xff;self.dll=0x77;self.dlm=0x88;self.pic&=~self.irq_mask
     u.mem_write(self.vector*4,struct.pack('<HH',0xabcd,0x4567))
     self.mode=0x13;self.page=2;self.cursor=0x1401;self.shape=0x2020;u.mem_write(0xb8000,b'\xff'*4000)
     self.rx.append(ord('R')) # hardware RBR pending across restore; no ISR active.
@@ -118,7 +120,7 @@ class LiveProgram(Meta):
   assert {name:self.get(name) for name in self.logical_names}==self.logical_before
   assert self.vector_value()==self.parent_vector
   assert (self.lcr,self.mcr,self.ier,self.dll,self.dlm)==(3,0xb,1,3,0)
-  assert not self.pic&0x10
+  assert not self.pic&self.irq_mask
   assert {name:self.get(name,1 if name.startswith('uart_saved_') else 2) for name in self.baseline}==self.baseline
 
 def main():

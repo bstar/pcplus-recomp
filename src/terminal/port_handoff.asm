@@ -1,12 +1,12 @@
 ; Maintained foreground single-UART ownership transfer. No original driver
-; bytes are changed. The settings UI does not invoke this entry yet.
+; bytes are changed. Used by the live settings transaction after confirmation.
 BITS 16
 CPU 8086
 %include "terminal_import.inc"
 SEGMENT _TEXT public class=CODE use16
 extern terminal_program_active,terminal_program_kind,terminal_program_status
 extern terminal_program_mcr,terminal_port_number,terminal_irq_vector
-extern connection_state,terminal_tx_count
+extern connection_state,terminal_tx_count,terminal_parser_active
 extern uart_port_index,uart_irq_indices
 extern uart_irq_disable_masks
 extern uart_port_rbr,uart_port_thr,uart_port_ier,uart_port_lcr
@@ -14,8 +14,8 @@ extern uart_port_mcr,uart_port_lsr,uart_port_msr
 extern uart_rx_count,uart_rx_dropped,uart_tx_paused
 extern uart_xoff_sent,uart_flow_pending,uart_rts_lowered
 extern uart_restore_interrupt,uart_restore_hardware_state
-extern uart_save_hardware_state,uart_disable,uart_install_interrupt
-global terminal_port_handoff
+extern uart_save_hardware_state,uart_mask_irq,uart_install_interrupt
+global terminal_port_handoff,terminal_port_check
 
 ; AX validated TI_SIZE-byte candidate in DS. Foreground setup owner only:
 ; child has returned, its ISR was removed, old-format XON/TEMT handoff completed.
@@ -24,11 +24,19 @@ global terminal_port_handoff
 ; target is IRQ-masked, IER0, DLAB0 with its original vector installed; the normal
 ; PROGRAM restore must install the desired serial format and re-enable it.
 ; All earlier ports are already restored, so one native snapshot is sufficient.
+; Same gates without resource transfer; handoff repeats them at commit so an
+; arriving byte/carrier during profile confirmation cannot slip through.
+terminal_port_check:
+ xor dx,dx
+ jmp port_enter
 terminal_port_handoff:
+ mov dx,1
+port_enter:
  push bp
  push si
  push di
  push es
+ mov di,dx
  mov si,ax
  or ax,ax
  jz .invalid
@@ -58,6 +66,8 @@ terminal_port_handoff:
  cmp dx,[es:bx]
  jne .invalid ;Do not probe ports absent from the BIOS table.
  cmp word [connection_state],0
+ jne .busy
+ cmp word [terminal_parser_active],0
  jne .busy
  cmp word [terminal_tx_count],0
  jne .busy
@@ -118,6 +128,8 @@ terminal_port_handoff:
  in al,dx
  test al,0x80
  jnz .busy
+ or di,di
+ jz .ready
  ; The old vector belongs to the old IRQ until restoration is complete.
  push word [terminal_irq_vector]
  call uart_restore_interrupt
@@ -144,7 +156,21 @@ terminal_port_handoff:
  inc dx
  mov [uart_port_msr],dx
  call uart_save_hardware_state
- call uart_disable ;Snapshot leaves DLAB1; disable clears it before IER0.
+ ; Do not use native disable: MCR0 would pulse an already asserted DTR and
+ ; can reset a modem. Mask IRQ, clear snapshot's DLAB, disable IER and lower
+ ; only RTS. The target's original MCR remains in its native exit snapshot.
+ call uart_mask_irq
+ mov dx,[uart_port_lcr]
+ in al,dx
+ and al,0x7f
+ out dx,al
+ mov dx,[uart_port_ier]
+ xor al,al
+ out dx,al
+ mov dx,[uart_port_mcr]
+ in al,dx
+ and al,0xfd
+ out dx,al
  ; Seed the native saved vector from the TARGET IRQ. The old saved vector must
  ; never be restored into this slot by PROGRAM's later restoration routine.
  push word [terminal_irq_vector]
@@ -158,6 +184,7 @@ terminal_port_handoff:
  mov byte [uart_xoff_sent],0
  mov byte [uart_flow_pending],0
  mov byte [uart_rts_lowered],0
+.ready:
  xor ax,ax
  jmp .done
 .invalid:

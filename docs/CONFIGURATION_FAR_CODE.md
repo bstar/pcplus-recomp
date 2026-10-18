@@ -59,11 +59,11 @@ generated analysis executable, private PRM or REA database is a build input.
 The integrated live setup owner now binds the startup namespace/selection,
 snapshots effective transport including autobaud, validates native commands,
 selectively applies independent settings and offers confirmed same-port serial
-changes and supported4/6 profile resets. COM changes remain deferred.
+changes, confirmed idle COM ownership transfer and supported4/6 profile resets.
 See [SETUP_LIVE.md](SETUP_LIVE.md). Full transport/profile ownership changes and
 the complete application remain open.
 
-The checkpoint's56-command terminal regression,60-output isolated source
+The checkpoint's58-command terminal regression,60-output isolated source
 rebuild,389 terminal candidate inputs,311 directory inputs,507 retained-context
 inputs and actual DOS child retention are bound together in
 [validation/configuration-far-code.json](validation/configuration-far-code.json).

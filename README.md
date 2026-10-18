@@ -342,4 +342,4 @@ From the running terminal, **Alt-F10** opens the same editor for an explicit
 `@` current-directory8.3 PRM. Valid display, pacing, future modem settings and
 BREAK edits apply during the session. A separate Y/N choice applies baud,
 line format and flow on the current port. Profiles4/6 have a separate confirmed
-keyboard/view reset; COM changes remain deferred. See [setup from the terminal](docs/SETUP_LIVE.md).
+keyboard/view reset. An idle COM move has its own confirmation and restores the old port before acquiring the new one; see [COM changes](docs/PORT_HANDOFF.md) and [setup from the terminal](docs/SETUP_LIVE.md).
