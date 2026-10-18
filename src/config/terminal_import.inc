@@ -19,4 +19,5 @@
 %define TI_IRQ 34
 %define TI_MAPPING_PAUSE 36
 %define TI_MAPPING_DELAY 38
-%define TI_SIZE 40
+%define TI_TRANSLATION 40
+%define TI_SIZE 42

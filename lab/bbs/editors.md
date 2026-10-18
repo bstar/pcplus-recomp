@@ -457,3 +457,13 @@ while emitting all measured keys; `editor-com-2cdf-buffer30` passes all seven
 audited checks. Neither ENiGMA run saves a post. The immediate aggregate remains
 false, and the earlier COM/flow and packetization experiments remain retained.
 See [the current checkpoint](modern-compatibility.md).
+
+## Saved translation-mode checkpoint
+
+Builde212df15 repeats the stock probes after extending PRM/plan layouts and
+adding saved translation modes. The BBS fixtures select mode0 (identity), without
+/X. Synchronet `editor-prm-e212-hard` passes all12 semantic and eight wire
+checks and aborts its draft. ENiGMA `editor-prm-e212-immediate` again fails Home
+and Insert behavior despite correct key output; `editor-prm-e212-buffer30`
+passes all seven audited checks. Both ENiGMA connections close without posting.
+Previous experiments remain retained and the immediate aggregate stays false.

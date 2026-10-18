@@ -16,7 +16,7 @@ def main():
  linked=bound('build/terminal/setup-live-checks.json',runtime);assert linked['inputs']==32
  dos=read('build/setup-startup/live-checks.json')
  assert dos['passed'] and dos['terminal_sha256']==runtime and dos['editor_sha256']==editor
- assert len(dos['cases'])==10 and all(c['passed'] and all(c['checks'].values()) for c in dos['cases'])
+ assert len(dos['cases'])==11 and all(c['passed'] and all(c['checks'].values()) for c in dos['cases'])
  owner=bound('build/terminal/live-setup-owner-checks.json',runtime);assert owner['inputs']==76
  apply=bound('build/terminal/live-setup-apply-checks.json',runtime);assert apply['inputs']==27
  policy=bound('build/terminal/live-setup-policy-checks.json',runtime);assert policy['inputs']==47
@@ -31,7 +31,7 @@ def main():
  frames=bound('build/terminal/config-far-checks.json',runtime)
  assert frames['configuration_bridge_pairs_verified']==26 and len(frames['rejected_mutations'])==119
  candidate=bound('build/live-configuration/terminal-checks.json',runtime)
- assert candidate['host']=='terminal-far-C' and candidate['inputs']==389 and candidate['maximum_CPU_call_stack_bytes']<8192-3514-16
+ assert candidate['host']=='terminal-far-C' and candidate['inputs']==389 and candidate['maximum_CPU_call_stack_bytes']<8192-3520-16
  directory=bound('build/terminal/directory-live-checks.json',runtime);assert directory['inputs']==311
  context=bound('build/terminal/directory-context-checks.json',runtime);assert context['inputs']==507
  retained=bound('build/far-storage-dos/checks.json',runtime)

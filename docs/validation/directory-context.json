@@ -1,80 +1,88 @@
 {
   "passed": true,
-  "binary_sha256": "14bdd48694fac096280a6ac7d413211dd843239e92498888b7b4f33d28b07ed9",
+  "binary_sha256": "e212df15d29a76880ae0e6f1633ba63c715af2ee94eae6efc8c30569b6c5498b",
   "memory_layout": {
-    "near_bytes": 53072,
-    "near_spare_bytes": 12464,
-    "near_relative_segment": 4153,
-    "far_relative_segment": 8220,
+    "near_bytes": 60144,
+    "near_spare_bytes": 5392,
+    "near_relative_segment": 4625,
+    "far_relative_segment": 9134,
     "shadow_offset": 2000,
     "history_offset": 10192,
     "far_bytes": 12288,
-    "far_end_linear": 145808,
-    "stack_end_linear": 119520,
-    "loaded_module_bytes": 95466,
-    "minimum_allocated_module_bytes": 145824,
-    "retained_parent_paragraphs": 9129,
+    "far_end_linear": 160432,
+    "stack_end_linear": 134144,
+    "loaded_module_bytes": 104686,
+    "minimum_allocated_module_bytes": 160448,
+    "retained_parent_paragraphs": 10043,
     "far_pointer_relocations_verified": true,
-    "snapshot_relative_segment": 8220,
+    "snapshot_relative_segment": 9134,
     "snapshot_image_offset": 0,
     "snapshot_bytes": 2000,
-    "snapshot_end_linear": 133520,
+    "snapshot_end_linear": 148144,
     "ui_screen_buffers": {
       "browser_screen": {
-        "relative_segment": 7470,
+        "relative_segment": 8384,
         "offset": 0,
         "bytes": 4000,
-        "start_linear": 119520,
-        "end_linear": 123520
+        "start_linear": 134144,
+        "end_linear": 138144
       },
       "ed_screen": {
-        "relative_segment": 7470,
+        "relative_segment": 8384,
         "offset": 4000,
         "bytes": 4000,
-        "start_linear": 123520,
-        "end_linear": 127520
+        "start_linear": 138144,
+        "end_linear": 142144
       },
       "program_screen": {
-        "relative_segment": 7470,
+        "relative_segment": 8384,
         "offset": 8000,
         "bytes": 4000,
-        "start_linear": 127520,
-        "end_linear": 131520
+        "start_linear": 142144,
+        "end_linear": 146144
       }
     },
     "far_ui_storage_bytes": 12000,
     "controller_bridge_pairs_verified": 22,
     "modem_bridge_pairs_verified": 22,
-    "resident_code_bytes": 63510,
-    "resident_code_spare_bytes": 2026,
+    "configuration_bridge_pairs_verified": 26,
+    "resident_code_bytes": 64872,
+    "resident_code_spare_bytes": 664,
     "code_segments": [
       {
         "name": "_TEXT",
         "kind": "CODE",
         "relative_segment": 0,
         "offset": 0,
-        "bytes": 63510
+        "bytes": 64872
+      },
+      {
+        "name": "CONFIG_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4055,
+        "offset": 0,
+        "bytes": 6191
       },
       {
         "name": "MODEM_CODE",
         "kind": "FARCODE",
-        "relative_segment": 3970,
+        "relative_segment": 4442,
         "offset": 0,
         "bytes": 1467
       },
       {
         "name": "PRINT_CODE",
         "kind": "FARCODE",
-        "relative_segment": 4062,
+        "relative_segment": 4534,
         "offset": 0,
         "bytes": 1449
       }
     ],
-    "far_code_bridge_pairs_verified": 44
+    "far_code_bridge_pairs_verified": 70
   },
   "linked_context_checks": {
     "passed": true,
-    "binary_sha256": "14bdd48694fac096280a6ac7d413211dd843239e92498888b7b4f33d28b07ed9",
+    "binary_sha256": "e212df15d29a76880ae0e6f1633ba63c715af2ee94eae6efc8c30569b6c5498b",
     "inputs": 507,
     "cases": [
       {
@@ -118,21 +126,21 @@
         "passed": true
       }
     ],
-    "maximum_CPU_call_stack_bytes": 4538,
+    "maximum_CPU_call_stack_bytes": 4600,
     "sources": {
       "src/directory/directory_live.c": "553cc980197a475c99077d0efa90c80063fb1ed26ed4489ac488f143a0b5ec32",
       "src/directory/directory_live.h": "faf28dd51b916e78ab1b45762bb819987a617525d323f8c53ec22b459d5966ba",
       "src/directory/directory_live.inc": "22e87c313a86c1f13c5f335bc246e87c83505067619313b9fcae25bee9243448",
-      "src/terminal/configuration.asm": "322398362a458f23d07a9505bbc86fecdfac1347cef069c3d00f780842e864ec",
+      "src/terminal/configuration.asm": "35c5e203118f7941604ccb102df56cc66139b53911f51a5934fb87ce3278184d",
       "standalone/check_directory_context.py": "e2fc0d831d82242fa88eeaef449baf5948efa70045a02f61a4653f1729f2132e",
-      "standalone/check_directory_live.py": "eed1d99ce4d62a2160f4576601fc94690df9a16ba9694218ab6660f92a4f6a46",
+      "standalone/check_directory_live.py": "faa587fa913ee18a937a61ef80b8665fecf1a6d0c225ddf558da8f30c47e2104",
       "standalone/dos_image.py": "2e8b0bd03cd4370b9b9633ebe3a76eed30ab0250ba8d26f4ec90eea49a5eb8e9"
     },
     "scope": "Actual linked retained-context reader and startup assembly; only PRM/directory I/O boundaries modeled. Pure matches/redecode use no I/O. Every interrupt/IN/OUT forbidden. Preserves raw headers and lexical request identity, not canonical namespace locking or live setup/commit."
   },
   "DOS_composition": {
     "passed": true,
-    "binary_sha256": "b2ac16c57b26e3b060a98b7f1f60c06805cb8c9de6202977546d921ba8464423",
+    "binary_sha256": "e2717a358520ba54ff09e7fe2d07928b53fe9f16c318da8faa4ce11a6fa69fbd",
     "checks": {
       "DOS_exit_and_internal_checks": true,
       "read_only_fixtures_unchanged": true,
@@ -141,7 +149,7 @@
     },
     "log": "DIRECTORY CONTEXT PASS 24 checks",
     "fixture_before_sha256": {
-      "VALID.PRM": "599e35a17837cca57e48892bc58f9bcfe0f9b57ec6c07660c18d2a958cb54390",
+      "VALID.PRM": "7ee017452e8557c66a93d31e5ff57d52d974fa008806856acf063f3a301b84b1",
       "FROZEN.DIR": "1c00c2ccfe00ff20853be37626774288d207973ec8f12651f6b3ff499e5f10c1",
       "SHORT.DIR": "3dcb2ee18cc6df239956905695205696032690d8acc21dc00beef41cb5f243fc"
     },
@@ -149,8 +157,8 @@
       "standalone/test_directory_context_dos.py": "33cfbdf0dc32ed3605aaa3123227e4651673bf5032fc5a1a73226a417480d08c",
       "standalone/directory_context_host.c": "1b60ee6e360487953d010c955f9f2045253f989661cdd95c4fb31d286763dc19",
       "standalone/directory_test_support.py": "1857fae3729a5a8c9b0264bf03acabfa2cfc37d56a91a16669c36927b15d9ddc",
-      "standalone/check_setup_model.py": "a2c449a19f42227626b0dda71f374c92d8dd0b8d7453ed74f6ecc4622ac1294f",
-      "standalone/check_directory_live.py": "eed1d99ce4d62a2160f4576601fc94690df9a16ba9694218ab6660f92a4f6a46"
+      "standalone/check_setup_model.py": "4006e95d96cc780a9e951bc9c59a495be62a2ff5ad0bd6c25cae24fcbc3764b5",
+      "standalone/check_directory_live.py": "faa587fa913ee18a937a61ef80b8665fecf1a6d0c225ddf558da8f30c47e2104"
     },
     "scope": "Actual DOS source-owned context load, independent raw selection comparison, explicit changed legacy header, retained/fresh candidate targets, real staged accounting update and read failure atomicity. Only STATE.DIR is intentionally changed; original fixture files remain unchanged. No live setup UI, canonical filesystem identity or physical modem proof."
   },
@@ -182,35 +190,56 @@
       "ATDCaseTest:23"
     ],
     "errors": [],
-    "seconds": 7.175,
-    "binary_sha256": "14bdd48694fac096280a6ac7d413211dd843239e92498888b7b4f33d28b07ed9",
+    "seconds": 7.176,
+    "binary_sha256": "e212df15d29a76880ae0e6f1633ba63c715af2ee94eae6efc8c30569b6c5498b",
     "command": "@D:\\TEST.PRM /E:D:\\TEST.DIR /N:17 /C:LEGACY /T:D:\\TEST.KEY COM1 38400 HARD",
     "expected_exit": 0,
+    "working_drive": "c",
     "scope": "Actual DOS directory startup with explicit legacy codes, loopback modem, global Meta PROGRAM/COMSPEC child, retained496-byte parent context and disjoint16KiB allocation/fill. Child compares full context before/after without parent mutation; exact bytes and subsequent directory accounting/hardware restoration checked separately. Not live setup or physical modem proof.",
-    "child_sha256": "673c042fd84a7eb5d1425f328038e354f550138b40785218123493234e684066",
-    "sample_hex": "58430f0014085d18a923172d110043617365546573743a000000000000000000000000000000003233000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004f776e656420636f6e7465787400000000000000000000000041420000000000000000000000000000000000000006000008010000000000000000000030302f30302f30300000000406000000000000000000000000000000000000000000000000000000000000010000000000000000000100443a5c544553542e50524d0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000443a5c544553542e4449520000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "child_sha256": "2a2b93d7a2b19b4fb26466f0adcd0a914bca8c418f14ed507cc2e963783ba2a3",
+    "sample_hex": "58430f001408351a3b27a930110043617365546573743a000000000000000000000000000000003233000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004f776e656420636f6e7465787400000000000000000000000041420000000000000000000000000000000000000006000008010000000000000000000030302f30302f30300000000406000000000000000000000000000000000000000000000000000000000000010000000000000000000100443a5c544553542e50524d0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000443a5c544553542e4449520000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
     "linker_defines": {
-      "DGROUP_SEG": 4153,
+      "DGROUP_SEG": 4625,
       "PROCESS_PSP": 448,
-      "CONTEXT_VALID": 1901,
-      "CONTEXT": 29024,
-      "REQUIRED_PARAS": 6014
+      "CONTEXT_VALID": 1903,
+      "CONTEXT": 30688,
+      "REQUIRED_PARAS": 6590
     }
   },
   "candidate_inputs": 389,
   "terminal_regression": {
     "passed": true,
-    "binary_sha256": "14bdd48694fac096280a6ac7d413211dd843239e92498888b7b4f33d28b07ed9",
+    "binary_sha256": "e212df15d29a76880ae0e6f1633ba63c715af2ee94eae6efc8c30569b6c5498b",
     "commands": [
       {
         "command": "python3 standalone/build_terminal.py",
         "exit_code": 0,
-        "seconds": 0.765
+        "seconds": 0.815
       },
       {
         "command": "python3 standalone/build_setup.py",
         "exit_code": 0,
         "seconds": 0.064
+      },
+      {
+        "command": "python3 standalone/build_live_configuration.py",
+        "exit_code": 0,
+        "seconds": 0.064
+      },
+      {
+        "command": "python3 standalone/check_translation_live.py",
+        "exit_code": 0,
+        "seconds": 0.465
+      },
+      {
+        "command": "python3 standalone/check_translation_modes.py",
+        "exit_code": 0,
+        "seconds": 1.366
+      },
+      {
+        "command": "python3 standalone/test_translation_live_dos.py",
+        "exit_code": 0,
+        "seconds": 24.251
       },
       {
         "command": "python3 standalone/check_setup_startup.py",
@@ -220,12 +249,72 @@
       {
         "command": "python3 standalone/test_setup_startup_dos.py",
         "exit_code": 0,
-        "seconds": 19.593
+        "seconds": 19.844
+      },
+      {
+        "command": "python3 standalone/check_setup_live.py",
+        "exit_code": 0,
+        "seconds": 0.615
+      },
+      {
+        "command": "python3 standalone/check_live_setup_owner.py",
+        "exit_code": 0,
+        "seconds": 7.176
+      },
+      {
+        "command": "python3 standalone/check_live_setup_policy.py",
+        "exit_code": 0,
+        "seconds": 4.17
+      },
+      {
+        "command": "python3 standalone/check_live_setup_link.py",
+        "exit_code": 0,
+        "seconds": 2.117
+      },
+      {
+        "command": "python3 standalone/check_live_setup_profile.py",
+        "exit_code": 0,
+        "seconds": 1.516
+      },
+      {
+        "command": "python3 standalone/check_port_handoff.py",
+        "exit_code": 0,
+        "seconds": 0.865
+      },
+      {
+        "command": "python3 standalone/check_live_setup_port.py",
+        "exit_code": 0,
+        "seconds": 1.516
+      },
+      {
+        "command": "python3 standalone/test_setup_port_dos.py",
+        "exit_code": 0,
+        "seconds": 80.44
+      },
+      {
+        "command": "python3 standalone/check_live_setup_apply.py",
+        "exit_code": 0,
+        "seconds": 1.015
+      },
+      {
+        "command": "python3 standalone/test_setup_live_dos.py",
+        "exit_code": 0,
+        "seconds": 82.44
+      },
+      {
+        "command": "python3 standalone/check_config_far_live.py",
+        "exit_code": 0,
+        "seconds": 0.314
+      },
+      {
+        "command": "python3 standalone/check_live_configuration.py --terminal",
+        "exit_code": 0,
+        "seconds": 41.328
       },
       {
         "command": "python3 standalone/check_modem_far_live.py",
         "exit_code": 0,
-        "seconds": 8.427
+        "seconds": 8.528
       },
       {
         "command": "python3 standalone/check_terminal_break_live.py",
@@ -235,7 +324,7 @@
       {
         "command": "python3 standalone/check_ui_screen_far.py",
         "exit_code": 0,
-        "seconds": 1.166
+        "seconds": 1.216
       },
       {
         "command": "python3 standalone/check_far_code_live.py",
@@ -245,12 +334,12 @@
       {
         "command": "python3 standalone/check_terminal_print_controller_live.py",
         "exit_code": 0,
-        "seconds": 4.27
+        "seconds": 4.37
       },
       {
         "command": "python3 standalone/check_terminal_screen_print_live.py",
         "exit_code": 0,
-        "seconds": 10.429
+        "seconds": 10.58
       },
       {
         "command": "python3 standalone/check_terminal_printer_live.py",
@@ -260,7 +349,7 @@
       {
         "command": "python3 standalone/check_terminal_monitor_live.py",
         "exit_code": 0,
-        "seconds": 1.316
+        "seconds": 1.366
       },
       {
         "command": "python3 standalone/check_terminal_snapshot_live.py",
@@ -280,22 +369,22 @@
       {
         "command": "python3 standalone/test_far_storage_dos.py",
         "exit_code": 0,
-        "seconds": 7.474
+        "seconds": 7.475
       },
       {
         "command": "python3 standalone/check_terminal_transfer_live.py",
         "exit_code": 0,
-        "seconds": 3.619
+        "seconds": 3.67
       },
       {
         "command": "python3 standalone/check_terminal_upload_live.py",
         "exit_code": 0,
-        "seconds": 22.345
+        "seconds": 22.595
       },
       {
         "command": "python3 standalone/check_program_actions_live.py",
         "exit_code": 0,
-        "seconds": 1.066
+        "seconds": 1.065
       },
       {
         "command": "python3 standalone/check_terminal_reset_live.py",
@@ -305,7 +394,7 @@
       {
         "command": "python3 standalone/test_program_actions_dos.py",
         "exit_code": 0,
-        "seconds": 34.362
+        "seconds": 34.359
       },
       {
         "command": "python3 standalone/test_terminal_reset_live_dos.py",
@@ -325,12 +414,12 @@
       {
         "command": "python3 standalone/check_key_live.py",
         "exit_code": 0,
-        "seconds": 0.715
+        "seconds": 0.765
       },
       {
         "command": "python3 standalone/check_meta_actions_live.py",
         "exit_code": 0,
-        "seconds": 2.368
+        "seconds": 2.418
       },
       {
         "command": "python3 standalone/check_character_edit_live.py",
@@ -340,7 +429,7 @@
       {
         "command": "python3 standalone/test_meta_actions_dos.py",
         "exit_code": 0,
-        "seconds": 19.793
+        "seconds": 19.797
       },
       {
         "command": "python3 standalone/check_line_edit_live.py",
@@ -350,7 +439,7 @@
       {
         "command": "python3 standalone/check_terminal_options.py --binary build/terminal/TERMINAL.EXE --map build/terminal/terminal.map",
         "exit_code": 0,
-        "seconds": 0.415
+        "seconds": 0.465
       },
       {
         "command": "python3 lab/bbs/check_formfeed.py",
@@ -370,22 +459,22 @@
       {
         "command": "python3 standalone/test_terminal.py",
         "exit_code": 0,
-        "seconds": 16.19
+        "seconds": 16.138
       },
       {
         "command": "python3 standalone/test_terminal_keys.py",
         "exit_code": 0,
-        "seconds": 24.098
+        "seconds": 24.152
       },
       {
         "command": "python3 standalone/check_terminal_config.py",
         "exit_code": 0,
-        "seconds": 0.364
+        "seconds": 0.414
       },
       {
         "command": "python3 standalone/check_startup_import.py --check-invalid-abi",
         "exit_code": 0,
-        "seconds": 0.314
+        "seconds": 0.364
       },
       {
         "command": "python3 standalone/check_connection.py",
@@ -395,17 +484,17 @@
       {
         "command": "python3 standalone/check_directory_live.py",
         "exit_code": 0,
-        "seconds": 3.019
+        "seconds": 3.169
       },
       {
         "command": "python3 standalone/check_directory_context.py",
         "exit_code": 0,
-        "seconds": 18.742
+        "seconds": 19.095
       },
       {
         "command": "python3 standalone/test_directory_context_terminal.py",
         "exit_code": 0,
-        "seconds": 7.224
+        "seconds": 7.225
       },
       {
         "command": "python3 standalone/check_directory_actions.py",
@@ -415,48 +504,48 @@
       {
         "command": "python3 standalone/test_terminal_config.py",
         "exit_code": 0,
-        "seconds": 14.084
+        "seconds": 14.036
       },
       {
         "command": "python3 standalone/test_connection_dos.py",
         "exit_code": 0,
-        "seconds": 27.103
+        "seconds": 27.056
       },
       {
         "command": "python3 standalone/test_directory_terminal.py",
         "exit_code": 0,
-        "seconds": 58.103
+        "seconds": 58.154
       }
     ],
-    "seconds": 329.329,
+    "seconds": 580.766,
     "complete": true
   },
   "source_rebuild": {
     "report": "docs/validation/application-components-source-build.json",
-    "source_snapshot_sha256": "805f63bc060a93d35bd83bd173a7b42421fa2cbb2338da140739163c34aeb935",
+    "source_snapshot_sha256": "de8c551ee3d4885e93f6049b118cc40649fb5253d6bb339045e0a3956ab3d691",
     "output_count": 60
   },
   "source_sha256": {
-    "standalone/record_directory_context.py": "625675aee9b3e5a846eb98b4c815ee025ba320f1163d876ea803a644c1919d4f",
+    "standalone/record_directory_context.py": "ab0521b47595aa45ab65d89541375cef524c30d925937729c0383f2667c24460",
     "standalone/check_directory_context.py": "e2fc0d831d82242fa88eeaef449baf5948efa70045a02f61a4653f1729f2132e",
     "standalone/build_directory_context.py": "f15b49c1d09a847d3229e25e3288c30b608626936ce5dce33d6ef5f2b0666123",
     "standalone/test_directory_context_dos.py": "33cfbdf0dc32ed3605aaa3123227e4651673bf5032fc5a1a73226a417480d08c",
     "standalone/test_directory_context_terminal.py": "591a195eb7c59d33a94fbf7100717cd2e483ad60899d2631a4e99f3ea8ee3cf7",
     "standalone/directory_context_child.asm": "8309560f5d5361cfd431d42f43219c68b5ecc5c5d1e22df8dabed9430f902ebf",
     "standalone/directory_context_host.c": "1b60ee6e360487953d010c955f9f2045253f989661cdd95c4fb31d286763dc19",
-    "standalone/test_connection_dos.py": "ab69ea47866c1f6ab036a9400496791f47670d8a704fa6aed80412f0b82bdb1a",
+    "standalone/test_connection_dos.py": "1401d7fab66dc7e8f0456e2378b2b82ea5b1ab52c35d51cea0bc76125c7f5f15",
     "standalone/directory_test_support.py": "1857fae3729a5a8c9b0264bf03acabfa2cfc37d56a91a16669c36927b15d9ddc",
     "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
     "src/directory/codec.py": "dce0ef20faf5cb760cc8b28e5fc00b8f4398bbaf4e32c9dfab6bd62f2b9105cc"
   },
   "retained_artifacts": {
-    "build/terminal/directory-context-checks.json": "6c7bb6cae75529e12fa9851758b35b75c7f6abd98aa3afbc1451ea98f8162201",
-    "build/directory-context/dos-results.json": "b14dcb67191d6c2bff10652a43215d5b61f5a22dac387903ea988a2a8421c3d7",
-    "build/directory-context/terminal-results.json": "a620b3d28f88546d748f72314908ff91de13e27d7e4fd27a9c568805f610f52a",
-    "build/directory-context/CTXCHILD.COM": "673c042fd84a7eb5d1425f328038e354f550138b40785218123493234e684066",
-    "build/connection-dos/directory-context/CONTEXT.BIN": "cfe46ff4fbcd196b3e1f51baa6f551825b7bebea90406f041765b9fb702b936b",
-    "build/terminal/directory-context-regression.json": "a06c1ef78d8cefdc49700279ddfded12d5afa6c1c97fca39231b31fb6f0caf9a",
-    "build/terminal/directory-context-regression.log": "1736d5494630f3167d749df13498a2e2e5516a115c8718c0620f18b1bec2c394"
+    "build/terminal/directory-context-checks.json": "620ec7bc793c44aa6c66e85e56a1d4493344e98627e353b23a22913a85b5dadb",
+    "build/directory-context/dos-results.json": "f5178b90acb679c69bb26e553e6d5763e6de91e8f0d0ec3f78984716011d3711",
+    "build/directory-context/terminal-results.json": "c215c5340e359146f457d7fa2c35644b377dd2f52cac54d542490a23bc919a40",
+    "build/directory-context/CTXCHILD.COM": "2a2b93d7a2b19b4fb26466f0adcd0a914bca8c418f14ed507cc2e963783ba2a3",
+    "build/connection-dos/directory-context/CONTEXT.BIN": "82929cf4ed8d204f4d8971b1f3f592fdb6a095f0031a2ddb554ddbcf38dafd8e",
+    "build/terminal/setup-profile-regression.json": "ebd6785f1eb2e00eb609c66bf242dc88b3054fffedab34913338637bd96e6418",
+    "build/terminal/setup-profile-regression.log": "16027564986f3a983997470a0da6e82d76fc62b6bc68c49cfb4a7fe22c05d132"
   },
   "scope": "Retained startup raw selection and logical request identity, separate accounting baseline, failure atomicity and ninth near-cdecl argument. Real DOS file mutation/accounting and actual terminal PROGRAM-child disjoint16KiB allocation/fill verify full496-byte persistence. ASCII lexical request matching is not canonical file identity or a namespace lock. Live configuration UI, active-generation/canonical ownership, UART/profile commit, complete application and physical modem validation remain open."
 }

@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "8c9af5a26f53bb8f4ade9b41d0a9e44c2de58d551f471bbbbe7e009f5e29ee36",
-  "source_file_count": 1309,
+  "source_snapshot_sha256": "de8c551ee3d4885e93f6049b118cc40649fb5253d6bb339045e0a3956ab3d691",
+  "source_file_count": 1312,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,19 +16,19 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "27c1e13b755fd1fb39a156ec657c86db19c567e1245bfaa6c71c130b817ba70b",
+  "build_log_sha256": "f380cecae76a9092db7be4c40f4d051810747612279d474179b87b8f90cf829e",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.2lfehD/pcplus-source-proof-2ygm4wtx/checkout",
+  "source_checkout": "/tmp/nix-shell.kKpNGr/pcplus-source-proof-vj_yy_6k/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
   "scope": "60 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
   "output_count": 60,
   "outputs": {
     "terminal/TERMINAL.EXE": {
-      "sha256": "2cdff8a2cb331c40caf331e2c5870e7100de285bbb43ac8b729f9a28f76d0635",
+      "sha256": "e212df15d29a76880ae0e6f1633ba63c715af2ee94eae6efc8c30569b6c5498b",
       "matches_workspace": true,
-      "workspace_sha256": "2cdff8a2cb331c40caf331e2c5870e7100de285bbb43ac8b729f9a28f76d0635"
+      "workspace_sha256": "e212df15d29a76880ae0e6f1633ba63c715af2ee94eae6efc8c30569b6c5498b"
     },
     "config-dos/CONFIG.EXE": {
       "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
@@ -296,19 +296,19 @@
       "workspace_sha256": "8095449ff1fbc10c718f9b3916c03ceec1dabe92b3e743004fd69fe129fa118b"
     },
     "setup/PRMEDIT.EXE": {
-      "sha256": "1dd49405f285b85a4d438be6cd67ebbc3d7cd76a5d81e74cc91106383463f31e",
+      "sha256": "5584732e1b5ac506ee7f8ec04829fceeb23aa64d4432a69b27df8218bf9e5680",
       "matches_workspace": true,
-      "workspace_sha256": "1dd49405f285b85a4d438be6cd67ebbc3d7cd76a5d81e74cc91106383463f31e"
+      "workspace_sha256": "5584732e1b5ac506ee7f8ec04829fceeb23aa64d4432a69b27df8218bf9e5680"
     },
     "live-configuration/LIVE.EXE": {
-      "sha256": "6d1baa9992de08a06cfa653dfacb6b4442875e27081a2a1926383bd8c79064ae",
+      "sha256": "7c922bf8d8d0c051130f18f57fd319f8a05c49f4254d38583c125d6debff82b8",
       "matches_workspace": true,
-      "workspace_sha256": "6d1baa9992de08a06cfa653dfacb6b4442875e27081a2a1926383bd8c79064ae"
+      "workspace_sha256": "7c922bf8d8d0c051130f18f57fd319f8a05c49f4254d38583c125d6debff82b8"
     },
     "directory-context/CONTEXT.EXE": {
-      "sha256": "b2ac16c57b26e3b060a98b7f1f60c06805cb8c9de6202977546d921ba8464423",
+      "sha256": "e2717a358520ba54ff09e7fe2d07928b53fe9f16c318da8faa4ce11a6fa69fbd",
       "matches_workspace": true,
-      "workspace_sha256": "b2ac16c57b26e3b060a98b7f1f60c06805cb8c9de6202977546d921ba8464423"
+      "workspace_sha256": "e2717a358520ba54ff09e7fe2d07928b53fe9f16c318da8faa4ce11a6fa69fbd"
     },
     "monitor/MONITOR.EXE": {
       "sha256": "766e8cb46c6edb3269cee3ea2a7896c03628f37e6fcfe7fc17938f834e13b377",

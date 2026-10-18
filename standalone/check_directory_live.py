@@ -50,8 +50,8 @@ class Live(Options):
    u.mem_write(self.data_base+io,struct.pack('<4H',status,5 if status else 0,6 if status else 0,456 if status else 23050))
   u.reg_write(UC_X86_REG_AX,status);u.reg_write(UC_X86_REG_SP,sp+2);u.reg_write(UC_X86_REG_IP,ret)
  def poison(self):
-  for at,size,value in ((self.serial,40,0xaa),(self.modem,368,0xbb),(self.plan,214,0xcc)):self.uc.mem_write(self.data_base+at,bytes([value])*size)
- def outputs(self):return tuple(bytes(self.uc.mem_read(self.data_base+at,size)) for at,size in ((self.serial,40),(self.modem,368),(self.plan,214)))
+  for at,size,value in ((self.serial,42,0xaa),(self.modem,368,0xbb),(self.plan,214,0xcc)):self.uc.mem_write(self.data_base+at,bytes([value])*size)
+ def outputs(self):return tuple(bytes(self.uc.mem_read(self.data_base+at,size)) for at,size in ((self.serial,42),(self.modem,368),(self.plan,214)))
  def arguments(self):return [self.prm_path,self.directory_path,self.entry,self.codes,self.serial,self.modem,self.plan,self.result]
  def read(self,args=None):
   self.uc.reg_write(UC_X86_REG_ES,self.ds);status=self.call('_directory_live_read',self.arguments() if args is None else args,limit=400000)

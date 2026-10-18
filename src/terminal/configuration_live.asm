@@ -1,5 +1,5 @@
 ; Apply validated configured display/mapping values without resetting the
-; parser, screen, cursor, peer SGR/DEC modes, keymap or transport. AX TI40.
+; parser, screen, cursor, peer SGR/DEC modes, keymap or transport. AX TI42.
 BITS 16
 CPU 8086
 %include "terminal_import.inc"

@@ -1,6 +1,6 @@
 # Configuration C in a separate DOS code segment
 
-The normal terminal links the directory transaction, pure624-byte settings
+The normal terminal links the directory transaction, pure626-byte settings
 candidate decoder, live setup owner and checked XLT reader in `CONFIG_CODE`, with a distinct CS and `CONFIG_GROUP`.
 Their data, constants and pointers remain in DGROUP with DS=SS. All four C modules
 still use Open Watcom's small model and ordinary near calls; only their code
@@ -43,12 +43,12 @@ PROGRAM's retained parent allocation. Together with PRINT/MODEM this validates
 and layouts. The independent311 directory and507 context cases execute normal
 terminal entry points across the bridge. `check_live_configuration.py --terminal`
 replays the same389 independently specified candidate cases against the normal
-terminal binary. Caller fixtures occupy3514 bytes at the bottom of the actual
+terminal binary. Caller fixtures occupy3520 bytes at the bottom of the actual
 8KiB stack; every executed instruction is checked for stack collision. No
 product scratch globals or memory beyond the real stack are borrowed. The
 standalone near-C diagnostic remains available for independent comparison.
 
-The current terminal candidate replay uses at most3042 bytes of call stack,
+The current terminal candidate replay uses at most3046 bytes of call stack,
 leaving the caller fixture and execution stack disjoint. It observes each
 actual implementation RET to require full FLAGS preservation through both
 entry wrappers, separately from the API's semantic return-value checks.
@@ -70,7 +70,7 @@ changes, confirmed idle COM ownership transfer and supported4/6 profile resets.
 See [SETUP_LIVE.md](SETUP_LIVE.md). Full transport/profile ownership changes and
 the complete application remain open.
 
-The checkpoint's60-command terminal regression,60-output isolated source
+The checkpoint's61-command terminal regression,60-output isolated source
 rebuild,389 terminal candidate inputs,311 directory inputs,507 retained-context
 inputs and actual DOS child retention are bound together in
 [validation/configuration-far-code.json](validation/configuration-far-code.json).

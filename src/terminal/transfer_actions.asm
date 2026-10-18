@@ -9,6 +9,7 @@ extern terminal_tx_count,terminal_tx_head,terminal_tx_buffer,terminal_macro_tx_e
 extern terminal_macro_cancel,terminal_program_cancel,terminal_program_pending
 extern uart_software_flow,uart_rx_count,uart_rx_dropped,uart_port_lsr,uart_port_msr
 extern uart_receive_byte,uart_unreceive_byte,uart_try_write,uart_poll_flow
+extern uart_rx_mask
 extern keyboard_poll,terminal_read_key,terminal_baud_low,terminal_baud_high
 extern terminal_transfer_ui_open,terminal_transfer_ui_restore,terminal_transfer_ui_receiving
 extern terminal_transfer_ui_progress,terminal_connection_notice,terminal_connection_notice_restore
@@ -51,6 +52,8 @@ transfer_start_direction:
  jne .done
  cmp word [uart_software_flow],0
  jne .soft
+ cmp word [uart_rx_mask],255
+ jne .masked
  cmp word [connection_state],0
  je .start
  cmp word [connection_state],6
@@ -69,6 +72,10 @@ transfer_start_direction:
  mov byte [transfer_note_soft],'T'
 .soft_note:
  mov si,transfer_note_soft
+ call terminal_connection_notice
+ jmp .done
+.masked:
+ mov si,transfer_note_mask
  call terminal_connection_notice
 .done:
  pop es
@@ -796,6 +803,7 @@ transfer_protocol_started: dw 0
 transfer_note_success: db 'RX complete',0
 transfer_note_cancel: db 'RX canceled',0
 transfer_note_soft: db 'RX: HARD/NONE',0
+transfer_note_mask: db 'Binary transfer needs an 8-bit input mask. Change settings and restart.',0
 transfer_note_timeout: db 'RX timeout',0
 transfer_note_carrier: db 'RX carrier lost',0
 transfer_note_overflow: db 'RX overflow',0

@@ -62,6 +62,10 @@ def main():
  # Response 1 is R0 (52 30), five chars. Home/Delete empties it before hex edit.
  response=bytearray(image());response[0xc4:0xc7]=b'\x1b[\0'
  recipes[3]=(recipes[3][0],recipes[3][1],bytes(response))
+ for name,keys,value in [
+  ('translation-save','pgdown '+'tab '*8+'home del 2 f10 escape',2),
+  ('translation-page-navigation','pgdown '+'tab '*8+'home del 2 tab s-tab home del 1 f10 escape',1)]:
+  expected=bytearray(image());expected[0x1e0:0x1e2]=bytes([value,0]);recipes.append((name,keys,bytes(expected)))
  for name,keys,want in recipes:
   d=run(name,'UI VALID.PRM',keys);assert (d/'VALID.PRM').read_bytes()==want,name
   assert b'SETUP UI RESTORED' in (d/'LOG.TXT').read_bytes(),name

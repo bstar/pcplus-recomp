@@ -75,11 +75,14 @@ class Translation(Monitor):
         u.reg_write(UC_X86_REG_AX, error or answer)
         self.set_carry(bool(error))
 
-    def load(self, blob, selected=True):
+    def load(self, blob, selected=True, prm_mode=None):
         if blob is not None:
-            self.files['TEST.XLT'] = bytearray(blob)
+            name = 'PCPLUS.XLT' if not selected and prm_mode == 1 else 'TEST.XLT'
+            self.files[name] = bytearray(blob)
         self.uc.mem_write(self.symbols['terminal_translation_path'], b'TEST.XLT\0')
-        self.put('terminal_option_mask', 16384 if selected else 0)
+        self.put('terminal_option_mask', (16384 if selected else 0) | (16 if prm_mode is not None else 0))
+        if prm_mode is not None:
+            self.uc.mem_write(self.symbols['terminal_configuration_values'] + 40, struct.pack('<H', prm_mode))
         result = self.call('terminal_load_translation')
         for reg, want in [(UC_X86_REG_BP, 0xbabe), (UC_X86_REG_SI, 0x1234),
                           (UC_X86_REG_DI, 0x5678), (UC_X86_REG_ES, 0xb800)]:

@@ -25,6 +25,7 @@ WORD_FIELDS={
  'reverse_attribute':0x1d38-ORIGINAL_DS_BASE,
  'underline_attribute':0x1d3a-ORIGINAL_DS_BASE,
  'current_attribute':0x1f70-ORIGINAL_DS_BASE,
+ 'translation_mode':0x1d64-ORIGINAL_DS_BASE,
 }
 
 @dataclass(frozen=True)
@@ -62,7 +63,7 @@ class LegacyPrm201:
  def word(self,name):return struct.unpack_from('<H',self._image,WORD_FIELDS[name])[0]
 
  def with_word(self,name,value):
-  """Edit a proved word location; semantic validation beyond serial is unresolved."""
+  """Edit a proved word location; application validation is separate."""
   if type(value) is not int or not 0<=value<=65535:raise ValueError('Expected unsigned 16-bit integer')
   output=bytearray(self._image);struct.pack_into('<H',output,WORD_FIELDS[name],value)
   return LegacyPrm201(output)

@@ -2,8 +2,8 @@
   "passed": true,
   "cases": [
     {
-      "case": "all44-fields-get-set-byte-identical-with-opaque-tail-data",
-      "inputs": 44,
+      "case": "all45-fields-get-set-byte-identical-with-opaque-tail-data",
+      "inputs": 45,
       "passed": true
     },
     {
@@ -13,7 +13,7 @@
     },
     {
       "case": "invalid-numeric-parity-and-unterminated-edits-entire-image-atomic",
-      "inputs": 80,
+      "inputs": 81,
       "passed": true
     },
     {
@@ -28,7 +28,7 @@
     },
     {
       "case": "malformed-loaded-fields-view-without-normalizing-and-explicit-repair",
-      "inputs": 41,
+      "inputs": 42,
       "passed": true
     },
     {
@@ -42,19 +42,18 @@
       "passed": true
     }
   ],
-  "binary_sha256": "10af23b7c87e8284e414fbfdbf99dbe8886af2a20c0925e955a0ea9976cf8891",
+  "binary_sha256": "00c8b38d77de77a206b1afecf5b5eeeb0cfcfc84b6ace2feba6a4913e6e3fd20",
   "sources": {
-    "src/config/setup_model.c": "cb09ee57b5be080b2403e3d0114bce17b3bfeee70f7311b4efeef4ed000c51c1",
-    "src/config/terminal_import.c": "8ec3056f74ab9b37594500bf0ea2b7a34388a2674af72eec716f1c829c31d66d",
+    "src/config/setup_model.c": "f900b5a1129125544b7d641b11715339cae6a8ea6881e4d98f369dcddecfdd99",
+    "src/config/terminal_import.c": "949b56e1da0a9b9f44dae01a325db13e4525a040e3947ed96de580b30cddcfd8",
     "src/config/modem_import.c": "aa984d766d561ab15e6fd067757953c856eb054a61dc8f4cb9c58c58f5df2a4b",
     "src/config/prm_dos.c": "e4d0386d3fb40e225cbc34ec7f989286f67ec9ffcff29a6f50eb77d7b24ee021",
     "standalone/setup_model_host.c": "9cd92b0005e6a4f9a7d275d62759666e7b33eba600af8cbc0ebba6450ff3c280",
-    "src/config/setup_model.h": "50dcbf3cf73b16032888fd6b8330a70c801786c717901486b0938090ebff5c3f",
-    "src/config/terminal_import.h": "1a4356026ff7aeece24a8b6437942d08bab611aaa82c14233a5ce7c9e895e6c5",
+    "src/config/setup_model.h": "7711d6a53c123688c2c954f177855945596a36b0bb9ce28a45edc3f13a9e380e",
+    "src/config/terminal_import.h": "ec71947cd81e37b97c14ecafcca291993190a333f35d88ecdbf27d447ddd1546",
     "src/config/modem_import.h": "7ef5213025c1d58c9dc8f4ec89197c4ca2d6ed67d8f2ea4ddeeb89350e9bfcb0",
     "src/config/prm_dos.h": "3a6f8f27e13f5fc97e290b95def601e49ce93b54f729d1bc3ddc527ba39de20c",
-    "standalone/check_setup_model.py": "a2c449a19f42227626b0dda71f374c92d8dd0b8d7453ed74f6ecc4622ac1294f"
+    "standalone/check_setup_model.py": "4006e95d96cc780a9e951bc9c59a495be62a2ff5ad0bd6c25cae24fcbc3764b5"
   },
-  "scope": "Actual source-built DOS8086 C. Synthetic settings only. Pure API replay forbids interrupts and port I/O; separate DOS run checks C runtime and no rewrite. Field model only, no settings UI, save ownership or original PCSETUP child compatibility.",
-  "artifact": "build/setup-model/checks.json"
+  "scope": "Actual source-built DOS8086 C. Synthetic settings only. Pure API replay forbids interrupts and port I/O; separate DOS run checks C runtime and no rewrite. Field model only, no settings UI, save ownership or original PCSETUP child compatibility."
 }

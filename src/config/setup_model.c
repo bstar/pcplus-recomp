@@ -54,7 +54,8 @@ static const descriptor fields[SETUP_FIELD_COUNT]={
  F("Response 8","Expanded bytes as hex pairs; max 15 bytes; no 00.",4,0x134,RESPONSE,0,16),
  F("Response 9","Expanded bytes as hex pairs; max 15 bytes; no 00.",4,0x144,RESPONSE,0,16),
  F("Response 10","Expanded bytes as hex pairs; max 15 bytes; no 00.",4,0x154,RESPONSE,0,16),
- F("Response 11","Expanded bytes as hex pairs; max 15 bytes; no 00.",4,0x164,RESPONSE,0,16)
+ F("Response 11","Expanded bytes as hex pairs; max 15 bytes; no 00.",4,0x164,RESPONSE,0,16),
+ F("Input translation","0 identity; 1 PCPLUS.XLT; 2 strip high bit. Changes need restart.",1,0x1e0,DECIMAL,0,2)
 };
 static const unsigned bases[]={0x3f8,0x2f8,0x3e8,0x2e8};
 static const unsigned irqs[]={4,3,4,3};

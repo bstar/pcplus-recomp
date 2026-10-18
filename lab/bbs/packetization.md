@@ -149,3 +149,10 @@ audited checks. Both disconnect without posting. The source, executable, serial
 settings, PRM and recipe match; packet delay is the selected difference. Prior
 experiments remain in the paired report. This still does not guarantee remote
 TCP boundaries or establish physical modem behavior.
+
+The saved-modee212df15 pair (`editor-prm-e212-immediate` /
+`editor-prm-e212-buffer30`) uses explicit saved identity mode in the new PRM
+layout, without /X. The stock editor is reached in both runs; all eight keys
+reach the BBS, immediate Home/Insert fail, and30ms buffering passes all seven
+behavior checks. Both drafts close unsaved. Runtime, serial, PRM, recipe and
+source identities match across this pair; old experiments remain retained.

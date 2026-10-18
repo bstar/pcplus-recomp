@@ -23,6 +23,7 @@ extern terminal_setup_profile_bind,terminal_setup_profile_stage
 extern terminal_setup_profile_status,terminal_setup_profile_ready
 extern terminal_connection_prepare,terminal_apply_live_configuration
 extern terminal_program_status,terminal_exit_code,terminal_quit
+extern terminal_translation_mode
 global terminal_setup_bind,terminal_setup_prepare,terminal_setup_complete
 global terminal_setup_return_prompt
 %macro save 0
@@ -99,6 +100,7 @@ terminal_setup_prepare:
  actual TI_HARD,uart_hardware_flow
  actual TI_IO_BASE,uart_port_rbr
  actual TI_IRQ,uart_irq_indices
+ actual TI_TRANSLATION,terminal_translation_mode
  mov si,terminal_modem_settings
  mov cx,MI_SIZE/2
  rep movsw
@@ -108,7 +110,7 @@ terminal_setup_prepare:
  mov cx,DL_SIZE/2
  rep movsw
  xor ax,ax
- stosw ;624-byte plan ends in the change mask.
+ stosw ;626-byte plan ends in the change mask.
  mov ax,terminal_dial_target
  push ax
  push word [terminal_option_mask]
@@ -510,8 +512,8 @@ terminal_setup_apply_status: dw 0
 terminal_setup_outcome: times 4 dw 0
 setup_unchanged: db 13,10,'Setup closed. No active changes. Press a key to return.',0
 setup_applied: db 13,10,'Settings applied. Press a key to return.',0
-setup_deferred: db 13,10,'Link/profile changes saved for next startup. Press a key to return.',0
-setup_mixed: db 13,10,'Settings applied; link/profile changes need restart. Press a key to return.',0
+setup_deferred: db 13,10,'Changes saved for next startup. Press a key to return.',0
+setup_mixed: db 13,10,'Settings applied; deferred changes need restart. Press a key to return.',0
 setup_apply_failed: db 13,10,'Could not validate saved settings. Active settings unchanged. Press a key.',0
 setup_serial_question: db 13,10,'Apply current-port baud/line/flow now? Peer must match. Y applies; other keys keep link.',0
 setup_port_question: db 13,10,'Move to saved COM/baud/line/flow? Both ports must be idle. Y moves; other keys keep link.',0
@@ -521,6 +523,6 @@ setup_profile_question: db 13,10,'Switch profile, reset keys/modes and clear scr
 setup_profile_failed: db 13,10,'Could not load profile keyboard; kept current profile. Press a key.',0
 SEGMENT _BSS public align=2 class=BSS use16
 global terminal_setup_plan
-terminal_setup_plan: resb 624
+terminal_setup_plan: resb TI_SIZE+MI_SIZE+DL_SIZE+2
 setup_previous_modem: resb MI_SIZE
 setup_previous_serial: resb TI_SIZE

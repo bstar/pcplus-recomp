@@ -1,0 +1,84 @@
+{
+  "passed": true,
+  "binary_sha256": "e212df15d29a76880ae0e6f1633ba63c715af2ee94eae6efc8c30569b6c5498b",
+  "inputs": 561,
+  "cases": [
+    {
+      "case": "PRM-offset1e0-three-modes-exact42-byte-plan-and-invalid-atomic-rejection",
+      "inputs": 7,
+      "passed": true
+    },
+    {
+      "case": "saved-mode-startup-default-name-missing-table-and-explicit-X-override",
+      "inputs": 6,
+      "passed": true
+    },
+    {
+      "case": "all256-original-driver-mask-values-raw-monitor-and-RIS-retention",
+      "inputs": 513,
+      "passed": true
+    },
+    {
+      "case": "binary-upload-and-download-refused-before-filename-or-file-ownership",
+      "inputs": 3,
+      "passed": true
+    },
+    {
+      "case": "pure-plan-classification-live-deferral-CLI-precedence-and-raw-validation",
+      "inputs": 22,
+      "passed": true
+    },
+    {
+      "case": "45th-editor-field-three-valid-values-opaque-preservation-and-invalid-edits",
+      "inputs": 8,
+      "passed": true
+    },
+    {
+      "case": "actual-AltF10-foreground-keeps-mask-while-adopting-independent-display-edit",
+      "inputs": 2,
+      "passed": true
+    }
+  ],
+  "original_cases": [
+    {
+      "mode": 0,
+      "mask": 255,
+      "loaded": false
+    },
+    {
+      "mode": 1,
+      "mask": 255,
+      "loaded": true
+    },
+    {
+      "mode": 2,
+      "mask": 127,
+      "loaded": false
+    },
+    {
+      "mode": 3,
+      "mask": 255,
+      "loaded": false
+    },
+    {
+      "mode": 65535,
+      "mask": 255,
+      "loaded": false
+    }
+  ],
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "sources": {
+    "standalone/check_translation_modes.py": "4a89b740bd940a0f360e7f348d3408b4b07d5ba1e1f3ca9caef674427efe0445",
+    "standalone/check_translation_live.py": "b84c878c3ca83fa27422631dd782a880b95e4e465b08386c4fa9cbed7905a08e",
+    "standalone/check_terminal_config.py": "fae4d0735ace207c27aaeb80aaeb84c18b858e5954fc29e6e8ed99a47c36a8d1",
+    "standalone/terminal_config_fixtures.py": "124f1e1c187e88b61cdeef065897ae545ee3a35c5088123b62e1c07f3da0b5fe",
+    "standalone/check_live_configuration.py": "6eed48ba3424ebff0714e759b0dc81a78e49afad9428c307f13561fb4efa0fc8",
+    "standalone/check_live_setup_owner.py": "b8708c21e3e2ac493bcdec8dc57ce91ab8f48b79256df4c4632a817f1bbb58fb",
+    "standalone/check_setup_model.py": "4006e95d96cc780a9e951bc9c59a495be62a2ff5ad0bd6c25cae24fcbc3764b5",
+    "standalone/check_live_setup_apply.py": "0418b67a6c655cbbcf012d5be873e2102117cf0244c6038bea19df1c54ed8c4c",
+    "standalone/live_setup_kernel.py": "b36cec472912401a60de34c051284e16922c86594614190c426e57611e415618",
+    "standalone/check_translation.py": "4236af225d0710754d807fba4abcea853d9dccbf117a833e9c2bf9899bfecbcb",
+    "standalone/check_terminal_transfer_live.py": "7080c84249b3296463cac411e3b5ec0ec4cbf4ac6183fed7d557753eaf16b020"
+  },
+  "scope": "Actual linked42-byte PRM validator,626-byte candidate/owner,45-field editor, driver, monitor, RIS and transfer gates. Hardware/DOS modeled except editor diagnostic compilation. Optional genuine-original overlay3 comparison uses controlled CRT boundaries; no synthetic analysis EXE executes. Invalid native selections default to identity; maintained validator deliberately rejects them."
+}

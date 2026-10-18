@@ -96,7 +96,7 @@ class Ports(LiveSettings):
   self.call('uart_mask_irq');dev['lcr']&=127;dev['ier']=0;dev['mcr']&=~2
   self.call('uart_restore_interrupt',[self.get('terminal_irq_vector')])
  def candidate(self,port):
-  raw=bytearray(self.uc.mem_read(self.symbols['terminal_configuration_values'],40))
+  raw=bytearray(self.uc.mem_read(self.symbols['terminal_configuration_values'],42))
   struct.pack_into('<H',raw,0,port);struct.pack_into('<HH',raw,32,BASES[port-1],IRQS[port-1])
   self.pointer=self.offset('terminal_setup_plan');self.uc.mem_write(self.data_base+self.pointer,bytes(raw))
   return self.pointer

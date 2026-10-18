@@ -36,15 +36,15 @@ def main():
   m=LiveSettings();before=snapshot(m);raw=word(word(m.raw,at,value),0x1a4,65535);launch(m,raw)
   assert m.get('terminal_setup_apply_status')==0 and m.get('terminal_break_delay_units')==65535
   assert struct.unpack('<4H',m.uc.mem_read(m.symbols['terminal_setup_outcome'],8))==(0,0,512,mask)
-  assert b'link/profile changes need restart' in m.local_text;intact(m,before)
+  assert b'deferred changes need restart' in m.local_text;intact(m,before)
  done('mixed-saves-apply-independent-settings-and-defer-each-link-profile-category',5)
  for kind in ['open','read','close','short','invalid']:
-  m=LiveSettings();before=snapshot(m);cfg=bytes(m.uc.mem_read(m.symbols['terminal_configuration_values'],40));modem=bytes(m.uc.mem_read(m.symbols['terminal_modem_settings'],368))
+  m=LiveSettings();before=snapshot(m);cfg=bytes(m.uc.mem_read(m.symbols['terminal_configuration_values'],42));modem=bytes(m.uc.mem_read(m.symbols['terminal_modem_settings'],368))
   if kind in ('open','read','close'):setattr(m,kind+'_error',5)
   raw=m.raw[:-1] if kind=='short' else word(m.raw,0x194,5) if kind=='invalid' else m.raw
   launch(m,raw)
   assert m.get('terminal_setup_apply_status')!=0 and b'Active settings unchanged' in m.local_text
-  assert bytes(m.uc.mem_read(m.symbols['terminal_configuration_values'],40))==cfg and bytes(m.uc.mem_read(m.symbols['terminal_modem_settings'],368))==modem
+  assert bytes(m.uc.mem_read(m.symbols['terminal_configuration_values'],42))==cfg and bytes(m.uc.mem_read(m.symbols['terminal_modem_settings'],368))==modem
   intact(m,before)
  done('file-open-read-close-truncation-and-decoder-failures-leave-active-settings-intact',5)
  m=LiveSettings();before=snapshot(m);m.keys.append(0x7100);m.poll();m.cwd=b'D:\\OTHER';m.safe()

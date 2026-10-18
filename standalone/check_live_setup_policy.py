@@ -3,9 +3,9 @@
 import hashlib,json,struct
 from check_live_setup_owner import Owner,ROOT,OUT,word
 def finish(m,mask):
- m.uc.mem_write(m.data_base+m.destination,b'\xcc'*624);m.uc.mem_write(m.data_base+m.result,b'\xdd'*8)
+ m.uc.mem_write(m.data_base+m.destination,b'\xcc'*626);m.uc.mem_write(m.data_base+m.result,b'\xdd'*8)
  status=m.invoke('_live_setup_finish_policy',[m.destination,m.result,mask])
- if status:assert m.output()==b'\xcc'*624
+ if status:assert m.output()==b'\xcc'*626
  return status,struct.unpack('<4H',m.uc.mem_read(m.data_base+m.result,8))
 def acknowledge(m,mask):return m.invoke('_live_setup_acknowledge',[mask])
 def main():
@@ -22,7 +22,7 @@ def main():
  done('every-permitted-serial-profile-combination-keeps-port-owned',16)
  m=Owner().ready()
  for at,value in [(0,1),(2,8),(4,1),(0x198,1),(0x194,6)]:m.raw=word(m.raw,at,value)
- assert finish(m,30)==(0,(0,0,0,31));assert m.output()[:40]==m.initial[:40]
+ assert finish(m,30)==(0,(0,0,0,31));assert m.output()[:42]==m.initial[:42]
  done('port-change-defers-all-dependent-serial-categories-together',1)
  m=Owner().ready();m.raw=word(m.raw,2,8);assert finish(m,14)==(0,(0,0,2,0));assert acknowledge(m,2)==0
  m.uc.mem_write(m.data_base+m.active,m.output());assert m.begin()==0;m.raw=word(m.raw,2,1)

@@ -372,7 +372,7 @@ configuration_messages: dw configuration_io,configuration_serial,configuration_f
  dw configuration_actions
  dw configuration_setup
  dw configuration_translation
-configuration_translation: db 'Could not load the requested 256-byte XLT table.',13,10,'$'
+configuration_translation: db 'Invalid input translation mode or 256-byte XLT table.',13,10,'$'
 configuration_setup: db 'Could not run PRMEDIT setup successfully. Check PRMEDIT.EXE and the PRM file.',13,10,'$'
 configuration_io: db 'Could not read the requested PCPLUS 2.01 configuration.',13,10,'$'
 configuration_serial: db 'Configuration has unsupported serial port or line settings.',13,10,'$'

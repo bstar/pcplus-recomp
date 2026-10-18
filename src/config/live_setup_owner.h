@@ -22,11 +22,11 @@ unsigned __cdecl live_setup_begin(const char *path,
  unsigned option_mask,const unsigned char *target);
 /* Read only the bound absolute PRM after child success. Keep selected directory
  * bytes frozen; no reread/accounting commit. Validate/classify into a merged
- * candidate: transport/profile/selection/target stay active and are deferred;
+ * candidate: transport/profile/translation/selection/target stay active and are deferred;
  * display/mapping/modem/BREAK can be adopted by the foreground owner. Native
  * command expansion is checked before any caller output commit. A failed
  * finish leaves destination intact and consumes the pending transaction.
- * Required result8 and destination624 must be disjoint from each other and
+ * Required result8 and destination626 must be disjoint from each other and
  * this module's storage. No active globals or hardware are changed here. */
 unsigned __cdecl live_setup_finish(live_configuration_plan *destination,
  live_setup_result *result);

@@ -13,6 +13,7 @@ def main():
   ('live-editor-apply-color','p2000 a-f10 p500 pgdown tab tab tab home del del 1 e f10 escape space r e a d y',word(image(),0x1ae,30),1,1),
   ('live-editor-apply-baud','p2000 a-f10 p500 tab home del del del del 1 1 5 2 0 0 f10 escape y r e a d y',word(image(),2,8),3,1),
   ('live-editor-apply-line','p2000 a-f10 p500 tab tab home del 7 tab home del e tab home del 2 f10 escape y r e a d y',word(word(word(image(),4,2),6,2),8,7),1,3),
+  ('live-editor-translation-deferred','p2000 a-f10 p500 pgdown tab tab tab tab tab tab tab tab home del 2 f10 escape space r e a d y',word(image(),0x1e0,2),1,1),
   ('live-editor-apply-flow','p2000 a-f10 p500 tab tab tab tab tab home del 1 tab home del 0 f10 escape y r e a d y',word(word(image(),0x198,1),0x19a,0),1,1)]:
   proof,actual=run(name,keys=keys,arguments='@TEST.PRM',post_echo=True,rate_mask=rate_mask,line_mask=line_mask)
   assert actual==expected,(name,actual[:12],expected[:12])

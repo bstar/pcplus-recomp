@@ -145,8 +145,9 @@ display `ev_62d1b3b7cdb5cc4b6127b03239df29d1592f202bb1263e7691e6443911c96e05`.
 ## Remaining work
 
 Recover or replace the table editor with checked persistence and explicit dirty
-state. Map saved selection1d64 into the validated PRM/settings transaction,
-including the7-bit alternative and changes during a session. Resolve remaining
+state. Saved selection1d64 now participates in validated startup and settings
+transactions, including the7-bit alternative and explicit live deferral. Live
+resource switching and the environment fallback remain open. Resolve remaining
 emulation/script consumers. Explicit startup selection, normal mapping, raw
 monitor/continuation and capture/RIS boundaries now have separate live tests;
 full settings/UI and physical UART/modem testing remain open. Integration must

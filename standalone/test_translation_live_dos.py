@@ -3,6 +3,8 @@
 import hashlib
 import json
 from pathlib import Path
+from modem_fixtures import fixture
+from check_directory_live import word
 from test_connection_dos import run, ROOT, BINARY
 
 
@@ -35,6 +37,28 @@ def main():
         cases.append(run('xlt-reject-' + name, 'reject', 'p500 a-x', expected=7,
                          arguments='/X:D:\\TEST.XLT',
                          files={'TEST.XLT': data} if data is not None else None))
+    proof = run('xlt-saved-table', 'success', 'p2500 a-x',
+                prm=word(fixture(), 0x1e0, 1), working_drive='d',
+                arguments='@D:\\TEST.PRM /D:CaseTest:23',
+                files={'PCPLUS.XLT': bytes(mapping)}, banner=banner)
+    screen = (ROOT / 'build/connection-dos/xlt-saved-table/SCREEN.BIN').read_bytes()
+    proof['checks']['saved_mode_maps_ordinary_input'] = screen[160:162] == b'y\x07'
+    proof['passed'] = all(proof['checks'].values());assert proof['passed'], proof
+    (ROOT / 'build/connection-dos/xlt-saved-table/result.json').write_text(json.dumps(proof, indent=2) + '\n')
+    cases.append(proof)
+    high_banner = bytes(value | 128 for value in b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0c')
+    cases.append(run('xlt-saved-seven-bit', 'success', 'p2500 a-x',
+                     prm=word(fixture(), 0x1e0, 2), working_drive='d',
+                     banner=high_banner, files={'PCPLUS.XLT': b'INVALID IGNORED TABLE'}))
+    cases.append(run('xlt-override-saved-mask', 'success', 'p2500 a-x',
+                     prm=word(fixture(), 0x1e0, 2), working_drive='d',
+                     arguments='@D:\\TEST.PRM /D:CaseTest:23 /X:D:\\TEST.XLT',
+                     banner=banner, files={'TEST.XLT': bytes(mapping), 'PCPLUS.XLT': b''}))
+    cases.append(run('xlt-saved-missing-default', 'reject', 'p500 a-x', expected=7,
+                     prm=word(fixture(), 0x1e0, 1), working_drive='d', arguments='@D:\\TEST.PRM'))
+    cases.append(run('xlt-reject-saved-mode', 'reject', 'p500 a-x', expected=7,
+                     prm=word(fixture(), 0x1e0, 3), working_drive='d',
+                     arguments='@D:\\TEST.PRM /X:D:\\TEST.XLT', files={'TEST.XLT': bytes(mapping)}))
     assert all(case['passed'] for case in cases)
     sources = [__file__, str(ROOT / 'standalone/test_connection_dos.py'),
                str(ROOT / 'standalone/test_terminal.py')]

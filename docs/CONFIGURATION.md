@@ -276,3 +276,22 @@ The maintained offline [PRMEDIT editor](SETUP_EDITOR.md) now stages and validate
 not implement PCSETUP's original parent-memory consumer protocol, which remains
 unavailable; see [native invocation evidence](SETUP_NATIVE.md). Complete schema,
 defaults, path precedence and live setup integration remain open.
+
+## Input translation selection
+
+The native overlay3 owner at CSdef8 reads DS1d64, corresponding to PRM offset
+01e0h within the DS1b84 memory image. Selection0 initializes identity;1 loads
+PCPLUS.XLT;2 initializes identity and sets the driver receive mask to7fh. Other
+native values fall through to identity/ffh. The maintained importer accepts0..2
+and rejects other values with status12 before committing its42-byte settings
+plan. Its saved-mode byte range is disjoint from pause byte01e2h and pacing
+word01e4h. The raw host codec remains lossless and performs no implicit semantic
+repair. See [translation recovery](TRANSLATION.md) and
+[live selection and scope](LIVE_TRANSLATION.md).
+
+The maintained45-field PRM editor exposes this word on its TERMINAL page. Live
+setup classifies a change with mask0800h, keeps the active table/mask, and reports
+it deferred until restart; independent edits can still apply. Explicit /X keeps
+its effective table selection after validating the saved PRM, so it never hides
+an invalid raw selection. The pure candidate ABI is now626 bytes: serial42,
+modem368, directory214 and trailing change word2.

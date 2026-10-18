@@ -55,6 +55,19 @@ static unsigned commit(unsigned field,unsigned *dirty)
 }
 static unsigned first(unsigned page_number)
 { unsigned i;for(i=0;i<SETUP_FIELD_COUNT;++i)if(setup_field(i)->page==page_number)return i;return 0; }
+static unsigned neighbor(unsigned field,unsigned reverse)
+{
+ unsigned i,p=setup_field(field)->page,previous=SETUP_NO_FIELD;
+ if(!reverse){
+  for(i=field+1;i<SETUP_FIELD_COUNT;++i)if(setup_field(i)->page==p)return i;
+  return first((p+1)%5);
+ }
+ for(i=0;i<field;++i)if(setup_field(i)->page==p)previous=i;
+ if(previous!=SETUP_NO_FIELD)return previous;
+ p=(p+4)%5;
+ for(i=0;i<SETUP_FIELD_COUNT;++i)if(setup_field(i)->page==p)previous=i;
+ return previous==SETUP_NO_FIELD?0:previous;
+}
 static void draw(unsigned field,unsigned pos,const char *message)
 {
  unsigned row=5,i,p=setup_field(field)->page;char text[SETUP_TEXT_SIZE];
@@ -71,7 +84,8 @@ static void draw(unsigned field,unsigned pos,const char *message)
  put(19,2,setup_field(field)->help,0x1e,76);
  put(21,2,message,0x1f,76);
  put(23,0," Tab/Arrows Field  PgUp/PgDn Page  F1 Help  F10 Save  Esc Discard",0x70,80);
- row=5+field-first(p);position(row,25+(pos<52?pos:52));
+ row=5;for(i=0;i<field;++i)if(setup_field(i)->page==p)++row;
+ position(row,25+(pos<52?pos:52));
 }
 static unsigned run(void)
 {
@@ -104,8 +118,7 @@ static unsigned run(void)
   if(ascii==9 || ascii==13 || scan==0x0f || scan==0x48 || scan==0x50 || scan==0x49 || scan==0x51){
    if(!commit(field,&dirty)){message="Invalid value. Correct it before leaving this field.";continue;}
    if(scan==0x49 || scan==0x51){next=setup_field(field)->page;next=(next+(scan==0x51?1:4))%5;field=first(next);}
-   else if((scan==0x0f && ascii!=9) || scan==0x48)field=field?field-1:SETUP_FIELD_COUNT-1;
-   else field=(field+1)%SETUP_FIELD_COUNT;
+   else field=neighbor(field,(scan==0x0f && ascii!=9) || scan==0x48);
    load_field(field,&pos,&dirty);message="Changes remain staged until F10.";continue;
   }
   if(scan==0x4b){if(pos)--pos;continue;}

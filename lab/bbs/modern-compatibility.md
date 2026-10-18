@@ -8,26 +8,27 @@ toolchains. These results do not establish physical Wi-Fi modem compatibility.
 
 ## Latest editor-tested build
 
-This runtime includes explicit XLT input translation, confirmed idle COM switching
-and supported profile changes. The BBS probes use the default disabled XLT mode.
+This runtime includes saved translation modes, explicit XLT input translation,
+confirmed idle COM switching and supported profile changes. The BBS probes use
+saved mode0 (identity) without /X.
 The editor probes below exercise ordinary BBS editing with that binary; actual
 Alt-F10 application is
 proved separately in [the live settings report](../../docs/validation/setup-live.json).
 
 DOS executable SHA-256:
-`2cdff8a2cb331c40caf331e2c5870e7100de285bbb43ac8b729f9a28f76d0635`.
+`e212df15d29a76880ae0e6f1633ba63c715af2ee94eae6efc8c30569b6c5498b`.
 
 | Server / modem forwarding | Result | Evidence |
 | --- | --- | --- |
-| Synchronet 3.22a development snapshot / HARD COM2/19200, immediate | All 12 audit checks and eight key-wire checks pass; draft aborted | `editor-com-2cdf-hard`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
+| Synchronet 3.22a development snapshot / HARD COM2/19200, immediate | All 12 audit checks and eight key-wire checks pass; draft aborted | `editor-prm-e212-hard`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
 | ENiGMA½ 0.5.1-beta / immediate | Correct outgoing keys; Home and Insert behavior fail | Current paired experiment below |
 | Same ENiGMA / explicit 30 ms buffering | All seven audited checks and eight key-wire checks pass; closes unsaved | Current paired experiment below |
 
 The ENiGMA pair uses the same DOS executable, keyboard recipe, synthetic PRM,
 serial settings and unchanged stock decoder. Only the modem's explicit
 `packet_delay_ms` differs. Server/user state is not reset between runs.
-Retained labels are `editor-com-2cdf-buffer30` and
-`editor-com-2cdf-immediate`; full hashes and checks are in
+Retained labels are `editor-prm-e212-buffer30` and
+`editor-prm-e212-immediate`; full hashes and checks are in
 [the paired report](../../docs/validation/bbs-enigma-packetization.json).
 
 The checked ENiGMA source, commit
@@ -61,7 +62,7 @@ finished. This does not establish why the earlier navigation failed. Both
 attempts are retained in the editor report. Paired recording now requires actual
 stock-editor entry on both sides before accepting a comparison.
 
-The editor runs above use the explicit-XLT build with translation disabled. Their harness records
+The editor runs above use the saved-mode build with identity translation. Their harness records
 and rechecks the executable hash; ordinary BBS startup is exercised without `/S`
 or opening Alt-F10. The separate settings suites prove the new settings behavior.
 All three preserve the synthetic PRM and restore independently sampled
@@ -120,7 +121,7 @@ BBS configurations remain unverified.
 
 ## Current matched Synchronet flow comparison
 
-`editor-com-0666-soft-pair` and `editor-com-2cdf-hard` use the same
+`editor-com-0666-soft-pair` and `editor-prm-e212-hard` use the same
 COM2/19200/8N1, source-built runtime, complete keyboard recipe, harness sources
 and synthetic PRM except its SOFT/HARD words. The SOFT run passes11/12 editor
 checks but consumes the single emitted Ctrl-Q as XON in the modem model, leaving

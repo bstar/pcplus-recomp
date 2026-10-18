@@ -248,7 +248,8 @@ and [line recovery](docs/LINE_EDIT.md).
 XLT instruction bytes and tests a separate checked256-byte DOS table loader.
 There are2,082 CPU cases with optional genuine-original comparison, nine actual
 DOS filesystem checks and22 declared API fault checks. The interactive terminal
-now accepts `/X:FILE.XLT` before connecting; normal received characters translate
+accepts `/X:FILE.XLT` and saved PRM modes0/1/2 (identity/table/7-bit mask).
+PRMEDIT exposes the mode; live changes defer until restart. Normal table-mode characters translate
 while parser continuations, output and binary/dedicated owners remain raw. See
 [translation recovery](docs/TRANSLATION.md) and [live selection](docs/LIVE_TRANSLATION.md).
 

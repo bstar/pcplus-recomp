@@ -22,20 +22,34 @@ def main():
     for name, digest in manifest['sources'].items():
         assert sha(name) == digest, name
     linked = read('build/terminal/translation-live-checks.json')
+    modes = read('build/terminal/translation-mode-checks.json')
+    original_modes = read('docs/validation/translation-modes-original.json')
     dos = read('build/terminal/translation-dos-checks.json')
     frames = read('build/terminal/config-far-checks.json')
     regression = read('build/terminal/setup-profile-regression.json')
-    for report in (linked, dos, frames, regression):
+    for report in (linked, modes, original_modes, dos, frames, regression):
         assert report['passed'] and report['binary_sha256'] == binary
     assert linked['inputs'] == 783 and len(linked['cases']) == 4
     assert frames['configuration_bridge_pairs_verified'] == 26
     assert len(frames['rejected_mutations']) == 119
-    assert regression['complete'] and len(regression['commands']) == 60
+    assert modes['inputs'] == original_modes['inputs'] == 561
+    assert len(original_modes['original_cases']) == 5
+    assert original_modes['original_sha256'] == '6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904'
+    for report in (modes, original_modes):
+        for name, digest in report['sources'].items():
+            assert sha(name) == digest, name
+    assert regression['complete'] and len(regression['commands']) == 61
     assert all(command['exit_code'] == 0 for command in regression['commands'])
     proof = read('docs/validation/terminal-source-build.json')
     assert proof['passed'] and proof['binary_sha256'] == binary
     assert proof['matches_workspace_binary'] and proof['matches_workspace_manifest']
-    assert dos['passed'] and len(dos['cases']) == 7
+    assert dos['passed'] and len(dos['cases']) == 12
+    editor = read('build/setup/checks.json')
+    assert editor['passed'] and len(editor['cases']) == 12
+    for name, digest in editor['sources'].items():
+        assert sha(name) == digest, name
+    for name, digest in editor['binaries'].items():
+        assert sha('build/setup/' + name) == digest, name
     for name, digest in dos['sources'].items():
         assert sha(name) == digest, name
     artifacts = []
@@ -50,24 +64,28 @@ def main():
         for leaf in ['BEFORE.BIN', 'AFTER.BIN', 'SCREEN.BIN', 'serial.bin',
                      'TEST.PRM', 'SNAP.COM', 'dosbox.conf', 'result.json']:
             artifacts.append(folder + '/' + leaf)
-        if (ROOT / folder / 'TEST.XLT').exists():
-            artifacts.append(folder + '/TEST.XLT')
+        for leaf in ('TEST.XLT', 'PCPLUS.XLT'):
+            if (ROOT / folder / leaf).exists():
+                artifacts.append(folder + '/' + leaf)
     scripts = ['standalone/check_translation_live.py', 'standalone/test_translation_live_dos.py',
                'standalone/test_connection_dos.py', 'standalone/test_terminal.py',
                'standalone/check_config_far_live.py', 'standalone/check_terminal_options.py',
                'standalone/terminal_memory.py', 'standalone/build_terminal.py',
+               'standalone/check_translation_modes.py', 'standalone/test_setup_dos.py',
+               'standalone/test_setup_live_dos.py', 'src/config/prm.py', 'src/config/test_prm.py',
                'standalone/record_translation_live.py']
     result = dict(passed=True, binary_sha256=binary,
-                  memory_layout=manifest['memory_layout'], linked=linked, actual_DOS=dos,
+                  memory_layout=manifest['memory_layout'], linked=linked, saved_modes=modes,
+                  original_mode_oracle=original_modes, actual_DOS=dos, offline_editor_DOS=editor,
                   call_frames=frames, terminal_regression=regression,
                   source_rebuild=dict(report='docs/validation/terminal-source-build.json',
                                       source_snapshot_sha256=proof['source_snapshot_sha256']),
                   sources={name: sha(name) for name in scripts},
                   runtime_sources=manifest['sources'],
                   retained_artifacts={name: sha(name) for name in artifacts},
-                  scope='Explicit startup /X path and checked load, normal receive mapping, raw parser continuation/TX/dedicated owners, capture and RIS. Linked hardware/DOS models and seven actual DOS cases; complete current terminal regression and isolated source build. PRM selection, 7-bit alternative, editor/save/reload and physical UART remain open.')
+                  scope='Saved PRM modes0/1/2, checked current-directory table load and explicit /X override, driver7-bit mask and binary-transfer rejection,42-byte serial/626-byte candidate ABI,45-field mode editor and live deferral. Linked561 mode inputs, five genuine-original selector cases,783 prior translation inputs,12 actual DOS translation and12 offline editor cases, full61-command terminal regression and isolated source rebuild. Table editor/save/reload, live mode/resource handoff, PCPLUS environment fallback and physical UART remain open.')
     (ROOT / 'docs/validation/translation-live.json').write_text(json.dumps(result, indent=2) + '\n')
-    print('Recorded live XLT:', linked['inputs'], 'linked inputs, seven DOS cases, 60 regression commands')
+    print('Recorded saved XLT modes:', modes['inputs'], 'mode inputs,12 DOS cases,61 regression commands')
 
 
 if __name__ == '__main__':

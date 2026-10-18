@@ -15,14 +15,14 @@ class Owner(DosImage):
   super().__init__(OUT/'TERMINAL.EXE',OUT/'terminal.map');self.directory=directory
   self.raw=image();self.record=record();self.canonical=b'D:\\WORK\\TEST.PRM';self.canonical_error=0;self.io_error=0;self.reads=[]
   pointer=self.offset('terminal_stack_top')-self.stack_bytes+16
-  for name,size in [('path',64),('context',496),('source',40),('active',624),('target',64),('destination',624),('result',8)]:setattr(self,name,pointer);pointer+=size
+  for name,size in [('path',64),('context',496),('source',42),('active',626),('target',64),('destination',626),('result',8)]:setattr(self,name,pointer);pointer+=size
   self.fixture_scratch_end=pointer
   self.uc.mem_write(self.data_base+self.path,b'TEST.PRM'.ljust(64,b'\0'))
   self.uc.mem_write(self.data_base+self.target,b'Local.Example:23'.ljust(64,b'\0'))
   context=struct.pack('<H',17)+bytes(250)+self.record+bytes(2)+b'TEST.PRM'.ljust(64,b'\0')+b'TEST.DIR'.ljust(64,b'\0')
   self.uc.mem_write(self.data_base+self.context,context)
   self.initial=(serial_expected(self.raw,self.record)+modem_expected(self.raw)+plan_expected(17,self.record,0,b'MiXeD.Host:23') if directory else terminal_expected(self.raw)+modem_expected(self.raw)+bytes(214))+bytes(2)
-  self.uc.mem_write(self.data_base+self.source,self.initial[:40]);self.uc.mem_write(self.data_base+self.active,self.initial)
+  self.uc.mem_write(self.data_base+self.source,self.initial[:42]);self.uc.mem_write(self.data_base+self.active,self.initial)
   self.uc.reg_write(UC_X86_REG_ES,self.ds)
   for name in ['capture_fs_canonical_','_prm_dos_load']:self.uc.mem_write(self.symbols[name],b'\xc3')
   self.uc.hook_add(UC_HOOK_CODE,self.boundary)
@@ -54,17 +54,17 @@ class Owner(DosImage):
  def bind(self,args=None):return self.invoke('_live_setup_bind',args or [self.path,self.context if self.directory else 0,self.source])
  def begin(self,mask=0,args=None):return self.invoke('_live_setup_begin',args or [self.path,self.context if self.directory else 0,self.active,16|(64 if self.directory else 32)|mask,self.target])
  def finish(self,args=None):
-  self.uc.mem_write(self.data_base+self.destination,b'\xcc'*624);self.uc.mem_write(self.data_base+self.result,b'\xdd'*8)
+  self.uc.mem_write(self.data_base+self.destination,b'\xcc'*626);self.uc.mem_write(self.data_base+self.result,b'\xdd'*8)
   status=self.invoke('_live_setup_finish',[self.destination,self.result] if args is None else args)
-  if status:assert self.output()==b'\xcc'*624
+  if status:assert self.output()==b'\xcc'*626
   return status,struct.unpack('<4H',self.uc.mem_read(self.data_base+self.result,8))
- def output(self):return bytes(self.uc.mem_read(self.data_base+self.destination,624))
+ def output(self):return bytes(self.uc.mem_read(self.data_base+self.destination,626))
  def ready(self):assert self.bind()==0 and self.begin()==0;return self
 def main():
  cases=[]
  def done(name,n):cases.append(dict(case=name,inputs=n,passed=True));print(name,n,flush=True)
  for directory in (False,True):
-  m=Owner(directory).ready();assert m.finish()==(0,(0,0,0,0));assert m.output()[:622]==m.initial[:622]
+  m=Owner(directory).ready();assert m.finish()==(0,(0,0,0,0));assert m.output()[:624]==m.initial[:624]
  done('exact-initial-candidate-with-and-without-retained-selection',2)
  edits=[(0,1,0,1),(2,8,0,2),(4,1,0,4),(6,2,0,4),(8,7,0,4),(0x198,1,0,8),(0x19a,0,0,8),(0x194,6,0,16),
   (0x1ae,14,32,0),(0x1b0,14,32,0),(0x1b2,14,32,0),(0x1b4,14,32,0),(0x1b6,14,32,0),(0x19c,0,32,0),(0x19e,0,32,0),

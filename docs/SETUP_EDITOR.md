@@ -1,6 +1,6 @@
 # Maintained DOS settings editor
 
-`PRMEDIT.EXE` edits the 44 currently mapped fields in an existing PCPlus2.01
+`PRMEDIT.EXE` edits the 45 currently mapped fields in an existing PCPlus2.01
 PRM image. It builds entirely from maintained source with the pinned Nix
 Open Watcom8086 toolchain. Save the file, exit, then start the terminal with that
 explicit file. The terminal also offers
@@ -82,7 +82,7 @@ These remain parts of F02/F06 and the overall application plan.
 
 `standalone/check_setup_model.py` builds the actualDOS16 C model and replays its
 near-cdecl APIs with DS=SS. All interrupts and IN/OUT instructions are forbidden
-in this replay. Cases cover all44 lossless round trips, importer agreement,
+in this replay. Cases cover all45 lossless round trips, importer agreement,
 rejected edits without any staged mutation, string capacities/caret boundaries,
 all11 response slots, malformed loaded-value repair, pointer overlap, segment
 wrap and output capacity. A separate DOS run checks C-runtime behavior without
@@ -101,3 +101,12 @@ Generated evidence is in `build/setup{,-model}`; public hash-bound summaries are
 `docs/validation/setup-{model,dos}.json`. No originals or private configurations
 are test inputs. These tests establish offline mapped editing, not original
 PCSETUP compatibility, physical serial behavior or complete application setup.
+
+The TERMINAL page now includes Input translation as its ninth field. Values0,1,2
+select identity, current-directory PCPLUS.XLT and7-bit receive masking at startup.
+The field keeps stable ID44 without moving earlier field IDs. Page rendering and
+Tab/Up/Down navigation use page membership rather than assuming consecutive IDs;
+PgUp/PgDn and reverse Tab still cross pages in order. Actual DOS tests save this
+field, cross forward/backward page boundaries, and compare the entire PRM plus
+restored screen/cursor state. Live Alt-F10 saves it but defers activation; see
+[LIVE_TRANSLATION.md](LIVE_TRANSLATION.md).

@@ -6,7 +6,8 @@ from modem_fixtures import fixture
 from test_terminal import SAMPLER
 from directory_test_support import accounting_check
 ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EXE'
-def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None):
+def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c"):
+ assert working_drive in ("c","d")
  out=ROOT/'build/connection-dos'/name;out.mkdir(parents=True,exist_ok=True)
  for p in ('PASS.TXT','FAIL.TXT','BEFORE.BIN','AFTER.BIN','SCREEN.BIN'):(out/p).unlink(missing_ok=True)
  # These are owned synthetic fixture directories, never a user's directory.
@@ -82,10 +83,10 @@ nosound=true
 @echo off
 mount c "{BINARY.parent}"
 mount d "{out}"
-c:
+{working_drive}:
 D:\\SNAP B
 ADDKEY {keys}
-TERMINAL {arguments}
+C:\\TERMINAL {arguments}
 {branch}
 :expected
 echo PASS>D:\\PASS.TXT
@@ -121,7 +122,7 @@ exit
  if mode in ('busy','silence'):checks['configured_abort_reached_wire']=bool(checks.get('configured_abort_reached_wire'))
  (out/'serial.bin').write_bytes(wire)
  (out/'screen.txt').write_text('\n'.join(screen[i*160:i*160+160:2].decode('cp437') for i in range(25))+'\n')
- proof={'case':name,'passed':all(checks.values()),'checks':checks,'commands':commands,'errors':errors,'seconds':round(time.monotonic()-started,3),'binary_sha256':digest,'command':arguments,'expected_exit':expected,'scope':'Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.'}
+ proof={'case':name,'passed':all(checks.values()),'checks':checks,'commands':commands,'errors':errors,'seconds':round(time.monotonic()-started,3),'binary_sha256':digest,'command':arguments,'expected_exit':expected,'working_drive':working_drive,'scope':'Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.'}
  (out/'result.json').write_text(json.dumps(proof,indent=2)+'\n');print(name,'PASS' if proof['passed'] else json.dumps(proof),flush=True);return proof
 def main():
  cases=[('fast-connect-banner','success','p4000 a-x'),('busy-abort','busy','p4000 a-x'),('timeout-abort','silence','p4000 a-x'),('configured-hangup','hangup','p3000 a-h p2200 a-x'),('explicit-redial','redial','p3500 a-d p3500 a-x')]

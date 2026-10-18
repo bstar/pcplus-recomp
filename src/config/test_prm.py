@@ -23,6 +23,14 @@ class PrmTests(unittest.TestCase):
   for size in [0,10,IMAGE_SIZE-1,IMAGE_SIZE+1]:
    with self.assertRaises(ValueError):LegacyPrm201(bytes(size))
   data=bytearray(IMAGE_SIZE);prm=LegacyPrm201(data);data[0]=255;self.assertEqual(prm.word('port_index'),0)
+ def test_translation_selection_location_and_opaque_neighbors(self):
+  data=bytes((i*29+7)&255 for i in range(IMAGE_SIZE));prm=LegacyPrm201(data)
+  for mode in (0,1,2,65535):
+   output=prm.with_word('translation_mode',mode)
+   self.assertEqual(output.word('translation_mode'),mode)
+   self.assertEqual(output.to_bytes()[:0x1e0],data[:0x1e0])
+   self.assertEqual(output.to_bytes()[0x1e0:0x1e2],struct.pack('<H',mode))
+   self.assertEqual(output.to_bytes()[0x1e2:],data[0x1e2:])
  def test_verified_word_and_port_array_locations(self):
   data=bytearray(IMAGE_SIZE)
   struct.pack_into('<H',data,0x194,6);struct.pack_into('<H',data,0x1ae,0x17)

@@ -9,7 +9,7 @@ from check_setup_model import image
 from check_directory_live import record,serial_expected,plan_expected,text,word
 from check_modem_import import expected as modem_expected
 from check_startup_import import terminal_expected
-ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/live-configuration';SIZE=624
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/live-configuration';SIZE=626
 MAX_STACK=[0]
 class Model(DosImage):
  terminal=False
@@ -23,7 +23,7 @@ class Model(DosImage):
    # for collision with the complete fixture; remaining stack is >4 KiB.
    assert self.stack_bytes==8192
    pointer=self.stack_top-self.stack_bytes+16
-   for name,size in [('im',1264),('sel',366),('active',624),('dest',624),('result',4),('serial',40),('modem',368),('plan',214),('dr',10)]:
+   for name,size in [('im',1264),('sel',366),('active',626),('dest',626),('result',4),('serial',42),('modem',368),('plan',214),('dr',10)]:
     setattr(self,name,pointer);pointer+=size
    self.fixture_scratch_end=pointer
    assert pointer<self.stack_top-self.stack_bytes//2
@@ -66,7 +66,7 @@ class Model(DosImage):
   for reg,value in [(UC_X86_REG_BP,0xbabe),(UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678),(UC_X86_REG_ES,self.ds)]:assert self.uc.reg_read(reg)==value
   if status:assert self.output()==b'\xcc'*SIZE
   return status,struct.unpack('<2H',self.uc.mem_read(self.data_base+self.result,4))
- def change(self):return struct.unpack_from('<H',self.output(),622)[0]
+ def change(self):return struct.unpack_from('<H',self.output(),624)[0]
 def main():
  parser=argparse.ArgumentParser();parser.add_argument('--terminal',action='store_true',help='Replay the normal terminal far-C implementation with caller-owned stack fixtures')
  Model.terminal=parser.parse_args().terminal
@@ -78,7 +78,7 @@ def main():
   expected=(serial_expected(m.raw,m.record)+modem_expected(m.raw)+plan_expected(17,m.record,0,b'MiXeD.Host:23') if directory else terminal_expected(m.raw)+modem_expected(m.raw)+bytes(214))+bytes(2)
   assert m.baseline==expected
   assert m.decode()==(0,(0,0)) and m.output()==m.baseline
- done('exact624-byte-initial-plan-and-unchanged-transition-with-and-without-directory',4)
+ done('exact626-byte-initial-plan-and-unchanged-transition-with-and-without-directory',4)
  count=0
  for directory in (False,True):
   for mask in range(16):
@@ -94,7 +94,7 @@ def main():
    for bit,spans in [(1,[(0,2),(32,4)]),(2,[(2,4)]),(4,[(6,6)]),(8,[(12,4)])]:
     if mask&bit:
      for at,n in spans:expected_serial[at:at+n]=m.baseline[at:at+n]
-   assert m.output()[:40]==expected_serial,(directory,mask)
+   assert m.output()[:42]==expected_serial,(directory,mask)
    assert m.change()&15==15^mask,(directory,mask,m.change())
    count+=1
  done('all16-CLI-category-combinations-after-global-and-directory-validation',count)
@@ -113,14 +113,14 @@ def main():
  done('all17-semantic-string-changes-ignore-after-NUL-and-opaque-PRM-bytes',count+1)
  for entry in range(1,201):
   m=Model(True);m.entry=entry;assert m.decode()[0]==0
-  assert struct.unpack_from('<H',m.output(),408)[0]==entry
+  assert struct.unpack_from('<H',m.output(),410)[0]==entry
   assert m.change()==(0 if entry==17 else 256)
  done('retained-selection-all200-record-numbers-and-metadata-classification',200)
  m=Model(True);m.record=text(m.record,25,21,b'NEW.EXAMPLE:23');assert m.decode()[0]==0 and m.change()==(256|1024)
  m=Model(True);r=bytearray(m.record);r[0x4b:0x4b+3]=b'pw\0';m.record=bytes(r);assert m.decode()[0]==0 and m.change()==256
- m=Model(True);m.header=b'9,\0'.ljust(25,b'\0')+bytes(225);m.record=text(m.record,25,21,b'A55');assert m.decode(codes=1)[0]==0 and m.output()[443:447]==b'9,55'
+ m=Model(True);m.header=b'9,\0'.ljust(25,b'\0')+bytes(225);m.record=text(m.record,25,21,b'A55');assert m.decode(codes=1)[0]==0 and m.output()[445:449]==b'9,55'
  m=Model(True);r=bytearray(m.record);r[0x4a]=1;r[25:46]=bytes(21);m.record=bytes(r);m.raw=word(m.raw,0x1a4,65535);raw=bytearray(m.raw);raw[0x18:0x47]=b'X'*47;raw[0xc4:0xd4]=b'X'*16;m.raw=bytes(raw)
- assert m.decode()[0]==0 and m.output()[40:406]==bytes(366) and m.output()[406:408]==b'\xff\xff'
+ assert m.decode()[0]==0 and m.output()[42:408]==bytes(366) and m.output()[408:410]==b'\xff\xff'
  done('target-private-metadata-legacy-header-and-DIRECT-modem-skip-with-BREAK',4)
  count=0
  for directory in (False,True):
@@ -145,13 +145,13 @@ def main():
  for index,value in [(0,0),(0,0xfc00),(1,0),(1,0xff00),(1,m.im),(2,2),(3,0),(3,0xfff0),(4,0),(4,0xff00),(5,0),(5,0xff80),(6,0xffff),*[(i,v) for i in (3,4,5,6) for v in (m.im,m.sel)],(4,m.serial),(5,m.serial),(5,m.modem),(6,m.serial),(6,m.modem),(6,m.plan)]:
   args=normal.copy();args[index]=value
   before=m.inputs()
-  for ptr,n in [(m.serial,40),(m.modem,368),(m.plan,214)]:m.uc.mem_write(m.data_base+ptr,b'\xcc'*n)
+  for ptr,n in [(m.serial,42),(m.modem,368),(m.plan,214)]:m.uc.mem_write(m.data_base+ptr,b'\xcc'*n)
   assert m.call('_directory_live_decode',args,limit=1000000)==1,(index,value)
   assert m.inputs()==before
-  for ptr,n in [(m.serial,40),(m.modem,368),(m.plan,214)]:assert bytes(m.uc.mem_read(m.data_base+ptr,n))==b'\xcc'*n
+  for ptr,n in [(m.serial,42),(m.modem,368),(m.plan,214)]:assert bytes(m.uc.mem_read(m.data_base+ptr,n))==b'\xcc'*n
   count+=1
  args=normal.copy();args[-1]=0;assert m.call('_directory_live_decode',args,limit=1000000)==0
- assert bytes(m.uc.mem_read(m.data_base+m.serial,40))==serial_expected(m.raw,m.record)
+ assert bytes(m.uc.mem_read(m.data_base+m.serial,42))==serial_expected(m.raw,m.record)
  done('pure-directory-API-own-null-wrap-input-output-result-alias-guards-and-optional-result',count+1)
  # Actual DOS also compares the refactored file owner and pure transaction.
  (OUT/'VALID.PRM').write_bytes(image());raw=bytes(250)+b''.join(record() for _ in range(200));assert len(raw)==23050;(OUT/'VALID.DIR').write_bytes(raw)

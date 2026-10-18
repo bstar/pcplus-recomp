@@ -37,6 +37,18 @@
       "screen_cursor_shape_page_restored": true
     },
     {
+      "case": "translation-save",
+      "passed": true,
+      "full_file_exact": true,
+      "screen_cursor_shape_page_restored": true
+    },
+    {
+      "case": "translation-page-navigation",
+      "passed": true,
+      "full_file_exact": true,
+      "screen_cursor_shape_page_restored": true
+    },
+    {
       "case": "production-executable-save",
       "passed": true,
       "full_file_exact": true
@@ -58,34 +70,35 @@
     }
   ],
   "binaries": {
-    "PRMEDIT.EXE": "1dd49405f285b85a4d438be6cd67ebbc3d7cd76a5d81e74cc91106383463f31e",
-    "OWNER.EXE": "05a7c3510c5a5ff26a8d8d14aebb10c5877fa83b5c0d9a6a53c767b5aa9a7007",
-    "UI.EXE": "4c9fe971690607752a27b3396d549d00623f47e0c9ee5186550db788b8ec2640",
-    "RECOVERY.EXE": "0cd362b19421dd016712ba6edaf73af4620f5e7473fca7e67486fbc1a4475157"
+    "PRMEDIT.EXE": "5584732e1b5ac506ee7f8ec04829fceeb23aa64d4432a69b27df8218bf9e5680",
+    "OWNER.EXE": "826885a2bc85b187b06e17364d71d3ee77083f8ee51e86df17de3bb686ce51b5",
+    "UI.EXE": "5428b27c7afe78a5e31b89d881df1b11736638a3ab54d13a92739cbcc907a580",
+    "RECOVERY.EXE": "ace07b84761021af7e8ebd463706447365b264058a1ddfe05c290ac4a2f1ac7e"
   },
   "sources": {
     "src/config/setup_document.c": "38c01317f29546bc5acdc13367050587322be87a6aca6f0ea4d595d506bed79e",
-    "src/config/setup_model.c": "cb09ee57b5be080b2403e3d0114bce17b3bfeee70f7311b4efeef4ed000c51c1",
-    "src/config/terminal_import.c": "8ec3056f74ab9b37594500bf0ea2b7a34388a2674af72eec716f1c829c31d66d",
+    "src/config/setup_model.c": "f900b5a1129125544b7d641b11715339cae6a8ea6881e4d98f369dcddecfdd99",
+    "src/config/terminal_import.c": "949b56e1da0a9b9f44dae01a325db13e4525a040e3947ed96de580b30cddcfd8",
     "src/config/modem_import.c": "aa984d766d561ab15e6fd067757953c856eb054a61dc8f4cb9c58c58f5df2a4b",
     "src/config/prm_dos.c": "e4d0386d3fb40e225cbc34ec7f989286f67ec9ffcff29a6f50eb77d7b24ee021",
     "src/config/prm_replace.c": "908e5efe698023ea52b626011441be9fe2935ee1f1f9162eba43eb3c56a754fc",
     "src/config/prm_replace_fs.c": "c267456eef56a72db65ff51b8aebc64ba78dbfbcd64e4c0235ba0434604910d4",
-    "src/config/setup_main.c": "105fa8336f7eb367af92cc67616671eb33478b8bfa6f3ccc993e80fab01185ef",
+    "src/config/setup_main.c": "43cce81e51076908c2e88844f125c98214acc6cb2c457e859f8769e663ea7412",
     "standalone/setup_document_host.c": "5a497667c1e30eff7ed1a4186c85d5535b6a1c894d4a8fb84bcc77cb77c2ed5b",
     "standalone/setup_ui_host.c": "ff7d1782f6619f44f0ff9055999850b92d31f52f85fa8048ac66e68d891c8b77",
     "standalone/setup_recovery_host.c": "546737a1c12853b9e70c5fa399b9f116f098ebde0b253710a3c7d84917688a98",
-    "standalone/test_setup_dos.py": "383c2b114e6c828785686348ffbce23a992103e67b188c9594d4720d8f2615d0",
-    "standalone/check_setup_model.py": "a2c449a19f42227626b0dda71f374c92d8dd0b8d7453ed74f6ecc4622ac1294f",
+    "standalone/test_setup_dos.py": "0a021d6c36c1897ccff384dd57cbd077e70159431da56fd23903892965d73a0b",
+    "standalone/check_setup_model.py": "4006e95d96cc780a9e951bc9c59a495be62a2ff5ad0bd6c25cae24fcbc3764b5",
     "src/config/prm_dos.h": "3a6f8f27e13f5fc97e290b95def601e49ce93b54f729d1bc3ddc527ba39de20c",
     "src/config/prm_replace.h": "fe0c4e5b5d2dbe641cacc9f76ab2406d947a543a479f9a48bedf71ecdfb8f806",
     "src/config/prm_replace_fs.h": "7d698bd01b9f98c3d92377c9c7f83ecf83e52e4a08ceca9e0948d2a79560e4e4",
-    "src/config/terminal_import.h": "1a4356026ff7aeece24a8b6437942d08bab611aaa82c14233a5ce7c9e895e6c5",
+    "src/config/terminal_import.h": "ec71947cd81e37b97c14ecafcca291993190a333f35d88ecdbf27d447ddd1546",
     "src/config/modem_import.h": "7ef5213025c1d58c9dc8f4ec89197c4ca2d6ed67d8f2ea4ddeeb89350e9bfcb0",
     "src/config/startup_import.h": "8e9a2ca1640e5f1e5209c74cfd7b4be4f56f9b132fdec603f48dfff7a73a2b84",
-    "src/config/setup_model.h": "50dcbf3cf73b16032888fd6b8330a70c801786c717901486b0938090ebff5c3f",
-    "src/config/setup_document.h": "faa31defcddea7759e0c50ccf1354f8027516548a84a558102b8c704221b4866"
+    "src/config/setup_model.h": "7711d6a53c123688c2c954f177855945596a36b0bb9ce28a45edc3f13a9e380e",
+    "src/config/setup_document.h": "faa31defcddea7759e0c50ccf1354f8027516548a84a558102b8c704221b4866",
+    "src/config/live_configuration.h": "27d0d14fc04e508042ff66e573a892590b4b622b5d12afed5e4c8e4b74511f7c",
+    "src/config/live_setup_owner.h": "f14e717425c76bba1943cc135e3b2439ba054bd72261e669e39878d51e2360b5"
   },
-  "scope": "Actual DOSBox-X filesystem and BIOS keyboard/video, synthetic settings only. UI host links identical UI source with renamed main to independently verify restoration; exact production EXE separately saves. No original PCSETUP, UART or physical hardware tests.",
-  "artifact": "build/setup/checks.json"
+  "scope": "Actual DOSBox-X filesystem and BIOS keyboard/video, synthetic settings only. UI host links identical UI source with renamed main to independently verify restoration; exact production EXE separately saves. No original PCSETUP, UART or physical hardware tests."
 }
