@@ -187,17 +187,17 @@
     ]
   },
   "binaries": {
-    "CAPSESS.EXE": "5023dc7cd086e868f40d3d2a99b72484c7ed4cc3f4662acaa15eabdfaadbfc68",
-    "CSFAULT.EXE": "2fb7158ceaf5a430a5db6cf24146b77e50bc9268f52d204f66c38b9431543920"
+    "CAPSESS.EXE": "a9467e6aefad690a40a09bcad195b77e1aecc1cacc2767157ba43e7f5ae8255f",
+    "CSFAULT.EXE": "f6a2d34ed41315d18d5fd2b4d105abd8ab8eda4f8464208ccfbb896609d900a0"
   },
   "sources": {
-    "src/capture/capture_file.c": "6ef1930a12699529110863015946d0b103cd146ca9d3c364322a51b3c281a34b",
-    "src/capture/capture_file.h": "532c2a95853a17e12eb37c69688dbaf1073599511259465dbc0bcebafb1442a1",
-    "src/capture/capture_fs.c": "d206e31ddfb8dfd986c2402b7276fd5b8c9b73dccfc33fe177bfd9848007997a",
-    "src/capture/capture_fs.h": "4b43a2ac57af28350c180f7d8380196dcf64f6fad41140303cd4a69d8874ab71",
+    "src/capture/capture_file.c": "9951fec4a6342306e40914a741f9180d17019b70f250b83d35d763b0ac2b08c1",
+    "src/capture/capture_file.h": "10c75f54969e9e9984b4830ce82b58ca7ab653c80397e12debd659a157f91002",
+    "src/capture/capture_fs.c": "6b5a106afaba8944e5032ce44777aa18d84d16e2cb07f64fe14bef5609891d13",
+    "src/capture/capture_fs.h": "01b6f4a9fea9f8d86a9bbe9448214e3ce78b1dc8f91b4af382ec0f14e5efb5cd",
     "src/capture/capture_session.c": "ea79a9f01591ecbc23741a960319c86396ffabf0f7a54d63f7070b8660dc6c1d",
     "src/capture/capture_session.h": "ded5a4670adb5ab7ef3f14ea64d62824289b851568fa5d7185e64567e8647e71",
-    "standalone/capture_session_host.c": "568be9b251a23d042049e7a3e21f6309beb8404935bb2a76eee2c4af4e14e3c5",
+    "standalone/capture_session_host.c": "c7d24b2e00a3f43c9758e05b9fca014ec0aa77aa3a9508845ffbc3b7eed22f42",
     "standalone/check_capture_session.py": "4781b43fc85287b21322e96214437aa08852b5a98e67272a63e827cc08bb5458"
   },
   "scope": "Independent actual DOSBox-X8086 compilation of maintained capture_session and binary file owner. Real normal files; compiled filesystem boundary faults. API clock vectors include18ticks/midnight; no native09b6 filtering, live UART, terminal integration, physicaldisk failure or native capture equivalence claim."

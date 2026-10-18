@@ -6,7 +6,9 @@ ORG 0x100
 %ifndef FAR_SEG
 %error Linker-derived FAR_SEG required
 %endif
-%define REQUIRED_PARAS (16+FAR_SEG+(FAR_END_OFFSET+15)/16)
+%ifndef REQUIRED_PARAS
+%error Linker-derived maximum REQUIRED_PARAS required
+%endif
 start:
  mov ax,cs
  cli
@@ -50,6 +52,12 @@ start:
  mov word [es:SHADOW_OFFSET+8190],0xbeef
  mov word [es:HISTORY_OFFSET],0xdead
  mov word [es:HISTORY_OFFSET+4094],0xbabe
+ mov ax,[result+2]
+ add ax,16+SNAPSHOT_SEG
+ mov [result+20],ax
+ mov es,ax
+ mov word [es:SNAPSHOT_OFFSET],0x1122
+ mov word [es:SNAPSHOT_OFFSET+1998],0x3344
  mov bx,0x400
  mov ah,0x48
  int 0x21
@@ -78,6 +86,15 @@ start:
  mov [result+18],ax
  cmp ax,0xbabe
  jne .free
+ mov es,[result+20]
+ mov ax,[es:SNAPSHOT_OFFSET]
+ mov [result+22],ax
+ cmp ax,0x1122
+ jne .free
+ mov ax,[es:SNAPSHOT_OFFSET+1998]
+ mov [result+24],ax
+ cmp ax,0x3344
+ jne .free
  or word [result],4
 .free:
  mov es,[result+10]
@@ -101,7 +118,7 @@ start:
  jc .exit
  mov bx,ax
  mov dx,result
- mov cx,20
+ mov cx,26
  mov ah,0x40
  int 0x21
  mov ah,0x3e
@@ -114,7 +131,7 @@ start:
 .terminate:
  int 0x21
 output: db 'D:\FARTEST.BIN',0
-result: times 10 dw 0
+result: times 13 dw 0
 
 align 2
  times 1024 db 0

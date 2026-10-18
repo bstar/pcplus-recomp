@@ -18,16 +18,20 @@ static unsigned fault,exists,owned,opens,writes,closes,attrs,seeks,ops;
 static unsigned long position,size;
 static unsigned char data[4096];
 static char last_path[64];
+/* Existing session fault model uses one synthetic current directory. Absolute
+ * identity and cross-owner aliases are checked by the dedicated owner suite. */
+unsigned capture_fs_canonical(const char *path,char *out)
+{++ops;strcpy(out,"C:\\");strcat(out,path);return 0;}
 unsigned capture_fs_attributes(const char *path,unsigned *attributes)
-{++ops;++attrs;strcpy(last_path,path);*attributes=fault==9?1:0;if(fault==1)return 5;return exists?0:2;}
+{++ops;++attrs;strcpy(last_path,!strncmp(path,"C:\\",3)?path+3:path);*attributes=fault==9?1:0;if(fault==1)return 5;return exists?0:2;}
 unsigned capture_fs_create(const char *path,int *handle)
 {
- ++ops;++opens;strcpy(last_path,path);
+ ++ops;++opens;strcpy(last_path,!strncmp(path,"C:\\",3)?path+3:path);
  if(fault==2){exists=1;memcpy(data,"raced",5);size=5;return 80;}
  if(exists)return 80;exists=owned=1;size=position=0;*handle=7;return 0;
 }
 unsigned capture_fs_open_append(const char *path,int *handle)
-{++ops;++opens;strcpy(last_path,path);if(fault==10)return 5;if(!exists)return 2;owned=1;*handle=7;position=0;return 0;}
+{++ops;++opens;strcpy(last_path,!strncmp(path,"C:\\",3)?path+3:path);if(fault==10)return 5;if(!exists)return 2;owned=1;*handle=7;position=0;return 0;}
 unsigned capture_fs_seek_end(int handle,unsigned long *value)
 {++ops;++seeks;if(handle!=7 || !owned)return 6;if(fault==8)return 25;position=size;*value=position;return 0;}
 unsigned capture_fs_write(int handle,const void *source,unsigned count,unsigned *written)

@@ -93,6 +93,9 @@ uses checked DOS writes and preserves partial files on errors; a genuine
 write/close failure reports exit12 unless an earlier error takes precedence.
 PROGRAM closes capture before launching a child. See
 [capture controls, exact bytes and limits](docs/LIVE_CAPTURE.md).
+Alt-G appends a character-only screen snapshot to `PCPLUS.SCR`, with trailing
+spaces trimmed and CRLF per row. It preserves open/held text capture and refuses
+an internal same-file conflict. See [screen-file snapshots](docs/LIVE_SNAPSHOT.md).
 Global `/T:MYKEYS.KEY` imports ten Meta actions; Alt-1..Alt-0 execute
 nonblocking TEXT or maintained PROGRAM actions. PROGRAM passes a validated
 1..51-byte stored command through COMSPEC `/c`, suspends terminal UART ownership

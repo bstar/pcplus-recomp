@@ -6,6 +6,7 @@ SEGMENT _TEXT public class=CODE use16
 extern _capture_session_begin,_capture_session_stop,_capture_session_pause
 extern _capture_session_flush,_capture_session_put,_capture_session_poll
 extern _capture_session_notice,_capture_file_result
+extern _snapshot_file_result
 extern terminal_sink_398a_enabled,terminal_cr_adds_lf
 extern terminal_clock_ticks,terminal_poll_serial,terminal_read_key,keyboard_poll
 extern terminal_connection_notice,terminal_connection_notice_restore
@@ -118,6 +119,10 @@ terminal_capture_before_program:
  push si
  push di
  push es
+ cmp word [_snapshot_file_result+10],0
+ jne .snapshot_owned
+ cmp word [_snapshot_file_result+12],0
+ jne .snapshot_owned
  cmp word [terminal_sink_398a_enabled],0
  je .check
  call _capture_session_stop
@@ -126,6 +131,9 @@ terminal_capture_before_program:
  cmp word [_capture_file_result+12],0
  je .done
  inc ax
+ jmp .done
+.snapshot_owned:
+ mov ax,1
 .done:
  pop es
  pop di

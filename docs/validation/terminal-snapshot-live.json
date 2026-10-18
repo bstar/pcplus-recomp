@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
+  "cases": [
+    {
+      "case": "real3446-64b8-NUL-CP437-trim80-and-frozen-view-under-later-UART-and-video-change",
+      "inputs": 2,
+      "passed": true
+    },
+    {
+      "case": "repeat-append-preserves-prefix-and-native-shadow-route-uses-far-metadata",
+      "inputs": 2,
+      "passed": true
+    },
+    {
+      "case": "native-status-row-SUB-repair-visibility-and-empty-row-bounds",
+      "inputs": 3,
+      "passed": true
+    },
+    {
+      "case": "separate-open-held-capture-owner-and-canonical-same-file-denial",
+      "inputs": 4,
+      "passed": true
+    },
+    {
+      "case": "short-write-close-once-uncertain-repeated-hotkey-PROGRAM-block-readonly-nonfatal",
+      "inputs": 4,
+      "passed": true
+    },
+    {
+      "case": "other-owner-geometry-CGA-retrace-and-invalid-far-source-reject-before-fileIO",
+      "inputs": 16,
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked native3446/64b8 and CGA-disabled brackets, maintained frozen-view writer, both checked DOS owners and PROGRAM guard. Only DOSkernel/BIOS/UART boundaries modeled. No physical DMA atomicity, physicaldisk or full viewport/UI claim."
+}

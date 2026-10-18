@@ -39,6 +39,9 @@
       "PASS uninitialized owner rejects begin without adopting dirty BSS",
       "PASS DATA cookie initializes dirty own BSS once",
       "PASS invalid modes path capacity null and snapshot aliases reject unchanged before IO",
+      "PASS canonical DOS error prevents any file acquisition",
+      "PASS unterminated canonical identity rejected without open",
+      "PASS empty canonical identity rejected without open",
       "PASS attribute DOS error prevents create",
       "PASS exclusive create error owns no handle",
       "PASS exclusive create race cannot overwrite competing file",
@@ -73,7 +76,7 @@
       "PASS session written DWORD overflow rejects before write",
       "PASS ambiguous close retained independently from first status",
       "PASS uncertain close retry cannot write close reset or adopt handle",
-      "CASES 37"
+      "CASES 40"
     ],
     "SEEKFAIL": [
       "PASS uninitialized owner rejects begin without adopting dirty BSS",
@@ -94,15 +97,15 @@
     ]
   },
   "binaries": {
-    "CAPTURE.EXE": "3a9101821e2e0a956176df944ffe1c62cee1ad2d27043999947f4a529a89a1a4",
-    "CAPFAULT.EXE": "76aa9d2ed7b61235a0b3d61cd185b828f0b11e9b8dbae8559953cc467c199e74"
+    "CAPTURE.EXE": "af7928b876ad9121c8a4d82590a8dffdbf8d307007dceccb18f07d8a4dd7cf85",
+    "CAPFAULT.EXE": "69285851dc16e4a57d1aff3e8b6eeec63bd3fa5837e36fe395eea7b4424b35f7"
   },
   "sources": {
-    "src/capture/capture_file.c": "6ef1930a12699529110863015946d0b103cd146ca9d3c364322a51b3c281a34b",
-    "src/capture/capture_file.h": "532c2a95853a17e12eb37c69688dbaf1073599511259465dbc0bcebafb1442a1",
-    "src/capture/capture_fs.c": "d206e31ddfb8dfd986c2402b7276fd5b8c9b73dccfc33fe177bfd9848007997a",
-    "src/capture/capture_fs.h": "4b43a2ac57af28350c180f7d8380196dcf64f6fad41140303cd4a69d8874ab71",
-    "standalone/capture_file_host.c": "3bff421a98f7d4ba9e5e48b9edb1886433f5858fbc1c62f2380429a2f31bc1d4",
+    "src/capture/capture_file.c": "9951fec4a6342306e40914a741f9180d17019b70f250b83d35d763b0ac2b08c1",
+    "src/capture/capture_file.h": "10c75f54969e9e9984b4830ce82b58ca7ab653c80397e12debd659a157f91002",
+    "src/capture/capture_fs.c": "6b5a106afaba8944e5032ce44777aa18d84d16e2cb07f64fe14bef5609891d13",
+    "src/capture/capture_fs.h": "01b6f4a9fea9f8d86a9bbe9448214e3ce78b1dc8f91b4af382ec0f14e5efb5cd",
+    "standalone/capture_file_host.c": "bedd11fbc69f3e87b8afe6b2762ace0d9cab210e64dca5d102355ad595f06437",
     "standalone/check_capture_file.py": "44ee960bc744c5cdd89d596bb5e1c8d833f2ac3d94fb4de639a7e39a05a85005"
   },
   "scope": "Maintained exact binary foreground DOS sink: exclusive NEW or existing APPEND on one write-only seek-END handle; actual DOS normal filesystem and compiled kernel fault boundaries. No formatting/native FILE interoperability, runtime integration, concurrent-writer guarantee, deletion/rollback or crash atomicity."

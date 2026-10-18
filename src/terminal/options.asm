@@ -579,6 +579,7 @@ terminal_usage:
  db 'Keyboard: /K:FILE.KBD imports the selected profile; explicit path only.',13,10
  db 'Meta actions: /T:FILE.KEY; Alt-1..Alt-0 run TEXT/PROGRAM; Esc cancels queued action.',13,10
  db 'Capture: Alt-F1 opens/appends or closes; Alt-F2 holds; Alt-F3 toggles CR+LF.',13,10
+ db 'Screen file: Alt-G appends the current screen to PCPLUS.SCR.',13,10
  db 'Keyboard BIOS: /B:AUTO (default), /B:STANDARD or /B:ENHANCED.',13,10
  db 'ANSI CSI M: /A:NETWORK (delete lines, default) or /A:ORIGINAL (wait).',13,10
  db 'PRM path: explicit only, max 63 bytes; no spaces, quotes or wildcards.',13,10

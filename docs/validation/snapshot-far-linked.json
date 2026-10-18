@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
+  "cases": [
+    {
+      "case": "actual-linker-far-relocations-and-full-storage-extents-outside-DGROUP",
+      "passed": true
+    },
+    {
+      "case": "actual-native-far-fill-overlapping-move-segment-differs-fromDS",
+      "passed": true
+    },
+    {
+      "case": "actual-history-LES-ring-full4096-and-wrap-with-shadow-canary",
+      "passed": true
+    },
+    {
+      "case": "real-RIS-far-shadow-clear-preserves-full-history",
+      "passed": true
+    },
+    {
+      "case": "real-PROGRAM-resize-EXEC-return-max-static-floor-and-full-far-canaries",
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked far relocations, native far movers/history, maintained RIS and PROGRAM retained-memory initializer/EXEC path. Only BIOS/UART/DOS-kernel boundaries modeled; test stack uses actual linked STACK end. No product service replacement."
+}

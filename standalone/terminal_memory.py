@@ -32,11 +32,21 @@ def inspect_terminal_memory(binary,map_path):
  relocations={seg*16+off for off,seg in (struct.unpack_from('<HH',image,header[12]+i*4) for i in range(header[3]))}
  assert address('erase_shadow_segment') in relocations
  assert address('terminal_history_pointer')+2 in relocations
- static_end=max(stack_end,far_end)
+ extra={};static_end=max(stack_end,far_end)
+ if 'terminal_snapshot_image' in symbols:
+  frozen=address('terminal_snapshot_image');frozen_end=address('terminal_snapshot_image_end')
+  frozen_seg,frozen_off=symbols['terminal_snapshot_image']
+  assert frozen_end-frozen==2000 and frozen_off+2000<=65536
+  assert frozen_end<=near_start or frozen>=near_start+near_size,'Frozen screen overlapsDGROUP'
+  assert frozen_end<=shadow or frozen>=far_end,'Frozen screen overlaps shadow/history'
+  assert word('terminal_snapshot_image_segment')==frozen_seg
+  assert address('terminal_snapshot_image_segment') in relocations
+  static_end=max(static_end,frozen_end)
+  extra={'snapshot_relative_segment':frozen_seg,'snapshot_image_offset':frozen_off,'snapshot_bytes':2000,'snapshot_end_linear':frozen_end}
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'
  allocated=((module_bytes+15)//16+header[5])*16
  assert allocated>=static_end,'MZ minimum allocation does not cover static storage'
  assert header[7]*16+header[8]==stack_end,'MZ SS:SP differs from linkedSTACK'
  assert retained+16<0xa000,'Static DOS parent cannot fit conventional memory'
- return {'near_bytes':near_size,'near_relative_segment':ds,'far_relative_segment':far_seg,'shadow_offset':shadow_off,'history_offset':history_off,'far_bytes':12288,'far_end_linear':far_end,'stack_end_linear':stack_end,'loaded_module_bytes':module_bytes,'minimum_allocated_module_bytes':allocated,'retained_parent_paragraphs':retained+16,'far_pointer_relocations_verified':True}
+ return {'near_bytes':near_size,'near_relative_segment':ds,'far_relative_segment':far_seg,'shadow_offset':shadow_off,'history_offset':history_off,'far_bytes':12288,'far_end_linear':far_end,'stack_end_linear':stack_end,'loaded_module_bytes':module_bytes,'minimum_allocated_module_bytes':allocated,'retained_parent_paragraphs':retained+16,'far_pointer_relocations_verified':True,**extra}

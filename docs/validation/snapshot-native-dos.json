@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "fdcc00355ace42b426cc320d779dc51c0b3ae8a0d47abf3a7bac3973417f69c9",
+  "scope": "Actual8086 DOS source-only native row copy/selector and snapshot writer: attribute removal,NULspace,trailingtrim,emptyrow,CRLF,status1Ah patch,append,keyboardwrapper,openfailure. Memory-FILE/UI are explicit diagnostic boundaries; real checked file ownership is separate."
+}

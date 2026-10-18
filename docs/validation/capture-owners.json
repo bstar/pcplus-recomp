@@ -1,0 +1,114 @@
+{
+  "passed": true,
+  "checks": {
+    "DOS_exits": true,
+    "NORMAL": true,
+    "GUARDS": true,
+    "CAPKEEP": true,
+    "CAPDROP": true,
+    "SNAPKEEP": true,
+    "SNAPDROP": true,
+    "TEXT.LOG": true,
+    "SNAP.BIN": true,
+    "SAME.LOG": true,
+    "INDEPEND.BIN": true,
+    "DATA/INNER.LOG": true
+  },
+  "cases": {
+    "NORMAL": [
+      "PASS capture first initialization cannot touch snapshot dirty BSS",
+      "PASS actual capture exclusively opens normalized file",
+      "PASS snapshot initialization cannot reset or close active capture",
+      "PASS both actual DOS handles write exact independent binary files",
+      "PASS closing snapshot once leaves capture alive until its own close",
+      "PASS new live canonical identity acquired",
+      "PASS actual DOS Truename catches case relative drive-relative rooted and absolute aliases without snapshot changes",
+      "PASS other-owner path snapshot cannot become input alias",
+      "PASS different canonical identity still opens concurrently",
+      "PASS cross-owner data snapshot alias rejection leaves both active results unchanged",
+      "PASS resolved close releases canonical lock for other owner append",
+      "PASS nested file opened before current-directory change",
+      "PASS actual changed-current-directory aliases resolve to existing live nested identity",
+      "PASS canonical handle remains exact after cwd change and releases after close",
+      "CASES 14"
+    ],
+    "GUARDS": [
+      "PASS capture first initialization cannot touch snapshot dirty BSS",
+      "PASS snapshot first initialization leaves initialized capture unchanged",
+      "PASS capture opens first real owner",
+      "PASS canonical relative drive-relative rooted absolute aliases collide before attrs or acquisition",
+      "PASS canonical error malformed empty or nonabsolute identity fails closed without disturbing live owner",
+      "PASS canonical error malformed empty or nonabsolute identity fails closed without disturbing live owner",
+      "PASS canonical error malformed empty or nonabsolute identity fails closed without disturbing live owner",
+      "PASS canonical error malformed empty or nonabsolute identity fails closed without disturbing live owner",
+      "PASS second independent file acquires different descriptor",
+      "PASS both owners protect both public snapshots from input aliasing",
+      "PASS independent writes and closing capture do not close snapshot",
+      "PASS independent physical files and per-owner counters remain exact",
+      "PASS both resolved cleanup calls cannot reclose either physical handle",
+      "PASS closed identity releases exclusion for other owner append",
+      "CASES 14"
+    ],
+    "CAPKEEP": [
+      "PASS capture first initialization cannot touch snapshot dirty BSS",
+      "PASS snapshot first initialization leaves initialized capture unchanged",
+      "PASS two owners hold independent physical handles before ambiguous close",
+      "PASS ambiguous close retains identity whether modeled kernel kept or released handle",
+      "PASS other owner remains usable despite independent ambiguous handle",
+      "PASS uncertain identity blocks every other-owner alias without reopening or closing",
+      "PASS initialization and cleanup cannot forget or retry uncertain owner",
+      "PASS uncertain owner stays untouched while other closes its new handle instance once",
+      "CASES 8"
+    ],
+    "CAPDROP": [
+      "PASS capture first initialization cannot touch snapshot dirty BSS",
+      "PASS snapshot first initialization leaves initialized capture unchanged",
+      "PASS two owners hold independent physical handles before ambiguous close",
+      "PASS ambiguous close retains identity whether modeled kernel kept or released handle",
+      "PASS other owner remains usable despite independent ambiguous handle",
+      "PASS uncertain identity blocks every other-owner alias without reopening or closing",
+      "PASS initialization and cleanup cannot forget or retry uncertain owner",
+      "PASS uncertain owner stays untouched while other closes its new handle instance once",
+      "CASES 8"
+    ],
+    "SNAPKEEP": [
+      "PASS capture first initialization cannot touch snapshot dirty BSS",
+      "PASS snapshot first initialization leaves initialized capture unchanged",
+      "PASS two owners hold independent physical handles before ambiguous close",
+      "PASS ambiguous close retains identity whether modeled kernel kept or released handle",
+      "PASS other owner remains usable despite independent ambiguous handle",
+      "PASS uncertain identity blocks every other-owner alias without reopening or closing",
+      "PASS initialization and cleanup cannot forget or retry uncertain owner",
+      "PASS uncertain owner stays untouched while other closes its new handle instance once",
+      "CASES 8"
+    ],
+    "SNAPDROP": [
+      "PASS capture first initialization cannot touch snapshot dirty BSS",
+      "PASS snapshot first initialization leaves initialized capture unchanged",
+      "PASS two owners hold independent physical handles before ambiguous close",
+      "PASS ambiguous close retains identity whether modeled kernel kept or released handle",
+      "PASS other owner remains usable despite independent ambiguous handle",
+      "PASS uncertain identity blocks every other-owner alias without reopening or closing",
+      "PASS initialization and cleanup cannot forget or retry uncertain owner",
+      "PASS uncertain owner stays untouched while other closes its new handle instance once",
+      "CASES 8"
+    ]
+  },
+  "binaries": {
+    "OWNERS.EXE": "e6eeba665addeb0f7003429f2fe516f6774c7a5bde3af84c6ee7e215bc783a41",
+    "OWFAULT.EXE": "9f1197227181c02a127504f5fdfb18388b5c1df55fd92814413b843fc104662d"
+  },
+  "sources": {
+    "src/capture/capture_file.c": "9951fec4a6342306e40914a741f9180d17019b70f250b83d35d763b0ac2b08c1",
+    "src/capture/capture_file.h": "10c75f54969e9e9984b4830ce82b58ca7ab653c80397e12debd659a157f91002",
+    "src/capture/capture_fs.c": "6b5a106afaba8944e5032ce44777aa18d84d16e2cb07f64fe14bef5609891d13",
+    "src/capture/capture_fs.h": "01b6f4a9fea9f8d86a9bbe9448214e3ce78b1dc8f91b4af382ec0f14e5efb5cd",
+    "standalone/capture_owners_host.c": "c9db0a61bed27d268c33803f2b799e710754c07ac423a5c03a1d7932f0873262",
+    "standalone/check_capture_owners.py": "02175863de4b00554a8ba2bc6290d0a509878ba91235db4838ddd2f12404f026"
+  },
+  "static_state_bytes": 460,
+  "snapshot_abi_bytes": 96,
+  "owner_descriptor_bytes": 134,
+  "minimum_kernel_contract": "DOS3+ INT21/60h canonical identity into128-byte buffer; exclusive NEW INT21/5Bh; APPEND write-only3Dh and samehandle4202h",
+  "scope": "Actual DOSBox-X8086 two independent checked binary owners, relative/drive-relative/absolute/current-directory canonical collision tests; compiled kernel faults for malformed identities and ambiguous close on either owner whether kernel kept/released handle. DOS canonical identity is not an external-process lock, host-mount/inode proof or concurrent namespace-remapping guarantee."
+}

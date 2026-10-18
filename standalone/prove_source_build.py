@@ -11,7 +11,7 @@ for raw in sorted(set(paths)):
  if not raw:continue
  rel=Path(os.fsdecode(raw))
  if rel.parts[0] in excluded or '__pycache__' in rel.parts:continue
- if rel.suffix.lower() in {'.exe','.com','.obj','.bin','.zip','.img','.dtp','.cfg','.pyc','.db','.gpr','.gzf','.rep'}:raise AssertionError(f'Unexpected artifact in public-source list: {rel}')
+ if rel.suffix.lower() in {'.exe','.com','.obj','.o','.bin','.zip','.img','.dtp','.cfg','.pyc','.db','.gpr','.gzf','.rep'}:raise AssertionError(f'Unexpected artifact in public-source list: {rel}')
  source=ROOT/rel
  assert source.is_file() and not source.is_symlink(),rel
  data=source.read_bytes();target=SNAP/rel;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data);target.chmod(source.stat().st_mode)
@@ -22,14 +22,16 @@ snapshot={'source_checkout':str(SNAP),'files':files,'file_count':len(files),'sha
 (OUT/'snapshot.json').write_text(json.dumps(snapshot,indent=2)+'\n')
 builds=['terminal','config_dos','config_replace','config_abi','ui_windows','modem_commands','modem_responses','modem_send','directory_dial','directory_browser','directory_editor','directory_accounting','keyboard_mapping','keyboard_detection','line_edit','meta_keys','character_edit','process','program_exec','terminal_reset','transfer_blocks','transfer_receive','transfer_send','transfer_files','transfer_session','transfer_uart','download_file','transfer_session_composite','transfer_storage','upload_file','transfer_metadata','batch_header']
 # All commands execute inside the fresh checkout's pinned Nix shell.
+builds.append('snapshot')
 program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/build_{name}.py'],check=True)\n" for name in builds)
-owner_checks=['standalone/check_batch_download.py','standalone/check_batch_upload.py','standalone/check_capture_file.py','standalone/check_capture_session.py']
+owner_checks=['standalone/check_batch_download.py','standalone/check_batch_upload.py','standalone/check_capture_file.py','standalone/check_capture_session.py','standalone/check_capture_owners.py']
 program+=''.join(f"subprocess.run(['python3',{name!r}],check=True)\n" for name in owner_checks)
 with (OUT/'build.log').open('w') as log:
  subprocess.run([str(SNAP/'tools/dev'),'--command','python3','-c',program],cwd=SNAP,stdout=log,stderr=log,check=True,timeout=300)
 outputs=['terminal/TERMINAL.EXE','config-dos/CONFIG.EXE','config-dos/CFGFAULT.EXE','config-replace/REPLACE.EXE','config-replace/REPFAULT.EXE','config-abi/ABI.EXE','ui-windows/WINDOWS.EXE','modem-commands/MODEMCMD.EXE','modem-responses/MODEMRSP.EXE','modem-send/MODEMSND.EXE','directory-dial/DIRDIAL.EXE','directory-browser/BROWSER.EXE','directory-editor/EDITOR.EXE','directory-accounting/DIRSTATS.EXE','keyboard-mapping/MAPPING.EXE','keyboard-detection/KBDMODE.EXE','line-edit/LINES.EXE','meta-keys/METAKEYS.EXE','character-edit/CHAREDIT.EXE','process/PROCESS.EXE','process/PROGRAM.EXE','process/CHILD.COM','program-exec/EXECUTOR.EXE','program-exec/CHILD.COM','terminal-reset/RESET.EXE','transfer-blocks/BLOCKS.EXE','transfer-receive/RECEIVE.EXE','transfer-send/SEND.EXE','transfer-files/FILES.EXE','transfer-session/SESSION.EXE','transfer-uart/TUART.EXE','download-file/DOWNLOAD.EXE','download-file/DLFAULT.EXE','transfer-session-composite/TRANSFER.EXE','transfer-storage/TRANSFER.EXE','upload-file/UPLOAD.EXE','upload-file/UPFAULT.EXE','transfer-metadata/METADATA.EXE','batch-header/HEADER.EXE']
 outputs += ['batch-download/BATCHDL.EXE','batch-download/BDFAULT.EXE','batch-upload/BATCH.EXE','batch-upload/BUFAULT.EXE']
 outputs += ['capture-file/CAPTURE.EXE','capture-file/CAPFAULT.EXE','capture-session/CAPSESS.EXE','capture-session/CSFAULT.EXE']
+outputs += ['snapshot/SNAPSHOT.EXE','capture-owners/OWNERS.EXE','capture-owners/OWFAULT.EXE']
 results={}
 for rel in outputs:
  path=SNAP/'build'/rel;workspace=ROOT/'build'/rel

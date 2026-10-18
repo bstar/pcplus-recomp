@@ -61,6 +61,7 @@ terminal:
 	python3 standalone/build_terminal.py
 
 test-terminal: terminal
+	python3 standalone/check_terminal_snapshot_live.py
 	python3 standalone/check_terminal_capture_live.py
 	python3 standalone/check_far_storage_live.py
 	python3 standalone/test_far_storage_dos.py
@@ -219,6 +220,16 @@ test-batch-header: batch-header
 
 .PHONY: test-batch-download test-batch-upload test-terminal-ymodem-live
 .PHONY: test-capture-file test-capture-session
+.PHONY: test-capture-owners snapshot test-snapshot
+all: snapshot
+test: test-capture-owners test-snapshot
+snapshot:
+	python3 standalone/build_snapshot.py
+test-snapshot: snapshot
+	python3 standalone/check_snapshot.py
+	python3 standalone/test_snapshot_dos.py
+test-capture-owners:
+	python3 standalone/check_capture_owners.py
 test-capture-file:
 	python3 standalone/check_capture_file.py
 test-capture-session:

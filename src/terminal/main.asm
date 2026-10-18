@@ -27,6 +27,7 @@ extern _terminal_upload_initialize
 extern _terminal_batch_initialize
 extern _capture_session_initialize,_capture_session_shutdown
 extern terminal_capture_poll
+extern _snapshot_file_initialize,terminal_snapshot_shutdown
 extern terminal_connection_start,terminal_connection_receive
 extern connection_state,connection_result
 ; Open Watcom small-code consistency marker for the near-C DOS IO subset.
@@ -47,6 +48,7 @@ _small_code_:
  call _terminal_upload_initialize
  call _terminal_batch_initialize
  call _capture_session_initialize
+ call _snapshot_file_initialize
  pop ax
  call terminal_parse_options
  jnc .configured
@@ -232,6 +234,17 @@ terminal_shutdown:
  mov byte [hardware_active],0
 .exit:
  call terminal_transfer_shutdown
+ call terminal_snapshot_shutdown
+ or ax,ax
+ jz .snapshot_closed
+ cmp word [terminal_exit_code],0
+ jne .snapshot_message
+ mov word [terminal_exit_code],12
+.snapshot_message:
+ mov dx,snapshot_failed
+ mov ah,9
+ int 0x21
+.snapshot_closed:
  call _capture_session_shutdown
  or ax,ax
  jz .capture_closed
@@ -290,6 +303,7 @@ flow_cleanup_failed: db 13,10,'Could not resume software flow before exit.',13,1
 macro_failed: db 13,10,'TEXT action timed out; terminal stopped.',13,10,'$'
 accounting_failed: db 13,10,'Call statistics save needs attention. Check directory recovery files.',13,10,'$'
 capture_failed: db 13,10,'Capture failed; partial log retained. Check free space and file access.',13,10,'$'
+snapshot_failed: db 13,10,'Screen snapshot failed; partial file retained.',13,10,'$'
 configuration_messages: dw configuration_io,configuration_serial,configuration_flow
  dw configuration_profile,configuration_display,configuration_argument,configuration_modem
  dw configuration_directory

@@ -5,6 +5,7 @@ CPU 8086
 SEGMENT _TEXT public class=CODE use16
 extern process_psp,process_keep_paragraphs,process_minimum_paragraphs
 extern terminal_stack_top,terminal_far_storage_end,_program_execute
+extern terminal_snapshot_image_end
 extern terminal_clock_ticks,terminal_macro_tx_epoch,terminal_tx_count
 extern terminal_quit,terminal_exit_code,connection_state
 extern uart_port_lsr,uart_port_thr,uart_port_lcr,uart_port_ier,uart_port_mcr
@@ -40,6 +41,15 @@ terminal_program_initialize:
  jae .highest
  mov ax,dx
 .highest:
+ mov dx,ax
+ mov ax,seg terminal_snapshot_image_end
+ mov bx,terminal_snapshot_image_end
+ call .paragraphs
+ add ax,bx
+ cmp ax,dx
+ jae .snapshot_highest
+ mov ax,dx
+.snapshot_highest:
  sub ax,[process_psp]
  mov [process_keep_paragraphs],ax
  mov [process_minimum_paragraphs],ax

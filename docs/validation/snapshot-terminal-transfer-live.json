@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
+  "inputs": 44,
+  "cases": [
+    {
+      "case": "SOFT-and-modem-owned-connections-reject-before-stage",
+      "inputs": 9,
+      "passed": true
+    },
+    {
+      "case": "actual-native-CRC128-1024-mixed-and-empty-EOT-ACK-after-checked-install",
+      "inputs": 4,
+      "passed": true
+    },
+    {
+      "case": "physical-CTS-THRE-drain-bound-lowword-wrap-and-midnight",
+      "inputs": 6,
+      "passed": true
+    },
+    {
+      "case": "progressing300baud128byte-drain-exceeds36ticks-with-wrap-midnight",
+      "inputs": 3,
+      "passed": true
+    },
+    {
+      "case": "outer-context-cancel-carrier-and-native-TX-stall-before-native-setjmp",
+      "inputs": 15,
+      "passed": true
+    },
+    {
+      "case": "whole-owner-progress-timeout-full-BIOS-ticks-wrap-midnight",
+      "inputs": 3,
+      "passed": true
+    },
+    {
+      "case": "DOS-shortwrite-write-close-install-faults-never-publish-final-ACK",
+      "inputs": 4,
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked transfer owner/native receiver/UI/storage/UARTISR; hardware FIFO/ports/BIOS ticks+keys/video and DOS filesystem kernel only modeled. No product callback patched, skipped or substituted.",
+  "limitations": [
+    "Synthetic CRC128/1024/mixed/empty peers; not full protocol or actual DOS/physical modem proof.",
+    "Synthetic clock advances one BIOSdaytick per eight clock reads; IRQ and busy-loop timing is modeled, and deadlines are checked using actual full daytick arithmetic."
+  ]
+}

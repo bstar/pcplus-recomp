@@ -13,6 +13,15 @@ static void check(int yes,const char *name)
 #ifdef CF_FAULT
 static unsigned fault,exists,attributes,owned,opens,seeks,writes,closes,ops;
 static unsigned long position,size;
+unsigned capture_fs_canonical(const char *path,char *out)
+{
+ ++ops;if(fault==12)return 5;if(fault==13){memset(out,'A',128);return 0;}if(fault==14){out[0]=0;return 0;}
+ if(path[1]==':'){
+  if(path[2]=='\\')strcpy(out,path);
+  else{out[0]=path[0];out[1]=':';out[2]='\\';strcpy(out+3,path+2);}
+ }else if(path[0]=='\\'){strcpy(out,"C:");strcat(out,path);}
+ else{strcpy(out,"C:\\");strcat(out,path);}return 0;
+}
 unsigned capture_fs_attributes(const char *path,unsigned *attr)
 {(void)path;++ops;*attr=attributes;if(fault==1)return 5;return exists?0:2;}
 unsigned capture_fs_create(const char *path,int *handle)
@@ -41,6 +50,9 @@ static void faults(void)
 {
  unsigned i,before,previous;capture_file_snapshot saved;char longpath[65];
  memset(longpath,'A',64);longpath[64]=0;saved=capture_file_result;before=ops;check(capture_file_begin(0,CF_NEW)==CF_ARGUMENT && capture_file_begin(longpath,CF_NEW)==CF_ARGUMENT && capture_file_begin(capture_file_result.path,CF_NEW)==CF_ARGUMENT && capture_file_begin("LOG.BIN",0)==CF_ARGUMENT && capture_file_begin("LOG.BIN",3)==CF_ARGUMENT && !memcmp(&saved,&capture_file_result,sizeof(saved)) && ops==before,"invalid modes path capacity null and snapshot aliases reject unchanged before IO");
+ model(12,0,0);before=opens;check(capture_file_begin("LOG.BIN",CF_NEW)==CF_INSPECT && capture_file_result.dos_error==5 && opens==before,"canonical DOS error prevents any file acquisition");
+ model(13,0,0);before=opens;check(capture_file_begin("LOG.BIN",CF_NEW)==CF_INSPECT && capture_file_result.dos_error==13 && opens==before,"unterminated canonical identity rejected without open");
+ model(14,0,0);before=opens;check(capture_file_begin("LOG.BIN",CF_NEW)==CF_INSPECT && capture_file_result.dos_error==13 && opens==before,"empty canonical identity rejected without open");
  model(1,0,0);check(capture_file_begin("LOG.BIN",CF_NEW)==CF_INSPECT && capture_file_result.dos_error==5 && !owned,"attribute DOS error prevents create");
  model(2,0,0);check(capture_file_begin("LOG.BIN",CF_NEW)==CF_OPEN && capture_file_result.dos_error==5 && !owned,"exclusive create error owns no handle");
  model(11,0,0);check(capture_file_begin("LOG.BIN",CF_NEW)==CF_CONFLICT && exists && !owned,"exclusive create race cannot overwrite competing file");

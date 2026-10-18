@@ -8,6 +8,8 @@ SEGMENT _DATA public align=16 class=DATA use16
 global ui_window_rows,ui_flow_region_cells,ui_flow_video_base
 global ui_flow_coordinate_base,ui_flow_suppressed,ui_flow_attribute
 ui_window_rows: dw 25
+global snapshot_video_columns
+snapshot_video_columns:
 ui_flow_region_cells: dw 80
 ui_flow_video_base: dw 0x0f00
 ui_flow_coordinate_base: dw 0x1800
@@ -97,6 +99,8 @@ screen_last_column:
 global csi_column_count
 global screen_attribute_row_bytes
 csi_column_count:
+global snapshot_shadow_columns
+snapshot_shadow_columns:
 screen_attribute_row_bytes:
  dw 80
 global csi_wrap_pending
@@ -157,6 +161,8 @@ global screen_columns
 screen_columns:
  dw 80
 global screen_video_row_bytes
+global snapshot_video_stride
+snapshot_video_stride:
 screen_video_row_bytes:
  dw 160
 global screen_viewport_right
@@ -201,6 +207,8 @@ global ansi_charset_g1_flag_graphics
 ansi_charset_g1_flag_graphics:
  dw 0
 global screen_viewport_enabled
+global snapshot_shadow_enabled
+snapshot_shadow_enabled:
 screen_viewport_enabled:
  dw 0
 global csi_scroll_top
@@ -256,7 +264,11 @@ erase_protection_mode: dw 0
 erase_cell_count: dw 2000
 global erase_attribute_values_base,erase_shadow_offset,erase_shadow_segment
 erase_attribute_values_base: dw erase_attribute_values
+global snapshot_shadow_offset
+snapshot_shadow_offset:
 erase_shadow_offset: dw erase_shadow_cells
+global snapshot_shadow_segment
+snapshot_shadow_segment:
 erase_shadow_segment: dw seg erase_shadow_cells
 global terminal_dec_keys,terminal_tab_stops,terminal_keymap,terminal_keymap_end,terminal_mode_372c
 terminal_dec_keys: dw 1
@@ -312,10 +324,14 @@ render_linefeed_suppression_enabled: dw 0
 global render_input_character
 render_input_character: dw 0
 global text_video_segment
+global snapshot_video_segment
+snapshot_video_segment:
 text_video_segment: dw 0xb800
 global text_bios_output
 text_bios_output: dw 0
 global text_cga_status_port
+global snapshot_cga_status_port
+snapshot_cga_status_port:
 text_cga_status_port: dw 0
 global scroll_unimplemented_service
 scroll_unimplemented_service: dw 0

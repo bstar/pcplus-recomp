@@ -15,6 +15,7 @@ typedef struct capture_file_snapshot {
  char path[64];
 } capture_file_snapshot;
 extern capture_file_snapshot capture_file_result;
+extern capture_file_snapshot snapshot_file_result;
 /* DATA cookie initializes dirty assembly-host BSS once. Repeated initialization
  * preserves resolved history and refuses open/ambiguous ownership unchanged. */
 unsigned __cdecl capture_file_initialize(void);
@@ -40,4 +41,17 @@ unsigned __cdecl capture_file_append(const void *data,unsigned count);
 unsigned __cdecl capture_file_close(void);
 /* Idle cleanup is harmless; all prior fatal statuses remain observable. */
 unsigned __cdecl capture_file_cleanup(void);
+/* Second fixed independent owner with the same96-byte ABI and statuses.
+ * Both owners protect input spans against both snapshots and all descriptors.
+ * DOS3+21h/60h canonicalization precedes IO; an open/uncertain other owner of
+ * the same canonical DOS identity rejects CF_BUSY without mutating either.
+ * The admitted absolute identity is used for subsequent filesystem calls.
+ * This is not an external process lock or a host-mount/hardlink identity proof.
+ * Runtime drive remapping, concurrent replacement and power loss are excluded. */
+unsigned __cdecl snapshot_file_initialize(void);
+unsigned __cdecl snapshot_file_validate_path(const char *path,unsigned allow_empty);
+unsigned __cdecl snapshot_file_begin(const char *path,unsigned mode);
+unsigned __cdecl snapshot_file_append(const void *data,unsigned count);
+unsigned __cdecl snapshot_file_close(void);
+unsigned __cdecl snapshot_file_cleanup(void);
 #endif

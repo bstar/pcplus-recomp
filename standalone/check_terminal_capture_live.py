@@ -21,6 +21,12 @@ class Capture(LiveTransfer):
   assert self.call('_capture_session_initialize')==0
  def interrupt(self,u,number,data):
   ax=u.reg_read(UC_X86_REG_AX);ah=ax>>8
+  if number==0x21 and ax==0x6000:
+   source=self.path(u.reg_read(UC_X86_REG_DS),u.reg_read(UC_X86_REG_SI))
+   absolute=source if len(source)>2 and source[1:3]==':\\' else 'C:\\'+source.lstrip('\\')
+   u.mem_write(u.reg_read(UC_X86_REG_ES)*16+u.reg_read(UC_X86_REG_DI),absolute.encode()+b'\0')
+   u.reg_write(UC_X86_REG_AX,0);self.set_carry(False)
+   self.capture_calls.append((0x60,source,0,0));return
   if number==0x21 and ah==0x43:
    path=self.path(u.reg_read(UC_X86_REG_DS),u.reg_read(UC_X86_REG_DX))
    if path.startswith('Z:'):return LiveProgram.interrupt(self,u,number,data)
@@ -38,10 +44,13 @@ class Capture(LiveTransfer):
   elif ah==0x5b:
    if name in self.files:error=80
    else:
-    self.files[name]=bytearray();answer=5;self.handles[5]=name;self.positions[5]=0
+    self.files[name]=bytearray();answer=next(h for h in range(5,64) if h not in self.handles)
+    self.handles[answer]=name;self.positions[answer]=0
   elif ah==0x3d:
    if name not in self.files:error=2
-   else:answer=5;self.handles[5]=name;self.positions[5]=0
+   else:
+    answer=next(h for h in range(5,64) if h not in self.handles)
+    self.handles[answer]=name;self.positions[answer]=0
   elif ah==0x42:
    if name is None:error=6
    else:
@@ -64,6 +73,9 @@ class Capture(LiveTransfer):
   pointer=self.offset('terminal_stack_top')+16
   self.uc.mem_write(self.data_base+pointer,path+b'\0')
   return self.call('_capture_session_begin',[pointer,tick&65535,tick>>16])
+ def path(self,segment,offset):
+  name=super().path(segment,offset)
+  return name[3:] if name.startswith('C:\\') else name
  def log(self,data):
   for value in data:self.call('terminal_log_character',[value])
  def contents(self,name='LOG.TXT'):return bytes(self.files[name])

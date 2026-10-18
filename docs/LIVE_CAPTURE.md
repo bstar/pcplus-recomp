@@ -3,8 +3,10 @@
 The maintained DOS terminal now connects the recovered132-byte resident09b6
 logger to a source-built DOS file owner. This implements processed text capture,
 append, pause/resume and checked shutdown. The complete F10 gate also requires
-raw monitoring, screen snapshots, printer output and script integration; those
-surfaces remain open. [Native inventory](CAPTURE_NATIVE_INVENTORY.md) records the
+raw monitoring, complete screen-snapshot modes, printer output and script
+integration; those surfaces remain open. A maintained checked
+[Alt-G screen-file path](LIVE_SNAPSHOT.md) now works alongside text capture.
+[Native inventory](CAPTURE_NATIVE_INVENTORY.md) records the
 REA evidence, original key routes and differences between those surfaces.
 
 Build with `./tools/dev --command python3 standalone/build_terminal.py`, then run
@@ -46,6 +48,14 @@ wildcards, traversal and invalid/overflowing near spans are rejected. Existing
 bytes, including DOS1Ah EOF markers, remain byte-for-byte intact: the unresolved
 native48a1/text-EOF behavior is not silently guessed. Append is nontransactional;
 there is no rollback, concurrent-writer exclusion or crash-atomic guarantee.
+
+The snapshot feature now shares this implementation through a second independent
+96-byte owner. Both input guards protect both owners' records and descriptors.
+Checked DOS Truename admission prevents a text log and `PCPLUS.SCR` from opening
+the same DOS file through different spellings; open/held and uncertain owners
+retain that exclusion. The admitted absolute identity is used for open. This
+requires DOS3 or newer and does not identify host mount aliases or lock out
+external writers. Capture itself stays open/held during a separate screen save.
 
 The256-byte application buffer flushes when full, after18 BIOS ticks, before a
 hold/close/transfer, and at shutdown. Full BIOS day ticks handle low-word wrap

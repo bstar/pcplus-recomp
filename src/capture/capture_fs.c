@@ -1,6 +1,13 @@
 #include "capture_fs.h"
 #include <dos.h>
 #include <fcntl.h>
+unsigned capture_fs_canonical(const char *path,char *absolute128)
+{
+ union REGS in,out;struct SREGS seg;
+ segread(&seg);seg.es=seg.ds;
+ in.x.ax=0x6000;in.x.cx=0;in.x.si=(unsigned)path;in.x.di=(unsigned)absolute128;
+ intdosx(&in,&out,&seg);return out.x.cflag?out.x.ax:0;
+}
 unsigned capture_fs_attributes(const char *path,unsigned *attributes)
 {return _dos_getfileattr(path,attributes);}
 unsigned capture_fs_create(const char *path,int *handle)

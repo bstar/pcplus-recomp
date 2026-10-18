@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "binary_sha256": "6b69f9b0bd7a79a3123c3e0a20e35ca950ed807c406444fc2004010278ef4dc6",
+  "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
   "cases": [
     {
       "case": "actual-native09b6-CR-LF-FF-DEL-with-checked-text-translation",

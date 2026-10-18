@@ -17,6 +17,7 @@ extern terminal_program_pending,terminal_program_cancel
 extern terminal_transfer_start
 extern terminal_upload_start
 extern terminal_capture_toggle,terminal_capture_pause,terminal_capture_crlf,terminal_capture_flush
+extern terminal_snapshot_start
 global terminal_poll_io,terminal_enqueue_al,terminal_tick_low,terminal_clock_ticks
 global ansi_next_byte,ansi_unread_byte,csi_transmit_byte,csi_transmit_string
 
@@ -167,6 +168,8 @@ terminal_poll_io:
  ; the private application queue is disabled and BIOS has one foreground reader.
  call terminal_read_key
 .key_ready:
+ cmp ax,0x2200 ;Native Alt-G screen-file snapshot
+ je .snapshot
  cmp ax,0x6800 ;Native Alt-F1 capture toggle
  je .capture
  cmp ax,0x6900 ;Native Alt-F2 capture hold
@@ -249,6 +252,9 @@ terminal_poll_io:
  jmp .done
 .capture:
  call terminal_capture_toggle
+ jmp .done
+.snapshot:
+ call terminal_snapshot_start
  jmp .done
 .capture_pause:
  call terminal_capture_pause

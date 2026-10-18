@@ -57,7 +57,9 @@ both static extents. Alt-S also supports ordinary XMODEM/1K uploads through
 checked read-only DOS sources and actual-ACK progress. F2 selects maintained
 CRC YMODEM batch receive/send with checked per-file ownership and exact declared
 lengths. Alt-F1/F2 text capture now uses the native logger, a checked DOS append
-owner and serviced prompt; see `docs/LIVE_CAPTURE.md`. Physical modem and
+owner and serviced prompt; see `docs/LIVE_CAPTURE.md`. Alt-G appends a frozen
+80x25 screen to PCPLUS.SCR through an independent checked owner; see
+`docs/LIVE_SNAPSHOT.md`. Physical modem and
 remaining protocol/application gates remain open. See
 `docs/TRANSFER_INTEGRATION.md` and `docs/LIVE_UPLOAD.md` for ownership and evidence.
 
@@ -209,13 +211,24 @@ physical modem compatibility or close the remaining application gates below.
       134 session assertions, 24 linked logger/PROGRAM inputs and11 selected
       actual UART/DOS/UI cases pass on6b69f9b0. The initial readonly-denial
       shutdown bug and two fixture/oracle failures remain in the evidence.
-      Full F10 still requires printer, screen/shadow snapshots, raw monitoring,
-      complete settings/status UI, ASPECT and physical validation. See
+      The fd68875e checkpoint adds Alt-G screen append using381 recovered native
+      bytes and a private2000-byte far image. Its69 backend cases,134 capture
+      session assertions,60 owner assertions,31 linked snapshot inputs and
+      11 actual DOS snapshot cases pass; the11 DOS capture cases also pass again.
+      Canonical DOS paths prevent the two owners from opening the same file.
+      Native recovery passes24 original-instruction comparisons and an8086 DOS
+      diagnostic. A linked negative exposed an unbounded CGA notice-rendering
+      wait; unsupported CGA geometry now returns without entering that path.
+      Synchronet's current full-screen editor probe passes; ENiGMA still fails
+      Home/Insert despite correct outgoing bytes. Those failures remain visible.
+      Full F10 still requires printer, remaining snapshot/viewport modes, raw
+      monitoring, complete settings/status UI, ASPECT and physical validation. See
       `docs/CAPTURE_NATIVE_INVENTORY.md`, `docs/LIVE_CAPTURE.md` and
       `docs/validation/terminal-capture-dos.json`.
-      The fresh maintained-source snapshot now reproduces47 byte-identical
+      The fresh maintained-source snapshot now reproduces50 byte-identical
       component/diagnostic outputs, including the current interactive executable
-      and both capture test pairs, with originals/install/REA databases absent.
+      and capture/owner/native-screen diagnostics, with originals/install/REA
+      databases absent. This checkpoint does not close the full application gate.
 - [ ] Reconstruct scripting interfaces and required interpreter/compiler integration.
       Keyboard file structures and original TEXT caret/pause consumers are proved,
       and explicit global /T KEY import now supports bounded nonblocking TEXT.

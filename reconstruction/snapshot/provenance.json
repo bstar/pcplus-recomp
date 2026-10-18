@@ -1,0 +1,134 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "source": "writer.asm",
+      "start": "0x3496",
+      "end_exclusive": "0x353d",
+      "bytes": 167,
+      "source_file_offset": 18070,
+      "sha256": "25a650bd17aba7d58bf3e1571fe910b57fee2a6a64edd88df15f4bdca8cceb57",
+      "region": "resident"
+    },
+    {
+      "source": "row.asm",
+      "start": "0x3446",
+      "end_exclusive": "0x3496",
+      "bytes": 80,
+      "source_file_offset": 17990,
+      "sha256": "c3db6e64b2b7e006d57cbfb85e7a0018d12df0e0d97faaf8382b7fa3977d4bff",
+      "region": "resident"
+    },
+    {
+      "source": "copy.asm",
+      "start": "0x64b8",
+      "end_exclusive": "0x64fd",
+      "bytes": 69,
+      "source_file_offset": 30392,
+      "sha256": "988bbf0e1f413231c6333a7c37cdc4265055ce7eaf1a16ba486c003df8e40e36",
+      "region": "resident"
+    },
+    {
+      "source": "keyboard.asm",
+      "start": "0x1310",
+      "end_exclusive": "0x132e",
+      "bytes": 30,
+      "source_file_offset": 9488,
+      "sha256": "309a71407ee16ce27a83b6654c5fe1b7798ed6b74534c191c8987e94c346351a",
+      "region": "resident"
+    },
+    {
+      "source": "video_begin.asm",
+      "start": "0x77be",
+      "end_exclusive": "0x77d2",
+      "bytes": 20,
+      "source_file_offset": 35262,
+      "sha256": "2cc6e3631df4700f866b38ea1f726e830474355ea81536da84aca5593cd1ab0f",
+      "region": "resident"
+    },
+    {
+      "source": "video_end.asm",
+      "start": "0x77ae",
+      "end_exclusive": "0x77bd",
+      "bytes": 15,
+      "source_file_offset": 35246,
+      "sha256": "aeb0332b6f43a6fbd8a691b197b2036c863ea3c5832b0602ac5ae8e44024288d",
+      "region": "resident"
+    }
+  ],
+  "state": {
+    "0x7a8e": "snapshot_cga_status_port",
+    "0xcdfa": "snapshot_shadow_enabled",
+    "0x325a": "snapshot_shadow_columns",
+    "0x5dea": "snapshot_shadow_offset",
+    "0x5dec": "snapshot_shadow_segment",
+    "0x7a7a": "snapshot_video_stride",
+    "0x7a78": "snapshot_video_segment",
+    "0x3250": "snapshot_video_columns",
+    "0x7a74": "snapshot_rows",
+    "0x334c": "snapshot_special_row",
+    "0x42c0": "snapshot_status_pointer",
+    "0x4716": "snapshot_append_mode",
+    "0x1e5f": "snapshot_filename",
+    "0x4719": "snapshot_newline",
+    "0x2b3a": "snapshot_error_text"
+  },
+  "boundaries": {
+    "0x3496": "snapshot_write_original",
+    "0x3446": "snapshot_row_original",
+    "0x64b8": "snapshot_copy_original",
+    "0x1310": "snapshot_keyboard_original",
+    "0x841a": "snapshot_open",
+    "0x33f3": "snapshot_prepare_screen",
+    "0x31bb": "snapshot_status",
+    "0x8268": "program_strcpy",
+    "0x8d18": "program_strlen",
+    "0x8e88": "snapshot_puts",
+    "0x8318": "snapshot_close",
+    "0x6bb6": "snapshot_wait_key",
+    "0x2fb8": "snapshot_refresh",
+    "0x427f": "snapshot_error",
+    "0x77be": "snapshot_video_begin",
+    "0x77ae": "snapshot_video_end",
+    "0xdae": "snapshot_keyboard_state"
+  },
+  "supporting_evidence": [
+    {
+      "export": "analysis/pcplus-main/functions/0x13496-asm.json",
+      "evidence_id": "ev_68337647c17ff53945a61bc81e6e08247d7b411b28e586de927f3c7e7d559fa1"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x13446-asm.json",
+      "evidence_id": "ev_3e80115b63239dd2e9e663e183f115b211778ed0e7eec02a76c7b9c1ec6c7a9b"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x164b8-asm.json",
+      "evidence_id": "ev_073a04b35f90a84a7ea7dfa10db55bca00d442e74f9adfe4deee25ece4413bab"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x177be-asm.json",
+      "evidence_id": "ev_c43082a7dc48a9b3f0ae81f668650d020422ffdb6633b93dd20ecaa1aaef3a06"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x177ae-asm.json",
+      "evidence_id": "ev_ba097dc8042b5fdd581c14b780e0f3f2e177bfd405a026654fd88b209d83e7af"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x146ba-asm.json",
+      "evidence_id": "ev_6e176171671c861500f5bed692dae31976c63dc08cb85e82d04c617bf844009d"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x16d1a-asm.json",
+      "evidence_id": "ev_b69c16de3a282945866264390ca70dc20baf95e61a5d5edf2ff0fd3bee666688"
+    }
+  ],
+  "keyboard_provenance": "Original resident1310..132d decoded from SHA-verified EXE bytes, selected by verified DS44e0 scan22h entry. No saved REA function export for this wrapper.",
+  "reused_sources": [
+    "reconstruction/program_exec/strcpy.asm",
+    "reconstruction/program_exec/strlen.asm"
+  ],
+  "limitations": [
+    "Exact unbounded originals; no live checked file owner.",
+    "Native FILE/UI/video mode services remain explicit diagnostic boundaries; output geometry requires maintained validation."
+  ]
+}

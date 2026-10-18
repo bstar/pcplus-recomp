@@ -234,3 +234,14 @@ and emits all eight sequences, but fails Home positioning and Insert mode. It
 closes unsaved; the authoritative server session confirms no post. Both restore
 hardware and preserve the synthetic PRM. Earlier-runtime cases remain retained
 in `docs/validation/bbs-editors.json`; the editor aggregate remains false.
+
+## Screen-file checkpoint
+
+`editor-snapshot-final` repeats both actual DOS recipes on frozen
+`fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c`,
+after adding native row helpers, the private frozen screen and two checked file
+owners. COM2/19200/HARD is unchanged. Synchronet passes12 behavior and eight
+wire checks, including abort. ENiGMA enters the stock editor and emits all eight
+sequences but still fails Home/Insert behavior. It closes unsaved and the server
+records no post. Both preserve the synthetic PRM and restore hardware. The
+separate successful snapshot/capture tests do not make ENiGMA editing pass.

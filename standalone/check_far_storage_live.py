@@ -23,6 +23,7 @@ class FarProgram(SafeStack,LiveProgram):
   if n==0x21 and u.reg_read(UC_X86_REG_AX)>>8==0x4a:
    end=self.get('process_psp')*16+u.reg_read(UC_X86_REG_BX)*16
    assert end>=self.symbols['terminal_far_storage_end'],'EXEC freed owned far storage'
+   assert end>=self.symbols['terminal_snapshot_image_end'],'EXEC freed frozen screen storage'
   return super().interrupt(u,n,data)
 class FarReset(SafeStack,ResetLive):pass
 
@@ -38,6 +39,8 @@ def main():
   assert m.get('terminal_history_start')==(history&65535) and m.get('terminal_history_end')-m.get('terminal_history_start')==4096
   assert m.symbols['terminal_history_buffer']==shadow+8192 and m.symbols['terminal_far_storage_end']==shadow+12288
   assert shadow>=m.data_base+m.offset('terminal_stack_top')
+  assert m.get('terminal_snapshot_image_segment')*16+m.offset('terminal_snapshot_image')%16==m.symbols['terminal_snapshot_image']
+  assert m.symbols['terminal_snapshot_image_end']-m.symbols['terminal_snapshot_image']==2000
  check('actual-linker-far-relocations-and-full-storage-extents-outside-DGROUP',pointers)
  def native_far():
   m=FarReset();put(m,'erase_shadow_cells',b'\xa5'*8192);put(m,'terminal_history_buffer',b'\x5a'*4096);seg=m.get('erase_shadow_segment');off=m.get('erase_shadow_offset')
@@ -60,10 +63,12 @@ def main():
  check('real-RIS-far-shadow-clear-preserves-full-history',reset)
  def retain():
   m=FarProgram([0x1c0d]);shadow=bytes((i*13)%256 for i in range(8192));history=bytes((i*17)%256 for i in range(4096));put(m,'erase_shadow_cells',shadow);put(m,'terminal_history_buffer',history)
-  expected=(max(m.symbols['terminal_stack_top'],m.symbols['terminal_far_storage_end'])+15)//16-m.get('process_psp')
+  frozen=bytes((i*19)%256 for i in range(2000));put(m,'terminal_snapshot_image',frozen)
+  expected=(max(m.symbols['terminal_stack_top'],m.symbols['terminal_far_storage_end'],m.symbols['terminal_snapshot_image_end'])+15)//16-m.get('process_psp')
   assert m.get('process_keep_paragraphs')==m.get('process_minimum_paragraphs')==expected
   assert m.queue(b'OWNED.COM')==0;m.safe();assert len(m.children)==1 and 0x4a in m.calls
   assert read(m,'erase_shadow_cells',8192)==shadow and read(m,'terminal_history_buffer',4096)==history
+  assert read(m,'terminal_snapshot_image',2000)==frozen
   m.restored()
  check('real-PROGRAM-resize-EXEC-return-max-static-floor-and-full-far-canaries',retain)
  result={'passed':True,'binary_sha256':hashlib.sha256(a.binary.read_bytes()).hexdigest(),'cases':cases,'scope':'Actual linked far relocations, native far movers/history, maintained RIS and PROGRAM retained-memory initializer/EXEC path. Only BIOS/UART/DOS-kernel boundaries modeled; test stack uses actual linked STACK end. No product service replacement.'}
