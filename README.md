@@ -87,6 +87,12 @@ enter an existing directory, such as `D:\RECV\`. For uploads, enter a DOS8.3
 filespec, such as `D:\SEND\*.BIN`. Select YMODEM on the BBS as well. Files are
 checked individually; earlier installed files survive a later batch failure.
 See [batch transfer behavior](docs/LIVE_YMODEM.md).
+Alt-F1 opens an append-text capture (empty Enter uses `PCPLUS.LOG`) or closes
+the current log; Alt-F2 pauses/resumes and Alt-F3 toggles CR-adds-LF. Capture
+uses checked DOS writes and preserves partial files on errors; a genuine
+write/close failure reports exit12 unless an earlier error takes precedence.
+PROGRAM closes capture before launching a child. See
+[capture controls, exact bytes and limits](docs/LIVE_CAPTURE.md).
 Global `/T:MYKEYS.KEY` imports ten Meta actions; Alt-1..Alt-0 execute
 nonblocking TEXT or maintained PROGRAM actions. PROGRAM passes a validated
 1..51-byte stored command through COMSPEC `/c`, suspends terminal UART ownership

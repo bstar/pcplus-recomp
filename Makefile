@@ -61,6 +61,7 @@ terminal:
 	python3 standalone/build_terminal.py
 
 test-terminal: terminal
+	python3 standalone/check_terminal_capture_live.py
 	python3 standalone/check_far_storage_live.py
 	python3 standalone/test_far_storage_dos.py
 	python3 standalone/check_terminal_transfer_live.py
@@ -145,7 +146,7 @@ test-parser: parser
 	python3 standalone/check_ansi.py
 	python3 standalone/test_parser_dos.py
 
-test: test-transfer-metadata test-batch-header test-batch-download test-batch-upload test-upload-file test-transfer-session-composite test-transfer-storage test-download-file test-process test-driver test-parser test-keyboard $(addprefix test-,$(MODULES)) test-keyboard-mapping-raw test-keymap test-keymap-dos test-key-actions-dos test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services test-config test-modem-import test-config-dos test-config-replace test-config-abi test-directory test-directory-dos test-directory-browser test-directory-editor test-directory-replace test-ui-flow test-terminal test-terminal-ymodem-live test-bbs-modem
+test: test-capture-file test-capture-session test-transfer-metadata test-batch-header test-batch-download test-batch-upload test-upload-file test-transfer-session-composite test-transfer-storage test-download-file test-process test-driver test-parser test-keyboard $(addprefix test-,$(MODULES)) test-keyboard-mapping-raw test-keymap test-keymap-dos test-key-actions-dos test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services test-config test-modem-import test-config-dos test-config-replace test-config-abi test-directory test-directory-dos test-directory-browser test-directory-editor test-directory-replace test-ui-flow test-terminal test-terminal-ymodem-live test-bbs-modem
 	python3 standalone/test_serial.py
 
 test-parser-compat: parser compat
@@ -217,6 +218,11 @@ test-batch-header: batch-header
 	python3 standalone/check_batch_header.py
 
 .PHONY: test-batch-download test-batch-upload test-terminal-ymodem-live
+.PHONY: test-capture-file test-capture-session
+test-capture-file:
+	python3 standalone/check_capture_file.py
+test-capture-session:
+	python3 standalone/check_capture_session.py
 test-batch-download:
 	python3 standalone/check_batch_download.py
 

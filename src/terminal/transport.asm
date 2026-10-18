@@ -16,6 +16,7 @@ extern terminal_macro_tx_allowed,terminal_macro_tx_epoch,terminal_defer_key,term
 extern terminal_program_pending,terminal_program_cancel
 extern terminal_transfer_start
 extern terminal_upload_start
+extern terminal_capture_toggle,terminal_capture_pause,terminal_capture_crlf,terminal_capture_flush
 global terminal_poll_io,terminal_enqueue_al,terminal_tick_low,terminal_clock_ticks
 global ansi_next_byte,ansi_unread_byte,csi_transmit_byte,csi_transmit_string
 
@@ -148,36 +149,7 @@ terminal_poll_io:
  push si
  push di
  push es
- cmp word [terminal_quit],0
- jne .done
- call terminal_connection_poll
- cmp word [terminal_quit],0
- jne .done
- call uart_poll_flow
- mov word [terminal_macro_tx_allowed],0
- cmp word [connection_state],0
- je .transmit
- cmp word [connection_state],6
- jne .macro
-.transmit:
- cmp word [terminal_tx_count],0
- je .grant_macro
- mov bx,[terminal_tx_head]
- mov al,[terminal_tx_buffer+bx]
- call uart_try_write
- jc .macro
- ; try_write preserves AX/DX; keep head lookup independent of future API changes.
- mov bx,[terminal_tx_head]
- inc bx
- and bx,1023
- mov [terminal_tx_head],bx
- dec word [terminal_tx_count]
- inc word [terminal_macro_tx_epoch]
- jmp .macro
-.grant_macro:
- mov word [terminal_macro_tx_allowed],1
-.macro:
- call terminal_macro_poll
+ call terminal_poll_serial
  cmp word [terminal_quit],0
  jne .done
 .keyboard:
@@ -195,6 +167,12 @@ terminal_poll_io:
  ; the private application queue is disabled and BIOS has one foreground reader.
  call terminal_read_key
 .key_ready:
+ cmp ax,0x6800 ;Native Alt-F1 capture toggle
+ je .capture
+ cmp ax,0x6900 ;Native Alt-F2 capture hold
+ je .capture_pause
+ cmp ax,0x6a00 ;Native Alt-F3 CR-adds-LF
+ je .capture_crlf
  cmp ax,0x1300 ;Alt-R: exclusive ordinaryXMODEM receive owner
  je .receive_file
  cmp ax,0x1f00 ;Alt-S: exclusive ordinaryXMODEM send owner
@@ -269,10 +247,21 @@ terminal_poll_io:
  mov word [terminal_exit_code],4
  mov word [terminal_quit],1
  jmp .done
+.capture:
+ call terminal_capture_toggle
+ jmp .done
+.capture_pause:
+ call terminal_capture_pause
+ jmp .done
+.capture_crlf:
+ call terminal_capture_crlf
+ jmp .done
 .receive_file:
+ call terminal_capture_flush
  call terminal_transfer_start
  jmp .done
 .send_file:
+ call terminal_capture_flush
  call terminal_upload_start
  jmp .done
 .quit:
@@ -295,6 +284,52 @@ terminal_poll_io:
  je .done
  call terminal_connection_start
 .done:
+ pop es
+ pop di
+ pop si
+ pop bp
+ ret
+
+; UART/modem/TX service without consuming a BIOS key. Used by capture prompt.
+global terminal_poll_serial
+terminal_poll_serial:
+ push bp
+ push si
+ push di
+ push es
+ cmp word [terminal_quit],0
+ jne .done
+ call terminal_connection_poll
+ cmp word [terminal_quit],0
+ jne .done
+ call uart_poll_flow
+ mov word [terminal_macro_tx_allowed],0
+ cmp word [connection_state],0
+ je .transmit
+ cmp word [connection_state],6
+ jne .macro
+.transmit:
+ cmp word [terminal_tx_count],0
+ je .grant_macro
+ mov bx,[terminal_tx_head]
+ mov al,[terminal_tx_buffer+bx]
+ call uart_try_write
+ jc .macro
+ ; try_write preserves AX/DX; keep head lookup independent of future API changes.
+ mov bx,[terminal_tx_head]
+ inc bx
+ and bx,1023
+ mov [terminal_tx_head],bx
+ dec word [terminal_tx_count]
+ inc word [terminal_macro_tx_epoch]
+ jmp .macro
+.grant_macro:
+ mov word [terminal_macro_tx_allowed],1
+.macro:
+ call terminal_macro_poll
+ cmp word [terminal_quit],0
+ jne .done
+ .done:
  pop es
  pop di
  pop si

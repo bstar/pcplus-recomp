@@ -54,7 +54,10 @@ Live receive integration now adds Alt-R XMODEM CRC/checksum128/1024 with
 checked DOS staging and final ACK after installation. The full-sized shadow and
 history arrays move far while the receiver arena stays near; PROGRAM retains
 both static extents. Alt-S also supports ordinary XMODEM/1K uploads through
-checked read-only DOS sources and actual-ACK progress. Physical modem and
+checked read-only DOS sources and actual-ACK progress. F2 selects maintained
+CRC YMODEM batch receive/send with checked per-file ownership and exact declared
+lengths. Alt-F1/F2 text capture now uses the native logger, a checked DOS append
+owner and serviced prompt; see `docs/LIVE_CAPTURE.md`. Physical modem and
 remaining protocol/application gates remain open. See
 `docs/TRANSFER_INTEGRATION.md` and `docs/LIVE_UPLOAD.md` for ownership and evidence.
 
@@ -68,7 +71,7 @@ missing form-feed handler; deeper ENiGMA½ testing exposed SOH/VT/CAN controls i
 a malformed stock theme's metadata. Those handlers are now recovered and tested;
 the source-owned defaults select the proved original ANSI profile. Earlier
 checkpoints passed all three local servers through login and menu navigation through a modeled Hayes/Telnet
-modem; Mystic also passes indexed-screen arrows and Escape return. The current
+modem; Mystic also passes indexed-screen arrows and Escape return. The historical
 036a8092 checkpoint passes Synchronet/Mystic menus and Synchronet FSEditor.
 ENiGMA login-matrix arrows and message/file menus pass with the paced retry;
 the initial schedule's incomplete menu workflow is retained with its failed audit. Its real editor
@@ -115,6 +118,15 @@ physical modem compatibility or close the remaining application gates below.
       The first harness failure remains retained; full-screen editor failures,
       other protocols and physical modem validation remain open. See
       `lab/bbs/transfers.md` and `docs/validation/bbs-transfers.json`.
+      Later2dafc08b YMODEM checks pass current selected upload/download workflows
+      on both servers, including ENiGMA two-file batches and post-transfer menus.
+      Both upload helpers omit the final empty-header ACK: exact installed files
+      and compatible menu handoff pass, while standard final ACK is explicitly
+      false. The terminal preserves the first application byte and shows an
+      unconfirmed-batch notice. Historical failed attempts remain recorded in
+      `docs/validation/bbs-ymodem.json`. The6b69f9b0 capture checkpoint repeats
+      actual editors: Synchronet passes, ENiGMA still fails Home/Insert with
+      correct wire bytes. No server decoder/coalescing fix is claimed.
 - [ ] Validate on the actual modem and failing BBS/key sequence supplied by the user.
 
 ## 4. Remaining application reconstruction
@@ -173,9 +185,15 @@ physical modem compatibility or close the remaining application gates below.
       now adds 1,140 exact bytes, with 127 original comparisons and an actual
       8086 DOS diagnostic. A maintained bounded codec distinguishes unknown/zero
       length, parses optional metadata and rejects unsafe filenames; 1,611 host
-      checks and 221 DOS checks pass. The fresh source-only proof now reproduces
-      39 outputs. Full batch ownership/integration, physical peers, every protocol
-      family, capture/logging and F09 remain open. See `docs/TRANSFER_METADATA.md`.
+      checks and 221 DOS checks pass. Checked batch upload/download owners and
+      maintained live CRC YMODEM now add per-file storage, safe enumeration,
+      exact lengths and truthful final-ACK policy. Thirty actual DOS protocol
+      cases and linked kernel-failure/UART tests also pass on6b69f9b0 after
+      capture/serial-poll integration. BBS transfer workflows retain their
+      separately recorded2dafc08b identity; current6b69 editor tests do not
+      substitute for repeating BBS transfers. See
+      `docs/LIVE_YMODEM.md` and `docs/TRANSFER_METADATA.md`. Other protocol
+      families, full settings/UI, physical peers and F09 remain open.
       See `docs/TRANSFER_SESSION.md`, `docs/DOWNLOAD_STORAGE.md`,
       `docs/TRANSFER_SEND.md`, `docs/TRANSFER_FILES.md`, `docs/TRANSFER_UART.md`.
       `docs/TRANSFER_INTEGRATION.md` records the implemented far-shadow/history
@@ -183,6 +201,21 @@ physical modem compatibility or close the remaining application gates below.
       LIVE_UPLOAD.md adds ordinary source-file uploads through the native sender
       and checked read-only DOS source ownership; remaining protocol families,
       capture/logging and application gates stay open.
+      Text capture now has a native REA inventory and maintained live owner:
+      Alt-F1 append/create/close, Alt-F2 hold/resume, Alt-F3 native CR-adds-LF,
+      checked writes/closes, partial-file retention and failure-aware shutdown.
+      DOS PROGRAM closes capture before child execution; transfers flush the
+      pending text and exclude protocol bytes. Sixty-six DOS sink cases,
+      134 session assertions, 24 linked logger/PROGRAM inputs and11 selected
+      actual UART/DOS/UI cases pass on6b69f9b0. The initial readonly-denial
+      shutdown bug and two fixture/oracle failures remain in the evidence.
+      Full F10 still requires printer, screen/shadow snapshots, raw monitoring,
+      complete settings/status UI, ASPECT and physical validation. See
+      `docs/CAPTURE_NATIVE_INVENTORY.md`, `docs/LIVE_CAPTURE.md` and
+      `docs/validation/terminal-capture-dos.json`.
+      The fresh maintained-source snapshot now reproduces47 byte-identical
+      component/diagnostic outputs, including the current interactive executable
+      and both capture test pairs, with originals/install/REA databases absent.
 - [ ] Reconstruct scripting interfaces and required interpreter/compiler integration.
       Keyboard file structures and original TEXT caret/pause consumers are proved,
       and explicit global /T KEY import now supports bounded nonblocking TEXT.

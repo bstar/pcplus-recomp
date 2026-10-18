@@ -1,0 +1,43 @@
+#ifndef PCPLUS_CAPTURE_FILE_H
+#define PCPLUS_CAPTURE_FILE_H
+/* Maintained exact binary foreground sink, near cdecl, DS=SS, unsigned16.
+ * Explicit path/mode only; no formatting, default path, truncation, native FILE
+ * interoperability, delete, rollback, concurrent-writer or crash-atomic claim.
+ * Caller may inspect but must not mutate this96-byte snapshot. */
+enum { CF_OK=0,CF_ARGUMENT,CF_BUSY,CF_STATE,CF_INSPECT,CF_CONFLICT,CF_OPEN,
+ CF_SEEK,CF_WRITE,CF_CLOSE,CF_OVERFLOW,CF_RECOVERY };
+enum { CF_IDLE=0,CF_OPENED,CF_CLOSED,CF_BROKEN,CF_UNCERTAIN };
+enum { CF_NEW=1,CF_APPEND=2 };
+typedef struct capture_file_snapshot {
+ unsigned state,first_status,dos_error,close_error,mode;
+ unsigned handle_open,handle_uncertain,write_calls,close_calls,reserved;
+ unsigned long start_size,written,current_size;
+ char path[64];
+} capture_file_snapshot;
+extern capture_file_snapshot capture_file_result;
+/* DATA cookie initializes dirty assembly-host BSS once. Repeated initialization
+ * preserves resolved history and refuses open/ambiguous ownership unchanged. */
+unsigned __cdecl capture_file_initialize(void);
+/* Pure validation before an application interprets an empty/default path.
+ * Shares begin's near-span/ownership and DOS83 checks; never performs IO. */
+unsigned __cdecl capture_file_validate_path(const char *path,unsigned allow_empty);
+/* Normalize ASCII DOS83 path<=63; no devices, wildcard, directory or traversal.
+ * NEW exclusively creates a missing file. APPEND requires an existing writable
+ * regular file, opens write-only and seeks END on that SAME physical handle.
+ * Validate arguments before replacing a resolved snapshot. Seek failure closes
+ * the newly owned handle once and retains primary and secondary errors. */
+unsigned __cdecl capture_file_begin(const char *path,unsigned mode);
+/* Count0 is a no-op (including null source), never DOS write0. Count<=32768;
+ * valid nonwrapping near span disjoint from ownership. Pure argument rejection
+ * leaves snapshot untouched. Positive short write/DOS error records actual
+ * accepted prefix, poisons this file and forbids further writes. DWORD total
+ * overflow fails before DOS IO. Append bytes cannot be rolled back. */
+unsigned __cdecl capture_file_append(const void *data,unsigned count);
+/* Physical close exactly once. Prior fatal status remains the return value
+ * after a successful close; ambiguous close retains CF_UNCERTAIN and secondary
+ * error, and subsequent calls return CF_RECOVERY without another DOS call.
+ * A resolved new begin may replace old history; open/uncertain begin cannot. */
+unsigned __cdecl capture_file_close(void);
+/* Idle cleanup is harmless; all prior fatal statuses remain observable. */
+unsigned __cdecl capture_file_cleanup(void);
+#endif

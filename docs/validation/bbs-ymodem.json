@@ -1,5 +1,5 @@
 {
-  "binary_sha256": "2dafc08b51450faf183e06f68d253eec410572cbfadedec5ab388e9e28b7aed6",
+  "binary_sha256": "6b69f9b0bd7a79a3123c3e0a20e35ca950ed807c406444fc2004010278ef4dc6",
   "runs": [
     {
       "server": "synchronet",
@@ -5647,7 +5647,7 @@
       }
     }
   ],
-  "current_runtime_run_count": 6,
+  "current_runtime_run_count": 0,
   "current_runtime_all_selected_cases_passed": false,
   "all_recorded_runs_passed": false,
   "latest_selected_workflows": {
@@ -5676,7 +5676,7 @@
       "standard_final_ACK": false
     }
   },
-  "latest_four_current_workflows_passed": true,
+  "latest_four_current_workflows_passed": false,
   "enigma_ymodem_setup": {
     "passed": true,
     "server_commit": "6c25317168b762f7d9088a54d3f8295438827a0e",

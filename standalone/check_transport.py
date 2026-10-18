@@ -73,7 +73,9 @@ class Transport(DosImage):
  def enqueue(self,data):
   # Caller-owned near test buffer; distinct from live rings and artificial stack.
   assert len(data)<=2048
-  pointer=0xf100;self.uc.mem_write(self.data_base+pointer,data+b'\0')
+  pointer=self.offset('terminal_stack_top')+16
+  assert pointer+len(data)+1<=65536,'No unowned near fixture space above application stack'
+  self.uc.mem_write(self.data_base+pointer,data+b'\0')
   self.call('csi_transmit_string',[pointer],cleanup=2)
  def drain(self):
   for _ in range(1030):

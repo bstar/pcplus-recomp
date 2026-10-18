@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "binary_sha256": "6b69f9b0bd7a79a3123c3e0a20e35ca950ed807c406444fc2004010278ef4dc6",
+  "cases": [
+    {
+      "case": "actual-native09b6-CR-LF-FF-DEL-with-checked-text-translation",
+      "inputs": 2,
+      "passed": true
+    },
+    {
+      "case": "append-keeps-textEOF-pause-flushes-no-heldbytes-repeat-open",
+      "inputs": 1,
+      "passed": true
+    },
+    {
+      "case": "foreground18tick-flush-with-lowword-wrap-and-BIOS-midnight",
+      "inputs": 3,
+      "passed": true
+    },
+    {
+      "case": "ordinary-and-native-unchecked-CR-errors-close-once-no-viewport-trap",
+      "inputs": 4,
+      "passed": true
+    },
+    {
+      "case": "uncertain-close-never-retried-or-reopened-sticky-error",
+      "inputs": 1,
+      "passed": true
+    },
+    {
+      "case": "prompt-rejects-other-owners-no-fileIO-and-inactive-pause-noop",
+      "inputs": 11,
+      "passed": true
+    },
+    {
+      "case": "PROGRAM-flush-close-before-EXEC-uncertain-close-cancels-child",
+      "inputs": 2,
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked native09b6, maintained capture session/file/UI bridges and PROGRAM code; only DOSfilesystem/BIOS/UART hardware modeled. Synthetic data. Actual full UART DOS/UI and FSfault diagnostics are separate evidence."
+}

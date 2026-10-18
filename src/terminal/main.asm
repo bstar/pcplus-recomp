@@ -25,6 +25,8 @@ extern terminal_transfer_poll,terminal_transfer_filter,terminal_transfer_shutdow
 extern _terminal_transfer_initialize
 extern _terminal_upload_initialize
 extern _terminal_batch_initialize
+extern _capture_session_initialize,_capture_session_shutdown
+extern terminal_capture_poll
 extern terminal_connection_start,terminal_connection_receive
 extern connection_state,connection_result
 ; Open Watcom small-code consistency marker for the near-C DOS IO subset.
@@ -44,6 +46,7 @@ _small_code_:
  call _terminal_transfer_initialize
  call _terminal_upload_initialize
  call _terminal_batch_initialize
+ call _capture_session_initialize
  pop ax
  call terminal_parse_options
  jnc .configured
@@ -142,6 +145,7 @@ _small_code_:
  call terminal_poll_io
  cmp word [terminal_quit],0
  jne terminal_shutdown
+ call terminal_capture_poll
  call terminal_transfer_poll
  cmp word [terminal_quit],0
  jne terminal_shutdown
@@ -228,6 +232,17 @@ terminal_shutdown:
  mov byte [hardware_active],0
 .exit:
  call terminal_transfer_shutdown
+ call _capture_session_shutdown
+ or ax,ax
+ jz .capture_closed
+ cmp word [terminal_exit_code],0
+ jne .capture_message
+ mov word [terminal_exit_code],12
+.capture_message:
+ mov dx,capture_failed
+ mov ah,9
+ int 0x21
+.capture_closed:
  call terminal_directory_flush_accounting
  or ax,ax
  jz .application_error
@@ -274,6 +289,7 @@ unsupported_keyboard: db 13,10,'Unsupported keyboard binding or local command; t
 flow_cleanup_failed: db 13,10,'Could not resume software flow before exit.',13,10,'$'
 macro_failed: db 13,10,'TEXT action timed out; terminal stopped.',13,10,'$'
 accounting_failed: db 13,10,'Call statistics save needs attention. Check directory recovery files.',13,10,'$'
+capture_failed: db 13,10,'Capture failed; partial log retained. Check free space and file access.',13,10,'$'
 configuration_messages: dw configuration_io,configuration_serial,configuration_flow
  dw configuration_profile,configuration_display,configuration_argument,configuration_modem
  dw configuration_directory

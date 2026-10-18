@@ -15,9 +15,14 @@ screen_adjust_attribute_boundary:
  mov ax,0x2adc
  jmp csi_unimplemented
 global screen_viewport_refresh
+extern terminal_capture_native_refresh
 screen_viewport_refresh:
+ call terminal_capture_native_refresh
+ jnc .capture_done
  mov ax,0x2fb8
  jmp csi_unimplemented
+.capture_done:
+ ret
 global screen_viewport_enter
 screen_viewport_enter:
  mov ax,0x482a
@@ -86,18 +91,6 @@ render_font_output:
 global terminal_sink_36fc
 terminal_sink_36fc:
  mov ax,0x36fc
- jmp csi_unimplemented
-global terminal_sink_8436
-terminal_sink_8436:
- mov ax,0x8436
- jmp csi_unimplemented
-global terminal_sink_427f
-terminal_sink_427f:
- mov ax,0x427f
- jmp csi_unimplemented
-global terminal_sink_bb23
-terminal_sink_bb23:
- mov ax,0xbb23
  jmp csi_unimplemented
 global terminal_escape_b98b
 terminal_escape_b98b:

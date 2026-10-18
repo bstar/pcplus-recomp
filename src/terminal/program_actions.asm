@@ -16,6 +16,7 @@ extern uart_set_baud_divisor,uart_set_line_control
 extern terminal_irq_vector,terminal_baud_low,terminal_baud_high
 extern terminal_parity,terminal_data_bits,terminal_stop_bits
 extern terminal_connection_notice,terminal_connection_notice_restore
+extern terminal_capture_before_program
 global terminal_program_initialize,terminal_program_start,terminal_program_poll
 global terminal_program_cancel
 
@@ -185,6 +186,9 @@ terminal_program_poll:
  call program_progress
  jmp .done ; Wait for this XOFF's physical shift-register completion too.
 .launch:
+ call terminal_capture_before_program
+ or ax,ax
+ jnz .cancel
  call terminal_connection_notice_restore
  ; The current live renderer is fixed80x25 mode3/page0. Reject other BIOS views.
  mov ah,0x0f

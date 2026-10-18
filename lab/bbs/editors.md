@@ -222,3 +222,15 @@ passes12 behavior and eight wire checks; ENiGMA still fails Home/Insert behavior
 with all eight wire sequences present. It closes unsaved with no post. The
 unchanged immediate bridge/stock decoder boundary remains visible. Separate
 ordinary upload tests do not make editor compatibility pass.
+
+## Checked capture checkpoint
+
+`editor-capture-final` repeats both actual DOS editor recipes on frozen
+`6b69f9b0bd7a79a3123c3e0a20e35ca950ed807c406444fc2004010278ef4dc6`,
+after adding the text-capture owner and separating serial service from keyboard
+polling. COM2/19200/HARD is unchanged. Synchronet passes its12 behavior and eight
+wire-key checks, including Ctrl-Q abort. ENiGMA still enters the stock editor
+and emits all eight sequences, but fails Home positioning and Insert mode. It
+closes unsaved; the authoritative server session confirms no post. Both restore
+hardware and preserve the synthetic PRM. Earlier-runtime cases remain retained
+in `docs/validation/bbs-editors.json`; the editor aggregate remains false.

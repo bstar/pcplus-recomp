@@ -65,6 +65,12 @@ is `standalone/test_terminal_ymodem_dos.py` and requires an explicit runtime
 SHA256 and fresh label. Local BBS workflows use `lab/bbs/test_ymodem_dos.py`.
 Their raw fixtures, captures and databases remain under ignored build storage.
 
+The capture/serial-poll checkpoint `6b69f9b0` repeats all30 independent DOS
+YMODEM cases and the linked owner/UART failure suite successfully. BBS transfer
+workflows retain their tested `2dafc08b` identity; the new build's separate editor
+runs do not count as current-runtime BBS transfer validation. Both checkpoints
+and earlier failed runs remain in the public validation records.
+
 This implements CRC YMODEM, not YMODEM-G, ZMODEM, SEALINK, crash atomicity or the
 complete PCPlus transfer/settings interface. DOSBox null-modem tests do not
 prove physical Wi-Fi modem wiring, buffering, CTS/DCD behavior or hardware

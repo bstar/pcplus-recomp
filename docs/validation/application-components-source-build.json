@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "2c089fbcefedced4516b24821b3dbb107e408a854c4f6bb936f216c2dc216882",
-  "source_file_count": 1038,
+  "source_snapshot_sha256": "256af8275ff653d56a58b06d96a9f8d2530d064020aa360c2659e8cca29725ed",
+  "source_file_count": 1059,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,19 +16,19 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "b785136c9c081153c071838f3b9a33ab29e86d58405d5577955a531e02784c81",
+  "build_log_sha256": "6f1fc5539a6e9141bf8c21fba806fbb34066834c3ae053a4a6b7073dd3ba1044",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.dEgeVb/pcplus-source-proof-7ns5kxh2/checkout",
+  "source_checkout": "/tmp/nix-shell.smwqs6/pcplus-source-proof-eu42_yvt/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
-  "scope": "43 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
-  "output_count": 43,
+  "scope": "47 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+  "output_count": 47,
   "outputs": {
     "terminal/TERMINAL.EXE": {
-      "sha256": "2dafc08b51450faf183e06f68d253eec410572cbfadedec5ab388e9e28b7aed6",
+      "sha256": "6b69f9b0bd7a79a3123c3e0a20e35ca950ed807c406444fc2004010278ef4dc6",
       "matches_workspace": true,
-      "workspace_sha256": "2dafc08b51450faf183e06f68d253eec410572cbfadedec5ab388e9e28b7aed6"
+      "workspace_sha256": "6b69f9b0bd7a79a3123c3e0a20e35ca950ed807c406444fc2004010278ef4dc6"
     },
     "config-dos/CONFIG.EXE": {
       "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
@@ -239,6 +239,26 @@
       "sha256": "f9471764bc92c38ba22529d21a77bf50a0902aa721b0f1e8a31002aacf002d59",
       "matches_workspace": true,
       "workspace_sha256": "f9471764bc92c38ba22529d21a77bf50a0902aa721b0f1e8a31002aacf002d59"
+    },
+    "capture-file/CAPTURE.EXE": {
+      "sha256": "3a9101821e2e0a956176df944ffe1c62cee1ad2d27043999947f4a529a89a1a4",
+      "matches_workspace": true,
+      "workspace_sha256": "3a9101821e2e0a956176df944ffe1c62cee1ad2d27043999947f4a529a89a1a4"
+    },
+    "capture-file/CAPFAULT.EXE": {
+      "sha256": "76aa9d2ed7b61235a0b3d61cd185b828f0b11e9b8dbae8559953cc467c199e74",
+      "matches_workspace": true,
+      "workspace_sha256": "76aa9d2ed7b61235a0b3d61cd185b828f0b11e9b8dbae8559953cc467c199e74"
+    },
+    "capture-session/CAPSESS.EXE": {
+      "sha256": "5023dc7cd086e868f40d3d2a99b72484c7ed4cc3f4662acaa15eabdfaadbfc68",
+      "matches_workspace": true,
+      "workspace_sha256": "5023dc7cd086e868f40d3d2a99b72484c7ed4cc3f4662acaa15eabdfaadbfc68"
+    },
+    "capture-session/CSFAULT.EXE": {
+      "sha256": "2fb7158ceaf5a430a5db6cf24146b77e50bc9268f52d204f66c38b9431543920",
+      "matches_workspace": true,
+      "workspace_sha256": "2fb7158ceaf5a430a5db6cf24146b77e50bc9268f52d204f66c38b9431543920"
     }
   },
   "build_scripts": [
@@ -275,6 +295,8 @@
     "standalone/build_transfer_metadata.py",
     "standalone/build_batch_header.py",
     "standalone/check_batch_download.py",
-    "standalone/check_batch_upload.py"
+    "standalone/check_batch_upload.py",
+    "standalone/check_capture_file.py",
+    "standalone/check_capture_session.py"
   ]
 }

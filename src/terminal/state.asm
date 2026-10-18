@@ -342,8 +342,12 @@ terminal_sink_3988_enabled: dw 0
 global terminal_cr_adds_lf
 terminal_cr_adds_lf: dw 0
 global terminal_sink_398a_enabled
+global _terminal_sink_398a_enabled
+_terminal_sink_398a_enabled:
 terminal_sink_398a_enabled: dw 0
 global terminal_sink_398c_disabled
+global _terminal_sink_398c_disabled
+_terminal_sink_398c_disabled:
 terminal_sink_398c_disabled: dw 0
 global terminal_sink_handle
 terminal_sink_handle: dw 0
