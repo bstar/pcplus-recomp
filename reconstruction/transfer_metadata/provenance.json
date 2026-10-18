@@ -1,0 +1,191 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "overlay": 21,
+  "units": [
+    {
+      "source": "parse_telink.asm",
+      "start": "0xe4c2",
+      "end_exclusive": "0xe529",
+      "bytes": 103,
+      "source_file_offset": 132978,
+      "sha256": "862ca3f1ba69a76b2a36fa6c15b4665bbd189170502600bb2acb5b0b390dec5f",
+      "region": "overlay21"
+    },
+    {
+      "source": "parse_ymodem.asm",
+      "start": "0xe52a",
+      "end_exclusive": "0xe5d9",
+      "bytes": 175,
+      "source_file_offset": 133082,
+      "sha256": "1b29fae53e475509fcad5f2473a44ee510541e3e445f05498efa03401d65118b",
+      "region": "overlay21"
+    },
+    {
+      "source": "send_telink.asm",
+      "start": "0xe5da",
+      "end_exclusive": "0xe762",
+      "bytes": 392,
+      "source_file_offset": 133258,
+      "sha256": "72b874e9fd5ed531fa4582b72035e2e661c2573cad507c7d1f6f69d7c3c32713",
+      "region": "overlay21"
+    },
+    {
+      "source": "send_ymodem.asm",
+      "start": "0xe762",
+      "end_exclusive": "0xe878",
+      "bytes": 278,
+      "source_file_offset": 133650,
+      "sha256": "5ccbc53a7ac5bb7f74371cc12e7d9876f8fa09e1895a26b235a551241078d0af",
+      "region": "overlay21"
+    },
+    {
+      "source": "end_ymodem.asm",
+      "start": "0xefcc",
+      "end_exclusive": "0xf01b",
+      "bytes": 79,
+      "source_file_offset": 135804,
+      "sha256": "90109b57c2b8a047f6ac37682e1b8874315efe3eaad210a3c5b7a573f9fced9c",
+      "region": "overlay21"
+    },
+    {
+      "source": "signed_format.asm",
+      "start": "0x9ae8",
+      "end_exclusive": "0x9af2",
+      "bytes": 10,
+      "source_file_offset": 44264,
+      "sha256": "f340a7c35109b43a60993b8c623439c1a14c6bcbe31c18db0bd31e570f9d0400",
+      "region": "resident"
+    },
+    {
+      "source": "basename.asm",
+      "start": "0x3ea4",
+      "end_exclusive": "0x3ed9",
+      "bytes": 53,
+      "source_file_offset": 20644,
+      "sha256": "aec2b928a46562ae8e7062b42593d042a5ee537f1a10b2aaf020dede414c4763",
+      "region": "resident"
+    },
+    {
+      "source": "send_zero.asm",
+      "start": "0x40aa",
+      "end_exclusive": "0x40b1",
+      "bytes": 7,
+      "source_file_offset": 21162,
+      "sha256": "9df0c6af98ada05a8235fc4f63e4eec2646927576f14e027d4a943ccdd378c18",
+      "region": "resident"
+    },
+    {
+      "source": "strncpy.asm",
+      "start": "0x9888",
+      "end_exclusive": "0x98b0",
+      "bytes": 40,
+      "source_file_offset": 43656,
+      "sha256": "d3c56fbf9273d579d74bea4fb6fbffb190dbb38a7508ee5a19b71bd70ffa48a2",
+      "region": "resident"
+    },
+    {
+      "source": "decimal_thunk.asm",
+      "start": "0x9b32",
+      "end_exclusive": "0x9b35",
+      "bytes": 3,
+      "source_file_offset": 44338,
+      "sha256": "1c589aae5fb0b0e0c07c611c1d1b3569eefef70cdfe6b9d8921fbfb50f6f0cf9",
+      "region": "resident"
+    }
+  ],
+  "state": {
+    "0x3996": "metadata_protocol",
+    "0x39c0": "metadata_buffer_pointer",
+    "0x9006": "metadata_size_low",
+    "0x9008": "metadata_size_high",
+    "0xcbae": "metadata_crc_high",
+    "0xcbb2": "metadata_crc_low",
+    "0xcd94": "metadata_checkpoint",
+    "0xcd76": "metadata_date",
+    "0xcd3a": "metadata_time",
+    "0xcb68": "metadata_filename",
+    "0xcb56": "metadata_batch_end",
+    "0x7920": "metadata_identification"
+  },
+  "boundaries": {
+    "0xe4c2": "metadata_parse_telink",
+    "0xe52a": "metadata_parse_ymodem",
+    "0xe5da": "metadata_send_telink",
+    "0xe762": "metadata_send_ymodem",
+    "0xefcc": "metadata_end_ymodem",
+    "0x9ae8": "metadata_signed_format",
+    "0xa5e8": "meta_keys_decimal_core",
+    "0x3ea4": "metadata_basename",
+    "0x83c6": "program_strrchr",
+    "0x40aa": "metadata_send_zero",
+    "0x9888": "metadata_strncpy",
+    "0x9b32": "metadata_decimal_thunk",
+    "0xa7ce": "directory_dial_integer_original",
+    "0x3b56": "metadata_stat_file",
+    "0x3f4b": "metadata_local_cancel",
+    "0x4861": "metadata_carrier",
+    "0x9065": "metadata_unwind",
+    "0xf03e": "receive_drain",
+    "0xab0b": "metadata_transmit_byte",
+    "0xaad9": "metadata_timed_byte",
+    "0x5c77": "_transfer_crc_buffer_original",
+    "0xee10": "metadata_display_start"
+  },
+  "supporting_evidence": [
+    {
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1e4c2-asm.json",
+      "evidence_id": "ev_c2b69ad75556f5fe6bfea2c0808a1d804bf86dad8bdae0d38528c9b04da51fbd"
+    },
+    {
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1e52a-asm.json",
+      "evidence_id": "ev_0576baf8c5c63af88658ca6518fa23d52f31a29574837742931ce982a848936a"
+    },
+    {
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1e5da-asm.json",
+      "evidence_id": "ev_87c441431f722ee9ad8b3b844934f9e59b5279dcd0359a837110a8685817b584"
+    },
+    {
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1e762-asm.json",
+      "evidence_id": "ev_b93c508ad1284101b3fb69a7f0a1741ee5f721a4582d82d4558ac28fc1d51e57"
+    },
+    {
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1efcc-asm.json",
+      "evidence_id": "ev_672de51b8e654cd30f4affaec0ecad57e1026ad091cb0a733e7b40cf1d7ed32a"
+    },
+    {
+      "export": "analysis/pcplus-transfer-metadata/format-entry.json",
+      "evidence_id": "ev_046115b5ed6fd3039a0475b1db31c3ef69a99fb86a0ac47fae56ccf09688782a"
+    },
+    {
+      "export": "analysis/pcplus-transfer-metadata/format-core.json",
+      "evidence_id": "ev_c3b81fa6085789a2c6afb888efd8ec660efbaa47e21db30597e87f8aea5efdaa"
+    },
+    {
+      "export": "analysis/pcplus-transfer-metadata/strncpy.json",
+      "evidence_id": "ev_ebeceb811c9fe8f84ad3610cfb532efb7f4fa4d214e55eed41e47e5a2d7d021f"
+    },
+    {
+      "export": "analysis/pcplus-transfer-metadata/zero.json",
+      "evidence_id": "ev_0b0712eeccd887fcaf42268d549cda6bf4d21af6cbd1486f94930bbae08d3d33"
+    },
+    {
+      "export": "analysis/pcplus-transfer-metadata/basename.json",
+      "evidence_id": "ev_2748a2b610af812ed79f4311b264be2bf26e2f581696b2500695c736889f7751"
+    }
+  ],
+  "reused_sources": [
+    "reconstruction/meta_keys/decimal_core.asm",
+    "reconstruction/directory_dial/integer.asm",
+    "reconstruction/program_exec/strrchr.asm",
+    "reconstruction/transfer_receive/drain.asm",
+    "reconstruction/transfer_blocks/crc_update.asm",
+    "reconstruction/transfer_blocks/crc_finish.asm",
+    "reconstruction/transfer_blocks/crc_buffer.asm",
+    "reconstruction/transfer_blocks/crc_table.asm"
+  ],
+  "limitations": [
+    "Exact original metadata helpers, not a complete batch protocol owner or live terminal integration.",
+    "Original unbounded filename copies, permissive/wrapping signed decimal parse and missing end-header ACK retries remain unchanged; maintained batch_header codec is separate.",
+    "Hardware, file-stat, cancel/carrier, nonlocal unwind, timing and display remain explicit diagnostic boundaries."
+  ]
+}

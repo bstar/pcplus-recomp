@@ -55,7 +55,7 @@ plugin interface.
 Transmitterde58 initializes payload size128 and start byte1. Its1K paths choose
 size1024/start2 when sufficient file data is available. Negotiation at df76..e034
 selects additive checksum for NAK15h, CRC for `C`43h or `G`47h, and has separate
-`S`/`W` branches whose complete semantics are not recovered here. The ordinary
+`U`55h/`W`57h branches whose complete semantics are not recovered here. The ordinary
 transmit span e12c..e1b6 performs:
 
 1. Send start byte, block number low byte and one's complement low byte.

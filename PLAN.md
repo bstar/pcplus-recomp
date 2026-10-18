@@ -169,8 +169,13 @@ physical modem compatibility or close the remaining application gates below.
       the final ACK until checked installation. HARD/NONE binary reception and
       actual DOS owned-peer tests are documented in TRANSFER_INTEGRATION.md.
       Alt-S now connects the native ordinary sender to checked read-only DOS sources,
-      bounded live UART callbacks and actual-ACK progress. Physical peers,
-      batch metadata, every protocol family, capture/logging and F09 remain open.
+      bounded live UART callbacks and actual-ACK progress. Native batch metadata
+      now adds 1,140 exact bytes, with 127 original comparisons and an actual
+      8086 DOS diagnostic. A maintained bounded codec distinguishes unknown/zero
+      length, parses optional metadata and rejects unsafe filenames; 1,611 host
+      checks and 221 DOS checks pass. The fresh source-only proof now reproduces
+      39 outputs. Full batch ownership/integration, physical peers, every protocol
+      family, capture/logging and F09 remain open. See `docs/TRANSFER_METADATA.md`.
       See `docs/TRANSFER_SESSION.md`, `docs/DOWNLOAD_STORAGE.md`,
       `docs/TRANSFER_SEND.md`, `docs/TRANSFER_FILES.md`, `docs/TRANSFER_UART.md`.
       `docs/TRANSFER_INTEGRATION.md` records the implemented far-shadow/history

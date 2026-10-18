@@ -8,6 +8,8 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 
 | Output | Inputs | Current purpose |
 | --- | --- | --- |
+| `build/transfer-metadata/METADATA.EXE` | Recovered source only, explicit diagnostic callbacks | Native YMODEM/TELINK headers, parsers and batch terminator; not a live batch owner |
+| `build/batch-header/HEADER.EXE` | Maintained source only | Bounded 128/1024-byte metadata codec, safe DOS basenames and optional fields |
 | `build/transfer-storage/TRANSFER.EXE` | Recovered and maintained source only | One native receive owner through actual staged DOS storage; UART/time are controlled peer fixtures |
 | `build/upload-file/{UPLOAD,UPFAULT}.EXE` | Maintained source only | Read-only binary upload sources, DWORD length/read accounting and close/failure diagnostics |
 | `build/download-file/{DOWNLOAD,DLFAULT}.EXE` | Maintained source only | Streaming binary storage, checked close/install and deterministic failure/recovery diagnostics |
@@ -269,8 +271,12 @@ CRC/checksum validation, retries, genuine setjmp/longjmp cancellation and EOT.
 The separate real-DOS-storage composition verifies periodic/final file writes,
 short-write and close-error installation gates, cancellation/timeout cleanup,
 and mixed128/1024-byte blocks at the flush boundary. Native sender and real UART
-component tests also pass. These components are being connected toward the full
-application; the terminal download/upload UI, physical modem transfers and every
-advertised protocol are still open. See [session contracts](docs/TRANSFER_SESSION.md),
+component tests also pass. The terminal now has live Alt-R/Alt-S ordinary
+XMODEM receive/send; actual DOS uploads/downloads pass against local Synchronet
+and ENiGMA servers with the documented lab configuration. The new native batch
+metadata module and maintained codec pass independently; full batch ownership,
+remaining advertised protocols and physical modem transfers remain open. See
+[batch metadata](docs/TRANSFER_METADATA.md), [BBS transfers](lab/bbs/transfers.md),
+[session contracts](docs/TRANSFER_SESSION.md),
 [download storage](docs/DOWNLOAD_STORAGE.md), [sender](docs/TRANSFER_SEND.md),
 [native file behavior](docs/TRANSFER_FILES.md) and [UART callbacks](docs/TRANSFER_UART.md).

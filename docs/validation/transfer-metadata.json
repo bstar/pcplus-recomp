@@ -1,0 +1,99 @@
+{
+  "passed": true,
+  "interactive_terminal_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
+  "native_build": {
+    "kind": "source-only-exact-transfer-metadata-memory-UART-fixture",
+    "binary_sha256": "efc26c3ca221739ac7c72b34707865407f4ab2ee223f4efdf751b148ea5b89b7",
+    "exact_metadata_bytes": 1140,
+    "sources": {
+      "reconstruction/transfer_metadata/parse_telink.asm": "d93c2dab166d99e5a80bfb4bed88f971c25c7fd25819efe97f4e54454b9c934b",
+      "reconstruction/transfer_metadata/parse_ymodem.asm": "f631712a6a423c15a3e27a448013a0f2be211ba7b79aacf77806493e055d5e04",
+      "reconstruction/transfer_metadata/send_telink.asm": "d249c1b8a13eb3ff4d47e0af31dc01acb7ba7b4eba1e47eba738f16b54289acc",
+      "reconstruction/transfer_metadata/send_ymodem.asm": "f4c89f22853679b3226329ba0f29a60c724f90783cee89f2a7a6466907dc560a",
+      "reconstruction/transfer_metadata/end_ymodem.asm": "58227767e72359eb7af2098e46dbbccbf97f673b52196460a1591425fb18e7f7",
+      "reconstruction/transfer_metadata/signed_format.asm": "f0222371df636ec3200d8c5e0cb92af9db2607dcc0fe87fc25eb96bc66713d41",
+      "reconstruction/transfer_metadata/basename.asm": "55db125074c24bc46059a3089dab1eeaeab3314d4e895a93ddfbef88d915b897",
+      "reconstruction/transfer_metadata/send_zero.asm": "a311f7547036b10c76eb040547c105a925b27565e15d77530ed1c2e545e442cc",
+      "reconstruction/transfer_metadata/strncpy.asm": "13bb8f5b3f64eab5b7183a8e4c9a2ddb3df010dfed1d33268a0d465139065a98",
+      "reconstruction/transfer_metadata/decimal_thunk.asm": "ab7640496579b3d72e836995c0e02e4125b4297873d125461d3c6c92cd0a6f2d",
+      "reconstruction/meta_keys/decimal_core.asm": "119737d67d872a1924a7afdffdef2ea1b7eb98223f248e3538781de2cfc98d9f",
+      "reconstruction/directory_dial/integer.asm": "23cfe8277eff68189eb7234998d0029f7f88e8665ad76399d58663d8a4d38092",
+      "reconstruction/program_exec/strrchr.asm": "49c6429f13940689fd3e5d29b668245fc43e781c0eb764ffc5c793d93660d312",
+      "reconstruction/transfer_receive/drain.asm": "f9001c2c1a29b1bac5d19d953b34f8db5f9b981d101aa07d1e850f0f1dbbb0f4",
+      "reconstruction/transfer_blocks/crc_update.asm": "c3ffeb0f2c15c06e02187021149c02370f8460302a1cdc3752da57f810487eb1",
+      "reconstruction/transfer_blocks/crc_finish.asm": "c2456ac67d66175990a66b8a7033d226585dedf3cc174a1b502d25026c970281",
+      "reconstruction/transfer_blocks/crc_buffer.asm": "00083b3c0f6143b8b0119f0c5690f32b54b2c981f474ed5ce1529336d8db1ad4",
+      "reconstruction/transfer_blocks/crc_table.asm": "cbd56e811c02708a2192bb2cfeb7939ad44ddda2e4ddfd3bcea96aab2083b0d2",
+      "standalone/transfer_metadata_host.asm": "ffe21ae41bc55d0f975fa5082592dea49a97cf4ebbd9f6638d79c460aec2c86e"
+    },
+    "limitations": [
+      "Synthetic UART, timing, stat, display and cancel/carrier boundaries; nonlocal unwind is an explicit INT3 boundary.",
+      "No live UART, actual file stat, batch owner or complete transfer session."
+    ]
+  },
+  "native_checks": {
+    "passed": true,
+    "binary_sha256": "efc26c3ca221739ac7c72b34707865407f4ab2ee223f4efdf751b148ea5b89b7",
+    "cases": 127,
+    "original_comparisons": 0,
+    "scope": "Actual native metadata, basename, decimal conversion, CRC and flush instructions; declared memory UART/stat/timing/UI/nonlocal-unwind boundaries. Original defects retained. No complete batch owner, live UART, real filesystem or YMODEM interoperability claim."
+  },
+  "native_case_kinds": {
+    "send5": 54,
+    "send3": 16,
+    "parse5": 14,
+    "parse3": 7,
+    "end5": 6,
+    "format": 30
+  },
+  "original_comparisons": 127,
+  "original_result_sha256": "3d92f553afca7bf6958e9b5de16e50b89a16b5ef2c65849443e787f2f2f797c5",
+  "native_DOS": {
+    "passed": true,
+    "returncode": 0,
+    "binary_sha256": "efc26c3ca221739ac7c72b34707865407f4ab2ee223f4efdf751b148ea5b89b7",
+    "scope": "Actual8086 DOS native metadata header, complete133-byte CRC frame, native basename/decimal/parser, emptybatch header and end detection. Synthetic UART/stat/time/UI boundaries; no live transfer session or filesystem."
+  },
+  "maintained_codec": {
+    "passed": true,
+    "host_oracle_checks": 1611,
+    "DOS_oracle_vectors": 200,
+    "DOS_summary": "BATCHHEADER 221 checks 0 failures",
+    "binary_sha256": "5fc883e06f588b13f7d61a3704e8fbdab789d69f10cf998a25d79abe60e06524",
+    "sources": {
+      "src/transfer/batch_header.c": "5003de29446cc1ec3a3776dcb1798b2763a6f1d556e866abe7e207cc39b49aa5",
+      "src/transfer/batch_header.h": "90b6691b30d0b60018bc05fe9b72932a2e913806913b326a15ab1ab15c69ad0b",
+      "standalone/check_batch_header.py": "179eeb22e309403e6b754b23e2897b4f43cea28fadf1babc150b1e2b6d0464fc"
+    },
+    "scope": "Maintained metadata codec only. Independent Python oracle, linked host C, source-built8086 DOS and near span/overlap diagnostics. No transfer engine, framing, filesystem timestamps/modes or original executable inputs."
+  },
+  "retained_artifacts": {
+    "build/transfer-metadata/manifest.json": "a508ed8353d1cf07d548ea2da2732e355744bdd55f552fa7a0fcdd7eea7419d0",
+    "build/transfer-metadata/checks.json": "4c974eedecbfa7cdc9a7dcef543b8df5ac42ef7bc461d57e09e982b7d2ba0021",
+    "build/transfer-metadata/checks-original.json": "3d92f553afca7bf6958e9b5de16e50b89a16b5ef2c65849443e787f2f2f797c5",
+    "build/transfer-metadata-dos/result.json": "f772448d74e56f80eeb17a0e9ca11b0685b5396d3a218899699d9116c8a1005a",
+    "build/batch-header/manifest.json": "01b354e14cf1c9ee65c87d63cf5c03f990b8046136f73106dab5348f2a5d5b04",
+    "build/batch-header/checks.json": "26e117198c2311be2465927088203e2cd9af478d27febe699a550109e4681b1c",
+    "build/batch-header/VECTORS.BIN": "e8cf7369de34e6ddf59ae18ec946c41468074d4f9858fef02d67adc577cfc477",
+    "build/batch-header/RESULT.TXT": "18c5c8bfc2e770b40de62fe039ba8e89be44edbfd73d09c97c9f778b1e28c9c4"
+  },
+  "limitations": [
+    "No live batch owner, UART/filesystem, end-to-end YMODEM or other-protocol completion claim.",
+    "Exact native defects preserved; maintained codec is separate and not linked into the frozen terminal.",
+    "Source-only normal builds exclude originals/installed data/REA; explicit original comparison is optional."
+  ],
+  "source_only_proof": {
+    "passed": true,
+    "outputs": 39,
+    "source_snapshot_sha256": "b5f51ffaa3ed63dac02c94d2e85181ebe30212d5ea4209fd310bfa164e4e0d1e",
+    "manifest": "docs/validation/application-components-source-build.json",
+    "manifest_sha256": "eca1de28fe1bbfb7dbf4511a32cb3277719974d0ccb4047e5c9acec5ebc6094b"
+  },
+  "validation_sources": {
+    "standalone/build_transfer_metadata.py": "43bf047844409c8110db31faac16aa23eaee5addbcd99c6eb1200f5dc3421a3b",
+    "standalone/check_transfer_metadata.py": "bf88c942e7b5cbf6e113934b9b16671412cdaea04cadb253b00d2c0f134e7762",
+    "standalone/test_transfer_metadata_dos.py": "cb565171d27cfa48b750514088f1074744ba6a98f2d99b76447dd323c5850943",
+    "standalone/build_batch_header.py": "23a5f2b652bdb38fdc83859f16beb8c3ca301495c37164f8deea16eaf33846e4",
+    "standalone/check_batch_header.py": "179eeb22e309403e6b754b23e2897b4f43cea28fadf1babc150b1e2b6d0464fc"
+  }
+}
