@@ -36,7 +36,7 @@ The live ring, frozen copy and two raw screen frames are distinct far owners.
 They do not alias the native shadow, snapshot or the three existing packed UI
 frames. MZ/map checks validate segment extents, relocated pointers and four
 near/far viewer entries. PROGRAM retains every new allocation. The current build
-retains 297,184 bytes including the PSP before DOS/environment overhead; this is
+retains 299,232 bytes including the PSP before DOS/environment overhead; this is
 not evidence for the original product's 192 KB limited configuration or a full
 295 KB application configuration. Physical UART throughput and video hardware
 remain unverified.
@@ -68,7 +68,7 @@ claim to have recovered the complete original redisplay UI.
 ```
 
 [Hash-bound validation](validation/redisplay-live.json) combines 39 linked inputs,
-one actual DOS observer workflow, the full 68-command terminal regression and
+one actual DOS observer workflow, the full 70-command terminal regression and
 63 byte-identical source-only outputs.
 
 The linked tests run actual transport dispatch, far viewer code and native
@@ -85,7 +85,8 @@ screen, viewer keys stay local, ordinary keys resume transmission, fixtures stay
 unchanged and UART/PIC/IRQ state returns to its independent baseline. Actual DOS
 child allocation/fill separately checks retained native-history endpoints.
 
-History export, clipboard filename extraction/list editing/paste, full original
+W now appends frozen history through a fourth checked file owner; see
+[history export](HISTORY_EXPORT.md). Clipboard filename extraction/list editing/paste, full original
 redisplay commands and other video geometries remain open. This implementation
 does not close F11 or the full-application checklist.
 

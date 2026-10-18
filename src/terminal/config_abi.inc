@@ -34,3 +34,4 @@ CONFIG_CDECL _config_directory_read,_directory_dos_read,4
 CONFIG_CDECL _config_number_expand,_directory_number_expand,4
 CONFIG_CDECL _config_live_expand,_live_modem_expand,4
 CONFIG_CDECL _config_process_run,_process_run,3
+CONFIG_CDECL _config_history_file,_history_file_event,3

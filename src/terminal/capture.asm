@@ -13,6 +13,7 @@ extern terminal_clock_ticks,terminal_poll_serial,terminal_read_key,keyboard_poll
 extern terminal_connection_notice,terminal_connection_notice_restore
 extern terminal_quit,terminal_exit_code,uart_rx_dropped,connection_state
 extern terminal_macro_active,terminal_program_pending,terminal_ansi_wait_active
+extern _history_file_result
 extern terminal_printer_before_program
 extern terminal_controller_active
 global terminal_capture_toggle,terminal_capture_pause,terminal_capture_crlf
@@ -138,6 +139,10 @@ terminal_capture_before_program:
  cmp word [_snapshot_file_result+10],0
  jne .snapshot_owned
  cmp word [_snapshot_file_result+12],0
+ jne .snapshot_owned
+ cmp word [_history_file_result+10],0
+ jne .snapshot_owned
+ cmp word [_history_file_result+12],0
  jne .snapshot_owned
  call terminal_printer_before_program
  or ax,ax

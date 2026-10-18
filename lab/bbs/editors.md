@@ -506,3 +506,15 @@ eight measured keys, but Home and Insert/overtype fail. The matched
 `editor-redisplay-27df-buffer30` passes all seven audit and eight wire checks.
 Both leave without saving. This loopback experiment does not establish physical
 modem compatibility or guaranteed TCP packet boundaries.
+
+## History export checkpoint
+
+Build4ad7d3a2 adds serviced frozen-history append through a fourth checked file
+owner. These ordinary editor tests use saved identity mode and do not open
+redisplay or perform an export. `editor-history-4ad7-hard` passes all12 Synchronet
+audit and eight key-output checks and aborts its draft. Stock ENiGMA
+`editor-history-4ad7-immediate` enters the editor and emits all eight measured
+keys but fails Home and Insert/overtype. The matched
+`editor-history-4ad7-buffer30` passes all seven audit and eight wire checks.
+Neither ENiGMA run saves a post. The buffering workaround is local evidence,
+with physical firmware and general TCP boundary guarantees still unverified.

@@ -18,9 +18,9 @@ remain owned by the caller. These are not variadic, RET-N or callback adapters.
 The C implementations call each other directly within CONFIG_CODE. Five
 explicit register-ABI imports (`memcpy`, `memset`, `memcmp`, `strchr` and the DOS
 canonicalizer) use named near thunks to far-call their resident counterparts.
-Ten more callbacks
+Eleven more callbacks
 copy1..4 cdecl words to the resident terminal/modem decoders, PRM/directory
-readers, bounded number expander, native command-expansion status adapter and the checked XLT open/read/close adapters, plus the DOS EXEC process boundary. Register imports retain the compiler's
+readers, bounded number expander, native command-expansion status adapter and the checked XLT open/read/close adapters, plus the DOS EXEC process boundary and the history file event owner. Register imports retain the compiler's
 trailing underscore symbol convention; they cannot use the cdecl adapters.
 The modem callback family's existing1..4-word contract is unchanged.
 
@@ -31,16 +31,16 @@ stack arguments must survive the additional far frames. Actual linked reads,
 EOF probes and failed reads exercise these adapters; all256 input bytes and
 caller state are checked. See [live translation](LIVE_TRANSLATION.md).
 
-`config_abi.inc` declares all33 bridge pairs. `terminal_memory.py` validates
+`config_abi.inc` declares all34 bridge pairs. `terminal_memory.py` validates
 their exact instructions, argument offsets/counts, near/far targets, return
 forms and required MZ relocations. It also checks an end marker linked after
 all nine C objects, ensuring the extent covers the implementations rather than just
 the assembly wrappers. All code must fit its own64KiB segment, be present in
 the loaded MZ, be disjoint from other code/data owners and remain covered by
 PROGRAM's retained parent allocation. Together with PRINT/MODEM this validates
-81 bridge pairs including four viewer register entries.
+82 bridge pairs including four viewer register entries.
 
-`check_config_far_live.py` rejects164 intentionally damaged frames, relocations
+`check_config_far_live.py` rejects167 intentionally damaged frames, relocations
 and layouts. The independent311 directory and507 context cases execute normal
 terminal entry points across the bridge. `check_live_configuration.py --terminal`
 replays the same389 independently specified candidate cases against the normal
@@ -71,7 +71,7 @@ changes, confirmed idle COM ownership transfer and supported4/6 profile resets.
 See [SETUP_LIVE.md](SETUP_LIVE.md). Full transport/profile ownership changes and
 the complete application remain open.
 
-The checkpoint's68-command terminal regression,63-output isolated source
+The checkpoint's70-command terminal regression,63-output isolated source
 rebuild,389 terminal candidate inputs,311 directory inputs,507 retained-context
 inputs and actual DOS child retention are bound together in
 [validation/configuration-far-code.json](validation/configuration-far-code.json).
@@ -97,3 +97,10 @@ inputs and four actual DOS command workflows to the current binary. Four new
 observations compare FLAGS at the actual C implementation RET and the public
 entry RET after normal execution, fallback, EXEC failure and resize failure.
 The tests do not replace product instructions or callbacks.
+
+The serviced history writer adds a three-word resident callback for the fourth
+checked file owner. The current executable uses64,516 resident code bytes,
+62,848 near data/stack bytes and299,232 retained parent bytes including PSP.
+Its DOS export tests exercise all three callback operations with actual files;
+see [history export](HISTORY_EXPORT.md). Earlier PROGRAM-only memory values
+above describe that migration checkpoint.

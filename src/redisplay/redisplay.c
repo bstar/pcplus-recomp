@@ -1,6 +1,7 @@
 /* Maintained redisplay over a frozen chronological native history snapshot.
  * DOS16 DS=SS; no heap, original resources, blocking input or UART ownership. */
 #include <dos.h>
+#include "../capture/capture_file.h"
 typedef unsigned short word;
 typedef unsigned char byte;
 typedef struct context {
@@ -10,6 +11,7 @@ typedef struct context {
 } context;
 unsigned redisplay_active=0;
 unsigned redisplay_search_pending=0;
+unsigned redisplay_export_pending=0;
 static byte __far *snapshot;
 static word __far *live;
 static word __far *view;
@@ -18,6 +20,32 @@ static word query_size,query_edit,found,last_match;
 static char query[40];
 static word checkpoints[247];
 static word search_start,search_cursor;
+static word export_edit,export_phase,export_at,export_size,export_notice,oldest_skip;
+static char export_path[64];
+static byte export_bytes[256];
+static void export_close(word notice)
+{
+ unsigned status=history_file_event(HISTORY_CLOSE,0,0);
+ redisplay_export_pending=0;export_edit=0;
+ export_notice=status?3:notice;
+}
+/* A foreground turn writes at most128 snapshot bytes, expanded to<=256 bytes.
+ * The main loop services serial/keyboard again before the next kernel call. */
+static word export_step(void)
+{
+ word n=0,budget=128;byte b;unsigned status;
+ if(!redisplay_export_pending)return 0;
+ if(!export_phase){
+  status=history_file_event(HISTORY_BEGIN,export_path,0);
+  if(status){redisplay_export_pending=0;export_notice=4;return 1;}
+  export_phase=1;return 1;
+ }
+ if(export_at==length){export_close(1);return 1;}
+ while(export_at<length && budget--){b=snapshot[export_at++];export_bytes[n++]=b;if(b==13)export_bytes[n++]=10;}
+ status=history_file_event(HISTORY_WRITE,export_bytes,n);
+ if(status){export_close(3);return 1;}
+ return 0;
+}
 static void copy(word __far *to,const word __far *from)
 {word i;for(i=0;i<2000;++i)to[i]=from[i];}
 static void cursor_get(void)
@@ -90,7 +118,7 @@ static void draw(void)
  word i,p=top,row,col;byte b;
  for(i=0;i<2000;++i)view[i]=0x0720;
  for(i=0;i<80;++i)view[i]=view[1920+i]=0x1f20;
- label(1,"PCPLUS  Redisplay  |  Up/Down  PgUp/PgDn  Home/End  / Search  F3 Next  Esc Return",0x1f00);
+ label(1,"PCPLUS  Redisplay  |  Up/Down  PgUp/PgDn  Home/End  / Search  F3  W Write  Esc",0x1f00);
  for(row=1;row<24 && p<length;++row){col=0;
   while(p<length){b=snapshot[p++];if(b==13)break;
    if(b==9){col+=8-(col&7);}else{
@@ -99,12 +127,23 @@ static void draw(void)
    if(col>=80){if(p<length && snapshot[p]==13)++p;break;}
   }
  }
- if(query_edit)label(1921,"Search: ",0x1f00);
+ if(export_edit){
+  for(i=1840;i<1920;++i)view[i]=0x1f20;
+  label(1841,"File: ",0x1f00);label(1847,export_path,0x1f00);
+  label(1921,"Append frozen history: Enter starts; Esc cancels. DOS 8.3 path, up to63 bytes.",0x1f00);
+ }
+ else if(redisplay_export_pending)label(1921,"Appending history; incoming data continues. Esc cancels; written bytes remain.",0x1f00);
+ else if(export_notice==1)label(1921,"History appended. W writes again; Esc returns to the live screen.",0x1f00);
+ else if(export_notice==2)label(1921,"Export canceled. A partial append may remain. W retries; Esc returns.",0x1f00);
+ else if(export_notice==3)label(1921,"Export failed; partial output may remain. Check the file/disk before retrying.",0x1f00);
+ else if(export_notice==4)label(1921,"Cannot open history file. Check path, attributes and active file owners.",0x1f00);
+ else if(export_notice==5)label(1921,"History is empty; no file was created. Esc returns to the live screen.",0x1f00);
+ else if(query_edit)label(1921,"Search: ",0x1f00);
  else if(redisplay_search_pending)label(1921,"Searching... Incoming data continues; Esc returns to the live screen.",0x1f00);
  else if(!length)label(1921,"History is empty. Incoming data continues; Esc returns to the live screen.",0x1f00);
  else if(!found)label(1921,"No match. / changes search; F3 repeats. Incoming data continues.",0x1f00);
  else label(1921,"Frozen history; incoming data continues. / searches; Esc returns to live screen.",0x1f00);
- if(query_edit)label(1929,query,0x1f00);
+ if(query_edit && !export_edit && !redisplay_export_pending)label(1929,query,0x1f00);
  if(visible){copy((word __far *)MK_FP(0xb800,0),view);hide();}
 }
 static void search(void)
@@ -153,17 +192,31 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   length=c->wrapped?63000U:c->head-c->start;p=c->wrapped?c->head:c->start;
   for(i=0;i<length;++i){snapshot[i]=source[p];if(++p==c->end)p=c->start;}
   cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));
-  redisplay_search_pending=0;query_size=query_edit=0;query[0]=0;found=1;last_match=65535U;visible=1;redisplay_active=1;index_rows();bottom();draw();return 1;
+  redisplay_search_pending=redisplay_export_pending=0;export_edit=export_notice=0;oldest_skip=c->wrapped && length && snapshot[0]==13;query_size=query_edit=0;query[0]=0;found=1;last_match=65535U;visible=1;redisplay_active=1;index_rows();bottom();draw();return 1;
  }
  if(!redisplay_active)return 0;
+ if(event==1 && key==27 && (export_edit || redisplay_export_pending)){
+  if(redisplay_export_pending)export_close(2);else{export_edit=0;export_notice=0;}
+  draw();return 1;
+ }
  if(event==4 || (event==1 && (key==27 || key==0x2d00))){
   if(event==1 && query_edit && key==27){query_edit=0;draw();return 1;}
+  if(redisplay_export_pending)export_close(2);
   if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();}
-  redisplay_search_pending=0;redisplay_active=visible=0;return key==0x2d00?0:1;
+  export_edit=0;redisplay_search_pending=0;redisplay_active=visible=0;return key==0x2d00?0:1;
  }
  if(event==2){if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();visible=0;}return 0;}
- if(event==3){if(search_step())draw();if(!visible){cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));visible=1;copy((word __far *)MK_FP(0xb800,0),view);hide();}return 0;}
+ if(event==3){if(export_step() || search_step())draw();if(!visible){cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));visible=1;copy((word __far *)MK_FP(0xb800,0),view);hide();}return 0;}
  if(event!=1)return 0;
+ if(redisplay_export_pending)return 1;
+ if(export_edit){
+  if((byte)key==13){
+   export_edit=0;
+   if(export_size){export_at=oldest_skip;export_phase=0;redisplay_export_pending=1;}
+  }else if((byte)key==8){if(export_size)export_path[--export_size]=0;}
+  else if((byte)key>=32 && (byte)key<127 && export_size<63){export_path[export_size++]=(byte)key;export_path[export_size]=0;}
+  draw();return 1;
+ }
  if(query_edit){
   if((byte)key==13){query_edit=0;search();}
   else if((byte)key==8){if(query_size)query[--query_size]=0;}
@@ -177,8 +230,11 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   case 0x5100:case 0x51e0:for(i=0;i<23 && next(top)<length;++i)top=next(top);break;
   case 0x4700:case 0x47e0:top=0;break;
   case 0x4f00:case 0x4fe0:bottom();break;
-  case '/':redisplay_search_pending=0;query_edit=1;query_size=0;query[0]=0;last_match=65535U;break;
-  case 0x3d00:search();break;
+  case 'w':case 'W':
+   if(length){export_edit=1;export_size=0;export_path[0]=0;export_notice=0;}else export_notice=5;
+   break;
+  case '/':export_notice=0;redisplay_search_pending=0;query_edit=1;query_size=0;query[0]=0;last_match=65535U;break;
+  case 0x3d00:export_notice=0;search();break;
   }
  }
  search_step();draw();return 1;

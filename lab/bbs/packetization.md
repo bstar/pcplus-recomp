@@ -188,3 +188,14 @@ buffering passes all seven audit checks. Neither saves a post. The recipes,
 serial settings, synthetic PRM and stock decoder are unchanged between runs.
 This supports a local buffering workaround, with no physical modem validation
 or general guarantee that TCP preserves a buffered write.
+
+## History export checkpoint
+
+The pair `editor-history-4ad7-immediate` / `editor-history-4ad7-buffer30` uses
+`4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05`.
+Both enter the unchanged stock ENiGMA editor, emit all eight measured keys and
+leave without saving. Immediate forwarding reproduces Home and Insert/overtype
+failures; explicit30 ms buffering passes all seven audit checks. Keyboard
+recipe, synthetic PRM, serial settings and decoder are unchanged between these
+runs. This supports the same local workaround, without physical-modem evidence
+or a guarantee that TCP preserves a buffered write.

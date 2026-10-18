@@ -10,11 +10,11 @@ must exclude original executables and private install/configuration data.
 The maintained terminal now includes directory editing/accounting, live settings
 with confirmed idle serial/profile/translation changes, XMODEM/YMODEM transfers,
 capture/snapshots/printer/monitor and serviced63,000-character redisplay with
-incremental search. All sixteen whole-application gates in `docs/FEATURES.md`
+incremental search and serviced append/CRLF history export. All sixteen whole-application gates in `docs/FEATURES.md`
 remain open. The numbered sections below retain earlier component evidence and
 historical checkpoints; their old run counts are not the current binary identity.
 
-The remaining work includes history export/clipboard, main menus/contextual help
+The remaining work includes filename clipboard, main menus/contextual help
 and complete settings/key editing; other terminal emulations and font/resource
 paths; remaining transfer families/external helpers; complete directory cycles
 and bindings; ASPECT compiler/interpreter/recorder; Host mode and storage; complete
@@ -435,7 +435,7 @@ chronological view, local Ctrl-PgUp navigation and ASCII case-insensitive
 incremental search/F3. Input, native capture/history and terminal replies continue
 while browsing; Escape restores the updated live screen. Independent actual DOS
 video/timer and peer evidence complements the linked native writer/viewer checks.
-See `docs/LIVE_REDISPLAY.md`. History export, filename clipboard and full F11
+See `docs/LIVE_REDISPLAY.md`. At that checkpoint, history export, filename clipboard and full F11
 remain open; no whole application gate is closed by this checkpoint.
 
 ### PROGRAM policy segmentation
@@ -447,3 +447,14 @@ DOS command handling. Near data/stack stays61,712 bytes. The expanded ABI checks
 validate33 configuration bridge pairs,81 total, and164 damaged frames/layouts.
 This is preparation for the remaining history export/clipboard work; all sixteen
 whole-application feature gates remain open.
+
+### Serviced frozen-history append
+
+W in redisplay appends the frozen chronological snapshot, expands CR to CRLF
+and exclusively creates a missing file. A fourth checked file owner excludes
+capture/snapshot/monitor aliases, retains partial-write evidence and ambiguous
+close state, and blocks child inheritance while unresolved.128-source-byte
+foreground chunks keep receive/keyboard service between writes. Verification
+combines27 linked inputs, three actual DOS workflows,167 ABI mutations,70 terminal
+commands and63 reproducible Nix outputs. Filename clipboard/full redisplay UI,
+other geometry and physical validation remain open; all F01–F16 gates remain open.

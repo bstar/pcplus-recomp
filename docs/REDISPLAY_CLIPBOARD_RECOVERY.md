@@ -1,7 +1,9 @@
 # Redisplay export and filename clipboard recovery
 
 This ledger records static original-product observations for remaining F11 work.
-It is not a claim that export or clipboard is implemented in the maintained app.
+[Serviced export](HISTORY_EXPORT.md) now implements the maintained file path;
+the filename clipboard remains unfinished. This ledger records the original
+static observations separately from those maintained behaviors.
 Original main executable SHA-256 is
 `6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904`.
 Resident exports live in ignored `analysis/pcplus-main/functions`; overlay exports
@@ -20,14 +22,14 @@ ring begins on that marker and stop at the recorded endpoint. Other bytes pass
 through unchanged. These observations need controlled original comparison before
 claiming complete empty/wrapped boundary fidelity.
 
-The maintained implementation should export the frozen chronological snapshot,
-keep serial input serviced between bounded writes, and use the existing checked
-DOS file ownership policy. CRLF expansion can make a full63,000-byte snapshot
+The maintained export now uses the frozen chronological snapshot, services
+serial input between bounded writes and uses the checked DOS file ownership
+policy; see [the implementation and validation](HISTORY_EXPORT.md). CRLF expansion can make a full63,000-byte snapshot
 larger than64KiB, so output totals must be32-bit and staging must be bounded.
 Existing-file append, missing-file exclusive create, denied/colliding paths,
 short writes, disk full, close ambiguity, cancellation and incoming data require
-independent coverage. This paragraph is an implementation plan, not recovered
-code or completed behavior.
+independent coverage. The maintained validation supplies that coverage; it does
+not establish recovery of the complete original UI.
 
 ## Clipboard observations
 

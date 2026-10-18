@@ -16,7 +16,8 @@ extern terminal_irq_vector,terminal_port_number,csi_unimplemented_service
 extern screen_attribute_cells,erase_attribute_values,erase_shadow_cells
 extern terminal_history_buffer
 extern terminal_redisplay_before,terminal_redisplay_idle,terminal_redisplay_stop
-extern _redisplay_search_pending
+extern _redisplay_search_pending,_redisplay_export_pending
+extern _history_file_event
 extern terminal_run_startup_setup
 extern terminal_setup_bind
 extern terminal_load_configuration
@@ -63,6 +64,13 @@ _small_code_:
  call _capture_session_initialize
  call _snapshot_file_initialize
  call _monitor_file_initialize
+ xor ax,ax
+ push ax
+ push ax
+ mov ax,2
+ push ax
+ call _history_file_event
+ add sp,6
  call _printer_device_initialize
  pop ax
  call terminal_parse_options
@@ -222,6 +230,8 @@ _small_code_:
  call terminal_redisplay_idle
  cmp word [_redisplay_search_pending],0
  jne .loop
+ cmp word [_redisplay_export_pending],0
+ jne .loop
  cmp word [terminal_tx_count],0
  jne .loop
  sti
@@ -315,6 +325,23 @@ terminal_shutdown:
  mov ah,9
  int 0x21
 .snapshot_closed:
+ xor ax,ax
+ push ax
+ push ax
+ mov ax,2
+ push ax
+ call _history_file_event
+ add sp,6
+ cmp ax,8 ; Only write/close/overflow/recovery failures affect final status.
+ jb .history_closed
+ cmp word [terminal_exit_code],0
+ jne .history_message
+ mov word [terminal_exit_code],12
+.history_message:
+ mov dx,history_failed
+ mov ah,9
+ int 0x21
+.history_closed:
  call _capture_session_shutdown
  or ax,ax
  jz .capture_closed
@@ -372,6 +399,7 @@ vector_active: db 0
 missing_port: db 'Selected COM port is not listed by the BIOS.',13,10,'$'
 unsupported: db 13,10,'Unsupported terminal function; terminal stopped.',13,10,'$'
 unsupported_keyboard: db 13,10,'Unsupported keyboard binding or local command; terminal stopped.',13,10,'$'
+history_failed: db 13,10,'History file could not be completed. Partial output may remain.',13,10,'$'
 flow_cleanup_failed: db 13,10,'Could not resume software flow before exit.',13,10,'$'
 macro_failed: db 13,10,'TEXT action timed out; terminal stopped.',13,10,'$'
 accounting_failed: db 13,10,'Call statistics save needs attention. Check directory recovery files.',13,10,'$'

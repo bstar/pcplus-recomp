@@ -50,7 +50,9 @@ and dynamic-overlay work remains open.
 Ctrl-PgUp now opens [serviced redisplay](docs/LIVE_REDISPLAY.md): 63,000 characters
 of history, line/page navigation, case-insensitive search and a preserved live
 screen. Incoming input and terminal replies continue while browsing. Escape
-returns to the updated terminal; history export and clipboard remain open.
+returns to the updated terminal. **W** appends the frozen history to a DOS file
+while incoming data continues; see [history export](docs/HISTORY_EXPORT.md) for
+path, cancellation and partial-write behavior. Filename clipboard remains open.
 
 ## Build and run in DOS
 

@@ -17,6 +17,7 @@ typedef struct capture_file_snapshot {
 extern capture_file_snapshot capture_file_result;
 extern capture_file_snapshot snapshot_file_result;
 extern capture_file_snapshot monitor_file_result;
+extern capture_file_snapshot history_file_result;
 /* DATA cookie initializes dirty assembly-host BSS once. Repeated initialization
  * preserves resolved history and refuses open/ambiguous ownership unchanged. */
 unsigned __cdecl capture_file_initialize(void);
@@ -43,7 +44,7 @@ unsigned __cdecl capture_file_close(void);
 /* Idle cleanup is harmless; all prior fatal statuses remain observable. */
 unsigned __cdecl capture_file_cleanup(void);
 /* Second fixed independent owner with the same96-byte ABI and statuses.
- * All three owners protect input spans against all snapshots and all descriptors.
+ * All four owners protect input spans against all snapshots and all descriptors.
  * DOS3+21h/60h canonicalization precedes IO; an open/uncertain other owner of
  * the same canonical DOS identity rejects CF_BUSY without mutating either.
  * The admitted absolute identity is used for subsequent filesystem calls.
@@ -66,4 +67,12 @@ unsigned __cdecl monitor_file_begin(const char *path,unsigned mode);
 unsigned __cdecl monitor_file_append(const void *data,unsigned count);
 unsigned __cdecl monitor_file_close(void);
 unsigned __cdecl monitor_file_cleanup(void);
+/* Fourth fixed owner for redisplay history, append-only. The event adapter uses
+ * three near-cdecl words so a single checked far callback owns the DOS boundary.
+ * BEGIN initializes its descriptor, appends an existing file or exclusively
+ * creates a missing file. WRITE accepts the same bounded near bytes as append.
+ * CLOSE is idempotent for an unused owner and never retries an ambiguous close.
+ */
+enum { HISTORY_BEGIN=0,HISTORY_WRITE=1,HISTORY_CLOSE=2 };
+unsigned __cdecl history_file_event(unsigned operation,const void *data,unsigned count);
 #endif

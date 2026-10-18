@@ -8,7 +8,7 @@ toolchains. These results do not establish physical Wi-Fi modem compatibility.
 
 ## Latest editor-tested build
 
-This runtime includes serviced 63 KB redisplay, confirmed live input-mode changes, bounded default-XLT
+This runtime includes serviced 63 KB redisplay and frozen-history export, confirmed live input-mode changes, bounded default-XLT
 PCPLUS directory lookup, saved translation modes, explicit XLT input translation,
 confirmed idle COM switching and supported profile changes. The BBS probes use
 saved mode0 (identity) without /X.
@@ -16,21 +16,22 @@ The editor probes below exercise ordinary BBS editing with that binary; actual
 Alt-F10 application is
 proved separately in [the live settings report](../../docs/validation/setup-live.json).
 Ctrl-PgUp browsing is exercised separately in [the redisplay report](../../docs/validation/redisplay-live.json).
+W export is exercised separately in [the history report](../../docs/validation/history-export.json); the editor probes use ordinary editing without opening redisplay.
 
 DOS executable SHA-256:
-`27df52265883ec63702e40e38d3feadde787459cdd2cf89c084d30dc3ef9577b`.
+`4ad7d3a2e4ad760149c95fe09c4ee96f29855d8aa9173e1819eb4db1e78d3d05`.
 
 | Server / modem forwarding | Result | Evidence |
 | --- | --- | --- |
-| Synchronet 3.22a development snapshot / HARD COM2/19200, immediate | All 12 audit checks and eight key-wire checks pass; draft aborted | `editor-redisplay-27df-hard-listener`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
+| Synchronet 3.22a development snapshot / HARD COM2/19200, immediate | All 12 audit checks and eight key-wire checks pass; draft aborted | `editor-history-4ad7-hard`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
 | ENiGMA½ 0.5.1-beta / immediate | Correct outgoing keys; Home and Insert/overtype fail | Current paired experiment below |
 | Same ENiGMA / explicit 30 ms buffering | All seven audited checks and eight key-wire checks pass; closes unsaved | Current paired experiment below |
 
 The ENiGMA pair uses the same DOS executable, keyboard recipe, synthetic PRM,
 serial settings and unchanged stock decoder. Only the modem's explicit
 `packet_delay_ms` differs. Server/user state is not reset between runs.
-Retained labels are `editor-redisplay-27df-buffer30` and
-`editor-redisplay-27df-immediate`; full hashes and checks are in
+Retained labels are `editor-history-4ad7-buffer30` and
+`editor-history-4ad7-immediate`; full hashes and checks are in
 [the paired report](../../docs/validation/bbs-enigma-packetization.json).
 
 The checked ENiGMA source, commit
@@ -52,8 +53,8 @@ default and packet-buffering results; it is not a supported BBS profile.
 The first redisplay Synchronet attempt, `editor-redisplay-27df-hard`, received
 connection refused because the owned listener was unavailable. Its failed
 prerequisite evidence is retained separately. Restarting the existing listener
-and retrying produced the passing editor run above; this does not establish why
-the previous listener stopped.
+and retrying passed that earlier redisplay build; both attempts remain in the
+report history. This does not establish why the previous listener stopped.
 
 An earlier screen-print checkpoint’s first Synchronet run was ended by a forced
 maintenance event before the editor opened. That prerequisite failure is retained. The current run retains

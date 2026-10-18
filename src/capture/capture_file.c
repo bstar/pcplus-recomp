@@ -8,7 +8,7 @@ ABI(handle_open,10);ABI(handle_uncertain,12);ABI(write_calls,14);ABI(close_calls
 ABI(reserved,18);ABI(start_size,20);ABI(written,24);ABI(current_size,28);ABI(path,32);
 typedef char cf_size[sizeof(capture_file_snapshot)==96?1:-1];
 typedef char cf_word[sizeof(unsigned)==2?1:-1];
-capture_file_snapshot capture_file_result,snapshot_file_result,monitor_file_result;
+capture_file_snapshot capture_file_result,snapshot_file_result,monitor_file_result,history_file_result;
 typedef struct capture_owner {
  unsigned cookie;
  int handle;
@@ -18,10 +18,11 @@ typedef struct capture_owner {
 typedef char cf_owner_size[sizeof(capture_owner)==134?1:-1];
 /* Fixed DATA descriptors, never caller-provided contexts. Each cookie protects
  * independent dirty assembly-host BSS; other-owner initialization is isolated. */
-static capture_owner owners[3]={
+static capture_owner owners[4]={
  {0xcf10,-1,&capture_file_result,{0}},
  {0xcf10,-1,&snapshot_file_result,{0}},
- {0xcf10,-1,&monitor_file_result,{0}}
+ {0xcf10,-1,&monitor_file_result,{0}},
+ {0xcf10,-1,&history_file_result,{0}}
 };
 static unsigned extent(const void *p,unsigned n)
 {return p && (unsigned long)(unsigned)p+n<=65536UL;}
@@ -31,7 +32,7 @@ static unsigned safe(const void *p,unsigned n)
 {
  return extent(p,n) && disjoint(p,n,&capture_file_result,sizeof(capture_file_result)) &&
  disjoint(p,n,&snapshot_file_result,sizeof(snapshot_file_result)) &&
- disjoint(p,n,&monitor_file_result,sizeof(monitor_file_result)) && disjoint(p,n,owners,sizeof(owners));
+ disjoint(p,n,&monitor_file_result,sizeof(monitor_file_result)) && disjoint(p,n,&history_file_result,sizeof(history_file_result)) && disjoint(p,n,owners,sizeof(owners));
 }
 static unsigned fold(unsigned c){return c>='a' && c<='z'?c-32:c;}
 static unsigned leaf(const char *s,unsigned n)
@@ -121,7 +122,7 @@ static unsigned begin(capture_owner *owner,const char *path,unsigned mode)
  }
  /* DOS canonical identity, not a lexical string comparison. Never reset or
   * close the other owner, including a handle whose close is ambiguous. */
- for(i=0;i<3;++i){
+ for(i=0;i<4;++i){
   other=&owners[i];
   if(other!=owner && other->cookie==0xcf11 &&
      (other->result->handle_open || other->result->handle_uncertain) &&
@@ -200,3 +201,16 @@ unsigned __cdecl monitor_file_begin(const char *p,unsigned mode){return begin(&o
 unsigned __cdecl monitor_file_append(const void *p,unsigned n){return append(&owners[2],p,n);}
 unsigned __cdecl monitor_file_close(void){return close_file(&owners[2]);}
 unsigned __cdecl monitor_file_cleanup(void){return cleanup(&owners[2]);}
+
+unsigned __cdecl history_file_event(unsigned operation,const void *data,unsigned count)
+{
+ capture_owner *owner=&owners[3];unsigned status;
+ if(operation>HISTORY_CLOSE)return CF_ARGUMENT;
+ if(owner->cookie==0xcf10){status=initialize(owner);if(status)return status;}
+ if(operation==HISTORY_WRITE)return append(owner,data,count);
+ if(operation==HISTORY_CLOSE)return cleanup(owner);
+ status=begin(owner,(const char *)data,CF_APPEND);
+ if(status==CF_INSPECT && owner->result->dos_error==2)
+  status=begin(owner,(const char *)data,CF_NEW);
+ return status;
+}
