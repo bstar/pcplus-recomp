@@ -19,15 +19,15 @@ def inspect_terminal_memory(binary,map_path):
   return struct.unpack_from('<H',image,at)[0]
  shadow=address('erase_shadow_cells');history=address('terminal_history_buffer');far_end=address('terminal_far_storage_end');stack_end=address('terminal_stack_top')
  far_seg,shadow_off=symbols['erase_shadow_cells'];history_seg,history_off=symbols['terminal_history_buffer']
- assert far_seg==history_seg==symbols['terminal_far_storage_end'][0]
- assert history-shadow==8192 and far_end-shadow==12288
+ assert history_seg==symbols['terminal_far_storage_end'][0] and far_seg!=history_seg
+ assert far_end-history==63000 and history>=shadow+8192
  assert far_end<=near_start or shadow>=near_start+near_size,'Far storage overlaps DGROUP'
- assert shadow_off+12288<=65536,'Far storage wraps itssegment'
+ assert shadow_off+8192<=65536 and history_off+63000<=65536,'Far storage wraps its segment'
  assert stack_end==near_start+near_size,'STACK end must cover all near data'
  assert word('erase_shadow_segment')==far_seg and word('erase_shadow_offset')==shadow_off
- assert word('terminal_history_start')==history_off and word('terminal_history_end')==history_off+4096
+ assert word('terminal_history_start')==history_off and word('terminal_history_end')==history_off+63000
  assert word('terminal_history_pointer')==history_off
- assert struct.unpack_from('<H',image,start+address('terminal_history_pointer')+2)[0]==far_seg
+ assert struct.unpack_from('<H',image,start+address('terminal_history_pointer')+2)[0]==history_seg
  # Every serialized segment pointer must actually have an MZ relocation.
  relocations={seg*16+off for off,seg in (struct.unpack_from('<HH',image,header[12]+i*4) for i in range(header[3]))}
  assert address('erase_shadow_segment') in relocations
@@ -45,7 +45,7 @@ def inspect_terminal_memory(binary,map_path):
   extra={'snapshot_relative_segment':frozen_seg,'snapshot_image_offset':frozen_off,'snapshot_bytes':2000,'snapshot_end_linear':frozen_end}
  # Independent full-screen owners must never alias across nested UI/EXEC.
  ui_buffers={}
- for name in ('browser_screen','ed_screen','program_screen'):
+ for name in ('browser_screen','ed_screen','program_screen','redisplay_live','redisplay_view'):
   if name not in symbols:continue
   lo=address(name);hi=address(name+'_end');seg,off=symbols[name]
   assert hi-lo==4000 and off+4000<=65536,(name,'invalid UI screen extent')
@@ -58,9 +58,20 @@ def inspect_terminal_memory(binary,map_path):
   ui_buffers[name]=dict(relative_segment=seg,offset=off,bytes=4000,start_linear=lo,end_linear=hi)
   static_end=max(static_end,hi)
  if ui_buffers:
-  assert len(ui_buffers)==3,'Incomplete terminal UI screen ownership'
+  assert len(ui_buffers)==5,'Incomplete terminal UI screen ownership'
   assert len({b['relative_segment'] for b in ui_buffers.values()})==1
-  extra.update(ui_screen_buffers=ui_buffers,far_ui_storage_bytes=12000)
+  extra.update(ui_screen_buffers=ui_buffers,far_ui_storage_bytes=20000)
+ # Frozen redisplay bytes are independent of the live history writer.
+ snap_lo=address('redisplay_snapshot');snap_hi=address('redisplay_snapshot_end')
+ snap_seg,snap_off=symbols['redisplay_snapshot']
+ assert snap_hi-snap_lo==63000 and snap_off+63000<=65536
+ assert snap_lo>=module_bytes and (snap_hi<=near_start or snap_lo>=near_start+near_size)
+ assert snap_hi<=shadow or snap_lo>=far_end
+ if 'terminal_snapshot_image' in symbols:assert snap_hi<=frozen or snap_lo>=frozen_end,'Frozen redisplay overlaps screen snapshot'
+ assert word('redisplay_snapshot_segment')==snap_seg and address('redisplay_snapshot_segment') in relocations
+ for buf in ui_buffers.values():assert snap_hi<=buf['start_linear'] or snap_lo>=buf['end_linear']
+ static_end=max(static_end,snap_hi)
+ extra.update(redisplay_snapshot_bytes=63000,redisplay_snapshot_end_linear=snap_hi)
  # All executable segments must fit their real-mode segment and survive EXEC.
  code_segments=[]
  for name,kind,group,cseg,coff,csize in re.findall(r'^(\w+)\s+(CODE|FARCODE)\s+(\S+)\s+([0-9a-f]{4}):([0-9a-f]{4})\s+([0-9a-f]+)',listing,re.M|re.I):
@@ -185,9 +196,17 @@ def inspect_terminal_memory(binary,map_path):
     else:assert len(fields)==3
     near_call(name+'_resident',target,prefix=prefix,suffix=suffix)
    config_bridges+=1
-  assert config_bridges==30,'Incomplete configuration ABI validation'
+  assert config_bridges==31,'Incomplete configuration ABI validation'
   bridges+=config_bridges
   extra['configuration_bridge_pairs_verified']=config_bridges
+ redisplay_bridges=0
+ for name in ('terminal_redisplay_key','terminal_redisplay_before','terminal_redisplay_idle','terminal_redisplay_stop'):
+  assert symbols[name][0]==near_code['relative_segment']
+  assert symbols[name+'_far'][0]==symbols[name+'_impl'][0]==symbols['terminal_config_code_start'][0]
+  far_call(name,name+'_far');near_call(name+'_far',name+'_impl')
+  redisplay_bridges+=1
+ bridges+=redisplay_bridges
+ extra['redisplay_bridge_pairs_verified']=redisplay_bridges
  extra.update(resident_code_bytes=near_code['bytes'],resident_code_spare_bytes=65536-near_code['bytes'],code_segments=code_segments,far_code_bridge_pairs_verified=bridges)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'
@@ -195,4 +214,4 @@ def inspect_terminal_memory(binary,map_path):
  assert allocated>=static_end,'MZ minimum allocation does not cover static storage'
  assert header[7]*16+header[8]==stack_end,'MZ SS:SP differs from linkedSTACK'
  assert retained+16<0xa000,'Static DOS parent cannot fit conventional memory'
- return {'near_bytes':near_size,'near_spare_bytes':65536-near_size,'near_relative_segment':ds,'far_relative_segment':far_seg,'shadow_offset':shadow_off,'history_offset':history_off,'far_bytes':12288,'far_end_linear':far_end,'stack_end_linear':stack_end,'loaded_module_bytes':module_bytes,'minimum_allocated_module_bytes':allocated,'retained_parent_paragraphs':retained+16,'far_pointer_relocations_verified':True,**extra}
+ return {'near_bytes':near_size,'near_spare_bytes':65536-near_size,'near_relative_segment':ds,'far_relative_segment':far_seg,'shadow_offset':shadow_off,'history_offset':history_off,'far_bytes':71192,'history_relative_segment':history_seg,'history_bytes':63000,'far_end_linear':far_end,'stack_end_linear':stack_end,'loaded_module_bytes':module_bytes,'minimum_allocated_module_bytes':allocated,'retained_parent_paragraphs':retained+16,'far_pointer_relocations_verified':True,**extra}

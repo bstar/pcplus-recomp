@@ -80,10 +80,10 @@ def main():
  check('count-video-buffer-wrap-denied-before-I-O-and-zero-count-noop',bounds)
  def layout():
   mp=ROOT/'build/terminal/terminal.map';listing=mp.read_text();image=BINARY.read_bytes();header=struct.unpack_from('<14H',image);start=header[4]*16
-  m=Screens();good=inspect_terminal_memory(BINARY,mp);assert good['far_ui_storage_bytes']==12000
+  m=Screens();good=inspect_terminal_memory(BINARY,mp);assert good['far_ui_storage_bytes']==20000
   def file_at(name):return start+m.symbols[name]-m.base
   mutants=[]
-  for name in ('browser_screen','ed_screen','program_screen'):
+  for name in ('browser_screen','ed_screen','program_screen','redisplay_live','redisplay_view'):
    pointer=file_at(name+'_segment');bad=bytearray(image);bad[pointer]^=1
    mutants.append((name+'-wrong-segment',bad,listing,'invalid relocated segment pointer'))
    bad=bytearray(image);wanted=pointer-start
@@ -112,7 +112,7 @@ def main():
     except AssertionError as error:assert reason in str(error),(label,error)
     else:raise AssertionError(('Invalid layout accepted',label))
   return len(mutants)
- check('three-relocated-private-owners-and-eight-invalid-layouts-rejected',layout)
+ check('five-relocated-private-owners-and-twelve-invalid-layouts-rejected',layout)
  result=dict(passed=True,binary_sha256=hashlib.sha256(BINARY.read_bytes()).hexdigest(),cases=cases,source_sha256={p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in ['standalone/check_ui_screen_far.py','src/terminal/ui_screen_far.asm']},scope='Real linked far screen helpers and recovered packed-cell read/write routines with modeled memory/CGA ports; all registers and DS=SS ABI checked. Literal cells, nested owners, pages, monochrome and exact64K/overflow boundaries verified. Actual DOS browser/editor/PROGRAM and retained allocation are separate tests; physical CGA timing is not established.')
  (ROOT/'build/terminal/ui-screen-far-checks.json').write_text(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':main()

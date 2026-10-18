@@ -89,3 +89,12 @@ change does not relabel those results as a new BBS run.
 This migration supports further application reconstruction. Complete original UI,
 help, settings, scripting, protocols, dynamic overlays and physical-machine
 validation remain open in the full feature plan.
+
+
+The [serviced redisplay](LIVE_REDISPLAY.md) checkpoint adds two independent raw
+4000-byte live/view frames to UI_STORAGE (20,000 bytes total), plus a distinct
+63,000-byte frozen history copy. The three existing packed-cell frames retain
+their formats and ownership. MZ/map validation now checks all five UI extents
+and their segment relocations; frame helpers reject twelve mutated layouts.
+The native 63,000-byte live ring occupies its own segment and PROGRAM retains
+all new extents. This is static far storage rather than dynamic overlay loading.

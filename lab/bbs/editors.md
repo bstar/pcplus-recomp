@@ -492,3 +492,17 @@ and aborts the draft. ENiGMA `editor-live-xlt-5689-immediate` emits every measur
 key but fails Home and Insert/overtype. The paired
 `editor-live-xlt-5689-buffer30` passes all seven audit and eight wire checks. Both
 ENiGMA drafts close unsaved. The immediate aggregate stays false.
+
+## Serviced redisplay checkpoint
+
+Build27df5226 adds 63 KB redisplay and incremental search. These editor probes
+use saved identity translation and ordinary editing, without opening redisplay.
+Synchronet `editor-redisplay-27df-hard-listener` passes all12 audit and eight
+wire checks and aborts the draft. The preceding `editor-redisplay-27df-hard`
+received connection refused before editor entry; its prerequisite failure is
+retained separately from the successful listener restart and retry.
+ENiGMA `editor-redisplay-27df-immediate` enters the stock editor and emits all
+eight measured keys, but Home and Insert/overtype fail. The matched
+`editor-redisplay-27df-buffer30` passes all seven audit and eight wire checks.
+Both leave without saving. This loopback experiment does not establish physical
+modem compatibility or guaranteed TCP packet boundaries.

@@ -8,28 +8,29 @@ toolchains. These results do not establish physical Wi-Fi modem compatibility.
 
 ## Latest editor-tested build
 
-This runtime includes confirmed live input-mode changes, bounded default-XLT
+This runtime includes serviced 63 KB redisplay, confirmed live input-mode changes, bounded default-XLT
 PCPLUS directory lookup, saved translation modes, explicit XLT input translation,
 confirmed idle COM switching and supported profile changes. The BBS probes use
 saved mode0 (identity) without /X.
 The editor probes below exercise ordinary BBS editing with that binary; actual
 Alt-F10 application is
 proved separately in [the live settings report](../../docs/validation/setup-live.json).
+Ctrl-PgUp browsing is exercised separately in [the redisplay report](../../docs/validation/redisplay-live.json).
 
 DOS executable SHA-256:
-`5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba`.
+`27df52265883ec63702e40e38d3feadde787459cdd2cf89c084d30dc3ef9577b`.
 
 | Server / modem forwarding | Result | Evidence |
 | --- | --- | --- |
-| Synchronet 3.22a development snapshot / HARD COM2/19200, immediate | All 12 audit checks and eight key-wire checks pass; draft aborted | `editor-live-xlt-5689-hard`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
+| Synchronet 3.22a development snapshot / HARD COM2/19200, immediate | All 12 audit checks and eight key-wire checks pass; draft aborted | `editor-redisplay-27df-hard-listener`, actual DOS rerun; [editor report](../../docs/validation/bbs-editors.json) |
 | ENiGMA½ 0.5.1-beta / immediate | Correct outgoing keys; Home and Insert/overtype fail | Current paired experiment below |
 | Same ENiGMA / explicit 30 ms buffering | All seven audited checks and eight key-wire checks pass; closes unsaved | Current paired experiment below |
 
 The ENiGMA pair uses the same DOS executable, keyboard recipe, synthetic PRM,
 serial settings and unchanged stock decoder. Only the modem's explicit
 `packet_delay_ms` differs. Server/user state is not reset between runs.
-Retained labels are `editor-live-xlt-5689-buffer30` and
-`editor-live-xlt-5689-immediate`; full hashes and checks are in
+Retained labels are `editor-redisplay-27df-buffer30` and
+`editor-redisplay-27df-immediate`; full hashes and checks are in
 [the paired report](../../docs/validation/bbs-enigma-packetization.json).
 
 The checked ENiGMA source, commit
@@ -47,6 +48,12 @@ although the multi-line view offers Ctrl-A for Home, the stock compose form
 intercepts it to change the subject. The actual DOS candidate emits the expected
 controls but fails editing checks. Its paired report remains separate from the
 default and packet-buffering results; it is not a supported BBS profile.
+
+The first redisplay Synchronet attempt, `editor-redisplay-27df-hard`, received
+connection refused because the owned listener was unavailable. Its failed
+prerequisite evidence is retained separately. Restarting the existing listener
+and retrying produced the passing editor run above; this does not establish why
+the previous listener stopped.
 
 An earlier screen-print checkpoint’s first Synchronet run was ended by a forced
 maintenance event before the editor opened. That prerequisite failure is retained. The current run retains
@@ -126,9 +133,9 @@ serial forwarding before changing key mappings. Then repeat on the physical
 BBS configurations remain unverified.
 
 
-## Current matched Synchronet flow comparison
+## Retained matched Synchronet flow comparison
 
-`editor-com-0666-soft-pair` and `editor-live-xlt-5689-hard` use the same
+`editor-com-0666-soft-pair` and `editor-com-0666-hard-pair` use the same
 COM2/19200/8N1, source-built runtime, complete keyboard recipe, harness sources
 and synthetic PRM except its SOFT/HARD words. The SOFT run passes11/12 editor
 checks but consumes the single emitted Ctrl-Q as XON in the modem model, leaving
@@ -142,7 +149,8 @@ and both recipes explicitly clear the synthetic body line. See the
 
 The initial current HARD run, `editor-com-0666-hard-clean`, also passed all12
 checks. It is retained with the failed SOFT run in editor history; the matched
-HARD control is selected for the current aggregate. Earlier editor and buffering
+HARD control remains in the matched flow report; the latest editor aggregate
+uses the separately identified redisplay build above. Earlier editor and buffering
 checkpoints remain in their reports. No older menu/transfer results are relabeled.
 
 ## Earlier live-settings preparation and flow boundary

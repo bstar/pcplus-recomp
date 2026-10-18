@@ -5,6 +5,23 @@ works with the intended RS-232 Wi-Fi modem/BBS setup. A diagnostic or patched
 original is an intermediate result, not completion. Public repository changes
 must exclude original executables and private install/configuration data.
 
+## Current application work
+
+The maintained terminal now includes directory editing/accounting, live settings
+with confirmed idle serial/profile/translation changes, XMODEM/YMODEM transfers,
+capture/snapshots/printer/monitor and serviced63,000-character redisplay with
+incremental search. All sixteen whole-application gates in `docs/FEATURES.md`
+remain open. The numbered sections below retain earlier component evidence and
+historical checkpoints; their old run counts are not the current binary identity.
+
+The remaining work includes history export/clipboard, main menus/contextual help
+and complete settings/key editing; other terminal emulations and font/resource
+paths; remaining transfer families/external helpers; complete directory cycles
+and bindings; ASPECT compiler/interpreter/recorder; Host mode and storage; complete
+startup/schema/default generation, packaging and target hardware validation.
+Modern BBS interaction and independent source-only rebuilding remain required
+regressions across that work. Physical Wi-Fi modem testing is still outstanding.
+
 ## 1. Serial driver — active
 
 - [x] Recover resident UART instructions with source provenance.
@@ -411,3 +428,12 @@ file/accounting assertions, an actual terminal PROGRAM-child context/allocation
 check and all45 terminal regression commands. The candidate still passes389
 inputs; a fresh checkout reproduces60 identical outputs. Live setup/commit and
 canonical namespace/generation ownership remain explicit subsequent work.
+
+
+Serviced redisplay now adds the advertised63,000-byte history capacity, a frozen
+chronological view, local Ctrl-PgUp navigation and ASCII case-insensitive
+incremental search/F3. Input, native capture/history and terminal replies continue
+while browsing; Escape restores the updated live screen. Independent actual DOS
+video/timer and peer evidence complements the linked native writer/viewer checks.
+See `docs/LIVE_REDISPLAY.md`. History export, filename clipboard and full F11
+remain open; no whole application gate is closed by this checkpoint.

@@ -14,6 +14,9 @@ extern uart_receive_byte,uart_rx_dropped,uart_port_rbr
 extern terminal_baud_low,terminal_baud_high,terminal_parity,terminal_data_bits,terminal_stop_bits
 extern terminal_irq_vector,terminal_port_number,csi_unimplemented_service
 extern screen_attribute_cells,erase_attribute_values,erase_shadow_cells
+extern terminal_history_buffer
+extern terminal_redisplay_before,terminal_redisplay_idle,terminal_redisplay_stop
+extern _redisplay_search_pending
 extern terminal_run_startup_setup
 extern terminal_setup_bind
 extern terminal_load_configuration
@@ -142,8 +145,14 @@ _small_code_:
  mov es,ax
  xor ax,ax
  mov di,erase_shadow_cells
- ; FAR_STORAGE is contiguous8192-byte shadow plus4096-byte history.
- mov cx,6144
+ ; Separate native shadow and full63000-byte history segments.
+ mov cx,4096
+ rep stosw
+ mov ax,seg terminal_history_buffer
+ mov es,ax
+ xor ax,ax
+ mov di,terminal_history_buffer
+ mov cx,31500
  rep stosw
  push ds
  pop es
@@ -198,6 +207,7 @@ _small_code_:
  call uart_receive_byte
  cmp ax,0xffff
  je .idle
+ call terminal_redisplay_before
  call terminal_connection_receive
  jc .loop
  call terminal_monitor_filter
@@ -209,6 +219,9 @@ _small_code_:
  call terminal_receive_input
  jmp .loop
 .idle:
+ call terminal_redisplay_idle
+ cmp word [_redisplay_search_pending],0
+ jne .loop
  cmp word [terminal_tx_count],0
  jne .loop
  sti
@@ -250,6 +263,7 @@ terminal_shutdown:
  mov ss,ax
  mov sp,terminal_stack_top
  sti
+ call terminal_redisplay_stop
  call terminal_break_cancel
  call terminal_macro_cancel
  call terminal_program_cancel

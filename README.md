@@ -46,6 +46,12 @@ in far storage: browser, nested editor and PROGRAM retain separate full frames,
 leaving13,152 bytes of capacity for more shared data/stack definitions. Full application
 and dynamic-overlay work remains open.
 
+
+Ctrl-PgUp now opens [serviced redisplay](docs/LIVE_REDISPLAY.md): 63,000 characters
+of history, line/page navigation, case-insensitive search and a preserved live
+screen. Incoming input and terminal replies continue while browsing. Escape
+returns to the updated terminal; history export and clipboard remain open.
+
 ## Build and run in DOS
 
 Requires Nix with flakes; the wrapper enables its required experimental features.

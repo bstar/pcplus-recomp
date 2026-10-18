@@ -5,6 +5,7 @@ BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
 extern pcplus_screen_save,pcplus_screen_restore,pcplus_flow_message
+extern terminal_redisplay_stop
 global terminal_connection_notice,terminal_connection_notice_restore
 %macro save 0
  push bp
@@ -29,6 +30,8 @@ global terminal_connection_notice,terminal_connection_notice_restore
 %endmacro
 terminal_connection_notice:
  save
+ ; Notices own the live screen, never a cached history-page underlay.
+ call terminal_redisplay_stop
  cmp byte [notice_active],0
  jne .draw
  mov ax,notice_cells

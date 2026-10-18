@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Linked far metadata/history, RIS and retained EXEC floor; hardware-only models."""
-import argparse,hashlib,json,struct
+import argparse,hashlib,json,struct,re
 from pathlib import Path
 from unicorn.x86_const import *
 ROOT=Path(__file__).resolve().parents[1]
@@ -36,38 +36,39 @@ def main():
   m=FarReset();shadow=m.get('erase_shadow_segment')*16+m.get('erase_shadow_offset');history=m.get('terminal_history_pointer',4)
   assert shadow==m.symbols['erase_shadow_cells'] and m.get('erase_shadow_segment')!=m.ds
   assert (history>>16)*16+(history&65535)==m.symbols['terminal_history_buffer']
-  assert m.get('terminal_history_start')==(history&65535) and m.get('terminal_history_end')-m.get('terminal_history_start')==4096
-  assert m.symbols['terminal_history_buffer']==shadow+8192 and m.symbols['terminal_far_storage_end']==shadow+12288
+  assert m.get('terminal_history_start')==(history&65535) and m.get('terminal_history_end')-m.get('terminal_history_start')==63000
+  assert m.symbols['terminal_history_buffer']>=shadow+8192 and m.symbols['terminal_far_storage_end']-m.symbols['terminal_history_buffer']==63000
   assert shadow>=m.data_base+m.offset('terminal_stack_top')
-  assert m.get('terminal_snapshot_image_segment')*16+m.offset('terminal_snapshot_image')%16==m.symbols['terminal_snapshot_image']
+  snapshot_offset=int(re.search(r'^[0-9a-f]{4}:([0-9a-f]{4})[*+ ]+\s+terminal_snapshot_image\s*$',a.map.read_text(),re.M|re.I)[1],16)
+  assert m.get('terminal_snapshot_image_segment')*16+snapshot_offset==m.symbols['terminal_snapshot_image']
   assert m.symbols['terminal_snapshot_image_end']-m.symbols['terminal_snapshot_image']==2000
  check('actual-linker-far-relocations-and-full-storage-extents-outside-DGROUP',pointers)
  def native_far():
-  m=FarReset();put(m,'erase_shadow_cells',b'\xa5'*8192);put(m,'terminal_history_buffer',b'\x5a'*4096);seg=m.get('erase_shadow_segment');off=m.get('erase_shadow_offset')
+  m=FarReset();put(m,'erase_shadow_cells',b'\xa5'*8192);put(m,'terminal_history_buffer',b'\x5a'*63000);seg=m.get('erase_shadow_segment');off=m.get('erase_shadow_offset')
   m.call('erase_far_fill',[8,0x3412,off,seg],cleanup=8);assert read(m,'erase_shadow_cells',16)==b'\x34\x12'*8
   m.call('erase_far_move',[8,off,seg,off+4,seg],cleanup=10);assert read(m,'erase_shadow_cells',20)==b'\x34\x12'*10
-  assert read(m,'terminal_history_buffer',4096)==b'\x5a'*4096
+  assert read(m,'terminal_history_buffer',63000)==b'\x5a'*63000
  check('actual-native-far-fill-overlapping-move-segment-differs-fromDS',native_far)
  def history():
-  m=FarReset();put(m,'erase_shadow_cells',b'\xa5'*8192);put(m,'terminal_history_buffer',b'\x5a'*4096)
-  for byte,count in [(65,4096),(66,17)]:
+  m=FarReset();put(m,'erase_shadow_cells',b'\xa5'*8192);put(m,'terminal_history_buffer',b'\x5a'*63000)
+  for byte,count in [(65,63000),(66,17)]:
    for _ in range(count):m.call('terminal_history_character',[byte],cleanup=2)
-  assert read(m,'terminal_history_buffer',4096)==b'B'*17+b'A'*(4096-17)
+  assert read(m,'terminal_history_buffer',63000)==b'B'*17+b'A'*(63000-17)
   assert m.get('terminal_history_pointer')==m.get('terminal_history_start')+17 and m.get('terminal_history_wrapped')==1
   assert read(m,'erase_shadow_cells',8192)==b'\xa5'*8192
- check('actual-history-LES-ring-full4096-and-wrap-with-shadow-canary',history)
+ check('actual-history-LES-ring-full63000-and-wrap-with-shadow-canary',history)
  def reset():
   m=FarReset();m.call('csi_clear_tabs',[1]);m.call('terminal_clear_home');assert m.call('terminal_reset_capture')==0
-  put(m,'erase_shadow_cells',b'\xa5'*8192);put(m,'terminal_history_buffer',b'\x5a'*4096);m.feed(b'\x1bc')
-  assert read(m,'erase_shadow_cells',8192)==bytes(8192) and read(m,'terminal_history_buffer',4096)==b'\x5a'*4096
+  put(m,'erase_shadow_cells',b'\xa5'*8192);put(m,'terminal_history_buffer',b'\x5a'*63000);m.feed(b'\x1bc')
+  assert read(m,'erase_shadow_cells',8192)==bytes(8192) and read(m,'terminal_history_buffer',63000)==b'\x5a'*63000
  check('real-RIS-far-shadow-clear-preserves-full-history',reset)
  def retain():
-  m=FarProgram([0x1c0d]);shadow=bytes((i*13)%256 for i in range(8192));history=bytes((i*17)%256 for i in range(4096));put(m,'erase_shadow_cells',shadow);put(m,'terminal_history_buffer',history)
+  m=FarProgram([0x1c0d]);shadow=bytes((i*13)%256 for i in range(8192));history=bytes((i*17)%256 for i in range(63000));put(m,'erase_shadow_cells',shadow);put(m,'terminal_history_buffer',history)
   frozen=bytes((i*19)%256 for i in range(2000));put(m,'terminal_snapshot_image',frozen)
   expected=(max(m.symbols['terminal_stack_top'],m.symbols['terminal_far_storage_end'],m.symbols['terminal_snapshot_image_end'])+15)//16-m.get('process_psp')
   assert m.get('process_keep_paragraphs')==m.get('process_minimum_paragraphs')==expected
   assert m.queue(b'OWNED.COM')==0;m.safe();assert len(m.children)==1 and 0x4a in m.calls
-  assert read(m,'erase_shadow_cells',8192)==shadow and read(m,'terminal_history_buffer',4096)==history
+  assert read(m,'erase_shadow_cells',8192)==shadow and read(m,'terminal_history_buffer',63000)==history
   assert read(m,'terminal_snapshot_image',2000)==frozen
   m.restored()
  check('real-PROGRAM-resize-EXEC-return-max-static-floor-and-full-far-canaries',retain)

@@ -41,7 +41,8 @@ the recovered classifier rather than being treated as KBD slot numbers.
 Alt-R starts ordinary XMODEM download and Alt-S starts ordinary XMODEM/1K
 upload, using explicit filename prompts and HARD/NONE binary flow. See
 [LIVE_UPLOAD.md](LIVE_UPLOAD.md) and [TRANSFER_INTEGRATION.md](TRANSFER_INTEGRATION.md).
-Alt-X exits, Alt-H invokes configured hang-up and Alt-D retries the selected
+Ctrl-PgUp opens [redisplay](LIVE_REDISPLAY.md), with local navigation/search and
+Escape return while input continues. Alt-X exits, Alt-H invokes configured hang-up and Alt-D retries the selected
 target after cleanup. These live commands take precedence over imported
 bindings. A recognized original local command that requires an unreconstructed
 application service stops with **errorlevel4** and the message
@@ -50,7 +51,7 @@ include unsupported ASPECT/HOOK KEY actions. Alt-1..Alt-0 invoke TEXT or local
 PROGRAM from an explicitly imported `/T:FILE.KEY`; see
 [LIVE_META_KEYS.md](LIVE_META_KEYS.md) and [LIVE_PROGRAM.md](LIVE_PROGRAM.md). Original
 no-op or unmapped keys remain ignored rather than being transmitted as arbitrary
-scan bytes. The complete original menus, scrollback commands, macros and
+scan bytes. The complete original menus, remaining redisplay/clipboard commands, macros and
 settings UI remain open.
 
 ## Explicit KBD import

@@ -35,11 +35,11 @@ def main():
     assert dos['child_sha256'] == sha('build/live-translation-child/CHDIR.EXE')
     frames = read('build/terminal/config-far-checks.json')
     assert frames['passed'] and frames['binary_sha256'] == runtime
-    assert frames['configuration_bridge_pairs_verified'] == 30 and len(frames['rejected_mutations']) == 147
+    assert frames['configuration_bridge_pairs_verified'] == 31 and len(frames['rejected_mutations']) == 154
     regression = read('build/terminal/setup-profile-regression.json')
     assert regression['passed'] and regression['complete'] and regression['binary_sha256'] == runtime
     expected = subprocess.check_output(['make', '-n', 'test-terminal'], cwd=ROOT, text=True).splitlines()
-    assert len(expected) == 66 and [c['command'] for c in regression['commands']] == expected
+    assert len(expected) == 68 and [c['command'] for c in regression['commands']] == expected
     assert all(c['exit_code'] == 0 for c in regression['commands'])
     proof = read('docs/validation/application-components-source-build.json')
     assert proof['passed'] and proof['output_count'] == 63
@@ -68,7 +68,7 @@ def main():
                   retained_artifacts={p: sha(p) for p in artifacts},
                   source_rebuild=dict(report='docs/validation/application-components-source-build.json',
                                       source_snapshot_sha256=proof['source_snapshot_sha256'], output_count=proof['output_count']),
-                  scope='Confirmed live PRM mode0/1/2 adoption with pre-child canonical current/PCPLUS namespaces, private exact256-byte staging and final guarded mode/table/mask commit before UART resumes. Explicit /X remains pinned; failures/declines retain active mode with independent edit adoption.331 linked inputs,10 actual DOS editor/namespace workflows,147 malformed frames/layouts,66-command regression and63 byte-identical isolated outputs. Same-mode reload command, dedicated terminal XLT editor action, original shared-memory PCSETUP ABI and physical modem remain open.')
+                  scope='Confirmed live PRM mode0/1/2 adoption with pre-child canonical current/PCPLUS namespaces, private exact256-byte staging and final guarded mode/table/mask commit before UART resumes. Explicit /X remains pinned; failures/declines retain active mode with independent edit adoption.331 linked inputs,10 actual DOS editor/namespace workflows,154 malformed frames/layouts,68-command regression and63 byte-identical isolated outputs. Same-mode reload command, dedicated terminal XLT editor action, original shared-memory PCSETUP ABI and physical modem remain open.')
     (ROOT/'docs/validation/live-translation.json').write_text(json.dumps(result, indent=2)+'\n')
     print('Recorded live translation', runtime)
 

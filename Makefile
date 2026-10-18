@@ -34,6 +34,11 @@ test-live-translation: terminal setup
 	python3 standalone/check_live_translation.py
 	python3 standalone/test_live_translation_dos.py
 
+.PHONY: test-redisplay
+test-redisplay: terminal
+	python3 standalone/check_redisplay_live.py
+	python3 standalone/test_redisplay_dos.py
+
 test-translation: translation
 	python3 standalone/check_translation.py
 
@@ -131,6 +136,8 @@ test-terminal: terminal
 	python3 standalone/check_terminal_monitor_live.py
 	python3 standalone/check_terminal_snapshot_live.py
 	python3 standalone/check_terminal_capture_live.py
+	python3 standalone/check_redisplay_live.py
+	python3 standalone/test_redisplay_dos.py
 	python3 standalone/check_far_storage_live.py
 	python3 standalone/test_far_storage_dos.py
 	python3 standalone/check_terminal_transfer_live.py

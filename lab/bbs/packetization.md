@@ -176,3 +176,15 @@ Both drafts close unsaved. Runtime, recipe, serial settings and PRM identities
 match; only the configured packet delay differs, with server/user state retained
 between runs. This remains a local workaround rather than a physical modem or
 remote TCP boundary guarantee.
+
+## Serviced redisplay checkpoint
+
+The actual DOS pair `editor-redisplay-27df-immediate` and
+`editor-redisplay-27df-buffer30` uses executable
+`27df52265883ec63702e40e38d3feadde787459cdd2cf89c084d30dc3ef9577b`.
+Both enter the stock ENiGMA editor and emit all eight measured keys. Immediate
+forwarding reproduces Home and Insert/overtype failures; explicit30 ms modem
+buffering passes all seven audit checks. Neither saves a post. The recipes,
+serial settings, synthetic PRM and stock decoder are unchanged between runs.
+This supports a local buffering workaround, with no physical modem validation
+or general guarantee that TCP preserves a buffered write.

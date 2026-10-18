@@ -1,0 +1,185 @@
+/* Maintained redisplay over a frozen chronological native history snapshot.
+ * DOS16 DS=SS; no heap, original resources, blocking input or UART ownership. */
+#include <dos.h>
+typedef unsigned short word;
+typedef unsigned char byte;
+typedef struct context {
+ word source_off,source_seg,snapshot_off,snapshot_seg;
+ word live_off,live_seg,view_off,view_seg;
+ word start,end,head,wrapped;
+} context;
+unsigned redisplay_active=0;
+unsigned redisplay_search_pending=0;
+static byte __far *snapshot;
+static word __far *live;
+static word __far *view;
+static word length,top,visible,position,shape;
+static word query_size,query_edit,found,last_match;
+static char query[40];
+static word checkpoints[247];
+static word search_start,search_cursor;
+static void copy(word __far *to,const word __far *from)
+{word i;for(i=0;i<2000;++i)to[i]=from[i];}
+static void cursor_get(void)
+{
+ word p=0,s=0;
+ __asm {
+ mov ah,3
+ xor bh,bh
+ int 10h
+ mov p,dx
+ mov s,cx 
+}
+ position=p;shape=s;
+}
+static void cursor_restore(void)
+{
+ word p=position,s=shape;
+ __asm {
+ mov ah,1
+ mov cx,s
+ int 10h
+ mov ah,2
+ xor bh,bh
+ mov dx,p
+ int 10h 
+}
+}
+static void hide(void)
+{__asm {
+ mov ah,1
+ mov cx,2000h
+ int 10h 
+}}
+static byte fold(byte b)
+{return b>='a' && b<='z'?b-32:b;}
+static word next(word at)
+{
+ word col=0;byte b;
+ while(at<length){b=snapshot[at++];if(b==13)return at;
+  col+=b==9?8-(col&7):1;
+  if(col>=80){if(at<length && snapshot[at]==13)++at;return at;}
+ }
+ return at;
+}
+static void index_rows(void)
+{
+ word p=0,n,block=0;
+ while(p<length){n=next(p);while(block<247 && ((unsigned long)block<<8)<n)checkpoints[block++]=p;p=n;}
+ while(block<247)checkpoints[block++]=0;
+}
+static word line_at(word at)
+{
+ word p,n;if(!length)return 0;if(at>=length)at=length-1;
+ p=checkpoints[at>>8];
+ while(p<at){n=next(p);if(n>at || n<=p)return p;p=n;}return p;
+}
+static word previous(word at)
+{
+ word p,n;if(!at)return 0;p=checkpoints[(at-1)>>8];
+ while(p<at){n=next(p);if(n>=at || n<=p)return p;p=n;}return 0;
+}
+static void bottom(void)
+{
+ word i;top=line_at(length?length-1:0);for(i=1;i<23;++i)top=previous(top);
+}
+static void label(word at,const char *s,word attribute)
+{while(*s && at<2000)view[at++]=attribute|(byte)*s++;}
+static void draw(void)
+{
+ word i,p=top,row,col;byte b;
+ for(i=0;i<2000;++i)view[i]=0x0720;
+ for(i=0;i<80;++i)view[i]=view[1920+i]=0x1f20;
+ label(1,"PCPLUS  Redisplay  |  Up/Down  PgUp/PgDn  Home/End  / Search  F3 Next  Esc Return",0x1f00);
+ for(row=1;row<24 && p<length;++row){col=0;
+  while(p<length){b=snapshot[p++];if(b==13)break;
+   if(b==9){col+=8-(col&7);}else{
+    if(col<80)view[row*80+col]=0x0700|(b<32?'.':b);++col;
+   }
+   if(col>=80){if(p<length && snapshot[p]==13)++p;break;}
+  }
+ }
+ if(query_edit)label(1921,"Search: ",0x1f00);
+ else if(redisplay_search_pending)label(1921,"Searching... Incoming data continues; Esc returns to the live screen.",0x1f00);
+ else if(!length)label(1921,"History is empty. Incoming data continues; Esc returns to the live screen.",0x1f00);
+ else if(!found)label(1921,"No match. / changes search; F3 repeats. Incoming data continues.",0x1f00);
+ else label(1921,"Frozen history; incoming data continues. / searches; Esc returns to live screen.",0x1f00);
+ if(query_edit)label(1929,query,0x1f00);
+ if(visible){copy((word __far *)MK_FP(0xb800,0),view);hide();}
+}
+static void search(void)
+{
+ if(!query_size || !length){found=0;redisplay_search_pending=0;return;}
+ search_start=last_match==65535U?top:last_match+1;
+ if(search_start>=length)search_start=0;
+ search_cursor=search_start;redisplay_search_pending=1;
+}
+/* At most64 candidates per foreground turn; receive, flow and cancellation
+ * resume between chunks, even for worst-case repeated-prefix searches. */
+static word search_step(void)
+{
+ word p,i,budget=64;
+ if(!redisplay_search_pending)return 0;
+ while(budget--){p=search_cursor;
+  if(query_size<=length-p){for(i=0;i<query_size;++i)if(fold(snapshot[p+i])!=fold((byte)query[i]))break;
+   if(i==query_size){top=line_at(p);last_match=p;found=1;redisplay_search_pending=0;return 1;}
+  }
+  if(++search_cursor==length)search_cursor=0;
+  if(search_cursor==search_start){found=0;redisplay_search_pending=0;return 1;}
+ }
+ return 0;
+}
+/* event0=open,1=key,2=before receive,3=idle paint,4=stop.
+ * Caller validates resource/geometry ownership before open and supplies the
+ * fixed relocated extents. Return1 consumes a key,0 allows normal dispatch. */
+unsigned __cdecl redisplay_event(word event,word key,const context *c)
+{
+ word i,p=0,mode=0;byte __far *source;
+ if(event==0){
+  if(redisplay_active)return 1;
+  __asm {
+ mov ah,0fh
+ int 10h
+ mov mode,ax
+ mov p,bx 
+}
+  if((mode&255)!=3 || mode>>8!=80 || p>>8 || c->end<=c->start ||
+   c->end-c->start!=63000U || c->head<c->start || c->head>=c->end || c->wrapped>1)return 1;
+  if(*(byte __far *)MK_FP(0x40,0x84)!=0 && *(byte __far *)MK_FP(0x40,0x84)!=24)return 1;
+  source=(byte __far *)MK_FP(c->source_seg,0);
+  snapshot=(byte __far *)MK_FP(c->snapshot_seg,c->snapshot_off);
+  live=(word __far *)MK_FP(c->live_seg,c->live_off);
+  view=(word __far *)MK_FP(c->view_seg,c->view_off);
+  length=c->wrapped?63000U:c->head-c->start;p=c->wrapped?c->head:c->start;
+  for(i=0;i<length;++i){snapshot[i]=source[p];if(++p==c->end)p=c->start;}
+  cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));
+  redisplay_search_pending=0;query_size=query_edit=0;query[0]=0;found=1;last_match=65535U;visible=1;redisplay_active=1;index_rows();bottom();draw();return 1;
+ }
+ if(!redisplay_active)return 0;
+ if(event==4 || (event==1 && (key==27 || key==0x2d00))){
+  if(event==1 && query_edit && key==27){query_edit=0;draw();return 1;}
+  if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();}
+  redisplay_search_pending=0;redisplay_active=visible=0;return key==0x2d00?0:1;
+ }
+ if(event==2){if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();visible=0;}return 0;}
+ if(event==3){if(search_step())draw();if(!visible){cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));visible=1;copy((word __far *)MK_FP(0xb800,0),view);hide();}return 0;}
+ if(event!=1)return 0;
+ if(query_edit){
+  if((byte)key==13){query_edit=0;search();}
+  else if((byte)key==8){if(query_size)query[--query_size]=0;}
+  else if((byte)key>=32 && (byte)key<127 && query_size<39){query[query_size++]=(byte)key;query[query_size]=0;}
+ }else{
+  if(key!=0x3d00){redisplay_search_pending=0;last_match=65535U;}
+  switch(key){
+  case 0x4800:case 0x48e0:top=previous(top);break;
+  case 0x5000:case 0x50e0:if(next(top)<length)top=next(top);break;
+  case 0x4900:case 0x49e0:for(i=0;i<23;++i)top=previous(top);break;
+  case 0x5100:case 0x51e0:for(i=0;i<23 && next(top)<length;++i)top=next(top);break;
+  case 0x4700:case 0x47e0:top=0;break;
+  case 0x4f00:case 0x4fe0:bottom();break;
+  case '/':redisplay_search_pending=0;query_edit=1;query_size=0;query[0]=0;last_match=65535U;break;
+  case 0x3d00:search();break;
+  }
+ }
+ search_step();draw();return 1;
+}

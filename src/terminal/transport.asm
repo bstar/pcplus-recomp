@@ -23,6 +23,7 @@ extern terminal_controller_key
 extern terminal_break_start,terminal_break_poll,terminal_break_cancel
 extern terminal_printer_toggle
 extern terminal_setup_start
+extern terminal_redisplay_key
 global terminal_poll_io,terminal_enqueue_al,terminal_tick_low,terminal_clock_ticks
 global ansi_next_byte,ansi_unread_byte,csi_transmit_byte,csi_transmit_string
 
@@ -173,6 +174,8 @@ terminal_poll_io:
  ; the private application queue is disabled and BIOS has one foreground reader.
  call terminal_read_key
 .key_ready:
+ call terminal_redisplay_key
+ jc .done
  cmp ax,0x3000 ; Native Alt-B, including dedicated/raw controller mode.
  je .break
  call terminal_controller_key

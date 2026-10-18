@@ -6,6 +6,7 @@ SEGMENT _TEXT public class=CODE use16
 extern uart_break_hold
 extern process_psp,process_keep_paragraphs,process_minimum_paragraphs
 extern terminal_stack_top,terminal_far_storage_end,_program_execute
+extern redisplay_snapshot_end,redisplay_view_end
 extern terminal_snapshot_image_end,browser_screen_end,ed_screen_end
 extern terminal_clock_ticks,terminal_macro_tx_epoch,terminal_tx_count
 extern terminal_quit,terminal_exit_code,connection_state
@@ -52,6 +53,8 @@ terminal_program_initialize:
 %%done:
  %endmacro
  keep_static_end terminal_far_storage_end
+ keep_static_end redisplay_snapshot_end
+ keep_static_end redisplay_view_end
  keep_static_end terminal_snapshot_image_end
  keep_static_end browser_screen_end
  keep_static_end ed_screen_end

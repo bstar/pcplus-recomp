@@ -8,10 +8,10 @@ def main():
  listing=a.map.read_text();symbols={name:(int(seg,16),int(off,16)) for seg,off,name in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',listing,re.M|re.I)}
  group=re.search(r'^DGROUP\s+([0-9a-f]+):',listing,re.M|re.I);assert group;dg=int(group[1],16)
  def near(name):seg,off=symbols[name];return seg*16+off-dg*16
- far,shadow=symbols['erase_shadow_cells'];hseg,history=symbols['terminal_history_buffer'];endseg,endoff=symbols['terminal_far_storage_end'];assert far==hseg==endseg and endoff-shadow==12288
+ far,shadow=symbols['erase_shadow_cells'];hseg,history=symbols['terminal_history_buffer'];endseg,endoff=symbols['terminal_far_storage_end'];assert hseg==endseg and far!=hseg and endoff-history==63000
  snapseg,snapoff=symbols['terminal_snapshot_image'];snapendseg,snapendoff=symbols['terminal_snapshot_image_end'];assert snapseg==snapendseg and snapendoff-snapoff==2000
  required=16+(max(endseg*16+endoff,snapendseg*16+snapendoff,symbols['terminal_stack_top'][0]*16+symbols['terminal_stack_top'][1])+15)//16
- defines={'DGROUP_SEG':dg,'FAR_SEG':far,'SHADOW_OFFSET':shadow,'HISTORY_OFFSET':history,'FAR_END_OFFSET':endoff,'PROCESS_PSP_OFFSET':near('process_psp'),'SHADOW_SEGMENT_OFFSET':near('erase_shadow_segment'),'HISTORY_POINTER_OFFSET':near('terminal_history_pointer')}
+ defines={'DGROUP_SEG':dg,'FAR_SEG':far,'SHADOW_OFFSET':shadow,'HISTORY_OFFSET':history,'HISTORY_SEG':hseg,'FAR_END_OFFSET':endoff,'PROCESS_PSP_OFFSET':near('process_psp'),'SHADOW_SEGMENT_OFFSET':near('erase_shadow_segment'),'HISTORY_POINTER_OFFSET':near('terminal_history_pointer')}
  code_seg,code_off=symbols['terminal_controller_code_start'];code_endseg,code_endoff=symbols['terminal_controller_code_end'];assert code_seg==code_endseg
  image=a.binary.read_bytes();header=struct.unpack_from('<14H',image);first=struct.unpack_from('<H',image,header[4]*16+code_seg*16+code_off)[0]
  required=max(required,16+(code_seg*16+code_endoff+15)//16)

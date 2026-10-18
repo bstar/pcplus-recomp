@@ -34,10 +34,13 @@ start:
  add ax,16+FAR_SEG
  cmp [es:SHADOW_SEGMENT_OFFSET],ax
  jne .next
+ mov dx,ax
+ mov ax,bx
+ add ax,16+HISTORY_SEG
  cmp [es:HISTORY_POINTER_OFFSET+2],ax
  jne .next
  mov [result+2],bx
- mov [result+8],ax
+ mov [result+8],dx
  or word [result],1
  dec bx
  mov es,bx
@@ -50,8 +53,11 @@ start:
  mov es,[result+8]
  mov word [es:SHADOW_OFFSET],0xcafe
  mov word [es:SHADOW_OFFSET+8190],0xbeef
+ mov ax,[result+2]
+ add ax,16+HISTORY_SEG
+ mov es,ax
  mov word [es:HISTORY_OFFSET],0xdead
- mov word [es:HISTORY_OFFSET+4094],0xbabe
+ mov word [es:HISTORY_OFFSET+62998],0xbabe
  mov ax,[result+2]
  add ax,16+SNAPSHOT_SEG
  mov [result+20],ax
@@ -114,11 +120,14 @@ start:
  mov [result+14],ax
  cmp ax,0xbeef
  jne .free
+ mov ax,[result+2]
+ add ax,16+HISTORY_SEG
+ mov es,ax
  mov ax,[es:HISTORY_OFFSET]
  mov [result+16],ax
  cmp ax,0xdead
  jne .free
- mov ax,[es:HISTORY_OFFSET+4094]
+ mov ax,[es:HISTORY_OFFSET+62998]
  mov [result+18],ax
  cmp ax,0xbabe
  jne .free

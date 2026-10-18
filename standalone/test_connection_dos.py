@@ -6,8 +6,11 @@ from modem_fixtures import fixture
 from test_terminal import SAMPLER
 from directory_test_support import accounting_check
 ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EXE'
-def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None):
+def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=()):
  assert working_drive in ("c","d")
+ assert observer is None or (observer.isalnum() and observer.isupper() and len(observer)<=8 and observer+'.COM' in (files or {}))
+ observer_start=('D:\\'+observer+' T') if observer else ''
+ observer_stop=('D:\\'+observer) if observer else ''
  out=ROOT/'build/connection-dos'/name;out.mkdir(parents=True,exist_ok=True)
  for p in ('PASS.TXT','FAIL.TXT','BEFORE.BIN','AFTER.BIN','SCREEN.BIN'):(out/p).unlink(missing_ok=True)
  # These are owned synthetic fixture directories, never a user's directory.
@@ -37,8 +40,10 @@ def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,
   try:
    conn,_=server.accept()
    with conn:
-    conn.settimeout(.05);line=bytearray();online=False;probe=bytearray();next_probe=0
+    conn.settimeout(.05);line=bytearray();online=False;probe=bytearray();next_probe=0;online_at=0;update_at=0
     while not stop.is_set():
+     if online and online_at and update_at<len(online_updates) and time.monotonic()-online_at>=online_updates[update_at][0]:
+      conn.sendall(online_updates[update_at][1]);update_at+=1
      if mode=='direct' and not online and time.monotonic()>=next_probe:
       conn.sendall(b'\x1b[5n');next_probe=time.monotonic()+.25
      try:block=conn.recv(4096)
@@ -66,7 +71,7 @@ def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,
        attempts+=1
        if mode=='silence':continue
        if mode=='busy' or (mode=='redial' and attempts==1):conn.sendall(b'\r\nBUSY\r\n');continue
-       online=True
+       online=True;online_at=time.monotonic()
        # Same TCP write as CONNECT: prove main retains bytes after a match
        # while the sender finishes its final inter-character delay.
        conn.sendall(b'CONNECT\r\n'+(banner if banner is not None else b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0c'))
@@ -93,6 +98,7 @@ mount d "{out}"
 {working_drive}:
 {environment_commands}
 D:\\SNAP B
+{observer_start}
 ADDKEY {keys}
 C:\\TERMINAL {arguments}
 {branch}
@@ -103,6 +109,7 @@ goto capture
 echo FAIL>D:\\FAIL.TXT
 :capture
 D:\\SNAP S
+{observer_stop}
 D:\\SNAP A
 exit
 ''';(out/'dosbox.conf').write_text(cfg)

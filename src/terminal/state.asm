@@ -298,7 +298,8 @@ erase_attribute_values: resb 4096
 SEGMENT FAR_STORAGE public align=16 class=FAR_DATA use16
 global erase_shadow_cells,terminal_history_buffer,terminal_far_storage_end
 erase_shadow_cells: resb 8192
-terminal_history_buffer: resb 4096
+SEGMENT HISTORY_STORAGE public align=16 class=FAR_DATA use16
+terminal_history_buffer: resb 63000
 terminal_far_storage_end:
 global render_autowrap,terminal_input_mode_8fe8
 render_autowrap equ cursor_state_value_1d20
@@ -382,7 +383,7 @@ terminal_newline_mode_9020: dw 0
 global terminal_history_pending,terminal_history_pointer,terminal_history_start,terminal_history_end,terminal_history_wrapped,terminal_history_buffer
 terminal_history_start: dw terminal_history_buffer
 terminal_history_pointer: dw terminal_history_buffer,seg terminal_history_buffer
-terminal_history_end: dw terminal_history_buffer+4096
+terminal_history_end: dw terminal_history_buffer+63000
 terminal_history_wrapped: dw 0
 terminal_history_pending: db 0
 
