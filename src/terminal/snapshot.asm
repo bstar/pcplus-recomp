@@ -14,6 +14,7 @@ extern screen_attribute_row_bytes,screen_video_row_bytes,ui_flow_region_cells
 extern text_video_segment,text_cga_status_port,screen_viewport_enabled
 extern erase_shadow_offset,erase_shadow_segment,erase_shadow_cells
 extern ui_flow_suppressed
+extern terminal_monitor_active
 global terminal_snapshot_start,terminal_snapshot_shutdown
 global terminal_snapshot_failed,terminal_snapshot_active,terminal_snapshot_rows_written
 global terminal_snapshot_last_action
@@ -40,6 +41,8 @@ global terminal_snapshot_last_action
 %endmacro
 terminal_snapshot_start:
  save
+ cmp word [terminal_monitor_active],0
+ jne .denied
  cmp word [terminal_snapshot_active],0
  jne .denied
  cmp word [terminal_macro_active],0

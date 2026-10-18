@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
+  "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
   "cases": [
     {
       "case": "actual-linker-far-relocations-and-full-storage-extents-outside-DGROUP",

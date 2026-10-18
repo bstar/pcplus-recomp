@@ -7,6 +7,7 @@ extern _capture_session_begin,_capture_session_stop,_capture_session_pause
 extern _capture_session_flush,_capture_session_put,_capture_session_poll
 extern _capture_session_notice,_capture_file_result
 extern _snapshot_file_result
+extern _monitor_file_result,terminal_monitor_active
 extern terminal_sink_398a_enabled,terminal_cr_adds_lf
 extern terminal_clock_ticks,terminal_poll_serial,terminal_read_key,keyboard_poll
 extern terminal_connection_notice,terminal_connection_notice_restore
@@ -39,6 +40,8 @@ global terminal_capture_native_refresh
 %endmacro
 terminal_capture_toggle:
  save
+ cmp word [terminal_monitor_active],0
+ jne .denied
  cmp word [terminal_sink_398a_enabled],0
  je .open
  call _capture_session_stop
@@ -119,6 +122,12 @@ terminal_capture_before_program:
  push si
  push di
  push es
+ cmp word [terminal_monitor_active],0
+ jne .snapshot_owned
+ cmp word [_monitor_file_result+10],0
+ jne .snapshot_owned
+ cmp word [_monitor_file_result+12],0
+ jne .snapshot_owned
  cmp word [_snapshot_file_result+10],0
  jne .snapshot_owned
  cmp word [_snapshot_file_result+12],0

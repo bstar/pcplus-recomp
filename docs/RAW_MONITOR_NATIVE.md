@@ -136,6 +136,14 @@ calls with successful no-ops.
 
 ## Next implementable units and bounded integration policy
 
+Follow-up source recovery now supplies the503-byte owner/resolver/Y-N prompt
+diagnostic in `reconstruction/monitor`, with27 original comparisons and an
+actual8086 DOS selfcheck. The maintained stateful implementation, third checked
+file owner and independent15-case DOS suite are described in
+[LIVE_MONITOR.md](LIVE_MONITOR.md). The initial contracts below remain useful
+for distinguishing exact native behavior from that maintained policy; they do
+not imply that all UI, HOOK or physical-device gates are closed.
+
 - Recover1aaa as the275-byte modal owner, and353d as the105-byte filename
   resolver separately. Link actual0730,UART dequeue, keyboard and CRT putc/
   close for diagnostic composition. UI3fc7/4015 and prompt6dde contracts are

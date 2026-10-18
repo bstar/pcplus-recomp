@@ -18,6 +18,7 @@ extern terminal_irq_vector,terminal_baud_low,terminal_baud_high
 extern terminal_parity,terminal_data_bits,terminal_stop_bits
 extern terminal_connection_notice,terminal_connection_notice_restore
 extern terminal_capture_before_program
+extern terminal_monitor_active
 global terminal_program_initialize,terminal_program_start,terminal_program_poll
 global terminal_program_cancel
 
@@ -77,6 +78,8 @@ terminal_program_start:
  push si
  push di
  push es
+ cmp word [terminal_monitor_active],0
+ jne .busy
  cmp word [terminal_program_pending],0
  jne .busy
  cmp word [terminal_program_active],0

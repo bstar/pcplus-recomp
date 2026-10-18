@@ -1,0 +1,54 @@
+{
+  "passed": true,
+  "test_sha256": "0df49238972a4746598615664e80530bedb407fb72d252fa478e2ff22830d937",
+  "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
+  "inputs": 23,
+  "cases": [
+    {
+      "case": "RX-busy-prior-open-or-sealed-owned-stage-unchanged-no-DOS",
+      "passed": true,
+      "inputs": 2
+    },
+    {
+      "case": "TX-busy-prior-enumeration-or-open-source-preserved-no-DOS",
+      "passed": true,
+      "inputs": 2
+    },
+    {
+      "case": "TX-read-close-fault-no-EOT-close-once-and-uncertain-retry",
+      "passed": true,
+      "inputs": 3
+    },
+    {
+      "case": "RX-write-short-close-install-faults-withhold-final-EOT-ACK",
+      "passed": true,
+      "inputs": 5
+    },
+    {
+      "case": "TX-RX-normal-controls-and-storage-before-peer-commit",
+      "passed": true,
+      "inputs": 2
+    },
+    {
+      "case": "actual-UART-ring-rewind-capacity-and-count-guards-fail-closed",
+      "passed": true,
+      "inputs": 2
+    },
+    {
+      "case": "final-header-unconfirmed-application-preserved-and-NAK-WAIT-remain-strict",
+      "passed": true,
+      "inputs": 5
+    },
+    {
+      "case": "ASM-partial-batch-notice-preserves-earlier-file-and-cancel-ignores-stale-count",
+      "passed": true,
+      "inputs": 2
+    }
+  ],
+  "scope": "Actual linked maintained YMODEM/codec/per-file owners/CRC and UART ISR; only BIOS/UART/ticks and DOS kernel filesystem/DTA/enumeration boundaries modeled. No product callback patched, skipped or manually returned.",
+  "limitations": [
+    "Focused synthetic kernel/peer CPU tests, separate from actual DOS/BBS evidence.",
+    "No physical serial timing, power-loss atomicity, streaming YMODEM-G or native batch equivalence claim.",
+    "Most cases use direct C engine entry; final-ACK uncertainty and partial/cancel notices additionally exercise foreground UI/ASM notice. No complete accepted-progress watchdog matrix is asserted here."
+  ]
+}

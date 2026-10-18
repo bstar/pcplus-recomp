@@ -4,6 +4,8 @@ Press **Alt-G** in the maintained DOS terminal to append the current screen to
 `PCPLUS.SCR` in the current directory. A successful action shows `Screen saved`.
 It does not wait for another key. Repeated snapshots append another25 rows;
 existing data is preserved. Text capture may remain open or held throughout.
+The raw monitor suppresses Alt-G while it owns the foreground. Its independent
+checked-file context also participates in the shared canonical conflict guard.
 
 This connects the actual recovered3446/64b8 row-selection and character-copy
 instructions to a maintained checked file writer. The native3496 writer and

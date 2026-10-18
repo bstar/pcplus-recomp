@@ -49,8 +49,10 @@ bytes, including DOS1Ah EOF markers, remain byte-for-byte intact: the unresolved
 native48a1/text-EOF behavior is not silently guessed. Append is nontransactional;
 there is no rollback, concurrent-writer exclusion or crash-atomic guarantee.
 
-The snapshot feature now shares this implementation through a second independent
-96-byte owner. Both input guards protect both owners' records and descriptors.
+Snapshot and raw-monitor files share this implementation through second and
+third independent96-byte owners. All input guards protect all three records
+and descriptors. Only the monitor owner admits explicit replacement, after its
+Y warning; text capture and snapshots retain their existing append/new modes.
 Checked DOS Truename admission prevents a text log and `PCPLUS.SCR` from opening
 the same DOS file through different spellings; open/held and uncertain owners
 retain that exclusion. The admitted absolute identity is used for open. This

@@ -1,12 +1,12 @@
 {
   "passed": false,
-  "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
+  "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
   "scope": "Actual local full-screen editor tests using source-built DOS terminal and an immediate Hayes/Telnet modem model. No physical modem, file transfers or complete application claim.",
   "servers": {
     "synchronet": {
       "run": {
         "name": "synchronet",
-        "label": "editor-snapshot-final",
+        "label": "editor-monitor-final",
         "checks": {
           "dos_normal_exit": true,
           "hardware_restored": true,
@@ -17,9 +17,9 @@
           "binary_unchanged_during_run": true
         },
         "passed": true,
-        "seconds": 47.07,
-        "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
-        "keyboard": "p1000 p7000 L A B U S E R enter p2000 L A B P A S S 4 2 enter p8000 space p3000 Q enter p5000 space p4000 P p2000 K E Y T E S T enter p3000 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p400 c-q p1800 space p3000 a-x p1000 a-x p1000 a-x p1000 a-x",
+        "seconds": 48.055,
+        "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
+        "keyboard": "p1000 p1000 p7000 L A B U S E R enter p2000 L A B P A S S 4 2 enter p8000 space p3000 Q enter p5000 space p4000 P p2000 K E Y T E S T enter p3000 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p400 c-q p1800 space p3000 a-x p1000 a-x p1000 a-x p1000 a-x p2000 a-x",
         "serial": {
           "com": 2,
           "baud": 19200,
@@ -28,6 +28,7 @@
           "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
         },
         "scope": "Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.",
+        "modem_packet_delay_ms": 0,
         "configuration": {
           "automatic_dial": true,
           "mode": "explicit synthetic partial PRM",
@@ -64,7 +65,7 @@
           "tab": true,
           "delete_line_ctrl_y": true
         },
-        "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
+        "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
         "serial": {
           "com": 2,
           "baud": 19200,
@@ -75,27 +76,28 @@
         "authority": {},
         "scope": "Actual loopback stock editor draft and captured DOS keyboard wire. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim.",
         "exit_mode": "editor_discard_or_abort",
-        "unexercised_keys": []
+        "unexercised_keys": [],
+        "modem_packet_delay_ms": 0
       },
       "retained_artifacts": {
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/SCREEN.BIN": "b0b0d7d9be46408146685c541772dae8865e49790e74b4b7e2b5b00abf6e880f",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/TEST.PRM": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/bbs-sent.bin": "fd45d4fec485f04e720b9d0cc1ef903310ed184000d73e329675c770a3c67fb7",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/bbs-wire.bin": "8ba5f0be1ccd2da37aeb0a39cd51d57294392b5f377ed0b42151c87848b3dcdd",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/display.bin": "ef60c3f33e92d80469dd4555658f2d428e3eb84e265ba607697beba91d7f3b85",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/dosbox.conf": "848b7c952dd7095cecd6ec37692c694df66ff6a716b5f5f9f38a5c66c496df85",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/dosbox.log": "64bedd1552cbbfced3a65faa1c64113ce9c818d2fbbf28d1604f0b0af772ebdf",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/modem.json": "45ce07d3e00a5862b93a92aa9ac35e8df2d2f892cd9fa4d6cf017ffbeb2c2a20",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/result.json": "ee0362cbbfadf24ed895c0c751b9a9393dffaedcb3c58872e2b90cc3cf980b2c",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/screen.txt": "001dd051a20d52c691a77feac5c3ad00e2fb595cf9b87010f64cc0e63fb63d2e",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/semantic-audit.json": "5b08d7efeadffd49ed8df560abbeaa19445113523c65dce4531aa5e15f243c89",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/serial-received.bin": "a015e50f0d94df4bebfe7d21cb0acfd8640031a8443703fca413ad9331474e71",
-        "build/bbs-lab/results/synchronet/editor-snapshot-final/serial-sent.bin": "ef60c3f33e92d80469dd4555658f2d428e3eb84e265ba607697beba91d7f3b85"
+        "build/bbs-lab/results/synchronet/editor-monitor-final/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/SCREEN.BIN": "e72ae3ef023eb499f270cd01419d7f7dad2e3238533fdc51c3a4c6c58314c2c1",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/TEST.PRM": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/bbs-sent.bin": "fd45d4fec485f04e720b9d0cc1ef903310ed184000d73e329675c770a3c67fb7",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/bbs-wire.bin": "e8fd5df471f286b3bff6a773b821a5cc0d0d9eb1ee453ae9e245ff2520560b43",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/display.bin": "af1ad357a4c61c15e74c96e2fd20dc24aed513fa1b97bdf041de4777be9e5fd3",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/dosbox.conf": "ceae72cc3b2e8cba57b7926864a4c40f3e18c3be00fe2a5c327e0e0e2bab2822",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/dosbox.log": "a44d1d5ef3ade034a37548c8ad7288503990097f2c838202bc4e009d286702cf",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/modem.json": "105b47ec84f3877d2675ab2d5703e7c79e0b5e5880ac64a3e184cace57e07d6b",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/result.json": "b064c99ffdd5ae57be91be1fea2a835839c799dbb141bc49bc553f3f61807e47",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/screen.txt": "10bc9763d749d7db52ab005490b44e88b496dbcff15985496fca6cbc67dd6c3f",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/semantic-audit.json": "448217315946fb81f2b87473f465f5914004ddaed2e3a14c9e5e4beac1612f1f",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/serial-received.bin": "a015e50f0d94df4bebfe7d21cb0acfd8640031a8443703fca413ad9331474e71",
+        "build/bbs-lab/results/synchronet/editor-monitor-final/serial-sent.bin": "af1ad357a4c61c15e74c96e2fd20dc24aed513fa1b97bdf041de4777be9e5fd3"
       },
       "prior_runtime_cases": [
         {
@@ -752,13 +754,108 @@
             "build/bbs-lab/results/synchronet/editor-capture-final/serial-received.bin": "a015e50f0d94df4bebfe7d21cb0acfd8640031a8443703fca413ad9331474e71",
             "build/bbs-lab/results/synchronet/editor-capture-final/serial-sent.bin": "d88b3ac868575e35f7f3ab49721e523edaddb6b6ddef3b220116f5d0d40b9db3"
           }
+        },
+        {
+          "run": {
+            "name": "synchronet",
+            "label": "editor-snapshot-final",
+            "checks": {
+              "dos_normal_exit": true,
+              "hardware_restored": true,
+              "screen_captured": true,
+              "bbs_connected": true,
+              "bbs_display_received": true,
+              "configuration_unchanged": true,
+              "binary_unchanged_during_run": true
+            },
+            "passed": true,
+            "seconds": 47.07,
+            "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
+            "keyboard": "p1000 p7000 L A B U S E R enter p2000 L A B P A S S 4 2 enter p8000 space p3000 Q enter p5000 space p4000 P p2000 K E Y T E S T enter p3000 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p400 c-q p1800 space p3000 a-x p1000 a-x p1000 a-x p1000 a-x",
+            "serial": {
+              "com": 2,
+              "baud": 19200,
+              "line": "8N1",
+              "flow": "HARD",
+              "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+            },
+            "scope": "Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.",
+            "configuration": {
+              "automatic_dial": true,
+              "mode": "explicit synthetic partial PRM",
+              "command": "TERMINAL @D:\\TEST.PRM /D:lab.local:23231",
+              "sha256": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
+              "directory_entry": null,
+              "directory_browser": false,
+              "directory_sha256": null
+            }
+          },
+          "semantic_evidence": {
+            "passed": true,
+            "checks": {
+              "DOS_harness": true,
+              "typed_draft_sent": true,
+              "all_exercised_keys_emitted": true,
+              "stock_editor_entered": true,
+              "draft_aborted": true,
+              "insert_toggled_overtype": true,
+              "home_marker_at_line_start": true,
+              "end_marker_at_line_end": true,
+              "delete_erases_final_character": true,
+              "tab_advances_to_next_stop": true,
+              "page_keys_report_document_boundaries": true,
+              "ctrl_y_delete_line_response": true
+            },
+            "observed_key_wire": {
+              "home": true,
+              "end": true,
+              "insert": true,
+              "delete": true,
+              "page_up": true,
+              "page_down": true,
+              "tab": true,
+              "delete_line_ctrl_y": true
+            },
+            "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
+            "serial": {
+              "com": 2,
+              "baud": 19200,
+              "line": "8N1",
+              "flow": "HARD",
+              "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+            },
+            "authority": {},
+            "scope": "Actual loopback stock editor draft and captured DOS keyboard wire. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim.",
+            "exit_mode": "editor_discard_or_abort",
+            "unexercised_keys": []
+          },
+          "retained_artifacts": {
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/SCREEN.BIN": "b0b0d7d9be46408146685c541772dae8865e49790e74b4b7e2b5b00abf6e880f",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/TEST.PRM": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/bbs-sent.bin": "fd45d4fec485f04e720b9d0cc1ef903310ed184000d73e329675c770a3c67fb7",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/bbs-wire.bin": "8ba5f0be1ccd2da37aeb0a39cd51d57294392b5f377ed0b42151c87848b3dcdd",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/display.bin": "ef60c3f33e92d80469dd4555658f2d428e3eb84e265ba607697beba91d7f3b85",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/dosbox.conf": "848b7c952dd7095cecd6ec37692c694df66ff6a716b5f5f9f38a5c66c496df85",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/dosbox.log": "64bedd1552cbbfced3a65faa1c64113ce9c818d2fbbf28d1604f0b0af772ebdf",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/modem.json": "45ce07d3e00a5862b93a92aa9ac35e8df2d2f892cd9fa4d6cf017ffbeb2c2a20",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/result.json": "ee0362cbbfadf24ed895c0c751b9a9393dffaedcb3c58872e2b90cc3cf980b2c",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/screen.txt": "001dd051a20d52c691a77feac5c3ad00e2fb595cf9b87010f64cc0e63fb63d2e",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/semantic-audit.json": "5b08d7efeadffd49ed8df560abbeaa19445113523c65dce4531aa5e15f243c89",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/serial-received.bin": "a015e50f0d94df4bebfe7d21cb0acfd8640031a8443703fca413ad9331474e71",
+            "build/bbs-lab/results/synchronet/editor-snapshot-final/serial-sent.bin": "ef60c3f33e92d80469dd4555658f2d428e3eb84e265ba607697beba91d7f3b85"
+          }
         }
       ]
     },
     "enigma": {
       "run": {
         "name": "enigma",
-        "label": "editor-snapshot-final",
+        "label": "editor-monitor-final",
         "checks": {
           "dos_normal_exit": true,
           "hardware_restored": true,
@@ -769,9 +866,9 @@
           "binary_unchanged_during_run": true
         },
         "passed": true,
-        "seconds": 85.383,
-        "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
-        "keyboard": "p1000 p12000 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 N p6000 enter p6000 M enter p5000 P enter p5000 enter p700 K E Y T E S T enter p1800 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p3000 a-x p1000 a-x p1000 a-x p1000 a-x",
+        "seconds": 86.33,
+        "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
+        "keyboard": "p1000 p1000 p12000 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 N p6000 enter p6000 M enter p5000 P enter p5000 enter p700 K E Y T E S T enter p1800 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p3000 a-x p1000 a-x p1000 a-x p1000 a-x p2000 a-x",
         "serial": {
           "com": 2,
           "baud": 19200,
@@ -780,6 +877,7 @@
           "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
         },
         "scope": "Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.",
+        "modem_packet_delay_ms": 0,
         "configuration": {
           "automatic_dial": true,
           "mode": "explicit synthetic partial PRM",
@@ -811,7 +909,7 @@
           "tab": true,
           "delete_line_ctrl_y": true
         },
-        "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
+        "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
         "serial": {
           "com": 2,
           "baud": 19200,
@@ -820,7 +918,7 @@
           "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
         },
         "authority": {
-          "session_id": "OkUNaqql855",
+          "session_id": "2PUmNBBbyOA",
           "menus": [
             "telnetConnected",
             "matrix",
@@ -866,23 +964,27 @@
             ],
             [
               1,
+              8
+            ],
+            [
+              1,
               9
             ],
             [
               1,
-              10
+              103
             ],
             [
               1,
-              113
+              11
             ],
             [
               1,
-              12
+              122
             ],
             [
               1,
-              132
+              13
             ],
             [
               1,
@@ -891,10 +993,6 @@
             [
               1,
               15
-            ],
-            [
-              1,
-              16
             ],
             [
               1,
@@ -920,29 +1018,30 @@
         },
         "scope": "Actual loopback stock editor draft and captured DOS keyboard wire. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim.",
         "exit_mode": "close_unsaved_connection",
-        "unexercised_keys": []
+        "unexercised_keys": [],
+        "modem_packet_delay_ms": 0
       },
       "retained_artifacts": {
-        "build/bbs-lab/results/enigma/editor-snapshot-final/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/SCREEN.BIN": "17c00ffcf3edb2566c34f02c14c791503cb6d3394a791fdcc780d6bf51668a92",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/TEST.PRM": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/bbs-sent.bin": "b052c4f581546109a0ea6ad014ab43cb41f0957592aefe9c516c556a331c2024",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/bbs-wire.bin": "bc0d797eccabcdfae3634a3b4265707caa6729b0bd25042d54273f1a32f62b27",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/display.bin": "c54ede4024bb2ab94cb99af0e63cf7b40e3c508c91fda1bf8ba4a6fc960b0688",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/dosbox.conf": "141e2942197f51b04a2ef76c6860d10028bc03c22847e6b84adebfc44df3ad7d",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/dosbox.log": "46c4ca0f386aa4f8786ce2c3c1c5fa7db9bfa2a70bfe0ad9229a8367eb4d2bdf",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/modem.json": "e9189fe47ffc14ebff55a75dbf75f429ad0187b606d6a40fe5c36ec0a3c5adb7",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/result.json": "a11281184cc51a7290276c43c0dd5416bde09516d086e1fe53ab8beab4fcedff",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/screen.txt": "1aabd7c42daa9940df62cbb2556650b2674ebb89a2d224fc03ad1bc20eb78d16",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/semantic-audit.json": "21db27de2fe6af81da55c06164b9179472206e346d73f36fb89e6ad736aa78f2",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/serial-received.bin": "218b467d919ac4230d51b6b82d08157fcf4a69b80f465981d9ca895b4aab81b9",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/serial-sent.bin": "c54ede4024bb2ab94cb99af0e63cf7b40e3c508c91fda1bf8ba4a6fc960b0688",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/server-log-start.json": "ea2f7b2dad23bac30c09efbff3401ba58a2033e0aa5ef7607a36af85c7d23373",
-        "build/bbs-lab/results/enigma/editor-snapshot-final/server-session.jsonl": "3ef6aca9dee01aab8e0a61aa2c2baf4de9c1376d7a6d4df264b35a10c76d8c17"
+        "build/bbs-lab/results/enigma/editor-monitor-final/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/editor-monitor-final/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/editor-monitor-final/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/bbs-lab/results/enigma/editor-monitor-final/SCREEN.BIN": "17c00ffcf3edb2566c34f02c14c791503cb6d3394a791fdcc780d6bf51668a92",
+        "build/bbs-lab/results/enigma/editor-monitor-final/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+        "build/bbs-lab/results/enigma/editor-monitor-final/TEST.PRM": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
+        "build/bbs-lab/results/enigma/editor-monitor-final/bbs-sent.bin": "b052c4f581546109a0ea6ad014ab43cb41f0957592aefe9c516c556a331c2024",
+        "build/bbs-lab/results/enigma/editor-monitor-final/bbs-wire.bin": "44d3d3abed62b5a07236a16ca2d4c94e225796cbb11fdba4ba344fecf363627f",
+        "build/bbs-lab/results/enigma/editor-monitor-final/display.bin": "fe1ddbbb645a4570c3d43d64c0e0680247ac79cecb2c80b92b23a9e6148638eb",
+        "build/bbs-lab/results/enigma/editor-monitor-final/dosbox.conf": "9fb756f81a69c0abcbd61daf368efb210b7c6be83ec9240c906e1971ba3e87a7",
+        "build/bbs-lab/results/enigma/editor-monitor-final/dosbox.log": "eb456a57275d4a7c74d14f7cf947767ccbd47b6df7504476f59ca412fe6739ad",
+        "build/bbs-lab/results/enigma/editor-monitor-final/modem.json": "5043efe578318468c32aa803259b2a8695adf72fafa31f5edf3012e0803da955",
+        "build/bbs-lab/results/enigma/editor-monitor-final/result.json": "6115aadf70e3e12d36ddd852b96ceff279d8a08c501cbd6522cc418f070069de",
+        "build/bbs-lab/results/enigma/editor-monitor-final/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+        "build/bbs-lab/results/enigma/editor-monitor-final/screen.txt": "1aabd7c42daa9940df62cbb2556650b2674ebb89a2d224fc03ad1bc20eb78d16",
+        "build/bbs-lab/results/enigma/editor-monitor-final/semantic-audit.json": "8d7fd54088433e4ef4f7fa25147c15e9b26a54b90f8ec929545f2513002805c9",
+        "build/bbs-lab/results/enigma/editor-monitor-final/serial-received.bin": "218b467d919ac4230d51b6b82d08157fcf4a69b80f465981d9ca895b4aab81b9",
+        "build/bbs-lab/results/enigma/editor-monitor-final/serial-sent.bin": "fe1ddbbb645a4570c3d43d64c0e0680247ac79cecb2c80b92b23a9e6148638eb",
+        "build/bbs-lab/results/enigma/editor-monitor-final/server-log-start.json": "9e09a525f788b3844d0fe78a8d2e1f5f686ae661060d6d26eeddb03e9ae366ed",
+        "build/bbs-lab/results/enigma/editor-monitor-final/server-session.jsonl": "14fe624803a3a53cfe0da5aca60e7e251c6d8feaa793ceb6e06039f9feb09b1d"
       },
       "independent_fragmentation_oracle": {
         "passed": true,
@@ -2821,6 +2920,196 @@
             "build/bbs-lab/results/enigma/editor-capture-final/serial-sent.bin": "4a155dd18f07cfc1f5d65388f0a47c3a81d6178daf924ac6cf0b5882a11c9926",
             "build/bbs-lab/results/enigma/editor-capture-final/server-log-start.json": "178ca1660c39c6e073a9823497a72b75f05870e8a1458fc2cb5d24cdf936353a",
             "build/bbs-lab/results/enigma/editor-capture-final/server-session.jsonl": "bfeddaa50b31aeb848e2ecbc1176634a6acc182e1d7a92b1ea7b32e60dc331e7"
+          }
+        },
+        {
+          "run": {
+            "name": "enigma",
+            "label": "editor-snapshot-final",
+            "checks": {
+              "dos_normal_exit": true,
+              "hardware_restored": true,
+              "screen_captured": true,
+              "bbs_connected": true,
+              "bbs_display_received": true,
+              "configuration_unchanged": true,
+              "binary_unchanged_during_run": true
+            },
+            "passed": true,
+            "seconds": 85.383,
+            "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
+            "keyboard": "p1000 p12000 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 N p6000 enter p6000 M enter p5000 P enter p5000 enter p700 K E Y T E S T enter p1800 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p3000 a-x p1000 a-x p1000 a-x p1000 a-x",
+            "serial": {
+              "com": 2,
+              "baud": 19200,
+              "line": "8N1",
+              "flow": "HARD",
+              "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+            },
+            "scope": "Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.",
+            "configuration": {
+              "automatic_dial": true,
+              "mode": "explicit synthetic partial PRM",
+              "command": "TERMINAL @D:\\TEST.PRM /D:lab.local:23233",
+              "sha256": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
+              "directory_entry": null,
+              "directory_browser": false,
+              "directory_sha256": null
+            }
+          },
+          "semantic_evidence": {
+            "passed": false,
+            "checks": {
+              "DOS_harness": true,
+              "typed_draft_sent": true,
+              "all_exercised_keys_emitted": true,
+              "stock_editor_entered": true,
+              "no_post_saved": true,
+              "insert_toggled_overtype": false,
+              "home_moves_before_marker": false
+            },
+            "observed_key_wire": {
+              "home": true,
+              "end": true,
+              "insert": true,
+              "delete": true,
+              "page_up": true,
+              "page_down": true,
+              "tab": true,
+              "delete_line_ctrl_y": true
+            },
+            "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
+            "serial": {
+              "com": 2,
+              "baud": 19200,
+              "line": "8N1",
+              "flow": "HARD",
+              "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+            },
+            "authority": {
+              "session_id": "OkUNaqql855",
+              "menus": [
+                "telnetConnected",
+                "matrix",
+                "login",
+                "fullLoginSequenceLoginArt",
+                "fullLoginSequenceLastCallers",
+                "fullLoginSequenceWhosOnline",
+                "fullLoginSequenceOnelinerz",
+                "fullLoginSequenceNewScanConfirm",
+                "fullLoginSequenceUserStats",
+                "mainMenu",
+                "messageBaseMainMenu",
+                "messageBaseNewPost"
+              ],
+              "first_body_cursor_positions": [
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  1,
+                  4
+                ],
+                [
+                  1,
+                  5
+                ],
+                [
+                  1,
+                  6
+                ],
+                [
+                  1,
+                  7
+                ],
+                [
+                  1,
+                  8
+                ],
+                [
+                  1,
+                  9
+                ],
+                [
+                  1,
+                  10
+                ],
+                [
+                  1,
+                  113
+                ],
+                [
+                  1,
+                  12
+                ],
+                [
+                  1,
+                  132
+                ],
+                [
+                  1,
+                  14
+                ],
+                [
+                  1,
+                  15
+                ],
+                [
+                  1,
+                  16
+                ],
+                [
+                  1,
+                  17
+                ],
+                [
+                  1,
+                  185
+                ],
+                [
+                  1,
+                  19
+                ],
+                [
+                  1,
+                  206
+                ],
+                [
+                  1,
+                  21
+                ]
+              ]
+            },
+            "scope": "Actual loopback stock editor draft and captured DOS keyboard wire. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim.",
+            "exit_mode": "close_unsaved_connection",
+            "unexercised_keys": []
+          },
+          "retained_artifacts": {
+            "build/bbs-lab/results/enigma/editor-snapshot-final/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/SCREEN.BIN": "17c00ffcf3edb2566c34f02c14c791503cb6d3394a791fdcc780d6bf51668a92",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/TEST.PRM": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/bbs-sent.bin": "b052c4f581546109a0ea6ad014ab43cb41f0957592aefe9c516c556a331c2024",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/bbs-wire.bin": "bc0d797eccabcdfae3634a3b4265707caa6729b0bd25042d54273f1a32f62b27",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/display.bin": "c54ede4024bb2ab94cb99af0e63cf7b40e3c508c91fda1bf8ba4a6fc960b0688",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/dosbox.conf": "141e2942197f51b04a2ef76c6860d10028bc03c22847e6b84adebfc44df3ad7d",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/dosbox.log": "46c4ca0f386aa4f8786ce2c3c1c5fa7db9bfa2a70bfe0ad9229a8367eb4d2bdf",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/modem.json": "e9189fe47ffc14ebff55a75dbf75f429ad0187b606d6a40fe5c36ec0a3c5adb7",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/result.json": "a11281184cc51a7290276c43c0dd5416bde09516d086e1fe53ab8beab4fcedff",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/screen.txt": "1aabd7c42daa9940df62cbb2556650b2674ebb89a2d224fc03ad1bc20eb78d16",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/semantic-audit.json": "21db27de2fe6af81da55c06164b9179472206e346d73f36fb89e6ad736aa78f2",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/serial-received.bin": "218b467d919ac4230d51b6b82d08157fcf4a69b80f465981d9ca895b4aab81b9",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/serial-sent.bin": "c54ede4024bb2ab94cb99af0e63cf7b40e3c508c91fda1bf8ba4a6fc960b0688",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/server-log-start.json": "ea2f7b2dad23bac30c09efbff3401ba58a2033e0aa5ef7607a36af85c7d23373",
+            "build/bbs-lab/results/enigma/editor-snapshot-final/server-session.jsonl": "3ef6aca9dee01aab8e0a61aa2c2baf4de9c1376d7a6d4df264b35a10c76d8c17"
           }
         }
       ],

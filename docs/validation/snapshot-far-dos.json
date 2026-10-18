@@ -25,23 +25,23 @@
     "ATDCaseTest:23"
   ],
   "errors": [],
-  "seconds": 7.325,
-  "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
+  "seconds": 7.324,
+  "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
   "command": "@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY COM1 38400 HARD",
   "expected_exit": 0,
   "scope": "Actual DOS livePROGRAM/COMSPEC owned child locates parent PSP, checks retainedMCB throughfarend afterSTACK, allocates/fills16KB separateDOSmemory and verifies full-sizedshadow/history and frozen-screen endpointcanaries. NormalUART/vector cleanup verified by existing sampler. No physical modem claim.",
-  "sample_hex": "0700140855215521ec25a92afecaefbeaddebebaec2522114433",
+  "sample_hex": "07001408ce21ce216526222bfecaefbeaddebeba652622114433",
   "linker_defines": {
-    "DGROUP_SEG": 3674,
-    "FAR_SEG": 7624,
+    "DGROUP_SEG": 3750,
+    "FAR_SEG": 7745,
     "SHADOW_OFFSET": 2000,
     "HISTORY_OFFSET": 10192,
     "FAR_END_OFFSET": 14288,
     "PROCESS_PSP_OFFSET": 448,
-    "SHADOW_SEGMENT_OFFSET": 22981,
-    "HISTORY_POINTER_OFFSET": 24397,
-    "SNAPSHOT_SEG": 7624,
+    "SHADOW_SEGMENT_OFFSET": 23461,
+    "HISTORY_POINTER_OFFSET": 24877,
+    "SNAPSHOT_SEG": 7745,
     "SNAPSHOT_OFFSET": 0,
-    "REQUIRED_PARAS": 8533
+    "REQUIRED_PARAS": 8654
   }
 }

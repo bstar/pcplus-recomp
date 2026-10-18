@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "checks": {
+    "DOS_normal_exit": true,
+    "selfcheck_reported_pass": true,
+    "within_timeout": true,
+    "diagnostic_unchanged": true,
+    "build_directory_names_unchanged": true,
+    "no_unexpected_fixture_files": true
+  },
+  "returncode": 0,
+  "seconds": 0.165,
+  "binary_sha256": "766e8cb46c6edb3269cee3ea2a7896c03628f37e6fcfe7fc17938f834e13b377",
+  "run": "build/monitor-dos/native-8086-final",
+  "selfcheck_stdout": "MONITOR PASS\r\n",
+  "build_manifest_sha256": "688f937b645d4c8f49c3ca22c7f5368b66cd1a45766cfc6504722c5d876cbd9d",
+  "harness_sha256": "e17be8a1e5ba96bbf179fc7af29f53938461ae18e4c2aa6525ee79842fea7cf4",
+  "scope": "Actual8086 DOS source-built native monitor owner/resolver/Y-N prompt selfcheck. CRT/UART/keyboard/render/UI services are declared memory fixtures; no live UART, modem, physical device or complete application claim.",
+  "artifacts": {
+    "build/monitor-dos/native-8086-final/OUTPUT.TXT": "b6130398ea47ebbe5c29165634e599ff7bb9001b4fc2e4f2d90de7cd17d091a6",
+    "build/monitor-dos/native-8086-final/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/monitor-dos/native-8086-final/dosbox.conf": "51c07016e008f822c40bda634f6cc08866a987de5d0d6834108af76ca9af9365",
+    "build/monitor-dos/native-8086-final/dosbox.log": "42eee0a79c1e0ba6b5ee6f94db21daf0a533651a1458ab1e404496c0175932a2"
+  }
+}

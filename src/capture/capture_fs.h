@@ -6,6 +6,7 @@
 unsigned capture_fs_canonical(const char *path,char *absolute128);
 unsigned capture_fs_attributes(const char *path,unsigned *attributes);
 unsigned capture_fs_create(const char *path,int *handle);
+unsigned capture_fs_create_replace(const char *path,int *handle);
 unsigned capture_fs_open_append(const char *path,int *handle);
 unsigned capture_fs_seek_end(int handle,unsigned long *position);
 unsigned capture_fs_write(int handle,const void *data,unsigned count,unsigned *written);

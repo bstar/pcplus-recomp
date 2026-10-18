@@ -45,6 +45,8 @@ static unsigned acquire(unsigned index,int *handle)
 {unsigned i;for(i=0;i<2;++i)if(!handles[i].live){handles[i].live=1;handles[i].index=index;handles[i].position=0;*handle=(int)i+7;return 0;}return 4;}
 unsigned capture_fs_create(const char *p,int *h)
 {++opens;if(find(p)>=0)return 80;if(file_count==8)return 4;strcpy(files[file_count].name,p);files[file_count].size=0;return acquire(file_count++,h);}
+unsigned capture_fs_create_replace(const char *p,int *h)
+{(void)p;(void)h;return 5;}
 unsigned capture_fs_open_append(const char *p,int *h)
 {int i;++opens;i=find(p);return i<0?2:acquire((unsigned)i,h);}
 unsigned capture_fs_seek_end(int h,unsigned long *p)

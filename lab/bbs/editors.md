@@ -256,3 +256,13 @@ This is separate evidence, not a replacement for the stock immediate aggregate.
 See [experiment, commands and limitations](packetization.md) and
 `docs/validation/bbs-enigma-packetization.json`. Physical modem behavior and
 TCP receive boundaries remain unverified.
+
+## Live monitor checkpoint
+
+`editor-monitor-final` repeats both immediate-bridge editor recipes on frozen
+9d90aa1a after adding the raw monitor, third checked file context and key router.
+Synchronet passes12 behavior and eight wire checks, including Ctrl-Q abort.
+ENiGMA emits all eight expected sequences but still fails Home/Insert behavior.
+It closes unsaved with no new post. Both restore sampled hardware and preserve
+the synthetic PRM. The separate buffered fd68875e experiment above remains
+historical evidence and is not a current immediate-editor pass.

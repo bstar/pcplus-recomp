@@ -59,7 +59,9 @@ CRC YMODEM batch receive/send with checked per-file ownership and exact declared
 lengths. Alt-F1/F2 text capture now uses the native logger, a checked DOS append
 owner and serviced prompt; see `docs/LIVE_CAPTURE.md`. Alt-G appends a frozen
 80x25 screen to PCPLUS.SCR through an independent checked owner; see
-`docs/LIVE_SNAPSHOT.md`. Physical modem and
+`docs/LIVE_SNAPSHOT.md`. Ctrl-backslash now opens a serviced raw monitor with
+explicit binaryDMP replacement through a third checked owner; see
+`docs/LIVE_MONITOR.md`. Physical modem and
 remaining protocol/application gates remain open. See
 `docs/TRANSFER_INTEGRATION.md` and `docs/LIVE_UPLOAD.md` for ownership and evidence.
 
@@ -231,13 +233,25 @@ physical modem compatibility or close the remaining application gates below.
       The Ctrl-backslash raw-monitor and binaryDMP route is now mapped from
       retained REA assembly, including byte transformations and modal ownership.
       See `docs/PRINTER_NATIVE.md` and `docs/RAW_MONITOR_NATIVE.md`.
-      Full F10 still requires live printer, remaining snapshot/viewport modes, raw
-      monitoring, complete settings/status UI, ASPECT and physical validation. See
+      The9d90aa1a checkpoint implements live Ctrl-backslash monitor with optional
+      binaryDMP replacement, native character rendering, serviced prompt/cancel,
+      bounded buffering and a third canonical-path checked file owner. Its15
+      selected actual DOS cases pass; the initial configured-attribute oracle
+      failure remains retained. Nine linked groups cover all256 bytes, UART mask/
+      software flow,18-tick flushing, ownership and storage failures. The third
+      owner adds160 assertions while69/134/60 existing backend/session/owner
+      assertions remain green. Eleven actual DOS capture and11 snapshot cases
+      pass again, as does the32-command terminal target. Native monitor recovery
+      adds503 exact bytes,27 original comparisons and an8086 DOS diagnostic.
+      Current Synchronet editing passes; ENiGMA immediate Home/Insert still fail.
+      See `docs/LIVE_MONITOR.md` and `docs/validation/terminal-monitor-dos.json`.
+      Full F10 still requires live printer, remaining snapshot/monitor geometry,
+      complete settings/status UI, ASPECT/HOOK and physical validation. See
       `docs/CAPTURE_NATIVE_INVENTORY.md`, `docs/LIVE_CAPTURE.md` and
       `docs/validation/terminal-capture-dos.json`.
-      The fresh maintained-source snapshot now reproduces51 byte-identical
+      The fresh maintained-source snapshot now reproduces54 byte-identical
       component/diagnostic outputs, including the current interactive executable
-      and capture/owner/native-screen/printer diagnostics, with originals/install/REA
+      and capture/owner/screen/printer/monitor diagnostics, with originals/install/REA
       databases absent. This checkpoint does not close the full application gate.
 - [ ] Reconstruct scripting interfaces and required interpreter/compiler integration.
       Keyboard file structures and original TEXT caret/pause consumers are proved,

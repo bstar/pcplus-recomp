@@ -1,0 +1,109 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "source": "owner.asm",
+      "start": "0x1aaa",
+      "end_exclusive": "0x1bbd",
+      "bytes": 275,
+      "source_file_offset": 11434,
+      "sha256": "f37c44a6f96de7f9b30801f8c5da90934c9ce621f29b8d9c23e3a36e9b83e8fe",
+      "region": "resident"
+    },
+    {
+      "source": "resolver.asm",
+      "start": "0x353d",
+      "end_exclusive": "0x35a6",
+      "bytes": 105,
+      "source_file_offset": 18237,
+      "sha256": "c7ec6dcd6c2a8f0bd8bbe662d0c4e31f1fa7db0b4c2b844848a054bc47fa3319",
+      "region": "resident"
+    },
+    {
+      "source": "yesno.asm",
+      "start": "0x6dde",
+      "end_exclusive": "0x6e59",
+      "bytes": 123,
+      "source_file_offset": 32734,
+      "sha256": "17cef652325c5f480ed52bcdb57d5a244f2d585cc6ec32941e28b1047a27416f",
+      "region": "resident"
+    }
+  ],
+  "state": {
+    "0x332c": "monitor_active",
+    "0x1d6e": "monitor_hook",
+    "0x1f7e": "monitor_prompt_attribute",
+    "0x1f7c": "monitor_choice_attribute",
+    "0x329e": "monitor_window_descriptor",
+    "0x422a": "monitor_prompt_text",
+    "0x468b": "monitor_dump_mode",
+    "0x468e": "monitor_dump_name",
+    "0x397a": "monitor_help_context",
+    "0x8e20": "monitor_rx_count",
+    "0x1d34": "monitor_special_attribute",
+    "0x1f70": "monitor_active_attribute",
+    "0x1d32": "monitor_normal_attribute",
+    "0xcffa": "monitor_key",
+    "0x324c": "monitor_environment_name_pointer",
+    "0x8f09": "monitor_path_before",
+    "0x8f0a": "monitor_path",
+    "0x471c": "monitor_probe_mode",
+    "0x471e": "monitor_separator",
+    "0x7a9a": "monitor_yes_label",
+    "0x7a96": "monitor_no_label",
+    "0x7a6c": "monitor_cursor_visibility",
+    "0x7a9e": "monitor_prompt_key"
+  },
+  "boundaries": {
+    "0x1aaa": "monitor_run_original",
+    "0x353d": "monitor_resolve_original",
+    "0x6dde": "monitor_yesno_original",
+    "0x2fb8": "monitor_status",
+    "0x24e2": "monitor_clear",
+    "0x3fc7": "monitor_save_window",
+    "0x6bf0": "monitor_draw_text",
+    "0x4015": "monitor_restore_window",
+    "0x841a": "monitor_open",
+    "0x8318": "monitor_close",
+    "0xaa65": "monitor_dequeue",
+    "0x730": "monitor_render",
+    "0x8436": "monitor_putc",
+    "0x651a": "monitor_keyboard_available",
+    "0x64fe": "monitor_keyboard_read",
+    "0x1604": "monitor_dispatch_key",
+    "0x8e12": "monitor_getenv",
+    "0x8268": "program_strcpy",
+    "0x8d18": "program_strlen",
+    "0x8bea": "program_strcat",
+    "0x6b5a": "monitor_prompt_lock",
+    "0x6b42": "monitor_prompt_unlock",
+    "0x6e78": "monitor_cursor_position",
+    "0x6dca": "monitor_cursor_6dca",
+    "0x6e5a": "monitor_cursor_6e5a",
+    "0x376d": "monitor_beep"
+  },
+  "supporting_evidence": [
+    {
+      "export": "analysis/pcplus-main/functions/0x11aaa-asm.json",
+      "evidence_id": "ev_0f26ef2aff3f6adb5aabe206ab2baa495cbdb748081537ed07650e2ba498d55e"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x1353d-asm.json",
+      "evidence_id": "ev_1cd43dbde8697560fddafd763fd3ab56971d91bd6badd8b88553d8e1cc1d6417"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x16dde-asm.json",
+      "evidence_id": "ev_974957d973c0620063fb4517598f57d6d1733280f7852f9de54d5584a9cedd03"
+    }
+  ],
+  "reused_sources": [
+    "reconstruction/program_exec/strcpy.asm",
+    "reconstruction/program_exec/strlen.asm",
+    "reconstruction/program_exec/strcat.asm"
+  ],
+  "limitations": [
+    "Exact503nativeinstructionbytes:275monitor,105resolver,123Y/Nprompt.",
+    "UARTdequeue,keyboard,render,UIandCRTareexplicitmemorydiagnosticboundaries;noclaimofliveUARTorfileowner.",
+    "Originaloverwritebinarywb,nullopen/ignoredIOerrors,unboundedresolvercopiesandsynchronouslooparepreservedonlyforcomparison."
+  ]
+}

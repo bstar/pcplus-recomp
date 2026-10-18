@@ -1,5 +1,5 @@
 {
-  "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
+  "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
   "runs": [
     {
       "case": "escape-no-create",
@@ -1778,63 +1778,644 @@
         "build/terminal-capture-dos/snapshot-fd68/capture-XMODEM-coexistence/serial.bin": "09c948490ed7cc0fe2748a7f24c4e9a1e09953e52f95060f4d067050eec9f3e3"
       },
       "observations": {}
+    },
+    {
+      "case": "escape-no-create",
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_DSR_after_each_text": true,
+        "actual_postcapture_keyboard": true,
+        "actual_postcapture_DSR": true,
+        "DOS_video_captured": true,
+        "actual_initial_DSR": true,
+        "actual_DSR_for_each_phase": true,
+        "no_peer_errors": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "required_actual_keyboard_and_DSR": true,
+        "escape_no_files_created": true,
+        "no_other_created_files": true
+      },
+      "errors": [],
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
+      "seconds": 3.471,
+      "command": "C:\\TERMINAL COM1 38400 8N1 HARD",
+      "keys": "p1500 a-f1 p300 escape p500 m 1 p500 r e a d y p500 a-x",
+      "scope": "Actual DOS processed-text capture/UI/hotkeys/UART/files and hardware snapshots. Independent controlled serial text/queries; no generated DOS replies, rawwirecapture or physical timing claim.",
+      "label": "monitor-9d90",
+      "retained_artifacts": {
+        "build/terminal-capture-dos/monitor-9d90/escape-no-create/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/escape-no-create/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/escape-no-create/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-capture-dos/monitor-9d90/escape-no-create/SCREEN.BIN": "8ecf9cb32700a500204101b093f757a56b9183dc4db072699289a516ac0f8bce",
+        "build/terminal-capture-dos/monitor-9d90/escape-no-create/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-capture-dos/monitor-9d90/escape-no-create/dosbox.conf": "18510ddd6ff0ce43c8e5bdb6cf9edf2ac68f201ed52d7467595eecf96ab7087c",
+        "build/terminal-capture-dos/monitor-9d90/escape-no-create/dosbox.log": "3ebf2c9c1adf2eacaae64c1e9e0c51a7744ba41a4d40f34468f5ab2799699ab8",
+        "build/terminal-capture-dos/monitor-9d90/escape-no-create/events.json": "6acde4408c1c0860e4e052744306a98cd32fcf410b01110b331810e9c606bc7f",
+        "build/terminal-capture-dos/monitor-9d90/escape-no-create/peer.bin": "b7e23b41315f6092ad78cb8a14e93b0dff8f2cdcbd87f16edf12b7d0da424918",
+        "build/terminal-capture-dos/monitor-9d90/escape-no-create/result.json": "3e959f39a715052ad766f51d82a2e95c1ea8214a376f1ac21a1a78c20ec4b458",
+        "build/terminal-capture-dos/monitor-9d90/escape-no-create/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-capture-dos/monitor-9d90/escape-no-create/screen.txt": "30aa0146222bcd950ab28f11bde85a7f03da36d74029a4e67253739cf917f914",
+        "build/terminal-capture-dos/monitor-9d90/escape-no-create/serial.bin": "8fa0af10c534c0a6b50eecd2fb48bb1c96cc37a2580edfc67967b37079640869"
+      },
+      "observations": {}
+    },
+    {
+      "case": "default-filename",
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_DSR_after_each_text": true,
+        "actual_postcapture_keyboard": true,
+        "actual_postcapture_DSR": true,
+        "DOS_video_captured": true,
+        "actual_initial_DSR": true,
+        "actual_DSR_for_each_phase": true,
+        "no_peer_errors": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "required_actual_keyboard_and_DSR": true,
+        "exact_processed_log_bytes": true,
+        "no_other_created_files": true
+      },
+      "errors": [],
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
+      "seconds": 4.971,
+      "command": "C:\\TERMINAL COM1 38400 8N1 HARD",
+      "keys": "p1500 a-f1 p300 enter p500 m 1 p1500 a-f1 p500 r e a d y p500 a-x",
+      "scope": "Actual DOS processed-text capture/UI/hotkeys/UART/files and hardware snapshots. Independent controlled serial text/queries; no generated DOS replies, rawwirecapture or physical timing claim.",
+      "label": "monitor-9d90",
+      "retained_artifacts": {
+        "build/terminal-capture-dos/monitor-9d90/default-filename/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/default-filename/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/default-filename/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-capture-dos/monitor-9d90/default-filename/PCPLUS.LOG": "34d250db5221af4713d099e6b0a14aa5569f1b2a5804270d4f917d92fe1232cf",
+        "build/terminal-capture-dos/monitor-9d90/default-filename/SCREEN.BIN": "097ccc63b658049b4323e317f2c81e557f948a69c0741f11a7f4f721b3f6658b",
+        "build/terminal-capture-dos/monitor-9d90/default-filename/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-capture-dos/monitor-9d90/default-filename/dosbox.conf": "eda039aab35cb5f75c6c516a54a8ba03d2a04ddab4a68e84d9a81fa7ab683019",
+        "build/terminal-capture-dos/monitor-9d90/default-filename/dosbox.log": "e7c7593871c2e507decfd012dfce6e5d4219d8a00c81a0a1acd1eb037f5059f3",
+        "build/terminal-capture-dos/monitor-9d90/default-filename/events.json": "459e1a34d5c6a7a0594f42e7cd4a3c05b5adc001afdfdcf3e51c2ff1316fe498",
+        "build/terminal-capture-dos/monitor-9d90/default-filename/peer.bin": "b7e23b41315f6092ad78cb8a14e93b0dff8f2cdcbd87f16edf12b7d0da424918",
+        "build/terminal-capture-dos/monitor-9d90/default-filename/result.json": "f0d32e455be7eacb0482aec5bf22f84b9280b2813b97316b3af3e05644bffd40",
+        "build/terminal-capture-dos/monitor-9d90/default-filename/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-capture-dos/monitor-9d90/default-filename/screen.txt": "ac606a7c7e2c5cce4c7055b085d6dd67ecee2a0f6c26f2b3c963bc70ffc52618",
+        "build/terminal-capture-dos/monitor-9d90/default-filename/serial.bin": "8fa0af10c534c0a6b50eecd2fb48bb1c96cc37a2580edfc67967b37079640869"
+      },
+      "observations": {}
+    },
+    {
+      "case": "explicit-filename",
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_DSR_after_each_text": true,
+        "actual_postcapture_keyboard": true,
+        "actual_postcapture_DSR": true,
+        "DOS_video_captured": true,
+        "actual_initial_DSR": true,
+        "actual_DSR_for_each_phase": true,
+        "no_peer_errors": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "required_actual_keyboard_and_DSR": true,
+        "exact_processed_log_bytes": true,
+        "no_other_created_files": true
+      },
+      "errors": [],
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
+      "seconds": 4.972,
+      "command": "C:\\TERMINAL COM1 38400 8N1 HARD",
+      "keys": "p1500 a-f1 p300 D : \\ L O G . T X T enter p500 m 1 p1500 a-f1 p500 r e a d y p500 a-x",
+      "scope": "Actual DOS processed-text capture/UI/hotkeys/UART/files and hardware snapshots. Independent controlled serial text/queries; no generated DOS replies, rawwirecapture or physical timing claim.",
+      "label": "monitor-9d90",
+      "retained_artifacts": {
+        "build/terminal-capture-dos/monitor-9d90/explicit-filename/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/explicit-filename/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/explicit-filename/LOG.TXT": "34d250db5221af4713d099e6b0a14aa5569f1b2a5804270d4f917d92fe1232cf",
+        "build/terminal-capture-dos/monitor-9d90/explicit-filename/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-capture-dos/monitor-9d90/explicit-filename/SCREEN.BIN": "097ccc63b658049b4323e317f2c81e557f948a69c0741f11a7f4f721b3f6658b",
+        "build/terminal-capture-dos/monitor-9d90/explicit-filename/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-capture-dos/monitor-9d90/explicit-filename/dosbox.conf": "de05310fe986c7f6da3394f9ee86ea40b50003c0ee193f133078a28fa28c4346",
+        "build/terminal-capture-dos/monitor-9d90/explicit-filename/dosbox.log": "cc1898a1f18801adf911c7be22e58beb2dce98f67bb15e76675807d383956893",
+        "build/terminal-capture-dos/monitor-9d90/explicit-filename/events.json": "a23b5ab49b07e467d116a6f32f9c0f8be7c23a4e69784996bfe6b54676955ca8",
+        "build/terminal-capture-dos/monitor-9d90/explicit-filename/peer.bin": "b7e23b41315f6092ad78cb8a14e93b0dff8f2cdcbd87f16edf12b7d0da424918",
+        "build/terminal-capture-dos/monitor-9d90/explicit-filename/result.json": "dc19136a9a31877683f842254ec6209aa9aef48ec5b647b2a1bb83990ec9733f",
+        "build/terminal-capture-dos/monitor-9d90/explicit-filename/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-capture-dos/monitor-9d90/explicit-filename/screen.txt": "ac606a7c7e2c5cce4c7055b085d6dd67ecee2a0f6c26f2b3c963bc70ffc52618",
+        "build/terminal-capture-dos/monitor-9d90/explicit-filename/serial.bin": "8fa0af10c534c0a6b50eecd2fb48bb1c96cc37a2580edfc67967b37079640869"
+      },
+      "observations": {}
+    },
+    {
+      "case": "repeat-append-DOS1A",
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_DSR_after_each_text": true,
+        "actual_postcapture_keyboard": true,
+        "actual_postcapture_DSR": true,
+        "DOS_video_captured": true,
+        "actual_initial_DSR": true,
+        "actual_DSR_for_each_phase": true,
+        "no_peer_errors": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "required_actual_keyboard_and_DSR": true,
+        "exact_processed_log_bytes": true,
+        "no_other_created_files": true
+      },
+      "errors": [],
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
+      "seconds": 7.225,
+      "command": "C:\\TERMINAL COM1 38400 8N1 HARD",
+      "keys": "p1500 a-f1 p300 D : \\ L O G . T X T enter p500 m 1 p1200 a-f1 p500 a-f1 p300 D : \\ L O G . T X T enter p500 m 2 p1200 a-f1 p500 r e a d y p500 a-x",
+      "scope": "Actual DOS processed-text capture/UI/hotkeys/UART/files and hardware snapshots. Independent controlled serial text/queries; no generated DOS replies, rawwirecapture or physical timing claim.",
+      "label": "monitor-9d90",
+      "retained_artifacts": {
+        "build/terminal-capture-dos/monitor-9d90/repeat-append-DOS1A/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/repeat-append-DOS1A/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/repeat-append-DOS1A/LOG.TXT": "5927f488b6b4262315d7fe35630c27664481f649ecd082f7bf3b9fc3dd842c8c",
+        "build/terminal-capture-dos/monitor-9d90/repeat-append-DOS1A/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-capture-dos/monitor-9d90/repeat-append-DOS1A/SCREEN.BIN": "ec7510ebb63c8bf0e6b3cfd217db00c1dfdbf74d5013ec5766dc66cd73719c37",
+        "build/terminal-capture-dos/monitor-9d90/repeat-append-DOS1A/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-capture-dos/monitor-9d90/repeat-append-DOS1A/dosbox.conf": "438995da7772d3b89a3d23d1f563a3fe6037a6ed8dc99a0397105e1bc2ec7627",
+        "build/terminal-capture-dos/monitor-9d90/repeat-append-DOS1A/dosbox.log": "c4ebd260f3f9558f54df4773998d0ed0d2496acded15bc3cf554ea3d0905fddd",
+        "build/terminal-capture-dos/monitor-9d90/repeat-append-DOS1A/events.json": "0415768dcaa7e005345e3ad59b25e681396fb23d8e46e5fbd700338ea92b7305",
+        "build/terminal-capture-dos/monitor-9d90/repeat-append-DOS1A/peer.bin": "804ddadae35df411a58e1769b725d47ff9ad928387f76539683f2019263023b2",
+        "build/terminal-capture-dos/monitor-9d90/repeat-append-DOS1A/result.json": "1d25b63c671f17b83b99f91c347d534ba7eb93c1abf502b14e11f471ca0931bb",
+        "build/terminal-capture-dos/monitor-9d90/repeat-append-DOS1A/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-capture-dos/monitor-9d90/repeat-append-DOS1A/screen.txt": "6efaa4fea56444b1ed06b65ba0192e72ec79d8f57f136d56b77ea7dc23ea0161",
+        "build/terminal-capture-dos/monitor-9d90/repeat-append-DOS1A/serial.bin": "74dae208d7922ab6a2eb64613faf9cb47020694dda57f8a672b1287d2973c7e5"
+      },
+      "observations": {}
+    },
+    {
+      "case": "pause-resume",
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_DSR_after_each_text": true,
+        "actual_postcapture_keyboard": true,
+        "actual_postcapture_DSR": true,
+        "DOS_video_captured": true,
+        "actual_initial_DSR": true,
+        "actual_DSR_for_each_phase": true,
+        "no_peer_errors": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "required_actual_keyboard_and_DSR": true,
+        "exact_processed_log_bytes": true,
+        "no_other_created_files": true
+      },
+      "errors": [],
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
+      "seconds": 8.077,
+      "command": "C:\\TERMINAL COM1 38400 8N1 HARD",
+      "keys": "p1500 a-f1 p300 D : \\ L O G . T X T enter p500 m 1 p1200 a-f2 p500 m 2 p1200 a-f2 p500 m 3 p1200 a-f1 p500 r e a d y p500 a-x",
+      "scope": "Actual DOS processed-text capture/UI/hotkeys/UART/files and hardware snapshots. Independent controlled serial text/queries; no generated DOS replies, rawwirecapture or physical timing claim.",
+      "label": "monitor-9d90",
+      "retained_artifacts": {
+        "build/terminal-capture-dos/monitor-9d90/pause-resume/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/pause-resume/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/pause-resume/LOG.TXT": "b5afc56abb54ba7344b0399adaaaeb21929adb11452615f5918f2fcad6041e82",
+        "build/terminal-capture-dos/monitor-9d90/pause-resume/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-capture-dos/monitor-9d90/pause-resume/SCREEN.BIN": "4aa3b03401df35f6d5ae98ff788a8cde651deb3a1799283aeed250209100174a",
+        "build/terminal-capture-dos/monitor-9d90/pause-resume/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-capture-dos/monitor-9d90/pause-resume/dosbox.conf": "1d0a7f714e73a30cc109ce5f08182c1ac93187bb8ca8f542e77db93d9b78566a",
+        "build/terminal-capture-dos/monitor-9d90/pause-resume/dosbox.log": "b676217691b4ce6bb342833e45ad78398801392a244b0712d5b491e35ff9bb25",
+        "build/terminal-capture-dos/monitor-9d90/pause-resume/events.json": "ba9a7f592acb4a360015a4247a971147691260cb6203a6543d7736a82fbb0665",
+        "build/terminal-capture-dos/monitor-9d90/pause-resume/peer.bin": "d554c62ce50d5ebb53a4d2dcb142231735539f77cbe4f85776ae33f527d5f5eb",
+        "build/terminal-capture-dos/monitor-9d90/pause-resume/result.json": "49c3506bdc28733a28a85e12695a1fd41f86a8bae305da948c5b4912e4c11d83",
+        "build/terminal-capture-dos/monitor-9d90/pause-resume/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-capture-dos/monitor-9d90/pause-resume/screen.txt": "48e5d73100f79a09665f82f86d87bd5cd360fcac6b9ad33462ed2e63a2101a6b",
+        "build/terminal-capture-dos/monitor-9d90/pause-resume/serial.bin": "79f54c96a02344fdce4540b7106fe7dc185131144bf370750745a8542092508d"
+      },
+      "observations": {}
+    },
+    {
+      "case": "CR-adds-LF-toggle",
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_DSR_after_each_text": true,
+        "actual_postcapture_keyboard": true,
+        "actual_postcapture_DSR": true,
+        "DOS_video_captured": true,
+        "actual_initial_DSR": true,
+        "actual_DSR_for_each_phase": true,
+        "no_peer_errors": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "required_actual_keyboard_and_DSR": true,
+        "exact_processed_log_bytes": true,
+        "no_other_created_files": true
+      },
+      "errors": [],
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
+      "seconds": 8.126,
+      "command": "C:\\TERMINAL COM1 38400 8N1 HARD",
+      "keys": "p1500 a-f1 p300 D : \\ L O G . T X T enter p500 m 1 p1200 a-f3 p500 m 2 p1200 a-f3 p500 m 3 p1200 a-f1 p500 r e a d y p500 a-x",
+      "scope": "Actual DOS processed-text capture/UI/hotkeys/UART/files and hardware snapshots. Independent controlled serial text/queries; no generated DOS replies, rawwirecapture or physical timing claim.",
+      "label": "monitor-9d90",
+      "retained_artifacts": {
+        "build/terminal-capture-dos/monitor-9d90/CR-adds-LF-toggle/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/CR-adds-LF-toggle/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/CR-adds-LF-toggle/LOG.TXT": "db10d297fa62e80dd0554d5c2bd49b5d9eff4e29570812401e0e8b47502a7850",
+        "build/terminal-capture-dos/monitor-9d90/CR-adds-LF-toggle/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-capture-dos/monitor-9d90/CR-adds-LF-toggle/SCREEN.BIN": "09fda65eefdd5f907ac6aca894dae4e43d26e9c2fd9f824d5911b49d35c9720b",
+        "build/terminal-capture-dos/monitor-9d90/CR-adds-LF-toggle/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-capture-dos/monitor-9d90/CR-adds-LF-toggle/dosbox.conf": "aaa7619792f5f1a23f47fb8f78b20be4ff3350dc01ba8983b6dcc5237cb9a76f",
+        "build/terminal-capture-dos/monitor-9d90/CR-adds-LF-toggle/dosbox.log": "b52fe488e1c7f64ec59884cebb3a8ca8cbc22290bf1a906d708a5e90d18623f2",
+        "build/terminal-capture-dos/monitor-9d90/CR-adds-LF-toggle/events.json": "f735086fe0dba783aea7105fa22e2bbecf111d9584620243ef7a42765221e49d",
+        "build/terminal-capture-dos/monitor-9d90/CR-adds-LF-toggle/peer.bin": "f5fde582663624eda642b50368384a8f0ecdbdb75563057f939ed14df492b3ca",
+        "build/terminal-capture-dos/monitor-9d90/CR-adds-LF-toggle/result.json": "be2897119610aca9723fd2095e6c485f75ef5496c4cb475c897e3e65fd380ed7",
+        "build/terminal-capture-dos/monitor-9d90/CR-adds-LF-toggle/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-capture-dos/monitor-9d90/CR-adds-LF-toggle/screen.txt": "f9884e2d0530871a01bfec599c2afaeb6130651a17b5b32688bf173761a79cde",
+        "build/terminal-capture-dos/monitor-9d90/CR-adds-LF-toggle/serial.bin": "79f54c96a02344fdce4540b7106fe7dc185131144bf370750745a8542092508d"
+      },
+      "observations": {}
+    },
+    {
+      "case": "periodic-flush",
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_DSR_after_each_text": true,
+        "actual_postcapture_keyboard": true,
+        "actual_postcapture_DSR": true,
+        "DOS_video_captured": true,
+        "actual_initial_DSR": true,
+        "actual_DSR_for_each_phase": true,
+        "no_peer_errors": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "required_actual_keyboard_and_DSR": true,
+        "exact_processed_log_bytes": true,
+        "actual_kernel_periodic_write_before_close": true,
+        "no_other_created_files": true
+      },
+      "errors": [],
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
+      "seconds": 5.972,
+      "command": "C:\\TERMINAL COM1 38400 8N1 HARD",
+      "keys": "p1500 a-f1 p300 D : \\ L O G . T X T enter p500 m 1 p2500 a-f1 p500 r e a d y p500 a-x",
+      "scope": "Actual DOS processed-text capture/UI/hotkeys/UART/files and hardware snapshots. Independent controlled serial text/queries; no generated DOS replies, rawwirecapture or physical timing claim.",
+      "label": "monitor-9d90",
+      "retained_artifacts": {
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/LOG.TXT": "a7c078c1b10a7e1a61ce46909b34ae179d121d52866c0c5d6798c1f1491c6124",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/SCREEN.BIN": "633c1f2e273dea655eaf054edbf8cfec42a0070e38d6cf2ec775abab4f62dce0",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/TRACE.BIN": "07a503e66bac82df1435e55ce554981802e7ca63fa3206bc1148dd5c0e010658",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/TRCDUMP.COM": "0dcb80a48bb044eb3b13a998306c43ed586a7a5ebcdb46123edf717bf126db72",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/TRCDUMP.asm": "a917e294ee48bd296515680e4025cf99acd5b8c0e2813a32098e90bd5ba0e815",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/TRCINST.COM": "6a3050d5121a783639b37f1b0dc18a3b18f46f643b714fd81a14ba9aa97e9775",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/TRCINST.asm": "c6df22e77b31ed9e282a68b666cfbecdb9bcc8fdf83d8f4f85937681ca028a37",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/dosbox.conf": "67cef08ddf02f829052197e6895e21425bf390db26a75831ba6320e44df41f27",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/dosbox.log": "02ce86c89027ed70281295e7d0c036b47c4a5a40c627d6355fe676c6c146f3fa",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/events.json": "153516adfb59398cae41605eb6845237dc60ef32d4185d6b6ba372bbab828d60",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/kernel-trace.json": "84afa4d53689811a9701befc0d75091b6a1c4a839497fb51086f3a5ba791fdaa",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/peer.bin": "dfbff73090ff84c6cafcc30d4c687f4d9be084ed69a96d6c5ec147dd4fdf0ec7",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/result.json": "920b9a74569a2e03cb0745b1f09aacded6695469c895c087d8565ba80a2ef4d4",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/screen.txt": "8015c07ea65e5ad89f30fba091b4304b53baad14cd688d86c227a0b50a9c4e08",
+        "build/terminal-capture-dos/monitor-9d90/periodic-flush/serial.bin": "8fa0af10c534c0a6b50eecd2fb48bb1c96cc37a2580edfc67967b37079640869"
+      },
+      "kernel_trace": {
+        "passed": true,
+        "chain_signature_and_restoration_checked": true,
+        "overflow": 0,
+        "records": [
+          {
+            "function": 64,
+            "handle": 5,
+            "count": 32,
+            "ticks": 290193
+          },
+          {
+            "function": 64,
+            "handle": 5,
+            "count": 4,
+            "ticks": 290193
+          },
+          {
+            "function": 64,
+            "handle": 5,
+            "count": 6,
+            "ticks": 290193
+          },
+          {
+            "function": 62,
+            "handle": 5,
+            "count": 6,
+            "ticks": 290193
+          },
+          {
+            "function": 64,
+            "handle": 5,
+            "count": 10,
+            "ticks": 290253
+          },
+          {
+            "function": 62,
+            "handle": 5,
+            "count": 10,
+            "ticks": 290281
+          },
+          {
+            "function": 64,
+            "handle": 5,
+            "count": 4000,
+            "ticks": 290299
+          },
+          {
+            "function": 62,
+            "handle": 5,
+            "count": 4000,
+            "ticks": 290299
+          },
+          {
+            "function": 64,
+            "handle": 5,
+            "count": 32,
+            "ticks": 290299
+          },
+          {
+            "function": 64,
+            "handle": 5,
+            "count": 4,
+            "ticks": 290299
+          },
+          {
+            "function": 64,
+            "handle": 5,
+            "count": 6,
+            "ticks": 290299
+          },
+          {
+            "function": 62,
+            "handle": 5,
+            "count": 6,
+            "ticks": 290299
+          }
+        ],
+        "early_writes": [
+          {
+            "write_index": 4,
+            "close_delta_ticks": 28
+          }
+        ],
+        "scope": "Independent source-built temporary INT21 trace, no product callback changes. Records actualAH40/AH3E and BIOS ticks; full vectorchain verified before and after restoration. At least10 ticks beforeclose proves earlyDOSwrite, not hoststdio visibility or exact18tick timing."
+      },
+      "observations": {
+        "host_periodic_visibility_before_stop": false
+      }
+    },
+    {
+      "case": "shutdown-flush",
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_DSR_after_each_text": true,
+        "shutdown_text_DSR_before_exit": true,
+        "actual_shutdown_closed_serial": true,
+        "DOS_video_captured": true,
+        "actual_initial_DSR": true,
+        "actual_DSR_for_each_phase": true,
+        "no_peer_errors": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "required_actual_shutdown": true,
+        "exact_processed_log_bytes": true,
+        "no_other_created_files": true
+      },
+      "errors": [],
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
+      "seconds": 2.769,
+      "command": "C:\\TERMINAL COM1 38400 8N1 HARD",
+      "keys": "p1500 a-f1 p300 D : \\ L O G . T X T enter p500 m 1 p300 a-x",
+      "scope": "Actual DOS processed-text capture/UI/hotkeys/UART/files and hardware snapshots. Independent controlled serial text/queries; no generated DOS replies, rawwirecapture or physical timing claim.",
+      "label": "monitor-9d90",
+      "retained_artifacts": {
+        "build/terminal-capture-dos/monitor-9d90/shutdown-flush/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/shutdown-flush/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/shutdown-flush/LOG.TXT": "ec9d02ae904f4de00932c201a16ca50dada95aa7410de1e78ebad110e9fbf4cd",
+        "build/terminal-capture-dos/monitor-9d90/shutdown-flush/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-capture-dos/monitor-9d90/shutdown-flush/SCREEN.BIN": "1438f0c332283ce31789e22e0007a2f30d6676c7e6573ed7968556e03561dde3",
+        "build/terminal-capture-dos/monitor-9d90/shutdown-flush/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-capture-dos/monitor-9d90/shutdown-flush/dosbox.conf": "fa8b3277a3c37c64c17d0c72f6dcfbe1d0bed9fd6f7a1cb72f0cdd1975f5500a",
+        "build/terminal-capture-dos/monitor-9d90/shutdown-flush/dosbox.log": "a316dad9fcd2aa9a7e2ac31a447edfeda6972e05e9b7764181745671082a8324",
+        "build/terminal-capture-dos/monitor-9d90/shutdown-flush/events.json": "2f5ad0bac57e6552909ad09503c05e860212f201fbf00c71e5a227d50ae14fba",
+        "build/terminal-capture-dos/monitor-9d90/shutdown-flush/peer.bin": "23f6bd5c2183cf9bf2ea3cf9ba6dc7152084c9352b10965fd6804db2603fdca5",
+        "build/terminal-capture-dos/monitor-9d90/shutdown-flush/result.json": "44a3d451930ef794555b7df0ad01524ab74b9541e0c550baf2d7d68983cbefe5",
+        "build/terminal-capture-dos/monitor-9d90/shutdown-flush/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-capture-dos/monitor-9d90/shutdown-flush/screen.txt": "b17ea20bd7ab90ff808e9cc5ba8105030467bf25b21270314669bcafe08cdf87",
+        "build/terminal-capture-dos/monitor-9d90/shutdown-flush/serial.bin": "13f24fa43bddac85888dd2755de4b5ae0cf188b563471e20fa0cec823c358ad2"
+      },
+      "observations": {}
+    },
+    {
+      "case": "buffer-over256",
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_DSR_after_each_text": true,
+        "actual_postcapture_keyboard": true,
+        "actual_postcapture_DSR": true,
+        "DOS_video_captured": true,
+        "actual_initial_DSR": true,
+        "actual_DSR_for_each_phase": true,
+        "no_peer_errors": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "required_actual_keyboard_and_DSR": true,
+        "exact_processed_log_bytes": true,
+        "no_other_created_files": true
+      },
+      "errors": [],
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
+      "seconds": 4.972,
+      "command": "C:\\TERMINAL COM1 38400 8N1 HARD",
+      "keys": "p1500 a-f1 p300 D : \\ L O G . T X T enter p500 m 1 p1500 a-f1 p500 r e a d y p500 a-x",
+      "scope": "Actual DOS processed-text capture/UI/hotkeys/UART/files and hardware snapshots. Independent controlled serial text/queries; no generated DOS replies, rawwirecapture or physical timing claim.",
+      "label": "monitor-9d90",
+      "retained_artifacts": {
+        "build/terminal-capture-dos/monitor-9d90/buffer-over256/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/buffer-over256/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/buffer-over256/LOG.TXT": "404180d9a4c411494f425b596595cac43da4653f5d3b7c5f6817687ebd980f9b",
+        "build/terminal-capture-dos/monitor-9d90/buffer-over256/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-capture-dos/monitor-9d90/buffer-over256/SCREEN.BIN": "0e056d4e206413a65de141d2e7965a36f2506f42d6ea6fe0c8e5f3ce4cdb6260",
+        "build/terminal-capture-dos/monitor-9d90/buffer-over256/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-capture-dos/monitor-9d90/buffer-over256/dosbox.conf": "a7008add22126f391ff7015c356e45ec41e35e9b205cc4dbc27c81ebd32b52c7",
+        "build/terminal-capture-dos/monitor-9d90/buffer-over256/dosbox.log": "8c884e847a512639fc7f8f989fb4ce5f544921505c8de7513aca6bf360ab6c1e",
+        "build/terminal-capture-dos/monitor-9d90/buffer-over256/events.json": "ea7d67e8136420f6939f0da820494cd1d875281a8a77f61dbd360e8de8102c5f",
+        "build/terminal-capture-dos/monitor-9d90/buffer-over256/peer.bin": "68d41872e3ee63016e84d99819cb77ea29c0f6fdea7a5745eacc16a6980e6bb0",
+        "build/terminal-capture-dos/monitor-9d90/buffer-over256/result.json": "0c01190f3d45611d1a4d9aa0521c222073b49955903b6471adbbce92bcdd90dd",
+        "build/terminal-capture-dos/monitor-9d90/buffer-over256/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-capture-dos/monitor-9d90/buffer-over256/screen.txt": "b426e4d70a2b093889c5009c68e638197e980731dc988db447ce40b48ff16e08",
+        "build/terminal-capture-dos/monitor-9d90/buffer-over256/serial.bin": "8fa0af10c534c0a6b50eecd2fb48bb1c96cc37a2580edfc67967b37079640869"
+      },
+      "observations": {}
+    },
+    {
+      "case": "readonly-open-failure",
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_DSR_after_each_text": true,
+        "actual_postcapture_keyboard": true,
+        "actual_postcapture_DSR": true,
+        "DOS_video_captured": true,
+        "actual_initial_DSR": true,
+        "actual_DSR_for_each_phase": true,
+        "no_peer_errors": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "required_actual_keyboard_and_DSR": true,
+        "exact_processed_log_bytes": true,
+        "no_other_created_files": true,
+        "readonly_preserved": true
+      },
+      "errors": [],
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
+      "seconds": 3.469,
+      "command": "C:\\TERMINAL COM1 38400 8N1 HARD",
+      "keys": "p1500 a-f1 p300 D : \\ L O C K . L O G enter p500 m 1 p500 r e a d y p500 a-x",
+      "scope": "Actual DOS processed-text capture/UI/hotkeys/UART/files and hardware snapshots. Independent controlled serial text/queries; no generated DOS replies, rawwirecapture or physical timing claim.",
+      "label": "monitor-9d90",
+      "retained_artifacts": {
+        "build/terminal-capture-dos/monitor-9d90/readonly-open-failure/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/readonly-open-failure/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/readonly-open-failure/LOCK.LOG": "cf96fcc67aacd29976e04abbac82d5118ee7aa976e6a45d23e8d5cc96d85c068",
+        "build/terminal-capture-dos/monitor-9d90/readonly-open-failure/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-capture-dos/monitor-9d90/readonly-open-failure/SCREEN.BIN": "8ecf9cb32700a500204101b093f757a56b9183dc4db072699289a516ac0f8bce",
+        "build/terminal-capture-dos/monitor-9d90/readonly-open-failure/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-capture-dos/monitor-9d90/readonly-open-failure/dosbox.conf": "55c171fa35c5de4c7e7fffa81463a544346f362283b345cee11f42c7d12e3954",
+        "build/terminal-capture-dos/monitor-9d90/readonly-open-failure/dosbox.log": "1afd7f1f5ac6b8cbb567d91ab6c44bcaa5be4324e6c48f22f4b9c2bface7db74",
+        "build/terminal-capture-dos/monitor-9d90/readonly-open-failure/events.json": "e4738397c39e570a1dc276e4bae882660ff6396b65a00f4e2f0b044f0325e4ab",
+        "build/terminal-capture-dos/monitor-9d90/readonly-open-failure/peer.bin": "b7e23b41315f6092ad78cb8a14e93b0dff8f2cdcbd87f16edf12b7d0da424918",
+        "build/terminal-capture-dos/monitor-9d90/readonly-open-failure/result.json": "0ad4aa44bac316b477cc7579f16e690d4d6ba0d136607484f2fbfbe66492e53b",
+        "build/terminal-capture-dos/monitor-9d90/readonly-open-failure/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-capture-dos/monitor-9d90/readonly-open-failure/screen.txt": "30aa0146222bcd950ab28f11bde85a7f03da36d74029a4e67253739cf917f914",
+        "build/terminal-capture-dos/monitor-9d90/readonly-open-failure/serial.bin": "8fa0af10c534c0a6b50eecd2fb48bb1c96cc37a2580edfc67967b37079640869"
+      },
+      "observations": {}
+    },
+    {
+      "case": "capture-XMODEM-coexistence",
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "actual_DSR_after_each_text": true,
+        "actual_XMODEM_transfer": true,
+        "actual_postcapture_keyboard": true,
+        "actual_postcapture_DSR": true,
+        "DOS_video_captured": true,
+        "actual_initial_DSR": true,
+        "actual_DSR_for_each_phase": true,
+        "no_peer_errors": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "runtime_unchanged": true,
+        "required_actual_keyboard_and_DSR": true,
+        "exact_processed_log_bytes": true,
+        "no_other_created_files": true
+      },
+      "errors": [],
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
+      "seconds": 9.827,
+      "command": "C:\\TERMINAL COM1 38400 8N1 HARD",
+      "keys": "p1500 a-f1 p300 D : \\ L O G . T X T enter p500 m 1 p1000 a-r p300 D : \\ R E C V . B I N enter p3500 p500 m 2 p1000 a-f1 p500 r e a d y p500 a-x",
+      "scope": "Actual DOS processed-text capture/UI/hotkeys/UART/files and hardware snapshots. Independent controlled serial text/queries; no generated DOS replies, rawwirecapture or physical timing claim.",
+      "label": "monitor-9d90",
+      "retained_artifacts": {
+        "build/terminal-capture-dos/monitor-9d90/capture-XMODEM-coexistence/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/capture-XMODEM-coexistence/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/terminal-capture-dos/monitor-9d90/capture-XMODEM-coexistence/LOG.TXT": "017290fff7b11ef034ee2ca2a8ab59dfc7725eebe08fe0dfacbf72f59443f159",
+        "build/terminal-capture-dos/monitor-9d90/capture-XMODEM-coexistence/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/terminal-capture-dos/monitor-9d90/capture-XMODEM-coexistence/RECV.BIN": "44d942056dd7041cfe6a1bbcb1a1f3afc385bb951b5efd787e71f514f29e1ddc",
+        "build/terminal-capture-dos/monitor-9d90/capture-XMODEM-coexistence/SCREEN.BIN": "b894822a25c23a211f0d2f23779a961988d9095d92f3eec1144510e8023a4d5e",
+        "build/terminal-capture-dos/monitor-9d90/capture-XMODEM-coexistence/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "build/terminal-capture-dos/monitor-9d90/capture-XMODEM-coexistence/dosbox.conf": "75506f831dd82a645604b9a320538c287fa5fa0842f458a786d68e2403e768cc",
+        "build/terminal-capture-dos/monitor-9d90/capture-XMODEM-coexistence/dosbox.log": "638d4c71ed51db96ffd49b364c5db757f173bbd4a25107bd4e3a89050bbb4bbb",
+        "build/terminal-capture-dos/monitor-9d90/capture-XMODEM-coexistence/events.json": "011167489ad7a25d7a2106ba83112ef42fca957210fa9d385129bf62634982ae",
+        "build/terminal-capture-dos/monitor-9d90/capture-XMODEM-coexistence/peer.bin": "7a191822a3df0af685f0892f164b08191ed8a764cfac23a41deb5b8e7e669035",
+        "build/terminal-capture-dos/monitor-9d90/capture-XMODEM-coexistence/result.json": "0a6d2492afa822af0d7e817f3fb2a55097760b376cd9ba4973bdd29a93cb6131",
+        "build/terminal-capture-dos/monitor-9d90/capture-XMODEM-coexistence/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "build/terminal-capture-dos/monitor-9d90/capture-XMODEM-coexistence/screen.txt": "8b8346838172a91c7146254c1cabd0e127c895961c4061bc67e59903633e38f2",
+        "build/terminal-capture-dos/monitor-9d90/capture-XMODEM-coexistence/serial.bin": "09c948490ed7cc0fe2748a7f24c4e9a1e09953e52f95060f4d067050eec9f3e3"
+      },
+      "observations": {}
     }
   ],
   "latest_selected_cases": {
     "escape-no-create": {
-      "label": "snapshot-fd68",
+      "label": "monitor-9d90",
       "passed": true,
-      "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c"
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e"
     },
     "default-filename": {
-      "label": "snapshot-fd68",
+      "label": "monitor-9d90",
       "passed": true,
-      "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c"
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e"
     },
     "explicit-filename": {
-      "label": "snapshot-fd68",
+      "label": "monitor-9d90",
       "passed": true,
-      "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c"
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e"
     },
     "repeat-append-DOS1A": {
-      "label": "snapshot-fd68",
+      "label": "monitor-9d90",
       "passed": true,
-      "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c"
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e"
     },
     "pause-resume": {
-      "label": "snapshot-fd68",
+      "label": "monitor-9d90",
       "passed": true,
-      "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c"
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e"
     },
     "CR-adds-LF-toggle": {
-      "label": "snapshot-fd68",
+      "label": "monitor-9d90",
       "passed": true,
-      "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c"
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e"
     },
     "periodic-flush": {
-      "label": "snapshot-fd68",
+      "label": "monitor-9d90",
       "passed": true,
-      "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c"
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e"
     },
     "shutdown-flush": {
-      "label": "snapshot-fd68",
+      "label": "monitor-9d90",
       "passed": true,
-      "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c"
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e"
     },
     "buffer-over256": {
-      "label": "snapshot-fd68",
+      "label": "monitor-9d90",
       "passed": true,
-      "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c"
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e"
     },
     "readonly-open-failure": {
-      "label": "snapshot-fd68",
+      "label": "monitor-9d90",
       "passed": true,
-      "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c"
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e"
     },
     "capture-XMODEM-coexistence": {
-      "label": "snapshot-fd68",
+      "label": "monitor-9d90",
       "passed": true,
-      "binary_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c"
+      "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e"
     }
   },
   "latest_selected_cases_passed": true,

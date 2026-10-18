@@ -1,13 +1,13 @@
 #ifndef PCPLUS_CAPTURE_FILE_H
 #define PCPLUS_CAPTURE_FILE_H
 /* Maintained exact binary foreground sink, near cdecl, DS=SS, unsigned16.
- * Explicit path/mode only; no formatting, default path, truncation, native FILE
+ * Explicit path/mode only; no formatting, default path, implicit truncation, native FILE
  * interoperability, delete, rollback, concurrent-writer or crash-atomic claim.
  * Caller may inspect but must not mutate this96-byte snapshot. */
 enum { CF_OK=0,CF_ARGUMENT,CF_BUSY,CF_STATE,CF_INSPECT,CF_CONFLICT,CF_OPEN,
  CF_SEEK,CF_WRITE,CF_CLOSE,CF_OVERFLOW,CF_RECOVERY };
 enum { CF_IDLE=0,CF_OPENED,CF_CLOSED,CF_BROKEN,CF_UNCERTAIN };
-enum { CF_NEW=1,CF_APPEND=2 };
+enum { CF_NEW=1,CF_APPEND=2,CF_REPLACE=3 };
 typedef struct capture_file_snapshot {
  unsigned state,first_status,dos_error,close_error,mode;
  unsigned handle_open,handle_uncertain,write_calls,close_calls,reserved;
@@ -16,6 +16,7 @@ typedef struct capture_file_snapshot {
 } capture_file_snapshot;
 extern capture_file_snapshot capture_file_result;
 extern capture_file_snapshot snapshot_file_result;
+extern capture_file_snapshot monitor_file_result;
 /* DATA cookie initializes dirty assembly-host BSS once. Repeated initialization
  * preserves resolved history and refuses open/ambiguous ownership unchanged. */
 unsigned __cdecl capture_file_initialize(void);
@@ -42,7 +43,7 @@ unsigned __cdecl capture_file_close(void);
 /* Idle cleanup is harmless; all prior fatal statuses remain observable. */
 unsigned __cdecl capture_file_cleanup(void);
 /* Second fixed independent owner with the same96-byte ABI and statuses.
- * Both owners protect input spans against both snapshots and all descriptors.
+ * All three owners protect input spans against all snapshots and all descriptors.
  * DOS3+21h/60h canonicalization precedes IO; an open/uncertain other owner of
  * the same canonical DOS identity rejects CF_BUSY without mutating either.
  * The admitted absolute identity is used for subsequent filesystem calls.
@@ -54,4 +55,15 @@ unsigned __cdecl snapshot_file_begin(const char *path,unsigned mode);
 unsigned __cdecl snapshot_file_append(const void *data,unsigned count);
 unsigned __cdecl snapshot_file_close(void);
 unsigned __cdecl snapshot_file_cleanup(void);
+/* Third independent binary owner. REPLACE is accepted ONLY here, after UI
+ * explicit replacement consent. Existing writable regular files are truncated
+ * by DOS3Ch; missing files use exclusive5Bh create. No rollback/race guarantee
+ * for a changing namespace. NEW/APPEND remain available. Ownership/canonical
+ * checks precede truncation, including uncertain other owners. */
+unsigned __cdecl monitor_file_initialize(void);
+unsigned __cdecl monitor_file_validate_path(const char *path,unsigned allow_empty);
+unsigned __cdecl monitor_file_begin(const char *path,unsigned mode);
+unsigned __cdecl monitor_file_append(const void *data,unsigned count);
+unsigned __cdecl monitor_file_close(void);
+unsigned __cdecl monitor_file_cleanup(void);
 #endif

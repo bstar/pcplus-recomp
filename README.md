@@ -96,11 +96,16 @@ PROGRAM closes capture before launching a child. See
 Alt-G appends a character-only screen snapshot to `PCPLUS.SCR`, with trailing
 spaces trimmed and CRLF per row. It preserves open/held text capture and refuses
 an internal same-file conflict. See [screen-file snapshots](docs/LIVE_SNAPSHOT.md).
+Ctrl+backslash opens the [raw monitor](docs/LIVE_MONITOR.md). Y explicitly
+replaces `PCPLUS.DMP` with binary received bytes; N/Enter/Escape selects view-only.
+Escape inside the monitor returns to normal ANSI processing. Existing text
+capture stays open or held and excludes received monitor bytes.
 
 The separate [native printer diagnostic](docs/PRINTER_NATIVE.md) reconstructs
 printer-copy instructions with explicit memory-device fixtures. The
 [raw-monitor ledger](docs/RAW_MONITOR_NATIVE.md) maps Ctrl-\\ and the binary DMP
-path. Live printer and raw-monitor integration remain unfinished.
+path. The exact native monitor remains a separate diagnostic; full original
+monitor/UI/HOOK modes and live printer integration remain unfinished.
 Global `/T:MYKEYS.KEY` imports ten Meta actions; Alt-1..Alt-0 execute
 nonblocking TEXT or maintained PROGRAM actions. PROGRAM passes a validated
 1..51-byte stored command through COMSPEC `/c`, suspends terminal UART ownership

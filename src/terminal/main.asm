@@ -28,6 +28,8 @@ extern _terminal_batch_initialize
 extern _capture_session_initialize,_capture_session_shutdown
 extern terminal_capture_poll
 extern _snapshot_file_initialize,terminal_snapshot_shutdown
+extern _monitor_file_initialize,terminal_monitor_poll,terminal_monitor_filter
+extern terminal_monitor_active,terminal_monitor_shutdown
 extern terminal_connection_start,terminal_connection_receive
 extern connection_state,connection_result
 ; Open Watcom small-code consistency marker for the near-C DOS IO subset.
@@ -49,6 +51,7 @@ _small_code_:
  call _terminal_batch_initialize
  call _capture_session_initialize
  call _snapshot_file_initialize
+ call _monitor_file_initialize
  pop ax
  call terminal_parse_options
  jnc .configured
@@ -148,6 +151,7 @@ _small_code_:
  cmp word [terminal_quit],0
  jne terminal_shutdown
  call terminal_capture_poll
+ call terminal_monitor_poll
  call terminal_transfer_poll
  cmp word [terminal_quit],0
  jne terminal_shutdown
@@ -165,15 +169,21 @@ _small_code_:
  cmp word [connection_result],0xffff
  jne .idle
 .receive:
+ cmp word [terminal_monitor_active],2
+ je .idle ;Prompt owns keyboard; leave all incoming bytes in actual RX ring.
  call uart_receive_byte
  cmp ax,0xffff
  je .idle
  call terminal_connection_receive
  jc .loop
+ call terminal_monitor_filter
+ jc .loop
  call terminal_transfer_filter
  jc .loop
  push ax
+ inc word [terminal_parser_active]
  call terminal_receive_character
+ dec word [terminal_parser_active]
  add sp,2
  jmp .loop
 .idle:
@@ -234,6 +244,17 @@ terminal_shutdown:
  mov byte [hardware_active],0
 .exit:
  call terminal_transfer_shutdown
+ call terminal_monitor_shutdown
+ or ax,ax
+ jz .monitor_closed
+ cmp word [terminal_exit_code],0
+ jne .monitor_message
+ mov word [terminal_exit_code],12
+.monitor_message:
+ mov dx,monitor_failed
+ mov ah,9
+ int 0x21
+.monitor_closed:
  call terminal_snapshot_shutdown
  or ax,ax
  jz .snapshot_closed
@@ -294,6 +315,8 @@ terminal_shutdown:
  int 0x21
 
 SEGMENT _DATA public align=16 class=DATA use16
+global terminal_parser_active
+terminal_parser_active: dw 0
 hardware_active: db 0
 vector_active: db 0
 missing_port: db 'Selected COM port is not listed by the BIOS.',13,10,'$'
@@ -304,6 +327,7 @@ macro_failed: db 13,10,'TEXT action timed out; terminal stopped.',13,10,'$'
 accounting_failed: db 13,10,'Call statistics save needs attention. Check directory recovery files.',13,10,'$'
 capture_failed: db 13,10,'Capture failed; partial log retained. Check free space and file access.',13,10,'$'
 snapshot_failed: db 13,10,'Screen snapshot failed; partial file retained.',13,10,'$'
+monitor_failed: db 13,10,'Monitor dump failed; partial file retained.',13,10,'$'
 configuration_messages: dw configuration_io,configuration_serial,configuration_flow
  dw configuration_profile,configuration_display,configuration_argument,configuration_modem
  dw configuration_directory

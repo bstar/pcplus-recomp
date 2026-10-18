@@ -7,6 +7,7 @@ extern terminal_option_mask,terminal_actions_path,_key_actions_dos_read
 extern modem_expand_bounded,terminal_clock_ticks,uart_try_write
 extern terminal_quit,terminal_exit_code,connection_state
 extern terminal_program_start,terminal_program_pending,terminal_program_active
+extern terminal_monitor_active
 global terminal_load_actions,terminal_macro_start,terminal_macro_poll
 global terminal_macro_cancel,terminal_defer_key,terminal_take_deferred_key
 
@@ -61,6 +62,8 @@ terminal_macro_start:
  push si
  push di
  push es
+ cmp word [terminal_monitor_active],0
+ jne .busy
  cmp word [terminal_macro_active],0
  jne .busy
  cmp word [terminal_program_pending],0

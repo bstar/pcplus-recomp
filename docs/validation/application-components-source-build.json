@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "124dc2789dc56b0f5e46154b395e8b71a544cfa30f04eee56388e9ab12ddba41",
-  "source_file_count": 1107,
+  "source_snapshot_sha256": "a27f89d917619cc7f41bf686d10fedcf0b82de92777796949387384478d3ea3b",
+  "source_file_count": 1129,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,19 +16,19 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "00edbd7e5f3e94b4c8c418c3d77043a46663e0b6377774807cfdf50caafdf257",
+  "build_log_sha256": "078707b1ad0453bc75a0f58dd0f7bb4b7758bff675e00efd0e4dfcac8e0d7edd",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.jZiTBq/pcplus-source-proof-yalmpag_/checkout",
+  "source_checkout": "/tmp/nix-shell.lxrVcH/pcplus-source-proof-846y5l9j/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
-  "scope": "51 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
-  "output_count": 51,
+  "scope": "54 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+  "output_count": 54,
   "outputs": {
     "terminal/TERMINAL.EXE": {
-      "sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c",
+      "sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
       "matches_workspace": true,
-      "workspace_sha256": "fd68875ea86d9da6b237ee6c302ec380a33711bccba4a218cf67f5dd0ed4e78c"
+      "workspace_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e"
     },
     "config-dos/CONFIG.EXE": {
       "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
@@ -241,24 +241,24 @@
       "workspace_sha256": "f9471764bc92c38ba22529d21a77bf50a0902aa721b0f1e8a31002aacf002d59"
     },
     "capture-file/CAPTURE.EXE": {
-      "sha256": "af7928b876ad9121c8a4d82590a8dffdbf8d307007dceccb18f07d8a4dd7cf85",
+      "sha256": "a06be37c0264168c97ff9342119a87959bb75538758a598395a33f89d2c74a36",
       "matches_workspace": true,
-      "workspace_sha256": "af7928b876ad9121c8a4d82590a8dffdbf8d307007dceccb18f07d8a4dd7cf85"
+      "workspace_sha256": "a06be37c0264168c97ff9342119a87959bb75538758a598395a33f89d2c74a36"
     },
     "capture-file/CAPFAULT.EXE": {
-      "sha256": "69285851dc16e4a57d1aff3e8b6eeec63bd3fa5837e36fe395eea7b4424b35f7",
+      "sha256": "7e706d7ed643a70cc5798c5a8913201a45e78109437b819a376fa6d211a13d8c",
       "matches_workspace": true,
-      "workspace_sha256": "69285851dc16e4a57d1aff3e8b6eeec63bd3fa5837e36fe395eea7b4424b35f7"
+      "workspace_sha256": "7e706d7ed643a70cc5798c5a8913201a45e78109437b819a376fa6d211a13d8c"
     },
     "capture-session/CAPSESS.EXE": {
-      "sha256": "a9467e6aefad690a40a09bcad195b77e1aecc1cacc2767157ba43e7f5ae8255f",
+      "sha256": "5d8d91c0f659b38e3a435a3933d316cb4a60cc0182e2bbb0922c5795bc3ad0f2",
       "matches_workspace": true,
-      "workspace_sha256": "a9467e6aefad690a40a09bcad195b77e1aecc1cacc2767157ba43e7f5ae8255f"
+      "workspace_sha256": "5d8d91c0f659b38e3a435a3933d316cb4a60cc0182e2bbb0922c5795bc3ad0f2"
     },
     "capture-session/CSFAULT.EXE": {
-      "sha256": "f6a2d34ed41315d18d5fd2b4d105abd8ab8eda4f8464208ccfbb896609d900a0",
+      "sha256": "79ff40f55375709e2b94a59815cbe7673e8e3f6f9bff718f411f3e55c8106684",
       "matches_workspace": true,
-      "workspace_sha256": "f6a2d34ed41315d18d5fd2b4d105abd8ab8eda4f8464208ccfbb896609d900a0"
+      "workspace_sha256": "79ff40f55375709e2b94a59815cbe7673e8e3f6f9bff718f411f3e55c8106684"
     },
     "snapshot/SNAPSHOT.EXE": {
       "sha256": "fdcc00355ace42b426cc320d779dc51c0b3ae8a0d47abf3a7bac3973417f69c9",
@@ -266,19 +266,34 @@
       "workspace_sha256": "fdcc00355ace42b426cc320d779dc51c0b3ae8a0d47abf3a7bac3973417f69c9"
     },
     "capture-owners/OWNERS.EXE": {
-      "sha256": "e6eeba665addeb0f7003429f2fe516f6774c7a5bde3af84c6ee7e215bc783a41",
+      "sha256": "873fd32c900e01e0ec137fe9f14cfb60efb210579a97bb8e1b00da08776781d1",
       "matches_workspace": true,
-      "workspace_sha256": "e6eeba665addeb0f7003429f2fe516f6774c7a5bde3af84c6ee7e215bc783a41"
+      "workspace_sha256": "873fd32c900e01e0ec137fe9f14cfb60efb210579a97bb8e1b00da08776781d1"
     },
     "capture-owners/OWFAULT.EXE": {
-      "sha256": "9f1197227181c02a127504f5fdfb18388b5c1df55fd92814413b843fc104662d",
+      "sha256": "56ef6039dc26f12ed0917164251eaf48b655c801e29a9b5ea0a54f1cb617d0cc",
       "matches_workspace": true,
-      "workspace_sha256": "9f1197227181c02a127504f5fdfb18388b5c1df55fd92814413b843fc104662d"
+      "workspace_sha256": "56ef6039dc26f12ed0917164251eaf48b655c801e29a9b5ea0a54f1cb617d0cc"
     },
     "printer/PRINTER.EXE": {
       "sha256": "2b699e0a2646abdf9b61c50277725d69932a6d29afdd8fb77308aa5d268eec90",
       "matches_workspace": true,
       "workspace_sha256": "2b699e0a2646abdf9b61c50277725d69932a6d29afdd8fb77308aa5d268eec90"
+    },
+    "monitor/MONITOR.EXE": {
+      "sha256": "766e8cb46c6edb3269cee3ea2a7896c03628f37e6fcfe7fc17938f834e13b377",
+      "matches_workspace": true,
+      "workspace_sha256": "766e8cb46c6edb3269cee3ea2a7896c03628f37e6fcfe7fc17938f834e13b377"
+    },
+    "monitor-file/MONITOR.EXE": {
+      "sha256": "dba129e7adf309ac92fee869da8913a1e1450bfb4446044c66563dfed6c15675",
+      "matches_workspace": true,
+      "workspace_sha256": "dba129e7adf309ac92fee869da8913a1e1450bfb4446044c66563dfed6c15675"
+    },
+    "monitor-file/MOFAULT.EXE": {
+      "sha256": "ee8cfd8041699a106a57dd3c207a67aad32fb85a2a0946190973710c6a6b81c8",
+      "matches_workspace": true,
+      "workspace_sha256": "ee8cfd8041699a106a57dd3c207a67aad32fb85a2a0946190973710c6a6b81c8"
     }
   },
   "build_scripts": [
@@ -316,10 +331,12 @@
     "standalone/build_batch_header.py",
     "standalone/build_snapshot.py",
     "standalone/build_printer.py",
+    "standalone/build_monitor.py",
     "standalone/check_batch_download.py",
     "standalone/check_batch_upload.py",
     "standalone/check_capture_file.py",
     "standalone/check_capture_session.py",
-    "standalone/check_capture_owners.py"
+    "standalone/check_capture_owners.py",
+    "standalone/check_monitor_file.py"
   ]
 }

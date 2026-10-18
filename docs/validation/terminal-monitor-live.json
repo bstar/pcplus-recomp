@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "binary_sha256": "9d90aa1ad8ef629c45613b61c14212fee71a0191603b49a6760d60a861c5451e",
+  "cases": [
+    {
+      "case": "all256-UART-ISR-bytes-native-renderer-special-attributes-binary-replace-and-close",
+      "inputs": 256,
+      "passed": true
+    },
+    {
+      "case": "N-Enter-promptEscape-viewonly-and-prompt-keeps-UART-data-queued",
+      "inputs": 5,
+      "passed": true
+    },
+    {
+      "case": "18-full-BIOS-ticks-flush-lowword-and-midnight-wrap",
+      "inputs": 3,
+      "passed": true
+    },
+    {
+      "case": "actual-UART-mask-and-software-XON-XOFF-consumption-before-monitor-boundary",
+      "inputs": 2,
+      "passed": true
+    },
+    {
+      "case": "independent-active-held-textcapture-canonical-alias-and-readonly-denial",
+      "inputs": 5,
+      "passed": true
+    },
+    {
+      "case": "write-short-close-sticky-partial-no-retry-and-uncertain-child-block",
+      "inputs": 3,
+      "passed": true
+    },
+    {
+      "case": "unacquired-open-failure-viewonly-carrier-loss-and-prompt-AltX-close",
+      "inputs": 3,
+      "passed": true
+    },
+    {
+      "case": "repeatCtrl-ordinaryTX-nested-owner-denial-AltX-closes-before-quit",
+      "inputs": 9,
+      "passed": true
+    },
+    {
+      "case": "parser-owner-geometry-CGA-rejections-are-bounded-no-fileIO",
+      "inputs": 18,
+      "passed": true
+    }
+  ],
+  "scope": "Actual linked monitor, renderer, UART ISR, keyboard/transport, canonical file owners and PROGRAM guard. Kernel/BIOS/hardware boundaries only are models. Dedicated actual DOS checks remain separate. No physical-wire, modem timing or complete original UI/HOOK claim.",
+  "test_source_sha256": "1d4d5fdebf994f7af2a908a3cc7a12bf927ff967739547522bc160a4247a54a3",
+  "retained_fixture_failures": [
+    {
+      "path": "build/terminal-monitor-linked/initial-9d90-helper-name.log",
+      "sha256": "20a3f898a2a280a558b48a7c1d745e0003b76dc93b00e6147ea841a9c8991f81"
+    },
+    {
+      "path": "build/terminal-monitor-linked/initial-9d90-model.json",
+      "sha256": "58d87e486d5b01ac19f1291cd8b596f69756f5ab89d66e3392fba846b3ac260e"
+    },
+    {
+      "path": "build/terminal-monitor-linked/initial-9d90-private-symbol.log",
+      "sha256": "50a1dfd67df5b92a6bbf8d6db9bb5a4bd9cce707f175bce7dac4a607ade5133f"
+    }
+  ],
+  "history_notes": "Initial hardware model lacked BIOS AH06; two later driver-only errors used a shadowed helper name and a private linker symbol. Product code was unchanged while the fixture was corrected; retained logs are separate from the passing current test."
+}

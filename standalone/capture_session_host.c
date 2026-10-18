@@ -30,6 +30,8 @@ unsigned capture_fs_create(const char *path,int *handle)
  if(fault==2){exists=1;memcpy(data,"raced",5);size=5;return 80;}
  if(exists)return 80;exists=owned=1;size=position=0;*handle=7;return 0;
 }
+unsigned capture_fs_create_replace(const char *p,int *h)
+{(void)p;(void)h;return 5;}
 unsigned capture_fs_open_append(const char *path,int *handle)
 {++ops;++opens;strcpy(last_path,!strncmp(path,"C:\\",3)?path+3:path);if(fault==10)return 5;if(!exists)return 2;owned=1;*handle=7;position=0;return 0;}
 unsigned capture_fs_seek_end(int handle,unsigned long *value)

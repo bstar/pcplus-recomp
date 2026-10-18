@@ -26,6 +26,8 @@ unsigned capture_fs_attributes(const char *path,unsigned *attr)
 {(void)path;++ops;*attr=attributes;if(fault==1)return 5;return exists?0:2;}
 unsigned capture_fs_create(const char *path,int *handle)
 {(void)path;++ops;++opens;if(fault==2)return 5;if(fault==11){exists=1;return 80;}if(exists)return 80;exists=owned=1;*handle=7;position=size=0;return 0;}
+unsigned capture_fs_create_replace(const char *p,int *h)
+{(void)p;(void)h;return 5;}
 unsigned capture_fs_open_append(const char *path,int *handle)
 {(void)path;++ops;++opens;if(fault==2)return 5;if(!exists)return 2;owned=1;*handle=7;position=0;return 0;}
 unsigned capture_fs_seek_end(int handle,unsigned long *value)

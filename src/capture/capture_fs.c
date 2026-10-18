@@ -12,6 +12,8 @@ unsigned capture_fs_attributes(const char *path,unsigned *attributes)
 {return _dos_getfileattr(path,attributes);}
 unsigned capture_fs_create(const char *path,int *handle)
 {return _dos_creatnew(path,_A_NORMAL,handle);}
+unsigned capture_fs_create_replace(const char *path,int *handle)
+{return _dos_creat(path,_A_NORMAL,handle);}
 unsigned capture_fs_open_append(const char *path,int *handle)
 {return _dos_open(path,O_WRONLY,handle);}
 unsigned capture_fs_seek_end(int handle,unsigned long *position)

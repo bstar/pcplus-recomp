@@ -95,18 +95,18 @@
     ]
   },
   "binaries": {
-    "OWNERS.EXE": "e6eeba665addeb0f7003429f2fe516f6774c7a5bde3af84c6ee7e215bc783a41",
-    "OWFAULT.EXE": "9f1197227181c02a127504f5fdfb18388b5c1df55fd92814413b843fc104662d"
+    "OWNERS.EXE": "873fd32c900e01e0ec137fe9f14cfb60efb210579a97bb8e1b00da08776781d1",
+    "OWFAULT.EXE": "56ef6039dc26f12ed0917164251eaf48b655c801e29a9b5ea0a54f1cb617d0cc"
   },
   "sources": {
-    "src/capture/capture_file.c": "9951fec4a6342306e40914a741f9180d17019b70f250b83d35d763b0ac2b08c1",
-    "src/capture/capture_file.h": "10c75f54969e9e9984b4830ce82b58ca7ab653c80397e12debd659a157f91002",
-    "src/capture/capture_fs.c": "6b5a106afaba8944e5032ce44777aa18d84d16e2cb07f64fe14bef5609891d13",
-    "src/capture/capture_fs.h": "01b6f4a9fea9f8d86a9bbe9448214e3ce78b1dc8f91b4af382ec0f14e5efb5cd",
-    "standalone/capture_owners_host.c": "c9db0a61bed27d268c33803f2b799e710754c07ac423a5c03a1d7932f0873262",
-    "standalone/check_capture_owners.py": "02175863de4b00554a8ba2bc6290d0a509878ba91235db4838ddd2f12404f026"
+    "src/capture/capture_file.c": "014595f6b227e321eab712c7aaeb737a87aa26023ecf2d7031949dca973d5665",
+    "src/capture/capture_file.h": "e5913177852312c1a18ef383bc158460dbff9dc613f0b72578b705e9f2f12bec",
+    "src/capture/capture_fs.c": "51b17907493fbe6ab11b82b7e5b2fdae4a1db47b8d5a843b9d839878ae84f5f8",
+    "src/capture/capture_fs.h": "806b050d4b9ebc1dd66c4d4d30d9b08e2e5256043eb51e7f07aba69524512155",
+    "standalone/capture_owners_host.c": "e478e33b8dcdd3cde9b38d5913d172d0c3e1f91870169cb4356b3d255f929ea1",
+    "standalone/check_capture_owners.py": "36e7a2a64e7fd9ea9df01758421bed99abdf38170cf3d0e0117df347536fcbc1"
   },
-  "static_state_bytes": 460,
+  "static_state_bytes": 690,
   "snapshot_abi_bytes": 96,
   "owner_descriptor_bytes": 134,
   "minimum_kernel_contract": "DOS3+ INT21/60h canonical identity into128-byte buffer; exclusive NEW INT21/5Bh; APPEND write-only3Dh and samehandle4202h",

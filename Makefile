@@ -61,6 +61,7 @@ terminal:
 	python3 standalone/build_terminal.py
 
 test-terminal: terminal
+	python3 standalone/check_terminal_monitor_live.py
 	python3 standalone/check_terminal_snapshot_live.py
 	python3 standalone/check_terminal_capture_live.py
 	python3 standalone/check_far_storage_live.py
@@ -223,6 +224,16 @@ test-batch-header: batch-header
 .PHONY: test-capture-file test-capture-session
 .PHONY: test-capture-owners snapshot test-snapshot
 .PHONY: printer test-printer
+.PHONY: monitor test-monitor test-monitor-file
+all: monitor
+test: test-monitor test-monitor-file
+monitor:
+	python3 standalone/build_monitor.py
+test-monitor: monitor
+	python3 standalone/check_monitor.py
+	python3 standalone/test_monitor_dos.py
+test-monitor-file:
+	python3 standalone/check_monitor_file.py
 all: printer
 test: test-printer
 printer:

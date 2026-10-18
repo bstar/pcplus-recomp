@@ -97,15 +97,15 @@
     ]
   },
   "binaries": {
-    "CAPTURE.EXE": "af7928b876ad9121c8a4d82590a8dffdbf8d307007dceccb18f07d8a4dd7cf85",
-    "CAPFAULT.EXE": "69285851dc16e4a57d1aff3e8b6eeec63bd3fa5837e36fe395eea7b4424b35f7"
+    "CAPTURE.EXE": "a06be37c0264168c97ff9342119a87959bb75538758a598395a33f89d2c74a36",
+    "CAPFAULT.EXE": "7e706d7ed643a70cc5798c5a8913201a45e78109437b819a376fa6d211a13d8c"
   },
   "sources": {
-    "src/capture/capture_file.c": "9951fec4a6342306e40914a741f9180d17019b70f250b83d35d763b0ac2b08c1",
-    "src/capture/capture_file.h": "10c75f54969e9e9984b4830ce82b58ca7ab653c80397e12debd659a157f91002",
-    "src/capture/capture_fs.c": "6b5a106afaba8944e5032ce44777aa18d84d16e2cb07f64fe14bef5609891d13",
-    "src/capture/capture_fs.h": "01b6f4a9fea9f8d86a9bbe9448214e3ce78b1dc8f91b4af382ec0f14e5efb5cd",
-    "standalone/capture_file_host.c": "bedd11fbc69f3e87b8afe6b2762ace0d9cab210e64dca5d102355ad595f06437",
+    "src/capture/capture_file.c": "014595f6b227e321eab712c7aaeb737a87aa26023ecf2d7031949dca973d5665",
+    "src/capture/capture_file.h": "e5913177852312c1a18ef383bc158460dbff9dc613f0b72578b705e9f2f12bec",
+    "src/capture/capture_fs.c": "51b17907493fbe6ab11b82b7e5b2fdae4a1db47b8d5a843b9d839878ae84f5f8",
+    "src/capture/capture_fs.h": "806b050d4b9ebc1dd66c4d4d30d9b08e2e5256043eb51e7f07aba69524512155",
+    "standalone/capture_file_host.c": "bd0808c960af810b0642888407aa39b6f9ad533c37d9989a7730ca54d46ceb69",
     "standalone/check_capture_file.py": "44ee960bc744c5cdd89d596bb5e1c8d833f2ac3d94fb4de639a7e39a05a85005"
   },
   "scope": "Maintained exact binary foreground DOS sink: exclusive NEW or existing APPEND on one write-only seek-END handle; actual DOS normal filesystem and compiled kernel fault boundaries. No formatting/native FILE interoperability, runtime integration, concurrent-writer guarantee, deletion/rollback or crash atomicity."
