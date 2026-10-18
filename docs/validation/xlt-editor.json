@@ -1,0 +1,134 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "owner",
+      "passed": true,
+      "log": "XLT OWNER PASS\n293 checks"
+    },
+    {
+      "case": "fault",
+      "passed": true,
+      "log": "XLT FAULT PASS 931 checks"
+    },
+    {
+      "case": "cancel",
+      "passed": true,
+      "exact_file": true,
+      "screen_restored": true
+    },
+    {
+      "case": "save-both-pages",
+      "passed": true,
+      "exact_file": true,
+      "screen_restored": true
+    },
+    {
+      "case": "jump-byte26",
+      "passed": true,
+      "exact_file": true,
+      "screen_restored": true
+    },
+    {
+      "case": "invalid-number-cancel",
+      "passed": true,
+      "exact_file": true,
+      "screen_restored": true
+    },
+    {
+      "case": "identity-discard",
+      "passed": true,
+      "exact_file": true,
+      "screen_restored": true
+    },
+    {
+      "case": "identity-save",
+      "passed": true,
+      "exact_file": true,
+      "screen_restored": true
+    },
+    {
+      "case": "reload-discard",
+      "passed": true,
+      "exact_file": true,
+      "screen_restored": true
+    },
+    {
+      "case": "reload-refuse",
+      "passed": true,
+      "exact_file": true,
+      "screen_restored": true
+    },
+    {
+      "case": "production",
+      "passed": true,
+      "exact_file": true,
+      "screen_restored": false
+    },
+    {
+      "case": "mono",
+      "passed": true,
+      "exact_file": true,
+      "screen_restored": true
+    },
+    {
+      "case": "active-page-one",
+      "passed": true,
+      "exact_file": true,
+      "screen_restored": true
+    },
+    {
+      "case": "new-cancel",
+      "passed": true,
+      "exact_file": true
+    },
+    {
+      "case": "new-save",
+      "passed": true,
+      "exact_file": true
+    },
+    {
+      "case": "readonly",
+      "passed": true,
+      "exact_file": true
+    },
+    {
+      "case": "collision",
+      "passed": true,
+      "exact_file": true
+    },
+    {
+      "case": "short",
+      "passed": true,
+      "exact_file": true
+    },
+    {
+      "case": "long",
+      "passed": true,
+      "exact_file": true
+    }
+  ],
+  "binaries": {
+    "XLTEDIT.EXE": "9d09101e63317e0572bf724eec39ba29624594007476f05c9ac29590ce86fea9",
+    "OWNER.EXE": "aea039381f634a5bb83dd87a2382753e2d0859971a3c3cec11e41dd29eee4a55",
+    "FAULT.EXE": "99d5861d96717f2520e54ab1f62f1dfba79c257f35aca783075010def2514573",
+    "UI.EXE": "8538793af9fc82a6e75e432badf9dd15ca4e50e218bfc1642f0d41aea451a2ed"
+  },
+  "sources": {
+    "src/translation/editor_fs.h": "a0115c8ce308758ab3a1212b9c39e771948f037f2aa9f1cbe1c8432e7bc12f2d",
+    "src/translation/editor_fs.c": "0b6431ee539772dde47c00425e41e4ac387e7862516028acb9f7710e58f560b0",
+    "src/translation/editor_document.h": "97de7b53fef15ac8c29b7b2c81694e7c3cc294ec9ca39b5761eae7b4bddb75cf",
+    "src/translation/editor_document.c": "95193dca3f33e0af859b7399e0abb64562f757099068dee19768d862506715ca",
+    "src/translation/editor_main.c": "6bb9d7f885814fdc4e56f63b3b100c9ee143f6c574777212d00c3c1b6d996e33",
+    "src/translation/xlt_dos.c": "b2383aa97088a59751412b71de9d5570fdd683c5ed3615025ecb810fe3258b4b",
+    "src/translation/xlt_dos.h": "87238a638bc9446a173dd60552372ecdb181b65b2192f327fb8ddfe8622ef219",
+    "src/translation/xlt_dos_fs.c": "459ea2c9d41515b0aa67e11eb9f178cd44404cba6b3eee69769b426124963a26",
+    "src/translation/xlt_dos_fs.h": "cb9e938aa83780f314947b75da7b99e491a8ea325839fa9f53991fde3543f7d9",
+    "standalone/xlt_editor_fault_host.c": "e588952305e901a8fd26bd97ab658bcc83a57ac2f11cf529a4649cce84df98a6",
+    "standalone/xlt_editor_ui_host.c": "c7f4734f421c606c717529193a1400627571bde616d8c55cdeabea159fd88f36",
+    "standalone/xlt_editor_owner_host.c": "4c53a810acced57e0258537907bb89cfc5b54a66520155db3df5643c67d9bcac",
+    "standalone/test_xlt_editor_dos.py": "0cda3bc35378e5b7afe79e3952fb2326deceb4f6011261e3185125863f5e3527",
+    "standalone/build_xlt_editor.py": "d50c82e0efeeeaba22d5b0dd606021ca4c362072d3d34e9b36496f9995cc7deb"
+  },
+  "scope": "Actual DOSBox-X production filesystem and BIOS-key UI tests plus production document/loader linked to injected DOS failures. Synthetic owned media only. No original application, live UART, physical modem or power-loss claim."
+}

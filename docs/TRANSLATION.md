@@ -144,8 +144,9 @@ display `ev_62d1b3b7cdb5cc4b6127b03239df29d1592f202bb1263e7691e6443911c96e05`.
 
 ## Remaining work
 
-Recover or replace the table editor with checked persistence and explicit dirty
-state. Saved selection1d64 now participates in validated startup and settings
+The maintained offline [XLTEDIT editor](XLT_EDITOR.md) now provides table editing,
+checked persistence and explicit dirty state. It deliberately leaves parent PRM
+mode changes separate. Saved selection1d64 now participates in validated startup and settings
 transactions, including the7-bit alternative and explicit live deferral. Live
 resource switching and the environment fallback remain open. Resolve remaining
 emulation/script consumers. Explicit startup selection, normal mapping, raw

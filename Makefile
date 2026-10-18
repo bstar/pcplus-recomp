@@ -9,6 +9,14 @@ all: serial parser keyboard $(MODULES) config-dos config-replace config-abi dire
 translation:
 	python3 standalone/build_translation.py
 
+.PHONY: xlt-editor test-xlt-editor
+all: xlt-editor
+test: test-xlt-editor
+xlt-editor:
+	python3 standalone/build_xlt_editor.py
+test-xlt-editor: xlt-editor
+	python3 standalone/test_xlt_editor_dos.py
+
 test-translation: translation
 	python3 standalone/check_translation.py
 

@@ -20,7 +20,8 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 | `build/ui-windows/WINDOWS.EXE` | Recovered and maintained assembly source only | Packed window snapshots and original flow-message service |
 | `build/modem-commands/MODEMCMD.EXE` | Recovered and maintained assembly source only | Original caret decoder with bounded source-owned wrapper |
 | `build/modem-responses/MODEMRSP.EXE` | Maintained and recovered assembly source only | Response matching and classification; dial-attempt object remains unlinked |
-| `build/setup/PRMEDIT.EXE` | Maintained C source only | Offline five-page editor for44 mapped PRM fields with staged validation and checked replacement; see [setup editor](docs/SETUP_EDITOR.md) |
+| `build/xlt-editor/XLTEDIT.EXE` | Maintained C source only | Offline 256-byte translation-table editor with checked save/recovery; see [XLT editor](docs/XLT_EDITOR.md) |
+| `build/setup/PRMEDIT.EXE` | Maintained C source only | Offline five-page editor for45 mapped PRM fields with staged validation and checked replacement; see [setup editor](docs/SETUP_EDITOR.md) |
 | `build/terminal/TERMINAL.EXE` | Maintained C and recovered/maintained assembly source only | Serial terminal with PRM startup, directory editing, staged saves and bounded modem dialing |
 | `build/standalone/SERIAL.EXE` | Maintained assembly source only | Independently linked DOS diagnostic exercising the recovered UART module |
 | `build/ansi/PARSER.EXE` | Maintained assembly source only | Independently linked parameter-reader diagnostic with bounds checks |
@@ -252,6 +253,8 @@ accepts `/X:FILE.XLT` and saved PRM modes0/1/2 (identity/table/7-bit mask).
 PRMEDIT exposes the mode; live changes defer until restart. Normal table-mode characters translate
 while parser continuations, output and binary/dedicated owners remain raw. See
 [translation recovery](docs/TRANSLATION.md) and [live selection](docs/LIVE_TRANSLATION.md).
+`./tools/build xlt-editor test-xlt-editor` builds and checks the offline
+[XLTEDIT table editor](docs/XLT_EDITOR.md), including failed-save recovery.
 
 Native recovery now includes 93 exact CRC instruction bytes plus an independently
 generated, original-verified 512-byte polynomial table, and 886 exact receiver
