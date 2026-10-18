@@ -122,6 +122,9 @@ directory_live_status __cdecl directory_live_read(const char *prm_path,
  memcpy(plan_stage.name,record,25);
  memcpy(plan_stage.record,record,114);
  memset(&modem_stage,0,sizeof(modem_stage));
+ /* BREAK is a line action even for DIRECT; retain its raw word without
+  * validating modem commands/responses that DIRECT deliberately skips. */
+ modem_stage.break_delay_units=image.bytes[0x1a4]|((unsigned)image.bytes[0x1a5]<<8);
  if(!plan_stage.dialing_mode){
   if(modem_import_decode(&image,&modem_stage)!=MODEM_IMPORT_OK){status=DIRECTORY_LIVE_MODEM;goto done;}
   if(directory_number_expand(record+0x19,selection.header,plan_stage.target,codes)){

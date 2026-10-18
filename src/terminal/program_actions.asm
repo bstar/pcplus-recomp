@@ -3,6 +3,7 @@
 BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
+extern uart_break_hold
 extern process_psp,process_keep_paragraphs,process_minimum_paragraphs
 extern terminal_stack_top,terminal_far_storage_end,_program_execute
 extern terminal_snapshot_image_end,browser_screen_end,ed_screen_end
@@ -78,6 +79,8 @@ terminal_program_start:
  push si
  push di
  push es
+ cmp word [uart_break_hold],0
+ jne .busy
  cmp word [terminal_controller_active],0
  jne .busy
  cmp word [terminal_monitor_active],0

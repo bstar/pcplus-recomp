@@ -3,6 +3,7 @@
 BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
+extern uart_break_hold
 extern terminal_option_mask,terminal_actions_path,_key_actions_dos_read
 extern modem_expand_bounded,terminal_clock_ticks,uart_try_write
 extern terminal_quit,terminal_exit_code,connection_state
@@ -63,6 +64,8 @@ terminal_macro_start:
  push si
  push di
  push es
+ cmp word [uart_break_hold],0
+ jne .busy
  cmp word [terminal_controller_active],0
  jne .busy
  cmp word [terminal_monitor_active],0

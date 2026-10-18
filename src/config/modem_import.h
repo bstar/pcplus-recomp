@@ -8,7 +8,7 @@
  * Array bytes after their first NUL are preserved in the decoded plan. */
 #define MODEM_IMPORT_RESPONSE_COUNT 11U
 #define MODEM_IMPORT_RESPONSE_SIZE 16U
-#define MODEM_IMPORT_SIZE 366U
+#define MODEM_IMPORT_SIZE 368U
 
 typedef struct modem_import_settings {
  unsigned dial_timeout_seconds;
@@ -27,6 +27,7 @@ typedef struct modem_import_settings {
  unsigned char answer_on[25];
  unsigned char answer_off[25];
  unsigned char responses[MODEM_IMPORT_RESPONSE_COUNT][MODEM_IMPORT_RESPONSE_SIZE];
+ unsigned break_delay_units; /* Raw PRM01A4h, nominal1/55 BIOS tick. */
 } modem_import_settings;
 typedef unsigned modem_import_status;
 enum {
@@ -38,7 +39,8 @@ enum {
  * accept0..32767 for the maintained32-bit deadline engine. This does not
  * reproduce the legacy increment-before-signed-compare overflow at32767.
  * Three flags accept0/1. Empty bounded strings are legal. Dangling caret is
- * rejected in commands only. Unknown PRM fields are never validated/applied.
+ * rejected in commands only. BREAK delay retains all16-bit values as nominal1/55-tick units; no
+ * additional bounds reject a legacy PRM. Unknown fields are never validated/applied.
  * Nonoverlapping DS extents must fit below64KiB; destination unchanged error. */
 modem_import_status __cdecl modem_import_decode(const prm_dos_image *image,
  modem_import_settings *destination);

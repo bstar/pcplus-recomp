@@ -20,6 +20,7 @@ extern terminal_capture_toggle,terminal_capture_pause,terminal_capture_crlf,term
 extern terminal_snapshot_start
 extern terminal_monitor_key
 extern terminal_controller_key
+extern terminal_break_start,terminal_break_poll,terminal_break_cancel
 extern terminal_printer_toggle
 global terminal_poll_io,terminal_enqueue_al,terminal_tick_low,terminal_clock_ticks
 global ansi_next_byte,ansi_unread_byte,csi_transmit_byte,csi_transmit_string
@@ -171,6 +172,8 @@ terminal_poll_io:
  ; the private application queue is disabled and BIOS has one foreground reader.
  call terminal_read_key
 .key_ready:
+ cmp ax,0x3000 ; Native Alt-B, including dedicated/raw controller mode.
+ je .break
  call terminal_controller_key
  jc .done
  call terminal_monitor_key
@@ -259,6 +262,9 @@ terminal_poll_io:
  mov word [terminal_exit_code],4
  mov word [terminal_quit],1
  jmp .done
+.break:
+ call terminal_break_start
+ jmp .done
 .capture:
  call terminal_capture_toggle
  jmp .done
@@ -294,6 +300,7 @@ terminal_poll_io:
  call terminal_connection_cancel
  jmp .done
 .redial:
+ call terminal_break_cancel
  call terminal_macro_cancel
  call terminal_program_cancel
  cmp word [connection_state],0
@@ -320,6 +327,7 @@ terminal_poll_serial:
  call terminal_connection_poll
  cmp word [terminal_quit],0
  jne .done
+ call terminal_break_poll
  call uart_poll_flow
  mov word [terminal_macro_tx_allowed],0
  cmp word [connection_state],0

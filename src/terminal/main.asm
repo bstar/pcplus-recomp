@@ -6,6 +6,7 @@ GROUP DGROUP _DATA _BSS STACK
 extern terminal_parse_options,terminal_usage,terminal_stack_top
 extern terminal_poll_io,terminal_quit,terminal_exit_code,terminal_tx_count
 extern terminal_receive_character,csi_clear_tabs,terminal_clear_home
+extern terminal_break_cancel
 extern uart_save_hardware_state,uart_restore_hardware_state
 extern uart_disable,uart_enable,uart_install_interrupt,uart_restore_interrupt
 extern uart_clear_receive_buffer,uart_set_baud_divisor,uart_set_line_control
@@ -243,6 +244,7 @@ terminal_shutdown:
  mov ss,ax
  mov sp,terminal_stack_top
  sti
+ call terminal_break_cancel
  call terminal_macro_cancel
  call terminal_program_cancel
  call terminal_controller_shutdown
@@ -344,6 +346,7 @@ terminal_shutdown:
 SEGMENT _DATA public align=16 class=DATA use16
 global terminal_parser_active
 terminal_parser_active: dw 0
+global hardware_active,vector_active
 hardware_active: db 0
 vector_active: db 0
 missing_port: db 'Selected COM port is not listed by the BIOS.',13,10,'$'

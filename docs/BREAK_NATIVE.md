@@ -194,5 +194,7 @@ COM/LCR, preservation of framing/DLAB bits, ordinary and midnight deadlines,
 repeated admission, key/cancel/carrier paths, pending TX behavior and exactly-once
 release before hardware restore. An actual DOS virtual UART run can verify the
 register/lifecycle behavior but not electrical timing at an external modem.
-Those tests and maintained runtime changes are outside this read-only scope.
-Full F03 and physical BREAK interoperability remain open until that work lands.
+That maintained work is now implemented and tested separately in
+[LIVE_BREAK.md](LIVE_BREAK.md), with its deliberate BIOS-tick timing policy.
+This native dossier remains recovery evidence; full F03 and physical BREAK
+interoperability remain open.

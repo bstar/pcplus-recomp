@@ -12,6 +12,7 @@ import json
 import os
 from pathlib import Path
 import socket
+import struct
 import subprocess
 import threading
 import time
@@ -114,10 +115,12 @@ state: times 6 db 0
 def run(case):
  output=ROOT/'build/terminal-tests'/case
  output.mkdir(parents=True,exist_ok=True)
- for name in ('PASS.TXT','FAIL.TXT','BEFORE.BIN','AFTER.BIN','SCREEN.BIN'):
+ for name in ('PASS.TXT','FAIL.TXT','BEFORE.BIN','AFTER.BIN','SCREEN.BIN','WATCH.BIN'):
   (output/name).unlink(missing_ok=True)
  (output/'sampler.asm').write_text(SAMPLER)
  subprocess.run(['nasm','-f','bin',str(output/'sampler.asm'),'-o',str(output/'SNAP.COM')],check=True)
+ watching=case in ('break','break-exit')
+ if watching:subprocess.run(['nasm','-f','bin',str(ROOT/'standalone/break_watch.asm'),'-o',str(output/'WATCH.COM')],check=True)
  digest=hashlib.sha256(BINARY.read_bytes()).hexdigest()
  checks={};events=[];times={};stop=threading.Event();wire=bytearray()
  server=socket.socket();server.bind(('127.0.0.1',0));server.listen(1);server.settimeout(15)
@@ -171,6 +174,13 @@ def run(case):
      connection.sendall(b'\x1b[?1l')
      checks['normal_cursor_up']=receive_until(b'\x1b[A',3)
      checks['typed_ascii_q']=receive_until(b'q',2)
+    elif watching:
+     # Keep actual RX/video busy across the entire keyboard-driven pulse.
+     counter=0
+     while not stop.is_set() and time.monotonic()-start<3:
+      try:connection.sendall(b'\r'+bytes([48+counter%10])+b'BREAK RX ACTIVE');counter+=1;collect(0.03)
+      except (BrokenPipeError,ConnectionResetError):break
+     checks['no_synthetic_BREAK_byte']=bytes(wire).replace(b'\x1b[0n',b'')==(b'q' if case=='break' else b'')
     elif case=='software':
      connection.sendall(b'FLOW WAIT\x13');times['stall_seconds']=round(time.monotonic()-start,3)
      collect(2)
@@ -184,8 +194,10 @@ def run(case):
   except (OSError,AssertionError) as error:events.append({'peer_error':str(error)})
 
  thread=threading.Thread(target=peer,daemon=True);thread.start()
- keyboard={'normal':'p1800 up p1500 up p800 q p1000 a-x','software':'p1000 q p1000 a-x','partial':'p1000 a-x','controller-disabled':'p3000 a-x'}[case]
+ keyboard={'normal':'p1800 up p1500 up p800 q p1000 a-x','software':'p1000 q p1000 a-x','partial':'p1000 a-x','controller-disabled':'p3000 a-x','break':'p1000 a-b p800 q p1000 a-x','break-exit':'p1000 a-b p100 a-x'}[case]
  arguments=' SOFT' if case=='software' else ''
+ watcher_start='D:\\WATCH T' if watching else ''
+ watcher_end='D:\\WATCH' if watching else ''
  branch='if errorlevel 1 goto failed\ngoto expected'
  config=f'''[sdl]
 output=surface
@@ -212,10 +224,12 @@ mount c "{BINARY.parent}"
 mount d "{output}"
 c:
 D:\\SNAP B
+{watcher_start}
 ADDKEY {keyboard}
 TERMINAL{arguments}
 {branch}
 :expected
+{watcher_end}
 D:\\SNAP S
 D:\\SNAP A
 echo PASS>D:\\PASS.TXT
@@ -254,10 +268,19 @@ exit
     at=row*160+column*2
     return screen[at:at+len(text)*2]==b''.join(bytes([value,attribute]) for value in text)
    checks['actual_video_menu_text_and_sgr']=cells(0,0,b'LoC',7) and cells(1,0,b'READY',2) and cells(1,8,b'OK',2) and cells(2,4,b'SELECT',7)
+ if watching:
+  sample=(output/'WATCH.BIN').read_bytes() if (output/'WATCH.BIN').exists() else b''
+  checks['independent_DOS_timer_observed_LCR_BREAK']=len(sample)==12 and struct.unpack('<6H',sample)[0]==0x4c42 and struct.unpack('<6H',sample)[2]>0
+  if len(sample)==12:
+   magic,total,pulse,resumed,last,video_mask=struct.unpack('<6H',sample)
+   checks['BREAK_clears_before_normal_resumed_activity']=resumed>0 if case=='break' else True
+   checks['RX_display_pattern_captured']=b'BREAK RX ACTIVE' in screen[::2]
+   checks['video_digit_changes_while_BREAK_asserted']=video_mask.bit_count()>=2
+   events.append(dict(timer_ticks=total,observed_BREAK_ticks=pulse,post_BREAK_ticks=resumed,last_sampled_LCR=last,video_digit_mask_during_BREAK=video_mask))
  if case=='partial':checks['alt_x_interrupts_partial_escape_before_parser_deadline']=elapsed-times.get('partial_seconds',0)<1.8
  if case=='software':checks['alt_x_exits_while_transmit_paused']=elapsed<3.5
  required=['terminal_ready_via_actual_dsr','expected_dos_exit_and_capture','hardware_irq_vectors_restored','uart_and_pic_restored','screen_captured']
- required+= {'normal':['fragmented_menu_and_cursor_report','application_cursor_up','normal_cursor_up','typed_ascii_q','actual_video_menu_text_and_sgr'],'software':['xon_xoff_withholds_typed_q','alt_x_exits_while_transmit_paused'],'partial':['alt_x_interrupts_partial_escape_before_parser_deadline'],'controller-disabled':[]}[case]
+ required+= {'normal':['fragmented_menu_and_cursor_report','application_cursor_up','normal_cursor_up','typed_ascii_q','actual_video_menu_text_and_sgr'],'software':['xon_xoff_withholds_typed_q','alt_x_exits_while_transmit_paused'],'partial':['alt_x_interrupts_partial_escape_before_parser_deadline'],'controller-disabled':[],'break':['independent_DOS_timer_observed_LCR_BREAK','BREAK_clears_before_normal_resumed_activity','RX_display_pattern_captured','video_digit_changes_while_BREAK_asserted','no_synthetic_BREAK_byte'],'break-exit':['independent_DOS_timer_observed_LCR_BREAK','RX_display_pattern_captured','no_synthetic_BREAK_byte']}[case]
  result={'case':case,'passed':all(checks.get(key,False) for key in required),'checks':checks,'seconds':round(elapsed,3),'timing':times,'events':events,'binary_sha256':digest,'received_hex':wire.hex(),'scope':'Source-only DOS terminal, actual emulated UART/PIC/keyboard/BIOS video and private loopback TCP peer; independent DOS hardware/vector/video sampler. No original PCPlus executable or public BBS.'}
  (output/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2),flush=True)
  return result['passed']
@@ -265,12 +288,12 @@ exit
 
 def main():
  parser=argparse.ArgumentParser(description=__doc__)
- parser.add_argument('--case',choices=['normal','software','partial','controller-disabled','all'],default='all')
+ parser.add_argument('--case',choices=['normal','software','partial','controller-disabled','break','break-exit','all'],default='all')
  args=parser.parse_args()
  directory=ROOT/'build/terminal-tests';directory.mkdir(parents=True,exist_ok=True)
  with (directory/'.lock').open('w') as lock:
   fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
-  cases=['normal','software','partial','controller-disabled'] if args.case=='all' else [args.case]
+  cases=['normal','software','partial','controller-disabled','break','break-exit'] if args.case=='all' else [args.case]
   results=[run(case) for case in cases]
  return 0 if all(results) else 1
 if __name__=='__main__':raise SystemExit(main())

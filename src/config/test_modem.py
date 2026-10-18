@@ -32,6 +32,15 @@ class ModemTests(unittest.TestCase):
   image=changed.to_bytes();self.assertEqual(image[0x12],13);self.assertEqual(image[0x1e2],126)
   self.assertEqual(struct.unpack_from('<H',image,10)[0],60);self.assertEqual(struct.unpack_from('<H',image,12)[0],15)
   self.assertEqual(changed.word('command_character_delay_units'),30)
+ def test_break_word_preserves_every_unrelated_byte(self):
+  original=bytes((i*29+7)%256 for i in range(IMAGE_SIZE))
+  prm=LegacyPrm201(original)
+  for value in (0,1,54,55,56,350,65535):
+   changed=prm.with_word('break_delay_units',value)
+   expected=bytearray(original);struct.pack_into('<H',expected,0x1a4,value)
+   self.assertEqual(changed.to_bytes(),expected)
+   self.assertEqual(changed.word('break_delay_units'),value)
+  self.assertEqual(prm.to_bytes(),original)
  def test_caret_rules_and_rejections(self):
   self.assertEqual(expand_modem_command(b'AT^M^J^@^^^?'),b'AT\r\n\xff^?')
   self.assertEqual(expand_modem_command(b'^^'),b'\x1e')

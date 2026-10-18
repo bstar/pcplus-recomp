@@ -3,6 +3,7 @@
 BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
+extern uart_break_hold
 extern terminal_clock_ticks,terminal_quit,terminal_exit_code,connection_state
 extern terminal_tx_count,terminal_tx_head,terminal_tx_buffer,terminal_macro_tx_epoch
 extern terminal_macro_cancel,terminal_program_cancel,terminal_program_pending
@@ -38,6 +39,8 @@ transfer_start_direction:
  push si
  push di
  push es
+ cmp word [uart_break_hold],0
+ jne .done
  cmp word [terminal_controller_active],0
  jne .done
  cmp word [terminal_monitor_active],0

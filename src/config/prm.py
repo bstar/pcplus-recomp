@@ -122,6 +122,7 @@ WORD_FIELDS.update({
  'initialize_while_connected':0x1b98-ORIGINAL_DS_BASE,
  'dial_cycle_limit':0x1b9a-ORIGINAL_DS_BASE,
  'command_character_delay_units':0x1d68-ORIGINAL_DS_BASE,
+ 'break_delay_units':0x1d28-ORIGINAL_DS_BASE,
 })
 BYTE_FIELDS={'dial_abort_character':0x1b96-ORIGINAL_DS_BASE,
              'command_pause_character':0x1d66-ORIGINAL_DS_BASE}

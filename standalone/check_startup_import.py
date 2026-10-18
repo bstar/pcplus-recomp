@@ -36,9 +36,9 @@ class Startup(Options):
   if not self.load_status:u.mem_write(self.data_base+image,self.payload)
   if io:u.mem_write(self.data_base+io,struct.pack('<4H',self.load_status,5 if self.load_status else 0,0,0 if self.load_status else 1264))
   u.reg_write(UC_X86_REG_AX,self.load_status);u.reg_write(UC_X86_REG_SP,sp+2);u.reg_write(UC_X86_REG_IP,ret)
- def plans(self):return bytes(self.uc.mem_read(self.data_base+self.serial,40)),bytes(self.uc.mem_read(self.data_base+self.modem,366))
+ def plans(self):return bytes(self.uc.mem_read(self.data_base+self.serial,40)),bytes(self.uc.mem_read(self.data_base+self.modem,368))
  def poison(self):
-  self.uc.mem_write(self.data_base+self.serial,b'\xcc'*40);self.uc.mem_write(self.data_base+self.modem,b'\xdd'*366)
+  self.uc.mem_write(self.data_base+self.serial,b'\xcc'*40);self.uc.mem_write(self.data_base+self.modem,b'\xdd'*368)
  def startup(self,arguments=None):
   self.uc.reg_write(UC_X86_REG_ES,self.ds)
   status=self.call('_terminal_startup_read',arguments or [self.path,self.serial,self.modem,self.result],limit=300000)
@@ -75,6 +75,7 @@ def main():
   assert c.parse(b' '.join(tokens))==(0,0);c.poison();c.uc.reg_write(UC_X86_REG_ES,c.ds)
   assert c.call('terminal_load_configuration',limit=400000)==0
   assert len(c.calls)==1 and c.plans()==(terminal_expected(c.payload),modem_expected(c.payload))
+  assert c.get('terminal_break_delay_units')==struct.unpack_from('<H',c.payload,0x1a4)[0]
   port=3 if mask&1 else 2;rate=115200 if mask&2 else 19200
   expected={'terminal_port_number':port,'terminal_baud_low':rate&65535,'terminal_baud_high':rate>>16,'terminal_parity':2 if mask&4 else 0,'terminal_data_bits':7 if mask&4 else 8,'terminal_stop_bits':2 if mask&4 else 1,'uart_software_flow':0 if mask&8 else 1,'uart_hardware_flow':0 if mask&8 else 1,'uart_port_rbr':BASES[port-1],'uart_irq_indices':IRQS[port-1],'csi_terminal_id':4,'attributes_monochrome':0,'attributes_current':0x1e}
   assert all(c.get(k)==v for k,v in expected.items()),(mask,expected)

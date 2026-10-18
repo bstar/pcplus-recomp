@@ -19,7 +19,8 @@
 %define MI_RESPONSES 190
 %define MI_RESPONSE_SIZE 16
 %define MI_RESPONSE_COUNT 11
-%define MI_SIZE 366
+%define MI_BREAK_DELAY 366
+%define MI_SIZE 368
 %define MI_OK 0
 %define MI_ARGUMENT 1
 %define MI_BOOLEAN 2

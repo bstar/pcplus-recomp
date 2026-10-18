@@ -20,6 +20,12 @@ Evidence: `docs/UART.md`, `docs/validation`, executable/map/driver results under
 `build/standalone` and DOSBox results under `build/serial-tests`. Physical testing
 requires an attached DOS machine/modem and must not be inferred from emulation.
 
+Serviced Alt-B now owns actual LCR BREAK with TEMT draining, held ordinary/flow
+TX, continued receive and conservative BIOS-day timing derived from the native
+startup calibration. Full modem/directory PRM plans retain01A4h, including DIRECT.
+Linked and actual DOS timer/video samples cover pulse/release and early exit;
+physical BREAK timing and modem behavior remain open. See `docs/LIVE_BREAK.md`.
+
 ## 2. ANSI parser and keyboard — active
 
 - [ ] Recover the complete input/parser state machine and its calls/state from REA evidence.
@@ -161,8 +167,10 @@ physical modem compatibility or close the remaining application gates below.
       The8b38144e checkpoint passes37 terminal commands,11 standalone UI DOS
       cases and14 dedicated-print DOS cases. Six linked UI groups/2031 inputs,
       including eight malformed-layout rejections, cover private ownership/bounds;
-      source-only rebuilding reproduces57 outputs. BBS editor results retain
-      their separate bdeb347c identity.
+      source-only rebuilding reproduces57 outputs. The8b38144e build also repeats actual BBS editors: Synchronet passes;
+      ENiGMA immediate Home/Insert failures persist, while explicit30ms modem
+      buffering passes the paired checks. Later runtime identities remain
+      separate in the hash-bound reports.
       See `docs/UI_FAR_STORAGE.md` for source and verification boundaries.
 - [ ] Reconstruct configuration persistence, dialing directory and application UI.
       Progress: original-code replay proves the 1,264-byte PRM load/save block

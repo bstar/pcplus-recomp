@@ -40,7 +40,7 @@ the dedicated-print controller. Resident near-call interfaces and DS=SS remain
 compatible; the builder checks far-call relocations, segment bounds and retained
 code across PROGRAM. [Private UI screens](docs/UI_FAR_STORAGE.md) also live
 in far storage: browser, nested editor and PROGRAM retain separate full frames,
-leaving13,168 bytes of capacity for more shared data/stack definitions. Full application
+leaving13,152 bytes of capacity for more shared data/stack definitions. Full application
 and dynamic-overlay work remains open.
 
 ## Build and run in DOS
@@ -71,7 +71,9 @@ or Escape to discard the edit. Successful directory connections save date/count
 after UART restoration at exit; the PRM remains read-only. See
 [directory editing and recovery](docs/DIRECTORY_EDITING.md) and
 [live directory selection](docs/DIRECTORY_LIVE.md). Escape cancels, Alt-H hangs up, and
-Alt-D repeats the target after cleanup. See [connection management](docs/CONNECTION.md).
+Alt-D repeats the target after cleanup. Alt-B sends a [serviced UART BREAK](docs/LIVE_BREAK.md),
+keeping receive/keyboard service active and releasing before hang-up or exit.
+See [connection management](docs/CONNECTION.md).
 Use `HARD` for RTS/CTS or `NONE` to disable flow control; match the modem's
 settings. Alt-X exits. Navigation, keypad and function/modifier keys now use all79
 recovered binding slots with maintained network defaults. `/K:MYKEYS.KBD`

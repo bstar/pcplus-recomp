@@ -7,7 +7,7 @@ from unicorn.x86_const import UC_X86_REG_ES,UC_X86_REG_BP,UC_X86_REG_SI,UC_X86_R
 from dos_image import DosImage
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/modem-import'
 COMMANDS=[(0x18,47),(0x47,25),(0x60,25),(0x79,25),(0x92,25),(0xab,25)]
-OFFSETS={'MI_TIMEOUT':0,'MI_REDIAL_PAUSE':2,'MI_AUTOBAUD':4,'MI_ABORT_DTR':6,'MI_INITIALIZE_CONNECTED':8,'MI_CYCLE_LIMIT':10,'MI_CHARACTER_DELAY':12,'MI_PAUSE_CHARACTER':14,'MI_ABORT_CHARACTER':16,'MI_INITIALIZATION':18,'MI_DIAL_PREFIX':65,'MI_DIAL_SUFFIX':90,'MI_HANGUP':115,'MI_ANSWER_ON':140,'MI_ANSWER_OFF':165,'MI_RESPONSES':190,'MI_SIZE':366}
+OFFSETS={'MI_TIMEOUT':0,'MI_REDIAL_PAUSE':2,'MI_AUTOBAUD':4,'MI_ABORT_DTR':6,'MI_INITIALIZE_CONNECTED':8,'MI_CYCLE_LIMIT':10,'MI_CHARACTER_DELAY':12,'MI_PAUSE_CHARACTER':14,'MI_ABORT_CHARACTER':16,'MI_INITIALIZATION':18,'MI_DIAL_PREFIX':65,'MI_DIAL_SUFFIX':90,'MI_HANGUP':115,'MI_ANSWER_ON':140,'MI_ANSWER_OFF':165,'MI_RESPONSES':190,'MI_BREAK_DELAY':366,'MI_SIZE':368}
 def fixture():
  image=bytearray(random.Random(201).randbytes(1264))
  for at,value in [(0x0a,45),(0x0c,2),(0x0e,1),(0x10,1),(0x14,0),(0x16,3),(0x1e4,30)]:struct.pack_into('<H',image,at,value)
@@ -19,7 +19,7 @@ def fixture():
 def changed(image,at,value):
  data=bytearray(image);struct.pack_into('<H',data,at,value);return bytes(data)
 def expected(image):
- return struct.pack('<9H',*(struct.unpack_from('<H',image,at)[0] for at in [0x0a,0x0c,0x0e,0x10,0x14,0x16,0x1e4]),image[0x1e2],image[0x12])+image[0x18:0x174]
+ return struct.pack('<9H',*(struct.unpack_from('<H',image,at)[0] for at in [0x0a,0x0c,0x0e,0x10,0x14,0x16,0x1e4]),image[0x1e2],image[0x12])+image[0x18:0x174]+image[0x1a4:0x1a6]
 def build():
  OUT.mkdir(parents=True,exist_ok=True)
  host=r'''#include "modem_import.h"
@@ -66,13 +66,13 @@ class Model(DosImage):
  def io(self,*args):raise AssertionError('Pure decoder attempted interrupt/UART/DOS IO')
  def decode(self,image,input_pointer=None,output_pointer=None):
   self.uc.mem_write(self.data_base+self.input,image)
-  self.uc.mem_write(self.data_base+self.output,b'\xcc'*366)
+  self.uc.mem_write(self.data_base+self.output,b'\xcc'*368)
   self.uc.reg_write(UC_X86_REG_ES,self.ds)
   status=self.call('_modem_import_decode',[self.input if input_pointer is None else input_pointer,self.output if output_pointer is None else output_pointer],limit=300000)
   assert bytes(self.uc.mem_read(self.data_base+self.input,1264))==image
   for reg,want in ((UC_X86_REG_BP,0xbabe),(UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678)):assert self.uc.reg_read(reg)==want
-  result=bytes(self.uc.mem_read(self.data_base+self.output,366))
-  if status:assert result==b'\xcc'*366
+  result=bytes(self.uc.mem_read(self.data_base+self.output,368))
+  if status:assert result==b'\xcc'*368
   return status,result
 
 def main():
@@ -113,6 +113,8 @@ def main():
    assert status==(3 if value>32767 or (at==0x0a and value==0) else 0),(at,value,status)
    if not status:assert result==expected(raw)
    count+=1
+ for value in (0,1,54,55,56,350,65535):
+  raw=changed(data,0x1a4,value);assert Model(binary,mapfile).decode(raw)==(0,expected(raw));count+=1
  check('Boolean-and-maintained-numeric-policy-boundaries-atomic',count)
  count=0
  for inp,out in ((0,model.output),(model.input,0),(0xfc00,model.output),(model.input,0xff00),(model.input,model.input),(model.input,model.input+1263)):
@@ -129,6 +131,6 @@ def main():
  assert (OUT/'PASS.TXT').exists() and b'MODEM IMPORT PASS' in (OUT/'LOG.TXT').read_bytes()
  assert before=={name:hashlib.sha256((OUT/name).read_bytes()).hexdigest() for name in before}
  check('real-DOS-loader-valid-missing-short-invalid-argument-noresult-and-no-rewrites',7)
- result={'passed':True,'inputs':inputs,'cases':cases,'binary_sha256':hashlib.sha256(binary.read_bytes()).hexdigest(),'settings_bytes':366,'sources':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [ROOT/'src/config/modem_import.c',ROOT/'src/config/modem_import.h',ROOT/'src/config/modem_import.inc',ROOT/'src/config/prm_dos.c',ROOT/'src/config/prm_dos.h',Path(__file__).resolve()]},'scope':'Source-built DOS8086 C decoder/loader, synthetic PRMs only. CPU tests forbid all interrupts and port IO during decode; separate DOS run executes read-only loader. No modem defaults, dialing, live UART, original executable or private config inputs.'}
+ result={'passed':True,'inputs':inputs,'cases':cases,'binary_sha256':hashlib.sha256(binary.read_bytes()).hexdigest(),'settings_bytes':368,'sources':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [ROOT/'src/config/modem_import.c',ROOT/'src/config/modem_import.h',ROOT/'src/config/modem_import.inc',ROOT/'src/config/prm_dos.c',ROOT/'src/config/prm_dos.h',Path(__file__).resolve()]},'scope':'Source-built DOS8086 C decoder/loader, synthetic PRMs only. CPU tests forbid all interrupts and port IO during decode; separate DOS run executes read-only loader. No modem defaults, dialing, live UART, original executable or private config inputs.'}
  (OUT/'checks.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
 if __name__=='__main__':main()

@@ -9,7 +9,7 @@ ABI(abort_drop_dtr,6);ABI(initialize_while_connected,8);ABI(dial_cycle_limit,10)
 ABI(command_character_delay_units,12);ABI(command_pause_character,14);
 ABI(dial_abort_character,16);ABI(initialization,18);ABI(dial_prefix,65);
 ABI(dial_suffix,90);ABI(hangup,115);ABI(answer_on,140);ABI(answer_off,165);
-ABI(responses,190);
+ABI(responses,190);ABI(break_delay_units,366);
 typedef char abi_settings_size[sizeof(modem_import_settings)==MODEM_IMPORT_SIZE?1:-1];
 typedef char abi_word_size[sizeof(unsigned)==2?1:-1];
 static unsigned word(const prm_dos_image *image,unsigned offset)
@@ -53,6 +53,7 @@ modem_import_status __cdecl modem_import_decode(const prm_dos_image *image,
  candidate.command_character_delay_units=word(image,0x1e4);
  candidate.command_pause_character=image->bytes[0x1e2];
  candidate.dial_abort_character=image->bytes[0x12];
+ candidate.break_delay_units=word(image,0x1a4);
  if(candidate.autobaud>1 || candidate.abort_drop_dtr>1 ||
   candidate.initialize_while_connected>1)return MODEM_IMPORT_BOOLEAN;
  /* Maintained engine uses32-bit deadlines. These are its positive/signed

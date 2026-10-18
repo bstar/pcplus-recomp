@@ -16,6 +16,11 @@ are derived from code and field-edit capacities, rather than guessed from
 existing user settings. All word values are unsigned little-endian storage;
 several original comparisons interpret them as signed.
 
+The DOS modem plan also appends the raw BREAK delay word at01A4h. Its startup
+calibration and maintained conservative timer policy are documented in
+[LIVE_BREAK.md](LIVE_BREAK.md); the historical command-character delay remains
+a distinct setting.
+
 ## Proved fields
 
 | PRM offset | Original DS | Storage / meaning and proof |

@@ -9,6 +9,8 @@ global uart_try_write, uart_poll_flow
 uart_try_write:
  push ax
  push dx
+ cmp word [uart_break_hold],0
+ jne .busy
  cmp word [uart_tx_paused],0
  jne .busy
  cmp word [uart_hardware_flow],1
@@ -43,6 +45,8 @@ uart_poll_flow:
  cli
  push ax
  push dx
+ cmp word [uart_break_hold],0
+ jne .done
  cmp byte [uart_flow_pending],0
  je .done
  mov dx,[uart_port_lsr]
@@ -58,3 +62,7 @@ uart_poll_flow:
  pop ax
  popf
  ret
+
+SEGMENT _DATA public class=DATA use16
+global uart_break_hold
+uart_break_hold: dw 0

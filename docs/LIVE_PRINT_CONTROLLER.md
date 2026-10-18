@@ -94,7 +94,8 @@ and source manifest to agree, and hashes all retained case artifacts.
 This does not prove physical printer timing, arbitrary driver-call time bounds,
 profile-complete original controller behavior or complete PCPlus parity. The
 native Alt-B break helper is documented in [BREAK_NATIVE.md](BREAK_NATIVE.md),
-but its duration conversion and maintained live implementation remain unproved;
-ordinary key forwarding does not establish serial break support. Native
+and the serviced live implementation is documented in [LIVE_BREAK.md](LIVE_BREAK.md).
+Alt-B now reaches that owner before controller key filtering; physical BREAK
+interoperability and exact electrical timing remain unverified. Native
 source/ABI diagnostics and linked fault/time tests are separate evidence; see
 [PRINT_CONTROLLER_NATIVE.md](PRINT_CONTROLLER_NATIVE.md).
