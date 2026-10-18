@@ -23,6 +23,12 @@ keyboard-profiles:
 test-keyboard-profiles: keyboard-profiles terminal
 	python3 standalone/check_keyboard_profiles.py
 
+.PHONY: test-resource-lookup
+test-resource-lookup: terminal
+	python3 standalone/test_resource_path_dos.py
+	python3 standalone/check_resource_lookup.py
+	python3 standalone/test_resource_lookup_dos.py
+
 test-translation: translation
 	python3 standalone/check_translation.py
 
@@ -88,6 +94,9 @@ terminal:
 test-terminal: setup live-configuration
 
 test-terminal: terminal
+	python3 standalone/test_resource_path_dos.py
+	python3 standalone/check_resource_lookup.py
+	python3 standalone/test_resource_lookup_dos.py
 	python3 standalone/check_translation_live.py
 	python3 standalone/check_translation_modes.py
 	python3 standalone/test_translation_live_dos.py

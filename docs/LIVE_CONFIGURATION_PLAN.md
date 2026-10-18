@@ -1,7 +1,7 @@
 # Live configuration candidate transaction
 
 The maintained DOS candidate decoder validates an in-memory PRM and optional
-retained directory selection, then produces one624-byte candidate. It does not
+retained directory selection, then produces one626-byte candidate. It does not
 modify active settings, launch setup or acquire/reconfigure the UART. This is
 the staging boundary needed before the running terminal can apply setup edits;
 the selective owner is now integrated, with full transport/profile handoff still open.
@@ -37,7 +37,7 @@ commits any of the serial, modem or directory output plans. Inputs/results and
 all output plans require disjoint nonwrapping near extents. No original parser
 or private configuration is needed by either build.
 
-A future live caller can retain the already-selected header/record instead of
+The live caller retains the already-selected header/record instead of
 silently rereading a changed directory or reentering the browser while connected.
 The caller still owns that selection's lifetime and identity. The terminal now
 [retains the complete header and logical request context](DIRECTORY_CONTEXT.md).
@@ -46,7 +46,7 @@ identity, validates after child return and applies independent settings with con
 
 ## Candidate and change classification
 
-`live_configuration_decode()` combines a40-byte serial plan,368-byte modem plan,
+`live_configuration_decode()` combines a42-byte serial plan,368-byte modem plan,
 214-byte directory plan and16-bit change mask. With no active plan and no CLI
 overrides it creates an initial validated candidate. With an active plan it
 compares the new effective settings after applying the four CLI categories.
@@ -71,6 +71,7 @@ All active serial fields are validated before they can enter a candidate.
 |0100|Directory selection/record metadata|
 |0200|Raw BREAK delay|
 |0400|Dialing mode or expanded target|
+|0800|Input translation mode; currently deferred until restart|
 
 Mapping delay/pause changes also set the modem bit because both consumers use
 those values. BREAK is separate. Modem strings compare only through their first
@@ -79,10 +80,11 @@ bytes are not applied or rewritten. Raw directory metadata differences remain
 classified, including passwords as private metadata; no transmission occurs.
 
 A candidate is not a commit or permission to change a connected transport.
-Future policy must distinguish transport/profile/target changes, coordinate
-flow and IRQ ownership, preserve active screen/parser modes and update the
-intended reset baseline. This component deliberately makes no successful live
-reconfiguration claim. Full F02/F06 and the application plan remain open.
+The separate live owner now coordinates flow/IRQ ownership, confirms supported
+profile and idle serial changes, and updates the intended reset baseline. This
+pure decoder alone makes no successful live reconfiguration claim. Connected
+COM moves, live XLT resource/mode handoff, other emulations and complete F02/F06
+remain open.
 
 ## Evidence
 
@@ -92,7 +94,8 @@ all200 selected entry numbers, semantic change flags, DIRECT and legacy target
 behavior, malformed source/active inputs and independent guards on the newly
 public directory API. Rejected candidates and all inputs remain byte-identical.
 A code hook measures stack use and requires it below the terminal's8KiB budget;
-this measures API calls, not a future parent/UI/ISR composition.
+this measures isolated candidate API calls; the parent/UI/ISR composition is
+covered separately by the live setup report.
 
 A separate DOS C-runtime test compares the real file-reading owner with the pure
 candidate decoder on generated PRM/DIR files and verifies that both fixtures

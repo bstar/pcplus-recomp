@@ -6,7 +6,7 @@ from modem_fixtures import fixture
 from test_terminal import SAMPLER
 from directory_test_support import accounting_check
 ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EXE'
-def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c"):
+def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None):
  assert working_drive in ("c","d")
  out=ROOT/'build/connection-dos'/name;out.mkdir(parents=True,exist_ok=True)
  for p in ('PASS.TXT','FAIL.TXT','BEFORE.BIN','AFTER.BIN','SCREEN.BIN'):(out/p).unlink(missing_ok=True)
@@ -17,8 +17,15 @@ def run(name,mode,keys,*,directory=None,prm=None,arguments=None,com=1,profile=6,
  (out/'TEST.PRM').write_bytes(payload)
  if directory is not None:(out/'TEST.DIR').write_bytes(directory)
  for filename,data in (files or {}).items():
-  assert Path(filename).name==filename and filename not in ('TEST.DIR','TEST.PRM')
-  (out/filename).write_bytes(data)
+  relative=Path(filename)
+  assert relative.parts and not relative.is_absolute() and '..' not in relative.parts and '\\' not in filename and filename not in ('TEST.DIR','TEST.PRM')
+  target_file=out/relative;target_file.parent.mkdir(parents=True,exist_ok=True);target_file.write_bytes(data)
+ environment_lines=['set PCPLUS=']
+ for variable,value in (environment or {}).items():
+  assert variable and all(c in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_' for c in variable)
+  assert not any(c in value for c in '\r\n\0%<>|&')
+  environment_lines.append('set '+variable+'='+value)
+ environment_commands='\n'.join(environment_lines)
  sampler=SAMPLER;base=(0x3f8,0x2f8,0x3e8,0x2e8)[com-1]
  for offset in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+offset),hex(base+offset))
  (out/'sampler.asm').write_text(sampler)
@@ -84,6 +91,7 @@ nosound=true
 mount c "{BINARY.parent}"
 mount d "{out}"
 {working_drive}:
+{environment_commands}
 D:\\SNAP B
 ADDKEY {keys}
 C:\\TERMINAL {arguments}
@@ -122,7 +130,7 @@ exit
  if mode in ('busy','silence'):checks['configured_abort_reached_wire']=bool(checks.get('configured_abort_reached_wire'))
  (out/'serial.bin').write_bytes(wire)
  (out/'screen.txt').write_text('\n'.join(screen[i*160:i*160+160:2].decode('cp437') for i in range(25))+'\n')
- proof={'case':name,'passed':all(checks.values()),'checks':checks,'commands':commands,'errors':errors,'seconds':round(time.monotonic()-started,3),'binary_sha256':digest,'command':arguments,'expected_exit':expected,'working_drive':working_drive,'scope':'Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.'}
+ proof={'case':name,'passed':all(checks.values()),'checks':checks,'commands':commands,'errors':errors,'seconds':round(time.monotonic()-started,3),'binary_sha256':digest,'command':arguments,'expected_exit':expected,'working_drive':working_drive,'environment':environment or {},'scope':'Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.'}
  (out/'result.json').write_text(json.dumps(proof,indent=2)+'\n');print(name,'PASS' if proof['passed'] else json.dumps(proof),flush=True);return proof
 def main():
  cases=[('fast-connect-banner','success','p4000 a-x'),('busy-abort','busy','p4000 a-x'),('timeout-abort','silence','p4000 a-x'),('configured-hangup','hangup','p3000 a-h p2200 a-x'),('explicit-redial','redial','p3500 a-d p3500 a-x')]

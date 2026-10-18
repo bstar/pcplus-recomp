@@ -156,3 +156,13 @@ layout, without /X. The stock editor is reached in both runs; all eight keys
 reach the BBS, immediate Home/Insert fail, and30ms buffering passes all seven
 behavior checks. Both drafts close unsaved. Runtime, serial, PRM, recipe and
 source identities match across this pair; old experiments remain retained.
+
+
+The bounded-resourcee02481cc pair (`editor-resource-e024-immediate` /
+`editor-resource-e024-buffer30`) keeps saved identity mode and no /X. Both reach
+the stock editor and emit all eight measured keys. Immediate forwarding passes
+Home positioning in this run but fails Insert/overtype;30ms buffering passes all
+seven audit checks. Both close without posting and restore sampled hardware.
+The differing immediate Home result reinforces that read/packet boundaries are
+not fixed between runs. The selected byte-transparent delay remains a local
+workaround, with the same physical-modem and remote TCP limitations.

@@ -3,7 +3,7 @@
 #define XLT_TABLE_SIZE 256U
 typedef unsigned xlt_dos_status;
 enum { XLT_DOS_OK=0, XLT_DOS_ARGUMENT, XLT_DOS_OPEN, XLT_DOS_READ,
-       XLT_DOS_SIZE, XLT_DOS_CLOSE };
+       XLT_DOS_SIZE, XLT_DOS_CLOSE, XLT_DOS_RESOURCE };
 typedef struct xlt_dos_result {
  xlt_dos_status status;
  unsigned dos_error,close_error,bytes_read;

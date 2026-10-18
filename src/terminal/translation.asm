@@ -4,6 +4,7 @@ CPU 8086
 %include "terminal_import.inc"
 SEGMENT _TEXT public class=CODE use16
 extern terminal_option_mask,terminal_translation_path,_xlt_dos_read
+extern _xlt_dos_read_default,process_psp
 extern terminal_receive_character,terminal_parser_active
 extern terminal_configuration_values,uart_rx_mask
 global terminal_load_translation,terminal_translate_input
@@ -38,7 +39,13 @@ terminal_load_translation:
  je .seven
  cmp ax,1
  jne .bad
- mov dx,translation_default_path
+ mov ax,terminal_translation_io
+ push ax
+ mov ax,terminal_translation_table
+ push ax
+ push word [process_psp]
+ call _xlt_dos_read_default
+ jmp .loaded
 .load:
  cld
  mov ax,terminal_translation_io
@@ -47,6 +54,7 @@ terminal_load_translation:
  push ax
  push dx
  call _xlt_dos_read
+.loaded:
  add sp,6
  mov [terminal_translation_status],ax
  or ax,ax
@@ -91,4 +99,3 @@ terminal_translation_mode: dw 0
 terminal_translation_status: dw 0
 terminal_translation_io: times 8 db 0
 terminal_translation_table: times 256 db 0
-translation_default_path: db 'PCPLUS.XLT',0

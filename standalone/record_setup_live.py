@@ -29,7 +29,7 @@ def main():
  assert len(port_dos['cases'])==6
  for source,digest in port_dos['sources'].items():assert sha(source)==digest,source
  frames=bound('build/terminal/config-far-checks.json',runtime)
- assert frames['configuration_bridge_pairs_verified']==26 and len(frames['rejected_mutations'])==119
+ assert frames['configuration_bridge_pairs_verified']==27 and len(frames['rejected_mutations'])==126
  candidate=bound('build/live-configuration/terminal-checks.json',runtime)
  assert candidate['host']=='terminal-far-C' and candidate['inputs']==389 and candidate['maximum_CPU_call_stack_bytes']<8192-3520-16
  directory=bound('build/terminal/directory-live-checks.json',runtime);assert directory['inputs']==311
@@ -41,7 +41,7 @@ def main():
  assert regression['passed'] and regression['complete'] and regression['binary_sha256']==runtime
  commands=subprocess.check_output(['make','-n','test-terminal'],cwd=ROOT,text=True).splitlines()
  assert [r['command'] for r in regression['commands']]==commands and all(r['exit_code']==0 for r in regression['commands'])
- proof=read('docs/validation/application-components-source-build.json');assert proof['passed'] and proof['output_count']==60
+ proof=read('docs/validation/application-components-source-build.json');assert proof['passed'] and proof['output_count']==62
  for path,digest in [('terminal/TERMINAL.EXE',runtime),('setup/PRMEDIT.EXE',editor)]:assert proof['outputs'][path]['sha256']==digest and proof['outputs'][path]['matches_workspace']
  scripts=['standalone/record_setup_live.py','standalone/check_setup_live.py','standalone/test_setup_live_dos.py','standalone/check_program_actions_live.py','standalone/test_setup_startup_dos.py','standalone/check_live_configuration.py','standalone/check_config_far_live.py','standalone/check_directory_live.py','standalone/check_directory_context.py','standalone/test_far_storage_dos.py','standalone/far_storage_child.asm','standalone/terminal_memory.py','standalone/build_terminal.py']
  scripts+=['standalone/check_live_setup_owner.py','standalone/check_live_setup_apply.py','standalone/live_setup_kernel.py']

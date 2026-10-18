@@ -467,3 +467,16 @@ checks and aborts its draft. ENiGMA `editor-prm-e212-immediate` again fails Home
 and Insert behavior despite correct key output; `editor-prm-e212-buffer30`
 passes all seven audited checks. Both ENiGMA connections close without posting.
 Previous experiments remain retained and the immediate aggregate stays false.
+
+
+## Bounded default-resource checkpoint
+
+Builde02481cc adds bounded default-XLT current-directory/PCPLUS lookup. The
+BBS probes retain saved mode0, without /X, so this is an editor regression
+checkpoint; the new lookup is exercised separately by12 actual DOS startup cases.
+Synchronet `editor-resource-e024-hard` passes all12 audit and eight wire checks
+and aborts its draft. ENiGMA `editor-resource-e024-immediate` emits every measured
+key and passes Home positioning this time, but fails Insert/overtype. The paired
+`editor-resource-e024-buffer30` passes all seven audit and eight wire checks. Both
+ENiGMA drafts close unsaved. The immediate aggregate stays false; earlier attempts
+and the rejected Ctrl-A alias experiment remain retained separately.

@@ -35,6 +35,7 @@ program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/bu
 owner_checks=['standalone/check_batch_download.py','standalone/check_batch_upload.py','standalone/check_capture_file.py','standalone/check_capture_session.py','standalone/check_capture_owners.py']
 owner_checks.append('standalone/check_monitor_file.py')
 owner_checks.append('standalone/check_printer_device.py')
+owner_checks.append('standalone/test_resource_path_dos.py')
 program+=''.join(f"subprocess.run(['python3',{name!r}],check=True)\n" for name in owner_checks)
 with (OUT/'build.log').open('w') as log:
  subprocess.run([str(SNAP/'tools/dev'),'--command','python3','-c',program],cwd=SNAP,stdout=log,stderr=log,check=True,timeout=300)
@@ -49,6 +50,7 @@ outputs += ['setup/PRMEDIT.EXE']
 outputs += ['live-configuration/LIVE.EXE']
 outputs += ['directory-context/CONTEXT.EXE']
 outputs += ['xlt-editor/XLTEDIT.EXE']
+outputs += ['resource-path/RESOURCE.EXE']
 outputs += ['monitor/MONITOR.EXE','monitor-file/MONITOR.EXE','monitor-file/MOFAULT.EXE']
 results={}
 for rel in outputs:

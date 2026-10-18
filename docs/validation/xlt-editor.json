@@ -121,7 +121,7 @@
     "src/translation/editor_document.c": "95193dca3f33e0af859b7399e0abb64562f757099068dee19768d862506715ca",
     "src/translation/editor_main.c": "6bb9d7f885814fdc4e56f63b3b100c9ee143f6c574777212d00c3c1b6d996e33",
     "src/translation/xlt_dos.c": "b2383aa97088a59751412b71de9d5570fdd683c5ed3615025ecb810fe3258b4b",
-    "src/translation/xlt_dos.h": "87238a638bc9446a173dd60552372ecdb181b65b2192f327fb8ddfe8622ef219",
+    "src/translation/xlt_dos.h": "ce90b566203b37cf3022ace866d93737dad0205dcbc70c9b40cc85942c6b51aa",
     "src/translation/xlt_dos_fs.c": "459ea2c9d41515b0aa67e11eb9f178cd44404cba6b3eee69769b426124963a26",
     "src/translation/xlt_dos_fs.h": "cb9e938aa83780f314947b75da7b99e491a8ea325839fa9f53991fde3543f7d9",
     "standalone/xlt_editor_fault_host.c": "e588952305e901a8fd26bd97ab658bcc83a57ac2f11cf529a4649cce84df98a6",

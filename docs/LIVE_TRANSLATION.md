@@ -23,7 +23,7 @@ PRM word01e0h selects the following startup behavior after complete validation:
 | Value | Input behavior | Resource |
 | --- | --- | --- |
 |0|Identity, receive maskffh|None|
-|1|XLT mapping on normal terminal bytes, receive maskffh|`PCPLUS.XLT` in the DOS current directory|
+|1|XLT mapping on normal terminal bytes, receive maskffh|`PCPLUS.XLT` in the DOS current directory, then bounded `PCPLUS` directory fallback|
 |2|Strip bit7 in the actual UART dequeue, receive mask7fh|None|
 
 `/X:FILE.XLT` overrides these valid saved modes with its explicit table andffh
@@ -43,9 +43,10 @@ change the UART's physical data-bit setting. Binary upload/download is refused
 before filename/file ownership while the mask is notffh. Mode1 still permits
 byte-exact binary transfer through the separate raw protocol owner.
 
-Current-directory lookup is explicit here: the original PCPLUS environment-path
-fallback is not implemented yet. Use `/X` with an explicit path for tables in
-other directories. A mode1 file must exist and contain exactly256 bytes.
+Default mode1 lookup now tries the current directory, then the inherited
+`PCPLUS` directory only after file/path-not-found. It stops on a damaged or
+unreadable current table. Explicit `/X` bypasses fallback. See the bounded
+[resource lookup policy](RESOURCE_LOOKUP.md). A table must contain exactly256 bytes.
 
 ## Ownership and behavior
 
@@ -72,9 +73,9 @@ payloads. These separate owners preserve their existing byte contracts.
 
 RIS keeps the selected table; it performs no resource reload. PROGRAM retains
 the table with the parent's normal data and retains its loader code with the
-complete configuration code extent. No live table reload, table editor or automatic
-environment lookup is implemented here. Saved-mode startup and
-live deferral are covered, while live resource switching remains open. See
+complete configuration code extent. The offline [XLTEDIT editor](XLT_EDITOR.md)
+provides checked table editing/save/reload. Bounded default XLT environment lookup
+is integrated; live table/mode switching remains deferred. See
 [native recovery](TRANSLATION.md).
 
 ## Code and validation
@@ -99,9 +100,9 @@ The linked suite covers783 inputs: all256 mapping outputs through normal and
 fragmented DOS reads, disabled/no-I/O startup, nine error cases, mapped ESC and
 ordinary characters, raw continuation/replies/typed output, processed capture,
 RIS retention and all256 raw monitor dump bytes. Only DOS/BIOS/UART boundaries
-are modeled; no application callback is skipped. The far-code suite rejects119
+are modeled; no application callback is skipped. The far-code suite rejects126
 damaged call frames, targets, returns, relocations and segment layouts, including
-the new XLT entry and three DOS adapters.
+both XLT entries and three DOS adapters.
 
 Twelve actual DOS cases use synthetic files and an owned loopback modem: encoded
 ESC controls and mapped text, an explicit identity table, an ignored table with

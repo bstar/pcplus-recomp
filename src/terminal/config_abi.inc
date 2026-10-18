@@ -11,6 +11,7 @@ CONFIG_ENTRY _live_setup_abort,1
 CONFIG_ENTRY _live_setup_finish_policy,3
 CONFIG_ENTRY _live_setup_acknowledge,1
 CONFIG_ENTRY _xlt_dos_read,3
+CONFIG_ENTRY _xlt_dos_read_default,3
 ; Compiler-default register ABI for these four small-model CRT functions.
 CONFIG_REGISTER config_memcpy_service_,memcpy_
 CONFIG_REGISTER config_memset_service_,memset_
