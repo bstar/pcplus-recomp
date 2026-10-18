@@ -41,8 +41,9 @@ are highlighted.
 
 This is an offline editor. F3 and F4 do not enable/disable the running terminal's
 mode or change a PRM image. That differs from the original parent's shared-memory
-editor. Select the saved mode with PRMEDIT and restart the terminal, or select a
-table explicitly with `/X:FILE.XLT`. Live resource switching remains unfinished.
+editor. Select the saved mode with PRMEDIT at startup, use a confirmed
+[Alt-F10 mode change](LIVE_TRANSLATION_SETUP.md), or select a table explicitly
+with `/X:FILE.XLT`. A dedicated same-mode live reload/editor command remains open.
 
 ## Save and recovery
 

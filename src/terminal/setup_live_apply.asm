@@ -24,6 +24,8 @@ extern terminal_setup_profile_status,terminal_setup_profile_ready
 extern terminal_connection_prepare,terminal_apply_live_configuration
 extern terminal_program_status,terminal_exit_code,terminal_quit
 extern terminal_translation_mode
+extern terminal_setup_translation_bind,terminal_setup_translation_choice,terminal_setup_translation_commit
+extern terminal_setup_translation_status
 global terminal_setup_bind,terminal_setup_prepare,terminal_setup_complete
 global terminal_setup_return_prompt
 %macro save 0
@@ -72,6 +74,9 @@ setup_context_pointer:
 ; transport (including negotiated autobaud). The ISR never owns these globals.
 terminal_setup_prepare:
  save
+ call terminal_setup_translation_bind
+ push ds
+ pop es
  mov word [terminal_setup_apply_status],0
  mov word [terminal_setup_link_status],0
  mov word [terminal_setup_port_requested],0
@@ -141,7 +146,7 @@ terminal_setup_complete:
  mov di,setup_previous_serial
  mov cx,TI_SIZE/2
  rep movsw
- mov ax,31
+ mov ax,31|2048
  push ax
  mov ax,terminal_setup_outcome
  push ax
@@ -155,6 +160,7 @@ terminal_setup_complete:
  call setup_port_choice
  call setup_profile_choice
  call setup_serial_choice
+ call terminal_setup_translation_choice
  test word [terminal_setup_outcome+4],128|15
  jz .apply
  ; Prepare future dial/hangup commands only after native expansion validation.
@@ -197,6 +203,8 @@ terminal_setup_complete:
 .failed:
  mov word [terminal_setup_profile_status],0
  mov word [terminal_setup_profile_ready],0
+ mov word [terminal_setup_translation_status],0
+ mov word [terminal_setup_key_consumed],0
  mov word [terminal_setup_apply_status],6
  mov word [terminal_setup_outcome],6
  mov word [terminal_setup_outcome+4],0
@@ -228,6 +236,7 @@ terminal_setup_complete:
  push ds
  pop es
  cld
+ call terminal_setup_translation_commit
  test word [terminal_setup_outcome+4],512
  jz .display
  mov ax,[terminal_setup_plan+TI_SIZE+MI_BREAK_DELAY]
@@ -474,6 +483,12 @@ terminal_setup_return_prompt:
  cmp word [terminal_setup_apply_status],0
  jne .done
  mov si,setup_profile_failed
+ cmp word [terminal_setup_translation_status],3
+ jne .profile_status
+ mov word [terminal_setup_key_consumed],0
+ mov si,setup_translation_failed
+ ret
+.profile_status:
  cmp word [terminal_setup_profile_status],3
  jne .check_link
  mov word [terminal_setup_key_consumed],0
@@ -482,6 +497,7 @@ terminal_setup_return_prompt:
  mov si,setup_link_busy
  cmp word [terminal_setup_link_status],3
  jne .not_busy
+ mov word [terminal_setup_key_consumed],0
  cmp word [terminal_setup_port_requested],0
  je .done
  mov si,setup_port_busy
@@ -521,6 +537,7 @@ setup_port_busy: db 13,10,'COM not available. Hang up (Alt-H) and drain line, th
 setup_link_busy: db 13,10,'Line busy; kept current serial settings. Press a key to return.',0
 setup_profile_question: db 13,10,'Switch profile, reset keys/modes and clear screen? Y switches; other keys keep profile.',0
 setup_profile_failed: db 13,10,'Could not load profile keyboard; kept current profile. Press a key.',0
+setup_translation_failed: db 13,10,'Could not apply translation; kept current mode. Other settings may apply. Press a key.',0
 SEGMENT _BSS public align=2 class=BSS use16
 global terminal_setup_plan
 terminal_setup_plan: resb TI_SIZE+MI_SIZE+DL_SIZE+2

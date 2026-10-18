@@ -29,6 +29,11 @@ test-resource-lookup: terminal
 	python3 standalone/check_resource_lookup.py
 	python3 standalone/test_resource_lookup_dos.py
 
+.PHONY: test-live-translation
+test-live-translation: terminal setup
+	python3 standalone/check_live_translation.py
+	python3 standalone/test_live_translation_dos.py
+
 test-translation: translation
 	python3 standalone/check_translation.py
 
@@ -100,6 +105,8 @@ test-terminal: terminal
 	python3 standalone/check_translation_live.py
 	python3 standalone/check_translation_modes.py
 	python3 standalone/test_translation_live_dos.py
+	python3 standalone/check_live_translation.py
+	python3 standalone/test_live_translation_dos.py
 	python3 standalone/check_setup_startup.py
 	python3 standalone/test_setup_startup_dos.py
 	python3 standalone/check_setup_live.py

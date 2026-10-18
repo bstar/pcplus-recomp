@@ -46,8 +46,9 @@ or oversized environment selection; existing reader status values 0–5 retain
 their meanings. Explicit-reader behavior remains unchanged.
 
 This is startup-only selection. RIS retains the already loaded table without
-reading files or the environment. Live table/mode handoff and automatic lookup
-for the remaining resources are still open.
+reading files or the environment. Confirmed [live mode changes](LIVE_TRANSLATION_SETUP.md) now bind both candidate
+namespaces before the child. Same-mode reload and automatic lookup for the
+remaining resources are still open.
 
 ## Original evidence and maintained differences
 

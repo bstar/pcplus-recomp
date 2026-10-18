@@ -480,3 +480,15 @@ key and passes Home positioning this time, but fails Insert/overtype. The paired
 `editor-resource-e024-buffer30` passes all seven audit and eight wire checks. Both
 ENiGMA drafts close unsaved. The immediate aggregate stays false; earlier attempts
 and the rejected Ctrl-A alias experiment remain retained separately.
+
+
+## Confirmed live input-mode checkpoint
+
+Build5689d8aa adds staged, confirmed input-mode adoption from Alt-F10. These
+BBS probes retain saved identity mode without /X; the separate live-translation
+report covers331 linked inputs and10 actual DOS mode/namespace workflows.
+Synchronet `editor-live-xlt-5689-hard` passes all12 audit and eight wire checks
+and aborts the draft. ENiGMA `editor-live-xlt-5689-immediate` emits every measured
+key but fails Home and Insert/overtype. The paired
+`editor-live-xlt-5689-buffer30` passes all seven audit and eight wire checks. Both
+ENiGMA drafts close unsaved. The immediate aggregate stays false.

@@ -107,3 +107,9 @@ Run these through `./tools/build test-terminal`. The pure staging API is describ
 in [LIVE_CONFIGURATION_PLAN.md](LIVE_CONFIGURATION_PLAN.md); the full feature
 inventory remains in [FEATURES.md](FEATURES.md). Hash-bound checkpoint evidence
 is recorded in [validation/setup-live.json](validation/setup-live.json).
+
+
+Input translation mode0/1/2 changes now have a separate
+[checked confirmation and table/mask handoff](LIVE_TRANSLATION_SETUP.md). Declines
+or failed table/namespace checks retain the active mode with independent edit
+adoption. Explicit /X remains fixed. Same-mode reload is still open.

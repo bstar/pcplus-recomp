@@ -71,7 +71,7 @@ All active serial fields are validated before they can enter a candidate.
 |0100|Directory selection/record metadata|
 |0200|Raw BREAK delay|
 |0400|Dialing mode or expanded target|
-|0800|Input translation mode; currently deferred until restart|
+|0800|Input translation mode; foreground offers a separate checked/confirmed handoff|
 
 Mapping delay/pause changes also set the modem bit because both consumers use
 those values. BREAK is separate. Modem strings compare only through their first
@@ -83,7 +83,7 @@ A candidate is not a commit or permission to change a connected transport.
 The separate live owner now coordinates flow/IRQ ownership, confirms supported
 profile and idle serial changes, and updates the intended reset baseline. This
 pure decoder alone makes no successful live reconfiguration claim. Connected
-COM moves, live XLT resource/mode handoff, other emulations and complete F02/F06
+COM moves, same-mode XLT reload, other emulations and complete F02/F06
 remain open.
 
 ## Evidence

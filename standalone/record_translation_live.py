@@ -30,15 +30,15 @@ def main():
     for report in (linked, modes, original_modes, dos, frames, regression):
         assert report['passed'] and report['binary_sha256'] == binary
     assert linked['inputs'] == 783 and len(linked['cases']) == 4
-    assert frames['configuration_bridge_pairs_verified'] == 27
-    assert len(frames['rejected_mutations']) == 126
+    assert frames['configuration_bridge_pairs_verified'] == 30
+    assert len(frames['rejected_mutations']) == 147
     assert modes['inputs'] == original_modes['inputs'] == 561
     assert len(original_modes['original_cases']) == 5
     assert original_modes['original_sha256'] == '6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904'
     for report in (modes, original_modes):
         for name, digest in report['sources'].items():
             assert sha(name) == digest, name
-    assert regression['complete'] and len(regression['commands']) == 64
+    assert regression['complete'] and len(regression['commands']) == 66
     assert all(command['exit_code'] == 0 for command in regression['commands'])
     proof = read('docs/validation/terminal-source-build.json')
     assert proof['passed'] and proof['binary_sha256'] == binary
@@ -70,6 +70,9 @@ def main():
     resource = read('docs/validation/resource-lookup.json')
     assert resource['passed'] and resource['binary_sha256'] == binary
     assert resource['linked']['inputs'] == 117 and len(resource['actual_DOS']['cases']) == 12
+    adoption = read('docs/validation/live-translation.json')
+    assert adoption['passed'] and adoption['binary_sha256'] == binary
+    assert adoption['linked']['inputs'] == 331 and len(adoption['actual_DOS']['cases']) == 10
     scripts = ['standalone/check_translation_live.py', 'standalone/test_translation_live_dos.py',
                'standalone/test_connection_dos.py', 'standalone/test_terminal.py',
                'standalone/check_config_far_live.py', 'standalone/check_terminal_options.py',
@@ -87,9 +90,10 @@ def main():
                   runtime_sources=manifest['sources'],
                   retained_artifacts={name: sha(name) for name in artifacts},
                   resource_lookup=dict(report='docs/validation/resource-lookup.json', linked_inputs=117, generic_DOS_assertions=30, actual_DOS_cases=12),
-                  scope='Saved PRM modes0/1/2, checked current-directory then bounded PCPLUS-environment default table lookup and explicit /X override, driver7-bit mask and binary-transfer rejection,42-byte serial/626-byte candidate ABI,45-field mode editor and live deferral. Linked561 mode inputs, five genuine-original selector cases,783 prior translation inputs,12 actual DOS translation and12 offline editor cases, full64-command terminal regression and isolated source rebuild. Offline XLTEDIT provides checked table editing/save/reload. Live mode/resource handoff, lookup for other resources and physical UART remain open.')
+                  confirmed_live_adoption=dict(report='docs/validation/live-translation.json', linked_inputs=331, actual_DOS_cases=10),
+                  scope='Saved PRM modes0/1/2, checked current-directory then bounded PCPLUS-environment default table lookup and explicit /X override, driver7-bit mask and binary-transfer rejection,42-byte serial/626-byte candidate ABI,45-field mode editor, default/decline deferral and confirmed live adoption. Linked561 mode inputs, five genuine-original selector cases,783 prior translation inputs,12 actual DOS translation and12 offline editor cases, full66-command terminal regression and isolated source rebuild. Offline XLTEDIT provides checked table editing/save/reload. Confirmed live changes bind namespaces, stage tables and commit mode/table/mask during the foreground handoff. Same-mode reload, a dedicated terminal XLT editor action, lookup for other resources and physical UART remain open.')
     (ROOT / 'docs/validation/translation-live.json').write_text(json.dumps(result, indent=2) + '\n')
-    print('Recorded saved XLT modes:', modes['inputs'], 'mode inputs,12 DOS cases,64 regression commands')
+    print('Recorded saved XLT modes:', modes['inputs'], 'mode inputs,12 DOS cases,66 regression commands')
 
 
 if __name__ == '__main__':

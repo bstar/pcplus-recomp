@@ -89,7 +89,7 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
  live_setup_result *result,unsigned permitted_link_mask)
 {
  live_configuration_result decoded;prm_dos_result io;unsigned mask,status,deferred;
- if((permitted_link_mask&~31U) || !external(destination,sizeof(*destination)) || !external(result,sizeof(*result)) ||
+ if((permitted_link_mask&~(31U|LIVE_CHANGE_TRANSLATION)) || !external(destination,sizeof(*destination)) || !external(result,sizeof(*result)) ||
   !separate(destination,sizeof(*destination),result,sizeof(*result)))return LIVE_SETUP_ARGUMENT;
  memset(result,0,sizeof(*result));
  if(owner.bound!=1 || owner.pending!=1){result->status=LIVE_SETUP_STATE;return result->status;}
@@ -120,13 +120,13 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
  }
  if(!command_valid(&owner.stage)){result->status=LIVE_SETUP_COMMAND;return result->status;}
  /* Explicit /X fixes the effective table mode, after raw PRM validation.
-  * Other saved mode changes await a resource/mask handoff and stay deferred. */
+  * Other mode changes require explicit permission and a foreground handoff. */
  if(owner.option_mask&16384U){
   owner.stage.serial.translation_mode=owner.active.serial.translation_mode;
   owner.stage.change_mask&=~LIVE_CHANGE_TRANSLATION;
  }
- if((owner.stage.change_mask&LIVE_CHANGE_PORT) && !(permitted_link_mask&LIVE_CHANGE_PORT))permitted_link_mask=0;
- deferred=owner.stage.change_mask&(((LIVE_CHANGE_TRANSPORT|LIVE_CHANGE_PROFILE)&~permitted_link_mask)|LIVE_CHANGE_DIRECTORY|LIVE_CHANGE_TARGET|LIVE_CHANGE_TRANSLATION);
+ if((owner.stage.change_mask&LIVE_CHANGE_PORT) && !(permitted_link_mask&LIVE_CHANGE_PORT))permitted_link_mask&=~31U;
+ deferred=owner.stage.change_mask&(((LIVE_CHANGE_TRANSPORT|LIVE_CHANGE_PROFILE|LIVE_CHANGE_TRANSLATION)&~permitted_link_mask)|LIVE_CHANGE_DIRECTORY|LIVE_CHANGE_TARGET);
  owner.offered_mask=owner.stage.change_mask;
  owner.offered_baud_low=owner.stage.serial.baud_low;owner.offered_baud_high=owner.stage.serial.baud_high;
  if(!(permitted_link_mask&LIVE_CHANGE_PORT)){
@@ -144,7 +144,7 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
   owner.stage.serial.software_flow=owner.active.serial.software_flow;owner.stage.serial.hardware_flow=owner.active.serial.hardware_flow;
  }
  if(!(permitted_link_mask&LIVE_CHANGE_PROFILE))owner.stage.serial.terminal_id=owner.active.serial.terminal_id;
- owner.stage.serial.translation_mode=owner.active.serial.translation_mode;
+ if(!(permitted_link_mask&LIVE_CHANGE_TRANSLATION))owner.stage.serial.translation_mode=owner.active.serial.translation_mode;
  memcpy(&owner.stage.directory,&owner.active.directory,sizeof(owner.stage.directory));
  result->deferred_mask=deferred;result->applied_mask=owner.stage.change_mask&~deferred;
  memcpy(destination,&owner.stage,sizeof(*destination));return LIVE_SETUP_OK;

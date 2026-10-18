@@ -31,6 +31,7 @@ builds.append('setup')
 builds.append('live_configuration')
 builds.append('directory_context')
 builds.append('xlt_editor')
+builds.append('live_translation_child')
 program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/build_{name}.py'],check=True)\n" for name in builds)
 owner_checks=['standalone/check_batch_download.py','standalone/check_batch_upload.py','standalone/check_capture_file.py','standalone/check_capture_session.py','standalone/check_capture_owners.py']
 owner_checks.append('standalone/check_monitor_file.py')
@@ -51,6 +52,7 @@ outputs += ['live-configuration/LIVE.EXE']
 outputs += ['directory-context/CONTEXT.EXE']
 outputs += ['xlt-editor/XLTEDIT.EXE']
 outputs += ['resource-path/RESOURCE.EXE']
+outputs += ['live-translation-child/CHDIR.EXE']
 outputs += ['monitor/MONITOR.EXE','monitor-file/MONITOR.EXE','monitor-file/MOFAULT.EXE']
 results={}
 for rel in outputs:

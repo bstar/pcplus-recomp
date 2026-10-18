@@ -30,7 +30,10 @@ unsigned __cdecl live_setup_begin(const char *path,
  * this module's storage. No active globals or hardware are changed here. */
 unsigned __cdecl live_setup_finish(live_configuration_plan *destination,
  live_setup_result *result);
-/* Explicitly permitted transport/profile bits (subset of31). Without PORT
+/* Explicitly permitted transport/profile bits (subset of31), plus optional
+ * LIVE_CHANGE_TRANSLATION. The foreground caller stages the resource, confirms
+ * and commits the mode/table/mask before input resumes; permission alone is not
+ * adoption. /X remains fixed after raw-file validation. Without PORT
  * permission a port change defers the entire coupled group as before. With
  * PORT permission, the source PRM baud describes the new port, rather than
  * retaining the old port's negotiated autobaud. The foreground owner must

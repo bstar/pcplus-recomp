@@ -250,7 +250,8 @@ XLT instruction bytes and tests a separate checked256-byte DOS table loader.
 There are2,082 CPU cases with optional genuine-original comparison, nine actual
 DOS filesystem checks and22 declared API fault checks. The interactive terminal
 accepts `/X:FILE.XLT` and saved PRM modes0/1/2 (identity/table/7-bit mask).
-PRMEDIT exposes the mode; live changes defer until restart. Default table mode
+PRMEDIT exposes the mode; Alt-F10 offers a separate confirmed
+[live mode handoff](docs/LIVE_TRANSLATION_SETUP.md). Default table mode
 uses bounded current-directory then `PCPLUS` directory lookup; see
 [resource lookup](docs/RESOURCE_LOOKUP.md). Explicit `/X` bypasses fallback. Normal table-mode characters translate
 while parser continuations, output and binary/dedicated owners remain raw. See

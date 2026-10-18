@@ -37,13 +37,17 @@ def probe_child():
  subprocess.run(['nasm','-f','obj',str(OUT/'probe.asm'),'-o',str(OUT/'probe.obj')],check=True)
  subprocess.run(['wlink','system','dos','option','quiet','name',str(OUT/'PROBE.EXE'),'file',str(OUT/'probe.obj')],check=True)
  return (OUT/'PROBE.EXE').read_bytes()
-def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate=1200,expected=0,ready=True,post_echo=False,rate_mask=None,line_mask=None,expected_profile=None,profile_clear=False,keyboard_file=None):
+def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate=1200,expected=0,ready=True,post_echo=False,rate_mask=None,line_mask=None,expected_profile=None,profile_clear=False,keyboard_file=None,files=None,environment=None,child_binary=None,post_banner=None):
  directory=OUT/name
  if directory.exists():shutil.rmtree(directory)
  directory.mkdir(parents=True);data=image() if payload is None else payload
  (directory/'TEST.PRM').write_bytes(data);shutil.copyfile(BINARY,directory/'TERMINAL.EXE')
  if keyboard_file is not None:(directory/'TEST.KBD').write_bytes(keyboard_file)
- if child=='editor':shutil.copyfile(EDITOR,directory/'PRMEDIT.EXE')
+ for filename,data_file in (files or {}).items():
+  relative=Path(filename);assert relative.parts and not relative.is_absolute() and '..' not in relative.parts and '\\' not in filename and filename not in ('TEST.PRM','TERMINAL.EXE','PRMEDIT.EXE')
+  (directory/relative).parent.mkdir(parents=True,exist_ok=True);(directory/relative).write_bytes(data_file)
+ if child_binary is not None:shutil.copyfile(child_binary,directory/'PRMEDIT.EXE')
+ elif child=='editor':shutil.copyfile(EDITOR,directory/'PRMEDIT.EXE')
  elif child=='probe':shutil.copyfile(OUT/'PROBE.EXE',directory/'PRMEDIT.EXE')
  elif child=='fail':
   (directory/'fail.asm').write_text('BITS 16\nSEGMENT _TEXT public class=CODE use16\n..start:\n mov ax,0x4c09\n int 0x21\nSEGMENT STACK stack class=STACK use16\n resb 256\n')
@@ -82,7 +86,7 @@ def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate
     wire.extend(block)
     if b'\x1b[1;12R' in wire:peer_checks['actual_terminal_cursor_reply']=True
     if post_echo and not post_sent and b'ready' in wire:
-     conn.sendall(b' LIVE\x1b[6n'+(b'\x1b[0c' if expected_profile is not None else b''));post_sent=True
+     conn.sendall((post_banner if post_banner is not None else b' LIVE')+b'\x1b[6n'+(b'\x1b[0c' if expected_profile is not None else b''));post_sent=True
     if post_echo and (b'\x1b[1;6R' if profile_clear else b'\x1b[1;17R') in wire:peer_checks['post_editor_receive_render_and_cursor_reply']=True
     if expected_profile is not None and (b'\x1b[?1;2c' if expected_profile==6 else b'\x1b[?62;2c') in wire:peer_checks['post_editor_profile_device_reply']=True
   except OSError as error:
@@ -93,6 +97,12 @@ def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate
  schedule='ADDKEY p750 '+' p120 '.join(keys.split()) if keys else ('ADDKEY p750' if ready else '')
  if ready:schedule+=' p1800 a-x'
  branch=f'if errorlevel {expected+1} goto fail\nif errorlevel {expected} goto pass\ngoto fail' if expected else 'if errorlevel 1 goto fail\ngoto pass'
+ environment_lines=['set PCPLUS=']
+ for variable,value in (environment or {}).items():
+  assert variable and all(c in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_' for c in variable)
+  assert not any(c in value for c in '\r\n\0%<>|&')
+  environment_lines.append('set '+variable+'='+value)
+ environment_commands='\n'.join(environment_lines)
  config=f'''[sdl]
 output=surface
 [cpu]
@@ -110,20 +120,21 @@ serial4=disabled
 @echo off
 mount d "{directory}"
 d:
+{environment_commands}
 WATCH T
 SNAP B
 {schedule}
 TERMINAL {arguments}
 {branch}
 :pass
-echo PASS>PASS.TXT
+echo PASS>D:\\PASS.TXT
 goto done
 :fail
-echo FAIL>FAIL.TXT
+echo FAIL>D:\\FAIL.TXT
 :done
-SNAP S
-SNAP A
-WATCH
+D:\\SNAP S
+D:\\SNAP A
+D:\\WATCH
 exit
 '''
  (directory/'dosbox.conf').write_text(config)
@@ -146,6 +157,7 @@ exit
  else:checks['UART_never_observed_enabled']=samples[4]==0
  if line_mask is not None:checks['actual_configured_UART_line_format']=samples[5]==line_mask
  if keyboard_file is not None:checks['keyboard_fixture_unchanged']=(directory/'TEST.KBD').read_bytes()==keyboard_file
+ for filename,data_file in (files or {}).items():checks['fixture_unchanged_'+filename]=(directory/filename).read_bytes()==data_file
  (directory/'serial.bin').write_bytes(wire)
  result={'case':name,'passed':all(checks.values()),'checks':checks,'expected_exit':expected,'arguments':arguments,'observed_errors':errors}
  (directory/'result.json').write_text(json.dumps(result,indent=2)+'\n');assert result['passed'],result

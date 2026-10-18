@@ -34,8 +34,10 @@ values; strict rejection is a documented maintained difference.
 The45-field PRMEDIT exposes Input translation on the TERMINAL page. Its field
 ID44 preserves earlier IDs; Tab and reverse navigation use page membership,
 including this appended field. During live Alt-F10 a saved mode change is
-classified with mask0800h and deferred until restart, retaining the active table
-and receive mask. Independent color/pacing/modem edits can still apply. `/X`
+classified with mask0800h. The foreground owner stages the default table in a
+frozen pre-child namespace and offers a separate confirmation before committing
+the mode/table/mask. Declines or failures retain the active selection while
+independent edits can apply. See [live mode setup](LIVE_TRANSLATION_SETUP.md). `/X`
 remains an effective override during later edits, after raw-file validation.
 
 Mode2 applies before parser, monitor and other receive consumers and does not
@@ -75,7 +77,8 @@ RIS keeps the selected table; it performs no resource reload. PROGRAM retains
 the table with the parent's normal data and retains its loader code with the
 complete configuration code extent. The offline [XLTEDIT editor](XLT_EDITOR.md)
 provides checked table editing/save/reload. Bounded default XLT environment lookup
-is integrated; live table/mode switching remains deferred. See
+is integrated, and confirmed live mode changes now stage/commit their table and
+receive mask. A dedicated same-mode reload command remains open. See
 [native recovery](TRANSLATION.md).
 
 ## Code and validation
@@ -100,9 +103,9 @@ The linked suite covers783 inputs: all256 mapping outputs through normal and
 fragmented DOS reads, disabled/no-I/O startup, nine error cases, mapped ESC and
 ordinary characters, raw continuation/replies/typed output, processed capture,
 RIS retention and all256 raw monitor dump bytes. Only DOS/BIOS/UART boundaries
-are modeled; no application callback is skipped. The far-code suite rejects126
+are modeled; no application callback is skipped. The far-code suite rejects147
 damaged call frames, targets, returns, relocations and segment layouts, including
-both XLT entries and three DOS adapters.
+the startup and three live XLT entries plus three DOS adapters.
 
 Twelve actual DOS cases use synthetic files and an owned loopback modem: encoded
 ESC controls and mapped text, an explicit identity table, an ignored table with
@@ -124,3 +127,9 @@ active XLT table, all256 driver-mask values and post-mask monitor bytes. Five
 optional genuine-original overlay3 cases confirm the native selector behavior
 through controlled CRT boundaries. This executes original instructions, never a
 synthetic analysis executable. See `validation/translation-modes-original.json`.
+
+
+The [confirmed live setup report](LIVE_TRANSLATION_SETUP.md) adds331 linked
+inputs and10 actual DOS workflows for mode adoption. The earlier561-mode suite
+continues to exercise default-policy/declined-change deferral; it does not replace
+accepted live-change tests.

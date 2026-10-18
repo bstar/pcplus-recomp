@@ -222,7 +222,7 @@
       "observed_errors": []
     }
   ],
-  "terminal_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+  "terminal_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
   "editor_sha256": "5584732e1b5ac506ee7f8ec04829fceeb23aa64d4432a69b27df8218bf9e5680",
   "sources": {
     "src/terminal/setup_startup.asm": "6f0e39c27edef7d769711a82af0766f8e6d7a67d785ab3b0e02a09ecc2277328",
@@ -231,7 +231,7 @@
     "standalone/check_setup_model.py": "4006e95d96cc780a9e951bc9c59a495be62a2ff5ad0bd6c25cae24fcbc3764b5",
     "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
     "standalone/setup_watch.asm": "a4971a184a702cd750851d95a4d64fe558333d09a5fa3a29aabbfd9d50e2044c",
-    "standalone/test_setup_startup_dos.py": "ed11b7d7496f679448b9e2005b37b45391789dd2f4c46e240d0bb25704746bc7"
+    "standalone/test_setup_startup_dos.py": "a035c63e79e75f14246b7b4170e900ea61e7a5b9a4eb04688f4d1da30f780568"
   },
   "scope": "Actual DOS direct editor child before UART acquisition, then source-built terminal with loopback serial and independent hardware/video sampling. Synthetic PRMs and source-built child probes only. Not live reconfiguration during a connection, original PCSETUP parent-memory ABI, or physical modem validation."
 }

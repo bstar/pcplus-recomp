@@ -1,84 +1,84 @@
 {
   "passed": true,
-  "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+  "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
   "memory_layout": {
-    "near_bytes": 60144,
-    "near_spare_bytes": 5392,
-    "near_relative_segment": 4715,
-    "far_relative_segment": 9224,
+    "near_bytes": 60736,
+    "near_spare_bytes": 4800,
+    "near_relative_segment": 4779,
+    "far_relative_segment": 9325,
     "shadow_offset": 2000,
     "history_offset": 10192,
     "far_bytes": 12288,
-    "far_end_linear": 161872,
-    "stack_end_linear": 135584,
-    "loaded_module_bytes": 106121,
-    "minimum_allocated_module_bytes": 161888,
-    "retained_parent_paragraphs": 10133,
+    "far_end_linear": 163488,
+    "stack_end_linear": 137200,
+    "loaded_module_bytes": 107351,
+    "minimum_allocated_module_bytes": 163504,
+    "retained_parent_paragraphs": 10234,
     "far_pointer_relocations_verified": true,
-    "snapshot_relative_segment": 9224,
+    "snapshot_relative_segment": 9325,
     "snapshot_image_offset": 0,
     "snapshot_bytes": 2000,
-    "snapshot_end_linear": 149584,
+    "snapshot_end_linear": 151200,
     "ui_screen_buffers": {
       "browser_screen": {
-        "relative_segment": 8474,
+        "relative_segment": 8575,
         "offset": 0,
         "bytes": 4000,
-        "start_linear": 135584,
-        "end_linear": 139584
+        "start_linear": 137200,
+        "end_linear": 141200
       },
       "ed_screen": {
-        "relative_segment": 8474,
+        "relative_segment": 8575,
         "offset": 4000,
         "bytes": 4000,
-        "start_linear": 139584,
-        "end_linear": 143584
+        "start_linear": 141200,
+        "end_linear": 145200
       },
       "program_screen": {
-        "relative_segment": 8474,
+        "relative_segment": 8575,
         "offset": 8000,
         "bytes": 4000,
-        "start_linear": 143584,
-        "end_linear": 147584
+        "start_linear": 145200,
+        "end_linear": 149200
       }
     },
     "far_ui_storage_bytes": 12000,
     "controller_bridge_pairs_verified": 22,
     "modem_bridge_pairs_verified": 22,
-    "configuration_bridge_pairs_verified": 27,
-    "resident_code_bytes": 64908,
-    "resident_code_spare_bytes": 628,
+    "configuration_bridge_pairs_verified": 30,
+    "resident_code_bytes": 65274,
+    "resident_code_spare_bytes": 262,
     "code_segments": [
       {
         "name": "_TEXT",
         "kind": "CODE",
         "relative_segment": 0,
         "offset": 0,
-        "bytes": 64908
+        "bytes": 65274
       },
       {
         "name": "CONFIG_CODE",
         "kind": "FARCODE",
-        "relative_segment": 4057,
+        "relative_segment": 4080,
         "offset": 0,
-        "bytes": 7587
+        "bytes": 8254
       },
       {
         "name": "MODEM_CODE",
         "kind": "FARCODE",
-        "relative_segment": 4532,
+        "relative_segment": 4596,
         "offset": 0,
         "bytes": 1467
       },
       {
         "name": "PRINT_CODE",
         "kind": "FARCODE",
-        "relative_segment": 4624,
+        "relative_segment": 4688,
         "offset": 0,
         "bytes": 1449
       }
     ],
-    "far_code_bridge_pairs_verified": 71
+    "far_code_bridge_pairs_verified": 74
   },
   "linked": {
     "passed": true,
@@ -146,11 +146,11 @@
       }
     ],
     "maximum_stack_bytes": 426,
-    "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+    "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
     "sources": {
       "standalone/check_resource_lookup.py": "56417ef4a5ca5581569d4e839a58df7480c8ef130cfe8c2adeb041eb2b938c30",
       "src/config/resource_path.c": "1afd131147061bc5d73871ac1354d0e63d3b9d08686401ca3a989d5fb8d154d5",
-      "src/config/resource_path.h": "3491d53ba83efe29004cb238474ead2a5b29fd52b74ea357751ee4752d957b2d",
+      "src/config/resource_path.h": "feb56d096bf9b833c0ec911b13c0aa799531ff14137dc738bda69cf0fb6cf260",
       "src/translation/xlt_default.c": "a9f3b1ba201063f4684ff25333846cfc2b7e915712017d09e245c643c7240932",
       "src/translation/xlt_default.h": "2fedd74f0e4edf43e2fdc3766951221e0e8413d6429b1b4753ea5ba1d3735d47"
     },
@@ -163,14 +163,14 @@
     "sources": {
       "src/config/resource_path.c": "1afd131147061bc5d73871ac1354d0e63d3b9d08686401ca3a989d5fb8d154d5",
       "standalone/resource_path_host.c": "ee1e853e0b8ba43a9f5ddd21e8ecb7e77f3bcc311f59eb1035ae84c2d8eaeb9f",
-      "src/config/resource_path.h": "3491d53ba83efe29004cb238474ead2a5b29fd52b74ea357751ee4752d957b2d",
+      "src/config/resource_path.h": "feb56d096bf9b833c0ec911b13c0aa799531ff14137dc738bda69cf0fb6cf260",
       "standalone/test_resource_path_dos.py": "a7d2ed0159fd02bbaa5c569712d0dececf45483921661c75229af7c3bb4b6ffb"
     },
     "scope": "Production generic resolver compiled unchanged for8086 and run in DOSBox-X. Synthetic PSP/environment in real DOS-allocated blocks. Directory concatenation, first duplicate, case, unterminated strings, exact63-byte limit, argument/wrap/alias guards and unchanged output on failure. Terminal-linked and inherited-environment tests remain separate."
   },
   "actual_DOS": {
     "passed": true,
-    "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+    "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
     "cases": [
       {
         "case": "resource-xlt-environment-directory",
@@ -194,8 +194,8 @@
           "ATDCaseTest:23"
         ],
         "errors": [],
-        "seconds": 3.622,
-        "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+        "seconds": 3.621,
+        "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
         "command": "@D:\\TEST.PRM /D:CaseTest:23",
         "expected_exit": 0,
         "working_drive": "d",
@@ -226,8 +226,8 @@
           "ATDCaseTest:23"
         ],
         "errors": [],
-        "seconds": 3.62,
-        "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+        "seconds": 3.621,
+        "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
         "command": "@D:\\TEST.PRM /D:CaseTest:23",
         "expected_exit": 0,
         "working_drive": "d",
@@ -259,8 +259,8 @@
           "ATDCaseTest:23"
         ],
         "errors": [],
-        "seconds": 3.671,
-        "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+        "seconds": 3.62,
+        "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
         "command": "@D:\\TEST.PRM /D:CaseTest:23",
         "expected_exit": 0,
         "working_drive": "d",
@@ -291,8 +291,8 @@
           "ATDCaseTest:23"
         ],
         "errors": [],
-        "seconds": 3.62,
-        "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+        "seconds": 3.621,
+        "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
         "command": "@D:\\TEST.PRM /D:CaseTest:23",
         "expected_exit": 0,
         "working_drive": "d",
@@ -324,8 +324,8 @@
           "ATDCaseTest:23"
         ],
         "errors": [],
-        "seconds": 3.621,
-        "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+        "seconds": 3.671,
+        "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
         "command": "@D:\\TEST.PRM /D:CaseTest:23 /X:D:\\EXPLICIT.XLT",
         "expected_exit": 0,
         "working_drive": "d",
@@ -355,7 +355,7 @@
         ],
         "errors": [],
         "seconds": 3.621,
-        "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+        "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
         "command": "@D:\\TEST.PRM /D:CaseTest:23",
         "expected_exit": 0,
         "working_drive": "d",
@@ -380,8 +380,8 @@
         },
         "commands": [],
         "errors": [],
-        "seconds": 0.265,
-        "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+        "seconds": 0.215,
+        "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
         "command": "@D:\\TEST.PRM",
         "expected_exit": 7,
         "working_drive": "d",
@@ -405,7 +405,7 @@
         "commands": [],
         "errors": [],
         "seconds": 0.215,
-        "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+        "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
         "command": "@D:\\TEST.PRM",
         "expected_exit": 7,
         "working_drive": "d",
@@ -430,7 +430,7 @@
         "commands": [],
         "errors": [],
         "seconds": 0.215,
-        "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+        "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
         "command": "@D:\\TEST.PRM",
         "expected_exit": 7,
         "working_drive": "d",
@@ -455,7 +455,7 @@
         "commands": [],
         "errors": [],
         "seconds": 0.215,
-        "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+        "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
         "command": "@D:\\TEST.PRM",
         "expected_exit": 7,
         "working_drive": "d",
@@ -479,7 +479,7 @@
         "commands": [],
         "errors": [],
         "seconds": 0.215,
-        "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+        "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
         "command": "@D:\\TEST.PRM",
         "expected_exit": 7,
         "working_drive": "d",
@@ -511,7 +511,7 @@
         ],
         "errors": [],
         "seconds": 3.671,
-        "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+        "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
         "command": "@D:\\TEST.PRM /D:CaseTest:23",
         "expected_exit": 0,
         "working_drive": "d",
@@ -525,7 +525,7 @@
       "standalone/test_resource_lookup_dos.py": "3d85b699af012308a2b8f5056aa87b563b8b44c3d727027f7bc0100918c2d091",
       "standalone/test_connection_dos.py": "96f163a0126773f1044c7eb6a7236bf651c9d01b5dff1e4ca6b81fba201eaba9",
       "src/config/resource_path.c": "1afd131147061bc5d73871ac1354d0e63d3b9d08686401ca3a989d5fb8d154d5",
-      "src/config/resource_path.h": "3491d53ba83efe29004cb238474ead2a5b29fd52b74ea357751ee4752d957b2d",
+      "src/config/resource_path.h": "feb56d096bf9b833c0ec911b13c0aa799531ff14137dc738bda69cf0fb6cf260",
       "src/translation/xlt_default.c": "a9f3b1ba201063f4684ff25333846cfc2b7e915712017d09e245c643c7240932",
       "src/translation/xlt_default.h": "2fedd74f0e4edf43e2fdc3766951221e0e8413d6429b1b4753ea5ba1d3735d47"
     },
@@ -533,8 +533,8 @@
   },
   "call_frames": {
     "passed": true,
-    "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
-    "configuration_bridge_pairs_verified": 27,
+    "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
+    "configuration_bridge_pairs_verified": 30,
     "entry_argument_counts": [
       1,
       2,
@@ -623,6 +623,24 @@
       "_xlt_dos_read_default:far-argument-offset",
       "_xlt_dos_read_default:implementation-target",
       "_xlt_dos_read_default:far-return",
+      "_xlt_live_bind:near-argument-offset",
+      "_xlt_live_bind:far-target",
+      "_xlt_live_bind:near-return",
+      "_xlt_live_bind:far-argument-offset",
+      "_xlt_live_bind:implementation-target",
+      "_xlt_live_bind:far-return",
+      "_xlt_live_stage:near-argument-offset",
+      "_xlt_live_stage:far-target",
+      "_xlt_live_stage:near-return",
+      "_xlt_live_stage:far-argument-offset",
+      "_xlt_live_stage:implementation-target",
+      "_xlt_live_stage:far-return",
+      "_xlt_live_commit:near-argument-offset",
+      "_xlt_live_commit:far-target",
+      "_xlt_live_commit:near-return",
+      "_xlt_live_commit:far-argument-offset",
+      "_xlt_live_commit:implementation-target",
+      "_xlt_live_commit:far-return",
       "_config_xlt_open:service-far-target",
       "_config_xlt_open:resident-call-frame",
       "_config_xlt_read:service-far-target",
@@ -651,6 +669,9 @@
       "_config_number_expand:resident-call-frame",
       "_config_live_expand:service-far-target",
       "_config_live_expand:resident-call-frame",
+      "_xlt_live_bind:missing-MZ-relocation",
+      "_xlt_live_stage:missing-MZ-relocation",
+      "_xlt_live_commit:missing-MZ-relocation",
       "_xlt_dos_read_default:missing-MZ-relocation",
       "_xlt_dos_read:missing-MZ-relocation",
       "_config_xlt_open_service:missing-MZ-relocation",
@@ -673,89 +694,89 @@
       "incomplete-C-extent"
     ],
     "memory": {
-      "near_bytes": 60144,
-      "near_spare_bytes": 5392,
-      "near_relative_segment": 4715,
-      "far_relative_segment": 9224,
+      "near_bytes": 60736,
+      "near_spare_bytes": 4800,
+      "near_relative_segment": 4779,
+      "far_relative_segment": 9325,
       "shadow_offset": 2000,
       "history_offset": 10192,
       "far_bytes": 12288,
-      "far_end_linear": 161872,
-      "stack_end_linear": 135584,
-      "loaded_module_bytes": 106121,
-      "minimum_allocated_module_bytes": 161888,
-      "retained_parent_paragraphs": 10133,
+      "far_end_linear": 163488,
+      "stack_end_linear": 137200,
+      "loaded_module_bytes": 107351,
+      "minimum_allocated_module_bytes": 163504,
+      "retained_parent_paragraphs": 10234,
       "far_pointer_relocations_verified": true,
-      "snapshot_relative_segment": 9224,
+      "snapshot_relative_segment": 9325,
       "snapshot_image_offset": 0,
       "snapshot_bytes": 2000,
-      "snapshot_end_linear": 149584,
+      "snapshot_end_linear": 151200,
       "ui_screen_buffers": {
         "browser_screen": {
-          "relative_segment": 8474,
+          "relative_segment": 8575,
           "offset": 0,
           "bytes": 4000,
-          "start_linear": 135584,
-          "end_linear": 139584
+          "start_linear": 137200,
+          "end_linear": 141200
         },
         "ed_screen": {
-          "relative_segment": 8474,
+          "relative_segment": 8575,
           "offset": 4000,
           "bytes": 4000,
-          "start_linear": 139584,
-          "end_linear": 143584
+          "start_linear": 141200,
+          "end_linear": 145200
         },
         "program_screen": {
-          "relative_segment": 8474,
+          "relative_segment": 8575,
           "offset": 8000,
           "bytes": 4000,
-          "start_linear": 143584,
-          "end_linear": 147584
+          "start_linear": 145200,
+          "end_linear": 149200
         }
       },
       "far_ui_storage_bytes": 12000,
       "controller_bridge_pairs_verified": 22,
       "modem_bridge_pairs_verified": 22,
-      "configuration_bridge_pairs_verified": 27,
-      "resident_code_bytes": 64908,
-      "resident_code_spare_bytes": 628,
+      "configuration_bridge_pairs_verified": 30,
+      "resident_code_bytes": 65274,
+      "resident_code_spare_bytes": 262,
       "code_segments": [
         {
           "name": "_TEXT",
           "kind": "CODE",
           "relative_segment": 0,
           "offset": 0,
-          "bytes": 64908
+          "bytes": 65274
         },
         {
           "name": "CONFIG_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4057,
+          "relative_segment": 4080,
           "offset": 0,
-          "bytes": 7587
+          "bytes": 8254
         },
         {
           "name": "MODEM_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4532,
+          "relative_segment": 4596,
           "offset": 0,
           "bytes": 1467
         },
         {
           "name": "PRINT_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4624,
+          "relative_segment": 4688,
           "offset": 0,
           "bytes": 1449
         }
       ],
-      "far_code_bridge_pairs_verified": 71
+      "far_code_bridge_pairs_verified": 74
     },
-    "scope": "Serialized DOS MZ and linker-map validation of thirteen explicit near-cdecl entries, five compiler register callbacks and nine resident cdecl callbacks; exact argument-copy frames, target calls/returns, relocations and full configuration C extent. Independent CPU candidate/directory/owner suites and actual DOS child allocation exercise behavior."
+    "scope": "Serialized DOS MZ and linker-map validation of sixteen explicit near-cdecl entries, five compiler register callbacks and nine resident cdecl callbacks; exact argument-copy frames, target calls/returns, relocations and full configuration C extent. Independent CPU candidate/directory/owner suites and actual DOS child allocation exercise behavior."
   },
   "terminal_regression": {
     "passed": true,
-    "binary_sha256": "e02481cc6d09d76006b7c85a62afca8d1ecef3c67f0a58c8ca1adaf30fdd9c09",
+    "binary_sha256": "5689d8aa3e071ca5813da167f730119766f8f10f25f63177159180b13f8d39ba",
     "commands": [
       {
         "command": "python3 standalone/build_terminal.py",
@@ -780,12 +801,12 @@
       {
         "command": "python3 standalone/check_resource_lookup.py",
         "exit_code": 0,
-        "seconds": 11.182
+        "seconds": 11.233
       },
       {
         "command": "python3 standalone/test_resource_lookup_dos.py",
         "exit_code": 0,
-        "seconds": 26.713
+        "seconds": 26.661
       },
       {
         "command": "python3 standalone/check_translation_live.py",
@@ -800,17 +821,27 @@
       {
         "command": "python3 standalone/test_translation_live_dos.py",
         "exit_code": 0,
-        "seconds": 24.257
+        "seconds": 24.105
+      },
+      {
+        "command": "python3 standalone/check_live_translation.py",
+        "exit_code": 0,
+        "seconds": 3.069
+      },
+      {
+        "command": "python3 standalone/test_live_translation_dos.py",
+        "exit_code": 0,
+        "seconds": 78.254
       },
       {
         "command": "python3 standalone/check_setup_startup.py",
         "exit_code": 0,
-        "seconds": 0.266
+        "seconds": 0.164
       },
       {
         "command": "python3 standalone/test_setup_startup_dos.py",
         "exit_code": 0,
-        "seconds": 20.11
+        "seconds": 19.799
       },
       {
         "command": "python3 standalone/check_setup_live.py",
@@ -820,67 +851,67 @@
       {
         "command": "python3 standalone/check_live_setup_owner.py",
         "exit_code": 0,
-        "seconds": 7.327
+        "seconds": 7.276
       },
       {
         "command": "python3 standalone/check_live_setup_policy.py",
         "exit_code": 0,
-        "seconds": 4.321
+        "seconds": 4.271
       },
       {
         "command": "python3 standalone/check_live_setup_link.py",
         "exit_code": 0,
-        "seconds": 2.168
+        "seconds": 2.268
       },
       {
         "command": "python3 standalone/check_live_setup_profile.py",
         "exit_code": 0,
-        "seconds": 1.567
+        "seconds": 1.617
       },
       {
         "command": "python3 standalone/check_port_handoff.py",
         "exit_code": 0,
-        "seconds": 0.915
+        "seconds": 0.865
       },
       {
         "command": "python3 standalone/check_live_setup_port.py",
         "exit_code": 0,
-        "seconds": 1.516
+        "seconds": 1.617
       },
       {
         "command": "python3 standalone/test_setup_port_dos.py",
         "exit_code": 0,
-        "seconds": 80.456
+        "seconds": 80.457
       },
       {
         "command": "python3 standalone/check_live_setup_apply.py",
         "exit_code": 0,
-        "seconds": 1.016
+        "seconds": 1.066
       },
       {
         "command": "python3 standalone/test_setup_live_dos.py",
         "exit_code": 0,
-        "seconds": 82.446
+        "seconds": 82.358
       },
       {
         "command": "python3 standalone/check_config_far_live.py",
         "exit_code": 0,
-        "seconds": 0.314
+        "seconds": 0.414
       },
       {
         "command": "python3 standalone/check_live_configuration.py --terminal",
         "exit_code": 0,
-        "seconds": 41.534
+        "seconds": 42.44
       },
       {
         "command": "python3 standalone/check_modem_far_live.py",
         "exit_code": 0,
-        "seconds": 8.679
+        "seconds": 8.779
       },
       {
         "command": "python3 standalone/check_terminal_break_live.py",
         "exit_code": 0,
-        "seconds": 1.316
+        "seconds": 1.266
       },
       {
         "command": "python3 standalone/check_ui_screen_far.py",
@@ -890,553 +921,196 @@
       {
         "command": "python3 standalone/check_far_code_live.py",
         "exit_code": 0,
-        "seconds": 0.318
+        "seconds": 0.314
       },
       {
         "command": "python3 standalone/check_terminal_print_controller_live.py",
         "exit_code": 0,
-        "seconds": 4.324
+        "seconds": 4.271
       },
       {
         "command": "python3 standalone/check_terminal_screen_print_live.py",
         "exit_code": 0,
-        "seconds": 10.536
+        "seconds": 10.482
       },
       {
         "command": "python3 standalone/check_terminal_printer_live.py",
         "exit_code": 0,
-        "seconds": 0.768
+        "seconds": 0.765
       },
       {
         "command": "python3 standalone/check_terminal_monitor_live.py",
         "exit_code": 0,
-        "seconds": 1.37
+        "seconds": 1.366
       },
       {
         "command": "python3 standalone/check_terminal_snapshot_live.py",
         "exit_code": 0,
-        "seconds": 1.52
+        "seconds": 1.567
       },
       {
         "command": "python3 standalone/check_terminal_capture_live.py",
         "exit_code": 0,
-        "seconds": 0.918
+        "seconds": 0.915
       },
       {
         "command": "python3 standalone/check_far_storage_live.py",
         "exit_code": 0,
-        "seconds": 0.318
+        "seconds": 0.314
       },
       {
         "command": "python3 standalone/test_far_storage_dos.py",
         "exit_code": 0,
-        "seconds": 7.479
+        "seconds": 7.477
       },
       {
         "command": "python3 standalone/check_terminal_transfer_live.py",
         "exit_code": 0,
-        "seconds": 3.673
+        "seconds": 3.67
       },
       {
         "command": "python3 standalone/check_terminal_upload_live.py",
         "exit_code": 0,
-        "seconds": 22.455
+        "seconds": 22.352
       },
       {
         "command": "python3 standalone/check_program_actions_live.py",
         "exit_code": 0,
-        "seconds": 1.119
+        "seconds": 1.116
       },
       {
         "command": "python3 standalone/check_terminal_reset_live.py",
         "exit_code": 0,
-        "seconds": 0.418
+        "seconds": 0.465
       },
       {
         "command": "python3 standalone/test_program_actions_dos.py",
         "exit_code": 0,
-        "seconds": 34.375
+        "seconds": 34.379
       },
       {
         "command": "python3 standalone/test_terminal_reset_live_dos.py",
         "exit_code": 0,
-        "seconds": 9.934
+        "seconds": 9.932
       },
       {
         "command": "python3 standalone/check_transport.py",
         "exit_code": 0,
-        "seconds": 1.319
+        "seconds": 1.366
       },
       {
         "command": "python3 standalone/check_key_output.py",
         "exit_code": 0,
-        "seconds": 1.87
+        "seconds": 1.917
       },
       {
         "command": "python3 standalone/check_key_live.py",
         "exit_code": 0,
-        "seconds": 0.768
+        "seconds": 0.765
       },
       {
         "command": "python3 standalone/check_meta_actions_live.py",
         "exit_code": 0,
-        "seconds": 2.421
+        "seconds": 2.468
       },
       {
         "command": "python3 standalone/check_character_edit_live.py",
         "exit_code": 0,
-        "seconds": 0.668
+        "seconds": 0.715
       },
       {
         "command": "python3 standalone/test_meta_actions_dos.py",
         "exit_code": 0,
-        "seconds": 19.799
+        "seconds": 19.914
       },
       {
         "command": "python3 standalone/check_line_edit_live.py",
         "exit_code": 0,
-        "seconds": 0.468
+        "seconds": 0.515
       },
       {
         "command": "python3 standalone/check_terminal_options.py --binary build/terminal/TERMINAL.EXE --map build/terminal/terminal.map",
         "exit_code": 0,
-        "seconds": 0.468
+        "seconds": 0.465
       },
       {
         "command": "python3 lab/bbs/check_formfeed.py",
         "exit_code": 0,
-        "seconds": 0.217
+        "seconds": 0.214
       },
       {
         "command": "python3 lab/bbs/check_enigma_controls.py",
         "exit_code": 0,
-        "seconds": 0.117
+        "seconds": 0.114
       },
       {
         "command": "python3 standalone/check_terminal_ui.py",
         "exit_code": 0,
-        "seconds": 0.067
+        "seconds": 0.064
       },
       {
         "command": "python3 standalone/test_terminal.py",
         "exit_code": 0,
-        "seconds": 16.194
+        "seconds": 16.244
       },
       {
         "command": "python3 standalone/test_terminal_keys.py",
         "exit_code": 0,
-        "seconds": 24.157
+        "seconds": 24.158
       },
       {
         "command": "python3 standalone/check_terminal_config.py",
         "exit_code": 0,
-        "seconds": 0.418
+        "seconds": 0.414
       },
       {
         "command": "python3 standalone/check_startup_import.py --check-invalid-abi",
         "exit_code": 0,
-        "seconds": 0.368
+        "seconds": 0.364
       },
       {
         "command": "python3 standalone/check_connection.py",
         "exit_code": 0,
-        "seconds": 1.269
+        "seconds": 1.266
       },
       {
         "command": "python3 standalone/check_directory_live.py",
         "exit_code": 0,
-        "seconds": 3.122
+        "seconds": 3.169
       },
       {
         "command": "python3 standalone/check_directory_context.py",
         "exit_code": 0,
-        "seconds": 19.399
+        "seconds": 19.196
       },
       {
         "command": "python3 standalone/test_directory_context_terminal.py",
         "exit_code": 0,
-        "seconds": 7.229
+        "seconds": 7.226
       },
       {
         "command": "python3 standalone/check_directory_actions.py",
         "exit_code": 0,
-        "seconds": 0.368
+        "seconds": 0.364
       },
       {
         "command": "python3 standalone/test_terminal_config.py",
         "exit_code": 0,
-        "seconds": 14.04
+        "seconds": 13.987
       },
       {
         "command": "python3 standalone/test_connection_dos.py",
         "exit_code": 0,
-        "seconds": 27.06
+        "seconds": 27.057
       },
       {
         "command": "python3 standalone/test_directory_terminal.py",
         "exit_code": 0,
-        "seconds": 58.069
+        "seconds": 58.162
       }
     ],
-    "complete": true,
-    "seconds": 621.949,
-    "continuation": {
-      "prior_successful_commands": 26,
-      "initial_failure": "Stale structural oracle expected70/26 bridges; new public entry requires71/27. No runtime change for retry.",
-      "prior_attempt_report": "build/terminal/resource-lookup-regression-attempt1.json",
-      "prior_attempt_log": "build/terminal/resource-lookup-regression-attempt1.log",
-      "prefix_runtime_binary_verified": true,
-      "continuation_inputs_sha256": {
-        "reconstruction/scroll/reverse_index.asm": "52ee566efb3b6044964ea02f2f495cb58264f3eed41ac3036ec98f679b358f9f",
-        "src/config/terminal_import.inc": "08ca7c953952e9159ea3d6537809499c54209cfd6eaf6fc9767d5e14b93aac11",
-        "src/transfer/terminal_receive.c": "faf87c67158394754515050b90ad451ad387277c6a220b7bec5254aa6a38db46",
-        "reconstruction/scroll/index.asm": "806d2530c5192a36d0bad8bf58e47a759b246ac87a021170de33d02e3ebb9357",
-        "src/reports/data.asm": "9159d8947d3c963f7c0122c46ca4ae194112595811c5a6a85875a1319bf358d1",
-        "src/terminal/snapshot.asm": "a4e492c725e9469127839fccdc504739fe185f41b00680ff7b298bbc8a381d49",
-        "reconstruction/cursor_shape/shape.asm": "d2468c655a47e4ebd0f1f52e90486710559b4ac87e256c3972d713095d5e0f8e",
-        "standalone/check_live_setup_profile.py": "4f17e9fa7ad1468e62d15179d32746efad6943c0990bd64ddc66418bb390185d",
-        "src/translation/xlt_default.h": "2fedd74f0e4edf43e2fdc3766951221e0e8413d6429b1b4753ea5ba1d3735d47",
-        "reconstruction/modem_commands/expand.asm": "834312f07d08f562a2982a0117c78eb377406d39eba0e31024b40d2bcc83732f",
-        "src/process/dos_exec.h": "62bcea65ffdaf95388d1ba54dc1e287943e431430f0ba1d789948009dc0dd6b9",
-        "src/capture/capture_file.c": "014595f6b227e321eab712c7aaeb737a87aa26023ecf2d7031949dca973d5665",
-        "standalone/check_meta_actions_live.py": "7e4daca4c2a2cc538d7dce5b37b054a878635f60f73d5f049e693425ce99f4a7",
-        "reconstruction/screen/cursor_output.asm": "b6583f7648c0f47a565e6361ef58481e3ac64e4bd571ebd4aa98e9873e65dd05",
-        "src/terminal/transfer_native_state.asm": "b652550ccbcf4811dbcfb0ff8a872cc7c87228c3edefe6391a987e776b3a8288",
-        "reconstruction/transfer_receive/accept.asm": "52d470580fe9a36b657e64c90b699c8bdf3c89b35a2b9e2ac11eca5133ee3b67",
-        "reconstruction/transfer_receive/reject.asm": "5baef0da457fa6e225d857ba0dc51e73ea4d6717ff693c124e4bb73c95abb9ce",
-        "reconstruction/transfer_receive/drain.asm": "f9001c2c1a29b1bac5d19d953b34f8db5f9b981d101aa07d1e850f0f1dbbb0f4",
-        "reconstruction/input_dispatch/logging.asm": "05c37ee3476b13c76453f0af8f587438dd9c2f1515fdb5eb87994b97a5fdb567",
-        "reconstruction/ui_windows/bounded.asm": "faa898f9ecb3540bb49f5ac26d0db7a81e2a1416f4ad5116f3144c7a9c00941d",
-        "src/terminal/config_bridge.asm": "0cf5490e72b02977e4fbfc4ce6d22d39d19451b8795911427f568225d67ddf1a",
-        "src/terminal/printer.asm": "70ac5cb8b90bc2d7a4ec1ee1a071a6c2f1a351e37ac2bbd49dc2e629674b629b",
-        "src/config/live_setup_owner.c": "df7e3d4390b66b31daf9f9444888f6c506231cd4de8a45d19d96c77c1a90a493",
-        "reconstruction/erase/default_attribute.asm": "5d366fde862b74ebf6c7264a8c5b814bba230978831cb2b8b02006a3ef27e8eb",
-        "reconstruction/modem_responses/state.asm": "0e40d2181f281a672743ccfb10b86d6a44de114797b0676e63861f246a50b383",
-        "src/terminal/far_bridge.inc": "fecaf08907a2a5e78e7f870166a91fbc7295df5708aac682d3320a3e09e764c5",
-        "src/key_mapping/keymap_dos_fs.c": "847868ab30eed7257c360417abf08c04852196e04fa6ea0002b31b9a425c335b",
-        "reconstruction/input_controls/vertical_tab.asm": "d3f5e6518bb33aad444c296bfba57327d06d462d1b3569a986dd09906e15e9a3",
-        "src/key_mapping/keymap_dos.h": "934d66751a563a8c1d44aa17eaa8375e930cd3dfeb90c5d77e5a27fbe9f9969c",
-        "src/transfer/ymodem.h": "162c205c5da30b3be71900adb560fc9a9f24a1647367f8aa7c4c2d54f57f18dc",
-        "src/translation/xlt_default.c": "a9f3b1ba201063f4684ff25333846cfc2b7e915712017d09e245c643c7240932",
-        "src/terminal/services.asm": "cfc5f50208990db802f79d4f809560618e5579ff0ca8b5c74501ba46975c1546",
-        "src/terminal/shutdown_flow.asm": "b9cd8b0f9dc53a8e640536c9adcff52789c841745f86054e4c2c406351a0d0be",
-        "reconstruction/transfer_receive/ack.asm": "824d690fe786a1e57cfb742af8c1122e7560a2fac7150f7030d1c0ac5c82d34d",
-        "standalone/check_terminal_upload_live.py": "0617c0e0a0c774e7f3d0b43c01d8c21aa7b70cb821335f7f79133db122280c90",
-        "standalone/test_translation_live_dos.py": "80075982c71c9f811e495ffa8f5d66b538035889eb9846dfb080351929ac01fd",
-        "standalone/test_terminal_reset_live_dos.py": "07b28c5960cc39dbe184fe9f7a010e5cb2d12744ca9de6048d1c5e7f549252cf",
-        "standalone/test_terminal_config.py": "f1d3d62c6df0b9183ba9f6cf9efe03a5c70e5ce88e6ae90a181329ce5286cef0",
-        "standalone/test_resource_lookup_dos.py": "3d85b699af012308a2b8f5056aa87b563b8b44c3d727027f7bc0100918c2d091",
-        "standalone/check_startup_import.py": "ab97baa7ce90a29c8f29bf19add9fd6f5a57ac1d21667b329c98138dbaf872c4",
-        "src/key_mapping/key_actions_dos.h": "c546bdbf201f31f1f36aa937280a32c636af84bc8798256d4024e5af66ca494e",
-        "src/config/prm_dos.h": "3a6f8f27e13f5fc97e290b95def601e49ce93b54f729d1bc3ddc527ba39de20c",
-        "reconstruction/snapshot/video_end.asm": "33f4b5c26128013b4afb6e140033240f0a4df809e660795d7deeaa9adf5f6b54",
-        "src/transfer/upload_file.c": "6d6172f356456f703d7c5eba63433ff34cb63394ffe8d118f64dccb23c48e0e2",
-        "standalone/check_directory_context.py": "e2fc0d831d82242fa88eeaef449baf5948efa70045a02f61a4653f1729f2132e",
-        "reconstruction/erase/rectangle.asm": "14931378fad57d57dde425df3d5898c95a2982a981a6d9d4ac005127e0fe5551",
-        "src/terminal/directory_editor.asm": "8361e42aedbdceae88d5bc2d9d0072c835349ef34616941aac4a9e1096e2850d",
-        "reconstruction/transfer_session/longjmp.asm": "2291d6ce48974bed1680cb43a9c008d651cb90280e07358724b4aef114bd59fc",
-        "standalone/check_port_handoff.py": "a0c82a7c292e9b66554f04ef7d713d1e5543c33242b1f0e8c3ee6565fa7b3ea4",
-        "src/key_mapping/keymap_dos.inc": "a9e9e8f3a981411efa44fc4255f0bb03469d5de1285787efe2f1855b33ba4c8f",
-        "src/process/program.c": "d92237a2108783243efdb55bb1b8cea401c3bab9ee35110a0835620d65a32ee3",
-        "reconstruction/transfer_session/ordinary_gate.asm": "acec8da8ef7bd29b2cc09b947fdd76d57c9aa59e3f10da215683210cb01f7f2f",
-        "reconstruction/transfer_files/periodic.asm": "7c1c4bb810744b6aceefcfcaf4059207e6c86e5a333f99c31d16e0b149f3be18",
-        "reconstruction/erase/display_after.asm": "8cd45a7ba21fa72b5d75f5b86936d331e45738db7526ca566b4ba6c5c52b2e13",
-        "reconstruction/ui_windows/cga_blank.asm": "ae36b284da023f64dc4d80db177469e6225b34b13406bf0d4c3057e356d09ade",
-        "reconstruction/keyboard_mapping/classifier.asm": "60096b4a91bba09c1f02c2bfc3e52baf5dad7efc2b9493a816ed654a2ae688d5",
-        "src/transfer/download_file.c": "ce8d41645e5fe4b3ab81c791f8aa6c3634d98bd0d5f8bb6afd698052391ade68",
-        "src/terminal/break_actions.asm": "1f203505825f9175dc1df1c4397aecd198bddaab0094613cee30fb60e3b4c7a9",
-        "standalone/build_terminal.py": "fdc1b05d1b870a0a3e2df916b5782aa650b300692308c5d3c4bd113d0a47e147",
-        "standalone/check_setup_live.py": "f1e273b58432a54dc4bd349e1085992075955eb390ae359b9c4e31be74096512",
-        "src/terminal/controller_bridge.asm": "b320d29606568c85dcdec1c527a798630adb15c79b58f51014a907996eb51afe",
-        "reconstruction/screen/cursor_pack.asm": "d35d5a306548a99526d13a0833aa3c781cf649b51662aa5a49a6fff80affd353",
-        "standalone/check_key_output.py": "e9371b9409139e675408cc6e139b5726b4f73e3ea172ca1ccff01cd9fb540dad",
-        "reconstruction/erase/far_move.asm": "3a89f8954adfdded079657f383c5aaec38c27166eb7e0e0485c015b7990c0b11",
-        "standalone/check_far_storage_live.py": "0f15325d8fb45ae27a2ab60d9b5dc42367fd8acab2549c062461af2447d010b7",
-        "src/directory/directory_replace_fs.c": "ea94c7e30ede691ac090cdff6ebfab9afb80c45e87b3603d85d19e4c7bffad5c",
-        "src/printer/printer_fs.h": "4d6bbea942d3bae1c96886fea456087927a52ab71bd614284c1e8f3b1d70690c",
-        "src/config/terminal_import.c": "949b56e1da0a9b9f44dae01a325db13e4525a040e3947ed96de580b30cddcfd8",
-        "src/transfer/upload_fs.h": "4866db43a52c4fd3f0472c4e952824f4bdab443731b4ba5f617aa533dcb674a8",
-        "reconstruction/screen/down.asm": "250d05ec52e27c50533aab8e81ee8264886125a3f70efd9df228f978cc030af1",
-        "src/terminal/setup_live.asm": "b8d0b9377aeb05b182bd6bf181c538ba02c9230c4e128e990e8a37e8165de107",
-        "reconstruction/modes/core.asm": "d84cfc76d177315a3f209f9651f98288bbb41b647ee0f59db1f7b8af51809700",
-        "reconstruction/transfer_blocks/crc_update.asm": "c3ffeb0f2c15c06e02187021149c02370f8460302a1cdc3752da57f810487eb1",
-        "src/terminal/setup_expand.asm": "7120447f8ea5b5a779437a9e215b6ec59054eff4540fc0848470e907942b5979",
-        "reconstruction/erase/scroll_down.asm": "3acbec5891434ce0cb16b4658169474ee0ce8ca620b30e14edcef07484293f9e",
-        "src/transfer/native_file_bridge.h": "4136f1481fa7f9acc1455b8ca81d25e08f47819a6dab6871615f1e033510763e",
-        "standalone/test_setup_live_dos.py": "e83709d58c8008a9624b08bef0dd6da804af7612858ffc9c6bff881de81e72ed",
-        "src/translation/xlt_dos_fs.c": "459ea2c9d41515b0aa67e11eb9f178cd44404cba6b3eee69769b426124963a26",
-        "reconstruction/transfer_receive/provenance.json": "3443316657120c9f62d32cfc41cdaf65f34635e0128e7797c045a04039856b8f",
-        "standalone/check_live_setup_apply.py": "0418b67a6c655cbbcf012d5be873e2102117cf0244c6038bea19df1c54ed8c4c",
-        "src/terminal/configuration.asm": "35c5e203118f7941604ccb102df56cc66139b53911f51a5934fb87ce3278184d",
-        "reconstruction/keyboard_detection/detect.asm": "52244c9adab544b143e392b91242ff1c5d7c1960461f6fb752154dad7d7c64e4",
-        "reconstruction/terminal_services/tabs.asm": "8891ebdf87b1a0b90b7d2cc7b278b8eb18f531ed07d5e51bc0aa64d75875a9bf",
-        "src/terminal/character_edit.asm": "da72275f8e991eb168992f9a3407dee58ad356602505f8b91ccd26c0cfab4c16",
-        "src/terminal/connection_ui.asm": "1fed6b8fdaf5cbaf48975fecc5e8f4bab2238af7f3f1ac12c28e1aebcf12bdb1",
-        "src/transfer/batch_download.h": "56b4da7c2bbac45c9f0ba5c4858107b1171d5d4f523a0d017f20d234ca1c6416",
-        "reconstruction/transfer_receive/cancel.asm": "59ffb9311c6249ebcfb89a7ee98dd8998f43c7db548fff57346498360134faf9",
-        "src/capture/capture_session.c": "ea79a9f01591ecbc23741a960319c86396ffabf0f7a54d63f7070b8660dc6c1d",
-        "src/terminal/setup_startup.asm": "6f0e39c27edef7d769711a82af0766f8e6d7a67d785ab3b0e02a09ecc2277328",
-        "reconstruction/text/cell.asm": "e0468b270562f4ac6df89768ef2224ca4757cb5f9d6b34917713a5cb7b7711ed",
-        "reconstruction/attributes/reset.asm": "1c582dcc4dbc7ac9cd0715a02e69b9bd0013f16833e6d42f4a6da089b578b1c5",
-        "reconstruction/directory_accounting/patch.asm": "3ed899cd9515303cf7906d572ee87d0a884a7dca90b8cf14ac1ff316b30200ac",
-        "reconstruction/cursor_shape/show.asm": "2408058ab078df08a0722dfc12ac538af0806d06e09060868e36d0c48132453b",
-        "src/transfer/upload_fs.c": "4072232a95249177aad523bc7e326a4261d97a582cd6b96e7c9cc6922419b8cb",
-        "standalone/test_setup_port_dos.py": "fa0b392e9aa5b66eabe85c6d6b6eafa124356da2c7dbd8516639b16ab4e23fcb",
-        "src/terminal/key_configuration.asm": "f2aa075a9ba3d615566f1a2105e50f3378ccc368af09c53b34b2155345f8f430",
-        "src/transfer/download_fs.h": "5ae3364e19981588631f3cb913c7eb3ad9e66937e37bfddb6fb3675dede22a92",
-        "src/transfer/native_file_bridge.c": "2d33493a85e26c587c2a6f281b4e9ed1b9224669a3a9f4c3f1b4344d2a76f7bf",
-        "src/transfer/batch_header.c": "5003de29446cc1ec3a3776dcb1798b2763a6f1d556e866abe7e207cc39b49aa5",
-        "src/transfer/upload_file.h": "2792cc583f9599d9d2e6c27994efd1d7a9ba379d198afbc90b2410db28431a63",
-        "src/transfer/batch_header.h": "90b6691b30d0b60018bc05fe9b72932a2e913806913b326a15ab1ab15c69ad0b",
-        "src/terminal/state.asm": "2bfb730475ea7540ef17c701cdc97df712d801a929de1662c7e8d5c7b5074b2e",
-        "src/reports/decimal.asm": "b2c63251711f71a8e573f6dea242db38ca259dde998ca35277df7ef138357a48",
-        "src/terminal/control_formfeed.asm": "b2f059f4359794e867921416d896574d6bee0f535be339870d94bb1490ace1f6",
-        "src/terminal/meta_actions.asm": "0dad150cd0ab18fb6497f6080871f763a3e1e0e413b394995373820712ce6655",
-        "standalone/check_setup_startup.py": "18d9a87cb40b3e0ab55a092fad940c212862810f4b26092b8c51c63c2cd2f3b3",
-        "src/capture/capture_file.h": "e5913177852312c1a18ef383bc158460dbff9dc613f0b72578b705e9f2f12bec",
-        "reconstruction/snapshot/video_begin.asm": "683d6dc1c6eaf4969102d6ef14517d0d7c853c5d1b3666b9e19a4088cffb45df",
-        "standalone/terminal_memory.py": "8331d8efefce32a7318af3f69cf664f8129cb60a30bafcf847c28db09073bcd2",
-        "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
-        "reconstruction/input_dispatch/carriage_return.asm": "4f827b0362606f35b5b863b05cc723012ff572b814b13adcce8ff2b66a063db7",
-        "standalone/check_terminal_options.py": "f5972cecd06295dd180a10416e4717196e4ccae18e08a1832bf973d7b2c7c786",
-        "src/directory/directory_dos.h": "4e5c3d971839de9899f2c0927d1bf8c5723ae14d2a123590381fd5706db5e72b",
-        "standalone/test_resource_path_dos.py": "a7d2ed0159fd02bbaa5c569712d0dececf45483921661c75229af7c3bb4b6ffb",
-        "reconstruction/character_edit/cga_disable.asm": "4d63214a0eede5de175d37a300d9a0023cf928b614ab78ca9f3698908c521880",
-        "reconstruction/transfer_send/session.asm": "559f40abb2abd6724e22f71580c52fd8d15ec773b51347ac91bda02e045b220b",
-        "src/transfer/native_sender_link.py": "0eff16fe2149432b60807fdc3d7c480caedd04138d4184090c8417ace1f43f3e",
-        "reconstruction/ansi/escape.asm": "b1a8405c4984b311775efa6cb6af2e6452a89a11937a299c75de85ecf2e6d2d2",
-        "reconstruction/line_edit/delete_line.asm": "905c3f21f2499b17b4668c13d2586c8266cd5a9634e16234f46de18681ffd6d0",
-        "src/config/startup_import.h": "8e9a2ca1640e5f1e5209c74cfd7b4be4f56f9b132fdec603f48dfff7a73a2b84",
-        "src/terminal/setup_live_apply.asm": "d7ac64678f723fbad365acf45264666f227473b649162046b4dcee6913c7f407",
-        "reconstruction/uart/core.asm": "9c0a38a7a305c5eec8e1c2299da74953656d33bdcae63f9866d7ef2d576fa52f",
-        "src/terminal/config_far.asm": "4b446fc6a6640cae339f57d73ee266ed870e208422e02324f1d049f6784aa666",
-        "src/translation/xlt_dos_fs.h": "cb9e938aa83780f314947b75da7b99e491a8ea325839fa9f53991fde3543f7d9",
-        "standalone/check_terminal_break_live.py": "faf03fe609d0fe8adfffb80360c49a23b3479b4ac7d3961f0a6bc05ae5d273bc",
-        "standalone/test_far_storage_dos.py": "5f45f0a9dab866411f88cc3cd683c7a4b09c9148412443f6f95078d18e533936",
-        "reconstruction/input_controls/cancel.asm": "622d2cc877a6d098f9369e83618a11041335a6f2f1abaa31b3fc71ee82c2d890",
-        "src/directory/directory_replace.c": "86607d3bd46fe3f86cdf669dc7aa483af3633672fa48a2e7d848b4a790ec669b",
-        "standalone/check_key_live.py": "638807e08385ee35813600d485a5d77299711371cd83efd59c4b107b23d3b2a8",
-        "reconstruction/transfer_session/error_file_cleanup.asm": "53881e5db42397e74d51c11b1f86c62b7eb32d5f0a255afff78652c95ded960b",
-        "standalone/test_setup_startup_dos.py": "ed11b7d7496f679448b9e2005b37b45391789dd2f4c46e240d0bb25704746bc7",
-        "reconstruction/input_dispatch/dispatch.asm": "98770d56fbac2d1f1ec4bf69d59063500a635efb2b101dafbe714adbb7b45213",
-        "standalone/check_directory_live.py": "faa587fa913ee18a937a61ef80b8665fecf1a6d0c225ddf558da8f30c47e2104",
-        "reconstruction/cursor_shape/bios.asm": "da4363012141bcead3d607705604ea2450602182834e91810d22474f5d24a5e4",
-        "reconstruction/erase/line_before.asm": "3fa9a753094d1f37ba8bd84dd758f71fb91e31d3a014e41ded069cada950d940",
-        "src/transfer/batch_upload_fs.c": "bcbf8fe35d713c6229dcf0bd3cf713e55570eca76cb5827088cc449f359310fe",
-        "reconstruction/input_dispatch/backspace.asm": "0ab5b858b2a69f7fddf7f9212fc1f28b2a0a0a9b086eac5b9686fd68508c55d7",
-        "reconstruction/directory_dial/bounded.asm": "6f872939c23d1ddd3064c7b066245d1cc72d3b220e20e6b344543a6be2416f44",
-        "reconstruction/screen/up.asm": "18722137d743c36c5079d1ebee26ab622c654a0b99f4fc0d67fd9c8f24af4384",
-        "standalone/check_terminal_monitor_live.py": "1d4d5fdebf994f7af2a908a3cc7a12bf927ff967739547522bc160a4247a54a3",
-        "standalone/check_terminal_printer_live.py": "3a8aea82397f1bd9ba8330d8e1426cfb2ef605aa7120699bbe9e185f06112d35",
-        "reconstruction/transfer_files/tail.asm": "59c26bacec2267b4084b321fb716f916c54c7b32bc71c9e2651735d03518e546",
-        "src/config/far_end.asm": "18f15ac74b33ed56718a29d484d3c85ed4dac96ba32e0d2210a07b8b0c49fdad",
-        "src/terminal/ymodem_actions.asm": "65b803f3e7ef7b319ae374e6f1fa7c606b667eaad5364107a1d218d7ed18e741",
-        "src/capture/capture_fs.h": "806b050d4b9ebc1dd66c4d4d30d9b08e2e5256043eb51e7f07aba69524512155",
-        "reconstruction/text/fill.asm": "f511a93dd8659be87a5bc98cae45219c4e47ce9b2241a3f05504c84bce1765b2",
-        "src/directory/directory_live.inc": "22e87c313a86c1f13c5f335bc246e87c83505067619313b9fcae25bee9243448",
-        "src/directory/directory_replace_fs.h": "9702aba7c5d55548dc5ba38289a0c5f1409a2769459904445d9a64c8bc88da9b",
-        "standalone/test_program_actions_dos.py": "59b7b76210313542e4d0fa6a0e92988ce63b79c0cb23034137d3221331ae1f66",
-        "src/config/live_setup_owner.h": "f14e717425c76bba1943cc135e3b2439ba054bd72261e669e39878d51e2360b5",
-        "src/config/terminal_import.h": "ec71947cd81e37b97c14ecafcca291993190a333f35d88ecdbf27d447ddd1546",
-        "reconstruction/character_edit/delete_character.asm": "8fe8135bc4ae71f1b00e5ddd7e0d3c5cdc95e58b08fc29c1232d3a092e02a112",
-        "reconstruction/transfer_session/failure_return.asm": "eedc9df5c5a4f13fd92886209def42d89f81d89ba1a1dd6dae9c7c2fa3415349",
-        "reconstruction/transfer_receive/header.asm": "4849d2addf3abb6fdb4aed901babbfdbb90b95f63d569e172072fcfe1f9e2f5b",
-        "standalone/check_live_configuration.py": "6eed48ba3424ebff0714e759b0dc81a78e49afad9428c307f13561fb4efa0fc8",
-        "reconstruction/screen/width_transition.asm": "e62505bfb2b67280abe8b035819b69906f61f3eaeb9acbafb8f19ba06ef943a8",
-        "reconstruction/ui_windows/tick_delay.asm": "9c5bb31541da9c3992897813ec5cd83b0cac1da7852cd967ef2edb33faad64f6",
-        "reconstruction/transfer_session/entry.asm": "ab22e6574e1fc82e57fb6b651db198295c16497d64a55a7f407a1060b1db975e",
-        "standalone/test_directory_terminal.py": "337dcea271d8cec7c3bf77c031ff9f9c6b4e684c8b0bd41823f41843fa406846",
-        "reconstruction/text/packed.asm": "cc41e79f46e3ccb38538b0b3b4fffcbe32e5c9e75a20f1d408724f7554f391b0",
-        "reconstruction/terminal_services/keyboard_mode.asm": "939f8ce3599614b1a4508157f73115c9e87e5b66264e93ab73796b73fab4f105",
-        "src/transfer/native_link.py": "b36aea74a0961141f301f1d4275d077f3ec27ca04ea2685384a0110477bd588f",
-        "standalone/check_resource_lookup.py": "56417ef4a5ca5581569d4e839a58df7480c8ef130cfe8c2adeb041eb2b938c30",
-        "reconstruction/line_edit/insert_line.asm": "94d3592066ee24d51f5976709b26ff094963ef80a873af1ef1bed7226fce4c2f",
-        "reconstruction/input_controls/start_heading.asm": "2913d2c193f90e69b93c1f3c5c2b03fcfefe6f40c40f32dad51683ebc57d4151",
-        "reconstruction/input_dispatch/history_pair.asm": "2493df0f644a26469da11c4d8d3a73fbb7fc88560b9ae8ac790d030752b6b1f5",
-        "src/config/modem_import.c": "aa984d766d561ab15e6fd067757953c856eb054a61dc8f4cb9c58c58f5df2a4b",
-        "reconstruction/character_edit/cga_restore.asm": "421ae5b39b8b5128a66ab74de5a5be475b34945f11750530760b9a2b34f2ecbd",
-        "reconstruction/transfer_session/initialize.asm": "eb2adf69eba8f1a3e0406c9fcbe22c00daebdbda990864d48830c41886a58140",
-        "standalone/check_terminal_print_controller_live.py": "98a9e1303d90582658be4d7064ba3936cfb8e2574056407c59d478bd020fa33d",
-        "reconstruction/character_edit/insert_character.asm": "dd5c436acca8429b17c786d79e94f2ba5ad9946d481419a43ff7860a4abce69e",
-        "standalone/check_config_far_live.py": "209ca56c2ed9745379e6ac5e09f93949700a6fe851545c3f7b88b1f91bb5297a",
-        "src/terminal/directory_accounting.asm": "84ae37bcd1523bc5ef811141ba74ec8deda2fe198de8e9b6a3c1dc59b5d356b1",
-        "src/transfer/terminal_upload.c": "73577a867bbf9fb19b0e12258aa5c7e77fd1a1823500f003dcefabbd1a814012",
-        "standalone/test_meta_actions_dos.py": "0bbea5ed4d1105830ff2e9f8e9e369c009703278fbffd19b72158cac26496188",
-        "src/transfer/batch_upload.c": "4abfb9c2bd00dff63bf8eac59f8f052c075a75c5de534ff4168e616d5b4c8008",
-        "reconstruction/keyboard/core.asm": "312a80488ff41165b235f08ca3de53aff22ea6057fe6f67747aeefbf4b5908bc",
-        "reconstruction/attributes/core.asm": "7a1e1f4fb23cb2656e7a66ee9f81006fbcd3484f202e3c0736fa85ea267fbb82",
-        "src/terminal/ui_screen_far.asm": "876b4b10ced4d03d4616c89e4861333c522d3747f2e15d01ef3a4413ad03d736",
-        "reconstruction/ansi/parameters.asm": "930d4558c2989d1c3ba97dde3ee1b4989e48cc53854796018369367a350d8832",
-        "src/terminal/screen_print.asm": "b26ee7e09cbb66d7da311083b1c8c53e5fa6016e9c9f00e3ebb7238df2658f5a",
-        "reconstruction/input_dispatch/divide.asm": "e0bb313480d9902a4c4d9dad1f30d6b0aa58aac6200ebf6775afdb5dd99eddce",
-        "reconstruction/input_dispatch/tables.asm": "0c7ac38a28f2ad5f8069da2cf9747080e8ee42e8347af970e5240daafc0a50e9",
-        "reconstruction/keyboard_mapping/raw_classifier.asm": "4caff92d9f405d5759d42a9dedc95a1fbbb8b6367911fb55cd7c665ce7719cb3",
-        "reconstruction/scroll/linefeed.asm": "1d2fa195557ee8bd39a481c8ec71c2a64dc01dd332ba5c94fc7fcfe3a8bb5077",
-        "reconstruction/transfer_session/setjmp.asm": "ca5238effb53084d17c2e942805dff6c21efddd401a7a3a0e2780c9209f05676",
-        "reconstruction/modem_responses/match.asm": "949a07693c66b6abb33b70f3c354b4b573889fe13b71ad8200b293c4e238690c",
-        "reconstruction/ui_windows/write_string.asm": "3d396d35c4643b8ce98f1f9bc4c830f6e8a94e81d1e885dcf1a6be8ca3260792",
-        "src/terminal/transport.asm": "e1d1b8da253a5529041b3c2f6a87ef9a1a1b0c12eb73c2439ced4f99d6956df9",
-        "src/terminal/line_edit.asm": "8d1201cb9e6174db02aa1eedc04b57a5df1f4d1b89fac7d0d18ca931200d7c31",
-        "reconstruction/snapshot/row.asm": "cf929887c06ce8feab1b08ea3f4031017a460514b6f1034ed3c1ddeb223511e9",
-        "reconstruction/transfer_session/context.asm": "57c0b64ca1141483ea8531eae0dbc74ceecfce0121b0d114df0575cb07851d3f",
-        "standalone/check_terminal_transfer_live.py": "7080c84249b3296463cac411e3b5ec0ec4cbf4ac6183fed7d557753eaf16b020",
-        "src/translation/xlt_dos.h": "ce90b566203b37cf3022ace866d93737dad0205dcbc70c9b40cc85942c6b51aa",
-        "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b",
-        "src/terminal/modem_sender.asm": "82ec6ea7b4160e6b60a936ec5d4c2cc916116ecd755c41b5e984602fe9c9d53a",
-        "lab/bbs/check_formfeed.py": "99272c5026054d4d62a982081aef516cc905c1b3d7c8a4fc8399ef44c720caf6",
-        "standalone/check_transport.py": "55cf5fabdae9f6d5f56085d9127e5e81656c2651283042fb81473c56b4c45b69",
-        "standalone/check_translation_modes.py": "4a89b740bd940a0f360e7f348d3408b4b07d5ba1e1f3ca9caef674427efe0445",
-        "src/uart/api.asm": "09ed9a4d77258010356adfed7b76bb5005817bbc03320ec9dc41e45491ed8c51",
-        "reconstruction/cursor_shape/hide.asm": "7ba563e8f67b7c6f270e5a10cad96a7ecc03275919692d8ce2ae4fcd8d488a10",
-        "lab/bbs/check_enigma_controls.py": "442b4e6997962b9920e65d3c359ceec98aa97fe5fa4755fe4c032734c67daf5f",
-        "src/directory/directory_dos.c": "2e39893159d4c3744c58047500a528089607671555af98ba85475950c5a9b887",
-        "src/terminal/configuration_live.asm": "59f6d461c0ab0553580f1c5a6559e8562bf07e0e977ea68ddf5d49906838698b",
-        "src/terminal/terminal_reset.asm": "9536befc3b93257e0b43c4a276e678463546044d5ccc6a799f482cc4c409f3f6",
-        "src/terminal/boundaries.asm": "33659c9d03aff791099d7b2f188f37350910379b46519ba09bd24eb5cb8b7f8f",
-        "reconstruction/erase/scroll_up.asm": "405ce8a6fd866638df1c861ffce453620442f8d5e56ec6198ade45adea237842",
-        "reconstruction/reports/core.asm": "581e2f218f091c87022f4ca45ba913f451d43c7dea325c2c3017c333536f1c15",
-        "src/terminal/config_abi.inc": "d9ab2b4abb493c6559d1ffdc1288d2c8d86b3e23994dd86adcf354dde7effd1c",
-        "reconstruction/transfer_send/provenance.json": "99f92f7daba16a6a4ea2ba1a9465cb81a5f0b917cf351bf70794542e6defb0da",
-        "reconstruction/erase/scan_attributes.asm": "ceaeac65bbd73338edc538453c82133067fe52e005f8bcb78ea87bcef165b536",
-        "reconstruction/terminal_services/clear_home.asm": "dfdae6ac0b16c172d23df8fd02c1f7abe0964156a89dc386a13476f2109757a9",
-        "standalone/check_ui_screen_far.py": "b0a2864002fcd7395d1c76860346073a1bb68d9f71229fdacad88629f57765a8",
-        "standalone/test_terminal_keys.py": "7fb4bf4c564d4e83d140853e41b7fc87a49c83febf80c85585e7d9a8ffc5e49b",
-        "src/terminal/modem_bridge.asm": "59c7ad22f397e9aac5acd302c9d49e5b68c3806d8d86e10d598c17cec9aa50e3",
-        "reconstruction/text/bios.asm": "e1539c5f6904ac727c435133b14ba5244e5862b33fa0042b75ad75a9595afc57",
-        "src/terminal/print_controller.asm": "e7af0782119e00d8563c214c1a469fd548f547f332f6c6e663dfe9594f792d92",
-        "reconstruction/transfer_blocks/crc_finish.asm": "c2456ac67d66175990a66b8a7033d226585dedf3cc174a1b502d25026c970281",
-        "src/directory/directory_live.c": "553cc980197a475c99077d0efa90c80063fb1ed26ed4489ac488f143a0b5ec32",
-        "reconstruction/transfer_send/cancel.asm": "9324066078aff11935a1bc5e315598344b182c1fae8077611e2c4af1aa652762",
-        "src/config/startup_import.c": "31ad7ca3b1802d0edb863503972cf82dd383928123a78315a74125dfd7c824ec",
-        "reconstruction/ui_windows/flow_message.asm": "f55db1f1ec1ecd7fefb7de55d5b6b0e131c23eed7dbd9158256c224066c2e88a",
-        "standalone/check_live_setup_owner.py": "b8708c21e3e2ac493bcdec8dc57ce91ab8f48b79256df4c4632a817f1bbb58fb",
-        "src/transfer/batch_download.c": "135f21a8169717873bd37ed3991398e31209bc2d968688555b5bafcc9dac5f65",
-        "src/terminal/program_actions.asm": "1daa714c63fc4d4ffd8c755faa4376ae3867afc65f529d1bca37579249cee2ea",
-        "standalone/check_directory_actions.py": "88ea8ade74410ee7f1258cf067d21addf4693ccc26ffddcff1b0dde7f9c3eecc",
-        "reconstruction/ansi/transition.asm": "9d63cc672672472aea208f63b5e57cc94aba7ff55af7a18776cb8d647395025d",
-        "reconstruction/scroll/wrap_forward.asm": "de8624cb290e4d00066cbad8a69954368a63e63410be5de13499660c577892b9",
-        "reconstruction/ui_windows/cga_unblank.asm": "acf6dfe88a10241104a75b1934507ca05d4761604aa51406632e4e06f2e2e339",
-        "src/key_mapping/keymap_dos_fs.h": "542038d5338a3b397f1251b09ae0d5b2978db7c20fcdb03b98f12c555e994fec",
-        "src/key_mapping/key_actions_dos.c": "bb76bc454c5e85ced3a49fdd9e0748b39e0f2421252114848f18a9adeb165d1b",
-        "src/printer/printer_device.h": "c7a354b7002c64ae1855d75e16ccf99017f768746d64c1c710e48dfa7b37b42e",
-        "src/capture/capture_session.h": "ded5a4670adb5ab7ef3f14ea64d62824289b851568fa5d7185e64567e8647e71",
-        "reconstruction/erase/far_fill.asm": "ff686277384a6f4b6f702e3b8893b3f4ad77f74506db173e0e089b667e0dcfad",
-        "standalone/check_connection.py": "9098b1ffa848dd82739484ac37841180f0e83880b3da1894b0389632fb307fb7",
-        "standalone/check_live_setup_policy.py": "0e2b13cdac2c93c46f900bcf99694435f98709f342f60746921ee3e4f04b6d5b",
-        "reconstruction/input_dispatch/history.asm": "54903a9c0b3c4ae71ada6e1b3098e7fb7172c871a976ce31997f3ebbcdc08909",
-        "reconstruction/transfer_session/success_return.asm": "a9774c9c1e219532dbcf199d3908a59937ab248355b79bfe3ab5017903927fe1",
-        "reconstruction/transfer_session/handshake.asm": "2da3adc5399a60f2e72def4e0965b3e9dd71afce66d14888f8ec914a920c63fa",
-        "src/translation/editor_document.h": "97de7b53fef15ac8c29b7b2c81694e7c3cc294ec9ca39b5761eae7b4bddb75cf",
-        "reconstruction/cursor_state/core.asm": "3c7d834144ebf19c2849375cb79a1dc4dacd17d3b97ca569c9bfc09e26799f84",
-        "src/transfer/batch_upload_fs.h": "f52485e843dd2f59551244be20a6d1839e91e6bddbe0db73764393430a6b3c11",
-        "reconstruction/terminal_services/reset_region.asm": "f2763cdc8afd31ea3f084e18d0abd7b952b641d9e23ac327b83eed4798dd5d12",
-        "src/directory/directory_live.h": "faf28dd51b916e78ab1b45762bb819987a617525d323f8c53ec22b459d5966ba",
-        "src/directory/directory_dos.inc": "aa272682259fe6bceb65d73a55d3fdf6f2a718fa8adc6a6f002fad0bf6ab9773",
-        "src/terminal/main.asm": "639f0406fe1ff3a4206a3a2dfb9965b4fce9817fd9d0382fda56c8a23dea6534",
-        "reconstruction/input_dispatch/tab.asm": "9309dc1a6c735d141ee7c93e1b8a01916bc790c69a2106712cd80114a79679bb",
-        "src/config/prm_dos.c": "e4d0386d3fb40e225cbc34ec7f989286f67ec9ffcff29a6f50eb77d7b24ee021",
-        "src/key_mapping/key_actions_dos.inc": "e59d70068d3908176304ebe8ad5404e4f373e310d15dda9c906139db4f00c859",
-        "reconstruction/ui_windows/read_packed.asm": "e13f437b0faff65ea5cc8646b7c53959323fd9fd3197f33ea2141734386f75ff",
-        "src/terminal/directory_edit_save.asm": "926235807dd032aec6662bd1bed44b05e25ec07b9f70ee9ab9081c8b787841fd",
-        "reconstruction/input_dispatch/home.asm": "2a15fc2426a03d01c4d681295a0517576f655532d18127b1d883a917fa0d0b10",
-        "reconstruction/uart/layout.inc": "1e732d890b17486bdace3f978276ce48e55da318df70787aa54475203fa9bd21",
-        "src/directory/directory_replace.h": "62f65615c0b1aeafa967658a0a122e3ed18e55d44412d8420b6603d098f13b45",
-        "src/terminal/options.asm": "47f3846ec86cab036cb6cf79357303ba194df5dec69455e2dfd8afb39ccf0128",
-        "reconstruction/ansi/dispatch-layout.inc": "1fab8c56d84c54bef9b5938b4f13d14fee0199ec1c813a643edd71d9d31aa949",
-        "standalone/check_terminal_config.py": "fae4d0735ace207c27aaeb80aaeb84c18b858e5954fc29e6e8ed99a47c36a8d1",
-        "standalone/check_modem_far_live.py": "7eec1bb832b2d432fb85e5df97cb9db6b2a418b2a18632aa8affa6a3580c0d90",
-        "src/process/dos_exec.asm": "302abd206c9d127cdbb1f1d75487e72ecec8f1023051e37bbc066ab9b553433a",
-        "reconstruction/snapshot/copy.asm": "cdf139320f358efc4b49b9d9f3acabc8c076c8df32ea1d4ec53f2b317935c431",
-        "reconstruction/transfer_session/wait.asm": "d0318699090974aaf09f6a68b0ccdc106a984d4c748d076f270dc6ade535c74c",
-        "reconstruction/transfer_session/commit_gate.asm": "1c8bf7d8630b52a9ac8a76fc15e9f6a0cc9587743fcb46c3b3e144a540841b81",
-        "reconstruction/transfer_session/totals.asm": "b134b70b62835289077987bd405888d6bdb6005d1831771e7c5d2be225b807fe",
-        "reconstruction/transfer_blocks/provenance.json": "d208524987aa9e314c71a0320cda9da46da26da4eb3455bb7b73783ebce8c608",
-        "reconstruction/character_edit/set_tab.asm": "9f99cbb069994b6ad665c9fd3668385c12ef0b9b465b458fe39dd316753fc580",
-        "reconstruction/transfer_session/entry_display.asm": "3a0bba55c3819ee3ea6969d00cb61f4dfc6fb040196dcf5ff2fb79b952561d1b",
-        "standalone/check_far_code_live.py": "177876f44cbdcb13c41715e1019f12818691df2135a3cdd4bab5375530a33a78",
-        "reconstruction/screen/left.asm": "812e101942c99411726283d892c5501edd040daab67edb3098f7dc427841dc9e",
-        "src/terminal/port_handoff.asm": "b0e6308448299cd5d159656fa6d4a38b67bd56635255020d62b044f850e371e2",
-        "src/translation/xlt_dos.c": "b2383aa97088a59751412b71de9d5570fdd683c5ed3615025ecb810fe3258b4b",
-        "src/config/live_configuration.c": "8d910c2e4c034d331b4c2263b3f242b1022f51db4f4391b6502414d6d4a7f28a",
-        "src/terminal/keyboard_data.asm": "05a64cd482cf50e2cc6d5eee18220b4b493cd4e7498aaa8adeb77b1ad1c56d1a",
-        "reconstruction/transfer_receive/eot.asm": "87ce398c88e9cf0af30c25c31096377322fb387984eb74add84f877d034319b4",
-        "src/config/modem_import.h": "7ef5213025c1d58c9dc8f4ec89197c4ca2d6ed67d8f2ea4ddeeb89350e9bfcb0",
-        "reconstruction/transfer_blocks/crc_table.asm": "cbd56e811c02708a2192bb2cfeb7939ad44ddda2e4ddfd3bcea96aab2083b0d2",
-        "reconstruction/transfer_session/provenance.json": "4d2ae9b8c8fd4e9d8eac5b458e6e81796d34617b017ce53735410d7f36702396",
-        "standalone/check_terminal_ui.py": "8608ea0001aa47964746d00f7304b025d1ac918812b7a5ca38b2dad484e77e62",
-        "src/config/live_configuration.h": "27d0d14fc04e508042ff66e573a892590b4b622b5d12afed5e4c8e4b74511f7c",
-        "src/transfer/ymodem.c": "83c8802337c04ea9d100a11eaf4578bc89b46a28e9f94825fa70fa1ed8f2a20a",
-        "src/terminal/translation.asm": "6ae4ae66fd6a6aeccb10dee806e28921667e50556f8232b4da7abb53aca40657",
-        "src/terminal/control_clear_screen.asm": "735a3f228698fd5538cd4b7589ef448ca68f377509c5b66ebcbca33c898c85d5",
-        "src/directory/directory_actions.c": "84c0a31b735f2fd3ee63f5edde7083dbacae938f1471cd0336d2f37e94adf0ad",
-        "src/transfer/batch_upload.h": "876ef64ab8dce57c5be9434668b83b5525c78d629e62fba97354563517eeff95",
-        "standalone/check_live_setup_port.py": "9cb1e045c0b2d5c5737b0686c02bcc4878cf3e5629523794a4bc2401301be8c7",
-        "reconstruction/ui_windows/coordinate.asm": "ca53ed156532cdca228d4295d3a5e57fb131c94dd98e3c43887b63e0c2e396fb",
-        "src/terminal/monitor.asm": "1ddd0d2c442396c6776fd7f7ab5941f1a4dcd78345037821339c1aec06ad2993",
-        "reconstruction/ui_windows/save.asm": "1f3c835a2cc40bab9c5441f660f340303848a8c086c629c0369d2c9e9706d085",
-        "standalone/check_live_setup_link.py": "9302055f6267259b54695da13fe784dc3b97592f0b475e597241f0e5e8bbc96f",
-        "src/terminal/transfer_sender_state.asm": "ca81106b44d8184e866db66b570981f23ba1a3465aee739f2713c34029479e15",
-        "reconstruction/input_dispatch/linefeed.asm": "57c71bce4143be3c8df39b70c17a7e3585d8d2fb55e7e0f6264150b3298bd88a",
-        "standalone/check_terminal_capture_live.py": "e9140d084d577cfea1727582b7607aeb6a22c0518e1a408bc68378674f6b3b5a",
-        "src/terminal/connection.asm": "6f67a2fccbd79b413d24c8e7569ced0d049b271c4a1000420147e104bcdb830d",
-        "standalone/check_terminal_reset_live.py": "38352a70f872a9fd289f59a0b279c95ada20cc34d7c09f5ab0645bd9a99f6fbd",
-        "standalone/check_line_edit_live.py": "30b51c52ade58f716b15a39f5ccf1ad664b17dca60bae9224f63e7953492ce3f",
-        "src/directory/directory_actions.h": "e7363dad30620b97c6b7fd799d70d386439aa178c5b9d23659b6f2b9c3a423f5",
-        "reconstruction/text/char.asm": "dafe4c306ed6d6f1bace9c0a4651258fe601cf0360e8400c1bb582eba1c2d41f",
-        "standalone/check_translation_live.py": "b84c878c3ca83fa27422631dd782a880b95e4e465b08386c4fa9cbed7905a08e",
-        "reconstruction/input_dispatch/ignore.asm": "581731c5140fae5072be3a1ecdaaa8799540c38131b6c33ea83c8e93687957f9",
-        "standalone/check_terminal_snapshot_live.py": "c9beeaed5352fbc8d530bf42b1f8fb241e068ad9268b9c701ca34efb5143143b",
-        "reconstruction/ansi/dispatch.asm": "f037a6b35fd49eed12c6ff266654de9b3e74cb08a598c987ddac71507f4056d0",
-        "reconstruction/transfer_receive/validate.asm": "667339258a895cb45dd74d278c6ec42ae0c32f878fc06851e2cbce92edcc024a",
-        "src/key_mapping/keymap_dos.c": "296b9016d7d1212464e738389cbc33f459b7790057822e67aac04081c2d82422",
-        "src/transfer/download_file.h": "12793ce2eb2007ad499bbb1d9a43800a7eca28f9a26f82eef4edc4500315d6a0",
-        "standalone/test_connection_dos.py": "96f163a0126773f1044c7eb6a7236bf651c9d01b5dff1e4ca6b81fba201eaba9",
-        "reconstruction/erase/previous_attribute.asm": "515cfccc074a11cafba547e51e26be1f754d70f01bdd43e475fc1d49caafa394",
-        "standalone/check_program_actions_live.py": "18b11fe8e74e1f156b65cfd26dfcc526b7fa2f7c793c0d7573ccd3d3c7c6bdbe",
-        "src/terminal/capture.asm": "91204ca79c195ca7077c2bb9f28b189d0901c747dd69825ce6cd4d63ccf27078",
-        "reconstruction/transfer_session/timestamp.asm": "1ecd32e851e7d427073f92efa7f7b4e07e2a156777b7f590e765035dd3433647",
-        "standalone/test_directory_context_terminal.py": "591a195eb7c59d33a94fbf7100717cd2e483ad60899d2631a4e99f3ea8ee3cf7",
-        "reconstruction/ui_windows/restore.asm": "9f1fb0e3f1ea5e231c7f3fba786f70772fd879c46298d870fe8d43ff46207e4e",
-        "reconstruction/transfer_files/provenance.json": "153d0b6718ca60f34b65f9c91bae7a018467771f49cd69c53a3743e6273ee359",
-        "src/transfer/terminal_ymodem.c": "bedff77b97e211fe9d4d090e6e058ee4da1a6fc55c06d5719fe467cf7c45fd6c",
-        "src/translation/editor_fs.h": "a0115c8ce308758ab3a1212b9c39e771948f037f2aa9f1cbe1c8432e7bc12f2d",
-        "reconstruction/ui_windows/read_byte.asm": "fc7cc46379666140e7082a0a3a8504b616495cc04c82488d2ffd3c69253a5d76",
-        "src/terminal/key_output.asm": "e1577a02f1f1166682533779f6c358590a9e09bc8bf9dde022dd054e11dc08a0",
-        "src/transfer/download_fs.c": "60f29a5dcfc60eda2b4cd4a86397b62528b5eeceb68f5337d7bea1a6878d34e6",
-        "reconstruction/erase/display_before.asm": "4bb56387041fb952c127571bcbe9b4190236a76ef62f5178300cc8caa949d913",
-        "reconstruction/transfer_session/retry.asm": "2cfed2ba104fcc8eea1f0f3861b0c2877969ab17fb3a8d6fb4b324ea629c990c",
-        "src/terminal/transfer_actions.asm": "960f425aae2b8a033340ff73639f9989d73be35342577dcafc9c07f8f37c9790",
-        "src/directory/directory_replace.inc": "f36f1ad48ad9bee207270cecb8d6685ed3ebfdd0e44e41899b5fcef29e56a85c",
-        "reconstruction/render/character.asm": "e58f36c7d75e420fe0d4e07cd3186d7ca73e827565583e31d373fedc7e2de110",
-        "standalone/build_live_configuration.py": "edb71ca7f2e431eaebe13bffc5093c5a3acd40b6e12eb64f5c0b1e827ac50161",
-        "src/printer/printer_device.c": "86be953e09835415339ad4bf5f8728139fe503777c0413c12dec8da9d735b27f",
-        "src/config/resource_path.h": "3491d53ba83efe29004cb238474ead2a5b29fd52b74ea357751ee4752d957b2d",
-        "reconstruction/modem_responses/classify.asm": "17bc7e13891e84ee17a5f18c2fb7522b7a8d768b9bf9086168e4b2df1856a994",
-        "reconstruction/scroll/scroll_up.asm": "d21cd669acebbabd1e2d59fa7cd2e96bd0af6f9519ef4fd83fe1b61ff326af0e",
-        "reconstruction/modem_commands/bounded.asm": "40b83bce86b64c30c536a5cf3d85019064dfa5a70e543cd04600aeb9d8dd7719",
-        "src/terminal/uart_data.asm": "4c37a129341e01667df80f17940791946667f4b0c081accd4e18230f29904789",
-        "src/printer/printer_fs.c": "cb481610c346892f4b8bbdd8579978b9654df3853be9afd51755f1717d7db773",
-        "reconstruction/transfer_blocks/crc_buffer.asm": "00083b3c0f6143b8b0119f0c5690f32b54b2c981f474ed5ce1529336d8db1ad4",
-        "src/capture/capture_fs.c": "51b17907493fbe6ab11b82b7e5b2fdae4a1db47b8d5a843b9d839878ae84f5f8",
-        "reconstruction/modem_responses/bounded.asm": "9c357ea496b017fef0981c9dc75a77dc3fe1be95623cd632d8a0bb331836b701",
-        "standalone/check_character_edit_live.py": "701a430729023caf7a56f4817ad0bc71028435f4e973a6812bc076b0c68fcc89",
-        "src/config/modem_import.inc": "d88caeda0fc81b9adc14be2ce3906b1612a4ac14fc2ed63e6785ad5d077d59e3",
-        "standalone/check_terminal_screen_print_live.py": "b54e3602cc0f4be4e75b7bdd67572c22835cbb845f34d0c6d9c12bffadc48cd2",
-        "src/ansi/decimal.asm": "5fab112c62b01ed885dc17238c89b8274c1caf2c6f6dc6b2a175e9ec63187c5f",
-        "reconstruction/screen/set_cursor.asm": "db96a18c8f1d9a928800bf82f329cd57f74032fe920c2123e9de3dd9c8ae07b6",
-        "src/config/resource_path.c": "1afd131147061bc5d73871ac1354d0e63d3b9d08686401ca3a989d5fb8d154d5",
-        "standalone/build_setup.py": "12a1fc4bf96a38577fca2c7b89baf789beb53373f059fa4b280d8f3d880bce76",
-        "src/terminal/transfer_ui.asm": "bf1cbbde3ab6351788fe8c7e3d856e767d92501b22ecdfffbccb1509c0fea230",
-        "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
-        "src/terminal/controller_abi.inc": "33de629fa3bbb35914c9070e067514c9520d16ff5d7ae7d9ea41173e72454c4e",
-        "reconstruction/screen/right.asm": "1ef4422d5be97996b70d47e35af92818ac42b7c2b2c1207a26b6fa1d82930851",
-        "reconstruction/text/cga_sync.asm": "f25ab8dae04c08d47f9a1410d4470e1ea36f6be6a0bda2fbb2122520c3226b37",
-        "src/terminal/modem_abi.inc": "7088021f9fd00cd6d164fbd7477d7789a7ff9725d47c3c7ba00303cd4dc9f327",
-        "src/terminal/directory_browser.asm": "a499fbb56fde85ab4f106f87b2290b078663100077f3fa4571bb2815b4bd8f23",
-        "src/terminal/setup_profile.asm": "a76aa822f4565d90f780d0813d3eb84b30b73b0352c5cc1a154d88a075ea2208",
-        "src/terminal/upload_actions.asm": "512f26336ead890f022f463d86d555320f40cfd47eac508928588e407e5cbfb5"
-      }
-    }
+    "seconds": 703.942,
+    "complete": true
   },
   "runtime_sources": {
     "reconstruction/ansi/dispatch.asm": "f037a6b35fd49eed12c6ff266654de9b3e74cb08a598c987ddac71507f4056d0",
@@ -1578,9 +1252,10 @@
     "src/terminal/services.asm": "cfc5f50208990db802f79d4f809560618e5579ff0ca8b5c74501ba46975c1546",
     "src/terminal/setup_expand.asm": "7120447f8ea5b5a779437a9e215b6ec59054eff4540fc0848470e907942b5979",
     "src/terminal/setup_live.asm": "b8d0b9377aeb05b182bd6bf181c538ba02c9230c4e128e990e8a37e8165de107",
-    "src/terminal/setup_live_apply.asm": "d7ac64678f723fbad365acf45264666f227473b649162046b4dcee6913c7f407",
+    "src/terminal/setup_live_apply.asm": "3981cccc1b94bf6cd74f01e78445e170193bb074482767add480473a4e41e3db",
     "src/terminal/setup_profile.asm": "a76aa822f4565d90f780d0813d3eb84b30b73b0352c5cc1a154d88a075ea2208",
     "src/terminal/setup_startup.asm": "6f0e39c27edef7d769711a82af0766f8e6d7a67d785ab3b0e02a09ecc2277328",
+    "src/terminal/setup_translation.asm": "5dbc746f7621f92970ef3a19697e53658cdefca167016ccde8564db71735da0f",
     "src/terminal/shutdown_flow.asm": "b9cd8b0f9dc53a8e640536c9adcff52789c841745f86054e4c2c406351a0d0be",
     "src/terminal/snapshot.asm": "a4e492c725e9469127839fccdc504739fe185f41b00680ff7b298bbc8a381d49",
     "src/terminal/state.asm": "2bfb730475ea7540ef17c701cdc97df712d801a929de1662c7e8d5c7b5074b2e",
@@ -1610,11 +1285,12 @@
     "src/key_mapping/key_actions_dos.c": "bb76bc454c5e85ced3a49fdd9e0748b39e0f2421252114848f18a9adeb165d1b",
     "src/process/program.c": "d92237a2108783243efdb55bb1b8cea401c3bab9ee35110a0835620d65a32ee3",
     "src/config/live_configuration.c": "8d910c2e4c034d331b4c2263b3f242b1022f51db4f4391b6502414d6d4a7f28a",
-    "src/config/live_setup_owner.c": "df7e3d4390b66b31daf9f9444888f6c506231cd4de8a45d19d96c77c1a90a493",
+    "src/config/live_setup_owner.c": "5f6b04c7f96687d5263f0e62c0be8b7fd3375ea1fb5363337c09a23030945c3c",
     "src/translation/xlt_dos.c": "b2383aa97088a59751412b71de9d5570fdd683c5ed3615025ecb810fe3258b4b",
     "src/translation/xlt_dos_fs.c": "459ea2c9d41515b0aa67e11eb9f178cd44404cba6b3eee69769b426124963a26",
     "src/translation/xlt_default.c": "a9f3b1ba201063f4684ff25333846cfc2b7e915712017d09e245c643c7240932",
     "src/config/resource_path.c": "1afd131147061bc5d73871ac1354d0e63d3b9d08686401ca3a989d5fb8d154d5",
+    "src/translation/xlt_live.c": "f223110405b08a880d0823fbac2bf379d2f3993435d4fa317710d209fe11b394",
     "src/transfer/download_file.c": "ce8d41645e5fe4b3ab81c791f8aa6c3634d98bd0d5f8bb6afd698052391ade68",
     "src/transfer/download_fs.c": "60f29a5dcfc60eda2b4cd4a86397b62528b5eeceb68f5337d7bea1a6878d34e6",
     "src/transfer/native_file_bridge.c": "2d33493a85e26c587c2a6f281b4e9ed1b9224669a3a9f4c3f1b4344d2a76f7bf",
@@ -1643,8 +1319,8 @@
     "reconstruction/uart/layout.inc": "1e732d890b17486bdace3f978276ce48e55da318df70787aa54475203fa9bd21",
     "reconstruction/ansi/dispatch-layout.inc": "1fab8c56d84c54bef9b5938b4f13d14fee0199ec1c813a643edd71d9d31aa949",
     "src/config/live_configuration.h": "27d0d14fc04e508042ff66e573a892590b4b622b5d12afed5e4c8e4b74511f7c",
-    "src/config/live_setup_owner.h": "f14e717425c76bba1943cc135e3b2439ba054bd72261e669e39878d51e2360b5",
-    "src/config/resource_path.h": "3491d53ba83efe29004cb238474ead2a5b29fd52b74ea357751ee4752d957b2d",
+    "src/config/live_setup_owner.h": "19e1537c43fb88ce3f84041d622cce160c2cee930e411731132f82b42960dc23",
+    "src/config/resource_path.h": "feb56d096bf9b833c0ec911b13c0aa799531ff14137dc738bda69cf0fb6cf260",
     "src/directory/directory_actions.h": "e7363dad30620b97c6b7fd799d70d386439aa178c5b9d23659b6f2b9c3a423f5",
     "src/directory/directory_dos.h": "4e5c3d971839de9899f2c0927d1bf8c5723ae14d2a123590381fd5706db5e72b",
     "src/directory/directory_live.h": "faf28dd51b916e78ab1b45762bb819987a617525d323f8c53ec22b459d5966ba",
@@ -1703,13 +1379,13 @@
     "reconstruction/transfer_files/provenance.json": "153d0b6718ca60f34b65f9c91bae7a018467771f49cd69c53a3743e6273ee359",
     "reconstruction/transfer_blocks/provenance.json": "d208524987aa9e314c71a0320cda9da46da26da4eb3455bb7b73783ebce8c608",
     "src/transfer/native_link.py": "b36aea74a0961141f301f1d4275d077f3ec27ca04ea2685384a0110477bd588f",
-    "standalone/terminal_memory.py": "8331d8efefce32a7318af3f69cf664f8129cb60a30bafcf847c28db09073bcd2",
+    "standalone/terminal_memory.py": "f0ebb4321980191c368205ee267aba2edd428b5c26a7119b29ec9f500a1c9531",
     "reconstruction/transfer_send/session.asm": "559f40abb2abd6724e22f71580c52fd8d15ec773b51347ac91bda02e045b220b",
     "reconstruction/transfer_send/cancel.asm": "9324066078aff11935a1bc5e315598344b182c1fae8077611e2c4af1aa652762",
     "reconstruction/transfer_blocks/crc_buffer.asm": "00083b3c0f6143b8b0119f0c5690f32b54b2c981f474ed5ce1529336d8db1ad4",
     "reconstruction/transfer_send/provenance.json": "99f92f7daba16a6a4ea2ba1a9465cb81a5f0b917cf351bf70794542e6defb0da",
     "src/transfer/native_sender_link.py": "0eff16fe2149432b60807fdc3d7c480caedd04138d4184090c8417ace1f43f3e",
-    "src/terminal/config_abi.inc": "d9ab2b4abb493c6559d1ffdc1288d2c8d86b3e23994dd86adcf354dde7effd1c",
+    "src/terminal/config_abi.inc": "7d9c5b1d27a3c90f2a899f0cbb6bbbf6826c4b0851cb709d4d73e3643eca6c23",
     "src/terminal/controller_abi.inc": "33de629fa3bbb35914c9070e067514c9520d16ff5d7ae7d9ea41173e72454c4e",
     "src/terminal/far_bridge.inc": "fecaf08907a2a5e78e7f870166a91fbc7295df5708aac682d3320a3e09e764c5",
     "src/terminal/modem_abi.inc": "7088021f9fd00cd6d164fbd7477d7789a7ff9725d47c3c7ba00303cd4dc9f327",
@@ -1718,6 +1394,7 @@
     "src/translation/xlt_default.h": "2fedd74f0e4edf43e2fdc3766951221e0e8413d6429b1b4753ea5ba1d3735d47",
     "src/translation/xlt_dos.h": "ce90b566203b37cf3022ace866d93737dad0205dcbc70c9b40cc85942c6b51aa",
     "src/translation/xlt_dos_fs.h": "cb9e938aa83780f314947b75da7b99e491a8ea325839fa9f53991fde3543f7d9",
+    "src/translation/xlt_live.h": "5ffe04087469d67f4ed53cced943065bd2bf17287666dfa6002d9be0c15d50b2",
     "src/key_mapping/key_actions_dos.h": "c546bdbf201f31f1f36aa937280a32c636af84bc8798256d4024e5af66ca494e",
     "src/key_mapping/keymap_dos.h": "934d66751a563a8c1d44aa17eaa8375e930cd3dfeb90c5d77e5a27fbe9f9969c",
     "src/key_mapping/keymap_dos_fs.h": "542038d5338a3b397f1251b09ae0d5b2978db7c20fcdb03b98f12c555e994fec",
@@ -1726,32 +1403,30 @@
   },
   "source_rebuild": {
     "report": "docs/validation/application-components-source-build.json",
-    "output_count": 62,
-    "source_snapshot_sha256": "d246d721c2c161da21117353deebfd48706241d24c7adbbc9014832698c05771"
+    "output_count": 63,
+    "source_snapshot_sha256": "3b830c6f597830191ef66ed178740c0b5d7453669ea9d3e015aa0c525cde6f0f"
   },
   "sources": {
-    "standalone/record_resource_lookup.py": "30f9ff4937c71cc8768cbad273445131a65389befbae4dbd11719ccb308c033c",
-    "standalone/build_terminal.py": "fdc1b05d1b870a0a3e2df916b5782aa650b300692308c5d3c4bd113d0a47e147",
+    "standalone/record_resource_lookup.py": "aa41a8fbb55a39e21beda7e0805f584d5fe2e782c81e211901e1992a4d0bb64f",
+    "standalone/build_terminal.py": "9acdd866c64ed0a5f536bcdaaa2b8b6f0d3a4cf619fffaf10ffa0910c5c7b18a",
     "standalone/test_resource_path_dos.py": "a7d2ed0159fd02bbaa5c569712d0dececf45483921661c75229af7c3bb4b6ffb",
     "standalone/resource_path_host.c": "ee1e853e0b8ba43a9f5ddd21e8ecb7e77f3bcc311f59eb1035ae84c2d8eaeb9f",
     "standalone/check_resource_lookup.py": "56417ef4a5ca5581569d4e839a58df7480c8ef130cfe8c2adeb041eb2b938c30",
     "standalone/test_resource_lookup_dos.py": "3d85b699af012308a2b8f5056aa87b563b8b44c3d727027f7bc0100918c2d091",
     "standalone/test_connection_dos.py": "96f163a0126773f1044c7eb6a7236bf651c9d01b5dff1e4ca6b81fba201eaba9",
-    "standalone/check_config_far_live.py": "209ca56c2ed9745379e6ac5e09f93949700a6fe851545c3f7b88b1f91bb5297a",
-    "standalone/check_far_code_live.py": "177876f44cbdcb13c41715e1019f12818691df2135a3cdd4bab5375530a33a78",
-    "standalone/terminal_memory.py": "8331d8efefce32a7318af3f69cf664f8129cb60a30bafcf847c28db09073bcd2",
-    "standalone/prove_source_build.py": "933a8a64f52609d18a44feabb48df680084ce22f153a0eeaf348b1e6ffe7efb4"
+    "standalone/check_config_far_live.py": "096fef526764c0d5ab48e1f157f2abb1958fccbb14464e4e4f08a67a965b5e59",
+    "standalone/check_far_code_live.py": "a00348a7ac506d64d2bdf1b3ffb3eeb63e6f568753ef1d217611ab858c5ee290",
+    "standalone/terminal_memory.py": "f0ebb4321980191c368205ee267aba2edd428b5c26a7119b29ec9f500a1c9531",
+    "standalone/prove_source_build.py": "d145a967189e51e3a0b44bb80b331925250b16ce937f4368b5a4edd6172ec8bb"
   },
   "retained_artifacts": {
     "build/resource-path/RESOURCE.EXE": "09aa79a27a7f3c657ce59f22e01c64aea13ba0768db242b385a837f89a79310d",
     "build/resource-path/CHECKS.TXT": "9b7ce04d3a91ff1c90167717a6b9d7832641e546a8dd9fe46ace424a169c3c10",
-    "build/resource-path/checks.json": "f9eaa59d2a99035a6892cf9da249837488dbf6ff7eba1d4fd9235a7220676e77",
-    "build/terminal/resource-lookup-checks.json": "f702f97f2ce2fa29c57b4728454479a58f83ecd523a7b74632e8ba6ab675d07f",
-    "build/terminal/resource-lookup-dos-checks.json": "e310191516fc869446f615a2f5e5a35466fd50dd685c62c239ee00ddba86ece2",
-    "build/terminal/setup-profile-regression.json": "3e46e86838bd4a201083b9863ef42581e7d94db239fce16d91f20d7267a386fe",
-    "build/terminal/setup-profile-regression.log": "d0bc1ea4c4d295e313b3c3084247482fd161ca6b1127d7defa449b0bf2660b1d",
-    "build/terminal/resource-lookup-regression-attempt1.json": "c28791420ca9bb25a09edf21b01b4cf2bfebb1d7150277951c0a167203424112",
-    "build/terminal/resource-lookup-regression-attempt1.log": "de2b00620575e12e88229c6e59cf965adc82f87a327eb9b912d77299716a4ec5",
+    "build/resource-path/checks.json": "496a0fb650a349c490d106ec165ffea60c86ca3d24f87adb6de2c23747c2f92f",
+    "build/terminal/resource-lookup-checks.json": "9435951f664addda22f5ff034767d6b98e1f9f400b22666cb31d2557d98cc5cb",
+    "build/terminal/resource-lookup-dos-checks.json": "37cc359d8870085d8d3afc3a8b4cd4d46b162bb85784908bce4f41968b133d8a",
+    "build/terminal/setup-profile-regression.json": "8315e9ddcdbfbee5e7f3a6c83e46a3ba12e20ac06375d51300acfc1d682292a9",
+    "build/terminal/setup-profile-regression.log": "de298000718cbc91f02633d2f8d423ea09c0d2be57b6daaa990474879cd7f2ab",
     "build/connection-dos/resource-xlt-environment-directory/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
     "build/connection-dos/resource-xlt-environment-directory/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
     "build/connection-dos/resource-xlt-environment-directory/CFG/PCPLUS.XLT": "1420e4cc05053451ccbf05e054addd05f4011622745022bb05069fecf7151414",
@@ -1759,9 +1434,9 @@
     "build/connection-dos/resource-xlt-environment-directory/SCREEN.BIN": "4b7ddb05f07c8a8a67d9a8c08acb78fdacebe95bcc18e5e68512e889e207daec",
     "build/connection-dos/resource-xlt-environment-directory/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
     "build/connection-dos/resource-xlt-environment-directory/TEST.PRM": "a50ca31ab6c1645e22afa034deaa889bff31b37dddb142622601a2771fdf1448",
-    "build/connection-dos/resource-xlt-environment-directory/dosbox.conf": "f8343d7011f7bb81ffefcc99b5d315b6030d2af891202ce9bf045319b3cc66c9",
+    "build/connection-dos/resource-xlt-environment-directory/dosbox.conf": "0603530926e3db351058dd048ba5034d8a7d3c2cfd95545fe0a555e4b0380a06",
     "build/connection-dos/resource-xlt-environment-directory/dosbox.log": "2bebda6660f26ad4cc11f75036b67620aa8336a2a6477513174dc1946530ec61",
-    "build/connection-dos/resource-xlt-environment-directory/result.json": "6ced5244946176144c6c5f24a4db727402cffb87a9c586ab2942f14549876a18",
+    "build/connection-dos/resource-xlt-environment-directory/result.json": "30f0a85c180bbe8409bfc245429e31fe96d57b1fcd8545b5ce251127a574a3f3",
     "build/connection-dos/resource-xlt-environment-directory/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
     "build/connection-dos/resource-xlt-environment-directory/screen.txt": "8f572fe30590888eef62c0179fdf1f5bd43f5fd022ffe0409cd128b0bb7b2c24",
     "build/connection-dos/resource-xlt-environment-directory/serial.bin": "67de7f4d669c3576e5e628d394cc44e2068e6707a42f4c1d5c6bd9590d023226",
@@ -1772,9 +1447,9 @@
     "build/connection-dos/resource-xlt-environment-trailing-separator/SCREEN.BIN": "4b7ddb05f07c8a8a67d9a8c08acb78fdacebe95bcc18e5e68512e889e207daec",
     "build/connection-dos/resource-xlt-environment-trailing-separator/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
     "build/connection-dos/resource-xlt-environment-trailing-separator/TEST.PRM": "a50ca31ab6c1645e22afa034deaa889bff31b37dddb142622601a2771fdf1448",
-    "build/connection-dos/resource-xlt-environment-trailing-separator/dosbox.conf": "2b0bca1b8b2faf6b562ffc663ecc113bc50026501339637c009be6b9913e5615",
+    "build/connection-dos/resource-xlt-environment-trailing-separator/dosbox.conf": "5049b8e3acfadc52685186134cffc239a9cf536f33d6ffdbb6e4f4f0495b2c83",
     "build/connection-dos/resource-xlt-environment-trailing-separator/dosbox.log": "9285d866fdb1f69a89ecc70b808c4ffc425e510d9829a02940e2df4240845113",
-    "build/connection-dos/resource-xlt-environment-trailing-separator/result.json": "bccf3836975609009003eb0d2413d71d8fa93a0f0a94ffd844d32f3026e075dc",
+    "build/connection-dos/resource-xlt-environment-trailing-separator/result.json": "fd89d7323a9d6e29a6849c3e78de64640fb2e04a3546d22df742ea2fb2773fa5",
     "build/connection-dos/resource-xlt-environment-trailing-separator/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
     "build/connection-dos/resource-xlt-environment-trailing-separator/screen.txt": "8f572fe30590888eef62c0179fdf1f5bd43f5fd022ffe0409cd128b0bb7b2c24",
     "build/connection-dos/resource-xlt-environment-trailing-separator/serial.bin": "67de7f4d669c3576e5e628d394cc44e2068e6707a42f4c1d5c6bd9590d023226",
@@ -1786,9 +1461,9 @@
     "build/connection-dos/resource-xlt-current-wins/SCREEN.BIN": "4b7ddb05f07c8a8a67d9a8c08acb78fdacebe95bcc18e5e68512e889e207daec",
     "build/connection-dos/resource-xlt-current-wins/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
     "build/connection-dos/resource-xlt-current-wins/TEST.PRM": "a50ca31ab6c1645e22afa034deaa889bff31b37dddb142622601a2771fdf1448",
-    "build/connection-dos/resource-xlt-current-wins/dosbox.conf": "c47d2144ad1acb943d58ce3c96707918d09a01407d71c18af7965a2a2e49bc2b",
+    "build/connection-dos/resource-xlt-current-wins/dosbox.conf": "bf31173e5793bed2b34551cd2c3a2617587f6da31ddebbd3eb4b14e47ed88661",
     "build/connection-dos/resource-xlt-current-wins/dosbox.log": "f1d4ce242ed32a99881ca723890ffd9e21edf8a5fce08987fbc6ed95f4ee79c7",
-    "build/connection-dos/resource-xlt-current-wins/result.json": "a9c91da12a158dda70190042c1c1990e7184d13c11b9c5718723ce1331d0eea9",
+    "build/connection-dos/resource-xlt-current-wins/result.json": "d619ebe43f15132484bf9274462d9b2ee97989ff2de606587f035ef842c4e7f7",
     "build/connection-dos/resource-xlt-current-wins/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
     "build/connection-dos/resource-xlt-current-wins/screen.txt": "8f572fe30590888eef62c0179fdf1f5bd43f5fd022ffe0409cd128b0bb7b2c24",
     "build/connection-dos/resource-xlt-current-wins/serial.bin": "67de7f4d669c3576e5e628d394cc44e2068e6707a42f4c1d5c6bd9590d023226",
@@ -1799,9 +1474,9 @@
     "build/connection-dos/resource-xlt-current-ignores-invalid-environment/SCREEN.BIN": "4b7ddb05f07c8a8a67d9a8c08acb78fdacebe95bcc18e5e68512e889e207daec",
     "build/connection-dos/resource-xlt-current-ignores-invalid-environment/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
     "build/connection-dos/resource-xlt-current-ignores-invalid-environment/TEST.PRM": "a50ca31ab6c1645e22afa034deaa889bff31b37dddb142622601a2771fdf1448",
-    "build/connection-dos/resource-xlt-current-ignores-invalid-environment/dosbox.conf": "c41bbe3b03820bb6130df92da049131a41d2112259db67ddfcdd80b09121c833",
+    "build/connection-dos/resource-xlt-current-ignores-invalid-environment/dosbox.conf": "91f772676c77ad075ce27b9fde7172c4ae71e29a7d52ab4f97e04f73bb44a56d",
     "build/connection-dos/resource-xlt-current-ignores-invalid-environment/dosbox.log": "b6f15edfa8f35cd0a1febde926eb3ea48d162fb0d7850fb715396ec4d82a0fdd",
-    "build/connection-dos/resource-xlt-current-ignores-invalid-environment/result.json": "73c7fac3addf9392418020b254aeec0f1e4927dd85496960ff6533e831b32563",
+    "build/connection-dos/resource-xlt-current-ignores-invalid-environment/result.json": "6936df0830fb6649337abf983b128d7cab9269cef1a5f382d06cb207b17b488a",
     "build/connection-dos/resource-xlt-current-ignores-invalid-environment/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
     "build/connection-dos/resource-xlt-current-ignores-invalid-environment/screen.txt": "8f572fe30590888eef62c0179fdf1f5bd43f5fd022ffe0409cd128b0bb7b2c24",
     "build/connection-dos/resource-xlt-current-ignores-invalid-environment/serial.bin": "67de7f4d669c3576e5e628d394cc44e2068e6707a42f4c1d5c6bd9590d023226",
@@ -1813,9 +1488,9 @@
     "build/connection-dos/resource-xlt-explicit-ignores-invalid-environment/SCREEN.BIN": "4b7ddb05f07c8a8a67d9a8c08acb78fdacebe95bcc18e5e68512e889e207daec",
     "build/connection-dos/resource-xlt-explicit-ignores-invalid-environment/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
     "build/connection-dos/resource-xlt-explicit-ignores-invalid-environment/TEST.PRM": "a50ca31ab6c1645e22afa034deaa889bff31b37dddb142622601a2771fdf1448",
-    "build/connection-dos/resource-xlt-explicit-ignores-invalid-environment/dosbox.conf": "4aba22eb72178c3ae9cf7009a089c443d4f08cbed7011687baebbfa5c4ce2231",
+    "build/connection-dos/resource-xlt-explicit-ignores-invalid-environment/dosbox.conf": "dd7f1f18b178949a31738f79c21da19de2acfce10414a506bdaf7e7429b9db01",
     "build/connection-dos/resource-xlt-explicit-ignores-invalid-environment/dosbox.log": "63dc4c2d8adf350712803ce82e78f86503f1ad9f793d41ea9f4a62c3e2197fc3",
-    "build/connection-dos/resource-xlt-explicit-ignores-invalid-environment/result.json": "d0ab017136dffd268a32384b8b8da6a07613809853d2a762589eca1e5f6ffb24",
+    "build/connection-dos/resource-xlt-explicit-ignores-invalid-environment/result.json": "bc26bda83234896274f2a1e8359cbdbfb5d7a74eb063d1bd4ef41bdddd3a4f0c",
     "build/connection-dos/resource-xlt-explicit-ignores-invalid-environment/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
     "build/connection-dos/resource-xlt-explicit-ignores-invalid-environment/screen.txt": "8f572fe30590888eef62c0179fdf1f5bd43f5fd022ffe0409cd128b0bb7b2c24",
     "build/connection-dos/resource-xlt-explicit-ignores-invalid-environment/serial.bin": "67de7f4d669c3576e5e628d394cc44e2068e6707a42f4c1d5c6bd9590d023226",
@@ -1825,9 +1500,9 @@
     "build/connection-dos/resource-xlt-identity-ignores-environment/SCREEN.BIN": "308ab3e3fb49b8b73302e8b3730ff49a4653c3dd1d09a0c538b322cdc87cbfba",
     "build/connection-dos/resource-xlt-identity-ignores-environment/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
     "build/connection-dos/resource-xlt-identity-ignores-environment/TEST.PRM": "90a73ecc2d700d3f976f438b3193025a1a7a59a651f53f2b803ccffe89e5ce88",
-    "build/connection-dos/resource-xlt-identity-ignores-environment/dosbox.conf": "6c2035a5383bdbee76220a8a80a963bc0c864ba9e0e76dde99e40f1cb6083593",
+    "build/connection-dos/resource-xlt-identity-ignores-environment/dosbox.conf": "037c0cfde5102cc275a10ef6271db72794b2096c014e0cf065dec0af16dbbfe7",
     "build/connection-dos/resource-xlt-identity-ignores-environment/dosbox.log": "a18476283126ea2921f03145eb405441c4c69aa03f64754772d3f13b3251f05a",
-    "build/connection-dos/resource-xlt-identity-ignores-environment/result.json": "c57a5ffe3ebe24587b9f54bf330e00020b7e8c8cfcc517269c79668d40e50e71",
+    "build/connection-dos/resource-xlt-identity-ignores-environment/result.json": "74d36850da3e3c55f32c1d1f65c0ee637c6a5f562dcc0403abaf5eb5d3e648fb",
     "build/connection-dos/resource-xlt-identity-ignores-environment/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
     "build/connection-dos/resource-xlt-identity-ignores-environment/screen.txt": "cbed9414e2b5f6f19480b14185fa98c847161eb55dd9461bcbf9511e4c8a8ab6",
     "build/connection-dos/resource-xlt-identity-ignores-environment/serial.bin": "33eda76c33245bd7410250938d2e085ca58657d8eee243a63884016b3c4a6d03",
@@ -1839,9 +1514,9 @@
     "build/connection-dos/resource-xlt-damaged-current-no-fallback/SCREEN.BIN": "cdb1fa2db6e41944524bae40ae097767427062e6c177c925ed72121e1e58353f",
     "build/connection-dos/resource-xlt-damaged-current-no-fallback/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
     "build/connection-dos/resource-xlt-damaged-current-no-fallback/TEST.PRM": "a50ca31ab6c1645e22afa034deaa889bff31b37dddb142622601a2771fdf1448",
-    "build/connection-dos/resource-xlt-damaged-current-no-fallback/dosbox.conf": "a4bf3b7e017c6f60a13f83e3dce9c3268608764a75a5d9e0972220d9f1c1528e",
+    "build/connection-dos/resource-xlt-damaged-current-no-fallback/dosbox.conf": "3446f53cd78f5d19d8ede2f417373a7698ab8064e20a87ce3df57e3ee0cabbf4",
     "build/connection-dos/resource-xlt-damaged-current-no-fallback/dosbox.log": "4c8403a96d55fe2a86c254c6cf2d10b0c7c22fe422b04a2402bcda145d87b82d",
-    "build/connection-dos/resource-xlt-damaged-current-no-fallback/result.json": "98c48d654908f7e5bf7a56fbde7c3b0f4ff82fd8ba252f8d12686689cdb0c890",
+    "build/connection-dos/resource-xlt-damaged-current-no-fallback/result.json": "abcd3609c2aca66b2357b3629dc2f85ebced80ce0e88694bef9dcf568a12b8c9",
     "build/connection-dos/resource-xlt-damaged-current-no-fallback/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
     "build/connection-dos/resource-xlt-damaged-current-no-fallback/screen.txt": "d79d679fa15442dd8703ef7c412e8f0a8be161dd7b20a0900068496d6ea02fae",
     "build/connection-dos/resource-xlt-damaged-current-no-fallback/serial.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -1851,9 +1526,9 @@
     "build/connection-dos/resource-xlt-missing-environment-table/SCREEN.BIN": "37c8a318be28afc28df8deeb1772659a7972e57e0b408b1b7b8efb58f63b87db",
     "build/connection-dos/resource-xlt-missing-environment-table/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
     "build/connection-dos/resource-xlt-missing-environment-table/TEST.PRM": "a50ca31ab6c1645e22afa034deaa889bff31b37dddb142622601a2771fdf1448",
-    "build/connection-dos/resource-xlt-missing-environment-table/dosbox.conf": "3d720366c383f9dfd2ddf23ee4dcc1098e3ab32b2c87a42d9281e927a7a89780",
+    "build/connection-dos/resource-xlt-missing-environment-table/dosbox.conf": "96159cf2339e83e1a522dca0b95b5c34074b28288b29606f262d767b0c0b0cf6",
     "build/connection-dos/resource-xlt-missing-environment-table/dosbox.log": "524cf94b3694fedb0e671c74d2ff09e03fc329090b578977fe11ce382cfd512f",
-    "build/connection-dos/resource-xlt-missing-environment-table/result.json": "f6028ebdf8d0209fe4e9f3f21affd5cc4da0be41d027482c1b9e42cd4e41bce0",
+    "build/connection-dos/resource-xlt-missing-environment-table/result.json": "ab13f22d4a2fad1676b6c741c6f8f8f3f1cf5bf05bb4ddaecca419a96d121c94",
     "build/connection-dos/resource-xlt-missing-environment-table/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
     "build/connection-dos/resource-xlt-missing-environment-table/screen.txt": "6b5c294c87a90422fcf2809f970d88df85d6303bd6eaf1f902cdc0875812c4fd",
     "build/connection-dos/resource-xlt-missing-environment-table/serial.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -1864,9 +1539,9 @@
     "build/connection-dos/resource-xlt-damaged-environment-table/SCREEN.BIN": "12e0e9085163ec43d67d1161a3a7ea31941d4402b04dd85cfed9f03e23cd18a4",
     "build/connection-dos/resource-xlt-damaged-environment-table/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
     "build/connection-dos/resource-xlt-damaged-environment-table/TEST.PRM": "a50ca31ab6c1645e22afa034deaa889bff31b37dddb142622601a2771fdf1448",
-    "build/connection-dos/resource-xlt-damaged-environment-table/dosbox.conf": "9f09c4f3b900f004b533b37ac36225b717906ced170629f43460c01e26458ceb",
+    "build/connection-dos/resource-xlt-damaged-environment-table/dosbox.conf": "64f944d753448007113024509ea71680935d9f5571207399ab5ba7c082e888fb",
     "build/connection-dos/resource-xlt-damaged-environment-table/dosbox.log": "9f9b73cbb7e2c74e59f83603bf0578e073065330063166b408ff6fa6f5d21f19",
-    "build/connection-dos/resource-xlt-damaged-environment-table/result.json": "68a8e7c5fec8136e742f249c31ee91a98f91f1d69a151b3df46b92d0e0e56c77",
+    "build/connection-dos/resource-xlt-damaged-environment-table/result.json": "3ed9d9b5e784d4d62019b7068164e9467b158ff692673bd64a8cd038292803e5",
     "build/connection-dos/resource-xlt-damaged-environment-table/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
     "build/connection-dos/resource-xlt-damaged-environment-table/screen.txt": "4280d2376ed07a2b46b5ae6dd2b5d8c94cfc4023794bffd8b743b84d004d6fba",
     "build/connection-dos/resource-xlt-damaged-environment-table/serial.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -1877,9 +1552,9 @@
     "build/connection-dos/resource-xlt-empty-environment/SCREEN.BIN": "39fe4915f7ffed36059a7c0faff3bf57a0d072170e59d0533da55196796e2586",
     "build/connection-dos/resource-xlt-empty-environment/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
     "build/connection-dos/resource-xlt-empty-environment/TEST.PRM": "a50ca31ab6c1645e22afa034deaa889bff31b37dddb142622601a2771fdf1448",
-    "build/connection-dos/resource-xlt-empty-environment/dosbox.conf": "5f4afea3901342525fccffded617441052ecfcca3e0cf8495348d704f9eecc87",
+    "build/connection-dos/resource-xlt-empty-environment/dosbox.conf": "124087ba376dcf04940dda965776c6692f0ee640e1d31cfbbe3c380fdcd5c75d",
     "build/connection-dos/resource-xlt-empty-environment/dosbox.log": "fdbd82ed128dbf7daab19bf19835156b33203a410657b88b916d8408b690de2e",
-    "build/connection-dos/resource-xlt-empty-environment/result.json": "77c74bce6d4d530c661878a3a2661b56994d47be2d643f370582798d4a39de74",
+    "build/connection-dos/resource-xlt-empty-environment/result.json": "f3f9fc151b5cf437dbc5449ea2d7dae15816850040b01fdc87bbd409eb60e77c",
     "build/connection-dos/resource-xlt-empty-environment/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
     "build/connection-dos/resource-xlt-empty-environment/screen.txt": "482c541f886316d7e9a7bd554a7bb94afc707145310eb4bd3aec7a1904d3af77",
     "build/connection-dos/resource-xlt-empty-environment/serial.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -1889,9 +1564,9 @@
     "build/connection-dos/resource-xlt-oversized-directory/SCREEN.BIN": "8fae4560922161e391be019a1399aed0510ee7a3dc241a1f9583f8ec606394b7",
     "build/connection-dos/resource-xlt-oversized-directory/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
     "build/connection-dos/resource-xlt-oversized-directory/TEST.PRM": "a50ca31ab6c1645e22afa034deaa889bff31b37dddb142622601a2771fdf1448",
-    "build/connection-dos/resource-xlt-oversized-directory/dosbox.conf": "f0adc55a2af58405e9a49f9d21bdd9792d83466baae9119a39e03de35342142a",
+    "build/connection-dos/resource-xlt-oversized-directory/dosbox.conf": "013dcf7fa351896ea243dacc12d046222b447698615eabe432331856bed10f21",
     "build/connection-dos/resource-xlt-oversized-directory/dosbox.log": "6a03fc77844dd06e5bdee84dd8e3457c930342652dd48e3e3f19e339f300f015",
-    "build/connection-dos/resource-xlt-oversized-directory/result.json": "56eeaaf94e07bbb48abb038369f0c83384e995544e1d108aa7b3ec7a24f0b086",
+    "build/connection-dos/resource-xlt-oversized-directory/result.json": "e5e2b877008af3540d69b8327eedee49bc3cfd9695bea6f70ec09e6159333dfb",
     "build/connection-dos/resource-xlt-oversized-directory/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
     "build/connection-dos/resource-xlt-oversized-directory/screen.txt": "24e07d5bb1882807b139935403fa37d9a09900a4936801b98f0000619ac2406d",
     "build/connection-dos/resource-xlt-oversized-directory/serial.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -1902,9 +1577,9 @@
     "build/connection-dos/resource-xlt-maximum63-byte-path/SCREEN.BIN": "4b7ddb05f07c8a8a67d9a8c08acb78fdacebe95bcc18e5e68512e889e207daec",
     "build/connection-dos/resource-xlt-maximum63-byte-path/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
     "build/connection-dos/resource-xlt-maximum63-byte-path/TEST.PRM": "a50ca31ab6c1645e22afa034deaa889bff31b37dddb142622601a2771fdf1448",
-    "build/connection-dos/resource-xlt-maximum63-byte-path/dosbox.conf": "4db0c9e4d60c24dd1a2cfe721986b04a8525fd61c55f49ba1c501ec775f28790",
+    "build/connection-dos/resource-xlt-maximum63-byte-path/dosbox.conf": "62679175ce5db79d86239145f853791510a1847a972fd363338f3a509868f74c",
     "build/connection-dos/resource-xlt-maximum63-byte-path/dosbox.log": "31e371c0bb20d73f4c7ced1f5d346a0e9ea03e76988ecc96d2abd9dc7c504800",
-    "build/connection-dos/resource-xlt-maximum63-byte-path/result.json": "626ae1979e602a3dced97d60d1b3d2cfd3d6979d6a97be42ce625f1369f0ef9f",
+    "build/connection-dos/resource-xlt-maximum63-byte-path/result.json": "bae8df3582812f617acbdf0b4b3d3ea03689307aa5d98eaef528fc48bc261d78",
     "build/connection-dos/resource-xlt-maximum63-byte-path/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
     "build/connection-dos/resource-xlt-maximum63-byte-path/screen.txt": "8f572fe30590888eef62c0179fdf1f5bd43f5fd022ffe0409cd128b0bb7b2c24",
     "build/connection-dos/resource-xlt-maximum63-byte-path/serial.bin": "67de7f4d669c3576e5e628d394cc44e2068e6707a42f4c1d5c6bd9590d023226"
@@ -1915,5 +1590,5 @@
     "pseudocode_evidence_id": "ev_e36893dd21a8e0238063e007dda32a4fd0f457d6c1d4a7e9ad9eb4e7db399009",
     "scope": "Reused retained REA static resolver exports. Maintained bounded C policy; no new original execution or native analysis session."
   },
-  "scope": "Default saved-mode XLT startup only: checked current file, fallback only on open errors2/3, bounded inherited PCPLUS directory, exact256-byte commit. Explicit /X and modes0/2 bypass lookup.117 linked inputs,30 real DOS generic assertions,12 actual DOS startup cases,64-command terminal regression and62-output isolated source rebuild. Other resource fallback, live table/mode handoff and physical UART/modem remain open."
+  "scope": "Default saved-mode XLT startup only: checked current file, fallback only on open errors2/3, bounded inherited PCPLUS directory, exact256-byte commit. Explicit /X and modes0/2 bypass lookup.117 linked inputs,30 real DOS generic assertions,12 actual DOS startup cases,66-command terminal regression and63-output isolated source rebuild. Confirmed live mode adoption is recorded separately in live-translation.json. Other resource fallback, same-mode reload and physical UART/modem remain open."
 }

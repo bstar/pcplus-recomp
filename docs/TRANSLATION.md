@@ -148,7 +148,8 @@ The maintained offline [XLTEDIT editor](XLT_EDITOR.md) now provides table editin
 checked persistence and explicit dirty state. It deliberately leaves parent PRM
 mode changes separate. Saved selection1d64 now participates in validated startup and settings
 transactions, including the7-bit alternative and explicit live deferral. Live
-resource switching remains open. Bounded default-table
+mode changes now use [confirmed staged adoption](LIVE_TRANSLATION_SETUP.md).
+A dedicated same-mode table reload/editor command remains open. Bounded default-table
 [PCPLUS environment fallback](RESOURCE_LOOKUP.md) is now integrated; lookup
 for the other resources remains open. Resolve remaining
 emulation/script consumers. Explicit startup selection, normal mapping, raw

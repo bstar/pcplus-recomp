@@ -166,3 +166,13 @@ seven audit checks. Both close without posting and restore sampled hardware.
 The differing immediate Home result reinforces that read/packet boundaries are
 not fixed between runs. The selected byte-transparent delay remains a local
 workaround, with the same physical-modem and remote TCP limitations.
+
+
+The confirmed-input-mode5689d8aa pair (`editor-live-xlt-5689-immediate` /
+`editor-live-xlt-5689-buffer30`) keeps saved identity mode without /X. Both enter
+the stock editor and emit all eight measured keys. Immediate forwarding fails
+Home and Insert/overtype; explicit30ms buffering passes all seven audit checks.
+Both drafts close unsaved. Runtime, recipe, serial settings and PRM identities
+match; only the configured packet delay differs, with server/user state retained
+between runs. This remains a local workaround rather than a physical modem or
+remote TCP boundary guarantee.
