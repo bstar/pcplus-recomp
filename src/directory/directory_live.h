@@ -21,6 +21,15 @@ enum {
  DIRECTORY_LIVE_RECORD,DIRECTORY_LIVE_BINDING,DIRECTORY_LIVE_TARGET,
  DIRECTORY_LIVE_MODE,DIRECTORY_LIVE_DUPLEX
 };
+/* Pure version of the same three-plan transaction over a caller-owned raw PRM
+ * and selected header/record. No DOS/UART/BIOS, no mutation of source images.
+ * Sources and all outputs/results must have disjoint nonwrapping DS extents;
+ * output plans remain unchanged on failure. Initial global serial validation
+ * precedes record overrides, preserving read() compatibility policy. */
+directory_live_status __cdecl directory_live_decode(const prm_dos_image *image,
+ const directory_dos_selection *selection,unsigned codes,
+ terminal_import_settings *serial,modem_import_settings *modem,
+ directory_live_plan *plan,directory_live_result *result);
 /* One PRM read and one strict directory read, then atomic three-plan commit.
  * Explicit paths1..63bytes; output/IO near extents disjoint and nonwrapping.
  * Unknown directory bytes remain untouched on disk. This API never writes.

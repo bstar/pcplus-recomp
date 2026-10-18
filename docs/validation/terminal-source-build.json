@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "ca400c212c3f9572fa7eb00f4ead106709513818659c86e3cff7b600c7f4c675",
-  "source_file_count": 1229,
+  "source_snapshot_sha256": "8f29354d939bd6a8324a1d9c0a4194bffffdb59eaa6058d63992516dab06acfc",
+  "source_file_count": 1240,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,85 +16,85 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "7fd146e40653b69da4082c0c0a86db0bfc868dc45b255ab3d0782c41d0ecc2d4",
+  "build_log_sha256": "f558c4ecc8e5734ee063dda9d344c4247cd47d32bee2c1134beca7c28b7bb5eb",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.Noer9x/pcplus-source-proof-8sskwoca/checkout",
+  "source_checkout": "/tmp/nix-shell.afUbBQ/pcplus-source-proof-nfgy_b4t/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
   "scope": "Source-only interactive DOS terminal with imported keyboard/action settings, directory UI, recovered line/character editing, maintained current-profile RIS, bounded process handoff, retained far shadow/history and live checked XMODEM receive/send and maintained CRC YMODEM batch ownership; full PCPlus application remains incomplete.",
-  "binary_sha256": "0fea93eccc614d71b3f74976cd24973a9806b1d171ad76895f2d816ba45bcec2",
+  "binary_sha256": "12bdea77aceb266b70eda04225e060f829dce5066758cd75f57f0c3eab6ca1bf",
   "matches_workspace_binary": true,
   "matches_workspace_manifest": true,
   "manifest": {
     "kind": "source-only-interactive-dos-terminal",
-    "binary_sha256": "0fea93eccc614d71b3f74976cd24973a9806b1d171ad76895f2d816ba45bcec2",
+    "binary_sha256": "12bdea77aceb266b70eda04225e060f829dce5066758cd75f57f0c3eab6ca1bf",
     "data_stack_bytes": 52576,
     "memory_layout": {
       "near_bytes": 52576,
       "near_spare_bytes": 12960,
-      "near_relative_segment": 4093,
-      "far_relative_segment": 8129,
+      "near_relative_segment": 4119,
+      "far_relative_segment": 8155,
       "shadow_offset": 2000,
       "history_offset": 10192,
       "far_bytes": 12288,
-      "far_end_linear": 144352,
-      "stack_end_linear": 118064,
-      "loaded_module_bytes": 94506,
-      "minimum_allocated_module_bytes": 144368,
-      "retained_parent_paragraphs": 9038,
+      "far_end_linear": 144768,
+      "stack_end_linear": 118480,
+      "loaded_module_bytes": 94922,
+      "minimum_allocated_module_bytes": 144784,
+      "retained_parent_paragraphs": 9064,
       "far_pointer_relocations_verified": true,
-      "snapshot_relative_segment": 8129,
+      "snapshot_relative_segment": 8155,
       "snapshot_image_offset": 0,
       "snapshot_bytes": 2000,
-      "snapshot_end_linear": 132064,
+      "snapshot_end_linear": 132480,
       "ui_screen_buffers": {
         "browser_screen": {
-          "relative_segment": 7379,
+          "relative_segment": 7405,
           "offset": 0,
           "bytes": 4000,
-          "start_linear": 118064,
-          "end_linear": 122064
+          "start_linear": 118480,
+          "end_linear": 122480
         },
         "ed_screen": {
-          "relative_segment": 7379,
+          "relative_segment": 7405,
           "offset": 4000,
           "bytes": 4000,
-          "start_linear": 122064,
-          "end_linear": 126064
+          "start_linear": 122480,
+          "end_linear": 126480
         },
         "program_screen": {
-          "relative_segment": 7379,
+          "relative_segment": 7405,
           "offset": 8000,
           "bytes": 4000,
-          "start_linear": 126064,
-          "end_linear": 130064
+          "start_linear": 126480,
+          "end_linear": 130480
         }
       },
       "far_ui_storage_bytes": 12000,
       "controller_bridge_pairs_verified": 22,
       "modem_bridge_pairs_verified": 22,
-      "resident_code_bytes": 62554,
-      "resident_code_spare_bytes": 2982,
+      "resident_code_bytes": 62974,
+      "resident_code_spare_bytes": 2562,
       "code_segments": [
         {
           "name": "_TEXT",
           "kind": "CODE",
           "relative_segment": 0,
           "offset": 0,
-          "bytes": 62554
+          "bytes": 62974
         },
         {
           "name": "MODEM_CODE",
           "kind": "FARCODE",
-          "relative_segment": 3910,
+          "relative_segment": 3936,
           "offset": 0,
           "bytes": 1467
         },
         {
           "name": "PRINT_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4002,
+          "relative_segment": 4028,
           "offset": 0,
           "bytes": 1449
         }
@@ -254,7 +254,7 @@
       "src/config/modem_import.c": "aa984d766d561ab15e6fd067757953c856eb054a61dc8f4cb9c58c58f5df2a4b",
       "src/config/startup_import.c": "31ad7ca3b1802d0edb863503972cf82dd383928123a78315a74125dfd7c824ec",
       "src/directory/directory_dos.c": "2e39893159d4c3744c58047500a528089607671555af98ba85475950c5a9b887",
-      "src/directory/directory_live.c": "64ecdc16e446a48e28f5ef90e24d801a3f911118226c1a78672d60eb7ae82c33",
+      "src/directory/directory_live.c": "5174dcbb907136e7c991c1f263e2418b5abb3ff22f70d891c41993a7afc27da2",
       "src/directory/directory_actions.c": "84c0a31b735f2fd3ee63f5edde7083dbacae938f1471cd0336d2f37e94adf0ad",
       "src/directory/directory_replace.c": "86607d3bd46fe3f86cdf669dc7aa483af3633672fa48a2e7d848b4a790ec669b",
       "src/directory/directory_replace_fs.c": "ea94c7e30ede691ac090cdff6ebfab9afb80c45e87b3603d85d19e4c7bffad5c",
@@ -291,7 +291,7 @@
       "reconstruction/ansi/dispatch-layout.inc": "1fab8c56d84c54bef9b5938b4f13d14fee0199ec1c813a643edd71d9d31aa949",
       "src/directory/directory_actions.h": "e7363dad30620b97c6b7fd799d70d386439aa178c5b9d23659b6f2b9c3a423f5",
       "src/directory/directory_dos.h": "4e5c3d971839de9899f2c0927d1bf8c5723ae14d2a123590381fd5706db5e72b",
-      "src/directory/directory_live.h": "f3b0712b97a2f023a8dc2b61dbe769a710d17820d7ec9d83370ce0d000f9dd43",
+      "src/directory/directory_live.h": "414dbcd1cf91fd6263a4a8eec231985d81545326954ef250cb5836799a61a0e9",
       "src/directory/directory_replace.h": "62f65615c0b1aeafa967658a0a122e3ed18e55d44412d8420b6603d098f13b45",
       "src/directory/directory_replace_fs.h": "9702aba7c5d55548dc5ba38289a0c5f1409a2769459904445d9a64c8bc88da9b",
       "src/directory/directory_dos.inc": "aa272682259fe6bceb65d73a55d3fdf6f2a718fa8adc6a6f002fad0bf6ab9773",

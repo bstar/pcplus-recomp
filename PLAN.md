@@ -384,3 +384,17 @@ checkout reproduces58 identical outputs. Modern editor reruns retain Synchronet
 success and ENiGMA immediate Home/Insert failure versus the30ms-buffered pass;
 login new-scan prerequisite failures and the explicit-decline retry remain in
 history. See `docs/validation/setup-startup.json` and the BBS checkpoint reports.
+
+
+Live setup now has a pure candidate transaction and a shared pure directory
+decoder. It validates a retained selection plus PRM, applies CLI precedence and
+classifies transport/profile/display/modem/target changes before any runtime
+commit. See `docs/LIVE_CONFIGURATION_PLAN.md`. The running-terminal UI, hardware
+handoff, parser/reset-baseline update and commit/rollback policy remain open;
+this component does not close F02/F06 or claim live setup is available.
+
+This candidate checkpoint passes389 pure API inputs,311 existing directory
+inputs and all43 terminal regression commands;59 isolated outputs match. The
+candidate API remains diagnostic-only. Current parent context lacks the full
+250-byte directory header, so retaining it and binding selection identity is
+required before wiring the UI and applying legacy-code edits during a session.
