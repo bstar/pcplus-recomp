@@ -266,5 +266,6 @@ pass a legitimate assembly allocation at DS:0000 as a C pointer.
 This test exposed the compiler's small-enum return convention before terminal
 integration. The APIs now use explicit unsigned status typedefs so assembly
 callers receive the documented AX value. C callers retain the named status
-constants and result layout. Configuration loading into the live terminal
-and complete application settings remain separate work.
+constants and result layout. The live terminal now imports a validated read-only subset through `@FILE.PRM`;
+see [startup configuration](STARTUP_CONFIGURATION.md). Complete application
+settings, defaults and configuration UI remain open.

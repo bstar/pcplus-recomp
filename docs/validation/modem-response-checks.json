@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "binary_sha256": "ee2c7450aff4d1a8df36e9e3040d187a1db14f0463f93958a8dfeaaadc573414",
+  "cases": [
+    {
+      "case": "case-sensitive-no-framing-short-prefix-tie-and-limited-fallback",
+      "inputs": 7,
+      "passed": true
+    },
+    {
+      "case": "all-eleven-slots-random-binary-streams-and-cursor-state",
+      "inputs": 12800,
+      "passed": true
+    },
+    {
+      "case": "partial-match-persistence-completed-slot-and-reset",
+      "inputs": 9,
+      "passed": true
+    },
+    {
+      "case": "bounded-errors-preserve-all-matcher-state",
+      "inputs": 4,
+      "passed": true
+    },
+    {
+      "case": "connect-failure-pending-and-autobaud-action-classification",
+      "inputs": 220,
+      "passed": true
+    }
+  ],
+  "scope": "Actual source-only recovered138-byte matcher, maintained bounded one-byte source and action classifier. No live UART or timeout engine."
+}

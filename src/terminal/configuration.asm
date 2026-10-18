@@ -1,0 +1,139 @@
+; Maintained startup-only partial PRM import. Full validation precedes UART IO.
+BITS 16
+CPU 8086
+%include "terminal_import.inc"
+SEGMENT _TEXT public class=CODE use16
+extern _terminal_import_read,terminal_config_path,terminal_option_mask
+extern terminal_port_number,terminal_baud_low,terminal_baud_high
+extern terminal_parity,terminal_data_bits,terminal_stop_bits,terminal_irq_vector
+extern uart_port_index,uart_irq_indices,uart_port_rbr,uart_port_thr,uart_port_ier
+extern uart_port_lcr,uart_port_mcr,uart_port_lsr,uart_port_msr
+extern uart_software_flow,uart_hardware_flow
+extern csi_terminal_id,attributes_monochrome,attributes_current
+extern attributes_normal_value,attributes_bold_value,attributes_preset_value
+extern attributes_reverse_value,attributes_underline_value,render_autowrap,scroll_enabled
+extern csi_erase_attribute,cursor_state_saved_1f70
+extern attributes_color_mode,terminal_dec_keys,terminal_backspace_mode_9058
+extern attributes_bold_active,attributes_blink_active,attributes_reverse_active
+
+global terminal_load_configuration,terminal_apply_configuration
+terminal_load_configuration:
+ push bp
+ push si
+ push di
+ push es
+ mov word [terminal_configuration_status],0
+ test word [terminal_option_mask],16
+ jz .success
+ ; The supported C DOS/string subset expects near pointers and DS=SS, DF=0.
+ push ds
+ pop es
+ cld
+ mov ax,terminal_configuration_io
+ push ax
+ mov ax,terminal_configuration_values
+ push ax
+ mov ax,terminal_config_path
+ push ax
+ call _terminal_import_read
+ add sp,6
+ mov [terminal_configuration_status],ax
+ or ax,ax
+ jnz .done
+ call terminal_apply_configuration
+.success:
+ xor ax,ax
+.done:
+ pop es
+ pop di
+ pop si
+ pop bp
+ ret
+
+; Validated structure only, startup before UART ownership. AX/BX/CX/DX scratch.
+; CLI category selection wins even when it explicitly selects a default value.
+terminal_apply_configuration:
+ test word [terminal_option_mask],1
+ jnz .baud
+ mov ax,[terminal_configuration_values+TI_PORT]
+ mov [terminal_port_number],ax
+ mov ax,[terminal_configuration_values+TI_IRQ]
+ mov [uart_irq_indices],ax
+ add ax,8
+ mov [terminal_irq_vector],ax
+ mov word [uart_port_index],0
+ mov dx,[terminal_configuration_values+TI_IO_BASE]
+ mov [uart_port_rbr],dx
+ mov [uart_port_thr],dx
+ inc dx
+ mov [uart_port_ier],dx
+ add dx,2
+ mov [uart_port_lcr],dx
+ inc dx
+ mov [uart_port_mcr],dx
+ inc dx
+ mov [uart_port_lsr],dx
+ inc dx
+ mov [uart_port_msr],dx
+.baud:
+ test word [terminal_option_mask],2
+ jnz .line
+ mov ax,[terminal_configuration_values+TI_BAUD_LOW]
+ mov [terminal_baud_low],ax
+ mov ax,[terminal_configuration_values+TI_BAUD_HIGH]
+ mov [terminal_baud_high],ax
+.line:
+ test word [terminal_option_mask],4
+ jnz .flow
+ mov ax,[terminal_configuration_values+TI_PARITY]
+ mov [terminal_parity],ax
+ mov ax,[terminal_configuration_values+TI_DATA]
+ mov [terminal_data_bits],ax
+ mov ax,[terminal_configuration_values+TI_STOP]
+ mov [terminal_stop_bits],ax
+.flow:
+ test word [terminal_option_mask],8
+ jnz .display
+ mov ax,[terminal_configuration_values+TI_SOFT]
+ mov [uart_software_flow],ax
+ mov ax,[terminal_configuration_values+TI_HARD]
+ mov [uart_hardware_flow],ax
+.display:
+ mov word [attributes_color_mode],1
+ mov word [terminal_dec_keys],1
+ mov word [terminal_backspace_mode_9058],1
+ mov word [attributes_bold_active],0
+ mov word [attributes_blink_active],0
+ mov byte [attributes_reverse_active],0
+ mov ax,[terminal_configuration_values+TI_PROFILE]
+ mov [csi_terminal_id],ax
+ xor dx,dx
+ cmp ax,6
+ jne .profile_flag
+ inc dx
+.profile_flag:
+ mov [attributes_monochrome],dx
+ mov ax,[terminal_configuration_values+TI_NORMAL]
+ mov [attributes_normal_value],ax
+ mov [attributes_current],ax
+ mov [cursor_state_saved_1f70],ax
+ mov [csi_erase_attribute],al
+ mov ax,[terminal_configuration_values+TI_BOLD]
+ mov [attributes_bold_value],ax
+ mov ax,[terminal_configuration_values+TI_PRESET]
+ mov [attributes_preset_value],ax
+ mov ax,[terminal_configuration_values+TI_REVERSE]
+ mov [attributes_reverse_value],ax
+ mov ax,[terminal_configuration_values+TI_UNDERLINE]
+ mov [attributes_underline_value],ax
+ mov ax,[terminal_configuration_values+TI_WRAP]
+ mov [render_autowrap],ax
+ mov ax,[terminal_configuration_values+TI_SCROLL]
+ mov [scroll_enabled],ax
+ ret
+
+SEGMENT _DATA public class=DATA use16
+global terminal_configuration_status,terminal_configuration_io,terminal_configuration_values
+terminal_configuration_status: dw 0
+terminal_configuration_io: times 8 db 0
+terminal_configuration_values: times TI_SIZE db 0

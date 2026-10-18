@@ -1,4 +1,4 @@
-MODULES := escape attributes screen text reports erase cursor_state cursor_shape scroll modes render input_dispatch csi ui_windows modem_commands
+MODULES := escape attributes screen text reports erase cursor_state cursor_shape scroll modes render input_dispatch csi ui_windows modem_commands modem_responses
 .PHONY: all serial parser keyboard config-dos $(MODULES) $(addprefix test-,$(MODULES)) test test-driver test-parser test-keyboard test-config test-config-dos test-parser-compat test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services compat test-compat test-modem clean
 
 all: serial parser keyboard $(MODULES) config-dos config-replace config-abi terminal
@@ -34,6 +34,8 @@ test-terminal: terminal
 	python3 lab/bbs/check_enigma_controls.py
 	python3 standalone/check_terminal_ui.py
 	python3 standalone/test_terminal.py
+	python3 standalone/check_terminal_config.py
+	python3 standalone/test_terminal_config.py
 
 test-bbs-modem:
 	python3 lab/bbs/check_modem.py

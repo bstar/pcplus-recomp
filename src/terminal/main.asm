@@ -13,6 +13,10 @@ extern uart_receive_byte,uart_rx_dropped,uart_port_rbr
 extern terminal_baud_low,terminal_baud_high,terminal_parity,terminal_data_bits,terminal_stop_bits
 extern terminal_irq_vector,terminal_port_number,csi_unimplemented_service
 extern screen_attribute_cells,erase_attribute_values,erase_shadow_cells
+extern terminal_load_configuration
+; Open Watcom small-code consistency marker for the near-C DOS IO subset.
+global _small_code_
+_small_code_:
 ..start:
  mov ax,es
  mov bx,DGROUP
@@ -36,6 +40,9 @@ extern screen_attribute_cells,erase_attribute_values,erase_shadow_cells
  int 0x21
  jmp terminal_shutdown
 .configured:
+ call terminal_load_configuration
+ or ax,ax
+ jnz .configuration_error
  ; Require a standard BIOS-listed serial port before changing its registers.
  mov bx,[terminal_port_number]
  dec bx
@@ -113,6 +120,19 @@ extern screen_attribute_cells,erase_attribute_values,erase_shadow_cells
  int 0x21
  mov word [terminal_exit_code],5
  jmp terminal_shutdown
+.configuration_error:
+ mov dx,configuration_argument
+ cmp ax,6
+ ja .configuration_message
+ mov bx,ax
+ dec bx
+ shl bx,1
+ mov dx,[configuration_messages+bx]
+.configuration_message:
+ mov ah,9
+ int 0x21
+ mov word [terminal_exit_code],7
+ jmp terminal_shutdown
 
 global terminal_abort,terminal_shutdown
 terminal_abort:
@@ -154,5 +174,13 @@ hardware_active: db 0
 vector_active: db 0
 missing_port: db 'Selected COM port is not listed by the BIOS.',13,10,'$'
 unsupported: db 13,10,'Unsupported terminal function; terminal stopped.',13,10,'$'
+configuration_messages: dw configuration_io,configuration_serial,configuration_flow
+ dw configuration_profile,configuration_display,configuration_argument
+configuration_io: db 'Could not read the requested PCPLUS 2.01 configuration.',13,10,'$'
+configuration_serial: db 'Configuration has unsupported serial port or line settings.',13,10,'$'
+configuration_flow: db 'Configuration flow-control values must be 0 or 1.',13,10,'$'
+configuration_profile: db 'Configuration terminal profile must be ANSI or VT220.',13,10,'$'
+configuration_display: db 'Configuration has unsupported display settings.',13,10,'$'
+configuration_argument: db 'Invalid configuration request.',13,10,'$'
 SEGMENT _BSS public align=16 class=BSS use16
 SEGMENT STACK stack align=16 class=STACK use16

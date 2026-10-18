@@ -1,13 +1,13 @@
 {
   "passed": true,
-  "source_snapshot": "Tracked maintained source with original EXE/install/analysis databases absent.",
-  "binary_sha256": "9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f",
+  "source_snapshot": "Maintained public source with original EXE/install/analysis databases absent.",
+  "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
   "matches_workspace_binary": true,
   "scope": "Interactive terminal milestone only; full PCPlus application remains incomplete",
   "manifest": {
     "kind": "source-only-interactive-dos-terminal",
-    "binary_sha256": "9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f",
-    "data_stack_bytes": 37280,
+    "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+    "data_stack_bytes": 38048,
     "sources": {
       "reconstruction/ansi/dispatch.asm": "f037a6b35fd49eed12c6ff266654de9b3e74cb08a598c987ddac71507f4056d0",
       "reconstruction/ansi/escape.asm": "b1a8405c4984b311775efa6cb6af2e6452a89a11937a299c75de85ecf2e6d2d2",
@@ -91,15 +91,21 @@
       "src/reports/decimal.asm": "b2c63251711f71a8e573f6dea242db38ca259dde998ca35277df7ef138357a48",
       "src/reports/data.asm": "9159d8947d3c963f7c0122c46ca4ae194112595811c5a6a85875a1319bf358d1",
       "src/terminal/boundaries.asm": "62f7ad69daa212e3d14bd3966eae9a5414340143dc9b589b8a0ee0d8ff5691b1",
+      "src/terminal/configuration.asm": "5172d14223fc6ac186452c92066dc95b8008af2bf7e5522337d4e3de26cf3187",
       "src/terminal/control_clear_screen.asm": "735a3f228698fd5538cd4b7589ef448ca68f377509c5b66ebcbca33c898c85d5",
       "src/terminal/control_formfeed.asm": "b2f059f4359794e867921416d896574d6bee0f535be339870d94bb1490ace1f6",
       "src/terminal/keyboard_data.asm": "05a64cd482cf50e2cc6d5eee18220b4b493cd4e7498aaa8adeb77b1ad1c56d1a",
-      "src/terminal/main.asm": "bca5c58c424fe8cbde83082ad6a112d507fb18e1ed2baa2f27604b3f43da4c0d",
-      "src/terminal/options.asm": "97c6666b16a3612686fb59dd75059fea946e79f82a0297399723860d7b714b07",
+      "src/terminal/main.asm": "33776476b099c880110b43e1900e33110345bb39dec14b9610bb0531c5ae18e2",
+      "src/terminal/options.asm": "164ae8104a240a7a193bf09a899296d26978494b0dc437e19e265be9a29e19bd",
       "src/terminal/services.asm": "cfc5f50208990db802f79d4f809560618e5579ff0ca8b5c74501ba46975c1546",
-      "src/terminal/state.asm": "187f0ee8e111d71ed2b76b6b3556623036a068dcba4802a5e452cf43de99f4f5",
+      "src/terminal/state.asm": "a33424eb0a6a9607b578aca93a364f6f6e129a7bf1dbce1646cc47b618517f58",
       "src/terminal/transport.asm": "b3d60e7d67ffb0db953e043b4ef9b9c2c02e7298a4ad031a76e9e3af2b18859e",
       "src/terminal/uart_data.asm": "4c37a129341e01667df80f17940791946667f4b0c081accd4e18230f29904789",
+      "src/config/prm_dos.c": "e4d0386d3fb40e225cbc34ec7f989286f67ec9ffcff29a6f50eb77d7b24ee021",
+      "src/config/terminal_import.c": "b28c64c3db55baadc39dd2ed4a8c6b21a64d5a2a2563730641e208e350ed305c",
+      "src/config/prm_dos.h": "3a6f8f27e13f5fc97e290b95def601e49ce93b54f729d1bc3ddc527ba39de20c",
+      "src/config/terminal_import.h": "5be41edd0cd6a9e345792348182341232f5cba2612a1a5ed31e63c82548933a6",
+      "src/config/terminal_import.inc": "10e4770712a5c0bf9227d625e2a56f0b8d22d27032638c24040291738e771cdf",
       "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
       "reconstruction/uart/layout.inc": "1e732d890b17486bdace3f978276ce48e55da318df70787aa54475203fa9bd21",
       "reconstruction/ansi/dispatch-layout.inc": "1fab8c56d84c54bef9b5938b4f13d14fee0199ec1c813a643edd71d9d31aa949"
@@ -107,7 +113,7 @@
     "limitations": [
       "Interactive terminal milestone, not the complete PCPlus application.",
       "Selected ANSI/ordinary controls, ASCII/raw CP437 output and four arrow mappings; specialized controls, fonts, profiles and UI remain unfinished.",
-      "Standard BIOS-listed COM1..4, explicit command options; no original PRM/KBD imported.",
+      "Standard BIOS-listed COM1..4; explicit partial2.01 PRM import, with CLI category overrides. No complete schema/default generation or KBD import.",
       "No dialing directory, automatic modem initialization, file transfers, ASPECT, Host or full settings UI.",
       "No physical UART/modem/public BBS validation."
     ]

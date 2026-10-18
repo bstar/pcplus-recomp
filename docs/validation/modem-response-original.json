@@ -1,0 +1,1020 @@
+{
+  "passed": true,
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "cases": [
+    {
+      "case": "response",
+      "slot": 0,
+      "autobaud": 0,
+      "result": 1,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "connected-ui"
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 0,
+      "autobaud": 1,
+      "result": 1,
+      "state": {
+        "baud_index": 0,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "set-baud",
+          "baud": 300
+        },
+        {
+          "operation": "connected-ui"
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 1,
+      "autobaud": 0,
+      "result": 1,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "connected-ui"
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 1,
+      "autobaud": 1,
+      "result": 1,
+      "state": {
+        "baud_index": 1,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "set-baud",
+          "baud": 1200
+        },
+        {
+          "operation": "connected-ui"
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 2,
+      "autobaud": 0,
+      "result": 1,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "connected-ui"
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 2,
+      "autobaud": 1,
+      "result": 1,
+      "state": {
+        "baud_index": 2,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "set-baud",
+          "baud": 2400
+        },
+        {
+          "operation": "connected-ui"
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 3,
+      "autobaud": 0,
+      "result": 1,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "connected-ui"
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 3,
+      "autobaud": 1,
+      "result": 1,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "connected-ui"
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 4,
+      "autobaud": 0,
+      "result": 1,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "connected-ui"
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 4,
+      "autobaud": 1,
+      "result": 1,
+      "state": {
+        "baud_index": 4,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "set-baud",
+          "baud": 9600
+        },
+        {
+          "operation": "connected-ui"
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 5,
+      "autobaud": 0,
+      "result": 1,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "connected-ui"
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 5,
+      "autobaud": 1,
+      "result": 1,
+      "state": {
+        "baud_index": 5,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "set-baud",
+          "baud": 19200
+        },
+        {
+          "operation": "connected-ui"
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 6,
+      "autobaud": 0,
+      "result": 1,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "connected-ui"
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 6,
+      "autobaud": 1,
+      "result": 1,
+      "state": {
+        "baud_index": 6,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "set-baud",
+          "baud": 38400
+        },
+        {
+          "operation": "connected-ui"
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 7,
+      "autobaud": 0,
+      "result": 0,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 7,
+      "autobaud": 1,
+      "result": 0,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 8,
+      "autobaud": 0,
+      "result": 0,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 8,
+      "autobaud": 1,
+      "result": 0,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 9,
+      "autobaud": 0,
+      "result": 0,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 9,
+      "autobaud": 1,
+      "result": 0,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 10,
+      "autobaud": 0,
+      "result": 0,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "response",
+      "slot": 10,
+      "autobaud": 1,
+      "result": 0,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "timeout-or-key",
+      "key": null,
+      "result": 0,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "timeout-or-key",
+      "key": 27,
+      "result": 27,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "abort-delay"
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "timeout-or-key",
+      "key": 32,
+      "result": 2,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "timeout-or-key",
+      "key": 20224,
+      "result": 0,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "edit-wait",
+          "accepted": false
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    },
+    {
+      "case": "timeout-or-key",
+      "key": 21248,
+      "result": 3,
+      "state": {
+        "baud_index": 3,
+        "echo": 1,
+        "pacing": 5
+      },
+      "calls": [
+        {
+          "operation": "rx-flush-boundary"
+        },
+        {
+          "operation": "command-send",
+          "source": 7115,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 24576,
+          "echo": 0,
+          "pacing_units": 30
+        },
+        {
+          "operation": "command-send",
+          "source": 7140,
+          "echo": 0,
+          "pacing_units": 30
+        }
+      ],
+      "unconsumed_response_bytes": 0
+    }
+  ],
+  "scope": "Actual original overlay5 e8ad and resident4a1d with synthetic response slots. UI, command send, baud setting, clock, keyboard and UART-read boundaries are modeled; Synthetic response is made available by the clock boundary after command sending, not before RXflush. No real modem/PRM or complete calling application."
+}

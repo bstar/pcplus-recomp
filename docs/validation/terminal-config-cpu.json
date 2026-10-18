@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+  "cases": [
+    {
+      "case": "all-standard-port-and-32bit-rate-imports-with-opaque-sentinels",
+      "passed": true,
+      "inputs": 36
+    },
+    {
+      "case": "independent-flow-bools-two-profiles-and-live-wrap-scroll",
+      "passed": true,
+      "inputs": 32
+    },
+    {
+      "case": "unsupported-known-fields-and-null-arguments-never-commit",
+      "passed": true,
+      "inputs": 30
+    },
+    {
+      "case": "actual-CLI-plus-ASM-import-all-category-override-combinations",
+      "passed": true,
+      "inputs": 16
+    },
+    {
+      "case": "absent-selector-performs-no-IO-and-retains-CLI-settings",
+      "passed": true,
+      "inputs": 1
+    }
+  ],
+  "scope": "Actual terminal-linked C validation and assembly application, opaque synthetic PRMs, existing CLI parser; interrupts and port IO forbidden. Real DOS loading/IRQ/video tested separately."
+}

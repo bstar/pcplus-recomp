@@ -1,18 +1,26 @@
 {
   "passed": true,
-  "scope": "Current interactive terminal and new application building blocks only; complete PCPlus application remains unfinished.",
-  "source_snapshot": "Tracked maintained source with original EXE/install/analysis databases absent.",
+  "scope": "Current interactive terminal and application building blocks only; complete PCPlus application remains unfinished.",
+  "source_snapshot": "Maintained public source with original EXE/install/analysis databases absent.",
   "outputs": {
     "terminal/TERMINAL.EXE": {
-      "sha256": "9a4308db775ca40fb7ff3dacf6169dff035b1350341cc852aedf5d6f9d0ede6f",
+      "sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
       "matches_workspace": true
     },
     "config-dos/CONFIG.EXE": {
       "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
       "matches_workspace": true
     },
+    "config-dos/CFGFAULT.EXE": {
+      "sha256": "e0a307b0c064cdb210889c8e57cead17f5bf4dde523b8679e5e96a5cfa9cd82a",
+      "matches_workspace": true
+    },
     "config-replace/REPLACE.EXE": {
       "sha256": "14daea33ed04c9639633f4ede3c951745c2c4ef36cf10f7b9d790265facb11a6",
+      "matches_workspace": true
+    },
+    "config-replace/REPFAULT.EXE": {
+      "sha256": "cc19bb968bb1ea389c6841f9ae935bdd69960841cb6a604b53eb003ee12fbc46",
       "matches_workspace": true
     },
     "config-abi/ABI.EXE": {
@@ -27,12 +35,8 @@
       "sha256": "f7bcd936b4a8966c2b79352147db4c3d4f3250630f7703852291b78020f7e9e3",
       "matches_workspace": true
     },
-    "config-dos/CFGFAULT.EXE": {
-      "sha256": "e0a307b0c064cdb210889c8e57cead17f5bf4dde523b8679e5e96a5cfa9cd82a",
-      "matches_workspace": true
-    },
-    "config-replace/REPFAULT.EXE": {
-      "sha256": "cc19bb968bb1ea389c6841f9ae935bdd69960841cb6a604b53eb003ee12fbc46",
+    "modem-responses/MODEMRSP.EXE": {
+      "sha256": "ee2c7450aff4d1a8df36e9e3040d187a1db14f0463f93958a8dfeaaadc573414",
       "matches_workspace": true
     }
   }

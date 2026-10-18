@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "ee2c7450aff4d1a8df36e9e3040d187a1db14f0463f93958a8dfeaaadc573414",
+  "scope": "Actual source-only DOS response matching, partial persistence and bad-cursor rejection; no UART or timing."
+}

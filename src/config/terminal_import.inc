@@ -1,0 +1,20 @@
+; Shared near-C settings layout. C compile-time offset checks enforce this ABI.
+%define TI_PORT 0
+%define TI_BAUD_LOW 2
+%define TI_BAUD_HIGH 4
+%define TI_PARITY 6
+%define TI_DATA 8
+%define TI_STOP 10
+%define TI_SOFT 12
+%define TI_HARD 14
+%define TI_PROFILE 16
+%define TI_NORMAL 18
+%define TI_BOLD 20
+%define TI_PRESET 22
+%define TI_REVERSE 24
+%define TI_UNDERLINE 26
+%define TI_WRAP 28
+%define TI_SCROLL 30
+%define TI_IO_BASE 32
+%define TI_IRQ 34
+%define TI_SIZE 36

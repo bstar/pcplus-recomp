@@ -1,0 +1,29 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "region": "resident-and-overlay5",
+  "ranges": [
+    {
+      "start": 18973,
+      "end": 19111,
+      "size": 138,
+      "sha256": "9f48631c9f64dc36d58094fb9c80c93bfc930caa25c8899e91146756e4bf5aca",
+      "source": "match.asm",
+      "context": "resident"
+    },
+    {
+      "source": "attempt.asm",
+      "context": "overlay5",
+      "start": 59565,
+      "end": 60141,
+      "size": 576,
+      "sha256": "85437c8a0fb0c4281022511c4c96a5aed46493606bd513cce438ab2326a09d47",
+      "assembly_evidence": "ev_5023f79a668e8360dce2412988c12d76db925a146c121f7b7531c9555fabec38"
+    }
+  ],
+  "assembly_evidence": "ev_eaf6bfcee78dea8d82da1fec58a76a1138dcf75801e5e52cc3063094472bfc9e",
+  "limitations": [
+    "Raw original requires valid NUL-terminated slots/cursors and uses UART availability/read boundaries.",
+    "Maintained bounded wrapper supplies one-byte input and validates slots/cursors; no timeout or live UART implementation.",
+    "Full attempt OMF object assembled but intentionally unlinked pending real UI/send/clock/UART service closure; original-only replay validates its decisions."
+  ]
+}

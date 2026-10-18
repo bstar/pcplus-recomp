@@ -1,0 +1,272 @@
+{
+  "passed": true,
+  "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+  "cases": [
+    {
+      "case": "import-ANSI-COM2",
+      "passed": true,
+      "checks": {
+        "expected_DOS_exit": true,
+        "IRQ_UART_PIC_restored": true,
+        "screen_captured": true,
+        "requested_file_unchanged": true,
+        "binary_unchanged": true,
+        "actual_ready_reply": true,
+        "imported_profile_device_reply": true,
+        "rendered_cursor_reply": true,
+        "actual_imported_video_color": true,
+        "all_protocol_checks_seen": true
+      },
+      "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+      "command": "@D:\\TEST.PRM",
+      "expected_exit": 0,
+      "observed_errors": [],
+      "scope": "Actual source-built terminal DOS startup with synthetic partial PRM; actual UART/IRQ, device/cursor replies and video. File and hardware independently checked."
+    },
+    {
+      "case": "import-VT220",
+      "passed": true,
+      "checks": {
+        "expected_DOS_exit": true,
+        "IRQ_UART_PIC_restored": true,
+        "screen_captured": true,
+        "requested_file_unchanged": true,
+        "binary_unchanged": true,
+        "actual_ready_reply": true,
+        "imported_profile_device_reply": true,
+        "rendered_cursor_reply": true,
+        "actual_imported_video_color": true,
+        "all_protocol_checks_seen": true
+      },
+      "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+      "command": "@D:\\TEST.PRM",
+      "expected_exit": 0,
+      "observed_errors": [],
+      "scope": "Actual source-built terminal DOS startup with synthetic partial PRM; actual UART/IRQ, device/cursor replies and video. File and hardware independently checked."
+    },
+    {
+      "case": "CLI-all-overrides",
+      "passed": true,
+      "checks": {
+        "expected_DOS_exit": true,
+        "IRQ_UART_PIC_restored": true,
+        "screen_captured": true,
+        "requested_file_unchanged": true,
+        "binary_unchanged": true,
+        "actual_ready_reply": true,
+        "imported_profile_device_reply": true,
+        "rendered_cursor_reply": true,
+        "actual_imported_video_color": true,
+        "all_protocol_checks_seen": true
+      },
+      "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+      "command": "@D:\\TEST.PRM COM1 38400 8N1 SOFT",
+      "expected_exit": 0,
+      "observed_errors": [],
+      "scope": "Actual source-built terminal DOS startup with synthetic partial PRM; actual UART/IRQ, device/cursor replies and video. File and hardware independently checked."
+    },
+    {
+      "case": "import-both-flow",
+      "passed": true,
+      "checks": {
+        "expected_DOS_exit": true,
+        "IRQ_UART_PIC_restored": true,
+        "screen_captured": true,
+        "requested_file_unchanged": true,
+        "binary_unchanged": true,
+        "actual_ready_reply": true,
+        "imported_profile_device_reply": true,
+        "rendered_cursor_reply": true,
+        "actual_imported_video_color": true,
+        "all_protocol_checks_seen": true
+      },
+      "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+      "command": "@D:\\TEST.PRM",
+      "expected_exit": 0,
+      "observed_errors": [],
+      "scope": "Actual source-built terminal DOS startup with synthetic partial PRM; actual UART/IRQ, device/cursor replies and video. File and hardware independently checked."
+    },
+    {
+      "case": "import-115200-COM3",
+      "passed": true,
+      "checks": {
+        "expected_DOS_exit": true,
+        "IRQ_UART_PIC_restored": true,
+        "screen_captured": true,
+        "requested_file_unchanged": true,
+        "binary_unchanged": true,
+        "actual_ready_reply": true,
+        "imported_profile_device_reply": true,
+        "rendered_cursor_reply": true,
+        "actual_imported_video_color": true,
+        "all_protocol_checks_seen": true
+      },
+      "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+      "command": "@D:\\TEST.PRM",
+      "expected_exit": 0,
+      "observed_errors": [],
+      "scope": "Actual source-built terminal DOS startup with synthetic partial PRM; actual UART/IRQ, device/cursor replies and video. File and hardware independently checked."
+    },
+    {
+      "case": "missing-file",
+      "passed": true,
+      "checks": {
+        "expected_DOS_exit": true,
+        "IRQ_UART_PIC_restored": true,
+        "screen_captured": true,
+        "requested_file_unchanged": true,
+        "binary_unchanged": true
+      },
+      "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+      "command": "@D:\\TEST.PRM",
+      "expected_exit": 7,
+      "observed_errors": [],
+      "scope": "Actual source-built terminal DOS startup with synthetic partial PRM; actual UART/IRQ, device/cursor replies and video. File and hardware independently checked."
+    },
+    {
+      "case": "short-file",
+      "passed": true,
+      "checks": {
+        "expected_DOS_exit": true,
+        "IRQ_UART_PIC_restored": true,
+        "screen_captured": true,
+        "requested_file_unchanged": true,
+        "binary_unchanged": true
+      },
+      "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+      "command": "@D:\\TEST.PRM",
+      "expected_exit": 7,
+      "observed_errors": [],
+      "scope": "Actual source-built terminal DOS startup with synthetic partial PRM; actual UART/IRQ, device/cursor replies and video. File and hardware independently checked."
+    },
+    {
+      "case": "long-file",
+      "passed": true,
+      "checks": {
+        "expected_DOS_exit": true,
+        "IRQ_UART_PIC_restored": true,
+        "screen_captured": true,
+        "requested_file_unchanged": true,
+        "binary_unchanged": true
+      },
+      "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+      "command": "@D:\\TEST.PRM",
+      "expected_exit": 7,
+      "observed_errors": [],
+      "scope": "Actual source-built terminal DOS startup with synthetic partial PRM; actual UART/IRQ, device/cursor replies and video. File and hardware independently checked."
+    },
+    {
+      "case": "invalid-profile",
+      "passed": true,
+      "checks": {
+        "expected_DOS_exit": true,
+        "IRQ_UART_PIC_restored": true,
+        "screen_captured": true,
+        "requested_file_unchanged": true,
+        "binary_unchanged": true
+      },
+      "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+      "command": "@D:\\TEST.PRM",
+      "expected_exit": 7,
+      "observed_errors": [],
+      "scope": "Actual source-built terminal DOS startup with synthetic partial PRM; actual UART/IRQ, device/cursor replies and video. File and hardware independently checked."
+    },
+    {
+      "case": "invalid-flow",
+      "passed": true,
+      "checks": {
+        "expected_DOS_exit": true,
+        "IRQ_UART_PIC_restored": true,
+        "screen_captured": true,
+        "requested_file_unchanged": true,
+        "binary_unchanged": true
+      },
+      "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+      "command": "@D:\\TEST.PRM",
+      "expected_exit": 7,
+      "observed_errors": [],
+      "scope": "Actual source-built terminal DOS startup with synthetic partial PRM; actual UART/IRQ, device/cursor replies and video. File and hardware independently checked."
+    },
+    {
+      "case": "invalid-IRQ",
+      "passed": true,
+      "checks": {
+        "expected_DOS_exit": true,
+        "IRQ_UART_PIC_restored": true,
+        "screen_captured": true,
+        "requested_file_unchanged": true,
+        "binary_unchanged": true
+      },
+      "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+      "command": "@D:\\TEST.PRM",
+      "expected_exit": 7,
+      "observed_errors": [],
+      "scope": "Actual source-built terminal DOS startup with synthetic partial PRM; actual UART/IRQ, device/cursor replies and video. File and hardware independently checked."
+    },
+    {
+      "case": "invalid-display",
+      "passed": true,
+      "checks": {
+        "expected_DOS_exit": true,
+        "IRQ_UART_PIC_restored": true,
+        "screen_captured": true,
+        "requested_file_unchanged": true,
+        "binary_unchanged": true
+      },
+      "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+      "command": "@D:\\TEST.PRM",
+      "expected_exit": 7,
+      "observed_errors": [],
+      "scope": "Actual source-built terminal DOS startup with synthetic partial PRM; actual UART/IRQ, device/cursor replies and video. File and hardware independently checked."
+    },
+    {
+      "case": "bad-file-not-hidden-by-CLI",
+      "passed": true,
+      "checks": {
+        "expected_DOS_exit": true,
+        "IRQ_UART_PIC_restored": true,
+        "screen_captured": true,
+        "requested_file_unchanged": true,
+        "binary_unchanged": true
+      },
+      "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+      "command": "@D:\\TEST.PRM COM1 38400 NONE",
+      "expected_exit": 7,
+      "observed_errors": [],
+      "scope": "Actual source-built terminal DOS startup with synthetic partial PRM; actual UART/IRQ, device/cursor replies and video. File and hardware independently checked."
+    },
+    {
+      "case": "help-does-not-load-missing",
+      "passed": true,
+      "checks": {
+        "expected_DOS_exit": true,
+        "IRQ_UART_PIC_restored": true,
+        "screen_captured": true,
+        "requested_file_unchanged": true,
+        "binary_unchanged": true
+      },
+      "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+      "command": "@D:\\TEST.PRM /?",
+      "expected_exit": 0,
+      "observed_errors": [],
+      "scope": "Actual source-built terminal DOS startup with synthetic partial PRM; actual UART/IRQ, device/cursor replies and video. File and hardware independently checked."
+    },
+    {
+      "case": "invalid-CLI",
+      "passed": true,
+      "checks": {
+        "expected_DOS_exit": true,
+        "IRQ_UART_PIC_restored": true,
+        "screen_captured": true,
+        "requested_file_unchanged": true,
+        "binary_unchanged": true
+      },
+      "binary_sha256": "31314d123ebb1b9d36e2b243f0d94d1ff19f571fd589fe6fe441552115e56b3e",
+      "command": "@D:\\TEST.PRM BADOPTION",
+      "expected_exit": 1,
+      "observed_errors": [],
+      "scope": "Actual source-built terminal DOS startup with synthetic partial PRM; actual UART/IRQ, device/cursor replies and video. File and hardware independently checked."
+    }
+  ],
+  "scope": "Actual DOS PRM startup/import, CLI precedence, no-rewrite error handling and independent hardware/video/protocol checks. Synthetic fixtures only; not full schema/default generation."
+}

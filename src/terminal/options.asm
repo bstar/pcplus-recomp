@@ -26,6 +26,10 @@ terminal_parse_options:
  cld
  rep movsw
  mov byte [options_seen],0
+ mov di,options_config_stage
+ xor ax,ax
+ mov cx,32
+ rep stosw
  mov es,dx
  xor cx,cx
  mov cl,[es:0x80]
@@ -56,7 +60,7 @@ terminal_parse_options:
  jb .invalid
  cmp al,0x7e
  ja .invalid
- cmp di,15
+ cmp di,64
  jae .invalid
  cmp al,'a'
  jb .store
@@ -71,6 +75,11 @@ terminal_parse_options:
  jmp .copy
 .token_done:
  mov byte [options_token+di],0
+ cmp byte [options_token],'@'
+ je .process
+ cmp di,15
+ ja .invalid
+.process:
  push cx
  push si
  call options_process_token
@@ -116,6 +125,16 @@ terminal_parse_options:
  mov [uart_software_flow],ax
  mov ax,[options_hard]
  mov [uart_hardware_flow],ax
+ ; Commit only after the complete command tail has validated. No file is read.
+ push ds
+ pop es
+ mov si,options_config_stage
+ mov di,terminal_config_path
+ mov cx,32
+ rep movsw
+ xor ax,ax
+ mov al,[options_seen]
+ mov [terminal_option_mask],ax
  xor ax,ax
  clc
  jmp .return
@@ -152,6 +171,31 @@ options_equal:
  ret
 
 options_process_token:
+ cmp byte [options_token],'@'
+ jne .help_start
+ test byte [options_seen],16
+ jnz .bad
+ mov si,options_token+1
+ mov di,options_config_stage
+ cmp byte [si],0
+ je .bad
+.config_copy:
+ lodsb
+ cmp al,'*'
+ je .bad
+ cmp al,'?'
+ je .bad
+ cmp al,34
+ je .bad
+ cmp al,39
+ je .bad
+ mov [di],al
+ inc di
+ or al,al
+ jnz .config_copy
+ or byte [options_seen],16
+ jmp .good
+.help_start:
  mov si,options_help_table
 .help_loop:
  lodsw
@@ -213,9 +257,9 @@ options_process_token:
  add bx,6
  jmp .flow_loop
 .flow_found:
- test byte [options_seen],4
+ test byte [options_seen],8
  jnz .bad
- or byte [options_seen],4
+ or byte [options_seen],8
  mov ax,[bx+2]
  mov [options_soft],ax
  mov ax,[bx+4]
@@ -252,9 +296,9 @@ options_process_token:
  jb .parity_loop
  jmp .bad
 .parity_ok:
- test byte [options_seen],8
+ test byte [options_seen],4
  jnz .bad
- or byte [options_seen],8
+ or byte [options_seen],4
  mov [options_parity],bx
 .good:
  xor ax,ax
@@ -266,10 +310,13 @@ options_process_token:
  ret
 
 SEGMENT _DATA public class=DATA use16
-global terminal_usage
+global terminal_usage,terminal_config_path,terminal_option_mask
+terminal_config_path: times 64 db 0
+terminal_option_mask: dw 0
 terminal_usage:
  db 'PCPLUS terminal lab',13,10
- db 'Usage: TERMINAL [COM1..COM4] [baud] [serial] [NONE|SOFT|HARD]',13,10
+ db 'Usage: TERMINAL [@FILE.PRM] [COM1..COM4] [baud] [serial] [NONE|SOFT|HARD]',13,10
+ db 'PRM path: explicit only, max 63 bytes; no spaces, quotes or wildcards.',13,10
  db 'Serial: 7/8 data, N/O/E/M/S parity, 1/2 stop; e.g. 8N1. Any option order.',13,10
  db 'Baud: 300 1200 2400 4800 9600 19200 38400 57600 115200',13,10
  db 'Defaults: COM1 38400 8N1 NONE. Alt-X exits. /? shows this help.',13,10,'$'
@@ -284,7 +331,8 @@ options_stop: dw 0
 options_soft: dw 0
 options_hard: dw 0
 options_seen: db 0
-options_token: times 16 db 0
+options_token: times 65 db 0
+options_config_stage: times 64 db 0
 options_parities: db 'NOEMS'
 options_bases: dw 0x3f8,0x2f8,0x3e8,0x2e8
 options_irqs: dw 4,3,4,3

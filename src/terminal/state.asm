@@ -18,7 +18,7 @@ csi_saved_row: dw 0
 global csi_saved_column
 csi_saved_column: dw 0
 global cursor_state_value_cdfc
-cursor_state_value_cdfc: dw 0
+cursor_state_value_cdfc: dw 1
 global cursor_state_value_ce04
 cursor_state_value_ce04: dw 0
 global cursor_state_value_1d20
@@ -32,9 +32,9 @@ cursor_state_saved_cdfc: dw 0
 global cursor_state_saved_ce04
 cursor_state_saved_ce04: dw 0
 global cursor_state_saved_1f70
-cursor_state_saved_1f70: dw 0
+cursor_state_saved_1f70: dw 7
 global cursor_state_saved_1d20
-cursor_state_saved_1d20: dw 0
+cursor_state_saved_1d20: dw 1
 global cursor_state_saved_cdd2
 cursor_state_saved_cdd2: dw 0
 global cursor_state_saved_3342
@@ -42,7 +42,7 @@ cursor_state_saved_3342: dw 0
 global modes_value_1d1a
 modes_value_1d1a: dw 0
 global modes_value_3980
-modes_value_3980: dw 0
+modes_value_3980: dw 1
 global modes_value_3982
 modes_value_3982: dw 0
 global modes_cursor_flags
@@ -345,7 +345,7 @@ terminal_tab_wrap: dw 0
 global terminal_tab_mode_8ff8
 terminal_tab_mode_8ff8: dw 0
 global terminal_backspace_mode_9058
-terminal_backspace_mode_9058: dw 0
+terminal_backspace_mode_9058: dw 1
 global terminal_backspace_erases
 terminal_backspace_erases: db 0
 global terminal_newline_mode_9020

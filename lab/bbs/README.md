@@ -62,3 +62,14 @@ transport/cleanup checks. Physical RS-232 Wi-Fi modem behavior, the user's
 specific failing public-board screens, transfers, full-screen editing and
 advanced protocols remain separate validation. This milestone is an interactive
 terminal, not the complete PCPlus application.
+
+## PRM startup regression
+
+The current primary matrix repeats all three read-only workflows with
+`TERMINAL @D:\TEST.PRM` inside DOS. The synthetic partial configuration selects
+COM2/19200/8N1/HARD; no serial CLI option masks the import. The harness option
+`--config-fixture` creates this fixture and verifies it is unchanged. It never
+loads private dialing or installed configuration data. Current results and
+historical executable hashes are distinguished in
+[`bbs-matrix.json`](../../docs/validation/bbs-matrix.json). Physical modem timing,
+transfers and the complete PCPlus application remain outside these results.
