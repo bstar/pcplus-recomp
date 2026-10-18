@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "source_tree": "9b864d6a66b983d0ea3e794d8f1c6c696287229b",
+  "command": "./tools/build all test-input_dispatch test-input-relocation test-config",
+  "original_executable_present": false,
+  "original_install_present": false,
+  "log_sha256": "54b919f372e79c9803250b2695f4c4385d83b0d18ddeea68ccc04272335d6e3e",
+  "input_binary_sha256": "1f75f66df27b8f7466d4babb8bf76c42087f80167fdb8ed5f5f7461106831080",
+  "scope": "Build all current source-only diagnostics and test new continuous input CPU/DOS/relocation plus config codec; earlier complete suite evidence remains isolated-source-build.json. No live modem/full application."
+}

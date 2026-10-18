@@ -85,6 +85,10 @@ Additional targets `test-scroll`, `test-modes`, `test-render`, `test-cursor_shap
 and `test-terminal-services` verify real scrolling, terminal modes, ordinary
 character output, cursor visibility/style and key-map/tab/reset helpers. These
 are source-built components; a complete interactive application remains open.
+`./tools/build test-input_dispatch test-input-relocation` verifies continuous
+text/ESC/CR/LF/TAB/BS through the recovered input, renderer and history paths.
+Selected controls and ANSI profiles are implemented; this diagnostic uses a
+memory byte provider. See [docs/INPUT_DISPATCH.md](docs/INPUT_DISPATCH.md).
 `./tools/build test-config` verifies a partial lossless host codec for proved PRM
 settings. It preserves unknown bytes and uses synthetic data; DOS configuration
 loading, complete defaults and the full settings UI remain work in progress.
@@ -106,9 +110,10 @@ place your supporting installation files, including ASPCOMP.EXE, in
 ./tools/pcplus-run
 ```
 
-The compatibility build verifies and inserts 8,982 recovered source bytes into the
+The compatibility build verifies and inserts 10,129 recovered source bytes (including 130 startup pointer-table bytes) into the
 original container, then replaces exactly two bytes using the archived Datastorm
-TECH_NET recipe. It retains the original program's other code and resources.
+TECH_NET recipe. Other maintained parser/input bounds fixes apply to source-built
+diagnostics; this compatibility container still changes only those two bytes. It retains the original program's other code and resources.
 The launcher uses a separate private installation under `reconstruction/lab`.
 Type `ATDThost:port` to dial its emulated Hayes modem; Alt-X exits. Its generated
 startup script and executable are refreshed on launch.

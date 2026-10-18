@@ -1,5 +1,5 @@
-MODULES := escape attributes screen text reports erase cursor_state cursor_shape scroll modes render csi
-.PHONY: all serial parser keyboard $(MODULES) $(addprefix test-,$(MODULES)) test test-driver test-parser test-keyboard test-config test-parser-compat test-csi-relocation test-modes-relocation test-terminal-services compat test-compat test-modem clean
+MODULES := escape attributes screen text reports erase cursor_state cursor_shape scroll modes render input_dispatch csi
+.PHONY: all serial parser keyboard $(MODULES) $(addprefix test-,$(MODULES)) test test-driver test-parser test-keyboard test-config test-parser-compat test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services compat test-compat test-modem clean
 
 all: serial parser keyboard $(MODULES)
 
@@ -15,6 +15,9 @@ test-csi-relocation: csi
 
 test-modes-relocation: modes
 	python3 standalone/check_modes_relocation.py
+
+test-input-relocation: input_dispatch
+	python3 standalone/check_input_dispatch_relocation.py
 
 test-terminal-services: csi
 	python3 standalone/check_terminal_services.py
@@ -42,7 +45,7 @@ test-parser: parser
 	python3 standalone/check_ansi.py
 	python3 standalone/test_parser_dos.py
 
-test: test-driver test-parser test-keyboard $(addprefix test-,$(MODULES)) test-csi-relocation test-modes-relocation test-terminal-services test-config
+test: test-driver test-parser test-keyboard $(addprefix test-,$(MODULES)) test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services test-config
 	python3 standalone/test_serial.py
 
 test-parser-compat: parser compat

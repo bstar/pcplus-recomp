@@ -28,9 +28,11 @@ def build_units(original):
         ("ansi/escape.asm", 0xecd2, 0xeeaf, 100386, False),
         ("cursor_state/core.asm", 0xdd74, 0xde04, 92708, False),
         ("modes/core.asm", 0xde98, 0xe084, 93000, False),
+        # Re-authored startup DS function-pointer tables, not resident code.
+        ("input_dispatch/tables.asm", 0x445e, 0x44e0, 0x25950 + 0x445e, False),
     ]
     specifications = [(*item, []) for item in specifications]
-    for module in ("screen", "attributes", "erase", "text", "terminal_services", "scroll", "render", "cursor_shape"):
+    for module in ("screen", "attributes", "erase", "text", "terminal_services", "scroll", "render", "cursor_shape", "input_dispatch"):
         provenance = json.loads((ROOT / f"reconstruction/{module}/provenance.json").read_text())
         for unit in provenance["units"]:
             lower, upper = unit["start"], unit["end"]

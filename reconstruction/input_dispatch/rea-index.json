@@ -1,0 +1,52 @@
+[
+  {
+    "resident_entry": "0x610",
+    "evidence_id": "ev_d53d1c66282bc50e670ae82baf3d89c2e48f0e66887e64c4c498cb484047acbb",
+    "scope": "retainedREA/Ghidraassembly"
+  },
+  {
+    "resident_entry": "0x9b6",
+    "evidence_id": "ev_59d3555c1eff09c949a0ed62a576c1f7a6107831cb7b3ba2e3c669917aec0157",
+    "scope": "retainedREA/Ghidraassembly"
+  },
+  {
+    "resident_entry": "0xa8c",
+    "scope": "original verified instruction range; entry corroborated by actual DScontroltable or directcall target, omitted from retainedREAfunctioninventory"
+  },
+  {
+    "resident_entry": "0xe60",
+    "scope": "original verified instruction range; entry corroborated by actual DScontroltable or directcall target, omitted from retainedREAfunctioninventory"
+  },
+  {
+    "resident_entry": "0xeea",
+    "scope": "original verified instruction range; entry corroborated by actual DScontroltable or directcall target, omitted from retainedREAfunctioninventory"
+  },
+  {
+    "resident_entry": "0xf3e",
+    "scope": "original verified instruction range; entry corroborated by actual DScontroltable or directcall target, omitted from retainedREAfunctioninventory"
+  },
+  {
+    "resident_entry": "0x1002",
+    "scope": "original verified instruction range; entry corroborated by actual DScontroltable or directcall target, omitted from retainedREAfunctioninventory"
+  },
+  {
+    "resident_entry": "0x1f56",
+    "evidence_id": "ev_37506588f17d0f8a76a2481d23ed54a5b7ece342c9971c062c91d985bc6c0352",
+    "scope": "retainedREA/Ghidraassembly"
+  },
+  {
+    "resident_entry": "0x5832",
+    "evidence_id": "ev_48c26fed90db1a41e030acafe59551473a6d214b4954cc40c16504a968729250",
+    "scope": "retainedREA/Ghidraassembly"
+  },
+  {
+    "resident_entry": "0x58ce",
+    "evidence_id": "ev_3775c89edd0f1d5e0bd9d993c04b86e97018e049f17a1776a5801c6cc8c917e6",
+    "scope": "retainedREA/Ghidraassembly"
+  },
+  {
+    "resident_entry": "0x830c",
+    "evidence_id": "ev_b7e2aee6447f1486f524d08b70ed8284a1df9872fffb6b89775e635353848ae6",
+    "scope": "retainedREA/Ghidraassembly"
+  }
+]

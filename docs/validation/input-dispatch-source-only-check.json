@@ -1,0 +1,5 @@
+{
+  "passed": true,
+  "scope": "Copied only declared source inputs, provenance and test harnesses to temporary directory without analysis/originals; fullinput build,8linked regressions and realDOSBox-X streamselftest including word-byte guard passed.",
+  "binary_sha256": "1f75f66df27b8f7466d4babb8bf76c42087f80167fdb8ed5f5f7461106831080"
+}

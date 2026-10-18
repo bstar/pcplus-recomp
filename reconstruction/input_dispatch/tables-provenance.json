@@ -1,0 +1,281 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "startup_data_sha256": "41b5e49c3f2bc40b7007d311af4282d9724b4cf0b11a696ca2bd6062ef4132c7",
+  "table_sha256": "f0094e840c188013993ce4f448933d1cc58c22d8862b183cc3b2b7b55c8f5fbe",
+  "bytes": 130,
+  "tables": {
+    "terminal_escape_dispatch_table": {
+      "start": 17502,
+      "entries": [
+        {
+          "original": 3680,
+          "symbol": "terminal_ignore_control"
+        },
+        {
+          "original": 47499,
+          "symbol": "terminal_escape_b98b"
+        },
+        {
+          "original": 47475,
+          "symbol": "ansi_escape_entry"
+        },
+        {
+          "original": 47475,
+          "symbol": "ansi_escape_entry"
+        },
+        {
+          "original": 47475,
+          "symbol": "ansi_escape_entry"
+        },
+        {
+          "original": 47475,
+          "symbol": "ansi_escape_entry"
+        },
+        {
+          "original": 47475,
+          "symbol": "ansi_escape_entry"
+        },
+        {
+          "original": 47475,
+          "symbol": "ansi_escape_entry"
+        },
+        {
+          "original": 47475,
+          "symbol": "ansi_escape_entry"
+        },
+        {
+          "original": 47475,
+          "symbol": "ansi_escape_entry"
+        },
+        {
+          "original": 47475,
+          "symbol": "ansi_escape_entry"
+        },
+        {
+          "original": 47475,
+          "symbol": "ansi_escape_entry"
+        },
+        {
+          "original": 47523,
+          "symbol": "terminal_escape_b9a3"
+        },
+        {
+          "original": 47487,
+          "symbol": "terminal_escape_b97f"
+        },
+        {
+          "original": 47487,
+          "symbol": "terminal_escape_b97f"
+        },
+        {
+          "original": 3680,
+          "symbol": "terminal_ignore_control"
+        },
+        {
+          "original": 3680,
+          "symbol": "terminal_ignore_control"
+        },
+        {
+          "original": 3680,
+          "symbol": "terminal_ignore_control"
+        },
+        {
+          "original": 47535,
+          "symbol": "terminal_escape_b9af"
+        },
+        {
+          "original": 47535,
+          "symbol": "terminal_escape_b9af"
+        },
+        {
+          "original": 47511,
+          "symbol": "terminal_escape_b997"
+        },
+        {
+          "original": 47511,
+          "symbol": "terminal_escape_b997"
+        },
+        {
+          "original": 47931,
+          "symbol": "terminal_escape_bb3b"
+        },
+        {
+          "original": 47931,
+          "symbol": "terminal_escape_bb3b"
+        },
+        {
+          "original": 47931,
+          "symbol": "terminal_escape_bb3b"
+        },
+        {
+          "original": 47931,
+          "symbol": "terminal_escape_bb3b"
+        },
+        {
+          "original": 47931,
+          "symbol": "terminal_escape_bb3b"
+        },
+        {
+          "original": 47931,
+          "symbol": "terminal_escape_bb3b"
+        },
+        {
+          "original": 47931,
+          "symbol": "terminal_escape_bb3b"
+        },
+        {
+          "original": 47931,
+          "symbol": "terminal_escape_bb3b"
+        },
+        {
+          "original": 47931,
+          "symbol": "terminal_escape_bb3b"
+        },
+        {
+          "original": 47931,
+          "symbol": "terminal_escape_bb3b"
+        },
+        {
+          "original": 47931,
+          "symbol": "terminal_escape_bb3b"
+        }
+      ]
+    },
+    "terminal_control_dispatch_table": {
+      "start": 17568,
+      "entries": [
+        {
+          "original": 3680,
+          "symbol": "terminal_ignore_control"
+        },
+        {
+          "original": 3682,
+          "symbol": "terminal_control_0e62"
+        },
+        {
+          "original": 3696,
+          "symbol": "terminal_control_0e70"
+        },
+        {
+          "original": 3680,
+          "symbol": "terminal_ignore_control"
+        },
+        {
+          "original": 19671,
+          "symbol": "terminal_control_4cd7"
+        },
+        {
+          "original": 3708,
+          "symbol": "terminal_control_0e7c"
+        },
+        {
+          "original": 3806,
+          "symbol": "terminal_control_0ede"
+        },
+        {
+          "original": 14200,
+          "symbol": "terminal_control_3778"
+        },
+        {
+          "original": 3818,
+          "symbol": "terminal_backspace"
+        },
+        {
+          "original": 2700,
+          "symbol": "terminal_tab"
+        },
+        {
+          "original": 3902,
+          "symbol": "terminal_linefeed"
+        },
+        {
+          "original": 3938,
+          "symbol": "terminal_control_0f62"
+        },
+        {
+          "original": 4016,
+          "symbol": "terminal_control_0fb0"
+        },
+        {
+          "original": 4098,
+          "symbol": "terminal_carriage_return"
+        },
+        {
+          "original": 4160,
+          "symbol": "terminal_control_1040"
+        },
+        {
+          "original": 4196,
+          "symbol": "terminal_control_1064"
+        },
+        {
+          "original": 4246,
+          "symbol": "terminal_control_1096"
+        },
+        {
+          "original": 3680,
+          "symbol": "terminal_ignore_control"
+        },
+        {
+          "original": 4302,
+          "symbol": "terminal_control_10ce"
+        },
+        {
+          "original": 4348,
+          "symbol": "terminal_control_10fc"
+        },
+        {
+          "original": 4362,
+          "symbol": "terminal_control_110a"
+        },
+        {
+          "original": 4414,
+          "symbol": "terminal_control_113e"
+        },
+        {
+          "original": 4444,
+          "symbol": "terminal_control_115c"
+        },
+        {
+          "original": 4496,
+          "symbol": "terminal_control_1190"
+        },
+        {
+          "original": 4520,
+          "symbol": "terminal_control_11a8"
+        },
+        {
+          "original": 4668,
+          "symbol": "terminal_control_123c"
+        },
+        {
+          "original": 4680,
+          "symbol": "terminal_control_1248"
+        },
+        {
+          "original": 3680,
+          "symbol": "terminal_ignore_control"
+        },
+        {
+          "original": 4734,
+          "symbol": "terminal_control_127e"
+        },
+        {
+          "original": 4754,
+          "symbol": "terminal_control_1292"
+        },
+        {
+          "original": 4784,
+          "symbol": "terminal_control_12b0"
+        },
+        {
+          "original": 4808,
+          "symbol": "screen_wrap_forward"
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Pointers re-authored as symbols; only ANSI escape profiles2..11 and selected ordinary controls implemented. Unsupported targets remain explicit link dependencies."
+  ]
+}

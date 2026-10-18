@@ -32,7 +32,11 @@ requires an attached DOS machine/modem and must not be inferred from emulation.
       the recovered high-level character renderer also wraps and scrolls, with
       531 operations matched against the original. Scroll/index and mode
       handlers, keyboard-mode/tab/reset helpers and BIOS cursor-shape routines
-      now build and pass independent tests; combined integration continues.
+      now pass independent and combined tests. The actual continuous input
+      dispatcher, ordinary CR/LF/TAB/BS, history and guarded logging paths
+      run in source-only DOS; specialized controls/sinks remain explicit gaps.
+      A maintained byte-normalization guard prevents proven negative-word
+      control-table indexing. See `docs/INPUT_DISPATCH.md`.
       remaining application services still prevent complete parser coverage.
       See `docs/ANSI.md`, `docs/CSI.md` and component documentation.
 - [ ] Reconstruct independently buildable complete parser and keyboard modules.

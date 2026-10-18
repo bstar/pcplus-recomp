@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "1f75f66df27b8f7466d4babb8bf76c42087f80167fdb8ed5f5f7461106831080",
+  "scope": "Source-only DOS executable checks continuous stream printable/ESC/CR/LF/TAB/BS through actual input dispatcher in DOSBox-X; no original executable or modem."
+}

@@ -1,0 +1,170 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/input_dispatch/dispatch.asm",
+      "start": 1552,
+      "end": 1840,
+      "bytes": 288,
+      "instructions": 78,
+      "sha256": "71c5f03454f7079c81daaec9a7ffdf980d4027fb1e75b2d1a4d1ce16f9fa65cc",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/input_dispatch/logging.asm",
+      "start": 2486,
+      "end": 2618,
+      "bytes": 132,
+      "instructions": 53,
+      "sha256": "19053388706c76e4aca61da2157a8581655d4f6b4b5567d21b28b2b3ee2da6fd",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/input_dispatch/tab.asm",
+      "start": 2700,
+      "end": 2894,
+      "bytes": 194,
+      "instructions": 80,
+      "sha256": "4afa58f6a4c80ddf2dc997ef72e1019afba8acae838546e6148137bdaa8206aa",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/input_dispatch/ignore.asm",
+      "start": 3680,
+      "end": 3681,
+      "bytes": 1,
+      "instructions": 1,
+      "sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/input_dispatch/backspace.asm",
+      "start": 3818,
+      "end": 3901,
+      "bytes": 83,
+      "instructions": 31,
+      "sha256": "3ea7f12cfc095f75833c34ab65bbe88cb31a9d0e49cf3bbba8dc8a6d31676980",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/input_dispatch/linefeed.asm",
+      "start": 3902,
+      "end": 3938,
+      "bytes": 36,
+      "instructions": 14,
+      "sha256": "f87270244f32451b4ebfe40543c7b7f6c729114e9fcb897eb4102d82db6d28e4",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/input_dispatch/carriage_return.asm",
+      "start": 4098,
+      "end": 4160,
+      "bytes": 62,
+      "instructions": 25,
+      "sha256": "88fc0b0ef1c0bec59ddebfa9db2fcf9b98fc6707f01d19dea4c2c1fe04f00bd3",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/input_dispatch/home.asm",
+      "start": 8022,
+      "end": 8047,
+      "bytes": 25,
+      "instructions": 11,
+      "sha256": "4ab1cf9c1746f338aa3baebc342ac11268bbfeb803e497b056bc9ad1a692ada5",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/input_dispatch/history.asm",
+      "start": 22578,
+      "end": 22734,
+      "bytes": 156,
+      "instructions": 56,
+      "sha256": "d0d91fc70ef6b21a5ff7444996993e877e0cbdc3009d1e6fef80d0ea6f645d82",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/input_dispatch/history_pair.asm",
+      "start": 22734,
+      "end": 22762,
+      "bytes": 28,
+      "instructions": 11,
+      "sha256": "fcbc288bbae25fe4ca165ee21c84a4e23cdff2759c8d57ab78664f3bfd1d606e",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/input_dispatch/divide.asm",
+      "start": 33548,
+      "end": 33560,
+      "bytes": 12,
+      "instructions": 7,
+      "sha256": "e5c14b9ddb162e5cf322974b45c5633d17471c2b151dab2aec8dd2544e486def",
+      "matched_original": true
+    }
+  ],
+  "state": {
+    "1d18": "csi_terminal_id",
+    "445e": "terminal_escape_dispatch_table",
+    "44a0": "terminal_control_dispatch_table",
+    "8ff6": "attributes_monochrome",
+    "3340": "scroll_suppress_next_linefeed",
+    "8fe8": "terminal_input_mode_8fe8",
+    "1d30": "terminal_c1_enabled",
+    "3988": "terminal_sink_3988_enabled",
+    "1d24": "terminal_cr_adds_lf",
+    "398a": "terminal_sink_398a_enabled",
+    "398c": "terminal_sink_398c_disabled",
+    "d114": "terminal_sink_handle",
+    "418a": "terminal_sink_error_state",
+    "3342": "csi_wrap_pending",
+    "900c": "screen_cursor_wrap",
+    "3734": "screen_attribute_checks",
+    "325c": "erase_cell_count",
+    "3346": "screen_attribute_offset",
+    "39c4": "screen_attributes_base",
+    "325a": "screen_attribute_row_bytes",
+    "399e": "screen_cursor_column",
+    "399c": "screen_cursor_row",
+    "3258": "screen_last_column",
+    "903e": "terminal_tab_wrap",
+    "8ff8": "terminal_tab_mode_8ff8",
+    "9058": "terminal_backspace_mode_9058",
+    "1d26": "terminal_backspace_erases",
+    "cf86": "screen_line_flags",
+    "1f70": "attributes_current",
+    "9020": "terminal_newline_mode_9020",
+    "ce3a": "screen_last_row",
+    "1d22": "scroll_enabled",
+    "4ecc": "terminal_history_pending",
+    "4ebe": "terminal_history_pointer",
+    "4ec6": "terminal_history_end",
+    "4eba": "terminal_history_start",
+    "4ec8": "terminal_history_wrapped",
+    "ce10": "terminal_tab_stops"
+  },
+  "services": {
+    "0730": "render_character",
+    "abde": "ansi_unread_byte",
+    "b973": "ansi_escape_entry",
+    "1bbe": "screen_set_cursor",
+    "1ea0": "screen_cursor_right",
+    "12c8": "screen_wrap_forward",
+    "2adc": "screen_adjust_attribute_boundary",
+    "1e30": "screen_cursor_left",
+    "6c4a": "text_write_bios",
+    "1d88": "screen_linefeed",
+    "1fc4": "scroll_up",
+    "36fc": "terminal_sink_36fc",
+    "8436": "terminal_sink_8436",
+    "427f": "terminal_sink_427f",
+    "bb23": "terminal_sink_bb23",
+    "2fb8": "screen_viewport_refresh"
+  },
+  "rea_evidence_id": "ev_d53d1c66282bc50e670ae82baf3d89c2e48f0e66887e64c4c498cb484047acbb",
+  "limitations": [
+    "State/service names are analyst annotations. DS372c meaning and serviceb9f7 semantics remain unresolved.",
+    "Unsupported terminal-control families and enabled logging sinks remain explicit external dependencies."
+  ],
+  "maintained_changes": [
+    "OMF entry masks its word character argument to eight bits before control-table indexing; flat recovery remains exact."
+  ]
+}

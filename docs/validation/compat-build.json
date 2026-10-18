@@ -84,6 +84,15 @@
       "matched_original": true
     },
     {
+      "source": "reconstruction/input_dispatch/tables.asm",
+      "file_offset": 171438,
+      "bytes": 130,
+      "assembly_defines": [],
+      "sha256": "f0094e840c188013993ce4f448933d1cc58c22d8862b183cc3b2b7b55c8f5fbe",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
       "source": "reconstruction/screen/set_cursor.asm",
       "file_offset": 11710,
       "bytes": 168,
@@ -462,6 +471,105 @@
       "matched_original": true
     },
     {
+      "source": "reconstruction/input_dispatch/dispatch.asm",
+      "file_offset": 6160,
+      "bytes": 288,
+      "assembly_defines": [],
+      "sha256": "71c5f03454f7079c81daaec9a7ffdf980d4027fb1e75b2d1a4d1ce16f9fa65cc",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/input_dispatch/logging.asm",
+      "file_offset": 7094,
+      "bytes": 132,
+      "assembly_defines": [],
+      "sha256": "19053388706c76e4aca61da2157a8581655d4f6b4b5567d21b28b2b3ee2da6fd",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/input_dispatch/tab.asm",
+      "file_offset": 7308,
+      "bytes": 194,
+      "assembly_defines": [],
+      "sha256": "4afa58f6a4c80ddf2dc997ef72e1019afba8acae838546e6148137bdaa8206aa",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/input_dispatch/ignore.asm",
+      "file_offset": 8288,
+      "bytes": 1,
+      "assembly_defines": [],
+      "sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/input_dispatch/backspace.asm",
+      "file_offset": 8426,
+      "bytes": 83,
+      "assembly_defines": [],
+      "sha256": "3ea7f12cfc095f75833c34ab65bbe88cb31a9d0e49cf3bbba8dc8a6d31676980",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/input_dispatch/linefeed.asm",
+      "file_offset": 8510,
+      "bytes": 36,
+      "assembly_defines": [],
+      "sha256": "f87270244f32451b4ebfe40543c7b7f6c729114e9fcb897eb4102d82db6d28e4",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/input_dispatch/carriage_return.asm",
+      "file_offset": 8706,
+      "bytes": 62,
+      "assembly_defines": [],
+      "sha256": "88fc0b0ef1c0bec59ddebfa9db2fcf9b98fc6707f01d19dea4c2c1fe04f00bd3",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/input_dispatch/home.asm",
+      "file_offset": 12630,
+      "bytes": 25,
+      "assembly_defines": [],
+      "sha256": "4ab1cf9c1746f338aa3baebc342ac11268bbfeb803e497b056bc9ad1a692ada5",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/input_dispatch/history.asm",
+      "file_offset": 27186,
+      "bytes": 156,
+      "assembly_defines": [],
+      "sha256": "d0d91fc70ef6b21a5ff7444996993e877e0cbdc3009d1e6fef80d0ea6f645d82",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/input_dispatch/history_pair.asm",
+      "file_offset": 27342,
+      "bytes": 28,
+      "assembly_defines": [],
+      "sha256": "fcbc288bbae25fe4ca165ee21c84a4e23cdff2759c8d57ab78664f3bfd1d606e",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
+      "source": "reconstruction/input_dispatch/divide.asm",
+      "file_offset": 38156,
+      "bytes": 12,
+      "assembly_defines": [],
+      "sha256": "e5c14b9ddb162e5cf322974b45c5633d17471c2b151dab2aec8dd2544e486def",
+      "original_relocation_sites": [],
+      "matched_original": true
+    },
+    {
       "source": "reconstruction/reports/core.asm",
       "file_offset": 92680,
       "bytes": 28,
@@ -528,7 +636,7 @@
       "matched_original": true
     }
   ],
-  "original_bytes_rebuilt_from_source": 8982,
+  "original_bytes_rebuilt_from_source": 10129,
   "handler_replay_tests": [
     {
       "case": "baseline-q-one-parameter",

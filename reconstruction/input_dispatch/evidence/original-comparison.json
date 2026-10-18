@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "linked_binary_sha256": "1f75f66df27b8f7466d4babb8bf76c42087f80167fdb8ed5f5f7461106831080",
+  "operations": 330,
+  "original_out_of_bounds_pointer_observations": [
+    {
+      "argument": 65457,
+      "original_pointer_offset": 17410,
+      "original_target": 23896,
+      "stopped_before_call": true
+    },
+    {
+      "argument": 65535,
+      "original_pointer_offset": 17566,
+      "original_target": 47931,
+      "stopped_before_call": true
+    }
+  ],
+  "cases": [
+    {
+      "case": "ordinary-and-high-byte-input",
+      "passed": true
+    },
+    {
+      "case": "tab-cr-lf-backspace-history",
+      "passed": true
+    },
+    {
+      "case": "deferred-wrap",
+      "passed": true
+    },
+    {
+      "case": "carriage-return-adds-linefeed",
+      "passed": true
+    },
+    {
+      "case": "linefeed-returns-column",
+      "passed": true
+    },
+    {
+      "case": "history-ring-wrap",
+      "passed": true
+    }
+  ],
+  "scope": "Unmodified original resident input/control/render/video/cursor/history/logging instructions versus source-linked entry per character; actual originalDScontrol pointers; overlay ANSI dispatch excluded and independently source-integration tested."
+}

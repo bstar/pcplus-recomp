@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "code_padding": 0,
+      "data_padding": 0,
+      "entry_offset": 7776,
+      "pointer_table_offset": 6146,
+      "binary_sha256": "1f75f66df27b8f7466d4babb8bf76c42087f80167fdb8ed5f5f7461106831080",
+      "passed": true
+    },
+    {
+      "code_padding": 819,
+      "data_padding": 1365,
+      "entry_offset": 8595,
+      "pointer_table_offset": 7522,
+      "binary_sha256": "92833d76ca05171f5c61dcb06c155cfd7ec21e01d00beec0961930a5fcb3967c",
+      "passed": true
+    },
+    {
+      "code_padding": 8465,
+      "data_padding": 4660,
+      "entry_offset": 16241,
+      "pointer_table_offset": 10818,
+      "binary_sha256": "2ac76a30e1e6f5baadb6d438b25334ebe8c44d798dd9bead2f4b5e813b9eadd3",
+      "passed": true
+    }
+  ],
+  "scope": "Actual both input CS tables and startup DS function pointers plus nestedANSI/render/control/history calls after independent code/data padding."
+}

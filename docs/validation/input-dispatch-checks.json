@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "binary_sha256": "1f75f66df27b8f7466d4babb8bf76c42087f80167fdb8ed5f5f7461106831080",
+  "cases": [
+    {
+      "case": "continuous-print-tab-cr-lf-sgr-backspace-and-real-history",
+      "passed": true
+    },
+    {
+      "case": "actual-startup-escape-and-control-function-pointer-tables",
+      "passed": true
+    },
+    {
+      "case": "original-cr-lf-mode-dependent-column-and-row-behavior",
+      "passed": true
+    },
+    {
+      "case": "continuous-stream-wrap-and-real-bottom-scroll",
+      "passed": true
+    },
+    {
+      "case": "embedded-parser-control-reenters-actual-control-dispatcher",
+      "passed": true
+    },
+    {
+      "case": "real-history-cr-state-and-buffer-wrap",
+      "passed": true
+    },
+    {
+      "case": "unrecovered-control-and-enabled-sink-boundaries-fail-fast",
+      "passed": true
+    },
+    {
+      "case": "maintained-byte-abi-and-real-dispatcher-negative-token-producer",
+      "passed": true
+    }
+  ],
+  "scope": "Actual recovered input/escape/parameter/CSI/control/render/video/cursor/scroll/history/guarded-log instructions; memory serial provider and explicit BIOS model. Unsupported control profiles and enabled sink services trap."
+}
