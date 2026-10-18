@@ -18,7 +18,7 @@ def main():
   detail=fn();cases.append(dict(case=name,passed=True,detail=detail));print(name,'PASS',flush=True)
  def layout():
   good=inspect_terminal_memory(BINARY,ROOT/'build/terminal/terminal.map')
-  assert good['far_code_bridge_pairs_verified']==85 and good['controller_bridge_pairs_verified']==22 and good['modem_bridge_pairs_verified']==23 and good['configuration_bridge_pairs_verified']==36
+  assert good['far_code_bridge_pairs_verified']==87 and good['controller_bridge_pairs_verified']==22 and good['modem_bridge_pairs_verified']==23 and good['configuration_bridge_pairs_verified']==38
   assert good['resident_code_bytes']<65536
   mutations=[]
   for name,delta,value in [('terminal_controller_start',3,0),('terminal_controller_start_far',3,0xc3),('terminal_printer_put_raw_resident',0,0x90)]:

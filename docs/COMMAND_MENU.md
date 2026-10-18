@@ -8,7 +8,7 @@ source-owned UI and help, not a recovered copy of PCPlus menus or help text.
 | File | Receive, send, screen file, capture open/close, capture hold/resume, CR-adds-LF, exit |
 | Connection | Dial the selected target, hang up, send BREAK |
 | View | Redisplay, filename clipboard, raw monitor, printer copy |
-| Setup | Edit the eligible saved PRM with PRMEDIT |
+| Setup | Edit the eligible saved PRM with PRMEDIT; reload the selected input table |
 | Help | Using the menu, keyboard/session commands, application status |
 
 Left/Right or Tab changes groups; Shift-Tab moves backward. Up/Down and Home/End
@@ -51,16 +51,16 @@ segment. This places them in CONFIG_CODE under this build's compiler options,
 before uninitialized far storage. Watcom documents this placement through
 [`__based(__segname("_CODE"))`](https://open-watcom.github.io/open-watcom-v2-wikidocs/cguide.html#Segment_Constant_Based_Pointers_and_Objects).
 The initial menu added48 bytes of bounded state/query storage in DGROUP. Deferred
-entry adds a two-byte flag and alignment, bringing near data/stack to64,192
-bytes. Resident code is64,932 bytes; the85 checked far bridge pairs and their
-argument contracts are unchanged. The linker/MZ
+entry adds a two-byte flag and alignment, bringing that checkpoint to64,192
+bytes. Input-table reload brings current near data/stack to64,480 bytes and
+resident code to65,298 bytes;87 far bridge pairs now include its two new entries. The linker/MZ
 verifier checks menu entry placement, near state, retained code and uninitialized
 screen/history extents; the real DOS PRMEDIT workflow exercises that retention.
 
 ## Verification
 
 `standalone/check_command_menu_live.py` runs actual linked code with BIOS,
-UART, video and DOS filesystem/PRN kernel boundaries modeled. Five groups/149 declared inputs cover navigation, contextual help
+UART, video and DOS filesystem/PRN kernel boundaries modeled. Five groups/151 declared inputs cover navigation, contextual help
 and bounded prose search, normal command dispatch, live receive/replies and
 ownership/geometry refusal. It compares selected service state against the
 existing direct hotkey path without replacing product functions. The printer
@@ -93,7 +93,7 @@ ignored local artifacts. Linked tests also exposed an incorrect conditional
 conversion of code-based string pointers in the footer. Explicit branches now
 pass the named code-segment objects to the far-pointer renderer.
 
-[`validation/command-menu.json`](validation/command-menu.json) binds149 menu and36
+[`validation/command-menu.json`](validation/command-menu.json) binds151 menu and36
 pending-entry linked inputs, four DOS workflows, full77-command regression and64-output
 source-only rebuild to the frozen executable. It retains the actual observer,
 wire, file, PRM and child artifacts by hash.
@@ -101,10 +101,10 @@ wire, file, PRM and child artifacts by hash.
 The same frozen executable passes selected stock Synchronet and ENiGMA menu-to-
 clipboard/download workflows; ENiGMA also reopens it for the post-transfer file
 search. `bbs-clipboard-transfers.json` retains a refused earlier Synchronet attempt
-separately from its settled retry and the current original-timing pass. A current
-ENiGMA achievement-popup interruption remains failed alongside an identical-recipe
-retry that passes the post-transfer search. The exact earlier acquisition failure is
-unproven, so this does not claim menu availability during every parser/owner
+separately from its settled retry and the current original-timing pass. An earlier `00728002`
+ENiGMA achievement-popup interruption remains failed alongside its identical-recipe
+retry. The current input-table reload build passes both selected workflows. The exact earlier
+acquisition failure is unproven, so this does not claim menu availability during every parser/owner
 state. The stock editor recheck passes Synchronet and ENiGMA with an explicit30ms
 buffering control; immediate ENiGMA retains Home/Insert failures. No BBS post is
 saved. Temporary synthetic Synchronet logon exemptions are restored and
@@ -113,3 +113,10 @@ independently read back; physical modem behavior remains unverified.
 Original pull-down layout, mouse interaction, complete settings/key editing,
 other geometries and physical modem tests remain open. This component does not
 close F02 or any whole-application gate.
+
+The input-table reload adds a nineteenth item and its contextual help. It uses
+Alt-F9 after closing the menu and restoring the live view; its separate
+[reload owner](TRANSLATION_RELOAD.md) checks eligibility before scheduling.
+The command-menu suite now covers151 inputs, including unavailable reload
+handoff and suppression of the direct hotkey while browsing. The reload suite
+also exercises eligible menu handoff in linked code and actual DOS.

@@ -44,9 +44,10 @@ normal transport. A newly active unrelated view is preserved rather than
 reentered. Revalidation includes the C-side mode/page/height/history checks.
 
 The two-byte request flag adds16 bytes after alignment to near data/stack,
-now64,192 bytes. Resident code is64,932 bytes, with604 bytes spare. The existing
-85 far bridges and argument contracts are unchanged. The retained parent,
-including PSP, is312,848 bytes.
+at that checkpoint64,192 bytes. Resident code was64,932 bytes, with604 spare.
+Its85 far bridges and argument contracts were unchanged; the retained parent
+including PSP was312,848 bytes. Later [table reload](TRANSLATION_RELOAD.md)
+extends the configuration ABI without changing the pending-entry policy.
 
 ## Evidence boundaries
 

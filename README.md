@@ -278,6 +278,9 @@ uses bounded current-directory then `PCPLUS` directory lookup; see
 [resource lookup](docs/RESOURCE_LOOKUP.md). Explicit `/X` bypasses fallback. Normal table-mode characters translate
 while parser continuations, output and binary/dedicated owners remain raw. See
 [translation recovery](docs/TRANSLATION.md) and [live selection](docs/LIVE_TRANSLATION.md).
+Alt-F9, or Setup → Reload input table, stages the frozen active file and asks
+before replacing its table during the session. Decline and errors retain the
+active mapping; see [table reload](docs/TRANSLATION_RELOAD.md).
 `./tools/build xlt-editor test-xlt-editor` builds and checks the offline
 [XLTEDIT table editor](docs/XLT_EDITOR.md), including failed-save recovery.
 

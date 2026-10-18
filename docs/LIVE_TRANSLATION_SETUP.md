@@ -52,9 +52,10 @@ installed as part of that failed settings transaction. Failure/busy notices
 require acknowledgement even if another independent change was accepted.
 
 This is maintained staging around source-owned PRMEDIT, not the original
-PCSETUP shared-memory child interface. Same-mode table reload and opening
-XLTEDIT as a dedicated terminal command remain open. Editing a table on disk
-does not silently replace the active in-memory table. The lookup is not a
+PCSETUP shared-memory child interface. [Alt-F9/menu reload](TRANSLATION_RELOAD.md)
+now explicitly reloads the frozen active table source in mode1. Opening XLTEDIT
+as a dedicated terminal command remains open. Editing a table on disk does not
+silently replace the active in-memory table. The lookup is not a
 concurrent-writer lock or a physical modem flow-control guarantee.
 
 ## Build and validation
@@ -65,8 +66,8 @@ concurrent-writer lock or a physical modem flow-control guarantee.
 ```
 
 [Live mode validation](validation/live-translation.json) binds 331 linked inputs,
-10 actual DOS workflows, all 167 damaged configuration-frame/layout cases,
-the 70-command terminal regression and a 63-output fresh public-source rebuild.
+10 actual DOS workflows, all 187 damaged configuration-frame/layout cases,
+the 77-command terminal regression and a 64-output fresh public-source rebuild.
 The linked tests run the actual owner, parser/driver, namespace resolver, DOS
 reader and cdecl/far adapters; only DOS/BIOS/UART boundaries are modeled.
 Declared fault cases mutate input state at child return or commit without

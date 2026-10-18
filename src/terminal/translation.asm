@@ -3,8 +3,8 @@ BITS 16
 CPU 8086
 %include "terminal_import.inc"
 SEGMENT _TEXT public class=CODE use16
-extern terminal_option_mask,terminal_translation_path,_xlt_dos_read
-extern _xlt_dos_read_default,process_psp
+extern terminal_option_mask,terminal_translation_path,_xlt_live_initialize
+extern process_psp
 extern terminal_receive_character,terminal_parser_active
 extern terminal_configuration_values,uart_rx_mask
 global terminal_load_translation,terminal_translate_input
@@ -27,44 +27,43 @@ terminal_load_translation:
  mov word [terminal_translation_mode],0
  mov word [uart_rx_mask],255
  mov word [terminal_translation_status],0
- mov dx,terminal_translation_path
+ xor ax,ax
+ xor dx,dx
  test word [terminal_option_mask],16384
- jnz .load
+ jz .saved
+ mov ax,1
+ mov dx,terminal_translation_path
+ jmp .load
+.saved:
  test word [terminal_option_mask],16
- jz .ok
+ jz .load
  mov ax,[terminal_configuration_values+TI_TRANSLATION]
- or ax,ax
- jz .ok
  cmp ax,2
- je .seven
- cmp ax,1
- jne .bad
- mov ax,terminal_translation_io
- push ax
- mov ax,terminal_translation_table
+ ja .bad
+.load:
+ push ax ;Keep the requested mode outside the caller-cleaned C argument frame.
+ mov cx,terminal_translation_io
+ push cx
+ mov cx,terminal_translation_table
+ push cx
+ push dx
  push ax
  push word [process_psp]
- call _xlt_dos_read_default
- jmp .loaded
-.load:
- cld
- mov ax,terminal_translation_io
- push ax
- mov ax,terminal_translation_table
- push ax
- push dx
- call _xlt_dos_read
-.loaded:
- add sp,6
- mov [terminal_translation_status],ax
- or ax,ax
+ call _xlt_live_initialize
+ add sp,10
+ mov bx,ax
+ pop ax
+ mov [terminal_translation_status],bx
+ or bx,bx
  jnz .bad
+ mov [terminal_translation_mode],ax
+ cmp ax,1
+ jne .mask
  mov word [terminal_translation_enabled],1
- mov word [terminal_translation_mode],1
- jmp .ok
-.seven:
+.mask:
+ cmp ax,2
+ jne .ok
  mov word [uart_rx_mask],127
- mov word [terminal_translation_mode],2
 .ok:
  xor ax,ax
  jmp .done

@@ -570,3 +570,42 @@ the exact file and protocol checks pass, but that workflow remains failed. The
 same keyboard recipe in a fresh session passes, with both attempts retained.
 Synchronet editor checks pass; immediate ENiGMA still fails Home/Insert and the
 explicit30ms packet-buffering experiment passes. No post was saved.
+
+### Explicit same-table reload
+
+Alt-F9 and Setup/Reload input table now use the existing drained PROGRAM UART
+owner without launching a child. Startup and confirmed mode adoption retain the
+actual canonical selected table source; reload cannot be redirected by later
+CWD/environment changes or a newly appearing higher-priority file. Exact checked
+staging precedes Y/N acceptance; decline/read/size/close/late-owner failure keeps
+the active table. Queued raw input uses an accepted table after return. Capture
+closes according to the existing foreground handoff policy. Canonical paths must
+fit63 bytes; ordinary startup retains lazy environment lookup and original
+missing-file-only fallback precedence. See `docs/TRANSLATION_RELOAD.md`.
+
+The dedicated suite passes66 linked inputs and eleven production DOS workflows,
+including real PROGRAM/DOS COPY or DEL, menu entry, default/environment/explicit
+sources and unchanged PRM/source-file checks. Two new cdecl entry pairs bring
+configuration bridges to38,87 total, with187 damaged frames/layouts rejected.
+Near data/stack is64,480 bytes and resident code65,298; retained parent including
+PSP is314,736. The corrected build passes the77-command application regression and reproduces
+64 source-only outputs. Its66 linked reload inputs also pass in the isolated
+source checkout without original/install/analysis inputs. Dedicated live XLTEDIT invocation, full settings/key editing,
+other terminal emulations, remaining protocols, ASPECT, Host, packaging and target
+hardware validation remain open; no whole-application gate is closed.
+
+Final reload review reproduced an early-answer bug in linked code and actual DOS
+with a controlled SOFT pause: Y was deferred while output drained, but a BIOS-only
+prompt consumed the next character and later leaked Y. Reload confirmation and
+failure acknowledgement now consume the existing foreground FIFO before BIOS.
+Following keys stay ordered and AX0 remains a real key. The corrected build passes
+the identical DOS recipe and66 linked inputs; the full eleven-case DOS suite,
+77-command regression and64-output clean rebuild all pass for it.
+
+The final reload runtime also passes stock Synchronet editor checks and both
+selected menu-to-clipboard downloads, including ENiGMA post-transfer search.
+Immediate ENiGMA Home/Insert failures remain; the paired explicit30ms buffering
+experiment passes. Temporary synthetic Synchronet logon exemptions were restored
+and independently read back. No message was saved. Resident CS has238 bytes
+spare, so further resident features require extending the existing far-code
+placement work. The full application/hardware checklist remains open.

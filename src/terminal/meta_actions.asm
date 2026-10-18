@@ -311,6 +311,17 @@ terminal_take_deferred_key:
  stc
  ret
 
+; A quiesced local prompt must honor keys already retained while its output
+; drained. CF distinguishes an empty FIFO from every valid BIOS word, even0.
+global terminal_read_foreground_key
+terminal_read_foreground_key:
+ call terminal_take_deferred_key
+ jnc .done
+ xor ax,ax
+ int 0x16
+.done:
+ ret
+
 SEGMENT _DATA public class=DATA use16
 ; Shared bounded foreground typeahead. A pending menu owns these same queued
 ; keys until its parser-safe opening; aliases expose storage, not new callbacks.

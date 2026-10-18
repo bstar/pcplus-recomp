@@ -106,7 +106,8 @@ empty new-session queue; expecting the requested file first in a general listing
 sorted by date; and searching raw ANSI bytes for a caption containing intervening
 color codes. The last two attempts completed the real transfer, but failed their
 post-menu assertions. Neither is relabeled as a passing run. The aggregate report
-therefore remains false while its two latest selected workflows pass.
+retains those failures within their historical runtime reports. The current
+runtime passes both selected workflows.
 
 The command-menu runtime enters the clipboard through Alt-Z, View and F
 on both servers, including ENiGMA's second search after the download. The report
@@ -121,7 +122,7 @@ prior-runtime report. The parser-safe entry checkpoint passes the original
 [MENU_PENDING.md](MENU_PENDING.md). That reproduction does not establish the
 cause of the earlier stock refusal.
 
-The current ENiGMA checkpoint retains another failed post-transfer search.
+The earlier `00728002` ENiGMA checkpoint retains another failed post-transfer search.
 The stock server displayed its ten-download achievement after the search
 command, consuming the first two characters of the following filename. The
 wire contains both complete uppercase filename packets, but the search form
@@ -130,17 +131,16 @@ independent exact DOS-file comparison pass; the overall workflow remains failed.
 Its retained diagnosis binds the popup, stock achievement configuration and
 cross-direction timing to the raw artifacts. A fresh session with the identical
 keyboard recipe passes the full search. No server setting, assertion or terminal
-code changed for that retry. The current aggregate therefore remains false while
-both latest selected workflows pass.
+code changed for that retry. That checkpoint aggregate remains false; the
+input-table reload runtime now passes both selected workflows without a retry.
 
 The BBS evidence recorder takes explicit current attempts and preserves earlier
 runtime reports separately:
 
 ```sh
 ./tools/dev --command python3 lab/bbs/record_clipboard_transfers.py \
-  --run synchronet:pending-clipboard-download-0072-1 \
-  --run enigma:pending-clipboard-search-download-0072-1 \
-  --run enigma:pending-clipboard-search-download-0072-2
+  --run synchronet:reload-clipboard-download-4557-1 \
+  --run enigma:reload-clipboard-search-download-4557-1
 ```
 
 These are selected Single/download integrations on owned loopback servers.

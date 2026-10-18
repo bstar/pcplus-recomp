@@ -23,6 +23,7 @@ extern terminal_controller_key
 extern terminal_break_start,terminal_break_poll,terminal_break_cancel
 extern terminal_printer_toggle
 extern terminal_setup_start
+extern terminal_translation_reload_start
 extern terminal_redisplay_key,terminal_clipboard_remaining
 extern terminal_menu_pending,terminal_deferred_count,terminal_deferred_head,terminal_deferred_tail
 extern terminal_parser_active,_redisplay_active,_command_menu_active
@@ -261,6 +262,11 @@ terminal_poll_io:
  call terminal_program_cancel
  jmp .done
 .meta_key:
+ cmp ax,0x7000 ;Alt-F9: maintained explicit same-table reload (native no-op).
+ jne .settings_key
+ call terminal_translation_reload_start
+ jmp .done
+.settings_key:
  cmp ax,0x7100 ;Alt-F10: direct maintained settings editor.
  jne .ordinary_meta
  call terminal_setup_start

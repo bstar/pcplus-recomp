@@ -1,0 +1,32 @@
+{
+  "user": "LABUSER",
+  "number": 1,
+  "level": 50,
+  "logons_today": 61,
+  "bit": 2048,
+  "before": 0,
+  "active": 2048,
+  "restored": true,
+  "scope": "Temporary synthetic-account daily-logon exemption only; editor/server quota policy unchanged.",
+  "after": 0,
+  "run_label": "editor-reload-4557-hard",
+  "independent_persisted_readback": {
+    "number": 1,
+    "level": 50,
+    "exemptions": 0,
+    "logons_today": 62
+  },
+  "binary_sha256": "4557259887c7d0f0a4a535b90e53a459077b414caf17e570edfd8e0ac77b942c",
+  "retained_artifacts": {
+    "build/bbs-lab/results/synchronet/reload-editor-4557-logon.begin.js": "ad90cb4ebc013c400b082fd07adf936ed4531132d161333483884911cd0f58c9",
+    "build/bbs-lab/results/synchronet/reload-editor-4557-logon.begin.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/bbs-lab/results/synchronet/reload-editor-4557-logon.begin.stdout": "afaa26b872217514bfc3665809f1ce9ca954048f93857a0b7686c87df2ee7fef",
+    "build/bbs-lab/results/synchronet/reload-editor-4557-logon.end.js": "b92f60a8b753000a0f055b7b2f3de1fb9fa4abdb9dec64d3667280ddd1a9fb1b",
+    "build/bbs-lab/results/synchronet/reload-editor-4557-logon.end.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/bbs-lab/results/synchronet/reload-editor-4557-logon.end.stdout": "7ce893cb767f7509e30d39324f2b0ae3aa08e94fd592e71e62f39e750e8e70ac",
+    "build/bbs-lab/results/synchronet/reload-editor-4557-logon.json": "306dc5e51f8a9633d925fae21aec4fdc98477de729c5841aac3e51db969f015f",
+    "build/bbs-lab/results/synchronet/reload-editor-4557-logon.verify.js": "951a1840905417a1dcc67f898465a80265249b9ce50f8df7651f3e3f2f4e66e4",
+    "build/bbs-lab/results/synchronet/reload-editor-4557-logon.verify.json": "b169eecb13f52b910f3f5c8df3c677884cdfe163fd599f18023ef1ad03d22f2d",
+    "build/bbs-lab/results/synchronet/reload-editor-4557-logon.verify.stdout": "887cc6d6a03ad74bdc2c2a0e6d8cb231fe51822e6880d2741fb8e390f8c34ce7"
+  }
+}

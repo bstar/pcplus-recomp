@@ -110,8 +110,8 @@ above describe that migration checkpoint.
 The filename clipboard adds a compiler-register strcmp import, a three-word
 resident transport callback and a named MODEM_CODE abort service. The latter is
 required when connection owners discard TX: a near cross-segment call is invalid
-and the actual DOS development run caught that mistake. Current layout checks
-verify36 configuration,23 modem,22 printer and4 redisplay bridge pairs. That
+and the actual DOS development run caught that mistake. That clipboard checkpoint checked
+36 configuration,23 modem,22 printer and4 redisplay bridge pairs. That
 clipboard checkpoint used64,796 resident code bytes,64,128 near data/stack bytes and304,992
 retained parent bytes including PSP. Clipboard core/UI code shares CONFIG_CODE;
 no extra full-screen frame is allocated. See [clipboard](FILENAME_CLIPBOARD.md).
@@ -128,8 +128,15 @@ checked. The linker verifier separately requires the menu entry in CONFIG_CODE
 and its mutable state in DGROUP. No additional full-screen frame is allocated.
 
 Parser-safe [pending menu entry](MENU_PENDING.md) adds a two-byte flag and reuses
-the32-word foreground typeahead. Current near data/stack is64,192 bytes, resident
-code64,932 bytes and retained parent312,848 bytes. The85 bridges and their
+the32-word foreground typeahead. At that checkpoint near data/stack was64,192
+bytes, resident code64,932 bytes and retained parent312,848 bytes. The85 bridges and their
 argument counts remain unchanged; a distinct resident service dispatches the
 retained request through the existing key entry. Real AX0 BIOS keys retain their
 ordinary meaning. No new buffer or far callback is added.
+
+[Explicit table reload](TRANSLATION_RELOAD.md) adds startup-selection and reload
+entry frames of five and three words. Current checks cover38 configuration
+pairs,87 total, and187 damaged frames/layouts. The same twelve C modules remain
+in CONFIG_CODE; the reload state machine extends the existing translation owner.
+Current near data/stack is64,480 bytes, resident code65,298 bytes and retained
+parent314,736 bytes including PSP. All static code/data extents remain covered.

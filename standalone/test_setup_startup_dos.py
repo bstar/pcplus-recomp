@@ -37,7 +37,8 @@ def probe_child():
  subprocess.run(['nasm','-f','obj',str(OUT/'probe.asm'),'-o',str(OUT/'probe.obj')],check=True)
  subprocess.run(['wlink','system','dos','option','quiet','name',str(OUT/'PROBE.EXE'),'file',str(OUT/'probe.obj')],check=True)
  return (OUT/'PROBE.EXE').read_bytes()
-def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate=1200,expected=0,ready=True,post_echo=False,rate_mask=None,line_mask=None,expected_profile=None,profile_clear=False,keyboard_file=None,files=None,environment=None,child_binary=None,post_banner=None):
+def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate=1200,expected=0,ready=True,post_echo=False,rate_mask=None,line_mask=None,expected_profile=None,profile_clear=False,keyboard_file=None,files=None,environment=None,child_binary=None,post_banner=None,expected_files=None,pause_after_input=None):
+ assert set(expected_files or {})<=set(files or {}),'Expected mutations must name explicit owned fixture files'
  directory=OUT/name
  if directory.exists():shutil.rmtree(directory)
  directory.mkdir(parents=True);data=image() if payload is None else payload
@@ -61,7 +62,7 @@ def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate
  def peer():
   conn=None
   try:
-   post_sent=False
+   post_sent=False;paused_at=None;pause_resumed=False
    while not stop.is_set():
     try:conn,_=server.accept();break
     except socket.timeout:pass
@@ -80,6 +81,10 @@ def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate
      peer_checks['actual_terminal_ready_reply']=True
      conn.sendall(b'\x1b[2J\x1b[HSETUP READY\x1b[6n');break
    while not stop.is_set():
+    if pause_after_input and paused_at is None and pause_after_input in wire:
+     conn.sendall(b'\x13\x1b[5n');paused_at=time.monotonic()
+    if paused_at is not None and not pause_resumed and time.monotonic()-paused_at>=1.25:
+     conn.sendall(b'\x11');pause_resumed=True;peer_checks['controlled_pause_resumed']=True
     try:block=conn.recv(4096)
     except socket.timeout:continue
     if not block:break
@@ -144,7 +149,7 @@ exit
  before=(directory/'BEFORE.BIN').read_bytes();after=(directory/'AFTER.BIN').read_bytes();screen=(directory/'SCREEN.BIN').read_bytes()
  checks={'expected_DOS_exit':proc.returncode==0 and (directory/'PASS.TXT').exists() and not (directory/'FAIL.TXT').exists(),'hardware_restored':len(before)==42 and before==after,'no_peer_errors':not errors,'no_recovery_files':not (directory/'PRMEDIT.BAK').exists() and not (directory/'PRMEDIT.$$$').exists()}
  if ready:
-  checks.update(peer_checks);checks['both_peer_checks_seen']=len(peer_checks)==(3 if post_echo else 2)+(expected_profile is not None)
+  checks.update(peer_checks);checks['both_peer_checks_seen']=len(peer_checks)==(3 if post_echo else 2)+(expected_profile is not None)+bool(pause_after_input)
   checks['actual_video_ready']=screen[:10:2]==b' LIVE' if profile_clear else screen[:22:2]==b'SETUP READY'
  else:checks['no_serial_output']=not wire
  if child=='probe' and ready:
@@ -157,7 +162,12 @@ exit
  else:checks['UART_never_observed_enabled']=samples[4]==0
  if line_mask is not None:checks['actual_configured_UART_line_format']=samples[5]==line_mask
  if keyboard_file is not None:checks['keyboard_fixture_unchanged']=(directory/'TEST.KBD').read_bytes()==keyboard_file
- for filename,data_file in (files or {}).items():checks['fixture_unchanged_'+filename]=(directory/filename).read_bytes()==data_file
+ for filename,data_file in (files or {}).items():
+  target=directory/filename
+  if filename in (expected_files or {}):
+   expected_file=expected_files[filename]
+   checks['fixture_expected_final_'+filename]=not target.exists() if expected_file is None else target.is_file() and target.read_bytes()==expected_file
+  else:checks['fixture_unchanged_'+filename]=target.read_bytes()==data_file
  (directory/'serial.bin').write_bytes(wire)
  result={'case':name,'passed':all(checks.values()),'checks':checks,'expected_exit':expected,'arguments':arguments,'observed_errors':errors}
  (directory/'result.json').write_text(json.dumps(result,indent=2)+'\n');assert result['passed'],result

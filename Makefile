@@ -427,3 +427,8 @@ test-command-menu: terminal setup
 	python3 standalone/check_command_menu_live.py
 	python3 standalone/check_menu_pending_live.py
 	python3 standalone/test_command_menu_dos.py --label "menu-$$(date -u +%Y%m%dT%H%M%S%N)" --sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)"
+
+.PHONY: test-translation-reload
+test-translation-reload: terminal setup
+	python3 standalone/check_translation_reload_live.py
+	python3 standalone/test_translation_reload_dos.py --label "reload-$$(date -u +%Y%m%dT%H%M%S%N)" --sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)"

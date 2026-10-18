@@ -91,13 +91,13 @@ def main():
     for size in range(1, 65):
         m = Lookup();m.resource_environment([b'PCPLUS='+b'A'*size])
         name = 'A'*size+'\\PCPLUS.XLT'
-        if size <= 52:
+        if size <= 49:
             m.files[name] = bytearray(IDENTITY)
             assert not m.load(None, selected=False, prm_mode=1), size
         else:
             rejected(m)
             assert len(m.xlt_calls) == 1
-    done('every-directory-length1-through64-exact63-byte-path-limit', 64)
+    done('every-relative-directory-length1-through64-canonical63-byte-path-limit', 64)
 
     for value in [b'"D:\\CFG"', b'D:\\A B', b'D:\\CFG;C:\\OTHER', b'D:\\*', b'D:\\?',
                   b'D:\\<', b'D:\\>', b'D:\\|', b'D:\\=', b'D:\x01', b'D:\xff']:
@@ -181,7 +181,9 @@ def main():
                   sources={str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
                            for p in [Path(__file__).resolve(), ROOT/'src/config/resource_path.c',
                                      ROOT/'src/config/resource_path.h', ROOT/'src/translation/xlt_default.c',
-                                     ROOT/'src/translation/xlt_default.h']},
+                                     ROOT/'src/translation/xlt_default.h',
+                                     ROOT/'src/translation/xlt_live.c',ROOT/'src/translation/xlt_live.h',
+                                     ROOT/'src/terminal/translation.asm']},
                   scope='Actual linked startup selector, cdecl/far adapters, bounded PSP/MCB environment parser and checked DOS reader. Only DOS IO and BIOS/UART modeled. Current-file error precedence, no fallback for explicit /X or modes0/2, destination preservation and64KiB environment bounds. Actual DOS environment/import tests remain separate.')
     (ROOT/'build/terminal/resource-lookup-checks.json').write_text(json.dumps(result, indent=2)+'\n')
     print('Resource lookup passed:', result['inputs'])

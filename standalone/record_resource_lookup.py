@@ -31,12 +31,12 @@ def main():
     for report in [linked, dos, generic]:
         assert report['passed'];sources(report)
     assert linked['binary_sha256'] == dos['binary_sha256'] == runtime
-    assert linked['inputs'] == 117 and linked['maximum_stack_bytes'] == 426
+    assert linked['inputs'] == 117 and linked['maximum_stack_bytes'] == 442
     assert len(dos['cases']) == 12 and generic['log'] == 'RESOURCE PATH PASS 30 checks'
     assert generic['binary_sha256'] == sha('build/resource-path/RESOURCE.EXE')
     frames = read('build/terminal/config-far-checks.json')
     assert frames['passed'] and frames['binary_sha256'] == runtime
-    assert frames['configuration_bridge_pairs_verified'] == 36 and len(frames['rejected_mutations']) == 173
+    assert frames['configuration_bridge_pairs_verified'] == 38 and len(frames['rejected_mutations']) == 187
     regression = read('build/terminal/setup-profile-regression.json')
     assert regression['passed'] and regression['complete'] and regression['binary_sha256'] == runtime
     expected = subprocess.check_output(['make', '-n', 'test-terminal'], cwd=ROOT, text=True).splitlines()
@@ -84,7 +84,7 @@ def main():
                     assembly_evidence_id='ev_1cd43dbde8697560fddafd763fd3ab56971d91bd6badd8b88553d8e1cc1d6417',
                     pseudocode_evidence_id='ev_e36893dd21a8e0238063e007dda32a4fd0f457d6c1d4a7e9ad9eb4e7db399009',
                     scope='Reused retained REA static resolver exports. Maintained bounded C policy; no new original execution or native analysis session.'),
-                  scope='Default saved-mode XLT startup only: checked current file, fallback only on open errors2/3, bounded inherited PCPLUS directory, exact256-byte commit. Explicit /X and modes0/2 bypass lookup.117 linked inputs,30 real DOS generic assertions,12 actual DOS startup cases,77-command terminal regression and64-output isolated source rebuild. Confirmed live mode adoption is recorded separately in live-translation.json. Other resource fallback, same-mode reload and physical UART/modem remain open.')
+                  scope='Default saved-mode XLT startup only: checked current file, fallback only on open errors2/3, bounded inherited PCPLUS directory, exact256-byte commit. Explicit /X and modes0/2 bypass lookup.117 linked inputs,30 real DOS generic assertions,12 actual DOS startup cases,77-command terminal regression and64-output isolated source rebuild. Confirmed live mode adoption is recorded separately in live-translation.json. Explicit same-table reload has separate evidence in translation-reload.json. Other resource fallback, dedicated live editor invocation and physical UART/modem remain open.')
     (ROOT/'docs/validation/resource-lookup.json').write_text(json.dumps(report, indent=2)+'\n')
     print('Recorded resource lookup', runtime)
 

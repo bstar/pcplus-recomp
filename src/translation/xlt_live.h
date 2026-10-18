@@ -18,4 +18,15 @@ unsigned __cdecl xlt_live_stage(unsigned mode,xlt_dos_result *result);
  * input. Output256 must be nonwrapping and outside private storage. No active
  * globals are read or changed here. Wrong/missing stage returns STATE. */
 unsigned __cdecl xlt_live_commit(unsigned mode,unsigned char *table);
+/* Startup only: reset binding, stage exact mode1 table (explicit path or the
+ * default current/PCPLUS lookup), and commit. Modes0/2 do no filesystem IO.
+ * Remember the chosen canonical source for a later explicit reload. Invalid
+ * arguments leave all state alone; a valid failed initialization unbinds it. */
+unsigned __cdecl xlt_live_initialize(unsigned psp,unsigned mode,const char *path,
+ unsigned char *table,xlt_dos_result *result);
+/* Foreground input/UART handoff required. 0 stages the frozen active path,
+ * 1 accepts into table256, 2 cancels this API's stage. table must be NULL for
+ * 0/2; result8 is always required. No fallback after source selection. Active
+ * mode/mask are caller-owned and must remain mode1/FF throughout acceptance. */
+unsigned __cdecl xlt_live_reload(unsigned action,unsigned char *table,xlt_dos_result *result);
 #endif

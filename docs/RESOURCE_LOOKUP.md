@@ -47,7 +47,8 @@ their meanings. Explicit-reader behavior remains unchanged.
 
 This is startup-only selection. RIS retains the already loaded table without
 reading files or the environment. Confirmed [live mode changes](LIVE_TRANSLATION_SETUP.md) now bind both candidate
-namespaces before the child. Same-mode reload and automatic lookup for the
+namespaces before the child. Explicit [same-table reload](TRANSLATION_RELOAD.md) now retains the actual
+canonical source;63-byte limits include resolved CWD. Automatic lookup for the
 remaining resources are still open.
 
 ## Original evidence and maintained differences
@@ -84,7 +85,7 @@ cases to source, executable, toolchain and artifact identities. The linked suite
 covers all directory lengths 1–64, complete 64 KiB scanning, malformed MCBs and
 terminators, duplicate precedence, forbidden characters, access/size/read/close
 errors, PSP/environment aliases and default-loader argument rejection. Peak
-observed stack use while executing CONFIG_CODE in that suite is 426 bytes;
+observed stack use while executing CONFIG_CODE in that suite is 442 bytes;
 this does not measure deeper DOS-kernel stack consumption.
 
 Actual DOS cases check directory values with/without separators, current-file

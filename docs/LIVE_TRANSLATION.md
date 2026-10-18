@@ -78,7 +78,7 @@ the table with the parent's normal data and retains its loader code with the
 complete configuration code extent. The offline [XLTEDIT editor](XLT_EDITOR.md)
 provides checked table editing/save/reload. Bounded default XLT environment lookup
 is integrated, and confirmed live mode changes now stage/commit their table and
-receive mask. A dedicated same-mode reload command remains open. See
+receive mask. Alt-F9/menu now offers an [explicit same-table reload](TRANSLATION_RELOAD.md). See
 [native recovery](TRANSLATION.md).
 
 ## Code and validation

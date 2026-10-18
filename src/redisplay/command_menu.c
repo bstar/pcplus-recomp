@@ -82,6 +82,12 @@ ENTRY(settings,"Edit saved settings            Alt-F10",
  "8.3 PRM leaf. An eligible idle session can adopt validated changes\n"
  "after returning; serial/profile changes require confirmation.\n"
  "The menu does not create a complete factory configuration.");
+ENTRY(reload,"Reload input table             Alt-F9",
+ "Reload the selected input translation table from its absolute path.\n"
+ "The file must contain exactly 256 bytes. Y accepts a checked stage;\n"
+ "other answers keep the active table. Queued input uses the new table.\n"
+ "Only table mode is eligible. Capture closes during the UART handoff.\n"
+ "Editing a file does not silently replace its active in-memory table.");
 ENTRY(using,"Using the command menu",
  "Alt-Z opens this menu. Left/Right or Tab changes the menu group.\n"
  "Up/Down or Home/End selects a command; a listed letter runs it.\n"
@@ -106,7 +112,7 @@ static const item MENU_TEXT items[]={
  ROW(capture,0,0x6800,'O'),ROW(hold,0,0x6900,'H'),ROW(crlf,0,0x6a00,'T'),ROW(exit,0,0x2d00,'X'),
  ROW(redial,1,0x2000,'D'),ROW(hangup,1,0x2300,'H'),ROW(linebreak,1,0x3000,'B'),
  ROW(history,2,0x8400,'R'),ROW(clipboard,2,0x8300,'F'),ROW(monitor,2,0x2b1c,'M'),ROW(printer,2,0x2600,'P'),
- ROW(settings,3,0x7100,'E'),ROW(using,4,0,'U'),ROW(keys,4,0,'K'),ROW(scope,4,0,'A')};
+ ROW(settings,3,0x7100,'E'),ROW(reload,3,0x7000,'R'),ROW(using,4,0,'U'),ROW(keys,4,0,'K'),ROW(scope,4,0,'A')};
 #define COUNT (sizeof(items)/sizeof(items[0]))
 static const char MENU_TEXT categories[][12]={"File","Connection","View","Setup","Help"};
 TEXT(title,"PCPLUS  Command Menu");

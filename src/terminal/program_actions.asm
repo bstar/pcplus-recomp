@@ -26,6 +26,8 @@ extern _process_run,terminal_setup_tail
 extern terminal_setup_prepare,terminal_setup_complete,terminal_setup_return_prompt
 extern terminal_setup_key_consumed,terminal_setup_link_status
 extern terminal_setup_profile_finish
+extern terminal_translation_reload_run
+extern terminal_translation_reload_status
 global terminal_program_initialize,terminal_program_start,terminal_program_poll
 global terminal_program_cancel
 global terminal_program_prepare_link
@@ -267,6 +269,11 @@ terminal_program_poll:
  push word [terminal_irq_vector]
  call uart_restore_interrupt
  add sp,2
+ cmp word [terminal_program_kind],2
+ jne .execute_child
+ call terminal_translation_reload_run
+ jmp .record_status
+.execute_child:
  mov ax,terminal_program_result
  push ax
  cmp word [terminal_program_kind],1
@@ -310,6 +317,8 @@ terminal_program_poll:
  jne .return_prompt
  call terminal_setup_complete
 .return_prompt:
+ cmp word [terminal_program_kind],2
+ je .restore_screen ;Reload owns its confirmation/failure acknowledgement.
  ; Original PROGRAM asks for a local key after the command. BIOS output avoids
  ; introducing DOS text-output/CTRL-C checks while the port is handed off.
  mov si,program_return_prompt
@@ -578,6 +587,9 @@ terminal_program_cancel:
  cmp word [terminal_program_pending],0
  je .clear
  mov word [terminal_program_status],3
+ cmp word [terminal_program_kind],2
+ jne .clear
+ mov word [terminal_translation_reload_status],4
 .clear:
  mov word [terminal_program_pending],0
  mov word [terminal_program_kind],0
@@ -611,7 +623,7 @@ SEGMENT _DATA public align=16 class=DATA use16
 global terminal_program_pending,terminal_program_active,terminal_program_status
 global terminal_program_command,terminal_program_result
 global terminal_program_kind
-terminal_program_kind: dw 0 ;0 PROGRAM/COMSPEC,1 direct maintained settings editor.
+terminal_program_kind: dw 0 ;0 PROGRAM/COMSPEC,1 PRMEDIT,2 same-table reload (no child).
 terminal_program_pending: dw 0
 terminal_program_active: dw 0
 terminal_program_status: dw 0

@@ -17,9 +17,9 @@ def main():
  memory=manifest['memory_layout']
  assert memory['history_bytes']==memory['redisplay_snapshot_bytes']==63000
  assert memory['far_ui_storage_bytes']==20000 and memory['redisplay_bridge_pairs_verified']==4
- assert memory['far_code_bridge_pairs_verified']==85 and memory['configuration_bridge_pairs_verified']==36
+ assert memory['far_code_bridge_pairs_verified']==87 and memory['configuration_bridge_pairs_verified']==38
  frames=read('build/terminal/config-far-checks.json')
- assert frames['passed'] and frames['binary_sha256']==runtime and len(frames['rejected_mutations'])==173
+ assert frames['passed'] and frames['binary_sha256']==runtime and len(frames['rejected_mutations'])==187
  native=read('build/far-storage/linked-checks.json');child=read('build/far-storage-dos/checks.json')
  for r in [native,child]:assert r['passed'] and r['binary_sha256']==runtime
  assert all(child['checks'].values()) and child['linker_defines']['FAR_END_OFFSET']-child['linker_defines']['HISTORY_OFFSET']==63000
