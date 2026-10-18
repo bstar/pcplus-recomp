@@ -133,9 +133,13 @@ def probe():
 def check_dos(label):
  path=ROOT/'build/bbs-lab/results/synchronet'/label
  result=json.loads((path/'result.json').read_text());text=Peer.cleaned((path/'display.bin').read_bytes());sent=(path/'serial-received.bin').read_bytes()
- file_at=text.index('■ File ■');message_at=text.index('No messages have been posted on Local Notices',file_at)
+ file_at=text.index('■ File ■')
+ # Editor probes explicitly select the owned local General area. The account
+ # retains that selection; both owned empty local areas exercise this read.
+ empty_area=next(area for area in ('Local Notices','Local General') if 'No messages have been posted on '+area in text[file_at:])
+ message_at=text.index('No messages have been posted on '+empty_area,file_at)
  checks={'run_and_hardware_checks':result['passed'],'real_ansi_device_attributes':b'\x1b[?1;2c' in sent,'input_commands_reached_wire':b'TQRQ' in sent,'file_section_reached':'List Files in dir' in text[:message_at] and 'Q Main/Message Section' in text[:message_at],'returned_then_read_empty_message_area':'■ Main ■' in text[file_at:message_at],'returned_to_main_after_message_pause':'■ Main ■' in text[message_at:],'final_dos_video_is_main_menu':'■ Main ■' in (path/'screen.txt').read_text(),'no_unrecognized_command':'Unrecognized command' not in text}
- output={'passed':all(checks.values()),'checks':checks,'binary_sha256':result['binary_sha256'],'serial':result.get('serial'),'scope':'Actual DOS ANSI profile login, file section, return, read empty message area, dismiss pause and final main menu. No transfer/message writes or physical modem claim.'}
+ output={'passed':all(checks.values()),'checks':checks,'empty_local_message_area':empty_area,'binary_sha256':result['binary_sha256'],'serial':result.get('serial'),'scope':'Actual DOS ANSI profile login, file section, return, read empty message area, dismiss pause and final main menu. No transfer/message writes or physical modem claim.'}
  (path/'navigation-checks.json').write_text(json.dumps(output,indent=2)+'\n');print(json.dumps(output,indent=2));assert output['passed']
 
 def main():

@@ -1,0 +1,835 @@
+{
+  "passed": false,
+  "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+  "scope": "Actual local full-screen editor tests using source-built DOS terminal and an immediate Hayes/Telnet modem model. No physical modem, file transfers or complete application claim.",
+  "servers": {
+    "synchronet": {
+      "run": {
+        "name": "synchronet",
+        "label": "editor-network-final",
+        "checks": {
+          "dos_normal_exit": true,
+          "hardware_restored": true,
+          "screen_captured": true,
+          "bbs_connected": true,
+          "bbs_display_received": true,
+          "configuration_unchanged": true,
+          "binary_unchanged_during_run": true
+        },
+        "passed": true,
+        "seconds": 47.069,
+        "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+        "keyboard": "p1000 p7000 L A B U S E R enter p2000 L A B P A S S 4 2 enter p8000 space p3000 Q enter p5000 space p4000 P p2000 K E Y T E S T enter p3000 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p400 c-q p1800 space p3000 a-x",
+        "serial": {
+          "com": 2,
+          "baud": 19200,
+          "line": "8N1",
+          "flow": "HARD",
+          "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+        },
+        "scope": "Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.",
+        "configuration": {
+          "automatic_dial": true,
+          "mode": "explicit synthetic partial PRM",
+          "command": "TERMINAL @D:\\TEST.PRM /D:lab.local:23231",
+          "sha256": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
+          "directory_entry": null,
+          "directory_browser": false,
+          "directory_sha256": null
+        }
+      },
+      "semantic_evidence": {
+        "passed": true,
+        "checks": {
+          "DOS_harness": true,
+          "typed_draft_sent": true,
+          "all_exercised_keys_emitted": true,
+          "stock_editor_entered": true,
+          "draft_aborted": true,
+          "insert_toggled_overtype": true,
+          "home_marker_at_line_start": true,
+          "end_marker_at_line_end": true,
+          "delete_erases_final_character": true,
+          "tab_advances_to_next_stop": true,
+          "page_keys_report_document_boundaries": true,
+          "ctrl_y_delete_line_response": true
+        },
+        "observed_key_wire": {
+          "home": true,
+          "end": true,
+          "insert": true,
+          "delete": true,
+          "page_up": true,
+          "page_down": true,
+          "tab": true,
+          "delete_line_ctrl_y": true
+        },
+        "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+        "serial": {
+          "com": 2,
+          "baud": 19200,
+          "line": "8N1",
+          "flow": "HARD",
+          "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+        },
+        "authority": {},
+        "scope": "Actual loopback stock editor draft and captured DOS keyboard wire. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim.",
+        "unexercised_keys": []
+      },
+      "retained_artifacts": {
+        "build/bbs-lab/results/synchronet/editor-network-final/result.json": "5d6bb38b21c9992041bf3976f712105b583281ad98e9a0b0958afd772cb87513",
+        "build/bbs-lab/results/synchronet/editor-network-final/semantic-audit.json": "bb2b347eb82aa74e1616733a2e53f6fca624827ecfc929ca3562a3e13ab52913",
+        "build/bbs-lab/results/synchronet/editor-network-final/serial-received.bin": "a015e50f0d94df4bebfe7d21cb0acfd8640031a8443703fca413ad9331474e71",
+        "build/bbs-lab/results/synchronet/editor-network-final/serial-sent.bin": "e0985ac5db3d0c79c2f023d71dbdbb8cb8b4b5cb7b00128f73984c8219b6ac33",
+        "build/bbs-lab/results/synchronet/editor-network-final/SCREEN.BIN": "c6e3440e183e17badfda47bf1b3099b7dbb39b0df46b5f939ec1874da6232a1c",
+        "build/bbs-lab/results/synchronet/editor-network-final/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/synchronet/editor-network-final/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/synchronet/editor-network-final/screen.txt": "7484401407963fa05d7287678a8c6241a8437351a99ae2af0f12969222afdf16",
+        "build/bbs-lab/results/synchronet/editor-network-final/display.bin": "e0985ac5db3d0c79c2f023d71dbdbb8cb8b4b5cb7b00128f73984c8219b6ac33"
+      }
+    },
+    "enigma": {
+      "run": {
+        "name": "enigma",
+        "label": "editor-network-immediate",
+        "checks": {
+          "dos_normal_exit": true,
+          "hardware_restored": true,
+          "screen_captured": true,
+          "bbs_connected": true,
+          "bbs_display_received": true,
+          "configuration_unchanged": true,
+          "binary_unchanged_during_run": true
+        },
+        "passed": true,
+        "seconds": 85.35,
+        "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+        "keyboard": "p1000 p12000 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 n p6000 enter p6000 M enter p5000 P enter p5000 enter p700 K E Y T E S T enter p1800 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p3000 a-x",
+        "serial": {
+          "com": 2,
+          "baud": 19200,
+          "line": "8N1",
+          "flow": "HARD",
+          "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+        },
+        "scope": "Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.",
+        "configuration": {
+          "automatic_dial": true,
+          "mode": "explicit synthetic partial PRM",
+          "command": "TERMINAL @D:\\TEST.PRM /D:lab.local:23233",
+          "sha256": "8ff221a096ac79d36c969cd520673d83da658c9e7d9c357ba3659ce15563cd87",
+          "directory_entry": null,
+          "directory_browser": false,
+          "directory_sha256": null
+        }
+      },
+      "semantic_evidence": {
+        "passed": false,
+        "checks": {
+          "DOS_harness": true,
+          "typed_draft_sent": true,
+          "all_exercised_keys_emitted": true,
+          "stock_editor_entered": true,
+          "no_post_saved": true,
+          "insert_toggled_overtype": false,
+          "home_moves_before_marker": false
+        },
+        "observed_key_wire": {
+          "home": true,
+          "end": true,
+          "insert": true,
+          "delete": true,
+          "page_up": true,
+          "page_down": true,
+          "tab": true,
+          "delete_line_ctrl_y": true
+        },
+        "binary_sha256": "84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b",
+        "serial": {
+          "com": 2,
+          "baud": 19200,
+          "line": "8N1",
+          "flow": "HARD",
+          "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+        },
+        "authority": {
+          "session_id": "eMUw6bKp6wA",
+          "menus": [
+            "telnetConnected",
+            "matrix",
+            "login",
+            "fullLoginSequenceLoginArt",
+            "fullLoginSequenceLastCallers",
+            "fullLoginSequenceWhosOnline",
+            "fullLoginSequenceOnelinerz",
+            "fullLoginSequenceNewScanConfirm",
+            "fullLoginSequenceUserStats",
+            "mainMenu",
+            "messageBaseMainMenu",
+            "messageBaseNewPost"
+          ],
+          "first_body_cursor_positions": [
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              1,
+              6
+            ],
+            [
+              1,
+              7
+            ],
+            [
+              1,
+              8
+            ],
+            [
+              1,
+              9
+            ],
+            [
+              1,
+              10
+            ],
+            [
+              1,
+              113
+            ],
+            [
+              1,
+              12
+            ],
+            [
+              1,
+              132
+            ],
+            [
+              1,
+              14
+            ],
+            [
+              1,
+              15
+            ],
+            [
+              1,
+              16
+            ],
+            [
+              1,
+              17
+            ],
+            [
+              1,
+              185
+            ],
+            [
+              1,
+              19
+            ],
+            [
+              1,
+              206
+            ],
+            [
+              1,
+              21
+            ]
+          ]
+        },
+        "scope": "Actual loopback stock editor draft and captured DOS keyboard wire. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim.",
+        "exit_mode": "close_unsaved_connection",
+        "unexercised_keys": []
+      },
+      "retained_artifacts": {
+        "build/bbs-lab/results/enigma/editor-network-immediate/result.json": "2477ff04b84d3329261071ddb0bcf340497f55a638e1abc398382a8b4930c132",
+        "build/bbs-lab/results/enigma/editor-network-immediate/semantic-audit.json": "69a5902dfd8420e3dc23d70d48f64b29d29630f2c793864faab01d279cf44933",
+        "build/bbs-lab/results/enigma/editor-network-immediate/serial-received.bin": "1b1dcac81b75f73b89ccd5f98415c70daed19bbc42b12f69468df81650f7cfa6",
+        "build/bbs-lab/results/enigma/editor-network-immediate/serial-sent.bin": "b5c3dddc5129bcc0c86c52c8124d29f91aebfe229140146155fb0d27cdb324b7",
+        "build/bbs-lab/results/enigma/editor-network-immediate/SCREEN.BIN": "17c00ffcf3edb2566c34f02c14c791503cb6d3394a791fdcc780d6bf51668a92",
+        "build/bbs-lab/results/enigma/editor-network-immediate/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/editor-network-immediate/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/editor-network-immediate/screen.txt": "1aabd7c42daa9940df62cbb2556650b2674ebb89a2d224fc03ad1bc20eb78d16",
+        "build/bbs-lab/results/enigma/editor-network-immediate/display.bin": "b5c3dddc5129bcc0c86c52c8124d29f91aebfe229140146155fb0d27cdb324b7",
+        "build/bbs-lab/results/enigma/editor-network-immediate/server-session.jsonl": "2d54fcf5f32b3cd03acc1c602a2f5ce23d50ae6b0843bc2344152ac11929e67b",
+        "build/bbs-lab/results/enigma/editor-network-immediate/server-log-start.json": "2464e86e138e83d5c6b58aae092ecd81e36ddfd74ee2f93a84f5df412acb1408"
+      },
+      "independent_fragmentation_oracle": {
+        "passed": true,
+        "scope": "Independent loopback stock editor comparison: complete ESC[D versus three writes separated by200ms. Close connection without submitting action menu; no Save or Enter after fragmented Escape.",
+        "steps": [
+          {
+            "name": "matrix",
+            "sent": "",
+            "menu": "matrix",
+            "received": 5661
+          },
+          {
+            "name": "login",
+            "sent": "0d",
+            "menu": "login",
+            "received": 3395
+          },
+          {
+            "name": "username",
+            "sent": "6c6f636c61620d",
+            "menu": "login",
+            "received": 151
+          },
+          {
+            "name": "password",
+            "sent": "4c6f432d4c61622d32303236210d",
+            "menu": "fullLoginSequenceLoginArt",
+            "received": 3256
+          },
+          {
+            "name": "advance-0",
+            "sent": "0d",
+            "menu": "fullLoginSequenceLastCallers",
+            "received": 4212
+          },
+          {
+            "name": "advance-1",
+            "sent": "0d",
+            "menu": "fullLoginSequenceWhosOnline",
+            "received": 3575
+          },
+          {
+            "name": "advance-2",
+            "sent": "0d",
+            "menu": "fullLoginSequenceOnelinerz",
+            "received": 3872
+          },
+          {
+            "name": "advance-3",
+            "sent": "1b",
+            "menu": "fullLoginSequenceNewScanConfirm",
+            "received": 233
+          },
+          {
+            "name": "advance-4",
+            "sent": "4e",
+            "menu": "fullLoginSequenceUserStats",
+            "received": 6097
+          },
+          {
+            "name": "advance-5",
+            "sent": "0d",
+            "menu": "mainMenu",
+            "received": 4187
+          },
+          {
+            "name": "messages",
+            "sent": "4d0d",
+            "menu": "messageBaseMainMenu",
+            "received": 4460
+          },
+          {
+            "name": "conferences",
+            "sent": "4a0d",
+            "menu": "messageBaseChangeCurrentConference",
+            "received": 4490
+          },
+          {
+            "name": "select-conference",
+            "sent": "0d",
+            "menu": "messageBaseMainMenu",
+            "received": 4459
+          },
+          {
+            "name": "areas",
+            "sent": "430d",
+            "menu": "messageBaseChangeCurrentArea",
+            "received": 4469
+          },
+          {
+            "name": "select-area",
+            "sent": "0d",
+            "menu": "messageBaseMainMenu",
+            "received": 4459
+          },
+          {
+            "name": "new-post",
+            "sent": "500d",
+            "menu": "messageBaseNewPost",
+            "received": 4383
+          },
+          {
+            "name": "to",
+            "sent": "0d",
+            "menu": "messageBaseNewPost",
+            "received": 206
+          },
+          {
+            "name": "subject",
+            "sent": "4c4f43414c20554e5341564544204b455920544553540d",
+            "menu": "messageBaseNewPost",
+            "received": 390
+          },
+          {
+            "name": "body",
+            "sent": "4142434445",
+            "menu": "messageBaseNewPost",
+            "received": 955
+          },
+          {
+            "name": "coalesced-left",
+            "sent": "1b5b44",
+            "menu": "messageBaseNewPost",
+            "received": 85
+          },
+          {
+            "name": "coalesced-end",
+            "sent": "1b5b347e",
+            "menu": "messageBaseNewPost",
+            "received": 85
+          },
+          {
+            "name": "split-escape",
+            "sent": "1b",
+            "menu": "messageBaseNewPost",
+            "received": 691
+          },
+          {
+            "name": "split-bracket",
+            "sent": "5b",
+            "menu": "messageBaseNewPost",
+            "received": 0
+          },
+          {
+            "name": "split-D",
+            "sent": "44",
+            "menu": "messageBaseNewPost",
+            "received": 0
+          }
+        ],
+        "server_rows": [
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "level": 30,
+            "remoteAddress": "127.0.0.1",
+            "friendlyRemoteAddress": "127.0.0.1",
+            "serverName": "Telnet",
+            "isSecure": false,
+            "port": 23233,
+            "family": "IPv4",
+            "msg": "Client connected on node 1 (Telnet/23233)",
+            "time": "2026-10-18T03:11:32.117Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "level": 20,
+            "width": 80,
+            "height": 25,
+            "source": "NAWS",
+            "msg": "Telnet: Windows size updated",
+            "time": "2026-10-18T03:11:32.157Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "level": 20,
+            "encoding": "cp437",
+            "msg": "Terminal type changed to ansi; Adjusting output encoding",
+            "time": "2026-10-18T03:11:32.157Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "level": 30,
+            "encoding": "cp437",
+            "currentEncoding": "cp437",
+            "msg": "Output encoding changed to cp437",
+            "time": "2026-10-18T03:11:32.157Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "level": 20,
+            "termType": "ANSI",
+            "msg": "Set terminal type",
+            "time": "2026-10-18T03:11:32.158Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "level": 20,
+            "setThemeId": "luciano_blocktronics",
+            "requestedThemeId": "luciano_blocktronics",
+            "info": {
+              "name": "Mystery Skull",
+              "author": "Luciano Ayres",
+              "group": "blocktronics",
+              "enabled": true,
+              "themeId": "luciano_blocktronics"
+            },
+            "msg": "Set client theme",
+            "time": "2026-10-18T03:11:32.158Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "level": 30,
+            "msg": "SyncTERM font support enabled on node 1",
+            "time": "2026-10-18T03:11:32.200Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "level": 20,
+            "menuName": "telnetConnected",
+            "msg": "Goto menu module",
+            "time": "2026-10-18T03:11:32.700Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "level": 20,
+            "reason": "Object does not exist: No matching art for supplied criteria: CONNECT",
+            "msg": "Cannot find theme art",
+            "time": "2026-10-18T03:11:32.701Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "level": 20,
+            "menuName": "matrix",
+            "msg": "Goto menu module",
+            "time": "2026-10-18T03:11:34.202Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "level": 20,
+            "menuName": "login",
+            "msg": "Goto menu module",
+            "time": "2026-10-18T03:11:35.209Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 30,
+            "msg": "User \"loclab\" successfully logged in",
+            "time": "2026-10-18T03:11:36.871Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 20,
+            "setThemeId": "luciano_blocktronics",
+            "requestedThemeId": "luciano_blocktronics",
+            "info": {
+              "name": "Mystery Skull",
+              "author": "Luciano Ayres",
+              "group": "blocktronics",
+              "enabled": true,
+              "themeId": "luciano_blocktronics"
+            },
+            "msg": "Set client theme",
+            "time": "2026-10-18T03:11:36.871Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 20,
+            "menuName": "fullLoginSequenceLoginArt",
+            "msg": "Goto menu module",
+            "time": "2026-10-18T03:11:36.872Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "VEUNmdbM85a",
+            "level": 30,
+            "msg": "Node 1 idle timeout of 10 minutes expired; Kicking",
+            "time": "2026-10-18T03:11:37.324Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 20,
+            "menuName": "fullLoginSequenceLastCallers",
+            "msg": "Goto menu module",
+            "time": "2026-10-18T03:11:38.879Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 20,
+            "menuName": "fullLoginSequenceWhosOnline",
+            "msg": "Goto menu module",
+            "time": "2026-10-18T03:11:39.885Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 20,
+            "menuName": "fullLoginSequenceOnelinerz",
+            "msg": "Goto menu module",
+            "time": "2026-10-18T03:11:40.890Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 20,
+            "menuName": "fullLoginSequenceNewScanConfirm",
+            "msg": "Goto menu module",
+            "time": "2026-10-18T03:11:41.895Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 20,
+            "menuName": "fullLoginSequenceUserStats",
+            "msg": "Goto menu module",
+            "time": "2026-10-18T03:11:42.898Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 20,
+            "menuName": "mainMenu",
+            "msg": "Goto menu module",
+            "time": "2026-10-18T03:11:43.905Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 20,
+            "menuName": "messageBaseMainMenu",
+            "msg": "Goto menu module",
+            "time": "2026-10-18T03:11:44.911Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 20,
+            "menuName": "messageBaseChangeCurrentConference",
+            "msg": "Goto menu module",
+            "time": "2026-10-18T03:11:45.917Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 30,
+            "confTag": "lab",
+            "confName": "Lab",
+            "areaTag": "general",
+            "msg": "1 changed message conference to general",
+            "time": "2026-10-18T03:11:46.922Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 20,
+            "menuName": "messageBaseMainMenu",
+            "msg": "Goto menu module",
+            "time": "2026-10-18T03:11:46.922Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 20,
+            "menuName": "messageBaseChangeCurrentArea",
+            "msg": "Goto menu module",
+            "time": "2026-10-18T03:11:47.928Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 20,
+            "areaTag": "general",
+            "area": {
+              "areaTag": "general",
+              "confTag": "lab",
+              "name": "General",
+              "desc": "Synthetic local test messages only",
+              "default": true
+            },
+            "msg": "Node 1 changed message area to general",
+            "time": "2026-10-18T03:11:48.933Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 20,
+            "menuName": "messageBaseMainMenu",
+            "msg": "Goto menu module",
+            "time": "2026-10-18T03:11:48.933Z",
+            "v": 0
+          },
+          {
+            "name": "ENiGMA\u00bd",
+            "hostname": "godvii",
+            "pid": 1097611,
+            "nodeId": 1,
+            "sessionId": "80Ue5wPDe1b",
+            "username": "loclab",
+            "level": 20,
+            "menuName": "messageBaseNewPost",
+            "msg": "Goto menu module",
+            "time": "2026-10-18T03:11:49.940Z",
+            "v": 0
+          }
+        ],
+        "checks": {
+          "coalesced_left_moves_to_column5": true,
+          "coalesced_end_restores_column6": true,
+          "fragmented_escape_opens_action_menu": true,
+          "fragmented_remainder_does_not_move_cursor": true,
+          "no_post_saved": true
+        }
+      },
+      "limitation": "All8 tested editing keys reach UART; actual server cursor/insert behavior fails when escape sequences split across reads. The immediate model is unchanged. Final probe closed unsaved; no message posted.",
+      "historical_failed_discard": {
+        "binary_sha256": "1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964",
+        "artifact": "build/bbs-lab/results/enigma/editor-baseline-keys/semantic-audit.json",
+        "no_post_saved": false,
+        "scope": "Earlier split-right-arrow caused intended discard to save one synthetic local KEYTEST message. Preserved as failed evidence; no public/external post."
+      }
+    }
+  },
+  "remaining": [
+    "ENiGMA editor handling of fragmented escape sequences",
+    "Physical UART/Wi-Fi modem packetization and handshake timing",
+    "Multiline documents, save/upload/attachments and complete application features"
+  ]
+}

@@ -63,6 +63,22 @@ specific failing public-board screens, transfers, full-screen editing and
 advanced protocols remain separate validation. This milestone is an interactive
 terminal, not the complete PCPlus application.
 
+## Full-screen editor results
+
+Deeper editor testing is recorded separately in
+[`bbs-editors.json`](../../docs/validation/bbs-editors.json), whose overall result
+remains **failed**. The current DOS build passes Synchronet's actual FSEditor:
+Home/End, Insert/Delete, Page Up/Down, Tab, Ctrl-Y redraw and Ctrl-Q draft abort
+are verified from server responses as well as outgoing key bytes.
+
+ENiGMA's tested keys now reach the UART correctly, but its editor misinterprets
+escape sequences split across TCP reads in the immediate modem model. An
+independent peer reproduces the same problem; the model and stock server remain
+unchanged. The latest DOS probe closes unsaved and confirms no message was
+posted. This is a retained compatibility failure, not an editor pass inferred
+from normal DOS exit or correct outgoing bytes. See
+[editor recipes, baseline failures and fragmentation evidence](editors.md).
+
 ## PRM startup regression
 
 The current primary matrix repeats all three read-only workflows with
@@ -96,13 +112,16 @@ only the selected record's date/count bytes; the harness verifies the other
 23,039 directory bytes exactly. `--directory-fixture` without
 `--directory-browser` instead uses explicit `/N` selection.
 
-The latest `directory-accounting` runs use the same executable, SHA-256
+The earlier `directory-accounting` checkpoint used the same executable, SHA-256
 `1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964`,
 on all three servers. Synchronet verifies file-menu return and an empty message
 read; Mystic verifies indexed file/message screens with Up/Down and Escape;
 ENiGMA verifies Main → Messages → Main → Files against its authoritative session
 log, along with actual DOS device/cursor replies and arrow bytes. Historical
-results in the matrix retain their original executable hashes.
+results in the matrix retain their original executable hashes. Current primary
+`keyboard-network` menu runs repeat all three workflows on
+`84019437bd2342f7053692abc42040ee91f666461f6a3aa51d544763113f2a7b`;
+the separate editor results retain ENiGMA's fragmentation failure.
 
 To audit an existing run through the pinned toolchain:
 
