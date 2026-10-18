@@ -63,7 +63,10 @@ independent complete-versus-split escape probe reproduces the server's handling
 of TCP chunks without partial escape state. Physical modem buffering/timing and remaining application features still
 require separate testing. Live XMODEM receives and ordinary uploads now have independent owned-peer
 DOS tests (`docs/TRANSFER_INTEGRATION.md`, `docs/LIVE_UPLOAD.md`); transfers against these BBS servers
-remain untested.
+now also pass actual DOS XMODEM-1K/CRC upload/download tests on Synchronet and
+ENiGMA. See [transfer setup, results and limitations](transfers.md) and
+[`bbs-transfers.json`](../../docs/validation/bbs-transfers.json). ENiGMA uses an
+explicit single-file lab protocol configuration; its editor failure remains open.
 
 The earlier `meta-character-network` ENiGMA matrix failure and its incomplete
 70-second timeout attempt remain historical evidence, with explicit limitations.

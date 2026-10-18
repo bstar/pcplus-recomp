@@ -1,0 +1,22 @@
+# Owned Synchronet transfer fixture
+
+`./tools/bbs-dev --command python3 lab/bbs/synchronet_transfer.py setup` appends a dedicated `Main:PCPLAB` directory to the existing owned loopback lab configuration, preserves the previous bytes under ignored `build/bbs-lab/synchronet/transfers`, seeds `PCXTEST.BIN` through the official `FileBase.add` API and requests the official terminal-server recycle semaphore. Run setup only when no lab sessions are active. It leaves existing configuration sections and users intact. The new directory is currently visible as directory **11** to the synthetic level-50 account; internal index is13.
+
+The server is the pinned official Synchronet source/snapshot commit `9de2c48d0265b07e1a8406d8a55d31df4fad7ee8`. Its existing stock `sexyz`3.6 helper runs through the pinned Nix BBS shell. Protocol key `X` selects XMODEM-Original; `1` selects XMODEM-1K/CRC. Setup records exact helper hashes, source commit and configuration hashes in ignored `setup.json`; it does not patch server or protocol-helper sources.
+
+After the existing synthetic login/bulletin sequence, use these stock menus:
+
+1. `T`, `J`, `11` followed by Enter selects PCPlus Lab.
+2. Download: `D`, `PCXTEST.BIN` followed by Enter, protocol `1` (or `X`), then **N alone** to decline hangup. Start the DOS receiver after that answer.
+3. Upload: `U`, `SEND.BIN` followed by Enter, **Y alone** to confirm destination, a description followed by Enter, protocol `1` (or `X`), then **N alone**. Start the DOS sender after that answer.
+4. Successful completion pauses at `[Hit a key]`; send space and require the `■ File ■` prompt. `Q` returns to the main/message section.
+
+Sending Enter after the hangup answer queues an extra key into the next operation. In particular, `N` followed by Enter caused a successful reference download to enter the later disconnect countdown. Use only the single answer key.
+
+`reference --protocol 1` and `reference --protocol X` use a declared socket reference peer against the real stock helper. Incoming and outgoing Telnet IAC quoting is handled separately from XMODEM frames. Every sequence/complement, checksum/CRC, payload and SUB-padding byte is checked independently. The binary transfer phase disables the reference peer's ANSI CPR-response heuristic. `reference --upload` sends a distinct deterministic local fixture (`PCXUP1.BIN` or `PCXUPX.BIN`), then checks the actual installed file and official FileBase metadata. These upload commands refuse to overwrite an existing target; keep captures rather than silently resetting server content.
+
+`audit --name SEND.BIN --expected /path/to/synthetic/SEND.BIN` emits JSON containing official `FileBase.get` fields plus independent physical size/hash. The setup fixture is11521bytes, SHA256 `2d10c92c0212b12674a7c5fd7aaba6af4afb2a7d8a7356ce1b5521fc96180cdc`, and includes NUL, SUB, IAC, XON and XOFF bytes. XMODEM carries no true length: the observed stock CRC download uses mixed1024/128byte frames, delivering11648bytes including127SUB padding bytes. Uploads preserve protocol padding in the stock server's installed file and metadata length. Neither side may claim an unpadded original length from XMODEM alone.
+
+All files, payloads, binary captures, metadata and session transcripts stay under ignored `build/`. These are synthetic local file transfers only. Reference-peer evidence is separate from actual DOS/client interoperability evidence. The dedicated area retains stock duplicate-hash checking: a repeated identical upload may be rejected/deleted by the server even under a different basename. Source authority: `src/sbbs3/upload.cpp` (`uploadfile`, `upload`), `download.cpp` (`protocol`), `getkey.cpp` (`yesno`), `js_filebase.cpp`, and `exec/load/sbbsdefs.js` in the pinned owned server tree.
+
+The CRC reference runs passed in both directions. Captures: `build/bbs-lab/synchronet/transfers/reference-download-1/result.json` and `reference-upload-1-PCXUPA.BIN/result.json`; `audit-PCXUPA.BIN.json` independently verifies all FileBase hashes and exact source/padding. The stock receiver requests CRC with `C`, ACKs14dataframes, NAKs the first EOT and ACKs the second EOT. The initial reference sender assumed one EOT and failed; its partial `PCXUP1.BIN` and failed capture remain preserved. A later fresh filename was used without deleting that evidence. `--name PCXUPA.BIN` selects a fresh reference-upload basename, restricted to the owned PCXUP prefix. No original/checksum reference run is claimed by this evidence.

@@ -1,0 +1,1459 @@
+{
+  "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
+  "all_recorded_runs_passed": false,
+  "passed_run_count": 4,
+  "failed_run_count": 1,
+  "runs": [
+    {
+      "server": "synchronet",
+      "label": "bbs-transfer-download-1",
+      "result": {
+        "passed": false,
+        "name": "synchronet",
+        "label": "bbs-transfer-download-1",
+        "mode": "download",
+        "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
+        "checks": {
+          "actual_validated_protocol": false,
+          "DOS_normal_exit": false,
+          "hardware_restored": false
+        },
+        "errors": [
+          "Unsupported ADDKEY token period stopped queue at first filename dot. Server Filespec input ends PCXTEST. DOS timeout140s followed Python3.14 wait_closed hang; owned Python SIGINT yielded original Modem finally/save."
+        ],
+        "scope": "Harness recipe/cleanup failure, no native transfer reached",
+        "termination": "Owned DOS process timed out; Python wait_closed hung; owned SIGINT allowed unchanged Modem finally/save. No protocol trace timestamps survived, retained raw captures only."
+      },
+      "harness_failure": {
+        "passed": false,
+        "scope": "Harness recipe/cleanup failure, no native transfer reached",
+        "cause": "Unsupported ADDKEY token period stopped queue at first filename dot. Server Filespec input ends PCXTEST. DOS timeout140s followed Python3.14 wait_closed hang; owned Python SIGINT yielded original Modem finally/save.",
+        "preserved": [
+          "serial-received.bin",
+          "display.bin",
+          "modem.json"
+        ],
+        "shared_target_files": "Absent; no deletion"
+      },
+      "retained_artifacts": {
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-1/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-1/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-1/TEST.DIR": "8a86bb125151f2d9477b801f93af68beec5785d79f09368c5ba4328426a350f9",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-1/TEST.PRM": "ae57ce85727e7d12b74621f1d6b84d5f23266c67c96c3deeef65b6f481d021ef",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-1/bbs-sent.bin": "0b9e1dd493f052382c7a5d044a6413bdce3fcfa60d0b191df2e6ee9bd1f9ca8e",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-1/bbs-wire.bin": "0b852ea2716a73f8b477132f88ac42591dc4bb6428251b8adf4c769d3247f61b",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-1/display.bin": "620d1a9b85cc323bb40ae3caa7cb1ea1548d441406d93e2e4b21f53c2b07ef9c",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-1/dosbox.conf": "558df9a34b9b148f244ada4228bdc245fdd29e2bf8c095c2bd2ed1921a54e1c1",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-1/dosbox.log": "6621b3a3a221c9a62e51e3336c85369becb1e8efbb378e0928cc4f4cdc8a4e38",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-1/harness-failure.json": "4e2cefae0ec8927dddc69f27e8782c7a20be6d78461d5d9ad00c486701be102c",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-1/modem.json": "8a053321f67da59a0017c8997d224798a70a30b62ddf8ce4387b7619abbedb8e",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-1/result.json": "785f8973ad6ca52e540cdd1f063a59f001ac9f4437de05b369cd327919d430fe",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-1/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-1/serial-received.bin": "77a2722ce87cc186ed28b1a466875f71f51bcd2292b9553fb9b6ebdec233bd71",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-1/serial-sent.bin": "620d1a9b85cc323bb40ae3caa7cb1ea1548d441406d93e2e4b21f53c2b07ef9c"
+      }
+    },
+    {
+      "server": "synchronet",
+      "label": "bbs-transfer-download-2",
+      "result": {
+        "passed": true,
+        "name": "synchronet",
+        "label": "bbs-transfer-download-2",
+        "mode": "download",
+        "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
+        "payload_sha256": "2d10c92c0212b12674a7c5fd7aaba6af4afb2a7d8a7356ce1b5521fc96180cdc",
+        "checks": {
+          "DOS_normal_exit": true,
+          "hardware_restored": true,
+          "screen_captured": true,
+          "bbs_connected": true,
+          "binary_unchanged": true,
+          "payload_fixture_unchanged": true,
+          "observed_decoded_offsets_match": true,
+          "configuration_unchanged": true,
+          "directory_accounting_exact": true,
+          "actual_frame_and_final_EOT_ACKs": true,
+          "EOT_bounded": true,
+          "posttransfer_actual_menu_input_response": true,
+          "actual_validated_protocol": true,
+          "DOS_download_exact_accepted_blocks": true,
+          "server_metadata_audit": true,
+          "no_leftover_staging": true
+        },
+        "errors": [],
+        "seconds": 69.649,
+        "keys": "p500 down p100 down p100 enter p1000 p7000 L A B U S E R enter p2000 L A B P A S S 4 2 enter p8000 space p3000 Q enter p5000 space p3000 T p2000 J p1500 1 1 enter p2000 D p1500 P C X T E S T . B I N enter p2000 1 p1500 N p1000 a-r p500 P C X T E S T . B I N enter p18000 space p2500 Q p3000 p3000 a-x",
+        "command": "C:\\TERMINAL @D:\\TEST.PRM /E:D:\\TEST.DIR",
+        "serial": {
+          "com": 2,
+          "baud": 19200,
+          "flow": "HARD"
+        },
+        "scope": "Actual local BBS protocol peer via unchanged Hayes/Telnet modem, real DOS AltR/AltS/files/UART. Passive frame/control audit, actual post-transfer menu interaction. Synthetic media; no physical CTS/DCD claim."
+      },
+      "protocol": {
+        "start": 31815,
+        "end": 43535,
+        "eot_start": 43533,
+        "eots": 2,
+        "crc": true,
+        "frames": [
+          {
+            "offset": 31815,
+            "end": 32844,
+            "number": 1,
+            "size": 1024,
+            "crc": true,
+            "sha256": "30471afc821ef9dcd32c9a81d6bd08330e136e3deb769e1a59248d7ba44fa80e"
+          },
+          {
+            "offset": 32844,
+            "end": 33873,
+            "number": 2,
+            "size": 1024,
+            "crc": true,
+            "sha256": "8973d90f5c2c686cd9065c84b328924c80147aea4acff3dd41a3375841e739c8"
+          },
+          {
+            "offset": 33873,
+            "end": 34902,
+            "number": 3,
+            "size": 1024,
+            "crc": true,
+            "sha256": "15dd8de30c56ecf7f9baad0f8028ba8df92484c8406a02aff4c6583fa28d33a3"
+          },
+          {
+            "offset": 34902,
+            "end": 35931,
+            "number": 4,
+            "size": 1024,
+            "crc": true,
+            "sha256": "8196de1b194dc6b42b115df69067baf284ebd19bfc7299f970e7cea72c8a5e0f"
+          },
+          {
+            "offset": 35931,
+            "end": 36960,
+            "number": 5,
+            "size": 1024,
+            "crc": true,
+            "sha256": "085ada90d1e1ec12537a06aa6b5c20ea2841a2659aabc93b8179f7c2fe73f012"
+          },
+          {
+            "offset": 36960,
+            "end": 37989,
+            "number": 6,
+            "size": 1024,
+            "crc": true,
+            "sha256": "9d3dad380e156f67a4b3829d53917cd3facfa8f28ec0284f4c86dbfbf8e22a65"
+          },
+          {
+            "offset": 37989,
+            "end": 39018,
+            "number": 7,
+            "size": 1024,
+            "crc": true,
+            "sha256": "fece326e5885be40064b8064d91f0d8df2977301ecd20d60b1154f3f055c7550"
+          },
+          {
+            "offset": 39018,
+            "end": 40047,
+            "number": 8,
+            "size": 1024,
+            "crc": true,
+            "sha256": "c4750cc3a0ab63285a538300dac90b055474a096050833278c375d4948d01c2d"
+          },
+          {
+            "offset": 40047,
+            "end": 41076,
+            "number": 9,
+            "size": 1024,
+            "crc": true,
+            "sha256": "2cec146835402e359fdaa36f8dc873bac3f07c95833915c876fe993d296686b2"
+          },
+          {
+            "offset": 41076,
+            "end": 42105,
+            "number": 10,
+            "size": 1024,
+            "crc": true,
+            "sha256": "b7dedf0cf48980d7e47cdd6a9c3575aa51fd2f46bafe88349e798469400047a4"
+          },
+          {
+            "offset": 42105,
+            "end": 43134,
+            "number": 11,
+            "size": 1024,
+            "crc": true,
+            "sha256": "d5f4270d92c04057786d187786c1444bd9b9034a3fe06c3101eaef0ca03dd8d8"
+          },
+          {
+            "offset": 43134,
+            "end": 43267,
+            "number": 12,
+            "size": 128,
+            "crc": true,
+            "sha256": "b97da3c5ea524857bc29e5190c44632bbce08487f69ac56e7520e3e058e767ec"
+          },
+          {
+            "offset": 43267,
+            "end": 43400,
+            "number": 13,
+            "size": 128,
+            "crc": true,
+            "sha256": "17877ab830abf82291e091964cefe19576ed15a20722f81ccc13c5d67343d8ee"
+          },
+          {
+            "offset": 43400,
+            "end": 43533,
+            "number": 14,
+            "size": 128,
+            "crc": true,
+            "sha256": "b6ed50c68b9891a6a361441de25da6a5b533dca9074f52451e4570239af3a4c6"
+          }
+        ],
+        "accepted_blocks": 14,
+        "controls": [
+          {
+            "kind": "frame",
+            "number": 1,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 2,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 3,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 4,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 5,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 6,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 7,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 8,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 9,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 10,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 11,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 12,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 13,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 14,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "EOT",
+            "response": 21
+          },
+          {
+            "kind": "EOT",
+            "response": 6
+          }
+        ]
+      },
+      "server_metadata": {
+        "passed": true,
+        "metadata_matches_physical_bytes": true,
+        "expected_payload_verified": true,
+        "padding_bytes": 0,
+        "server_commit": "9de2c48d0265b07e1a8406d8a55d31df4fad7ee8",
+        "directory_code": "pcplab",
+        "name": "PCXTEST.BIN",
+        "exists": true,
+        "bytes": 11521,
+        "sha256": "2d10c92c0212b12674a7c5fd7aaba6af4afb2a7d8a7356ce1b5521fc96180cdc",
+        "metadata": {
+          "name": "PCXTEST.BIN",
+          "vpath": "Main/PCPLAB/PCXTEST.BIN",
+          "from": "Lab Sysop",
+          "desc": "Synthetic PCPlus binary transfer fixture",
+          "size": 11521,
+          "time": 1792302106,
+          "added": 1792302106,
+          "last_downloaded": 1792302685,
+          "times_downloaded": 3,
+          "crc16": 24393,
+          "crc32": 2787419004,
+          "md5": "f7472728ae3d5400ccff5b6cffec96c5",
+          "sha1": "3f524139d14e88637c6760e5c441fc8026815871"
+        }
+      },
+      "retained_artifacts": {
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/PCXTEST.BIN": "ca9202d2cf9a78a776de8d719e8aec1eb6c2688c7aba1c1db0868fbc5dda8da7",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/SCREEN.BIN": "14bb46ef3405778bdba21e0ab8ebef00a50e75ebaf2abc1ba13c92aad26059c4",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/TEST.DIR": "373cdd3c923b5b11c6ba6895f903b2a009c04499f177f387aefbfc208f59648c",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/TEST.PRM": "ae57ce85727e7d12b74621f1d6b84d5f23266c67c96c3deeef65b6f481d021ef",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/accepted-payload.bin": "ca9202d2cf9a78a776de8d719e8aec1eb6c2688c7aba1c1db0868fbc5dda8da7",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/bbs-sent.bin": "924e7a25f4ff662eec56861b6ea4fae2a4da99358d6a4a66831fc87191572570",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/bbs-wire.bin": "ae1171a5495922e0c3a5df45db5b359f1007dd4f91c3b138f6061d6a2697619f",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/display.bin": "fd6ba250ab4ace108b5e1b2b0f75a9d26c7f63f3c2a02b5671afd4f76f614b29",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/dosbox.conf": "132deba21153c4daee3ed6c2541bbe356107b6a4a53be566cdaa564eb10db878",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/dosbox.log": "c3c5372098a53f4f96b44ac41619fbf7cfaef1f31e8270f8379a3cc7b9f63d57",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/modem.json": "9711f60d31aef0b66e3b0e8fc252335c5a0b94667a3f34240bd61440b7c0e520",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/protocol.json": "006d42e0007e3347ed22541fa2a452b58a6e78dbba34bb94b3a042168c2a322a",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/result.json": "40cd5930a6ba9a64a78e8e1fad0bc1597b083fc7cb7d425cdb85943abc60b795",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/screen.txt": "2c685ed2120b66b66340bc7f7bdc889537814f9fb04f21d18b998093c1d4acaa",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/serial-received.bin": "a945e0fd06f9d9c5bfe6e64f7577de2096b34aafccab162e84dc96218cf8d49a",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/serial-sent.bin": "fd6ba250ab4ace108b5e1b2b0f75a9d26c7f63f3c2a02b5671afd4f76f614b29",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/server-audit.stderr": "b7bee0aaae040256ada0e07a31bfff9f82f7f3c5e5f5b674367f1fa895eb8464",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/server-audit.stdout": "a10cdefaffe544277721d4b0a5ab94b0b80d467b9b9ad5a4ea8da41705ea0901",
+        "build/bbs-lab/results/synchronet/bbs-transfer-download-2/trace.json": "3166ea1ce06dbc74cd09b497886150a0a78143631cf6ddfde54142def7477db0"
+      }
+    },
+    {
+      "server": "synchronet",
+      "label": "bbs-transfer-upload-1",
+      "result": {
+        "passed": true,
+        "name": "synchronet",
+        "label": "bbs-transfer-upload-1",
+        "mode": "upload",
+        "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
+        "payload_sha256": "2d10c92c0212b12674a7c5fd7aaba6af4afb2a7d8a7356ce1b5521fc96180cdc",
+        "checks": {
+          "DOS_normal_exit": true,
+          "hardware_restored": true,
+          "screen_captured": true,
+          "bbs_connected": true,
+          "binary_unchanged": true,
+          "payload_fixture_unchanged": true,
+          "observed_decoded_offsets_match": true,
+          "configuration_unchanged": true,
+          "directory_accounting_exact": true,
+          "actual_frame_and_final_EOT_ACKs": true,
+          "EOT_bounded": true,
+          "posttransfer_actual_menu_input_response": true,
+          "actual_validated_protocol": true,
+          "DOS_source_unchanged": true,
+          "server_uploaded_exact_accepted_blocks": true,
+          "server_metadata_audit": true,
+          "no_leftover_staging": true
+        },
+        "errors": [],
+        "seconds": 75.53,
+        "keys": "p500 down p100 down p100 enter p1000 p7000 L A B U S E R enter p2000 L A B P A S S 4 2 enter p8000 space p3000 Q enter p5000 space p3000 T p2000 J p1500 1 1 enter p2000 U p1500 S E N D . B I N enter p1500 Y p1500 S y n t h e t i c space l o c a l space t r a n s f e r space f i x t u r e enter p2000 1 p1500 N p1000 a-s p500 S E N D . B I N enter p18000 space p2500 Q p3000 p3000 a-x",
+        "command": "C:\\TERMINAL @D:\\TEST.PRM /E:D:\\TEST.DIR",
+        "serial": {
+          "com": 2,
+          "baud": 19200,
+          "flow": "HARD"
+        },
+        "scope": "Actual local BBS protocol peer via unchanged Hayes/Telnet modem, real DOS AltR/AltS/files/UART. Passive frame/control audit, actual post-transfer menu interaction. Synthetic media; no physical CTS/DCD claim."
+      },
+      "protocol": {
+        "start": 131,
+        "end": 11851,
+        "eot_start": 11849,
+        "eots": 2,
+        "crc": true,
+        "frames": [
+          {
+            "offset": 131,
+            "end": 1160,
+            "number": 1,
+            "size": 1024,
+            "crc": true,
+            "sha256": "30471afc821ef9dcd32c9a81d6bd08330e136e3deb769e1a59248d7ba44fa80e"
+          },
+          {
+            "offset": 1160,
+            "end": 2189,
+            "number": 2,
+            "size": 1024,
+            "crc": true,
+            "sha256": "8973d90f5c2c686cd9065c84b328924c80147aea4acff3dd41a3375841e739c8"
+          },
+          {
+            "offset": 2189,
+            "end": 3218,
+            "number": 3,
+            "size": 1024,
+            "crc": true,
+            "sha256": "15dd8de30c56ecf7f9baad0f8028ba8df92484c8406a02aff4c6583fa28d33a3"
+          },
+          {
+            "offset": 3218,
+            "end": 4247,
+            "number": 4,
+            "size": 1024,
+            "crc": true,
+            "sha256": "8196de1b194dc6b42b115df69067baf284ebd19bfc7299f970e7cea72c8a5e0f"
+          },
+          {
+            "offset": 4247,
+            "end": 5276,
+            "number": 5,
+            "size": 1024,
+            "crc": true,
+            "sha256": "085ada90d1e1ec12537a06aa6b5c20ea2841a2659aabc93b8179f7c2fe73f012"
+          },
+          {
+            "offset": 5276,
+            "end": 6305,
+            "number": 6,
+            "size": 1024,
+            "crc": true,
+            "sha256": "9d3dad380e156f67a4b3829d53917cd3facfa8f28ec0284f4c86dbfbf8e22a65"
+          },
+          {
+            "offset": 6305,
+            "end": 7334,
+            "number": 7,
+            "size": 1024,
+            "crc": true,
+            "sha256": "fece326e5885be40064b8064d91f0d8df2977301ecd20d60b1154f3f055c7550"
+          },
+          {
+            "offset": 7334,
+            "end": 8363,
+            "number": 8,
+            "size": 1024,
+            "crc": true,
+            "sha256": "c4750cc3a0ab63285a538300dac90b055474a096050833278c375d4948d01c2d"
+          },
+          {
+            "offset": 8363,
+            "end": 9392,
+            "number": 9,
+            "size": 1024,
+            "crc": true,
+            "sha256": "2cec146835402e359fdaa36f8dc873bac3f07c95833915c876fe993d296686b2"
+          },
+          {
+            "offset": 9392,
+            "end": 10421,
+            "number": 10,
+            "size": 1024,
+            "crc": true,
+            "sha256": "b7dedf0cf48980d7e47cdd6a9c3575aa51fd2f46bafe88349e798469400047a4"
+          },
+          {
+            "offset": 10421,
+            "end": 11450,
+            "number": 11,
+            "size": 1024,
+            "crc": true,
+            "sha256": "d5f4270d92c04057786d187786c1444bd9b9034a3fe06c3101eaef0ca03dd8d8"
+          },
+          {
+            "offset": 11450,
+            "end": 11583,
+            "number": 12,
+            "size": 128,
+            "crc": true,
+            "sha256": "b97da3c5ea524857bc29e5190c44632bbce08487f69ac56e7520e3e058e767ec"
+          },
+          {
+            "offset": 11583,
+            "end": 11716,
+            "number": 13,
+            "size": 128,
+            "crc": true,
+            "sha256": "17877ab830abf82291e091964cefe19576ed15a20722f81ccc13c5d67343d8ee"
+          },
+          {
+            "offset": 11716,
+            "end": 11849,
+            "number": 14,
+            "size": 128,
+            "crc": true,
+            "sha256": "b6ed50c68b9891a6a361441de25da6a5b533dca9074f52451e4570239af3a4c6"
+          }
+        ],
+        "accepted_blocks": 14,
+        "controls": [
+          {
+            "kind": "frame",
+            "number": 1,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 2,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 3,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 4,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 5,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 6,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 7,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 8,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 9,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 10,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 11,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 12,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 13,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 14,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "EOT",
+            "response": 21
+          },
+          {
+            "kind": "EOT",
+            "response": 6
+          }
+        ]
+      },
+      "server_metadata": {
+        "passed": true,
+        "metadata_matches_physical_bytes": true,
+        "expected_payload_verified": true,
+        "padding_bytes": 127,
+        "server_commit": "9de2c48d0265b07e1a8406d8a55d31df4fad7ee8",
+        "directory_code": "pcplab",
+        "name": "SEND.BIN",
+        "exists": true,
+        "bytes": 11648,
+        "sha256": "ca9202d2cf9a78a776de8d719e8aec1eb6c2688c7aba1c1db0868fbc5dda8da7",
+        "metadata": {
+          "name": "SEND.BIN",
+          "vpath": "Main/PCPLAB/SEND.BIN",
+          "from": "LABUSER",
+          "from_ip_addr": "127.0.0.1",
+          "from_host_name": "<no name>",
+          "from_protocol": "Telnet",
+          "from_port": "51054",
+          "desc": "Oct18'26  Synthetic local transfer fixture",
+          "cost": 11648,
+          "size": 11648,
+          "time": 1792302854,
+          "added": 1792302854,
+          "crc16": 54592,
+          "crc32": 1139585697,
+          "md5": "eb4dd4f9d5ecdd756c483857a532f955",
+          "sha1": "be4e4eb77284097df440ff0d08c33b6de6a3086e"
+        }
+      },
+      "retained_artifacts": {
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/SCREEN.BIN": "2daf4600ed63a5836f6444663e23f98d48d1da49c76a0897bef4a5ed161bd71c",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/SEND.BIN": "2d10c92c0212b12674a7c5fd7aaba6af4afb2a7d8a7356ce1b5521fc96180cdc",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/TEST.DIR": "373cdd3c923b5b11c6ba6895f903b2a009c04499f177f387aefbfc208f59648c",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/TEST.PRM": "ae57ce85727e7d12b74621f1d6b84d5f23266c67c96c3deeef65b6f481d021ef",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/accepted-payload.bin": "ca9202d2cf9a78a776de8d719e8aec1eb6c2688c7aba1c1db0868fbc5dda8da7",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/bbs-sent.bin": "c5a304f942eb1b1d17cb729aa34539b550b5169b35802f9454b8291c1fb19f76",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/bbs-wire.bin": "3881c4c8483e3c3af0fd819363d8c5b9f8b0eb9b077cb90985f39f737bfbd50a",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/display.bin": "3ca81d8d3d890ef4049d4dba235d8dc3ccc7996dded5315256b0c60a3e5c7ca2",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/dosbox.conf": "16121d640bda1a1fb97801f09394e038a12669928da15ded65cd4bd4f9cd4567",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/dosbox.log": "5592081163f59d40408b688732a6362bd8f4316cc94f8d3df71c1f473970f1ae",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/modem.json": "19f0e08c3a881d4f6c552a88562ad10ded36d2bb7def0c8d2b3e59ea7f6dcdd0",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/protocol.json": "107c8225ce5c69aa7ff08cd9ce6892d69ae9a6aca8cd309a62981f5553225ba7",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/result.json": "071ec9adf677b31a76be600148ad42457f9e02a40691280ce57fdf1cb2cc436c",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/screen.txt": "934e13d7d9dd79b98bd813cf707c3e484866b6ad65953eb3cd56e350ad8c205e",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/serial-received.bin": "a53283c3f5c95548f3f8f40e10ae6e2c776973f8753b62ea225f6821cea7484e",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/serial-sent.bin": "3ca81d8d3d890ef4049d4dba235d8dc3ccc7996dded5315256b0c60a3e5c7ca2",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/server-audit.stderr": "b7bee0aaae040256ada0e07a31bfff9f82f7f3c5e5f5b674367f1fa895eb8464",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/server-audit.stdout": "d882060291f9c0a46ab88c639c8f0ed1fe362ac3a6be588736994a5467f6dc84",
+        "build/bbs-lab/results/synchronet/bbs-transfer-upload-1/trace.json": "698b6b48ec9aaa179ba61938a0d8aeaa235212c7e7d4aada044f1e5b261d2102"
+      }
+    },
+    {
+      "server": "enigma",
+      "label": "bbs-transfer-download-1",
+      "result": {
+        "passed": true,
+        "name": "enigma",
+        "label": "bbs-transfer-download-1",
+        "mode": "download",
+        "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
+        "payload_sha256": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6",
+        "checks": {
+          "DOS_normal_exit": true,
+          "hardware_restored": true,
+          "screen_captured": true,
+          "bbs_connected": true,
+          "binary_unchanged": true,
+          "payload_fixture_unchanged": true,
+          "observed_decoded_offsets_match": true,
+          "configuration_unchanged": true,
+          "directory_accounting_exact": true,
+          "actual_frame_and_final_EOT_ACKs": true,
+          "EOT_bounded": true,
+          "posttransfer_actual_menu_input_response": true,
+          "actual_validated_protocol": true,
+          "DOS_download_exact_accepted_blocks": true,
+          "server_metadata_audit": true,
+          "no_leftover_staging": true
+        },
+        "errors": [],
+        "seconds": 107.451,
+        "keys": "p500 down p100 down p100 enter p1000 p12000 down p600 up p600 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 N p6000 enter p9000 F enter p2000 L enter p2000 t p1500 q p1500 D enter p2000 a p1500 enter p1000 a-r p500 P C X T E S T . B I N enter p18000 enter p2000 L enter p3000 p3000 a-x",
+        "command": "C:\\TERMINAL @D:\\TEST.PRM /E:D:\\TEST.DIR",
+        "serial": {
+          "com": 2,
+          "baud": 19200,
+          "flow": "HARD"
+        },
+        "scope": "Actual local BBS protocol peer via unchanged Hayes/Telnet modem, real DOS AltR/AltS/files/UART. Passive frame/control audit, actual post-transfer menu interaction. Synthetic media; no physical CTS/DCD claim."
+      },
+      "protocol": {
+        "start": 55037,
+        "end": 66757,
+        "eot_start": 66755,
+        "eots": 2,
+        "crc": true,
+        "frames": [
+          {
+            "offset": 55037,
+            "end": 56066,
+            "number": 1,
+            "size": 1024,
+            "crc": true,
+            "sha256": "d6c2b69f4e05c9631fb43985e75c856a0d58bffbcfd815bc7e1bd375cb31fa3e"
+          },
+          {
+            "offset": 56066,
+            "end": 57095,
+            "number": 2,
+            "size": 1024,
+            "crc": true,
+            "sha256": "d7c270784f0b246f6e2495c2dfefbcc6a86160c41075a95d7d2619fe2b9768d3"
+          },
+          {
+            "offset": 57095,
+            "end": 58124,
+            "number": 3,
+            "size": 1024,
+            "crc": true,
+            "sha256": "87943ab64897229f699afbd125ce82df9ff287686355027c0228736fe0207382"
+          },
+          {
+            "offset": 58124,
+            "end": 59153,
+            "number": 4,
+            "size": 1024,
+            "crc": true,
+            "sha256": "3f709ca349e550b95f919df13b8eb83303bbc4a240625813f75863aa44bd15da"
+          },
+          {
+            "offset": 59153,
+            "end": 60182,
+            "number": 5,
+            "size": 1024,
+            "crc": true,
+            "sha256": "a3c584c0f8f37079d1c0365a0b02502d26375a9fef949ff1c4f600fa21eb9b9b"
+          },
+          {
+            "offset": 60182,
+            "end": 61211,
+            "number": 6,
+            "size": 1024,
+            "crc": true,
+            "sha256": "c3ba843affd54bfc50b4c3808c7bb695f7fe2d0cb7d407416945c69ee61630c7"
+          },
+          {
+            "offset": 61211,
+            "end": 62240,
+            "number": 7,
+            "size": 1024,
+            "crc": true,
+            "sha256": "5b8cfc429f6663c8e540c175f7a7f30de3a3a5e7be2e5409cd008c8c6b772634"
+          },
+          {
+            "offset": 62240,
+            "end": 63269,
+            "number": 8,
+            "size": 1024,
+            "crc": true,
+            "sha256": "2f5d323fac1eeb2ba5335e6ab76b6c5e7532cbe03d823c30a0b71260c3be4b0e"
+          },
+          {
+            "offset": 63269,
+            "end": 64298,
+            "number": 9,
+            "size": 1024,
+            "crc": true,
+            "sha256": "2cfd7fc746b5ee6440c05d8c9e95cb3b8e5d54d6ed5bd13877bbd20bacc2909b"
+          },
+          {
+            "offset": 64298,
+            "end": 65327,
+            "number": 10,
+            "size": 1024,
+            "crc": true,
+            "sha256": "0131715efc16ce2dd4a6db4953e880c54256dbc0cec560b73dbcb985bf0f1ad8"
+          },
+          {
+            "offset": 65327,
+            "end": 66356,
+            "number": 11,
+            "size": 1024,
+            "crc": true,
+            "sha256": "9efa07dd31ab1f4ae9e49003133a1446da9781c72776ec1bb0a3202cd1aa34bb"
+          },
+          {
+            "offset": 66356,
+            "end": 66489,
+            "number": 12,
+            "size": 128,
+            "crc": true,
+            "sha256": "92ab7f8a384154094d7b9317ee3754e90e4fe58f8fc6e6f1dbd3a99ec624a275"
+          },
+          {
+            "offset": 66489,
+            "end": 66622,
+            "number": 13,
+            "size": 128,
+            "crc": true,
+            "sha256": "1b7162c24818b173b98982389f88fd2751ae7d9cfaacfe2beae486146564a695"
+          },
+          {
+            "offset": 66622,
+            "end": 66755,
+            "number": 14,
+            "size": 128,
+            "crc": true,
+            "sha256": "1cf6397d7ad2715712145abab8f410e65d92587cb0db34a963572b5f157d6761"
+          }
+        ],
+        "accepted_blocks": 14,
+        "controls": [
+          {
+            "kind": "frame",
+            "number": 1,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 2,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 3,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 4,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 5,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 6,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 7,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 8,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 9,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 10,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 11,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 12,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 13,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 14,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "EOT",
+            "response": 21
+          },
+          {
+            "kind": "EOT",
+            "response": 6
+          }
+        ]
+      },
+      "server_metadata": {
+        "passed": true,
+        "checks": {
+          "exactly_one_entry": true,
+          "owned_area": true,
+          "owned_filename": true,
+          "owned_physical_parent": true,
+          "metadata_size": true,
+          "metadata_sha256": true,
+          "physical_exact_source_bytes": true,
+          "download_count_incremented": true
+        },
+        "server_commit": "6c25317168b762f7d9088a54d3f8295438827a0e",
+        "expected_source_bytes": 11521,
+        "expected_source_sha256": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6",
+        "reference_download_count": 1,
+        "minimum_downloads": 2,
+        "metadata": [
+          {
+            "fileId": 1,
+            "fileName": "PCXTEST.BIN",
+            "areaTag": "pcplus_transfer",
+            "storageTag": "pcplus_transfer",
+            "filePath": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/source/file_base/pcplus_transfer/PCXTEST.BIN",
+            "fileSha256": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6",
+            "meta": {
+              "dl_count": 2,
+              "byte_size": 11521,
+              "file_crc32": "e2503f36",
+              "file_md5": "82cae38f60e5b489f7578e6ffa7b87a3",
+              "file_sha1": "ed79e6fe4aaaa5b5ea730023a392674d09a59f08"
+            },
+            "desc": "PCXTEST"
+          }
+        ],
+        "scope": "Official FileEntry API and unchanged owned physical source; download count was 1 after the independent reference transfer. DOS destination padding is checked separately by the DOS harness."
+      },
+      "server_session": {
+        "passed": true,
+        "checks": {
+          "unique_new_connection": true,
+          "unique_authenticated_session": true,
+          "stock_external_protocol_success": true,
+          "ordered_protocol_return_and_file_list": true
+        },
+        "session_id": "bPUQ6Wmrvxm",
+        "mode": "download",
+        "menus": [
+          "telnetConnected",
+          "matrix",
+          "login",
+          "fullLoginSequenceLoginArt",
+          "fullLoginSequenceLastCallers",
+          "fullLoginSequenceWhosOnline",
+          "fullLoginSequenceOnelinerz",
+          "fullLoginSequenceNewScanConfirm",
+          "fullLoginSequenceUserStats",
+          "mainMenu",
+          "fileBaseMainMenu",
+          "fileBaseListEntries",
+          "fileBaseMainMenu",
+          "fileBaseDownloadManager",
+          "fileTransferProtocolSelection",
+          "sendFilesToUser",
+          "fileTransferProtocolSelection",
+          "fileBaseMainMenu",
+          "fileBaseListEntries",
+          "fileBaseMainMenu"
+        ],
+        "log_byte_start": 350807,
+        "log_byte_end": 359932,
+        "scope": "Owned real ENiGMA server log slice from recorded pre-run offset; one connection/login, stock protocol exit, later file list. No additional connection created by this audit."
+      },
+      "retained_artifacts": {
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/PCXTEST.BIN": "4932ffe8b687196948ab6b720e542f50e39fe0d2683701f95d90b9653f6232da",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/SCREEN.BIN": "ce9ecb0c10d3c4591f1557e36a42c3c1438fddea446c5fb6ca27c4ba41c3463c",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/TEST.DIR": "1ecf3b7d23649da245a2534e4bad6fecaedfe91a64df25b7a113b16369525b65",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/TEST.PRM": "ae57ce85727e7d12b74621f1d6b84d5f23266c67c96c3deeef65b6f481d021ef",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/accepted-payload.bin": "4932ffe8b687196948ab6b720e542f50e39fe0d2683701f95d90b9653f6232da",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/bbs-sent.bin": "62ab1ddd7789e0ec8e129d07aa8f642234c35ec3e40002bf8af7bbfa9afde3c8",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/bbs-wire.bin": "e2be2462f5a3af7cd4746daa9c7971895ad94c6c71e6ce6454adc7a0a3eec28d",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/display.bin": "7f7466b2b544edcc0a31a1eb22f3e535d0392f97bcd22240425e8be5f751410c",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/dosbox.conf": "d15d8dcb46c709cd06dfe1151cfc70d43081a2393263e33c76a1862dedef28ba",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/dosbox.log": "47aef1ab872c3e90fc9edba44793e5bd3638c7951c3c9673c4b863c276dca459",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/modem.json": "641845907b282cb0d6f770c5b46065037e1ecc917094089381f03e90c253281e",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/protocol.json": "020096e02cc88cb1131c873a61d56881d711c013cd08ebc8286ed1931f7e3c07",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/result.json": "45eaefdd12529dde61de9008d802b2bb03d47dbe09fd8876367acf2e26e53fe1",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/screen.txt": "92a191a39d1329006d2b253e7b7a603aa454cb7e1bf0f961f9deedd5ca193733",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/serial-received.bin": "97e59d15db4ccbee9017435ea96e6ed9e98adb4b84b60c2571775e92830a34ad",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/serial-sent.bin": "750845069c4be6f2c47067a9bbd7369456c0a1b297be73c8f09d6472e100507f",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/server-audit.stderr": "b7bee0aaae040256ada0e07a31bfff9f82f7f3c5e5f5b674367f1fa895eb8464",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/server-audit.stdout": "e80b4335bb59de8965b13661e0b4667a3886836a613030404ca8976a4682f720",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/server-log-start.json": "09364c40925f316080c031c460d82be8821b2d926b8b3d269df996bd32302c07",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/server-session-audit.json": "3d791afbb7a1fde36a347a7ea9c520ac8a836cbd804197555a8f7d1681de1a49",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/server-session.jsonl": "43d9800368eed2f838da8e1f2dc9d0f4a02bbfb055ec1f1135fbf7dffccd47cf",
+        "build/bbs-lab/results/enigma/bbs-transfer-download-1/trace.json": "cdbab4e7dfadca6d6d3343a16f5fe0c21e1bb1dc9baae419812fb6ba26b06e7a"
+      }
+    },
+    {
+      "server": "enigma",
+      "label": "bbs-transfer-upload-1",
+      "result": {
+        "passed": true,
+        "name": "enigma",
+        "label": "bbs-transfer-upload-1",
+        "mode": "upload",
+        "binary_sha256": "036a80922c783887249224122f1f44b856d0ff8ae22a106ffe843cb5c9f1cdad",
+        "payload_sha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+        "checks": {
+          "DOS_normal_exit": true,
+          "hardware_restored": true,
+          "screen_captured": true,
+          "bbs_connected": true,
+          "binary_unchanged": true,
+          "payload_fixture_unchanged": true,
+          "observed_decoded_offsets_match": true,
+          "configuration_unchanged": true,
+          "directory_accounting_exact": true,
+          "actual_frame_and_final_EOT_ACKs": true,
+          "EOT_bounded": true,
+          "posttransfer_actual_menu_input_response": true,
+          "actual_validated_protocol": true,
+          "DOS_source_unchanged": true,
+          "server_uploaded_exact_accepted_blocks": true,
+          "server_metadata_audit": true,
+          "unique_server_session_and_ordered_menus": true,
+          "no_leftover_staging": true
+        },
+        "errors": [],
+        "seconds": 114.17,
+        "keys": "p500 down p100 down p100 enter p1000 p12000 down p600 up p600 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 N p6000 enter p9000 F enter p2000 U enter p1500 tab p1000 tab p1000 tab p1000 enter p1500 enter p1000 a-s p500 S E N D . B I N enter p18000 tab p700 tab p700 tab p700 enter p3000 enter p2000 L enter p3000 p3000 a-x",
+        "command": "C:\\TERMINAL @D:\\TEST.PRM /E:D:\\TEST.DIR",
+        "serial": {
+          "com": 2,
+          "baud": 19200,
+          "flow": "HARD"
+        },
+        "scope": "Actual local BBS protocol peer via unchanged Hayes/Telnet modem, real DOS AltR/AltS/files/UART. Passive frame/control audit, actual post-transfer menu interaction. Synthetic media; no physical CTS/DCD claim."
+      },
+      "protocol": {
+        "start": 79,
+        "end": 11799,
+        "eot_start": 11797,
+        "eots": 2,
+        "crc": true,
+        "frames": [
+          {
+            "offset": 79,
+            "end": 1108,
+            "number": 1,
+            "size": 1024,
+            "crc": true,
+            "sha256": "46aa8632e9e8c354278dbe1a18fd3c0aa1e24abc37b82c476bc39ef016e454ae"
+          },
+          {
+            "offset": 1108,
+            "end": 2137,
+            "number": 2,
+            "size": 1024,
+            "crc": true,
+            "sha256": "3354440727ed4e92213912297884c668dd4a13e855538566fe3d4b058864d140"
+          },
+          {
+            "offset": 2137,
+            "end": 3166,
+            "number": 3,
+            "size": 1024,
+            "crc": true,
+            "sha256": "3a1b3ec572cc206f32cb974dae76d4ec04bc15ecff773eb584622340c83bf289"
+          },
+          {
+            "offset": 3166,
+            "end": 4195,
+            "number": 4,
+            "size": 1024,
+            "crc": true,
+            "sha256": "ddbacae8b7e19f9664e53279faf17a047ad847241820eb3df6d32dae2dfb4aa4"
+          },
+          {
+            "offset": 4195,
+            "end": 5224,
+            "number": 5,
+            "size": 1024,
+            "crc": true,
+            "sha256": "be88a35d5e2a486b7d086c0f05df67b18bccdde355adf58cbf0b1e7895435652"
+          },
+          {
+            "offset": 5224,
+            "end": 6253,
+            "number": 6,
+            "size": 1024,
+            "crc": true,
+            "sha256": "e1914980ff12b1a142d2500549e683cf9775cee9c24f397f9b29f34483d1b89d"
+          },
+          {
+            "offset": 6253,
+            "end": 7282,
+            "number": 7,
+            "size": 1024,
+            "crc": true,
+            "sha256": "c116c7aca2e6abe709b5af61ce4c2a18df8a5730525c4356383389f40c01b414"
+          },
+          {
+            "offset": 7282,
+            "end": 8311,
+            "number": 8,
+            "size": 1024,
+            "crc": true,
+            "sha256": "fbf1641b754bb5cc8673f0f270c7ebde05acd75809c64ee3f62a262d832ea58e"
+          },
+          {
+            "offset": 8311,
+            "end": 9340,
+            "number": 9,
+            "size": 1024,
+            "crc": true,
+            "sha256": "aed7797b46b888bebe7bd2f7e133ba64e3e5f9e69bcfd30deae74189805999a1"
+          },
+          {
+            "offset": 9340,
+            "end": 10369,
+            "number": 10,
+            "size": 1024,
+            "crc": true,
+            "sha256": "5c577f167c242202e23205d7a9abc26a1ead5c2d9e6e627e15b36d7876ba2a39"
+          },
+          {
+            "offset": 10369,
+            "end": 11398,
+            "number": 11,
+            "size": 1024,
+            "crc": true,
+            "sha256": "b31fe2deecfabd3844b7d3a8910604f5960a8f85a16fd72d82938cf9294cbadb"
+          },
+          {
+            "offset": 11398,
+            "end": 11531,
+            "number": 12,
+            "size": 128,
+            "crc": true,
+            "sha256": "551517115fcfa08240af9a2faa16929255ab7f145fd79f62434757ca6443caf8"
+          },
+          {
+            "offset": 11531,
+            "end": 11664,
+            "number": 13,
+            "size": 128,
+            "crc": true,
+            "sha256": "5f11d6b031ced8c752739ccd625801d4a42b7cb9be419d8a0e7e1ecf89ddc0b4"
+          },
+          {
+            "offset": 11664,
+            "end": 11797,
+            "number": 14,
+            "size": 128,
+            "crc": true,
+            "sha256": "b6ed50c68b9891a6a361441de25da6a5b533dca9074f52451e4570239af3a4c6"
+          }
+        ],
+        "accepted_blocks": 14,
+        "controls": [
+          {
+            "kind": "frame",
+            "number": 1,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 2,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 3,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 4,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 5,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 6,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 7,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 8,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 9,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 10,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 11,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 12,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 13,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "frame",
+            "number": 14,
+            "response": 6,
+            "retry": false
+          },
+          {
+            "kind": "EOT",
+            "response": 21
+          },
+          {
+            "kind": "EOT",
+            "response": 6
+          }
+        ]
+      },
+      "server_metadata": {
+        "passed": true,
+        "checks": {
+          "exactly_one_entry": true,
+          "owned_area": true,
+          "owned_filename": true,
+          "owned_physical_parent": true,
+          "metadata_size": true,
+          "metadata_sha256": true,
+          "physical_exact_padded_bytes": true,
+          "synthetic_upload_user": true
+        },
+        "server_commit": "6c25317168b762f7d9088a54d3f8295438827a0e",
+        "expected_source_bytes": 11521,
+        "expected_stored_bytes": 11648,
+        "expected_stored_sha256": "436e40662c42ea36a9c5d85eff4074e0bad0717fedddb8da554971076936b7bf",
+        "metadata": [
+          {
+            "fileId": 2,
+            "fileName": "PCXUP.BIN",
+            "areaTag": "pcplus_transfer",
+            "storageTag": "pcplus_transfer",
+            "filePath": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/source/file_base/pcplus_transfer/PCXUP.BIN",
+            "fileSha256": "436e40662c42ea36a9c5d85eff4074e0bad0717fedddb8da554971076936b7bf",
+            "meta": {
+              "dl_count": 0,
+              "byte_size": 11648,
+              "file_crc32": "444e5bef",
+              "file_md5": "1fe2a4e6f5faa3c081d08f7f914184ad",
+              "file_sha1": "b45d43cd2f9ed0fb1dd570529fa9e20e7f69cf51",
+              "upload_by_user_id": 2,
+              "upload_by_username": "loclab"
+            },
+            "desc": "PCXUP"
+          }
+        ],
+        "scope": "Official FileEntry API plus exact owned physical padded bytes; no direct invented SQL"
+      },
+      "server_session": {
+        "passed": true,
+        "checks": {
+          "unique_new_connection": true,
+          "unique_authenticated_session": true,
+          "stock_external_protocol_success": true,
+          "ordered_protocol_return_and_file_list": true
+        },
+        "session_id": "POUBelYAKel",
+        "mode": "upload",
+        "menus": [
+          "telnetConnected",
+          "matrix",
+          "login",
+          "fullLoginSequenceLoginArt",
+          "fullLoginSequenceLastCallers",
+          "fullLoginSequenceWhosOnline",
+          "fullLoginSequenceOnelinerz",
+          "fullLoginSequenceNewScanConfirm",
+          "fullLoginSequenceUserStats",
+          "mainMenu",
+          "fileBaseMainMenu",
+          "fileBaseUploadFiles",
+          "fileTransferProtocolSelection",
+          "recvFilesFromUser",
+          "fileTransferProtocolSelection",
+          "fileBaseUploadFiles",
+          "fileBaseMainMenu",
+          "fileBaseListEntries",
+          "fileBaseMainMenu"
+        ],
+        "log_byte_start": 359932,
+        "log_byte_end": 369450,
+        "scope": "Owned real ENiGMA server log slice from recorded pre-run offset; one connection/login, stock protocol exit, later file list. No additional connection created by this audit."
+      },
+      "retained_artifacts": {
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/SCREEN.BIN": "dcdc764673ebf5a523dd1253e8db99e99dfd23ac6deb465ddfddddf11d8c2c8f",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/SEND.BIN": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/TEST.DIR": "1ecf3b7d23649da245a2534e4bad6fecaedfe91a64df25b7a113b16369525b65",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/TEST.PRM": "ae57ce85727e7d12b74621f1d6b84d5f23266c67c96c3deeef65b6f481d021ef",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/accepted-payload.bin": "436e40662c42ea36a9c5d85eff4074e0bad0717fedddb8da554971076936b7bf",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/bbs-sent.bin": "67e8db643bd25c069a141c71982aa5860b7a895b3929542ba140856ba0deb7b1",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/bbs-wire.bin": "994f76c04e5e6f70e4d57b2ed4e6e65fe27a028cf7a571c2449f8827f76b6bd8",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/display.bin": "15d11b461e7ca54226a27b2492df00bf673b991e9e17ad49e61285bc4fc8b353",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/dosbox.conf": "922127cbc46d265e29216018eb276364d97a2b50be972c4702448e4e5c5b8efc",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/dosbox.log": "6811efda72f0de0981087d76dc20280026f99d2d9ffb0bce761cd96f729b902b",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/modem.json": "74805ec97e04419dcc8932c66911443be859b2b8c2c8915eb849b92954402ca6",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/protocol.json": "ec4de0fbff52f62f0fb158cf63373c51a855a65b6ac95c1d22071960e0df58bc",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/result.json": "2e48f2561d6b0cddde3850b987a0f1310e9f41b6970557a3bda7a62cc5160b2b",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/screen.txt": "044cc93e9e6689e1d559ed2bd06bb2b4e87d203f677cc2415210971d5edb3fbf",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/serial-received.bin": "3d6f298dc8971883ed5291fc4edb3a49c56ed8edb1eefdaf21dd8407bf627507",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/serial-sent.bin": "b2d2c102db2970b82861ec57c8c65ef6a3b7bf085efde934e705322972f9d553",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/server-audit.stderr": "b7bee0aaae040256ada0e07a31bfff9f82f7f3c5e5f5b674367f1fa895eb8464",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/server-audit.stdout": "da411752afd9fdbb52d2d48c5be90c594eaf832714d66c604a6dc8eb9cef1a54",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/server-log-start.json": "2beccabcad976e605f5e223233e076efe7c5998f143846d7d7582ce0a87d20bd",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/server-session-audit.json": "3ca37a54e006d9e90c065ca5f44eedde13924f78ac5fe93c6d1f48ca99412511",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/server-session.jsonl": "dfe36b258bcd3a69141e8dde3aff5b8b888c20d5671668b4a701e3c7f6c423e5",
+        "build/bbs-lab/results/enigma/bbs-transfer-upload-1/trace.json": "c6ec74ae38dbed72fb3f7dafcbfe8323510c622c93081b6f44268b62e2c99c16"
+      }
+    }
+  ],
+  "scope": [
+    "Actual source-built DOS terminal, UART and DOS files against local BBS protocol helpers.",
+    "Loopback synthetic accounts/media; Hayes/Telnet modem and hardware are emulated.",
+    "Protocol results do not establish editor compatibility or a complete PCPlus application.",
+    "XMODEM has no original-length metadata; accepted padding remains in downloaded/uploaded files.",
+    "Failed attempts remain distinct from successful retries."
+  ],
+  "server_setup": {
+    "enigma": {
+      "retained_setup_sha256": "2202ed36f98bd57db1a3750d12450c432af81987db910245afffad089ede2a7f",
+      "server_commit": "6c25317168b762f7d9088a54d3f8295438827a0e",
+      "helper_original_sha256": "7aa339b40482a99a6854253d9e0c336a7bec3ed55a2072f7fe5ce7a72323893b",
+      "helper_patched_sha256": "d1aeb1347fee332be75dd638dd4cb10a1bf7c418d96d0ebb79ca90470b0ed4bd",
+      "helper_manifest": {
+        "_comment": "Generated by docker/sexyz/build.sh -- do not edit by hand.",
+        "upstream": "https://github.com/SynchronetBBS/sbbs.git",
+        "upstream_commit": "e7a825704ef5329c7ef8408749671291a85ef7f2",
+        "sexyz_version": "3.6",
+        "source_digest": "79bbd980581e7b90c4bc4506d948b0554919e40634b0bde84b3e67d76c660455",
+        "built_at": "2026-09-28T06:59:16Z",
+        "builder_image": "debian:bookworm",
+        "binaries": {
+          "amd64": "7aa339b40482a99a6854253d9e0c336a7bec3ed55a2072f7fe5ce7a72323893b",
+          "arm64": "1b06c7563d1a3c4b7d6e77e29bb0282cfcd9c507ca8d8591fb7e98c74d6b2cf0",
+          "armv7": "16f3a4f4dc28eb18c4dc3d7b036e8856fc3bcd1f7877e3d51dcec4791bc0e0a0"
+        }
+      },
+      "loader": "/nix/store/qqiqd3ah10x8hzsif4j1y4xc1miw23nx-glibc-2.42-67/lib/ld-linux-x86-64.so.2",
+      "config_before_sha256": "6a441de1d8bacdb69d58cefe626fab78b515b0b84731d29223693ffb75b8c8ff",
+      "config_after_sha256": "32a1403b61791d6e26a2cc82b6176e2fdc3ca671df8ac535241e260059cb1a69",
+      "area": "pcplus_transfer",
+      "file_bytes": 11521,
+      "file_sha256": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6"
+    },
+    "synchronet": {
+      "retained_setup_sha256": "9e123e461f16f2fb06ac54f770241ed0ac04d911a8fe224c55dd6c83e4461d3c",
+      "server_commit": "9de2c48d0265b07e1a8406d8a55d31df4fad7ee8",
+      "helpers": {
+        "sexyz": {
+          "path": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synchronet/runtime/exec/sexyz",
+          "sha256": "03bc778bfefe2cc8cc67e02cbff8c574bb890e352e88941fa3048d5875a8df82"
+        },
+        "jsexec": {
+          "path": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synchronet/runtime/exec/jsexec",
+          "sha256": "ee52802eee93709b70ae3e3a18ac0d755054c2163e1096e37c502837e3630ffc"
+        },
+        "sbbs": {
+          "path": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synchronet/runtime/exec/sbbs",
+          "sha256": "055fbcd075af32394a3a891051b173008146901c2ab4b144709ffac4999f8c24"
+        }
+      },
+      "file_ini_before_sha256": "783537ec8e2eefee1774cf2bb0b566cd9e89831dda8f65f0fc0f6ede7a74c2f4",
+      "file_ini_after_sha256": "8c17297e82490a5b1662a839960149ac4ec27a3ca88b6ff745965ae097327b68",
+      "existing_configuration_prefix_unchanged": true,
+      "appended_directory": "pcplab",
+      "payload": {
+        "path": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synchronet/runtime/data/dirs/pcplab/PCXTEST.BIN",
+        "bytes": 11521,
+        "sha256": "2d10c92c0212b12674a7c5fd7aaba6af4afb2a7d8a7356ce1b5521fc96180cdc"
+      }
+    }
+  }
+}

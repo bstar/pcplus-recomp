@@ -53,8 +53,10 @@ requires an attached DOS machine/modem and must not be inferred from emulation.
 Live receive integration now adds Alt-R XMODEM CRC/checksum128/1024 with
 checked DOS staging and final ACK after installation. The full-sized shadow and
 history arrays move far while the receiver arena stays near; PROGRAM retains
-both static extents. Physical modem, uploads and remaining protocol/application
-gates remain open. See `docs/TRANSFER_INTEGRATION.md` for ownership and evidence.
+both static extents. Alt-S also supports ordinary XMODEM/1K uploads through
+checked read-only DOS sources and actual-ACK progress. Physical modem and
+remaining protocol/application gates remain open. See
+`docs/TRANSFER_INTEGRATION.md` and `docs/LIVE_UPLOAD.md` for ownership and evidence.
 
 The first source-only interactive `TERMINAL.EXE` connects the recovered UART,
 keyboard, parser and display engine. Its synthetic DOSBox-X tests verify actual
@@ -106,6 +108,13 @@ physical modem compatibility or close the remaining application gates below.
       Preserve the full
       settings/directory/UI/transfer/script/Host scope below.
 - [ ] Capture representative BBS sessions and verify interaction, display and transfers.
+      Progress: frozen036a actual DOS XMODEM-1K/CRC uploads and downloads pass on
+      both Synchronet and ENiGMA½, including exact padded bytes, official server
+      metadata, post-transfer menu interaction and hardware/config restoration.
+      ENiGMA uses an explicitly documented single-file lab protocol configuration.
+      The first harness failure remains retained; full-screen editor failures,
+      other protocols and physical modem validation remain open. See
+      `lab/bbs/transfers.md` and `docs/validation/bbs-transfers.json`.
 - [ ] Validate on the actual modem and failing BBS/key sequence supplied by the user.
 
 ## 4. Remaining application reconstruction
