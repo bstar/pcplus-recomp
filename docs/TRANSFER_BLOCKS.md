@@ -143,9 +143,12 @@ actual overlay21 transmit fragment, with only UART byte/bulk output explicitly
 recorded into memory. All195 cases pass. Actual DOS checks31c3 and a bounded
 CRC frame header. No public BBS uploads or installed/private files participate.
 
-The next useful source unit is the bounded packet receive/validate boundary
-around d8e8..d9be, followed by sender/receiver ACK/retry/EOT ownership and actual
-UART scheduling. Preserve the larger original transfer engine's DOS/UI/flow
-dependencies explicitly. Full XMODEM transfer requires an independent owned
-peer test, corrupt/duplicate/cancel/timeout/disk-failure coverage and exact file
-comparisons; the current memory-only serializer does not close F08 or F09.
+The packet receive/validate and session boundaries have since been recovered;
+see [TRANSFER_RECEIVE.md](TRANSFER_RECEIVE.md),
+[TRANSFER_SESSION.md](TRANSFER_SESSION.md) and [TRANSFER_SEND.md](TRANSFER_SEND.md).
+Maintained real-DOS storage is composed separately in
+[DOWNLOAD_STORAGE.md](DOWNLOAD_STORAGE.md). Their exact scopes distinguish
+continuous native state from per-block fixtures, real file IO from controlled
+UART input, and legacy baseline defects from maintained safeguards. Full F08/F09
+still requires terminal UI/live UART integration, owned peer transfers, every
+advertised protocol and physical modem evidence.

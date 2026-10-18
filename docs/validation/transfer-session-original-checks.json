@@ -1,0 +1,339 @@
+{
+  "passed": true,
+  "binary_sha256": "6297cab2c881e11885d23a814ffaf45967749e88a09f8f9d17949f8ca6a79302",
+  "cases": [
+    {
+      "case": "handshake-4-1",
+      "passed": true
+    },
+    {
+      "case": "handshake-4-2",
+      "passed": true
+    },
+    {
+      "case": "handshake-9-1",
+      "passed": true
+    },
+    {
+      "case": "handshake-9-2",
+      "passed": true
+    },
+    {
+      "case": "handshake-12-1",
+      "passed": true
+    },
+    {
+      "case": "handshake-12-2",
+      "passed": true
+    },
+    {
+      "case": "handshake-10-1",
+      "passed": true
+    },
+    {
+      "case": "handshake-10-2",
+      "passed": true
+    },
+    {
+      "case": "handshake-11-1",
+      "passed": true
+    },
+    {
+      "case": "handshake-11-2",
+      "passed": true
+    },
+    {
+      "case": "CRC-fallback-eleven-NAKs-no-input",
+      "passed": true
+    },
+    {
+      "case": "checksum-fallback-arrival",
+      "passed": true
+    },
+    {
+      "case": "waitmode-0",
+      "passed": true
+    },
+    {
+      "case": "waitmode-1",
+      "passed": true
+    },
+    {
+      "case": "waitmode-2",
+      "passed": true
+    },
+    {
+      "case": "short-wait",
+      "passed": true
+    },
+    {
+      "case": "wait-arrival",
+      "passed": true
+    },
+    {
+      "case": "wait-local-cancel-0",
+      "passed": true
+    },
+    {
+      "case": "wait-local-cancel-1",
+      "passed": true
+    },
+    {
+      "case": "wait-local-cancel-65535",
+      "passed": true
+    },
+    {
+      "case": "wait-carrier-drop",
+      "passed": true
+    },
+    {
+      "case": "retry-limit-0",
+      "passed": true
+    },
+    {
+      "case": "retry-limit-14",
+      "passed": true
+    },
+    {
+      "case": "retry-limit-15",
+      "passed": true
+    },
+    {
+      "case": "retry-limit-16",
+      "passed": true
+    },
+    {
+      "case": "retry-limit-65535",
+      "passed": true
+    },
+    {
+      "case": "retry-local-cancel",
+      "passed": true
+    },
+    {
+      "case": "retry-carrier-drop",
+      "passed": true
+    },
+    {
+      "case": "retry-double-CAN",
+      "passed": true
+    },
+    {
+      "case": "retry-single-CAN",
+      "passed": true
+    },
+    {
+      "case": "actual-setjmp-longjmp-stack-register-restoration-0",
+      "passed": true
+    },
+    {
+      "case": "actual-setjmp-longjmp-stack-register-restoration-1",
+      "passed": true
+    },
+    {
+      "case": "actual-setjmp-longjmp-stack-register-restoration-7",
+      "passed": true
+    },
+    {
+      "case": "actual-setjmp-longjmp-stack-register-restoration-15",
+      "passed": true
+    },
+    {
+      "case": "actual-setjmp-longjmp-stack-register-restoration-32768",
+      "passed": true
+    },
+    {
+      "case": "actual-setjmp-longjmp-stack-register-restoration-65535",
+      "passed": true
+    },
+    {
+      "case": "native-initialize-protocol-0",
+      "passed": true
+    },
+    {
+      "case": "native-initialize-protocol-1",
+      "passed": true
+    },
+    {
+      "case": "native-initialize-protocol-2",
+      "passed": true
+    },
+    {
+      "case": "native-initialize-protocol-3",
+      "passed": true
+    },
+    {
+      "case": "native-initialize-protocol-4",
+      "passed": true
+    },
+    {
+      "case": "native-initialize-protocol-5",
+      "passed": true
+    },
+    {
+      "case": "native-initialize-protocol-6",
+      "passed": true
+    },
+    {
+      "case": "native-initialize-protocol-7",
+      "passed": true
+    },
+    {
+      "case": "native-initialize-protocol-8",
+      "passed": true
+    },
+    {
+      "case": "native-initialize-protocol-9",
+      "passed": true
+    },
+    {
+      "case": "native-initialize-protocol-10",
+      "passed": true
+    },
+    {
+      "case": "native-initialize-protocol-11",
+      "passed": true
+    },
+    {
+      "case": "native-initialize-protocol-12",
+      "passed": true
+    },
+    {
+      "case": "native-initialize-protocol-13",
+      "passed": true
+    },
+    {
+      "case": "actual-receive-preamble-open-prefix-False-success-True",
+      "passed": true
+    },
+    {
+      "case": "actual-receive-preamble-open-prefix-True-success-True",
+      "passed": true
+    },
+    {
+      "case": "actual-receive-preamble-open-prefix-False-success-False",
+      "passed": true
+    },
+    {
+      "case": "original-handshake-4-1",
+      "passed": true
+    },
+    {
+      "case": "original-handshake-4-2",
+      "passed": true
+    },
+    {
+      "case": "original-handshake-9-1",
+      "passed": true
+    },
+    {
+      "case": "original-handshake-9-2",
+      "passed": true
+    },
+    {
+      "case": "original-handshake-12-1",
+      "passed": true
+    },
+    {
+      "case": "original-handshake-12-2",
+      "passed": true
+    },
+    {
+      "case": "original-handshake-10-1",
+      "passed": true
+    },
+    {
+      "case": "original-handshake-10-2",
+      "passed": true
+    },
+    {
+      "case": "original-handshake-11-1",
+      "passed": true
+    },
+    {
+      "case": "original-handshake-11-2",
+      "passed": true
+    },
+    {
+      "case": "original-CRC-fallback-eleven-NAKs-no-input",
+      "passed": true
+    },
+    {
+      "case": "original-checksum-fallback-arrival",
+      "passed": true
+    },
+    {
+      "case": "original-waitmode-0",
+      "passed": true
+    },
+    {
+      "case": "original-waitmode-1",
+      "passed": true
+    },
+    {
+      "case": "original-waitmode-2",
+      "passed": true
+    },
+    {
+      "case": "original-short-wait",
+      "passed": true
+    },
+    {
+      "case": "original-wait-arrival",
+      "passed": true
+    },
+    {
+      "case": "original-wait-local-cancel-0",
+      "passed": true
+    },
+    {
+      "case": "original-wait-local-cancel-1",
+      "passed": true
+    },
+    {
+      "case": "original-wait-local-cancel-65535",
+      "passed": true
+    },
+    {
+      "case": "original-wait-carrier-drop",
+      "passed": true
+    },
+    {
+      "case": "original-retry-limit-0",
+      "passed": true
+    },
+    {
+      "case": "original-retry-limit-14",
+      "passed": true
+    },
+    {
+      "case": "original-retry-limit-15",
+      "passed": true
+    },
+    {
+      "case": "original-retry-limit-16",
+      "passed": true
+    },
+    {
+      "case": "original-retry-limit-65535",
+      "passed": true
+    },
+    {
+      "case": "original-retry-local-cancel",
+      "passed": true
+    },
+    {
+      "case": "original-retry-carrier-drop",
+      "passed": true
+    },
+    {
+      "case": "original-retry-double-CAN",
+      "passed": true
+    },
+    {
+      "case": "original-retry-single-CAN",
+      "passed": true
+    }
+  ],
+  "scope": "Exact native session initialization, handshake, retry and genuine setjmp/longjmp cancellation. Explicit diagnostic UART/time/UI/path/file-open checkpoints; no complete transfer or live UART/file commit claim."
+}

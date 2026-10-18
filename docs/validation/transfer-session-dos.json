@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "6297cab2c881e11885d23a814ffaf45967749e88a09f8f9d17949f8ca6a79302",
+  "scope": "Actual source-only DOS8086 exact native session initialization, handshake, real setjmp/longjmp stack restoration and double-CAN nonlocal cancellation. Explicit fixture UART/time/UI; no live UART or files."
+}

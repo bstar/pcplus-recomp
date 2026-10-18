@@ -148,8 +148,8 @@ receive_status:
  mov [receive_status_code],ax
  pop bp
  ret
-global receive_post_event
-receive_post_event:
+global receive_longjmp_boundary
+receive_longjmp_boundary:
  push bp
  mov bp,sp
  mov ax,[bp+6]
@@ -319,6 +319,6 @@ global receive_wire_high
 receive_wire_high: dw 0
 global receive_wire_low
 receive_wire_low: dw 0
-global receive_event_queue,receive_cancel_code
-receive_event_queue: dw 0
+global receive_jump_context,receive_cancel_code
+receive_jump_context: dw 0
 receive_cancel_code: dw 0

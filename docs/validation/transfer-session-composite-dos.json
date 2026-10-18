@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "c6cb27a6b24a4c95eb4f6b5a12e5c23fb88fa41a076e82800b9a4e888d21a906",
+  "scope": "Actual source-only DOS8086 one native receiver owner from checksum handshake through payload validation, ACK/NAK, repeated EOT, memory-file write and close. Replaceable synthetic UART/time/UI/memory sink; no live UART or DOS storage."
+}

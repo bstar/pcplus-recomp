@@ -29,7 +29,7 @@ only assemble maintained source and check its baseline hashes.
 | overlay21 `dd4a..ddf6` | Initial EOT NAK, confirmation/timeout retry and cancellation check |
 | resident `40b1..40c1` | Real ACK `06` / NAK `15` calls to original UART transmitter |
 | overlay21 `f03e..f050` | Delay/flush until no queued input remains |
-| overlay21 `f050..f070` | Two CAN bytes request event 7 via original event queue |
+| overlay21 `f050..f070` | Two CAN bytes invoke `longjmp(context, 7)` through an explicit diagnostic boundary |
 
 The range ends are exclusive. OMF-only jumps at fragment fallthroughs expose
 checkpoints; flat builds retain the original bytes. CRC update/finalization and
@@ -66,15 +66,22 @@ the polynomial table come from the independently verified
   commit. The source also retains the second-observation branch. Diagnostic
   time callbacks record calls without waiting; real UART timing is unproved.
 * The recovered cancellation helper recognizes two consecutive CAN bytes and
-  posts event 7. The application loop consuming that event is outside these
-  fragments; a posted event is not claimed as completed cancellation.
+  invokes resident `9065`, the original near `longjmp`, with value 7 and the
+  saved context at `cd94`. Resident `9048` saves BP, DI, SI, SP and return IP in
+  ten bytes. The fragment diagnostic records that **nonlocal-transfer request**
+  and returns normally from a modeled boundary; it does not link the actual
+  context owner or complete cancellation. The separate
+  [session reconstruction](TRANSFER_SESSION.md) executes the genuine
+  setjmp/longjmp and cancellation consumption. Earlier descriptions of this
+  context as an event queue were incorrect.
 
 State ownership is explicit in the provenance ledger: DS `cc9a` last accepted,
 `cc9c` received block, `cd32` complement, `cb5e` payload size, `39c0` buffer
 pointer, `cd34` buffer usage, `cd80` accepted count, `cd8a` error count,
 `8ffa/8ffc` and `cb2c/cb2e` byte totals. DI selects checksum/CRC; BP locals
 include retry count at `-14h`, batch-metadata flag at `-0eh`, pending failure
-at `-4`, previous/current start at `-2`/`-10h`. DS=SS is required.
+at `-4`, previous/current start at `-2`/`-10h`. DS `cd94` is the ten-byte nonlocal jump context, not a queued-event structure.
+DS=SS is required.
 
 ## Bounded diagnostic ABI and boundaries
 
@@ -95,11 +102,11 @@ not a live transfer service or atomic file receiver.
 | 4 / 5 | Integrity failure / early payload timeout |
 | 6 / 7 / 8 | EOT ACK before file commit / unsupported control / invalid arguments |
 | 10 / 11 / 13 | Batch metadata / buffer flush / file commit boundary |
-| 14 / 15 | Control-read timeout retry / double-CAN event posted |
+| 14 / 15 | Control-read timeout retry / double-CAN nonlocal-transfer boundary reached |
 
 The fixture implements bounded memory byte reads returning `ffff` at exhaustion;
 records real ACK/NAK transmitter requests; models input flush, delay calls,
-progress/status and cancellation-event posting. It does not call real UART,
+progress/status and the explicit modeled longjmp boundary. It does not call real UART,
 DOS file APIs or UI. Flush intentionally discards already queued fixture bytes;
 it does not model future asynchronous arrivals. Only non-streaming ordinary
 receive and the stated batch gate are tested; YMODEM-G/SEAlink/WXMODEM session
@@ -120,7 +127,7 @@ semantics are not established by these tests.
 six bounds checks, and 265 independently loaded original-instruction replays.
 The replay executes original instructions in a bounded CPU sandbox with the same
 explicit UART/time/UI boundary model and compares wire, counters, payload,
-status and cancellation request. It does not execute an original DOS process.
+status and nonlocal-transfer request. It does not execute an original DOS process.
 Vectors cover binary/random data, both block sizes and trailer types, duplicate
 and wrong number, complement/trailer corruption, truncation, byte/word rollover,
 SYN, metadata gate, EOT NAK/ACK and double CAN. Actual source-only DOSBox-X 8086
@@ -130,7 +137,7 @@ complement, sequence, truncation, EOT and double CAN).
 Results live under ignored `build/transfer-receive/` and
 `build/transfer-receive-dos/`. The next implementation boundary is buffered DOS
 file writing/flush/close with failure handling, then a bounded session owner
-connecting UART deadlines, retry limits, cancellation-event consumption and
+connecting UART deadlines, retry limits, nonlocal cancellation consumption and
 handshake to these genuine validation paths. Batch metadata/file naming,
 protocol-specific streaming/window behavior, full UI and F09 external protocol
 execution remain open. No public BBS uploads or live peer transfer was performed.

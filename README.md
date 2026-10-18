@@ -8,6 +8,9 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 
 | Output | Inputs | Current purpose |
 | --- | --- | --- |
+| `build/transfer-storage/TRANSFER.EXE` | Recovered and maintained source only | One native receive owner through actual staged DOS storage; UART/time are controlled peer fixtures |
+| `build/download-file/{DOWNLOAD,DLFAULT}.EXE` | Maintained source only | Streaming binary storage, checked close/install and deterministic failure/recovery diagnostics |
+| `build/transfer-{send,files,session,uart}/` | Recovered and maintained source only | Sender, CRT file handling, nonlocal session ownership and real UART transfer-component diagnostics |
 | `build/transfer-blocks/BLOCKS.EXE`, `build/transfer-receive/RECEIVE.EXE` | Recovered and maintained source only | CRC/framing and receiver validation diagnostics; UART/time/file-session boundaries remain explicit |
 | `build/program-exec/EXECUTOR.EXE`, `build/terminal-reset/RESET.EXE` | Recovered and maintained source only | Native PROGRAM/EXEC and terminal-reset diagnostics with unresolved application services |
 | `build/process/PROCESS.EXE`, `build/process/PROGRAM.EXE` | Maintained source only | Bounded DOS process execution and owned-child diagnostics |
@@ -184,7 +187,7 @@ Native recovery now includes 93 exact CRC instruction bytes plus an independentl
 generated, original-verified 512-byte polynomial table, and 886 exact receiver
 bytes. `./tools/build test-transfer_blocks test-transfer_receive` exercises
 block framing, payload/trailer validation, duplicate ACK, sequence/integrity NAK,
-EOT and double-CAN paths. Optional original comparison is explicit; ordinary
+EOT and double-CAN boundaries. Optional original comparison is explicit; ordinary
 builds need no original files. The receiver diagnostic models UART/time/UI
 boundaries and stops before file commit. It does not yet transfer files between
 peers. See [block primitives](docs/TRANSFER_BLOCKS.md) and
@@ -250,3 +253,16 @@ deploy them. Decompiled pseudocode is evidence, not recovered original source.
 
 PCPlus and ProComm Plus are names of the original product. This repository is an
 independent reconstruction effort; original program rights are not reassigned.
+
+## Transfer reconstruction checkpoint
+
+One native ordinary receiver now stays active across handshake, multiple blocks,
+CRC/checksum validation, retries, genuine setjmp/longjmp cancellation and EOT.
+The separate real-DOS-storage composition verifies periodic/final file writes,
+short-write and close-error installation gates, cancellation/timeout cleanup,
+and mixed128/1024-byte blocks at the flush boundary. Native sender and real UART
+component tests also pass. These components are being connected toward the full
+application; the terminal download/upload UI, physical modem transfers and every
+advertised protocol are still open. See [session contracts](docs/TRANSFER_SESSION.md),
+[download storage](docs/DOWNLOAD_STORAGE.md), [sender](docs/TRANSFER_SEND.md),
+[native file behavior](docs/TRANSFER_FILES.md) and [UART callbacks](docs/TRANSFER_UART.md).

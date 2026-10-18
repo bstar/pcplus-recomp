@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "binary_sha256": "427a7997d12a9933389aa63210a6c425b13ca597730378a628618ff3339e9b30",
+  "cases": [
+    {
+      "case": "borrowed-binary",
+      "passed": true,
+      "returncode": 0,
+      "expected_bytes": 600
+    },
+    {
+      "case": "unbuffered-binary",
+      "passed": true,
+      "returncode": 0,
+      "expected_bytes": 600
+    },
+    {
+      "case": "borrowed-text-CRLF",
+      "passed": true,
+      "returncode": 0,
+      "expected_bytes": 603
+    },
+    {
+      "case": "closed-handle-errors",
+      "passed": true,
+      "returncode": 0,
+      "expected_bytes": 0
+    }
+  ],
+  "scope": "Actual source-only native CRT fwrite/fflush/fclose through real DOS40/3e, borrowed512-byte buffer or unbuffered,600 binary/text bytes, reopen/read/EOF and closed-handle errors. No live UART, transaction or whole transfer session."
+}

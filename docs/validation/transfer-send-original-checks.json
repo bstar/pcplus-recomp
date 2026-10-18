@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "binary_sha256": "437f069804ac8b6eeff6307944286ed7c4db3d8f4761b2b90873c6ab52014a75",
+  "inputs": 93,
+  "original_comparisons": 93,
+  "scope": "Exact session/cancel/setjmp/longjmp/CRC instructions with explicit synthetic FILE/UART/time/UI/alternateprotocol boundaries. No actual files, serialdevice or complete application."
+}

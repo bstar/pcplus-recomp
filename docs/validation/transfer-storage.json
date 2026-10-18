@@ -1,0 +1,83 @@
+{
+  "passed": true,
+  "checks": {
+    "all_native_owner_storage_cases": true
+  },
+  "binary_sha256": "ec3957d3770636eeb11eb4cdf699902d4027258d87a8c06a532ff45f26842883",
+  "output_sha256": "35c1a095e2eb42f77ad3db594b75ad34dbf64fb5a24c6ab760f3bfb07a2c119b",
+  "cases": [
+    {
+      "mode": "N",
+      "passed": true,
+      "checks": {
+        "DOS_expected_exit": true,
+        "case_reported_pass": true,
+        "native_owner_and_sealed_storage_success": true,
+        "native_periodic_and_final_binary_file_exact": true,
+        "stage_name_removed_only_after_install": true
+      },
+      "transcript": "OWNER 1 STATE 2 FIRST 0 BYTES 11264\nPASS native receiver periodic and final bytes installed after checked close\n"
+    },
+    {
+      "mode": "M",
+      "passed": true,
+      "checks": {
+        "DOS_expected_exit": true,
+        "case_reported_pass": true,
+        "native_owner_and_sealed_storage_success": true,
+        "native_periodic_and_final_binary_file_exact": true,
+        "stage_name_removed_only_after_install": true
+      },
+      "transcript": "OWNER 1 STATE 2 FIRST 0 BYTES 11136\nPASS native receiver periodic and final bytes installed after checked close\n"
+    },
+    {
+      "mode": "W",
+      "passed": true,
+      "checks": {
+        "DOS_expected_exit": true,
+        "case_reported_pass": true,
+        "native_return_and_storage_failure_state": true,
+        "failed_or_canceled_file_never_installed": true,
+        "resolved_partial_stage_removed": true
+      },
+      "transcript": "OWNER 1 STATE 5 FIRST 7 BYTES 10257\nPASS native ignored final short write cannot install partial\n"
+    },
+    {
+      "mode": "C",
+      "passed": true,
+      "checks": {
+        "DOS_expected_exit": true,
+        "case_reported_pass": true,
+        "native_return_and_storage_failure_state": true,
+        "failed_or_canceled_file_never_installed": true,
+        "uncertain_close_stage_preserved_exact": true
+      },
+      "transcript": "OWNER 1 STATE 6 FIRST 8 BYTES 11264\nPASS native ignored close error retains recovery stage without install\n"
+    },
+    {
+      "mode": "X",
+      "passed": true,
+      "checks": {
+        "DOS_expected_exit": true,
+        "case_reported_pass": true,
+        "native_return_and_storage_failure_state": true,
+        "failed_or_canceled_file_never_installed": true,
+        "resolved_partial_stage_removed": true
+      },
+      "transcript": "OWNER 0 STATE 2 FIRST 0 BYTES 1024\nPASS canceled or timed out native owner closes and discards owned stage\n"
+    },
+    {
+      "mode": "T",
+      "passed": true,
+      "checks": {
+        "DOS_expected_exit": true,
+        "case_reported_pass": true,
+        "native_return_and_storage_failure_state": true,
+        "failed_or_canceled_file_never_installed": true,
+        "resolved_partial_stage_removed": true
+      },
+      "transcript": "OWNER 0 STATE 1 FIRST 0 BYTES 0\nPASS canceled or timed out native owner closes and discards owned stage\n"
+    }
+  ],
+  "scope": "One actual native session owner with realDOS append/seal/install:11x1024 and79x128+1024 binary cases; injected finalshortwrite/closeerror, doubleCAN and timeout cleanup. Native10240-byte periodicflush and finaltail execute; independentfirsterror gate prevents failed installation. Controlled memory UART/time/UI; no live UART/BBS/terminal UI/physicalmodem or ACK-after-commit claim."
+}

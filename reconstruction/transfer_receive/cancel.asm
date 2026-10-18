@@ -20,13 +20,13 @@ global receive_at_f06c
 global receive_at_f06e
 global receive_at_f06f
 extern receive_header_byte
-extern receive_post_event
-extern receive_event_queue
+extern receive_longjmp_boundary
+extern receive_jump_context
 %else
 ORG 0xf050
 %define receive_header_byte 0x5ca0
-%define receive_post_event 0x9065
-%define receive_event_queue 0xcd94
+%define receive_longjmp_boundary 0x9065
+%define receive_jump_context 0xcd94
 %endif
 %include "encodings.inc"
 receive_control_status: push bp
@@ -38,9 +38,9 @@ receive_at_f05c: cmp ax,strict word 0x18
 receive_at_f05f: jnz short receive_at_f06c
 receive_at_f061: mov ax,0x7
 receive_at_f064: push ax
-receive_at_f065: mov ax,receive_event_queue
+receive_at_f065: mov ax,receive_jump_context
 receive_at_f068: push ax
-receive_at_f069: call receive_post_event
+receive_at_f069: call receive_longjmp_boundary
 receive_at_f06c: mov_load sp,bp
 receive_at_f06e: pop bp
 receive_at_f06f: ret

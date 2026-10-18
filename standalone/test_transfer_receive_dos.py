@@ -57,7 +57,7 @@ exit
                 code=-1
         passed=code==0 and (output/'PASS.TXT').exists() and not (output/'FAIL.TXT').exists()
         result={'passed':passed,'returncode':code,'binary_sha256':digest,
-                'scope':'Actual source-only DOS exact receiver with modeled UART/time/UI: accepted CRC payload, bad CRC, duplicate ACK, complement/sequence NAK, truncated data, EOT NAK/ACK and double-CAN event. No live UART/files/session.'}
+                'scope':'Actual source-only DOS exact receiver with modeled UART/time/UI: accepted CRC payload, bad CRC, duplicate ACK, complement/sequence NAK, truncated data, EOT NAK/ACK and double-CAN modeled nonlocal-transfer boundary. No live UART/files/session.'}
         (output/'result.json').write_text(json.dumps(result,indent=2)+'\n')
         print(json.dumps(result,indent=2),flush=True)
         return 0 if passed else 1

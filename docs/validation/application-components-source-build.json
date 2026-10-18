@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "96b79fa32e1bab58e2df24771d00071c0b3f2880903aaba0e45a7b4d8bd12615",
-  "source_file_count": 837,
+  "source_snapshot_sha256": "f9b03d61b2e6e7b54a30acfcc334b662dd9d497f0fcdbfbc7d7a6c4dd00d2c2f",
+  "source_file_count": 932,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,14 +16,14 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "bc7b3c3f59d570668073ebb8c4e6454224d912cceb02e0c2758e2f22390bfe1d",
+  "build_log_sha256": "462baf0086bc98a6a59e51bf71c5d6b6f0a9979f33c496c10178a69b5abd93f5",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.UqzYVp/pcplus-source-proof-lia7rk_a/checkout",
+  "source_checkout": "/tmp/nix-shell.nfRlEI/pcplus-source-proof-w1qu8eok/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
-  "scope": "27 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
-  "output_count": 27,
+  "scope": "35 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+  "output_count": 35,
   "outputs": {
     "terminal/TERMINAL.EXE": {
       "sha256": "7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a",
@@ -159,6 +159,46 @@
       "sha256": "7f2da1865bcd4b7bbe1fa466e9bfc2e759de514109787516c330a28797f26e8e",
       "matches_workspace": true,
       "workspace_sha256": "7f2da1865bcd4b7bbe1fa466e9bfc2e759de514109787516c330a28797f26e8e"
+    },
+    "transfer-send/SEND.EXE": {
+      "sha256": "437f069804ac8b6eeff6307944286ed7c4db3d8f4761b2b90873c6ab52014a75",
+      "matches_workspace": true,
+      "workspace_sha256": "437f069804ac8b6eeff6307944286ed7c4db3d8f4761b2b90873c6ab52014a75"
+    },
+    "transfer-files/FILES.EXE": {
+      "sha256": "427a7997d12a9933389aa63210a6c425b13ca597730378a628618ff3339e9b30",
+      "matches_workspace": true,
+      "workspace_sha256": "427a7997d12a9933389aa63210a6c425b13ca597730378a628618ff3339e9b30"
+    },
+    "transfer-session/SESSION.EXE": {
+      "sha256": "6297cab2c881e11885d23a814ffaf45967749e88a09f8f9d17949f8ca6a79302",
+      "matches_workspace": true,
+      "workspace_sha256": "6297cab2c881e11885d23a814ffaf45967749e88a09f8f9d17949f8ca6a79302"
+    },
+    "transfer-uart/TUART.EXE": {
+      "sha256": "b976f8a928dc052b7cfc4c2adf3b34f7e869e1b4748ba2d6f30d2652a90db28b",
+      "matches_workspace": true,
+      "workspace_sha256": "b976f8a928dc052b7cfc4c2adf3b34f7e869e1b4748ba2d6f30d2652a90db28b"
+    },
+    "download-file/DOWNLOAD.EXE": {
+      "sha256": "99199a1fcf86ec55fa79c1d6f93ff882e9624895f0232fa9e465a1a65df9d1fe",
+      "matches_workspace": true,
+      "workspace_sha256": "99199a1fcf86ec55fa79c1d6f93ff882e9624895f0232fa9e465a1a65df9d1fe"
+    },
+    "download-file/DLFAULT.EXE": {
+      "sha256": "b7457f18de99106d11101509d6cad8cb486a444d76664612255af22176bfc615",
+      "matches_workspace": true,
+      "workspace_sha256": "b7457f18de99106d11101509d6cad8cb486a444d76664612255af22176bfc615"
+    },
+    "transfer-session-composite/TRANSFER.EXE": {
+      "sha256": "c6cb27a6b24a4c95eb4f6b5a12e5c23fb88fa41a076e82800b9a4e888d21a906",
+      "matches_workspace": true,
+      "workspace_sha256": "c6cb27a6b24a4c95eb4f6b5a12e5c23fb88fa41a076e82800b9a4e888d21a906"
+    },
+    "transfer-storage/TRANSFER.EXE": {
+      "sha256": "ec3957d3770636eeb11eb4cdf699902d4027258d87a8c06a532ff45f26842883",
+      "matches_workspace": true,
+      "workspace_sha256": "ec3957d3770636eeb11eb4cdf699902d4027258d87a8c06a532ff45f26842883"
     }
   },
   "build_scripts": [
@@ -183,6 +223,13 @@
     "standalone/build_program_exec.py",
     "standalone/build_terminal_reset.py",
     "standalone/build_transfer_blocks.py",
-    "standalone/build_transfer_receive.py"
+    "standalone/build_transfer_receive.py",
+    "standalone/build_transfer_send.py",
+    "standalone/build_transfer_files.py",
+    "standalone/build_transfer_session.py",
+    "standalone/build_transfer_uart.py",
+    "standalone/build_download_file.py",
+    "standalone/build_transfer_session_composite.py",
+    "standalone/build_transfer_storage.py"
   ]
 }

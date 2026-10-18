@@ -136,15 +136,28 @@ physical modem compatibility or close the remaining application gates below.
       DOS diagnostic, distinct from the maintained nonblocking live controller.
       See `docs/CONFIGURATION.md`.
 - [ ] Reconstruct file transfers, capture/logging and supporting tools used by the app.
-      Progress: native protocol selection/handler routing is mapped; 93 exact CRC
-      bytes plus a generated original-verified 512-byte table and 886 exact receiver
-      bytes are source-built. Framing/checksum/CRC, duplicate ACK, sequence and
-      integrity NAK, EOT and double-CAN event paths pass source/original replay
-      and actual DOS diagnostics. UART/time/UI remain explicit receiver fixtures;
-      buffered file commit, full session/retries/cancellation ownership, batch
-      metadata and every advertised built-in/external protocol remain open.
-      Capture/logging and F09 helper integration are not closed by these modules.
-      See `docs/TRANSFER_BLOCKS.md` and `docs/TRANSFER_RECEIVE.md`.
+      Progress: native protocol routing, CRC/framing and packet validation are
+      source-built. Native sender adds1,240 exact bytes; CRT/receiver file paths
+      add1,657; session owner/context/handshake adds1,027; transfer UART helpers
+      reuse the resident core with90 exact clock/header bytes. One continuous
+      native ordinary receiver now composes handshake, repeated blocks, retries,
+      real setjmp/longjmp and EOT. Source tests cover CRC/checksum, mixed block
+      sizes, duplicate/retry/cancel paths and explicit metadata boundaries.
+      Maintained streaming DOS storage checks exact writes and close before
+      exclusive target installation. A real-DOS composition proves periodic/final
+      output, final short-write/close failure gates, cancellation/timeout cleanup,
+      and79x128+1024 at the flush threshold. Its UART/time remain peer fixtures;
+      a separate real-UART DOS test sends1,024 exact binary bytes.
+      Native final EOT write/close results are ignored; the maintained owner
+      independently gates installation. Native ACK-before-final-commit needs a
+      separate wire policy. Terminal UI/UART session integration, source-file
+      upload integration, full deadline/cancellation services, physical peers,
+      batch metadata, every protocol family, capture/logging and F09 remain open.
+      See `docs/TRANSFER_SESSION.md`, `docs/DOWNLOAD_STORAGE.md`,
+      `docs/TRANSFER_SEND.md`, `docs/TRANSFER_FILES.md`, `docs/TRANSFER_UART.md`.
+      `docs/TRANSFER_INTEGRATION.md` records the audited far-shadow/history
+      relocation, PROGRAM retention floor and serviced binary-UART owner needed
+      next; those runtime changes remain unimplemented.
 - [ ] Reconstruct scripting interfaces and required interpreter/compiler integration.
       Keyboard file structures and original TEXT caret/pause consumers are proved,
       and explicit global /T KEY import now supports bounded nonblocking TEXT.

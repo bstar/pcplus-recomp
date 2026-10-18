@@ -35,7 +35,7 @@ def cases():
   result.append((f'batch-block0-explicit-metadata-boundary-{protocol}',expected(bytes(128),0,crc),crc,0,protocol,10,b'',None,0))
  syn=bytearray(expected(bytes(128),1,1));syn[0]=0x16
  result.append(('SYN-128-byte-header',bytes(syn),1,0,4,0,b'\x06',bytes(128),0))
- result.append(('double-CAN-posts-event7',b'\x55\x18\x18',1,0,4,15,b'',None,0))
+ result.append(('double-CAN-modeled-longjmp7-boundary',b'\x55\x18\x18',1,0,4,15,b'',None,0))
  result.append(('unknown-start-timeout-retry',b'\x55',1,0,4,14,b'\x15',None,1))
  return result
 

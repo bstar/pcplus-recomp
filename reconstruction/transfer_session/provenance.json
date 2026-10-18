@@ -1,0 +1,245 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "overlay": 21,
+  "units": [
+    {
+      "source": "ordinary_gate.asm",
+      "start": "0xda31",
+      "end_exclusive": "0xda3a",
+      "bytes": 9,
+      "source_file_offset": 130273,
+      "sha256": "8c80d80f43238bd6037427e3e22609b7b17544d1d1789d3864c90f172fe6b99c"
+    },
+    {
+      "source": "success_return.asm",
+      "start": "0xda9e",
+      "end_exclusive": "0xdaa7",
+      "bytes": 9,
+      "source_file_offset": 130382,
+      "sha256": "419ad689f140f96169bf0aabe92f49a819dd27264478d587335b6e689acc5903"
+    },
+    {
+      "source": "commit_gate.asm",
+      "start": "0xdcfd",
+      "end_exclusive": "0xdd4a",
+      "bytes": 77,
+      "source_file_offset": 130989,
+      "sha256": "9345974c9587b5e1f542bed29381e92b4873c6e0f606ede59d9bab112f2dc0aa"
+    },
+    {
+      "source": "entry.asm",
+      "start": "0xd6a4",
+      "end_exclusive": "0xd731",
+      "bytes": 141,
+      "source_file_offset": 129364,
+      "sha256": "78f5d0aa7a4c134e96a13383c0080ff0be4ac79aa1f9c2f902e69664b8040e55"
+    },
+    {
+      "source": "entry_display.asm",
+      "start": "0xd73c",
+      "end_exclusive": "0xd752",
+      "bytes": 22,
+      "source_file_offset": 129516,
+      "sha256": "96db6a2794f493c34adda6803189f306d0b535879b475dd120144718f6ffc079"
+    },
+    {
+      "source": "error_file_cleanup.asm",
+      "start": "0xd8ae",
+      "end_exclusive": "0xd8e8",
+      "bytes": 58,
+      "source_file_offset": 129886,
+      "sha256": "5588f21771553630f314d4c5d994f1cc651f0c25985b479ffc9ebfd53d4fa567"
+    },
+    {
+      "source": "initialize.asm",
+      "start": "0xd656",
+      "end_exclusive": "0xd6a4",
+      "bytes": 78,
+      "source_file_offset": 129286,
+      "sha256": "f6a270033f7ded12c6645b481418aecafce6f841b2228481fd58080fa49b9fc1"
+    },
+    {
+      "source": "totals.asm",
+      "start": "0xefb0",
+      "end_exclusive": "0xefcb",
+      "bytes": 27,
+      "source_file_offset": 135776,
+      "sha256": "8b7dff9666ec9b621ccbb11ac41434d4a06f5e1a0124f9424c0d38060dbb7c2d"
+    },
+    {
+      "source": "handshake.asm",
+      "start": "0xd752",
+      "end_exclusive": "0xd87c",
+      "bytes": 298,
+      "source_file_offset": 129538,
+      "sha256": "7cd03abc044ed6ce461e8b256d5c42cf5d0674cb8ea3bebac244d3eacd773b0d"
+    },
+    {
+      "source": "context.asm",
+      "start": "0xd87c",
+      "end_exclusive": "0xd8ae",
+      "bytes": 50,
+      "source_file_offset": 129836,
+      "sha256": "5c6365d2f5cd8cbef038bb9b257dde17a5c8218a80348e7ee7f347fa6b402fff"
+    },
+    {
+      "source": "retry.asm",
+      "start": "0xdc1f",
+      "end_exclusive": "0xdc6a",
+      "bytes": 75,
+      "source_file_offset": 130767,
+      "sha256": "182c27e73ba13f87625eaabb2be4232dea692df9875ce8971e4d3c13c6fd78b0"
+    },
+    {
+      "source": "wait.asm",
+      "start": "0xf070",
+      "end_exclusive": "0xf0d3",
+      "bytes": 99,
+      "source_file_offset": 135968,
+      "sha256": "ae81e01e98e5fb80fc53f87e3ef9dd63544915b11330970dd67809a94daf1896"
+    },
+    {
+      "source": "timestamp.asm",
+      "start": "0xf0d4",
+      "end_exclusive": "0xf0df",
+      "bytes": 11,
+      "source_file_offset": 136068,
+      "sha256": "4557ed5a2b9a305a9ae1841d7304076ba29609d1974f07e61912cfbf3228972d"
+    },
+    {
+      "source": "setjmp.asm",
+      "start": "0x9048",
+      "end_exclusive": "0x9065",
+      "bytes": 29,
+      "source_file_offset": 41544,
+      "sha256": "4903e9d5d0bf54876a6c28f86854b6a6fc995b0948ecaa9a910d2d2c0e69c052"
+    },
+    {
+      "source": "longjmp.asm",
+      "start": "0x9065",
+      "end_exclusive": "0x9086",
+      "bytes": 33,
+      "source_file_offset": 41573,
+      "sha256": "10edd48482a91a1412444fb830066c711619b2c31fd432182a19257442ffc2d6"
+    },
+    {
+      "source": "failure_return.asm",
+      "start": "0xd731",
+      "end_exclusive": "0xd73c",
+      "bytes": 11,
+      "source_file_offset": 129505,
+      "sha256": "46e12d4219239d5661ce9ba37760f1b1294145b5f80008a2c1a5bb80a4854758"
+    }
+  ],
+  "state": {
+    "0x1d1e": "session_serial_gate",
+    "0x1ea0": "session_download_prefix",
+    "0x77f0": "session_open_mode",
+    "0x1b86": "session_baud_index",
+    "0x1f76": "session_ui_attribute",
+    "0x203e": "session_short_wait",
+    "0x3270": "session_baud_table",
+    "0x3272": "session_baud_table_high",
+    "0x3986": "session_wait_mode",
+    "0x3996": "session_protocol",
+    "0x39c0": "session_buffer_pointer",
+    "0x8e20": "session_queued_count",
+    "0x8ffa": "session_total_low",
+    "0x8ffc": "session_total_high",
+    "0x9006": "session_expected_low",
+    "0x9008": "session_expected_high",
+    "0x905a": "session_rate_low",
+    "0x905c": "session_rate_high",
+    "0x9062": "session_payload",
+    "0xcb2c": "session_bytes_low",
+    "0xcb2e": "session_bytes_high",
+    "0xcb3a": "session_state_cb3a",
+    "0xcb54": "session_state_cb54",
+    "0xcb56": "session_state_cb56",
+    "0xcbaa": "session_file_handle",
+    "0xcd34": "session_buffer_used",
+    "0xcc9a": "session_last_block",
+    "0xcd3a": "session_state_cd3a",
+    "0xcd76": "session_state_cd76",
+    "0xcd7a": "session_state_cd7a",
+    "0xcd80": "session_blocks_accepted",
+    "0xcd8a": "session_error_count",
+    "0xcd94": "session_context",
+    "0xcdcc": "session_streaming_mode",
+    "0xce06": "session_started_low",
+    "0xce08": "session_started_high",
+    "0x2e44": "session_integrity_labels"
+  },
+  "boundaries": {
+    "0x9c7c": "session_long_remainder",
+    "0x3717": "session_path_test",
+    "0x3ea4": "session_display_path",
+    "0x841a": "session_file_open",
+    "0x86ac": "session_file_write",
+    "0xabfa": "session_serial_gate_set",
+    "0x8318": "session_file_close_boundary",
+    "0x3f4b": "session_local_cancel",
+    "0x4861": "session_carrier_present",
+    "0x6b98": "session_delay_ticks",
+    "0x6bf0": "session_ui_print",
+    "0x77fe": "session_clock",
+    "0xe498": "session_status",
+    "0xab0b": "session_transmit_byte",
+    "0xaad9": "session_timed_byte",
+    "0xd077": "session_protocol12_boundary",
+    "0xd06b": "session_protocol9_boundary",
+    "0x40b9": "session_send_nak",
+    "0xf050": "session_control_status",
+    "0xda3a": "session_batch_metadata_boundary",
+    "0xdaea": "session_accept_data",
+    "0xddf6": "session_commit_buffer",
+    "0xde02": "session_commit_partial",
+    "0xde20": "session_commit_unknown_size",
+    "0xd731": "session_failure_cleanup_argument",
+    "0xd734": "session_failure_return",
+    "0xd87c": "session_context_enter",
+    "0xd8ae": "session_file_cleanup",
+    "0xdc1f": "session_retry_enter",
+    "0xdc6a": "session_header_checkpoint",
+    "0xdcf1": "session_retry_limit"
+  },
+  "supporting_evidence": [
+    {
+      "name": "session-initialization",
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1d656-asm.json",
+      "evidence_id": "ev_18516253dc9dfbbe0289d9c1376677c3b8dc90356c7da59f88915ea6789b7122"
+    },
+    {
+      "name": "receive-controller",
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1d6a4-asm.json",
+      "evidence_id": "ev_5627e54d9f87691801201530328b3cd53d294b87c896a38d9c5b1d3c1e62851b"
+    },
+    {
+      "name": "session-byte-totals",
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1efb0-asm.json",
+      "evidence_id": "ev_dcb49d5d2379b262b31c6a529ac338419a9c70f82a040f66da42732e1b67363c"
+    },
+    {
+      "name": "handshake-wait",
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1f070-asm.json",
+      "evidence_id": "ev_83b801b990aa09341d92968a0e28910152926fdd6c94449bc3ca81e9c8499983"
+    },
+    {
+      "name": "timestamp",
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1f0d4-asm.json",
+      "evidence_id": "ev_2999da56311d9486b9e231b17c9eccc1eb2dbea678bbde7196020c22c5d17614"
+    },
+    {
+      "name": "application-owner",
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1d0d0-asm.json",
+      "evidence_id": "ev_7d193548db8b42c6f44afba9eed51ec6c952ce54f8caa04e22a6cf0a91493c84"
+    }
+  ],
+  "setjmp_evidence": "ev_5e9883fbf1946afde585338918ee467ff5dc65e55e792ba44922b0db819f2d4e",
+  "limitations": [
+    "Exact native session fragments; OMF-only fallthrough jumps expose diagnostic checkpoints.",
+    "Original9048/9065 are real nonlocal setjmp/longjmp, not event posting. Context10bytes(BP,DI,SI,SP,returnIP) requires DS=SS and same live code segment.",
+    "Diagnostic models UART timing, carrier, keyboard and UI explicitly; no live transfer/application owner or file IO is claimed.",
+    "Protocol9/12 specialized controllers, file cleanup and application UI lifecycle remain explicit boundaries."
+  ]
+}

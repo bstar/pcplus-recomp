@@ -1,0 +1,106 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "overlay": 21,
+  "sender_evidence_id": "ev_c9beb57caf28b9f7acfdde54f6d78d941a7bcac553e5126c5277ef8f25aee23b",
+  "units": [
+    {
+      "source": "session.asm",
+      "start": "0xde58",
+      "end_exclusive": "0xe2d2",
+      "bytes": 1146,
+      "source_file_offset": 131336,
+      "sha256": "86038c95216a54048757b3b1434df2b73e6fc346e0dbcf049c63f7aefda39879"
+    },
+    {
+      "source": "cancel.asm",
+      "start": "0xf050",
+      "end_exclusive": "0xf070",
+      "bytes": 32,
+      "source_file_offset": 135936,
+      "sha256": "f38eb063e5128a75136b1f19c82988cda3d12d009d0a28e00ede10570869c344"
+    },
+    {
+      "source": "checkpoint.asm",
+      "start": "0x9048",
+      "end_exclusive": "0x9086",
+      "bytes": 62,
+      "source_file_offset": 41544,
+      "sha256": "229aa476c732dd7770a0b0df13a9764a145900b37bb7aee208f911aefe761514"
+    }
+  ],
+  "state": {
+    "0x3996": "send_protocol",
+    "0x39c0": "send_buffer_pointer",
+    "0x1f76": "send_ui_context",
+    "0x2e44": "send_integrity_labels",
+    "0x77f3": "send_initial_open_mode",
+    "0x77f6": "send_binary_open_mode",
+    "0x8e20": "send_queued_count",
+    "0x8ffa": "send_total_low",
+    "0x8ffc": "send_total_high",
+    "0x9006": "send_file_size_low",
+    "0x9008": "send_file_size_high",
+    "0xcb2c": "send_session_low",
+    "0xcb2e": "send_session_high",
+    "0xcb5e": "send_block_size",
+    "0xcbaa": "send_file_handle",
+    "0xcbae": "send_crc_high",
+    "0xcbb2": "send_crc_low",
+    "0xcc9a": "send_block_number",
+    "0xcd34": "send_buffer_used",
+    "0xcd80": "send_blocks_counted",
+    "0xcd8a": "send_error_count",
+    "0xcdcc": "send_streaming_mode",
+    "0xcd94": "send_checkpoint_buffer",
+    "0xceea": "send_directory_prefix"
+  },
+  "boundaries": {
+    "0xde58": "transfer_send_session",
+    "0xd656": "send_reset_state",
+    "0xefb0": "send_prepare_ui",
+    "0xd08f": "send_delegate_protocol13",
+    "0x841a": "send_open_file",
+    "0xe498": "send_status",
+    "0x3ea4": "send_filename_display",
+    "0x6bf0": "send_display_text",
+    "0xee10": "send_display_start",
+    "0x9048": "send_checkpoint",
+    "0x9065": "send_unwind",
+    "0xaad9": "send_timed_byte",
+    "0x3f4b": "send_local_cancel",
+    "0x4861": "send_carrier",
+    "0xf050": "send_control_status",
+    "0xd083": "send_delegate_U",
+    "0xd0a7": "send_delegate_W",
+    "0xabca": "send_flush_input",
+    "0x8318": "send_close_file",
+    "0xe5da": "send_metadata3",
+    "0xe762": "send_metadata5",
+    "0xf0d4": "send_initialize_progress",
+    "0x845a": "send_read_file",
+    "0xab0b": "send_transmit_byte",
+    "0xab92": "send_transmit_buffer",
+    "0x5c77": "_transfer_crc_buffer_original",
+    "0xe322": "send_progress",
+    "0xaa65": "send_receive_byte",
+    "0x5ca0": "send_header_byte"
+  },
+  "supporting_evidence": [
+    {
+      "export": "analysis/pcplus-overlay-anchored-21/functions/0x1f050-asm.json",
+      "evidence_id": "ev_3343401c1e6f056fc6c94618eee27ef21ddc84522dcda8103ece4f49da1ef7b3"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x19065-asm.json",
+      "evidence_id": "ev_dad9d5fadd00741c2a3e854a80de5fe41148b87ad874d8e5128e1b31335f06ac"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x13f4b-asm.json",
+      "evidence_id": "ev_1ec0abcec90c5c3cb04abffd3fa96d97152f2c426730ca9fcef69a49e8867682"
+    }
+  ],
+  "limitations": [
+    "Exact sender session and control/unwind instructions; external UI, filesystem, UART and alternate protocol services remain explicit integration boundaries.",
+    "Standalone services are declared synthetic fixtures, not a live transfer engine."
+  ]
+}

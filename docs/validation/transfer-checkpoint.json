@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "commands": [
+    {
+      "command": "./tools/build test-download-file test-transfer_send test-transfer_files test-transfer_session test-transfer_uart test-transfer-session-composite test-transfer-storage test-transfer_receive",
+      "exit_code": 0
+    },
+    {
+      "command": "./tools/dev --command python3 standalone/prove_source_build.py",
+      "exit_code": 0
+    },
+    {
+      "command": "./tools/dev --command python3 standalone/test_transfer_storage_dos.py",
+      "exit_code": 0
+    }
+  ],
+  "source_only_outputs": 35,
+  "terminal_binary_changed": false,
+  "terminal_binary_sha256": "7b9ca14b22f7729107f9be9c9592372d1a6c1a1c3b038a77474c55bea7e6f57a",
+  "scope": "Native transfer sender/file/session/UART components, maintained storage and one-owner scheduled-peer to actualDOSfile composition. Full PCPlus application and terminal transfer UI/live UART session remain unfinished."
+}

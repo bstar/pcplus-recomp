@@ -1,0 +1,47 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "source": "clock.asm",
+      "start": "0x3323",
+      "end_exclusive": "0x332e",
+      "bytes": 11,
+      "region": 0,
+      "source_file_offset": 17699,
+      "sha256": "5291a203c0c84b71b85b0a50febcd985e2070c672d8ba557d95e652b87140d74"
+    },
+    {
+      "source": "clock.asm",
+      "start": "0x778c",
+      "end_exclusive": "0x77ad",
+      "bytes": 33,
+      "region": 1,
+      "source_file_offset": 35212,
+      "sha256": "c677c642aab995664be684bbcd61ded5f3be8491c1d7a89e8167fb50b53680d0"
+    },
+    {
+      "source": "header_timeout.asm",
+      "start": "0x5ca0",
+      "end_exclusive": "0x5cce",
+      "bytes": 46,
+      "region": null,
+      "source_file_offset": 28320,
+      "sha256": "cac3b64b4124d89b51def2913c187db7517d1ae30e2903f47f8ff2366779e7e5"
+    }
+  ],
+  "reused_source": "reconstruction/uart/core.asm",
+  "supporting_evidence": [
+    {
+      "export": "analysis/pcplus-main/functions/0x13323-asm.json",
+      "evidence_id": "ev_3a201917bb29b457a187c41bb1f5763da7ae218ddb1fadd6e65e2b344c90184a"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x1778c-asm.json",
+      "evidence_id": "ev_125ef5931c19bbcdbef33aac7555cc4a950c874fc11db0b086e25ce498f80355"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x15ca0-asm.json",
+      "evidence_id": "ev_5e9b2a5c6803fb0f53c20c417ee7fb18a78a012a1384deaec9f58b8b253d6393"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "binary_sha256": "427a7997d12a9933389aa63210a6c425b13ca597730378a628618ff3339e9b30",
+  "cases": [
+    {
+      "case": "bounded-diagnostic-FILE-initialization-rejects-invalid-handle-and-modes",
+      "inputs": 3,
+      "passed": true
+    },
+    {
+      "case": "native-binary-text-buffering-elementcounts-faults-receiver-shortwrite-finalerrors",
+      "inputs": 62,
+      "passed": true
+    },
+    {
+      "case": "genuine-original-CRT-and-receiver-file-fragments-against-source",
+      "inputs": 62,
+      "passed": true
+    }
+  ],
+  "scope": "Native CRT source and actual receiver file fragments; modeled DOSkernel faults, bounded synthetic FILE objects. No live UART/full session/transaction policy."
+}

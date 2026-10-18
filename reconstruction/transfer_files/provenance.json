@@ -1,0 +1,216 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "overlay": 21,
+  "receiver_evidence_id": "ev_5627e54d9f87691801201530328b3cd53d294b87c896a38d9c5b1d3c1e62851b",
+  "units": [
+    {
+      "source": "fwrite.asm",
+      "start": "0x86ac",
+      "end_exclusive": "0x87ad",
+      "bytes": 257,
+      "source_file_offset": 39084,
+      "sha256": "053ac66b05bf8c99f340f55022670763a11b2571805eb3cd3b68cfe2f36543d3"
+    },
+    {
+      "source": "fflush.asm",
+      "start": "0x8c54",
+      "end_exclusive": "0x8cc6",
+      "bytes": 114,
+      "source_file_offset": 40532,
+      "sha256": "c9f92f55d3228f910def017d565909f06bdfce6b3bae05eb0511e041401ae525"
+    },
+    {
+      "source": "fclose.asm",
+      "start": "0x8318",
+      "end_exclusive": "0x83c6",
+      "bytes": 174,
+      "source_file_offset": 38168,
+      "sha256": "8f00b318edc2df32b260d3c5644eab5af7865f3c3555b37e25393312fdd97986"
+    },
+    {
+      "source": "write.asm",
+      "start": "0xa368",
+      "end_exclusive": "0xa4a6",
+      "bytes": 318,
+      "source_file_offset": 46440,
+      "sha256": "0e6b3aecd988a90a305c696c122f814c9b597cba584fa6137c0099ed7d19f46d"
+    },
+    {
+      "source": "close.asm",
+      "start": "0x868c",
+      "end_exclusive": "0x86ac",
+      "bytes": 32,
+      "source_file_offset": 39052,
+      "sha256": "3dc0d713d31ff0cefd40d8f61e5119c50f09566c94d02829c2e19eff186451a1"
+    },
+    {
+      "source": "free_buffer.asm",
+      "start": "0xa000",
+      "end_exclusive": "0xa02a",
+      "bytes": 42,
+      "source_file_offset": 45568,
+      "sha256": "5ea21adb961b15eda5fb5eae7b6d4fe314813afeb6451fd2bb7137ea64255677"
+    },
+    {
+      "source": "putc.asm",
+      "start": "0x91a6",
+      "end_exclusive": "0x9286",
+      "bytes": 224,
+      "source_file_offset": 41894,
+      "sha256": "c29bcb0e1d9ba80b29f846a124676ffb755e71d3efc2268831c926c4feb901ef"
+    },
+    {
+      "source": "seek.asm",
+      "start": "0xa22e",
+      "end_exclusive": "0xa2a8",
+      "bytes": 122,
+      "source_file_offset": 46126,
+      "sha256": "6a17b74c0dca1974a0518bc11aa29f33ab413e8457853c72f7c7516e66b6174c"
+    },
+    {
+      "source": "error_zero.asm",
+      "start": "0x9420",
+      "end_exclusive": "0x9428",
+      "bytes": 8,
+      "source_file_offset": 42528,
+      "sha256": "82df84fbae801403c8ca1b1dc46f4c69f34e8e05a794afed0833def65240f3d0"
+    },
+    {
+      "source": "error_value.asm",
+      "start": "0x9435",
+      "end_exclusive": "0x9442",
+      "bytes": 13,
+      "source_file_offset": 42549,
+      "sha256": "a081dcb2bee0f638efa1f7024f1d61f19f6184c74d901c572d83593df8893930"
+    },
+    {
+      "source": "stack_available.asm",
+      "start": "0xa8d4",
+      "end_exclusive": "0xa8e6",
+      "bytes": 18,
+      "source_file_offset": 47828,
+      "sha256": "bd20a14ad17ec2c1155f6fdff724bba61614828979b7268307cc437e54fb4e7c"
+    },
+    {
+      "source": "copy_wrapper.asm",
+      "start": "0x4735",
+      "end_exclusive": "0x4748",
+      "bytes": 19,
+      "source_file_offset": 22837,
+      "sha256": "2d179bb98a2606ea61c8c9b7b22f4a25bc300a5a98b7bd3db79cefed4fd9e2d6"
+    },
+    {
+      "source": "copy.asm",
+      "start": "0x85b4",
+      "end_exclusive": "0x85fc",
+      "bytes": 72,
+      "source_file_offset": 38836,
+      "sha256": "8f2d99034340eacf7ddcbe1a27e39d854b79bd600525001cb9979524a7d74fb6"
+    },
+    {
+      "source": "periodic.asm",
+      "start": "0xdb2a",
+      "end_exclusive": "0xdbbc",
+      "bytes": 146,
+      "source_file_offset": 130522,
+      "sha256": "9fc4427ccaf4732545dd57caed8cf41e766bc8aaa0ee0c2b7a1dadb02ddd8fde"
+    },
+    {
+      "source": "tail.asm",
+      "start": "0xddf6",
+      "end_exclusive": "0xde58",
+      "bytes": 98,
+      "source_file_offset": 131238,
+      "sha256": "f558c2132fc969ebe469c0768ea96aee923415d3b44fc51707dc3aa90e20eee0"
+    }
+  ],
+  "state": {
+    "0x7b29": "files_handle_limit",
+    "0x7b2b": "files_handle_flags",
+    "0x7b6a": "files_stream_table",
+    "0x7c0a": "files_extra_table",
+    "0x7c0e": "files_extra_temporary",
+    "0x7b72": "files_stdout",
+    "0x7b7a": "files_stderr",
+    "0x7b8a": "files_aux",
+    "0x7dd6": "files_stack_floor",
+    "0x8e24": "files_overlay_cookie",
+    "0x8e26": "files_overlay_callback",
+    "0x7ae4": "files_temp_prefix",
+    "0x7ae6": "files_temp_separator",
+    "0x39c0": "files_receive_buffer",
+    "0xcbaa": "files_receive_stream",
+    "0xcd34": "files_receive_used",
+    "0x9006": "files_receive_size_low",
+    "0x9008": "files_receive_size_high",
+    "0x8ffa": "files_receive_total_low",
+    "0x8ffc": "files_receive_total_high",
+    "0x1d1e": "files_receive_flow_switch"
+  },
+  "boundaries": {
+    "0x86ac": "files_fwrite",
+    "0x8c54": "files_fflush",
+    "0x8318": "files_fclose",
+    "0xa368": "files_write",
+    "0x868c": "files_close",
+    "0xa000": "files_free_buffer",
+    "0x91a6": "files_putc",
+    "0xa22e": "files_seek",
+    "0x9420": "files_error_zero",
+    "0x9435": "files_error_value",
+    "0x9448": "program_map_error",
+    "0xa8d4": "files_stack_available",
+    "0x4735": "files_copy_wrapper",
+    "0x85b4": "files_copy",
+    "0x92a4": "files_heap_free",
+    "0xa71a": "files_allocate_buffer",
+    "0x8cce": "files_flush_all",
+    "0xa8bc": "files_stack_failure",
+    "0x8268": "files_string_copy",
+    "0x8bea": "files_string_append",
+    "0x8e6c": "files_unsigned_decimal",
+    "0x9086": "files_unlink",
+    "0xe498": "files_receive_status",
+    "0xabfa": "files_receive_flow",
+    "0x3af8": "files_receive_timestamp",
+    "0xdc07": "files_receive_resume",
+    "0xd734": "files_receive_failure",
+    "0xda9e": "files_receive_success",
+    "0xd731": "files_receive_stack_failure"
+  },
+  "supporting_evidence": [
+    {
+      "export": "analysis/pcplus-main/functions/0x186ac-asm.json",
+      "evidence_id": "ev_7955ddd4171ae2434fe3de0d986341521d34fa5d2dcfb2d9791250d70da191f7"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x18318-asm.json",
+      "evidence_id": "ev_171c0d493c48ca5f0297bf94ac0c8dca8d7ee3264c72ce6596df0e332a911e78"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x18c54-asm.json",
+      "evidence_id": "ev_6aec9459e5cef18c9f894091fefd02a62c0abcebffc33bdb5b19019fa201ff81"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x1a368-asm.json",
+      "evidence_id": "ev_36c0b9afffae0561e5b700ca7360943a8339b703ff392c91bec3f630f125e2cd"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x1868c-asm.json",
+      "evidence_id": "ev_ee8fcc29556dd9976e3e3abf8fa97f3120e79f3aac9a491e6ded6ed9b41a7e26"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x191a6-asm.json",
+      "evidence_id": "ev_b304336c511ab5b5855465ee788207b1cf34b32ad22dd5784a47b412742d2596"
+    },
+    {
+      "export": "analysis/pcplus-main/functions/0x1a000-asm.json",
+      "evidence_id": "ev_bfd8b318c8cf7c270fdd8d1095fd35c07204ad407088058abb15ff9fc0c5972b"
+    }
+  ],
+  "limitations": [
+    "CRT source accepts unchecked FILE pointers and sizes; standalone diagnostic initializes only bounded synthetic FILE objects.",
+    "Heap allocation/free, temporary-file cleanup and full receiver UI/flow/session remain explicit boundaries.",
+    "Periodic fwrite uses one full-sized element and rejects short writes; final receiver tail ignores fwrite/fclose errors."
+  ]
+}

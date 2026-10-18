@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "checks": {
+    "DOS_selfcheck": true,
+    "all_binary_bytes_exact": true,
+    "peer_completed": true,
+    "frozen_binary": true
+  },
+  "errors": [],
+  "binary_sha256": "b976f8a928dc052b7cfc4c2adf3b34f7e869e1b4748ba2d6f30d2652a90db28b",
+  "scope": "Actual DOS8086 recovered UART IRQ/timed-reader/bulk-writer plus exact DOS clock and bounded extent guard; loopback binary1024 bytes including00/ff and acknowledgement. NONEflow only; no physicaladapter/CTSstalls, vendorUI or full transfer session."
+}

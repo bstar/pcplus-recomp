@@ -88,7 +88,7 @@
     "0xcd80": "receive_blocks_accepted",
     "0xcd8a": "receive_error_count",
     "0xcdcc": "receive_streaming_mode",
-    "0xcd94": "receive_event_queue"
+    "0xcd94": "receive_jump_context"
   },
   "boundaries": {
     "0x5c42": "transfer_crc_update_original",
@@ -104,7 +104,7 @@
     "0xab0b": "receive_transmit_byte",
     "0x6b72": "receive_delay",
     "0xf050": "receive_control_status",
-    "0x9065": "receive_post_event",
+    "0x9065": "receive_longjmp_boundary",
     "0xda31": "receive_validated",
     "0xdb2a": "receive_buffer_full",
     "0xdc28": "receive_complete",
@@ -120,7 +120,7 @@
       "evidence_id": "ev_0e782875a0747cda224a66d1b03b087502ad6545afd099c9611df3e822f8034f"
     },
     {
-      "name": "double-CAN-event",
+      "name": "double-CAN-longjmp-request",
       "export": "analysis/pcplus-overlay-anchored-21/functions/0x1f050-asm.json",
       "evidence_id": "ev_3343401c1e6f056fc6c94618eee27ef21ddc84522dcda8103ece4f49da1ef7b3"
     },
@@ -133,6 +133,6 @@
   "limitations": [
     "Exact fragments preserve original behavior; OMF-only fallthrough jumps expose explicit diagnostic checkpoints.",
     "The standalone host is a bounded memory UART/time/UI fixture, not a production transfer implementation.",
-    "Continued session, file flush/close, batch metadata application and original UI/cancellation event consumption are not implemented."
+    "Continued session, file flush/close, batch metadata application and original UI/nonlocal cancellation consumption are not implemented."
   ]
 }

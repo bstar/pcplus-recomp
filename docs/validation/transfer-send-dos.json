@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "binary_sha256": "437f069804ac8b6eeff6307944286ed7c4db3d8f4761b2b90873c6ab52014a75",
+  "scope": "Actual source-only DOS exact sender with modeled UART/time/UI: checksum frame header/sequence/padding/trailer, accepted ACK, file-close fixture, EOT/ACK and counters. No live UART/files/session."
+}
