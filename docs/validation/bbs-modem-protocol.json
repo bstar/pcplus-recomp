@@ -24,9 +24,13 @@
     {
       "case": "selected-baud-in-modem-CONNECT-and-Telnet-TSPEED",
       "passed": true
+    },
+    {
+      "case": "explicit30ms-buffer-still-awaits-DOS-CPR-and-preserves-binary-Telnet",
+      "passed": true
     }
   ],
-  "modem_source_sha256": "a66008cc15b580ae194d56e5a553a450d19d399867b2369a9dd9fddfcd9e47e3",
+  "modem_source_sha256": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
   "references": [
     "https://www.rfc-editor.org/rfc/rfc854",
     "https://www.rfc-editor.org/rfc/rfc1091",

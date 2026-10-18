@@ -245,3 +245,14 @@ wire checks, including abort. ENiGMA enters the stock editor and emits all eight
 sequences but still fails Home/Insert behavior. It closes unsaved and the server
 records no post. Both preserve the synthetic PRM and restore hardware. The
 separate successful snapshot/capture tests do not make ENiGMA editing pass.
+
+## Explicit modem-buffering experiment
+
+The same fd68875e DOS binary now passes the ENiGMA Home/Insert checks when the
+lab modem explicitly groups raw serial bytes for up to30ms. An immediate control
+reproduces both failures. Both runs transmit all eight expected key sequences,
+restore sampled hardware, preserve the PRM and close without saving a post.
+This is separate evidence, not a replacement for the stock immediate aggregate.
+See [experiment, commands and limitations](packetization.md) and
+`docs/validation/bbs-enigma-packetization.json`. Physical modem behavior and
+TCP receive boundaries remain unverified.

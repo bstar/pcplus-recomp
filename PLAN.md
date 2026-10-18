@@ -78,7 +78,11 @@ modem; Mystic also passes indexed-screen arrows and Escape return. The historica
 ENiGMA login-matrix arrows and message/file menus pass with the paced retry;
 the initial schedule's incomplete menu workflow is retained with its failed audit. Its real editor
 still fails Home/Insert despite correct outgoing bytes (docs/validation/bbs-matrix.json
-and bbs-editors.json). An
+and bbs-editors.json). An explicit byte-transparent modem packet-buffering
+experiment is tracked separately in `lab/bbs/packetization.md`: Home/Insert pass
+with30ms grouping and fail again in the immediate control on the same fd68875e
+DOS build. It does not replace the immediate-bridge failure or establish physical
+modem compatibility. An
 isolated maintained-source snapshot builds the identical interactive executable
 with no original executables or installation present. These tests do not establish
 physical modem compatibility or close the remaining application gates below.

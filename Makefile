@@ -95,6 +95,7 @@ test-terminal: terminal
 
 test-bbs-modem:
 	python3 lab/bbs/check_modem.py
+	python3 lab/bbs/check_packetization.py
 
 $(MODULES):
 	python3 standalone/build_$@.py

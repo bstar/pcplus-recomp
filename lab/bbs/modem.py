@@ -7,6 +7,30 @@ unchanged to the actual DOS terminal; this proxy never fabricates those replies.
 import asyncio,json,time
 from pathlib import Path
 IAC,SB,SE,WILL,WONT,DO,DONT=255,250,240,251,252,253,254
+
+async def serial_packets(reader,delay_ms=0):
+ """Optional byte-transparent experiment: first-byte deadline, at most256 bytes.
+
+ This groups writes, not TCP receive events. It never recognizes ANSI or alters
+ bytes. The default preserves immediate forwarding and its stock-server failures.
+ """
+ if not 0<=delay_ms<=100:raise ValueError('Packet delay must be0..100 milliseconds')
+ if not delay_ms:
+  while data:=await reader.read(4096):yield data
+  return
+ loop=asyncio.get_running_loop()
+ while first:=await reader.read(256):
+  packet=bytearray(first);deadline=loop.time()+delay_ms/1000;eof=False
+  while len(packet)<256:
+   remaining=deadline-loop.time()
+   if remaining<=0:break
+   try:part=await asyncio.wait_for(reader.read(256-len(packet)),remaining)
+   except asyncio.TimeoutError:break
+   if not part:eof=True;break
+   packet.extend(part)
+  yield bytes(packet)
+  if eof:return
+
 class Telnet:
  def __init__(self,baud=38400):
   self.baud=baud;self.pending=bytearray();self.local=set();self.remote=set();self.refused_local=set();self.refused_remote=set();self.events=[]
@@ -57,8 +81,11 @@ class Telnet:
  def encode(data):return data.replace(b'\xff',b'\xff\xff')
 
 class Modem:
- def __init__(self,host,port,output,*,soft=False,baud=38400,raw=False):
+ def __init__(self,host,port,output,*,soft=False,baud=38400,raw=False,packet_delay_ms=0):
   assert host in ('127.0.0.1','localhost','::1'),'Lab endpoints must be loopback'
+  if not 0<=packet_delay_ms<=100:raise ValueError('Packet delay must be0..100 milliseconds')
+  if soft and packet_delay_ms:raise ValueError('Buffering experiment requires NONE/HARD; software flow remains immediate')
+  self.packet_delay_ms=packet_delay_ms
   self.host,self.port,self.output=host,port,Path(output);self.soft,self.baud,self.raw=soft,baud,raw
   self.output.mkdir(parents=True,exist_ok=True);self.ready=asyncio.Event();self.done=asyncio.Event();self.events=[];self.codec=Telnet(baud)
   self.display=bytearray();self.keyboard=bytearray();self.wire_in=bytearray();self.wire_out=bytearray();self.serial_out=bytearray()
@@ -68,7 +95,7 @@ class Modem:
   if self.connected:writer.close();return
   self.connected=True;self.event('serial-connected');self.ready.set();line=bytearray();up_reader=up_writer=None;task=None
   try:
-   while data:=await reader.read(4096):
+   async for data in serial_packets(reader,self.packet_delay_ms):
     self.keyboard.extend(data)
     if up_writer is None:
      for value in data:
@@ -93,6 +120,7 @@ class Modem:
       else:forward.append(value)
      if forward:
       packet=bytes(forward) if self.raw else self.codec.encode(bytes(forward))
+      if self.packet_delay_ms:self.event('buffered-serial-write',wire_offset=len(self.wire_out),wire_bytes=len(packet),serial_bytes=len(forward))
       self.wire_out.extend(packet);up_writer.write(packet);await up_writer.drain()
    self.event('serial-eof')
   except (OSError,ConnectionError,asyncio.IncompleteReadError) as error:self.event('error',message=str(error))
@@ -114,4 +142,4 @@ class Modem:
  def save(self):
   for name,data in [('bbs-wire.bin',self.wire_in),('bbs-sent.bin',self.wire_out),('display.bin',self.display),('serial-received.bin',self.keyboard),('serial-sent.bin',self.serial_out)]:
    (self.output/name).write_bytes(data)
-  (self.output/'modem.json').write_text(json.dumps({'events':self.events,'telnet':self.codec.events,'flow_mode':'software' if self.soft else 'none','raw':self.raw,'baud':self.baud,'limitations':['Test modem model, not physical Wi-Fi modem firmware.','Telnet option replies handled by modem; all ANSI replies come from actual DOS executable.','ATD connects only configured loopback test BBS.']},indent=2)+'\n')
+  (self.output/'modem.json').write_text(json.dumps({'events':self.events,'telnet':self.codec.events,'flow_mode':'software' if self.soft else 'none','raw':self.raw,'baud':self.baud,'packet_delay_ms':self.packet_delay_ms,'packet_limit_bytes':256 if self.packet_delay_ms else None,'limitations':['Test modem model, not physical Wi-Fi modem firmware.','Telnet option replies handled by modem; all ANSI replies come from actual DOS executable.','ATD connects only configured loopback test BBS.','Optional buffering groups serial bytes without parsing them; TCP receive boundaries remain uncontrolled.']},indent=2)+'\n')

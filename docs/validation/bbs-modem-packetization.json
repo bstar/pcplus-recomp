@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "cases": [
+    "all-byte-binary-preservation-and256-byte-bound",
+    "default-first-byte-immediate-without-EOF",
+    "fragmented-escape-grouped-and-lone-escape-flushed-at-EOF",
+    "standalone-Escape-released-at-deadline-with-connection-open",
+    "continuous-trickle-first-byte-deadline-prevents-unbounded-delay",
+    "invalid-delay-and-software-flow-rejected"
+  ],
+  "modem_source_sha256": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+  "scope": "Unit fixtures establish byte preservation, immediate default, bounded packet size and first-byte timeout. They do not establish TCP receive boundaries, actual BBS or physical modem behavior."
+}

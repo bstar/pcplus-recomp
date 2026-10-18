@@ -60,7 +60,10 @@ completed runs restore sampled IRQ/UART/PIC state and preserve synthetic PRMs.
 
 The stock ENiGMA decoder and immediate modem model remain unchanged. An
 independent complete-versus-split escape probe reproduces the server's handling
-of TCP chunks without partial escape state. Physical modem buffering/timing and remaining application features still
+of TCP chunks without partial escape state. An opt-in, byte-transparent
+[serial packet buffering experiment](packetization.md) now tests this boundary
+separately; the immediate default and its failed editor evidence remain intact.
+Physical modem buffering/timing and remaining application features still
 require separate testing. Live XMODEM receives and ordinary uploads now have independent owned-peer
 DOS tests (`docs/TRANSFER_INTEGRATION.md`, `docs/LIVE_UPLOAD.md`); transfers against these BBS servers
 now also pass actual DOS XMODEM-1K/CRC upload/download tests on Synchronet and

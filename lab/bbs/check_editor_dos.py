@@ -34,6 +34,8 @@ def audit(name,label,expect_page_down=True,disconnect=False):
    page_keys_report_document_boundaries=bool(re.search(b'T'+b'(?:'+csi+b')*'+b'\x07'+b'(?:'+csi+b')*'+b'\x07',display)),
    ctrl_y_delete_line_response=b'\x1b[M' in display and 'unsupported terminal' not in clean.lower())
  audit={'passed':all(checks.values()),'checks':checks,'observed_key_wire':observed,'binary_sha256':result['binary_sha256'],'serial':result['serial'],'authority':authority,'scope':'Actual loopback stock editor draft and captured DOS keyboard wire. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim.','exit_mode':'close_unsaved_connection' if disconnect else 'editor_discard_or_abort','unexercised_keys':[] if expect_page_down else ['page_down (invalid ADDKEY pgdn alias; rerun with pgdown)']}
+ audit['modem_packet_delay_ms']=result.get('modem_packet_delay_ms',0)
+ if audit['modem_packet_delay_ms']:audit['scope']+=' Explicit modem buffering experiment; does not replace immediate-bridge failures or prove physical firmware compatibility.'
  (out/'semantic-audit.json').write_text(json.dumps(audit,indent=2)+'\n');print(json.dumps(audit,indent=2));return audit['passed']
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('name',choices=['enigma','synchronet']);p.add_argument('--label',required=True);p.add_argument('--page-down-not-exercised',action='store_true');p.add_argument('--disconnect-unsaved',action='store_true');a=p.parse_args();raise SystemExit(0 if audit(a.name,a.label,not a.page_down_not_exercised,a.disconnect_unsaved) else 1)

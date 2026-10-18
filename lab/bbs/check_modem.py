@@ -17,7 +17,7 @@ def aggregate(parts):
  assert not codec.pending,'Complete input left buffered bytes'
  return bytes(display),bytes(reply),codec
 
-async def socket_passthrough(baud=38400):
+async def socket_passthrough(baud=38400,packet_delay_ms=0):
  # This peer is explicitly a protocol unit fixture, never a claimed vendor BBS.
  no_answer=asyncio.Event();peer_done=asyncio.Future()
  query=b'\x1b[6n';answer=b'\x1b[4;5R'
@@ -38,7 +38,7 @@ async def socket_passthrough(baud=38400):
    if not peer_done.done():peer_done.set_exception(error)
   finally:writer.close();await writer.wait_closed()
  bbs=await asyncio.start_server(peer,'127.0.0.1',0)
- modem=Modem('127.0.0.1',bbs.sockets[0].getsockname()[1],OUT/f'socket-{baud}',soft=False,baud=baud)
+ modem=Modem('127.0.0.1',bbs.sockets[0].getsockname()[1],OUT/f'socket-{baud}-packet{packet_delay_ms}',soft=False,baud=baud,packet_delay_ms=packet_delay_ms)
  serial=await asyncio.start_server(modem.accept,'127.0.0.1',0)
  reader,writer=await asyncio.open_connection('127.0.0.1',serial.sockets[0].getsockname()[1])
  try:
@@ -115,6 +115,7 @@ def main():
   assert codec.feed(b'\xff\xfa\x20\x01\xff\xf0')==(b'',b'\xff\xfa\x20\x0019200,19200\xff\xf0')
   asyncio.run(socket_passthrough(19200))
  check('selected-baud-in-modem-CONNECT-and-Telnet-TSPEED',baud)
+ check('explicit30ms-buffer-still-awaits-DOS-CPR-and-preserves-binary-Telnet',lambda:asyncio.run(socket_passthrough(19200,30)))
  result={'passed':True,'cases':cases,'modem_source_sha256':hashlib.sha256((ROOT/'lab/bbs/modem.py').read_bytes()).hexdigest(),
   'references':['https://www.rfc-editor.org/rfc/rfc854','https://www.rfc-editor.org/rfc/rfc1091','https://www.rfc-editor.org/rfc/rfc1073'],
   'scope':'Protocol unit checks and isolated socket fixture only; actual vendor BBS/DOS compatibility evidence is separate. ANSI requests/replies are not fabricated by the modem.'}
