@@ -87,9 +87,33 @@ See [connection controller](../../docs/CONNECTION.md) for policy and boundaries.
 ## Native directory regression
 
 `--directory-fixture --directory-browser --entry 3` launches the native
-read-only chooser with no `/N` or `/D`, then selects entry3 using Down/Down/Enter.
+chooser with no `/N` or `/D`, then selects entry3 using Down/Down/Enter.
 The synthetic PRM uses COM1/38400 while that record selects COM2/19200. Current
 primary matrix cases prove actual configured ATZ/ATD output and subsequent
-message/file navigation on all three local servers. Both input-file hashes and
-independent hardware snapshots remain unchanged. `--directory-fixture` without
+message/file navigation on all three local servers. The PRM and independent
+hardware snapshots remain unchanged. On exit, successful-call accounting changes
+only the selected record's date/count bytes; the harness verifies the other
+23,039 directory bytes exactly. `--directory-fixture` without
 `--directory-browser` instead uses explicit `/N` selection.
+
+The latest `directory-accounting` runs use the same executable, SHA-256
+`1ddb64bdba5e94b1522cc51898eb8e6a4a4d77256d76a6c01dac287cfa9a9964`,
+on all three servers. Synchronet verifies file-menu return and an empty message
+read; Mystic verifies indexed file/message screens with Up/Down and Escape;
+ENiGMA verifies Main → Messages → Main → Files against its authoritative session
+log, along with actual DOS device/cursor replies and arrow bytes. Historical
+results in the matrix retain their original executable hashes.
+
+To audit an existing run through the pinned toolchain:
+
+```sh
+./tools/dev --command python3 lab/bbs/synchronet.py check-dos --label directory-accounting
+./tools/dev --command python3 lab/bbs/check_enigma_dos.py --label directory-accounting
+./tools/dev --command python3 lab/bbs/mystic.py audit --label directory-accounting
+```
+
+For owned ENiGMA runs, `test_dos.py` records the server log's starting byte offset
+before DOS launches. The ENiGMA audit requires exactly one new server session,
+authentication, ordered menu transitions, real DOS replies and the final File
+Base screen. An extra concurrent login fails session isolation instead of being
+silently attributed to the test.

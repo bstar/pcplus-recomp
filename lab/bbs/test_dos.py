@@ -9,6 +9,7 @@ from test_terminal import SAMPLER
 from terminal_config_fixtures import image as config_image, RATES
 from modem_fixtures import fixture as modem_fixture
 from directory_fixtures import directory as directory_image,prm as directory_prm
+from directory_test_support import accounting_check
 
 async def run(args):
  binary=ROOT/'build/terminal/TERMINAL.EXE'
@@ -81,6 +82,9 @@ D:\\SNAP A
 exit
 '''
  (output/'dosbox.conf').write_text(config)
+ if args.name=='enigma' and args.port==23233:
+  server_log=ROOT/'build/bbs-lab/enigma/source/logs/enigma-bbs.log'
+  (output/'server-log-start.json').write_text(json.dumps({'byte_offset':server_log.stat().st_size})+'\n')
  start=time.monotonic()
  with (output/'dosbox.log').open('w') as log:
   process=await asyncio.create_subprocess_exec('dosbox-x','-fastlaunch','-nogui','-conf',str(output/'dosbox.conf'),cwd=output,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),stdout=log,stderr=log)
@@ -97,7 +101,7 @@ exit
  after=(output/'AFTER.BIN').read_bytes() if (output/'AFTER.BIN').exists() else b''
  checks={'dos_normal_exit':code==0 and (output/'PASS.TXT').exists(),'hardware_restored':len(before)==42 and before==after,'screen_captured':len(screen)==4000,'bbs_connected':any(e['kind']=='bbs-connected' for e in modem.events),'bbs_display_received':bool(modem.display)}
  if fixture is not None:checks['configuration_unchanged']=(output/'TEST.PRM').read_bytes()==fixture
- if directory_fixture is not None:checks['directory_unchanged']=(output/'TEST.DIR').read_bytes()==directory_fixture
+ if directory_fixture is not None:checks['directory_accounting_exact']=accounting_check(directory_fixture,(output/'TEST.DIR').read_bytes(),args.entry)
  checks['binary_unchanged_during_run']=hashlib.sha256(binary.read_bytes()).hexdigest()==digest
  result={'name':args.name,'label':args.label,'checks':checks,'passed':all(checks.values()),'seconds':round(time.monotonic()-start,3),'binary_sha256':digest,'keyboard':keys,'serial':{'com':args.com,'baud':args.baud,'line':'8N1','flow':args.flow,'hardware_scope':'DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.'},'scope':'Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.'}
  result['configuration']={'automatic_dial':automatic,'mode':'explicit synthetic partial PRM' if fixture is not None else 'CLI serial options','command':command,'sha256':hashlib.sha256(fixture).hexdigest() if fixture is not None else None,'directory_entry':args.entry if directory_fixture is not None else None,'directory_browser':args.directory_browser,'directory_sha256':hashlib.sha256(directory_fixture).hexdigest() if directory_fixture is not None else None}
