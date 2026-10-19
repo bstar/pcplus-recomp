@@ -738,3 +738,15 @@ current DOS/BBS workflows and explicitly retained earlier attempts. Window
 settings, adaptive original block sizing, auto-download, persisted receive
 resume, physical modem/line-loss timing, remaining protocols/emulations/UI,
 ASPECT, Host and all F01–F16 completion gates remain open.
+
+## Automatic ZMODEM reception: recognition prerequisite
+
+The original terminal trigger and Auto Download PRM word are now identified;
+see `docs/ZMODEM_AUTOSTART_NATIVE.md` for exact evidence, the saved download
+prefix and unresolved path-validation semantics. A separately maintained canonical hex invitation recognizer validates
+CRC16 before proposing ownership transfer and preserves rejected/incomplete
+bytes. It passes 6,510 independent host/8086 DOS vectors with a 22-byte DOS state
+and a byte-identical source-only diagnostic rebuild. See
+`docs/ZMODEM_AUTOSTART.md` and its validation ledger. It is not yet connected to
+terminal input, settings or destination selection. Actual automatic downloads,
+modern BBS workflows and all F01–F16 gates remain open.

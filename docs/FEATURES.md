@@ -193,3 +193,10 @@ watchdog; the engine separately bounds repeated rewinds. Paired counterexamples,
 DOS files/far callbacks and selected modern BBS flows are documented in
 [WINDOWED_ZMODEM.md](WINDOWED_ZMODEM.md). This advances F08 without closing
 any F01–F16 whole-application gate.
+
+The automatic-reception prerequisite recovers the original Auto Download trigger
+and separately tests a maintained CRC-valid canonical invitation recognizer.
+It preserves rejected/truncated bytes across 6,510 host and 8086 DOS vectors;
+[ZMODEM_AUTOSTART.md](ZMODEM_AUTOSTART.md) distinguishes recognition policy from
+original behavior and lists pending settings, ownership and BBS integration.
+Automatic reception is not enabled, and F08 remains open.

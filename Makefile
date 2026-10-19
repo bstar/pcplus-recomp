@@ -377,9 +377,14 @@ test: test-zmodem-wire
 test-zmodem-wire:
 	python3 standalone/check_zmodem_wire.py
 
+.PHONY: test-zmodem-autostart
+test: test-zmodem-autostart
+test-zmodem-autostart:
+	python3 standalone/check_zmodem_autostart.py
+
 .PHONY: test-zmodem
 test: test-zmodem
-test-zmodem: test-zmodem-wire
+test-zmodem: test-zmodem-wire test-zmodem-autostart
 	python3 standalone/check_zmodem_window.py
 	python3 standalone/check_zmodem.py
 	python3 standalone/test_zmodem_dos.py

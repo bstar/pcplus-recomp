@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "vectors": 6510,
+  "DOS_summary": "6510 vectors; state 22 bytes; PASS",
+  "isolated_source_build_byte_identical": true,
+  "vectors_sha256": "5e76615fb1eafd77fe00443e4d695b9209fcbe30476196b4275c3400dd21e098",
+  "binary_sha256": "4d3f3069f57d6e3bc4faad10ad8ba12c93f9d6ce67dcb35d60fa835310100c05",
+  "sources": {
+    "src/transfer/zmodem_autostart.c": "a232cdcbc084949d53c1634c9012aa16ec793a349eb47bd50b6c2b146178f7c0",
+    "src/transfer/zmodem_autostart.h": "fbace38b9a9e02971ca62109007ecdafd081ccb6327c4b0d6a9c025e21d7ff7d",
+    "standalone/zmodem_autostart_host.c": "f5c53d54e768c588e153fc3a08ee99e244895cca4e090224ecaef281e870153e",
+    "standalone/check_zmodem_autostart.py": "15629668c85bd22dab2e40328c740bab5a53cc42b58cf7bafaa09f3ff81d9141"
+  },
+  "scope": "Canonical hex ZRQINIT recognizer only; host and actual 8086 DOS byte conservation, CRC and bounded output. Not integrated with terminal, settings, file owners or BBS sessions."
+}
