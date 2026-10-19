@@ -26,20 +26,20 @@ Modern BBS interaction and independent source-only rebuilding remain required
 regressions across that work. Physical Wi-Fi modem testing is still outstanding.
 
 ASPECT now includes native WHEN/CWHEN matching and deferred handlers through
-the actual resident terminal renderer, with DOS/runtime and scoped modern BBS
-regressions. The host compiler emits eleven selected SET settings. Their225-byte
-native component and the corrected status script-label relocation are verified,
-but production SET remains limited to WHENCASE while native status services and
-session-setting adoption are integrated. See `docs/ASPECT_WHEN_RUNTIME.md` and
-`docs/ASPECT_SET_NATIVE.md`; complete scripting, keyboard/UI and recorder remain
-part of the full application goal.
-`docs/STATUS_MEMORY.md` records the status prerequisite: fixed redisplay prose
-and its row index now live outside DGROUP, increasing near headroom from48 to
-1,440 bytes while retaining the8KiB stack and checked DOS child-memory extents.
-`docs/STATUS_HELPERS.md` and `docs/STATUS_RENDERER.md` now cover the recovered
-status helpers, bounded formatter and full native body through checked code
-segment bridges. Nine full-renderer DOS cases and112 reproducible outputs pass;
-live state staging, the guarded STATUS operation and SET adoption remain next.
+the actual resident terminal renderer. Eleven SET setters and native
+FIND/FOUND/SWITCH/CASE run in DOS with checked temporary ownership. The runtime
+supports69 opcode slots;146 remain unsupported. Status staging and ASIOv4
+capability2 are live. See `docs/ASPECT_WHEN_RUNTIME.md`,
+`docs/ASPECT_SET_RUNTIME.md` and `docs/ASPECT_FIND_CASE_RUNTIME.md`.
+
+Serial BREAK work now includes249 exact native bytes, original compiler grammar
+for BREAK/SET BREAK/FETCH BREAK, and a linked maintained child transport owner
+with calibrated full-word timing and cancellation/error cleanup. This remains
+preparatory: opcode0D/SET09/FETCH37 production dispatch, parent duration inheritance
+and native notice/status integration are still open. The existing Alt-B parent
+owner remains a separate timing policy. `docs/ASPECT_BREAK_NATIVE.md` and
+`docs/ASPECT_BREAK_OWNER.md` record the evidence and remaining boundaries.
+Complete scripting, keyboard/UI and recorder remain part of the full goal.
 
 ZMODEM now has live Alt-R/Alt-S/F2 dispatch, CONFIG_CODE placement, ten verified
 far callbacks, checked source seek/skip, exact variable receive packets and

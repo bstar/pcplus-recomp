@@ -185,6 +185,8 @@ unsigned __cdecl aspect_serial_close(void)
  unsigned char __far *destination;
  unsigned long start,now;
  if(!aspect_serial_active)return aspect_serial_status;
+ /* Release owned BREAK before attempting the final flow-control drain. */
+ aspect_serial_break_release();
  /* Stop upstream before taking the child ISR down. Control flow bypasses
   * peer CTS/XOFF. Advisory36tick bound never repeats accepted data bytes. */
  if(uart_software_flow)uart_flow_pending=0x13;

@@ -31,6 +31,14 @@ unsigned __cdecl aspect_serial_unread(void);
 /* 0 accepted;1 flow/THRE busy;2 disabled/fatal. */
 unsigned __cdecl aspect_serial_try_write(unsigned byte);
 unsigned __cdecl aspect_serial_poll(void);
+/* Maintained BREAK owner. reserve holds data AND queued flow TX while draining;
+ * assert returns PENDING7 until actual LSR TEMT. Neither routine waits. A failed
+ * assert retains the reservation: caller MUST release on every exit. Foreign
+ * BREAK/DLAB is LINE8. release is idempotent, preserves current framing/IF and
+ * touches LCR only for our asserted pulse. Both close paths release first. */
+unsigned __cdecl aspect_serial_break_reserve(void);
+unsigned __cdecl aspect_serial_break_assert(void);
+unsigned __cdecl aspect_serial_break_release(void);
 /* Physical MSR DCD bit80; ffff if closed, with no port access. */
 unsigned __cdecl aspect_serial_carrier(void);
 unsigned long __cdecl aspect_serial_ticks(void);

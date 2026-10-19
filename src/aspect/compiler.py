@@ -32,7 +32,7 @@ SIZES = (2, 4, 8, 81)
 SET_BOOLEAN = {'display': 0x12, 'findcase': 0x23, 'switchcase': 0x44,
                'waitcase': 0x55, 'whencase': 0x56, 'keys': 0x29,
                'rxdata': 0x3B, 'msg_crlf': 0x2E}
-SET_INTEGER = {'pausechar': 0x30, 'txpace': 0x4C}
+SET_INTEGER = {'pausechar': 0x30, 'txpace': 0x4C, 'break': 0x09}
 OPS = {"+": 0x00, "-": 0xB5, "*": 0x7D, "/": 0x26, "%": 0x7B,
        "==": 0x32, "!=": 0x7F, "<": 0x6D, ">": 0x54,
        "<=": 0x68, ">=": 0x48}
@@ -427,6 +427,23 @@ class Compiler:
         else:
             self.error(f'unsupported SET setting {setting}')
 
+    def fetch_command(self, tokens):
+        # FETCH queries a setting; GET is an unrelated interactive input command.
+        # Other native FETCH families remain outside the maintained subset.
+        if len(tokens) < 3 or tokens[1] != 'break':
+            self.error('only FETCH BREAK is supported')
+        operands = tokens[3:] if tokens[2] == ',' else tokens[2:]
+        if not operands or operands[0] == '(':
+            self.error('FETCH BREAK requires an integer destination')
+        parser = Expression(operands, self.line)
+        node = parser.parse(7)
+        if parser.pos != len(parser.tokens):
+            self.error('unexpected FETCH BREAK operands')
+        kind, wire = self.lvalue(node)
+        if kind != 0:
+            self.error('FETCH BREAK requires an integer destination')
+        self.emit(0x37, 0x09, wire)
+
     def when_command(self, tokens):
         command = tokens[0]
         # Commas are separators in native compiler input. They cannot replace
@@ -482,6 +499,11 @@ class Compiler:
 
     def command(self, tokens):
         command = tokens[0]
+        if command == 'break' and len(tokens) != 1:
+            self.error('BREAK does not accept operands or punctuation')
+        if command == 'fetch':
+            self.fetch_command(tokens)
+            return
         if command == 'find':
             self.find_command(tokens)
             return

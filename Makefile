@@ -787,3 +787,18 @@ test-aspect-script-directory-dos:
 .PHONY: test-aspect-txpace-linked
 test-aspect-txpace-linked: aspect-runner
 	python3 standalone/check_aspect_txpace_linked.py
+
+# Recovered BREAK units remain separate from the maintained UART owner and UI.
+.PHONY: aspect-break-native test-aspect-break-native test-aspect-break-compiler test-aspect-break-owner test-aspect-break-linked
+all: aspect-break-native
+test: test-aspect-break-native test-aspect-break-compiler test-aspect-break-owner
+aspect-break-native:
+	python3 standalone/build_aspect_break_native.py
+test-aspect-break-native: aspect-break-native
+	python3 standalone/check_aspect_break_native.py
+test-aspect-break-compiler:
+	python3 standalone/test_aspect_break_compiler.py
+test-aspect-break-owner: aspect-serial
+	python3 standalone/check_aspect_break_owner.py
+test-aspect-break-linked: aspect-runner
+	python3 standalone/check_aspect_break_linked.py

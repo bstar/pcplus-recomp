@@ -63,6 +63,11 @@ _aspect_serial_backend_open:
  mov [serial_vector],ax
  ; Establish complete baseline before enabling any child interrupt. Preserve
  ; DTR exactly: this explicit lease requires an already asserted connection.
+ ; Reject another owner's BREAK/DLAB before the native saver changes LCR.
+ mov dx,[uart_port_lcr]
+ in al,dx
+ test al,0xc0
+ jnz .line
  call uart_save_hardware_state
  test byte [uart_saved_mcr],1
  jz .restore_reject
@@ -156,6 +161,8 @@ _aspect_serial_backend_open:
 .restore_reject:
  call uart_restore_hardware_state
  mov ax,4
+ jmp .done
+.line: mov ax,8
  jmp .done
 .busy: mov ax,2
  jmp .done
@@ -268,6 +275,98 @@ _aspect_serial_try_write:
 .bad: mov ax,2
 .done: pop bp
  ret
+; Maintained BREAK lease:0 idle,1 TX held/draining,2 asserted. Unlike native
+;0401, admission never clears a foreign BREAK/DLAB and waits for TEMT before
+;assertion. All state/LCR transitions are atomic with the actual IRQ/flow API.
+;No delay, polling loop, DOS call, PIC or MCR write occurs under CLI.
+;Nearcdecl DS=SS; AX typed status, DX volatile; all other registers/IF retained.
+global _aspect_serial_break_reserve,_aspect_serial_break_assert
+ global _aspect_serial_break_release
+_aspect_serial_break_reserve:
+ pushf
+ cli
+ mov ax,4
+ cmp word [_aspect_serial_active],1
+ jne .done
+ cmp word [_aspect_serial_status],0
+ jne .status
+ cmp word [serial_break_state],0
+ jne .busy
+ cmp word [uart_break_hold],0
+ jne .busy
+ mov dx,[uart_port_lcr]
+ in al,dx
+ test al,0xc0
+ jnz .line
+ mov word [uart_break_hold],1
+ mov word [serial_break_state],1
+ xor ax,ax
+ jmp .done
+.status:
+ mov ax,[_aspect_serial_status]
+ jmp .done
+.busy: mov ax,2
+ jmp .done
+.line: mov ax,8
+.done:
+ popf
+ ret
+_aspect_serial_break_assert:
+ pushf
+ cli
+ mov ax,4
+ cmp word [_aspect_serial_active],1
+ jne .done
+ cmp word [serial_break_state],1
+ jne .done
+ cmp word [uart_break_hold],1
+ jne .done
+ cmp word [_aspect_serial_status],0
+ jne .status
+ mov dx,[uart_port_lcr]
+ in al,dx
+ test al,0xc0
+ jnz .line
+ mov dx,[uart_port_lsr]
+ in al,dx
+ test al,0x40 ; TEMT requires BOTH holding and shift registers empty.
+ jz .pending
+ mov dx,[uart_port_lcr]
+ in al,dx
+ or al,0x40
+ mov word [serial_break_state],2
+ out dx,al
+ xor ax,ax
+ jmp .done
+.status:
+ mov ax,[_aspect_serial_status]
+ jmp .done
+.line: mov ax,8
+ jmp .done
+.pending: mov ax,7
+.done:
+ popf
+ ret
+_aspect_serial_break_release:
+ pushf
+ cli
+ cmp word [serial_break_state],0
+ je .done
+ cmp word [serial_break_state],2
+ jne .held
+ cmp word [_aspect_serial_active],1
+ jne .held
+ mov dx,[uart_port_lcr]
+ in al,dx
+ and al,0xbf ; preserve current framing and DLAB, clear ONLY owned BREAK.
+ out dx,al
+.held:
+ mov word [serial_break_state],0
+ mov word [uart_break_hold],0
+.done:
+ xor ax,ax
+ popf
+ ret
 global _aspect_serial_tx_empty
 _aspect_serial_tx_empty:
  mov dx,[uart_port_lsr]
@@ -312,6 +411,7 @@ _aspect_serial_backend_close:
  mov word [serial_unread_valid],0
  cmp word [_aspect_serial_active],1
  jne .done
+ call _aspect_serial_break_release
  ; Never spin or consume RX to hide a lifecycle failure. Parent handback is a
  ; separate contract; a caller closing with unread input receives explicit6.
  cmp word [_aspect_serial_status],0
@@ -379,6 +479,7 @@ SEGMENT _DATA public class=DATA use16
 w _aspect_serial_active,0
 w _aspect_serial_status,0
 w _aspect_serial_handoff_enabled,0
+w serial_break_state,0
 w serial_unread_valid,0
 w serial_unread_slot,0
 w serial_vector,12

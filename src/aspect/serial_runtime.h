@@ -10,6 +10,10 @@ unsigned runtime_serial_read_raw(void);
 unsigned runtime_serial_receive(unsigned delayed);
 unsigned runtime_serial_character_delay(unsigned delay);
 unsigned runtime_serial_prepare_pacing(void);
+/* Low-level transport action only. Caller owns native command policy/status UI
+ * and duration inheritance. Full raw16-bit units accepted, split into bounded
+ * calibrated chunks; every error/cancel releases our UART BREAK reservation. */
+unsigned runtime_serial_break(unsigned units);
 unsigned runtime_serial_pause(unsigned ticks);
 unsigned runtime_serial_wait_second(void);
 extern unsigned runtime_serial_error;

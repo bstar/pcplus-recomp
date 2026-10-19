@@ -1,0 +1,601 @@
+{
+  "schema": "aspect-break-compiler-v1",
+  "source_encoding": "cp437",
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "provenance": [
+    {
+      "report": "analysis/aspect-break/compiler-01/report.json",
+      "report_sha256": "c189ff76bab8774a19bae1503ab745a2917a9cc5fd33c9addad7f466914e1d3c",
+      "probe": "compiler_probe.py",
+      "probe_sha256": "69d64ef7df7e3f87cf26bb262241494096ef2407e8087751a5478f02f8fcc3c8"
+    },
+    {
+      "report": "analysis/aspect-break/compiler-02/report.json",
+      "report_sha256": "cb3f240d4afb1e92c08329e604af11de61e0640bb2b9c70d470c1521286bc6b1",
+      "probe": "compiler_probe02.py",
+      "probe_sha256": "90e51c754d5c82718fdb0113feda464b333bbd2b4755d3aac78fd2c2ed40abc3"
+    }
+  ],
+  "freezer_sha256": "2ce30a586d8317c3b806089065defa5a649fb919eee382871be79d6e907ba8c2",
+  "vectors": [
+    {
+      "name": "BK000",
+      "label": "BREAK_NONE",
+      "source": "integer duration\r\nproc main\r\nbreak\r\nendproc\r\n",
+      "source_sha256": "21d194e4cd6bc1ebfef630a6fb632355304a55c17d2fb3632f5504420beb2235",
+      "hex": "00 cf 0d 94",
+      "asx_sha256": "d98d0229c5b5d036b6da9895356717879061643c25cc7fe5079a9b102286fa26"
+    },
+    {
+      "name": "BK004",
+      "label": "SET_DEFAULT",
+      "source": "integer duration\r\nproc main\r\nset break 350\r\nendproc\r\n",
+      "source_sha256": "2a09784ce6b036159693dd3097c7a13add1033274d62c154e2174462ff41a42b",
+      "hex": "00 cf 9e 09 ab 5e 01 94",
+      "asx_sha256": "9b47c5dd1df834d2e1a57d51856364d6ec021a40864ade6d994bf007d29e6664"
+    },
+    {
+      "name": "BK005",
+      "label": "SET_ZERO",
+      "source": "integer duration\r\nproc main\r\nset break 0\r\nendproc\r\n",
+      "source_sha256": "9a93a3b7cfef5d24ec33bfe7a15e00ade6b852b92a0dc5e70ea2e95eb84cac14",
+      "hex": "00 cf 9e 09 b5 00 94",
+      "asx_sha256": "3390bc4216466bf0dd957bfa20da0843771c7b7c10244d69fd372cdca1fda194"
+    },
+    {
+      "name": "BK006",
+      "label": "SET_MAX",
+      "source": "integer duration\r\nproc main\r\nset break 32767\r\nendproc\r\n",
+      "source_sha256": "998cd6d5ab59c8f53b3b0b88014ab6d7a3f0a1ccb55622e675c394ad1c353d86",
+      "hex": "00 cf 9e 09 ab ff 7f 94",
+      "asx_sha256": "95d9fd012c790177c7b9ddcf6da8e310a1c929ceabfefbb7ce9ab7eb6afa96b2"
+    },
+    {
+      "name": "BK009",
+      "label": "SET_NEG",
+      "source": "integer duration\r\nproc main\r\nset break -1\r\nendproc\r\n",
+      "source_sha256": "b25c80f4d2f0dd0413bf8ac25146da96328782f595e0f955411793cf1bd80bfb",
+      "hex": "00 cf 9e 09 ab ff ff 94",
+      "asx_sha256": "70148dd8fef6d5c66875a67fe8bb7824761332ca05552cd23846338b0ce3befc"
+    },
+    {
+      "name": "BK010",
+      "label": "SET_MIN",
+      "source": "integer duration\r\nproc main\r\nset break -32768\r\nendproc\r\n",
+      "source_sha256": "d9c2b4379a94b78f1016c0336a641007b8b8c698efcdb6768ab37b83e49a628e",
+      "hex": "00 cf 9e 09 ab 00 80 94",
+      "asx_sha256": "b4ffcdd16e736ea0ada2f8f034ea6a9cec4ce4642f29729d311a088a462f30ab"
+    },
+    {
+      "name": "BK015",
+      "label": "SET_WORD",
+      "source": "integer duration\r\nproc main\r\nset break duration\r\nendproc\r\n",
+      "source_sha256": "a81e4fc8c4454d1799642d2ee176e08a22c620395702f9bfb04ea7096122d615",
+      "hex": "00 cf 9e 09 8d 00 94",
+      "asx_sha256": "6ca861af75a481d4093bd6c01d40629967e5126282c893cae97062b0d77aed0c"
+    },
+    {
+      "name": "BK020",
+      "label": "SET_COMMA",
+      "source": "integer duration\r\nproc main\r\nset break ,350\r\nendproc\r\n",
+      "source_sha256": "256cd2dcb3b6cf67a1e4e22b3ddef207032cc70d97d8a78314885e6451cba0ee",
+      "hex": "00 cf 9e 09 ab 5e 01 94",
+      "asx_sha256": "9b47c5dd1df834d2e1a57d51856364d6ec021a40864ade6d994bf007d29e6664"
+    },
+    {
+      "name": "BK040",
+      "label": "SET_LOCAL",
+      "source": "integer duration\r\nproc main\r\ninteger delay_units=7\r\nset break delay_units\r\nendproc\r\n",
+      "source_sha256": "5391422fdee639a695a27af603c47646581f18b301a0f834634976560ab1488f",
+      "hex": "00 d2 02 00 5b 00 a1 00 00 ab 07 00 cf 9e 09 a1 00 00 95",
+      "asx_sha256": "49caab8230d9e0e605b77e813788e71243ea2d5fe837ca0060794bd117a917af"
+    },
+    {
+      "name": "BK041",
+      "label": "SET_PARAM",
+      "source": "\r\nproc main\r\ncall worker with 7\r\nendproc\r\nproc worker\r\nintparm delay_units\r\nset break delay_units\r\nendproc\r\n",
+      "source_sha256": "ca6aaf2e3220ae3d6e576bab98f855737034e4937520fd4ccce9330e55dd5c61",
+      "hex": "00 cf d0 cc b5 07 c8 0f 00 00 00 d2 fe ff 94 cf 9e 09 97 08 00 95",
+      "asx_sha256": "fd2eaaee2dce7bd58cf1eec739933fbb6948ce04838d90259b64ed3ca082ded1"
+    },
+    {
+      "name": "BF000",
+      "label": "FETCH_WORD",
+      "source": "integer duration\r\nproc main\r\nfetch break duration\r\nendproc\r\n",
+      "source_sha256": "7309a6892c2ece3778004b3c0300d9d16b2b99ccd5a17fc471e1405e5da651fb",
+      "hex": "00 cf 37 09 8d 00 94",
+      "asx_sha256": "7ce37fefcce8625e7e4e3825cd3f58cf77ae1eafc541b5a944f54dc6120112e8"
+    },
+    {
+      "name": "BF005",
+      "label": "FETCH_COMMA",
+      "source": "integer duration\r\nproc main\r\nfetch break ,duration\r\nendproc\r\n",
+      "source_sha256": "b423ff506da1c010bf1832e0757dc420c4323ef10f73316373090a9fd7ee3441",
+      "hex": "00 cf 37 09 8d 00 94",
+      "asx_sha256": "7ce37fefcce8625e7e4e3825cd3f58cf77ae1eafc541b5a944f54dc6120112e8"
+    },
+    {
+      "name": "BF013",
+      "label": "ROUNDTRIP_FETCH",
+      "source": "integer duration\r\nproc main\r\nfetch break duration\r\nset break 7\r\nbreak\r\nset break duration\r\nendproc\r\n",
+      "source_sha256": "50004bb9c222de308ee6399fe83362102b1adf6e7ed7148711f74cc4d56aee8b",
+      "hex": "00 cf 37 09 8d 00 9e 09 b5 07 0d 9e 09 8d 00 94",
+      "asx_sha256": "fc36c03145c5829ed8e68fef891d255a652130ae9cb0523fabf927b7314ffd8e"
+    },
+    {
+      "name": "BF017",
+      "label": "FETCH_LOCAL",
+      "source": "integer duration\r\nproc main\r\ninteger delay_units\r\nfetch break delay_units\r\nendproc\r\n",
+      "source_sha256": "b448a210c90684b81073e1b2586e7a166b9b92a0a2af6bf22894d2bd5ad5240b",
+      "hex": "00 d2 02 00 cf 37 09 a1 00 00 95",
+      "asx_sha256": "01663066e316bca82e438c097ff12a056c49eb96c572934e77f4363cbeb70984"
+    },
+    {
+      "name": "BF018",
+      "label": "FETCH_PARAM",
+      "source": "\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm delay_units\r\nfetch break delay_units\r\nendproc\r\n",
+      "source_sha256": "961b0a6cc683936f8b16be493cae6160058e6e6023111d2ffe296f11a8a67fcd",
+      "hex": "00 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 37 09 97 08 00 95",
+      "asx_sha256": "61f21f488a3a861515b60976d94bea7782ee4eff937c49af3f8426355376bd83"
+    }
+  ],
+  "rejected": [
+    {
+      "name": "BK001",
+      "label": "BREAK_ARG",
+      "source": "integer duration\r\nproc main\r\nbreak 7\r\nendproc\r\n",
+      "source_sha256": "8d737b17f7629a2cc0f7e26a6cc4624530cf623148ce1d862af39918d8f498cd",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> 7"
+      ]
+    },
+    {
+      "name": "BK002",
+      "label": "BREAK_STR",
+      "source": "integer duration\r\nproc main\r\nbreak \"7\"\r\nendproc\r\n",
+      "source_sha256": "8677bb584017a1205b2dc63e0bb43ced3f6853b0c63035ef9020ff63d736616a",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> 7"
+      ]
+    },
+    {
+      "name": "BK003",
+      "label": "BREAK_COMMA",
+      "source": "integer duration\r\nproc main\r\nbreak,\r\nendproc\r\n",
+      "source_sha256": "7cbb896f594ddac830988c256c7fdcf970cf1ea602431f26fa7a3040880c84e9",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "BK007",
+      "label": "SET_WIDE",
+      "source": "integer duration\r\nproc main\r\nset break 32768\r\nendproc\r\n",
+      "source_sha256": "379b9513a646159cb5ed01f0d54fad99950c9cca62e8fa2e7c047768400b158f",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 32768"
+      ]
+    },
+    {
+      "name": "BK008",
+      "label": "SET_UWORD",
+      "source": "integer duration\r\nproc main\r\nset break 65535\r\nendproc\r\n",
+      "source_sha256": "de48c4c4530b97d24e6f83704bd61ecd22dbc7e7ad8e64d82469173d4f1acb0d",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 65535"
+      ]
+    },
+    {
+      "name": "BK011",
+      "label": "SET_LONG",
+      "source": "integer duration\r\nproc main\r\nset break 350L\r\nendproc\r\n",
+      "source_sha256": "297c13d676f37d311d5d9e3a056382cf10370e0fabb8d9668f44bc3704c57011",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 350L"
+      ]
+    },
+    {
+      "name": "BK012",
+      "label": "SET_FLOAT",
+      "source": "integer duration\r\nproc main\r\nset break 350.0\r\nendproc\r\n",
+      "source_sha256": "c89ff6130b28fd0e022a8361542f9d7c7cb00ac024380c565e3412f9d3fc00e2",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 350.0"
+      ]
+    },
+    {
+      "name": "BK013",
+      "label": "SET_STR",
+      "source": "integer duration\r\nproc main\r\nset break \"350\"\r\nendproc\r\n",
+      "source_sha256": "721094112d6225c05cb7e1841367e63d10e2b57f8174b3ad6d2c9d25b70cd3c0",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 350"
+      ]
+    },
+    {
+      "name": "BK014",
+      "label": "SET_BOOL",
+      "source": "integer duration\r\nproc main\r\nset break ON\r\nendproc\r\n",
+      "source_sha256": "353d9a3683c3ddb92260dc8833c99c1a20902cafe62ff9c17a7b6cd4b682f584",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> ON"
+      ]
+    },
+    {
+      "name": "BK016",
+      "label": "SET_MISSING",
+      "source": "integer duration\r\nproc main\r\nset break\r\nendproc\r\n",
+      "source_sha256": "8f9051f0424b3a69bd4dd0319f573ebc24af5978e27094102bb3fbbbe8f70499",
+      "errors": [
+        "Error C006 Line 3: Missing token"
+      ]
+    },
+    {
+      "name": "BK017",
+      "label": "SET_WRONGKEY",
+      "source": "integer duration\r\nproc main\r\nset breaklen 350\r\nendproc\r\n",
+      "source_sha256": "8351758e43bff2165d32a628fc34abc5a918a45f8a81e79389d8a6072699b1f6",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> BREAKLEN",
+        "Error C002 Line 3: Unexpected token ==> 350"
+      ]
+    },
+    {
+      "name": "BK018",
+      "label": "SET_EXPR",
+      "source": "integer duration\r\nproc main\r\nset break 349+1\r\nendproc\r\n",
+      "source_sha256": "06caff2a2af2c5272f639e9b9398fd44aef9d27f3064cbae367099bac2e4d930",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "BK019",
+      "label": "SET_PAREN",
+      "source": "integer duration\r\nproc main\r\nset break (350)\r\nendproc\r\n",
+      "source_sha256": "f52b356574b77faf14cfd353d9a1a820886180772c00d90a57f1254218aefbfb",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> (",
+        "Error C002 Line 3: Unexpected token ==> 350",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "BK021",
+      "label": "SET_TRAILING",
+      "source": "integer duration\r\nproc main\r\nset break 350,\r\nendproc\r\n",
+      "source_sha256": "a9b4760c501d2420a2eff3b596703f9ec84476168d57beaf166b68692e505eb6",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "BK022",
+      "label": "GET_WORD",
+      "source": "integer duration\r\nproc main\r\nget break duration\r\nendproc\r\n",
+      "source_sha256": "48487d38890911c1a2d9247f30849b12b73462131aa13d3d615e0a6cfc584410",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> BREAK"
+      ]
+    },
+    {
+      "name": "BK023",
+      "label": "GET_MISSING",
+      "source": "integer duration\r\nproc main\r\nget break\r\nendproc\r\n",
+      "source_sha256": "554809d4e408493ae687bc8f645dbc0a3436e1fa134b2672a9709aa2a86e94aa",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> BREAK"
+      ]
+    },
+    {
+      "name": "BK024",
+      "label": "GET_REVERSE",
+      "source": "integer duration\r\nproc main\r\nget duration break\r\nendproc\r\n",
+      "source_sha256": "72ba51fa0085c39f50b11a245d458a53b11ae7af7f523a6c2c51ce81ef6918ee",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> BREAK"
+      ]
+    },
+    {
+      "name": "BK025",
+      "label": "GET_CONST",
+      "source": "integer duration\r\nproc main\r\nget break 1\r\nendproc\r\n",
+      "source_sha256": "861b4da21a4ee4eab119d40c2099dbdacec543acd86115da8d23a54342572a3b",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> BREAK"
+      ]
+    },
+    {
+      "name": "BK026",
+      "label": "GET_BUILTIN",
+      "source": "integer duration\r\nproc main\r\nget break failure\r\nendproc\r\n",
+      "source_sha256": "9fe18da4533b0ba7dac0d49808084179d9b968103b3e62ead8960d5523e245d6",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> BREAK"
+      ]
+    },
+    {
+      "name": "BK027",
+      "label": "GET_COMMA",
+      "source": "integer duration\r\nproc main\r\nget break ,duration\r\nendproc\r\n",
+      "source_sha256": "c7cafabdeecb83cbb3fda85e2bd22049d6d5c7501fc4a38af587ab97ff9d8aef",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> BREAK"
+      ]
+    },
+    {
+      "name": "BK028",
+      "label": "GET_TRAILING",
+      "source": "integer duration\r\nproc main\r\nget break duration,\r\nendproc\r\n",
+      "source_sha256": "b7c4c43837b381f7988a8ce2d1034b9a4547df6b9671c5b29927a354c39184b3",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> BREAK",
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "BK029",
+      "label": "GET_EXPR",
+      "source": "integer duration\r\nproc main\r\nget break duration+1\r\nendproc\r\n",
+      "source_sha256": "5ff9f05a2aab9467f629b987e352dcc4e1bf3d5920aeb649de39b56d673cf89f",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> BREAK",
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "BK030",
+      "label": "GET_PAREN",
+      "source": "integer duration\r\nproc main\r\nget break (duration)\r\nendproc\r\n",
+      "source_sha256": "38b927df81472f1a4f6b35b30179aae9e6508a3d129518cc4a8c3908ae3f92af",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> BREAK",
+        "Error C021 Line 3: Invalid numeric variable or constant ==> (",
+        "Error C002 Line 3: Unexpected token ==> DURATION",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "BK031",
+      "label": "GET_BADKEY",
+      "source": "integer duration\r\nproc main\r\nget breaklen duration\r\nendproc\r\n",
+      "source_sha256": "ec86b8c84862c4bc3634888a88facce2c72b3e602c92f5e55fdd52882f8ce6ab",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> BREAKLEN"
+      ]
+    },
+    {
+      "name": "BK032",
+      "label": "GET_DISPLAY",
+      "source": "integer duration\r\nproc main\r\nget display duration\r\nendproc\r\n",
+      "source_sha256": "ecacdbabb0942d6312158591d68f044f6462fd57b33fa5b939e2cf2f76d02dce",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> DISPLAY"
+      ]
+    },
+    {
+      "name": "BK033",
+      "label": "SET_VAR_long",
+      "source": "long duration\r\nproc main\r\nset break duration\r\nendproc\r\n",
+      "source_sha256": "8f0e92a2e9283fc68015a6f6085fa0b3fcfec907c23c14b3e690252676b23879",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> DURATION"
+      ]
+    },
+    {
+      "name": "BK034",
+      "label": "GET_VAR_long",
+      "source": "long duration\r\nproc main\r\nget break duration\r\nendproc\r\n",
+      "source_sha256": "5a65b75da1d153592459e973cb47e9beba468ccb17a6cce0984b877774360a0e",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> BREAK",
+        "Error C021 Line 3: Invalid numeric variable or constant ==> DURATION"
+      ]
+    },
+    {
+      "name": "BK035",
+      "label": "SET_VAR_float",
+      "source": "float duration\r\nproc main\r\nset break duration\r\nendproc\r\n",
+      "source_sha256": "00a7fda7028bf01ddda0f2dd21013d1cca0c0683cfe5f3c2e8e4093d9472ce3f",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> DURATION"
+      ]
+    },
+    {
+      "name": "BK036",
+      "label": "GET_VAR_float",
+      "source": "float duration\r\nproc main\r\nget break duration\r\nendproc\r\n",
+      "source_sha256": "742cede89e66b177e701b159af8647d8eecb5a27f2f211e62565a50191664993",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> BREAK",
+        "Error C021 Line 3: Invalid numeric variable or constant ==> DURATION"
+      ]
+    },
+    {
+      "name": "BK037",
+      "label": "SET_VAR_string",
+      "source": "string duration\r\nproc main\r\nset break duration\r\nendproc\r\n",
+      "source_sha256": "78f18b364d726aef914693c5a362d180e56a3806907c8d3a11df2236475e7bad",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> DURATION"
+      ]
+    },
+    {
+      "name": "BK038",
+      "label": "GET_VAR_string",
+      "source": "string duration\r\nproc main\r\nget break duration\r\nendproc\r\n",
+      "source_sha256": "c9774314a846c1f3d35d817f20d081aba920952a4aa05c8bbda48cca19a05453",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> BREAK",
+        "Error C021 Line 3: Invalid numeric variable or constant ==> DURATION"
+      ]
+    },
+    {
+      "name": "BK039",
+      "label": "GET_LOCAL",
+      "source": "integer duration\r\nproc main\r\ninteger delay_units\r\nget break delay_units\r\nendproc\r\n",
+      "source_sha256": "75f6968069747205ffcb04a04fd4e055e1d1e4c8ccf5e5d24897f168ff74b141",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> BREAK"
+      ]
+    },
+    {
+      "name": "BK042",
+      "label": "GET_PARAM",
+      "source": "\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm delay_units\r\nget break delay_units\r\nendproc\r\n",
+      "source_sha256": "1fc73a4af0e59e514cc731fdbe036defc0915e9ff8302f8a0c3a4b59a44113b1",
+      "errors": [
+        "Error C001 Line 7: Invalid token ==> BREAK"
+      ]
+    },
+    {
+      "name": "BK043",
+      "label": "ROUNDTRIP",
+      "source": "integer duration\r\nproc main\r\nget break duration\r\nset break 7\r\nbreak\r\nset break duration\r\nendproc\r\n",
+      "source_sha256": "c95c009ed95235f238c0c2a678f8f154b6c5ec2202ff5316e6f209a346bcec54",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> BREAK"
+      ]
+    },
+    {
+      "name": "BF001",
+      "label": "FETCH_MISSING",
+      "source": "integer duration\r\nproc main\r\nfetch break\r\nendproc\r\n",
+      "source_sha256": "1ca8fd50f5e00bb3ded38cb8539eb038da9f0bc5ab4cb77aabf2a8747bc798b5",
+      "errors": [
+        "Error C006 Line 3: Missing token"
+      ]
+    },
+    {
+      "name": "BF002",
+      "label": "FETCH_REVERSE",
+      "source": "integer duration\r\nproc main\r\nfetch duration break\r\nendproc\r\n",
+      "source_sha256": "067d3e21eb398948b8c5707e90c2b3e66faa2bcfbf09aa9abbaa2c99a0cf4cd0",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> DURATION",
+        "Error C002 Line 3: Unexpected token ==> BREAK"
+      ]
+    },
+    {
+      "name": "BF003",
+      "label": "FETCH_CONST",
+      "source": "integer duration\r\nproc main\r\nfetch break 1\r\nendproc\r\n",
+      "source_sha256": "fa50ebec38b39a738ffdcfb13c5b460baacd805075d5fee3706a9dd84cd5c6c6",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1"
+      ]
+    },
+    {
+      "name": "BF004",
+      "label": "FETCH_BUILTIN",
+      "source": "integer duration\r\nproc main\r\nfetch break failure\r\nendproc\r\n",
+      "source_sha256": "6698a429b6721aaf87573da67c4c8ac842d7724f323ca7e89501eaa10fd52ed2",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> FAILURE"
+      ]
+    },
+    {
+      "name": "BF006",
+      "label": "FETCH_TRAIL",
+      "source": "integer duration\r\nproc main\r\nfetch break duration,\r\nendproc\r\n",
+      "source_sha256": "7a0f567775e13f3ec1229f9cc315eb841aecb739772cda9bac9c7465b27c14b9",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "BF007",
+      "label": "FETCH_PAREN",
+      "source": "integer duration\r\nproc main\r\nfetch break (duration)\r\nendproc\r\n",
+      "source_sha256": "8a21cc192b4436444f9cdad1fdb11a572fc7a32aede93d930a3f9b37c2862f93",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> (",
+        "Error C002 Line 3: Unexpected token ==> DURATION",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "BF008",
+      "label": "FETCH_EXPR",
+      "source": "integer duration\r\nproc main\r\nfetch break duration+1\r\nendproc\r\n",
+      "source_sha256": "6f55b541afe6647c27b95721e0db8bccecdadd1a54e02aa2d7e19da219c8f4dc",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "BF009",
+      "label": "FETCH_BADKEY",
+      "source": "integer duration\r\nproc main\r\nfetch breaklen duration\r\nendproc\r\n",
+      "source_sha256": "6d00f5e5f23f25faec3c81c39c771afeecd43a881a22402a9a49622d42f33c2b",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> BREAKLEN",
+        "Error C002 Line 3: Unexpected token ==> DURATION"
+      ]
+    },
+    {
+      "name": "BF011",
+      "label": "FETCH_BREAK_EXTRA",
+      "source": "integer duration\r\nproc main\r\nfetch break duration duration\r\nendproc\r\n",
+      "source_sha256": "c6a66ca1e7740de129ba81e3148cc6fc9fba7b97ccf0bc7582a817ce99ffa66c",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> DURATION"
+      ]
+    },
+    {
+      "name": "BF012",
+      "label": "FETCH_BREAK_STR",
+      "source": "integer duration\r\nproc main\r\nfetch break \"duration\"\r\nendproc\r\n",
+      "source_sha256": "c67ae9a3ab4bbde7842a1baf2b4c5254c000d8186bc5880420ec6069d56603a7",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> duration"
+      ]
+    },
+    {
+      "name": "BF014",
+      "label": "FETCH_long",
+      "source": "long duration\r\nproc main\r\nfetch break duration\r\nendproc\r\n",
+      "source_sha256": "8401efc74494a84b0308d88e20da73ecd458084ea1535d69b2a834b9916c4961",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DURATION"
+      ]
+    },
+    {
+      "name": "BF015",
+      "label": "FETCH_float",
+      "source": "float duration\r\nproc main\r\nfetch break duration\r\nendproc\r\n",
+      "source_sha256": "f95f39aaec3fadba41f933c72597c8cdc5cbf839714a0754dbdab2e463237125",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DURATION"
+      ]
+    },
+    {
+      "name": "BF016",
+      "label": "FETCH_string",
+      "source": "string duration\r\nproc main\r\nfetch break duration\r\nendproc\r\n",
+      "source_sha256": "8c436e19aa16bc32185e77a4c9ab97ee09d1012069172ef5e07599326bfd9ad0",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DURATION"
+      ]
+    }
+  ],
+  "unsupported": [
+    {
+      "name": "BF010",
+      "label": "FETCH_DISPLAY",
+      "source": "integer duration\r\nproc main\r\nfetch display duration\r\nendproc\r\n",
+      "source_sha256": "aaa7c13283dcd1c6cf5ae273d20bc2e47fa63639e58d7725f7b07563334dbd2f",
+      "hex": "00 cf 37 12 8d 00 94",
+      "asx_sha256": "1d1a130a49758b5cb9d7be6c783d8bb7e7a603dc2bb5351604659a0af1b81abb",
+      "reason": "Original accepted; maintained FETCH scope currently BREAK only"
+    }
+  ],
+  "native_setting_evidence": {
+    "private_report_sha256": "d47042e1e0eeb638b1e1cfb6bdd49128dfde927ef1f646d779c9f8b33a8379f9",
+    "cases": 12
+  },
+  "scope": "Sourcegrammar/emission only. NativeSETbounds0..32767; FETCHreturnsrawword. No UARTBREAK/runtimeavailability claim. FETCHDISPLAYexplicitlyunsupported."
+}

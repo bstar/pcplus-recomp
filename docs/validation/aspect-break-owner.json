@@ -1,0 +1,1003 @@
+{
+  "passed": true,
+  "scope": "Preparatory native BREAK recovery, compiler grammar and maintained child transport owner. Not interpreter command or parent/UI integration.",
+  "child_sha256": "416ccf536d95325a345b3a5e71ae10ac8e06b62b646d9203c3f3d11d4ba9841c",
+  "serial_diagnostic_sha256": "d70244fd2634ff7bc99d46d55cd6c504aa03418a27297c417e44301a2d190c7f",
+  "parent_sha256": "e9c8a731df6af6bc0f2afd25fec1363ce6607dc2be284f1ab911e41d1217ecc5",
+  "compiler_sha256": "7377e8ec9b18aec8adf4df8a630eacaa50d95a99f732137c94c3582e4633da6e",
+  "reports": {
+    "build/aspect-break-compiler/checks.json": {
+      "sha256": "ad1809577d5fa85cbedbd2e5cc013e14c49731c916a1cfc7036e4870ba3fcc40",
+      "result": {
+        "passed": true,
+        "original_inputs": [],
+        "counts": {
+          "accepted": 15,
+          "presentation": 15,
+          "rejected": 47,
+          "unsupported": 1,
+          "novel": 7
+        },
+        "compiler_sha256": "7377e8ec9b18aec8adf4df8a630eacaa50d95a99f732137c94c3582e4633da6e",
+        "checker_sha256": "79e811310caf2101bf587864a5f7e069c99e31c4d33467bf0f9ffa12b13b9055",
+        "fixture_sha256": "6e97bb0b213b44e5c589c12828afc4c75a46c4d669b0a89d25a1405141ee4f0b",
+        "scope": "Compileronly. Nativebounds0..32767; negativeconstantscompilebutnativeboundsreject. FETCHDISPLAYunsupported; no claimof UARTBREAK/runtimeintegration."
+      }
+    },
+    "build/aspect-break-native/checks.json": {
+      "sha256": "eda0515cec15008fd4dc71b47c9219dc4c672c1298c3d6b2fa0bd86db3cd08d3",
+      "result": {
+        "passed": true,
+        "cases": 2585,
+        "instruction_addresses": 104,
+        "all_native_instructions": 104,
+        "coverage": [
+          1025,
+          1026,
+          1029,
+          1031,
+          1032,
+          1036,
+          1039,
+          1040,
+          1041,
+          1045,
+          1048,
+          1049,
+          1051,
+          1054,
+          1055,
+          1059,
+          1061,
+          1064,
+          1065,
+          1066,
+          1070,
+          1073,
+          1075,
+          1078,
+          1079,
+          1083,
+          1086,
+          1087,
+          1088,
+          1091,
+          1092,
+          12731,
+          12732,
+          12734,
+          12737,
+          12738,
+          12739,
+          12743,
+          12746,
+          12748,
+          12750,
+          12754,
+          12756,
+          12760,
+          12765,
+          12767,
+          12770,
+          12771,
+          12772,
+          12775,
+          12776,
+          12779,
+          12782,
+          12785,
+          12786,
+          12787,
+          12790,
+          12791,
+          12794,
+          12797,
+          12798,
+          12802,
+          12805,
+          12808,
+          12812,
+          12814,
+          12817,
+          12820,
+          12823,
+          12824,
+          12825,
+          12828,
+          12829,
+          12832,
+          12833,
+          12834,
+          12836,
+          12837,
+          27458,
+          27462,
+          27466,
+          27468,
+          27471,
+          27475,
+          27477,
+          27480,
+          27482,
+          27485,
+          27489,
+          27491,
+          27495,
+          27497,
+          27500,
+          27504,
+          59003,
+          59006,
+          59559,
+          59564,
+          59566,
+          59569,
+          59572,
+          59573,
+          59577,
+          59580
+        ],
+        "manifest_sha256": "0716488edccf3040d4c61f2d5bdf38cc7d400a395443bbd048d4742c6e97659d",
+        "checker_sha256": "c319c667407f9bf719d643e86b24b1de47afbb3f5a209c999473760a26b7534e",
+        "optional_original": null,
+        "scope": "Actual249native source bytes. Hardware I/O, calibrated delay, cursor BIOS/video, screen services, bounded operand and status refresh are declared synchronous component callbacks. Fault callback stop proves missing native cleanup; no actual DOS, physical duration, maintained child integration or notice pointer initialization claim."
+      }
+    },
+    "build/aspect-serial/break-owner-checks.json": {
+      "sha256": "45e4bf6c108b10811b27519d7cce2ff14ba34894e4f729936e639cf7b64dd195",
+      "result": {
+        "passed": true,
+        "groups": [
+          {
+            "case": "closed-no-port-write-callee-registers-DS-SS-IF",
+            "inputs": 6,
+            "passed": true
+          },
+          {
+            "case": "foreign-BREAK-DLAB-lease-admission-before-first-write",
+            "inputs": 66,
+            "passed": true
+          },
+          {
+            "case": "all-LCR-values-admission-owned-assert-framing-preservation-idempotence-IF0and1",
+            "inputs": 512,
+            "passed": true
+          },
+          {
+            "case": "TEMT-not-THRE-assertion-and-release-reservation-on-drain-cancel",
+            "inputs": 8,
+            "passed": true
+          },
+          {
+            "case": "foreign-line-change-after-reserve-remains-untouched-on-cancel",
+            "inputs": 12,
+            "passed": true
+          },
+          {
+            "case": "actual-ISR-RX-hardware-RTS-software-queued-XOFF-held-TX-until-release",
+            "inputs": 12,
+            "passed": true
+          },
+          {
+            "case": "both-close-paths-release-before-flow-drain-and-restore-even-on-fatal-status",
+            "inputs": 8,
+            "passed": true
+          },
+          {
+            "case": "fatal-admission-and-assert-no-hardware-change-cleanup-reservation",
+            "inputs": 2,
+            "passed": true
+          }
+        ],
+        "inputs": 626,
+        "binary_sha256": "d70244fd2634ff7bc99d46d55cd6c504aa03418a27297c417e44301a2d190c7f",
+        "checker_sha256": "70c31a5f7a03dddb6bf57f82b29e48aab3a3adb44d9c03890d59f687a534622d",
+        "original_inputs": [],
+        "limitations": [
+          "UART/PIC/DOS modeled; actual linked DOS instructions execute.",
+          "Low-level lease only: no calibrated duration, opcode dispatch, parent configuration or status UI claim.",
+          "Concurrent changes modeled between calls; every owner port write checks IF=0 and LCR-only access."
+        ]
+      }
+    },
+    "build/aspect-runner/break-linked-checks.json": {
+      "sha256": "3abf3c9ed73ceddaff606bb35c946101ee3017ed8856a908f3fdc4984e809e7d",
+      "result": {
+        "passed": true,
+        "binary_sha256": "416ccf536d95325a345b3a5e71ae10ac8e06b62b646d9203c3f3d11d4ba9841c",
+        "checker_sha256": "67c92ba11cbeb742710a1ce50de737ab96a56db22256f3777c42b1b7ca1686d3",
+        "cases": [
+          {
+            "name": "full-word-calibrated-units-0",
+            "passed": true,
+            "pulse_units": 0,
+            "serial_error": 0,
+            "pacing_error": 0
+          },
+          {
+            "name": "full-word-calibrated-units-1",
+            "passed": true,
+            "pulse_units": 1,
+            "serial_error": 0,
+            "pacing_error": 0
+          },
+          {
+            "name": "full-word-calibrated-units-350",
+            "passed": true,
+            "pulse_units": 350,
+            "serial_error": 0,
+            "pacing_error": 0
+          },
+          {
+            "name": "full-word-calibrated-units-999",
+            "passed": true,
+            "pulse_units": 999,
+            "serial_error": 0,
+            "pacing_error": 0
+          },
+          {
+            "name": "full-word-calibrated-units-1000",
+            "passed": true,
+            "pulse_units": 1000,
+            "serial_error": 0,
+            "pacing_error": 0
+          },
+          {
+            "name": "full-word-calibrated-units-32767",
+            "passed": true,
+            "pulse_units": 32767,
+            "serial_error": 0,
+            "pacing_error": 0
+          },
+          {
+            "name": "full-word-calibrated-units-32768",
+            "passed": true,
+            "pulse_units": 32768,
+            "serial_error": 0,
+            "pacing_error": 0
+          },
+          {
+            "name": "full-word-calibrated-units-65535",
+            "passed": true,
+            "pulse_units": 65535,
+            "serial_error": 0,
+            "pacing_error": 0
+          },
+          {
+            "name": "actual-calibration-before-350-unit-pulse",
+            "passed": true,
+            "pulse_units": 350,
+            "serial_error": 0,
+            "pacing_error": 0
+          },
+          {
+            "name": "cancel-at-unit-0",
+            "passed": true,
+            "pulse_units": 0,
+            "serial_error": 0,
+            "pacing_error": 0
+          },
+          {
+            "name": "cancel-at-unit-1",
+            "passed": true,
+            "pulse_units": 1,
+            "serial_error": 0,
+            "pacing_error": 6
+          },
+          {
+            "name": "cancel-at-unit-999",
+            "passed": true,
+            "pulse_units": 999,
+            "serial_error": 0,
+            "pacing_error": 6
+          },
+          {
+            "name": "cancel-at-unit-1000",
+            "passed": true,
+            "pulse_units": 1000,
+            "serial_error": 0,
+            "pacing_error": 6
+          },
+          {
+            "name": "overflow-at-unit-1",
+            "passed": true,
+            "pulse_units": 1,
+            "serial_error": 5,
+            "pacing_error": 6
+          },
+          {
+            "name": "overflow-at-unit-999",
+            "passed": true,
+            "pulse_units": 999,
+            "serial_error": 5,
+            "pacing_error": 6
+          },
+          {
+            "name": "overflow-at-unit-1000",
+            "passed": true,
+            "pulse_units": 1000,
+            "serial_error": 5,
+            "pacing_error": 6
+          },
+          {
+            "name": "TEMT-drain-timeout-start-0",
+            "passed": true,
+            "pulse_units": 0,
+            "serial_error": 7,
+            "pacing_error": 0
+          },
+          {
+            "name": "TEMT-drain-timeout-start-1573035",
+            "passed": true,
+            "pulse_units": 0,
+            "serial_error": 7,
+            "pacing_error": 0
+          },
+          {
+            "name": "TEMT-drain-eventually-ready",
+            "passed": true,
+            "pulse_units": 1,
+            "serial_error": 0,
+            "pacing_error": 0
+          },
+          {
+            "name": "stopped-BIOS-clock-finite-independent-drain-bound",
+            "passed": true,
+            "pulse_units": 0,
+            "serial_error": 7,
+            "pacing_error": 0
+          },
+          {
+            "name": "foreign-before-calibration-no-flow-TX-43",
+            "passed": true,
+            "pulse_units": 0,
+            "serial_error": 8,
+            "pacing_error": 0
+          },
+          {
+            "name": "foreign-before-calibration-no-flow-TX-83",
+            "passed": true,
+            "pulse_units": 0,
+            "serial_error": 8,
+            "pacing_error": 0
+          },
+          {
+            "name": "foreign-before-reserve-43",
+            "passed": true,
+            "pulse_units": 0,
+            "serial_error": 8,
+            "pacing_error": 0
+          },
+          {
+            "name": "foreign-after-reserve-43",
+            "passed": true,
+            "pulse_units": 0,
+            "serial_error": 8,
+            "pacing_error": 0
+          },
+          {
+            "name": "foreign-before-reserve-83",
+            "passed": true,
+            "pulse_units": 0,
+            "serial_error": 8,
+            "pacing_error": 0
+          },
+          {
+            "name": "foreign-after-reserve-83",
+            "passed": true,
+            "pulse_units": 0,
+            "serial_error": 8,
+            "pacing_error": 0
+          },
+          {
+            "name": "foreign-before-reserve-c3",
+            "passed": true,
+            "pulse_units": 0,
+            "serial_error": 8,
+            "pacing_error": 0
+          },
+          {
+            "name": "foreign-after-reserve-c3",
+            "passed": true,
+            "pulse_units": 0,
+            "serial_error": 8,
+            "pacing_error": 0
+          },
+          {
+            "name": "IF0-admission-0",
+            "passed": true,
+            "pulse_units": 0,
+            "serial_error": 0,
+            "pacing_error": 3
+          },
+          {
+            "name": "IF0-admission-350",
+            "passed": true,
+            "pulse_units": 0,
+            "serial_error": 0,
+            "pacing_error": 3
+          },
+          {
+            "name": "no-owned-UART-rejected",
+            "passed": true,
+            "pulse_units": 0,
+            "serial_error": 0,
+            "pacing_error": 0
+          }
+        ],
+        "scope": "Actual linked child transport, native6B72 busyloop, IRQ-live calibration, TEMT drain, cancellation, overflow and owned LCR cleanup. BIOS/UART/tick inputs modeled. Full-word count tests use explicit calibrated word1 after real preparation; separate350-unit test uses actual measured74. No opcode/UI/parent inheritance or physical pulse timing claim."
+      }
+    },
+    "build/aspect-serial/checks.json": {
+      "sha256": "5c14c823cf432741f2ccaa46940b7ed0fcfaed2a594b51abb9c0c74cae683bec",
+      "result": {
+        "passed": true,
+        "groups": [
+          {
+            "case": "strict-com-divisor-format-flow-descriptor-before-port-IO",
+            "inputs": 12,
+            "passed": true
+          },
+          {
+            "case": "all-four-standard-COM-physical-port-IRQ4or3-PIC-masks-and-actual-ISR",
+            "inputs": 4,
+            "passed": true
+          },
+          {
+            "case": "real-ISR-binary-poll-read-lowbyte-write-closeonce-and-register-vector-PIC-restore",
+            "inputs": 4,
+            "passed": true
+          },
+          {
+            "case": "standalone-unread-return-is-explicit-failure",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "ASIOvalidated-parent-allocation-wrap-full-ring-exact-publication-after-restore",
+            "inputs": 4,
+            "passed": true
+          },
+          {
+            "case": "UART-only-unit-explicitly-rejects-v4-render-capability-before-IO",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "ASIOidentity-version-count-status-publication-reserved-guard-reject-before-IO",
+            "inputs": 11,
+            "passed": true
+          },
+          {
+            "case": "real-ISR-XOFF-XON-and-CTS-stalls-never-busywait-data-write",
+            "inputs": 2,
+            "passed": true
+          },
+          {
+            "case": "36-BIOS-tick-TEMT-stall-bounded-at-normal-and-midnight-close",
+            "inputs": 2,
+            "passed": true
+          },
+          {
+            "case": "full-ring-overflow-never-overwrites-unread-and-close-retains-fatal-status",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "actual-ISR-SOFT3073-highwater-128-lowwater-foreground-XOFF-XON",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "parent-MCB-owner-identity-extent-near-wrap-descriptor-ring-disjoint-guards",
+            "inputs": 5,
+            "passed": true
+          },
+          {
+            "case": "combined-B-XON-bypasses-CTS-but-data-requires-both-CTS-and-peer-XON",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "ASIOv2-effective-table256-immutable-identity-and-dequeue7bit-raw-unread-handback",
+            "inputs": 3,
+            "passed": true
+          },
+          {
+            "case": "ASIOv2-guard-mode-table-span-MCBextent-and-descriptor-ring-overlap-before-IO",
+            "inputs": 8,
+            "passed": true
+          },
+          {
+            "case": "ASIOv3-COM1to3-empty-wrapped-full-preload-before-IRQ-append-highwater-record-snapshot-raw-handback",
+            "inputs": 4,
+            "passed": true
+          },
+          {
+            "case": "ASIOv3-input-count-read-empty-entry-record-size-guard-and-all-disjoint-span-validation",
+            "inputs": 14,
+            "passed": true
+          },
+          {
+            "case": "ASIOv3-all-eight-native-string-extents-NUL-bounded-and-full40byte-MCB-range",
+            "inputs": 9,
+            "passed": true
+          },
+          {
+            "case": "ASIOv3-private-current-session-date-projection-count-wrap-and-zero-delta",
+            "inputs": 3,
+            "passed": true
+          },
+          {
+            "case": "ASIOv3-absent-year-coherence-invalid-Gregorian-date-and-noentry-projection-before-IO",
+            "inputs": 10,
+            "passed": true
+          },
+          {
+            "case": "unread-one-shot-invalid-empty-close-pollTX-no-token-read-invention-callee-registers-IF0and1",
+            "inputs": 2,
+            "passed": true
+          },
+          {
+            "case": "unread-native-last-to-base-wrap-retains-raw-cell-under-identity-table-and7bit-dequeue",
+            "inputs": 3,
+            "passed": true
+          },
+          {
+            "case": "unread-actual-ISR-fills-freed-slot-before-rollback-full-ring-fatal-no-overwrite-two-wraps",
+            "inputs": 2,
+            "passed": true
+          },
+          {
+            "case": "unread-only-latest-read-pointer-mismatch-and-failed-read-invalidation",
+            "inputs": 1,
+            "passed": true
+          }
+        ],
+        "inputs": 108,
+        "binary_sha256": "d70244fd2634ff7bc99d46d55cd6c504aa03418a27297c417e44301a2d190c7f",
+        "checker_sha256": "177c3b383251b99011755b40db658d49797df4acc67f34a8464f88446f7b3ba3",
+        "manifest_sha256": "ff391c144bb9c53c248c98548b66a88cedb9f975a923f3f52bfc0b351b3d86ab",
+        "limitations": [
+          "Kernel/ports modeled; actualDOS loopback test separately required.",
+          "Standard COM1..4 ports/IRQ masks are modeled; separate actual DOS backend tests use COM1 only."
+        ],
+        "original_inputs": []
+      }
+    },
+    "build/aspect-serial/dos-checks.json": {
+      "sha256": "d88c26dd2c735c63eb0f2226b5fb9d90a7fa6af56ebb0cc11488de6b33eddf1f",
+      "result": {
+        "passed": true,
+        "cases": [
+          {
+            "case": "dos-N",
+            "passed": true,
+            "checks": {
+              "expected_DOS_exit": true,
+              "hardware_restored": true,
+              "wire_exact": true,
+              "no_peer_error": true
+            },
+            "errors": [],
+            "wire_hex": "4452"
+          },
+          {
+            "case": "dos-S",
+            "passed": true,
+            "checks": {
+              "expected_DOS_exit": true,
+              "hardware_restored": true,
+              "wire_exact": true,
+              "no_peer_error": true
+            },
+            "errors": [],
+            "wire_hex": "11445213"
+          },
+          {
+            "case": "dos-H",
+            "passed": true,
+            "checks": {
+              "expected_DOS_exit": true,
+              "hardware_restored": true,
+              "wire_exact": true,
+              "no_peer_error": true
+            },
+            "errors": [],
+            "wire_hex": "4452"
+          },
+          {
+            "case": "dos-B",
+            "passed": true,
+            "checks": {
+              "expected_DOS_exit": true,
+              "hardware_restored": true,
+              "wire_exact": true,
+              "no_peer_error": true
+            },
+            "errors": [],
+            "wire_hex": "11445213"
+          },
+          {
+            "case": "dos-N-cancel",
+            "passed": true,
+            "checks": {
+              "expected_DOS_exit": true,
+              "hardware_restored": true,
+              "wire_exact": true,
+              "no_peer_error": true
+            },
+            "errors": [],
+            "wire_hex": "44"
+          },
+          {
+            "case": "dos-N-denied",
+            "passed": true,
+            "checks": {
+              "expected_DOS_exit": true,
+              "hardware_restored": true,
+              "wire_exact": true,
+              "no_peer_error": true
+            },
+            "errors": [],
+            "wire_hex": ""
+          }
+        ],
+        "binary_sha256": "d70244fd2634ff7bc99d46d55cd6c504aa03418a27297c417e44301a2d190c7f",
+        "checker_sha256": "15fdfda9fbce42064474da4134b59d59ea48e68dc8ac9cc32d004d9c6aab61c8",
+        "manifest_sha256": "ff391c144bb9c53c248c98548b66a88cedb9f975a923f3f52bfc0b351b3d86ab",
+        "original_inputs": [],
+        "limitations": [
+          "DOSBox-X nullmodem, virtual CTS always ready; physical modem/flow timing unverified.",
+          "Independent backend diagnostic; live parent ASIO handback tested separately."
+        ]
+      }
+    },
+    "build/aspect-render-client/checks.json": {
+      "sha256": "40a74d65448ac4e01a8c5d3e2a2a713697eb3dff5ad375ca005735e9f6b49ea1",
+      "result": {
+        "passed": true,
+        "binary_sha256": "416ccf536d95325a345b3a5e71ae10ac8e06b62b646d9203c3f3d11d4ba9841c",
+        "manifest_sha256": "bef3f075d5f77be0daa13e0db68d4f47d12b15c0515bf01d9c3e3bd3143d0afd",
+        "checker_sha256": "07ca0a747a768e105c7a4495c7b2d6ee5b7e91ba4eaad48cd8d1e71dc30c014e",
+        "original_inputs": [],
+        "regression_history": [
+          {
+            "binary_sha256": "83dc70363614c919c50b375c30e80645f2d0ff21a244022cc05a5841b56499cb",
+            "failure": "IF-enabled childDS/parentSS transition",
+            "evidence": "build/aspect-render-client-history/pre-CLI-transition/transition-window-failure.json"
+          }
+        ],
+        "cases": [
+          {
+            "case": "invalid-capability-preload-projection-before-UART",
+            "inputs": 8,
+            "passed": true
+          },
+          {
+            "case": "entry-outside-parent-or-overlapping-descriptor-ring",
+            "inputs": 4,
+            "passed": true
+          },
+          {
+            "case": "callback-stack-extent-and-live-SP-admission-before-UART",
+            "inputs": 3,
+            "passed": true
+          },
+          {
+            "case": "single-native-E382-alias-render-admission-and-post-UART-diagnostic-lifecycle",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "v2-STATUS-scalar-bounds-and-lease-lifetime-before-parent-request",
+            "inputs": 8,
+            "passed": true
+          },
+          {
+            "case": "STATUS-after-UART-close-rejected-before-parent-hardware-request",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "different-parent-DS-SS-child-stack-full-register-IF-DF-preservation",
+            "inputs": 4,
+            "passed": true
+          },
+          {
+            "case": "7bit-dequeue-unread-and-raw-ASIO-handback-through-callback",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "invalid-unread-is-typed-fatal-not-ignored",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "redzone-corruption-rejects-callback-and-next-request",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "actual-native4C74-cdecl-emit-balanced-stack",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "actual-CF-D0-shared-E382-selector-display-and-independent-WAITFOR-display",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "nested-callback-rejects-without-overwriting-active-parent-frame",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "real-ISR-fills-unread-slot-typed-overflow-and-postclose-error-render",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "parent-result-is-typed-and-reserved-bridge-results-map-state",
+            "inputs": 10,
+            "passed": true
+          },
+          {
+            "case": "IF-obeying-actual-UART-ISR-during-child-callback-with-restored-parent-frame",
+            "inputs": 1,
+            "passed": true
+          }
+        ],
+        "inputs": 47,
+        "limitations": [
+          "Far endpoint is an explicit lifecycle success boundary; actual parent input/parser/render engine is not modeled or claimed here.",
+          "DOS/UART/BIOS keyboard boundaries modeled; real callback-stack and register instructions execute.",
+          "CPU unit sets documented usable CRT stack bounds; independent actual8086DOS fixture corroborates real Watcom bounds."
+        ]
+      }
+    },
+    "build/aspect-runner/txpace-linked-checks.json": {
+      "sha256": "66081735b7f83e980229464175965b55f2235ad5a230b5efd622c02df154924f",
+      "result": {
+        "passed": true,
+        "binary_sha256": "416ccf536d95325a345b3a5e71ae10ac8e06b62b646d9203c3f3d11d4ba9841c",
+        "checker_sha256": "a107ec27bb4aaa63d7bec0344fb83c29683db805d15941973ac395c0142ddad8",
+        "cases": [
+          {
+            "name": "empty-ready",
+            "passed": true,
+            "result": 0,
+            "native_units": 8,
+            "callback_phases": [
+              2,
+              1,
+              3
+            ]
+          },
+          {
+            "name": "headroom-boundary",
+            "passed": true,
+            "result": 0,
+            "native_units": 8,
+            "callback_phases": [
+              2,
+              1,
+              3
+            ]
+          },
+          {
+            "name": "admission-too-full",
+            "passed": true,
+            "result": 14,
+            "native_units": 0,
+            "callback_phases": [
+              2
+            ]
+          },
+          {
+            "name": "alignment-consumes-headroom",
+            "passed": true,
+            "result": 14,
+            "native_units": 0,
+            "callback_phases": [
+              2,
+              1
+            ]
+          },
+          {
+            "name": "alignment-cancel",
+            "passed": true,
+            "result": 13,
+            "native_units": 0,
+            "callback_phases": [
+              2,
+              1
+            ]
+          },
+          {
+            "name": "IF0-before-hardware",
+            "passed": true,
+            "result": 14,
+            "native_units": 0,
+            "callback_phases": []
+          }
+        ],
+        "scope": "Actual linked child calibration, native busyloop and transport admission. Tick edges, queued count and BIOS Escape are explicit inputs. No product body is skipped. Checks headroom during post-admission alignment, no dequeue, no UART/PIC ownership writes, IF/DS=SS and typed failure. Physical timing and sustained IRQ traffic require separate proofs."
+      }
+    },
+    "build/aspect-runtime/checks.json": {
+      "sha256": "696f1b6e635ee2ddd9b316910cd3874e697f0731d0f2fb4eb43c87419e7d69d8",
+      "result": {
+        "passed": true,
+        "DOS_summary": "ASPECT_RUNTIME 878 cases 20586 checks 0 failures",
+        "binary_sha256": "1e924571c1162e5d09e5c301f99fcd984ccece95a9a25baf0e05d284b1a360fc",
+        "manifest_sha256": "d1a6e3954e5f1d043cdf7a6b5732df53d64b4d82c12bc22b804f438ca8bcd28b",
+        "check_sha256": "0109ce207eb31b27eb903b9df4f44680c73be78ba3428cf14e0ce6318df52d49",
+        "result_sha256": "e3bc8852182bec947688ddb5c30e548502d92e6d3cbb219a15f37fbbfe1a0393",
+        "optional_original": null,
+        "original_inputs": [],
+        "fixture_count": 430,
+        "unsupported_slot_cases": 146,
+        "directory_metadata": {
+          "cases": 18,
+          "default_noentry_cases": 2,
+          "unsupported_baud_cases": 1,
+          "host_binding_checks": 164,
+          "fixture_sha256": "80b38259968e5f1a3c5c5d388fa40928ecd7ed759ffc916158f4632a4ae57676",
+          "scope": "Independent ACV2 parse, exact authored114B/entry binding, and actualDOS output/tx/value lines. No private original input."
+        },
+        "fixture_data_sha256": "ac8ec4a81494c9d37423c4ed60f9cee2150461a7ed8892391cfcaba12be6bce6",
+        "fixture_schema": "ACV2",
+        "SET_family": {
+          "supported_subcommands": {
+            "12": "DISPLAY",
+            "18": "DUPLEX",
+            "23": "FINDCASE",
+            "29": "KEYS",
+            "2e": "MSG_CRLF",
+            "30": "PAUSECHAR",
+            "3b": "RXDATA",
+            "44": "SWITCHCASE",
+            "4c": "TXPACE",
+            "55": "WAITCASE",
+            "56": "WHENCASE"
+          },
+          "unsupported_subcommands_tested": 245,
+          "truncated_cases": 2,
+          "raw_boolean_cases": 2,
+          "integration_vectors": 38
+        },
+        "supported_slot_count": 69,
+        "scope": "Actual recovered dispatcher executes source-compiled authored ASX through real DOS files/far and near heaps and native console/serial/WHEN/SET/FIND/CASE commands. Serial queue/clock/carrier and requested pacing units are explicit diagnostic models. Supported slots and unsupported coverage are bound to the manifest; full compiler/VM and arbitrary-bytecode safety remain unfinished."
+      }
+    },
+    "build/application-source-proof/result.json": {
+      "sha256": "27f3dd2091a82f1efafe7b29bb5f75ed4231b46b53a26e7d43014c99e31e61b4",
+      "output_count": 132,
+      "source_snapshot_sha256": "3ac7139972b7e1ff9aeaf088177d689845b6dd6051662f5e56f68a4641ddd71c"
+    }
+  },
+  "bbs": {
+    "synchronet": {
+      "report": "build/bbs-lab/script-login/break-416c-sync/checks.json",
+      "sha256": "8647a3ead946a9e2813a570985b31dfa65bfa91ef331a63e5ef407ed86789821",
+      "checks": {
+        "DOS_harness": true,
+        "current_terminal": true,
+        "current_runner": true,
+        "inputs_unchanged": true,
+        "credentials_not_in_keyboard": true,
+        "script_credentials_once": true,
+        "no_other_login_text_before_script": true,
+        "authenticated_display": true,
+        "no_error_or_blocking_return_prompt": true,
+        "resumed_parent_editor": true,
+        "draft_aborted": true
+      },
+      "editor_checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "draft_aborted": true,
+        "insert_toggled_overtype": true,
+        "home_marker_at_line_start": true,
+        "end_marker_at_line_end": true,
+        "delete_erases_final_character": true,
+        "tab_advances_to_next_stop": true,
+        "page_keys_report_document_boundaries": true,
+        "ctrl_y_delete_line_response": true
+      },
+      "key_wire": {
+        "home": true,
+        "end": true,
+        "insert": true,
+        "delete": true,
+        "page_up": true,
+        "page_down": true,
+        "tab": true,
+        "delete_line_ctrl_y": true
+      },
+      "packet_delay_ms": 0
+    },
+    "enigma": {
+      "report": "build/bbs-lab/script-login/break-416c-enigma-network30/checks.json",
+      "sha256": "b5402dda014b7f4e745236ae84fa611743e90ea9665d4b33edfd636f89399ae2",
+      "checks": {
+        "DOS_harness": true,
+        "current_terminal": true,
+        "current_runner": true,
+        "inputs_unchanged": true,
+        "stock_server_unchanged": true,
+        "credentials_not_in_keyboard": true,
+        "script_credentials_once": true,
+        "no_other_login_text_before_script": true,
+        "authenticated_server_log": true,
+        "no_error_or_blocking_return_prompt": true,
+        "resumed_parent_editor": true,
+        "no_post_saved": true
+      },
+      "editor_checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "no_post_saved": true,
+        "insert_toggled_overtype": true,
+        "home_moves_before_marker": true
+      },
+      "key_wire": {
+        "home": true,
+        "end": true,
+        "insert": true,
+        "delete": true,
+        "page_up": true,
+        "page_down": true,
+        "tab": true,
+        "delete_line_ctrl_y": true
+      },
+      "packet_delay_ms": 30
+    },
+    "enigma_alternate_profile_failure": {
+      "report": "build/bbs-lab/script-login/break-416c-enigma30/checks.json",
+      "sha256": "8850b6ee47a2ce494db4165b7a6045bfae5d012271c9962c2f2aca07d1945ba8",
+      "passed": false,
+      "keyboard_profile": "enigma-editor",
+      "packet_delay_ms": 30,
+      "checks": {
+        "DOS_harness": true,
+        "current_terminal": true,
+        "current_runner": true,
+        "inputs_unchanged": true,
+        "stock_server_unchanged": true,
+        "credentials_not_in_keyboard": true,
+        "script_credentials_once": true,
+        "no_other_login_text_before_script": true,
+        "authenticated_server_log": true,
+        "no_error_or_blocking_return_prompt": true,
+        "resumed_parent_editor": false,
+        "no_post_saved": true
+      },
+      "editor_checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "no_post_saved": true,
+        "insert_toggled_overtype": false,
+        "home_moves_before_marker": false
+      },
+      "scope": "Additional alternate-profile attempt; retained failure, not the established network-profile regression."
+    }
+  },
+  "incomplete": [
+    "BREAK0D and SET09/FETCH37/09 production interpreter dispatch",
+    "Parent configuration duration inheritance and explicit ABI lifetime",
+    "Native BREAK notice/status integration",
+    "Actual DOS BREAK pulse scheduling and physical UART/modem timing",
+    "ENiGMA immediate-forwarding Home/Insert interaction issue remains open",
+    "All sixteen full-application gates remain open"
+  ]
+}

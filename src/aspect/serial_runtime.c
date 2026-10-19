@@ -139,6 +139,60 @@ unsigned runtime_serial_prepare_pacing(void)
 #endif
  return runtime_error;
 }
+unsigned runtime_serial_break(unsigned units)
+{
+#if defined(ASPECT_RUNTIME_SERIAL)
+ unsigned status,tries=0,chunk;
+ unsigned long start,now;
+ if(runtime_error)return runtime_error;
+ if(!runtime_serial_ready()){runtime_set_error(ASPECT_RUN_UNSUPPORTED);return runtime_error;}
+ /* Even zero-length pulses need an interrupt-live drain/cancellation path. */
+ if(!(aspect_txpace_flags()&512U)){
+  runtime_serial_pacing_error=ASPECT_TXPACE_IF;
+  runtime_set_error(ASPECT_RUN_SERIAL);return runtime_error;
+ }
+ /* Reserve before calibration: reject foreign LCR state before any flow TX.
+  * IRQ RX/RTS continue; calibration headroom checks bound queue admission. */
+ status=aspect_serial_break_reserve();
+ if(status){runtime_serial_error=status;runtime_set_error(ASPECT_RUN_SERIAL);return runtime_error;}
+ if(units && runtime_serial_prepare_pacing())goto release;
+ start=aspect_serial_ticks();
+ if(start>=ASPECT_TXPACE_DAY){
+  runtime_serial_pacing_error=ASPECT_TXPACE_CLOCK;
+  runtime_set_error(ASPECT_RUN_SERIAL);goto release;
+ }
+ for(;;){
+  if(runtime_console_cancel_poll())goto release;
+  status=aspect_serial_break_assert();
+  if(!status)break;
+  if(status!=ASPECT_SERIAL_PENDING){
+   runtime_serial_error=status;runtime_set_error(ASPECT_RUN_SERIAL);goto release;
+  }
+  now=aspect_serial_ticks();
+  if(now>=ASPECT_TXPACE_DAY){
+   runtime_serial_pacing_error=ASPECT_TXPACE_CLOCK;
+   runtime_set_error(ASPECT_RUN_SERIAL);goto release;
+  }
+  if(now<start)now+=ASPECT_TXPACE_DAY;
+  /* Independent finite poll bound also handles a stopped BIOS tick source. */
+  if(now-start>=19UL || ++tries==65535U){
+   runtime_serial_error=ASPECT_SERIAL_PENDING;
+   runtime_set_error(ASPECT_RUN_SERIAL);goto release;
+  }
+ }
+ while(units){
+  chunk=units>999U?999U:units;
+  status=aspect_txpace_delay(chunk,runtime_serial_pacing_step);
+  if(status){runtime_serial_pacing_error=status;runtime_set_error(ASPECT_RUN_SERIAL);break;}
+  units-=chunk;
+ }
+release:
+ aspect_serial_break_release();
+#else
+ (void)units;runtime_set_error(ASPECT_RUN_UNSUPPORTED);
+#endif
+ return runtime_error;
+}
 unsigned runtime_serial_character_delay(unsigned delay)
 {
  if(delay>999U){runtime_set_error(ASPECT_RUN_OPERAND);return runtime_error;}

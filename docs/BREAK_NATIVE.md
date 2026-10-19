@@ -26,9 +26,11 @@ its callees' ordinary conventions. AX/BX/CX/DX/ES/flags are scratch.
 
 1. Calls6B5A, the existing cursor/UI state bracket.
 2. Calls31BB with words `[DS2074]` and0 (caller cleanup4). That helper uses
-   the argument as a status text pointer with zero display delay. The current
-   DS2074 pointer's initialization is not recovered here; a nearby `*** BREAK ***`
-   literal alone does not prove its dynamic pointer value in every profile.
+   the argument as a status text pointer with zero display delay. Follow-up
+   [ASPECT recovery](ASPECT_BREAK_NATIVE.md) resolves the installed pointer:
+   DS2074 contains0000h, a valid near offset to `*** BREAK ***` atDS:0000.
+   Actual native6BF0 accepts offset0 and reads its characters directly; this
+   is an initialized string-offset table, not an unresolved null resource.
 3. Calls829A with `[DS8FEE]` (caller cleanup2).829A actually executes
    `IN AL,DX` on its word port argument and clears AH.
 4. Copies the returned original LCR into SI, ORs40h, pushes the asserted value

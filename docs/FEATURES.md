@@ -567,3 +567,14 @@ ownership. The compiler matches54 accepted original outputs and72 rejections;
 independent near-owner DOS checks and125 reproducible outputs remain separate
 scope.69 opcode slots are implemented,146 remain unsupported, and no whole-
 application gate is closed.
+
+F03/F13 now have [scoped BREAK recovery and a child transport owner](ASPECT_BREAK_OWNER.md):
+249 exact native bytes, original compiler grammar for BREAK/SET BREAK/FETCH BREAK,
+626 linked UART ownership inputs and31 linked timing/cancellation/error cases.
+The source-only proof reproduces132 outputs. Interpreter dispatch for these
+commands, parent duration inheritance, native notice/status integration, actual
+DOS pulse scheduling and physical UART timing remain open; supported runtime
+counts stay69 opcode slots and eleven SET setters. Native notice pointer0000h
+is now proved valid DS:0000 (`*** BREAK ***`), rather than a missing resource.
+See [native evidence](ASPECT_BREAK_NATIVE.md) and
+[validation](validation/aspect-break-owner.json). No whole-application gate closes.
