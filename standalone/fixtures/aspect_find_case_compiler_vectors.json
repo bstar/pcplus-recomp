@@ -1,0 +1,1159 @@
+{
+  "schema": "aspect-find-case-compiler-v1",
+  "source_encoding": "cp437",
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "provenance": [
+    {
+      "report": "analysis/aspect-findcase/compiler-01/report.json",
+      "report_sha256": "9012f46999b927b3a6603e4bab9231cd9db9358edb44a6c5108f2f674d3df1dc",
+      "probe": "compiler_probe.py",
+      "probe_sha256": "56c94f44bc5a743aab145925647bbfb74bced731b7174ed037af758d7dfc3dbb"
+    },
+    {
+      "report": "analysis/aspect-findcase/compiler-02/report.json",
+      "report_sha256": "bee7863edf03016b6bfeed01e09dd6817078a5b9a671c7aabd907bd69c8bcfb3",
+      "probe": "compiler_probe02.py",
+      "probe_sha256": "0c046530f7577596569442d378379fea39f5dded383bf25044f2c9afd4901ce7"
+    },
+    {
+      "report": "analysis/aspect-findcase/compiler-03/report.json",
+      "report_sha256": "0254b6f4fbd4e084256eff682585e41503d0531d8cf6b8e30f0cf5a7b4b79177",
+      "probe": "compiler_probe03.py",
+      "probe_sha256": "a5187113d6262b329cac699137dbbf437b3a52c31466eca5ed2dae2c54826abe"
+    }
+  ],
+  "freezer_sha256": "147fe364c7f0948bdad502b72ae28b55e5a9a6215871a5a06bb443b5db1808b0",
+  "vectors": [
+    {
+      "name": "FC000",
+      "label": "FIND_TWO",
+      "source": "integer result\r\nproc main\r\nfind \"ABCABC\" \"BC\"\r\nendproc\r\n",
+      "source_sha256": "1128dc407667be37118ad145f083dfa9eb57a873924dc370b365fc330e7b16db",
+      "hex": "00 cf 3b aa b9 0e 60 7b ea 5e 0d c4 aa b5 87 6b 3e 00 94",
+      "asx_sha256": "2dd19a61b9722c6919479209b25cb69ce9df32e0e97d1cd954448c0c26525758"
+    },
+    {
+      "name": "FC010",
+      "label": "FIND_EMPTY",
+      "source": "integer result\r\nproc main\r\nfind \"\" \"\"\r\nendproc\r\n",
+      "source_sha256": "e96bc0fd91561e35ebf0b21ec99c790396691895974c4e6377652410d85e2a7c",
+      "hex": "00 cf 3b 6e 13 6e 13 00 94",
+      "asx_sha256": "4124155d97a2ab95163148979abc76eef479b63bc59cfccb1fb8a3a6a774d1c8"
+    },
+    {
+      "name": "FC011",
+      "label": "FIND_COMMA",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\",\"B\"\r\nendproc\r\n",
+      "source_sha256": "1d1224f43e6a723b7dff8982d31741cfdfd04d9e48d34ea50d9994705151f260",
+      "hex": "00 cf 3b aa b6 0b 60 7b ea aa b4 03 4d 00 94",
+      "asx_sha256": "dab6b4b1918524aefb5977f3e31fab55e8368f578334739b2e658f6b38f93a52"
+    },
+    {
+      "name": "FC012",
+      "label": "SW_EMPTY_NUM",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "b69692a5329c07f9f50d66000f81217a5d0793e29a7ece95078e6edb38407409",
+      "hex": "00 cf b8 b5 01 09 00 00 00 94",
+      "asx_sha256": "b8948724e149a8316c1dead7b397789c0608420f201706ae3c25814106267f0f"
+    },
+    {
+      "name": "FC013",
+      "label": "SW_EMPTY_STR",
+      "source": "integer result\r\nproc main\r\nswitch \"A\"\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "2a0e7db94cf336a5c4586a76cbe183c8ec8a353fb03d9a616dea5a5f5c92499b",
+      "hex": "00 cf b8 aa b4 09 60 0b 00 00 00 94",
+      "asx_sha256": "f781c954dff73c5f4e109f3218d50db4e13eb508e6c45967b5f99d7003bccd88"
+    },
+    {
+      "name": "FC014",
+      "label": "SW_ONE",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "f6ca50f749e4fc746adde84a3d4db78c37fb75198a5e7e78fbace80d7d2fbd14",
+      "hex": "00 cf b8 b5 01 09 00 00 00 0f 1c 00 00 00 b5 01 5b 00 8d 00 ab 07 00 62 1c 00 00 00 94",
+      "asx_sha256": "450abda549d5cbd8c78cfd49f7cce95ed4998641169e449ed4dc79ef133723d6"
+    },
+    {
+      "name": "FC016",
+      "label": "SW_STR",
+      "source": "integer result\r\nproc main\r\nswitch \"A\"\r\ncase \"A\"\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "9674e66a2110ea20db98ffd49f5c42037293fc4cd020aaf7ca60194fc52fac47",
+      "hex": "00 cf b8 aa b4 09 60 0b 00 00 00 0f 20 00 00 00 aa b4 8b 3c 5b 00 8d 00 ab 07 00 62 20 00 00 00 94",
+      "asx_sha256": "94cd153b7ea09e83582c4e27cb578c0e16470b521ad796803c677448d47e68a5"
+    },
+    {
+      "name": "FC017",
+      "label": "SW_DEFAULT",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ndefault\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "6538711f3052f62abf7d49147626259f1e990ea106885d3a5ac873dc35c5ec57",
+      "hex": "00 cf b8 b5 01 09 00 00 00 5b 00 8d 00 ab 07 00 62 15 00 00 00 94",
+      "asx_sha256": "a736bf4bc8bde2bd8b79d49861a44c65a132e7410f99dae6eb8e5ef1805cb336"
+    },
+    {
+      "name": "FC019",
+      "label": "SW_TWO",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\nresult=7\r\nendcase\r\ncase 2\r\nresult=8\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "11d2a6ca1e394c49419e82a98cbda0322e360d7939ee682171464b93cbfcc828",
+      "hex": "00 cf b8 b5 01 09 00 00 00 0f 1c 00 00 00 b5 01 5b 00 8d 00 ab 07 00 62 2f 00 00 00 0f 2f 00 00 00 b5 02 5b 00 8d 00 ab 08 00 62 2f 00 00 00 94",
+      "asx_sha256": "834426326eeb60c84815b30fc7489a6f4ed46f035f8436023b41c97a9ad754bf"
+    },
+    {
+      "name": "FC020",
+      "label": "SW_BREAK",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\nresult=7\r\nbreak\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "903f58a2293af9d785b60675c9c66c7c6d292c62057bb906a76c7560781e205b",
+      "hex": "00 cf b8 b5 01 09 00 00 00 0f 1d 00 00 00 b5 01 5b 00 8d 00 ab 07 00 0d 62 1d 00 00 00 94",
+      "asx_sha256": "3d9ef37aa4b9e64a1eea2f5c9c27b57ee4b02811288d78f77d9989b89aa581c2"
+    },
+    {
+      "name": "FC022",
+      "label": "SW_EXIT",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\nexit\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "ae6046713f7528a7a3a95e6dcc5dd807ecc9988d29d6714b5b42e3a607ab9064",
+      "hex": "00 cf b8 b5 01 09 00 00 00 0f 16 00 00 00 b5 01 33 62 16 00 00 00 94",
+      "asx_sha256": "84c89a4a1783a3dfdbbe0e7196d188c21d09e9253eaff7c9582a6f25024f34f6"
+    },
+    {
+      "name": "FC027",
+      "label": "SW_VAR",
+      "source": "integer result\r\nproc main\r\nswitch result\r\ncase result\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "b9e87242e91a0955a3a56e4e3256ea8650e0c6ca86640ffb8cdb8df3b2c65a94",
+      "hex": "00 cf b8 8d 00 09 00 00 00 0f 1c 00 00 00 8d 00 5b 00 8d 00 ab 07 00 62 1c 00 00 00 94",
+      "asx_sha256": "dd5327ff66d8bd251017cbb5c2bf8cb17ea50ce21bf5df8f706d34d1d0e12c0b"
+    },
+    {
+      "name": "FC033",
+      "label": "SW_NEST",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\nswitch \"A\"\r\ncase \"A\"\r\nresult=7\r\nendcase\r\nendswitch\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "b4b0cef8792c7ef7301be0035e18fcd37e9d7b3d9fe4726a30bb32265b4ae162",
+      "hex": "00 cf b8 b5 01 09 00 00 00 0f 33 00 00 00 b5 01 b8 aa b4 0d 58 19 00 00 00 0f 2e 00 00 00 aa b4 83 36 5b 00 8d 00 ab 07 00 62 2e 00 00 00 62 33 00 00 00 94",
+      "asx_sha256": "521fb07162d5a0cbddc41a183e1d32337ee852add012f6de5525160d0e552060"
+    },
+    {
+      "name": "FC040",
+      "label": "SW_DEFAULT_FIRST",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ndefault\r\nresult=7\r\nendcase\r\ncase 1\r\nresult=8\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "184913fec81c2d8df4130e4b1edeb9e1207ed6ba80ff7fc1aaa00fed4f742ab2",
+      "hex": "00 cf b8 b5 01 15 00 00 00 5b 00 8d 00 ab 07 00 62 28 00 00 00 0f 09 00 00 00 b5 01 5b 00 8d 00 ab 08 00 62 28 00 00 00 94",
+      "asx_sha256": "a7082844e9c70e38461f704c86dd45391aab06d27d9a75a62324f0338b2aac75"
+    },
+    {
+      "name": "FC041",
+      "label": "SW_ADJACENT",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\ncase 2\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "855bcacebb43c483241f88709d402f04f1a737126ef97de48625b8070a83eced",
+      "hex": "00 cf b8 b5 01 09 00 00 00 0f 15 00 00 00 b5 01 62 1c 00 00 00 0f 28 00 00 00 b5 02 5b 00 8d 00 ab 07 00 62 28 00 00 00 94",
+      "asx_sha256": "7b48bf520388353eeab6de60667736ae4831ef6a5710e4edccfa3cfcc67f7d7d"
+    },
+    {
+      "name": "FC046",
+      "label": "FIND_RESULT",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\" \"B\" result\r\nendproc\r\n",
+      "source_sha256": "f10df94549a42b76455245fa62c6eff6b51f4a996e785c6e74cfa482aa821ed5",
+      "hex": "00 cf 3b aa b6 0b 60 7b ea aa b4 03 4d 01 8d 00 94",
+      "asx_sha256": "2f18e1f24f01e48b4d77c4b1b3239f2ad15e7a238a4ba6d6de0c22f309178fc0"
+    },
+    {
+      "name": "FD000",
+      "label": "FIND_DEST_integer",
+      "source": "integer target\r\nproc main\r\nfind \"ABCABC\" \"BC\" target\r\nendproc\r\n",
+      "source_sha256": "d31fab76292ee68f4554467f48c1280fc3980657c79346160ffda392cd7aa354",
+      "hex": "00 cf 3b aa b9 0e 60 7b ea 5e 0d c4 aa b5 87 6b 3e 01 8d 00 94",
+      "asx_sha256": "2fd859fa942507834c8288c91e77f3273a2307f94287c844c9487fef891bd46c"
+    },
+    {
+      "name": "FD001",
+      "label": "SWITCH_VAR_integer",
+      "source": "integer target\r\nproc main\r\nswitch target\r\ncase 1\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "96a2427333eeeb3a3418e3b665a389677425375b298301d27f6b600960a992e1",
+      "hex": "00 cf b8 8d 00 09 00 00 00 0f 15 00 00 00 b5 01 62 15 00 00 00 94",
+      "asx_sha256": "8305b6028843a88f68d1ef350273a8322160c6180214c50e21082ad6d8ef1de8"
+    },
+    {
+      "name": "FD007",
+      "label": "SWITCH_VAR_string",
+      "source": "string target\r\nproc main\r\nswitch target\r\ncase \"A\"\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "b4cdaef80bd9b6d1853bb4403a40df304fa89ec1e6d98a6919e991bede2a6c0e",
+      "hex": "01 cf b8 8c 00 09 00 00 00 0f 17 00 00 00 aa b4 89 22 62 17 00 00 00 94",
+      "asx_sha256": "1e43fd05d4c9ed40e30ed194d72b7774cc4c703a82526970a9e3a7ae5976cb0b"
+    },
+    {
+      "name": "FD012",
+      "label": "FIND_BUILTIN_SRC",
+      "source": "integer result\r\nproc main\r\nfind $d_name $null result\r\nendproc\r\n",
+      "source_sha256": "5e0c597e19794c1e70408952019a987ae7ac1d591d5058164cf9d8de4b1b5481",
+      "hex": "00 cf 3b 6e 03 6e 13 01 8d 00 94",
+      "asx_sha256": "be04e3e1e7b6b510f65ddbe60bc1f5ef6fd3a7b0f8efdde810f81bb0cf91d339"
+    },
+    {
+      "name": "FD020",
+      "label": "SW_LOCAL_INT",
+      "source": "integer result\r\nproc main\r\ninteger target=2\r\nswitch target\r\ncase 2\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "130a91eb22a662e77a3432f314cf2ae12c06bbc311bbcbe43690e934b462ac6b",
+      "hex": "00 d2 02 00 5b 00 a1 00 00 ab 02 00 cf b8 a1 00 00 15 00 00 00 0f 28 00 00 00 b5 02 5b 00 8d 00 ab 07 00 62 28 00 00 00 95",
+      "asx_sha256": "9e2f5f04ac43123003f8cd177a1ade74638303566fbe709b20550c347090f04f"
+    },
+    {
+      "name": "FD021",
+      "label": "SW_LOCAL_STR",
+      "source": "integer result\r\nproc main\r\nstring target=\"A\"\r\nswitch target\r\ncase \"A\"\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "3d68099f3c127e704528f516557c6bc347e054adf36a6c0c956094f234034393",
+      "hex": "00 d2 51 00 ac a0 00 00 aa b4 82 76 00 cf b8 a0 00 00 16 00 00 00 0f 2b 00 00 00 aa b4 0b 46 5b 00 8d 00 ab 07 00 62 2b 00 00 00 95",
+      "asx_sha256": "b5aaf03480bfd44a11279c2b3a1b2331da2b53dd913523c400ae66a3d57fb824"
+    },
+    {
+      "name": "FD022",
+      "label": "SW_PARM_INT",
+      "source": "integer result\r\nproc main\r\ncall worker with 2\r\nendproc\r\nproc worker\r\nintparm target\r\nswitch target\r\ncase 2\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "0675d22711e70bc8f36a4743c40609bb660228a9df13c39465ffac73234b82c2",
+      "hex": "00 cf d0 cc b5 02 c8 0f 00 00 00 d2 fe ff 94 cf b8 97 08 00 18 00 00 00 0f 2b 00 00 00 b5 02 5b 00 8d 00 ab 07 00 62 2b 00 00 00 95",
+      "asx_sha256": "9079aef8cd44f493c1cebb7330020949c5d2afdc02bd01f2455d152dd0f1f6f7"
+    },
+    {
+      "name": "FD023",
+      "label": "SW_PARM_STR",
+      "source": "integer result\r\nproc main\r\ncall worker with \"A\"\r\nendproc\r\nproc worker\r\nstrparm target\r\nswitch target\r\ncase \"A\"\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "0761421bf51aec18f9823686cc242f82960ffb2fa51a38868f880a8faddd78ce",
+      "hex": "00 cf d0 cd aa b4 8a c0 c8 11 00 00 00 d2 af ff 94 cf b8 96 57 00 1a 00 00 00 0f 2f 00 00 00 aa b4 06 18 5b 00 8d 00 ab 07 00 62 2f 00 00 00 95",
+      "asx_sha256": "ec8f9c8c56859260e3354ce1f64190bb0728deb74d3205e7a79e9ce8a0348717"
+    },
+    {
+      "name": "FD024",
+      "label": "SW_BUILTIN_INT",
+      "source": "\r\nproc main\r\nswitch comdata\r\ncase failure\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "460ec840c5da4986c2b7c26e2e4fcb0fcde599ca108ceb11d6073018f6e392d2",
+      "hex": "00 cf b8 6f 14 09 00 00 00 0f 15 00 00 00 6f 15 62 15 00 00 00 94",
+      "asx_sha256": "b45810b6d63755253e6d4ca35040c037f392e469d43b6e81bbe4af061d21852c"
+    },
+    {
+      "name": "FD025",
+      "label": "SW_BUILTIN_STR",
+      "source": "\r\nproc main\r\nswitch $d_name\r\ncase $null\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "90dd5a6937c4c2546abed0b282eb9f180881f8f9d656ae06e180915fc5887058",
+      "hex": "00 cf b8 6e 03 09 00 00 00 0f 15 00 00 00 6e 13 62 15 00 00 00 94",
+      "asx_sha256": "91b4d8db865d93ac4154a30db2fa6f650b400c91ad4507edeb13c8bed549f3c1"
+    },
+    {
+      "name": "FD026",
+      "label": "SW_CASE_STRVAR",
+      "source": "string target\r\nproc main\r\nswitch \"A\"\r\ncase target\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "eff69c4ad243846ade6aa3e594cace1990339dd9621e0a44acc401fcd98683b9",
+      "hex": "01 cf b8 aa b4 09 60 0b 00 00 00 0f 17 00 00 00 8c 00 62 17 00 00 00 94",
+      "asx_sha256": "7eed3a296dacc70476527d748f8814817b87bffd6e58d51b00f879f72b27a76c"
+    },
+    {
+      "name": "FD029",
+      "label": "SW_CASE_NEG",
+      "source": "\r\nproc main\r\nswitch -1\r\ncase -1\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "5c88045334b15ce1894c786a30285bb9652a778923cf318e171bba2dc48a96ba",
+      "hex": "00 cf b8 ab ff ff 0a 00 00 00 0f 17 00 00 00 ab ff ff 62 17 00 00 00 94",
+      "asx_sha256": "75b263e35ec59ea16088ff40973ab80fe2d0ae173c2ad880b4baf061a6774ebe"
+    },
+    {
+      "name": "FD030",
+      "label": "SW_CASE_MIN",
+      "source": "\r\nproc main\r\nswitch -32768\r\ncase -32768\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "884e6a2190172351b866c2e5125c0d9516e3729d3307358d604a74d4d910b177",
+      "hex": "00 cf b8 ab 00 80 0a 00 00 00 0f 17 00 00 00 ab 00 80 62 17 00 00 00 94",
+      "asx_sha256": "3480ada453b24922ee47b091257d154c8b3531bd1d93b47537a881dc9474246c"
+    },
+    {
+      "name": "FD035",
+      "label": "SW_EMPTYCASE",
+      "source": "\r\nproc main\r\nswitch 1\r\ncase 1\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "5c5498889b1bf6f2b548f0eadf418d0f3767491764daf6abcf216445b39906d3",
+      "hex": "00 cf b8 b5 01 09 00 00 00 0f 15 00 00 00 b5 01 62 15 00 00 00 94",
+      "asx_sha256": "5c66d1101464785c9eac7179413bf6409b6b835688f9dc2864a4b47dfaacf60e"
+    },
+    {
+      "name": "FD036",
+      "label": "SW_EMPTYDEFAULT",
+      "source": "\r\nproc main\r\nswitch 1\r\ndefault\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "73867235d4208199b49030bbed34ace0a4d82db518f55029d2ce91a48ecbf8ed",
+      "hex": "00 cf b8 b5 01 09 00 00 00 62 0e 00 00 00 94",
+      "asx_sha256": "e65b1dda62ab8fbd75c6644ee9495b39ea0cdb24e4e4b3bcb0110549b37e473c"
+    },
+    {
+      "name": "FD037",
+      "label": "SW_CASE_NODEFAULT",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\nendcase\r\ndefault\r\nresult=9\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "6f338077f300216c33cf8a1677ff3945ea287e5678a60c951c70331141efedb6",
+      "hex": "00 cf b8 b5 01 09 00 00 00 0f 15 00 00 00 b5 01 62 21 00 00 00 5b 00 8d 00 ab 09 00 62 21 00 00 00 94",
+      "asx_sha256": "fcd8ef871df60d2747706c77fd5276fcae484b03c5ea18809c39bac5f461ae08"
+    },
+    {
+      "name": "FD038",
+      "label": "SW_DUP_CASE",
+      "source": "\r\nproc main\r\nswitch 1\r\ncase 1\r\nendcase\r\ncase 1\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "4a74eb27efe262961ece35b03b0003b6b8ef566aef5fdabd45fd6d7b569e4a5e",
+      "hex": "00 cf b8 b5 01 09 00 00 00 0f 15 00 00 00 b5 01 62 21 00 00 00 0f 21 00 00 00 b5 01 62 21 00 00 00 94",
+      "asx_sha256": "e1af722be8825311f540acbdc80c4334e5a85188aab68bd00f78ca9e238abf8b"
+    },
+    {
+      "name": "FD039",
+      "label": "SW_DEFAULT_LAST",
+      "source": "integer result\r\nproc main\r\nswitch 2\r\ncase 1\r\nresult=1\r\nendcase\r\ndefault\r\nresult=9\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "4f6cb156f40076e0cc94de5b0425cc9e1d71638e99513ba26e96f042c8809020",
+      "hex": "00 cf b8 b5 02 09 00 00 00 0f 1c 00 00 00 b5 01 5b 00 8d 00 ab 01 00 62 28 00 00 00 5b 00 8d 00 ab 09 00 62 28 00 00 00 94",
+      "asx_sha256": "3c1386e49d447264cd9e23e5ef592c3b41d99c00b6bf7fd16e0446ea67d04147"
+    },
+    {
+      "name": "FD040",
+      "label": "SW_DEFAULT_MIDDLE",
+      "source": "integer result\r\nproc main\r\nswitch 2\r\ncase 1\r\nresult=1\r\nendcase\r\ndefault\r\nresult=9\r\nendcase\r\ncase 2\r\nresult=2\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "d9719883abe47e895d0cad88934bc5469ba986688bbd967214ddba6ca766121e",
+      "hex": "00 cf b8 b5 02 09 00 00 00 0f 28 00 00 00 b5 01 5b 00 8d 00 ab 01 00 62 3b 00 00 00 5b 00 8d 00 ab 09 00 62 3b 00 00 00 0f 1c 00 00 00 b5 02 5b 00 8d 00 ab 02 00 62 3b 00 00 00 94",
+      "asx_sha256": "83ef5e34abb579f138f829b06067dda5a0bf3a7b7e532138dc48a4c73e6b43ea"
+    },
+    {
+      "name": "FD041",
+      "label": "SW_DEFAULT_EMPTY_ADJ",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ndefault\r\ncase 1\r\nresult=1\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "bfb652924202d46d06ae370792496e8f2d2e274654d3b781b37923ffbab11d56",
+      "hex": "00 cf b8 b5 01 0e 00 00 00 62 15 00 00 00 0f 09 00 00 00 b5 01 5b 00 8d 00 ab 01 00 62 21 00 00 00 94",
+      "asx_sha256": "6082f3b7cf95368eebec8a6cfed2ab992124664fea9a1ca65b905222309a0b5e"
+    },
+    {
+      "name": "FD042",
+      "label": "SW_CASE_DEFAULT_ADJ",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\ndefault\r\nresult=1\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "551f994a173fc143afaa73fb511492f4b0ae62fd57fd45361c410e0642f68c2f",
+      "hex": "00 cf b8 b5 01 09 00 00 00 0f 10 00 00 00 b5 01 5b 00 8d 00 ab 01 00 62 1c 00 00 00 94",
+      "asx_sha256": "f6794c4be4899a41acd4b60611982301cb5d390986ac8573892d4e7e3da9b131"
+    },
+    {
+      "name": "FD043",
+      "label": "SW_THREE_ADJ",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\ncase 2\r\ncase 3\r\nresult=1\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "dbbec57e2e8c1ecec12250597251627e4a648b3c37819c3dfa15def8d35348a4",
+      "hex": "00 cf b8 b5 01 09 00 00 00 0f 15 00 00 00 b5 01 62 1c 00 00 00 0f 21 00 00 00 b5 02 62 28 00 00 00 0f 34 00 00 00 b5 03 5b 00 8d 00 ab 01 00 62 34 00 00 00 94",
+      "asx_sha256": "ebc0687cbae1c8f6c3933cef11090076dbed9f42ef9574f72beaf97489944001"
+    },
+    {
+      "name": "FD050",
+      "label": "SW_IF",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\nif result==0\r\nresult=9\r\nelse\r\nresult=8\r\nendif\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "4ce5ee6a801e1c9086a75b2f39a8308c879a66aaa148c2f5e71ed77c623cb261",
+      "hex": "00 cf b8 b5 01 09 00 00 00 0f 38 00 00 00 b5 01 32 00 8d 00 ab 00 00 79 00 15 2c 00 00 00 79 00 5b 00 8d 00 ab 09 00 62 33 00 00 00 5b 00 8d 00 ab 08 00 62 38 00 00 00 94",
+      "asx_sha256": "84587e183ac4280205255a00337b105fd4d2277e5bf81aa78bca2e94f73adab5"
+    },
+    {
+      "name": "FD051",
+      "label": "SW_WHILE",
+      "source": "integer result\r\nproc main\r\nwhile result<3\r\nswitch result\r\ncase 1\r\nexitwhile\r\nendcase\r\ndefault\r\nresult++\r\nendcase\r\nendswitch\r\nendwhile\r\nendproc\r\n",
+      "source_sha256": "03faf9cf9f4d7b75a7e02b8284991e6e9ce2cc96c2141331df2914a952026cdd",
+      "hex": "00 cf 6d 00 8d 00 ab 03 00 79 00 15 37 00 00 00 79 00 b8 8d 00 19 00 00 00 0f 2a 00 00 00 b5 01 62 37 00 00 00 62 32 00 00 00 5a 8d 00 62 32 00 00 00 62 02 00 00 00 94",
+      "asx_sha256": "82f49a46d393bcf7db9c126e95ae47c6d454c03f3ae1a42a1a333487f2fde415"
+    },
+    {
+      "name": "FD052",
+      "label": "SW_CASE_CALL",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\ncall worker\r\nendcase\r\nendswitch\r\nendproc\r\nproc worker\r\nresult=9\r\nendproc\r\n",
+      "source_sha256": "f5f8f0d33462e39152eb939063b1a60dfbe8f700d96c879da6ca354e6b2be263",
+      "hex": "00 cf b8 b5 01 09 00 00 00 0f 1b 00 00 00 b5 01 d0 c7 1c 00 00 00 62 1b 00 00 00 94 cf 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "75fb4cd32516cafec0abcb0b8186b5f17b93c98fe3488bcb5642255e2bb23ebf"
+    },
+    {
+      "name": "FD053",
+      "label": "SW_EMPTY_STRING",
+      "source": "\r\nproc main\r\nswitch \"\"\r\ncase \"\"\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "4df23d76d523886250bdd17c4a74016b75accad26b6d3438b1416f3d1e79db00",
+      "hex": "00 cf b8 6e 13 09 00 00 00 0f 15 00 00 00 6e 13 62 15 00 00 00 94",
+      "asx_sha256": "4597637ec518f8d502af8fcbc4e2785e91d93c7bb71a222e41e08f6594d509e5"
+    },
+    {
+      "name": "FD054",
+      "label": "SW_HIGH_STRING",
+      "source": "\r\nproc main\r\nswitch \"\u00e9\"\r\ncase \"\u00e9\"\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "26e21154194b9047ad0fbf483c88f85a3dfe706ce0a4a9b310fd1f18cedf93f6",
+      "hex": "00 cf b8 aa b4 09 a1 0b 00 00 00 0f 19 00 00 00 aa b4 8b 7d 62 19 00 00 00 94",
+      "asx_sha256": "c83f221c54def49731e8156edeec1474198cdcd51faa16f80338f5229637d64d"
+    },
+    {
+      "name": "FD055",
+      "label": "BREAK_ALONE",
+      "source": "\r\nproc main\r\nbreak\r\nendproc\r\n",
+      "source_sha256": "5a94f497c93a1ce41cb623f27c3dadb6084c9cc8e583962449abddc1634ac504",
+      "hex": "00 cf 0d 94",
+      "asx_sha256": "d98d0229c5b5d036b6da9895356717879061643c25cc7fe5079a9b102286fa26"
+    },
+    {
+      "name": "FD057",
+      "label": "FIND_MAX",
+      "source": "\r\nproc main\r\nfind \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\" \"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\"\r\nendproc\r\n",
+      "source_sha256": "da9fe04808d791176130fe5de3440d45fc247a7b436bbd9f81c21114ba420ef1",
+      "hex": "00 cf 3b aa 03 58 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a aa 03 d7 3d 77 23 37 c1 09 3d fb 9b 6b 2b 25 8f 3d 77 23 37 c1 09 3d fb 9b 6b 2b 25 8f 3d 77 23 37 c1 09 3d fb 9b 6b 2b 25 8f 3d 77 23 37 c1 09 3d fb 9b 6b 2b 25 8f 3d 77 23 37 c1 09 3d fb 9b 6b 2b 25 8f 3d 77 23 37 c1 09 3d fb 9b 6b 2b 25 8f 3d 77 00 94",
+      "asx_sha256": "7a4d43d20b73af085d43e2c4af64a3c86ab8ae10b78755da8da1dedc629fa49b"
+    },
+    {
+      "name": "FE000",
+      "label": "FIND_COMMA_THIRD",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\",\"B\",result\r\nendproc\r\n",
+      "source_sha256": "94e4a7ab3aed09953f2a047e34de098a6c819c5149e60312e41f21bcdeb04804",
+      "hex": "00 cf 3b aa b6 0b 60 7b ea aa b4 03 4d 01 8d 00 94",
+      "asx_sha256": "2f18e1f24f01e48b4d77c4b1b3239f2ad15e7a238a4ba6d6de0c22f309178fc0"
+    },
+    {
+      "name": "FE001",
+      "label": "FIND_SPACE_COMMA",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\" \"B\",result\r\nendproc\r\n",
+      "source_sha256": "9fd016fc2b48c0f48116520550cfcc8cb49e3809096dddc3044f2de05f1dcfe0",
+      "hex": "00 cf 3b aa b6 0b 60 7b ea aa b4 03 4d 01 8d 00 94",
+      "asx_sha256": "2f18e1f24f01e48b4d77c4b1b3239f2ad15e7a238a4ba6d6de0c22f309178fc0"
+    },
+    {
+      "name": "FE005",
+      "label": "FIND_LOCAL_OK",
+      "source": "integer result\r\nproc main\r\nstring haystack=\"ABC\",needle=\"B\"\r\ninteger offset\r\nfind haystack needle offset\r\nendproc\r\n",
+      "source_sha256": "656bedcd8b97b379a2e47c337d38d6d539a6664d0be6a1eb3723f05a678748b2",
+      "hex": "00 d2 a4 00 ac a0 00 00 aa b6 84 76 37 0a 00 ac a0 51 00 aa b4 0d 59 00 cf 3b a0 00 00 a0 51 00 01 a1 a2 00 95",
+      "asx_sha256": "92a48a99695226d27bb3928994c40027908e813bba89ce6e7f1e237e343851e6"
+    },
+    {
+      "name": "FE007",
+      "label": "SW_BODY_NEXTCASE",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\nresult=9\r\ncase 2\r\nresult=8\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "b804698d9d8c16ff1d2080b11d9073509b8981265737c86b5a2606b9851ba38d",
+      "hex": "00 cf b8 b5 01 09 00 00 00 0f 1c 00 00 00 b5 01 5b 00 8d 00 ab 09 00 62 23 00 00 00 0f 2f 00 00 00 b5 02 5b 00 8d 00 ab 08 00 62 2f 00 00 00 94",
+      "asx_sha256": "690d69a0fb82f37bb0a23bb0913e36a35dd1e9a57bdc1702918bc03ea9ed9ef7"
+    },
+    {
+      "name": "FE010",
+      "label": "SW_DEFAULT_ADJ_LAST",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\ndefault\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "4851a8ffd7f9146e7f9033b9567141076774c15084d603a9d2d55e4e7d35c4be",
+      "hex": "00 cf b8 b5 01 09 00 00 00 0f 10 00 00 00 b5 01 62 15 00 00 00 94",
+      "asx_sha256": "a81574883b29c85ea51617f86aab97bd95760cab1071e0741d46ee19aa843367"
+    },
+    {
+      "name": "FE011",
+      "label": "SW_CASE_AFTERDEFAULT_BODY",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ndefault\r\nresult=9\r\ncase 1\r\nresult=8\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "33e60c5d9a21607066e697f7f3705893de761ade5b47ca99e8cf9289916c60e3",
+      "hex": "00 cf b8 b5 01 15 00 00 00 5b 00 8d 00 ab 09 00 62 1c 00 00 00 0f 09 00 00 00 b5 01 5b 00 8d 00 ab 08 00 62 28 00 00 00 94",
+      "asx_sha256": "280b4d54790e8a90197fa86b6dcb40d6135855d043e44bc7d361b716eaa97d30"
+    },
+    {
+      "name": "FE012",
+      "label": "SW_EMPTY_DEFAULT_ONLY",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ndefault\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "80c521fac4dce84d82c48e360bae3fac4684693fcef7e539a43ea6e271b586a0",
+      "hex": "00 cf b8 b5 01 09 00 00 00 62 0e 00 00 00 94",
+      "asx_sha256": "e65b1dda62ab8fbd75c6644ee9495b39ea0cdb24e4e4b3bcb0110549b37e473c"
+    },
+    {
+      "name": "FE018",
+      "label": "SW_MAX",
+      "source": "integer result\r\nproc main\r\nswitch 32767\r\ncase 32767\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "8cd5580f2125cd93f39e58f05ce14832b0e0bca969cb59087679f12a4d33eb47",
+      "hex": "00 cf b8 ab ff 7f 0a 00 00 00 0f 17 00 00 00 ab ff 7f 62 17 00 00 00 94",
+      "asx_sha256": "2664b9c420429642706e069537e3277c9f29259ce10cdeb0603db2a11cc0ed76"
+    },
+    {
+      "name": "FE019",
+      "label": "FIND_PARM_OK",
+      "source": "integer result\r\nproc main\r\ncall worker with \"ABC\" \"B\" 0\r\nendproc\r\nproc worker\r\nstrparm haystack,needle\r\nintparm offset\r\nfind haystack needle offset\r\nendproc\r\n",
+      "source_sha256": "75f469db4536a233d6984233fa5a2575bd2dc7bc3b785837c8a8c849d957be46",
+      "hex": "00 cf d0 cd aa b6 8c c0 6b 78 cd aa b4 05 89 cc b5 00 c8 1b 00 00 00 d2 5c ff 94 cf 3b 96 aa 00 96 59 00 01 97 08 00 95",
+      "asx_sha256": "f07be913dd3f09bdf013845032fc1feb7fa9dd413fba7f0f6929f4ed5779c422"
+    }
+  ],
+  "rejected": [
+    {
+      "name": "FC001",
+      "label": "FIND_ONE",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "eded338383cdbcef596aebb7255ad74e61e753c1400ceaaaae78d5f95ddb7169",
+      "errors": [
+        "Error C006 Line 3: Missing token"
+      ]
+    },
+    {
+      "name": "FC002",
+      "label": "FIND_NONE",
+      "source": "integer result\r\nproc main\r\nfind\r\nendproc\r\n",
+      "source_sha256": "51b9d12f80be91084f20909f1207b04267dad151d8efbf1fe36fe826e05c5987",
+      "errors": [
+        "Error C006 Line 3: Missing token",
+        "Error C006 Line 3: Missing token"
+      ]
+    },
+    {
+      "name": "FC003",
+      "label": "FIND_START",
+      "source": "integer result\r\nproc main\r\nfind \"ABCABC\" \"BC\" 2\r\nendproc\r\n",
+      "source_sha256": "01b54d6f9a1e1cfd5160cdfed2377303445dc91049f4d338f5fbd5413c433077",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 2"
+      ]
+    },
+    {
+      "name": "FC004",
+      "label": "FIND_FOUR",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\" \"B\" 1 2\r\nendproc\r\n",
+      "source_sha256": "3278ab16e52ab9531167fc814a6c0618571e502b843a8138257b876d42fc17ba",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1",
+        "Error C002 Line 3: Unexpected token ==> 2"
+      ]
+    },
+    {
+      "name": "FC005",
+      "label": "FIND_NUM",
+      "source": "integer result\r\nproc main\r\nfind 5 2\r\nendproc\r\n",
+      "source_sha256": "91b783ee1db47836cc061444ce3ecf1135b5ee45b1d3c96870021ff8457a54ba",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> 5",
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> 2"
+      ]
+    },
+    {
+      "name": "FC006",
+      "label": "FIND_MIX1",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\" 2\r\nendproc\r\n",
+      "source_sha256": "450d65efab2a4a9a40750d2d28b47a2fef4600dca63fd0bb75de50640c58343a",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> 2"
+      ]
+    },
+    {
+      "name": "FC007",
+      "label": "FIND_MIX2",
+      "source": "integer result\r\nproc main\r\nfind 2 \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "a5f2c7c017b470606983814c1e4343689494c1adaf7e704252af26dbb48c77b4",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> 2"
+      ]
+    },
+    {
+      "name": "FC008",
+      "label": "FIND_EXPR",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\" \"B\" 1+1\r\nendproc\r\n",
+      "source_sha256": "e23939eed10b63159772ff6a190436190099f5b88334eca338d80dd9388fc96e",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1",
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FC009",
+      "label": "FIND_PAREN",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\" \"B\" (1)\r\nendproc\r\n",
+      "source_sha256": "0249e8416b6a62ce568170c649d5923340b75567e62ca767797ecc71cdcaaf69",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> (",
+        "Error C002 Line 3: Unexpected token ==> 1",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FC015",
+      "label": "SW_NO_ENDCASE",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\nresult=7\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "29f7567a6f42af9595a61db67a2b1df94ef80cb0cef1435e11f2995247d4c6fc",
+      "errors": [
+        "Error C008 Line 6: Missing ENDCASE command"
+      ]
+    },
+    {
+      "name": "FC018",
+      "label": "SW_DEFAULT_NOEND",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ndefault\r\nresult=7\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "474a1fd86f48d3561e95d139994ae11987ef3fd24fe707c23acf487edfc99dfc",
+      "errors": [
+        "Error C008 Line 6: Missing ENDCASE command"
+      ]
+    },
+    {
+      "name": "FC021",
+      "label": "SW_EXITCASE",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\nexitcase\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "e4be5ff38f5510281d1a8db87c781ff4f417ce26abad397e1f5c16db2ac7b1d5",
+      "errors": [
+        "Error C020 Line 5: Invalid command or expression token ==> EXITCASE"
+      ]
+    },
+    {
+      "name": "FC023",
+      "label": "SW_MULTI",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1,2\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "1e1580e1384f158d6def3cb3f4c566d9377f3ddb816def00aaf6ad2b666f8784",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> 2"
+      ]
+    },
+    {
+      "name": "FC024",
+      "label": "SW_RANGE",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1 to 3\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "b9cd3ce93c2f5b984ef59e6a5b5b1c78e96f80d9a76a3e0807da07ca910ddf84",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> TO",
+        "Error C002 Line 4: Unexpected token ==> 3"
+      ]
+    },
+    {
+      "name": "FC025",
+      "label": "SW_ELSE",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase else\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "6f408f95bfcc77aa4705726666e2d70b9eb9beba819438c4dd1cf50ae876707a",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> ELSE"
+      ]
+    },
+    {
+      "name": "FC026",
+      "label": "SW_COLON",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1:\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "936e3f218c8eeed27229ef7dead6f3d92e9da499e71f2199b857ef49295a2a56",
+      "errors": [
+        "Error C012 Line 4: Unexpected colon"
+      ]
+    },
+    {
+      "name": "FC028",
+      "label": "SW_EXPR",
+      "source": "integer result\r\nproc main\r\nswitch 1+1\r\ncase 2\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "896e8181d52011439070c25790fe1d44f9e49435e9449be69353a426b83ff571",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FC029",
+      "label": "SW_CASE_EXPR",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1+1\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "2fc4d02633decd5550805d5043bea99e98ab96fb8f5a277b9162fabb6936c228",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> +",
+        "Error C002 Line 4: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FC030",
+      "label": "SW_MIX",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase \"A\"\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "1ff3fe6bbfc52e1647753b2820ed2e2ee3130e5366e94be494f1a067bea619bd",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> A"
+      ]
+    },
+    {
+      "name": "FC031",
+      "label": "SW_LONG",
+      "source": "integer result\r\nproc main\r\nswitch 1L\r\ncase 1L\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "bea423e5e5d5e265880801296ccb8973d4236413d659ddf1f7c8568305fd0d89",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> 1L",
+        "Error C023 Line 4: Invalid string constant (quotes missing) ==> 1L"
+      ]
+    },
+    {
+      "name": "FC032",
+      "label": "SW_FLOAT",
+      "source": "integer result\r\nproc main\r\nswitch 1.0\r\ncase 1.0\r\nresult=7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "ace58922d5363d7a5da8e680e327cae308f1568d6eab295d1e5f45b2bc2ec38b",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> 1.0",
+        "Error C023 Line 4: Invalid string constant (quotes missing) ==> 1.0"
+      ]
+    },
+    {
+      "name": "FC034",
+      "label": "CASE_ORPHAN",
+      "source": "integer result\r\nproc main\r\ncase 1\r\nendproc\r\n",
+      "source_sha256": "cfacc9c456f8585e7896e68210fe862c200969811caf29ee4a5427b18c56431a",
+      "errors": [
+        "Error C003 Line 3: Unexpected command ==> CASE",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FC035",
+      "label": "DEFAULT_ORPHAN",
+      "source": "integer result\r\nproc main\r\ndefault\r\nendproc\r\n",
+      "source_sha256": "d067ce0b27faabca4030df7de50d8f2d23953e41dfbc8016bed336a42be6ec27",
+      "errors": [
+        "Error C003 Line 3: Unexpected command ==> DEFAULT"
+      ]
+    },
+    {
+      "name": "FC036",
+      "label": "ENDCASE_ORPHAN",
+      "source": "integer result\r\nproc main\r\nendcase\r\nendproc\r\n",
+      "source_sha256": "289db15acb5160148bb1854c3236afcc92f4f7e77f8e4f8222118370a89c14ae",
+      "errors": [
+        "Error C003 Line 3: Unexpected command ==> ENDCASE"
+      ]
+    },
+    {
+      "name": "FC037",
+      "label": "ENDSW_ORPHAN",
+      "source": "integer result\r\nproc main\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "b2ac527dcd03ada9ddcb1d53f97d4b50d99effd65a4f095c9ff970a28819c990",
+      "errors": [
+        "Error C003 Line 3: Unexpected command ==> ENDSWITCH"
+      ]
+    },
+    {
+      "name": "FC038",
+      "label": "SW_DUP_DEFAULT",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ndefault\r\nendcase\r\ndefault\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "ac10a45dfd8b61ac05c7e25325264f7a888323ee3eef12edd01d92aa1ff97340",
+      "errors": [
+        "Error C007 Line 6: Missing ENDSWITCH command",
+        "Error C003 Line 6: Unexpected command ==> DEFAULT",
+        "Error C003 Line 7: Unexpected command ==> ENDCASE",
+        "Error C003 Line 8: Unexpected command ==> ENDSWITCH"
+      ]
+    },
+    {
+      "name": "FC039",
+      "label": "SW_NO_CASE",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\nresult=7\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "aeade77d98af6bef7b15b120f68c699092bea81a339bff381527f61d775e918f",
+      "errors": [
+        "Error C007 Line 4: Missing ENDSWITCH command",
+        "Error C003 Line 5: Unexpected command ==> ENDSWITCH"
+      ]
+    },
+    {
+      "name": "FC042",
+      "label": "FIND_NEG",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\" \"B\" -1\r\nendproc\r\n",
+      "source_sha256": "2684e825562d7e2b1d17cb4f289049a108e03a6442b4545905d1a598a84a1289",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> -1"
+      ]
+    },
+    {
+      "name": "FC043",
+      "label": "FIND_LONG",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\" \"B\" 32768\r\nendproc\r\n",
+      "source_sha256": "124625b923ffaf3a0095b970a95906301d24ed27d119d259cc5e44b5cee6b4ec",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 32768"
+      ]
+    },
+    {
+      "name": "FC044",
+      "label": "FIND_FLOAT",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\" \"B\" 1.0\r\nendproc\r\n",
+      "source_sha256": "a315b2275cc6d9f5dd02216565090644d6d40ee934a9ed837606d6ef87236cc6",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1.0"
+      ]
+    },
+    {
+      "name": "FC045",
+      "label": "FIND_STRING",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\" \"B\" \"A\"\r\nendproc\r\n",
+      "source_sha256": "e2e132be9ffbaf02a388d7955ad21cac0d0309708939c0712808b15978afb8ed",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> A"
+      ]
+    },
+    {
+      "name": "FC047",
+      "label": "FIND_TRAILCOMMA",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\" \"B\",\r\nendproc\r\n",
+      "source_sha256": "c242dc728514a0125bbdb7c4a82e791ef8a94382f8d529865ecfbf7c245c5ab1",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> ,"
+      ]
+    },
+    {
+      "name": "FD002",
+      "label": "FIND_DEST_long",
+      "source": "long target\r\nproc main\r\nfind \"ABCABC\" \"BC\" target\r\nendproc\r\n",
+      "source_sha256": "ffc46fe14936602f240089b45e878046c741e152a06a064cf9274dcc206f0f74",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> TARGET"
+      ]
+    },
+    {
+      "name": "FD003",
+      "label": "SWITCH_VAR_long",
+      "source": "long target\r\nproc main\r\nswitch target\r\ncase 1\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "160860672454b468596b00c6b4551e6c95fbcf6700efedbb69bd4d422573ae89",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> TARGET",
+        "Error C023 Line 4: Invalid string constant (quotes missing) ==> 1"
+      ]
+    },
+    {
+      "name": "FD004",
+      "label": "FIND_DEST_float",
+      "source": "float target\r\nproc main\r\nfind \"ABCABC\" \"BC\" target\r\nendproc\r\n",
+      "source_sha256": "17d889ed3b4ce6bea8e41803c388117ce182a7525c4f79460dce8f2c8e53cc0e",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> TARGET"
+      ]
+    },
+    {
+      "name": "FD005",
+      "label": "SWITCH_VAR_float",
+      "source": "float target\r\nproc main\r\nswitch target\r\ncase 1\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "dc2b2699fd176522fb6d40037136519ba7fa3e9533f4452f9c25ad467198dbed",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> TARGET",
+        "Error C023 Line 4: Invalid string constant (quotes missing) ==> 1"
+      ]
+    },
+    {
+      "name": "FD006",
+      "label": "FIND_DEST_string",
+      "source": "string target\r\nproc main\r\nfind \"ABCABC\" \"BC\" target\r\nendproc\r\n",
+      "source_sha256": "d55221490a4d09695829ebe89b59915ca8abc0e83ead041638572ff066d71a03",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> TARGET"
+      ]
+    },
+    {
+      "name": "FD008",
+      "label": "FIND_LOCAL",
+      "source": "\r\nproc main\r\nstring text=\"ABC\",needle=\"B\"\r\ninteger pos\r\nfind text needle pos\r\nendproc\r\n",
+      "source_sha256": "70ed1d59e095e5badd1065a1b63a9242035d88b89c5fef462610e32f9982549d",
+      "errors": [
+        "Error C028 Line 3: Invalid use of reserved word ==> TEXT",
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> TEXT"
+      ]
+    },
+    {
+      "name": "FD009",
+      "label": "FIND_PARM",
+      "source": "\r\nproc main\r\ncall worker with \"ABC\" \"B\" 0\r\nendproc\r\nproc worker\r\nstrparm text,needle\r\nintparm pos\r\nfind text needle pos\r\nendproc\r\n",
+      "source_sha256": "661ec5e200fb2647de2ad45b44ecb1e24c97848dc7f838e5dc40e2cbb33d9fe7",
+      "errors": [
+        "Error C028 Line 6: Invalid use of reserved word ==> TEXT",
+        "Error C023 Line 8: Invalid string constant (quotes missing) ==> TEXT"
+      ]
+    },
+    {
+      "name": "FD010",
+      "label": "FIND_LONGPARM",
+      "source": "\r\nproc main\r\ncall worker with \"ABC\" 0L\r\nendproc\r\nproc worker\r\nstrparm text\r\nlongparm pos\r\nfind text \"A\" pos\r\nendproc\r\n",
+      "source_sha256": "eb0f51b074ec381cfb1d7c52df6e000884166d1c72e993ee54d297be57804569",
+      "errors": [
+        "Error C028 Line 6: Invalid use of reserved word ==> TEXT",
+        "Error C023 Line 8: Invalid string constant (quotes missing) ==> TEXT",
+        "Error C022 Line 8: Invalid numeric variable ==> POS"
+      ]
+    },
+    {
+      "name": "FD011",
+      "label": "FIND_BUILTIN_DEST",
+      "source": "\r\nproc main\r\nfind \"ABC\" \"B\" failure\r\nendproc\r\n",
+      "source_sha256": "0d88a4a4e8c09911d8bc23aefc4312148edcd6888939c57bba7a78a4abc64a0f",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> FAILURE"
+      ]
+    },
+    {
+      "name": "FD013",
+      "label": "FIND_MANY",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\" \"B\" result result\r\nendproc\r\n",
+      "source_sha256": "36e1eb01d6cad2c4191cada9880fa26c5a14c41f863d060ebae9cacd75c26213",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> RESULT"
+      ]
+    },
+    {
+      "name": "FD014",
+      "label": "FIND_COMMA_DEST",
+      "source": "integer result\r\nproc main\r\nfind ,\"ABC\",,\"B\",result,\r\nendproc\r\n",
+      "source_sha256": "5066ac370e28dd61b07836ebe3dc8d506a12c269b8d4845930dca9fca4bab426",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> ,",
+        "Error C025 Line 3: Invalid identifier ==> ,",
+        "Error C002 Line 3: Unexpected token ==> ,",
+        "Error C002 Line 3: Unexpected token ==> B",
+        "Error C002 Line 3: Unexpected token ==> ,",
+        "Error C002 Line 3: Unexpected token ==> RESULT",
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FD015",
+      "label": "FIND_TRAIL_TWO",
+      "source": "\r\nproc main\r\nfind \"ABC\" \"B\",\r\nendproc\r\n",
+      "source_sha256": "7f91552496f42566a149a6d0d7951bad98fef1d1fe42b431ae1e5dc3818fc4cf",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> ,"
+      ]
+    },
+    {
+      "name": "FD016",
+      "label": "FIND_MINUSDEST",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\" \"B\" -result\r\nendproc\r\n",
+      "source_sha256": "915c3d6776f2cab3fefdc2c81fa2568c9d7310fb1a8c864a8e8f525cee4e9e29",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> -RESULT"
+      ]
+    },
+    {
+      "name": "FD017",
+      "label": "FIND_PARENDEST",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\" \"B\" (result)\r\nendproc\r\n",
+      "source_sha256": "09e5588152c32313bf691c86e8402fb52c8a330eacb50bba05aad01ae913bfac",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> (",
+        "Error C002 Line 3: Unexpected token ==> RESULT",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FD018",
+      "label": "FIND_PARENSRC",
+      "source": "\r\nproc main\r\nfind (\"ABC\") \"B\"\r\nendproc\r\n",
+      "source_sha256": "043b306ed4800daaabab85b68c167fc612bc734b0daa834865b23942afaa8ed1",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> (",
+        "Error C025 Line 3: Invalid identifier ==> )",
+        "Error C002 Line 3: Unexpected token ==> B"
+      ]
+    },
+    {
+      "name": "FD019",
+      "label": "FIND_CONCAT",
+      "source": "\r\nproc main\r\nfind \"A\"+\"B\" \"B\"\r\nendproc\r\n",
+      "source_sha256": "728b710036ad099133ba3ad75c7d9b50751af7bb6566a0f62f5eb405473aa62c",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> +",
+        "Error C025 Line 3: Invalid identifier ==> B",
+        "Error C002 Line 3: Unexpected token ==> B"
+      ]
+    },
+    {
+      "name": "FD027",
+      "label": "SW_CASE_LONGVAR",
+      "source": "long target\r\nproc main\r\nswitch 1\r\ncase target\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "ede8dae036880292385996b45a23e7c4f6708bd9039e0f9446c4201fcfb545e6",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> TARGET"
+      ]
+    },
+    {
+      "name": "FD028",
+      "label": "SW_CASE_FLOATVAR",
+      "source": "float target\r\nproc main\r\nswitch 1\r\ncase target\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "eb9a3c47b7bd7e7079823c253d9d29ab9c582b21f64c7a289dbed55c4175a258",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> TARGET"
+      ]
+    },
+    {
+      "name": "FD031",
+      "label": "SW_CASE_WIDE",
+      "source": "\r\nproc main\r\nswitch 32768\r\ncase 32768\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "ab0ec45ff6c63bef23154e2c64d268257157492a7df363ef50946f9929e9b48f",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> 32768",
+        "Error C023 Line 4: Invalid string constant (quotes missing) ==> 32768"
+      ]
+    },
+    {
+      "name": "FD032",
+      "label": "SW_PAREN",
+      "source": "\r\nproc main\r\nswitch (1)\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "0e6864c7c74b3b04d406ad165e6b07bfbf634b883976c382d79e4b1d2b5d6a0d",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> (",
+        "Error C002 Line 3: Unexpected token ==> 1",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FD033",
+      "label": "SW_TRAIL_COMMA",
+      "source": "\r\nproc main\r\nswitch 1,\r\ncase 1,\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "01b5aede172b2bd279056d714f75213d9af37755c56584b0cff3ba1863f9c1b5",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,",
+        "Error C002 Line 4: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FD034",
+      "label": "SW_LEAD_COMMA",
+      "source": "\r\nproc main\r\nswitch ,1\r\ncase ,1\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "c65d764fd201eee6073565f640c9c88c2c8cd794366f4ce3eee8852479ecf313",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> ,",
+        "Error C002 Line 3: Unexpected token ==> 1",
+        "Error C023 Line 4: Invalid string constant (quotes missing) ==> ,",
+        "Error C002 Line 4: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FD044",
+      "label": "SW_ENDCASE_EXTRA",
+      "source": "\r\nproc main\r\nswitch 1\r\ncase 1\r\nendcase 2\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "006af8fde18588804d3bf9083b9f80dc2d0e7d2936c45c70631c9bc2410e349f",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> 2"
+      ]
+    },
+    {
+      "name": "FD045",
+      "label": "SW_DEFAULT_EXTRA",
+      "source": "\r\nproc main\r\nswitch 1\r\ndefault 2\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "0736c3dad9136b3a2e345747896baad54bc37b11adfc9f80811360f1abf8ff6c",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> 2"
+      ]
+    },
+    {
+      "name": "FD046",
+      "label": "SW_ENDSW_EXTRA",
+      "source": "\r\nproc main\r\nswitch 1\r\nendswitch 2\r\nendproc\r\n",
+      "source_sha256": "0f70ef882c48e0e465b22618bb88a22bd98f4588d63e8c48040b5e6b287b96d3",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> 2"
+      ]
+    },
+    {
+      "name": "FD047",
+      "label": "SW_CASE_MISSING",
+      "source": "\r\nproc main\r\nswitch 1\r\ncase\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "6d1d97bdef99e5ad47cac6dc67bc600d2f42b590cc7378de2a6e428c39236a7a",
+      "errors": [
+        "Error C006 Line 4: Missing token"
+      ]
+    },
+    {
+      "name": "FD048",
+      "label": "SW_MISSING",
+      "source": "\r\nproc main\r\nswitch\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "746bfe897f858f931ebb2fa3f41c8fd4cb0a01a1005db6e9331178d9f8fb7b4e",
+      "errors": [
+        "Error C006 Line 3: Missing token"
+      ]
+    },
+    {
+      "name": "FD049",
+      "label": "SW_UNFINISHED",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\nresult=9\r\nendproc\r\n",
+      "source_sha256": "1a442e8b0ddfc2ef988af078dd7e638055d6c596820d78296bded76d262959e4",
+      "errors": [
+        "Error C008 Line 6: Missing ENDCASE command",
+        "Error C007 Line 6: Missing ENDSWITCH command"
+      ]
+    },
+    {
+      "name": "FD056",
+      "label": "SW_BREAK_ARG",
+      "source": "\r\nproc main\r\nswitch 1\r\ncase 1\r\nbreak 7\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "a90124f592a71cde41cf6710d2b08fd3cb66da860b2d644af8c02323fbd0f005",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> 7"
+      ]
+    },
+    {
+      "name": "FE002",
+      "label": "FIND_DOUBLE_COMMA",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\",,\"B\"\r\nendproc\r\n",
+      "source_sha256": "0169c46811a2ac6af791ef2fde8d7b6f2dab44943dfe6822b033ebb774a67d34",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> ,",
+        "Error C025 Line 3: Invalid identifier ==> ,",
+        "Error C002 Line 3: Unexpected token ==> B"
+      ]
+    },
+    {
+      "name": "FE003",
+      "label": "FIND_DEST_TRAILING",
+      "source": "integer result\r\nproc main\r\nfind \"ABC\" \"B\" result,\r\nendproc\r\n",
+      "source_sha256": "0844c267e986e9781c62932eb46e5417b3f4ee7559da4f5368a2487381a43024",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FE004",
+      "label": "FIND_LEADING",
+      "source": "integer result\r\nproc main\r\nfind ,\"ABC\" \"B\"\r\nendproc\r\n",
+      "source_sha256": "f660300691703d877e8ba02cce1b865154c4658f6198ccd2ee25e97a99d10552",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> ,",
+        "Error C025 Line 3: Invalid identifier ==> B"
+      ]
+    },
+    {
+      "name": "FE006",
+      "label": "FIND_LOCAL_LONG",
+      "source": "integer result\r\nproc main\r\nlong offset\r\nfind \"ABC\" \"B\" offset\r\nendproc\r\n",
+      "source_sha256": "2d754349ffd4b0bb566c4994b9d32de3ee69850480c886056f876df431a71482",
+      "errors": [
+        "Error C022 Line 4: Invalid numeric variable ==> OFFSET"
+      ]
+    },
+    {
+      "name": "FE008",
+      "label": "SW_EMPTY_NOEND",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "dd6601f3eb41983097173733b2b626993d4ecea3ad1dec1387d125002ac556a8",
+      "errors": [
+        "Error C008 Line 5: Missing ENDCASE command"
+      ]
+    },
+    {
+      "name": "FE009",
+      "label": "SW_EMPTYDEFAULT_NOEND",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ndefault\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "8d1bdc435392f0cd8d7d64ecd45c89ea50d7aec8538ac1525a1aaf233eaca462",
+      "errors": [
+        "Error C008 Line 5: Missing ENDCASE command"
+      ]
+    },
+    {
+      "name": "FE013",
+      "label": "SW_SWITCH_NOEND",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\nendproc\r\n",
+      "source_sha256": "ed8e97e926b11f75b05963bd7d72c690601130905a39e0f1b791fad56d14df1d",
+      "errors": [
+        "Error C007 Line 4: Missing ENDSWITCH command"
+      ]
+    },
+    {
+      "name": "FE014",
+      "label": "SW_CASE_DUPEND",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\nendcase\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "d281958b532d6b62e46eae70de4b549c37ca57545d581757ec1fb44a895d524d",
+      "errors": [
+        "Error C007 Line 6: Missing ENDSWITCH command",
+        "Error C003 Line 6: Unexpected command ==> ENDCASE",
+        "Error C003 Line 7: Unexpected command ==> ENDSWITCH"
+      ]
+    },
+    {
+      "name": "FE015",
+      "label": "SW_CASE_DOUBLEDEFAULT",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase 1\r\ndefault\r\ndefault\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "5594e8bedcb23d4353331df4ed4ee4de015916dbf00fc0ca3990cc21d51ed4c3",
+      "errors": [
+        "Error C003 Line 6: Unexpected command ==> DEFAULT"
+      ]
+    },
+    {
+      "name": "FE016",
+      "label": "SW_STRCASE_NUM",
+      "source": "integer result\r\nproc main\r\nswitch \"A\"\r\ncase 1\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "827866c3864fecbc34ea3c52ed465cfc5b1d2009b5d60b81009602782ee04c2e",
+      "errors": [
+        "Error C023 Line 4: Invalid string constant (quotes missing) ==> 1"
+      ]
+    },
+    {
+      "name": "FE017",
+      "label": "SW_CASE_NEG_LONG",
+      "source": "integer result\r\nproc main\r\nswitch 1\r\ncase -32769\r\nendcase\r\nendswitch\r\nendproc\r\n",
+      "source_sha256": "2ba86038606384eda34fad47a7d2e5161af56c627dc58c96e57d72cebc3fee02",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> -32769"
+      ]
+    }
+  ],
+  "scope": "Authored compilergrammar/encoding only. FIND/SWITCH runtime support not established by compilation. BREAK0D is seriallineBREAK, not switchcontrol."
+}

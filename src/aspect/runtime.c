@@ -1,6 +1,7 @@
 #include "runtime.h"
 #include "when_runtime.h"
 #include "set_runtime.h"
+#include "find_runtime.h"
 #include "file_io.h"
 #include "serial_runtime.h"
 #include "receive_runtime.h"
@@ -61,6 +62,7 @@ void runtime_reset_native(void)
     /* Native overlay2 D6EA initializes MESSAGE line-feed mode E38A to1. */
     runtime_console_message_mode=1;
     runtime_set_reset();
+    runtime_find_reset();
     runtime_serial_reset();runtime_receive_reset();runtime_when_reset();runtime_directory_reset();
     runtime_string_pending_far=0;runtime_string_pending_near=0;
     runtime_string_scratch_pointer=runtime_string_scratch_index=0;runtime_string_check_range=1;
@@ -144,6 +146,7 @@ unsigned runtime_close(unsigned token)
 }
 void runtime_finish(void)
 {
+    runtime_find_finish();
     runtime_when_finish();
     runtime_receive_begin(0);
     if(runtime_string_count)runtime_cleanup();
@@ -202,7 +205,7 @@ void runtime_native_error(unsigned code)
 unsigned aspect_runtime_run(const char *path,unsigned step_limit)
 {
     void (__interrupt __far *previous_divide)(void);
-    if(active || runtime_live || runtime_file.handle || !path || !*path || !step_limit)return ASPECT_RUN_STATE;
+    if(active || runtime_live || runtime_find_live || runtime_file.handle || !path || !*path || !step_limit)return ASPECT_RUN_STATE;
     active=1;runtime_error=runtime_steps=runtime_live=runtime_peak_live=0;
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
     memset(runtime_string_snapshot,0,sizeof(runtime_string_snapshot));

@@ -41,6 +41,10 @@ extern aspect_set_dispatch,aspect_set_display,aspect_set_duplex,aspect_set_findc
 extern aspect_set_keys,aspect_set_msg_crlf,aspect_set_rxdata,aspect_set_switchcase
 extern aspect_set_waitcase,aspect_set_whencase,aspect_set_pausechar,aspect_set_txpace
 extern aspect_string_store_integer
+extern aspect_find_command,aspect_case_switch,aspect_case_compare
+extern program_strcpy,program_strcmpi
+extern _runtime_find_alloc,_runtime_find_free
+extern aspect_expr_integer_address
 extern _runtime_when_key_ready,_runtime_when_read_key,_runtime_when_confirm_abort
 extern _runtime_when_abort,_runtime_when_dispatch_key
 extern _runtime_when_monitor_begin,_runtime_when_monitor_end
@@ -303,6 +307,8 @@ aspect_operand_builtin_integer:
  je .comdata
  cmp word [bp+4],22
  je .forever
+ cmp word [bp+4],23
+ je .found
  cmp word [bp+4],21
  je .status
  cmp word [bp+4],28
@@ -313,6 +319,9 @@ aspect_operand_builtin_integer:
  jmp short .done
 .comdata:
  call aspect_receive_available_status
+ jmp short .done
+.found:
+ mov ax,[aspect_find_found]
  jmp short .done
 .directory:
  call aspect_directory_builtin_entry
@@ -353,6 +362,33 @@ aspect_string_strlen: jmp program_strlen
 aspect_string_strncmp: jmp program_strncmp
 aspect_string_concat: jmp directory_dial_append_original
 aspect_string_upper: jmp directory_dial_upper_original
+global aspect_find_upper,aspect_expr_integer_destination,aspect_find_alloc,aspect_find_free
+aspect_find_upper: jmp directory_dial_upper_original
+aspect_expr_integer_destination: jmp aspect_expr_integer_address
+aspect_find_alloc:
+ push bp
+ mov bp,sp
+ push word [bp+4]
+ call _runtime_find_alloc
+ add sp,2
+ pop bp
+ or ax,ax
+ jnz .done
+ mov ax,[_runtime_error]
+ jmp fail
+.done: ret
+aspect_find_free:
+ push bp
+ mov bp,sp
+ push word [bp+4]
+ call _runtime_find_free
+ add sp,2
+ pop bp
+ cmp word [_runtime_error],0
+ je .done
+ mov ax,[_runtime_error]
+ jmp fail
+.done: ret
 global aspect_console_emit_byte,aspect_console_cancel_poll,aspect_console_wait_second
 aspect_console_emit_byte: jmp _runtime_console_emit_byte
 aspect_console_cancel_poll: jmp _runtime_when_cancel_poll
@@ -619,6 +655,13 @@ scalar aspect_serial_character_delay_value,_runtime_serial_character_delay_value
 scalar aspect_set_query_mode,_runtime_set_query_mode
 scalar aspect_set_findcase_value,_runtime_set_findcase_value
 scalar aspect_set_switchcase_value,_runtime_set_switchcase_value
+scalar aspect_find_found,_runtime_find_found
+scalar aspect_case_integer,_runtime_case_integer
+global aspect_case_type,_runtime_case_type,aspect_case_string,_runtime_case_string
+aspect_case_type:
+_runtime_case_type: db 0
+aspect_case_string:
+_runtime_case_string: times 81 db 0
 global _runtime_set_duplex_changed
 _runtime_set_duplex_changed: dw 0
 global aspect_set_table
@@ -822,6 +865,12 @@ aspect_dispatch_handlers:
  dw aspect_when_cancel
 %elif op=0x9e
  dw aspect_set_dispatch
+%elif op=0x3b
+ dw aspect_find_command
+%elif op=0xb8
+ dw aspect_case_switch
+%elif op=0x0f
+ dw aspect_case_compare
 %elif op=0x9a
  dw aspect_strcmd_compare_bytes
 %elif op=0xa4

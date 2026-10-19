@@ -2,7 +2,10 @@
 
 FINDCASE and SWITCHCASE have real native consumers, distinct from WAITCASE and
 WHENCASE. The new source modules recover those consumers; this checkpoint does
-not add them to ASPECT.EXE or complete their source-language grammar.
+not itself add them to ASPECT.EXE or complete their source-language grammar.
+The later [production integration](ASPECT_FIND_CASE_RUNTIME.md) now connects
+these handlers and a checked near-heap owner; compiler conformance has a
+[separate bounded proof](ASPECT_FIND_CASE_COMPILER.md).
 
 | Setting | Native state | Consumer | Meaning |
 | --- | --- | --- | --- |

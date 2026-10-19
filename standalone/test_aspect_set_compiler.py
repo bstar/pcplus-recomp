@@ -44,7 +44,7 @@ def main():
                   compiler_sha256=sha(Path(compiler.__file__).read_bytes()),
                   checker_sha256=sha(Path(__file__).read_bytes()),
                   fixture_sha256=sha(fixture.read_bytes()),
-                  scope='Host compiler grammar/emission only; DOS runtime SET support remains limited to WHENCASE.')
+                  scope='Host compiler grammar/emission only; Eleven native SET setters have separate runtime evidence; broader SET coverage remains unfinished.')
     out = ROOT / 'build/aspect-set-compiler'
     out.mkdir(parents=True, exist_ok=True)
     (out / 'checks.json').write_text(json.dumps(report, indent=2) + '\n')

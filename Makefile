@@ -38,6 +38,15 @@ test-aspect-find-case: aspect-find-case
 	python3 standalone/check_aspect_find_case.py
 all: aspect-find-case
 test: test-aspect-find-case
+.PHONY: aspect-find-owner test-aspect-find-owner test-aspect-find-case-compiler
+aspect-find-owner:
+	python3 standalone/build_aspect_find_owner.py
+test-aspect-find-owner: aspect-find-owner
+	python3 standalone/check_aspect_find_owner.py
+test-aspect-find-case-compiler:
+	python3 standalone/test_aspect_find_case_compiler.py
+all: aspect-find-owner
+test: test-aspect-find-owner test-aspect-find-case-compiler
 .PHONY: aspect-when test-aspect-when aspect-renderer-policy test-aspect-renderer-policy
 aspect-when:
 	python3 standalone/build_aspect_when.py

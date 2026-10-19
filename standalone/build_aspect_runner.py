@@ -14,7 +14,7 @@ def main():
     objects = []
     sources = [Path(__file__).resolve(), ROOT / 'standalone/build_aspect_runtime.py',
                *[ROOT / 'src/aspect' / name for name in ['runner.c', 'runtime.c', 'runtime.h', 'file_io.c', 'file_io.h',
-                   'serial_runtime.c','serial_runtime.h','receive_runtime.c','receive_runtime.h','when_runtime.c','when_runtime.h','set_runtime.c','set_runtime.h','txpace.c','txpace.h','directory_runtime.c','directory_runtime.h','serial.c','serial.h','serial_handoff.h','resident_render.c','resident_render.h']],
+                   'serial_runtime.c','serial_runtime.h','receive_runtime.c','receive_runtime.h','when_runtime.c','when_runtime.h','set_runtime.c','set_runtime.h','find_runtime.c','find_runtime.h','txpace.c','txpace.h','directory_runtime.c','directory_runtime.h','serial.c','serial.h','serial_handoff.h','resident_render.c','resident_render.h']],
                ROOT/'reconstruction/translation/receive.asm', ROOT / 'reconstruction/uart/encodings.inc',ROOT/'reconstruction/uart/layout.inc',
                ROOT/'src/config/resource_path.c',ROOT/'src/config/resource_path.h',
                ROOT/'reconstruction/directory_accounting/patch.asm']
@@ -33,12 +33,12 @@ def main():
                     '-i=' + str(ROOT / 'src/aspect'), '-fm=ASPECT.map', '-fe=ASPECT.EXE',
                     str(ROOT / 'src/aspect/runner.c'), str(ROOT / 'src/aspect/runtime.c'),
                     str(ROOT / 'src/aspect/file_io.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),
-                    str(ROOT/'src/aspect/serial.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/resident_render.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/txpace.c'),str(ROOT/'src/config/resource_path.c'), *objects], cwd=OUT, check=True)
+                    str(ROOT/'src/aspect/serial.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/resident_render.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),str(ROOT/'src/aspect/txpace.c'),str(ROOT/'src/config/resource_path.c'), *objects], cwd=OUT, check=True)
     result = dict(binary_sha256=sha(OUT / 'ASPECT.EXE'), original_inputs=[],
                   sources={str(p.relative_to(ROOT)): sha(p) for p in sources},
                   platform='8086 DOS, small model, near DS=SS, cdecl, 8192-byte stack',
                   diagnostic_build=False,
-                  scope='DOS CLI for trusted source-compiled ASX; partial66-slot runtime with native WHEN/CWHEN and eleven SET setters; FIND/CASE command consumers remain separate work. Calibrated cooperative TXPACE uses an explicit IRQ-live policy. Optional owned UART with validated parent ASIO handback and resident rendering. No complete script/UI scheduling or arbitrary-bytecode safety.')
+                  scope='DOS CLI for trusted source-compiled ASX; partial69-slot runtime with native WHEN/CWHEN and eleven SET setters; Native FIND/SWITCH/CASE consume shared setting state with checked near temporary ownership. Calibrated cooperative TXPACE uses an explicit IRQ-live policy. Optional owned UART with validated parent ASIO handback and resident rendering. No complete script/UI scheduling or arbitrary-bytecode safety.')
     (OUT / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')
     print('ASPECT.EXE', result['binary_sha256'])
 

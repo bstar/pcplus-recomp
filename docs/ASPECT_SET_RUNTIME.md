@@ -10,12 +10,12 @@ setter. The source compiler grammar and emitted bytes are unchanged.
 | --- | --- |
 | DISPLAY | Received-lead rendering gate; translation and WHEN matching continue. It does not retire the resident renderer or suppress status/direct output. |
 | DUPLEX | Native child local transmit echo. Explicit changes project HDX/FDX into the parent status row; drawing does not commit parent settings. |
-| FINDCASE | Native E392 state, initialized0 for a fresh interpreter invocation. The [recovered FIND consumer](ASPECT_FIND_CASE.md) awaits application integration. |
+| FINDCASE | Native E392 state, initialized0 for a fresh interpreter invocation. The [native FIND consumer](ASPECT_FIND_CASE_RUNTIME.md) now uses this shared word. |
 | KEYS | Native E380 keyboard-disable word. ON stores1 and disables native local-key dispatch; maintained immediate Escape cancellation remains available. |
 | MSG_CRLF | Native MESSAGE trailing CR/LF selection, initially1. |
 | PAUSECHAR | Checked32..126 integer, stored as one byte; native TRANSMIT waits rather than sending that character. |
 | RXDATA | Writes the existing E382 flow/deferred-service/receive-echo gate itself, overwriting its current value. It is not a separate receive-enable flag. |
-| SWITCHCASE | Native E394 state, initialized0. The [recovered SWITCH/CASE consumer](ASPECT_FIND_CASE.md) awaits application integration. |
+| SWITCHCASE | Native E394 state, initialized0. The [native CASE consumer](ASPECT_FIND_CASE_RUNTIME.md) now uses this shared word. |
 | TXPACE | Checked0..999 units consumed by native TRANSMIT; nonzero production values use the calibrated service described below. |
 | WAITCASE | Actual native WAITFOR comparison mode. |
 | WHENCASE | Actual native receive/disconnect matcher comparison mode. |
@@ -88,11 +88,11 @@ semantic coverage.
 
 The separate [FIND/SWITCH/CASE component](ASPECT_FIND_CASE.md) contains401 exact
 native bytes and passes2642 CPU cases, visiting all199 recovered instructions.
-Near allocation and FILE/operand boundaries are explicit models; it is not yet
-linked into the application. Fresh source builds reproduce124 checked outputs.
+Near allocation and FILE/operand boundaries are explicit component models. The
+later [application integration](ASPECT_FIND_CASE_RUNTIME.md) supplies a checked
+near owner and actual DOS execution; its source proof reproduces125 outputs.
 
-Next work is to integrate the recovered FIND and SWITCH/CASE consumers, preserve
-their source grammar and native failure behavior, then continue the remaining
+Following FIND/CASE integration, continue the remaining
 ASPECT families, compiler/recorder, keyboard/UI and session configuration owners.
 Full emulation/protocol/Host and physical Wi-Fi modem requirements remain open;
 none of F01–F16 is closed by this checkpoint.

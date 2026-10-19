@@ -123,6 +123,7 @@ def main():
   unsupported_slot_cases=manifest['unsupported_slot_cases'],
   directory_metadata=directory,fixture_data_sha256=sha(OUT/'CASES.DAT'),fixture_schema='ACV2',
   SET_family=manifest['SET_family'],
-  scope='Actual recovered dispatcher executes source-compiled authored ASX through real DOS files/far heap and native console/serial/WHEN/SET commands. Serial queue/clock/carrier and requested pacing units are explicit diagnostic models. Incomplete66-slot command surface;149 unsupported in-range slots and245 unsupported SET subcommands abort. FIND/CASE consumers and actual pacing calibration require separate proofs. No full compiler/VM or arbitrary-bytecode safety.')
+  supported_slot_count=len(manifest['supported_slots']),
+  scope='Actual recovered dispatcher executes source-compiled authored ASX through real DOS files/far and near heaps and native console/serial/WHEN/SET/FIND/CASE commands. Serial queue/clock/carrier and requested pacing units are explicit diagnostic models. Supported slots and unsupported coverage are bound to the manifest; full compiler/VM and arbitrary-bytecode safety remain unfinished.')
  (OUT/('checks-native.json' if optional else 'checks.json')).write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
 if __name__=='__main__':main()

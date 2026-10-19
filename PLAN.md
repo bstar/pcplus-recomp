@@ -1361,3 +1361,28 @@ native bytes in six units and two relocatable objects.2642 CPU cases visit all
 199 recovered instructions; near allocation, operands/FILE seeks and loader/UI
 boundaries are explicit models. The consumer component remains unlinked. The
 fresh-source proof now reproduces124 outputs including it and calibrated TXPACE.
+
+
+## Native FIND/SWITCH/CASE application checkpoint
+
+The [runtime integration](docs/ASPECT_FIND_CASE_RUNTIME.md) connects401 exact
+native bytes, actual CRT/FILE services and the existing FINDCASE/SWITCHCASE words.
+FOUND reads the real result. A checked near-heap owner frees partial insensitive
+FIND copies during nonlocal unwind; typed allocation failure deliberately stops
+before the original unchecked NULL dereference.69 command slots are exposed,
+with146 unsupported slots retained as failures.
+
+The [compiler proof](docs/ASPECT_FIND_CASE_COMPILER.md) adds54 exact accepted
+outputs,72 original rejections, variants and seven novel checks while preserving
+all earlier corpora.878 actual DOS runtime cases/20586 checks include28 new
+semantic/failure vectors and two actual ASX files above70KB. The independent
+near-owner proof passes186089 checks/1787 operations. Four actual terminal cases
+use UART/RGET text for native sensitivity-dependent login selection, passing152
+checks and parent ownership/query/history/hardware checks. The fresh-source
+proof reproduces125 outputs. The checkpoint record is
+`docs/validation/aspect-find-case-runtime.json`.
+
+Next: recover and integrate the serial BREAK service emitted by the compiler,
+continue remaining ASPECT/recorder and invocation paths, complete native
+keyboard/UI/configuration and shared-session adoption, broaden emulations and
+protocols, and validate physical Wi-Fi modems. All F01–F16 remain open.

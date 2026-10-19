@@ -482,6 +482,9 @@ class Compiler:
 
     def command(self, tokens):
         command = tokens[0]
+        if command == 'find':
+            self.find_command(tokens)
+            return
         if command == 'set':
             self.set_command(tokens)
             return
@@ -513,6 +516,7 @@ class Compiler:
         commands = {
             'comgetc': (0xC9, 'i', False), 'comgetcd': (0xCA, 'i', False),
             'message': (0x76, 's', False), 'exit': (0x33, '', False),
+            'break': (0x0D, '', False),
             'transmit': (0xBF, 's', False), 'waitfor': (0xD4, 's', True),
             'rstrcmp': (0x9A, 'ss', True),
             'atoi': (0x06, 'si', False), 'atol': (0x07, 'sl', False),
@@ -588,6 +592,94 @@ class Compiler:
             self.error('command and call operands must be atomic')
         return node
 
+    def switch_operand(self, tokens, expected=None):
+        if not tokens or tokens[0] in ('(', ','):
+            self.error('SWITCH/CASE requires one atomic integer or string operand')
+        parser = Expression(tokens, self.line)
+        node = parser.parse(7)
+        if parser.pos != len(tokens):
+            self.error('unexpected SWITCH/CASE operands')
+        kind = self.kind(node)
+        value = self.atomic(node) if kind == 3 else self.word_argument(node)
+        kind = 3 if kind == 3 else 0
+        if expected is not None and kind != expected:
+            self.error('CASE operand type differs from SWITCH')
+        return kind, value
+
+    def switch_statement(self, tokens, blocks):
+        command = tokens[0]
+        if command == 'switch':
+            kind, value = self.switch_operand(tokens[1:])
+            self.emit(0xB8)
+            self.operand(value, compact=True)
+            offset = len(self.output)
+            self.emit(dword(0))
+            blocks.append(['switch', dict(kind=kind, first=offset, next=None,
+                                          default=None, exits=[], opened=False)])
+            return
+        if not blocks or blocks[-1][0] != 'switch':
+            self.error(f'unmatched {command}')
+        state = blocks[-1][1]
+        if command in ('case', 'default'):
+            if command == 'default' and (len(tokens) != 1 or state['default'] is not None):
+                self.error('invalid or duplicate DEFAULT')
+            # An implicit CASE boundary falls into the following body, skipping
+            # its match record. DEFAULT has no record, so needs no such jump.
+            shared = self.jump(0x62) if state['opened'] and command == 'case' else None
+            if command == 'case':
+                _, value = self.switch_operand(tokens[1:], state['kind'])
+                target = len(self.output)
+                self.patch(state['next'] if state['next'] is not None else state['first'], target)
+                self.emit(0x0F)
+                state['next'] = len(self.output)
+                self.emit(dword(0))
+                self.operand(value, compact=True)
+                if shared is not None:
+                    self.patch(shared)
+            else:
+                state['default'] = len(self.output)
+            state['opened'] = True
+        elif command == 'endcase':
+            if len(tokens) != 1 or not state['opened']:
+                self.error('unmatched ENDCASE')
+            state['exits'].append(self.jump(0x62))
+            state['opened'] = False
+        else:
+            if len(tokens) != 1 or state['opened']:
+                self.error('ENDSWITCH requires preceding ENDCASE')
+            target = state['default'] if state['default'] is not None else len(self.output)
+            self.patch(state['next'] if state['next'] is not None else state['first'], target)
+            for offset in state['exits']:
+                self.patch(offset)
+            blocks.pop()
+
+    def find_command(self, tokens):
+        parser = Expression(tokens[1:], self.line)
+        self.emit(0x3B)
+        for index in range(2):
+            if index and parser.pos < len(parser.tokens) and parser.tokens[parser.pos] == ',':
+                parser.pos += 1
+            if parser.pos == len(parser.tokens) or parser.tokens[parser.pos] in ('(', ','):
+                self.error('FIND requires two atomic strings')
+            node = parser.parse(7)
+            if self.kind(node) != 3:
+                self.error('FIND requires string source and pattern')
+            self.operand(self.atomic(node), compact=True)
+        optional = parser.pos < len(parser.tokens)
+        self.emit(int(optional))
+        if optional:
+            if parser.tokens[parser.pos] == ',':
+                parser.pos += 1
+            if parser.pos == len(parser.tokens) or parser.tokens[parser.pos] in ('(', ','):
+                self.error('FIND requires an integer destination')
+            node = parser.parse(7)
+            kind, wire = self.lvalue(node)
+            if kind != 0:
+                self.error('FIND destination must be integer')
+            self.emit(wire)
+        if parser.pos != len(parser.tokens):
+            self.error('unexpected FIND operands')
+
     def condition(self, tokens):
         node = self.tree(tokens)
         if self.kind(node) == 3:
@@ -607,7 +699,13 @@ class Compiler:
             command = tokens[0]
             if command in ('else', 'endif', 'endwhile', 'exitwhile', 'loopwhile') and len(tokens) != 1:
                 self.error(f'{command} does not accept operands')
-            if command == 'if':
+            switch_commands = ('switch', 'case', 'default', 'endcase', 'endswitch')
+            if (blocks and blocks[-1][0] == 'switch' and
+                    not blocks[-1][1]['opened'] and command not in ('case', 'default', 'endswitch')):
+                self.error('SWITCH requires CASE/DEFAULT or ENDSWITCH')
+            if command in switch_commands:
+                self.switch_statement(tokens, blocks)
+            elif command == 'if':
                 blocks.append(['if', self.condition(tokens[1:]), []])
             elif command in ('else', 'elseif'):
                 if not blocks or blocks[-1][0] != 'if' or blocks[-1][1] is None:

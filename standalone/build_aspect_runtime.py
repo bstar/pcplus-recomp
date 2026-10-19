@@ -12,9 +12,11 @@ ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm'
  ('receive_policy','src/aspect/receive_policy.asm',None),
  ('when','src/aspect/when.asm',None),
  ('set_commands','src/aspect/set_commands.asm',None),
+ ('find_commands','src/aspect/find_commands.asm',None),('case_commands','src/aspect/case_commands.asm',None),
  ('directory','src/aspect/directory_builtins.asm',None),
  ('flow','src/aspect/control_flow.asm',None),('parameters','src/aspect/parameters.asm',None),('strings','src/aspect/string_operands.asm',None),('string_commands','src/aspect/string_commands.asm',None),('string_services','src/aspect/string_services.asm',None),
  ('string_strlen','reconstruction/program_exec/strlen.asm','PROGRAM_EXEC_OMF'),('string_strncmp','reconstruction/program_exec/strncmp.asm','PROGRAM_EXEC_OMF'),
+ ('string_strcpy','reconstruction/program_exec/strcpy.asm','PROGRAM_EXEC_OMF'),('string_strcmpi','reconstruction/program_exec/strcmpi.asm','PROGRAM_EXEC_OMF'),
  ('string_concat','reconstruction/directory_dial/append.asm','DIRECTORY_DIAL_OMF'),('string_upper','reconstruction/directory_dial/uppercase.asm','DIRECTORY_DIAL_OMF'),('operands','src/aspect/numeric_operands.asm',None),
  ('operations','src/aspect/numeric_operations.asm',None),
  ('arithmetic','src/aspect/arithmetic.asm',None),('long','src/aspect/long_arithmetic.asm',None),('support','src/aspect/expression_support.asm',None),
@@ -24,7 +26,7 @@ ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm'
  ('bridge','src/aspect/runtime_bridge.asm',None)]
 SUPPORT=[(1,0xd2a0,0xd2d6,109184-0xd0d0),(2,0xd3f2,0xd408,109184-0xd0d0),
  (3,0xdb7d,0xdc48,109184-0xd0d0),(4,0xde4d,0xdf04,109184-0xd0d0),(5,0x9ac0,0x9ae7,0x1200)]
-ERRORS={'unsupported':3,'float':4,'budget':6,'stack':9,'divide_zero':11,'native_int0':12,'operand':7,'cancelled':13,'serial':14}
+ERRORS={'unsupported':3,'float':4,'budget':6,'heap':8,'stack':9,'divide_zero':11,'native_int0':12,'operand':7,'cancelled':13,'serial':14}
 C=r'''
 #include <stdio.h>
 #include <dos.h>
@@ -36,6 +38,7 @@ C=r'''
 #include "directory_runtime.h"
 #include "when_runtime.h"
 #include "set_runtime.h"
+#include "find_runtime.h"
 extern unsigned runtime_receive_pattern_count,runtime_wait_gate;
 extern aspect_file runtime_file;
 extern unsigned runtime_string_count,runtime_depth,runtime_stack_pointer,runtime_frame;
@@ -57,7 +60,7 @@ static void run(const char *path,unsigned limit,unsigned error,unsigned has_inte
  ck((cpu_flags()&0x600)==(flags_before&0x600));
  ck(runtime_string_pending_far==0 && runtime_string_pending_near==0);
  ck(runtime_string_scratch_pointer==0 && runtime_string_scratch_index==0);
- ck(result==error);ck(runtime_live==0);ck(runtime_string_count==0);ck(runtime_file.handle==0);
+ ck(result==error);ck(runtime_live==0);ck(runtime_find_live==0);ck(runtime_string_count==0);ck(runtime_file.handle==0);
  ck(runtime_depth==0);ck(runtime_stack_pointer==(unsigned)runtime_arena+0x1b1a);
  ck(runtime_frame==runtime_stack_pointer);ck(runtime_abi_bad==0);ck(runtime_peak_live==peak);
  ck(runtime_receive_pattern_count==0);ck(runtime_when_disconnect_armed==0);ck(runtime_wait_gate==0);
@@ -184,7 +187,9 @@ def main():
  when_corpus=json.loads(when_corpus_path.read_text())
  set_corpus_path=ROOT/'standalone/fixtures/aspect_set_runtime_vectors.json'
  set_corpus=json.loads(set_corpus_path.read_text())
- cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']+conversion_corpus['vectors']+compiler_corpus['vectors']+console_corpus['vectors']+serial_corpus['vectors']+receive_cases+directory_corpus['vectors']+when_corpus['vectors']
+ find_corpus_path=ROOT/'standalone/fixtures/aspect_find_case_runtime_vectors.json'
+ find_corpus=json.loads(find_corpus_path.read_text())
+ cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']+conversion_corpus['vectors']+compiler_corpus['vectors']+console_corpus['vectors']+serial_corpus['vectors']+receive_cases+directory_corpus['vectors']+when_corpus['vectors']+find_corpus['vectors']
  # Historical PAUSE oracle expected an unsupported stop before opcode88 recovery.
  # Its authored seven-second script now executes the recovered native delay.
  cases=[dict(c,expected={}) if c['name']=='PAUSE' else c for c in cases]
@@ -197,8 +202,9 @@ def main():
  sources.append(console_corpus_path)
  sources += [ROOT/'reconstruction/translation/receive.asm',receive_corpus_path,serial_corpus_path,ROOT/'src/aspect/serial_runtime.c',ROOT/'src/aspect/serial_runtime.h',ROOT/'src/aspect/receive_runtime.c',ROOT/'src/aspect/receive_runtime.h']
  sources += [directory_corpus_path,ROOT/'src/aspect/directory_runtime.c',ROOT/'src/aspect/directory_runtime.h']
- sources += [ROOT/'src/aspect/set_runtime.c',ROOT/'src/aspect/set_runtime.h']
+ sources += [ROOT/'src/aspect/set_runtime.c',ROOT/'src/aspect/set_runtime.h',ROOT/'src/aspect/find_runtime.c',ROOT/'src/aspect/find_runtime.h']
  sources.append(set_corpus_path)
+ sources.append(find_corpus_path)
  sources += [when_corpus_path,receive_overrides_path,ROOT/'src/aspect/when_runtime.c',ROOT/'src/aspect/when_runtime.h']
  for name,rel,define in ASM:
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
@@ -208,9 +214,17 @@ def main():
   subprocess.run(['nasm','-f','bin',inc,'-DASPECT_EXPR_FLAT',f'-DASPECT_EXPR_UNIT={unit}',str(ROOT/'src/aspect/expression_support.asm'),'-o',str(p)],check=True)
   assert p.stat().st_size==end-start
   units.append(dict(unit=unit,start=start,end_exclusive=end,file_start=base+start,bytes=end-start,sha256=sha(p)))
- program=C
+ near_admission=' runtime_find_fail_after=65535U;\n'
+ near_observe=''
+ for case in find_corpus['vectors']:
+  path=case['name']+'.ASX';ex=case['expected']
+  if 'near_fail_after' in case:
+   near_admission+=f' if(!strcmp(path,"{path}"))runtime_find_fail_after={case["near_fail_after"]};\n'
+  near_observe+=f' if(!strcmp(path,"{path}")){{ck(runtime_find_peak=={ex["near_peak"]});ck(runtime_find_alloc_calls=={ex["near_calls"]});}}\n'
+ program=C.replace('result=aspect_runtime_run(path,limit);',near_admission+'result=aspect_runtime_run(path,limit);')
+ program=program.replace(' ck(result==error);',near_observe+' ck(result==error);')
  supported={int(op,16):name for op,name in re.findall(r'%(?:el)?if op=(0x[0-9a-f]+)\n dw (\w+)',(ROOT/'src/aspect/runtime_bridge.asm').read_text())}
- assert len(supported)==66
+ assert len(supported)==69
  # ACV2 adds explicit owned-directory metadata to ACV1's diagnostic inputs.
  table=bytearray(b'ACV2'+struct.pack('<H',len(cases)))
  def block(data):
@@ -326,17 +340,18 @@ def main():
  program=program.replace(END,extra+END)
  (OUT/'diagnostic.c').write_text(program)
  subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dASPECT_RUNTIME_DIAGNOSTIC',
- '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),*objects],cwd=OUT,check=True)
+ '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),*objects],cwd=OUT,check=True)
  report=dict(binary_sha256=sha(OUT/'EXECUTE.EXE'),sources={str(p.relative_to(ROOT)):sha(p) for p in sources},support_units=units,original_inputs=[],
   compile_flags=['8086','small model','cdecl','ASPECT_RUNTIME_DIAGNOSTIC'],fixture_count=len(cases),
   supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+15+len(unsupported)+(256-len(set_supported))+4+len(set_corpus['vectors']),
   SET_family=dict(supported_subcommands={f'{key:02x}':value for key,value in set_supported.items()},unsupported_subcommands_tested=256-len(set_supported),truncated_cases=2,raw_boolean_cases=2,integration_vectors=len(set_corpus['vectors'])),
+  FIND_CASE_family=dict(integration_vectors=len(find_corpus['vectors']),near_failure_cases=sum('near_fail_after' in c for c in find_corpus['vectors']),native_bytes=401,scope='Actual native FIND/SWITCH/CASE with owned near allocations and typed failure before native NULL dereference. FOUND and SWITCH snapshots are shared state; per-invocation SET sensitivity resets separately.'),
   fixture_data={'file':'CASES.DAT','schema':'ACV2','sha256':sha(OUT/'CASES.DAT'),'bytes':len(table),'cases':len(cases)},
   parameter_fixture_aliases={'PARFLOAT':'FLOAT'},
   composed_receive_overrides=receive_overrides,
   maintained_string_fault_fixture={'STRSHORT':'STRGASS compiler bytes with final00 option and94 return removed; first global HELLO retained, second stays empty'},
   maintained_heap_fault_fixtures={'HEAPFLT':'IDIVEDGE compiler bytes with global-string count changed from0to2','HEAPZERO':'IDZ compiler bytes with global-string count changed from0to2'},
   fixture_expectations={c['name']:{'source_sha256':c['source_sha256'],'asx_sha256':c['asx_sha256'],'expected':c['expected']} for c in cases},
-  scope='Incremental actual native dispatch/operand/operation/file/heap/WHEN/SET composition executing source-owned compiled fixtures. Incomplete66-slot opcode table; eleven native SET setters, while FIND/CASE consumers remain separate work. Serial queue/clock/carrier inputs and status-tail snapshots are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
+  scope='Incremental actual native dispatch/operand/operation/file/heap/WHEN/SET/FIND/CASE composition executing source-owned compiled fixtures. Incomplete69-slot opcode table; eleven native SET setters and shared FIND/CASE consumers. Serial queue/clock/carrier inputs and status-tail snapshots are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
  (OUT/'manifest.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 if __name__=='__main__':main()

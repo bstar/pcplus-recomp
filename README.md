@@ -68,13 +68,14 @@ Stage the terminal, sibling helpers and
 an authored HELLO example with `./tools/build package`; files appear in
 `build/dos-package` without original executables or private profiles.
 
-The [native SET runtime](docs/ASPECT_SET_RUNTIME.md) now connects eleven setters
+The [native SET runtime](docs/ASPECT_SET_RUNTIME.md) connects eleven setters
 to real child state and the parent's normal status row. Nonzero TXPACE uses a
-bounded IRQ-live calibration around the recovered delay loop.853 DOS runtime
-cases/19000 checks, six UART cases and six full-terminal SET/status compositions
-pass.124 outputs reproduce from a fresh source-only checkout. The separately
-recovered [FIND/SWITCH/CASE consumers](docs/ASPECT_FIND_CASE.md) remain unlinked;
-shared-session setting adoption and full-application requirements remain open.
+bounded IRQ-live calibration around the recovered delay loop. The subsequent
+[FIND/SWITCH/CASE integration](docs/ASPECT_FIND_CASE_RUNTIME.md) adds the actual
+consumers, FOUND and checked near temporary ownership.878 DOS runtime cases/
+20586 checks and four UART/RGET/parent compositions pass. The compiler matches
+54 accepted original FIND/CASE outputs and72 rejections.125 outputs reproduce
+from a fresh source-only checkout; full-application requirements remain open.
 
 Current outputs:
 
@@ -89,7 +90,7 @@ Current outputs:
 | `build/aspect-strings/STRINGS.EXE` | Recovered assembly and controlled services | String operands, literals and assignment, including actual far copy and DOS far heap |
 | `build/aspect-long/LONG.EXE` | Recovered assembly only | Native signed long multiply/divide/remainder and shift helpers, including independent actual DOS checks |
 | `build/aspect-arithmetic/ARITH.EXE` | Recovered assembly and controlled services | Native arithmetic component; controlled long/float boundaries are distinct from composed execution |
-| `build/aspect-runtime/EXECUTE.EXE` | Maintained source compiler, recovered assembly and maintained DOS resource owner | Fixed source-compiled suite;66 opcode slots with eleven native SET setters,149 unsupported slots and245 unsupported SET subcommands |
+| `build/aspect-runtime/EXECUTE.EXE` | Maintained source compiler, recovered assembly and maintained DOS resource owner | Fixed source-compiled suite;69 opcode slots with native FIND/SWITCH/CASE and eleven SET setters;146 unsupported slots and245 unsupported SET subcommands |
 | `build/aspect-runner/ASPECT.EXE` | Recovered instructions and maintained DOS CLI/resource owner | Execute trusted compiled scripts; raw stdout, Escape cancellation and an optional checked UART lease |
 | `build/aspect-receive-commands/RECEIVE.EXE` | Recovered assembly and controlled platform callbacks | Character, line and quiet-line input, native delayed read and DOS time, COMDATA/FOREVER |
 | `build/aspect-serial-commands/SERIAL.EXE` | Recovered assembly and controlled device/time callbacks | TRANSMIT/WAITFOR and native formatter, timeout, case, clock and result primitives |

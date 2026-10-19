@@ -557,3 +557,13 @@ service.853 DOS runtime cases/19000 checks include38 integration vectors; six
 actual UART cases and six terminal status compositions distinguish platform,
 consumer and renderer proofs. FIND/CASE command integration and shared-session
 adoption remain open, as do all F01–F16 gates.
+
+
+The [native FIND/SWITCH/CASE application checkpoint](ASPECT_FIND_CASE_RUNTIME.md)
+now links the401-byte consumer component to real CRT/FILE and checked near-heap
+ownership. The compiler matches54 accepted original outputs and72 rejections;
+878 actual DOS runtime cases/20586 checks include28 consumer/failure vectors and
+70KB DWORD seeks. Four actual UART/RGET/parent compositions pass152 checks;
+independent near-owner DOS checks and125 reproducible outputs remain separate
+scope.69 opcode slots are implemented,146 remain unsupported, and no whole-
+application gate is closed.
