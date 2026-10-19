@@ -40,7 +40,12 @@ typedef struct zm_session {
  zw_u32 position,size,files,bytes;
  char name[13];
  zw_decoder decoder;
- unsigned char rx[1024],data[1024],wire[2059];
+ unsigned char data[1024];
+ /* Only consumed/CRC-accepted receive data can be acknowledged. Once handed
+  * to the checked writer, its buffer may encode a response. A sender never
+  * decodes payload packets, so its encoded output can use the same region.
+  * 8KiB ZedZap RX plus standard 1KiB TX fits the existing exclusive arena. */
+ union {unsigned char rx[ZW_RECEIVE_MAX],wire[ZW_RECEIVE_MAX];} io;
 } zm_session;
 /* Caller provides the workspace, disjoint ops and durable callback context.
  * No static state or allocation. DOS near arguments, DS=SS; callbacks are far

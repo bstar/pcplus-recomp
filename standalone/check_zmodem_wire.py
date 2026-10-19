@@ -63,7 +63,7 @@ def main():
     lib.zw_data_encode.argtypes=[C.c_uint,C.c_void_p,C.c_uint,C.c_uint,C.c_uint,C.c_void_p,C.c_uint]
     rng=random.Random(0x5a4d);records=[];streams=[];checks=0
     def decoder(fmt,control,kind,capacity=1024):
-        s=Decoder();buf=C.create_string_buffer(b'\xa5'*1026,1026)
+        s=Decoder();buf=C.create_string_buffer(b'\xa5'*(capacity+2),capacity+2)
         assert lib.zw_init(C.byref(s),C.byref(buf,1),capacity,control)==0
         s.format=fmt
         if kind:assert lib.zw_data(C.byref(s))==0
@@ -73,7 +73,7 @@ def main():
         nonlocal checks
         s,buf=decoder(fmt,control,kind,capacity)
         assert [v for _,v in feed(s,wire)]==expected,(fmt,control,kind,wire,expected)
-        assert buf.raw[0]==165 and buf.raw[capacity+1:]==b'\xa5'*(1025-capacity)
+        assert buf.raw[0]==165 and buf.raw[capacity+1:]==b'\xa5'
         streams.append(struct.pack('<BBBHHH',fmt,control,kind,capacity,len(wire),len(expected))+wire+bytes(expected));checks+=1
     def case(kind,fmt,control,data,ending=107,retain=True):
         nonlocal checks
@@ -134,6 +134,13 @@ def main():
             scenario(fmt,control,1,b'X'+wire[1:],[3])
             scenario(fmt,control,1,wire[:-4],[])
             scenario(fmt,control,1,b'\x18z',[4])
+    for fmt in (65,67):
+        for control in (0,1):
+            for count in (1025,2048,4096,8192):
+                body=bytes(i%256 for i in range(count))
+                scenario(fmt,control,1,packet(body,fmt,107,control),[2],capacity=8192)
+            scenario(fmt,control,1,packet(b'Z'*8193,fmt,107,control),[5],capacity=8192)
+            scenario(fmt,control,1,packet(bytes(8192),fmt,107,control),[2],capacity=8192)
     # Historic hex headers use parity-marked LF (8a); uppercase hex accepted.
     for control in (0,1):
         wire=header(bytes([1,0,0,0,35]),66,control).upper().replace(b'\n',b'\x8a')

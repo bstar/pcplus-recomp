@@ -178,3 +178,10 @@ separate controller/sender CS and explicit caller-cleaned stack adapters. It
 frees1,184 resident code bytes and validates44 bridge pairs plus retained modem
 code under DOS allocation. This is additional F01 progress; it does not close
 the complete startup/overlay/UI or source-only whole-application gates.
+
+
+The subsequent `d0274a22` checkpoint adds8 KiB reception without another resident
+payload buffer and validates logged-in local Synchronet/ENiGMA upload/download
+workflows. The ENiGMA selector-first fixture bypasses the unresolved fragmented
+arrow issue. Exact scope, all failed attempts, memory and artifact identities
+are recorded in [ZEDZAP_BBS.md](ZEDZAP_BBS.md). All F01–F16 gates remain open.

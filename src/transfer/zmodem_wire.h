@@ -2,7 +2,7 @@
 #define PCPLUS_ZMODEM_WIRE_H
 /* Maintained Forsberg ZMODEM framing, not a transfer/file owner. Near cdecl,
  * DS=SS. No allocation, globals, UART, filesystem or original binary inputs.
- * Caller retains state and a disjoint 1..1024-byte tentative payload buffer.
+ * Caller retains state and a disjoint 1..8192-byte tentative payload buffer.
  * Buffer contents become acceptable ONLY on ZW_DATA; all other events forbid
  * committing them. On error caller recovers from its last committed offset.
  */
@@ -19,6 +19,7 @@ enum { ZW_MORE=0, ZW_HEADER, ZW_DATA, ZW_CRC, ZW_FORMAT, ZW_OVERFLOW,
  ZW_CANCEL, ZW_ARGUMENT };
 enum { ZW_BIN16=65, ZW_HEX=66, ZW_BIN32=67 };
 enum { ZW_CRCE=104, ZW_CRCG=105, ZW_CRCQ=106, ZW_CRCW=107 };
+#define ZW_RECEIVE_MAX 8192
 typedef struct zw_decoder {
  unsigned char *buffer;
  unsigned capacity,count,phase,index,escape,cans,control,overflow,nibble;

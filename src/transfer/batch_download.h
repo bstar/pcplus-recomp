@@ -28,7 +28,7 @@ unsigned __cdecl batch_download_begin(const char *directory);
 unsigned __cdecl batch_download_open(const batch_header_result *header);
 unsigned __cdecl batch_download_append(const void *data,unsigned count);
 /* Unpadded variable packet bytes for a length-advisory protocol. Only an
- * unknown-length owner is accepted; 0..1024 exact bytes, no trimming. The
+ * unknown-length owner is accepted; 0..8192 exact bytes, no trimming. The
  * YMODEM append/declared-length behavior above remains unchanged. */
 unsigned __cdecl batch_download_exact(const void *data,unsigned count);
 /* Known length0 is an empty file, not unknown. The last accepted frame stores

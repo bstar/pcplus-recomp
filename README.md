@@ -4,7 +4,11 @@ An incremental source reconstruction of ProComm Plus 2.01, focused first on
 serial communication, ANSI terminal handling and BBS compatibility.
 The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 
-**This is not yet a complete PCPlus source rebuild.** Current outputs:
+**This is not yet a complete PCPlus source rebuild.** The current terminal
+passes logged-in ZMODEM uploads and downloads against local Synchronet and ENiGMA,
+including 8 KiB reception. [Results and remaining interaction limits](docs/ZEDZAP_BBS.md).
+
+Current outputs:
 
 | Output | Inputs | Current purpose |
 | --- | --- | --- |

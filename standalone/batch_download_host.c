@@ -81,7 +81,7 @@ static void faults(void)
  check(open_file("EMPTY.BIN",0,1)==BD_OK && batch_download_finish()==BD_OK && installed_size[installed-1]==0,"known zero installs empty without data frame");
  check(open_file("UNKNOWN.BIN",0,0)==BD_OK && batch_download_append(payload,128)==BD_OK && batch_download_append(payload,1024)==BD_OK && batch_download_finish()==BD_OK && installed_size[installed-1]==1152UL && !batch_download_result.known_length,"unknown size retains complete accepted frames");
  open_file("VARIABLE.BIN",0,0);before=ops;saved=batch_download_result;
- check(batch_download_exact(payload,1025)==BD_ARGUMENT && !memcmp(&saved,&batch_download_result,sizeof(saved)) && ops==before,"variable count rejects unchanged");
+ check(batch_download_exact(payload,8193)==BD_ARGUMENT && !memcmp(&saved,&batch_download_result,sizeof(saved)) && ops==before,"variable count rejects unchanged");
  check(batch_download_exact(0,0)==BD_OK && ops==before && batch_download_exact(payload,3)==BD_OK && batch_download_finish()==BD_OK && installed_size[installed-1]==3,"zero no IO and exact unpadded short packet");
  mode=4;open_file("VPART.BIN",0,0);check(batch_download_exact(payload,7)==BD_STORAGE && batch_download_result.wire==7 && batch_download_result.stored==3 && batch_download_finish()==BD_STORAGE,"variable short write poisons install");mode=0;batch_download_cleanup();
  /* Ambiguous close last: this process deliberately retains recovery ownership. */

@@ -78,6 +78,12 @@ def main():
     for off in range(0,17,7):rx+=h(3,min(off+7,17));tx+=payload(data[off:off+7],off)
     rx+=h(1,0x23000007)+h(8);tx+=h(11,17,67)+h(8)+b'OO'
     case('finite-receiver-buffer-seven',True,rx,{},source_files={'TEST.BIN':data},expected_wire=tx)
+    for fmt in (65,67):
+        for n in (2048,4096,8192):
+            data=bytes(i&255 for i in range(n))
+            case(f'ZedZap-receive-{fmt}-{n}',False,offer('TEST.BIN',n,fmt)+payload(data,0,fmt)+h(11,n,fmt)+h(8)+b'OO',{'TEST.BIN':data})
+        data=bytes(8192)+bytes(range(256))*32
+        case(f'ZedZap-continued-ACK-buffer-reuse-{fmt}',False,offer('TEST.BIN',len(data),fmt)+h(10,0,fmt)+packet(data[:8192],fmt,106,0)+packet(data[8192:],fmt,107,0)+h(11,len(data),fmt)+h(8)+b'OO',{'TEST.BIN':data})
     conf=f'''[sdl]
 output=surface
 [cpu]

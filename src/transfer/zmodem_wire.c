@@ -41,7 +41,7 @@ void __cdecl zw_headers(zw_decoder *s)
 {s->phase=0;s->index=0;s->escape=0;s->nibble=0;}
 unsigned __cdecl zw_init(zw_decoder *s,unsigned char *buffer,unsigned capacity,unsigned control)
 {
- if(!span(s,sizeof(*s)) || !capacity || capacity>1024 || !span(buffer,capacity) || !separate(s,sizeof(*s),buffer,capacity) || control>1)return ZW_ARGUMENT;
+ if(!span(s,sizeof(*s)) || !capacity || capacity>ZW_RECEIVE_MAX || !span(buffer,capacity) || !separate(s,sizeof(*s),buffer,capacity) || control>1)return ZW_ARGUMENT;
  memset(s,0,sizeof(*s));s->buffer=buffer;s->capacity=capacity;s->control=control;
  return ZW_MORE;
 }

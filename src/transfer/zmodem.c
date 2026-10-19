@@ -14,7 +14,7 @@ static unsigned put(zm_session *s,const void *p,unsigned n)
 static unsigned event(zm_session *s)
 {
  unsigned i,r,v;
- for(i=0;i<8192;++i){
+ for(i=0;i<32768U;++i){
   /* A peer may purge for one second after ZRPOS. A one-second read here can
    * repeatedly expire during that purge and provoke a recovery livelock. */
   v=s->ops->read_byte(s->context,3);
@@ -36,13 +36,13 @@ static unsigned header(zm_session *s,unsigned type,zw_u32 pos,unsigned fmt)
  unsigned char h[5];unsigned n;
  h[0]=(unsigned char)type;h[1]=(unsigned char)pos;h[2]=(unsigned char)(pos>>8);
  h[3]=(unsigned char)(pos>>16);h[4]=(unsigned char)(pos>>24);
- n=zw_header_encode(fmt,h,s->control,s->wire,sizeof(s->wire));
- return n?put(s,s->wire,n):fail(s,ZM_PROTOCOL);
+ n=zw_header_encode(fmt,h,s->control,s->io.wire,sizeof(s->io.wire));
+ return n?put(s,s->io.wire,n):fail(s,ZM_PROTOCOL);
 }
 static unsigned data(zm_session *s,unsigned n,unsigned ending)
 {
- unsigned length=zw_data_encode(s->format,s->data,n,ending,s->control,s->wire,sizeof(s->wire));
- return length?put(s,s->wire,length):fail(s,ZM_PROTOCOL);
+ unsigned length=zw_data_encode(s->format,s->data,n,ending,s->control,s->io.wire,sizeof(s->io.wire));
+ return length?put(s,s->io.wire,length):fail(s,ZM_PROTOCOL);
 }
 static unsigned receive_init(zm_session *s)
 {return header(s,ZRINIT,0x23000000UL,ZW_HEX);}
@@ -93,12 +93,13 @@ static unsigned receive(zm_session *s)
    }
    if(type==ZSINIT){header(s,ZACK,0,ZW_HEX);++s->retries;continue;}
    count=s->decoder.count;
-   for(i=0;i<count && s->rx[i];++i){}
+   if(count>1024)return fail(s,ZM_PROTOCOL);
+   for(i=0;i<count && s->io.rx[i];++i){}
    if(i==count)return fail(s,ZM_PROTOCOL);
-   for(++i;i<count && s->rx[i];++i){}
+   for(++i;i<count && s->io.rx[i];++i){}
    if(i==count)return fail(s,ZM_PROTOCOL);
-   for(i=count;i<sizeof(s->rx);++i)s->rx[i]=0;
-   if(!count || batch_header_decode(s->rx,sizeof(s->rx),&meta)!=BH_OK || meta.kind!=BH_FILE)return fail(s,ZM_PROTOCOL);
+   for(i=count;i<1024;++i)s->io.rx[i]=0;
+   if(!count || batch_header_decode(s->io.rx,1024,&meta)!=BH_OK || meta.kind!=BH_FILE)return fail(s,ZM_PROTOCOL);
    if(s->owned){
     if(strcmp(s->name,meta.name))return fail(s,ZM_PROTOCOL);
    }else{
@@ -132,7 +133,7 @@ static unsigned receive(zm_session *s)
    }
    count=s->decoder.count;ending=s->decoder.ending;
    if(0xffffffffUL-s->position<count)return fail(s,ZM_PROTOCOL);
-   if(count && s->ops->write_received(s->context,s->rx,count))return fail(s,ZM_FILE);
+   if(count && s->ops->write_received(s->context,s->io.rx,count))return fail(s,ZM_FILE);
    s->position+=count;
    if(count)s->retries=0;else if(++s->retries==LIMIT)return fail(s,ZM_PROTOCOL);
    if(ending==ZW_CRCQ || ending==ZW_CRCW)header(s,ZACK,s->position,ZW_HEX);
@@ -261,7 +262,7 @@ unsigned __cdecl zm_run(zm_session *s,const zm_ops *ops,void *context,unsigned s
  if(!ops->read_byte || !ops->write_wire || (sending?(!ops->next || !ops->seek || !ops->read_file || !ops->close_source):
   (!ops->open_received || !ops->write_received || !ops->commit_received || !ops->abort_received)))return ZM_ARGUMENT;
  memset(s,0,sizeof(*s));s->ops=ops;s->context=context;s->sending=sending;
- zw_init(&s->decoder,s->rx,sizeof(s->rx),0);r=sending?send(s):receive(s);
+ zw_init(&s->decoder,s->io.rx,sizeof(s->io.rx),0);r=sending?send(s):receive(s);
  if(s->owned==1){
   s->cleanup_status=sending?ops->close_source(context,0):ops->abort_received(context);
   if(!s->cleanup_status)s->owned=0;

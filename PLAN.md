@@ -696,3 +696,23 @@ the separate30ms buffering experiment passes. No post was saved, and the
 synthetic logon exemption was restored and independently read back.
 The full application gates remain open, including complete settings/key editing,
 other emulations/protocols, ASPECT, Host, packaging and physical target testing.
+
+
+## 8 KiB reception and logged-in ZMODEM checkpoint
+
+The `d0274a22` runtime accepts 8 KiB packets within the existing exclusive arena
+by sharing receive and response storage. Baud-dependent accepted-progress budgets
+allow worst-case quoting; missing final OO has an explicit unconfirmed footer.
+Both directions pass actual DOS logged-in local Synchronet and ENiGMA workflows,
+with exact files, independent wire/control audits, official metadata and later
+menu interaction. ENiGMA uses its inherited stock `-telnet -8 sz/rz` helper.
+Its path and selector-first fixture are recorded; fragmented-arrow selection
+remains unresolved. Five failed attempts remain distinct from five successes.
+
+The current binary passes71 linked workflows,10 unresolved-owner guards and325
+damaged-frame/pointer rejections. Component validation passes92 scripted checks,
+22 independent peer sessions and53 DOS workflows. Two additional actual DOS
+CRC16/CRC32 sessions receive full8 KiB packets with exact files. See
+`docs/ZEDZAP_BBS.md` and `docs/validation/zedzap-bbs.json`. Full loss/timing tests,
+windowed sending, auto-download, persisted resume, physical modem, full original
+UI/emulations/protocols, ASPECT and Host remain required; no F01–F16 gate closes.

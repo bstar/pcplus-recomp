@@ -15,7 +15,7 @@ executable, overlay bytes or generated analysis database is a codec build input.
 
 ## Interface and ownership
 
-`zw_init` binds caller-owned state to a disjoint 1–1024-byte payload buffer.
+`zw_init` binds caller-owned state to a disjoint 1–8192-byte payload buffer.
 There is no allocation or global state. DOS calls use near cdecl pointers and
 DS=SS; span/overlap checks reject wrapped near buffers. Nothing is added to the
 terminal's constrained near-data segment at this checkpoint.
@@ -51,7 +51,7 @@ The small bitwise implementation makes no hardware throughput claim.
 
 Encoders count before writing and return zero without changing output on invalid
 arguments or short capacity. Header and data output must be disjoint from input.
-A 24-byte header span and 2059-byte data span cover the worst quoted standard
+Encoding remains limited to 1,024-byte payloads. A 24-byte header span and 2059-byte data span cover the worst quoted standard
 packet. All storage belongs to the caller; the future terminal integration can
 use its exclusive transfer arena rather than allocate another resident buffer.
 
@@ -62,11 +62,11 @@ Run `./tools/build test-zmodem-wire`.
 The independent Python oracle uses `binascii.crc_hqx`/`zlib.crc32`, not the C CRC
 implementation. It supplies exact encoded headers/data and checks bytewise C
 decoding, all four endings, both CRC widths, ESCCTL, all byte values, random
-payloads, empty/1/1023/1024-byte packets, quoting, short outputs, corruption,
+payloads, empty/1/1023/1024-byte packets and 2/4/8 KiB reception, quoting, short outputs, corruption,
 truncation, capacity overflow, continued subpackets, header recovery, parity LF,
-flow injection and cancellation. The host run passes 5,027 assertions. Watcom's
-source-built 8086 executable passes 822 independent wire vectors and 55
-fault/continuation streams: 7,309 checks, zero failures. It also checks near-span
+flow injection and cancellation. The host run passes 5,051 assertions. Watcom's
+source-built 8086 executable passes 822 independent wire vectors and 79
+fault/continuation streams: 7,381 checks, zero failures. It also checks near-span
 wraps and state/buffer aliases on the actual 16-bit target.
 
 A separate directory containing only the codec C/header and diagnostic C source

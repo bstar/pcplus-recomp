@@ -23,7 +23,7 @@ class ZPeer(Peer):
     self.log('protocol-start')
     sending=self.recipe['direction']=='tx'
     self.command=[shutil.which('rz' if sending else 'sz'),'-b','-q']+self.recipe['flags']
-    if not sending:self.command+=['-L','1024']+[n for n,_ in self.recipe['files']]
+    if not sending:self.command+=(['-8','-L','8192'] if self.recipe.get('zedzap') else ['-L','1024'])+[n for n,_ in self.recipe['files']]
     with (self.path/'peer-stderr.log').open('wb') as log:
      self.child=subprocess.Popen(self.command,cwd=self.path/'PEER',stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=log,bufsize=0)
      self.child.stdin.write(self.pending);self.pending.clear();deadline=time.monotonic()+max(65,self.recipe.get('transfer_timeout',65))
@@ -115,12 +115,12 @@ exit
   keys=keys,files={n:hashlib.sha256(d).hexdigest() for n,d in r['files']},scope='Actual DOSBox-X BIOS F2 protocol selection, maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with independent pinned lrzsz stdio peer. Synthetic local media, no BBS login or physical modem claim.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(r['name'],json.dumps(result),flush=True);return result
 def main():
- p=argparse.ArgumentParser();p.add_argument('--sha256',required=True);p.add_argument('--label',required=True);p.add_argument('--jobs',type=int,default=2,choices=(1,2));p.add_argument('--after-ms',type=int,default=15000);p.add_argument('--large',action='store_true');p.add_argument('--case',action='append');p.add_argument('--timeout',type=int,default=100);a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--sha256',required=True);p.add_argument('--label',required=True);p.add_argument('--jobs',type=int,default=2,choices=(1,2));p.add_argument('--after-ms',type=int,default=15000);p.add_argument('--large',action='store_true');p.add_argument('--case',action='append');p.add_argument('--timeout',type=int,default=100);p.add_argument('--zedzap',action='store_true');a=p.parse_args()
  assert a.label.replace('-','').replace('_','').isalnum();assert hashlib.sha256(BINARY.read_bytes()).hexdigest()==a.sha256
  OUT.mkdir(exist_ok=True);files=[('EMPTY.BIN',b''),('ODD.BIN',b'A'),('ALL.BIN',bytes(range(256))*(257 if a.large else 4)+b'\0\x1a\xff@\r')]
  rows=[dict(name='rx-default',direction='rx',flags=[],files=files),dict(name='rx-crc16',direction='rx',flags=['-o'],files=files),dict(name='tx-default',direction='tx',flags=[],files=files),dict(name='tx-escape',direction='tx',flags=['-e'],files=files)]
  rows=[r for r in rows if not a.case or r['name'] in a.case];assert rows
- for r in rows:r['transfer_timeout']=max(65,a.after_ms/1000+10)
+ for r in rows:r['transfer_timeout']=max(65,a.after_ms/1000+10);r['zedzap']=a.zedzap
  with (OUT/'.lock').open('w') as lock:
   fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
   with ThreadPoolExecutor(max_workers=a.jobs) as pool:results=list(pool.map(lambda r:run_case(r,a),rows))

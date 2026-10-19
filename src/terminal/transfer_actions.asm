@@ -110,13 +110,7 @@ terminal_transfer_poll:
  mov word [terminal_upload_blocks_accepted],0
  mov word [terminal_upload_accepted_bytes],0
  mov word [terminal_upload_accepted_bytes+2],0
- mov word [transfer_progress_budget],540 ;30seconds; lowbaud gets120seconds
- cmp word [terminal_baud_high],0
- jne .budget_ready
- cmp word [terminal_baud_low],1200
- jae .budget_ready
- mov word [transfer_progress_budget],2160
-.budget_ready:
+ call terminal_transfer_set_budget
  call terminal_connection_notice_restore
  call terminal_clock_ticks
  mov [transfer_progress_tick],ax
@@ -202,6 +196,10 @@ terminal_transfer_poll:
  jmp .notice
 .batch_unconfirmed:
  mov si,transfer_note_batch_ack
+ cmp word [terminal_transfer_protocol],2
+ jne .unconfirmed_notice
+ mov si,transfer_note_zmodem_end
+.unconfirmed_notice:
  jmp .notice
 .receive:
  call _terminal_transfer_store
@@ -770,6 +768,38 @@ terminal_transfer_filter:
  pop ax
  clc
  ret
+; Accepted-progress deadline, not an idle-byte timer. ZedZap can contain8192
+; payload bytes plus quoting before a verified packet exists. Allow the worst
+; quoted packet on a slow UART without treating unverified bytes as progress.
+GLOBAL terminal_transfer_set_budget,transfer_progress_budget
+terminal_transfer_set_budget:
+ mov word [transfer_progress_budget],540
+ cmp word [terminal_baud_high],0
+ jne .done
+ cmp word [terminal_transfer_protocol],2
+ je .zmodem
+ cmp word [terminal_baud_low],1200
+ jae .done
+ mov word [transfer_progress_budget],2160
+ ret
+.zmodem:
+ cmp word [terminal_baud_low],9600
+ jae .done
+ mov word [transfer_progress_budget],1080
+ cmp word [terminal_baud_low],4800
+ jae .done
+ mov word [transfer_progress_budget],2160
+ cmp word [terminal_baud_low],2400
+ jae .done
+ mov word [transfer_progress_budget],4320
+ cmp word [terminal_baud_low],1200
+ jae .done
+ mov word [transfer_progress_budget],8640
+ cmp word [terminal_baud_low],600
+ jae .done
+ mov word [transfer_progress_budget],17280
+.done:
+ ret
 terminal_transfer_shutdown:
  call _terminal_transfer_cleanup
  push ax
@@ -831,4 +861,5 @@ transfer_note_file: db 'RX file error',0
 transfer_note_recovery: db 'RX recovery!',0
 transfer_note_ack: db 'RX saved; ACK?',0
 transfer_note_batch_ack: db 'TX batch sent; ACK?',0
+transfer_note_zmodem_end: db 'RX files saved; finish unconfirmed',0
 transfer_note_batch_partial: db 'RX batch partial',0

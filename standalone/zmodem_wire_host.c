@@ -1,7 +1,7 @@
 #include "zmodem_wire.h"
 #include <stdio.h>
 #include <string.h>
-static unsigned char input[1024],expected[2060],output[2060],payload[1026];
+static unsigned char input[1024],expected[16400],output[2060],payload[8194];
 static zw_decoder s,saved;
 static unsigned checks,failures;
 static void ck(unsigned good,const char *label)
@@ -38,7 +38,7 @@ int main(void)
  f=fopen("STREAMS.BIN","rb");if(!f)return 1;
  while((format=(unsigned)fgetc(f))!=0xffffU){
   control=(unsigned)fgetc(f);kind=(unsigned)fgetc(f);length=word(f);n=word(f);ending=word(f);
-  if(!length || length>1024 || n>2060 || ending>1024 || fread(expected,1,n,f)!=n || fread(input,1,ending,f)!=ending)return 2;
+  if(!length || length>8192 || n>16400 || ending>1024 || fread(expected,1,n,f)!=n || fread(input,1,ending,f)!=ending)return 2;
   memset(payload,0xa5,sizeof(payload));zw_init(&s,payload+1,length,control);s.format=format;if(kind)zw_data(&s);
   events=0;
   for(i=0;i<n;++i){
