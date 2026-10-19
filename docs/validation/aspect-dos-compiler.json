@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "recorder_sha256": "46132f6050006d0b9258e4af6473dd6135f8e11cb80377f27550803ebde2de6f",
+  "recorder_sha256": "b506d5b7df928dfdd27f0cc5a43f107ab7d300d040ec61d44747d508ed8e4ea4",
   "reports": {
     "lexer": {
       "manifest_sha256": "d5c2a09b77b7e156d2458f46e780d9cad9eb20c4f7a5126648593a698f6d9120",
@@ -201,7 +201,7 @@
     },
     "dos": {
       "manifest_sha256": "d3a3217601498fce28ec62670c08bdc80ba1df5b200be709fe18371614c2547a",
-      "checks_sha256": "cf18c1a4a1d84c0fbecc11528b401b705adf22d350b30659ab69658b36d1323b",
+      "checks_sha256": "e796994376054a8cd92cf93bfbf71563db6d76f14f9220b0fcad760bcf3f5e80",
       "report": {
         "passed": true,
         "case_count": 1173,
@@ -209,7 +209,7 @@
         "rejected": 455,
         "binary_sha256": "cf924b18ae099619f6f83c8127b03e2b2ca39ce3f41a16f336e28585cc5e5941",
         "manifest_sha256": "d3a3217601498fce28ec62670c08bdc80ba1df5b200be709fe18371614c2547a",
-        "checker_sha256": "701022e306a871444d9c0cc6ced68baa13f6a43ee90970d6670f7df568a2a768",
+        "checker_sha256": "4d9d647a6e511078a5351b44ce5616bbc1b5924782bb61ac348c206b23e50976",
         "host_compiler_sha256": "a83dc4b99c51340235649339c118fd6e10ac80ff194c427254b12aeec2d59dc9",
         "fixture_sources": {
           "standalone/fixtures/aspect_arithmetic_vectors.json": "18424774c5bf1856a6aefd04bd7973556c3e375ce402aefee08c6224317f15f4",
@@ -251,7 +251,7 @@
           "FAULT.EXE": "24e9eaa40679e2a53e79426fc259aec9cb2df99f2af7c4930d8fa5178c222527",
           "FAILBACK.EXE": "1af040e843a639358ff6ec4c06291a637729b3ce1b7dc8afbb2884b0f57da047"
         },
-        "runtime_child_sha256": "5f036ec4f50aad5610dfc537ea3a965ab056c080f2a2d3d502583f5cfd1ee117",
+        "runtime_child_sha256": "cecda190d9f2c4dbea07c4938cecb6e4e1e7f84ba9eed8816758f8a6ea2a02a8",
         "runtime_asx_sha256": "c55d6e3d34b440734e5513d220ee9b6fe9c5c0237c362f98bfe142a7e493c569",
         "case_manifest_sha256": "e82fe121642012bb8e6cbae89ee5d5d3b28cfad903a31fcf51a55c7561c9eba3",
         "reused_sources": {
@@ -260,13 +260,14 @@
           "standalone/compiler_heap_snapshot.h": "22059de2b8b206a7029e71e44a90af584bc55d33ebf45dd36c3531f8a24005bd"
         },
         "original_inputs": [],
-        "scope": "Complete maintained host grammar under8086 DOS, staged CLI publication including forced rollback/restoration failures and owned fault cleanup, followed by actual execution of DOS-compiled bytecode in maintained ASPECT. Runtime ASP integration and native language expansion remain unfinished."
+        "scope": "Complete maintained host grammar under8086 DOS, staged CLI publication including forced rollback/restoration failures and owned fault cleanup, followed by actual execution of DOS-compiled bytecode in maintained ASPECT. Runtime source loading is validated separately; full native language expansion remains unfinished."
       }
     }
   },
-  "source_proof_sha256": "4391d293b1631ccf50ac42b97ef16c57aacf1581b6c7292a5007daa56ff2a849",
+  "source_proof_sha256": "616f741dc37681f408ad2ba2dbe49df24db4f86f9ffbfee277ce1d2bf456f42c",
   "reproduced_output_count": 153,
-  "application_bytes_unchanged_from_prior_label_checkpoint": true,
+  "terminal_bytes_unchanged_from_prior_label_checkpoint": true,
+  "runtime_integration_validation": "docs/validation/aspect-source-compile.json",
   "CRT_analysis": {
     "evidence_id": "ev_d1a5f2f22b386770e1316405e3db283a854074f3496c79f5004bb421f01b9b66",
     "target_sha256": "feef536a2ceec25567d164d566c749a5c085d5b5a847542790a0b977939d8235",
@@ -300,7 +301,7 @@
     "actual maintained DOS interpreter execution of DOS-compiled ASX"
   ],
   "required_remaining": [
-    "runtime ASP/fallback integration preserving UART/file/settings ownership, INT0/PSP/vector isolation and BBS workflows",
+    "original compiler UI and broader lifecycle/physical compatibility beyond the separately tested runtime integration",
     "full native compiler coverage beyond the host subset",
     "recorder and remaining F01-F16 requirements"
   ],

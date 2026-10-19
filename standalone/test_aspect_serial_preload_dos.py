@@ -76,7 +76,7 @@ int main(int argc,char **argv){
 }
 '''
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
-def main():
+def main(expected_wire=None):
  OUT.mkdir(parents=True,exist_ok=True)
  (OUT/'parent.c').write_text(PARENT);(OUT/'probe.c').write_text(PROBE)
  sources=[ROOT/'src/aspect/serial_backend.asm',ROOT/'reconstruction/uart/core.asm',ROOT/'src/uart/api.asm']
@@ -132,7 +132,8 @@ exit
   with (folder/'dosbox.log').open('w') as log:
    p=subprocess.run(['dosbox-x','-fastlaunch','-nogui','-conf',str(folder/'dosbox.conf')],stdout=log,stderr=log,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),timeout=15)
   thread.join(2);server.close()
-  checks=dict(dos_pass=p.returncode==0 and (folder/'PASS.TXT').exists() and not(folder/'FAIL.TXT').exists(),wire_exact=bytes(wire)==(b'\x11' if flow in ['S','B'] else b'')+b'D'+(b'\x13' if flow in ['S','B'] else b''),peer_clean=not errors)
+  wanted=expected_wire[flow] if expected_wire is not None else (b'\x11' if flow in ['S','B'] else b'')+b'D'+(b'\x13' if flow in ['S','B'] else b'')
+  checks=dict(dos_pass=p.returncode==0 and (folder/'PASS.TXT').exists() and not(folder/'FAIL.TXT').exists(),wire_exact=bytes(wire)==wanted,peer_clean=not errors)
   result=dict(version=version,mode=mode,preload_count=count,preload_read=at,entry=entry,port=port,flow=flow,passed=all(checks.values()),checks=checks,errors=errors,wire_hex=wire.hex(),result=(folder/'RESULT.TXT').read_text())
   (folder/'checks.json').write_text(json.dumps(result,indent=2)+'\n');print(result,flush=True);cases.append(result)
  sources += [ROOT/'src/aspect/serial.c',ROOT/'src/aspect/serial.h',ROOT/'src/aspect/serial_handoff.h',ROOT/'reconstruction/directory_accounting/patch.asm',Path(__file__).resolve()]

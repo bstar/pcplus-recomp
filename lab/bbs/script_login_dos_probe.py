@@ -43,6 +43,7 @@ def observed_driver():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label', required=True)
+    parser.add_argument('--source', action='store_true', help='Compile LOGON.ASP in the actual DOS child')
     args = parser.parse_args()
     assert args.label and all(c.isalnum() or c in '-_' for c in args.label)
     output = ROOT / 'build/bbs-lab/results/synchronet' / args.label
@@ -95,13 +96,18 @@ def main():
               'else\r\nmessage "PASSWORD PROMPT NOT RECEIVED"\r\n'
               'endif\r\nendproc\r\n')
     (stage / 'LOGON.ASP').write_bytes(source.encode('ascii'))
-    (stage / 'LOGON.ASX').write_bytes(compile_source(source))
+    if args.source:
+        shutil.copyfile(ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE',stage/'ASPCOMP.EXE')
+    else:
+        (stage / 'LOGON.ASX').write_bytes(compile_source(source))
     recipe_path = ROOT / 'lab/bbs/synchronet-editor-recipe.json'
     original = json.loads(recipe_path.read_text())['keyboard_input']
     login = 'p13000 L A B U S E R enter p2000 L A B P A S S 4 2 enter p8000 '
     assert original.startswith(login)
     keys = ('p13000 a-z p300 a p300 l o g o n . a s x enter '
             'p8000 ' + original[len(login):])
+    if args.source:
+        keys=keys.replace('l o g o n . a s x','l o g o n . a s p')
     assert 'LABUSER' not in keys.replace(' ', '').upper()
     assert 'LABPASS42' not in keys.replace(' ', '').upper()
     assert 'enter' not in keys[keys.index('A B C D E'):].split()
@@ -120,6 +126,7 @@ def main():
     (stage / 'predictions.json').write_text(json.dumps(dict(
         sources=inputs, staged=staged, command=command,
         expected_login_wire_hex=b'LABUSER\rLABPASS42\r'.hex(),
+        compile_in_DOS=args.source,expected_ASX_sha256=hashlib.sha256(compile_source(source)).hexdigest(),
         expected_editor_passed=True), indent=2) + '\n')
     with (stage / 'harness.log').open('w') as log:
         code = subprocess.call(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
@@ -140,6 +147,7 @@ def main():
         DOS_harness=code == 0 and run['passed'],
         current_terminal=run['binary_sha256'] == staged['TERMINAL.EXE'] == sha(ROOT / 'build/terminal/TERMINAL.EXE'),
         current_runner=staged['ASPECT.EXE'] == sha(ROOT / 'build/aspect-runner/ASPECT.EXE'),
+        source_compilation=(not args.source or (stage/'LOGON.ASX').read_bytes()==compile_source(source)),
         inputs_unchanged=inputs == {str(p.relative_to(ROOT)): sha(p) for p in sources}
                          and all(sha(stage / leaf) == digest for leaf, digest in staged.items()),
         credentials_not_in_keyboard=run['keyboard_input'] == keys

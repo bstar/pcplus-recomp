@@ -57,8 +57,8 @@ def main():
  for name,digest in binaries.items():assert proof['outputs'][name]['sha256']==digest
  # This chapter adds frontend tools and changes no application product bytes.
  prior=read('docs/validation/aspect-script-label.json')
- for path,key in [('terminal/TERMINAL.EXE','terminal_sha256'),('aspect-runner/ASPECT.EXE','runner_sha256')]:
-  assert proof['outputs'][path]['sha256']==prior[key]==sha('build/'+path)
+ assert proof['outputs']['terminal/TERMINAL.EXE']['sha256']==prior['terminal_sha256']==sha('build/terminal/TERMINAL.EXE')
+ assert proof['outputs']['aspect-runner/ASPECT.EXE']['sha256']==sha('build/aspect-runner/ASPECT.EXE')
  old=(ROOT/'analysis/dos-compiler-heap/CRTHEAP-feef536a.EXE').read_bytes()
  assert hashlib.sha256(old).hexdigest()=='feef536a2ceec25567d164d566c749a5c085d5b5a847542790a0b977939d8235'
  current=(ROOT/'build/aspect-compiler-unit/tests/CRTHEAP.EXE').read_bytes()
@@ -70,14 +70,15 @@ def main():
  assert original_routine==current[new_header+current_offset:new_header+current_offset+267]
  result=dict(passed=True,recorder_sha256=sha('standalone/record_aspect_dos_compiler.py'),reports=reports,
   source_proof_sha256=sha('docs/validation/application-components-source-build.json'),reproduced_output_count=153,
-  application_bytes_unchanged_from_prior_label_checkpoint=True,
+  terminal_bytes_unchanged_from_prior_label_checkpoint=True,
+  runtime_integration_validation='docs/validation/aspect-source-compile.json',
   CRT_analysis=dict(evidence_id='ev_d1a5f2f22b386770e1316405e3db283a854074f3496c79f5004bb421f01b9b66',
    target_sha256=hashlib.sha256(old).hexdigest(),current_runtime_probe_sha256=crt['binary_sha256'],identical_routine_sha256=hashlib.sha256(original_routine).hexdigest(),function='__HeapWalk',linear_address='0x10a0c',body_bytes=267,
    scope='REA/Ghidra static instructions plus separate owned malloc-only DOS execution. Pinned checker false failure; production allocator unchanged. Independent observer covers block/free-list/used-count structure and rejects six corruptions or capacity failures.'),
   native_declaration_oracle=dict(fixture_sha256=sha('standalone/fixtures/aspect_declaration_edges.json'),compiler_sha256=oracle['compiler_sha256'],probe_sha256=oracle['probe_sha256'],provenance=oracle['provenance'],accepted=2,rejected=8),
   compiler_stages_completed=['streaming lexical frontend','declaration/procedure inventory and owned source ranges','typed expression parsing and exact operand/assignment fragments with short-circuit DWORD patches','integer-only decimal to IEEE754 nearest/even conversion','complete maintained host statement/command grammar and typed procedure calls','validation of unused bodies/initializers and confirmed malformed declaration edges','iterative zero-reference pruning and complete ASX with DWORD patches beyond64KiB','DOS compiler CLI with staged output, replacement rollback and preserved source/existing output on tested failures','actual maintained DOS interpreter execution of DOS-compiled ASX'],
-  required_remaining=['runtime ASP/fallback integration preserving UART/file/settings ownership, INT0/PSP/vector isolation and BBS workflows','full native compiler coverage beyond the host subset','recorder and remaining F01-F16 requirements'],
+  required_remaining=['original compiler UI and broader lifecycle/physical compatibility beyond the separately tested runtime integration','full native compiler coverage beyond the host subset','recorder and remaining F01-F16 requirements'],
   limitations=['ASPLEX/ASPINV/ASPEXP remain diagnostics; ASPCOMP produces complete ASX only for the maintained host grammar.','Original ASPECT language families beyond the maintained subset remain unsupported.','Additional native malformed grammar edges still require independent evidence.','Physical hardware and modem compatibility are not established by these compiler tests.'],whole_application_gates_closed=[])
  (ROOT/'docs/validation/aspect-dos-compiler.json').write_text(json.dumps(result,indent=2)+'\n')
- print('Bound DOS compiler:',dos['case_count'],'whole programs,',expression['case_count'],'expression fragments; runtime source fallback and full native language remain pending')
+ print('Bound DOS compiler:',dos['case_count'],'whole programs,',expression['case_count'],'expression fragments; full native language remains pending; source fallback is validated separately')
 if __name__=='__main__':main()

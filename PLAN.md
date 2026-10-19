@@ -1546,3 +1546,40 @@ nested EXEC INT0/PSP/vector isolation, UART/settings/file/label preservation and
 actual BBS workflow integration remain next. Full native compiler families
 beyond the maintained subset, recorder and all F01–F16 application requirements
 remain open. See `docs/ASPECT_DOS_COMPILER.md` and its validation ledger.
+
+### Runtime source compiler handoff
+
+Production ASPECT now compiles explicit ASP and missing-ASX source siblings,
+including EXECUTE targets, using the maintained ASPCOMP executable beside it.
+Existing compiled files retain precedence; compile failure cannot execute stale
+ASX. Current/PCPLUS namespace and qualified paths remain bounded, including an
+actual79-character DOS source. Captured diagnostics restore the parent's handles
+and render only after child return; temporary logs are retired.
+
+The interpreter brackets nested P_WAIT with a neutral INT0 handler so a compiler
+fault with foreign DS/SS terminates that child instead of unwinding the VM.
+Normal return restores the VM vector, caller PSP/INT23/24 and the eventual caller
+INT0. Escape is checked before EXEC and after child return. Numeric/settings,
+directory/translation, raw queue, file/string lifecycle and current ASX labels
+retain session ownership across compilation.
+
+UART IRQ remains live. Compiler admission proactively transmits XOFF/lowers RTS
+where selected and waits boundedly for pending flow/TX. Resume releases only
+introduced pauses; high queues retain backpressure. The child wrapper also fixes
+combined S/H dequeue's preloaded RTS low-water recovery. Flat recovered UART
+bytes remain unchanged. Nested admission and foreign BREAK preserve ownership.
+
+Verified 22 offline production cases/223 checks, seven actual UART cases including
+three3200-byte pressure cases, and four independent preload/flow cases including
+a full4096-byte queue on COM1/COM2. The pressure-only compiler wrapper declares a
+36-tick hold around the real DOS compiler. Exact unread ASIO suffix, control
+bytes, IRQ/INT0/23/24, PIC/MCR and guards are checked. Native VM1146/26309 and
+production CLI21/105 regressions and ordinary UART checks pass.
+
+The unchanged terminal performs directory-bound DOS source compilation, script
+login and unsaved editor return on Synchronet and ENiGMA. Passing ENiGMA uses the
+explicit existing30ms buffering policy. Its source-enabled immediate-forwarding
+attempt compiled/authenticated but retained the known Home-key failure. No
+immediate-forwarding fix or physical modem compatibility is claimed. Full native
+language/compiler UI/recorder and all F01–F16 requirements remain open. See
+`docs/ASPECT_SOURCE_COMPILE.md` and `docs/validation/aspect-source-compile.json`.

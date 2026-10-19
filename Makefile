@@ -871,3 +871,12 @@ aspect-compiler-dos:
 	python3 standalone/build_aspect_compiler_dos.py
 test-aspect-compiler-dos: aspect-compiler-dos aspect-runner
 	python3 standalone/check_aspect_compiler_dos.py
+
+.PHONY: test-aspect-source-compile test-aspect-source-serial-dos test-aspect-compile-flow-dos
+test-aspect-source-compile: aspect-runner aspect-compiler-dos
+	python3 standalone/check_aspect_source_compile.py
+test-aspect-source-serial-dos: aspect-runner aspect-compiler-dos
+	python3 standalone/check_aspect_source_serial_dos.py
+test-aspect-compile-flow-dos:
+	python3 standalone/test_aspect_compile_flow_dos.py
+test: test-aspect-source-compile test-aspect-source-serial-dos test-aspect-compile-flow-dos

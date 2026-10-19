@@ -1,0 +1,136 @@
+{
+  "passed": true,
+  "recorder_sha256": "8e093dd1a95f94528a162168d66e67315aaf4265ffc789b07f79d319c0348a9b",
+  "runner_sha256": "cecda190d9f2c4dbea07c4938cecb6e4e1e7f84ba9eed8816758f8a6ea2a02a8",
+  "compiler_sha256": "cf924b18ae099619f6f83c8127b03e2b2ca39ce3f41a16f336e28585cc5e5941",
+  "terminal_sha256": "97299d4b1c854be054ce8e15a5acf1a9cc95f8d90a0c197342b9fdcbbb23518a",
+  "reports": {
+    "source": {
+      "path": "build/aspect-source-compile/checks.json",
+      "sha256": "11d8be80e0103df4a0e56a4e36bd2049f0c0ba7cdf1f0f6d888265d945115e36",
+      "summary": "SOURCE_EXEC 22 cases 223 checks 0 failures"
+    },
+    "serial": {
+      "path": "build/aspect-source-serial-dos/checks.json",
+      "sha256": "45ef83148057ce1a8aa90710011fcc5db53e00c9a743a995572fd297930a26dc",
+      "summary": "Actual production nested DOS compiler and8086 ASPECT UART IRQ across N/S/H/B flow. Checked proactive XOFF/XON for S/B, raw IRQ reception, retained numeric/BREAK state, native compiled bytecode, exact unread ASIO return, vectors/PIC/MCR/guards. No resident-renderer, physical modem or external BBS claim."
+    },
+    "flow": {
+      "path": "build/aspect-compile-flow-dos/checks.json",
+      "sha256": "6ba9b043d2239d6d4aa191a46083ebf46793ed15400613abffed6b3b35de2203",
+      "summary": "Actual DOS COM1/COM2 compiler pause/resume with IRQ and wrapped/preloaded queues. Rejected nested pause preserves count/ownership; full combined-flow preload releases RTS at low water, then receives new live IRQ bytes and returns exact raw suffix. N/S/H/B across four established fixtures; physical flow timing remains unproved."
+    },
+    "runtime": {
+      "path": "build/aspect-runtime/checks.json",
+      "sha256": "88c099b96a7178ea6a221f70af1de8b104f18a1e9feb734193983e807bc73347",
+      "summary": "ASPECT_RUNTIME 1146 cases 26309 checks 0 failures"
+    },
+    "CLI": {
+      "path": "build/aspect-runner/checks.json",
+      "sha256": "e3f17fce9d7534946fd505d1824328a56e8e22b5354c619a59586c77a26d8c5a",
+      "summary": "RUNNER 21 cases 105 checks 0 failures"
+    },
+    "UART_CPU": {
+      "path": "build/aspect-serial/checks.json",
+      "sha256": "a40bbc97fa47735561e6e77fe40cb2cadbafede120d0a7158d862d9d8750d0e6",
+      "summary": "UART_CPU"
+    },
+    "UART_DOS": {
+      "path": "build/aspect-serial/dos-checks.json",
+      "sha256": "c094c960445a6c7dad54d4facbc103eb16ef9d3d296ace5c2dd788f2e8b3ff8b",
+      "summary": "UART_DOS"
+    }
+  },
+  "BBS": [
+    {
+      "server": "synchronet",
+      "label": "compiler-source-sync-04",
+      "passed": true,
+      "report_sha256": "148826d5025246fec6552a324d0d0b0ba408e836b07cecba74f06671d1fd196f",
+      "predictions_sha256": "da7163b79cd03e2b409f0c16759a9d973a6c19d79c86a6b86cc44231f2a03dd8",
+      "compiled_asx_sha256": "39401ae083a407ca96b48454bd27e8a78e203811eef15f73179088169f9d444c",
+      "checks": {
+        "DOS_harness": true,
+        "current_terminal": true,
+        "current_runner": true,
+        "source_compilation": true,
+        "inputs_unchanged": true,
+        "credentials_not_in_keyboard": true,
+        "script_credentials_once": true,
+        "no_other_login_text_before_script": true,
+        "authenticated_display": true,
+        "no_error_or_blocking_return_prompt": true,
+        "resumed_parent_editor": true,
+        "draft_aborted": true
+      },
+      "packet_delay_ms": 0
+    },
+    {
+      "server": "enigma",
+      "label": "compiler-source-enigma30-03",
+      "passed": true,
+      "report_sha256": "7dac2fe117731354f4302a5a74e6fc2d0042909158098d5d82718854e4ad23cd",
+      "predictions_sha256": "2f8cc35d0adf4e3fa6b8d975965ba90a11225c2f775dd224eea4396a9a7d7318",
+      "compiled_asx_sha256": "f5c4f5fc5329b68d17a4cce714e00f8250baa3c61e7b137a0b9f7eefcb274030",
+      "checks": {
+        "DOS_harness": true,
+        "current_terminal": true,
+        "current_runner": true,
+        "source_compilation": true,
+        "inputs_unchanged": true,
+        "stock_server_unchanged": true,
+        "credentials_not_in_keyboard": true,
+        "script_credentials_once": true,
+        "no_other_login_text_before_script": true,
+        "authenticated_server_log": true,
+        "no_error_or_blocking_return_prompt": true,
+        "resumed_parent_editor": true,
+        "no_post_saved": true
+      },
+      "packet_delay_ms": 30
+    }
+  ],
+  "retained_immediate_ENiGMA_failure": {
+    "report_sha256": "d5d65a9d3b2db815047407eaabd252e5bd6e2fa9499ce8597ec6ad7fa9c9aae2",
+    "runner_sha256": "675aa92b8ae6d775aade4d63d8b76db67a2457e1c47b8e88bac4e6941e2de6c6",
+    "checks": {
+      "DOS_harness": true,
+      "current_terminal": true,
+      "current_runner": true,
+      "source_compilation": true,
+      "inputs_unchanged": true,
+      "stock_server_unchanged": true,
+      "credentials_not_in_keyboard": true,
+      "script_credentials_once": true,
+      "no_other_login_text_before_script": true,
+      "authenticated_server_log": true,
+      "no_error_or_blocking_return_prompt": true,
+      "resumed_parent_editor": false,
+      "no_post_saved": true
+    },
+    "scope": "Earlier source-enabled binary in this checkpoint family compiled and authenticated, then retained the known stock Home-key failure. No immediate-forwarding fix is claimed."
+  },
+  "source_proof_sha256": "616f741dc37681f408ad2ba2dbe49df24db4f86f9ffbfee277ce1d2bf456f42c",
+  "reproduced_outputs": 153,
+  "compiler_port_validation_sha256": "9bcf4616ec2161ed969c90f43e5db250c0bfb88768c2eed859b4e4370bbd4c6e",
+  "original_inputs": [],
+  "implemented": [
+    "explicit ASP compilation and missing-ASX sibling fallback, with compiled-name precedence",
+    "sibling compiler location, captured diagnostics and immutable source/failed old-ASX preservation",
+    "neutral compiler INT0 scope, parent PSP/vector restoration and foreign-DS CPU-fault isolation",
+    "cancellation before EXEC and queued Escape after child return",
+    "live UART IRQ, proactive owned XOFF/RTS pause, checked resume and retained unread bytes",
+    "combined-flow RTS low-water recovery including full preloaded queues",
+    "EXECUTE retained numeric/settings state and current compiled-file label",
+    "actual DOS terminal directory-bound source compilation, login and unsaved editor return on recorded Synchronet/ENiGMA configurations"
+  ],
+  "limitations": [
+    "Compiler language remains the maintained host subset; full native language, recorder and original compiler/error UI remain unfinished.",
+    "Compilation is synchronous. Escape queued during the child is handled on return, not by asynchronously interrupting compiler work.",
+    "No source fallback replaces an existing invalid or unreadable ASX.",
+    "ENiGMA Home-key behavior with immediate byte forwarding remains unresolved; the passing network-profile run uses explicit30ms buffering.",
+    "Physical modems/386 and timing outside the recorded emulator cases remain unverified.",
+    "No F01-F16 whole-application gate is closed."
+  ],
+  "whole_application_gates_closed": []
+}

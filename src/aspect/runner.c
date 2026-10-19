@@ -20,7 +20,7 @@ static unsigned path_ok(const char *path)
  if(!path || !*path || strlen(path)>127)return 0;
  for(p=path;*p;++p){
   c=(unsigned char)*p;
-  if(c<33 || c>126 || c=='"' || c=='<' || c=='>' || c=='|' || c=='*' || c=='?' || c=='/')return 0;
+  if(c<33 || c==127 || c=='"' || c=='<' || c=='>' || c=='|' || c=='*' || c=='?' || c=='/')return 0;
   if(c=='\\' || c==':')leaf=p+1;
  }
  while(leaf[n] && leaf[n]!='.')++n;

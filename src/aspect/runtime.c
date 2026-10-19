@@ -15,6 +15,7 @@
 #if defined(ASPECT_RUNTIME_SERIAL)
 #include "../config/resource_path.h"
 #include "resident_render.h"
+#include "source_compile.h"
 extern unsigned __cdecl aspect_serial_psp(void);
 extern unsigned runtime_set_duplex_changed,runtime_serial_local_echo;
 #endif
@@ -30,8 +31,22 @@ unsigned char runtime_console_output[1024];
 unsigned runtime_console_output_size;
 #endif
 static unsigned active,end_wait_started;
+static unsigned compiler_scope;
 extern void runtime_end_wait_native(void);
 extern void __interrupt __far runtime_divide_interrupt(void);
+extern void __interrupt __far runtime_compiler_interrupt(void);
+unsigned runtime_compiler_scope(unsigned entering)
+{
+ if(!active||entering>1)return ASPECT_RUN_STATE;
+ if(entering){
+  if(compiler_scope||_dos_getvect(0)!=runtime_divide_interrupt)return ASPECT_RUN_STATE;
+  compiler_scope=1;_dos_setvect(0,runtime_compiler_interrupt);
+ }else{
+  if(!compiler_scope)return ASPECT_RUN_STATE;
+  _dos_setvect(0,runtime_divide_interrupt);compiler_scope=0;
+ }
+ return 0;
+}
 extern unsigned runtime_depth,runtime_frame,runtime_stack_pointer,runtime_wait_gate;
 extern unsigned runtime_source_type,runtime_target_type,runtime_lookahead,runtime_stage_index;
 extern unsigned runtime_exit_state,runtime_local_count,runtime_string_count;
@@ -88,9 +103,6 @@ unsigned runtime_open(unsigned owner,const char *path)
     unsigned char header;
     unsigned status,i,base=(unsigned)runtime_arena+0x1b1a;
     char normalized[ASPECT_SCRIPT_PATH_CAPACITY];
-#if defined(ASPECT_RUNTIME_SERIAL)
-    char resolved[64];unsigned prefix,n;
-#endif
     /* The argument may be the latest scratch slot. Stage before per-file
      * resets; retain numeric/settings/session banks across dispatcher999. */
     status=aspect_script_path(path,normalized);
@@ -101,20 +113,16 @@ unsigned runtime_open(unsigned owner,const char *path)
     runtime_when_file_reset();
     if(runtime_error)return 0;
     if(status==ASPECT_SCRIPT_PATH_EMPTY)goto no_file;
-    if(status==ASPECT_SCRIPT_PATH_SOURCE){runtime_set_error(ASPECT_RUN_UNSUPPORTED);goto no_file;}
-    if(status!=ASPECT_SCRIPT_PATH_COMPILED){runtime_native_error_code=102;runtime_set_error(ASPECT_RUN_OPERAND);goto no_file;}
+    if(status!=ASPECT_SCRIPT_PATH_COMPILED&&status!=ASPECT_SCRIPT_PATH_SOURCE){runtime_native_error_code=102;runtime_set_error(ASPECT_RUN_OPERAND);goto no_file;}
     path=normalized;
-    status=aspect_file_open(&runtime_file,path);
 #if defined(ASPECT_RUNTIME_SERIAL)
-    /* Native353D tries the current name, then the PCPLUS directory. It does
-     * not search PATH or prefer a different file over an existing bad ASX. */
-    if(status==ASPECT_FILE_IO && !resource_pcplus_path(aspect_serial_psp(),"X",resolved)){
-        prefix=strlen(resolved)-1;
-        for(n=0;n<64 && path[n];++n){}
-        if(n && n<64 && prefix+n<64){memcpy(resolved+prefix,path,n+1);status=aspect_file_open(&runtime_file,resolved);}
-    }
-#endif
+    status=runtime_source_open(&runtime_file,normalized,status==ASPECT_SCRIPT_PATH_SOURCE);
+    if(status){runtime_set_error(status);return 0;}
+#else
+    if(status==ASPECT_SCRIPT_PATH_SOURCE){runtime_set_error(ASPECT_RUN_UNSUPPORTED);goto no_file;}
+    status=aspect_file_open(&runtime_file,path);
     if(status!=ASPECT_FILE_OK){runtime_set_error(ASPECT_RUN_OPEN);return 0;}
+#endif
     /* Native D4D0 rejects a CRT device-descriptor flag before reading. The
      * maintained CRT boundary uses isatty, so EXECUTE CON cannot block a read. */
     if(isatty(fileno(runtime_file.handle))){
@@ -267,6 +275,10 @@ unsigned aspect_runtime_run(const char *path,unsigned step_limit)
     void (__interrupt __far *previous_divide)(void);
     if(active || runtime_live || runtime_find_live || runtime_file.handle || !path || !*path || !step_limit)return ASPECT_RUN_STATE;
     active=1;runtime_error=runtime_steps=runtime_live=runtime_peak_live=0;
+    compiler_scope=0;
+#if defined(ASPECT_RUNTIME_SERIAL)
+    runtime_compiler_calls=runtime_compiler_exit=runtime_compiler_dos_error=0;
+#endif
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
     memset(runtime_string_snapshot,0,sizeof(runtime_string_snapshot));
     runtime_console_output_size=0;

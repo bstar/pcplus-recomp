@@ -3,9 +3,9 @@
 The DOS compiler is being ported from the maintained host compiler, preserving
 its existing language coverage and original-compiler bytecode expectations.
 The maintained host compiler grammar now has a source-built8086 DOS port,
-`ASPCOMP.EXE`, producing complete ASX programs. The interpreter still reports
-unsupported when an ASP needs compilation; automatic runtime compilation is the
-next integration task. Original language families beyond the maintained host
+`ASPCOMP.EXE`, producing complete ASX programs. The production interpreter now
+compiles explicit ASP and missing-ASX source siblings through this DOS compiler.
+See [source loading](ASPECT_SOURCE_COMPILE.md) for process/IRQ ownership evidence. Original language families beyond the maintained host
 subset and the recorder remain unfinished. ASPLEX/ASPINV/ASPEXP are separate
 developer diagnostics.
 
@@ -217,16 +217,16 @@ An explicit output is also supported: `ASPCOMP HELLO.ASP DEMO.ASX`. Output must
 be a distinct `.ASX` path. Normal application builds do not read original
 compiler executables, host compiler code, fixtures or REA databases.
 
-## Remaining compiler work
+## Runtime integration and remaining compiler work
 
-1. Integrate explicit ASP and missing-ASX ASP fallback into the checked loader.
-   Preserve UART lease, flow/error handling, settings, filename label,
-   file/global cleanup and source namespace across compiler invocation.
-2. Scope INT0 ownership across nested compiler EXEC so a compiler fault cannot
-   reenter an interpreter trap with the compiler's DS/SS. Verify child PSP,
-   vector restoration, errors/cancellation and the actual DOS/BBS workflows.
-3. Expand beyond the maintained host grammar to full original compiler coverage,
-   add the recorder and finish the remaining application services. Additional
-   malformed/native language edges still need independent original evidence.
+Explicit ASP and missing-ASX source fallback now run the maintained DOS compiler
+from inside the interpreter, including EXECUTE replacements. Neutral compiler
+INT0 ownership, live UART flow pause/resume, file/PSP/vector cleanup and actual
+terminal/BBS workflows are recorded in [ASPECT_SOURCE_COMPILE.md](ASPECT_SOURCE_COMPILE.md).
+The component diagnostics intentionally retain their narrower lexical/inventory,
+fragment and native-VM scopes; production source loading is tested separately.
 
-No F01–F16 whole-application gate is closed by this compiler checkpoint.
+Full original compiler language coverage beyond the maintained host grammar,
+original compiler/error UI, recorder and remaining application services are still
+required. Additional malformed/native grammar and physical modem/timing edges
+need independent evidence. No F01–F16 whole-application gate is closed.

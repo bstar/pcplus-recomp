@@ -43,15 +43,19 @@ terminates normally after releasing the old file. Invalid names stop with
 operand/native102; missing compiled files report OPEN; bad headers report HEADER.
 Partial new-string allocation unwinds and releases each live block once.
 
-**DOS source compilation is still required and unimplemented.** Explicit ASP
-stops as unsupported; missing ASX does not yet find/compile an ASP fallback.
-The original invokes ASPCOMP.EXE and has different missing-source/error UI.
-The authored Python compiler supplies source-built ASX on the host, not a DOS
-compiler dependency. Neither the original compiler nor original executable is
-an application build input. The capability4 parent/child operation now publishes the current compiled
-script basename and refreshes native STATUS after each accepted file open.
-The invocation filename remains unchanged. See [ASPECT_SCRIPT_LABEL.md](ASPECT_SCRIPT_LABEL.md).
-DOS compilation/fallback and original error UI remain open plan items.
+DOS source compilation is now implemented for the maintained compiler grammar.
+Explicit ASP compiles before execution; a missing ASX tries its ASP sibling in
+the current directory and bounded PCPLUS fallback. Existing ASX takes precedence,
+including a bad header, and compiler failure never runs stale output. ASPCOMP is
+selected beside the interpreter through the checked executable trailer.
+
+The compiler runs in a nested DOS process under a neutral INT0 owner, with live
+UART IRQ and proactive XOFF/RTS pause. Captured diagnostics return through the
+current console/renderer after child exit. The capability4 parent label publishes
+the accepted compiled basename after successful loading. See
+[ASPECT_SOURCE_COMPILE.md](ASPECT_SOURCE_COMPILE.md) and
+[ASPECT_SCRIPT_LABEL.md](ASPECT_SCRIPT_LABEL.md). Full original compiler language
+and compiler/error UI remain open requirements.
 
 ## End-of-script receive
 

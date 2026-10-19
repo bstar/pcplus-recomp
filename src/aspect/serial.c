@@ -10,12 +10,15 @@ extern unsigned aspect_serial_handoff_enabled;
 extern unsigned __cdecl aspect_serial_backend_close(void);
 extern unsigned __cdecl aspect_serial_psp(void);
 extern unsigned __cdecl aspect_serial_tx_empty(void);
+extern unsigned __cdecl aspect_serial_compile_hold(void);
+extern unsigned __cdecl aspect_serial_compile_release(void);
 #if defined(ASPECT_RUNTIME_SERIAL)
 extern unsigned __cdecl aspect_render_prepare(unsigned,unsigned,unsigned);
 extern unsigned __cdecl aspect_render_attach(void);
 #endif
 static aspect_serial_handoff __far *handoff;
 static unsigned char input_translation[256];
+static unsigned compile_pause_owned;
 static unsigned input_translation_mode;
 static unsigned char directory_record[114];
 static unsigned directory_entry;
@@ -168,6 +171,7 @@ unsigned __cdecl aspect_serial_open(const char *p)
  preload_source=candidate?(unsigned char __far *)MK_FP(candidate->parent_ds,candidate->ring):0;
  status=aspect_serial_backend_open(p[2]-'1',divisor,lcr,flow);
  if(!status){
+  compile_pause_owned=0;
   handoff=candidate;aspect_serial_handoff_enabled=candidate!=0;
 #if defined(ASPECT_RUNTIME_SERIAL)
   if(has_render && aspect_render_attach()){
@@ -197,6 +201,7 @@ unsigned __cdecl aspect_serial_close(void)
   if((uart_flow_pending || !aspect_serial_tx_empty()) && !aspect_serial_status)aspect_serial_status=ASPECT_SERIAL_PENDING;
  }
  status=aspect_serial_backend_close();
+ compile_pause_owned=0;
  if(handoff){
   n=uart_rx_count;at=uart_rx_read-(unsigned)uart_rx_buffer;
   if(n>4096 || at>=4096){n=0;if(!status)status=ASPECT_SERIAL_STATE;}
@@ -207,4 +212,24 @@ unsigned __cdecl aspect_serial_close(void)
   handoff->returned=1;handoff=0;aspect_serial_handoff_enabled=0;
  }
  aspect_serial_status=status;return status;
+}
+unsigned __cdecl aspect_serial_compile_pause(void)
+{
+ unsigned status;unsigned long start,now;
+ if(!aspect_serial_active)return 0;
+ if(compile_pause_owned)return ASPECT_SERIAL_BUSY;
+ status=aspect_serial_compile_hold();if(status)return status;compile_pause_owned=1;
+ start=aspect_serial_ticks();
+ do{
+  status=aspect_serial_poll();if(status){aspect_serial_compile_resume();return status;}
+  if(!uart_flow_pending&&aspect_serial_tx_empty())return 0;
+  now=aspect_serial_ticks();if(now<start)now+=1573040UL;
+ }while(now-start<36UL);
+ aspect_serial_compile_resume();return ASPECT_SERIAL_PENDING;
+}
+unsigned __cdecl aspect_serial_compile_resume(void)
+{
+ if(!compile_pause_owned)return 0;
+ compile_pause_owned=0;if(!aspect_serial_active)return 0;
+ aspect_serial_compile_release();return aspect_serial_poll();
 }

@@ -31,6 +31,11 @@ unsigned __cdecl aspect_serial_unread(void);
 /* 0 accepted;1 flow/THRE busy;2 disabled/fatal. */
 unsigned __cdecl aspect_serial_try_write(unsigned byte);
 unsigned __cdecl aspect_serial_poll(void);
+/* Foreground compiler bracket: proactive XOFF/RTS pause, IRQ still live.
+ * Resume retires only introduced flow pauses, retaining a full-ring pause
+ * until normal consumption drains it. No close/reopen or ring reset. */
+unsigned __cdecl aspect_serial_compile_pause(void);
+unsigned __cdecl aspect_serial_compile_resume(void);
 /* Maintained BREAK owner. reserve holds data AND queued flow TX while draining;
  * assert returns PENDING7 until actual LSR TEMT. Neither routine waits. A failed
  * assert retains the reservation: caller MUST release on every exit. Foreign

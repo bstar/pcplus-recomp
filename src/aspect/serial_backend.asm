@@ -30,6 +30,9 @@ _aspect_serial_backend_open:
  cmp word [_aspect_serial_active],0
  jne .busy
  mov word [serial_unread_valid],0
+ mov word [serial_compile_held],0
+ mov word [serial_compile_soft],0
+ mov word [serial_compile_hard],0
  mov ax,[bp+4]
  cmp ax,3
  ja .arg
@@ -200,6 +203,7 @@ _aspect_serial_read:
  je .read_done
  mov word [serial_unread_valid],1
 .read_done:
+ call serial_compile_hardware_resume
  popf
  pop di
  pop si
@@ -384,6 +388,112 @@ _aspect_serial_poll:
 .status:
  mov ax,[_aspect_serial_status]
  ret
+
+; Proactive compiler flow bracket. Only introduced pauses are retired. The IRQ
+; stays installed, so data already in flight is retained while the child runs.
+global _aspect_serial_compile_hold,_aspect_serial_compile_release
+_aspect_serial_compile_hold:
+ pushf
+ push bp
+ mov bp,sp
+ mov ax,4
+ ; The foreground drain uses BIOS ticks and requires a live IRQ/timer. Refuse
+ ; IF0 before any flow/MCR mutation instead of entering a nonadvancing wait.
+ test word [ss:bp+2],0x200
+ jz .done
+ cli
+ mov ax,4
+ cmp word [_aspect_serial_active],1
+ jne .done
+ mov ax,[_aspect_serial_status]
+ or ax,ax
+ jnz .done
+ mov ax,2
+ cmp word [serial_compile_held],0
+ jne .done
+ cmp word [uart_break_hold],0
+ jne .done
+ mov dx,[uart_port_lcr]
+ in al,dx
+ test al,0xc0
+ mov ax,8
+ jnz .done
+ mov word [serial_compile_held],1
+ mov word [serial_compile_soft],0
+ cmp word [uart_software_flow],0
+ je .hard
+ cmp byte [uart_xoff_sent],0
+ jne .soft_pause
+ mov word [serial_compile_soft],1
+.soft_pause:
+ mov byte [uart_xoff_sent],1
+ mov byte [uart_flow_pending],0x13
+.hard:
+ cmp word [uart_hardware_flow],0
+ je .ok
+ mov dx,[uart_port_mcr]
+ in al,dx
+ test al,2
+ jz .ok
+ and al,0xfd
+ out dx,al
+ mov word [serial_compile_hard],1
+ mov byte [uart_rts_lowered],1
+.ok: xor ax,ax
+.done: pop bp
+ popf
+ ret
+_aspect_serial_compile_release:
+ pushf
+ cli
+ cmp word [serial_compile_held],0
+ je .done
+ mov word [serial_compile_held],0
+ cmp word [_aspect_serial_active],1
+ jne .done
+ cmp word [uart_rx_count],3072
+ jae .done
+ cmp word [serial_compile_soft],0
+ je .hardware
+ mov byte [uart_xoff_sent],0
+ mov byte [uart_flow_pending],0x11
+.hardware:
+ cmp word [serial_compile_hard],0
+ je .done
+ call serial_compile_hardware_ready
+.done:
+ mov word [serial_compile_soft],0
+ mov ax,[_aspect_serial_status]
+ popf
+ ret
+; Also handle combined S/H mode: the recovered software dequeue returns before
+; the hardware branch. Our deferred RTS must still retire at the low watermark.
+serial_compile_hardware_resume:
+ cmp word [serial_compile_held],0
+ jne serial_compile_hardware_done
+ cmp word [uart_rx_count],128
+ ja serial_compile_hardware_done
+serial_compile_hardware_ready:
+ push ax
+ push dx
+ cmp word [serial_compile_hard],0
+ jne .restore
+ ; With simultaneous software/hardware flow, native dequeue returns from its
+ ; software branch. A preloaded hardware pause must still retire at low water.
+ cmp word [uart_hardware_flow],0
+ je .keep
+ cmp byte [uart_rts_lowered],0
+ je .keep
+.restore:
+ mov dx,[uart_port_mcr]
+ in al,dx
+ or al,2
+ out dx,al
+ mov byte [uart_rts_lowered],0
+ mov word [serial_compile_hard],0
+.keep: pop dx
+ pop ax
+serial_compile_hardware_done: ret
 global _aspect_serial_psp
 _aspect_serial_psp:
  push bx
@@ -448,6 +558,9 @@ _aspect_serial_backend_close:
  add sp,2
  call uart_restore_hardware_state
  mov word [_aspect_serial_active],0
+ mov word [serial_compile_held],0
+ mov word [serial_compile_soft],0
+ mov word [serial_compile_hard],0
 .done:
  mov ax,[_aspect_serial_status]
  pop es
@@ -482,6 +595,9 @@ w _aspect_serial_handoff_enabled,0
 w serial_break_state,0
 w serial_unread_valid,0
 w serial_unread_slot,0
+w serial_compile_held,0
+w serial_compile_soft,0
+w serial_compile_hard,0
 w serial_vector,12
 serial_bases: dw 0x3f8,0x2f8,0x3e8,0x2e8
 serial_vectors: dw 12,11,12,11

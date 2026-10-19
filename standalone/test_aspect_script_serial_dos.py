@@ -31,7 +31,7 @@ static struct {unsigned before;unsigned char bytes[4096];unsigned after;} ring;
 int main(void){
  int out,err,oldout,olderr,result;unsigned mask,vector_ok,mask_ok,psp,ds,guard_ok,oldmcr,mcr_ok;
  char option[32];union REGS inregs,outregs;FILE *record;
- void (__interrupt __far *vector)(void);
+ void (__interrupt __far *vector)(void),(__interrupt __far *zero)(void),(__interrupt __far *brk)(void),(__interrupt __far *critical)(void);
  inregs.h.ah=0x62;intdos(&inregs,&outregs);psp=outregs.x.bx;
  ds=FP_SEG((void __far *)&lease);
  lease.magic=ASIO_MAGIC;lease.version=ASIO_VERSION;lease.size=ASIO_SIZE;
@@ -42,7 +42,7 @@ int main(void){
  /* Model the retained parent's already established modem connection. The
   * child lease deliberately refuses to raise DTR itself. */
  oldmcr=inp(0x3fc);outp(0x3fc,oldmcr|1);
- vector=_dos_getvect(12);mask=inp(0x21);
+ vector=_dos_getvect(12);zero=_dos_getvect(0);brk=_dos_getvect(0x23);critical=_dos_getvect(0x24);mask=inp(0x21);
  out=open("STDOUT.BIN",O_CREAT|O_TRUNC|O_WRONLY|O_BINARY,S_IREAD|S_IWRITE);
  err=open("STDERR.BIN",O_CREAT|O_TRUNC|O_WRONLY|O_BINARY,S_IREAD|S_IWRITE);
  if(out<0||err<0)return 99;
@@ -50,7 +50,7 @@ int main(void){
  if(dup2(out,1)||dup2(err,2))return 97;close(out);close(err);
  result=spawnl(P_WAIT,"ASPECT.EXE","ASPECT","CASE.ASX",option,(char *)0);
  dup2(oldout,1);dup2(olderr,2);close(oldout);close(olderr);
- vector_ok=_dos_getvect(12)==vector;mask_ok=inp(0x21)==mask;
+ vector_ok=_dos_getvect(12)==vector&&_dos_getvect(0)==zero&&_dos_getvect(0x23)==brk&&_dos_getvect(0x24)==critical;mask_ok=inp(0x21)==mask;
  mcr_ok=inp(0x3fc)==(oldmcr|1);outp(0x3fc,oldmcr);
  guard_ok=ring.before==0x1234&&ring.after==0x5678&&lease.guard==(psp^ds^(unsigned)ring.bytes^ASIO_GUARD);
  record=fopen("RETURN.BIN","wb");if(!record)return 96;
@@ -68,9 +68,10 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def build_driver(output):
+def build_driver(output, flow='N'):
+    assert flow in ('N','S','H','B')
     output.mkdir(parents=True, exist_ok=True)
-    (output / 'driver.c').write_text(DRIVER)
+    (output / 'driver.c').write_text(DRIVER.replace(':03:N:',':03:'+flow+':'))
     subprocess.run(['wcl', '-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-k4096',
                     '-i=' + str(ROOT / 'src/aspect'), '-fe=SERTEST.EXE', str(output / 'driver.c')],
                    cwd=output, check=True)
@@ -93,6 +94,29 @@ def run(case, binary, destination, driver):
         assert re.fullmatch(r'[A-Z0-9_]{1,8}\.ASX',leaf),leaf
         (output/leaf).write_bytes(compile_source(source))
         dependencies[leaf]=dict(source=source,asx_sha256=sha(output/leaf))
+    if case.get('source_scripts'):
+        shutil.copyfile(ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE',output/'ASPCOMP.EXE')
+        for leaf, source in case['source_scripts'].items():
+            assert re.fullmatch(r'[A-Z0-9_]{1,8}\.ASP',leaf),leaf
+            (output/leaf).write_bytes(source.encode('cp437'))
+            (output/(leaf[:-1]+'X')).unlink(missing_ok=True)
+            dependencies[leaf]=dict(source_sha256=sha(output/leaf),source_bytes=(output/leaf).stat().st_size)
+        if case.get('compiler_wait_ticks'):
+            delay=case['compiler_wait_ticks'];assert 1<=delay<=90
+            shutil.copyfile(output/'ASPCOMP.EXE',output/'REALCOMP.EXE')
+            wrapper=r'''#include <dos.h>
+#include <bios.h>
+#include <stdio.h>
+#include <process.h>
+static unsigned long ticks(void){long value;_bios_timeofday(_TIME_GETCLOCK,&value);return (unsigned long)value;}
+int main(int argc,char **argv){int result;FILE *f;unsigned long values[2],now;
+ if(argc!=2)return 64;values[0]=ticks();result=spawnl(P_WAIT,"REALCOMP.EXE","ASPCOMP",argv[1],(char *)0);
+ do{now=ticks();if(now<values[0])now+=1573040UL;}while(now-values[0]<DELAY);
+ values[1]=now;f=fopen("COMPTIME.BIN","wb");if(!f)return 96;fwrite(values,4,2,f);fclose(f);return result;}
+'''.replace('DELAY',str(delay))
+            (output/'compile_wait.c').write_text(wrapper)
+            subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k4096','-fe=ASPCOMP.EXE',str(output/'compile_wait.c')],cwd=output,check=True)
+            dependencies['compiler_wait']=dict(ticks=delay,source_sha256=sha(output/'compile_wait.c'),wrapper_sha256=sha(output/'ASPCOMP.EXE'),real_compiler_sha256=sha(output/'REALCOMP.EXE'))
     model, expected = case['serial'], case['expected']
     outgoing = bytes.fromhex(expected['tx_hex'])
     incoming = bytes.fromhex(model.get('input_hex', ''))

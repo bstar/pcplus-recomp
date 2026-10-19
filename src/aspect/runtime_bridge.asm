@@ -84,6 +84,15 @@ runtime_divide_trap:
  mov ax,12
  jmp fail
 
+; Compiler EXEC runs under a neutral fault vector. No parent data/stack pointer
+; is touched while DS/SS belong to the child; DOS terminates the current PSP.
+; The waiting interpreter restores its own vector after child termination.
+global _runtime_compiler_interrupt
+_runtime_compiler_interrupt:
+ mov ax,0x4c0c
+ sti
+ int 0x21
+
 global _runtime_enter
 _runtime_enter:
  push bp

@@ -54,6 +54,7 @@ def bound_directory(**options):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label', required=True)
+    parser.add_argument('--source', action='store_true', help='Compile LOGON.ASP in the actual DOS child')
     parser.add_argument('--profile', choices=['network', 'enigma-editor'], default='network')
     parser.add_argument('--packet-delay-ms', type=int, choices=range(101), default=0)
     args = parser.parse_args()
@@ -105,7 +106,10 @@ def main():
     # owned test account has twelve, so its password is explicit script data.
     source = 'proc main\r\nwaitfor "lOGIN" 25\r\nif waitfor\r\ntransmit "^M"\r\nwaitfor "PASSW_" 10\r\nif waitfor\r\nwaitquiet 1 10\r\ntransmit "loclab^M"\r\nwaitquiet 1 10\r\ntransmit "LoC-Lab-2026!^M"\r\nmessage "LOGIN SENT"\r\nelse\r\nmessage "PASSWORD FORM NOT RECEIVED"\r\nendif\r\nelse\r\nmessage "LOGIN MATRIX NOT RECEIVED"\r\nendif\r\nendproc\r\n'
     (stage / 'LOGON.ASP').write_bytes(source.encode('ascii'))
-    (stage / 'LOGON.ASX').write_bytes(compile_source(source))
+    if args.source:
+        shutil.copyfile(ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE',stage/'ASPCOMP.EXE')
+    else:
+        (stage / 'LOGON.ASX').write_bytes(compile_source(source))
     recipe_path = ROOT / 'lab/bbs/editor-recipes.json'
     original = json.loads(recipe_path.read_text())['enigma_unsaved']['keyboard_input']
     login = 'p12000 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 '
@@ -144,6 +148,7 @@ def main():
         sources=inputs, staged=staged, command=command,
         server_commit=server_commit, server_sources=server_sources,
         expected_login_wire_hex=b'loclab\rLoC-Lab-2026!\r'.hex(),
+        compile_in_DOS=args.source,expected_ASX_sha256=hashlib.sha256(compile_source(source)).hexdigest(),
         expected_editor_passed=True), indent=2) + '\n')
     with (stage / 'harness.log').open('w') as log:
         code = subprocess.call(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
@@ -164,6 +169,7 @@ def main():
         DOS_harness=code == 0 and run['passed'],
         current_terminal=run['binary_sha256'] == staged['TERMINAL.EXE'] == sha(ROOT / 'build/terminal/TERMINAL.EXE'),
         current_runner=staged['ASPECT.EXE'] == sha(ROOT / 'build/aspect-runner/ASPECT.EXE'),
+        source_compilation=(not args.source or (stage/'LOGON.ASX').read_bytes()==compile_source(source)),
         inputs_unchanged=inputs == {str(p.relative_to(ROOT)): sha(p) for p in sources}
                          and all(sha(stage / leaf) == digest for leaf, digest in staged.items()),
         stock_server_unchanged=server_sources == {leaf: sha(server / leaf) for leaf in server_sources},
