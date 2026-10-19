@@ -44,7 +44,7 @@ policy before invoking the shared routine.
 ## Validation
 
 The [checkpoint record](validation/aspect-key-output.json) binds the current
-parent, child, compiler, checker hashes and fresh153-product source-only proof.
+parent, child, compiler, checker hashes and the fresh source-only product proof.
 
 The CPU key-output checker executes837 product cases over both profile tables,
 all79 slots and full/half duplex, with declared echo/cursor recording endpoints.

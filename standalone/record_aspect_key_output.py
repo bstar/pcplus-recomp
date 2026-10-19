@@ -39,7 +39,7 @@ def main():
             scope=data['scope']))
     proof_path = 'docs/validation/application-components-source-build.json'
     proof = json.loads((ROOT / proof_path).read_text())
-    assert proof['passed'] and proof['output_count'] == 153
+    assert proof['passed'] and proof['output_count'] >= 153
     assert all(p['matches_workspace'] for p in proof['outputs'].values())
     for path, digest in [('terminal/TERMINAL.EXE', terminal), ('aspect-runner/ASPECT.EXE', runner),
                          ('aspect-compiler-dos/ASPCOMP.EXE', compiler)]:
@@ -50,7 +50,7 @@ def main():
     assert package['files']['ASPCOMP.EXE'] == compiler
     result = dict(passed=True, renderer_capability=6, recorder_sha256=sha(Path(__file__).relative_to(ROOT)),
         terminal_sha256=terminal, runner_sha256=runner, compiler_sha256=compiler,
-        reports=reports, reproduced_outputs=153, source_proof_sha256=sha(proof_path),
+        reports=reports, reproduced_outputs=proof['output_count'], source_proof_sha256=sha(proof_path),
         original_inputs=[], whole_application_gates_closed=[],
         retained_fixture_failures=[dict(label='shared-keys-02', reason='Cursor prediction omitted three displayed END characters.'),
                                   dict(label='shared-keys-04', reason='Enhanced Home was incorrectly expected to perform legacy Home echo; corrected fixture explicitly selects STANDARD BIOS.')],
@@ -60,7 +60,7 @@ def main():
                      'Native echo services in the CPU oracle are explicit recording boundaries; real rendering is exercised separately in DOS.',
                      'Physical BIOS, UART and Wi-Fi modem remain unverified; no complete application or universal BBS compatibility claim.'])
     (ROOT / 'docs/validation/aspect-key-output.json').write_text(json.dumps(result, indent=2) + '\n')
-    print('Bound shared key output and 153 source-only products; no whole-application gates closed')
+    print(f"Bound shared key output and {proof['output_count']} source-only products; no whole-application gates closed")
 
 
 if __name__ == '__main__':

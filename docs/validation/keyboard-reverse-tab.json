@@ -1,0 +1,88 @@
+{
+  "passed": true,
+  "production_integration": false,
+  "recorder_sha256": "9a459942b101ad9b5a06b6ce67e0d1d2167995b5c373174b552cafe5b03aa989",
+  "builder_sha256": "e45f01d7611258d3c33aab2d782f6af28dec666816780491b2756fac9fdc2c63",
+  "checks": {
+    "passed": true,
+    "cases": 3846,
+    "binary_sha256": "a0d8084ea00c268ddb5737574d2f141d9204c2d8313c4e770c5446aa91daab92",
+    "checker_sha256": "ede1a7cc8cf31b81387d108c869e23588a21433445d65925fa215832f7f5adc7",
+    "original_inputs": [],
+    "scope": "Actual recovered226-byte instructions, six valid FE-terminated tab tables,80 columns, all eight tab-mode combinations, protected attribute search and native stack/SI/DS=SS checks. Cursor/attribute repair/division/protected-home services are declared scalar models; no video, DOS hardware or application integration claim.",
+    "native_recursion_counterexample": {
+      "passed": true,
+      "real_recovered_cursor_left": true,
+      "tab_wrap": 1,
+      "cursor_wrap": 0,
+      "column": 0,
+      "stops": [
+        0,
+        8
+      ],
+      "instruction_limit": 20000,
+      "returned": false,
+      "scope": "Actual reverse-tab and cursor-left instructions. Screen-set-cursor is the declared scalar model; preserves row1/column0 in this case. Characterizes inherited recursion, not a safety fix."
+    },
+    "manifest_sha256": "a0d3a44742112c1094c7cad24fc80f0032d378e679dc4c757113b90e79085b45"
+  },
+  "report_path": "build/keyboard-reverse-tab/checks.json",
+  "report_sha256": "d1c8f16bd02e52d7fcecf1e11b5ef21b8b6ac99412b215afb2f1c6fb192e1c53",
+  "provenance": {
+    "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "units": [
+      {
+        "file": "reconstruction/keyboard_reverse_tab/reverse_tab.asm",
+        "start": 3008,
+        "end": 3234,
+        "bytes": 226,
+        "instructions": 90,
+        "sha256": "a0d8084ea00c268ddb5737574d2f141d9204c2d8313c4e770c5446aa91daab92",
+        "matched_original": true,
+        "file_offset": 7616
+      }
+    ],
+    "state": {
+      "900c": "screen_cursor_wrap",
+      "3734": "screen_attribute_checks",
+      "3346": "screen_attribute_offset",
+      "9038": "screen_reverse_wrap_blocked",
+      "39c4": "screen_attributes_base",
+      "325a": "screen_attribute_row_bytes",
+      "ce10": "terminal_tab_stops",
+      "903e": "terminal_tab_wrap",
+      "904c": "scroll_skip_attribute_scan",
+      "8ff8": "terminal_tab_mode_8ff8",
+      "399e": "screen_cursor_column",
+      "399c": "screen_cursor_row"
+    },
+    "services": {
+      "1e30": "screen_cursor_left",
+      "2adc": "screen_adjust_attribute_boundary",
+      "830c": "reverse_tab_signed_divide",
+      "1bbe": "screen_set_cursor",
+      "1ea0": "screen_cursor_right",
+      "1f56": "reverse_tab_protected_home"
+    },
+    "limitations": [
+      "REA reports no defined instruction/procedure at this entry; complete mapped bytes were decoded independently with ndisasm and byte-checked after assembly.",
+      "Native table search assumes an FE terminator; malformed tables are not bounded by the original routine.",
+      "External cursor, attribute-repair, division and protected-home services require separate binding and validation. No production integration or full keyboard gate claim."
+    ],
+    "rea_evidence": {
+      "bytes": "ev_18c8c70cf3ca03428dbba938dcd9734175e4633b2374c73b2277463a36d018e0",
+      "file_mapping": "ev_e1ead9b45f6bb15a132bb0ee8b82e26c2c73d6ad7baf4413fbe0b05fa715173f",
+      "undefined_listing": "ev_642fb8fa9d9a12470cd8535e3d4aab08919280f44dd810ceed8a10acad3cf792"
+    }
+  },
+  "source_build_outputs": 156,
+  "source_build_proof_sha256": "93e0864caf02ced66a5e93a89203472a432540f08b717b6365ced229761686d0",
+  "original_inputs": [],
+  "whole_application_gates_closed": [],
+  "remaining": [
+    "Bind actual cursor/attribute/division/protected-home services.",
+    "Validate table termination/bounds and inconsistent mode combinations before any keyboard wire/echo effect.",
+    "Exercise actual DOS display, child-owned UART and error cleanup before enabling production half-duplex reverse Tab.",
+    "Recover full Insert/Delete echo services; finish all application gates."
+  ]
+}

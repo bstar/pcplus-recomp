@@ -14,6 +14,16 @@ snapshots and native-derived echo. Shared output covers all79 binding slots;
 local commands/macros and half-duplex reverse-Tab/Insert/Delete echo remain
 unfinished. Continue full keyboard/UI integration; no F01–F16 gate closes.
 
+The [native reverse-Tab routine](docs/KEYBOARD_REVERSE_TAB.md) is now recovered
+as226 exact bytes and a relocatable object, with3846 CPU cases. A combined
+native reverse-Tab/cursor-left replay characterizes recursive retry under
+inconsistent wrap flags. Production binding, bounded table/mode admission and
+actual DOS echo tests remain required before removing the current rejection.
+The half-duplex Insert/Delete trampolines resolve to the existing recovered
+CSI ICH/DCH routines in overlay12. Reuse those real helpers with checked
+preflight before wire output, preserve parser parameters and verify actual
+parent/child DOS echo; their current keyboard rejection remains in place.
+
 The goal is a maintained, source-built PCPlus application that runs in DOS and
 works with the intended RS-232 Wi-Fi modem/BBS setup. A diagnostic or patched
 original is an intermediate result, not completion. Public repository changes

@@ -1,7 +1,7 @@
 {
   "passed": true,
   "renderer_capability": 6,
-  "recorder_sha256": "23c78cb636a2b5f6ad80110c879aafe6d1be1b7edf6710d0c1e92f48cd5368bf",
+  "recorder_sha256": "4b8b6e2f9ba125a746c7317bb9aaca91499e7db5786ff165d40e50ba5e49e561",
   "terminal_sha256": "eae23158210bf4a5d47e3c8d7c01e9da2ea25d5b62dd9c707588eea8698efdab",
   "runner_sha256": "2cef1bd3a42eb39ef148db6b16eb0ef68e3965b0e7fe19042f44b23ebfbf916d",
   "compiler_sha256": "cf924b18ae099619f6f83c8127b03e2b2ca39ce3f41a16f336e28585cc5e5941",
@@ -56,8 +56,8 @@
       "scope": "Actual production nested DOS compiler and8086 ASPECT UART IRQ across N/S/H/B flow. Checked proactive XOFF/XON for S/B, raw IRQ reception, retained numeric/BREAK state, native compiled bytecode, exact unread ASIO return, vectors/PIC/MCR/guards. No resident-renderer, physical modem or external BBS claim."
     }
   ],
-  "reproduced_outputs": 153,
-  "source_proof_sha256": "bf7d9c7922e30c0ebce3c33d977980be2a24f7903957bd997dd68682087b1fd8",
+  "reproduced_outputs": 156,
+  "source_proof_sha256": "93e0864caf02ced66a5e93a89203472a432540f08b717b6365ced229761686d0",
   "original_inputs": [],
   "whole_application_gates_closed": [],
   "retained_fixture_failures": [

@@ -1,4 +1,11 @@
 .DEFAULT_GOAL := all
+.PHONY: keyboard-reverse-tab test-keyboard-reverse-tab
+keyboard-reverse-tab:
+	python3 standalone/build_keyboard_reverse_tab.py
+test-keyboard-reverse-tab: keyboard-reverse-tab
+	python3 standalone/check_keyboard_reverse_tab.py
+all: keyboard-reverse-tab
+test: test-keyboard-reverse-tab
 .PHONY: status-helpers test-status-helpers test-status-helpers-compat status-renderer test-status-renderer
 all: status-helpers status-renderer
 status-helpers:
