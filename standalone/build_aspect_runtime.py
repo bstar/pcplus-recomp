@@ -1,0 +1,92 @@
+#!/usr/bin/env python3
+"""Source-only incremental native ASPECT execution/ownership diagnostic."""
+import hashlib,json,re,subprocess
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/aspect-runtime'
+ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm',None),
+ ('globals','src/aspect/global_strings.asm',None),('stack','src/aspect/value_stack.asm',None),
+ ('flow','src/aspect/control_flow.asm',None),('operands','src/aspect/numeric_operands.asm',None),
+ ('operations','src/aspect/numeric_operations.asm',None),('support','src/aspect/expression_support.asm',None),
+ ('copy','reconstruction/erase/move_bytes.asm','ERASE_OMF'),
+ ('setjmp','reconstruction/transfer_session/setjmp.asm','TRANSFER_SESSION_OMF'),
+ ('longjmp','reconstruction/transfer_session/longjmp.asm','TRANSFER_SESSION_OMF'),
+ ('bridge','src/aspect/runtime_bridge.asm',None)]
+SUPPORT=[(1,0xd2a0,0xd2d6,109184-0xd0d0),(2,0xd3f2,0xd408,109184-0xd0d0),
+ (3,0xdb7d,0xdc48,109184-0xd0d0),(4,0xde4d,0xdf04,109184-0xd0d0),(5,0x9ac0,0x9ae7,0x1200)]
+ERRORS={'unsupported':3,'float':4,'budget':6,'stack':9}
+C=r'''
+#include <stdio.h>
+#include "runtime.h"
+#include "file_io.h"
+extern aspect_file runtime_file;
+extern unsigned runtime_string_count,runtime_depth,runtime_stack_pointer,runtime_frame;
+extern unsigned char runtime_arena[0x3aca];
+static unsigned failures,cases;
+static unsigned long checks;
+static const char *current;
+static void ck(unsigned ok){++checks;if(!ok){++failures;printf("FAIL %s check=%lu opcode=%u steps=%u\n",current,checks,runtime_last_opcode,runtime_steps);}}
+static void run(const char *path,unsigned limit,unsigned error,unsigned has_integer,unsigned integer_value,unsigned has_long,unsigned long long_value,unsigned peak){
+ unsigned result;current=path;++cases;result=aspect_runtime_run(path,limit);
+ ck(result==error);ck(runtime_live==0);ck(runtime_string_count==0);ck(runtime_file.handle==0);
+ ck(runtime_depth==0);ck(runtime_stack_pointer==(unsigned)runtime_arena+0x1b1a);
+ ck(runtime_frame==runtime_stack_pointer);ck(runtime_abi_bad==0);ck(runtime_peak_live==peak);
+ if(has_integer)ck(runtime_integer_b[0]==integer_value);
+ if(has_long)ck(runtime_longs[0]==long_value);
+ printf("CASE %s error=%u steps=%u peak=%u cleanup=%u close=%u int0=%u long0=%lu\n",path,result,runtime_steps,runtime_peak_live,runtime_cleanup_count,runtime_close_count,runtime_integer_b[0],runtime_longs[0]);
+}
+int main(void){FILE *done;
+'''
+END=r'''
+ current="invalid API";ck(aspect_runtime_run(0,10)==ASPECT_RUN_STATE);
+ ck(aspect_runtime_run("",10)==ASPECT_RUN_STATE);
+ ck(aspect_runtime_run("EMPTY.ASX",0)==ASPECT_RUN_STATE);
+ done=fopen("DONE.TXT","w");if(!done)return 2;
+ fprintf(done,"ASPECT_RUNTIME %u cases %lu checks %u failures\n",cases,checks,failures);fclose(done);
+ printf("ASPECT_RUNTIME %u cases %lu checks %u failures\n",cases,checks,failures);return failures?1:0;
+}
+'''
+def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
+def main():
+ OUT.mkdir(parents=True,exist_ok=True);inc='-I'+str(ROOT/'reconstruction/uart')+'/'
+ corpus_path=ROOT/'standalone/fixtures/aspect_execution_vectors.json';corpus=json.loads(corpus_path.read_text())
+ sources=[Path(__file__).resolve(),corpus_path,ROOT/'reconstruction/uart/encodings.inc',ROOT/'src/aspect/runtime.c',ROOT/'src/aspect/runtime.h',ROOT/'src/aspect/file_io.c',ROOT/'src/aspect/file_io.h']
+ objects=[];units=[]
+ for name,rel,define in ASM:
+  p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
+  subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))
+ for unit,start,end,base in SUPPORT:
+  p=OUT/f'support{unit}.bin'
+  subprocess.run(['nasm','-f','bin',inc,'-DASPECT_EXPR_FLAT',f'-DASPECT_EXPR_UNIT={unit}',str(ROOT/'src/aspect/expression_support.asm'),'-o',str(p)],check=True)
+  assert p.stat().st_size==end-start
+  units.append(dict(unit=unit,start=start,end_exclusive=end,file_start=base+start,bytes=end-start,sha256=sha(p)))
+ program=C
+ supported={int(op,16):name for op,name in re.findall(r'%(?:el)?if op=(0x[0-9a-f]+)\n dw (\w+)',(ROOT/'src/aspect/runtime_bridge.asm').read_text())}
+ assert len(supported)==24
+ for case in corpus['vectors']:
+  data=bytes.fromhex(case['hex']);assert hashlib.sha256(data).hexdigest()==case['asx_sha256']
+  name=case['name']+'.ASX';(OUT/name).write_bytes(data);ex=case['expected'];error=ERRORS.get(ex.get('error'),0)
+  program+=f' run("{name}",{ex.get("limit",1000)},{error},{int("integer0" in ex)},{ex.get("integer0",0)&65535}U,{int("long0" in ex)},{ex.get("long0",0)}UL,{ex.get("allocated",0)});\n'
+ # Malformed fixtures stop at header/read/unsupported boundaries, not arbitrary unsafe operands.
+ for name,data,error in [('NOHEADER',b'',2),('BADHEAD',bytes.fromhex('81 cf 94'),2),('BADOP',bytes.fromhex('00 ff'),3),('TRUNC',bytes.fromhex('00 cf 5b 00 8d 00 ab 07'),5)]:
+  (OUT/(name+'.ASX')).write_bytes(data);program+=f' run("{name}.ASX",1000,{error},0,0,0,0UL,0);\n'
+ (OUT/'MISSING.ASX').unlink(missing_ok=True);program+=' run("MISSING.ASX",1000,1,0,0,0,0UL,0);\n'
+ program+=' runtime_fail_after=0;run("STRINGS.ASX",1000,8,0,0,0,0UL,0);\n'
+ program+=' runtime_fail_after=1;run("STRINGS.ASX",1000,8,0,0,0,0UL,1);\n'
+ program+=' runtime_fail_after=0xffff;run("STRINGS.ASX",1000,0,0,0,0,0UL,2);\n'
+ program+=' run("ASSIGN.ASX",1000,0,1,7,0,0UL,0);\n'+END
+ # Every unimplemented in-range slot must abort, never silently consume bytes.
+ unsupported=[op for op in range(215) if op not in supported]
+ extra=''
+ for op in unsupported:
+  name=f'U{op:03X}.ASX';(OUT/name).write_bytes(bytes([0,op]))
+  extra+=f' run("{name}",1000,3,0,0,0,0UL,0);ck(runtime_last_opcode=={op});\n'
+ program=program.replace(END,extra+END)
+ (OUT/'diagnostic.c').write_text(program)
+ subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dASPECT_RUNTIME_DIAGNOSTIC',
+ '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/file_io.c'),*objects],cwd=OUT,check=True)
+ report=dict(binary_sha256=sha(OUT/'EXECUTE.EXE'),sources={str(p.relative_to(ROOT)):sha(p) for p in sources},support_units=units,original_inputs=[],
+  compile_flags=['8086','small model','cdecl','ASPECT_RUNTIME_DIAGNOSTIC'],fixture_count=len(corpus['vectors']),
+  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(corpus['vectors'])+9+len(unsupported),
+  scope='Incremental actual native dispatch/operand/operation/file/heap composition executing source-owned compiled fixtures. Incomplete opcode table; unavailable services abort. Not full ASPECT or arbitrary-input safety.')
+ (OUT/'manifest.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
+if __name__=='__main__':main()

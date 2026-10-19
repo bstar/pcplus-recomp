@@ -277,3 +277,30 @@ word/DWORD reads, targets beyond64KiB, nested frames/returns and real abort on
 short reads/position failures. No opcode loop/full script owner or expression
 execution is claimed.71 outputs now reproduce without originals; all
 whole-application gates remain open.
+
+
+## ASPECT compiled-script execution checkpoint
+
+A standalone source-built owner now executes authored original-compiler ASX
+fixtures through the real recovered dispatcher, numeric operands/operations,
+conditional branches, frame/call/return routines and nonlocal abort. Maintained
+DOS stdio and far-heap ownership replace diagnostic file/heap callbacks. Of19
+compiler fixtures,15 finish successfully; float, PAUSE, endless-loop budget and
+recursive-stack overflow stop with their expected distinct errors. The composed
+suite passes219 actual8086 DOS cases/2,179 assertions, including every191
+unsupported slot, short reads, invalid headers and allocation failure/retry.
+
+The new operand module adds381 exact bytes (4,599 CPU scenarios/16,248 DOS
+assertions); operations add1,182 exact bytes (2,809 CPU scenarios covering464
+native instruction addresses/4,439 DOS assertions); expression support adds501
+exact bytes. Optional original-byte comparisons are separate from ordinary
+source-only tests. See [ASPECT_RUNTIME.md](ASPECT_RUNTIME.md) and its frozen validation report.
+
+Only24of215 slots are wired. General arithmetic, strings, parameters, float
+runtime, application commands, compiler/recorder and terminal scheduling remain
+unfinished. Native unchecked indexing/frame arithmetic limits this checkpoint
+to the authored corpus. No F01–F16 gate closes; integration must also address
+the terminal's near-memory limit. The interactive TERMINAL image remains731418bd.
+
+A fresh original-free source rebuild reproduces74 outputs byte for byte, including
+the three new ASPECT diagnostics. The terminal remains unchanged.

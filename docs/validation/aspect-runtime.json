@@ -1,0 +1,641 @@
+{
+  "passed": true,
+  "sources": {
+    "src/aspect/numeric_operands.asm": "dea2003fd9e74ac333314e20aa37a6b23b92c2e1ae869d728714d65f43fdd869",
+    "src/aspect/control_flow.asm": "33c7f8a622e5d61e78a7e6e9161de37dee292f5d3a43533a32c1462493d2285d",
+    "src/aspect/value_stack.asm": "3326b2edbe875a98566b93c1b66ec40989718021be72b809cdec8173be4b7370",
+    "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "standalone/build_aspect_flow.py": "102b323fa2a9b324c22d115d9dc52338bd747db77ca544b34427e03c802a088b",
+    "standalone/build_aspect_operands.py": "c44397011b4d3ea08705aec7d12ab60be4e8c68c3eb3583df0193493be6f3b44",
+    "standalone/check_aspect_operands.py": "a9d76ebfc4d23f2b0eeb96049a0e68e280736725c410b63acdcd0f412739e554",
+    "src/aspect/numeric_operations.asm": "c403985e74e03fe44b45116fe7558304756ce7df529a9ae4b4be7c7c067052f3",
+    "standalone/build_aspect_operations.py": "7d6f7ad7720c01869cdb361a85870cabef4aca85e4222cf5682ac1cc92856e76",
+    "standalone/check_aspect_operations.py": "ae6f2422fcf4de713376a7be4f4ad9e46c61fa72465f00e6b2f40432ad4ede41",
+    "standalone/build_aspect_runtime.py": "9da0a6b721e088efeadf721d7003353c627a5db49d704875cee013b3ea471394",
+    "standalone/fixtures/aspect_execution_vectors.json": "2fe02fbc44993cb35e2d9ca9ed6a003070e458dcec4de485d43a7af5a0ce80e4",
+    "src/aspect/runtime.c": "e53e4e66eb3a9097b314b35d5af07586c5c1ef8632983d6482d192d5b60d13bb",
+    "src/aspect/runtime.h": "fc87709a496991331a1b91cdff4190806a324a5aee45bb36f47255d69ebdbc12",
+    "src/aspect/file_io.c": "05e0d0e1701c39be60798c0ec1214ca95500c8e7354254b66e421ef116ac3a24",
+    "src/aspect/file_io.h": "a43126acae21c3daa15eb45e5aa92cb6c0bbde5c31b57b90dc552f9361549c7a",
+    "src/aspect/dispatch.asm": "0da6d20b979b6da93dcf216835db0cc8fd11cab6c53fc442ce3b850d84fb9918",
+    "src/aspect/abort.asm": "37b57a4284889310fb7ce7834b17d53c06abbbb8fd714b1068600e7c3150cb2d",
+    "src/aspect/global_strings.asm": "faf8d611f7b490866befd9affb11e3235b5b7fbd3e6bfe73aab4cc0c4a2b8c29",
+    "src/aspect/expression_support.asm": "3ab0bf9812f38df4f7884f1e35959058b1605ecd5faabb42bcdcc854e934be79",
+    "reconstruction/transfer_session/setjmp.asm": "ca5238effb53084d17c2e942805dff6c21efddd401a7a3a0e2780c9209f05676",
+    "reconstruction/transfer_session/longjmp.asm": "2291d6ce48974bed1680cb43a9c008d651cb90280e07358724b4aef114bd59fc",
+    "src/aspect/runtime_bridge.asm": "65acb33d31b865b81ee18a79fc5292a1924d13383704741bdc361e7b5fd28c93",
+    "standalone/check_aspect_runtime.py": "ed5c5f008a3c6704e03d3d2ed9c778bd72090faeb3fafe91fe80c15ff8fa82da",
+    "standalone/check_aspect_flow.py": "7e64fea6387b8ef1427360b20ced800609e2da1a8c5bfd96e270d277f15677cb",
+    "standalone/aspect_execution_probe.py": "bc1504b27a8d4bd9779a2ee289926891387bc4a16d156803c4e2f9df6145eb0a",
+    "standalone/freeze_aspect_execution.py": "f4e002e5f5090a426ba43db944e5a74a917f21186c9e13f0607e4cc8634adace",
+    "standalone/record_aspect_runtime.py": "6e13bb2a591ed643fedc25924311bba975144f78c32e992edf3cb7bed0e95fb1"
+  },
+  "local_evidence": {
+    "build/aspect-operands/manifest.json": "f16e263350dd1768bfca458583011bc49c71e25d426373d649c93c47e53c8674",
+    "build/aspect-operands/checks.json": "9dc3d9980f362b09638b0d61acb80f2decb2b912aa0d0622dfd589f0a61712e4",
+    "build/aspect-operands/checks-native.json": "a12a19fe3ec7e1348214385b2288667c81e5123bb2954ab06165e2e098627924",
+    "build/aspect-operations/manifest.json": "ec786929af89a4b6f2dafc167311ae92099c399f3cea905c4121e1364fb27b42",
+    "build/aspect-operations/cpu-result.json": "7bb8ee10c5f9ad9d93b1098d2a871e593a2f2b353a14a09afa9851c10243e822",
+    "build/aspect-operations/cpu-result-native.json": "3777662fc936ee611e1f277403edc1cfb3c303e56cbdab1c6aca8ff04731799f",
+    "build/aspect-operations/cpu-records.json": "741908d7425b6978b35b197dad5351ed322f7f9bf076c62f8bd4469489ac822a",
+    "build/aspect-runtime/manifest.json": "3091f7d6f52099bbad9251ab9cb3af2afbdf7e40156586b0d1a0ee418ba4b78a",
+    "build/aspect-runtime/checks.json": "5a8928af529989a8da35ff55b1be0224f306e468783db54fdf5ef9b65c4c81fa",
+    "build/aspect-runtime/checks-native.json": "e7f6eafdb50ec55d45bd6831535de8086e6df9b2ce8c55797ee6c0f4c0358a93",
+    "build/aspect-runtime/RESULT.TXT": "7be6c129d6533df43fb4f250140b4ee1e5008b6f78dfed23b8512d6d973cb913",
+    "analysis/aspect-expression/rea-support-01.json": "6de72297a9850e578cd8d2755afdb3b751745596823ca07e555b5103e8ced735",
+    "analysis/aspect-vm-runtime/execution-04/report.json": "7561bfba920aea376466e40b7ce191b7ee895388ae31f7ea548a039c99a1031c"
+  },
+  "operands": {
+    "manifest": {
+      "binary_sha256": "fb07492fb48bfa0d0cca760fc33c1c884c0551627b58b51df2778b6e310f897e",
+      "original_inputs": [],
+      "units": [
+        {
+          "name": "addresses",
+          "start": 53662,
+          "end_exclusive": 53680,
+          "source_file_start": 109390,
+          "bytes": 18,
+          "sha256": "837dc6adc3b2ecb8bd21262a26641768d8476c96cd2f9debdc407d1a0134b2cf"
+        },
+        {
+          "name": "predicates",
+          "start": 56080,
+          "end_exclusive": 56165,
+          "source_file_start": 111808,
+          "bytes": 85,
+          "sha256": "cf642a67b20e39f23082ca212a63e5effcee3d2980f1b0d39f54fd88d018753b"
+        },
+        {
+          "name": "numeric",
+          "start": 56392,
+          "end_exclusive": 56614,
+          "source_file_start": 112120,
+          "bytes": 222,
+          "sha256": "74db7d82604bae2f46594f183d6f013f49a68b09320548654dcf9c13fedde4da"
+        },
+        {
+          "name": "token",
+          "start": 57585,
+          "end_exclusive": 57641,
+          "source_file_start": 113313,
+          "bytes": 56,
+          "sha256": "2aee346fac99f7af7195d428924dcdf998fb7ff2843f4d3cf9c18662d30edf55"
+        }
+      ],
+      "sources": {
+        "src/aspect/numeric_operands.asm": "dea2003fd9e74ac333314e20aa37a6b23b92c2e1ae869d728714d65f43fdd869",
+        "src/aspect/control_flow.asm": "33c7f8a622e5d61e78a7e6e9161de37dee292f5d3a43533a32c1462493d2285d",
+        "src/aspect/value_stack.asm": "3326b2edbe875a98566b93c1b66ec40989718021be72b809cdec8173be4b7370",
+        "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b",
+        "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+        "standalone/build_aspect_flow.py": "102b323fa2a9b324c22d115d9dc52338bd747db77ca544b34427e03c802a088b",
+        "standalone/build_aspect_operands.py": "c44397011b4d3ea08705aec7d12ab60be4e8c68c3eb3583df0193493be6f3b44"
+      },
+      "scope": "Native numeric selection/token/address predicates with real flow/stack/copy. Modeled byte/CRT/builtin/invalid callbacks and source-owned banks; no original services, floating arithmetic, or full VM claim."
+    },
+    "source_only_checks": {
+      "passed": true,
+      "cpu_scenarios": 4599,
+      "DOS_summary": "ASPECT_OPERANDS 16248 checks 0 failures",
+      "optional_original": null,
+      "binary_sha256": "fb07492fb48bfa0d0cca760fc33c1c884c0551627b58b51df2778b6e310f897e",
+      "units": {
+        "addresses": "837dc6adc3b2ecb8bd21262a26641768d8476c96cd2f9debdc407d1a0134b2cf",
+        "predicates": "cf642a67b20e39f23082ca212a63e5effcee3d2980f1b0d39f54fd88d018753b",
+        "numeric": "74db7d82604bae2f46594f183d6f013f49a68b09320548654dcf9c13fedde4da",
+        "token": "2aee346fac99f7af7195d428924dcdf998fb7ff2843f4d3cf9c18662d30edf55"
+      },
+      "check_sha256": "a9d76ebfc4d23f2b0eeb96049a0e68e280736725c410b63acdcd0f412739e554",
+      "inherited_checker_sha256": "7e64fea6387b8ef1427360b20ced800609e2da1a8c5bfd96e270d277f15677cb",
+      "original_inputs": [],
+      "scope": "8native operand/token/address/predicate entries with actual flow/typed stack/copy. Source-owned banks and modeled builtin/invalid/byte/CRT callbacks. Allinteger/long selector paths, invalidtokens,uncheckedEOFindex/framewrap and shortDWORD exposure tested; no real builtin, float or full VM claim."
+    },
+    "optional_native": {
+      "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+      "exact_operand_bytes": 381,
+      "paired_cpu_scenarios": 4599
+    }
+  },
+  "operations": {
+    "manifest": {
+      "binary_sha256": "98c8d27d0fb5dde4c30edb1390a092e8823652177f7e11417952e1718bbf101b",
+      "original_inputs": [],
+      "start": 54437,
+      "end_exclusive": 55619,
+      "bytes": 1182,
+      "flat_sha256": "141329257da52573602e7b5924f4525234cbcf432f412c7ebe5654bdf559c4c8",
+      "sources": {
+        "src/aspect/numeric_operations.asm": "c403985e74e03fe44b45116fe7558304756ce7df529a9ae4b4be7c7c067052f3",
+        "src/aspect/numeric_operands.asm": "dea2003fd9e74ac333314e20aa37a6b23b92c2e1ae869d728714d65f43fdd869",
+        "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b",
+        "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+        "standalone/build_aspect_operations.py": "7d6f7ad7720c01869cdb361a85870cabef4aca85e4222cf5682ac1cc92856e76"
+      },
+      "scope": "Source-only native numeric metadata/comparison/assignment plus native classification predicates and overlap-safe copy. Float and expression/system services remain external dependencies; no complete VM claim."
+    },
+    "cpu_cases": 2809,
+    "groups": {
+      "metadata": 258,
+      "result_coercion": 20,
+      "eight_coercion": 20,
+      "store_result": 16,
+      "store_boolean": 16,
+      "logical": 48,
+      "comparisons": 1836,
+      "float_boundary": 24,
+      "increment_decrement": 512,
+      "assignment": 48,
+      "assignment_wrappers": 2,
+      "overlapping_float_copy": 5,
+      "unavailable_float": 4
+    },
+    "instruction_coverage": 464,
+    "records_sha256": "741908d7425b6978b35b197dad5351ed322f7f9bf076c62f8bd4469489ac822a",
+    "DOS": {
+      "summary": "ASPECT_OPERATIONS 4439 checks 0 failures",
+      "folder": "build/aspect-operations/dos-1792388168427148097",
+      "binary_sha256": "98c8d27d0fb5dde4c30edb1390a092e8823652177f7e11417952e1718bbf101b",
+      "scope": "Linked8086operations/copy; controlled operand/address/classification callbacks; unavailable float services abort the fixture invocation. No floating math or wholeVM."
+    },
+    "optional_native": {
+      "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+      "exact_bytes": true,
+      "identical_cpu_records": 2809
+    }
+  },
+  "runtime": {
+    "manifest": {
+      "binary_sha256": "75eb875ca12aa1676844754afd41486a421a8679cb2093448753ca845e79ecfb",
+      "sources": {
+        "standalone/build_aspect_runtime.py": "9da0a6b721e088efeadf721d7003353c627a5db49d704875cee013b3ea471394",
+        "standalone/fixtures/aspect_execution_vectors.json": "2fe02fbc44993cb35e2d9ca9ed6a003070e458dcec4de485d43a7af5a0ce80e4",
+        "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+        "src/aspect/runtime.c": "e53e4e66eb3a9097b314b35d5af07586c5c1ef8632983d6482d192d5b60d13bb",
+        "src/aspect/runtime.h": "fc87709a496991331a1b91cdff4190806a324a5aee45bb36f47255d69ebdbc12",
+        "src/aspect/file_io.c": "05e0d0e1701c39be60798c0ec1214ca95500c8e7354254b66e421ef116ac3a24",
+        "src/aspect/file_io.h": "a43126acae21c3daa15eb45e5aa92cb6c0bbde5c31b57b90dc552f9361549c7a",
+        "src/aspect/dispatch.asm": "0da6d20b979b6da93dcf216835db0cc8fd11cab6c53fc442ce3b850d84fb9918",
+        "src/aspect/abort.asm": "37b57a4284889310fb7ce7834b17d53c06abbbb8fd714b1068600e7c3150cb2d",
+        "src/aspect/global_strings.asm": "faf8d611f7b490866befd9affb11e3235b5b7fbd3e6bfe73aab4cc0c4a2b8c29",
+        "src/aspect/value_stack.asm": "3326b2edbe875a98566b93c1b66ec40989718021be72b809cdec8173be4b7370",
+        "src/aspect/control_flow.asm": "33c7f8a622e5d61e78a7e6e9161de37dee292f5d3a43533a32c1462493d2285d",
+        "src/aspect/numeric_operands.asm": "dea2003fd9e74ac333314e20aa37a6b23b92c2e1ae869d728714d65f43fdd869",
+        "src/aspect/numeric_operations.asm": "c403985e74e03fe44b45116fe7558304756ce7df529a9ae4b4be7c7c067052f3",
+        "src/aspect/expression_support.asm": "3ab0bf9812f38df4f7884f1e35959058b1605ecd5faabb42bcdcc854e934be79",
+        "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b",
+        "reconstruction/transfer_session/setjmp.asm": "ca5238effb53084d17c2e942805dff6c21efddd401a7a3a0e2780c9209f05676",
+        "reconstruction/transfer_session/longjmp.asm": "2291d6ce48974bed1680cb43a9c008d651cb90280e07358724b4aef114bd59fc",
+        "src/aspect/runtime_bridge.asm": "65acb33d31b865b81ee18a79fc5292a1924d13383704741bdc361e7b5fd28c93"
+      },
+      "support_units": [
+        {
+          "unit": 1,
+          "start": 53920,
+          "end_exclusive": 53974,
+          "file_start": 109648,
+          "bytes": 54,
+          "sha256": "f44d1381879db32a3471ab7605c49a6d97b25395422c5a8604b45d9337216833"
+        },
+        {
+          "unit": 2,
+          "start": 54258,
+          "end_exclusive": 54280,
+          "file_start": 109986,
+          "bytes": 22,
+          "sha256": "2f3c68286f7445c3c1d401d1ed410239e9719f11687def70d37378e38cf93bb5"
+        },
+        {
+          "unit": 3,
+          "start": 56189,
+          "end_exclusive": 56392,
+          "file_start": 111917,
+          "bytes": 203,
+          "sha256": "ec40b46f8c508b585b8ef7eeb7f2398e5c081567fe83495721b87cd6e0ae9809"
+        },
+        {
+          "unit": 4,
+          "start": 56909,
+          "end_exclusive": 57092,
+          "file_start": 112637,
+          "bytes": 183,
+          "sha256": "b235ad26e9d5106fe3390f615c52f2868f44fb5ec54cad3352249a4285be8298"
+        },
+        {
+          "unit": 5,
+          "start": 39616,
+          "end_exclusive": 39655,
+          "file_start": 44224,
+          "bytes": 39,
+          "sha256": "13198f32453ef810aad7bdde574976081e28a8037b04581ede30be457a30cc10"
+        }
+      ],
+      "original_inputs": [],
+      "compile_flags": [
+        "8086",
+        "small model",
+        "cdecl",
+        "ASPECT_RUNTIME_DIAGNOSTIC"
+      ],
+      "fixture_count": 19,
+      "supported_slots": {
+        "03": "aspect_ops_logical_and",
+        "15": "aspect_expr_branch_false",
+        "1e": "aspect_ops_decrement",
+        "32": "aspect_ops_equal",
+        "48": "aspect_ops_less_equal",
+        "54": "aspect_ops_less",
+        "5a": "aspect_ops_increment",
+        "5b": "aspect_ops_assign",
+        "5c": "aspect_ops_assign_chained",
+        "62": "aspect_flow_jump",
+        "68": "aspect_ops_greater_equal",
+        "6d": "aspect_ops_greater",
+        "7f": "aspect_ops_not_equal",
+        "81": "aspect_ops_logical_not",
+        "84": "aspect_ops_logical_or",
+        "94": "aspect_flow_return",
+        "95": "aspect_flow_return_framed",
+        "bc": "aspect_expr_branch_true",
+        "bd": "aspect_expr_branch_false_alias",
+        "c7": "aspect_flow_call_operand",
+        "c8": "aspect_flow_call_framed",
+        "cf": "aspect_flow_gate_decrement",
+        "d0": "aspect_flow_gate_increment",
+        "d2": "aspect_flow_reserve_locals"
+      },
+      "unsupported_slot_cases": 191,
+      "diagnostic_case_count": 219,
+      "scope": "Incremental actual native dispatch/operand/operation/file/heap composition executing source-owned compiled fixtures. Incomplete opcode table; unavailable services abort. Not full ASPECT or arbitrary-input safety."
+    },
+    "checks": {
+      "passed": true,
+      "DOS_summary": "ASPECT_RUNTIME 219 cases 2179 checks 0 failures",
+      "binary_sha256": "75eb875ca12aa1676844754afd41486a421a8679cb2093448753ca845e79ecfb",
+      "manifest_sha256": "3091f7d6f52099bbad9251ab9cb3af2afbdf7e40156586b0d1a0ee418ba4b78a",
+      "check_sha256": "ed5c5f008a3c6704e03d3d2ed9c778bd72090faeb3fafe91fe80c15ff8fa82da",
+      "result_sha256": "7be6c129d6533df43fb4f250140b4ee1e5008b6f78dfed23b8512d6d973cb913",
+      "optional_original": null,
+      "original_inputs": [],
+      "fixture_count": 19,
+      "unsupported_slot_cases": 191,
+      "scope": "Actual recovered dispatcher executes compiled authored ASX through real DOS files/far heap and maintained resource owner. Incomplete24-slot command surface; all191 unsupported in-range slots abort. No full compiler/VM, arbitrary-bytecode safety or terminal integration."
+    },
+    "optional_native": {
+      "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+      "exact_support_bytes": 501,
+      "units": [
+        {
+          "unit": 1,
+          "start": 53920,
+          "end_exclusive": 53974,
+          "file_start": 109648,
+          "bytes": 54,
+          "sha256": "f44d1381879db32a3471ab7605c49a6d97b25395422c5a8604b45d9337216833"
+        },
+        {
+          "unit": 2,
+          "start": 54258,
+          "end_exclusive": 54280,
+          "file_start": 109986,
+          "bytes": 22,
+          "sha256": "2f3c68286f7445c3c1d401d1ed410239e9719f11687def70d37378e38cf93bb5"
+        },
+        {
+          "unit": 3,
+          "start": 56189,
+          "end_exclusive": 56392,
+          "file_start": 111917,
+          "bytes": 203,
+          "sha256": "ec40b46f8c508b585b8ef7eeb7f2398e5c081567fe83495721b87cd6e0ae9809"
+        },
+        {
+          "unit": 4,
+          "start": 56909,
+          "end_exclusive": 57092,
+          "file_start": 112637,
+          "bytes": 183,
+          "sha256": "b235ad26e9d5106fe3390f615c52f2868f44fb5ec54cad3352249a4285be8298"
+        },
+        {
+          "unit": 5,
+          "start": 39616,
+          "end_exclusive": 39655,
+          "file_start": 44224,
+          "bytes": 39,
+          "sha256": "13198f32453ef810aad7bdde574976081e28a8037b04581ede30be457a30cc10"
+        }
+      ]
+    },
+    "cases": [
+      {
+        "file": "EMPTY.ASX",
+        "error": 0,
+        "steps": 2,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 0,
+        "long0": 0
+      },
+      {
+        "file": "ASSIGN.ASX",
+        "error": 0,
+        "steps": 3,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 7,
+        "long0": 0
+      },
+      {
+        "file": "LONG.ASX",
+        "error": 0,
+        "steps": 3,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 0,
+        "long0": 65535
+      },
+      {
+        "file": "IFTRUE.ASX",
+        "error": 0,
+        "steps": 6,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 7,
+        "long0": 0
+      },
+      {
+        "file": "IFFALSE.ASX",
+        "error": 0,
+        "steps": 5,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 9,
+        "long0": 0
+      },
+      {
+        "file": "CALL.ASX",
+        "error": 0,
+        "steps": 7,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 23,
+        "long0": 0
+      },
+      {
+        "file": "FRAME.ASX",
+        "error": 0,
+        "steps": 11,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 42,
+        "long0": 0
+      },
+      {
+        "file": "CMP.ASX",
+        "error": 0,
+        "steps": 6,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 11,
+        "long0": 0
+      },
+      {
+        "file": "WHILE.ASX",
+        "error": 0,
+        "steps": 17,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 0,
+        "long0": 0
+      },
+      {
+        "file": "POSTDEC.ASX",
+        "error": 0,
+        "steps": 4,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 2,
+        "long0": 0
+      },
+      {
+        "file": "POSTINC.ASX",
+        "error": 0,
+        "steps": 4,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 4,
+        "long0": 0
+      },
+      {
+        "file": "BOOLEAN.ASX",
+        "error": 0,
+        "steps": 6,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 6,
+        "long0": 0
+      },
+      {
+        "file": "LONGCMP.ASX",
+        "error": 0,
+        "steps": 7,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 17,
+        "long0": 65535
+      },
+      {
+        "file": "FLOAT.ASX",
+        "error": 4,
+        "steps": 2,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 0,
+        "long0": 0
+      },
+      {
+        "file": "STRINGS.ASX",
+        "error": 0,
+        "steps": 2,
+        "peak": 2,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 0,
+        "long0": 0
+      },
+      {
+        "file": "STR128.ASX",
+        "error": 0,
+        "steps": 2,
+        "peak": 128,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 0,
+        "long0": 0
+      },
+      {
+        "file": "ENDLESS.ASX",
+        "error": 6,
+        "steps": 1000,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 0,
+        "long0": 0
+      },
+      {
+        "file": "RECURSE.ASX",
+        "error": 9,
+        "steps": 6087,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 0,
+        "long0": 0
+      },
+      {
+        "file": "PAUSE.ASX",
+        "error": 3,
+        "steps": 2,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 0,
+        "long0": 0
+      },
+      {
+        "file": "NOHEADER.ASX",
+        "error": 2,
+        "steps": 0,
+        "peak": 0,
+        "cleanup": 0,
+        "close": 0,
+        "integer0": 0,
+        "long0": 0
+      },
+      {
+        "file": "BADHEAD.ASX",
+        "error": 2,
+        "steps": 0,
+        "peak": 0,
+        "cleanup": 0,
+        "close": 0,
+        "integer0": 0,
+        "long0": 0
+      },
+      {
+        "file": "BADOP.ASX",
+        "error": 3,
+        "steps": 1,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 0,
+        "long0": 0
+      },
+      {
+        "file": "TRUNC.ASX",
+        "error": 5,
+        "steps": 2,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 0,
+        "long0": 0
+      },
+      {
+        "file": "MISSING.ASX",
+        "error": 1,
+        "steps": 0,
+        "peak": 0,
+        "cleanup": 0,
+        "close": 0,
+        "integer0": 0,
+        "long0": 0
+      },
+      {
+        "file": "STRINGS.ASX",
+        "error": 8,
+        "steps": 0,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 0,
+        "long0": 0
+      },
+      {
+        "file": "STRINGS.ASX",
+        "error": 8,
+        "steps": 0,
+        "peak": 1,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 0,
+        "long0": 0
+      },
+      {
+        "file": "STRINGS.ASX",
+        "error": 0,
+        "steps": 2,
+        "peak": 2,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 0,
+        "long0": 0
+      },
+      {
+        "file": "ASSIGN.ASX",
+        "error": 0,
+        "steps": 3,
+        "peak": 0,
+        "cleanup": 1,
+        "close": 1,
+        "integer0": 7,
+        "long0": 0
+      }
+    ],
+    "unsupported_count": 191
+  },
+  "compiler_fixture_scope": "Source-owned script source and original-compiler-produced ASX fixture bytes only. No original compiler/application/resources; normal builds do not need originals.",
+  "static_memcompare_evidence": [
+    {
+      "id": "ev_7a9e24a3273e69e0315cb5039db67e01713be330cdec779c10c1ec02bfb2700d",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x19ac0"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_b958fe6a3b500dfd43f1e4dfba0f7d3c3d6ae461352962d7391ee8f2e40810c2",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x19ac0"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    }
+  ],
+  "limitations": [
+    "Only24of215 native opcode slots are wired; all191 others abort, never silently skip.",
+    "No source-owned ASPECT compiler yet; normal tests use authored original-compiler output frozen as fixtures.",
+    "Native unchecked index/frame/type paths remain; authored fixtures are not proof of arbitrary-bytecode safety.",
+    "Float/system/UI/serial/string/arithmetic/parameter services remain incomplete; float models in component tests never provide mathematics.",
+    "Runtime is a standalone diagnostic composition, not integrated into TERMINAL; all whole-application gates remain open."
+  ]
+}

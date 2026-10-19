@@ -1,0 +1,200 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "private_report": "analysis/aspect-vm-runtime/execution-04/report.json",
+  "private_report_sha256": "7561bfba920aea376466e40b7ce191b7ee895388ae31f7ea548a039c99a1031c",
+  "probe_sha256": "bc1504b27a8d4bd9779a2ee289926891387bc4a16d156803c4e2f9df6145eb0a",
+  "freezer_sha256": "f4e002e5f5090a426ba43db944e5a74a917f21186c9e13f0607e4cc8634adace",
+  "vectors": [
+    {
+      "name": "EMPTY",
+      "source": "proc main\r\nendproc\r\n",
+      "source_sha256": "c0f5e97f5c8882f703c6ca3288c8a3452115e4912dd20330a366a7b8f00c645c",
+      "hex": "00 cf 94",
+      "asx_sha256": "b85a731bed7fb244d45379f0d3ee38f0180c450a3074982be7ba3755c80cce69",
+      "expected": {}
+    },
+    {
+      "name": "ASSIGN",
+      "source": "integer result\r\nproc main\r\nresult = 7\r\nendproc\r\n",
+      "source_sha256": "1de5a9ab6886940f9f08e32f73cfdf857c1368b3708ec17286cc3bddae106133",
+      "hex": "00 cf 5b 00 8d 00 ab 07 00 94",
+      "asx_sha256": "fea1e0933105f20290dc6bf4c8aaa7c69ce8da234d0203567f14f2de51322057",
+      "expected": {
+        "integer0": 7
+      }
+    },
+    {
+      "name": "LONG",
+      "source": "long result\r\nproc main\r\nresult = 65535\r\nendproc\r\n",
+      "source_sha256": "e9877885f2aa52dc2a755f81279d286adb3a09bddf0e5f011f45772f3b761949",
+      "hex": "00 cf 5b 05 8e 00 ac ff ff 00 00 94",
+      "asx_sha256": "3cbb3ae092c9605e0a87158c6281606e5611530be5d4dbba19d53ac8b305fa80",
+      "expected": {
+        "long0": 65535
+      }
+    },
+    {
+      "name": "IFTRUE",
+      "source": "integer result\r\nproc main\r\nif 1\r\nresult = 7\r\nelse\r\nresult = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "6e1d15f2b336b0ff462f0d1a2702e47ea5d2e279974ca5c6e77767e3dd382449",
+      "hex": "00 cf 5b 00 79 00 ab 01 00 15 1c 00 00 00 79 00 5b 00 8d 00 ab 07 00 62 23 00 00 00 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "c9b9634da6278903a0bfee7b711f68005cf97e71a8a1fb3aa6b1859432610eb2",
+      "expected": {
+        "integer0": 7
+      }
+    },
+    {
+      "name": "IFFALSE",
+      "source": "integer result\r\nproc main\r\nif 0\r\nresult = 7\r\nelse\r\nresult = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "77c41b1e3d771805edc688625fc32648814e79bd3c6c496f95794e1724c39066",
+      "hex": "00 cf 5b 00 79 00 ab 00 00 15 1c 00 00 00 79 00 5b 00 8d 00 ab 07 00 62 23 00 00 00 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "62cb9edcc94b8fe3a00198a5191f3982126e277ebf653fb36a46f6dfe2fafac4",
+      "expected": {
+        "integer0": 9
+      }
+    },
+    {
+      "name": "CALL",
+      "source": "integer result\r\nproc main\r\ncall helper\r\nendproc\r\nproc helper\r\nresult = 23\r\nendproc\r\n",
+      "source_sha256": "86fe5ae7aba416fd12fa6a3c8e241ae94ec148d09525bdda7303a28882998bc0",
+      "hex": "00 cf d0 c7 09 00 00 00 94 cf 5b 00 8d 00 ab 17 00 94",
+      "asx_sha256": "a075a53300337c2494615168afc0c3ddb2c80453e48974e263c1bf8e2058d875",
+      "expected": {
+        "integer0": 23
+      }
+    },
+    {
+      "name": "FRAME",
+      "source": "integer result\r\nproc main\r\ninteger first\r\nfirst = 23\r\ncall helper\r\nendproc\r\nproc helper\r\ninteger second\r\nsecond = 42\r\nresult = second\r\nendproc\r\n",
+      "source_sha256": "54842c6af011151a10966d158dbf57dbe9d32f00d6b0e501d99507a4cd59d1cd",
+      "hex": "00 d2 02 00 cf 5b 00 a1 00 00 ab 17 00 d0 c8 14 00 00 00 95 d2 02 00 cf 5b 00 a1 00 00 ab 2a 00 5b 00 8d 00 a1 00 00 95",
+      "asx_sha256": "6d56b1945652bad55cacfba4150f44405383f3234cd75c4fb5ab0a724057dc90",
+      "expected": {
+        "integer0": 42
+      }
+    },
+    {
+      "name": "CMP",
+      "source": "integer result\r\nproc main\r\nif 3 < 7\r\nresult = 11\r\nelse\r\nresult = 13\r\nendif\r\nendproc\r\n",
+      "source_sha256": "10c5dad663aef7fcb9b23b970bbb2dc7e8e128131f766299914f1350eadb9ecf",
+      "hex": "00 cf 6d 00 ab 03 00 ab 07 00 79 00 15 1f 00 00 00 79 00 5b 00 8d 00 ab 0b 00 62 26 00 00 00 5b 00 8d 00 ab 0d 00 94",
+      "asx_sha256": "e51c1d5fa0999ce77c1db9071164bccfdc6fc5877b8b765ae28eea56e0dda3ba",
+      "expected": {
+        "integer0": 11
+      }
+    },
+    {
+      "name": "WHILE",
+      "source": "integer result\r\nproc main\r\nresult = 3\r\nwhile result\r\nresult--\r\nendwhile\r\nendproc\r\n",
+      "source_sha256": "73b4add228d8704e582283e30e9279d6298e8a82ca2efd250dd93252b7612f36",
+      "hex": "00 cf 5b 00 8d 00 ab 03 00 5b 00 79 00 8d 00 15 1e 00 00 00 79 00 1e 8d 00 62 09 00 00 00 94",
+      "asx_sha256": "11f6b13d0f615b1495482521c5f4cfab26c47f88324a10a62f50c9c3248c05f5",
+      "expected": {
+        "integer0": 0
+      }
+    },
+    {
+      "name": "POSTDEC",
+      "source": "integer result\r\nproc main\r\nresult = 3\r\nresult--\r\nendproc\r\n",
+      "source_sha256": "440329a93d12d62affbda7af724ae0b287c33064dd128a781a7196b9d6edfa8d",
+      "hex": "00 cf 5b 00 8d 00 ab 03 00 1e 8d 00 94",
+      "asx_sha256": "a45f7ca9d6ad76fded8165deec4086a677e2616f73f7592aa7e722ebc0d3817e",
+      "expected": {
+        "integer0": 2
+      }
+    },
+    {
+      "name": "POSTINC",
+      "source": "integer result\r\nproc main\r\nresult = 3\r\nresult++\r\nendproc\r\n",
+      "source_sha256": "4b760d2c089149325fabc28ecde7d4332781029e729c60715272624aaad1c3f6",
+      "hex": "00 cf 5b 00 8d 00 ab 03 00 5a 8d 00 94",
+      "asx_sha256": "94cfc841c76e36309662867682c0a3d70e23c75b50d37af86998de5923cf2f40",
+      "expected": {
+        "integer0": 4
+      }
+    },
+    {
+      "name": "BOOLEAN",
+      "source": "integer result\r\nproc main\r\nif 1 && 0\r\nresult = 2\r\nelse\r\nresult = 6\r\nendif\r\nendproc\r\n",
+      "source_sha256": "c3f96341f03844db71e5856dde26918cd12d85504443babef45c1304fe661451",
+      "hex": "00 cf 62 13 00 00 00 5b 00 79 00 ab 01 00 62 1a 00 00 00 5b 00 79 00 ab 00 00 15 2d 00 00 00 79 00 5b 00 8d 00 ab 02 00 62 34 00 00 00 5b 00 8d 00 ab 06 00 94",
+      "asx_sha256": "dfd0b53f6551e95b8332eb11bd3e3e366c212ca3af3d47df830bdea5294d0ac1",
+      "expected": {
+        "integer0": 6
+      }
+    },
+    {
+      "name": "LONGCMP",
+      "source": "integer result\r\nlong wide\r\nproc main\r\nwide = 65535\r\nif wide > 32768\r\nresult = 17\r\nelse\r\nresult = 19\r\nendif\r\nendproc\r\n",
+      "source_sha256": "3a0080b55d506b5536e1b9a0529f85c4bf6cf1ce3baa7cbff9a6246500f7d045",
+      "hex": "00 cf 5b 05 8e 00 ac ff ff 00 00 54 01 8e 00 ac 00 80 00 00 79 00 15 29 00 00 00 79 00 5b 00 8d 00 ab 11 00 62 30 00 00 00 5b 00 8d 00 ab 13 00 94",
+      "asx_sha256": "f442922a4bd62f1a64b3f339ae7eb9b8ba5b0b43fb1aed69e67da8aa62388638",
+      "expected": {
+        "integer0": 17,
+        "long0": 65535
+      }
+    },
+    {
+      "name": "FLOAT",
+      "source": "float value\r\nproc main\r\nvalue = 7.0\r\nendproc\r\n",
+      "source_sha256": "c25da2f228688a776c910e05b0da3481eefe2da5e1bbace92c4bc0e38500ee98",
+      "hex": "00 cf 5b 0a 8f 00 ad 00 00 00 00 00 00 1c 40 94",
+      "asx_sha256": "646172f6233b8024246cbe39f502198fab06dfa7cc8c3b0d0d6b6d0bd775773c",
+      "expected": {
+        "error": "float"
+      }
+    },
+    {
+      "name": "STRINGS",
+      "source": "string first,second\r\nproc main\r\nendproc\r\n",
+      "source_sha256": "2ab09d3af76084a2c7abbcafc8a4e20c9104433e5af914fc8581995db3f5aa97",
+      "hex": "02 cf 94",
+      "asx_sha256": "7e344f51d7fade5188a927c4bc0e688461027444e0e373d24f6f0ad6e5f7ca4c",
+      "expected": {
+        "allocated": 2
+      }
+    },
+    {
+      "name": "STR128",
+      "source": "string value0\r\nstring value1\r\nstring value2\r\nstring value3\r\nstring value4\r\nstring value5\r\nstring value6\r\nstring value7\r\nstring value8\r\nstring value9\r\nstring value10\r\nstring value11\r\nstring value12\r\nstring value13\r\nstring value14\r\nstring value15\r\nstring value16\r\nstring value17\r\nstring value18\r\nstring value19\r\nstring value20\r\nstring value21\r\nstring value22\r\nstring value23\r\nstring value24\r\nstring value25\r\nstring value26\r\nstring value27\r\nstring value28\r\nstring value29\r\nstring value30\r\nstring value31\r\nstring value32\r\nstring value33\r\nstring value34\r\nstring value35\r\nstring value36\r\nstring value37\r\nstring value38\r\nstring value39\r\nstring value40\r\nstring value41\r\nstring value42\r\nstring value43\r\nstring value44\r\nstring value45\r\nstring value46\r\nstring value47\r\nstring value48\r\nstring value49\r\nstring value50\r\nstring value51\r\nstring value52\r\nstring value53\r\nstring value54\r\nstring value55\r\nstring value56\r\nstring value57\r\nstring value58\r\nstring value59\r\nstring value60\r\nstring value61\r\nstring value62\r\nstring value63\r\nstring value64\r\nstring value65\r\nstring value66\r\nstring value67\r\nstring value68\r\nstring value69\r\nstring value70\r\nstring value71\r\nstring value72\r\nstring value73\r\nstring value74\r\nstring value75\r\nstring value76\r\nstring value77\r\nstring value78\r\nstring value79\r\nstring value80\r\nstring value81\r\nstring value82\r\nstring value83\r\nstring value84\r\nstring value85\r\nstring value86\r\nstring value87\r\nstring value88\r\nstring value89\r\nstring value90\r\nstring value91\r\nstring value92\r\nstring value93\r\nstring value94\r\nstring value95\r\nstring value96\r\nstring value97\r\nstring value98\r\nstring value99\r\nstring value100\r\nstring value101\r\nstring value102\r\nstring value103\r\nstring value104\r\nstring value105\r\nstring value106\r\nstring value107\r\nstring value108\r\nstring value109\r\nstring value110\r\nstring value111\r\nstring value112\r\nstring value113\r\nstring value114\r\nstring value115\r\nstring value116\r\nstring value117\r\nstring value118\r\nstring value119\r\nstring value120\r\nstring value121\r\nstring value122\r\nstring value123\r\nstring value124\r\nstring value125\r\nstring value126\r\nstring value127\r\nproc main\r\nendproc\r\n",
+      "source_sha256": "0c2430e2e5226205aa07cb50e85aa9d995b4ffa22047bada07d8743eb4f89dd0",
+      "hex": "80 cf 94",
+      "asx_sha256": "4b1138c44efa32abf96021c20242ede696c2268d47ef64a4a6382dd351e3be7a",
+      "expected": {
+        "allocated": 128
+      }
+    },
+    {
+      "name": "ENDLESS",
+      "source": "proc main\r\nwhile 1\r\nendwhile\r\nendproc\r\n",
+      "source_sha256": "b3b93f36ad09cc44cd81f352d3366398096d42bc61704bfd65fa26dd8dc5626f",
+      "hex": "00 cf 5b 00 79 00 ab 01 00 15 15 00 00 00 79 00 62 02 00 00 00 94",
+      "asx_sha256": "905ee2046c9485a0efbaf1d16aab3f249fe59104f6d51a5fa70135acd6400299",
+      "expected": {
+        "error": "budget"
+      }
+    },
+    {
+      "name": "RECURSE",
+      "source": "proc main\r\ncall main\r\nendproc\r\n",
+      "source_sha256": "595193e3af09d02fe70623c2bf48e41675056bf01cd68f24d5b66dff485ae1cc",
+      "hex": "00 cf d0 c7 01 00 00 00 94",
+      "asx_sha256": "ad03418e255f12b7264094fe4875cbc2c8448d52c88edbc4fc0d0d781d99cefa",
+      "expected": {
+        "error": "stack",
+        "limit": 65000
+      }
+    },
+    {
+      "name": "PAUSE",
+      "source": "proc main\r\npause 7\r\nendproc\r\n",
+      "source_sha256": "dc9b493cc2525ab21067f75a94580bb3a9b957e0551c8f752b5882c227f054d1",
+      "hex": "00 cf 88 b5 07 94",
+      "asx_sha256": "9911d765686f90353933d4bb5c58c9419c85aadb93afcea611e01eaae4f1ba57",
+      "expected": {
+        "error": "unsupported"
+      }
+    }
+  ],
+  "scope": "Source-owned script source and original-compiler-produced ASX fixture bytes only. No original compiler/application/resources; normal builds do not need originals."
+}

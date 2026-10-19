@@ -4,6 +4,27 @@ MODULES := escape attributes screen text reports erase cursor_state cursor_shape
 all: serial parser keyboard $(MODULES) config-dos config-replace config-abi directory-browser directory-editor process download-file upload-file transfer-metadata batch-header transfer-session-composite transfer-storage terminal
 
 .PHONY: aspect-literal test-aspect-literal test-aspect-compat
+.PHONY: aspect-operands test-aspect-operands test-aspect-operands-compat aspect-operations test-aspect-operations test-aspect-operations-compat aspect-runtime test-aspect-runtime test-aspect-runtime-compat
+all: aspect-operands aspect-operations aspect-runtime
+test: test-aspect-operands test-aspect-operations test-aspect-runtime
+aspect-operands:
+	python3 standalone/build_aspect_operands.py
+test-aspect-operands:
+	python3 standalone/check_aspect_operands.py
+test-aspect-operands-compat:
+	python3 standalone/check_aspect_operands.py --original analysis/pcplus-install/PCPLUS.EXE
+aspect-operations:
+	python3 standalone/build_aspect_operations.py
+test-aspect-operations:
+	python3 standalone/check_aspect_operations.py
+test-aspect-operations-compat:
+	python3 standalone/check_aspect_operations.py --original analysis/pcplus-install/PCPLUS.EXE
+aspect-runtime:
+	python3 standalone/build_aspect_runtime.py
+test-aspect-runtime:
+	python3 standalone/check_aspect_runtime.py
+test-aspect-runtime-compat:
+	python3 standalone/check_aspect_runtime.py --original analysis/pcplus-install/PCPLUS.EXE
 .PHONY: aspect-flow test-aspect-flow test-aspect-flow-compat aspect-file test-aspect-file
 all: aspect-flow aspect-file
 test: test-aspect-flow test-aspect-file

@@ -19,13 +19,18 @@ parameter encodings. [Stack and error-unwind composition](docs/ASPECT_EXECUTION.
 now verifies real native context restoration after an overflow.
 [File-backed calls and frames](docs/ASPECT_FILE_FLOW.md) now use actual DOS
 stdio, including nested returns and targets beyond64KiB.
-These components do not yet compile or execute scripts
-in the maintained terminal.
+The [standalone execution owner](docs/ASPECT_RUNTIME.md) now runs selected
+compiled scripts through real DOS files and far-heap allocation, including
+integer/long assignments, comparisons, branches, loops and procedure frames.
+Script compilation and execution in the maintained terminal remain unfinished.
 
 Current outputs:
 
 | Output | Inputs | Current purpose |
 | --- | --- | --- |
+| `build/aspect-runtime/EXECUTE.EXE` | Recovered assembly and maintained DOS resource owner | Fixed compiled-script suite;24 supported opcode slots,191 explicit unsupported stops; no terminal integration |
+| `build/aspect-operands/OPERANDS.EXE` | Recovered assembly and controlled services | Integer/long operand decoding; unchecked native indexing and external builtins remain explicit |
+| `build/aspect-operations/OPERATE.EXE` | Recovered assembly and controlled services | Assignment, logical/comparison and increment/decrement diagnostics; float services are unavailable |
 | `build/aspect-flow/FLOW.EXE` | Recovered assembly and modeled callbacks | Native reads/calls/frames/returns; unchecked historical behavior remains explicit |
 | `build/aspect-file/FILE.EXE` | Recovered assembly and maintained C file adapter | Actual DOS file-backed control flow, checked short operands and nonlocal abort; no complete interpreter |
 | `build/aspect-stack/STACK.EXE` | Recovered assembly and source-owned error callbacks | Typed value-stack and native copy diagnostic; native unchecked arithmetic/pop behavior retained |
