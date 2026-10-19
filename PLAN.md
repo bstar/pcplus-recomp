@@ -880,3 +880,12 @@ File/UI/opcode/resource services remain substitutes. See
 `docs/ASPECT_EXECUTION.md`.69 outputs rebuild identically from maintained source;
 real DWORD file services, frames/expressions/resource ownership and full F13
 application integration remain open.
+
+ASPECT file/control recovery adds14 native entries/330 exact bytes.457 CPU
+scenarios and631 DOS assertions preserve isolated native behavior. A maintained
+read-only file bridge then passes113 host and218 actual8086 DOS checks with
+real buffered reads, DWORD targets beyond64KiB, two nested framed calls/returns,
+local reservation and actual nonlocal abort on short operands/failed positions.
+See `docs/ASPECT_FILE_FLOW.md`. The diagnostic directly invokes native routines;
+no opcode loop, expression evaluator or full script owner is implemented.
+71 outputs now rebuild identically without originals; F13 and all gates remain open.

@@ -269,3 +269,11 @@ restores dispatcher state after modeled faults and a genuine native stack guard
 failure, while file/UI/opcode/resource callbacks remain diagnostic substitutes.
 The current69-output source rebuild still does not implement full ASPECT or
 close any whole-application gate.
+
+F13 gains [file-backed native control flow](ASPECT_FILE_FLOW.md):330 exact bytes,
+457 CPU scenarios and631 native-diagnostic DOS assertions. A separate maintained
+file adapter uses actual host/DOS stdio (113/218 checks), composing buffered
+word/DWORD reads, targets beyond64KiB, nested frames/returns and real abort on
+short reads/position failures. No opcode loop/full script owner or expression
+execution is claimed.71 outputs now reproduce without originals; all
+whole-application gates remain open.

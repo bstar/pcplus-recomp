@@ -114,3 +114,9 @@ still retain freed pointers and have no count cap; the recovered value stack
 still has unchecked arithmetic/pop semantics. Full compiler grammar/passes,
 VM commands, recorder, floating runtime, application invocation and physical
 hardware validation remain open. No F01–F16 whole-application gate closes here.
+
+The following [file/control composition](ASPECT_FILE_FLOW.md) connects native
+readers and calls/frames/returns to actual maintained DOS stdio, including
+positions beyond64KiB and real abort on short operands/failed positions. It
+extends the source rebuild to71 outputs while leaving complete script execution
+and ownership open.

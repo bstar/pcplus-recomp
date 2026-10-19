@@ -1,0 +1,269 @@
+{
+  "passed": true,
+  "sources": {
+    "src/aspect/control_flow.asm": "33c7f8a622e5d61e78a7e6e9161de37dee292f5d3a43533a32c1462493d2285d",
+    "src/aspect/value_stack.asm": "3326b2edbe875a98566b93c1b66ec40989718021be72b809cdec8173be4b7370",
+    "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "standalone/build_aspect_flow.py": "102b323fa2a9b324c22d115d9dc52338bd747db77ca544b34427e03c802a088b",
+    "standalone/check_aspect_flow.py": "7e64fea6387b8ef1427360b20ced800609e2da1a8c5bfd96e270d277f15677cb",
+    "standalone/build_aspect_file.py": "6ed7f01f58b5ee33eb5eb57ce325a1f86e1b44508d8b351326bdda2beccede65",
+    "src/aspect/file_io.c": "05e0d0e1701c39be60798c0ec1214ca95500c8e7354254b66e421ef116ac3a24",
+    "src/aspect/file_io.h": "a43126acae21c3daa15eb45e5aa92cb6c0bbde5c31b57b90dc552f9361549c7a",
+    "standalone/aspect_file_fixture.c": "5bed7330188164aa948873bb0c8b40feffb525e90dd938f837f052d688216ee3",
+    "src/aspect/abort.asm": "37b57a4284889310fb7ce7834b17d53c06abbbb8fd714b1068600e7c3150cb2d",
+    "reconstruction/transfer_session/setjmp.asm": "ca5238effb53084d17c2e942805dff6c21efddd401a7a3a0e2780c9209f05676",
+    "reconstruction/transfer_session/longjmp.asm": "2291d6ce48974bed1680cb43a9c008d651cb90280e07358724b4aef114bd59fc",
+    "standalone/aspect_file_fixture.asm": "d9f5194484a3b13a20ce8af4d2f5c18d1c5e7a96d047ba5fb25c19b734554d2d",
+    "standalone/check_aspect_file.py": "dd494d34a37e461cbd8310fbdd8a1de049e124c8763516b6568812a284ccb7ce",
+    "standalone/record_aspect_file.py": "d9f159c78994f73f73fe24a37270951c9f473cdcc680090cedc3a79bc4513516"
+  },
+  "local_evidence": {
+    "build/aspect-flow/manifest.json": "9be579a41d8ed27f1f56316b3d8e9bc7e986be32c7f64c7205c22b8aacf2d8b6",
+    "build/aspect-flow/checks.json": "a9590c40b76f539ded22751a609fe429b0aea6efa32c03399a03e62a670e4bec",
+    "build/aspect-flow/checks-native.json": "f284dd4bd27c7efe2f083b472bd836999e84cd3423b318c27a5fbeeffb4f246b",
+    "build/aspect-file/manifest.json": "eb27d0b10520b2a4bc12f87b3a04a30b9ab190af03a4f572d90cd587fb317577",
+    "build/aspect-file/checks.json": "aacf8ac73dacaa086af1ae7c9082a9d98294ea27b5ed95c171e823587cc2c19f",
+    "analysis/pcplus-overlay-entry-images/manifest.json": "f823ad14e2fea0a83a84929db04d7acbe3ac3a5d5ee2e3fbf38628aa88f1f23a",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d1f2-asm.json": "6aa2086c1ef2481dafb0dc15d8d34dca9c38cdde1cd706c8923e15a414903eff",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d27d-asm.json": "8b76b19ef41463c3c6a240541fd0da7c6c9a5a907fc7dcaa7be1fe2ca922b8b2",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d282-asm.json": "3811991cb8003b6bfb990d3055c798b12dae46c519b5a66ecaa6d58cc6322b72",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d287-asm.json": "c8381e96065adf5f51772b04a2e4c135090a00d5f8bde682079c134c391c6573",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d2d6-asm.json": "fc1617111af6ca22f080b89b14f6d7dc720f8a91da116d23d85ab9c4b4952e60",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d2f9-asm.json": "03dbea4992c5142a11687d1e8ecf518e1556547b81097e68597cdf07bde2add2",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d307-asm.json": "d6cbd6ed81413da6bbf0d6280901e2f9611b35297f997da70d0045e9b258f557",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d310-asm.json": "91a350a031eed77a42e585d91917b0f2f6bf3b9ed68efc4fa007d0b8c4700703",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d317-asm.json": "c6dae849f39da38d49b918829e582773cda0c604d09c0b67d3d849684679bb75",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d339-asm.json": "9f9373237115041cae857fac8e780ae46384a41839690b3c154b6cd5eb6f7c9d",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d349-asm.json": "0402570ad275c401a591ea70f88548a25d1801cee50fb460be71d8149a9d6115",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d352-asm.json": "0d15b561395cefa2e3c630dddb701cf4dd03d71aa8847e32ca13f5fa8f6ccdb4",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1e129-asm.json": "3de7565435ff9fc8044acef02eee8db4bb220643bc8d7390e1bf7010228eb050",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1e176-asm.json": "ed70ca02dd12d9972e955da82e2c5a8586f67270b39bbcd3b48cd75a3807ece7"
+  },
+  "native_flow": {
+    "manifest": {
+      "binary_sha256": "181160210ffb6e15b60b8d67d5a287b09a8cce7136f180591b9426f820edcc27",
+      "original_inputs": [],
+      "units": [
+        {
+          "name": "locals",
+          "start": 53746,
+          "end_exclusive": 53773,
+          "source_file_start": 109474,
+          "bytes": 27,
+          "sha256": "e2079db7562728ef7c528d663e2a86a40aa4456a63a490a89741e2053b68db86"
+        },
+        {
+          "name": "seek",
+          "start": 53885,
+          "end_exclusive": 53920,
+          "source_file_start": 109613,
+          "bytes": 35,
+          "sha256": "0a34c077a9ccca36a1dd58183f0ee5fdd969af8dd7cc393142dd05f3811dd962"
+        },
+        {
+          "name": "calls",
+          "start": 53974,
+          "end_exclusive": 54130,
+          "source_file_start": 109702,
+          "bytes": 156,
+          "sha256": "68223941e1d0a5a7bfb1a9c50acc41d3bc02ee812807bdbfd6b6b043644415c2"
+        },
+        {
+          "name": "readers",
+          "start": 57641,
+          "end_exclusive": 57753,
+          "source_file_start": 113369,
+          "bytes": 112,
+          "sha256": "dfa7447160db051ea69b4c0e0387a279b539fd0b5854622c9d0c01e236b6a628"
+        }
+      ],
+      "sources": {
+        "src/aspect/control_flow.asm": "33c7f8a622e5d61e78a7e6e9161de37dee292f5d3a43533a32c1462493d2285d",
+        "src/aspect/value_stack.asm": "3326b2edbe875a98566b93c1b66ec40989718021be72b809cdec8173be4b7370",
+        "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b",
+        "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+        "standalone/build_aspect_flow.py": "102b323fa2a9b324c22d115d9dc52338bd747db77ca544b34427e03c802a088b"
+      },
+      "scope": "Recovered native flow/operand routines with actual typed stack/copy. Source-owned modeled CRT/error/exit callbacks; no full loader/VM or checked IO claim."
+    },
+    "source_only_checks": {
+      "passed": true,
+      "cpu_scenarios": 457,
+      "DOS_summary": "ASPECT_FLOW 631 checks 0 failures",
+      "optional_original": null,
+      "binary_sha256": "181160210ffb6e15b60b8d67d5a287b09a8cce7136f180591b9426f820edcc27",
+      "units": {
+        "locals": "e2079db7562728ef7c528d663e2a86a40aa4456a63a490a89741e2053b68db86",
+        "seek": "0a34c077a9ccca36a1dd58183f0ee5fdd969af8dd7cc393142dd05f3811dd962",
+        "calls": "68223941e1d0a5a7bfb1a9c50acc41d3bc02ee812807bdbfd6b6b043644415c2",
+        "readers": "dfa7447160db051ea69b4c0e0387a279b539fd0b5854622c9d0c01e236b6a628"
+      },
+      "check_sha256": "7e64fea6387b8ef1427360b20ced800609e2da1a8c5bfd96e270d277f15677cb",
+      "original_inputs": [],
+      "scope": "14native flow/read entries plus actual typed stack/copy. Modeled CRT/error/exit only; short reads retain stack bytes, failed IO is unchecked, gate/depth/pointer/local-count wrap preserved. No full VM or realfile/longjmp claim."
+    },
+    "optional_original": {
+      "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+      "exact_flow_bytes": 330,
+      "exact_stack_bytes": 197,
+      "exact_copy_bytes": 72,
+      "paired_cpu_scenarios": 457
+    }
+  },
+  "real_file": {
+    "manifest": {
+      "binary_sha256": "c3786f890c44ad898a16e716888c8b0bc791bcbb061ad5f7da2442795b5770b7",
+      "sources": {
+        "standalone/build_aspect_file.py": "6ed7f01f58b5ee33eb5eb57ce325a1f86e1b44508d8b351326bdda2beccede65",
+        "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+        "src/aspect/file_io.c": "05e0d0e1701c39be60798c0ec1214ca95500c8e7354254b66e421ef116ac3a24",
+        "src/aspect/file_io.h": "a43126acae21c3daa15eb45e5aa92cb6c0bbde5c31b57b90dc552f9361549c7a",
+        "standalone/aspect_file_fixture.c": "5bed7330188164aa948873bb0c8b40feffb525e90dd938f837f052d688216ee3",
+        "src/aspect/control_flow.asm": "33c7f8a622e5d61e78a7e6e9161de37dee292f5d3a43533a32c1462493d2285d",
+        "src/aspect/value_stack.asm": "3326b2edbe875a98566b93c1b66ec40989718021be72b809cdec8173be4b7370",
+        "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b",
+        "src/aspect/abort.asm": "37b57a4284889310fb7ce7834b17d53c06abbbb8fd714b1068600e7c3150cb2d",
+        "reconstruction/transfer_session/setjmp.asm": "ca5238effb53084d17c2e942805dff6c21efddd401a7a3a0e2780c9209f05676",
+        "reconstruction/transfer_session/longjmp.asm": "2291d6ce48974bed1680cb43a9c008d651cb90280e07358724b4aef114bd59fc",
+        "standalone/aspect_file_fixture.asm": "d9f5194484a3b13a20ce8af4d2f5c18d1c5e7a96d047ba5fb25c19b734554d2d"
+      },
+      "original_inputs": [],
+      "scope": "Native flow/read/frame/stack/abort composition backed by actual DOS stdio and maintained checked operand callbacks. Source-owned file fixture; no opcode loop or complete interpreter."
+    },
+    "checks": {
+      "passed": true,
+      "host_summary": "ASPECT_FILE 113 checks 0 failures",
+      "DOS_summary": "ASPECT_FILE 218 checks 0 failures",
+      "binary_sha256": "c3786f890c44ad898a16e716888c8b0bc791bcbb061ad5f7da2442795b5770b7",
+      "manifest_sha256": "eb27d0b10520b2a4bc12f87b3a04a30b9ab190af03a4f572d90cd587fb317577",
+      "check_sha256": "dd494d34a37e461cbd8310fbdd8a1de049e124c8763516b6568812a284ccb7ce",
+      "original_inputs": [],
+      "fixture_bytes": 72016,
+      "host_fixture_sha256": "53d5f77fc5300e3f3a28e74d744ada8683b6bffbc9c05c0e8d2eb524c5c60875",
+      "DOS_fixture_sha256": "53d5f77fc5300e3f3a28e74d744ada8683b6bffbc9c05c0e8d2eb524c5c60875",
+      "scope": "Same maintained file API uses real host and DOS stdio. DOS additionally runs recovered readers, DWORD seeks/calls, nested frames, returns and actual abort/longjmp. No opcode loop, parser or full script execution."
+    }
+  },
+  "retained_rea": [
+    {
+      "evidence_id": "ev_293367081eac400f55aafd83957103a2e86a8fe2ddfa69158923da9707bea09b",
+      "parameters": {
+        "procedure": "0x1d1f2"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "scope": "Retained static assembly on synthetic carrier; never executed"
+    },
+    {
+      "evidence_id": "ev_a735fca8c6bdfca392f5ea3de64779b42c7bbeeeafaf7071696216986a4f4b99",
+      "parameters": {
+        "procedure": "0x1d27d"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "scope": "Retained static assembly on synthetic carrier; never executed"
+    },
+    {
+      "evidence_id": "ev_18caa82529badfecf0ba498868fa79890c08231d61793d8fddebfd923ec8b0cd",
+      "parameters": {
+        "procedure": "0x1d282"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "scope": "Retained static assembly on synthetic carrier; never executed"
+    },
+    {
+      "evidence_id": "ev_e5f632a46824f43b188caf28c067f449d37a13f4d43d9e8d6b2706ad4157a362",
+      "parameters": {
+        "procedure": "0x1d287"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "scope": "Retained static assembly on synthetic carrier; never executed"
+    },
+    {
+      "evidence_id": "ev_fe1f90a7a297120f978f4a3634e4bfd439f52a9485a3eed11d6a983e1c2e1862",
+      "parameters": {
+        "procedure": "0x1d2d6"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "scope": "Retained static assembly on synthetic carrier; never executed"
+    },
+    {
+      "evidence_id": "ev_2baccf7203e2746503257ce98972bc4a8e1e096ed17484077d2087d777b74b57",
+      "parameters": {
+        "procedure": "0x1d2f9"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "scope": "Retained static assembly on synthetic carrier; never executed"
+    },
+    {
+      "evidence_id": "ev_0555ffe22133e21c8c766b889e3107cb376b0ff45dbaabdc20b6be9fcbe9efb7",
+      "parameters": {
+        "procedure": "0x1d307"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "scope": "Retained static assembly on synthetic carrier; never executed"
+    },
+    {
+      "evidence_id": "ev_6d82dbe6424784780ed9b510d39a7a44a391978498150f68e8f24ebcc570b08c",
+      "parameters": {
+        "procedure": "0x1d310"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "scope": "Retained static assembly on synthetic carrier; never executed"
+    },
+    {
+      "evidence_id": "ev_36b3ede7e7073b815976608cbbb9d21740dd87ebb3d31872f70122b5e9d2b89b",
+      "parameters": {
+        "procedure": "0x1d317"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "scope": "Retained static assembly on synthetic carrier; never executed"
+    },
+    {
+      "evidence_id": "ev_b8993c45dbb8b3c18f107d72985ba819f3104f53423e493c0b2cdec4ae3f6819",
+      "parameters": {
+        "procedure": "0x1d339"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "scope": "Retained static assembly on synthetic carrier; never executed"
+    },
+    {
+      "evidence_id": "ev_e30a83a1363bb95d18000afaa216bc4518345e61a37f6bc3baec316b54440f35",
+      "parameters": {
+        "procedure": "0x1d349"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "scope": "Retained static assembly on synthetic carrier; never executed"
+    },
+    {
+      "evidence_id": "ev_7b51e70dc5647ca106e2cfbd0201f9420a0c858172ee019038654e30a058d241",
+      "parameters": {
+        "procedure": "0x1d352"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "scope": "Retained static assembly on synthetic carrier; never executed"
+    },
+    {
+      "evidence_id": "ev_71766782e52480bb398fd5915df6da6ab05a037691b84f15995e29e3b206f5c7",
+      "parameters": {
+        "procedure": "0x1e129"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "scope": "Retained static assembly on synthetic carrier; never executed"
+    },
+    {
+      "evidence_id": "ev_a3f0b779d8a02ccfc75ee193fa61a7fb1af5bf0fb0a583cc392d3d1fc830dd96",
+      "parameters": {
+        "procedure": "0x1e176"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "scope": "Retained static assembly on synthetic carrier; never executed"
+    }
+  ],
+  "limits": [
+    "Native handlers preserve unchecked IO and stack/frame/local-count semantics in isolation.",
+    "Maintained file callbacks abort short operand reads and failed positions through actual native abort/longjmp.",
+    "The real-file fixture invokes native routines directly; no opcode loop or complete script interpreter exists here.",
+    "Error abort does not roll back already changed depth/stack; the diagnostic owner resets state and closes real files explicitly.",
+    "No full compiler, expressions, loader owner, recorder, live terminal integration or physical hardware proof."
+  ]
+}

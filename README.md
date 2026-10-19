@@ -17,6 +17,8 @@ ASPECT recovery now includes a [literal codec](docs/ASPECT_LITERAL.md),
 [Compiler flow probes](docs/ASPECT_CONTROL_FLOW.md) establish call/branch and
 parameter encodings. [Stack and error-unwind composition](docs/ASPECT_EXECUTION.md)
 now verifies real native context restoration after an overflow.
+[File-backed calls and frames](docs/ASPECT_FILE_FLOW.md) now use actual DOS
+stdio, including nested returns and targets beyond64KiB.
 These components do not yet compile or execute scripts
 in the maintained terminal.
 
@@ -24,6 +26,8 @@ Current outputs:
 
 | Output | Inputs | Current purpose |
 | --- | --- | --- |
+| `build/aspect-flow/FLOW.EXE` | Recovered assembly and modeled callbacks | Native reads/calls/frames/returns; unchecked historical behavior remains explicit |
+| `build/aspect-file/FILE.EXE` | Recovered assembly and maintained C file adapter | Actual DOS file-backed control flow, checked short operands and nonlocal abort; no complete interpreter |
 | `build/aspect-stack/STACK.EXE` | Recovered assembly and source-owned error callbacks | Typed value-stack and native copy diagnostic; native unchecked arithmetic/pop behavior retained |
 | `build/aspect-unwind/UNWIND.EXE` | Recovered assembly and source-owned callbacks | Real dispatcher/abort/setjmp/longjmp composition, including a native stack-overflow case |
 | `build/aspect-literal/LITERAL.EXE` | Maintained C source only | Bounded nonempty ASPECT literal payload codec diagnostic |
