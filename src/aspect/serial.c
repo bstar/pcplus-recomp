@@ -3,7 +3,7 @@
 #include "serial_handoff.h"
 #include <dos.h>
 extern unsigned char uart_rx_buffer[];
-extern unsigned uart_rx_read,uart_rx_count;
+extern unsigned uart_rx_read,uart_rx_write,uart_rx_count;
 extern unsigned uart_software_flow,uart_rx_mask;
 extern unsigned char uart_flow_pending;
 extern unsigned aspect_serial_handoff_enabled;
@@ -13,6 +13,37 @@ extern unsigned __cdecl aspect_serial_tx_empty(void);
 static aspect_serial_handoff __far *handoff;
 static unsigned char input_translation[256];
 static unsigned input_translation_mode;
+static unsigned char directory_record[114];
+static unsigned directory_entry;
+static unsigned char __far *preload_source;
+static unsigned preload_count,preload_read;
+extern unsigned __cdecl directory_accounting_patch(const unsigned char *,unsigned char *,unsigned,unsigned,unsigned,unsigned);
+static unsigned record_bounded(const unsigned char __far *p)
+{
+ static const unsigned offsets[]={0,25,52,61,75,86,95,105};
+ static const unsigned sizes[]={25,21,9,9,11,9,9,9};
+ unsigned i,j;
+ for(i=0;i<8;++i){
+  for(j=0;j<sizes[i];++j)if(!p[offsets[i]+j])break;
+  if(j==sizes[i])return 0;
+ }
+ return 1;
+}
+unsigned __cdecl aspect_serial_directory_entry(void)
+{return directory_entry;}
+const unsigned char * __cdecl aspect_serial_directory_record(void)
+{return directory_entry?directory_record:0;}
+/* Internal backend callback: its UART IRQ is masked/IER0, queue already reset.
+ * Copy first, publish queue fields, then backend may enable its actual ISR. */
+void __cdecl aspect_serial_preload(void)
+{
+ unsigned i,at=preload_read;
+ for(i=0;i<preload_count;++i){uart_rx_buffer[i]=preload_source[at];at=(at+1)&4095;}
+ uart_rx_read=(unsigned)uart_rx_buffer;
+ uart_rx_write=(unsigned)uart_rx_buffer+(preload_count&4095);
+ uart_rx_count=preload_count;
+ uart_rx_mask=input_translation_mode==ASIO_XLT_MASK7F?127U:255U;
+}
 unsigned __cdecl aspect_serial_translate(unsigned byte)
 {return input_translation_mode==ASIO_XLT_TABLE?input_translation[byte&255U]:(byte&255U);}
 unsigned __cdecl aspect_serial_translation_policy(void)
@@ -23,8 +54,10 @@ static unsigned hex(unsigned c)
 unsigned __cdecl aspect_serial_open(const char *p)
 {
  unsigned i,v,divisor=0,lcr=0,flow,segment=0,offset=0,status,parent;
- unsigned long begin,end,address,ring,table;
- unsigned mode=0,table_offset=0,guard;
+ unsigned long begin,end,address,ring,table=0,record_address=0;
+ unsigned mode=0,table_offset=0,guard,descriptor_size=ASIO_SIZE;
+ unsigned initial_count=0,initial_read=0,entry=0,record_offset=0;
+ unsigned year=0,month=0,day=0,delta=0;
  unsigned char __far *mcb;
  aspect_serial_handoff __far *candidate=0;
  if(!p || (unsigned long)(unsigned)p+14UL>65536UL)return ASPECT_SERIAL_ARGUMENT;
@@ -46,11 +79,25 @@ unsigned __cdecl aspect_serial_open(const char *p)
   end=begin+(unsigned long)*(unsigned __far *)(mcb+3)*16UL;
   if(end>1048576UL || address<begin || address+ASIO_SIZE>end)return ASPECT_SERIAL_ARGUMENT;
   candidate=(aspect_serial_handoff __far *)MK_FP(segment,offset);
-  if(candidate->magic!=ASIO_MAGIC || (candidate->version!=ASIO_VERSION && candidate->version!=ASIO_VERSION_TRANSLATION) || candidate->size!=ASIO_SIZE ||
+  if(candidate->version==ASIO_VERSION_PRELOAD){
+   descriptor_size=ASIO_V3_SIZE;
+   if((unsigned long)offset+descriptor_size>65536UL || address+descriptor_size>end)return ASPECT_SERIAL_ARGUMENT;
+  }
+  if(candidate->magic!=ASIO_MAGIC || (candidate->version!=ASIO_VERSION && candidate->version!=ASIO_VERSION_TRANSLATION && candidate->version!=ASIO_VERSION_PRELOAD) || candidate->size!=descriptor_size ||
    candidate->parent_psp!=parent || !candidate->parent_psp ||
-   candidate->capacity!=4096 || candidate->count || candidate->status || candidate->returned ||
+   candidate->capacity!=4096 || candidate->returned ||
    (unsigned long)candidate->ring+4096UL>65536UL)return ASPECT_SERIAL_ARGUMENT;
   guard=candidate->parent_psp^candidate->parent_ds^candidate->ring^ASIO_GUARD;
+  if(candidate->version==ASIO_VERSION_PRELOAD){
+   aspect_serial_handoff_v3 __far *v3=(aspect_serial_handoff_v3 __far *)candidate;
+   initial_count=candidate->count;initial_read=candidate->status;entry=v3->entry;record_offset=v3->record;
+   year=v3->year;month=v3->month;day=v3->day;delta=v3->delta;
+   if(initial_count>4096 || initial_read>4095 || (!initial_count && initial_read) ||
+      entry>200 || (!entry && record_offset) || (!year && (month||day||delta)) ||
+      (year && !entry))return ASPECT_SERIAL_ARGUMENT;
+   guard^=initial_count^initial_read^entry^record_offset;
+   guard^=year^month^day^delta;
+  }else if(candidate->count || candidate->status)return ASPECT_SERIAL_ARGUMENT;
   if(candidate->version==ASIO_VERSION){
    if(candidate->reserved0 || candidate->reserved1)return ASPECT_SERIAL_ARGUMENT;
   }else{
@@ -60,13 +107,22 @@ unsigned __cdecl aspect_serial_open(const char *p)
   }
   if(candidate->guard!=guard)return ASPECT_SERIAL_ARGUMENT;
   ring=(unsigned long)candidate->parent_ds*16UL+candidate->ring;
-  if(end>1048576UL || address<begin || address+ASIO_SIZE>end || ring<begin || ring+4096UL>end ||
-    (address<ring+4096UL && ring<address+ASIO_SIZE))return ASPECT_SERIAL_ARGUMENT;
+  if(end>1048576UL || address<begin || address+descriptor_size>end || ring<begin || ring+4096UL>end ||
+    (address<ring+4096UL && ring<address+descriptor_size))return ASPECT_SERIAL_ARGUMENT;
   if(mode==ASIO_XLT_TABLE){
    table=(unsigned long)candidate->parent_ds*16UL+table_offset;
    if((unsigned long)table_offset+256UL>65536UL || table<begin || table+256UL>end ||
-      table+256UL>1048576UL || (table<address+ASIO_SIZE && address<table+256UL) ||
+      table+256UL>1048576UL || (table<address+descriptor_size && address<table+256UL) ||
       (table<ring+4096UL && ring<table+256UL))return ASPECT_SERIAL_ARGUMENT;
+  }
+  if(entry){
+   record_address=(unsigned long)candidate->parent_ds*16UL+record_offset;
+   if(!record_offset || (unsigned long)record_offset+114UL>65536UL || record_address<begin ||
+      record_address+114UL>end || record_address+114UL>1048576UL ||
+      (record_address<address+descriptor_size && address<record_address+114UL) ||
+      (record_address<ring+4096UL && ring<record_address+114UL) ||
+      (mode==ASIO_XLT_TABLE && record_address<table+256UL && table<record_address+114UL))return ASPECT_SERIAL_ARGUMENT;
+   if(!record_bounded((unsigned char __far *)MK_FP(candidate->parent_ds,record_offset)))return ASPECT_SERIAL_ARGUMENT;
   }
  }
  flow=(unsigned char)p[12];if(flow>='a'&&flow<='z')flow-=32;
@@ -77,8 +133,14 @@ unsigned __cdecl aspect_serial_open(const char *p)
   *(unsigned char __far *)MK_FP(candidate->parent_ds,table_offset+i):
   (unsigned char)i;
  input_translation_mode=mode;
+ directory_entry=entry;
+ for(i=0;i<114;++i)directory_record[i]=entry?
+  *(unsigned char __far *)MK_FP(candidate->parent_ds,record_offset+i):0;
+ if(year && directory_accounting_patch(directory_record,directory_record,year,month,day,delta))return ASPECT_SERIAL_ARGUMENT;
+ preload_count=initial_count;preload_read=initial_read;
+ preload_source=candidate?(unsigned char __far *)MK_FP(candidate->parent_ds,candidate->ring):0;
  status=aspect_serial_backend_open(p[2]-'1',divisor,lcr,flow);
- if(!status){uart_rx_mask=mode==ASIO_XLT_MASK7F?127U:255U;handoff=candidate;aspect_serial_handoff_enabled=candidate!=0;}
+ if(!status){handoff=candidate;aspect_serial_handoff_enabled=candidate!=0;}
  return status;
 }
 

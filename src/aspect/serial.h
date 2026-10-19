@@ -8,7 +8,7 @@ enum { ASPECT_SERIAL_OK=0,ASPECT_SERIAL_ARGUMENT=1,ASPECT_SERIAL_BUSY=2,
  ASPECT_SERIAL_ABSENT=3,ASPECT_SERIAL_STATE=4,ASPECT_SERIAL_OVERFLOW=5,
  ASPECT_SERIAL_UNREAD=6,ASPECT_SERIAL_PENDING=7,ASPECT_SERIAL_LINE=8 };
 extern unsigned aspect_serial_active,aspect_serial_status,aspect_serial_rx_count;
-/* Optional :ssss:oooo ASIOv1/v2 parent descriptor suffix; validated before IO. */
+/* Optional :ssss:oooo ASIOv1/v2/v3 parent descriptor; validated before IO. */
 unsigned __cdecl aspect_serial_open(const char *option);
 unsigned __cdecl aspect_serial_close(void);
 /* Immutable effective input table established before IRQ admission. Identity
@@ -16,6 +16,10 @@ unsigned __cdecl aspect_serial_close(void);
  * ASIO handback always preserves full raw bytes still in the IRQ ring. */
 unsigned __cdecl aspect_serial_translate(unsigned byte);
 unsigned __cdecl aspect_serial_translation_policy(void);
+/* Immutable raw selected record, never interpreted or transmitted here.
+ * NULL record means no directory selection; otherwise exactly114 bytes. */
+unsigned __cdecl aspect_serial_directory_entry(void);
+const unsigned char * __cdecl aspect_serial_directory_record(void);
 unsigned __cdecl aspect_serial_available(void);
 /* read returns a dequeued byte (mode2 masks7bits), orffff if unavailable. It
  * never applies the mode1 table; the native receive adapter owns that step. */

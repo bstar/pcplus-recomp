@@ -57,6 +57,7 @@ builds.append('aspect_serial_commands')
 builds.append('aspect_serial')
 builds.append('aspect_receive_commands')
 builds.append('aspect_receive_policy')
+builds.append('aspect_directory')
 program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/build_{name}.py'],check=True)\n" for name in builds)
 owner_checks=['standalone/check_batch_download.py','standalone/check_batch_upload.py','standalone/check_capture_file.py','standalone/check_capture_session.py','standalone/check_capture_owners.py']
 owner_checks.append('standalone/check_monitor_file.py')
@@ -64,6 +65,7 @@ owner_checks.append('standalone/check_printer_device.py')
 owner_checks.append('standalone/test_resource_path_dos.py')
 owner_checks.append('standalone/test_aspect_compiler.py')
 owner_checks.append('standalone/check_aspect_runner.py')
+owner_checks.append('standalone/check_aspect_directory.py')
 owner_checks.append('standalone/package_dos.py')
 program+=''.join(f"subprocess.run(['python3',{name!r}],check=True)\n" for name in owner_checks)
 with (OUT/'build.log').open('w') as log:
@@ -90,6 +92,7 @@ outputs += ['aspect-flow/FLOW.EXE','aspect-file/FILE.EXE']
 outputs += ['aspect-string-services/SERVICES.EXE','aspect-string-commands/STRCMD.EXE']
 outputs += ['aspect-conversions/CONVERT.EXE','aspect-conversion-services/CONVERT.EXE']
 outputs += ['aspect-receive-policy/POLICY.EXE']
+outputs += ['aspect-directory/DIRBUILT.EXE']
 outputs += ['aspect-receive-commands/RECEIVE.EXE','aspect-runtime/CASES.DAT']
 outputs += ['aspect-serial-commands/SERIAL.EXE','aspect-serial/SERIAL.EXE']
 outputs += ['aspect-console/CONSOLE.EXE','aspect-runner/ASPECT.EXE','aspect-runner/tests/RUNTEST.EXE']

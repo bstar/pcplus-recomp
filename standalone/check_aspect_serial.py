@@ -34,6 +34,12 @@ class Serial(uart.Machine):
   data=struct.pack('<I12H',0x4f495341,1,28,psp,ds,ring,4096,0,0,psp^ds^ring^0xa510,0,0,0)
   self.uc.mem_write(ds*16+off,data);self.desc=ds*16+off
   return b':1800:0100'
+ def descriptor3(self,count=0,start=0,entry=3,record=0x700,mode=0,date=(0,0,0,0)):
+  suffix=self.descriptor();table=0x500 if mode==1 else 0
+  data=struct.pack('<I18H',0x4f495341,3,40,self.parent_psp,0x1800,0x1000,4096,count,start,
+   self.parent_psp^0x1800^0x1000^0xa510^table^mode^count^start^entry^record^date[0]^date[1]^date[2]^date[3],0,table,mode,entry,record,*date)
+  self.uc.mem_write(self.desc,data)
+  return suffix
  def restored(self):
   regs,divisor,vectors=self.initial
   for port in [0x21,0x3fb,0x3fc,0x3f9]:assert self.registers[port]==regs[port],(hex(port),self.registers,regs)
@@ -151,6 +157,63 @@ def main():
   assert m.open(b'/S1:0003:03:N'+suffix)==1 and not m.writes
   assert bytes(m.uc.mem_read(m.desc,28))==before
  done('ASIOv2-guard-mode-table-span-MCBextent-and-descriptor-ring-overlap-before-IO',8)
+ for count,start,mode,port in [(0,0,0,1),(17,4093,1,2),(4096,1234,2,2),(3073,4095,0,3)]:
+  m=Serial();suffix=m.descriptor3(count,start,mode=mode)
+  data=bytes((i*37+128)&255 for i in range(count));ring=bytearray(4096)
+  for i,c in enumerate(data):ring[(start+i)&4095]=c
+  record=bytearray(i^37 for i in range(114))
+  for at in [24,45,60,69,85,94,103,113]:record[at]=0
+  record=bytes(record);m.uc.mem_write(m.target,bytes(ring));m.uc.mem_write(0x18700,record)
+  m.uc.mem_write(0x18500,bytes(i^85 for i in range(256)))
+  assert m.open(('/S%d:0003:03:B'%port).encode()+suffix)==0
+  assert m.call('_aspect_serial_available')==count
+  assert m.call('_aspect_serial_directory_entry')==3
+  pointer=m.call('_aspect_serial_directory_record');assert pointer and bytes(m.uc.mem_read(m.data_base+pointer,114))==record
+  m.uc.mem_write(0x18700,bytes(114));assert bytes(m.uc.mem_read(m.data_base+pointer,114))==record
+  assert m.get('uart_flow_pending',1)==(0x13 if count>=3072 else 0x11)
+  assert bool(m.get('uart_rts_lowered',1))==(count>=3072)
+  assert bool(m.registers[0x3fc]&2)==(count<3072)
+  read=min(count,1)
+  got=bytes(m.call('_aspect_serial_read') for _ in range(read))
+  # Genuine ISR appends after the normalized preload, including full-ring wrap.
+  m.receive_irq(b'Z')
+  got+=bytes(m.call('_aspect_serial_read') for _ in range(count-read+1))
+  expected=data+b'Z'
+  assert got==(bytes(c&127 for c in expected) if mode==2 else expected)
+  m.receive_irq(b'\xff\x80');assert m.call('_aspect_serial_close')==0;m.restored()
+  assert bytes(m.uc.mem_read(m.target,2))==b'\xff\x80'
+ done('ASIOv3-COM1to3-empty-wrapped-full-preload-before-IRQ-append-highwater-record-snapshot-raw-handback',4)
+ for count,start,entry,record,mode in [(4097,0,3,0x700,0),(1,4096,3,0x700,0),(0,1,0,0,0),(0,0,201,0x700,0),(0,0,0,0x700,0),(0,0,3,0,0),(0,0,3,0x11c,0),(0,0,3,0x1000,0),(0,0,3,0x580,1),(0,0,3,0xffc0,0)]:
+  m=Serial();suffix=m.descriptor3(count,start,entry,record,mode)
+  before=bytes(m.uc.mem_read(m.desc,40));assert m.open(b'/S1:0003:03:N'+suffix)==1 and not m.writes
+  assert bytes(m.uc.mem_read(m.desc,40))==before
+ for offset,value in [(6,28),(6,32),(20,0)]:
+  m=Serial();suffix=m.descriptor3();m.uc.mem_write(m.desc+offset,struct.pack('<H',value))
+  assert m.open(b'/S1:0003:03:N'+suffix)==1 and not m.writes
+ m=Serial();suffix=m.descriptor3(entry=0,record=0)
+ assert m.open(b'/S1:0003:03:N'+suffix)==0
+ assert not m.call('_aspect_serial_directory_entry') and not m.call('_aspect_serial_directory_record')
+ assert m.call('_aspect_serial_close')==0;m.restored()
+ done('ASIOv3-input-count-read-empty-entry-record-size-guard-and-all-disjoint-span-validation',14)
+ for offset,size in [(0,25),(25,21),(52,9),(61,9),(75,11),(86,9),(95,9),(105,9)]:
+  m=Serial();suffix=m.descriptor3();record=bytearray(114);record[offset:offset+size]=b'A'*size
+  m.uc.mem_write(0x18700,bytes(record));assert m.open(b'/S1:0003:03:N'+suffix)==1 and not m.writes
+ m=Serial();m.descriptor3();data=bytes(m.uc.mem_read(m.desc,40));m.uc.mem_write(0x2fee2,data)
+ assert m.open(b'/S1:0003:03:N:2f00:0ee2')==1 and not m.writes
+ done('ASIOv3-all-eight-native-string-extents-NUL-bounded-and-full40byte-MCB-range',9)
+ for date,old,expected in [((2026,10,19,1),65535,0),((2000,2,29,0),123,123),((2099,12,31,65535),1,0)]:
+  m=Serial();suffix=m.descriptor3(date=date);record=bytearray(114);struct.pack_into('<H',record,70,old)
+  m.uc.mem_write(0x18700,bytes(record));assert m.open(b'/S1:0003:03:N'+suffix)==0
+  ptr=m.call('_aspect_serial_directory_record');got=bytes(m.uc.mem_read(m.data_base+ptr,114))
+  want=bytearray(record);want[61:70]=f'{date[1]:02d}/{date[2]:02d}/{date[0]%100:02d}'.encode()+b'\0';struct.pack_into('<H',want,70,expected)
+  assert got==bytes(want) and bytes(m.uc.mem_read(0x18700,114))==bytes(record)
+  assert m.call('_aspect_serial_close')==0;m.restored()
+ done('ASIOv3-private-current-session-date-projection-count-wrap-and-zero-delta',3)
+ for date in [(0,1,0,0),(0,0,0,1),(1979,1,1,1),(2100,1,1,1),(2025,2,29,1),(2000,2,30,1),(2026,4,31,1),(2026,0,1,1),(2026,1,0,1)]:
+  m=Serial();suffix=m.descriptor3(date=date);before=bytes(m.uc.mem_read(0x18700,114))
+  assert m.open(b'/S1:0003:03:N'+suffix)==1 and not m.writes and bytes(m.uc.mem_read(0x18700,114))==before
+ m=Serial();suffix=m.descriptor3(entry=0,record=0,date=(2026,10,19,1));assert m.open(b'/S1:0003:03:N'+suffix)==1 and not m.writes
+ done('ASIOv3-absent-year-coherence-invalid-Gregorian-date-and-noentry-projection-before-IO',10)
  result=dict(passed=True,groups=cases,inputs=sum(x['inputs'] for x in cases),binary_sha256=hashlib.sha256(uart.BINARY.read_bytes()).hexdigest(),checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),manifest_sha256=hashlib.sha256((OUT/'manifest.json').read_bytes()).hexdigest(),limitations=['Kernel/ports modeled; actualDOS loopback test separately required.','Standard COM1..4 ports/IRQ masks are modeled; separate actual DOS backend tests use COM1 only.'],original_inputs=[])
  (OUT/'checks.json').write_text(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':main()

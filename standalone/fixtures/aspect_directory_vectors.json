@@ -1,0 +1,563 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "private_report": "analysis/aspect-directory/compiler-03/report.json",
+  "private_report_sha256": "1295f4e13b2cb4a817c60fa45c4f1e0084bd8362595c8cb09f56c473661163ce",
+  "probe_sha256": "21cfe7b7ec18aa5656acc0dc26ba20aabbc25b974e6bf1e12b02771676f1250d",
+  "freezer_sha256": "a45c593dbbec74d51446fde743a73f4d3f23742a089133f9e7f281614ca8feff",
+  "vectors": [
+    {
+      "name": "DIR0",
+      "source": "string target\r\nproc main\r\ntarget = $D_LDATE\r\nendproc\r\n",
+      "source_sha256": "dfe675a484ac17f7ba0d7ba25fd56063e7ecbbeca9c76615d2ee47128f9e3879",
+      "hex": "01 cf ac 8c 00 6e 00 00 94",
+      "asx_sha256": "27b4d026284494cf4cc823cfbe1ddc4a5d3ce8a4a1c50826d3d1206d869f493a",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "string0": "10/19/26",
+        "stdout_hex": "",
+        "tx_hex": ""
+      }
+    },
+    {
+      "name": "DIR1",
+      "source": "string target\r\nproc main\r\ntarget = $D_KBDFILE\r\nendproc\r\n",
+      "source_sha256": "7ea726b025efbd9f412f2407244e4af923cd6afa331978b486030dd4f3bc5056",
+      "hex": "01 cf ac 8c 00 6e 01 00 94",
+      "asx_sha256": "8ef62ef2efecc57fe1a66011f74e4d8d80a18408b4b6f8755dca656420aaba36",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "string0": "KEYFILE",
+        "stdout_hex": "",
+        "tx_hex": ""
+      }
+    },
+    {
+      "name": "DIR2",
+      "source": "string target\r\nproc main\r\ntarget = $D_METAKEY\r\nendproc\r\n",
+      "source_sha256": "51d3ccce36a25a1f75b59ee2045bc90c8686a554d1e9dde4bf94885d4ab69f8b",
+      "hex": "01 cf ac 8c 00 6e 02 00 94",
+      "asx_sha256": "76ee29bd5dd7b6ab0b8feb1600e0e53ac0d1a59ddb2bb4f8414fc21e3949f068",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "string0": "METAKEY",
+        "stdout_hex": "",
+        "tx_hex": ""
+      }
+    },
+    {
+      "name": "DIR3",
+      "source": "string target\r\nproc main\r\ntarget = $D_NAME\r\nendproc\r\n",
+      "source_sha256": "a8cca9258a1aa10f836dcb5ee4cfd1e9a0098428363ea1f0968c3d4795cf93aa",
+      "hex": "01 cf ac 8c 00 6e 03 00 94",
+      "asx_sha256": "23877a5b3750c3ebddc8a6a2f42dcd9c7e466efafec0c22b7a5af6da0ebc0fce",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "string0": "SYNTHETIC NODE",
+        "stdout_hex": "",
+        "tx_hex": ""
+      }
+    },
+    {
+      "name": "DIR4",
+      "source": "string target\r\nproc main\r\ntarget = $D_NOTE\r\nendproc\r\n",
+      "source_sha256": "25408a2774c3bda2528953c336e2e65da4f1de9aaff808c5e4f235ecd0970403",
+      "hex": "01 cf ac 8c 00 6e 04 00 94",
+      "asx_sha256": "bb0e39217278d65584e2a5b97369f54f4248aca7a5a53f9a1907e9a219496ad4",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "string0": "NOTE",
+        "stdout_hex": "",
+        "tx_hex": ""
+      }
+    },
+    {
+      "name": "DIR5",
+      "source": "string target\r\nproc main\r\ntarget = $D_PHONE\r\nendproc\r\n",
+      "source_sha256": "59b61e4b066cef2ba03055986b61ba5a62cddebf557ca900d710f1cc434e253c",
+      "hex": "01 cf ac 8c 00 6e 05 00 94",
+      "asx_sha256": "e5984bb59381b86c84f2d898d14629ecd6d3d887d4a75b8ca2ea1b49b158520f",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "string0": "555-0100",
+        "stdout_hex": "",
+        "tx_hex": ""
+      }
+    },
+    {
+      "name": "DIR6",
+      "source": "string target\r\nproc main\r\ntarget = $D_PWORD\r\nendproc\r\n",
+      "source_sha256": "e983f25056bf942e7559044c4a8228094939e436f15d2fca394bdad905efff3a",
+      "hex": "01 cf ac 8c 00 6e 06 00 94",
+      "asx_sha256": "1a362e4022a580fbe7170d5400869dd6015376003d7c4336808ffdc29d9ea7a3",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "string0": "sYNth42!",
+        "stdout_hex": "",
+        "tx_hex": ""
+      }
+    },
+    {
+      "name": "DIR7",
+      "source": "string target\r\nproc main\r\ntarget = $D_SCRIPT\r\nendproc\r\n",
+      "source_sha256": "7032a6a89784eb00a3787fb1112847a499fdb49689be661250e636df9a0d09d9",
+      "hex": "01 cf ac 8c 00 6e 07 00 94",
+      "asx_sha256": "1502146ee3488285e7639e18e6d84e83a259cc2f3dda5920b4b491f70e8d0603",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "string0": "SIGNON",
+        "stdout_hex": "",
+        "tx_hex": ""
+      }
+    },
+    {
+      "name": "DIRNUM",
+      "source": "integer target\r\nproc main\r\ntarget = $D_ENTRY\r\nendproc\r\n",
+      "source_sha256": "a2fbd67b45561249730a90742adc003f2c502b95514f3a61839eb5d2f0a77aca",
+      "hex": "00 cf 5b 00 8d 00 6f 03 94",
+      "asx_sha256": "aeecd309146a1821bbb042b128a37392075a043730c3f4582b3b64fbd8cd3b72",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "integer0": 7,
+        "stdout_hex": "",
+        "tx_hex": ""
+      }
+    },
+    {
+      "name": "DIRALL",
+      "source": "\r\nproc main\r\nmessage $D_LDATE\r\nmessage $D_KBDFILE\r\nmessage $D_METAKEY\r\nmessage $D_NAME\r\nmessage $D_NOTE\r\nmessage $D_PHONE\r\nmessage $D_PWORD\r\nmessage $D_SCRIPT\r\nendproc\r\n",
+      "source_sha256": "7252213e1a265872371b0708c8f6a237b7429cc7157f1ca56b746df492c37b8a",
+      "hex": "00 cf 76 6e 00 76 6e 01 76 6e 02 76 6e 03 76 6e 04 76 6e 05 76 6e 06 76 6e 07 94",
+      "asx_sha256": "65d19b0cba8cc7629cf402289ea195f1563b9d78543fd51c216d1139b30159a2",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "stdout_hex": "31302f31392f32360d0a4b455946494c450d0a4d4554414b45590d0a53594e544845544943204e4f44450d0a4e4f54450d0a3535352d303130300d0a73594e74683432210d0a5349474e4f4e0d0a",
+        "tx_hex": ""
+      }
+    },
+    {
+      "name": "DIRTX",
+      "source": "\r\nproc main\r\ntransmit $D_PWORD\r\nendproc\r\n",
+      "source_sha256": "d86f733d701724080097c90ee976bc7125892086960ac6f0c30941dd106a303a",
+      "hex": "00 cf bf 6e 06 94",
+      "asx_sha256": "f0ef93e786e33ce37d93df380c4e1d9dfa32d2c39cef8bc3002715fb507f2a90",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "tx_hex": "73594e7468343221",
+        "stdout_hex": ""
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false
+      }
+    },
+    {
+      "name": "DIRLOC",
+      "source": "\r\nproc main\r\nstring target\r\ntarget = $D_PWORD\r\nmessage target\r\nendproc\r\n",
+      "source_sha256": "0b203117738e70a514e58890531fbb0eafc8486899acacafeb2ae6ab25429f54",
+      "hex": "00 d2 51 00 cf ac a0 00 00 6e 06 00 76 a0 00 00 95",
+      "asx_sha256": "cc096a0d741168e80a8dc6f091e4787b01d6e09fef5614e52af28352f84b3695",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "stdout_hex": "73594e74683432210d0a",
+        "tx_hex": ""
+      }
+    },
+    {
+      "name": "DMCONCAT",
+      "source": "string target\r\nproc main\r\ntarget = $D_NAME\r\nstrcat target $D_PHONE\r\nendproc\r\n",
+      "source_sha256": "92073d2ab829624b8ae52d67bf2d516f003cb21666f0b4a6d3c16a0719419ee4",
+      "hex": "01 cf ac 8c 00 6e 03 00 aa 8c 00 6e 05 00 94",
+      "asx_sha256": "2ebfd1f7a396f10f90e9c7c7ef9bcdbe5b158357de30dd5699272c5b3bcef0ce",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "string0": "SYNTHETIC NODE555-0100",
+        "stdout_hex": "",
+        "tx_hex": ""
+      }
+    },
+    {
+      "name": "DMPARAM",
+      "source": "string target\r\nproc main\r\ncall worker with $D_PWORD\r\nendproc\r\nproc worker\r\nstrparm value\r\ntarget = value\r\nendproc\r\n",
+      "source_sha256": "36ebe9a51cac6a56fc211f3d3ca57f305bdd89154b88c70aca88e1de264be55a",
+      "hex": "01 cf d0 cd 6e 06 c8 0f 00 00 00 d2 af ff 94 cf ac 8c 00 96 57 00 00 95",
+      "asx_sha256": "02f9bec7ebdbd1be70ac988ebf40378f903e3646b88dac1cdc09c85cbc1fa6b7",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "string0": "sYNth42!",
+        "stdout_hex": "",
+        "tx_hex": ""
+      }
+    },
+    {
+      "name": "DMFRAME",
+      "source": "string target\r\nproc main\r\nstring value\r\nvalue = $D_PHONE\r\ntarget = value\r\nendproc\r\n",
+      "source_sha256": "2534b539b6ba28ed04d29a06ce1e40bd497aba25669059323da0cd57cfdc2ed8",
+      "hex": "01 d2 51 00 cf ac a0 00 00 6e 05 00 ac 8c 00 a0 00 00 00 95",
+      "asx_sha256": "6b7710d4ce5130240751553c3ec4318a3c2ec00b415ace9082bab70a59fd0a97",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "string0": "555-0100",
+        "stdout_hex": "",
+        "tx_hex": ""
+      }
+    },
+    {
+      "name": "DMMIXED",
+      "source": "string label,secret\ninteger selected\r\nproc main\r\nlabel = $D_NAME\r\nsecret = $D_PWORD\r\nselected = $D_ENTRY\r\nendproc\r\n",
+      "source_sha256": "595837db87a39846e624df9e906592d136068f02addf303bb3f465ccbf4b89eb",
+      "hex": "02 cf ac 8c 00 6e 03 00 ac 8c 01 6e 06 00 5b 00 8d 00 6f 03 94",
+      "asx_sha256": "f468f9d7550bd540df67d245bba810997bebaa5cae9187ca538efaeb9e8d7320",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "string0": "SYNTHETIC NODE",
+        "string1": "sYNth42!",
+        "integer0": 7,
+        "stdout_hex": "",
+        "tx_hex": ""
+      }
+    },
+    {
+      "name": "DMEMPTY",
+      "source": "string target\r\nproc main\r\ntarget = $D_PWORD\r\nendproc\r\n",
+      "source_sha256": "e983f25056bf942e7559044c4a8228094939e436f15d2fca394bdad905efff3a",
+      "hex": "01 cf ac 8c 00 6e 06 00 94",
+      "asx_sha256": "1a362e4022a580fbe7170d5400869dd6015376003d7c4336808ffdc29d9ea7a3",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000000000000000000000000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "string0": "",
+        "stdout_hex": "",
+        "tx_hex": ""
+      }
+    },
+    {
+      "name": "DMHIGH",
+      "source": "string target\r\nproc main\r\ntarget = $D_PWORD\r\nendproc\r\n",
+      "source_sha256": "e983f25056bf942e7559044c4a8228094939e436f15d2fca394bdad905efff3a",
+      "hex": "01 cf ac 8c 00 6e 06 00 94",
+      "asx_sha256": "1a362e4022a580fbe7170d5400869dd6015376003d7c4336808ffdc29d9ea7a3",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000082809800683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "string0": "\u00e9\u00c7\u00ff",
+        "stdout_hex": "",
+        "tx_hex": ""
+      }
+    }
+  ],
+  "compiler_only": [
+    {
+      "name": "DIRBAUD",
+      "source": "long target\r\nproc main\r\ntarget = $D_BAUD\r\nendproc\r\n",
+      "source_sha256": "e5cd6db721965b91ea69f31243d7ec66015fea7df22c6941f18e9fa78317f74f",
+      "hex": "00 cf 5b 05 8e 00 70 00 94",
+      "asx_sha256": "9ba41f119a0a5b150ea85e8953386b7fa8a7838b9df5e0245f98231cbd547083",
+      "source_encoding": "cp437",
+      "directory": {
+        "entry": 7,
+        "record_hex": "53594e544845544943204e4f444500000000000000000000003535352d30313030000000000000000000000000000000000000005349474e4f4e00000031302f31392f323600000000000073594e74683432210000004d4554414b455900004b455946494c450000004e4f54450000000000"
+      },
+      "expected": {
+        "stdout_hex": "",
+        "tx_hex": ""
+      },
+      "dos_excluded": true,
+      "dos_excluded_reason": "BAUD long0 original getter indexes global DWORD baud table3270 using record.word46; native service/table not bound by this directory snapshot phase."
+    }
+  ],
+  "rejected": [
+    {
+      "name": "MISS0",
+      "source": "string target\r\nproc main\r\ntarget = $D_USERNAME\r\nendproc\r\n",
+      "source_sha256": "7a3d6228d9bcaf3b3b2feea5caf75c65038761603ec23268b04983a8994b37ec",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> $D_USERNAME"
+      ]
+    },
+    {
+      "name": "MISS1",
+      "source": "string target\r\nproc main\r\ntarget = $D_USER\r\nendproc\r\n",
+      "source_sha256": "dcb6053c2d37be09f5a0d808d1e59c9da48e1c123301449925d4481603cc3631",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> $D_USER"
+      ]
+    },
+    {
+      "name": "MISS2",
+      "source": "string target\r\nproc main\r\ntarget = $D_PASSWORD\r\nendproc\r\n",
+      "source_sha256": "35961375e14469f6831b6c7838939a1aaa0d9807d1ebc94e9b19f7e7d81c773f",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> $D_PASSWORD"
+      ]
+    },
+    {
+      "name": "MISS3",
+      "source": "string target\r\nproc main\r\ntarget = $D_NUMBER\r\nendproc\r\n",
+      "source_sha256": "3cfce8aeaf1c14256766f9670004aadd7d8cb5a963d5b7c974d07085c00d62c6",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> $D_NUMBER"
+      ]
+    },
+    {
+      "name": "DECL0",
+      "source": "string $D_LDATE\r\nproc main\r\nmessage \"UNREACHABLE\"\r\nendproc\r\n",
+      "source_sha256": "f5dfab22cf5e1a4bf97e2cb25b4ddfe27c343e3244d98e830526839d693bfb2f",
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $D_LDATE"
+      ]
+    },
+    {
+      "name": "DEST0",
+      "source": "\r\nproc main\r\n$D_LDATE = \"WRITE\"\r\nendproc\r\n",
+      "source_sha256": "230c6874aa4503fb8f3387dee2399f5db8003c633fdaab528d1d8ace734411ca",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> $D_LDATE"
+      ]
+    },
+    {
+      "name": "DECL1",
+      "source": "string $D_KBDFILE\r\nproc main\r\nmessage \"UNREACHABLE\"\r\nendproc\r\n",
+      "source_sha256": "c069cf5eaf50f361ff6399a391f4cec9e43c5a821b574c782ed1060282bfc2e8",
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $D_KBDFILE"
+      ]
+    },
+    {
+      "name": "DEST1",
+      "source": "\r\nproc main\r\n$D_KBDFILE = \"WRITE\"\r\nendproc\r\n",
+      "source_sha256": "9023fa75f934bdf72c53158c301af35e2f8f55b893d8548110d95dd69054bda3",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> $D_KBDFILE"
+      ]
+    },
+    {
+      "name": "DECL2",
+      "source": "string $D_METAKEY\r\nproc main\r\nmessage \"UNREACHABLE\"\r\nendproc\r\n",
+      "source_sha256": "df480b2227cabe4d22c7d7c88f07d2dc872b5527c14319819f560d31b88c36ef",
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $D_METAKEY"
+      ]
+    },
+    {
+      "name": "DEST2",
+      "source": "\r\nproc main\r\n$D_METAKEY = \"WRITE\"\r\nendproc\r\n",
+      "source_sha256": "389da018e3b2e921e8adb6ab567b840bdd7f130987317d55810529efb28f38e5",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> $D_METAKEY"
+      ]
+    },
+    {
+      "name": "DECL3",
+      "source": "string $D_NAME\r\nproc main\r\nmessage \"UNREACHABLE\"\r\nendproc\r\n",
+      "source_sha256": "d79159d4488fedb0ce8b91af790c2c9db525b2a74fac9c96a0d3ed3624c7727b",
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $D_NAME"
+      ]
+    },
+    {
+      "name": "DEST3",
+      "source": "\r\nproc main\r\n$D_NAME = \"WRITE\"\r\nendproc\r\n",
+      "source_sha256": "2d869a667c9a92f10abfb5250483ad4214f7ecc1a5308b2899a14b11d9b90f79",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> $D_NAME"
+      ]
+    },
+    {
+      "name": "DECL4",
+      "source": "string $D_NOTE\r\nproc main\r\nmessage \"UNREACHABLE\"\r\nendproc\r\n",
+      "source_sha256": "766a6b45d336cc0fe70a5d97175cb78af4d80b580318e279fb69a0caf4f25406",
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $D_NOTE"
+      ]
+    },
+    {
+      "name": "DEST4",
+      "source": "\r\nproc main\r\n$D_NOTE = \"WRITE\"\r\nendproc\r\n",
+      "source_sha256": "f34a1996469563fa252db211c4f520c12fdaac0ae4ebbe37678d368d6ebfe3d8",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> $D_NOTE"
+      ]
+    },
+    {
+      "name": "DECL5",
+      "source": "string $D_PHONE\r\nproc main\r\nmessage \"UNREACHABLE\"\r\nendproc\r\n",
+      "source_sha256": "2dcc586846af20ffb1919138d2e6bf01d2c02137337ff5228873929ddec7bf2d",
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $D_PHONE"
+      ]
+    },
+    {
+      "name": "DEST5",
+      "source": "\r\nproc main\r\n$D_PHONE = \"WRITE\"\r\nendproc\r\n",
+      "source_sha256": "1c1f10136f67c98749e7386c107c23f27e882a6ef2fc0912ead10219908450b6",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> $D_PHONE"
+      ]
+    },
+    {
+      "name": "DECL6",
+      "source": "string $D_PWORD\r\nproc main\r\nmessage \"UNREACHABLE\"\r\nendproc\r\n",
+      "source_sha256": "af52568b75bb1380966e56efbf2ce4d93f8e026ea593e42b3e297c47ddb99551",
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $D_PWORD"
+      ]
+    },
+    {
+      "name": "DEST6",
+      "source": "\r\nproc main\r\n$D_PWORD = \"WRITE\"\r\nendproc\r\n",
+      "source_sha256": "d430b2704fea6b49d3408d8385198a24d71d02e958d9933ad559c7aeedd6ae07",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> $D_PWORD"
+      ]
+    },
+    {
+      "name": "DECL7",
+      "source": "string $D_SCRIPT\r\nproc main\r\nmessage \"UNREACHABLE\"\r\nendproc\r\n",
+      "source_sha256": "6dafdc1de859fdf91c6cb23a31cb7015e25ce2ede69345d1a6f8e147c9c293b4",
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $D_SCRIPT"
+      ]
+    },
+    {
+      "name": "DEST7",
+      "source": "\r\nproc main\r\n$D_SCRIPT = \"WRITE\"\r\nendproc\r\n",
+      "source_sha256": "f16eeac675ca64d3e7d9c0e71ae6f4899e89c84ced33ecdd2cd9562756d71b7f",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> $D_SCRIPT"
+      ]
+    },
+    {
+      "name": "DECLINT",
+      "source": "integer $D_ENTRY\r\nproc main\r\n\r\nendproc\r\n",
+      "source_sha256": "010111fefd5f239f9a8e4fc65f5554ae3370d1e9d621f3f3e280279cff6adfda",
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $D_ENTRY"
+      ]
+    },
+    {
+      "name": "DECLLONG",
+      "source": "long $D_BAUD\r\nproc main\r\n\r\nendproc\r\n",
+      "source_sha256": "09f503ad25bc436a08d6463eea88d542098d3a46c7c04408adec6cfaadb376ab",
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $D_BAUD"
+      ]
+    },
+    {
+      "name": "DESTINT",
+      "source": "\r\nproc main\r\n$D_ENTRY = 1\r\nendproc\r\n",
+      "source_sha256": "7f0ca708594466228a294604bc1de33f6fb8252f31d1ea9f1a7e35d930c2915a",
+      "errors": [
+        "Error C044 Line 3: Invalid variable operand"
+      ]
+    },
+    {
+      "name": "DESTLONG",
+      "source": "\r\nproc main\r\n$D_BAUD = 9600L\r\nendproc\r\n",
+      "source_sha256": "8c06b3c80b3f573068564f6d2d268b796935bf22739c46ae6702f46fe4c8ec5d",
+      "errors": [
+        "Error C044 Line 3: Invalid variable operand"
+      ]
+    },
+    {
+      "name": "WRONGINT",
+      "source": "integer target\r\nproc main\r\ntarget = $D_PWORD\r\nendproc\r\n",
+      "source_sha256": "391f125148c2c9e79b372a60f5facf7b3eeed5d70bc8de162bca2367ea610653",
+      "errors": [
+        "Error C034 Line 3: Invalid expression token ==> $D_PWORD",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "name": "WRONGSTR",
+      "source": "string target\r\nproc main\r\ntarget = $D_ENTRY\r\nendproc\r\n",
+      "source_sha256": "2d68e6e57f3c99162dd73fc7c2cab2bff8cfb94a54badfff86b5bf17cee5cf5f",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> $D_ENTRY"
+      ]
+    }
+  ],
+  "expectation_model": "Hand-derived before composed VM execution from synthetic114B record and selected entry7. String slots0..7 point to record offsets61,95,86,0,105,25,75,52. Importantly KBDFILE1 uses95 and METAKEY2 uses86, despite potential editor-label assumptions. Entry3 reads selected entry independently of record bytes. Password is explicit script operand, not automatic transmission. No directory username builtin inferred. BAUD emits long0 but remains compile-only pending table binding.",
+  "native_evidence": [
+    "analysis/aspect-directory/original-getters-01.json:24 original getter executions, empty/max/CP437 synthetic fields",
+    "Original overlay16 D9B5..D9B9 selected entry;DAA2..DAC2 eight string getter bodies; compiler03 exact6E/6F/70 typed selectors"
+  ],
+  "prior_report": {
+    "path": "analysis/aspect-directory/compiler-01/report.json",
+    "sha256": "eca5b888c68103f4b9c9929634a79e858a5d1a57bce9724c1333fe535a6f07dd",
+    "attempts": 17,
+    "accepted": 13
+  },
+  "scope": "45 original compiler attempts19 accepted26 rejected;18 authored metadata runtime vectors1 compiler-only. Normal compiler/tests use frozen authored data and source only. No private directory/configuration, automatic credential transmission, username alias, or full application claim."
+}

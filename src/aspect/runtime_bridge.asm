@@ -249,23 +249,44 @@ aspect_expr_read_float:
  mov ax,4
  jmp fail
 
-; Maintained builtin routing: original string builtin19 is the empty string.
-; All other builtin services remain explicit unsupported actions.
+extern aspect_directory_builtin_entry,aspect_directory_builtin_ldate
+extern aspect_directory_builtin_kbdfile,aspect_directory_builtin_metakey
+extern aspect_directory_builtin_name,aspect_directory_builtin_note
+extern aspect_directory_builtin_phone,aspect_directory_builtin_pword,aspect_directory_builtin_script
+; Native directory pointer getters, with an immutable owned selected record.
+; Other string builtin services remain explicit unsupported actions.
 global aspect_string_builtin
 aspect_string_builtin:
  push bp
  mov bp,sp
+ cmp word [bp+4],7
+ ja .other
+ push bx
+ mov bx,[bp+4]
+ shl bx,1
+ call [cs:directory_string_getters+bx]
+ pop bx
+ pop bp
+ ret 2
+.other:
  cmp word [bp+4],19
  jne unsupported
  mov ax,empty_script
  pop bp
  ret 2
+directory_string_getters:
+ dw aspect_directory_builtin_ldate,aspect_directory_builtin_kbdfile
+ dw aspect_directory_builtin_metakey,aspect_directory_builtin_name
+ dw aspect_directory_builtin_note,aspect_directory_builtin_phone
+ dw aspect_directory_builtin_pword,aspect_directory_builtin_script
 
 ; Maintained routing to recovered compare-status services only.
 global aspect_operand_builtin_integer,aspect_operand_builtin_long
 aspect_operand_builtin_integer:
  push bp
  mov bp,sp
+ cmp word [bp+4],3
+ je .directory
  cmp word [bp+4],20
  je .comdata
  cmp word [bp+4],22
@@ -280,6 +301,9 @@ aspect_operand_builtin_integer:
  jmp short .done
 .comdata:
  call aspect_receive_available_status
+ jmp short .done
+.directory:
+ call aspect_directory_builtin_entry
  jmp short .done
 .forever:
  call aspect_receive_forever
@@ -464,6 +488,12 @@ aspect_receive_policy_emit_byte:
 
 SEGMENT _DATA public class=DATA use16
 GROUP DGROUP _DATA
+global aspect_directory_record,_runtime_directory_record
+aspect_directory_record:
+_runtime_directory_record: times 114 db 0
+global aspect_directory_entry,_runtime_directory_entry
+aspect_directory_entry:
+_runtime_directory_entry: dw 0
 ; Maintained scanner data: only native ctype bit04 (decimal digit) is read.
 ; Other flags from the original CRT table are outside this owner's contract.
 global aspect_convert_candidate_chars,aspect_convert_ctype

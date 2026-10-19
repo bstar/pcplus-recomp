@@ -690,3 +690,17 @@ test-aspect-receive-policy-compat:
 	python3 standalone/check_aspect_receive_policy.py --original analysis/pcplus-install/PCPLUS.EXE
 test-aspect-script-translation-dos:
 	python3 standalone/test_aspect_script_translation_dos.py
+
+.PHONY: aspect-directory test-aspect-directory test-aspect-directory-compat test-aspect-serial-preload-dos test-aspect-script-directory-dos
+all: aspect-directory
+test: test-aspect-directory
+aspect-directory:
+	python3 standalone/build_aspect_directory.py
+test-aspect-directory: aspect-directory
+	python3 standalone/check_aspect_directory.py
+test-aspect-directory-compat:
+	python3 standalone/check_aspect_directory.py --original analysis/pcplus-install/PCPLUS.EXE
+test-aspect-serial-preload-dos:
+	python3 standalone/test_aspect_serial_preload_dos.py
+test-aspect-script-directory-dos:
+	python3 standalone/test_aspect_script_directory_dos.py

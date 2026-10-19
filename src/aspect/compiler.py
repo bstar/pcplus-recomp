@@ -20,7 +20,14 @@ class CompileError(ValueError):
 TYPES = {"integer": 0, "long": 1, "float": 2, "string": 3}
 PARMS = {"intparm": 0, "longparm": 1, "floatparm": 2, "strparm": 3}
 BUILTINS = {'comdata': 20, 'failure': 21, 'forever': 22, 'found': 23,
-            'success': 27, 'waitfor': 28}
+            'success': 27, 'waitfor': 28, '$d_entry': 3}
+STRING_BUILTINS = {'$d_ldate': 0, '$d_kbdfile': 1, '$d_metakey': 2,
+                   '$d_name': 3, '$d_note': 4, '$d_phone': 5,
+                   '$d_pword': 6, '$d_script': 7, '$null': 19}
+LONG_BUILTINS = {'$d_baud': 0}
+TYPED_BUILTINS = {**{name: (0, slot) for name, slot in BUILTINS.items()},
+                  **{name: (1, slot) for name, slot in LONG_BUILTINS.items()},
+                  **{name: (3, slot) for name, slot in STRING_BUILTINS.items()}}
 SIZES = (2, 4, 8, 81)
 OPS = {"+": 0x00, "-": 0xB5, "*": 0x7D, "/": 0x26, "%": 0x7B,
        "==": 0x32, "!=": 0x7F, "<": 0x6D, ">": 0x54,
@@ -169,7 +176,7 @@ class Compiler:
             if not part or not re.fullmatch(r'[a-z_$][a-z_0-9$]*', part[0]):
                 self.error('expected declaration name')
             name = part[0]
-            if name == 'text' or name in BUILTINS:
+            if name == 'text' or name in TYPED_BUILTINS:
                 self.error(f'{name.upper()} is a reserved ASPECT keyword')
             symbols = self.globals if proc is None else proc.symbols
             if name in symbols:
@@ -217,8 +224,8 @@ class Compiler:
         if tag == 'string':
             return 3
         if tag == 'symbol':
-            if node[1] in BUILTINS:
-                return 0
+            if node[1] in TYPED_BUILTINS:
+                return TYPED_BUILTINS[node[1]][0]
             if node[1] == '$null' or re.fullmatch(r's[0-9]', node[1]):
                 return 3
             return self.symbol(node[1]).kind
@@ -231,7 +238,7 @@ class Compiler:
         return max(self.kind(node[2]), self.kind(node[3]))
 
     def lvalue(self, node):
-        if node[0] != 'symbol' or node[1] in BUILTINS or node[1] == '$null':
+        if node[0] != 'symbol' or node[1] in TYPED_BUILTINS:
             self.error('variable destination required')
         if re.fullmatch(r's[0-9]', node[1]):
             return 3, bytes((0x64, int(node[1][1])))
@@ -268,10 +275,9 @@ class Compiler:
                 i = (index * stride) % 13
                 self.emit((char + (table[i] if (i + parity) % 2 == 0 else -table[i])) & 255)
         elif tag == 'symbol':
-            if node[1] in BUILTINS:
-                self.emit(0x6F, BUILTINS[node[1]])
-            elif node[1] == '$null':
-                self.emit(0x6E, 19)
+            if node[1] in TYPED_BUILTINS:
+                kind, slot = TYPED_BUILTINS[node[1]]
+                self.emit({0: 0x6F, 1: 0x70, 3: 0x6E}[kind], slot)
             else:
                 self.emit(self.lvalue(node)[1])
         elif tag == 'temporary':

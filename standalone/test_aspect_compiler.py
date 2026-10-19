@@ -13,7 +13,7 @@ sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import CompileError, compile_source  # noqa: E402
 
 CORPORA = ('execution', 'arithmetic', 'parameter', 'string_command',
-           'conversion', 'compiler_validation', 'console', 'serial', 'receive')
+           'conversion', 'compiler_validation', 'console', 'serial', 'receive', 'directory')
 COUNTS = {'frozen_vectors_checked': 0, 'presentation_variants_checked': 0,
           'frozen_rejections_checked': 0}
 
@@ -41,7 +41,7 @@ class CompilerTests(unittest.TestCase):
         self.assertGreaterEqual(count, 358)
 
     def test_console_and_serial_original_compiler_rejections(self):
-        for corpus in ('console', 'serial', 'receive'):
+        for corpus in ('console', 'serial', 'receive', 'directory'):
             data = json.loads((ROOT / f'standalone/fixtures/aspect_{corpus}_vectors.json').read_text())
             for vector in data['rejected']:
                 with self.subTest(corpus=corpus, name=vector['name']), self.assertRaises(CompileError):

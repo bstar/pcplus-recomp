@@ -6,7 +6,7 @@ from unicorn import UC_HOOK_CODE,UC_HOOK_INTR,UC_HOOK_INSN
 from unicorn.x86_const import UC_X86_INS_IN,UC_X86_INS_OUT,UC_X86_REG_ES,UC_X86_REG_SP,UC_X86_REG_SS,UC_X86_REG_BP,UC_X86_REG_SI,UC_X86_REG_DI,UC_X86_REG_EFLAGS
 from dos_image import DosImage
 from check_setup_model import image
-from check_directory_live import record,serial_expected,plan_expected,text,word
+from check_directory_live import record,serial_expected,plan_expected,text,word,script_names
 from check_modem_import import expected as modem_expected
 from check_startup_import import terminal_expected
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/live-configuration';SIZE=628
@@ -73,6 +73,17 @@ def main():
  MAX_STACK[0]=0
  cases=[]
  def done(name,n):cases.append(dict(case=name,inputs=n,passed=True));print(name,n,flush=True)
+ valid,invalid=script_names();count=0
+ stored_fields=[spelling.ljust(9,b'\0') for spelling,_ in valid]+[b'\0'+b'\xff'*8,b' ignored\0']
+ for stored in stored_fields:
+  m=Model(True);raw=bytearray(m.record);raw[0x34:0x3d]=stored;raw[24]=0xfe;raw[70:72]=b'\xff\xff';m.record=bytes(raw)
+  assert m.decode()==(0,(0,0))
+  expected=serial_expected(m.raw,m.record)+modem_expected(m.raw)+plan_expected(17,m.record,0,b'MiXeD.Host:23')+struct.pack('<H',256)
+  assert m.output()==expected and m.change()==256;count+=1
+ for spelling in invalid:
+  m=Model(True);raw=bytearray(m.record);raw[0x34:0x3d]=spelling.ljust(9,b'\0');m.record=bytes(raw)
+  assert m.decode()[0]==4;count+=1
+ done('compiled-script-candidate-names-raw-metadata-classification-and-atomic-rejections',count)
  for directory in (False,True):
   m=Model(directory)
   expected=(serial_expected(m.raw,m.record)+modem_expected(m.raw)+plan_expected(17,m.record,0,b'MiXeD.Host:23') if directory else terminal_expected(m.raw)+modem_expected(m.raw)+bytes(214))+bytes(2)
@@ -130,7 +141,7 @@ def main():
    m=Model(directory);raw=bytearray(m.raw);raw[at:at+size]=b'X'*size;m.raw=bytes(raw);assert m.decode(mask=15)[0]==(4 if directory else 3);count+=1
  for at,value in [(0x68,5),(0x30,5),(0x49,5),(0x4a,2),(0x33,1)]:
   m=Model(True);raw=bytearray(m.record);raw[at]=value;m.record=bytes(raw);assert m.decode()[0]==4;count+=1
- m=Model(True);m.record=text(m.record,0x34,9,b'RUN');assert m.decode()[0]==4;count+=1
+ m=Model(True);m.record=text(m.record,0x34,9,b'RUN.ASP');assert m.decode()[0]==4;count+=1
  for at,value in [(0,0),(2,123),(4,1),(6,5),(12,2),(16,5),(18,256),(32,0),(34,0),(36,256)]:
   m=Model();raw=bytearray(m.baseline);struct.pack_into('<H',raw,at,value);m.uc.mem_write(m.data_base+m.active,bytes(raw));assert m.decode()[0]==5;count+=1
  done('invalid-global-record-modem-and-active-state-never-commit-or-hide-behind-CLI',count)

@@ -1159,3 +1159,55 @@ immediate forwarding still fails Home on its recorded de47 build; the matched
 30ms buffering experiment passes, with both retained separately. Full script
 rendering/events/recorder, other application work, custom IRQ inheritance and
 physical Wi-Fi modem validation remain required. All F01–F16 gates remain open.
+
+## Directory scripts and shared ASPECT renderer — active
+
+[Directory-script integration](docs/DIRECTORY_SCRIPTS.md) adds selected-record
+expressions, post-connect ASX launch, current-directory/PCPLUS lookup and a
+40-byte ASIOv3 raw-preload interface. ASIOv1/v2 remain 28 bytes. The child applies
+pending accounting only to its private snapshot so `$D_LDATE` sees this call
+without changing the parent's deferred-save baseline. Native getter recovery
+contains 36 exact bytes; 2,056 CPU and 16 DOS getter cases pass. Compiler coverage
+is 377 frozen outputs, 377 variants and 88 rejected cases; runtime coverage is
+536 cases/9,458 checks with 63 implemented slots and 152 unsupported slots.
+
+Current integration passes 20 linked launch groups/80 inputs, 99 backend CPU
+inputs, 15 production metadata/preload/projection cases, seven actual DOS
+directory-script cases and seven manual Script-launch cases. Directory live,
+context and live-configuration checks pass 435, 564 and 448 inputs respectively.
+All 91 outputs reproduce in a fresh source-only build. Parent DS/SS is 65,456
+bytes. The [validation record](docs/validation/directory-scripts.json) binds
+these results and both real Synchronet workflows to the current binaries.
+
+The strict automatic Synchronet workflow **fails** its editor gate. Scripted
+credentials authenticate once, but ASPECT consumes initial ANSI queries without
+replying, selecting the server's line editor. The current manual-launch workflow
+passes all 12 editor checks because terminal negotiation occurs before launching
+the script. Synthetic prompt/suffix tests cannot prove this automatic workflow.
+Keep the failed traffic, predictions and assertions for the renderer fix.
+
+Next work preserves the native shared-session behavior:
+
+- [ ] Define a versioned resident-render service with validated parent ownership,
+      one active lease and typed failure/unwind outcomes. Reuse the real parent
+      renderer, profile, cursor, attributes, modes and history.
+- [ ] Prove DS=SS stack switching and bounded stack reservation using real DOS
+      calls, red zones and IRQ injection before enabling renderer callbacks.
+- [ ] Route parser continuation reads to the child UART without translation or
+      WAITFOR matching; send full renderer reports synchronously through the
+      child's serviced transmit path. Preserve COMGETC display suppression.
+- [ ] Audit renderer imports for DOS handle ownership, modal entry and abort
+      paths. Reject unavailable operations before state mutation; no fake sinks
+      or cross-stack exits into suspended parent frames.
+- [ ] Adopt rendered screen/cursor state on return, including failed scripts;
+      route script output consistently and prevent old PROGRAM screenshot restore.
+- [ ] Replay failed query traffic with the complete parser, fragmented sequences,
+      XLT lead-only handling, CTS/flow stalls, timeout/cancel and screen/history
+      continuity. Then rerun strict automatic Synchronet and ENiGMA workflows.
+
+The full renderer closure inventory is retained locally under
+`build/aspect-render-audit`. A child clone fits estimated memory limits but would
+need a large bidirectional state protocol; the resident service avoids that
+duplication and still requires the explicit stack/ownership proofs above.
+Complete WHEN dispatch, remaining ASPECT families, compile-on-demand, directory
+bindings, all F01–F16 application gates and hardware validation remain required.

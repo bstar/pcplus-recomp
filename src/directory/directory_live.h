@@ -42,7 +42,8 @@ directory_live_status __cdecl directory_live_decode(const prm_dos_image *image,
  * Unknown directory bytes remain untouched on disk. This API never writes.
  * codes0 preserves literal network targets; codes1 uses original A..J semantics.
  * Protocol selection is retained as metadata until transfer UI is implemented.
- * Unsupported script/KEY/META bindings and HALF fail before UART. Stored
+ * Supported compiled-script names are retained for post-connect execution.
+ * Unsupported script spellings, KEY/META bindings and HALF fail before UART. Stored
  * password bytes remain metadata; they are never automatically transmitted.
  * DIRECT accepts an empty number and needs no modem command configuration.
  */
@@ -65,4 +66,9 @@ directory_live_status __cdecl directory_live_read_context(const char *prm_path,
  * Read-only arguments may alias each other; invalid extents/strings return0. */
 unsigned __cdecl directory_live_context_matches(const directory_live_context *context,
  const char *prm_path,const char *directory_path,unsigned entry,unsigned codes);
+/* Convert a NUL-terminated stored9-byte script field to an uppercase DOS8.3
+ * path, appending .ASX when absent. Blank first byte/space means no script.
+ * Output13bytes and input9bytes must be disjoint valid near extents.
+ * Returns0 on success;1 for malformed/unsupported name. Does not open files. */
+unsigned __cdecl directory_script_name(const unsigned char *stored,char *output);
 #endif

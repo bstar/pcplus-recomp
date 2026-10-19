@@ -8,6 +8,7 @@ extern uart_install_interrupt,uart_restore_interrupt,uart_receive_byte
 extern uart_try_write,uart_poll_flow,uart_mask_irq
 extern uart_saved_ds,uart_previous_irq_offset,uart_previous_irq_segment
 extern uart_break_hold
+extern _aspect_serial_preload
 global _aspect_serial_backend_open,_aspect_serial_backend_close
  global _aspect_serial_available,_aspect_serial_read,_aspect_serial_try_write
  global _aspect_serial_poll,_aspect_serial_ticks
@@ -91,6 +92,18 @@ _aspect_serial_backend_open:
 .both:
  mov word [uart_hardware_flow],1
 .format:
+ call _aspect_serial_preload
+ cmp word [uart_rx_count],3072
+ jb .preload_ready
+ cmp word [uart_software_flow],0
+ je .preload_hard
+ mov byte [uart_xoff_sent],1
+ mov byte [uart_flow_pending],0x13
+.preload_hard:
+ cmp word [uart_hardware_flow],0
+ je .preload_ready
+ mov byte [uart_rts_lowered],1
+.preload_ready:
  mov dx,[uart_port_lcr]
  mov al,0x80
  out dx,al
@@ -111,6 +124,10 @@ _aspect_serial_backend_open:
  mov dx,[uart_port_mcr]
  mov al,[uart_saved_mcr]
  or al,0x0a ;RTS+OUT2; DTR untouched, already1.
+ cmp byte [uart_rts_lowered],0
+ je .mcr_ready
+ and al,0xfd
+.mcr_ready:
  out dx,al
  mov dx,[uart_port_ier]
  mov al,1
@@ -347,12 +364,17 @@ global uart_rx_buffer
 uart_rx_buffer: resb 4096
 
 ; C ABI aliases to the same recovered driver state (no duplicate storage).
-global _uart_rx_buffer,_uart_rx_read,_uart_rx_count,_uart_software_flow,_uart_flow_pending,_uart_rx_mask
+global _uart_rx_buffer,_uart_rx_read,_uart_rx_write,_uart_rx_count,_uart_software_flow,_uart_flow_pending,_uart_rx_mask
 _uart_rx_buffer equ uart_rx_buffer
 _uart_rx_read equ uart_rx_read
+_uart_rx_write equ uart_rx_write
 _uart_rx_count equ uart_rx_count
 _uart_software_flow equ uart_software_flow
 _uart_flow_pending equ uart_flow_pending
 _uart_rx_mask equ uart_rx_mask
 SEGMENT STACK stack class=STACK use16
 GROUP DGROUP _DATA _BSS STACK
+
+; Shared maintained pure accounting patch, applied only to the child's private
+; directory snapshot before UART admission. No filesystem or automatic TX.
+%include "../directory_accounting/patch.asm"

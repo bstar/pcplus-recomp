@@ -4,7 +4,7 @@ import hashlib,json,re,struct
 from pathlib import Path
 from unicorn import UC_HOOK_CODE
 from unicorn.x86_const import UC_X86_REG_SP,UC_X86_REG_SS,UC_X86_REG_ES
-from check_directory_live import Live,ROOT,BINARY,MAP,text,word,plan_expected
+from check_directory_live import Live,ROOT,BINARY,MAP,text,word,plan_expected,script_names
 MAX_STACK=[0]
 class Context(Live):
  def __init__(self):
@@ -38,6 +38,17 @@ class Context(Live):
 def main():
  cases=[]
  def done(name,n):cases.append(dict(case=name,inputs=n,passed=True));print(name,n,flush=True)
+ count=0
+ valid,invalid=script_names()
+ for spelling,_ in valid:
+  c=Context();raw=bytearray(text(c.record,0x34,9,spelling));raw[24]=0xfe;raw[0x48]=0xff;raw[70:72]=b'\xff\xff';c.record=bytes(raw)
+  c.poison();assert c.capture()==0 and c.context_bytes()==c.expected_context()
+  assert c.outputs()[2][100:]==c.record and c.matches()==1;count+=1
+ for spelling in invalid:
+  c=Context();raw=bytearray(c.record);raw[0x34:0x3d]=spelling.ljust(9,b'\0');c.record=bytes(raw)
+  c.poison();before=c.outputs();assert c.capture()==(6 if len(spelling)==9 else 7)
+  assert c.outputs()==before;count+=1
+ done('compiled-script-selection-preserves-raw-context-and-invalid-script-four-plan-rollback',count)
  count=0
  for entry in range(1,201):
   for codes in (0,1):

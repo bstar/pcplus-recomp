@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Independent linked directory C/ASM transaction tests; only file IO is modeled."""
-import argparse,hashlib,itertools,json,struct,sys
+import argparse,hashlib,itertools,json,re,struct,sys
 from pathlib import Path
 from unicorn import UC_HOOK_CODE
-from unicorn.x86_const import UC_X86_REG_AX,UC_X86_REG_IP,UC_X86_REG_SP,UC_X86_REG_ES,UC_X86_REG_BP,UC_X86_REG_SI,UC_X86_REG_DI
+from unicorn.x86_const import UC_X86_REG_AX,UC_X86_REG_IP,UC_X86_REG_SP,UC_X86_REG_ES,UC_X86_REG_BP,UC_X86_REG_SI,UC_X86_REG_DI,UC_X86_REG_CS,UC_X86_REG_DS,UC_X86_REG_SS,UC_X86_REG_EFLAGS
 from check_terminal_options import Options,SERIAL_FIELDS
 from check_startup_import import fixture as prm_fixture,terminal_expected
 from check_modem_import import expected as modem_expected
@@ -24,6 +24,65 @@ def serial_expected(prm,raw):
  return terminal_expected(prm)
 def plan_expected(entry,raw,codes,target):
  name=raw[:25];return struct.pack('<5H',entry,raw[0x4a],raw[0x48],raw[0x33],codes)+name+target+bytes(64-len(target))+b'\0'+raw
+
+def script_names():
+ """Hand-authored DOS spellings; no production predicate is reused."""
+ valid=[(b'GO',b'GO.ASX'),(b'abcdefgh',b'ABCDEFGH.ASX'),(b'a_b-1',b'A_B-1.ASX'),
+  (b'go.asx',b'GO.ASX'),(b'ABCD.ASX',b'ABCD.ASX'),(b'A\\GO',b'A\\GO.ASX'),
+  (b'FOLDER\\G',b'FOLDER\\G.ASX'),(b'\\GO',b'\\GO.ASX'),(b'C:GO',b'C:GO.ASX'),
+  (b'c:\\go',b'C:\\GO.ASX'),(b'\\a\\b',b'\\A\\B.ASX'),(b'A\\B\\C',b'A\\B\\C.ASX'),
+  (b'A.B\\C',b'A.B\\C.ASX'),(b'C:\\G.ASX',b'C:\\G.ASX'),(b'\\GO.ASX',b'\\GO.ASX'),
+  (b'12345678',b'12345678.ASX'),(b'_',b'_.ASX'),(b'-',b'-.ASX')]
+ invalid=[b'G.ASP',b'G.EXE',b'G.AS',b'G.ASXX',b'G.',b'.ASX',b'.',b'..',
+  b'..\\GO',b'A\\..\\G',b'A\\.\\G',b'GO\\',b'A\\\\B',b'\\\\GO',b'C:',b'C:\\',
+  b'C:/GO',b'G O',b'G\tO',b'G\x01O',b'G\x7fO',b'G\x80O',b'G\xffO',b'G*O',b'G?O',
+  b'C::GO',b'1:GO',b'GO:ASX',b'CON',b'con.asx',b'PRN',b'AUX',b'NUL',b'COM1',
+  b'lpt9',b'COM9.ASX',b'CON\\G',b'A\\NUL',b'ABCDEFGH!']
+ return valid,invalid
+
+def call_script_name(c,source,destination):
+ """Supply an owned near caller directly in the helper's linked CONFIG_CODE CS."""
+ match=re.search(r'^([0-9a-f]{4}):([0-9a-f]{4})[ *+]+_directory_script_name\s*$',MAP.read_text(),re.M|re.I)
+ assert match
+ cs=c.base_segment+int(match[1],16);stop=(cs<<4)+0xfffe
+ for reg,value in [(UC_X86_REG_CS,cs),(UC_X86_REG_DS,c.ds),(UC_X86_REG_SS,c.ds),
+                   (UC_X86_REG_ES,c.ds),(UC_X86_REG_EFLAGS,0x202),(UC_X86_REG_BP,0xbabe),
+                   (UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678)]:c.uc.reg_write(reg,value)
+ sp=c.offset('terminal_stack_top')-6
+ c.uc.mem_write(c.data_base+sp,struct.pack('<3H',0xfffe,source,destination));c.uc.reg_write(UC_X86_REG_SP,sp)
+ returned=[]
+ def finish(u,address,size,_):
+  if address==stop and u.reg_read(UC_X86_REG_CS)==cs:returned.append(True);u.emu_stop()
+ hook=c.uc.hook_add(UC_HOOK_CODE,finish)
+ try:c.uc.emu_start(c.symbols['_directory_script_name'],0,count=100000)
+ finally:c.uc.hook_del(hook)
+ assert returned and c.uc.reg_read(UC_X86_REG_SP)==sp+2
+ for reg,value in [(UC_X86_REG_BP,0xbabe),(UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678),(UC_X86_REG_ES,c.ds)]:assert c.uc.reg_read(reg)==value
+ assert bytes(c.uc.mem_read(c.data_base+sp+2,4))==struct.pack('<2H',source,destination)
+ return c.uc.reg_read(UC_X86_REG_AX)
+
+def check_script_helper():
+ c=Live();valid,invalid=script_names();count=0
+ cases=[(raw.ljust(9,b'\0'),expected) for raw,expected in valid]
+ cases += [(b'\0'+b'\xff'*8,b''),(b' ignored\0',b'')]
+ cases += [(raw.ljust(9,b'\0'),None) for raw in invalid]
+ for stored,expected in cases:
+  assert len(stored)==9
+  raw=b'BEFORE'+stored+b'GAP!'+b'\xcc'*13+b'AFTER'
+  pointer=c.stage_near(raw);source=pointer+6;destination=source+13
+  status=call_script_name(c,source,destination)
+  expected_output=(expected+b'\0'+b'\xcc'*(12-len(expected))) if expected is not None else b'\xcc'*13
+  assert status==(expected is None),(stored,status,expected)
+  assert bytes(c.uc.mem_read(c.data_base+pointer,len(raw)))==raw[:19]+expected_output+raw[32:],stored
+  assert not c.calls and c.modem_calls==c.number_calls==0;count+=1
+ # These invalid near extents must fail before touching any fixture output.
+ for source_offset,dest_offset in [(0,19),(0xfff8,19),(6,0),(6,0xfff4),(6,6),(6,7),(6,1)]:
+  raw=b'BEFOREGO\0'+bytes(6)+b'GAP!'+b'\xcc'*13+b'AFTER';pointer=c.stage_near(raw)
+  source=source_offset if source_offset in (0,0xfff8) else pointer+source_offset
+  destination=dest_offset if dest_offset in (0,0xfff4) else pointer+dest_offset
+  assert call_script_name(c,source,destination)==1
+  assert bytes(c.uc.mem_read(c.data_base+pointer,len(raw)))==raw;count+=1
+ return count
 class Live(Options):
  def __init__(self):
   super().__init__(BINARY,MAP);self.prm=prm_fixture();self.record=record();self.header=bytes(250);self.entry=1;self.codes=0;self.prm_status=0;self.directory_status=0;self.calls=[];self.modem_calls=0;self.number_calls=0
@@ -65,6 +124,21 @@ def main():
  if args.expect_sha256:assert digest==args.expect_sha256
  groups=[]
  def done(name,count):groups.append({'case':name,'inputs':count,'passed':True});print(name,'passed',count,flush=True)
+ done('pure-compiled-script-paths-atomic-output-cdecl-ABI-and-near-extents',check_script_helper())
+ valid,invalid=script_names();count=0
+ for spelling,_ in valid:
+  c=Live();raw=bytearray(text(c.record,0x34,9,spelling));raw[24]=0xfe;raw[0x48]=0xff;raw[70:72]=b'\xff\xff'
+  c.record=bytes(raw);c.poison();assert c.read()==0
+  assert c.outputs()==(serial_expected(c.prm,c.record),modem_expected(c.prm),plan_expected(1,c.record,0,b'MiXeD.Host:23'))
+  assert c.outputs()[2][100:]==c.record;count+=1
+ for spelling in invalid:
+  c=Live();raw=bytearray(c.record);raw[0x34:0x3d]=spelling.ljust(9,b'\0');c.record=bytes(raw);c.poison();before=c.outputs()
+  want=6 if len(spelling)==9 else 7
+  assert c.read()==want and c.outputs()==before,(spelling,want);count+=1
+ for spelling in (b'\0'+b'\xff'*8,b' ignored\0'):
+  c=Live();raw=bytearray(c.record);raw[0x34:0x3d]=spelling;c.record=bytes(raw);assert c.read()==0
+  assert c.outputs()[2][100:]==c.record;count+=1
+ done('script-bindings-accepted-raw-metadata-preserved-invalid-names-three-plan-rollback',count)
  for entry in range(1,201):
   c=Live();c.entry=entry;c.poison();assert c.read()==0
   assert c.outputs()==(serial_expected(c.prm,c.record),modem_expected(c.prm),plan_expected(entry,c.record,0,b'MiXeD.Host:23'))
@@ -94,7 +168,8 @@ def main():
  done('stored-password-remains-private-metadata-with-no-automatic-send',1)
  mutations=[(0x4b,b'X'*11,6),(0x2e,b'\x09\0',4),(0x30,b'\x05',4),(0x31,b'\x06',4),(0x32,b'\0',4),(0x49,b'\x07',4),(0x68,b'\x05',4),(0x4a,b'\x02',9),(0x33,b'\x01',10),(0x33,b'\xff',10),(0,b'X'*25,6),(25,b'X'*21,6)]
  for offset,size in ((0x34,9),(0x56,9),(0x5f,9)):
-  mutations.extend([(offset,b'X\0',7),(offset,b'X'*size,6)])
+  if offset!=0x34:mutations.append((offset,b'X\0',7))
+  mutations.append((offset,b'X'*size,6))
  for at,value,want in mutations:
   c=Live();raw=bytearray(c.record);raw[at:at+len(value)]=value;c.record=bytes(raw);c.poison();before=c.outputs();assert c.read()==want and c.outputs()==before,(at,value,want)
  for number,codes,header in [(b'',0,bytes(250)),(b'AT^M',0,bytes(250)),(b'A'*20,1,b'1234\0'.ljust(25,b'\0')+bytes(225)),(b'K',1,b'X'*250),(b'A',1,b'^\0'.ljust(25,b'\0')+bytes(225))]:

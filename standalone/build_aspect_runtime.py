@@ -10,6 +10,7 @@ ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm'
  ('serial_commands','src/aspect/serial_commands.asm',None),
  ('receive_commands','src/aspect/receive_commands.asm',None),
  ('receive_policy','src/aspect/receive_policy.asm',None),
+ ('directory','src/aspect/directory_builtins.asm',None),
  ('flow','src/aspect/control_flow.asm',None),('parameters','src/aspect/parameters.asm',None),('strings','src/aspect/string_operands.asm',None),('string_commands','src/aspect/string_commands.asm',None),('string_services','src/aspect/string_services.asm',None),
  ('string_strlen','reconstruction/program_exec/strlen.asm','PROGRAM_EXEC_OMF'),('string_strncmp','reconstruction/program_exec/strncmp.asm','PROGRAM_EXEC_OMF'),
  ('string_concat','reconstruction/directory_dial/append.asm','DIRECTORY_DIAL_OMF'),('string_upper','reconstruction/directory_dial/uppercase.asm','DIRECTORY_DIAL_OMF'),('operands','src/aspect/numeric_operands.asm',None),
@@ -30,6 +31,7 @@ C=r'''
 #include "file_io.h"
 #include "serial_runtime.h"
 #include "receive_runtime.h"
+#include "directory_runtime.h"
 extern aspect_file runtime_file;
 extern unsigned runtime_string_count,runtime_depth,runtime_stack_pointer,runtime_frame;
 extern unsigned char runtime_arena[0x3aca];
@@ -76,7 +78,7 @@ static void serial_output(const char *expected,unsigned count){unsigned i;
  * hundreds of calls into the16-bit near code segment. These are test inputs,
  * not production bytecode/interpreter lookup tables. */
 static unsigned fixture_bad;
-static unsigned char fixture_input[4096],fixture_trigger[1024],fixture_expected[1024];
+static unsigned char fixture_input[4096],fixture_trigger[1024],fixture_expected[1024],fixture_directory[114];
 static unsigned read_word(FILE *f){unsigned n=0;if(fread(&n,2,1,f)!=1)fixture_bad=1;return n;}
 static unsigned long read_long(FILE *f){unsigned long n=0;if(fread(&n,4,1,f)!=1)fixture_bad=1;return n;}
 static unsigned read_block(FILE *f,void *p,unsigned n,unsigned capacity){
@@ -87,7 +89,7 @@ static unsigned fixture_suite(void){
  unsigned mode,in_count,trigger_count,seconds,seconds_step,kind,index,values;
  unsigned long value,initial_ticks,tick_step;char name[32],magic[4];
  f=fopen("CASES.DAT","rb");if(!f)return 1;
- if(read_block(f,magic,4,4)||memcmp(magic,"ACV1",4)){fclose(f);return 1;}
+ if(read_block(f,magic,4,4)||memcmp(magic,"ACV2",4)){fclose(f);return 1;}
  count=read_word(f);
  for(i=0;i<count&&!fixture_bad;++i){
   n=read_word(f);if(n>=sizeof(name)||read_block(f,name,n,sizeof(name)-1))break;name[n]=0;
@@ -100,6 +102,10 @@ static unsigned fixture_suite(void){
    runtime_receive_fixture(seconds,seconds_step);
    runtime_serial_fixture(fixture_input,in_count,fixture_trigger,trigger_count,mode,initial_ticks,tick_step);
   }else{runtime_serial_fixture_disable();runtime_receive_fixture(0,1);}
+  if(read_word(f)){
+   n=read_word(f);if(!n||n>200||read_block(f,fixture_directory,114,114)){fixture_bad=1;break;}
+   runtime_directory_fixture(n,fixture_directory);
+  }else runtime_directory_fixture(0,0);
   if(fixture_bad)break;
   run(name,limit,error,has_integer,integer,has_long,value,peak);
   if(native_error!=65535U){ck(runtime_native_error_code==native_error);printf("NATIVE %s code=%u\n",name,runtime_native_error_code);}
@@ -151,7 +157,9 @@ def main():
  serial_corpus=json.loads(serial_corpus_path.read_text())
  receive_corpus_path=ROOT/'standalone/fixtures/aspect_receive_vectors.json'
  receive_corpus=json.loads(receive_corpus_path.read_text())
- cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']+conversion_corpus['vectors']+compiler_corpus['vectors']+console_corpus['vectors']+serial_corpus['vectors']+receive_corpus['vectors']
+ directory_corpus_path=ROOT/'standalone/fixtures/aspect_directory_vectors.json'
+ directory_corpus=json.loads(directory_corpus_path.read_text())
+ cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']+conversion_corpus['vectors']+compiler_corpus['vectors']+console_corpus['vectors']+serial_corpus['vectors']+receive_corpus['vectors']+directory_corpus['vectors']
  # Historical PAUSE oracle expected an unsupported stop before opcode88 recovery.
  # Its authored seven-second script now executes the recovered native delay.
  cases=[dict(c,expected={}) if c['name']=='PAUSE' else c for c in cases]
@@ -163,6 +171,7 @@ def main():
  sources.append(ROOT/'src/aspect/compiler.py')
  sources.append(console_corpus_path)
  sources += [ROOT/'reconstruction/translation/receive.asm',receive_corpus_path,serial_corpus_path,ROOT/'src/aspect/serial_runtime.c',ROOT/'src/aspect/serial_runtime.h',ROOT/'src/aspect/receive_runtime.c',ROOT/'src/aspect/receive_runtime.h']
+ sources += [directory_corpus_path,ROOT/'src/aspect/directory_runtime.c',ROOT/'src/aspect/directory_runtime.h']
  for name,rel,define in ASM:
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
   subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))
@@ -174,8 +183,8 @@ def main():
  program=C
  supported={int(op,16):name for op,name in re.findall(r'%(?:el)?if op=(0x[0-9a-f]+)\n dw (\w+)',(ROOT/'src/aspect/runtime_bridge.asm').read_text())}
  assert len(supported)==63
- # ACV1 stores expected values and modeled device inputs, not executable code.
- table=bytearray(b'ACV1'+struct.pack('<H',len(cases)))
+ # ACV2 adds explicit owned-directory metadata to ACV1's diagnostic inputs.
+ table=bytearray(b'ACV2'+struct.pack('<H',len(cases)))
  def block(data):
   assert len(data)<=65535
   return struct.pack('<H',len(data))+data
@@ -194,6 +203,10 @@ def main():
    assert len(incoming)<=4096 and len(trigger)<=1024
    flags=int(serial.get('enabled',True)) | (2 if serial.get('case_sensitive') else 0)
    table+=struct.pack('<HHHIIHH',len(incoming),len(trigger),flags,serial.get('initial_ticks',0),serial.get('tick_step',1),serial.get('initial_seconds',0),serial.get('seconds_step',1))+incoming+trigger
+  directory=case.get('directory');table+=struct.pack('<H',bool(directory))
+  if directory:
+   record=bytes.fromhex(directory['record_hex']);assert len(record)==114 and 1<=directory['entry']<=200
+   table+=struct.pack('<H',directory['entry'])+record
   output=bytes.fromhex(ex.get('stdout_hex',''));tx=bytes.fromhex(ex.get('tx_hex',''));assert len(output)<=1024 and len(tx)<=1024
   table+=block(output)+block(tx)
   values=[]
@@ -208,7 +221,13 @@ def main():
     values.append(struct.pack('<HHI',1 if kind=='integer' else 2,index,value&0xffffffff))
   table+=struct.pack('<H',len(values))+b''.join(values)
  (OUT/'CASES.DAT').write_bytes(table)
- program+=' runtime_serial_fixture_disable();\n'
+ program+=' runtime_serial_fixture_disable();runtime_directory_fixture(0,0);\n'
+ program+=' run("DIRNUM.ASX",1000,0,1,0,0,0UL,0);numeric_value(0,0,0UL);\n'
+ program+=' run("DIR6.ASX",1000,0,0,0,0,0UL,1);string_value(0,"");\n'
+ baud=directory_corpus['compiler_only'][0];baud_data=compile_source(baud['source'])
+ assert baud_data==bytes.fromhex(baud['hex']) and hashlib.sha256(baud_data).hexdigest()==baud['asx_sha256']
+ (OUT/'DIRBAUD.ASX').write_bytes(baud_data)
+ program+=' run("DIRBAUD.ASX",1000,3,0,0,0,0UL,0);\n'
  # Malformed fixtures stop at header/read/unsupported boundaries, not arbitrary unsafe operands.
  for name,data,error in [('NOHEADER',b'',2),('BADHEAD',bytes.fromhex('81 cf 94'),2),('BADOP',bytes.fromhex('00 ff'),3),('TRUNC',bytes.fromhex('00 cf 5b 00 8d 00 ab 07'),5)]:
   (OUT/(name+'.ASX')).write_bytes(data);program+=f' run("{name}.ASX",1000,{error},0,0,0,0UL,0);\n'
@@ -238,11 +257,11 @@ def main():
  program=program.replace(END,extra+END)
  (OUT/'diagnostic.c').write_text(program)
  subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dASPECT_RUNTIME_DIAGNOSTIC',
- '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),*objects],cwd=OUT,check=True)
+ '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),str(ROOT/'src/aspect/directory_runtime.c'),*objects],cwd=OUT,check=True)
  report=dict(binary_sha256=sha(OUT/'EXECUTE.EXE'),sources={str(p.relative_to(ROOT)):sha(p) for p in sources},support_units=units,original_inputs=[],
   compile_flags=['8086','small model','cdecl','ASPECT_RUNTIME_DIAGNOSTIC'],fixture_count=len(cases),
-  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+12+len(unsupported),
-  fixture_data={'file':'CASES.DAT','schema':'ACV1','sha256':sha(OUT/'CASES.DAT'),'bytes':len(table),'cases':len(cases)},
+  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+15+len(unsupported),
+  fixture_data={'file':'CASES.DAT','schema':'ACV2','sha256':sha(OUT/'CASES.DAT'),'bytes':len(table),'cases':len(cases)},
   parameter_fixture_aliases={'PARFLOAT':'FLOAT'},
   maintained_string_fault_fixture={'STRSHORT':'STRGASS compiler bytes with final00 option and94 return removed; first global HELLO retained, second stays empty'},
   maintained_heap_fault_fixtures={'HEAPFLT':'IDIVEDGE compiler bytes with global-string count changed from0to2','HEAPZERO':'IDZ compiler bytes with global-string count changed from0to2'},

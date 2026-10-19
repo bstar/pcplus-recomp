@@ -2,10 +2,15 @@
 #include "file_io.h"
 #include "serial_runtime.h"
 #include "receive_runtime.h"
+#include "directory_runtime.h"
 #include <malloc.h>
 #include <dos.h>
 #include <bios.h>
 #include <string.h>
+#if defined(ASPECT_RUNTIME_SERIAL)
+#include "../config/resource_path.h"
+extern unsigned __cdecl aspect_serial_psp(void);
+#endif
 
 aspect_file runtime_file;
 unsigned runtime_error,runtime_steps,runtime_limit,runtime_last_opcode;
@@ -52,7 +57,7 @@ void runtime_reset_native(void)
     runtime_word_value=0;runtime_dword_value=0;runtime_string_compare_result=0;runtime_native_error_code=0;
     /* Native overlay2 D6EA initializes MESSAGE line-feed mode E38A to1. */
     runtime_console_message_mode=1;
-    runtime_serial_reset();runtime_receive_reset();
+    runtime_serial_reset();runtime_receive_reset();runtime_directory_reset();
     runtime_string_pending_far=0;runtime_string_pending_near=0;
     runtime_string_scratch_pointer=runtime_string_scratch_index=0;runtime_string_check_range=1;
     memset(runtime_string_bank_a,0,sizeof(runtime_string_bank_a));
@@ -70,8 +75,22 @@ void runtime_reset_native(void)
 unsigned runtime_open(unsigned owner,const char *path)
 {
     unsigned char header;
+    unsigned status;
+#if defined(ASPECT_RUNTIME_SERIAL)
+    char resolved[64];unsigned prefix,n;
+#endif
     (void)owner;
-    if(aspect_file_open(&runtime_file,path)!=ASPECT_FILE_OK){runtime_set_error(ASPECT_RUN_OPEN);return 0;}
+    status=aspect_file_open(&runtime_file,path);
+#if defined(ASPECT_RUNTIME_SERIAL)
+    /* Native353D tries the current name, then the PCPLUS directory. It does
+     * not search PATH or prefer a different file over an existing bad ASX. */
+    if(status==ASPECT_FILE_IO && !resource_pcplus_path(aspect_serial_psp(),"X",resolved)){
+        prefix=strlen(resolved)-1;
+        for(n=0;n<64 && path[n];++n){}
+        if(n && n<64 && prefix+n<64){memcpy(resolved+prefix,path,n+1);status=aspect_file_open(&runtime_file,resolved);}
+    }
+#endif
+    if(status!=ASPECT_FILE_OK){runtime_set_error(ASPECT_RUN_OPEN);return 0;}
     if(aspect_file_read(&header,1,1,&runtime_file)!=1 || header>128){
         runtime_set_error(ASPECT_RUN_HEADER);aspect_file_close(&runtime_file);return 0;
     }

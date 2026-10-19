@@ -40,6 +40,36 @@ static unsigned bounded(const unsigned char *text,unsigned capacity)
 }
 static unsigned blank(const unsigned char *text)
 { return !text[0] || text[0]==' '; }
+static unsigned name_device(const char *p,unsigned n)
+{
+ if(n==3 && (!memcmp(p,"CON",3)||!memcmp(p,"PRN",3)||!memcmp(p,"AUX",3)||!memcmp(p,"NUL",3)))return 1;
+ return n==4 && (!memcmp(p,"COM",3)||!memcmp(p,"LPT",3)) && p[3]>='1' && p[3]<='9';
+}
+unsigned __cdecl directory_script_name(const unsigned char *stored,char *output)
+{
+ char name[13];unsigned i,n,start,base=0,extension=0,dot=0,c;
+ if(!extent(stored,9)||!extent(output,13)||!disjoint(stored,9,output,13))return 1;
+ for(n=0;n<9 && stored[n];++n){}
+ if(n==9)return 1;
+ if(blank(stored)){output[0]=0;return 0;}
+ for(i=0;i<n;++i){c=stored[i];name[i]=(char)(c>='a'&&c<='z'?c-32:c);}name[n]=0;
+ i=0;if(n>1 && name[0]>='A' && name[0]<='Z' && name[1]==':')i=2;
+ if(name[i]=='\\')++i;start=i;
+ for(;;++i){
+  c=(unsigned char)name[i];
+  if(!c || c=='\\'){
+   if(!base || (dot&&!extension) || name_device(name+start,base))return 1;
+   if(!c)break;
+   start=i+1;base=extension=dot=0;continue;
+  }
+  if(c=='.'){if(!base||dot)return 1;dot=1;continue;}
+  if(!((c>='A'&&c<='Z')||(c>='0'&&c<='9')||c=='_'||c=='-'))return 1;
+  if(dot){if(++extension>3)return 1;}else if(++base>8)return 1;
+ }
+ if(dot){if(extension!=3 || memcmp(name+n-3,"ASX",3))return 1;}
+ else{memcpy(name+n,".ASX",5);n+=4;}
+ memcpy(output,name,n+1);return 0;
+}
 static void put_word(prm_dos_image *image,unsigned at,unsigned value)
 { image->bytes[at]=(unsigned char)value;image->bytes[at+1]=(unsigned char)(value>>8); }
 static unsigned literal(const unsigned char *target)
@@ -71,6 +101,7 @@ directory_live_status __cdecl directory_live_decode(const prm_dos_image *source,
  terminal_import_settings serial_stage;
  modem_import_settings modem_stage;
  directory_live_plan plan_stage;
+ char script_name[13];
  const unsigned char *record;
  unsigned status,i,port;
  static const unsigned binding_offsets[]={0x34,0x56,0x5f};
@@ -99,7 +130,9 @@ directory_live_status __cdecl directory_live_decode(const prm_dos_image *source,
  if(!bounded(record+0x4b,11)){status=DIRECTORY_LIVE_RECORD;goto done;}
  for(i=0;i<3;++i){
   if(!bounded(record+binding_offsets[i],binding_sizes[i])){status=DIRECTORY_LIVE_RECORD;goto done;}
-  if(!blank(record+binding_offsets[i])){status=DIRECTORY_LIVE_BINDING;goto done;}
+  if(i? !blank(record+binding_offsets[i]):directory_script_name(record+binding_offsets[i],script_name)){
+   status=DIRECTORY_LIVE_BINDING;goto done;
+  }
  }
  if(record[0x4a]>1){status=DIRECTORY_LIVE_MODE;goto done;}
  if(record[0x33]!=0){status=DIRECTORY_LIVE_DUPLEX;goto done;}

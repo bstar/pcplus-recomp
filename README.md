@@ -36,6 +36,12 @@ ASPECT subset directly from authored source. The diagnostic build compiles all
 Full script compilation, application command coverage and terminal scheduling
 remain unfinished.
 
+[Directory-bound scripts](docs/DIRECTORY_SCRIPTS.md) now receive a private selected
+record, current-call date and queued raw input. The native directory expressions
+are documented [here](docs/ASPECT_DIRECTORY.md). Automatic Synchronet login
+authenticates but currently fails the full-screen editor test because WAITFOR
+does not share the terminal renderer. That workflow remains an open gate.
+
 The [DOS script runner](docs/ASPECT_RUNNER.md) now adds File → A → Run script
 through the terminal's Alt-Z menu. `ASPECT.EXE` runs as a separate DOS child
 with MESSAGE/EXIT/PAUSE support and returns through the PROGRAM owner. Selected serial scripts now use the active port through a checked child

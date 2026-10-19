@@ -7,6 +7,8 @@ extern aspect_serial_handoff script_handoff;
 extern unsigned script_divisor,script_lcr;
 extern unsigned script_port_index,script_soft_flow,script_hard_flow;
 extern unsigned script_parent_ring;
+extern unsigned script_directory_entry,script_directory_record;
+extern unsigned script_directory_year,script_directory_month,script_directory_day,script_directory_delta;
 static char digit(unsigned value){return value<10?(char)(value+'0'):(char)(value-10+'A');}
 static char *hexword(char *p,unsigned n){*p++=digit(n>>12);*p++=digit((n>>8)&15);*p++=digit((n>>4)&15);*p++=digit(n&15);return p;}
 static unsigned span(const void *p,unsigned n)
@@ -43,12 +45,14 @@ unsigned __cdecl terminal_script_prepare(unsigned psp,char *executable,char *tai
     /* Resident prepare has validated/staged the actual live policy in these
      * existing descriptor words before crossing the CONFIG_CODE bridge. */
     translation=script_handoff.reserved1;if(translation>2)return 1;
-    script_handoff.magic=ASIO_MAGIC;script_handoff.version=ASIO_VERSION_TRANSLATION;script_handoff.size=28;
+    script_handoff.magic=ASIO_MAGIC;script_handoff.version=ASIO_VERSION_PRELOAD;script_handoff.size=ASIO_V3_SIZE;
     script_handoff.parent_psp=psp;script_handoff.parent_ds=ds;
     script_handoff.ring=(unsigned)script_parent_ring;script_handoff.capacity=4096;
-    script_handoff.count=script_handoff.status=script_handoff.returned=0;
+    script_handoff.returned=0;
     script_handoff.guard=psp^ds^(unsigned)script_parent_ring^ASIO_GUARD^
-     script_handoff.reserved0^script_handoff.reserved1;
+     script_handoff.reserved0^script_handoff.reserved1^script_handoff.count^
+     script_handoff.status^script_directory_entry^script_directory_record^
+     script_directory_year^script_directory_month^script_directory_day^script_directory_delta;
     p=tail+i;*p++=' ';*p++='/';*p++='S';*p++='1'+script_port_index;*p++=':';
     p=hexword(p,script_divisor);*p++=':';*p++=digit(script_lcr>>4);*p++=digit(script_lcr&15);*p++=':';
     *p++=script_soft_flow?(script_hard_flow?'B':'S'):script_hard_flow?'H':'N';*p++=':';

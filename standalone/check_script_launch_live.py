@@ -128,10 +128,41 @@ def main():
  assert bytes(m.uc.mem_read(0xb8000+160,18))[::2]==b'REMAINDER'
  assert m.get('uart_rx_count')==0
  done('child-unread-ASIO-publication-reenters-real-parent-parser-with-exact-bytes',1)
- for state in ['uart_rx_count','uart_rx_dropped','terminal_parser_active','terminal_ansi_wait_active']:
+ for state in ['uart_rx_dropped','terminal_parser_active','terminal_ansi_wait_active']:
   m=model();path(m,b'TEST.ASX');m.put(state,1)
   assert m.call('terminal_script_start')==1 and not m.children and not m.get('terminal_program_pending')
- done('parent-RX-loss-parser-wait-state-admission-before-process-owner',4)
+ done('parent-RX-loss-parser-wait-state-admission-before-process-owner',3)
+ for count,start,entry in [(0,0,0),(17,4090,7),(4096,2047,200)]:
+  m=model();path(m,b'TEST.ASX');m.put('uart_rx_count',count)
+  m.put('uart_rx_read',m.symbols['uart_rx_buffer']-m.data_base+start)
+  if entry:
+   m.put('terminal_directory_context_valid',1)
+   m.uc.mem_write(m.symbols['terminal_directory_context'],struct.pack('<H',entry))
+  assert m.call('terminal_script_start')==0 and m.call('terminal_script_prepare')==0
+  d=struct.unpack('<I18H',m.uc.mem_read(m.symbols['_script_handoff'],40))
+  assert d[1:3]==(3,40) and d[7:9]==(count,start if count else 0)
+  pointer=m.symbols['terminal_directory_context']-m.data_base+252 if entry else 0
+  assert d[13:]==(entry,pointer,0,0,0,0)
+  assert d[9]==d[3]^d[4]^d[5]^0xa510^d[7]^d[8]^d[11]^d[12]^entry^pointer
+ done('ASIOv3-retains-wrapped-full-raw-preload-and-selected-directory-in-quiet-parent',3)
+ for selected,pending,delta in [(True,True,1),(True,True,0),(True,False,7),(False,True,1)]:
+  m=model();path(m,b'TEST.ASX')
+  if selected:
+   m.put('terminal_directory_context_valid',1)
+   m.uc.mem_write(m.symbols['terminal_directory_context'],struct.pack('<H',7))
+  m.uc.mem_write(m.symbols['directory_pending'],bytes([int(pending)]))
+  for name,value in [('year',2024),('month',2),('day',29),('count',delta)]:
+   m.put('directory_pending_'+name,value)
+  context=bytes(m.uc.mem_read(m.symbols['terminal_directory_context'],366))
+  assert m.call('terminal_script_start')==0 and m.call('terminal_script_prepare')==0
+  d=struct.unpack('<I18H',m.uc.mem_read(m.symbols['_script_handoff'],40))
+  expected=(2024,2,29,delta) if selected and pending else (0,0,0,0)
+  assert d[15:]==expected,d
+  guard=d[3]^d[4]^d[5]^0xa510
+  for n in [*d[7:9],*d[11:]]:guard^=n
+  assert d[9]==guard
+  assert bytes(m.uc.mem_read(m.symbols['terminal_directory_context'],366))==context
+ done('pending-accounting-projection-guard-preserves-parent-context-including-counter-wrap',4)
  m=model();path(m,b'TEST.ASX');m.put('uart_software_flow',1);m.put('uart_hardware_flow',1)
  assert m.call('terminal_script_start')==0
  # Existing PROGRAM owner first announces XOFF, then waits for physical TEMT.
@@ -170,22 +201,33 @@ def main():
   m.uc.mem_write(m.symbols['terminal_translation_table'],bytes(i^85 for i in range(256)))
   assert m.call('terminal_script_start')==0;m.keys.append(32);m.safe()
   assert len(m.children)==1 and m.get('terminal_program_status')==4;m.restored()
-  descriptor=struct.unpack('<I12H',m.uc.mem_read(m.symbols['_script_handoff'],28))
+  descriptor=struct.unpack('<I18H',m.uc.mem_read(m.symbols['_script_handoff'],40))
   pointer=m.symbols['terminal_translation_table']-m.data_base if mode==1 else 0
-  assert descriptor[1]==2 and descriptor[11:]==(pointer,mode),descriptor
+  assert descriptor[1]==3 and descriptor[11:]==(pointer,mode,0,0,0,0,0,0),descriptor
   assert descriptor[9]==descriptor[3]^descriptor[4]^descriptor[5]^0xa510^pointer^mode
- done('ASIOv2-parent-policy-mode-enabled-ISRmask-and-existing-table-pointer-guard',3)
+ done('ASIOv3-parent-policy-mode-enabled-dequeuemask-and-existing-table-pointer-guard',3)
  for mode,enabled,mask in [(3,0,255),(0,1,255),(1,0,255),(1,1,127),(2,1,127),(2,0,255),(0,0,127)]:
   m=model();path(m,b'TEST.ASX');m.put('terminal_translation_mode',mode)
   m.put('terminal_translation_enabled',enabled);m.put('uart_rx_mask',mask)
   assert m.call('terminal_script_start')==0;m.keys.append(32);m.safe()
   assert not m.children and m.get('terminal_program_status')==5;m.restored()
  done('ASIOv2-inconsistent-mode-enabled-and-UARTmask-denied-before-child',7)
- for offset,value in [(4,1),(20,0),(24,1),(26,1)]:
+ for offset,value in [(4,2),(20,0),(24,1),(26,1),(28,1),(30,1),(32,2026),(34,10),(36,19),(38,1)]:
   m=model();path(m,b'TEST.ASX');m.handoff_tamper=(offset,value)
   assert m.call('terminal_script_start')==0;m.keys.append(32);m.safe()
   assert len(m.children)==1 and m.get('terminal_program_status')==5;m.restored()
- done('ASIOv2-parent-completion-rejects-version-guard-table-mode-mutation',4)
+ done('ASIOv3-parent-completion-rejects-version-guard-table-mode-and-directory-and-projection-mutation',10)
+ for stored,want in [(b'LOGON',b'LOGON.ASX'),(b'go.asx',b'GO.ASX'),(b'D:go',b'D:GO.ASX')]:
+  m=model();m.put('terminal_directory_context_valid',1);m.put('connection_state',6)
+  m.uc.mem_write(m.symbols['terminal_directory_context'],struct.pack('<H',7))
+  m.uc.mem_write(m.symbols['terminal_directory_context']+252+52,stored+b'\0')
+  m.call('terminal_directory_script_connected')
+  assert m.get('terminal_program_pending') and m.get('terminal_program_kind')==4
+  tail=bytes(m.uc.mem_read(m.symbols['terminal_translation_edit_tail'],96)).split(b'\0',1)[0]
+  assert tail==b' '+want,tail
+  m.safe();assert len(m.children)==1 and m.get('terminal_program_status')==4 and not m.live_prompt_calls
+  m.restored()
+ done('directory-connected-queues-normalized-compiled-script-through-real-foreground-owner',3)
  result=dict(passed=True,binary_sha256=hashlib.sha256(BINARY.read_bytes()).hexdigest(),cases=cases,
   inputs=sum(x['inputs'] for x in cases),checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),manifest_sha256=hashlib.sha256((ROOT/'build/terminal/manifest.json').read_bytes()).hexdigest(),sources={p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in ['src/terminal/script_launch.asm','src/terminal/script_launch.c','src/redisplay/command_menu.c','src/terminal/program_actions.asm','src/terminal/config_abi.inc','src/aspect/serial_handoff.h','src/uart/api.asm',__file__.split(str(ROOT)+'/')[-1]]},
   limitations=['DOS EXEC boundary modeled; interpreter semantics and actual child launch require separate DOS test.','Child owns a raw UART lease; terminal emulation/history are suspended until ASIO returns unread data. Capture closes before child; existing PROGRAM owner restores screen/UART.'])

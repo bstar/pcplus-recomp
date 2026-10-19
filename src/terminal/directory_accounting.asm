@@ -8,6 +8,7 @@ SEGMENT _TEXT public class=CODE use16
 extern _directory_save_accounting
 extern terminal_directory_path,terminal_directory_entry,terminal_directory_plan
 extern terminal_option_mask,terminal_exit_code
+extern terminal_directory_script_connected
 global terminal_directory_note_connected
 global terminal_directory_flush_accounting
 %macro save 0
@@ -35,6 +36,7 @@ terminal_directory_note_connected:
  save
  test word [terminal_option_mask],64
  jz .done
+ call terminal_directory_script_connected
  mov byte [directory_pending],1
  inc word [directory_pending_count]
  mov ah,0x2a
@@ -112,6 +114,7 @@ directory_account_result: times DR_RESULT_SIZE db 0
 directory_account_status: dw 0
 directory_pending: db 0
 directory_pending_count: dw 0
+global directory_pending_year,directory_pending_month,directory_pending_day
 directory_pending_year: dw 0
 directory_pending_month: dw 0
 directory_pending_day: dw 0

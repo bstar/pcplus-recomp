@@ -2,6 +2,7 @@
 ; The child owns an explicit raw UART lease; terminal rendering resumes later.
 BITS 16
 CPU 8086
+%include "directory_live.inc"
 SEGMENT _TEXT public class=CODE use16
 extern terminal_program_start,terminal_program_kind,process_psp
 extern terminal_translation_edit_executable,terminal_translation_edit_tail
@@ -12,6 +13,106 @@ extern uart_port_lcr,uart_port_thr,uart_software_flow,uart_hardware_flow
 extern terminal_port_number,terminal_irq_vector
 extern uart_rts_lowered,terminal_parser_active,terminal_ansi_wait_active
 extern terminal_translation_enabled,terminal_translation_mode,terminal_translation_table,uart_rx_mask
+extern terminal_directory_context_valid,terminal_directory_context
+extern terminal_program_active,terminal_program_pending,_command_menu_active,_redisplay_active
+extern directory_pending,directory_pending_count,directory_pending_year,directory_pending_month,directory_pending_day
+global terminal_directory_script_connected
+; One call per successful directory connection. Reuse the manual launch owner
+; and filename storage; no separate armed flag or mutable directory bytes.
+terminal_directory_script_connected:
+ push bp
+ push si
+ push di
+ push es
+ cmp word [terminal_directory_context_valid],0
+ je .done
+ mov ax,[terminal_program_active]
+ or ax,[terminal_program_pending]
+ or ax,[_command_menu_active]
+ or ax,[_redisplay_active]
+ jnz .done
+ mov si,terminal_directory_context+DLC_RECORD+0x34
+ cmp byte [si],0
+ je .done
+ cmp byte [si],' '
+ je .done
+ push ds
+ pop es
+ mov di,_command_menu_script
+ mov cx,9
+ xor bx,bx
+ cld
+.copy:
+ lodsb
+ or al,al
+ jz .suffix
+ cmp al,'a'
+ jb .upper
+ cmp al,'z'
+ ja .upper
+ sub al,32
+.upper:
+ cmp al,0x5c
+ jne .dot
+ xor bx,bx
+.dot:
+ cmp al,'.'
+ jne .store
+ inc bx
+.store:
+ stosb
+ loop .copy
+ jmp .done ;Startup validated NUL within9; retain defense against mutation.
+.suffix:
+ or bx,bx
+ jnz .terminate
+ mov ax,0x412e ;.A
+ stosw
+ mov ax,0x5853 ;SX
+ stosw
+.terminate:
+ xor al,al
+ stosb
+ call terminal_script_start
+.done:
+ pop es
+ pop di
+ pop si
+ pop bp
+ ret
+
+; AX selected entry0/1..200, BX near raw114-byte record or0. No new DATA.
+script_directory_policy:
+ xor ax,ax
+ xor bx,bx
+ cmp word [terminal_directory_context_valid],0
+ je .done
+ mov ax,[terminal_directory_context+DLC_ENTRY]
+ or ax,ax
+ jz .bad
+ cmp ax,200
+ ja .bad
+ mov bx,terminal_directory_context+DLC_RECORD
+.done: ret
+.bad:
+ mov ax,0xffff
+ ret
+; Derive pending accounting without changing the retained record or save baseline.
+; Presence is independent of delta: the connection counter may wrap to zero.
+script_projection_policy:
+ xor ax,ax
+ xor bx,bx
+ xor cx,cx
+ xor dx,dx
+ cmp word [terminal_directory_context_valid],0
+ je .done
+ cmp byte [directory_pending],0
+ je .done
+ mov ax,[directory_pending_year]
+ mov bx,[directory_pending_month]
+ mov cx,[directory_pending_day]
+ mov dx,[directory_pending_count]
+.done: ret
 script_translation_policy:
  mov ax,[terminal_translation_mode]
  cmp ax,2
@@ -79,8 +180,12 @@ terminal_script_start:
 ; stranded in another segment. Hardware RBR is left for the child ISR.
 script_admit:
  mov ax,1
- cmp word [uart_rx_count],0
- jne .done
+ cmp word [uart_rx_count],4096
+ ja .done
+ cmp word [uart_rx_read],uart_rx_buffer
+ jb .done
+ cmp word [uart_rx_read],uart_rx_buffer+4096
+ jae .done
  cmp word [uart_rx_dropped],0
  jne .done
  cmp word [terminal_parser_active],0
@@ -94,6 +199,25 @@ terminal_script_prepare:
  call script_admit
  or ax,ax
  jnz .done
+ mov ax,[uart_rx_count]
+ mov [script_handoff+16],ax
+ xor bx,bx
+ or ax,ax
+ jz .preload_staged
+ mov bx,[uart_rx_read]
+ sub bx,uart_rx_buffer
+.preload_staged:
+ mov [script_handoff+18],bx
+ call script_directory_policy
+ cmp ax,200
+ ja .bad_policy
+ mov [_script_directory_entry],ax
+ mov [_script_directory_record],bx
+ call script_projection_policy
+ mov [_script_directory_year],ax
+ mov [_script_directory_month],bx
+ mov [_script_directory_day],cx
+ mov [_script_directory_delta],dx
  call script_translation_policy
  cmp ax,2
  ja .bad_policy
@@ -207,9 +331,9 @@ terminal_script_complete:
  jne .bad
  cmp word [script_handoff+2],0x4f49
  jne .bad
- cmp word [script_handoff+4],2
+ cmp word [script_handoff+4],3
  jne .bad
- cmp word [script_handoff+6],28
+ cmp word [script_handoff+6],40
  jne .bad
  mov ax,[process_psp]
  cmp [script_handoff+8],ax
@@ -226,7 +350,34 @@ terminal_script_complete:
  xor ax,0xa510
  xor ax,[script_handoff+24]
  xor ax,[script_handoff+26]
+ xor ax,[_script_directory_entry]
+ xor ax,[_script_directory_record]
+ xor ax,[_script_directory_year]
+ xor ax,[_script_directory_month]
+ xor ax,[_script_directory_day]
+ xor ax,[_script_directory_delta]
+ xor ax,[uart_rx_count]
+ cmp word [uart_rx_count],0
+ je .check_guard
+ mov bx,[uart_rx_read]
+ sub bx,uart_rx_buffer
+ xor ax,bx
+.check_guard:
  cmp [script_handoff+20],ax
+ jne .bad
+ call script_directory_policy
+ cmp ax,[_script_directory_entry]
+ jne .bad
+ cmp bx,[_script_directory_record]
+ jne .bad
+ call script_projection_policy
+ cmp ax,[_script_directory_year]
+ jne .bad
+ cmp bx,[_script_directory_month]
+ jne .bad
+ cmp cx,[_script_directory_day]
+ jne .bad
+ cmp dx,[_script_directory_delta]
  jne .bad
  mov ax,[terminal_translation_mode]
  cmp [script_handoff+26],ax
@@ -269,6 +420,14 @@ SEGMENT _DATA
 global _script_handoff,_script_divisor,_script_lcr
 _script_handoff:
 script_handoff: times 14 dw 0
+global _script_directory_entry,_script_directory_record
+_script_directory_entry: dw 0
+_script_directory_record: dw 0
+global _script_directory_year,_script_directory_month,_script_directory_day,_script_directory_delta
+_script_directory_year: dw 0
+_script_directory_month: dw 0
+_script_directory_day: dw 0
+_script_directory_delta: dw 0
 _script_divisor:
 script_divisor: dw 0
 _script_lcr:
