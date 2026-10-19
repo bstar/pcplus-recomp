@@ -359,7 +359,7 @@ application scheduling/memory placement remain unfinished. The terminal remains
 
 A fresh original-free source rebuild reproduces78 outputs byte for byte.
 Native E104 scratch/next-script aliasing is preserved and verified in the map;
-CHAIN/state999 remains unsupported.
+At that checkpoint CHAIN/state999 remained unsupported; the current compiled-target EXECUTE integration is described in [ASPECT_CHAIN_RUNTIME.md](ASPECT_CHAIN_RUNTIME.md).
 
 
 ## ASPECT string commands and comparison status
@@ -590,3 +590,13 @@ byte-identically without originals. [Bound validation](validation/aspect-break-r
 retains the first observer's missed post-exit clearing, the corrected observer
 and the final current products. Physical modem/timing, immediate-forwarding
 ENiGMA behavior and complete application gates remain open.
+
+
+F13 checkpoint: compiled-target EXECUTE now runs native999 replacement in the
+actual DOS interpreter, retaining settings/numeric banks and UART ownership,
+releasing old far globals and resetting per-file frames/WHEN references. The
+native end-wait is connected through a once-only maintained budget/cancel
+owner for attached rendering; raw ASIO preserves unread input.72/215 opcode
+slots are supported. DOS source compilation/fallback, chained parent filename
+labels, recorder/full compiler/remaining services and F13 remain open. See
+[ASPECT_CHAIN_RUNTIME.md](ASPECT_CHAIN_RUNTIME.md). No F01–F16 gate closes.

@@ -987,7 +987,7 @@ application scheduling/memory placement remain unfinished. The terminal remains
 
 A fresh original-free source rebuild reproduces78 outputs byte for byte.
 Native E104 scratch/next-script aliasing is preserved and verified in the map;
-CHAIN/state999 remains unsupported.
+At that checkpoint CHAIN/state999 remained unsupported; see the later EXECUTE integration checkpoint below.
 
 
 ## ASPECT string commands and comparison status
@@ -1386,3 +1386,40 @@ Next: recover and integrate the serial BREAK service emitted by the compiler,
 continue remaining ASPECT/recorder and invocation paths, complete native
 keyboard/UI/configuration and shared-session adoption, broaden emulations and
 protocols, and validate physical Wi-Fi modems. All F01–F16 remain open.
+
+
+### Compiled-script replacement and native end-wait
+
+EXECUTE now compiles from the original grammar and links the actual24-byte
+CB handler to the resident999 restart. Native per-file/final owners are
+recovered separately as248 exact bytes, with208 CPU cases. The bounded
+loader stages the shared scratch filename, releases old far global strings,
+allocates new empty strings, abandons frames/local owners and WHEN references,
+and preserves numeric/settings/receive state. Gate increments retain native
+state; initial invocation now correctly uses interactive owner0.35 path-policy
+cases/141 checks guard the original extension-buffer overflow.
+
+Recovered61-byte4BFF shutdown and actual mapped receive compose in221 CPU
+cases. An attached terminal uses this end drain with a maintained once-only,
+budget/cancel owner; raw ASIO retains unread bytes. The original compiler
+oracle supplies35 accepted EXECUTE specimens and41 rejections, plus variants
+and7 novel checks. CHAIN remains rejected as a source keyword.
+
+Actual DOS chaining passes16 cases/287 checks, including frame abandonment,
+settings/numeric persistence, fresh globals, cumulative self-chain budget,
+WHEN retirement, queued input, empty/missing/device/bad-header/source/name
+and allocation/truncation failures. Production COM1 with an independent peer
+passes success/missing-target ownership checks, retaining BREAK1234 and exact
+TRAIL unread bytes. A real terminal/child replacement preserves the renderer
+and changed BREAK/WHENCASE with42 status/query/keyboard/owner checks. The
+existing interpreter regression passes1146 cases/26309 checks; the formerly
+unsupported CB slot is now covered by replacement tests, leaving143 unsupported
+slots and72 supported slots. Production CLI21/105 and native SET/status6/228
+also pass. Fresh original-free compilation reproduces149 outputs exactly.
+
+Remaining work includes DOS source compilation and missing-ASX ASP fallback,
+original filename/error UI and parent label refresh after replacement; full
+compiler/recorder/remaining command families, other profiles/protocols, Host,
+modern BBS immediate-forwarding issues and physical Wi-Fi modem validation.
+All F01–F16 gates remain open. See `docs/ASPECT_CHAIN_RUNTIME.md` and
+`docs/validation/aspect-chain-runtime.json` for scope and bound evidence.

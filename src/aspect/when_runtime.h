@@ -4,6 +4,8 @@
  * interpreter or synchronous CALL shim: native flow owns deferred FILE seeks. */
 void runtime_when_reset(void);
 void runtime_when_finish(void);
+/* Per-file reset preserves gate, settings and queued/last key values. */
+void runtime_when_file_reset(void);
 unsigned runtime_when_poll(void);
 /* Legacy raw ASIO has no idle renderer. Preserve unread bytes unless an
  * admitted renderer or active WHEN pattern actually consumes idle input. */

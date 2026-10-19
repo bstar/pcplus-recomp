@@ -450,6 +450,19 @@ class Compiler:
             self.error('FETCH requires an integer destination')
         self.emit(0x37, FETCH_SETTINGS[tokens[1]], wire)
 
+    def execute_command(self, tokens):
+        # Native source spelling is EXECUTE; CHAIN is not a compiler keyword.
+        # File resolution belongs to the loader, not this string emission.
+        operands = tokens[1:]
+        if not operands or operands[0] in ('(', ','):
+            self.error('EXECUTE requires one atomic string operand')
+        parser = Expression(operands, self.line)
+        node = parser.parse(7)
+        if parser.pos != len(parser.tokens) or self.kind(node) != 3:
+            self.error('EXECUTE requires one atomic string operand')
+        self.emit(0xCB)
+        self.operand(self.atomic(node), compact=True)
+
     def when_command(self, tokens):
         command = tokens[0]
         # Commas are separators in native compiler input. They cannot replace
@@ -507,6 +520,9 @@ class Compiler:
         command = tokens[0]
         if command == 'break' and len(tokens) != 1:
             self.error('BREAK does not accept operands or punctuation')
+        if command == 'execute':
+            self.execute_command(tokens)
+            return
         if command == 'fetch':
             self.fetch_command(tokens)
             return

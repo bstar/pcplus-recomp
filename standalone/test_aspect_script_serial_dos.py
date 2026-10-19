@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import socket
@@ -87,6 +88,11 @@ def run(case, binary, destination, driver):
     assert compiled == bytes.fromhex(case['hex']), case['name']
     (output / 'CASE.ASP').write_bytes(case['source'].encode('cp437'))
     (output / 'CASE.ASX').write_bytes(compiled)
+    dependencies={}
+    for leaf, source in case.get('scripts',{}).items():
+        assert re.fullmatch(r'[A-Z0-9_]{1,8}\.ASX',leaf),leaf
+        (output/leaf).write_bytes(compile_source(source))
+        dependencies[leaf]=dict(source=source,asx_sha256=sha(output/leaf))
     model, expected = case['serial'], case['expected']
     outgoing = bytes.fromhex(expected['tx_hex'])
     incoming = bytes.fromhex(model.get('input_hex', ''))
@@ -160,8 +166,8 @@ exit
     stdout, stderr = (output / 'STDOUT.BIN').read_bytes(), (output / 'STDERR.BIN').read_bytes()
     returned = (output / 'RETURN.BIN').read_bytes()
     # The authored trigger includes a deterministic trailing span in SWHIT.
-    intended_return = b'TRAIL' if case['name'] == 'SWHIT' else b''
-    code = {'operand': 7, 'unsupported': 3}.get(expected.get('error'), 0)
+    intended_return = bytes.fromhex(expected['returned_hex']) if 'returned_hex' in expected else (b'TRAIL' if case['name'] == 'SWHIT' else b'')
+    code = expected.get('exit_code',{'operand': 7, 'unsupported': 3}.get(expected.get('error'), 0))
     checks = dict(
         dos_parent_pass=(output / 'PASS.TXT').exists() and not (output / 'FAIL.TXT').exists(),
         status_uart_asio=status == f'exit={code} vector=1 mask=1 mcr=1 returned=1 count={len(intended_return)} lease=0 guard=1',
@@ -172,7 +178,7 @@ exit
         peer_no_error=not errors,
         input_delivered=sent.is_set() if incoming else True,
     )
-    result = dict(name=case['name'], passed=all(checks.values()), checks=checks,
+    result = dict(name=case['name'], passed=all(checks.values()), checks=checks,dependency_scripts=dependencies,
                   source_sha256=sha(output / 'CASE.ASP'), asx_sha256=sha(output / 'CASE.ASX'),
                   binary_sha256=sha(output / 'ASPECT.EXE'),
                   parent_binary_sha256=sha(output / 'SERTEST.EXE'),

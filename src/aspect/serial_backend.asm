@@ -499,7 +499,8 @@ w uart_rx_dropped,0
 global _aspect_serial_rx_count,aspect_serial_rx_count
 aspect_serial_rx_count:
 _aspect_serial_rx_count:
-global aspect_dispatch_paused
+global aspect_dispatch_paused,aspect_end_wait_rx_count
+aspect_end_wait_rx_count:
 aspect_dispatch_paused:
 w uart_rx_count,0
 w uart_rx_mask,255

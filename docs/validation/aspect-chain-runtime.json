@@ -1,0 +1,2824 @@
+{
+  "passed": true,
+  "terminal_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+  "runner_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+  "compiler_sha256": "5fc4281e7a26f70e6becf962c8ed6e7a253ca4bc1ee4fa5487a5ab42a0470812",
+  "recorder_sha256": "b9d221013a26ca8c7f4ad98ca60722f2278071a59a864142036092c7961213ce",
+  "runner_manifest_sha256": "09059ea1f039e5739e2b7a92bdd4acc627bde9edb7c272663a452005fbd1267a",
+  "reports": {
+    "build/aspect-chain-native/checks.json": {
+      "sha256": "93d497ce2edfeb11c967ca3e6270844c1392e50ff6314eda2f78278156824384",
+      "report": {
+        "passed": true,
+        "cases": 208,
+        "owner_native_instructions": 93,
+        "visited_addresses": 188,
+        "manifest_sha256": "a6effda13415d1e1bc884a71100d84ef8b9601ea9f7e90717a1bf8fda8dd3222",
+        "checker_sha256": "771de702133f98626d10138e5eb6e980fb8beb9ca47c65b902a3b74c789dc64a",
+        "optional_original": null,
+        "scope": "Actual248native command/open/final bytes plus actualscratch/strcpy/dispatcher instructions. Initializer, stringreader, fullfilename/compile/openloader, globalallocator/release, FILE andUI remain explicitmodels. No actualDOS/fullVM/nonlocalerror or safe malformedinputclaim."
+      }
+    },
+    "build/aspect-end-wait-native/checks.json": {
+      "sha256": "e18a74c8230125acbeea7922079ef103d08eb998b0778167fe66a6fe87024b8c",
+      "report": {
+        "passed": true,
+        "cases": 221,
+        "owner_instructions": 21,
+        "visited_addresses": 55,
+        "manifest_sha256": "95ca8e67ed0e07d93c8b0dff66b939663d343ab55e6b57410c3975730836e9d8",
+        "checker_sha256": "b794edb9cbae127e35b2317eaff1c0a9af28d849e6fb403055c4bcdbc1c88475",
+        "optional_original": null,
+        "scope": "Actual61nativeendwaitbytes +actual4C3C/4C74mappedreceive; controlledrawUART,calibrateddelayarrival,keyboardpeekandrendereremitcallbacks. No fullrenderer,physicaltiming,DOSexecution,cancellationunwindorboundedschedulingclaim."
+      }
+    },
+    "build/aspect-chain-compiler/checks.json": {
+      "sha256": "f2689efd55ae4e13f66a9a118c74d4757b8a6d2b29ef8b7199e1d1bfc3d0d539",
+      "report": {
+        "passed": true,
+        "original_inputs": [],
+        "counts": {
+          "accepted": 35,
+          "rejected": 41,
+          "presentation": 35,
+          "rejected_variants": 41,
+          "novel": 7
+        },
+        "compiler_sha256": "5fc4281e7a26f70e6becf962c8ed6e7a253ca4bc1ee4fa5487a5ab42a0470812",
+        "checker_sha256": "4dfa89a5b6662a3312c14b5ad9b5cf7b5f4f3326dfc89b05628000f41e4fe54b",
+        "fixture_sha256": "58bed52ef95f99601398df15542a0ee07dbbbb03a52397860abf67ae165c5b2a",
+        "scope": "EXECUTEcompileronly, noCHAINalias. Rawpathspelling andpostcommandcodepreserved; loader/restart999 andruntimeexecutionnotestablishedhere."
+      }
+    },
+    "build/aspect-script-path/checks.json": {
+      "sha256": "7766dfa794573cc5540e9591ae02f3fbc575b86c2ebf6929998d0fd88ea0ac20",
+      "report": {
+        "cases": 35,
+        "checks": 141,
+        "passed": true,
+        "sources": {
+          "src/aspect/script_path.c": "9ae220f48479293000ec074a31f163a4616f10a660717e85ea4ba7ee11849d2b",
+          "src/aspect/script_path.h": "a7d8124b0ed2714787c0577bd9bde01afa839910d32ba335189e0c5d1acd787c",
+          "standalone/test_aspect_script_path.py": "12cd27411171f2c0a24028c3bca490fadd9885df2ec9fbae2f7f2fa9b8b1793c"
+        },
+        "scope": "Host C filename normalization and bounds; retained D4D0 rules, not original runtime or DOS file resolution. Native unchecked extension overflow deliberately rejected."
+      }
+    },
+    "build/aspect-runtime/checks.json": {
+      "sha256": "5dcc05a707d883493c5d87a76cf98ae683a19eb4eeb62d44fa924695b1873861",
+      "report": {
+        "passed": true,
+        "DOS_summary": "ASPECT_RUNTIME 1146 cases 26309 checks 0 failures",
+        "binary_sha256": "37bcb4e6260d3bff4240069c06f71563c1541cbfd7e4f860d9fe9b3eaff34a5c",
+        "manifest_sha256": "b64681fd81624a7fd82f806e56c55639d8eb3b1e6e8bd0a5aed31155b4a15041",
+        "check_sha256": "0109ce207eb31b27eb903b9df4f44680c73be78ba3428cf14e0ce6318df52d49",
+        "result_sha256": "94973230dfa294a081beb9b08ecb031f3f1c8e6331d1d925b0c866ef6d0cdb6e",
+        "optional_original": null,
+        "original_inputs": [],
+        "fixture_count": 444,
+        "unsupported_slot_cases": 143,
+        "directory_metadata": {
+          "cases": 18,
+          "default_noentry_cases": 2,
+          "unsupported_baud_cases": 1,
+          "host_binding_checks": 164,
+          "fixture_sha256": "80b38259968e5f1a3c5c5d388fa40928ecd7ed759ffc916158f4632a4ae57676",
+          "scope": "Independent ACV2 parse, exact authored114B/entry binding, and actualDOS output/tx/value lines. No private original input."
+        },
+        "fixture_data_sha256": "60686f912586032385df812a63e0a0cdadb7e3333da01dae4ebbea846c72e16e",
+        "fixture_schema": "ACV2",
+        "SET_family": {
+          "supported_subcommands": {
+            "09": "BREAK",
+            "12": "DISPLAY",
+            "18": "DUPLEX",
+            "23": "FINDCASE",
+            "29": "KEYS",
+            "2e": "MSG_CRLF",
+            "30": "PAUSECHAR",
+            "3b": "RXDATA",
+            "44": "SWITCHCASE",
+            "4c": "TXPACE",
+            "55": "WAITCASE",
+            "56": "WHENCASE"
+          },
+          "unsupported_subcommands_tested": 244,
+          "truncated_cases": 2,
+          "raw_boolean_cases": 2,
+          "integration_vectors": 38
+        },
+        "supported_slot_count": 72,
+        "scope": "Actual recovered dispatcher executes source-compiled authored ASX through real DOS files/far and near heaps and native console/serial/WHEN/SET/FIND/CASE commands. Serial queue/clock/carrier and requested pacing units are explicit diagnostic models. Supported slots and unsupported coverage are bound to the manifest; full compiler/VM and arbitrary-bytecode safety remain unfinished."
+      }
+    },
+    "build/aspect-chain-runtime/checks.json": {
+      "sha256": "87ffe40a35f66a13e9da508c5a985814ddcab1f0bb975fa7125eb3ac7f44caaa",
+      "report": {
+        "passed": true,
+        "DOS_summary": "CHAIN 16 cases 287 checks 0 failures",
+        "binary_sha256": "b3cbba3e1c36820faae992849dcf7973e32d28e088ce6e1ab85c93889df2d841",
+        "runtime_manifest_sha256": "b64681fd81624a7fd82f806e56c55639d8eb3b1e6e8bd0a5aed31155b4a15041",
+        "checker_sha256": "7a49a135bca9d94696758b37f72c007e2bb295a7726938a83cab7fb039f6ee38",
+        "result_sha256": "352aa4225bc7d879fefd325950b6129b2991c0f6d291d191db30e51eba09176e",
+        "fixtures": {
+          "CSTART": {
+            "source": "integer value,saved\nstring payload\nproc main\nvalue=42\npayload=\"old allocation\"\nset break 1234\nset msg_crlf off\nexecute \"cend\"\nvalue=99\nendproc\n",
+            "asx_sha256": "ddf84f31629290982f338af7b1cb9988b96df081fd8f619484bc53bea02778e1"
+          },
+          "CEND": {
+            "source": "integer value,saved\nstring payload\nproc main\nfetch break saved\nmessage payload\nmessage \"END\"\nendproc\n",
+            "asx_sha256": "a13459430fbbb504edaafd39da899306148c6b55fe4b949b87966388958bc804"
+          },
+          "CFAR": {
+            "source": "string target\nproc main\ntarget=\"cend.asx\"\nexecute target\nmessage \"BAD\"\nendproc\n",
+            "asx_sha256": "c9748efddae74f739708d095139421d5f6a8ec883ae1498ab3f9d9e2719819d5"
+          },
+          "CLOCAL": {
+            "source": "proc main\ncall worker\nendproc\nproc worker\nstring target\ntarget=\"cgate.asx\"\nexecute target\nmessage \"BAD\"\nendproc\n",
+            "asx_sha256": "6756d5037a23aded2ece09ea5e352a611e66f1194bb0dcb02b1317cdd2f927e2"
+          },
+          "CGATE": {
+            "source": "integer gate\nproc main\nfetch rxdata gate\nendproc\n",
+            "asx_sha256": "f942b9d1f4a76245d836eff6c8fa7ad038136015926b5d47de7250f7267d7400"
+          },
+          "CWHEN": {
+            "source": "proc main\nwhen 0 \"X\" call worker\nexecute \"cgate\"\nendproc\nproc worker\nmessage \"STALE\"\nendproc\n",
+            "asx_sha256": "8afdf3060d3c73aa6ee55dacd2478e6c4d7acb2d594bb6a96e071557eb7fab7b"
+          },
+          "CEMPTY": {
+            "source": "string payload\nproc main\npayload=\"owned\"\nexecute \"\"\nmessage \"BAD\"\nendproc\n",
+            "asx_sha256": "4b9db4a403e50df27b0d659281e1c3490e10d7103a39da41d22117815c83f7b4"
+          },
+          "CMISS": {
+            "source": "string payload\nproc main\npayload=\"owned\"\nexecute \"absent\"\nendproc\n",
+            "asx_sha256": "2bd91ace66c91a00b58331a223c59ce8156f9644e069698c10c860376bd27601"
+          },
+          "CBAD": {
+            "source": "string payload\nproc main\npayload=\"owned\"\nexecute \"bad\"\nendproc\n",
+            "asx_sha256": "77d1137d08b4915346c131d84935d64804f5b97f0ec60faed8fc6f0e8fa87f19"
+          },
+          "CASP": {
+            "source": "proc main\nexecute \"source.asp\"\nendproc\n",
+            "asx_sha256": "a3dabe41cb69a52d56d5dc08ac7082f8dd7cc09478183d7c7cf37cf99d7cbac9"
+          },
+          "CDEVICE": {
+            "source": "proc main\nexecute \"CON\"\nendproc\n",
+            "asx_sha256": "3bc166b51a253f06346a3cb902c12c108bc730d0f2f116348b498f75dc144b6e"
+          },
+          "CNAME": {
+            "source": "proc main\nexecute \"bad.exe\"\nendproc\n",
+            "asx_sha256": "e141c3b3a088919d7f2275a4680b6187a271d83bb3986be3968f3eee4436f396"
+          },
+          "CSELF": {
+            "source": "string payload\nproc main\npayload=\"self\"\nexecute \"cself\"\nendproc\n",
+            "asx_sha256": "ef9fff352045462ae2f2cb016475915888feb4ac69cbe5f001bc2f6dd129a745"
+          },
+          "CONE": {
+            "source": "string a,b\nproc main\na=\"one\"\nexecute \"ctwo\"\nendproc\n",
+            "asx_sha256": "bfae25a27bc880d7ad545e73da55f0206a709cbd61582abef3dcaa8f85b197ac"
+          },
+          "CTWO": {
+            "source": "string a\nproc main\na=\"two\"\nexecute \"cthree\"\nendproc\n",
+            "asx_sha256": "a98881fd9ecb1d195def096b3c8a721dabdbe7015c8e541d45b189afdd79d507"
+          },
+          "CTHREE": {
+            "source": "string a,b,c\nproc main\nmessage \"three\"\nendproc\n",
+            "asx_sha256": "526e222516101b6c902fc8ed3502d6ccd139760d0c40411dea798254eb14849c"
+          },
+          "CFAIL": {
+            "source": "proc main\nexecute \"cthree\"\nendproc\n",
+            "asx_sha256": "2be8b42a61e37a25016a79770ef50e2a837c1d3902b6acd364278c2981706738"
+          },
+          "CBANK": {
+            "source": "integer number\nlong wide\nproc main\nnumber=123\nwide=1234567L\nexecute \"cbank2\"\nendproc\n",
+            "asx_sha256": "c6722314bf225ca4d2159c6bf13cd4b5899d14ba86cceb16d5e8cb2a7d4f55ea"
+          },
+          "CQUEUE": {
+            "source": "proc main\nset rxdata on\ntransmit \"GO\"\nexecute \"cqueue2\"\nendproc\n",
+            "asx_sha256": "d68b1fd34eb947b3c4c06bf871e49c36b612950c3a9be74e7d1d5b99fd709b06"
+          },
+          "CQUEUE2": {
+            "source": "integer got,gate\nproc main\nfetch rxdata gate\ncomgetc got\nendproc\n",
+            "asx_sha256": "f1a914848989dd6b4f04d581d3fa28dbd75dc447881a78ba3e774f7b5c22c5af"
+          },
+          "CBANK2": {
+            "source": "integer number\nlong wide\nproc main\nnumber=number+1\nwide=wide+1L\nendproc\n",
+            "asx_sha256": "5fbdaeaa75f213cb7b05f2e4495389b26a626f9f1053fb2ab2d3edd69eb745e2"
+          }
+        },
+        "cases": [
+          {
+            "name": "CSTART",
+            "error": 0,
+            "peak": 1,
+            "cleanup": 2,
+            "close": 2,
+            "integer0": 42,
+            "integer1": 1234,
+            "output": "454e44",
+            "string0": ""
+          },
+          {
+            "name": "CFAR",
+            "error": 0,
+            "peak": 1,
+            "cleanup": 2,
+            "close": 2,
+            "integer1": 350,
+            "output": "0d0a454e440d0a",
+            "string0": ""
+          },
+          {
+            "name": "CLOCAL",
+            "error": 0,
+            "peak": 0,
+            "cleanup": 2,
+            "close": 2,
+            "integer0": 0,
+            "output": ""
+          },
+          {
+            "name": "CWHEN",
+            "error": 0,
+            "peak": 0,
+            "cleanup": 2,
+            "close": 2,
+            "integer0": 0,
+            "output": ""
+          },
+          {
+            "name": "CEMPTY",
+            "error": 0,
+            "peak": 1,
+            "cleanup": 1,
+            "close": 1,
+            "output": "",
+            "string0": "6f776e6564"
+          },
+          {
+            "name": "CMISS",
+            "error": 1,
+            "peak": 1,
+            "cleanup": 1,
+            "close": 1,
+            "output": ""
+          },
+          {
+            "name": "CBAD",
+            "error": 2,
+            "peak": 1,
+            "cleanup": 1,
+            "close": 1,
+            "output": ""
+          },
+          {
+            "name": "CASP",
+            "error": 3,
+            "peak": 0,
+            "cleanup": 1,
+            "close": 1,
+            "output": ""
+          },
+          {
+            "name": "CDEVICE",
+            "error": 1,
+            "peak": 0,
+            "cleanup": 1,
+            "close": 1,
+            "output": ""
+          },
+          {
+            "name": "CNAME",
+            "error": 7,
+            "peak": 0,
+            "cleanup": 1,
+            "close": 1,
+            "native": 102,
+            "output": ""
+          },
+          {
+            "name": "CSELF",
+            "error": 6,
+            "peak": 1,
+            "limit": 40,
+            "output": ""
+          },
+          {
+            "name": "CONE",
+            "error": 0,
+            "peak": 3,
+            "cleanup": 3,
+            "close": 3,
+            "output": "74687265650d0a",
+            "string0": ""
+          },
+          {
+            "name": "CFAIL",
+            "error": 8,
+            "peak": 1,
+            "cleanup": 2,
+            "close": 2,
+            "fail_after": 1,
+            "output": ""
+          },
+          {
+            "name": "CTRUNC",
+            "error": 5,
+            "peak": 0,
+            "cleanup": 1,
+            "close": 1,
+            "output": ""
+          },
+          {
+            "name": "CQUEUE",
+            "error": 0,
+            "peak": 0,
+            "cleanup": 2,
+            "close": 2,
+            "integer0": 90,
+            "integer1": 1,
+            "output": ""
+          },
+          {
+            "name": "CBANK",
+            "error": 0,
+            "peak": 0,
+            "cleanup": 2,
+            "close": 2,
+            "integer0": 124,
+            "long0": 1234568,
+            "output": ""
+          }
+        ],
+        "original_inputs": [],
+        "scope": "Actual source-built DOS interpreter, files, far allocations and native999 restart. Diagnostic transport and no-renderer end policy. ASP compilation and parent label refresh remain open."
+      }
+    },
+    "build/aspect-chain-serial-dos/checks.json": {
+      "sha256": "e4ea2a4db833b436ea7b3c466a642cf8bc05d036c3d46bf8763a3df9a425d64e",
+      "report": {
+        "passed": true,
+        "runner_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+        "runner_manifest_sha256": "09059ea1f039e5739e2b7a92bdd4acc627bde9edb7c272663a452005fbd1267a",
+        "checker_sha256": "0a34268c11cd34bf8c36d02cc661c5fece1c950bad3b92d250baf4b0f4a298e5",
+        "reused_checker_sha256": "9ac60e906b488c1dcbf4004196ea825b6bf1b8bb4649e39e56b9c7f9e445f336",
+        "predictions_sha256": "49d1ced382df9cb1391edf4ed7adec832d2fe1b37518dc521003571285effa70",
+        "cases": [
+          {
+            "name": "livechain",
+            "passed": true,
+            "checks": {
+              "dos_parent_pass": true,
+              "status_uart_asio": true,
+              "exact_transmit": true,
+              "exact_stdout": true,
+              "exact_returned_unread": true,
+              "stderr": true,
+              "peer_no_error": true,
+              "input_delivered": true
+            },
+            "dependency_scripts": {
+              "NEXT.ASX": {
+                "source": "integer saved\nproc main\nfetch break saved\nif saved == 1234\ntransmit \"POLICYOK\"\nelse\ntransmit \"BADPOLICY\"\nendif\nwaitfor \"END\" 5\ntransmit \"DONE^M\"\nendproc\n",
+                "asx_sha256": "8776f3f3ba1eb851e1b835fbb1c5ec636d97aea748d91aaf5a9f9aca729e3624"
+              }
+            },
+            "source_sha256": "58cde31afe9284134ad3a4f40d98682d2fe0d81181a3b3a2639f233526923bfd",
+            "asx_sha256": "793947c4943b19422102d1c3bfc102340e27e4cadab5c912751abf1d7a8c4ad4",
+            "binary_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+            "parent_binary_sha256": "0f1298e7e7b2c30e7877c82b42575ba337a4808d602df73869842c3488c7ce48",
+            "config_sha256": "66ab89f3079c7ba54712114fec249871cbe73d5c83004ef0cb34d625724b794e",
+            "handoff_header_sha256": "51db79078c78294d7f247da793839d8114ae6680e8fa5798b681b1c32648e7eb",
+            "tx_hex": "5245414459504f4c4943594f4b444f4e450d",
+            "input_hex": "4c4f47494e3a454e44545241494c",
+            "stdout_hex": "",
+            "stderr_hex": "",
+            "status": "exit=0 vector=1 mask=1 mcr=1 returned=1 count=5 lease=0 guard=1",
+            "returned_hex": "545241494c",
+            "descriptor_hex": "4153494f01001c001408e20ba00300100500000046a5010000000000",
+            "elapsed_seconds": 0.265,
+            "peer_errors": []
+          },
+          {
+            "name": "missingchain",
+            "passed": true,
+            "checks": {
+              "dos_parent_pass": true,
+              "status_uart_asio": true,
+              "exact_transmit": true,
+              "exact_stdout": true,
+              "exact_returned_unread": true,
+              "stderr": true,
+              "peer_no_error": true,
+              "input_delivered": true
+            },
+            "dependency_scripts": {},
+            "source_sha256": "164fb787b27fcad50c8c8cb0b57cb0b715c8653d584e76cea3cd98e77d2e7369",
+            "asx_sha256": "dba1b6c7212816edd4045c177e0c333e1307f81071c91f24e8165bb855c3f1ab",
+            "binary_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+            "parent_binary_sha256": "0f1298e7e7b2c30e7877c82b42575ba337a4808d602df73869842c3488c7ce48",
+            "config_sha256": "c94a455f80aac636fcd70268696fd9b84cb7a959783edd07c1b1eca1257b63b4",
+            "handoff_header_sha256": "51db79078c78294d7f247da793839d8114ae6680e8fa5798b681b1c32648e7eb",
+            "tx_hex": "",
+            "input_hex": "",
+            "stdout_hex": "",
+            "stderr_hex": "4153504543543a2063616e6e6f74206f70656e2073637269707420286572726f7220312c206f70636f64652043422c20737465702032290d0a",
+            "status": "exit=1 vector=1 mask=1 mcr=1 returned=1 count=0 lease=0 guard=1",
+            "returned_hex": "",
+            "descriptor_hex": "4153494f01001c001408e20ba00300100000000046a5010000000000",
+            "elapsed_seconds": 0.215,
+            "peer_errors": []
+          }
+        ],
+        "original_inputs": [],
+        "scope": "Actual production8086DOS child, COM1/38400 TCP peer and retained ASIOv1 parent. Script replacement retains UART/raw unread suffix and changed BREAK duration, restores IRQ/PIC/MCR/guard on success and missing target. No renderer, physical modem or complete compiler claim."
+      }
+    },
+    "build/aspect-runner/checks.json": {
+      "sha256": "40366224b0f10b08cdc37ea873a1ecea387912d9c007d3d7c9937a2aba67e624",
+      "report": {
+        "passed": true,
+        "original_inputs": [],
+        "binary_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+        "manifest_sha256": "09059ea1f039e5739e2b7a92bdd4acc627bde9edb7c272663a452005fbd1267a",
+        "checker_sha256": "f3a73d1cb8c02ffc01fdca0a82b9f5505f03ee114a18faf2a80dc6b67c5cf7a5",
+        "compiler_sha256": "5fc4281e7a26f70e6becf962c8ed6e7a253ca4bc1ee4fa5487a5ab42a0470812",
+        "result_sha256": "13dd32a85070f0fc854bd3d732120f7ae7b03f5d665c4340a102b25610ecc846",
+        "DOS_summary": "RUNNER 21 cases 105 checks 0 failures",
+        "cases": {
+          "HELLO": {
+            "exit": 0,
+            "stdout_hex": "48656c6c6f2c20444f530d0a",
+            "source": "proc main\nmessage \"Hello, DOS\"\nendproc\n",
+            "asx_sha256": "f42b006e6a05c006ea39d9f10a9bdcd688cc4b000fd0fd25b769f9bc75267b4d",
+            "stderr_hex": ""
+          },
+          "CARET": {
+            "exit": 0,
+            "stdout_hex": "410d420a43ff441e455e460d0a",
+            "source": "proc main\nmessage \"A^MB^JC^@D^^E^^^F\"\nendproc\n",
+            "asx_sha256": "f2c8f65d218ba24baae65b4b9e604b0d51a896633c0c35f439fee1e447523da0",
+            "stderr_hex": ""
+          },
+          "EARLY": {
+            "exit": 0,
+            "stdout_hex": "6265666f72650d0a",
+            "source": "proc main\nmessage \"before\"\nexit\nmessage \"after\"\nendproc\n",
+            "asx_sha256": "d77b9abc171d9fd1527d2053131f586567e85c7a30e82f179eedc652d8c74be5",
+            "stderr_hex": ""
+          },
+          "UNKNOWN": {
+            "exit": 3,
+            "stdout_hex": "",
+            "source": "proc main\ntransmit \"wire\"\nendproc\n",
+            "asx_sha256": "43884405171a91aa8405c2a498f1cea9e6dc613c46ff26215e25379e2ae0183a",
+            "stderr_hex": "4153504543543a20756e737570706f7274656420636f6d6d616e64206f72207365727669636520286572726f7220332c206f70636f64652042462c20737465702032290d0a"
+          },
+          "ZERO": {
+            "exit": 11,
+            "stdout_hex": "",
+            "source": "proc main\ninteger number\nnumber = 1 / 0\nendproc\n",
+            "asx_sha256": "b80ff3521ceb1157816d3b8c10766a358549f47b49a45a55e27d6b7c89d9fb19",
+            "stderr_hex": "4153504543543a206469766973696f6e206279207a65726f20286572726f722031312c206f70636f64652032362c207374657020332c206e61746976652032290d0a"
+          },
+          "BUDGET": {
+            "exit": 6,
+            "stdout_hex": "",
+            "source": "proc main\nwhile 1\nendwhile\nendproc\n",
+            "asx_sha256": "905ee2046c9485a0efbaf1d16aab3f249fe59104f6d51a5fa70135acd6400299",
+            "stderr_hex": "4153504543543a20696e737472756374696f6e206275646765742065786861757374656420286572726f7220362c206f70636f64652031352c2073746570203132290d0a"
+          },
+          "CANCEL": {
+            "exit": 13,
+            "stdout_hex": "",
+            "source": "proc main\nwhile 1\nendwhile\nendproc\n",
+            "asx_sha256": "905ee2046c9485a0efbaf1d16aab3f249fe59104f6d51a5fa70135acd6400299",
+            "stderr_hex": "4153504543543a2063616e63656c6c656420286572726f722031332c206f70636f64652030302c20737465702030290d0a"
+          },
+          "PAUSE": {
+            "exit": 0,
+            "stdout_hex": "6177616b650d0a",
+            "source": "proc main\npause 1\nmessage \"awake\"\nendproc\n",
+            "asx_sha256": "9034108d7409a5d827f72282d3d0dfee732ee1401f57d9d79982fa3c0e3aa007",
+            "stderr_hex": ""
+          },
+          "MISSING": {
+            "exit": 1,
+            "stdout_hex": "",
+            "stderr_hex": "4153504543543a2063616e6e6f74206f70656e2073637269707420286572726f7220312c206f70636f64652030302c20737465702030290d0a"
+          },
+          "BADHEAD": {
+            "exit": 2,
+            "stdout_hex": "",
+            "stderr_hex": "4153504543543a20696e76616c6964207363726970742068656164657220286572726f7220322c206f70636f64652030302c20737465702030290d0a"
+          },
+          "ARGS": {
+            "exit": 64,
+            "stdout_hex": "",
+            "stderr_hex": "55736167653a20415350454354207363726970742e415358205b696e737472756374696f6e2d6275646765743a312e2e36353533355d205b2f53313a303030333a30333a4e5d0d0a"
+          },
+          "LIMIT0": {
+            "exit": 64,
+            "stdout_hex": "",
+            "stderr_hex": "55736167653a20415350454354207363726970742e415358205b696e737472756374696f6e2d6275646765743a312e2e36353533355d205b2f53313a303030333a30333a4e5d0d0a"
+          },
+          "LIMITBIG": {
+            "exit": 64,
+            "stdout_hex": "",
+            "stderr_hex": "55736167653a20415350454354207363726970742e415358205b696e737472756374696f6e2d6275646765743a312e2e36353533355d205b2f53313a303030333a30333a4e5d0d0a"
+          },
+          "LIMITBAD": {
+            "exit": 64,
+            "stdout_hex": "",
+            "stderr_hex": "55736167653a20415350454354207363726970742e415358205b696e737472756374696f6e2d6275646765743a312e2e36353533355d205b2f53313a303030333a30333a4e5d0d0a"
+          },
+          "DEVICE": {
+            "exit": 64,
+            "stdout_hex": "",
+            "stderr_hex": "55736167653a20415350454354207363726970742e415358205b696e737472756374696f6e2d6275646765743a312e2e36353533355d205b2f53313a303030333a30333a4e5d0d0a"
+          },
+          "HELP": {
+            "exit": 0,
+            "stdout_hex": "415350454354207363726970742e415358205b696e737472756374696f6e2d6275646765743a312e2e36353533355d205b2f53313a303030333a30333a4e5d0d0a",
+            "stderr_hex": ""
+          },
+          "SERPORT": {
+            "exit": 14,
+            "stdout_hex": "",
+            "stderr_hex": "4153504543543a2073657269616c2073657276696365206572726f7220286572726f722031342c206f70636f64652030302c207374657020302c2073657269616c2031290d0a"
+          },
+          "SERDIV": {
+            "exit": 14,
+            "stdout_hex": "",
+            "stderr_hex": "4153504543543a2073657269616c2073657276696365206572726f7220286572726f722031342c206f70636f64652030302c207374657020302c2073657269616c2031290d0a"
+          },
+          "SERLCR": {
+            "exit": 14,
+            "stdout_hex": "",
+            "stderr_hex": "4153504543543a2073657269616c2073657276696365206572726f7220286572726f722031342c206f70636f64652030302c207374657020302c2073657269616c2031290d0a"
+          },
+          "SERFLOW": {
+            "exit": 14,
+            "stdout_hex": "",
+            "stderr_hex": "4153504543543a2073657269616c2073657276696365206572726f7220286572726f722031342c206f70636f64652030302c207374657020302c2073657269616c2031290d0a"
+          },
+          "SERPTR": {
+            "exit": 14,
+            "stdout_hex": "",
+            "stderr_hex": "4153504543543a2073657269616c2073657276696365206572726f7220286572726f722031342c206f70636f64652030302c207374657020302c2073657269616c2031290d0a"
+          }
+        },
+        "scope": "Actual production DOS CLI spawned21 times with independent handles; exact stdout/stderr, statuses, BIOS Escape, native delay, malformed serial handoff admission and INT0 restoration. Fixed trusted source cases, not arbitrary-bytecode safety or complete serial scripting."
+      }
+    },
+    "build/aspect-chain-status-dos/chain-final/checks.json": {
+      "sha256": "37b67dffeefc1777c2923d38825a330fc910e1a311198ba9407954cee0de275f",
+      "report": {
+        "passed": true,
+        "cases": [
+          {
+            "case": "renderer-chain-policy",
+            "passed": true,
+            "checks": {
+              "renderer_post_sent": true,
+              "DOS_expected_exit": true,
+              "hardware_restored": true,
+              "PRM_unchanged": true,
+              "binary_unchanged": true,
+              "no_peer_errors": true,
+              "no_unexpected_commands": true,
+              "directory_expected_updates_only": true,
+              "fixture_unchanged_LOGIN.ASP": true,
+              "fixture_unchanged_LOGIN.ASX": true,
+              "fixture_unchanged_RENDER.COM": true,
+              "fixture_unchanged_NEXT.ASX": true,
+              "fixture_unchanged_NEXT.ASP": true,
+              "actual_init_and_dial": true,
+              "actual_DOS_CPR": true,
+              "actual_DOS_DA": true,
+              "actual_screen_snapshot": true,
+              "passive_EXEC_observed": true,
+              "child_exit_expected": true,
+              "parent_JFT_unchanged": true,
+              "all_parent_sink_owners_unchanged": true,
+              "explicit_password_only": true,
+              "ordinary_parent_keyboard_resumes": true,
+              "initial_CPR_before_password": true,
+              "no_automatic_redial": true,
+              "frozen_inputs": true,
+              "post_query_sent_after_password": true,
+              "post_return_cursor_coherent": true,
+              "video_0_0": true,
+              "far_history_retained_across_EXEC_return": true,
+              "far_history_bounds": true,
+              "native_renderer_updated_far_history": true,
+              "actual_child_PAUSE_status_observed": true,
+              "native_status_row_exact": true,
+              "fourteen_label_attributes": true,
+              "eighty_first_native_cell": true,
+              "parent_duplex_unchanged": true,
+              "parent_profile_retained": true,
+              "parent_ui_attribute_retained": true,
+              "SETWHENCASE_value": true,
+              "chained_break_override_retained": true,
+              "target_ASX_staged": true
+            },
+            "commands": [
+              "ATZ",
+              "ATDCaseTest:23"
+            ],
+            "errors": [],
+            "seconds": 7.527,
+            "binary_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+            "command": "@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK",
+            "expected_exit": 0,
+            "working_drive": "d",
+            "environment": {},
+            "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.",
+            "history_states": [
+              [
+                0,
+                63000,
+                0,
+                19865
+              ],
+              [
+                0,
+                63000,
+                22,
+                19865
+              ],
+              [
+                0,
+                63000,
+                22,
+                19865
+              ]
+            ],
+            "history_prefix_hex": [
+              "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            ],
+            "observed_EXEC_names": [
+              "Z:\\BIN\\ADDKEY.COM",
+              "C:\\TERMINAL.EXE",
+              "C:\\ASPECT.EXE",
+              "D:\\SNAP.COM",
+              "D:\\RENDER.COM",
+              "",
+              "",
+              ""
+            ],
+            "admission_failure_observed": 0,
+            "admission_state": {},
+            "passive_all_EXEC_debug": [
+              5,
+              1865,
+              60419,
+              16897
+            ],
+            "passive_observer_header": [
+              21070,
+              1,
+              1,
+              1,
+              9962,
+              2581,
+              0
+            ],
+            "child_exit_parent_state": {
+              "csi_origin_mode": 0,
+              "cursor_state_value_1d20": 1,
+              "terminal_mode_372c": 0,
+              "modes_value_3980": 1,
+              "modes_value_1d1a": 0,
+              "csi_terminal_id": 6,
+              "screen_cursor_row": 0,
+              "screen_cursor_column": 21,
+              "terminal_sink_3988_enabled": 0,
+              "terminal_sink_398a_enabled": 0
+            },
+            "runner_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+            "expectations_sha256": "1a002f7091bacc62850d2b4704bd6eab66a7174def8dd25e9ee6fb292e0f486f",
+            "observer_sha256": "f09c0afd319731c88cd257e043626ca59891b5d98977e99370ced9e29f9ac206",
+            "status_samples": 19,
+            "status_row_hex": "201f4c1e4f1e471e491e4e1e2e1e411e531e581e201e201e201e201e201eb31f201f411f4e1f531f491f201f201f201f201f201fb31f201f461f441f581f201fb31f201f331f381f341f301f301f201f4e1f381f311f201fb31f201f4c1f4f1f471f201f431f4c1f4f1f531f451f441f201fb31f201f501f521f491f4e1f541f201f4f1f461f461f201fb31f201f4f1f4e1f2d1f4c1f491f4e1f451f201f201f201f",
+            "status_characters": " LOGIN.ASX     \u2502 ANSI     \u2502 FDX \u2502 38400 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 ON-LINE   ",
+            "status_parent_duplex": 0
+          }
+        ],
+        "terminal_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+        "runner_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+        "checker_sha256": "3fb2fb3fbe7b1c829c4090f80217401b9d761a9ab1383700efb446f0408661ac",
+        "expectations_sha256": "1a002f7091bacc62850d2b4704bd6eab66a7174def8dd25e9ee6fb292e0f486f",
+        "parent_map_sha256": "b20b0ddd7b2d67a6b8f3d56ef23a49d63f2fd509a1fbf4f6b95d3aab3ecb713f",
+        "observer_source_sha256": "60dffb2525aa7cb2ec1a30c37f8813b3107391cafc9435ddd9a422584a55a946",
+        "original_inputs": [],
+        "scope": "Actual production DOS parent/child EXECUTE with resident capability3. Changed BREAK1234 and WHENCASE survive replacement; policy inheritance does not overwrite the change on reopen. Target PAUSE samples actual parent status; known initial LOGIN label remains until label operation is implemented. Original query/history/keyboard/owner/IRQ/JFT checks retained. No physical modem or source compile claim.",
+        "reused_renderer_checker_sha256": "de835528072794493a6897317aa62589f12120fd9007db78386db0d651d698a9",
+        "status_fixture_sha256": "35a6e2c58262dea9ccac3daed6b635c55fc7490a9ec52de6ff4df843a8194ab9",
+        "target_source": "integer saved\nproc main\nfetch break saved\nif saved == 1234\ntransmit \"CHAINOK^M\"\nelse\ntransmit \"BADPOLICY^M\"\nendif\npause 1\ntransmit $D_PWORD\ntransmit \"^M\"\nendproc\n",
+        "reused_status_checker_sha256": "70c577b42481f1f1832b0384c122ccae3f4e9da491bdf1f120b2949024f5bbdc"
+      }
+    },
+    "build/aspect-set-status-dos/chain-final/checks.json": {
+      "sha256": "89183ccc9cebada3ef925da51fe5fdbe9d760a4fbe80e0f1817fa47f52a2485f",
+      "report": {
+        "passed": true,
+        "cases": [
+          {
+            "case": "DISPLAY-off-still-refreshes",
+            "passed": true,
+            "checks": {
+              "renderer_post_sent": true,
+              "DOS_expected_exit": true,
+              "hardware_restored": true,
+              "PRM_unchanged": true,
+              "binary_unchanged": true,
+              "no_peer_errors": true,
+              "no_unexpected_commands": true,
+              "directory_expected_updates_only": true,
+              "fixture_unchanged_LOGIN.ASP": true,
+              "fixture_unchanged_LOGIN.ASX": true,
+              "fixture_unchanged_RENDER.COM": true,
+              "actual_init_and_dial": true,
+              "actual_DOS_CPR": true,
+              "actual_DOS_DA": true,
+              "actual_screen_snapshot": true,
+              "passive_EXEC_observed": true,
+              "child_exit_expected": true,
+              "parent_JFT_unchanged": true,
+              "all_parent_sink_owners_unchanged": true,
+              "explicit_password_only": true,
+              "ordinary_parent_keyboard_resumes": true,
+              "initial_CPR_before_password": true,
+              "no_automatic_redial": true,
+              "frozen_inputs": true,
+              "post_query_sent_after_password": true,
+              "post_return_cursor_coherent": true,
+              "video_0_0": true,
+              "far_history_retained_across_EXEC_return": true,
+              "far_history_bounds": true,
+              "native_renderer_updated_far_history": true,
+              "actual_child_PAUSE_status_observed": true,
+              "native_status_row_exact": true,
+              "fourteen_label_attributes": true,
+              "eighty_first_native_cell": true,
+              "parent_duplex_unchanged": true,
+              "parent_profile_retained": true,
+              "parent_ui_attribute_retained": true,
+              "SETWHENCASE_value": true
+            },
+            "commands": [
+              "ATZ",
+              "ATDCaseTest:23"
+            ],
+            "errors": [],
+            "seconds": 7.479,
+            "binary_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+            "command": "@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK",
+            "expected_exit": 0,
+            "working_drive": "d",
+            "environment": {},
+            "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.",
+            "history_states": [
+              [
+                0,
+                63000,
+                0,
+                19865
+              ],
+              [
+                0,
+                63000,
+                22,
+                19865
+              ],
+              [
+                0,
+                63000,
+                22,
+                19865
+              ]
+            ],
+            "history_prefix_hex": [
+              "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            ],
+            "observed_EXEC_names": [
+              "Z:\\BIN\\ADDKEY.COM",
+              "C:\\TERMINAL.EXE",
+              "C:\\ASPECT.EXE",
+              "D:\\SNAP.COM",
+              "D:\\RENDER.COM",
+              "",
+              "",
+              ""
+            ],
+            "admission_failure_observed": 0,
+            "admission_state": {},
+            "passive_all_EXEC_debug": [
+              5,
+              1865,
+              60419,
+              16897
+            ],
+            "passive_observer_header": [
+              21070,
+              1,
+              1,
+              1,
+              9962,
+              2581,
+              0
+            ],
+            "child_exit_parent_state": {
+              "csi_origin_mode": 0,
+              "cursor_state_value_1d20": 1,
+              "terminal_mode_372c": 0,
+              "modes_value_3980": 1,
+              "modes_value_1d1a": 0,
+              "csi_terminal_id": 6,
+              "screen_cursor_row": 0,
+              "screen_cursor_column": 21,
+              "terminal_sink_3988_enabled": 0,
+              "terminal_sink_398a_enabled": 0
+            },
+            "runner_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+            "expectations_sha256": "a3f8017dd2819f0b4e7d89649213f4bc3d71b29e8345b08af2254e9e65adbe2c",
+            "observer_sha256": "f09c0afd319731c88cd257e043626ca59891b5d98977e99370ced9e29f9ac206",
+            "status_samples": 19,
+            "status_row_hex": "201f4c1e4f1e471e491e4e1e2e1e411e531e581e201e201e201e201e201eb31f201f411f4e1f531f491f201f201f201f201f201fb31f201f461f441f581f201fb31f201f331f381f341f301f301f201f4e1f381f311f201fb31f201f4c1f4f1f471f201f431f4c1f4f1f531f451f441f201fb31f201f501f521f491f4e1f541f201f4f1f461f461f201fb31f201f4f1f4e1f2d1f4c1f491f4e1f451f201f201f201f",
+            "status_characters": " LOGIN.ASX     \u2502 ANSI     \u2502 FDX \u2502 38400 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 ON-LINE   ",
+            "status_parent_duplex": 0
+          },
+          {
+            "case": "MESSAGE-and-KEYS-state",
+            "passed": true,
+            "checks": {
+              "renderer_post_sent": true,
+              "DOS_expected_exit": true,
+              "hardware_restored": true,
+              "PRM_unchanged": true,
+              "binary_unchanged": true,
+              "no_peer_errors": true,
+              "no_unexpected_commands": true,
+              "directory_expected_updates_only": true,
+              "fixture_unchanged_LOGIN.ASP": true,
+              "fixture_unchanged_LOGIN.ASX": true,
+              "fixture_unchanged_RENDER.COM": true,
+              "actual_init_and_dial": true,
+              "actual_DOS_CPR": true,
+              "actual_DOS_DA": true,
+              "actual_screen_snapshot": true,
+              "passive_EXEC_observed": true,
+              "child_exit_expected": true,
+              "parent_JFT_unchanged": true,
+              "all_parent_sink_owners_unchanged": true,
+              "explicit_password_only": true,
+              "ordinary_parent_keyboard_resumes": true,
+              "initial_CPR_before_password": true,
+              "no_automatic_redial": true,
+              "frozen_inputs": true,
+              "post_query_sent_after_password": true,
+              "post_return_cursor_coherent": true,
+              "video_0_0": true,
+              "far_history_retained_across_EXEC_return": true,
+              "far_history_bounds": true,
+              "native_renderer_updated_far_history": true,
+              "actual_child_PAUSE_status_observed": true,
+              "native_status_row_exact": true,
+              "fourteen_label_attributes": true,
+              "eighty_first_native_cell": true,
+              "parent_duplex_unchanged": true,
+              "parent_profile_retained": true,
+              "parent_ui_attribute_retained": true,
+              "SETWHENCASE_value": true
+            },
+            "commands": [
+              "ATZ",
+              "ATDCaseTest:23"
+            ],
+            "errors": [],
+            "seconds": 7.529,
+            "binary_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+            "command": "@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK",
+            "expected_exit": 0,
+            "working_drive": "d",
+            "environment": {},
+            "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.",
+            "history_states": [
+              [
+                0,
+                63000,
+                0,
+                19865
+              ],
+              [
+                0,
+                63000,
+                22,
+                19865
+              ],
+              [
+                0,
+                63000,
+                22,
+                19865
+              ]
+            ],
+            "history_prefix_hex": [
+              "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            ],
+            "observed_EXEC_names": [
+              "Z:\\BIN\\ADDKEY.COM",
+              "C:\\TERMINAL.EXE",
+              "C:\\ASPECT.EXE",
+              "D:\\SNAP.COM",
+              "D:\\RENDER.COM",
+              "",
+              "",
+              ""
+            ],
+            "admission_failure_observed": 0,
+            "admission_state": {},
+            "passive_all_EXEC_debug": [
+              5,
+              1865,
+              60419,
+              16897
+            ],
+            "passive_observer_header": [
+              21070,
+              1,
+              1,
+              1,
+              9962,
+              2581,
+              0
+            ],
+            "child_exit_parent_state": {
+              "csi_origin_mode": 0,
+              "cursor_state_value_1d20": 1,
+              "terminal_mode_372c": 0,
+              "modes_value_3980": 1,
+              "modes_value_1d1a": 0,
+              "csi_terminal_id": 6,
+              "screen_cursor_row": 0,
+              "screen_cursor_column": 21,
+              "terminal_sink_3988_enabled": 0,
+              "terminal_sink_398a_enabled": 0
+            },
+            "runner_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+            "expectations_sha256": "a3f8017dd2819f0b4e7d89649213f4bc3d71b29e8345b08af2254e9e65adbe2c",
+            "observer_sha256": "f09c0afd319731c88cd257e043626ca59891b5d98977e99370ced9e29f9ac206",
+            "status_samples": 19,
+            "status_row_hex": "201f4c1e4f1e471e491e4e1e2e1e411e531e581e201e201e201e201e201eb31f201f411f4e1f531f491f201f201f201f201f201fb31f201f461f441f581f201fb31f201f331f381f341f301f301f201f4e1f381f311f201fb31f201f4c1f4f1f471f201f431f4c1f4f1f531f451f441f201fb31f201f501f521f491f4e1f541f201f4f1f461f461f201fb31f201f4f1f4e1f2d1f4c1f491f4e1f451f201f201f201f",
+            "status_characters": " LOGIN.ASX     \u2502 ANSI     \u2502 FDX \u2502 38400 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 ON-LINE   ",
+            "status_parent_duplex": 0
+          },
+          {
+            "case": "line-policy-paced-transmit",
+            "passed": true,
+            "checks": {
+              "renderer_post_sent": true,
+              "DOS_expected_exit": true,
+              "hardware_restored": true,
+              "PRM_unchanged": true,
+              "binary_unchanged": true,
+              "no_peer_errors": true,
+              "no_unexpected_commands": true,
+              "directory_expected_updates_only": true,
+              "fixture_unchanged_LOGIN.ASP": true,
+              "fixture_unchanged_LOGIN.ASX": true,
+              "fixture_unchanged_RENDER.COM": true,
+              "actual_init_and_dial": true,
+              "actual_DOS_CPR": true,
+              "actual_DOS_DA": true,
+              "actual_screen_snapshot": true,
+              "passive_EXEC_observed": true,
+              "child_exit_expected": true,
+              "parent_JFT_unchanged": true,
+              "all_parent_sink_owners_unchanged": true,
+              "explicit_password_only": true,
+              "ordinary_parent_keyboard_resumes": true,
+              "initial_CPR_before_password": true,
+              "no_automatic_redial": true,
+              "frozen_inputs": true,
+              "post_query_sent_after_password": true,
+              "post_return_cursor_coherent": true,
+              "video_0_0": true,
+              "far_history_retained_across_EXEC_return": true,
+              "far_history_bounds": true,
+              "native_renderer_updated_far_history": true,
+              "actual_child_PAUSE_status_observed": true,
+              "native_status_row_exact": true,
+              "fourteen_label_attributes": true,
+              "eighty_first_native_cell": true,
+              "parent_duplex_unchanged": true,
+              "parent_profile_retained": true,
+              "parent_ui_attribute_retained": true,
+              "SETWHENCASE_value": true
+            },
+            "commands": [
+              "ATZ",
+              "ATDCaseTest:23"
+            ],
+            "errors": [],
+            "seconds": 7.479,
+            "binary_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+            "command": "@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK",
+            "expected_exit": 0,
+            "working_drive": "d",
+            "environment": {},
+            "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.",
+            "history_states": [
+              [
+                0,
+                63000,
+                0,
+                19865
+              ],
+              [
+                0,
+                63000,
+                22,
+                19865
+              ],
+              [
+                0,
+                63000,
+                22,
+                19865
+              ]
+            ],
+            "history_prefix_hex": [
+              "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            ],
+            "observed_EXEC_names": [
+              "Z:\\BIN\\ADDKEY.COM",
+              "C:\\TERMINAL.EXE",
+              "C:\\ASPECT.EXE",
+              "D:\\SNAP.COM",
+              "D:\\RENDER.COM",
+              "",
+              "",
+              ""
+            ],
+            "admission_failure_observed": 0,
+            "admission_state": {},
+            "passive_all_EXEC_debug": [
+              5,
+              1865,
+              60419,
+              16897
+            ],
+            "passive_observer_header": [
+              21070,
+              1,
+              1,
+              1,
+              9962,
+              2581,
+              0
+            ],
+            "child_exit_parent_state": {
+              "csi_origin_mode": 0,
+              "cursor_state_value_1d20": 1,
+              "terminal_mode_372c": 0,
+              "modes_value_3980": 1,
+              "modes_value_1d1a": 0,
+              "csi_terminal_id": 6,
+              "screen_cursor_row": 0,
+              "screen_cursor_column": 21,
+              "terminal_sink_3988_enabled": 0,
+              "terminal_sink_398a_enabled": 0
+            },
+            "runner_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+            "expectations_sha256": "a3f8017dd2819f0b4e7d89649213f4bc3d71b29e8345b08af2254e9e65adbe2c",
+            "observer_sha256": "f09c0afd319731c88cd257e043626ca59891b5d98977e99370ced9e29f9ac206",
+            "status_samples": 19,
+            "status_row_hex": "201f4c1e4f1e471e491e4e1e2e1e411e531e581e201e201e201e201e201eb31f201f411f4e1f531f491f201f201f201f201f201fb31f201f461f441f581f201fb31f201f331f381f341f301f301f201f4e1f381f311f201fb31f201f4c1f4f1f471f201f431f4c1f4f1f531f451f441f201fb31f201f501f521f491f4e1f541f201f4f1f461f461f201fb31f201f4f1f4e1f2d1f4c1f491f4e1f451f201f201f201f",
+            "status_characters": " LOGIN.ASX     \u2502 ANSI     \u2502 FDX \u2502 38400 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 ON-LINE   ",
+            "status_parent_duplex": 0
+          },
+          {
+            "case": "RXDATA-native-gate",
+            "passed": true,
+            "checks": {
+              "renderer_post_sent": true,
+              "DOS_expected_exit": true,
+              "hardware_restored": true,
+              "PRM_unchanged": true,
+              "binary_unchanged": true,
+              "no_peer_errors": true,
+              "no_unexpected_commands": true,
+              "directory_expected_updates_only": true,
+              "fixture_unchanged_LOGIN.ASP": true,
+              "fixture_unchanged_LOGIN.ASX": true,
+              "fixture_unchanged_RENDER.COM": true,
+              "actual_init_and_dial": true,
+              "actual_DOS_CPR": true,
+              "actual_DOS_DA": true,
+              "actual_screen_snapshot": true,
+              "passive_EXEC_observed": true,
+              "child_exit_expected": true,
+              "parent_JFT_unchanged": true,
+              "all_parent_sink_owners_unchanged": true,
+              "explicit_password_only": true,
+              "ordinary_parent_keyboard_resumes": true,
+              "initial_CPR_before_password": true,
+              "no_automatic_redial": true,
+              "frozen_inputs": true,
+              "post_query_sent_after_password": true,
+              "post_return_cursor_coherent": true,
+              "video_0_0": true,
+              "far_history_retained_across_EXEC_return": true,
+              "far_history_bounds": true,
+              "native_renderer_updated_far_history": true,
+              "actual_child_PAUSE_status_observed": true,
+              "native_status_row_exact": true,
+              "fourteen_label_attributes": true,
+              "eighty_first_native_cell": true,
+              "parent_duplex_unchanged": true,
+              "parent_profile_retained": true,
+              "parent_ui_attribute_retained": true,
+              "SETWHENCASE_value": true
+            },
+            "commands": [
+              "ATZ",
+              "ATDCaseTest:23"
+            ],
+            "errors": [],
+            "seconds": 7.529,
+            "binary_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+            "command": "@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK",
+            "expected_exit": 0,
+            "working_drive": "d",
+            "environment": {},
+            "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.",
+            "history_states": [
+              [
+                0,
+                63000,
+                0,
+                19865
+              ],
+              [
+                0,
+                63000,
+                22,
+                19865
+              ],
+              [
+                0,
+                63000,
+                22,
+                19865
+              ]
+            ],
+            "history_prefix_hex": [
+              "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            ],
+            "observed_EXEC_names": [
+              "Z:\\BIN\\ADDKEY.COM",
+              "C:\\TERMINAL.EXE",
+              "C:\\ASPECT.EXE",
+              "D:\\SNAP.COM",
+              "D:\\RENDER.COM",
+              "",
+              "",
+              ""
+            ],
+            "admission_failure_observed": 0,
+            "admission_state": {},
+            "passive_all_EXEC_debug": [
+              5,
+              1865,
+              60419,
+              16897
+            ],
+            "passive_observer_header": [
+              21070,
+              1,
+              1,
+              1,
+              9962,
+              2581,
+              0
+            ],
+            "child_exit_parent_state": {
+              "csi_origin_mode": 0,
+              "cursor_state_value_1d20": 1,
+              "terminal_mode_372c": 0,
+              "modes_value_3980": 1,
+              "modes_value_1d1a": 0,
+              "csi_terminal_id": 6,
+              "screen_cursor_row": 0,
+              "screen_cursor_column": 21,
+              "terminal_sink_3988_enabled": 0,
+              "terminal_sink_398a_enabled": 0
+            },
+            "runner_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+            "expectations_sha256": "a3f8017dd2819f0b4e7d89649213f4bc3d71b29e8345b08af2254e9e65adbe2c",
+            "observer_sha256": "f09c0afd319731c88cd257e043626ca59891b5d98977e99370ced9e29f9ac206",
+            "status_samples": 19,
+            "status_row_hex": "201f4c1e4f1e471e491e4e1e2e1e411e531e581e201e201e201e201e201eb31f201f411f4e1f531f491f201f201f201f201f201fb31f201f461f441f581f201fb31f201f331f381f341f301f301f201f4e1f381f311f201fb31f201f4c1f4f1f471f201f431f4c1f4f1f531f451f441f201fb31f201f501f521f491f4e1f541f201f4f1f461f461f201fb31f201f4f1f4e1f2d1f4c1f491f4e1f451f201f201f201f",
+            "status_characters": " LOGIN.ASX     \u2502 ANSI     \u2502 FDX \u2502 38400 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 ON-LINE   ",
+            "status_parent_duplex": 0
+          },
+          {
+            "case": "DUPLEX-half-snapshot",
+            "passed": true,
+            "checks": {
+              "renderer_post_sent": true,
+              "DOS_expected_exit": true,
+              "hardware_restored": true,
+              "PRM_unchanged": true,
+              "binary_unchanged": true,
+              "no_peer_errors": true,
+              "no_unexpected_commands": true,
+              "directory_expected_updates_only": true,
+              "fixture_unchanged_LOGIN.ASP": true,
+              "fixture_unchanged_LOGIN.ASX": true,
+              "fixture_unchanged_RENDER.COM": true,
+              "actual_init_and_dial": true,
+              "actual_DOS_CPR": true,
+              "actual_DOS_DA": true,
+              "actual_screen_snapshot": true,
+              "passive_EXEC_observed": true,
+              "child_exit_expected": true,
+              "parent_JFT_unchanged": true,
+              "all_parent_sink_owners_unchanged": true,
+              "explicit_password_only": true,
+              "ordinary_parent_keyboard_resumes": true,
+              "initial_CPR_before_password": true,
+              "no_automatic_redial": true,
+              "frozen_inputs": true,
+              "post_query_sent_after_password": true,
+              "post_return_cursor_coherent": true,
+              "video_0_0": true,
+              "far_history_retained_across_EXEC_return": true,
+              "far_history_bounds": true,
+              "native_renderer_updated_far_history": true,
+              "actual_child_PAUSE_status_observed": true,
+              "native_status_row_exact": true,
+              "fourteen_label_attributes": true,
+              "eighty_first_native_cell": true,
+              "parent_duplex_unchanged": true,
+              "parent_profile_retained": true,
+              "parent_ui_attribute_retained": true,
+              "SETWHENCASE_value": true
+            },
+            "commands": [
+              "ATZ",
+              "ATDCaseTest:23"
+            ],
+            "errors": [],
+            "seconds": 7.528,
+            "binary_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+            "command": "@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK",
+            "expected_exit": 0,
+            "working_drive": "d",
+            "environment": {},
+            "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.",
+            "history_states": [
+              [
+                0,
+                63000,
+                0,
+                19865
+              ],
+              [
+                0,
+                63000,
+                22,
+                19865
+              ],
+              [
+                0,
+                63000,
+                22,
+                19865
+              ]
+            ],
+            "history_prefix_hex": [
+              "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            ],
+            "observed_EXEC_names": [
+              "Z:\\BIN\\ADDKEY.COM",
+              "C:\\TERMINAL.EXE",
+              "C:\\ASPECT.EXE",
+              "D:\\SNAP.COM",
+              "D:\\RENDER.COM",
+              "",
+              "",
+              ""
+            ],
+            "admission_failure_observed": 0,
+            "admission_state": {},
+            "passive_all_EXEC_debug": [
+              5,
+              1865,
+              60419,
+              16897
+            ],
+            "passive_observer_header": [
+              21070,
+              1,
+              1,
+              1,
+              9962,
+              2581,
+              0
+            ],
+            "child_exit_parent_state": {
+              "csi_origin_mode": 0,
+              "cursor_state_value_1d20": 1,
+              "terminal_mode_372c": 0,
+              "modes_value_3980": 1,
+              "modes_value_1d1a": 0,
+              "csi_terminal_id": 6,
+              "screen_cursor_row": 0,
+              "screen_cursor_column": 21,
+              "terminal_sink_3988_enabled": 0,
+              "terminal_sink_398a_enabled": 0
+            },
+            "runner_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+            "expectations_sha256": "a3f8017dd2819f0b4e7d89649213f4bc3d71b29e8345b08af2254e9e65adbe2c",
+            "observer_sha256": "f09c0afd319731c88cd257e043626ca59891b5d98977e99370ced9e29f9ac206",
+            "status_samples": 19,
+            "status_row_hex": "201f4c1e4f1e471e491e4e1e2e1e411e531e581e201e201e201e201e201eb31f201f411f4e1f531f491f201f201f201f201f201fb31f201f481f441f581f201fb31f201f331f381f341f301f301f201f4e1f381f311f201fb31f201f4c1f4f1f471f201f431f4c1f4f1f531f451f441f201fb31f201f501f521f491f4e1f541f201f4f1f461f461f201fb31f201f4f1f4e1f2d1f4c1f491f4e1f451f201f201f201f",
+            "status_characters": " LOGIN.ASX     \u2502 ANSI     \u2502 HDX \u2502 38400 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 ON-LINE   ",
+            "status_parent_duplex": 0
+          },
+          {
+            "case": "DISPLAY-off-DUPLEX-half",
+            "passed": true,
+            "checks": {
+              "renderer_post_sent": true,
+              "DOS_expected_exit": true,
+              "hardware_restored": true,
+              "PRM_unchanged": true,
+              "binary_unchanged": true,
+              "no_peer_errors": true,
+              "no_unexpected_commands": true,
+              "directory_expected_updates_only": true,
+              "fixture_unchanged_LOGIN.ASP": true,
+              "fixture_unchanged_LOGIN.ASX": true,
+              "fixture_unchanged_RENDER.COM": true,
+              "actual_init_and_dial": true,
+              "actual_DOS_CPR": true,
+              "actual_DOS_DA": true,
+              "actual_screen_snapshot": true,
+              "passive_EXEC_observed": true,
+              "child_exit_expected": true,
+              "parent_JFT_unchanged": true,
+              "all_parent_sink_owners_unchanged": true,
+              "explicit_password_only": true,
+              "ordinary_parent_keyboard_resumes": true,
+              "initial_CPR_before_password": true,
+              "no_automatic_redial": true,
+              "frozen_inputs": true,
+              "post_query_sent_after_password": true,
+              "post_return_cursor_coherent": true,
+              "video_0_0": true,
+              "far_history_retained_across_EXEC_return": true,
+              "far_history_bounds": true,
+              "native_renderer_updated_far_history": true,
+              "actual_child_PAUSE_status_observed": true,
+              "native_status_row_exact": true,
+              "fourteen_label_attributes": true,
+              "eighty_first_native_cell": true,
+              "parent_duplex_unchanged": true,
+              "parent_profile_retained": true,
+              "parent_ui_attribute_retained": true,
+              "SETWHENCASE_value": true
+            },
+            "commands": [
+              "ATZ",
+              "ATDCaseTest:23"
+            ],
+            "errors": [],
+            "seconds": 7.529,
+            "binary_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+            "command": "@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK",
+            "expected_exit": 0,
+            "working_drive": "d",
+            "environment": {},
+            "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.",
+            "history_states": [
+              [
+                0,
+                63000,
+                0,
+                19865
+              ],
+              [
+                0,
+                63000,
+                22,
+                19865
+              ],
+              [
+                0,
+                63000,
+                22,
+                19865
+              ]
+            ],
+            "history_prefix_hex": [
+              "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            ],
+            "observed_EXEC_names": [
+              "Z:\\BIN\\ADDKEY.COM",
+              "C:\\TERMINAL.EXE",
+              "C:\\ASPECT.EXE",
+              "D:\\SNAP.COM",
+              "D:\\RENDER.COM",
+              "",
+              "",
+              ""
+            ],
+            "admission_failure_observed": 0,
+            "admission_state": {},
+            "passive_all_EXEC_debug": [
+              5,
+              1865,
+              60419,
+              16897
+            ],
+            "passive_observer_header": [
+              21070,
+              1,
+              1,
+              1,
+              9962,
+              2581,
+              0
+            ],
+            "child_exit_parent_state": {
+              "csi_origin_mode": 0,
+              "cursor_state_value_1d20": 1,
+              "terminal_mode_372c": 0,
+              "modes_value_3980": 1,
+              "modes_value_1d1a": 0,
+              "csi_terminal_id": 6,
+              "screen_cursor_row": 0,
+              "screen_cursor_column": 21,
+              "terminal_sink_3988_enabled": 0,
+              "terminal_sink_398a_enabled": 0
+            },
+            "runner_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+            "expectations_sha256": "a3f8017dd2819f0b4e7d89649213f4bc3d71b29e8345b08af2254e9e65adbe2c",
+            "observer_sha256": "f09c0afd319731c88cd257e043626ca59891b5d98977e99370ced9e29f9ac206",
+            "status_samples": 19,
+            "status_row_hex": "201f4c1e4f1e471e491e4e1e2e1e411e531e581e201e201e201e201e201eb31f201f411f4e1f531f491f201f201f201f201f201fb31f201f481f441f581f201fb31f201f331f381f341f301f301f201f4e1f381f311f201fb31f201f4c1f4f1f471f201f431f4c1f4f1f531f451f441f201fb31f201f501f521f491f4e1f541f201f4f1f461f461f201fb31f201f4f1f4e1f2d1f4c1f491f4e1f451f201f201f201f",
+            "status_characters": " LOGIN.ASX     \u2502 ANSI     \u2502 HDX \u2502 38400 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 ON-LINE   ",
+            "status_parent_duplex": 0
+          }
+        ],
+        "terminal_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+        "runner_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+        "checker_sha256": "ff5a181ec89fa0603790785c558234617337a2e50db86c52c9af0bda5aba6e7a",
+        "expectations_sha256": "a3f8017dd2819f0b4e7d89649213f4bc3d71b29e8345b08af2254e9e65adbe2c",
+        "parent_map_sha256": "b20b0ddd7b2d67a6b8f3d56ef23a49d63f2fd509a1fbf4f6b95d3aab3ecb713f",
+        "observer_source_sha256": "60dffb2525aa7cb2ec1a30c37f8813b3107391cafc9435ddd9a422584a55a946",
+        "original_inputs": [],
+        "scope": "Actual native SET handlers and parent STATUS with passive child-PAUSE row sampling. DISPLAY OFF does not suppress status; explicit HALF projects HDX without parent duplex adoption. FULL is restored before password transmission. Other setters execute but their broader consumers require separate evidence. No physical carrier/timing or complete application claim.",
+        "reused_renderer_checker_sha256": "de835528072794493a6897317aa62589f12120fd9007db78386db0d651d698a9",
+        "status_fixture_sha256": "35a6e2c58262dea9ccac3daed6b635c55fc7490a9ec52de6ff4df843a8194ab9",
+        "reused_status_checker_sha256": "70c577b42481f1f1832b0384c122ccae3f4e9da491bdf1f120b2949024f5bbdc"
+      }
+    },
+    "docs/validation/application-components-source-build.json": {
+      "sha256": "235f6a83105094a38fe8cc85e396e1e53bafc37a0ee539d89c299dd961523649",
+      "report": {
+        "passed": true,
+        "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
+        "source_snapshot_sha256": "1ea0b1f26af04022df420143eff03f28b7e853e5cebe4aa2abfa3e3af485bc09",
+        "source_file_count": 1907,
+        "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
+        "excluded_top_level_paths": [
+          ".git",
+          "analysis",
+          "build",
+          "install",
+          "original",
+          "originals"
+        ],
+        "original_executable_present": false,
+        "original_install_present": false,
+        "REA_database_present": false,
+        "previous_build_outputs_present": false,
+        "build_log_sha256": "de41d42e68a3c94ce59a2641023b8189a8fe58f826200010579e046a2b38f6cf",
+        "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
+        "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
+        "source_checkout": "/tmp/nix-shell.WvnF3o/pcplus-source-proof-kw_56k49/checkout",
+        "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
+        "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
+        "scope": "149 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+        "output_count": 149,
+        "outputs": {
+          "terminal/TERMINAL.EXE": {
+            "sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+            "matches_workspace": true,
+            "workspace_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9"
+          },
+          "config-dos/CONFIG.EXE": {
+            "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
+            "matches_workspace": true,
+            "workspace_sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78"
+          },
+          "config-dos/CFGFAULT.EXE": {
+            "sha256": "e0a307b0c064cdb210889c8e57cead17f5bf4dde523b8679e5e96a5cfa9cd82a",
+            "matches_workspace": true,
+            "workspace_sha256": "e0a307b0c064cdb210889c8e57cead17f5bf4dde523b8679e5e96a5cfa9cd82a"
+          },
+          "config-replace/REPLACE.EXE": {
+            "sha256": "14daea33ed04c9639633f4ede3c951745c2c4ef36cf10f7b9d790265facb11a6",
+            "matches_workspace": true,
+            "workspace_sha256": "14daea33ed04c9639633f4ede3c951745c2c4ef36cf10f7b9d790265facb11a6"
+          },
+          "config-replace/REPFAULT.EXE": {
+            "sha256": "cc19bb968bb1ea389c6841f9ae935bdd69960841cb6a604b53eb003ee12fbc46",
+            "matches_workspace": true,
+            "workspace_sha256": "cc19bb968bb1ea389c6841f9ae935bdd69960841cb6a604b53eb003ee12fbc46"
+          },
+          "config-abi/ABI.EXE": {
+            "sha256": "ee150a767d6072441b8727c246040f4fb02676c435ff7dd0104de46125b3adbe",
+            "matches_workspace": true,
+            "workspace_sha256": "ee150a767d6072441b8727c246040f4fb02676c435ff7dd0104de46125b3adbe"
+          },
+          "ui-windows/WINDOWS.EXE": {
+            "sha256": "fbf6cabd1539075134062d99e4477c7eb7a229325e6fa50791adc11867420671",
+            "matches_workspace": true,
+            "workspace_sha256": "fbf6cabd1539075134062d99e4477c7eb7a229325e6fa50791adc11867420671"
+          },
+          "modem-commands/MODEMCMD.EXE": {
+            "sha256": "f7bcd936b4a8966c2b79352147db4c3d4f3250630f7703852291b78020f7e9e3",
+            "matches_workspace": true,
+            "workspace_sha256": "f7bcd936b4a8966c2b79352147db4c3d4f3250630f7703852291b78020f7e9e3"
+          },
+          "modem-responses/MODEMRSP.EXE": {
+            "sha256": "ee2c7450aff4d1a8df36e9e3040d187a1db14f0463f93958a8dfeaaadc573414",
+            "matches_workspace": true,
+            "workspace_sha256": "ee2c7450aff4d1a8df36e9e3040d187a1db14f0463f93958a8dfeaaadc573414"
+          },
+          "modem-send/MODEMSND.EXE": {
+            "sha256": "e7cfa5511c5a0fa10b1158f6137eeb585fef1aa8c20bf3b206e435aef14f4809",
+            "matches_workspace": true,
+            "workspace_sha256": "e7cfa5511c5a0fa10b1158f6137eeb585fef1aa8c20bf3b206e435aef14f4809"
+          },
+          "directory-dial/DIRDIAL.EXE": {
+            "sha256": "84f502735fd9e87ff4d22ff58702bdedf01847e6c53b3b4442902d490a77a0f2",
+            "matches_workspace": true,
+            "workspace_sha256": "84f502735fd9e87ff4d22ff58702bdedf01847e6c53b3b4442902d490a77a0f2"
+          },
+          "directory-browser/BROWSER.EXE": {
+            "sha256": "5fd4c103817f6134893f4a0d623147725c574c2cdd492692ca34ad1f18967cbd",
+            "matches_workspace": true,
+            "workspace_sha256": "5fd4c103817f6134893f4a0d623147725c574c2cdd492692ca34ad1f18967cbd"
+          },
+          "directory-editor/EDITOR.EXE": {
+            "sha256": "0158e88c0db97faf16872873b9917a7b29519ede7ccdfdd79e345effe37d849c",
+            "matches_workspace": true,
+            "workspace_sha256": "0158e88c0db97faf16872873b9917a7b29519ede7ccdfdd79e345effe37d849c"
+          },
+          "directory-accounting/DIRSTATS.EXE": {
+            "sha256": "8dbe12f0b2b365cd1d6d986b82122251c22230f0e973e22faaf2fb51807faae4",
+            "matches_workspace": true,
+            "workspace_sha256": "8dbe12f0b2b365cd1d6d986b82122251c22230f0e973e22faaf2fb51807faae4"
+          },
+          "keyboard-mapping/MAPPING.EXE": {
+            "sha256": "0816a43d53bb5e2602a00b8f56e795e50d40c8d8b8ad155aa827d74998e8f977",
+            "matches_workspace": true,
+            "workspace_sha256": "0816a43d53bb5e2602a00b8f56e795e50d40c8d8b8ad155aa827d74998e8f977"
+          },
+          "keyboard-detection/KBDMODE.EXE": {
+            "sha256": "5e268db564750f1525016e4b89b3b64525a2dfb75587d755b9da5fcc93a813a0",
+            "matches_workspace": true,
+            "workspace_sha256": "5e268db564750f1525016e4b89b3b64525a2dfb75587d755b9da5fcc93a813a0"
+          },
+          "line-edit/LINES.EXE": {
+            "sha256": "7a10bc8c2a2883cdb447933dd1628647d2a61ba5fe133c94d5cbf21ec018a9b6",
+            "matches_workspace": true,
+            "workspace_sha256": "7a10bc8c2a2883cdb447933dd1628647d2a61ba5fe133c94d5cbf21ec018a9b6"
+          },
+          "meta-keys/METAKEYS.EXE": {
+            "sha256": "dd2a111d900d309fa2cf5e40f1dacfd38c959ac01086fdfb31de6c2d9d80f713",
+            "matches_workspace": true,
+            "workspace_sha256": "dd2a111d900d309fa2cf5e40f1dacfd38c959ac01086fdfb31de6c2d9d80f713"
+          },
+          "character-edit/CHAREDIT.EXE": {
+            "sha256": "ff8c65cea099092ba50908d0b6b4e5bb1901509b9303b744ee0191f7bcaa82f6",
+            "matches_workspace": true,
+            "workspace_sha256": "ff8c65cea099092ba50908d0b6b4e5bb1901509b9303b744ee0191f7bcaa82f6"
+          },
+          "process/PROCESS.EXE": {
+            "sha256": "7da5229e3cbc16de2c994fadaf5556c34a105afa4813ce64646fa5b543892a05",
+            "matches_workspace": true,
+            "workspace_sha256": "7da5229e3cbc16de2c994fadaf5556c34a105afa4813ce64646fa5b543892a05"
+          },
+          "process/PROGRAM.EXE": {
+            "sha256": "c9d32557bc40fd4542ea888b0181c111edee7abffc324ffd2242eb17cc7abeaa",
+            "matches_workspace": true,
+            "workspace_sha256": "c9d32557bc40fd4542ea888b0181c111edee7abffc324ffd2242eb17cc7abeaa"
+          },
+          "process/CHILD.COM": {
+            "sha256": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f",
+            "matches_workspace": true,
+            "workspace_sha256": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f"
+          },
+          "program-exec/EXECUTOR.EXE": {
+            "sha256": "aec4daeba2e9d9fd49a0df325455c25a8bd95c3015f797dc4123169b0c3bbe0b",
+            "matches_workspace": true,
+            "workspace_sha256": "aec4daeba2e9d9fd49a0df325455c25a8bd95c3015f797dc4123169b0c3bbe0b"
+          },
+          "program-exec/CHILD.COM": {
+            "sha256": "fccf1fea18c1c5f803d4d3331ce845eab9bd2cae7659797e2bf909723c871c24",
+            "matches_workspace": true,
+            "workspace_sha256": "fccf1fea18c1c5f803d4d3331ce845eab9bd2cae7659797e2bf909723c871c24"
+          },
+          "terminal-reset/RESET.EXE": {
+            "sha256": "8bdd8c62707ef4c1761c734a9481cad18be991aeed3cadd6194c527f14408e32",
+            "matches_workspace": true,
+            "workspace_sha256": "8bdd8c62707ef4c1761c734a9481cad18be991aeed3cadd6194c527f14408e32"
+          },
+          "transfer-blocks/BLOCKS.EXE": {
+            "sha256": "b9eecad4fce1ea76e5f870d7706ce449ca00db99c1ffa99b03e14334ab54d3a1",
+            "matches_workspace": true,
+            "workspace_sha256": "b9eecad4fce1ea76e5f870d7706ce449ca00db99c1ffa99b03e14334ab54d3a1"
+          },
+          "transfer-receive/RECEIVE.EXE": {
+            "sha256": "7f2da1865bcd4b7bbe1fa466e9bfc2e759de514109787516c330a28797f26e8e",
+            "matches_workspace": true,
+            "workspace_sha256": "7f2da1865bcd4b7bbe1fa466e9bfc2e759de514109787516c330a28797f26e8e"
+          },
+          "transfer-send/SEND.EXE": {
+            "sha256": "437f069804ac8b6eeff6307944286ed7c4db3d8f4761b2b90873c6ab52014a75",
+            "matches_workspace": true,
+            "workspace_sha256": "437f069804ac8b6eeff6307944286ed7c4db3d8f4761b2b90873c6ab52014a75"
+          },
+          "transfer-files/FILES.EXE": {
+            "sha256": "427a7997d12a9933389aa63210a6c425b13ca597730378a628618ff3339e9b30",
+            "matches_workspace": true,
+            "workspace_sha256": "427a7997d12a9933389aa63210a6c425b13ca597730378a628618ff3339e9b30"
+          },
+          "transfer-session/SESSION.EXE": {
+            "sha256": "6297cab2c881e11885d23a814ffaf45967749e88a09f8f9d17949f8ca6a79302",
+            "matches_workspace": true,
+            "workspace_sha256": "6297cab2c881e11885d23a814ffaf45967749e88a09f8f9d17949f8ca6a79302"
+          },
+          "transfer-uart/TUART.EXE": {
+            "sha256": "b976f8a928dc052b7cfc4c2adf3b34f7e869e1b4748ba2d6f30d2652a90db28b",
+            "matches_workspace": true,
+            "workspace_sha256": "b976f8a928dc052b7cfc4c2adf3b34f7e869e1b4748ba2d6f30d2652a90db28b"
+          },
+          "download-file/DOWNLOAD.EXE": {
+            "sha256": "99199a1fcf86ec55fa79c1d6f93ff882e9624895f0232fa9e465a1a65df9d1fe",
+            "matches_workspace": true,
+            "workspace_sha256": "99199a1fcf86ec55fa79c1d6f93ff882e9624895f0232fa9e465a1a65df9d1fe"
+          },
+          "download-file/DLFAULT.EXE": {
+            "sha256": "b7457f18de99106d11101509d6cad8cb486a444d76664612255af22176bfc615",
+            "matches_workspace": true,
+            "workspace_sha256": "b7457f18de99106d11101509d6cad8cb486a444d76664612255af22176bfc615"
+          },
+          "transfer-session-composite/TRANSFER.EXE": {
+            "sha256": "c6cb27a6b24a4c95eb4f6b5a12e5c23fb88fa41a076e82800b9a4e888d21a906",
+            "matches_workspace": true,
+            "workspace_sha256": "c6cb27a6b24a4c95eb4f6b5a12e5c23fb88fa41a076e82800b9a4e888d21a906"
+          },
+          "transfer-storage/TRANSFER.EXE": {
+            "sha256": "ec3957d3770636eeb11eb4cdf699902d4027258d87a8c06a532ff45f26842883",
+            "matches_workspace": true,
+            "workspace_sha256": "ec3957d3770636eeb11eb4cdf699902d4027258d87a8c06a532ff45f26842883"
+          },
+          "upload-file/UPLOAD.EXE": {
+            "sha256": "d9e9b6cf95010f76575187722b5b474ee349cbf9560b332604a952b302e22914",
+            "matches_workspace": true,
+            "workspace_sha256": "d9e9b6cf95010f76575187722b5b474ee349cbf9560b332604a952b302e22914"
+          },
+          "upload-file/UPFAULT.EXE": {
+            "sha256": "1565f10e9890a70beee4149ea404b441892b357441175a907e31ddc1d5f9d17d",
+            "matches_workspace": true,
+            "workspace_sha256": "1565f10e9890a70beee4149ea404b441892b357441175a907e31ddc1d5f9d17d"
+          },
+          "transfer-metadata/METADATA.EXE": {
+            "sha256": "efc26c3ca221739ac7c72b34707865407f4ab2ee223f4efdf751b148ea5b89b7",
+            "matches_workspace": true,
+            "workspace_sha256": "efc26c3ca221739ac7c72b34707865407f4ab2ee223f4efdf751b148ea5b89b7"
+          },
+          "batch-header/HEADER.EXE": {
+            "sha256": "5fc883e06f588b13f7d61a3704e8fbdab789d69f10cf998a25d79abe60e06524",
+            "matches_workspace": true,
+            "workspace_sha256": "5fc883e06f588b13f7d61a3704e8fbdab789d69f10cf998a25d79abe60e06524"
+          },
+          "batch-download/BATCHDL.EXE": {
+            "sha256": "62fe933a6eecb5028e801de2c4959c47981890141cff1da98ec67927b7b1d367",
+            "matches_workspace": true,
+            "workspace_sha256": "62fe933a6eecb5028e801de2c4959c47981890141cff1da98ec67927b7b1d367"
+          },
+          "batch-download/BDFAULT.EXE": {
+            "sha256": "f599d2b4e1e429324f32a0cd6fd16a120fe5f30c19b78935ecdbb48ac6fae5d3",
+            "matches_workspace": true,
+            "workspace_sha256": "f599d2b4e1e429324f32a0cd6fd16a120fe5f30c19b78935ecdbb48ac6fae5d3"
+          },
+          "batch-upload/BATCH.EXE": {
+            "sha256": "f68598d90743fbe867a6f4be15ebb78991b342c0bc12d8d109c669e332c7dcd3",
+            "matches_workspace": true,
+            "workspace_sha256": "f68598d90743fbe867a6f4be15ebb78991b342c0bc12d8d109c669e332c7dcd3"
+          },
+          "batch-upload/BUFAULT.EXE": {
+            "sha256": "d839641df58da79e2e98d03de5bd1e768f3ab593569e8e14255b9456c0a35fae",
+            "matches_workspace": true,
+            "workspace_sha256": "d839641df58da79e2e98d03de5bd1e768f3ab593569e8e14255b9456c0a35fae"
+          },
+          "capture-file/CAPTURE.EXE": {
+            "sha256": "532cec80d51f5cba16ce98d008a21eb6dd777db2b0079ece0e7b39c49ce980d5",
+            "matches_workspace": true,
+            "workspace_sha256": "532cec80d51f5cba16ce98d008a21eb6dd777db2b0079ece0e7b39c49ce980d5"
+          },
+          "capture-file/CAPFAULT.EXE": {
+            "sha256": "90424c20cf0847c77aee9aa5ba5c1d084fecf223967400d5b9835d487cc20775",
+            "matches_workspace": true,
+            "workspace_sha256": "90424c20cf0847c77aee9aa5ba5c1d084fecf223967400d5b9835d487cc20775"
+          },
+          "capture-session/CAPSESS.EXE": {
+            "sha256": "771e2fd702017b25d53e8f0694592258abce08677f17d803212038e27971ba07",
+            "matches_workspace": true,
+            "workspace_sha256": "771e2fd702017b25d53e8f0694592258abce08677f17d803212038e27971ba07"
+          },
+          "capture-session/CSFAULT.EXE": {
+            "sha256": "5b630566b588e95652f1bd9a99c9c0d71c81102f4fe81692ff5deb1892e36b04",
+            "matches_workspace": true,
+            "workspace_sha256": "5b630566b588e95652f1bd9a99c9c0d71c81102f4fe81692ff5deb1892e36b04"
+          },
+          "clipboard/CLIPCORE.EXE": {
+            "sha256": "a14ecea00b50dc2ca0e2c3954bd9567884078220c34b595907035ea59f072ee8",
+            "matches_workspace": true,
+            "workspace_sha256": "a14ecea00b50dc2ca0e2c3954bd9567884078220c34b595907035ea59f072ee8"
+          },
+          "snapshot/SNAPSHOT.EXE": {
+            "sha256": "fdcc00355ace42b426cc320d779dc51c0b3ae8a0d47abf3a7bac3973417f69c9",
+            "matches_workspace": true,
+            "workspace_sha256": "fdcc00355ace42b426cc320d779dc51c0b3ae8a0d47abf3a7bac3973417f69c9"
+          },
+          "capture-owners/OWNERS.EXE": {
+            "sha256": "14199a9e0765dc962232dae877e761822f165eebc6a79d608945a533cd04353a",
+            "matches_workspace": true,
+            "workspace_sha256": "14199a9e0765dc962232dae877e761822f165eebc6a79d608945a533cd04353a"
+          },
+          "capture-owners/OWFAULT.EXE": {
+            "sha256": "db7d4bd9b922e5af1759c6bc595d61f14d417f4724efd156647b55b66d643554",
+            "matches_workspace": true,
+            "workspace_sha256": "db7d4bd9b922e5af1759c6bc595d61f14d417f4724efd156647b55b66d643554"
+          },
+          "printer/PRINTER.EXE": {
+            "sha256": "2b699e0a2646abdf9b61c50277725d69932a6d29afdd8fb77308aa5d268eec90",
+            "matches_workspace": true,
+            "workspace_sha256": "2b699e0a2646abdf9b61c50277725d69932a6d29afdd8fb77308aa5d268eec90"
+          },
+          "print_screen/PRINTSCR.EXE": {
+            "sha256": "4383b3799c4c6dc0bda05daf447d80bb5d09af2c7a1fcb14921f592b1eca1201",
+            "matches_workspace": true,
+            "workspace_sha256": "4383b3799c4c6dc0bda05daf447d80bb5d09af2c7a1fcb14921f592b1eca1201"
+          },
+          "printer-device/PRINTER.EXE": {
+            "sha256": "07308264cb1d4c6ec70ed46e103d288027b1d33227d00d040fd824da9d87ef52",
+            "matches_workspace": true,
+            "workspace_sha256": "07308264cb1d4c6ec70ed46e103d288027b1d33227d00d040fd824da9d87ef52"
+          },
+          "print_controller/PRINTCTL.EXE": {
+            "sha256": "8095449ff1fbc10c718f9b3916c03ceec1dabe92b3e743004fd69fe129fa118b",
+            "matches_workspace": true,
+            "workspace_sha256": "8095449ff1fbc10c718f9b3916c03ceec1dabe92b3e743004fd69fe129fa118b"
+          },
+          "setup/PRMEDIT.EXE": {
+            "sha256": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646",
+            "matches_workspace": true,
+            "workspace_sha256": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646"
+          },
+          "live-configuration/LIVE.EXE": {
+            "sha256": "3ff4960670b7417417dbb3ce40603ed808079dbc48dd35141468ce282dac6729",
+            "matches_workspace": true,
+            "workspace_sha256": "3ff4960670b7417417dbb3ce40603ed808079dbc48dd35141468ce282dac6729"
+          },
+          "directory-context/CONTEXT.EXE": {
+            "sha256": "b425b2884e91b47323fd549a8f6ca0b3f575c29abfb1a4b448973b8531a14449",
+            "matches_workspace": true,
+            "workspace_sha256": "b425b2884e91b47323fd549a8f6ca0b3f575c29abfb1a4b448973b8531a14449"
+          },
+          "xlt-editor/XLTEDIT.EXE": {
+            "sha256": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10",
+            "matches_workspace": true,
+            "workspace_sha256": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+          },
+          "resource-path/RESOURCE.EXE": {
+            "sha256": "4809ccecf3bc736bf49daf64a7b311b0ededdfe241751da5e2cfec95474b1736",
+            "matches_workspace": true,
+            "workspace_sha256": "4809ccecf3bc736bf49daf64a7b311b0ededdfe241751da5e2cfec95474b1736"
+          },
+          "live-translation-child/CHDIR.EXE": {
+            "sha256": "aa2e5ea120ee97c32c1865c7b85343333c2dd9c5db99e771ad0ae1cd949e0441",
+            "matches_workspace": true,
+            "workspace_sha256": "aa2e5ea120ee97c32c1865c7b85343333c2dd9c5db99e771ad0ae1cd949e0441"
+          },
+          "aspect-literal/LITERAL.EXE": {
+            "sha256": "bcd47845d6bea3a692599323095f29460a8dbecd15d57ecbd47f5c1358c5c1f2",
+            "matches_workspace": true,
+            "workspace_sha256": "bcd47845d6bea3a692599323095f29460a8dbecd15d57ecbd47f5c1358c5c1f2"
+          },
+          "aspect-dispatch/DISPATCH.EXE": {
+            "sha256": "68288f66c17e188bbbae1813594639dd88eae5e050a483ae91af764f6aff7b4f",
+            "matches_workspace": true,
+            "workspace_sha256": "68288f66c17e188bbbae1813594639dd88eae5e050a483ae91af764f6aff7b4f"
+          },
+          "aspect-globals/GLOBALS.EXE": {
+            "sha256": "cb96ac730aefadb56b16a25196104d0bad8fc13d44d98a8977c9d4a6c9b67cb1",
+            "matches_workspace": true,
+            "workspace_sha256": "cb96ac730aefadb56b16a25196104d0bad8fc13d44d98a8977c9d4a6c9b67cb1"
+          },
+          "aspect-stack/STACK.EXE": {
+            "sha256": "35afb60eb6ac3381ace5cd7b67810579ec945d7d4e23eb92707baa86f8326993",
+            "matches_workspace": true,
+            "workspace_sha256": "35afb60eb6ac3381ace5cd7b67810579ec945d7d4e23eb92707baa86f8326993"
+          },
+          "aspect-unwind/UNWIND.EXE": {
+            "sha256": "df2113e8d4d89448c4e1427e1923a1a84ae91b1c8ffd27b37be3497b37234456",
+            "matches_workspace": true,
+            "workspace_sha256": "df2113e8d4d89448c4e1427e1923a1a84ae91b1c8ffd27b37be3497b37234456"
+          },
+          "aspect-flow/FLOW.EXE": {
+            "sha256": "181160210ffb6e15b60b8d67d5a287b09a8cce7136f180591b9426f820edcc27",
+            "matches_workspace": true,
+            "workspace_sha256": "181160210ffb6e15b60b8d67d5a287b09a8cce7136f180591b9426f820edcc27"
+          },
+          "aspect-file/FILE.EXE": {
+            "sha256": "c3786f890c44ad898a16e716888c8b0bc791bcbb061ad5f7da2442795b5770b7",
+            "matches_workspace": true,
+            "workspace_sha256": "c3786f890c44ad898a16e716888c8b0bc791bcbb061ad5f7da2442795b5770b7"
+          },
+          "aspect-string-services/SERVICES.EXE": {
+            "sha256": "aa331784777b77dbcc44e049c7831bac99ff7b6941c5e260b784b79f2356254e",
+            "matches_workspace": true,
+            "workspace_sha256": "aa331784777b77dbcc44e049c7831bac99ff7b6941c5e260b784b79f2356254e"
+          },
+          "aspect-string-commands/STRCMD.EXE": {
+            "sha256": "9b333410db88ce1fdbd3ff3aeff06de2a742176a5e22ba0dd687d1a60486d059",
+            "matches_workspace": true,
+            "workspace_sha256": "9b333410db88ce1fdbd3ff3aeff06de2a742176a5e22ba0dd687d1a60486d059"
+          },
+          "aspect-conversions/CONVERT.EXE": {
+            "sha256": "d964e1ebd36168a2e67e68a930da9f501121cc88537d11bb0f139d4eb05f803c",
+            "matches_workspace": true,
+            "workspace_sha256": "d964e1ebd36168a2e67e68a930da9f501121cc88537d11bb0f139d4eb05f803c"
+          },
+          "aspect-conversion-services/CONVERT.EXE": {
+            "sha256": "f9ef2f6f6ecc8adaeeed69769ccd863281f665996ff32423b4d5428feb0fb73c",
+            "matches_workspace": true,
+            "workspace_sha256": "f9ef2f6f6ecc8adaeeed69769ccd863281f665996ff32423b4d5428feb0fb73c"
+          },
+          "aspect-receive-policy/POLICY.EXE": {
+            "sha256": "b4940e3aefa08af2831d806c88568240d932fdfe904c4ab4c84b42fe48a4b5dc",
+            "matches_workspace": true,
+            "workspace_sha256": "b4940e3aefa08af2831d806c88568240d932fdfe904c4ab4c84b42fe48a4b5dc"
+          },
+          "aspect-directory/DIRBUILT.EXE": {
+            "sha256": "9788de45b5781604de55a86a822089d6090e885071f93026414de7d1289d399c",
+            "matches_workspace": true,
+            "workspace_sha256": "9788de45b5781604de55a86a822089d6090e885071f93026414de7d1289d399c"
+          },
+          "aspect-set/unit1.bin": {
+            "sha256": "eadb4fa80afa5f52ffef368433325a45ee2eddfea1d400b27ca4aa5b5cb162fb",
+            "matches_workspace": true,
+            "workspace_sha256": "eadb4fa80afa5f52ffef368433325a45ee2eddfea1d400b27ca4aa5b5cb162fb"
+          },
+          "aspect-set/unit2.bin": {
+            "sha256": "626d50f3a5138b684a9d04d21ad2022abde290d997bac56c22e4b035429b4f13",
+            "matches_workspace": true,
+            "workspace_sha256": "626d50f3a5138b684a9d04d21ad2022abde290d997bac56c22e4b035429b4f13"
+          },
+          "aspect-set/unit3.bin": {
+            "sha256": "0c71c9e7b72aaca7c9b5a14d277744c0d413a1785b15bfaa769eb448d874eae1",
+            "matches_workspace": true,
+            "workspace_sha256": "0c71c9e7b72aaca7c9b5a14d277744c0d413a1785b15bfaa769eb448d874eae1"
+          },
+          "aspect-set/unit4.bin": {
+            "sha256": "f012b3ec0b031bb0cd46b858f150a1313024501de4cba865e18e31dacf43f5b4",
+            "matches_workspace": true,
+            "workspace_sha256": "f012b3ec0b031bb0cd46b858f150a1313024501de4cba865e18e31dacf43f5b4"
+          },
+          "aspect-set/unit5.bin": {
+            "sha256": "2da4f655ecdb0aff3c3cc9f7b1e4e9aba16d5edbb7eecc1ecb8265aa44e45173",
+            "matches_workspace": true,
+            "workspace_sha256": "2da4f655ecdb0aff3c3cc9f7b1e4e9aba16d5edbb7eecc1ecb8265aa44e45173"
+          },
+          "aspect-set/unit6.bin": {
+            "sha256": "1db7ce21ca0e6339c98d112478a66625500f3156b3e894db689b47a4c4ae4ace",
+            "matches_workspace": true,
+            "workspace_sha256": "1db7ce21ca0e6339c98d112478a66625500f3156b3e894db689b47a4c4ae4ace"
+          },
+          "aspect-set/unit7.bin": {
+            "sha256": "6272ee1d0f04e2c7b1a65c49f089b1d9c4ff19c96fa3789a1e8d6d12f0828421",
+            "matches_workspace": true,
+            "workspace_sha256": "6272ee1d0f04e2c7b1a65c49f089b1d9c4ff19c96fa3789a1e8d6d12f0828421"
+          },
+          "aspect-set/unit8.bin": {
+            "sha256": "9aabcb9306c1df67e07c36799439c9c57275befa7df1c333751fbdaca0ed4098",
+            "matches_workspace": true,
+            "workspace_sha256": "9aabcb9306c1df67e07c36799439c9c57275befa7df1c333751fbdaca0ed4098"
+          },
+          "aspect-set/unit9.bin": {
+            "sha256": "8a1f7326b2799dc62c3036268b7780132072cc58fc72c950e56f722652e81404",
+            "matches_workspace": true,
+            "workspace_sha256": "8a1f7326b2799dc62c3036268b7780132072cc58fc72c950e56f722652e81404"
+          },
+          "aspect-set/unit10.bin": {
+            "sha256": "cedf08f72d5bb8e861e49bee30abecdff765b7b3441916c59f663e2b1e323073",
+            "matches_workspace": true,
+            "workspace_sha256": "cedf08f72d5bb8e861e49bee30abecdff765b7b3441916c59f663e2b1e323073"
+          },
+          "aspect-set/unit11.bin": {
+            "sha256": "7a0491015ec1871a201788168e98b5753d6bf382d4a67cada744f8b929c8b4f7",
+            "matches_workspace": true,
+            "workspace_sha256": "7a0491015ec1871a201788168e98b5753d6bf382d4a67cada744f8b929c8b4f7"
+          },
+          "aspect-set/unit12.bin": {
+            "sha256": "7fd57b3ee84fbfc4cafd187dce95b9bad571b2c40c463fd6d61179a373a4d1ca",
+            "matches_workspace": true,
+            "workspace_sha256": "7fd57b3ee84fbfc4cafd187dce95b9bad571b2c40c463fd6d61179a373a4d1ca"
+          },
+          "aspect-set/unit13.bin": {
+            "sha256": "3530cc1fa0db1e5e40130053822e9051307e5c6806d7f800e2ab810c7408d10f",
+            "matches_workspace": true,
+            "workspace_sha256": "3530cc1fa0db1e5e40130053822e9051307e5c6806d7f800e2ab810c7408d10f"
+          },
+          "aspect-set/unit14.bin": {
+            "sha256": "4a2e4b651e9a28b75308a9b80b9fb86e770adcbea7723c4bd3d18bdda147ddf3",
+            "matches_workspace": true,
+            "workspace_sha256": "4a2e4b651e9a28b75308a9b80b9fb86e770adcbea7723c4bd3d18bdda147ddf3"
+          },
+          "aspect-set/set_commands.obj": {
+            "sha256": "dc79408b51e75ae8430e0cab2b32a9ef37bce5f7f22bcc042b7ffe32e5716e1e",
+            "matches_workspace": true,
+            "workspace_sha256": "dc79408b51e75ae8430e0cab2b32a9ef37bce5f7f22bcc042b7ffe32e5716e1e"
+          },
+          "aspect-txpace/delay.bin": {
+            "sha256": "a7149212d6d9857e43f3e86112c258c9e11c2aeae0d292ef964a908b43beb850",
+            "matches_workspace": true,
+            "workspace_sha256": "a7149212d6d9857e43f3e86112c258c9e11c2aeae0d292ef964a908b43beb850"
+          },
+          "aspect-txpace/native.obj": {
+            "sha256": "2bdaed06a82b02d48cc7dfaaaf56645cbae8b1d27df9c2bbc80538f112f01003",
+            "matches_workspace": true,
+            "workspace_sha256": "2bdaed06a82b02d48cc7dfaaaf56645cbae8b1d27df9c2bbc80538f112f01003"
+          },
+          "aspect-txpace/txpace.obj": {
+            "sha256": "1af8737f10c731e0e7845ae14e83e015db8d8de429b33df90e82ded0773cd1f5",
+            "matches_workspace": true,
+            "workspace_sha256": "1af8737f10c731e0e7845ae14e83e015db8d8de429b33df90e82ded0773cd1f5"
+          },
+          "aspect-txpace/TXPACE.EXE": {
+            "sha256": "6e43c5fc867f450bb0f1c4d90161beefc13242b4da1a533caaa8d40be3b330d2",
+            "matches_workspace": true,
+            "workspace_sha256": "6e43c5fc867f450bb0f1c4d90161beefc13242b4da1a533caaa8d40be3b330d2"
+          },
+          "aspect-find-case/find_commands-1.bin": {
+            "sha256": "e82456228d2bd2206610ad2574835e4d608593c3bd05c59193bc4934694d1714",
+            "matches_workspace": true,
+            "workspace_sha256": "e82456228d2bd2206610ad2574835e4d608593c3bd05c59193bc4934694d1714"
+          },
+          "aspect-find-case/find_commands-2.bin": {
+            "sha256": "a9040687a57da38c5dbe4adfb8f48bf038bf9d6de24af856b84f873d359bba31",
+            "matches_workspace": true,
+            "workspace_sha256": "a9040687a57da38c5dbe4adfb8f48bf038bf9d6de24af856b84f873d359bba31"
+          },
+          "aspect-find-case/find_commands-3.bin": {
+            "sha256": "62af3e557976f088764d6534cc4cb5f5a07365db8c71fe3214c80fa7dddfbc4f",
+            "matches_workspace": true,
+            "workspace_sha256": "62af3e557976f088764d6534cc4cb5f5a07365db8c71fe3214c80fa7dddfbc4f"
+          },
+          "aspect-find-case/find_commands-4.bin": {
+            "sha256": "72e0d0a8f4d386067e6089fc42fdb13a03463affaeab5d129773b16fa7399ef8",
+            "matches_workspace": true,
+            "workspace_sha256": "72e0d0a8f4d386067e6089fc42fdb13a03463affaeab5d129773b16fa7399ef8"
+          },
+          "aspect-find-case/case_commands-1.bin": {
+            "sha256": "ef4fe899969e28529f07c2ce1aae0b76bc77dc5db16cd5bb3096476db929c058",
+            "matches_workspace": true,
+            "workspace_sha256": "ef4fe899969e28529f07c2ce1aae0b76bc77dc5db16cd5bb3096476db929c058"
+          },
+          "aspect-find-case/case_commands-2.bin": {
+            "sha256": "d64de62f8d769588ab6032aea281f27903806110a72b3b7fbd1490888904854f",
+            "matches_workspace": true,
+            "workspace_sha256": "d64de62f8d769588ab6032aea281f27903806110a72b3b7fbd1490888904854f"
+          },
+          "aspect-find-case/find_commands.obj": {
+            "sha256": "fc83b3792d75e257763a15147f20130d4068bdb21bd9b8e1f10d22d65cf22fca",
+            "matches_workspace": true,
+            "workspace_sha256": "fc83b3792d75e257763a15147f20130d4068bdb21bd9b8e1f10d22d65cf22fca"
+          },
+          "aspect-find-case/case_commands.obj": {
+            "sha256": "8e40e5d496d6b9a7f890b04f5f273167d1a07c70946ad76ea1de72e0f541f55a",
+            "matches_workspace": true,
+            "workspace_sha256": "8e40e5d496d6b9a7f890b04f5f273167d1a07c70946ad76ea1de72e0f541f55a"
+          },
+          "aspect-find-owner/OWNER.EXE": {
+            "sha256": "3829d7bbf627c4336624d8b6f81cc9ff8782e293765dd0ffb9d635a938d175fd",
+            "matches_workspace": true,
+            "workspace_sha256": "3829d7bbf627c4336624d8b6f81cc9ff8782e293765dd0ffb9d635a938d175fd"
+          },
+          "aspect-break-native/native.bin": {
+            "sha256": "93d70ad8677f762a625e09f586fd2df2f8a2320faffaf84dafd4857d3dfe142f",
+            "matches_workspace": true,
+            "workspace_sha256": "93d70ad8677f762a625e09f586fd2df2f8a2320faffaf84dafd4857d3dfe142f"
+          },
+          "aspect-break-native/command.bin": {
+            "sha256": "99aea90814aefb883c594f9cbb9d5e75e2e2617088270e73795054f6a67fec26",
+            "matches_workspace": true,
+            "workspace_sha256": "99aea90814aefb883c594f9cbb9d5e75e2e2617088270e73795054f6a67fec26"
+          },
+          "aspect-break-native/setting.bin": {
+            "sha256": "0b391028cdc76b444a18a2c9bb92b5e646aaf6782bd06468e46100ab598830e5",
+            "matches_workspace": true,
+            "workspace_sha256": "0b391028cdc76b444a18a2c9bb92b5e646aaf6782bd06468e46100ab598830e5"
+          },
+          "aspect-break-native/cursor_pop.bin": {
+            "sha256": "abeb2eb16fd1d5cb88f2e6e2d10d0379e65732acb917c0132a2d5697129927ce",
+            "matches_workspace": true,
+            "workspace_sha256": "abeb2eb16fd1d5cb88f2e6e2d10d0379e65732acb917c0132a2d5697129927ce"
+          },
+          "aspect-break-native/cursor_push.bin": {
+            "sha256": "b8cf98c71a7789f24cea2f160e4f521032f2da547afffafbd0092894bd93cd3f",
+            "matches_workspace": true,
+            "workspace_sha256": "b8cf98c71a7789f24cea2f160e4f521032f2da547afffafbd0092894bd93cd3f"
+          },
+          "aspect-break-native/notice.bin": {
+            "sha256": "bbf6abd27e7f9fec26f25a34f31cda98eb42c6ab51ea8db8c5ee94141ad99b04",
+            "matches_workspace": true,
+            "workspace_sha256": "bbf6abd27e7f9fec26f25a34f31cda98eb42c6ab51ea8db8c5ee94141ad99b04"
+          },
+          "aspect-break-native/break_commands.obj": {
+            "sha256": "5d71ebb57b4de058c3fd090afdfabd8dbc8b0975d5b777da91e95a21fd384d80",
+            "matches_workspace": true,
+            "workspace_sha256": "5d71ebb57b4de058c3fd090afdfabd8dbc8b0975d5b777da91e95a21fd384d80"
+          },
+          "aspect-fetch-native/fetch.bin": {
+            "sha256": "4e939010cac745158775f610246f8b16f8d4da9f19531759d7014ce585e23fe9",
+            "matches_workspace": true,
+            "workspace_sha256": "4e939010cac745158775f610246f8b16f8d4da9f19531759d7014ce585e23fe9"
+          },
+          "aspect-fetch-native/operand.bin": {
+            "sha256": "01ce9602651b49f69bddd78c501dcef8d30551c6c8cad7fbe608d3a9ce3e1694",
+            "matches_workspace": true,
+            "workspace_sha256": "01ce9602651b49f69bddd78c501dcef8d30551c6c8cad7fbe608d3a9ce3e1694"
+          },
+          "aspect-fetch-native/bounded.bin": {
+            "sha256": "807968171c5e5a7a7e2c787b88cd28e4aa45e4b01857c95f52f249fb555e65ef",
+            "matches_workspace": true,
+            "workspace_sha256": "807968171c5e5a7a7e2c787b88cd28e4aa45e4b01857c95f52f249fb555e65ef"
+          },
+          "aspect-fetch-native/cursor_read.bin": {
+            "sha256": "ca5cacff797fbe0ebdeb2cde96e2e1293c11cd54634069b6a03b128a80e4db1b",
+            "matches_workspace": true,
+            "workspace_sha256": "ca5cacff797fbe0ebdeb2cde96e2e1293c11cd54634069b6a03b128a80e4db1b"
+          },
+          "aspect-fetch-native/fetch_command.obj": {
+            "sha256": "fcfdc4c537e2663d1fad27fa701f66e3d0358986735943b10984298b0b5378e5",
+            "matches_workspace": true,
+            "workspace_sha256": "fcfdc4c537e2663d1fad27fa701f66e3d0358986735943b10984298b0b5378e5"
+          },
+          "aspect-fetch-native/break_cursor_read.obj": {
+            "sha256": "5ee7e360889a694d7ac763f50b0b99095b70c84e82ae8261d7293adb7ed7b2a0",
+            "matches_workspace": true,
+            "workspace_sha256": "5ee7e360889a694d7ac763f50b0b99095b70c84e82ae8261d7293adb7ed7b2a0"
+          },
+          "aspect-chain-native/command.bin": {
+            "sha256": "aaf433d91accfaadfc3f90729b3ab4918759ae452c3417e1eaafd005335cf20c",
+            "matches_workspace": true,
+            "workspace_sha256": "aaf433d91accfaadfc3f90729b3ab4918759ae452c3417e1eaafd005335cf20c"
+          },
+          "aspect-chain-native/file_open.bin": {
+            "sha256": "79af3f10476dfe1004f69551ce6dcb2d68320721bce2876db2735618e9d87c73",
+            "matches_workspace": true,
+            "workspace_sha256": "79af3f10476dfe1004f69551ce6dcb2d68320721bce2876db2735618e9d87c73"
+          },
+          "aspect-chain-native/finish.bin": {
+            "sha256": "bd10a1fc5710546125e73bf77aca763a992edec93a172d11d25047f4dcc0d16f",
+            "matches_workspace": true,
+            "workspace_sha256": "bd10a1fc5710546125e73bf77aca763a992edec93a172d11d25047f4dcc0d16f"
+          },
+          "aspect-chain-native/scratch.bin": {
+            "sha256": "151372c834822b7686316b5cd05f72df9b1215abb705a21a282356e532a2b874",
+            "matches_workspace": true,
+            "workspace_sha256": "151372c834822b7686316b5cd05f72df9b1215abb705a21a282356e532a2b874"
+          },
+          "aspect-chain-native/strcpy.bin": {
+            "sha256": "353e318feb16fbe3f0d4351c433976bb22913a51bdef8bc36a85be96f0509f26",
+            "matches_workspace": true,
+            "workspace_sha256": "353e318feb16fbe3f0d4351c433976bb22913a51bdef8bc36a85be96f0509f26"
+          },
+          "aspect-chain-native/dispatch.bin": {
+            "sha256": "d2006fe5dd53b6416aec915c9bd58b4ae1a11fc003aafef090279fa2d37520a6",
+            "matches_workspace": true,
+            "workspace_sha256": "d2006fe5dd53b6416aec915c9bd58b4ae1a11fc003aafef090279fa2d37520a6"
+          },
+          "aspect-chain-native/chain_command.obj": {
+            "sha256": "96a11cbe5cbe93386a29aa80ee0125c4b46789fe4c42894d4fe7878fc05075bd",
+            "matches_workspace": true,
+            "workspace_sha256": "96a11cbe5cbe93386a29aa80ee0125c4b46789fe4c42894d4fe7878fc05075bd"
+          },
+          "aspect-end-wait-native/end_wait.bin": {
+            "sha256": "02d32299d5e84dacbb3042c78c2bd526ac91f6e5075c58a886cf80f4dd229593",
+            "matches_workspace": true,
+            "workspace_sha256": "02d32299d5e84dacbb3042c78c2bd526ac91f6e5075c58a886cf80f4dd229593"
+          },
+          "aspect-end-wait-native/receive-1.bin": {
+            "sha256": "065fc1f8738e136d133e623777fecffd3554fa268a14c399b775b19c6d298fc1",
+            "matches_workspace": true,
+            "workspace_sha256": "065fc1f8738e136d133e623777fecffd3554fa268a14c399b775b19c6d298fc1"
+          },
+          "aspect-end-wait-native/receive-2.bin": {
+            "sha256": "93cb24fd1411d027e85d590a5fa13b824093f97fa411e64b5ccfa34f4239038e",
+            "matches_workspace": true,
+            "workspace_sha256": "93cb24fd1411d027e85d590a5fa13b824093f97fa411e64b5ccfa34f4239038e"
+          },
+          "aspect-end-wait-native/end_wait.obj": {
+            "sha256": "9e38ef93b5e15774165c9dbc9757913f305a6afe6ea1421437c654ae5e7771f9",
+            "matches_workspace": true,
+            "workspace_sha256": "9e38ef93b5e15774165c9dbc9757913f305a6afe6ea1421437c654ae5e7771f9"
+          },
+          "status-helpers/unit1.bin": {
+            "sha256": "72c10e9a0d346f13e4232b74eee2566aaa8d5fdaac91717fafbf73b4cdf19a5c",
+            "matches_workspace": true,
+            "workspace_sha256": "72c10e9a0d346f13e4232b74eee2566aaa8d5fdaac91717fafbf73b4cdf19a5c"
+          },
+          "status-helpers/unit2.bin": {
+            "sha256": "f10d19c8a2da414db6c21405dec85ca715f03620e590c943852d3f6fe8bcaee5",
+            "matches_workspace": true,
+            "workspace_sha256": "f10d19c8a2da414db6c21405dec85ca715f03620e590c943852d3f6fe8bcaee5"
+          },
+          "status-helpers/unit3.bin": {
+            "sha256": "3df99318ca42546665f801c401ec52a5f16150d80afc3d940ab41d75f41cb52c",
+            "matches_workspace": true,
+            "workspace_sha256": "3df99318ca42546665f801c401ec52a5f16150d80afc3d940ab41d75f41cb52c"
+          },
+          "status-helpers/unit4.bin": {
+            "sha256": "9804c343b471756bbd6c56e1157c6ea1e6a9e8c343b406559e52fed0c6849450",
+            "matches_workspace": true,
+            "workspace_sha256": "9804c343b471756bbd6c56e1157c6ea1e6a9e8c343b406559e52fed0c6849450"
+          },
+          "status-helpers/STATUS.EXE": {
+            "sha256": "6b161ecf7443d1d128e6ed79d8d5b8d3461ae84b0dab5fe389b71e91888946b2",
+            "matches_workspace": true,
+            "workspace_sha256": "6b161ecf7443d1d128e6ed79d8d5b8d3461ae84b0dab5fe389b71e91888946b2"
+          },
+          "status-renderer/STATUS.EXE": {
+            "sha256": "2f5ef231f958b209e3560f8ab34fabb44711a70ab402e31db7ae959458aa867e",
+            "matches_workspace": true,
+            "workspace_sha256": "2f5ef231f958b209e3560f8ab34fabb44711a70ab402e31db7ae959458aa867e"
+          },
+          "aspect-receive-commands/RECEIVE.EXE": {
+            "sha256": "71080402c11a32f5711ca29bac1e52c11b82315bede3d19e7a6a44b8afb3dec1",
+            "matches_workspace": true,
+            "workspace_sha256": "71080402c11a32f5711ca29bac1e52c11b82315bede3d19e7a6a44b8afb3dec1"
+          },
+          "aspect-runtime/CASES.DAT": {
+            "sha256": "60686f912586032385df812a63e0a0cdadb7e3333da01dae4ebbea846c72e16e",
+            "matches_workspace": true,
+            "workspace_sha256": "60686f912586032385df812a63e0a0cdadb7e3333da01dae4ebbea846c72e16e"
+          },
+          "aspect-serial-commands/SERIAL.EXE": {
+            "sha256": "1246c0cec286893de01953bb5cd6b6a7917a566dc34b2c79d583576edf100725",
+            "matches_workspace": true,
+            "workspace_sha256": "1246c0cec286893de01953bb5cd6b6a7917a566dc34b2c79d583576edf100725"
+          },
+          "aspect-serial/SERIAL.EXE": {
+            "sha256": "8dd9f87afa509092fe252e2b8a8c3b04ed64bf9c59db26b6e8efc7ac80084b47",
+            "matches_workspace": true,
+            "workspace_sha256": "8dd9f87afa509092fe252e2b8a8c3b04ed64bf9c59db26b6e8efc7ac80084b47"
+          },
+          "aspect-console/CONSOLE.EXE": {
+            "sha256": "080d3623f7cb5813ac7348d0f9444e14d7d409598acc5a4a0554429fe32778d5",
+            "matches_workspace": true,
+            "workspace_sha256": "080d3623f7cb5813ac7348d0f9444e14d7d409598acc5a4a0554429fe32778d5"
+          },
+          "aspect-runner/ASPECT.EXE": {
+            "sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+            "matches_workspace": true,
+            "workspace_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20"
+          },
+          "aspect-runner/tests/RUNTEST.EXE": {
+            "sha256": "9f5268058dce303dcefa3f6cc9b014846cf7f06393fc5e56e54efa1661cdd04c",
+            "matches_workspace": true,
+            "workspace_sha256": "9f5268058dce303dcefa3f6cc9b014846cf7f06393fc5e56e54efa1661cdd04c"
+          },
+          "aspect-parameters/PARAM.EXE": {
+            "sha256": "cc6188d599b7c1a118373ca693e315ad1783dd55e84f40626cb0b4274df6eafc",
+            "matches_workspace": true,
+            "workspace_sha256": "cc6188d599b7c1a118373ca693e315ad1783dd55e84f40626cb0b4274df6eafc"
+          },
+          "aspect-strings/STRINGS.EXE": {
+            "sha256": "33fbb842582a14b34d28c9b6daba266ac80ff4938907f4007327d69c274a60b4",
+            "matches_workspace": true,
+            "workspace_sha256": "33fbb842582a14b34d28c9b6daba266ac80ff4938907f4007327d69c274a60b4"
+          },
+          "aspect-long/LONG.EXE": {
+            "sha256": "2cc9e26a79da879c5441cba3a75db097b051b6387d3016d44238a8d3bc6b2758",
+            "matches_workspace": true,
+            "workspace_sha256": "2cc9e26a79da879c5441cba3a75db097b051b6387d3016d44238a8d3bc6b2758"
+          },
+          "aspect-arithmetic/ARITH.EXE": {
+            "sha256": "a56ff61e7cd4db2756dcdd870600a8e4bf81cff59ad31e0b1407232fae7919c8",
+            "matches_workspace": true,
+            "workspace_sha256": "a56ff61e7cd4db2756dcdd870600a8e4bf81cff59ad31e0b1407232fae7919c8"
+          },
+          "aspect-operands/OPERANDS.EXE": {
+            "sha256": "fb07492fb48bfa0d0cca760fc33c1c884c0551627b58b51df2778b6e310f897e",
+            "matches_workspace": true,
+            "workspace_sha256": "fb07492fb48bfa0d0cca760fc33c1c884c0551627b58b51df2778b6e310f897e"
+          },
+          "aspect-operations/OPERATE.EXE": {
+            "sha256": "98c8d27d0fb5dde4c30edb1390a092e8823652177f7e11417952e1718bbf101b",
+            "matches_workspace": true,
+            "workspace_sha256": "98c8d27d0fb5dde4c30edb1390a092e8823652177f7e11417952e1718bbf101b"
+          },
+          "aspect-runtime/EXECUTE.EXE": {
+            "sha256": "37bcb4e6260d3bff4240069c06f71563c1541cbfd7e4f860d9fe9b3eaff34a5c",
+            "matches_workspace": true,
+            "workspace_sha256": "37bcb4e6260d3bff4240069c06f71563c1541cbfd7e4f860d9fe9b3eaff34a5c"
+          },
+          "monitor/MONITOR.EXE": {
+            "sha256": "766e8cb46c6edb3269cee3ea2a7896c03628f37e6fcfe7fc17938f834e13b377",
+            "matches_workspace": true,
+            "workspace_sha256": "766e8cb46c6edb3269cee3ea2a7896c03628f37e6fcfe7fc17938f834e13b377"
+          },
+          "monitor-file/MONITOR.EXE": {
+            "sha256": "d6fa5642e9b41ebc467823257fe81a5ce4896978b7e28d99a0522dc63c8dd542",
+            "matches_workspace": true,
+            "workspace_sha256": "d6fa5642e9b41ebc467823257fe81a5ce4896978b7e28d99a0522dc63c8dd542"
+          },
+          "monitor-file/MOFAULT.EXE": {
+            "sha256": "bb0b7ab2b9c79e52b9e33369e91bfaa84f5ad2ec13691e2fb80bdd3fc17651d2",
+            "matches_workspace": true,
+            "workspace_sha256": "bb0b7ab2b9c79e52b9e33369e91bfaa84f5ad2ec13691e2fb80bdd3fc17651d2"
+          }
+        },
+        "build_scripts": [
+          "standalone/build_terminal.py",
+          "standalone/build_config_dos.py",
+          "standalone/build_config_replace.py",
+          "standalone/build_config_abi.py",
+          "standalone/build_ui_windows.py",
+          "standalone/build_modem_commands.py",
+          "standalone/build_modem_responses.py",
+          "standalone/build_modem_send.py",
+          "standalone/build_directory_dial.py",
+          "standalone/build_directory_browser.py",
+          "standalone/build_directory_editor.py",
+          "standalone/build_directory_accounting.py",
+          "standalone/build_keyboard_mapping.py",
+          "standalone/build_keyboard_detection.py",
+          "standalone/build_line_edit.py",
+          "standalone/build_meta_keys.py",
+          "standalone/build_character_edit.py",
+          "standalone/build_process.py",
+          "standalone/build_program_exec.py",
+          "standalone/build_terminal_reset.py",
+          "standalone/build_transfer_blocks.py",
+          "standalone/build_transfer_receive.py",
+          "standalone/build_transfer_send.py",
+          "standalone/build_transfer_files.py",
+          "standalone/build_transfer_session.py",
+          "standalone/build_transfer_uart.py",
+          "standalone/build_download_file.py",
+          "standalone/build_transfer_session_composite.py",
+          "standalone/build_transfer_storage.py",
+          "standalone/build_upload_file.py",
+          "standalone/build_transfer_metadata.py",
+          "standalone/build_batch_header.py",
+          "standalone/build_clipboard.py",
+          "standalone/build_snapshot.py",
+          "standalone/build_printer.py",
+          "standalone/build_monitor.py",
+          "standalone/build_print_screen.py",
+          "standalone/build_print_controller.py",
+          "standalone/build_setup.py",
+          "standalone/build_live_configuration.py",
+          "standalone/build_directory_context.py",
+          "standalone/build_xlt_editor.py",
+          "standalone/build_live_translation_child.py",
+          "standalone/build_aspect_literal.py",
+          "standalone/build_aspect_dispatch.py",
+          "standalone/build_aspect_globals.py",
+          "standalone/build_aspect_stack.py",
+          "standalone/build_aspect_unwind.py",
+          "standalone/build_aspect_flow.py",
+          "standalone/build_aspect_file.py",
+          "standalone/build_aspect_operands.py",
+          "standalone/build_aspect_operations.py",
+          "standalone/build_aspect_runtime.py",
+          "standalone/build_aspect_long.py",
+          "standalone/build_aspect_arithmetic.py",
+          "standalone/build_aspect_parameters.py",
+          "standalone/build_aspect_strings.py",
+          "standalone/build_aspect_string_services.py",
+          "standalone/build_aspect_string_commands.py",
+          "standalone/build_aspect_conversions.py",
+          "standalone/build_aspect_conversion_services.py",
+          "standalone/build_aspect_console.py",
+          "standalone/build_aspect_runner.py",
+          "standalone/build_aspect_serial_commands.py",
+          "standalone/build_aspect_serial.py",
+          "standalone/build_aspect_receive_commands.py",
+          "standalone/build_aspect_receive_policy.py",
+          "standalone/build_aspect_directory.py",
+          "standalone/build_aspect_set.py",
+          "standalone/build_aspect_txpace.py",
+          "standalone/build_aspect_find_case.py",
+          "standalone/build_aspect_find_owner.py",
+          "standalone/build_aspect_break_native.py",
+          "standalone/build_aspect_fetch_native.py",
+          "standalone/build_aspect_chain_native.py",
+          "standalone/build_aspect_end_wait_native.py",
+          "standalone/build_status_helpers.py",
+          "standalone/build_status_renderer.py",
+          "standalone/check_batch_download.py",
+          "standalone/check_batch_upload.py",
+          "standalone/check_capture_file.py",
+          "standalone/check_capture_session.py",
+          "standalone/check_capture_owners.py",
+          "standalone/check_monitor_file.py",
+          "standalone/check_printer_device.py",
+          "standalone/test_resource_path_dos.py",
+          "standalone/test_aspect_compiler.py",
+          "standalone/test_aspect_set_compiler.py",
+          "standalone/test_aspect_find_case_compiler.py",
+          "standalone/test_aspect_break_compiler.py",
+          "standalone/check_aspect_set.py",
+          "standalone/check_aspect_txpace.py",
+          "standalone/check_aspect_find_case.py",
+          "standalone/check_aspect_find_owner.py",
+          "standalone/check_status_helpers.py",
+          "standalone/check_status_renderer.py",
+          "standalone/check_status_live.py",
+          "standalone/check_aspect_runner.py",
+          "standalone/check_aspect_txpace_linked.py",
+          "standalone/check_aspect_break_native.py",
+          "standalone/check_aspect_fetch_native.py",
+          "standalone/check_aspect_break_policy.py",
+          "standalone/check_aspect_break_ui.py",
+          "standalone/check_aspect_break_owner.py",
+          "standalone/check_aspect_break_linked.py",
+          "standalone/check_aspect_directory.py",
+          "standalone/package_dos.py"
+        ]
+      }
+    },
+    "build/bbs-lab/script-login/chain-final-sync/checks.json": {
+      "sha256": "b6a0b7ce87af0a049f7f996cfc5666ac74c030b895f260e9c07244fa228aaee8",
+      "report": {
+        "passed": true,
+        "checks": {
+          "DOS_harness": true,
+          "current_terminal": true,
+          "current_runner": true,
+          "inputs_unchanged": true,
+          "credentials_not_in_keyboard": true,
+          "script_credentials_once": true,
+          "no_other_login_text_before_script": true,
+          "authenticated_display": true,
+          "no_error_or_blocking_return_prompt": true,
+          "resumed_parent_editor": true,
+          "draft_aborted": true
+        },
+        "sources": {
+          "lab/bbs/script_login_dos_probe.py": "767aac44ca229e455bc557bdad8b54f0866ea6a3c843b2ff378632e6bb928f22",
+          "lab/bbs/synchronet-editor-recipe.json": "a2cce7cd32d8b18a722286b4b27af92f9fe5a60007702330ab225a3820c2b221",
+          "src/aspect/compiler.py": "5fc4281e7a26f70e6becf962c8ed6e7a253ca4bc1ee4fa5487a5ab42a0470812",
+          "standalone/test_script_launch_dos.py": "7511bd518ffbf26bdc9a4f4f315c85e10ea30643f8b07ad2abf6255206873b0e",
+          "standalone/command_menu_watch.asm": "af79eefa3a05b9a14dd51d6acf169ca8f8030c92fbaa9fc31aa9ab94b74247da",
+          "lab/bbs/editor_dos_probe.py": "e151b915529b28aa293408114feed5617f0a41099cdf83c059e743869f58a932",
+          "lab/bbs/test_dos.py": "8e1728173c0e3b6d77ebd6fc91975040b2cb410248d3f79d92fcb8ef402cae41",
+          "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+          "lab/bbs/check_editor_dos.py": "abb1f880d002deea9d5506793c32a205da25c1e462f64798fc7fe02edb7bd5e6"
+        },
+        "staged": {
+          "watch.asm": "5401d0c2168b2142579dc5c8b4dc8cc53a888a86d39664417695a100b9348809",
+          "SCRIPT.COM": "1d1a301751df9b83797087d0cf2f9f017f8f37d5874d38503e1f2a178680046d",
+          "TERMINAL.EXE": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+          "ASPECT.EXE": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+          "LOGON.ASP": "8b85eb9277f98736d8a238668f6fe0ac7310e69104e32b8d0b42823a43327ea4",
+          "LOGON.ASX": "df4c1431cc5a5b11edebdffadf813c18ac922e5091740006c220cdd1ca444aad"
+        },
+        "predictions_sha256": "32f32491182b5fe90c408947a704508f6a62e7faf1a875d2dfbf07fc0ea3c290",
+        "terminal_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+        "runner_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+        "run": {
+          "name": "synchronet",
+          "label": "chain-final-sync",
+          "checks": {
+            "dos_normal_exit": true,
+            "hardware_restored": true,
+            "screen_captured": true,
+            "bbs_connected": true,
+            "bbs_display_received": true,
+            "configuration_unchanged": true,
+            "binary_unchanged_during_run": true
+          },
+          "passed": true,
+          "seconds": 52.033,
+          "binary_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+          "keyboard": "p1000 p13000 a-z p300 a p300 l o g o n . a s x enter p8000 space p3000 Q enter p5000 space p4000 P p2000 K E Y T E S T enter p3000 c-y p400 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p400 c-q p1800 space p3000 a-x p2000 a-x",
+          "keyboard_input": "p13000 a-z p300 a p300 l o g o n . a s x enter p8000 space p3000 Q enter p5000 space p4000 P p2000 K E Y T E S T enter p3000 c-y p400 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p400 c-q p1800 space p3000 a-x",
+          "serial": {
+            "com": 2,
+            "baud": 19200,
+            "line": "8N1",
+            "flow": "HARD",
+            "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+          },
+          "scope": "Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.",
+          "server_log": null,
+          "server_endpoint": {
+            "address": "127.0.0.1",
+            "port": 23231
+          },
+          "modem_packet_delay_ms": 0,
+          "keyboard_profile": null,
+          "configuration": {
+            "automatic_dial": true,
+            "mode": "explicit synthetic partial PRM",
+            "command": "TERMINAL @D:\\TEST.PRM /D:lab.local:23231",
+            "sha256": "e7f9ffdf31573890beaf152c5ae7e9835808d75eade3e2910fc63b8b73f9da55",
+            "directory_entry": null,
+            "directory_browser": false,
+            "directory_sha256": null
+          }
+        },
+        "editor": {
+          "passed": true,
+          "checks": {
+            "DOS_harness": true,
+            "typed_draft_sent": true,
+            "all_exercised_keys_emitted": true,
+            "stock_editor_entered": true,
+            "draft_aborted": true,
+            "insert_toggled_overtype": true,
+            "home_marker_at_line_start": true,
+            "end_marker_at_line_end": true,
+            "delete_erases_final_character": true,
+            "tab_advances_to_next_stop": true,
+            "page_keys_report_document_boundaries": true,
+            "ctrl_y_delete_line_response": true
+          },
+          "observed_key_wire": {
+            "home": true,
+            "end": true,
+            "insert": true,
+            "delete": true,
+            "page_up": true,
+            "page_down": true,
+            "tab": true,
+            "delete_line_ctrl_y": true
+          },
+          "binary_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+          "serial": {
+            "com": 2,
+            "baud": 19200,
+            "line": "8N1",
+            "flow": "HARD",
+            "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+          },
+          "authority": {},
+          "scope": "Actual loopback editor draft and captured DOS keyboard wire. Server identity is recorded separately. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim.",
+          "exit_mode": "editor_discard_or_abort",
+          "unexercised_keys": [],
+          "modem_packet_delay_ms": 0,
+          "keyboard_profile": "network"
+        },
+        "observer_bits": 1,
+        "artifacts": {
+          "build/bbs-lab/results/synchronet/chain-final-sync/TEST.PRM": "e7f9ffdf31573890beaf152c5ae7e9835808d75eade3e2910fc63b8b73f9da55",
+          "build/bbs-lab/results/synchronet/chain-final-sync/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+          "build/bbs-lab/results/synchronet/chain-final-sync/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+          "build/bbs-lab/results/synchronet/chain-final-sync/dosbox.conf": "af1ed8516b94cc37b74ec0b68357f378dda6898f9d54de5df5dea50a7c860abe",
+          "build/bbs-lab/results/synchronet/chain-final-sync/dosbox.log": "61c3cbb4b90239e07f4679ed98baa0c47bc120e951046ba4d6cdda5a24ec4b10",
+          "build/bbs-lab/results/synchronet/chain-final-sync/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+          "build/bbs-lab/results/synchronet/chain-final-sync/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+          "build/bbs-lab/results/synchronet/chain-final-sync/SCRIPT.BIN": "ea5d515c4e3373307d85a9aaf4079d8a4dfca2748e449e5cd059e101ce1e9828",
+          "build/bbs-lab/results/synchronet/chain-final-sync/SCREEN.BIN": "90c0e27ee27e63f8c5c669a7cd87271fd02b2701fb9acd51470705b385574719",
+          "build/bbs-lab/results/synchronet/chain-final-sync/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+          "build/bbs-lab/results/synchronet/chain-final-sync/bbs-wire.bin": "3b75f9609f352a915b038a48b6de1a3504073dba9f9edf12efd827b4c562c28c",
+          "build/bbs-lab/results/synchronet/chain-final-sync/bbs-sent.bin": "a78d3d31c9027793e2ea3d5aefca3d93c2a9d0e5ad147af7391a4f603cc5b910",
+          "build/bbs-lab/results/synchronet/chain-final-sync/display.bin": "2b9e1b32433e7cef02b3bad47411bd2e7f597ac4806542eb0c0c2d44648f9b64",
+          "build/bbs-lab/results/synchronet/chain-final-sync/serial-received.bin": "c6f2d0a6f7e0f6320a673bb23846133cbaefaf589b5ee1ee8be63affb0c8b685",
+          "build/bbs-lab/results/synchronet/chain-final-sync/serial-sent.bin": "2b9e1b32433e7cef02b3bad47411bd2e7f597ac4806542eb0c0c2d44648f9b64",
+          "build/bbs-lab/results/synchronet/chain-final-sync/modem.json": "66b7a3ee7a7ebb3e59e08354ef9cc5954ba93b4820dfbdbf039253cdc3d92d9b",
+          "build/bbs-lab/results/synchronet/chain-final-sync/screen.txt": "91106d7aad42a11c1dbf980b67d2e08b0882d8259ef44af96964ac802c3e082f",
+          "build/bbs-lab/results/synchronet/chain-final-sync/result.json": "1f670ed87c87a0883a1baf44ace3424dbd249017c47c56fc228b22bfa5dc9ecf",
+          "build/bbs-lab/results/synchronet/chain-final-sync/semantic-audit.json": "29cf3fd24d2a15dd5a0ebf593f66f0fa8200113b3ac00863163e8e05c3c8cad0"
+        },
+        "scope": "Actual DOS menu-launched source-built ASPECT sends synthetic local Synchronet credentials; native WAITFOR gates password transmission. INT1C passively rejects launch-error or blocking return prompts; successful connected script resumes parent rendering and unsaved stock-editor checks. No physical modem, full script renderer or whole-application claim."
+      }
+    },
+    "build/bbs-lab/script-login/chain-final-enigma30/checks.json": {
+      "sha256": "318fe0ef1a07ff0515ab21f8c658fbe2c3b0c2b9bb2114d6a30aea9365d15d5e",
+      "report": {
+        "keyboard_profile": "network",
+        "modem_packet_delay_ms": 30,
+        "server_commit": "6c25317168b762f7d9088a54d3f8295438827a0e",
+        "server_sources": {
+          "core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+          "core/multi_line_edit_text_view.js": "687eb7ae3355cea0e91a30f80134a87b9060bc26f11f1661c7c4f7cfb0d47ce7"
+        },
+        "passed": true,
+        "checks": {
+          "DOS_harness": true,
+          "current_terminal": true,
+          "current_runner": true,
+          "inputs_unchanged": true,
+          "stock_server_unchanged": true,
+          "credentials_not_in_keyboard": true,
+          "script_credentials_once": true,
+          "no_other_login_text_before_script": true,
+          "authenticated_server_log": true,
+          "no_error_or_blocking_return_prompt": true,
+          "resumed_parent_editor": true,
+          "no_post_saved": true
+        },
+        "sources": {
+          "lab/bbs/enigma_directory_script_probe.py": "5d4ebafb0cee12c18c07ee5432fd44f63b5bf0957aae00558e817ef5afdbae0d",
+          "lab/bbs/editor-recipes.json": "72777d66ae84bd488f551cdb367deadbb47d4a4405f921f0d1ab0d578b1a3649",
+          "src/aspect/compiler.py": "5fc4281e7a26f70e6becf962c8ed6e7a253ca4bc1ee4fa5487a5ab42a0470812",
+          "standalone/test_script_launch_dos.py": "7511bd518ffbf26bdc9a4f4f315c85e10ea30643f8b07ad2abf6255206873b0e",
+          "standalone/command_menu_watch.asm": "af79eefa3a05b9a14dd51d6acf169ca8f8030c92fbaa9fc31aa9ab94b74247da",
+          "lab/bbs/editor_dos_probe.py": "e151b915529b28aa293408114feed5617f0a41099cdf83c059e743869f58a932",
+          "lab/bbs/test_dos.py": "8e1728173c0e3b6d77ebd6fc91975040b2cb410248d3f79d92fcb8ef402cae41",
+          "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+          "lab/bbs/check_editor_dos.py": "abb1f880d002deea9d5506793c32a205da25c1e462f64798fc7fe02edb7bd5e6",
+          "standalone/directory_fixtures.py": "e4b0cf7ad4a2c408f2a11d093b2c568633aa8bed6ff62cb53f6f67ff3aa5962c",
+          "standalone/directory_test_support.py": "1857fae3729a5a8c9b0264bf03acabfa2cfc37d56a91a16669c36927b15d9ddc",
+          "build/keyboard-profiles/NETWORK.KBD": "a5906e5a8f6bce7c961008d1355929dd6945b9e3932a5e2aac23eea3eb301091"
+        },
+        "staged": {
+          "watch.asm": "5401d0c2168b2142579dc5c8b4dc8cc53a888a86d39664417695a100b9348809",
+          "SCRIPT.COM": "1d1a301751df9b83797087d0cf2f9f017f8f37d5874d38503e1f2a178680046d",
+          "TERMINAL.EXE": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+          "ASPECT.EXE": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+          "LOGON.ASP": "ab34480d2e34403eae22c28c128dd7d8fd2cf445f6bfb8b84eb3a0108898e68f",
+          "LOGON.ASX": "f5c4f5fc5329b68d17a4cce714e00f8250baa3c61e7b137a0b9f7eefcb274030"
+        },
+        "predictions_sha256": "c2f8da4771ea2fd32ae7c7792638706aa8c2309e65aef554fc12212e0b15202a",
+        "terminal_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+        "runner_sha256": "942c207c5a52bf648463138729413e61289f4eff03728b406fd226bcedc35a20",
+        "run": {
+          "name": "enigma",
+          "label": "chain-final-enigma30",
+          "checks": {
+            "dos_normal_exit": true,
+            "hardware_restored": true,
+            "screen_captured": true,
+            "bbs_connected": true,
+            "bbs_display_received": true,
+            "configuration_unchanged": true,
+            "keyboard_profile_unchanged": true,
+            "directory_accounting_exact": true,
+            "binary_unchanged_during_run": true
+          },
+          "passed": true,
+          "seconds": 88.865,
+          "binary_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+          "keyboard": "p1000 p33000 enter p5000 enter p5000 enter p5000 escape p2500 n p6000 n p3000 enter p6000 M enter p5000 P enter p5000 enter p700 K E Y T E S T enter p1800 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p3000 a-x p2000 a-x",
+          "keyboard_input": "p33000 enter p5000 enter p5000 enter p5000 escape p2500 n p6000 n p3000 enter p6000 M enter p5000 P enter p5000 enter p700 K E Y T E S T enter p1800 A B C D E p400 home p400 H p400 end p400 E p400 left p400 del p400 ins p400 Z p400 tab p400 T p400 pgup p400 pgdown p400 c-y p400 U N S A V E D p3000 a-x",
+          "serial": {
+            "com": 2,
+            "baud": 19200,
+            "line": "8N1",
+            "flow": "HARD",
+            "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+          },
+          "scope": "Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.",
+          "server_log": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/source/logs/enigma-bbs.log",
+          "server_endpoint": {
+            "address": "127.0.0.1",
+            "port": 23233
+          },
+          "modem_packet_delay_ms": 30,
+          "keyboard_profile": {
+            "sha256": "a5906e5a8f6bce7c961008d1355929dd6945b9e3932a5e2aac23eea3eb301091",
+            "file": "BOARD.KBD"
+          },
+          "configuration": {
+            "automatic_dial": true,
+            "mode": "explicit synthetic partial PRM",
+            "command": "TERMINAL @D:\\TEST.PRM /E:D:\\TEST.DIR /N:3 /K:D:\\BOARD.KBD",
+            "sha256": "6abe60b3420535b904a5ecdb4a7c00d395960c8aeede67b10bdf559f483965fc",
+            "directory_entry": 3,
+            "directory_browser": false,
+            "directory_sha256": "65c689d6be247e5441bf51475d1d6f2eb5d1ec3e6369b863618fc76a84ff1a79"
+          }
+        },
+        "editor": {
+          "passed": true,
+          "checks": {
+            "DOS_harness": true,
+            "typed_draft_sent": true,
+            "all_exercised_keys_emitted": true,
+            "stock_editor_entered": true,
+            "no_post_saved": true,
+            "insert_toggled_overtype": true,
+            "home_moves_before_marker": true
+          },
+          "observed_key_wire": {
+            "home": true,
+            "end": true,
+            "insert": true,
+            "delete": true,
+            "page_up": true,
+            "page_down": true,
+            "tab": true,
+            "delete_line_ctrl_y": true
+          },
+          "binary_sha256": "cd804e72f84c704ae074156868514d5019468e26342e206927d6ee0eb036e9a9",
+          "serial": {
+            "com": 2,
+            "baud": 19200,
+            "line": "8N1",
+            "flow": "HARD",
+            "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+          },
+          "authority": {
+            "server_log": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/source/logs/enigma-bbs.log",
+            "stock_server": true,
+            "session_id": "80UeDAoW0pp",
+            "menus": [
+              "telnetConnected",
+              "matrix",
+              "login",
+              "fullLoginSequenceLoginArt",
+              "fullLoginSequenceLastCallers",
+              "fullLoginSequenceWhosOnline",
+              "fullLoginSequenceOnelinerz",
+              "fullLoginSequenceNewScanConfirm",
+              "fullLoginSequenceUserStats",
+              "mainMenu",
+              "messageBaseMainMenu",
+              "messageBaseNewPost"
+            ],
+            "first_body_cursor_positions": [
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                7
+              ],
+              [
+                1,
+                8
+              ],
+              [
+                1,
+                7
+              ],
+              [
+                1,
+                7
+              ],
+              [
+                1,
+                7
+              ],
+              [
+                1,
+                8
+              ],
+              [
+                1,
+                9
+              ],
+              [
+                1,
+                10
+              ],
+              [
+                1,
+                10
+              ],
+              [
+                1,
+                10
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ]
+          },
+          "scope": "Actual loopback editor draft and captured DOS keyboard wire. Server identity is recorded separately. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim. Explicit modem buffering experiment; does not replace immediate-bridge failures or prove physical firmware compatibility.",
+          "exit_mode": "close_unsaved_connection",
+          "unexercised_keys": [],
+          "modem_packet_delay_ms": 30,
+          "keyboard_profile": "network"
+        },
+        "observer_bits": 1,
+        "artifacts": {
+          "build/bbs-lab/results/enigma/chain-final-enigma30/TEST.PRM": "6abe60b3420535b904a5ecdb4a7c00d395960c8aeede67b10bdf559f483965fc",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/BOARD.KBD": "a5906e5a8f6bce7c961008d1355929dd6945b9e3932a5e2aac23eea3eb301091",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/dosbox.conf": "2e8689e3a17eb0c8b1805f241896d4909be10238304c2e5913fbc2f2594693f5",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/server-log-start.json": "77bb32562b71162cde4fad4b5591e44427ed40b40dc2613fd08f9d551da65a09",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/dosbox.log": "c29fb2c64dccc61e6b7f87d373c90d540f9e34cda2f49fc2464ebf62a34964d8",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/TEST.DIR": "034d63be6d811d265a3ed055d5b0957e85da3f781cfb929fcef3275d8814f4a8",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/SCRIPT.BIN": "4dd4fbcdfa3d3a137e032a7d3d2a9d9db10aaca344391cfe201906ad19c3b689",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/SCREEN.BIN": "95ed5f6c1ff5557e5ccd75735358b0f28810fd5303e28e5f275064d8eef1dbec",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/bbs-wire.bin": "2de7c75613e0fb10b21538b84c712eccd2a675c17be2b4faff1be958e4e586d9",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/bbs-sent.bin": "66657d608a8c9a88f84dd1ea73de0774071d5c880c3640aa21feef2132a2782a",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/display.bin": "e4aeb23140badb08f169c178b1c468e97e2907b97ea591a83983525f2fc1d96b",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/serial-received.bin": "d7789c407d3f122cf50ae8ee9b415391086a39220f4d3c57d14c6e3a4c13495c",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/serial-sent.bin": "e4aeb23140badb08f169c178b1c468e97e2907b97ea591a83983525f2fc1d96b",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/modem.json": "0713a3bea5aa2516cff13576d7aed95a6064a6138b11ca4b69da96b1758edda3",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/screen.txt": "a4a43bf10d1d0b1f429239e9ecd2a58ecde5cffce7e3d75a1587d3059adee74c",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/result.json": "03ee7b6f504b3ffc25fd0aa7626c1e944d01074002252351064a06d8c47823f1",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/server-session.jsonl": "f287d99c09bdee4c8755d49170845bf08f86cf33d5d59f646868573405c6567d",
+          "build/bbs-lab/results/enigma/chain-final-enigma30/semantic-audit.json": "990abc2ffa003a3ff12adef068db774a8fd0020c92543c8a423a0011eddb5fea"
+        },
+        "scope": "Actual DOS directory-bound script sends only synthetic local ENiGMA credentials after native prompt and quiet waits. Passive INT1C observer checks launcher errors. Stock editor checks use the explicitly recorded modem buffering delay and keyboard profile. Disconnect leaves the draft unsaved. Buffered experiments do not replace immediate-forwarding failures. No physical modem or full application claim."
+      }
+    }
+  },
+  "BBS": {
+    "synchronet": {
+      "label": "chain-final-sync",
+      "modem_buffer_ms": 0,
+      "passed": true
+    },
+    "enigma": {
+      "label": "chain-final-enigma30",
+      "modem_buffer_ms": 30,
+      "passed": true
+    }
+  },
+  "supported_opcode_slots": 72,
+  "unsupported_opcode_slots": 143,
+  "whole_application_gates_closed": [],
+  "limitations": [
+    "DOS ASP compiler and missing-ASX source fallback remain required.",
+    "Parent status still shows the initial invocation filename after EXECUTE.",
+    "Raw ASIO and diagnostic transport skip native terminal end-drain; attached drain uses maintained budget/cancel and BIOS-key policies.",
+    "ENiGMA stock immediate forwarding remains unresolved; retained network-profile test uses explicit30ms buffering.",
+    "Other command families, full UI/emulations/protocols/Host and physical Wi-Fi modems remain required."
+  ]
+}

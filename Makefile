@@ -816,3 +816,27 @@ test-aspect-break-ui: terminal
 	python3 standalone/check_aspect_break_ui.py
 test-aspect-break-dos: terminal aspect-runner
 	python3 standalone/test_aspect_break_dos.py --label "break-$$(date -u +%Y%m%dT%H%M%S%N)" --terminal-sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)" --runner-sha256 "$$(sha256sum build/aspect-runner/ASPECT.EXE | cut -d' ' -f1)"
+
+.PHONY: aspect-chain-native test-aspect-chain-native test-aspect-chain-compiler aspect-end-wait-native test-aspect-end-wait-native test-aspect-script-path test-aspect-chain-runtime test-aspect-chain-serial-dos
+all: aspect-chain-native aspect-end-wait-native
+test: test-aspect-chain-native test-aspect-chain-compiler test-aspect-end-wait-native test-aspect-script-path
+aspect-chain-native:
+	python3 standalone/build_aspect_chain_native.py
+test-aspect-chain-native: aspect-chain-native
+	python3 standalone/check_aspect_chain_native.py
+test-aspect-chain-compiler:
+	python3 standalone/test_aspect_chain_compiler.py
+aspect-end-wait-native:
+	python3 standalone/build_aspect_end_wait_native.py
+test-aspect-end-wait-native: aspect-end-wait-native
+	python3 standalone/check_aspect_end_wait_native.py
+test-aspect-script-path:
+	python3 standalone/test_aspect_script_path.py
+test-aspect-chain-runtime:
+	python3 standalone/check_aspect_chain_runtime.py
+test-aspect-chain-serial-dos: aspect-runner
+	python3 standalone/check_aspect_chain_serial_dos.py
+
+.PHONY: test-aspect-chain-status-dos
+test-aspect-chain-status-dos: terminal aspect-runner
+	python3 standalone/test_aspect_chain_status_dos.py --label "chain-$$(date -u +%Y%m%dT%H%M%S%N)" --terminal-sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)" --runner-sha256 "$$(sha256sum build/aspect-runner/ASPECT.EXE | cut -d' ' -f1)"

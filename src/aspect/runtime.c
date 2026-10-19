@@ -3,11 +3,13 @@
 #include "set_runtime.h"
 #include "find_runtime.h"
 #include "file_io.h"
+#include "script_path.h"
 #include "serial_runtime.h"
 #include "receive_runtime.h"
 #include "directory_runtime.h"
 #include <malloc.h>
 #include <dos.h>
+#include <io.h>
 #include <bios.h>
 #include <string.h>
 #if defined(ASPECT_RUNTIME_SERIAL)
@@ -26,7 +28,8 @@ unsigned char runtime_string_snapshot[128][81];
 unsigned char runtime_console_output[1024];
 unsigned runtime_console_output_size;
 #endif
-static unsigned active;
+static unsigned active,end_wait_started;
+extern void runtime_end_wait_native(void);
 extern void __interrupt __far runtime_divide_interrupt(void);
 extern unsigned runtime_depth,runtime_frame,runtime_stack_pointer,runtime_wait_gate;
 extern unsigned runtime_source_type,runtime_target_type,runtime_lookahead,runtime_stage_index;
@@ -56,6 +59,7 @@ void runtime_set_error(unsigned error)
 void runtime_reset_native(void)
 {
     unsigned base=(unsigned)runtime_arena+0x1b1a;
+    end_wait_started=0;
     runtime_depth=0;runtime_frame=runtime_stack_pointer=base;runtime_wait_gate=0;
     runtime_source_type=runtime_target_type=runtime_lookahead=runtime_stage_index=0;
     runtime_word_value=0;runtime_dword_value=0;runtime_string_compare_result=0;runtime_native_error_code=0;
@@ -81,11 +85,24 @@ void runtime_reset_native(void)
 unsigned runtime_open(unsigned owner,const char *path)
 {
     unsigned char header;
-    unsigned status;
+    unsigned status,i,base=(unsigned)runtime_arena+0x1b1a;
+    char normalized[ASPECT_SCRIPT_PATH_CAPACITY];
 #if defined(ASPECT_RUNTIME_SERIAL)
     char resolved[64];unsigned prefix,n;
 #endif
-    (void)owner;
+    /* The argument may be the latest scratch slot. Stage before per-file
+     * resets; retain numeric/settings/session banks across dispatcher999. */
+    status=aspect_script_path(path,normalized);
+    runtime_frame=runtime_stack_pointer=base;
+    runtime_stage_index=runtime_lookahead=runtime_depth=runtime_local_count=0;
+    runtime_exit_state=runtime_string_pending_near=0;
+    for(i=0;i<36;i+=12){runtime_locals[i]=0;runtime_locals[i+1]=0;}
+    runtime_when_file_reset();
+    if(runtime_error)return 0;
+    if(status==ASPECT_SCRIPT_PATH_EMPTY)goto no_file;
+    if(status==ASPECT_SCRIPT_PATH_SOURCE){runtime_set_error(ASPECT_RUN_UNSUPPORTED);goto no_file;}
+    if(status!=ASPECT_SCRIPT_PATH_COMPILED){runtime_native_error_code=102;runtime_set_error(ASPECT_RUN_OPERAND);goto no_file;}
+    path=normalized;
     status=aspect_file_open(&runtime_file,path);
 #if defined(ASPECT_RUNTIME_SERIAL)
     /* Native353D tries the current name, then the PCPLUS directory. It does
@@ -97,6 +114,11 @@ unsigned runtime_open(unsigned owner,const char *path)
     }
 #endif
     if(status!=ASPECT_FILE_OK){runtime_set_error(ASPECT_RUN_OPEN);return 0;}
+    /* Native D4D0 rejects a CRT device-descriptor flag before reading. The
+     * maintained CRT boundary uses isatty, so EXECUTE CON cannot block a read. */
+    if(isatty(fileno(runtime_file.handle))){
+        runtime_set_error(ASPECT_RUN_OPEN);aspect_file_close(&runtime_file);return 0;
+    }
     if(aspect_file_read(&header,1,1,&runtime_file)!=1 || header>128){
         runtime_set_error(ASPECT_RUN_HEADER);aspect_file_close(&runtime_file);return 0;
     }
@@ -110,7 +132,17 @@ unsigned runtime_open(unsigned owner,const char *path)
     /* Clear the full pointer tail before native allocation can unwind. */
     memset(runtime_strings,0,sizeof(runtime_strings));runtime_string_count=0;
     runtime_globals_init();
-    runtime_wait_gate=1;return 1;
+    ++runtime_wait_gate;
+    if(owner)++runtime_wait_gate;
+    runtime_string_scratch_index=0;
+    runtime_string_scratch_pointer=(unsigned)runtime_string_scratch;
+    return 1;
+no_file:
+    runtime_string_scratch_index=0;
+    runtime_string_scratch_pointer=(unsigned)runtime_string_scratch;
+    ++runtime_wait_gate;
+    if(owner)++runtime_wait_gate;
+    return 0;
 }
 void __far *runtime_alloc(unsigned size)
 {
@@ -137,7 +169,7 @@ void runtime_cleanup(void)
     for(i=0;i<runtime_string_count && i<128;++i)
         if(runtime_strings[i])_fmemcpy(runtime_string_snapshot[i],runtime_strings[i],81);
 #endif
-    runtime_when_finish();
+    runtime_when_file_reset();
     ++runtime_cleanup_count;
     runtime_globals_release();
     /* Native release retains pointers; owner explicitly invalidates them. */
@@ -149,6 +181,25 @@ unsigned runtime_close(unsigned token)
     if(token!=(unsigned)&runtime_file){runtime_set_error(ASPECT_RUN_STATE);return 0xffff;}
     if(aspect_file_close(&runtime_file)!=ASPECT_FILE_OK){runtime_set_error(ASPECT_RUN_IO);return 0xffff;}
     return 0;
+}
+void runtime_end_wait(void)
+{
+    /* A renderer failure can nonlocally reenter dispatch shutdown. Revoke the
+     * drain once before entering native code. Raw ASIO retains unread bytes. */
+    if(end_wait_started || runtime_error)return;
+    end_wait_started=1;
+#if defined(ASPECT_RUNTIME_SERIAL)
+    if(aspect_render_active())runtime_end_wait_native();
+#endif
+}
+void runtime_end_wait_step(void)
+{
+    /* Native live drain is unbounded. Share the invocation budget and service
+     * cancellation/transport, without entering WHEN or consuming normal keys. */
+    if(runtime_error)return;
+    if(runtime_steps>=runtime_limit){runtime_set_error(ASPECT_RUN_BUDGET);return;}
+    ++runtime_steps;
+    runtime_console_cancel_poll();
 }
 void runtime_finish(void)
 {

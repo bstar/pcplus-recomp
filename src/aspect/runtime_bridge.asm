@@ -38,6 +38,10 @@ extern _runtime_when_poll,_runtime_when_cancel_poll,_runtime_when_idle_allowed
 extern _runtime_when_host_poll,_runtime_serial_carrier
 extern _runtime_set_status_refresh,_runtime_break_command
 extern aspect_break_command,aspect_break_setting,aspect_fetch_command
+extern aspect_end_wait
+extern _runtime_end_wait,_runtime_end_wait_step
+extern aspect_receive_policy_displayed
+extern aspect_chain_command
 extern aspect_console_pause_operand
 extern aspect_set_dispatch,aspect_set_display,aspect_set_duplex,aspect_set_findcase
 extern aspect_set_keys,aspect_set_msg_crlf,aspect_set_rxdata,aspect_set_switchcase
@@ -91,7 +95,7 @@ _runtime_enter:
  mov si,0x1234
  mov di,0x5678
  push word [bp+4]
- mov ax,1
+ xor ax,ax
  push ax
  call aspect_dispatch
  cmp sp,[saved_sp]
@@ -346,7 +350,7 @@ aspect_operand_builtin_long:
 global aspect_dispatch_wait,aspect_dispatch_shutdown
  global aspect_abort_tell,aspect_abort_format,aspect_abort_print
 aspect_dispatch_wait: jmp aspect_serial_receive
-aspect_dispatch_shutdown:
+aspect_dispatch_shutdown: jmp _runtime_end_wait
 aspect_abort_tell:
 aspect_abort_format:
 aspect_abort_print:
@@ -357,6 +361,21 @@ fail:
  pop bx
  call aspect_abort
  ret
+
+global aspect_chain_copy
+aspect_chain_copy: jmp program_strcpy
+
+global _runtime_end_wait_native
+_runtime_end_wait_native: jmp aspect_end_wait
+global aspect_end_wait_receive,aspect_end_wait_key_ready
+aspect_end_wait_receive:
+ call _runtime_end_wait_step
+ cmp word [_runtime_error],0
+ je .receive
+ mov ax,[_runtime_error]
+ jmp fail
+.receive: jmp aspect_receive_policy_displayed
+aspect_end_wait_key_ready: jmp _runtime_when_key_ready
 
 ; Reuse existing recovered CRT code rather than another implementation.
 global aspect_string_strlen,aspect_string_strncmp,aspect_string_concat,aspect_string_upper
@@ -436,6 +455,8 @@ global aspect_serial_send_byte,aspect_serial_receive,aspect_serial_character_del
 serial_argument_adapter aspect_serial_send_byte,_runtime_serial_send
 serial_argument_adapter aspect_serial_receive,_runtime_serial_receive
 serial_argument_adapter aspect_serial_character_delay,_runtime_serial_character_delay
+global aspect_end_wait_delay
+aspect_end_wait_delay: jmp aspect_serial_character_delay
 global aspect_serial_clock,aspect_serial_pause_ticks
 %ifdef ASPECT_RUNTIME_SERIAL
 aspect_serial_clock: jmp aspect_serial_native_clock
@@ -660,6 +681,13 @@ scalar aspect_when_pending_key,_runtime_when_pending_key
 global aspect_receive_policy_display
 aspect_receive_policy_display:
 scalar aspect_receive_display,_runtime_receive_display
+global aspect_end_wait_display,aspect_end_wait_pattern_count
+%ifndef ASPECT_RUNTIME_SERIAL
+global aspect_end_wait_rx_count
+aspect_end_wait_rx_count equ aspect_serial_rx_count
+%endif
+aspect_end_wait_display equ _runtime_receive_display
+aspect_end_wait_pattern_count equ _runtime_receive_pattern_count
 scalar aspect_console_message_mode,_runtime_console_message_mode
 scalar aspect_serial_case_sensitive,_runtime_serial_case_sensitive
 scalar aspect_serial_wait_result,_runtime_serial_wait_result
@@ -828,6 +856,8 @@ aspect_dispatch_handlers:
  dw aspect_convert_atol
 %elif op=0x0d
  dw aspect_break_command
+%elif op=0xcb
+ dw aspect_chain_command
 %elif op=0x37
  dw aspect_fetch_command
 %elif op=0x13

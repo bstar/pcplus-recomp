@@ -1,0 +1,686 @@
+{
+  "schema": "aspect-chain-compiler-v1",
+  "source_encoding": "cp437",
+  "source_command": "EXECUTE",
+  "rejected_keyword": "CHAIN",
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "provenance": [
+    {
+      "report": "analysis/aspect-chain/compiler-01/report.json",
+      "report_sha256": "b42d0060a95c19b8fef8bfccb66e777c747a3c86968f23d4e8a94556d2bae760",
+      "probe": "compiler_probe.py",
+      "probe_sha256": "1653790dbc37374a25e721bed7eda656d19b24e5993473508bbb6ff748b5ae6a"
+    },
+    {
+      "report": "analysis/aspect-chain/compiler-02/report.json",
+      "report_sha256": "79c60754e1a71819f911096cfdcecdf04f8d64dab5459a1d31f56c8e2e43028d",
+      "probe": "compiler_probe02.py",
+      "probe_sha256": "5716103b7155d27087db2ea4bf15e72b37b0aab8529f0da22202372303fa49dd"
+    }
+  ],
+  "freezer_sha256": "bced4d01c94534b670fbab89d1b0d5a57cffcf40335dd91a7cd563e5f55d5efb",
+  "vectors": [
+    {
+      "name": "CH018",
+      "label": "EXECUTE_LITERAL",
+      "source": "integer result\r\nproc main\r\nexecute \"NEXT\"\r\nendproc\r\n",
+      "source_sha256": "c9607224d47b7c4c782f272c9373f281e54da08d847e8ebdb69981bdb04f499d",
+      "hex": "00 cf cb aa b7 0c 6d 7e ff 71 94",
+      "asx_sha256": "496140dbb2950cb1d6fb93617f40fc5f37d7d32b2ed8ec4f7ad7fe815e237cbf"
+    },
+    {
+      "name": "CH019",
+      "label": "EXECUTE_EMPTY",
+      "source": "integer result\r\nproc main\r\nexecute \"\"\r\nendproc\r\n",
+      "source_sha256": "705297253f52e482d9fcb038855ad34b7a2fb332e2a0979cc0fa718f67fa0aca",
+      "hex": "00 cf cb 6e 13 94",
+      "asx_sha256": "5e6bc18568698d22cbbb28989f1bebf66adc627d9ef652284f7aefc5c88025e6"
+    },
+    {
+      "name": "CH020",
+      "label": "EXECUTE_ASX",
+      "source": "integer result\r\nproc main\r\nexecute \"NEXT.ASX\"\r\nendproc\r\n",
+      "source_sha256": "f8f9616d5c0ee90e405fbeec64d35d779ec39cac35b374fab70bff5feb6e69dd",
+      "hex": "00 cf cb aa bb 10 6d 7e ff 71 f9 c2 9a 6f 94",
+      "asx_sha256": "1d48e34249b17e1fa9e554c914ccecfc2511bb4b3f659c7052200f9f785a13ac"
+    },
+    {
+      "name": "CH021",
+      "label": "EXECUTE_ASP",
+      "source": "integer result\r\nproc main\r\nexecute \"NEXT.ASP\"\r\nendproc\r\n",
+      "source_sha256": "b78a1d989228f511c91bac2d6b790b7f4ae6e99ce7864aa071913136a5ba914e",
+      "hex": "00 cf cb aa bb 10 6d 7e ff 71 f9 c2 9a 67 94",
+      "asx_sha256": "02254798ae2590536d3fd893932bfb0654b8fd42e9600c69a018b7ec81f76999"
+    },
+    {
+      "name": "CH034",
+      "label": "EXEC_PATH_RELATIVE",
+      "source": "integer result\r\nproc main\r\nexecute \"CFG\\NEXT.ASX\"\r\nendproc\r\n",
+      "source_sha256": "1201fc5787fb3994c5a7b394a46530fc7cff8123ee68f00eb8cce8a5a720ff51",
+      "hex": "00 cf cb aa bf 14 62 7f ee 79 19 c6 9f 6b 33 4c 58 2f 94",
+      "asx_sha256": "761fc57724453e5ed3973ff885594bfef51608b8135e52ea1cee7ccdfac49ee3"
+    },
+    {
+      "name": "CH035",
+      "label": "EXEC_PATH_ROOT",
+      "source": "integer result\r\nproc main\r\nexecute \"\\NEXT.ASX\"\r\nendproc\r\n",
+      "source_sha256": "c1b3e90e0fc01bb65afbb4f281c316c514fd9834e586b2ec6eb8201e3f4e1d1d",
+      "hex": "00 cf cb aa bc 11 7b 87 ec 75 1f af 88 6a 5d 94",
+      "asx_sha256": "6881568a29783b40a7593bb30f63be2a759433f776e0f6d01a89693b2edff0f0"
+    },
+    {
+      "name": "CH036",
+      "label": "EXEC_PATH_DRIVE",
+      "source": "integer result\r\nproc main\r\nexecute \"C:\\CFG\\NEXT.ASX\"\r\nendproc\r\n",
+      "source_sha256": "859b9917debeb65ba94aecf38404b4c24faa00c554db6cc40ec7d4beccfe7087",
+      "hex": "00 cf cb aa c2 17 62 73 03 60 11 c8 a3 65 4a 63 59 05 f4 72 91 94",
+      "asx_sha256": "e43b700a584aa5ae12977409d0aa5ea4d4209f848041f85d8af8389ddfac35fc"
+    },
+    {
+      "name": "CH037",
+      "label": "EXEC_PATH_LOWER",
+      "source": "integer result\r\nproc main\r\nexecute \"next.asx\"\r\nendproc\r\n",
+      "source_sha256": "3e92c8c8d596c6ed379051d7ae3f3af7b1ee2f3420b92a1ec486729d677ecc29",
+      "hex": "00 cf cb aa bb 10 8d 9e 1f 91 f9 e2 ba 8f 94",
+      "asx_sha256": "1985bf00ab8360c8430e4f0b284a64c46e026f773c3815b21749cd7d5b9ffd3a"
+    },
+    {
+      "name": "CH038",
+      "label": "EXEC_PATH_SPACE",
+      "source": "integer result\r\nproc main\r\nexecute \"A B.ASX\"\r\nendproc\r\n",
+      "source_sha256": "1efea7d655b8f1041a3ec268ecea33965a85e17eb40153b4ea4ae05dbabd5e3c",
+      "hex": "00 cf cb aa ba 0f 60 59 e9 4b 0c d4 9f 94",
+      "asx_sha256": "b76626233276d6414e735901a7737fce09071e6256a2e891d0ccc2e16f1628a7"
+    },
+    {
+      "name": "CH039",
+      "label": "EXEC_PATH_LONG_NAME",
+      "source": "integer result\r\nproc main\r\nexecute \"LONGFILENAME.ASX\"\r\nendproc\r\n",
+      "source_sha256": "c4e3ad1bc1c1842e969c40f4096fb3fc839952d36917dc3f298c06cf4205df2e",
+      "hex": "00 cf cb aa c3 18 6b 88 f5 64 11 ca 93 5c 53 4c 52 1c e1 60 8c ff 94",
+      "asx_sha256": "140f536cd124b32531cb414201ddeb3a75ca43fd7d15ee29fb6a3284ca599253"
+    },
+    {
+      "name": "CH040",
+      "label": "EXEC_PATH_DOT",
+      "source": "integer result\r\nproc main\r\nexecute \".\"\r\nendproc\r\n",
+      "source_sha256": "a9caedce2baa73a3a2d5b0f48544153f58ee46da442aac2b61c0f4d3049d5826",
+      "hex": "00 cf cb aa b4 09 4d 94",
+      "asx_sha256": "f83a09496532bd11036a95de731eb7bc55a264caf551b76eb02938d54952646a"
+    },
+    {
+      "name": "CH041",
+      "label": "EXEC_PATH_PARENT",
+      "source": "integer result\r\nproc main\r\nexecute \"..\"\r\nendproc\r\n",
+      "source_sha256": "5d696007a4de87e55db14519e2b888e1476b75891ab1406e9752725b1d913f8a",
+      "hex": "00 cf cb aa b5 0a 4d 67 94",
+      "asx_sha256": "f86e7b4073f3e2328f7964d536d0b33240763b2a549c6b2749aeb26ee689f914"
+    },
+    {
+      "name": "CH042",
+      "label": "EXEC_PATH_HIGH",
+      "source": "integer result\r\nproc main\r\nexecute \"\u00e9.ASX\"\r\nendproc\r\n",
+      "source_sha256": "c6d4a00a4c623b70b3931d8b326fa741e25945ffa6d465f75f714db1348109b1",
+      "hex": "00 cf cb aa b8 0d a1 67 e8 70 23 94",
+      "asx_sha256": "a860af90cefc135d6a9ac6810acfb26a7476f812ef58f4ec4645a679dd87ec2b"
+    },
+    {
+      "name": "CH043",
+      "label": "EXEC_PATH_MAX",
+      "source": "integer result\r\nproc main\r\nexecute \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\r\nendproc\r\n",
+      "source_sha256": "0406f6144e46893ddd99bd2bbf4fbf39b0090c3df00d1881a57034124cb6eaee",
+      "hex": "00 cf cb aa 03 58 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a 94",
+      "asx_sha256": "4326f068ab43ac5b23bedd49d11a2b6362defd39720988a6cdaf6541ad07df45"
+    },
+    {
+      "name": "CH048",
+      "label": "EXEC_VAR_string",
+      "source": "string target\r\nproc main\r\nexecute target\r\nendproc\r\n",
+      "source_sha256": "0e7ceb714312c0bfeaff68f3761b227875fd0035a1474bab800ed9995b899eb9",
+      "hex": "01 cf cb 8c 00 94",
+      "asx_sha256": "56b4448c7dbef69a8653ca2adb34841db3e3cb4cbb9a9cda8921cf04315adeb9"
+    },
+    {
+      "name": "CH049",
+      "label": "EXEC_GLOBAL",
+      "source": "string target\r\nproc main\r\ntarget=\"NEXT.ASX\"\r\nexecute target\r\nendproc\r\n",
+      "source_sha256": "47538fad49f42981681ec9ebdd2783ce43b30dd2fe4faa7fd961826caf4c5d99",
+      "hex": "01 cf ac 8c 00 aa bb 12 53 4a 9f 1f d5 60 2a 63 00 cb 8c 00 94",
+      "asx_sha256": "7b86f7990766d3ff2cfe5e5375a63d940152ab4a298414f477e6fd96eb0143a5"
+    },
+    {
+      "name": "CH050",
+      "label": "EXEC_LOCAL",
+      "source": "integer result\r\nproc main\r\nstring target=\"NEXT.ASX\"\r\nexecute target\r\nendproc\r\n",
+      "source_sha256": "1ec1885748e0df3732eb46b9cf855c3b6b43a64ab24e62ac92f862cbf98ce939",
+      "hex": "00 d2 51 00 ac a0 00 00 aa bb 89 83 3a 1f 0d 57 24 4e 39 00 cf cb a0 00 00 95",
+      "asx_sha256": "cf797f83d43d4382a325c35a79573d495659c4b0a17a3c2dee4e5735e3897ddd"
+    },
+    {
+      "name": "CH051",
+      "label": "EXEC_PARAM",
+      "source": "\r\nproc main\r\ncall worker with \"NEXT.ASX\"\r\nendproc\r\nproc worker\r\nstrparm target\r\nexecute target\r\nendproc\r\n",
+      "source_sha256": "d7bd0d767311ac734147fe39fe12d64cb7e82c4b8fca5d39a772894503a60938",
+      "hex": "00 cf d0 cd aa bb 91 cd 6e 8d 4f 11 36 ac 53 c8 18 00 00 00 d2 af ff 94 cf cb 96 57 00 95",
+      "asx_sha256": "9dbdf5d4777f98c836c062d5bd070e52ce869383f853f894d60130c760ed39bf"
+    },
+    {
+      "name": "CH053",
+      "label": "EXEC_BUILTIN",
+      "source": "integer result\r\nproc main\r\nexecute $d_script\r\nendproc\r\n",
+      "source_sha256": "c91c40f429b2b4c1f700a52f5165a1e72c086188cd24731e15eb1c5c90bd8e6c",
+      "hex": "00 cf cb 6e 07 94",
+      "asx_sha256": "578cbda0a93210ff1deca1cd305f4eabae935ef51543ad1703ca5bae88eda2a0"
+    },
+    {
+      "name": "CH054",
+      "label": "EXEC_AFTER",
+      "source": "integer result\r\nproc main\r\nresult=1\r\nexecute \"NEXT\"\r\nresult=9\r\nendproc\r\n",
+      "source_sha256": "7d49c50cbae3f9fbdde49bc06d80a26922671b3f52ee5d58a3670b66aa16f33f",
+      "hex": "00 cf 5b 00 8d 00 ab 01 00 cb aa b7 88 07 26 41 1b 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "87e254e0fdf758733e1ff9e5e9807da050b4594eee8d83b43e865be7e910132a"
+    },
+    {
+      "name": "CH055",
+      "label": "EXEC_CALLED",
+      "source": "integer result\r\nproc main\r\ncall worker\r\nresult=9\r\nendproc\r\nproc worker\r\nexecute \"NEXT\"\r\nresult=8\r\nendproc\r\n",
+      "source_sha256": "b116074347cf0713e5c72d3256acb11f72dc789f23b3e1a3ea135a0bd42b25db",
+      "hex": "00 cf d0 c7 10 00 00 00 5b 00 8d 00 ab 09 00 94 cf cb aa b7 87 15 28 d7 3d 5b 00 8d 00 ab 08 00 94",
+      "asx_sha256": "e6530484d67346aeabe632a11363e8db8ba8df899dacff17e17fa5fc51fbfd2d"
+    },
+    {
+      "name": "CH056",
+      "label": "EXEC_CALLED_FRAME",
+      "source": "integer result\r\nproc main\r\ncall worker with \"NEXT\"\r\nresult=9\r\nendproc\r\nproc worker\r\nstrparm target\r\ninteger local_result=7\r\nexecute target\r\nresult=8\r\nendproc\r\n",
+      "source_sha256": "593732c40af19c75902231252681842a61d3c7e02869eca463271049a4ea4e0a",
+      "hex": "00 cf d0 cd aa b7 8d cd 6e 8d 4f c8 1b 00 00 00 d2 af ff 5b 00 8d 00 ab 09 00 94 d2 02 00 5b 00 a1 00 00 ab 07 00 cf cb 96 57 00 5b 00 8d 00 ab 08 00 95",
+      "asx_sha256": "d58a565e400a971df3748b32f20f1be6bbb696c357173d5562020f92415d190e"
+    },
+    {
+      "name": "CH057",
+      "label": "EXEC_IF",
+      "source": "integer result\r\nproc main\r\nif result==0\r\nexecute \"NEXT\"\r\nendif\r\nresult=9\r\nendproc\r\n",
+      "source_sha256": "8f8a80d1d624d4ed9a67736cc6e978ddfdb6d3245a86455c124500f7df7eadc8",
+      "hex": "00 cf 32 00 8d 00 ab 00 00 79 00 15 1a 00 00 00 79 00 cb aa b7 05 19 50 91 9b 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "98394cbf0388ff0b0e498ebfea6b653f60a82b1ed1e4df42bcfa7012af13b5b0"
+    },
+    {
+      "name": "CH058",
+      "label": "EXEC_UNUSED",
+      "source": "integer result\r\nproc main\r\nexecute \"NEXT\"\r\nendproc\r\nproc unused\r\nresult=5\r\nendproc\r\n",
+      "source_sha256": "b4f48af7b4c1d41f34e0aec30fa6bbccc2232a5b32465200891f5ce362d41f18",
+      "hex": "00 cf cb aa b7 0c 6d 7e ff 71 94",
+      "asx_sha256": "496140dbb2950cb1d6fb93617f40fc5f37d7d32b2ed8ec4f7ad7fe815e237cbf"
+    },
+    {
+      "name": "CH061",
+      "label": "EXEC_COMMANDLINE",
+      "source": "integer result\r\nproc main\r\nexecute \"NEXT.ASX ARG\"\r\nendproc\r\n",
+      "source_sha256": "079799b6d0bcbf2b17bbaf8e2cc28f508c3a3ad17e070dfab1b7e2161e9db4c7",
+      "hex": "00 cf cb aa bf 14 6d 7e ff 71 f9 c2 9a 6f 25 4c 57 1e 94",
+      "asx_sha256": "54ba2a8bac9eb83d03025676be345fec05fc688608bd4ddfa1261b74fcaf0e9f"
+    },
+    {
+      "name": "CP000",
+      "label": "EXEC_REL_SINGLE",
+      "source": "integer result\r\nproc main\r\nexecute \"CFG\\NEXT.ASX\"\r\nendproc\r\n",
+      "source_sha256": "1201fc5787fb3994c5a7b394a46530fc7cff8123ee68f00eb8cce8a5a720ff51",
+      "hex": "00 cf cb aa bf 14 62 7f ee 79 19 c6 9f 6b 33 4c 58 2f 94",
+      "asx_sha256": "761fc57724453e5ed3973ff885594bfef51608b8135e52ea1cee7ccdfac49ee3"
+    },
+    {
+      "name": "CP001",
+      "label": "EXEC_ROOT_SINGLE",
+      "source": "integer result\r\nproc main\r\nexecute \"\\NEXT.ASX\"\r\nendproc\r\n",
+      "source_sha256": "c1b3e90e0fc01bb65afbb4f281c316c514fd9834e586b2ec6eb8201e3f4e1d1d",
+      "hex": "00 cf cb aa bc 11 7b 87 ec 75 1f af 88 6a 5d 94",
+      "asx_sha256": "6881568a29783b40a7593bb30f63be2a759433f776e0f6d01a89693b2edff0f0"
+    },
+    {
+      "name": "CP002",
+      "label": "EXEC_DRIVE_SINGLE",
+      "source": "integer result\r\nproc main\r\nexecute \"C:\\CFG\\NEXT.ASX\"\r\nendproc\r\n",
+      "source_sha256": "859b9917debeb65ba94aecf38404b4c24faa00c554db6cc40ec7d4beccfe7087",
+      "hex": "00 cf cb aa c2 17 62 73 03 60 11 c8 a3 65 4a 63 59 05 f4 72 91 94",
+      "asx_sha256": "e43b700a584aa5ae12977409d0aa5ea4d4209f848041f85d8af8389ddfac35fc"
+    },
+    {
+      "name": "CP003",
+      "label": "EXEC_FORWARD",
+      "source": "integer result\r\nproc main\r\nexecute \"CFG/NEXT.ASX\"\r\nendproc\r\n",
+      "source_sha256": "2d173b5fad33b452db3174f884b99dc3d319a353b2b35193be1b17c91f63ee35",
+      "hex": "00 cf cb aa bf 14 62 7f ee 4c 19 c6 9f 6b 33 4c 58 2f 94",
+      "asx_sha256": "de582bad324b3f6fea3aa9cea4692f20950b56035d08aa398bd8f2a87b1cafe5"
+    },
+    {
+      "name": "CP004",
+      "label": "EXEC_EXT_EXE",
+      "source": "integer result\r\nproc main\r\nexecute \"NEXT.EXE\"\r\nendproc\r\n",
+      "source_sha256": "1be533aa7d65d7f7613bb4dc5152f035feb4acd07686fa9f38ffb7d433febdde",
+      "hex": "00 cf cb aa bb 10 6d 7e ff 71 f9 c6 9f 5c 94",
+      "asx_sha256": "cfefee2d498f55d35f4fde27125a8c789210cba280ac7d47c86f743a1b55a570"
+    },
+    {
+      "name": "CP005",
+      "label": "EXEC_EXT_OTHER",
+      "source": "integer result\r\nproc main\r\nexecute \"NEXT.XYZ\"\r\nendproc\r\n",
+      "source_sha256": "8a45a9c95eb1ec13d4202074b629fa68fc76e4a781b33cb0a274288be1020487",
+      "hex": "00 cf cb aa bb 10 6d 7e ff 71 f9 d9 a0 71 94",
+      "asx_sha256": "4d37c41d571c9799abb7be5dffbc50a1ecdb7caa4527abd435c9b3bf2ae24408"
+    },
+    {
+      "name": "CP006",
+      "label": "EXEC_TRAIL_DOT",
+      "source": "integer result\r\nproc main\r\nexecute \"NEXT.\"\r\nendproc\r\n",
+      "source_sha256": "cffee9f888971445c858f835251c2d403527a8ea63d2f07516c67c075a64230c",
+      "hex": "00 cf cb aa b8 0d 6d 7e ff 71 f9 94",
+      "asx_sha256": "c43668ff74e3c6e6c10ddbb67d5384c769ddb56508d33049b03d0d75ffa0e086"
+    },
+    {
+      "name": "CP007",
+      "label": "EXEC_COLON",
+      "source": "integer result\r\nproc main\r\nexecute \"C:NEXT.ASX\"\r\nendproc\r\n",
+      "source_sha256": "9cf2156049d8d4ea1829c7f93d8b2dcf79f53728f8c4bc7adbad123aff0794a8",
+      "hex": "00 cf cb aa bd 12 62 73 f5 62 23 d5 75 58 58 63 94",
+      "asx_sha256": "81ecda73de5d1c7aa9aa51ab568193641880b51f36cf1dafd21fe1f20c5d4537"
+    },
+    {
+      "name": "CP008",
+      "label": "EXEC_CARET",
+      "source": "integer result\r\nproc main\r\nexecute \"NEXT^M.ASX\"\r\nendproc\r\n",
+      "source_sha256": "b1f96b104d2bdb56fc3d1d5ac6d59d55d48129bcc20b69e6988cdf9438b58eae",
+      "hex": "00 cf cb aa bd 12 6d 7e ff 71 29 ce 75 58 58 63 94",
+      "asx_sha256": "ea8ffe57fb4184c825aef3252bb85b885bd07da637f1d947325ccd4f9d32cd26"
+    },
+    {
+      "name": "CP009",
+      "label": "EXEC_NULL",
+      "source": "integer result\r\nproc main\r\nexecute $null\r\nendproc\r\n",
+      "source_sha256": "25394007a0f714a1d83c3b0425ec85cd0e2c2c75b77bf671146ba8c1e7894168",
+      "hex": "00 cf cb 6e 13 94",
+      "asx_sha256": "5e6bc18568698d22cbbb28989f1bebf66adc627d9ef652284f7aefc5c88025e6"
+    }
+  ],
+  "rejected": [
+    {
+      "name": "CH000",
+      "label": "CHAIN_BARE",
+      "source": "integer result\r\nproc main\r\nchain \r\nendproc\r\n",
+      "source_sha256": "784b0cbba2e3d5939b458d3893daccb4aea9e729ce30694959e5f64feebf1e14",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH001",
+      "label": "CHAIN_LITERAL",
+      "source": "integer result\r\nproc main\r\nchain \"NEXT\"\r\nendproc\r\n",
+      "source_sha256": "c1d6a587079c48e0eb3b0db9b29047decdf0c5cc2d34cff401ce4939dad92319",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH002",
+      "label": "CHAIN_EMPTY",
+      "source": "integer result\r\nproc main\r\nchain \"\"\r\nendproc\r\n",
+      "source_sha256": "2c519236e868aa1b2586239ac5697096fe722a9e2bf1ee4834703617170b9e75",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH003",
+      "label": "CHAIN_ASX",
+      "source": "integer result\r\nproc main\r\nchain \"NEXT.ASX\"\r\nendproc\r\n",
+      "source_sha256": "82e96875eee830cc0efc3297a43fb0dba07a499e2ed3d12403c22e9494fd2113",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH004",
+      "label": "CHAIN_ASP",
+      "source": "integer result\r\nproc main\r\nchain \"NEXT.ASP\"\r\nendproc\r\n",
+      "source_sha256": "2d2e97a37fe00ce85c371096d8dea23c0dc2641cb317517e70143b17433c2e33",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH005",
+      "label": "CHAIN_NUMBER",
+      "source": "integer result\r\nproc main\r\nchain 7\r\nendproc\r\n",
+      "source_sha256": "13d5cea6dc5cfa98e45cd7731a87724564334fbe7bef4581ec62bd5231fb59a2",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH006",
+      "label": "CHAIN_LONG",
+      "source": "integer result\r\nproc main\r\nchain 7L\r\nendproc\r\n",
+      "source_sha256": "e7ee20bc4d25db59570c04e3c618ff7181c893870981b3c71523d469bd9477e3",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH007",
+      "label": "CHAIN_FLOAT",
+      "source": "integer result\r\nproc main\r\nchain 7.0\r\nendproc\r\n",
+      "source_sha256": "512a9263d7e6a9629e09e3a6a00bfcbce6fc69f3d1a64ef780fa10d149964bea",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH008",
+      "label": "CHAIN_UNQUOTED",
+      "source": "integer result\r\nproc main\r\nchain NEXT\r\nendproc\r\n",
+      "source_sha256": "6fd69a38eaf3274efa0bdfe29717ec387c560864e9f570253d8ad2d89792b081",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH009",
+      "label": "CHAIN_LEADING_COMMA",
+      "source": "integer result\r\nproc main\r\nchain ,\"NEXT\"\r\nendproc\r\n",
+      "source_sha256": "05ffb7cf58e4e57d707a589d36324e948473c2a66cedb8fe320c150abf0d81a1",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH010",
+      "label": "CHAIN_TRAIL_COMMA",
+      "source": "integer result\r\nproc main\r\nchain \"NEXT\",\r\nendproc\r\n",
+      "source_sha256": "3847a868a77c5c45dfc5295057633bf9fc2c0caad704e220c932781a6fac16a3",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH011",
+      "label": "CHAIN_SECOND_STR",
+      "source": "integer result\r\nproc main\r\nchain \"NEXT\" \"ARG\"\r\nendproc\r\n",
+      "source_sha256": "7d5a820e7db9169d49fa31ddcc441bc1ede428138be4942e5eb5f98e30a36daf",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH012",
+      "label": "CHAIN_SECOND_NUM",
+      "source": "integer result\r\nproc main\r\nchain \"NEXT\" 7\r\nendproc\r\n",
+      "source_sha256": "d5f9eb50168df6ab9cb86da7ffb98b0d4f81d2e0d12af16ed0868d0f241e3e3c",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH013",
+      "label": "CHAIN_WITH_STR",
+      "source": "integer result\r\nproc main\r\nchain \"NEXT\" with \"ARG\"\r\nendproc\r\n",
+      "source_sha256": "96bda60c10aca722afbba906dea455c85ce8f8f41fe799004405fe4d4a92298c",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH014",
+      "label": "CHAIN_WITH_NUM",
+      "source": "integer result\r\nproc main\r\nchain \"NEXT\" with 7\r\nendproc\r\n",
+      "source_sha256": "7a6cf1048155d629fa2f024a1900be179a56675bb8027847335d601cdf159d8d",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH015",
+      "label": "CHAIN_EXPR",
+      "source": "integer result\r\nproc main\r\nchain \"NE\"+\"XT\"\r\nendproc\r\n",
+      "source_sha256": "0c437adfa67cb343f17051204d5472c76a9319b6f96f923d3ed31442a3502047",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH016",
+      "label": "CHAIN_PAREN",
+      "source": "integer result\r\nproc main\r\nchain (\"NEXT\")\r\nendproc\r\n",
+      "source_sha256": "cd84d42f1a49cb5e31461500e0fff4ee1d5497946ec4ebfdc9942df48d1833d5",
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> CHAIN"
+      ]
+    },
+    {
+      "name": "CH017",
+      "label": "EXECUTE_BARE",
+      "source": "integer result\r\nproc main\r\nexecute \r\nendproc\r\n",
+      "source_sha256": "212df43ab4b4a034394effb894110305897b55b6ef91372e80164f775d204d5d",
+      "errors": [
+        "Error C006 Line 3: Missing token"
+      ]
+    },
+    {
+      "name": "CH022",
+      "label": "EXECUTE_NUMBER",
+      "source": "integer result\r\nproc main\r\nexecute 7\r\nendproc\r\n",
+      "source_sha256": "0168f2137c33532c42c2f50f740aa2a0c7736415b8d1217484344ae427a69067",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> 7"
+      ]
+    },
+    {
+      "name": "CH023",
+      "label": "EXECUTE_LONG",
+      "source": "integer result\r\nproc main\r\nexecute 7L\r\nendproc\r\n",
+      "source_sha256": "21618d8a93b257c44430101794df5b4171a83d00b566edad9a256f4128b90af2",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> 7L"
+      ]
+    },
+    {
+      "name": "CH024",
+      "label": "EXECUTE_FLOAT",
+      "source": "integer result\r\nproc main\r\nexecute 7.0\r\nendproc\r\n",
+      "source_sha256": "8aab393b2cb18da4c780f66de24a87dcea51e7586acf6c0bedf1a8aef2bb30c6",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> 7.0"
+      ]
+    },
+    {
+      "name": "CH025",
+      "label": "EXECUTE_UNQUOTED",
+      "source": "integer result\r\nproc main\r\nexecute NEXT\r\nendproc\r\n",
+      "source_sha256": "1077033368474b07c31e0c8378d602890870024eaf16b623791e195411a35b18",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> NEXT"
+      ]
+    },
+    {
+      "name": "CH026",
+      "label": "EXECUTE_LEADING_COMMA",
+      "source": "integer result\r\nproc main\r\nexecute ,\"NEXT\"\r\nendproc\r\n",
+      "source_sha256": "98bb84c1f4057ddbb38063d5f38cb427baceb0ff504514a50e218582d525841f",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> ,",
+        "Error C002 Line 3: Unexpected token ==> NEXT"
+      ]
+    },
+    {
+      "name": "CH027",
+      "label": "EXECUTE_TRAIL_COMMA",
+      "source": "integer result\r\nproc main\r\nexecute \"NEXT\",\r\nendproc\r\n",
+      "source_sha256": "734f564f622809a8e546cb5f986d13b24417501629eb2d1f7ad7ee36f81c4d5a",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "CH028",
+      "label": "EXECUTE_SECOND_STR",
+      "source": "integer result\r\nproc main\r\nexecute \"NEXT\" \"ARG\"\r\nendproc\r\n",
+      "source_sha256": "83e4086c889b7a9996782301597925f9e34bd6b212180ef0b515edb727dfcdc6",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ARG"
+      ]
+    },
+    {
+      "name": "CH029",
+      "label": "EXECUTE_SECOND_NUM",
+      "source": "integer result\r\nproc main\r\nexecute \"NEXT\" 7\r\nendproc\r\n",
+      "source_sha256": "ef025d9ee737c85808a5d3267b135ccc88668455a8d95da1adfc8615ffef888d",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> 7"
+      ]
+    },
+    {
+      "name": "CH030",
+      "label": "EXECUTE_WITH_STR",
+      "source": "integer result\r\nproc main\r\nexecute \"NEXT\" with \"ARG\"\r\nendproc\r\n",
+      "source_sha256": "28011f808c655af67b6b39c943ea3ac5e2bffeb99956a29417649aec8d4c8225",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> WITH",
+        "Error C002 Line 3: Unexpected token ==> ARG"
+      ]
+    },
+    {
+      "name": "CH031",
+      "label": "EXECUTE_WITH_NUM",
+      "source": "integer result\r\nproc main\r\nexecute \"NEXT\" with 7\r\nendproc\r\n",
+      "source_sha256": "16644c84b07fa707a362f07771d41604470544b1f79e917e2668274c27ac6243",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> WITH",
+        "Error C002 Line 3: Unexpected token ==> 7"
+      ]
+    },
+    {
+      "name": "CH032",
+      "label": "EXECUTE_EXPR",
+      "source": "integer result\r\nproc main\r\nexecute \"NE\"+\"XT\"\r\nendproc\r\n",
+      "source_sha256": "9613b9fc7e5a9ebecb09fdbc3f21534bea4a2e6712e03bd5783c217957a3a0e7",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> XT"
+      ]
+    },
+    {
+      "name": "CH033",
+      "label": "EXECUTE_PAREN",
+      "source": "integer result\r\nproc main\r\nexecute (\"NEXT\")\r\nendproc\r\n",
+      "source_sha256": "fd5fcb57f51aa1a86bf5b0402b3f7f7a5d632e992f99152c1af599f51def3390",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> (",
+        "Error C002 Line 3: Unexpected token ==> NEXT",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "CH044",
+      "label": "EXEC_PATH_OVER",
+      "source": "integer result\r\nproc main\r\nexecute \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\r\nendproc\r\n",
+      "source_sha256": "1630b52e7c0ded449a6794d568b742569ebeef5cbc7c78d691926a1cfe443918",
+      "errors": [
+        "Error C043 Line 3: Maximum token length exceeded ==> AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      ]
+    },
+    {
+      "name": "CH045",
+      "label": "EXEC_VAR_integer",
+      "source": "integer target\r\nproc main\r\nexecute target\r\nendproc\r\n",
+      "source_sha256": "ddb73c339e482cfc41d25c01525e0d08678c41464feb2a759ff20ffa8d37182a",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> TARGET"
+      ]
+    },
+    {
+      "name": "CH046",
+      "label": "EXEC_VAR_long",
+      "source": "long target\r\nproc main\r\nexecute target\r\nendproc\r\n",
+      "source_sha256": "440ad798ef6e0a93c79522e56feb20b66b41ad52eca9137db00aa9b37f2f442b",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> TARGET"
+      ]
+    },
+    {
+      "name": "CH047",
+      "label": "EXEC_VAR_float",
+      "source": "float target\r\nproc main\r\nexecute target\r\nendproc\r\n",
+      "source_sha256": "f52ed95a90d74e58d7404092299f20dde1481495fa957e56fe6a2594fda82522",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> TARGET"
+      ]
+    },
+    {
+      "name": "CH052",
+      "label": "EXEC_NUM_PARAM",
+      "source": "\r\nproc main\r\ncall worker with 1\r\nendproc\r\nproc worker\r\nintparm target\r\nexecute target\r\nendproc\r\n",
+      "source_sha256": "a99723797eaad10627cf6d79fa41eacf88aa155901d7d2999f712015e317e3ff",
+      "errors": [
+        "Error C023 Line 7: Invalid string constant (quotes missing) ==> TARGET"
+      ]
+    },
+    {
+      "name": "CH059",
+      "label": "EXEC_PROCEDURE",
+      "source": "integer result\r\nproc main\r\nexecute worker\r\nendproc\r\nproc worker\r\nresult=5\r\nendproc\r\n",
+      "source_sha256": "a69c974a9a1c839727fc0321cbde46cd7ae020cd6823cd0ed718eb454d50cc6d",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> WORKER"
+      ]
+    },
+    {
+      "name": "CH060",
+      "label": "EXEC_COMMA_EXTRA",
+      "source": "integer result\r\nproc main\r\nexecute \"NEXT\", \"ARG\"\r\nendproc\r\n",
+      "source_sha256": "a9cc968b2d2b54bb6f3f40aca303a51683e1060012c24456d5400d762db1d906",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ARG"
+      ]
+    },
+    {
+      "name": "CP010",
+      "label": "EXEC_LEADCOMMA_VAR",
+      "source": "string target\r\nproc main\r\nexecute ,target\r\nendproc\r\n",
+      "source_sha256": "b25a2a0733cd2e594e9bf4f17b194108d38e2218b75e51fb5c0fd42b684866ff",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> ,",
+        "Error C002 Line 3: Unexpected token ==> TARGET"
+      ]
+    },
+    {
+      "name": "CP011",
+      "label": "EXEC_TRAILCOMMA_VAR",
+      "source": "string target\r\nproc main\r\nexecute target,\r\nendproc\r\n",
+      "source_sha256": "dc26f9a81e61ac868cd5bed4ffe7663729ca9650c4eaf4d2e0dc73d1582848b7",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "CP012",
+      "label": "EXEC_PAREN_VAR",
+      "source": "string target\r\nproc main\r\nexecute (target)\r\nendproc\r\n",
+      "source_sha256": "4e0e02aab4027ab1112fffb26adccd522802bf904773cb0832b47c6643aa9053",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> (",
+        "Error C002 Line 3: Unexpected token ==> TARGET",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "CP013",
+      "label": "EXEC_CONCAT_VAR",
+      "source": "string target\r\nproc main\r\nexecute target+\".ASX\"\r\nendproc\r\n",
+      "source_sha256": "431303c799d3c6c73a447d628b8f19491d0983697e55aa794019637358880018",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> .ASX"
+      ]
+    }
+  ],
+  "scope": "Compilergrammar/emissiononly. Rawfilenamebytespreserved; noextensionvalidation/parameterlist/unreachableelimination. Nativeexecution/restart999/pathresolutionremainseparate."
+}

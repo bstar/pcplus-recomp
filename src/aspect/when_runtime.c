@@ -25,6 +25,11 @@ void runtime_when_reset(void)
  runtime_when_last_key=0;runtime_when_pending_key=65535U;
  runtime_when_deferred=runtime_when_pending_service=service_busy=monitor_busy=0;
 }
+void runtime_when_file_reset(void)
+{
+ disarm();
+ runtime_when_deferred=runtime_when_pending_service=service_busy=monitor_busy=0;
+}
 void runtime_when_finish(void)
 {
  /* Invalidate references before the script FILE/global strings are released.
