@@ -71,11 +71,10 @@ def run(wire=None):
  check('outside-margins-invalid-bottom-and-protected-state-are-no-op',invalid_regions)
  def attributes():
   t=Live();t.position(5,17);t.put('screen_cursor_wrap',1)
-  try:t.feed(b'\x1b[M')
-  except Abort as e:assert e.args==(0x2d98,)
-  else:raise AssertionError('Unrecovered attribute repair silently skipped')
-  assert t.cells()==t.original
- check('unsupported-attribute-plane-remains-explicit-before-mutation',attributes)
+  t.uc.mem_write(t.symbols['erase_attribute_values'],b'\x07'*4096)
+  t.feed(b'\x1b[M');assert t.cells()==t.expected(5,24,1,False)
+  assert (t.get('screen_cursor_row'),t.get('screen_cursor_column'))==(5,17)
+ check('admitted-attribute-plane-delete-preserves-column',attributes)
  def original_lines():
   for service,insert in [('csi_service_d668',True),('csi_service_d73c',False)]:
    t=Live();t.position(5,17);t.put('terminal_ansi_m_policy',1);t.call(service)

@@ -75,3 +75,8 @@ original indefinite waiting. A nontrivial repair test verifies the explicit
 2d98 boundary. Actual DOSBox-X8086 verifies inserted/deleted rows, cleared last
 row and unchanged outside rows, using actual emulated video; no physical UART,
 real modem, BBS or protected-attribute repair is claimed by that diagnostic.
+
+The maintained application now adds [bounded NETWORK line metadata](LINE_ATTRIBUTES.md)
+with the real native video and field-repair dependencies. It admits supported
+attribute planes and preserves restricted-region bounds and the last row. This
+is separate from the exact standalone routines above and their legacy behavior.

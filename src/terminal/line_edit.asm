@@ -11,6 +11,7 @@ extern csi_last_row,screen_cursor_wrap,screen_attribute_checks
 extern terminal_poll_io,terminal_tick_low,uart_receive_byte,terminal_quit
 extern terminal_abort
 extern connection_state
+extern terminal_line_insert_far,terminal_line_delete_far,attribute_repair_admit_far
 global csi_service_d668,csi_service_d73c,csi_service_daf2
 
 ; NETWORK clips repetition to the active region and preserves the column.
@@ -25,7 +26,7 @@ csi_service_d668:
  call line_edit_region
  jc .done
  push word [screen_cursor_column]
- call csi_insert_line
+ call far terminal_line_insert_far
  pop dx
  mov ax,[screen_cursor_row]
  call screen_set_cursor
@@ -48,7 +49,7 @@ csi_service_d73c:
  call line_edit_region
  jc .done
  push word [screen_cursor_column]
- call csi_delete_line
+ call far terminal_line_delete_far
  pop dx
  mov ax,[screen_cursor_row]
  call screen_set_cursor
@@ -75,7 +76,12 @@ line_edit_region:
  cmp dx,[csi_last_row]
  ja .outside
  cmp word [screen_cursor_wrap],0
- jne .unsupported_attributes
+ je .attributes_ready
+ push ax
+ call far attribute_repair_admit_far
+ pop ax
+ jc .unsupported_attributes
+.attributes_ready:
  sub dx,ax
  inc dx
  mov ax,[ansi_parameters]
@@ -110,7 +116,7 @@ csi_service_daf2:
  mov si,ax
  push word [screen_cursor_column]
 .line:
- call csi_delete_line
+ call far terminal_line_delete_far
  dec si
  jnz .line
  pop dx
@@ -122,6 +128,16 @@ csi_service_daf2:
  pop si
  pop bp
  ret
+
+; Register-only resident services for the maintained far plane owner. The
+; recovered functions, including ORIGINAL policy behavior, remain unchanged.
+global line_native_insert_far,line_native_delete_far
+line_native_insert_far:
+ call csi_insert_line
+ retf
+line_native_delete_far:
+ call csi_delete_line
+ retf
 
 ; The exact original loop is retained in reconstruction/line_edit but is not
 ; linked here: it neither services flow nor times out. Keep the observable byte

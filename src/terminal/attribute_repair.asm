@@ -3,7 +3,7 @@ BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
 extern terminal_abort,erase_default_attribute,erase_previous_attribute,text_write_char
-global erase_repair_attributes
+global erase_repair_attributes,repair_abort_far
 erase_repair_attributes:
  push bp
  mov bp,sp

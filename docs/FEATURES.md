@@ -94,6 +94,13 @@ helper. Actual stock BBS sessions, fuller recovery/timing coverage, full
 streaming/window behavior, auto-download and physical modem remain open;
 F08 remains open.
 
+The application now admits supported line attributes under NETWORK policy through
+`LINE_ATTRIBUTES.md`: bounded active-region shifts, native video-only callbacks
+and region-limited native field repair, with512 linked cases,45 pre-edit geometry
+rejections and explicit-fixture actual DOS video/backing checks. Exact standalone
+line helpers and ORIGINAL semantics retain their historical constants. This is
+additional F02 coverage, with no whole-application gate closure.
+
 E2 advertises TTY; DEC VT52/100/102/220/320; ANSI X3.64; IBM
 3101/3161/3270/PC; TeleVideo 910/912/920/922/925/950/955; DG 100/200/210;
 ADDS 60/90; ADM 3A/5/31; Wyse 50/75/100; ATT 605/4410; Heath 19; and

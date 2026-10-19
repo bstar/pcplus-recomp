@@ -91,8 +91,11 @@ now passes925 linked cases, including39 actual scroll, wrap and repeated
 parser/keyboard Delete consumers. Mode0 admits the temporary stale offsets
 used during native wrapping; cursor-based modes retain full consistency checks.
 Native scroll metadata moves the whole plane even for partial BIOS rectangles.
-The separate line-edit helpers still need their fixed row constants evaluated
-before their existing wrap-state rejection can be removed.
+The exact line-edit constants remain unchanged in recovery. The application now
+uses a [bounded NETWORK plane owner](docs/LINE_ATTRIBUTES.md) with real native
+video-only helpers and region-limited field repair,512 linked cases and actual
+DOS guard/video checks. ORIGINAL policy still calls the exact recovered routines;
+viewport and remaining terminal behavior stay open.
 
 ASPECT now includes native WHEN/CWHEN matching and deferred handlers through
 the actual resident terminal renderer. Twelve SET setters/FETCH getters and native

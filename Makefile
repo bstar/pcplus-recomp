@@ -438,6 +438,7 @@ test-terminal: terminal
 	python3 standalone/check_character_edit_live.py
 	python3 standalone/test_meta_actions_dos.py
 	python3 standalone/check_line_edit_live.py
+	python3 standalone/check_line_attributes_live.py
 	python3 standalone/check_terminal_options.py --binary build/terminal/TERMINAL.EXE --map build/terminal/terminal.map
 	python3 lab/bbs/check_formfeed.py
 	python3 lab/bbs/check_enigma_controls.py

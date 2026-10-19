@@ -283,6 +283,24 @@ def inspect_terminal_memory(binary,map_path):
   assert address('terminal_aspect_adopt')==address('terminal_aspect_active')+2
   extra.update(aspect_far_services_verified=len(services),aspect_resident_far_references_verified=references,
                aspect_emit_cdecl_bridge_verified=True,aspect_handoff_bytes=48,aspect_renderer_state_bytes=4)
+  line_references=0
+  for name,wanted in (('terminal_line_insert_far',1),('terminal_line_delete_far',2)):
+   assert symbols[name][0]==aspect_seg and symbols[name][1]<aspect_code['bytes'],(name,'line-plane far owner')
+   target=struct.pack('<HH',symbols[name][1],aspect_seg)
+   matches=[i for i in range(len(resident)-4) if resident[i]==0x9a and resident[i+1:i+5]==target
+            and resident_lo+i+3 in relocations]
+   assert len(matches)==wanted,(name,'line-plane resident entry references')
+   line_references+=len(matches)
+  aspect_lo=aspect_seg*16
+  aspect_bytes=image[start+aspect_lo:start+aspect_lo+aspect_code['bytes']]
+  for bridge,target in (('line_native_insert_far','csi_insert_line'),('line_native_delete_far','csi_delete_line')):
+   assert symbols[bridge][0]==symbols[target][0]==near_code['relative_segment']
+   near_call(bridge,target,suffix=b'\xcb')
+   encoded=b'\x9a'+struct.pack('<HH',symbols[bridge][1],symbols[bridge][0])
+   matches=[i for i in range(len(aspect_bytes)-4) if aspect_bytes[i:i+5]==encoded and aspect_lo+i+3 in relocations]
+   assert len(matches)==1,(bridge,'line-plane relocated native video callback')
+  extra.update(line_attribute_far_entries_verified=2,line_attribute_resident_references_verified=line_references,
+               line_attribute_video_callbacks_verified=2)
  if 'terminal_status_live' in symbols:
   status_seg=next(c['relative_segment'] for c in code_segments if c['name']=='CONFIG_CODE')
   for name in ('terminal_status_live','status_renderer_refresh','terminal_reset_status_refresh',

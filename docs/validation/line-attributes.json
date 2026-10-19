@@ -1,0 +1,261 @@
+{
+  "passed": true,
+  "terminal_sha256": "d418fca35f3ed3e4adbe7f87eb236f10660ddcc813cb73acfbe5abeac05627cd",
+  "reports": {
+    "linked": {
+      "path": "build/terminal/line-attributes-live-checks.json",
+      "sha256": "0e13044f5770ebf743ceb16deb3704573905885a906717a349368078139dd0b5"
+    },
+    "policy": {
+      "path": "build/terminal/line-edit-live-checks.json",
+      "sha256": "eacba7c7ba1c695325ac9658b4298c9e5c009a7d2750f4c85062ea4bb6251d0e"
+    },
+    "DOS": {
+      "path": "build/line-attributes-dos/bounded-lines-03/checks.json",
+      "sha256": "7e753313136a9137ffa0ac33b015023b1b4bf318df7ce17e6f24496582d27c01"
+    },
+    "ASPECT": {
+      "path": "build/aspect-renderer-dos/bounded-lines-01/checks.json",
+      "sha256": "8d8279d7fd87aa04062d66c0eaab4073bde5261691199c69a2ef9f484d16ec04"
+    },
+    "ENiGMA": {
+      "path": "build/bbs-lab/results/enigma/bounded-lines-search-01/search-checks.json",
+      "sha256": "815f051dbc47c2914d75f80f4980f6a44b60612fd2c9dacb8759fe37d2989123"
+    },
+    "ABI": {
+      "path": "build/terminal/config-far-checks.json",
+      "sha256": "0397d559df03b5df43a4dcbf45d5d46cca1b641318b16ab7f860fa660e2938dc"
+    }
+  },
+  "linked": {
+    "cases": 512,
+    "repair_operations": 192,
+    "pre_mutation_rejections": 45
+  },
+  "actual_DOS": {
+    "checks": {
+      "canonical_DOS_harness": true,
+      "fixture_and_exit_seen": true,
+      "DS_equals_SS": true,
+      "temporary_state_restored": true,
+      "cursor_preserved": true,
+      "post_edit_cursor_snapshots": true,
+      "flags_and_guards": true,
+      "values_and_guards": true,
+      "video_byte_exact": true,
+      "last_row_CPR": true,
+      "inputs_unchanged": true
+    },
+    "state": {
+      "wrap": 1,
+      "normal_fill_word": 7,
+      "logical_cells": 2000,
+      "cursor": [
+        24,
+        79
+      ],
+      "cursor_snapshots": 4
+    },
+    "capture_sha256": "b6af6a5813e682e6dc1a0920381e57c25ca56bb56536d19ccb9fd331db2f4276",
+    "fixture": "Explicit test-only BIOS-boundary plane seeding; application executable and subsequent instructions unmodified."
+  },
+  "ASPECT": {
+    "cases": [
+      "queries-before-login",
+      "native-edits-origin-scroll"
+    ],
+    "runner_sha256": "2cef1bd3a42eb39ef148db6b16eb0ef68e3965b0e7fe19042f44b23ebfbf916d"
+  },
+  "ENiGMA": {
+    "checks": {
+      "DOS_harness": true,
+      "unique_authenticated_session": true,
+      "exact_owned_modules": true,
+      "inputs_unchanged": true,
+      "no_post_saved": true,
+      "real_search_route": true,
+      "title_search": true,
+      "index_selection": true,
+      "index_paging": true,
+      "selected_game_details": true,
+      "diz_page": true,
+      "nfo_navigation": true,
+      "bottom_content": true,
+      "empty_search": true
+    },
+    "source_modules": {
+      "mods/loc_game_details/loc_game_details.js": "0711413e29c01f0cf3cef7f89b3dc607515381a67a23e1a58205aa6d7a20efb8",
+      "mods/black_flag_files/helpers.js": "e4f6c1df6dbb9d6282d0534150c9149889637d34f01665691ca3bc5d19a06235",
+      "mods/black_flag_files/black_flag_files.js": "20a6d544cb820ac3840c1d271cfd41c7e0fb1c42600100756367845b147cf535",
+      "mods/black_flag_files/search.js": "d159e1fd6936e13613321a92cf68f93681de083cf68a9cb65d8f891cb6b54236"
+    },
+    "live_revision": "237cd9743d6978a940dd66db0e78f6ab8ccd3e37",
+    "live_client_sha256": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+    "live_server_modified": false
+  },
+  "source_build": {
+    "path": "docs/validation/application-components-source-build.json",
+    "sha256": "700d6f8669610b10ce60aca4fe447e00862699cd1400a242161b1dcc4c19d4b0",
+    "outputs": 178
+  },
+  "memory_layout": {
+    "near_bytes": 64832,
+    "near_spare_bytes": 704,
+    "near_relative_segment": 7643,
+    "far_relative_segment": 17039,
+    "shadow_offset": 0,
+    "history_offset": 0,
+    "far_bytes": 71192,
+    "history_relative_segment": 17551,
+    "history_bytes": 63000,
+    "far_end_linear": 343816,
+    "stack_end_linear": 187120,
+    "loaded_module_bytes": 156008,
+    "minimum_allocated_module_bytes": 343824,
+    "retained_parent_paragraphs": 21505,
+    "far_pointer_relocations_verified": true,
+    "snapshot_relative_segment": 12945,
+    "snapshot_image_offset": 63504,
+    "snapshot_bytes": 2000,
+    "snapshot_end_linear": 272624,
+    "ui_screen_buffers": {
+      "browser_screen": {
+        "relative_segment": 11695,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 187120,
+        "end_linear": 191120
+      },
+      "ed_screen": {
+        "relative_segment": 11695,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 191120,
+        "end_linear": 195120
+      },
+      "program_screen": {
+        "relative_segment": 11695,
+        "offset": 8000,
+        "bytes": 4000,
+        "start_linear": 195120,
+        "end_linear": 199120
+      },
+      "redisplay_live": {
+        "relative_segment": 11695,
+        "offset": 12000,
+        "bytes": 4000,
+        "start_linear": 199120,
+        "end_linear": 203120
+      },
+      "redisplay_view": {
+        "relative_segment": 11695,
+        "offset": 16000,
+        "bytes": 4000,
+        "start_linear": 203120,
+        "end_linear": 207120
+      }
+    },
+    "far_ui_storage_bytes": 20000,
+    "redisplay_snapshot_bytes": 63000,
+    "redisplay_snapshot_end_linear": 270120,
+    "redisplay_row_index_bytes": 494,
+    "redisplay_row_index_relative_segment": 12945,
+    "redisplay_row_index_offset": 63000,
+    "redisplay_row_index_end_linear": 270614,
+    "controller_bridge_pairs_verified": 22,
+    "modem_bridge_pairs_verified": 23,
+    "command_menu_far_code_verified": true,
+    "ymodem_far_code_verified": true,
+    "zmodem_far_callbacks_verified": 10,
+    "configuration_bridge_pairs_verified": 79,
+    "redisplay_bridge_pairs_verified": 4,
+    "aspect_far_services_verified": 16,
+    "aspect_resident_far_references_verified": 21,
+    "aspect_emit_cdecl_bridge_verified": true,
+    "aspect_handoff_bytes": 48,
+    "aspect_renderer_state_bytes": 4,
+    "line_attribute_far_entries_verified": 2,
+    "line_attribute_resident_references_verified": 3,
+    "line_attribute_video_callbacks_verified": 2,
+    "status_far_bridge_pairs_verified": 5,
+    "status_script_label_bytes": 15,
+    "resident_code_bytes": 65526,
+    "resident_code_spare_bytes": 10,
+    "code_segments": [
+      {
+        "name": "_TEXT",
+        "kind": "CODE",
+        "relative_segment": 0,
+        "offset": 0,
+        "bytes": 65526
+      },
+      {
+        "name": "ASPECT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4096,
+        "offset": 0,
+        "bytes": 5996
+      },
+      {
+        "name": "CONFIG_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4471,
+        "offset": 0,
+        "bytes": 47795
+      },
+      {
+        "name": "MODEM_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 7459,
+        "offset": 0,
+        "bytes": 1483
+      },
+      {
+        "name": "PRINT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 7552,
+        "offset": 0,
+        "bytes": 1449
+      }
+    ],
+    "far_code_bridge_pairs_verified": 128
+  },
+  "sources": {
+    "src/terminal/line_edit.asm": "a213f92aff58d0bbf7ece5d4cabde0136d12b13285213418fd54fb38afeaf201",
+    "src/terminal/line_attributes.asm": "80afdf6011273e1029b79eea27838963bcb0a0d4edf97a1d8be86df09c961a49",
+    "src/terminal/attribute_repair.asm": "3045ad50de58301d18cebb7cd339a824be5811579f208fd5d91070caad8d00b9",
+    "standalone/check_line_edit_live.py": "3e8b69c1f89d8aba47f2d05ab3eb6a76eb4154bc56979d4561743a6fcaf769eb",
+    "standalone/check_line_attributes_live.py": "2072db6fae5ea5bb24040a49be34d6b1b568aa5694e4584c9713ec6247629414",
+    "standalone/test_line_attributes_dos.py": "fd88188ceaa16fba54a89c0982d9dbcdab4d9721983fff845175d41189291993",
+    "standalone/line_attributes_watch.asm": "353b073fc8c6e536ac7ff6003ea08e7b73e8aca3b874ef1f80496dcaaaac1454",
+    "standalone/terminal_memory.py": "be85f702a0be97bf34d1dd4df1c05f7404bee1eea4708a86685aed2afec75192"
+  },
+  "exact_native_sources": {
+    "reconstruction/line_edit/insert_line.asm": "94d3592066ee24d51f5976709b26ff094963ef80a873af1ef1bed7226fce4c2f",
+    "reconstruction/line_edit/delete_line.asm": "905c3f21f2499b17b4668c13d2586c8266cd5a9634e16234f46de18681ffd6d0",
+    "reconstruction/line_edit/provenance.json": "f0431a98f8674cbcbd8d73bf75b150d50e300c7cf8f8414d5276f591cf97b7d6"
+  },
+  "retained_observation_failures": [
+    {
+      "path": "build/line-attributes-dos/bounded-lines-01/checks.json",
+      "sha256": "345cf7da873191d6574e7b59c284803ad65c19812e0642f74c8283279084d32b",
+      "failed_observation": "video_byte_exact",
+      "product_exit_passed": true
+    },
+    {
+      "path": "build/line-attributes-dos/bounded-lines-02/checks.json",
+      "sha256": "edc880de216255df53f1cef33ddcf708b590d90c7a98fe159f771e76d4136de6",
+      "failed_observation": "three_cursor_snapshots",
+      "product_exit_passed": true
+    }
+  ],
+  "recorder_sha256": "86f1854f3a1b7ae2c7e0e01dd074d1d4742ed22ce7994ccb4f36097924ca69aa",
+  "whole_application_gates_closed": [],
+  "scope": "Maintained NETWORK line-plane shifts/region-limited real native repair with real native video callbacks, distinct from unchanged exact recovery/ORIGINAL policy. Actual-linked state/video oracles, explicit-fixture unmodified DOS executable, ordinary DOS ASPECT and owned-source ENiGMA search/NFO regression plus current source rebuild.",
+  "limitations": [
+    "Admitted fixed80-column B800 mode with no viewport; complete video/emulation and settings exposure remain open.",
+    "The real DOS plane-mode test uses declared test-only state seeding; the ordinary ENiGMA/ASPECT runs validate current supported defaults.",
+    "Exact ORIGINAL helpers retain their legacy23-row metadata copies; this intentional application policy does not rewrite that evidence.",
+    "Live ENiGMA decoder installation, physical RS-232/Wi-Fi modem validation and complete application gates remain open."
+  ]
+}

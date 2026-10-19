@@ -368,7 +368,9 @@ recovered line helpers. `test-meta_keys test-character_edit` checks exact
 recovered action/character helpers. `test-terminal` also runs linked keyboard,
 TEXT and line/character-policy regressions plus actual DOS delivery/import. See
 [mapping evidence](docs/KEYBOARD_MAPPING.md), [file formats](docs/KEY_MAPPING.md)
-and [line recovery](docs/LINE_EDIT.md).
+and [line recovery](docs/LINE_EDIT.md). NETWORK line editing now also has a
+[bounded attribute-plane owner](docs/LINE_ATTRIBUTES.md) with region-limited
+native field repair and physical last-row handling; exact recovery remains separate.
 
 `./tools/build test-translation test-translation-dos` builds176 exact native
 XLT instruction bytes and tests a separate checked256-byte DOS table loader.
