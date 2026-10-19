@@ -68,6 +68,7 @@ extern _aspect_render_preflight_modes
 extern _aspect_render_client_admit
 extern terminal_status_live,terminal_break_ui,terminal_script_label_update
 extern terminal_break_delay_units
+extern keyboard_bios_mode
 extern _script_handoff
 global terminal_render_prepare,terminal_render_revoke,terminal_render_validate,terminal_render_typed_abort
 global terminal_render_failure_notice
@@ -111,7 +112,7 @@ terminal_render_prepare:
  mov word [_script_render_segment],seg resident_bridge_entry
  mov ax,[cs:render_token]
  mov [_script_render_token],ax
- mov word [_script_render_version],4
+ mov word [_script_render_version],5
  xor ax,ax
 .done:
  pop es
@@ -147,7 +148,7 @@ terminal_render_validate:
  cmp [_script_render_token],ax
  mov ax,1
  jne .done
- cmp word [_script_render_version],4
+ cmp word [_script_render_version],5
  jne .done
  xor ax,ax
 .done:
@@ -225,6 +226,8 @@ render_body:
  je .break_notice
  cmp di,6
  je .script_label
+ cmp di,7
+ je .keyboard_policy
  cmp di,1
  jne .state
  cmp bx,255
@@ -283,6 +286,26 @@ render_body:
  jnz .done
  call far terminal_break_ui
  ret
+.keyboard_policy:
+ or bx,bx
+ jnz .operand
+ cmp word [_script_handoff+22],0
+ jne .serial
+ call _aspect_render_admit
+ or ax,ax
+ jnz .done
+ xor bx,bx
+ mov bl,[keyboard_bios_mode]
+ cmp bx,0
+ je .keyboard_mode
+ cmp bx,16
+ jne .state
+.keyboard_mode:
+ mov ax,8
+ call resident_bridge_callback
+ cmp ax,14
+ jbe .done
+ jmp .state
 .script_label:
  cmp bx,0xffff
  je .label_admit

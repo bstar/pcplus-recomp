@@ -14,8 +14,9 @@ def main():
  assert keyboard['passed'] and keyboard['runner_sha256']==digest
  assert keyboard['checker_sha256']==sha('standalone/check_aspect_keyboard.py')
  assert keyboard['manifest_sha256']==sha('build/aspect-runner/manifest.json')
- assert keyboard['CPU_words']==keyboard['DOS_words']==65536
- assert keyboard['DOS_summary']=='ASPECT_KEYBOARD 65536 words 131132 checks 0 failures'
+ assert keyboard['CPU_words']==keyboard['DOS_words']==131072
+ assert keyboard['DOS_summary']=='ASPECT_KEYBOARD 131072 words 655494 checks 0 failures'
+ assert keyboard['BIOS_modes']==[0,16] and keyboard['BDA_flag_cases']==256
  assert keyboard['words_corrected_from_previous_reader']==19011
  for leaf,h in keyboard['objects'].items():assert runner['objects'][leaf]==h
  for leaf,h in keyboard['test_inputs'].items():assert sha('build/aspect-keyboard/'+leaf)==h
@@ -42,8 +43,22 @@ def main():
  assert proof['outputs']['aspect-runner/ASPECT.EXE']['sha256']==digest
  assert proof['outputs']['aspect-runtime/EXECUTE.EXE']['sha256']==sha('build/aspect-runtime/EXECUTE.EXE')
  assert read('build/dos-package/manifest.json')['files']['ASPECT.EXE']==digest
+ policy=read('build/aspect-keyboard/policy-checks.json')
+ assert policy['passed'] and policy['runner_sha256']==digest and len(policy['cases'])==10
+ assert policy['checker_sha256']==sha('standalone/check_aspect_keyboard_policy.py')
+ assert policy['reused_checker_sha256']==sha('standalone/check_aspect_render_client.py')
+ modes_path='build/aspect-keyboard-mode-dos/bios-policy-02/checks.json';modes=read(modes_path)
+ assert modes['passed'] and modes['runner_sha256']==digest
+ assert modes['terminal_sha256']==sha('build/terminal/TERMINAL.EXE')
+ assert modes['checker_sha256']==sha('standalone/test_aspect_keyboard_mode_dos.py')
+ assert modes['reused_status_checker_sha256']==sha('standalone/test_aspect_status_dos.py')
+ assert len(modes['cases'])==4 and all(c['checks']['inherited_BIOS_mode'] and all(c['checks'].values()) for c in modes['cases'])
+ assert len({c['case'] for c in modes['cases']})==4
+ failed_modes_path='build/aspect-keyboard-mode-dos/bios-policy-01/checks.json';failed_modes=read(failed_modes_path)
+ assert not failed_modes['passed']
+ assert all(c['checks']['SETWHENCASE_value'] for c in failed_modes['cases'])
  bbs=[]
- for server,label in [('synchronet','keyboard-normalizer-sync-01'),('enigma','keyboard-normalizer-enigma30-01')]:
+ for server,label in [('synchronet','keyboard-bios-sync-01'),('enigma','keyboard-bios-enigma30-01')]:
   path='build/bbs-lab/script-login/'+label+'/checks.json';r=read(path)
   assert r['passed'] and all(r['checks'].values()) and r['runner_sha256']==digest
   assert r['checks']['source_compilation']
@@ -54,13 +69,15 @@ def main():
   for p,h in r['sources'].items():assert sha(p)==h,p
   bbs.append(dict(server=server,path=path,sha256=sha(path),checks=r['checks'],packet_delay_ms=r.get('modem_packet_delay_ms',0)))
  result=dict(passed=True,recorder_sha256=sha('standalone/record_aspect_keyboard.py'),runner_sha256=digest,keyboard=keyboard,
-  reports=reports,BBS=bbs,native_baseline_regions=baseline['baseline_regions'],
+  reports=reports,BBS=bbs,native_baseline_regions=baseline['baseline_regions'],renderer_capability=5,
+  BIOS_policy=policy,parent_child_modes=dict(path=modes_path,sha256=sha(modes_path),cases=modes['cases']),
+  retained_failed_probes=[dict(path=failed_modes_path,sha256=sha(failed_modes_path),reason='All mode observations correct; two direct status-row checks lacked explicit repaint after incoming clear-screen.'),dict(path='build/aspect-keyboard/history/bios-counter-01/RESULT.TXT',sha256=sha('build/aspect-keyboard/history/bios-counter-01/RESULT.TXT'),reason='Harness read counter not reset between exhaustive mode sweeps; one checker failure, key results correct.')],
   source_proof_sha256=sha('docs/validation/application-components-source-build.json'),reproduced_outputs=153,
   REA_evidence=['ev_cb670ed8c108fd2f8a4d03d1d83765074271c3cae5e31f2e0ac94f3c59873699','ev_8e40cf9d5f190f977da1b135d35970d1fcab5cac3261658c9dabbd80eb7dfbd6'],
   original_inputs=[],whole_application_gates_closed=[],
   limitations=['Acquisition only: ordinary script-time dispatch remains unsupported; native confirmation and full profile/macro/hotkey/UI services are unfinished.',
    'CPU INT16 and DOS temporary BIOS vector are declared models; no physical BIOS/keyboard or Wi-Fi modem validation.',
-   'BIOS enhanced-mode inheritance remains unfinished.',
+   'Keyboard dispatch and native abort confirmation remain unfinished; no full keyboard/UI gate closes.',
    'ENiGMA passing editor case uses explicit30ms buffering; the historical immediate-forwarding Home-key failure is unresolved.'])
  (ROOT/'docs/validation/aspect-keyboard.json').write_text(json.dumps(result,indent=2)+'\n')
  print('Bound exhaustive ASPECT keyboard acquisition and current DOS/BBS regressions')

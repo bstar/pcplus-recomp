@@ -62,6 +62,8 @@ endpoint:
  je .end
  cmp ax,4
  je .policy
+ cmp ax,7
+ je .keyboard_policy
  cmp ax,6
  je .label
  mov ax,10
@@ -90,13 +92,20 @@ endpoint:
  mov bx,350
  call far [cs:callback]
  jmp .return
+.keyboard_policy:
+ or bx,bx
+ jnz .bad
+ mov ax,8
+ xor bx,bx
+ call far [cs:callback]
+ jmp .return
 .begin:
  inc word [cs:results]
  cmp word [cs:reject_begin],1
  je .denied
  cmp word [bx],0x5243
  jne .bad
- cmp word [bx+2],4
+ cmp word [bx+2],5
  jne .bad
  cmp word [bx+4],0x7123
  jne .bad

@@ -4,8 +4,11 @@
 BITS 16
 CPU 8086
 %include "encodings.inc"
-; A caller with its own BIOS/queue owner can link just the two original
-; normalizers. Keep the default flat and complete OMF regions unchanged.
+; Select just normalizers or BIOS read/peek plus normalizers, without queue
+; ownership. Keep the default flat and complete OMF regions unchanged.
+%ifdef KEYBOARD_BIOS_ONLY
+%define KEYBOARD_NORMALIZERS_ONLY
+%endif
 %ifdef KEYBOARD_NORMALIZERS_ONLY
 %define KEYBOARD_OMF
 %endif
@@ -13,6 +16,10 @@ CPU 8086
 SEGMENT _TEXT public class=CODE use16
 global keyboard_normalize_bios
 global keyboard_normalize_extended
+%ifdef KEYBOARD_BIOS_ONLY
+global keyboard_bios_read,keyboard_bios_peek
+extern keyboard_bios_mode
+%endif
 %ifndef KEYBOARD_NORMALIZERS_ONLY
 global keyboard_read
 global keyboard_peek
@@ -150,7 +157,9 @@ ORG 0x7836
 %endif
 %endif
 %ifidn __OUTPUT_FORMAT__,obj
-%ifdef KEYBOARD_NORMALIZERS_ONLY
+%ifdef KEYBOARD_BIOS_ONLY
+%define KEYBOARD_EMIT 1
+%elifdef KEYBOARD_NORMALIZERS_ONLY
 %define KEYBOARD_EMIT 0
 %else
 %define KEYBOARD_EMIT 1
@@ -182,6 +191,7 @@ L_7852: jnz L_784e
 L_7854: mov ah, 0x1
 L_7856: ret
 db 0 ; original alignment byte
+%ifndef KEYBOARD_NORMALIZERS_ONLY
 %ifdef KEYBOARD_OMF
 keyboard_queue_read:
 %endif
@@ -203,6 +213,7 @@ L_7878: call keyboard_read
 L_787b: push ax
 L_787c: call keyboard_normalize_extended
 L_787f: ret
+%endif
 %endif
 %ifdef KEYBOARD_OMF
 %else

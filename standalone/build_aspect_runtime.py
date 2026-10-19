@@ -4,7 +4,9 @@ import hashlib,json,re,struct,subprocess,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/aspect-runtime'
 ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm',None),
- ('keyboard_normalizers','reconstruction/keyboard/core.asm','KEYBOARD_NORMALIZERS_ONLY'),
+ ('keyboard_normalizers','reconstruction/keyboard/core.asm','KEYBOARD_BIOS_ONLY'),
+ ('keyboard_detection','reconstruction/keyboard_detection/detect.asm','KEYBOARD_DETECTION_OMF'),
+ ('keyboard_owner','src/aspect/keyboard.asm',None),
  ('keyboard_api','src/keyboard/api.asm',None),
  ('globals','src/aspect/global_strings.asm',None),('stack','src/aspect/value_stack.asm',None),
  ('conversions','src/aspect/conversions.asm',None),('conversion_services','src/aspect/conversion_services.asm',None),

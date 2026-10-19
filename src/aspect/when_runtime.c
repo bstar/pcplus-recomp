@@ -5,8 +5,6 @@
 #include "runtime.h"
 #include "serial_runtime.h"
 #include "when_runtime.h"
-#include "../keyboard/api.h"
-#include <bios.h>
 #if defined(ASPECT_RUNTIME_SERIAL)
 #include "resident_render.h"
 #endif
@@ -25,6 +23,7 @@ void runtime_when_reset(void)
  disarm();runtime_when_case_sensitive=0;runtime_when_keyboard_disabled=0;
  runtime_when_last_key=0;runtime_when_pending_key=65535U;
  runtime_when_deferred=runtime_when_pending_service=service_busy=monitor_busy=0;
+ runtime_keyboard_auto();
 }
 void runtime_when_file_reset(void)
 {
@@ -50,10 +49,9 @@ unsigned runtime_when_transport_poll(void)
 {
  unsigned key;
  runtime_serial_poll();if(runtime_error)return 1;
- if(!_bios_keybrd(_KEYBRD_READY))return 0;
- key=_bios_keybrd(_KEYBRD_READY);
+ key=runtime_keyboard_peek();if(!key)return 0;
  /* Leave ordinary local keys queued for the native service's safe point. */
- if((key&255)==27){_bios_keybrd(_KEYBRD_READ);runtime_set_error(ASPECT_RUN_CANCELLED);return 1;}
+ if((key&255)==27){runtime_keyboard_read();runtime_set_error(ASPECT_RUN_CANCELLED);return 1;}
  return 0;
 }
 unsigned runtime_when_idle_allowed(void)
@@ -86,13 +84,10 @@ unsigned runtime_when_cancel_poll(void)
 }
 unsigned runtime_when_host_poll(void){return runtime_serial_poll();}
 unsigned runtime_when_key_ready(void)
-{return runtime_error?0:_bios_keybrd(_KEYBRD_READY);}
+{return runtime_error?0:runtime_keyboard_peek();}
 unsigned runtime_when_read_key(void)
 {
- unsigned key=_bios_keybrd(_KEYBRD_READ);
- /* Native64FE ->7836 ->77D2 preserves keypad/Backspace identities and uses
-  * a signed372A threshold. Clearing every nonzero key's AH loses those. */
- return keyboard_key_from_bios(key);
+ return runtime_keyboard_read();
 }
 unsigned runtime_when_confirm_abort(void)
 {runtime_set_error(ASPECT_RUN_CANCELLED);return 1;}

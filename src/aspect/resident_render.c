@@ -10,6 +10,7 @@ unsigned aspect_render_parent_entry[2];
 aspect_render_client aspect_render_client_record;
 static unsigned attached,callback_error;
 static unsigned policy_queried,policy_wait,policy_received;
+static unsigned keyboard_queried,keyboard_wait,keyboard_received;
 static unsigned label_wait,label_next,label_done;
 static unsigned char script_label[13];
 extern unsigned runtime_serial_break_units;
@@ -71,7 +72,7 @@ unsigned __cdecl aspect_render_status(unsigned duplex)
  return result?result:callback_error;
 }
 void __cdecl aspect_render_policy_reset(void)
-{policy_queried=policy_wait=policy_received=0;}
+{policy_queried=policy_wait=policy_received=0;keyboard_queried=keyboard_wait=keyboard_received=0;}
 unsigned __cdecl aspect_render_policy_inherit(void)
 {
  unsigned result;
@@ -98,6 +99,22 @@ unsigned __cdecl aspect_render_break_notice(unsigned end)
  result=typed(aspect_render_request(ASPECT_RENDER_BREAK_NOTICE,end));
  if(aspect_render_client_check())return ASPECT_RUN_STATE;
  return result?result:callback_error;
+}
+unsigned __cdecl aspect_render_keyboard_inherit(void)
+{
+ unsigned result;
+ if(!attached || aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(!aspect_serial_active)return ASPECT_RUN_SERIAL;
+ if(keyboard_queried)return 0;
+ if(keyboard_wait)return ASPECT_RUN_STATE;
+ callback_error=keyboard_received=0;keyboard_wait=1;
+ result=typed(aspect_render_request(ASPECT_RENDER_KEYBOARD_POLICY,0));
+ keyboard_wait=0;
+ if(aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(result)return result;
+ if(callback_error)return callback_error;
+ if(!keyboard_received)return ASPECT_RUN_STATE;
+ keyboard_queried=1;return 0;
 }
 unsigned __cdecl aspect_render_script_label(const char *path,unsigned duplex)
 {
@@ -138,6 +155,11 @@ static unsigned callback_dispatch(unsigned operation,unsigned value)
  }
  if(!aspect_serial_active){callback_error=ASPECT_RUN_SERIAL;return operation==ASPECT_RENDER_RAW_WAIT || operation==ASPECT_RENDER_RAW_NOW?65535U:callback_error;}
  switch(operation){
+ case ASPECT_RENDER_KEYBOARD_MODE:
+  if(!keyboard_wait || keyboard_received || (value!=0 && value!=16)){
+   callback_error=ASPECT_RUN_STATE;return callback_error;
+  }
+  runtime_keyboard_mode=value;keyboard_received=1;return 0;
  case ASPECT_RENDER_LABEL_BYTE:
   if(!label_wait || label_done || value>=13 || value!=label_next){callback_error=ASPECT_RUN_STATE;return 65535U;}
   ++label_next;

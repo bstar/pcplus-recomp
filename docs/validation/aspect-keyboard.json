@@ -1,16 +1,21 @@
 {
   "passed": true,
-  "recorder_sha256": "58837240f1ad1da188ebd0ce30cf1afd47befc7765968f5004937376164fd4e9",
-  "runner_sha256": "6aca8fa05715490e5ad02cca5a9d7600a23b51ce1c0010fd196a8242d46eeea1",
+  "recorder_sha256": "aa96b9f4f45e2dc5db09f1ba73abc3c58d075db108bf787446cf2490ea5a1aec",
+  "runner_sha256": "e05961c86e997b0219fecb6493727219e284afc2768ceb9046dbc9f034dd873b",
   "keyboard": {
     "passed": true,
-    "runner_sha256": "6aca8fa05715490e5ad02cca5a9d7600a23b51ce1c0010fd196a8242d46eeea1",
-    "checker_sha256": "6197584a94b965c5554d44da5089e0c86d99dcea9601335a78d720f7c0b0c74a",
-    "manifest_sha256": "c90ef5492d9f2b2f0acad54ad910b88d9184140e886514f6cfc4407b87ed775f",
-    "CPU_words": 65536,
-    "DOS_words": 65536,
+    "runner_sha256": "e05961c86e997b0219fecb6493727219e284afc2768ceb9046dbc9f034dd873b",
+    "checker_sha256": "b8dbdea97a8a81ac7804d299990369a4411965089968585f70e9ac70e9b45fb0",
+    "manifest_sha256": "b3f40945f2dcc320f56879d728b3ffeabe26344bae0df1fabf8e961504d58b01",
+    "CPU_words": 131072,
+    "DOS_words": 131072,
+    "BIOS_modes": [
+      0,
+      16
+    ],
+    "BDA_flag_cases": 256,
     "words_corrected_from_previous_reader": 19011,
-    "DOS_summary": "ASPECT_KEYBOARD 65536 words 131132 checks 0 failures",
+    "DOS_summary": "ASPECT_KEYBOARD 131072 words 655494 checks 0 failures",
     "original_inputs": [],
     "objects": {
       "abort.obj": "9a40f2f05f5187cd95bfb3e5355bc790335b91d9629b7eaa43349cb9e794245c",
@@ -34,7 +39,9 @@
       "flow.obj": "678d2951a9b825bf58f8bb00d48bf3f745660a298f9bc0586f4526c8c6df30cc",
       "globals.obj": "029b739581918411c547bbe27a15cbb63d0acd4b3f064abd21b66cc998e6bae9",
       "keyboard_api.obj": "6a02facb226c07cac1a74c0aaf183a3460c194427aa5f9a5f3fa1f6581192755",
-      "keyboard_normalizers.obj": "040340037145d0f2271ae3571caeeebbedf64a7225c87bdd3e3a8130a1e22e62",
+      "keyboard_detection.obj": "bddf234152af645768dbc660c01a738e4082b5c746a5207e8fe0101152bdb2b1",
+      "keyboard_normalizers.obj": "7f2ffc1298e4daa4333cb82d25a99edfebe8909e16530181c0495f7b7040b41a",
+      "keyboard_owner.obj": "61b5c6d6278881019e84b8209b58dfcf3082fe39157bacd6da1ca8e632bff15a",
       "long.obj": "752aaff2819d1f47b35b799f90494f12b634895bd2426d55b3e536cae59365db",
       "longjmp.obj": "6e8783ff0dd23a0ae67e67b73bf43abec7740a54b3b8025e9b1cf2cc06fb72d7",
       "operands.obj": "c47f536bb56345f674cbed074c3df4ac7630c373a4d28f3f0a981efa24ccc53e",
@@ -42,18 +49,18 @@
       "parameters.obj": "2e8e911119f1e0dd359aa90eee9c09331b56ff19d94ee65742c3ad02ef28aac5",
       "receive_commands.obj": "3ffddce1777033a3ecc8bcd601b58a4fa9a960a3b9003fb324677f302c721054",
       "receive_policy.obj": "0a1909e1c7010fb7199a1ac02ab8c3c35f6ed3bdb24344dc6191c174b6505a80",
-      "receive_runtime.o": "9f21dad6e219857897f16a6cbb9e43670fca8786c52c5bb26a20e32ef9a3ff24",
+      "receive_runtime.o": "23c7df9a18d010a79c8f7dc5de4f1b42c11ba5c5e52c4dcabfbc00c030aba5c8",
       "resident_client.obj": "209dc89f2f6d49deef01ab9cae06c3b0a91e2d4cbbf5885d74978aad8c57c75f",
-      "resident_render.o": "589f790cfec9500f5eed50a0ad0173c3e0f9dd204e70505174fadb838e592f86",
+      "resident_render.o": "aa72b52a36231e37ebcee36fdad36e6cacfe4b4ff0d4a0418b4aa88255fcc729",
       "resource_path.o": "69f36ac6e6356a4a56321c4491ab196fc9eebfbfc4a3358c6ee911d3d1594814",
-      "runtime.o": "dd8c5a82e42f69e377b6e051b6755ba28b17378ffbeb9c98bf4b293b387f6c85",
+      "runtime.o": "4850fb23ca86009982819fb33d8f3dd8eafc304f41efeedd5d685ea56685707d",
       "script_path.o": "d38436fead2c3966bf3a8413b6650962c335793c2fe611a334db328f597e6446",
-      "serial.o": "ba78f9052f9a1d21d66264ea488779f8ef720a7cbbc2d47dd8f55cf524539b9a",
+      "serial.o": "1333d7dd8de2e41a9439ac758078d0549aa11b82776afb8e1d19de6794378292",
       "serial_backend.obj": "92216df2b74e3cf6b80e0dc08e4701d3ce8836e00d218f468dd405b1a6e0ccd2",
       "serial_commands.obj": "344968511920e3ba78b49239f14ea8168ed1923d910e8d25d60ca087c6d981cd",
-      "serial_runtime.o": "298a1636a4b0891a88f47759412ade454b9db3bd1b2f7cee09652cc013080e1c",
+      "serial_runtime.o": "2386bd817cec2663eaed0281c366bd1bff91314443856ebe7f00abe42ab607f5",
       "set_commands.obj": "a9500712281aa4347928a94a7404c01dd8f2e0eca4bf350dbbed8a42e8cc4a21",
-      "set_runtime.o": "d3a3f996ecbc81f0bde0b357cbb891791a5c0053168c878b46cd1d39294e7c24",
+      "set_runtime.o": "e638c83935eed1a62a925b9641d7a907689719243e58999b15978bedc03ecf23",
       "setjmp.obj": "368493fdb27779f737d2426b34657fbe0bfcbef270dd5275deb468f0857bd991",
       "source_compile.o": "b6301d506bdf5312b7c7fb1789d0b7fe11b2b0ea61bdfd4bd7d2e297acc84210",
       "stack.obj": "c5f58d70175aaea06c93779a48b5a196446c5e7b17095eb3b4d2904e1a73e951",
@@ -72,42 +79,42 @@
       "uart.obj": "d222e44857577d0a424ff5677a3fe50d9f96c5a5c4e544489dc9c18c0239e6a2",
       "uart_api.obj": "ce2a3f46ba2108a4c9eafee5182c92210719cb94d125a0ca7880cafc5b07e49d",
       "when.obj": "0e81ca655fa983e34da82f09df1cd7075319b489f2b378904c0b3208b017a222",
-      "when_runtime.o": "c4d99538e2b5ed9b19724ac20b6461c90e3a55b92d6bdc461cd0319f011a382c"
+      "when_runtime.o": "8741e92200bc36f76c7b766cc8a3faf215c6149ce7f0168be71abf00071fdfad"
     },
     "test_inputs": {
-      "harness.c": "8532b32701a12f10c62d5d9f7c08224544b1672de3374e44eea4b1590bd3aec5",
-      "bios.asm": "b2703ef3a4455e4478a6e10dccb39d192ee31637146df6f7fbdc579ed5859910",
-      "KEYTEST.EXE": "92b4bfc8ddb426df922d37de6c66c0868b0474703121ba97d4883d1bf82cfb5b"
+      "harness.c": "49b19330c1fa633c8decc314327b60c825b3ba8bb9f9ace3f53a2cfb44288f86",
+      "bios.asm": "9e062ba2adcc7130057506d18194ead4d83f1e6a032d762d2a75d5a4a87bbdf3",
+      "KEYTEST.EXE": "f9828ad49592d9d5cdcfcdc1eca95d10964e8f6ced3fd66b5686c920fb05a370"
     },
-    "scope": "Exhaustive actual product reader CPU replay with modeled INT16, and exhaustive8086 DOS execution of the same production objects with a temporary owned BIOS vector. DOS also checks native WHEN last/pending-key state, unsupported dispatch, disabled/deferred keyboard and Escape cancellation. Does not establish physical BIOS behavior or implement full keyboard/UI dispatch."
+    "scope": "Exhaustive actual product reader CPU replay and8086 DOS execution in standard/enhanced modes with declared BIOS models. Both preserve occupiedAX0 versus emptyZF, read consumption and native normalization. CPU checks256 BDA flag patterns; DOS checks native WHEN state, disabled/deferred keyboard, file-reset retention and cancellation. No physical BIOS or full keyboard/UI dispatch claim."
   },
   "reports": {
     "runtime": {
       "path": "build/aspect-runtime/checks.json",
-      "sha256": "662a49858940a5f904a94cc154b10cd68695d00d856f48be03fa89f485658536",
+      "sha256": "d3934f4a5d0e4760ee1cd46b782894de94b4314d7d3a8b1a44f13ac41a290365",
       "summary": "ASPECT_RUNTIME 1146 cases 26309 checks 0 failures"
     },
     "CLI": {
       "path": "build/aspect-runner/checks.json",
-      "sha256": "d0dcf8f10b7665c5beab2d529f5e66e8178570b659bd7d478c67dfd8b0d5cf70",
+      "sha256": "9a05ae24d828031b5ee67c94c68cc7d755dc06f408d0b4b6d2c975d604ea5659",
       "summary": "RUNNER 21 cases 105 checks 0 failures"
     },
     "source": {
       "path": "build/aspect-source-compile/checks.json",
-      "sha256": "e92f66b02f78696c5ca496b036ebefb3d19a29643e8c4d390893d6c7099043f9",
+      "sha256": "ed6cecefe1a4e937df2a1baaa8a380839bcebef663bc25a485e8d6ef0e4b9f28",
       "summary": "SOURCE_EXEC 22 cases 223 checks 0 failures"
     },
     "serial": {
       "path": "build/aspect-source-serial-dos/checks.json",
-      "sha256": "805d86cc5ddfd6f40fe87afe0989f108d870a95bc77665933a0487f2d3573cfb",
+      "sha256": "5c3cc78ebbb68b9159e1480237e97fadd0a7648aeb238a60db0d3b84a4b8cf61",
       "summary": "Actual production nested DOS compiler and8086 ASPECT UART IRQ across N/S/H/B flow. Checked proactive XOFF/XON for S/B, raw IRQ reception, retained numeric/BREAK state, native compiled bytecode, exact unread ASIO return, vectors/PIC/MCR/guards. No resident-renderer, physical modem or external BBS claim."
     }
   },
   "BBS": [
     {
       "server": "synchronet",
-      "path": "build/bbs-lab/script-login/keyboard-normalizer-sync-01/checks.json",
-      "sha256": "46e9eeb1e6732e7617b2da30d6baf476d84424ec6a8e5ee2dfc377a064ff4276",
+      "path": "build/bbs-lab/script-login/keyboard-bios-sync-01/checks.json",
+      "sha256": "19fe37bf7c9416148ef2960081ced9e5ce55de114d78c500d25bd8de4825afca",
       "checks": {
         "DOS_harness": true,
         "current_terminal": true,
@@ -126,8 +133,8 @@
     },
     {
       "server": "enigma",
-      "path": "build/bbs-lab/script-login/keyboard-normalizer-enigma30-01/checks.json",
-      "sha256": "e656602b673db3061a584c79ca18f82bce3f8dff5aaa32e7ab4c78e13d05fe5a",
+      "path": "build/bbs-lab/script-login/keyboard-bios-enigma30-01/checks.json",
+      "sha256": "42aacb2b7ff2ba1989ef90602a2330d538b0bea5646e2d7a9f9f826c04c8b77f",
       "checks": {
         "DOS_harness": true,
         "current_terminal": true,
@@ -172,7 +179,585 @@
       "sha256": "5abf79079784887129ff2059a8c9645d1decffa2d4a7265e04a86ed3b1c4f862"
     }
   ],
-  "source_proof_sha256": "6fa3ec6b8c0a9f76c5fe040619ae6fd87d6685762c34aac45d02695c3a76a6ae",
+  "renderer_capability": 5,
+  "BIOS_policy": {
+    "passed": true,
+    "cases": [
+      {
+        "name": "mode-0-once-until-session-reset",
+        "passed": true
+      },
+      {
+        "name": "mode-16-once-until-session-reset",
+        "passed": true
+      },
+      {
+        "name": "bad-callback-()",
+        "passed": true
+      },
+      {
+        "name": "bad-callback-(0, 0)",
+        "passed": true
+      },
+      {
+        "name": "bad-callback-(16, 16)",
+        "passed": true
+      },
+      {
+        "name": "bad-callback-(1,)",
+        "passed": true
+      },
+      {
+        "name": "bad-callback-(17,)",
+        "passed": true
+      },
+      {
+        "name": "bad-callback-(65535,)",
+        "passed": true
+      },
+      {
+        "name": "unsolicited-and-closed-lease",
+        "passed": true
+      },
+      {
+        "name": "capabilities-1-to-4-before-hardware",
+        "passed": true
+      }
+    ],
+    "runner_sha256": "e05961c86e997b0219fecb6493727219e284afc2768ceb9046dbc9f034dd873b",
+    "checker_sha256": "02df90b0264b2eb29c386a876d6b905bb26d32dfa62f0007ae34a4fc48359bdc",
+    "reused_checker_sha256": "60c02ff48619a7217d929eb3cab7c9fb29939962b7339b344d37e3d57b37ceb6",
+    "scope": "Actual child code and checked callback stacks with explicit synchronous parent endpoint. Modes0/16, once per invocation, retained file-reset selection, duplicate/missing/out-of-range/unsolicited/closed rejection, and old capabilities before UART. Actual terminal policy tested separately."
+  },
+  "parent_child_modes": {
+    "path": "build/aspect-keyboard-mode-dos/bios-policy-02/checks.json",
+    "sha256": "450fe79905c54632c383e809dda1823861a2e0f6a6a2259a96e8a370b283d19a",
+    "cases": [
+      {
+        "case": "BIOS-0-direct",
+        "passed": true,
+        "checks": {
+          "renderer_post_sent": true,
+          "DOS_expected_exit": true,
+          "hardware_restored": true,
+          "PRM_unchanged": true,
+          "binary_unchanged": true,
+          "no_peer_errors": true,
+          "no_unexpected_commands": true,
+          "directory_expected_updates_only": true,
+          "fixture_unchanged_LOGIN.ASP": true,
+          "fixture_unchanged_LOGIN.ASX": true,
+          "fixture_unchanged_RENDER.COM": true,
+          "actual_init_and_dial": true,
+          "actual_DOS_CPR": true,
+          "actual_DOS_DA": true,
+          "actual_screen_snapshot": true,
+          "passive_EXEC_observed": true,
+          "child_exit_expected": true,
+          "parent_JFT_unchanged": true,
+          "all_parent_sink_owners_unchanged": true,
+          "explicit_password_only": true,
+          "ordinary_parent_keyboard_resumes": true,
+          "initial_CPR_before_password": true,
+          "no_automatic_redial": true,
+          "frozen_inputs": true,
+          "post_query_sent_after_password": true,
+          "post_return_cursor_coherent": true,
+          "video_0_0": true,
+          "far_history_retained_across_EXEC_return": true,
+          "far_history_bounds": true,
+          "native_renderer_updated_far_history": true,
+          "actual_child_PAUSE_status_observed": true,
+          "native_status_row_exact": true,
+          "fourteen_label_attributes": true,
+          "eighty_first_native_cell": true,
+          "parent_duplex_unchanged": true,
+          "parent_profile_retained": true,
+          "parent_ui_attribute_retained": true,
+          "inherited_BIOS_mode": true
+        },
+        "commands": [
+          "ATZ",
+          "ATDCaseTest:23"
+        ],
+        "errors": [],
+        "seconds": 7.529,
+        "binary_sha256": "32270b8dc4e0a2b089ff015d5fc56773e3a28b6f489a31c13439b9b0ee8ca0f3",
+        "command": "@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK /B:STANDARD",
+        "expected_exit": 0,
+        "working_drive": "d",
+        "environment": {},
+        "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.",
+        "history_states": [
+          [
+            0,
+            63000,
+            0,
+            19891
+          ],
+          [
+            0,
+            63000,
+            22,
+            19891
+          ],
+          [
+            0,
+            63000,
+            22,
+            19891
+          ]
+        ],
+        "history_prefix_hex": [
+          "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "observed_EXEC_names": [
+          "Z:\\BIN\\ADDKEY.COM",
+          "C:\\TERMINAL.EXE",
+          "C:\\ASPECT.EXE",
+          "D:\\SNAP.COM",
+          "D:\\RENDER.COM",
+          "",
+          "",
+          ""
+        ],
+        "admission_failure_observed": 0,
+        "admission_state": {},
+        "passive_all_EXEC_debug": [
+          5,
+          1865,
+          58606,
+          476
+        ],
+        "passive_observer_header": [
+          21070,
+          1,
+          1,
+          1,
+          9987,
+          2581,
+          0
+        ],
+        "child_exit_parent_state": {
+          "csi_origin_mode": 0,
+          "cursor_state_value_1d20": 1,
+          "terminal_mode_372c": 0,
+          "modes_value_3980": 1,
+          "modes_value_1d1a": 0,
+          "csi_terminal_id": 6,
+          "screen_cursor_row": 0,
+          "screen_cursor_column": 21,
+          "terminal_sink_3988_enabled": 0,
+          "terminal_sink_398a_enabled": 0
+        },
+        "runner_sha256": "e05961c86e997b0219fecb6493727219e284afc2768ceb9046dbc9f034dd873b",
+        "expectations_sha256": "a4f1408ea9fa4d3215ba440a3419cf231a8510202f3c9d3440697b8ea97a27d9",
+        "observer_sha256": "0c3ee04306b8384a33d16b7f508b20c3e5d46b2e81502052198ff9b1798d3a60",
+        "status_samples": 38,
+        "status_row_hex": "201f4c1e4f1e471e491e4e1e2e1e411e531e581e201e201e201e201e201eb31f201f411f4e1f531f491f201f201f201f201f201fb31f201f461f441f581f201fb31f201f331f381f341f301f301f201f4e1f381f311f201fb31f201f4c1f4f1f471f201f431f4c1f4f1f531f451f441f201fb31f201f501f521f491f4e1f541f201f4f1f461f461f201fb31f201f4f1f4e1f2d1f4c1f491f4e1f451f201f201f201f",
+        "status_characters": " LOGIN.ASX     \u2502 ANSI     \u2502 FDX \u2502 38400 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 ON-LINE   ",
+        "status_parent_duplex": 0
+      },
+      {
+        "case": "BIOS-0-chain",
+        "passed": true,
+        "checks": {
+          "renderer_post_sent": true,
+          "DOS_expected_exit": true,
+          "hardware_restored": true,
+          "PRM_unchanged": true,
+          "binary_unchanged": true,
+          "no_peer_errors": true,
+          "no_unexpected_commands": true,
+          "directory_expected_updates_only": true,
+          "fixture_unchanged_LOGIN.ASP": true,
+          "fixture_unchanged_LOGIN.ASX": true,
+          "fixture_unchanged_RENDER.COM": true,
+          "fixture_unchanged_NEXT.ASX": true,
+          "actual_init_and_dial": true,
+          "actual_DOS_CPR": true,
+          "actual_DOS_DA": true,
+          "actual_screen_snapshot": true,
+          "passive_EXEC_observed": true,
+          "child_exit_expected": true,
+          "parent_JFT_unchanged": true,
+          "all_parent_sink_owners_unchanged": true,
+          "explicit_password_only": true,
+          "ordinary_parent_keyboard_resumes": true,
+          "initial_CPR_before_password": true,
+          "no_automatic_redial": true,
+          "frozen_inputs": true,
+          "post_query_sent_after_password": true,
+          "post_return_cursor_coherent": true,
+          "video_0_0": true,
+          "far_history_retained_across_EXEC_return": true,
+          "far_history_bounds": true,
+          "native_renderer_updated_far_history": true,
+          "actual_child_PAUSE_status_observed": true,
+          "native_status_row_exact": true,
+          "fourteen_label_attributes": true,
+          "eighty_first_native_cell": true,
+          "parent_duplex_unchanged": true,
+          "parent_profile_retained": true,
+          "parent_ui_attribute_retained": true,
+          "inherited_BIOS_mode": true
+        },
+        "commands": [
+          "ATZ",
+          "ATDCaseTest:23"
+        ],
+        "errors": [],
+        "seconds": 7.529,
+        "binary_sha256": "32270b8dc4e0a2b089ff015d5fc56773e3a28b6f489a31c13439b9b0ee8ca0f3",
+        "command": "@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK /B:STANDARD",
+        "expected_exit": 0,
+        "working_drive": "d",
+        "environment": {},
+        "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.",
+        "history_states": [
+          [
+            0,
+            63000,
+            0,
+            19891
+          ],
+          [
+            0,
+            63000,
+            22,
+            19891
+          ],
+          [
+            0,
+            63000,
+            22,
+            19891
+          ]
+        ],
+        "history_prefix_hex": [
+          "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "observed_EXEC_names": [
+          "Z:\\BIN\\ADDKEY.COM",
+          "C:\\TERMINAL.EXE",
+          "C:\\ASPECT.EXE",
+          "D:\\SNAP.COM",
+          "D:\\RENDER.COM",
+          "",
+          "",
+          ""
+        ],
+        "admission_failure_observed": 0,
+        "admission_state": {},
+        "passive_all_EXEC_debug": [
+          5,
+          1865,
+          58606,
+          476
+        ],
+        "passive_observer_header": [
+          21070,
+          1,
+          1,
+          1,
+          9987,
+          2581,
+          0
+        ],
+        "child_exit_parent_state": {
+          "csi_origin_mode": 0,
+          "cursor_state_value_1d20": 1,
+          "terminal_mode_372c": 0,
+          "modes_value_3980": 1,
+          "modes_value_1d1a": 0,
+          "csi_terminal_id": 6,
+          "screen_cursor_row": 0,
+          "screen_cursor_column": 21,
+          "terminal_sink_3988_enabled": 0,
+          "terminal_sink_398a_enabled": 0
+        },
+        "runner_sha256": "e05961c86e997b0219fecb6493727219e284afc2768ceb9046dbc9f034dd873b",
+        "expectations_sha256": "a4f1408ea9fa4d3215ba440a3419cf231a8510202f3c9d3440697b8ea97a27d9",
+        "observer_sha256": "0c3ee04306b8384a33d16b7f508b20c3e5d46b2e81502052198ff9b1798d3a60",
+        "status_samples": 38,
+        "status_row_hex": "201f4e1e451e581e541e2e1e411e531e581e201e201e201e201e201e201eb31f201f411f4e1f531f491f201f201f201f201f201fb31f201f461f441f581f201fb31f201f331f381f341f301f301f201f4e1f381f311f201fb31f201f4c1f4f1f471f201f431f4c1f4f1f531f451f441f201fb31f201f501f521f491f4e1f541f201f4f1f461f461f201fb31f201f4f1f4e1f2d1f4c1f491f4e1f451f201f201f201f",
+        "status_characters": " NEXT.ASX      \u2502 ANSI     \u2502 FDX \u2502 38400 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 ON-LINE   ",
+        "status_parent_duplex": 0
+      },
+      {
+        "case": "BIOS-16-direct",
+        "passed": true,
+        "checks": {
+          "renderer_post_sent": true,
+          "DOS_expected_exit": true,
+          "hardware_restored": true,
+          "PRM_unchanged": true,
+          "binary_unchanged": true,
+          "no_peer_errors": true,
+          "no_unexpected_commands": true,
+          "directory_expected_updates_only": true,
+          "fixture_unchanged_LOGIN.ASP": true,
+          "fixture_unchanged_LOGIN.ASX": true,
+          "fixture_unchanged_RENDER.COM": true,
+          "actual_init_and_dial": true,
+          "actual_DOS_CPR": true,
+          "actual_DOS_DA": true,
+          "actual_screen_snapshot": true,
+          "passive_EXEC_observed": true,
+          "child_exit_expected": true,
+          "parent_JFT_unchanged": true,
+          "all_parent_sink_owners_unchanged": true,
+          "explicit_password_only": true,
+          "ordinary_parent_keyboard_resumes": true,
+          "initial_CPR_before_password": true,
+          "no_automatic_redial": true,
+          "frozen_inputs": true,
+          "post_query_sent_after_password": true,
+          "post_return_cursor_coherent": true,
+          "video_0_0": true,
+          "far_history_retained_across_EXEC_return": true,
+          "far_history_bounds": true,
+          "native_renderer_updated_far_history": true,
+          "actual_child_PAUSE_status_observed": true,
+          "native_status_row_exact": true,
+          "fourteen_label_attributes": true,
+          "eighty_first_native_cell": true,
+          "parent_duplex_unchanged": true,
+          "parent_profile_retained": true,
+          "parent_ui_attribute_retained": true,
+          "inherited_BIOS_mode": true
+        },
+        "commands": [
+          "ATZ",
+          "ATDCaseTest:23"
+        ],
+        "errors": [],
+        "seconds": 7.479,
+        "binary_sha256": "32270b8dc4e0a2b089ff015d5fc56773e3a28b6f489a31c13439b9b0ee8ca0f3",
+        "command": "@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK /B:ENHANCED",
+        "expected_exit": 0,
+        "working_drive": "d",
+        "environment": {},
+        "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.",
+        "history_states": [
+          [
+            0,
+            63000,
+            0,
+            19891
+          ],
+          [
+            0,
+            63000,
+            22,
+            19891
+          ],
+          [
+            0,
+            63000,
+            22,
+            19891
+          ]
+        ],
+        "history_prefix_hex": [
+          "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "observed_EXEC_names": [
+          "Z:\\BIN\\ADDKEY.COM",
+          "C:\\TERMINAL.EXE",
+          "C:\\ASPECT.EXE",
+          "D:\\SNAP.COM",
+          "D:\\RENDER.COM",
+          "",
+          "",
+          ""
+        ],
+        "admission_failure_observed": 0,
+        "admission_state": {},
+        "passive_all_EXEC_debug": [
+          5,
+          1865,
+          58606,
+          476
+        ],
+        "passive_observer_header": [
+          21070,
+          1,
+          1,
+          1,
+          9987,
+          2581,
+          0
+        ],
+        "child_exit_parent_state": {
+          "csi_origin_mode": 0,
+          "cursor_state_value_1d20": 1,
+          "terminal_mode_372c": 0,
+          "modes_value_3980": 1,
+          "modes_value_1d1a": 0,
+          "csi_terminal_id": 6,
+          "screen_cursor_row": 0,
+          "screen_cursor_column": 21,
+          "terminal_sink_3988_enabled": 0,
+          "terminal_sink_398a_enabled": 0
+        },
+        "runner_sha256": "e05961c86e997b0219fecb6493727219e284afc2768ceb9046dbc9f034dd873b",
+        "expectations_sha256": "a4f1408ea9fa4d3215ba440a3419cf231a8510202f3c9d3440697b8ea97a27d9",
+        "observer_sha256": "0c3ee04306b8384a33d16b7f508b20c3e5d46b2e81502052198ff9b1798d3a60",
+        "status_samples": 38,
+        "status_row_hex": "201f4c1e4f1e471e491e4e1e2e1e411e531e581e201e201e201e201e201eb31f201f411f4e1f531f491f201f201f201f201f201fb31f201f461f441f581f201fb31f201f331f381f341f301f301f201f4e1f381f311f201fb31f201f4c1f4f1f471f201f431f4c1f4f1f531f451f441f201fb31f201f501f521f491f4e1f541f201f4f1f461f461f201fb31f201f4f1f4e1f2d1f4c1f491f4e1f451f201f201f201f",
+        "status_characters": " LOGIN.ASX     \u2502 ANSI     \u2502 FDX \u2502 38400 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 ON-LINE   ",
+        "status_parent_duplex": 0
+      },
+      {
+        "case": "BIOS-16-chain",
+        "passed": true,
+        "checks": {
+          "renderer_post_sent": true,
+          "DOS_expected_exit": true,
+          "hardware_restored": true,
+          "PRM_unchanged": true,
+          "binary_unchanged": true,
+          "no_peer_errors": true,
+          "no_unexpected_commands": true,
+          "directory_expected_updates_only": true,
+          "fixture_unchanged_LOGIN.ASP": true,
+          "fixture_unchanged_LOGIN.ASX": true,
+          "fixture_unchanged_RENDER.COM": true,
+          "fixture_unchanged_NEXT.ASX": true,
+          "actual_init_and_dial": true,
+          "actual_DOS_CPR": true,
+          "actual_DOS_DA": true,
+          "actual_screen_snapshot": true,
+          "passive_EXEC_observed": true,
+          "child_exit_expected": true,
+          "parent_JFT_unchanged": true,
+          "all_parent_sink_owners_unchanged": true,
+          "explicit_password_only": true,
+          "ordinary_parent_keyboard_resumes": true,
+          "initial_CPR_before_password": true,
+          "no_automatic_redial": true,
+          "frozen_inputs": true,
+          "post_query_sent_after_password": true,
+          "post_return_cursor_coherent": true,
+          "video_0_0": true,
+          "far_history_retained_across_EXEC_return": true,
+          "far_history_bounds": true,
+          "native_renderer_updated_far_history": true,
+          "actual_child_PAUSE_status_observed": true,
+          "native_status_row_exact": true,
+          "fourteen_label_attributes": true,
+          "eighty_first_native_cell": true,
+          "parent_duplex_unchanged": true,
+          "parent_profile_retained": true,
+          "parent_ui_attribute_retained": true,
+          "inherited_BIOS_mode": true
+        },
+        "commands": [
+          "ATZ",
+          "ATDCaseTest:23"
+        ],
+        "errors": [],
+        "seconds": 7.528,
+        "binary_sha256": "32270b8dc4e0a2b089ff015d5fc56773e3a28b6f489a31c13439b9b0ee8ca0f3",
+        "command": "@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK /B:ENHANCED",
+        "expected_exit": 0,
+        "working_drive": "d",
+        "environment": {},
+        "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.",
+        "history_states": [
+          [
+            0,
+            63000,
+            0,
+            19891
+          ],
+          [
+            0,
+            63000,
+            22,
+            19891
+          ],
+          [
+            0,
+            63000,
+            22,
+            19891
+          ]
+        ],
+        "history_prefix_hex": [
+          "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "observed_EXEC_names": [
+          "Z:\\BIN\\ADDKEY.COM",
+          "C:\\TERMINAL.EXE",
+          "C:\\ASPECT.EXE",
+          "D:\\SNAP.COM",
+          "D:\\RENDER.COM",
+          "",
+          "",
+          ""
+        ],
+        "admission_failure_observed": 0,
+        "admission_state": {},
+        "passive_all_EXEC_debug": [
+          5,
+          1865,
+          58606,
+          476
+        ],
+        "passive_observer_header": [
+          21070,
+          1,
+          1,
+          1,
+          9987,
+          2581,
+          0
+        ],
+        "child_exit_parent_state": {
+          "csi_origin_mode": 0,
+          "cursor_state_value_1d20": 1,
+          "terminal_mode_372c": 0,
+          "modes_value_3980": 1,
+          "modes_value_1d1a": 0,
+          "csi_terminal_id": 6,
+          "screen_cursor_row": 0,
+          "screen_cursor_column": 21,
+          "terminal_sink_3988_enabled": 0,
+          "terminal_sink_398a_enabled": 0
+        },
+        "runner_sha256": "e05961c86e997b0219fecb6493727219e284afc2768ceb9046dbc9f034dd873b",
+        "expectations_sha256": "a4f1408ea9fa4d3215ba440a3419cf231a8510202f3c9d3440697b8ea97a27d9",
+        "observer_sha256": "0c3ee04306b8384a33d16b7f508b20c3e5d46b2e81502052198ff9b1798d3a60",
+        "status_samples": 38,
+        "status_row_hex": "201f4e1e451e581e541e2e1e411e531e581e201e201e201e201e201e201eb31f201f411f4e1f531f491f201f201f201f201f201fb31f201f461f441f581f201fb31f201f331f381f341f301f301f201f4e1f381f311f201fb31f201f4c1f4f1f471f201f431f4c1f4f1f531f451f441f201fb31f201f501f521f491f4e1f541f201f4f1f461f461f201fb31f201f4f1f4e1f2d1f4c1f491f4e1f451f201f201f201f",
+        "status_characters": " NEXT.ASX      \u2502 ANSI     \u2502 FDX \u2502 38400 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 ON-LINE   ",
+        "status_parent_duplex": 0
+      }
+    ]
+  },
+  "retained_failed_probes": [
+    {
+      "path": "build/aspect-keyboard-mode-dos/bios-policy-01/checks.json",
+      "sha256": "fa037c8e83235cda492376693bc77c2c4f4347f2c2dc9334099dfd41cb63e532",
+      "reason": "All mode observations correct; two direct status-row checks lacked explicit repaint after incoming clear-screen."
+    },
+    {
+      "path": "build/aspect-keyboard/history/bios-counter-01/RESULT.TXT",
+      "sha256": "c3997894d8b3bee7e31328288e5f1917f7270d0cb9c7ec7ef722c4030c74c1c6",
+      "reason": "Harness read counter not reset between exhaustive mode sweeps; one checker failure, key results correct."
+    }
+  ],
+  "source_proof_sha256": "a1a1d1d552f4a7dce1f3a1b26a4f8b464fe143414525b84ec0d6ee41f3049332",
   "reproduced_outputs": 153,
   "REA_evidence": [
     "ev_cb670ed8c108fd2f8a4d03d1d83765074271c3cae5e31f2e0ac94f3c59873699",
@@ -183,7 +768,7 @@
   "limitations": [
     "Acquisition only: ordinary script-time dispatch remains unsupported; native confirmation and full profile/macro/hotkey/UI services are unfinished.",
     "CPU INT16 and DOS temporary BIOS vector are declared models; no physical BIOS/keyboard or Wi-Fi modem validation.",
-    "BIOS enhanced-mode inheritance remains unfinished.",
+    "Keyboard dispatch and native abort confirmation remain unfinished; no full keyboard/UI gate closes.",
     "ENiGMA passing editor case uses explicit30ms buffering; the historical immediate-forwarding Home-key failure is unresolved."
   ]
 }

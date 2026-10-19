@@ -3,6 +3,11 @@
 /* Maintained ownership around the exact native WHEN component. No event-body
  * interpreter or synchronous CALL shim: native flow owns deferred FILE seeks. */
 void runtime_when_reset(void);
+/* Session BIOS owner. Mode is0 or10h; native peek retains occupiedAX0 as0100. */
+unsigned __cdecl runtime_keyboard_read(void);
+unsigned __cdecl runtime_keyboard_peek(void);
+unsigned __cdecl runtime_keyboard_auto(void);
+extern unsigned runtime_keyboard_mode;
 void runtime_when_finish(void);
 /* Per-file reset preserves gate, settings and queued/last key values. */
 void runtime_when_file_reset(void);

@@ -72,8 +72,9 @@ normalizer before raw classification. Alternate low-E0 keypad words1ce0/35e0
 map to e00d/e02f through explicit maintained aliases. The normalized API remains
 available for callers that need the original UI convention.
 
-The ASPECT child now links the same normalizers through
-`KEYBOARD_NORMALIZERS_ONLY`, with its own BIOS reader and no private queue.
+The ASPECT child now links the same BIOS read/peek and normalizers through
+`KEYBOARD_BIOS_ONLY`, with owned AUTO selection, capability5 parent-mode
+inheritance and no private queue.
 [ASPECT keyboard acquisition](ASPECT_KEYBOARD.md) documents exhaustive word
 coverage and the remaining script-time dispatch boundary.
 

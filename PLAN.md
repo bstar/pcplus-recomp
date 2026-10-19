@@ -2,7 +2,10 @@
 
 Latest keyboard checkpoint: [ASPECT acquisition](docs/ASPECT_KEYBOARD.md) fixes
 the child's lossy BIOS normalization using the recovered terminal routine.
-Exhaustive CPU and8086 DOS checks cover all65,536 words; native WHEN dispatch
+Capability5 now inherits parent standard/enhanced BIOS selection, and native
+peek preserves occupiedAX0 versus an empty queue. Exhaustive CPU and8086 DOS
+checks cover all65,536 words in both modes. Four real parent/child mode cases
+pass directly and after EXECUTE. Native WHEN dispatch
 still reports unsupported for ordinary keys. Continue full keyboard/UI
 integration; this does not close any F01–F16 gate.
 
@@ -35,12 +38,12 @@ ASPECT now includes native WHEN/CWHEN matching and deferred handlers through
 the actual resident terminal renderer. Twelve SET setters/FETCH getters and native
 FIND/FOUND/SWITCH/CASE run in DOS with checked temporary ownership. The runtime
 supports72 opcode slots;143 remain unsupported. EXECUTE replaces compiled
-scripts with retained session state. Status staging and ASIOv4 capability4
+scripts with retained session state. Status staging and ASIOv4 capability5
 publish current script labels through a bounded scalar transfer. See `docs/ASPECT_WHEN_RUNTIME.md`,
 `docs/ASPECT_SET_RUNTIME.md` and `docs/ASPECT_FIND_CASE_RUNTIME.md`.
 
 Serial BREAK now executes through native opcode0D, SET09 and FETCH37, with
-ASIOv4 capability4 inheriting the raw configured word and owning the actual
+ASIOv4 capability5 inheriting the raw configured word and owning the actual
 native notice/cursor bracket. Five actual DOS product cases cover configured
 350/1000, raw65535, zero and in-pulse Escape cleanup. The expanded1146-case DOS
 suite checks all twelve FETCH getters and244 unsupported selectors. The parent
