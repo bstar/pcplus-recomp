@@ -79,3 +79,8 @@ nonlocal-unwind composition once its10-byte context and DS=SS/CS invariants are
 verified with this dispatcher. The current dispatcher and globals diagnostics
 use declared callback models and do not prove that composition. Complete
 compiler/VM/recorder and application script integration remain open under F13.
+
+The subsequent [execution composition](ASPECT_EXECUTION.md) now verifies native
+setjmp/longjmp with this dispatcher, including an actual value-stack guard
+failure and direct/chained-script context restoration. File-backed targets,
+call/return frames and typed expression execution remain the next dependencies.

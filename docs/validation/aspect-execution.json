@@ -1,0 +1,308 @@
+{
+  "passed": true,
+  "sources": {
+    "src/aspect/value_stack.asm": "3326b2edbe875a98566b93c1b66ec40989718021be72b809cdec8173be4b7370",
+    "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "standalone/build_aspect_stack.py": "af25b389b9607b35f08890547bcf29482b62c53821dd1789f65986eb05cabe6a",
+    "standalone/check_aspect_stack.py": "52455ab5fb7179f062de131620d336a5db59f04cdf819bd7b5607e1005400dd5",
+    "standalone/build_aspect_unwind.py": "0e89c54524011c157f219b18476a64d400369521b1abe46b0f24b8824a3cc019",
+    "src/aspect/dispatch.asm": "0da6d20b979b6da93dcf216835db0cc8fd11cab6c53fc442ce3b850d84fb9918",
+    "src/aspect/abort.asm": "37b57a4284889310fb7ce7834b17d53c06abbbb8fd714b1068600e7c3150cb2d",
+    "reconstruction/transfer_session/setjmp.asm": "ca5238effb53084d17c2e942805dff6c21efddd401a7a3a0e2780c9209f05676",
+    "reconstruction/transfer_session/longjmp.asm": "2291d6ce48974bed1680cb43a9c008d651cb90280e07358724b4aef114bd59fc",
+    "standalone/check_aspect_unwind.py": "098975fbcc36cac68908d055720489c8dd9a982631a91bddda0d4caf40c65b1e",
+    "standalone/record_aspect_execution.py": "37d27c1d1cba6889e6a7dc699ea5b0f79a23d565b9c4c0e63fc461ee59ea6a2f"
+  },
+  "local_evidence": {
+    "build/aspect-stack/manifest.json": "91a62b6da320c9f13c3962170e7047273bd655b7d07392d40e83540eba62458f",
+    "build/aspect-stack/checks.json": "c763e5e867ce1da53d741d388541d82638ac1075bef47a357477358fea1a9645",
+    "build/aspect-stack/checks-native.json": "a9ab6b34fdfb23ef653e95bfedaa805b238e43271972d11a120135a1deb4eb51",
+    "build/aspect-unwind/manifest.json": "b2b9b2ac00a05222cf1fe1fe40d91e8971eba014e8b51f89a18590623ce89775",
+    "build/aspect-unwind/checks.json": "510bc7d159e602688f09d8e6537a95835d0b8ef6e0a20149098fad39a9190671",
+    "build/aspect-unwind/checks-native.json": "c097f615ac45f1db3feefb5574d14bdace888f15bf7e27f9bf39beebfa1ab8de",
+    "analysis/pcplus-overlay-entry-images/manifest.json": "f823ad14e2fea0a83a84929db04d7acbe3ac3a5d5ee2e3fbf38628aa88f1f23a",
+    "analysis/pcplus-main/functions/0x14ebc-asm.json": "8d0569fcf880bd4221a7285d284ed32d0cd1bd34aac5fddc7409c5968bf7c335",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d0d0-asm.json": "c05b6c3dd886bc2757c6cf607f84897446a79bfbc2fb084c645688045f7a20ad",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d0f2-asm.json": "0b1211f6a87e00a18d08a786ac6dd641fe152a6a7afc402c2510b6b91deec4bb",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d110-asm.json": "bea336dd94c616f86d4a7d424ae1f66621a4ec645a95754226173ad0e019a119",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d134-asm.json": "b352614491cd11564b5eb9f1c8130bc6de6dd7a66b87ca21dc808a76548a81e4",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d157-asm.json": "1ce458b7c9d31d30d1e3f6bf6416852b791a001bf36edea384e53f3e6040cfcf",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d17a-asm.json": "c8b0a6b878e179b13b2f84683d4caef88829bc3b4df070e38f5b815ebd325c97",
+    "analysis/pcplus-overlay-anchored-16/functions/0x1d186-asm.json": "75ed58f4d82a31b135629727591ab61de5a2cebe650187c1990af4dfee55778f"
+  },
+  "components": {
+    "stack": {
+      "manifest": {
+        "binary_sha256": "35afb60eb6ac3381ace5cd7b67810579ec945d7d4e23eb92707baa86f8326993",
+        "flat_sha256": "1aab9bd8ea8c0879214142073ea95bd8d2e5fc8abf1760663fbd607f6e19ea4a",
+        "copy_sha256": "8f2d99034340eacf7ddcbe1a27e39d854b79bd600525001cb9979524a7d74fb6",
+        "original_inputs": [],
+        "sources": {
+          "src/aspect/value_stack.asm": "3326b2edbe875a98566b93c1b66ec40989718021be72b809cdec8173be4b7370",
+          "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b",
+          "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+          "standalone/build_aspect_stack.py": "af25b389b9607b35f08890547bcf29482b62c53821dd1789f65986eb05cabe6a"
+        },
+        "scope": "Exact typed stack primitives and native memory copy; diagnostic error callbacks only. Native unchecked pop/wrap and error-return behavior retained; no safe production stack or VM claim."
+      },
+      "source_only_checks": {
+        "passed": true,
+        "cpu_cases": 786,
+        "DOS_summary": "ASPECT_STACK 2286 checks 0 failures",
+        "optional_original": null,
+        "binary_sha256": "35afb60eb6ac3381ace5cd7b67810579ec945d7d4e23eb92707baa86f8326993",
+        "flat_sha256": "1aab9bd8ea8c0879214142073ea95bd8d2e5fc8abf1760663fbd607f6e19ea4a",
+        "copy_sha256": "8f2d99034340eacf7ddcbe1a27e39d854b79bd600525001cb9979524a7d74fb6",
+        "check_sha256": "52455ab5fb7179f062de131620d336a5db59f04cdf819bd7b5607e1005400dd5",
+        "original_inputs": [],
+        "scope": "Seven native typed-stack primitives and real85B4copy execute unchanged. Native unchecked underflow,16-bit reserve/pointer wrap and error105-return continuation verified in isolated memory; error-stop is a callback policy, not original longjmp. No safe stack or full VM claim."
+      },
+      "optional_original": {
+        "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+        "file_start": 109184,
+        "file_end_exclusive": 109381,
+        "exact_stack_bytes": 197,
+        "exact_copy_bytes": 72,
+        "paired_cpu_cases": 786
+      }
+    },
+    "unwind": {
+      "manifest": {
+        "binary_sha256": "df2113e8d4d89448c4e1427e1923a1a84ae91b1c8ffd27b37be3497b37234456",
+        "sources": {
+          "standalone/build_aspect_unwind.py": "0e89c54524011c157f219b18476a64d400369521b1abe46b0f24b8824a3cc019",
+          "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+          "src/aspect/dispatch.asm": "0da6d20b979b6da93dcf216835db0cc8fd11cab6c53fc442ce3b850d84fb9918",
+          "src/aspect/abort.asm": "37b57a4284889310fb7ce7834b17d53c06abbbb8fd714b1068600e7c3150cb2d",
+          "reconstruction/transfer_session/setjmp.asm": "ca5238effb53084d17c2e942805dff6c21efddd401a7a3a0e2780c9209f05676",
+          "reconstruction/transfer_session/longjmp.asm": "2291d6ce48974bed1680cb43a9c008d651cb90280e07358724b4aef114bd59fc",
+          "src/aspect/value_stack.asm": "3326b2edbe875a98566b93c1b66ec40989718021be72b809cdec8173be4b7370",
+          "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b"
+        },
+        "native_units": [
+          {
+            "name": "dispatch",
+            "source": "src/aspect/dispatch.asm",
+            "cs_start": 19231,
+            "cs_end_exclusive": 19455,
+            "file_start": 23839,
+            "bytes": 224,
+            "flat_sha256": "d2006fe5dd53b6416aec915c9bd58b4ae1a11fc003aafef090279fa2d37520a6"
+          },
+          {
+            "name": "abort",
+            "source": "src/aspect/abort.asm",
+            "cs_start": 20156,
+            "cs_end_exclusive": 20219,
+            "file_start": 24764,
+            "bytes": 63,
+            "flat_sha256": "438b02dabdb0eb38da2426a0a618164c821810d6808bdad328d80dce5f66c8d3"
+          },
+          {
+            "name": "setjmp",
+            "source": "reconstruction/transfer_session/setjmp.asm",
+            "cs_start": 36936,
+            "cs_end_exclusive": 36965,
+            "file_start": 41544,
+            "bytes": 29,
+            "flat_sha256": "4903e9d5d0bf54876a6c28f86854b6a6fc995b0948ecaa9a910d2d2c0e69c052"
+          },
+          {
+            "name": "longjmp",
+            "source": "reconstruction/transfer_session/longjmp.asm",
+            "cs_start": 36965,
+            "cs_end_exclusive": 36998,
+            "file_start": 41573,
+            "bytes": 33,
+            "flat_sha256": "10edd48482a91a1412444fb830066c711619b2c31fd432182a19257442ffc2d6"
+          },
+          {
+            "name": "stack",
+            "source": "src/aspect/value_stack.asm",
+            "cs_start": 53456,
+            "cs_end_exclusive": 53653,
+            "file_start": 109184,
+            "bytes": 197,
+            "flat_sha256": "1aab9bd8ea8c0879214142073ea95bd8d2e5fc8abf1760663fbd607f6e19ea4a"
+          },
+          {
+            "name": "copy",
+            "source": "reconstruction/erase/move_bytes.asm",
+            "cs_start": 34228,
+            "cs_end_exclusive": 34300,
+            "file_start": 38836,
+            "bytes": 72,
+            "flat_sha256": "8f2d99034340eacf7ddcbe1a27e39d854b79bd600525001cb9979524a7d74fb6"
+          }
+        ],
+        "original_inputs": [],
+        "scope": "Real recovered dispatcher/abort/setjmp/longjmp composition; diagnostic file/UI/opcode callbacks. Not a complete VM or real resource owner."
+      },
+      "source_only_checks": {
+        "passed": true,
+        "DOS_summary": "ASPECT_UNWIND 72 cases 1968 checks 0 failures",
+        "DOS_cases": 72,
+        "binary_sha256": "df2113e8d4d89448c4e1427e1923a1a84ae91b1c8ffd27b37be3497b37234456",
+        "manifest_sha256": "b2b9b2ac00a05222cf1fe1fe40d91e8971eba014e8b51f89a18590623ce89775",
+        "check_sha256": "098975fbcc36cac68908d055720489c8dd9a982631a91bddda0d4caf40c65b1e",
+        "optional_original": null,
+        "original_inputs": [],
+        "scope": "Recovered dispatcher, abort and real setjmp/longjmp run together in8086 DOS. Source-owned open/service/read/handler/error/wait/file/UI models; no complete interpreter or resource owner.",
+        "cases": "Normal and seven modeled callback fault sites plus actual native stack-overflow105 x two owners x direct/chained scripts x position display off/on. Nested faults poison SI/DI and allocate frames; assert no fallthrough, stack/register/context canaries, untouched overflow destination and exactly-once cleanup/close/finish."
+      },
+      "optional_original": {
+        "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+        "exact_bytes": 618,
+        "units": [
+          {
+            "name": "dispatch",
+            "source": "src/aspect/dispatch.asm",
+            "cs_start": 19231,
+            "cs_end_exclusive": 19455,
+            "file_start": 23839,
+            "bytes": 224,
+            "flat_sha256": "d2006fe5dd53b6416aec915c9bd58b4ae1a11fc003aafef090279fa2d37520a6"
+          },
+          {
+            "name": "abort",
+            "source": "src/aspect/abort.asm",
+            "cs_start": 20156,
+            "cs_end_exclusive": 20219,
+            "file_start": 24764,
+            "bytes": 63,
+            "flat_sha256": "438b02dabdb0eb38da2426a0a618164c821810d6808bdad328d80dce5f66c8d3"
+          },
+          {
+            "name": "setjmp",
+            "source": "reconstruction/transfer_session/setjmp.asm",
+            "cs_start": 36936,
+            "cs_end_exclusive": 36965,
+            "file_start": 41544,
+            "bytes": 29,
+            "flat_sha256": "4903e9d5d0bf54876a6c28f86854b6a6fc995b0948ecaa9a910d2d2c0e69c052"
+          },
+          {
+            "name": "longjmp",
+            "source": "reconstruction/transfer_session/longjmp.asm",
+            "cs_start": 36965,
+            "cs_end_exclusive": 36998,
+            "file_start": 41573,
+            "bytes": 33,
+            "flat_sha256": "10edd48482a91a1412444fb830066c711619b2c31fd432182a19257442ffc2d6"
+          },
+          {
+            "name": "stack",
+            "source": "src/aspect/value_stack.asm",
+            "cs_start": 53456,
+            "cs_end_exclusive": 53653,
+            "file_start": 109184,
+            "bytes": 197,
+            "flat_sha256": "1aab9bd8ea8c0879214142073ea95bd8d2e5fc8abf1760663fbd607f6e19ea4a"
+          },
+          {
+            "name": "copy",
+            "source": "reconstruction/erase/move_bytes.asm",
+            "cs_start": 34228,
+            "cs_end_exclusive": 34300,
+            "file_start": 38836,
+            "bytes": 72,
+            "flat_sha256": "8f2d99034340eacf7ddcbe1a27e39d854b79bd600525001cb9979524a7d74fb6"
+          }
+        ],
+        "scope": "Exact static byte comparison; linkedDOS execution uses maintained source, not original executable."
+      }
+    }
+  },
+  "retained_rea": [
+    {
+      "evidence_id": "ev_e3343dc7c28d2af17088266c32b0b0e42810f994bf180056d7668b977ae6e3ec",
+      "operation": "procedure_assembly",
+      "subject_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+      "parameters": {
+        "procedure": "0x14ebc"
+      },
+      "scope": "Retained static assembly, not observed execution"
+    },
+    {
+      "evidence_id": "ev_aaa8a83d77a974b0eb9cc16aea37d4dd5952bead585196876c2f508e0d90465e",
+      "operation": "procedure_assembly",
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "parameters": {
+        "procedure": "0x1d0d0"
+      },
+      "scope": "Retained static assembly, not observed execution"
+    },
+    {
+      "evidence_id": "ev_1374fc86f4b3c10bfac6e6f8fe1910aac0de43d861955175d54fbed8f75b52e7",
+      "operation": "procedure_assembly",
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "parameters": {
+        "procedure": "0x1d0f2"
+      },
+      "scope": "Retained static assembly, not observed execution"
+    },
+    {
+      "evidence_id": "ev_7534972164d5719401decaf31e06b8f7e63ef48c3582e871b376c20b822bfd4f",
+      "operation": "procedure_assembly",
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "parameters": {
+        "procedure": "0x1d110"
+      },
+      "scope": "Retained static assembly, not observed execution"
+    },
+    {
+      "evidence_id": "ev_7937c776ee31b0aece4bcac99fcd9149a13a13f7c64c07e30bc6bd98e8e02729",
+      "operation": "procedure_assembly",
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "parameters": {
+        "procedure": "0x1d134"
+      },
+      "scope": "Retained static assembly, not observed execution"
+    },
+    {
+      "evidence_id": "ev_ac3fe2432f406e96a2105a283b3bc8b443e5bcd2f819c4036c825359ffed6329",
+      "operation": "procedure_assembly",
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "parameters": {
+        "procedure": "0x1d157"
+      },
+      "scope": "Retained static assembly, not observed execution"
+    },
+    {
+      "evidence_id": "ev_f95d1a43887e21852a34677354febca1754549e0a40f49e0f355de733ab03bb8",
+      "operation": "procedure_assembly",
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "parameters": {
+        "procedure": "0x1d17a"
+      },
+      "scope": "Retained static assembly, not observed execution"
+    },
+    {
+      "evidence_id": "ev_0a7d211feab842c36a02f29e828cbf6e5f5acc7b4f16036bba01f1a7df7b347e",
+      "operation": "procedure_assembly",
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "parameters": {
+        "procedure": "0x1d186"
+      },
+      "scope": "Retained static assembly, not observed execution"
+    }
+  ],
+  "static_carrier": {
+    "sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+    "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "stack_source_range": {
+      "role": "overlay-16",
+      "relative_address": 53456,
+      "source_file_offset": 109184,
+      "bytes": 5520
+    },
+    "scope": "Synthetic static-analysis carrier only; never executed. Original bytes independently compared by optional native checks."
+  },
+  "limitations": [
+    "Stack component preserves unchecked arithmetic/pop semantics; not a safe production stack.",
+    "Unwind composition executes real native abort/setjmp/longjmp; file/UI/opcode callbacks remain diagnostic models.",
+    "Error105 adapter calls real native abort, while complete error UI/resource ownership remains unimplemented.",
+    "No whole compiler/VM, file-backed scripts, live terminal script integration or physical hardware validation."
+  ]
+}

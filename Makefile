@@ -4,6 +4,21 @@ MODULES := escape attributes screen text reports erase cursor_state cursor_shape
 all: serial parser keyboard $(MODULES) config-dos config-replace config-abi directory-browser directory-editor process download-file upload-file transfer-metadata batch-header transfer-session-composite transfer-storage terminal
 
 .PHONY: aspect-literal test-aspect-literal test-aspect-compat
+.PHONY: aspect-stack test-aspect-stack test-aspect-stack-compat aspect-unwind test-aspect-unwind test-aspect-unwind-compat
+all: aspect-stack aspect-unwind
+test: test-aspect-stack test-aspect-unwind
+aspect-stack:
+	python3 standalone/build_aspect_stack.py
+test-aspect-stack:
+	python3 standalone/check_aspect_stack.py
+test-aspect-stack-compat:
+	python3 standalone/check_aspect_stack.py --original analysis/pcplus-install/PCPLUS.EXE
+aspect-unwind:
+	python3 standalone/build_aspect_unwind.py
+test-aspect-unwind:
+	python3 standalone/check_aspect_unwind.py
+test-aspect-unwind-compat:
+	python3 standalone/check_aspect_unwind.py --original analysis/pcplus-install/PCPLUS.EXE
 .PHONY: aspect-dispatch test-aspect-dispatch test-aspect-dispatch-compat
 all: aspect-dispatch
 test: test-aspect-dispatch

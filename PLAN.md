@@ -871,3 +871,12 @@ ASPECT control-flow emission now has72 original compiler probes (49 accepted,
 conditional/loop branches and typed parameters. These constrain the real
 compiler/VM reconstruction without claiming an implemented compiler. See
 `docs/ASPECT_CONTROL_FLOW.md`; actual typed frame/file/unwind composition is next.
+
+ASPECT execution composition now adds197 exact typed-stack bytes and63 exact
+abort bytes. The stack diagnostic passes786 CPU scenarios and2,2868086 DOS
+assertions; the real dispatcher/abort/setjmp/longjmp composition passes72 DOS
+cases/1,968 assertions, including a native overflow that unwinds before writing.
+File/UI/opcode/resource services remain substitutes. See
+`docs/ASPECT_EXECUTION.md`.69 outputs rebuild identically from maintained source;
+real DWORD file services, frames/expressions/resource ownership and full F13
+application integration remain open.

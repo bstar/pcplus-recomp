@@ -261,3 +261,11 @@ far pointers and allocation-failure models;705,369 DOS byte/state assertions
 cover counts0..128 and cleanup ordering. Heap/error callbacks remain models,
 with native bounds/rollback/double-release limitations explicit.67 outputs now
 rebuild from maintained source; F13 and all whole-application gates remain open.
+
+F13 now includes [native stack and nonlocal unwind composition](ASPECT_EXECUTION.md):
+197 typed-stack bytes,63 abort bytes,786 CPU scenarios,2,286 standalone stack
+DOS assertions and72 composed DOS cases/1,968 assertions. Real setjmp/longjmp
+restores dispatcher state after modeled faults and a genuine native stack guard
+failure, while file/UI/opcode/resource callbacks remain diagnostic substitutes.
+The current69-output source rebuild still does not implement full ASPECT or
+close any whole-application gate.
