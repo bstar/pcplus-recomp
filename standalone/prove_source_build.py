@@ -73,6 +73,7 @@ builds.append('aspect_file_attributes')
 builds.append('aspect_file_times')
 builds.append('aspect_system_query')
 builds.append('aspect_environment')
+builds.append('aspect_external')
 builds.append('aspect_script_files')
 builds.append('aspect_script_file_backend')
 builds.append('aspect_compiler_lexer')
@@ -97,6 +98,8 @@ owner_checks.append('standalone/check_aspect_system_query.py')
 owner_checks.append('standalone/check_aspect_system_query_compiler.py')
 owner_checks.append('standalone/check_aspect_environment.py')
 owner_checks.append('standalone/check_aspect_environment_compiler.py')
+owner_checks.append('standalone/check_aspect_external.py')
+owner_checks.append('standalone/check_aspect_external_compiler.py')
 owner_checks.append('standalone/check_aspect_file_attributes.py')
 owner_checks.append('standalone/check_aspect_file_attributes_compiler.py')
 owner_checks.append('standalone/check_aspect_enumeration.py')
@@ -197,6 +200,9 @@ outputs += ['aspect-system-query/system_query.obj']
 outputs += ['aspect-environment/'+u['name']+'.bin' for u in json.loads((ROOT/'standalone/fixtures/aspect_environment_native_units.json').read_text())['units']]
 outputs += ['aspect-environment/crt-'+u['name']+'.bin' for u in json.loads((ROOT/'standalone/fixtures/aspect_environment_native_units.json').read_text())['reused']]
 outputs += ['aspect-environment/environment.obj','aspect-environment/environment_unowned.obj']
+outputs += ['aspect-external/'+u['name']+'.bin' for u in json.loads((ROOT/'standalone/fixtures/aspect_external_native_units.json').read_text())['units']]
+outputs += ['aspect-external/crt-'+u['name']+'.bin' for u in json.loads((ROOT/'standalone/fixtures/aspect_external_native_units.json').read_text())['reused']]
+outputs += ['aspect-external/external_commands.obj','aspect-external/EXTERNAL.EXE']
 outputs += ['aspect-script-file-backend/SCRIPTIO.EXE']
 outputs += ['aspect-compiler-lexer/ASPLEX.EXE','aspect-compiler-unit/ASPINV.EXE']
 outputs += ['aspect-compiler-expression/ASPEXP.EXE']

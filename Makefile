@@ -1020,3 +1020,13 @@ test-aspect-environment-compiler:
 	python3 standalone/check_aspect_environment_compiler.py
 all: aspect-environment
 test: test-aspect-environment test-aspect-environment-compiler
+
+.PHONY: aspect-external test-aspect-external test-aspect-external-compiler
+aspect-external:
+	python3 standalone/build_aspect_external.py
+test-aspect-external: aspect-external
+	python3 standalone/check_aspect_external.py
+test-aspect-external-compiler:
+	python3 standalone/check_aspect_external_compiler.py
+all: aspect-external
+test: test-aspect-external test-aspect-external-compiler

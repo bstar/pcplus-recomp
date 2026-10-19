@@ -89,6 +89,20 @@ must exclude original executables and private install/configuration data.
 
 ## Current application work
 
+The [external-command frontend](docs/ASPECT_EXTERNAL.md) recovers192 exact bytes
+plus92 reused string bytes, with1,514 paired source/original cases and53 actual
+DOS boundary cases/436 assertions. Both compilers match70 original outcomes
+(29 accepted/41 rejected); the complete DOS compiler passes2,003 cases. All29
+accepted records still stop at their exact unsupported product opcode, before
+child launch. Runtime coverage stays105/110. The next required work is the real
+PROGRAM application executor: owned environment/tails, raw child result,
+PSP/trap/memory lifetime, display/WAIT/NOCLEAR and UART release/restore, followed
+by stream/session/BBS verification. The six-step controller checklist in that
+ledger retains full scope; no runtime or whole-application gate is closed.
+The existing23-check isolated ENiGMA workflow still passes with this compiler;
+278 outputs reproduce without originals. The package is refreshed, while the
+interpreter/terminal binaries and105/110 runtime scope remain unchanged.
+
 The [environment integration](docs/ASPECT_ENVIRONMENT.md) adds GETENV/PUTENV,
 555 exact native+237 reused bytes and697 paired source/original cases. The48
 original compiler outcomes match19 accepted/29 rejected forms; the complete DOS

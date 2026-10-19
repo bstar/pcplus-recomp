@@ -1,0 +1,62 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "unit": 1,
+      "name": "commands",
+      "start": 61948,
+      "end": 61963,
+      "file_start": 121356,
+      "bytes": 15,
+      "sha256": "e10ddcd68ecf0cb6b617250cd87e44b02f9e2b13ecc453024a01906f704fd770"
+    },
+    {
+      "unit": 2,
+      "name": "common",
+      "start": 61963,
+      "end": 62115,
+      "file_start": 121371,
+      "bytes": 152,
+      "sha256": "7e66b4f7fc1660a7218aeb507fc11dd59eac7dba3f81785eab379bcf11db4dab"
+    },
+    {
+      "unit": 3,
+      "name": "shell",
+      "start": 56372,
+      "end": 56397,
+      "file_start": 62132,
+      "bytes": 25,
+      "sha256": "a3239298a41feecaa953dcee65b40837a83f835acc34eed8a7bc9935a1c9cb06"
+    }
+  ],
+  "reused": [
+    {
+      "name": "strcpy",
+      "start": 33384,
+      "end": 33434,
+      "file_start": 37992,
+      "bytes": 50,
+      "sha256": "353e318feb16fbe3f0d4351c433976bb22913a51bdef8bc36a85be96f0509f26",
+      "source": "reconstruction/program_exec/strcpy.asm"
+    },
+    {
+      "name": "strchr",
+      "start": 35882,
+      "end": 35924,
+      "file_start": 40490,
+      "bytes": 42,
+      "sha256": "5f75e040b310c90655f98a393c981cfcfb030ce2377c86090da3259d9be46a16",
+      "source": "reconstruction/program_exec/strchr.asm"
+    }
+  ],
+  "whitespace_bytes": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    32
+  ],
+  "ctype_mask_sha256": "9d156cf34cd5d017485e105dc4ab29dbeaf888247146795a658442e6ba7cb110",
+  "scope": "Numerical source provenance only. Exact native frontends with external application executor/environment dependencies. No runtime handler publication or DOS child ownership claim."
+}

@@ -155,10 +155,31 @@ static void when(pc_compiler *c,unsigned clear)
  }else{bad(c);return;}
  if(c->expression.position!=c->expression.last)bad(c);
 }
+static void external_command(pc_compiler *c,unsigned opcode)
+{
+ unsigned n,present;
+ if(opcode==0xa3){if(c->line.count!=1){bad(c);return;}emit(c,opcode);return;}
+ c->expression.position=1;
+ if(c->line.count<2||pc_equal(c,1,"(")||pc_equal(c,1,",")){bad(c);return;}
+ n=parse(c);if(!pc_ready(c)||kind(c,n)!=3){bad(c);return;}
+ emit(c,opcode);operand(c,n,0);if(!pc_ready(c))return;
+ present=c->expression.position<c->expression.last;emit(c,present);
+ if(present){
+  if(pc_equal(c,c->expression.position,","))++c->expression.position;
+  if(pc_equal(c,c->expression.position,"noclear"))emit(c,0x25);
+  else if(pc_equal(c,c->expression.position,"wait"))emit(c,0x36);
+  else{bad(c);return;}
+  ++c->expression.position;
+ }
+ if(c->expression.position!=c->expression.last)bad(c);
+}
 void pc_commands(pc_compiler *c)
 {
  unsigned args[ASPECT_COMPILER_TOKEN_MAX],count,i,j,n,dest,expected,optional,command_index=65535U;
  char role;aspect_compiler_value value;const command *cmd;
+ if(pc_equal(c,0,"dos")){external_command(c,0x28);return;}
+ if(pc_equal(c,0,"run")){external_command(c,0x9b);return;}
+ if(pc_equal(c,0,"shell")){external_command(c,0xa3);return;}
  for(i=0;i<sizeof(file_commands)/sizeof(file_commands[0]);++i)
   if(pc_equal(c,0,file_commands[i].name)){file_command(c,&file_commands[i]);return;}
  if(pc_equal(c,0,"chdir")){path_command(c,0x11);return;}

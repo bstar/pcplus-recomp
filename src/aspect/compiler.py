@@ -521,6 +521,32 @@ class Compiler:
 
     def command(self, tokens):
         command = tokens[0]
+        if command == 'shell':
+            if len(tokens) != 1:
+                self.error('SHELL does not accept operands')
+            self.emit(0xA3)
+            return
+        if command in ('dos', 'run'):
+            parser = Expression(tokens[1:], self.line)
+            if not parser.tokens or parser.tokens[0] in ('(', ','):
+                self.error(f'{command} requires an atomic string')
+            node = parser.parse(7)
+            if self.kind(node) != 3:
+                self.error(f'{command} requires a string')
+            self.emit(0x28 if command == 'dos' else 0x9B)
+            self.operand(self.atomic(node), compact=True)
+            present = parser.pos < len(parser.tokens)
+            self.emit(int(present))
+            if present:
+                if parser.tokens[parser.pos] == ',':
+                    parser.pos += 1
+                if parser.pos == len(parser.tokens) or parser.tokens[parser.pos] not in ('noclear', 'wait'):
+                    self.error(f'{command} accepts NOCLEAR or WAIT')
+                self.emit(0x25 if parser.tokens[parser.pos] == 'noclear' else 0x36)
+                parser.pos += 1
+            if parser.pos != len(parser.tokens):
+                self.error(f'unexpected {command} operands')
+            return
         if command == 'break' and len(tokens) != 1:
             self.error('BREAK does not accept operands or punctuation')
         if command == 'execute':

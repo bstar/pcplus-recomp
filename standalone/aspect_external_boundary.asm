@@ -1,0 +1,19 @@
+; Authored diagnostic bindings. The executor records arguments; it never EXECs.
+BITS 16
+CPU 8086
+SEGMENT _TEXT public class=CODE use16
+extern aspect_external_dos,aspect_external_run,aspect_external_shell
+extern _external_source,_external_optional,_external_option
+global _external_test_dos,_external_test_run,_external_test_shell
+global aspect_string_read,aspect_string_option_flag,aspect_dispatch_read
+_external_test_dos: jmp aspect_external_dos
+_external_test_run: jmp aspect_external_run
+_external_test_shell: jmp aspect_external_shell
+aspect_string_read: jmp _external_source
+aspect_string_option_flag: jmp _external_optional
+aspect_dispatch_read: jmp _external_option
+GROUP DGROUP _DATA
+SEGMENT _DATA public class=DATA use16
+global aspect_string_compare_result,_external_comparison
+aspect_string_compare_result:
+_external_comparison: dw 0

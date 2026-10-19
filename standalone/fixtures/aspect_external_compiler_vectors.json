@@ -1,0 +1,789 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "harness_sha256": "f7cac771b6e2c9ec9cb245e310825490379ab695fcdf327ad27aabd7bb678d84",
+  "cases": [
+    {
+      "name": "EX000",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \r\nendproc\r\n",
+      "source_sha256": "4e2af9025188cb5f6fe1cbf5dda4e802df8b65e24e00f0be27c537049f848ea4",
+      "success": false,
+      "label": "dos ",
+      "log_sha256": "0a4b69427ac7f6e385bd0d77832e58b001e718e4bd3f16ad849be6791c7084be",
+      "errors": [
+        "Error C006 Line 4: Missing token"
+      ]
+    },
+    {
+      "name": "EX001",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \"CHILD ARG\"\r\nendproc\r\n",
+      "source_sha256": "29bfe8c7e09412eb60d3bf023af344a7d278e5ea1c411758460717b0e3d25ecf",
+      "success": true,
+      "label": "dos \"CHILD ARG\"",
+      "log_sha256": "84871f2fb0d311bd6c822d22bd12a789839e1ed8b5ee84454e51e5e6592095ed",
+      "errors": [],
+      "hex": "01 cf 28 aa bc 12 c4 1f 14 51 61 2b e8 57 80 00 94",
+      "asx_sha256": "8cd4ea1fbe37205fa5e1f882580d1034b838dc2f447d8d9b50f0ce4b9ca40f08"
+    },
+    {
+      "name": "EX002",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos command\r\nendproc\r\n",
+      "source_sha256": "b9f1838754e1a2626d1772218166b73d7d52db7edbecb157b01bcf0eb13e8800",
+      "success": true,
+      "label": "dos command",
+      "log_sha256": "35ca2f11476103865a9edc4f82b7168fc24871d97bd0a4f30d1917a20feb104f",
+      "errors": [],
+      "hex": "01 cf 28 8c 00 00 94",
+      "asx_sha256": "34c1e4b584d3a14167f9aaef3b220c455652799732bc499f286c8a46643568bf"
+    },
+    {
+      "name": "EX003",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos s0\r\nendproc\r\n",
+      "source_sha256": "1e691b4548b2b30011737f9ad0873ee040b6882c784a0bddc417e531a9be02dd",
+      "success": true,
+      "label": "dos s0",
+      "log_sha256": "40c4f2966fa774bc6c74630980705f267b2fbf9e61440fd58d59c03a09727563",
+      "errors": [],
+      "hex": "01 cf 28 64 00 00 94",
+      "asx_sha256": "7fa8091aac194d4358353dea29c8fe8ce5ed386d912cf8382b1d2acbfd755526"
+    },
+    {
+      "name": "EX004",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos $NULL\r\nendproc\r\n",
+      "source_sha256": "cfa7218a16eac1f7000b01c6157f588d90e65bd0e00142a04555aa4ded0062b1",
+      "success": true,
+      "label": "dos $NULL",
+      "log_sha256": "b454203ab4dd224bc7f87204d6a37d8aed8d91bd0c084feb1ce8be8ec90c67aa",
+      "errors": [],
+      "hex": "01 cf 28 6e 13 00 94",
+      "asx_sha256": "2a87c40fc2ed5c7105e216a44e63f290c48ce1e0e3e0fe13c83f062d01ef0d44"
+    },
+    {
+      "name": "EX005",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos $FDATE\r\nendproc\r\n",
+      "source_sha256": "512cb7f1c22cd91d295310b66531f5fb1d5806b840d8526ebe88791a6ac634a9",
+      "success": true,
+      "label": "dos $FDATE",
+      "log_sha256": "cef2e71fd1b2fe33226fb7c02fa169a29dc1ab891bf161cb1af5b3688060bdcc",
+      "errors": [],
+      "hex": "01 cf 28 6e 0a 00 94",
+      "asx_sha256": "fae1750632b33d05927ee94ac2c6c4b520f15daeb606741dd6b4b3898940fd51"
+    },
+    {
+      "name": "EX006",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos number\r\nendproc\r\n",
+      "source_sha256": "9f0ce62b61d6a1205e0eea971168c0e3bc9c9f3a8f99ad1c4585ee15abca35b0",
+      "success": false,
+      "label": "dos number",
+      "log_sha256": "391e9e466394f8e3e1b1cfeac1cfdb81b094db5f128f49873725339d8eccb24b",
+      "errors": [
+        "Error C023 Line 4: Invalid string constant (quotes missing) ==> NUMBER"
+      ]
+    },
+    {
+      "name": "EX007",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \"\"\r\nendproc\r\n",
+      "source_sha256": "c789d7232c9f8b02c893b5c7183fd276a77aaaa3ceb77c25c0f8f7fc05b40f57",
+      "success": true,
+      "label": "dos \"\"",
+      "log_sha256": "31ba998ae4c267428cda861ceb067097301873d1ca78d5cf5423a406ec710c6f",
+      "errors": [],
+      "hex": "01 cf 28 6e 13 00 94",
+      "asx_sha256": "2a87c40fc2ed5c7105e216a44e63f290c48ce1e0e3e0fe13c83f062d01ef0d44"
+    },
+    {
+      "name": "EX008",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \"CHILD\" WAIT\r\nendproc\r\n",
+      "source_sha256": "ede7ca27118a78ab8b437f5be60138589a4dae4f4bfc3254c927b975870cb2d2",
+      "success": true,
+      "label": "dos \"CHILD\" WAIT",
+      "log_sha256": "5679a2a53e15b1aa605006e3926a7dffaed2e9826580a5fa3b58fba21c8433a2",
+      "errors": [],
+      "hex": "01 cf 28 aa b8 0e c4 1f 14 51 61 01 36 94",
+      "asx_sha256": "3b913a969c15fef608df6793a4b8d9c4e7b36f7f89abd97ad4459a62dbd9da5b"
+    },
+    {
+      "name": "EX009",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \"CHILD\",WAIT\r\nendproc\r\n",
+      "source_sha256": "7473e07bdb583b5fe8e7259176ee81c12c7ce2722c8dcbc598bb60d5f56676c2",
+      "success": true,
+      "label": "dos \"CHILD\",WAIT",
+      "log_sha256": "e56cb0158dab42e72167ad8a4fdd92ea7dba346bc2c0fed1f7b935d1e9e7f93a",
+      "errors": [],
+      "hex": "01 cf 28 aa b8 0e c4 1f 14 51 61 01 36 94",
+      "asx_sha256": "3b913a969c15fef608df6793a4b8d9c4e7b36f7f89abd97ad4459a62dbd9da5b"
+    },
+    {
+      "name": "EX010",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \"CHILD\" ,WAIT\r\nendproc\r\n",
+      "source_sha256": "b131eec57e265111f21707b64da70a79ac30d7b8fb56a3b322f2edd2db19b796",
+      "success": true,
+      "label": "dos \"CHILD\" ,WAIT",
+      "log_sha256": "504b462328544589fafe44ca07e8b427ca13e63565868ab4f2957ef16ba1ce13",
+      "errors": [],
+      "hex": "01 cf 28 aa b8 0e c4 1f 14 51 61 01 36 94",
+      "asx_sha256": "3b913a969c15fef608df6793a4b8d9c4e7b36f7f89abd97ad4459a62dbd9da5b"
+    },
+    {
+      "name": "EX011",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \"CHILD\" NOCLEAR\r\nendproc\r\n",
+      "source_sha256": "8731258d09f7e197ad4ae6531ff84376bb46158a3317e0ec8594dfb88a11b09e",
+      "success": true,
+      "label": "dos \"CHILD\" NOCLEAR",
+      "log_sha256": "58fa17072b3cca3fbdf05c92907e83dd6d397d77db70e085a59d6fa5a0fa55aa",
+      "errors": [],
+      "hex": "01 cf 28 aa b8 0e c4 1f 14 51 61 01 25 94",
+      "asx_sha256": "88d80c13f95e8b2dca166bfa3fa14b05aad3a3ccefccb777ecbcff434f62c844"
+    },
+    {
+      "name": "EX012",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \"CHILD\",NOCLEAR\r\nendproc\r\n",
+      "source_sha256": "9b65ecce1d3be00cd07777b900e3200372841dc4f6db614e57f5d1240a05a2b5",
+      "success": true,
+      "label": "dos \"CHILD\",NOCLEAR",
+      "log_sha256": "7384b16fea4167c644190c3305e8f179d35d04f2a89bf4e13b5a66b199aeef28",
+      "errors": [],
+      "hex": "01 cf 28 aa b8 0e c4 1f 14 51 61 01 25 94",
+      "asx_sha256": "88d80c13f95e8b2dca166bfa3fa14b05aad3a3ccefccb777ecbcff434f62c844"
+    },
+    {
+      "name": "EX013",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \"CHILD\" NONE\r\nendproc\r\n",
+      "source_sha256": "cbaadcbf0ac25441f1bc96a0fc8eebb981ae420184e342819656bc0aecb608bf",
+      "success": false,
+      "label": "dos \"CHILD\" NONE",
+      "log_sha256": "565ed1cf5bbb10c10d525877fcb20bb2962ab1e2d833c63752fe8c07f942ae5c",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> NONE"
+      ]
+    },
+    {
+      "name": "EX014",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \"CHILD\" 1\r\nendproc\r\n",
+      "source_sha256": "d5df601041379f8fba6a496661171c4b997eac74c73faf31fb51b65c94e9f23a",
+      "success": false,
+      "label": "dos \"CHILD\" 1",
+      "log_sha256": "2ac32e4ebe136276b12bce00cb074cee7ea72393efb8731409b392095eae3ff5",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> 1"
+      ]
+    },
+    {
+      "name": "EX015",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \"CHILD\" number\r\nendproc\r\n",
+      "source_sha256": "7baba53c54c9fb13e7d958ff5783756156cbd37d8815c319b776ccde6ddffe8e",
+      "success": false,
+      "label": "dos \"CHILD\" number",
+      "log_sha256": "0a436cd8efe5bdecbd8aaa287535e3150611b00870356035a6d9565ecd222706",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> NUMBER"
+      ]
+    },
+    {
+      "name": "EX016",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \"CHILD\" \"WAIT\"\r\nendproc\r\n",
+      "source_sha256": "061cc3f1e1390d153fb50b2857b497774ffd1be71fc421893fcf135c4223ce60",
+      "success": false,
+      "label": "dos \"CHILD\" \"WAIT\"",
+      "log_sha256": "ea6f33e8cb2b7b0a5d092fc28bc28e5bb62666785703541bcae0ba06124d9820",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> WAIT"
+      ]
+    },
+    {
+      "name": "EX017",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \"CHILD\" WAIT NOCLEAR\r\nendproc\r\n",
+      "source_sha256": "cdcbf4bc610b01e7a84c6d61958cc4294d707407cbd84f699b3368cb45e01d85",
+      "success": false,
+      "label": "dos \"CHILD\" WAIT NOCLEAR",
+      "log_sha256": "a3d9d8230e57ce0e787b36b8fdec6f41b9f02792d17ecb56410883762f2dce6a",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> NOCLEAR"
+      ]
+    },
+    {
+      "name": "EX018",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \"CHILD\",\r\nendproc\r\n",
+      "source_sha256": "9124a4a816f27e0ef0f78c517d7f988fc87c1a83abc1dbec3ff7929c0542c1cd",
+      "success": false,
+      "label": "dos \"CHILD\",",
+      "log_sha256": "bba245c6f5baada041af3d341ffdf42c42880cb618162a4685927bb0d227c9c7",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> ,"
+      ]
+    },
+    {
+      "name": "EX019",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \"CHILD\",,WAIT\r\nendproc\r\n",
+      "source_sha256": "13d0ed98c45ef45a70e856440b7b6850cf22888586fa9a64553f49a6388e4050",
+      "success": false,
+      "label": "dos \"CHILD\",,WAIT",
+      "log_sha256": "60ea223cb55cc6cd117dd7a5c9a1d4ef4d350edd59f5f67fc1488bbb75f81c04",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> ,",
+        "Error C002 Line 4: Unexpected token ==> ,",
+        "Error C002 Line 4: Unexpected token ==> WAIT"
+      ]
+    },
+    {
+      "name": "EX020",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos ,command\r\nendproc\r\n",
+      "source_sha256": "898e7f4230cfa0e1c684ea215ad673af6eefa652220fc3ce549a51084ceaac71",
+      "success": false,
+      "label": "dos ,command",
+      "log_sha256": "c09532142d5f77e2a94298192f97783edc93f7aed56b3db37c008823049d9d46",
+      "errors": [
+        "Error C023 Line 4: Invalid string constant (quotes missing) ==> ,",
+        "Error C001 Line 4: Invalid token ==> COMMAND"
+      ]
+    },
+    {
+      "name": "EX021",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos (command)\r\nendproc\r\n",
+      "source_sha256": "a7dd2c53accab8cd54c2f5c9b8e13ddf881594ac4ea02e10821f968345ff57bc",
+      "success": false,
+      "label": "dos (command)",
+      "log_sha256": "abae9090500bb5a13be184130fb35c01ce16244aa82186b1cfbeac37ee853d3e",
+      "errors": [
+        "Error C023 Line 4: Invalid string constant (quotes missing) ==> (",
+        "Error C001 Line 4: Invalid token ==> COMMAND",
+        "Error C002 Line 4: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "EX022",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos command+\"X\"\r\nendproc\r\n",
+      "source_sha256": "6f26a575c7f1706c24472df46dc15185ec9c800534b34c2d5f9c4a2e52892d5c",
+      "success": false,
+      "label": "dos command+\"X\"",
+      "log_sha256": "90563a3b8234965ee5c4bd2824438523a8ae5ebc9fd953aa42c8153ca4b79478",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> +",
+        "Error C002 Line 4: Unexpected token ==> X"
+      ]
+    },
+    {
+      "name": "EX023",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos command WAIT,\r\nendproc\r\n",
+      "source_sha256": "39f6db50b160cf2362bba2bec58ec045ae28745b48f81587fc4d4a9fd3f0d8a7",
+      "success": false,
+      "label": "dos command WAIT,",
+      "log_sha256": "cb8c2f9f89f719924840de105263e78178a3f11c8c9e456510a44ebeba81afaf",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "EX024",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos command,WAIT,\r\nendproc\r\n",
+      "source_sha256": "0bf33841dbc8eeacc869cd5d60f30f8078d3dfaca660374de137828071a07a17",
+      "success": false,
+      "label": "dos command,WAIT,",
+      "log_sha256": "2cce3afebd36a6c4f4573bf3ccdaceecea6b6c08f71b812ca5cb3f4a0378d366",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "EX025",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos command ON\r\nendproc\r\n",
+      "source_sha256": "8d2c91423bcadfc2d963712f66dd0dc7cb8b845253c9cb2128cbb2d6b4b846e8",
+      "success": false,
+      "label": "dos command ON",
+      "log_sha256": "d366d1fe1359b44a9b38288e0c4185a2e1ad67e159adf4c093a5aa6b7cb91156",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> ON"
+      ]
+    },
+    {
+      "name": "EX026",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos command FOREVER\r\nendproc\r\n",
+      "source_sha256": "37794d19a5863fc6249dfd8a9cf69063aaae1530c34158c34f1e4788e0f6e3c3",
+      "success": false,
+      "label": "dos command FOREVER",
+      "log_sha256": "9a3afbdfb5cf92813ca895e71b3df98dcdec86ab43b4607efc10094936be7763",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> FOREVER"
+      ]
+    },
+    {
+      "name": "EX027",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos command NOCLEAR WAIT\r\nendproc\r\n",
+      "source_sha256": "13229486a88b60b848de88381a62c618d874acf1a37592055e2b9992fbac8c4d",
+      "success": false,
+      "label": "dos command NOCLEAR WAIT",
+      "log_sha256": "a623ff26db3a4f453408d7dc8868917d5330481bc4949b0c99aaa4df21582174",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> WAIT"
+      ]
+    },
+    {
+      "name": "EX028",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \r\nendproc\r\n",
+      "source_sha256": "b5fbd0f0d76016931710a4a7105fef3e06796651bd59111f3257b6f833d84c14",
+      "success": false,
+      "label": "run ",
+      "log_sha256": "dcb65c4d8c792569db53199c6e5cefc25e6ba2f83fa9ebe921c1689b406b77ef",
+      "errors": [
+        "Error C006 Line 4: Missing token"
+      ]
+    },
+    {
+      "name": "EX029",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \"CHILD ARG\"\r\nendproc\r\n",
+      "source_sha256": "c557f16516087fa353ce0096f62999f56f006197a93d2beae6bb87d97e1fb270",
+      "success": true,
+      "label": "run \"CHILD ARG\"",
+      "log_sha256": "593808a34835c0b0260ba49797af32d4a30ea6302a796e6e1ca96f6366e43cce",
+      "errors": [],
+      "hex": "01 cf 9b aa bc 12 c4 1f 14 51 61 2b e8 57 80 00 94",
+      "asx_sha256": "dd3911d8a99cfd8a570ac17ca85d754dd09784b329102c7de73d140ff0d10936"
+    },
+    {
+      "name": "EX030",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun command\r\nendproc\r\n",
+      "source_sha256": "82fc72beef96be0a03ee5a36f161be94b30a33c3df9573da1387d269c312b1c5",
+      "success": true,
+      "label": "run command",
+      "log_sha256": "78686764c052e633140ad2683d25a28bd1afb563acf8e5f02f89e8be3e53803a",
+      "errors": [],
+      "hex": "01 cf 9b 8c 00 00 94",
+      "asx_sha256": "fe52a78b351ef4742a1c2e7a9e47516d17ef39fca064fb92de9c61a2b045eae4"
+    },
+    {
+      "name": "EX031",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun s0\r\nendproc\r\n",
+      "source_sha256": "92d0305e576cabb6774efde5d67b82b40cca264c33bc581601fb60f8c9cb570c",
+      "success": true,
+      "label": "run s0",
+      "log_sha256": "f2704c7efabeb8c2b245ebb2f54588d32f92bbe07f82b65987fbbd462554092f",
+      "errors": [],
+      "hex": "01 cf 9b 64 00 00 94",
+      "asx_sha256": "906cb3fdd478be598b1fb2de076c14f15190b18b6dad0f742b93f7df80dca444"
+    },
+    {
+      "name": "EX032",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun $NULL\r\nendproc\r\n",
+      "source_sha256": "32ce1634211607e23044db603d5a8ca1323b751c7fa4936117b9bff589c5bba6",
+      "success": true,
+      "label": "run $NULL",
+      "log_sha256": "9eb2dbe21646e8bf284a910236b51ac9ed10e79199d970b7b181fa221fcc2424",
+      "errors": [],
+      "hex": "01 cf 9b 6e 13 00 94",
+      "asx_sha256": "9a2fce5504f2459eb9255077e9bb4b44f58093e8538b11c78858f903dea14814"
+    },
+    {
+      "name": "EX033",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun $FDATE\r\nendproc\r\n",
+      "source_sha256": "7567ee65d0b24de6ea061ce32731c702399084f2187503856e137b1b621332de",
+      "success": true,
+      "label": "run $FDATE",
+      "log_sha256": "86303811d78e391c8199f408f0b0763a597b54bee97578adf5a6b50a7f67382e",
+      "errors": [],
+      "hex": "01 cf 9b 6e 0a 00 94",
+      "asx_sha256": "6c2116a7a739d79482bbb34a99aadbf82d789e0ec01a6451dd0250bf9f22b85a"
+    },
+    {
+      "name": "EX034",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun number\r\nendproc\r\n",
+      "source_sha256": "07c62411cd8e6836279d46eee1de8bbf636348f1b4cda8e903cc45ddfc22dd59",
+      "success": false,
+      "label": "run number",
+      "log_sha256": "e742e3b93bd21991206ba8c19185b9193b8ad83dddfe79f5aa02e114d7944c1c",
+      "errors": [
+        "Error C023 Line 4: Invalid string constant (quotes missing) ==> NUMBER"
+      ]
+    },
+    {
+      "name": "EX035",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \"\"\r\nendproc\r\n",
+      "source_sha256": "8a5bcfb5302f2019d4ca9a7d80b9f0964deb854fee287d95bcaac11bd4a67e3f",
+      "success": true,
+      "label": "run \"\"",
+      "log_sha256": "2ce60bcfbd8afe8deb0b95ba389c2076508618f093809e052094a24c585d7c5c",
+      "errors": [],
+      "hex": "01 cf 9b 6e 13 00 94",
+      "asx_sha256": "9a2fce5504f2459eb9255077e9bb4b44f58093e8538b11c78858f903dea14814"
+    },
+    {
+      "name": "EX036",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \"CHILD\" WAIT\r\nendproc\r\n",
+      "source_sha256": "db8ab208a99d5212c9f1b23cf843230b42ed3472f096cba448affbd4379fb73c",
+      "success": true,
+      "label": "run \"CHILD\" WAIT",
+      "log_sha256": "c59ce96ad2e53455f07c03ae7717f8a125272a90e51c045ed1188e4604f0b417",
+      "errors": [],
+      "hex": "01 cf 9b aa b8 0e c4 1f 14 51 61 01 36 94",
+      "asx_sha256": "13914bdcaa3557df087dd40ed19996dea8a54daa5a36c37949f0ff6ceb4266f7"
+    },
+    {
+      "name": "EX037",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \"CHILD\",WAIT\r\nendproc\r\n",
+      "source_sha256": "893d45a3404482ad293738cf722215899e6d34a0a118bc6a2273b66f1e8053aa",
+      "success": true,
+      "label": "run \"CHILD\",WAIT",
+      "log_sha256": "eefe556cbeba7f49ae8e6eb43e7ef1918b15e6117971d3414431969e21d9f83a",
+      "errors": [],
+      "hex": "01 cf 9b aa b8 0e c4 1f 14 51 61 01 36 94",
+      "asx_sha256": "13914bdcaa3557df087dd40ed19996dea8a54daa5a36c37949f0ff6ceb4266f7"
+    },
+    {
+      "name": "EX038",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \"CHILD\" ,WAIT\r\nendproc\r\n",
+      "source_sha256": "11326cfde36e82e89119a5de6e52ad424016415b29cdb5038000848c263e35c4",
+      "success": true,
+      "label": "run \"CHILD\" ,WAIT",
+      "log_sha256": "05f3b94c97d8f7eea251d6bcf99b96779071a10bc995915ec143efaefb6ba838",
+      "errors": [],
+      "hex": "01 cf 9b aa b8 0e c4 1f 14 51 61 01 36 94",
+      "asx_sha256": "13914bdcaa3557df087dd40ed19996dea8a54daa5a36c37949f0ff6ceb4266f7"
+    },
+    {
+      "name": "EX039",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \"CHILD\" NOCLEAR\r\nendproc\r\n",
+      "source_sha256": "20f5fd4e88d3d1dc7306d0d14882126c638a57acb4b2dd69f0d7f7d4b1320a7a",
+      "success": true,
+      "label": "run \"CHILD\" NOCLEAR",
+      "log_sha256": "200e1a40c5183102a00b6423588affda609d1e32f6aec61650dd440c4e0fc766",
+      "errors": [],
+      "hex": "01 cf 9b aa b8 0e c4 1f 14 51 61 01 25 94",
+      "asx_sha256": "6e61e0082fe0727d91eec2787a92925fc60d1304545cf4c73363eb2c4eca2804"
+    },
+    {
+      "name": "EX040",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \"CHILD\",NOCLEAR\r\nendproc\r\n",
+      "source_sha256": "fb4a3b1076a1f37da2332d7300c6dc40dd266b01a130b505a331f5d1c0b93c20",
+      "success": true,
+      "label": "run \"CHILD\",NOCLEAR",
+      "log_sha256": "52f14b7b73f49665079feab785c668deeb93ffcd7d8ed402f2478c507a4ccdc4",
+      "errors": [],
+      "hex": "01 cf 9b aa b8 0e c4 1f 14 51 61 01 25 94",
+      "asx_sha256": "6e61e0082fe0727d91eec2787a92925fc60d1304545cf4c73363eb2c4eca2804"
+    },
+    {
+      "name": "EX041",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \"CHILD\" NONE\r\nendproc\r\n",
+      "source_sha256": "34adf6e27c2b7ead1866fc15db01b3f8b27e70b5cf7bcbd845c7c3c4033da6df",
+      "success": false,
+      "label": "run \"CHILD\" NONE",
+      "log_sha256": "feb1c66aab1f23641d8b1c6c9851d4d5d982bc8b6dd581ec8c20ea7e4b3dd4c7",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> NONE"
+      ]
+    },
+    {
+      "name": "EX042",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \"CHILD\" 1\r\nendproc\r\n",
+      "source_sha256": "5b6a48c73071ec5d15920353b924523adbbf00c514d8ce679511173bf66c9dfb",
+      "success": false,
+      "label": "run \"CHILD\" 1",
+      "log_sha256": "b54b55bc081a65df2df8e1de9043546e2d0a307844486da0f4c9e3756203d5d9",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> 1"
+      ]
+    },
+    {
+      "name": "EX043",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \"CHILD\" number\r\nendproc\r\n",
+      "source_sha256": "a8bf5f8ff1d259386fa43c80539c9ad492be5847fdc871fac0404b4d690f4be1",
+      "success": false,
+      "label": "run \"CHILD\" number",
+      "log_sha256": "bd70ff8bc1c50e551d95340040af05924da1e54b4947818992c0cd9e4b628574",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> NUMBER"
+      ]
+    },
+    {
+      "name": "EX044",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \"CHILD\" \"WAIT\"\r\nendproc\r\n",
+      "source_sha256": "963b6992e210df96d0235c386ec7d659d79d44f221db11cf53a115d78f02147f",
+      "success": false,
+      "label": "run \"CHILD\" \"WAIT\"",
+      "log_sha256": "efefd177f5ef1fc6c4230c166b9756d69cab374121ca07c10c86938e6ac213ea",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> WAIT"
+      ]
+    },
+    {
+      "name": "EX045",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \"CHILD\" WAIT NOCLEAR\r\nendproc\r\n",
+      "source_sha256": "001af81639587c6075e596008862bb2f8b4c1419e37a42798fc10ee4e621bd2f",
+      "success": false,
+      "label": "run \"CHILD\" WAIT NOCLEAR",
+      "log_sha256": "d5aec280314eff5e45b3d861da1f4966349f55932852787a0d2d2e89075368f5",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> NOCLEAR"
+      ]
+    },
+    {
+      "name": "EX046",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \"CHILD\",\r\nendproc\r\n",
+      "source_sha256": "528388459ac0ad0b12cb65a1fdb7734421eff4edbe586e2433a2536cf8da9d58",
+      "success": false,
+      "label": "run \"CHILD\",",
+      "log_sha256": "5326457090327f94b0a3ec521a5fa8ac783416f59e12599739efde562a8fe856",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> ,"
+      ]
+    },
+    {
+      "name": "EX047",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \"CHILD\",,WAIT\r\nendproc\r\n",
+      "source_sha256": "4e24a205bdddea58050c5a670d82ae64125edaa0d84f7db4642e7c7a05ac22db",
+      "success": false,
+      "label": "run \"CHILD\",,WAIT",
+      "log_sha256": "ea58e852e2397b93a08c741c89400aeca91a522248ac24b968705ea08e3b9756",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> ,",
+        "Error C002 Line 4: Unexpected token ==> ,",
+        "Error C002 Line 4: Unexpected token ==> WAIT"
+      ]
+    },
+    {
+      "name": "EX048",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun ,command\r\nendproc\r\n",
+      "source_sha256": "35a01632fc2318170463caa8451fa247b089b907bac87b173b9857991ac2d5fb",
+      "success": false,
+      "label": "run ,command",
+      "log_sha256": "c15f7a06b2ed170d7aae8bec161b27380e79233249f3ccd1de9405f0e562d35e",
+      "errors": [
+        "Error C023 Line 4: Invalid string constant (quotes missing) ==> ,",
+        "Error C001 Line 4: Invalid token ==> COMMAND"
+      ]
+    },
+    {
+      "name": "EX049",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun (command)\r\nendproc\r\n",
+      "source_sha256": "84ffe357ed3193e68669c9249004e52412e44da0c50cb702de81fc4230f5d989",
+      "success": false,
+      "label": "run (command)",
+      "log_sha256": "6b71b0e6fa9029cd2cc51c73fcf2e9c155c062dd4446ddd9564554bb2ec537ad",
+      "errors": [
+        "Error C023 Line 4: Invalid string constant (quotes missing) ==> (",
+        "Error C001 Line 4: Invalid token ==> COMMAND",
+        "Error C002 Line 4: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "EX050",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun command+\"X\"\r\nendproc\r\n",
+      "source_sha256": "f3b25c3dc5fb2b978379660259a39c7cdc8740af0ad948311b8faeafc8539d40",
+      "success": false,
+      "label": "run command+\"X\"",
+      "log_sha256": "f72a7c308b3eb531b2a143f54c471eca8341e16a81f9877623306aa6bb4b9cdf",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> +",
+        "Error C002 Line 4: Unexpected token ==> X"
+      ]
+    },
+    {
+      "name": "EX051",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun command WAIT,\r\nendproc\r\n",
+      "source_sha256": "fc5b2283816ced81fcda3c5c375575ee1414b1daeddfe1726d77d2b4678d3fb6",
+      "success": false,
+      "label": "run command WAIT,",
+      "log_sha256": "cba75542e67853ef85ae61081aec47d6507a77323b406e38133fcbc72285a5f7",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "EX052",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun command,WAIT,\r\nendproc\r\n",
+      "source_sha256": "c7192c72a6d9e7c9509f640b03aaf8d2c1e679803c2174c64601764058a73c7e",
+      "success": false,
+      "label": "run command,WAIT,",
+      "log_sha256": "4c1928fe27a1791846760130ed038bbf9fb055b3a83270ec4ad8f1c30879d5d5",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "EX053",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun command ON\r\nendproc\r\n",
+      "source_sha256": "5aaea3e8c077027e53f5c258ad30726508c50571f80636f7bf27177413a01195",
+      "success": false,
+      "label": "run command ON",
+      "log_sha256": "ce6c8d3e785e3d8c903db28ba31268b68d80a3ff482a8e5c1b2a93425084b1c0",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> ON"
+      ]
+    },
+    {
+      "name": "EX054",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun command FOREVER\r\nendproc\r\n",
+      "source_sha256": "245278af93229cb63a97f81d5fd1802813785df34157ccd6f3f05c09df9a8811",
+      "success": false,
+      "label": "run command FOREVER",
+      "log_sha256": "b1cf44c120611228cc3932ae8bb52535d6db55335b87110bcfb5b1f552444364",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> FOREVER"
+      ]
+    },
+    {
+      "name": "EX055",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun command NOCLEAR WAIT\r\nendproc\r\n",
+      "source_sha256": "0917c6bb47291e690b121d630910e6b530f8214d4f60cdb7610a749794b250c8",
+      "success": false,
+      "label": "run command NOCLEAR WAIT",
+      "log_sha256": "5a34abd8732b49c02382a5d6602271bc32996af3ca38eee5e0b4c9123812fa89",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> WAIT"
+      ]
+    },
+    {
+      "name": "EX056",
+      "source": "integer number\r\nstring command\r\nproc main\r\nshell \r\nendproc\r\n",
+      "source_sha256": "1b88f9d8ec1648187f584b99a3cd178707c5c3d1fde6a17b9d614f6354161e2f",
+      "success": true,
+      "label": "shell ",
+      "log_sha256": "7e8a9a4807f5da7c74670eb02fdeb3a3f9dd805b455cba24c26748eb2c9a0cfc",
+      "errors": [],
+      "hex": "01 cf a3 94",
+      "asx_sha256": "b4a6b3ffb7609ed2e2731cf5b5451b573e4ca4cf646242b127d24bd65f43f99f"
+    },
+    {
+      "name": "EX057",
+      "source": "integer number\r\nstring command\r\nproc main\r\nshell command\r\nendproc\r\n",
+      "source_sha256": "ebb35fc67a3c4f9bf5addf6f5757126ba67d32e3cba04d396976b84a13cb6e10",
+      "success": false,
+      "label": "shell command",
+      "log_sha256": "34043867a44e1155643f7c9952abb265b22afa3dc4f7ef51c3951dc961220848",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> COMMAND"
+      ]
+    },
+    {
+      "name": "EX058",
+      "source": "integer number\r\nstring command\r\nproc main\r\nshell \"\"\r\nendproc\r\n",
+      "source_sha256": "5090914e47132e8762b3fb642ecdf2a4df7c3aedea58dc94c622672efe9c4287",
+      "success": false,
+      "label": "shell \"\"",
+      "log_sha256": "74aa005c8132cbe975afa94905340e13df42ae27d3268dbe2cd4484fdb5723dc",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> $NULL"
+      ]
+    },
+    {
+      "name": "EX059",
+      "source": "integer number\r\nstring command\r\nproc main\r\nshell WAIT\r\nendproc\r\n",
+      "source_sha256": "ae73a11e277d756dda2e13d4533c70659f4c23bf63a69dafe12bb8abb9a8ca75",
+      "success": false,
+      "label": "shell WAIT",
+      "log_sha256": "83d0b45a46f2cf3814ad6ae9098ad4c5d98cc7143720b6d308fd689ab59b4c05",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> WAIT"
+      ]
+    },
+    {
+      "name": "EX060",
+      "source": "integer number\r\nstring command\r\nproc main\r\nshell ,\r\nendproc\r\n",
+      "source_sha256": "2c7e6668da6316e24ff463f9479a497c95c3473aa29a5fa5cb719fed7d9195eb",
+      "success": false,
+      "label": "shell ,",
+      "log_sha256": "a607d5536d5b76e218e22eb541fe6d7421ba4d9f83a56d32d646b0b507839c4f",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "EX061",
+      "source": "integer number\r\nstring command\r\nproc main\r\nshell NOCLEAR\r\nendproc\r\n",
+      "source_sha256": "e67a2f9ed23064795dda6f5bd9c11b734c0ce72e7702cef170c00d89d3086012",
+      "success": false,
+      "label": "shell NOCLEAR",
+      "log_sha256": "851ec4d751637b385b78b644378e63a7f1a4f7dd355128c6fd104e0108537eeb",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> NOCLEAR"
+      ]
+    },
+    {
+      "name": "EX062",
+      "source": "integer number\r\nstring command\r\nproc main\r\nstring localval=\"CHILD ARG\"\r\ndos localval WAIT\r\nendproc\r\n",
+      "source_sha256": "da089d2f71fe707517ffd4edfa5e84b68e673f73fc14cab5cfba155f8bc8cd7d",
+      "success": true,
+      "label": "string localval=\"CHILD ARG\"\ndos localval WAIT",
+      "log_sha256": "bd3b478e310f1a4bb49b224088ec8ea318ea87c8b2c4093683447f0267237b05",
+      "errors": [],
+      "hex": "01 d2 51 00 ac a0 00 00 aa bc 8b 38 01 2c 2d 3f 09 76 19 70 00 cf 28 a0 00 00 01 36 95",
+      "asx_sha256": "0407a107a101a6bc86114ee3eafaa46263df7a34bdc240e6ecfd595769127e23"
+    },
+    {
+      "name": "EX063",
+      "source": "integer number\r\nstring command\r\nproc main\r\ncall worker with \"CHILD ARG\"\r\nendproc\r\nproc worker\r\nstrparm argument\r\ndos argument NOCLEAR\r\nendproc\r\n",
+      "source_sha256": "bd40f5e06f1bf81d3499457c4b681b708958258acc622fad3e8f7e58c09e1b67",
+      "success": true,
+      "label": "call worker with \"CHILD ARG\"",
+      "log_sha256": "50adc171d2a31701b7ca7961eb1fd780e2e34d26543baffc93d9cb8a36fa0b93",
+      "errors": [],
+      "hex": "01 cf d0 cd aa bc 93 3e 43 02 81 9d 01 6a 47 30 c8 19 00 00 00 d2 af ff 94 cf 28 96 57 00 01 25 95",
+      "asx_sha256": "914e0467c5954cb32da07796534e02aeec574a3805327a12e651c31131097c06"
+    },
+    {
+      "name": "EX064",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"\r\nendproc\r\n",
+      "source_sha256": "1e51fd812e94068ae3ed35d1de489ef2efcc49a08f0f4ccc71c64bf50dee1b16",
+      "success": true,
+      "label": "dos \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"",
+      "log_sha256": "acb801e1eccc268fc6bce7e27d6c880c27f7d7d9446184073191c01f5cf043e2",
+      "errors": [],
+      "hex": "01 cf 28 aa 03 59 d9 2f 23 5d 75 63 ff 5d 91 6f 77 9f 0b d9 2f 23 5d 75 63 ff 5d 91 6f 77 9f 0b d9 2f 23 5d 75 63 ff 5d 91 6f 77 9f 0b d9 2f 23 5d 75 63 ff 5d 91 6f 77 9f 0b d9 2f 23 5d 75 63 ff 5d 91 6f 77 9f 0b d9 2f 23 5d 75 63 ff 5d 91 6f 77 9f 0b d9 2f 00 94",
+      "asx_sha256": "8cf7b99a2193c719d5d308c1d95d6192edd319ed718fd96c831312fdfa2e4aba"
+    },
+    {
+      "name": "EX065",
+      "source": "integer number\r\nstring command\r\nproc main\r\ndos \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"\r\nendproc\r\n",
+      "source_sha256": "ae622bae7b59b14b604bb6790c033e56a18134175606dd8cfa80f777115d6fa3",
+      "success": false,
+      "label": "dos \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"",
+      "log_sha256": "3ae60a5aeb3fd698fdebd68069b265121e09b14a0bae91c3a659dcdd721477a9",
+      "errors": [
+        "Error C043 Line 4: Maximum token length exceeded ==> XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+      ]
+    },
+    {
+      "name": "EX066",
+      "source": "integer number\r\nstring command\r\nproc main\r\nstring localval=\"CHILD ARG\"\r\nrun localval WAIT\r\nendproc\r\n",
+      "source_sha256": "818c55d8211b01c04df0e57ba49bf085c7eac6e98693813df8651f898ab0b9e2",
+      "success": true,
+      "label": "string localval=\"CHILD ARG\"\nrun localval WAIT",
+      "log_sha256": "9bf3132d7729caa2eb500af40bb9897382f8d19e5525de5734f628c2e30e9c33",
+      "errors": [],
+      "hex": "01 d2 51 00 ac a0 00 00 aa bc 8b 38 01 2c 2d 3f 09 76 19 70 00 cf 9b a0 00 00 01 36 95",
+      "asx_sha256": "ce95b8053ffbded16144aa274edc42fcd82c1f2a2d2a786ceb1a81a2e15bde3c"
+    },
+    {
+      "name": "EX067",
+      "source": "integer number\r\nstring command\r\nproc main\r\ncall worker with \"CHILD ARG\"\r\nendproc\r\nproc worker\r\nstrparm argument\r\nrun argument NOCLEAR\r\nendproc\r\n",
+      "source_sha256": "c97dff3fadbb97e3a0995392a6913421b434375a17504f739bbc070bea04aba9",
+      "success": true,
+      "label": "call worker with \"CHILD ARG\"",
+      "log_sha256": "dadb1234ac435ba293265b7030fedeb58300f230efec10dfe41a39f565699584",
+      "errors": [],
+      "hex": "01 cf d0 cd aa bc 93 3e 43 02 81 9d 01 6a 47 30 c8 19 00 00 00 d2 af ff 94 cf 9b 96 57 00 01 25 95",
+      "asx_sha256": "a0df5575290a4e11241bec4dc1bc0f2f913e4c0244aa0b6506e11b86cc0df3ec"
+    },
+    {
+      "name": "EX068",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"\r\nendproc\r\n",
+      "source_sha256": "bb69fb979e077bff9f0d3360dc01c58a0b2bd593b46d1fef113a5c04c2e9546c",
+      "success": true,
+      "label": "run \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"",
+      "log_sha256": "16107ff0069eb634d4db240ac224de26451319b5b6b345724e329b499341400e",
+      "errors": [],
+      "hex": "01 cf 9b aa 03 59 d9 2f 23 5d 75 63 ff 5d 91 6f 77 9f 0b d9 2f 23 5d 75 63 ff 5d 91 6f 77 9f 0b d9 2f 23 5d 75 63 ff 5d 91 6f 77 9f 0b d9 2f 23 5d 75 63 ff 5d 91 6f 77 9f 0b d9 2f 23 5d 75 63 ff 5d 91 6f 77 9f 0b d9 2f 23 5d 75 63 ff 5d 91 6f 77 9f 0b d9 2f 00 94",
+      "asx_sha256": "b9a35eec00a0f11056f09edbb3def93fd51ad6a515ab57c3103bc5c9b3c942a0"
+    },
+    {
+      "name": "EX069",
+      "source": "integer number\r\nstring command\r\nproc main\r\nrun \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"\r\nendproc\r\n",
+      "source_sha256": "288f9829aafe4d9e2bf985e144c771c3a18eb3fd1bcfbd0d44e927d6521e4ceb",
+      "success": false,
+      "label": "run \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"",
+      "log_sha256": "f0bbacbaf27d798743080878ad225f50f41ed11126c78668feaf7b47e09072c5",
+      "errors": [
+        "Error C043 Line 4: Maximum token length exceeded ==> XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+      ]
+    }
+  ],
+  "scope": "Authored source compilation only; expected values fixed independently before runtime execution."
+}

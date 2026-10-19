@@ -107,6 +107,10 @@ with native free-space arithmetic and corrected DOSVER far-global writeback.
 native CRT and owned persistent values, with DOS child inheritance and automatic
 exit cleanup. The dispatcher now supports105 of215 slots; full ASPECT remains unfinished.
 
+[External command frontends](docs/ASPECT_EXTERNAL.md) recover DOS/RUN/SHELL and
+add exact source compilation. Their application executor remains unintegrated;
+the interpreter still rejects all three explicitly before any child launch.
+
 The [integrated script-file commands](docs/ASPECT_SCRIPT_FILE_RUNTIME.md) now
 connect both compilers and the interpreter to the owned DOS backend. Thirteen
 file commands and FGETS_CRLF SET/FETCH cover real file I/O, retained EXECUTE

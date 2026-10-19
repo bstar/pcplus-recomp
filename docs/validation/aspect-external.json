@@ -1,0 +1,126 @@
+{
+  "passed": true,
+  "runtime_enabled": false,
+  "terminal_sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+  "runner_sha256": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+  "compiler_sha256": "3470c718df0d21fad4635b99f6c3b2e5d307637581728bdb639e6e9521a9c931",
+  "native_bytes": 192,
+  "reused_bytes": 92,
+  "component_cases": 1514,
+  "original_comparisons": 1514,
+  "supported_opcodes": 105,
+  "unsupported_opcodes": 110,
+  "evidence": {
+    "native": {
+      "path": "build/aspect-external/checks.json",
+      "sha256": "5e7b466f38729835f26d4acddad231384f1c6d808074d4f70dd751173b0bfb0a"
+    },
+    "original": {
+      "path": "build/aspect-external/native-checks.json",
+      "sha256": "24913fe23dcda780bc609cbdd3d4436622b70119333f56b234238da3594636a3"
+    },
+    "host": {
+      "path": "build/aspect-external/compiler-checks.json",
+      "sha256": "ba729df7a3563d8c9db1d7d7cd18f9cdcb6101748eff1c51175dbc1ee5bbfea1"
+    },
+    "compiler": {
+      "path": "build/aspect-compiler-dos/checks.json",
+      "sha256": "59c0fa99f4619f38ba688417659654ae5a5defade1d806a0b01c44435c82312a"
+    },
+    "runtime": {
+      "path": "build/aspect-runtime/checks.json",
+      "sha256": "3094f40a7581dac98179acaf39dc1af8d27e44b6a955ef31b7508dce9c3b8ab0"
+    },
+    "DOS": {
+      "path": "build/aspect-external-dos/integrated-01/checks.json",
+      "sha256": "90ed1182ed396c6302cf72cbe7205a45f60ce9dc7a50de51bbb8809c8e7eb409"
+    },
+    "ENiGMA": {
+      "path": "build/bbs-lab/results/enigma/external-compiler-regression-01/search-checks.json",
+      "sha256": "bf1b35a3b87e06ed5bc807126248c5007befb464a76469f3c1e236f87a86e8d5"
+    }
+  },
+  "original_compiler": {
+    "cases": 70,
+    "accepted": 29,
+    "rejected": 41
+  },
+  "DOS_compiler": {
+    "cases": 2003,
+    "accepted": 1037,
+    "rejected": 966
+  },
+  "OMF_DOS_boundary": {
+    "cases": 53,
+    "assertions": 436,
+    "executor_is_model": true
+  },
+  "product_rejection": {
+    "cases": 29,
+    "error": 3,
+    "actual_opcodes": [
+      40,
+      155,
+      163
+    ],
+    "side_effect_marker_absent": true
+  },
+  "runtime_summary": "ASPECT_RUNTIME 1111 cases 26686 checks 0 failures",
+  "ENiGMA_regression": {
+    "DOS_harness": true,
+    "unique_authenticated_session": true,
+    "exact_owned_modules": true,
+    "inputs_unchanged": true,
+    "no_post_saved": true,
+    "real_search_route": true,
+    "title_search": true,
+    "index_selection": true,
+    "index_paging": true,
+    "selected_game_details": true,
+    "diz_page": true,
+    "nfo_navigation": true,
+    "bottom_content": true,
+    "empty_search": true,
+    "DOS_source_compiler": true,
+    "native_file_trace": true,
+    "no_keyboard_credentials": true,
+    "native_file_info": true,
+    "native_enumeration_trace": true,
+    "native_attribute_trace": true,
+    "native_timestamp_trace": true,
+    "native_system_query_trace": true,
+    "native_environment_trace": true
+  },
+  "REA": [
+    {
+      "bundle_sha256": "1fc3ad42ca4f6c983b24e01187e0f2a807cec4bf32a5098e6c063b25c4fdb354",
+      "evidence_ids": [
+        "ev_3f0ce28961a77e1029a61a5d1ad82dd158a97d2e29a9fe2a0f82981bdda8d90f",
+        "ev_8ab34d95a695b3d2c4b7a1d55e8a94a5e5a05e48c9d81639c95d3c8de25fba5d",
+        "ev_a55c21f479a4bf342f55d30219245c945ab025854c433c8d21995bdbd66f1494"
+      ]
+    },
+    {
+      "bundle_sha256": "ddcf423b8e05e46baa07ba375dcb3ab1662e6eab40d66bc0bab73af18644bd20",
+      "evidence_ids": [
+        "ev_8d8e65702e2103af8e9c2b13297fd354a0011b9de91e51318917f4297c657626"
+      ]
+    }
+  ],
+  "source_build_proof": {
+    "path": "docs/validation/application-components-source-build.json",
+    "sha256": "d9cfadbae950b490446ab448730b9bec10dd96f0002c629477439722edd380bf",
+    "outputs": 278
+  },
+  "package_manifest_sha256": "daec87aefa199135275029a3ab25b239395a580d85b16ea1e3d58f8021822d4a",
+  "recorder_sha256": "cfd310df7a1646ae12792475b7b826b232094cd142e54695dc5a8b4bb612d9f2",
+  "current_policy": "Compilers emit exact native records; external runtime handlers remain unpublished. Native/OMF executor boundaries are models. No generic spawn substitute for pending PROGRAM controller.",
+  "live_server_modified": false,
+  "physical_modem_validated": false,
+  "whole_application_gates_closed": [],
+  "remaining": [
+    "Implement the full external application executor/controller checklist in docs/ASPECT_EXTERNAL.md before publishing DOS/RUN/SHELL.",
+    "110 runtime opcode slots, remaining selectors/recorder and complete F01-F16 application requirements.",
+    "Approved live ENiGMA deployment and full catalog/editor/transfers, physical RS-232 Wi-Fi modem validation."
+  ]
+}

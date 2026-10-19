@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "c5bf7572a34ce94871e39060f9b532aaa6eb5d801d34cf71fbc0ebee9c1c951f",
-  "source_file_count": 2185,
+  "source_snapshot_sha256": "d98feae9a26d5c5a39cd858800b032ae6de59b04a7c89d610fc28ac4b02e7d4d",
+  "source_file_count": 2198,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,14 +16,14 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "c6906da842f0ec1389e403f3fee4e5b04da6be48f472d80e3dffeb7b920377b8",
+  "build_log_sha256": "118a5272a46b11e2393044e49bcc5146a4dc8066478e060edbdb469e8997634e",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.u7VURl/pcplus-source-proof-gfuq1nqu/checkout",
+  "source_checkout": "/tmp/nix-shell.GpLEkI/pcplus-source-proof-_2tppqf2/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
-  "scope": "271 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
-  "output_count": 271,
+  "scope": "278 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+  "output_count": 278,
   "outputs": {
     "terminal/TERMINAL.EXE": {
       "sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
@@ -1115,6 +1115,41 @@
       "matches_workspace": true,
       "workspace_sha256": "13eb6284827f80f4fa75c45c3c908d429b759fd970c3e159ebb0ef427cf621bd"
     },
+    "aspect-external/commands.bin": {
+      "sha256": "e10ddcd68ecf0cb6b617250cd87e44b02f9e2b13ecc453024a01906f704fd770",
+      "matches_workspace": true,
+      "workspace_sha256": "e10ddcd68ecf0cb6b617250cd87e44b02f9e2b13ecc453024a01906f704fd770"
+    },
+    "aspect-external/common.bin": {
+      "sha256": "7e66b4f7fc1660a7218aeb507fc11dd59eac7dba3f81785eab379bcf11db4dab",
+      "matches_workspace": true,
+      "workspace_sha256": "7e66b4f7fc1660a7218aeb507fc11dd59eac7dba3f81785eab379bcf11db4dab"
+    },
+    "aspect-external/shell.bin": {
+      "sha256": "a3239298a41feecaa953dcee65b40837a83f835acc34eed8a7bc9935a1c9cb06",
+      "matches_workspace": true,
+      "workspace_sha256": "a3239298a41feecaa953dcee65b40837a83f835acc34eed8a7bc9935a1c9cb06"
+    },
+    "aspect-external/crt-strcpy.bin": {
+      "sha256": "353e318feb16fbe3f0d4351c433976bb22913a51bdef8bc36a85be96f0509f26",
+      "matches_workspace": true,
+      "workspace_sha256": "353e318feb16fbe3f0d4351c433976bb22913a51bdef8bc36a85be96f0509f26"
+    },
+    "aspect-external/crt-strchr.bin": {
+      "sha256": "5f75e040b310c90655f98a393c981cfcfb030ce2377c86090da3259d9be46a16",
+      "matches_workspace": true,
+      "workspace_sha256": "5f75e040b310c90655f98a393c981cfcfb030ce2377c86090da3259d9be46a16"
+    },
+    "aspect-external/external_commands.obj": {
+      "sha256": "b2b30d18dd6fc95d0253bfd9a4840888dfae9f93ea3aef34089e5ecc2d32ef19",
+      "matches_workspace": true,
+      "workspace_sha256": "b2b30d18dd6fc95d0253bfd9a4840888dfae9f93ea3aef34089e5ecc2d32ef19"
+    },
+    "aspect-external/EXTERNAL.EXE": {
+      "sha256": "9209ad2f36dc814618d8f7f493cb5663e248c08708ffc56474f05b574d8cbeec",
+      "matches_workspace": true,
+      "workspace_sha256": "9209ad2f36dc814618d8f7f493cb5663e248c08708ffc56474f05b574d8cbeec"
+    },
     "aspect-script-file-backend/SCRIPTIO.EXE": {
       "sha256": "8842725839a10989fac5f95c35598611ea14d5ff601c74e723da29ac5151d43b",
       "matches_workspace": true,
@@ -1136,9 +1171,9 @@
       "workspace_sha256": "586d3730bb97fbec67219ca38ea6a3370275ae1650a2d87923957f6c070df96c"
     },
     "aspect-compiler-dos/ASPCOMP.EXE": {
-      "sha256": "0f58f46f9cec25810fc53d331aaaf318f61d9f5b684598ef2b0ecba361bde8b3",
+      "sha256": "3470c718df0d21fad4635b99f6c3b2e5d307637581728bdb639e6e9521a9c931",
       "matches_workspace": true,
-      "workspace_sha256": "0f58f46f9cec25810fc53d331aaaf318f61d9f5b684598ef2b0ecba361bde8b3"
+      "workspace_sha256": "3470c718df0d21fad4635b99f6c3b2e5d307637581728bdb639e6e9521a9c931"
     },
     "status-helpers/unit1.bin": {
       "sha256": "72c10e9a0d346f13e4232b74eee2566aaa8d5fdaac91717fafbf73b4cdf19a5c",
@@ -1465,6 +1500,7 @@
     "standalone/build_aspect_file_times.py",
     "standalone/build_aspect_system_query.py",
     "standalone/build_aspect_environment.py",
+    "standalone/build_aspect_external.py",
     "standalone/build_aspect_script_files.py",
     "standalone/build_aspect_script_file_backend.py",
     "standalone/build_aspect_compiler_lexer.py",
@@ -1492,6 +1528,8 @@
     "standalone/check_aspect_system_query_compiler.py",
     "standalone/check_aspect_environment.py",
     "standalone/check_aspect_environment_compiler.py",
+    "standalone/check_aspect_external.py",
+    "standalone/check_aspect_external_compiler.py",
     "standalone/check_aspect_file_attributes.py",
     "standalone/check_aspect_file_attributes_compiler.py",
     "standalone/check_aspect_enumeration.py",

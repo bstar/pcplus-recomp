@@ -676,3 +676,10 @@ temporary-buffer aliasing. The403 real DOS invocations/3,119 assertions prove
 independent values, native case/status rules, EXECUTE/invocation persistence,
 ordinary child inheritance, automatic exit restoration and fault/heap/JFT cleanup.
 105 slots are now supported and110 rejected; all application gates remain open.
+
+F13 compiler coverage now also includes DOS/RUN/SHELL. [External frontend
+evidence](ASPECT_EXTERNAL.md) binds192 exact+92 reused bytes,1,514 paired cases,
+70 original compiler outcomes and53 real DOS OMF boundary cases. The application
+executor remains unintegrated, and all29 accepted command records explicitly
+stop at their unsupported opcode without child side effects. Runtime105/110
+and the complete PROGRAM/UI/serial requirements remain open.
