@@ -664,3 +664,17 @@ test-aspect-script-serial-dos:
 	python3 standalone/test_aspect_script_serial_dos.py
 test-aspect-serial-bbs:
 	python3 standalone/test_aspect_serial_bbs.py
+
+.PHONY: aspect-receive-commands test-aspect-receive-commands test-aspect-receive-commands-compat
+all: aspect-receive-commands
+test: test-aspect-receive-commands
+aspect-receive-commands:
+	python3 standalone/build_aspect_receive_commands.py
+test-aspect-receive-commands:
+	python3 standalone/check_aspect_receive_commands.py
+test-aspect-receive-commands-compat:
+	python3 standalone/check_aspect_receive_commands.py --original analysis/pcplus-install/PCPLUS.EXE
+
+.PHONY: test-aspect-script-receive-dos
+test-aspect-script-receive-dos:
+	python3 standalone/test_aspect_script_receive_dos.py

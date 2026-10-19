@@ -2,6 +2,7 @@
  * Diagnostic queue/clock inputs are separate from the production UART owner. */
 #include "runtime.h"
 #include "serial_runtime.h"
+#include "receive_runtime.h"
 #include <string.h>
 #if defined(ASPECT_RUNTIME_SERIAL)
 #include "serial.h"
@@ -75,12 +76,13 @@ unsigned runtime_serial_receive(unsigned ignored)
 {
  unsigned value=65535U;(void)ignored;
  if(!runtime_serial_ready()){runtime_set_error(ASPECT_RUN_UNSUPPORTED);return value;}
- runtime_serial_poll();
+ if(runtime_console_cancel_poll())return value;
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
  if(runtime_serial_rx_count){value=input[input_at++];release();}
 #elif defined(ASPECT_RUNTIME_SERIAL)
  value=aspect_serial_read();runtime_serial_poll();
 #endif
+ runtime_receive_note_byte(value);
  return value;
 }
 unsigned runtime_serial_character_delay(unsigned delay)

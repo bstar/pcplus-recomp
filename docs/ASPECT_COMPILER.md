@@ -38,10 +38,10 @@ It preserves an existing output if compilation fails.
   `exitwhile`, `loopwhile` with absolute 32-bit jump offsets.
 * String assignment and `strcat`, `strcmp`, `rstrcmp`, `strcpy`, `strlen`, `strlwr`,
   `strpeek`, `strpoke`, `strset`, `strupdt`, `strupr`, `substr`; optional counts
-  where established. `success`, `failure`, `$NULL` and fixed string slots
+  where established. `success`, `failure`, `comdata`, `forever`, `found`, `$NULL` and fixed string slots
   `S0` through `S9` are recognized operands.
 * `atoi`, `atol`, `itoa`, `ltoa`, `message`, `exit`, `pause`, `transmit` and
-  `waitfor` command emission. Their availability
+  `waitfor`, `comgetc`, `comgetcd`, `rget` and `waitquiet` command emission. Their availability
   in any application depends on that application's runtime service wiring.
 
 Calls and commands accept atomic operands, with optional commas between them.
@@ -58,13 +58,11 @@ use the established position and physical-line keyed transform. Empty strings
 emit the original null-string builtin. Local numeric declaration lists preserve
 the original chained initializer record form.
 
-The original-free regression suite compares all **270** authored public vectors
-against frozen ASPCOMP 1.01 byte outcomes and SHA256 values: 19 execution, 86
-arithmetic, 27 parameter, 52 string-command, 38 conversion and 15 independent
-compiler-validation cases, plus 33 console/comparison cases. The three
-long-delay console cases are explicitly compiler-only, outside the runtime
-vector list. Those outcomes came from the separate optional
-original compiler oracle, SHA256
+The original-free regression suite compares all **358** accepted authored public
+vectors against frozen ASPCOMP1.01 byte outcomes and SHA256 values. This includes
+the earlier302 outcomes and56 receive-command outcomes. Compiler-only cases
+remain separate from the runtime vector list. Those outcomes came from the
+optional original compiler oracle, SHA256
 `5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a`.
 Their provenance is retained in each fixture corpus. Test inputs, expected
 runtime values and emitted bytes are distinct from compiler implementation.
@@ -100,8 +98,12 @@ script, including caller continuations. The native default comes from overlay02
 D6EA, which resets E38A to one (retained evidence
 `ev_7f2a37333c76fe8f326ecc36a6ef20a640284f710c20b9e47a19c3288aa55d92`).
 Caret bytes remain literal in ASX and are decoded at runtime; they are not host
-compiler escapes. TRANSMIT and WAITFOR currently have compiler grammar evidence
-and explicit unsupported-runtime predictions. They are not compiled away.
+compiler escapes. The maintained runtime now executes TRANSMIT/WAITFOR and the receive commands
+through explicit raw UART platform services. [Receive-command evidence](ASPECT_RECEIVE.md)
+distinguishes native semantics from terminal-rendering and scheduling gaps.
+FOUND emits its established builtin index but remains unsupported at runtime.
+FOREVER emits an integer builtin or a special timeout option according to its
+grammar position; these forms have different native values and are tested separately.
 
 ## Explicit limits
 

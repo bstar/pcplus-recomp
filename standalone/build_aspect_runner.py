@@ -14,7 +14,7 @@ def main():
     objects = []
     sources = [Path(__file__).resolve(), ROOT / 'standalone/build_aspect_runtime.py',
                *[ROOT / 'src/aspect' / name for name in ['runner.c', 'runtime.c', 'runtime.h', 'file_io.c', 'file_io.h',
-                   'serial_runtime.c','serial_runtime.h','serial.c','serial.h','serial_handoff.h']],
+                   'serial_runtime.c','serial_runtime.h','receive_runtime.c','receive_runtime.h','serial.c','serial.h','serial_handoff.h']],
                ROOT / 'reconstruction/uart/encodings.inc',ROOT/'reconstruction/uart/layout.inc']
     serial_asm=[('uart','reconstruction/uart/core.asm','UART_OMF'),('uart_api','src/uart/api.asm',None),
                 ('serial_backend','src/aspect/serial_backend.asm',None)]
@@ -28,13 +28,13 @@ def main():
     subprocess.run(['wcl', '-q', '-bt=dos', '-0', '-ms', '-ecc', '-s', '-w4', '-we', '-k8192','-dASPECT_RUNTIME_SERIAL',
                     '-i=' + str(ROOT / 'src/aspect'), '-fm=ASPECT.map', '-fe=ASPECT.EXE',
                     str(ROOT / 'src/aspect/runner.c'), str(ROOT / 'src/aspect/runtime.c'),
-                    str(ROOT / 'src/aspect/file_io.c'),str(ROOT/'src/aspect/serial_runtime.c'),
+                    str(ROOT / 'src/aspect/file_io.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),
                     str(ROOT/'src/aspect/serial.c'), *objects], cwd=OUT, check=True)
     result = dict(binary_sha256=sha(OUT / 'ASPECT.EXE'), original_inputs=[],
                   sources={str(p.relative_to(ROOT)): sha(p) for p in sources},
                   platform='8086 DOS, small model, near DS=SS, cdecl, 8192-byte stack',
                   diagnostic_build=False,
-                  scope='DOS CLI for trusted source-compiled ASX; partial59-slot runtime. Optional owned UART with validated parent ASIO handback; native TRANSMIT/WAITFOR with raw receive backend. No complete script/UI scheduling or arbitrary-bytecode safety.')
+                  scope='DOS CLI for trusted source-compiled ASX; partial63-slot runtime. Optional owned UART with validated parent ASIO handback; native TRANSMIT/WAITFOR with raw receive backend. No complete script/UI scheduling or arbitrary-bytecode safety.')
     (OUT / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')
     print('ASPECT.EXE', result['binary_sha256'])
 

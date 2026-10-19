@@ -19,6 +19,8 @@ class CompileError(ValueError):
 
 TYPES = {"integer": 0, "long": 1, "float": 2, "string": 3}
 PARMS = {"intparm": 0, "longparm": 1, "floatparm": 2, "strparm": 3}
+BUILTINS = {'comdata': 20, 'failure': 21, 'forever': 22, 'found': 23,
+            'success': 27, 'waitfor': 28}
 SIZES = (2, 4, 8, 81)
 OPS = {"+": 0x00, "-": 0xB5, "*": 0x7D, "/": 0x26, "%": 0x7B,
        "==": 0x32, "!=": 0x7F, "<": 0x6D, ">": 0x54,
@@ -167,8 +169,8 @@ class Compiler:
             if not part or not re.fullmatch(r'[a-z_$][a-z_0-9$]*', part[0]):
                 self.error('expected declaration name')
             name = part[0]
-            if name == 'text':
-                self.error('TEXT is a reserved ASPECT keyword')
+            if name == 'text' or name in BUILTINS:
+                self.error(f'{name.upper()} is a reserved ASPECT keyword')
             symbols = self.globals if proc is None else proc.symbols
             if name in symbols:
                 self.error(f'duplicate declaration {name}')
@@ -215,7 +217,7 @@ class Compiler:
         if tag == 'string':
             return 3
         if tag == 'symbol':
-            if node[1] in ('success', 'failure', 'waitfor'):
+            if node[1] in BUILTINS:
                 return 0
             if node[1] == '$null' or re.fullmatch(r's[0-9]', node[1]):
                 return 3
@@ -229,7 +231,7 @@ class Compiler:
         return max(self.kind(node[2]), self.kind(node[3]))
 
     def lvalue(self, node):
-        if node[0] != 'symbol' or node[1] in ('success', 'failure', 'waitfor', '$null'):
+        if node[0] != 'symbol' or node[1] in BUILTINS or node[1] == '$null':
             self.error('variable destination required')
         if re.fullmatch(r's[0-9]', node[1]):
             return 3, bytes((0x64, int(node[1][1])))
@@ -266,8 +268,8 @@ class Compiler:
                 i = (index * stride) % 13
                 self.emit((char + (table[i] if (i + parity) % 2 == 0 else -table[i])) & 255)
         elif tag == 'symbol':
-            if node[1] in ('success', 'failure', 'waitfor'):
-                self.emit(0x6F, {'success': 27, 'failure': 21, 'waitfor': 28}[node[1]])
+            if node[1] in BUILTINS:
+                self.emit(0x6F, BUILTINS[node[1]])
             elif node[1] == '$null':
                 self.emit(0x6E, 19)
             else:
@@ -394,8 +396,29 @@ class Compiler:
     def command(self, tokens):
         command = tokens[0]
         args = self.arguments(tokens[1:])
+        if command in ('rget', 'waitquiet'):
+            destination = int(command == 'rget')
+            if not destination <= len(args) <= destination + 2:
+                self.error(f'{command} operand count mismatch')
+            self.emit(0xCE if destination else 0xD5)
+            if destination:
+                kind, wire = self.lvalue(args[0])
+                if kind != 3:
+                    self.error('RGET requires string destination')
+                self.emit(wire)
+            for index in range(destination, destination + 2):
+                if index >= len(args):
+                    self.emit(0)
+                    break
+                self.emit(1)
+                if command == 'waitquiet' and index == 1 and args[index] == ('symbol', 'forever'):
+                    self.emit(0x1A)
+                else:
+                    self.operand(self.word_argument(args[index]), compact=True)
+            return
         # (opcode, mandatory operand types, optional numeric count)
         commands = {
+            'comgetc': (0xC9, 'i', False), 'comgetcd': (0xCA, 'i', False),
             'message': (0x76, 's', False), 'exit': (0x33, '', False),
             'transmit': (0xBF, 's', False), 'waitfor': (0xD4, 's', True),
             'rstrcmp': (0x9A, 'ss', True),

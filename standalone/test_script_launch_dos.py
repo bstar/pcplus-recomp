@@ -130,7 +130,14 @@ def main():
   folder=OUT/old
   if folder.exists():
    prior=json.loads((folder/'result.json').read_text())
-   history.append(dict(case=old,terminal_sha256=prior['binary_sha256'],runner_sha256=rdigest,
+   identity_path=folder/'identity.json';identity=None
+   if identity_path.exists():
+    identity=json.loads(identity_path.read_text())
+    assert identity['result_sha256']==hashlib.sha256((folder/'result.json').read_bytes()).hexdigest()
+    assert identity['terminal_sha256']==prior['binary_sha256']
+   history.append(dict(case=old,terminal_sha256=prior['binary_sha256'],runner_sha256=identity['runner_sha256'] if identity else None,
+    runner_identity_source=str(identity_path.relative_to(ROOT)) if identity else 'Unknown: no archived runner identity; never substitute current binary',
+    runner_identity_sha256=hashlib.sha256(identity_path.read_bytes()).hexdigest() if identity else None,
     failed_checks=[k for k,v in prior['checks'].items() if not v],
     confirmed_terminal_exit=6,characterization=old.endswith('exit6'),
     reason='Parent UART IRQ/IER remained disabled during PROGRAM return-key wait; trailing incoming UART bytes overran RBR. Script-only serviced prompt restores parent ISR and polls flow before waiting.',

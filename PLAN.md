@@ -1085,3 +1085,35 @@ invalid, FOREVER is distinct enum1A. Prior failed evidence remains retained.
 Nonzero calibrated character delay, SET, most application commands, full
 compiler/VM/recorder, original UI, physical modem validation and all F01–F16
 whole-application gates remain open.
+
+## ASPECT character, line and quiet-line receive
+
+The [receive checkpoint](docs/ASPECT_RECEIVE.md) adds COMGETC/COMGETCD, RGET,
+WAITQUIET, COMDATA20 and FOREVER22. Nine native ranges contain435 exact bytes;
+all60 component ranges match the original,696 paired CPU scenarios and14,500
+actual DOS assertions pass, and all188 native instructions are exercised.
+The source compiler matches358 frozen outputs and358 presentation variants.
+The interpreter implements63 slots and explicitly rejects152;351 source-compiled
+runtime fixtures pass515 cases/9,091 checks. Generated ACV1 CASES.DAT metadata
+replaces unrolled test calls that exceeded the16-bit near-code limit, retaining
+the full suite and DS=SS. The required test data is hash-bound and independently
+reproduced with88 other outputs in the fresh source-only build.
+
+Fifteen independent actual DOS/UART cases pass135 checks, including delayed
+input, binary00/80/FF, RGET near/far/parameter storage and exact unread tails,
+timeouts, contextual FOREVER, cancellation and the maintained zero-length
+buffer guard. The earlier28 UART cases, two owned-local BBS greeting cases and
+five terminal Script workflows pass on the same production runner. Historical
+failure runner identity now comes from archived evidence instead of borrowing
+the current runner hash.
+
+The native FOREVER integer builtin returns1; only supported timeout grammar
+positions use the special1A indefinite option. Native successful-open state
+suppresses COMGETC display, unlike the direct4C3C receive path. Native4C74's
+translation/pattern-monitor/rendering service remains an explicit application
+dependency; raw child input can consume ANSI streams differently. Production
+polling fixes native cancellation gaps and bounds the native RGET max0 overflow
+before an81st non-CR store. These differences are documented, with original
+quirks retained in bounded component tests. Full compiler, ASPECT application
+services/invocation/recorder, other features, physical modem validation and all
+F01–F16 whole-application gates remain open.

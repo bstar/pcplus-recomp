@@ -1,0 +1,1779 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "private_report": "analysis/aspect-receive/compiler-04/report.json",
+  "private_report_sha256": "06e0e102f9007d02032307b2278d0b0547f74e85769220caceb6d11e49987c14",
+  "probe_sha256": "c9088af77b9f811f3c2028fade5fe2121b3f70ea2b13d8c8a34fd6d3d01f0ad6",
+  "freezer_sha256": "c053398f8da8f98142f0949607c4f3b56b1cd27626c3bfc169d3dd015da7d852",
+  "source_encoding": "cp437",
+  "vectors": [
+    {
+      "name": "GCINT",
+      "source": "integer outcome\r\nproc main\r\ncomgetc outcome\r\nendproc\r\n",
+      "source_sha256": "e574c958777d17af259b58ac4eb37bc0c3f11006301d8bf4e726a4ba3e045475",
+      "hex": "00 cf c9 8d 00 94",
+      "asx_sha256": "66ff5606a36f9440913fada403157d758bcc812b5a0f5b4255671cbd0259a5da",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 65
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "41",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "GCLOC",
+      "source": "integer outcome\r\nproc main\r\ninteger val\r\ncomgetc val\r\noutcome = val\r\nendproc\r\n",
+      "source_sha256": "2269790c2d1263aeacd07311a7ea4e1c4f48de47fdb51e857aae05d9528606a0",
+      "hex": "00 d2 02 00 cf c9 a1 00 00 5b 00 8d 00 a1 00 00 95",
+      "asx_sha256": "31771a2e3130c000e33cf9d2ac3960cda46fb4024b9063e689570652792c7ad4",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 255
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "ff",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "GCPARM",
+      "source": "integer outcome\r\nproc main\r\ncall worker with 7\r\nendproc\r\nproc worker\r\nintparm val\r\ncomgetc val\r\noutcome = val\r\nendproc\r\n",
+      "source_sha256": "0b4b58b09604173b5e8498473031700bc68d65ea7d1cea53f21fe8063414a621",
+      "hex": "00 cf d0 cc b5 07 c8 0f 00 00 00 d2 fe ff 94 cf c9 97 08 00 5b 00 8d 00 97 08 00 95",
+      "asx_sha256": "93d7ace0904ca0de30a8e0d66f755e96dd7624e3681539d00e31c00357bb75d0",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "00",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "GDINT",
+      "source": "integer outcome\r\nproc main\r\ncomgetcd outcome\r\nendproc\r\n",
+      "source_sha256": "838a382d9565c180af5c7060a1fd68ddd6bed6a861f08d931bde537405db079c",
+      "hex": "00 cf ca 8d 00 94",
+      "asx_sha256": "d78f3d6e5a5951e8309dad0f389b75efd0f860c43119a3e1411a54dee514141a",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 13
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "0d",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "GDLOC",
+      "source": "integer outcome\r\nproc main\r\ninteger val\r\ncomgetcd val\r\noutcome = val\r\nendproc\r\n",
+      "source_sha256": "6c2cabe0df036fe353473e86ff7cbc2e42202c2f2344998f793dfb30c10e8e35",
+      "hex": "00 d2 02 00 cf ca a1 00 00 5b 00 8d 00 a1 00 00 95",
+      "asx_sha256": "9a3827927d59043a15241529e78eb5a2d2858c3f954bc259911fcedf8b33e282",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 66
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "42",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "GDPARM",
+      "source": "integer outcome\r\nproc main\r\ncall worker with 7\r\nendproc\r\nproc worker\r\nintparm val\r\ncomgetcd val\r\noutcome = val\r\nendproc\r\n",
+      "source_sha256": "b1bdb2236930cb0b86753a4372b9f1a89557be83f0a1d8ccf4189f90c0edc93b",
+      "hex": "00 cf d0 cc b5 07 c8 0f 00 00 00 d2 fe ff 94 cf ca 97 08 00 5b 00 8d 00 97 08 00 95",
+      "asx_sha256": "479dce43f7980ed5939a624f5984f0d3b61c2ac2ad982268debf8e6ae5dd55ac",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 127
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "7f",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RG0",
+      "source": "string buffer\r\ninteger statuscode,good,remaining\r\nproc main\r\nrget buffer\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "95beb094e1bf42f98b03d5ba372eec609b306e2b6123d781b49ddf5ccfb976b6",
+      "hex": "01 cf ce 8c 00 00 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "6712e50f189a0801d284be2416e7782fd588b6447ac8023586943147a400af57",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 4,
+        "string0": "HELLO"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "48454c4c4f0d5441494c",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RG1",
+      "source": "string buffer\r\ninteger statuscode,good,remaining\r\nproc main\r\nrget buffer 1\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "55a03acb4dbdba2bab311989e0f3df93e7f1d3ebd74af3546c9c2145d6557541",
+      "hex": "01 cf ce 8c 00 01 b5 01 00 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "a35eb93f5e576007faa6b3b1866c6d1b3e04b29614c7762328cbfdb3298e5b77",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 2,
+        "string0": "A"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "41420d",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RG2",
+      "source": "string buffer\r\ninteger statuscode,good,remaining\r\nproc main\r\nrget buffer 1 2\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "f5a8a37f2b62cddf5ea422fd7a42ae41aa0e6fcd79d745f694e9747dce4be045",
+      "hex": "01 cf ce 8c 00 01 b5 01 01 b5 02 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "f21c394069586bd0adf8e00eeb3860fe1427a7b855289b81de2da07dd34ba835",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 2,
+        "string0": "A"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "41420d",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RG9",
+      "source": "string buffer\r\ninteger statuscode,good,remaining\r\nproc main\r\nrget buffer FOREVER\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "56bb8f3355e04e1cdb808614263c400f423ebbf4c621cd872fa15995b9474974",
+      "hex": "01 cf ce 8c 00 01 6f 16 00 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "786a3166caf5f903f39d79281422c2bba182bafe31585c30d85711d6a896328a",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 2,
+        "string0": "A"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "41420d",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RG10",
+      "source": "string buffer\r\ninteger statuscode,good,remaining\r\nproc main\r\nrget buffer 80 1\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "f0c12b91a435ddfcc6ecd071ad91de8b3f3c382583b8d2edb032db637209c3a2",
+      "hex": "01 cf ce 8c 00 01 b5 50 01 b5 01 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "52a8a585fdd4a50daf737461bf56db79e44a8a44ac7bf8efa48712424f62b79f",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 4,
+        "string0": "HELLO"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "48454c4c4f0d5441494c",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RG11",
+      "source": "string buffer\r\ninteger statuscode,good,remaining\r\nproc main\r\nrget buffer 1 FOREVER\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "b607df99be4791e2753d818e0fd0505e75330769616760840c9149368bcff176",
+      "hex": "01 cf ce 8c 00 01 b5 01 01 6f 16 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "ada583901e244c0e44c57a7be09dfdf2b7d3d230edf715d0ccc0f65f2a235c36",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 2,
+        "string0": "A"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "41420d",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQ0",
+      "source": "integer ticks\r\ninteger statuscode,good,remaining\r\nproc main\r\nwaitquiet \r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "839b2918944238c4358db4b73b7aad7e47c8324ec6342ae4ccf12e25cbf412fc",
+      "hex": "00 cf d5 00 5b 00 8d 01 6f 15 5b 00 8d 02 6f 1b 5b 00 8d 03 6f 14 94",
+      "asx_sha256": "650e65be76a8fbb7ae3cdc496d7dfe0020cf2cd664e16d77489dc2c4874e7e4a",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer1": 0,
+        "integer2": 1,
+        "integer3": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQ1",
+      "source": "integer ticks\r\ninteger statuscode,good,remaining\r\nproc main\r\nwaitquiet 1\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "18296c1e96e4216aeaad3a2c72f6bfebc2842f044db878da33ce61974dff3392",
+      "hex": "00 cf d5 01 b5 01 00 5b 00 8d 01 6f 15 5b 00 8d 02 6f 1b 5b 00 8d 03 6f 14 94",
+      "asx_sha256": "30b5475d093a7c1b3afdf69b3f640bda5134d73221687b85f5c16be759464f98",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer1": 0,
+        "integer2": 1,
+        "integer3": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQ2",
+      "source": "integer ticks\r\ninteger statuscode,good,remaining\r\nproc main\r\nwaitquiet 0\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "92b842bbe1c076a394468568346178b129e432ad7ae659b5febff9300f7904fb",
+      "hex": "00 cf d5 01 b5 00 00 5b 00 8d 01 6f 15 5b 00 8d 02 6f 1b 5b 00 8d 03 6f 14 94",
+      "asx_sha256": "5b504188587121eaa624d794ddbb8689a2c138b824eb6599be96dfbbb50c2bb5",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer1": 0,
+        "integer2": 1,
+        "integer3": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQ3",
+      "source": "integer ticks\r\nproc main\r\nwaitquiet -1\r\nendproc\r\n",
+      "source_sha256": "5205a2212c27c9e82d9c4ff02220931d6859773c6492edf32169bfd8857201a4",
+      "hex": "00 cf d5 01 ab ff ff 00 94",
+      "asx_sha256": "f3017bb75d9da8d02de173d76f185f0aef986cba0259f9f6a64c702a5fec4aca",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "error": "operand",
+        "native_error": 1
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQ4",
+      "source": "integer ticks\r\ninteger statuscode,good,remaining\r\nproc main\r\nwaitquiet 32767\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "cf0ca2c603feaecab623d6d7b4bafa05c4442152575976bad977423a8f6b4b8b",
+      "hex": "00 cf d5 01 ab ff 7f 00 5b 00 8d 01 6f 15 5b 00 8d 02 6f 1b 5b 00 8d 03 6f 14 94",
+      "asx_sha256": "21d19336398ecd7b04b0dfcb4503c097754cb589d6d901da4fde5b96ae6d6a23",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer1": 1,
+        "integer2": 0,
+        "integer3": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQ8",
+      "source": "integer ticks\r\ninteger statuscode,good,remaining\r\nproc main\r\nwaitquiet 1 2\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "4f5e6e1ca64ad1d48971ffc9b90706b9680f32ce4a9593e1b2868ef284426fd6",
+      "hex": "00 cf d5 01 b5 01 01 b5 02 5b 00 8d 01 6f 15 5b 00 8d 02 6f 1b 5b 00 8d 03 6f 14 94",
+      "asx_sha256": "fca8981b7bf6093064d15916c2c9f1b1e58be5dff5f085001459e6c67af560f6",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer1": 0,
+        "integer2": 1,
+        "integer3": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQ9",
+      "source": "integer ticks\r\ninteger statuscode,good,remaining\r\nproc main\r\nwaitquiet FOREVER\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "c8ecebd2c356ea4b0b81b6ff98fe74c1c36e3bd0d383174c53b1a619e5709f6d",
+      "hex": "00 cf d5 01 6f 16 00 5b 00 8d 01 6f 15 5b 00 8d 02 6f 1b 5b 00 8d 03 6f 14 94",
+      "asx_sha256": "bdc817e6c2b44f441c1f39a6a175787db2aaa307a24e3976b3502aaf2303c1a5",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer1": 0,
+        "integer2": 1,
+        "integer3": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQ11",
+      "source": "integer ticks\r\ninteger statuscode,good,remaining\r\nproc main\r\nwaitquiet ticks\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "ad45606c9a272cb7172afea327fb3227fbd0f0f2722aac8af54bd99d12078c1e",
+      "hex": "00 cf d5 01 8d 00 00 5b 00 8d 01 6f 15 5b 00 8d 02 6f 1b 5b 00 8d 03 6f 14 94",
+      "asx_sha256": "782d4f0bad1ae7f4cafdc88b1983be6e7b68e990cdff4f5ff72f166fccb197d6",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer1": 0,
+        "integer2": 1,
+        "integer3": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQ12",
+      "source": "integer ticks\r\ninteger statuscode,good,remaining\r\nproc main\r\nwaitquiet ticks 1\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "b5a8079d6bd408e811102cbce720f3c49a2b3c94a78a6062ade310166c39569c",
+      "hex": "00 cf d5 01 8d 00 01 b5 01 5b 00 8d 01 6f 15 5b 00 8d 02 6f 1b 5b 00 8d 03 6f 14 94",
+      "asx_sha256": "c0f42dd362f987d8fa139ada52823fb054c296aeeb9713a1ddaf263575b62f77",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer1": 0,
+        "integer2": 1,
+        "integer3": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "GCBIN",
+      "source": "integer first,second,third\r\nproc main\r\ncomgetc first\r\ncomgetc second\r\ncomgetc third\r\nendproc\r\n",
+      "source_sha256": "f9d3b5fca053485af7311325865fe750d4aee080f992f6405bb082872c50cb0d",
+      "hex": "00 cf c9 8d 00 c9 8d 01 c9 8d 02 94",
+      "asx_sha256": "4e5e3428a8578ada9e2a391c802a4431708f949dc9dfea5ee84aee302e6754c4",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 128,
+        "integer2": 255
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "0080ff",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "GCREPEAT",
+      "source": "integer first,second\r\nproc main\r\ncomgetc first\r\ncomgetc second\r\nendproc\r\n",
+      "source_sha256": "c0b2232b0077b504fc26858566763bf5dc7da45697f12d0b3397497832dfce25",
+      "hex": "00 cf c9 8d 00 c9 8d 01 94",
+      "asx_sha256": "933d27662cdcfc309f825168614b8ccc720f75baa4f5ee1fecd369945689efa6",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 65,
+        "integer1": 65535
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "41",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "GDDELAY",
+      "source": "integer outcome\r\nproc main\r\ncomgetcd outcome\r\nendproc\r\n",
+      "source_sha256": "838a382d9565c180af5c7060a1fd68ddd6bed6a861f08d931bde537405db079c",
+      "hex": "00 cf ca 8d 00 94",
+      "asx_sha256": "d78f3d6e5a5951e8309dad0f389b75efd0f860c43119a3e1411a54dee514141a",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 65535
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RGLOCAL",
+      "source": "string outcome\r\ninteger statuscode,good,remaining\r\nproc main\r\nstring value = \"OLD\"\r\nrget value 5 1\r\noutcome = value\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "dddf83bf1da779610146865bd258f7d4dc776d83a540982277ac9e07d2709c47",
+      "hex": "01 d2 51 00 ac a0 00 00 aa b6 85 44 05 27 00 cf ce a0 00 00 01 b5 05 01 b5 01 ac 8c 00 a0 00 00 00 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 95",
+      "asx_sha256": "e6a972a6f7c535d0ea9c83e4988379a872e0e64112acd41f51802f5894809b3b",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0,
+        "string0": "NEW"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "4e45570d",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RGPARM",
+      "source": "string outcome\r\ninteger statuscode,good,remaining\r\nproc main\r\ncall worker with \"OLD\"\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\nproc worker\r\nstrparm value\r\nrget value 5 1\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "44e503c6db83a3bd8da784618c22b3e8053dd38362a2832f162e4cc802507244",
+      "hex": "01 cf d0 cd aa b6 8d 4a 47 fd c8 25 00 00 00 d2 af ff 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94 cf ce 96 57 00 01 b5 05 01 b5 01 ac 8c 00 96 57 00 00 95",
+      "asx_sha256": "3366829e5a3c444e08680375e693a61143517ca89b67fb1084d4cda642db90c3",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0,
+        "string0": "NEW"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "4e45570d",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RGGLOB",
+      "source": "string buffer\r\ninteger statuscode,good,remaining\r\nproc main\r\nbuffer = \"OLD\"\r\nrget buffer 5 1\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "f7591fced953e786a70e78bdf3a6475591fb29a91dfd299711dd648797269eca",
+      "hex": "01 cf ac 8c 00 aa b6 0e f6 cd 49 00 ce 8c 00 01 b5 05 01 b5 01 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "dd4a1f1d359a2f0da241d65d5fc39ea0bdb02ae4ed4e288becf054bccf6b55cc",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0,
+        "string0": "NEW"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "4e45570d",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RGFIXED",
+      "source": "string outcome\r\ninteger statuscode,good,remaining\r\nproc main\r\nrget s0 5 1\r\noutcome = s0\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "9a61a762cb7ac622831d943ec07105fc37bf63a9d0fa48802db3739b0d6b1cd3",
+      "hex": "01 cf ce 64 00 01 b5 05 01 b5 01 ac 8c 00 64 00 00 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "9bbb09a688b0b521b29e3386df1ba96224eced8fb3efd85f693e483550db6d8b",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0,
+        "string0": "NEW"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "4e45570d",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RGMAX0",
+      "source": "string buffer\r\ninteger statuscode,good,remaining\r\nproc main\r\nrget buffer 0 1\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "404dc9470616eb0fdb796d2be896b0277d5037bcd6d3ca99e8659ada989cf9f6",
+      "hex": "01 cf ce 8c 00 01 b5 00 01 b5 01 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "b3b3bdffe36fac46c6a1620d033e0bcb45e6082aa8569307228ea9613f41b5e8",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 1,
+        "integer1": 0,
+        "integer2": 0,
+        "string0": ""
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RGMAX81",
+      "source": "string buffer\r\nproc main\r\nrget buffer 81 1\r\nendproc\r\n",
+      "source_sha256": "f865ff6506959b760a37ea5cf43d00ab1875faba0111fe2494cfb41424ec3a0e",
+      "hex": "01 cf ce 8c 00 01 b5 51 01 b5 01 94",
+      "asx_sha256": "a849164f824896879c912957905c013b7858c0ad15abef745b00128a93a3c74d",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "error": "operand",
+        "native_error": 1
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RGMAXNEG",
+      "source": "string buffer\r\nproc main\r\nrget buffer -1 1\r\nendproc\r\n",
+      "source_sha256": "544b0da2c4d7fa919095c77a0c53f1b5ce98975172d9db4be3b8c208464d1f0e",
+      "hex": "01 cf ce 8c 00 01 ab ff ff 01 b5 01 94",
+      "asx_sha256": "8c1629b6dc868fa8f314f174be48360c6bb2964ee38525febf5e5bf6c114194b",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "error": "operand",
+        "native_error": 1
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RGTM0",
+      "source": "string buffer\r\ninteger statuscode,good,remaining\r\nproc main\r\nrget buffer 5 0\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "28e7c442ccd9bf8c5084b2ac435b94cafb0d8b8a1155291ddba33292de8b1250",
+      "hex": "01 cf ce 8c 00 01 b5 05 01 b5 00 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "e1a39bb5280ec21dd9be4f8f263c66005a5923aefefd368c2ff13e9bb0284816",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 1,
+        "integer1": 0,
+        "integer2": 4,
+        "string0": ""
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "4142430d",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RGTMNEG",
+      "source": "string buffer\r\nproc main\r\nrget buffer 5 -1\r\nendproc\r\n",
+      "source_sha256": "d43dc80a590af55472ddb204565e58be89ec8a62f74b8263afa68be30fff2092",
+      "hex": "01 cf ce 8c 00 01 b5 05 01 ab ff ff 94",
+      "asx_sha256": "78ef522be0dc64ec504ca742fe418902f054b570e3e880deb17548d1295efbc3",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "error": "operand",
+        "native_error": 1
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RGVARS",
+      "source": "string buffer\r\ninteger statuscode,good,remaining\r\nproc main\r\ninteger length = 5,deadline = 1\r\nrget buffer length deadline\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "f0ff0341a68423e44b5c8191dcb959ad3b43087f7275231775131f2a2a929eb8",
+      "hex": "01 d2 04 00 5c 00 a1 00 00 ab 05 00 79 00 5b 00 a1 02 00 ab 01 00 cf ce 8c 00 01 a1 00 00 01 a1 02 00 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 95",
+      "asx_sha256": "a349f0bc35a42aa1ac4578d0a60cd94af784596fe2e5c5c3fb0ec0a371e87e10",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0,
+        "string0": "NEW"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "4e45570d",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQOPT0",
+      "source": "\r\nproc main\r\nwaitquiet 1 0\r\nendproc\r\n",
+      "source_sha256": "2ab916389b9790ba6e9786e4071758e70ffd7551bc65c12ef83a1338b19410de",
+      "hex": "00 cf d5 01 b5 01 01 b5 00 94",
+      "asx_sha256": "6b87a97e3d5ae797e2ebdaa068647b7d814d642c58cdf3755309221c2c608d5a",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "error": "operand",
+        "native_error": 1
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQOPTNEG",
+      "source": "\r\nproc main\r\nwaitquiet 1 -1\r\nendproc\r\n",
+      "source_sha256": "e566919b9c1ab9fec2033227774a69617bbf708aba02e3943ac817f347a27528",
+      "hex": "00 cf d5 01 b5 01 01 ab ff ff 94",
+      "asx_sha256": "22981f04aa518fa91a3db392e49ea44c768bd59c7c163d3ff3c62d22d1c9e189",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "error": "operand",
+        "native_error": 1
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQOPTFOR",
+      "source": "\r\ninteger statuscode,good,remaining\r\nproc main\r\nwaitquiet 1 FOREVER\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "123cf37454d433b072d1a7225660d40b93bb2b85303bbf91551a8fc2bd813f68",
+      "hex": "00 cf d5 01 b5 01 01 1a 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "ccbf51ddd3e6cbeed5c1d619ba39d59f2ee4cf9611d742df498d32fef53505f0",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQLOCAL",
+      "source": "\r\ninteger statuscode,good,remaining\r\nproc main\r\ninteger quiet = 1,total = 2\r\nwaitquiet quiet total\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "32add633280b0c430d03ca4697aa79b1d68bf607a81d14db2cd59b500ba9ec4f",
+      "hex": "00 d2 04 00 5c 00 a1 00 00 ab 01 00 79 00 5b 00 a1 02 00 ab 02 00 cf d5 01 a1 00 00 01 a1 02 00 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 95",
+      "asx_sha256": "57f16a718aa85669c345d94ff3b692d66a0387e155db9fdf04cc312bf923be38",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQPARM",
+      "source": "\r\ninteger statuscode,good,remaining\r\nproc main\r\ncall worker with 1 2\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\nproc worker\r\nintparm quiet,total\r\nwaitquiet quiet total\r\nendproc\r\n",
+      "source_sha256": "c796c744bedb19b5bc4be009584bbd1230f2062a3e4fcd25cad77c2e776c859a",
+      "hex": "00 cf d0 cc b5 01 cc b5 02 c8 24 00 00 00 d2 fc ff 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94 cf d5 01 97 0a 00 01 97 08 00 95",
+      "asx_sha256": "97f25727449a97b9482fc4fdf07e18781d08f417d8fb884d87996e2600daebf3",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "STATFOR",
+      "source": "integer outcome\r\nproc main\r\noutcome = FOREVER\r\nendproc\r\n",
+      "source_sha256": "1d5ba1ccf2212ed8c03a703cfa9435a5d27a932e0f25d9953b9ecbbb72e141f7",
+      "hex": "00 cf 5b 00 8d 00 6f 16 94",
+      "asx_sha256": "d0961ba5858e7628a5bc413df613408b8be0e13c7610088ba78fc0e73bf904cd",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 1
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "STATDATA",
+      "source": "integer outcome\r\nproc main\r\noutcome = COMDATA\r\nendproc\r\n",
+      "source_sha256": "6ebddc2b45dae0ee8c647612265aaaabf45e3380617ff0806fe58fb5c9589ecd",
+      "hex": "00 cf 5b 00 8d 00 6f 14 94",
+      "asx_sha256": "f2017b15f060063318d106953f9607bb744b8fd14dc75071d7ec06641e0ac749",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 3
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "414243",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "GCEMPTY",
+      "source": "integer outcome\r\nproc main\r\ncomgetc outcome\r\nendproc\r\n",
+      "source_sha256": "e574c958777d17af259b58ac4eb37bc0c3f11006301d8bf4e726a4ba3e045475",
+      "hex": "00 cf c9 8d 00 94",
+      "asx_sha256": "66ff5606a36f9440913fada403157d758bcc812b5a0f5b4255671cbd0259a5da",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 65535
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "GDDATA",
+      "source": "integer outcome\r\nproc main\r\ncomgetcd outcome\r\nendproc\r\n",
+      "source_sha256": "838a382d9565c180af5c7060a1fd68ddd6bed6a861f08d931bde537405db079c",
+      "hex": "00 cf ca 8d 00 94",
+      "asx_sha256": "d78f3d6e5a5951e8309dad0f389b75efd0f860c43119a3e1411a54dee514141a",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 26
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "1a",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RGFULL",
+      "source": "string buffer\r\ninteger statuscode,good,remaining\r\nproc main\r\nrget buffer 80 1\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "f0c12b91a435ddfcc6ecd071ad91de8b3f3c382583b8d2edb032db637209c3a2",
+      "hex": "01 cf ce 8c 00 01 b5 50 01 b5 01 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "52a8a585fdd4a50daf737461bf56db79e44a8a44ac7bf8efa48712424f62b79f",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0,
+        "string0": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "4141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RGBIN",
+      "source": "string buffer\r\ninteger first,second\r\ninteger statuscode,good,remaining\r\nproc main\r\nrget buffer 5 1\r\nstrpeek buffer 1 first\r\nstrpeek buffer 2 second\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "f6d0d4eed0f1f903b3d60ccde4441cbd1ebc17b3dda92aa4ce332e83de625494",
+      "hex": "01 cf ce 8c 00 01 b5 05 01 b5 01 b0 8c 00 b5 01 8d 00 b0 8c 00 b5 02 8d 01 5b 00 8d 02 6f 15 5b 00 8d 03 6f 1b 5b 00 8d 04 6f 14 94",
+      "asx_sha256": "76c8ede91e6546c975497e434ff31efa308eeb042e4ff515525d551fe932b263",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer2": 0,
+        "integer3": 1,
+        "integer4": 0,
+        "string0": "A",
+        "integer0": 0,
+        "integer1": 255
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "4100ff0d",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RGEMPTY",
+      "source": "string buffer\r\ninteger statuscode,good,remaining\r\nproc main\r\nrget buffer 80 1\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "f0c12b91a435ddfcc6ecd071ad91de8b3f3c382583b8d2edb032db637209c3a2",
+      "hex": "01 cf ce 8c 00 01 b5 50 01 b5 01 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "52a8a585fdd4a50daf737461bf56db79e44a8a44ac7bf8efa48712424f62b79f",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0,
+        "string0": ""
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "0d",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RGTIME",
+      "source": "string buffer\r\ninteger statuscode,good,remaining\r\nproc main\r\nrget buffer 80 1\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "f0c12b91a435ddfcc6ecd071ad91de8b3f3c382583b8d2edb032db637209c3a2",
+      "hex": "01 cf ce 8c 00 01 b5 50 01 b5 01 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "52a8a585fdd4a50daf737461bf56db79e44a8a44ac7bf8efa48712424f62b79f",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 1,
+        "integer1": 0,
+        "integer2": 0,
+        "string0": ""
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RGWRAP",
+      "source": "string buffer\r\ninteger statuscode,good,remaining\r\nproc main\r\nrget buffer 80 1\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "f0c12b91a435ddfcc6ecd071ad91de8b3f3c382583b8d2edb032db637209c3a2",
+      "hex": "01 cf ce 8c 00 01 b5 50 01 b5 01 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "52a8a585fdd4a50daf737461bf56db79e44a8a44ac7bf8efa48712424f62b79f",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 1,
+        "integer1": 0,
+        "integer2": 0,
+        "string0": ""
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 59,
+        "seconds_step": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQBURST",
+      "source": "\r\ninteger statuscode,good,remaining\r\nproc main\r\nwaitquiet 1 3\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "9d73c2d2bf62c717b0201cdda03e5f498fe9f641aa7776e43830dcdae1b27c62",
+      "hex": "00 cf d5 01 b5 01 01 b5 03 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "c4dfd7c94515076c3721f8488949d5ce112d91cfddd8f5dd733e1c95ce105987",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "41",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQSHORT",
+      "source": "\r\ninteger statuscode,good,remaining\r\nproc main\r\nwaitquiet 2 1\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "5024cbadd15e3ed4c7dad75b8b9a6e45ab776d12e51078682d0a60d87fbbbbe1",
+      "hex": "00 cf d5 01 b5 02 01 b5 01 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "2c5f80e542b547ea00c7b56832c609a22996b4e0b082c0d2671e3f203b32c1db",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 1,
+        "integer1": 0,
+        "integer2": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "41",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQFSTRM",
+      "source": "\r\ninteger statuscode,good,remaining\r\nproc main\r\nwaitquiet 2 FOREVER\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "c8c3c620398bce463f663797b624597e2dddf761eb33e5f1c644d76871e2c439",
+      "hex": "00 cf d5 01 b5 02 01 1a 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "b9b20ecd0c10d193b7e785f5c4670b26a25eb92296fc8c7c70761770b1efb761",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "41",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQTIE",
+      "source": "\r\ninteger statuscode,good,remaining\r\nproc main\r\nwaitquiet 1 1\r\nstatuscode = failure\r\ngood = success\r\nremaining = COMDATA\r\nendproc\r\n",
+      "source_sha256": "33d73011915f84594f9b14de3b1ad8feb63d66ff6a3bbafa562724a82bbcaae9",
+      "hex": "00 cf d5 01 b5 01 01 b5 01 5b 00 8d 00 6f 15 5b 00 8d 01 6f 1b 5b 00 8d 02 6f 14 94",
+      "asx_sha256": "16af0cacd09c20be8cb2e92c883e1b76f71c1a35bfdf6d9a93428a9c5567cabb",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WQZEROT",
+      "source": "\r\nproc main\r\nwaitquiet 0 0\r\nendproc\r\n",
+      "source_sha256": "2db1898534b79bca121a035ed4f04330bc532625d69a6e33ec157b15101e4207",
+      "hex": "00 cf d5 01 b5 00 01 b5 00 94",
+      "asx_sha256": "20aabe3da176f79aef270adc69bae0f1ceead514b4d49356095add4204dd86b0",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "error": "operand",
+        "native_error": 1
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "STATD0",
+      "source": "integer outcome\r\nproc main\r\noutcome = COMDATA\r\nendproc\r\n",
+      "source_sha256": "6ebddc2b45dae0ee8c647612265aaaabf45e3380617ff0806fe58fb5c9589ecd",
+      "hex": "00 cf 5b 00 8d 00 6f 14 94",
+      "asx_sha256": "f2017b15f060063318d106953f9607bb744b8fd14dc75071d7ec06641e0ac749",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 0,
+        "tick_step": 1,
+        "initial_seconds": 0,
+        "seconds_step": 0
+      },
+      "dos_excluded": false
+    }
+  ],
+  "compiler_only": [
+    {
+      "name": "STATFND",
+      "source": "integer outcome\r\nproc main\r\noutcome = FOUND\r\nendproc\r\n",
+      "source_sha256": "8624ab4899558ed2484dee7aa9f8a3ca12eb389d7fe6a809b97a84dcc5f25ef0",
+      "hex": "00 cf 5b 00 8d 00 6f 17 94",
+      "asx_sha256": "6e3f4d58a1240af4dd3a2fbb1d8587e6c6ac36e4d00d3c7583bbc7761ed1ceba",
+      "source_encoding": "cp437",
+      "expected": {},
+      "dos_excluded": true,
+      "dos_excluded_reason": "FOUND builtin23 reads unrelated E39C; this phase does not establish its producer semantics or wire it as a new general service."
+    },
+    {
+      "name": "RGZEROQ",
+      "source": "string buffer\r\nproc main\r\nrget buffer 0 1\r\nendproc\r\n",
+      "source_sha256": "3897806563fd835f98e3c4c9c06ff6704124483938cbbb6394d1fc26ec2418c5",
+      "hex": "01 cf ce 8c 00 01 b5 00 01 b5 01 94",
+      "asx_sha256": "f9da0cf747a1d944b28f045e52a5fc4cfa9abbf215d737bf2efcde4aaf80f4eb",
+      "source_encoding": "cp437",
+      "expected": {},
+      "dos_excluded": true,
+      "dos_excluded_reason": "Native max0 tests the endpointer rather than length and can overrun81-byte destination with an unterminated stream; queued-byte quirk is not executed in general VM corpus."
+    }
+  ],
+  "rejected": [
+    {
+      "name": "GCNONE",
+      "source": "\r\nproc main\r\ncomgetc\r\nendproc\r\n",
+      "source_sha256": "fb309b7a7c6f196bcfff36375dd20f12c570f505ca92fbdb6ac655b794eea3b1",
+      "errors": [
+        "Error C006 Line 3: Missing token"
+      ]
+    },
+    {
+      "name": "GCNUM",
+      "source": "\r\nproc main\r\ncomgetc 7\r\nendproc\r\n",
+      "source_sha256": "5081ccb613b352a6c87b7a5797c79d353e9c731d5f13f9f5b23e2bf0b106dcfb",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 7"
+      ]
+    },
+    {
+      "name": "GCLONG",
+      "source": "long outcome\r\nproc main\r\ncomgetc outcome\r\nendproc\r\n",
+      "source_sha256": "bcf65c6989a39a86d9c2c7f9a2e603edeab2f7947024d74408bf1b5580f5a80a",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> OUTCOME"
+      ]
+    },
+    {
+      "name": "GCSTR",
+      "source": "string outcome\r\nproc main\r\ncomgetc outcome\r\nendproc\r\n",
+      "source_sha256": "6573aa4cc01c1001b1cb2274f8c8a1b456b612b03657162ae431fbe9e2b2e888",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> OUTCOME"
+      ]
+    },
+    {
+      "name": "GCTIME",
+      "source": "integer outcome\r\nproc main\r\ncomgetc outcome 1\r\nendproc\r\n",
+      "source_sha256": "53bafef9ce43e63f9f342eee776d9623b17b18425f2a76bd5131fd102eac00ab",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "GDNONE",
+      "source": "\r\nproc main\r\ncomgetcd\r\nendproc\r\n",
+      "source_sha256": "51596eb60690de82c5b88edae7d3cb3d5508e7926b4da3855100f87c9c95e9f5",
+      "errors": [
+        "Error C006 Line 3: Missing token"
+      ]
+    },
+    {
+      "name": "GDNUM",
+      "source": "\r\nproc main\r\ncomgetcd 7\r\nendproc\r\n",
+      "source_sha256": "86d4fc15a4a410408d89600e7b0815f12acd9f57eda0950c30b5d85d59a91607",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 7"
+      ]
+    },
+    {
+      "name": "GDLONG",
+      "source": "long outcome\r\nproc main\r\ncomgetcd outcome\r\nendproc\r\n",
+      "source_sha256": "2cd7e42ef4164ce76901ed3a0d8c064b47a879e7b9a43790b67bc76355396199",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> OUTCOME"
+      ]
+    },
+    {
+      "name": "GDSTR",
+      "source": "string outcome\r\nproc main\r\ncomgetcd outcome\r\nendproc\r\n",
+      "source_sha256": "d433fa7dcaea12a02f7d8540539d3bc81903a583f1c3cf290ec210eaad332fe3",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> OUTCOME"
+      ]
+    },
+    {
+      "name": "GDTIME",
+      "source": "integer outcome\r\nproc main\r\ncomgetcd outcome 1\r\nendproc\r\n",
+      "source_sha256": "eb4d086ab7b757b6187bffe9b3812ca14ef994a47f405abbc796fcea1252da0b",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "RG3",
+      "source": "string buffer\r\nproc main\r\nrget buffer 1 2 3\r\nendproc\r\n",
+      "source_sha256": "f5e30a887e3f80966474ece12de649331ee5d4da9d5f74a0beb24438ea706c9b",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> 3"
+      ]
+    },
+    {
+      "name": "RG4",
+      "source": "string buffer\r\nproc main\r\nrget 1 buffer\r\nendproc\r\n",
+      "source_sha256": "68c1f9f584eb4394253a36b69def95bc29e0f3be1968d674c9c9fd5333e24010",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1",
+        "Error C021 Line 3: Invalid numeric variable or constant ==> BUFFER"
+      ]
+    },
+    {
+      "name": "RG5",
+      "source": "string buffer\r\nproc main\r\nrget buffer \"END\"\r\nendproc\r\n",
+      "source_sha256": "cd58732352d3f790e497a8067815b38fd7460fd26cff58e33f3d1ba3a2002986",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> END"
+      ]
+    },
+    {
+      "name": "RG6",
+      "source": "string buffer\r\nproc main\r\nrget buffer \"END\" 1\r\nendproc\r\n",
+      "source_sha256": "b3ae8f9eb438ee0d54881d271f397924e655f3def825ad8d7e8ea447a117476e",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> END"
+      ]
+    },
+    {
+      "name": "RG7",
+      "source": "string buffer\r\nproc main\r\nrget buffer 1 \"END\"\r\nendproc\r\n",
+      "source_sha256": "ec834d6804f432fcde5e2f15def2184c8461d54002cb21ad5f21c72ecbf24601",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> END"
+      ]
+    },
+    {
+      "name": "RG8",
+      "source": "string buffer\r\nproc main\r\nrget buffer 1 2 \"END\"\r\nendproc\r\n",
+      "source_sha256": "ebb50fe4c5a6449f22464df2cf6807679c06df35c1ce134aa44d4025768481c6",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> END"
+      ]
+    },
+    {
+      "name": "RG12",
+      "source": "string buffer\r\nproc main\r\nrget buffer 80 1 13\r\nendproc\r\n",
+      "source_sha256": "78723bfa39d8b269516b25b023db4724cfa6e25d9100f716db86f92238eb115f",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> 13"
+      ]
+    },
+    {
+      "name": "WQ5",
+      "source": "integer ticks\r\nproc main\r\nwaitquiet 32768\r\nendproc\r\n",
+      "source_sha256": "1d9e9b6c78c3c98906341bc751257dd2e30df6fc170ea99137f2271b606a74cf",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 32768"
+      ]
+    },
+    {
+      "name": "WQ6",
+      "source": "integer ticks\r\nproc main\r\nwaitquiet 1L\r\nendproc\r\n",
+      "source_sha256": "29ac0da32b08bda77bc66a35d34f72c4e55391e3c5c3bdbafef0309610bce549",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 1L"
+      ]
+    },
+    {
+      "name": "WQ7",
+      "source": "integer ticks\r\nproc main\r\nwaitquiet 1.0\r\nendproc\r\n",
+      "source_sha256": "a3083b08dd9ac6e50c54c4cd1e53769d742c984f917805a997540234be6b53c8",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 1.0"
+      ]
+    },
+    {
+      "name": "WQ10",
+      "source": "integer ticks\r\nproc main\r\nwaitquiet \"x\"\r\nendproc\r\n",
+      "source_sha256": "a30bc22aa9a4edda81c6557a2cdb60e875e58a4f95627368415880db61858107",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> x"
+      ]
+    },
+    {
+      "name": "GCSTAT",
+      "source": "integer outcome\r\nproc main\r\noutcome = comgetc\r\nendproc\r\n",
+      "source_sha256": "8c16b13691e86ff67b3587760f30e4d371c127119ed4789493907e095a64e1e8",
+      "errors": [
+        "Error C003 Line 3: Unexpected command ==> COMGETC",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "name": "GDSTAT",
+      "source": "integer outcome\r\nproc main\r\noutcome = comgetcd\r\nendproc\r\n",
+      "source_sha256": "2c77238821a84fdab9360d2d6155aa0eccc9b49a839bcb1e14e9d0bad86c62ff",
+      "errors": [
+        "Error C003 Line 3: Unexpected command ==> COMGETCD",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "name": "RGSTAT",
+      "source": "integer outcome\r\nproc main\r\noutcome = rget\r\nendproc\r\n",
+      "source_sha256": "2f52ac8ea6c8192983fabe0717cb2ba1cc0ebec22400c87915ecdf3076d5c1fc",
+      "errors": [
+        "Error C003 Line 3: Unexpected command ==> RGET",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "name": "WQSTAT",
+      "source": "integer outcome\r\nproc main\r\noutcome = waitquiet\r\nendproc\r\n",
+      "source_sha256": "e48080f192e6765f2f551d3e43f2a62bad7f62e069c5cac295cbbc82b6e9079a",
+      "errors": [
+        "Error C003 Line 3: Unexpected command ==> WAITQUIET",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "name": "RGLIT",
+      "source": "\r\nproc main\r\nrget \"LITERAL\" 5 1\r\nendproc\r\n",
+      "source_sha256": "164478577dd33910f2f1fbd2789b5f25008cb5608836063390082d655bcfb4b6",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> LITERAL"
+      ]
+    },
+    {
+      "name": "RGINT",
+      "source": "integer outcome\r\nproc main\r\nrget outcome 5 1\r\nendproc\r\n",
+      "source_sha256": "128b0b8ccbc2e86afbac77bf23c2b7b9ff63ed736620a9240e165737f1bb6265",
+      "errors": [
+        "Error C024 Line 3: Invalid string variable ==> OUTCOME"
+      ]
+    },
+    {
+      "name": "RGLONG",
+      "source": "long outcome\r\nproc main\r\nrget outcome 5 1\r\nendproc\r\n",
+      "source_sha256": "2b09318624db623ce7e9fc50180f8b0818cfaf6bba17d6930fe62f43f02f35f2",
+      "errors": [
+        "Error C024 Line 3: Invalid string variable ==> OUTCOME"
+      ]
+    },
+    {
+      "name": "RGTMWIDE",
+      "source": "string buffer\r\nproc main\r\nrget buffer 5 32768\r\nendproc\r\n",
+      "source_sha256": "737f16c66d9fb3c474236b12878c71230c1102e93d872a374a54f37fc224efa9",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 32768"
+      ]
+    },
+    {
+      "name": "RGTMLONG",
+      "source": "string buffer\r\nproc main\r\nrget buffer 5 1L\r\nendproc\r\n",
+      "source_sha256": "7df55110392fb0b0b24b4aa9e749952836220044a4f402c1e332812b886c8b9f",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 1L"
+      ]
+    },
+    {
+      "name": "RGTMFLT",
+      "source": "string buffer\r\nproc main\r\nrget buffer 5 1.0\r\nendproc\r\n",
+      "source_sha256": "e0038e8da09766ee323e410d4262e1d123f31914d9c48dfcdb8029f0d0e7bb49",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 1.0"
+      ]
+    },
+    {
+      "name": "RGMXLONG",
+      "source": "string buffer\r\nlong length\r\nproc main\r\nrget buffer length 1\r\nendproc\r\n",
+      "source_sha256": "2f6fce3dcf768061171761c21052eb7da7d72ee21e129a9b4a9fcd463c181f00",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> LENGTH"
+      ]
+    },
+    {
+      "name": "WQTMWIDE",
+      "source": "\r\nproc main\r\nwaitquiet 1 32768\r\nendproc\r\n",
+      "source_sha256": "9bdf0fe18681d7289a014b6503ae1e0672e2ea1b670749f554de71a99708c607",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 32768"
+      ]
+    },
+    {
+      "name": "WQTMFLT",
+      "source": "\r\nproc main\r\nwaitquiet 1 1.0\r\nendproc\r\n",
+      "source_sha256": "487ab3ae1bf1bdb5ca057c3702e5ca9b8c6802c08297199e6e4b481f3167d9d3",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 1.0"
+      ]
+    },
+    {
+      "name": "WQLONG",
+      "source": "long quiet\r\nproc main\r\nwaitquiet quiet 2\r\nendproc\r\n",
+      "source_sha256": "5c66f2970cd78950e40c01b5a279ea29e4c99ccdc4e7206caf144a96574e53fc",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> QUIET"
+      ]
+    }
+  ],
+  "expectation_model": "Authored predictions fixed before composed VM execution from retained native contracts. COMGETC immediatebyte/FFFF and COMGETCD <=36 observed BIOS lowword transitions; loaderD770 incrementsE382 afterD6EAreset, so effective display1/suppress1 means no default COMbyte echo. RGET max80/defaulttimeout30, timeout0 skipsloop/failure1, max0 pointer-limit quirk retained for safe empty case; CR terminates without storing CR, maxfull and CR completion setfailure0, timeoutfailure1. RGET binary bytes behindNUL independently exposed viaSTRPEEK; COMDATA reports remaining bytes. WAITQUIET defaultsquiet15,total30; numericquiet0 skipsloop/success; total0/negative faults native1; inputdrain resetsquiet, total continues, quiet completion wins simultaneous expiration. RGET bothoptions and WAITQUIET quiet FOREVER use genericbuiltin22=1; WAITQUIET total and WAITFOR timeout use specialenum1A indefinite. RGET DOS-seconds models use seconds_step0 for queued data and1 for timeouts; RGWRAP begins59. RX/clock fixtures are explicit diagnostic platform inputs, not physical modem timing or a production source setting.",
+  "native_evidence": [
+    "analysis/aspect-expression/rea-receive-01.json: resident50C7,52D0,6BB6",
+    "analysis/aspect-expression/rea-receive-03.json:5440,5431,5438,DD68",
+    "analysis/aspect-expression/rea-receive-04.json:FOREVER22 DA10 MOVAX1RET;COMDATA20 DA08;FOUND23 DA14",
+    "Native loaderD6EA+D770 effective echo-suppression lifetime, independently traced by root."
+  ],
+  "superseded": {
+    "corpus_sha256": "cbc087b560986b4dfb2cbdfad9b8191f662eee1fececb1e06d75a30c61b2a7c9",
+    "reason": "Maintained compiler byte comparison caught WAITQUIET totalFOREVER specialenum1A before composedexecution; initial model explanation overgeneralized genericFOREVER. Existing expected values unchanged, newWQFSTRM differentiates indefinite total."
+  },
+  "scope": "91 original compiler attempts56 accepted35 rejected;54 bounded modeled-serial runtime vectors2 compiler-only. Rejected reservedWAIT variable attempt and initial grammar attempts retained in compiler01/02 privately. No composed runtime outcomes inform these predictions; no whole compiler, renderer, event/capture or physical-modem claim."
+}

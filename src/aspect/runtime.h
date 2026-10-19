@@ -11,6 +11,7 @@ enum { ASPECT_RUN_OK=0,ASPECT_RUN_OPEN,ASPECT_RUN_HEADER,ASPECT_RUN_UNSUPPORTED,
 unsigned aspect_runtime_run(const char *path,unsigned step_limit);
 void runtime_set_error(unsigned error);
 unsigned runtime_console_cancel_poll(void);
+void runtime_console_emit_byte(unsigned value);
 extern unsigned runtime_error;
 extern unsigned runtime_integer_a[10],runtime_integer_b[128];
 extern unsigned long runtime_longs[128];

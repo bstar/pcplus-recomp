@@ -27,11 +27,15 @@ extern aspect_convert_atoi,aspect_convert_atol,aspect_convert_itoa,aspect_conver
 extern aspect_console_message,aspect_console_exit,aspect_console_pause,aspect_console_native_wait_second
 extern _runtime_console_emit_byte,_runtime_console_cancel_poll
 extern aspect_serial_transmit,aspect_serial_wait_for,aspect_serial_wait_status,aspect_serial_native_clock
+extern aspect_receive_comgetc,aspect_receive_comgetcd,aspect_receive_rget,aspect_receive_wait_quiet
+extern aspect_receive_native_seconds,aspect_receive_available_status,aspect_receive_forever
+extern _runtime_receive_character,_runtime_receive_begin
+%ifndef ASPECT_RUNTIME_SERIAL
+extern _runtime_receive_seconds
+%endif
 extern _runtime_serial_ready,_runtime_serial_send,_runtime_serial_receive,_runtime_serial_character_delay
 extern _runtime_serial_pause
-%ifdef ASPECT_RUNTIME_SERIAL
 extern _runtime_serial_wait_second
-%endif
 extern _runtime_error
 %ifndef ASPECT_RUNTIME_SERIAL
 extern _runtime_serial_clock
@@ -260,6 +264,10 @@ global aspect_operand_builtin_integer,aspect_operand_builtin_long
 aspect_operand_builtin_integer:
  push bp
  mov bp,sp
+ cmp word [bp+4],20
+ je .comdata
+ cmp word [bp+4],22
+ je .forever
  cmp word [bp+4],21
  je .status
  cmp word [bp+4],28
@@ -267,6 +275,12 @@ aspect_operand_builtin_integer:
  cmp word [bp+4],27
  jne unsupported
  call aspect_string_success
+ jmp short .done
+.comdata:
+ call aspect_receive_available_status
+ jmp short .done
+.forever:
+ call aspect_receive_forever
  jmp short .done
 .status:
  call aspect_string_status
@@ -305,7 +319,6 @@ global aspect_console_emit_byte,aspect_console_cancel_poll,aspect_console_wait_s
 aspect_console_emit_byte: jmp _runtime_console_emit_byte
 aspect_console_cancel_poll: jmp _runtime_console_cancel_poll
 aspect_console_wait_second:
-%ifdef ASPECT_RUNTIME_SERIAL
  call _runtime_serial_ready
  or ax,ax
  jz .native
@@ -314,7 +327,6 @@ aspect_console_wait_second:
  jnz fail
  ret
 .native:
-%endif
  jmp aspect_console_native_wait_second
 
 ; Maintained platform admission and bounded UART adapters. Missing serial
@@ -357,6 +369,63 @@ aspect_serial_clock: jmp _runtime_serial_clock
 serial_argument_adapter aspect_serial_pause_ticks,_runtime_serial_pause
 %endif
 
+; Receive handlers retain their original algorithms. The explicit raw device
+; adapter owns cooperative polling and cancellation, not terminal scheduling.
+runtime_receive_comgetc:
+ call _runtime_serial_ready
+ or ax,ax
+ jz unsupported
+ jmp aspect_receive_comgetc
+runtime_receive_comgetcd:
+ call _runtime_serial_ready
+ or ax,ax
+ jz unsupported
+ jmp aspect_receive_comgetcd
+runtime_receive_wait_quiet:
+ call _runtime_serial_ready
+ or ax,ax
+ jz unsupported
+ jmp aspect_receive_wait_quiet
+runtime_receive_rget:
+ call _runtime_serial_ready
+ or ax,ax
+ jz unsupported
+ mov ax,1
+ push ax
+ call _runtime_receive_begin
+ add sp,2
+ call aspect_receive_rget
+ xor ax,ax
+ push ax
+ call _runtime_receive_begin
+ add sp,2
+ ret
+global aspect_receive_seconds,aspect_receive_character,aspect_receive_raw_read
+%ifdef ASPECT_RUNTIME_SERIAL
+aspect_receive_seconds: jmp aspect_receive_native_seconds
+%else
+aspect_receive_seconds: jmp _runtime_receive_seconds
+%endif
+aspect_receive_raw_read:
+ xor ax,ax
+ push ax
+ call _runtime_serial_receive
+ add sp,2
+ ret
+aspect_receive_character:
+ push bp
+ mov bp,sp
+ push word [bp+6]
+ push word [bp+4]
+ call _runtime_receive_character
+ add sp,4
+ pop bp
+ cmp word [_runtime_error],0
+ je .done
+ mov ax,[_runtime_error]
+ jmp fail
+.done: ret 4
+
 SEGMENT _DATA public class=DATA use16
 GROUP DGROUP _DATA
 ; Maintained scanner data: only native ctype bit04 (decimal digit) is read.
@@ -378,6 +447,10 @@ aspect_convert_ctype:
 %1:
 %2: dw 0
 %endmacro
+global aspect_receive_clock_sample
+aspect_receive_clock_sample: times 4 dw 0
+scalar aspect_receive_display,_runtime_receive_display
+scalar aspect_receive_suppress_echo,_runtime_receive_suppress_echo
 scalar aspect_console_message_mode,_runtime_console_message_mode
 scalar aspect_serial_case_sensitive,_runtime_serial_case_sensitive
 scalar aspect_serial_wait_result,_runtime_serial_wait_result
@@ -575,6 +648,10 @@ aspect_dispatch_handlers:
  dw aspect_expr_branch_false_alias
 %elif op=0xbf
  dw runtime_serial_transmit
+%elif op=0xc9
+ dw runtime_receive_comgetc
+%elif op=0xca
+ dw runtime_receive_comgetcd
 %elif op=0xc6
  dw aspect_arith_bit_xor
 %elif op=0xc7
@@ -585,6 +662,8 @@ aspect_dispatch_handlers:
  dw aspect_parameter_push_numeric
 %elif op=0xcd
  dw aspect_parameter_push_string
+%elif op=0xce
+ dw runtime_receive_rget
 %elif op=0xcf
  dw aspect_flow_gate_decrement
 %elif op=0xd0
@@ -593,6 +672,8 @@ aspect_dispatch_handlers:
  dw aspect_flow_reserve_locals
 %elif op=0xd4
  dw runtime_serial_wait_for
+%elif op=0xd5
+ dw runtime_receive_wait_quiet
 %else
  dw unsupported
 %endif
