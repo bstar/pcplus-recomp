@@ -65,6 +65,11 @@ ORG 0xeafa
 %define script_file_strlen 0x8d18
 %else
 %define ASPECT_SCRIPT_FILE_UNIT 0
+%define aspect_script_file_slots _runtime_script_file_slots
+%define aspect_script_file_last _runtime_script_file_last
+%define aspect_script_file_keep_crlf _runtime_script_file_keep_crlf
+%define aspect_script_file_mode_flags _runtime_script_file_mode_flags
+%define aspect_script_file_mode_scratch _runtime_script_file_mode_pointer
 SEGMENT _TEXT public class=CODE use16
 global aspect_script_file_clear,aspect_script_file_close,aspect_script_file_flush
 global aspect_script_file_getc,aspect_script_file_gets,aspect_script_file_open

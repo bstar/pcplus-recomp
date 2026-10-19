@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "8439aba00c913b3d71709f25988fe9519adc6c6f1f344c90bcbd0d7c6f94acce",
-  "source_file_count": 2084,
+  "source_snapshot_sha256": "f80f4bd92b76b7c0c5a4faa6bbe0d85ff7bac924a1cdef938bd7c858811bb3db",
+  "source_file_count": 2094,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,14 +16,14 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "175df60b191f9f3b55292db29e3ea7ee105fb12caf0c21f65a9f57c957ec1c99",
+  "build_log_sha256": "94a8ef1682852ff753b28199b8ea1d184a0e5c8baff62fa59534a167df5faae2",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.3dzVZg/pcplus-source-proof-f56h8zll/checkout",
+  "source_checkout": "/tmp/nix-shell.Mfmdkl/pcplus-source-proof-8uara70f/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
-  "scope": "215 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
-  "output_count": 215,
+  "scope": "216 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+  "output_count": 216,
   "outputs": {
     "terminal/TERMINAL.EXE": {
       "sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
@@ -831,14 +831,19 @@
       "workspace_sha256": "aa680bd09c38f031f44a4fe0a1802b99cd5090fa8e61353a40a324b8efe51312"
     },
     "aspect-script-files/script_file_commands.obj": {
-      "sha256": "00f72388820489e5fdbb6083f4dcdbfe75605c719bd1a8259cade903be232890",
+      "sha256": "01ca10bf80da00b22a329ce71c72dcfac701228520f6673f35601291f0ab606c",
       "matches_workspace": true,
-      "workspace_sha256": "00f72388820489e5fdbb6083f4dcdbfe75605c719bd1a8259cade903be232890"
+      "workspace_sha256": "01ca10bf80da00b22a329ce71c72dcfac701228520f6673f35601291f0ab606c"
     },
     "aspect-script-files/script_file_services.obj": {
-      "sha256": "cfc53ebe0bb16fca7ff297516791fce3f25305c0dcbbb39804df9b71bd0096ca",
+      "sha256": "db77751ae2dbee109117e8afb665731b7cf9869e82bb75089d23f35f233f5969",
       "matches_workspace": true,
-      "workspace_sha256": "cfc53ebe0bb16fca7ff297516791fce3f25305c0dcbbb39804df9b71bd0096ca"
+      "workspace_sha256": "db77751ae2dbee109117e8afb665731b7cf9869e82bb75089d23f35f233f5969"
+    },
+    "aspect-script-file-backend/SCRIPTIO.EXE": {
+      "sha256": "8842725839a10989fac5f95c35598611ea14d5ff601c74e723da29ac5151d43b",
+      "matches_workspace": true,
+      "workspace_sha256": "8842725839a10989fac5f95c35598611ea14d5ff601c74e723da29ac5151d43b"
     },
     "aspect-compiler-lexer/ASPLEX.EXE": {
       "sha256": "36d94bc8e9d50f29356ec1984b697a55108863d8d98e2651a820604668042910",
@@ -1180,6 +1185,7 @@
     "standalone/build_aspect_end_wait_native.py",
     "standalone/build_aspect_paths.py",
     "standalone/build_aspect_script_files.py",
+    "standalone/build_aspect_script_file_backend.py",
     "standalone/build_aspect_compiler_lexer.py",
     "standalone/build_aspect_compiler_unit.py",
     "standalone/build_aspect_compiler_expression.py",
@@ -1232,6 +1238,7 @@
     "standalone/check_aspect_paths.py",
     "standalone/check_aspect_path_compiler.py",
     "standalone/check_aspect_script_files.py",
+    "standalone/check_aspect_script_file_backend.py",
     "standalone/package_dos.py"
   ]
 }

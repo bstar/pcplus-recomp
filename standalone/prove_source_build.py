@@ -68,6 +68,7 @@ builds.append('aspect_chain_native')
 builds.append('aspect_end_wait_native')
 builds.append('aspect_paths')
 builds.append('aspect_script_files')
+builds.append('aspect_script_file_backend')
 builds.append('aspect_compiler_lexer')
 builds.append('aspect_compiler_unit')
 builds.append('aspect_compiler_expression')
@@ -117,6 +118,7 @@ owner_checks.append('standalone/check_aspect_directory.py')
 owner_checks.append('standalone/check_aspect_paths.py')
 owner_checks.append('standalone/check_aspect_path_compiler.py')
 owner_checks.append('standalone/check_aspect_script_files.py')
+owner_checks.append('standalone/check_aspect_script_file_backend.py')
 owner_checks.append('standalone/package_dos.py')
 program+=''.join(f"subprocess.run(['python3',{name!r}],check=True)\n" for name in owner_checks)
 with (OUT/'build.log').open('w') as log:
@@ -163,6 +165,7 @@ outputs += ['aspect-paths/'+name+'.bin' for name in ('error_map','error_access',
 outputs += ['aspect-paths/'+name+'.obj' for name in ('path_commands','path_services','path_state','error_access','error_exec','map_error')]
 outputs += ['aspect-script-files/'+u['name']+'.bin' for u in json.loads((ROOT/'standalone/fixtures/aspect_script_file_native_units.json').read_text())['units']]
 outputs += ['aspect-script-files/script_file_commands.obj','aspect-script-files/script_file_services.obj']
+outputs += ['aspect-script-file-backend/SCRIPTIO.EXE']
 outputs += ['aspect-compiler-lexer/ASPLEX.EXE','aspect-compiler-unit/ASPINV.EXE']
 outputs += ['aspect-compiler-expression/ASPEXP.EXE']
 outputs += ['aspect-compiler-dos/ASPCOMP.EXE']

@@ -23,6 +23,11 @@ ORG 0xd97a
 %define aspect_string_compare_result 0xd124
 %else
 %define ASPECT_SCRIPT_FILE_SERVICE_UNIT 0
+%define aspect_script_file_slots _runtime_script_file_slots
+%define aspect_script_file_last _runtime_script_file_last
+%define aspect_script_file_check aspect_string_check_range
+%define aspect_script_file_error aspect_string_error
+%define aspect_script_file_fallback _runtime_script_file_fallback
 SEGMENT _TEXT public class=CODE use16
 global aspect_script_file_status,aspect_script_file_lookup,aspect_script_file_number
 extern aspect_string_bounded_integer,aspect_script_file_error,aspect_script_file_slots

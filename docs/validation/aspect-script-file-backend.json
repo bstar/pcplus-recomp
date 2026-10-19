@@ -1,0 +1,201 @@
+{
+  "passed": true,
+  "runtime_integrated": false,
+  "compiler_integrated": false,
+  "binary_sha256": "8842725839a10989fac5f95c35598611ea14d5ff601c74e723da29ac5151d43b",
+  "manifest_sha256": "e2271791f8a8a2e8599359c12dfa6b172a9101aee6572a81cd7ae468405848cb",
+  "DOS": {
+    "path": "build/aspect-script-file-backend/checks.json",
+    "sha256": "7cd5df9411490cbaaa1374b4612601e5f274e05fda73d64e12dd02423f15add5",
+    "checks": {
+      "passed": true,
+      "DOS_summary": "SCRIPT_FILES 7976 checks 0 failures",
+      "assertions": 7976,
+      "cycles": 100,
+      "simultaneous_slots": 6,
+      "binary_sha256": "8842725839a10989fac5f95c35598611ea14d5ff601c74e723da29ac5151d43b",
+      "heap_observation": {
+        "far_used_blocks": 0,
+        "near_used_blocks": 11,
+        "addresses_and_sizes_preserved": true,
+        "inherited_JFT_entries_preserved": 20
+      },
+      "manifest_sha256": "e2271791f8a8a2e8599359c12dfa6b172a9101aee6572a81cd7ae468405848cb",
+      "checker_sha256": "27e3641ac44d25c7b0213e85f833623a77bdb87b75da85643176a257145918a2",
+      "result_sha256": "a002015820f02c51d7e222cd4f46223ce4204fde4340fbdf7877dae3faec8875",
+      "original_inputs": [],
+      "files": {
+        "BINARY.BIN": {
+          "bytes": 336,
+          "sha256": "024d5c292e97415d597e5ce0daa982bc96e5a2944c050fe370e386eb40dda3e1"
+        },
+        "LINES.BIN": {
+          "bytes": 7,
+          "sha256": "0d7b74d879ca31b9e303970f52c319b763dee978c83a819439fcb5d5dc1a7e3c"
+        },
+        "TEXT.TXT": {
+          "bytes": 16,
+          "sha256": "9476dc8e939f668c65d43189cb721b610be57ffeb8cc83ad012e0cc2617ff6bf"
+        },
+        "SPARSE.BIN": {
+          "bytes": 70001,
+          "sha256": "f82dfdc0bcb7cc678d48bbb5ae8779260948041f600af22954f676767adaece0"
+        },
+        "REPLACE.BIN": {
+          "bytes": 8,
+          "sha256": "6da0633528deaa0144e7b058315f0b753ec0b945163a72bf96a0d18180f9de0d"
+        },
+        "BADCL.BIN": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "BADEND.BIN": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "GOODEND.BIN": {
+          "bytes": 4,
+          "sha256": "79f076abdd19a752db7267bfff2f9022161d120dea919fdaca2ffdfc24ca8c96"
+        },
+        "APPEND.BIN": {
+          "bytes": 12,
+          "sha256": "fb3621610095133173dae2ee0391bda91c06d2b95528b73e76947862f8b668f1"
+        },
+        "LONGTXT.BIN": {
+          "bytes": 85,
+          "sha256": "9ef187ea219c5c06bb966fca75897bb8607266758225fa3293a8fed510d810c9"
+        },
+        "SLOT0.BIN": {
+          "bytes": 5,
+          "sha256": "c501935a6b2b247d007e9860becbe4c13d6561af9fc8b73ba24c8b2a7a80cb22"
+        },
+        "SLOT1.BIN": {
+          "bytes": 5,
+          "sha256": "c501935a6b2b247d007e9860becbe4c13d6561af9fc8b73ba24c8b2a7a80cb22"
+        },
+        "SLOT2.BIN": {
+          "bytes": 5,
+          "sha256": "c501935a6b2b247d007e9860becbe4c13d6561af9fc8b73ba24c8b2a7a80cb22"
+        },
+        "SLOT3.BIN": {
+          "bytes": 5,
+          "sha256": "c501935a6b2b247d007e9860becbe4c13d6561af9fc8b73ba24c8b2a7a80cb22"
+        },
+        "SLOT4.BIN": {
+          "bytes": 5,
+          "sha256": "c501935a6b2b247d007e9860becbe4c13d6561af9fc8b73ba24c8b2a7a80cb22"
+        },
+        "SLOT5.BIN": {
+          "bytes": 5,
+          "sha256": "c501935a6b2b247d007e9860becbe4c13d6561af9fc8b73ba24c8b2a7a80cb22"
+        }
+      },
+      "scope": "Actual native13 handlers and3 helpers over real owned DOS stdio. Binary/text bytes, CRLF/controlZ, 32bit positions beyond64KiB, read-only errors, failed replacement, explicit and cleanup DOS-close faults, six-slot100-cycle near/far heap and JFT identity, guarded string writes. Typed operand/writeback/returning-warning/lowercase callbacks are test boundaries; actual interpreter/compiler/abort/CHAIN integration and original CRT equivalence remain separate.",
+      "run": "build/aspect-script-file-backend/tests/backend-06"
+    }
+  },
+  "native": {
+    "build/aspect-script-files/checks.json": {
+      "sha256": "49bc66b1036963e19cad5cc2cc48a62e4a1ddd5ab0ffdc6c27e5344707f6ea10",
+      "checks": {
+        "passed": true,
+        "cases": 5828,
+        "original_comparisons": 0,
+        "checker_sha256": "7594aaffcd97bf0f7571d028ed7459e809d51af420ab83784b9a2b90bddd275b",
+        "manifest_sha256": "04f7eaa2c971e71dbf9cb6b0d35a03241565a693df5edabdb7916bb47c8328a8",
+        "instruction_addresses": 301,
+        "scope": "Actual recovered13 file handlers and3 helpers with explicit operand/CRT/string/error-return models. Native slot-table, comparison, EOF destination, CRLF/controlZ and byte/count/long destination effects; full nonstack DS, stack and BP/SI/DI/DS=SS/DF checks. Models do not prove real stdio, fatal unwind, filesystem, arbitrary bytecode or integrated application behavior."
+      }
+    },
+    "build/aspect-script-files/native-checks.json": {
+      "sha256": "7cfe94e4f1dbc203bb967050d85c216b50795045a2ef10ad2bcf4bfd94cbd4ba",
+      "checks": {
+        "passed": true,
+        "cases": 5828,
+        "original_comparisons": 5828,
+        "checker_sha256": "7594aaffcd97bf0f7571d028ed7459e809d51af420ab83784b9a2b90bddd275b",
+        "manifest_sha256": "04f7eaa2c971e71dbf9cb6b0d35a03241565a693df5edabdb7916bb47c8328a8",
+        "instruction_addresses": 301,
+        "scope": "Actual recovered13 file handlers and3 helpers with explicit operand/CRT/string/error-return models. Native slot-table, comparison, EOF destination, CRLF/controlZ and byte/count/long destination effects; full nonstack DS, stack and BP/SI/DI/DS=SS/DF checks. Models do not prove real stdio, fatal unwind, filesystem, arbitrary bytecode or integrated application behavior."
+      }
+    }
+  },
+  "REA": {
+    "lifetime": {
+      "bundle_sha256": "7ae499cc3673bb640600e515a8745b513046bd57f98fee35bdde99b5b272ee0b",
+      "records": [
+        {
+          "operation": "procedure_pseudo_code",
+          "procedure": "0x1d770",
+          "evidence_id": "ev_8ff21649bd3d277b6ca23c7d15e7906e380bcad2d87b3318ecb71c9c666c3e01",
+          "target_sha256": "b0452a5c59c2d5dea631df90538b0e163f25b9aa86679855e5788b83f6338c35"
+        },
+        {
+          "operation": "procedure_pseudo_code",
+          "procedure": "0x1d804",
+          "evidence_id": "ev_b30359ddd225aedf9c5c6b0528ab423016250f590530ac366e6b029d835306f6",
+          "target_sha256": "b0452a5c59c2d5dea631df90538b0e163f25b9aa86679855e5788b83f6338c35"
+        },
+        {
+          "operation": "procedure_pseudo_code",
+          "procedure": "0x1d4d0",
+          "evidence_id": "ev_d7b6d1b1b0cda4408eed7653c42dd6ec108171417055a031f680b4d6f171cee5",
+          "target_sha256": "b0452a5c59c2d5dea631df90538b0e163f25b9aa86679855e5788b83f6338c35"
+        }
+      ]
+    },
+    "seek": {
+      "bundle_sha256": "7bf59c5ef62ea568a6a6c60a87cd51234c19ba52a05ffdee30211ad1e1c9b0d6",
+      "records": [
+        {
+          "operation": "procedure_assembly",
+          "procedure": "0x18c54",
+          "evidence_id": "ev_534309afc8be02d45154b208dfc333ed389be135b0feec6203c775517e7852c7",
+          "target_sha256": "6cea4652377db36867cf1a663e8e0d7bbf0c296e3cb5c86dd67b6e442bb7a194"
+        },
+        {
+          "operation": "procedure_assembly",
+          "procedure": "0x1853a",
+          "evidence_id": "ev_85b16cdbad382e57c4268091ab0a1575c7986b12b956279b512ad2738f3369a2",
+          "target_sha256": "6cea4652377db36867cf1a663e8e0d7bbf0c296e3cb5c86dd67b6e442bb7a194"
+        },
+        {
+          "operation": "procedure_assembly",
+          "procedure": "0x1a22e",
+          "evidence_id": "ev_86da97ffc48f7d0830f4353a86b85f6b14641b4bcf51397984dbd86b7da595a9",
+          "target_sha256": "6cea4652377db36867cf1a663e8e0d7bbf0c296e3cb5c86dd67b6e442bb7a194"
+        }
+      ]
+    }
+  },
+  "original_initializer": {
+    "unit": {
+      "name": "loader-state-defaults",
+      "overlay": 2,
+      "start": "d6ea",
+      "end_exclusive": "d770",
+      "source_file_offset": 59642,
+      "bytes": 134,
+      "sha256": "dd7553165bc18c450270216dce0fb53e4e1e4b8edebd299e15c95c36cdd1a3b7"
+    },
+    "assembly_sha256": "ffdb4fe4c375eb0214ead0946efef8a29c5180a371c44aff3907638d44654319",
+    "FGETS_CRLF_default": 1
+  },
+  "source_build_proof": {
+    "path": "docs/validation/application-components-source-build.json",
+    "sha256": "095c98c6ce63046d9ca67c3529cd8d80df27fe10a901cb87a6775feebf2aaf88",
+    "outputs": 216
+  },
+  "recorder_sha256": "45d9b6f479eb860d9c79701c09be9326c68a3cec364eb1a82ad7f850b6fd107c",
+  "whole_application_gates_closed": [],
+  "retained_failures": [
+    "backend-01: one negative absolute seek comparison failed.",
+    "backend-02 and backend-seek-probe-01: querying DOS position did not reproduce the original CRT negative-target guard; nativeA22E evidence then established the needed precheck."
+  ],
+  "remaining": [
+    "Both compilers and runtime dispatch; FGETS_CRLF SET/FETCH.",
+    "Actual VM completion/error/abort/cancel/EXECUTE and repeated invocations.",
+    "Terminal child handoffs and broader original CRT/borrowed-warning equivalence."
+  ],
+  "scope": "Native13 handlers/3helpers over owned real DOS stdio with declared typed operand/writeback/warning/lowercase fixture boundaries. Actual filesystem and backend finish API verified; packaged runtime still has76 supported slots."
+}

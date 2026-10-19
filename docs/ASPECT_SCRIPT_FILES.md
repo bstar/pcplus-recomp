@@ -55,10 +55,12 @@ They do not execute real filesystem operations or prove a real CRT backend.
 ./tools/dev --command make test-aspect-script-files
 ```
 
-Required next work is the owned six-slot backend and its native FILE adapters,
-real binary/text I/O and translation, resource cleanup on normal return, abort,
-CHAIN and repeated invocations, and borrowed-stream/fatal-warning policy.
-Then integrate the two compilers, the `EOF` destination and the `FGETS_CRLF`
+The [owned DOS backend](ASPECT_SCRIPT_FILE_BACKEND.md) now runs these handlers
+against real files in a linked diagnostic, including binary/text I/O, seeks,
+EOF/error flags and six-slot repeated cleanup. Required next work is actual
+interpreter lifecycle integration across normal return, abort and EXECUTE,
+deeper original CRT equivalence and borrowed-stream/fatal-warning policy.
+Integrate the two compilers, the `EOF` destination and the `FGETS_CRLF`
 setter, and run real DOS file contents/seek/EOF/failure tests and terminal child
 handoffs. Keep those checks on owned test media. No whole-application gate closes.
 

@@ -81,13 +81,21 @@ must exclude original executables and private install/configuration data.
 
 ## Current application work
 
+The [owned script-file backend](docs/ASPECT_SCRIPT_FILE_BACKEND.md) now runs the
+thirteen native handlers with actual DOS stdio. Its 7,976 assertions cover binary/
+text bytes, EOF/CRLF/control-Z, append, long/negative seeks, read-only writes,
+real DOS-close faults and 100 six-slot cleanup rounds with retained heap/JFT
+identity. REA's negative-seek guard corrected a real Watcom discrepancy. The
+backend is still a linked component: next connect both compilers, runtime
+dispatch/SET and real completion/abort/EXECUTE lifetimes and parent handoffs.
+
 The [script-file recovery](docs/ASPECT_SCRIPT_FILES.md) now supplies 572 exact
 native bytes for thirteen commands (including EOF) and three shared helpers.
 The 5,828 CPU cases and separate original replay cover slot/status/destination
 semantics; the original compiler oracle has 119 accepted and 110 rejected authored
 programs. This component is not yet wired into the maintained 76-slot runtime.
-Next implement its owned six-slot stdio backend and cleanup, compiler integration,
-FGETS_CRLF control and real DOS filesystem/terminal-child tests.
+The owned backend checkpoint above strengthens this with real DOS filesystem
+evidence; compiler/runtime/setting integration and terminal-child tests remain.
 
 The [ASPECT path commands](docs/ASPECT_PATHS.md) add native CHDIR, MKDIR, RMDIR
 and DELETE to both maintained compilers and the DOS child. The 210 exact native
