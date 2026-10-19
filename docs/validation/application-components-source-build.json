@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "dfc81acb40c3e4f7091c60a4f3bd930d739fe2c2e8122312409de96ed71962d6",
-  "source_file_count": 1493,
+  "source_snapshot_sha256": "8db99948a7ae914291d423b15d1081ba3b68900ac62effc5a7f459702fa2decf",
+  "source_file_count": 1536,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,14 +16,14 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "fb462c88b3b51eab804b65635502e3b5e43adc2118fc9ef943b3b0460cfe1113",
+  "build_log_sha256": "53975df94a697610dfbf9a484def8f8cbe606c1c160466e3f5537b6af0478893",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.b2houN/pcplus-source-proof-qs02asnv/checkout",
+  "source_checkout": "/tmp/nix-shell.yazK0o/pcplus-source-proof-kl7ru4rr/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
-  "scope": "64 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
-  "output_count": 64,
+  "scope": "65 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+  "output_count": 65,
   "outputs": {
     "terminal/TERMINAL.EXE": {
       "sha256": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
@@ -330,6 +330,11 @@
       "matches_workspace": true,
       "workspace_sha256": "aa2e5ea120ee97c32c1865c7b85343333c2dd9c5db99e771ad0ae1cd949e0441"
     },
+    "aspect-literal/LITERAL.EXE": {
+      "sha256": "bcd47845d6bea3a692599323095f29460a8dbecd15d57ecbd47f5c1358c5c1f2",
+      "matches_workspace": true,
+      "workspace_sha256": "bcd47845d6bea3a692599323095f29460a8dbecd15d57ecbd47f5c1358c5c1f2"
+    },
     "monitor/MONITOR.EXE": {
       "sha256": "766e8cb46c6edb3269cee3ea2a7896c03628f37e6fcfe7fc17938f834e13b377",
       "matches_workspace": true,
@@ -390,6 +395,7 @@
     "standalone/build_directory_context.py",
     "standalone/build_xlt_editor.py",
     "standalone/build_live_translation_child.py",
+    "standalone/build_aspect_literal.py",
     "standalone/check_batch_download.py",
     "standalone/check_batch_upload.py",
     "standalone/check_capture_file.py",

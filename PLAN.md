@@ -833,3 +833,21 @@ the separate patched instance was stopped after testing. This proves selected
 server-side correction workflows, not a DOS fix for unmodified remote boards.
 Physical modem/network timing, broader editor/transfer paths and all F01–F16
 whole-application gates remain open.
+
+## ASPECT compiler literal foundation
+
+The original compiler1.01 has a new91-case source-owned DOS oracle (73 accepted,
+18 rejected). REA identifies its source chunk counter and position-sensitive
+literal emitter. A maintained nonempty1..80-byte C payload codec now matches44
+whole-compiler vectors and725 original-instruction comparisons, with52 separate
+first-pass count cases. The source-owned diagnostic passes2,080 host checks and
+1,403 actual8086 DOS checks. A fresh tree reproduces65 byte-identical outputs
+without originals, including LITERAL.EXE; the interactive runtime remains731418bd.
+
+`docs/ASPECT_LITERAL.md` records the format, evidence IDs, Nix commands and limits;
+`docs/validation/aspect-literal.json` binds sources and results. The first probe's
+return-file redirection defect is explicit and excluded from success evidence.
+This component is not a source parser, whole compiler or application VM. Recover
+the ASX loader/dispatch/value/call state and command services next, then the full
+compiler/interpreter/recorder and every invocation/scheduling path. F13 and all
+other whole-application gates remain open.

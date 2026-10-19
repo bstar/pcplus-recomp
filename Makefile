@@ -3,6 +3,16 @@ MODULES := escape attributes screen text reports erase cursor_state cursor_shape
 
 all: serial parser keyboard $(MODULES) config-dos config-replace config-abi directory-browser directory-editor process download-file upload-file transfer-metadata batch-header transfer-session-composite transfer-storage terminal
 
+.PHONY: aspect-literal test-aspect-literal test-aspect-compat
+all: aspect-literal
+test: test-aspect-literal
+aspect-literal:
+	python3 standalone/build_aspect_literal.py
+test-aspect-literal:
+	python3 standalone/check_aspect_literal.py
+test-aspect-compat: test-aspect-literal
+	python3 standalone/check_aspect_literal_native.py --require-host --output analysis/aspect-compiler/native-make-$$(date +%s%N)
+
 .PHONY: config-abi test-config-abi test-directory test-ui-flow directory-browser test-directory-browser directory-editor test-directory-editor test-directory-replace test-directory-dos
 .PHONY: test-keymap test-keymap-dos test-key-actions-dos test-keyboard-mapping-raw translation test-translation test-translation-dos
 

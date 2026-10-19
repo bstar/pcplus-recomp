@@ -238,3 +238,11 @@ search passes 20 checks, with exact bytes, restored hardware, unchanged message
 count and one official download-count increment. The failed initial menu recipe
 is retained. No DOS code changed, and broader timing/physical modem and F04/F05/F08
 completion remain open.
+
+
+F13 now has a source-owned [nonempty ASPECT literal codec](ASPECT_LITERAL.md),
+with91 whole-compiler probes,44 exact payload vectors,725 native/C comparisons
+and52 native first-pass cases. The maintained component passes2,080 host and
+1,403 actual8086 DOS checks; it joins a65-output original-free source rebuild.
+This does not compile or execute a script. Full loader/VM/grammar/commands,
+recorder, floating runtime and application scheduling/invocations remain open.
