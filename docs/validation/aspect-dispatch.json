@@ -1,0 +1,182 @@
+{
+  "passed": true,
+  "sources": {
+    "src/aspect/dispatch.asm": "0da6d20b979b6da93dcf216835db0cc8fd11cab6c53fc442ce3b850d84fb9918",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "standalone/build_aspect_dispatch.py": "aa4eb76b8ce9b2217aea86d159db4894d08f82c6088da90e62ea39eadf6982a4",
+    "standalone/check_aspect_dispatch.py": "21952cbd95ca425d2ce2f9a1ed2f36ea7ffd6f5c8792778394d7dc4daac3043a",
+    "standalone/inventory_aspect_vm.py": "1b7cf1266b8d61f096e50fbba56a0353fe474b0fbdb45f7d26f24405d74731d0",
+    "standalone/inventory_aspect_keywords.py": "6d2c3bcc119d28a121a62ba3032efb1677e848474d1a43486f90401eea2b8d07",
+    "standalone/aspect_vm_probe.py": "3b6e07e81ebaee99b5a6057470b781a2158bc588469b3212a4342b5d9123950c",
+    "standalone/aspect_header_probe.py": "e183f3bbd6f35a991c2a724a4721752b22be06c493d4dc8dd5d6195f0f24e976",
+    "standalone/record_aspect_dispatch.py": "8d74a8a9b1f2f272a800a58656145cbdd70770a0ea792e774e4096bd06f0d9b3"
+  },
+  "local_evidence": {
+    "build/aspect-dispatch/manifest.json": "0f76d280b54456226c06af7fd504b5ed951bee324b75852b923db40016409a29",
+    "build/aspect-dispatch/checks.json": "925e832ad7bc0227079588bd56c8f331ea2f704506e6c4bd35abb3952cc9378f",
+    "build/aspect-dispatch/checks-native.json": "0a9e632eb6a53f73b8c503cff431d51d7c089147e64700e6d07ef1994cdfcbfb",
+    "analysis/aspect-vm/inventory-02.json": "03ebc4018c52510d19a87ad67ad5aaa9ab4bb33a3e281de7e2d552d47e44b42e",
+    "analysis/aspect-vm-runtime/flow-01/result.json": "bc728da2884aabb54c4c798cef2c22143f59f6c8aa8f715678d66dcbfe0b94b0",
+    "analysis/aspect-vm-runtime/false-01/result.json": "4072a3cfc01d5f34e58c81d9e8bb3918cc09f1fe4afe8227f2b8e14e0670302c",
+    "analysis/aspect-vm-runtime/header-02/report.json": "85e07e5520adc3dcf503cefcd3f1ed45f42762b7edf6d93ef2f1b0d4d8064844",
+    "analysis/aspect-vm-runtime/header-03/report.json": "eb29f0e57e5ea896a9ce938f317b4e2cf25ff5bd9258916414c7f1d8e56fff97",
+    "analysis/aspect-vm-runtime/keywords-02/inventory.json": "a5ad8f4973f45e877d690001b01ecca75bb5c5a1d0f8505baffd8a900418c536",
+    "analysis/aspect-vm/rea-loader-dispatch-01.json": "79de85bc5e41102678e945133ca9b99f759f58b12906937ba057642714902b52"
+  },
+  "diagnostic": {
+    "binary_sha256": "68288f66c17e188bbbae1813594639dd88eae5e050a483ae91af764f6aff7b4f",
+    "flat_sha256": "d2006fe5dd53b6416aec915c9bd58b4ae1a11fc003aafef090279fa2d37520a6",
+    "native_start": 19231,
+    "native_end_exclusive": 19455,
+    "sources": {
+      "src/aspect/dispatch.asm": "0da6d20b979b6da93dcf216835db0cc8fd11cab6c53fc442ce3b850d84fb9918",
+      "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+      "standalone/build_aspect_dispatch.py": "aa4eb76b8ce9b2217aea86d159db4894d08f82c6088da90e62ea39eadf6982a4"
+    },
+    "original_inputs": [],
+    "scope": "Exact recovered dispatcher only, source-owned callback backend; no opcode implementation or full VM"
+  },
+  "source_only_checks": {
+    "passed": true,
+    "cpu_cases": 590,
+    "DOS_summary": "ASPECT_DISPATCH 3616 checks 0 failures",
+    "flat_sha256": "d2006fe5dd53b6416aec915c9bd58b4ae1a11fc003aafef090279fa2d37520a6",
+    "binary_sha256": "68288f66c17e188bbbae1813594639dd88eae5e050a483ae91af764f6aff7b4f",
+    "optional_original": null,
+    "check_sha256": "21952cbd95ca425d2ce2f9a1ed2f36ea7ffd6f5c8792778394d7dc4daac3043a",
+    "original_inputs": [],
+    "scope": "Native dispatcher executes on CPU; linked8086 DOS callback diagnostic. All215 handler slots checked; real opcode handlers, CRT, loader, UI and file IO deliberately stubbed. Not full ASPECT VM."
+  },
+  "optional_native_comparison": {
+    "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "native_file_start": 23839,
+    "native_file_end_exclusive": 24063,
+    "native_sha256": "d2006fe5dd53b6416aec915c9bd58b4ae1a11fc003aafef090279fa2d37520a6",
+    "exact_bytes": 224,
+    "paired_cpu_cases": 590
+  },
+  "dispatch_inventory": {
+    "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "dispatch_table": {
+      "DS_offset": "4b08",
+      "file_offset": 173144,
+      "entries": 215,
+      "bytes": 430,
+      "sha256": "d4a2809aa4ed73ca6f66d3d2361d274617e6c9f0587bbebbdb08cc868d8e2fe4"
+    },
+    "resident_handlers": 48,
+    "overlay_handlers": 167,
+    "overlay_handler_counts": {
+      "3": 3,
+      "12": 6,
+      "16": 30,
+      "17": 62,
+      "18": 65,
+      "19": 1
+    },
+    "scope": "Static index with source-byte coordinate verification only. Function boundaries use retained REA exports; handler semantics/completeness and runtime reachability are not established by table membership."
+  },
+  "original_runtime": [
+    {
+      "case": "flow",
+      "checks": {
+        "compiled": true,
+        "expected_script_order": true,
+        "no_unselected_branch": true,
+        "terminal_resumed": true,
+        "keyboard_after_script": true,
+        "original_app_unchanged": true,
+        "returned_to_dos": true,
+        "source_install_unchanged": true
+      },
+      "original_application_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+      "original_compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+      "harness_sha256": "3b6e07e81ebaee99b5a6057470b781a2158bc588469b3212a4342b5d9123950c",
+      "source_sha256": "3501661e0dd335aa88f74abce076757e4a0341956ed9ec1c2aa45e90a4bb75b1",
+      "asx_sha256": "ce494225a96a8ccb48c1c84035ceee6c424fb8ccd129803b5cec8d75cb7d9834",
+      "serial_sha256": "3d260ef1783553770244495530cf57ddb1361a6b079286e6b288b681bd01bbda",
+      "returncode": 0,
+      "timed_out": false,
+      "scope": "Original unmodified PCPlus and ASPCOMP in DOSBox-X; source-owned script compiled and run by original startup VM, loopback emulated UART and BIOS keyboard; no maintained VM, real modem, hardware, or public BBS."
+    },
+    {
+      "case": "false",
+      "checks": {
+        "compiled": true,
+        "expected_script_order": true,
+        "no_unselected_branch": true,
+        "terminal_resumed": true,
+        "keyboard_after_script": true,
+        "original_app_unchanged": true,
+        "returned_to_dos": true,
+        "source_install_unchanged": true
+      },
+      "original_application_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+      "original_compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+      "harness_sha256": "3b6e07e81ebaee99b5a6057470b781a2158bc588469b3212a4342b5d9123950c",
+      "source_sha256": "377a0c8a20267a5045a5436ff9a18723f63d696377c9973f06055b964d0ed087",
+      "asx_sha256": "9c0d0a2016d54d29994a18337edea579c47769837477bd81bf6f855328c197bf",
+      "serial_sha256": "96376e5952a1c8d5ea7a2247e10ca22dfe4d1f35d3ae3c39ad6cf5161095ea07",
+      "returncode": 0,
+      "timed_out": false,
+      "scope": "Original unmodified PCPlus and ASPCOMP in DOSBox-X; source-owned script compiled and run by original startup VM, loopback emulated UART and BIOS keyboard; no maintained VM, real modem, hardware, or public BBS."
+    }
+  ],
+  "original_compiler_declarations": [
+    {
+      "cases": 114,
+      "accepted": 82,
+      "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+      "historical_harness_sha256": "5ac8d324737b7ef69e6238e2aa114964162ba86eb82ace7996541778e92177bc",
+      "scope": "Original compiler declaration/header oracle; source-owned scripts, no generated ASX executed, no original application or maintained compiler/VM behavior claimed."
+    },
+    {
+      "cases": 6,
+      "accepted": 6,
+      "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+      "historical_harness_sha256": "e183f3bbd6f35a991c2a724a4721752b22be06c493d4dc8dd5d6195f0f24e976",
+      "scope": "Original compiler declaration/header oracle; source-owned scripts, no generated ASX executed, no original application or maintained compiler/VM behavior claimed."
+    }
+  ],
+  "compiler_keyword_inventory": {
+    "table_count": 18,
+    "record_count": 637,
+    "command_records": 217,
+    "unique_command_tokens": 178,
+    "limits": [
+      "Static exact-original table inventory only; no compiler or VM execution performed here.",
+      "Field semantics beyond retained native evidence and independent compiler corpus remain unknown.",
+      "Application opcode slots, operand tokens and command names require separate decoder/context evidence.",
+      "Normal source-only build must not invoke this tool or read the original."
+    ],
+    "retained_rea_evidence": [
+      {
+        "id": "ev_1c0648f34cafacc7f1003ea13c60733961b97710f241fb5ed4c901a44dfd1c95",
+        "operation": "procedure_pseudo_code",
+        "parameters": {
+          "procedure": "FUN_1000_0547"
+        }
+      },
+      {
+        "id": "ev_dce9ff88b97a1bd6e02eb2c01bdd239335f924687fa71410becdc27c8725a915",
+        "operation": "procedure_pseudo_code",
+        "parameters": {
+          "procedure": "FUN_1000_2267"
+        }
+      },
+      {
+        "id": "ev_dd2f4258ffb188e9e30fa7faf22747c5d4208b1b93b97f168509bf879b7d0384",
+        "operation": "procedure_pseudo_code",
+        "parameters": {
+          "procedure": "FUN_1000_0f1b"
+        }
+      }
+    ]
+  },
+  "limits": [
+    "Only the dispatch loop is reconstructed here; the diagnostic substitutes every backend callback.",
+    "Original compiler/application runtime probes are baseline evidence, not maintained VM functionality.",
+    "Compiler-only declaration probes do not establish runtime allocation or malformed-input safety.",
+    "No full compiler, loader, VM, recorder, floating runtime or application script integration yet."
+  ]
+}

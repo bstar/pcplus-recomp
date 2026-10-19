@@ -851,3 +851,11 @@ This component is not a source parser, whole compiler or application VM. Recover
 the ASX loader/dispatch/value/call state and command services next, then the full
 compiler/interpreter/recorder and every invocation/scheduling path. F13 and all
 other whole-application gates remain open.
+
+ASPECT dispatch now has224 recovered native bytes,590 CPU scenarios and3,616
+linked8086 DOS assertions, with optional exact original comparison. Original
+application probes establish selected call/IF/WHILE behavior; declaration/header
+and keyword inventories constrain the next compiler/loader work. The diagnostic
+uses callback substitutes and cannot execute scripts. See
+`docs/ASPECT_DISPATCH.md`. It extends the original-free build to66 outputs;
+complete compiler/VM/recorder and F13 remain open.

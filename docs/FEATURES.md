@@ -246,3 +246,11 @@ and52 native first-pass cases. The maintained component passes2,080 host and
 1,403 actual8086 DOS checks; it joins a65-output original-free source rebuild.
 This does not compile or execute a script. Full loader/VM/grammar/commands,
 recorder, floating runtime and application scheduling/invocations remain open.
+
+F13 also has a source-built224-byte native dispatch loop,590 CPU scenarios and
+3,616 linked8086 DOS assertions. The loop's callbacks substitute real opcode,
+loader, file and UI services. Selected original application flow probes and120
+compiler declaration probes provide baseline evidence, while the keyword/table
+inventories bound further reconstruction. See [ASPECT_DISPATCH.md](ASPECT_DISPATCH.md).
+This component joins a66-output original-free rebuild; full ASPECT execution,
+compiler, recorder and all whole-application gates remain open.
