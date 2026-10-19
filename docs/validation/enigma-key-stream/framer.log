@@ -1,0 +1,1 @@
+{"passed":true,"checks":1638,"scope":"Deterministic key-framing oracle: all partitions, UTF8, byte conservation, bounded first-byte deadlines, raw takeover and close. Not a stock-server or DOS-client fix."}

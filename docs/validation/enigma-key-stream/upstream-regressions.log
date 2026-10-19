@@ -1,0 +1,183 @@
+
+
+  Client.end()
+    teardown runs once
+      ✔ leaves the current module exactly once
+      ✔ persists minutes online exactly once
+      ✔ disconnects the terminal exactly once
+      ✔ removes the theme listener exactly once
+      ✔ records that it has ended
+    the transport disconnect is not guarded
+      ✔ disconnects on every call
+      ✔ still disconnects when the first teardown threw
+      ✔ falls back to output.end() when there is no disconnect()
+      ✔ swallows a disconnect that throws, as it always has
+    the cases the teardown has to tolerate
+      ✔ ends a session that never reached a module
+      ✔ does not persist minutes online for an unauthenticated session
+      ✔ ends a session with no terminal
+    the removeClient loop
+      ✔ tears down once across end -> close -> removeClient -> end
+
+  ViewController: mapping actionKeys
+    ✔ binds every key an entry names
+    ✔ reports an unresolved @reference rather than dropping it quietly
+    ✔ names the form or prompt it came from
+    ✔ reports an entry that names no keys
+    ✔ survives a null entry
+    ✔ still binds the good entries around a bad one
+
+  ViewController: actionKeys through the real load path
+    ✔ loadFromMenuConfig binds the menu form keys
+    ✔ loadFromPromptConfig binds the prompt keys
+
+  MultiLineEditTextView — keyPressBackspace at col 0
+    ✔ is a no-op when cursor is at the very first line of the buffer
+    ✔ joins the current line onto the end of the previous line
+    ✔ lands the cursor at the column equal to the previous line length
+    ✔ does not merge across a hard-break boundary it did not start on
+    ✔ rewraps when the joined line exceeds view width
+    ✔ scrolls the document when the target line is above the visible window
+
+  MultiLineEditTextView — start/end of document
+    ✔ Ctrl-Home moves cursor to (0,0) and scrolls to top
+    ✔ Ctrl-End moves cursor to end of last line
+
+  MultiLineEditTextView — word navigation
+    ✔ word-left from inside a word jumps to word start
+    ✔ word-left from between words skips spaces then word
+    ✔ word-left at col 0 moves to end of previous line
+    ✔ word-left at document start is a no-op
+    ✔ word-right from inside a word jumps to start of next word
+    ✔ word-right at end of line wraps to next line start
+
+  MultiLineEditTextView — delete word
+    ✔ Ctrl-W deletes from cursor to start of current word
+    ✔ Ctrl-W with cursor in middle of word deletes back to word start
+    ✔ Ctrl-W at col 0 is a no-op
+    ✔ Ctrl-T deletes from cursor to start of next word
+    ✔ Ctrl-T at EOL is a no-op
+
+  MultiLineEditTextView — cut/paste (Ctrl-K / Ctrl-U)
+    ✔ Ctrl-K removes the current line and stores it in cutBuffer
+    ✔ sequential Ctrl-K presses accumulate lines
+    ✔ Ctrl-U pastes cutBuffer at cursor position
+    ✔ Ctrl-U is a no-op with empty cutBuffer
+
+  MultiLineEditTextView — live pipe codes
+    ✔ _hasPipeCodes detects |## and ignores non-numeric |XX
+    ✔ _renderLineForDisplay replaces |## with ANSI SGR and leaves other text
+    ✔ _renderLineForDisplay leaves non-numeric |XX sequences as literals
+    ✔ _bufferToDisplayCol returns buffer col unchanged when no pipe codes
+    ✔ _bufferToDisplayCol skips complete pipe codes (0 display width)
+    ✔ _bufferToDisplayCol handles two pipe codes on one line
+    ✔ keyPressRight skips a pipe code without terminal cursor movement (bufferCol+3)
+    ✔ keyPressLeft skips back over a pipe code without terminal cursor movement (bufferCol-3)
+    ✔ keyPressRight does NOT skip a partial pipe sequence (only | typed so far)
+    ✔ getData() returns raw pipe codes — round-trips unchanged
+
+  MultiLineEditTextView — _buildFindMatches
+    ✔ returns an empty array when the query is not found
+    ✔ returns a single match with correct line/display positions
+    ✔ is case-insensitive
+    ✔ returns all overlapping-start occurrences on one line
+    ✔ finds matches across multiple lines with correct lineIndex
+    ✔ searches display text — pipe codes are stripped before matching
+    ✔ returns correct displayStart for a match after a pipe code
+
+  MultiLineEditTextView — setFindQuery
+    ✔ sets _findState with query and match array
+    ✔ positions the cursor at the start of the first match
+    ✔ positions the cursor at the buffer column after a pipe code prefix
+    ✔ sets _findState with empty matches when query is not found
+    ✔ clears _findState when called with an empty string
+    ✔ getFindMatchCount reflects the active match count
+
+  MultiLineEditTextView — gotoFirstMatch
+    ✔ does NOT set _findState
+    ✔ positions the cursor at the first match without _findState
+    ✔ is a no-op for an empty query — _findState stays null, cursor unchanged
+    ✔ leaves cursor at (0,0) when query has no matches
+
+  MultiLineEditTextView — findNext / findPrev
+    ✔ findNext advances currentIndex to the next match
+    ✔ findNext wraps around from the last match to the first
+    ✔ findPrev decrements currentIndex
+    ✔ findPrev wraps from the first match to the last
+    ✔ findNext is a no-op when _findState is null
+    ✔ findPrev is a no-op when _findState is null
+    ✔ findNext positions cursor at the next match column
+
+  MultiLineEditTextView — clearFind
+    ✔ nulls _findState
+    ✔ is a no-op (does not throw) when _findState is already null
+
+  MultiLineEditTextView — setText clears active find
+    ✔ _findState is null after setText regardless of prior find
+
+  MultiLineEditTextView — _scrollToMatch positioning
+    ✔ centers the match vertically when the document is tall enough
+    ✔ clamps topVisibleIndex to 0 for matches near the document start
+    ✔ clamps topVisibleIndex so the last line stays visible
+
+  MultiLineEditTextView — wide character cursor math
+    _bufferToDisplayCol — wide chars
+      ✔ pure ASCII: buffer col equals display col
+      ✔ wide char contributes 2 display cols for 1 buffer pos
+      ✔ multiple wide chars accumulate correctly
+      ✔ pure CJK line: every buffer pos maps to even display col
+      ✔ tab chars each count as 1 display col (wcwidth returns -1 but we render as space)
+      ✔ mix of tab and wide chars accumulates correctly
+    _displayToBufferCol — wide chars
+      ✔ pure ASCII: display col equals buffer col
+      ✔ display col before wide char maps to that buffer position
+      ✔ display col inside wide char snaps to before the char
+      ✔ display col after wide char maps to next buffer position
+      ✔ round-trips: bufferToDisplay then displayToBuffer returns original buffer col
+      ✔ wide char in slow path (line with pipe codes) also snaps correctly
+    wide char wrapping in view
+      ✔ CJK text wraps at display-column boundary in the view buffer
+      ✔ cursor ends at correct buffer col after setText on CJK text
+    tab insertion with preceding wide chars
+      ✔ keyPressTab after a wide char inserts the correct number of tab chars to reach next stop
+      ✔ keyPressTab at col 0 (no preceding wide char) inserts tabWidth tab chars
+    wrap trigger with tabs and wide chars
+      ✔ typing a char that pushes a line with tabs over the display width triggers rewrap
+
+  MultiLineEditTextView — insertCharactersInText wide-char positioning
+    ✔ uses display column (not buffer index) for write-start goto after a wide char
+    ✔ uses display column for write-start when multiple wide chars precede the insert
+    ✔ pure ASCII line is unaffected — buffer col equals display col
+
+  MultiLineEditTextView — cursor stability after forward Delete
+    ✔ Delete at end-of-line joins + rewraps and leaves the cursor on a valid line
+    ✔ Delete at end-of-line followed by Backspace does not crash
+    ✔ forward Delete mid-paragraph keeps cursor valid after rewrap
+
+  MultiLineEditTextView — _clampCursorToBuffer
+    ✔ clamps cursorPos.col to current line length
+    ✔ clamps cursorPos.row to the last buffer line
+    ✔ clamps topVisibleIndex when it points past the buffer end
+    ✔ clamps negative cursorPos/topVisibleIndex to 0
+    ✔ lands cursorPos.col at 0 when the target line is empty
+    ✔ onKeyPress clamps before dispatch — Backspace with stranded col does not crash
+
+  ViewController client key-press attachment invariant (#712)
+    ✔ a single attached VC receives key presses
+    ✔ TWO attached VCs both receive the same key press (the #712 hazard)
+    ✔ detaching a VC stops key delivery to it — only the attached VC gets keys
+    ✔ detachClientEvents() removes the client key-press listener (no leak)
+
+  FSE _finishEditModeInit (#712)
+    ✔ fresh compose: redraws the footer then focuses the HEADER (never the body)
+    ✔ upload round-trip (_focusBodyAfterInit): redraws the footer then focuses the BODY
+    ✔ focuses the header only after the footer redraw completes
+
+  FSE _returnFocusToBody (#712)
+    ✔ detaches the header (setFocus(false)) before focusing the body
+    ✔ is safe when the header is not attached (still just focuses the body)
+    ✔ does nothing to a header that does not exist (overlay-only forms)
+
+
+  123 passing (31ms)
+

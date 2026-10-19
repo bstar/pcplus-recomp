@@ -199,3 +199,18 @@ failures; explicit30 ms buffering passes all seven audit checks. Keyboard
 recipe, synthetic PRM, serial settings and decoder are unchanged between these
 runs. This supports the same local workaround, without physical-modem evidence
 or a guarantee that TCP preserves a buffered write.
+
+## Isolated incremental keyboard parser experiment
+
+The pinned stock Client independently reproduces 74 fragmented key-event
+failures and nine editor-state failures. An isolated server-side prototype now
+passes 112 Client/editor checks against stock unfragmented baselines, including
+those splits, while 1,638 deterministic framing checks and 123 selected upstream
+regressions pass. The real multi-line editor verifies Left/Home insertion and
+Insert overwrite. The running stock fixture and DOS executable are unchanged.
+
+See [the patch, reproduction command and limits](patches/enigma-key-stream/README.md)
+and [frozen evidence](../../docs/validation/enigma-key-stream/report.json).
+This uses synthetic streams/configuration rather than a running patched BBS.
+The 100 ms deadline, raw transfer transitions and physical-network behavior
+still need end-to-end evaluation; the stock BBS interaction issue stays open.

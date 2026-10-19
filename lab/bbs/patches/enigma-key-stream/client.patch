@@ -1,0 +1,65 @@
+diff --git a/core/client.js b/core/client.js
+index b282386..f360768 100644
+--- a/core/client.js
++++ b/core/client.js
+@@ -45,6 +45,7 @@ const UserProps = require('./user_property.js');
+ 
+ //  deps
+ const stream = require('stream');
++const { KeyStream } = require('./key_stream.js');
+ const assert = require('assert');
+ const _ = require('lodash');
+ 
+@@ -145,12 +146,16 @@ function Client(/*input, output*/) {
+     });
+ 
+     this.setTemporaryDirectDataHandler = function (handler) {
++        this.keyStream.reset();
++        this.directDataHandler = handler;
+         this.dataPassthrough = true; //  let implementations do with what they will here
+         this.input.removeAllListeners('data');
+         this.input.on('data', handler);
+     };
+ 
+     this.restoreDataHandler = function () {
++        this.keyStream.reset();
++        this.directDataHandler = null;
+         this.dataPassthrough = false;
+         this.input.removeAllListeners('data');
+         this.input.on('data', this.dataHandler);
+@@ -318,7 +323,7 @@ function Client(/*input, output*/) {
+         }[code];
+     };
+ 
+-    this.on('data', function clientData(data) {
++    const decodeKeyboardData = function clientData(data, ignoredAtReceipt = false) {
+         //  create a uniform format that can be parsed below
+         if (data[0] > 127 && undefined === data[1]) {
+             data[0] -= 128;
+@@ -468,12 +473,17 @@ function Client(/*input, output*/) {
+ 
+                 self.lastActivityTime = Date.now();
+ 
+-                if (!self.ignoreInput) {
++                if (!self.ignoreInput && !ignoredAtReceipt) {
+                     self.emit('key press', ch, key);
+                 }
+             }
+         });
++    };
++    this.keyStream = new KeyStream(decodeKeyboardData, {
++        raw: () => (self.dataPassthrough ? self.directDataHandler : null),
++        ignored: () => !!self.ignoreInput,
+     });
++    this.on('data', data => this.keyStream.write(data));
+ }
+ 
+ require('util').inherits(Client, stream);
+@@ -640,6 +650,7 @@ Client.prototype.restoreIdleLogoutSeconds = function () {
+ Client.prototype.end = function () {
+     if (!this.clientEnded) {
+         this.clientEnded = true;
++        this.keyStream.close();
+ 
+         if (this.term) {
+             this.term.disconnect();

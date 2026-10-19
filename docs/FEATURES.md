@@ -219,3 +219,12 @@ workflows pass; 64 outputs rebuild byte-identically without originals. See
 [ZMODEM_AUTOSTART.md](ZMODEM_AUTOSTART.md). The ENiGMA fragmented-key issue,
 other invitation forms, wider protocols/UI, ASPECT, Host, physical peers and
 all F01–F16 whole-application gates remain open.
+
+
+The isolated [ENiGMA keyboard experiment](../lab/bbs/patches/enigma-key-stream/README.md)
+adds actual Client/editor evidence for the chunk-local decoder boundary: 74 stock
+key-event and nine editor-state failures are reproduced; the candidate passes
+112 checks against stock unfragmented results, 1,638 framing checks and 123
+selected upstream regressions. This changes no DOS code or running stock server.
+Patched-server/DOS/transfer integration and physical modem validation remain
+open, so it does not resolve the stock interaction issue or close F04/F05.

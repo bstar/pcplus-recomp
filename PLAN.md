@@ -797,3 +797,21 @@ grows. Canonical invitations are implemented; binary/noncanonical automatic
 invites, persisted resume, broader timing/physical modem testing, remaining
 protocols/emulations/UI, ASPECT and Host remain required. The ENiGMA fragmented
 key interaction remains unresolved. No F01–F16 gate is closed by this component.
+
+## ENiGMA incremental keyboard experiment
+
+A separately exported candidate of pinned ENiGMA revision 6c253171 reproduces
+and addresses chunk-local keyboard decoding without changing the running stock
+fixture or DOS runtime 731418bd. Actual stock Client checks demonstrate 74 key
+event and nine editor-state fragmentation failures. The candidate passes 112
+Client/editor checks against stock unfragmented baselines, 1,638 deterministic
+framing checks and 123 selected upstream regressions. A broader parity test
+caught and corrected an Escape-prefixed UTF-8 regression in the first prototype.
+
+`lab/bbs/patches/enigma-key-stream/README.md` provides the isolated patch and
+pinned Nix reproduction command; `docs/validation/enigma-key-stream/report.json`
+binds inputs, source identities and logs. The 100 ms ambiguous-input policy and
+raw-owner lifecycle remain experimental. A separately configured patched-server
+DOS session, post-editor transfer checks, physical modem validation and remote
+stock BBS compatibility remain required. This is server-side evidence, not a
+DOS-client fix, and no F01–F16 gate closes.

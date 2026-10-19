@@ -1,0 +1,3 @@
+# Unified patch context and captured test output retain their exact bytes.
+lab/bbs/patches/**/*.patch -whitespace
+docs/validation/enigma-key-stream/*.log -whitespace

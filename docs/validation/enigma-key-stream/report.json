@@ -1,0 +1,314 @@
+{
+  "upstream_revision": "6c25317168b762f7d9088a54d3f8295438827a0e",
+  "node": "v24.18.1",
+  "inputs": {
+    "README.md": "26c87faaca1df2b075b8d0d00759c171af665005d764dffc4a1fc5b92e20c8e4",
+    "UPSTREAM-LICENSE.txt": "b8c4816f84a393de5c72fb42a8bd9c65361b2fd58a351bd1af2e2b6eefc622e1",
+    "check.py": "6aba723602252dfbbfe8625754792be2f8abb670d573b32f9a0de8a8b373e9d8",
+    "check_client.js": "275319a151dda708779304fe7a9f9f3f02470c3e9989cf0ce0d5f2fa7aa730bf",
+    "check_key_stream.js": "d18c7229a1e09f8add715e5ed6ae0b30f78165e61af4ab50660d160170fe562d",
+    "client.patch": "3cc681530604f55de31e4a4a4c877a65e1db1907ea7af45fda2cf3156e0d2c5e",
+    "key_stream.js": "daaac4d679b8562bfcd69b7345b7ec203169ea0f319d8dccd19c23fce261f1b4"
+  },
+  "nix_lock_sha256": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+  "upstream_package_lock_sha256": "8fcaecda3a4b1756ad295be95486cbdd5b9afea005949ac3da8822224c822d56",
+  "stock_client_sha256": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+  "candidate_client_sha256": "8cb3b4c8d439e0c43a09d9caf87b69560b3df1b51de053d70f2dc9b6dc9ea31b",
+  "candidate_key_stream_sha256": "daaac4d679b8562bfcd69b7345b7ec203169ea0f319d8dccd19c23fce261f1b4",
+  "scope": "Isolated Client/editor experiment; not a running BBS or DOS/physical-modem compatibility claim",
+  "tests": [
+    {
+      "name": "framer",
+      "exit_code": 0,
+      "log_sha256": "62d94ae08bd21627306fe5b479baadc19622bb7227c30a2cb7e77ffc0531ffcd",
+      "result": {
+        "passed": true,
+        "checks": 1638,
+        "scope": "Deterministic key-framing oracle: all partitions, UTF8, byte conservation, bounded first-byte deadlines, raw takeover and close. Not a stock-server or DOS-client fix."
+      }
+    },
+    {
+      "name": "stock-counterexample",
+      "exit_code": 0,
+      "log_sha256": "7949dc84bf9fa1d0d5d39a1311b875f0276f1a4ab89faa3fd74aba9932e7e9e6",
+      "result": {
+        "passed": true,
+        "stock_baselines": {
+          "\u001b[A": [
+            {
+              "name": "up arrow",
+              "seq": "\u001b[A"
+            }
+          ],
+          "\u001b[B": [
+            {
+              "name": "down arrow",
+              "seq": "\u001b[B"
+            }
+          ],
+          "\u001b[D": [
+            {
+              "name": "left arrow",
+              "seq": "\u001b[D"
+            }
+          ],
+          "\u001b[H": [
+            {
+              "name": "home",
+              "seq": "\u001b[H"
+            }
+          ],
+          "\u001b[2~": [
+            {
+              "name": "insert",
+              "seq": "\u001b[2~"
+            }
+          ],
+          "\u001b[4~": [
+            {
+              "name": "end",
+              "seq": "\u001b[4~"
+            }
+          ],
+          "\u001b[5~": [
+            {
+              "name": "page up",
+              "seq": "\u001b[5~"
+            }
+          ],
+          "\u001bOA": [
+            {
+              "name": "up arrow",
+              "seq": "\u001bOA"
+            }
+          ],
+          "\u001b[1;5A": [
+            {
+              "name": "ctrl + up arrow",
+              "seq": "\u001b[1;5A"
+            }
+          ],
+          "\u001b[[A": [
+            {
+              "name": "f1",
+              "seq": "\u001b[[A"
+            }
+          ],
+          "\u00e9": [
+            {
+              "ch": "\u00e9"
+            }
+          ],
+          "\u20ac": [
+            {
+              "ch": "\u20ac"
+            }
+          ],
+          "\ud83d\ude00": [
+            {
+              "ch": "\ud83d"
+            },
+            {
+              "ch": "\ude00"
+            }
+          ],
+          "\u001b\u00e9": [],
+          "\u001b\u20ac": [],
+          "\u001b\ud83d\ude00": [
+            {
+              "ch": "\ude00"
+            }
+          ],
+          "\u001b[25;80R": [
+            {
+              "cpr": [
+                25,
+                80
+              ]
+            }
+          ],
+          "\u001b[DZ": {
+            "text": [
+              "ABCZD"
+            ],
+            "cursor": {
+              "row": 0,
+              "col": 4
+            },
+            "mode": "insert"
+          },
+          "\u001b[HZ": {
+            "text": [
+              "ZABCD"
+            ],
+            "cursor": {
+              "row": 0,
+              "col": 1
+            },
+            "mode": "insert"
+          },
+          "\u001b[H\u001b[2~Z": {
+            "text": [
+              "ZBCD"
+            ],
+            "cursor": {
+              "row": 0,
+              "col": 1
+            },
+            "mode": "overtype"
+          }
+        },
+        "fixed": false,
+        "checks": 109,
+        "demonstrated_fragmentation_failures": 74,
+        "editor_fragmentation_failures": 9,
+        "scope": "Actual pinned ENiGMA Client with synthetic stream/config, key and CPR events, raw takeover, restore and close. No stock-server mutation or DOS-client fix claim."
+      }
+    },
+    {
+      "name": "candidate-client-editor",
+      "exit_code": 0,
+      "log_sha256": "90eb0b558a5a9ccb79f79d77d501047be0aa0b552873e51b146ef0ad58abf083",
+      "result": {
+        "passed": true,
+        "stock_baselines": {
+          "\u001b[A": [
+            {
+              "name": "up arrow",
+              "seq": "\u001b[A"
+            }
+          ],
+          "\u001b[B": [
+            {
+              "name": "down arrow",
+              "seq": "\u001b[B"
+            }
+          ],
+          "\u001b[D": [
+            {
+              "name": "left arrow",
+              "seq": "\u001b[D"
+            }
+          ],
+          "\u001b[H": [
+            {
+              "name": "home",
+              "seq": "\u001b[H"
+            }
+          ],
+          "\u001b[2~": [
+            {
+              "name": "insert",
+              "seq": "\u001b[2~"
+            }
+          ],
+          "\u001b[4~": [
+            {
+              "name": "end",
+              "seq": "\u001b[4~"
+            }
+          ],
+          "\u001b[5~": [
+            {
+              "name": "page up",
+              "seq": "\u001b[5~"
+            }
+          ],
+          "\u001bOA": [
+            {
+              "name": "up arrow",
+              "seq": "\u001bOA"
+            }
+          ],
+          "\u001b[1;5A": [
+            {
+              "name": "ctrl + up arrow",
+              "seq": "\u001b[1;5A"
+            }
+          ],
+          "\u001b[[A": [
+            {
+              "name": "f1",
+              "seq": "\u001b[[A"
+            }
+          ],
+          "\u00e9": [
+            {
+              "ch": "\u00e9"
+            }
+          ],
+          "\u20ac": [
+            {
+              "ch": "\u20ac"
+            }
+          ],
+          "\ud83d\ude00": [
+            {
+              "ch": "\ud83d"
+            },
+            {
+              "ch": "\ude00"
+            }
+          ],
+          "\u001b\u00e9": [],
+          "\u001b\u20ac": [],
+          "\u001b\ud83d\ude00": [
+            {
+              "ch": "\ude00"
+            }
+          ],
+          "\u001b[25;80R": [
+            {
+              "cpr": [
+                25,
+                80
+              ]
+            }
+          ],
+          "\u001b[DZ": {
+            "text": [
+              "ABCZD"
+            ],
+            "cursor": {
+              "row": 0,
+              "col": 4
+            },
+            "mode": "insert"
+          },
+          "\u001b[HZ": {
+            "text": [
+              "ZABCD"
+            ],
+            "cursor": {
+              "row": 0,
+              "col": 1
+            },
+            "mode": "insert"
+          },
+          "\u001b[H\u001b[2~Z": {
+            "text": [
+              "ZBCD"
+            ],
+            "cursor": {
+              "row": 0,
+              "col": 1
+            },
+            "mode": "overtype"
+          }
+        },
+        "fixed": true,
+        "checks": 112,
+        "demonstrated_fragmentation_failures": 0,
+        "editor_fragmentation_failures": 0,
+        "scope": "Actual pinned ENiGMA Client with synthetic stream/config, key and CPR events, raw takeover, restore and close. No stock-server mutation or DOS-client fix claim."
+      }
+    },
+    {
+      "name": "upstream-regressions",
+      "exit_code": 0,
+      "log_sha256": "7cd11875bf1c12a961ec4b7b77314fe675266a38495be64227d0b811c066da88"
+    }
+  ],
+  "passed": true,
+  "stock_client_unchanged": true
+}
