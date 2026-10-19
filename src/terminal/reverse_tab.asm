@@ -8,6 +8,7 @@ extern screen_cursor_wrap,screen_attribute_checks,screen_reverse_wrap_blocked
 extern screen_cursor_row,screen_cursor_column,screen_first_row,screen_last_row
 extern screen_attribute_offset,screen_attribute_cells,screen_line_flags,erase_cell_count
 extern scroll_enabled,scroll_suppress_next_linefeed
+extern attribute_repair_admit
 global terminal_key_reverse_tab_admit_far,terminal_key_reverse_tab_far,reverse_tab_protected_home
 
 terminal_key_reverse_tab_admit_far:
@@ -116,13 +117,15 @@ terminal_key_reverse_tab_admit_far:
  cmp dx,79
  jne .admit
  ; A native Right at this marker wraps. Suppressed linefeed leaves offsets
- ; stale, and protected scrolling reaches unrecovered attribute-repair APIs.
+ ; stale. Scrolling requires admitted metadata/value backing for real repair.
  cmp word [scroll_suppress_next_linefeed],0
  jne .reject
  cmp ax,[screen_last_row]
  jne .admit
  cmp word [scroll_enabled],0
- jne .reject
+ je .admit
+ call attribute_repair_admit
+ jc .reject
 .admit:
  xor ax,ax
  jmp .done

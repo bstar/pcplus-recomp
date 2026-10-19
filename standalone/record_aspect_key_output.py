@@ -20,9 +20,10 @@ def main():
         ('build/terminal-key-output/edit-checks.json', 'standalone/check_terminal_key_edit.py', 'binary_sha256', terminal),
         ('build/terminal-key-output/reverse-tab-checks.json', 'standalone/check_terminal_reverse_tab.py', 'binary_sha256', terminal),
         ('build/attribute-boundary/checks.json', 'standalone/check_attribute_boundary.py', None, None),
+        ('build/attribute-repair/live-checks.json', 'standalone/check_attribute_repair_live.py', 'binary_sha256', terminal),
         ('build/terminal-key-output/native-echo.json', 'standalone/check_keyboard_echo_native.py', None, None),
         ('build/aspect-keyboard/key-client-checks.json', 'standalone/check_aspect_key_client.py', 'runner_sha256', runner),
-        ('build/aspect-keys-dos/reverse-tab-01/checks.json', 'standalone/test_aspect_keys_dos.py', 'runner_sha256', runner),
+        ('build/aspect-keys-dos/attribute-repair-01/checks.json', 'standalone/test_aspect_keys_dos.py', 'runner_sha256', runner),
         ('build/aspect-keyboard/checks.json', 'standalone/check_aspect_keyboard.py', 'runner_sha256', runner),
         ('build/aspect-source-compile/checks.json', 'standalone/check_aspect_source_compile.py', 'runner_sha256', runner),
         ('build/aspect-source-serial-dos/checks.json', 'standalone/check_aspect_source_serial_dos.py', 'runner_sha256', runner),
@@ -63,17 +64,17 @@ def main():
         regressions.append(dict(path=path, sha256=sha(path), checker_sha256=sha(checker),
                                 cases=len(data['cases']), scope=data['scope']))
     bbs = []
-    sync_path = 'build/bbs-lab/script-login/reverse-tab-sync-01/checks.json'
+    sync_path = 'build/bbs-lab/script-login/attribute-repair-sync-01/checks.json'
     sync = json.loads((ROOT / sync_path).read_text())
     assert sync['passed'] and all(sync['checks'].values())
     assert sync['terminal_sha256'] == terminal and sync['runner_sha256'] == runner
     bbs.append(dict(server='stock Synchronet', path=sync_path, sha256=sha(sync_path), checks=sync['checks']))
-    enigma_path = 'build/bbs-lab/results/enigma/reverse-tab-enigma-transfer-01-wrapper/experiment.json'
+    enigma_path = 'build/bbs-lab/results/enigma/attribute-repair-enigma-transfer-02-wrapper/experiment.json'
     enigma = json.loads((ROOT / enigma_path).read_text())
     assert enigma['passed'] and enigma['inputs_unchanged']
     assert enigma['input_hashes']['build/terminal/TERMINAL.EXE'] == terminal
     assert enigma['message_count_before'] == enigma['message_count_after']
-    transfer_path = 'build/bbs-lab/results/enigma/reverse-tab-enigma-transfer-01/result.json'
+    transfer_path = 'build/bbs-lab/results/enigma/attribute-repair-enigma-transfer-02/result.json'
     transfer = json.loads((ROOT / transfer_path).read_text())
     assert transfer['passed'] and all(transfer['checks'].values())
     assert transfer['binary_sha256'] == terminal
@@ -86,9 +87,10 @@ def main():
         original_inputs=[], whole_application_gates_closed=[],
         retained_fixture_failures=[dict(label='shared-keys-02', reason='Cursor prediction omitted three displayed END characters.'),
                                   dict(label='shared-keys-04', reason='Enhanced Home was incorrectly expected to perform legacy Home echo; corrected fixture explicitly selects STANDARD BIOS.'),
-                                  dict(label='half-edit-source-proof', reason='New55-case checker passed but could not write its report in a fresh checkout; corrected independent output-directory creation.')],
+                                  dict(label='half-edit-source-proof', reason='New55-case checker passed but could not write its report in a fresh checkout; corrected independent output-directory creation.'),
+                                  dict(label='attribute-repair-enigma-transfer-01', reason='Stopped before dialing because the Node-only BBS shell lacks NASM; fresh-label retry uses the pinned DOS development shell.')],
         limitations=['Local menus/macros/HOOK/PROGRAM and abort confirmation remain unfinished during scripts.',
-                     'Reverse-Tab and Insert/Delete reject unsupported geometry/repair before output; protected scrolling and full viewport/audio configuration remain unfinished.',
+                     'Reverse-Tab and Insert/Delete admit native field repair/scrolling with checked backing; unsupported geometry and suppressed wrap remain pre-wire failures. General viewport/audio and line-edit metadata ownership remain unfinished.',
                      'Original blocking pacing and complete status/selection post-actions remain unfinished.',
                      'Native echo services in the CPU oracle are explicit recording boundaries; real rendering is exercised separately in DOS.',
                      'Physical BIOS, UART and Wi-Fi modem remain unverified; no complete application or universal BBS compatibility claim.'])

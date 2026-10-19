@@ -1,7 +1,7 @@
 {
   "passed": true,
   "production_integration": true,
-  "recorder_sha256": "ab00632fe75fcfd1049a350938a6617a22016456de3788f463d5c31aa470a35c",
+  "recorder_sha256": "2b6ca85f6b2f0639ec14c666589a3d66b4fe5497534f182422dc4dcffdccceb2",
   "builder_sha256": "5203e6b4f50dbf4ad668c2a7090ba06c1ede5512cb1384bd587acb864cff94d8",
   "provenance": {
     "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
@@ -87,12 +87,12 @@
   },
   "linked": {
     "path": "build/terminal-key-output/reverse-tab-checks.json",
-    "sha256": "24af202b95cdce47b55ed6f93ea0c8283c815c5fbba3488ec2f9c7b316478758",
+    "sha256": "c2b8340c7fbc908eac97ff7bec123c247778f3aaa7f4572a554d62a9255f0593",
     "checks": {
       "passed": true,
       "cases": 630,
-      "binary_sha256": "2356ffff300e34a17977a9000a6a1f9026a8440742c802c676a12d8a307095da",
-      "checker_sha256": "0891fd73e142bd21a822014759511dc8dd1154203d570587a742bfce3ad39c0b",
+      "binary_sha256": "e6d170f2bba5a32f5ec3a92d61a17b4b1c3e40ca75b29886423bcedc33d5eab9",
+      "checker_sha256": "2416b487be143a5c26e6f5cd6656715d6bb6031fe490da39afdd423199146552",
       "original_inputs": [],
       "scope": "Actual shared key core, checked far admission, recovered reverse Tab, boundary/coordinate/division/protected-home and real resident cursor helpers. Hardware-only BIOS/CRT models include adversarial notice-register clobbering. Table/mode matrix, protected/circular fields,1..25-row planes, doublewidth and pre-wire malformed/unsafe-state rejection; video/metadata/parser parameters unchanged. No physical BIOS/modem or full application/viewport claim."
     }
@@ -103,45 +103,45 @@
       "kind": "CODE",
       "relative_segment": 0,
       "offset": 0,
-      "bytes": 65442
+      "bytes": 65502
     },
     {
       "name": "ASPECT_CODE",
       "kind": "FARCODE",
-      "relative_segment": 4091,
+      "relative_segment": 4094,
       "offset": 0,
-      "bytes": 5100
+      "bytes": 5660
     },
     {
       "name": "CONFIG_CODE",
       "kind": "FARCODE",
-      "relative_segment": 4410,
+      "relative_segment": 4448,
       "offset": 0,
       "bytes": 46724
     },
     {
       "name": "MODEM_CODE",
       "kind": "FARCODE",
-      "relative_segment": 7331,
+      "relative_segment": 7369,
       "offset": 0,
       "bytes": 1483
     },
     {
       "name": "PRINT_CODE",
       "kind": "FARCODE",
-      "relative_segment": 7424,
+      "relative_segment": 7462,
       "offset": 0,
       "bytes": 1449
     }
   ],
   "source_build_outputs": 178,
-  "source_build_proof_sha256": "a2d862f588f893ffaf7ea0ea0b6c0393ac485b1e429d2d34cace1bc17a1a4243",
+  "source_build_proof_sha256": "84dffb5d6a176ff647d9b086739678faf3ee4f5cc2634a71d797dfbc2b2d25d1",
   "original_inputs": [],
   "whole_application_gates_closed": [],
   "limitations": [
     "Application admission supports consistent80-column,1..25-row B800 geometry; viewport ownership is unfinished.",
     "The notice uses the maintained BIOS bell provider, rather than original PIT tone timing/settings.",
-    "Protected scrolling/repaint2D98 and related services remain unfinished; keyboard paths needing them fail before output.",
+    "Protected scrolling now binds native repair2D98; general viewport services and original line-edit metadata ownership remain unfinished.",
     "Component cursor/notice endpoints and application BIOS/CRT hardware are explicitly modeled; physical machine/modem/audio validation remains open."
   ]
 }

@@ -58,7 +58,7 @@
   "limitations": [
     "Native routines require valid geometry, bounded cursor offset and metadata/value storage. Application admission is separate.",
     "Repaint delegates visible writes to recovered text_write_char and hidden viewport writes to the supplied shadow far pointer.",
-    "This component is not yet bound into the application; protected scrolling admission remains unchanged."
+    "Flat component evidence alone does not establish application integration or protected scrolling correctness; separate linked and DOS reports are required."
   ],
   "rea_evidence": {
     "0x2c3a": "ev_d63e7b7d265d17bf760c635ad693f9e334d37416eba14e47425126b55ad1281d",

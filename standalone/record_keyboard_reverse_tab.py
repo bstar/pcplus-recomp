@@ -24,7 +24,7 @@ def main():
  assert live['checker_sha256']==sha('standalone/check_terminal_reverse_tab.py')
  assert live['binary_sha256']==sha('build/terminal/TERMINAL.EXE')
  assert proof['outputs']['terminal/TERMINAL.EXE']['sha256']==live['binary_sha256']
- dos_path='build/aspect-keys-dos/reverse-tab-01/checks.json';dos=read(dos_path)
+ dos_path='build/aspect-keys-dos/attribute-repair-01/checks.json';dos=read(dos_path)
  assert dos['passed'] and len(dos['cases'])==16
  assert dos['terminal_sha256']==live['binary_sha256']
  assert dos['checker_sha256']==sha('standalone/test_aspect_keys_dos.py')
@@ -35,7 +35,7 @@ def main():
   source_build_outputs=proof['output_count'],source_build_proof_sha256=sha(proof_path),
   linked=dict(path=live_path,sha256=sha(live_path),checks=live),DOS=dict(path=dos_path,sha256=sha(dos_path),cases=16),
   original_inputs=[],whole_application_gates_closed=[],
-  remaining=['Complete protected scrolling/repair and general viewport services; their unsafe paths remain pre-wire rejections.',
+  remaining=['Complete general viewport services and line-edit metadata ownership; unsupported geometry and suppressed wrap remain pre-wire rejections.',
              'Complete original audio/settings behavior; the notice currently uses the maintained BIOS bell provider.',
              'Finish local-key UI/macros, all application gates and physical-machine/modem validation.'])
  (ROOT/'docs/validation/keyboard-reverse-tab.json').write_text(json.dumps(report,indent=2)+'\n')

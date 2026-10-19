@@ -1,7 +1,7 @@
 {
   "passed": true,
   "production_integration": true,
-  "recorder_sha256": "96da5110e8b7648c2ee131c33a75ff4f4332df8d6c4ca7c9781a258e3efde762",
+  "recorder_sha256": "e1bad055a1a3d812988534999ee72d15635283ac1e86e9b2dd7e8e7d1b80bd25",
   "builder_sha256": "e45f01d7611258d3c33aab2d782f6af28dec666816780491b2756fac9fdc2c63",
   "checks": {
     "passed": true,
@@ -76,28 +76,28 @@
     }
   },
   "source_build_outputs": 178,
-  "source_build_proof_sha256": "a2d862f588f893ffaf7ea0ea0b6c0393ac485b1e429d2d34cace1bc17a1a4243",
+  "source_build_proof_sha256": "84dffb5d6a176ff647d9b086739678faf3ee4f5cc2634a71d797dfbc2b2d25d1",
   "linked": {
     "path": "build/terminal-key-output/reverse-tab-checks.json",
-    "sha256": "24af202b95cdce47b55ed6f93ea0c8283c815c5fbba3488ec2f9c7b316478758",
+    "sha256": "c2b8340c7fbc908eac97ff7bec123c247778f3aaa7f4572a554d62a9255f0593",
     "checks": {
       "passed": true,
       "cases": 630,
-      "binary_sha256": "2356ffff300e34a17977a9000a6a1f9026a8440742c802c676a12d8a307095da",
-      "checker_sha256": "0891fd73e142bd21a822014759511dc8dd1154203d570587a742bfce3ad39c0b",
+      "binary_sha256": "e6d170f2bba5a32f5ec3a92d61a17b4b1c3e40ca75b29886423bcedc33d5eab9",
+      "checker_sha256": "2416b487be143a5c26e6f5cd6656715d6bb6031fe490da39afdd423199146552",
       "original_inputs": [],
       "scope": "Actual shared key core, checked far admission, recovered reverse Tab, boundary/coordinate/division/protected-home and real resident cursor helpers. Hardware-only BIOS/CRT models include adversarial notice-register clobbering. Table/mode matrix, protected/circular fields,1..25-row planes, doublewidth and pre-wire malformed/unsafe-state rejection; video/metadata/parser parameters unchanged. No physical BIOS/modem or full application/viewport claim."
     }
   },
   "DOS": {
-    "path": "build/aspect-keys-dos/reverse-tab-01/checks.json",
-    "sha256": "2ff12cbef77a6db0179cf281b2edaacf717f86df8a06815fb6ab684c35e573d6",
+    "path": "build/aspect-keys-dos/attribute-repair-01/checks.json",
+    "sha256": "cf78fb1e38579466b68cf71d92583b2106f41b4d14bb7942131aaeadc99ea9c2",
     "cases": 16
   },
   "original_inputs": [],
   "whole_application_gates_closed": [],
   "remaining": [
-    "Complete protected scrolling/repair and general viewport services; their unsafe paths remain pre-wire rejections.",
+    "Complete general viewport services and line-edit metadata ownership; unsupported geometry and suppressed wrap remain pre-wire rejections.",
     "Complete original audio/settings behavior; the notice currently uses the maintained BIOS bell provider.",
     "Finish local-key UI/macros, all application gates and physical-machine/modem validation."
   ]

@@ -53,8 +53,9 @@ the30-byte table. Empty tables retain native mode-dependent no-op/home behavior.
 Only the branch that reads stops validates that table: protected navigation
 does not fail because of unused tab data. Read-only lookahead checks the actual
 protected path before transmission. It rejects doublewidth underflow,
-nonprogressing reverse wrap, stale offsets from suppressed wrap and protected
-scroll paths that would reach the still-unrecovered repair services. It does
+nonprogressing reverse wrap, stale offsets from suppressed wrap and invalid
+repair backing before protected scrolling. The real [field repair](ATTRIBUTE_REPAIR.md)
+now handles admitted scroll paths. Admission does
 not move the cursor or consume those mode flags while deciding admission.
 
 The630 linked cases exercise native code and far bridges on ordinary and

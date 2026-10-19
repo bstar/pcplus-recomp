@@ -41,8 +41,9 @@ def main():
  for offset in (5*80+17,5*80+19,5*80+79):
   t=Edit();t.position(5,17);t.put('screen_cursor_wrap',1);t.put('ansi_parameters',32767)
   t.uc.mem_write(t.symbols['screen_attribute_cells']+offset,b'\x80')
-  assert t.key(KEYS[9])==3 and not t.wire() and t.cells()==t.original
+  assert t.key(KEYS[9])==0 and t.wire()
+  assert (t.get('screen_cursor_row'),t.get('screen_cursor_column'))==(5,17)
   assert t.get('ansi_parameters')==32767;cases+=1
- report=dict(passed=True,cases=cases,binary_sha256=hashlib.sha256((ROOT/'build/terminal/TERMINAL.EXE').read_bytes()).hexdigest(),checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),scope='Actual shared key core, checked admission, native ICH/DCH and video/memory helpers. Hardware boundaries only are modeled. Both profiles, four standard/enhanced key identities, single/doublewidth edits, unchanged cursor/parser parameters and invalid/repair admission before any wire or video mutation. No physical keyboard/modem claim.',original_inputs=[])
+ report=dict(passed=True,cases=cases,binary_sha256=hashlib.sha256((ROOT/'build/terminal/TERMINAL.EXE').read_bytes()).hexdigest(),checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),scope='Actual shared key core, checked admission, native ICH/DCH and video/memory/attribute repair helpers. Hardware boundaries only are modeled. Both profiles, four standard/enhanced key identities, single/doublewidth edits, unchanged cursor/parser parameters, valid marker deletion and invalid geometry before wire/video mutation. Deep repair/video/value comparisons are in the separate live repair check. No physical keyboard/modem claim.',original_inputs=[])
  (ROOT/'build/terminal-key-output/edit-checks.json').write_text(json.dumps(report,indent=2)+'\n');print('Shared key native editing',cases,'cases PASS')
 if __name__=='__main__':main()

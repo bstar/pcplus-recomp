@@ -18,5 +18,5 @@ for p in m.SOURCE.glob('*.asm'):
 p=m.SOURCE/'provenance.json';r=json.loads(p.read_text());r.pop('derived_aliases',None)
 r['rea_evidence']={'0x2c3a':'ev_d63e7b7d265d17bf760c635ad693f9e334d37416eba14e47425126b55ad1281d','0x2cf2':'ev_4f8f8f3ebcf4e0586108151870cc92586265a163247141a2592b4082c9629a1d','0x2d98':'ev_4ab18267a860061b33b0bdd2abff5eebfe38b8a8c31cac2c6c1126d9f006f8cf'}
 for u in r['units']:u['file_offset']=0x1200+u['start']
-r['limitations']=['Native routines require valid geometry, bounded cursor offset and metadata/value storage. Application admission is separate.','Repaint delegates visible writes to recovered text_write_char and hidden viewport writes to the supplied shadow far pointer.','This component is not yet bound into the application; protected scrolling admission remains unchanged.']
+r['limitations']=['Native routines require valid geometry, bounded cursor offset and metadata/value storage. Application admission is separate.','Repaint delegates visible writes to recovered text_write_char and hidden viewport writes to the supplied shadow far pointer.','Flat component evidence alone does not establish application integration or protected scrolling correctness; separate linked and DOS reports are required.']
 p.write_text(json.dumps(r,indent=2)+'\n')

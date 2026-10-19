@@ -10,7 +10,7 @@ from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'build/terminal';OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
-modules += ['attribute_boundary','keyboard_reverse_tab']
+modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
 sources=[]
 for module in modules:
  sources += sorted((ROOT/'reconstruction'/module).glob('*.asm'))
@@ -36,6 +36,10 @@ objects=[]
 for index,source in enumerate(sources):
  obj=OUT/f'unit-{index}.obj';objects.append(str(obj));options=[]
  if source.parent.parent.name=='reconstruction':options=['-D'+source.parent.name.upper()+'_OMF']
+ if source.parent.name=='attribute_repair':
+  options += ['-DATTRIBUTE_REPAIR_FAR','-Derase_default_attribute=repair_default_attribute',
+   '-Derase_previous_attribute=repair_previous_attribute','-Dtext_write_char=repair_text_write_char',
+   '-Dattributes_protected_value=attributes_preset_value']
  if source.parent.name in ('attribute_boundary','keyboard_reverse_tab') or source.name=='protected_home.asm':
   options += ['-DKEYBOARD_ECHO_FAR','-Dscreen_set_cursor=attribute_screen_set_cursor',
    '-Dscreen_cursor_left=attribute_screen_cursor_left','-Dscreen_cursor_right=attribute_screen_cursor_right',

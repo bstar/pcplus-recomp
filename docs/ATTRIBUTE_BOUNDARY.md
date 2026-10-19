@@ -46,8 +46,10 @@ The linked630-case keyboard replay executes the real scanner, coordinate,
 division, protected-home and resident cursor helpers. Only BIOS/CRT hardware is
 modeled, including notice firmware that clobbers registers. See
 [reverse Tab](KEYBOARD_REVERSE_TAB.md) and the shared keyboard validation for
-the DOS and modern-BBS checks. Complex attribute repaint2D98, general viewport
-services, physical video/audio and all whole-application gates remain open.
+the DOS and modern-BBS checks. [Native attribute repair2D98](ATTRIBUTE_REPAIR.md)
+now runs through checked application bridges. General viewport services,
+line-edit metadata ownership, physical video/audio and all application gates
+remain open.
 
 The [validation record](validation/attribute-boundary.json) binds the component,
 linked routines and segment sizes to the clean source-only product rebuild.

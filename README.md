@@ -507,8 +507,10 @@ The same capability inherits the parent's standard/enhanced BIOS selection;
 see [ASPECT keyboard acquisition](docs/ASPECT_KEYBOARD.md).
 Ordinary keys during scripts now use the parent's selected profile and the
 child UART through [shared key output](docs/ASPECT_KEY_OUTPUT.md), including
-checked native half-duplex Insert/Delete and reverse-Tab echo. Local commands,
-complete protected scrolling/repair and viewport handling remain unfinished.
+checked native half-duplex Insert/Delete and reverse-Tab echo with
+[field repair](docs/ATTRIBUTE_REPAIR.md) during marker deletion and scrolling.
+Local commands, complete line-edit metadata ownership and viewport handling
+remain unfinished.
 
 The [DOS compiler port](docs/ASPECT_DOS_COMPILER.md) provides `ASPCOMP.EXE`
 for the maintained ASPECT language subset. `ASPECT` compiles explicit ASP files

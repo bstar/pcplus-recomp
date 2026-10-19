@@ -15,13 +15,24 @@ def main():
  assert proof['passed'] and proof['output_count']>=178
  for p,h in manifest['outputs'].items():
   assert sha(p)==h and proof['outputs'][str(Path(p).relative_to('build'))]['sha256']==h,p
- result=dict(passed=True,production_integration=False,builder_sha256=sha('standalone/build_attribute_repair.py'),
+ live_path='build/attribute-repair/live-checks.json';live=read(live_path)
+ assert live['passed'] and live['cases']==925 and live['consumer_cases']==39 and live['prewire_cases']==12
+ assert live['checker_sha256']==sha('standalone/check_attribute_repair_live.py')
+ assert live['reference_sha256']==sha('standalone/check_attribute_repair.py')
+ assert live['binary_sha256']==sha('build/terminal/TERMINAL.EXE')==proof['outputs']['terminal/TERMINAL.EXE']['sha256']
+ layout=read('build/terminal/manifest.json')['memory_layout']['code_segments']
+ assert all(s['bytes']<=65536 for s in layout)
+ regressions_path='docs/validation/aspect-key-output.json';regressions=read(regressions_path)
+ assert regressions['passed'] and regressions['terminal_sha256']==live['binary_sha256']
+ assert len(regressions['BBS'])==2 and all(all(b['checks'].values()) for b in regressions['BBS'])
+ result=dict(passed=True,production_integration=True,builder_sha256=sha('standalone/build_attribute_repair.py'),
   recorder_sha256=sha(Path(__file__).relative_to(ROOT)),provenance=read('reconstruction/attribute_repair/provenance.json'),
-  checks=checks,sources=manifest['sources'],outputs=manifest['outputs'],source_build_outputs=proof['output_count'],
-  source_build_proof_sha256=sha('docs/validation/application-components-source-build.json'),original_inputs=[],whole_application_gates_closed=[],
-  limitations=['Component is not yet bound to application2D98; existing protected-path pre-wire admission is unchanged.',
+  checks=checks,linked=dict(path=live_path,sha256=sha(live_path),checks=live),code_segments=layout,sources=manifest['sources'],outputs=manifest['outputs'],source_build_outputs=proof['output_count'],
+  source_build_proof_sha256=sha('docs/validation/application-components-source-build.json'),DOS_and_BBS=dict(path=regressions_path,sha256=sha(regressions_path)),original_inputs=[],whole_application_gates_closed=[],
+  limitations=['Native scroll metadata shifts the whole logical plane even for partial BIOS video rectangles; exact behavior is characterized.',
+   'Line-edit metadata hardcodes original row constants; its existing wrap-state rejection remains until evaluated separately.',
    'Viewport advance caches native visibility until left/physical-width/row boundaries; arbitrary right edges and inactive-left0 quirks are characterized, not fixed.',
    'Only CGA retrace input is modeled; physical display, modem and timing validation remain open.'])
  (ROOT/'docs/validation/attribute-repair.json').write_text(json.dumps(result,indent=2)+'\n')
- print('Recorded exact399-byte attribute repair and1928 CPU cases; no application gate closed')
+ print('Recorded exact399-byte attribute repair,1928 component and925 linked cases; no application gate closed')
 if __name__=='__main__':main()

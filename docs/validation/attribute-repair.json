@@ -1,8 +1,8 @@
 {
   "passed": true,
-  "production_integration": false,
+  "production_integration": true,
   "builder_sha256": "df2911e6312f2bd42435b14661cb88b51b45db3e76e9cb5e3554c73b0985de19",
-  "recorder_sha256": "806e1b22215f5dd0b87712eae3039f266cf0f77ad6f00a84e1dfd6825cf14bb4",
+  "recorder_sha256": "17f8a042b696e8320c6201702336aa140abc7cce84d95078c93d2443123cc967",
   "provenance": {
     "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
     "units": [
@@ -63,7 +63,7 @@
     "limitations": [
       "Native routines require valid geometry, bounded cursor offset and metadata/value storage. Application admission is separate.",
       "Repaint delegates visible writes to recovered text_write_char and hidden viewport writes to the supplied shadow far pointer.",
-      "This component is not yet bound into the application; protected scrolling admission remains unchanged."
+      "Flat component evidence alone does not establish application integration or protected scrolling correctness; separate linked and DOS reports are required."
     ],
     "rea_evidence": {
       "0x2c3a": "ev_d63e7b7d265d17bf760c635ad693f9e334d37416eba14e47425126b55ad1281d",
@@ -94,6 +94,59 @@
     "production_integration": false,
     "scope": "All seven real recovered routines execute. Reference checks full metadata/value guards, character/attribute video and shadow bytes, native early marker termination, mode3 tail repair, row/viewport transitions and callee stack/register ABI. Only CGA retrace port reads are modeled. Application protected scrolling and physical hardware remain unverified."
   },
+  "linked": {
+    "path": "build/attribute-repair/live-checks.json",
+    "sha256": "95411712da8bc5eb7068eb281493f4ed7e62d75e00ed268cc694d1252218103d",
+    "checks": {
+      "passed": true,
+      "cases": 925,
+      "consumer_cases": 39,
+      "prewire_cases": 12,
+      "geometry_errors": 17,
+      "binary_sha256": "e6d170f2bba5a32f5ec3a92d61a17b4b1c3e40ca75b29886423bcedc33d5eab9",
+      "checker_sha256": "f2d864e273db897501566ea8324f95e765712be80199b697ee2b26a87d061e9a",
+      "reference_sha256": "306096b9774c756afff4fa1c46458c2d599748cd466cc3bf0d75c61d58fd1fef",
+      "original_inputs": [],
+      "scope": "Actual application RET2 resident bridge, checked far repair and real coordinate/default/previous/video dependencies. Full flag/value guards and video, cursor/DS=SS/callee ABI, malformed geometry before mutation; actual scroll, wrapped reverse Tab and repeated parser/keyboard DCH consumers. Invalid repair backing/geometry rejects keys before wire/cursor/parser/video/plane changes. Native whole-plane metadata shift with partial video regions is characterized. No viewport or physical hardware compatibility claim."
+    }
+  },
+  "code_segments": [
+    {
+      "name": "_TEXT",
+      "kind": "CODE",
+      "relative_segment": 0,
+      "offset": 0,
+      "bytes": 65502
+    },
+    {
+      "name": "ASPECT_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 4094,
+      "offset": 0,
+      "bytes": 5660
+    },
+    {
+      "name": "CONFIG_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 4448,
+      "offset": 0,
+      "bytes": 46724
+    },
+    {
+      "name": "MODEM_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 7369,
+      "offset": 0,
+      "bytes": 1483
+    },
+    {
+      "name": "PRINT_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 7462,
+      "offset": 0,
+      "bytes": 1449
+    }
+  ],
   "sources": {
     "reconstruction/attribute_repair/write.asm": "d9ebb80d5df3df702f8ecbddbb12b9d881a64da4680fda195d302ba033ec8039",
     "reconstruction/attribute_repair/advance.asm": "b997514bf893c6ab05e39bd5da9b320e1f0c0b3b63868939c2758f584ede5032",
@@ -120,11 +173,16 @@
     "build/attribute-repair/text-char.obj": "97237f222ace226604972b06476905a20b11435472630f15d5e724166f6c9128"
   },
   "source_build_outputs": 178,
-  "source_build_proof_sha256": "a2d862f588f893ffaf7ea0ea0b6c0393ac485b1e429d2d34cace1bc17a1a4243",
+  "source_build_proof_sha256": "84dffb5d6a176ff647d9b086739678faf3ee4f5cc2634a71d797dfbc2b2d25d1",
+  "DOS_and_BBS": {
+    "path": "docs/validation/aspect-key-output.json",
+    "sha256": "e9df280c42b161cb8d682008dac758509cd02557cc6d0a6eb26bc60e1e343670"
+  },
   "original_inputs": [],
   "whole_application_gates_closed": [],
   "limitations": [
-    "Component is not yet bound to application2D98; existing protected-path pre-wire admission is unchanged.",
+    "Native scroll metadata shifts the whole logical plane even for partial BIOS video rectangles; exact behavior is characterized.",
+    "Line-edit metadata hardcodes original row constants; its existing wrap-state rejection remains until evaluated separately.",
     "Viewport advance caches native visibility until left/physical-width/row boundaries; arbitrary right edges and inactive-left0 quirks are characterized, not fixed.",
     "Only CGA retrace input is modeled; physical display, modem and timing validation remain open."
   ]

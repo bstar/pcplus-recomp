@@ -62,12 +62,9 @@ global ansi_escape_service_ec94
 ansi_escape_service_ec94:
  mov ax,0xec94
  jmp csi_unimplemented
-global erase_complex_protected,erase_repair_attributes
+global erase_complex_protected
 erase_complex_protected:
  mov ax,0xd05f
- jmp csi_unimplemented
-erase_repair_attributes:
- mov ax,0x2d98
  jmp csi_unimplemented
 csi_unimplemented:
  mov [csi_unimplemented_service],ax

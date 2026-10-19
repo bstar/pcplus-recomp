@@ -6,6 +6,10 @@ test-attribute-repair: attribute-repair
 	python3 standalone/check_attribute_repair.py
 all: attribute-repair
 test: test-attribute-repair
+.PHONY: test-attribute-repair-live
+test-attribute-repair-live: terminal attribute-repair
+	python3 standalone/check_attribute_repair_live.py
+test: test-attribute-repair-live
 
 .PHONY: attribute-boundary test-attribute-boundary
 attribute-boundary:

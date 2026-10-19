@@ -31,7 +31,7 @@ def main():
   source_build_outputs=proof['output_count'],source_build_proof_sha256=sha(proof_path),original_inputs=[],whole_application_gates_closed=[],
   limitations=['Application admission supports consistent80-column,1..25-row B800 geometry; viewport ownership is unfinished.',
                'The notice uses the maintained BIOS bell provider, rather than original PIT tone timing/settings.',
-               'Protected scrolling/repaint2D98 and related services remain unfinished; keyboard paths needing them fail before output.',
+               'Protected scrolling now binds native repair2D98; general viewport services and original line-edit metadata ownership remain unfinished.',
                'Component cursor/notice endpoints and application BIOS/CRT hardware are explicitly modeled; physical machine/modem/audio validation remains open.'])
  (ROOT/'docs/validation/attribute-boundary.json').write_text(json.dumps(result,indent=2)+'\n')
  print('Bound exact attribute routines and checked far production navigation; no whole-application gates closed')

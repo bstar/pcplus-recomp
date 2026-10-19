@@ -115,8 +115,17 @@ def main():
  for suppressed in (0,1):
   t=Reverse();stage(t,11,10);t.put('screen_first_row',5);t.put('screen_last_row',10);t.put('screen_cursor_wrap',1);t.put('screen_attribute_checks',1);t.put('scroll_suppress_next_linefeed',suppressed)
   t.uc.mem_write(t.symbols['screen_attribute_cells']+10*80+79,b'\x80');before=t.snapshot()
-  assert t.key()==3 and not t.wire() and t.snapshot()==before;cases+=1
-  assert (t.get('screen_cursor_row'),t.get('screen_cursor_column'))==(11,10)
+  value=t.key()
+  if suppressed:
+   assert value==3 and not t.wire() and t.snapshot()==before
+   assert (t.get('screen_cursor_row'),t.get('screen_cursor_column'))==(11,10)
+  else:
+   assert value==0 and t.wire()==b'R'
+   assert (t.get('screen_cursor_row'),t.get('screen_cursor_column'))==(10,0)
+   flags=bytearray(2000);flags[9*80+79]=0x80
+   assert bytes(t.uc.mem_read(t.symbols['screen_attribute_cells'],2000))==flags
+   assert bytes(t.uc.mem_read(t.symbols['ansi_parameters'],16))==parameters
+  cases+=1
  for last in (24,2):
   t=Reverse();stage(t,3,10);t.put('screen_cursor_wrap',1);t.put('screen_attribute_checks',1);t.put('screen_last_row',last);t.put('scroll_enabled',0 if last==2 else 1)
   t.uc.mem_write(t.symbols['screen_attribute_cells']+2*80+79,b'\x80');before=t.snapshot()

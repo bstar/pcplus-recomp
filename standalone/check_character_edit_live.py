@@ -60,20 +60,17 @@ def run():
     else:wanted[start:end-1]=wanted[start+1:end];wanted[end-1]&=254
    assert bytes(t.uc.mem_read(t.symbols['screen_attribute_cells'],2000))==wanted
  check('real-parser-and-known-metadata-planes-shift-through-actual-helpers',metadata)
- def unsupported():
+ def repair():
   for offset in (5*80+17,5*80+19,5*80+79):
    t=Live();t.position(5,17);t.put('screen_cursor_wrap',1);t.uc.mem_write(t.symbols['screen_attribute_cells']+offset,b'\x80')
-   before=(t.cells(),bytes(t.uc.mem_read(t.symbols['screen_attribute_cells'],2000)),bytes(t.uc.mem_read(t.symbols['erase_attribute_values'],2000)))
-   try:t.feed(b'\x1b[3P')
-   except Abort as e:assert e.args==(0x2d98,)
-   else:raise AssertionError('Complex repair silently skipped')
-   after=(t.cells(),bytes(t.uc.mem_read(t.symbols['screen_attribute_cells'],2000)),bytes(t.uc.mem_read(t.symbols['erase_attribute_values'],2000)))
-   assert after==before,'Preflight allowed partial mutation before later repair failure'
+   t.feed(b'\x1b[3P')
+   assert (t.get('screen_cursor_row'),t.get('screen_cursor_column'))==(5,17)
+   assert t.cells()!=t.original
   for pointer in ('screen_attributes_base','erase_attribute_values_base'):
    for entry in ('csi_service_d270','csi_service_d440'):
     t=Live();t.position(5,17);t.put('screen_cursor_wrap',1);t.put(pointer,0xfff0);t.put('ansi_parameters',32767);t.call(entry)
     assert t.cells()==t.original and t.get('ansi_parameters')==1
- check('repair-preflight-rejects-entire-span-before-any-mutation-and-invalid-pointers',unsupported)
+ check('marker-deletion-uses-real-repair-and-invalid-pointers-remain-no-op',repair)
  def protected():
   for insert,command in [(True,b'@'),(False,b'P')]:
    for wrap in (0,1):
@@ -95,6 +92,6 @@ def run():
    t=Live();t.position(5,17);t.put('ansi_parameters',3);t.uc.reg_write(UC_X86_REG_ES,0x4321);DosImage.call(t,entry)
    for reg,value in [(UC_X86_REG_BP,0xbabe),(UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678),(UC_X86_REG_ES,0x4321)]:assert t.uc.reg_read(reg)==value,(entry,reg)
  check('near-stack-BP-SI-DI-and-arbitrary-caller-ES-preserved',abi)
- result={'passed':True,'binary_sha256':hashlib.sha256((ROOT/'build/terminal/TERMINAL.EXE').read_bytes()).hexdigest(),'cases':cases,'scope':'Actual linked UART IRQ, input/CSI/ESC dispatcher, maintained bounds and recovered character helpers/video/movers; hardware-only BIOS video/keyboard/UART/tick oracle. Fixed80x25 live geometry; complex attribute repair rejected before mutation, viewport support remains diagnostic-only.'}
+ result={'passed':True,'binary_sha256':hashlib.sha256((ROOT/'build/terminal/TERMINAL.EXE').read_bytes()).hexdigest(),'cases':cases,'scope':'Actual linked UART IRQ, input/CSI/ESC dispatcher, maintained bounds and recovered character helpers/video/movers/attribute repair; hardware-only BIOS video/keyboard/UART/tick oracle. Fixed80x25 live geometry; complete repair video/value comparisons are in the live repair replay. Viewport support remains diagnostic-only.'}
  (ROOT/'build/terminal/character-edit-live-checks.json').write_text(json.dumps(result,indent=2)+'\n');print('Live character editing:',len(cases),'groups passed')
 if __name__=='__main__':run()

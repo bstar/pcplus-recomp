@@ -29,8 +29,9 @@ no local echo; legacy Home's slot76 moves the cursor.
 
 Half-duplex Insert/Delete now call the actual recovered ICH/DCH helpers once.
 Both standard and enhanced identities perform checked admission before any
-binding reaches the wire. Unsupported geometry, metadata pointers and complex
-delete-repair spans return unsupported without wire/video mutation. Admission
+binding reaches the wire. Unsupported geometry and metadata pointers return
+unsupported without wire/video mutation. Marker deletion now calls the native
+field repair through checked far bridges. Admission
 restores the parser parameter count, and echo does not route through a CSI
 repetition wrapper or change that count. Existing CSI error/no-op behavior is
 preserved. These echo helpers implement the native cell edits, not a new local
@@ -55,9 +56,9 @@ stops and protected-field metadata. Checked admission precedes all wire/echo
 effects. Its real boundary/coordinate/division/protected-home services share
 ASPECT_CODE and use explicit far bridges to resident cursor and notice code.
 Malformed tables and nonprogressing native wrap are rejected before mutation.
-Protected navigation bypasses unused tab-table validation. Paths requiring
-unrecovered protected scrolling/repair remain explicit pre-wire failures;
-they are not replaced with cursor no-ops. See [reverse Tab](KEYBOARD_REVERSE_TAB.md)
+Protected navigation bypasses unused tab-table validation. Protected scrolling
+now uses actual native field repair with admitted backing. Unsupported geometry
+and suppressed wrap remain pre-wire failures. See [reverse Tab](KEYBOARD_REVERSE_TAB.md)
 and [attribute boundaries](ATTRIBUTE_BOUNDARY.md).
 
 ## Validation
@@ -98,6 +99,12 @@ pre-wire rejection and a bell BIOS that clobbers registers. The718-case
 component test separately verifies exact boundary and viewport-coordinate
 instructions with declared cursor/notice recording boundaries.
 
+The925-case [live repair replay](ATTRIBUTE_REPAIR.md) executes the actual far
+repair bridges and native repaint services, including39 scroll, wrapped
+reverse-Tab and repeated parser/keyboard Delete consumers. It compares full
+video and metadata/value planes. Native whole-plane metadata movement under
+partial video margins is characterized explicitly.
+
 Earlier failed fixtures are retained privately. `shared-keys-02` omitted the
 three displayed END characters from its cursor predictions. `shared-keys-04`
 asked enhanced Home for legacy Home echo; explicit STANDARD BIOS selection now
@@ -110,8 +117,8 @@ or treating output after script return as script output.
 Local menus, transfers, macros/HOOK/PROGRAM dispatch, native abort confirmation
 and original status/selection post-actions are unfinished during scripts.
 Reverse-Tab and Insert/Delete retain explicit preflight rejection for
-unsupported geometry/repair. Protected scrolling and complete viewport/audio
-configuration remain unfinished; full-duplex bindings still transmit without
+unsupported geometry and suppressed wrap. Line-edit metadata ownership and
+complete viewport/audio configuration remain unfinished; full-duplex bindings still transmit without
 requiring a supported local-echo plane.
 Original blocking per-binding pacing remains outside the maintained queue
 policy, as it was before this integration. A raw script without an admitted

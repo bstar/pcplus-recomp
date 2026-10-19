@@ -8,7 +8,7 @@ extern screen_viewport_enabled,screen_viewport_active,screen_viewport_offset
 extern csi_last_row,screen_last_column,screen_first_row,screen_last_row
 extern erase_cell_count,screen_attributes_base,screen_attribute_cells
 extern screen_cursor_row,screen_cursor_column,screen_attribute_offset,screen_video_offset
-global screen_adjust_attribute_boundary,attribute_geometry_admit,attribute_boundary_notice
+global screen_adjust_attribute_boundary,attribute_geometry_admit,attribute_plane_admit,attribute_boundary_notice
 extern screen_set_cursor,screen_cursor_left,screen_cursor_right
 
 ; Preserve the resident near-call/RET4 interface through the checked far API.
@@ -65,6 +65,30 @@ attribute_boundary_notice_far:
 SEGMENT ASPECT_CODE public align=16 class=FARCODE use16
 ; Read-only geometry check; near callers live in this far segment.
 attribute_geometry_admit:
+ call attribute_plane_admit
+ jc .bad
+ mov ax,[screen_cursor_row]
+ cmp ax,[csi_last_row]
+ ja .bad
+ cmp word [screen_cursor_column],79
+ ja .bad
+ mov cx,80
+ mul cx
+ add ax,[screen_cursor_column]
+ cmp ax,[screen_attribute_offset]
+ jne .bad
+ shl ax,1
+ cmp ax,[screen_video_offset]
+ jne .bad
+ clc
+ ret
+.bad:
+ stc
+ ret
+
+; Whole-plane repair during native wrapping ignores temporarily stale cursor
+; offsets; it still requires bounded real backing and fixed video geometry.
+attribute_plane_admit:
  cmp word [screen_columns],80
  jne .bad
  cmp word [screen_attribute_row_bytes],80
@@ -84,8 +108,6 @@ attribute_geometry_admit:
  mov ax,[csi_last_row]
  cmp ax,24
  ja .bad
- cmp [screen_cursor_row],ax
- ja .bad
  cmp [screen_last_row],ax
  ja .bad
  mov bx,[screen_first_row]
@@ -97,16 +119,6 @@ attribute_geometry_admit:
  cmp ax,[erase_cell_count]
  jne .bad
  cmp word [screen_attributes_base],screen_attribute_cells
- jne .bad
- cmp word [screen_cursor_column],79
- ja .bad
- mov ax,[screen_cursor_row]
- mul cx
- add ax,[screen_cursor_column]
- cmp ax,[screen_attribute_offset]
- jne .bad
- shl ax,1
- cmp ax,[screen_video_offset]
  jne .bad
  clc
  ret

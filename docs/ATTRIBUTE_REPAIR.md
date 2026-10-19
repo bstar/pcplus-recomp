@@ -46,9 +46,29 @@ in full; stack cleanup, BP/SI/DI preservation and DS=SS are checked. ES is scrat
 in the native writer. Only the CGA status port is modeled; this is not physical
 video or timing validation.
 
-This component is not yet connected to the application. The next step is a
-checked far bridge for2D98, with real resident default/previous/video services,
-followed by protected scroll/edit replay and DOS/BBS regression. The application
-still rejects protected keyboard paths that need this service before sending.
-All whole-application gates, complete viewport ownership and physical modem
-validation remain open. See the [validation record](validation/attribute-repair.json).
+The application now binds2D98 through a resident RET2 bridge and checked far
+entry in ASPECT_CODE, with near/far adapters to real resident default, previous
+and byte-video services. Read-only admission requires fixed80-column geometry,
+bounded logical height and real metadata/value backing. Modes using the cursor
+also require consistent cursor/video/attribute offsets. Whole-plane mode0
+deliberately ignores cursor offsets: native wrap changes the column before
+scrolling and updates those offsets afterward. Wrap-disabled repair retains
+the native no-op behavior even with otherwise unsupported geometry.
+
+The925 linked cases compare metadata/value guards and video through the actual
+application bridges, including39 scroll, wrapping and repeated parser/keyboard
+delete consumers and12 key rejection cases before any wire/cursor/parser/plane
+change. This removes the earlier blanket rejection of marker deletion
+and reverse-Tab paths requiring scroll repair. Invalid backing and suppressed
+wrapping remain explicit keyboard failures before output. The630 reverse-Tab,
+55 native key-edit,837 scalar key and existing parser regressions remain
+separate checks. Real DOS keyboard/BBS tests cover the integrated product;
+the detailed protected-field comparisons are CPU replay with modeled hardware.
+
+Native scroll metadata shifts the entire logical plane even when its BIOS
+video rectangle uses smaller margins. That original behavior is characterized,
+not presented as region-matched metadata semantics. The line-edit helpers have
+additional fixed row constants and still retain their existing wrap-state
+rejection pending separate evaluation. All whole-application gates, complete
+viewport ownership and physical modem validation remain open. See the
+[validation record](validation/attribute-repair.json).

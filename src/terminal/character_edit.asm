@@ -1,6 +1,6 @@
 ; Maintained live bounds around actual recovered ICH/DCH/HTS instructions.
 ; The live renderer owns a fixed80x25 direct video plane. Unvalidated viewport
-; layouts are no-ops; complex attribute repair fails before any cell is moved.
+; layouts are no-ops; attribute repair admission precedes any cell movement.
 BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
@@ -12,6 +12,7 @@ extern screen_viewport_active,screen_viewport_offset,text_video_segment
 extern screen_line_flags,screen_cursor_wrap,screen_attribute_checks
 extern screen_attributes_base,screen_attribute_cells
 extern erase_attribute_values_base,erase_attribute_values
+extern attribute_repair_admit_far
 global csi_service_d270,csi_service_d440,ansi_escape_service_dac6
 
 csi_service_d270:
@@ -116,8 +117,8 @@ character_edit_prepare:
  or di,di
  jz .count
  ; Check the whole remaining metadata span, not just the first deleted byte.
- ; This conservative preflight prevents a later repeated helper from reaching
- ; unrecovered2d98 after earlier helpers have already mutated video or planes.
+ ; A later repeated helper can reach2D98 after earlier video/plane movement.
+ ; Validate the actual repair geometry before the first helper runs.
  mov si,[screen_attribute_offset]
  add si,screen_attribute_cells
  mov cx,[screen_last_column]
@@ -125,9 +126,13 @@ character_edit_prepare:
  inc cx
 .scan:
  test byte [si],0x80
- jnz .unsupported_attributes
+ jnz .repair_ready
  inc si
  loop .scan
+ jmp .count
+.repair_ready:
+ call far attribute_repair_admit_far
+ jc .unsupported_attributes
 .count:
  mov ax,[ansi_parameters]
  cmp ax,1

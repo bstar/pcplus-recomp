@@ -11,7 +11,7 @@ Latest keyboard checkpoint: [shared key output](docs/ASPECT_KEY_OUTPUT.md) route
 script-time keys through the actual parent classifier/profile and child-owned
 UART. Capability6 retains inherited BIOS selection and adds checked duplex
 snapshots and native-derived echo. Shared output covers all79 binding slots;
-local commands/macros and complete protected scrolling/repair remain unfinished.
+local commands/macros and complete line-edit metadata/viewport ownership remain unfinished.
 Half-duplex Insert/Delete and reverse Tab now use the real recovered helpers
 with pre-wire admission and parser-parameter preservation. Continue full keyboard/UI
 integration; no F01–F16 gate closes.
@@ -22,8 +22,8 @@ native reverse-Tab/cursor-left replay characterizes recursive retry under
 inconsistent wrap flags. It now runs through bounded admission in ASPECT_CODE,
 with real attribute-boundary/coordinate services and explicit resident bridges.
 The630 linked and16 DOS cases cover ordinary/custom tabs, protected fields and
-pre-wire failure. Unsupported protected scrolling and viewport/audio settings
-still require their remaining services; all whole-application gates stay open.
+pre-wire failure. Admitted protected scrolling now uses real native field repair;
+general viewport/audio settings still need their remaining services. All gates stay open.
 The half-duplex Insert/Delete trampolines resolve to the existing recovered
 CSI ICH/DCH routines in overlay12. Those real helpers now run through checked
 preflight before wire output, with parser parameters preserved and actual
@@ -58,9 +58,13 @@ regressions across that work. Physical Wi-Fi modem testing is still outstanding.
 The [attribute-repair component](docs/ATTRIBUTE_REPAIR.md) now recovers399 exact
 bytes for2D98/2C3A/2CF2. Its1928 CPU cases execute real coordinate, default,
 previous-attribute and byte-video dependencies, including full metadata/video
-comparisons and shadow viewport transitions. This is component evidence only:
-bind the checked far application bridge next, then exercise protected scrolling
-and rerun DOS/BBS regressions. Existing pre-wire rejection remains in place.
+comparisons and shadow viewport transitions. The checked far application bridge
+now passes925 linked cases, including39 actual scroll, wrap and repeated
+parser/keyboard Delete consumers. Mode0 admits the temporary stale offsets
+used during native wrapping; cursor-based modes retain full consistency checks.
+Native scroll metadata moves the whole plane even for partial BIOS rectangles.
+The separate line-edit helpers still need their fixed row constants evaluated
+before their existing wrap-state rejection can be removed.
 
 ASPECT now includes native WHEN/CWHEN matching and deferred handlers through
 the actual resident terminal renderer. Twelve SET setters/FETCH getters and native
