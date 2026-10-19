@@ -1,0 +1,118 @@
+{
+  "passed": true,
+  "terminal_sha256": "14ab0f99b57643cf5f6ba2befed2099bc617b62453de17e157566a280e365d17",
+  "DOS": {
+    "path": "build/bbs-lab/results/enigma/owned-game-repeat-01/repeat-checks.json",
+    "sha256": "c4e34e0a3a63d088abc2ae6609e10a22da651b296aa5608e54494e4f8515f8c0",
+    "checks": {
+      "DOS_harness": true,
+      "inputs_unchanged": true,
+      "unique_authenticated_session": true,
+      "three_protocol_processes_in_order": true,
+      "no_post_saved": true,
+      "receive_skip_receive": true,
+      "file_A_exact": true,
+      "file_B_exact": true,
+      "only_expected_files": true,
+      "finish_snapshots": true,
+      "existing_alias_unchanged": true,
+      "no_stage_after_each_finish": true
+    },
+    "scope": "One actual DOS/ENiGMA connection: receive long-name ZIP A, explicitly ZSKIP existing alias A, then receive ZIP B. Passive CRC/data/receiver-control/ZFIN-OO and NFO input-response audits; per-finish inode/mtime/ctime/hash snapshots, checked real DOS storage and restored hardware. Isolated staged server and modeled19200/HARD modem; no live/physical claim."
+  },
+  "transactions": [
+    {
+      "kind": "received",
+      "wire_name": "PCPLUS PROBE 01 (1991).ZIP",
+      "local_name": "8868026D.ZIP",
+      "post_menu": true
+    },
+    {
+      "kind": "skipped-existing",
+      "wire_name": "PCPLUS PROBE 01 (1991).ZIP",
+      "local_name": "8868026D.ZIP",
+      "post_menu": true
+    },
+    {
+      "kind": "received",
+      "wire_name": "PCPLUS PROBE 02 (1991).ZIP",
+      "local_name": "FFF6D09D.ZIP",
+      "post_menu": true
+    }
+  ],
+  "existing_file_identity_preserved": true,
+  "files": {
+    "8868026D.ZIP": {
+      "sha256": "7c7079d0ff6f5352713fdd8c1ba83b36767927e3112410eb8535caa6fbd75e1e",
+      "bytes": 1301
+    },
+    "FFF6D09D.ZIP": {
+      "sha256": "75e571cd384bfe254421cd62cf01c9589ed21a1e1a3e4b62e67bb5168fdc53f9",
+      "bytes": 1301
+    }
+  },
+  "negative_audit": {
+    "path": "build/bbs-lab/results/enigma/owned-game-repeat-01/audit-negative-checks.json",
+    "sha256": "375b52d6efc11cc7c6fda247bf695a4a31a467cd4d3c4d13e4b01500e91df81e",
+    "checks": [
+      {
+        "case": "CRC-corrupt-first-payload",
+        "rejected": true,
+        "reason": "Data CRC mismatch"
+      },
+      {
+        "case": "CRC-corrupt-ZSKIP",
+        "rejected": true,
+        "reason": "No CRC-valid ZSKIP after the offer"
+      },
+      {
+        "case": "CRC-corrupt-skip-ZFIN-reply",
+        "rejected": true,
+        "reason": "No receiver ZFIN for skipped session"
+      },
+      {
+        "case": "missing-skip-OO",
+        "rejected": true,
+        "reason": "('Expected three complete sessions', 2)"
+      },
+      {
+        "case": "missing-post-skip-NFO-response",
+        "rejected": true,
+        "reason": ""
+      },
+      {
+        "case": "CRC-valid-wire-wrong-source-bytes",
+        "rejected": true,
+        "reason": "Transferred bytes differ"
+      },
+      {
+        "case": "ZSKIP-before-offer-chronology",
+        "rejected": true,
+        "reason": "No CRC-valid ZSKIP after the offer"
+      }
+    ]
+  },
+  "source_modules": {
+    "mods/loc_game_details/loc_game_details.js": "0711413e29c01f0cf3cef7f89b3dc607515381a67a23e1a58205aa6d7a20efb8",
+    "mods/black_flag_files/helpers.js": "e4f6c1df6dbb9d6282d0534150c9149889637d34f01665691ca3bc5d19a06235",
+    "mods/black_flag_files/black_flag_files.js": "20a6d544cb820ac3840c1d271cfd41c7e0fb1c42600100756367845b147cf535",
+    "mods/black_flag_files/search.js": "d159e1fd6936e13613321a92cf68f93681de083cf68a9cb65d8f891cb6b54236"
+  },
+  "filename_validation": {
+    "path": "docs/validation/zmodem-long-names.json",
+    "sha256": "532ef8eb596fe197f2fc409dc1c752a8b89811743f9621854b05df26e0a475b8"
+  },
+  "source_build_proof": {
+    "path": "docs/validation/application-components-source-build.json",
+    "sha256": "f33f8c6c3edaee1e6369515600b44ad111979d6f01d201f8aa97acb8388d7454",
+    "outputs": 178
+  },
+  "recorder_sha256": "76285ef7c3389aeafc4daf23744e09cc9a02a58101d2bc232f5ded95e2afdeaa",
+  "whole_application_gates_closed": [],
+  "live_server_modified": false,
+  "limitations": [
+    "Synthetic generated archives and selected owned source/menu/art on the staged isolated ENiGMA fixture; live board/catalog installation remains pending.",
+    "Modem/UART timing is modeled19200/HARD; physical Wi-Fi modem timing/flow control and complete application gates remain open.",
+    "Filesystem snapshots are captured after each confirmed sender finish; source captures and per-finish host identity/timestamps remain in ignored build artifacts."
+  ]
+}

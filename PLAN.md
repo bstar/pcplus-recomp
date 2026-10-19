@@ -26,6 +26,12 @@ ZMODEM completion and subsequent NFO interaction verified. The446 host and68
 Complete filename UI/catalog integration, live installation and physical
 modem testing remain open along with the whole-application gates.
 
+The [same-connection receive/skip/receive](lab/bbs/enigma-repeat-download.md)
+workflow now passes in the full DOS terminal, including unchanged file identity
+and timestamps, exact second-file bytes and NFO interaction after all three
+protocol processes. Seven passive-audit corruptions reject. Filename UI/catalog
+integration and the remaining software gates still need their implementations.
+
 Latest keyboard checkpoint: [shared key output](docs/ASPECT_KEY_OUTPUT.md) routes
 script-time keys through the actual parent classifier/profile and child-owned
 UART. Capability6 retains inherited BIOS selection and adds checked duplex

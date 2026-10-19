@@ -56,6 +56,12 @@ filesystem assertions. Its server audit checks the actual custom search/details
 return route. Existing short-name editor/transfer workflows remain separate
 regressions. See [the validation record](validation/zmodem-long-names.json).
 
+The [repeated-download check](../lab/bbs/enigma-repeat-download.md) also passes
+through the full terminal: receive ZIP01, explicitly skip its existing alias,
+then receive ZIP02 in the same connection. The first file's inode, timestamps,
+size and hash remain unchanged. Three protocol finishes each return to usable
+game-specific NFO input; seven corrupted audit inputs reject.
+
 The historical [search evaluation](validation/enigma-search.json) retains the
 pre-fix failure and paired production-codec replay. The new adapter handles
 that wire/local distinction before the unchanged strict codec. The live board
