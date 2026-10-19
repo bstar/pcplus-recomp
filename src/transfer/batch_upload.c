@@ -108,6 +108,15 @@ unsigned __cdecl batch_upload_read(void *data,unsigned capacity,unsigned *count)
  if(n==0xffff)return fail(BU_SOURCE,upload_source_result.dos_error,upload_source_result.first_status);
  *count=n;return BU_OK;
 }
+unsigned __cdecl batch_upload_seek(unsigned long offset)
+{
+ unsigned s;
+ if(cookie!=0xbaa1 || !active || batch_upload_current.state!=BU_READING)return BU_STATE;
+ if(upload_source_result.handle_uncertain)return BU_RECOVERY;
+ if(offset>batch_upload_current.size || offset>0x7fffffffUL)return BU_ARGUMENT;
+ s=upload_source_seek(offset);
+ return s?fail(s==UF_RECOVERY?BU_RECOVERY:BU_SOURCE,upload_source_result.dos_error,s):BU_OK;
+}
 unsigned __cdecl batch_upload_close(void)
 {
  unsigned s;
@@ -127,4 +136,14 @@ unsigned __cdecl batch_upload_abort(void)
  s=upload_source_abort();active=upload_source_result.handle_open || upload_source_result.handle_uncertain;
  if(s)return fail(active?BU_RECOVERY:BU_SOURCE,upload_source_result.close_error,s);
  batch_upload_current.state=BU_ABORTED;return BU_OK;
+}
+unsigned __cdecl batch_upload_skip(void)
+{
+ unsigned s;
+ if(cookie!=0xbaa1)return BU_STATE;
+ if(upload_source_result.handle_uncertain)return BU_RECOVERY;
+ if(!active)return BU_STATE;
+ s=upload_source_abort();active=upload_source_result.handle_open || upload_source_result.handle_uncertain;
+ if(s)return fail(active?BU_RECOVERY:BU_SOURCE,upload_source_result.close_error,s);
+ batch_upload_current.state=BU_ENUMERATING;return BU_OK;
 }

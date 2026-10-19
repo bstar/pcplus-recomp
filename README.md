@@ -379,11 +379,13 @@ settings/UI and physical modem transfers remain open. See
 [download storage](docs/DOWNLOAD_STORAGE.md), [sender](docs/TRANSFER_SEND.md),
 [native file behavior](docs/TRANSFER_FILES.md) and [UART callbacks](docs/TRANSFER_UART.md).
 
-ZMODEM framing and batch sessions are separate maintained source components;
-run `./tools/build test-zmodem` for independent oracle/peer checks and 8086 DOS
-workflows. [Sessions](docs/ZMODEM_SESSION.md), [wire codec](docs/ZMODEM_WIRE.md)
-and [native evidence](docs/ZMODEM_NATIVE.md) describe their scope. Terminal
-integration and live BBS workflows remain open.
+ZMODEM is available through Alt-R/Alt-S: press F2 in the prompt until ZMODEM is
+selected, then enter a receive directory or send filespec. The live engine uses
+checked batch storage/source seeking and serviced UART ownership; independent
+actual DOS peer transfers pass. See [live ZMODEM](docs/LIVE_ZMODEM.md),
+[sessions](docs/ZMODEM_SESSION.md), [wire codec](docs/ZMODEM_WIRE.md) and
+[native evidence](docs/ZMODEM_NATIVE.md). Logged-in stock BBS workflows,
+windowed sending, auto-download and physical modem validation remain open.
 
 
 For an existing2.01 PRM in the current DOS directory, build both applications

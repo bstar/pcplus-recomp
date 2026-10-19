@@ -138,6 +138,18 @@ unsigned __cdecl upload_source_read(void *data,unsigned size,unsigned count,unsi
  if(received!=request){fail(UF_SHRINK,0);return 0xffff;}
  return received;
 }
+upload_file_status __cdecl upload_source_seek(unsigned long offset)
+{
+ unsigned error;unsigned long actual=0;
+ if(ownership_cookie!=0x55a1)return UF_STATE;
+ if(upload_source_result.handle_uncertain)return UF_RECOVERY;
+ if(upload_source_result.first_status || upload_source_result.state!=UF_READING ||
+  !upload_source_result.binary_open || !upload_source_result.handle_open)return UF_STATE;
+ if(offset>upload_source_result.size || offset>0x7fffffffUL)return UF_ARGUMENT;
+ error=upload_fs_seek(source_handle,offset,&actual);
+ if(error || actual!=offset)return fail(UF_SEEK,error);
+ upload_source_result.consumed=offset;return UF_OK;
+}
 unsigned __cdecl upload_source_close(unsigned token)
 {
  unsigned status;

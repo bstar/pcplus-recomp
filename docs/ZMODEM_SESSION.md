@@ -2,7 +2,8 @@
 
 `src/transfer/zmodem.c` implements standard ZMODEM batch send and receive over
 the [maintained wire codec](ZMODEM_WIRE.md). It builds independently for 8086
-DOS using the pinned Nix/Watcom toolchain. It is not yet linked into the terminal.
+DOS using the pinned Nix/Watcom toolchain. The production terminal integration is
+documented separately in [live ZMODEM](LIVE_ZMODEM.md).
 This is maintained source guided by the protocol and independently checked peers;
 it is not recovered original C. [Native evidence](ZMODEM_NATIVE.md) separately
 records original common/send/receive responsibilities and unresolved behavior.
@@ -104,13 +105,12 @@ hashes, actual peer commands and retained consumed/delivered/output wire hashes.
 [DOS report](validation/zmodem-dos.json) records case results and exact input and
 output hashes. New peer runs use unique directories to preserve earlier evidence.
 
-## Required integration
+## Live integration and remaining work
 
-The next step is checked batch-source seek support and a terminal storage adapter
-with the existing directory/pattern semantics. Then place engine and codec in
-the far segment, allocate the workspace in the exclusive transfer arena, connect
-serviced UART/time/cancellation/progress and filename/UI dispatch, and exercise
-actual DOS transfers against independent peers and stock Synchronet/ENiGMA BBS
-sessions. Auto-download, full settings, original streaming/window behavior,
-persisted partial resume and hardware remain required. All whole-application
-feature gates, including F08, remain open.
+The terminal now adds checked batch-source seek/skip, variable-length receive
+storage, CONFIG_CODE placement, arena allocation and serviced UART/progress/UI
+dispatch. Independent actual DOS lrzsz transfers pass; see `LIVE_ZMODEM.md` for
+their scope and runtime identity. Stock Synchronet/ENiGMA logged-in BBS sessions,
+broader live recovery/timing/cancel tests, auto-download, full settings, original
+streaming/window behavior, persisted partial resume and hardware remain required.
+All whole-application feature gates, including F08, remain open.

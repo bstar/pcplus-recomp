@@ -80,6 +80,10 @@ static void faults(void)
  open_file("TOTAL.BIN",0,1);{unsigned long saved_total=batch_download_result.completed_files;batch_download_result.completed_files=0xffffffffUL;before=renames;check(batch_download_finish()==BD_OVERFLOW && renames==before && stage_exists,"completed file DWORD overflow rejects before install");batch_download_cleanup();batch_download_result.completed_files=saved_total;}
  check(open_file("EMPTY.BIN",0,1)==BD_OK && batch_download_finish()==BD_OK && installed_size[installed-1]==0,"known zero installs empty without data frame");
  check(open_file("UNKNOWN.BIN",0,0)==BD_OK && batch_download_append(payload,128)==BD_OK && batch_download_append(payload,1024)==BD_OK && batch_download_finish()==BD_OK && installed_size[installed-1]==1152UL && !batch_download_result.known_length,"unknown size retains complete accepted frames");
+ open_file("VARIABLE.BIN",0,0);before=ops;saved=batch_download_result;
+ check(batch_download_exact(payload,1025)==BD_ARGUMENT && !memcmp(&saved,&batch_download_result,sizeof(saved)) && ops==before,"variable count rejects unchanged");
+ check(batch_download_exact(0,0)==BD_OK && ops==before && batch_download_exact(payload,3)==BD_OK && batch_download_finish()==BD_OK && installed_size[installed-1]==3,"zero no IO and exact unpadded short packet");
+ mode=4;open_file("VPART.BIN",0,0);check(batch_download_exact(payload,7)==BD_STORAGE && batch_download_result.wire==7 && batch_download_result.stored==3 && batch_download_finish()==BD_STORAGE,"variable short write poisons install");mode=0;batch_download_cleanup();
  /* Ambiguous close last: this process deliberately retains recovery ownership. */
  mode=6;open_file("UNCERT.BIN",128,1);batch_download_append(payload,128);before=closes;count=installed;check(batch_download_finish()==BD_RECOVERY && closes==before+1 && batch_download_result.file.handle_uncertain && stage_exists && installed==count,"ambiguous close forbids installation");before=ops;saved=batch_download_result;check(batch_download_finish()==BD_RECOVERY && batch_download_cleanup()==BD_RECOVERY && batch_download_initialize()==BD_RECOVERY && batch_download_begin("DATA")==BD_RECOVERY && batch_download_open(&header)==BD_RECOVERY && !memcmp(&saved,&batch_download_result,sizeof(saved)) && ops==before,"uncertain close retries never reset snapshot close remove or rename");
 }
@@ -102,6 +106,7 @@ static void normal(void)
  saved=batch_download_result;check(batch_download_begin("C:\\..\\DATA")==BD_ARGUMENT && !memcmp(&saved,&batch_download_result,sizeof(saved)),"parent traversal rejects without result mutation");
  check(batch_download_begin("C:\\")==BD_OK && open_file("ROOT.BIN",1,1)==BD_OK && batch_download_append(payload,128)==BD_OK && batch_download_finish()==BD_OK,"explicit DOS root parent supported");
  check(batch_download_begin(".")==BD_OK && open_file("HERE.BIN",1,1)==BD_OK && batch_download_append(payload,128)==BD_OK && batch_download_finish()==BD_OK,"explicit current directory supported");
+ check(open_file("EXACT.BIN",0,0)==BD_OK && batch_download_exact(0,0)==BD_OK && batch_download_exact(payload,3)==BD_OK && batch_download_finish()==BD_OK && batch_download_result.wire==3 && batch_download_result.stored==3,"actual unpadded variable packet installs exact bytes");
 }
 #endif
 int main(void)

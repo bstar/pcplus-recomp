@@ -65,3 +65,9 @@ CONFIG_CDECL _config_bu_read,_batch_upload_read,3
 CONFIG_ZERO _config_bu_next,_batch_upload_next
 CONFIG_ZERO _config_bu_close,_batch_upload_close
 CONFIG_ZERO _config_bu_abort,_batch_upload_abort
+; Maintained ZMODEM component and checked variable-packet/seek operations.
+CONFIG_ENTRY _terminal_zmodem_store,1
+CONFIG_REGISTER config_strcpy_service_,strcpy_
+CONFIG_CDECL _config_bu_seek,_batch_upload_seek,2
+CONFIG_ZERO _config_bu_skip,_batch_upload_skip
+CONFIG_CDECL _config_bd_exact,_batch_download_exact,2

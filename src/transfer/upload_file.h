@@ -31,6 +31,11 @@ unsigned __cdecl upload_source_open(const char *path,const char *mode);
  * status. Positive short reads are conservatively treated as source shrink.
  * Binary bytes including1Ah are untouched; consumed is fullDWORD. */
 unsigned __cdecl upload_source_read(void *data,unsigned size,unsigned count,unsigned token);
+/* Checked reposition within the frozen size, including EOF. Reading binary
+ * owner only; invalid range leaves the snapshot unchanged. DOS error or an
+ * unexpected returned position poisons the owner; consumed advances only on
+ * exact success. No reopen, reset of failure history or source mutation. */
+upload_file_status __cdecl upload_source_seek(unsigned long offset);
 /* Token1 logical. Token2 closes exactly once; repeats never issue another DOS
  * close. Closing before complete consumption latchesUF_INCOMPLETE. */
 unsigned __cdecl upload_source_close(unsigned token);

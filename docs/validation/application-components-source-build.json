@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "10f98caac26bc4ad9fe47ddd2d743024f2d76ee4d2e5866a4e7697d5234de900",
-  "source_file_count": 1435,
+  "source_snapshot_sha256": "ab3013407dbc114fedf554789d68054bdb16d8b9662273aa4eec2790f96979d5",
+  "source_file_count": 1454,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,19 +16,19 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "fbfeb9d56f913de6e964cc8284a6e54b2feebb6457e3956fb541e4f8bab24c73",
+  "build_log_sha256": "1bc190c3c3788eef18ba989744e0aa1aeb3cdcd98a4bbed01b06eda9e9183a88",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.XyFHOj/pcplus-source-proof-gswmuoit/checkout",
+  "source_checkout": "/tmp/nix-shell.1XnskU/pcplus-source-proof-s2x2c4su/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
   "scope": "64 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
   "output_count": 64,
   "outputs": {
     "terminal/TERMINAL.EXE": {
-      "sha256": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
+      "sha256": "8c481cfd54e4104b7dab5ef9d192318ceff9b07bfd1730e17c8c212a3ba20f18",
       "matches_workspace": true,
-      "workspace_sha256": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2"
+      "workspace_sha256": "8c481cfd54e4104b7dab5ef9d192318ceff9b07bfd1730e17c8c212a3ba20f18"
     },
     "config-dos/CONFIG.EXE": {
       "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
@@ -201,14 +201,14 @@
       "workspace_sha256": "ec3957d3770636eeb11eb4cdf699902d4027258d87a8c06a532ff45f26842883"
     },
     "upload-file/UPLOAD.EXE": {
-      "sha256": "da4e63040af9c58f93968f57e1a348e2496c3a7754b6485b2ed61f33704f2ff7",
+      "sha256": "d9e9b6cf95010f76575187722b5b474ee349cbf9560b332604a952b302e22914",
       "matches_workspace": true,
-      "workspace_sha256": "da4e63040af9c58f93968f57e1a348e2496c3a7754b6485b2ed61f33704f2ff7"
+      "workspace_sha256": "d9e9b6cf95010f76575187722b5b474ee349cbf9560b332604a952b302e22914"
     },
     "upload-file/UPFAULT.EXE": {
-      "sha256": "039af95d39c0041af756cdee160cc92e6b399aa76d43bdc0ad6f187d159e5563",
+      "sha256": "1565f10e9890a70beee4149ea404b441892b357441175a907e31ddc1d5f9d17d",
       "matches_workspace": true,
-      "workspace_sha256": "039af95d39c0041af756cdee160cc92e6b399aa76d43bdc0ad6f187d159e5563"
+      "workspace_sha256": "1565f10e9890a70beee4149ea404b441892b357441175a907e31ddc1d5f9d17d"
     },
     "transfer-metadata/METADATA.EXE": {
       "sha256": "efc26c3ca221739ac7c72b34707865407f4ab2ee223f4efdf751b148ea5b89b7",
@@ -221,24 +221,24 @@
       "workspace_sha256": "5fc883e06f588b13f7d61a3704e8fbdab789d69f10cf998a25d79abe60e06524"
     },
     "batch-download/BATCHDL.EXE": {
-      "sha256": "ade257f91099a563355c245dffc5a40b7efdc12c5326f2f185dcddec5dbfa3f7",
+      "sha256": "bf3c88edf908058054cc70a4d0583af088cc6bfb93449e4c35bc4adef0c51bcc",
       "matches_workspace": true,
-      "workspace_sha256": "ade257f91099a563355c245dffc5a40b7efdc12c5326f2f185dcddec5dbfa3f7"
+      "workspace_sha256": "bf3c88edf908058054cc70a4d0583af088cc6bfb93449e4c35bc4adef0c51bcc"
     },
     "batch-download/BDFAULT.EXE": {
-      "sha256": "cb42deb342a5bfa62f367b05b541ef813306fa6610dd900c4121538c82a45c85",
+      "sha256": "f572f8cde839f7c74ee11a85b0870a7509e1cf81d1a080a2c8d14857a6c53683",
       "matches_workspace": true,
-      "workspace_sha256": "cb42deb342a5bfa62f367b05b541ef813306fa6610dd900c4121538c82a45c85"
+      "workspace_sha256": "f572f8cde839f7c74ee11a85b0870a7509e1cf81d1a080a2c8d14857a6c53683"
     },
     "batch-upload/BATCH.EXE": {
-      "sha256": "bf7c5ba885edf57435c5acaf6e4253876cb2771edc0907232c87b7660b742888",
+      "sha256": "f68598d90743fbe867a6f4be15ebb78991b342c0bc12d8d109c669e332c7dcd3",
       "matches_workspace": true,
-      "workspace_sha256": "bf7c5ba885edf57435c5acaf6e4253876cb2771edc0907232c87b7660b742888"
+      "workspace_sha256": "f68598d90743fbe867a6f4be15ebb78991b342c0bc12d8d109c669e332c7dcd3"
     },
     "batch-upload/BUFAULT.EXE": {
-      "sha256": "f9471764bc92c38ba22529d21a77bf50a0902aa721b0f1e8a31002aacf002d59",
+      "sha256": "d839641df58da79e2e98d03de5bd1e768f3ab593569e8e14255b9456c0a35fae",
       "matches_workspace": true,
-      "workspace_sha256": "f9471764bc92c38ba22529d21a77bf50a0902aa721b0f1e8a31002aacf002d59"
+      "workspace_sha256": "d839641df58da79e2e98d03de5bd1e768f3ab593569e8e14255b9456c0a35fae"
     },
     "capture-file/CAPTURE.EXE": {
       "sha256": "532cec80d51f5cba16ce98d008a21eb6dd777db2b0079ece0e7b39c49ce980d5",

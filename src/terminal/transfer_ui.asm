@@ -7,6 +7,7 @@ extern keyboard_poll,terminal_read_key,terminal_transfer_filename
 extern session_blocks_accepted
 extern terminal_transfer_direction,terminal_upload_blocks_accepted
 extern terminal_transfer_protocol,_ymodem_current
+extern _terminal_zmodem_kbytes
 GLOBAL terminal_transfer_ui_open,terminal_transfer_ui_restore,terminal_transfer_ui_progress
 GLOBAL terminal_transfer_ui_receiving
 terminal_transfer_ui_open:
@@ -89,7 +90,11 @@ terminal_transfer_ui_open:
  mov byte [terminal_transfer_filename+bx],0
  jmp .input
 .protocol:
- xor word [terminal_transfer_protocol],1
+ inc word [terminal_transfer_protocol]
+ cmp word [terminal_transfer_protocol],3
+ jb .selected
+ mov word [terminal_transfer_protocol],0
+.selected:
  call ui_title
  jmp .input
 .backspace:
@@ -145,12 +150,20 @@ ui_title:
  jne .protocol
  mov si,transfer_ui_upload_title
 .protocol:
+ cmp word [terminal_transfer_protocol],2
+ je .zmodem_title
  cmp word [terminal_transfer_protocol],1
  jne .draw
  mov si,transfer_ui_batch_title
  cmp word [terminal_transfer_direction],1
  jne .draw
  mov si,transfer_ui_batch_upload_title
+ jmp .draw
+.zmodem_title:
+ mov si,transfer_ui_zmodem_title
+ cmp word [terminal_transfer_direction],1
+ jne .draw
+ mov si,transfer_ui_zmodem_upload_title
 .draw:
  mov di,3680
  call ui_text
@@ -180,12 +193,20 @@ terminal_transfer_ui_receiving:
  jne .running
  mov si,transfer_ui_upload_running
 .running:
+ cmp word [terminal_transfer_protocol],2
+ je .zmodem_running
  cmp word [terminal_transfer_protocol],1
  jne .draw
  mov si,transfer_ui_batch_running
  cmp word [terminal_transfer_direction],1
  jne .draw
  mov si,transfer_ui_batch_upload_running
+ jmp .draw
+.zmodem_running:
+ mov si,transfer_ui_zmodem_running
+ cmp word [terminal_transfer_direction],1
+ jne .draw
+ mov si,transfer_ui_zmodem_upload_running
 .draw:
  mov di,3680
  call ui_text
@@ -210,6 +231,11 @@ terminal_transfer_ui_progress:
  jne .count
  mov ax,[terminal_upload_blocks_accepted]
 .count:
+ cmp word [terminal_transfer_protocol],2
+ jne .batch_count
+ mov ax,[_terminal_zmodem_kbytes]
+ jmp .digits
+.batch_count:
  cmp word [terminal_transfer_protocol],1
  jne .digits
  mov ax,[_ymodem_current+6] ;fixed nearC word blocks
@@ -278,3 +304,7 @@ transfer_ui_batch_title: db ' YMODEM directory:  [F2] Protocol   [Enter] Start  
 transfer_ui_batch_upload_title: db ' YMODEM filespec:   [F2] Protocol   [Enter] Start   [Esc] Cancel',0
 transfer_ui_batch_running: db ' Receiving YMODEM  [Esc] Cancel                    Blocks:',0
 transfer_ui_batch_upload_running: db ' Sending YMODEM    [Esc] Cancel                    Blocks:',0
+transfer_ui_zmodem_title: db ' ZMODEM directory: [F2] Protocol   [Enter] Start   [Esc] Cancel',0
+transfer_ui_zmodem_upload_title: db ' ZMODEM filespec:  [F2] Protocol   [Enter] Start   [Esc] Cancel',0
+transfer_ui_zmodem_running: db ' Receiving ZMODEM [Esc] Cancel                       KiB:',0
+transfer_ui_zmodem_upload_running: db ' Sending ZMODEM   [Esc] Cancel                       KiB:',0

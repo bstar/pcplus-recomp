@@ -383,6 +383,16 @@ test-zmodem: test-zmodem-wire
 	python3 standalone/check_zmodem.py
 	python3 standalone/test_zmodem_dos.py
 
+.PHONY: test-terminal-zmodem-live
+test-terminal: test-terminal-zmodem-live
+test-terminal-zmodem-live: terminal
+	python3 standalone/check_terminal_zmodem_live.py
+
+.PHONY: test-zmodem-owners-live
+test: test-zmodem-owners-live
+test-zmodem-owners-live: terminal
+	python3 standalone/check_zmodem_owners_live.py
+
 .PHONY: setup test-setup
 all: setup
 test: test-setup

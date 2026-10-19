@@ -21,6 +21,12 @@ int main(void)
   offset+=n;
  }
  CHECK(offset==70013UL && upload_source_result.consumed==offset);
+ before=upload_source_result;
+ CHECK(upload_source_seek(70014UL)==UF_ARGUMENT && !memcmp(&before,&upload_source_result,sizeof(before)));
+ CHECK(upload_source_seek(65535UL)==UF_OK && upload_source_read(buffer,1,2,2)==2);
+ CHECK(buffer[0]==(unsigned char)(65535UL*37+13) && buffer[1]==(unsigned char)(65536UL*37+13));
+ CHECK(upload_source_seek(0)==UF_OK && upload_source_read(buffer,1,1,2)==1 && buffer[0]==13);
+ CHECK(upload_source_seek(70013UL)==UF_OK && upload_source_read(buffer,1,1,2)==0);
  CHECK(upload_source_close(2)==0 && upload_source_close(2)==0);
  CHECK(upload_source_result.close_calls==1 && !upload_source_result.handle_open);
  CHECK(upload_source_finish()==UF_OK && upload_source_finish()==UF_OK);

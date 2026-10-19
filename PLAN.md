@@ -8,7 +8,7 @@ must exclude original executables and private install/configuration data.
 ## Current application work
 
 The maintained terminal now includes directory editing/accounting, live settings
-with confirmed idle serial/profile/translation changes, XMODEM/YMODEM transfers,
+with confirmed idle serial/profile/translation changes, XMODEM/YMODEM/ZMODEM transfers,
 capture/snapshots/printer/monitor and serviced63,000-character redisplay with
 incremental search, serviced append/CRLF history export and a filename clipboard
 with checked one/all/tagged serial output. Alt-Z adds a source-owned command menu,
@@ -25,16 +25,16 @@ startup/schema/default generation, packaging and target hardware validation.
 Modern BBS interaction and independent source-only rebuilding remain required
 regressions across that work. Physical Wi-Fi modem testing is still outstanding.
 
-ZMODEM is the active transfer addition. Retained REA evidence maps its common
-framing and separate send/receive overlays (`docs/ZMODEM_NATIVE.md`). The maintained
-wire codec and batch session engine now pass independent host/wire checks,
-source-built 8086 DOS workflows, pinned lrzsz transfers and selected stock
-Synchronet protocol-helper transfers, including corruption recovery. The DOS
-receive diagnostic uses the existing checked file owner. Byte-identical isolated
-rebuilds pass. See `docs/ZMODEM_WIRE.md` and `docs/ZMODEM_SESSION.md`. Terminal
-source seek/storage adaptation, far placement, serviced UI/UART ownership,
-streaming/window behavior and actual stock BBS sessions remain required before
-claiming live ZMODEM support.
+ZMODEM now has live Alt-R/Alt-S/F2 dispatch, CONFIG_CODE placement, ten verified
+far callbacks, checked source seek/skip, exact variable receive packets and
+serviced UI/UART ownership. Linked workflows and independent actual DOS lrzsz
+transfers cover empty/binary/over64KiB files, CRC16 and control escaping; failed
+initial large-upload fixture attempts remain explicit. Component recovery also
+passes selected stock Synchronet helper tests. All64 existing source outputs
+rebuild byte-identically. See `docs/LIVE_ZMODEM.md`, `docs/ZMODEM_SESSION.md` and
+`docs/ZMODEM_NATIVE.md`. Logged-in stock Synchronet/ENiGMA ZMODEM workflows,
+actual DOS corruption/cancel/timing coverage, windowed sending, persisted partial
+resume, auto-download, broader name mapping and hardware remain required.
 
 ## 1. Serial driver — active
 

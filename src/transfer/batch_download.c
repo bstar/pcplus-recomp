@@ -145,6 +145,15 @@ unsigned __cdecl batch_download_append(const void *data,unsigned count)
   stored=(unsigned)(batch_download_result.declared-batch_download_result.stored);
  status=transfer_download_append(data,stored);return storage(status);
 }
+unsigned __cdecl batch_download_exact(const void *data,unsigned count)
+{
+ unsigned status;
+ if(cookie!=0xbd11 || batch_download_result.state!=BD_OPEN)return BD_STATE;
+ if(batch_download_result.known_length || count>1024 || (count && !input(data,count)))return BD_ARGUMENT;
+ if(batch_download_result.wire>0xffffffffUL-count){batch_download_result.state=BD_BROKEN;return fail(BD_OVERFLOW);}
+ batch_download_result.wire+=count;
+ status=transfer_download_append(data,count);return storage(status);
+}
 unsigned __cdecl batch_download_finish(void)
 {
  unsigned status;

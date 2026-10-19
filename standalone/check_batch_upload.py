@@ -42,6 +42,7 @@ int main(int argc,char **argv)
  CHECK(batch_upload_read(&batch_upload_current,2,&n)==BU_ARGUMENT && reads==0);
  CHECK(batch_upload_read(buffer,1,(unsigned *)&upload_source_result)==BU_ARGUMENT && reads==0);
  CHECK(batch_upload_read((void *)0xffff,2,&n)==BU_ARGUMENT && reads==0);
+ if(choice==6 || choice==7){CHECK(batch_upload_seek(1)==BU_SOURCE && !upload_source_result.consumed);CHECK(batch_upload_abort()==BU_OK && closes==1);return 0;}
  s=batch_upload_read(buffer,1024,&n);
  if(choice==3 || choice==5){CHECK(s==BU_SOURCE && n==0);CHECK(batch_upload_next()==BU_BUSY);CHECK(batch_upload_abort()==BU_OK);CHECK(closes==1);return 0;}
  CHECK(s==BU_OK && n==3 && buffer[0]==0 && buffer[1]==26 && buffer[2]==255);
@@ -101,7 +102,15 @@ int main(void)
  CHECK(batch_upload_next()==BU_FILE);
  CHECK(batch_upload_abort()==BU_OK);
  CHECK(batch_upload_next()==BU_STATE);
- puts("PASS209binaryemptyDTA");return 0;
+ CHECK(batch_upload_initialize()==BU_OK);
+ CHECK(batch_upload_begin("DATA/BIG.BIN")==BU_OK && batch_upload_next()==BU_FILE);
+ CHECK(batch_upload_seek(11520UL)==BU_OK && batch_upload_read(buffer,1,&n)==BU_OK && n==1 && buffer[0]==0);
+ CHECK(batch_upload_close()==BU_OK && batch_upload_next()==BU_DONE);
+ CHECK(batch_upload_initialize()==BU_OK);
+ CHECK(batch_upload_begin("DATA/F00?.BIN")==BU_OK && batch_upload_next()==BU_FILE);
+ CHECK(batch_upload_skip()==BU_OK && batch_upload_next()==BU_FILE);
+ CHECK(batch_upload_abort()==BU_OK);
+ puts("PASS209binaryemptyDTA-seek-skip");return 0;
 }
 #endif
 '''
@@ -118,6 +127,7 @@ unsigned upload_fs_attributes(const char *p,unsigned *a){*a=0;return 0;}
 unsigned upload_fs_open(const char *p,int *h){*h=7;return 0;}
 unsigned upload_fs_seek_end(int h,unsigned long *n){*n=choice==2?0x80000000UL:3;return 0;}
 unsigned upload_fs_rewind(int h){return 0;}
+unsigned upload_fs_seek(int h,unsigned long offset,unsigned long *actual){*actual=offset+(choice==7);return choice==6?5:0;}
 unsigned upload_fs_read(int h,void *p,unsigned n,unsigned *got)
 {unsigned char *b=p;++reads;b[0]=0;b[1]=26;b[2]=255;*got=choice==3?1:3;return choice==5?5:0;}
 unsigned upload_fs_close(int h){++closes;return choice==4?6:0;}
@@ -137,13 +147,13 @@ def build():
 
 def main():
  sources=build();cases=[]
- for mode in range(6):
+ for mode in range(8):
   m=DosImage(OUT/'BUFAULT.EXE',OUT/'bufault.map')
   m.uc.mem_write(m.data_base+0xf100,str(mode).encode()+b'\0')
   m.uc.mem_write(m.data_base+0xf000,struct.pack('<3H',0,0xf100,0))
   m.uc.reg_write(UC_X86_REG_AX,2);m.uc.reg_write(UC_X86_REG_DX,0xf000)
   answer=m.call('main_',limit=5000000)
-  cases.append({'case':['ownership-bounds-normal','enumeration-error-not-EOF','oversized-source-close','shrink-abort','uncertain-close-no-repeat','read-error-abort'][mode],'passed':answer==0,'return':answer})
+  cases.append({'case':['ownership-bounds-normal','enumeration-error-not-EOF','oversized-source-close','shrink-abort','uncertain-close-no-repeat','read-error-abort','seek-error-abort','wrong-returned-position-abort'][mode],'passed':answer==0,'return':answer})
   assert answer==0,cases[-1]
  data=OUT/'DATA';data.mkdir(exist_ok=True);(data/'DIR.BIN').mkdir(exist_ok=True)
  (data/'BIG.BIN').write_bytes(bytes(i&255 for i in range(11521)))

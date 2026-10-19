@@ -173,6 +173,19 @@ def inspect_terminal_memory(binary,map_path):
    assert symbols[name][0]==config_seg,(name,'batch code outside CONFIG_CODE')
   assert near_start<=address('_ymodem_current') and address('_ymodem_current')+32<=near_start+near_size
   extra['ymodem_far_code_verified']=True
+  if '_zm_run' in symbols:
+   for name in ('_zm_run','_zw_headers','_zw_feed','_zw_header_encode','_zw_data_encode','_terminal_zmodem_store_impl'):
+    assert symbols[name][0]==config_seg,(name,'ZMODEM outside CONFIG_CODE')
+   table=address('_terminal_zmodem_ops')
+   assert near_start<=table and table+40<=near_start+near_size,'ZMODEM callback table outside near data'
+   callbacks=struct.unpack('<20H',raw('_terminal_zmodem_ops',40))
+   names=('input','output','next','seek','read_file','close_source','open_received','write_received','commit','abort_received')
+   for i,name in enumerate(names):
+    off,seg=callbacks[2*i:2*i+2]
+    assert (seg,off)==symbols['_terminal_zmodem_'+name],('ZMODEM callback identity',name)
+    assert seg==config_seg and off<config_code['bytes'],('ZMODEM callback target',i)
+    assert table+4*i+2 in relocations,('ZMODEM callback relocation',i)
+   extra['zmodem_far_callbacks_verified']=10
   abi=Path(__file__).resolve().parents[1]/'src/terminal/config_abi.inc'
   config_bridges=0
   def cdecl_prefix(count,first):
@@ -205,7 +218,7 @@ def inspect_terminal_memory(binary,map_path):
     else:assert len(fields)==3
     near_call(name+'_resident',target,prefix=prefix,suffix=suffix)
    config_bridges+=1
-  assert config_bridges==61,'Incomplete configuration ABI validation'
+  assert config_bridges==66,'Incomplete configuration ABI validation'
   bridges+=config_bridges
   extra['configuration_bridge_pairs_verified']=config_bridges
  redisplay_bridges=0

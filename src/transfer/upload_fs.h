@@ -5,6 +5,7 @@ unsigned upload_fs_attributes(const char *path,unsigned *attributes);
 unsigned upload_fs_open(const char *path,int *handle);
 unsigned upload_fs_seek_end(int handle,unsigned long *size);
 unsigned upload_fs_rewind(int handle);
+unsigned upload_fs_seek(int handle,unsigned long offset,unsigned long *actual);
 unsigned upload_fs_read(int handle,void *data,unsigned count,unsigned *received);
 unsigned upload_fs_close(int handle);
 #endif

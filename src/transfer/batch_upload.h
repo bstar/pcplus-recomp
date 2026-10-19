@@ -17,6 +17,9 @@ unsigned __cdecl batch_upload_next(void);
 /* count is set only after valid arguments; on IO error it is zero.
  * Zero capacity is valid with null data; count itself must be valid. */
 unsigned __cdecl batch_upload_read(void *data,unsigned capacity,unsigned *count);
+unsigned __cdecl batch_upload_seek(unsigned long offset);
+/* Close an intentionally skipped source, preserving enumeration continuation. */
+unsigned __cdecl batch_upload_skip(void);
 unsigned __cdecl batch_upload_close(void);
 /* abort is the cleanup operation: closes a known owned handle once, including
  * after read errors/incomplete consumption. An ambiguous failed DOS close is

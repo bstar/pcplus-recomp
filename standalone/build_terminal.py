@@ -41,6 +41,7 @@ c_sources += sorted((ROOT/'src/clipboard').glob('*.c'))
 c_sources += [ROOT/'src/transfer'/name for name in ['download_file.c','download_fs.c','native_file_bridge.c','terminal_receive.c']]
 c_sources += [ROOT/'src/transfer'/name for name in ['upload_file.c','upload_fs.c','terminal_upload.c']]
 c_sources += [ROOT/'src/transfer'/name for name in ['batch_header.c','batch_download.c','batch_upload.c','batch_upload_fs.c','ymodem.c','terminal_ymodem.c']]
+c_sources += [ROOT/'src/transfer'/name for name in ['zmodem.c','zmodem_wire.c','terminal_zmodem.c']]
 c_sources += sorted((ROOT/'src/capture').glob('*.c'))
 c_sources += sorted((ROOT/'src/printer').glob('*.c'))
 config_sources={ROOT/'src/directory/directory_live.c',ROOT/'src/config/live_configuration.c',ROOT/'src/config/live_setup_owner.c'}
@@ -52,6 +53,7 @@ config_sources.add(ROOT/'src/redisplay/command_menu.c')
 config_sources.update((ROOT/'src/clipboard').glob('*.c'))
 config_sources.add(ROOT/'src/process/program.c')
 config_sources.update({ROOT/'src/transfer/ymodem.c',ROOT/'src/transfer/batch_header.c'})
+config_sources.update({ROOT/'src/transfer'/name for name in ['zmodem.c','zmodem_wire.c','terminal_zmodem.c']})
 config_aliases={name:name+'_impl' for name in ['directory_live_decode','directory_live_read','directory_live_read_context','directory_live_context_matches','live_configuration_decode','live_setup_bind','live_setup_begin','live_setup_finish','live_setup_abort','live_setup_finish_policy','live_setup_acknowledge']}
 config_aliases.update({name:'config_'+name+'_service' for name in ['memcpy','memset','memcmp','strchr','strcmp']})
 config_aliases.update({'terminal_import_decode':'config_terminal_decode_service','modem_import_decode':'config_modem_decode_service','prm_dos_load':'config_prm_read_service','directory_dos_read':'config_directory_read_service','directory_number_expand':'config_number_expand_service'})
@@ -64,6 +66,9 @@ config_aliases.update({'xlt_dos_read':'xlt_dos_read_impl',
  'xlt_fs_open':'config_xlt_open_service','xlt_fs_read':'config_xlt_read_service',
  'xlt_fs_close':'config_xlt_close_service'})
 config_aliases.update({name:name+'_impl' for name in ['ymodem_run','batch_header_end','batch_header_encode','batch_header_decode']})
+config_aliases.update({'terminal_zmodem_store':'terminal_zmodem_store_impl','strcpy':'config_strcpy_service',
+ 'batch_upload_seek':'config_bu_seek_service','batch_upload_skip':'config_bu_skip_service',
+ 'batch_download_exact':'config_bd_exact_service'})
 config_aliases.update({name:'config_'+short+'_service' for name,short in {
  'transfer_crc_buffer_original':'ym_crc','ymodem_io_read':'ym_read','ymodem_io_put':'ym_put','ymodem_io_unread':'ym_unread',
  'ymodem_io_poll':'ym_poll','ymodem_io_progress':'ym_progress',
@@ -103,6 +108,7 @@ inputs += sorted((ROOT/'src/clipboard').glob('*.h'))
 inputs += sorted((ROOT/'src/redisplay').glob('*.h'))
 inputs += [ROOT/'src/transfer'/name for name in ['download_file.h','download_fs.h','native_file_bridge.h','upload_file.h','upload_fs.h','batch_header.h','batch_download.h','batch_upload.h','batch_upload_fs.h','ymodem.h']]+native['inputs']+[ROOT/'standalone/terminal_memory.py']
 inputs += sender['inputs']
+inputs += [ROOT/'src/transfer/zmodem.h',ROOT/'src/transfer/zmodem_wire.h']
 inputs += [ROOT/'standalone/omf_imports.py']
 inputs += sorted((ROOT/'src/terminal').glob('*.inc'))
 inputs += sorted((ROOT/'src/translation').glob('*.h'))

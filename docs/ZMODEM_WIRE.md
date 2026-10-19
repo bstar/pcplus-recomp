@@ -2,9 +2,10 @@
 
 `src/transfer/zmodem_wire.c` is an independently maintained, bounded C89 codec
 for standard ZMODEM headers and data subpackets. It builds for DOS 8086 through
-the pinned Nix/Watcom toolchain. It is not yet linked into TERMINAL.EXE and does
-not implement a transfer session. The existing terminal and its XMODEM/YMODEM
-paths retain their prior binary identities and validation reports.
+the pinned Nix/Watcom toolchain. It is linked into TERMINAL.EXE through the
+separate [session engine](ZMODEM_SESSION.md) and [live adapter](LIVE_ZMODEM.md).
+This document's diagnostic remains framing-only; prior terminal/XMODEM/YMODEM
+reports retain their explicitly recorded historical binary identities.
 
 The implementation follows [Forsberg's 1988 protocol specification](https://gallium.inria.fr/~doligez/zmodem/zmodem.txt),
 sections 7–11. [Native evidence](ZMODEM_NATIVE.md) separately records retained
@@ -76,7 +77,8 @@ hash. See [validation/zmodem-wire.json](validation/zmodem-wire.json).
 These results establish wire framing only. The separate
 [maintained session engine](ZMODEM_SESSION.md) now adds negotiation, metadata,
 verified-position recovery, checked receive commits, sender seeking and bounded
-completion, with independent peer and actual DOS component checks. Terminal
-source/storage adaptation, far-segment placement, serviced UI/UART ownership,
-stock Synchronet/ENiGMA BBS sessions and physical modem tests remain open.
+completion, with independent peer and actual DOS component checks. Live terminal
+adaptation, far placement and UART/UI ownership now have separate evidence in
+`LIVE_ZMODEM.md`. Stock Synchronet/ENiGMA BBS sessions and physical modem tests
+remain open.
 All full-application gates, including F08, remain open.

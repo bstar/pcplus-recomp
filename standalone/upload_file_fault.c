@@ -2,7 +2,7 @@
 #include "upload_fs.h"
 #include <string.h>
 static unsigned attributes_error,open_error,seek_error,rewind_error,read_error,close_error;
-static unsigned attributes_value,actual_limit,read_oversize;
+static unsigned attributes_value,actual_limit,read_oversize,seek_wrong;
 static unsigned opens,reads,closes,seeks,rewinds;
 static unsigned long declared,position;
 static unsigned char buffer[10240];
@@ -11,6 +11,8 @@ unsigned upload_fs_attributes(const char *p,unsigned *a){(void)p;*a=attributes_v
 unsigned upload_fs_open(const char *p,int *h){(void)p;++opens;*h=37;position=0;return open_error;}
 unsigned upload_fs_seek_end(int h,unsigned long *n){(void)h;++seeks;*n=declared;position=declared;return seek_error;}
 unsigned upload_fs_rewind(int h){(void)h;++rewinds;position=0;return rewind_error;}
+unsigned upload_fs_seek(int h,unsigned long offset,unsigned long *actual)
+{(void)h;++seeks;*actual=offset+seek_wrong;if(!seek_error)position=*actual;return seek_error;}
 unsigned upload_fs_read(int h,void *data,unsigned n,unsigned *actual)
 {
  unsigned i;(void)h;++reads;
@@ -24,7 +26,7 @@ static unsigned reset(void)
  if(upload_source_result.handle_uncertain)return UF_RECOVERY;
  if(upload_source_result.handle_open)upload_source_abort();
  attributes_error=open_error=seek_error=rewind_error=read_error=close_error=0;
- attributes_value=read_oversize=0;actual_limit=10240;opens=reads=closes=seeks=rewinds=0;declared=200;
+ attributes_value=read_oversize=seek_wrong=0;actual_limit=10240;opens=reads=closes=seeks=rewinds=0;declared=200;
  return upload_source_initialize();
 }
 static unsigned ready(void)
@@ -61,6 +63,19 @@ int main(int argc,char **argv)
  CHECK(upload_source_begin("OTHER.BIN")==UF_BUSY && !memcmp(&before,&upload_source_result,sizeof(before)) && opens==1);
  CHECK(upload_source_read(buffer,1,200,2)==200 && upload_source_read(buffer,1,200,2)==0 && reads==1);
  CHECK(upload_source_close(2)==0 && upload_source_close(2)==0 && closes==1 && upload_source_finish()==UF_OK);
+ CHECK(reset()==UF_OK);CHECK(!ready());before=upload_source_result;i=seeks;
+ CHECK(upload_source_seek(201)==UF_ARGUMENT && upload_source_seek(0xffffffffUL)==UF_ARGUMENT);
+ CHECK(!memcmp(&before,&upload_source_result,sizeof(before)) && seeks==i);
+ CHECK(upload_source_seek(199)==UF_OK && upload_source_read(buffer,1,1,2)==1 && buffer[0]==(unsigned char)(199*37UL+13));
+ CHECK(upload_source_seek(0)==UF_OK && upload_source_seek(200)==UF_OK && upload_source_read(buffer,1,1,2)==0);
+ CHECK(upload_source_close(2)==0 && closes==1);
+ for(error=0;error<=8;++error){
+  CHECK(reset()==UF_OK);CHECK(!ready());before=upload_source_result;
+  seek_error=error;seek_wrong=error==0;
+  CHECK(upload_source_seek(100)==UF_SEEK && upload_source_result.consumed==before.consumed);
+  CHECK(upload_source_result.dos_error==error && upload_source_read(buffer,1,1,2)==0xffff);
+  CHECK(upload_source_abort()==UF_OK && closes==1);
+ }
  for(error=1;error<=8;++error){
   CHECK(reset()==UF_OK);CHECK(!ready());read_error=error;actual_limit=13;
   CHECK(upload_source_read(buffer,1,200,2)==0xffff && upload_source_result.first_status==UF_READ && upload_source_result.consumed==13);
