@@ -94,3 +94,12 @@ Before claiming the requested compatibility, require actual DOS login, custom
 search/list/details/DIZ/NFO navigation, unsaved editor behavior, and byte-exact
 transfers on this board. Repeat after any installed decoder change. Physical
 RS-232 Wi-Fi modem timing/flow-control testing remains separate.
+
+The [isolated owned game-details fixture](enigma-notes.md) now copies the exact
+details/helper source but supplies only synthetic notes/files and a dedicated
+menu route. Actual Client/module replay reproduces fragmented navigation and
+accidental exits with the original decoder, while the staged decoder preserves
+all180 checks. The patched DOS run reaches DIZ/NFO and passes the complete
+nine-page navigation sequence, including leaving and reopening the module.
+This strengthens the candidate evidence without modifying the live board or
+claiming its custom search/list route is fixed.

@@ -7,6 +7,13 @@ passes actual DOS editor and byte-exact ZMODEM workflows in isolation; it is
 not installed on the live board. Keep that distinction in compatibility claims
 and validate the actual custom menus and physical modem separately.
 
+The [isolated exact game-details fixture](lab/bbs/enigma-notes.md) now covers
+the owned module with synthetic DIZ/NFO data. Original Client replay yields164
+fragmented differences and120 unintended exits; the staged decoder has zero in
+180 checks. Actual DOS passes DIZ display, all six navigation keys, final NFO
+content and menu leave/reentry through the added test route. The live custom
+index/search route and physical modem remain separate requirements.
+
 Latest keyboard checkpoint: [shared key output](docs/ASPECT_KEY_OUTPUT.md) routes
 script-time keys through the actual parent classifier/profile and child-owned
 UART. Capability6 retains inherited BIOS selection and adds checked duplex

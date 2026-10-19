@@ -1,0 +1,251 @@
+{
+  "passed": true,
+  "defect_reproduced": true,
+  "isolated_fix_verified": true,
+  "live_server_modified": false,
+  "terminal_sha256": "e6d170f2bba5a32f5ec3a92d61a17b4b1c3e40ca75b29886423bcedc33d5eab9",
+  "owned_upstream_revision": "237cd9743d6978a940dd66db0e78f6ab8ccd3e37",
+  "source_modules": {
+    "mods/loc_game_details/loc_game_details.js": "0711413e29c01f0cf3cef7f89b3dc607515381a67a23e1a58205aa6d7a20efb8",
+    "mods/black_flag_files/helpers.js": "e4f6c1df6dbb9d6282d0534150c9149889637d34f01665691ca3bc5d19a06235"
+  },
+  "unit": {
+    "baseline": {
+      "path": "build/bbs-lab/owned-enigma-notes-01/module-baseline.json",
+      "sha256": "e0b09518cd7c030dc84e7493d8475593c8f6a74e595d672da579df8357c26dc0",
+      "checks": 180,
+      "fragmented_differences": 164,
+      "unexpected_leaves": 120,
+      "client_sha256": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+      "node": "v24.18.1",
+      "scope": "Actual ENiGMA Client and exact owned GameDetails constructor/draw/lines/onKey/leave, all selected escape-sequence partitions, tab reset and listener teardown. Synthetic data and previous-menu boundary; no network/login/SQLite or physical modem claim."
+    },
+    "framed": {
+      "path": "build/bbs-lab/owned-enigma-notes-01/module-framed.json",
+      "sha256": "0619fa8606bf96d712808ff2d4b3dfff8049e8bb9c923b5b69cc8e0284b5935c",
+      "checks": 180,
+      "fragmented_differences": 0,
+      "unexpected_leaves": 0,
+      "client_sha256": "8cb3b4c8d439e0c43a09d9caf87b69560b3df1b51de053d70f2dc9b6dc9ea31b",
+      "node": "v24.18.1",
+      "scope": "Actual ENiGMA Client and exact owned GameDetails constructor/draw/lines/onKey/leave, all selected escape-sequence partitions, tab reset and listener teardown. Synthetic data and previous-menu boundary; no network/login/SQLite or physical modem claim."
+    }
+  },
+  "DOS": {
+    "baseline": {
+      "path": "build/bbs-lab/results/enigma/owned-notes-baseline-01/notes-checks.json",
+      "sha256": "b34fca571a8d1461d22986e22a27160e4157d39f30c73e9360b55e0fc44b6e89",
+      "navigation_passed": false,
+      "checks": {
+        "DOS_harness": true,
+        "unique_authenticated_session": true,
+        "exact_owned_module": true,
+        "inputs_unchanged": true,
+        "no_post_saved": true,
+        "overview": true,
+        "diz_page": true,
+        "nfo_page": true,
+        "exact_navigation": false,
+        "bottom_content": false,
+        "menu_leave_reenter": true,
+        "actual_profile_key_bytes": true
+      },
+      "observed_pages": [
+        [
+          1,
+          15,
+          24
+        ],
+        [
+          1,
+          15,
+          24
+        ]
+      ],
+      "expected_pages": [
+        [
+          1,
+          15,
+          24
+        ],
+        [
+          2,
+          16,
+          24
+        ],
+        [
+          10,
+          24,
+          24
+        ],
+        [
+          9,
+          23,
+          24
+        ],
+        [
+          1,
+          15,
+          24
+        ],
+        [
+          10,
+          24,
+          24
+        ],
+        [
+          1,
+          15,
+          24
+        ],
+        [
+          1,
+          15,
+          24
+        ],
+        [
+          10,
+          24,
+          24
+        ]
+      ],
+      "modem_packet_delay_ms": 0,
+      "scope": "Actual DOSBox-X19200/HARD/immediate modeled modem against exact owned game-details/helper code and real ENiGMA Client/MenuModule/FileEntry/SQLite. Synthetic account,file,DIZ,NFO and added NFO menu route; not the live custom search/list flow or physical RS-232 modem."
+    },
+    "framed": {
+      "path": "build/bbs-lab/results/enigma/owned-notes-framed-02/notes-checks.json",
+      "sha256": "3ba7a0056c4752b57e791cf677e3cbebddb8720ef33ad3012f9135c2162c784c",
+      "navigation_passed": true,
+      "checks": {
+        "DOS_harness": true,
+        "unique_authenticated_session": true,
+        "exact_owned_module": true,
+        "inputs_unchanged": true,
+        "no_post_saved": true,
+        "overview": true,
+        "diz_page": true,
+        "nfo_page": true,
+        "exact_navigation": true,
+        "bottom_content": true,
+        "menu_leave_reenter": true,
+        "actual_profile_key_bytes": true
+      },
+      "observed_pages": [
+        [
+          1,
+          15,
+          24
+        ],
+        [
+          2,
+          16,
+          24
+        ],
+        [
+          10,
+          24,
+          24
+        ],
+        [
+          9,
+          23,
+          24
+        ],
+        [
+          1,
+          15,
+          24
+        ],
+        [
+          10,
+          24,
+          24
+        ],
+        [
+          1,
+          15,
+          24
+        ],
+        [
+          1,
+          15,
+          24
+        ],
+        [
+          10,
+          24,
+          24
+        ]
+      ],
+      "expected_pages": [
+        [
+          1,
+          15,
+          24
+        ],
+        [
+          2,
+          16,
+          24
+        ],
+        [
+          10,
+          24,
+          24
+        ],
+        [
+          9,
+          23,
+          24
+        ],
+        [
+          1,
+          15,
+          24
+        ],
+        [
+          10,
+          24,
+          24
+        ],
+        [
+          1,
+          15,
+          24
+        ],
+        [
+          1,
+          15,
+          24
+        ],
+        [
+          10,
+          24,
+          24
+        ]
+      ],
+      "modem_packet_delay_ms": 0,
+      "scope": "Actual DOSBox-X19200/HARD/immediate modeled modem against exact owned game-details/helper code and real ENiGMA Client/MenuModule/FileEntry/SQLite. Synthetic account,file,DIZ,NFO and added NFO menu route; not the live custom search/list flow or physical RS-232 modem."
+    }
+  },
+  "node": "v24.18.1",
+  "nix_lock_sha256": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+  "source_build_proof": {
+    "path": "docs/validation/application-components-source-build.json",
+    "sha256": "84dffb5d6a176ff647d9b086739678faf3ee4f5cc2634a71d797dfbc2b2d25d1",
+    "outputs": 178
+  },
+  "recorder_sha256": "e54ac6f71fb6dc8f0fbc144edfa6769e0282b397c14aea83e77da668db461048",
+  "whole_application_gates_closed": [],
+  "retained_prerequisite_failure": {
+    "label": "owned-notes-framed-01",
+    "reason": "Explicit server-log guard rejected an unsupported harness owner before connecting; corrected runner uses enigma and a fresh label."
+  },
+  "limitations": [
+    "Exact owned details/helper source with generated DIZ/NFO and a dedicated test-menu route; live custom index/search routing and its real catalog remain unverified after patching.",
+    "The staged decoder remains uninstalled on the live board; retained live failures are not superseded by these isolated passes.",
+    "Incomplete key deadline remains100ms; physical RS-232 Wi-Fi modem latency/flow control and other BBS implementations need separate testing.",
+    "Game-details HTTP/browser/queue/transfer actions are outside this navigation fixture; editor/ZMODEM handoffs have separate records.",
+    "Pinned Nix shells reuse existing node_modules; this is not a fresh dependency-reproducibility proof."
+  ]
+}
