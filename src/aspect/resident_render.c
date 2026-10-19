@@ -55,6 +55,17 @@ unsigned __cdecl aspect_render_finish(void)
  if(!result)attached=0;
  return result;
 }
+unsigned __cdecl aspect_render_status(unsigned duplex)
+{
+ unsigned result;
+ if(!attached || aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(!aspect_serial_active)return ASPECT_RUN_SERIAL;
+ if(duplex!=65535U && duplex>255)return ASPECT_RUN_OPERAND;
+ callback_error=0;
+ result=typed(aspect_render_request(ASPECT_RENDER_STATUS,duplex));
+ if(aspect_render_client_check())return ASPECT_RUN_STATE;
+ return result?result:callback_error;
+}
 /* Called only by the far callback's checked child DS=SS stack. A closed UART
  * permits plain diagnostic rendering, not new receive/transmit operations. */
 static unsigned callback_dispatch(unsigned operation,unsigned value)

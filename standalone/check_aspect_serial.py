@@ -85,8 +85,8 @@ def main():
  done('ASIOvalidated-parent-allocation-wrap-full-ring-exact-publication-after-restore',4)
  m=Serial();suffix=m.descriptor3(entry=0,record=0)
  raw=bytearray(m.uc.mem_read(m.desc,40));struct.pack_into('<HH',raw,4,4,48)
- guard=int.from_bytes(raw[20:22],'little')^0x300^0x1800^0x7123^1
- struct.pack_into('<H',raw,20,guard);raw+=struct.pack('<4H',0x300,0x1800,0x7123,1)
+ guard=int.from_bytes(raw[20:22],'little')^0x300^0x1800^0x7123^2
+ struct.pack_into('<H',raw,20,guard);raw+=struct.pack('<4H',0x300,0x1800,0x7123,2)
  m.uc.mem_write(m.desc,bytes(raw));assert m.open(b'/S1:0003:03:N'+suffix)==1 and not m.writes
  done('UART-only-unit-explicitly-rejects-v4-render-capability-before-IO',1)
  for offset,value in [(0,0),(4,3),(6,26),(8,123),(14,4095),(16,1),(18,1),(20,0),(22,1),(24,1),(26,1)]:

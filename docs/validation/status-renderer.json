@@ -5,17 +5,18 @@
   "sources": {
     "src/status/status_renderer_bridge.asm": "e75cbbc6c3ac242084178e96d84bf80841773c2cbe7c9450ac3a9e28729adbc8",
     "standalone/status_renderer_host.asm": "b9720eb238a706f95d1c2badd3dd00605575bd2057f95f499615fc47e7a74eff",
-    "standalone/status_renderer_state.inc": "abf3a20fcb39dfd7e74cada4cc8725602d5a889c39f4264e5b88448d80b58744",
-    "standalone/build_status_renderer.py": "d179c65651a52dec2d2ce9f2dfd7371a6e7da46a9ce5b6d4f064f952b4b6ec25",
+    "standalone/status_renderer_state.inc": "2131d928d6cb385e3e611f69fb6793f07dc2bb58f70bbd73715c547b855e5a3f",
+    "src/status/status_state.inc": "c2b6c5e98aaef86be0467fc315022c394ebf63fb028d9b2571d7a0318eb5d9f6",
+    "standalone/build_status_renderer.py": "45081b71583577b10a8afe2139e45bc4858be0bd949ef6b51476c330002a0e53",
     "standalone/check_status_renderer.py": "9d3842570ac10cb1ebcf13b016dd6c6162facaea1b10e82cb35b83ee63a2faee",
-    "standalone/record_status_renderer.py": "7fdf8191317222686ca8beadc36ab291a95397b3ccd0a1cf9d24963a3850ed7c",
+    "standalone/record_status_renderer.py": "4faf13157a8e83264b352dd05a7415d43f5e74f2aab51b22560ec133fa10c8e1",
     "reconstruction/terminal_reset/status_refresh.asm": "d4bb50f9c650a2b95fef3da4f493d1746f4d801fb1bde702e5e70f8f028b249f",
     "reconstruction/terminal_reset/status_fill.asm": "36f39bc908c420b7fab7fa23e4220b18dc4763ecaaf96227c96c82624599a913",
     "docs/STATUS_RENDERER.md": "30b0a97815e69d0068bce077b1ff18256cb6fa36c7b42aff0175280499016d0b"
   },
   "reports": {
     "build/status-renderer/manifest.json": {
-      "sha256": "ecc1330f18e61c74f2195d187d54bdd44f0ad5e8459ac68621d73efddeca9723",
+      "sha256": "f75798db151a41b9ad3a4c8f08fd13eac8e57b742beeb751e5a2e951e65621bd",
       "result": {
         "original_inputs": [],
         "source_dependencies": {
@@ -34,20 +35,21 @@
           "standalone/status_renderer_host.asm": "b9720eb238a706f95d1c2badd3dd00605575bd2057f95f499615fc47e7a74eff",
           "src/status/status_formatter.c": "4cc9ef228190a7e847342338b2757ba85c610022fc3e9d6b0d1755285b37434b",
           "src/status/status_formatter.h": "471caa182614bc605f07d76c705d5a70ce1d9551efb826713ab863bbac08e7d2",
-          "standalone/status_renderer_state.inc": "abf3a20fcb39dfd7e74cada4cc8725602d5a889c39f4264e5b88448d80b58744",
+          "src/status/status_state.inc": "c2b6c5e98aaef86be0467fc315022c394ebf63fb028d9b2571d7a0318eb5d9f6",
+          "standalone/status_renderer_state.inc": "2131d928d6cb385e3e611f69fb6793f07dc2bb58f70bbd73715c547b855e5a3f",
           "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919"
         },
-        "builder_sha256": "d179c65651a52dec2d2ce9f2dfd7371a6e7da46a9ce5b6d4f064f952b4b6ec25",
+        "builder_sha256": "45081b71583577b10a8afe2139e45bc4858be0bd949ef6b51476c330002a0e53",
         "binary_sha256": "2f5ef231f958b209e3560f8ab34fabb44711a70ab402e31db7ae959458aa867e"
       }
     },
     "build/status-renderer/checks.json": {
-      "sha256": "bc56b6281eaa350991040a9ada37675284e036208660a57415da5c0686e9976a",
+      "sha256": "45a77c0aeeaba4a185e039746e0ac8500f4cbd540533258c2a9e914e45c83c56",
       "result": {
         "passed": true,
         "original_inputs": [],
         "binary_sha256": "2f5ef231f958b209e3560f8ab34fabb44711a70ab402e31db7ae959458aa867e",
-        "manifest_sha256": "ecc1330f18e61c74f2195d187d54bdd44f0ad5e8459ac68621d73efddeca9723",
+        "manifest_sha256": "f75798db151a41b9ad3a4c8f08fd13eac8e57b742beeb751e5a2e951e65621bd",
         "checker_sha256": "9d3842570ac10cb1ebcf13b016dd6c6162facaea1b10e82cb35b83ee63a2faee",
         "predictions_sha256": "8c87c2545db024680a93b38adadbcd25a1eab9ff4cd734b1399fd42cd9344fa9",
         "cases": [
@@ -119,12 +121,12 @@
       }
     },
     "docs/validation/application-components-source-build.json": {
-      "sha256": "be072ecef4fe93908c4bc1d3544567515e2c6711f40688328dcfe74c0b35a714",
+      "sha256": "a2519a1fb0adbff973d595f5a8e2d92146d1c49f7dc4c03244529f6f334a232c",
       "result": {
         "passed": true,
         "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-        "source_snapshot_sha256": "a80f6cac6eeb3bec0448dab97e952599f1a638a754df08f367ec673e577d05c3",
-        "source_file_count": 1817,
+        "source_snapshot_sha256": "becb3bd6c215ebc428a658348ac592b28e42750b8886339a0ba9996bf51e1fd6",
+        "source_file_count": 1823,
         "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
         "excluded_top_level_paths": [
           ".git",
@@ -138,19 +140,19 @@
         "original_install_present": false,
         "REA_database_present": false,
         "previous_build_outputs_present": false,
-        "build_log_sha256": "0dc5aabb7270c3d96dfe2b1613a790c4c972c4ab65e1f6ad0a34b7a41f71f6cf",
+        "build_log_sha256": "3235befe6bf210129f4dfb27ad22bbc12f7be889d6982e363a706d167e556dc9",
         "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
         "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-        "source_checkout": "/tmp/nix-shell.YNhWFn/pcplus-source-proof-3ak53t63/checkout",
+        "source_checkout": "/tmp/nix-shell.xgCEZ1/pcplus-source-proof-3q1d2i57/checkout",
         "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
         "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
         "scope": "112 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
         "output_count": 112,
         "outputs": {
           "terminal/TERMINAL.EXE": {
-            "sha256": "44a477b47d85ec2741e0ab7d5098b54f073150738750bbd421abb773f9831951",
+            "sha256": "e9c8a731df6af6bc0f2afd25fec1363ce6607dc2be284f1ab911e41d1217ecc5",
             "matches_workspace": true,
-            "workspace_sha256": "44a477b47d85ec2741e0ab7d5098b54f073150738750bbd421abb773f9831951"
+            "workspace_sha256": "e9c8a731df6af6bc0f2afd25fec1363ce6607dc2be284f1ab911e41d1217ecc5"
           },
           "config-dos/CONFIG.EXE": {
             "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
@@ -638,9 +640,9 @@
             "workspace_sha256": "1246c0cec286893de01953bb5cd6b6a7917a566dc34b2c79d583576edf100725"
           },
           "aspect-serial/SERIAL.EXE": {
-            "sha256": "d08d69cb7372bd4aedbda7596627e66a9095cb87749da393112c288dc36b4d55",
+            "sha256": "cf0a8a4bac51aca2c50a73b7c4508c5a3143e144fcacdf357bb73dd8c02b8e11",
             "matches_workspace": true,
-            "workspace_sha256": "d08d69cb7372bd4aedbda7596627e66a9095cb87749da393112c288dc36b4d55"
+            "workspace_sha256": "cf0a8a4bac51aca2c50a73b7c4508c5a3143e144fcacdf357bb73dd8c02b8e11"
           },
           "aspect-console/CONSOLE.EXE": {
             "sha256": "080d3623f7cb5813ac7348d0f9444e14d7d409598acc5a4a0554429fe32778d5",
@@ -648,9 +650,9 @@
             "workspace_sha256": "080d3623f7cb5813ac7348d0f9444e14d7d409598acc5a4a0554429fe32778d5"
           },
           "aspect-runner/ASPECT.EXE": {
-            "sha256": "0f00aa3e44da029ca7727f38f1e1af6db08a84a712cb30b03e990219cf3c60ef",
+            "sha256": "65b3e08de86f436e4216ec2238a20d42b667ef21e1ec2d49a5a745c50daa935a",
             "matches_workspace": true,
-            "workspace_sha256": "0f00aa3e44da029ca7727f38f1e1af6db08a84a712cb30b03e990219cf3c60ef"
+            "workspace_sha256": "65b3e08de86f436e4216ec2238a20d42b667ef21e1ec2d49a5a745c50daa935a"
           },
           "aspect-runner/tests/RUNTEST.EXE": {
             "sha256": "9f5268058dce303dcefa3f6cc9b014846cf7f06393fc5e56e54efa1661cdd04c",
@@ -688,9 +690,9 @@
             "workspace_sha256": "98c8d27d0fb5dde4c30edb1390a092e8823652177f7e11417952e1718bbf101b"
           },
           "aspect-runtime/EXECUTE.EXE": {
-            "sha256": "b8c100366aa1c62578e1df0970d788e223abf96100af9c41d0dd7646e1257efe",
+            "sha256": "32309fab32545cc1388ca9621dd31784438bf4b29e51995360618a5d377ad2c1",
             "matches_workspace": true,
-            "workspace_sha256": "b8c100366aa1c62578e1df0970d788e223abf96100af9c41d0dd7646e1257efe"
+            "workspace_sha256": "32309fab32545cc1388ca9621dd31784438bf4b29e51995360618a5d377ad2c1"
           },
           "monitor/MONITOR.EXE": {
             "sha256": "766e8cb46c6edb3269cee3ea2a7896c03628f37e6fcfe7fc17938f834e13b377",
@@ -793,6 +795,7 @@
           "standalone/check_aspect_set.py",
           "standalone/check_status_helpers.py",
           "standalone/check_status_renderer.py",
+          "standalone/check_status_live.py",
           "standalone/check_aspect_runner.py",
           "standalone/check_aspect_directory.py",
           "standalone/package_dos.py"
@@ -845,5 +848,5 @@
       }
     }
   },
-  "scope": "Source-built full native status component across real near/far bridges. ActualDOS video/stack/ABI and typed failures checked. Carrier remains a diagnostic word; production state staging, guarded parent STATUS RPC, SET lifetimes and full application remain unfinished."
+  "scope": "Source-built full native status component across real near/far bridges. ActualDOS video/stack/ABI and typed failures checked. Carrier here remains a diagnostic word; production normal-row staging and guarded STATUS RPC have separate live-status evidence. Other SET lifetimes and full application remain unfinished."
 }

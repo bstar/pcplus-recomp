@@ -36,6 +36,7 @@ extern aspect_receive_policy_read
 extern aspect_when_register,aspect_when_cancel,aspect_when_monitor,aspect_when_service
 extern _runtime_when_poll,_runtime_when_cancel_poll,_runtime_when_idle_allowed
 extern _runtime_when_host_poll,_runtime_serial_carrier
+extern _runtime_when_status_refresh
 extern _runtime_when_key_ready,_runtime_when_read_key,_runtime_when_confirm_abort
 extern _runtime_when_abort,_runtime_when_dispatch_key
 extern _runtime_when_monitor_begin,_runtime_when_monitor_end
@@ -552,6 +553,9 @@ runtime_when_set:
  cmp ax,1
  ja aspect_operand_invalid
  mov [aspect_when_case_sensitive],ax
+ call _runtime_when_status_refresh
+ or ax,ax
+ jnz fail
  ret
 
 SEGMENT _DATA public class=DATA use16

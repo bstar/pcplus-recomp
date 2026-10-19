@@ -57,27 +57,22 @@ Raw escape continuations remain queued when the renderer is not entered;
 matching them against the displayed parser's continuation behavior would be
 incorrect.
 
-## Status refresh work
+## Status refresh integration
 
-The 515-byte2FB8..31BB status body already exists in
-`reconstruction/terminal_reset/status_refresh.asm`. It depends on status data,
-formatting, text/fill services and carrier state. The live parent's
-`screen_viewport_refresh` currently stops explicitly, apart from a separately
-paired capture-error path. That capture exception cannot provide SET refresh.
-The existing resident renderer RPC has BEGIN/EMIT/END, with no status operation.
+The [live parent service](LIVE_STATUS.md) now stages bounded parent state and
+executes the recovered515-byte status body,175-byte helpers and actual text
+services through capability2 STATUS. SET WHENCASE uses that path while its UART
+lease is live. The normal row is integrated; live alternate key labels and
+other SET handlers remain unfinished. Four actual DOS cases pass152 checks,
+and85 linked cases cover staging and rejection before drawing/MSR input.
 
-Recovery found a relocation omission at3044: the script-label pointer was a
-literal D464 in the OMF build. It now uses `terminal_reset_script_label` while
-the flat build retains native D464. A new linked regression first reproduced
-the wrong D464 versus actual D565 pointer, then verified the corrected pointer
-and label bytes against the original path. It stops at the explicit UART-status
-dependency; it does not claim completed status rendering.
-
-Next integration needs the remaining formatting/fill owners, bounded status
-state/resources, a guarded resident status operation and deliberate adoption of
-session settings. Parent near-memory headroom is48 bytes, so added code/data
-must respect the existing far-storage and CONFIG segment strategy. Returning
-success without the status operation would hide missing application behavior.
+The earlier literal D464 script-label relocation was replaced with
+`terminal_reset_script_label`; the flat build retains the native address.
+Independent linked/original evidence preserves the failure and correction.
+After moving redisplay resources far, the new status integration leaves832
+near-data bytes and408 resident-code bytes. Additional integration must continue
+to respect far storage, explicit paragraph alignment and checked stack owners.
+The status snapshot never commits parent duplex or persistent configuration.
 
 Retained REA evidence includes generic E6BB
 `ev_0eac28aff291b49ec3d0558f8f05ee1eedb3010924224c14dc0014c056185ef8`,

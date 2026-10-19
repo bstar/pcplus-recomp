@@ -12,6 +12,9 @@ status-renderer:
 test-status-renderer: status-renderer
 	python3 standalone/check_status_renderer.py
 test: test-status-helpers test-status-renderer
+.PHONY: test-status-live
+test-status-live: terminal
+	python3 standalone/check_status_live.py
 .PHONY: aspect-set test-aspect-set test-aspect-set-compat
 all: aspect-set
 aspect-set:

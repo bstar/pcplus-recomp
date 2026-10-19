@@ -68,7 +68,7 @@ endpoint:
  je .denied
  cmp word [bx],0x5243
  jne .bad
- cmp word [bx+2],1
+ cmp word [bx+2],2
  jne .bad
  cmp word [bx+4],0x7123
  jne .bad
@@ -177,9 +177,9 @@ int main(int argc,char **argv){
  descriptor.base.base.parent_psp=psp;descriptor.base.base.parent_ds=ds;descriptor.base.base.ring=(unsigned)ring.bytes;descriptor.base.base.capacity=4096;
  ring.before=0x1357;ring.after=0x2468;ring.bytes[0]='Z';descriptor.base.base.count=1;
  if(mode==3){ring.bytes[0]='A';ring.bytes[1]='Z';descriptor.base.base.count=2;}
- descriptor.render_offset=endpoint_offset();descriptor.render_segment=endpoint_segment();descriptor.render_token=0x7123;descriptor.render_version=1;
+ descriptor.render_offset=endpoint_offset();descriptor.render_segment=endpoint_segment();descriptor.render_token=0x7123;descriptor.render_version=ASPECT_RENDER_CAP_VERSION;
  if(mode==2)descriptor.render_token=0;
- descriptor.base.base.guard=psp^ds^(unsigned)ring.bytes^ASIO_GUARD^descriptor.base.base.count^descriptor.render_offset^descriptor.render_segment^descriptor.render_token^1;
+ descriptor.base.base.guard=psp^ds^(unsigned)ring.bytes^ASIO_GUARD^descriptor.base.base.count^descriptor.render_offset^descriptor.render_segment^descriptor.render_token^descriptor.render_version;
  endpoint_config(mode);sprintf(option,"/S1:0003:03:N:%04X:%04X",ds,(unsigned)&descriptor);
  mcr=inp(0x3fc);outp(0x3fc,mcr|1);hardware(before);vec=_dos_getvect(12);
  o=open("OUT.BIN",O_CREAT|O_TRUNC|O_WRONLY|O_BINARY,S_IREAD|S_IWRITE);e=open("ERR.BIN",O_CREAT|O_TRUNC|O_WRONLY|O_BINARY,S_IREAD|S_IWRITE);oo=dup(1);ee=dup(2);dup2(o,1);dup2(e,2);close(o);close(e);

@@ -42,7 +42,7 @@ def main():
                     '-fo=' + str(obj), 'src/status/status_formatter.c'], cwd=ROOT, check=True)
     objects.append(obj)
     deps.update({name: sha(ROOT / name) for name in ('src/status/status_formatter.c',
-        'src/status/status_formatter.h', 'standalone/status_renderer_state.inc', 'reconstruction/uart/encodings.inc')})
+        'src/status/status_formatter.h', 'src/status/status_state.inc', 'standalone/status_renderer_state.inc', 'reconstruction/uart/encodings.inc')})
     subprocess.run(['wlink', 'system', 'dos', 'option', 'quiet', 'option',
                     'map=' + str(OUT / 'status.map'), 'name', str(OUT / 'STATUS.EXE'),
                     'file', ','.join(map(str, objects))], cwd=ROOT, check=True)

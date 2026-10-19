@@ -1306,3 +1306,26 @@ Next work includes remaining native SET and ASPECT command families, complete
 keyboard/UI and settings integration, supported profile/owner expansion and
 the remaining F01–F16 application requirements. Physical RS-232/Wi-Fi modem
 validation is still required; this checkpoint does not complete the goal.
+
+
+## Live status integration checkpoint
+
+The [parent STATUS service](docs/LIVE_STATUS.md) is now called by SET WHENCASE
+through ASIOv4 renderer capability2 while the child UART lease is live. It stages
+actual bounded parent fields and executes native status drawing; snapshot-only
+duplex projection does not commit settings. The normal layout is admitted;
+alternate key-label ownership remains unfinished. DS=SS uses64704 bytes with832
+spare; resident code leaves408 bytes, and ASPECT_CODE is explicitly aligned.
+
+Four actual DOS scenarios pass152 checks;85 linked staging cases,47 client
+inputs,22 parent admission cases, five DOS callback cases and the existing eight
+WHEN/315 checks pass. Runtime diagnostics retain825 DOS cases/18298 checks.
+Fresh public-source builds reproduce112 outputs. Local Synchronet and explicitly
+30ms-buffered ENiGMA login/editor regressions pass; immediate ENiGMA behavior and
+physical modem validation remain open. The checkpoint record is
+`docs/validation/live-status.json`.
+
+Next: integrate the recovered225-byte SET dispatcher/handlers into the production
+child, resolve raw-byte boolean/shared RXDATA semantics and real setting users,
+then connect the recovered calibrated TXPACE service. Full keyboard/UI,
+compiler/recorder, other profiles/protocols, Host and all F01–F16 remain open.

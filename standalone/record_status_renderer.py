@@ -34,13 +34,13 @@ def main():
     reports = {str(path.relative_to(ROOT)): dict(sha256=sha(path), result=json.loads(path.read_text()))
                for path in (manifest_path, check_path, proof_path, ROOT / 'docs/validation/status-helpers.json')}
     files = ('src/status/status_renderer_bridge.asm', 'standalone/status_renderer_host.asm',
-             'standalone/status_renderer_state.inc', 'standalone/build_status_renderer.py',
+             'standalone/status_renderer_state.inc', 'src/status/status_state.inc', 'standalone/build_status_renderer.py',
              'standalone/check_status_renderer.py', 'standalone/record_status_renderer.py',
              'reconstruction/terminal_reset/status_refresh.asm',
              'reconstruction/terminal_reset/status_fill.asm', 'docs/STATUS_RENDERER.md')
     record = dict(schema='status-renderer-v1', passed=True, original_inputs=[],
                   sources={name: sha(ROOT / name) for name in files}, reports=reports,
-                  scope='Source-built full native status component across real near/far bridges. ActualDOS video/stack/ABI and typed failures checked. Carrier remains a diagnostic word; production state staging, guarded parent STATUS RPC, SET lifetimes and full application remain unfinished.')
+                  scope='Source-built full native status component across real near/far bridges. ActualDOS video/stack/ABI and typed failures checked. Carrier here remains a diagnostic word; production normal-row staging and guarded STATUS RPC have separate live-status evidence. Other SET lifetimes and full application remain unfinished.')
     out = ROOT / 'docs/validation/status-renderer.json'
     out.write_text(json.dumps(record, indent=2) + '\n')
     print(out.relative_to(ROOT))

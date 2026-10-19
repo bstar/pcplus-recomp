@@ -25,12 +25,21 @@ sources += [ROOT/'src/process/dos_exec.asm']
 sources += [ROOT/'reconstruction/snapshot'/name for name in ['row.asm','copy.asm','video_begin.asm','video_end.asm']]
 sources += sorted((ROOT/'src/terminal').glob('*.asm'))
 sources += [ROOT/'src/aspect/resident_bridge.asm']
+sources += [ROOT/'src/status/status_renderer_bridge.asm',ROOT/'src/status/status_helpers.asm',
+ ROOT/'reconstruction/terminal_reset/status_refresh.asm',ROOT/'reconstruction/terminal_reset/status_fill.asm',
+ ROOT/'reconstruction/program_exec/strlen.asm']
 render_import_adapters={}
 objects=[]
 for index,source in enumerate(sources):
  obj=OUT/f'unit-{index}.obj';objects.append(str(obj));options=[]
  if source.parent.parent.name=='reconstruction':options=['-D'+source.parent.name.upper()+'_OMF']
  if source==ROOT/'src/aspect/resident_bridge.asm':options+=['-DRESIDENT_BRIDGE_FAR']
+ if source.parent==ROOT/'reconstruction/terminal_reset':
+  options+=['-DSTATUS_CONFIG_CODE','-Dtext_fill_cells=status_text_fill','-Dtext_write_packed=status_text_packed',
+   '-Dterminal_reset_ui_75e8=status_ui_printf','-Dterminal_reset_ui_7630=status_character_fill',
+   '-Dterminal_reset_status_message=status_message']
+ if source==ROOT/'src/status/status_helpers.asm':
+  options+=['-DSTATUS_HELPERS_CONFIG','-Dui_write_string=status_write_string','-Dprogram_strlen=status_strlen']
  if source==ROOT/'reconstruction/input_dispatch/dispatch.asm':options+=['-Dterminal_receive_character=terminal_receive_character_native']
  # Keep NASM's THEADR source name independent of the checkout location, so
  # recorded import-adapter object hashes also reproduce in a fresh tree.
@@ -57,6 +66,7 @@ c_sources += [ROOT/'src/transfer'/name for name in ['zmodem_autostart.c','termin
 c_sources += sorted((ROOT/'src/capture').glob('*.c'))
 c_sources += sorted((ROOT/'src/printer').glob('*.c'))
 c_sources += [ROOT/'src/aspect/renderer_client.c',ROOT/'src/aspect/renderer_policy.c']
+c_sources += [ROOT/'src/status/status_formatter.c']
 config_sources={ROOT/'src/directory/directory_live.c',ROOT/'src/config/live_configuration.c',ROOT/'src/config/live_setup_owner.c'}
 config_sources.update({ROOT/'src/config'/name for name in ['terminal_preferences.c','transfer_import.c']})
 config_sources.update({ROOT/'src/transfer'/name for name in ['zmodem_autostart.c','terminal_autostart.c']})
@@ -102,6 +112,7 @@ for source in c_sources:
  obj=OUT/(source.stem+'.obj');objects.append(str(obj))
  options=['-nt=CONFIG_CODE','-nc=FARCODE']+['-d'+name+'='+alias for name,alias in config_aliases.items()] if source in config_sources else []
  if source.parent==ROOT/'src/aspect':options=['-nt=ASPECT_CODE','-nc=FARCODE']
+ if source==ROOT/'src/status/status_formatter.c':options=['-ecc']
  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we',*options,'-i='+str(ROOT/'src/config'),'-i='+str(ROOT/'src/directory'),'-i='+str(ROOT/'src/key_mapping'),'-i='+str(ROOT/'src/process'),'-i='+str(ROOT/'src/transfer'),'-fo='+str(obj),str(source)],cwd=OUT,check=True)
  if source==ROOT/'src/transfer/batch_header.c':
   before=obj.read_bytes();normalized,counts=rename_imports(before,{'__U4D':'config_u4div_service_','__U4M':'config_u4mul_service_'})
@@ -120,6 +131,7 @@ assert group and int(group[1],16)<65536,'DS=SS small-model data/stack exceeds 64
 memory=inspect_terminal_memory(OUT/'TERMINAL.EXE',OUT/'terminal.map')
 inputs=sources+c_sources+[ROOT/'src/config/prm_dos.h',ROOT/'src/config/terminal_import.h',ROOT/'src/config/terminal_import.inc',ROOT/'src/config/modem_import.h',ROOT/'src/config/modem_import.inc',ROOT/'src/config/startup_import.h',ROOT/'reconstruction/uart/encodings.inc',ROOT/'reconstruction/uart/layout.inc',ROOT/'reconstruction/ansi/dispatch-layout.inc']
 inputs += [ROOT/'src/config/live_configuration.h',ROOT/'src/aspect/resident_render.h',ROOT/'src/aspect/resident_bridge.inc',ROOT/'src/aspect/renderer_policy.h',ROOT/'src/aspect/serial_handoff.h']
+inputs += [ROOT/'src/status/status_state.inc',ROOT/'src/status/status_formatter.h']
 inputs += [ROOT/'src/config/live_setup_owner.h',ROOT/'src/config/terminal_preferences.h',ROOT/'src/config/transfer_import.h']
 inputs += [ROOT/'src/config/resource_path.h']
 inputs += sorted((ROOT/'src/directory').glob('*.h'))+sorted((ROOT/'src/directory').glob('*.inc'))

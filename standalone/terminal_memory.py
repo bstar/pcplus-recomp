@@ -283,6 +283,26 @@ def inspect_terminal_memory(binary,map_path):
   assert address('terminal_aspect_adopt')==address('terminal_aspect_active')+2
   extra.update(aspect_far_services_verified=len(services),aspect_resident_far_references_verified=references,
                aspect_emit_cdecl_bridge_verified=True,aspect_handoff_bytes=48,aspect_renderer_state_bytes=4)
+ if 'terminal_status_live' in symbols:
+  status_seg=next(c['relative_segment'] for c in code_segments if c['name']=='CONFIG_CODE')
+  for name in ('terminal_status_live','status_renderer_refresh','terminal_reset_status_refresh',
+               'terminal_reset_status_fill','status_ui_printf','status_character_fill',
+               'status_message','status_sprintf','terminal_reset_sprintf','_status_format'):
+   assert symbols[name][0]==status_seg,(name,'STATUS owner segment')
+  for source,target,count in (('status_text_fill','text_fill_cells',3),
+      ('status_text_packed','text_write_packed',2),('status_write_string','ui_write_string',3)):
+   resident=source+'_resident'
+   assert symbols[source][0]==status_seg and symbols[resident][0]==near_code['relative_segment']
+   assert raw(source,8)==b'\x9a'+struct.pack('<HH',symbols[resident][1],symbols[resident][0])+b'\xc2'+struct.pack('<H',count*2)
+   assert address(source)+3 in relocations
+   prefix=b'\x55\x89\xe5'+b''.join(bytes([0xff,0x76,8+2*i]) for i in reversed(range(count)))
+   near_call(resident,target,prefix=prefix,suffix=b'\x8d\x66\x00\x5d\xcb')
+  far_call('status_strlen','status_strlen_resident')
+  near_call('status_strlen_resident','program_strlen',prefix=b'\x55\x89\xe5\xff\x76\x08',suffix=b'\x8d\x66\x00\x5d\xcb')
+  far_call('terminal_reset_uart_status','status_uart_resident')
+  near_call('status_uart_resident','status_carrier_read')
+  assert near_start<=address('terminal_reset_script_label') and address('terminal_reset_script_label')+15<=near_start+near_size
+  extra.update(status_far_bridge_pairs_verified=5,status_script_label_bytes=15)
  extra.update(resident_code_bytes=near_code['bytes'],resident_code_spare_bytes=65536-near_code['bytes'],code_segments=code_segments,far_code_bridge_pairs_verified=bridges)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'

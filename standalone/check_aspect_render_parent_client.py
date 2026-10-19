@@ -16,7 +16,7 @@ def main():
   image=DosImage(BINARY,MAP);u=image.uc
   psp,parent,ds,offset,token=0x8000,0xff0,0x8200,0x1000,0x1432
   mcb=bytearray(b'M'+struct.pack('<HH',psp,0x800)+b'\0'*11)
-  client=[0x5243,1,token,0x20,0x8010]
+  client=[0x5243,2,token,0x20,0x8010]
   output=image.stage_near(b'\xa5'*4)
   if name=='Z-owner':mcb[0]=ord('Z')
   if name=='wrong-PSP':psp=0xff
@@ -30,7 +30,7 @@ def main():
   if name=='client-outside':ds=0x9000
   if name=='client-in-PSP':ds,offset=0x8000,0x80
   if name=='bad-magic':client[0]=0
-  if name=='bad-version':client[1]=2
+  if name=='bad-version':client[1]=1
   if name=='zero-token':token=0
   if name=='wrong-token':client[2]^=1
   if name=='callback-in-PSP':client[3:]=[0x80,0x8000]

@@ -539,3 +539,12 @@ the separate formatter/helper proof covers25 DOS format cases and nine helper
 compositions. Fresh source builds reproduce112 checked outputs. This provides
 the native drawing owner needed by SET; live parent state/RPC integration and
 all whole-application gates remain open.
+
+
+The subsequent [live status integration](LIVE_STATUS.md) connects SET WHENCASE
+to the parent's bounded normal-row state through renderer capability2. Both
+client and parent reject STATUS after the UART lease closes. Four actual DOS
+cases/152 checks,85 linked staging cases,47 client inputs,22 parent admission
+cases, five DOS callbacks, eight WHEN/315 checks and112 reproducible outputs
+support this checkpoint. Other SET handlers, alternate live key labels, broader
+renderer owners and all whole-application gates remain unfinished.

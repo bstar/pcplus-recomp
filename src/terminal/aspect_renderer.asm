@@ -60,12 +60,14 @@ terminal_aspect_emit_resident:
  add sp,2
  retf
 
-SEGMENT ASPECT_CODE public class=FARCODE use16
+SEGMENT ASPECT_CODE public align=16 class=FARCODE use16
 extern resident_bridge_initialize,resident_bridge_disable,resident_bridge_entry
 extern resident_bridge_caller_ds,resident_bridge_callback,resident_bridge_abort
 extern _aspect_render_admit,_aspect_render_preflight_control
 extern _aspect_render_preflight_modes
 extern _aspect_render_client_admit
+extern terminal_status_live
+extern _script_handoff
 global terminal_render_prepare,terminal_render_revoke,terminal_render_validate,terminal_render_typed_abort
 global terminal_render_failure_notice
 global terminal_render_unsupported,terminal_render_read,terminal_render_read_now
@@ -107,7 +109,7 @@ terminal_render_prepare:
  mov word [_script_render_segment],seg resident_bridge_entry
  mov ax,[cs:render_token]
  mov [_script_render_token],ax
- mov word [_script_render_version],1
+ mov word [_script_render_version],2
  xor ax,ax
 .done:
  pop es
@@ -137,7 +139,7 @@ terminal_render_validate:
  cmp [_script_render_token],ax
  mov ax,1
  jne .done
- cmp word [_script_render_version],1
+ cmp word [_script_render_version],2
  jne .done
  xor ax,ax
 .done:
@@ -207,6 +209,8 @@ render_body:
  jne .state
  cmp di,2
  je .end
+ cmp di,3
+ je .status
  cmp di,1
  jne .state
  cmp bx,255
@@ -224,6 +228,23 @@ render_body:
  call render_scope_end
  xor ax,ax
 .done:
+ ret
+.status:
+ ; returned is published last after child UART restoration. Unlike ordinary
+ ; error rendering, STATUS reads hardware carrier and requires that lease.
+ cmp word [_script_handoff+22],0
+ jne .serial
+ push bx
+ call _aspect_render_admit
+ pop bx
+ or ax,ax
+ jnz .done
+ ; This is the captured bridge's checked parent stack. No child pointers,
+ ; receive callbacks, FILE activity or parser entry are used by STATUS.
+ call far terminal_status_live
+ ret
+.serial:
+ mov ax,14
  ret
 .begin:
  cmp word [cs:render_attached],0
