@@ -880,3 +880,8 @@ test-aspect-source-serial-dos: aspect-runner aspect-compiler-dos
 test-aspect-compile-flow-dos:
 	python3 standalone/test_aspect_compile_flow_dos.py
 test: test-aspect-source-compile test-aspect-source-serial-dos test-aspect-compile-flow-dos
+
+.PHONY: test-aspect-keyboard
+test-aspect-keyboard: aspect-runner
+	python3 standalone/check_aspect_keyboard.py
+test: test-aspect-keyboard

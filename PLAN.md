@@ -1,5 +1,11 @@
 # Complete DOS rebuild plan
 
+Latest keyboard checkpoint: [ASPECT acquisition](docs/ASPECT_KEYBOARD.md) fixes
+the child's lossy BIOS normalization using the recovered terminal routine.
+Exhaustive CPU and8086 DOS checks cover all65,536 words; native WHEN dispatch
+still reports unsupported for ordinary keys. Continue full keyboard/UI
+integration; this does not close any F01–F16 gate.
+
 The goal is a maintained, source-built PCPlus application that runs in DOS and
 works with the intended RS-232 Wi-Fi modem/BBS setup. A diagnostic or patched
 original is an intermediate result, not completion. Public repository changes

@@ -4,6 +4,8 @@ import hashlib,json,re,struct,subprocess,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/aspect-runtime'
 ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm',None),
+ ('keyboard_normalizers','reconstruction/keyboard/core.asm','KEYBOARD_NORMALIZERS_ONLY'),
+ ('keyboard_api','src/keyboard/api.asm',None),
  ('globals','src/aspect/global_strings.asm',None),('stack','src/aspect/value_stack.asm',None),
  ('conversions','src/aspect/conversions.asm',None),('conversion_services','src/aspect/conversion_services.asm',None),
  ('console','src/aspect/console_commands.asm',None),
@@ -212,7 +214,7 @@ def main():
  sources.append(set_corpus_path)
  sources.append(find_corpus_path)
  sources.append(break_corpus_path)
- sources += [when_corpus_path,receive_overrides_path,ROOT/'src/aspect/when_runtime.c',ROOT/'src/aspect/when_runtime.h']
+ sources += [when_corpus_path,receive_overrides_path,ROOT/'src/aspect/when_runtime.c',ROOT/'src/aspect/when_runtime.h',ROOT/'src/keyboard/api.h']
  for name,rel,define in ASM:
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
   subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))

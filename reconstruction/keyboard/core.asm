@@ -4,18 +4,25 @@
 BITS 16
 CPU 8086
 %include "encodings.inc"
+; A caller with its own BIOS/queue owner can link just the two original
+; normalizers. Keep the default flat and complete OMF regions unchanged.
+%ifdef KEYBOARD_NORMALIZERS_ONLY
+%define KEYBOARD_OMF
+%endif
 %ifdef KEYBOARD_OMF
 SEGMENT _TEXT public class=CODE use16
+global keyboard_normalize_bios
+global keyboard_normalize_extended
+%ifndef KEYBOARD_NORMALIZERS_ONLY
 global keyboard_read
 global keyboard_peek
 global keyboard_poll
-global keyboard_normalize_bios
 global keyboard_bios_read
 global keyboard_bios_peek
 global keyboard_queue_read
 global keyboard_read_extended
-global keyboard_normalize_extended
 extern keyboard_queue_count, keyboard_queue_index, keyboard_queue_active, keyboard_queue_peek, keyboard_queue_values, keyboard_bios_mode, keyboard_debug_gate, keyboard_debug_callback
+%endif
 %else
 %ifndef KEYBOARD_REGION
 %define KEYBOARD_REGION 0
@@ -45,7 +52,11 @@ ORG 0x64fe
 %endif
 %endif
 %ifidn __OUTPUT_FORMAT__,obj
+%ifdef KEYBOARD_NORMALIZERS_ONLY
+%define KEYBOARD_EMIT 0
+%else
 %define KEYBOARD_EMIT 1
+%endif
 %else
 %assign KEYBOARD_EMIT (KEYBOARD_REGION = 0)
 %endif
@@ -139,7 +150,11 @@ ORG 0x7836
 %endif
 %endif
 %ifidn __OUTPUT_FORMAT__,obj
+%ifdef KEYBOARD_NORMALIZERS_ONLY
+%define KEYBOARD_EMIT 0
+%else
 %define KEYBOARD_EMIT 1
+%endif
 %else
 %assign KEYBOARD_EMIT (KEYBOARD_REGION = 2)
 %endif

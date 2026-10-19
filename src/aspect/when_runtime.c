@@ -5,6 +5,7 @@
 #include "runtime.h"
 #include "serial_runtime.h"
 #include "when_runtime.h"
+#include "../keyboard/api.h"
 #include <bios.h>
 #if defined(ASPECT_RUNTIME_SERIAL)
 #include "resident_render.h"
@@ -89,7 +90,9 @@ unsigned runtime_when_key_ready(void)
 unsigned runtime_when_read_key(void)
 {
  unsigned key=_bios_keybrd(_KEYBRD_READ);
- return (key&255)?key&255:key;
+ /* Native64FE ->7836 ->77D2 preserves keypad/Backspace identities and uses
+  * a signed372A threshold. Clearing every nonzero key's AH loses those. */
+ return keyboard_key_from_bios(key);
 }
 unsigned runtime_when_confirm_abort(void)
 {runtime_set_error(ASPECT_RUN_CANCELLED);return 1;}

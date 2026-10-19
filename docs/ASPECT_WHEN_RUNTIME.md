@@ -73,6 +73,10 @@ this owner; unsupported local UI keys report an error. The child's enabled
 keyboard setting is an explicit maintained policy, not a newly proved native
 startup default.
 
+Keyboard acquisition now preserves the original scan/keypad identities through
+the recovered BIOS normalizer; see [ASPECT keyboard acquisition](ASPECT_KEYBOARD.md).
+This does not implement the still-unsupported local-key dispatcher.
+
 ## Raw backend compatibility
 
 Native idle draining needs a consumer. The admitted parent renderer supplies

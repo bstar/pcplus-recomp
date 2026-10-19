@@ -72,6 +72,11 @@ normalizer before raw classification. Alternate low-E0 keypad words1ce0/35e0
 map to e00d/e02f through explicit maintained aliases. The normalized API remains
 available for callers that need the original UI convention.
 
+The ASPECT child now links the same normalizers through
+`KEYBOARD_NORMALIZERS_ONLY`, with its own BIOS reader and no private queue.
+[ASPECT keyboard acquisition](ASPECT_KEYBOARD.md) documents exhaustive word
+coverage and the remaining script-time dispatch boundary.
+
 The original queue peek base is DS:5df4h, while dequeue uses DS:5e00h, twelve
 bytes later. Neither read routine advances the queue index; the producer has
 not been reconstructed. The host preserves the separation and tests it rather

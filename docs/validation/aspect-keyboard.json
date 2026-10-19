@@ -1,0 +1,189 @@
+{
+  "passed": true,
+  "recorder_sha256": "58837240f1ad1da188ebd0ce30cf1afd47befc7765968f5004937376164fd4e9",
+  "runner_sha256": "6aca8fa05715490e5ad02cca5a9d7600a23b51ce1c0010fd196a8242d46eeea1",
+  "keyboard": {
+    "passed": true,
+    "runner_sha256": "6aca8fa05715490e5ad02cca5a9d7600a23b51ce1c0010fd196a8242d46eeea1",
+    "checker_sha256": "6197584a94b965c5554d44da5089e0c86d99dcea9601335a78d720f7c0b0c74a",
+    "manifest_sha256": "c90ef5492d9f2b2f0acad54ad910b88d9184140e886514f6cfc4407b87ed775f",
+    "CPU_words": 65536,
+    "DOS_words": 65536,
+    "words_corrected_from_previous_reader": 19011,
+    "DOS_summary": "ASPECT_KEYBOARD 65536 words 131132 checks 0 failures",
+    "original_inputs": [],
+    "objects": {
+      "abort.obj": "9a40f2f05f5187cd95bfb3e5355bc790335b91d9629b7eaa43349cb9e794245c",
+      "arithmetic.obj": "fe6209b1c42f82f033c620bf68a6235b2c94244c80af634a42b358ac9719230b",
+      "break_commands.obj": "569a1ca5083e262d19ef0b21d97be5f6152a8cfc56500881901276d0cb52eabc",
+      "bridge.obj": "7282d58e4de02f84431b9c957f0b0b13006a128c57a2261d1a05b44eba5f3db5",
+      "case_commands.obj": "57c90b1746e734ee6c503d0b4dc895425826c6b6c18f53f1efbf1d15a3878f20",
+      "chain_command.obj": "e157bfbb44aa8cc5cb86a19df312407ab3d62b7048c09e8bb2f93931a34c9083",
+      "console.obj": "6a9fad10c37a4802ba09050e44178c3082ea9ac9a85f0e3475f7ba9da9da242f",
+      "conversion_services.obj": "4ec3190eb33326d803ef16bdd0c009d8ffb2347ab67ad51e843edd79142a7879",
+      "conversions.obj": "028a044d58f0a8d978dff856b0c6ffe0b2cc5026e9ce95d1dc6e8d8f4562e018",
+      "copy.obj": "004d6f9bd7c5a4bd4c439119e9dc68ba27ad7cd45620d717478428342dd2adc3",
+      "directory.obj": "8e675670aa5b46bb89f7489885520a3ca6e850b0b8093a102b8fbbb43096453b",
+      "directory_runtime.o": "b9a3f522f4259f06f83bf743cf0e5f2b42f13e2589bb42bce1962df5a15d08d8",
+      "dispatch.obj": "55d48ce737149429d194b81154e8fb7c84dd4c79554b0fe4427fb8e8616b5f0c",
+      "end_wait.obj": "a1673c5483e9f9d6cc07533b21bff587932baec6f946716295d06fdad2065534",
+      "fetch_command.obj": "7846992c3a2e3e2b6aca5e5907377cb284e6516087ead963b06ef97f170c8e3a",
+      "file_io.o": "7a26f2b102e98887ef6f978effc8c38c08cf738b22db301a9b03f6ba64667e72",
+      "find_commands.obj": "061645a15b8abb4993e2687ab6c6a35366b656911ae1b578f3cf4801bc88e8a1",
+      "find_runtime.o": "0accf592b40e4c682aab31029daab76f935caebab5a13b67a0a47bbdab5b4319",
+      "flow.obj": "678d2951a9b825bf58f8bb00d48bf3f745660a298f9bc0586f4526c8c6df30cc",
+      "globals.obj": "029b739581918411c547bbe27a15cbb63d0acd4b3f064abd21b66cc998e6bae9",
+      "keyboard_api.obj": "6a02facb226c07cac1a74c0aaf183a3460c194427aa5f9a5f3fa1f6581192755",
+      "keyboard_normalizers.obj": "040340037145d0f2271ae3571caeeebbedf64a7225c87bdd3e3a8130a1e22e62",
+      "long.obj": "752aaff2819d1f47b35b799f90494f12b634895bd2426d55b3e536cae59365db",
+      "longjmp.obj": "6e8783ff0dd23a0ae67e67b73bf43abec7740a54b3b8025e9b1cf2cc06fb72d7",
+      "operands.obj": "c47f536bb56345f674cbed074c3df4ac7630c373a4d28f3f0a981efa24ccc53e",
+      "operations.obj": "29b4cc5cbd74265cc9552542c7290968b5fd52fa76674d7d709e1bce3d27322f",
+      "parameters.obj": "2e8e911119f1e0dd359aa90eee9c09331b56ff19d94ee65742c3ad02ef28aac5",
+      "receive_commands.obj": "3ffddce1777033a3ecc8bcd601b58a4fa9a960a3b9003fb324677f302c721054",
+      "receive_policy.obj": "0a1909e1c7010fb7199a1ac02ab8c3c35f6ed3bdb24344dc6191c174b6505a80",
+      "receive_runtime.o": "9f21dad6e219857897f16a6cbb9e43670fca8786c52c5bb26a20e32ef9a3ff24",
+      "resident_client.obj": "209dc89f2f6d49deef01ab9cae06c3b0a91e2d4cbbf5885d74978aad8c57c75f",
+      "resident_render.o": "589f790cfec9500f5eed50a0ad0173c3e0f9dd204e70505174fadb838e592f86",
+      "resource_path.o": "69f36ac6e6356a4a56321c4491ab196fc9eebfbfc4a3358c6ee911d3d1594814",
+      "runtime.o": "dd8c5a82e42f69e377b6e051b6755ba28b17378ffbeb9c98bf4b293b387f6c85",
+      "script_path.o": "d38436fead2c3966bf3a8413b6650962c335793c2fe611a334db328f597e6446",
+      "serial.o": "ba78f9052f9a1d21d66264ea488779f8ef720a7cbbc2d47dd8f55cf524539b9a",
+      "serial_backend.obj": "92216df2b74e3cf6b80e0dc08e4701d3ce8836e00d218f468dd405b1a6e0ccd2",
+      "serial_commands.obj": "344968511920e3ba78b49239f14ea8168ed1923d910e8d25d60ca087c6d981cd",
+      "serial_runtime.o": "298a1636a4b0891a88f47759412ade454b9db3bd1b2f7cee09652cc013080e1c",
+      "set_commands.obj": "a9500712281aa4347928a94a7404c01dd8f2e0eca4bf350dbbed8a42e8cc4a21",
+      "set_runtime.o": "d3a3f996ecbc81f0bde0b357cbb891791a5c0053168c878b46cd1d39294e7c24",
+      "setjmp.obj": "368493fdb27779f737d2426b34657fbe0bfcbef270dd5275deb468f0857bd991",
+      "source_compile.o": "b6301d506bdf5312b7c7fb1789d0b7fe11b2b0ea61bdfd4bd7d2e297acc84210",
+      "stack.obj": "c5f58d70175aaea06c93779a48b5a196446c5e7b17095eb3b4d2904e1a73e951",
+      "string_commands.obj": "2f485158596ecba8be77a99f32994d118287775e304fe0e7bd667b3b3390802c",
+      "string_concat.obj": "dd4c2c4fcf848cca3e813a1bcad4275807a3a76de0dd687f8fca26847d1f5e66",
+      "string_services.obj": "3037960ab7e77e9486d49652e3c55fcd991f8b9cfc94bceef4b3c8b7c284bcbc",
+      "string_strcmpi.obj": "82e0b78449a907150217ad098cb91115b7465569ddccfd32c7503ab9f9074bab",
+      "string_strcpy.obj": "d47f63d89d1802dc91c4b63bc175cb09fb5e406450c5477fc44a77bd47c8f4e2",
+      "string_strlen.obj": "e838811b0c2d0e38e744011c87fbb8b621345c578d25f820a9d63f19ec3f51f6",
+      "string_strncmp.obj": "bc39d3d37421b6eb78d9b8c173403a7f14df9525953de2bfaffaefe06fd6b168",
+      "string_upper.obj": "df6294bcd5990ed45f36e484bc29045711cd209469ee49b9192db1a3f79ffedd",
+      "strings.obj": "1718ee2076219bdfc3206fab1aecb3c2ff7fb80be0ca354390606f1a97f2add9",
+      "support.obj": "212b2a982f54a2dbe8ad6e641841b138e7bedd2ea7470e3ea153b479564f2d5f",
+      "txpace.o": "010ece45732f907d7d28c872d66dafcae28244f2701bdd5918e10bd5a3a5f269",
+      "txpace.obj": "924c67618137cc3d46f40fa5f80edf64a08a88df3741aa2b640aa83c573a95e7",
+      "uart.obj": "d222e44857577d0a424ff5677a3fe50d9f96c5a5c4e544489dc9c18c0239e6a2",
+      "uart_api.obj": "ce2a3f46ba2108a4c9eafee5182c92210719cb94d125a0ca7880cafc5b07e49d",
+      "when.obj": "0e81ca655fa983e34da82f09df1cd7075319b489f2b378904c0b3208b017a222",
+      "when_runtime.o": "c4d99538e2b5ed9b19724ac20b6461c90e3a55b92d6bdc461cd0319f011a382c"
+    },
+    "test_inputs": {
+      "harness.c": "8532b32701a12f10c62d5d9f7c08224544b1672de3374e44eea4b1590bd3aec5",
+      "bios.asm": "b2703ef3a4455e4478a6e10dccb39d192ee31637146df6f7fbdc579ed5859910",
+      "KEYTEST.EXE": "92b4bfc8ddb426df922d37de6c66c0868b0474703121ba97d4883d1bf82cfb5b"
+    },
+    "scope": "Exhaustive actual product reader CPU replay with modeled INT16, and exhaustive8086 DOS execution of the same production objects with a temporary owned BIOS vector. DOS also checks native WHEN last/pending-key state, unsupported dispatch, disabled/deferred keyboard and Escape cancellation. Does not establish physical BIOS behavior or implement full keyboard/UI dispatch."
+  },
+  "reports": {
+    "runtime": {
+      "path": "build/aspect-runtime/checks.json",
+      "sha256": "662a49858940a5f904a94cc154b10cd68695d00d856f48be03fa89f485658536",
+      "summary": "ASPECT_RUNTIME 1146 cases 26309 checks 0 failures"
+    },
+    "CLI": {
+      "path": "build/aspect-runner/checks.json",
+      "sha256": "d0dcf8f10b7665c5beab2d529f5e66e8178570b659bd7d478c67dfd8b0d5cf70",
+      "summary": "RUNNER 21 cases 105 checks 0 failures"
+    },
+    "source": {
+      "path": "build/aspect-source-compile/checks.json",
+      "sha256": "e92f66b02f78696c5ca496b036ebefb3d19a29643e8c4d390893d6c7099043f9",
+      "summary": "SOURCE_EXEC 22 cases 223 checks 0 failures"
+    },
+    "serial": {
+      "path": "build/aspect-source-serial-dos/checks.json",
+      "sha256": "805d86cc5ddfd6f40fe87afe0989f108d870a95bc77665933a0487f2d3573cfb",
+      "summary": "Actual production nested DOS compiler and8086 ASPECT UART IRQ across N/S/H/B flow. Checked proactive XOFF/XON for S/B, raw IRQ reception, retained numeric/BREAK state, native compiled bytecode, exact unread ASIO return, vectors/PIC/MCR/guards. No resident-renderer, physical modem or external BBS claim."
+    }
+  },
+  "BBS": [
+    {
+      "server": "synchronet",
+      "path": "build/bbs-lab/script-login/keyboard-normalizer-sync-01/checks.json",
+      "sha256": "46e9eeb1e6732e7617b2da30d6baf476d84424ec6a8e5ee2dfc377a064ff4276",
+      "checks": {
+        "DOS_harness": true,
+        "current_terminal": true,
+        "current_runner": true,
+        "source_compilation": true,
+        "inputs_unchanged": true,
+        "credentials_not_in_keyboard": true,
+        "script_credentials_once": true,
+        "no_other_login_text_before_script": true,
+        "authenticated_display": true,
+        "no_error_or_blocking_return_prompt": true,
+        "resumed_parent_editor": true,
+        "draft_aborted": true
+      },
+      "packet_delay_ms": 0
+    },
+    {
+      "server": "enigma",
+      "path": "build/bbs-lab/script-login/keyboard-normalizer-enigma30-01/checks.json",
+      "sha256": "e656602b673db3061a584c79ca18f82bce3f8dff5aaa32e7ab4c78e13d05fe5a",
+      "checks": {
+        "DOS_harness": true,
+        "current_terminal": true,
+        "current_runner": true,
+        "source_compilation": true,
+        "inputs_unchanged": true,
+        "stock_server_unchanged": true,
+        "credentials_not_in_keyboard": true,
+        "script_credentials_once": true,
+        "no_other_login_text_before_script": true,
+        "authenticated_server_log": true,
+        "no_error_or_blocking_return_prompt": true,
+        "resumed_parent_editor": true,
+        "no_post_saved": true
+      },
+      "packet_delay_ms": 30
+    }
+  ],
+  "native_baseline_regions": [
+    {
+      "start": "0x64fe",
+      "end_exclusive": "0x6553",
+      "size": 85,
+      "sha256": "941b394851a067c2fc835c85b5c415a7160b8cab679f0c0b84a6926e25dcf2e8"
+    },
+    {
+      "start": "0x77d2",
+      "end_exclusive": "0x77fd",
+      "size": 43,
+      "sha256": "4575c0d57d8ebd385741a2f7d63834920268dd32f1fe28cb0d2bf3751da22a2a"
+    },
+    {
+      "start": "0x7836",
+      "end_exclusive": "0x7880",
+      "size": 74,
+      "sha256": "440baa8de6478677c811ae8df4488f44425b140738b4743178b727155a663d3d"
+    },
+    {
+      "start": "0x7fe2",
+      "end_exclusive": "0x7fff",
+      "size": 29,
+      "sha256": "5abf79079784887129ff2059a8c9645d1decffa2d4a7265e04a86ed3b1c4f862"
+    }
+  ],
+  "source_proof_sha256": "6fa3ec6b8c0a9f76c5fe040619ae6fd87d6685762c34aac45d02695c3a76a6ae",
+  "reproduced_outputs": 153,
+  "REA_evidence": [
+    "ev_cb670ed8c108fd2f8a4d03d1d83765074271c3cae5e31f2e0ac94f3c59873699",
+    "ev_8e40cf9d5f190f977da1b135d35970d1fcab5cac3261658c9dabbd80eb7dfbd6"
+  ],
+  "original_inputs": [],
+  "whole_application_gates_closed": [],
+  "limitations": [
+    "Acquisition only: ordinary script-time dispatch remains unsupported; native confirmation and full profile/macro/hotkey/UI services are unfinished.",
+    "CPU INT16 and DOS temporary BIOS vector are declared models; no physical BIOS/keyboard or Wi-Fi modem validation.",
+    "BIOS enhanced-mode inheritance remains unfinished.",
+    "ENiGMA passing editor case uses explicit30ms buffering; the historical immediate-forwarding Home-key failure is unresolved."
+  ]
+}
