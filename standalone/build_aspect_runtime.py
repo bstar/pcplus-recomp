@@ -5,7 +5,9 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/aspect-runtime'
 ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm',None),
  ('globals','src/aspect/global_strings.asm',None),('stack','src/aspect/value_stack.asm',None),
- ('flow','src/aspect/control_flow.asm',None),('parameters','src/aspect/parameters.asm',None),('strings','src/aspect/string_operands.asm',None),('operands','src/aspect/numeric_operands.asm',None),
+ ('flow','src/aspect/control_flow.asm',None),('parameters','src/aspect/parameters.asm',None),('strings','src/aspect/string_operands.asm',None),('string_commands','src/aspect/string_commands.asm',None),('string_services','src/aspect/string_services.asm',None),
+ ('string_strlen','reconstruction/program_exec/strlen.asm','PROGRAM_EXEC_OMF'),('string_strncmp','reconstruction/program_exec/strncmp.asm','PROGRAM_EXEC_OMF'),
+ ('string_concat','reconstruction/directory_dial/append.asm','DIRECTORY_DIAL_OMF'),('string_upper','reconstruction/directory_dial/uppercase.asm','DIRECTORY_DIAL_OMF'),('operands','src/aspect/numeric_operands.asm',None),
  ('operations','src/aspect/numeric_operations.asm',None),
  ('arithmetic','src/aspect/arithmetic.asm',None),('long','src/aspect/long_arithmetic.asm',None),('support','src/aspect/expression_support.asm',None),
  ('copy','reconstruction/erase/move_bytes.asm','ERASE_OMF'),
@@ -14,7 +16,7 @@ ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm'
  ('bridge','src/aspect/runtime_bridge.asm',None)]
 SUPPORT=[(1,0xd2a0,0xd2d6,109184-0xd0d0),(2,0xd3f2,0xd408,109184-0xd0d0),
  (3,0xdb7d,0xdc48,109184-0xd0d0),(4,0xde4d,0xdf04,109184-0xd0d0),(5,0x9ac0,0x9ae7,0x1200)]
-ERRORS={'unsupported':3,'float':4,'budget':6,'stack':9,'divide_zero':11,'native_int0':12}
+ERRORS={'unsupported':3,'float':4,'budget':6,'stack':9,'divide_zero':11,'native_int0':12,'operand':7}
 C=r'''
 #include <stdio.h>
 #include <dos.h>
@@ -66,9 +68,11 @@ def main():
  parameter_corpus_path=ROOT/'standalone/fixtures/aspect_parameter_vectors.json'
  parameter_corpus=json.loads(parameter_corpus_path.read_text())
  parameter_cases=[dict(c,name='PARFLOAT') if c['name']=='FLOAT' else c for c in parameter_corpus['vectors']]
- cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases
+ command_corpus_path=ROOT/'standalone/fixtures/aspect_string_command_vectors.json'
+ command_corpus=json.loads(command_corpus_path.read_text())
+ cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']
  assert len({c['name'] for c in cases})==len(cases)
- sources=[Path(__file__).resolve(),corpus_path,arithmetic_corpus_path,parameter_corpus_path,ROOT/'reconstruction/uart/encodings.inc',ROOT/'src/aspect/runtime.c',ROOT/'src/aspect/runtime.h',ROOT/'src/aspect/file_io.c',ROOT/'src/aspect/file_io.h']
+ sources=[Path(__file__).resolve(),corpus_path,arithmetic_corpus_path,parameter_corpus_path,command_corpus_path,ROOT/'reconstruction/uart/encodings.inc',ROOT/'src/aspect/runtime.c',ROOT/'src/aspect/runtime.h',ROOT/'src/aspect/file_io.c',ROOT/'src/aspect/file_io.h']
  objects=[];units=[]
  for name,rel,define in ASM:
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
@@ -80,16 +84,17 @@ def main():
   units.append(dict(unit=unit,start=start,end_exclusive=end,file_start=base+start,bytes=end-start,sha256=sha(p)))
  program=C
  supported={int(op,16):name for op,name in re.findall(r'%(?:el)?if op=(0x[0-9a-f]+)\n dw (\w+)',(ROOT/'src/aspect/runtime_bridge.asm').read_text())}
- assert len(supported)==39
+ assert len(supported)==50
  for case in cases:
   data=bytes.fromhex(case['hex']);assert hashlib.sha256(data).hexdigest()==case['asx_sha256']
   name=case['name']+'.ASX';(OUT/name).write_bytes(data);ex=case['expected'];error=ERRORS[ex['error']] if 'error' in ex else 0
   assert not case.get('dos_excluded',False),case['name']
   program+=f' run("{name}",{ex.get("limit",1000)},{error},{int("integer0" in ex)},{ex.get("integer0",0)&65535}U,{int("long0" in ex)},{ex.get("long0",0)}UL,{ex.get("allocated",data[0])});\n'
+  if 'native_error' in ex:program+=f' ck(runtime_native_error_code=={ex["native_error"]});printf("NATIVE {name} code=%u\\n",runtime_native_error_code);\n'
   for key,value in ex.items():
    if re.fullmatch(r'string[0-9]+',key):
     index=int(key[6:]);assert 0<=index<128
-    text=value.encode('ascii');assert len(text)<=80 and b'\0' not in text
+    text=value.encode('cp437');assert len(text)<=80 and b'\0' not in text
     literal=''.join(f'\\{b:03o}' for b in text)
     program+=f' ck(strcmp((char *)runtime_string_snapshot[{index}],"{literal}")==0);printf("STRING {name} {key}=");{{unsigned i;for(i=0;i<81 && runtime_string_snapshot[{index}][i];++i)printf("%02X",runtime_string_snapshot[{index}][i]);printf("\\n");}}\n'
    match=re.fullmatch(r'(integer|long)([0-9]+)',key)
@@ -136,6 +141,6 @@ def main():
   maintained_string_fault_fixture={'STRSHORT':'STRGASS compiler bytes with final00 option and94 return removed; first global HELLO retained, second stays empty'},
   maintained_heap_fault_fixtures={'HEAPFLT':'IDIVEDGE compiler bytes with global-string count changed from0to2','HEAPZERO':'IDZ compiler bytes with global-string count changed from0to2'},
   fixture_expectations={c['name']:{'source_sha256':c['source_sha256'],'asx_sha256':c['asx_sha256'],'expected':c['expected']} for c in cases},
-  scope='Incremental actual native dispatch/operand/operation/file/heap composition executing source-owned compiled fixtures. Incomplete39-slot opcode table; unavailable services abort. Not full ASPECT or arbitrary-input safety.')
+  scope='Incremental actual native dispatch/operand/operation/file/heap composition executing source-owned compiled fixtures. Incomplete50-slot opcode table; unavailable services abort. Not full ASPECT or arbitrary-input safety.')
  (OUT/'manifest.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 if __name__=='__main__':main()

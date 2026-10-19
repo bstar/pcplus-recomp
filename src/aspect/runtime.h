@@ -11,6 +11,7 @@ unsigned aspect_runtime_run(const char *path,unsigned step_limit);
 extern unsigned runtime_integer_a[10],runtime_integer_b[128];
 extern unsigned long runtime_longs[128];
 extern unsigned runtime_steps,runtime_last_opcode,runtime_peak_live;
+extern unsigned runtime_native_error_code,runtime_string_compare_result;
 extern unsigned runtime_live,runtime_cleanup_count,runtime_close_count,runtime_abi_bad;
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
 extern unsigned runtime_fail_after;

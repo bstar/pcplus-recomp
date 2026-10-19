@@ -26,17 +26,22 @@ The [arithmetic extension](docs/ASPECT_ARITHMETIC.md) adds signed integer/long
 math, compound assignments and scoped DOS divide-fault recovery.
 [Typed parameters and strings](docs/ASPECT_PARAMETERS.md) now execute mixed
 arguments, nested calls, by-value mutation and real far-string assignment.
+[String commands and comparison status](docs/ASPECT_STRING_COMMANDS.md) now add
+concatenation, case conversion, byte operations, substrings and SUCCESS/FAILURE
+conditions, with CP437 behavior preserved.
 Script compilation and execution in the maintained terminal remain unfinished.
 
 Current outputs:
 
 | Output | Inputs | Current purpose |
 | --- | --- | --- |
+| `build/aspect-string-services/SERVICES.EXE` | Recovered assembly and controlled operand/address callbacks | Actual CRT helpers and compare-status services |
+| `build/aspect-string-commands/STRCMD.EXE` | Recovered assembly and controlled services | Eleven native command handlers with actual string/CRT/frame/copy dependencies |
 | `build/aspect-parameters/PARAM.EXE` | Recovered assembly and controlled readers | Typed parameter pushes with actual native numeric/frame/stack/copy code |
 | `build/aspect-strings/STRINGS.EXE` | Recovered assembly and controlled services | String operands, literals and assignment, including actual far copy and DOS far heap |
 | `build/aspect-long/LONG.EXE` | Recovered assembly only | Native signed long multiply/divide/remainder and shift helpers, including independent actual DOS checks |
 | `build/aspect-arithmetic/ARITH.EXE` | Recovered assembly and controlled services | Native arithmetic component; controlled long/float boundaries are distinct from composed execution |
-| `build/aspect-runtime/EXECUTE.EXE` | Recovered assembly and maintained DOS resource owner | Fixed compiled-script suite;39 supported opcode slots,176 explicit unsupported stops; no terminal integration |
+| `build/aspect-runtime/EXECUTE.EXE` | Recovered assembly and maintained DOS resource owner | Fixed compiled-script suite;50 supported opcode slots,165 explicit unsupported stops; no terminal integration |
 | `build/aspect-operands/OPERANDS.EXE` | Recovered assembly and controlled services | Integer/long operand decoding; unchecked native indexing and external builtins remain explicit |
 | `build/aspect-operations/OPERATE.EXE` | Recovered assembly and controlled services | Assignment, logical/comparison and increment/decrement diagnostics; float services are unavailable |
 | `build/aspect-flow/FLOW.EXE` | Recovered assembly and modeled callbacks | Native reads/calls/frames/returns; unchecked historical behavior remains explicit |

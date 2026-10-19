@@ -18,6 +18,11 @@ extern aspect_arith_modulo,aspect_arith_multiply,aspect_arith_negate,aspect_arit
 extern aspect_arith_shift_left,aspect_arith_shift_right,aspect_arith_subtract,aspect_arith_bit_xor
 extern aspect_parameter_push_numeric,aspect_parameter_push_string
 extern aspect_string_assign
+extern aspect_strcmd_compare_bytes,aspect_strcmd_concat,aspect_strcmd_compare,aspect_strcmd_length
+extern aspect_strcmd_lower,aspect_strcmd_get_char,aspect_strcmd_set_char,aspect_strcmd_fill
+extern aspect_strcmd_subcopy,aspect_strcmd_upper,aspect_strcmd_substr
+extern program_strlen,program_strncmp,directory_dial_append_original,directory_dial_upper_original
+extern aspect_string_status,aspect_string_success
 extern _runtime_file,_runtime_reset_native,_runtime_open,_runtime_alloc,_runtime_free
 extern _runtime_cleanup,_runtime_close,_runtime_finish,_runtime_service,_runtime_read
 extern _runtime_native_error,_runtime_set_error,_runtime_header
@@ -237,8 +242,22 @@ aspect_string_builtin:
  pop bp
  ret 2
 
+; Maintained routing to recovered compare-status services only.
 global aspect_operand_builtin_integer,aspect_operand_builtin_long
 aspect_operand_builtin_integer:
+ push bp
+ mov bp,sp
+ cmp word [bp+4],21
+ je .status
+ cmp word [bp+4],27
+ jne unsupported
+ call aspect_string_success
+ jmp short .done
+.status:
+ call aspect_string_status
+.done:
+ pop bp
+ ret 2
 aspect_operand_builtin_long:
  mov ax,3
  jmp fail
@@ -257,6 +276,13 @@ fail:
  pop bx
  call aspect_abort
  ret
+
+; Reuse existing recovered CRT code rather than another implementation.
+global aspect_string_strlen,aspect_string_strncmp,aspect_string_concat,aspect_string_upper
+aspect_string_strlen: jmp program_strlen
+aspect_string_strncmp: jmp program_strncmp
+aspect_string_concat: jmp directory_dial_append_original
+aspect_string_upper: jmp directory_dial_upper_original
 
 SEGMENT _DATA public class=DATA use16
 GROUP DGROUP _DATA
@@ -280,6 +306,7 @@ scalar aspect_string_pending_near,_runtime_string_pending_near
 scalar aspect_string_scratch_pointer,_runtime_string_scratch_pointer
 scalar aspect_string_scratch_index,_runtime_string_scratch_index
 scalar aspect_string_check_range,_runtime_string_check_range
+scalar aspect_string_compare_result,_runtime_string_compare_result
  global aspect_string_pending_far,_runtime_string_pending_far
 aspect_string_pending_far:
 _runtime_string_pending_far: dd 0
@@ -402,14 +429,36 @@ aspect_dispatch_handlers:
  dw aspect_flow_return
 %elif op=0x95
  dw aspect_flow_return_framed
+%elif op=0x9a
+ dw aspect_strcmd_compare_bytes
 %elif op=0xa4
  dw aspect_arith_shift_left
 %elif op=0xa5
  dw aspect_arith_shift_right
+%elif op=0xaa
+ dw aspect_strcmd_concat
+%elif op=0xab
+ dw aspect_strcmd_compare
 %elif op=0xac
  dw aspect_string_assign
+%elif op=0xae
+ dw aspect_strcmd_length
+%elif op=0xaf
+ dw aspect_strcmd_lower
+%elif op=0xb0
+ dw aspect_strcmd_get_char
+%elif op=0xb1
+ dw aspect_strcmd_set_char
+%elif op=0xb2
+ dw aspect_strcmd_fill
+%elif op=0xb3
+ dw aspect_strcmd_subcopy
+%elif op=0xb4
+ dw aspect_strcmd_upper
 %elif op=0xb5
  dw aspect_arith_subtract
+%elif op=0xb6
+ dw aspect_strcmd_substr
 %elif op=0xbc
  dw aspect_expr_branch_true
 %elif op=0xbd

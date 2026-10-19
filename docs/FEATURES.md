@@ -360,3 +360,25 @@ application scheduling/memory placement remain unfinished. The terminal remains
 A fresh original-free source rebuild reproduces78 outputs byte for byte.
 Native E104 scratch/next-script aliasing is preserved and verified in the map;
 CHAIN/state999 remains unsupported.
+
+
+## ASPECT string commands and comparison status
+
+Eleven native string/byte commands add401 exact bytes,2,058 CPU scenarios
+covering all196 instructions, and27,819 actual8086 DOS assertions. All37
+component code ranges compare exactly with the original. New173-byte services
+and168 reused CRT bytes provide actual comparison, case conversion, fill,
+operand/store and status behavior; file/error/builtin callback limits remain
+explicit in component diagnostics.
+
+The composed runtime now wires50of215 slots and executes184 authored compiled
+fixtures. Its361-case DOS suite passes5,371 assertions. New fixtures cover
+concatenation, comparison, length, peek/poke, fill/update/substrings, local and
+parameter operands, zero counts, CP437 bytes and true/false SUCCESS/FAILURE
+branches. Six native range/overflow errors preserve committed strings and free
+resources; the owner retains native error1/3 while mapping to operand error7.
+
+See `docs/ASPECT_STRING_COMMANDS.md` and its frozen validation report. Only the
+selected command surface is established: other string/format/builtin services,
+float/compiler/recorder and terminal scheduling/memory integration remain open.
+The interactive terminal remains731418bd; all F01–F16 gates remain open.

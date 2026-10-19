@@ -1,5 +1,10 @@
 # ASPECT procedure parameters and string execution
 
+This document records checkpoint `5bd8aa5`. The
+[current string-command extension](ASPECT_STRING_COMMANDS.md) expands the
+standalone runtime to 50 slots and 184 compiled fixtures. Counts and identities
+below describe the parameter/string checkpoint.
+
 The standalone owner now executes typed procedure arguments and string
 assignment using recovered PCPlus instructions. Compiled fixtures verify mixed
 integer/long/string arguments, nested calls, caller and callee locals, by-value

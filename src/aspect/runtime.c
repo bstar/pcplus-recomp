@@ -26,6 +26,8 @@ extern unsigned char runtime_string_bank_a[10][81],runtime_string_scratch[11][81
 extern unsigned long runtime_string_pending_far;
 extern unsigned runtime_string_pending_near,runtime_string_scratch_pointer,runtime_string_scratch_index;
 extern unsigned runtime_string_check_range;
+unsigned runtime_native_error_code;
+extern unsigned runtime_string_compare_result;
 extern void __far *runtime_strings[128];
 extern void runtime_enter(const char *path);
 extern void runtime_globals_init(void);
@@ -40,7 +42,7 @@ void runtime_reset_native(void)
     unsigned base=(unsigned)runtime_arena+0x1b1a;
     runtime_depth=0;runtime_frame=runtime_stack_pointer=base;runtime_wait_gate=0;
     runtime_source_type=runtime_target_type=runtime_lookahead=runtime_stage_index=0;
-    runtime_word_value=0;runtime_dword_value=0;
+    runtime_word_value=0;runtime_dword_value=0;runtime_string_compare_result=0;runtime_native_error_code=0;
     runtime_string_pending_far=0;runtime_string_pending_near=0;
     runtime_string_scratch_pointer=runtime_string_scratch_index=0;runtime_string_check_range=1;
     memset(runtime_string_bank_a,0,sizeof(runtime_string_bank_a));
@@ -129,6 +131,7 @@ int runtime_read(void)
 }
 void runtime_native_error(unsigned code)
 {
+    runtime_native_error_code=code;
     if(code==2)runtime_set_error(ASPECT_RUN_DIVIDE_ZERO);
     else if(code==101)runtime_set_error(ASPECT_RUN_HEAP);
     else if(code==105)runtime_set_error(ASPECT_RUN_STACK);

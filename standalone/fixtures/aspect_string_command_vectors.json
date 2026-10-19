@@ -1,0 +1,868 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "private_report": "analysis/aspect-string-commands/compiler-03/report.json",
+  "private_report_sha256": "f996bcff0a439444c45473b0170210a7f5cad9a0a59648cf25c8bf846c03cd70",
+  "probe_sha256": "bf9269bd2e527eaefaa4173fa50ac77ad85a440956797a76a2204e8ca3dab88c",
+  "freezer_sha256": "dabe53cdf1b673cfa36eb68d2cb035554fd8320622a2ed96eceb91cda36777a7",
+  "source_encoding": "cp437",
+  "vectors": [
+    {
+      "name": "LEN",
+      "intent": "LEN",
+      "source": "string value\r\ninteger outcome\r\nproc main\r\nvalue = \"HELLO\"\r\nstrlen value outcome\r\nendproc\r\n",
+      "source_sha256": "cf9c6bf1e1e6dd20e2c4eed58f8c3aaa9dbf8de5dd2e09d0255dc80da19e58a9",
+      "hex": "01 cf ac 8c 00 aa b8 10 ef c6 51 23 88 00 ae 8c 00 8d 00 94",
+      "asx_sha256": "fc1526558971e892c4ca47726f27e3c75ea5ab670cb7cfa3afc86276450a49c8",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "HELLO",
+        "integer0": 5
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "PEEK",
+      "intent": "PEEK",
+      "source": "string value\r\ninteger outcome\r\nproc main\r\nvalue = \"ABC\"\r\nstrpeek value 1 outcome\r\nendproc\r\n",
+      "source_sha256": "67db7fa9d87ee73463ac6c769e7e2e124ac0f3c40e6af5d915e6520d8f931b23",
+      "hex": "01 cf ac 8c 00 aa b6 0e e8 c3 48 00 b0 8c 00 b5 01 8d 00 94",
+      "asx_sha256": "0de2735c0a2056438a7efbd3e5c2647714476ce493f84d64c0d514f043919d08",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "ABC",
+        "integer0": 66
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "POKE",
+      "intent": "POKE",
+      "source": "string value\r\nproc main\r\nvalue = \"ABC\"\r\nstrpoke value 1 90\r\nendproc\r\n",
+      "source_sha256": "9e278334e93b699f66807aa16c34e2ddc2ebb1a250e755215484c25fe12511c9",
+      "hex": "01 cf ac 8c 00 aa b6 0d 46 47 8a 00 b1 8c 00 b5 01 b5 5a 94",
+      "asx_sha256": "172fe07c26b153cf2c7a8fbecd872daf4ea4f37226c64441e84d657c94eabc49",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "AZC"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "LOWER",
+      "intent": "LOWER",
+      "source": "string value\r\nproc main\r\nvalue = \"AbCz09!\"\r\nstrlwr value\r\nendproc\r\n",
+      "source_sha256": "e66d21e44330c60c55a84fa9dd6395ff21b567cf2f96769581ada43b3e90db85",
+      "hex": "01 cf ac 8c 00 aa ba 11 46 67 8a 45 d7 58 f8 00 af 8c 00 94",
+      "asx_sha256": "7a9ef92251b72d58903a85c93e9976de0ab315ce3ff91662115c736b6cbdabbb",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "abcz09!"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "UPPER",
+      "intent": "UPPER",
+      "source": "string value\r\nproc main\r\nvalue = \"AbCz09!\"\r\nstrupr value\r\nendproc\r\n",
+      "source_sha256": "c6c296ad455e346ccf1145d4045614d23d9f4e41474a3bd23d869421c2c75bb4",
+      "hex": "01 cf ac 8c 00 aa ba 11 46 67 8a 45 d7 58 f8 00 b4 8c 00 94",
+      "asx_sha256": "7d904afab77811c3514feabf0ce665fa6f624620bd4513daee2af7d191f205ac",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "ABCZ09!"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "LOWHI",
+      "intent": "LOWHI",
+      "source": "string value\r\nproc main\r\nvalue = \"A\u00e9Z\u00c7\"\r\nstrlwr value\r\nendproc\r\n",
+      "source_sha256": "0328a5d7d03937c974708652638cbe533f1190868f7d97c2944ac66aed2378f8",
+      "hex": "01 cf ac 8c 00 aa b7 0e 46 87 a1 4b 00 af 8c 00 94",
+      "asx_sha256": "9ce44c28239ed304bd39d295d0a29378def87f50b349b80a8b04af2622b6e38e",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "a\u00e9z\u00c7"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "UPHI",
+      "intent": "UPHI",
+      "source": "string value\r\nproc main\r\nvalue = \"a\u00e9z\u00c7\"\r\nstrupr value\r\nendproc\r\n",
+      "source_sha256": "ce04f5f22fbea759a8db53f1ba73ff3a0e84441d4dd1cf3fd076546f4f32a2b9",
+      "hex": "01 cf ac 8c 00 aa b7 0e 66 87 c1 4b 00 b4 8c 00 94",
+      "asx_sha256": "426c6dc8730adf44cfa982f4e968153a29b867e75a9c1493f7e0bff0655818ab",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "A\u00e9Z\u00c7"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CAT",
+      "intent": "CAT",
+      "source": "string value\r\nproc main\r\nvalue = \"AB\"\r\nstrcat value \"CD\"\r\nendproc\r\n",
+      "source_sha256": "dccaad7b4b844844343dbb273db0138cbe0acfc41ac0693592a72c51211bc0e1",
+      "hex": "01 cf ac 8c 00 aa b5 0c 46 47 00 aa 8c 00 aa b5 8a 24 0b 00 94",
+      "asx_sha256": "41fd130e69ddd05e422bab80231c721afa4ec9fc77e5ddbaa5ee296e005831ac",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "ABCD"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CATLEN",
+      "intent": "CATLEN",
+      "source": "string value\r\nproc main\r\nvalue = \"AB\"\r\nstrcat value \"CDEF\" 2\r\nendproc\r\n",
+      "source_sha256": "15080ae2ea6c40a8717d3332cf9fd1fb463452a0f329ae68756386852fc56cff",
+      "hex": "01 cf ac 8c 00 aa b5 0c 46 47 00 aa 8c 00 aa b7 8c 24 0b 9e 29 01 b5 02 94",
+      "asx_sha256": "06e178a3d98ad763fed8b12fb5de568cabb47d14f42ba34dc6d6695b30ab0d1d",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "ABCD"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CPYLEN",
+      "intent": "CPYLEN",
+      "source": "string value\r\nproc main\r\nvalue = \"ABCDE\"\r\nstrcpy value \"WXYZ\" 2\r\nendproc\r\n",
+      "source_sha256": "ac367c7db406d4f2cab34417cb215e92537785381b74757a84ec04c6c8a7d6f2",
+      "hex": "01 cf ac 8c 00 aa b8 0f 46 47 8a 0f ec 00 ac 8c 00 aa b7 0f fe d9 5e 31 01 b5 02 94",
+      "asx_sha256": "ceee36725c3d5b0a6519a9344186f4b96f585f35b00e96c45d67e098494d9a90",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "WX"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SET",
+      "intent": "SET",
+      "source": "string value\r\nproc main\r\nvalue = \"ABCDE\"\r\nstrset value 65\r\nendproc\r\n",
+      "source_sha256": "28904942ab67e3290b695bc0fe1488306d873b7ff9222ff4f3eb358a22b802ff",
+      "hex": "01 cf ac 8c 00 aa b8 0f 46 47 8a 0f ec 00 b2 8c 00 b5 41 00 94",
+      "asx_sha256": "7eae1b7a9b7552f1e5387b32bb4c1d3d65ba9a4579a53534ca94c171ed198741",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SETLEN",
+      "intent": "SETLEN",
+      "source": "string value\r\nproc main\r\nvalue = \"ABCDE\"\r\nstrset value 65 3\r\nendproc\r\n",
+      "source_sha256": "ee58b6dfb53084e538a844a6d18303ca3a0ef2854ee555f5a613725b34591216",
+      "hex": "01 cf ac 8c 00 aa b8 0f 46 47 8a 0f ec 00 b2 8c 00 b5 41 01 b5 03 94",
+      "asx_sha256": "64128eae6912f6fa00ed918b1a39ace09398b5515925a15daa1243afb96c7334",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "AAADE"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "UPDATE",
+      "intent": "UPDATE",
+      "source": "string value\r\nproc main\r\nvalue = \"ABCDE\"\r\nstrupdt value \"xy\" 1 2\r\nendproc\r\n",
+      "source_sha256": "328c4d307bb4982a397bcc1152d32974c00e4a890b8fb15cf050db4998ad4a59",
+      "hex": "01 cf ac 8c 00 aa b8 0f 46 47 8a 0f ec 00 b3 8c 00 aa b5 0d 1f fa b5 01 b5 02 94",
+      "asx_sha256": "fe88e5dd194a5c7cdaeda51f017b9322b18df03348832f3c741cf529ac96638a",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "AxyDE"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SUBCOPY",
+      "intent": "SUBCOPY",
+      "source": "string value\r\nproc main\r\nsubstr value \"ABCDE\" 1 3\r\nendproc\r\n",
+      "source_sha256": "a2161ca32384931510704982b9ec03c2e8fdc4e2b3b6b69d34a5b234e1e31412",
+      "hex": "01 cf b6 8c 00 aa b8 0f 46 47 8a 0f ec b5 01 b5 03 94",
+      "asx_sha256": "6b6e16c956e7ace1301e7b0b078965956dc530acfed26ccad884a53de91af4e6",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "BCD"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CMPEQ",
+      "intent": "CMPEQ",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"ABC\" \"ABC\"\r\noutcome = 1\r\nendproc\r\n",
+      "source_sha256": "3b011da87da7f3a2a256f71a81835727d905066f6a523227b6a61c88240c6d6e",
+      "hex": "00 cf ab aa b6 0b 60 7b ea aa b6 05 4c 89 60 00 5b 00 8d 00 ab 01 00 94",
+      "asx_sha256": "fc030cc36da2aa122c1d6d83765ca49b5129917ae0e8dc1ee7893ab56bd1fea2",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CMPNE",
+      "intent": "CMPNE",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"ABC\" \"ABD\"\r\noutcome = 1\r\nendproc\r\n",
+      "source_sha256": "8b777c9472d708306936e6cd2400be7940a5c8f79c1f88c47746bcd1afb29988",
+      "hex": "00 cf ab aa b6 0b 60 7b ea aa b6 05 4c 89 61 00 5b 00 8d 00 ab 01 00 94",
+      "asx_sha256": "cb8b0a68dfb6549781f712b7a2faacdd3cb9b4871ba5efeb4db4f5cb81f4b01d",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CMPLEN",
+      "intent": "CMPLEN",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"ABC\" \"ABD\" 2\r\noutcome = 1\r\nendproc\r\n",
+      "source_sha256": "3c5ffc9063a20e39674422fb5a4a50028df63b36edaa869a036dd17ae8977acc",
+      "hex": "00 cf ab aa b6 0b 60 7b ea aa b6 05 4c 89 61 01 b5 02 5b 00 8d 00 ab 01 00 94",
+      "asx_sha256": "683cabc0e6cd955c12c3c5f7a4a4d7488b3caf4823e5f60bb0e2854b0c2f9568",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "LENEMP",
+      "intent": "LENEMP",
+      "source": "string value\r\ninteger outcome\r\nproc main\r\nvalue = \"\"\r\nstrlen value outcome\r\nendproc\r\n",
+      "source_sha256": "008897f14cbfc22c6e34f48a1fd0e9f8b1275c2e4dac80a6f4f1f10aba1e7924",
+      "hex": "01 cf ac 8c 00 6e 13 00 ae 8c 00 8d 00 94",
+      "asx_sha256": "f417df09cb7d6fb1c932e2cb632143c0bf9b682a99355549beb43299e13d4ceb",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "",
+        "integer0": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "LENMAX",
+      "intent": "LENMAX",
+      "source": "string value\r\ninteger outcome\r\nproc main\r\nvalue = \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\r\nstrlen value outcome\r\nendproc\r\n",
+      "source_sha256": "4305da795fcdb719fe604efdf718e1e2a831415c8f497e484d18f127b1a62fcb",
+      "hex": "01 cf ac 8c 00 aa 03 5b e8 c2 46 18 7a 0c 58 46 60 5e 88 4c f4 e8 c2 46 18 7a 0c 58 46 60 5e 88 4c f4 e8 c2 46 18 7a 0c 58 46 60 5e 88 4c f4 e8 c2 46 18 7a 0c 58 46 60 5e 88 4c f4 e8 c2 46 18 7a 0c 58 46 60 5e 88 4c f4 e8 c2 46 18 7a 0c 58 46 60 5e 88 4c f4 e8 c2 00 ae 8c 00 8d 00 94",
+      "asx_sha256": "c2a4079a04f3e225a480cf1e89cce7858581bc51ac9e32d90328036d2e32c6d8",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "integer0": 80
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CATOFL",
+      "intent": "CATOFL",
+      "source": "string value\r\nproc main\r\nvalue = \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\r\nstrcat value \"BC\"\r\nendproc\r\n",
+      "source_sha256": "4e2ca150ba06c7ea73ca43e5a00b48ea675919988a3775f4012038459825d577",
+      "hex": "01 cf ac 8c 00 aa 02 59 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 00 aa 8c 00 aa b5 03 0d 4e 00 94",
+      "asx_sha256": "c25094a1ad64b9d8ff134bef26fb7ad65e6adfba9acc348a7abedb2a189dcfdb",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "error": "operand",
+        "native_error": 3
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CATFULL",
+      "intent": "CATFULL",
+      "source": "string value\r\nproc main\r\nvalue = \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\r\nstrcat value \"B\"\r\nendproc\r\n",
+      "source_sha256": "fcde556801418f9c931c6327fafde8736e0875290b52d4b9f6126f3356bba567",
+      "hex": "01 cf ac 8c 00 aa 03 5a 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 46 00 aa 8c 00 aa b4 83 37 00 94",
+      "asx_sha256": "5e3b84c923f222f0f9d2f4dfd381324ab22ca9ac79380b119f31ce6ab45b00b2",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "error": "operand",
+        "native_error": 3
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CATEMPTY",
+      "intent": "CATEMPTY",
+      "source": "string value\r\nproc main\r\nvalue = \"AB\"\r\nstrcat value \"\"\r\nendproc\r\n",
+      "source_sha256": "f82a1756136119b0a92be279020353f195aa867e9a9a8cf44887d2af42484b61",
+      "hex": "01 cf ac 8c 00 aa b5 0c 46 47 00 aa 8c 00 6e 13 00 94",
+      "asx_sha256": "98b8a6a0b876a1e9647f1779cf9510b161d1b58945e2bdde81c38bac2ce6fdba",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "AB"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CATZERO",
+      "intent": "CATZERO",
+      "source": "string value\r\nproc main\r\nvalue = \"AB\"\r\nstrcat value \"CD\" 0\r\nendproc\r\n",
+      "source_sha256": "db0f8eac258afa4e592f479210d39f8910c48e6a296a6eed204af79d6fc38050",
+      "hex": "01 cf ac 8c 00 aa b5 0c 46 47 00 aa 8c 00 aa b5 8a 24 0b 01 b5 00 94",
+      "asx_sha256": "36f3b9c2e34ef79f39d81220f6996953b9637ba5d66e9e0c2637665b28efc83a",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "AB"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "BADLEN",
+      "intent": "BADLEN",
+      "source": "string value\r\nproc main\r\nstrcpy value \"ABC\" 81\r\nendproc\r\n",
+      "source_sha256": "03c0849487ffdcbe771e04881cff8b1c69e2f76bcb177bba7aac848b8f366b9c",
+      "hex": "01 cf ac 8c 00 aa b6 0d 46 47 8a 01 b5 51 94",
+      "asx_sha256": "2894d487ba716dac1c589100820deb95ec181a5ee88f8822b7d50c618997e9a3",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "",
+        "error": "operand",
+        "native_error": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "BADINDEX",
+      "intent": "BADINDEX",
+      "source": "string value\r\ninteger outcome\r\nproc main\r\nvalue = \"ABC\"\r\nstrpeek value 80 outcome\r\nendproc\r\n",
+      "source_sha256": "90ee5a9ea862fc8642e844a451e439f3e4e419f69574d0b0d20a393d57b4187f",
+      "hex": "01 cf ac 8c 00 aa b6 0e e8 c3 48 00 b0 8c 00 b5 50 8d 00 94",
+      "asx_sha256": "5814ed90e511a3d761a9ff42561554bea71126196e5f524a3009f62f3c77c84d",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "ABC",
+        "error": "operand",
+        "native_error": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "BADCHAR",
+      "intent": "BADCHAR",
+      "source": "string value\r\nproc main\r\nvalue = \"ABC\"\r\nstrpoke value 1 256\r\nendproc\r\n",
+      "source_sha256": "60f0499e03dea5a762fbed8711926ad7f28a1a8628f2b26bc8f098f85ad8a559",
+      "hex": "01 cf ac 8c 00 aa b6 0d 46 47 8a 00 b1 8c 00 b5 01 ab 00 01 94",
+      "asx_sha256": "38c20d5910ffe36ef0908923ba816b6e0ec3ed47deaeb03bdf71ee260c089e2c",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "ABC",
+        "error": "operand",
+        "native_error": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SUBEND",
+      "intent": "SUBEND",
+      "source": "string value\r\nproc main\r\nsubstr value \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZ\" 79 1\r\nendproc\r\n",
+      "source_sha256": "b1ab63a09a106ec199ce59efe5380b30ce44bb0b0296c4282fb5d6a1710a1eda",
+      "hex": "01 cf b6 8c 00 aa 03 5a 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 46 88 0c e8 60 18 4c 58 c2 5e 7a f4 46 5f b5 4f b5 01 94",
+      "asx_sha256": "1a6cbca8bb0039d24aea519070f4d8f898e486bf5fb530609d88fc0e8cdfd0fb",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "Z"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "BADSUM",
+      "intent": "BADSUM",
+      "source": "string value\r\nproc main\r\nvalue = \"ABCDE\"\r\nstrupdt value \"xy\" 79 2\r\nendproc\r\n",
+      "source_sha256": "c6095ae438a0d5b79184d79e3dd1c8d05c36160379ed9bf2f94542ae72afa30e",
+      "hex": "01 cf ac 8c 00 aa b8 0f 46 47 8a 0f ec 00 b3 8c 00 aa b5 0d 1f fa b5 4f b5 02 94",
+      "asx_sha256": "d727f44ed6e41d53f14c4bffa45529b1fea3769a1d3c9573269e9d665bf5a320",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "ABCDE",
+        "error": "operand",
+        "native_error": 3
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "LOCAL",
+      "intent": "LOCAL",
+      "source": "string outcome\r\nproc main\r\nstring value\r\nvalue = \"AbC\"\r\nstrlwr value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "f1897577575385a16d38b5541f167614101facfca8376e3d1c34169e46e88b15",
+      "hex": "01 d2 51 00 cf ac a0 00 00 aa b6 06 7a 7f c4 00 af a0 00 00 ac 8c 00 a0 00 00 00 95",
+      "asx_sha256": "2030e9afc40aec2414a59f8d4394f6c72a37590baf35ce1611b435f2170ab443",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "abc"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "PARAM",
+      "intent": "PARAM",
+      "source": "string outcome\r\nproc main\r\ncall helper with \"AbC\"\r\nendproc\r\nproc helper\r\nstrparm value\r\nstrupr value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "3ef90923004adad866ae9ba3531d0b0aae574e533b6079372c8d6c8c5cf8efa1",
+      "hex": "01 cf d0 cd aa b6 8c c0 8b 78 c8 13 00 00 00 d2 af ff 94 cf b4 96 57 00 ac 8c 00 96 57 00 00 95",
+      "asx_sha256": "9d5749d78c56b878b8b87ef5c6e85980d5bb3fe22123b688ed38fb16c405e7ec",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "ABC"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "PGET",
+      "intent": "PGET",
+      "source": "integer outcome\r\nproc main\r\ncall helper with \"ABC\"\r\nendproc\r\nproc helper\r\nstrparm value\r\nstrpeek value 2 outcome\r\nendproc\r\n",
+      "source_sha256": "a4198705b96205acd21acdb4cbc5d35ac397130d7fff2a5ca5e467ac8bc50cf8",
+      "hex": "00 cf d0 cd aa b6 8c c0 6b 78 c8 13 00 00 00 d2 af ff 94 cf b0 96 57 00 b5 02 8d 00 95",
+      "asx_sha256": "3be45f24c544df354a708cfea2d8b1a9a3977dc8ee8c3a83f812219c0611e620",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 67
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "LOCALCAT",
+      "intent": "LOCALCAT",
+      "source": "string outcome\r\nproc main\r\nstring value = \"AB\"\r\nstrcat value \"CD\"\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "437abb61713c28b5a7d04e8afb645cf3963d064a9b82f06e57e198b52741977e",
+      "hex": "01 d2 51 00 ac a0 00 00 aa b5 83 76 37 00 cf aa a0 00 00 aa b5 03 0e 4f 00 ac 8c 00 a0 00 00 00 95",
+      "asx_sha256": "c8a3c9e720a40fe11d8f141bb30ca65df8a90cc9e875631abd9040a95f8d6297",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "ABCD"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "GLBGLB",
+      "intent": "GLBGLB",
+      "source": "string value,source\r\nproc main\r\nvalue = \"AB\"\r\nsource = \"CD\"\r\nstrcat value source\r\nendproc\r\n",
+      "source_sha256": "d4bb289669f683cea9a352ca8cacbad3e959ea0e273dc2f27a7f19ad6f8eb450",
+      "hex": "02 cf ac 8c 00 aa b5 0c 46 47 00 ac 8c 01 aa b5 8a 24 0b 00 aa 8c 00 8c 01 00 94",
+      "asx_sha256": "c7f67ad0f5f36123f4406786220311c7b5c31f20d5b291f02ae5638dc191e40d",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "ABCD",
+        "string1": "CD"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "PEEKHI",
+      "intent": "PEEKHI",
+      "source": "string value\r\ninteger outcome\r\nproc main\r\nvalue = \"\u00e9\"\r\nstrpeek value 0 outcome\r\nendproc\r\n",
+      "source_sha256": "18145c2ac55f9e84b27df01d03a913be10f6f0d354da98c9d85c31d9366f6eb4",
+      "hex": "01 cf ac 8c 00 aa b4 0c 29 00 b0 8c 00 b5 00 8d 00 94",
+      "asx_sha256": "da05932fdf929ef8f112c079a0ecb870865aae9143ddd07d761f349c7d29b9e1",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "\u00e9",
+        "integer0": 130
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "POKEHI",
+      "intent": "POKEHI",
+      "source": "string value\r\nproc main\r\nvalue = \"ABC\"\r\nstrpoke value 1 130\r\nendproc\r\n",
+      "source_sha256": "c9c1a9db146697135deefd66ed80ecace058aacb7f699d24474cc197cbebb058",
+      "hex": "01 cf ac 8c 00 aa b6 0d 46 47 8a 00 b1 8c 00 b5 01 b5 82 94",
+      "asx_sha256": "913377225c27a3fd7d4ed4d961e1c375c7294a508a35649a8a67a15fb67829c9",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "A\u00e9C"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SETZERO",
+      "intent": "SETZERO",
+      "source": "string value\r\nproc main\r\nvalue = \"ABCDE\"\r\nstrset value 0 3\r\nendproc\r\n",
+      "source_sha256": "a3922c74177495b0aff61d29ed8f6138fed23f56fbc4db3fb49e87659224d593",
+      "hex": "01 cf ac 8c 00 aa b8 0f 46 47 8a 0f ec 00 b2 8c 00 b5 00 01 b5 03 94",
+      "asx_sha256": "4fc2c11edb0e8e4a2b43e8748abeb7d8190228d499b5b0d66c6d737ed6cad0b2",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": ""
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "IFEQSTAT",
+      "intent": "IFEQSTAT",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"ABC\" \"ABC\"\r\nif success\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "60463cf276e3c8344def127f2cdf11eaa56ae6434a7930f54a3fb3e71f3274fa",
+      "hex": "00 cf ab aa b6 0b 60 7b ea aa b6 05 4c 89 60 00 5b 00 79 00 6f 1b 15 29 00 00 00 79 00 5b 00 8d 00 ab 07 00 62 30 00 00 00 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "8c37078aefeab54ca2ffcf65362dda8825fd454bac3e4a12d95f1c9602cf81c8",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 7
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "IFNESTAT",
+      "intent": "IFNESTAT",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"ABC\" \"ABD\"\r\nif failure\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "ea7f11f32aa16f51152ec6d496180804c04d389a5a7f5dacc178c8705c6d0f58",
+      "hex": "00 cf ab aa b6 0b 60 7b ea aa b6 05 4c 89 61 00 5b 00 79 00 6f 15 15 29 00 00 00 79 00 5b 00 8d 00 ab 07 00 62 30 00 00 00 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "040ffe028764a6408cc2e4b1e1228bf4f16417f0e3a051f0114829780d5b8296",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 7
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "IFLTSTAT",
+      "intent": "IFLTSTAT",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"ABC\" \"ABD\"\r\nif failure < 0\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "74f2598b1934819a28de4d670c73a952bdea76cb0b4b48ebc21a2f2ef401d18d",
+      "hex": "00 cf ab aa b6 0b 60 7b ea aa b6 05 4c 89 61 00 6d 00 6f 15 ab 00 00 79 00 15 2c 00 00 00 79 00 5b 00 8d 00 ab 07 00 62 33 00 00 00 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "a1142779bb249c4ce46e9a3e41e8722c90a6b73a29fb1a400c9f57b1a5f9ef95",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 7
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "IFGTSTAT",
+      "intent": "IFGTSTAT",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"ABD\" \"ABC\"\r\nif failure > 0\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "1e630531e08a8134c22919d874d85b29666c43bac5d84f61c3cb67b074e25d0b",
+      "hex": "00 cf ab aa b6 0b 60 7b eb aa b6 05 4c 89 60 00 54 00 6f 15 ab 00 00 79 00 15 2c 00 00 00 79 00 5b 00 8d 00 ab 07 00 62 33 00 00 00 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "54364ce4f90981166e08b237fecb7b2f338ee8901bb4e4c64598493dd29b0830",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 7
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "IFCSSTAT",
+      "intent": "IFCSSTAT",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"abc\" \"ABC\"\r\nif failure > 0\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "2bcafa07dd234c9f6e19a054af8a9fdc4d9d87582004239d25de0a3a778f31aa",
+      "hex": "00 cf ab aa b6 0b 80 9b 0a aa b6 05 4c 89 60 00 54 00 6f 15 ab 00 00 79 00 15 2c 00 00 00 79 00 5b 00 8d 00 ab 07 00 62 33 00 00 00 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "ed4a52bb52c55da35f8961d168ded7cba127d510307ce06988492a36616ee050",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 7
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "IFHISTAT",
+      "intent": "IFHISTAT",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"\u00e9\" \"Z\"\r\nif failure > 0\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "dfcf082c89786164dceb3a1d9e0ae68d4f5eafa707976c5036521a2195966b72",
+      "hex": "00 cf ab aa b4 09 a1 aa b4 0d 71 00 54 00 6f 15 ab 00 00 79 00 15 28 00 00 00 79 00 5b 00 8d 00 ab 07 00 62 2f 00 00 00 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "c1a42c58fda517b219e7a9c5b06233d2d9aec106773c2e250dc3eb1a473199b0",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 7
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "IFEMPST",
+      "intent": "IFEMPST",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"\" \"\"\r\nif success\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "3a12f735a45c054a6854e0ebbd8471925327709394b2bce5b187d90476ecfb3f",
+      "hex": "00 cf ab 6e 13 6e 13 00 5b 00 79 00 6f 1b 15 21 00 00 00 79 00 5b 00 8d 00 ab 07 00 62 28 00 00 00 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "3045def8cbcfd7ffe8a00be52b6a6c7c81c83815e718beca58e95516a315d12a",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 7
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "IFPREFIX",
+      "intent": "IFPREFIX",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"ABC\" \"ABD\" 2\r\nif success\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "42e43ea974a88ea8261985855d1115bfe5e4a54b002abf0091509644bbaa84fe",
+      "hex": "00 cf ab aa b6 0b 60 7b ea aa b6 05 4c 89 61 01 b5 02 5b 00 79 00 6f 1b 15 2b 00 00 00 79 00 5b 00 8d 00 ab 07 00 62 32 00 00 00 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "0b3b77ca81d53ebeb4c09bc713effa1ce2720e4759e2ec6d407836a4b19bbe08",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 7
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "IFLOCAL",
+      "intent": "IFLOCAL",
+      "source": "integer outcome\r\nproc main\r\nstring va = \"ABC\",vb = \"ABC\"\r\nstrcmp va vb\r\nif success\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "91b5cf225ea814f5c689b6072aee7c8138ccce80391e2a8451c00acb01d957d0",
+      "hex": "00 d2 a2 00 ac a0 00 00 aa b6 84 76 37 0a 00 ac a0 51 00 aa b6 0f 58 e9 48 00 cf ab a0 00 00 a0 51 00 00 5b 00 79 00 6f 1b 15 3c 00 00 00 79 00 5b 00 8d 00 ab 07 00 62 43 00 00 00 5b 00 8d 00 ab 09 00 95",
+      "asx_sha256": "cd8be72cda9afad2251c98e622b9eb954406996bd4e22406ff202d5adfe6a972",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 7
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "IFPARAM",
+      "intent": "IFPARAM",
+      "source": "integer outcome\r\nproc main\r\ncall helper with \"ABC\" \"ABD\"\r\nendproc\r\nproc helper\r\nstrparm va,vb\r\nstrcmp va vb\r\nif failure < 0\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "01a5213843e592151c2121ee2e9c78f9bd426caf79c9e87753398ef0ca2d342a",
+      "hex": "00 cf d0 cd aa b6 8c c0 6b 78 cd aa b6 07 88 61 5b c8 1a 00 00 00 d2 5e ff 94 cf ab 96 a8 00 96 57 00 00 6d 00 6f 15 ab 00 00 79 00 15 3f 00 00 00 79 00 5b 00 8d 00 ab 07 00 62 46 00 00 00 5b 00 8d 00 ab 09 00 95",
+      "asx_sha256": "04dbfed623bfaa62d5b66ffba086c4e1d1c3697cf50a2db0f3724894b0d60ad9",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 7
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "IFNEFAIL",
+      "intent": "IFNEFAIL",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"ABC\" \"ABD\"\r\nif success\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "317610f58bb30a9fda9eee7b328210f3da160b39a0b01decfc9e0474259f9077",
+      "hex": "00 cf ab aa b6 0b 60 7b ea aa b6 05 4c 89 61 00 5b 00 79 00 6f 1b 15 29 00 00 00 79 00 5b 00 8d 00 ab 07 00 62 30 00 00 00 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "151fa88720851e6dadf1eb0564a790801898eb1264a54d09d92fe5d5b0068d30",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 9
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "IFEQFAIL",
+      "intent": "IFEQFAIL",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"ABC\" \"ABC\"\r\nif failure\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "0fe89e5568b4a1b47d8ecbd9d9928c60b284d1070cdaa4cb041ee90268a4f32e",
+      "hex": "00 cf ab aa b6 0b 60 7b ea aa b6 05 4c 89 60 00 5b 00 79 00 6f 15 15 29 00 00 00 79 00 5b 00 8d 00 ab 07 00 62 30 00 00 00 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "0ebc4cb37169cf1eea3145d69cd4955b246799049b6e6b43dc640f6b97ff6d4c",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 9
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CMPRLT",
+      "intent": "CMPRLT",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"A\" \"B\"\r\noutcome = failure\r\nendproc\r\n",
+      "source_sha256": "9ab0ce636666ed9eba4df8c40887ffb331ce31b19e4199b8c30818e28466e0a8",
+      "hex": "00 cf ab aa b4 09 60 aa b4 0d 59 00 5b 00 8d 00 6f 15 94",
+      "asx_sha256": "210dad31b5c00c113bf09cd148ad791e2bbec9e9fa25b25559572d5c167b77a9",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 65535
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CMPRGT",
+      "intent": "CMPRGT",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"B\" \"A\"\r\noutcome = failure\r\nendproc\r\n",
+      "source_sha256": "9b163645e4b619d313dff7da9023d58be7434761fc57c56ce07fd606ab80995d",
+      "hex": "00 cf ab aa b4 09 61 aa b4 0d 58 00 5b 00 8d 00 6f 15 94",
+      "asx_sha256": "8187f6975e64e323f626eb05c98819294f7c71bddc5dace26b5f726cdf012f8a",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CMPREQ",
+      "intent": "CMPREQ",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"A\" \"A\"\r\noutcome = failure\r\nendproc\r\n",
+      "source_sha256": "be4d550b9b21dde22584e019c20cc6f396d53d9ebef69a881cf58ae0913bf4fb",
+      "hex": "00 cf ab aa b4 09 60 aa b4 0d 58 00 5b 00 8d 00 6f 15 94",
+      "asx_sha256": "bc882a7f463d3a0612a4bdf775e8391dc9636b764c10c0f5ee79f2e249b4fd91",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CMPZERO",
+      "intent": "CMPZERO",
+      "source": "integer outcome\r\nproc main\r\nstrcmp \"ABC\" \"ABD\" 0\r\nif success\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "d5caf22b2e17d47a3411fa77ef0d66b50d07d5401d423051993a9651c6392e0c",
+      "hex": "00 cf ab aa b6 0b 60 7b ea aa b6 05 4c 89 61 01 b5 00 5b 00 79 00 6f 1b 15 2b 00 00 00 79 00 5b 00 8d 00 ab 07 00 62 32 00 00 00 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "ac6c4f8ed5b8db387ffae8595559ca793e6812737430c8337244674f1ebbc08b",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 7
+      },
+      "dos_excluded": false
+    }
+  ],
+  "rejected": [
+    {
+      "name": "LENREV",
+      "source": "string value\r\ninteger outcome\r\nproc main\r\nvalue = \"HELLO\"\r\nstrlen outcome value\r\nendproc\r\n",
+      "source_sha256": "664bdb44a747975c22e9c0d0372eab74ab61ba6319cff92be058237b9933b158",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> OUTCOME",
+        "Error C022 Line 5: Invalid numeric variable ==> VALUE"
+      ],
+      "log_sha256": "ffb687695d72705653c160760240523da772f1081bc679d2a6bf8ffd6fdba6fb",
+      "source_encoding": "cp437"
+    },
+    {
+      "name": "PEEKREV",
+      "source": "string value\r\ninteger outcome\r\nproc main\r\nvalue = \"ABC\"\r\nstrpeek outcome value 1\r\nendproc\r\n",
+      "source_sha256": "08e422a207ba1ab5fe46958c8864401b4e6099a0a49a2ed3431f477180c2ba83",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> OUTCOME",
+        "Error C021 Line 5: Invalid numeric variable or constant ==> VALUE",
+        "Error C025 Line 5: Invalid identifier ==> 1"
+      ],
+      "log_sha256": "b5c892f79885a3f8a1fea56ca7bbb18a25e8ef8301d188297c20719d21463665",
+      "source_encoding": "cp437"
+    },
+    {
+      "name": "NOLEN",
+      "source": "string value\r\nproc main\r\nstrlwr value 2\r\nendproc\r\n",
+      "source_sha256": "6fa2c8f0a31ccc899ed8d0648bd20e18190693b83c5c435c32e3525fc4009848",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> 2"
+      ],
+      "log_sha256": "2d72b959c39b7955b35dd9923abd0a1ab6b8455041557bcf37d8f3f974a8363b",
+      "source_encoding": "cp437"
+    },
+    {
+      "name": "BADCOUNT",
+      "source": "string value\r\nproc main\r\nstrcat value\r\nendproc\r\n",
+      "source_sha256": "29bbce529b47b75a1972fde9462dd9f769e87592c5af8d95cf783c8b62b9e024",
+      "errors": [
+        "Error C006 Line 3: Missing token"
+      ],
+      "log_sha256": "08519c9c991ee541ac2ff779d4e36ef904ee6561689dbb25ea293768c4dce69a",
+      "source_encoding": "cp437"
+    },
+    {
+      "name": "IFEQ",
+      "source": "integer outcome\r\nproc main\r\nif \"ABC\" == \"ABC\"\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "533912bd54432beb1056bd5e10a5f27ecb9e69e8d4added7c1dcf15d89ff1034",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> ABC",
+        "Error C002 Line 3: Unexpected token ==> ==",
+        "Error C002 Line 3: Unexpected token ==> ABC"
+      ],
+      "log_sha256": "be6823ae971623088e5f49fcb32c956b6924a5a93e62c4d63059687b76bcc8b4",
+      "source_encoding": "cp437"
+    },
+    {
+      "name": "IFNE",
+      "source": "integer outcome\r\nproc main\r\nif \"ABC\" != \"ABD\"\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "c604d1a9f802820a2530b0cc3f383003ac768a6c6ca055bb42fa5e2435e992c6",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> ABC",
+        "Error C002 Line 3: Unexpected token ==> !=",
+        "Error C002 Line 3: Unexpected token ==> ABD"
+      ],
+      "log_sha256": "4d3d61998bdbf08a8d39a440a8ce7c86f689c808b9c2d5b69ce08e9962ecf5ca",
+      "source_encoding": "cp437"
+    },
+    {
+      "name": "IFLT",
+      "source": "integer outcome\r\nproc main\r\nif \"ABC\" < \"ABD\"\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "eac7c2abd25f86b7f5dc25b374da9cd69421e759ed61c6bcadec0bf02aa5804a",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> ABC",
+        "Error C002 Line 3: Unexpected token ==> <",
+        "Error C002 Line 3: Unexpected token ==> ABD"
+      ],
+      "log_sha256": "8cce2a8f3541a0df69641de5c611a5b8b43abf67032f1a5b50b095dad7879f4b",
+      "source_encoding": "cp437"
+    },
+    {
+      "name": "IFLE",
+      "source": "integer outcome\r\nproc main\r\nif \"ABC\" <= \"ABC\"\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "c00d1f20f72a718d32b3ecc0221f0d5bf9992e462b9b7198b4de2e6fb71babdb",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> ABC",
+        "Error C002 Line 3: Unexpected token ==> <=",
+        "Error C002 Line 3: Unexpected token ==> ABC"
+      ],
+      "log_sha256": "58142e9a06a3cfce10467656c090f6fcf69616d5e326b355678bf1c9846bd2f4",
+      "source_encoding": "cp437"
+    },
+    {
+      "name": "IFGT",
+      "source": "integer outcome\r\nproc main\r\nif \"ABD\" > \"ABC\"\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "f00ae2e5b1d02c2b9cca61eaf3765255df7030b78df4b4bbe9403f653f180fe9",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> ABD",
+        "Error C002 Line 3: Unexpected token ==> >",
+        "Error C002 Line 3: Unexpected token ==> ABC"
+      ],
+      "log_sha256": "b138c4057e7ebd5a9f8f45821d1718078267b8db39973ecb77f4ba5c508fb620",
+      "source_encoding": "cp437"
+    },
+    {
+      "name": "IFGE",
+      "source": "integer outcome\r\nproc main\r\nif \"ABC\" >= \"ABC\"\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "e6019e88ea5dee0ff786fe8505f543750c0926389746d28f038c6f13d9fc1ecc",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> ABC",
+        "Error C002 Line 3: Unexpected token ==> >=",
+        "Error C002 Line 3: Unexpected token ==> ABC"
+      ],
+      "log_sha256": "776a17ea0332fb87d7ff09043a478a9a76db0da4c71a0794ff808be8a9127c22",
+      "source_encoding": "cp437"
+    },
+    {
+      "name": "IFCASE",
+      "source": "integer outcome\r\nproc main\r\nif \"abc\" == \"ABC\"\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "a4d34242321866d3d9ce05416df631783d2ad1112ce0f8da81e33d9e7e0466ef",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> abc",
+        "Error C002 Line 3: Unexpected token ==> ==",
+        "Error C002 Line 3: Unexpected token ==> ABC"
+      ],
+      "log_sha256": "38ede777177741eb6b9b999030932ec9b4ae48c4532082dcbd7a893f20b181d9",
+      "source_encoding": "cp437"
+    },
+    {
+      "name": "IFHI",
+      "source": "integer outcome\r\nproc main\r\nif \"\u00e9\" > \"Z\"\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "de7e007dac711e8adc87850aad2bdd4598be9d1d2de5e211420aaeaf9046dfbe",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> \u00e9",
+        "Error C002 Line 3: Unexpected token ==> >",
+        "Error C002 Line 3: Unexpected token ==> Z"
+      ],
+      "log_sha256": "ffd1ab08d50e6e6ca4809a5323368d4e615c61ad1e7e2995ccd0dc6565c4df38",
+      "source_encoding": "cp437"
+    },
+    {
+      "name": "IFEMPTY",
+      "source": "integer outcome\r\nproc main\r\nif \"\" == \"\"\r\noutcome = 7\r\nelse\r\noutcome = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "46c5e398f194a3b336f2a469b03300a36f433ee8c1b5e2faddeeca6f383fc1d0",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> $NULL",
+        "Error C002 Line 3: Unexpected token ==> ==",
+        "Error C002 Line 3: Unexpected token ==> $NULL"
+      ],
+      "log_sha256": "7b6f4e59371dc7d0f1fd4541678e96f5fe9c3ce92f631016aa0cfc7ab6c5dcbc",
+      "source_encoding": "cp437"
+    }
+  ],
+  "expectation_model": "Hand-derived string/character/index arithmetic and ASCII-only case mapping; CP437 high bytes remain unchanged. strcmp is unsigned-byte lexicographic with signed -1/0/1 result. Native builtin FAILURE returns this result; SUCCESS returns result==0. Native operand/overflow errors1/3 become maintained operand error7 before mutation/writeback. No maintained runtime outputs informed these expectations.",
+  "findings": [
+    "Accepted STRLEN string integerdest; STRPEEK string index integerdest; STRPOKE string index character.",
+    "Accepted STRCAT/STRCPY dest source [count]; STRSET dest character [count]; STRUPDT/SUBSTR dest source index count.",
+    "String indexes are zero-based. Optional length emits01 plus integer operand; omitted length emits00.",
+    "Direct IF quoted-string relational expressions rejected in the authored probes; STRCMP followed IF SUCCESS/FAILURE or numeric comparison with FAILURE accepted.",
+    "SUCCESS uses numeric builtin27; FAILURE uses21. No other builtin service is needed by this corpus.",
+    "Subcopy requires opcodeB6 in addition to AA/AB/AC/AE/AF/B0/B1/B2/B3/B4.",
+    "String assignment copy terminates at the requested destination length; bounded fill preserves remaining preexisting string bytes and forces byte80 to NUL."
+  ],
+  "scope": "Original compiler output for authored scripts only, independent expected outcomes and rejected grammar attempts. No original executable/application/resource bytes and no claim of complete language or command coverage."
+}
