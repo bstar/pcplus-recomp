@@ -5,6 +5,11 @@ Classic Pillars menu, live navigation failures, staged fixes and untested doors.
 For that menu, pass `--main-menu-text '[ LoC ]'` to the live DOS driver; its old
 literal `Main Menu` wait does not match the newly decorated heading.
 
+The [live Infocom door workflow](enigma-infocom.md) now passes13 actual DOS
+checks, including library paging, Zork input and clean worker/menu return.
+Eight corrupted acceptance captures reject. No saved game or live decoder is
+changed; this does not erase the live NFO/editor failures.
+
 The user's running board is `~/projects/black-flag-bbs`, revision
 `237cd9743d6978a940dd66db0e78f6ab8ccd3e37`, with a custom file index and game
 details module. The separately named `~/projects/enigma` directory was empty.

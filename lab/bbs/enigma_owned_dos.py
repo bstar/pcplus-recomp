@@ -55,6 +55,24 @@ async def run(args):
     sources += list((server / 'config/menus').rglob('*.hjson'))
     sources += list((server / 'mods').rglob('*.js'))
     sources += list((server / 'mods').rglob('*.json'))
+    infocom = None
+    saves_before = None
+    def probe_saves():
+        return {str(p.relative_to(server)): sha(p)
+                for folder in (server / 'local/infocom/saves').glob(str(account['userId']) + '-*')
+                for p in folder.rglob('*') if p.is_file()}
+    if args.mode == 'infocom':
+        import enigma_infocom_probe as infocom
+        catalog = server / 'local/infocom/catalog.json'
+        story = next(g for g in json.loads(catalog.read_text())['games'] if g['id'] == 1)
+        assert story['title'] == 'Zork I: The Great Underground Empire'
+        game = Path(story['path']).resolve()
+        assert game.is_relative_to(server / 'local/infocom/games')
+        assert sha(game) == story['sha256'] and game.read_bytes()[0] == story['version']
+        sources += [catalog, game, Path(infocom.__file__)]
+        sources += [server / 'core/zmachine_door' / p for p in (
+            'zmachine_door.js', 'zmachine_worker.js', 'save_dialog.js')]
+        saves_before = probe_saves()
     binary = ROOT / 'build/terminal/TERMINAL.EXE'
     before = {str(p): sha(p) for p in sources + [binary, Path(__file__), Path(test_dos.__file__)]}
     revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=server, text=True).strip()
@@ -107,6 +125,8 @@ async def run(args):
         prefix = 'M enter p5000 P enter'
         assert body.startswith(prefix)
         body = body.replace(prefix, 'M enter p2500 J enter p2000 enter p2500 P enter', 1)
+    elif args.mode == 'infocom':
+        body = infocom.KEYS
     else:
         body = ('F enter p1800 S enter p1800 B l a s t o c y s t enter p2500 '
                 'enter p2000 i p1200 n p1200 down p500 pgdown p500')
@@ -180,6 +200,10 @@ async def run(args):
                       nfo_page=bool(pages),
                       nfo_scrolled=len(pages)>1 and pages[-1][0]>pages[0][0]
                                    and pages[-1][1]==pages[-1][2])
+    elif args.mode == 'infocom':
+        checks.update(infocom.audit(clean, (out / 'bbs-sent.bin').read_bytes(), own,
+                                    story['sha256']))
+        checks['infocom_probe_saves_unchanged'] = saves_before == probe_saves()
     else:
         positions = [(int(r), int(c)) for r,c in re.findall(r'(?:INS|OVR) (\d+),(\d+)', clean[clean.find('KEYTEST'):])]
         checks.update(editor_entered='KEYTEST' in clean and bool(positions),
@@ -204,7 +228,7 @@ if __name__ == '__main__':
     parser.add_argument('--host', required=True)
     parser.add_argument('--port', type=int, default=2323)
     parser.add_argument('--label', required=True)
-    parser.add_argument('--mode', choices=['files', 'editor'], required=True)
+    parser.add_argument('--mode', choices=['files', 'editor', 'infocom'], required=True)
     parser.add_argument('--profile', choices=['network', 'enigma-editor'], default='network')
     parser.add_argument('--main-menu-text', default='Main Menu',
                         help='Literal contiguous wire fragment identifying the configured main menu')

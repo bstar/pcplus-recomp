@@ -7,6 +7,14 @@ passes actual DOS editor and byte-exact ZMODEM workflows in isolation; it is
 not installed on the live board. Keep that distinction in compatibility claims
 and validate the actual custom menus and physical modem separately.
 
+The [live Infocom door workflow](lab/bbs/enigma-infocom.md) now passes13 checks
+with the maintained DOS binaries and unchanged live decoder: exact library
+paging, Zork I entry, LOOK/NORTH/LOOK responses, matching worker startup/shutdown
+and return through Doors to Main. Eight independently corrupted captures reject;
+existing probe saves remain unchanged. DOS SAVE/RESTORE, Global War/Barren
+Realms Elite, the live decoder correction and physical modem acceptance remain
+open. This is additional validation, not completion of the full application.
+
 The [isolated exact game-details fixture](lab/bbs/enigma-notes.md) now covers
 the owned module with synthetic DIZ/NFO data. Original Client replay yields164
 fragmented differences and120 unintended exits; the staged decoder has zero in

@@ -1,0 +1,117 @@
+{
+  "passed": true,
+  "compatibility_complete": false,
+  "server_revision": "237cd9743d6978a940dd66db0e78f6ab8ccd3e37",
+  "live_client_sha256": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+  "application_binaries": {
+    "TERMINAL.EXE": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+    "ASPECT.EXE": "9305fa9b638066de7a888ed29249ee54bdeef591e843bfe72c5259edbb2c6cf8",
+    "ASPCOMP.EXE": "eb9da4919f592cfa6a60e129712039b867875a64a6d1e0439787f8ecee543e78"
+  },
+  "main_menu_text": "[ LoC ]",
+  "checks": {
+    "DOS_harness": true,
+    "authenticated_probe": true,
+    "main_menu": true,
+    "inputs_unchanged": true,
+    "no_post_saved": true,
+    "staged_products_unchanged": true,
+    "DOS_source_compiled": true,
+    "infocom_route_gameplay_and_return": true,
+    "infocom_commands_emitted": true,
+    "infocom_worker_lifecycle": true,
+    "infocom_no_worker_errors": true,
+    "infocom_no_save_requested": true,
+    "infocom_probe_saves_unchanged": true
+  },
+  "server_inputs": {
+    "core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+    "core/multi_line_edit_text_view.js": "687eb7ae3355cea0e91a30f80134a87b9060bc26f11f1661c7c4f7cfb0d47ce7",
+    "config/config.hjson": "4281f5fa4c47213cd3baa0a9674ee28e940536b466b4b718814fb48e9e6e25a8",
+    "config/menus/activitypub.hjson": "82861725a47e5892bbfd2251feb02ca0bb46707516a872cf373b350b704c9fe7",
+    "config/menus/doors.hjson": "22b98aec1ca878560502d7f922e798477ec988f883a30f9c973fd6f3102eee72",
+    "config/menus/file_base.hjson": "18e80539178e71ff6a662fd7792f59dbf303df3435309a3d9063ae34b9fe469f",
+    "config/menus/login.hjson": "215f943d381a2acc4c1713ff14331efaee19c474218428eac6b64f77b9355f18",
+    "config/menus/message_base.hjson": "607939acb6818c7c5fb50a2d90b04fed1b92d50f51fb9ca4215cef06644d2540",
+    "config/menus/new_user.hjson": "04f466f10cc5c169c03186bc8a7fde7b18d5d938e7f0b70873d74bae15161cec",
+    "config/menus/private_mail.hjson": "ffb59f0d6f2d592181d2bc304d46e9e2a3b71a14c2d6cd65a639f6b0c6f3d382",
+    "config/menus/black-flag.hjson": "b97e7d1c857275cc49b20d12fec3ba60cd94b85672e663a8af11b61019e6fd5f",
+    "mods/black_flag_files/black_flag_files.js": "20a6d544cb820ac3840c1d271cfd41c7e0fb1c42600100756367845b147cf535",
+    "mods/black_flag_files/helpers.js": "e4f6c1df6dbb9d6282d0534150c9149889637d34f01665691ca3bc5d19a06235",
+    "mods/black_flag_files/search.js": "d159e1fd6936e13613321a92cf68f93681de083cf68a9cb65d8f891cb6b54236",
+    "mods/loc_game_details/loc_game_details.js": "0711413e29c01f0cf3cef7f89b3dc607515381a67a23e1a58205aa6d7a20efb8",
+    "mods/loc_transfer_protocol_select/loc_transfer_protocol_select.js": "9450bbb9faab72b52ac58a684408443a805e5ce33fd585b9cb694b7881c473e0",
+    "mods/loc_download_ready/loc_download_ready.js": "859ea1b0d395c127e7aafcf9b954a0939e11921e6c19fb3d2b3053915bce4207",
+    "mods/loc_main_menu/loc_main_menu.js": "3f365e0a29639e63d23aae895e088a142a16ed65a9e6e7373fa5766d00028a43",
+    "mods/loc_infocom_menu/loc_infocom_menu.js": "79b79501b620adde920440a685cb87de6ff8b31bfd455cb39d02c579787721ca",
+    "mods/loc_main_menu/classic-pillars.json": "b438d2b4a2f5e3b75a1a64cf0ba14d690b8cdcbe67a858bc3d287470982bdc33",
+    "mods/loc_main_menu/dos-doors.json": "40ae9aad83c64c781669e45bbb8a10236b9322079a6985e8f44ba39e638c9dba",
+    "local/infocom/catalog.json": "4eddecfbaf2f86e53c7d884bcfa65ffc00c3abaa78b5ddc0df3f9f6989c04202",
+    "local/infocom/games/07ba90fc9f214fba9532228a3c0ba1230eeeacf5b8dfad5d9d721762aaa5f9b4.z5": "07ba90fc9f214fba9532228a3c0ba1230eeeacf5b8dfad5d9d721762aaa5f9b4",
+    "core/zmachine_door/zmachine_door.js": "d2022c7a7cb6cba4e3cc080bf912e9fdb2f0353d0d0a735f633df2cce729ee4b",
+    "core/zmachine_door/zmachine_worker.js": "2275e21da616c6af82a475b488cd3bfc9d6be65275b0ccfffeb40ebc4b4ebdd1",
+    "core/zmachine_door/save_dialog.js": "9524990c774e02c166672bbed9832ee3f70daa81137273b2f51bc2b8ad3551b5"
+  },
+  "evidence": {
+    "build/bbs-lab/results/enigma-owned/owned-infocom-02/owned-server-checks.json": "da16fb6814e2bae85f1cc0d6cef871dd0c9a11c448f67bb7c10f7dc4a747715b",
+    "build/bbs-lab/results/enigma-owned/owned-infocom-02/audit-negative-checks.json": "bb9bd648daf4145d4a2fde7d3e97371d42f7c12e386bb3ab3a415ab0c968caf2",
+    "build/bbs-lab/results/enigma-owned/owned-infocom-02/display.bin": "1f815b012ea2512d7e8cd814488f96b81a306f3a1f5f15f9a09b8dd5a24cb4a4",
+    "build/bbs-lab/results/enigma-owned/owned-infocom-02/bbs-sent.bin": "db333cb24ff3b8e6aa00746e56fb340253c8bd98820250dc1348f81c759bec5f",
+    "build/bbs-lab/results/enigma-owned/owned-infocom-02/server-session.jsonl": "c700668b7f1f56b2381229ab638928b9494063ae7f61b689c6de259400e258a4"
+  },
+  "audit_negative_cases": [
+    {
+      "case": "missing-library-page",
+      "rejected": true,
+      "failed_check": "infocom_route_gameplay_and_return"
+    },
+    {
+      "case": "missing-game-input-response",
+      "rejected": true,
+      "failed_check": "infocom_route_gameplay_and_return"
+    },
+    {
+      "case": "missing-final-menu",
+      "rejected": true,
+      "failed_check": "infocom_route_gameplay_and_return"
+    },
+    {
+      "case": "missing-quit-command",
+      "rejected": true,
+      "failed_check": "infocom_commands_emitted"
+    },
+    {
+      "case": "missing-worker-stop",
+      "rejected": true,
+      "failed_check": "infocom_worker_lifecycle"
+    },
+    {
+      "case": "wrong-story",
+      "rejected": true,
+      "failed_check": "infocom_worker_lifecycle"
+    },
+    {
+      "case": "worker-error",
+      "rejected": true,
+      "failed_check": "infocom_no_worker_errors"
+    },
+    {
+      "case": "unexpected-save",
+      "rejected": true,
+      "failed_check": "infocom_no_save_requested"
+    }
+  ],
+  "driver_sha256": "5838b75bd2567f577fe4a31f4839279338d6595a8714a4fe856943214a4a500a",
+  "probe_sha256": "dec20ae067472ad05322721808c8e3dcc4ce510322b61010a0cf3904ad8c0ba1",
+  "checker_sha256": "a06a9ab7e7fdd2f80a258e09aac1b67d194cce9848e491008955f36133844be4",
+  "recorder_sha256": "ab99dd7c7fb9d5b4b617e657044084a18ed9f6060fd356857fbbcc3f4a46578d",
+  "live_server_modified": false,
+  "physical_modem_validated": false,
+  "whole_application_gates_closed": [],
+  "limitations": [
+    "One installed Zork release, basic input, paging and clean return; no full playthrough.",
+    "No SAVE/RESTORE, Global War or Barren Realms Elite DOS acceptance.",
+    "Live NFO/editor decoder failures remain separate; no decoder installation.",
+    "Modeled UART/modem; physical RS-232 Wi-Fi modem is unverified."
+  ]
+}
