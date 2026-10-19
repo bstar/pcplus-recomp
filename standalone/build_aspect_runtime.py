@@ -6,16 +6,18 @@ ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/aspect-runtime'
 ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm',None),
  ('globals','src/aspect/global_strings.asm',None),('stack','src/aspect/value_stack.asm',None),
  ('flow','src/aspect/control_flow.asm',None),('operands','src/aspect/numeric_operands.asm',None),
- ('operations','src/aspect/numeric_operations.asm',None),('support','src/aspect/expression_support.asm',None),
+ ('operations','src/aspect/numeric_operations.asm',None),
+ ('arithmetic','src/aspect/arithmetic.asm',None),('long','src/aspect/long_arithmetic.asm',None),('support','src/aspect/expression_support.asm',None),
  ('copy','reconstruction/erase/move_bytes.asm','ERASE_OMF'),
  ('setjmp','reconstruction/transfer_session/setjmp.asm','TRANSFER_SESSION_OMF'),
  ('longjmp','reconstruction/transfer_session/longjmp.asm','TRANSFER_SESSION_OMF'),
  ('bridge','src/aspect/runtime_bridge.asm',None)]
 SUPPORT=[(1,0xd2a0,0xd2d6,109184-0xd0d0),(2,0xd3f2,0xd408,109184-0xd0d0),
  (3,0xdb7d,0xdc48,109184-0xd0d0),(4,0xde4d,0xdf04,109184-0xd0d0),(5,0x9ac0,0x9ae7,0x1200)]
-ERRORS={'unsupported':3,'float':4,'budget':6,'stack':9}
+ERRORS={'unsupported':3,'float':4,'budget':6,'stack':9,'divide_zero':11,'native_int0':12}
 C=r'''
 #include <stdio.h>
+#include <dos.h>
 #include "runtime.h"
 #include "file_io.h"
 extern aspect_file runtime_file;
@@ -24,9 +26,14 @@ extern unsigned char runtime_arena[0x3aca];
 static unsigned failures,cases;
 static unsigned long checks;
 static const char *current;
+static unsigned cpu_flags(void);
+#pragma aux cpu_flags = "pushf" "pop ax" value [ax] modify exact [ax];
 static void ck(unsigned ok){++checks;if(!ok){++failures;printf("FAIL %s check=%lu opcode=%u steps=%u\n",current,checks,runtime_last_opcode,runtime_steps);}}
 static void run(const char *path,unsigned limit,unsigned error,unsigned has_integer,unsigned integer_value,unsigned has_long,unsigned long long_value,unsigned peak){
- unsigned result;current=path;++cases;result=aspect_runtime_run(path,limit);
+ void (__interrupt __far *previous_divide)(void);
+ unsigned result,flags_before=cpu_flags();previous_divide=_dos_getvect(0);current=path;++cases;result=aspect_runtime_run(path,limit);
+ ck(_dos_getvect(0)==previous_divide);
+ ck((cpu_flags()&0x600)==(flags_before&0x600));
  ck(result==error);ck(runtime_live==0);ck(runtime_string_count==0);ck(runtime_file.handle==0);
  ck(runtime_depth==0);ck(runtime_stack_pointer==(unsigned)runtime_arena+0x1b1a);
  ck(runtime_frame==runtime_stack_pointer);ck(runtime_abi_bad==0);ck(runtime_peak_live==peak);
@@ -49,7 +56,11 @@ def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def main():
  OUT.mkdir(parents=True,exist_ok=True);inc='-I'+str(ROOT/'reconstruction/uart')+'/'
  corpus_path=ROOT/'standalone/fixtures/aspect_execution_vectors.json';corpus=json.loads(corpus_path.read_text())
- sources=[Path(__file__).resolve(),corpus_path,ROOT/'reconstruction/uart/encodings.inc',ROOT/'src/aspect/runtime.c',ROOT/'src/aspect/runtime.h',ROOT/'src/aspect/file_io.c',ROOT/'src/aspect/file_io.h']
+ arithmetic_corpus_path=ROOT/'standalone/fixtures/aspect_arithmetic_vectors.json'
+ arithmetic_corpus=json.loads(arithmetic_corpus_path.read_text())
+ cases=corpus['vectors']+arithmetic_corpus['vectors']
+ assert len({c['name'] for c in cases})==len(cases)
+ sources=[Path(__file__).resolve(),corpus_path,arithmetic_corpus_path,ROOT/'reconstruction/uart/encodings.inc',ROOT/'src/aspect/runtime.c',ROOT/'src/aspect/runtime.h',ROOT/'src/aspect/file_io.c',ROOT/'src/aspect/file_io.h']
  objects=[];units=[]
  for name,rel,define in ASM:
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
@@ -61,11 +72,20 @@ def main():
   units.append(dict(unit=unit,start=start,end_exclusive=end,file_start=base+start,bytes=end-start,sha256=sha(p)))
  program=C
  supported={int(op,16):name for op,name in re.findall(r'%(?:el)?if op=(0x[0-9a-f]+)\n dw (\w+)',(ROOT/'src/aspect/runtime_bridge.asm').read_text())}
- assert len(supported)==24
- for case in corpus['vectors']:
+ assert len(supported)==36
+ for case in cases:
   data=bytes.fromhex(case['hex']);assert hashlib.sha256(data).hexdigest()==case['asx_sha256']
-  name=case['name']+'.ASX';(OUT/name).write_bytes(data);ex=case['expected'];error=ERRORS.get(ex.get('error'),0)
+  name=case['name']+'.ASX';(OUT/name).write_bytes(data);ex=case['expected'];error=ERRORS[ex['error']] if 'error' in ex else 0
+  assert not case.get('dos_excluded',False),case['name']
   program+=f' run("{name}",{ex.get("limit",1000)},{error},{int("integer0" in ex)},{ex.get("integer0",0)&65535}U,{int("long0" in ex)},{ex.get("long0",0)}UL,{ex.get("allocated",0)});\n'
+  for key,value in ex.items():
+   match=re.fullmatch(r'(integer|long)([0-9]+)',key)
+   if match:
+    kind,index=match[1],int(match[2]);assert 0<=index<128
+    bank='runtime_integer_b' if kind=='integer' else 'runtime_longs'
+    suffix='U' if kind=='integer' else 'UL'
+    program+=f' ck({bank}[{index}]=={value}{suffix});printf("VALUE {name} {key}=%lu\\n",(unsigned long){bank}[{index}]);\n'
+
  # Malformed fixtures stop at header/read/unsupported boundaries, not arbitrary unsafe operands.
  for name,data,error in [('NOHEADER',b'',2),('BADHEAD',bytes.fromhex('81 cf 94'),2),('BADOP',bytes.fromhex('00 ff'),3),('TRUNC',bytes.fromhex('00 cf 5b 00 8d 00 ab 07'),5)]:
   (OUT/(name+'.ASX')).write_bytes(data);program+=f' run("{name}.ASX",1000,{error},0,0,0,0UL,0);\n'
@@ -73,6 +93,12 @@ def main():
  program+=' runtime_fail_after=0;run("STRINGS.ASX",1000,8,0,0,0,0UL,0);\n'
  program+=' runtime_fail_after=1;run("STRINGS.ASX",1000,8,0,0,0,0UL,1);\n'
  program+=' runtime_fail_after=0xffff;run("STRINGS.ASX",1000,0,0,0,0,0UL,2);\n'
+ # Maintained ownership-fault fixtures: only the declared string-count header
+ # changes; arithmetic bytes remain the corresponding compiler-authored fixture.
+ for name,template,error in [('HEAPFLT','IDIVEDGE',12),('HEAPZERO','IDZ',11)]:
+  wire=bytearray(bytes.fromhex(next(c['hex'] for c in cases if c['name']==template)))
+  assert wire[0]==0;wire[0]=2;(OUT/(name+'.ASX')).write_bytes(wire)
+  program+=f' run("{name}.ASX",1000,{error},0,0,0,0UL,2);\n'
  program+=' run("ASSIGN.ASX",1000,0,1,7,0,0UL,0);\n'+END
  # Every unimplemented in-range slot must abort, never silently consume bytes.
  unsupported=[op for op in range(215) if op not in supported]
@@ -85,8 +111,10 @@ def main():
  subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dASPECT_RUNTIME_DIAGNOSTIC',
  '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/file_io.c'),*objects],cwd=OUT,check=True)
  report=dict(binary_sha256=sha(OUT/'EXECUTE.EXE'),sources={str(p.relative_to(ROOT)):sha(p) for p in sources},support_units=units,original_inputs=[],
-  compile_flags=['8086','small model','cdecl','ASPECT_RUNTIME_DIAGNOSTIC'],fixture_count=len(corpus['vectors']),
-  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(corpus['vectors'])+9+len(unsupported),
-  scope='Incremental actual native dispatch/operand/operation/file/heap composition executing source-owned compiled fixtures. Incomplete opcode table; unavailable services abort. Not full ASPECT or arbitrary-input safety.')
+  compile_flags=['8086','small model','cdecl','ASPECT_RUNTIME_DIAGNOSTIC'],fixture_count=len(cases),
+  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+11+len(unsupported),
+  maintained_heap_fault_fixtures={'HEAPFLT':'IDIVEDGE compiler bytes with global-string count changed from0to2','HEAPZERO':'IDZ compiler bytes with global-string count changed from0to2'},
+  fixture_expectations={c['name']:{'source_sha256':c['source_sha256'],'asx_sha256':c['asx_sha256'],'expected':c['expected']} for c in cases},
+  scope='Incremental actual native dispatch/operand/operation/file/heap composition executing source-owned compiled fixtures. Incomplete36-slot opcode table; unavailable services abort. Not full ASPECT or arbitrary-input safety.')
  (OUT/'manifest.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 if __name__=='__main__':main()

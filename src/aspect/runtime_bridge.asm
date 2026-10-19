@@ -13,10 +13,28 @@ extern aspect_expr_branch_false,aspect_expr_branch_true,aspect_expr_branch_false
 extern aspect_ops_logical_and,aspect_ops_logical_not,aspect_ops_logical_or
 extern aspect_ops_equal,aspect_ops_less_equal,aspect_ops_less,aspect_ops_greater_equal,aspect_ops_greater,aspect_ops_not_equal
 extern aspect_ops_decrement,aspect_ops_increment,aspect_ops_assign,aspect_ops_assign_chained
+extern aspect_arith_add,aspect_arith_bit_and,aspect_arith_bit_not,aspect_arith_divide
+extern aspect_arith_modulo,aspect_arith_multiply,aspect_arith_negate,aspect_arith_bit_or
+extern aspect_arith_shift_left,aspect_arith_shift_right,aspect_arith_subtract,aspect_arith_bit_xor
 extern _runtime_file,_runtime_reset_native,_runtime_open,_runtime_alloc,_runtime_free
 extern _runtime_cleanup,_runtime_close,_runtime_finish,_runtime_service,_runtime_read
 extern _runtime_native_error,_runtime_set_error,_runtime_header
 extern _aspect_file_refill,_aspect_file_read,_aspect_file_seek,_aspect_file_tell
+
+; Maintained INT0 owner: rewrite the interrupt return, then IRET restores FLAGS.
+; No C/DOS call or DS access occurs on the interrupt frame. Parent owns vector.
+global _runtime_divide_interrupt
+_runtime_divide_interrupt:
+ push bp
+ mov bp,sp
+ mov word [ss:bp+2],runtime_divide_trap
+ mov ax,cs
+ mov word [ss:bp+4],ax
+ pop bp
+ iret
+runtime_divide_trap:
+ mov ax,12
+ jmp fail
 
 global _runtime_enter
 _runtime_enter:
@@ -162,11 +180,12 @@ aspect_dispatch_cleanup: jmp _runtime_cleanup
 aspect_dispatch_close: jmp _runtime_close
 aspect_dispatch_finish: jmp _runtime_finish
 
-global aspect_dispatch_error,aspect_flow_error,aspect_stack_error,aspect_globals_error
+global aspect_dispatch_error,aspect_flow_error,aspect_stack_error,aspect_globals_error,aspect_arith_error
 aspect_dispatch_error:
 aspect_flow_error:
 aspect_stack_error:
 aspect_globals_error:
+aspect_arith_error:
  push bp
  mov bp,sp
  push word [bp+4]
@@ -300,12 +319,20 @@ _runtime_arena: times 0x3aca db 0
 aspect_dispatch_handlers:
 %assign op 0
 %rep 215
-%if op=0x03
+%if op=0x00
+ dw aspect_arith_add
+%elif op=0x02
+ dw aspect_arith_bit_and
+%elif op=0x03
  dw aspect_ops_logical_and
+%elif op=0x13
+ dw aspect_arith_bit_not
 %elif op=0x15
  dw aspect_expr_branch_false
 %elif op=0x1e
  dw aspect_ops_decrement
+%elif op=0x26
+ dw aspect_arith_divide
 %elif op=0x32
  dw aspect_ops_equal
 %elif op=0x48
@@ -324,20 +351,36 @@ aspect_dispatch_handlers:
  dw aspect_ops_greater_equal
 %elif op=0x6d
  dw aspect_ops_greater
+%elif op=0x7b
+ dw aspect_arith_modulo
+%elif op=0x7d
+ dw aspect_arith_multiply
+%elif op=0x7e
+ dw aspect_arith_negate
 %elif op=0x7f
  dw aspect_ops_not_equal
 %elif op=0x81
  dw aspect_ops_logical_not
+%elif op=0x82
+ dw aspect_arith_bit_or
 %elif op=0x84
  dw aspect_ops_logical_or
 %elif op=0x94
  dw aspect_flow_return
 %elif op=0x95
  dw aspect_flow_return_framed
+%elif op=0xa4
+ dw aspect_arith_shift_left
+%elif op=0xa5
+ dw aspect_arith_shift_right
+%elif op=0xb5
+ dw aspect_arith_subtract
 %elif op=0xbc
  dw aspect_expr_branch_true
 %elif op=0xbd
  dw aspect_expr_branch_false_alias
+%elif op=0xc6
+ dw aspect_arith_bit_xor
 %elif op=0xc7
  dw aspect_flow_call_operand
 %elif op=0xc8

@@ -1,5 +1,10 @@
 # ASPECT compiled-script execution
 
+This document records the initial 24-slot checkpoint at `1dbbc04`. The
+[current arithmetic extension](ASPECT_ARITHMETIC.md) expands it to 36 slots,
+105 compiled fixtures and 295 composed DOS cases. Counts and artifact identity
+below describe the initial checkpoint.
+
 The standalone owner now executes selected compiled ASX scripts using recovered
 8086 instructions and actual DOS files and far-heap allocations. The fixed
 `EXECUTE.EXE` diagnostic completes15 authored compiler fixtures: integer/long

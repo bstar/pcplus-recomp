@@ -304,3 +304,32 @@ the terminal's near-memory limit. The interactive TERMINAL image remains731418bd
 
 A fresh original-free source rebuild reproduces74 outputs byte for byte, including
 the three new ASPECT diagnostics. The terminal remains unchanged.
+
+
+## ASPECT arithmetic and DOS divide-fault ownership
+
+The standalone interpreter now wires36of215 native opcode slots and executes
+105 authored original-compiler fixtures. Ninety finish;15 reach their expected
+unsupported/float/budget/stack/division stops. The complete295-case actual8086
+DOS suite passes3,794 assertions, including all179 unsupported slots and
+post-fault resource restoration. General integer/long arithmetic and compiler
+precedence temporaries now execute with actual recovered long helpers.
+
+New recovery adds665 overlay17 arithmetic bytes (3,668 CPU scenarios/29,056
+DOS assertions) and535 resident long-helper bytes (4,626 CPU scenarios/4,622 DOS
+checks, all248 instruction addresses). Component arithmetic callbacks and actual
+composed execution remain separate evidence. CPU shift masking limits are
+explicit; actualDOS covers all8086 word CL counts0..255.
+
+A maintained scoped INT0 vector turns native word MIN/-1 faults into error12,
+IRETing before native nonlocal abort, then restoring the previous vector. Every
+composed run checks vector and IF/DF restoration; two distinct maintained
+fixtures prove file/heap cleanup with live string allocations during faults.
+See [ASPECT_ARITHMETIC.md](ASPECT_ARITHMETIC.md) and `docs/validation/aspect-arithmetic.json`.
+
+All F01–F16 gates remain open. Strings/parameters/float/application services,
+compiler/recorder and terminal scheduling/memory placement remain required.
+The interactive terminal stays731418bd; this checkpoint is standalone.
+
+A fresh original-free source build reproduces76 byte-identical outputs,
+including the new long and arithmetic diagnostics and expanded EXECUTE suite.

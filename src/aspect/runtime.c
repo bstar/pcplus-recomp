@@ -1,6 +1,7 @@
 #include "runtime.h"
 #include "file_io.h"
 #include <malloc.h>
+#include <dos.h>
 #include <string.h>
 
 aspect_file runtime_file;
@@ -11,6 +12,7 @@ unsigned runtime_at_opcode,runtime_header,runtime_alloc_calls;
 unsigned runtime_fail_after=0xffff;
 #endif
 static unsigned active;
+extern void __interrupt __far runtime_divide_interrupt(void);
 extern unsigned runtime_depth,runtime_frame,runtime_stack_pointer,runtime_wait_gate;
 extern unsigned runtime_source_type,runtime_target_type,runtime_lookahead,runtime_stage_index;
 extern unsigned runtime_exit_state,runtime_local_count,runtime_string_count;
@@ -110,18 +112,26 @@ int runtime_read(void)
 }
 void runtime_native_error(unsigned code)
 {
-    if(code==101)runtime_set_error(ASPECT_RUN_HEAP);
+    if(code==2)runtime_set_error(ASPECT_RUN_DIVIDE_ZERO);
+    else if(code==101)runtime_set_error(ASPECT_RUN_HEAP);
     else if(code==105)runtime_set_error(ASPECT_RUN_STACK);
     else if(code==107)runtime_set_error(ASPECT_RUN_IO);
     else runtime_set_error(ASPECT_RUN_OPERAND);
 }
 unsigned aspect_runtime_run(const char *path,unsigned step_limit)
 {
+    void (__interrupt __far *previous_divide)(void);
     if(active || runtime_live || runtime_file.handle || !path || !*path || !step_limit)return ASPECT_RUN_STATE;
     active=1;runtime_error=runtime_steps=runtime_live=runtime_peak_live=0;
     runtime_cleanup_count=runtime_close_count=runtime_alloc_calls=runtime_at_opcode=0;
     runtime_last_opcode=0;runtime_limit=step_limit;runtime_abi_bad=0;
-    aspect_file_init(&runtime_file);runtime_enter(path);active=0;
+    aspect_file_init(&runtime_file);
+    /* Scoped maintained CPU-fault policy. The ISR IRETs into an abort trampoline
+     * so saved FLAGS are restored before native nonlocal unwinding. */
+    previous_divide=_dos_getvect(0);
+    _dos_setvect(0,runtime_divide_interrupt);
+    runtime_enter(path);
+    _dos_setvect(0,previous_divide);active=0;
     if(runtime_abi_bad)runtime_set_error(ASPECT_RUN_STATE);
     return runtime_error;
 }

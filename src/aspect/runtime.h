@@ -6,7 +6,7 @@
  * abort explicitly. Terminal scheduling and full command coverage remain open. */
 enum { ASPECT_RUN_OK=0,ASPECT_RUN_OPEN,ASPECT_RUN_HEADER,ASPECT_RUN_UNSUPPORTED,
        ASPECT_RUN_FLOAT,ASPECT_RUN_IO,ASPECT_RUN_BUDGET,ASPECT_RUN_OPERAND,
-       ASPECT_RUN_HEAP,ASPECT_RUN_STACK,ASPECT_RUN_STATE };
+       ASPECT_RUN_HEAP,ASPECT_RUN_STACK,ASPECT_RUN_STATE,ASPECT_RUN_DIVIDE_ZERO,ASPECT_RUN_ARITHMETIC_FAULT };
 unsigned aspect_runtime_run(const char *path,unsigned step_limit);
 extern unsigned runtime_integer_a[10],runtime_integer_b[128];
 extern unsigned long runtime_longs[128];

@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "c401bfc1a4a9a2207e0c0812cf0893731eb411eb69f66938323f6f8c93a93225",
-  "source_file_count": 1598,
+  "source_snapshot_sha256": "896b2151532dff5a81368b7ae151232048259f083b458a90d56f763e1d5b9aaa",
+  "source_file_count": 1610,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,10 +16,10 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "47c5bcdbdb8e401b853e2ea1cf4ad652167594524e02864562e7352ce82f5dba",
+  "build_log_sha256": "7e5ce45bf412ab713eb7bf95683f2fb678c3b81a383b60553d03d7fddf660011",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.BtzWDm/pcplus-source-proof-ead490b4/checkout",
+  "source_checkout": "/tmp/nix-shell.GeCYNR/pcplus-source-proof-01rwznkr/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
   "scope": "Source-only interactive DOS terminal with imported keyboard/action settings, directory UI, recovered line/character editing, maintained current-profile RIS, bounded process handoff, retained far shadow/history and live checked XMODEM receive/send and maintained CRC YMODEM batch ownership; full PCPlus application remains incomplete.",
