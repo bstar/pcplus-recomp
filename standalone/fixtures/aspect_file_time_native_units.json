@@ -1,0 +1,60 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "unit": 1,
+      "name": "wrappers",
+      "start": 60805,
+      "end": 60836,
+      "file_start": 120213,
+      "bytes": 31,
+      "sha256": "96e0a76230fb926a50b5d37f5b9647cfcf56acece0a245d9f2598f4bc8177285"
+    },
+    {
+      "unit": 2,
+      "name": "core",
+      "start": 61039,
+      "end": 61239,
+      "file_start": 120447,
+      "bytes": 200,
+      "sha256": "80d32d2639528ffbb1cad11a42256d6a43db78a0dca1d560987a97bb30b67c31"
+    },
+    {
+      "unit": 3,
+      "name": "date",
+      "start": 61239,
+      "end": 61316,
+      "file_start": 120647,
+      "bytes": 77,
+      "sha256": "a10e4ce717aa7204b1dd0a8fedd71807ebb4bd7291568caf4f55a021e000f519"
+    },
+    {
+      "unit": 4,
+      "name": "time",
+      "start": 61316,
+      "end": 61360,
+      "file_start": 120724,
+      "bytes": 44,
+      "sha256": "5a6de0e83a19937c233d716f62f62037886b3a6efc7e0cb4f62f84a480a93d08"
+    },
+    {
+      "unit": 5,
+      "name": "read",
+      "start": 62187,
+      "end": 62204,
+      "file_start": 121595,
+      "bytes": 17,
+      "sha256": "62c81d2962e285b51c8960be21ad8775bd9c3a93274c8b2c288fc27287cb313f"
+    },
+    {
+      "unit": 6,
+      "name": "write",
+      "start": 62204,
+      "end": 62225,
+      "file_start": 121612,
+      "bytes": 21,
+      "sha256": "f28c504f274359da3d828b8ab50f5671728e8f02dd002f85553c549c7b36f942"
+    }
+  ],
+  "scope": "Numeric provenance only. Original getter source-reader,destructive setter parsing,rb open and open-only comparison policy retained in flat core."
+}

@@ -1,8 +1,8 @@
 # ASPECT file attributes
 
 The maintained compilers and production DOS interpreter now support GETFATTR and
-SETFATTR. The dispatcher implements 96 of 215 opcode slots and explicitly rejects
-119. This advances the maintained language without closing F13 or any other
+SETFATTR. That checkpoint implemented96 of215 opcode slots and rejected119. The later
+[file date/time integration](ASPECT_FILE_TIMES.md) extends this to100/115. This advances the maintained language without closing F13 or any other
 whole-application gate.
 
 ```text

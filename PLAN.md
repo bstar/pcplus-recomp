@@ -81,6 +81,20 @@ must exclude original executables and private install/configuration data.
 
 ## Current application work
 
+The [timestamp integration](docs/ASPECT_FILE_TIMES.md) adds GETFDATE/GETFTIME and
+SETFDATE/SETFTIME through both compilers and the production child. Its390 exact
+native+87 reused CRT bytes pass507 source/original cases. The108 original compiler
+outcomes match38 accepted/70 rejected cases;1,772 complete DOS compiler cases pass.
+An actual native-core control reproduces lost globals and destructively parsed
+inputs; the maintained destination/flush/private-copy adapters fix both. The248
+same-process VM invocations pass2,901 assertions, including year pivots,leap day,
+seconds/opposite-field preservation,six streams,EXECUTE and late-fault cleanup.
+The runtime implements100 slots and rejects115;1,116 composed cases/26,796 checks
+pass. The279 attribute/310 enumeration/155 query/341 stream regressions still pass.
+Parent login and all21 expanded isolated ENiGMA checks pass;250 outputs reproduce
+without originals. All whole-application gates remain open.
+
+
 The [file attribute integration](docs/ASPECT_FILE_ATTRIBUTES.md) adds GETFATTR and
 SETFATTR through both compilers and the production DOS child. Its100 exact bytes
 plus203 reused parser/formatter bytes pass1,081 source/original cases. The54-case
@@ -88,8 +102,8 @@ original compiler corpus matches19 accepted/35 rejected outcomes; the full DOS
 compiler passes1,664 cases. An actual native-wrapper control reproduces lost far
 global writeback; the maintained destination/flush adaptation fixes it. The279
 same-process VM runs pass2,403 assertions, including all RHSA masks, four output
-classes, six streams, shared FOUND, EXECUTE and fault cleanup. The dispatcher now
-implements96 slots and rejects119;1,120 composed cases/26,884 checks pass. The
+classes, six streams, shared FOUND, EXECUTE and fault cleanup. That checkpoint
+implemented96 slots and rejected119;1,120 composed cases/26,884 checks pass. The
 310 enumeration/155 query/341 stream regressions still pass. Parent login and
 all20 expanded isolated ENiGMA checks pass;241 outputs reproduce without originals.
 All whole-application gates remain open.

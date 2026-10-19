@@ -990,3 +990,13 @@ test-aspect-file-attributes-compiler:
 	python3 standalone/check_aspect_file_attributes_compiler.py
 all: aspect-file-attributes
 test: test-aspect-file-attributes test-aspect-file-attributes-compiler
+
+.PHONY: aspect-file-times test-aspect-file-times test-aspect-file-times-compiler
+aspect-file-times:
+	python3 standalone/build_aspect_file_times.py
+test-aspect-file-times: aspect-file-times
+	python3 standalone/check_aspect_file_times.py
+test-aspect-file-times-compiler:
+	python3 standalone/check_aspect_file_times_compiler.py
+all: aspect-file-times
+test: test-aspect-file-times test-aspect-file-times-compiler

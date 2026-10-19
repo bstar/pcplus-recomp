@@ -129,3 +129,9 @@ then sets/gets RHS and clears/gets an empty far-global attribute string before
 authentication. ATTR.LOG must be exactly `RHS|`, adding a twentieth check to the
 same custom navigation route. [Attribute validation](../../docs/ASPECT_FILE_ATTRIBUTES.md)
 binds the source-built DOS compiler/runner and independent native-wrapper control.
+
+`--timestamp-login` includes all earlier probes, then sets/gets file date/time
+through the DOS-compiled source and requires TIME.LOG to be exactly
+` 3-07-93|13:45`. This adds a twenty-first check before the same custom navigation
+route. [Timestamp validation](../../docs/ASPECT_FILE_TIMES.md) binds the actual
+native-core control and maintained stdio/writeback/input-copy adapters separately.

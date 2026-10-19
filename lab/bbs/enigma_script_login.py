@@ -1,5 +1,6 @@
 """Prompt-driven source login for the isolated synthetic loclab account only."""
-def source(file_info=False,enumeration=False,file_attributes=False):
+def source(file_info=False,enumeration=False,file_attributes=False,file_times=False):
+ file_attributes=file_attributes or file_times
  enumeration=enumeration or file_attributes
  file_info=file_info or enumeration
  probe=('fopen 4 \"FILECHK.TMP\" \"wb\"\nfputs 4 \"proof\"\nfclose 4\n'
@@ -16,7 +17,12 @@ def source(file_info=False,enumeration=False,file_attributes=False):
   'setfattr "FILECHK.BIN" ""\nif failure\nexit\nendif\ngetfattr "FILECHK.BIN" probe_attrs\n'
   'if failure\nexit\nendif\nstrcmp probe_attrs $NULL\nif failure\nexit\nendif\n'
   'fputs 4 probe_attrs\nfclose 4\n') if file_attributes else ''
- return ('integer cancel_done,scan_done\n'+('long probe_size\n' if file_info else '')+('string probe_number\n' if enumeration else '')+('string probe_attrs\n' if file_attributes else '')+'proc main\ninteger attempts\n'+probe+enum_probe+attr_probe+
+ time_probe=('setfdate "FILECHK.BIN" "03-07-93"\nsetftime "FILECHK.BIN" "13:45"\n'
+  'getfdate "FILECHK.BIN" probe_date\nif failure\nexit\nendif\ngetftime "FILECHK.BIN" probe_time\n'
+  'if failure\nexit\nendif\nstrcmp probe_date " 3-07-93"\nif failure\nexit\nendif\n'
+  'strcmp probe_time "13:45"\nif failure\nexit\nendif\nfopen 4 "TIME.LOG" "wb"\n'
+  'fputs 4 probe_date\nfputs 4 "|"\nfputs 4 probe_time\nfclose 4\n') if file_times else ''
+ return ('integer cancel_done,scan_done\n'+('long probe_size\n' if file_info else '')+('string probe_number\n' if enumeration else '')+('string probe_attrs\n' if file_attributes else '')+('string probe_date,probe_time\n' if file_times else '')+'proc main\ninteger attempts\n'+probe+enum_probe+attr_probe+time_probe+
  'fopen 5 "LOGIN.LOG" "wb"\nfputs 5 "START"\n'
  'cancel_done=0\nscan_done=0\nattempts=0\n'
  'waitfor "lOGIN" 25\ntransmit "^M"\n'

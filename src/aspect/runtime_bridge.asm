@@ -1,6 +1,7 @@
 ; Maintained experimental owner bridges for recovered ASPECT instructions.
 ; Near DS=SS. Actual DOS files/far heap; unsupported commands/services abort.
 ; This table is deliberately incomplete and never treats an unknown slot as NOP.
+extern aspect_file_times_get_date,aspect_file_times_get_time,aspect_file_times_set_date,aspect_file_times_set_time
 extern aspect_file_attributes_get,aspect_file_attributes_set
 extern aspect_file_info_isfile,aspect_file_info_size,aspect_file_info_rename
 extern aspect_enumeration_first,aspect_enumeration_next,aspect_enumeration_size
@@ -887,7 +888,15 @@ _runtime_arena: times 0x3aca db 0
 aspect_dispatch_handlers:
 %assign op 0
 %rep 215
-%if op=0x4d
+%if op=0x4e
+ dw aspect_file_times_get_date
+%elif op=0x51
+ dw aspect_file_times_get_time
+%elif op=0xa0
+ dw aspect_file_times_set_date
+%elif op=0xa1
+ dw aspect_file_times_set_time
+%elif op=0x4d
  dw aspect_file_attributes_get
 %elif op=0x9f
  dw aspect_file_attributes_set

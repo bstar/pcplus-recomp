@@ -549,6 +549,8 @@ class Compiler:
             self.operand(self.atomic(node), compact=True)
             return
         file_commands = {
+            'getfdate': (0x4E, 'sd'), 'getftime': (0x51, 'sd'),
+            'setfdate': (0xA0, 'ss'), 'setftime': (0xA1, 'ss'),
             'getfattr': (0x4D, 'sd'), 'setfattr': (0x9F, 'ss'),
             'findfirst': (0x3C, 'sS'), 'findnext': (0x3D, ''),
             'isfile': (0x60, 's'), 'getfsize': (0x50, 'sl'), 'rename': (0x93, 'ss'),

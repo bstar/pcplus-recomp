@@ -28,13 +28,13 @@ async def run(args):
     sources.update({f'source_board/{p}':server/p for p in [*metadata['source_inputs'],'core/client.js']})
     sources.update({'terminal':binary,'staged_terminal':stage/'TERMINAL.EXE','runner':Path(__file__),'harness':Path(test_dos.__file__),
                     'fixture':ROOT/'lab/bbs/enigma_search_fixture.py','notes_fixture':ROOT/'lab/bbs/enigma_notes_fixture.py'})
-    script_login=getattr(args,'script_login',False) or getattr(args,'file_info_login',False) or getattr(args,'enumeration_login',False) or getattr(args,'attribute_login',False)
+    script_login=getattr(args,'script_login',False) or getattr(args,'file_info_login',False) or getattr(args,'enumeration_login',False) or getattr(args,'attribute_login',False) or getattr(args,'timestamp_login',False)
     if script_login:
         from enigma_script_login import source
         for rel in ('aspect-runner/ASPECT.EXE','aspect-compiler-dos/ASPCOMP.EXE'):
             original=ROOT/'build'/rel;dest=stage/original.name;shutil.copyfile(original,dest)
             sources[rel]=original;sources['staged/'+dest.name]=dest
-        (stage/'LOGON.ASP').write_bytes(source(getattr(args,'file_info_login',False),getattr(args,'enumeration_login',False),getattr(args,'attribute_login',False)).replace('\n','\r\n').encode('ascii'))
+        (stage/'LOGON.ASP').write_bytes(source(getattr(args,'file_info_login',False),getattr(args,'enumeration_login',False),getattr(args,'attribute_login',False),getattr(args,'timestamp_login',False)).replace('\n','\r\n').encode('ascii'))
         sources['login_source']=stage/'LOGON.ASP'
         sources['login_driver']=ROOT/'lab/bbs/enigma_script_login.py'
     before={p:sha(f) for p,f in sources.items()};count=messages(candidate)
@@ -97,24 +97,28 @@ async def run(args):
         from compiler import compile_source
         from enigma_script_login import source
         compiled=stage/'LOGON.ASX';trace=stage/'LOGIN.LOG'
-        checks.update(DOS_source_compiler=compiled.is_file() and compiled.read_bytes()==compile_source(source(getattr(args,'file_info_login',False),getattr(args,'enumeration_login',False),getattr(args,'attribute_login',False))),
+        checks.update(DOS_source_compiler=compiled.is_file() and compiled.read_bytes()==compile_source(source(getattr(args,'file_info_login',False),getattr(args,'enumeration_login',False),getattr(args,'attribute_login',False),getattr(args,'timestamp_login',False))),
             native_file_trace=trace.is_file() and trace.read_bytes()==b'STARTAUTHREADY',
             no_keyboard_credentials='loclab' not in keys.replace(' ','') and 'LoC-Lab-2026!' not in keys.replace(' ',''))
         login_evidence=dict(runner_sha256=before['aspect-runner/ASPECT.EXE'],compiler_sha256=before['aspect-compiler-dos/ASPCOMP.EXE'],
             source_sha256=before['login_source'],compiled_sha256=sha(compiled) if compiled.exists() else None,
             trace_sha256=sha(trace) if trace.exists() else None,trace_bytes=trace.stat().st_size if trace.exists() else 0)
-    if getattr(args,'file_info_login',False) or getattr(args,'enumeration_login',False) or getattr(args,'attribute_login',False):
+    if getattr(args,'file_info_login',False) or getattr(args,'enumeration_login',False) or getattr(args,'attribute_login',False) or getattr(args,'timestamp_login',False):
         probe=stage/'FILECHK.BIN'
         checks['native_file_info']=probe.is_file() and probe.read_bytes()==b'proof' and not (stage/'FILECHK.TMP').exists()
         login_evidence['file_info_probe_sha256']=sha(probe) if probe.is_file() else None
-    if getattr(args,'enumeration_login',False) or getattr(args,'attribute_login',False):
+    if getattr(args,'enumeration_login',False) or getattr(args,'attribute_login',False) or getattr(args,'timestamp_login',False):
         enumeration_trace=stage/'FIND.LOG'
         checks['native_enumeration_trace']=enumeration_trace.is_file() and enumeration_trace.read_bytes()==b'FILECHK.BIN|FILECHK|BIN|5'
         login_evidence['enumeration_trace_sha256']=sha(enumeration_trace) if enumeration_trace.is_file() else None
-    if getattr(args,'attribute_login',False):
+    if getattr(args,'attribute_login',False) or getattr(args,'timestamp_login',False):
         attribute_trace=stage/'ATTR.LOG'
         checks['native_attribute_trace']=attribute_trace.is_file() and attribute_trace.read_bytes()==b'RHS|'
         login_evidence['attribute_trace_sha256']=sha(attribute_trace) if attribute_trace.is_file() else None
+    if getattr(args,'timestamp_login',False):
+        timestamp_trace=stage/'TIME.LOG'
+        checks['native_timestamp_trace']=timestamp_trace.is_file() and timestamp_trace.read_bytes()==b' 3-07-93|13:45'
+        login_evidence['timestamp_trace_sha256']=sha(timestamp_trace) if timestamp_trace.is_file() else None
     result=dict(passed=all(checks.values()),script_login=login_evidence,checks=checks,terminal_sha256=sha(binary),source_modules=metadata['source_modules'],
         source_inputs={k:before['source_board/'+k] for k in metadata['source_inputs']},input_hashes=before,
         pages=pages,expected_pages=expected_pages,selected=selected,expected_selected=expected_selected,
@@ -132,4 +136,5 @@ if __name__=='__main__':
     p.add_argument('--file-info-login',action='store_true',help='Require native ISFILE/GETFSIZE/RENAME before scripted login')
     p.add_argument('--enumeration-login',action='store_true',help='Require native file enumeration and builtin trace before source login')
     p.add_argument('--attribute-login',action='store_true',help='Require native attribute roundtrip/global-writeback trace before source login')
+    p.add_argument('--timestamp-login',action='store_true',help='Require native file timestamp/global-writeback trace before source login')
     a=p.parse_args();raise SystemExit(asyncio.run(run(a)))

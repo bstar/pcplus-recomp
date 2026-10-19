@@ -655,3 +655,10 @@ native+203 reused bytes,1,081 component/original cases,54 original compiler outc
 and279 repeated DOS VM invocations. A real native-wrapper control preserves the
 original lost-global-write bug separately.96 slots are supported and119 rejected;
 all whole-application gates remain open.
+
+F13 now includes GETFDATE/GETFTIME/SETFDATE/SETFTIME through a native-prefix stream
+adapter. [Timestamp evidence](ASPECT_FILE_TIMES.md) binds390 exact+87 reused bytes,
+507 component/original cases,108 original compiler outcomes and248 real DOS VM
+invocations. A native control separates lost-global/destructive-input behavior
+from maintained writeback/input-copy corrections.100 slots are supported and115
+explicitly rejected; every whole-application gate remains open.

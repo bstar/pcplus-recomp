@@ -112,7 +112,7 @@ def main():
  printf("INFO_VM %u cases %u checks %u failures farheap%u nearheap%u JFT-preserved\\n",cases,checks,failures,far_count,near_count);return failures?1:0;}
 '''
  (out/'harness.c').write_text(program)
- cs=['runtime.c','script_file_runtime.c','file_info_runtime.c','enumeration_runtime.c','file_io.c','script_path.c','serial_runtime.c','receive_runtime.c','directory_runtime.c','when_runtime.c','set_runtime.c','find_runtime.c']
+ cs=['runtime.c','script_file_runtime.c','file_info_runtime.c','file_times_runtime.c','enumeration_runtime.c','file_io.c','script_path.c','serial_runtime.c','receive_runtime.c','directory_runtime.c','when_runtime.c','set_runtime.c','find_runtime.c']
  subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dASPECT_RUNTIME_DIAGNOSTIC','-i='+str(ROOT/'src/aspect'),'-i='+str(ROOT/'standalone'),'-fm='+str(out/'INFOVM.map'),'-fe='+str(stage/'INFOVM.EXE'),str(out/'harness.c'),str(ROOT/'standalone/compiler_heap_snapshot.c'),*[str(ROOT/'src/aspect'/n) for n in cs],*[str(COMPONENT/(name+'.obj')) for name,_,_ in ASM]],cwd=out,check=True)
  batch=['@echo off']
  for name in SOURCES:

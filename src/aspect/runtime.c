@@ -4,6 +4,7 @@
 #include "find_runtime.h"
 #include "script_file_runtime.h"
 #include "file_info_runtime.h"
+#include "file_times_runtime.h"
 #include "enumeration_runtime.h"
 #include "file_io.h"
 #include "script_path.h"
@@ -89,6 +90,7 @@ void runtime_reset_native(void)
     runtime_enumeration_reset();
     runtime_set_error(runtime_script_files_reset());
     runtime_set_error(runtime_file_info_reset());
+    runtime_set_error(runtime_file_times_reset());
     runtime_serial_reset();runtime_receive_reset();runtime_when_reset();runtime_directory_reset();
     runtime_string_pending_far=0;runtime_string_pending_near=0;
     runtime_string_scratch_pointer=runtime_string_scratch_index=0;runtime_string_check_range=1;
@@ -222,6 +224,7 @@ void runtime_end_wait_step(void)
 }
 void runtime_finish(void)
 {
+    runtime_file_times_finish();
     runtime_file_info_finish();
     runtime_script_files_finish();
     runtime_find_finish();
@@ -283,7 +286,7 @@ void runtime_native_error(unsigned code)
 unsigned aspect_runtime_run(const char *path,unsigned step_limit)
 {
     void (__interrupt __far *previous_divide)(void);
-    if(active || runtime_live || runtime_find_live || runtime_script_file_live || runtime_file_info_live || runtime_file.handle || !path || !*path || !step_limit)return ASPECT_RUN_STATE;
+    if(active || runtime_live || runtime_find_live || runtime_script_file_live || runtime_file_info_live || runtime_file_times_live || runtime_file.handle || !path || !*path || !step_limit)return ASPECT_RUN_STATE;
     active=1;runtime_error=runtime_steps=runtime_live=runtime_peak_live=0;
     compiler_scope=0;
 #if defined(ASPECT_RUNTIME_SERIAL)
