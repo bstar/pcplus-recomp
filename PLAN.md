@@ -1254,4 +1254,8 @@ expand renderer owner/profile support and stack/timing coverage; test physical
 RS-232/Wi-Fi modems and the remaining F01–F16 application requirements. The
 [602-byte WHEN component](docs/ASPECT_WHEN.md) passes independent CPU/DOS and
 native full-flow composition checks, but is not yet linked into the application.
+The [compiler increment](docs/ASPECT_WHEN_COMPILER.md) now emits WHEN/CWHEN and
+SET WHENCASE, passes40 new frozen outputs/variants and43 rejection cases, and
+keeps all377 earlier outputs unchanged. Four source/native compositions verify
+deferred calls and shared gate behavior; production event wiring remains next.
 Every full-application gate remains open.

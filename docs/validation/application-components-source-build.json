@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "b00ff3fca57245f4c4a2244e128268367309375a5e10e4e0b4de8af030bf4098",
-  "source_file_count": 1769,
+  "source_snapshot_sha256": "3611d240bd8a2f02459e0cf1a717f31c8e7f7c31d9a59be58a4603502fba77e6",
+  "source_file_count": 1773,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,10 +16,10 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "2a2eab8f465cb4cbf716bbe38289126fec2844f1506fe9e11ddb4d0addbfa12d",
+  "build_log_sha256": "2a3357ec8c93d258829e45f3d5cc6ad56e3d3b4db5b136d0af07e0a7c00ae602",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.V9Mqjd/pcplus-source-proof-3x3x_4x6/checkout",
+  "source_checkout": "/tmp/nix-shell.nevPOa/pcplus-source-proof-gb4pbuxm/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
   "scope": "91 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",

@@ -4,6 +4,9 @@ aspect-when:
 	python3 standalone/build_aspect_when.py
 test-aspect-when: aspect-when
 	python3 standalone/check_aspect_when.py
+.PHONY: test-aspect-when-compiler
+test-aspect-when-compiler: aspect-when
+	python3 standalone/test_aspect_when_compiler.py --native
 aspect-renderer-policy:
 	python3 standalone/build_aspect_renderer_policy.py
 test-aspect-renderer-policy: aspect-renderer-policy

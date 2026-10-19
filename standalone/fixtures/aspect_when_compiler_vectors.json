@@ -1,0 +1,95 @@
+{
+  "schema": "aspect-when-compiler-followup-v1",
+  "scope": "Authored original compiler grammar/procedure pruning outcomes only; no whole-application runtime claim.",
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "report_sha256": "31935e50939f811d30a8f5bbebfc829a7e40e1ca6d5688e9d83918049a14ea08",
+  "probe_sha256": "154d7e5120f1120084dbd107b4432939273ffaf1a02349660bf73e2ff6d00670",
+  "vectors": [
+    {
+      "name": "UNREACH",
+      "source": "proc main\r\nendproc\r\nproc worker\r\ncall third\r\nendproc\r\nproc third\r\nendproc\r\n",
+      "source_sha256": "8cf26eae02b44ef85fade710ed1c46a8acc3dbed5abff062b5e4bdc630c01190",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf 94",
+      "asx_sha256": "b85a731bed7fb244d45379f0d3ee38f0180c450a3074982be7ba3755c80cce69"
+    },
+    {
+      "name": "UNREC",
+      "source": "proc main\r\nendproc\r\nproc first\r\ncall second\r\nendproc\r\nproc second\r\ncall first\r\nendproc\r\n",
+      "source_sha256": "737a3e800abee3eb7a2517f22eb59ff9d693e8aa60dbdbc239ab3da5a0c74236",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf 94 cf d0 c7 0b 00 00 00 94 cf d0 c7 03 00 00 00 94",
+      "asx_sha256": "bc515e4157ab50038665a70bd25be7c1550057a46ff16cc3742538610f7a1c38"
+    },
+    {
+      "name": "UNFIRST",
+      "source": "proc worker\r\nendproc\r\nproc main\r\nendproc\r\n",
+      "source_sha256": "a569e28ef6b0cfac20946b79a036a7652c8d33239f933adcd83afbc25f56a378",
+      "source_encoding": "cp437",
+      "asx_hex": "00 62 06 00 00 00 cf 94",
+      "asx_sha256": "fcb58f41fbe998805312b2ab0211deb748142b676ccf322c8305d4b57ded83d0"
+    },
+    {
+      "name": "WHCOMMA",
+      "source": "proc main\r\nwhen 0, \"A\" transmit \"X\"\r\nendproc\r\n",
+      "source_sha256": "6d2f339c6a411e1c45e855325a133302bfefaf600c238bb0dd93485eea0cab02",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf d6 01 b5 00 aa b4 8b 3c 32 aa b4 04 91 94",
+      "asx_sha256": "45ffcfa267b2aee04c3f45712214a55839b615470fa67b0530d61ccb1f1bee5f"
+    }
+  ],
+  "compiler_rejected": [
+    {
+      "name": "WHENPAR",
+      "source": "proc main\r\nwhen 0 \"A\" call worker\r\nendproc\r\nproc worker\r\nintparm arg\r\nendproc\r\n",
+      "source_sha256": "01e707bc8164644f9c2d4bbc765dc2d74094cedf92a0ad152d36bcef86e0ea1f",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C046 Line 2: Invalid number of parameters"
+      ]
+    },
+    {
+      "name": "WHENLPR",
+      "source": "proc main\r\nwhen 0 \"A\" call worker\r\nendproc\r\nproc worker\r\nstrparm arg\r\ninteger item\r\nendproc\r\n",
+      "source_sha256": "ea6162615a36a8d40db5dbe326b615f205396d93598e037f4668e950f3305d8a",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C046 Line 2: Invalid number of parameters"
+      ]
+    },
+    {
+      "name": "CWPAREN",
+      "source": "integer index\r\nproc main\r\ncwhen (index)\r\nendproc\r\n",
+      "source_sha256": "08955bf0cde59d7fcc163062de3be4728997e6b7e564da50cae05c2558301d78",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> (",
+        "Error C002 Line 3: Unexpected token ==> INDEX",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "WHPAREN",
+      "source": "integer index\r\nproc main\r\nwhen (index) \"A\" transmit \"X\"\r\nendproc\r\n",
+      "source_sha256": "38dd3132c05552cc27a50b0a5b625ce66dec6188470837c21bfe2f8ae411a7ed",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> (",
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> INDEX",
+        "Error C001 Line 3: Invalid token ==> )",
+        "Error C002 Line 3: Unexpected token ==> A",
+        "Error C002 Line 3: Unexpected token ==> TRANSMIT",
+        "Error C002 Line 3: Unexpected token ==> X"
+      ]
+    },
+    {
+      "name": "UNBAD",
+      "source": "proc main\r\nendproc\r\nproc worker\r\nmessage 123\r\nendproc\r\n",
+      "source_sha256": "9360ef8a537001ae43087f334592d4c76d42ec0adc29eabbe7551bae3fcbc58e",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C023 Line 4: Invalid string constant (quotes missing) ==> 123"
+      ]
+    }
+  ]
+}

@@ -399,8 +399,69 @@ class Compiler:
             args.append(parser.parse(7))
         return args
 
+    def when_command(self, tokens):
+        command = tokens[0]
+        if command == 'set':
+            if len(tokens) != 3 or tokens[1] != 'whencase' or tokens[2] not in ('on', 'off'):
+                self.error('supported SET form is SET WHENCASE ON/OFF')
+            self.emit(0x9E, 0x56, int(tokens[2] == 'on'))
+            return
+        # Commas are separators in native compiler input. They cannot replace
+        # the required slot itself, and a slot expression/parenthesis is not
+        # part of this atomic-operand command grammar.
+        operands = tokens[1:]
+        if not operands or operands[0] == ',':
+            self.error(f'{command} requires a slot or DISCONNECT')
+        operands = [token for token in operands if token != ',']
+        disconnected = operands[0] == 'disconnect'
+        parser = Expression(operands, self.line)
+        self.emit(0xD6 if command == 'when' else 0x1C, int(not disconnected))
+        if disconnected:
+            parser.pos = 1
+        else:
+            if operands[0] == '(':
+                self.error('WHEN/CWHEN slot must be an atomic integer operand')
+            slot = parser.parse(7)
+            self.operand(self.word_argument(slot), compact=True)
+        if command == 'cwhen':
+            if parser.pos != len(operands):
+                self.error('CWHEN accepts one slot or DISCONNECT')
+            return
+        if not disconnected:
+            pattern = parser.parse(7)
+            if self.kind(pattern) != 3:
+                self.error('WHEN requires a string pattern')
+            self.operand(self.atomic(pattern), compact=True)
+        if parser.pos >= len(operands):
+            self.error('WHEN requires TRANSMIT or CALL action')
+        action = operands[parser.pos]
+        parser.pos += 1
+        if action == 'transmit':
+            response = parser.parse(7)
+            if self.kind(response) != 3:
+                self.error('WHEN TRANSMIT requires a string response')
+            self.emit(0x32)
+            self.operand(self.atomic(response), compact=True)
+        elif action == 'call':
+            if parser.pos >= len(operands) or operands[parser.pos] not in self.procedures:
+                self.error('unknown WHEN called procedure')
+            callee = self.procedures[operands[parser.pos]]
+            parser.pos += 1
+            if callee.params:
+                self.error('WHEN CALL does not accept procedure parameters')
+            self.emit(7)
+            offset = self.jump(0xC8 if callee.size else 0xC7)
+            self.fixups.append((offset, callee))
+        else:
+            self.error('WHEN action must be TRANSMIT or CALL')
+        if parser.pos != len(operands):
+            self.error('unexpected WHEN action operands')
+
     def command(self, tokens):
         command = tokens[0]
+        if command in ('when', 'cwhen', 'set'):
+            self.when_command(tokens)
+            return
         args = self.arguments(tokens[1:])
         if command in ('rget', 'waitquiet'):
             destination = int(command == 'rget')
@@ -589,6 +650,49 @@ class Compiler:
         if blocks:
             self.error('unterminated conditional or loop')
 
+    def emitted_procedures(self):
+        # Original compiler discards zero-reference procedures repeatedly,
+        # preserving MAIN and mutually referenced dead cycles. This is not a
+        # reachability-only rewrite; emitted order remains declaration order.
+        references = {}
+        for name, proc in self.procedures.items():
+            called = set()
+            for _, tokens in proc.lines:
+                if tokens[0] in ('call', 'gosub') and len(tokens) > 1:
+                    called.add(tokens[1])
+                elif tokens[0] == 'when':
+                    for index, token in enumerate(tokens[:-1]):
+                        if token == 'call':
+                            called.add(tokens[index + 1])
+            references[name] = called & self.procedures.keys()
+        included = set(self.procedures)
+        while True:
+            referenced = set().union(*(references[name] for name in included))
+            discard = included - referenced - {'main'}
+            if not discard:
+                break
+            included -= discard
+        return [proc for name, proc in self.procedures.items() if name in included]
+
+    def emit_procedures(self, procedures):
+        self.emit(self.counts[3])
+        # The original retains this prefix when the first declared procedure
+        # is unused and removed, leaving a jump to the following MAIN.
+        if next(iter(self.procedures)) != 'main':
+            self.fixups.append((self.jump(0x62), self.procedures['main']))
+        for proc in procedures:
+            self.proc = proc
+            proc.address = len(self.output)
+            if proc.size:
+                self.emit(0xD2, word(proc.size))
+            for self.line, tokens, chained in proc.initializers:
+                self.assign(tokens, chained)
+            self.emit(0xCF)
+            self.statements(proc)
+            self.emit(0x95 if proc.size or proc.params else 0x94)
+        for offset, proc in self.fixups:
+            self.patch(offset, proc.address)
+
     def compile(self, source: str) -> bytes:
         current = None
         for self.line, text in enumerate(source.splitlines(), 1):
@@ -622,21 +726,14 @@ class Compiler:
             for param in proc.params:
                 param.index = offset
                 offset -= SIZES[param.kind]
-        self.emit(self.counts[3])
-        if next(iter(self.procedures)) != 'main':
-            self.fixups.append((self.jump(0x62), self.procedures['main']))
-        for proc in self.procedures.values():
-            self.proc = proc
-            proc.address = len(self.output)
-            if proc.size:
-                self.emit(0xD2, word(proc.size))
-            for self.line, tokens, chained in proc.initializers:
-                self.assign(tokens, chained)
-            self.emit(0xCF)
-            self.statements(proc)
-            self.emit(0x95 if proc.size or proc.params else 0x94)
-        for offset, proc in self.fixups:
-            self.patch(offset, proc.address)
+        selected = self.emitted_procedures()
+        if len(selected) != len(self.procedures):
+            # Native compiler still rejects malformed unused bodies. Validate
+            # them before the final offset/literal-position emission pass.
+            self.emit_procedures(self.procedures.values())
+            self.output = bytearray()
+            self.fixups = []
+        self.emit_procedures(selected)
         return bytes(self.output)
 
 

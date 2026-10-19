@@ -1,0 +1,86 @@
+{
+  "compiler_sha256": "59e54a409d93889277cd354c9f846a409caf9be2b19123a36feb50f2d01653d2",
+  "runtime_WHEN_integrated": false,
+  "original_inputs": [],
+  "existing_suite": {
+    "scope": "Host source compiler tests; frozen public original outcomes are data, no original executable is read.",
+    "original_inputs": [],
+    "success": true,
+    "test_methods": 10,
+    "frozen_vectors_checked": 377,
+    "presentation_variants_checked": 377,
+    "frozen_rejections_checked": 88,
+    "compiler_sha256": "59e54a409d93889277cd354c9f846a409caf9be2b19123a36feb50f2d01653d2",
+    "checker_sha256": "800381fd5c3fe203027b9874ce37cbcb6ba26923e161e4be467be5c751746aa0",
+    "fixture_sha256": {
+      "execution": "2fe02fbc44993cb35e2d9ca9ed6a003070e458dcec4de485d43a7af5a0ce80e4",
+      "arithmetic": "18424774c5bf1856a6aefd04bd7973556c3e375ce402aefee08c6224317f15f4",
+      "parameter": "025c4de5e5681b0a502d566b73555b225610f6293dda69f7f38cb78448a88b67",
+      "string_command": "e6095291b2b868e440bbfc4de735d1130d216546119817788ca66306234a78ee",
+      "conversion": "95296153ff69e7c2c7974af0df17a8a4d1ab2524242f636b9c128aa1b8ee3781",
+      "compiler_validation": "7604d6e801ff1dbed3f7a1d58287c49afe6f5dcbb0c099a3d607ed9f5c5d8c7a",
+      "console": "43693c61e265b31a13324adb550335b0c37238dd737419edcc4b3b598693b60e",
+      "serial": "5b0913c888b2fe19274f9868de9706ee3e4430c6517018c74dd7638d534f1a49",
+      "receive": "41518818a3bfa97bae66277ef04ecf730717cdca31b87f582b310d24793062dc",
+      "directory": "80b38259968e5f1a3c5c5d388fa40928ecd7ed759ffc916158f4632a4ae57676"
+    }
+  },
+  "when_suite": {
+    "passed": true,
+    "original_inputs": [],
+    "scope": "Compiler grammar/encoding only; native flag runs four controlled native source component compositions with explicit FILE/platform boundaries. No production WHEN integration claim.",
+    "compiler_sha256": "59e54a409d93889277cd354c9f846a409caf9be2b19123a36feb50f2d01653d2",
+    "checker_sha256": "298f76920a77d0c4ad670fb8c8331c2777ee6c6e7b4adc4397b76760712dd924",
+    "fixtures": {
+      "standalone/fixtures/aspect_when_vectors.json": "be1d33b309bd42cbfaa63599d47d1bcfb16238ae80f26ff11f49722b1c12d969",
+      "standalone/fixtures/aspect_when_compiler_vectors.json": "3af789975d9275dd1657d03c248e5c3e8d5b7dca05bf6f2a2d3ffa068122de93"
+    },
+    "native_bindings": {
+      "build/aspect-when/manifest.json": "0c9a4006ace16b597c6bba2184ce206d2f5da9f09d88ddf7d57f2bda75aba032",
+      "standalone/check_aspect_when.py": "5388931dec0368b82783934b2056af99d2ec2b60196bd242e55fdebcc977fedc",
+      "build/aspect-when/unit1.bin": "93d0b8a983ed7d0df29811252829c83c80997f7e45ffbc42fc0d9aa1c16319a2",
+      "build/aspect-when/unit2.bin": "50a68e588b87989c2acf0df59bf6658e24ceeaf1fe204b938422e345e43419e6",
+      "build/aspect-when/unit3.bin": "3a7f2df11eb7f142d744f8170aac0794f5b79477e49a495e23ae90124d72f1b3",
+      "build/aspect-when/unit4.bin": "25846cd95b043caefa81c0438147106397b21d4cf5f5d77a2db03754e9c99959",
+      "build/aspect-when/copy.bin": "8f2d99034340eacf7ddcbe1a27e39d854b79bd600525001cb9979524a7d74fb6",
+      "build/aspect-when/upper.bin": "3299a60b2a07441474a86c70a338c58e3cf407df6850dc9799822b8dd9610210",
+      "build/aspect-when/decode.bin": "008b9051520b45049c2a7c95767686eb48fa3951da532a8abc18de9ead0f9b43",
+      "build/aspect-when/exit.bin": "c072e61f2b3198634ab97e89956f8eff7118d73376a3a1483c6a28348491cc92",
+      "build/aspect-when/dispatch.bin": "d2006fe5dd53b6416aec915c9bd58b4ae1a11fc003aafef090279fa2d37520a6",
+      "build/aspect-when/stack.bin": "1aab9bd8ea8c0879214142073ea95bd8d2e5fc8abf1760663fbd607f6e19ea4a",
+      "build/aspect-when/flow1.bin": "e2079db7562728ef7c528d663e2a86a40aa4456a63a490a89741e2053b68db86",
+      "build/aspect-when/flow2.bin": "0a34c077a9ccca36a1dd58183f0ee5fdd969af8dd7cc393142dd05f3811dd962",
+      "build/aspect-when/flow3.bin": "68223941e1d0a5a7bfb1a9c50acc41d3bc02ee812807bdbfd6b6b043644415c2",
+      "build/aspect-when/flow4.bin": "dfa7447160db051ea69b4c0e0387a279b539fd0b5854622c9d0c01e236b6a628",
+      "build/aspect-when/operands1.bin": "837dc6adc3b2ecb8bd21262a26641768d8476c96cd2f9debdc407d1a0134b2cf",
+      "build/aspect-when/operands2.bin": "cf642a67b20e39f23082ca212a63e5effcee3d2980f1b0d39f54fd88d018753b",
+      "build/aspect-when/operands3.bin": "74db7d82604bae2f46594f183d6f013f49a68b09320548654dcf9c13fedde4da",
+      "build/aspect-when/operands4.bin": "2aee346fac99f7af7195d428924dcdf998fb7ff2843f4d3cf9c18662d30edf55",
+      "build/aspect-when/strings1.bin": "102a1d5d8d5c3e2a6d17f606d759cb62855043018d6d8b7b3cdf89b54b300000",
+      "build/aspect-when/strings2.bin": "807968171c5e5a7a7e2c787b88cd28e4aa45e4b01857c95f52f249fb555e65ef",
+      "build/aspect-when/strings4.bin": "24f46fcffe5c8736875f347882351439016a87cda7f99a12d755a4bda5d3a015",
+      "build/aspect-when/expression4.bin": "b235ad26e9d5106fe3390f615c52f2868f44fb5ec54cad3352249a4285be8298",
+      "build/aspect-when/serial1.bin": "c7aa9f633639f4f58d7a9ed02dcbe42421749d391a53d2b103671b9ab83dce8a",
+      "build/aspect-when/serial2.bin": "bed1126fc9c04693d383651c2944f457ac59a79d8f5a765082ae208991c7af5f",
+      "build/aspect-when/serial3.bin": "e007929f4330589b441dd73a6e2c1356e470a269d9a1f1c7dd2650620deb1fbb",
+      "build/aspect-when/serial4.bin": "c982a9bf143167f6f6b8ba5177de7ed3b4baf03b759b4fb2ae81c5e9082cd21e",
+      "build/aspect-when/serial5.bin": "79bbff0db21dc51fb52bc4fec0ff85008468d10eb5a812ad9eb6a49e1f6bf65c",
+      "build/aspect-when/receive1.bin": "b1bca0d74bd8400e257f8f95382924d09cc686d05e0da1d6a8ccc713fc9d527d",
+      "build/aspect-when/receive4.bin": "bcd3e278a5abd66a7affffab68faa63376b6ef762ee1a081e06d94b615d4daf5",
+      "build/aspect-when/policy1.bin": "065fc1f8738e136d133e623777fecffd3554fa268a14c399b775b19c6d298fc1",
+      "build/aspect-when/policy2.bin": "93cb24fd1411d027e85d590a5fa13b824093f97fa411e64b5ccfa34f4239038e"
+    },
+    "counts": {
+      "accepted": 40,
+      "rejected": 33,
+      "presentation": 40,
+      "authored_rejected": 10,
+      "native_compositions": 4
+    }
+  },
+  "local_evidence_sha256": {
+    "build/aspect-compiler/checks.json": "84e862a4f579f73a27baaa11db761845601781abcdcf117aa0536d3e9544a352",
+    "build/aspect-when-compiler/checks-native-source.json": "e078c3ae5711056cdeae6810e6efb79692450577c6c71485a2db50c7e1692c52"
+  },
+  "scope": "Host compiler and four controlled native source compositions. Existing377 accepted outputs/variants and88 rejections remain unchanged;40 WHEN/procedure outputs/variants,33 original rejections and10 authored rejections pass. No production event scheduling, renderer/carrier/error lifecycle or full-application completion claim."
+}

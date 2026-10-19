@@ -35,6 +35,8 @@ ASPECT subset directly from authored source. The diagnostic build compiles all
 377 fixtures and compares them with the original oracle before DOS execution.
 Full script compilation, application command coverage and terminal scheduling
 remain unfinished.
+[WHEN compiler support](docs/ASPECT_WHEN_COMPILER.md) adds 40 separately checked
+outputs; production event dispatch remains unintegrated.
 
 [Directory-bound scripts](docs/DIRECTORY_SCRIPTS.md) now receive a private selected
 record, current-call date and queued raw input. The native directory expressions

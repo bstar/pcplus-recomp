@@ -12,6 +12,7 @@ Use the pinned toolchain:
 ```sh
 ./tools/dev --command python src/aspect/compiler.py example.ASP -o example.ASX
 ./tools/dev --command python standalone/test_aspect_compiler.py
+./tools/dev --command python standalone/test_aspect_when_compiler.py
 ```
 
 The importable interface is `compile_source(source: str) -> bytes`. Unsupported
@@ -40,6 +41,10 @@ It preserves an existing output if compilation fails.
   `strpeek`, `strpoke`, `strset`, `strupdt`, `strupr`, `substr`; optional counts
   where established. `success`, `failure`, `comdata`, `forever`, `found`, `$NULL` and fixed string slots
   `S0` through `S9` are recognized operands.
+* `when` with TRANSMIT/CALL actions, `cwhen`, DISCONNECT forms and
+  `set whencase on/off` emission. WHEN CALL uses absolute C7/C8 procedure
+  fixups and rejects parameterized handlers; application runtime support
+  remains a separate integration step. See `ASPECT_WHEN_COMPILER.md`.
 * `atoi`, `atol`, `itoa`, `ltoa`, `message`, `exit`, `pause`, `transmit` and
   `waitfor`, `comgetc`, `comgetcd`, `rget` and `waitquiet` command emission. Their availability
   in any application depends on that application's runtime service wiring.
@@ -58,14 +63,21 @@ use the established position and physical-line keyed transform. Empty strings
 emit the original null-string builtin. Local numeric declaration lists preserve
 the original chained initializer record form.
 
-The original-free regression suite compares all **358** accepted authored public
-vectors against frozen ASPCOMP1.01 byte outcomes and SHA256 values. This includes
-the earlier302 outcomes and56 receive-command outcomes. Compiler-only cases
+The existing original-free regression suite compares all **377** accepted authored
+public outcomes against frozen ASPCOMP1.01 bytes and SHA256 values. The isolated
+WHEN suite adds40 outcomes from its component and procedure-grammar corpora,
+checking417 outcomes across both suites without changing prior fixtures. Compiler-only cases
 remain separate from the runtime vector list. Those outcomes came from the
 optional original compiler oracle, SHA256
 `5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a`.
 Their provenance is retained in each fixture corpus. Test inputs, expected
 runtime values and emitted bytes are distinct from compiler implementation.
+
+The WHEN follow-up also preserves native unused-procedure behavior: repeatedly
+remove zero-reference procedures with MAIN protected, retain mutually referenced
+dead cycles, retain the initial MAIN jump when the first declaration is dropped,
+and validate malformed unused bodies. These rules match the bounded authored
+original corpus, rather than asserting full optimizer recovery.
 
 Every frozen source is additionally compiled with renamed symbols, changed
 keyword case, indentation and LF endings. Independent tests cover reordered
