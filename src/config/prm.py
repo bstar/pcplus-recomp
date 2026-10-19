@@ -27,6 +27,7 @@ WORD_FIELDS={
  'current_attribute':0x1f70-ORIGINAL_DS_BASE,
  'translation_mode':0x1d64-ORIGINAL_DS_BASE,
  'clipboard_separator':0x206e-ORIGINAL_DS_BASE,
+ 'auto_download':0x1fb0-ORIGINAL_DS_BASE,
 }
 
 @dataclass(frozen=True)
@@ -98,6 +99,17 @@ class LegacyPrm201:
   output=bytearray(self._image);output[offset:offset+len(value)+1]=value+b'\0'
   return LegacyPrm201(output)
 
+
+ def download_path_bytes(self):
+  region=self._image[0x31c:0x35c]
+  if b'\0' not in region:raise ValueError('Unterminated download path; opaque image preserved')
+  return region.split(b'\0',1)[0]
+
+ def with_download_path_bytes(self,value):
+  value=bytes(value)
+  if b'\0' in value or len(value)>=64:raise ValueError('Expected at most63 non-NUL bytes')
+  output=bytearray(self._image);output[0x31c:0x31c+len(value)+1]=value+b'\0'
+  return LegacyPrm201(output)
 
  def byte(self,name):return self._image[BYTE_FIELDS[name]]
  def with_byte(self,name,value):

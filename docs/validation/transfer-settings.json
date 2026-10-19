@@ -1,0 +1,454 @@
+{
+  "passed": true,
+  "runtime_sha256": "d791eb10d984ec69348fa7815da8516cf38eca16161fe83345a76934ea0711d3",
+  "editor_sha256": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646",
+  "reports": {
+    "model": {
+      "passed": true,
+      "binary_sha256": "d72f8a81871b93b58b6e88798ffb1e0a1f8e31e5a262d4161798fa45e45ed110",
+      "scope": "Actual source-built DOS8086 C. Synthetic settings only. Pure API replay forbids interrupts and port I/O; separate DOS run checks C runtime and no rewrite. Field model only, no settings UI, save ownership or original PCSETUP child compatibility.",
+      "cases": [
+        {
+          "case": "all48-fields-get-set-byte-identical-with-opaque-tail-data",
+          "inputs": 48,
+          "passed": true
+        },
+        {
+          "case": "serial-profile-and-BREAK-values-agree-with-existing-importers",
+          "inputs": 32,
+          "passed": true
+        },
+        {
+          "case": "invalid-numeric-parity-and-unterminated-edits-entire-image-atomic",
+          "inputs": 84,
+          "passed": true
+        },
+        {
+          "case": "six-command-caret-grammar-capacities-tail-preservation-and-revert",
+          "inputs": 48,
+          "passed": true
+        },
+        {
+          "case": "11-expanded-response-slots-lossless-hex-and-invalid-input-atomic",
+          "inputs": 121,
+          "passed": true
+        },
+        {
+          "case": "malformed-loaded-fields-view-without-normalizing-and-explicit-repair",
+          "inputs": 42,
+          "passed": true
+        },
+        {
+          "case": "near-cdecl-null-overlap-capacity-and-segment-wrap",
+          "inputs": 16,
+          "passed": true
+        },
+        {
+          "case": "Auto-Download-word-lossless-edit-nonzero-enables-decoded-flag",
+          "inputs": 6,
+          "passed": true
+        },
+        {
+          "case": "download-path-roots-drive-relative-empty-63-byte-tail-preservation-and-revert",
+          "inputs": 16,
+          "passed": true
+        },
+        {
+          "case": "invalid-loaded-path-rejected-without-mutation-and-explicit-repair",
+          "inputs": 27,
+          "passed": true
+        },
+        {
+          "case": "transfer-settings-near-null-alias-wrap-and-capacity",
+          "inputs": 9,
+          "passed": true
+        },
+        {
+          "case": "actual-DOS-c-runtime-model-and-no-file-rewrites",
+          "inputs": 1,
+          "passed": true
+        }
+      ]
+    },
+    "editor_regression": {
+      "passed": true,
+      "binaries": {
+        "PRMEDIT.EXE": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646",
+        "OWNER.EXE": "4c6be922fded2ca352d8374206d18a3fccf27789f8d5f1da5e15416b1255d475",
+        "UI.EXE": "5a2a6bc2b8a03412be3f3c54ddc4a584147c0b2dacdf8b4d91d474e5ed50a0df",
+        "RECOVERY.EXE": "b50b1e289f7083f40027f25992e3f9429cfc33e51bb250122416f0457794f565"
+      },
+      "scope": "Actual DOSBox-X filesystem and BIOS keyboard/video, synthetic settings only. UI host links identical UI source with renamed main to independently verify restoration; exact production EXE separately saves. No original PCSETUP, UART or physical hardware tests.",
+      "cases": [
+        {
+          "case": "DOS-owner-load-atomic-save-external-opaque-change-readonly-recovery-collision-invalid-lock-missing",
+          "passed": true
+        },
+        {
+          "case": "cancel",
+          "passed": true,
+          "full_file_exact": true,
+          "screen_cursor_shape_page_restored": true
+        },
+        {
+          "case": "save-baud",
+          "passed": true,
+          "full_file_exact": true,
+          "screen_cursor_shape_page_restored": true
+        },
+        {
+          "case": "invalid-blocked",
+          "passed": true,
+          "full_file_exact": true,
+          "screen_cursor_shape_page_restored": true
+        },
+        {
+          "case": "response-save",
+          "passed": true,
+          "full_file_exact": true,
+          "screen_cursor_shape_page_restored": true
+        },
+        {
+          "case": "repair",
+          "passed": true,
+          "full_file_exact": true,
+          "screen_cursor_shape_page_restored": true
+        },
+        {
+          "case": "translation-save",
+          "passed": true,
+          "full_file_exact": true,
+          "screen_cursor_shape_page_restored": true
+        },
+        {
+          "case": "translation-page-navigation",
+          "passed": true,
+          "full_file_exact": true,
+          "screen_cursor_shape_page_restored": true
+        },
+        {
+          "case": "production-executable-save",
+          "passed": true,
+          "full_file_exact": true
+        },
+        {
+          "case": "mono-cancel",
+          "passed": true,
+          "full_file_exact": true,
+          "screen_cursor_shape_page_restored": true
+        },
+        {
+          "case": "active-page-one-cancel",
+          "passed": true,
+          "screen_cursor_shape_page_restored": true
+        },
+        {
+          "case": "injected-backup-cleanup-error-installed-baseline-retained-backup-and-locked-retry",
+          "passed": true
+        }
+      ]
+    },
+    "transfer_UI": {
+      "passed": true,
+      "editor_sha256": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646",
+      "scope": "Actual DOS BIOS-key PRMEDIT UI and checked owner on synthetic media. Exact full-image enable/nonzero/path/both/cancel/device-refusal/63-byte-path saves and screen restoration. No live terminal adoption, automatic download, BBS or physical modem claim.",
+      "cases": [
+        {
+          "case": "enable",
+          "passed": true,
+          "full_file_exact": true,
+          "screen_cursor_shape_page_restored": true,
+          "input_sha256": "5bb0592690762ae3630ca9187a066921ebd19057e7fa5f5b09b9d75df5c3161f",
+          "output_sha256": "fb04cfb60a365635f7c909e0b8c65969a3a58a24170ebb7caa08f8dc4c6227a4"
+        },
+        {
+          "case": "nonzero-word",
+          "passed": true,
+          "full_file_exact": true,
+          "screen_cursor_shape_page_restored": true,
+          "input_sha256": "5bb0592690762ae3630ca9187a066921ebd19057e7fa5f5b09b9d75df5c3161f",
+          "output_sha256": "970c2496c0d668fa7c26c290be0a6385e988d4401d9cba811ebe3ff2b1f16086"
+        },
+        {
+          "case": "directory",
+          "passed": true,
+          "full_file_exact": true,
+          "screen_cursor_shape_page_restored": true,
+          "input_sha256": "5bb0592690762ae3630ca9187a066921ebd19057e7fa5f5b09b9d75df5c3161f",
+          "output_sha256": "c581bc909c1782d89551df7d12770e3482625ac748c934c07879a9daed94772e"
+        },
+        {
+          "case": "both",
+          "passed": true,
+          "full_file_exact": true,
+          "screen_cursor_shape_page_restored": true,
+          "input_sha256": "5bb0592690762ae3630ca9187a066921ebd19057e7fa5f5b09b9d75df5c3161f",
+          "output_sha256": "a7c572eace5710cbbf4720b0c98bb2e07064ce8f46d4f4051a3de2c83a24c7f5"
+        },
+        {
+          "case": "cancel",
+          "passed": true,
+          "full_file_exact": true,
+          "screen_cursor_shape_page_restored": true,
+          "input_sha256": "5bb0592690762ae3630ca9187a066921ebd19057e7fa5f5b09b9d75df5c3161f",
+          "output_sha256": "5bb0592690762ae3630ca9187a066921ebd19057e7fa5f5b09b9d75df5c3161f"
+        },
+        {
+          "case": "bad-device",
+          "passed": true,
+          "full_file_exact": true,
+          "screen_cursor_shape_page_restored": true,
+          "input_sha256": "5bb0592690762ae3630ca9187a066921ebd19057e7fa5f5b09b9d75df5c3161f",
+          "output_sha256": "5bb0592690762ae3630ca9187a066921ebd19057e7fa5f5b09b9d75df5c3161f"
+        },
+        {
+          "case": "long-directory",
+          "passed": true,
+          "full_file_exact": true,
+          "screen_cursor_shape_page_restored": true,
+          "input_sha256": "5bb0592690762ae3630ca9187a066921ebd19057e7fa5f5b09b9d75df5c3161f",
+          "output_sha256": "cd1fb46afe9fdcd66a0f6fad211299eed64c64daedd8e9742f01c01bc9f11acf"
+        }
+      ]
+    },
+    "clipboard_regression": {
+      "passed": true,
+      "binary_sha256": "d791eb10d984ec69348fa7815da8516cf38eca16161fe83345a76934ea0711d3",
+      "editor_sha256": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646",
+      "scope": "Actual DOS production startup/PRMEDIT/AltF10/clipboard/UART and independent INT1C observer. Raw PRM04EA values0/32/255 reach wire unchanged; exact full-file save, unsaved cancel and unrelated save preserve session R; invalid256 refuses before UART. No physical UART, native PCSETUP binding or whole-application completion claim.",
+      "cases": [
+        {
+          "case": "clipboard-settings-start-0",
+          "passed": true,
+          "checks": {
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "fixture_unchanged_CLWATCH.COM": true,
+            "fixture_unchanged_PRMEDIT.EXE": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "expected_exact_paste": true,
+            "local_names_not_transmitted": true,
+            "keyboard_resumes": true,
+            "observer_saw_clipboard": true,
+            "editor_recovery_files_absent": true,
+            "observed_separator_0": true
+          }
+        },
+        {
+          "case": "clipboard-settings-start-32",
+          "passed": true,
+          "checks": {
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "fixture_unchanged_CLWATCH.COM": true,
+            "fixture_unchanged_PRMEDIT.EXE": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "expected_exact_paste": true,
+            "local_names_not_transmitted": true,
+            "keyboard_resumes": true,
+            "observer_saw_clipboard": true,
+            "editor_recovery_files_absent": true,
+            "observed_separator_32": true
+          }
+        },
+        {
+          "case": "clipboard-settings-start-255",
+          "passed": true,
+          "checks": {
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "fixture_unchanged_CLWATCH.COM": true,
+            "fixture_unchanged_PRMEDIT.EXE": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "expected_exact_paste": true,
+            "local_names_not_transmitted": true,
+            "keyboard_resumes": true,
+            "observer_saw_clipboard": true,
+            "editor_recovery_files_absent": true,
+            "observed_separator_255": true
+          }
+        },
+        {
+          "case": "clipboard-settings-live-save",
+          "passed": true,
+          "checks": {
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_expected_bytes": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "fixture_unchanged_CLWATCH.COM": true,
+            "fixture_unchanged_PRMEDIT.EXE": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "expected_exact_paste": true,
+            "local_names_not_transmitted": true,
+            "keyboard_resumes": true,
+            "observer_saw_clipboard": true,
+            "editor_recovery_files_absent": true,
+            "observed_separator_13": true,
+            "observed_separator_32": true
+          }
+        },
+        {
+          "case": "clipboard-settings-cancel-keeps-R",
+          "passed": true,
+          "checks": {
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "fixture_unchanged_CLWATCH.COM": true,
+            "fixture_unchanged_PRMEDIT.EXE": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "expected_exact_paste": true,
+            "local_names_not_transmitted": true,
+            "keyboard_resumes": true,
+            "observer_saw_clipboard": true,
+            "editor_recovery_files_absent": true,
+            "observed_separator_32": true
+          }
+        },
+        {
+          "case": "clipboard-settings-unrelated-keeps-R",
+          "passed": true,
+          "checks": {
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_expected_bytes": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "fixture_unchanged_CLWATCH.COM": true,
+            "fixture_unchanged_PRMEDIT.EXE": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "expected_exact_paste": true,
+            "local_names_not_transmitted": true,
+            "keyboard_resumes": true,
+            "observer_saw_clipboard": true,
+            "editor_recovery_files_absent": true,
+            "observed_separator_32": true
+          }
+        },
+        {
+          "case": "clipboard-settings-invalid",
+          "passed": true,
+          "checks": {
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "no_modem_commands": true,
+            "no_modem_or_paste_bytes": true
+          }
+        }
+      ]
+    }
+  },
+  "retained_fixture_failure": {
+    "passed": false,
+    "kind": "unsupported-ADDKEY-token",
+    "token": "slash",
+    "effect": "Scheduling stops at first invalid token; editor never receives save/exit keys; subprocess times out at30seconds.",
+    "correction": "Literal / character per upstream CMD_ADDKEY parser; no product change.",
+    "config_sha256": "94e3384731bc619722c8470bceaf57d59a07bdaf73dc86eb671dd502e575662b"
+  },
+  "source_only_rebuild": {
+    "outputs": 64,
+    "byte_identical": true,
+    "snapshot_sha256": "abc95382138b8836a70bcf64d6f8c1505834cd79d1559781294650c5115c0f7d"
+  },
+  "sources": {
+    "src/config/setup_model.c": "068112ded568d9a072b0bedb1ee53ae91de9521e85491409c8336bebbca4e327",
+    "src/config/transfer_import.c": "ccb7527ad2bf0fbca9ea0af87074d2a93caea701a779a2ef08c644cdfb076f41",
+    "src/config/terminal_import.c": "eb1da3e965705d511445aa95061ea0d9b13b3d36bf6d76d3310a570b8c7cfef4",
+    "src/config/modem_import.c": "aa984d766d561ab15e6fd067757953c856eb054a61dc8f4cb9c58c58f5df2a4b",
+    "src/config/prm_dos.c": "e4d0386d3fb40e225cbc34ec7f989286f67ec9ffcff29a6f50eb77d7b24ee021",
+    "standalone/setup_model_host.c": "c7eec6cc69d93f2f08c63f6e6e624ed68183d726098429d87a254012c199d69b",
+    "src/config/transfer_import.h": "88f302460b20a50ebd621d2c78b7b1cdcf424c9acd31e1368757cf6a7bd2f7f8",
+    "src/config/setup_model.h": "18b580082466fe85b4d7b156529fc66b75262b28f3b2b2a0d11cade583c3b011",
+    "src/config/terminal_import.h": "662c6f0692dfdc8f569c5599e318b05bec571450c7753c3d08e96559c1930439",
+    "src/config/modem_import.h": "7ef5213025c1d58c9dc8f4ec89197c4ca2d6ed67d8f2ea4ddeeb89350e9bfcb0",
+    "src/config/prm_dos.h": "3a6f8f27e13f5fc97e290b95def601e49ce93b54f729d1bc3ddc527ba39de20c",
+    "standalone/check_setup_model.py": "3dc32afeb0855fc31e4f7058a8e9d7cdf58e3bb85583f596b2474cb1321d989f",
+    "src/config/setup_document.c": "38c01317f29546bc5acdc13367050587322be87a6aca6f0ea4d595d506bed79e",
+    "src/config/prm_replace.c": "908e5efe698023ea52b626011441be9fe2935ee1f1f9162eba43eb3c56a754fc",
+    "src/config/prm_replace_fs.c": "c267456eef56a72db65ff51b8aebc64ba78dbfbcd64e4c0235ba0434604910d4",
+    "src/config/setup_main.c": "f8c2ef42dcd25bbc347258b720132047dd0d7336e0a3210c8fa222c8356e5545",
+    "standalone/setup_document_host.c": "5a497667c1e30eff7ed1a4186c85d5535b6a1c894d4a8fb84bcc77cb77c2ed5b",
+    "standalone/setup_ui_host.c": "ff7d1782f6619f44f0ff9055999850b92d31f52f85fa8048ac66e68d891c8b77",
+    "standalone/setup_recovery_host.c": "546737a1c12853b9e70c5fa399b9f116f098ebde0b253710a3c7d84917688a98",
+    "standalone/test_setup_dos.py": "eca3f600585c3df1d52cf44a80ab0884582186a89ddab388d8fd62d842b36076",
+    "src/config/prm_replace.h": "fe0c4e5b5d2dbe641cacc9f76ab2406d947a543a479f9a48bedf71ecdfb8f806",
+    "src/config/prm_replace_fs.h": "7d698bd01b9f98c3d92377c9c7f83ecf83e52e4a08ceca9e0948d2a79560e4e4",
+    "src/config/startup_import.h": "8e9a2ca1640e5f1e5209c74cfd7b4be4f56f9b132fdec603f48dfff7a73a2b84",
+    "src/config/setup_document.h": "faa31defcddea7759e0c50ccf1354f8027516548a84a558102b8c704221b4866",
+    "src/config/live_configuration.h": "505914805431837d100fb3905f436a4d28653f969ce337989e2700d53f0adb2c",
+    "src/config/live_setup_owner.h": "e8f502ace10377639ebd7537661676cb6babe6880beb7413abbf86b6d3eaa8f1",
+    "src/config/resource_path.h": "187327178d79148592c3fe42783ee38ff701500b836a0b54424ed13a6a158e31",
+    "standalone/test_transfer_settings_dos.py": "47197b523614a60dc744ebd2e0906b1666f146baf3bc3476b8563ac05fc80713",
+    "standalone/build_setup.py": "3d787fc0744a56e51b7e75b6655b59c3c90fe1e1bc986e49ad75b17ef6375ece",
+    "standalone/test_clipboard_settings_dos.py": "6558ac3511fc67f0d83e4bb02ca88ba0f596416a3b3758f47d3e452b3cb8d0aa",
+    "standalone/test_connection_dos.py": "438162021da140fda6b5b3ce9eea971ef5659b7216bd89df80fcab441096cdf3",
+    "standalone/clipboard_watch.asm": "841a9a65807ca28529955f3ac1f29e87718c2c99327443d4514cf54c072924e3",
+    "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+    "standalone/terminal_config_fixtures.py": "dd38f8a0c6c77d5d2ec2120c1f3d6b8a755525d11e2f6d986a056a3d0d8e4df4",
+    "src/config/live_configuration.c": "5cb2b52946d3c91d074aba9e39e27b5cde381ff4f7ace5266294520ace35de3d",
+    "src/config/live_setup_owner.c": "a509ff81bce721ecf9c9fd457d7e61fbeae876caa0fd90a40720346003d1179a",
+    "src/terminal/configuration.asm": "96ec7a00b67089f98acba43ff4080e2f13523fcf0fac9455eb282ead4bab4528",
+    "src/terminal/configuration_live.asm": "64e43312e5d15eefb98b50f047ea84198c3c70a6897e9b37b56f045982772818",
+    "src/terminal/setup_live_apply.asm": "c71e51940298a058200069d4280e454211be9fd7810e341fb59c208328ad4c8c",
+    "src/clipboard/clipboard_ui.c": "d9907992805a4414102fbdfb194163b17a6ef06934c72fd7c4173170ad4f7632",
+    "standalone/record_transfer_settings.py": "4e79a97cb417b526560dd34d6e6a93654478769cff7e97e32943eebf99575e9b",
+    "standalone/check_modem_import.py": "2b3016e043a470ebbc86c9fcb5b80396af8bce28b3aa5337843584a92a138113",
+    "src/config/prm.py": "b01254c6c8eac888ea38b408bc0a7490ac49d851240310fd8b7fa92b179c2a20",
+    "src/config/test_prm.py": "9e7e96b9765dc4695d8ca75b90fd38a893a4df48bde70def335fd25e25a4db98"
+  },
+  "artifacts": {
+    "build/setup-model/checks.json": "579fc28fca3455cedaf43990c715ebd257ea8e7e54457e248d0f7eefc38bebce",
+    "build/setup/checks.json": "c90dd4192fda222f9fc2ef45500cb3737b99af7d5c5b796e1f995664fd8f3e8d",
+    "build/setup/transfer-settings-checks.json": "58d13f16204c54445855b5d03a52a92e5dd416bdc76075ecfdc3c9fb019ff6d5",
+    "build/clipboard-settings-dos/checks.json": "ee4fa3dbfdde932bbe58c35376f515d92a1951579c7743370b7b5ea20d10f441",
+    "build/setup/tests/transfer-settings-long-directory-invalid-key/fixture-failure.json": "a4b47c017fc520482fa9b4806783f488e95a4937fc0b5964d0518d9c73b4f440",
+    "build/setup/tests/transfer-settings-long-directory-invalid-key/dosbox.conf": "94e3384731bc619722c8470bceaf57d59a07bdaf73dc86eb671dd502e575662b",
+    "docs/validation/application-components-source-build.json": "497565161ac55f827761395ef59065630d8085536323bb01510b0d2eb884302f",
+    "docs/validation/terminal-source-build.json": "f42e0ca024a5055092875dbe18eb35f2c8e7b54247ab84b3bcc4fca401c53fdb",
+    "build/application-source-proof/snapshot.json": "fee7dc0f00de0b4c208c3c1cbef28e9146b1a73a5d3580f7d7affbc8936beffb",
+    "build/application-source-proof/build.log": "fb08ef8ee26585c41e0e66d8cf38c9ea2c1b96af58a4ece91f68326bf017fc90"
+  },
+  "scope": "Mapped transfer-setting editing and independent decoder only. Selected actual DOS owner/UI and existing live clipboard regressions pass. Terminal binary unchanged; startup/live transfer-setting adoption and automatic downloads are not implemented. All F01-F16 gates remain open."
+}

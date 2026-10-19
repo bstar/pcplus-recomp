@@ -26,7 +26,7 @@ Current outputs:
 | `build/modem-commands/MODEMCMD.EXE` | Recovered and maintained assembly source only | Original caret decoder with bounded source-owned wrapper |
 | `build/modem-responses/MODEMRSP.EXE` | Maintained and recovered assembly source only | Response matching and classification; dial-attempt object remains unlinked |
 | `build/xlt-editor/XLTEDIT.EXE` | Maintained C source only | 256-byte translation-table editor, offline or launched with Alt-F8, with checked save/recovery; see [XLT editor](docs/XLT_EDITOR.md) |
-| `build/setup/PRMEDIT.EXE` | Maintained C source only | Offline five-page editor for46 mapped PRM fields with staged validation and checked replacement; see [setup editor](docs/SETUP_EDITOR.md) |
+| `build/setup/PRMEDIT.EXE` | Maintained C source only | Offline five-page editor for 48 mapped PRM fields with staged validation and checked replacement; see [setup editor](docs/SETUP_EDITOR.md) |
 | `build/terminal/TERMINAL.EXE` | Maintained C and recovered/maintained assembly source only | Serial terminal with PRM startup, directory editing, staged saves and bounded modem dialing |
 | `build/standalone/SERIAL.EXE` | Maintained assembly source only | Independently linked DOS diagnostic exercising the recovered UART module |
 | `build/ansi/PARSER.EXE` | Maintained assembly source only | Independently linked parameter-reader diagnostic with bounds checks |

@@ -407,6 +407,7 @@ setup:
 test-setup: setup
 	python3 standalone/check_setup_model.py
 	python3 standalone/test_setup_dos.py
+	python3 standalone/test_transfer_settings_dos.py
 
 .PHONY: test-setup-startup
 test-setup-startup: terminal setup

@@ -750,3 +750,20 @@ and a byte-identical source-only diagnostic rebuild. See
 `docs/ZMODEM_AUTOSTART.md` and its validation ledger. It is not yet connected to
 terminal input, settings or destination selection. Actual automatic downloads,
 modern BBS workflows and all F01–F16 gates remain open.
+
+## Automatic reception: saved transfer settings
+
+PRMEDIT now edits the two proved transfer preferences without changing the
+existing serial-settings ABI. The separate checked decoder normalizes the
+original zero/nonzero enable word and resolves an empty prefix to current
+directory at transfer time. Paths and opaque tail bytes round-trip; malformed
+paths remain repairable without implicit normalization. The 63-byte path field
+scrolls during editing. See `docs/TRANSFER_SETTINGS.md` and its validation ledger.
+
+The model passes 450 inputs in 12 groups; all 12 existing DOS editor workflows,
+seven new transfer-setting UI flows, seven existing production clipboard/settings
+flows and 15 configuration unit tests pass. A fresh source-only snapshot again
+reproduces 64 outputs. Runtime remains d791eb10. Startup/live transfer-setting
+adoption, checked destination reconciliation and automatic transfer entry remain
+required, followed by actual DOS/Synchronet/ENiGMA workflows. All F01–F16 gates
+remain open.

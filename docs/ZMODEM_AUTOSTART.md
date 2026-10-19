@@ -64,9 +64,10 @@ This proves the recognizer contract, not live terminal or BBS integration.
 
 ## Work still required
 
-Import and edit the proved Auto Download setting without guessing other PRM
-fields. Import the proved download-prefix field at PRM offset031c with checked
-termination and destination semantics, including the current-directory fallback.
+The mapped editor and checked transfer-settings decoder now cover both fields;
+see [TRANSFER_SETTINGS.md](TRANSFER_SETTINGS.md). Connect that decoder to startup
+and live adoption, then reconcile the directory with the checked file owner,
+including current-directory and drive-relative forms.
 Connect recognition to serviced terminal input with
 correct translation, capture, native parser continuation, printer/controller,
 monitor, PROGRAM and pending-transfer boundaries. Start the existing exclusive

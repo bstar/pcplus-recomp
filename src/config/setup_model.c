@@ -1,10 +1,11 @@
 #include "setup_model.h"
 #include "terminal_import.h"
 #include "modem_import.h"
+#include "transfer_import.h"
 #include <string.h>
 
 enum { DECIMAL, HEXWORD, PORT, BAUD, PARITY, BITS, PROFILE, COMMAND, RESPONSE,
- BASE, IRQ };
+ BASE, IRQ, PATH };
 typedef struct descriptor {
  setup_field_info info;
  unsigned offset,kind,minimum,maximum;
@@ -56,7 +57,9 @@ static const descriptor fields[SETUP_FIELD_COUNT]={
  F("Response 10","Expanded bytes as hex pairs; max 15 bytes; no 00.",4,0x154,RESPONSE,0,16),
  F("Response 11","Expanded bytes as hex pairs; max 15 bytes; no 00.",4,0x164,RESPONSE,0,16),
  F("Input translation","0 identity; 1 PCPLUS.XLT; 2 strip high bit. Changes need restart.",1,0x1e0,DECIMAL,0,2),
- F("Clipboard separator","Byte after each all/tagged name: 13 CR, 32 space, 0..255.",1,0x4ea,DECIMAL,0,255)
+ F("Clipboard separator","Byte after each all/tagged name: 13 CR, 32 space, 0..255.",1,0x4ea,DECIMAL,0,255),
+ F("Auto Download","0 disabled; any nonzero word enables ZMODEM automatic reception.",1,0x42c,DECIMAL,0,65535),
+ F("Download directory","DOS 8.3 directory; empty uses current directory. Checked at transfer start.",1,0x31c,PATH,0,64)
 };
 static const unsigned bases[]={0x3f8,0x2f8,0x3e8,0x2e8};
 static const unsigned irqs[]={4,3,4,3};
@@ -118,10 +121,11 @@ setup_status __cdecl setup_get(const prm_dos_image *image,unsigned index,char *t
   v=word(image,0);if(v>3)return SETUP_STORED_VALUE;
   at=(f->kind==BASE?0x174:0x184)+v*2;
  }
- if(f->kind==COMMAND || f->kind==RESPONSE){
+ if(f->kind==COMMAND || f->kind==RESPONSE || f->kind==PATH){
   n=length((const char *)image->bytes+at,f->maximum);
   if(n==f->maximum || (f->kind==COMMAND && !caret_ok((const char *)image->bytes+at,n)))return SETUP_STORED_VALUE;
-  if(f->kind==COMMAND){memcpy(tmp,image->bytes+at,n+1);}
+  if(f->kind==PATH && !transfer_import_path((const char *)image->bytes+at,f->maximum))return SETUP_STORED_VALUE;
+  if(f->kind==COMMAND || f->kind==PATH){memcpy(tmp,image->bytes+at,n+1);}
   else {
    for(i=0;i<n;++i){
     if(i)tmp[k++]=' ';
@@ -154,7 +158,7 @@ setup_status __cdecl setup_set(const prm_dos_image *baseline,prm_dos_image *stag
  unsigned index,const char *text)
 {
  const descriptor *f;unsigned len,at,v=0,i,n=0,p;unsigned long value;
- unsigned char bytes[47];
+ unsigned char bytes[64];
  if(index>=SETUP_FIELD_COUNT || !extent(baseline,sizeof(*baseline)) ||
   !extent(staged,sizeof(*staged)) || !extent(text,SETUP_TEXT_SIZE) ||
   !separate(baseline,sizeof(*baseline),staged,sizeof(*staged)) ||
@@ -162,8 +166,9 @@ setup_status __cdecl setup_set(const prm_dos_image *baseline,prm_dos_image *stag
   !separate(staged,sizeof(*staged),text,SETUP_TEXT_SIZE))return SETUP_ARGUMENT;
  len=length(text,SETUP_TEXT_SIZE);if(len==SETUP_TEXT_SIZE)return SETUP_VALUE;
  f=&fields[index];at=f->offset;
- if(f->kind==COMMAND){
-  if(len>=f->maximum || !caret_ok(text,len))return SETUP_VALUE;
+ if(f->kind==COMMAND || f->kind==PATH){
+  if(len>=f->maximum || (f->kind==COMMAND && !caret_ok(text,len)) ||
+   (f->kind==PATH && !transfer_import_path(text,len+1)))return SETUP_VALUE;
   n=len;memcpy(bytes,text,len);
  }else if(f->kind==RESPONSE){
   i=0;
@@ -193,7 +198,7 @@ setup_status __cdecl setup_set(const prm_dos_image *baseline,prm_dos_image *stag
   }
  }
  /* Nothing above mutates staged. Commit only after full parse. */
- if(f->kind==COMMAND || f->kind==RESPONSE){
+ if(f->kind==COMMAND || f->kind==RESPONSE || f->kind==PATH){
   memcpy(staged->bytes+at,baseline->bytes+at,f->maximum);
   memcpy(staged->bytes+at,bytes,n);staged->bytes[at+n]=0;
  }else if(f->kind==PORT){

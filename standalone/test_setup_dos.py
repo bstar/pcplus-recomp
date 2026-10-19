@@ -4,7 +4,7 @@ import hashlib,json,os,shutil,subprocess
 from pathlib import Path
 from check_setup_model import image
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/setup';BASE=['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k16384','-i='+str(ROOT/'src/config')]
-COMMON=[ROOT/'src/config'/p for p in ['setup_document.c','setup_model.c','terminal_import.c','modem_import.c','prm_dos.c','prm_replace.c','prm_replace_fs.c']]
+COMMON=[ROOT/'src/config'/p for p in ['setup_document.c','setup_model.c','transfer_import.c','terminal_import.c','modem_import.c','prm_dos.c','prm_replace.c','prm_replace_fs.c']]
 def build():
  subprocess.run(BASE+['-fe=OWNER.EXE',*map(str,COMMON),str(ROOT/'standalone/setup_document_host.c')],cwd=OUT,check=True)
  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we','-dmain=setup_application_main','-fo=setup_ui.obj',str(ROOT/'src/config/setup_main.c')],cwd=OUT,check=True)

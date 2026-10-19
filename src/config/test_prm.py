@@ -42,6 +42,23 @@ class PrmTests(unittest.TestCase):
    self.assertEqual(output[0x4ec:],data[0x4ec:])
    self.assertEqual(LegacyPrm201(output).word('clipboard_separator'),value)
   self.assertEqual(prm.to_bytes(),data)
+ def test_transfer_locations_and_opaque_tail_preservation(self):
+  data=bytes((i*37+5)&255 for i in range(IMAGE_SIZE));prm=LegacyPrm201(data)
+  for value in (0,1,2,255,256,65535):
+   result=prm.with_word('auto_download',value)
+   self.assertEqual(result.word('auto_download'),value)
+   self.assertEqual(result.to_bytes()[:0x42c],data[:0x42c])
+   self.assertEqual(result.to_bytes()[0x42e:],data[0x42e:])
+  for value in (b'',b'C:\\GAMES',b'A'*63,b'\xff'):
+   result=prm.with_download_path_bytes(value)
+   self.assertEqual(result.download_path_bytes(),value)
+   expected=bytearray(data);expected[0x31c:0x31c+len(value)+1]=value+b'\0'
+   self.assertEqual(result.to_bytes(),bytes(expected))
+  for value in (b'A'*64,b'A\0B'):
+   with self.assertRaises(ValueError):prm.with_download_path_bytes(value)
+  malformed=bytearray(data);malformed[0x31c:0x35c]=b'X'*64
+  with self.assertRaises(ValueError):LegacyPrm201(malformed).download_path_bytes()
+  self.assertEqual(prm.to_bytes(),data)
  def test_verified_word_and_port_array_locations(self):
   data=bytearray(IMAGE_SIZE)
   struct.pack_into('<H',data,0x194,6);struct.pack_into('<H',data,0x1ae,0x17)

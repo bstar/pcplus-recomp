@@ -79,7 +79,7 @@ static void draw(unsigned field,unsigned pos,const char *message)
   put(row,2,setup_field(i)->label,i==field?0x70:0x17,22);
   if(i==field)strcpy(text,edit);
   else if(setup_get(&document.staged,i,text,sizeof(text))!=SETUP_OK)strcpy(text,"<INVALID - edit to repair>");
-  put(row++,25,text,i==field?0x70:0x1f,53);
+  put(row++,25,text+(i==field && pos>52?pos-52:0),i==field?0x70:0x1f,53);
  }
  put(19,2,setup_field(field)->help,0x1e,76);
  put(21,2,message,0x1f,76);

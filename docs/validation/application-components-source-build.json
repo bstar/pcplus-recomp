@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "21f302d1b676bf85e55395d7de5f5a8f86c906804ee8c7f2a813ce36ecf8e09c",
-  "source_file_count": 1470,
+  "source_snapshot_sha256": "abc95382138b8836a70bcf64d6f8c1505834cd79d1559781294650c5115c0f7d",
+  "source_file_count": 1482,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,10 +16,10 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "778c5c366afd74923a413e4a5f08d0f60f0d62151a29100b89dfb4151823c255",
+  "build_log_sha256": "fb08ef8ee26585c41e0e66d8cf38c9ea2c1b96af58a4ece91f68326bf017fc90",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.rNjMNf/pcplus-source-proof-ocuokt4f/checkout",
+  "source_checkout": "/tmp/nix-shell.xKvoaW/pcplus-source-proof-sug5hmit/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
   "scope": "64 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
@@ -301,9 +301,9 @@
       "workspace_sha256": "8095449ff1fbc10c718f9b3916c03ceec1dabe92b3e743004fd69fe129fa118b"
     },
     "setup/PRMEDIT.EXE": {
-      "sha256": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
+      "sha256": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646",
       "matches_workspace": true,
-      "workspace_sha256": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7"
+      "workspace_sha256": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646"
     },
     "live-configuration/LIVE.EXE": {
       "sha256": "cea4eb7c7e0ffacddc5a694e83e55e21f07d6049718e9545722df1868c9782f5",

@@ -1,6 +1,6 @@
 # Maintained DOS settings editor
 
-`PRMEDIT.EXE` edits the 46 currently mapped fields in an existing PCPlus2.01
+`PRMEDIT.EXE` edits the 48 currently mapped fields in an existing PCPlus2.01
 PRM image. It builds entirely from maintained source with the pinned Nix
 Open Watcom8086 toolchain. Save the file, exit, then start the terminal with that
 explicit file. The terminal also offers
@@ -47,7 +47,10 @@ bases/IRQs are not supported by the current terminal importer. Profiles4 and6
 remain partial VT220/ANSI implementations, not claims of complete emulation.
 
 The Terminal page includes a decimal0..255 clipboard separator at PRM04EA;
-see [startup and live settings](CLIPBOARD_SETTINGS.md).
+see [startup and live settings](CLIPBOARD_SETTINGS.md). Auto Download and Download
+directory are also editable; their checked decoder and current integration
+limits are documented in [transfer settings](TRANSFER_SETTINGS.md). Saving these
+two fields does not yet enable automatic reception in the terminal.
 
 Six command strings use native caret notation. Eleven response slots hold
 already-expanded bytes, so their editor uses hex pairs, for example

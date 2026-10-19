@@ -200,3 +200,10 @@ It preserves rejected/truncated bytes across 6,510 host and 8086 DOS vectors;
 [ZMODEM_AUTOSTART.md](ZMODEM_AUTOSTART.md) distinguishes recognition policy from
 original behavior and lists pending settings, ownership and BBS integration.
 Automatic reception is not enabled, and F08 remains open.
+
+The mapped PRMEDIT editor now exposes Auto Download and Download directory,
+with a separate checked transfer-settings decoder and 48 mapped fields.
+[TRANSFER_SETTINGS.md](TRANSFER_SETTINGS.md) records 450 model inputs, 19 DOS
+editor/owner workflows, seven production clipboard/settings regressions and a
+fresh 64-output source-only rebuild. These saved preferences are not yet adopted
+by the terminal; automatic reception and F08 remain open.
