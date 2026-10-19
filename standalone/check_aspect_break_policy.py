@@ -37,7 +37,7 @@ def main():
  assert m.call('_aspect_render_policy_inherit')==14
  assert m.call('_aspect_render_break_notice',[0])==14
  cases.append(dict(name='unsolicited-value-and-closed-lease-rejected',passed=True))
- for old in (1,2,3,4):
+ for old in (1,2,3,4,5):
   m=Policy();m.words[-1]=old;m.publish();assert m.open()==1 and not m.writes
  cases.append(dict(name='old-capabilities-before-hardware',passed=True))
  m=Policy();assert m.open()==0;m.requests.clear()

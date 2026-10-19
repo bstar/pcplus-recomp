@@ -68,8 +68,9 @@ leaves unread UART bytes for ASIO handback. Error, stack exhaustion and budget
 tests check cleanup before the next script starts.
 
 The maintained child still uses immediate Escape cancellation. Native abort
-confirmation and ordinary local keyboard/UI dispatch are not reconstructed in
-this owner; unsupported local UI keys report an error. The child's enabled
+confirmation and full local keyboard/UI dispatch are not reconstructed in
+this owner; unsupported local UI keys report an error. Ordinary keys now use
+the [shared profile output path](ASPECT_KEY_OUTPUT.md). The child's enabled
 keyboard setting is an explicit maintained policy, not a newly proved native
 startup default.
 

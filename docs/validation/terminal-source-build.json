@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "5cafbacc9037daa0204aae5b647e76e08aaca1c8c9216cb5555ececadfabcb49",
-  "source_file_count": 1973,
+  "source_snapshot_sha256": "22e63ab8d2bfd9f967c0729ce13d56d027d03a52ef5273ed0ec3683de3d0f57a",
+  "source_file_count": 1979,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,14 +16,14 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "b93bbdacce7b864106fa8fd600d04c59dc96845f3e3165f1108d1626ecb17328",
+  "build_log_sha256": "fb8b91a470999de15d965d7d12f97fb3a3fb93c0fba2258b3403da6604d0bf68",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.jztW66/pcplus-source-proof-_pa9eeao/checkout",
+  "source_checkout": "/tmp/nix-shell.e7ETgT/pcplus-source-proof-rxyqys2n/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
   "scope": "Source-only interactive DOS terminal with imported keyboard/action settings, directory UI, recovered line/character editing, maintained current-profile RIS, bounded process handoff, retained far shadow/history and live checked XMODEM receive/send and maintained CRC YMODEM batch ownership; full PCPlus application remains incomplete.",
-  "binary_sha256": "32270b8dc4e0a2b089ff015d5fc56773e3a28b6f489a31c13439b9b0ee8ca0f3",
+  "binary_sha256": "eae23158210bf4a5d47e3c8d7c01e9da2ea25d5b62dd9c707588eea8698efdab",
   "matches_workspace_binary": true,
   "matches_workspace_manifest": true,
   "manifest": {
@@ -36,72 +36,72 @@
       "normalized_object_sha256": "01bd96165308ac2fd147d3634ee5e4495488fdcbdd11903889d2f8e37ac614e1"
     },
     "kind": "source-only-interactive-dos-terminal",
-    "binary_sha256": "32270b8dc4e0a2b089ff015d5fc56773e3a28b6f489a31c13439b9b0ee8ca0f3",
+    "binary_sha256": "eae23158210bf4a5d47e3c8d7c01e9da2ea25d5b62dd9c707588eea8698efdab",
     "data_stack_bytes": 64768,
     "memory_layout": {
       "near_bytes": 64768,
       "near_spare_bytes": 768,
-      "near_relative_segment": 7390,
-      "far_relative_segment": 16782,
+      "near_relative_segment": 7427,
+      "far_relative_segment": 16819,
       "shadow_offset": 0,
       "history_offset": 0,
       "far_bytes": 71192,
-      "history_relative_segment": 17294,
+      "history_relative_segment": 17331,
       "history_bytes": 63000,
-      "far_end_linear": 339704,
-      "stack_end_linear": 183008,
-      "loaded_module_bytes": 151892,
-      "minimum_allocated_module_bytes": 339728,
-      "retained_parent_paragraphs": 21248,
+      "far_end_linear": 340296,
+      "stack_end_linear": 183600,
+      "loaded_module_bytes": 152484,
+      "minimum_allocated_module_bytes": 340320,
+      "retained_parent_paragraphs": 21285,
       "far_pointer_relocations_verified": true,
-      "snapshot_relative_segment": 12688,
+      "snapshot_relative_segment": 12725,
       "snapshot_image_offset": 63504,
       "snapshot_bytes": 2000,
-      "snapshot_end_linear": 268512,
+      "snapshot_end_linear": 269104,
       "ui_screen_buffers": {
         "browser_screen": {
-          "relative_segment": 11438,
+          "relative_segment": 11475,
           "offset": 0,
           "bytes": 4000,
-          "start_linear": 183008,
-          "end_linear": 187008
+          "start_linear": 183600,
+          "end_linear": 187600
         },
         "ed_screen": {
-          "relative_segment": 11438,
+          "relative_segment": 11475,
           "offset": 4000,
           "bytes": 4000,
-          "start_linear": 187008,
-          "end_linear": 191008
+          "start_linear": 187600,
+          "end_linear": 191600
         },
         "program_screen": {
-          "relative_segment": 11438,
+          "relative_segment": 11475,
           "offset": 8000,
           "bytes": 4000,
-          "start_linear": 191008,
-          "end_linear": 195008
+          "start_linear": 191600,
+          "end_linear": 195600
         },
         "redisplay_live": {
-          "relative_segment": 11438,
+          "relative_segment": 11475,
           "offset": 12000,
           "bytes": 4000,
-          "start_linear": 195008,
-          "end_linear": 199008
+          "start_linear": 195600,
+          "end_linear": 199600
         },
         "redisplay_view": {
-          "relative_segment": 11438,
+          "relative_segment": 11475,
           "offset": 16000,
           "bytes": 4000,
-          "start_linear": 199008,
-          "end_linear": 203008
+          "start_linear": 199600,
+          "end_linear": 203600
         }
       },
       "far_ui_storage_bytes": 20000,
       "redisplay_snapshot_bytes": 63000,
-      "redisplay_snapshot_end_linear": 266008,
+      "redisplay_snapshot_end_linear": 266600,
       "redisplay_row_index_bytes": 494,
-      "redisplay_row_index_relative_segment": 12688,
+      "redisplay_row_index_relative_segment": 12725,
       "redisplay_row_index_offset": 63000,
-      "redisplay_row_index_end_linear": 266502,
+      "redisplay_row_index_end_linear": 267094,
       "controller_bridge_pairs_verified": 22,
       "modem_bridge_pairs_verified": 23,
       "command_menu_far_code_verified": true,
@@ -110,47 +110,47 @@
       "configuration_bridge_pairs_verified": 79,
       "redisplay_bridge_pairs_verified": 4,
       "aspect_far_services_verified": 16,
-      "aspect_resident_far_references_verified": 20,
+      "aspect_resident_far_references_verified": 21,
       "aspect_emit_cdecl_bridge_verified": true,
       "aspect_handoff_bytes": 48,
       "aspect_renderer_state_bytes": 4,
       "status_far_bridge_pairs_verified": 5,
       "status_script_label_bytes": 15,
-      "resident_code_bytes": 65210,
-      "resident_code_spare_bytes": 326,
+      "resident_code_bytes": 65294,
+      "resident_code_spare_bytes": 242,
       "code_segments": [
         {
           "name": "_TEXT",
           "kind": "CODE",
           "relative_segment": 0,
           "offset": 0,
-          "bytes": 65210
+          "bytes": 65294
         },
         {
           "name": "ASPECT_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4076,
+          "relative_segment": 4081,
           "offset": 0,
-          "bytes": 3330
+          "bytes": 3849
         },
         {
           "name": "CONFIG_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4285,
+          "relative_segment": 4322,
           "offset": 0,
           "bytes": 46724
         },
         {
           "name": "MODEM_CODE",
           "kind": "FARCODE",
-          "relative_segment": 7206,
+          "relative_segment": 7243,
           "offset": 0,
           "bytes": 1483
         },
         {
           "name": "PRINT_CODE",
           "kind": "FARCODE",
-          "relative_segment": 7299,
+          "relative_segment": 7336,
           "offset": 0,
           "bytes": 1449
         }
@@ -262,7 +262,7 @@
       "reconstruction/snapshot/copy.asm": "cdf139320f358efc4b49b9d9f3acabc8c076c8df32ea1d4ec53f2b317935c431",
       "reconstruction/snapshot/video_begin.asm": "683d6dc1c6eaf4969102d6ef14517d0d7c853c5d1b3666b9e19a4088cffb45df",
       "reconstruction/snapshot/video_end.asm": "33f4b5c26128013b4afb6e140033240f0a4df809e660795d7deeaa9adf5f6b54",
-      "src/terminal/aspect_renderer.asm": "686de27a90378cdbd6191fd12428f036bf9dc1a4f188aad0c99c497575c02f61",
+      "src/terminal/aspect_renderer.asm": "e1bc7c62a0d3e4e0b5a136d36ebf30cd450dcea6856b9111900d299dd4083992",
       "src/terminal/autostart.asm": "fe26d1f0c2a75f728440923cefab2be2005ce8f2054919f9072c39ad285e4491",
       "src/terminal/boundaries.asm": "33659c9d03aff791099d7b2f188f37350910379b46519ba09bd24eb5cb8b7f8f",
       "src/terminal/break_actions.asm": "1f203505825f9175dc1df1c4397aecd198bddaab0094613cee30fb60e3b4c7a9",
@@ -283,6 +283,7 @@
       "src/terminal/directory_edit_save.asm": "926235807dd032aec6662bd1bed44b05e25ec07b9f70ee9ab9081c8b787841fd",
       "src/terminal/directory_editor.asm": "8361e42aedbdceae88d5bc2d9d0072c835349ef34616941aac4a9e1096e2850d",
       "src/terminal/key_configuration.asm": "f2aa075a9ba3d615566f1a2105e50f3378ccc368af09c53b34b2155345f8f430",
+      "src/terminal/key_dispatch.asm": "de45a42bf31ead5d7189014cf8e56f17e8c3919a0016d8b9d083f3fff1d7c465",
       "src/terminal/key_output.asm": "e1577a02f1f1166682533779f6c358590a9e09bc8bf9dde022dd054e11dc08a0",
       "src/terminal/keyboard_data.asm": "05a64cd482cf50e2cc6d5eee18220b4b493cd4e7498aaa8adeb77b1ad1c56d1a",
       "src/terminal/line_edit.asm": "5972ce56da98ccc945bb0a43e259d9e095abe6d0caf56fd8d5ccfb90bd86536f",
@@ -319,7 +320,7 @@
       "src/terminal/translation.asm": "166421735869efc18bfa4290f1711c240b4b0f1d9430ca3a974d897964599f5d",
       "src/terminal/translation_edit.asm": "9de688d9bf95ea3196dd37e6651d244519b146756eddd28f4abe6a6aae26e003",
       "src/terminal/translation_reload.asm": "b8d75068437a79706bd2873f14c1824de7f3785c5460bed253c7e8cc59e187cd",
-      "src/terminal/transport.asm": "05d7e4b8c3c01e7925cea59952b3eb8343c80e64353d89a75c5b8c5bd6b1b789",
+      "src/terminal/transport.asm": "74f71a1604c5f1bd200c94985634f44ad257e51ac147fdfdef046d5332fc1ecd",
       "src/terminal/uart_data.asm": "4c37a129341e01667df80f17940791946667f4b0c081accd4e18230f29904789",
       "src/terminal/ui_screen_far.asm": "876b4b10ced4d03d4616c89e4861333c522d3747f2e15d01ef3a4413ad03d736",
       "src/terminal/upload_actions.asm": "512f26336ead890f022f463d86d555320f40cfd47eac508928588e407e5cbfb5",
@@ -395,7 +396,7 @@
       "reconstruction/uart/layout.inc": "1e732d890b17486bdace3f978276ce48e55da318df70787aa54475203fa9bd21",
       "reconstruction/ansi/dispatch-layout.inc": "1fab8c56d84c54bef9b5938b4f13d14fee0199ec1c813a643edd71d9d31aa949",
       "src/config/live_configuration.h": "bd73849fef4194bf10a60e04e784eff92fe3830bde47b9ca1b2c069909db0a06",
-      "src/aspect/resident_render.h": "71e95d397cc4613f8514ca3033c90090cb240d5b77ae2b98d2e3f08377af1549",
+      "src/aspect/resident_render.h": "44232ebc6a8b3ef11c8e38292a5b7b55ed1fdf73ceb286aea340e2fed7e06923",
       "src/aspect/resident_bridge.inc": "eb420da9a7a220db7ae32c4f2e216e6a22b0415ca4cb757d93baca46faefeccb",
       "src/aspect/renderer_policy.h": "f31d01c21a5d4447dc6f24cd24c0fe186690640c0b888375465d2a2a85cee676",
       "src/aspect/serial_handoff.h": "51db79078c78294d7f247da793839d8114ae6680e8fa5798b681b1c32648e7eb",

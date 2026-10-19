@@ -41,7 +41,7 @@ def main():
                   sources={str(p.relative_to(ROOT)): sha(p) for p in sources},
                   platform='8086 DOS, small model, near DS=SS, cdecl, 8192-byte stack',
                   diagnostic_build=False,
-                  scope='DOS CLI for trusted ASX and maintained ASP compilation; partial72-slot runtime with native WHEN/CWHEN and twelve SET/FETCH families. Explicit ASP or missing-ASX fallback invokes sibling ASPCOMP with captured diagnostics, scoped neutral INT0, live IRQ and proactive owned flow pause. EXECUTE retains session state across compilation and publishes current ASX labels. Capability5 inherits parent standard/enhanced BIOS selection; native read/peek retain occupiedAX0 and original normalization. Optional validated parent ASIO handback and resident rendering. Full language/UI scheduling, physical flow timing and arbitrary-bytecode safety remain unfinished.')
+                  scope='DOS CLI for trusted ASX and maintained ASP compilation; partial72-slot runtime with native WHEN/CWHEN and twelve SET/FETCH families. Explicit ASP or missing-ASX fallback invokes sibling ASPCOMP with scoped compiler faults and owned UART flow. EXECUTE retains session state and publishes current ASX labels. Capability6 retains inherited BIOS selection and adds shared parent profile key output through the child UART, with checked duplex snapshots and native-derived echo. Local UI/macros, half-duplex reverse-tab/insert/delete, full language/recorder, physical timing and arbitrary-bytecode safety remain unfinished.')
     (OUT / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')
     print('ASPECT.EXE', result['binary_sha256'])
 

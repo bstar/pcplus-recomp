@@ -45,11 +45,11 @@ word coverage includes values a particular physical BIOS might never produce.
 
 The child selects AUTO at invocation startup through the recovered7916 BDA
 detector. CPU replay checks every possible BDA0496 byte without mutating it.
-With an admitted parent, renderer capability5 inherits the parent's effective
+With an admitted parent, renderer capability5 introduced inheritance of its effective
 mode0/10h once before script execution. Thus explicit `/B:STANDARD` and
 `/B:ENHANCED` survive the child boundary, independently of AUTO. EXECUTE retains
 that selection; a new invocation resets inheritance. ASIO's descriptor remains
-version4/48 bytes; its guarded renderer capability is now5. Capabilities1–4
+version4/48 bytes; that checkpoint used renderer capability5. Capabilities1–4
 are rejected before UART access. Missing, duplicate, unsolicited, invalid or
 closed-lease policy callbacks fail explicitly.
 
@@ -69,12 +69,12 @@ under `build/aspect-keyboard/history/bios-counter-01` and
 `build/aspect-keyboard-mode-dos/bios-policy-01`; the passing parent run is
 `bios-policy-02` with the same product binaries.
 
-This fixes acquisition only. Ordinary script-time keys still reach the explicit
-unsupported dispatcher; native abort confirmation, full profile/macro/hotkey/UI
-dispatch and physical BIOS validation remain unfinished.
-The parent terminal keyboard path is unchanged. Full keyboard integration must
-preserve native mapping precedence and UART/renderer ownership across the child
-lease; substituting ASCII output alone would not complete that requirement.
+This checkpoint fixed acquisition. The subsequent
+[shared key-output integration](ASPECT_KEY_OUTPUT.md) uses capability6 to route
+ordinary script-time keys through the selected parent profile and actual child
+UART. Native abort confirmation, full macro/hotkey/UI dispatch and physical BIOS
+validation remain unfinished. The acquisition validation below retains its
+original binary identities.
 
 The [validation record](validation/aspect-keyboard.json) binds the product,
 objects, generated harness, source-only rebuild and regression results. Older

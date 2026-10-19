@@ -93,4 +93,9 @@ unsigned runtime_when_confirm_abort(void)
 {runtime_set_error(ASPECT_RUN_CANCELLED);return 1;}
 void runtime_when_abort(void){runtime_set_error(ASPECT_RUN_CANCELLED);}
 void runtime_when_dispatch_key(unsigned key)
-{(void)key;runtime_set_error(ASPECT_RUN_UNSUPPORTED);}
+{
+#if defined(ASPECT_RUNTIME_SERIAL)
+ if(aspect_render_active()){unsigned result=aspect_render_key(key);if(result)runtime_set_error(result);return;}
+#endif
+ (void)key;runtime_set_error(ASPECT_RUN_UNSUPPORTED);
+}

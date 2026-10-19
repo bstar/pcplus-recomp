@@ -32,6 +32,7 @@ extern terminal_menu_pending,terminal_deferred_count,terminal_deferred_head,term
 extern terminal_parser_active,_redisplay_active,_command_menu_active
 extern terminal_aspect_active,terminal_render_read,terminal_render_unread
 extern terminal_render_poll,terminal_render_send,terminal_render_string
+extern terminal_key_output
 global terminal_menu_pending_poll
 global terminal_poll_io,terminal_enqueue_al,terminal_tick_low,terminal_clock_ticks
 global ansi_next_byte,ansi_unread_byte,csi_transmit_byte,csi_transmit_string
@@ -114,6 +115,14 @@ ansi_unread_byte:
 ; AL -> bounded TX queue. No busy wait, no local echo. AX is preserved.
 ; Overflow terminates the session with explicit error3 instead of losing bytes.
 terminal_enqueue_al:
+ cmp word [terminal_aspect_active],0
+ je .ordinary
+ push ax
+ and ax,255
+ call far terminal_render_send
+ pop ax
+ ret
+.ordinary:
  push bx
  cmp word [terminal_quit],0
  jne .done
@@ -333,19 +342,12 @@ terminal_poll_io:
  jz .done
  jmp .unsupported
 .classify:
- call keyboard_classify_raw
- cmp ax,79
- jb .binding
- cmp ah,1
- jne .nonliteral
- call terminal_enqueue_al
- jmp .done
-.binding:
- call terminal_enqueue_key_slot
- jmp .done
-.nonliteral:
- cmp ax,0xfffe
- jne .done ; Original no-op/unmapped key, no wire bytes.
+ mov bx,0xffff
+ call far terminal_key_output
+ cmp word [terminal_quit],0
+ jne .done
+ or ax,ax
+ jz .done
 .unsupported:
  ; A recognized original local command needs application UI/services that have
  ; not been reconstructed. Keep this explicit instead of transmitting the key.

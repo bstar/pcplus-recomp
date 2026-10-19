@@ -501,10 +501,13 @@ BREAK edits apply during the session. A separate Y/N choice applies baud,
 line format and flow on the current port. Profiles4/6 have a separate confirmed
 keyboard/view reset. An idle COM move has its own confirmation and restores the old port before acquiring the new one; see [COM changes](docs/PORT_HANDOFF.md) and [setup from the terminal](docs/SETUP_LIVE.md).
 
-Current matched terminal/ASPECT packages use renderer capability5 to display the
+Current matched terminal/ASPECT packages use renderer capability6 to display the
 current script name after `EXECUTE`; see [the label protocol and checks](docs/ASPECT_SCRIPT_LABEL.md).
 The same capability inherits the parent's standard/enhanced BIOS selection;
 see [ASPECT keyboard acquisition](docs/ASPECT_KEYBOARD.md).
+Ordinary keys during scripts now use the parent's selected profile and the
+child UART through [shared key output](docs/ASPECT_KEY_OUTPUT.md). Local commands
+and several half-duplex editing actions remain unfinished.
 
 The [DOS compiler port](docs/ASPECT_DOS_COMPILER.md) provides `ASPCOMP.EXE`
 for the maintained ASPECT language subset. `ASPECT` compiles explicit ASP files

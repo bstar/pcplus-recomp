@@ -105,7 +105,7 @@ endpoint:
  je .denied
  cmp word [bx],0x5243
  jne .bad
- cmp word [bx+2],5
+ cmp word [bx+2],6
  jne .bad
  cmp word [bx+4],0x7123
  jne .bad

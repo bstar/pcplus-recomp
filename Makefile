@@ -888,3 +888,12 @@ test: test-aspect-keyboard
 test-aspect-keyboard-policy: aspect-runner
 	python3 standalone/check_aspect_keyboard_policy.py
 test: test-aspect-keyboard-policy
+
+.PHONY: test-terminal-key-output test-aspect-key-client test-keyboard-echo-native
+test-terminal-key-output: terminal
+	python3 standalone/check_terminal_key_output.py
+test-aspect-key-client: aspect-runner
+	python3 standalone/check_aspect_key_client.py
+test-keyboard-echo-native: keyboard_mapping
+	python3 standalone/check_keyboard_echo_native.py
+test: test-terminal-key-output test-aspect-key-client test-keyboard-echo-native

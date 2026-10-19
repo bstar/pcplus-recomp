@@ -1,0 +1,80 @@
+{
+  "passed": true,
+  "renderer_capability": 6,
+  "recorder_sha256": "23c78cb636a2b5f6ad80110c879aafe6d1be1b7edf6710d0c1e92f48cd5368bf",
+  "terminal_sha256": "eae23158210bf4a5d47e3c8d7c01e9da2ea25d5b62dd9c707588eea8698efdab",
+  "runner_sha256": "2cef1bd3a42eb39ef148db6b16eb0ef68e3965b0e7fe19042f44b23ebfbf916d",
+  "compiler_sha256": "cf924b18ae099619f6f83c8127b03e2b2ca39ce3f41a16f336e28585cc5e5941",
+  "reports": [
+    {
+      "path": "build/terminal-key-output/checks.json",
+      "sha256": "24c29cf7d65a869970413afa4022c20ff33efed1133d125636a3ef159671adac",
+      "checker_sha256": "8b488e406c28c4cd45f29af46528764dae4f4556da45927238d4fd44c7c90a55",
+      "cases": 837,
+      "scope": "Actual product far key core, raw classifier, bindings and queue instructions. Echo/cursor scalar endpoints are explicit recording fixtures; actual renderer and child UART covered separately. Full/half, FF wire/echo distinction, literal/control, native no-op/local rejection, aliases, malformed binding and atomic capacity failure. Half reverse-tab/insert/delete remain unsupported before output."
+    },
+    {
+      "path": "build/terminal-key-output/native-echo.json",
+      "sha256": "adeaafe4a36cabe3c02ad0b6bbcb07647263f1e73db56732cd060bb903884e76",
+      "checker_sha256": "82c98b42a4bb99281d5d1bf7fe93048b32353adaf6f0207407ee96c54020c720",
+      "cases": 316,
+      "scope": "Exact recovered OMF dispatcher instructions select emit slot and echo services for all79keys with duplex0/1, private hook/cursor-wrap/373C flags0. Emitter and every external service are declared recording boundaries. UI/status/reset services remain listed rather than treated as reconstructed; no actual echo execution, physical keyboard or complete native dispatcher claim."
+    },
+    {
+      "path": "build/aspect-keyboard/key-client-checks.json",
+      "sha256": "bcfe5f6cd6c2378aa714b5982e6fc08ace912efddb68d2779b17ad88e993cedc",
+      "checker_sha256": "1dc59fa22916a174ae829106d6c04a2a158d75c6c89535b753680e68fd7381df",
+      "cases": 14,
+      "scope": "Actual child key request/callback code and guarded stacks; explicit scalar parent boundary. Exact16bit key, inherited/changed duplex, one callback per request, missing/duplicate/nonzero selector, typed errors, retry cleanup, unsolicited/closed/old capability rejection. Actual parent profile/UART/echo tested separately."
+    },
+    {
+      "path": "build/aspect-keys-dos/shared-keys-05/checks.json",
+      "sha256": "f9e82ac10f31d36443f2188739438f9831f6546866e852d7876bfce9399de420",
+      "checker_sha256": "f2737b20be5a2e6f04634a6e6b5e57be0e3988f1ae612667b5284be9d4bb94be",
+      "cases": 10,
+      "scope": "Actual DOS BIOS keys during ASPECT WAITFOR, shared selected parent profile bindings, child-owned UART and real renderer echo. Owned peer withholds END until typed done, then script sends its password marker and continues; later parent keys still work. ANSI/VT220 full/half and binary custom KBD. No physical modem or full local-key/UI/macro claim."
+    },
+    {
+      "path": "build/aspect-keyboard/checks.json",
+      "sha256": "486a0f33c3ddfbd9a0ed309603dc5ce8b270a23b75adfe1bf796ea72295419fb",
+      "checker_sha256": "b8dbdea97a8a81ac7804d299990369a4411965089968585f70e9ac70e9b45fb0",
+      "cases": null,
+      "scope": "Exhaustive actual product reader CPU replay and8086 DOS execution in standard/enhanced modes with declared BIOS models. Both preserve occupiedAX0 versus emptyZF, read consumption and native normalization. CPU checks256 BDA flag patterns; DOS checks native WHEN state, disabled/deferred keyboard, file-reset retention and cancellation. No physical BIOS or full keyboard/UI dispatch claim."
+    },
+    {
+      "path": "build/aspect-source-compile/checks.json",
+      "sha256": "9b63ecb0c317ebee7a6b32970005c63d14124fc5b5b094dca2a04ff3355f6a82",
+      "checker_sha256": "42d8e7fcc5c59e35484b73d21e99702e7a5b584d35babfd87e090f3782c7bf19",
+      "cases": null,
+      "scope": "Actual production interpreter automatically compiles ASP/missing-ASX with original namespace/old-ASX rules, preserves chain state, caller PSP/INT0/23/24 and files, survives a foreign-DS compiler CPU fault and a leaked INT0 vector, cancels before/after compiler EXEC, and completes20 counted real compiler replacements in one invocation. UART/renderer/BBS composition remains separately required."
+    },
+    {
+      "path": "build/aspect-source-serial-dos/checks.json",
+      "sha256": "66540595aa1b9d63d21f6a346099f8c25fd23b583bfa6f64a1d7ecaf2ee1cdf5",
+      "checker_sha256": "1d299ca6a4656c94dde0e27b9d02a7ca22d84dc2665bb4c42c654ed8b03f143b",
+      "cases": 7,
+      "scope": "Actual production nested DOS compiler and8086 ASPECT UART IRQ across N/S/H/B flow. Checked proactive XOFF/XON for S/B, raw IRQ reception, retained numeric/BREAK state, native compiled bytecode, exact unread ASIO return, vectors/PIC/MCR/guards. No resident-renderer, physical modem or external BBS claim."
+    }
+  ],
+  "reproduced_outputs": 153,
+  "source_proof_sha256": "bf7d9c7922e30c0ebce3c33d977980be2a24f7903957bd997dd68682087b1fd8",
+  "original_inputs": [],
+  "whole_application_gates_closed": [],
+  "retained_fixture_failures": [
+    {
+      "label": "shared-keys-02",
+      "reason": "Cursor prediction omitted three displayed END characters."
+    },
+    {
+      "label": "shared-keys-04",
+      "reason": "Enhanced Home was incorrectly expected to perform legacy Home echo; corrected fixture explicitly selects STANDARD BIOS."
+    }
+  ],
+  "limitations": [
+    "Local menus/macros/HOOK/PROGRAM and abort confirmation remain unfinished during scripts.",
+    "Half-duplex reverse-Tab and Insert/Delete echo return unsupported before output.",
+    "Original blocking pacing and complete status/selection post-actions remain unfinished.",
+    "Native echo services in the CPU oracle are explicit recording boundaries; real rendering is exercised separately in DOS.",
+    "Physical BIOS, UART and Wi-Fi modem remain unverified; no complete application or universal BBS compatibility claim."
+  ]
+}

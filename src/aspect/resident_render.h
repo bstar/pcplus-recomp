@@ -3,23 +3,24 @@
 /* Maintained application RPC contract, not an original PCPlus structure.
  * ASIOv4 appends four words to the v3 descriptor: parent far entry offset,
  * segment, nonzero lease token, capability version. All four bind the guard.
- * Capability5 adds checked BIOS mode inheritance; capability4 added script labels.
+ * Capability6 adds shared profile key output; capability5 added BIOS inheritance.
  * Older capability versions are rejected explicitly.
  * Far request AX=operation/BX=value, AX=result, all other registers/FLAGS
  * preserved. Each context runs DS=SS on its own checked stack slice. */
 #define ASIO_VERSION_RENDER 4U
 #define ASIO_V4_SIZE 48U
-#define ASPECT_RENDER_CAP_VERSION 5U
+#define ASPECT_RENDER_CAP_VERSION 6U
 #define ASPECT_RENDER_CLIENT_MAGIC 0x5243U
 #define ASPECT_RENDER_CLIENT_SIZE 10U
 enum { ASPECT_RENDER_BEGIN=0, ASPECT_RENDER_EMIT=1, ASPECT_RENDER_END=2,
  ASPECT_RENDER_STATUS=3, ASPECT_RENDER_BREAK_POLICY=4,
  ASPECT_RENDER_BREAK_NOTICE=5, ASPECT_RENDER_SCRIPT_LABEL=6,
- ASPECT_RENDER_KEYBOARD_POLICY=7 };
+ ASPECT_RENDER_KEYBOARD_POLICY=7, ASPECT_RENDER_KEY=8 };
 enum { ASPECT_RENDER_RAW_WAIT=0, ASPECT_RENDER_UNREAD=1,
  ASPECT_RENDER_SEND=2, ASPECT_RENDER_POLL=3, ASPECT_RENDER_ERROR=4,
  ASPECT_RENDER_RAW_NOW=5, ASPECT_RENDER_BREAK_VALUE=6,
- ASPECT_RENDER_LABEL_BYTE=7, ASPECT_RENDER_KEYBOARD_MODE=8 };
+ ASPECT_RENDER_LABEL_BYTE=7, ASPECT_RENDER_KEYBOARD_MODE=8,
+ ASPECT_RENDER_KEY_DUPLEX=9 };
 typedef struct aspect_render_client {
  unsigned magic,version,token,callback_offset,callback_segment;
 } aspect_render_client;
@@ -43,6 +44,7 @@ unsigned __cdecl aspect_render_status(unsigned duplex);
 void __cdecl aspect_render_policy_reset(void);
 unsigned __cdecl aspect_render_policy_inherit(void);
 unsigned __cdecl aspect_render_keyboard_inherit(void);
+unsigned __cdecl aspect_render_key(unsigned key);
 /*0 begins a single owned cursor/notice bracket,1 ends it idempotently.
  * STATUS remains a separate operation; no child pointer crosses this API. */
 unsigned __cdecl aspect_render_break_notice(unsigned end);

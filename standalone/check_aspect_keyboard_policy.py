@@ -33,10 +33,10 @@ def main():
  assert m.call('_aspect_serial_close')==0
  assert m.call('_aspect_render_keyboard_inherit')==14
  cases.append(dict(name='unsolicited-and-closed-lease',passed=True))
- for old in (1,2,3,4):
+ for old in (1,2,3,4,5):
   m=Policy();m.words[-1]=old;m.publish()
   assert m.open()==1 and not m.writes and not m.get('_aspect_serial_active')
- cases.append(dict(name='capabilities-1-to-4-before-hardware',passed=True))
+ cases.append(dict(name='capabilities-1-to-5-before-hardware',passed=True))
  report=dict(passed=True,cases=cases,runner_sha256=client.sha(client.q.BINARY),checker_sha256=client.sha(Path(__file__)),reused_checker_sha256=client.sha(Path(client.__file__)),scope='Actual child code and checked callback stacks with explicit synchronous parent endpoint. Modes0/16, once per invocation, retained file-reset selection, duplicate/missing/out-of-range/unsolicited/closed rejection, and old capabilities before UART. Actual terminal policy tested separately.')
  out=client.q.ROOT/'build/aspect-keyboard/policy-checks.json';out.write_text(json.dumps(report,indent=2)+'\n')
  print('ASPECT keyboard policy',len(cases),'cases PASS')
