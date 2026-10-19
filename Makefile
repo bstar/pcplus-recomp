@@ -13,6 +13,15 @@ test-aspect-dispatch:
 	python3 standalone/check_aspect_dispatch.py
 test-aspect-dispatch-compat:
 	python3 standalone/check_aspect_dispatch.py --original analysis/pcplus-install/PCPLUS.EXE
+.PHONY: aspect-globals test-aspect-globals test-aspect-globals-compat
+all: aspect-globals
+test: test-aspect-globals
+aspect-globals:
+	python3 standalone/build_aspect_globals.py
+test-aspect-globals:
+	python3 standalone/check_aspect_globals.py
+test-aspect-globals-compat:
+	python3 standalone/check_aspect_globals.py --original analysis/pcplus-install/PCPLUS.EXE
 all: aspect-literal
 test: test-aspect-literal
 aspect-literal:

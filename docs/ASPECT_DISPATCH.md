@@ -112,3 +112,9 @@ in the retained anchored overlay2 exports. Static evidence does not imply runtim
 coverage of those routines. Real handlers, complete loader/resource/error
 lifecycle, compiler grammar/passes, recorder, FLOAT.RTE and live terminal
 invocations remain open. F13 and every whole-application gate remain open.
+
+The subsequent [global-string recovery](ASPECT_GLOBAL_STRINGS.md) implements the
+101 native D850/D88E bytes separately, with616 CPU scenarios and705,369 linked
+DOS assertions. It advances the loader's primitive layer and extends the fresh
+source build to67 outputs. Allocation, error handling and full script execution
+remain unresolved application services.

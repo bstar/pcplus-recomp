@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "sources": {
+    "src/aspect/global_strings.asm": "faf8d611f7b490866befd9affb11e3235b5b7fbd3e6bfe73aab4cc0c4a2b8c29",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "standalone/build_aspect_globals.py": "9b6d82182bc6976753dad9b9c1414139f122ffa6bed6ec2ee8e92f8e1cbfe667",
+    "standalone/check_aspect_globals.py": "293cb30875fc23a3bce2be4374d6fca8e47136efc59a16db46cd1b9b52544e7e",
+    "standalone/record_aspect_globals.py": "4be92e5b2b13b6a678c9f171aa040bad394e047411b00773832a15a0e90dbe88"
+  },
+  "diagnostic": {
+    "binary_sha256": "cb96ac730aefadb56b16a25196104d0bad8fc13d44d98a8977c9d4a6c9b67cb1",
+    "flat_sha256": "2375d3d0436ed254d52c441682ae07983dcb967c9fe9792bab208c4092890fad",
+    "sources": {
+      "src/aspect/global_strings.asm": "faf8d611f7b490866befd9affb11e3235b5b7fbd3e6bfe73aab4cc0c4a2b8c29",
+      "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+      "standalone/build_aspect_globals.py": "9b6d82182bc6976753dad9b9c1414139f122ffa6bed6ec2ee8e92f8e1cbfe667"
+    },
+    "original_inputs": [],
+    "scope": "Recovered lifecycle only; source-owned farheap/error callbacks. Counts0..128; no heap manager, full loader, or ASPECT VM claim."
+  },
+  "source_only_checks": {
+    "passed": true,
+    "cpu_cases": 616,
+    "DOS_summary": "ASPECT_GLOBALS 705369 checks 0 failures",
+    "binary_sha256": "cb96ac730aefadb56b16a25196104d0bad8fc13d44d98a8977c9d4a6c9b67cb1",
+    "flat_sha256": "2375d3d0436ed254d52c441682ae07983dcb967c9fe9792bab208c4092890fad",
+    "optional_original": null,
+    "original_inputs": [],
+    "check_sha256": "293cb30875fc23a3bce2be4374d6fca8e47136efc59a16db46cd1b9b52544e7e",
+    "tested_counts": "0..128 only; malformed values deliberately not executed",
+    "native_malformed_behavior": "Stores complete read AX and signed JG; FFFF is negative and skips loops; byte255 exceeds128-slot table. No bounds check or rollback. Release retains pointers/count; repeated release is unsafe.",
+    "scope": "Recovered routines execute unmodified with source-owned read/farheap/error callbacks. Error-return and stop-at-error are separate diagnostic models, not real error101/longjmp recovery. Real heap, loader and VM remain outside scope."
+  },
+  "optional_native_comparison": {
+    "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "file_start": 60000,
+    "file_end_exclusive": 60101,
+    "native_sha256": "2375d3d0436ed254d52c441682ae07983dcb967c9fe9792bab208c4092890fad",
+    "exact_bytes": 101,
+    "paired_cpu_cases": 616
+  },
+  "local_evidence": {
+    "build/aspect-globals/manifest.json": "1d3d8ebc3dbcad985d583da7d9688957f99d5018d6d8fc4af81e4108a42f98ab",
+    "build/aspect-globals/checks.json": "9dde47cd8a3fd74fe1b84e0d24269bd0bfb19bf390a245ba5d9f603903372867",
+    "build/aspect-globals/checks-native.json": "e62ea580a2af52f8ef90e003822a9cb6636ca7233b02ac334966aaec03aad8b2"
+  },
+  "limitations": [
+    "Recovered native allocation/release primitives, not a complete loader or VM.",
+    "DOS and CPU use declared heap/error callback substitutes.",
+    "No original heap manager, error UI or nonlocal unwind is exercised.",
+    "No rollback, bounds validation or idempotent release is implied."
+  ]
+}

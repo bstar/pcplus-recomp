@@ -11,10 +11,20 @@ including 8 KiB reception and bounded windowed sending.
 Saved Auto Download and Download directory now support
 [automatic ZMODEM reception](docs/ZMODEM_AUTOSTART.md) on both local BBS fixtures.
 
+ASPECT recovery now includes a [literal codec](docs/ASPECT_LITERAL.md),
+[native dispatcher](docs/ASPECT_DISPATCH.md) and
+[global-string primitives](docs/ASPECT_GLOBAL_STRINGS.md).
+[Compiler flow probes](docs/ASPECT_CONTROL_FLOW.md) establish call/branch and
+parameter encodings. These components do not yet compile or execute scripts
+in the maintained terminal.
+
 Current outputs:
 
 | Output | Inputs | Current purpose |
 | --- | --- | --- |
+| `build/aspect-literal/LITERAL.EXE` | Maintained C source only | Bounded nonempty ASPECT literal payload codec diagnostic |
+| `build/aspect-dispatch/DISPATCH.EXE` | Recovered assembly and source-owned callbacks | Exact215-slot dispatcher diagnostic; opcode handlers and application services remain unresolved |
+| `build/aspect-globals/GLOBALS.EXE` | Recovered assembly and source-owned callbacks | Native allocation/release diagnostic; complete heap/error owner and loader remain unresolved |
 | `build/transfer-metadata/METADATA.EXE` | Recovered source only, explicit diagnostic callbacks | Native YMODEM/TELINK headers, parsers and batch terminator; not a live batch owner |
 | `build/batch-header/HEADER.EXE` | Maintained source only | Bounded 128/1024-byte metadata codec, safe DOS basenames and optional fields |
 | `build/transfer-storage/TRANSFER.EXE` | Recovered and maintained source only | One native receive owner through actual staged DOS storage; UART/time are controlled peer fixtures |

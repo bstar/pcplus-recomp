@@ -1,0 +1,654 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "total_cases": 72,
+  "accepted": 49,
+  "rejected": 23,
+  "historical_runs": [
+    {
+      "path": "analysis/aspect-vm-runtime/control-01/report.json",
+      "report_sha256": "176c3dbf6c5b56bd2a46e62a4ab6db8340a2b2fba9c96e52962743a65926b1ec",
+      "recorded_harness_sha256": "aebdcf86403c7801b5a56165e843a471b882d0a87cc49cc5cb917df19454a984",
+      "cases": 45,
+      "accepted": 27,
+      "rejected": 18
+    },
+    {
+      "path": "analysis/aspect-vm-runtime/control-02/report.json",
+      "report_sha256": "64103d223099792832c60f634453a77ba05b9bd150c75fcaf8db206a09389d35",
+      "recorded_harness_sha256": "b3b040fa3f6cde6c155cd841386f7264a930313ce73296039691bc75d813b088",
+      "cases": 16,
+      "accepted": 13,
+      "rejected": 3
+    },
+    {
+      "path": "analysis/aspect-vm-runtime/control-03/report.json",
+      "report_sha256": "afbab444bea6741a73359bb4c7f0197246ec9cd4903419ee61471e88b621f456",
+      "recorded_harness_sha256": "63e41893645a1907cc09c5029ceffafd700bbe30cbf97ec890de3a422535f34d",
+      "cases": 11,
+      "accepted": 9,
+      "rejected": 2
+    }
+  ],
+  "cases": [
+    {
+      "name": "EMPTY",
+      "source_sha256": "b3ac80e1c2ca8b615ae460316748948fce56550d60683afc281cba40adafecff",
+      "success": true,
+      "asx_sha256": "b85a731bed7fb244d45379f0d3ee38f0180c450a3074982be7ba3755c80cce69",
+      "bytes": 3,
+      "run": "control-01"
+    },
+    {
+      "name": "EXIT",
+      "source_sha256": "d58b4ec7da2d6a567a1339feb1a1cc38bb2afec9636c4db2eba486b4fe5e8a34",
+      "success": true,
+      "asx_sha256": "76b904f07a1b3eb0f1ae8a9f041d28b1ac89b2d3cbe130977fa8ac25d7d332ac",
+      "bytes": 4,
+      "run": "control-01"
+    },
+    {
+      "name": "CALLF",
+      "source_sha256": "cb9d107db395c2c78f0c7f6a8af92d484ef8122ed7746e29397ae66d2ece8d95",
+      "success": true,
+      "asx_sha256": "ba006e5c7d3090d7c3d337160632eaff1e444e2a1b65a89982580146aff2948d",
+      "bytes": 14,
+      "run": "control-01"
+    },
+    {
+      "name": "GOSUBF",
+      "source_sha256": "6ff6544b81e88c14bb434085c8bfc6d381d26f3e1955c7f315fc15e9421abc1e",
+      "success": true,
+      "asx_sha256": "ba006e5c7d3090d7c3d337160632eaff1e444e2a1b65a89982580146aff2948d",
+      "bytes": 14,
+      "run": "control-01"
+    },
+    {
+      "name": "CALLB",
+      "source_sha256": "d50814b7125fc7a500c3352cded2e0285f2d8db7c6abb2e14279c8f816f4d77c",
+      "success": true,
+      "asx_sha256": "d067a228667163ec4623ca2ce767e41a1114d4242d68c0112ab5926290d95e5b",
+      "bytes": 19,
+      "run": "control-01"
+    },
+    {
+      "name": "CALL2",
+      "source_sha256": "4bf153c0fad6f6010e670a981ab57daa4644e86461056aadf0c58190b4557715",
+      "success": true,
+      "asx_sha256": "178a3876c25c4881e07b0ca3708b8d6904e408ac43bfe33de0d92e213f8029d7",
+      "bytes": 20,
+      "run": "control-01"
+    },
+    {
+      "name": "CALLLOC",
+      "source_sha256": "7b0beff59316b45ec36eb78f7f76eb0cdf5d353321a7e42812cb3c13dbcaeac1",
+      "success": true,
+      "asx_sha256": "4a3c5a46af58994c615958f41364bc72115ed8a16601c6f13da8a5986a1c24b2",
+      "bytes": 18,
+      "run": "control-01"
+    },
+    {
+      "name": "MAINLOC",
+      "source_sha256": "56a2a29151325250e34ecc33226006234fd44686d9f5e8f5eb1102616cdd906a",
+      "success": true,
+      "asx_sha256": "72e2279283dcec2bfdd71a2083c6cc841a1946e3245ebbf312e4694bc04e890a",
+      "bytes": 17,
+      "run": "control-01"
+    },
+    {
+      "name": "BOTHLOC",
+      "source_sha256": "81397f0022851c7d79c5d46f9d829a98896eef68e63022c82058903aadb61325",
+      "success": true,
+      "asx_sha256": "b956aeea9b7344e22e2cd0948688605ed35434a5453d5764af8bf414f4ed849b",
+      "bytes": 21,
+      "run": "control-01"
+    },
+    {
+      "name": "NESTCALL",
+      "source_sha256": "0b820c4407ce415c3076cc97f6f59d3c0a0a57b780906380f7544b31ef8ef355",
+      "success": true,
+      "asx_sha256": "f89c255f97606589105efdfaf0e36bdfe5274b5f76c1887bfc8aa5f17e48e75a",
+      "bytes": 22,
+      "run": "control-01"
+    },
+    {
+      "name": "CALLSELF",
+      "source_sha256": "595193e3af09d02fe70623c2bf48e41675056bf01cd68f24d5b66dff485ae1cc",
+      "success": true,
+      "asx_sha256": "ad03418e255f12b7264094fe4875cbc2c8448d52c88edbc4fc0d0d781d99cefa",
+      "bytes": 9,
+      "run": "control-01"
+    },
+    {
+      "name": "IF1",
+      "source_sha256": "41215e910986ae1261dbff62093b424a1438bcb4f403322c213adea99204dc8b",
+      "success": true,
+      "asx_sha256": "a8721142eab9a89dfc7b6dc6481b80ce6ee3eeaf222e6c58d7cab1a8d4899396",
+      "bytes": 20,
+      "run": "control-01"
+    },
+    {
+      "name": "IF0",
+      "source_sha256": "a012960eca0f4a975da03ab0a658a9d44371b3cc9d8c92123d55a68a20da9794",
+      "success": true,
+      "asx_sha256": "dd190551355f79b745b8cb3db0d1f04938380f72100355cda99cefc4ba2b154f",
+      "bytes": 20,
+      "run": "control-01"
+    },
+    {
+      "name": "IFELSE",
+      "source_sha256": "89506d6aa22b2a4aaed539620d38256f54a2f6e55402671a85b1129a42f29208",
+      "success": true,
+      "asx_sha256": "c1154e70e2f68c829f401838bbfd438b2c9a383a1cf42dfadd6bfe529b7206f9",
+      "bytes": 28,
+      "run": "control-01"
+    },
+    {
+      "name": "IFELIF",
+      "source_sha256": "9634cc396716a791fe093c4496717424102aa12fcffc93fc9204faa04aeaecc8",
+      "success": true,
+      "asx_sha256": "16e08ca6cca05145f94a934d8b67e4b07269bb44d6a715a4c58ffbdfcd72c36e",
+      "bytes": 42,
+      "run": "control-01"
+    },
+    {
+      "name": "IFCHAIN",
+      "source_sha256": "0835b53afac3c9ceab575c6b6362d0657b0f7f91a45916d72778c595878797b6",
+      "success": true,
+      "asx_sha256": "7f71cf8787b8c347c0b224edacd79fb3fc4fc5854eb627aa8eef9bb0ce449036",
+      "bytes": 50,
+      "run": "control-01"
+    },
+    {
+      "name": "IFNEST",
+      "source_sha256": "5a57d1c8d298df89e9bb82219d189a8e4d378bdc9e05ff1e4b0ac29d519691cd",
+      "success": true,
+      "asx_sha256": "239539f0286c04cdc623531ebd7c70e70db0b1cc1058169922b24f5912ff1f6b",
+      "bytes": 34,
+      "run": "control-01"
+    },
+    {
+      "name": "WHILE0",
+      "source_sha256": "d9ae5cf92b56dae0284adb1bb758fa14b9b304e1601c686f0bf572691e35bd44",
+      "success": true,
+      "asx_sha256": "d9c098b144ef4ea7f8aac715439af58443296a9b128125495b166054cec533fa",
+      "bytes": 25,
+      "run": "control-01"
+    },
+    {
+      "name": "WHILE1",
+      "source_sha256": "0ad3f0a3567bfc7e688b1ee4164f09654264b214a336e7cadcc78666e8ca346e",
+      "success": true,
+      "asx_sha256": "d2ecff6b35526b3243fd85217690c77ce673d0a3455bb35e987bc322fc1c2959",
+      "bytes": 25,
+      "run": "control-01"
+    },
+    {
+      "name": "WHILEX",
+      "source_sha256": "9c01bccfb1d63d37302aa0736fea61bb2a3a43f002aed5958cec183c2ae20e00",
+      "success": true,
+      "asx_sha256": "689a5688e8a88597be768138dc6a5c667424623f848243c30e794ae7ecafaaa9",
+      "bytes": 33,
+      "run": "control-01"
+    },
+    {
+      "name": "WHILEL",
+      "source_sha256": "6182e48f45d6a5b7aa649598fd7c1c3ad8230f1591a87729246fd40214dcc4ca",
+      "success": true,
+      "asx_sha256": "6d046603839476b8b6e1ddb0a2e685242c41f0b8baf1dad90418dd79a259d7f0",
+      "bytes": 33,
+      "run": "control-01"
+    },
+    {
+      "name": "WNEST",
+      "source_sha256": "35f049ded5bbce33179f2eefb670eb025196f317a8e4b08324ca8e68346787fc",
+      "success": true,
+      "asx_sha256": "24fa67842d4cfde587bd54e2a1d3d420f4cc755beb6c368da19ff673b39bc195",
+      "bytes": 51,
+      "run": "control-01"
+    },
+    {
+      "name": "WHIFX",
+      "source_sha256": "708f7d707050cf8d91e3702977662fb2d18ccc4f7c43958f5c829dafabd845d4",
+      "success": true,
+      "asx_sha256": "50e71bcd2c080469208cf921bdf4e46c8ab33ec8012fe55b287cce6cda2033c3",
+      "bytes": 41,
+      "run": "control-01"
+    },
+    {
+      "name": "BADX",
+      "source_sha256": "f5e546ba69dcbd523da3f5acb4011ca3bd9f784a19e6684b91c91c8b34f23f5e",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "BADL",
+      "source_sha256": "cc061431183b3f59bb1633b7dd9185754f2e0006537f40c8c1257bac625c118d",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "BADEND",
+      "source_sha256": "f306e79bdaed47cf97446f62ee5c6ded706a7da0de254463e771d84810609663",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "IFCMP",
+      "source_sha256": "3780d785b519c46e8fae23f017151ee29b12f73a1e467c065d6fde875ddd6cbf",
+      "success": true,
+      "asx_sha256": "b4ecd60ceeba920bfddd0cfccadcd211d22969d26fde0f03d2893f4a6aa8bcb0",
+      "bytes": 26,
+      "run": "control-01"
+    },
+    {
+      "name": "WVAR",
+      "source_sha256": "c93e8894de0082fbb51e65d1c4169c2d8a59ebbc2d2a03a4cf11e1ef4b64d89d",
+      "success": true,
+      "asx_sha256": "fe81ac489322f14f7d518c82dea305e3706faf0053f0413fea80baa180d84c6a",
+      "bytes": 50,
+      "run": "control-01"
+    },
+    {
+      "name": "PINT",
+      "source_sha256": "7963416693c2c92be00a94d65741aafa53d7da3485def64145ef3f998b4a272f",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "PNINT",
+      "source_sha256": "46cef8412016a2da4ba75eea387c15a6f941b59885edc08cc436cb3ac21e9ce3",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "PLINT",
+      "source_sha256": "9adf16a51cf4aee9cd971c83d0778789f9e4b303b6b3a2f41a8e65c02787b412",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "PLONG",
+      "source_sha256": "5e734eb7dbc6384f456d45d36a83e01bcd76decf8d25cc8d3fd2e1767eae6104",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "PNLONG",
+      "source_sha256": "b8f3ddded2682ce0cdea87a0ed7c3da32a4a5b9addb3d401c108d857a8c143a5",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "PLLONG",
+      "source_sha256": "98acd563deca6ce43b3695db3d64d1912d5c9bc11c7132c6cd9b409da9d130a2",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "PSTR",
+      "source_sha256": "5fc34d3109ffc538b5eebb2aec7d8271c56cf49c9e3cba473d6853790bd11882",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "PNSTR",
+      "source_sha256": "b17fdace4591017b19555081f43bce70d5787999f72d1de276532ea6753f0464",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "PLSTR",
+      "source_sha256": "409edf088d4ee0ae4f47c77af1e3d75236353bfbe3060febf9f62b21a5e15d95",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "PFLOAT",
+      "source_sha256": "f76814d4ab794239353b199e96d958a1b52208ef7243525c295d2731be28720d",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "PNFLOAT",
+      "source_sha256": "2b4f7ae1b3e26442c78530fc9b3dc959a7b7dcfaedc6f88df3e89cdc7de47d22",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "PLFLOAT",
+      "source_sha256": "c63c89462d92a0f45622d85aa0ae6b6360f43331e1e38ed2dfeca78592213ac2",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "P2INT",
+      "source_sha256": "eb01b667f098592cff3b0eecb53fd856e16a0eb12b0111ea8f753a84888bc930",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "P2COMMA",
+      "source_sha256": "dc48cada17ad829025764d4ce6f09ff02ac895a9a2cbfbfcbcc70af12ceec79f",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "PMIX",
+      "source_sha256": "f7d47e95fd9cf4984aaf0c4439cd1cbd42d03afe7764fe6a89351ede343c1db3",
+      "success": false,
+      "run": "control-01"
+    },
+    {
+      "name": "RETURN",
+      "source_sha256": "c43a5b2a7beea43eae114bc0c301e162890dcea3c12ad549b3033314a7575e97",
+      "success": true,
+      "asx_sha256": "9541647c7ee8d8abe02c9e899c7ebf605b838234037b7ef14702156a9620261f",
+      "bytes": 15,
+      "run": "control-01"
+    },
+    {
+      "name": "RETLOC",
+      "source_sha256": "1c30ddb06c3f7504f84ab3da9fa8ef8617539a8dcd5b1d15970cc04d1e26e1fb",
+      "success": true,
+      "asx_sha256": "eb783a5520491e7d47439aee4a2cfc62a7040b4e571149764e37b7157d082a24",
+      "bytes": 18,
+      "run": "control-01"
+    },
+    {
+      "name": "WINT",
+      "source_sha256": "6d91be11fc52904dc5f2275280be5d5007b7687f2a6fc44c256cd25e5d5dbf11",
+      "success": true,
+      "asx_sha256": "f691b8dd11611ea607df26c98a336f6a223243f408db439ef4af7be42259993e",
+      "bytes": 17,
+      "run": "control-02"
+    },
+    {
+      "name": "WLONG",
+      "source_sha256": "ffee0bbaf1c12f438f5622a05fd98745d822c4cd7c35cc9a1a362307596cd2a9",
+      "success": false,
+      "run": "control-02"
+    },
+    {
+      "name": "WSTR",
+      "source_sha256": "39ddfbcb52c6313e5b3474324905e005b5097b7ba01ca8085a324d6185f233f3",
+      "success": true,
+      "asx_sha256": "849a23a20da0e5d1c6e469ae1fb8301330f6fd45d58487753ef3f281353bb489",
+      "bytes": 23,
+      "run": "control-02"
+    },
+    {
+      "name": "WFLOAT",
+      "source_sha256": "992a07b90223b84b63d98f01e70556155ab8c9b491b60de12322dcdc535adb83",
+      "success": true,
+      "asx_sha256": "363fde95271375ef4571705a8c3aa6f1dbfd689a51f0ac8853524d75ef903def",
+      "bytes": 24,
+      "run": "control-02"
+    },
+    {
+      "name": "WLINT",
+      "source_sha256": "97a8cb3b5e0061e9217cbd28a53c329bea50388c2bdff72d18fcaa9b7f545ad2",
+      "success": true,
+      "asx_sha256": "0f71ab81fe49876be2a1a9d311e160bbe1b515e17e28073987628706d8b0b22d",
+      "bytes": 20,
+      "run": "control-02"
+    },
+    {
+      "name": "WLLONG",
+      "source_sha256": "6fbeaa27eab8f59eee4ef045f74b27085b76e868448f3c832405dc2df5ff6b59",
+      "success": false,
+      "run": "control-02"
+    },
+    {
+      "name": "WLSTR",
+      "source_sha256": "21fd32fd9a925bbf2db318fba7babf7dc3dbbd5c533bfa393344814b58437f8a",
+      "success": true,
+      "asx_sha256": "09fd13c2510ed8f681bba7b5c4b74dfc580d95f1bce81de09f6edb4c36b81c2b",
+      "bytes": 26,
+      "run": "control-02"
+    },
+    {
+      "name": "WLFLOAT",
+      "source_sha256": "ce7d493d0bc001269403cdc5069f36f1699d6a6ee333ca188e7933f5262b7f53",
+      "success": true,
+      "asx_sha256": "048fccd1c6dbe2673a42761e9654aa070c7a3064656cb1ff4fa87c8a32642170",
+      "bytes": 27,
+      "run": "control-02"
+    },
+    {
+      "name": "W2INT",
+      "source_sha256": "8ea5332609716025b0435d27d5bc9bc9ba1a0e06baf139824f62446e84dd8aff",
+      "success": true,
+      "asx_sha256": "001feec9d4bfe865d558d4b336a5862f1a004d89d131cae6f88c7d4354ddab8f",
+      "bytes": 28,
+      "run": "control-02"
+    },
+    {
+      "name": "W2COMMA",
+      "source_sha256": "6cad3d9944116a048399d963a2bbd8e74cba3033bd2edf385d7f2f834a7ee253",
+      "success": true,
+      "asx_sha256": "001feec9d4bfe865d558d4b336a5862f1a004d89d131cae6f88c7d4354ddab8f",
+      "bytes": 28,
+      "run": "control-02"
+    },
+    {
+      "name": "WMIX",
+      "source_sha256": "aaf27c9393ce8d024a321f1ba2dcd5842a486593768aea05a81d41ac8d6dca3d",
+      "success": true,
+      "asx_sha256": "d28b3708bcbc7595c36ddc9cc90418250ec630734d6fef9aef05d30502daa2bc",
+      "bytes": 34,
+      "run": "control-02"
+    },
+    {
+      "name": "WSCOMMA",
+      "source_sha256": "5f3ff95b6ad0e9318396ba1c078b90ce513cd0157e9c5a8219f7a79b611099b7",
+      "success": true,
+      "asx_sha256": "d28b3708bcbc7595c36ddc9cc90418250ec630734d6fef9aef05d30502daa2bc",
+      "bytes": 34,
+      "run": "control-02"
+    },
+    {
+      "name": "WPAREN",
+      "source_sha256": "cd3c32d7d91272a90f4933f2bb9067e007dbbd851b3582b70eac067999b2e034",
+      "success": false,
+      "run": "control-02"
+    },
+    {
+      "name": "WINIT",
+      "source_sha256": "cb061ec7a24f68aabe5e3b65c8b54b26bdc59e10745140fea98b7eacf81b979f",
+      "success": true,
+      "asx_sha256": "0ef3974761ce0703c077169ec1a26bb4e9af11627a79e23651134fe9ab6228fb",
+      "bytes": 36,
+      "run": "control-02"
+    },
+    {
+      "name": "FARCALL",
+      "source_sha256": "a1737e95f791a74eb11615f8da3da92aa85e6281deaa785a8905ceaf5f9d1ac1",
+      "success": true,
+      "asx_sha256": "f401ef0f66b998ab9bd56282b0fabb4d18625beae7b94490814addc57cf62914",
+      "bytes": 67214,
+      "run": "control-02"
+    },
+    {
+      "name": "FARMAIN",
+      "source_sha256": "687dffb8de4900909fe41560006b3feb6cb2a0c320b58b0810120886e6ab3983",
+      "success": true,
+      "asx_sha256": "6def8fba0dca1c2c96e46ea7ff3c19452a7783436b9cc34d6862b378c4996c6a",
+      "bytes": 67216,
+      "run": "control-02"
+    },
+    {
+      "name": "L32768",
+      "source_sha256": "bd4073024eeeffc05fae0182469456890ef9bccf60db12c56a487cdf14d80380",
+      "success": true,
+      "asx_sha256": "b7d8f05fb337249eebd931e1e96b94ed0d9ae7425360087e02504532728e436c",
+      "bytes": 20,
+      "run": "control-03"
+    },
+    {
+      "name": "L65535",
+      "source_sha256": "083e9c04ea7c7efa0e1963877ed0222d1fe4206a36a415acf4f4bbce18492f01",
+      "success": true,
+      "asx_sha256": "e9634937d1393f41093749830a52919e5e20333bbd795883eb896cd07b8c720b",
+      "bytes": 20,
+      "run": "control-03"
+    },
+    {
+      "name": "LMAX",
+      "source_sha256": "fa898beb1514a6cee0ca4802affe8d47ce837f0c171b1102e77d31bbac16a7ba",
+      "success": true,
+      "asx_sha256": "24ee9bc7ec61dc5c1f84fe97b92a4359cf2813e590febae992e28b3facb242ee",
+      "bytes": 20,
+      "run": "control-03"
+    },
+    {
+      "name": "LMIN",
+      "source_sha256": "9a9766703030ae3fc148d6757652b37ca1655f9d202a583579bee17143276619",
+      "success": true,
+      "asx_sha256": "aa3a5c07bd98bd5850fa8b498fe8301e3105dcd8d9476e2d30233a5ebbcba97d",
+      "bytes": 20,
+      "run": "control-03"
+    },
+    {
+      "name": "LOVER",
+      "source_sha256": "2e57705cfd01fade667f5bc4b9340ef43d28c468e69a5a8253a5a06b945e4fce",
+      "success": true,
+      "asx_sha256": "aa3a5c07bd98bd5850fa8b498fe8301e3105dcd8d9476e2d30233a5ebbcba97d",
+      "bytes": 20,
+      "run": "control-03"
+    },
+    {
+      "name": "LSUFF",
+      "source_sha256": "510f0a42599d4fcc36119bcb5a2539e2131d6244044710428a19accb2a9145c4",
+      "success": true,
+      "asx_sha256": "73deddf73d6879c81bb1dc6e56af88c3540c621b621b5e085858ad53300d820a",
+      "bytes": 20,
+      "run": "control-03"
+    },
+    {
+      "name": "LHEX",
+      "source_sha256": "0f81e60a565f4d2715d647905f7a5325660de136885aaae9183480f70cf4785c",
+      "success": false,
+      "run": "control-03"
+    },
+    {
+      "name": "LVAR",
+      "source_sha256": "a04c212f4b7a021fb02e4388dede24b84436f87a17d6cd0b100c9aa8b1318383",
+      "success": true,
+      "asx_sha256": "9d8226bb0a8fb311b8111d735f39d6f4fa6380fa9d820938aafcd52057b4a228",
+      "bytes": 21,
+      "run": "control-03"
+    },
+    {
+      "name": "LFROMI",
+      "source_sha256": "cfadec8fe8489803bcaecc7dd6777e9665ec9e166e6087d9ad2829ebc8bc881b",
+      "success": false,
+      "run": "control-03"
+    },
+    {
+      "name": "FARIF",
+      "source_sha256": "266e44de982a2826c5df40416ba3457d5ce41af9c342329fb14d5e588761dd9d",
+      "success": true,
+      "asx_sha256": "5e7e6cb262820fb290919b7c245d0d4046cb1f39faf21e711aa76a6e7c9148d7",
+      "bytes": 67217,
+      "run": "control-03"
+    },
+    {
+      "name": "FARWHILE",
+      "source_sha256": "5a646effcdc0f7e6e248998a55e92e55f5e54c176bbb69441e8fe8c5e4db0851",
+      "success": true,
+      "asx_sha256": "787d068cffe087d24e1b50214baa6728a86c1121ebe8af50a6a5a527c3823c5d",
+      "bytes": 67222,
+      "run": "control-03"
+    }
+  ],
+  "observations": [
+    "CALL and GOSUB produce byte-identical records in matched source context.",
+    "D0 C7 target32 for no-frame callee; C8 replacesC7 for callee with locals or parameters. Target is absolute file offset including header, pointing at D2 prefix where present, otherwiseCF.",
+    "Main not first adds62 followed absolute32 main entry address after header.",
+    "IF false branch15 and unconditional branch62 carry absolute32LE targets. FARIF and FARWHILE prove nonzero upperword.",
+    "ELSE jumps to end; WHILE end/LOOPWHILE jump to condition start; EXITWHILE jumps after loop.",
+    "RETURN emits94 without frame,95 with frame, identical to respective ENDPROC terminator.",
+    "WITH is required before actual arguments. Optional comma separates argument list; parenthesized(7) rejectedC001.",
+    "Caller numeric/string arguments useCC/CD prefixes before typed operand records. C8 target followedD2 signed16 negative argument byte count; this looks like cleanup but runtime interpretation needs separate native VM evidence.",
+    "INTPARM/STRPARM/FLOATPARM produce negative callerD2 counts2/81/8; LONGPARM count4. Callee returns95 even with parameters and zero locals.",
+    "Two integer parameter operands97 use offsets10/8; mixed int/string use97 offset89 and96 offset87.",
+    "7L is long typedAC32; decimal32768/65535/MAX accepted as long. Unsuffixed7 and hex0x8000 mismatch LONGPARM.",
+    "Original accepts decimal2147483648 and emits80000000, same as-2147483648. This is observed original permissiveness; it is not prescribed future safe compiler policy."
+  ],
+  "observed_address_fields": [
+    {
+      "run": "control-01",
+      "case": "CALLF",
+      "field_offset": 4,
+      "width": 4,
+      "little_endian_value": 9,
+      "target_byte": "cf",
+      "within_file": true
+    },
+    {
+      "run": "control-01",
+      "case": "CALLB",
+      "field_offset": 2,
+      "width": 4,
+      "little_endian_value": 11,
+      "target_byte": "cf",
+      "within_file": true
+    },
+    {
+      "run": "control-01",
+      "case": "CALLB",
+      "field_offset": 14,
+      "width": 4,
+      "little_endian_value": 6,
+      "target_byte": "cf",
+      "within_file": true
+    },
+    {
+      "run": "control-02",
+      "case": "FARCALL",
+      "field_offset": 4,
+      "width": 4,
+      "little_endian_value": 67209,
+      "target_byte": "cf",
+      "within_file": true
+    },
+    {
+      "run": "control-02",
+      "case": "FARMAIN",
+      "field_offset": 2,
+      "width": 4,
+      "little_endian_value": 67208,
+      "target_byte": "cf",
+      "within_file": true
+    },
+    {
+      "run": "control-03",
+      "case": "FARIF",
+      "field_offset": 10,
+      "width": 4,
+      "little_endian_value": 67216,
+      "target_byte": "94",
+      "within_file": true
+    },
+    {
+      "run": "control-03",
+      "case": "FARWHILE",
+      "field_offset": 10,
+      "width": 4,
+      "little_endian_value": 67221,
+      "target_byte": "94",
+      "within_file": true
+    }
+  ],
+  "limits": [
+    "Compiler-only emission experiment; generated ASX not executed in these runs.",
+    "Known original application flow smoke from earlier task is separate evidence and does not cover all present constructs.",
+    "No general control-flow decoder/compiler, recursion runtime safety, arbitrary malformed input, exception or resource-limit claims.",
+    "Historical run harness hashes differ because corpus expanded after each bounded run; source/ASX bytes and hashes remain preserved in each run directory."
+  ],
+  "private_ledger_sha256": "3fa7c4fe41c4046ce3f706145fa2b5b636106ba9b66a062eb40223d40af4e002",
+  "sources": {
+    "standalone/aspect_flow_probe.py": "63e41893645a1907cc09c5029ceffafd700bbe30cbf97ec890de3a422535f34d",
+    "standalone/record_aspect_flow.py": "15672ba2943f84c6ae4b27879f182bd371cbe32ef2cb5ed7c8cf36eb357aa00d"
+  }
+}

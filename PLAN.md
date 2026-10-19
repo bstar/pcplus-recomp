@@ -859,3 +859,15 @@ and keyword inventories constrain the next compiler/loader work. The diagnostic
 uses callback substitutes and cannot execute scripts. See
 `docs/ASPECT_DISPATCH.md`. It extends the original-free build to66 outputs;
 complete compiler/VM/recorder and F13 remain open.
+
+The loader's global-string primitives now add101 exact source-built bytes,
+616 CPU comparisons and705,369 linked8086 DOS assertions. Native unbounded
+count handling and retained freed pointers are explicit limitations; full
+loader ownership/error unwinding and execution remain open. See
+`docs/ASPECT_GLOBAL_STRINGS.md`. Fresh source rebuilding now covers67 outputs.
+
+ASPECT control-flow emission now has72 original compiler probes (49 accepted,
+23 rejected), including absolute32-bit targets beyond64KiB, framed calls,
+conditional/loop branches and typed parameters. These constrain the real
+compiler/VM reconstruction without claiming an implemented compiler. See
+`docs/ASPECT_CONTROL_FLOW.md`; actual typed frame/file/unwind composition is next.

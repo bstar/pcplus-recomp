@@ -254,3 +254,10 @@ compiler declaration probes provide baseline evidence, while the keyword/table
 inventories bound further reconstruction. See [ASPECT_DISPATCH.md](ASPECT_DISPATCH.md).
 This component joins a66-output original-free rebuild; full ASPECT execution,
 compiler, recorder and all whole-application gates remain open.
+
+[ASPECT global-string primitives](ASPECT_GLOBAL_STRINGS.md) add101 recovered
+bytes and a separate linkedDOS diagnostic to F13.616 CPU scenarios cover
+far pointers and allocation-failure models;705,369 DOS byte/state assertions
+cover counts0..128 and cleanup ordering. Heap/error callbacks remain models,
+with native bounds/rollback/double-release limitations explicit.67 outputs now
+rebuild from maintained source; F13 and all whole-application gates remain open.
