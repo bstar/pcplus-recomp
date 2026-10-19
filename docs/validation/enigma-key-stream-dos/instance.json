@@ -1,0 +1,19 @@
+{
+  "port": 23234,
+  "address": "127.0.0.1",
+  "candidate": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate",
+  "upstream_revision": "6c25317168b762f7d9088a54d3f8295438827a0e",
+  "client_sha256": "8cb3b4c8d439e0c43a09d9caf87b69560b3df1b51de053d70f2dc9b6dc9ea31b",
+  "key_stream_sha256": "daaac4d679b8562bfcd69b7345b7ec203169ea0f319d8dccd19c23fce261f1b4",
+  "stock_client_sha256": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+  "config_sha256": "7422bc03a7a13d66bb3bff99f34d3f7683b3c71a9137b33d22ad52e4d5adeddb",
+  "database_snapshots": {
+    "db/activitypub.sqlite3": "1b5ee6668810d6623162cf327317a231f3144ecc42ced7dacf96cbef2b071530",
+    "db/file.sqlite3": "e8e6153fe5004968e7cf37b50a919ddde7f7c08b7500807f090d6fc61f8ab60f",
+    "db/message.sqlite3": "6a956d15b44b32c88c89bdd443285962633ff65aa63f5881ba227f79819788f4",
+    "db/mods/codes.l33t.enigma.onelinerz.sqlite3": "63a51ef3631b6d96886a1319c8fdd68353d8c32c05890ff211ff7b1dd684d42b",
+    "db/system.sqlite3": "df5b4c4f169088498addd175c375abb72119412cfd64d4ec4032d81618809433",
+    "db/user.sqlite3": "7805109c874bdeb6457f6db6bc79c337ca3f3c7134b662325c164d87f959ef74"
+  },
+  "scope": "Separate patched server; synthetic DB snapshots; no writable stock runtime shared"
+}

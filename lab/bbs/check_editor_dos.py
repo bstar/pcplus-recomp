@@ -23,18 +23,25 @@ def audit(name,label,expect_page_down=True,disconnect=False,keyboard_profile='ne
  checks={'DOS_harness':result['passed'],'typed_draft_sent':b'ABCDE' in tx,'all_exercised_keys_emitted':all(value for key,value in observed.items() if expect_page_down or key!='page_down')}
  authority={}
  if name=='enigma':
-  start=json.loads((out/'server-log-start.json').read_text())['byte_offset'];log=ROOT/'build/bbs-lab/enigma/source/logs/enigma-bbs.log'
+  boundary=json.loads((out/'server-log-start.json').read_text());start=boundary['byte_offset']
+  stock_log=ROOT/'build/bbs-lab/enigma/source/logs/enigma-bbs.log'
+  log=Path(boundary.get('path',str(stock_log))).resolve()
+  assert log.is_relative_to(ROOT/'build') and log.is_file(),'Only owned server logs'
+  assert result.get('server_log',str(log))==str(log),'Harness/auditor server mismatch'
+  assert boundary.get('inode',log.stat().st_ino)==log.stat().st_ino,'Server log rotated during run'
+  stock_server=log==stock_log
   with log.open('rb') as f:f.seek(start);rows=[json.loads(x) for x in f if x.strip()]
   rows=[r for r in rows if datetime.fromisoformat(r['time'].replace('Z','+00:00')).timestamp()<=(out/'result.json').stat().st_mtime]
   sessions={r['sessionId'] for r in rows if r.get('menuName')=='telnetConnected'};assert len(sessions)==1,sessions
   session=sessions.pop();rows=[r for r in rows if r.get('sessionId')==session];menus=[r['menuName'] for r in rows if r.get('menuName')]
   entered='messageBaseNewPost' in menus;left=entered and 'messageBaseMainMenu' in menus[menus.index('messageBaseNewPost')+1:]
-  checks.update(stock_editor_entered=entered,no_post_saved=not any('posted message to' in r.get('msg','') for r in rows),insert_toggled_overtype='OVR ' in clean)
+  checks['stock_editor_entered' if stock_server else 'experimental_editor_entered']=entered
+  checks.update(no_post_saved=not any('posted message to' in r.get('msg','') for r in rows),insert_toggled_overtype='OVR ' in clean)
   body=clean[clean.find('KEYTEST'):]
   positions=[(int(row),int(col)) for row,col in re.findall(r'(?:INS|OVR) (\d+),(\d+)',body)]
   checks['home_moves_before_marker']=positions[:7]==[(1,2),(1,3),(1,4),(1,5),(1,6),(1,1),(1,2)]
   if not disconnect:checks['discard_returned_message_menu']=left
-  authority={'session_id':session,'menus':menus,'first_body_cursor_positions':positions[:20]};(out/'server-session.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in rows))
+  authority={'server_log':str(log),'stock_server':stock_server,'session_id':session,'menus':menus,'first_body_cursor_positions':positions[:20]};(out/'server-session.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in rows))
  else:
   csi=rb'\x1b\[[0-?]*[ -/]*[@-~]'
   checks.update(stock_editor_entered='FSEditor v1.105' in clean,draft_aborted='Aborted.' in clean,insert_toggled_overtype='Overwrite Mode' in clean,
@@ -43,7 +50,7 @@ def audit(name,label,expect_page_down=True,disconnect=False,keyboard_profile='ne
    tab_advances_to_next_stop=b'\x1b[5;8H \x1b[5;9H' in display,
    page_keys_report_document_boundaries=bool(re.search(b'T'+b'(?:'+csi+b')*'+b'\x07'+b'(?:'+csi+b')*'+b'\x07',display)),
    ctrl_y_delete_line_response=b'\x1b[M' in display and 'unsupported terminal' not in clean.lower())
- audit={'passed':all(checks.values()),'checks':checks,'observed_key_wire':observed,'binary_sha256':result['binary_sha256'],'serial':result['serial'],'authority':authority,'scope':'Actual loopback stock editor draft and captured DOS keyboard wire. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim.','exit_mode':'close_unsaved_connection' if disconnect else 'editor_discard_or_abort','unexercised_keys':[] if expect_page_down else ['page_down (invalid ADDKEY pgdn alias; rerun with pgdown)']}
+ audit={'passed':all(checks.values()),'checks':checks,'observed_key_wire':observed,'binary_sha256':result['binary_sha256'],'serial':result['serial'],'authority':authority,'scope':'Actual loopback editor draft and captured DOS keyboard wire. Server identity is recorded separately. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim.','exit_mode':'close_unsaved_connection' if disconnect else 'editor_discard_or_abort','unexercised_keys':[] if expect_page_down else ['page_down (invalid ADDKEY pgdn alias; rerun with pgdown)']}
  audit['modem_packet_delay_ms']=result.get('modem_packet_delay_ms',0)
  audit['keyboard_profile']=keyboard_profile
  if audit['modem_packet_delay_ms']:audit['scope']+=' Explicit modem buffering experiment; does not replace immediate-bridge failures or prove physical firmware compatibility.'

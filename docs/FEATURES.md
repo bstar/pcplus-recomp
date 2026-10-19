@@ -228,3 +228,13 @@ key-event and nine editor-state failures are reproduced; the candidate passes
 selected upstream regressions. This changes no DOS code or running stock server.
 Patched-server/DOS/transfer integration and physical modem validation remain
 open, so it does not resolve the stock interaction issue or close F04/F05.
+
+
+[Actual DOS paired ENiGMA evidence](ENIGMA_KEY_STREAM_DOS.md) extends the isolated
+parser experiment: the same binary/recipe with immediate forwarding fails Home
+and Insert on stock and passes seven editor checks on the patched instance. A
+same-session draft discard, automatic ZMODEM download and post-transfer file
+search passes 20 checks, with exact bytes, restored hardware, unchanged message
+count and one official download-count increment. The failed initial menu recipe
+is retained. No DOS code changed, and broader timing/physical modem and F04/F05/F08
+completion remain open.

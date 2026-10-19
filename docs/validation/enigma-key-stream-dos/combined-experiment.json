@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "mode": "editor-transfer",
+  "harness_exit": 0,
+  "editor_audit_exit": null,
+  "input_hashes": {
+    "build/terminal/TERMINAL.EXE": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
+    "build/bbs-lab/enigma/source/core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+    "build/bbs-lab/enigma/source/config/config.hjson": "daae39792955eaf7b99c45fc936d54b153f62ea0d3f77672f45a8ace756a7dbc",
+    "build/bbs-lab/key-stream-check-3/candidate/core/client.js": "8cb3b4c8d439e0c43a09d9caf87b69560b3df1b51de053d70f2dc9b6dc9ea31b",
+    "build/bbs-lab/key-stream-check-3/candidate/core/key_stream.js": "daaac4d679b8562bfcd69b7345b7ec203169ea0f319d8dccd19c23fce261f1b4",
+    "build/bbs-lab/key-stream-check-3/candidate/config/config.hjson": "7422bc03a7a13d66bb3bff99f34d3f7683b3c71a9137b33d22ad52e4d5adeddb",
+    "build/bbs-lab/key-stream-check-3/candidate/helpers/sexyz": "d1aeb1347fee332be75dd638dd4cb10a1bf7c418d96d0ebb79ca90470b0ed4bd",
+    "build/bbs-lab/key-stream-check-3/candidate/file_base/pcplus_transfer/PCXTEST.BIN": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6",
+    "lab/bbs/enigma_key_stream_dos.py": "b0172a448a7db6168a58c5d2f6ee30818ed93d587cb45f6c8429f578f592e6ff",
+    "lab/bbs/enigma_key_stream_fixture.py": "efa7499d01b0440cc8f7a6b2ea754b9bf3d5649cea16468e2a90c9bce1b4cbd1",
+    "lab/bbs/editor_dos_probe.py": "e151b915529b28aa293408114feed5617f0a41099cdf83c059e743869f58a932",
+    "lab/bbs/test_dos.py": "8e1728173c0e3b6d77ebd6fc91975040b2cb410248d3f79d92fcb8ef402cae41",
+    "lab/bbs/check_editor_dos.py": "abb1f880d002deea9d5506793c32a205da25c1e462f64798fc7fe02edb7bd5e6",
+    "lab/bbs/test_transfer_dos.py": "d8cbd432c3b1e9dab4dd7fc841defff5b18e379592a935b43a010657cd967964",
+    "lab/bbs/test_zmodem_dos.py": "a3ea299325259f6d7f31bfa31dc7d96ab6a4270a92469c546d58f4afe3250038",
+    "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+    "lab/bbs/audit_zmodem.py": "8a72f2b0033d5ab6eeb092a1bda3acc32f7b6d9c3fa7e71c5bc184d8a708c666",
+    "lab/bbs/editor-recipes.json": "72777d66ae84bd488f551cdb367deadbb47d4a4405f921f0d1ab0d578b1a3649"
+  },
+  "inputs_unchanged": true,
+  "message_count_before": 1,
+  "message_count_after": 1,
+  "modem_packet_delay_ms": 0,
+  "endpoint": "127.0.0.1:23234",
+  "scope": "Actual DOS against isolated patched ENiGMA; immediate byte-transparent modem; no physical modem or remote stock-server claim"
+}

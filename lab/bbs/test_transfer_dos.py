@@ -145,8 +145,11 @@ def self_check():
 
 def audit_enigma_server(output,mode,end_offset=None):
  """Retain bounded owned-server evidence for this one recorded DOS session."""
- output=Path(output);start=json.loads((output/'server-log-start.json').read_text())['byte_offset']
- log=ROOT/'build/bbs-lab/enigma/source/logs/enigma-bbs.log';full=log.read_bytes();end=len(full) if end_offset is None else end_offset
+ output=Path(output);boundary=json.loads((output/'server-log-start.json').read_text());start=boundary['byte_offset']
+ stock_log=ROOT/'build/bbs-lab/enigma/source/logs/enigma-bbs.log'
+ log=owned_file(boundary.get('path',str(stock_log)))
+ assert boundary.get('inode',log.stat().st_ino)==log.stat().st_ino,'Server log rotated during session'
+ full=log.read_bytes();end=len(full) if end_offset is None else end_offset
  assert isinstance(end,int) and start<=end<=len(full),'Invalid recorded server log boundary'
  raw=full[start:end]
  (output/'server-session.jsonl').write_bytes(raw)
@@ -165,7 +168,9 @@ def audit_enigma_server(output,mode,end_offset=None):
   try:ordered='fileTransferProtocolSelection' in before and after.index('fileBaseMainMenu')<after.index('fileBaseListEntries')
   except ValueError:pass
  checks=dict(unique_new_connection=len(connected)==1 and len(sessions)==1,unique_authenticated_session=len(authenticated)==1 and authenticated[0].get('sessionId')==session,stock_external_protocol_success=len(executions)==1 and len(exits)==1,ordered_protocol_return_and_file_list=ordered)
- result=dict(passed=all(checks.values()),checks=checks,session_id=session,mode=mode,menus=menus,log_byte_start=start,log_byte_end=start+len(raw),scope='Owned real ENiGMA server log slice from recorded pre-run offset; one connection/login, stock protocol exit, later file list. No additional connection created by this audit.')
+ if log!=stock_log:
+  checks['experimental_external_protocol_success']=checks.pop('stock_external_protocol_success')
+ result=dict(passed=all(checks.values()),checks=checks,server_log=str(log),stock_server=log==stock_log,session_id=session,mode=mode,menus=menus,log_byte_start=start,log_byte_end=start+len(raw),scope='Owned real ENiGMA server log slice from recorded pre-run offset; one connection/login, external protocol exit, later file list; stock/experimental identity recorded separately. No additional connection created by this audit.')
  (output/'server-session-audit.json').write_text(json.dumps(result,indent=2)+'\n');return result
 
 async def run(a):

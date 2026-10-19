@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "pid": 3295309,
+  "writable_regular_paths": [
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/activitypub.sqlite3",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/activitypub.sqlite3-shm",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/activitypub.sqlite3-wal",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/file.sqlite3",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/file.sqlite3-shm",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/file.sqlite3-wal",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/message.sqlite3",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/message.sqlite3-shm",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/message.sqlite3-wal",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/mods/codes.l33t.enigma.onelinerz.sqlite3",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/mods/codes.l33t.enigma.onelinerz.sqlite3-shm",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/mods/codes.l33t.enigma.onelinerz.sqlite3-wal",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/system.sqlite3",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/system.sqlite3-shm",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/system.sqlite3-wal",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/user.sqlite3",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/user.sqlite3-shm",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/user.sqlite3-wal",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/instance.log",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/logs/enigma-bbs.log",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/logs/enigma-bbs.web.log"
+  ],
+  "scope": "Live patched Node process writable file descriptor targets; standard /dev/null and sockets/pipes excluded"
+}

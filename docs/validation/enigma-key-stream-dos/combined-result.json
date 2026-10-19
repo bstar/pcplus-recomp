@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "standard_completion": true,
+  "name": "enigma",
+  "label": "key-stream-7314-editor-zmodem-2",
+  "mode": "download",
+  "binary_sha256": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
+  "payload_sha256": {
+    "PCXTEST.BIN": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6"
+  },
+  "checks": {
+    "DOS_normal_exit": true,
+    "hardware_restored": true,
+    "screen_captured": true,
+    "bbs_connected": true,
+    "binary_unchanged": true,
+    "payload_fixture_unchanged": true,
+    "observed_decoded_offsets_match": true,
+    "configuration_unchanged": true,
+    "automatic_invitation_then_receiver_negotiation": true,
+    "no_manual_transfer_keys": true,
+    "ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed": true,
+    "posttransfer_actual_menu_input_response": true,
+    "actual_validated_protocol": true,
+    "DOS_exact_length_PCXTEST.BIN": true,
+    "only_expected_received_files": true,
+    "unique_server_session_and_ordered_menus": true,
+    "same_session_editor_then_transfer": true,
+    "no_editor_post_saved": true,
+    "discard_menu_used": true,
+    "no_leftover_staging": true
+  },
+  "errors": [],
+  "seconds": 131.007,
+  "keys": "p1000 p12000 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 enter p5000 enter p5000 enter p5000 escape p2500 n p6000 enter p6000 M enter p5000 P enter p5000 enter p700 K enter p1500 A home H ins Z escape p500 right enter p1500 Q enter p1000 F enter p2000 S enter p1500 P C X T E S T . B I N enter p1500 enter p2000 t p1000 q p1000 escape p1000 D enter p1500 a p1000 enter p1000 p30000 enter p2000 S enter p1500 P C X T E S T . B I N enter p1500 enter p3000 a-x",
+  "command": "C:\\TERMINAL @D:\\TEST.PRM /D:lab.local:23234",
+  "serial": {
+    "com": 2,
+    "baud": 19200,
+    "flow": "HARD"
+  },
+  "scope": "Actual local BBS ZMODEM via unchanged observed Hayes/Telnet bridge and production DOS F2/AltR/AltS/UART/files. Independent passive header/data CRC, verified offsets, ZEOF and ZFIN/OO, opposite headers and post-transfer menu input/response. Synthetic media, no injected protocol replies or physical modem claim.",
+  "server_endpoint": {
+    "address": "127.0.0.1",
+    "port": 23234
+  },
+  "experimental_server_instance": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/instance.json"
+}

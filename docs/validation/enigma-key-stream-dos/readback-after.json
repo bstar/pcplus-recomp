@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "mutable_paths": {
+    "logs": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/logs",
+    "db": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db",
+    "modsDb": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/db/mods",
+    "dropFiles": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/drop",
+    "emailInbound": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/mail/email"
+  },
+  "server": {
+    "address": "127.0.0.1",
+    "port": 23234
+  },
+  "file": {
+    "name": "PCXTEST.BIN",
+    "path": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/file_base/pcplus_transfer/PCXTEST.BIN",
+    "sha256": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6",
+    "bytes": 11521,
+    "download_count": 18
+  },
+  "helper_sha256": "d1aeb1347fee332be75dd638dd4cb10a1bf7c418d96d0ebb79ca90470b0ed4bd",
+  "scope": "Official configuration and FileEntry API; isolated paths and physical file corroborated; no additional BBS connection"
+}

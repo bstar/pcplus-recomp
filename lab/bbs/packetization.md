@@ -214,3 +214,20 @@ and [frozen evidence](../../docs/validation/enigma-key-stream/report.json).
 This uses synthetic streams/configuration rather than a running patched BBS.
 The 100 ms deadline, raw transfer transitions and physical-network behavior
 still need end-to-end evaluation; the stock BBS interaction issue stays open.
+
+## Paired actual DOS server correction
+
+The current 731418bd binary now has a direct stock/patched comparison using the
+same canonical editor recipe, serial settings and zero modem buffering. Stock
+`key-stream-7314-stock-editor-1` reproduces Home and Insert failures; isolated
+`key-stream-7314-editor-1` passes all seven checks. Both emit all eight measured
+keys and save no post. The patched `key-stream-7314-editor-zmodem-2` additionally
+discards a draft and completes an automatic exact-file ZMODEM download plus
+post-transfer file search in one session. The first combined recipe remains a
+failed record because Escape did not quit the message menu.
+
+[Reproduction, isolation and scope](../../docs/ENIGMA_KEY_STREAM_DOS.md) and
+[frozen evidence](../../docs/validation/enigma-key-stream-dos/report.json) record
+the details. The separate server was stopped afterward. This establishes selected
+server-side correction workflows; remote stock boards and physical modem timing
+remain unresolved.

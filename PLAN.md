@@ -815,3 +815,21 @@ raw-owner lifecycle remain experimental. A separately configured patched-server
 DOS session, post-editor transfer checks, physical modem validation and remote
 stock BBS compatibility remain required. This is server-side evidence, not a
 DOS-client fix, and no F01–F16 gate closes.
+
+## ENiGMA paired actual DOS keyboard and transfer checkpoint
+
+The same 731418bd DOS runtime and canonical immediate-forwarding editor recipe
+now reproduce Home/Insert failures on stock ENiGMA and pass all seven editor
+checks on an isolated patched instance. A second patched session discards its
+draft, automatically receives the exact 11,521-byte file via ZMODEM and searches
+the file list afterward; all 20 checks pass, hardware/configuration are restored
+and official download count increments once. The candidate message count stays
+unchanged. An initial wrong message-menu Escape recipe remains a failed record.
+
+`docs/ENIGMA_KEY_STREAM_DOS.md` gives the Nix reproduction commands and limits;
+`docs/validation/enigma-key-stream-dos/report.json` freezes identities, source
+comparison and 92 local artifact hashes. The running stock fixture was unchanged;
+the separate patched instance was stopped after testing. This proves selected
+server-side correction workflows, not a DOS fix for unmodified remote boards.
+Physical modem/network timing, broader editor/transfer paths and all F01–F16
+whole-application gates remain open.

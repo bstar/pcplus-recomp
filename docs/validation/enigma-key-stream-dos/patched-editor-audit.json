@@ -1,0 +1,136 @@
+{
+  "passed": true,
+  "checks": {
+    "DOS_harness": true,
+    "typed_draft_sent": true,
+    "all_exercised_keys_emitted": true,
+    "experimental_editor_entered": true,
+    "no_post_saved": true,
+    "insert_toggled_overtype": true,
+    "home_moves_before_marker": true
+  },
+  "observed_key_wire": {
+    "home": true,
+    "end": true,
+    "insert": true,
+    "delete": true,
+    "page_up": true,
+    "page_down": true,
+    "tab": true,
+    "delete_line_ctrl_y": true
+  },
+  "binary_sha256": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
+  "serial": {
+    "com": 2,
+    "baud": 19200,
+    "line": "8N1",
+    "flow": "HARD",
+    "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented."
+  },
+  "authority": {
+    "server_log": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/key-stream-check-3/candidate/logs/enigma-bbs.log",
+    "stock_server": false,
+    "session_id": "04U0amY9vqO",
+    "menus": [
+      "telnetConnected",
+      "matrix",
+      "login",
+      "fullLoginSequenceLoginArt",
+      "fullLoginSequenceLastCallers",
+      "fullLoginSequenceWhosOnline",
+      "fullLoginSequenceOnelinerz",
+      "fullLoginSequenceNewScanConfirm",
+      "fullLoginSequenceUserStats",
+      "mainMenu",
+      "messageBaseMainMenu",
+      "messageBaseNewPost"
+    ],
+    "first_body_cursor_positions": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        1,
+        5
+      ],
+      [
+        1,
+        6
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        7
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        7
+      ],
+      [
+        1,
+        7
+      ],
+      [
+        1,
+        7
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ],
+      [
+        1,
+        10
+      ],
+      [
+        1,
+        10
+      ],
+      [
+        1,
+        10
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ]
+  },
+  "scope": "Actual loopback editor draft and captured DOS keyboard wire. Server identity is recorded separately. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim.",
+  "exit_mode": "close_unsaved_connection",
+  "unexercised_keys": [],
+  "modem_packet_delay_ms": 0,
+  "keyboard_profile": "network"
+}

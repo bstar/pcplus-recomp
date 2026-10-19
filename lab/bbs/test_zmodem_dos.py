@@ -65,6 +65,7 @@ async def run(a):
  if a.directory_browser:
   assert a.directory_fixture and a.entry<=10;prefix='p500 '+('down p100 '*(a.entry-1))+'enter p1000 '
  keys=prefix+a.keys+f' p{a.wait*1000} a-x'
+ assert len('ADDKEY '+keys)<500,'Complete ADDKEY command exceeds safe DOS bound'
  serial='\n'.join('serial'+str(i)+'='+(f'nullmodem server:127.0.0.1 port:{port} transparent:1 rxdelay:200 txdelay:1' if i==a.com else 'disabled') for i in range(1,5))
  config=f'''[sdl]
 output=surface
@@ -98,8 +99,9 @@ exit
 '''
  (output/'dosbox.conf').write_text(config)
  if a.name=='enigma':
-  server_log=ROOT/'build/bbs-lab/enigma/source/logs/enigma-bbs.log'
-  if server_log.exists():(output/'server-log-start.json').write_text(json.dumps({'byte_offset':server_log.stat().st_size})+'\n')
+  server_log=a.experimental_server_log or ROOT/'build/bbs-lab/enigma/source/logs/enigma-bbs.log'
+  if server_log.exists():
+   stat=server_log.stat();(output/'server-log-start.json').write_text(json.dumps({'byte_offset':stat.st_size,'path':str(server_log),'inode':stat.st_ino})+'\n')
  start=time.monotonic()
  with (output/'dosbox.log').open('w') as log:
   process=await asyncio.create_subprocess_exec('dosbox-x','-fastlaunch','-nogui','-conf',str(output/'dosbox.conf'),cwd=output,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),stdout=log,stderr=log)
@@ -174,7 +176,15 @@ exit
   except ValueError:checks['server_metadata_audit']=False
  elif a.mode=='upload':checks['server_metadata_audit']=False
  if a.name=='enigma':
-  try:checks['unique_server_session_and_ordered_menus']=audit_enigma_server(output,a.mode)['passed']
+  try:
+   server_audit=audit_enigma_server(output,a.mode)
+   checks['unique_server_session_and_ordered_menus']=server_audit['passed']
+   if a.editor_first:
+    menus=server_audit['menus'];editor=menus.index('messageBaseNewPost');transfer=menus.index('fileTransferProtocolSelection')
+    checks['same_session_editor_then_transfer']=editor<menus.index('messageBaseMainMenu',editor+1)<transfer
+    rows=[json.loads(line) for line in (output/'server-session.jsonl').read_text().splitlines() if line.strip()]
+    checks['no_editor_post_saved']=not any('posted message to' in r.get('msg','') for r in rows)
+    checks['discard_menu_used']=b'discard' in bytes(modem.display).lower()
   except Exception as error:errors.append('Server session audit: '+str(error));checks['unique_server_session_and_ordered_menus']=False
  checks['no_leftover_staging']=not list(output.rglob('PCRX.$$$'))
  (output/'screen.txt').write_text('\n'.join(screen[r*160:r*160+160:2].decode('cp437') for r in range(25))+'\n')
@@ -185,6 +195,8 @@ exit
   (output/'protocol.json').write_text(json.dumps(audit,indent=2)+'\n')
  confirmed=bool(audit and audit.get('controls') and audit.get('finish'))
  result=dict(passed=all(checks.values()),standard_completion=confirmed,name=a.name,label=a.label,mode=a.mode,binary_sha256=a.sha256,payload_sha256=payload_hash,checks=checks,errors=errors,seconds=round(time.monotonic()-start,3),keys=keys,command=command,serial=dict(com=a.com,baud=a.baud,flow=a.flow),scope='Actual local BBS ZMODEM via unchanged observed Hayes/Telnet bridge and production DOS F2/AltR/AltS/UART/files. Independent passive header/data CRC, verified offsets, ZEOF and ZFIN/OO, opposite headers and post-transfer menu input/response. Synthetic media, no injected protocol replies or physical modem claim.')
+ result['server_endpoint']={'address':'127.0.0.1','port':a.port}
+ result['experimental_server_instance']=str(a.server_instance) if a.server_instance else None
  (output/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2));return 0 if result['passed'] else 1
 
 def main():
@@ -196,6 +208,8 @@ def main():
  p.add_argument('--file',action='append',required=True,help='DOSNAME.BIN=owned build/fixture path')
  p.add_argument('--keys',required=True);p.add_argument('--start-input-hex',required=True)
  p.add_argument('--post-input-hex',required=True);p.add_argument('--post-menu',action='append',required=True)
+ p.add_argument('--server-instance',type=Path,help='Owned experimental ENiGMA instance.json on23234; default remains stock')
+ p.add_argument('--editor-first',action='store_true',help='Require same server session to discard an unsaved editor draft before transfer')
  p.add_argument('--server-directory');p.add_argument('--server-audit-command-json')
  p.add_argument('--wait',type=int,default=3);p.add_argument('--timeout',type=int,default=180)
  p.add_argument('--com',type=int,choices=range(1,5),default=2);p.add_argument('--baud',type=int,choices=RATES,default=19200)
@@ -204,7 +218,14 @@ def main():
  p.add_argument('--directory-fixture',action='store_true');p.add_argument('--directory-browser',action='store_true')
  p.add_argument('--entry',type=int,choices=range(1,201),default=3);a=p.parse_args()
  assert bytes.fromhex(a.start_input_hex) and bytes.fromhex(a.post_input_hex)
- assert a.port=={'synchronet':23231,'enigma':23233}[a.name],'Only the matching owned loopback BBS endpoint'
+ a.experimental_server_log=None
+ if a.server_instance:
+  from enigma_key_stream_fixture import verify_running,PORT
+  a.server_instance=owned_file(a.server_instance)
+  assert a.name=='enigma' and a.port==PORT and a.server_instance.name=='instance.json'
+  a.experimental_server_log=verify_running(a.server_instance.parent)
+ else:assert a.port=={'synchronet':23231,'enigma':23233}[a.name],'Only the matching owned loopback BBS endpoint'
+ assert not a.editor_first or a.name=='enigma','Editor/transfer sequence requires owned ENiGMA'
  output=ROOT/'build/bbs-lab/results'/a.name/a.label;output.mkdir(parents=True,exist_ok=True)
  with (output/'.lock').open('w') as lock:
   fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
