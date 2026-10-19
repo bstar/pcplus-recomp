@@ -1,0 +1,42 @@
+{
+  "component": "status-helpers-and-bounded-formatter",
+  "scope": "Sourcecomponent only; notcomplete2FB8/statusRPC/SET/applicationintegration",
+  "original_inputs_normal": [],
+  "native_bytes": 175,
+  "source_sha256": {
+    "src/status/status_helpers.asm": "fad79744c8fbe51ff42956e3d0cc530de19d8fc6cdc4b6ab626bbd65bc913759",
+    "src/status/status_formatter.c": "4cc9ef228190a7e847342338b2757ba85c610022fc3e9d6b0d1755285b37434b",
+    "src/status/status_formatter.h": "471caa182614bc605f07d76c705d5a70ce1d9551efb826713ab863bbac08e7d2",
+    "standalone/build_status_helpers.py": "9282d6a814dd0d442cb156448dc3c82ebc0e838ca299fb27de5b37f9db344975",
+    "standalone/check_status_helpers.py": "3b085f343fb58bcb026357f06a3d0838b55296d5643674b010df3b02f9a79c0d",
+    "standalone/status_helpers_host.asm": "94e3286363a97cba17f6561f89daf5f0b3873fa3bfce30c6598ba4c4446e4c7a",
+    "standalone/fixtures/status_helper_units.json": "999b3c6d5476a4ac13ed5fcbc5a1bfc6c71afcfa774ee4840a97671e806c6703",
+    "standalone/fixtures/status_formatter_vectors.json": "35a6e2c58262dea9ccac3daed6b635c55fc7490a9ec52de6ff4df843a8194ab9",
+    "docs/STATUS_HELPERS.md": "7d4702775cb05afc6292161503d4c6f546fa5882f5609211327f206a6b19a9a0"
+  },
+  "manifest_sha256": "f22710fd3d8ce175e83496b3e4a70f11a5a5faae44e47905d5dbe6433c49cbb4",
+  "checks_sha256": "ca47f7c873aabfa5722f6df8ab58c9af17074ef3dd18f27713c4ec83fd25dcc2",
+  "optional_original_checks_sha256": "4966c52be26fffc91c1e303f4f8cad0f942ecaf312f74b4b1ff68afcce3d489f",
+  "diagnostic_sha256": "6b161ecf7443d1d128e6ed79d8d5b8d3461ae84b0dab5fe389b71e91888946b2",
+  "results": {
+    "passed": true,
+    "cpu_cases": 6,
+    "actual8086_dos_formatter_cases": 25,
+    "actual8086_dos_helper_compositions": 9,
+    "optional_original_byte_comparison": 175
+  },
+  "optional_original_runtime_evidence": {
+    "formatter_vectors": 14,
+    "normal_status_cases": 4,
+    "alternate_status_cases": 1,
+    "private_ledger_sha256": "f3b59e3dbfb4e8ddeb83a511ed4e869e0e90bb4ddb4ce8970c58aaccb4f0133b"
+  },
+  "limitations": [
+    "PhysicalCGAuntested; CPUportsmodeled",
+    "No fulloriginalCRT; explicitboundedsubset",
+    "No parentRPC/segmentadoption/application lifecyclevalidation",
+    "Normalstatus81stvideocellwritepreserved; alternate80",
+    "Nativecount0nonCGAriskretained; notexercised"
+  ],
+  "zero_padding_policy": "Explicit unsupportedformat -2 for%03d/%01s; truncatedabc% also-2"
+}

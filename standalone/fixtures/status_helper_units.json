@@ -1,0 +1,37 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "unit": 1,
+      "entry": 30184,
+      "end": 30256,
+      "bytes": 72,
+      "source_evidence": "analysis/pcplus-main/functions/0x175e8.asm",
+      "sha256": "72c10e9a0d346f13e4232b74eee2566aaa8d5fdaac91717fafbf73b4cdf19a5c"
+    },
+    {
+      "unit": 2,
+      "entry": 30256,
+      "end": 30299,
+      "bytes": 43,
+      "source_evidence": "analysis/pcplus-main/functions/0x17630.asm",
+      "sha256": "f10d19c8a2da414db6c21405dec85ca715f03620e590c943852d3f6fe8bcaee5"
+    },
+    {
+      "unit": 3,
+      "entry": 12838,
+      "end": 12880,
+      "bytes": 42,
+      "source_evidence": "analysis/pcplus-main/functions/0x13226.asm",
+      "sha256": "3df99318ca42546665f801c401ec52a5f16150d80afc3d940ab41d75f41cb52c"
+    },
+    {
+      "unit": 4,
+      "entry": 32270,
+      "end": 32288,
+      "bytes": 18,
+      "source_evidence": "analysis/pcplus-main/functions/0x17e0e.asm",
+      "sha256": "9804c343b471756bbd6c56e1157c6ea1e6a9e8c343b406559e52fed0c6849450"
+    }
+  ]
+}

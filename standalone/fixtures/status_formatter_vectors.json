@@ -1,0 +1,545 @@
+{
+  "cases": [
+    {
+      "name": "normal",
+      "format_hex": "20252d31342e313473b320252d382e387320b3202563445820b32536732025632564256420b3204c4f4720252d372e3773b3205052494e54204f252d322e327320b320252d382e38732020",
+      "args": [
+        {
+          "string_hex": "544553542e415358"
+        },
+        {
+          "string_hex": "5654323230"
+        },
+        {
+          "word": 70
+        },
+        {
+          "string_hex": "3338343030"
+        },
+        {
+          "word": 78
+        },
+        {
+          "word": 8
+        },
+        {
+          "word": 1
+        },
+        {
+          "string_hex": "434c4f53454420"
+        },
+        {
+          "string_hex": "4646"
+        },
+        {
+          "string_hex": "4f46462d4c494e45"
+        }
+      ],
+      "expected_hex": "20544553542e415358202020202020b320565432323020202020b32046445820b3203338343030204e383120b3204c4f4720434c4f53454420b3205052494e54204f464620b3204f46462d4c494e452020",
+      "expected_result": 81,
+      "cap": 136,
+      "argc": 10,
+      "native": true
+    },
+    {
+      "name": "novel",
+      "format_hex": "20252d31342e313473b320252d382e387320b3202563445820b32536732025632564256420b3204c4f4720252d372e3773b3205052494e54204f252d322e327320b320252d382e38732020",
+      "args": [
+        {
+          "string_hex": "4c4f4e4753435249505458595a313233343536"
+        },
+        {
+          "string_hex": "454d554c4154494f4e2d4558545241"
+        },
+        {
+          "word": 72
+        },
+        {
+          "string_hex": "313135323030"
+        },
+        {
+          "word": 69
+        },
+        {
+          "word": 7
+        },
+        {
+          "word": 2
+        },
+        {
+          "string_hex": "4f4e20484f4c44204558545241"
+        },
+        {
+          "string_hex": "4e204558545241"
+        },
+        {
+          "string_hex": "4f4e2d4c494e45204558545241"
+        }
+      ],
+      "expected_hex": "204c4f4e4753435249505458595a31b320454d554c4154494f20b32048445820b33131353230302045373220b3204c4f47204f4e20484f4c44b3205052494e54204f4e2020b3204f4e2d4c494e45202020",
+      "expected_result": 81,
+      "cap": 136,
+      "argc": 10,
+      "native": true
+    },
+    {
+      "name": "empty",
+      "format_hex": "20252d31342e313473b320252d382e387320b3202563445820b32536732025632564256420b3204c4f4720252d372e3773b3205052494e54204f252d322e327320b320252d382e38732020",
+      "args": [
+        {
+          "string_hex": ""
+        },
+        {
+          "string_hex": ""
+        },
+        {
+          "word": 70
+        },
+        {
+          "string_hex": ""
+        },
+        {
+          "word": 79
+        },
+        {
+          "word": 5
+        },
+        {
+          "word": 1
+        },
+        {
+          "string_hex": ""
+        },
+        {
+          "string_hex": ""
+        },
+        {
+          "string_hex": ""
+        }
+      ],
+      "expected_hex": "202020202020202020202020202020b320202020202020202020b32046445820b3202020202020204f353120b3204c4f472020202020202020b3205052494e54204f202020b32020202020202020202020",
+      "expected_result": 81,
+      "cap": 136,
+      "argc": 10,
+      "native": true
+    },
+    {
+      "name": "cp437",
+      "format_hex": "20252d31342e313473b320252d382e387320b3202563445820b32536732025632564256420b3204c4f4720252d372e3773b3205052494e54204f252d322e327320b320252d382e38732020",
+      "args": [
+        {
+          "string_hex": "80ffb34e414d45"
+        },
+        {
+          "string_hex": "dbdc414e5349"
+        },
+        {
+          "word": 72
+        },
+        {
+          "string_hex": "333030"
+        },
+        {
+          "word": 83
+        },
+        {
+          "word": 8
+        },
+        {
+          "word": 2
+        },
+        {
+          "string_hex": "82434c4f534544"
+        },
+        {
+          "string_hex": "93"
+        },
+        {
+          "string_hex": "9f4f4e4c494e45"
+        }
+      ],
+      "expected_hex": "2080ffb34e414d4520202020202020b320dbdc414e5349202020b32048445820b32020203330302053383220b3204c4f472082434c4f534544b3205052494e54204f932020b3209f4f4e4c494e45202020",
+      "expected_result": 81,
+      "cap": 136,
+      "argc": 10,
+      "native": true
+    },
+    {
+      "name": "alt_empty",
+      "format_hex": "252d31302e313073252d31302e313073252d31302e313073252d31302e313073252d31302e313073252d31302e313073252d31302e313073252d31302e313073",
+      "args": [
+        {
+          "string_hex": ""
+        },
+        {
+          "string_hex": ""
+        },
+        {
+          "string_hex": ""
+        },
+        {
+          "string_hex": ""
+        },
+        {
+          "string_hex": ""
+        },
+        {
+          "string_hex": ""
+        },
+        {
+          "string_hex": ""
+        },
+        {
+          "string_hex": ""
+        }
+      ],
+      "expected_hex": "2020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020",
+      "expected_result": 80,
+      "cap": 136,
+      "argc": 8,
+      "native": true
+    },
+    {
+      "name": "alt_novel",
+      "format_hex": "252d31302e313073252d31302e313073252d31302e313073252d31302e313073252d31302e313073252d31302e313073252d31302e313073252d31302e313073",
+      "args": [
+        {
+          "string_hex": "46312d48454c50"
+        },
+        {
+          "string_hex": "46322d414c54"
+        },
+        {
+          "string_hex": "303132333435363738394558545241"
+        },
+        {
+          "string_hex": "58"
+        },
+        {
+          "string_hex": "4635"
+        },
+        {
+          "string_hex": "4636"
+        },
+        {
+          "string_hex": "4637"
+        },
+        {
+          "string_hex": "4638"
+        }
+      ],
+      "expected_hex": "46312d48454c5020202046322d414c5420202020303132333435363738395820202020202020202046352020202020202020463620202020202020204637202020202020202046382020202020202020",
+      "expected_result": 80,
+      "cap": 136,
+      "argc": 8,
+      "native": true
+    },
+    {
+      "name": "alt_cp437",
+      "format_hex": "252d31302e313073252d31302e313073252d31302e313073252d31302e313073252d31302e313073252d31302e313073252d31302e313073252d31302e313073",
+      "args": [
+        {
+          "string_hex": "808080808080808080808080"
+        },
+        {
+          "string_hex": "818181818181818181818181"
+        },
+        {
+          "string_hex": "828282828282828282828282"
+        },
+        {
+          "string_hex": "838383838383838383838383"
+        },
+        {
+          "string_hex": "848484848484848484848484"
+        },
+        {
+          "string_hex": "858585858585858585858585"
+        },
+        {
+          "string_hex": "868686868686868686868686"
+        },
+        {
+          "string_hex": "878787878787878787878787"
+        }
+      ],
+      "expected_hex": "8080808080808080808081818181818181818181828282828282828282828383838383838383838384848484848484848484858585858585858585858686868686868686868687878787878787878787",
+      "expected_result": 80,
+      "cap": 136,
+      "argc": 8,
+      "native": true
+    },
+    {
+      "name": "signed",
+      "format_hex": "25647c25647c25647c25647c2564",
+      "args": [
+        {
+          "word": 0
+        },
+        {
+          "word": 1
+        },
+        {
+          "word": 32767
+        },
+        {
+          "word": 32768
+        },
+        {
+          "word": 65535
+        }
+      ],
+      "expected_hex": "307c317c33323736377c2d33323736387c2d31",
+      "expected_result": 19,
+      "cap": 136,
+      "argc": 5,
+      "native": true
+    },
+    {
+      "name": "padded",
+      "format_hex": "5b2536645d5b252d36645d5b2531645d",
+      "args": [
+        {
+          "word": 65535
+        },
+        {
+          "word": 42
+        },
+        {
+          "word": 32768
+        }
+      ],
+      "expected_hex": "5b202020202d315d5b3432202020205d5b2d33323736385d",
+      "expected_result": 24,
+      "cap": 136,
+      "argc": 3,
+      "native": true
+    },
+    {
+      "name": "truncate",
+      "format_hex": "5b25332e33735d5b252d382e34735d5b252e30735d",
+      "args": [
+        {
+          "string_hex": "414243444546"
+        },
+        {
+          "string_hex": "58595a313233"
+        },
+        {
+          "string_hex": "49474e4f524544"
+        }
+      ],
+      "expected_hex": "5b4142435d5b58595a31202020205d5b5d",
+      "expected_result": 17,
+      "cap": 136,
+      "argc": 3,
+      "native": true
+    },
+    {
+      "name": "nulchar",
+      "format_hex": "41256342256343",
+      "args": [
+        {
+          "word": 0
+        },
+        {
+          "word": 255
+        }
+      ],
+      "expected_hex": "410042ff43",
+      "expected_result": 5,
+      "cap": 136,
+      "argc": 2,
+      "native": true
+    },
+    {
+      "name": "percent",
+      "format_hex": "3130302525205b25635d",
+      "args": [
+        {
+          "word": 65
+        }
+      ],
+      "expected_hex": "31303025205b415d",
+      "expected_result": 8,
+      "cap": 136,
+      "argc": 1,
+      "native": true
+    },
+    {
+      "name": "fitting",
+      "format_hex": "2573",
+      "args": [
+        {
+          "string_hex": "414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141"
+        }
+      ],
+      "expected_hex": "414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141",
+      "expected_result": 135,
+      "cap": 136,
+      "argc": 1,
+      "native": true
+    },
+    {
+      "name": "capexact",
+      "format_hex": "2573",
+      "args": [
+        {
+          "string_hex": "41424344"
+        }
+      ],
+      "expected_hex": "41424344",
+      "expected_result": 4,
+      "cap": 5,
+      "argc": 1,
+      "native": true
+    },
+    {
+      "name": "overflow",
+      "format_hex": "2573",
+      "args": [
+        {
+          "string_hex": "41424344"
+        }
+      ],
+      "expected_hex": "",
+      "expected_result": -1,
+      "cap": 4,
+      "argc": 1,
+      "native": false
+    },
+    {
+      "name": "overflowpad",
+      "format_hex": "253673",
+      "args": [
+        {
+          "string_hex": "41"
+        }
+      ],
+      "expected_hex": "",
+      "expected_result": -1,
+      "cap": 6,
+      "argc": 1,
+      "native": false
+    },
+    {
+      "name": "badformat",
+      "format_hex": "2578",
+      "args": [
+        {
+          "word": 12
+        }
+      ],
+      "expected_hex": "",
+      "expected_result": -2,
+      "cap": 136,
+      "argc": 1,
+      "native": false
+    },
+    {
+      "name": "badwidth",
+      "format_hex": "2531333673",
+      "args": [
+        {
+          "string_hex": "41"
+        }
+      ],
+      "expected_hex": "",
+      "expected_result": -2,
+      "cap": 136,
+      "argc": 1,
+      "native": false
+    },
+    {
+      "name": "badprecision",
+      "format_hex": "252e31333673",
+      "args": [
+        {
+          "string_hex": "41"
+        }
+      ],
+      "expected_hex": "",
+      "expected_result": -2,
+      "cap": 136,
+      "argc": 1,
+      "native": false
+    },
+    {
+      "name": "unfinished",
+      "format_hex": "61626325",
+      "args": [],
+      "expected_hex": "",
+      "expected_result": -2,
+      "cap": 136,
+      "argc": 0,
+      "native": false
+    },
+    {
+      "name": "shortvector",
+      "format_hex": "2573202564",
+      "args": [
+        {
+          "string_hex": "41"
+        }
+      ],
+      "expected_hex": "",
+      "expected_result": -3,
+      "cap": 136,
+      "argc": 1,
+      "native": false
+    },
+    {
+      "name": "zeroargs",
+      "format_hex": "2563",
+      "args": [
+        {
+          "word": 65
+        }
+      ],
+      "expected_hex": "",
+      "expected_result": -3,
+      "cap": 136,
+      "argc": 0,
+      "native": false
+    },
+    {
+      "name": "badcap",
+      "format_hex": "41",
+      "args": [],
+      "expected_hex": "",
+      "expected_result": -1,
+      "cap": 137,
+      "argc": 0,
+      "native": false
+    },
+    {
+      "name": "zeropad_decimal",
+      "format_hex": "25303364",
+      "args": [
+        {
+          "word": 7
+        }
+      ],
+      "expected_hex": "",
+      "expected_result": -2,
+      "cap": 136,
+      "argc": 1,
+      "native": false
+    },
+    {
+      "name": "zeropad_string",
+      "format_hex": "25303173",
+      "args": [
+        {
+          "string_hex": "41"
+        }
+      ],
+      "expected_hex": "",
+      "expected_result": -2,
+      "cap": 136,
+      "argc": 1,
+      "native": false
+    }
+  ],
+  "scope": "Authored bounded status format predictions; component cases not full application support. Negative codes are maintained safety policy."
+}

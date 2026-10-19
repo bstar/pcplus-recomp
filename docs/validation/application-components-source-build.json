@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "687ce103ea2a69c525abb4a6744b2f14605e52cc6941518b6d77001a5be5f6a7",
-  "source_file_count": 1797,
+  "source_snapshot_sha256": "a80f6cac6eeb3bec0448dab97e952599f1a638a754df08f367ec673e577d05c3",
+  "source_file_count": 1817,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,14 +16,14 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "8a7e2a707f19e16f85ff6d19a376b438b0e9de2f06dccf9c87d49194f717f453",
+  "build_log_sha256": "0dc5aabb7270c3d96dfe2b1613a790c4c972c4ab65e1f6ad0a34b7a41f71f6cf",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.GxuB2W/pcplus-source-proof-jygve9ev/checkout",
+  "source_checkout": "/tmp/nix-shell.YNhWFn/pcplus-source-proof-3ak53t63/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
-  "scope": "106 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
-  "output_count": 106,
+  "scope": "112 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+  "output_count": 112,
   "outputs": {
     "terminal/TERMINAL.EXE": {
       "sha256": "44a477b47d85ec2741e0ab7d5098b54f073150738750bbd421abb773f9831951",
@@ -470,6 +470,36 @@
       "matches_workspace": true,
       "workspace_sha256": "dc79408b51e75ae8430e0cab2b32a9ef37bce5f7f22bcc042b7ffe32e5716e1e"
     },
+    "status-helpers/unit1.bin": {
+      "sha256": "72c10e9a0d346f13e4232b74eee2566aaa8d5fdaac91717fafbf73b4cdf19a5c",
+      "matches_workspace": true,
+      "workspace_sha256": "72c10e9a0d346f13e4232b74eee2566aaa8d5fdaac91717fafbf73b4cdf19a5c"
+    },
+    "status-helpers/unit2.bin": {
+      "sha256": "f10d19c8a2da414db6c21405dec85ca715f03620e590c943852d3f6fe8bcaee5",
+      "matches_workspace": true,
+      "workspace_sha256": "f10d19c8a2da414db6c21405dec85ca715f03620e590c943852d3f6fe8bcaee5"
+    },
+    "status-helpers/unit3.bin": {
+      "sha256": "3df99318ca42546665f801c401ec52a5f16150d80afc3d940ab41d75f41cb52c",
+      "matches_workspace": true,
+      "workspace_sha256": "3df99318ca42546665f801c401ec52a5f16150d80afc3d940ab41d75f41cb52c"
+    },
+    "status-helpers/unit4.bin": {
+      "sha256": "9804c343b471756bbd6c56e1157c6ea1e6a9e8c343b406559e52fed0c6849450",
+      "matches_workspace": true,
+      "workspace_sha256": "9804c343b471756bbd6c56e1157c6ea1e6a9e8c343b406559e52fed0c6849450"
+    },
+    "status-helpers/STATUS.EXE": {
+      "sha256": "6b161ecf7443d1d128e6ed79d8d5b8d3461ae84b0dab5fe389b71e91888946b2",
+      "matches_workspace": true,
+      "workspace_sha256": "6b161ecf7443d1d128e6ed79d8d5b8d3461ae84b0dab5fe389b71e91888946b2"
+    },
+    "status-renderer/STATUS.EXE": {
+      "sha256": "2f5ef231f958b209e3560f8ab34fabb44711a70ab402e31db7ae959458aa867e",
+      "matches_workspace": true,
+      "workspace_sha256": "2f5ef231f958b209e3560f8ab34fabb44711a70ab402e31db7ae959458aa867e"
+    },
     "aspect-receive-commands/RECEIVE.EXE": {
       "sha256": "71080402c11a32f5711ca29bac1e52c11b82315bede3d19e7a6a44b8afb3dec1",
       "matches_workspace": true,
@@ -626,6 +656,8 @@
     "standalone/build_aspect_receive_policy.py",
     "standalone/build_aspect_directory.py",
     "standalone/build_aspect_set.py",
+    "standalone/build_status_helpers.py",
+    "standalone/build_status_renderer.py",
     "standalone/check_batch_download.py",
     "standalone/check_batch_upload.py",
     "standalone/check_capture_file.py",
@@ -637,6 +669,8 @@
     "standalone/test_aspect_compiler.py",
     "standalone/test_aspect_set_compiler.py",
     "standalone/check_aspect_set.py",
+    "standalone/check_status_helpers.py",
+    "standalone/check_status_renderer.py",
     "standalone/check_aspect_runner.py",
     "standalone/check_aspect_directory.py",
     "standalone/package_dos.py"

@@ -36,6 +36,10 @@ part of the full application goal.
 `docs/STATUS_MEMORY.md` records the status prerequisite: fixed redisplay prose
 and its row index now live outside DGROUP, increasing near headroom from48 to
 1,440 bytes while retaining the8KiB stack and checked DOS child-memory extents.
+`docs/STATUS_HELPERS.md` and `docs/STATUS_RENDERER.md` now cover the recovered
+status helpers, bounded formatter and full native body through checked code
+segment bridges. Nine full-renderer DOS cases and112 reproducible outputs pass;
+live state staging, the guarded STATUS operation and SET adoption remain next.
 
 ZMODEM now has live Alt-R/Alt-S/F2 dispatch, CONFIG_CODE placement, ten verified
 far callbacks, checked source seek/skip, exact variable receive packets and

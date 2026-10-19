@@ -2,7 +2,11 @@
 BITS 16
 CPU 8086
 %ifdef TERMINAL_RESET_OMF
+%ifdef STATUS_CONFIG_CODE
+SEGMENT CONFIG_CODE public class=FARCODE use16
+%else
 SEGMENT _TEXT public class=CODE use16
+%endif
 global terminal_reset_status_refresh
 extern text_fill_cells
 extern terminal_reset_status_message

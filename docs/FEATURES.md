@@ -530,3 +530,12 @@ near bytes instead of48. Linked full-history cases, actual DOS redisplay/export/
 clipboard workflows, all eight WHEN renderer compositions, scoped Synchronet
 and30ms-buffered ENiGMA editors, and106 reproducible outputs pass. Native status
 and SET integration remain open.
+
+The [full status component](STATUS_RENDERER.md) now executes recovered2FB8 and
+the175-byte helpers through real text/UI routines and explicit CONFIG/resident
+bridges. Nine actual8086DOS cases cover normal and alternate rows, all eight
+key-label fields, hidden/message branches and three typed formatter failures;
+the separate formatter/helper proof covers25 DOS format cases and nine helper
+compositions. Fresh source builds reproduce112 checked outputs. This provides
+the native drawing owner needed by SET; live parent state/RPC integration and
+all whole-application gates remain open.

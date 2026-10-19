@@ -1,0 +1,849 @@
+{
+  "schema": "status-renderer-v1",
+  "passed": true,
+  "original_inputs": [],
+  "sources": {
+    "src/status/status_renderer_bridge.asm": "e75cbbc6c3ac242084178e96d84bf80841773c2cbe7c9450ac3a9e28729adbc8",
+    "standalone/status_renderer_host.asm": "b9720eb238a706f95d1c2badd3dd00605575bd2057f95f499615fc47e7a74eff",
+    "standalone/status_renderer_state.inc": "abf3a20fcb39dfd7e74cada4cc8725602d5a889c39f4264e5b88448d80b58744",
+    "standalone/build_status_renderer.py": "d179c65651a52dec2d2ce9f2dfd7371a6e7da46a9ce5b6d4f064f952b4b6ec25",
+    "standalone/check_status_renderer.py": "9d3842570ac10cb1ebcf13b016dd6c6162facaea1b10e82cb35b83ee63a2faee",
+    "standalone/record_status_renderer.py": "7fdf8191317222686ca8beadc36ab291a95397b3ccd0a1cf9d24963a3850ed7c",
+    "reconstruction/terminal_reset/status_refresh.asm": "d4bb50f9c650a2b95fef3da4f493d1746f4d801fb1bde702e5e70f8f028b249f",
+    "reconstruction/terminal_reset/status_fill.asm": "36f39bc908c420b7fab7fa23e4220b18dc4763ecaaf96227c96c82624599a913",
+    "docs/STATUS_RENDERER.md": "30b0a97815e69d0068bce077b1ff18256cb6fa36c7b42aff0175280499016d0b"
+  },
+  "reports": {
+    "build/status-renderer/manifest.json": {
+      "sha256": "ecc1330f18e61c74f2195d187d54bdd44f0ad5e8459ac68621d73efddeca9723",
+      "result": {
+        "original_inputs": [],
+        "source_dependencies": {
+          "reconstruction/terminal_reset/status_refresh.asm": "d4bb50f9c650a2b95fef3da4f493d1746f4d801fb1bde702e5e70f8f028b249f",
+          "reconstruction/terminal_reset/status_fill.asm": "36f39bc908c420b7fab7fa23e4220b18dc4763ecaaf96227c96c82624599a913",
+          "src/status/status_helpers.asm": "fad79744c8fbe51ff42956e3d0cc530de19d8fc6cdc4b6ab626bbd65bc913759",
+          "src/status/status_renderer_bridge.asm": "e75cbbc6c3ac242084178e96d84bf80841773c2cbe7c9450ac3a9e28729adbc8",
+          "reconstruction/ui_windows/write_string.asm": "3d396d35c4643b8ce98f1f9bc4c830f6e8a94e81d1e885dcf1a6be8ca3260792",
+          "reconstruction/ui_windows/coordinate.asm": "ca53ed156532cdca228d4295d3a5e57fb131c94dd98e3c43887b63e0c2e396fb",
+          "reconstruction/ui_windows/cga_blank.asm": "ae36b284da023f64dc4d80db177469e6225b34b13406bf0d4c3057e356d09ade",
+          "reconstruction/ui_windows/cga_unblank.asm": "acf6dfe88a10241104a75b1934507ca05d4761604aa51406632e4e06f2e2e339",
+          "reconstruction/text/fill.asm": "f511a93dd8659be87a5bc98cae45219c4e47ce9b2241a3f05504c84bce1765b2",
+          "reconstruction/text/packed.asm": "cc41e79f46e3ccb38538b0b3b4fffcbe32e5c9e75a20f1d408724f7554f391b0",
+          "reconstruction/text/cga_sync.asm": "f25ab8dae04c08d47f9a1410d4470e1ea36f6be6a0bda2fbb2122520c3226b37",
+          "reconstruction/program_exec/strlen.asm": "a3a4f98217c60ca930b83060071be356bb2340740f6a994e450fecab13d0f5af",
+          "standalone/status_renderer_host.asm": "b9720eb238a706f95d1c2badd3dd00605575bd2057f95f499615fc47e7a74eff",
+          "src/status/status_formatter.c": "4cc9ef228190a7e847342338b2757ba85c610022fc3e9d6b0d1755285b37434b",
+          "src/status/status_formatter.h": "471caa182614bc605f07d76c705d5a70ce1d9551efb826713ab863bbac08e7d2",
+          "standalone/status_renderer_state.inc": "abf3a20fcb39dfd7e74cada4cc8725602d5a889c39f4264e5b88448d80b58744",
+          "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919"
+        },
+        "builder_sha256": "d179c65651a52dec2d2ce9f2dfd7371a6e7da46a9ce5b6d4f064f952b4b6ec25",
+        "binary_sha256": "2f5ef231f958b209e3560f8ab34fabb44711a70ab402e31db7ae959458aa867e"
+      }
+    },
+    "build/status-renderer/checks.json": {
+      "sha256": "bc56b6281eaa350991040a9ada37675284e036208660a57415da5c0686e9976a",
+      "result": {
+        "passed": true,
+        "original_inputs": [],
+        "binary_sha256": "2f5ef231f958b209e3560f8ab34fabb44711a70ab402e31db7ae959458aa867e",
+        "manifest_sha256": "ecc1330f18e61c74f2195d187d54bdd44f0ad5e8459ac68621d73efddeca9723",
+        "checker_sha256": "9d3842570ac10cb1ebcf13b016dd6c6162facaea1b10e82cb35b83ee63a2faee",
+        "predictions_sha256": "8c87c2545db024680a93b38adadbcd25a1eab9ff4cd734b1399fd42cd9344fa9",
+        "cases": [
+          {
+            "name": "FDX.BIN",
+            "passed": true,
+            "bytes": 4004,
+            "sha256": "b9584e3609abbae13a5a8c4565a54cdbecc803804ddacf7db67b330a70052963",
+            "after_visible_hex": "201fcccc"
+          },
+          {
+            "name": "HDX.BIN",
+            "passed": true,
+            "bytes": 4004,
+            "sha256": "978c611984b2f2012a0d965c3e1a18765bf350dbd62ed251c2f156dda11cefae",
+            "after_visible_hex": "201fcccc"
+          },
+          {
+            "name": "ALT.BIN",
+            "passed": true,
+            "bytes": 4004,
+            "sha256": "0e9ff4cf2ddc32dca4703b3df423dcaa603290bb7dea78d9f263c5fbba9e2d7c",
+            "after_visible_hex": "cccccccc"
+          },
+          {
+            "name": "HIDDEN.BIN",
+            "passed": true,
+            "bytes": 4004,
+            "sha256": "d9071c94f240a30ee137880449a70354d99ceb60e95788b37fadb1a71e52f92f",
+            "after_visible_hex": "cccccccc"
+          },
+          {
+            "name": "MESSAGE.BIN",
+            "passed": true,
+            "bytes": 4004,
+            "sha256": "eb57f9125afb1f7222ff131cb9da23550d860bc64854fe186a0841a450c10cdd",
+            "after_visible_hex": "cccccccc"
+          },
+          {
+            "name": "LABELS.BIN",
+            "passed": true,
+            "bytes": 4004,
+            "sha256": "4a8f088c115cb6e0199fff463ee99d21d4834ea83ac2802344f1e715aa400cb9",
+            "after_visible_hex": "cccccccc"
+          },
+          {
+            "name": "FORMAT.BIN",
+            "passed": true,
+            "bytes": 4004,
+            "sha256": "69cb2c22e221508e5d8eb89e876ec1c43edd26fa3fdb12861cb7eff8b794b362",
+            "after_visible_hex": "cccccccc"
+          },
+          {
+            "name": "OVERFLOW.BIN",
+            "passed": true,
+            "bytes": 4004,
+            "sha256": "69cb2c22e221508e5d8eb89e876ec1c43edd26fa3fdb12861cb7eff8b794b362",
+            "after_visible_hex": "cccccccc"
+          },
+          {
+            "name": "ARGS.BIN",
+            "passed": true,
+            "bytes": 4004,
+            "sha256": "69cb2c22e221508e5d8eb89e876ec1c43edd26fa3fdb12861cb7eff8b794b362",
+            "after_visible_hex": "cccccccc"
+          }
+        ],
+        "scope": "Actual8086DOS full recovered515B status body and175B helpers, maintained far bounded formatter, real native text/UI VRAM functions, actual CONFIG/resident RETN/cdecl bridges. Six successful status cases plus three typed formatter failures compare all4004bytes including native81st cell, eight distinct key-label fields and emphasis attributes. Rejected formats/overflow/argument exhaustion return3/7/10; native post-format emphasis writes remain explicit in failure expectations. DS=SS, SP/BP/SI/DI/IF/DF and stack guards checked in DOS. Carrier is explicit diagnostic word; parent RPC, production state staging, physical DCD/CGA and full application integration remain open."
+      }
+    },
+    "docs/validation/application-components-source-build.json": {
+      "sha256": "be072ecef4fe93908c4bc1d3544567515e2c6711f40688328dcfe74c0b35a714",
+      "result": {
+        "passed": true,
+        "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
+        "source_snapshot_sha256": "a80f6cac6eeb3bec0448dab97e952599f1a638a754df08f367ec673e577d05c3",
+        "source_file_count": 1817,
+        "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
+        "excluded_top_level_paths": [
+          ".git",
+          "analysis",
+          "build",
+          "install",
+          "original",
+          "originals"
+        ],
+        "original_executable_present": false,
+        "original_install_present": false,
+        "REA_database_present": false,
+        "previous_build_outputs_present": false,
+        "build_log_sha256": "0dc5aabb7270c3d96dfe2b1613a790c4c972c4ab65e1f6ad0a34b7a41f71f6cf",
+        "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
+        "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
+        "source_checkout": "/tmp/nix-shell.YNhWFn/pcplus-source-proof-3ak53t63/checkout",
+        "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
+        "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
+        "scope": "112 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+        "output_count": 112,
+        "outputs": {
+          "terminal/TERMINAL.EXE": {
+            "sha256": "44a477b47d85ec2741e0ab7d5098b54f073150738750bbd421abb773f9831951",
+            "matches_workspace": true,
+            "workspace_sha256": "44a477b47d85ec2741e0ab7d5098b54f073150738750bbd421abb773f9831951"
+          },
+          "config-dos/CONFIG.EXE": {
+            "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
+            "matches_workspace": true,
+            "workspace_sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78"
+          },
+          "config-dos/CFGFAULT.EXE": {
+            "sha256": "e0a307b0c064cdb210889c8e57cead17f5bf4dde523b8679e5e96a5cfa9cd82a",
+            "matches_workspace": true,
+            "workspace_sha256": "e0a307b0c064cdb210889c8e57cead17f5bf4dde523b8679e5e96a5cfa9cd82a"
+          },
+          "config-replace/REPLACE.EXE": {
+            "sha256": "14daea33ed04c9639633f4ede3c951745c2c4ef36cf10f7b9d790265facb11a6",
+            "matches_workspace": true,
+            "workspace_sha256": "14daea33ed04c9639633f4ede3c951745c2c4ef36cf10f7b9d790265facb11a6"
+          },
+          "config-replace/REPFAULT.EXE": {
+            "sha256": "cc19bb968bb1ea389c6841f9ae935bdd69960841cb6a604b53eb003ee12fbc46",
+            "matches_workspace": true,
+            "workspace_sha256": "cc19bb968bb1ea389c6841f9ae935bdd69960841cb6a604b53eb003ee12fbc46"
+          },
+          "config-abi/ABI.EXE": {
+            "sha256": "ee150a767d6072441b8727c246040f4fb02676c435ff7dd0104de46125b3adbe",
+            "matches_workspace": true,
+            "workspace_sha256": "ee150a767d6072441b8727c246040f4fb02676c435ff7dd0104de46125b3adbe"
+          },
+          "ui-windows/WINDOWS.EXE": {
+            "sha256": "fbf6cabd1539075134062d99e4477c7eb7a229325e6fa50791adc11867420671",
+            "matches_workspace": true,
+            "workspace_sha256": "fbf6cabd1539075134062d99e4477c7eb7a229325e6fa50791adc11867420671"
+          },
+          "modem-commands/MODEMCMD.EXE": {
+            "sha256": "f7bcd936b4a8966c2b79352147db4c3d4f3250630f7703852291b78020f7e9e3",
+            "matches_workspace": true,
+            "workspace_sha256": "f7bcd936b4a8966c2b79352147db4c3d4f3250630f7703852291b78020f7e9e3"
+          },
+          "modem-responses/MODEMRSP.EXE": {
+            "sha256": "ee2c7450aff4d1a8df36e9e3040d187a1db14f0463f93958a8dfeaaadc573414",
+            "matches_workspace": true,
+            "workspace_sha256": "ee2c7450aff4d1a8df36e9e3040d187a1db14f0463f93958a8dfeaaadc573414"
+          },
+          "modem-send/MODEMSND.EXE": {
+            "sha256": "e7cfa5511c5a0fa10b1158f6137eeb585fef1aa8c20bf3b206e435aef14f4809",
+            "matches_workspace": true,
+            "workspace_sha256": "e7cfa5511c5a0fa10b1158f6137eeb585fef1aa8c20bf3b206e435aef14f4809"
+          },
+          "directory-dial/DIRDIAL.EXE": {
+            "sha256": "84f502735fd9e87ff4d22ff58702bdedf01847e6c53b3b4442902d490a77a0f2",
+            "matches_workspace": true,
+            "workspace_sha256": "84f502735fd9e87ff4d22ff58702bdedf01847e6c53b3b4442902d490a77a0f2"
+          },
+          "directory-browser/BROWSER.EXE": {
+            "sha256": "5fd4c103817f6134893f4a0d623147725c574c2cdd492692ca34ad1f18967cbd",
+            "matches_workspace": true,
+            "workspace_sha256": "5fd4c103817f6134893f4a0d623147725c574c2cdd492692ca34ad1f18967cbd"
+          },
+          "directory-editor/EDITOR.EXE": {
+            "sha256": "0158e88c0db97faf16872873b9917a7b29519ede7ccdfdd79e345effe37d849c",
+            "matches_workspace": true,
+            "workspace_sha256": "0158e88c0db97faf16872873b9917a7b29519ede7ccdfdd79e345effe37d849c"
+          },
+          "directory-accounting/DIRSTATS.EXE": {
+            "sha256": "8dbe12f0b2b365cd1d6d986b82122251c22230f0e973e22faaf2fb51807faae4",
+            "matches_workspace": true,
+            "workspace_sha256": "8dbe12f0b2b365cd1d6d986b82122251c22230f0e973e22faaf2fb51807faae4"
+          },
+          "keyboard-mapping/MAPPING.EXE": {
+            "sha256": "0816a43d53bb5e2602a00b8f56e795e50d40c8d8b8ad155aa827d74998e8f977",
+            "matches_workspace": true,
+            "workspace_sha256": "0816a43d53bb5e2602a00b8f56e795e50d40c8d8b8ad155aa827d74998e8f977"
+          },
+          "keyboard-detection/KBDMODE.EXE": {
+            "sha256": "5e268db564750f1525016e4b89b3b64525a2dfb75587d755b9da5fcc93a813a0",
+            "matches_workspace": true,
+            "workspace_sha256": "5e268db564750f1525016e4b89b3b64525a2dfb75587d755b9da5fcc93a813a0"
+          },
+          "line-edit/LINES.EXE": {
+            "sha256": "7a10bc8c2a2883cdb447933dd1628647d2a61ba5fe133c94d5cbf21ec018a9b6",
+            "matches_workspace": true,
+            "workspace_sha256": "7a10bc8c2a2883cdb447933dd1628647d2a61ba5fe133c94d5cbf21ec018a9b6"
+          },
+          "meta-keys/METAKEYS.EXE": {
+            "sha256": "dd2a111d900d309fa2cf5e40f1dacfd38c959ac01086fdfb31de6c2d9d80f713",
+            "matches_workspace": true,
+            "workspace_sha256": "dd2a111d900d309fa2cf5e40f1dacfd38c959ac01086fdfb31de6c2d9d80f713"
+          },
+          "character-edit/CHAREDIT.EXE": {
+            "sha256": "ff8c65cea099092ba50908d0b6b4e5bb1901509b9303b744ee0191f7bcaa82f6",
+            "matches_workspace": true,
+            "workspace_sha256": "ff8c65cea099092ba50908d0b6b4e5bb1901509b9303b744ee0191f7bcaa82f6"
+          },
+          "process/PROCESS.EXE": {
+            "sha256": "7da5229e3cbc16de2c994fadaf5556c34a105afa4813ce64646fa5b543892a05",
+            "matches_workspace": true,
+            "workspace_sha256": "7da5229e3cbc16de2c994fadaf5556c34a105afa4813ce64646fa5b543892a05"
+          },
+          "process/PROGRAM.EXE": {
+            "sha256": "c9d32557bc40fd4542ea888b0181c111edee7abffc324ffd2242eb17cc7abeaa",
+            "matches_workspace": true,
+            "workspace_sha256": "c9d32557bc40fd4542ea888b0181c111edee7abffc324ffd2242eb17cc7abeaa"
+          },
+          "process/CHILD.COM": {
+            "sha256": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f",
+            "matches_workspace": true,
+            "workspace_sha256": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f"
+          },
+          "program-exec/EXECUTOR.EXE": {
+            "sha256": "aec4daeba2e9d9fd49a0df325455c25a8bd95c3015f797dc4123169b0c3bbe0b",
+            "matches_workspace": true,
+            "workspace_sha256": "aec4daeba2e9d9fd49a0df325455c25a8bd95c3015f797dc4123169b0c3bbe0b"
+          },
+          "program-exec/CHILD.COM": {
+            "sha256": "fccf1fea18c1c5f803d4d3331ce845eab9bd2cae7659797e2bf909723c871c24",
+            "matches_workspace": true,
+            "workspace_sha256": "fccf1fea18c1c5f803d4d3331ce845eab9bd2cae7659797e2bf909723c871c24"
+          },
+          "terminal-reset/RESET.EXE": {
+            "sha256": "8bdd8c62707ef4c1761c734a9481cad18be991aeed3cadd6194c527f14408e32",
+            "matches_workspace": true,
+            "workspace_sha256": "8bdd8c62707ef4c1761c734a9481cad18be991aeed3cadd6194c527f14408e32"
+          },
+          "transfer-blocks/BLOCKS.EXE": {
+            "sha256": "b9eecad4fce1ea76e5f870d7706ce449ca00db99c1ffa99b03e14334ab54d3a1",
+            "matches_workspace": true,
+            "workspace_sha256": "b9eecad4fce1ea76e5f870d7706ce449ca00db99c1ffa99b03e14334ab54d3a1"
+          },
+          "transfer-receive/RECEIVE.EXE": {
+            "sha256": "7f2da1865bcd4b7bbe1fa466e9bfc2e759de514109787516c330a28797f26e8e",
+            "matches_workspace": true,
+            "workspace_sha256": "7f2da1865bcd4b7bbe1fa466e9bfc2e759de514109787516c330a28797f26e8e"
+          },
+          "transfer-send/SEND.EXE": {
+            "sha256": "437f069804ac8b6eeff6307944286ed7c4db3d8f4761b2b90873c6ab52014a75",
+            "matches_workspace": true,
+            "workspace_sha256": "437f069804ac8b6eeff6307944286ed7c4db3d8f4761b2b90873c6ab52014a75"
+          },
+          "transfer-files/FILES.EXE": {
+            "sha256": "427a7997d12a9933389aa63210a6c425b13ca597730378a628618ff3339e9b30",
+            "matches_workspace": true,
+            "workspace_sha256": "427a7997d12a9933389aa63210a6c425b13ca597730378a628618ff3339e9b30"
+          },
+          "transfer-session/SESSION.EXE": {
+            "sha256": "6297cab2c881e11885d23a814ffaf45967749e88a09f8f9d17949f8ca6a79302",
+            "matches_workspace": true,
+            "workspace_sha256": "6297cab2c881e11885d23a814ffaf45967749e88a09f8f9d17949f8ca6a79302"
+          },
+          "transfer-uart/TUART.EXE": {
+            "sha256": "b976f8a928dc052b7cfc4c2adf3b34f7e869e1b4748ba2d6f30d2652a90db28b",
+            "matches_workspace": true,
+            "workspace_sha256": "b976f8a928dc052b7cfc4c2adf3b34f7e869e1b4748ba2d6f30d2652a90db28b"
+          },
+          "download-file/DOWNLOAD.EXE": {
+            "sha256": "99199a1fcf86ec55fa79c1d6f93ff882e9624895f0232fa9e465a1a65df9d1fe",
+            "matches_workspace": true,
+            "workspace_sha256": "99199a1fcf86ec55fa79c1d6f93ff882e9624895f0232fa9e465a1a65df9d1fe"
+          },
+          "download-file/DLFAULT.EXE": {
+            "sha256": "b7457f18de99106d11101509d6cad8cb486a444d76664612255af22176bfc615",
+            "matches_workspace": true,
+            "workspace_sha256": "b7457f18de99106d11101509d6cad8cb486a444d76664612255af22176bfc615"
+          },
+          "transfer-session-composite/TRANSFER.EXE": {
+            "sha256": "c6cb27a6b24a4c95eb4f6b5a12e5c23fb88fa41a076e82800b9a4e888d21a906",
+            "matches_workspace": true,
+            "workspace_sha256": "c6cb27a6b24a4c95eb4f6b5a12e5c23fb88fa41a076e82800b9a4e888d21a906"
+          },
+          "transfer-storage/TRANSFER.EXE": {
+            "sha256": "ec3957d3770636eeb11eb4cdf699902d4027258d87a8c06a532ff45f26842883",
+            "matches_workspace": true,
+            "workspace_sha256": "ec3957d3770636eeb11eb4cdf699902d4027258d87a8c06a532ff45f26842883"
+          },
+          "upload-file/UPLOAD.EXE": {
+            "sha256": "d9e9b6cf95010f76575187722b5b474ee349cbf9560b332604a952b302e22914",
+            "matches_workspace": true,
+            "workspace_sha256": "d9e9b6cf95010f76575187722b5b474ee349cbf9560b332604a952b302e22914"
+          },
+          "upload-file/UPFAULT.EXE": {
+            "sha256": "1565f10e9890a70beee4149ea404b441892b357441175a907e31ddc1d5f9d17d",
+            "matches_workspace": true,
+            "workspace_sha256": "1565f10e9890a70beee4149ea404b441892b357441175a907e31ddc1d5f9d17d"
+          },
+          "transfer-metadata/METADATA.EXE": {
+            "sha256": "efc26c3ca221739ac7c72b34707865407f4ab2ee223f4efdf751b148ea5b89b7",
+            "matches_workspace": true,
+            "workspace_sha256": "efc26c3ca221739ac7c72b34707865407f4ab2ee223f4efdf751b148ea5b89b7"
+          },
+          "batch-header/HEADER.EXE": {
+            "sha256": "5fc883e06f588b13f7d61a3704e8fbdab789d69f10cf998a25d79abe60e06524",
+            "matches_workspace": true,
+            "workspace_sha256": "5fc883e06f588b13f7d61a3704e8fbdab789d69f10cf998a25d79abe60e06524"
+          },
+          "batch-download/BATCHDL.EXE": {
+            "sha256": "62fe933a6eecb5028e801de2c4959c47981890141cff1da98ec67927b7b1d367",
+            "matches_workspace": true,
+            "workspace_sha256": "62fe933a6eecb5028e801de2c4959c47981890141cff1da98ec67927b7b1d367"
+          },
+          "batch-download/BDFAULT.EXE": {
+            "sha256": "f599d2b4e1e429324f32a0cd6fd16a120fe5f30c19b78935ecdbb48ac6fae5d3",
+            "matches_workspace": true,
+            "workspace_sha256": "f599d2b4e1e429324f32a0cd6fd16a120fe5f30c19b78935ecdbb48ac6fae5d3"
+          },
+          "batch-upload/BATCH.EXE": {
+            "sha256": "f68598d90743fbe867a6f4be15ebb78991b342c0bc12d8d109c669e332c7dcd3",
+            "matches_workspace": true,
+            "workspace_sha256": "f68598d90743fbe867a6f4be15ebb78991b342c0bc12d8d109c669e332c7dcd3"
+          },
+          "batch-upload/BUFAULT.EXE": {
+            "sha256": "d839641df58da79e2e98d03de5bd1e768f3ab593569e8e14255b9456c0a35fae",
+            "matches_workspace": true,
+            "workspace_sha256": "d839641df58da79e2e98d03de5bd1e768f3ab593569e8e14255b9456c0a35fae"
+          },
+          "capture-file/CAPTURE.EXE": {
+            "sha256": "532cec80d51f5cba16ce98d008a21eb6dd777db2b0079ece0e7b39c49ce980d5",
+            "matches_workspace": true,
+            "workspace_sha256": "532cec80d51f5cba16ce98d008a21eb6dd777db2b0079ece0e7b39c49ce980d5"
+          },
+          "capture-file/CAPFAULT.EXE": {
+            "sha256": "90424c20cf0847c77aee9aa5ba5c1d084fecf223967400d5b9835d487cc20775",
+            "matches_workspace": true,
+            "workspace_sha256": "90424c20cf0847c77aee9aa5ba5c1d084fecf223967400d5b9835d487cc20775"
+          },
+          "capture-session/CAPSESS.EXE": {
+            "sha256": "771e2fd702017b25d53e8f0694592258abce08677f17d803212038e27971ba07",
+            "matches_workspace": true,
+            "workspace_sha256": "771e2fd702017b25d53e8f0694592258abce08677f17d803212038e27971ba07"
+          },
+          "capture-session/CSFAULT.EXE": {
+            "sha256": "5b630566b588e95652f1bd9a99c9c0d71c81102f4fe81692ff5deb1892e36b04",
+            "matches_workspace": true,
+            "workspace_sha256": "5b630566b588e95652f1bd9a99c9c0d71c81102f4fe81692ff5deb1892e36b04"
+          },
+          "clipboard/CLIPCORE.EXE": {
+            "sha256": "a14ecea00b50dc2ca0e2c3954bd9567884078220c34b595907035ea59f072ee8",
+            "matches_workspace": true,
+            "workspace_sha256": "a14ecea00b50dc2ca0e2c3954bd9567884078220c34b595907035ea59f072ee8"
+          },
+          "snapshot/SNAPSHOT.EXE": {
+            "sha256": "fdcc00355ace42b426cc320d779dc51c0b3ae8a0d47abf3a7bac3973417f69c9",
+            "matches_workspace": true,
+            "workspace_sha256": "fdcc00355ace42b426cc320d779dc51c0b3ae8a0d47abf3a7bac3973417f69c9"
+          },
+          "capture-owners/OWNERS.EXE": {
+            "sha256": "14199a9e0765dc962232dae877e761822f165eebc6a79d608945a533cd04353a",
+            "matches_workspace": true,
+            "workspace_sha256": "14199a9e0765dc962232dae877e761822f165eebc6a79d608945a533cd04353a"
+          },
+          "capture-owners/OWFAULT.EXE": {
+            "sha256": "db7d4bd9b922e5af1759c6bc595d61f14d417f4724efd156647b55b66d643554",
+            "matches_workspace": true,
+            "workspace_sha256": "db7d4bd9b922e5af1759c6bc595d61f14d417f4724efd156647b55b66d643554"
+          },
+          "printer/PRINTER.EXE": {
+            "sha256": "2b699e0a2646abdf9b61c50277725d69932a6d29afdd8fb77308aa5d268eec90",
+            "matches_workspace": true,
+            "workspace_sha256": "2b699e0a2646abdf9b61c50277725d69932a6d29afdd8fb77308aa5d268eec90"
+          },
+          "print_screen/PRINTSCR.EXE": {
+            "sha256": "4383b3799c4c6dc0bda05daf447d80bb5d09af2c7a1fcb14921f592b1eca1201",
+            "matches_workspace": true,
+            "workspace_sha256": "4383b3799c4c6dc0bda05daf447d80bb5d09af2c7a1fcb14921f592b1eca1201"
+          },
+          "printer-device/PRINTER.EXE": {
+            "sha256": "07308264cb1d4c6ec70ed46e103d288027b1d33227d00d040fd824da9d87ef52",
+            "matches_workspace": true,
+            "workspace_sha256": "07308264cb1d4c6ec70ed46e103d288027b1d33227d00d040fd824da9d87ef52"
+          },
+          "print_controller/PRINTCTL.EXE": {
+            "sha256": "8095449ff1fbc10c718f9b3916c03ceec1dabe92b3e743004fd69fe129fa118b",
+            "matches_workspace": true,
+            "workspace_sha256": "8095449ff1fbc10c718f9b3916c03ceec1dabe92b3e743004fd69fe129fa118b"
+          },
+          "setup/PRMEDIT.EXE": {
+            "sha256": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646",
+            "matches_workspace": true,
+            "workspace_sha256": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646"
+          },
+          "live-configuration/LIVE.EXE": {
+            "sha256": "3ff4960670b7417417dbb3ce40603ed808079dbc48dd35141468ce282dac6729",
+            "matches_workspace": true,
+            "workspace_sha256": "3ff4960670b7417417dbb3ce40603ed808079dbc48dd35141468ce282dac6729"
+          },
+          "directory-context/CONTEXT.EXE": {
+            "sha256": "b425b2884e91b47323fd549a8f6ca0b3f575c29abfb1a4b448973b8531a14449",
+            "matches_workspace": true,
+            "workspace_sha256": "b425b2884e91b47323fd549a8f6ca0b3f575c29abfb1a4b448973b8531a14449"
+          },
+          "xlt-editor/XLTEDIT.EXE": {
+            "sha256": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10",
+            "matches_workspace": true,
+            "workspace_sha256": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+          },
+          "resource-path/RESOURCE.EXE": {
+            "sha256": "4809ccecf3bc736bf49daf64a7b311b0ededdfe241751da5e2cfec95474b1736",
+            "matches_workspace": true,
+            "workspace_sha256": "4809ccecf3bc736bf49daf64a7b311b0ededdfe241751da5e2cfec95474b1736"
+          },
+          "live-translation-child/CHDIR.EXE": {
+            "sha256": "aa2e5ea120ee97c32c1865c7b85343333c2dd9c5db99e771ad0ae1cd949e0441",
+            "matches_workspace": true,
+            "workspace_sha256": "aa2e5ea120ee97c32c1865c7b85343333c2dd9c5db99e771ad0ae1cd949e0441"
+          },
+          "aspect-literal/LITERAL.EXE": {
+            "sha256": "bcd47845d6bea3a692599323095f29460a8dbecd15d57ecbd47f5c1358c5c1f2",
+            "matches_workspace": true,
+            "workspace_sha256": "bcd47845d6bea3a692599323095f29460a8dbecd15d57ecbd47f5c1358c5c1f2"
+          },
+          "aspect-dispatch/DISPATCH.EXE": {
+            "sha256": "68288f66c17e188bbbae1813594639dd88eae5e050a483ae91af764f6aff7b4f",
+            "matches_workspace": true,
+            "workspace_sha256": "68288f66c17e188bbbae1813594639dd88eae5e050a483ae91af764f6aff7b4f"
+          },
+          "aspect-globals/GLOBALS.EXE": {
+            "sha256": "cb96ac730aefadb56b16a25196104d0bad8fc13d44d98a8977c9d4a6c9b67cb1",
+            "matches_workspace": true,
+            "workspace_sha256": "cb96ac730aefadb56b16a25196104d0bad8fc13d44d98a8977c9d4a6c9b67cb1"
+          },
+          "aspect-stack/STACK.EXE": {
+            "sha256": "35afb60eb6ac3381ace5cd7b67810579ec945d7d4e23eb92707baa86f8326993",
+            "matches_workspace": true,
+            "workspace_sha256": "35afb60eb6ac3381ace5cd7b67810579ec945d7d4e23eb92707baa86f8326993"
+          },
+          "aspect-unwind/UNWIND.EXE": {
+            "sha256": "df2113e8d4d89448c4e1427e1923a1a84ae91b1c8ffd27b37be3497b37234456",
+            "matches_workspace": true,
+            "workspace_sha256": "df2113e8d4d89448c4e1427e1923a1a84ae91b1c8ffd27b37be3497b37234456"
+          },
+          "aspect-flow/FLOW.EXE": {
+            "sha256": "181160210ffb6e15b60b8d67d5a287b09a8cce7136f180591b9426f820edcc27",
+            "matches_workspace": true,
+            "workspace_sha256": "181160210ffb6e15b60b8d67d5a287b09a8cce7136f180591b9426f820edcc27"
+          },
+          "aspect-file/FILE.EXE": {
+            "sha256": "c3786f890c44ad898a16e716888c8b0bc791bcbb061ad5f7da2442795b5770b7",
+            "matches_workspace": true,
+            "workspace_sha256": "c3786f890c44ad898a16e716888c8b0bc791bcbb061ad5f7da2442795b5770b7"
+          },
+          "aspect-string-services/SERVICES.EXE": {
+            "sha256": "aa331784777b77dbcc44e049c7831bac99ff7b6941c5e260b784b79f2356254e",
+            "matches_workspace": true,
+            "workspace_sha256": "aa331784777b77dbcc44e049c7831bac99ff7b6941c5e260b784b79f2356254e"
+          },
+          "aspect-string-commands/STRCMD.EXE": {
+            "sha256": "9b333410db88ce1fdbd3ff3aeff06de2a742176a5e22ba0dd687d1a60486d059",
+            "matches_workspace": true,
+            "workspace_sha256": "9b333410db88ce1fdbd3ff3aeff06de2a742176a5e22ba0dd687d1a60486d059"
+          },
+          "aspect-conversions/CONVERT.EXE": {
+            "sha256": "d964e1ebd36168a2e67e68a930da9f501121cc88537d11bb0f139d4eb05f803c",
+            "matches_workspace": true,
+            "workspace_sha256": "d964e1ebd36168a2e67e68a930da9f501121cc88537d11bb0f139d4eb05f803c"
+          },
+          "aspect-conversion-services/CONVERT.EXE": {
+            "sha256": "f9ef2f6f6ecc8adaeeed69769ccd863281f665996ff32423b4d5428feb0fb73c",
+            "matches_workspace": true,
+            "workspace_sha256": "f9ef2f6f6ecc8adaeeed69769ccd863281f665996ff32423b4d5428feb0fb73c"
+          },
+          "aspect-receive-policy/POLICY.EXE": {
+            "sha256": "b4940e3aefa08af2831d806c88568240d932fdfe904c4ab4c84b42fe48a4b5dc",
+            "matches_workspace": true,
+            "workspace_sha256": "b4940e3aefa08af2831d806c88568240d932fdfe904c4ab4c84b42fe48a4b5dc"
+          },
+          "aspect-directory/DIRBUILT.EXE": {
+            "sha256": "9788de45b5781604de55a86a822089d6090e885071f93026414de7d1289d399c",
+            "matches_workspace": true,
+            "workspace_sha256": "9788de45b5781604de55a86a822089d6090e885071f93026414de7d1289d399c"
+          },
+          "aspect-set/unit1.bin": {
+            "sha256": "eadb4fa80afa5f52ffef368433325a45ee2eddfea1d400b27ca4aa5b5cb162fb",
+            "matches_workspace": true,
+            "workspace_sha256": "eadb4fa80afa5f52ffef368433325a45ee2eddfea1d400b27ca4aa5b5cb162fb"
+          },
+          "aspect-set/unit2.bin": {
+            "sha256": "626d50f3a5138b684a9d04d21ad2022abde290d997bac56c22e4b035429b4f13",
+            "matches_workspace": true,
+            "workspace_sha256": "626d50f3a5138b684a9d04d21ad2022abde290d997bac56c22e4b035429b4f13"
+          },
+          "aspect-set/unit3.bin": {
+            "sha256": "0c71c9e7b72aaca7c9b5a14d277744c0d413a1785b15bfaa769eb448d874eae1",
+            "matches_workspace": true,
+            "workspace_sha256": "0c71c9e7b72aaca7c9b5a14d277744c0d413a1785b15bfaa769eb448d874eae1"
+          },
+          "aspect-set/unit4.bin": {
+            "sha256": "f012b3ec0b031bb0cd46b858f150a1313024501de4cba865e18e31dacf43f5b4",
+            "matches_workspace": true,
+            "workspace_sha256": "f012b3ec0b031bb0cd46b858f150a1313024501de4cba865e18e31dacf43f5b4"
+          },
+          "aspect-set/unit5.bin": {
+            "sha256": "2da4f655ecdb0aff3c3cc9f7b1e4e9aba16d5edbb7eecc1ecb8265aa44e45173",
+            "matches_workspace": true,
+            "workspace_sha256": "2da4f655ecdb0aff3c3cc9f7b1e4e9aba16d5edbb7eecc1ecb8265aa44e45173"
+          },
+          "aspect-set/unit6.bin": {
+            "sha256": "1db7ce21ca0e6339c98d112478a66625500f3156b3e894db689b47a4c4ae4ace",
+            "matches_workspace": true,
+            "workspace_sha256": "1db7ce21ca0e6339c98d112478a66625500f3156b3e894db689b47a4c4ae4ace"
+          },
+          "aspect-set/unit7.bin": {
+            "sha256": "6272ee1d0f04e2c7b1a65c49f089b1d9c4ff19c96fa3789a1e8d6d12f0828421",
+            "matches_workspace": true,
+            "workspace_sha256": "6272ee1d0f04e2c7b1a65c49f089b1d9c4ff19c96fa3789a1e8d6d12f0828421"
+          },
+          "aspect-set/unit8.bin": {
+            "sha256": "9aabcb9306c1df67e07c36799439c9c57275befa7df1c333751fbdaca0ed4098",
+            "matches_workspace": true,
+            "workspace_sha256": "9aabcb9306c1df67e07c36799439c9c57275befa7df1c333751fbdaca0ed4098"
+          },
+          "aspect-set/unit9.bin": {
+            "sha256": "8a1f7326b2799dc62c3036268b7780132072cc58fc72c950e56f722652e81404",
+            "matches_workspace": true,
+            "workspace_sha256": "8a1f7326b2799dc62c3036268b7780132072cc58fc72c950e56f722652e81404"
+          },
+          "aspect-set/unit10.bin": {
+            "sha256": "cedf08f72d5bb8e861e49bee30abecdff765b7b3441916c59f663e2b1e323073",
+            "matches_workspace": true,
+            "workspace_sha256": "cedf08f72d5bb8e861e49bee30abecdff765b7b3441916c59f663e2b1e323073"
+          },
+          "aspect-set/unit11.bin": {
+            "sha256": "7a0491015ec1871a201788168e98b5753d6bf382d4a67cada744f8b929c8b4f7",
+            "matches_workspace": true,
+            "workspace_sha256": "7a0491015ec1871a201788168e98b5753d6bf382d4a67cada744f8b929c8b4f7"
+          },
+          "aspect-set/unit12.bin": {
+            "sha256": "7fd57b3ee84fbfc4cafd187dce95b9bad571b2c40c463fd6d61179a373a4d1ca",
+            "matches_workspace": true,
+            "workspace_sha256": "7fd57b3ee84fbfc4cafd187dce95b9bad571b2c40c463fd6d61179a373a4d1ca"
+          },
+          "aspect-set/unit13.bin": {
+            "sha256": "3530cc1fa0db1e5e40130053822e9051307e5c6806d7f800e2ab810c7408d10f",
+            "matches_workspace": true,
+            "workspace_sha256": "3530cc1fa0db1e5e40130053822e9051307e5c6806d7f800e2ab810c7408d10f"
+          },
+          "aspect-set/unit14.bin": {
+            "sha256": "4a2e4b651e9a28b75308a9b80b9fb86e770adcbea7723c4bd3d18bdda147ddf3",
+            "matches_workspace": true,
+            "workspace_sha256": "4a2e4b651e9a28b75308a9b80b9fb86e770adcbea7723c4bd3d18bdda147ddf3"
+          },
+          "aspect-set/set_commands.obj": {
+            "sha256": "dc79408b51e75ae8430e0cab2b32a9ef37bce5f7f22bcc042b7ffe32e5716e1e",
+            "matches_workspace": true,
+            "workspace_sha256": "dc79408b51e75ae8430e0cab2b32a9ef37bce5f7f22bcc042b7ffe32e5716e1e"
+          },
+          "status-helpers/unit1.bin": {
+            "sha256": "72c10e9a0d346f13e4232b74eee2566aaa8d5fdaac91717fafbf73b4cdf19a5c",
+            "matches_workspace": true,
+            "workspace_sha256": "72c10e9a0d346f13e4232b74eee2566aaa8d5fdaac91717fafbf73b4cdf19a5c"
+          },
+          "status-helpers/unit2.bin": {
+            "sha256": "f10d19c8a2da414db6c21405dec85ca715f03620e590c943852d3f6fe8bcaee5",
+            "matches_workspace": true,
+            "workspace_sha256": "f10d19c8a2da414db6c21405dec85ca715f03620e590c943852d3f6fe8bcaee5"
+          },
+          "status-helpers/unit3.bin": {
+            "sha256": "3df99318ca42546665f801c401ec52a5f16150d80afc3d940ab41d75f41cb52c",
+            "matches_workspace": true,
+            "workspace_sha256": "3df99318ca42546665f801c401ec52a5f16150d80afc3d940ab41d75f41cb52c"
+          },
+          "status-helpers/unit4.bin": {
+            "sha256": "9804c343b471756bbd6c56e1157c6ea1e6a9e8c343b406559e52fed0c6849450",
+            "matches_workspace": true,
+            "workspace_sha256": "9804c343b471756bbd6c56e1157c6ea1e6a9e8c343b406559e52fed0c6849450"
+          },
+          "status-helpers/STATUS.EXE": {
+            "sha256": "6b161ecf7443d1d128e6ed79d8d5b8d3461ae84b0dab5fe389b71e91888946b2",
+            "matches_workspace": true,
+            "workspace_sha256": "6b161ecf7443d1d128e6ed79d8d5b8d3461ae84b0dab5fe389b71e91888946b2"
+          },
+          "status-renderer/STATUS.EXE": {
+            "sha256": "2f5ef231f958b209e3560f8ab34fabb44711a70ab402e31db7ae959458aa867e",
+            "matches_workspace": true,
+            "workspace_sha256": "2f5ef231f958b209e3560f8ab34fabb44711a70ab402e31db7ae959458aa867e"
+          },
+          "aspect-receive-commands/RECEIVE.EXE": {
+            "sha256": "71080402c11a32f5711ca29bac1e52c11b82315bede3d19e7a6a44b8afb3dec1",
+            "matches_workspace": true,
+            "workspace_sha256": "71080402c11a32f5711ca29bac1e52c11b82315bede3d19e7a6a44b8afb3dec1"
+          },
+          "aspect-runtime/CASES.DAT": {
+            "sha256": "300ff0ada64e0d5e0ebbd58e78eb0b9b17733a830f8c2d571411f3f7734f2880",
+            "matches_workspace": true,
+            "workspace_sha256": "300ff0ada64e0d5e0ebbd58e78eb0b9b17733a830f8c2d571411f3f7734f2880"
+          },
+          "aspect-serial-commands/SERIAL.EXE": {
+            "sha256": "1246c0cec286893de01953bb5cd6b6a7917a566dc34b2c79d583576edf100725",
+            "matches_workspace": true,
+            "workspace_sha256": "1246c0cec286893de01953bb5cd6b6a7917a566dc34b2c79d583576edf100725"
+          },
+          "aspect-serial/SERIAL.EXE": {
+            "sha256": "d08d69cb7372bd4aedbda7596627e66a9095cb87749da393112c288dc36b4d55",
+            "matches_workspace": true,
+            "workspace_sha256": "d08d69cb7372bd4aedbda7596627e66a9095cb87749da393112c288dc36b4d55"
+          },
+          "aspect-console/CONSOLE.EXE": {
+            "sha256": "080d3623f7cb5813ac7348d0f9444e14d7d409598acc5a4a0554429fe32778d5",
+            "matches_workspace": true,
+            "workspace_sha256": "080d3623f7cb5813ac7348d0f9444e14d7d409598acc5a4a0554429fe32778d5"
+          },
+          "aspect-runner/ASPECT.EXE": {
+            "sha256": "0f00aa3e44da029ca7727f38f1e1af6db08a84a712cb30b03e990219cf3c60ef",
+            "matches_workspace": true,
+            "workspace_sha256": "0f00aa3e44da029ca7727f38f1e1af6db08a84a712cb30b03e990219cf3c60ef"
+          },
+          "aspect-runner/tests/RUNTEST.EXE": {
+            "sha256": "9f5268058dce303dcefa3f6cc9b014846cf7f06393fc5e56e54efa1661cdd04c",
+            "matches_workspace": true,
+            "workspace_sha256": "9f5268058dce303dcefa3f6cc9b014846cf7f06393fc5e56e54efa1661cdd04c"
+          },
+          "aspect-parameters/PARAM.EXE": {
+            "sha256": "cc6188d599b7c1a118373ca693e315ad1783dd55e84f40626cb0b4274df6eafc",
+            "matches_workspace": true,
+            "workspace_sha256": "cc6188d599b7c1a118373ca693e315ad1783dd55e84f40626cb0b4274df6eafc"
+          },
+          "aspect-strings/STRINGS.EXE": {
+            "sha256": "33fbb842582a14b34d28c9b6daba266ac80ff4938907f4007327d69c274a60b4",
+            "matches_workspace": true,
+            "workspace_sha256": "33fbb842582a14b34d28c9b6daba266ac80ff4938907f4007327d69c274a60b4"
+          },
+          "aspect-long/LONG.EXE": {
+            "sha256": "2cc9e26a79da879c5441cba3a75db097b051b6387d3016d44238a8d3bc6b2758",
+            "matches_workspace": true,
+            "workspace_sha256": "2cc9e26a79da879c5441cba3a75db097b051b6387d3016d44238a8d3bc6b2758"
+          },
+          "aspect-arithmetic/ARITH.EXE": {
+            "sha256": "a56ff61e7cd4db2756dcdd870600a8e4bf81cff59ad31e0b1407232fae7919c8",
+            "matches_workspace": true,
+            "workspace_sha256": "a56ff61e7cd4db2756dcdd870600a8e4bf81cff59ad31e0b1407232fae7919c8"
+          },
+          "aspect-operands/OPERANDS.EXE": {
+            "sha256": "fb07492fb48bfa0d0cca760fc33c1c884c0551627b58b51df2778b6e310f897e",
+            "matches_workspace": true,
+            "workspace_sha256": "fb07492fb48bfa0d0cca760fc33c1c884c0551627b58b51df2778b6e310f897e"
+          },
+          "aspect-operations/OPERATE.EXE": {
+            "sha256": "98c8d27d0fb5dde4c30edb1390a092e8823652177f7e11417952e1718bbf101b",
+            "matches_workspace": true,
+            "workspace_sha256": "98c8d27d0fb5dde4c30edb1390a092e8823652177f7e11417952e1718bbf101b"
+          },
+          "aspect-runtime/EXECUTE.EXE": {
+            "sha256": "b8c100366aa1c62578e1df0970d788e223abf96100af9c41d0dd7646e1257efe",
+            "matches_workspace": true,
+            "workspace_sha256": "b8c100366aa1c62578e1df0970d788e223abf96100af9c41d0dd7646e1257efe"
+          },
+          "monitor/MONITOR.EXE": {
+            "sha256": "766e8cb46c6edb3269cee3ea2a7896c03628f37e6fcfe7fc17938f834e13b377",
+            "matches_workspace": true,
+            "workspace_sha256": "766e8cb46c6edb3269cee3ea2a7896c03628f37e6fcfe7fc17938f834e13b377"
+          },
+          "monitor-file/MONITOR.EXE": {
+            "sha256": "d6fa5642e9b41ebc467823257fe81a5ce4896978b7e28d99a0522dc63c8dd542",
+            "matches_workspace": true,
+            "workspace_sha256": "d6fa5642e9b41ebc467823257fe81a5ce4896978b7e28d99a0522dc63c8dd542"
+          },
+          "monitor-file/MOFAULT.EXE": {
+            "sha256": "bb0b7ab2b9c79e52b9e33369e91bfaa84f5ad2ec13691e2fb80bdd3fc17651d2",
+            "matches_workspace": true,
+            "workspace_sha256": "bb0b7ab2b9c79e52b9e33369e91bfaa84f5ad2ec13691e2fb80bdd3fc17651d2"
+          }
+        },
+        "build_scripts": [
+          "standalone/build_terminal.py",
+          "standalone/build_config_dos.py",
+          "standalone/build_config_replace.py",
+          "standalone/build_config_abi.py",
+          "standalone/build_ui_windows.py",
+          "standalone/build_modem_commands.py",
+          "standalone/build_modem_responses.py",
+          "standalone/build_modem_send.py",
+          "standalone/build_directory_dial.py",
+          "standalone/build_directory_browser.py",
+          "standalone/build_directory_editor.py",
+          "standalone/build_directory_accounting.py",
+          "standalone/build_keyboard_mapping.py",
+          "standalone/build_keyboard_detection.py",
+          "standalone/build_line_edit.py",
+          "standalone/build_meta_keys.py",
+          "standalone/build_character_edit.py",
+          "standalone/build_process.py",
+          "standalone/build_program_exec.py",
+          "standalone/build_terminal_reset.py",
+          "standalone/build_transfer_blocks.py",
+          "standalone/build_transfer_receive.py",
+          "standalone/build_transfer_send.py",
+          "standalone/build_transfer_files.py",
+          "standalone/build_transfer_session.py",
+          "standalone/build_transfer_uart.py",
+          "standalone/build_download_file.py",
+          "standalone/build_transfer_session_composite.py",
+          "standalone/build_transfer_storage.py",
+          "standalone/build_upload_file.py",
+          "standalone/build_transfer_metadata.py",
+          "standalone/build_batch_header.py",
+          "standalone/build_clipboard.py",
+          "standalone/build_snapshot.py",
+          "standalone/build_printer.py",
+          "standalone/build_monitor.py",
+          "standalone/build_print_screen.py",
+          "standalone/build_print_controller.py",
+          "standalone/build_setup.py",
+          "standalone/build_live_configuration.py",
+          "standalone/build_directory_context.py",
+          "standalone/build_xlt_editor.py",
+          "standalone/build_live_translation_child.py",
+          "standalone/build_aspect_literal.py",
+          "standalone/build_aspect_dispatch.py",
+          "standalone/build_aspect_globals.py",
+          "standalone/build_aspect_stack.py",
+          "standalone/build_aspect_unwind.py",
+          "standalone/build_aspect_flow.py",
+          "standalone/build_aspect_file.py",
+          "standalone/build_aspect_operands.py",
+          "standalone/build_aspect_operations.py",
+          "standalone/build_aspect_runtime.py",
+          "standalone/build_aspect_long.py",
+          "standalone/build_aspect_arithmetic.py",
+          "standalone/build_aspect_parameters.py",
+          "standalone/build_aspect_strings.py",
+          "standalone/build_aspect_string_services.py",
+          "standalone/build_aspect_string_commands.py",
+          "standalone/build_aspect_conversions.py",
+          "standalone/build_aspect_conversion_services.py",
+          "standalone/build_aspect_console.py",
+          "standalone/build_aspect_runner.py",
+          "standalone/build_aspect_serial_commands.py",
+          "standalone/build_aspect_serial.py",
+          "standalone/build_aspect_receive_commands.py",
+          "standalone/build_aspect_receive_policy.py",
+          "standalone/build_aspect_directory.py",
+          "standalone/build_aspect_set.py",
+          "standalone/build_status_helpers.py",
+          "standalone/build_status_renderer.py",
+          "standalone/check_batch_download.py",
+          "standalone/check_batch_upload.py",
+          "standalone/check_capture_file.py",
+          "standalone/check_capture_session.py",
+          "standalone/check_capture_owners.py",
+          "standalone/check_monitor_file.py",
+          "standalone/check_printer_device.py",
+          "standalone/test_resource_path_dos.py",
+          "standalone/test_aspect_compiler.py",
+          "standalone/test_aspect_set_compiler.py",
+          "standalone/check_aspect_set.py",
+          "standalone/check_status_helpers.py",
+          "standalone/check_status_renderer.py",
+          "standalone/check_aspect_runner.py",
+          "standalone/check_aspect_directory.py",
+          "standalone/package_dos.py"
+        ]
+      }
+    },
+    "docs/validation/status-helpers.json": {
+      "sha256": "3bf44cf3b5acc72e6d100a9b4ca4ca59e23d6d2a63665a94e4e639768360ac8b",
+      "result": {
+        "component": "status-helpers-and-bounded-formatter",
+        "scope": "Sourcecomponent only; notcomplete2FB8/statusRPC/SET/applicationintegration",
+        "original_inputs_normal": [],
+        "native_bytes": 175,
+        "source_sha256": {
+          "src/status/status_helpers.asm": "fad79744c8fbe51ff42956e3d0cc530de19d8fc6cdc4b6ab626bbd65bc913759",
+          "src/status/status_formatter.c": "4cc9ef228190a7e847342338b2757ba85c610022fc3e9d6b0d1755285b37434b",
+          "src/status/status_formatter.h": "471caa182614bc605f07d76c705d5a70ce1d9551efb826713ab863bbac08e7d2",
+          "standalone/build_status_helpers.py": "9282d6a814dd0d442cb156448dc3c82ebc0e838ca299fb27de5b37f9db344975",
+          "standalone/check_status_helpers.py": "3b085f343fb58bcb026357f06a3d0838b55296d5643674b010df3b02f9a79c0d",
+          "standalone/status_helpers_host.asm": "94e3286363a97cba17f6561f89daf5f0b3873fa3bfce30c6598ba4c4446e4c7a",
+          "standalone/fixtures/status_helper_units.json": "999b3c6d5476a4ac13ed5fcbc5a1bfc6c71afcfa774ee4840a97671e806c6703",
+          "standalone/fixtures/status_formatter_vectors.json": "35a6e2c58262dea9ccac3daed6b635c55fc7490a9ec52de6ff4df843a8194ab9",
+          "docs/STATUS_HELPERS.md": "7d4702775cb05afc6292161503d4c6f546fa5882f5609211327f206a6b19a9a0"
+        },
+        "manifest_sha256": "f22710fd3d8ce175e83496b3e4a70f11a5a5faae44e47905d5dbe6433c49cbb4",
+        "checks_sha256": "ca47f7c873aabfa5722f6df8ab58c9af17074ef3dd18f27713c4ec83fd25dcc2",
+        "optional_original_checks_sha256": "4966c52be26fffc91c1e303f4f8cad0f942ecaf312f74b4b1ff68afcce3d489f",
+        "diagnostic_sha256": "6b161ecf7443d1d128e6ed79d8d5b8d3461ae84b0dab5fe389b71e91888946b2",
+        "results": {
+          "passed": true,
+          "cpu_cases": 6,
+          "actual8086_dos_formatter_cases": 25,
+          "actual8086_dos_helper_compositions": 9,
+          "optional_original_byte_comparison": 175
+        },
+        "optional_original_runtime_evidence": {
+          "formatter_vectors": 14,
+          "normal_status_cases": 4,
+          "alternate_status_cases": 1,
+          "private_ledger_sha256": "f3b59e3dbfb4e8ddeb83a511ed4e869e0e90bb4ddb4ce8970c58aaccb4f0133b"
+        },
+        "limitations": [
+          "PhysicalCGAuntested; CPUportsmodeled",
+          "No fulloriginalCRT; explicitboundedsubset",
+          "No parentRPC/segmentadoption/application lifecyclevalidation",
+          "Normalstatus81stvideocellwritepreserved; alternate80",
+          "Nativecount0nonCGAriskretained; notexercised"
+        ],
+        "zero_padding_policy": "Explicit unsupportedformat -2 for%03d/%01s; truncatedabc% also-2"
+      }
+    }
+  },
+  "scope": "Source-built full native status component across real near/far bridges. ActualDOS video/stack/ABI and typed failures checked. Carrier remains a diagnostic word; production state staging, guarded parent STATUS RPC, SET lifetimes and full application remain unfinished."
+}

@@ -1,4 +1,17 @@
 .DEFAULT_GOAL := all
+.PHONY: status-helpers test-status-helpers test-status-helpers-compat status-renderer test-status-renderer
+all: status-helpers status-renderer
+status-helpers:
+	python3 standalone/build_status_helpers.py
+test-status-helpers: status-helpers
+	python3 standalone/check_status_helpers.py
+test-status-helpers-compat: status-helpers
+	python3 standalone/check_status_helpers.py --original analysis/pcplus-originals/PCPLUS-main-2.01.EXE
+status-renderer:
+	python3 standalone/build_status_renderer.py
+test-status-renderer: status-renderer
+	python3 standalone/check_status_renderer.py
+test: test-status-helpers test-status-renderer
 .PHONY: aspect-set test-aspect-set test-aspect-set-compat
 all: aspect-set
 aspect-set:
