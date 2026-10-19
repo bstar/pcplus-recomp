@@ -106,7 +106,7 @@ class Expression:
                 raise CompileError(f"line {self.line}: missing closing parenthesis")
             self.pos += 1
         elif token[0].isdigit():
-            node = ('constant', *number(token))
+            node = ('constant', *number(token), token.endswith('l'))
         elif token.startswith('"'):
             node = ('string', token[1:-1])
         elif re.fullmatch(r'[a-z_$][a-z_0-9$]*', token):
@@ -167,6 +167,8 @@ class Compiler:
             if not part or not re.fullmatch(r'[a-z_$][a-z_0-9$]*', part[0]):
                 self.error('expected declaration name')
             name = part[0]
+            if name == 'text':
+                self.error('TEXT is a reserved ASPECT keyword')
             symbols = self.globals if proc is None else proc.symbols
             if name in symbols:
                 self.error(f'duplicate declaration {name}')
@@ -237,7 +239,7 @@ class Compiler:
     def operand(self, node, compact=False):
         tag = node[0]
         if tag == 'constant':
-            kind, value = node[1:]
+            kind, value = node[1:3]
             if kind == 2:
                 self.emit(0xAD, struct.pack('<d', value))
             elif kind == 1:
@@ -394,6 +396,9 @@ class Compiler:
         args = self.arguments(tokens[1:])
         # (opcode, mandatory operand types, optional numeric count)
         commands = {
+            'message': (0x76, 's', False), 'exit': (0x33, '', False),
+            'transmit': (0xBF, 's', False), 'waitfor': (0xD4, 's', True),
+            'rstrcmp': (0x9A, 'ss', True),
             'atoi': (0x06, 'si', False), 'atol': (0x07, 'sl', False),
             'itoa': (0x61, 'wd', False), 'ltoa': (0x6E, 'qd', False),
             'strcat': (0xAA, 'ds', True), 'strcmp': (0xAB, 'ss', True),
@@ -401,7 +406,7 @@ class Compiler:
             'strlwr': (0xAF, 'd', False), 'strpeek': (0xB0, 'sni', False),
             'strpoke': (0xB1, 'dnn', False), 'strset': (0xB2, 'dn', True),
             'strupdt': (0xB3, 'dsnn', False), 'strupr': (0xB4, 'd', False),
-            'substr': (0xB6, 'dsnn', False), 'pause': (0x88, 'n', False),
+            'substr': (0xB6, 'dsnn', False), 'pause': (0x88, 'v', False),
         }
         if command not in commands:
             self.error(f'unsupported command {command}')
@@ -421,9 +426,11 @@ class Compiler:
                     self.error(f'{command} requires {("integer", "long")[expected]} destination')
                 self.emit(self.lvalue(arg)[1])
             else:
-                if role in 'nwq' and kind == 3:
+                if role in 'nvwq' and kind == 3:
                     self.error(f'{command} requires numeric operand')
                 value = self.atomic(arg)
+                if role == 'v':
+                    value = self.word_argument(arg)
                 if role in 'wq':
                     expected = 0 if role == 'w' else 1
                     if value[0] == 'constant' and value[1] != 2:
@@ -436,7 +443,24 @@ class Compiler:
             if len(args) > len(signature):
                 if self.kind(args[-1]) == 3:
                     self.error('numeric count required')
-                self.operand(self.atomic(args[-1]), compact=True)
+                value = (self.word_argument(args[-1]) if command == 'waitfor'
+                         else self.atomic(args[-1]))
+                self.operand(value, compact=True)
+
+    def word_argument(self, node):
+        value = self.atomic(node)
+        # -32768 is the sole accepted unsigned-token boundary crossing: its
+        # positive token is long-classified, but this command expects a word.
+        minimum = (node[0] == 'unary' and node[1] == '-' and
+                   node[2][0] == 'constant' and node[2][2] == 32768 and
+                   not node[2][3])
+        if self.kind(node) != 0 and not minimum:
+            self.error('integer command operand required')
+        if value[0] == 'constant':
+            if not -32768 <= value[2] <= 32767:
+                self.error('integer command constant outside -32768..32767')
+            return ('constant', 0, value[2])
+        return value
 
     def atomic(self, node):
         if node[0] == 'unary' and node[1] == '-' and node[2][0] == 'constant':

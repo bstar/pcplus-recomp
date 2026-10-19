@@ -1022,3 +1022,36 @@ the host; it does not implement the full language or a DOS-hosted compiler.
 Floating services, formatting, recorder, terminal bindings and scheduling,
 memory placement and the complete application remain required. All F01–F16
 whole-application gates remain open.
+
+
+## DOS ASPECT runner and terminal Script launch
+
+A source-built ASPECT.EXE now runs compiled local scripts and is staged beside
+TERMINAL.EXE by `./tools/build package`, together with PRMEDIT/XLTEDIT and an
+authored HELLO source/ASX example. Alt-Z File A prompts for a bounded DOS83 path,
+then invokes the sibling interpreter directly through existing PROGRAM kind4
+handoff. Four actual DOS workflows verify script output, unsupported code,
+missing helper and prompt cancellation, with UART/screen/configuration and
+ordinary typing restored.30 linked launch inputs,153 menu inputs and updated
+79 configuration/128 total far bridges pass. Near data/stack is65,344bytes;
+192bytes remain. Scripts are children; live UART script scheduling stays open.
+
+MESSAGE/EXIT/PAUSE add296 exact native bytes,459 paired CPU scenarios and9,384
+actual DOS assertions covering all145 instructions.44 code ranges compare with
+the original. MESSAGE uses the native caret transform and verified defaultCRLF;
+the maintained DOS backend writes raw stdout. PAUSE retains the native BIOS
+clock helper.16 production CLI launches verify exact output/statuses, budget,
+Escape, delay and INT0 restoration. The composed437-case DOS suite passes6,996
+assertions over267 source-compiled fixtures.57of215 slots execute;158 abort.
+
+The compiler now matches270 accepted frozen outputs and270 presentation
+variants.55 console oracle attempts yield33accepted/22rejected, including three
+compiler-only long pauses. TRANSMIT/WAITFOR emission is recovered, with runtime
+services still unsupported. Historical PAUSE7 now executes instead of expecting
+an unsupported stop. Diagnostic shared output/value check functions resolve a
+reproduced64KiB code-segment overflow without reducing fixture coverage.
+
+See `docs/ASPECT_RUNNER.md` and `docs/validation/aspect-console.json`. Full
+ASPECT command/runtime/compiler support, application scheduling, recorder,
+other emulations/protocols/UI, Host mode and physical validation remain open.
+All F01–F16 whole-application gates remain open.

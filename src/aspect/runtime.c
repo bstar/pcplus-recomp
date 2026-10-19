@@ -2,6 +2,7 @@
 #include "file_io.h"
 #include <malloc.h>
 #include <dos.h>
+#include <bios.h>
 #include <string.h>
 
 aspect_file runtime_file;
@@ -11,6 +12,8 @@ unsigned runtime_at_opcode,runtime_header,runtime_alloc_calls;
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
 unsigned runtime_fail_after=0xffff;
 unsigned char runtime_string_snapshot[128][81];
+unsigned char runtime_console_output[1024];
+unsigned runtime_console_output_size;
 #endif
 static unsigned active;
 extern void __interrupt __far runtime_divide_interrupt(void);
@@ -28,10 +31,12 @@ extern unsigned runtime_string_pending_near,runtime_string_scratch_pointer,runti
 extern unsigned runtime_string_check_range;
 unsigned runtime_native_error_code;
 extern unsigned runtime_string_compare_result;
+extern unsigned runtime_console_message_mode;
 extern void __far *runtime_strings[128];
 extern void runtime_enter(const char *path);
 extern void runtime_globals_init(void);
 extern void runtime_globals_release(void);
+unsigned runtime_console_cancel_poll(void);
 
 void runtime_set_error(unsigned error)
 {
@@ -43,6 +48,8 @@ void runtime_reset_native(void)
     runtime_depth=0;runtime_frame=runtime_stack_pointer=base;runtime_wait_gate=0;
     runtime_source_type=runtime_target_type=runtime_lookahead=runtime_stage_index=0;
     runtime_word_value=0;runtime_dword_value=0;runtime_string_compare_result=0;runtime_native_error_code=0;
+    /* Native overlay2 D6EA initializes MESSAGE line-feed mode E38A to1. */
+    runtime_console_message_mode=1;
     runtime_string_pending_far=0;runtime_string_pending_near=0;
     runtime_string_scratch_pointer=runtime_string_scratch_index=0;runtime_string_check_range=1;
     memset(runtime_string_bank_a,0,sizeof(runtime_string_bank_a));
@@ -119,8 +126,30 @@ void runtime_finish(void)
 }
 unsigned runtime_service(void)
 {
+    if(runtime_error)return 1;
+    if(runtime_console_cancel_poll())return 1;
     if(runtime_steps>=runtime_limit){runtime_set_error(ASPECT_RUN_BUDGET);return 1;}
     ++runtime_steps;runtime_at_opcode=1;return 0;
+}
+unsigned runtime_console_cancel_poll(void)
+{
+    unsigned key;
+    if(runtime_error)return 1;
+    if(!_bios_keybrd(_KEYBRD_READY))return 0;
+    key=_bios_keybrd(_KEYBRD_READ);
+    if((key&255)==27){runtime_set_error(ASPECT_RUN_CANCELLED);return 1;}
+    return 0;
+}
+void runtime_console_emit_byte(unsigned value)
+{
+    unsigned char byte=(unsigned char)value;
+#if defined(ASPECT_RUNTIME_DIAGNOSTIC)
+    if(runtime_console_output_size>=sizeof(runtime_console_output))runtime_set_error(ASPECT_RUN_IO);
+    else runtime_console_output[runtime_console_output_size++]=byte;
+#else
+    unsigned written;
+    if(_dos_write(1,&byte,1,&written) || written!=1)runtime_set_error(ASPECT_RUN_IO);
+#endif
 }
 int runtime_read(void)
 {
@@ -145,6 +174,7 @@ unsigned aspect_runtime_run(const char *path,unsigned step_limit)
     active=1;runtime_error=runtime_steps=runtime_live=runtime_peak_live=0;
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
     memset(runtime_string_snapshot,0,sizeof(runtime_string_snapshot));
+    runtime_console_output_size=0;
 #endif
     runtime_cleanup_count=runtime_close_count=runtime_alloc_calls=runtime_at_opcode=0;
     runtime_last_opcode=0;runtime_limit=step_limit;runtime_abi_bad=0;

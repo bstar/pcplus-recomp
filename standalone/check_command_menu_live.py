@@ -65,11 +65,11 @@ def main():
  def handoff():
   # Every instruction of the real dispatcher and selected owner runs.
   for group,index,key,state,want in [(0,0,0x1300,'terminal_transfer_pending',1),
-   (0,1,0x1f00,'terminal_transfer_pending',1),(0,4,0x6900,'terminal_quit',0),
-   (0,5,0x6a00,'terminal_cr_adds_lf',1),(1,0,0x2000,'connection_state',0),
+   (0,1,0x1f00,'terminal_transfer_pending',1),(0,5,0x6900,'terminal_quit',0),
+   (0,6,0x6a00,'terminal_cr_adds_lf',1),(1,0,0x2000,'connection_state',0),
    (1,1,0x2300,'connection_state',0),(1,2,0x3000,'uart_break_hold',1),
    (2,0,0x8400,'_redisplay_active',1),(2,1,0x8300,'_clipboard_ui_active',1),
-   (2,2,0x2b1c,'terminal_monitor_active',2),(0,6,0x2d00,'terminal_quit',1),
+   (2,2,0x2b1c,'terminal_monitor_active',2),(0,7,0x2d00,'terminal_quit',1),
    (3,1,0x7000,'terminal_translation_reload_status',4),(3,2,0x6f00,'terminal_translation_edit_status',4)]:
    m=Menu();direct=Menu()
    if key==0x3000:
@@ -87,7 +87,7 @@ def main():
   m.choose(2,3);assert m.get('terminal_printer_closing') and not m.get('terminal_sink_3988_enabled')
   m.call('terminal_printer_poll');assert not m.device_live and not m.get('_command_menu_action')
   m=MenuPrinter();assert m.begin()==0
-  m.choose(0,4);m.log(b'HELD');m.choose(0,4);m.log(b'LIVE');m.choose(0,3)
+  m.choose(0,5);m.log(b'HELD');m.choose(0,5);m.log(b'LIVE');m.choose(0,4)
   assert m.contents()==b'LIVE' and not m.get('terminal_sink_398a_enabled')
   return 20
  check('normal-transfer-capture-break-monitor-viewer-clipboard-exit-dispatch-and-mnemonics',handoff)

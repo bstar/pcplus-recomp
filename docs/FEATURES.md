@@ -397,3 +397,13 @@ The host compiler covers the tested grammar, not full ASPECT or a DOS-hosted
 compiler. Float/formatting/recorder, serial/UI bindings and terminal memory/
 scheduling remain required. See `ASPECT_COMPILER.md` and the frozen conversion
 report. All F01–F16 whole-application gates remain open.
+
+
+F13 now adds the [DOS runner and Script menu](ASPECT_RUNNER.md), with source-built
+ASPECT.EXE, native MESSAGE/EXIT/PAUSE,267source-compiled fixtures and437actualDOS
+cases/6,996assertions.16productionCLIcases and4terminalchild/resume workflows
+pass.57of215slots execute;158abort. The compiler matches270acceptedvectors and
+270presentationvariants. F01/F02/F09/F16 gain a checked direct sibling helper
+launch/package,79configuration/128totalfarbridges and65,344nearbytes. This is
+DOSchild integration, not live serial scripting. Complete application/script
+scheduling and all F01–F16 whole-application gates remain open.

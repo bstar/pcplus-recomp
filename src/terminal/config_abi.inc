@@ -1,3 +1,4 @@
+CONFIG_ENTRY _terminal_script_prepare,3
 CONFIG_ENTRY _terminal_preferences_read,5
 CONFIG_ENTRY _terminal_directory_preferences_read,10
 ; Near public C names and exact caller-cleaned word counts.

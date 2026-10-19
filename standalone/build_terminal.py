@@ -37,7 +37,7 @@ c_sources += [ROOT/'src/config'/name for name in ['terminal_preferences.c','tran
 c_sources += [ROOT/'src/translation/xlt_dos.c',ROOT/'src/translation/xlt_dos_fs.c']
 c_sources += [ROOT/'src/translation/xlt_default.c',ROOT/'src/config/resource_path.c']
 c_sources += [ROOT/'src/translation/xlt_live.c',ROOT/'src/redisplay/redisplay.c']
-c_sources += [ROOT/'src/redisplay/command_menu.c']
+c_sources += [ROOT/'src/redisplay/command_menu.c',ROOT/'src/terminal/script_launch.c']
 c_sources += sorted((ROOT/'src/clipboard').glob('*.c'))
 c_sources += [ROOT/'src/transfer'/name for name in ['download_file.c','download_fs.c','native_file_bridge.c','terminal_receive.c']]
 c_sources += [ROOT/'src/transfer'/name for name in ['upload_file.c','upload_fs.c','terminal_upload.c']]
@@ -54,11 +54,13 @@ config_sources.update({ROOT/'src/translation/xlt_default.c',ROOT/'src/config/res
 config_sources.add(ROOT/'src/translation/xlt_live.c')
 config_sources.add(ROOT/'src/redisplay/redisplay.c')
 config_sources.add(ROOT/'src/redisplay/command_menu.c')
+config_sources.add(ROOT/'src/terminal/script_launch.c')
 config_sources.update((ROOT/'src/clipboard').glob('*.c'))
 config_sources.add(ROOT/'src/process/program.c')
 config_sources.update({ROOT/'src/transfer/ymodem.c',ROOT/'src/transfer/batch_header.c'})
 config_sources.update({ROOT/'src/transfer'/name for name in ['zmodem.c','zmodem_wire.c','terminal_zmodem.c']})
-config_aliases={name:name+'_impl' for name in ['directory_live_decode','directory_live_read','directory_live_read_context','directory_live_context_matches','live_configuration_decode','live_setup_bind','live_setup_begin','live_setup_finish','live_setup_abort','live_setup_finish_policy','live_setup_acknowledge']}
+config_aliases={'terminal_script_prepare':'terminal_script_prepare_impl'}
+config_aliases.update({name:name+'_impl' for name in ['directory_live_decode','directory_live_read','directory_live_read_context','directory_live_context_matches','live_configuration_decode','live_setup_bind','live_setup_begin','live_setup_finish','live_setup_abort','live_setup_finish_policy','live_setup_acknowledge']})
 config_aliases.update({name:'config_'+name+'_service' for name in ['memcpy','memset','memcmp','strchr','strcmp']})
 config_aliases.update({name:name+'_impl' for name in ['terminal_preferences_read','terminal_directory_preferences_read','live_setup_transfer_settings']})
 config_aliases.update({name:name+'_impl' for name in ['terminal_autostart_initialize','terminal_autostart_flush','terminal_autostart_poll','terminal_autostart_input']})

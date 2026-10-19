@@ -4,6 +4,29 @@ MODULES := escape attributes screen text reports erase cursor_state cursor_shape
 all: serial parser keyboard $(MODULES) config-dos config-replace config-abi directory-browser directory-editor process download-file upload-file transfer-metadata batch-header transfer-session-composite transfer-storage terminal
 
 
+.PHONY: test-script-launch test-script-launch-dos
+test: test-script-launch
+test-script-launch: terminal
+	python3 standalone/check_script_launch_live.py
+test-script-launch-dos: terminal aspect-runner
+	python3 standalone/test_script_launch_dos.py
+
+.PHONY: aspect-runner test-aspect-runner aspect-console test-aspect-console test-aspect-console-compat package
+all: aspect-runner aspect-console
+test: test-aspect-runner test-aspect-console
+aspect-runner:
+	python3 standalone/build_aspect_runner.py
+test-aspect-runner:
+	python3 standalone/check_aspect_runner.py
+aspect-console:
+	python3 standalone/build_aspect_console.py
+test-aspect-console:
+	python3 standalone/check_aspect_console.py
+test-aspect-console-compat:
+	python3 standalone/check_aspect_console.py --original analysis/pcplus-install/PCPLUS.EXE
+package:
+	python3 standalone/package_dos.py
+
 .PHONY: test-aspect-compiler
 test: test-aspect-compiler
 test-aspect-compiler:

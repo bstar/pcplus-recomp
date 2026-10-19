@@ -36,11 +36,12 @@ It preserves an existing output if compilation fails.
   this compiler does not silently evaluate them on the host.
 * Nested `if` / `elseif` / `else` / `endif` and `while` / `endwhile`,
   `exitwhile`, `loopwhile` with absolute 32-bit jump offsets.
-* String assignment and `strcat`, `strcmp`, `strcpy`, `strlen`, `strlwr`,
+* String assignment and `strcat`, `strcmp`, `rstrcmp`, `strcpy`, `strlen`, `strlwr`,
   `strpeek`, `strpoke`, `strset`, `strupdt`, `strupr`, `substr`; optional counts
   where established. `success`, `failure`, `$NULL` and fixed string slots
   `S0` through `S9` are recognized operands.
-* `atoi`, `atol`, `itoa`, `ltoa`, and `pause` command emission. Their availability
+* `atoi`, `atol`, `itoa`, `ltoa`, `message`, `exit`, `pause`, `transmit` and
+  `waitfor` command emission. Their availability
   in any application depends on that application's runtime service wiring.
 
 Calls and commands accept atomic operands, with optional commas between them.
@@ -57,10 +58,12 @@ use the established position and physical-line keyed transform. Empty strings
 emit the original null-string builtin. Local numeric declaration lists preserve
 the original chained initializer record form.
 
-The original-free regression suite compares all **237** authored public vectors
+The original-free regression suite compares all **270** authored public vectors
 against frozen ASPCOMP 1.01 byte outcomes and SHA256 values: 19 execution, 86
 arithmetic, 27 parameter, 52 string-command, 38 conversion and 15 independent
-compiler-validation cases. Those outcomes came from the separate optional
+compiler-validation cases, plus 33 console/comparison cases. The three
+long-delay console cases are explicitly compiler-only, outside the runtime
+vector list. Those outcomes came from the separate optional
 original compiler oracle, SHA256
 `5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a`.
 Their provenance is retained in each fixture corpus. Test inputs, expected
@@ -73,6 +76,32 @@ above 64 KiB, CP437 CLI input, failed-output preservation, variable-bank limits,
 type/count errors and unsupported syntax. Original runtime evidence and native
 DOS runtime diagnostics are documented separately; byte compatibility alone is
 not proof that every emitted command has a fully reconstructed runtime service.
+
+The console corpus preserves all 55 canonical compiler attempts: 33 accepted and
+22 rejected. Its optional oracle is `standalone/aspect_console_probe.py`; the
+freezer binds the private compiler report, probe source, authored predictions and
+accepted ASX hashes in `standalone/fixtures/aspect_console_vectors.json`.
+Earlier compiler01/02 errors remain private, including the discovery that TEXT
+is a reserved word. The maintained compiler now rejects TEXT declarations.
+
+Console grammar is concrete: `message string`, operand-free `exit`,
+`pause integer`, `transmit string`, `waitfor string [integer timeout]`, and
+`rstrcmp string string [integer count]`. PAUSE and the optional WAITFOR timeout
+require signed integer operands; long variables, `L` suffixes, floats and the
+positive constant 32768 are rejected. Native PAUSE subsequently rejects negative
+values at execution. RSTRCMP compares a raw byte span, defaulting to 80 bytes;
+its bytes beyond a NUL can matter, unlike STRCMP. Its corpus uses fresh zeroed
+scratch backing or an explicit short span, rather than assuming these commands
+are equivalent.
+
+Runtime predictions were fixed before composed execution: MESSAGE uses the
+native caret decoder and appends the default CRLF; EXIT terminates the whole
+script, including caller continuations. The native default comes from overlay02
+D6EA, which resets E38A to one (retained evidence
+`ev_7f2a37333c76fe8f326ecc36a6ef20a640284f710c20b9e47a19c3288aa55d92`).
+Caret bytes remain literal in ASX and are decoded at runtime; they are not host
+compiler escapes. TRANSMIT and WAITFOR currently have compiler grammar evidence
+and explicit unsupported-runtime predictions. They are not compiled away.
 
 ## Explicit limits
 

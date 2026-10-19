@@ -13,14 +13,16 @@ sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import CompileError, compile_source  # noqa: E402
 
 CORPORA = ('execution', 'arithmetic', 'parameter', 'string_command',
-           'conversion', 'compiler_validation')
-COUNTS = {'frozen_vectors_checked': 0, 'presentation_variants_checked': 0}
+           'conversion', 'compiler_validation', 'console')
+COUNTS = {'frozen_vectors_checked': 0, 'presentation_variants_checked': 0,
+          'frozen_rejections_checked': 0}
 
 
 def vectors():
     for corpus in CORPORA:
         path = ROOT / f'standalone/fixtures/aspect_{corpus}_vectors.json'
-        for vector in json.loads(path.read_text())['vectors']:
+        data = json.loads(path.read_text())
+        for vector in data['vectors'] + data.get('compiler_only', []):
             yield corpus, vector
 
 
@@ -30,11 +32,20 @@ class CompilerTests(unittest.TestCase):
         for corpus, vector in vectors():
             with self.subTest(corpus=corpus, name=vector['name']):
                 actual = compile_source(vector['source'])
+                self.assertEqual(hashlib.sha256(vector['source'].encode('cp437')).hexdigest(),
+                                 vector['source_sha256'])
                 self.assertEqual(actual, bytes.fromhex(vector['hex']))
                 self.assertEqual(hashlib.sha256(actual).hexdigest(), vector['asx_sha256'])
                 COUNTS['frozen_vectors_checked'] += 1
             count += 1
-        self.assertGreaterEqual(count, 237)
+        self.assertGreaterEqual(count, 270)
+
+    def test_console_original_compiler_rejections(self):
+        data = json.loads((ROOT / 'standalone/fixtures/aspect_console_vectors.json').read_text())
+        for vector in data['rejected']:
+            with self.subTest(name=vector['name']), self.assertRaises(CompileError):
+                compile_source(vector['source'])
+            COUNTS['frozen_rejections_checked'] += 1
 
     def test_case_whitespace_and_symbol_renaming(self):
         # Changes lexical presentation, not source line numbers or string bytes.
@@ -83,12 +94,12 @@ class CompilerTests(unittest.TestCase):
             'call missing', 'call worker with 1', 'call worker 1',
             'if 1\nanswer = 2', 'endif', 'else', 'endwhile',
             'exitwhile', 'loopwhile', 'if 1\nelse 2\nendif',
-            'strcpy answer "bad"', 'strcmp "A"', 'atoi "1" text',
-            'strcpy text "x" "badcount"', 'text = 1',
-            'text = "' + 'A' * 81 + '"', 'answer = 1 @ 2',
+            'strcpy answer "bad"', 'strcmp "A"', 'atoi "1" msgbuf',
+            'strcpy msgbuf "x" "badcount"', 'msgbuf = 1',
+            'msgbuf = "' + 'A' * 81 + '"', 'answer = 1 @ 2',
         ]
         for body in bodies:
-            source = ('integer answer\nstring text\nproc main\n' + body +
+            source = ('integer answer\nstring msgbuf\nproc main\n' + body +
                       '\nendproc\nproc worker\nendproc\n')
             with self.subTest(body=body), self.assertRaises(CompileError):
                 compile_source(source)
@@ -122,7 +133,7 @@ class CompilerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             directory = Path(temporary)
             source, output = directory / 'NEW.ASP', directory / 'NEW.ASX'
-            source.write_bytes('string text\r\nproc main\r\ntext = "éÇ"\r\nendproc\r\n'.encode('cp437'))
+            source.write_bytes('string msgbuf\r\nproc main\r\nmsgbuf = "éÇ"\r\nendproc\r\n'.encode('cp437'))
             result = subprocess.run([sys.executable, str(ROOT / 'src/aspect/compiler.py'),
                                      str(source), '-o', str(output)], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr)

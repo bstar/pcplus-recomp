@@ -30,6 +30,7 @@ extern terminal_translation_reload_run
 extern terminal_translation_reload_status
 extern terminal_translation_edit_prepare,terminal_translation_edit_complete
 extern terminal_translation_edit_executable,terminal_translation_edit_tail
+extern terminal_script_prepare
 extern terminal_translation_edit_status
 global terminal_program_initialize,terminal_program_start,terminal_program_poll
 global terminal_program_cancel
@@ -279,6 +280,8 @@ terminal_program_poll:
 .execute_child:
  mov ax,terminal_program_result
  push ax
+ cmp word [terminal_program_kind],4
+ je .script_child
  cmp word [terminal_program_kind],3
  je .edit_child
  cmp word [terminal_program_kind],1
@@ -299,10 +302,16 @@ terminal_program_poll:
  call _process_run
  add sp,6
  jmp .child_status
+.script_child:
+ call terminal_script_prepare
+ or ax,ax
+ jnz .setup_denied
+ jmp .direct_child
 .edit_child:
  call terminal_translation_edit_prepare
  or ax,ax
  jnz .setup_denied
+ .direct_child:
  mov ax,terminal_translation_edit_tail
  push ax
  mov ax,terminal_translation_edit_executable
@@ -316,6 +325,8 @@ terminal_program_poll:
  or ax,ax
  jnz .record_status
  cmp word [terminal_program_kind],1
+ je .check_child_exit
+ cmp word [terminal_program_kind],4
  je .check_child_exit
  cmp word [terminal_program_kind],3
  jne .record_status
@@ -655,7 +666,7 @@ SEGMENT _DATA public align=16 class=DATA use16
 global terminal_program_pending,terminal_program_active,terminal_program_status
 global terminal_program_command,terminal_program_result
 global terminal_program_kind
-terminal_program_kind: dw 0 ;0 PROGRAM/COMSPEC,1 PRMEDIT,2 reload (no child),3 XLTEDIT.
+terminal_program_kind: dw 0 ;0 PROGRAM/COMSPEC,1 PRMEDIT,2 reload (no child),3 XLTEDIT,4 ASPECT.
 terminal_program_pending: dw 0
 terminal_program_active: dw 0
 terminal_program_status: dw 0

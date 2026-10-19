@@ -24,6 +24,8 @@ extern aspect_strcmd_subcopy,aspect_strcmd_upper,aspect_strcmd_substr
 extern program_strlen,program_strncmp,directory_dial_append_original,directory_dial_upper_original
 extern aspect_string_status,aspect_string_success
 extern aspect_convert_atoi,aspect_convert_atol,aspect_convert_itoa,aspect_convert_ltoa
+extern aspect_console_message,aspect_console_exit,aspect_console_pause,aspect_console_native_wait_second
+extern _runtime_console_emit_byte,_runtime_console_cancel_poll
 extern _runtime_file,_runtime_reset_native,_runtime_open,_runtime_alloc,_runtime_free
 extern _runtime_cleanup,_runtime_close,_runtime_finish,_runtime_service,_runtime_read
 extern _runtime_native_error,_runtime_set_error,_runtime_header
@@ -284,6 +286,10 @@ aspect_string_strlen: jmp program_strlen
 aspect_string_strncmp: jmp program_strncmp
 aspect_string_concat: jmp directory_dial_append_original
 aspect_string_upper: jmp directory_dial_upper_original
+global aspect_console_emit_byte,aspect_console_cancel_poll,aspect_console_wait_second
+aspect_console_emit_byte: jmp _runtime_console_emit_byte
+aspect_console_cancel_poll: jmp _runtime_console_cancel_poll
+aspect_console_wait_second: jmp aspect_console_native_wait_second
 
 SEGMENT _DATA public class=DATA use16
 GROUP DGROUP _DATA
@@ -306,6 +312,7 @@ aspect_convert_ctype:
 %1:
 %2: dw 0
 %endmacro
+scalar aspect_console_message_mode,_runtime_console_message_mode
 scalar aspect_flow_depth,_runtime_depth
 scalar aspect_flow_frame,_runtime_frame
 scalar aspect_flow_wait_gate,_runtime_wait_gate
@@ -414,6 +421,8 @@ aspect_dispatch_handlers:
  dw aspect_arith_divide
 %elif op=0x32
  dw aspect_ops_equal
+%elif op=0x33
+ dw aspect_console_exit
 %elif op=0x48
  dw aspect_ops_less_equal
 %elif op=0x54
@@ -452,6 +461,10 @@ aspect_dispatch_handlers:
  dw aspect_convert_itoa
 %elif op=0x6e
  dw aspect_convert_ltoa
+%elif op=0x76
+ dw aspect_console_message
+%elif op=0x88
+ dw aspect_console_pause
 %elif op=0x9a
  dw aspect_strcmd_compare_bytes
 %elif op=0xa4

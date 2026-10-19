@@ -7,7 +7,8 @@ typedef unsigned char byte;
 typedef struct item { const char __far *name;const char __far *help;word category,key,letter; } item;
 unsigned command_menu_active=0,command_menu_action=0;
 static word category,selected,phase,query_size,notice;
-static char query[32];
+char command_menu_script[64];
+#define query command_menu_script
 static word __far *view;
 #define MENU_TEXT __based(__segname("_CODE"))
 #define TEXT(n,s) static const char MENU_TEXT n[]=s
@@ -94,6 +95,12 @@ ENTRY(table,"Edit input table               Alt-F8",
  "F1 saves changes; Escape returns. Y then applies a checked snapshot;\n"
  "other answers retain the active table. Only table mode is eligible.\n"
  "Capture closes while the UART and interrupt belong to the editor.");
+ENTRY(script,"Run script",
+ "Run a compiled ASPECT script from a local DOS file.\n"
+ "Enter a DOS 8.3 path, then Enter; Escape cancels. The terminal pauses\n"
+ "its port and closes capture for the child, then restores its screen.\n"
+ "Script console output appears before the return-key prompt. Serial\n"
+ "script commands are not implemented; this does not automate the BBS.");
 ENTRY(using,"Using the command menu",
  "Alt-Z opens this menu. Left/Right or Tab changes the menu group.\n"
  "Up/Down or Home/End selects a command; a listed letter runs it.\n"
@@ -109,13 +116,13 @@ ENTRY(keys,"Keyboard and session commands",
 ENTRY(scope,"Application status",
  "This maintained source-built terminal is still being reconstructed.\n"
  "The menu exposes implemented commands and source-owned help.\n"
- "Other emulations, ASPECT, Host, additional transfer protocols and\n"
+ "Other emulations, Host, additional transfer protocols and\n"
  "complete original menus/settings remain under development.\n"
  "Loopback BBS tests do not replace physical UART/modem validation.");
 #define ROW(n,c,k,l) {n##_name,n##_help,c,k,l}
 static const item MENU_TEXT items[]={
  ROW(receive,0,0x1300,'R'),ROW(send,0,0x1f00,'S'),ROW(snapshot,0,0x2200,'W'),
- ROW(capture,0,0x6800,'O'),ROW(hold,0,0x6900,'H'),ROW(crlf,0,0x6a00,'T'),ROW(exit,0,0x2d00,'X'),
+ ROW(script,0,0xfe00,'A'),ROW(capture,0,0x6800,'O'),ROW(hold,0,0x6900,'H'),ROW(crlf,0,0x6a00,'T'),ROW(exit,0,0x2d00,'X'),
  ROW(redial,1,0x2000,'D'),ROW(hangup,1,0x2300,'H'),ROW(linebreak,1,0x3000,'B'),
  ROW(history,2,0x8400,'R'),ROW(clipboard,2,0x8300,'F'),ROW(monitor,2,0x2b1c,'M'),ROW(printer,2,0x2600,'P'),
  ROW(settings,3,0x7100,'E'),ROW(reload,3,0x7000,'R'),ROW(table,3,0x6f00,'T'),ROW(using,4,0,'U'),ROW(keys,4,0,'K'),ROW(scope,4,0,'A')};
@@ -127,6 +134,8 @@ TEXT(help_footer,"Up/Down PgUp/PgDn: topic  /: find  Esc: command menu  Alt-X: e
 TEXT(find_footer,"Find command/help text: Enter searches from the next topic; Esc cancels.");
 TEXT(no_match,"No matching topic. / changes the search; arrows select a command.");
 TEXT(find_label,"Find: ");
+TEXT(script_label,"Script DOS 8.3 path: ");
+TEXT(script_footer,"Enter: run script  Escape: cancel  Backspace: edit");
 static byte fold(byte c){return c>='a' && c<='z'?c-32:c;}
 static void text(word at,const char __far *s,word attr)
 {while(*s && at<2000)view[at++]=attr|(byte)*s++;}
@@ -146,9 +155,9 @@ static void draw(void)
   }
   if(notice)text(1921,no_match,0x1f00);else text(1921,footer,0x1f00);
  }
- if(phase==2){for(i=1760;i<1840;++i)view[i]=0x1f20;text(1762,find_label,0x1f00);
-  for(i=0;i<query_size;++i)view[1768+i]=0x1f00|(byte)query[i];
-  for(i=1920;i<2000;++i)view[i]=0x1f20;text(1921,find_footer,0x1f00);}
+ if(phase==2 || phase==3){for(i=1760;i<1840;++i)view[i]=0x1f20;text(1762,phase==3?script_label:find_label,0x1f00);
+  for(i=0;i<query_size;++i)view[(phase==3?1782:1768)+i]=0x1f00|(byte)query[i];
+  for(i=1920;i<2000;++i)view[i]=0x1f20;text(1921,phase==3?script_footer:find_footer,0x1f00);}
 }
 static word matches(const char __far *s)
 {
@@ -171,6 +180,9 @@ unsigned __cdecl command_menu_event(word event,word key,word __far *frame)
  if(event!=1)return 1;
  if(key==0x2d00){command_menu_action=key;command_menu_active=0;return 0;}
  if(c==27){if(phase){phase=notice=0;draw();return 1;}command_menu_active=0;return 0;}
+ if(phase==3){if(c==13){if(query_size){command_menu_action=0xfe00;command_menu_active=0;return 0;}}
+  else if(c==8){if(query_size)query[--query_size]=0;}
+  else if(c>=32 && c<127 && query_size<57){query[query_size++]=c;query[query_size]=0;}draw();return 1;}
  if(phase==2){if(c==13)search();else if(c==8){if(query_size)query[--query_size]=0;}
   else if(c>=32 && c<127 && query_size<31){query[query_size++]=c;query[query_size]=0;}draw();return 1;}
  if(c=='/'){phase=2;query_size=notice=0;query[0]=0;draw();return 1;}
@@ -190,7 +202,8 @@ unsigned __cdecl command_menu_event(word event,word key,word __far *frame)
  else{
   if(c!=13){for(i=0;i<COUNT;++i)if(items[i].category==category && items[i].letter==fold(c)){selected=i;break;}
    if(i==COUNT){draw();return 1;}}
-  if(!items[selected].key)phase=1;
+  if(items[selected].key==0xfe00){phase=3;query_size=0;query[0]=0;}
+  else if(!items[selected].key)phase=1;
   else{command_menu_action=items[selected].key;command_menu_active=0;return 0;}
  }
  draw();return 1;

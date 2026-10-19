@@ -1,0 +1,591 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "private_report": "analysis/aspect-console/compiler-03/report.json",
+  "private_report_sha256": "861a18a27b64f83362da43251378c07426e1cfe537927233821457e4273feba3",
+  "probe_sha256": "5a99e93a093ce29efe64d2383a04082a5ca6bfdabde7e415f4b14eace5bb37e2",
+  "freezer_sha256": "cb6b76df64798f4f5e928a22768ff7df945e47ef3429603d6cef465141a7a106",
+  "source_encoding": "cp437",
+  "vectors": [
+    {
+      "name": "MSGONE",
+      "source": "\r\nproc main\r\nmessage \"HELLO\"\r\nendproc\r\n",
+      "source_sha256": "832831ab6b18a712cc1ec73cc99e5f92410f9055ed97f406f9d5a51a4e7e1fc6",
+      "hex": "00 cf 76 aa b8 0d 67 7e f3 69 1a 94",
+      "asx_sha256": "02e30a1baf5ed9910c4828ed7103126d98cb0008dc815e553dbcb8ec4fe935ad",
+      "source_encoding": "cp437",
+      "expected": {
+        "stdout_hex": "48454c4c4f0d0a"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "MSGEMPTY",
+      "source": "\r\nproc main\r\nmessage \"\"\r\nendproc\r\n",
+      "source_sha256": "ce25e27c7a9feadbca83208484d2b84576e5ab76ad415bf33743893bb1905c96",
+      "hex": "00 cf 76 6e 13 94",
+      "asx_sha256": "a3cbbc41d9fa87fd0658f86085e1026ed0d9bd416c3c61748c3e9ccff5722799",
+      "source_encoding": "cp437",
+      "expected": {
+        "stdout_hex": "0d0a"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "MSGCTRL",
+      "source": "\r\nproc main\r\nmessage \"A^MB^JC\"\r\nendproc\r\n",
+      "source_sha256": "bc705f204c1da8dcdefa87a1058a5a7b65e0e3c7f14cbcc70b25fd9b7807e923",
+      "hex": "00 cf 76 aa ba 0f 60 97 f4 5f 29 cb 8a 94",
+      "asx_sha256": "fcd552f5972b099ea449ede2bbc6c8bad4609d737db95831010631e9f1a385fa",
+      "source_encoding": "cp437",
+      "expected": {
+        "stdout_hex": "410d420a430d0a"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "MSGCAR",
+      "source": "\r\nproc main\r\nmessage \"^A^@^^\"\r\nendproc\r\n",
+      "source_sha256": "4c578021ed75e90208838a466d26bb33e3d173aebf3fb762369f3085065d4919",
+      "hex": "00 cf 76 aa b9 0e 7d 7a 05 5d 29 df 94",
+      "asx_sha256": "8e0d400277fbae8bbfef7a046aeb08e8c6c51913d2436d07a46c3cde925cac8c",
+      "source_encoding": "cp437",
+      "expected": {
+        "stdout_hex": "01ff1e0d0a"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "MSGHIGH",
+      "source": "\r\nproc main\r\nmessage \"\u00e9\u00c7\"\r\nendproc\r\n",
+      "source_sha256": "a19be24ef058a0e8f25635d0064191ceb920a229a02ebd3a53c495ed4acf92ef",
+      "hex": "00 cf 76 aa b5 0a a1 b9 94",
+      "asx_sha256": "0cf1e4bd76b9ab6b6d7c83b667c660f412559c7849f58469bdc05b210dd6247d",
+      "source_encoding": "cp437",
+      "expected": {
+        "stdout_hex": "82800d0a"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "MSGGLB",
+      "source": "string msgbuf\r\nproc main\r\nmsgbuf = \"GLOBAL\"\r\nmessage msgbuf\r\nendproc\r\n",
+      "source_sha256": "7f39a3c98d88d8c5114e3b3c8e22f95d955cf582a367dab6e50f3670ba84e087",
+      "hex": "01 cf ac 8c 00 aa b9 10 4c 51 96 0d e8 6b 00 76 8c 00 94",
+      "asx_sha256": "f30aeeacc92260b2eb1ce4b25822feb2b5255fbaf82d8e3d6241a52adfef34bb",
+      "source_encoding": "cp437",
+      "expected": {
+        "stdout_hex": "474c4f42414c0d0a",
+        "string0": "GLOBAL"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "MSGLOCAL",
+      "source": "\r\nproc main\r\nstring msgbuf = \"LOCAL\"\r\nmessage msgbuf\r\nendproc\r\n",
+      "source_sha256": "ef4ab2e5a0f7b7f12c06e5548203dcdef82c82cc730e261285aec8d000b3a6c1",
+      "hex": "00 d2 51 00 ac a0 00 00 aa b8 86 81 44 0a fa 75 00 cf 76 a0 00 00 95",
+      "asx_sha256": "a4897bab457cd647bab6b1675a4908ce40f17c54fa5b35877a192aa3ed3b1f07",
+      "source_encoding": "cp437",
+      "expected": {
+        "stdout_hex": "4c4f43414c0d0a"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "MSGPARM",
+      "source": "\r\nproc main\r\ncall worker with \"PARAM\"\r\nendproc\r\nproc worker\r\nstrparm msgbuf\r\nmessage msgbuf\r\nendproc\r\n",
+      "source_sha256": "02c5193c49753d56df7684cbde2750f9fccf0402a12a073d564a9bf6cd91294d",
+      "hex": "00 cf d0 cd aa b8 8e cf 6a 87 3c 30 c8 15 00 00 00 d2 af ff 94 cf 76 96 57 00 95",
+      "asx_sha256": "85428ca5e0599c093fad85c3d488bfef4165d4251ab3edb254209a78d7647526",
+      "source_encoding": "cp437",
+      "expected": {
+        "stdout_hex": "504152414d0d0a"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "MSGTWICE",
+      "source": "\r\nproc main\r\nmessage \"ONE\"\r\nmessage \"TWO\"\r\nendproc\r\n",
+      "source_sha256": "70ab0ddec81f5b1335bdd999a7bec2d85198d9ae62a54e02d72345cdc15158e3",
+      "hex": "00 cf 76 aa b6 0b 6e 87 ec 76 aa b6 87 0d 38 38 94",
+      "asx_sha256": "7d3e8db5d5d419c70c4c5525f344f3b02d31b0018f44618485b5f2f6a2831c81",
+      "source_encoding": "cp437",
+      "expected": {
+        "stdout_hex": "4f4e450d0a54574f0d0a"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "MSGMAX",
+      "source": "\r\nproc main\r\nmessage \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\r\nendproc\r\n",
+      "source_sha256": "7433515e0b9a21ebddc18adb2e6feae05827cacb11d26215fdba24cfe2cd23b7",
+      "hex": "00 cf 76 aa 03 58 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a 94",
+      "asx_sha256": "ede859b421eb5c6ea53fdece425df36217c8e677a816460f0194151591a5639f",
+      "source_encoding": "cp437",
+      "expected": {
+        "stdout_hex": "41414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141410d0a"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "EXPLAIN",
+      "source": "integer outcome\r\nproc main\r\noutcome = 1\r\nexit\r\noutcome = 9\r\nendproc\r\n",
+      "source_sha256": "227d3236be89780bad81e67843928373d2c6144971c91d50bbbb20d96b0de633",
+      "hex": "00 cf 5b 00 8d 00 ab 01 00 33 5b 00 8d 00 ab 09 00 94",
+      "asx_sha256": "00b3a4b37f15b6a08456fb85bac64ee526f4a9ea23fa88e3a413bdde891952a1",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "EXNEST",
+      "source": "integer outcome\r\nproc main\r\ncall worker\r\noutcome = 9\r\nendproc\r\nproc worker\r\noutcome = 7\r\nexit\r\nendproc\r\n",
+      "source_sha256": "0be19ce90d86cb7892a50db4d28bef49938cef2ee8a599e784dee5289e0361aa",
+      "hex": "00 cf d0 c7 10 00 00 00 5b 00 8d 00 ab 09 00 94 cf 5b 00 8d 00 ab 07 00 33 94",
+      "asx_sha256": "4432a3f93708ad6d29abbf7fdfd21325d489a442ed8730bbcf0812a49d7013fd",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 7
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "PZ",
+      "source": "\r\nproc main\r\npause 0\r\nendproc\r\n",
+      "source_sha256": "18d2b38dbeaf552240ef1831a0b34a80414c7eaabc8aca599ebd2b774a4b5856",
+      "hex": "00 cf 88 b5 00 94",
+      "asx_sha256": "e3106f0979e2678c9c471ae445b746030ac032c6ffaaf70daf7d4a4432c36138",
+      "source_encoding": "cp437",
+      "expected": {},
+      "dos_excluded": false
+    },
+    {
+      "name": "PONE",
+      "source": "\r\nproc main\r\npause 1\r\nendproc\r\n",
+      "source_sha256": "927c839fa7a91c5f3c60968c76c813ed313e37215ca8ff7a58d0a113b49d5a0c",
+      "hex": "00 cf 88 b5 01 94",
+      "asx_sha256": "5a2dd05337ded23a3845f80b29397f370d5e87a5392514758f44c396a48e22ac",
+      "source_encoding": "cp437",
+      "expected": {},
+      "dos_excluded": false
+    },
+    {
+      "name": "PNEG",
+      "source": "\r\nproc main\r\npause -1\r\nendproc\r\n",
+      "source_sha256": "05f4e2b25a72fa57172820a735818b5478eedd3705c4330350f7f9b48d870083",
+      "hex": "00 cf 88 ab ff ff 94",
+      "asx_sha256": "bb0c2aaa749f1c5a6e65ec0ce5bc54e0261f599bfbc3b9b0beb6aa1af2ebbea5",
+      "source_encoding": "cp437",
+      "expected": {
+        "error": "operand",
+        "native_error": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "PMIN",
+      "source": "\r\nproc main\r\npause -32768\r\nendproc\r\n",
+      "source_sha256": "3b98cddd8be90d7cff02c20336c1c2c12d229439ebbcf467bf72dcc648a05452",
+      "hex": "00 cf 88 ab 00 80 94",
+      "asx_sha256": "d225dc983835bd591ef3f915d0422f42f33538ef72f2bb8bf1fc025c15cda066",
+      "source_encoding": "cp437",
+      "expected": {
+        "error": "operand",
+        "native_error": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "TXONE",
+      "source": "\r\nproc main\r\ntransmit \"AT^M\"\r\nendproc\r\n",
+      "source_sha256": "f91e67d06244bd56e55eb2647c686dd55474425dbfcdcec178261d6f860a8da1",
+      "hex": "00 cf bf aa b7 0c 60 8d 05 6a 94",
+      "asx_sha256": "7b4bec3fc32ceb1a0dfc215ecd919cd158bb51849adb848f260215dc7181aed6",
+      "source_encoding": "cp437",
+      "expected": {
+        "error": "unsupported"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "TXEMPTY",
+      "source": "\r\nproc main\r\ntransmit \"\"\r\nendproc\r\n",
+      "source_sha256": "3e3883562038c99c80e23c74690d260ba47407c81d045dfc6bfd30c45447beb4",
+      "hex": "00 cf bf 6e 13 94",
+      "asx_sha256": "4e2fc279e765c3edf1f9901b9d9f37c2b8ff76ed9033d274c937eea991a24583",
+      "source_encoding": "cp437",
+      "expected": {
+        "error": "unsupported"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WFONE",
+      "source": "\r\nproc main\r\nwaitfor \"login:\"\r\nendproc\r\n",
+      "source_sha256": "7fcc5cc056b025451ab115b850f0ce55e5da2bdf7d65d2a9bab90049f5674f24",
+      "hex": "00 cf d4 aa b9 0e 8b a8 0e 86 39 bb 00 94",
+      "asx_sha256": "1a1d28ba8a9a1ce1e03ca4ff8541826ab7bef1bdd9218b21b811aca7679e9c3d",
+      "source_encoding": "cp437",
+      "expected": {
+        "error": "unsupported"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WFTIME",
+      "source": "\r\nproc main\r\nwaitfor \"login:\" 5\r\nendproc\r\n",
+      "source_sha256": "05301e6bb54d895404020a4f76284bda60f6ce6c6bf445844a2b2c6e0c7b64ea",
+      "hex": "00 cf d4 aa b9 0e 8b a8 0e 86 39 bb 01 b5 05 94",
+      "asx_sha256": "0a309f2b156032a95e66192570deb1d414459397e43bd0902bb297b2b7e6d65e",
+      "source_encoding": "cp437",
+      "expected": {
+        "error": "unsupported"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "WFEMPTY",
+      "source": "\r\nproc main\r\nwaitfor \"\" 0\r\nendproc\r\n",
+      "source_sha256": "7989faf41de207849427d4e7dd68fe28efb91e125f9db4da40b2dd171bafaeb9",
+      "hex": "00 cf d4 6e 13 01 b5 00 94",
+      "asx_sha256": "b85aa242c1f82c97fbfd565307d74e5e67d3e073594b7fd5ba4f2a4c4ce11fd6",
+      "source_encoding": "cp437",
+      "expected": {
+        "error": "unsupported"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RS2",
+      "source": "integer outcome\r\nproc main\r\nrstrcmp \"ABC\" \"ABC\"\r\noutcome = failure\r\nendproc\r\n",
+      "source_sha256": "3247a269bec2fac26f6f46d0fbe249172a701a0b729004fe3ded10ae0007586f",
+      "hex": "00 cf 9a aa b6 0b 60 7b ea aa b6 05 4c 89 60 00 5b 00 8d 00 6f 15 94",
+      "asx_sha256": "e78af39072d4a190aebe8f4524e74bb0068c2da03ffc387708dac4f599d83024",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RS3",
+      "source": "integer outcome\r\nproc main\r\nrstrcmp \"ABC\" \"ABD\" 2\r\noutcome = failure\r\nendproc\r\n",
+      "source_sha256": "730b7ce6353099ff42788ea5e91d69a6927040e1fd03e4f278ac900ca35a7b86",
+      "hex": "00 cf 9a aa b6 0b 60 7b ea aa b6 05 4c 89 61 01 b5 02 5b 00 8d 00 6f 15 94",
+      "asx_sha256": "c204873496dd7cb2c93ed389661399104c7f4fb6b2d01b33c406ec0d24fc896d",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RSCASE",
+      "source": "integer outcome\r\nproc main\r\nrstrcmp \"abc\" \"ABC\"\r\noutcome = failure\r\nendproc\r\n",
+      "source_sha256": "e378829df19d5553d84759fb220637a749ac3628e64b05993c1e501a34c64470",
+      "hex": "00 cf 9a aa b6 0b 80 9b 0a aa b6 05 4c 89 60 00 5b 00 8d 00 6f 15 94",
+      "asx_sha256": "3dda7cec8c5ed0d1970c273d406bc9141ccd5eba6d77e0c4fd4a075fe2305141",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RSDIFF",
+      "source": "integer outcome\r\nproc main\r\nrstrcmp \"ABC\" \"ABD\"\r\noutcome = failure\r\nendproc\r\n",
+      "source_sha256": "c11556b482e8de971d89c1d188f64ae43cf6a62aa62a1d1070f994079e0f0c8a",
+      "hex": "00 cf 9a aa b6 0b 60 7b ea aa b6 05 4c 89 61 00 5b 00 8d 00 6f 15 94",
+      "asx_sha256": "2636dcbab5bd3ad1e21085604104675f5691376766163522c9644ff4c93f948f",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 65535
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RSPREF",
+      "source": "integer outcome\r\nproc main\r\nrstrcmp \"AB\" \"ABC\"\r\noutcome = failure\r\nendproc\r\n",
+      "source_sha256": "fa8cb13864f29593637149fde9d70faa9c9c5180635d338e4d2c61dd358fd88c",
+      "hex": "00 cf 9a aa b5 0a 60 7b aa b6 84 76 37 0a 00 5b 00 8d 00 6f 15 94",
+      "asx_sha256": "6494c0f8fb2aff676883fdf587802e77ec0c76de29f7496b1815cd629d096515",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 65535
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RSEMPTY",
+      "source": "integer outcome\r\nproc main\r\nrstrcmp \"\" \"\"\r\noutcome = failure\r\nendproc\r\n",
+      "source_sha256": "d7a1709808fe3296cd05f679317b1f3a76347cf01d9ec61869a82073a32f6172",
+      "hex": "00 cf 9a 6e 13 6e 13 00 5b 00 8d 00 6f 15 94",
+      "asx_sha256": "3610a7967ac9e1e9d5e40796b2dcd8922362ce63a106175785697d5676749a47",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RSZERO",
+      "source": "integer outcome\r\nproc main\r\nrstrcmp \"ABC\" \"ABD\" 0\r\noutcome = failure\r\nendproc\r\n",
+      "source_sha256": "17f71d20a87dde422ba3de5f10141b5def638e56388c8ca73b0568757dc85783",
+      "hex": "00 cf 9a aa b6 0b 60 7b ea aa b6 05 4c 89 61 01 b5 00 5b 00 8d 00 6f 15 94",
+      "asx_sha256": "a24187e03dbebabfd286397b4e93b9600aa215f809519050881cfdb07d788ed9",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RSBAD",
+      "source": "\r\nproc main\r\nrstrcmp \"ABC\" \"ABD\" 81\r\nendproc\r\n",
+      "source_sha256": "7772a9cac1af5c158e56744be7703146acb063b08300fbcbf4b95e6fc19bb9d8",
+      "hex": "00 cf 9a aa b6 0b 60 7b ea aa b6 05 4c 89 61 01 b5 51 94",
+      "asx_sha256": "22afed874dbc21ece810bcb6ea8313fbb18577dbf1ae0c1be2a04f7bb7b12269",
+      "source_encoding": "cp437",
+      "expected": {
+        "error": "operand",
+        "native_error": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "RSLOCAL",
+      "source": "integer outcome\r\nproc main\r\nstring first = \"ABC\",second = \"ABD\"\r\nrstrcmp first second 2\r\noutcome = failure\r\nendproc\r\n",
+      "source_sha256": "65a005b240edd21782281e3711adf839f7db52b2541c7bd6a8404a10a8ee2e89",
+      "hex": "00 d2 a2 00 ac a0 00 00 aa b6 84 76 37 0a 00 ac a0 51 00 aa b6 0f 58 e9 49 00 cf 9a a0 00 00 a0 51 00 01 b5 02 5b 00 8d 00 6f 15 95",
+      "asx_sha256": "4ea4ca54671a0a7d3992b1692d3cbb2f2ce4418a34d4a4726cb24c78f32cbbb4",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 0
+      },
+      "dos_excluded": false
+    }
+  ],
+  "compiler_only": [
+    {
+      "name": "PN",
+      "source": "\r\nproc main\r\npause 7\r\nendproc\r\n",
+      "source_sha256": "789183f728bf97b1e8d26a7c791c334df41547ef6f4de911fbcad81dd9825e55",
+      "hex": "00 cf 88 b5 07 94",
+      "asx_sha256": "9911d765686f90353933d4bb5c58c9419c85aadb93afcea611e01eaae4f1ba57",
+      "source_encoding": "cp437",
+      "expected": {},
+      "dos_excluded": true,
+      "dos_excluded_reason": "Compiler grammar only: avoid a native BIOS delay of 7 seconds in regression execution."
+    },
+    {
+      "name": "PMAX",
+      "source": "\r\nproc main\r\npause 32767\r\nendproc\r\n",
+      "source_sha256": "c81df47ef18c32c2bcb2cbeb9504ac0d8e60c72bf487a6267ee47b0471541063",
+      "hex": "00 cf 88 ab ff 7f 94",
+      "asx_sha256": "e421238af1a58ac489f1e55fe1cc13b8800e043ac0dc816db03abed4d4b0285b",
+      "source_encoding": "cp437",
+      "expected": {},
+      "dos_excluded": true,
+      "dos_excluded_reason": "Compiler grammar only: avoid a native BIOS delay of 32767 seconds in regression execution."
+    },
+    {
+      "name": "PWORD",
+      "source": "\r\nproc main\r\ninteger ticks = 3\r\npause ticks\r\nendproc\r\n",
+      "source_sha256": "b17c7c72309450aaaf69b340e058f9be6e8421f9c8d93b07d73cb7aaabd3cd4d",
+      "hex": "00 d2 02 00 5b 00 a1 00 00 ab 03 00 cf 88 a1 00 00 95",
+      "asx_sha256": "eab18fc384bbbacb608b25d8097ccba7aa816f270b04f7259c6b0f3086324ccd",
+      "source_encoding": "cp437",
+      "expected": {},
+      "dos_excluded": true,
+      "dos_excluded_reason": "Compiler grammar only: avoid a native BIOS delay of 3 seconds in regression execution."
+    }
+  ],
+  "rejected": [
+    {
+      "name": "MSGNUM",
+      "source": "\r\nproc main\r\nmessage 7\r\nendproc\r\n",
+      "source_sha256": "50cd29d5e7b4fa186861662d6ddb412f2c56f37b4a2039af7eb26ac0572101dd",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> 7"
+      ]
+    },
+    {
+      "name": "MSGMISS",
+      "source": "\r\nproc main\r\nmessage\r\nendproc\r\n",
+      "source_sha256": "3055e359baed53f16190e25a4382a5855f9b78cb6e92838da78bf5bce28e6a1f",
+      "errors": [
+        "Error C006 Line 3: Missing token"
+      ]
+    },
+    {
+      "name": "MSGEXTRA",
+      "source": "\r\nproc main\r\nmessage \"A\" \"B\"\r\nendproc\r\n",
+      "source_sha256": "ea193e9537afc7e30944a108fc3703333f1c853d54bf6854a78caa29cd77d2fc",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> B"
+      ]
+    },
+    {
+      "name": "EXARG",
+      "source": "\r\nproc main\r\nexit 7\r\nendproc\r\n",
+      "source_sha256": "20afca39b1b610440b5bfe0ad65119d2087faed2f610777ff8424772e771e5e5",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> 7"
+      ]
+    },
+    {
+      "name": "EXSTR",
+      "source": "\r\nproc main\r\nexit \"x\"\r\nendproc\r\n",
+      "source_sha256": "f11a3475435ab8fea2a4659fe05ff2ed40b4a3b54ae683175ab06cd05f5dc865",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> x"
+      ]
+    },
+    {
+      "name": "PSUFF",
+      "source": "\r\nproc main\r\npause 7L\r\nendproc\r\n",
+      "source_sha256": "956de11bfb866fc7bb2d20e5879b0bba1925c0526d5b5fe4e6db870f51e2ddf9",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 7L"
+      ]
+    },
+    {
+      "name": "PNSUFF",
+      "source": "\r\nproc main\r\npause -7L\r\nendproc\r\n",
+      "source_sha256": "f45147ed73f1f503800f0e9ba3620008d45165d6395999137917d9e746e46272",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> -7L"
+      ]
+    },
+    {
+      "name": "PUNSIGN",
+      "source": "\r\nproc main\r\npause 32768\r\nendproc\r\n",
+      "source_sha256": "1e2010e3b64f77d6bae7644efc6d6c7cc69d81be3dd5264a49f97541dac13632",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 32768"
+      ]
+    },
+    {
+      "name": "PLVAR",
+      "source": "\r\nproc main\r\nlong ticks = 3L\r\npause ticks\r\nendproc\r\n",
+      "source_sha256": "7a7da17b12dc95b79e9b361c5e721c9615e522073f13954c975c6909ddd87f8e",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> TICKS"
+      ]
+    },
+    {
+      "name": "PLONG",
+      "source": "\r\nproc main\r\npause 65537\r\nendproc\r\n",
+      "source_sha256": "4f9dca54de804076924aa4b06e90ec2706e872d7694342bfaa0a1b7f71f0a857",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 65537"
+      ]
+    },
+    {
+      "name": "PFLOAT",
+      "source": "\r\nproc main\r\npause 7.0\r\nendproc\r\n",
+      "source_sha256": "1d8a226ff7c14211aa20c9b19459c2874aa62cb6d72f7888de392a628e31244f",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 7.0"
+      ]
+    },
+    {
+      "name": "PSTR",
+      "source": "\r\nproc main\r\npause \"x\"\r\nendproc\r\n",
+      "source_sha256": "ca7f772385929f2d0e7853d4e267b362e2a740521eb634026c5b9dafa1b5eebe",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> x"
+      ]
+    },
+    {
+      "name": "PMISS",
+      "source": "\r\nproc main\r\npause\r\nendproc\r\n",
+      "source_sha256": "77493b50cc95256070f0902c195362703ec6e07393ece250058fecada275e50c",
+      "errors": [
+        "Error C006 Line 3: Missing token"
+      ]
+    },
+    {
+      "name": "TXNUM",
+      "source": "\r\nproc main\r\ntransmit 7\r\nendproc\r\n",
+      "source_sha256": "079a5207ef62b71de6d213b2b7e3d9078f0b35e0aabd9a2b293134378cd4a4e2",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> 7"
+      ]
+    },
+    {
+      "name": "TXEXTRA",
+      "source": "\r\nproc main\r\ntransmit \"A\" \"B\"\r\nendproc\r\n",
+      "source_sha256": "eb3a8bc52d5e32b0a5f88e4f54316b337d24fd673bbc13b8dc18ae30fac9784e",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> B"
+      ]
+    },
+    {
+      "name": "WFREV",
+      "source": "\r\nproc main\r\nwaitfor 5 \"login:\"\r\nendproc\r\n",
+      "source_sha256": "f55109f548c80d59e13364552303805532ae9fba9c80d88ec6cce1bff8d3b22c",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> 5",
+        "Error C021 Line 3: Invalid numeric variable or constant ==> login:"
+      ]
+    },
+    {
+      "name": "WFWIDE",
+      "source": "\r\nproc main\r\nwaitfor \"login:\" 32768\r\nendproc\r\n",
+      "source_sha256": "badb0ea765ac2c4d46902015505d343731eb9e1dae77cc60f80c568b1ae20152",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 32768"
+      ]
+    },
+    {
+      "name": "WFSUFF",
+      "source": "\r\nproc main\r\nwaitfor \"login:\" 7L\r\nendproc\r\n",
+      "source_sha256": "ee2bc218b8a32632cd8a540a0103a9ff196af1717f12a5e5fbfef6dbbf88b2c5",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 7L"
+      ]
+    },
+    {
+      "name": "WFMISS",
+      "source": "\r\nproc main\r\nwaitfor\r\nendproc\r\n",
+      "source_sha256": "cba4dec66c45cd3551c9e096b0b3be5f4ca24653f7ade06c876235cd977fae19",
+      "errors": [
+        "Error C006 Line 3: Missing token"
+      ]
+    },
+    {
+      "name": "RS4",
+      "source": "\r\nproc main\r\nrstrcmp \"ABC\" \"ABD\" 0 2\r\nendproc\r\n",
+      "source_sha256": "5f850aa1a83a651f313a23c0efb0609971c95ffc37b53ccf1265febfec3189e9",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> 2"
+      ]
+    },
+    {
+      "name": "RSMISS",
+      "source": "\r\nproc main\r\nrstrcmp \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "099b2757bc04443824245598eed624fee36b3ec25acd1d1da0132130f44264df",
+      "errors": [
+        "Error C006 Line 3: Missing token"
+      ]
+    },
+    {
+      "name": "RSNUM",
+      "source": "\r\nproc main\r\nrstrcmp 1 2 3\r\nendproc\r\n",
+      "source_sha256": "f5b7fc3712f59687afd29df75fb8504cc6a0e375f2d4b4c5d6007462b61a38b2",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> 1",
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> 2"
+      ]
+    }
+  ],
+  "expectation_model": "Predictions fixed in authored probe before composed VM execution. MESSAGE native4934 caret decoder then default CRLF (overlay02 D6EA resets E38A=1); EXIT native state1 terminates the script successfully, including caller continuations. PAUSE bounded integer read rejects negative values with native1; positive long delays excluded from DOS tests. TRANSMIT/WAITFOR have grammar evidence only, expect explicit unsupported stop. RSTRCMP uses unsigned raw-byte comparison, default count80, with fresh zeroed scratch backing; count81 faults native1. Status values are -1/0/1 as 16-bit words.",
+  "native_evidence": [
+    "analysis/aspect-expression/rea-console-defaults-01.json ev_7f2a37333c76fe8f326ecc36a6ef20a640284f710c20b9e47a19c3288aa55d92",
+    "Recovered string_commands.asm EF00..EF1D and string_operands.asm EEF0..EEFF"
+  ],
+  "scope": "55 authored compiler cases:33 accepted,22 rejected;30 runtime vectors and3 compiler-only long-delay cases. Prior compiler01/02 failures retained privately. No complete console, timer or serial-service claim."
+}

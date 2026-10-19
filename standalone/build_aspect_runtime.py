@@ -6,6 +6,7 @@ ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/aspect-runtime'
 ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm',None),
  ('globals','src/aspect/global_strings.asm',None),('stack','src/aspect/value_stack.asm',None),
  ('conversions','src/aspect/conversions.asm',None),('conversion_services','src/aspect/conversion_services.asm',None),
+ ('console','src/aspect/console_commands.asm',None),
  ('flow','src/aspect/control_flow.asm',None),('parameters','src/aspect/parameters.asm',None),('strings','src/aspect/string_operands.asm',None),('string_commands','src/aspect/string_commands.asm',None),('string_services','src/aspect/string_services.asm',None),
  ('string_strlen','reconstruction/program_exec/strlen.asm','PROGRAM_EXEC_OMF'),('string_strncmp','reconstruction/program_exec/strncmp.asm','PROGRAM_EXEC_OMF'),
  ('string_concat','reconstruction/directory_dial/append.asm','DIRECTORY_DIAL_OMF'),('string_upper','reconstruction/directory_dial/uppercase.asm','DIRECTORY_DIAL_OMF'),('operands','src/aspect/numeric_operands.asm',None),
@@ -49,6 +50,18 @@ static void run(const char *path,unsigned limit,unsigned error,unsigned has_inte
  if(has_long)ck(runtime_longs[0]==long_value);
  printf("CASE %s error=%u steps=%u peak=%u cleanup=%u close=%u int0=%u long0=%lu\n",path,result,runtime_steps,runtime_peak_live,runtime_cleanup_count,runtime_close_count,runtime_integer_b[0],runtime_longs[0]);
 }
+static void output(const char *expected,unsigned count){unsigned i;
+ ck(runtime_console_output_size==count);ck(memcmp(runtime_console_output,expected,count)==0);
+ printf("OUTPUT %s ",current);for(i=0;i<runtime_console_output_size;++i)printf("%02X",runtime_console_output[i]);printf("\n");
+}
+static void string_value(unsigned index,const char *expected){unsigned i;
+ ck(strcmp((char *)runtime_string_snapshot[index],expected)==0);printf("STRING %s string%u=",current,index);
+ for(i=0;i<81 && runtime_string_snapshot[index][i];++i)printf("%02X",runtime_string_snapshot[index][i]);printf("\n");
+}
+static void numeric_value(unsigned is_long,unsigned index,unsigned long expected){unsigned long value;
+ value=is_long?runtime_longs[index]:runtime_integer_b[index];ck(value==expected);
+ printf("VALUE %s %s%u=%lu\n",current,is_long?"long":"integer",index,value);
+}
 int main(void){FILE *done;
 '''
 END=r'''
@@ -77,13 +90,19 @@ def main():
  conversion_corpus=json.loads(conversion_corpus_path.read_text())
  compiler_corpus_path=ROOT/'standalone/fixtures/aspect_compiler_validation_vectors.json'
  compiler_corpus=json.loads(compiler_corpus_path.read_text())
- cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']+conversion_corpus['vectors']+compiler_corpus['vectors']
+ console_corpus_path=ROOT/'standalone/fixtures/aspect_console_vectors.json'
+ console_corpus=json.loads(console_corpus_path.read_text())
+ cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']+conversion_corpus['vectors']+compiler_corpus['vectors']+console_corpus['vectors']
+ # Historical PAUSE oracle expected an unsupported stop before opcode88 recovery.
+ # Its authored seven-second script now executes the recovered native delay.
+ cases=[dict(c,expected={}) if c['name']=='PAUSE' else c for c in cases]
  assert len({c['name'] for c in cases})==len(cases)
  sources=[Path(__file__).resolve(),corpus_path,arithmetic_corpus_path,parameter_corpus_path,command_corpus_path,ROOT/'reconstruction/uart/encodings.inc',ROOT/'src/aspect/runtime.c',ROOT/'src/aspect/runtime.h',ROOT/'src/aspect/file_io.c',ROOT/'src/aspect/file_io.h']
  objects=[];units=[]
  sources.append(conversion_corpus_path)
  sources.append(compiler_corpus_path)
  sources.append(ROOT/'src/aspect/compiler.py')
+ sources.append(console_corpus_path)
  for name,rel,define in ASM:
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
   subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))
@@ -94,7 +113,7 @@ def main():
   units.append(dict(unit=unit,start=start,end_exclusive=end,file_start=base+start,bytes=end-start,sha256=sha(p)))
  program=C
  supported={int(op,16):name for op,name in re.findall(r'%(?:el)?if op=(0x[0-9a-f]+)\n dw (\w+)',(ROOT/'src/aspect/runtime_bridge.asm').read_text())}
- assert len(supported)==54
+ assert len(supported)==57
  for case in cases:
   source=case['source'];assert hashlib.sha256(source.encode('cp437')).hexdigest()==case['source_sha256']
   data=compile_source(source)
@@ -103,18 +122,19 @@ def main():
   assert not case.get('dos_excluded',False),case['name']
   program+=f' run("{name}",{ex.get("limit",1000)},{error},{int("integer0" in ex)},{ex.get("integer0",0)&65535}U,{int("long0" in ex)},{ex.get("long0",0)}UL,{ex.get("allocated",data[0])});\n'
   if 'native_error' in ex:program+=f' ck(runtime_native_error_code=={ex["native_error"]});printf("NATIVE {name} code=%u\\n",runtime_native_error_code);\n'
+  output=bytes.fromhex(ex.get('stdout_hex',''));assert len(output)<=1024
+  literal=''.join(f'\\{byte:03o}' for byte in output)
+  program+=f' output("{literal}",{len(output)});\n'
   for key,value in ex.items():
    if re.fullmatch(r'string[0-9]+',key):
     index=int(key[6:]);assert 0<=index<128
     text=value.encode('cp437');assert len(text)<=80 and b'\0' not in text
     literal=''.join(f'\\{b:03o}' for b in text)
-    program+=f' ck(strcmp((char *)runtime_string_snapshot[{index}],"{literal}")==0);printf("STRING {name} {key}=");{{unsigned i;for(i=0;i<81 && runtime_string_snapshot[{index}][i];++i)printf("%02X",runtime_string_snapshot[{index}][i]);printf("\\n");}}\n'
+    program+=f' string_value({index},"{literal}");\n'
    match=re.fullmatch(r'(integer|long)([0-9]+)',key)
    if match:
     kind,index=match[1],int(match[2]);assert 0<=index<128
-    bank='runtime_integer_b' if kind=='integer' else 'runtime_longs'
-    suffix='U' if kind=='integer' else 'UL'
-    program+=f' ck({bank}[{index}]=={value}{suffix});printf("VALUE {name} {key}=%lu\\n",(unsigned long){bank}[{index}]);\n'
+    program+=f' numeric_value({int(kind=="long")},{index},{value}UL);\n'
 
  # Malformed fixtures stop at header/read/unsupported boundaries, not arbitrary unsafe operands.
  for name,data,error in [('NOHEADER',b'',2),('BADHEAD',bytes.fromhex('81 cf 94'),2),('BADOP',bytes.fromhex('00 ff'),3),('TRUNC',bytes.fromhex('00 cf 5b 00 8d 00 ab 07'),5)]:
@@ -153,6 +173,6 @@ def main():
   maintained_string_fault_fixture={'STRSHORT':'STRGASS compiler bytes with final00 option and94 return removed; first global HELLO retained, second stays empty'},
   maintained_heap_fault_fixtures={'HEAPFLT':'IDIVEDGE compiler bytes with global-string count changed from0to2','HEAPZERO':'IDZ compiler bytes with global-string count changed from0to2'},
   fixture_expectations={c['name']:{'source_sha256':c['source_sha256'],'asx_sha256':c['asx_sha256'],'expected':c['expected']} for c in cases},
-  scope='Incremental actual native dispatch/operand/operation/file/heap composition executing source-owned compiled fixtures. Incomplete54-slot opcode table; unavailable services abort. Not full ASPECT or arbitrary-input safety.')
+  scope='Incremental actual native dispatch/operand/operation/file/heap composition executing source-owned compiled fixtures. Incomplete57-slot opcode table; unavailable services abort. Not full ASPECT or arbitrary-input safety.')
  (OUT/'manifest.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 if __name__=='__main__':main()
