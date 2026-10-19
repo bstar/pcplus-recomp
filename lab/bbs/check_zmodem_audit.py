@@ -47,6 +47,21 @@ def main():
   try:controls(items)
   except AssertionError:cases.append(dict(case=name,passed=True));continue
   raise AssertionError('Accepted bad opposite controls: '+name)
+ # Asynchronous Q ACK may arrive after later data; future positions may not.
+ wire=offer('TEST.BIN',6)+h(10,0,67)+packet(b'ABC',67,106,0)+packet(b'DEF',67,104,0)+h(11,6)+h(8)+b'OO'
+ a=audit_batch(wire,{'TEST.BIN':b'ABCDEF'})
+ trace=[dict(direction='bbs',seconds=1+2*i,offset=e['offset'],size=e['end']-e['offset']) for i,e in enumerate(a['events'])]
+ trace.append(dict(direction='bbs',seconds=15,offset=a['end']-2,size=2))
+ for name,items,accepted in [
+  ('delayed-Q-ACK',[(9,0,4),(3,3,10),(1,0x23000000,12),(8,0,14)],True),
+  ('cumulative-Q-ACK',[(9,0,4),(3,6,10),(1,0x23000000,12),(8,0,14)],True),
+  ('future-Q-ACK',[(9,0,4),(3,7,10),(1,0x23000000,12),(8,0,14)],False),
+  ('unsent-Q-ACK',[(9,0,4),(3,6,8),(1,0x23000000,12),(8,0,14)],False)]:
+  # controls() uses a14-second post deadline; FIN at14 is allowed here.
+  try:controls(items)
+  except AssertionError:assert not accepted,name
+  else:assert accepted,name
+  cases.append(dict(case=name,passed=True))
  # Retained actual DOS lrzsz captures are optional corroboration, not test inputs.
  out=ROOT/'build/bbs-lab/zmodem-audit';out.mkdir(parents=True,exist_ok=True)
  report=dict(passed=True,checks=len(cases),cases=cases,sources={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [Path(__file__).resolve(),ROOT/'lab/bbs/audit_zmodem.py',ROOT/'standalone/check_zmodem.py',ROOT/'standalone/check_zmodem_wire.py']},scope='Independent passive audit fixture/negative checks. No real BBS session or C codec execution.')

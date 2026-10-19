@@ -11,6 +11,7 @@ import struct
 import subprocess
 from check_zmodem import h,meta,offer,payload
 from check_zmodem_wire import packet
+from zmodem_window_vectors import vectors
 
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/zmodem-dos'
 def main():
@@ -41,10 +42,10 @@ def main():
                 wire+=payload(data[off:off+1024],off,fmt);expected+=h(3,min(off+1024,n))
             wire+=h(11,n,fmt)+h(8)+b'OO';expected+=h(1,0x23000000)+h(8)
             case(f'receive-{fmt}-{n}',False,wire,{'TEST.BIN':data},expected_wire=expected)
-            rx=h(1,0x23000000 if fmt==67 else 0x03000000)+h(9)
+            rx=h(1,0x22000000 if fmt==67 else 0x02000000)+h(9)
             tx=h(0)+h(4,0x01000000,fmt)+packet(meta('TEST.BIN',n).ljust(128,b'\0'),fmt,107,0)
             for off in range(0,n,1024):rx+=h(3,min(off+1024,n));tx+=payload(data[off:off+1024],off,fmt)
-            rx+=h(1,0x23000000 if fmt==67 else 0x03000000)+h(8);tx+=h(11,n,fmt)+h(8)+b'OO'
+            rx+=h(1,0x22000000 if fmt==67 else 0x02000000)+h(8);tx+=h(11,n,fmt)+h(8)+b'OO'
             case(f'send-{fmt}-{n}',True,rx,{},expected_wire=tx,source_files={'TEST.BIN':data},checks={'closes':1,'uncertain':0})
     for end in (104,105,106,107):
         wire=offer('TEST.BIN',999)+h(10,0,67)+packet(b'ABC',67,end,0)
@@ -54,7 +55,7 @@ def main():
     wire=offer('TEST.BIN',0)+payload(b'ABC')+offer('TEST.BIN',0)+h(10,3,67)+bad+payload(b'DEF',3)+h(11,6)+h(8)+b'OO'
     case('CRC-duplicate-offer-zero-size-estimate',False,wire,{'TEST.BIN':b'ABCDEF'})
     for offset in (0,3,6):
-        rx=h(1,0x23000000)+h(9,offset)+(h(3,6) if offset<6 else b'')+h(1,0x23000000)+h(8)
+        rx=h(1,0x22000000)+h(9,offset)+(h(3,6) if offset<6 else b'')+h(1,0x22000000)+h(8)
         tx=h(0)+h(4,0x01000000,67)+packet(meta('TEST.BIN',6).ljust(128,b'\0'),67,107,0)
         if offset<6:tx+=payload(b'ABCDEF'[offset:],offset)
         tx+=h(11,6,67)+h(8)+b'OO'
@@ -69,7 +70,7 @@ def main():
     case('commit-failure-no-acknowledgement',False,offer('TEST.BIN',3)+payload(b'ABC')+h(11,3),{},fault=5,expected_status=7,
         expected_wire=h(1,0x23000000)+h(9)+h(3,3)+b'\x18'*8+b'\x08'*10)
     for fault in (1,2,3):
-        case(f'source-fault-{fault}',True,h(1,0x23000000)+h(9)+h(3,3)+h(1,0x23000000)+h(8),{},source_files={'TEST.BIN':b'ABC'},fault=fault,expected_status=7,
+        case(f'source-fault-{fault}',True,h(1,0x22000000)+h(9)+h(3,3)+h(1,0x22000000)+h(8),{},source_files={'TEST.BIN':b'ABC'},fault=fault,expected_status=7,
             checks={'closes':1,'uncertain':1 if fault==3 else 0})
     for name,data in (('missing-filename-NUL',b'TEST.BIN'),('missing-metadata-NUL',b'TEST.BIN\x00123'),('unsafe-filename',meta('../X',3))):
         case(name,False,h(4,0,67)+packet(data,67,107,0),{},expected_status=6)
@@ -84,6 +85,9 @@ def main():
             case(f'ZedZap-receive-{fmt}-{n}',False,offer('TEST.BIN',n,fmt)+payload(data,0,fmt)+h(11,n,fmt)+h(8)+b'OO',{'TEST.BIN':data})
         data=bytes(8192)+bytes(range(256))*32
         case(f'ZedZap-continued-ACK-buffer-reuse-{fmt}',False,offer('TEST.BIN',len(data),fmt)+h(10,0,fmt)+packet(data[:8192],fmt,106,0)+packet(data[8192:],fmt,107,0)+h(11,len(data),fmt)+h(8)+b'OO',{'TEST.BIN':data})
+    for fmt in (65,67):
+        for v in vectors(fmt,include_long=True):
+            case(f'window-{fmt}-'+v['label'],True,v['rx'],{},expected_wire=v['tx'],source_files={'TEST.BIN':v['body']},checks={'closes':1,'uncertain':0})
     conf=f'''[sdl]
 output=surface
 [cpu]
@@ -112,7 +116,7 @@ c:
         assert {p.name for p in path.iterdir()}==expected_names,item['label']
         if item['wire'] is not None:assert (path/'OUT.BIN').read_bytes()==item['wire'],item['label']
         results.append(dict(label=item['label'],passed=True,result=fields,input_sha256=hashlib.sha256((path/'IN.BIN').read_bytes()).hexdigest(),output_sha256=hashlib.sha256((path/'OUT.BIN').read_bytes()).hexdigest()))
-    inputs=sources+headers+[Path(__file__).resolve(),ROOT/'standalone/check_zmodem.py',ROOT/'standalone/check_zmodem_wire.py',ROOT/'nix/flake.nix',ROOT/'nix/flake.lock',ROOT/'tools/dev']
+    inputs=sources+headers+[Path(__file__).resolve(),ROOT/'standalone/check_zmodem.py',ROOT/'standalone/zmodem_window_vectors.py',ROOT/'standalone/check_zmodem_wire.py',ROOT/'nix/flake.nix',ROOT/'nix/flake.lock',ROOT/'tools/dev']
     result=dict(passed=True,DOS_cases=len(results),cases=results,binary_sha256=hashlib.sha256((OUT/'SESSION.EXE').read_bytes()).hexdigest(),isolated_source_build_byte_identical=True,
         tools={name:shutil.which(name) for name in ('wcl','dosbox-x')},
         sources={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs},

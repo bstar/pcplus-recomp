@@ -114,11 +114,12 @@
       "peer_exit": 0,
       "corruptions": 0,
       "corrupt_at": null,
+      "corrupt_packet": null,
       "peer_sha256": "582f46dbbc401d98ef7bc0af8ff34e7ef33f159699d6b73def7434c04297e34d",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download-default/peer-consumed.bin": "3db12531c1628e64c04191ff31001e8c83cf805b99c1a4a6cf2aef2278e5c21c",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download-default/engine-delivered.bin": "3db12531c1628e64c04191ff31001e8c83cf805b99c1a4a6cf2aef2278e5c21c",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download-default/engine-output.bin": "4a30a6e862aa7ff2f8b83a8bd69b98763efdaac38909d51b07cbcf5db1333a92"
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download-default/peer-consumed.bin": "e175a5e5785c0decf37e1c60af0156b34610006e9bd65d44a44f7956040e1c64",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download-default/engine-delivered.bin": "e175a5e5785c0decf37e1c60af0156b34610006e9bd65d44a44f7956040e1c64",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download-default/engine-output.bin": "4a30a6e862aa7ff2f8b83a8bd69b98763efdaac38909d51b07cbcf5db1333a92"
       },
       "file_sha256": {
         "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -145,11 +146,12 @@
       "peer_exit": 0,
       "corruptions": 0,
       "corrupt_at": null,
+      "corrupt_packet": null,
       "peer_sha256": "582f46dbbc401d98ef7bc0af8ff34e7ef33f159699d6b73def7434c04297e34d",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download--e/peer-consumed.bin": "962d5c5eab3fe9966584476fb7fab44dddf0709d71964c8beb8cca1b9e060eef",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download--e/engine-delivered.bin": "962d5c5eab3fe9966584476fb7fab44dddf0709d71964c8beb8cca1b9e060eef",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download--e/engine-output.bin": "fb11fa1c335c6bf2214aea729810cab9859fa254c6d23ea88ffdb552c60a6ace"
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download--e/peer-consumed.bin": "2142d4dfdcd7d6cb5115d228fd55f48d2cf5a653575bd1e72f0054bcc2c98d96",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download--e/engine-delivered.bin": "2142d4dfdcd7d6cb5115d228fd55f48d2cf5a653575bd1e72f0054bcc2c98d96",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download--e/engine-output.bin": "fb11fa1c335c6bf2214aea729810cab9859fa254c6d23ea88ffdb552c60a6ace"
       },
       "file_sha256": {
         "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -176,11 +178,12 @@
       "peer_exit": 0,
       "corruptions": 0,
       "corrupt_at": null,
+      "corrupt_packet": null,
       "peer_sha256": "582f46dbbc401d98ef7bc0af8ff34e7ef33f159699d6b73def7434c04297e34d",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download--o/peer-consumed.bin": "20466e9aa9fd8b97b51dd95a57ba761196849659c45d5417bd72f8c3d31f2e21",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download--o/engine-delivered.bin": "20466e9aa9fd8b97b51dd95a57ba761196849659c45d5417bd72f8c3d31f2e21",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download--o/engine-output.bin": "4a30a6e862aa7ff2f8b83a8bd69b98763efdaac38909d51b07cbcf5db1333a92"
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download--o/peer-consumed.bin": "c52f70f556b583569e0110b79a183a1156556306d0f25fd5ea925ced34d5d139",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download--o/engine-delivered.bin": "c52f70f556b583569e0110b79a183a1156556306d0f25fd5ea925ced34d5d139",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download--o/engine-output.bin": "4a30a6e862aa7ff2f8b83a8bd69b98763efdaac38909d51b07cbcf5db1333a92"
       },
       "file_sha256": {
         "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -206,11 +209,12 @@
       "peer_exit": 0,
       "corruptions": 1,
       "corrupt_at": 64,
+      "corrupt_packet": null,
       "peer_sha256": "582f46dbbc401d98ef7bc0af8ff34e7ef33f159699d6b73def7434c04297e34d",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download-default-corrupt/peer-consumed.bin": "a24d95338519b94b4c96772c59e4c8e08a83900abb17c8495d79fbc902633ff4",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download-default-corrupt/engine-delivered.bin": "09832ddc558a84b5a5dcbe3819fa4c1df7a455f9f58f6349ed6d80d587ac72e1",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download-default-corrupt/engine-output.bin": "ad618c874ac97829e376cbef2a1365a348cdd87a85f1d10c5358814b47aee566"
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download-default-corrupt/peer-consumed.bin": "535b92d9843d9d3cced157e983e3f0fa6db2982ab21110037dfa880d8530ed30",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download-default-corrupt/engine-delivered.bin": "034812c173fda768ce72e44b4d052e1db74585d44d6d59ef18fbb0efabd3560d",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download-default-corrupt/engine-output.bin": "ad618c874ac97829e376cbef2a1365a348cdd87a85f1d10c5358814b47aee566"
       },
       "file_sha256": {
         "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -237,11 +241,12 @@
       "peer_exit": 0,
       "corruptions": 0,
       "corrupt_at": null,
+      "corrupt_packet": null,
       "peer_sha256": "582f46dbbc401d98ef7bc0af8ff34e7ef33f159699d6b73def7434c04297e34d",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download--8--L-8192/peer-consumed.bin": "784d0e30b3a3264a00b9614bb595ce3079b0f66c0d16328b6989dc209d6006e3",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download--8--L-8192/engine-delivered.bin": "784d0e30b3a3264a00b9614bb595ce3079b0f66c0d16328b6989dc209d6006e3",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download--8--L-8192/engine-output.bin": "4a30a6e862aa7ff2f8b83a8bd69b98763efdaac38909d51b07cbcf5db1333a92"
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download--8--L-8192/peer-consumed.bin": "5354e353d802e3b42845e2f29efc3774a1789d5cf2d053fc248470ade4ebcc54",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download--8--L-8192/engine-delivered.bin": "5354e353d802e3b42845e2f29efc3774a1789d5cf2d053fc248470ade4ebcc54",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download--8--L-8192/engine-output.bin": "4a30a6e862aa7ff2f8b83a8bd69b98763efdaac38909d51b07cbcf5db1333a92"
       },
       "file_sha256": {
         "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -268,11 +273,12 @@
       "peer_exit": 0,
       "corruptions": 1,
       "corrupt_at": 4160,
+      "corrupt_packet": null,
       "peer_sha256": "582f46dbbc401d98ef7bc0af8ff34e7ef33f159699d6b73def7434c04297e34d",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download--8--L-8192-corrupt/peer-consumed.bin": "93eb524dd2f8d5fca9f57bfe24ba0de1367388d418ff6fa1a19eae61ceb951e1",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download--8--L-8192-corrupt/engine-delivered.bin": "dc1d44c8e6195460225d84388a665b05f9dd8c526666f63230ce190aeadb8ab9",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-download--8--L-8192-corrupt/engine-output.bin": "2731897401ee990e1bd552d1cf35560460321b8d1409ba66e658fca7b627c15d"
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download--8--L-8192-corrupt/peer-consumed.bin": "a55351c926a3dd3c9b22bd06d388bcf5bd7b01c072800ce392709aa7038ba165",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download--8--L-8192-corrupt/engine-delivered.bin": "d0a97a04c857ca72c795c8bda5c1cdd2af6b6e02776fec4eaffa8fd0721b6a13",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-download--8--L-8192-corrupt/engine-output.bin": "2731897401ee990e1bd552d1cf35560460321b8d1409ba66e658fca7b627c15d"
       },
       "file_sha256": {
         "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -293,11 +299,12 @@
       "peer_exit": 0,
       "corruptions": 0,
       "corrupt_at": null,
+      "corrupt_packet": null,
       "peer_sha256": "b494265acac463036658b11552e0be35fff29b919e6fa036fae57a6ba44afbd2",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-upload-default/peer-consumed.bin": "52c947e234bb8d8ebe72fbe81d80180f275a104981d38e54b5ada2468a44f529",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-upload-default/engine-delivered.bin": "52c947e234bb8d8ebe72fbe81d80180f275a104981d38e54b5ada2468a44f529",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-upload-default/engine-output.bin": "2249eecf32902a2b027489a86db65faa3c5ef09886038e12f7ad77da4fe82135"
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-upload-default/peer-consumed.bin": "fc51c480f6ff96a94769fdf716e952171444e417bc866500d28efb00ded43efd",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-upload-default/engine-delivered.bin": "fc51c480f6ff96a94769fdf716e952171444e417bc866500d28efb00ded43efd",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-upload-default/engine-output.bin": "76c9a105e85656d4fbbaa2f6bb34193d45737c7f672ddbc34ee9591a06f02e78"
       },
       "file_sha256": {
         "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -319,11 +326,12 @@
       "peer_exit": 0,
       "corruptions": 0,
       "corrupt_at": null,
+      "corrupt_packet": null,
       "peer_sha256": "b494265acac463036658b11552e0be35fff29b919e6fa036fae57a6ba44afbd2",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-upload--e/peer-consumed.bin": "263c8efd76f0f749b21654ebe6aa0999c81fecf10f8d8590a8b347e203798135",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-upload--e/engine-delivered.bin": "263c8efd76f0f749b21654ebe6aa0999c81fecf10f8d8590a8b347e203798135",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-upload--e/engine-output.bin": "63836ab9dadabc804d39b586b49c58d64309e3f62a4c7328b60737c0a2db8eb1"
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-upload--e/peer-consumed.bin": "c684ffb4e265078578beac68e3f997adbd55af445bd39c66614a11e47ba090c9",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-upload--e/engine-delivered.bin": "c684ffb4e265078578beac68e3f997adbd55af445bd39c66614a11e47ba090c9",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-upload--e/engine-output.bin": "37ff31ce43386d5269b6bf2c6fa30867f1a5a2dae678ad91e652f8ebfbb318a9"
       },
       "file_sha256": {
         "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -346,11 +354,12 @@
       "peer_exit": 0,
       "corruptions": 0,
       "corrupt_at": null,
+      "corrupt_packet": null,
       "peer_sha256": "b494265acac463036658b11552e0be35fff29b919e6fa036fae57a6ba44afbd2",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-upload--w-256/peer-consumed.bin": "52c947e234bb8d8ebe72fbe81d80180f275a104981d38e54b5ada2468a44f529",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-upload--w-256/engine-delivered.bin": "52c947e234bb8d8ebe72fbe81d80180f275a104981d38e54b5ada2468a44f529",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-upload--w-256/engine-output.bin": "2249eecf32902a2b027489a86db65faa3c5ef09886038e12f7ad77da4fe82135"
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-upload--w-256/peer-consumed.bin": "fc51c480f6ff96a94769fdf716e952171444e417bc866500d28efb00ded43efd",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-upload--w-256/engine-delivered.bin": "fc51c480f6ff96a94769fdf716e952171444e417bc866500d28efb00ded43efd",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-upload--w-256/engine-output.bin": "76c9a105e85656d4fbbaa2f6bb34193d45737c7f672ddbc34ee9591a06f02e78"
       },
       "file_sha256": {
         "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -371,11 +380,38 @@
       "peer_exit": 0,
       "corruptions": 1,
       "corrupt_at": 64,
+      "corrupt_packet": 1,
       "peer_sha256": "b494265acac463036658b11552e0be35fff29b919e6fa036fae57a6ba44afbd2",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-upload-default-corrupt/peer-consumed.bin": "c375d0d58984071135b658c7712feb118be3b31085bff18506db7b2e1ca1ed8e",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-upload-default-corrupt/engine-delivered.bin": "c375d0d58984071135b658c7712feb118be3b31085bff18506db7b2e1ca1ed8e",
-        "build/zmodem-session/runs/20261019T013144932868Z/lrzsz-upload-default-corrupt/engine-output.bin": "16dc0fec281c6b4c20be494e7506e5fdd6e09cc8169c3bc928c3bbf18dff847c"
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-upload-default-corrupt/peer-consumed.bin": "1596711fa31591cfa2c90f4ce3f5ffeacd9269cbbd506f40625c33584fd11126",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-upload-default-corrupt/engine-delivered.bin": "1596711fa31591cfa2c90f4ce3f5ffeacd9269cbbd506f40625c33584fd11126",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-upload-default-corrupt/engine-output.bin": "0110dacf39d090dd838af58a9e9e9a9f74fa347629029a683a4890a3e4112786"
+      },
+      "file_sha256": {
+        "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "fb56441d77f70131474cc811118ebf18f34b061ec0d4fd2d126d41e6f9b76c3f"
+      }
+    },
+    {
+      "label": "lrzsz-upload-default-corrupt-packet3",
+      "passed": true,
+      "bytes": 65798,
+      "files": 3,
+      "command": [
+        "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/rz",
+        "-b",
+        "-q"
+      ],
+      "peer_exit": 0,
+      "corruptions": 1,
+      "corrupt_at": 64,
+      "corrupt_packet": 3,
+      "peer_sha256": "b494265acac463036658b11552e0be35fff29b919e6fa036fae57a6ba44afbd2",
+      "retained_wire_sha256": {
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-upload-default-corrupt-packet3/peer-consumed.bin": "c3d6b7b654855f78e52139382cf86ae4f06e43f36ef970285c18eaeae3166480",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-upload-default-corrupt-packet3/engine-delivered.bin": "c3d6b7b654855f78e52139382cf86ae4f06e43f36ef970285c18eaeae3166480",
+        "build/zmodem-session/runs/20261019T022803800838Z/lrzsz-upload-default-corrupt-packet3/engine-output.bin": "ee680b618c4493f439ce56c8fbe806b1735fe13776738c799fc7776e818f2377"
       },
       "file_sha256": {
         "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -398,11 +434,12 @@
       "peer_exit": 0,
       "corruptions": 0,
       "corrupt_at": null,
+      "corrupt_packet": null,
       "peer_sha256": "03bc778bfefe2cc8cc67e02cbff8c574bb890e352e88941fa3048d5875a8df82",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download-default/peer-consumed.bin": "2b4361767dbd19fc5033e48480c4d92ac0d12287ce9f6ab417638aa0287b07cc",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download-default/engine-delivered.bin": "2b4361767dbd19fc5033e48480c4d92ac0d12287ce9f6ab417638aa0287b07cc",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download-default/engine-output.bin": "98b4995a2afa8f1a3fd770bfde8b35ba70f02df00058d15879c761ac677f0a24"
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download-default/peer-consumed.bin": "9544b9346413b3e4f7e1323f1f69571953cf83e1e5fa889ee2f63a3c71ca0bd5",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download-default/engine-delivered.bin": "9544b9346413b3e4f7e1323f1f69571953cf83e1e5fa889ee2f63a3c71ca0bd5",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download-default/engine-output.bin": "98b4995a2afa8f1a3fd770bfde8b35ba70f02df00058d15879c761ac677f0a24"
       },
       "file_sha256": {
         "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
@@ -425,11 +462,12 @@
       "peer_exit": 0,
       "corruptions": 0,
       "corrupt_at": null,
+      "corrupt_packet": null,
       "peer_sha256": "03bc778bfefe2cc8cc67e02cbff8c574bb890e352e88941fa3048d5875a8df82",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download--e/peer-consumed.bin": "81b7010b67f4c3b34031a27e07b6ae1b6296767e4febe0ddb35d726e04f07338",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download--e/engine-delivered.bin": "81b7010b67f4c3b34031a27e07b6ae1b6296767e4febe0ddb35d726e04f07338",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download--e/engine-output.bin": "98b4995a2afa8f1a3fd770bfde8b35ba70f02df00058d15879c761ac677f0a24"
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download--e/peer-consumed.bin": "9544b9346413b3e4f7e1323f1f69571953cf83e1e5fa889ee2f63a3c71ca0bd5",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download--e/engine-delivered.bin": "9544b9346413b3e4f7e1323f1f69571953cf83e1e5fa889ee2f63a3c71ca0bd5",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download--e/engine-output.bin": "98b4995a2afa8f1a3fd770bfde8b35ba70f02df00058d15879c761ac677f0a24"
       },
       "file_sha256": {
         "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
@@ -452,11 +490,12 @@
       "peer_exit": 0,
       "corruptions": 0,
       "corrupt_at": null,
+      "corrupt_packet": null,
       "peer_sha256": "03bc778bfefe2cc8cc67e02cbff8c574bb890e352e88941fa3048d5875a8df82",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download--o/peer-consumed.bin": "21198e3a90f16dbe03399891bae4180b8cf7c2a09bd93a8c94e63ee41b1d9535",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download--o/engine-delivered.bin": "21198e3a90f16dbe03399891bae4180b8cf7c2a09bd93a8c94e63ee41b1d9535",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download--o/engine-output.bin": "98b4995a2afa8f1a3fd770bfde8b35ba70f02df00058d15879c761ac677f0a24"
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download--o/peer-consumed.bin": "b26be7f0c8ecfd0d263bbacc06ad1263d05215dc262a7c5ad48afb2d7cc02072",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download--o/engine-delivered.bin": "b26be7f0c8ecfd0d263bbacc06ad1263d05215dc262a7c5ad48afb2d7cc02072",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download--o/engine-output.bin": "98b4995a2afa8f1a3fd770bfde8b35ba70f02df00058d15879c761ac677f0a24"
       },
       "file_sha256": {
         "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
@@ -478,11 +517,12 @@
       "peer_exit": 0,
       "corruptions": 1,
       "corrupt_at": 64,
+      "corrupt_packet": null,
       "peer_sha256": "03bc778bfefe2cc8cc67e02cbff8c574bb890e352e88941fa3048d5875a8df82",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download-default-corrupt/peer-consumed.bin": "d3ff5344543f6a526d5ce8c4485c531a8187f1feec675f407dd2c2c0915a75ec",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download-default-corrupt/engine-delivered.bin": "422c64eb25026f673924119f6517e67809f9d23a891de5020aa5ae819e02cbe2",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download-default-corrupt/engine-output.bin": "189b9ce10265e23b15d7da3c9233893c9c1818cfe690d22aef7907f6ed99b25e"
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download-default-corrupt/peer-consumed.bin": "2eaace252d16eed8e217d876471fd8420ee1b0e207c022a773e547498a26da8e",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download-default-corrupt/engine-delivered.bin": "cd07f7bdf59d8325c9af2b5c8b6de5efaae55001d075cb05f13a81bc8f79b8a9",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download-default-corrupt/engine-output.bin": "189b9ce10265e23b15d7da3c9233893c9c1818cfe690d22aef7907f6ed99b25e"
       },
       "file_sha256": {
         "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
@@ -505,11 +545,12 @@
       "peer_exit": 0,
       "corruptions": 0,
       "corrupt_at": null,
+      "corrupt_packet": null,
       "peer_sha256": "03bc778bfefe2cc8cc67e02cbff8c574bb890e352e88941fa3048d5875a8df82",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download--8/peer-consumed.bin": "e733d0641b5785357b712e597b605a17a26a681b442b1fea6ee2f6f9c49683c5",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download--8/engine-delivered.bin": "e733d0641b5785357b712e597b605a17a26a681b442b1fea6ee2f6f9c49683c5",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download--8/engine-output.bin": "98b4995a2afa8f1a3fd770bfde8b35ba70f02df00058d15879c761ac677f0a24"
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download--8/peer-consumed.bin": "f62651ae2936465c1fec5555359484e5f62c023e2d2f65504f525bb47a886971",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download--8/engine-delivered.bin": "f62651ae2936465c1fec5555359484e5f62c023e2d2f65504f525bb47a886971",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download--8/engine-output.bin": "98b4995a2afa8f1a3fd770bfde8b35ba70f02df00058d15879c761ac677f0a24"
       },
       "file_sha256": {
         "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
@@ -532,11 +573,12 @@
       "peer_exit": 0,
       "corruptions": 1,
       "corrupt_at": 4160,
+      "corrupt_packet": null,
       "peer_sha256": "03bc778bfefe2cc8cc67e02cbff8c574bb890e352e88941fa3048d5875a8df82",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download--8-corrupt/peer-consumed.bin": "7380361e1692153384b96c0c8a61e9a13d10c5404a6872e3b3826ffe9e49e8d7",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download--8-corrupt/engine-delivered.bin": "14f52a16f0fbbca1c27980b67be4275e0596069561dbac6362b147e0fa0a2499",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-download--8-corrupt/engine-output.bin": "8fd043cafe9c06bbb2ad113fd599aedfd8f6a9a923e2f746f845193dd20a59b8"
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download--8-corrupt/peer-consumed.bin": "55f0f0f2ac854b6b7b8bffe1c0a4411b8f336bf3f7f51697f092521bee457d9a",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download--8-corrupt/engine-delivered.bin": "a054b7d73e7cc9f548cf197d7bdc156bf24c2547c798b5a167883f2e7a90ba75",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-download--8-corrupt/engine-output.bin": "8fd043cafe9c06bbb2ad113fd599aedfd8f6a9a923e2f746f845193dd20a59b8"
       },
       "file_sha256": {
         "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
@@ -556,11 +598,12 @@
       "peer_exit": 0,
       "corruptions": 0,
       "corrupt_at": null,
+      "corrupt_packet": null,
       "peer_sha256": "03bc778bfefe2cc8cc67e02cbff8c574bb890e352e88941fa3048d5875a8df82",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload-default/peer-consumed.bin": "4192bbcb2be1fec8271241da2a11e9f93703eb8455df162cb57722d6b9bf687c",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload-default/engine-delivered.bin": "4192bbcb2be1fec8271241da2a11e9f93703eb8455df162cb57722d6b9bf687c",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload-default/engine-output.bin": "bfe6a1ed4238171996482a798cdbae24628b5109a979431e916be29a90d70d6c"
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload-default/peer-consumed.bin": "54e5f3879360c58d7ff64dd73b50eb4fabea1a2f1443b826e11db92a1dfc9262",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload-default/engine-delivered.bin": "54e5f3879360c58d7ff64dd73b50eb4fabea1a2f1443b826e11db92a1dfc9262",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload-default/engine-output.bin": "c6cf7456a68e9c6809bae69a9bdedb1cdd27cc614b8b247b55b3da2c1c1d6b22"
       },
       "file_sha256": {
         "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
@@ -581,11 +624,12 @@
       "peer_exit": 0,
       "corruptions": 0,
       "corrupt_at": null,
+      "corrupt_packet": null,
       "peer_sha256": "03bc778bfefe2cc8cc67e02cbff8c574bb890e352e88941fa3048d5875a8df82",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload--e/peer-consumed.bin": "d1590beff8eaa5771a8784d644335d5741eaaedaf51cefe7fac443d297959bc1",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload--e/engine-delivered.bin": "d1590beff8eaa5771a8784d644335d5741eaaedaf51cefe7fac443d297959bc1",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload--e/engine-output.bin": "8faf6ed72c2be75151e81aba77a440fa9297d999afdf1c464053a3011f9848b0"
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload--e/peer-consumed.bin": "ceea3cf25be7bc05395eba4da7894907d5711e15a4b881218fb8936393e5aabc",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload--e/engine-delivered.bin": "ceea3cf25be7bc05395eba4da7894907d5711e15a4b881218fb8936393e5aabc",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload--e/engine-output.bin": "d5e92a34c76a1a9cd1047b00227e315e55769bd44e67161cce180e49d373d23a"
       },
       "file_sha256": {
         "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
@@ -606,11 +650,12 @@
       "peer_exit": 0,
       "corruptions": 0,
       "corrupt_at": null,
+      "corrupt_packet": null,
       "peer_sha256": "03bc778bfefe2cc8cc67e02cbff8c574bb890e352e88941fa3048d5875a8df82",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload--o/peer-consumed.bin": "77ffba03cbe8d63e4f26fb172c5d43be5875a3dbea6fee69d916b06611899565",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload--o/engine-delivered.bin": "77ffba03cbe8d63e4f26fb172c5d43be5875a3dbea6fee69d916b06611899565",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload--o/engine-output.bin": "83e1b17a6af822ee101b1767cf13fcde087057c2beda0eff831247d7317dd0bb"
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload--o/peer-consumed.bin": "f817cd77d4912108c44699901fd568efa0ed5fd339a76c7b712db9f13b8ed085",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload--o/engine-delivered.bin": "f817cd77d4912108c44699901fd568efa0ed5fd339a76c7b712db9f13b8ed085",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload--o/engine-output.bin": "2b2e47e2966f8fca4eb4ac256f5ff2d90ff66b0a1c47f32084a4d50f82238453"
       },
       "file_sha256": {
         "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
@@ -630,11 +675,12 @@
       "peer_exit": 0,
       "corruptions": 1,
       "corrupt_at": 64,
+      "corrupt_packet": 1,
       "peer_sha256": "03bc778bfefe2cc8cc67e02cbff8c574bb890e352e88941fa3048d5875a8df82",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload-default-corrupt/peer-consumed.bin": "fbd949c49ffd32b13da8087321d1b05f966cdf1d3e16cdb7e13567e517c86349",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload-default-corrupt/engine-delivered.bin": "fbd949c49ffd32b13da8087321d1b05f966cdf1d3e16cdb7e13567e517c86349",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload-default-corrupt/engine-output.bin": "c70ad73eb0fba9e63a9f1cddf8a9960c022486ca807d96a995cb0cf2c3a922f4"
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload-default-corrupt/peer-consumed.bin": "bdd78727d028af6079a8b9465d52931786e89f6967c088559eb8bdf0b4452abc",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload-default-corrupt/engine-delivered.bin": "bdd78727d028af6079a8b9465d52931786e89f6967c088559eb8bdf0b4452abc",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload-default-corrupt/engine-output.bin": "b558f12ef7d478135fa99fd2b42abcfcaa2098f81aaa4f31cea184fc140cc1f1"
       },
       "file_sha256": {
         "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
@@ -655,11 +701,12 @@
       "peer_exit": 0,
       "corruptions": 0,
       "corrupt_at": null,
+      "corrupt_packet": null,
       "peer_sha256": "03bc778bfefe2cc8cc67e02cbff8c574bb890e352e88941fa3048d5875a8df82",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload--8/peer-consumed.bin": "4192bbcb2be1fec8271241da2a11e9f93703eb8455df162cb57722d6b9bf687c",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload--8/engine-delivered.bin": "4192bbcb2be1fec8271241da2a11e9f93703eb8455df162cb57722d6b9bf687c",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload--8/engine-output.bin": "bfe6a1ed4238171996482a798cdbae24628b5109a979431e916be29a90d70d6c"
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload--8/peer-consumed.bin": "54e5f3879360c58d7ff64dd73b50eb4fabea1a2f1443b826e11db92a1dfc9262",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload--8/engine-delivered.bin": "54e5f3879360c58d7ff64dd73b50eb4fabea1a2f1443b826e11db92a1dfc9262",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload--8/engine-output.bin": "c6cf7456a68e9c6809bae69a9bdedb1cdd27cc614b8b247b55b3da2c1c1d6b22"
       },
       "file_sha256": {
         "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
@@ -680,11 +727,37 @@
       "peer_exit": 0,
       "corruptions": 1,
       "corrupt_at": 64,
+      "corrupt_packet": 1,
       "peer_sha256": "03bc778bfefe2cc8cc67e02cbff8c574bb890e352e88941fa3048d5875a8df82",
       "retained_wire_sha256": {
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload--8-corrupt/peer-consumed.bin": "fbd949c49ffd32b13da8087321d1b05f966cdf1d3e16cdb7e13567e517c86349",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload--8-corrupt/engine-delivered.bin": "fbd949c49ffd32b13da8087321d1b05f966cdf1d3e16cdb7e13567e517c86349",
-        "build/zmodem-session/runs/20261019T013144932868Z/sexyz-upload--8-corrupt/engine-output.bin": "c70ad73eb0fba9e63a9f1cddf8a9960c022486ca807d96a995cb0cf2c3a922f4"
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload--8-corrupt/peer-consumed.bin": "bdd78727d028af6079a8b9465d52931786e89f6967c088559eb8bdf0b4452abc",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload--8-corrupt/engine-delivered.bin": "bdd78727d028af6079a8b9465d52931786e89f6967c088559eb8bdf0b4452abc",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload--8-corrupt/engine-output.bin": "b558f12ef7d478135fa99fd2b42abcfcaa2098f81aaa4f31cea184fc140cc1f1"
+      },
+      "file_sha256": {
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "fb56441d77f70131474cc811118ebf18f34b061ec0d4fd2d126d41e6f9b76c3f"
+      }
+    },
+    {
+      "label": "sexyz-upload-default-corrupt-packet3",
+      "passed": true,
+      "bytes": 65798,
+      "files": 2,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synchronet/runtime/exec/sexyz",
+        "-raw",
+        "rz"
+      ],
+      "peer_exit": 0,
+      "corruptions": 1,
+      "corrupt_at": 64,
+      "corrupt_packet": 3,
+      "peer_sha256": "03bc778bfefe2cc8cc67e02cbff8c574bb890e352e88941fa3048d5875a8df82",
+      "retained_wire_sha256": {
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload-default-corrupt-packet3/peer-consumed.bin": "6e3575aa558757824aecfe0975843283552b7856883f2dcbdca37bed4d0c709c",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload-default-corrupt-packet3/engine-delivered.bin": "6e3575aa558757824aecfe0975843283552b7856883f2dcbdca37bed4d0c709c",
+        "build/zmodem-session/runs/20261019T022803800838Z/sexyz-upload-default-corrupt-packet3/engine-output.bin": "b72760a0ba0065d6f273fe82098160b36a5472861a4d77f9f71be3b889837ac9"
       },
       "file_sha256": {
         "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
@@ -698,13 +771,13 @@
     "rz": "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/rz"
   },
   "sources": {
-    "src/transfer/zmodem.c": "eccfee840acc0cea46e400da60eb22aa3e39078670f9302bc4c0bb089ddcb7d4",
-    "src/transfer/zmodem.h": "27e922103bf689f0c89854c6706c3d0947c374b580ba2d671fd3afef3034278a",
+    "src/transfer/zmodem.c": "b7022e040385e38a8e1e9ff9310389c45cb934f6317209e1428bdff8098908b2",
+    "src/transfer/zmodem.h": "5f90b5944609e8141f6bbb5f77456f44677b23f335d74c1bbfc92b0d29955ce7",
     "src/transfer/zmodem_wire.c": "fdae5d7c899ac2b32efe4b2f9d14d6c66ca323263b2fff5bf5da33f5915c1a6b",
     "src/transfer/zmodem_wire.h": "3dd5631882942ee5eaf195ff00dc7e838828ae0a6ecd89a8fa7eeef4511ddd68",
     "src/transfer/batch_header.c": "5003de29446cc1ec3a3776dcb1798b2763a6f1d556e866abe7e207cc39b49aa5",
     "src/transfer/batch_header.h": "90b6691b30d0b60018bc05fe9b72932a2e913806913b326a15ab1ab15c69ad0b",
-    "standalone/check_zmodem.py": "95b2aaa36cf9f4a4fe20a6b61a087149115727be81e1a9632690fae17f6175f8",
+    "standalone/check_zmodem.py": "987de194aafe346f876081ff1ca22a07874a9a0980df169d929de6489257c5e3",
     "standalone/check_zmodem_wire.py": "ced7cec6ed33f9b2b9e8056893398b7d394aeaaa5b95c21f7f7e2ca8bc328c94",
     "nix/flake.nix": "7f069dd8346be02006737101a2790b99a881411fa75b657316f75b090816c15f",
     "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",

@@ -716,3 +716,25 @@ CRC16/CRC32 sessions receive full8 KiB packets with exact files. See
 `docs/ZEDZAP_BBS.md` and `docs/validation/zedzap-bbs.json`. Full loss/timing tests,
 windowed sending, auto-download, persisted resume, physical modem, full original
 UI/emulations/protocols, ASPECT and Host remain required; no F01–F16 gate closes.
+
+
+## Bounded windowed ZMODEM and confirmed replay
+
+The `d791eb10` runtime adds a bounded asynchronous sender with separate wire,
+confirmed and historical offsets. CANFDX/CANOVIO peers may stream up to an 8 KiB
+window; receiver capacity is separately enforced between synchronous boundaries.
+The first packet after reposition is synchronous, and open frames close before
+recovery. Forward ACKs during a long replay neither exhaust nor forgive the
+engine's accumulated rewind budget. The live adapter observes a rewind without
+refresh, then refreshes on confirmed forward replay. A paired linked watchdog
+probe reproduces the earlier 540-tick failure and completes an 800-tick replay
+after the correction, with individual 100-tick ACK intervals.
+
+Literal wire schedules and reactive peers check window/storage bounds, partial
+ACKs, source failures, noise/cancel and 128 KiB rewind. Real lrzsz and stock
+Synchronet helper tests also corrupt a payload within a continuing stream.
+See `docs/WINDOWED_ZMODEM.md` and its validation ledger for exact final counts,
+current DOS/BBS workflows and explicitly retained earlier attempts. Window
+settings, adaptive original block sizing, auto-download, persisted receive
+resume, physical modem/line-loss timing, remaining protocols/emulations/UI,
+ASPECT, Host and all F01–F16 completion gates remain open.

@@ -6,7 +6,8 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 
 **This is not yet a complete PCPlus source rebuild.** The current terminal
 passes logged-in ZMODEM uploads and downloads against local Synchronet and ENiGMA,
-including 8 KiB reception. [Results and remaining interaction limits](docs/ZEDZAP_BBS.md).
+including 8 KiB reception and bounded windowed sending.
+[Results, replay recovery and remaining interaction limits](docs/WINDOWED_ZMODEM.md).
 
 Current outputs:
 

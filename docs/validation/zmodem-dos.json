@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "DOS_cases": 53,
+  "DOS_cases": 61,
   "cases": [
     {
       "label": "receive-65-0",
@@ -14,7 +14,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "90a6edb47bbd46999cd8bfb45610a443bc238bb312dcb3b03c8d01f46e56ee6f",
@@ -32,10 +32,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "57e2864a6eb5963490f7748d8c130e0ed0d4657274737a77f7c15dd100c96c6b",
+      "input_sha256": "f33ac20a285f24c8ddfb1a07d80f0e4c6426f517a366cb7ec60a0f8ac061ad46",
       "output_sha256": "8c14186903ccc864a9749bd7cda3b7562696ddd9a24f2c6932e767300091f416"
     },
     {
@@ -50,7 +50,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "d88db56f7df635d7272c5634b2bc5e48a12315f8892ab75663c1545a212b90ca",
@@ -68,10 +68,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "015f09a4292b7153f6dd6f9e9d03c68bd2197369420bbed1577e58655839c874",
+      "input_sha256": "7804f5d64d4b1c6dad2ab623d9a2fa0c4ea6cdb9a4a83c6b0665d5a406af0a64",
       "output_sha256": "de43349889f78b99e83eccee80123c6399d10200d3f4d5db323485e225a32cfe"
     },
     {
@@ -86,7 +86,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "b024821206cdfa39d0caf625c9f203ac7fd633395e9045d627d5024d4ca7b67d",
@@ -104,10 +104,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "731bbe4367803377b559f0f1ce2e2ec5405984182c4cd5728e503905b3ff658b",
+      "input_sha256": "48c051976bef17b0696730627c4deba9211ddc0997546ba56db77579172c9c6d",
       "output_sha256": "4a849b8a3758e49a4814f1390e9c312b3ae834639c86f991b102cd025ac4e6f3"
     },
     {
@@ -122,7 +122,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "85e77282f8a61ee914b8b9806cc71c8f507704bba3dc5b01b4d38411a59b056b",
@@ -140,10 +140,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "e3ed5c26fb18768e8cb0a2e802183570c113bdaeb0f48486ed2dc56ec7b19b30",
+      "input_sha256": "223190c9f23a4a3e938667bd0e209c012efab2f661a02c6887f26e5ad3fef150",
       "output_sha256": "351d2002c5acad8f1f0f0f33ff8365e35efa2af44ffc0e6606b212dcc32202df"
     },
     {
@@ -158,7 +158,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "ff15a02546f0cfb0f97c91dc0132ca133b8f0791910c7c3cc6a00e9871812dfa",
@@ -176,10 +176,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "b9cfba85fdc387fcee2fc7a0c6c7435aa6c4c9e1e39231fdfe81d3a8ae3555ca",
+      "input_sha256": "f674c8f8c63d07d8fa883cc4b1f428c37b7c2c942463115c6122d2c62edf460e",
       "output_sha256": "d644287836376f1b8de58e3a408fbdcaacbe7fe176db10d247c07dab567ce355"
     },
     {
@@ -194,7 +194,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "a9872c361304f88983fcf76b58d2e88f10fafa521b9f51091a49740056e04406",
@@ -212,10 +212,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "7dd125d6ef16fb3678254eba8eb7da15d93652d204d8f92a1acd134765853506",
+      "input_sha256": "fa84527b046f3d8983df1c9a05e83c0e05e38f5005f985a6552590b272c8746b",
       "output_sha256": "fc6b7de5605bcf4c8b2ed03408b0205bafdbcbd23b1785e16c89f9a8941e1d80"
     },
     {
@@ -230,7 +230,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "f85d0180b42d050a52b1fda663eb749d580866fad2941e3062b8366367ba9bd3",
@@ -248,10 +248,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "7ae5c557e917db78ed4ad54e6dc94fc5c3ca41b1e68ef2cab0d86cd16ce4da67",
+      "input_sha256": "c90f954bd97db0da1e85dea131fb37ad3ef58587ed96304d1c221c16832190be",
       "output_sha256": "9c23ca4fb4276b250b392799e5209cf62307c6482c21afdf4197889526d67f02"
     },
     {
@@ -266,7 +266,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "211702ccfafb79b246423f75dd6c5883e0b6d27b8b28263751300af9b3278ea7",
@@ -284,10 +284,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "727a2a9461d9c1627c1bd5075c1126f6d80ce24ca68954b87909d0dccd79c8c1",
+      "input_sha256": "362bf8a9dc347425c0d918472ac6a45c8cbc28c2569ddd45f82214193d735df1",
       "output_sha256": "1c62b719ed13118724ed4d699055b5ed2865e65dc09e2364ab120d57d368f25b"
     },
     {
@@ -302,7 +302,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "db09b14005d100cf3af60ee2d288e9623103619e0b6d49d096b44b8406aa7d34",
@@ -320,10 +320,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "8ab8e30a08a2b97250d831c71fbadf5921924bac95bcda371f7079e6ad75a7e3",
+      "input_sha256": "52877a09cce6dffb1e36483a8b39206acafd904311d1216edc1bd88e77e5f567",
       "output_sha256": "aa677b0d04123006e6ab6f74ff0f9e31015885a71289008288859b933dac4670"
     },
     {
@@ -338,7 +338,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "e0af6360bc7fc756cf86e4a88fbdc4d9c2d02f11ec40745c3daa7a185c0d6e80",
@@ -356,10 +356,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "89ed1c7207d10eb877ef3fe1a4c919e47e91a06fab92126580de51d13bd7f24b",
+      "input_sha256": "952bafe4b867cbe9385b601433db07de7b291afe55801e655cd9e187f739e0f8",
       "output_sha256": "1ea27e3f4bc258341039891c6f3d34536e7d69f1644f71f5d1eda055f9145317"
     },
     {
@@ -374,7 +374,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "91552352c55a92d8a5fa682160f46cd25ae35fd06d81c808dcdb55fa9191ae31",
@@ -392,10 +392,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "9d5f578a38ff435523a54513c53d2744a865c4552ff8bf9c45785885fac4f140",
+      "input_sha256": "1299fd9f75184b8e2355734aebd18cb5c7c9e45856c53fed3d16e5544bebbd31",
       "output_sha256": "bb5f63ae4424cae25118db1a8dd3c46f3f9795bcdc457aa9dfbba8c82a70b373"
     },
     {
@@ -410,7 +410,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "e5339d3cca70844c5f099378e84bb65505a6553b4e787f153ead1b6e930b26b9",
@@ -428,10 +428,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "0ff3dd2432ec96e43046ec15027d9d6401dcd5910bfc770257f1ebdc8ecc185f",
+      "input_sha256": "9982555a304efc48dbde69d93ea96580f08cd152706ee650a0827ab85cb84ebc",
       "output_sha256": "ed0b0283620026fdbef7bcae990d171fda39cf29d38f1053d6b858fa33d6b71c"
     },
     {
@@ -446,7 +446,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "228bd55c46bb915fcf53728d3d5a8b9c077876477167ed6cbbc5841b2482e5d3",
@@ -464,7 +464,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "08a127807e3789e34a5a95fc9c955e95e618fd9ebf65fc01082ef36daa10ed51",
@@ -482,7 +482,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "83e9c923e6da54aeb73666b317f3f287e179d8cad2ae1ab8ecfda7e47a2cb3a6",
@@ -500,7 +500,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "ed58d347ef21925da075bbf034b9d2f6b1defbe11b848a2965a6dba409b81ae3",
@@ -518,7 +518,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "f05c001d2c9beecac91d35b3a60c34690a5a7e3bf48ba2b5d97bcd021b6483c0",
@@ -536,10 +536,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "28ba53d011255f1464967cf8821783aa740afa61ebcffe8e4ebba5879c9810b9",
+      "input_sha256": "35106ef544686ca520087e7a5c36d29622e027d7bbdf348622070386aca01c5f",
       "output_sha256": "fd5c4a4b73873d6671f72ee1f63a72867292a9e7892608c1f2ac7a545e3b3099"
     },
     {
@@ -554,10 +554,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "3f26a2dc1bd5255460568a49d18b45bc8636def6bfcb069e961db416ec6d5c4e",
+      "input_sha256": "57409f330eaccdbf2c39a6dd69d8c35bb4edf0e999143fe771a23d40ca7502d3",
       "output_sha256": "e5837e2dc76969e347fd4a57bbe42e555f97aebf786fd5b1b6898ccd2d40440a"
     },
     {
@@ -572,10 +572,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "89248815316eaebc5a2d0d3231e82ada40c01df6a29c383ff5dc1116ac73a28e",
+      "input_sha256": "140976de0093bc023e407fa388e07a98ca5093064faf7ba26185c4053335d0d5",
       "output_sha256": "2d0c034b1635a2d5ead67455023014fdf1a6a5153af8cbe23e1920b35cf14f8d"
     },
     {
@@ -590,7 +590,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "ba31d3a6cd23f281d3f1b5041a53d01341221ad119955beffbe54ccc5b11f693",
@@ -608,7 +608,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "9216b714dbfbb9f8fa6ff1c892bb1479273a82011194e603950aa3dfc2c1910a",
@@ -626,7 +626,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "9dd892bb3f87c71ebe0e1e34b2aa7cc874fbb88d4455b5402db56c2750db94c0",
@@ -644,7 +644,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "9dd892bb3f87c71ebe0e1e34b2aa7cc874fbb88d4455b5402db56c2750db94c0",
@@ -662,7 +662,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "f3c6772e94ef0f526ed18fa7e0842426f798d8e0e05864eacd661a434c149ff2",
@@ -680,7 +680,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "9a1417381463b137d48e6b56c64b2dd182ad8ec8f6b8cdfe89375e42206c28a6",
@@ -698,10 +698,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "d1395bc421113f0bd44826567c6e83753463837a1fced1c201c9afbebe070ca5",
+      "input_sha256": "554456f1b1385f17d402d0e9030b659cd9613343402c9b5816128334cf99d091",
       "output_sha256": "64606c3b80b9ef9c1332233dd9f73c846bb0a430ef72be4aacd9c196c42e5449"
     },
     {
@@ -716,10 +716,10 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "d1395bc421113f0bd44826567c6e83753463837a1fced1c201c9afbebe070ca5",
+      "input_sha256": "554456f1b1385f17d402d0e9030b659cd9613343402c9b5816128334cf99d091",
       "output_sha256": "64606c3b80b9ef9c1332233dd9f73c846bb0a430ef72be4aacd9c196c42e5449"
     },
     {
@@ -734,10 +734,10 @@
         "closes": 1,
         "uncertain": 1,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
-      "input_sha256": "d1395bc421113f0bd44826567c6e83753463837a1fced1c201c9afbebe070ca5",
+      "input_sha256": "554456f1b1385f17d402d0e9030b659cd9613343402c9b5816128334cf99d091",
       "output_sha256": "f9b823ce3f5e559da59b4fa1ff9aa8d8e6e859ca9e417a978436da0f695ea8d7"
     },
     {
@@ -752,7 +752,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "c658dbc165a6ee796d0c33cfdf2bd15909a546b2cd21189b6111febf9fcde36b",
@@ -770,7 +770,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "f3cff27656e99b06212f258d708dfe99c769cd8d67283683a5a4c133c1425e89",
@@ -788,7 +788,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "c48216cb2ff33ad4cd334fc8c62172c383cbd84daa5a76f031f8bc178e9274f6",
@@ -806,7 +806,7 @@
         "closes": 1,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "4ede8984e19a7ebbb158afba4f27dafc048ea915c8057b59643150566c278941",
@@ -824,7 +824,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "9bee6b14a461aa938e9d0868a4e168e228c9ceea23f100cbafceec06ace060f1",
@@ -842,7 +842,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "3765f57586ec62c15b9a7fe04e51f74f66f3693abaa0e8cf23006927e623cc2a",
@@ -860,7 +860,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "85a74645be3a680860c2f2e0cbfa15544c8820fdc306175cbed087b3f00ac7f0",
@@ -878,7 +878,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "593c3f3b4deb179845ac59c79c121c5c3f0096e8b3bc0d4d62cdcf2bb9bd5459",
@@ -896,7 +896,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "75820d66f122cb6cee3bf48838d5f7725d11b8e3c380ecdc5ccd5ade72905222",
@@ -914,7 +914,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "ffa4717247bbbf05f7d2d14e8272a8fa49fe3c3d3a28d79a8349614e4405e000",
@@ -932,7 +932,7 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "70aa517c47ae435aa4ace9d2cc1704cebf492f2dde48bc5a3e3934119e4ea46e",
@@ -950,33 +950,178 @@
         "closes": 0,
         "uncertain": 0,
         "stage": 0,
-        "workspace": 9308,
+        "workspace": 9312,
         "ops": 40
       },
       "input_sha256": "baeae12e970feb6622c02236e61eb6c14441db598c09d90ef82b51b492689b36",
       "output_sha256": "f2643970b12c3c2ee867bcd47ddef47a40f8fe9c71d15bd707ccb7fec30a5959"
+    },
+    {
+      "label": "window-65-delayed-full-window",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 18433,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 9312,
+        "ops": 40
+      },
+      "input_sha256": "034829d470901f982beaff71c451f58bd83ab4a177256521c7e9e308adc2c33f",
+      "output_sha256": "5a55043e96d898ca72009ede388d7b7f6702d94668aac3f14c2f51c740598042"
+    },
+    {
+      "label": "window-65-capacity-independent-of-ACK",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 10241,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 9312,
+        "ops": 40
+      },
+      "input_sha256": "de40cd6eaea3eddd9ec52cedc5b4a5f5ec2d459d8027c0b9c63450e764112455",
+      "output_sha256": "34368160f530d956a30b7e941eb018e3886240534f21abf1de64f1071eab2eee"
+    },
+    {
+      "label": "window-65-open-frame-reposition",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 5000,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 9312,
+        "ops": 40
+      },
+      "input_sha256": "3550348e8a3a9e16f5e5ae56005bf668d726571eb250c0dedd22d211f887db4a",
+      "output_sha256": "7e078d7b363153ca696fcf325bb8bcad39cf32ee8dc8d1abdb35cf5817a8825c"
+    },
+    {
+      "label": "window-65-long-confirmed-prefix-replay",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 131073,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 9312,
+        "ops": 40
+      },
+      "input_sha256": "617b0b3aa8e5419448d778bb8767aa7b2197a936ad2d53d8a1baf9648ccb0d94",
+      "output_sha256": "c71abfeca5b7bacd6c944c0157e94663fe562b61eabff33d4b24eb04277341c8"
+    },
+    {
+      "label": "window-67-delayed-full-window",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 18433,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 9312,
+        "ops": 40
+      },
+      "input_sha256": "6629ccb1dbf47250b0d49962a62e28104bf93358e1ed2b54e207ebb51e6ebaa6",
+      "output_sha256": "1a6cbe61ddaeaa4fa6d591d454367bd2f998c50984ccc9ebbc9e024fbf6f6b00"
+    },
+    {
+      "label": "window-67-capacity-independent-of-ACK",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 10241,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 9312,
+        "ops": 40
+      },
+      "input_sha256": "e2d364491f7c1789290f6630f3349951773c70abb7ee9061389771f0e7e32b3e",
+      "output_sha256": "0a128dea60b5d1f69040b4714f03395648b188d9621de66cf13cb10d66c6331c"
+    },
+    {
+      "label": "window-67-open-frame-reposition",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 5000,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 9312,
+        "ops": 40
+      },
+      "input_sha256": "14947b0b8352d264761654364fcb6468d40a091c6f4ce3c05c216ed239f2e96e",
+      "output_sha256": "c69b7a65c6780063b68d8d7d68671e4b77689180a3ea39e154bc78660353422a"
+    },
+    {
+      "label": "window-67-long-confirmed-prefix-replay",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 131073,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 9312,
+        "ops": 40
+      },
+      "input_sha256": "690c35e1f327cc7a8ff9571c84e41cfbeec784b96553a31a47027ef7a23e2dde",
+      "output_sha256": "6ece030f5ab33df280c9df1c8729c30016b72d4003fbe3e7a113ab9ceef51a7e"
     }
   ],
-  "binary_sha256": "0d67db95280145df39e58b8fc7b58d1e118bc8338dd04ff438ab05c6a78b467d",
+  "binary_sha256": "8bb47e74b85b2221ed2fb2480906038000fbe6c68ee737697afa212af47be8e9",
   "isolated_source_build_byte_identical": true,
   "tools": {
     "wcl": "/nix/store/wks50wdhsyxs7wx9gvqlwjgavhkkdag1-open-watcom-v2-0-unstable-2026-04-11/bin/wcl",
     "dosbox-x": "/nix/store/cb0mas86nyk9lgzjas06nr688dpwbs86-dosbox-x-2026.07.02/bin/dosbox-x"
   },
   "sources": {
-    "src/transfer/zmodem.c": "eccfee840acc0cea46e400da60eb22aa3e39078670f9302bc4c0bb089ddcb7d4",
+    "src/transfer/zmodem.c": "b7022e040385e38a8e1e9ff9310389c45cb934f6317209e1428bdff8098908b2",
     "src/transfer/zmodem_wire.c": "fdae5d7c899ac2b32efe4b2f9d14d6c66ca323263b2fff5bf5da33f5915c1a6b",
     "src/transfer/batch_header.c": "5003de29446cc1ec3a3776dcb1798b2763a6f1d556e866abe7e207cc39b49aa5",
     "src/transfer/download_file.c": "ce8d41645e5fe4b3ab81c791f8aa6c3634d98bd0d5f8bb6afd698052391ade68",
     "src/transfer/download_fs.c": "60f29a5dcfc60eda2b4cd4a86397b62528b5eeceb68f5337d7bea1a6878d34e6",
     "standalone/zmodem_host.c": "f4ab74edca435d2ed6f142c5cb0f6c1462edfed7422046f539fc30fd77c64481",
-    "src/transfer/zmodem.h": "27e922103bf689f0c89854c6706c3d0947c374b580ba2d671fd3afef3034278a",
+    "src/transfer/zmodem.h": "5f90b5944609e8141f6bbb5f77456f44677b23f335d74c1bbfc92b0d29955ce7",
     "src/transfer/zmodem_wire.h": "3dd5631882942ee5eaf195ff00dc7e838828ae0a6ecd89a8fa7eeef4511ddd68",
     "src/transfer/batch_header.h": "90b6691b30d0b60018bc05fe9b72932a2e913806913b326a15ab1ab15c69ad0b",
     "src/transfer/download_file.h": "12793ce2eb2007ad499bbb1d9a43800a7eca28f9a26f82eef4edc4500315d6a0",
     "src/transfer/download_fs.h": "5ae3364e19981588631f3cb913c7eb3ad9e66937e37bfddb6fb3675dede22a92",
-    "standalone/test_zmodem_dos.py": "5e193fe6e58b7d7e1c9c92726e70957a677c8228761b051b0311d5e2a724569a",
-    "standalone/check_zmodem.py": "95b2aaa36cf9f4a4fe20a6b61a087149115727be81e1a9632690fae17f6175f8",
+    "standalone/test_zmodem_dos.py": "61cd3f8622c5cce8c56644e1f8293daccb57f01f21d8814dc0e060ecf536654d",
+    "standalone/check_zmodem.py": "987de194aafe346f876081ff1ca22a07874a9a0980df169d929de6489257c5e3",
+    "standalone/zmodem_window_vectors.py": "29b2ad9cd10958fb1f439a730f2e0c08908aaa3b8f45a027cc706d78600f7f83",
     "standalone/check_zmodem_wire.py": "ced7cec6ed33f9b2b9e8056893398b7d394aeaaa5b95c21f7f7e2ca8bc328c94",
     "nix/flake.nix": "7f069dd8346be02006737101a2790b99a881411fa75b657316f75b090816c15f",
     "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",

@@ -1,5 +1,9 @@
 # 8 KiB reception and logged-in BBS transfers
 
+This records the `d0274a22` checkpoint. Subsequent
+[windowed sending and replay-watchdog work](WINDOWED_ZMODEM.md) has its own
+runtime, validation and memory accounting.
+
 The `d0274a22` source-built DOS terminal receives ZMODEM/ZedZap packets up to
 8,192 bytes. The original 1 KiB limit made ENiGMA's stock `-telnet -8 sz` helper
 fall back through repeated retransmissions. A retained 11,521-byte download used

@@ -11,13 +11,13 @@ static unsigned put(zm_session *s,const void *p,unsigned n)
  unsigned r=s->ops->write_wire(s->context,p,n);
  return r?fail(s,r==ZM_ABORT?ZM_CANCEL:ZM_IO):0;
 }
-static unsigned event(zm_session *s)
+static unsigned event_for(zm_session *s,unsigned seconds)
 {
  unsigned i,r,v;
  for(i=0;i<32768U;++i){
   /* A peer may purge for one second after ZRPOS. A one-second read here can
    * repeatedly expire during that purge and provoke a recovery livelock. */
-  v=s->ops->read_byte(s->context,3);
+  v=s->ops->read_byte(s->context,seconds);
   if(v==ZM_WAIT)return ZM_WAIT;
   if(v>255){fail(s,v==ZM_ABORT?ZM_CANCEL:ZM_IO);return ZM_BROKEN;}
   r=zw_feed(&s->decoder,v);
@@ -26,6 +26,7 @@ static unsigned event(zm_session *s)
  }
  return ZW_FORMAT;
 }
+static unsigned event(zm_session *s){return event_for(s,3);}
 static zw_u32 position(zm_session *s)
 {
  unsigned char *h=s->decoder.header;
@@ -147,6 +148,8 @@ static void negotiate(zm_session *s)
  unsigned char *h=s->decoder.header;unsigned capacity=(unsigned)h[1]|((unsigned)h[2]<<8);
  s->format=(h[4]&32)?ZW_BIN32:ZW_BIN16;s->control=(h[4]&64)?1:0;
  s->block=capacity && capacity<1024?capacity:1024;
+ s->capacity=capacity;
+ s->window=(h[4]&3)==3?(capacity && capacity<8192?capacity:8192):s->block;
 }
 static unsigned seek(zm_session *s,zw_u32 pos)
 {
@@ -189,10 +192,87 @@ static unsigned offer(zm_session *s)
  }
  return s->status?s->status:fail(s,ZM_TIMEOUT);
 }
+/* Maintained bounded asynchronous sender. position remains peer-confirmed;
+ * sent is only wire output. No retransmission buffer: checked seek replays source.
+ * Receiver storage capacity is independent of ACK/window credits. */
+static unsigned send_stream(zm_session *s)
+{
+ unsigned r,type,n,got,ending,open=0,sync=1,waiting,eof,segment=0,query=0;
+ zw_u32 sent=s->position,verified=sent,at;
+ s->retries=0;
+ while(!s->status && s->retries<LIMIT){
+  s->phase=3;eof=sent==s->size;waiting=1;
+  if(eof){
+   if(open && data(s,0,ZW_CRCE))break;open=0;
+   if(header(s,ZEOF,sent,s->format))break;
+  }else{
+   if(!open){if(header(s,ZDATA,sent,s->format))break;open=1;}
+   n=s->size-sent>s->block?s->block:(unsigned)(s->size-sent);
+   if(n>s->window-(unsigned)(sent-s->position))n=s->window-(unsigned)(sent-s->position);
+   if(s->capacity && n>s->capacity-segment)n=s->capacity-segment;
+   if(!n)return fail(s,ZM_PROTOCOL);
+   if(s->ops->seek(s->context,sent) || s->ops->read_file(s->context,s->data,n,&got) || got!=n)return fail(s,ZM_FILE);
+   if(sync || sent-s->position+n==s->window || (s->capacity && segment+n==s->capacity))ending=ZW_CRCW;
+   else if(sent+n==s->size)ending=ZW_CRCE;
+   else if(query+n>=s->window/4)ending=ZW_CRCQ;
+   else ending=ZW_CRCG;
+   if(data(s,n,ending))break;sent+=n;
+   if(s->capacity)segment+=n;
+   query+=n;
+   if(ending==ZW_CRCQ || ending==ZW_CRCW)query=0;
+   if(ending==ZW_CRCE || ending==ZW_CRCW)open=0;
+   waiting=ending==ZW_CRCW;
+  }
+  for(;;){
+   /* Empty polls retain partial headers, including a split ZDLE. */
+   r=event_for(s,waiting?3:0);
+   if(r==ZM_WAIT && !waiting)break;
+   if(r!=ZW_HEADER){
+    if(s->status)break;
+    ++s->retries;goto replay;
+   }
+   type=s->decoder.header[0];at=position(s);
+   if(type==ZACK){
+    if(at>sent)return fail(s,ZM_PROTOCOL);
+    if(at>s->position){
+     s->position=at;
+     /* A forward ACK during a long replay is useful, but must not
+      * forgive repeated rewind requests until the old high-water is passed. */
+     if(at>verified){verified=at;s->retries=0;}
+    }else ++s->retries;
+    if(!eof && waiting && at==sent){sync=0;segment=0;break;}
+   }else if(type==ZRPOS){
+    if(at>s->size)return fail(s,ZM_PROTOCOL);
+    if(open && data(s,0,ZW_CRCE))break;open=0;
+    if(at>verified){verified=at;s->retries=0;}else ++s->retries;
+    if(seek(s,at))break;
+    sent=at;segment=query=0;sync=1;zw_headers(&s->decoder);break;
+   }else if(type==ZRINIT && eof){s->position=sent;return 0;}
+   else if(type==ZSKIP){
+    if(open && data(s,0,ZW_CRCE))break;
+    return ZM_DONE;
+   }else if(type==ZABORT || type==ZFERR || type==ZCAN)return fail(s,ZM_CANCEL);
+   else if(type==ZCHALLENGE){
+    if(open && data(s,0,ZW_CRCE))break;open=0;
+    if(header(s,ZACK,at,ZW_HEX))break;
+    ++s->retries;
+   }else ++s->retries;
+   if(s->retries>=LIMIT)break;
+  }
+  continue;
+replay:
+  if(open && data(s,0,ZW_CRCE))break;open=0;
+  if(seek(s,s->position))break;
+  sent=s->position;segment=query=0;sync=1;zw_headers(&s->decoder);
+ }
+ return s->status?s->status:fail(s,ZM_TIMEOUT);
+}
 static unsigned send_file(zm_session *s)
 {
  unsigned r,type,n,got;zw_u32 next,verified;
- r=offer(s);if(r)return r;s->retries=0;verified=s->position;
+ r=offer(s);if(r)return r;
+ if(s->window>s->block)return send_stream(s);
+ s->retries=0;verified=s->position;
  while(!s->status && s->retries<LIMIT){
   s->phase=3;next=s->position;
   if(s->position==s->size){if(header(s,ZEOF,s->position,s->format))break;}
@@ -205,7 +285,7 @@ static unsigned send_file(zm_session *s)
   for(;;){
    r=event(s);if(r!=ZW_HEADER)break;type=s->decoder.header[0];
    if(type==ZACK && next>s->position && position(s)==next){
-    s->position=next;if(next>verified){verified=next;s->retries=0;}else ++s->retries;break;
+    s->position=next;if(next>verified){verified=next;s->retries=0;}break;
    }
    if(type==ZRPOS){
     if(position(s)>verified && position(s)<=s->size){verified=position(s);s->retries=0;}else ++s->retries;

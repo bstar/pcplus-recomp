@@ -380,6 +380,7 @@ test-zmodem-wire:
 .PHONY: test-zmodem
 test: test-zmodem
 test-zmodem: test-zmodem-wire
+	python3 standalone/check_zmodem_window.py
 	python3 standalone/check_zmodem.py
 	python3 standalone/test_zmodem_dos.py
 

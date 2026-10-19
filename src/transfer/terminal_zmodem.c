@@ -14,18 +14,19 @@ unsigned terminal_zmodem_kbytes;
 unsigned long terminal_zmodem_files;
 typedef struct live_zmodem {
  zm_session session;
- unsigned long high,files;
+ unsigned long observed,files;
 } live_zmodem;
 typedef char fits_arena[sizeof(live_zmodem)<=10240?1:-1];
 static void progress(live_zmodem *p)
 {
  unsigned long kb=p->session.position>>10;
+ unsigned advanced=p->session.position>p->observed || p->session.files>p->files;
  terminal_zmodem_kbytes=kb>65535UL?65535:(unsigned)kb;
  terminal_zmodem_files=p->session.files;
- if(p->session.position>p->high || p->session.files>p->files){
-  if(p->session.position>p->high)p->high=p->session.position;
-  p->files=p->session.files;ymodem_io_progress();
- }
+ /* Observe a rewind without calling it progress. Later confirmed forward
+  * replay is live activity; the engine separately bounds repeated rewinds. */
+ p->observed=p->session.position;p->files=p->session.files;
+ if(advanced)ymodem_io_progress();
 }
 unsigned ZM_FAR __cdecl terminal_zmodem_input(void *ctx,unsigned seconds)
 {
@@ -47,7 +48,7 @@ unsigned ZM_FAR __cdecl terminal_zmodem_next(void *ctx,char *name,zw_u32 *size)
  live_zmodem *p=ctx;unsigned r=batch_upload_next();
  if(r==BU_DONE)return ZM_DONE;
  if(r!=BU_FILE)return ZM_FILE;
- memcpy(name,batch_upload_current.name,13);*size=batch_upload_current.size;p->high=0;return 0;
+ memcpy(name,batch_upload_current.name,13);*size=batch_upload_current.size;p->observed=0;return 0;
 }
 unsigned ZM_FAR __cdecl terminal_zmodem_seek(void *ctx,zw_u32 at)
 {(void)ctx;return batch_upload_seek(at);}
@@ -65,7 +66,7 @@ unsigned ZM_FAR __cdecl terminal_zmodem_open_received(void *ctx,const batch_head
  r=batch_download_open(&advisory);
  if(r==BD_STORAGE && batch_download_result.file.first_status==TF_CONFLICT)return ZM_DONE;
  if(r)return ZM_FILE;
- p->high=0;ymodem_io_progress();return 0;
+ p->observed=0;ymodem_io_progress();return 0;
 }
 unsigned ZM_FAR __cdecl terminal_zmodem_write_received(void *ctx,const void *data,unsigned n)
 {(void)ctx;return batch_download_exact(data,n);}
@@ -86,7 +87,7 @@ unsigned __cdecl terminal_zmodem_store(unsigned sending)
  if(sending?batch_upload_begin(terminal_transfer_filename):batch_download_begin(terminal_transfer_filename)){
   if(!terminal_transfer_fault)terminal_transfer_fault=7;return 1;
  }
- p->high=p->files=0;
+ p->observed=p->files=0;
  status=zm_run(&p->session,&terminal_zmodem_ops,p,sending);progress(p);
  if(upload_source_result.handle_uncertain || batch_download_result.file.handle_uncertain || batch_download_result.file.stage_exists)
   terminal_transfer_cleanup_status=1;

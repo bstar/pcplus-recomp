@@ -3,6 +3,8 @@
 This document records the initial `8c481cfd` integration checkpoint.
 The subsequent `d0274a22` runtime adds [8 KiB reception and logged-in BBS tests](ZEDZAP_BBS.md);
 the footprint and validation numbers below remain historical.
+Current [windowed sending](WINDOWED_ZMODEM.md) also corrects confirmed-replay
+progress and retains both earlier runtime counterexamples.
 
 Alt-R receives and Alt-S sends. In the transfer prompt, press F2 to cycle
 XMODEM, YMODEM and ZMODEM. ZMODEM receive takes an existing directory such as

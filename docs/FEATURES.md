@@ -185,3 +185,11 @@ payload buffer and validates logged-in local Synchronet/ENiGMA upload/download
 workflows. The ENiGMA selector-first fixture bypasses the unresolved fragmented
 arrow issue. Exact scope, all failed attempts, memory and artifact identities
 are recorded in [ZEDZAP_BBS.md](ZEDZAP_BBS.md). All F01–F16 gates remain open.
+
+
+The `d791eb10` maintained sender adds bounded asynchronous windows and separate
+receiver-capacity accounting. Confirmed replay refreshes the live inactivity
+watchdog; the engine separately bounds repeated rewinds. Paired counterexamples,
+DOS files/far callbacks and selected modern BBS flows are documented in
+[WINDOWED_ZMODEM.md](WINDOWED_ZMODEM.md). This advances F08 without closing
+any F01–F16 whole-application gate.

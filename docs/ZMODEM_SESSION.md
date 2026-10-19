@@ -10,7 +10,7 @@ records original common/send/receive responsibilities and unresolved behavior.
 
 ## Session and file ownership
 
-The caller supplies a 9,308-byte DOS workspace and a disjoint 40-byte callback
+The caller supplies a 9,312-byte DOS workspace and a disjoint 40-byte callback
 table. A union shares the 8,192-byte receive payload and encoded-response
 storage; a separate 1,024-byte sender payload remains live. Received bytes are
 accepted by the file callback before a response reuses the union. Sending still
@@ -24,11 +24,13 @@ Sending negotiates CRC16/CRC32, ESCCTL and finite receiver buffer capacity. It
 offers safe DOS8.3 filenames with binary conversion requested, honors ZRPOS at
 zero/interior/EOF offsets, answers bounded prefix/whole-file ZCRC requests and
 rejects positions beyond the source. Source seek and exact read callbacks must
-preserve a checked source size and propagate errors. Every packet uses ZCRCW
-with a bounded ACK wait. ACK offsets must match the sent boundary; stale ACKs,
-reposition requests and timeouts have finite retry paths. Recovery resets only
-on a new verified high-water position. This sender currently waits after each
-packet; original-style windowed sending and throughput tuning remain open.
+preserve a checked source size and propagate errors. Without CANFDX/CANOVIO, packets use ZCRCW
+with an exact-boundary ACK wait. With both capabilities, the sender uses a
+bounded asynchronous window, separate receiver storage accounting and zero-wait
+control sampling. Stale/future ACKs, reposition requests and timeouts have finite
+paths. The engine retains a historical high-water retry bound while the live
+watchdog recognizes confirmed forward replay. See [windowed sending](WINDOWED_ZMODEM.md)
+for recovery, actual DOS/BBS evidence and remaining policy/settings limits.
 
 Receiving advertises standard CRC32/full-duplex/overlap capability, accepts all
 four subpacket endings with payloads up to 8,192 bytes and verifies ZDATA against the committed position.
@@ -74,13 +76,13 @@ Run `./tools/build test-zmodem`. The target also exercises the wire codec.
   CRC16/CRC32, zero/odd/boundary lengths, every subpacket ending, metadata-size
   estimates, duplicate offers, CRC recovery, offset rejection, prefix CRC,
   timeout/cancel, file failures, cleanup retention, skipped files and lost OO.
-- Ten pinned lrzsz 0.12.20 stdio transfers cover both directions, three files
+- Eleven pinned lrzsz 0.12.20 stdio transfers cover both directions, three files
   per session (empty, one byte and 65,797 bytes), CRC16 reception, control
   escaping and receiver window settings. Separate transfers inject one corrupt
   payload byte in each direction and verify exact final files after recovery.
   The package comes from the existing locked nixpkgs input, now in the default
   Nix shell. Nothing is installed through an unpinned system package manager.
-- Fifty-three source-built 8086 DOS workflows verify far callbacks, actual files
+- Sixty-one source-built 8086 DOS workflows verify far callbacks, actual files
   across 64 KiB, receiver use of the checked exclusive stage/close/install owner,
   source seek/read failures, one physical source close after a close fault,
   foreign stage preservation, target skip and final-acknowledgment failure gates.
@@ -97,7 +99,7 @@ The optional stock-helper run uses:
 ```
 
 The selected owned Synchronet helper is master `9de2c48d02`, independently
-identified by binary hash in the report. Twelve additional stdio transfers pass:
+identified by binary hash in the report. Thirteen additional stdio transfers pass:
 both directions, CRC16, control escaping and one corrupted byte in each direction.
 The peer matrix additionally exercises 8 KiB reception, including corruption
 inside a packet beyond the first 4 KiB. Stock-helper sessions use the one-byte and 65,797-byte files only; empty
@@ -116,5 +118,5 @@ storage, CONFIG_CODE placement, arena allocation and serviced UART/progress/UI
 dispatch. Independent actual DOS lrzsz transfers pass; see `LIVE_ZMODEM.md` for
 their scope and runtime identity. Selected stock Synchronet/ENiGMA logged-in uploads and downloads now pass;
 see [their exact scope](ZEDZAP_BBS.md). Broader live recovery/timing/cancel tests, auto-download, full settings, original
-streaming/window behavior, persisted partial resume and hardware remain required.
+original adaptive block sizing/window settings, persisted partial resume and hardware remain required.
 All whole-application feature gates, including F08, remain open.

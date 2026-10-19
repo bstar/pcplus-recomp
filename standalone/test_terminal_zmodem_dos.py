@@ -11,7 +11,7 @@ from test_terminal_ymodem_dos import BatchPeer
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/terminal-zmodem-dos';BINARY=ROOT/'build/terminal/TERMINAL.EXE'
 class ZPeer(Peer):
  def __init__(self,r,path):
-  self.path=path;self.child=None;self.peer_exit=None;self.resume_timeout=80
+  self.path=path;self.child=None;self.peer_exit=None;self.resume_timeout=r.get('resume_timeout',80)
   super().__init__(r)
  def run(self):
   try:
@@ -112,7 +112,7 @@ exit
  (out/'events.json').write_text(json.dumps(peer.events,indent=2)+'\n')
  (out/'serial.bin').write_bytes(peer.wire);(out/'peer.bin').write_bytes(peer.sent)
  result=dict(passed=all(checks.values()),case=r['name'],checks=checks,errors=peer.errors,binary_sha256=a.sha256,peer_command=getattr(peer,'command',None),peer_exit=peer.peer_exit,
-  keys=keys,files={n:hashlib.sha256(d).hexdigest() for n,d in r['files']},scope='Actual DOSBox-X BIOS F2 protocol selection, maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with independent pinned lrzsz stdio peer. Synthetic local media, no BBS login or physical modem claim.')
+  keys=keys,recipe_bounds=dict(after_ms=a.after_ms,transfer_timeout=r['transfer_timeout'],resume_timeout=r['resume_timeout'],DOS_timeout=a.timeout),files={n:hashlib.sha256(d).hexdigest() for n,d in r['files']},scope='Actual DOSBox-X BIOS F2 protocol selection, maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with independent pinned lrzsz stdio peer. Synthetic local media, no BBS login or physical modem claim.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(r['name'],json.dumps(result),flush=True);return result
 def main():
  p=argparse.ArgumentParser();p.add_argument('--sha256',required=True);p.add_argument('--label',required=True);p.add_argument('--jobs',type=int,default=2,choices=(1,2));p.add_argument('--after-ms',type=int,default=15000);p.add_argument('--large',action='store_true');p.add_argument('--case',action='append');p.add_argument('--timeout',type=int,default=100);p.add_argument('--zedzap',action='store_true');a=p.parse_args()
@@ -120,7 +120,7 @@ def main():
  OUT.mkdir(exist_ok=True);files=[('EMPTY.BIN',b''),('ODD.BIN',b'A'),('ALL.BIN',bytes(range(256))*(257 if a.large else 4)+b'\0\x1a\xff@\r')]
  rows=[dict(name='rx-default',direction='rx',flags=[],files=files),dict(name='rx-crc16',direction='rx',flags=['-o'],files=files),dict(name='tx-default',direction='tx',flags=[],files=files),dict(name='tx-escape',direction='tx',flags=['-e'],files=files)]
  rows=[r for r in rows if not a.case or r['name'] in a.case];assert rows
- for r in rows:r['transfer_timeout']=max(65,a.after_ms/1000+10);r['zedzap']=a.zedzap
+ for r in rows:r['transfer_timeout']=max(65,a.after_ms/1000+10);r['zedzap']=a.zedzap;r['resume_timeout']=min(a.timeout,max(10,a.after_ms/1000+10))
  with (OUT/'.lock').open('w') as lock:
   fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
   with ThreadPoolExecutor(max_workers=a.jobs) as pool:results=list(pool.map(lambda r:run_case(r,a),rows))

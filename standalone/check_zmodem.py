@@ -27,7 +27,7 @@ class Ops(C.Structure):
 class PacketIO(C.Union):
     _fields_=[('rx',C.c_ubyte*8192),('wire',C.c_ubyte*8192)]
 class Session(C.Structure):
-    _fields_=[('ops',P),('context',P)]+[(n,U) for n in ('status','cleanup_status','sending','owned','format','control','block','retries','phase','skipped')]+[
+    _fields_=[('ops',P),('context',P)]+[(n,U) for n in ('status','cleanup_status','sending','owned','format','control','block','retries','phase','skipped','window','capacity')]+[
         (n,D) for n in ('position','size','files','bytes')]+[('name',C.c_char*13),('decoder',Decoder),('data',C.c_ubyte*1024),('io',PacketIO)]
 
 def h(t,pos=0,fmt=66):return header(bytes([t])+pos.to_bytes(4,'little'),fmt,0)
@@ -36,10 +36,10 @@ def offer(name,size,fmt=67):return h(4,0,fmt)+packet(meta(name,size),fmt,107,0)
 def payload(data,offset=0,fmt=67,end=107):return h(10,offset,fmt)+packet(data,fmt,end,0)
 
 class Fixture:
-    def __init__(self,lib,rx=b'',sources=(),fault=None,peer=None,corrupt=False,corrupt_at=64):
+    def __init__(self,lib,rx=b'',sources=(),fault=None,peer=None,corrupt=False,corrupt_at=64,corrupt_packet=1):
         self.lib=lib;self.rx=list(rx);self.tx=bytearray();self.sources=list(sources);self.source=None;self.offset=0
         self.received={};self.stage=None;self.target=None;self.events=[];self.fault=fault;self.peer=peer;self.errors=[]
-        self.corrupt=corrupt;self.corrupt_at=corrupt_at;self.corruptions=0;self.peer_wire=bytearray();self.engine_wire=bytearray()
+        self.corrupt=corrupt;self.corrupt_at=corrupt_at;self.corrupt_packet=corrupt_packet;self.out_packets=0;self.corruptions=0;self.peer_wire=bytearray();self.engine_wire=bytearray()
         def guarded(fn,typ):
             def call(*args):
                 try:return fn(*args)
@@ -62,8 +62,10 @@ class Fixture:
     def write(self,_,data,n):
         if self.fault=='transport':return 1
         data=C.string_at(data,n)
-        if self.corrupt and not self.corruptions and self.session.phase==3 and b'@A' in data and not data.startswith(b'*\x18'):
-            at=data.index(b'@A');data=data[:at]+b'BA'+data[at+2:];self.corruptions+=1
+        if self.session.phase==3 and b'@A' in data and not data.startswith(b'*\x18'):
+            self.out_packets+=1
+            if self.corrupt and not self.corruptions and self.out_packets==self.corrupt_packet and b'@A' in data:
+                at=data.index(b'@A');data=data[:at]+b'BA'+data[at+2:];self.corruptions+=1
         self.tx.extend(data)
         if self.peer:
             self.peer.stdin.write(data);self.peer.stdin.flush()
@@ -130,9 +132,9 @@ def main():
             for off in range(0,n,1024):expected+=h(3,min(off+1024,n))
             expected+=h(1,0x23000000)+h(8)
             check(f'receive-wire-{fmt}-{n}',bytes(f.tx)==expected)
-            rx=h(1,0x23000000 if fmt==67 else 0x03000000)+h(9)
+            rx=h(1,0x22000000 if fmt==67 else 0x02000000)+h(9)
             for off in range(0,n,1024):rx+=h(3,min(off+1024,n))
-            rx+=h(1,0x23000000 if fmt==67 else 0x03000000)+h(8)
+            rx+=h(1,0x22000000 if fmt==67 else 0x02000000)+h(8)
             f=Fixture(lib,rx,[('TEST.BIN',body)]);check(f'send-{fmt}-{n}',f.run(True)==0 and f.session.files==1 and f.session.bytes==n and f.source is None)
             expected=h(0)+h(4,0x01000000,fmt)+packet(meta('TEST.BIN',n).ljust(128,b'\0'),fmt,107,0)
             for off in range(0,n,1024):expected+=payload(body[off:off+1024],off,fmt)
@@ -147,17 +149,17 @@ def main():
         wire+=(h(10,3,67) if end in (104,107) else b'')+packet(b'DEF',67,107,0)+h(11,6)+h(8)+b'OO'
         f=Fixture(lib,wire);check(f'receive-ending-{end}',f.run()==0 and f.received['TEST.BIN']==b'ABCDEF')
     for off in (0,3,6):
-        rx=h(1,0x23000000)+h(9,off)+(h(3,6) if off<6 else b'')+h(1,0x23000000)+h(8)
+        rx=h(1,0x22000000)+h(9,off)+(h(3,6) if off<6 else b'')+h(1,0x22000000)+h(8)
         f=Fixture(lib,rx,[('TEST.BIN',b'ABCDEF')]);check(f'send-resume-{off}',f.run(True)==0 and ('seek',off) in f.events)
-    rx=h(1,0x23000000)+h(9,7)
+    rx=h(1,0x22000000)+h(9,7)
     f=Fixture(lib,rx,[('TEST.BIN',b'ABCDEF')]);check('sender-rejects-beyond-EOF',f.run(True)==6 and ('close',0) in f.events)
-    rx=h(1,0x23000000)+h(13,3)+h(9)+h(3,6)+h(1,0x23000000)+h(8)
+    rx=h(1,0x22000000)+h(13,3)+h(9)+h(3,6)+h(1,0x22000000)+h(8)
     f=Fixture(lib,rx,[('TEST.BIN',b'ABCDEF')]);check('sender-prefix-CRC',f.run(True)==0 and h(13,__import__('zlib').crc32(b'ABC')) in f.tx)
     for fault in ('cancel','transport','open','write','commit'):
         f=Fixture(lib,offer('TEST.BIN',3)+payload(b'ABC')+h(11,3)+h(8)+b'OO',fault=fault)
         result=f.run();check('receive-fault-'+fault,result!=0 and not f.received and f.stage is None)
     for fault in ('next','seek','read','close'):
-        f=Fixture(lib,h(1,0x23000000)+h(9)+h(3,3)+h(1,0x23000000)+h(8),[('TEST.BIN',b'ABC')],fault=fault)
+        f=Fixture(lib,h(1,0x22000000)+h(9)+h(3,3)+h(1,0x22000000)+h(8),[('TEST.BIN',b'ABC')],fault=fault)
         check('send-fault-'+fault,f.run(True)==7)
         if fault=='close':check('failed-source-close-never-repeated',sum(e[0]=='close' for e in f.events)==1 and f.session.owned==2 and f.session.cleanup_status)
     f=Fixture(lib,offer('TEST.BIN',3)+payload(b'ABC')+h(11,3)+h(8));check('lost-final-OO',f.run()==8 and f.received['TEST.BIN']==b'ABC')
@@ -168,20 +170,20 @@ def main():
     names={f'F{i}.BIN':b'original' for i in range(12)}
     f=Fixture(lib,b''.join(offer(name,1) for name in names)+h(8)+b'OO');f.received=dict(names)
     check('many-existing-files-skipped',f.run()==0 and f.session.skipped==12 and f.received==names)
-    f=Fixture(lib,h(1,0x23000000)+h(13,7),[('TEST.BIN',b'ABCDEF')]);check('reject-CRC-prefix-beyond-EOF',f.run(True)==6)
+    f=Fixture(lib,h(1,0x22000000)+h(13,7),[('TEST.BIN',b'ABCDEF')]);check('reject-CRC-prefix-beyond-EOF',f.run(True)==6)
     for capacity in (1,7,128):
-        data=bytes(range(17));rx=h(1,0x23000000|capacity)+h(9)
+        data=bytes(range(17));rx=h(1,0x22000000|capacity)+h(9)
         expected=h(0)+h(4,0x01000000,67)+packet(meta('TEST.BIN',17).ljust(128,b'\0'),67,107,0)
         for off in range(0,len(data),capacity):
             rx+=h(3,min(off+capacity,len(data)));expected+=payload(data[off:off+capacity],off)
-        rx+=h(1,0x23000000|capacity)+h(8);expected+=h(11,17,67)+h(8)+b'OO'
+        rx+=h(1,0x22000000|capacity)+h(8);expected+=h(11,17,67)+h(8)+b'OO'
         f=Fixture(lib,rx,[('TEST.BIN',data)])
         check(f'finite-receiver-buffer-{capacity}',f.run(True)==0 and f.session.block==capacity and bytes(f.tx)==expected)
-    f=Fixture(lib,h(1,0x23000000)+h(9)+h(3,0)+h(3,3)+h(1,0x23000000)+h(8),[('TEST.BIN',b'ABC')])
+    f=Fixture(lib,h(1,0x22000000)+h(9)+h(3,0)+h(3,3)+h(1,0x22000000)+h(8),[('TEST.BIN',b'ABC')])
     check('stale-ACK-before-valid-ACK',f.run(True)==0 and sum(e[0]=='read' for e in f.events)==1)
-    f=Fixture(lib,list(h(1,0x23000000)+h(9))+[65535]+list(h(9,3)+h(1,0x23000000)+h(8)),[('TEST.BIN',b'ABC')])
+    f=Fixture(lib,list(h(1,0x22000000)+h(9))+[65535]+list(h(9,3)+h(1,0x22000000)+h(8)),[('TEST.BIN',b'ABC')])
     check('lost-ACK-resend-and-verified-reposition',f.run(True)==0 and sum(e[0]=='read' for e in f.events)==2)
-    f=Fixture(lib,h(1,0x23000000)+h(9)*20,[('TEST.BIN',b'ABC')])
+    f=Fixture(lib,h(1,0x22000000)+h(9)*20,[('TEST.BIN',b'ABC')])
     check('repeated-same-position-bounded',f.run(True)==4 and sum(e[0]=='close' for e in f.events)==1)
     for fmt in (65,67):
         for n in (2048,4096,8192):
@@ -201,8 +203,10 @@ def main():
         variants=[([],False),(['-e'],False),((['-w','256'] if sending and peer_kind=='lrzsz' else ['-o']),False),([],True)]
         if peer_kind=='sexyz':variants += [(['-8'],False),(['-8'],True)]
         elif not sending:variants += [(['-8','-L','8192'],False),(['-8','-L','8192'],True)]
-        for flags,corrupt in variants:
-            label=peer_kind+'-'+('upload' if sending else 'download')+('-'+'-'.join(flags) if flags else '-default')+('-corrupt' if corrupt else '')
+        variants=[(flags,corrupt,1) for flags,corrupt in variants]
+        if sending:variants.append(([],True,3))
+        for flags,corrupt,corrupt_packet in variants:
+            label=peer_kind+'-'+('upload' if sending else 'download')+('-'+'-'.join(flags) if flags else '-default')+('-corrupt' if corrupt else '')+('-packet'+str(corrupt_packet) if corrupt_packet>1 else '')
             directory=runroot/label
             directory.mkdir();data=bytes(range(256))*257+b'\x1a\0\xff@\r'
             files=([('EMPTY.BIN',b'')] if peer_kind=='lrzsz' else [])+[('ODD.BIN',b'A'),('ALL.BIN',data)]
@@ -215,7 +219,7 @@ def main():
                 peer=subprocess.Popen(command,cwd=directory,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=log,bufsize=0)
                 try:
                     corrupt_at=4160 if '-8' in flags and not sending else 64
-                    fixture=Fixture(lib,sources=files if sending else (),peer=peer,corrupt=corrupt,corrupt_at=corrupt_at);result=fixture.run(sending)
+                    fixture=Fixture(lib,sources=files if sending else (),peer=peer,corrupt=corrupt,corrupt_at=corrupt_at,corrupt_packet=corrupt_packet);result=fixture.run(sending)
                     for name,raw in (('peer-consumed.bin',fixture.peer_wire),('engine-delivered.bin',fixture.engine_wire),('engine-output.bin',fixture.tx)):
                         (directory/name).write_bytes(raw)
                     (directory/'engine-result.json').write_text(json.dumps(dict(status=result,files=fixture.session.files,bytes=fixture.session.bytes,events=fixture.events))+'\n')
@@ -224,7 +228,7 @@ def main():
                     actual={name:(directory/name).read_bytes() for name,_ in files} if sending else fixture.received
                     assert peer.returncode==0 and actual==dict(files),(label,result,peer.returncode,(directory/'stderr.log').read_text(errors='replace'),fixture.events[-10:])
                     assert fixture.corruptions==int(corrupt)
-                    peer_cases.append(dict(label=label,passed=True,bytes=len(data)+1,files=len(files),command=command,peer_exit=peer.returncode,corruptions=fixture.corruptions,corrupt_at=corrupt_at if corrupt else None,
+                    peer_cases.append(dict(label=label,passed=True,bytes=len(data)+1,files=len(files),command=command,peer_exit=peer.returncode,corruptions=fixture.corruptions,corrupt_at=corrupt_at if corrupt else None,corrupt_packet=corrupt_packet if sending and corrupt else None,
                         peer_sha256=hashlib.sha256(Path(command[0]).read_bytes()).hexdigest(),
                         retained_wire_sha256={str((directory/name).relative_to(ROOT)):hashlib.sha256((directory/name).read_bytes()).hexdigest() for name in ('peer-consumed.bin','engine-delivered.bin','engine-output.bin')},
                         file_sha256={name:hashlib.sha256(body).hexdigest() for name,body in files}))

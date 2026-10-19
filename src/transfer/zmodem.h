@@ -9,6 +9,7 @@
 #endif
 /* Explicit foreground owner. Callbacks service transport/cancel during waits
  * and writes. read returns byte or one of the three sentinel values below.
+ * A zero-second read must poll without waiting and preserve unread bytes.
  * Other callbacks return zero on success, nonzero on failure; next returns
  * ZM_DONE only when enumeration is complete. Seek accepts offsets including EOF.
  * Received metadata size is advisory. commit must check close and installation
@@ -36,7 +37,7 @@ typedef struct zm_session {
  const zm_ops *ops;void *context;
  /* owned: 0 resolved, 1 active, 2 source close failed (never called again). */
  unsigned status,cleanup_status,sending,owned,format,control,block,retries;
- unsigned phase,skipped;
+ unsigned phase,skipped,window,capacity;
  zw_u32 position,size,files,bytes;
  char name[13];
  zw_decoder decoder;
@@ -53,7 +54,8 @@ typedef struct zm_session {
  * synchronous and non-reentrant. Receiver starts at offset zero in a new owned
  * stage; retransmission resumes that stage's verified offset. Existing files
  * may be skipped by open_received returning ZM_DONE, never overwritten here.
- * Sender uses bounded ZCRCW packets; receiver accepts all four endings.
+ * Sender uses bounded asynchronous windows only with CANFDX/CANOVIO; otherwise
+ * ZCRCW packets. Receiver accepts all four endings.
  */
 unsigned __cdecl zm_run(zm_session *,const zm_ops *,void *,unsigned sending);
 #endif

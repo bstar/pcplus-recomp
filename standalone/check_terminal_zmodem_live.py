@@ -10,6 +10,8 @@ from check_terminal_ymodem_live import LiveYmodem
 from check_terminal_transfer_live import LiveTransfer,ROOT,BINARY
 from check_zmodem import h,meta,offer,payload
 from check_zmodem_wire import packet
+from zmodem_window_vectors import vectors
+from check_zmodem_progress_live import run_case as progress_case
 
 class LiveZmodem(LiveYmodem):
  def __init__(self,*,sending=False,source=b'ABC\0\x1a\xff@\r',fault=None,fmt=67,resume=0,receive_block=1024):
@@ -18,10 +20,10 @@ class LiveZmodem(LiveYmodem):
   self.initial_offered=True;self.put('terminal_transfer_protocol',2);self.script_enabled=True;self.strict=fault is None
   self.filename=b'SEND.BIN' if sending else b'D:\\RECV\\'
   if sending:
-   self.script.append((h(0),h(1,0x23000000 if fmt==67 else 0x03000000)))
+   self.script.append((h(0),h(1,0x22000000 if fmt==67 else 0x02000000)))
    self.script.append((h(4,0x01000000,fmt)+packet(meta('SEND.BIN',len(source)).ljust(128,b'\0'),fmt,107,0),h(9,resume)))
    for off in range(resume,len(source),1024):self.script.append((payload(source[off:off+1024],off,fmt),h(3,min(off+1024,len(source)))))
-   self.script.append((h(11,len(source),fmt),h(1,0x23000000 if fmt==67 else 0x03000000)))
+   self.script.append((h(11,len(source),fmt),h(1,0x22000000 if fmt==67 else 0x02000000)))
    self.script.append((h(8),h(8)));self.script.append((b'OO',b'APP'))
   else:
    self.script.append((h(1,0x23000000),offer('ONE.BIN',len(source)+123,fmt)))
@@ -125,6 +127,14 @@ def main():
    m.advance_ticks=False;m.respect_rts=True;m.put('uart_hardware_flow',1)
    assert m.run()==0 and not m.script and not m.handles and bytes(m.files['D:\\RECV\\ONE.BIN'])==source
    cases.append(dict(case=f'ZedZap-HARD-CRC-{fmt}-length-{n}',passed=True,clock='Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time.'))
+ for fmt in (65,67):
+  for v in vectors(fmt,'SEND.BIN'):
+   m=LiveZmodem(sending=True,source=v['body'],fmt=fmt);m.script=deque(v['script']);m.script[-1]=(b'OO',b'APP')
+   assert m.run()==0 and not m.script and not m.pending and not m.handles
+   assert bytes(m.files['SEND.BIN'])==v['body'] and m.get('_terminal_zmodem_files',4)==1
+   assert bytes(m.call('uart_receive_byte') for _ in range(3))==b'APP'
+   cases.append(dict(case=f'windowed-{fmt}-'+v['label'],passed=True))
+ cases.append(progress_case(LiveZmodem))
  for protocol in (0,1,2):
   for baud in (300,600,1200,2400,4800,9600,19200,115200):
    m=LiveZmodem();m.put('terminal_transfer_protocol',protocol);m.put('terminal_baud_low',baud&65535);m.put('terminal_baud_high',baud>>16)

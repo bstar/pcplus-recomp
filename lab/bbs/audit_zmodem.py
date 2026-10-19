@@ -124,8 +124,17 @@ def audit_controls(audit,opposite,trace,sender,post_time,unused=False):
     lower=timestamp(trace,sender,p['crc_end']-1)
     later=[e for e in audit['events'] if e['offset']>=p['end']]
     upper=min(post_time,timestamp(trace,sender,later[0]['offset'])) if later else post_time
+    # ZCRCQ requests an asynchronous/cumulative ACK. It need not precede the
+    # next subpacket. ZCRCW still requires its exact boundary before continuing.
+    if p['ending']==106:upper=post_time
+    def valid_ack(h):
+     if h['type']!=3:return False
+     if p['ending']==107:return h['position']==p['position']
+     when=timestamp(trace,other,h['offset'])
+     transmitted=max((q['position'] for q in f['packets'] if timestamp(trace,sender,q['crc_end']-1)<=when),default=0)
+     return p['position']<=h['position']<=transmitted
     candidates=[h for h in headers if lower<=timestamp(trace,other,h['offset'])<=upper and
-                ((h['type']==3 and h['position']==p['position']) or (h['type']==9 and h['position']<=p['position']-p['length']))]
+                (valid_ack(h) or (h['type']==9 and h['position']<=p['position']-p['length']))]
     assert candidates,('No ACK or verified-position recovery for subpacket',p['offset'],p['position'])
     item=candidates[0];records.append(dict(type=item['type'],position=item['position'],offset=item['offset'],seconds=timestamp(trace,other,item['offset']),recovery=item['type']==9))
   match(1,None,timestamp(trace,sender,f['end']-1),post_time)
