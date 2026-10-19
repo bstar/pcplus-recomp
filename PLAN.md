@@ -14,6 +14,18 @@ fragmented differences and120 unintended exits; the staged decoder has zero in
 content and menu leave/reentry through the added test route. The live custom
 index/search route and physical modem remain separate requirements.
 
+The [owned search/index route](lab/bbs/enigma-search.md) now passes DOS
+navigation with the actual selected menus, art and modules over30 generated
+ZIPs, plus11 real SQLite/FTS query checks. Keep game-download handling separate:
+the current batch metadata codec accepts only DOS8.3 names, while these board
+archives have long names. Exercise the actual custom D download and implement
+validated wire-name/local-name handling rather than substituting BIN fixtures.
+The actual custom download now confirms this gap: a CRC-valid long-name ZIP
+offer reaches DOS, transfer fails and no file is saved. The production-linked
+metadata replay returns `BH_NAME`; changing only the filename to a DOS8.3 name
+returns `BH_OK`. Implement separate bounded wire/local names, deterministic
+collision handling and repeat the exact ZIP/menu-return test next.
+
 Latest keyboard checkpoint: [shared key output](docs/ASPECT_KEY_OUTPUT.md) routes
 script-time keys through the actual parent classifier/profile and child-owned
 UART. Capability6 retains inherited BIOS selection and adds checked duplex

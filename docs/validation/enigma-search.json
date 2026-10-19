@@ -1,0 +1,313 @@
+{
+  "passed": true,
+  "navigation_verified": true,
+  "game_download_verified": false,
+  "compatibility_complete": false,
+  "live_server_modified": false,
+  "terminal_sha256": "e6d170f2bba5a32f5ec3a92d61a17b4b1c3e40ca75b29886423bcedc33d5eab9",
+  "owned_upstream_revision": "237cd9743d6978a940dd66db0e78f6ab8ccd3e37",
+  "source_modules": {
+    "mods/loc_game_details/loc_game_details.js": "0711413e29c01f0cf3cef7f89b3dc607515381a67a23e1a58205aa6d7a20efb8",
+    "mods/black_flag_files/helpers.js": "e4f6c1df6dbb9d6282d0534150c9149889637d34f01665691ca3bc5d19a06235",
+    "mods/black_flag_files/black_flag_files.js": "20a6d544cb820ac3840c1d271cfd41c7e0fb1c42600100756367845b147cf535",
+    "mods/black_flag_files/search.js": "d159e1fd6936e13613321a92cf68f93681de083cf68a9cb65d8f891cb6b54236"
+  },
+  "source_inputs": {
+    "mods/loc_game_details/loc_game_details.js": "0711413e29c01f0cf3cef7f89b3dc607515381a67a23e1a58205aa6d7a20efb8",
+    "mods/black_flag_files/helpers.js": "e4f6c1df6dbb9d6282d0534150c9149889637d34f01665691ca3bc5d19a06235",
+    "mods/black_flag_files/black_flag_files.js": "20a6d544cb820ac3840c1d271cfd41c7e0fb1c42600100756367845b147cf535",
+    "mods/black_flag_files/search.js": "d159e1fd6936e13613321a92cf68f93681de083cf68a9cb65d8f891cb6b54236",
+    "config/menus/file_base.hjson": "18e80539178e71ff6a662fd7792f59dbf303df3435309a3d9063ae34b9fe469f",
+    "art/themes/black_flag/theme.hjson": "0edc3ab8c5702eec83e3ba9ad0838bad0e50b2fc796fd867afd7494c2952c85a",
+    "art/themes/black_flag/FMENU.ANS": "28c25419a5efa84b94aad87e0e715475cf64b0efe18f97cfeaeb7dcb7069ead6",
+    "art/themes/black_flag/FILPMPT.ANS": "655d23537072a2a6092dfa2180633ea9dc1378582f5938a269ba52eecbff77d2",
+    "art/themes/black_flag/LOCSEARCH.ANS": "3904ba93feed80a80e19895b3d6843d7acc937d2c63ad98cbfe20fc50eabaa46"
+  },
+  "selected_menus": [
+    "fileBaseMainMenu",
+    "fileBaseSearch",
+    "blackFlagZipResults",
+    "locGameDetails"
+  ],
+  "selected_theme": [
+    "fileBaseSearch"
+  ],
+  "menu_selection_sha256": "21252731af2c4d47b0eafc795f61a3ae7cd92a8effc4094b1b24405ddcf5ef94",
+  "synthetic_archives": 30,
+  "queries": {
+    "path": "build/bbs-lab/owned-enigma-search-01/search-query-checks.json",
+    "sha256": "b751f93031b3f93bd78f88f4054239d94136dd1c4787c66176d7a4d4aaceeef0",
+    "checks": {
+      "passed": true,
+      "checks": 11,
+      "cases": [
+        {
+          "case": "browse-allowed-area",
+          "passed": true,
+          "count": 30,
+          "mode": "Browse"
+        },
+        {
+          "case": "title-multiple-tokens",
+          "passed": true,
+          "count": 30,
+          "mode": "Titles / filenames"
+        },
+        {
+          "case": "case-and-punctuation",
+          "passed": true,
+          "count": 1,
+          "mode": "Titles / filenames"
+        },
+        {
+          "case": "unicode-folding",
+          "passed": true,
+          "count": 1,
+          "mode": "Titles / filenames"
+        },
+        {
+          "case": "anchored-wildcard",
+          "passed": true,
+          "count": 10,
+          "mode": "Titles / filenames"
+        },
+        {
+          "case": "wildcard-all-allowed",
+          "passed": true,
+          "count": 30,
+          "mode": "Titles / filenames"
+        },
+        {
+          "case": "fulltext-description",
+          "passed": true,
+          "count": 30,
+          "mode": "Full text"
+        },
+        {
+          "case": "no-results",
+          "passed": true,
+          "count": 0,
+          "mode": "Titles / filenames"
+        },
+        {
+          "case": "explicit-area-intersection",
+          "passed": true,
+          "count": 30,
+          "mode": "Titles / filenames"
+        },
+        {
+          "case": "disallowed-area",
+          "passed": true,
+          "count": 0,
+          "mode": "Titles / filenames"
+        },
+        {
+          "case": "no-allowed-areas",
+          "passed": true,
+          "count": 0,
+          "mode": "Titles / filenames"
+        }
+      ],
+      "node": "v24.18.1",
+      "checker_sha256": "267150ec3ed54b600fd542bbbe83b40c8a2c8ab27d47c71384d4d6312cc67ae1",
+      "search_sha256": "d159e1fd6936e13613321a92cf68f93681de083cf68a9cb65d8f891cb6b54236",
+      "file_entry_sha256": "618516d4c7db0fa6b26edf241ac0313e46eb8839f18a472af136ff56e11e0aa0",
+      "scope": "Exact owned search module, real FileEntry query builder, read-only generated SQLite file/FTS tables. Explicit allowed-area inputs; no actual user ACS or DOS keyboard claim from these queries."
+    }
+  },
+  "DOS": {
+    "path": "build/bbs-lab/results/enigma/owned-search-framed-01/search-checks.json",
+    "sha256": "a218f58913d189950a13b2d30e381e770996237117c23d4d83cb4a096ab303c1",
+    "checks": {
+      "DOS_harness": true,
+      "unique_authenticated_session": true,
+      "exact_owned_modules": true,
+      "inputs_unchanged": true,
+      "no_post_saved": true,
+      "real_search_route": true,
+      "title_search": true,
+      "index_selection": true,
+      "index_paging": true,
+      "selected_game_details": true,
+      "diz_page": true,
+      "nfo_navigation": true,
+      "bottom_content": true,
+      "empty_search": true
+    },
+    "selected": [
+      0,
+      1,
+      15,
+      14,
+      0,
+      29,
+      0,
+      1,
+      0
+    ],
+    "ranges": [
+      [
+        1,
+        14
+      ],
+      [
+        1,
+        14
+      ],
+      [
+        15,
+        28
+      ],
+      [
+        15,
+        28
+      ],
+      [
+        1,
+        14
+      ],
+      [
+        29,
+        30
+      ],
+      [
+        1,
+        14
+      ],
+      [
+        1,
+        14
+      ],
+      [
+        1,
+        14
+      ]
+    ],
+    "NFO_pages": [
+      [
+        1,
+        15,
+        24
+      ],
+      [
+        2,
+        16,
+        24
+      ],
+      [
+        10,
+        24,
+        24
+      ],
+      [
+        9,
+        23,
+        24
+      ],
+      [
+        1,
+        15,
+        24
+      ],
+      [
+        10,
+        24,
+        24
+      ],
+      [
+        1,
+        15,
+        24
+      ]
+    ],
+    "route": [
+      "fileBaseMainMenu",
+      "fileBaseSearch",
+      "blackFlagZipResults",
+      "locGameDetails",
+      "blackFlagZipResults",
+      "fileBaseSearch",
+      "blackFlagZipResults",
+      "fileBaseSearch",
+      "fileBaseMainMenu",
+      "mainMenu"
+    ]
+  },
+  "game_download": {
+    "path": "build/bbs-lab/results/enigma/owned-game-transfer-02-wrapper/characterization.json",
+    "sha256": "ff9fbcebbf1de335aa443667e5d738a0f13941c1dfc9cc3e67817890c40b5ded",
+    "passed": false,
+    "wire_offers": [
+      {
+        "name": "PCPLUS PROBE 01 (1991).ZIP",
+        "size": 1301,
+        "header_offset": 43771,
+        "data_crc_verified": true
+      }
+    ],
+    "received_files": [],
+    "checks": {
+      "DOS_normal_exit": true,
+      "hardware_restored": true,
+      "screen_captured": true,
+      "bbs_connected": true,
+      "binary_unchanged": true,
+      "payload_fixture_unchanged": true,
+      "observed_decoded_offsets_match": true,
+      "configuration_unchanged": true,
+      "actual_validated_protocol": false,
+      "unique_server_session_and_ordered_menus": false,
+      "no_leftover_staging": true
+    },
+    "errors": [
+      "Missing complete protocol header"
+    ],
+    "wire_name_replay": {
+      "path": "build/bbs-lab/owned-enigma-search-01/wire-name-replay.json",
+      "sha256": "b256c701221c776752bfc01a2dc2c71fa146f949e21d43cbe1717f75d77446c5",
+      "checks": {
+        "passed": true,
+        "terminal_sha256": "e6d170f2bba5a32f5ec3a92d61a17b4b1c3e40ca75b29886423bcedc33d5eab9",
+        "checker_sha256": "77242a9402e432844920cbde8e059b39e14613c25f751dc7232d510c67d47af8",
+        "header_source_sha256": "5003de29446cc1ec3a3776dcb1798b2763a6f1d556e866abe7e207cc39b49aa5",
+        "capture_sha256": "f715f931e8f5e8d913d5479563039cf3246841b9212ee2adb98e53e3a5f588e0",
+        "wire_name": "PCPLUS PROBE 01 (1991).ZIP",
+        "wire_size": 1301,
+        "metadata_crc_verified": true,
+        "header_offset": 43771,
+        "observations": [
+          {
+            "input": "captured",
+            "status": 2,
+            "result_unchanged": true,
+            "block_sha256": "b819cc7d18885106460592d1b768fd602d0e0cc4bda27454e75ec69beaac9f8b"
+          },
+          {
+            "input": "DOS83-filename-only",
+            "status": 0,
+            "result_unchanged": false,
+            "block_sha256": "86bfa1aa478d4dcbe5a33ae29c0ef0370d543c437fe44c388f910ff2d4b5633d"
+          }
+        ],
+        "scope": "Actual linked production metadata decoder receives CRC-verified captured ZFILE, padded exactly as the receive engine does. Captured long name returns BH_NAME atomically; changing only that field to a DOS83 name returns BH_OK. No transfer completion, filesystem mapping or physical-modem claim."
+      }
+    }
+  },
+  "source_build_proof": {
+    "path": "docs/validation/application-components-source-build.json",
+    "sha256": "84dffb5d6a176ff647d9b086739678faf3ee4f5cc2634a71d797dfbc2b2d25d1",
+    "outputs": 178
+  },
+  "nix_lock_sha256": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+  "recorder_sha256": "c11e45ad869442e0ab67d7be0ebd79d2ff5660c954c4d36bad08449eb8e10ce4",
+  "whole_application_gates_closed": [],
+  "retained_prerequisite_failure": {
+    "label": "owned-game-transfer-01",
+    "reason": "Import selected a same-named standalone diagnostic, before any BBS connection; driver now asserts the laboratory module path."
+  },
+  "remaining": [
+    "Implement separate bounded wire names and DOS local names with deterministic collision/device/path handling; repeat exact game ZIP download and menu return.",
+    "Approved live patch/restart and actual catalog retesting remain pending; selected source/menu/ANSI copies with generated data are isolated evidence.",
+    "Physical modem timing/flow control,100ms key deadline and complete application gates remain open."
+  ]
+}

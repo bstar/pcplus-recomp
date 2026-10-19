@@ -103,3 +103,10 @@ all180 checks. The patched DOS run reaches DIZ/NFO and passes the complete
 nine-page navigation sequence, including leaving and reopening the module.
 This strengthens the candidate evidence without modifying the live board or
 claiming its custom search/list route is fixed.
+
+The next [search/index route fixture](enigma-search.md) copies the selected
+owned menus, ANSI assets, theme settings and all four modules around a30-ZIP
+generated catalog. It passes11 real SQLite/FTS query checks and the DOS
+F/S search → paged index → selected game → DIZ/NFO → empty-search/return route.
+This covers the actual selected routing in isolation; the live catalog and
+service remain unchanged, and game-download results are evaluated separately.
