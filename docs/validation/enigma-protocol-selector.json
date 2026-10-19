@@ -1,0 +1,84 @@
+{
+  "passed": true,
+  "compatibility_complete": false,
+  "live_server_modified": false,
+  "terminal_sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+  "owned_upstream_revision": "237cd9743d6978a940dd66db0e78f6ab8ccd3e37",
+  "live_client_sha256": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+  "staged_client_sha256": "8cb3b4c8d439e0c43a09d9caf87b69560b3df1b51de053d70f2dc9b6dc9ea31b",
+  "source_modules": {
+    "mods/loc_game_details/loc_game_details.js": "0711413e29c01f0cf3cef7f89b3dc607515381a67a23e1a58205aa6d7a20efb8",
+    "mods/black_flag_files/helpers.js": "e4f6c1df6dbb9d6282d0534150c9149889637d34f01665691ca3bc5d19a06235",
+    "mods/black_flag_files/black_flag_files.js": "20a6d544cb820ac3840c1d271cfd41c7e0fb1c42600100756367845b147cf535",
+    "mods/black_flag_files/search.js": "d159e1fd6936e13613321a92cf68f93681de083cf68a9cb65d8f891cb6b54236",
+    "mods/loc_transfer_protocol_select/loc_transfer_protocol_select.js": "9450bbb9faab72b52ac58a684408443a805e5ce33fd585b9cb694b7881c473e0",
+    "mods/loc_download_ready/loc_download_ready.js": "859ea1b0d395c127e7aafcf9b954a0939e11921e6c19fb3d2b3053915bce4207"
+  },
+  "selected_menus": [
+    "fileBaseMainMenu",
+    "fileBaseSearch",
+    "blackFlagZipResults",
+    "locGameDetails",
+    "fileTransferProtocolSelection",
+    "locDownloadReady"
+  ],
+  "selected_theme": [
+    "fileBaseSearch",
+    "fileTransferProtocolSelection"
+  ],
+  "selector_art_sha256": "77a10221f81bc3749b926bd956fcb487c060890aad846921db5a79a8a9c75932",
+  "synthetic_archives": 30,
+  "query_checks": 11,
+  "navigation_checks": {
+    "DOS_harness": true,
+    "unique_authenticated_session": true,
+    "exact_owned_modules": true,
+    "inputs_unchanged": true,
+    "no_post_saved": true,
+    "real_search_route": true,
+    "title_search": true,
+    "index_selection": true,
+    "index_paging": true,
+    "selected_game_details": true,
+    "diz_page": true,
+    "nfo_navigation": true,
+    "bottom_content": true,
+    "empty_search": true
+  },
+  "transfer_checks": {
+    "DOS_normal_exit": true,
+    "hardware_restored": true,
+    "screen_captured": true,
+    "bbs_connected": true,
+    "binary_unchanged": true,
+    "payload_fixture_unchanged": true,
+    "observed_decoded_offsets_match": true,
+    "configuration_unchanged": true,
+    "automatic_invitation_then_receiver_negotiation": true,
+    "no_manual_transfer_keys": true,
+    "ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed": true,
+    "posttransfer_actual_menu_input_response": true,
+    "actual_validated_protocol": true,
+    "DOS_exact_length_PCPLUS PROBE 01 (1991).ZIP": true,
+    "only_expected_received_files": true,
+    "unique_server_session_and_ordered_menus": true,
+    "no_leftover_staging": true
+  },
+  "archive": {
+    "wire_name": "PCPLUS PROBE 01 (1991).ZIP",
+    "local_name": "8868026D.ZIP",
+    "bytes": 1301,
+    "sha256": "7c7079d0ff6f5352713fdd8c1ba83b36767927e3112410eb8535caa6fbd75e1e"
+  },
+  "evidence": {
+    "build/bbs-lab/owned-enigma-protocol-01/report.json": "0c5be8d70ec828ed36414b08ac83f1d2a792dc1bbd8d41528ff25ca810931c12",
+    "build/bbs-lab/owned-enigma-protocol-01/candidate/search-instance.json": "29e6001bbf0aa180b9e60db28e890a789cc7f7194c1013a1620c38c794acf000",
+    "build/bbs-lab/results/enigma/owned-protocol-search-01/search-checks.json": "2764e00baf1d29d2eddf70de7de6145b818053191dbcdcdb6c2473eced6be6f0",
+    "build/bbs-lab/results/enigma/owned-protocol-transfer-01-wrapper/characterization.json": "061510f7c669875dc040e00fe942b11442731fbe39a5e0ab57bf3839eff9d942",
+    "build/bbs-lab/owned-enigma-protocol-01/search-query-checks.json": "b751f93031b3f93bd78f88f4054239d94136dd1c4787c66176d7a4d4aaceeef0"
+  },
+  "nix_lock_sha256": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+  "recorder_sha256": "9fe6a7755289ebb142343159a739b3d336e4d08e658539888da65eff3fe0b028",
+  "scope": "Actual DOS immediate modem through six exact owned modules and selected menus; generated ZIP/DIZ/NFO data and isolated patched decoder. Custom terminal protocol selector, ZMODEM and return to NFO verified. HTTP/browser branch, live catalog, physical modem and whole-application completion remain unverified.",
+  "whole_application_gates_closed": []
+}

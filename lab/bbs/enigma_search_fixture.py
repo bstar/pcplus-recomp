@@ -2,7 +2,7 @@
 """Stage selected owned search/index menus with generated archive fixtures.
 
 Use tools/bbs-dev and a new checked candidate. No live board changes; only
-selected menu/theme objects, four modules and three ANSI assets are copied.
+selected menu/theme objects, six modules and three ANSI assets are copied.
 """
 import argparse
 import hashlib
@@ -26,16 +26,21 @@ def setup_search(candidate,server):
     candidate=owned(candidate);server=server.resolve();assert not pid(candidate)
     prepare(candidate,server,'framed')
     metadata=json.loads((candidate/'notes-instance.json').read_text())
-    sources=['mods/black_flag_files/black_flag_files.js','mods/black_flag_files/search.js',
+    modules=['mods/black_flag_files/black_flag_files.js','mods/black_flag_files/search.js',
+             'mods/loc_transfer_protocol_select/loc_transfer_protocol_select.js',
+             'mods/loc_download_ready/loc_download_ready.js']
+    sources=[*modules,
              'config/menus/file_base.hjson','art/themes/black_flag/theme.hjson',
              *['art/themes/black_flag/'+f+'.ANS' for f in ('FMENU','FILPMPT','LOCSEARCH')]]
     before={p:sha(server/p) for p in sources}
-    for p in sources[:2]:
-        dest=candidate/p;assert not dest.exists();shutil.copyfile(server/p,dest)
+    for p in modules:
+        dest=candidate/p;dest.parent.mkdir(parents=True,exist_ok=True)
+        assert not dest.exists();shutil.copyfile(server/p,dest)
         metadata['source_modules'][p]=before[p];metadata['staged_modules'][p]=sha(dest)
     menus=parse(candidate,server/'config/menus/file_base.hjson')
     menu_path=candidate/'config/menus/loc-main.hjson';config=json.loads(menu_path.read_text())
-    selected=['fileBaseMainMenu','fileBaseSearch','blackFlagZipResults','locGameDetails']
+    selected=['fileBaseMainMenu','fileBaseSearch','blackFlagZipResults','locGameDetails',
+              'fileTransferProtocolSelection','locDownloadReady']
     selected_menus={p:menus['menus'][p] for p in selected}
     selected_prompts={'fileMenuCommand':menus['prompts']['fileMenuCommand']}
     config['menus'].update(selected_menus);config['prompts'].update(selected_prompts)

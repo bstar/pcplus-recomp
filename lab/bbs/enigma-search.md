@@ -1,8 +1,8 @@
 # Owned search, index and game-details route
 
-This fixture copies the owned board's four search/index/details modules,
-the selected file-base/search/details menu objects, the file command prompt,
-the search-specific theme settings and three ANSI assets. It overlays them in
+This fixture copies the owned board's six search/index/details and download
+modules, the selected file-base/search/details/protocol-selection menu objects,
+the file command prompt, selected theme settings and three ANSI assets. It overlays them in
 an isolated lab checkout with the staged keyboard decoder. The other login
 and system menus remain the synthetic lab defaults. No live source, settings,
 databases, catalogs or service are changed.
@@ -35,9 +35,9 @@ probe command is removed, so this test cannot bypass the real search route.
 The game transfer probe uses the selected archive's actual long filename.
 Its adapter changes only the test harness's DOS83-BIN fixture-name admission;
 the production DOS engine, modem and passive CRC/data audit are unchanged.
-Transfer success is recorded separately from navigation. The current batch
-metadata codec currently accepts only DOS8.3 basenames; long-name handling is
-a separate compatibility requirement, not replaced with an easier BIN fixture.
+Transfer success is recorded separately from navigation. The earlier batch
+metadata codec accepted only DOS8.3 basenames; the wire/local filename adapter
+described below now handles the generated archive's actual long name.
 
 The retained pre-fix custom download sent a CRC-valid ZFILE offer for
 `PCPLUS PROBE 01 (1991).ZIP` (1301 bytes), but transfer fails and no file is
@@ -52,6 +52,21 @@ completion and NFO input/response afterward. The historical failure record
 remains unchanged; the new filename validation record binds the corrected
 binary and tests separately.
 
+The protocol-selector checkpoint adds the exact `loc_transfer_protocol_select`
+and `loc_download_ready` modules and their selected menu definitions. The former
+fixture used the stock selector, which left a gap in testing the game's D action.
+The terminal branch now runs through the owned selector and returns to NFO input
+after a byte-exact ZMODEM download. Its selected theme settings and FPROSEL art
+are checked against the owned board. Copying the HTTP module does not establish
+coverage of its browser/HTTP branch.
+
+The game-transfer command now exits unsuccessfully whenever its full protocol
+audit fails, even if a valid file offer was observed. The older characterization
+command could exit successfully for a failed download; its retained JSON already
+marked that download as failed. The
+[selector validation](../../docs/validation/enigma-protocol-selector.json)
+records current navigation and transfer results separately from historical runs.
+
 Run the [keyboard experiment](patches/enigma-key-stream/README.md) first to
 create a fresh checked candidate for the owned upstream revision, then:
 
@@ -59,7 +74,7 @@ create a fresh checked candidate for the owned upstream revision, then:
 ./tools/bbs-dev --command python3 lab/bbs/enigma_search_fixture.py \
   --candidate build/bbs-lab/NEW/candidate --server-root /path/to/owned/enigma
 ./tools/bbs-dev --command node lab/bbs/check_enigma_search.js \
-  build/bbs-lab/NEW/candidate
+  build/bbs-lab/NEW/candidate > build/bbs-lab/NEW/search-query-checks.json
 ./tools/bbs-dev --command python3 lab/bbs/enigma_key_stream_fixture.py start \
   --candidate build/bbs-lab/NEW/candidate
 ./tools/dev --command python3 lab/bbs/enigma_search_dos.py \
@@ -69,6 +84,9 @@ create a fresh checked candidate for the owned upstream revision, then:
   --candidate build/bbs-lab/NEW/candidate --label unique-game-transfer-label
 ./tools/bbs-dev --command python3 lab/bbs/enigma_key_stream_fixture.py stop \
   --candidate build/bbs-lab/NEW/candidate
+./tools/bbs-dev --command python3 standalone/record_enigma_protocol.py \
+  --candidate build/bbs-lab/NEW/candidate --server-root /path/to/owned/enigma \
+  --search-label unique-search-label --transfer-label unique-game-transfer-label
 ```
 
 The first transfer driver selected a same-named standalone diagnostic because

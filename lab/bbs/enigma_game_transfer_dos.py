@@ -97,9 +97,11 @@ def main(args):
         protocol_checks=result.get('checks',{}),protocol_errors=result.get('errors',[]),
         input_hashes=before,runner_sha256=sha(Path(__file__)),
         scope='Actual DOS custom search -> selected long-name ZIP -> game-details D -> ENiGMA ZMODEM. Fixture wire/local filename and custom menu-route adapters retain the original CRC/payload/handshake/storage/hardware checks. No wire bytes or protocol replies synthesized; compatibility passes only when every protocol check passes.')
+    report['passed']=(report['transfer_passed'] and report['harness_exit']==0
+        and report['inputs_unchanged'] and report['no_post_saved'] and bool(report['wire_offers']))
     (wrapper/'characterization.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps({k:report[k] for k in ('transfer_passed','inputs_unchanged','no_post_saved','wire_offers','received_files','protocol_errors')},indent=2))
-    return 0 if report['inputs_unchanged'] and report['wire_offers'] and report['no_post_saved'] else 1
+    return 0 if report['passed'] else 1
 
 
 if __name__=='__main__':

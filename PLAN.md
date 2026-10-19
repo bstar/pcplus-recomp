@@ -35,6 +35,14 @@ screen ownership. Seventeen linked cases and an independent actual DOS timer
 observer cover that display. Persistent filename catalog integration and the
 remaining software gates still need their implementations.
 
+The [owned protocol selector](docs/validation/enigma-protocol-selector.json)
+checkpoint extends the isolated fixture to six exact owned modules, including
+the custom terminal transfer selector and download-ready menu. Actual DOS
+downloads the generated long-name ZIP through that selector and returns to
+usable NFO input, with every protocol audit required for a successful command
+exit. HTTP/browser behavior, live decoder installation and physical modem
+validation remain separate requirements.
+
 The [line controller](docs/LINE_CONTROLLER_FAR.md) now lives in ASPECT_CODE behind
 four checked resident entries. Resident space grows from10 to290 bytes while
 DS=SS storage remains64832 bytes. Paired192 line/96 wait cases preserve the prior
