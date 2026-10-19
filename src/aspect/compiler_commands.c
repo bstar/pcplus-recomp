@@ -82,6 +82,13 @@ static void find(pc_compiler *c)
  }
  if(c->expression.position!=c->expression.last)bad(c);
 }
+static void path_command(pc_compiler *c,unsigned opcode)
+{
+ unsigned n;c->expression.position=1;
+ if(c->line.count<2||pc_equal(c,1,"(")||pc_equal(c,1,",")){bad(c);return;}
+ n=parse(c);if(c->expression.position!=c->expression.last||kind(c,n)!=3){bad(c);return;}
+ emit(c,opcode);operand(c,n,0);
+}
 static void execute(pc_compiler *c)
 {
  unsigned n;c->expression.position=1;
@@ -114,6 +121,10 @@ void pc_commands(pc_compiler *c)
 {
  unsigned args[ASPECT_COMPILER_TOKEN_MAX],count,i,j,n,dest,expected,optional,command_index=65535U;
  char role;aspect_compiler_value value;const command *cmd;
+ if(pc_equal(c,0,"chdir")){path_command(c,0x11);return;}
+ if(pc_equal(c,0,"mkdir")){path_command(c,0x79);return;}
+ if(pc_equal(c,0,"rmdir")){path_command(c,0x99);return;}
+ if(pc_equal(c,0,"delete")){path_command(c,0x20);return;}
  if(pc_equal(c,0,"break")&&c->line.count!=1){bad(c);return;}
  if(pc_equal(c,0,"set")||pc_equal(c,0,"fetch")){set_fetch(c,pc_equal(c,0,"fetch"));return;}
  if(pc_equal(c,0,"find")){find(c);return;}

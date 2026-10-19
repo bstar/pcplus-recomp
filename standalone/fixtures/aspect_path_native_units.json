@@ -1,0 +1,138 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "source": "src/aspect/path_commands.asm",
+      "group": "command",
+      "unit": 1,
+      "start": 59009,
+      "end": 59017,
+      "overlay": 18,
+      "file_start": 118417,
+      "bytes": 8,
+      "sha256": "17a70720ada622ee942cb5abf3352db04763d29ac86e11fee04f55d903bb3da0"
+    },
+    {
+      "source": "src/aspect/path_commands.asm",
+      "group": "command",
+      "unit": 2,
+      "start": 59552,
+      "end": 59564,
+      "overlay": 18,
+      "file_start": 118960,
+      "bytes": 12,
+      "sha256": "0a657408c883a130ed32fd235e2d9d671ce0ab9c331ae87d6dedd2452dbde300"
+    },
+    {
+      "source": "src/aspect/path_commands.asm",
+      "group": "command",
+      "unit": 3,
+      "start": 59619,
+      "end": 59631,
+      "overlay": 18,
+      "file_start": 119027,
+      "bytes": 12,
+      "sha256": "d5f54a5ddb7c44a9f07364feed3589f11c85bbbdd9a2d77c77b3e7f6e5fcbc49"
+    },
+    {
+      "source": "src/aspect/path_commands.asm",
+      "group": "command",
+      "unit": 4,
+      "start": 59034,
+      "end": 59046,
+      "overlay": 18,
+      "file_start": 118442,
+      "bytes": 12,
+      "sha256": "f57fc8ed363b3b5edde86b97dce5b17564e2e0187b35a29f85e52f5c4e1ff128"
+    },
+    {
+      "source": "src/aspect/path_services.asm",
+      "group": "service",
+      "unit": 1,
+      "start": 30126,
+      "end": 30184,
+      "overlay": null,
+      "file_start": 34734,
+      "bytes": 58,
+      "sha256": "f622d114ce594d1b179e1fbb705f1d14a6d6de8fab747a47c778b7d32857ca0b"
+    },
+    {
+      "source": "src/aspect/path_services.asm",
+      "group": "service",
+      "unit": 2,
+      "start": 40000,
+      "end": 40007,
+      "overlay": null,
+      "file_start": 44608,
+      "bytes": 7,
+      "sha256": "b4dabba22960ca2de3240aa97a0be9b6b78e4524d86c14a2f6f8ffe62a30bb72"
+    },
+    {
+      "source": "src/aspect/path_services.asm",
+      "group": "service",
+      "unit": 3,
+      "start": 40012,
+      "end": 40020,
+      "overlay": null,
+      "file_start": 44620,
+      "bytes": 8,
+      "sha256": "13f18e9d990b5b85d2cb60d4089061cb32153e64e959e8b060e3bba2bf94b00b"
+    },
+    {
+      "source": "src/aspect/path_services.asm",
+      "group": "service",
+      "unit": 4,
+      "start": 36998,
+      "end": 37011,
+      "overlay": null,
+      "file_start": 41606,
+      "bytes": 13,
+      "sha256": "76b3632f8b59f0b0fd04e944595e72180bb7ea9ff6cf317b3a2943ce0346f271"
+    },
+    {
+      "source": "src/aspect/path_services.asm",
+      "group": "service",
+      "unit": 5,
+      "start": 62150,
+      "end": 62164,
+      "overlay": 18,
+      "file_start": 121558,
+      "bytes": 14,
+      "sha256": "e93cc924a539dd2f8e553d425aa4455ad8a8cd34f451afe923137d1907759ad7"
+    }
+  ],
+  "reused": [
+    "reconstruction/program_exec/error_access.asm",
+    "reconstruction/program_exec/error_exec.asm",
+    "reconstruction/program_exec/map_error.asm"
+  ],
+  "error_map": {
+    "file_start": 185510,
+    "DS_offset": 31574,
+    "bytes": 20,
+    "values": [
+      0,
+      22,
+      2,
+      2,
+      24,
+      13,
+      9,
+      12,
+      12,
+      12,
+      7,
+      8,
+      22,
+      22,
+      255,
+      2,
+      13,
+      18,
+      2,
+      255
+    ],
+    "sha256": "e54227eaec51d70b2278c5771501d26a8cc3245ebfcfa3f1b1058d62dd9d0ced"
+  },
+  "scope": "Frozen native ASPECT path command/service instructions and numeric DOS-to-errno mapping; source-only builds read hashes/facts only. DOS3+ production mapping; component tests also characterize older version behavior."
+}

@@ -1,0 +1,446 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "oracle_sha256": "4fc42fa3965f27915deb157f850ddee661c14f5ad19ab632e7680b4e2f7b2606",
+  "cases": [
+    {
+      "name": "PP000",
+      "label": "chdir_literal",
+      "source": "string pathvar\r\nproc main\r\nchdir \"DIR\"\r\nendproc\r\n",
+      "source_sha256": "01f6e5aeb2bfa70d834bd9971fca94f6e1774ba7bc30a68cabd10864fcfb55c1",
+      "success": true,
+      "hex": "01 cf 11 aa b6 0b 63 82 f9 94",
+      "asx_sha256": "39b5f1ce0ed63a5ad05eb3d725b11bfc4c0d9eee54f0d73b77e0bc454d523d0f"
+    },
+    {
+      "name": "PP001",
+      "label": "chdir_empty",
+      "source": "string pathvar\r\nproc main\r\nchdir \"\"\r\nendproc\r\n",
+      "source_sha256": "f952c670c6ce31c6e82f5322a90527e5d1b312dcde760cd8a173534b9b546cfc",
+      "success": true,
+      "hex": "01 cf 11 6e 13 94",
+      "asx_sha256": "a92753136f1ca3f084f4914bea7eb5269cb4affae788a76779c8a7c898d65ffe"
+    },
+    {
+      "name": "PP002",
+      "label": "chdir_global",
+      "source": "string pathvar\r\nproc main\r\nchdir pathvar\r\nendproc\r\n",
+      "source_sha256": "ac118ac4962485c84f7e572dc7a2a4b024033faeb2707d799ccf7094cc3223b1",
+      "success": true,
+      "hex": "01 cf 11 8c 00 94",
+      "asx_sha256": "e21e507818ba5a3a7cf8ceecc5ca308b6a06364297f473e6eafda15cbac1fb46"
+    },
+    {
+      "name": "PP003",
+      "label": "chdir_missing",
+      "source": "string pathvar\r\nproc main\r\nchdir \r\nendproc\r\n",
+      "source_sha256": "1ce53c1b572ce34d4b5e4264a00dd856460408401200063a4ba82b400071b0bb",
+      "success": false
+    },
+    {
+      "name": "PP004",
+      "label": "chdir_int",
+      "source": "string pathvar\r\nproc main\r\nchdir 1\r\nendproc\r\n",
+      "source_sha256": "0f2532e1a5148237ef4a8f493f59240fef8c67d15531d11554f0d906b8cacf80",
+      "success": false
+    },
+    {
+      "name": "PP005",
+      "label": "chdir_float",
+      "source": "string pathvar\r\nproc main\r\nchdir 1.0\r\nendproc\r\n",
+      "source_sha256": "8ac57dcb9daa729823f3b15550c22c1f33bb6237ca6196fd68fd98f0f212e578",
+      "success": false
+    },
+    {
+      "name": "PP006",
+      "label": "chdir_two",
+      "source": "string pathvar\r\nproc main\r\nchdir \"A\" \"B\"\r\nendproc\r\n",
+      "source_sha256": "e673776f8d13022a0ed88479b3f13b302c7ea803d3cab39c6b1d748a9e7b6f70",
+      "success": false
+    },
+    {
+      "name": "PP007",
+      "label": "chdir_comma_first",
+      "source": "string pathvar\r\nproc main\r\nchdir ,\"A\"\r\nendproc\r\n",
+      "source_sha256": "e97c5b87adcf7ae1c4100c3d7bb827bf4a091930e8b42a8962a4e8b4f62cc322",
+      "success": false
+    },
+    {
+      "name": "PP008",
+      "label": "chdir_comma_last",
+      "source": "string pathvar\r\nproc main\r\nchdir \"A\",\r\nendproc\r\n",
+      "source_sha256": "15fae47f32b7a1c2ed9620ccfdd02582982df5205fd71e40f4149f72c9710ec4",
+      "success": false
+    },
+    {
+      "name": "PP009",
+      "label": "chdir_paren",
+      "source": "string pathvar\r\nproc main\r\nchdir (\"A\")\r\nendproc\r\n",
+      "source_sha256": "5f1660e7b6842518c6d42735562ad51e1c3986bb69e6c8248b76f0104bdefffd",
+      "success": false
+    },
+    {
+      "name": "PP010",
+      "label": "chdir_expression",
+      "source": "string pathvar\r\nproc main\r\nchdir \"A\"+\"B\"\r\nendproc\r\n",
+      "source_sha256": "a20b2074156bfbd5e1b7a275933992897b35363d0e8055980e9684b985268c0c",
+      "success": false
+    },
+    {
+      "name": "PP011",
+      "label": "chdir_local",
+      "source": "\r\nproc main\r\nstring localpath\r\nchdir localpath\r\nendproc\r\n",
+      "source_sha256": "589e829e1732ffeccf4bb8007a4a462af5d61e5e14309c29bead71556ceb17d7",
+      "success": true,
+      "hex": "00 d2 51 00 cf 11 a0 00 00 95",
+      "asx_sha256": "28d89934589b5b7e078c1a9ba61d9b2860ee667979cfc51b7c7215494df573f6"
+    },
+    {
+      "name": "PP012",
+      "label": "chdir_parameter",
+      "source": "\r\nproc main\r\ncall worker with \"DIR\"\r\nendproc\r\nproc worker\r\nstrparm patharg\r\nchdir patharg\r\nendproc\r\n",
+      "source_sha256": "0e49f26ca9bd3bf6211144271215155816f1243704825a1afd90e592325ae658",
+      "success": true,
+      "hex": "00 cf d0 cd aa b6 8c c3 72 87 c8 13 00 00 00 d2 af ff 94 cf 11 96 57 00 95",
+      "asx_sha256": "6aa27fbb0d8ac5b33158dc01acb29a04e86092174c01ec9b2f1a89ce420835ba"
+    },
+    {
+      "name": "PP013",
+      "label": "chdir_CP437",
+      "source": "string pathvar\r\nproc main\r\nchdir \"D\u00c9R\"\r\nendproc\r\n",
+      "source_sha256": "5d7619fd760a4a00d94c8a3f192cdf5c5dc767ca363ed5b6f57b1611b1f27b9c",
+      "success": true,
+      "hex": "01 cf 11 aa b6 0b 63 c9 f9 94",
+      "asx_sha256": "458eef0d16ee17150914359c984219d408ed0252767e092c365ef0fb1b97c853"
+    },
+    {
+      "name": "PP014",
+      "label": "mkdir_literal",
+      "source": "string pathvar\r\nproc main\r\nmkdir \"DIR\"\r\nendproc\r\n",
+      "source_sha256": "8fea664775a31b63e59fa7b57b3658d88103c2db8d22760bc81a2c0f6fd184ac",
+      "success": true,
+      "hex": "01 cf 79 aa b6 0b 63 82 f9 94",
+      "asx_sha256": "00ab99c50ef4396666ea991766a27bd561e9573c55a488f35749adf9a90881ac"
+    },
+    {
+      "name": "PP015",
+      "label": "mkdir_empty",
+      "source": "string pathvar\r\nproc main\r\nmkdir \"\"\r\nendproc\r\n",
+      "source_sha256": "db45bfee88cb705df8dce50195fb3ed90a84e9467b005dc7d0c7106e18a774a1",
+      "success": true,
+      "hex": "01 cf 79 6e 13 94",
+      "asx_sha256": "f8ba2680054f20b14ff4516d6464470d3067bb31626a4457ba41959a2345e4c1"
+    },
+    {
+      "name": "PP016",
+      "label": "mkdir_global",
+      "source": "string pathvar\r\nproc main\r\nmkdir pathvar\r\nendproc\r\n",
+      "source_sha256": "e3ef5bd71fe3a436943d6187a4f3da877e393bd5a11b7cd7cd7647de30fceee3",
+      "success": true,
+      "hex": "01 cf 79 8c 00 94",
+      "asx_sha256": "815533644663519509a1230afd7b6bb7ee335f5413c70a086fe0920b85820a3e"
+    },
+    {
+      "name": "PP017",
+      "label": "mkdir_missing",
+      "source": "string pathvar\r\nproc main\r\nmkdir \r\nendproc\r\n",
+      "source_sha256": "74fb3a2dbd3c0ace584911cd44ca647372c96f579ddc22c272d9aa2c49ce7032",
+      "success": false
+    },
+    {
+      "name": "PP018",
+      "label": "mkdir_int",
+      "source": "string pathvar\r\nproc main\r\nmkdir 1\r\nendproc\r\n",
+      "source_sha256": "fa3a3910332d2c3fd5ee117ffe4dc30e263d0bec7160165eb561402ccf48a48c",
+      "success": false
+    },
+    {
+      "name": "PP019",
+      "label": "mkdir_float",
+      "source": "string pathvar\r\nproc main\r\nmkdir 1.0\r\nendproc\r\n",
+      "source_sha256": "cea9df5d55b89f5dd522a4a8b454289b26b2bd0122b7ca88feff024184c1533e",
+      "success": false
+    },
+    {
+      "name": "PP020",
+      "label": "mkdir_two",
+      "source": "string pathvar\r\nproc main\r\nmkdir \"A\" \"B\"\r\nendproc\r\n",
+      "source_sha256": "3148643b5b8230aa9adbe6b47e030b3d3b2449b35d0a9ff841d249beb9383abd",
+      "success": false
+    },
+    {
+      "name": "PP021",
+      "label": "mkdir_comma_first",
+      "source": "string pathvar\r\nproc main\r\nmkdir ,\"A\"\r\nendproc\r\n",
+      "source_sha256": "e2bfbb87ea070ed5a81da1cf2df8ec48db718aeb097bb28251eba7da069f8db8",
+      "success": false
+    },
+    {
+      "name": "PP022",
+      "label": "mkdir_comma_last",
+      "source": "string pathvar\r\nproc main\r\nmkdir \"A\",\r\nendproc\r\n",
+      "source_sha256": "f64850c6e785dc99a9f4b7a04ba9c46fca188ec663b6efa9d151008a5e15a0ff",
+      "success": false
+    },
+    {
+      "name": "PP023",
+      "label": "mkdir_paren",
+      "source": "string pathvar\r\nproc main\r\nmkdir (\"A\")\r\nendproc\r\n",
+      "source_sha256": "47a00896324394f214235880c4d16bfe60d29edbe8400e3e321d23327a92b656",
+      "success": false
+    },
+    {
+      "name": "PP024",
+      "label": "mkdir_expression",
+      "source": "string pathvar\r\nproc main\r\nmkdir \"A\"+\"B\"\r\nendproc\r\n",
+      "source_sha256": "a8abd1d9e494133562f3c8eab069b373a5a2a1a91ffa1faa7e9c9a90da958881",
+      "success": false
+    },
+    {
+      "name": "PP025",
+      "label": "mkdir_local",
+      "source": "\r\nproc main\r\nstring localpath\r\nmkdir localpath\r\nendproc\r\n",
+      "source_sha256": "9b89868b9f5da19d3bfa3361aca582cbe5bb0b28cf9fd9c0b9dfbe48ea2611bb",
+      "success": true,
+      "hex": "00 d2 51 00 cf 79 a0 00 00 95",
+      "asx_sha256": "d12bb4b699b1f6c712724fbf8d28a176e4ce5eb924f270004defc6e224078164"
+    },
+    {
+      "name": "PP026",
+      "label": "mkdir_parameter",
+      "source": "\r\nproc main\r\ncall worker with \"DIR\"\r\nendproc\r\nproc worker\r\nstrparm patharg\r\nmkdir patharg\r\nendproc\r\n",
+      "source_sha256": "2c07da91bf2a5a113fff60bb4e6bbeea2edcf4d82e5601ef65a3a069cdd35dee",
+      "success": true,
+      "hex": "00 cf d0 cd aa b6 8c c3 72 87 c8 13 00 00 00 d2 af ff 94 cf 79 96 57 00 95",
+      "asx_sha256": "55e7a2204fb7141d2dc304d26386ac756403b3847347f5e04afd1977b207e950"
+    },
+    {
+      "name": "PP027",
+      "label": "mkdir_CP437",
+      "source": "string pathvar\r\nproc main\r\nmkdir \"D\u00c9R\"\r\nendproc\r\n",
+      "source_sha256": "4e44a69018b1b56370a539a1168187fd0b6418724df7d6abb8b81f9325ab0f0a",
+      "success": true,
+      "hex": "01 cf 79 aa b6 0b 63 c9 f9 94",
+      "asx_sha256": "9245ef9a2e2fd78a14dfa6c1841081f219bf4cf1ea047553cef8e05253cab0f7"
+    },
+    {
+      "name": "PP028",
+      "label": "rmdir_literal",
+      "source": "string pathvar\r\nproc main\r\nrmdir \"DIR\"\r\nendproc\r\n",
+      "source_sha256": "c288ca8f86fc488323654275b6f3792a345ee27eadb900531254505cdb468b2a",
+      "success": true,
+      "hex": "01 cf 99 aa b6 0b 63 82 f9 94",
+      "asx_sha256": "3471a184f9e067f3ace2392ef3064b642fd3db5c99183568abdda59557694dfd"
+    },
+    {
+      "name": "PP029",
+      "label": "rmdir_empty",
+      "source": "string pathvar\r\nproc main\r\nrmdir \"\"\r\nendproc\r\n",
+      "source_sha256": "cb656247b436c014ba9d50ba9d123ad1de3ccee3e9df1409a3665f3b88b139d0",
+      "success": true,
+      "hex": "01 cf 99 6e 13 94",
+      "asx_sha256": "e5e394b81b3249cc65f037044db766fb6e17e02d357dcb6a60369e27bddf9c71"
+    },
+    {
+      "name": "PP030",
+      "label": "rmdir_global",
+      "source": "string pathvar\r\nproc main\r\nrmdir pathvar\r\nendproc\r\n",
+      "source_sha256": "a107d30330ca32f80ffa8b8d3b7ee0d5d099fd5b38358b1216eb74bb1359bdf2",
+      "success": true,
+      "hex": "01 cf 99 8c 00 94",
+      "asx_sha256": "1a9f35a52858514416bc133d417cb43a64be023b62b9d2b3944bedc8c2e4e6a4"
+    },
+    {
+      "name": "PP031",
+      "label": "rmdir_missing",
+      "source": "string pathvar\r\nproc main\r\nrmdir \r\nendproc\r\n",
+      "source_sha256": "f974640dd422ac5dde23934d498a4c7165496171905eda96f9de7d443c7dbd06",
+      "success": false
+    },
+    {
+      "name": "PP032",
+      "label": "rmdir_int",
+      "source": "string pathvar\r\nproc main\r\nrmdir 1\r\nendproc\r\n",
+      "source_sha256": "6eddf024479d3889d43a41da53b4078b5c4c2025156bf3219c35bce455c42db4",
+      "success": false
+    },
+    {
+      "name": "PP033",
+      "label": "rmdir_float",
+      "source": "string pathvar\r\nproc main\r\nrmdir 1.0\r\nendproc\r\n",
+      "source_sha256": "557f514fc9855ccd2a8cb934aef6235918ce3aa6a966c4cf0bdb5d594a513fcf",
+      "success": false
+    },
+    {
+      "name": "PP034",
+      "label": "rmdir_two",
+      "source": "string pathvar\r\nproc main\r\nrmdir \"A\" \"B\"\r\nendproc\r\n",
+      "source_sha256": "cd2b8f58b4b83ee35367d2bb1b9d11d1cad473cd16e5e07f551dc12517662cef",
+      "success": false
+    },
+    {
+      "name": "PP035",
+      "label": "rmdir_comma_first",
+      "source": "string pathvar\r\nproc main\r\nrmdir ,\"A\"\r\nendproc\r\n",
+      "source_sha256": "837f7c23dc7f6e35510b8475f29b95fe0511b6511309ef1c08864875fa3a1b99",
+      "success": false
+    },
+    {
+      "name": "PP036",
+      "label": "rmdir_comma_last",
+      "source": "string pathvar\r\nproc main\r\nrmdir \"A\",\r\nendproc\r\n",
+      "source_sha256": "128fffe5656c89d8897a58caa01941ae707fdb2e86ce653eb98d228084407c35",
+      "success": false
+    },
+    {
+      "name": "PP037",
+      "label": "rmdir_paren",
+      "source": "string pathvar\r\nproc main\r\nrmdir (\"A\")\r\nendproc\r\n",
+      "source_sha256": "b341f23b926d7cac95b76d740bab26a903a56bbdba1b9220379b0af93bfd4585",
+      "success": false
+    },
+    {
+      "name": "PP038",
+      "label": "rmdir_expression",
+      "source": "string pathvar\r\nproc main\r\nrmdir \"A\"+\"B\"\r\nendproc\r\n",
+      "source_sha256": "c804375dc5d7aec30af267a95c2f8dc910968ad367e07d353e4ea32ce7d07bc6",
+      "success": false
+    },
+    {
+      "name": "PP039",
+      "label": "rmdir_local",
+      "source": "\r\nproc main\r\nstring localpath\r\nrmdir localpath\r\nendproc\r\n",
+      "source_sha256": "34995143c10f81ec21df0200ae498d64c3345a2c5ce71b694c752b6342fe0049",
+      "success": true,
+      "hex": "00 d2 51 00 cf 99 a0 00 00 95",
+      "asx_sha256": "0fd9405eae8cee89938bf6c73cf65058fd33a690fe6fa4b6325c33715bfe785d"
+    },
+    {
+      "name": "PP040",
+      "label": "rmdir_parameter",
+      "source": "\r\nproc main\r\ncall worker with \"DIR\"\r\nendproc\r\nproc worker\r\nstrparm patharg\r\nrmdir patharg\r\nendproc\r\n",
+      "source_sha256": "af2bfd9b7297127b1751e7f576d80aae8c1528e05775034d38b5de9c051daa84",
+      "success": true,
+      "hex": "00 cf d0 cd aa b6 8c c3 72 87 c8 13 00 00 00 d2 af ff 94 cf 99 96 57 00 95",
+      "asx_sha256": "0d9d00653ef7f30095638b069e03160719cf0d60d401e46d3a31f1ceedde3945"
+    },
+    {
+      "name": "PP041",
+      "label": "rmdir_CP437",
+      "source": "string pathvar\r\nproc main\r\nrmdir \"D\u00c9R\"\r\nendproc\r\n",
+      "source_sha256": "9d742b0f88d260238c5bfb3b4bb4772a8376d35f1a04afdb35181a0cb1563bc3",
+      "success": true,
+      "hex": "01 cf 99 aa b6 0b 63 c9 f9 94",
+      "asx_sha256": "f8c7fa62ff79bd725ce32f353f30194ea1385598916a4781e8aeda1f55b10a17"
+    },
+    {
+      "name": "PP042",
+      "label": "delete_literal",
+      "source": "string pathvar\r\nproc main\r\ndelete \"DIR\"\r\nendproc\r\n",
+      "source_sha256": "2ebf802fb458f01b272f350106fa95188c17fdc3e3f44ef413e140d99e0b86f4",
+      "success": true,
+      "hex": "01 cf 20 aa b6 0b 63 82 f9 94",
+      "asx_sha256": "b1e03c6c65f6f88307e6a6cdf5cae1f031ff581d7c7574b4a1df66f973821f23"
+    },
+    {
+      "name": "PP043",
+      "label": "delete_empty",
+      "source": "string pathvar\r\nproc main\r\ndelete \"\"\r\nendproc\r\n",
+      "source_sha256": "3678e3512570c811425ca63ef2f5bfed3a89dca2d84ced358272eb0612a7ec80",
+      "success": true,
+      "hex": "01 cf 20 6e 13 94",
+      "asx_sha256": "4e7a7a21cb6f62dcd7fe84c2941a7519df3a928c9c828788398b5cf0ebc39296"
+    },
+    {
+      "name": "PP044",
+      "label": "delete_global",
+      "source": "string pathvar\r\nproc main\r\ndelete pathvar\r\nendproc\r\n",
+      "source_sha256": "cebfaea1d9f6e2118c1352ac56b9329c1af5ee450a100dc4dfc79072bb6a63b9",
+      "success": true,
+      "hex": "01 cf 20 8c 00 94",
+      "asx_sha256": "654edce31faffb987271aa4c2c92f1df731a1c6f7283decf8c2d43cc1dee89d4"
+    },
+    {
+      "name": "PP045",
+      "label": "delete_missing",
+      "source": "string pathvar\r\nproc main\r\ndelete \r\nendproc\r\n",
+      "source_sha256": "34435ab6f36a2e1ba733f61c088ab64ff5cad8246734545410de44fe5c835245",
+      "success": false
+    },
+    {
+      "name": "PP046",
+      "label": "delete_int",
+      "source": "string pathvar\r\nproc main\r\ndelete 1\r\nendproc\r\n",
+      "source_sha256": "43f8eb0e6b4b5d042bf6216ef7a24746adaeb8244a30d4920cd508a21a270bcb",
+      "success": false
+    },
+    {
+      "name": "PP047",
+      "label": "delete_float",
+      "source": "string pathvar\r\nproc main\r\ndelete 1.0\r\nendproc\r\n",
+      "source_sha256": "c1f5558e85113024f248d2664c02690c8011fbecc4f18156b58f5c7f1a534036",
+      "success": false
+    },
+    {
+      "name": "PP048",
+      "label": "delete_two",
+      "source": "string pathvar\r\nproc main\r\ndelete \"A\" \"B\"\r\nendproc\r\n",
+      "source_sha256": "7b3cca48736f6630ec22fc7019001670f5a7ea03f8302cb4aa378dcab5714e48",
+      "success": false
+    },
+    {
+      "name": "PP049",
+      "label": "delete_comma_first",
+      "source": "string pathvar\r\nproc main\r\ndelete ,\"A\"\r\nendproc\r\n",
+      "source_sha256": "86e1ec2a8e007d0aa755391312ad3b7914043f4aacbb4a1c2aa819a245ed3503",
+      "success": false
+    },
+    {
+      "name": "PP050",
+      "label": "delete_comma_last",
+      "source": "string pathvar\r\nproc main\r\ndelete \"A\",\r\nendproc\r\n",
+      "source_sha256": "6bfc9da84c74a4d52c8299f04512fcad203248b6b1307f2e8de84267fc697daf",
+      "success": false
+    },
+    {
+      "name": "PP051",
+      "label": "delete_paren",
+      "source": "string pathvar\r\nproc main\r\ndelete (\"A\")\r\nendproc\r\n",
+      "source_sha256": "6077f16cf26cfbb7151f549fc908af4cb85571088e0e5276734dfc8a62d86e23",
+      "success": false
+    },
+    {
+      "name": "PP052",
+      "label": "delete_expression",
+      "source": "string pathvar\r\nproc main\r\ndelete \"A\"+\"B\"\r\nendproc\r\n",
+      "source_sha256": "8c1d8e0aaffa41c68587d5acca30560deec94bb6387c03a0f33b8a37678de367",
+      "success": false
+    },
+    {
+      "name": "PP053",
+      "label": "delete_local",
+      "source": "\r\nproc main\r\nstring localpath\r\ndelete localpath\r\nendproc\r\n",
+      "source_sha256": "a6fa890f6338fe18c545397a913b7d75ba3df94e61461f0a16149ff8a7666e91",
+      "success": true,
+      "hex": "00 d2 51 00 cf 20 a0 00 00 95",
+      "asx_sha256": "a1c03c8f81054a76d9dd1b215b61d58bba366ffbb62c85349f5bd211d0552e02"
+    },
+    {
+      "name": "PP054",
+      "label": "delete_parameter",
+      "source": "\r\nproc main\r\ncall worker with \"DIR\"\r\nendproc\r\nproc worker\r\nstrparm patharg\r\ndelete patharg\r\nendproc\r\n",
+      "source_sha256": "c73fd42acbe3c2b244d36f0ed27bc14c95e544bf4f47f4559948af64c5e5030b",
+      "success": true,
+      "hex": "00 cf d0 cd aa b6 8c c3 72 87 c8 13 00 00 00 d2 af ff 94 cf 20 96 57 00 95",
+      "asx_sha256": "31046dd926f09599594fcfa07d6b234c85e39c2e01778a8b28a55bddbc725597"
+    },
+    {
+      "name": "PP055",
+      "label": "delete_CP437",
+      "source": "string pathvar\r\nproc main\r\ndelete \"D\u00c9R\"\r\nendproc\r\n",
+      "source_sha256": "4762054ac04d8ee109619f8d9a496558ab3d0cfe921a1444543cd9baadd1680a",
+      "success": true,
+      "hex": "01 cf 20 aa b6 0b 63 c9 f9 94",
+      "asx_sha256": "bc55e8232c576f78fe6db54a4de011cef0976f4123d844ccd23fce46522f900b"
+    }
+  ]
+}

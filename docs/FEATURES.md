@@ -180,6 +180,13 @@ this machine contains, not the complete PCPlus distribution. Revisit this
 inventory when code/resource tracing discovers additional features; do not treat
 the initial matrix as permission to omit them.
 
+The [ASPECT path-command checkpoint](ASPECT_PATHS.md) extends F13 with CHDIR,
+MKDIR, RMDIR and DELETE in both maintained compilers and the DOS runtime.
+Native byte/grammar conformance, real DOS file/directory effects and retained
+drive/CWD are verified separately from the actual terminal login-child handoff.
+This adds four supported slots (76 total, 139 unsupported); it does not close
+F13, F15 or any whole-application gate.
+
 The modem segmentation checkpoint in `MODEM_FAR_CODE.md` extends F01 with a
 separate controller/sender CS and explicit caller-cleaned stack adapters. It
 frees1,184 resident code bytes and validates44 bridge pairs plus retained modem

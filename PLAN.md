@@ -81,6 +81,15 @@ must exclude original executables and private install/configuration data.
 
 ## Current application work
 
+The [ASPECT path commands](docs/ASPECT_PATHS.md) add native CHDIR, MKDIR, RMDIR
+and DELETE to both maintained compilers and the DOS child. The 210 exact native
+instruction bytes and numeric DOS error map have 1,578 CPU cases and a separate
+matching original replay. Four DOS-compiled filesystem scripts pass 19 status
+checks, including retained CWD/drive and the distinct comparison/error semantics.
+The real terminal login child also completes relative directory creation/removal
+before sending its password, then resumes parent keyboard input. Supported
+opcode slots grow from 72 to 76; 139 remain unsupported. No application gate closes.
+
 The maintained terminal now includes directory editing/accounting, live settings
 with confirmed idle serial/profile/translation changes, XMODEM/YMODEM/ZMODEM transfers,
 capture/snapshots/printer/monitor and serviced63,000-character redisplay with

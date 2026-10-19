@@ -5,6 +5,7 @@ BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
 extern aspect_dispatch,aspect_abort,session_setjmp
+extern aspect_path_chdir,aspect_path_mkdir,aspect_path_rmdir,aspect_path_delete
 extern aspect_globals_initialize,aspect_globals_release
 extern aspect_flow_gate_decrement,aspect_flow_gate_increment,aspect_flow_seek
 extern aspect_flow_call_operand,aspect_flow_call_framed,aspect_flow_return,aspect_flow_return_framed
@@ -869,6 +870,14 @@ aspect_dispatch_handlers:
  dw aspect_chain_command
 %elif op=0x37
  dw aspect_fetch_command
+%elif op=0x11
+ dw aspect_path_chdir
+%elif op=0x79
+ dw aspect_path_mkdir
+%elif op=0x99
+ dw aspect_path_rmdir
+%elif op=0x20
+ dw aspect_path_delete
 %elif op=0x13
  dw aspect_arith_bit_not
 %elif op=0x15

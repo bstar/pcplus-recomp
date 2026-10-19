@@ -66,6 +66,7 @@ builds.append('aspect_break_native')
 builds.append('aspect_fetch_native')
 builds.append('aspect_chain_native')
 builds.append('aspect_end_wait_native')
+builds.append('aspect_paths')
 builds.append('aspect_compiler_lexer')
 builds.append('aspect_compiler_unit')
 builds.append('aspect_compiler_expression')
@@ -112,6 +113,8 @@ owner_checks.append('standalone/check_aspect_break_ui.py')
 owner_checks.append('standalone/check_aspect_break_owner.py')
 owner_checks.append('standalone/check_aspect_break_linked.py')
 owner_checks.append('standalone/check_aspect_directory.py')
+owner_checks.append('standalone/check_aspect_paths.py')
+owner_checks.append('standalone/check_aspect_path_compiler.py')
 owner_checks.append('standalone/package_dos.py')
 program+=''.join(f"subprocess.run(['python3',{name!r}],check=True)\n" for name in owner_checks)
 with (OUT/'build.log').open('w') as log:
@@ -152,6 +155,10 @@ outputs += ['aspect-fetch-native/'+u['name']+'.bin' for u in json.loads((ROOT/'s
 outputs += ['aspect-fetch-native/fetch_command.obj','aspect-fetch-native/break_cursor_read.obj']
 outputs += ['aspect-chain-native/'+name for name in ['command.bin','file_open.bin','finish.bin','scratch.bin','strcpy.bin','dispatch.bin','chain_command.obj']]
 outputs += ['aspect-end-wait-native/'+name for name in ['end_wait.bin','receive-1.bin','receive-2.bin','end_wait.obj']]
+outputs += [f'aspect-paths/command{n}.bin' for n in range(1,5)]
+outputs += [f'aspect-paths/service{n}.bin' for n in range(1,6)]
+outputs += ['aspect-paths/'+name+'.bin' for name in ('error_map','error_access','error_exec','map_error')]
+outputs += ['aspect-paths/'+name+'.obj' for name in ('path_commands','path_services','path_state','error_access','error_exec','map_error')]
 outputs += ['aspect-compiler-lexer/ASPLEX.EXE','aspect-compiler-unit/ASPINV.EXE']
 outputs += ['aspect-compiler-expression/ASPEXP.EXE']
 outputs += ['aspect-compiler-dos/ASPCOMP.EXE']

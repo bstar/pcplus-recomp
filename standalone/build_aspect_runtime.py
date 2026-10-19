@@ -22,6 +22,10 @@ ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm'
  ('fetch_command','src/aspect/fetch_command.asm',None),
  ('find_commands','src/aspect/find_commands.asm',None),('case_commands','src/aspect/case_commands.asm',None),
  ('directory','src/aspect/directory_builtins.asm',None),
+ ('path_commands','src/aspect/path_commands.asm',None),('path_services','src/aspect/path_services.asm',None),('path_state','src/aspect/path_state.asm',None),
+ ('path_error_access','reconstruction/program_exec/error_access.asm','PROGRAM_EXEC_OMF'),
+ ('path_error_exec','reconstruction/program_exec/error_exec.asm','PROGRAM_EXEC_OMF'),
+ ('path_map_error','reconstruction/program_exec/map_error.asm','PROGRAM_EXEC_OMF'),
  ('flow','src/aspect/control_flow.asm',None),('parameters','src/aspect/parameters.asm',None),('strings','src/aspect/string_operands.asm',None),('string_commands','src/aspect/string_commands.asm',None),('string_services','src/aspect/string_services.asm',None),
  ('string_strlen','reconstruction/program_exec/strlen.asm','PROGRAM_EXEC_OMF'),('string_strncmp','reconstruction/program_exec/strncmp.asm','PROGRAM_EXEC_OMF'),
  ('string_strcpy','reconstruction/program_exec/strcpy.asm','PROGRAM_EXEC_OMF'),('string_strcmpi','reconstruction/program_exec/strcmpi.asm','PROGRAM_EXEC_OMF'),
@@ -235,7 +239,7 @@ def main():
  program=C.replace('result=aspect_runtime_run(path,limit);',near_admission+'result=aspect_runtime_run(path,limit);')
  program=program.replace(' ck(result==error);',near_observe+' ck(result==error);')
  supported={int(op,16):name for op,name in re.findall(r'%(?:el)?if op=(0x[0-9a-f]+)\n dw (\w+)',(ROOT/'src/aspect/runtime_bridge.asm').read_text())}
- assert len(supported)==72
+ assert len(supported)==76
  # ACV2 adds explicit owned-directory metadata to ACV1's diagnostic inputs.
  table=bytearray(b'ACV2'+struct.pack('<H',len(cases)))
  def block(data):
@@ -376,6 +380,6 @@ def main():
   maintained_string_fault_fixture={'STRSHORT':'STRGASS compiler bytes with final00 option and94 return removed; first global HELLO retained, second stays empty'},
   maintained_heap_fault_fixtures={'HEAPFLT':'IDIVEDGE compiler bytes with global-string count changed from0to2','HEAPZERO':'IDZ compiler bytes with global-string count changed from0to2'},
   fixture_expectations={c['name']:{'source_sha256':c['source_sha256'],'asx_sha256':c['asx_sha256'],'expected':c['expected']} for c in cases},
-  scope='Incremental actual native dispatch/operand/operation/file/heap/WHEN/SET/FIND/CASE composition executing source-owned compiled fixtures. Incomplete72-slot opcode table; twelve native SET setters and FETCH queries and shared FIND/CASE consumers. Serial queue/clock/carrier inputs and status-tail snapshots are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
+  scope='Incremental actual native dispatch/operand/operation/file/heap/WHEN/SET/FIND/CASE composition executing source-owned compiled fixtures. Incomplete76-slot opcode table; twelve native SET setters and FETCH queries and shared FIND/CASE consumers. Serial queue/clock/carrier inputs and status-tail snapshots are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
  (OUT/'manifest.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 if __name__=='__main__':main()

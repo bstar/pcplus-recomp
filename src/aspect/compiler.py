@@ -536,6 +536,16 @@ class Compiler:
         if command in ('when', 'cwhen'):
             self.when_command(tokens)
             return
+        if command in ('chdir', 'mkdir', 'rmdir', 'delete'):
+            parser = Expression(tokens[1:], self.line)
+            if not parser.tokens or parser.tokens[0] in ('(', ','):
+                self.error(f'{command} requires one atomic string')
+            node = parser.parse(7)
+            if parser.pos != len(parser.tokens) or self.kind(node) != 3:
+                self.error(f'{command} requires one atomic string')
+            self.emit({'chdir': 0x11, 'mkdir': 0x79, 'rmdir': 0x99, 'delete': 0x20}[command])
+            self.operand(self.atomic(node), compact=True)
+            return
         args = self.arguments(tokens[1:])
         if command in ('rget', 'waitquiet'):
             destination = int(command == 'rget')

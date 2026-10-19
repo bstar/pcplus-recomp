@@ -46,6 +46,15 @@ test: test-status-helpers test-status-renderer
 test-status-live: terminal
 	python3 standalone/check_status_live.py
 .PHONY: aspect-set test-aspect-set test-aspect-set-compat
+.PHONY: aspect-paths test-aspect-paths test-aspect-path-compiler
+all: aspect-paths
+test: test-aspect-paths test-aspect-path-compiler
+aspect-paths:
+	python3 standalone/build_aspect_paths.py
+test-aspect-paths: aspect-paths
+	python3 standalone/check_aspect_paths.py
+test-aspect-path-compiler:
+	python3 standalone/check_aspect_path_compiler.py
 all: aspect-set
 aspect-set:
 	python3 standalone/build_aspect_set.py

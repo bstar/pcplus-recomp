@@ -1,0 +1,456 @@
+{
+  "passed": true,
+  "native_instruction_bytes": 210,
+  "numeric_error_entries": 20,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "terminal_sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+  "runner_sha256": "f54280f22effbbb67211de3fd070c7603c9aa490f71c27ccc3e83d187e5d1d3b",
+  "compiler_sha256": "41d247e4b66e9e2edfb56fc08ccb2b5360fad903493f2da6487c9c3d2984baa5",
+  "reports": {
+    "native": {
+      "path": "build/aspect-paths/checks.json",
+      "sha256": "b92fea52ca793c97041896285ec7c7461b6a1b6a8584ac5b0146b662e20fd919",
+      "checks": {
+        "passed": true,
+        "cases": 1578,
+        "original_comparisons": 0,
+        "checker_sha256": "1c8471024c2cb351d44d55a0f946b732b37d70fdd30183e5fe0147bbe0810bca",
+        "manifest_sha256": "af2c4d04576d2a5c8759397d1af50cc8186053a97e8b3461e3c902684ec0a3de",
+        "instruction_addresses": 99,
+        "scope": "Actual source-built flat native handlers/services and reused CRT error code; string operand is a declared source pointer fixture, DOS21 kernel returns are explicit. Complete non-stack data, error/status, drive fallback/select and BP/SI/DI/DS=SS/DF/stack checks; all8-bit DOS errors, extended errors and pre3/3+ mapping. Optional actual-original-byte replay is separate from real DOS filesystem/runtime tests."
+      }
+    },
+    "original_replay": {
+      "path": "build/aspect-paths/native-checks.json",
+      "sha256": "5a8c1fb23cb422282a402755645fd048ee5226db544a6c45e93138ec8b072189",
+      "checks": {
+        "passed": true,
+        "cases": 1578,
+        "original_comparisons": 1578,
+        "checker_sha256": "1c8471024c2cb351d44d55a0f946b732b37d70fdd30183e5fe0147bbe0810bca",
+        "manifest_sha256": "af2c4d04576d2a5c8759397d1af50cc8186053a97e8b3461e3c902684ec0a3de",
+        "instruction_addresses": 99,
+        "scope": "Actual source-built flat native handlers/services and reused CRT error code; string operand is a declared source pointer fixture, DOS21 kernel returns are explicit. Complete non-stack data, error/status, drive fallback/select and BP/SI/DI/DS=SS/DF/stack checks; all8-bit DOS errors, extended errors and pre3/3+ mapping. Optional actual-original-byte replay is separate from real DOS filesystem/runtime tests."
+      }
+    },
+    "host_compiler": {
+      "path": "build/aspect-paths/compiler-checks.json",
+      "sha256": "4f9de785533847c3e27900933b13c8605c8c08ac7090b1b6ba4b81e9af8bac1b",
+      "checks": {
+        "passed": true,
+        "accepted": 24,
+        "rejected": 32,
+        "fixture_sha256": "b4e9dab6879171c9adf52e24aadb626860a8a904ec26f6d8332144166510d7aa",
+        "compiler_sha256": "cdcfbab49aea0c24698aa282d424e40280b3b22204961f009c2eca6909ed2837",
+        "checker_sha256": "907fca37ef8c5f31ccfd2dcf05e8373c1e6b93c5eb97dbcbf91bff056cb6263a",
+        "original_inputs": [],
+        "scope": "Exact accepted ASX and rejected source behavior for56 frozen authored compiler cases, independent of DOS runtime/filesystem semantics."
+      }
+    },
+    "DOS_compiler": {
+      "path": "build/aspect-compiler-dos/checks.json",
+      "sha256": "5c35cbe4c9d0c5ab31325c83c5916afb84dd44ccee5ca39f5699653d28bc4814",
+      "checks": {
+        "passed": true,
+        "case_count": 1231,
+        "accepted": 742,
+        "rejected": 489,
+        "binary_sha256": "41d247e4b66e9e2edfb56fc08ccb2b5360fad903493f2da6487c9c3d2984baa5",
+        "manifest_sha256": "9349ff7b75c385b500af5a5e81aae2a595b7c05f180596fbf39bcb310fd84271",
+        "checker_sha256": "4d9d647a6e511078a5351b44ce5616bbc1b5924782bb61ac348c206b23e50976",
+        "host_compiler_sha256": "cdcfbab49aea0c24698aa282d424e40280b3b22204961f009c2eca6909ed2837",
+        "fixture_sources": {
+          "standalone/fixtures/aspect_arithmetic_vectors.json": "18424774c5bf1856a6aefd04bd7973556c3e375ce402aefee08c6224317f15f4",
+          "standalone/fixtures/aspect_break_compiler_vectors.json": "7b5f7ca6c45e6746f03362eb184232ebcf7b271210c3732a0be62714647b308a",
+          "standalone/fixtures/aspect_break_native_units.json": "02b884e3e19f239d8e836ee4a70a632027ee9dff2d6ae65dc3ebc5ef63fe5e78",
+          "standalone/fixtures/aspect_break_runtime_vectors.json": "3116a6b04e629677bf8c60f8e11c3326b04aefc7f6589b54de950b08cbd64771",
+          "standalone/fixtures/aspect_chain_compiler_vectors.json": "58bed52ef95f99601398df15542a0ee07dbbbb03a52397860abf67ae165c5b2a",
+          "standalone/fixtures/aspect_chain_native_units.json": "c115775cf248d19ccea52af4f9729aa8ff5e671a0411299f9bfe72cc2b4575f9",
+          "standalone/fixtures/aspect_compiler_validation_vectors.json": "7604d6e801ff1dbed3f7a1d58287c49afe6f5dcbb0c099a3d607ed9f5c5d8c7a",
+          "standalone/fixtures/aspect_console_vectors.json": "43693c61e265b31a13324adb550335b0c37238dd737419edcc4b3b598693b60e",
+          "standalone/fixtures/aspect_conversion_vectors.json": "95296153ff69e7c2c7974af0df17a8a4d1ab2524242f636b9c128aa1b8ee3781",
+          "standalone/fixtures/aspect_declaration_edges.json": "ad0b8ba7daa117bd96f109c766ba2f270219764bf4a586363cbf4833952b726b",
+          "standalone/fixtures/aspect_directory_vectors.json": "80b38259968e5f1a3c5c5d388fa40928ecd7ed759ffc916158f4632a4ae57676",
+          "standalone/fixtures/aspect_end_wait_native.json": "712f5d7c215d15e747f21e9c6b7b7391ebfead162080d319495574ad09f07418",
+          "standalone/fixtures/aspect_execution_vectors.json": "2fe02fbc44993cb35e2d9ca9ed6a003070e458dcec4de485d43a7af5a0ce80e4",
+          "standalone/fixtures/aspect_fetch_native_units.json": "d966032ecdc3fee0b76b883236c3ec494ea28b8b1a87c29bf41973f662e4532f",
+          "standalone/fixtures/aspect_find_case_compiler_vectors.json": "cb781c6b5f82a30d45af684a88ba41f1f9eb9255f443c64eb021959028e81c72",
+          "standalone/fixtures/aspect_find_case_native_units.json": "ed0b3870476ad67296d37ece99cacb51881382c867b25033f151345d7472c6f5",
+          "standalone/fixtures/aspect_find_case_runtime_vectors.json": "80b1ea787876a0f04366b06298a91f3b9db669fa7668272daf8c57acf26adc92",
+          "standalone/fixtures/aspect_literal_vectors.json": "bba820322dd748752ad67b040a5b1a67dfbe6762509ad7ec48805815103e5e9e",
+          "standalone/fixtures/aspect_parameter_vectors.json": "025c4de5e5681b0a502d566b73555b225610f6293dda69f7f38cb78448a88b67",
+          "standalone/fixtures/aspect_path_compiler_vectors.json": "b4e9dab6879171c9adf52e24aadb626860a8a904ec26f6d8332144166510d7aa",
+          "standalone/fixtures/aspect_path_native_units.json": "4ce418ca05ace1b8391b74c490c938df8e873b0a35d95c68d0f1231cef01cbc8",
+          "standalone/fixtures/aspect_receive_runtime_overrides.json": "b473807e571a122c0401a7e4eff6ff0d1ae8b72b7b2ce523ebe5b3b80bd5ca81",
+          "standalone/fixtures/aspect_receive_vectors.json": "41518818a3bfa97bae66277ef04ecf730717cdca31b87f582b310d24793062dc",
+          "standalone/fixtures/aspect_serial_vectors.json": "5b0913c888b2fe19274f9868de9706ee3e4430c6517018c74dd7638d534f1a49",
+          "standalone/fixtures/aspect_set_compiler_vectors.json": "3c7b2e6a0997faa0d2953bfacc5caba997b5cd18c55816c2833b646e04356602",
+          "standalone/fixtures/aspect_set_native_units.json": "6730fd7deedd1167882536872264ae8b1e9e86cbcdba1b126f89951f12da76e1",
+          "standalone/fixtures/aspect_set_runtime_vectors.json": "fb78b644fbed9afdc2beabef6075839103afe809d1176578b81f0546f8d5c24d",
+          "standalone/fixtures/aspect_string_command_vectors.json": "e6095291b2b868e440bbfc4de735d1130d216546119817788ca66306234a78ee",
+          "standalone/fixtures/aspect_when_compiler_vectors.json": "3af789975d9275dd1657d03c248e5c3e8d5b7dca05bf6f2a2d3ffa068122de93",
+          "standalone/fixtures/aspect_when_runtime_vectors.json": "27188a8468758d8af49fc2a055e05a9db51dca7e39b47c69959246e264a05e9b",
+          "standalone/fixtures/aspect_when_vectors.json": "be1d33b309bd42cbfaa63599d47d1bcfb16238ae80f26ff11f49722b1c12d969"
+        },
+        "DOS_summary": "PROGRAM 1231 cases 0 failures",
+        "API_summary": "API 1693 checks 0 failures",
+        "ownership_summary": "OWNERSHIP 26 program and29 inventory failures,100 successful cycles",
+        "CLI_children": 11,
+        "fault_CLI_children": 2,
+        "fault_binaries": {
+          "FAULT.EXE": "883e3f2bbd47495aff2835a208bca927ef885f1325a1ff49729120b6b68db130",
+          "FAILBACK.EXE": "760f3515e8ce24aa7e026e00dcf91c4b431cd48588faf84a2ff09ae02445a03d"
+        },
+        "runtime_child_sha256": "f54280f22effbbb67211de3fd070c7603c9aa490f71c27ccc3e83d187e5d1d3b",
+        "runtime_asx_sha256": "c55d6e3d34b440734e5513d220ee9b6fe9c5c0237c362f98bfe142a7e493c569",
+        "case_manifest_sha256": "203b6877605824cad4f079a44a766e26c6cf69491468720b015c6c526c3071a4",
+        "reused_sources": {
+          "standalone/check_aspect_compiler_lexer.py": "29b9a24513978a6724355e6ac1c8a96cc32a21ad122ecf7c2e22e465d80e3628",
+          "standalone/compiler_heap_snapshot.c": "e8ec917dad1831310e99debbcc9e422430fbcd4c7442c0d4f922718afe260017",
+          "standalone/compiler_heap_snapshot.h": "22059de2b8b206a7029e71e44a90af584bc55d33ebf45dd36c3531f8a24005bd"
+        },
+        "original_inputs": [],
+        "scope": "Complete maintained host grammar under8086 DOS, staged CLI publication including forced rollback/restoration failures and owned fault cleanup, followed by actual execution of DOS-compiled bytecode in maintained ASPECT. Runtime source loading is validated separately; full native language expansion remains unfinished."
+      }
+    },
+    "runtime": {
+      "path": "build/aspect-runtime/checks.json",
+      "sha256": "d93793e343e92512d4e0b88e540e37d24617d8ee12028f74f87db050c40b61d0",
+      "checks": {
+        "passed": true,
+        "DOS_summary": "ASPECT_RUNTIME 1142 cases 26225 checks 0 failures",
+        "binary_sha256": "a25d7e1774bf5e496f9a346e6fb262f51ad1f924f56561d845b6a877fe923bdc",
+        "manifest_sha256": "30bdae999532941a0c939c0d3596a253cd05eac3630bee1176cbaf3687075bdc",
+        "check_sha256": "0109ce207eb31b27eb903b9df4f44680c73be78ba3428cf14e0ce6318df52d49",
+        "result_sha256": "4cb12d0fd06f40f20a5b75cc0ce8c781ac86f61da2eafed3963f9d6ea776d951",
+        "optional_original": null,
+        "original_inputs": [],
+        "fixture_count": 444,
+        "unsupported_slot_cases": 139,
+        "directory_metadata": {
+          "cases": 18,
+          "default_noentry_cases": 2,
+          "unsupported_baud_cases": 1,
+          "host_binding_checks": 164,
+          "fixture_sha256": "80b38259968e5f1a3c5c5d388fa40928ecd7ed759ffc916158f4632a4ae57676",
+          "scope": "Independent ACV2 parse, exact authored114B/entry binding, and actualDOS output/tx/value lines. No private original input."
+        },
+        "fixture_data_sha256": "60686f912586032385df812a63e0a0cdadb7e3333da01dae4ebbea846c72e16e",
+        "fixture_schema": "ACV2",
+        "SET_family": {
+          "supported_subcommands": {
+            "09": "BREAK",
+            "12": "DISPLAY",
+            "18": "DUPLEX",
+            "23": "FINDCASE",
+            "29": "KEYS",
+            "2e": "MSG_CRLF",
+            "30": "PAUSECHAR",
+            "3b": "RXDATA",
+            "44": "SWITCHCASE",
+            "4c": "TXPACE",
+            "55": "WAITCASE",
+            "56": "WHENCASE"
+          },
+          "unsupported_subcommands_tested": 244,
+          "truncated_cases": 2,
+          "raw_boolean_cases": 2,
+          "integration_vectors": 38
+        },
+        "supported_slot_count": 76,
+        "scope": "Actual recovered dispatcher executes source-compiled authored ASX through real DOS files/far and near heaps and native console/serial/WHEN/SET/FIND/CASE commands. Serial queue/clock/carrier and requested pacing units are explicit diagnostic models. Supported slots and unsupported coverage are bound to the manifest; full compiler/VM and arbitrary-bytecode safety remain unfinished."
+      }
+    },
+    "filesystem": {
+      "path": "build/aspect-paths-dos/paths-02/checks.json",
+      "sha256": "d30538f2f43c07df751732cfd54b33fe933e77ce552c3774bdc504594effb339",
+      "checks": {
+        "passed": true,
+        "scripts": 4,
+        "status_checks": 19,
+        "statuses": {
+          "FILES": {
+            "MK_NEW": 0,
+            "MK_EXISTS": -1,
+            "CD_GOOD": -1,
+            "MK_SUB": 0,
+            "CD_BAD": 0,
+            "MK_STILL": 0,
+            "DEL_MISS": -1,
+            "DEL_GOOD": 0,
+            "RM_FULL": 5,
+            "CD_PARENT": 5,
+            "RM_SUB": 0,
+            "RM_STILL": 0,
+            "RM_BOX": 0
+          },
+          "DRIVE": {
+            "DRIVE_STATUS": -1,
+            "DRIVE_CHILD": 0
+          },
+          "PARAM": {
+            "PARAM_MK": 0,
+            "PARAM_RM": 0
+          },
+          "HIGH": {
+            "HIGH_MK": 0,
+            "HIGH_RM": 0
+          }
+        },
+        "cwd": {
+          "FILES": "D:\\",
+          "DRIVE": "C:\\ONC",
+          "PARAM": "D:\\",
+          "HIGH": "D:\\"
+        },
+        "inputs": {
+          "build/aspect-runner/ASPECT.EXE": "f54280f22effbbb67211de3fd070c7603c9aa490f71c27ccc3e83d187e5d1d3b",
+          "build/aspect-compiler-dos/ASPCOMP.EXE": "41d247e4b66e9e2edfb56fc08ccb2b5360fad903493f2da6487c9c3d2984baa5",
+          "standalone/test_aspect_paths_dos.py": "93141cccd31155f90ab7e46340ef697c142c49b732a5215015f25ede5d318ba6"
+        },
+        "runner_sha256": "f54280f22effbbb67211de3fd070c7603c9aa490f71c27ccc3e83d187e5d1d3b",
+        "compiler_sha256": "41d247e4b66e9e2edfb56fc08ccb2b5360fad903493f2da6487c9c3d2984baa5",
+        "checker_sha256": "93141cccd31155f90ab7e46340ef697c142c49b732a5215015f25ede5d318ba6",
+        "guard_file_preserved": true,
+        "source_and_DOS_bytecode_equal": true,
+        "scope": "Actual8086 DOS original-free compiler and ASPECT runtime, real mkdir/delete/rmdir/chdir/drive syscalls and host-visible filesystem effects. Global/local/parameter/CP437 operands, expected failure continuation, native comparison distinctions, preserved nonempty guard, relative hierarchy and retained CWD/default-drive after child exit. Fresh owned mapped drives only; not physical filesystem crash recovery or complete language."
+      }
+    },
+    "parent": {
+      "path": "build/aspect-paths-parent-dos/paths-parent-01/checks.json",
+      "sha256": "c220b6aa44a928b83357ef72a4f9e3e4983ebe2d9aec168df41d938bb922b1dd",
+      "checks": {
+        "passed": true,
+        "cases": [
+          {
+            "case": "path-login",
+            "passed": true,
+            "checks": {
+              "renderer_post_sent": true,
+              "DOS_expected_exit": true,
+              "hardware_restored": true,
+              "PRM_unchanged": true,
+              "binary_unchanged": true,
+              "no_peer_errors": true,
+              "no_unexpected_commands": true,
+              "directory_expected_updates_only": true,
+              "fixture_unchanged_LOGIN.ASP": true,
+              "fixture_unchanged_LOGIN.ASX": true,
+              "fixture_unchanged_RENDER.COM": true,
+              "actual_init_and_dial": true,
+              "actual_DOS_CPR": true,
+              "actual_DOS_DA": true,
+              "actual_screen_snapshot": true,
+              "passive_EXEC_observed": true,
+              "child_exit_expected": true,
+              "parent_JFT_unchanged": true,
+              "all_parent_sink_owners_unchanged": true,
+              "explicit_password_only": true,
+              "ordinary_parent_keyboard_resumes": true,
+              "initial_CPR_before_password": true,
+              "no_automatic_redial": true,
+              "frozen_inputs": true,
+              "post_query_sent_after_password": true,
+              "post_return_cursor_coherent": true,
+              "video_0_0": true,
+              "far_history_retained_across_EXEC_return": true,
+              "far_history_bounds": true,
+              "native_renderer_updated_far_history": true,
+              "relative_path_hierarchy_removed": true
+            },
+            "commands": [
+              "ATZ",
+              "ATDCaseTest:23"
+            ],
+            "errors": [],
+            "seconds": 7.476,
+            "binary_sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+            "command": "@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK",
+            "expected_exit": 0,
+            "working_drive": "d",
+            "environment": {},
+            "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.",
+            "history_states": [
+              [
+                0,
+                63000,
+                0,
+                20132
+              ],
+              [
+                0,
+                63000,
+                22,
+                20132
+              ],
+              [
+                0,
+                63000,
+                22,
+                20132
+              ]
+            ],
+            "history_prefix_hex": [
+              "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "0d4649525354204259544520534146454c4f47494e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            ],
+            "observed_EXEC_names": [
+              "Z:\\BIN\\ADDKEY.COM",
+              "C:\\TERMINAL.EXE",
+              "C:\\ASPECT.EXE",
+              "D:\\SNAP.COM",
+              "D:\\RENDER.COM",
+              "",
+              "",
+              ""
+            ],
+            "admission_failure_observed": 0,
+            "admission_state": {},
+            "passive_all_EXEC_debug": [
+              5,
+              1865,
+              248,
+              13604
+            ],
+            "passive_observer_header": [
+              21070,
+              1,
+              1,
+              1,
+              10224,
+              2562,
+              0
+            ],
+            "child_exit_parent_state": {
+              "csi_origin_mode": 0,
+              "cursor_state_value_1d20": 1,
+              "terminal_mode_372c": 0,
+              "modes_value_3980": 1,
+              "modes_value_1d1a": 0,
+              "csi_terminal_id": 6,
+              "screen_cursor_row": 0,
+              "screen_cursor_column": 21,
+              "terminal_sink_3988_enabled": 0,
+              "terminal_sink_398a_enabled": 0
+            },
+            "runner_sha256": "f54280f22effbbb67211de3fd070c7603c9aa490f71c27ccc3e83d187e5d1d3b",
+            "expectations_sha256": "39f0f35fdc9373eba319e2cb0b2d817bb5e0612683b22e1f2b1c70cec4483416",
+            "observer_sha256": "97758f131c42affd573c17af69c2aea091bb533f95dcccda08c98e06118e5a69"
+          }
+        ],
+        "terminal_sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+        "runner_sha256": "f54280f22effbbb67211de3fd070c7603c9aa490f71c27ccc3e83d187e5d1d3b",
+        "checker_sha256": "86e4b54537fb12804f995f234cbfae912c891feb92a50742f20bdab3ae56da6c",
+        "expectations_sha256": "39f0f35fdc9373eba319e2cb0b2d817bb5e0612683b22e1f2b1c70cec4483416",
+        "parent_map_sha256": "c3268fb45f6d7bf02894a94b5ee1b480eefcdbaeebdb4db384a8400f30c9779e",
+        "observer_source_sha256": "e0c51aefcf3226c147150a6e5d2fc99526c9038045bca330500cd3ea35c8a0be",
+        "original_inputs": [],
+        "scope": "Actual terminal ASPECT login child with native DOS mkdir/chdir/rmdir. Password transmitted only after the relative hierarchy is removed; real parent keys, renderer query, JFT/sink/history/serial ownership and normal DOS exit checked by the reused passive observer. Owned test drives and modeled modem; no physical modem or complete language claim.",
+        "reused_renderer_checker_sha256": "a82b94072dd6d5b8ca16be3ceffb8f6228ee833f9500dd9578bc6ffc2bb7ba91"
+      }
+    }
+  },
+  "original_compiler_oracle": {
+    "path": "analysis/aspect-paths/compiler-02/report.json",
+    "sha256": "4fc42fa3965f27915deb157f850ddee661c14f5ad19ab632e7680b4e2f7b2606",
+    "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+    "accepted": 24,
+    "rejected": 32
+  },
+  "REA": {
+    "bundle_sha256": "4948cb9ad0f51c375dc5dedf1cc4bf22941ddf633923a368de10fbdab6bb15fb",
+    "records": [
+      {
+        "operation": "procedure_assembly",
+        "procedure": "0x1e681",
+        "evidence_id": "ev_0704d720d4d41f6b2dee9ad1616d138f39f78d37cc9a0b412d42a4520a35bb92"
+      },
+      {
+        "operation": "procedure_assembly",
+        "procedure": "0x175ae",
+        "evidence_id": "ev_1f278d84c1425627357bd4b0a76d173177be8137f300a2b105d3a696ee9ad5d3"
+      },
+      {
+        "operation": "procedure_pseudo_code",
+        "procedure": "0x1e8e3",
+        "evidence_id": "ev_36506ddd66c9de597ea37a5eb9aac46f7e4565b0d68c73639e2328de4ba5322a"
+      },
+      {
+        "operation": "procedure_pseudo_code",
+        "procedure": "0x1e8a0",
+        "evidence_id": "ev_5741d838c567932ef27f051162205c68d3af61af54f3d9b1ab114dfceac9a91a"
+      },
+      {
+        "operation": "procedure_pseudo_code",
+        "procedure": "0x19086",
+        "evidence_id": "ev_5a13c7cb211268a8650f4db4e71209847a9d454be7ffdd809ed7ebc3104e5df1"
+      },
+      {
+        "operation": "procedure_pseudo_code",
+        "procedure": "0x1e681",
+        "evidence_id": "ev_6a24001a65e698d25a97f2c7aa94681e5d581b30566e4d03e4af4a3ee0431efc"
+      },
+      {
+        "operation": "procedure_pseudo_code",
+        "procedure": "0x175ae",
+        "evidence_id": "ev_79532f01c42e24a2bc8c80c2f5302b01de5e4fb0b62ea166fa646109dd1862fe"
+      },
+      {
+        "operation": "procedure_assembly",
+        "procedure": "0x1f2c6",
+        "evidence_id": "ev_8bd051c9327d6afc64ba5d0f37ccd1a1427f3f7b0c7e034209525d53b305fb5d"
+      },
+      {
+        "operation": "procedure_pseudo_code",
+        "procedure": "0x1e69a",
+        "evidence_id": "ev_bcb216ae5f888797175607b18aa7d0ea61a0c9c6ed772db056e42a5cd6c6eb84"
+      },
+      {
+        "operation": "procedure_pseudo_code",
+        "procedure": "0x19c40",
+        "evidence_id": "ev_c8ac124cfa22c3d257bf61b0da4c2dc823c6da9939dc619580fe99424ff5bc98"
+      },
+      {
+        "operation": "procedure_assembly",
+        "procedure": "0x19c40",
+        "evidence_id": "ev_cf3f67ff4d22615e22bcaa97584bb0c64f45a7c45498aa10726e1d18b6f93171"
+      },
+      {
+        "operation": "procedure_pseudo_code",
+        "procedure": "0x1f2c6",
+        "evidence_id": "ev_dd0ae435d2e6b8982284d4480082ffeb61dc9e62cae35b4dc9034f257aedbf75"
+      },
+      {
+        "operation": "procedure_assembly",
+        "procedure": "0x1e8e3",
+        "evidence_id": "ev_ea5d34a0f46ab2bc25b1ac47c2fbd863bdf289820d76dbdddb3b6882c2843897"
+      },
+      {
+        "operation": "procedure_assembly",
+        "procedure": "0x1e69a",
+        "evidence_id": "ev_f390a99708dbcc80fd10f3423b02e7e5612cb89fc68f9a9630add49e6e36f4c2"
+      },
+      {
+        "operation": "procedure_assembly",
+        "procedure": "0x1e8a0",
+        "evidence_id": "ev_f8654f324dc4e98481e15e9956aed88c3a7a458d877ee4b7bf51dacf9e64eec2"
+      },
+      {
+        "operation": "procedure_assembly",
+        "procedure": "0x19086",
+        "evidence_id": "ev_faedccb8e4f085227efcc6e30a7e15ce9a760a31a2b7255373c3bb5c83b15ec7"
+      }
+    ],
+    "scope": "Static synthetic overlay-entry analysis, never executed; native behavior separately tested."
+  },
+  "source_build_proof": {
+    "path": "docs/validation/application-components-source-build.json",
+    "sha256": "47c85dbba74b7086feb7d6ebb828c837999d94610ff35ac61eab6f58ae02cda7",
+    "outputs": 197
+  },
+  "package_manifest_sha256": "ba4caca1dbb0168cac4c67513f1bb98a31185c2d19b6cb4c175e303c2e39bf5f",
+  "recorder_sha256": "cf6134bbe50e15acf7ad05c34ba0dcf4b8827d6903b51a3f1b5c557dfa5e52ab",
+  "whole_application_gates_closed": [],
+  "scope": "Native path commands and DOS3+ backend; original compiler and instruction conformance, actual DOS filesystem/drive retention and parent login handoff. Maintained 76-slot runtime remains incomplete; arbitrary bytecode, crash recovery and physical modem validation are separate."
+}
