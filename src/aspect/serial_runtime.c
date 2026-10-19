@@ -3,6 +3,7 @@
 #include "runtime.h"
 #include "serial_runtime.h"
 #include "receive_runtime.h"
+#include "set_runtime.h"
 #include <string.h>
 extern unsigned runtime_receive_display;
 #if defined(ASPECT_RUNTIME_SERIAL)
@@ -33,13 +34,14 @@ static void release(void)
 void runtime_serial_reset(void)
 {
  runtime_serial_error=runtime_serial_pacing_error=runtime_serial_wait_result=0;runtime_serial_case_sensitive=0;
+ runtime_serial_break_units=350;
  runtime_serial_pause_character=126;runtime_serial_local_echo=runtime_serial_character_delay_value=0;
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
  runtime_serial_paced_units=runtime_serial_paced_calls=0;
  input_at=runtime_serial_tx_size=0;released=0;clock_value=initial_clock;
  runtime_serial_case_sensitive=(flags&2)!=0;release();
 #elif defined(ASPECT_RUNTIME_SERIAL)
- aspect_txpace_reset();
+ aspect_txpace_reset();aspect_render_policy_reset();
 #endif
 }
 unsigned runtime_serial_ready(void)
@@ -190,6 +192,32 @@ release:
  aspect_serial_break_release();
 #else
  (void)units;runtime_set_error(ASPECT_RUN_UNSUPPORTED);
+#endif
+ return runtime_error;
+}
+unsigned runtime_break_command(void)
+{
+#if defined(ASPECT_RUNTIME_SERIAL)
+ unsigned notice=0,result;
+ if(!runtime_serial_ready()){runtime_set_error(ASPECT_RUN_UNSUPPORTED);return runtime_error;}
+ if(aspect_render_active()){
+  result=aspect_render_break_notice(0);
+  if(result){runtime_set_error(result);return runtime_error;}
+  notice=1;
+ }
+ runtime_serial_break(runtime_serial_break_units);
+ if(notice){
+  result=aspect_render_break_notice(1);
+  if(result)runtime_set_error(result);
+  /* Native E67B refreshes on success. An error leaves through the nonlocal
+   * abort adapter, so explicitly restore STATUS after the owned UI cleanup. */
+  if(runtime_error)runtime_set_status_refresh();
+ }
+#elif defined(ASPECT_RUNTIME_DIAGNOSTIC)
+ /* Diagnostic timing is a requested-unit observation, not a UART pulse. */
+ if(!runtime_serial_ready())runtime_set_error(ASPECT_RUN_UNSUPPORTED);
+#else
+ runtime_set_error(ASPECT_RUN_UNSUPPORTED);
 #endif
  return runtime_error;
 }

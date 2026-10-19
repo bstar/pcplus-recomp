@@ -167,3 +167,58 @@ No hardware timing, actual DOS execution, complete native renderer, compiler
 conformance suite or maintained child lifecycle is claimed by this component.
 The optional original pass additionally checks both dispatch thunks/tables and
 installed350 default. Current reports remain under `build/aspect-break-native/`.
+
+
+## Native FETCH and cursor prerequisites
+
+`src/aspect/fetch_command.asm` recovers opcode37h's actual owner, overlay19
+E660..E672 (18 bytes), reached through residentC237. Overlay18 E660 is an
+unrelated handler and must not be used for this recovery. FETCH sets E38E to1,
+reads the selector through4CB4, doubles AX into BX, calls the near table entry
+atDS4D24+BX, and returns. It leaves E38E=1 and performs no status refresh.
+There is **no native selector bounds check**: FFFFh and doubled-word wrap remain
+unchecked. A maintained SET/FETCH table must therefore provide its own typed
+unsupported entries and any pre-dispatch safety policy explicitly. Native table
+indirection alone does not establish malformed-bytecode safety.
+
+DD9C is already recovered as `aspect_console_pause_operand` in
+`src/aspect/console_commands.asm`, unit6 (11 bytes). It pushes0 then7FFFh and
+calls the actual52-byte `aspect_string_bounded_integer` atDD68, which consumes
+both bound arguments with RET4. No duplicate `break_operand.asm` is needed:
+an adapter can alias `aspect_break_operand` to `aspect_console_pause_operand`.
+DD68 reads the actual integer operand and, when E37C is nonzero, checks signed
+bounds. On failure it calls error1. If that error callback returns and E378 is
+nonzero, the helper returns the lower bound0; if the callback returns with
+E378=0, it returns the original invalid operand. With E37C=0 it skips the check.
+A real nonlocal abort prevents the later SET store. A fixture that always
+clamps, or always prevents return, would conceal these native distinctions.
+
+`src/aspect/break_cursor_read.asm` separately recovers resident798E..79A8,
+26 bytes. It exports `aspect_break_cursor_read` and uses the existing
+`screen_use_bios_cursor` alias for7A66. When the word is0, it sets ES=0040h
+and returns the packed cursor from BDA0040:0050. Otherwise it clears BH,
+executes INT10h/AH03h for page0, and returns DX in AX. It preserves BP/SI/DI
+and its near stack; BX/CX/DX/ES/FLAGS are volatile. This reader plus the
+existing `screen_cursor_output` can support a maintained one-level cursor
+bracket without linking the native alias-prone cursor stack.
+
+A separate original-free builder/checker pair, `standalone/build_aspect_fetch_native.py`
+and `standalone/check_aspect_fetch_native.py`, binds these107 exact source bytes
+in `standalone/fixtures/aspect_fetch_native_units.json`. Tests execute all45
+native instructions across FETCH's256 byte selectors plus FFFFh/word-wrap
+indices, range-check enabled/disabled, returning/stopped error policies,
+exit-state branches, and both BDA/BIOS cursor legs. BIOS output is an explicit
+INT10 callback; operand reads, table services and errors are explicit callbacks.
+The test does not replace those boundaries with invented opcode semantics or
+claim a production longjmp or actual DOS cursor test. Optional original
+comparison verifies all107 bytes and the original37h dispatch thunk. Normal
+builds emit `fetch_command.obj` and `break_cursor_read.obj` plus four flat units
+without reading the original executable.
+
+Retained REA procedures corroborate these recovered instruction listings:
+FETCH `ev_a00a7be8d7da304e618a0a8020ccfd9e4bc65ed43739974b00ca471be5226ca9`,
+DD68 `ev_3853bd77e3355996a36a7c4df5b8564c9abceffd8f01df517678f942b7650da9`,
+DD9C `ev_8cdf42580163a2eecce5b217c38fd9a07b1f20e95da53882981a9bd58598de23`,
+and798E `ev_e9e9c3bf9a2e8bb274ff8eb19635bebf12c9e20b9932dcf3ae65e922bbba91c3`.
+Pseudo-code is supporting evidence; exact public range hashes and optional
+original byte comparison establish the8086 encodings and branch boundaries.

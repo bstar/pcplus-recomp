@@ -1,10 +1,10 @@
 # ASPECT child BREAK transport owner
 
-The maintained child UART now has a bounded BREAK transport service. It is
-preparatory infrastructure: ASPECT opcode0D, SET09 and FETCH37/09 are **not yet
-wired into the production interpreter**. Parent configuration inheritance and
-native notice/status integration remain required. The runtime still implements
-69 opcode slots and eleven SET setters. No whole-application gate closes here.
+This document records the initial transport checkpoint at7ff697c. The command,
+parent configuration and native UI are now connected; see
+[the current runtime integration](ASPECT_BREAK_RUNTIME.md). The ownership and
+transport checks below remain independently scoped. Historical69-slot/eleven-SET
+and132-output counts in that checkpoint are not the current application counts.
 
 ## Ownership and timing
 
@@ -64,15 +64,16 @@ inputs are modeled. Reports retain executable/checker hashes under
 `build/aspect-runner/break-linked-checks.json`.
 
 These proofs do not establish actual DOS scheduling, physical UART timing,
-parent duration inheritance, native UI integration or command dispatch. Those
-are the next required integration work, rather than conclusions from these tests.
+parent duration inheritance, native UI integration or command dispatch. The subsequent
+[application proof](ASPECT_BREAK_RUNTIME.md) covers those integration requirements
+separately.
 
-Current application regressions also pass six actual DOS UART lease cases,
+The7ff697c checkpoint application regressions passed six actual DOS UART lease cases,
 the878-case interpreter suite and both local BBS script/editor workflows.
 Synchronet uses its established immediate forwarding path. ENiGMA uses the
 established network keyboard profile and explicit30ms modem buffering. An
 additional enigma-editor-profile attempt failed Home/Insert semantics and is
 retained alongside that successful comparison; immediate-forwarding ENiGMA
 compatibility remains open. These are application regressions, not execution of
-the as-yet-unwired BREAK command. Public bound summaries are in
+the then-unwired BREAK command. Public bound summaries are in
 [validation/aspect-break-owner.json](validation/aspect-break-owner.json).

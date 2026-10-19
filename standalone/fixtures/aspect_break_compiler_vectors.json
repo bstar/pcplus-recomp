@@ -14,9 +14,15 @@
       "report_sha256": "cb3f240d4afb1e92c08329e604af11de61e0640bb2b9c70d470c1521286bc6b1",
       "probe": "compiler_probe02.py",
       "probe_sha256": "90e51c754d5c82718fdb0113feda464b333bbd2b4755d3aac78fd2c2ed40abc3"
+    },
+    {
+      "report": "analysis/aspect-break/compiler-03/report.json",
+      "report_sha256": "2abcd15fe184e5650fa51f71a90dedff233c608faa42047b8559526cb9236104",
+      "probe": "compiler_probe03.py",
+      "probe_sha256": "270c70d229c2b2402a0310b9060911537dbe9273b2608b25f71cff34ae4319d4"
     }
   ],
-  "freezer_sha256": "2ce30a586d8317c3b806089065defa5a649fb919eee382871be79d6e907ba8c2",
+  "freezer_sha256": "23392ded4faa59ac12f9f348fbda4e5fa922866df8a54e2175d704486d104b9a",
   "vectors": [
     {
       "name": "BK000",
@@ -115,6 +121,14 @@
       "asx_sha256": "7ce37fefcce8625e7e4e3825cd3f58cf77ae1eafc541b5a944f54dc6120112e8"
     },
     {
+      "name": "BF010",
+      "label": "FETCH_DISPLAY",
+      "source": "integer duration\r\nproc main\r\nfetch display duration\r\nendproc\r\n",
+      "source_sha256": "aaa7c13283dcd1c6cf5ae273d20bc2e47fa63639e58d7725f7b07563334dbd2f",
+      "hex": "00 cf 37 12 8d 00 94",
+      "asx_sha256": "1d1a130a49758b5cb9d7be6c783d8bb7e7a603dc2bb5351604659a0af1b81abb"
+    },
+    {
       "name": "BF013",
       "label": "ROUNDTRIP_FETCH",
       "source": "integer duration\r\nproc main\r\nfetch break duration\r\nset break 7\r\nbreak\r\nset break duration\r\nendproc\r\n",
@@ -137,6 +151,390 @@
       "source_sha256": "961b0a6cc683936f8b16be493cae6160058e6e6023111d2ffe296f11a8a67fcd",
       "hex": "00 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 37 09 97 08 00 95",
       "asx_sha256": "61f21f488a3a861515b60976d94bea7782ee4eff937c49af3f8426355376bd83"
+    },
+    {
+      "name": "FG000",
+      "label": "FETCH_BREAK_GLOBAL",
+      "source": "integer destination\r\nproc main\r\nfetch break destination\r\nendproc\r\n",
+      "source_sha256": "1102ab95a04c3655081fd7ce26408e7d38ed2f8b6940cb38038c421e85129894",
+      "hex": "00 cf 37 09 8d 00 94",
+      "asx_sha256": "7ce37fefcce8625e7e4e3825cd3f58cf77ae1eafc541b5a944f54dc6120112e8"
+    },
+    {
+      "name": "FG001",
+      "label": "FETCH_BREAK_LOCAL",
+      "source": "integer destination\r\nproc main\r\ninteger local_result\r\nfetch break local_result\r\nendproc\r\n",
+      "source_sha256": "8a1cbb69e95a468c5df5b141f61715df582ac2b61c70ab2e94b74cb6c788ccb0",
+      "hex": "00 d2 02 00 cf 37 09 a1 00 00 95",
+      "asx_sha256": "01663066e316bca82e438c097ff12a056c49eb96c572934e77f4363cbeb70984"
+    },
+    {
+      "name": "FG002",
+      "label": "FETCH_BREAK_PARAMETER",
+      "source": "\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm parm_result\r\nfetch break parm_result\r\nendproc\r\n",
+      "source_sha256": "9c982218222e3bb97f0ecb9e579a9829934ee541c441f2edaf1afc91910afc5e",
+      "hex": "00 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 37 09 97 08 00 95",
+      "asx_sha256": "61f21f488a3a861515b60976d94bea7782ee4eff937c49af3f8426355376bd83"
+    },
+    {
+      "name": "FG003",
+      "label": "FETCH_BREAK_COMMA",
+      "source": "integer destination\r\nproc main\r\nfetch break ,destination\r\nendproc\r\n",
+      "source_sha256": "f2260f0895fb7368eb37cc396e5416f65187b3ea2fc8c1c475bd0804d2fe1369",
+      "hex": "00 cf 37 09 8d 00 94",
+      "asx_sha256": "7ce37fefcce8625e7e4e3825cd3f58cf77ae1eafc541b5a944f54dc6120112e8"
+    },
+    {
+      "name": "FG012",
+      "label": "FETCH_DISPLAY_GLOBAL",
+      "source": "integer destination\r\nproc main\r\nfetch display destination\r\nendproc\r\n",
+      "source_sha256": "7ef7e0fbca48b2c2cda62ebc8ee9e0dc73fb2543a3f5e609913fc28a9009b595",
+      "hex": "00 cf 37 12 8d 00 94",
+      "asx_sha256": "1d1a130a49758b5cb9d7be6c783d8bb7e7a603dc2bb5351604659a0af1b81abb"
+    },
+    {
+      "name": "FG013",
+      "label": "FETCH_DISPLAY_LOCAL",
+      "source": "integer destination\r\nproc main\r\ninteger local_result\r\nfetch display local_result\r\nendproc\r\n",
+      "source_sha256": "898a02e577dd5dfed82ac4db531853be9837c05fc605201bfbabb639c4d4c7e2",
+      "hex": "00 d2 02 00 cf 37 12 a1 00 00 95",
+      "asx_sha256": "bf4a6a71dcbfc4b8ce0423633ea61739a38d0cbe2c733cde6de0731e8aefbeb7"
+    },
+    {
+      "name": "FG014",
+      "label": "FETCH_DISPLAY_PARAMETER",
+      "source": "\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm parm_result\r\nfetch display parm_result\r\nendproc\r\n",
+      "source_sha256": "6cbe27f543b8e59095eb415a3a71c85cffb01d2de1d1dc259365f513d0e9f896",
+      "hex": "00 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 37 12 97 08 00 95",
+      "asx_sha256": "07899395cc0ea4c89698be57ef2eb78f7a7131e001729aa416f1c535ea4c3c72"
+    },
+    {
+      "name": "FG015",
+      "label": "FETCH_DISPLAY_COMMA",
+      "source": "integer destination\r\nproc main\r\nfetch display ,destination\r\nendproc\r\n",
+      "source_sha256": "6ac0153bd1c88257b32a2f662c7f22888acdfe41679a1029911e9b62506d20f0",
+      "hex": "00 cf 37 12 8d 00 94",
+      "asx_sha256": "1d1a130a49758b5cb9d7be6c783d8bb7e7a603dc2bb5351604659a0af1b81abb"
+    },
+    {
+      "name": "FG024",
+      "label": "FETCH_DUPLEX_GLOBAL",
+      "source": "integer destination\r\nproc main\r\nfetch duplex destination\r\nendproc\r\n",
+      "source_sha256": "c30fb5a85ac7692e4c9769d25f19c70782bd99d72d7fc29f3c8f07bb755a36c6",
+      "hex": "00 cf 37 18 8d 00 94",
+      "asx_sha256": "8b067045ba8f1b04dfee4256580ee285dd83adfc81e573b4cc20528f347e138e"
+    },
+    {
+      "name": "FG025",
+      "label": "FETCH_DUPLEX_LOCAL",
+      "source": "integer destination\r\nproc main\r\ninteger local_result\r\nfetch duplex local_result\r\nendproc\r\n",
+      "source_sha256": "eed0e4d772ef54a3e532d9cecf05957e6c669a2b2fd5877c233f07d9bbf72de5",
+      "hex": "00 d2 02 00 cf 37 18 a1 00 00 95",
+      "asx_sha256": "8b9581762bf4d535762557eb74959a69b60360d7efea706db820beaecded9ddd"
+    },
+    {
+      "name": "FG026",
+      "label": "FETCH_DUPLEX_PARAMETER",
+      "source": "\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm parm_result\r\nfetch duplex parm_result\r\nendproc\r\n",
+      "source_sha256": "2848828c9ca7fe45816ed99b7435ae9122aaa0e3a7c55d6a9401f0aec74a4991",
+      "hex": "00 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 37 18 97 08 00 95",
+      "asx_sha256": "9116feb0501cec80e05e74d84a105bb76609e80aec9533adba808370ba1878f9"
+    },
+    {
+      "name": "FG027",
+      "label": "FETCH_DUPLEX_COMMA",
+      "source": "integer destination\r\nproc main\r\nfetch duplex ,destination\r\nendproc\r\n",
+      "source_sha256": "822dea6f9b0b1cfe5ac82e9719d7088fc708319737fcb318393edb333e94cf52",
+      "hex": "00 cf 37 18 8d 00 94",
+      "asx_sha256": "8b067045ba8f1b04dfee4256580ee285dd83adfc81e573b4cc20528f347e138e"
+    },
+    {
+      "name": "FG036",
+      "label": "FETCH_FINDCASE_GLOBAL",
+      "source": "integer destination\r\nproc main\r\nfetch findcase destination\r\nendproc\r\n",
+      "source_sha256": "3c583e3b35e92faf2fb0b684e20336af18004c46dd834a70c3f922e61b82678a",
+      "hex": "00 cf 37 23 8d 00 94",
+      "asx_sha256": "40a9ed4788241ed22ba93437efe86d153bff65ebfc9ce18d39b4f1591c53e2cb"
+    },
+    {
+      "name": "FG037",
+      "label": "FETCH_FINDCASE_LOCAL",
+      "source": "integer destination\r\nproc main\r\ninteger local_result\r\nfetch findcase local_result\r\nendproc\r\n",
+      "source_sha256": "1582e0cd68fc6c3019db9060a7117d932365c826fcfe3b2828fcdf8d662f5e40",
+      "hex": "00 d2 02 00 cf 37 23 a1 00 00 95",
+      "asx_sha256": "257f1cb32b1912d4c72740fd319831ef6acc0a0df559fd9b13f9dceea47797ef"
+    },
+    {
+      "name": "FG038",
+      "label": "FETCH_FINDCASE_PARAMETER",
+      "source": "\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm parm_result\r\nfetch findcase parm_result\r\nendproc\r\n",
+      "source_sha256": "80f498c3ae5e4c43c2b364b5b157e361d4cc4d612a97a670a97408f34370018e",
+      "hex": "00 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 37 23 97 08 00 95",
+      "asx_sha256": "f4ba682142a2b902d05f4a56a99a58237d31e55ee17fc9f662434cfd82affa3b"
+    },
+    {
+      "name": "FG039",
+      "label": "FETCH_FINDCASE_COMMA",
+      "source": "integer destination\r\nproc main\r\nfetch findcase ,destination\r\nendproc\r\n",
+      "source_sha256": "e94541b5ccbecdf49d197a268b65e6ae2d0fe97e7fee3ded09fb9868ebc3a804",
+      "hex": "00 cf 37 23 8d 00 94",
+      "asx_sha256": "40a9ed4788241ed22ba93437efe86d153bff65ebfc9ce18d39b4f1591c53e2cb"
+    },
+    {
+      "name": "FG048",
+      "label": "FETCH_KEYS_GLOBAL",
+      "source": "integer destination\r\nproc main\r\nfetch keys destination\r\nendproc\r\n",
+      "source_sha256": "19a04b683e7b5d8e4e41876a71310623da82508c110dda841b38dcce1f4e2ed8",
+      "hex": "00 cf 37 29 8d 00 94",
+      "asx_sha256": "bc954eb12f0236e5c8e4196e9eca65b1d7c4a45785e3ba64bb43d66913527881"
+    },
+    {
+      "name": "FG049",
+      "label": "FETCH_KEYS_LOCAL",
+      "source": "integer destination\r\nproc main\r\ninteger local_result\r\nfetch keys local_result\r\nendproc\r\n",
+      "source_sha256": "59de9ef7eb62b659a3d0ce91519e3865bcd849a08f44ab3be56ce5f2f768fbd6",
+      "hex": "00 d2 02 00 cf 37 29 a1 00 00 95",
+      "asx_sha256": "18d784c2d494868d585c048a4f323103c23b13cab77ddbd89348fc9076c65699"
+    },
+    {
+      "name": "FG050",
+      "label": "FETCH_KEYS_PARAMETER",
+      "source": "\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm parm_result\r\nfetch keys parm_result\r\nendproc\r\n",
+      "source_sha256": "3771a0d245bf73f1c0ec198e36fc78a7b7068d87ecd94119e0905db0d7159795",
+      "hex": "00 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 37 29 97 08 00 95",
+      "asx_sha256": "0fb83f0d8430439ce0da2da7b421c9445d7974a0b96c5b046f44a8c8077104db"
+    },
+    {
+      "name": "FG051",
+      "label": "FETCH_KEYS_COMMA",
+      "source": "integer destination\r\nproc main\r\nfetch keys ,destination\r\nendproc\r\n",
+      "source_sha256": "30cde5a9823064bed9a3980550f4d5ed7f900fa3c3174791696985d6fde08cee",
+      "hex": "00 cf 37 29 8d 00 94",
+      "asx_sha256": "bc954eb12f0236e5c8e4196e9eca65b1d7c4a45785e3ba64bb43d66913527881"
+    },
+    {
+      "name": "FG060",
+      "label": "FETCH_MSG_CRLF_GLOBAL",
+      "source": "integer destination\r\nproc main\r\nfetch msg_crlf destination\r\nendproc\r\n",
+      "source_sha256": "e84a90c6226f38f2ad71e43e6526a88e85f6b7e576ed9c20ba7c5ea7c2f1db9e",
+      "hex": "00 cf 37 2e 8d 00 94",
+      "asx_sha256": "38959678c0f37f8113baffd16a6674fc4357f9b67b81cb0169fd44588a54fa50"
+    },
+    {
+      "name": "FG061",
+      "label": "FETCH_MSG_CRLF_LOCAL",
+      "source": "integer destination\r\nproc main\r\ninteger local_result\r\nfetch msg_crlf local_result\r\nendproc\r\n",
+      "source_sha256": "3c8b0d852bf0ba99a0286d747579a576fd00a6e6529fc753ac14537a4ff3fc4c",
+      "hex": "00 d2 02 00 cf 37 2e a1 00 00 95",
+      "asx_sha256": "3c356e3901dfbc6b143e6bcb24cb6119e10be2f68361ff6958c7270ea2180b61"
+    },
+    {
+      "name": "FG062",
+      "label": "FETCH_MSG_CRLF_PARAMETER",
+      "source": "\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm parm_result\r\nfetch msg_crlf parm_result\r\nendproc\r\n",
+      "source_sha256": "baf84fa589cd56495f7d93beb5015a867acf0c3cf7314247d8fcabb3578df527",
+      "hex": "00 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 37 2e 97 08 00 95",
+      "asx_sha256": "5bd0a889fa996a133ced146bb370545b0f73b6430c4304431314e84f19f7d406"
+    },
+    {
+      "name": "FG063",
+      "label": "FETCH_MSG_CRLF_COMMA",
+      "source": "integer destination\r\nproc main\r\nfetch msg_crlf ,destination\r\nendproc\r\n",
+      "source_sha256": "28e781705f9f48b34bb0664d6a3baf3a2821bd46869abe70225ef6cd290b5c90",
+      "hex": "00 cf 37 2e 8d 00 94",
+      "asx_sha256": "38959678c0f37f8113baffd16a6674fc4357f9b67b81cb0169fd44588a54fa50"
+    },
+    {
+      "name": "FG072",
+      "label": "FETCH_PAUSECHAR_GLOBAL",
+      "source": "integer destination\r\nproc main\r\nfetch pausechar destination\r\nendproc\r\n",
+      "source_sha256": "192388361ac21f114481b9888255db5c947696263a7a41b8458f2e01db1f2851",
+      "hex": "00 cf 37 30 8d 00 94",
+      "asx_sha256": "c0dbd06147abfae72488de93a5a41b3595c07bb0278be0244c377f76beb5ec78"
+    },
+    {
+      "name": "FG073",
+      "label": "FETCH_PAUSECHAR_LOCAL",
+      "source": "integer destination\r\nproc main\r\ninteger local_result\r\nfetch pausechar local_result\r\nendproc\r\n",
+      "source_sha256": "ecdee3cd5977effe7c449cce4b5bc8bd754b8abb5f195f9597cbee95839fdba2",
+      "hex": "00 d2 02 00 cf 37 30 a1 00 00 95",
+      "asx_sha256": "187ebe013bb006db9799841246b538bb38978fedacc8b25588069d233d12b2aa"
+    },
+    {
+      "name": "FG074",
+      "label": "FETCH_PAUSECHAR_PARAMETER",
+      "source": "\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm parm_result\r\nfetch pausechar parm_result\r\nendproc\r\n",
+      "source_sha256": "36940e63661cdbe702c55f7d85efd25cbb4d8fa2d873a31a3499b49cac052f5c",
+      "hex": "00 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 37 30 97 08 00 95",
+      "asx_sha256": "8de0bcb67c7bbb67089fcbec1b0bc9173b6d54ac8f6d1276cfa05cb1c96a51dc"
+    },
+    {
+      "name": "FG075",
+      "label": "FETCH_PAUSECHAR_COMMA",
+      "source": "integer destination\r\nproc main\r\nfetch pausechar ,destination\r\nendproc\r\n",
+      "source_sha256": "44dea5cec34f4b47dd13113f6a763b9914c33fd688cbbcd9fcb442e1c5a11de1",
+      "hex": "00 cf 37 30 8d 00 94",
+      "asx_sha256": "c0dbd06147abfae72488de93a5a41b3595c07bb0278be0244c377f76beb5ec78"
+    },
+    {
+      "name": "FG084",
+      "label": "FETCH_RXDATA_GLOBAL",
+      "source": "integer destination\r\nproc main\r\nfetch rxdata destination\r\nendproc\r\n",
+      "source_sha256": "c2be51e0b87d785ce34f4bddb9985b09f40af7ae03306e8fa5d0142024580462",
+      "hex": "00 cf 37 3b 8d 00 94",
+      "asx_sha256": "f942b9d1f4a76245d836eff6c8fa7ad038136015926b5d47de7250f7267d7400"
+    },
+    {
+      "name": "FG085",
+      "label": "FETCH_RXDATA_LOCAL",
+      "source": "integer destination\r\nproc main\r\ninteger local_result\r\nfetch rxdata local_result\r\nendproc\r\n",
+      "source_sha256": "89f68823d5b49e5c7ae7bfe121fbb23f1ce26799fd62d412bf48866716da1caf",
+      "hex": "00 d2 02 00 cf 37 3b a1 00 00 95",
+      "asx_sha256": "d57311d23ee87270ede2d2a097a521686d886d8941bf202983525fb9361ec705"
+    },
+    {
+      "name": "FG086",
+      "label": "FETCH_RXDATA_PARAMETER",
+      "source": "\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm parm_result\r\nfetch rxdata parm_result\r\nendproc\r\n",
+      "source_sha256": "56c156937779b5e158c5fa0c1326fd256af359150e3bfa6fa9961c0202b73a0b",
+      "hex": "00 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 37 3b 97 08 00 95",
+      "asx_sha256": "c5b471eff0957f5dd3b91b377d9fec072a45dcc2e09e38fc2e5ec1173ce0b751"
+    },
+    {
+      "name": "FG087",
+      "label": "FETCH_RXDATA_COMMA",
+      "source": "integer destination\r\nproc main\r\nfetch rxdata ,destination\r\nendproc\r\n",
+      "source_sha256": "4e83a1efee887fc5d98aa99d1cd4ef120ceb1ca0df273a7fabdfda8e4ed8a3f0",
+      "hex": "00 cf 37 3b 8d 00 94",
+      "asx_sha256": "f942b9d1f4a76245d836eff6c8fa7ad038136015926b5d47de7250f7267d7400"
+    },
+    {
+      "name": "FG096",
+      "label": "FETCH_SWITCHCASE_GLOBAL",
+      "source": "integer destination\r\nproc main\r\nfetch switchcase destination\r\nendproc\r\n",
+      "source_sha256": "15d382422365c7011c63764a293c29547a8b52af483a0fa5663709a5c216b110",
+      "hex": "00 cf 37 44 8d 00 94",
+      "asx_sha256": "4d03d3e729b03c9d1516623aeb6b076e0df6a6422a5be71fe6e70f84d6ba6bd3"
+    },
+    {
+      "name": "FG097",
+      "label": "FETCH_SWITCHCASE_LOCAL",
+      "source": "integer destination\r\nproc main\r\ninteger local_result\r\nfetch switchcase local_result\r\nendproc\r\n",
+      "source_sha256": "fc28fcaa61b7d57807bb4be0e6626a6115fd6d4b7318bcd590761b01e61cdd8b",
+      "hex": "00 d2 02 00 cf 37 44 a1 00 00 95",
+      "asx_sha256": "b21c1e86c8125ffa70bce6abf87587458c5e14f68ae41f9bdc9c28d3c050c77b"
+    },
+    {
+      "name": "FG098",
+      "label": "FETCH_SWITCHCASE_PARAMETER",
+      "source": "\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm parm_result\r\nfetch switchcase parm_result\r\nendproc\r\n",
+      "source_sha256": "bd310b0c9da22308f54c824a18a2b83e78dc45be7d0f9de521ede66fa89ac5a7",
+      "hex": "00 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 37 44 97 08 00 95",
+      "asx_sha256": "9cfece016474fde46e8412332c941c58990ee98980931bb0d2880c3526d3d4b2"
+    },
+    {
+      "name": "FG099",
+      "label": "FETCH_SWITCHCASE_COMMA",
+      "source": "integer destination\r\nproc main\r\nfetch switchcase ,destination\r\nendproc\r\n",
+      "source_sha256": "ebc5b90741df64623f5e5d642653a263d8514b7035aae37d272fd3df1c564fb0",
+      "hex": "00 cf 37 44 8d 00 94",
+      "asx_sha256": "4d03d3e729b03c9d1516623aeb6b076e0df6a6422a5be71fe6e70f84d6ba6bd3"
+    },
+    {
+      "name": "FG108",
+      "label": "FETCH_TXPACE_GLOBAL",
+      "source": "integer destination\r\nproc main\r\nfetch txpace destination\r\nendproc\r\n",
+      "source_sha256": "3bf4ec9d1ddc959f3e3b5fe15ae5683f806ff012ed22f84cf7a6bd4317037563",
+      "hex": "00 cf 37 4c 8d 00 94",
+      "asx_sha256": "01354dc6398a8af8530a3d41431bc414b1e30a8a5482ff9c558b3065f9b6566d"
+    },
+    {
+      "name": "FG109",
+      "label": "FETCH_TXPACE_LOCAL",
+      "source": "integer destination\r\nproc main\r\ninteger local_result\r\nfetch txpace local_result\r\nendproc\r\n",
+      "source_sha256": "5450e493f073f79d6e7fd9758e7296c3211b401b1a2371ba1e764f7866c0f50f",
+      "hex": "00 d2 02 00 cf 37 4c a1 00 00 95",
+      "asx_sha256": "ee1e85e000a45dc9c9868f41e274eaa0a3c14ac02f6331e940f021886f94d3e0"
+    },
+    {
+      "name": "FG110",
+      "label": "FETCH_TXPACE_PARAMETER",
+      "source": "\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm parm_result\r\nfetch txpace parm_result\r\nendproc\r\n",
+      "source_sha256": "8ad336aac94381e99b9862a9c8b2525aeb41414888bf7eece37690973c49dc94",
+      "hex": "00 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 37 4c 97 08 00 95",
+      "asx_sha256": "81b066dbb3ea012b4986b6cc45f221d8562b7b72e7dbad082bd140196e71ee83"
+    },
+    {
+      "name": "FG111",
+      "label": "FETCH_TXPACE_COMMA",
+      "source": "integer destination\r\nproc main\r\nfetch txpace ,destination\r\nendproc\r\n",
+      "source_sha256": "c7221b21a3c210a438948f7c6e2f6c5a1e0bd044f95efc81ad84020ca91423dc",
+      "hex": "00 cf 37 4c 8d 00 94",
+      "asx_sha256": "01354dc6398a8af8530a3d41431bc414b1e30a8a5482ff9c558b3065f9b6566d"
+    },
+    {
+      "name": "FG120",
+      "label": "FETCH_WAITCASE_GLOBAL",
+      "source": "integer destination\r\nproc main\r\nfetch waitcase destination\r\nendproc\r\n",
+      "source_sha256": "aeb2c088040165549fcec21f4a3e6b0e3ea77b23d6df913b40d4f38cd134b086",
+      "hex": "00 cf 37 55 8d 00 94",
+      "asx_sha256": "3571a3fe6583d8e8b9a26ba9dfb3501baee980e2b8b975d859231e1637d316cb"
+    },
+    {
+      "name": "FG121",
+      "label": "FETCH_WAITCASE_LOCAL",
+      "source": "integer destination\r\nproc main\r\ninteger local_result\r\nfetch waitcase local_result\r\nendproc\r\n",
+      "source_sha256": "0afb56c6260ef21294b790a75161e57a71729b5eebabe88e68c35480bc516d42",
+      "hex": "00 d2 02 00 cf 37 55 a1 00 00 95",
+      "asx_sha256": "c4ca92a453bb5f9e6365e58cb1a746987af5b1f2658ab5765d573c86ecee01a3"
+    },
+    {
+      "name": "FG122",
+      "label": "FETCH_WAITCASE_PARAMETER",
+      "source": "\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm parm_result\r\nfetch waitcase parm_result\r\nendproc\r\n",
+      "source_sha256": "4c7241dc565feaa718467e084bfbafb512df9a2036c3772dcd2e67d95283d77a",
+      "hex": "00 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 37 55 97 08 00 95",
+      "asx_sha256": "e8c73757b7b7e36a4230c4938280ad8f6c7ebffbff6a1630317e4641e5ef17bd"
+    },
+    {
+      "name": "FG123",
+      "label": "FETCH_WAITCASE_COMMA",
+      "source": "integer destination\r\nproc main\r\nfetch waitcase ,destination\r\nendproc\r\n",
+      "source_sha256": "29d8fa23ef3d42252669162079dd9bbf9c341adc616e37b374aed54597ab2e68",
+      "hex": "00 cf 37 55 8d 00 94",
+      "asx_sha256": "3571a3fe6583d8e8b9a26ba9dfb3501baee980e2b8b975d859231e1637d316cb"
+    },
+    {
+      "name": "FG132",
+      "label": "FETCH_WHENCASE_GLOBAL",
+      "source": "integer destination\r\nproc main\r\nfetch whencase destination\r\nendproc\r\n",
+      "source_sha256": "e5da9ae695c440594ac323d660c6bcc4a6bd7da99125d678ab8c8f1bbe9818ed",
+      "hex": "00 cf 37 56 8d 00 94",
+      "asx_sha256": "6328d1ce8e78b52be355496c4d0233ea08cea09266f07473460ca251001fff72"
+    },
+    {
+      "name": "FG133",
+      "label": "FETCH_WHENCASE_LOCAL",
+      "source": "integer destination\r\nproc main\r\ninteger local_result\r\nfetch whencase local_result\r\nendproc\r\n",
+      "source_sha256": "bbb96ca8d43dbd06055132371ed4bbe86ccf439bdfdddf799a553330bafb0a41",
+      "hex": "00 d2 02 00 cf 37 56 a1 00 00 95",
+      "asx_sha256": "a28705804ea58557946fd40808bc824b4db32491a5a0fb0338665adbe4fb8ac4"
+    },
+    {
+      "name": "FG134",
+      "label": "FETCH_WHENCASE_PARAMETER",
+      "source": "\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm parm_result\r\nfetch whencase parm_result\r\nendproc\r\n",
+      "source_sha256": "776fb848a6a9f092e10d8fa3a139b14e593e76b72235e9d2b6565e1a20331f61",
+      "hex": "00 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 37 56 97 08 00 95",
+      "asx_sha256": "754e5f65b1472b256f3a135a9d1c3561b090cd9cea70b459ce2f6c016b9e4a79"
+    },
+    {
+      "name": "FG135",
+      "label": "FETCH_WHENCASE_COMMA",
+      "source": "integer destination\r\nproc main\r\nfetch whencase ,destination\r\nendproc\r\n",
+      "source_sha256": "0058a3a7d8aab9e6041ac91af896506fc30838a42bb48313b9998507bed1843f",
+      "hex": "00 cf 37 56 8d 00 94",
+      "asx_sha256": "6328d1ce8e78b52be355496c4d0233ea08cea09266f07473460ca251001fff72"
     }
   ],
   "rejected": [
@@ -580,22 +978,912 @@
       "errors": [
         "Error C022 Line 3: Invalid numeric variable ==> DURATION"
       ]
-    }
-  ],
-  "unsupported": [
+    },
     {
-      "name": "BF010",
-      "label": "FETCH_DISPLAY",
-      "source": "integer duration\r\nproc main\r\nfetch display duration\r\nendproc\r\n",
-      "source_sha256": "aaa7c13283dcd1c6cf5ae273d20bc2e47fa63639e58d7725f7b07563334dbd2f",
-      "hex": "00 cf 37 12 8d 00 94",
-      "asx_sha256": "1d1a130a49758b5cb9d7be6c783d8bb7e7a603dc2bb5351604659a0af1b81abb",
-      "reason": "Original accepted; maintained FETCH scope currently BREAK only"
+      "name": "FG004",
+      "label": "FETCH_BREAK_LONG",
+      "source": "long destination\r\nproc main\r\nfetch break destination\r\nendproc\r\n",
+      "source_sha256": "1c4abf6c1953ef05a58dab51cfe436f34b8f2fcdaeb8148959567b45b89a4672",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG005",
+      "label": "FETCH_BREAK_FLOAT",
+      "source": "float destination\r\nproc main\r\nfetch break destination\r\nendproc\r\n",
+      "source_sha256": "df7fc6586521679c82868f5bce05ebb6b8f5da3ba7471ca0f8fff60f3d78cb14",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG006",
+      "label": "FETCH_BREAK_STRING",
+      "source": "string destination\r\nproc main\r\nfetch break destination\r\nendproc\r\n",
+      "source_sha256": "f669c08c27c433c3a7fa24fd800bbe0de6dc24de5a41c6de79a3bf410cc8a7c8",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG007",
+      "label": "FETCH_BREAK_CONSTANT",
+      "source": "integer destination\r\nproc main\r\nfetch break 1\r\nendproc\r\n",
+      "source_sha256": "28427fba66edb00965a6a9c68901c9af35f19dc9dbb7c76843b88357d8db4b23",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1"
+      ]
+    },
+    {
+      "name": "FG008",
+      "label": "FETCH_BREAK_BUILTIN",
+      "source": "integer destination\r\nproc main\r\nfetch break failure\r\nendproc\r\n",
+      "source_sha256": "8170b372917c3ea90b66ca7db9c7342bc22f76342961318a4d397c10740cf2b2",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> FAILURE"
+      ]
+    },
+    {
+      "name": "FG009",
+      "label": "FETCH_BREAK_PAREN",
+      "source": "integer destination\r\nproc main\r\nfetch break (destination)\r\nendproc\r\n",
+      "source_sha256": "7c95393e26bcd53933b63f4acef59ecf9176e65c49fe49e7b0d8e86aa5b62a12",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> (",
+        "Error C002 Line 3: Unexpected token ==> DESTINATION",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FG010",
+      "label": "FETCH_BREAK_EXPRESSION",
+      "source": "integer destination\r\nproc main\r\nfetch break destination+1\r\nendproc\r\n",
+      "source_sha256": "a23bd60c83587d4c919adffe9a747bdab98cbd1c5004490cff981b9931755bdb",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FG011",
+      "label": "FETCH_BREAK_TRAILING",
+      "source": "integer destination\r\nproc main\r\nfetch break destination,\r\nendproc\r\n",
+      "source_sha256": "c841bcc61e9b6e7dd99ced0d72b009a4f6f42304d9bb1ed684c00797c76fbb69",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FG016",
+      "label": "FETCH_DISPLAY_LONG",
+      "source": "long destination\r\nproc main\r\nfetch display destination\r\nendproc\r\n",
+      "source_sha256": "94cc44782c701cfcf87059700255d22e03bb46728af2d2e1f37c93a56465f0e3",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG017",
+      "label": "FETCH_DISPLAY_FLOAT",
+      "source": "float destination\r\nproc main\r\nfetch display destination\r\nendproc\r\n",
+      "source_sha256": "eb5df20d11a33f7c127914950744944df5b1e66d0699753e5ae28f2b35670cda",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG018",
+      "label": "FETCH_DISPLAY_STRING",
+      "source": "string destination\r\nproc main\r\nfetch display destination\r\nendproc\r\n",
+      "source_sha256": "5f5fe0681bfc40a98856845d8e88323dec437600afa1d094e0df4708f83f493d",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG019",
+      "label": "FETCH_DISPLAY_CONSTANT",
+      "source": "integer destination\r\nproc main\r\nfetch display 1\r\nendproc\r\n",
+      "source_sha256": "d316f74071132401176a26537d20667ab05afe297b4e6ba57c1927dcba2c2a30",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1"
+      ]
+    },
+    {
+      "name": "FG020",
+      "label": "FETCH_DISPLAY_BUILTIN",
+      "source": "integer destination\r\nproc main\r\nfetch display failure\r\nendproc\r\n",
+      "source_sha256": "f8625356ffd483abc5f8511a81d88c40b9f5171af92db7255f56eee6abfc041b",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> FAILURE"
+      ]
+    },
+    {
+      "name": "FG021",
+      "label": "FETCH_DISPLAY_PAREN",
+      "source": "integer destination\r\nproc main\r\nfetch display (destination)\r\nendproc\r\n",
+      "source_sha256": "7da4228fcb13a05732582ee36e3e8cac20b1666ecdc87e5a5610e190392a372b",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> (",
+        "Error C002 Line 3: Unexpected token ==> DESTINATION",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FG022",
+      "label": "FETCH_DISPLAY_EXPRESSION",
+      "source": "integer destination\r\nproc main\r\nfetch display destination+1\r\nendproc\r\n",
+      "source_sha256": "f4849be58b28449d03adf5e816007ec5f62f2ae73ed9df535c1180e3dc8086a7",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FG023",
+      "label": "FETCH_DISPLAY_TRAILING",
+      "source": "integer destination\r\nproc main\r\nfetch display destination,\r\nendproc\r\n",
+      "source_sha256": "324a0be3fb190cdfafcccb7ceefdfd4e1e161672050fc45fca31eddd42b1d46c",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FG028",
+      "label": "FETCH_DUPLEX_LONG",
+      "source": "long destination\r\nproc main\r\nfetch duplex destination\r\nendproc\r\n",
+      "source_sha256": "15276ff643eae56040413b2294e4ea24a64ce2b42a3c45c2084cd7dc86dbec0a",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG029",
+      "label": "FETCH_DUPLEX_FLOAT",
+      "source": "float destination\r\nproc main\r\nfetch duplex destination\r\nendproc\r\n",
+      "source_sha256": "f6fffb1e7f405242ee73715caa953799d178a0254ee2b4b26ebc83a2dc3e77c2",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG030",
+      "label": "FETCH_DUPLEX_STRING",
+      "source": "string destination\r\nproc main\r\nfetch duplex destination\r\nendproc\r\n",
+      "source_sha256": "99f35815a6d1ca6bf39365b3a204e186cc2e3251ccc96a8e0e3eb1899d0cf70c",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG031",
+      "label": "FETCH_DUPLEX_CONSTANT",
+      "source": "integer destination\r\nproc main\r\nfetch duplex 1\r\nendproc\r\n",
+      "source_sha256": "1ac41bd098df6ca5389f8648b344b3aeaae6eb5ecb62a27bd8dbbb8b691e241b",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1"
+      ]
+    },
+    {
+      "name": "FG032",
+      "label": "FETCH_DUPLEX_BUILTIN",
+      "source": "integer destination\r\nproc main\r\nfetch duplex failure\r\nendproc\r\n",
+      "source_sha256": "4ade57e0248a86635346c761200eb15f4a90c3cb288d11ce049a1a3249e919b2",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> FAILURE"
+      ]
+    },
+    {
+      "name": "FG033",
+      "label": "FETCH_DUPLEX_PAREN",
+      "source": "integer destination\r\nproc main\r\nfetch duplex (destination)\r\nendproc\r\n",
+      "source_sha256": "503c46a7e76b1531d66405ca3fd0520204a4516fbe1db68196e569c673ce9068",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> (",
+        "Error C002 Line 3: Unexpected token ==> DESTINATION",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FG034",
+      "label": "FETCH_DUPLEX_EXPRESSION",
+      "source": "integer destination\r\nproc main\r\nfetch duplex destination+1\r\nendproc\r\n",
+      "source_sha256": "e7ee34526f70a02409e3d8e10aa2b85b47f1a120eb1002b0a4acd88f59339db0",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FG035",
+      "label": "FETCH_DUPLEX_TRAILING",
+      "source": "integer destination\r\nproc main\r\nfetch duplex destination,\r\nendproc\r\n",
+      "source_sha256": "6b7c5484d0e173443144fc8538433f6ae38df7e26f6d7473382b80717de0c33c",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FG040",
+      "label": "FETCH_FINDCASE_LONG",
+      "source": "long destination\r\nproc main\r\nfetch findcase destination\r\nendproc\r\n",
+      "source_sha256": "e4c9824b4af4ad0d317af0698869c1377512e1a5b919a5425981fc9d16d7499d",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG041",
+      "label": "FETCH_FINDCASE_FLOAT",
+      "source": "float destination\r\nproc main\r\nfetch findcase destination\r\nendproc\r\n",
+      "source_sha256": "8caa4b29f6664e1ff51e5e16ea0045d29786567b279105374e9df41e85bae29f",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG042",
+      "label": "FETCH_FINDCASE_STRING",
+      "source": "string destination\r\nproc main\r\nfetch findcase destination\r\nendproc\r\n",
+      "source_sha256": "a267c19c849a1c92f5bb044ff4b493963bcb91cf10a93b220662f1a3609c06eb",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG043",
+      "label": "FETCH_FINDCASE_CONSTANT",
+      "source": "integer destination\r\nproc main\r\nfetch findcase 1\r\nendproc\r\n",
+      "source_sha256": "a2edf4b51f757aa0de075f6f9a9fe7579dc33153aa73bf0e1d2314e9403374c6",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1"
+      ]
+    },
+    {
+      "name": "FG044",
+      "label": "FETCH_FINDCASE_BUILTIN",
+      "source": "integer destination\r\nproc main\r\nfetch findcase failure\r\nendproc\r\n",
+      "source_sha256": "b0b622a69c430586379ab767a0d015158fb44bdaee3514badce161e59ed2ecdd",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> FAILURE"
+      ]
+    },
+    {
+      "name": "FG045",
+      "label": "FETCH_FINDCASE_PAREN",
+      "source": "integer destination\r\nproc main\r\nfetch findcase (destination)\r\nendproc\r\n",
+      "source_sha256": "b32709b260fe111e9bc70555879aa4326b9e5b149a835887bcfabe261fe4c003",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> (",
+        "Error C002 Line 3: Unexpected token ==> DESTINATION",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FG046",
+      "label": "FETCH_FINDCASE_EXPRESSION",
+      "source": "integer destination\r\nproc main\r\nfetch findcase destination+1\r\nendproc\r\n",
+      "source_sha256": "080696ee80eaff653278e4f437da1a637663be1d72e5602846aa4cdb9613e327",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FG047",
+      "label": "FETCH_FINDCASE_TRAILING",
+      "source": "integer destination\r\nproc main\r\nfetch findcase destination,\r\nendproc\r\n",
+      "source_sha256": "210ed907b2fb5c6e34dec1c4bdbd2e83bd5b6bbc1d7d67667661c281fabd75b7",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FG052",
+      "label": "FETCH_KEYS_LONG",
+      "source": "long destination\r\nproc main\r\nfetch keys destination\r\nendproc\r\n",
+      "source_sha256": "3140ec0eb831f29f679c13904a240c4a41049c4f2c035659f92c435c700c34f2",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG053",
+      "label": "FETCH_KEYS_FLOAT",
+      "source": "float destination\r\nproc main\r\nfetch keys destination\r\nendproc\r\n",
+      "source_sha256": "8f8c599fe0ebb14ef452178d92a1f23d682b77c527a7fdd417b7241a7f5f9846",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG054",
+      "label": "FETCH_KEYS_STRING",
+      "source": "string destination\r\nproc main\r\nfetch keys destination\r\nendproc\r\n",
+      "source_sha256": "dec87661c9ff5ba4e3c9f3bcd97dc5b08d73d7e9b125e4913ed01042b0222111",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG055",
+      "label": "FETCH_KEYS_CONSTANT",
+      "source": "integer destination\r\nproc main\r\nfetch keys 1\r\nendproc\r\n",
+      "source_sha256": "91d67b28792351e0af9dc8000079128605f59467364f01479cab81bd8a074c81",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1"
+      ]
+    },
+    {
+      "name": "FG056",
+      "label": "FETCH_KEYS_BUILTIN",
+      "source": "integer destination\r\nproc main\r\nfetch keys failure\r\nendproc\r\n",
+      "source_sha256": "f2dbb1f87ca5ed32174dbc892bd341001ab3a66ac881d2459c01fa3da6109ea3",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> FAILURE"
+      ]
+    },
+    {
+      "name": "FG057",
+      "label": "FETCH_KEYS_PAREN",
+      "source": "integer destination\r\nproc main\r\nfetch keys (destination)\r\nendproc\r\n",
+      "source_sha256": "ffb6364334d82fcbdf91c82bc50d2e786ff440fdfc5450b89347082aaf80ccfa",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> (",
+        "Error C002 Line 3: Unexpected token ==> DESTINATION",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FG058",
+      "label": "FETCH_KEYS_EXPRESSION",
+      "source": "integer destination\r\nproc main\r\nfetch keys destination+1\r\nendproc\r\n",
+      "source_sha256": "2fea955c18abc2248d012ad3d531c3b1712d6be30440b95ee40c2311301730f2",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FG059",
+      "label": "FETCH_KEYS_TRAILING",
+      "source": "integer destination\r\nproc main\r\nfetch keys destination,\r\nendproc\r\n",
+      "source_sha256": "fc11de18d3ef4347eca51df117ef5fdd477bdd2c1eb89e57a4752d9c8d323540",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FG064",
+      "label": "FETCH_MSG_CRLF_LONG",
+      "source": "long destination\r\nproc main\r\nfetch msg_crlf destination\r\nendproc\r\n",
+      "source_sha256": "200e2f46af2734e91acb27d6baf1a53810e249562697a894e76d2d35773af8b7",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG065",
+      "label": "FETCH_MSG_CRLF_FLOAT",
+      "source": "float destination\r\nproc main\r\nfetch msg_crlf destination\r\nendproc\r\n",
+      "source_sha256": "3805cb0d8f3b085ad0bcbbec78bfdd8f7d72d270e3ec2c4df373395cfd3a658a",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG066",
+      "label": "FETCH_MSG_CRLF_STRING",
+      "source": "string destination\r\nproc main\r\nfetch msg_crlf destination\r\nendproc\r\n",
+      "source_sha256": "685c2f023d1fd89833f893411724160a5a4c1d28f65d6bbef96715925a9aca1b",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG067",
+      "label": "FETCH_MSG_CRLF_CONSTANT",
+      "source": "integer destination\r\nproc main\r\nfetch msg_crlf 1\r\nendproc\r\n",
+      "source_sha256": "c71d3aae274a9b7b32a6744f6f54fd4a9e8c5ce3ff410056e4935fca2378867b",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1"
+      ]
+    },
+    {
+      "name": "FG068",
+      "label": "FETCH_MSG_CRLF_BUILTIN",
+      "source": "integer destination\r\nproc main\r\nfetch msg_crlf failure\r\nendproc\r\n",
+      "source_sha256": "572cd85adc2fbc240f3e7d6dbf313d88003d23388f50d49cd5f3bcb187f93d03",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> FAILURE"
+      ]
+    },
+    {
+      "name": "FG069",
+      "label": "FETCH_MSG_CRLF_PAREN",
+      "source": "integer destination\r\nproc main\r\nfetch msg_crlf (destination)\r\nendproc\r\n",
+      "source_sha256": "4e84a80100b3906cb04980a33b8528278d3827ed61bc10337ef52faac8c2ba1e",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> (",
+        "Error C002 Line 3: Unexpected token ==> DESTINATION",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FG070",
+      "label": "FETCH_MSG_CRLF_EXPRESSION",
+      "source": "integer destination\r\nproc main\r\nfetch msg_crlf destination+1\r\nendproc\r\n",
+      "source_sha256": "299a6dcb75db6a4feb927090680a0b81b5cc9a0338940d9c4bd4f595c909f965",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FG071",
+      "label": "FETCH_MSG_CRLF_TRAILING",
+      "source": "integer destination\r\nproc main\r\nfetch msg_crlf destination,\r\nendproc\r\n",
+      "source_sha256": "4b807ef2156ff264ae0e5b643df9f0761c6426ad62d8ea9eb0fe8400ec17fd0e",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FG076",
+      "label": "FETCH_PAUSECHAR_LONG",
+      "source": "long destination\r\nproc main\r\nfetch pausechar destination\r\nendproc\r\n",
+      "source_sha256": "7eafe38aa4023c0f11bed5d5adfa20b1ebdf8c7accc6172ca6b992624b16ae8f",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG077",
+      "label": "FETCH_PAUSECHAR_FLOAT",
+      "source": "float destination\r\nproc main\r\nfetch pausechar destination\r\nendproc\r\n",
+      "source_sha256": "f987189e92c8b7706a0ef896d2f1954c9b16c813b31adce6f94775cd3c5909f6",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG078",
+      "label": "FETCH_PAUSECHAR_STRING",
+      "source": "string destination\r\nproc main\r\nfetch pausechar destination\r\nendproc\r\n",
+      "source_sha256": "630102ad283a3b5f496d0758a82aee50df30a5a4d9457c299bcb3e800a0cfd0b",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG079",
+      "label": "FETCH_PAUSECHAR_CONSTANT",
+      "source": "integer destination\r\nproc main\r\nfetch pausechar 1\r\nendproc\r\n",
+      "source_sha256": "a06b803569e56c1936598890605cd605b067adc7999930ed57593a9f2e023fd1",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1"
+      ]
+    },
+    {
+      "name": "FG080",
+      "label": "FETCH_PAUSECHAR_BUILTIN",
+      "source": "integer destination\r\nproc main\r\nfetch pausechar failure\r\nendproc\r\n",
+      "source_sha256": "5cd7dbf3609673a2f9bc06f24e403bff1016348062d4fce29a0cdb38dd587519",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> FAILURE"
+      ]
+    },
+    {
+      "name": "FG081",
+      "label": "FETCH_PAUSECHAR_PAREN",
+      "source": "integer destination\r\nproc main\r\nfetch pausechar (destination)\r\nendproc\r\n",
+      "source_sha256": "78b74d0e9ae38c6d6e181b026e4c04f6eba7b6d751544ae22e922e65d1e89399",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> (",
+        "Error C002 Line 3: Unexpected token ==> DESTINATION",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FG082",
+      "label": "FETCH_PAUSECHAR_EXPRESSION",
+      "source": "integer destination\r\nproc main\r\nfetch pausechar destination+1\r\nendproc\r\n",
+      "source_sha256": "4baafd3fa947b8c77bf762d515ea55941c6f2383315aaa5948246433fb50447a",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FG083",
+      "label": "FETCH_PAUSECHAR_TRAILING",
+      "source": "integer destination\r\nproc main\r\nfetch pausechar destination,\r\nendproc\r\n",
+      "source_sha256": "aea180392b9ccc09fba3853d054e2db5fb23c38cc1622a2747287260fce6dfa6",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FG088",
+      "label": "FETCH_RXDATA_LONG",
+      "source": "long destination\r\nproc main\r\nfetch rxdata destination\r\nendproc\r\n",
+      "source_sha256": "a370b35ef406bc7d100511b07d09a63dc1bcd077f2f86ca850f40bbbd33d0bb6",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG089",
+      "label": "FETCH_RXDATA_FLOAT",
+      "source": "float destination\r\nproc main\r\nfetch rxdata destination\r\nendproc\r\n",
+      "source_sha256": "0fa32641d481ed56eb09d299aebbe08f80b70e6435ade244365de9e06f137959",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG090",
+      "label": "FETCH_RXDATA_STRING",
+      "source": "string destination\r\nproc main\r\nfetch rxdata destination\r\nendproc\r\n",
+      "source_sha256": "b8825ce165ca622d56df42976fce0d79b0d04bf7895eb5b4679618fc91a09244",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG091",
+      "label": "FETCH_RXDATA_CONSTANT",
+      "source": "integer destination\r\nproc main\r\nfetch rxdata 1\r\nendproc\r\n",
+      "source_sha256": "7ebaa06583e032d1750ca33283728ae352927692e2c9dd7a3dc44d2fbc02bdb9",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1"
+      ]
+    },
+    {
+      "name": "FG092",
+      "label": "FETCH_RXDATA_BUILTIN",
+      "source": "integer destination\r\nproc main\r\nfetch rxdata failure\r\nendproc\r\n",
+      "source_sha256": "e25a24420d2b2c1db980ad00d0c65d1332617b146e0b1dbad482c1ac6a79b4a3",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> FAILURE"
+      ]
+    },
+    {
+      "name": "FG093",
+      "label": "FETCH_RXDATA_PAREN",
+      "source": "integer destination\r\nproc main\r\nfetch rxdata (destination)\r\nendproc\r\n",
+      "source_sha256": "7735414553dc1cc919a6b156abd9714a64e067d78402a2e5a900f02b199cdf40",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> (",
+        "Error C002 Line 3: Unexpected token ==> DESTINATION",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FG094",
+      "label": "FETCH_RXDATA_EXPRESSION",
+      "source": "integer destination\r\nproc main\r\nfetch rxdata destination+1\r\nendproc\r\n",
+      "source_sha256": "d70dcc3176c80d1a033dda41ecded6c15052b0e4de046076f7e31dfa5a6fe825",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FG095",
+      "label": "FETCH_RXDATA_TRAILING",
+      "source": "integer destination\r\nproc main\r\nfetch rxdata destination,\r\nendproc\r\n",
+      "source_sha256": "92fbf90fbe1d122cfd6f3d3a55c16300d4aeec55ecfa0cfbe78c7ecbf32aecf1",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FG100",
+      "label": "FETCH_SWITCHCASE_LONG",
+      "source": "long destination\r\nproc main\r\nfetch switchcase destination\r\nendproc\r\n",
+      "source_sha256": "7ee197c8a4df2903cc464bdced76d0ad356f72742dedf8dd978d10a77c6c524a",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG101",
+      "label": "FETCH_SWITCHCASE_FLOAT",
+      "source": "float destination\r\nproc main\r\nfetch switchcase destination\r\nendproc\r\n",
+      "source_sha256": "04ecd34c042d0aef05d8505d1503e7f0f7c445e2a3eb021cf0ccd04d772805e7",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG102",
+      "label": "FETCH_SWITCHCASE_STRING",
+      "source": "string destination\r\nproc main\r\nfetch switchcase destination\r\nendproc\r\n",
+      "source_sha256": "42e9e98c1c021119963c5540f7ed33979db82b5afd77c617a5a82c74131e3bf9",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG103",
+      "label": "FETCH_SWITCHCASE_CONSTANT",
+      "source": "integer destination\r\nproc main\r\nfetch switchcase 1\r\nendproc\r\n",
+      "source_sha256": "3f0277d140845b011b08cf51e7fb0d1826f43d471588afea4cb7d0f4ceb8599f",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1"
+      ]
+    },
+    {
+      "name": "FG104",
+      "label": "FETCH_SWITCHCASE_BUILTIN",
+      "source": "integer destination\r\nproc main\r\nfetch switchcase failure\r\nendproc\r\n",
+      "source_sha256": "d8e369873fe6af42676c33accd63a7cabed7ab589d3ce85832591fa8cc7c3fed",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> FAILURE"
+      ]
+    },
+    {
+      "name": "FG105",
+      "label": "FETCH_SWITCHCASE_PAREN",
+      "source": "integer destination\r\nproc main\r\nfetch switchcase (destination)\r\nendproc\r\n",
+      "source_sha256": "5686d029fda995f9bce504f69cb51d4388fcde613e129d7a1bacfc94e67fb434",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> (",
+        "Error C002 Line 3: Unexpected token ==> DESTINATION",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FG106",
+      "label": "FETCH_SWITCHCASE_EXPRESSION",
+      "source": "integer destination\r\nproc main\r\nfetch switchcase destination+1\r\nendproc\r\n",
+      "source_sha256": "6dcc2ad6484c2c6ef4120b8d3e352b631502b341fdcae315376eab29538fb0dc",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FG107",
+      "label": "FETCH_SWITCHCASE_TRAILING",
+      "source": "integer destination\r\nproc main\r\nfetch switchcase destination,\r\nendproc\r\n",
+      "source_sha256": "5fb68cea549f8c898982f4bdd5172e306781378e977fb4f689f86a0a05cb853c",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FG112",
+      "label": "FETCH_TXPACE_LONG",
+      "source": "long destination\r\nproc main\r\nfetch txpace destination\r\nendproc\r\n",
+      "source_sha256": "34dd8823b55caa0feb51d0ac68a0705df38ff13a27b76cc61c6135971cba01cb",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG113",
+      "label": "FETCH_TXPACE_FLOAT",
+      "source": "float destination\r\nproc main\r\nfetch txpace destination\r\nendproc\r\n",
+      "source_sha256": "e07a82f98d460ab6d64368765d9cbb19e3f326b59ecd536abff1ddf622b0ac1a",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG114",
+      "label": "FETCH_TXPACE_STRING",
+      "source": "string destination\r\nproc main\r\nfetch txpace destination\r\nendproc\r\n",
+      "source_sha256": "4ac0a94ae97ad70f7207823fa674435a1b92c75b56829cc7065dbdceafecc834",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG115",
+      "label": "FETCH_TXPACE_CONSTANT",
+      "source": "integer destination\r\nproc main\r\nfetch txpace 1\r\nendproc\r\n",
+      "source_sha256": "35d51080dc6c76f4abd2c1a354a4f85a1864f6f6812661331e9840c045378dfd",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1"
+      ]
+    },
+    {
+      "name": "FG116",
+      "label": "FETCH_TXPACE_BUILTIN",
+      "source": "integer destination\r\nproc main\r\nfetch txpace failure\r\nendproc\r\n",
+      "source_sha256": "0d648e080245ef68c8fb504fa1da60eb0d0cbe16493672d14232d5149d2e3a1f",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> FAILURE"
+      ]
+    },
+    {
+      "name": "FG117",
+      "label": "FETCH_TXPACE_PAREN",
+      "source": "integer destination\r\nproc main\r\nfetch txpace (destination)\r\nendproc\r\n",
+      "source_sha256": "66bdaf97267b365835795b359d2d0992e1e0de566eeb0f358bb3f1c0082158ff",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> (",
+        "Error C002 Line 3: Unexpected token ==> DESTINATION",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FG118",
+      "label": "FETCH_TXPACE_EXPRESSION",
+      "source": "integer destination\r\nproc main\r\nfetch txpace destination+1\r\nendproc\r\n",
+      "source_sha256": "7fa4d1e374ab5e4e9c37eb3023986f2b5959f0ce83437f66954539f75adbaa89",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FG119",
+      "label": "FETCH_TXPACE_TRAILING",
+      "source": "integer destination\r\nproc main\r\nfetch txpace destination,\r\nendproc\r\n",
+      "source_sha256": "3722fd3dac84de24edecc9580b375195946c7d38427aab047cb8293f026b5ac5",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FG124",
+      "label": "FETCH_WAITCASE_LONG",
+      "source": "long destination\r\nproc main\r\nfetch waitcase destination\r\nendproc\r\n",
+      "source_sha256": "1e462d4f5f4cba3add3d31b89f26e51b96b9fa44f0bfd217939e0e78d3e58c8c",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG125",
+      "label": "FETCH_WAITCASE_FLOAT",
+      "source": "float destination\r\nproc main\r\nfetch waitcase destination\r\nendproc\r\n",
+      "source_sha256": "470aab627dafb7ffe1b5a0a169d91a0fa7d8abcc4897694709db31c4c046773c",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG126",
+      "label": "FETCH_WAITCASE_STRING",
+      "source": "string destination\r\nproc main\r\nfetch waitcase destination\r\nendproc\r\n",
+      "source_sha256": "19639d74090e7305fc4a0cf5a936fb22665ca533b9849d6b447fd2263c65241c",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG127",
+      "label": "FETCH_WAITCASE_CONSTANT",
+      "source": "integer destination\r\nproc main\r\nfetch waitcase 1\r\nendproc\r\n",
+      "source_sha256": "69d27c3451ff2274cd9a6b8a418037830e396b53ebdef06aefc7460f7cf71f6e",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1"
+      ]
+    },
+    {
+      "name": "FG128",
+      "label": "FETCH_WAITCASE_BUILTIN",
+      "source": "integer destination\r\nproc main\r\nfetch waitcase failure\r\nendproc\r\n",
+      "source_sha256": "75714885e43ceba936feede246203e9d83b43e6354fabccfde0af0b1d32e9448",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> FAILURE"
+      ]
+    },
+    {
+      "name": "FG129",
+      "label": "FETCH_WAITCASE_PAREN",
+      "source": "integer destination\r\nproc main\r\nfetch waitcase (destination)\r\nendproc\r\n",
+      "source_sha256": "5a678db5d3cb1f38bb1dc285f2b126b0b5da94aee445cc2af901956896e965e2",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> (",
+        "Error C002 Line 3: Unexpected token ==> DESTINATION",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FG130",
+      "label": "FETCH_WAITCASE_EXPRESSION",
+      "source": "integer destination\r\nproc main\r\nfetch waitcase destination+1\r\nendproc\r\n",
+      "source_sha256": "37235062b8f9b9162639331cb8826aff5ab8d446c66a4fd72538b7b7c1d502c2",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FG131",
+      "label": "FETCH_WAITCASE_TRAILING",
+      "source": "integer destination\r\nproc main\r\nfetch waitcase destination,\r\nendproc\r\n",
+      "source_sha256": "5ed6339675fc7e0b95026d0b0b6a88cb8e034536978a7817ebef7a7409b19ec7",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FG136",
+      "label": "FETCH_WHENCASE_LONG",
+      "source": "long destination\r\nproc main\r\nfetch whencase destination\r\nendproc\r\n",
+      "source_sha256": "a57985c84da874d426e886aa045c801b09d859996ad149e77861da5b7c1bad3a",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG137",
+      "label": "FETCH_WHENCASE_FLOAT",
+      "source": "float destination\r\nproc main\r\nfetch whencase destination\r\nendproc\r\n",
+      "source_sha256": "446fa7d5239e0638bf9f305e9007cfc99aedcd659be0a7277e01486973a644fd",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG138",
+      "label": "FETCH_WHENCASE_STRING",
+      "source": "string destination\r\nproc main\r\nfetch whencase destination\r\nendproc\r\n",
+      "source_sha256": "87e9cd4499023781df13d114c098e90c0a09c74b612410d33e8cbcaae8628cbc",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FG139",
+      "label": "FETCH_WHENCASE_CONSTANT",
+      "source": "integer destination\r\nproc main\r\nfetch whencase 1\r\nendproc\r\n",
+      "source_sha256": "5d66dc4b748ed260c3277fc32910df72397b1d935a43600bab7c1311d99ddf4d",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> 1"
+      ]
+    },
+    {
+      "name": "FG140",
+      "label": "FETCH_WHENCASE_BUILTIN",
+      "source": "integer destination\r\nproc main\r\nfetch whencase failure\r\nendproc\r\n",
+      "source_sha256": "526036e61bb038f78c18287a0103f146d8d407779375f7d6f5df81f858352768",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> FAILURE"
+      ]
+    },
+    {
+      "name": "FG141",
+      "label": "FETCH_WHENCASE_PAREN",
+      "source": "integer destination\r\nproc main\r\nfetch whencase (destination)\r\nendproc\r\n",
+      "source_sha256": "e68e6377a247f8d1cfd9a65d71bcbee4ca6b51c76e1b63c402889d18dda46b1b",
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> (",
+        "Error C002 Line 3: Unexpected token ==> DESTINATION",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FG142",
+      "label": "FETCH_WHENCASE_EXPRESSION",
+      "source": "integer destination\r\nproc main\r\nfetch whencase destination+1\r\nendproc\r\n",
+      "source_sha256": "16a075fea3b567c862eddf85a5acc1c28d0077f2b50a1a8e25ba94c17a6a2b6c",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "FG143",
+      "label": "FETCH_WHENCASE_TRAILING",
+      "source": "integer destination\r\nproc main\r\nfetch whencase destination,\r\nendproc\r\n",
+      "source_sha256": "d702bfe246fa7c6c326c7def393bcbb7a8fdd54e28aacb3a0c70c743dae17c8b",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
     }
   ],
+  "unsupported": [],
   "native_setting_evidence": {
     "private_report_sha256": "d47042e1e0eeb638b1e1cfb6bdd49128dfde927ef1f646d779c9f8b33a8379f9",
     "cases": 12
   },
-  "scope": "Sourcegrammar/emission only. NativeSETbounds0..32767; FETCHreturnsrawword. No UARTBREAK/runtimeavailability claim. FETCHDISPLAYexplicitlyunsupported."
+  "scope": "Sourcegrammar/emission only. NativeSETbounds0..32767; FETCHreturnsrawword. No UARTBREAK/runtimeavailability claim. Selected12FETCHsettingsonly."
 }

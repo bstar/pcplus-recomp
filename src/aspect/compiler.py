@@ -33,6 +33,12 @@ SET_BOOLEAN = {'display': 0x12, 'findcase': 0x23, 'switchcase': 0x44,
                'waitcase': 0x55, 'whencase': 0x56, 'keys': 0x29,
                'rxdata': 0x3B, 'msg_crlf': 0x2E}
 SET_INTEGER = {'pausechar': 0x30, 'txpace': 0x4C, 'break': 0x09}
+# Proved FETCH families have integer destinations, including byte/boolean fields.
+# Keep this whitelist separate from future SET additions.
+FETCH_SETTINGS = {'break': 0x09, 'display': 0x12, 'duplex': 0x18,
+                  'findcase': 0x23, 'keys': 0x29, 'msg_crlf': 0x2E,
+                  'pausechar': 0x30, 'rxdata': 0x3B, 'switchcase': 0x44,
+                  'txpace': 0x4C, 'waitcase': 0x55, 'whencase': 0x56}
 OPS = {"+": 0x00, "-": 0xB5, "*": 0x7D, "/": 0x26, "%": 0x7B,
        "==": 0x32, "!=": 0x7F, "<": 0x6D, ">": 0x54,
        "<=": 0x68, ">=": 0x48}
@@ -430,19 +436,19 @@ class Compiler:
     def fetch_command(self, tokens):
         # FETCH queries a setting; GET is an unrelated interactive input command.
         # Other native FETCH families remain outside the maintained subset.
-        if len(tokens) < 3 or tokens[1] != 'break':
-            self.error('only FETCH BREAK is supported')
+        if len(tokens) < 3 or tokens[1] not in FETCH_SETTINGS:
+            self.error('unsupported or incomplete FETCH setting')
         operands = tokens[3:] if tokens[2] == ',' else tokens[2:]
         if not operands or operands[0] == '(':
-            self.error('FETCH BREAK requires an integer destination')
+            self.error('FETCH requires an integer destination')
         parser = Expression(operands, self.line)
         node = parser.parse(7)
         if parser.pos != len(parser.tokens):
-            self.error('unexpected FETCH BREAK operands')
+            self.error('unexpected FETCH operands')
         kind, wire = self.lvalue(node)
         if kind != 0:
-            self.error('FETCH BREAK requires an integer destination')
-        self.emit(0x37, 0x09, wire)
+            self.error('FETCH requires an integer destination')
+        self.emit(0x37, FETCH_SETTINGS[tokens[1]], wire)
 
     def when_command(self, tokens):
         command = tokens[0]

@@ -1,0 +1,55 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "name": "fetch",
+      "source": "src/aspect/fetch_command.asm",
+      "defines": [
+        "-DASPECT_FETCH_FLAT"
+      ],
+      "start": 58976,
+      "end": 58994,
+      "length": 18,
+      "original_file_offset": 121680,
+      "sha256": "4e939010cac745158775f610246f8b16f8d4da9f19531759d7014ce585e23fe9"
+    },
+    {
+      "name": "operand",
+      "source": "src/aspect/console_commands.asm",
+      "defines": [
+        "-DASPECT_CONSOLE_FLAT",
+        "-DASPECT_CONSOLE_UNIT=6"
+      ],
+      "start": 56732,
+      "end": 56743,
+      "length": 11,
+      "original_file_offset": 112460,
+      "sha256": "01ce9602651b49f69bddd78c501dcef8d30551c6c8cad7fbe608d3a9ce3e1694"
+    },
+    {
+      "name": "bounded",
+      "source": "src/aspect/string_operands.asm",
+      "defines": [
+        "-DASPECT_STRING_FLAT",
+        "-DASPECT_STRING_UNIT=2"
+      ],
+      "start": 56680,
+      "end": 56732,
+      "length": 52,
+      "original_file_offset": 112408,
+      "sha256": "807968171c5e5a7a7e2c787b88cd28e4aa45e4b01857c95f52f249fb555e65ef"
+    },
+    {
+      "name": "cursor_read",
+      "source": "src/aspect/break_cursor_read.asm",
+      "defines": [
+        "-DASPECT_BREAK_CURSOR_FLAT"
+      ],
+      "start": 31118,
+      "end": 31144,
+      "length": 26,
+      "original_file_offset": 35726,
+      "sha256": "ca5cacff797fbe0ebdeb2cde96e2e1293c11cd54634069b6a03b128a80e4db1b"
+    }
+  ]
+}

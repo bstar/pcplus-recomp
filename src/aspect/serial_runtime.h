@@ -14,8 +14,10 @@ unsigned runtime_serial_prepare_pacing(void);
  * and duration inheritance. Full raw16-bit units accepted, split into bounded
  * calibrated chunks; every error/cancel releases our UART BREAK reservation. */
 unsigned runtime_serial_break(unsigned units);
+unsigned runtime_break_command(void);
 unsigned runtime_serial_pause(unsigned ticks);
 unsigned runtime_serial_wait_second(void);
+extern unsigned runtime_serial_break_units;
 extern unsigned runtime_serial_error;
 extern unsigned runtime_serial_pacing_error;
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)

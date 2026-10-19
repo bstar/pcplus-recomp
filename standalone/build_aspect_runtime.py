@@ -12,6 +12,8 @@ ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm'
  ('receive_policy','src/aspect/receive_policy.asm',None),
  ('when','src/aspect/when.asm',None),
  ('set_commands','src/aspect/set_commands.asm',None),
+ ('break_commands','src/aspect/break_commands.asm','ASPECT_BREAK_RUNTIME'),
+ ('fetch_command','src/aspect/fetch_command.asm',None),
  ('find_commands','src/aspect/find_commands.asm',None),('case_commands','src/aspect/case_commands.asm',None),
  ('directory','src/aspect/directory_builtins.asm',None),
  ('flow','src/aspect/control_flow.asm',None),('parameters','src/aspect/parameters.asm',None),('strings','src/aspect/string_operands.asm',None),('string_commands','src/aspect/string_commands.asm',None),('string_services','src/aspect/string_services.asm',None),
@@ -39,7 +41,7 @@ C=r'''
 #include "when_runtime.h"
 #include "set_runtime.h"
 #include "find_runtime.h"
-extern unsigned runtime_receive_pattern_count,runtime_wait_gate;
+extern unsigned runtime_receive_pattern_count,runtime_wait_gate,runtime_set_duplex_changed;
 extern aspect_file runtime_file;
 extern unsigned runtime_string_count,runtime_depth,runtime_stack_pointer,runtime_frame;
 extern unsigned char runtime_arena[0x3aca];
@@ -189,7 +191,9 @@ def main():
  set_corpus=json.loads(set_corpus_path.read_text())
  find_corpus_path=ROOT/'standalone/fixtures/aspect_find_case_runtime_vectors.json'
  find_corpus=json.loads(find_corpus_path.read_text())
- cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']+conversion_corpus['vectors']+compiler_corpus['vectors']+console_corpus['vectors']+serial_corpus['vectors']+receive_cases+directory_corpus['vectors']+when_corpus['vectors']+find_corpus['vectors']
+ break_corpus_path=ROOT/'standalone/fixtures/aspect_break_runtime_vectors.json'
+ break_corpus=json.loads(break_corpus_path.read_text())
+ cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']+conversion_corpus['vectors']+compiler_corpus['vectors']+console_corpus['vectors']+serial_corpus['vectors']+receive_cases+directory_corpus['vectors']+when_corpus['vectors']+find_corpus['vectors']+break_corpus['vectors']
  # Historical PAUSE oracle expected an unsupported stop before opcode88 recovery.
  # Its authored seven-second script now executes the recovered native delay.
  cases=[dict(c,expected={}) if c['name']=='PAUSE' else c for c in cases]
@@ -205,6 +209,7 @@ def main():
  sources += [ROOT/'src/aspect/set_runtime.c',ROOT/'src/aspect/set_runtime.h',ROOT/'src/aspect/find_runtime.c',ROOT/'src/aspect/find_runtime.h']
  sources.append(set_corpus_path)
  sources.append(find_corpus_path)
+ sources.append(break_corpus_path)
  sources += [when_corpus_path,receive_overrides_path,ROOT/'src/aspect/when_runtime.c',ROOT/'src/aspect/when_runtime.h']
  for name,rel,define in ASM:
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
@@ -224,7 +229,7 @@ def main():
  program=C.replace('result=aspect_runtime_run(path,limit);',near_admission+'result=aspect_runtime_run(path,limit);')
  program=program.replace(' ck(result==error);',near_observe+' ck(result==error);')
  supported={int(op,16):name for op,name in re.findall(r'%(?:el)?if op=(0x[0-9a-f]+)\n dw (\w+)',(ROOT/'src/aspect/runtime_bridge.asm').read_text())}
- assert len(supported)==69
+ assert len(supported)==71
  # ACV2 adds explicit owned-directory metadata to ACV1's diagnostic inputs.
  table=bytearray(b'ACV2'+struct.pack('<H',len(cases)))
  def block(data):
@@ -276,12 +281,24 @@ def main():
   (OUT/(name+'.ASX')).write_bytes(data);program+=f' run("{name}.ASX",1000,{error},0,0,0,0UL,0);\n'
  (OUT/'MISSING.ASX').unlink(missing_ok=True);program+=' run("MISSING.ASX",1000,1,0,0,0,0UL,0);\n'
  # Native SET dispatch uses a complete owned table; unimplemented selectors
- # remain typed failures. These eleven setters do not implement GET grammar.
- set_supported={0x12:'DISPLAY',0x18:'DUPLEX',0x23:'FINDCASE',0x29:'KEYS',0x2e:'MSG_CRLF',0x30:'PAUSECHAR',0x3b:'RXDATA',0x44:'SWITCHCASE',0x4c:'TXPACE',0x55:'WAITCASE',0x56:'WHENCASE'}
+ # remain typed failures. GET is a separate interactive-input instruction.
+ set_supported={0x09:'BREAK',0x12:'DISPLAY',0x18:'DUPLEX',0x23:'FINDCASE',0x29:'KEYS',0x2e:'MSG_CRLF',0x30:'PAUSECHAR',0x3b:'RXDATA',0x44:'SWITCHCASE',0x4c:'TXPACE',0x55:'WAITCASE',0x56:'WHENCASE'}
  for sub in range(256):
   if sub not in set_supported:(OUT/f'S{sub:02X}.ASX').write_bytes(bytes([0,0x9e,sub]))
  condition=' && '.join(f'sub!={sub}' for sub in set_supported)
  program+=' {unsigned sub;char path[12];for(sub=0;sub<256;++sub)if('+condition+'){sprintf(path,"S%02X.ASX",sub);run(path,1000,3,0,0,0,0UL,0);}}\n'
+ # Native FETCH shares the same complete table but has no status tail.
+ for sub in range(256):
+  if sub not in set_supported:(OUT/f'Q{sub:02X}.ASX').write_bytes(bytes([0,0x37,sub]))
+ program+=' {unsigned sub;char path[12];for(sub=0;sub<256;++sub)if('+condition+'){sprintf(path,"Q%02X.ASX",sub);run(path,1000,3,0,0,0,0UL,0);ck(runtime_set_refresh_count==0);}}\n'
+ for case in break_corpus['raw_getters']:
+  assert hashlib.sha256(case['source'].encode('cp437')).hexdigest()==case['source_sha256']
+  assert compile_source(case['source'])==bytes.fromhex(case['hex'])
+  (OUT/(case['name']+'.ASX')).write_bytes(bytes.fromhex(case['hex']))
+  program+=f' run("{case["name"]}.ASX",1000,0,1,{case["expected"]},0,0UL,0);ck(runtime_set_refresh_count==0);ck(runtime_set_duplex_changed==0);\n'
+ for name,wire in [('QTRUNC',bytes([0,0x37])),('QDEST',bytes([0,0x37,9]))]:
+  (OUT/(name+'.ASX')).write_bytes(wire)
+  program+=f' run("{name}.ASX",1000,5,0,0,0,0UL,0);ck(runtime_set_refresh_count==0);\n'
  for name,wire,error in [('SETTRUNC',bytes([0,0x9e]),5),('SETVALTR',bytes([0,0x9e,0x56]),5),
                          ('SETBOOL2',bytes([0,0xcf,0x9e,0x56,2,0xd0,0x94]),0),('SETBOOLF',bytes([0,0xcf,0x9e,0x56,255,0xd0,0x94]),0)]:
   (OUT/(name+'.ASX')).write_bytes(wire)
@@ -343,8 +360,9 @@ def main():
  '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),*objects],cwd=OUT,check=True)
  report=dict(binary_sha256=sha(OUT/'EXECUTE.EXE'),sources={str(p.relative_to(ROOT)):sha(p) for p in sources},support_units=units,original_inputs=[],
   compile_flags=['8086','small model','cdecl','ASPECT_RUNTIME_DIAGNOSTIC'],fixture_count=len(cases),
-  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+15+len(unsupported)+(256-len(set_supported))+4+len(set_corpus['vectors']),
+  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+15+len(unsupported)+(256-len(set_supported))+4+len(set_corpus['vectors'])+(256-len(set_supported))+len(break_corpus['raw_getters'])+2,
   SET_family=dict(supported_subcommands={f'{key:02x}':value for key,value in set_supported.items()},unsupported_subcommands_tested=256-len(set_supported),truncated_cases=2,raw_boolean_cases=2,integration_vectors=len(set_corpus['vectors'])),
+  BREAK_family=dict(integration_vectors=len(break_corpus['vectors']),raw_fetch_getters=len(break_corpus['raw_getters']),unsupported_fetch_selectors_tested=256-len(set_supported),fetch_truncations=2,diagnostic_timing='Transport readiness only; actual UART pulses covered by separate product DOS tests.'),
   FIND_CASE_family=dict(integration_vectors=len(find_corpus['vectors']),near_failure_cases=sum('near_fail_after' in c for c in find_corpus['vectors']),native_bytes=401,scope='Actual native FIND/SWITCH/CASE with owned near allocations and typed failure before native NULL dereference. FOUND and SWITCH snapshots are shared state; per-invocation SET sensitivity resets separately.'),
   fixture_data={'file':'CASES.DAT','schema':'ACV2','sha256':sha(OUT/'CASES.DAT'),'bytes':len(table),'cases':len(cases)},
   parameter_fixture_aliases={'PARFLOAT':'FLOAT'},
@@ -352,6 +370,6 @@ def main():
   maintained_string_fault_fixture={'STRSHORT':'STRGASS compiler bytes with final00 option and94 return removed; first global HELLO retained, second stays empty'},
   maintained_heap_fault_fixtures={'HEAPFLT':'IDIVEDGE compiler bytes with global-string count changed from0to2','HEAPZERO':'IDZ compiler bytes with global-string count changed from0to2'},
   fixture_expectations={c['name']:{'source_sha256':c['source_sha256'],'asx_sha256':c['asx_sha256'],'expected':c['expected']} for c in cases},
-  scope='Incremental actual native dispatch/operand/operation/file/heap/WHEN/SET/FIND/CASE composition executing source-owned compiled fixtures. Incomplete69-slot opcode table; eleven native SET setters and shared FIND/CASE consumers. Serial queue/clock/carrier inputs and status-tail snapshots are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
+  scope='Incremental actual native dispatch/operand/operation/file/heap/WHEN/SET/FIND/CASE composition executing source-owned compiled fixtures. Incomplete71-slot opcode table; twelve native SET setters and FETCH queries and shared FIND/CASE consumers. Serial queue/clock/carrier inputs and status-tail snapshots are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
  (OUT/'manifest.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 if __name__=='__main__':main()

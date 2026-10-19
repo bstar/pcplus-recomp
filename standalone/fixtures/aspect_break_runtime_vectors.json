@@ -1,0 +1,249 @@
+{
+  "schema": 1,
+  "scope": "Authored execution expectations frozen before DOS run. Diagnostic BREAK models transport readiness, not electrical timing; actual serial owner separately tested. Native SET/FETCH/command dispatcher and FILE/destination ownership execute.",
+  "vectors": [
+    {
+      "name": "BINIT",
+      "source": "integer saved\nproc main\nfetch break saved\nendproc\n",
+      "source_sha256": "efdf74f70576d12ebb55a13ebd0206197b5480e9d287e84180759e7987aa81ad",
+      "hex": "00cf37098d0094",
+      "asx_sha256": "7ce37fefcce8625e7e4e3825cd3f58cf77ae1eafc541b5a944f54dc6120112e8",
+      "expected": {
+        "integer0": 350
+      }
+    },
+    {
+      "name": "BS0",
+      "source": "integer saved\nproc main\nset break 0\nfetch break saved\nendproc\n",
+      "source_sha256": "6e5936c84c6cbb8799f60c38877236e6ae1d34617cb840cc18d3fbdff49c8c08",
+      "hex": "00cf9e09b50037098d0094",
+      "asx_sha256": "19310ee25b47393914af0c72919e2690534cc0af2a349612616584a1555c3b17",
+      "expected": {
+        "integer0": 0
+      }
+    },
+    {
+      "name": "BS1",
+      "source": "integer saved\nproc main\nset break 1\nfetch break saved\nendproc\n",
+      "source_sha256": "668bc34b9df76b035c970005290db9c3fe2b9f052f8dcdfb4ef5e5e33bc80f51",
+      "hex": "00cf9e09b50137098d0094",
+      "asx_sha256": "7a713b7d2ed953893e1ad048575d6d52b69b97292fb5566918e0dd0522e42f0f",
+      "expected": {
+        "integer0": 1
+      }
+    },
+    {
+      "name": "BS350",
+      "source": "integer saved\nproc main\nset break 350\nfetch break saved\nendproc\n",
+      "source_sha256": "2391bb0d6e53feb91866988bdd289734357f81fa619f9b431259de804e7944da",
+      "hex": "00cf9e09ab5e0137098d0094",
+      "asx_sha256": "f51803ab14cb386871c3781ee4680003b7b8dbbf8f6b5157fc5524fca3babe02",
+      "expected": {
+        "integer0": 350
+      }
+    },
+    {
+      "name": "BS999",
+      "source": "integer saved\nproc main\nset break 999\nfetch break saved\nendproc\n",
+      "source_sha256": "d771b4bda5190422c609093a96154d07d59bd09983ba5f965a3c7c29596ff0de",
+      "hex": "00cf9e09abe70337098d0094",
+      "asx_sha256": "13a5707788c740009772d77841fb669ad98ca3f647dc095626defc11dfa7457b",
+      "expected": {
+        "integer0": 999
+      }
+    },
+    {
+      "name": "BS1000",
+      "source": "integer saved\nproc main\nset break 1000\nfetch break saved\nendproc\n",
+      "source_sha256": "e0bca74560caf1148a8b231b4183079b64df2d78c269c2afb71f66cd80500205",
+      "hex": "00cf9e09abe80337098d0094",
+      "asx_sha256": "78508f6adb69d788b71be134f9b99f541ebe654d4e9eeddf20d037fd215c33ee",
+      "expected": {
+        "integer0": 1000
+      }
+    },
+    {
+      "name": "BS32767",
+      "source": "integer saved\nproc main\nset break 32767\nfetch break saved\nendproc\n",
+      "source_sha256": "b333d7a0ab6746a898c7fb5366c7c8d93fc7ad97eb5e79aaea2ece01308903d5",
+      "hex": "00cf9e09abff7f37098d0094",
+      "asx_sha256": "93c3ef464830801fafb70f16c66e2b6b56532526ce809210e7827f54c7d2dbb3",
+      "expected": {
+        "integer0": 32767
+      }
+    },
+    {
+      "name": "BNEG",
+      "source": "integer saved\nproc main\nfetch break saved\nset break -1\nendproc\n",
+      "source_sha256": "25c5b0b84b31b5996a3026d526e9886a6a2c454146b643d1c222940dd6a25122",
+      "hex": "00cf37098d009e09abffff94",
+      "asx_sha256": "24898329f08889ce1886f9a973b64033f6df07dd9ef29921cf84ce418e7931eb",
+      "expected": {
+        "integer0": 350,
+        "error": "operand",
+        "native_error": 1
+      }
+    },
+    {
+      "name": "BMIN",
+      "source": "integer saved\nproc main\nfetch break saved\nset break -32768\nendproc\n",
+      "source_sha256": "955041078623558aebf2f233a920a1e936cc9824deecb00a7a938ed5054e3f39",
+      "hex": "00cf37098d009e09ab008094",
+      "asx_sha256": "17c419bae33786a9cde892bcd8df9dc8a248823677312d9f95190a3a090c956e",
+      "expected": {
+        "integer0": 350,
+        "error": "operand",
+        "native_error": 1
+      }
+    },
+    {
+      "name": "BOFF",
+      "source": "proc main\nbreak\nendproc\n",
+      "source_sha256": "96c5c5bd7bce4ac1687072fa450df0c500e24c3a91d9d20b7a414d33d642125f",
+      "hex": "00cf0d94",
+      "asx_sha256": "d98d0229c5b5d036b6da9895356717879061643c25cc7fe5079a9b102286fa26",
+      "expected": {
+        "error": "unsupported"
+      }
+    },
+    {
+      "name": "BP0",
+      "source": "integer saved\nproc main\nset break 0\nbreak\nfetch break saved\nendproc\n",
+      "source_sha256": "eefb8e343c69cbbe376df88751265b62591b3131fa483d67456409a1df748259",
+      "hex": "00cf9e09b5000d37098d0094",
+      "asx_sha256": "ce25f4bb2254d3f9e713c147ed03f1fe4fe3214668146dcf2e0d241d4d03df88",
+      "expected": {
+        "integer0": 0
+      },
+      "serial": {
+        "enabled": true
+      }
+    },
+    {
+      "name": "BP350",
+      "source": "integer saved\nproc main\nset break 350\nbreak\nfetch break saved\nendproc\n",
+      "source_sha256": "e6526fa69c55284b51887d1063c9f95eba28ef49d1af571b3daf75671a8c4143",
+      "hex": "00cf9e09ab5e010d37098d0094",
+      "asx_sha256": "fa1bc3394fffc9a4dea5950cdd64c214cb9be4cb7ebd7346b8b962beca2b5228",
+      "expected": {
+        "integer0": 350
+      },
+      "serial": {
+        "enabled": true
+      }
+    },
+    {
+      "name": "BP32767",
+      "source": "integer saved\nproc main\nset break 32767\nbreak\nfetch break saved\nendproc\n",
+      "source_sha256": "e468fa784a658ab6474c747197e046d7fff2a9ba3bf20c94a348e00da575bd70",
+      "hex": "00cf9e09abff7f0d37098d0094",
+      "asx_sha256": "144d60d205834809b41707d4bb3d0b932daaf37b2fa0a338a2f34da888fc5876",
+      "expected": {
+        "integer0": 32767
+      },
+      "serial": {
+        "enabled": true
+      }
+    },
+    {
+      "name": "BRESET",
+      "source": "integer saved\nproc main\nset break 0\nfetch break saved\nset break 350\nbreak\nfetch break saved\nendproc\n",
+      "source_sha256": "aa61a7b2901ab7f2e31721745053726003fd9e471873eddce86bb9bbbbac6f3c",
+      "hex": "00cf9e09b50037098d009e09ab5e010d37098d0094",
+      "asx_sha256": "e64d80b2482809ebbcfdcc7535642d006545a2f5afebcd2b6d69f835eeed8b53",
+      "expected": {
+        "integer0": 350
+      },
+      "serial": {
+        "enabled": true
+      }
+    }
+  ],
+  "raw_getters": [
+    {
+      "name": "Q09",
+      "hex": "00cf37098d0094",
+      "expected": 350,
+      "source": "integer result\nproc main\nfetch break result\nendproc\n",
+      "source_sha256": "d0038c292f09b1ffc10d254c976a87372454ef3685b145155ad1a7f233e66ed0"
+    },
+    {
+      "name": "Q12",
+      "hex": "00cf37128d0094",
+      "expected": 0,
+      "source": "integer result\nproc main\nfetch display result\nendproc\n",
+      "source_sha256": "00e4b03a7bfef96a7c431989497aef20adf5a2f7b1bebe7b3aa6c241c9ee39f4"
+    },
+    {
+      "name": "Q18",
+      "hex": "00cf37188d0094",
+      "expected": 0,
+      "source": "integer result\nproc main\nfetch duplex result\nendproc\n",
+      "source_sha256": "660e546173e14318d095f3215b3b118482e7b689835b65540dbde7caafc59335"
+    },
+    {
+      "name": "Q23",
+      "hex": "00cf37238d0094",
+      "expected": 0,
+      "source": "integer result\nproc main\nfetch findcase result\nendproc\n",
+      "source_sha256": "972cd7650e80f9dc98e7cd7a0446ab192588ca8edce290bb31297150804fd7b3"
+    },
+    {
+      "name": "Q29",
+      "hex": "00cf37298d0094",
+      "expected": 0,
+      "source": "integer result\nproc main\nfetch keys result\nendproc\n",
+      "source_sha256": "226060f40c75150a38566d5a3042cc8c8aa1f0659c5e869e7f907b36a6e09eb3"
+    },
+    {
+      "name": "Q2E",
+      "hex": "00cf372e8d0094",
+      "expected": 1,
+      "source": "integer result\nproc main\nfetch msg_crlf result\nendproc\n",
+      "source_sha256": "4b6ab4716561d62348aa7fb3872829664b9c62d5a6b52098110ffe43d5da2534"
+    },
+    {
+      "name": "Q30",
+      "hex": "00cf37308d0094",
+      "expected": 126,
+      "source": "integer result\nproc main\nfetch pausechar result\nendproc\n",
+      "source_sha256": "c8018e1deacb92cf962371937060457956ce15d05021c50a1f1b5f6323bcc0eb"
+    },
+    {
+      "name": "Q3B",
+      "hex": "00cf373b8d0094",
+      "expected": 0,
+      "source": "integer result\nproc main\nfetch rxdata result\nendproc\n",
+      "source_sha256": "05f921f71d531198b5a763a29d5a48d853bab19a80723f9933a3d2f13992b03a"
+    },
+    {
+      "name": "Q44",
+      "hex": "00cf37448d0094",
+      "expected": 0,
+      "source": "integer result\nproc main\nfetch switchcase result\nendproc\n",
+      "source_sha256": "e8dfb61830deb2e28581877e3fb4f18bfc52d82259bf3e372241a552b0fc54b8"
+    },
+    {
+      "name": "Q4C",
+      "hex": "00cf374c8d0094",
+      "expected": 0,
+      "source": "integer result\nproc main\nfetch txpace result\nendproc\n",
+      "source_sha256": "27b1632303012e8afdd8108beef552c118a4abad0fad0c44cbcc78db242d5eca"
+    },
+    {
+      "name": "Q55",
+      "hex": "00cf37558d0094",
+      "expected": 0,
+      "source": "integer result\nproc main\nfetch waitcase result\nendproc\n",
+      "source_sha256": "e816a22cf5107a7d11726d2b28d62e0142a2590738c80232f0a1c7597954eca3"
+    },
+    {
+      "name": "Q56",
+      "hex": "00cf37568d0094",
+      "expected": 0,
+      "source": "integer result\nproc main\nfetch whencase result\nendproc\n",
+      "source_sha256": "d69d97b4cb89a2cdc56827bed1d8dc5d3a930209644e8d16d4d353845f06f855"
+    }
+  ],
+  "raw_getter_scope": "Authored ASX expectations, now tied to original-proved compiler grammar for all twelve getters. Diagnostic DISPLAY0 and gate0 inside native CF main are explicit expected inputs. No parent configuration adoption implied."
+}

@@ -36,7 +36,9 @@ extern aspect_receive_policy_read
 extern aspect_when_register,aspect_when_cancel,aspect_when_monitor,aspect_when_service
 extern _runtime_when_poll,_runtime_when_cancel_poll,_runtime_when_idle_allowed
 extern _runtime_when_host_poll,_runtime_serial_carrier
-extern _runtime_set_status_refresh
+extern _runtime_set_status_refresh,_runtime_break_command
+extern aspect_break_command,aspect_break_setting,aspect_fetch_command
+extern aspect_console_pause_operand
 extern aspect_set_dispatch,aspect_set_display,aspect_set_duplex,aspect_set_findcase
 extern aspect_set_keys,aspect_set_msg_crlf,aspect_set_rxdata,aspect_set_switchcase
 extern aspect_set_waitcase,aspect_set_whencase,aspect_set_pausechar,aspect_set_txpace
@@ -595,9 +597,21 @@ aspect_set_status_refresh:
  jnz fail
  ret
 aspect_set_query_integer: jmp aspect_string_store_integer
+global aspect_break_native,aspect_break_status_refresh,aspect_break_operand,aspect_break_store_integer
+aspect_break_status_refresh: jmp aspect_set_status_refresh
+aspect_break_operand: jmp aspect_console_pause_operand
+aspect_break_store_integer: jmp aspect_string_store_integer
+aspect_break_native:
+ call _runtime_break_command
+ or ax,ax
+ jnz fail
+ ret
 runtime_set_duplex:
  call aspect_set_duplex
+ cmp word [aspect_set_query_mode],0
+ jne .done
  mov word [_runtime_set_duplex_changed],1
+.done:
  ret
 
 SEGMENT _DATA public class=DATA use16
@@ -652,6 +666,9 @@ scalar aspect_serial_wait_result,_runtime_serial_wait_result
 scalar aspect_serial_pause_character,_runtime_serial_pause_character
 scalar aspect_serial_local_echo,_runtime_serial_local_echo
 scalar aspect_serial_character_delay_value,_runtime_serial_character_delay_value
+scalar aspect_break_delay_units,_runtime_serial_break_units
+global aspect_break_query_mode
+aspect_break_query_mode:
 scalar aspect_set_query_mode,_runtime_set_query_mode
 scalar aspect_set_findcase_value,_runtime_set_findcase_value
 scalar aspect_set_switchcase_value,_runtime_set_switchcase_value
@@ -668,7 +685,9 @@ global aspect_set_table
 aspect_set_table:
 %assign setting 0
 %rep 256
-%if setting=0x12
+%if setting=0x09
+ dw aspect_break_setting
+%elif setting=0x12
  dw aspect_set_display
 %elif setting=0x18
  dw runtime_set_duplex
@@ -807,6 +826,10 @@ aspect_dispatch_handlers:
  dw aspect_convert_atoi
 %elif op=0x07
  dw aspect_convert_atol
+%elif op=0x0d
+ dw aspect_break_command
+%elif op=0x37
+ dw aspect_fetch_command
 %elif op=0x13
  dw aspect_arith_bit_not
 %elif op=0x15

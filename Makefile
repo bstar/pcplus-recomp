@@ -802,3 +802,17 @@ test-aspect-break-owner: aspect-serial
 	python3 standalone/check_aspect_break_owner.py
 test-aspect-break-linked: aspect-runner
 	python3 standalone/check_aspect_break_linked.py
+
+.PHONY: aspect-fetch-native test-aspect-fetch-native test-aspect-break-policy test-aspect-break-ui test-aspect-break-dos
+all: aspect-fetch-native
+test: test-aspect-fetch-native
+aspect-fetch-native:
+	python3 standalone/build_aspect_fetch_native.py
+test-aspect-fetch-native: aspect-fetch-native
+	python3 standalone/check_aspect_fetch_native.py
+test-aspect-break-policy: aspect-runner
+	python3 standalone/check_aspect_break_policy.py
+test-aspect-break-ui: terminal
+	python3 standalone/check_aspect_break_ui.py
+test-aspect-break-dos: terminal aspect-runner
+	python3 standalone/test_aspect_break_dos.py --label "break-$$(date -u +%Y%m%dT%H%M%S%N)" --terminal-sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)" --runner-sha256 "$$(sha256sum build/aspect-runner/ASPECT.EXE | cut -d' ' -f1)"

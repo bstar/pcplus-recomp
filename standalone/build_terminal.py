@@ -29,6 +29,7 @@ sources += [ROOT/'src/status/status_renderer_bridge.asm',ROOT/'src/status/status
  ROOT/'reconstruction/terminal_reset/status_refresh.asm',ROOT/'reconstruction/terminal_reset/status_fill.asm',
  ROOT/'reconstruction/program_exec/strlen.asm']
 render_import_adapters={}
+sources.append(ROOT/'src/aspect/break_cursor_read.asm')
 objects=[]
 for index,source in enumerate(sources):
  obj=OUT/f'unit-{index}.obj';objects.append(str(obj));options=[]

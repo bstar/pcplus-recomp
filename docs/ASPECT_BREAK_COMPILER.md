@@ -1,12 +1,12 @@
-# BREAK duration compiler grammar
+# BREAK and FETCH compiler grammar
 
-The maintained host compiler accepts no-argument `BREAK`, `SET BREAK` and `FETCH BREAK` using frozen ASPCOMP 1.01 bytecode evidence. **GET is not the setting query command.** It is an unrelated interactive field-input command. `BREAKLEN` is not the proved setting keyword.
+The maintained host compiler accepts no-argument `BREAK`, `SET BREAK` and FETCH for the 12 recovered settings using frozen ASPCOMP 1.01 bytecode evidence. **GET is not the setting query command.** It is an unrelated interactive field-input command. `BREAKLEN` is not the proved setting keyword.
 
 ```
 ./tools/dev --command python3 standalone/test_aspect_break_compiler.py
 ```
 
-The public corpus freezes 63 authored original compiler attempts: 15 accepted sources in the maintained scope, 47 rejections, and one accepted `FETCH DISPLAY` source retained as explicitly unsupported. The checker verifies all supported bytes, symbol/case/whitespace variants, original rejection boundaries, the unsupported boundary and seven novel emissions. Compilation does not establish working UART BREAK ownership, electrical duration, parent inheritance, or complete FETCH support.
+The public corpus freezes 207 authored original compiler attempts: 64 accepted sources and 143 rejections. The checker verifies all accepted bytes, symbol/case/whitespace variants, original rejection boundaries and 19 novel emissions. A new 144-attempt batch checks all 12 FETCH settings with global, local and integer-parameter destinations, comma separators and eight rejected destination forms per setting. Compilation does not establish working UART BREAK ownership, electrical duration, parent inheritance, or FETCH support beyond these 12 settings.
 
 ## Source syntax and exact bytes
 
@@ -33,9 +33,26 @@ SET emission is `9E 09 <integer-source>`. Examples inside an ordinary main proce
 | `set break 32767` | `00 CF 9E09 ABFF7F 94` |
 | `set break -1` | `00 CF 9E09 ABFFFF 94` |
 
-FETCH BREAK takes an atomic **integer destination**: global, local or integer parameter. Constants, readonly builtins, other variable types, expressions and parentheses are rejected. A comma before the destination is accepted; a trailing comma is rejected. It emits `37 09 <integer-destination>`. For global integer0: `00 CF 37 09 8D00 94`. The query's native owner does not refresh the status row; the successful native setter does.
+FETCH takes an atomic **integer destination**: global, local or integer parameter. Constants, readonly builtins, other variable types, expressions and parentheses are rejected. A comma before the destination is accepted; a trailing comma is rejected. FETCH BREAK emits `37 09 <integer-destination>`. For global integer0: `00 CF 37 09 8D00 94`. The query's native owner does not refresh the status row; the successful native setter does.
 
-Only FETCH BREAK is added here. The original compiler also accepted `FETCH DISPLAY duration`, emitting `37 12 8D00`, but the maintained compiler deliberately rejects it until that family is separately integrated. No getter is implemented as a constant or no-op.
+All 12 proved settings use the same integer destination grammar and `37 <selector> <destination>` encoding:
+
+| Setting | Selector |
+| --- | --- |
+| BREAK | `09` |
+| DISPLAY | `12` |
+| DUPLEX | `18` |
+| FINDCASE | `23` |
+| KEYS | `29` |
+| MSG_CRLF | `2E` |
+| PAUSECHAR | `30` |
+| RXDATA | `3B` |
+| SWITCHCASE | `44` |
+| TXPACE | `4C` |
+| WAITCASE | `55` |
+| WHENCASE | `56` |
+
+For example, `FETCH DISPLAY duration` emits `37 12 8D00` when duration is global integer0. Boolean and byte settings still require integer destinations. Source emission does not normalize the queried value, reinterpret DUPLEX, or mutate RXDATA; the real native getter determines its raw/signed result. Other FETCH settings remain rejected by an explicit whitelist. No getter is implemented as a constant or no-op.
 
 ## Native storage, bounds and defaults
 
@@ -51,9 +68,9 @@ Parent/child inheritance needs an explicit lifetime and ABI decision. The mainta
 
 ## Provenance and limits
 
-`freeze_aspect_break_compiler.py` is an optional oracle-maintenance tool. It hash-checks the private original reports/probes before generating the public authored fixture. Normal compiler checks do not read those private inputs. Compiler SHA:
+`freeze_aspect_break_compiler.py` is an optional oracle-maintenance tool. It hash-checks the private original reports/probes before generating the public authored fixture. Normal compiler checks do not read those private inputs. Original ASPCOMP 1.01 binary SHA (distinct from the maintained Python source hash in the checker report):
 
-`7377e8ec9b18aec8adf4df8a630eacaa50d95a99f732137c94c3582e4633da6e`
+`5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a`
 
 The native storage evidence uses original application SHA `6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904`. Retained REA Evidence IDs:
 

@@ -63,6 +63,7 @@ builds.append('aspect_txpace')
 builds.append('aspect_find_case')
 builds.append('aspect_find_owner')
 builds.append('aspect_break_native')
+builds.append('aspect_fetch_native')
 builds.append('status_helpers')
 builds.append('status_renderer')
 program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/build_{name}.py'],check=True)\n" for name in builds)
@@ -84,6 +85,9 @@ owner_checks.append('standalone/check_status_live.py')
 owner_checks.append('standalone/check_aspect_runner.py')
 owner_checks.append('standalone/check_aspect_txpace_linked.py')
 owner_checks.append('standalone/check_aspect_break_native.py')
+owner_checks.append('standalone/check_aspect_fetch_native.py')
+owner_checks.append('standalone/check_aspect_break_policy.py')
+owner_checks.append('standalone/check_aspect_break_ui.py')
 owner_checks.append('standalone/check_aspect_break_owner.py')
 owner_checks.append('standalone/check_aspect_break_linked.py')
 owner_checks.append('standalone/check_aspect_directory.py')
@@ -123,6 +127,8 @@ outputs += ['aspect-find-case/find_commands.obj','aspect-find-case/case_commands
 outputs += ['aspect-find-owner/OWNER.EXE']
 outputs += ['aspect-break-native/'+u['name']+'.bin' for u in json.loads((ROOT/'standalone/fixtures/aspect_break_native_units.json').read_text())['units']]
 outputs += ['aspect-break-native/break_commands.obj']
+outputs += ['aspect-fetch-native/'+u['name']+'.bin' for u in json.loads((ROOT/'standalone/fixtures/aspect_fetch_native_units.json').read_text())['units']]
+outputs += ['aspect-fetch-native/fetch_command.obj','aspect-fetch-native/break_cursor_read.obj']
 outputs += [f'status-helpers/unit{n}.bin' for n in range(1,5)]
 outputs += ['status-helpers/STATUS.EXE','status-renderer/STATUS.EXE']
 outputs += ['aspect-receive-commands/RECEIVE.EXE','aspect-runtime/CASES.DAT']

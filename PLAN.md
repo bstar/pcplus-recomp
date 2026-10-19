@@ -26,20 +26,20 @@ Modern BBS interaction and independent source-only rebuilding remain required
 regressions across that work. Physical Wi-Fi modem testing is still outstanding.
 
 ASPECT now includes native WHEN/CWHEN matching and deferred handlers through
-the actual resident terminal renderer. Eleven SET setters and native
+the actual resident terminal renderer. Twelve SET setters/FETCH getters and native
 FIND/FOUND/SWITCH/CASE run in DOS with checked temporary ownership. The runtime
-supports69 opcode slots;146 remain unsupported. Status staging and ASIOv4
-capability2 are live. See `docs/ASPECT_WHEN_RUNTIME.md`,
+supports71 opcode slots;144 remain unsupported. Status staging and ASIOv4
+capability3 are live. See `docs/ASPECT_WHEN_RUNTIME.md`,
 `docs/ASPECT_SET_RUNTIME.md` and `docs/ASPECT_FIND_CASE_RUNTIME.md`.
 
-Serial BREAK work now includes249 exact native bytes, original compiler grammar
-for BREAK/SET BREAK/FETCH BREAK, and a linked maintained child transport owner
-with calibrated full-word timing and cancellation/error cleanup. This remains
-preparatory: opcode0D/SET09/FETCH37 production dispatch, parent duration inheritance
-and native notice/status integration are still open. The existing Alt-B parent
-owner remains a separate timing policy. `docs/ASPECT_BREAK_NATIVE.md` and
-`docs/ASPECT_BREAK_OWNER.md` record the evidence and remaining boundaries.
-Complete scripting, keyboard/UI and recorder remain part of the full goal.
+Serial BREAK now executes through native opcode0D, SET09 and FETCH37, with
+ASIOv4 capability3 inheriting the raw configured word and owning the actual
+native notice/cursor bracket. Five actual DOS product cases cover configured
+350/1000, raw65535, zero and in-pulse Escape cleanup. The expanded1147-case DOS
+suite checks all twelve FETCH getters and244 unsupported selectors. The parent
+Alt-B timing policy remains separate. See `docs/ASPECT_BREAK_RUNTIME.md` and its
+native/transport evidence. Complete scripting, keyboard/UI and recorder remain
+part of the full goal; no whole-application gate closes.
 
 ZMODEM now has live Alt-R/Alt-S/F2 dispatch, CONFIG_CODE placement, ten verified
 far callbacks, checked source seek/skip, exact variable receive packets and

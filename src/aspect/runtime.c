@@ -100,6 +100,12 @@ unsigned runtime_open(unsigned owner,const char *path)
     if(aspect_file_read(&header,1,1,&runtime_file)!=1 || header>128){
         runtime_set_error(ASPECT_RUN_HEADER);aspect_file_close(&runtime_file);return 0;
     }
+#if defined(ASPECT_RUNTIME_SERIAL)
+    if(aspect_render_active()){
+        status=aspect_render_policy_inherit();
+        if(status){runtime_set_error(status);aspect_file_close(&runtime_file);return 0;}
+    }
+#endif
     runtime_header=header;
     /* Clear the full pointer tail before native allocation can unwind. */
     memset(runtime_strings,0,sizeof(runtime_strings));runtime_string_count=0;

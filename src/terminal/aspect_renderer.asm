@@ -66,7 +66,8 @@ extern resident_bridge_caller_ds,resident_bridge_callback,resident_bridge_abort
 extern _aspect_render_admit,_aspect_render_preflight_control
 extern _aspect_render_preflight_modes
 extern _aspect_render_client_admit
-extern terminal_status_live
+extern terminal_status_live,terminal_break_ui
+extern terminal_break_delay_units
 extern _script_handoff
 global terminal_render_prepare,terminal_render_revoke,terminal_render_validate,terminal_render_typed_abort
 global terminal_render_failure_notice
@@ -109,7 +110,7 @@ terminal_render_prepare:
  mov word [_script_render_segment],seg resident_bridge_entry
  mov ax,[cs:render_token]
  mov [_script_render_token],ax
- mov word [_script_render_version],2
+ mov word [_script_render_version],3
  xor ax,ax
 .done:
  pop es
@@ -122,6 +123,11 @@ terminal_render_prepare:
  retf
 
 terminal_render_revoke:
+ ; Parent cursor cleanup needs no retired child callback or UART operation.
+ push bx
+ mov bx,1
+ call far terminal_break_ui
+ pop bx
  call resident_bridge_disable
  mov word [cs:render_attached],0
  mov word [cs:render_callback],0
@@ -139,7 +145,7 @@ terminal_render_validate:
  cmp [_script_render_token],ax
  mov ax,1
  jne .done
- cmp word [_script_render_version],2
+ cmp word [_script_render_version],3
  jne .done
  xor ax,ax
 .done:
@@ -211,6 +217,10 @@ render_body:
  je .end
  cmp di,3
  je .status
+ cmp di,4
+ je .break_policy
+ cmp di,5
+ je .break_notice
  cmp di,1
  jne .state
  cmp bx,255
@@ -242,6 +252,32 @@ render_body:
  ; This is the captured bridge's checked parent stack. No child pointers,
  ; receive callbacks, FILE activity or parser entry are used by STATUS.
  call far terminal_status_live
+ ret
+.break_policy:
+ or bx,bx
+ jnz .operand
+ cmp word [_script_handoff+22],0
+ jne .serial
+ call _aspect_render_admit
+ or ax,ax
+ jnz .done
+ mov bx,[terminal_break_delay_units]
+ mov ax,6
+ call resident_bridge_callback
+ cmp ax,14
+ jbe .done
+ jmp .state
+.break_notice:
+ cmp bx,1
+ ja .operand
+ cmp word [_script_handoff+22],0
+ jne .serial
+ push bx
+ call _aspect_render_admit
+ pop bx
+ or ax,ax
+ jnz .done
+ call far terminal_break_ui
  ret
 .serial:
  mov ax,14

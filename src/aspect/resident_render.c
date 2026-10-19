@@ -9,6 +9,8 @@
 unsigned aspect_render_parent_entry[2];
 aspect_render_client aspect_render_client_record;
 static unsigned attached,callback_error;
+static unsigned policy_queried,policy_wait,policy_received;
+extern unsigned runtime_serial_break_units;
 extern unsigned __cdecl aspect_render_client_prepare(void);
 extern unsigned __cdecl aspect_render_client_check(void);
 extern unsigned __cdecl aspect_render_request(unsigned,unsigned);
@@ -25,7 +27,7 @@ unsigned __cdecl aspect_render_prepare(unsigned offset,unsigned segment,unsigned
  aspect_render_client_record.token=token;
  aspect_render_client_record.callback_offset=aspect_render_callback_offset();
  aspect_render_client_record.callback_segment=aspect_render_code_segment();
- callback_error=0;
+ callback_error=0;aspect_render_policy_reset();
  return aspect_render_client_prepare();
 }
 unsigned __cdecl aspect_render_attach(void)
@@ -66,6 +68,35 @@ unsigned __cdecl aspect_render_status(unsigned duplex)
  if(aspect_render_client_check())return ASPECT_RUN_STATE;
  return result?result:callback_error;
 }
+void __cdecl aspect_render_policy_reset(void)
+{policy_queried=policy_wait=policy_received=0;}
+unsigned __cdecl aspect_render_policy_inherit(void)
+{
+ unsigned result;
+ if(!attached || aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(!aspect_serial_active)return ASPECT_RUN_SERIAL;
+ if(policy_queried)return 0;
+ if(policy_wait)return ASPECT_RUN_STATE;
+ callback_error=policy_received=0;policy_wait=1;
+ result=typed(aspect_render_request(ASPECT_RENDER_BREAK_POLICY,0));
+ policy_wait=0;
+ if(aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(result)return result;
+ if(callback_error)return callback_error;
+ if(!policy_received)return ASPECT_RUN_STATE;
+ policy_queried=1;return 0;
+}
+unsigned __cdecl aspect_render_break_notice(unsigned end)
+{
+ unsigned result;
+ if(!attached || aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(!aspect_serial_active)return ASPECT_RUN_SERIAL;
+ if(end>1)return ASPECT_RUN_OPERAND;
+ callback_error=0;
+ result=typed(aspect_render_request(ASPECT_RENDER_BREAK_NOTICE,end));
+ if(aspect_render_client_check())return ASPECT_RUN_STATE;
+ return result?result:callback_error;
+}
 /* Called only by the far callback's checked child DS=SS stack. A closed UART
  * permits plain diagnostic rendering, not new receive/transmit operations. */
 static unsigned callback_dispatch(unsigned operation,unsigned value)
@@ -78,6 +109,9 @@ static unsigned callback_dispatch(unsigned operation,unsigned value)
  }
  if(!aspect_serial_active){callback_error=ASPECT_RUN_SERIAL;return operation==ASPECT_RENDER_RAW_WAIT || operation==ASPECT_RENDER_RAW_NOW?65535U:callback_error;}
  switch(operation){
+ case ASPECT_RENDER_BREAK_VALUE:
+  if(!policy_wait || policy_received){callback_error=ASPECT_RUN_STATE;return callback_error;}
+  runtime_serial_break_units=value;policy_received=1;return 0;
  case ASPECT_RENDER_RAW_WAIT:return runtime_receive_raw_character(1);
  case ASPECT_RENDER_RAW_NOW:return runtime_receive_raw_character(0);
  case ASPECT_RENDER_UNREAD:

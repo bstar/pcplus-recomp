@@ -568,7 +568,7 @@ independent near-owner DOS checks and125 reproducible outputs remain separate
 scope.69 opcode slots are implemented,146 remain unsupported, and no whole-
 application gate is closed.
 
-F03/F13 now have [scoped BREAK recovery and a child transport owner](ASPECT_BREAK_OWNER.md):
+The7ff697c F03/F13 checkpoint added [scoped BREAK recovery and a child transport owner](ASPECT_BREAK_OWNER.md):
 249 exact native bytes, original compiler grammar for BREAK/SET BREAK/FETCH BREAK,
 626 linked UART ownership inputs and31 linked timing/cancellation/error cases.
 The source-only proof reproduces132 outputs. Interpreter dispatch for these
@@ -578,3 +578,15 @@ counts stay69 opcode slots and eleven SET setters. Native notice pointer0000h
 is now proved valid DS:0000 (`*** BREAK ***`), rather than a missing resource.
 See [native evidence](ASPECT_BREAK_NATIVE.md) and
 [validation](validation/aspect-break-owner.json). No whole-application gate closes.
+
+
+F03/F13 now include [live ASPECT BREAK/FETCH integration](ASPECT_BREAK_RUNTIME.md):
+71 opcode slots, twelve SET/FETCH families and1147 actual DOS execution cases.
+Capability3 inherits the raw configured duration once per invocation and brackets
+the native notice/cursor with retained-underlay cleanup. Five DOS pulse/cancel
+cases, six status compositions, eight WHEN compositions and both established
+BBS workflows pass against the current parent/child.138 outputs reproduce
+byte-identically without originals. [Bound validation](validation/aspect-break-runtime.json)
+retains the first observer's missed post-exit clearing, the corrected observer
+and the final current products. Physical modem/timing, immediate-forwarding
+ENiGMA behavior and complete application gates remain open.

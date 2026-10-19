@@ -60,7 +60,16 @@ endpoint:
  je .emit
  cmp ax,2
  je .end
+ cmp ax,4
+ je .policy
  mov ax,10
+ jmp .return
+.policy:
+ or bx,bx
+ jnz .bad
+ mov ax,6
+ mov bx,350
+ call far [cs:callback]
  jmp .return
 .begin:
  inc word [cs:results]
@@ -68,7 +77,7 @@ endpoint:
  je .denied
  cmp word [bx],0x5243
  jne .bad
- cmp word [bx+2],2
+ cmp word [bx+2],3
  jne .bad
  cmp word [bx+4],0x7123
  jne .bad

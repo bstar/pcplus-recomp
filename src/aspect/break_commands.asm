@@ -58,6 +58,13 @@ ORG 0x31bb
 %define aspect_break_wait_ticks 0x6b98
 %define aspect_break_screen_restore 0x7682
 %else
+%ifdef ASPECT_BREAK_RUNTIME
+%define ASPECT_BREAK_UNIT 7
+SEGMENT _TEXT public class=CODE use16
+global aspect_break_command,aspect_break_setting
+extern aspect_break_native,aspect_break_status_refresh,aspect_break_delay_units
+extern aspect_break_query_mode,aspect_break_operand,aspect_break_store_integer
+%else
 %define ASPECT_BREAK_UNIT 0
 SEGMENT _TEXT public class=CODE use16
 global aspect_break_native,aspect_break_command,aspect_break_setting
@@ -71,6 +78,7 @@ extern aspect_break_screen_end,aspect_break_video_segment,aspect_break_video_off
 extern aspect_break_notice_disabled,aspect_break_notice_attribute
 extern aspect_break_screen_save,aspect_break_screen_fill,aspect_break_screen_text
 extern aspect_break_wait_ticks,aspect_break_screen_restore
+%endif
 %endif
 %if ASPECT_BREAK_UNIT=0 || ASPECT_BREAK_UNIT=1
 aspect_break_native:
@@ -106,12 +114,12 @@ aspect_break_native:
  pop si
  ret
 %endif
-%if ASPECT_BREAK_UNIT=0 || ASPECT_BREAK_UNIT=2
+%if ASPECT_BREAK_UNIT=0 || ASPECT_BREAK_UNIT=2 || ASPECT_BREAK_UNIT=7
 aspect_break_command:
  call aspect_break_native
  jmp near aspect_break_status_refresh
 %endif
-%if ASPECT_BREAK_UNIT=0 || ASPECT_BREAK_UNIT=3
+%if ASPECT_BREAK_UNIT=0 || ASPECT_BREAK_UNIT=3 || ASPECT_BREAK_UNIT=7
 aspect_break_setting:
  cmp word [aspect_break_query_mode],0
  jnz .query
