@@ -73,11 +73,10 @@ produces a byte-identical DOS executable. The report records Nix compiler and
 DOSBox-X paths, source hashes, input corpus hashes and diagnostic executable
 hash. See [validation/zmodem-wire.json](validation/zmodem-wire.json).
 
-These results establish wire framing only. They do not establish file-transfer
-interoperability or performance. Next work is the session state machines:
-ZRINIT negotiation, ZFILE metadata, checked per-file ownership, ZRPOS/retry,
-ZDATA and verified-offset accounting, ZEOF/install gates, batch completion and
-bounded ZFIN/OO handling. Sender seeking, resume including EOF and empty files,
-timeouts/cancel, reverse-channel handling, terminal UI/UART ownership, independent
-peers, stock Synchronet/ENiGMA transfers and physical modem tests remain open.
+These results establish wire framing only. The separate
+[maintained session engine](ZMODEM_SESSION.md) now adds negotiation, metadata,
+verified-position recovery, checked receive commits, sender seeking and bounded
+completion, with independent peer and actual DOS component checks. Terminal
+source/storage adaptation, far-segment placement, serviced UI/UART ownership,
+stock Synchronet/ENiGMA BBS sessions and physical modem tests remain open.
 All full-application gates, including F08, remain open.

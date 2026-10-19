@@ -1,0 +1,54 @@
+#ifndef PCPLUS_ZMODEM_H
+#define PCPLUS_ZMODEM_H
+#include "zmodem_wire.h"
+#include "batch_header.h"
+#ifdef __WATCOMC__
+#define ZM_FAR __far
+#else
+#define ZM_FAR
+#endif
+/* Explicit foreground owner. Callbacks service transport/cancel during waits
+ * and writes. read returns byte or one of the three sentinel values below.
+ * Other callbacks return zero on success, nonzero on failure; next returns
+ * ZM_DONE only when enumeration is complete. Seek accepts offsets including EOF.
+ * Received metadata size is advisory. commit must check close and installation
+ * before returning success. abort/close must retain ambiguous ownership outside
+ * this workspace and must never retry an uncertain physical close.
+ */
+enum { ZM_OK=0,ZM_DONE=1,ZM_ARGUMENT=2,ZM_IO,ZM_TIMEOUT,ZM_CANCEL,
+ ZM_PROTOCOL,ZM_FILE,ZM_END_UNCONFIRMED };
+#define ZM_WAIT 0xffffU
+#define ZM_BROKEN 0xfffeU
+#define ZM_ABORT 0xfffdU
+typedef struct zm_ops {
+ unsigned (ZM_FAR __cdecl *read_byte)(void *,unsigned seconds);
+ unsigned (ZM_FAR __cdecl *write_wire)(void *,const void *,unsigned);
+ unsigned (ZM_FAR __cdecl *next)(void *,char *,zw_u32 *);
+ unsigned (ZM_FAR __cdecl *seek)(void *,zw_u32);
+ unsigned (ZM_FAR __cdecl *read_file)(void *,void *,unsigned,unsigned *);
+ unsigned (ZM_FAR __cdecl *close_source)(void *,unsigned complete);
+ unsigned (ZM_FAR __cdecl *open_received)(void *,const batch_header_result *);
+ unsigned (ZM_FAR __cdecl *write_received)(void *,const void *,unsigned);
+ unsigned (ZM_FAR __cdecl *commit_received)(void *);
+ unsigned (ZM_FAR __cdecl *abort_received)(void *);
+} zm_ops;
+typedef struct zm_session {
+ const zm_ops *ops;void *context;
+ /* owned: 0 resolved, 1 active, 2 source close failed (never called again). */
+ unsigned status,cleanup_status,sending,owned,format,control,block,retries;
+ unsigned phase,skipped;
+ zw_u32 position,size,files,bytes;
+ char name[13];
+ zw_decoder decoder;
+ unsigned char rx[1024],data[1024],wire[2059];
+} zm_session;
+/* Caller provides the workspace, disjoint ops and durable callback context.
+ * No static state or allocation. DOS near arguments, DS=SS; callbacks are far
+ * so the engine/codec may later occupy a separate code segment. A session is
+ * synchronous and non-reentrant. Receiver starts at offset zero in a new owned
+ * stage; retransmission resumes that stage's verified offset. Existing files
+ * may be skipped by open_received returning ZM_DONE, never overwritten here.
+ * Sender uses bounded ZCRCW packets; receiver accepts all four endings.
+ */
+unsigned __cdecl zm_run(zm_session *,const zm_ops *,void *,unsigned sending);
+#endif

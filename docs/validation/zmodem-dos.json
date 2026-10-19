@@ -1,0 +1,842 @@
+{
+  "passed": true,
+  "DOS_cases": 45,
+  "cases": [
+    {
+      "label": "receive-65-0",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 0,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "90a6edb47bbd46999cd8bfb45610a443bc238bb312dcb3b03c8d01f46e56ee6f",
+      "output_sha256": "9f463b145e0a2951e2283eacf20640ee8dca11e50fb70d9c350bac05f6edb0fd"
+    },
+    {
+      "label": "send-65-0",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 0,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "57e2864a6eb5963490f7748d8c130e0ed0d4657274737a77f7c15dd100c96c6b",
+      "output_sha256": "8c14186903ccc864a9749bd7cda3b7562696ddd9a24f2c6932e767300091f416"
+    },
+    {
+      "label": "receive-65-1",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 1,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "d88db56f7df635d7272c5634b2bc5e48a12315f8892ab75663c1545a212b90ca",
+      "output_sha256": "cde8f5f9f038e9363443459c55a84e32ab9a1c9780f67b5d617048ea4a5f2a0d"
+    },
+    {
+      "label": "send-65-1",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 1,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "015f09a4292b7153f6dd6f9e9d03c68bd2197369420bbed1577e58655839c874",
+      "output_sha256": "de43349889f78b99e83eccee80123c6399d10200d3f4d5db323485e225a32cfe"
+    },
+    {
+      "label": "receive-65-1023",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 1023,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "b024821206cdfa39d0caf625c9f203ac7fd633395e9045d627d5024d4ca7b67d",
+      "output_sha256": "3c001a9bebf716541208bffce24af5ff5d7b4583ef8a139a5810f930b5b649fc"
+    },
+    {
+      "label": "send-65-1023",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 1023,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "731bbe4367803377b559f0f1ce2e2ec5405984182c4cd5728e503905b3ff658b",
+      "output_sha256": "4a849b8a3758e49a4814f1390e9c312b3ae834639c86f991b102cd025ac4e6f3"
+    },
+    {
+      "label": "receive-65-1024",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 1024,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "85e77282f8a61ee914b8b9806cc71c8f507704bba3dc5b01b4d38411a59b056b",
+      "output_sha256": "0836cec3a908b478e0aac1a7b94545014584826aa62444262a2cb3a705442090"
+    },
+    {
+      "label": "send-65-1024",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 1024,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "e3ed5c26fb18768e8cb0a2e802183570c113bdaeb0f48486ed2dc56ec7b19b30",
+      "output_sha256": "351d2002c5acad8f1f0f0f33ff8365e35efa2af44ffc0e6606b212dcc32202df"
+    },
+    {
+      "label": "receive-65-1025",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 1025,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "ff15a02546f0cfb0f97c91dc0132ca133b8f0791910c7c3cc6a00e9871812dfa",
+      "output_sha256": "da3260ac242f0c701110c7c824219c761510697d805e788efa1047a842e4e14e"
+    },
+    {
+      "label": "send-65-1025",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 1025,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "b9cfba85fdc387fcee2fc7a0c6c7435aa6c4c9e1e39231fdfe81d3a8ae3555ca",
+      "output_sha256": "d644287836376f1b8de58e3a408fbdcaacbe7fe176db10d247c07dab567ce355"
+    },
+    {
+      "label": "receive-65-65797",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 65797,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "a9872c361304f88983fcf76b58d2e88f10fafa521b9f51091a49740056e04406",
+      "output_sha256": "d83da7e3dbf2fd5adacc85de3d8789ca9149a5e2907a623f29bcbc4052cdd10a"
+    },
+    {
+      "label": "send-65-65797",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 65797,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "7dd125d6ef16fb3678254eba8eb7da15d93652d204d8f92a1acd134765853506",
+      "output_sha256": "fc6b7de5605bcf4c8b2ed03408b0205bafdbcbd23b1785e16c89f9a8941e1d80"
+    },
+    {
+      "label": "receive-67-0",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 0,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "f85d0180b42d050a52b1fda663eb749d580866fad2941e3062b8366367ba9bd3",
+      "output_sha256": "9f463b145e0a2951e2283eacf20640ee8dca11e50fb70d9c350bac05f6edb0fd"
+    },
+    {
+      "label": "send-67-0",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 0,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "7ae5c557e917db78ed4ad54e6dc94fc5c3ca41b1e68ef2cab0d86cd16ce4da67",
+      "output_sha256": "9c23ca4fb4276b250b392799e5209cf62307c6482c21afdf4197889526d67f02"
+    },
+    {
+      "label": "receive-67-1",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 1,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "211702ccfafb79b246423f75dd6c5883e0b6d27b8b28263751300af9b3278ea7",
+      "output_sha256": "cde8f5f9f038e9363443459c55a84e32ab9a1c9780f67b5d617048ea4a5f2a0d"
+    },
+    {
+      "label": "send-67-1",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 1,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "727a2a9461d9c1627c1bd5075c1126f6d80ce24ca68954b87909d0dccd79c8c1",
+      "output_sha256": "1c62b719ed13118724ed4d699055b5ed2865e65dc09e2364ab120d57d368f25b"
+    },
+    {
+      "label": "receive-67-1023",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 1023,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "db09b14005d100cf3af60ee2d288e9623103619e0b6d49d096b44b8406aa7d34",
+      "output_sha256": "3c001a9bebf716541208bffce24af5ff5d7b4583ef8a139a5810f930b5b649fc"
+    },
+    {
+      "label": "send-67-1023",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 1023,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "8ab8e30a08a2b97250d831c71fbadf5921924bac95bcda371f7079e6ad75a7e3",
+      "output_sha256": "aa677b0d04123006e6ab6f74ff0f9e31015885a71289008288859b933dac4670"
+    },
+    {
+      "label": "receive-67-1024",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 1024,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "e0af6360bc7fc756cf86e4a88fbdc4d9c2d02f11ec40745c3daa7a185c0d6e80",
+      "output_sha256": "0836cec3a908b478e0aac1a7b94545014584826aa62444262a2cb3a705442090"
+    },
+    {
+      "label": "send-67-1024",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 1024,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "89ed1c7207d10eb877ef3fe1a4c919e47e91a06fab92126580de51d13bd7f24b",
+      "output_sha256": "1ea27e3f4bc258341039891c6f3d34536e7d69f1644f71f5d1eda055f9145317"
+    },
+    {
+      "label": "receive-67-1025",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 1025,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "91552352c55a92d8a5fa682160f46cd25ae35fd06d81c808dcdb55fa9191ae31",
+      "output_sha256": "da3260ac242f0c701110c7c824219c761510697d805e788efa1047a842e4e14e"
+    },
+    {
+      "label": "send-67-1025",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 1025,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "9d5f578a38ff435523a54513c53d2744a865c4552ff8bf9c45785885fac4f140",
+      "output_sha256": "bb5f63ae4424cae25118db1a8dd3c46f3f9795bcdc457aa9dfbba8c82a70b373"
+    },
+    {
+      "label": "receive-67-65797",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 65797,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "e5339d3cca70844c5f099378e84bb65505a6553b4e787f153ead1b6e930b26b9",
+      "output_sha256": "d83da7e3dbf2fd5adacc85de3d8789ca9149a5e2907a623f29bcbc4052cdd10a"
+    },
+    {
+      "label": "send-67-65797",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 65797,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "0ff3dd2432ec96e43046ec15027d9d6401dcd5910bfc770257f1ebdc8ecc185f",
+      "output_sha256": "ed0b0283620026fdbef7bcae990d171fda39cf29d38f1053d6b858fa33d6b71c"
+    },
+    {
+      "label": "receive-ending-estimate-104",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 6,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "228bd55c46bb915fcf53728d3d5a8b9c077876477167ed6cbbc5841b2482e5d3",
+      "output_sha256": "ed65ee4a740e85b3dd5703a9f35b73d2563fad3cdd9939d9c6eb299f6fcd009e"
+    },
+    {
+      "label": "receive-ending-estimate-105",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 6,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "08a127807e3789e34a5a95fc9c955e95e618fd9ebf65fc01082ef36daa10ed51",
+      "output_sha256": "ed65ee4a740e85b3dd5703a9f35b73d2563fad3cdd9939d9c6eb299f6fcd009e"
+    },
+    {
+      "label": "receive-ending-estimate-106",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 6,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "83e9c923e6da54aeb73666b317f3f287e179d8cad2ae1ab8ecfda7e47a2cb3a6",
+      "output_sha256": "74452d7b3544da9f77f2128cd495c00738ba22fd83d4319c14fdbb6608eb87f1"
+    },
+    {
+      "label": "receive-ending-estimate-107",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 6,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "ed58d347ef21925da075bbf034b9d2f6b1defbe11b848a2965a6dba409b81ae3",
+      "output_sha256": "74452d7b3544da9f77f2128cd495c00738ba22fd83d4319c14fdbb6608eb87f1"
+    },
+    {
+      "label": "CRC-duplicate-offer-zero-size-estimate",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 6,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "f05c001d2c9beecac91d35b3a60c34690a5a7e3bf48ba2b5d97bcd021b6483c0",
+      "output_sha256": "ef3406607c0f9efe838e30e054e947a9a0c5c5f032cecd1ff334d57d9cdc2bc0"
+    },
+    {
+      "label": "send-resume-0",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 6,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "28ba53d011255f1464967cf8821783aa740afa61ebcffe8e4ebba5879c9810b9",
+      "output_sha256": "fd5c4a4b73873d6671f72ee1f63a72867292a9e7892608c1f2ac7a545e3b3099"
+    },
+    {
+      "label": "send-resume-3",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 6,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "3f26a2dc1bd5255460568a49d18b45bc8636def6bfcb069e961db416ec6d5c4e",
+      "output_sha256": "e5837e2dc76969e347fd4a57bbe42e555f97aebf786fd5b1b6898ccd2d40440a"
+    },
+    {
+      "label": "send-resume-6",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 6,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "89248815316eaebc5a2d0d3231e82ada40c01df6a29c383ff5dc1116ac73a28e",
+      "output_sha256": "2d0c034b1635a2d5ead67455023014fdf1a6a5153af8cbe23e1920b35cf14f8d"
+    },
+    {
+      "label": "cancel-owned-stage",
+      "passed": true,
+      "result": {
+        "status": 5,
+        "files": 0,
+        "bytes": 0,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "ba31d3a6cd23f281d3f1b5041a53d01341221ad119955beffbe54ccc5b11f693",
+      "output_sha256": "003c892475ec69e18c9de9ed37e8fed20bac51ccf256b636d38ac4cf01fb1bf7"
+    },
+    {
+      "label": "lost-final-OO",
+      "passed": true,
+      "result": {
+        "status": 8,
+        "files": 1,
+        "bytes": 3,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "9216b714dbfbb9f8fa6ff1c892bb1479273a82011194e603950aa3dfc2c1910a",
+      "output_sha256": "6b006d43e818dc267b73f987cdf27c04246aa49f466ea3eae4cf800877bcf556"
+    },
+    {
+      "label": "existing-target-skipped",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 0,
+        "bytes": 0,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "9dd892bb3f87c71ebe0e1e34b2aa7cc874fbb88d4455b5402db56c2750db94c0",
+      "output_sha256": "2ea268e8f37cd2032ab6bc949c0d5b85597e5df78e9e433a99103244729e8151"
+    },
+    {
+      "label": "foreign-stage-preserved",
+      "passed": true,
+      "result": {
+        "status": 7,
+        "files": 0,
+        "bytes": 0,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "9dd892bb3f87c71ebe0e1e34b2aa7cc874fbb88d4455b5402db56c2750db94c0",
+      "output_sha256": "93b9e7c683a7b09967b3fcecf96dac88159ea6a813beff38d5e793d301d08e25"
+    },
+    {
+      "label": "write-failure",
+      "passed": true,
+      "result": {
+        "status": 7,
+        "files": 0,
+        "bytes": 0,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "f3c6772e94ef0f526ed18fa7e0842426f798d8e0e05864eacd661a434c149ff2",
+      "output_sha256": "8ca2bf97a4f8aee7a76b8ae57d071fc088d4cd745f3ecb7a55f649a535a63472"
+    },
+    {
+      "label": "commit-failure-no-acknowledgement",
+      "passed": true,
+      "result": {
+        "status": 7,
+        "files": 0,
+        "bytes": 0,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "9a1417381463b137d48e6b56c64b2dd182ad8ec8f6b8cdfe89375e42206c28a6",
+      "output_sha256": "003c892475ec69e18c9de9ed37e8fed20bac51ccf256b636d38ac4cf01fb1bf7"
+    },
+    {
+      "label": "source-fault-1",
+      "passed": true,
+      "result": {
+        "status": 7,
+        "files": 0,
+        "bytes": 0,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "d1395bc421113f0bd44826567c6e83753463837a1fced1c201c9afbebe070ca5",
+      "output_sha256": "64606c3b80b9ef9c1332233dd9f73c846bb0a430ef72be4aacd9c196c42e5449"
+    },
+    {
+      "label": "source-fault-2",
+      "passed": true,
+      "result": {
+        "status": 7,
+        "files": 0,
+        "bytes": 0,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "d1395bc421113f0bd44826567c6e83753463837a1fced1c201c9afbebe070ca5",
+      "output_sha256": "64606c3b80b9ef9c1332233dd9f73c846bb0a430ef72be4aacd9c196c42e5449"
+    },
+    {
+      "label": "source-fault-3",
+      "passed": true,
+      "result": {
+        "status": 7,
+        "files": 0,
+        "bytes": 0,
+        "cleanup": 1,
+        "owned": 2,
+        "closes": 1,
+        "uncertain": 1,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "d1395bc421113f0bd44826567c6e83753463837a1fced1c201c9afbebe070ca5",
+      "output_sha256": "f9b823ce3f5e559da59b4fa1ff9aa8d8e6e859ca9e417a978436da0f695ea8d7"
+    },
+    {
+      "label": "missing-filename-NUL",
+      "passed": true,
+      "result": {
+        "status": 6,
+        "files": 0,
+        "bytes": 0,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "c658dbc165a6ee796d0c33cfdf2bd15909a546b2cd21189b6111febf9fcde36b",
+      "output_sha256": "93b9e7c683a7b09967b3fcecf96dac88159ea6a813beff38d5e793d301d08e25"
+    },
+    {
+      "label": "missing-metadata-NUL",
+      "passed": true,
+      "result": {
+        "status": 6,
+        "files": 0,
+        "bytes": 0,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "f3cff27656e99b06212f258d708dfe99c769cd8d67283683a5a4c133c1425e89",
+      "output_sha256": "93b9e7c683a7b09967b3fcecf96dac88159ea6a813beff38d5e793d301d08e25"
+    },
+    {
+      "label": "unsafe-filename",
+      "passed": true,
+      "result": {
+        "status": 6,
+        "files": 0,
+        "bytes": 0,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 0,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "c48216cb2ff33ad4cd334fc8c62172c383cbd84daa5a76f031f8bc178e9274f6",
+      "output_sha256": "93b9e7c683a7b09967b3fcecf96dac88159ea6a813beff38d5e793d301d08e25"
+    },
+    {
+      "label": "finite-receiver-buffer-seven",
+      "passed": true,
+      "result": {
+        "status": 0,
+        "files": 1,
+        "bytes": 17,
+        "cleanup": 0,
+        "owned": 0,
+        "closes": 1,
+        "uncertain": 0,
+        "stage": 0,
+        "workspace": 4200,
+        "ops": 40
+      },
+      "input_sha256": "4ede8984e19a7ebbb158afba4f27dafc048ea915c8057b59643150566c278941",
+      "output_sha256": "a31ec54028127c43dd391af31bfb8fcad2cc0c02b885003f60e5019bef2fb0be"
+    }
+  ],
+  "binary_sha256": "5897ab1dd7c86b9ed9be00e3c436d336cc4a65ba0e44f767b996407ea5e29d4e",
+  "isolated_source_build_byte_identical": true,
+  "tools": {
+    "wcl": "/nix/store/wks50wdhsyxs7wx9gvqlwjgavhkkdag1-open-watcom-v2-0-unstable-2026-04-11/bin/wcl",
+    "dosbox-x": "/nix/store/cb0mas86nyk9lgzjas06nr688dpwbs86-dosbox-x-2026.07.02/bin/dosbox-x"
+  },
+  "sources": {
+    "src/transfer/zmodem.c": "0df301a89e0f0860675b90caf91ef2691c965968a05de1778eeb5f500abe5dcd",
+    "src/transfer/zmodem_wire.c": "9e78914c19bb208e92246a8850f1a5430708db279ca588f423f89b6a70646149",
+    "src/transfer/batch_header.c": "5003de29446cc1ec3a3776dcb1798b2763a6f1d556e866abe7e207cc39b49aa5",
+    "src/transfer/download_file.c": "ce8d41645e5fe4b3ab81c791f8aa6c3634d98bd0d5f8bb6afd698052391ade68",
+    "src/transfer/download_fs.c": "60f29a5dcfc60eda2b4cd4a86397b62528b5eeceb68f5337d7bea1a6878d34e6",
+    "standalone/zmodem_host.c": "f4ab74edca435d2ed6f142c5cb0f6c1462edfed7422046f539fc30fd77c64481",
+    "src/transfer/zmodem.h": "d82b9c0ed6cd1d44470b93c5f0035a25d9a7abffa9651ab6b0f2156413b6cf30",
+    "src/transfer/zmodem_wire.h": "524a2fe2ae43ba15baa20fbe24efd1947725dcc92337f03618f0d474030801c5",
+    "src/transfer/batch_header.h": "90b6691b30d0b60018bc05fe9b72932a2e913806913b326a15ab1ab15c69ad0b",
+    "src/transfer/download_file.h": "12793ce2eb2007ad499bbb1d9a43800a7eca28f9a26f82eef4edc4500315d6a0",
+    "src/transfer/download_fs.h": "5ae3364e19981588631f3cb913c7eb3ad9e66937e37bfddb6fb3675dede22a92",
+    "standalone/test_zmodem_dos.py": "57702501cfcb5264473f73410e0ab131a2facc47210e3ed75e3f6e6ec3a0b758",
+    "standalone/check_zmodem.py": "4e237bdb5ced6bad33fde761b4424d6b3d7c7b5424b9aa042b2fd2ec42f12751",
+    "standalone/check_zmodem_wire.py": "d2638ac80f4d2a019fcfb4bb74b86a1f2a22453f3ccc672f5822df39189e22db",
+    "nix/flake.nix": "7f069dd8346be02006737101a2790b99a881411fa75b657316f75b090816c15f",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+    "tools/dev": "abbf4bd3a4d6cb91b5f7eecc3919ccbccd15e472bc49463e9d2669adc67e0bca"
+  },
+  "scope": "Actual source-built 8086 DOS session engine with far callbacks and real checked receive filesystem owner. Wire input is scripted, source callbacks diagnostic stdio; not the terminal source/transport/UI adapter or a live DOS UART/BBS session."
+}

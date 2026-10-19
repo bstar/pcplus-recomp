@@ -25,13 +25,16 @@ startup/schema/default generation, packaging and target hardware validation.
 Modern BBS interaction and independent source-only rebuilding remain required
 regressions across that work. Physical Wi-Fi modem testing is still outstanding.
 
-ZMODEM is the active transfer addition. Retained REA evidence now maps its common
+ZMODEM is the active transfer addition. Retained REA evidence maps its common
 framing and separate send/receive overlays (`docs/ZMODEM_NATIVE.md`). The maintained
-wire codec passes independent Python/host checks and source-built 8086 DOS
-vectors/fault streams, with a byte-identical isolated rebuild; see
-`docs/ZMODEM_WIRE.md`. It is not yet linked into the terminal. Negotiation,
-checked file owners, sender/receiver recovery, UI/UART integration and modern
-BBS peer tests remain required before claiming live ZMODEM support.
+wire codec and batch session engine now pass independent host/wire checks,
+source-built 8086 DOS workflows, pinned lrzsz transfers and selected stock
+Synchronet protocol-helper transfers, including corruption recovery. The DOS
+receive diagnostic uses the existing checked file owner. Byte-identical isolated
+rebuilds pass. See `docs/ZMODEM_WIRE.md` and `docs/ZMODEM_SESSION.md`. Terminal
+source seek/storage adaptation, far placement, serviced UI/UART ownership,
+streaming/window behavior and actual stock BBS sessions remain required before
+claiming live ZMODEM support.
 
 ## 1. Serial driver — active
 

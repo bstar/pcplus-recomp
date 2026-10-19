@@ -83,12 +83,14 @@ Verified source-built subcases, with every whole-feature gate still open:
 | F11 | Serviced maintained redisplay over the native history format | `LIVE_REDISPLAY.md`; separate63,000-byte live ring/frozen snapshot, Ctrl-PgUp line/page/Home/End navigation, ASCII case-insensitive search/F3, bounded foreground search and live-screen/cursor preservation. Linked native writer checks full ring wrapping; linked viewer and independent actual DOS video/UART tests verify browsing/search with incoming data. W adds serviced checked append/CRLF history export; `HISTORY_EXPORT.md` binds27 linked inputs and three actual DOS workflows, including append past70KB and canonical four-owner exclusion. `FILENAME_CLIPBOARD.md` adds Alt-= and redisplay C,15-entry editing/tagging, recovered bounded extraction and one/all/tagged packets with runtime separators.46 linked inputs and two actual DOS observer/peer workflows cover serviced output, partial cancellation, UART-completion Single removal and connection-queue discard. The core passes614 linked inputs,321 optional original comparisons and559 actual8086 DOS assertions. `CLIPBOARD_SETTINGS.md` adds validated PRM04EA startup import,46th editor field, live adoption and session-R preservation:805 linked inputs and7 actual DOS workflows. `CLIPBOARD_TRANSFERS.md` adds six actual DOS Single/Tagged/All selection workflows across strict XMODEM/YMODEM peers, stale-name/canceled-prompt recovery, post-transfer reuse and external BIOS ownership observation. Selected stock Single/download workflows pass Synchronet Filespec/XMODEM and ENiGMA search/YMODEM plus a second post-transfer clipboard search (`validation/bbs-clipboard-transfers.json`); four failed ENiGMA fixture attempts remain explicit. Stock uploads/multi-name conventions, full original UI, other video geometries and physical modem validation remain open. |
 | F16 | Source-only builds of current diagnostics and interactive terminal through pinned Nix tooling | `validation/isolated-source-build.json`, `validation/application-components-source-build.json` and `validation/terminal-source-build.json`; the current snapshot reproduces64 byte-identical outputs, including the filename clipboard core, retained-directory-context and pure live-configuration candidate diagnostics, offline PRMEDIT settings and XLTEDIT table editors, bounded resource-path and settings-CWD diagnostic children, capture, three file owners, screen-file, checked printer device, native screen-print/controller and monitor diagnostics. The complete application still depends on unrecovered code/resources and has no source-only whole-application build. |
 
-ZMODEM framing now has a maintained bounded codec with independent host and
-8086 DOS oracle checks, documented in `ZMODEM_WIRE.md`; `ZMODEM_NATIVE.md`
-records retained REA analysis of the original common/send/receive overlays.
-This codec is not yet linked into the terminal. ZMODEM session ownership,
-recovery, UART/UI integration and independent BBS peer validation remain open;
-F08 remains open.
+ZMODEM framing and batch sessions now have maintained bounded components with
+independent host/peer and 8086 DOS checks, documented in `ZMODEM_WIRE.md` and
+`ZMODEM_SESSION.md`; `ZMODEM_NATIVE.md` records retained REA analysis of the
+original common/send/receive overlays. Component corruption recovery passes
+pinned lrzsz and the selected stock Synchronet protocol helper. These components
+are not yet linked into the terminal. Terminal source/storage adaptation, UART/UI
+integration, full streaming/window behavior and actual BBS session validation
+remain open; F08 remains open.
 
 E2 advertises TTY; DEC VT52/100/102/220/320; ANSI X3.64; IBM
 3101/3161/3270/PC; TeleVideo 910/912/920/922/925/950/955; DG 100/200/210;
