@@ -1,0 +1,3172 @@
+{
+  "passed": true,
+  "sources": {
+    "src/aspect/parameters.asm": "3574b6c3221cdfa3caf03836d5d6a660bf886941a8dab64ab4c9c81d26d00ff2",
+    "src/aspect/numeric_operands.asm": "dea2003fd9e74ac333314e20aa37a6b23b92c2e1ae869d728714d65f43fdd869",
+    "src/aspect/control_flow.asm": "33c7f8a622e5d61e78a7e6e9161de37dee292f5d3a43533a32c1462493d2285d",
+    "src/aspect/value_stack.asm": "3326b2edbe875a98566b93c1b66ec40989718021be72b809cdec8173be4b7370",
+    "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "standalone/build_aspect_flow.py": "102b323fa2a9b324c22d115d9dc52338bd747db77ca544b34427e03c802a088b",
+    "standalone/build_aspect_operands.py": "c44397011b4d3ea08705aec7d12ab60be4e8c68c3eb3583df0193493be6f3b44",
+    "standalone/build_aspect_parameters.py": "550ca8460a44147a83d4791a70f4e401c56eb758efb8891055ad26259ab835b9",
+    "standalone/check_aspect_parameters.py": "a6e25bd394a48fc955b578e1f691d9ee5921c25103b5fa7a814fad288ce3372c",
+    "src/aspect/string_operands.asm": "c8aa3643df1ed1a0b6f26d8a1a9946fe6652eddefc3ff3bd5f9de6660705e7dc",
+    "src/aspect/literal.c": "c525cf0732e11cf1cb952d3a51dcf51559b152117f779cbdb4071e912445b17f",
+    "src/aspect/literal.h": "5bf6bafe9e135fd33e894ceb8009377f3098aadaca7bbe3d1217dc9748317e14",
+    "standalone/build_aspect_strings.py": "eb2402d1f583ac7ca46956907b0b6d29f26942edb199f964857780ee27db8061",
+    "standalone/check_aspect_strings.py": "39e1333eff5974b0af6c9189bf0ce9f690cb5add5d939c43d10520c2cac6c649",
+    "standalone/build_aspect_runtime.py": "a8ef897843acf005cafaaab31a8bf2309426bf57055dc24f1f7f4c5b238338fa",
+    "standalone/fixtures/aspect_execution_vectors.json": "2fe02fbc44993cb35e2d9ca9ed6a003070e458dcec4de485d43a7af5a0ce80e4",
+    "standalone/fixtures/aspect_arithmetic_vectors.json": "18424774c5bf1856a6aefd04bd7973556c3e375ce402aefee08c6224317f15f4",
+    "standalone/fixtures/aspect_parameter_vectors.json": "025c4de5e5681b0a502d566b73555b225610f6293dda69f7f38cb78448a88b67",
+    "src/aspect/runtime.c": "940401daedc26314cbad0e3c1210dbfbc124ba1a7f81b8003b7af67f82169a4b",
+    "src/aspect/runtime.h": "2a3d750da4f2f32468488077586f1eaec94f91f2621d89ceffe295117baea2ec",
+    "src/aspect/file_io.c": "05e0d0e1701c39be60798c0ec1214ca95500c8e7354254b66e421ef116ac3a24",
+    "src/aspect/file_io.h": "a43126acae21c3daa15eb45e5aa92cb6c0bbde5c31b57b90dc552f9361549c7a",
+    "src/aspect/dispatch.asm": "0da6d20b979b6da93dcf216835db0cc8fd11cab6c53fc442ce3b850d84fb9918",
+    "src/aspect/abort.asm": "37b57a4284889310fb7ce7834b17d53c06abbbb8fd714b1068600e7c3150cb2d",
+    "src/aspect/global_strings.asm": "faf8d611f7b490866befd9affb11e3235b5b7fbd3e6bfe73aab4cc0c4a2b8c29",
+    "src/aspect/numeric_operations.asm": "c403985e74e03fe44b45116fe7558304756ce7df529a9ae4b4be7c7c067052f3",
+    "src/aspect/arithmetic.asm": "00c41be2c16354c8e0e556e23fee6924b0cb89c787881ff541c6c3ec186e4a32",
+    "src/aspect/long_arithmetic.asm": "6e47e9439ea53a30f5ca06d4d16a798ee619457360a613442b37e3fb5a8a00d7",
+    "src/aspect/expression_support.asm": "3ab0bf9812f38df4f7884f1e35959058b1605ecd5faabb42bcdcc854e934be79",
+    "reconstruction/transfer_session/setjmp.asm": "ca5238effb53084d17c2e942805dff6c21efddd401a7a3a0e2780c9209f05676",
+    "reconstruction/transfer_session/longjmp.asm": "2291d6ce48974bed1680cb43a9c008d651cb90280e07358724b4aef114bd59fc",
+    "src/aspect/runtime_bridge.asm": "f8fd56571b125656eca2894d4f2009b1f8bdc7edcb0a81631643b528d63c744d",
+    "standalone/check_aspect_runtime.py": "ff9eef16886c26dee27f29ac2587e5ba5976b1c262f9575cd1de6dd1fd2b498b",
+    "standalone/check_aspect_operands.py": "a9d76ebfc4d23f2b0eeb96049a0e68e280736725c410b63acdcd0f412739e554",
+    "standalone/check_aspect_flow.py": "7e64fea6387b8ef1427360b20ced800609e2da1a8c5bfd96e270d277f15677cb",
+    "standalone/aspect_parameter_probe.py": "f2a7b83b82c99db2b13af0eb294c5068cf7b5138c694295038fe7496f09483cb",
+    "standalone/freeze_aspect_parameters.py": "eb1570eb5a79fe21afa75aa64a4a4ece4b1fc2328716353ee3d2a2becd8da57b",
+    "standalone/record_aspect_parameters.py": "576d0f5515c73e5bb82155426b51c65bf5fd986aa0158e71302433d5b184ae55"
+  },
+  "local_evidence": {
+    "build/aspect-parameters/manifest.json": "c20c6915a002436b5c63f560798940edc88065c8c4462bdab2ab6c08878436af",
+    "build/aspect-parameters/checks.json": "f763073e0a112f7da69d364d086785aba7aaa6297a7998d3e35e2ecdc7b92879",
+    "build/aspect-parameters/checks-native.json": "0fbb4d9a35a0e07eec5c4f7f0c8482a2863cc5dbff50251005507940e79d2236",
+    "build/aspect-strings/manifest.json": "7c61e52e1bb6627f327918109a16370d6eba9b6ed92e454f9a8d5d137b165dcd",
+    "build/aspect-strings/checks.json": "69b756fbd4c9cd3f6e8734b538d4f3fd0279a501ab6fad7b90d9a505912984e0",
+    "build/aspect-strings/checks-native.json": "cf29dcd12145a0970424d8b7e43858ba17b5de354cf7bab5c4cf9acebefa5ea3",
+    "build/aspect-runtime/manifest.json": "02dc048fe89a304f13d48a7879a70ce52c249b74573ab13c76534083ed897780",
+    "build/aspect-runtime/checks.json": "c122abbcdf6517c90dd32a8935aeb3492c87fae66791f76d98813b3601d23a7d",
+    "build/aspect-runtime/checks-native.json": "506033e653fecfc0452d1acf797c926c53a4e518ef9a34e5d139faea99f218d3",
+    "build/aspect-strings/failed-check-01.json": "0d04988e67a824799a64f860090599ebb0080836024710c29087eea7cfffd701",
+    "build/aspect-strings/cpu-records.json": "cd2947f48d74372febed31126a651ea121b64d967f557a979ce299703ca32248",
+    "standalone/fixtures/aspect_parameter_vectors.json": "025c4de5e5681b0a502d566b73555b225610f6293dda69f7f38cb78448a88b67",
+    "analysis/aspect-parameters/compiler-03/report.json": "e2847417384412e1cc0e7886e3b3010db70aba1706504c056233eeecd101b05f",
+    "analysis/aspect-parameters/compiler-02/report.json": "5cc33c2af6f3ced0a4fee56a00bdfba19442e706a8e34fd8308aec00967d1ec2",
+    "build/aspect-runtime/RESULT.TXT": "252815319300838ca09fabd32426e443e483d448ae05f3e8c49e5862a618678d",
+    "build/aspect-runtime/EXECUTE.map": "fe5e5f55c425ca3d9599933f4d07558d8c6eab7d0e1ca08422053f6eb719dbf7",
+    "analysis/aspect-expression/rea-string-01.json": "10f39b541d4f91d90f120f6176d06ade2415a854d3373ca131ba6eb7d5a66c4b",
+    "analysis/aspect-expression/rea-string-02.json": "d83d3c57faabff82c431dfd7f0243b711da624492704e9ad730abd9bc6e66ac3",
+    "analysis/aspect-expression/rea-string-03.json": "3c6c6e3487d0e76472d320fbc78cc55ebea39d33ad39966d9957c8586db2aa6c"
+  },
+  "modules": {
+    "parameters": {
+      "manifest": {
+        "binary_sha256": "cc6188d599b7c1a118373ca693e315ad1783dd55e84f40626cb0b4274df6eafc",
+        "flat_sha256": "95dd7e90c84588a2a71ed957a068309103deeb7840fe66359e62768e6c1cd65a",
+        "original_inputs": [],
+        "sources": {
+          "src/aspect/parameters.asm": "3574b6c3221cdfa3caf03836d5d6a660bf886941a8dab64ab4c9c81d26d00ff2",
+          "src/aspect/numeric_operands.asm": "dea2003fd9e74ac333314e20aa37a6b23b92c2e1ae869d728714d65f43fdd869",
+          "src/aspect/control_flow.asm": "33c7f8a622e5d61e78a7e6e9161de37dee292f5d3a43533a32c1462493d2285d",
+          "src/aspect/value_stack.asm": "3326b2edbe875a98566b93c1b66ec40989718021be72b809cdec8173be4b7370",
+          "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b",
+          "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+          "standalone/build_aspect_flow.py": "102b323fa2a9b324c22d115d9dc52338bd747db77ca544b34427e03c802a088b",
+          "standalone/build_aspect_operands.py": "c44397011b4d3ea08705aec7d12ab60be4e8c68c3eb3583df0193493be6f3b44",
+          "standalone/build_aspect_parameters.py": "550ca8460a44147a83d4791a70f4e401c56eb758efb8891055ad26259ab835b9"
+        },
+        "scope": "Three native parameter primitives plus actual numeric/flow/typed stack/copy. Float/string readers return opaque fixture buffers; no float/string parser acceptance, real builtin services, or complete VM claim."
+      },
+      "source_only_checks": {
+        "passed": true,
+        "cpu_scenarios": 3901,
+        "groups": {
+          "numeric_selection": 3584,
+          "classification_fallthrough": 242,
+          "EOF_forwarding": 1,
+          "string_copy": 32,
+          "unchecked_address": 25,
+          "EOF_address": 1,
+          "reserve_failure": 8,
+          "unchecked_pointer_wrap": 4,
+          "operand_abort": 2,
+          "unavailable_reader": 2
+        },
+        "DOS_summary": "ASPECT_PARAMETERS 9731 checks 0 failures",
+        "optional_original": null,
+        "binary_sha256": "cc6188d599b7c1a118373ca693e315ad1783dd55e84f40626cb0b4274df6eafc",
+        "flat_sha256": "95dd7e90c84588a2a71ed957a068309103deeb7840fe66359e62768e6c1cd65a",
+        "check_sha256": "a6e25bd394a48fc955b578e1f691d9ee5921c25103b5fa7a814fad288ce3372c",
+        "inherited_checker_sha256": "a9d76ebfc4d23f2b0eeb96049a0e68e280736725c410b63acdcd0f412739e554",
+        "original_inputs": [],
+        "visited_instructions": 30,
+        "scope": "Three native parameter entries plus actual numeric operand/flow/typed stack/copy. Opaque8/81-byte reader policies and error-return/stop only. Noninteger/nonlong andEOF routing do not establish float parser acceptance; zero lookahead retains absent sentinel semantics. No rollback, safe stack or complete VM claim."
+      },
+      "optional_native": {
+        "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+        "source_file_start": 109408,
+        "source_file_end_exclusive": 109474,
+        "exact_parameter_bytes": 66,
+        "paired_cpu_scenarios": 3901
+      }
+    },
+    "strings": {
+      "manifest": {
+        "original_inputs": [],
+        "binary_sha256": "33fbb842582a14b34d28c9b6daba266ac80ff4938907f4007327d69c274a60b4",
+        "units": {
+          "strings": "102a1d5d8d5c3e2a6d17f606d759cb62855043018d6d8b7b3cdf89b54b300000",
+          "bounded": "807968171c5e5a7a7e2c787b88cd28e4aa45e4b01857c95f52f249fb555e65ef",
+          "length": "bd522dd00b36c1ccba3ecea89d979e35bc2f89d78108cba63f61f706bb388731",
+          "option": "24f46fcffe5c8736875f347882351439016a87cda7f99a12d755a4bda5d3a015",
+          "farcopy": "9a804e282d2e53aeaa20fc1dd8222de1eda3cb6ef8a2d1d20292ffb5a8ffa9ab",
+          "getds": "62c8c8f666f7746933e2ce364cafa0b6c9d1013a45019ccb6140d287a60cbb87",
+          "count": "2497a10e6097deeef9f049250d65f34fc9be6f4d9294ce46e801aa4439704ff8",
+          "assign": "e267a7d781dbc84fa1f6fc6c1ceaca963e769e52392806396fee6f33989583d2"
+        },
+        "sources": {
+          "src/aspect/string_operands.asm": "c8aa3643df1ed1a0b6f26d8a1a9946fe6652eddefc3ff3bd5f9de6660705e7dc",
+          "src/aspect/numeric_operands.asm": "dea2003fd9e74ac333314e20aa37a6b23b92c2e1ae869d728714d65f43fdd869",
+          "src/aspect/control_flow.asm": "33c7f8a622e5d61e78a7e6e9161de37dee292f5d3a43533a32c1462493d2285d",
+          "src/aspect/value_stack.asm": "3326b2edbe875a98566b93c1b66ec40989718021be72b809cdec8173be4b7370",
+          "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b",
+          "src/aspect/literal.c": "c525cf0732e11cf1cb952d3a51dcf51559b152117f779cbdb4071e912445b17f",
+          "src/aspect/literal.h": "5bf6bafe9e135fd33e894ceb8009377f3098aadaca7bbe3d1217dc9748317e14",
+          "standalone/build_aspect_operands.py": "c44397011b4d3ea08705aec7d12ab60be4e8c68c3eb3583df0193493be6f3b44",
+          "standalone/build_aspect_flow.py": "102b323fa2a9b324c22d115d9dc52338bd747db77ca544b34427e03c802a088b",
+          "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+          "standalone/build_aspect_strings.py": "eb2402d1f583ac7ca46956907b0b6d29f26942edb199f964857780ee27db8061"
+        },
+        "scope": "Native string/numeric/frame/copy modules; source-owned CRT/builtin/error callbacks. Literal C codec supplies independent wire input. Real DOS far heap and native far copy; no full VM."
+      },
+      "source_only_checks": {
+        "passed": true,
+        "original_inputs": [],
+        "manifest_sha256": "7c61e52e1bb6627f327918109a16370d6eba9b6ed92e454f9a8d5d137b165dcd",
+        "inherited_checker_sha256": "a9d76ebfc4d23f2b0eeb96049a0e68e280736725c410b63acdcd0f412739e554",
+        "inherited_flow_checker_sha256": "7e64fea6387b8ef1427360b20ced800609e2da1a8c5bfd96e270d277f15677cb",
+        "cases": 2251,
+        "groups": {
+          "literal_all_lengths_strides_parities": 1920,
+          "scratch_rotation": 1,
+          "unchecked_scratch_initial_index": 3,
+          "far_global_read_writeback": 15,
+          "invalid_selectors": 250,
+          "valid_selectors": 5,
+          "bounded_length_return_policy": 32,
+          "option_flag": 5,
+          "bounded_assignment": 10,
+          "default_assignment_count": 3,
+          "short_read_native_quirk": 1,
+          "error_stop": 1,
+          "invalid_stop": 1,
+          "far_copy_lengths": 4
+        },
+        "DOS": {
+          "summary": "ASPECT_STRINGS 14441 checks 0 failures",
+          "folder": "build/aspect-strings/dos-1792389803500071708",
+          "binary_sha256": "33fbb842582a14b34d28c9b6daba266ac80ff4938907f4007327d69c274a60b4"
+        },
+        "optional_original": null,
+        "records_sha256": "cd2947f48d74372febed31126a651ea121b64d967f557a979ce299703ca32248",
+        "harness_sha256": "39e1333eff5974b0af6c9189bf0ce9f690cb5add5d939c43d10520c2cac6c649",
+        "sources": {
+          "src/aspect/string_operands.asm": "c8aa3643df1ed1a0b6f26d8a1a9946fe6652eddefc3ff3bd5f9de6660705e7dc",
+          "src/aspect/numeric_operands.asm": "dea2003fd9e74ac333314e20aa37a6b23b92c2e1ae869d728714d65f43fdd869",
+          "src/aspect/control_flow.asm": "33c7f8a622e5d61e78a7e6e9161de37dee292f5d3a43533a32c1462493d2285d",
+          "src/aspect/value_stack.asm": "3326b2edbe875a98566b93c1b66ec40989718021be72b809cdec8173be4b7370",
+          "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b",
+          "src/aspect/literal.c": "c525cf0732e11cf1cb952d3a51dcf51559b152117f779cbdb4071e912445b17f",
+          "src/aspect/literal.h": "5bf6bafe9e135fd33e894ceb8009377f3098aadaca7bbe3d1217dc9748317e14",
+          "standalone/build_aspect_operands.py": "c44397011b4d3ea08705aec7d12ab60be4e8c68c3eb3583df0193493be6f3b44",
+          "standalone/build_aspect_flow.py": "102b323fa2a9b324c22d115d9dc52338bd747db77ca544b34427e03c802a088b",
+          "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+          "standalone/build_aspect_strings.py": "eb2402d1f583ac7ca46956907b0b6d29f26942edb199f964857780ee27db8061"
+        },
+        "scope": "617 native string bytes plus native numeric/frame/near/far-copy helpers; explicit CRT,builtin,error fixtures. Short fread is unchecked, scratch/index arithmetic unchecked. No whole VM or builtin system integration claim."
+      },
+      "optional_native": {
+        "sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+        "exact_string_bytes": 617,
+        "identical_cpu_records": 2251
+      }
+    },
+    "runtime": {
+      "manifest": {
+        "binary_sha256": "b320b02b1ccbc847c9fe1292d284377eb81cbd364437b11b981b5518d7eb986a",
+        "sources": {
+          "standalone/build_aspect_runtime.py": "a8ef897843acf005cafaaab31a8bf2309426bf57055dc24f1f7f4c5b238338fa",
+          "standalone/fixtures/aspect_execution_vectors.json": "2fe02fbc44993cb35e2d9ca9ed6a003070e458dcec4de485d43a7af5a0ce80e4",
+          "standalone/fixtures/aspect_arithmetic_vectors.json": "18424774c5bf1856a6aefd04bd7973556c3e375ce402aefee08c6224317f15f4",
+          "standalone/fixtures/aspect_parameter_vectors.json": "025c4de5e5681b0a502d566b73555b225610f6293dda69f7f38cb78448a88b67",
+          "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+          "src/aspect/runtime.c": "940401daedc26314cbad0e3c1210dbfbc124ba1a7f81b8003b7af67f82169a4b",
+          "src/aspect/runtime.h": "2a3d750da4f2f32468488077586f1eaec94f91f2621d89ceffe295117baea2ec",
+          "src/aspect/file_io.c": "05e0d0e1701c39be60798c0ec1214ca95500c8e7354254b66e421ef116ac3a24",
+          "src/aspect/file_io.h": "a43126acae21c3daa15eb45e5aa92cb6c0bbde5c31b57b90dc552f9361549c7a",
+          "src/aspect/dispatch.asm": "0da6d20b979b6da93dcf216835db0cc8fd11cab6c53fc442ce3b850d84fb9918",
+          "src/aspect/abort.asm": "37b57a4284889310fb7ce7834b17d53c06abbbb8fd714b1068600e7c3150cb2d",
+          "src/aspect/global_strings.asm": "faf8d611f7b490866befd9affb11e3235b5b7fbd3e6bfe73aab4cc0c4a2b8c29",
+          "src/aspect/value_stack.asm": "3326b2edbe875a98566b93c1b66ec40989718021be72b809cdec8173be4b7370",
+          "src/aspect/control_flow.asm": "33c7f8a622e5d61e78a7e6e9161de37dee292f5d3a43533a32c1462493d2285d",
+          "src/aspect/parameters.asm": "3574b6c3221cdfa3caf03836d5d6a660bf886941a8dab64ab4c9c81d26d00ff2",
+          "src/aspect/string_operands.asm": "c8aa3643df1ed1a0b6f26d8a1a9946fe6652eddefc3ff3bd5f9de6660705e7dc",
+          "src/aspect/numeric_operands.asm": "dea2003fd9e74ac333314e20aa37a6b23b92c2e1ae869d728714d65f43fdd869",
+          "src/aspect/numeric_operations.asm": "c403985e74e03fe44b45116fe7558304756ce7df529a9ae4b4be7c7c067052f3",
+          "src/aspect/arithmetic.asm": "00c41be2c16354c8e0e556e23fee6924b0cb89c787881ff541c6c3ec186e4a32",
+          "src/aspect/long_arithmetic.asm": "6e47e9439ea53a30f5ca06d4d16a798ee619457360a613442b37e3fb5a8a00d7",
+          "src/aspect/expression_support.asm": "3ab0bf9812f38df4f7884f1e35959058b1605ecd5faabb42bcdcc854e934be79",
+          "reconstruction/erase/move_bytes.asm": "f364e8b0543b817cb568ae3cbd248de87e7353073baafaedc798d3d516d35c3b",
+          "reconstruction/transfer_session/setjmp.asm": "ca5238effb53084d17c2e942805dff6c21efddd401a7a3a0e2780c9209f05676",
+          "reconstruction/transfer_session/longjmp.asm": "2291d6ce48974bed1680cb43a9c008d651cb90280e07358724b4aef114bd59fc",
+          "src/aspect/runtime_bridge.asm": "f8fd56571b125656eca2894d4f2009b1f8bdc7edcb0a81631643b528d63c744d"
+        },
+        "support_units": [
+          {
+            "unit": 1,
+            "start": 53920,
+            "end_exclusive": 53974,
+            "file_start": 109648,
+            "bytes": 54,
+            "sha256": "f44d1381879db32a3471ab7605c49a6d97b25395422c5a8604b45d9337216833"
+          },
+          {
+            "unit": 2,
+            "start": 54258,
+            "end_exclusive": 54280,
+            "file_start": 109986,
+            "bytes": 22,
+            "sha256": "2f3c68286f7445c3c1d401d1ed410239e9719f11687def70d37378e38cf93bb5"
+          },
+          {
+            "unit": 3,
+            "start": 56189,
+            "end_exclusive": 56392,
+            "file_start": 111917,
+            "bytes": 203,
+            "sha256": "ec40b46f8c508b585b8ef7eeb7f2398e5c081567fe83495721b87cd6e0ae9809"
+          },
+          {
+            "unit": 4,
+            "start": 56909,
+            "end_exclusive": 57092,
+            "file_start": 112637,
+            "bytes": 183,
+            "sha256": "b235ad26e9d5106fe3390f615c52f2868f44fb5ec54cad3352249a4285be8298"
+          },
+          {
+            "unit": 5,
+            "start": 39616,
+            "end_exclusive": 39655,
+            "file_start": 44224,
+            "bytes": 39,
+            "sha256": "13198f32453ef810aad7bdde574976081e28a8037b04581ede30be457a30cc10"
+          }
+        ],
+        "original_inputs": [],
+        "compile_flags": [
+          "8086",
+          "small model",
+          "cdecl",
+          "ASPECT_RUNTIME_DIAGNOSTIC"
+        ],
+        "fixture_count": 132,
+        "supported_slots": {
+          "00": "aspect_arith_add",
+          "02": "aspect_arith_bit_and",
+          "03": "aspect_ops_logical_and",
+          "13": "aspect_arith_bit_not",
+          "15": "aspect_expr_branch_false",
+          "1e": "aspect_ops_decrement",
+          "26": "aspect_arith_divide",
+          "32": "aspect_ops_equal",
+          "48": "aspect_ops_less_equal",
+          "54": "aspect_ops_less",
+          "5a": "aspect_ops_increment",
+          "5b": "aspect_ops_assign",
+          "5c": "aspect_ops_assign_chained",
+          "62": "aspect_flow_jump",
+          "68": "aspect_ops_greater_equal",
+          "6d": "aspect_ops_greater",
+          "7b": "aspect_arith_modulo",
+          "7d": "aspect_arith_multiply",
+          "7e": "aspect_arith_negate",
+          "7f": "aspect_ops_not_equal",
+          "81": "aspect_ops_logical_not",
+          "82": "aspect_arith_bit_or",
+          "84": "aspect_ops_logical_or",
+          "94": "aspect_flow_return",
+          "95": "aspect_flow_return_framed",
+          "a4": "aspect_arith_shift_left",
+          "a5": "aspect_arith_shift_right",
+          "ac": "aspect_string_assign",
+          "b5": "aspect_arith_subtract",
+          "bc": "aspect_expr_branch_true",
+          "bd": "aspect_expr_branch_false_alias",
+          "c6": "aspect_arith_bit_xor",
+          "c7": "aspect_flow_call_operand",
+          "c8": "aspect_flow_call_framed",
+          "cc": "aspect_parameter_push_numeric",
+          "cd": "aspect_parameter_push_string",
+          "cf": "aspect_flow_gate_decrement",
+          "d0": "aspect_flow_gate_increment",
+          "d2": "aspect_flow_reserve_locals"
+        },
+        "unsupported_slot_cases": 176,
+        "diagnostic_case_count": 320,
+        "parameter_fixture_aliases": {
+          "PARFLOAT": "FLOAT"
+        },
+        "maintained_string_fault_fixture": {
+          "STRSHORT": "STRGASS compiler bytes with final00 option and94 return removed; first global HELLO retained, second stays empty"
+        },
+        "maintained_heap_fault_fixtures": {
+          "HEAPFLT": "IDIVEDGE compiler bytes with global-string count changed from0to2",
+          "HEAPZERO": "IDZ compiler bytes with global-string count changed from0to2"
+        },
+        "fixture_expectations": {
+          "EMPTY": {
+            "source_sha256": "c0f5e97f5c8882f703c6ca3288c8a3452115e4912dd20330a366a7b8f00c645c",
+            "asx_sha256": "b85a731bed7fb244d45379f0d3ee38f0180c450a3074982be7ba3755c80cce69",
+            "expected": {}
+          },
+          "ASSIGN": {
+            "source_sha256": "1de5a9ab6886940f9f08e32f73cfdf857c1368b3708ec17286cc3bddae106133",
+            "asx_sha256": "fea1e0933105f20290dc6bf4c8aaa7c69ce8da234d0203567f14f2de51322057",
+            "expected": {
+              "integer0": 7
+            }
+          },
+          "LONG": {
+            "source_sha256": "e9877885f2aa52dc2a755f81279d286adb3a09bddf0e5f011f45772f3b761949",
+            "asx_sha256": "3cbb3ae092c9605e0a87158c6281606e5611530be5d4dbba19d53ac8b305fa80",
+            "expected": {
+              "long0": 65535
+            }
+          },
+          "IFTRUE": {
+            "source_sha256": "6e1d15f2b336b0ff462f0d1a2702e47ea5d2e279974ca5c6e77767e3dd382449",
+            "asx_sha256": "c9b9634da6278903a0bfee7b711f68005cf97e71a8a1fb3aa6b1859432610eb2",
+            "expected": {
+              "integer0": 7
+            }
+          },
+          "IFFALSE": {
+            "source_sha256": "77c41b1e3d771805edc688625fc32648814e79bd3c6c496f95794e1724c39066",
+            "asx_sha256": "62cb9edcc94b8fe3a00198a5191f3982126e277ebf653fb36a46f6dfe2fafac4",
+            "expected": {
+              "integer0": 9
+            }
+          },
+          "CALL": {
+            "source_sha256": "86fe5ae7aba416fd12fa6a3c8e241ae94ec148d09525bdda7303a28882998bc0",
+            "asx_sha256": "a075a53300337c2494615168afc0c3ddb2c80453e48974e263c1bf8e2058d875",
+            "expected": {
+              "integer0": 23
+            }
+          },
+          "FRAME": {
+            "source_sha256": "54842c6af011151a10966d158dbf57dbe9d32f00d6b0e501d99507a4cd59d1cd",
+            "asx_sha256": "6d56b1945652bad55cacfba4150f44405383f3234cd75c4fb5ab0a724057dc90",
+            "expected": {
+              "integer0": 42
+            }
+          },
+          "CMP": {
+            "source_sha256": "10c5dad663aef7fcb9b23b970bbb2dc7e8e128131f766299914f1350eadb9ecf",
+            "asx_sha256": "e51c1d5fa0999ce77c1db9071164bccfdc6fc5877b8b765ae28eea56e0dda3ba",
+            "expected": {
+              "integer0": 11
+            }
+          },
+          "WHILE": {
+            "source_sha256": "73b4add228d8704e582283e30e9279d6298e8a82ca2efd250dd93252b7612f36",
+            "asx_sha256": "11f6b13d0f615b1495482521c5f4cfab26c47f88324a10a62f50c9c3248c05f5",
+            "expected": {
+              "integer0": 0
+            }
+          },
+          "POSTDEC": {
+            "source_sha256": "440329a93d12d62affbda7af724ae0b287c33064dd128a781a7196b9d6edfa8d",
+            "asx_sha256": "a45f7ca9d6ad76fded8165deec4086a677e2616f73f7592aa7e722ebc0d3817e",
+            "expected": {
+              "integer0": 2
+            }
+          },
+          "POSTINC": {
+            "source_sha256": "4b760d2c089149325fabc28ecde7d4332781029e729c60715272624aaad1c3f6",
+            "asx_sha256": "94cfc841c76e36309662867682c0a3d70e23c75b50d37af86998de5923cf2f40",
+            "expected": {
+              "integer0": 4
+            }
+          },
+          "BOOLEAN": {
+            "source_sha256": "c3f96341f03844db71e5856dde26918cd12d85504443babef45c1304fe661451",
+            "asx_sha256": "dfd0b53f6551e95b8332eb11bd3e3e366c212ca3af3d47df830bdea5294d0ac1",
+            "expected": {
+              "integer0": 6
+            }
+          },
+          "LONGCMP": {
+            "source_sha256": "3a0080b55d506b5536e1b9a0529f85c4bf6cf1ce3baa7cbff9a6246500f7d045",
+            "asx_sha256": "f442922a4bd62f1a64b3f339ae7eb9b8ba5b0b43fb1aed69e67da8aa62388638",
+            "expected": {
+              "integer0": 17,
+              "long0": 65535
+            }
+          },
+          "FLOAT": {
+            "source_sha256": "c25da2f228688a776c910e05b0da3481eefe2da5e1bbace92c4bc0e38500ee98",
+            "asx_sha256": "646172f6233b8024246cbe39f502198fab06dfa7cc8c3b0d0d6b6d0bd775773c",
+            "expected": {
+              "error": "float"
+            }
+          },
+          "STRINGS": {
+            "source_sha256": "2ab09d3af76084a2c7abbcafc8a4e20c9104433e5af914fc8581995db3f5aa97",
+            "asx_sha256": "7e344f51d7fade5188a927c4bc0e688461027444e0e373d24f6f0ad6e5f7ca4c",
+            "expected": {
+              "allocated": 2
+            }
+          },
+          "STR128": {
+            "source_sha256": "0c2430e2e5226205aa07cb50e85aa9d995b4ffa22047bada07d8743eb4f89dd0",
+            "asx_sha256": "4b1138c44efa32abf96021c20242ede696c2268d47ef64a4a6382dd351e3be7a",
+            "expected": {
+              "allocated": 128
+            }
+          },
+          "ENDLESS": {
+            "source_sha256": "b3b93f36ad09cc44cd81f352d3366398096d42bc61704bfd65fa26dd8dc5626f",
+            "asx_sha256": "905ee2046c9485a0efbaf1d16aab3f249fe59104f6d51a5fa70135acd6400299",
+            "expected": {
+              "error": "budget"
+            }
+          },
+          "RECURSE": {
+            "source_sha256": "595193e3af09d02fe70623c2bf48e41675056bf01cd68f24d5b66dff485ae1cc",
+            "asx_sha256": "ad03418e255f12b7264094fe4875cbc2c8448d52c88edbc4fc0d0d781d99cefa",
+            "expected": {
+              "error": "stack",
+              "limit": 65000
+            }
+          },
+          "PAUSE": {
+            "source_sha256": "dc9b493cc2525ab21067f75a94580bb3a9b957e0551c8f752b5882c227f054d1",
+            "asx_sha256": "9911d765686f90353933d4bb5c58c9419c85aadb93afcea611e01eaae4f1ba57",
+            "expected": {
+              "error": "unsupported"
+            }
+          },
+          "IADD": {
+            "source_sha256": "e337a6a6946ef2cdb5419c4163721d01ed9d2f38eca4ff74d771d2c7320be6f7",
+            "asx_sha256": "7181ec7b78d9d5896e27f8fe57df2ee204af01dfb43ee586b3c8e63dcb9663ff",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 22
+            }
+          },
+          "ICADD": {
+            "source_sha256": "2d10f42dacbf06eeb635699d5adbc817fd75462e132fa99bb9ac9e1614ebc668",
+            "asx_sha256": "ce55ecba54e880611e692c5bdcdc2e324e0677368b5cfd8a3f519c0703588470",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 22
+            }
+          },
+          "ISUB": {
+            "source_sha256": "d054fc6187aaa7ed38a9b337ae84979e27ee6187c2225ed298f9ac38970b5bbf",
+            "asx_sha256": "35679249f2b42818c32eb6c6f1e1f13c694247bdf34abfffe55fd5dc1dd0b570",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 12
+            }
+          },
+          "ICSUB": {
+            "source_sha256": "55981dff7ad1f6585455903c4c710b0af022ddeb7f50f766175aea8e102a0a7a",
+            "asx_sha256": "29983171cd7dec31007e02daf2c1d3f78b83e709214510ef41ec154181b48b8d",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 12
+            }
+          },
+          "IMUL": {
+            "source_sha256": "e1cad02555a0a7020166dae9df5333439c14b46a11df7a9802e9456dad9f7e2f",
+            "asx_sha256": "089897636a6d0795895709709b4bcb0724e09a8fa3e54a9634e0b79d309f9fac",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 85
+            }
+          },
+          "ICMUL": {
+            "source_sha256": "440e4c9ec7759401734c1e34452cdc7ac81a300542289a5b39af1fe2ea7abf78",
+            "asx_sha256": "32c75e2f378ba90bea48b8b73d0d949064e60fabd1ce50463e40ad7130865511",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 85
+            }
+          },
+          "IDIV": {
+            "source_sha256": "6f57bdbf47da2865ed907cc3774c9193b05a14e3df8c13d56a0a7b77b277ab54",
+            "asx_sha256": "152728f24cdb357ced8c482286251f6ba7df89fa558afa299ca5af26e75de0e6",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 3
+            }
+          },
+          "ICDIV": {
+            "source_sha256": "4820e681a1eca47b6d3870a32866fa84c5f4618e49f5d6d56c1292e9e04fce93",
+            "asx_sha256": "eeac17d65a0aa53646cbbb9d843f1191556a5beeff448553f314144151ebce8e",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 3
+            }
+          },
+          "IMOD": {
+            "source_sha256": "9d5dd948b3344527fdacba1250fdff481f4cebc5c6942c3bb474aaaa5f6e866f",
+            "asx_sha256": "50eadd46abcf4c66c5f2d2a376997f01f2bbcffdfa23e323c47627c89dfb5f70",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 2
+            }
+          },
+          "ICMOD": {
+            "source_sha256": "e129227afea08246a61d41da5d267c80dcf29c0890e99e5df97d3a534b4183a6",
+            "asx_sha256": "36c540b03db00987d2eb6af66e2612787f18283e2896b170a872b96d0e61cf18",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 2
+            }
+          },
+          "INEGVAR": {
+            "source_sha256": "9c6b283ff08e1ad42322ba4e96ef1901f3cd859ff2349e223e01d402732a5041",
+            "asx_sha256": "37ccef2afe76fc77f57c6fc8cc3779055b5ebc021da89665c496e113cbfc80b6",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 65519
+            }
+          },
+          "IDOUBLE": {
+            "source_sha256": "39f4f8876850ca677c7ce059a8f66ff495b15f81d0b07fb45eec92cff2270bc6",
+            "asx_sha256": "954396dd0a0352c2b6d5dec0091fcf2de3c4e22c649a7a5143fece2f8e352dca",
+            "expected": {
+              "integer0": 16,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 16
+            }
+          },
+          "INEGPAR": {
+            "source_sha256": "3b0e8f604629bacb0e0437066477bb72213fadbc9db5be5b9c8a3744e9761447",
+            "asx_sha256": "3c7f94e71e713ed56e10058c82a45af1011ade532eeef8483e94a2deb78d3fb6",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 65514
+            }
+          },
+          "IPREC": {
+            "source_sha256": "5e0e12b9aa5451b9488537286b10a2024b4d4e094ef5bac76436dfe72112a7f0",
+            "asx_sha256": "9fb14d44a7c0866f58e8068348e0719ef85bf2e663d13e7e2797d9118d0a87ed",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 42
+            }
+          },
+          "IPAREN": {
+            "source_sha256": "e4b2732383affad3506641acdb24d83b57c2138dd80f8a630e1bbc7d51f87185",
+            "asx_sha256": "bf054e87a73e831036e99e5744c16b63fe39c6834aa75b1feed0a06daae3671a",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 110
+            }
+          },
+          "IPSUB": {
+            "source_sha256": "058fdf679a0f4c49363a7e73651e87a509e0e96e10698e0923575a4d9237a3d4",
+            "asx_sha256": "ba77ba0ec5d2b6ec00bb7c6550d9b7b70a16cb1cf6e9b895fec8e3b8a53d1628",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 7
+            }
+          },
+          "IPDIV": {
+            "source_sha256": "be56d8130ae435b6fa3ab8e1d2103b3717dc937c8412cebc836d896b75836f42",
+            "asx_sha256": "5182a5862751575be1c52169c3658cf4bfdbfe173b4de7beee09bb5bf5893e69",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 0
+            }
+          },
+          "IPMIX": {
+            "source_sha256": "cdb069f47ea3af8d74342143aa6b35a0ce4dfea95a3988b901bcafac92557589",
+            "asx_sha256": "18c413aa82a2173827f3f186e152fad068bbd39b787b0a085e9b4c6640ca73e2",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 90
+            }
+          },
+          "ILEFT": {
+            "source_sha256": "e23a453c40f4e5bf6b3b9c8454ad83fd6a4c7c5ccb29f6fb2f4a6f9a090eabc0",
+            "asx_sha256": "9fb14d44a7c0866f58e8068348e0719ef85bf2e663d13e7e2797d9118d0a87ed",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 42
+            }
+          },
+          "IKCONST": {
+            "source_sha256": "08ba45bc27fb61e33de0878987ba0e5fe3ffef7a24067e6876197afd74f6ecf6",
+            "asx_sha256": "7da7000508d80d1344893174a266b9a9b11fb9ad434fc0cc13005a254c497c01",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 22
+            }
+          },
+          "IKDIV": {
+            "source_sha256": "93dba4f20622048750a75315754ecf5cf54f764d9b13754fda691e705cff5ba3",
+            "asx_sha256": "526e67c6c2efbb11e2564cdecfae8dc9c4111374856d8caf1a24dfaca52101e1",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 3
+            }
+          },
+          "IKMOD": {
+            "source_sha256": "6f506274390fc279f41ebaac084c3a3697da6032dea60a0a04ce5685a5c58533",
+            "asx_sha256": "dcb8c1cee7418eae1ae4568e125ca6ce2ebbbbb7266720e39321c8ea8c18be9e",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "integer3": 2
+            }
+          },
+          "IDZ": {
+            "source_sha256": "f291b4d555c2aaf5730cf6d3b99ce4c98d39fd5172dce66ac35714f3a31073de",
+            "asx_sha256": "657179f93dd4009b93b74d570a67c5cd99aed6b10f91e4f1240aff73568a5d98",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "error": "divide_zero"
+            }
+          },
+          "IMZ": {
+            "source_sha256": "479054fc1c330366a62cfb204d7f72c71a8e13058899dc567118a2a51af662fe",
+            "asx_sha256": "a1b31d49536cbf56e0bad873b6de880202e80cb1a8a8d6f490528b9710c81bca",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "error": "divide_zero"
+            }
+          },
+          "ICDZ": {
+            "source_sha256": "778341de2b9437cca94f3cd674b9e495107bb6c4f28f9980db0430e078e3a29d",
+            "asx_sha256": "59ff0c90d5afc8f4d8b2493fad7296155f7deb46c0b7ef7fd08c34522247e0ef",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "error": "divide_zero"
+            }
+          },
+          "ICMZ": {
+            "source_sha256": "e3d529beed97e1632571a81d11721666d80772fd099362a033c11aea218c551d",
+            "asx_sha256": "4eaa799b9765f5840d360c39a81d2382f9701909b2f548009772cbe75ec0b84e",
+            "expected": {
+              "integer0": 17,
+              "integer1": 5,
+              "integer2": 5,
+              "error": "divide_zero"
+            }
+          },
+          "LADD": {
+            "source_sha256": "7cbb118b69c346c52ff6dbf9ecea7e15e7048935a212e35cb15959ae52ce5240",
+            "asx_sha256": "14bf4393f17be62ae4dad8dae5f00e822d3be25fe906829242189ee65bf40f3d",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 65542
+            }
+          },
+          "LCADD": {
+            "source_sha256": "d0e02ae8c7c821b07ee19518908139a8ec5e574a2caeea1596a4b69d9d80ddb2",
+            "asx_sha256": "88b9c751264627f34eaf6ef8e64ad96db6883c432e242334612334dbd3cd3bae",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 65542
+            }
+          },
+          "LSUB": {
+            "source_sha256": "a850f76b08756eb9f6727e58ffac616007f0e90bd5491b71123b5ee8dc5f1e89",
+            "asx_sha256": "aa2ab04ad3f69a9c4660449ef56f6eadc059138fab056868763403488708db50",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 65532
+            }
+          },
+          "LCSUB": {
+            "source_sha256": "de6076be3c4c0efbd223b020442abbcefb89c397b814d962f367a8d358126ad5",
+            "asx_sha256": "c1f4aad276100c76f46538c7d8ea16aaca9d0804a6072449b8dfb4e8d344538b",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 65532
+            }
+          },
+          "LMUL": {
+            "source_sha256": "4db844b425ede2e7268ca0395f56c5267f9af8a009334229f0072dff00af26c5",
+            "asx_sha256": "f83de368e8ae770cd8d97ac40a9d157ebf53a2b2fe75693bd4af67a4c69c291d",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 327685
+            }
+          },
+          "LCMUL": {
+            "source_sha256": "abf82a2577699cd201630867650b26d11e53299e5f777346ad344973b45075dc",
+            "asx_sha256": "1d33b7ed415519f0f14dd1b3aa91462a3906abab1f9fb3013bbb983af53d6ba4",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 327685
+            }
+          },
+          "LDIV": {
+            "source_sha256": "a436fd835bc09cff4b7f42044d66477ca869580c099c2d22ec83e820b8b152ee",
+            "asx_sha256": "71b96f7a522834ea1b486629e69cc884e297d5578e533f852da7122dee62c18e",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 13107
+            }
+          },
+          "LCDIV": {
+            "source_sha256": "cf3c122ad0fdd51b22b06fabf71fc4c9a1949168a2e25d7c5cd36aa99e70612d",
+            "asx_sha256": "dab3856b2271569fe9345dbb445a7ab72c1659c799d9a12455a991f35e3f1296",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 13107
+            }
+          },
+          "LMOD": {
+            "source_sha256": "dba72651a2ced9e3a29b3f212c37d6d4870112e79925e4a75254fadb13f7e80c",
+            "asx_sha256": "55ca1de5ac42a808d2397c442424ec4f49850c9ec75a59d1ffad85e0921f479f",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 2
+            }
+          },
+          "LCMOD": {
+            "source_sha256": "ef934f94fd0981074e878d30d9cea8e7b7fe0c9c41cbfba575e334171ff73caa",
+            "asx_sha256": "4c98e8455ed5be94137e15ed96fef0ed9de8fd9e4d7867ecfaa38798ac80e42f",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 2
+            }
+          },
+          "LNEGVAR": {
+            "source_sha256": "6bfad70b03626be6d469eda8d36b6da11b4377c262cc608d51cdf134525225ba",
+            "asx_sha256": "50f8347ea8060534e36944020ed20c60888f1020d2d9d3d2235850cf68831235",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 4294901759
+            }
+          },
+          "LDOUBLE": {
+            "source_sha256": "36f3d2c841feb2801709b595601c488559541802103f16926066fc389b57cf79",
+            "asx_sha256": "479eea25d641c2f082feb807c63feec47d7e20ec83abe830992f3acfe56d57e9",
+            "expected": {
+              "long0": 65536,
+              "long1": 5,
+              "long2": 5,
+              "long3": 65536
+            }
+          },
+          "LNEGPAR": {
+            "source_sha256": "a2c9e394c234ecf39e75e2a5a7eec5ba647865e3c19abc4661dfbdebf2b784b1",
+            "asx_sha256": "28a07438420fb54b8fd3c2839451bd334bf54cb2282ef6461617dc642096a6c5",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 4294901754
+            }
+          },
+          "LPREC": {
+            "source_sha256": "54fe155c4396884a4233f4c956c83bcc63f717e61930424c83f7f930595524dc",
+            "asx_sha256": "f817171cac9584252887fc74d2e9349179a5e385fdae018fd56cffe3df206d9f",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 65562
+            }
+          },
+          "LPAREN": {
+            "source_sha256": "4521e3997cd84b0f0927382adcc4033284af4ffb45b7f710532ac9f540b73103",
+            "asx_sha256": "4303dd6f4518b2b2d93d83cd553add7bde4aaebdba6071c11170c04e0bcb6eca",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 327710
+            }
+          },
+          "LPSUB": {
+            "source_sha256": "7a2fa75b3c4bdd717dfb672029be1802c5ba054edcb41d9550636e73a18864cd",
+            "asx_sha256": "a92c9fe7be58f8b61c3323c9715ad7146619f3aa96f1ea7bd2aa171afc5d1c32",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 65527
+            }
+          },
+          "LPDIV": {
+            "source_sha256": "ba418a469aa1d741b3626e28c05117802509c2170563d0b9f7b6f8019598318a",
+            "asx_sha256": "97981af4447833d758d0f6c7cce8b6fbd1c15209b3bf6c7230b8962a0cfc80e0",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 2621
+            }
+          },
+          "LPMIX": {
+            "source_sha256": "069ea9341d9d8cb03c6fbdc1ea4abe8bf489edea8ec92defa202bb8ed314a432",
+            "asx_sha256": "4934d385e75934da80f59a23702d6b80b1088d688a99b2dd38dfb4090387b380",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 327690
+            }
+          },
+          "LLEFT": {
+            "source_sha256": "899f03263bc115f85ae4a363e35f61838a609c6e82c119590ff81babc30b2a98",
+            "asx_sha256": "f817171cac9584252887fc74d2e9349179a5e385fdae018fd56cffe3df206d9f",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 65562
+            }
+          },
+          "LKCONST": {
+            "source_sha256": "d235a059fccc3b9e88cddbf0f9928a0eb3bfd0988387ecc5a31178244cbc2b25",
+            "asx_sha256": "d6178e24ba400930f6fe05e9a728fb28e8e34fb4f5be8cac4ab9e4e3cdaac398",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 22
+            }
+          },
+          "LKDIV": {
+            "source_sha256": "802ccfec64dbd147577cc880bfce4d136ece10c73009a741dbb6b4c32b6f327f",
+            "asx_sha256": "1a6ab75e0a306e10065151db6367a0ce85db4cddcaa9003a3fcaaa4c9766eb0c",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 3
+            }
+          },
+          "LKMOD": {
+            "source_sha256": "71186bdceda6cad8e093b6b0aa1a1816a937adbb27fbf3178134347068a28693",
+            "asx_sha256": "ca5140ae5d8b43349a816fe795ad00ee3b654edcc578cf36ac2f73465fe78fdd",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "long3": 2
+            }
+          },
+          "LDZ": {
+            "source_sha256": "c8d279fb0d1d527a3ccaa41e58b9c4f626a934374fc25fadd26c4cd075eeb985",
+            "asx_sha256": "684d22888ccf933d4a3f03cbb9298c33fa6886f40ce21d3a8199f131329cd6ec",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "error": "divide_zero"
+            }
+          },
+          "LMZ": {
+            "source_sha256": "00a024749318e43be9d9c89cb5da5f225607798307292855b72f4d10704b99ce",
+            "asx_sha256": "f3506a67bc6e5676a258a8db2c91a417e26f5bd70cd73fd282fff91227474aa6",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "error": "divide_zero"
+            }
+          },
+          "LCDZ": {
+            "source_sha256": "ba620c9ae100884913fa0b22105949f17901c512947a429903881336dcd06873",
+            "asx_sha256": "12a3c7f67e715a02a3cfe917b87a11fd9e014169c60c9a307103b9957e615b3e",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "error": "divide_zero"
+            }
+          },
+          "LCMZ": {
+            "source_sha256": "31c5ee1edc7814df1d8b96e47557bae8f38df2dd102a475e77af8ddd195dfd50",
+            "asx_sha256": "230a0788427938f764839707558082077c6d550be5aaed1b359045ce2b3275f4",
+            "expected": {
+              "long0": 65537,
+              "long1": 5,
+              "long2": 5,
+              "error": "divide_zero"
+            }
+          },
+          "IMAX": {
+            "source_sha256": "86662242d8e57e4e9c639beb3a2dcaf6cbb95cef53596b4ae7b12ca92a8ce3d2",
+            "asx_sha256": "f29e9bbdaa771aa2523472fdd1c661e298baef5f4bec7a66178142f6b09fe54a",
+            "expected": {
+              "integer0": 32768
+            }
+          },
+          "IMIN": {
+            "source_sha256": "70dfb74904c47c28445e7b3860c95d8c94be8927c1896c26c45c00c309e03149",
+            "asx_sha256": "f237d1063067de70e07ca33a96a3ded38c8c107bf0005d56bfab263c96fce6a5",
+            "expected": {
+              "integer0": 32767
+            }
+          },
+          "INEGDIV": {
+            "source_sha256": "854f49d35ec6bee412b4763183d9754a395c70031e69733eeafd4a5bd617129b",
+            "asx_sha256": "2e2bac35ab7aaceb3594aeb1b352efd40bc3ef39c1651be4aad5d7390b2541b7",
+            "expected": {
+              "integer0": 65533
+            }
+          },
+          "INEGMOD": {
+            "source_sha256": "b5ca49f42530d1118c2331a91b84cf02bb8f32d58f129f6dd7cc51399df788ff",
+            "asx_sha256": "e10825fadba5c863fd4b24438f3d70c320a996fe23a6adb81e99809485d4ee96",
+            "expected": {
+              "integer0": 65534
+            }
+          },
+          "IDIVOV": {
+            "source_sha256": "8820a118f4e61c6dab98f07168199f67cb0d1af7728b347ae30acdf36baa941d",
+            "asx_sha256": "6152d47b747231a5244c78afcd5739d40896889b817019caaa6394d88f7a5f1c",
+            "expected": {
+              "integer0": 32768
+            }
+          },
+          "INEGMIN": {
+            "source_sha256": "a764adcc829bae701155be36caac711527bc8a5a0086d0499c11409642423e73",
+            "asx_sha256": "84c1f1772da17dc78d320fa3cacc8bb5eade3e644b8417d790d1bc1f3cb7f4af",
+            "expected": {
+              "integer0": 32768
+            }
+          },
+          "I65535": {
+            "source_sha256": "2cfd089d41fdf0e575c378376393769e64a3d1c8e2ad54f0305a661e28e8b9af",
+            "asx_sha256": "7d4b8a9a951b051443a8fec8ef67fb21e62941a0967c8c904a73af1e0982f750",
+            "expected": {
+              "integer0": 65535
+            }
+          },
+          "I32768": {
+            "source_sha256": "dc2ee3c508ad290d2cba10a72a1484dd1d91021e9afb12904ef0faf5e434d2cf",
+            "asx_sha256": "84c1f1772da17dc78d320fa3cacc8bb5eade3e644b8417d790d1bc1f3cb7f4af",
+            "expected": {
+              "integer0": 32768
+            }
+          },
+          "LNEG": {
+            "source_sha256": "ed877400bc2c2a23de3299ce8f2426cf65ab439fcf54235284852861e51c4c29",
+            "asx_sha256": "825392e69d25672d40e2c928422df7b248af8110ac5e424a4164d80eadaef2a4",
+            "expected": {
+              "long0": 4294901759
+            }
+          },
+          "LMAX": {
+            "source_sha256": "cb03357c570f917ffbe4b241754f1fbbae7273af8ca60dda5dfd029dc4eef671",
+            "asx_sha256": "9c2cb6fa47fe5a99dbb197f389f75446ee9d55a186021a1077e851c7aa920613",
+            "expected": {
+              "long0": 2147483648
+            }
+          },
+          "LMIN": {
+            "source_sha256": "d63bd90f25a86977f3582d63d09d45dc499949224802b6042523fcce4e068373",
+            "asx_sha256": "8935918b95a0129e25b24933d715d72ea5fd5548591a7dea28c5cd88e41c8e63",
+            "expected": {
+              "long0": 2147483647
+            }
+          },
+          "LDIVOV": {
+            "source_sha256": "8989db70b08afcedc1cbe376f55234f04c637bba808fec4a7a12d75dc5678afa",
+            "asx_sha256": "2b118e86c133af779b0f91122546b2c672e6f0b716dc6282599586b8e3844b30",
+            "expected": {
+              "long0": 2147483648
+            }
+          },
+          "LNEGDIV": {
+            "source_sha256": "172586687c92cee12a13bfbcb0825ef2b588cab32c44b41125eba88f0e8d48a3",
+            "asx_sha256": "6cf649c03a1b5738321f8b024759c39e77fd5b0c08cc9f0a4182794a766b59f3",
+            "expected": {
+              "long0": 4294954189
+            }
+          },
+          "LNEGMOD": {
+            "source_sha256": "9dc75db2875a26119ccea7c02553935d50c9396edc203f49f1d1c9a2bc845a23",
+            "asx_sha256": "325d56629c713e78a48c092d8797a8388dc84890677aee7a84546f87126fa47a",
+            "expected": {
+              "long0": 4294967294
+            }
+          },
+          "LTOOWIDE": {
+            "source_sha256": "05de21ab8ac142d0143457d91a6fc5c8c880006563e4f913d03c4d721ae8855c",
+            "asx_sha256": "e36869d77167b44bee79b03d5f33b434eda056d9ff8e31efdf12f3f8f5dcaa41",
+            "expected": {
+              "long0": 0
+            }
+          },
+          "LHEXSIGN": {
+            "source_sha256": "4bc6f10cc8e93e6034ad4ac4433cfb53a6a04070e6a660bc80595bbabf012da5",
+            "asx_sha256": "73c67010796433827643d11b82159d7bb80785579b5846ea9365f52bb6bf64df",
+            "expected": {
+              "long0": 4294967295
+            }
+          },
+          "LSUFF": {
+            "source_sha256": "470870c864dc1d5c09182a05264374ed88bc2af7d34c82f6f12ad3c9cd6cb49b",
+            "asx_sha256": "b7c5c2a0f7a5accebcc9821d4ca4a6c4946c4a4b725614f30d3f6294c991217c",
+            "expected": {
+              "long0": 22
+            }
+          },
+          "LMIX": {
+            "source_sha256": "d0f5f812ff7d78f4b3d926395a9cf27dfb75695612a56dfdfb59c6658f0edec6",
+            "asx_sha256": "162930e5bcb0ef5dd482d6b190c6734cd9c817ad17e000698cc287daff37f2ff",
+            "expected": {
+              "long0": 65542
+            }
+          },
+          "LCONST": {
+            "source_sha256": "9cc1047480d523d9b94fffa61fd54e542137e7c05c8440eae7e8cd009fe2e3f3",
+            "asx_sha256": "bb43a02ae8586bf8cc08c2c0b588b3d432654d98324bac9613997e54dce3c1b6",
+            "expected": {
+              "long0": 22
+            }
+          },
+          "LCMIX": {
+            "source_sha256": "444627a06ec554bfe9bb427d243424d308e957866d48ac4f4dc4f705717e1ce5",
+            "asx_sha256": "950120eaa00fd870294573740e73b23c97198c8891cdb88af1bc10ca9ee49150",
+            "expected": {
+              "long0": 22
+            }
+          },
+          "IWRAP": {
+            "source_sha256": "adacffdde15966c4f583125a4cbdb53cdabc283692a4644cd7e5b3e3de7511f0",
+            "asx_sha256": "2f4649598b68edf85462c89cd58923bd00422e92ddf5c537bcfd4c4385e94de8",
+            "expected": {
+              "integer0": 0
+            }
+          },
+          "LFLOAT": {
+            "source_sha256": "aa7b1d8087a387c70a1c8c3790c667d9f1ebb50df2bbf48dd67cbeebdc54ac08",
+            "asx_sha256": "3d96bab87a4df20fbd5b123cf87bb1ccce5abed409424b1d76158ab5816791e3",
+            "expected": {
+              "error": "float"
+            }
+          },
+          "IADDEDGE": {
+            "source_sha256": "0769a76a04e7ccc64e7f46ae06d197e127a0e2ff107346f3418ed2fe26ff6d63",
+            "asx_sha256": "8ed149a47a8901814da7d7f6482814a83640b2d3067c28f5453d7fdd187b2caa",
+            "expected": {
+              "integer0": 32767,
+              "integer1": 1,
+              "integer2": 32768
+            }
+          },
+          "ISUBEDGE": {
+            "source_sha256": "0f951f3f8071cecdec9e029bea472e73e377faa870d545e44a71c4668188b180",
+            "asx_sha256": "446522523f6cf9529173db742f06628c42aa9f7db1715424a14f11db96cde5f8",
+            "expected": {
+              "integer0": 32768,
+              "integer1": 1,
+              "integer2": 32767
+            }
+          },
+          "IDIVEDGE": {
+            "source_sha256": "e750e2b96e45b0fb56067f85ad82eda025f1b8adc9b676ad4e3ae181189d27cf",
+            "asx_sha256": "ec1aea296021e843b0b887776b55013684e5cdcc9052bb816952bb9375575d98",
+            "expected": {
+              "integer0": 32768,
+              "integer1": 65535,
+              "error": "native_int0"
+            }
+          },
+          "IMODEDGE": {
+            "source_sha256": "1797141347306a498c8c7164e304899b17d610bc3ea4d915719f3dcd7cf295f1",
+            "asx_sha256": "3b99ab514b492482293009fbc13724803e662cf94a1fb428349b5312e55fbdc1",
+            "expected": {
+              "integer0": 32768,
+              "integer1": 65535,
+              "error": "native_int0"
+            }
+          },
+          "LADDEDGE": {
+            "source_sha256": "f250a2111f93eff15654ceaf39f1e0a393882077f720c5a0a30d148f6c0918a1",
+            "asx_sha256": "f6c6ec55bed06d2b67e724e529aa17b1aebe248b26bb4bdb5b3a89e078547068",
+            "expected": {
+              "long0": 2147483647,
+              "long1": 1,
+              "long2": 2147483648
+            }
+          },
+          "LSUBEDGE": {
+            "source_sha256": "fb612be491f1a4fb499b1b96760834110eea13a448dc253af5f6ed46819947ec",
+            "asx_sha256": "f85e7b5b83d6fda4803717e5a0509117704295e78fb1eeb8c117d19b2fbcbd6d",
+            "expected": {
+              "long0": 2147483648,
+              "long1": 1,
+              "long2": 2147483647
+            }
+          },
+          "LDIVEDGE": {
+            "source_sha256": "25c16da2d9f74d54790bed70f7b6b2cfa2082a8a35696466c272d92ece9133ea",
+            "asx_sha256": "dabb2614f6de52e0fc45d8694f61439473a613b047395f18e3538e929a374944",
+            "expected": {
+              "long0": 2147483648,
+              "long1": 4294967295,
+              "long2": 2147483648
+            }
+          },
+          "LMODEDGE": {
+            "source_sha256": "5840fa2452dc5aa31a219892125e484d5e5b0586292960e3b7265a84a60fc61a",
+            "asx_sha256": "1b41c8454368279b9beed5716dad56a99b96caf9c13565dc6dd2a132038a6223",
+            "expected": {
+              "long0": 2147483648,
+              "long1": 4294967295,
+              "long2": 0
+            }
+          },
+          "MIXVAR": {
+            "source_sha256": "b4d2014811d225fe4b7359eee194840a503556ba5f07f2800281c6e7a3aa8f03",
+            "asx_sha256": "75d451fdc6a7353f2adaa1951858632f8155a8ce917ee5a101b9bf7abe88638b",
+            "expected": {
+              "integer0": 5,
+              "long0": 65537,
+              "long1": 65542
+            }
+          },
+          "MIXREV": {
+            "source_sha256": "5f41a6e3b90ed215f206e303f777ae8d9ff4c822fd1f7d1c42552ed3188b55f4",
+            "asx_sha256": "73cc86b0813ddecb068379ec648331439546ae530ea65d51d3025b5af6c10ffc",
+            "expected": {
+              "integer0": 5,
+              "long0": 65537,
+              "long1": 65542
+            }
+          },
+          "CHAIN": {
+            "source_sha256": "a68dedd9a723a0f106be529c6ef991e49c45abae5ba17a8c6f92b1519dfc4588",
+            "asx_sha256": "da8079b0ddfce4aa046b3349b4afb4eb2a59d80fe4589130bc16521b9da37a40",
+            "expected": {
+              "integer0": 6,
+              "integer1": 5,
+              "integer2": 6
+            }
+          },
+          "PREFIX": {
+            "source_sha256": "dbc84a4187bf74417a0d9b65125abd00c79210c71bab6621b6efee7be06657ca",
+            "asx_sha256": "7988aa7b6fa884cc5e5abd8bbff76b0e077f716e6b97232f1eb54e236014b294",
+            "expected": {
+              "integer0": 2
+            }
+          },
+          "INTARG": {
+            "source_sha256": "2841c370451a1f0ea80f2d9cbe36875b85f326e82951452f971511ea2f6d2f34",
+            "asx_sha256": "7897dd1d4ca8a6bff81eff73acd19cca937c43907afd5a84bd3c64f3b028442b",
+            "expected": {
+              "integer0": 7
+            }
+          },
+          "LONGARG": {
+            "source_sha256": "f25eb81689d3d0bb6c8c501287ad5c31144a8be1e4fb484522c649f6b41e8136",
+            "asx_sha256": "19a04df6809fb768c957497dcc939e9b635e743d38c4fcd3351738abfaca9660",
+            "expected": {
+              "long0": 65537
+            }
+          },
+          "STRARG": {
+            "source_sha256": "50f6b9d154d3851d6ef7bf2708696499665a473468026568dede753bcbc0d4cf",
+            "asx_sha256": "b7444cdf67009b0b49f674a4b1cf60a85fa762bab8a9433cdf45875459af1492",
+            "expected": {
+              "string0": "HELLO"
+            }
+          },
+          "EMPTYSTR": {
+            "source_sha256": "3f8a7890a3aba7366a79137d7fecc02f9da52ef5522a712b564269e4f0d22c9a",
+            "asx_sha256": "8be283bbcb53bf771349832362489af65912276c85d90edd39d4377e1d817407",
+            "expected": {
+              "string0": ""
+            }
+          },
+          "MIXED": {
+            "source_sha256": "c316b8db5936941a43bcf3f760100b67da8a345d48e351315e4cd1ecce597375",
+            "asx_sha256": "efe38e7fdaf6de7234d40b6a3758f4b1b85b9bd9b50d768d7735c717f44419a0",
+            "expected": {
+              "integer0": 7,
+              "long0": 65537,
+              "string0": "HELLO"
+            }
+          },
+          "COMMAS": {
+            "source_sha256": "757d82f3275c190d73199c0c3be6c02110d4cb119a30354a4f2686b4a7fd7b5c",
+            "asx_sha256": "efe38e7fdaf6de7234d40b6a3758f4b1b85b9bd9b50d768d7735c717f44419a0",
+            "expected": {
+              "integer0": 7,
+              "long0": 65537,
+              "string0": "HELLO"
+            }
+          },
+          "STRLOCAL": {
+            "source_sha256": "586ccfd938c3c71591fe392af588607eabff3e8d9cbea39e305f58b48f5bb3f9",
+            "asx_sha256": "0587d91f7244fd24577bb80f6cef2f9863a99c140c77b25ef2b93dea72535525",
+            "expected": {
+              "string0": "HELLO"
+            }
+          },
+          "STRGLOB": {
+            "source_sha256": "d47e5ecd4c77b150079df39de66544ca23739601f0d39eea8fa6083aed75b939",
+            "asx_sha256": "fb305ffe11fb2bd8b0fc2b370783b63636171a52e2620b726fea7470b887606c",
+            "expected": {
+              "string0": "HELLO",
+              "string1": "HELLO"
+            }
+          },
+          "STRMUT": {
+            "source_sha256": "d0210140f4a92c6a4d0780e8b73c7a5028c9fc6f4c4b889a67ac041c17eefdb2",
+            "asx_sha256": "9b86b4c73f35d130ba7e2fb4a0b17a1532526c845edd52d04f32b899fc975a0f",
+            "expected": {
+              "string0": "ORIGINAL",
+              "string1": "CHANGED"
+            }
+          },
+          "INTMUT": {
+            "source_sha256": "29652e7ba2a08e1561a484d18de8fa1f1e644789a0c356d2ad8a9cd8984811f4",
+            "asx_sha256": "e19aaf2b466b579aa252c7dc2f2a4de1959a34476bd659ea9ca0cfdc6bcd1c91",
+            "expected": {
+              "integer0": 7,
+              "integer1": 9
+            }
+          },
+          "LONGMUT": {
+            "source_sha256": "e342a564be0f611dfadb7239c92d8c3305996f0fa719dff23f960ebfcbb3c69f",
+            "asx_sha256": "85904984a4bee3dbd127c429d8b8f1a6f3ef7e338281c1c96f707dc3bb5f3cd8",
+            "expected": {
+              "long0": 65537,
+              "long1": 65539
+            }
+          },
+          "STRGASS": {
+            "source_sha256": "b7b221a1b1e8d82cdb7c506bc55e2696967a1e70bac58f392477dbffb1ae1859",
+            "asx_sha256": "3568b48b460d63284166014e1e76cabcbf7f7e1fa4bad5d4d7d920461b83a89c",
+            "expected": {
+              "string0": "HELLO",
+              "string1": "HELLO"
+            }
+          },
+          "STRLASS": {
+            "source_sha256": "444e8d11bee59d8f0ac0792a7b2f0ffaf7d70c56f856f39803b5c12baf19262d",
+            "asx_sha256": "b1cb3cbc951cc3060d13558ee6047a17241210bd4d7d2b8c36bb874e0f92abc8",
+            "expected": {
+              "string0": "HELLO"
+            }
+          },
+          "STRINIT": {
+            "source_sha256": "fdcc47a89137681bbd3c6edd0d012c836f70934fd9b3ac3059cff85cafae3bd2",
+            "asx_sha256": "fb52f26936079a98bea1664c1493e6156fd657b4b3355a7afa97537c5477e4f0",
+            "expected": {
+              "string0": "HELLO"
+            }
+          },
+          "STRMAX": {
+            "source_sha256": "93c95a7abf145f54418749f5b972cc5dd5d4832e20d8c7725869c50fd2837616",
+            "asx_sha256": "6f86afbc9f2de1b3cddb0a862053294c93705fc4ba6960e508927853ec8c41b1",
+            "expected": {
+              "string0": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            }
+          },
+          "STRNEST": {
+            "source_sha256": "8f8b03add822158a9b1886299243ce32fd2015f7d6e99836d7bf08541e93a12c",
+            "asx_sha256": "ceb0c3de34e650e937cc6bcc96466b93998f8155e9f090719e982d23192457fd",
+            "expected": {
+              "string0": "HELLO"
+            }
+          },
+          "INTS2": {
+            "source_sha256": "5aeed1263105fcf4ff27c6786718386c25e16ba041506d7c6849e6738cb25d17",
+            "asx_sha256": "7d0c994afb8e20f067e0fc738615774ca6028cac28227e56ee84c656dd34d937",
+            "expected": {
+              "integer0": 7,
+              "integer1": 9
+            }
+          },
+          "LONGS2": {
+            "source_sha256": "1b31a345bd18dd2df0e9139738bb4ea307f1bc39da65e02170f3ef4133a99954",
+            "asx_sha256": "323f12b8f9128559e7314ef52ae16773ecc1b18d94c9593eefee520c2aab4514",
+            "expected": {
+              "long0": 65537,
+              "long1": 65539
+            }
+          },
+          "STRS2": {
+            "source_sha256": "0185ed296a44fdce3a9a6c109aae2b3379ca7bda4abfaf8fe003101742b5ad45",
+            "asx_sha256": "f9301cf2a4ac7031908147e8cb1897457b5d966ee611d6cc44ff983be7f04f02",
+            "expected": {
+              "string0": "FIRST",
+              "string1": "SECOND"
+            }
+          },
+          "PARFLOAT": {
+            "source_sha256": "450c2eefb7d40afae2eff07f53e9c4cf507831f91e36b8c3c8a1db1fb6787959",
+            "asx_sha256": "4f77eb9a40b68dfab35fa03f6ed4f3b456be680bcb3ac18884c7cfcf64207421",
+            "expected": {
+              "error": "float"
+            }
+          },
+          "INTEVAL": {
+            "source_sha256": "0bb3debd94b9c9209c84028fb7c1f3d684bdf79c9d4422a17ed5702c229d0f07",
+            "asx_sha256": "1c6f2f39292cf0d9aaec5c8eda48d7b18d66fe2ec530931858759b4c092fe777",
+            "expected": {
+              "integer0": 11
+            }
+          },
+          "LONGEVAL": {
+            "source_sha256": "7db082bd614813efde764056681130e6ebabfddeddde491e7040becd45e4c5c5",
+            "asx_sha256": "e978e10a23d33082bdf2cc905d1fb026b90f75547843341fbbee4e3b6c87a139",
+            "expected": {
+              "long0": 65542
+            }
+          },
+          "NESTEVAL": {
+            "source_sha256": "080c0a46a4b1b820436b0d641f8ebf9d59edba98642d45ad8ba498ca12d2e4a8",
+            "asx_sha256": "1b1a0416af3c74e3a30a5e6160e04bea1ecc31955ad553dc260a57c684b602f9",
+            "expected": {
+              "integer0": 12
+            }
+          },
+          "LOCEVAL": {
+            "source_sha256": "94b04a0d4167d966e51be1385c0d299812fe31c790593223fc639594df855958",
+            "asx_sha256": "4aaf9c20211d255b8fa5afba552d0a337b36b7305297b1a645e6c0651e55c2e7",
+            "expected": {
+              "integer0": 12
+            }
+          },
+          "STRRECUR": {
+            "source_sha256": "d11f08d77a09612eb60cf3ce521e842051343c0c9f2003488f280cf31766644a",
+            "asx_sha256": "1f5681a3df3fd537e158f0bfea714fd85309ec8c856c958137e3979a23be1b8e",
+            "expected": {
+              "string0": "LIVE",
+              "error": "stack",
+              "limit": 65000
+            }
+          },
+          "PARZERO": {
+            "source_sha256": "414948524c4c263a30f204252fa40739ac5415282261cf07018801d39a78f72c",
+            "asx_sha256": "f0ca3a4bf5c919ad8455a8821232516b7ff853815ec33f7d71ecf4669ed1da42",
+            "expected": {
+              "string0": "ALIVE",
+              "error": "divide_zero"
+            }
+          },
+          "PARFHEAP": {
+            "source_sha256": "5b1f9c78fa13919a96aaf6ee03359a4f3d749beff5c4197af1d73fd6d1b03ea1",
+            "asx_sha256": "e6a127759851c9d613b30973c66d6da07c47e1f9d77677b3bc783298c4110ba3",
+            "expected": {
+              "string0": "ALIVE",
+              "error": "float"
+            }
+          }
+        },
+        "scope": "Incremental actual native dispatch/operand/operation/file/heap composition executing source-owned compiled fixtures. Incomplete39-slot opcode table; unavailable services abort. Not full ASPECT or arbitrary-input safety."
+      },
+      "source_only_checks": {
+        "passed": true,
+        "DOS_summary": "ASPECT_RUNTIME 320 cases 4760 checks 0 failures",
+        "binary_sha256": "b320b02b1ccbc847c9fe1292d284377eb81cbd364437b11b981b5518d7eb986a",
+        "manifest_sha256": "02dc048fe89a304f13d48a7879a70ce52c249b74573ab13c76534083ed897780",
+        "check_sha256": "ff9eef16886c26dee27f29ac2587e5ba5976b1c262f9575cd1de6dd1fd2b498b",
+        "result_sha256": "252815319300838ca09fabd32426e443e483d448ae05f3e8c49e5862a618678d",
+        "optional_original": null,
+        "original_inputs": [],
+        "fixture_count": 132,
+        "unsupported_slot_cases": 176,
+        "scope": "Actual recovered dispatcher executes compiled authored ASX through real DOS files/far heap and maintained resource owner. Incomplete39-slot command surface; all176 unsupported in-range slots abort. No full compiler/VM, arbitrary-bytecode safety or terminal integration."
+      },
+      "optional_native": {
+        "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+        "exact_support_bytes": 501,
+        "units": [
+          {
+            "unit": 1,
+            "start": 53920,
+            "end_exclusive": 53974,
+            "file_start": 109648,
+            "bytes": 54,
+            "sha256": "f44d1381879db32a3471ab7605c49a6d97b25395422c5a8604b45d9337216833"
+          },
+          {
+            "unit": 2,
+            "start": 54258,
+            "end_exclusive": 54280,
+            "file_start": 109986,
+            "bytes": 22,
+            "sha256": "2f3c68286f7445c3c1d401d1ed410239e9719f11687def70d37378e38cf93bb5"
+          },
+          {
+            "unit": 3,
+            "start": 56189,
+            "end_exclusive": 56392,
+            "file_start": 111917,
+            "bytes": 203,
+            "sha256": "ec40b46f8c508b585b8ef7eeb7f2398e5c081567fe83495721b87cd6e0ae9809"
+          },
+          {
+            "unit": 4,
+            "start": 56909,
+            "end_exclusive": 57092,
+            "file_start": 112637,
+            "bytes": 183,
+            "sha256": "b235ad26e9d5106fe3390f615c52f2868f44fb5ec54cad3352249a4285be8298"
+          },
+          {
+            "unit": 5,
+            "start": 39616,
+            "end_exclusive": 39655,
+            "file_start": 44224,
+            "bytes": 39,
+            "sha256": "13198f32453ef810aad7bdde574976081e28a8037b04581ede30be457a30cc10"
+          }
+        ],
+        "empty_string_builtin": {
+          "index": 19,
+          "resident_thunk": "C2C7",
+          "overlay": 16,
+          "entry": "DAFB",
+          "returned_DS_offset": "4942",
+          "observed_first_byte": 0,
+          "maintained_scope": "Only builtin19 returns an owned empty string; other string builtins remain unsupported."
+        }
+      }
+    }
+  },
+  "compiler": {
+    "cases": 40,
+    "accepted": 27,
+    "rejected": 13,
+    "expected_completions": 23,
+    "expected_stops": {
+      "float": 2,
+      "stack": 1,
+      "divide_zero": 1
+    },
+    "prior_accepted_reproduced": 24,
+    "findings": [
+      "WITH required; commas optional between typed actual arguments.",
+      "Direct arithmetic actual arguments rejected in spaced, unspaced, parenthesized and bracketed forms tested; precomputing into typed local accepted.",
+      "CC marks numeric actual pushes; CD string actual pushes; framedC8 call carries32-bit absolute target.",
+      "Numeric parameter selectors97/98 carry16-bit frame-relative offsets; string parameter selector96 likewise.",
+      "StringassignmentAC uses global8C indexbyte, localA0 offsetword or formal96 offsetword; authored assignment records end with00 mode byte.",
+      "Exact runtime/string ownership and parameter behavior must be established by execution tests, not these compiler observations."
+    ]
+  },
+  "native_E104_aliases": {
+    "aspect_string_scratch_pointer": "0b5e:305a",
+    "aspect_dispatch_next_script": "0b5e:305a"
+  },
+  "retained_fixture_failure": {
+    "harness_sha256": "81dc7989bf43cd98fbe2b5c926c619737ba936372797a9f8d2819abf4e979f85",
+    "DOS_folder": "build/aspect-strings/dos-1792389694705444931",
+    "DOS_summary": "ASPECT_STRINGS 14441 checks 1 failures",
+    "CPU_records_sha256": "cd2947f48d74372febed31126a651ea121b64d967f557a979ce299703ca32248",
+    "failure": "Only C fixture post-copy sentinel at string_bank[81] was uninitialized D when count80; bank capacity810 is safe. Expected D guard incorrectly compared original33. Initialize guard explicitly; no maintained native code changes."
+  },
+  "runtime_cases": [
+    {
+      "file": "EMPTY.ASX",
+      "error": 0,
+      "steps": 2,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "ASSIGN.ASX",
+      "error": 0,
+      "steps": 3,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 7,
+      "long0": 0
+    },
+    {
+      "file": "LONG.ASX",
+      "error": 0,
+      "steps": 3,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65535
+    },
+    {
+      "file": "IFTRUE.ASX",
+      "error": 0,
+      "steps": 6,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 7,
+      "long0": 0
+    },
+    {
+      "file": "IFFALSE.ASX",
+      "error": 0,
+      "steps": 5,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 9,
+      "long0": 0
+    },
+    {
+      "file": "CALL.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 23,
+      "long0": 0
+    },
+    {
+      "file": "FRAME.ASX",
+      "error": 0,
+      "steps": 11,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 42,
+      "long0": 0
+    },
+    {
+      "file": "CMP.ASX",
+      "error": 0,
+      "steps": 6,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 11,
+      "long0": 0
+    },
+    {
+      "file": "WHILE.ASX",
+      "error": 0,
+      "steps": 17,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "POSTDEC.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 2,
+      "long0": 0
+    },
+    {
+      "file": "POSTINC.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 4,
+      "long0": 0
+    },
+    {
+      "file": "BOOLEAN.ASX",
+      "error": 0,
+      "steps": 6,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 6,
+      "long0": 0
+    },
+    {
+      "file": "LONGCMP.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 65535
+    },
+    {
+      "file": "FLOAT.ASX",
+      "error": 4,
+      "steps": 2,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "STRINGS.ASX",
+      "error": 0,
+      "steps": 2,
+      "peak": 2,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "STR128.ASX",
+      "error": 0,
+      "steps": 2,
+      "peak": 128,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "ENDLESS.ASX",
+      "error": 6,
+      "steps": 1000,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "RECURSE.ASX",
+      "error": 9,
+      "steps": 6087,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "PAUSE.ASX",
+      "error": 3,
+      "steps": 2,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "IADD.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "ICADD.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "ISUB.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "ICSUB.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "IMUL.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "ICMUL.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "IDIV.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "ICDIV.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "IMOD.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "ICMOD.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "INEGVAR.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "IDOUBLE.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 16,
+      "long0": 0
+    },
+    {
+      "file": "INEGPAR.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "IPREC.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "IPAREN.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "IPSUB.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "IPDIV.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "IPMIX.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "ILEFT.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "IKCONST.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "IKDIV.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "IKMOD.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "IDZ.ASX",
+      "error": 11,
+      "steps": 5,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "IMZ.ASX",
+      "error": 11,
+      "steps": 5,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "ICDZ.ASX",
+      "error": 11,
+      "steps": 5,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "ICMZ.ASX",
+      "error": 11,
+      "steps": 5,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "LADD.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LCADD.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LSUB.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LCSUB.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LMUL.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LCMUL.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LDIV.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LCDIV.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LMOD.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LCMOD.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LNEGVAR.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LDOUBLE.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65536
+    },
+    {
+      "file": "LNEGPAR.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LPREC.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LPAREN.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LPSUB.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LPDIV.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LPMIX.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LLEFT.ASX",
+      "error": 0,
+      "steps": 8,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LKCONST.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LKDIV.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LKMOD.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LDZ.ASX",
+      "error": 11,
+      "steps": 5,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LMZ.ASX",
+      "error": 11,
+      "steps": 5,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LCDZ.ASX",
+      "error": 11,
+      "steps": 5,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "LCMZ.ASX",
+      "error": 11,
+      "steps": 5,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "IMAX.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 32768,
+      "long0": 0
+    },
+    {
+      "file": "IMIN.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 32767,
+      "long0": 0
+    },
+    {
+      "file": "INEGDIV.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 65533,
+      "long0": 0
+    },
+    {
+      "file": "INEGMOD.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 65534,
+      "long0": 0
+    },
+    {
+      "file": "IDIVOV.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 32768,
+      "long0": 0
+    },
+    {
+      "file": "INEGMIN.ASX",
+      "error": 0,
+      "steps": 3,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 32768,
+      "long0": 0
+    },
+    {
+      "file": "I65535.ASX",
+      "error": 0,
+      "steps": 3,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 65535,
+      "long0": 0
+    },
+    {
+      "file": "I32768.ASX",
+      "error": 0,
+      "steps": 3,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 32768,
+      "long0": 0
+    },
+    {
+      "file": "LNEG.ASX",
+      "error": 0,
+      "steps": 3,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 4294901759
+    },
+    {
+      "file": "LMAX.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 2147483648
+    },
+    {
+      "file": "LMIN.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 2147483647
+    },
+    {
+      "file": "LDIVOV.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 2147483648
+    },
+    {
+      "file": "LNEGDIV.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 4294954189
+    },
+    {
+      "file": "LNEGMOD.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 4294967294
+    },
+    {
+      "file": "LTOOWIDE.ASX",
+      "error": 0,
+      "steps": 3,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "LHEXSIGN.ASX",
+      "error": 0,
+      "steps": 3,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 4294967295
+    },
+    {
+      "file": "LSUFF.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 22
+    },
+    {
+      "file": "LMIX.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65542
+    },
+    {
+      "file": "LCONST.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 22
+    },
+    {
+      "file": "LCMIX.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 22
+    },
+    {
+      "file": "IWRAP.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "LFLOAT.ASX",
+      "error": 4,
+      "steps": 2,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "IADDEDGE.ASX",
+      "error": 0,
+      "steps": 6,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 32767,
+      "long0": 0
+    },
+    {
+      "file": "ISUBEDGE.ASX",
+      "error": 0,
+      "steps": 6,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 32768,
+      "long0": 0
+    },
+    {
+      "file": "IDIVEDGE.ASX",
+      "error": 12,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 32768,
+      "long0": 0
+    },
+    {
+      "file": "IMODEDGE.ASX",
+      "error": 12,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 32768,
+      "long0": 0
+    },
+    {
+      "file": "LADDEDGE.ASX",
+      "error": 0,
+      "steps": 6,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 2147483647
+    },
+    {
+      "file": "LSUBEDGE.ASX",
+      "error": 0,
+      "steps": 6,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 2147483648
+    },
+    {
+      "file": "LDIVEDGE.ASX",
+      "error": 0,
+      "steps": 6,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 2147483648
+    },
+    {
+      "file": "LMODEDGE.ASX",
+      "error": 0,
+      "steps": 6,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 2147483648
+    },
+    {
+      "file": "MIXVAR.ASX",
+      "error": 0,
+      "steps": 6,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 5,
+      "long0": 65537
+    },
+    {
+      "file": "MIXREV.ASX",
+      "error": 0,
+      "steps": 6,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 5,
+      "long0": 65537
+    },
+    {
+      "file": "CHAIN.ASX",
+      "error": 0,
+      "steps": 7,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 6,
+      "long0": 0
+    },
+    {
+      "file": "PREFIX.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 2,
+      "long0": 0
+    },
+    {
+      "file": "INTARG.ASX",
+      "error": 0,
+      "steps": 9,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 7,
+      "long0": 0
+    },
+    {
+      "file": "LONGARG.ASX",
+      "error": 0,
+      "steps": 9,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "STRARG.ASX",
+      "error": 0,
+      "steps": 9,
+      "peak": 1,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "EMPTYSTR.ASX",
+      "error": 0,
+      "steps": 9,
+      "peak": 1,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "MIXED.ASX",
+      "error": 0,
+      "steps": 13,
+      "peak": 1,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 7,
+      "long0": 65537
+    },
+    {
+      "file": "COMMAS.ASX",
+      "error": 0,
+      "steps": 13,
+      "peak": 1,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 7,
+      "long0": 65537
+    },
+    {
+      "file": "STRLOCAL.ASX",
+      "error": 0,
+      "steps": 11,
+      "peak": 1,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "STRGLOB.ASX",
+      "error": 0,
+      "steps": 10,
+      "peak": 2,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "STRMUT.ASX",
+      "error": 0,
+      "steps": 11,
+      "peak": 2,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "INTMUT.ASX",
+      "error": 0,
+      "steps": 11,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 7,
+      "long0": 0
+    },
+    {
+      "file": "LONGMUT.ASX",
+      "error": 0,
+      "steps": 11,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "STRGASS.ASX",
+      "error": 0,
+      "steps": 4,
+      "peak": 2,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "STRLASS.ASX",
+      "error": 0,
+      "steps": 6,
+      "peak": 1,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "STRINIT.ASX",
+      "error": 0,
+      "steps": 5,
+      "peak": 1,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "STRMAX.ASX",
+      "error": 0,
+      "steps": 9,
+      "peak": 1,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "STRNEST.ASX",
+      "error": 0,
+      "steps": 15,
+      "peak": 1,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "INTS2.ASX",
+      "error": 0,
+      "steps": 11,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 7,
+      "long0": 0
+    },
+    {
+      "file": "LONGS2.ASX",
+      "error": 0,
+      "steps": 11,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65537
+    },
+    {
+      "file": "STRS2.ASX",
+      "error": 0,
+      "steps": 11,
+      "peak": 2,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "PARFLOAT.ASX",
+      "error": 4,
+      "steps": 3,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "INTEVAL.ASX",
+      "error": 0,
+      "steps": 13,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 11,
+      "long0": 0
+    },
+    {
+      "file": "LONGEVAL.ASX",
+      "error": 0,
+      "steps": 12,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 65542
+    },
+    {
+      "file": "NESTEVAL.ASX",
+      "error": 0,
+      "steps": 18,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 12,
+      "long0": 0
+    },
+    {
+      "file": "LOCEVAL.ASX",
+      "error": 0,
+      "steps": 16,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 12,
+      "long0": 0
+    },
+    {
+      "file": "STRRECUR.ASX",
+      "error": 9,
+      "steps": 376,
+      "peak": 1,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "PARZERO.ASX",
+      "error": 11,
+      "steps": 7,
+      "peak": 1,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "PARFHEAP.ASX",
+      "error": 4,
+      "steps": 4,
+      "peak": 1,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "NOHEADER.ASX",
+      "error": 2,
+      "steps": 0,
+      "peak": 0,
+      "cleanup": 0,
+      "close": 0,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "BADHEAD.ASX",
+      "error": 2,
+      "steps": 0,
+      "peak": 0,
+      "cleanup": 0,
+      "close": 0,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "BADOP.ASX",
+      "error": 3,
+      "steps": 1,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "TRUNC.ASX",
+      "error": 5,
+      "steps": 2,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "MISSING.ASX",
+      "error": 1,
+      "steps": 0,
+      "peak": 0,
+      "cleanup": 0,
+      "close": 0,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "STRINGS.ASX",
+      "error": 8,
+      "steps": 0,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "STRINGS.ASX",
+      "error": 8,
+      "steps": 0,
+      "peak": 1,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "STRINGS.ASX",
+      "error": 0,
+      "steps": 2,
+      "peak": 2,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "HEAPFLT.ASX",
+      "error": 12,
+      "steps": 4,
+      "peak": 2,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 32768,
+      "long0": 0
+    },
+    {
+      "file": "HEAPZERO.ASX",
+      "error": 11,
+      "steps": 5,
+      "peak": 2,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 17,
+      "long0": 0
+    },
+    {
+      "file": "STRSHORT.ASX",
+      "error": 5,
+      "steps": 3,
+      "peak": 2,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 0,
+      "long0": 0
+    },
+    {
+      "file": "ASSIGN.ASX",
+      "error": 0,
+      "steps": 3,
+      "peak": 0,
+      "cleanup": 1,
+      "close": 1,
+      "integer0": 7,
+      "long0": 0
+    }
+  ],
+  "string_values": {
+    "STRARG.ASX:string0": "HELLO",
+    "EMPTYSTR.ASX:string0": "",
+    "MIXED.ASX:string0": "HELLO",
+    "COMMAS.ASX:string0": "HELLO",
+    "STRLOCAL.ASX:string0": "HELLO",
+    "STRGLOB.ASX:string0": "HELLO",
+    "STRGLOB.ASX:string1": "HELLO",
+    "STRMUT.ASX:string0": "ORIGINAL",
+    "STRMUT.ASX:string1": "CHANGED",
+    "STRGASS.ASX:string0": "HELLO",
+    "STRGASS.ASX:string1": "HELLO",
+    "STRLASS.ASX:string0": "HELLO",
+    "STRINIT.ASX:string0": "HELLO",
+    "STRMAX.ASX:string0": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "STRNEST.ASX:string0": "HELLO",
+    "STRS2.ASX:string0": "FIRST",
+    "STRS2.ASX:string1": "SECOND",
+    "STRRECUR.ASX:string0": "LIVE",
+    "PARZERO.ASX:string0": "ALIVE",
+    "PARFHEAP.ASX:string0": "ALIVE"
+  },
+  "unsupported_count": 176,
+  "static_evidence": [
+    {
+      "id": "ev_8daf0a92dbf024cb78ee74de201f2d6b7c92ce164e2dc71b3b49c49ae0c38ae4",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x176b0"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_93c2a0b1ef55dd854d8215249b82189bbecec0167122239c386d8edfdd6814cf",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x1d1b8"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_9ff60f2a710057c458669596a47fc8a3a9106744ed25f97ac1be82aa7bc542cb",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x1df13"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_a7eb8eace34c5602c7fb1d541382c3ccea180b9f1510f564c33ac4727e6eaa4e",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x1df71"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_d858d8bd81c48024b76dbc557f26a713fe730413bc896e766ff783c30d70e09b",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x19286"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_dfcf66fc59b2d8b00219eb6ae2d6e9b1baee665679a386a6eebdce86e55ffeca",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x1dfea"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_ee2dd97fb2ee67b14afdc71a175026e51de2d51b5c8d3893eb685c0a8404b563",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x1e0a4"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_05db164d5a5d051f96140f6dff4a7378cea3995ed79134200ab57ba22cbc6455",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x1df13"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_169b01a4bcab79255abbca59c6ea0fab7735cb22b67fc5b0c3eaab2253caf348",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x1dfc7"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_1b4dff7b878078ff486bb5b20176cda5f8a6b2279c45975cd1632745306f5858",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x1dd68"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_4acd779e909f964a32dbe1e7c332a227f4f179a3f925079db0b41fc90bed27ca",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x1e0e4"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_695f84ad4128125af2793e9634c1600975927be79043e95af11ea13c4a87ac54",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x1dfea"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_97b739781472761d4714bbc2aad47381c7a6b727b706d9c42d3e22b0249d518f",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x1df71"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_e1a00060acea25c7ea12c323bc3fb99e3618da8f1cf775165f18aca9ab23822e",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x1df04"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_f0aae9d0bfcdb33491bf3d110dc865b5427cfadc8f481d3d2359d052601a36b8",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x1df0b"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_fcdd0f52ac175470095f7a0118550c9d16ade35b33504109c6f8258f8f80d999",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x1de11"
+      },
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302"
+    },
+    {
+      "id": "ev_6c6c58e4e7921b7f9fe90f439a0d3abf6182db8c8100adb18f0600a4692b20e2",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x1eef0"
+      },
+      "subject_sha256": "5347274e7bdb429ae1e15edf5bd5fe68710d26166508f90f3b030b5e30836254"
+    },
+    {
+      "id": "ev_951bbbf42fbc691cd81ad998e21d994a19576c1650ecc8ca5f663e01e7ab67c7",
+      "operation": "procedure_assembly",
+      "parameters": {
+        "procedure": "0x1ef1d"
+      },
+      "subject_sha256": "5347274e7bdb429ae1e15edf5bd5fe68710d26166508f90f3b030b5e30836254"
+    }
+  ],
+  "maintained_policy": "Actual far-string storage and native81-byte scratch reads/writeback; owner clears pending scratch references after unwind. Diagnostics snapshot string values before real free. String builtin19 returns an owned81-byte empty buffer; all others abort.",
+  "limitations": [
+    "Only39of215 opcode slots wired;176 abort explicitly.",
+    "Component opaque parameter readers and CRT/builtin/error models remain separate from actual composed file/heap/string execution.",
+    "Native short fread and unchecked index/type/frame/scratch arithmetic remain in recovered code; checked composition aborts short reads but is not arbitrary-bytecode safe.",
+    "No float mathematics, complete string commands/builtins, source compiler, recorder or terminal integration; all whole-application gates remain open."
+  ]
+}

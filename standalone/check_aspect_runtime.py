@@ -18,7 +18,14 @@ def main():
  for unit,digest in zip(manifest['support_units'],EXPECTED):
   path=OUT/f'support{unit["unit"]}.bin';assert sha(path)==unit['sha256']==digest
   if args.original:assert original[unit['file_start']:unit['file_start']+unit['bytes']]==path.read_bytes()
- if args.original:optional=dict(original_sha256=ORIGINAL,exact_support_bytes=sum(u['bytes'] for u in manifest['support_units']),units=manifest['support_units'])
+ if args.original:
+  # Original string builtin19 routes via thunkC2C7 to overlay16 DAFB,
+  # which returns a pointer to NUL. The owner supplies its own empty string.
+  import struct
+  assert struct.unpack_from('<H',original,0x25950+0x4cf8+19*2)[0]==0xc2c7
+  assert original[109184-0xd0d0+0xdafb:109184-0xd0d0+0xdaff]==bytes.fromhex('b8 42 49 c3')
+  assert original[0x25950+0x4942]==0
+  optional=dict(original_sha256=ORIGINAL,exact_support_bytes=sum(u['bytes'] for u in manifest['support_units']),units=manifest['support_units'],empty_string_builtin=dict(index=19,resident_thunk='C2C7',overlay=16,entry='DAFB',returned_DS_offset='4942',observed_first_byte=0,maintained_scope='Only builtin19 returns an owned empty string; other string builtins remain unsupported.'))
  for name in ['DONE.TXT','PASS.TXT','FAIL.TXT']:(OUT/name).unlink(missing_ok=True)
  conf=f'''[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\ncycles=max\n[mixer]\nnosound=true\n[autoexec]\n@echo off\nmount c "{OUT}"\nc:\nEXECUTE >RESULT.TXT\nif errorlevel 1 goto failed\necho PASS>PASS.TXT\ngoto done\n:failed\necho FAIL>FAIL.TXT\n:done\nexit\n'''
  (OUT/'dosbox.conf').write_text(conf)
@@ -31,6 +38,6 @@ def main():
   check_sha256=sha(Path(__file__).resolve()),result_sha256=sha(OUT/'RESULT.TXT'),optional_original=optional,
   original_inputs=[] if optional is None else [str(args.original)],fixture_count=manifest['fixture_count'],
   unsupported_slot_cases=manifest['unsupported_slot_cases'],
-  scope='Actual recovered dispatcher executes compiled authored ASX through real DOS files/far heap and maintained resource owner. Incomplete36-slot command surface; all179 unsupported in-range slots abort. No full compiler/VM, arbitrary-bytecode safety or terminal integration.')
+  scope='Actual recovered dispatcher executes compiled authored ASX through real DOS files/far heap and maintained resource owner. Incomplete39-slot command surface; all176 unsupported in-range slots abort. No full compiler/VM, arbitrary-bytecode safety or terminal integration.')
  (OUT/('checks-native.json' if optional else 'checks.json')).write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
 if __name__=='__main__':main()

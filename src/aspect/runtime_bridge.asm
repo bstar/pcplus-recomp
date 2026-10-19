@@ -16,6 +16,8 @@ extern aspect_ops_decrement,aspect_ops_increment,aspect_ops_assign,aspect_ops_as
 extern aspect_arith_add,aspect_arith_bit_and,aspect_arith_bit_not,aspect_arith_divide
 extern aspect_arith_modulo,aspect_arith_multiply,aspect_arith_negate,aspect_arith_bit_or
 extern aspect_arith_shift_left,aspect_arith_shift_right,aspect_arith_subtract,aspect_arith_bit_xor
+extern aspect_parameter_push_numeric,aspect_parameter_push_string
+extern aspect_string_assign
 extern _runtime_file,_runtime_reset_native,_runtime_open,_runtime_alloc,_runtime_free
 extern _runtime_cleanup,_runtime_close,_runtime_finish,_runtime_service,_runtime_read
 extern _runtime_native_error,_runtime_set_error,_runtime_header
@@ -180,12 +182,13 @@ aspect_dispatch_cleanup: jmp _runtime_cleanup
 aspect_dispatch_close: jmp _runtime_close
 aspect_dispatch_finish: jmp _runtime_finish
 
-global aspect_dispatch_error,aspect_flow_error,aspect_stack_error,aspect_globals_error,aspect_arith_error
+global aspect_dispatch_error,aspect_flow_error,aspect_stack_error,aspect_globals_error,aspect_arith_error,aspect_string_error
 aspect_dispatch_error:
 aspect_flow_error:
 aspect_stack_error:
 aspect_globals_error:
 aspect_arith_error:
+aspect_string_error:
  push bp
  mov bp,sp
  push word [bp+4]
@@ -221,6 +224,18 @@ aspect_ops_float_compare:
 aspect_expr_read_float:
  mov ax,4
  jmp fail
+
+; Maintained builtin routing: original string builtin19 is the empty string.
+; All other builtin services remain explicit unsupported actions.
+global aspect_string_builtin
+aspect_string_builtin:
+ push bp
+ mov bp,sp
+ cmp word [bp+4],19
+ jne unsupported
+ mov ax,empty_script
+ pop bp
+ ret 2
 
 global aspect_operand_builtin_integer,aspect_operand_builtin_long
 aspect_operand_builtin_integer:
@@ -261,6 +276,22 @@ scalar aspect_expr_stage_index,_runtime_stage_index
 scalar aspect_dispatch_exit_state,_runtime_exit_state
 scalar aspect_flow_local_count,_runtime_local_count
 scalar aspect_globals_count,_runtime_string_count
+scalar aspect_string_pending_near,_runtime_string_pending_near
+scalar aspect_string_scratch_pointer,_runtime_string_scratch_pointer
+scalar aspect_string_scratch_index,_runtime_string_scratch_index
+scalar aspect_string_check_range,_runtime_string_check_range
+ global aspect_string_pending_far,_runtime_string_pending_far
+aspect_string_pending_far:
+_runtime_string_pending_far: dd 0
+ global aspect_string_bank_a,_runtime_string_bank_a
+aspect_string_bank_a:
+_runtime_string_bank_a: times 10*81 db 0
+ global aspect_string_scratch,_runtime_string_scratch
+aspect_string_scratch:
+_runtime_string_scratch: times 11*81 db 0
+; Recovered literal-transform algorithm constants, shared with literal.c.
+ global aspect_string_transform
+aspect_string_transform: db 0xb3,0x35,0x0b,0xc7,0x47,0x29,0x1d,0xfb,0x1f,0x7f,0x05,0x59,0x17
 scalar aspect_ops_word_value,_runtime_word_value
  global aspect_ops_dword_value,_runtime_dword_value
 aspect_ops_dword_value:
@@ -273,8 +304,10 @@ aspect_dispatch_argument: times 10 db 0
 aspect_dispatch_paused: dw 0
 aspect_dispatch_seek_enabled: dw 0
  global aspect_dispatch_next_script
-aspect_dispatch_next_script: dw empty_script
-empty_script: db 0
+; Native E104 is shared by scratch reads and the next-script pointer.
+aspect_dispatch_next_script equ aspect_string_scratch_pointer
+; String parameter pushes require a full readable81-byte value.
+empty_script: times 81 db 0
 ; This aliases the same gate word used by recovered CF/D0.
 aspect_dispatch_wait_disabled equ aspect_flow_wait_gate
  global aspect_abort_display_position,aspect_abort_format_string
@@ -373,6 +406,8 @@ aspect_dispatch_handlers:
  dw aspect_arith_shift_left
 %elif op=0xa5
  dw aspect_arith_shift_right
+%elif op=0xac
+ dw aspect_string_assign
 %elif op=0xb5
  dw aspect_arith_subtract
 %elif op=0xbc
@@ -385,6 +420,10 @@ aspect_dispatch_handlers:
  dw aspect_flow_call_operand
 %elif op=0xc8
  dw aspect_flow_call_framed
+%elif op=0xcc
+ dw aspect_parameter_push_numeric
+%elif op=0xcd
+ dw aspect_parameter_push_string
 %elif op=0xcf
  dw aspect_flow_gate_decrement
 %elif op=0xd0

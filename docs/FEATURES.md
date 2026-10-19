@@ -333,3 +333,30 @@ The interactive terminal stays731418bd; this checkpoint is standalone.
 
 A fresh original-free source build reproduces76 byte-identical outputs,
 including the new long and arithmetic diagnostics and expanded EXECUTE suite.
+
+
+## ASPECT typed parameters and string ownership
+
+Native parameter pushes now add66 exact bytes (3,901 CPU scenarios, all30
+instruction addresses,9,731 actualDOS assertions). String selection/literals,
+11-slot scratch rotation, far read/writeback and assignment add617 exact bytes
+(2,251 CPU records and14,441 DOS checks). Component opaque readers/services are
+explicit; the composed runtime executes actual native readers, copy routines,
+real DOS files and far-heap storage.
+
+The132 compiled authored fixtures now include typed/mixed arguments, nested
+calls and locals, by-value parameter mutation, empty and80-character strings.
+The full320-case DOS suite passes4,760 assertions, including all176 unsupported
+slots and active-frame faults with allocated strings. String recursion hits the
+native guard after376 steps; callee division/float faults unwind and free real
+resources. A maintained truncated assignment preserves the committed source
+and empty destination, discards pending writeback, then permits a retry.
+
+See `docs/ASPECT_PARAMETERS.md` and `docs/validation/aspect-parameters.json`.
+Only39of215 slots are wired; broad string/builtin/float/compiler/recorder and
+application scheduling/memory placement remain unfinished. The terminal remains
+731418bd, and all F01–F16 whole-application gates remain open.
+
+A fresh original-free source rebuild reproduces78 outputs byte for byte.
+Native E104 scratch/next-script aliasing is preserved and verified in the map;
+CHAIN/state999 remains unsupported.

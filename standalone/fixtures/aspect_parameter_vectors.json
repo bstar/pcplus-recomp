@@ -1,0 +1,485 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "private_report": "analysis/aspect-parameters/compiler-03/report.json",
+  "private_report_sha256": "e2847417384412e1cc0e7886e3b3010db70aba1706504c056233eeecd101b05f",
+  "probe_sha256": "f2a7b83b82c99db2b13af0eb294c5068cf7b5138c694295038fe7496f09483cb",
+  "freezer_sha256": "eb1570eb5a79fe21afa75aa64a4a4ece4b1fc2328716353ee3d2a2becd8da57b",
+  "vectors": [
+    {
+      "name": "INTARG",
+      "intent": "INTARG",
+      "source": "integer outcome\r\nproc main\r\ncall helper with 7\r\nendproc\r\nproc helper\r\nintparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "2841c370451a1f0ea80f2d9cbe36875b85f326e82951452f971511ea2f6d2f34",
+      "hex": "00 cf d0 cc b5 07 c8 0f 00 00 00 d2 fe ff 94 cf 5b 00 8d 00 97 08 00 95",
+      "asx_sha256": "7897dd1d4ca8a6bff81eff73acd19cca937c43907afd5a84bd3c64f3b028442b",
+      "expected": {
+        "integer0": 7
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "LONGARG",
+      "intent": "LONGARG",
+      "source": "long outcome\r\nproc main\r\ncall helper with 65537\r\nendproc\r\nproc helper\r\nlongparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "f25eb81689d3d0bb6c8c501287ad5c31144a8be1e4fb484522c649f6b41e8136",
+      "hex": "00 cf d0 cc ac 01 00 01 00 c8 12 00 00 00 d2 fc ff 94 cf 5b 05 8e 00 98 0a 00 95",
+      "asx_sha256": "19a04df6809fb768c957497dcc939e9b635e743d38c4fcd3351738abfaca9660",
+      "expected": {
+        "long0": 65537
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "STRARG",
+      "intent": "STRARG",
+      "source": "string outcome\r\nproc main\r\ncall helper with \"HELLO\"\r\nendproc\r\nproc helper\r\nstrparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "50f6b9d154d3851d6ef7bf2708696499665a473468026568dede753bcbc0d4cf",
+      "hex": "01 cf d0 cd aa b8 8e c7 6e 81 47 32 c8 15 00 00 00 d2 af ff 94 cf ac 8c 00 96 57 00 00 95",
+      "asx_sha256": "b7444cdf67009b0b49f674a4b1cf60a85fa762bab8a9433cdf45875459af1492",
+      "expected": {
+        "string0": "HELLO"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "EMPTYSTR",
+      "intent": "EMPTYSTR",
+      "source": "string outcome\r\nproc main\r\ncall helper with \"\"\r\nendproc\r\nproc helper\r\nstrparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "3f8a7890a3aba7366a79137d7fecc02f9da52ef5522a712b564269e4f0d22c9a",
+      "hex": "01 cf d0 cd 6e 13 c8 0f 00 00 00 d2 af ff 94 cf ac 8c 00 96 57 00 00 95",
+      "asx_sha256": "8be283bbcb53bf771349832362489af65912276c85d90edd39d4377e1d817407",
+      "expected": {
+        "string0": ""
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "MIXED",
+      "intent": "MIXED",
+      "source": "integer iout\r\nlong lout\r\nstring sout\r\nproc main\r\ncall helper with 7 65537 \"HELLO\"\r\nendproc\r\nproc helper\r\nintparm iv\r\nlongparm lv\r\nstrparm sv\r\niout = iv\r\nlout = lv\r\nsout = sv\r\nendproc\r\n",
+      "source_sha256": "c316b8db5936941a43bcf3f760100b67da8a345d48e351315e4cd1ecce597375",
+      "hex": "01 cf d0 cc b5 07 cc ac 01 00 01 00 cd aa b8 0d 67 7e f3 69 1a c8 1e 00 00 00 d2 a9 ff 94 cf 5b 00 8d 00 97 5d 00 5b 05 8e 00 98 5b 00 ac 8c 00 96 57 00 00 95",
+      "asx_sha256": "efe38e7fdaf6de7234d40b6a3758f4b1b85b9bd9b50d768d7735c717f44419a0",
+      "expected": {
+        "integer0": 7,
+        "long0": 65537,
+        "string0": "HELLO"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "COMMAS",
+      "intent": "COMMAS",
+      "source": "integer iout\r\nlong lout\r\nstring sout\r\nproc main\r\ncall helper with 7,65537,\"HELLO\"\r\nendproc\r\nproc helper\r\nintparm iv\r\nlongparm lv\r\nstrparm sv\r\niout = iv\r\nlout = lv\r\nsout = sv\r\nendproc\r\n",
+      "source_sha256": "757d82f3275c190d73199c0c3be6c02110d4cb119a30354a4f2686b4a7fd7b5c",
+      "hex": "01 cf d0 cc b5 07 cc ac 01 00 01 00 cd aa b8 0d 67 7e f3 69 1a c8 1e 00 00 00 d2 a9 ff 94 cf 5b 00 8d 00 97 5d 00 5b 05 8e 00 98 5b 00 ac 8c 00 96 57 00 00 95",
+      "asx_sha256": "efe38e7fdaf6de7234d40b6a3758f4b1b85b9bd9b50d768d7735c717f44419a0",
+      "expected": {
+        "integer0": 7,
+        "long0": 65537,
+        "string0": "HELLO"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "STRLOCAL",
+      "intent": "STRLOCAL",
+      "source": "string outcome\r\nproc main\r\nstring localv\r\nlocalv = \"HELLO\"\r\ncall helper with localv\r\nendproc\r\nproc helper\r\nstrparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "586ccfd938c3c71591fe392af588607eabff3e8d9cbea39e305f58b48f5bb3f9",
+      "hex": "01 d2 51 00 cf ac a0 00 00 aa b8 08 81 62 cd 63 5a 00 d0 cd a0 00 00 c8 20 00 00 00 d2 af ff 95 cf ac 8c 00 96 57 00 00 95",
+      "asx_sha256": "0587d91f7244fd24577bb80f6cef2f9863a99c140c77b25ef2b93dea72535525",
+      "expected": {
+        "string0": "HELLO"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "STRGLOB",
+      "intent": "STRGLOB",
+      "source": "string input,outcome\r\nproc main\r\ninput = \"HELLO\"\r\ncall helper with input\r\nendproc\r\nproc helper\r\nstrparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "d47e5ecd4c77b150079df39de66544ca23739601f0d39eea8fa6083aed75b939",
+      "hex": "02 cf ac 8c 00 aa b8 0f 4d 4a 93 17 f6 00 d0 cd 8c 00 c8 1b 00 00 00 d2 af ff 94 cf ac 8c 01 96 57 00 00 95",
+      "asx_sha256": "fb305ffe11fb2bd8b0fc2b370783b63636171a52e2620b726fea7470b887606c",
+      "expected": {
+        "string0": "HELLO",
+        "string1": "HELLO"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "STRMUT",
+      "intent": "STRMUT",
+      "source": "string input,outcome\r\nproc main\r\ninput = \"ORIGINAL\"\r\ncall helper with input\r\nendproc\r\nproc helper\r\nstrparm value\r\nvalue = \"CHANGED\"\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "d0210140f4a92c6a4d0780e8b73c7a5028c9fc6f4c4b889a67ac041c17eefdb2",
+      "hex": "02 cf ac 8c 00 aa bb 12 54 57 90 12 f0 6d 18 57 00 d0 cd 8c 00 c8 1e 00 00 00 d2 af ff 94 cf ac 96 57 00 aa ba 10 c4 1f 0c 53 64 50 eb 00 ac 8c 01 96 57 00 00 95",
+      "asx_sha256": "9b86b4c73f35d130ba7e2fb4a0b17a1532526c845edd52d04f32b899fc975a0f",
+      "expected": {
+        "string0": "ORIGINAL",
+        "string1": "CHANGED"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "INTMUT",
+      "intent": "INTMUT",
+      "source": "integer input,outcome\r\nproc main\r\ninput = 7\r\ncall helper with input\r\nendproc\r\nproc helper\r\nintparm value\r\nvalue = 9\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "29652e7ba2a08e1561a484d18de8fa1f1e644789a0c356d2ad8a9cd8984811f4",
+      "hex": "00 cf 5b 00 8d 00 ab 07 00 d0 cc 8d 00 c8 16 00 00 00 d2 fe ff 94 cf 5b 00 97 08 00 ab 09 00 5b 00 8d 01 97 08 00 95",
+      "asx_sha256": "e19aaf2b466b579aa252c7dc2f2a4de1959a34476bd659ea9ca0cfdc6bcd1c91",
+      "expected": {
+        "integer0": 7,
+        "integer1": 9
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "LONGMUT",
+      "intent": "LONGMUT",
+      "source": "long input,outcome\r\nproc main\r\ninput = 65537\r\ncall helper with input\r\nendproc\r\nproc helper\r\nlongparm value\r\nvalue = 65539\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "e342a564be0f611dfadb7239c92d8c3305996f0fa719dff23f960ebfcbb3c69f",
+      "hex": "00 cf 5b 05 8e 00 ac 01 00 01 00 d0 cc 8e 00 c8 18 00 00 00 d2 fc ff 94 cf 5b 05 98 0a 00 ac 03 00 01 00 5b 05 8e 01 98 0a 00 95",
+      "asx_sha256": "85904984a4bee3dbd127c429d8b8f1a6f3ef7e338281c1c96f707dc3bb5f3cd8",
+      "expected": {
+        "long0": 65537,
+        "long1": 65539
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "STRGASS",
+      "intent": "STRGASS",
+      "source": "string first,second\r\nproc main\r\nfirst = \"HELLO\"\r\nsecond = first\r\nendproc\r\n",
+      "source_sha256": "b7b221a1b1e8d82cdb7c506bc55e2696967a1e70bac58f392477dbffb1ae1859",
+      "hex": "02 cf ac 8c 00 aa b8 0f 4d 4a 93 17 f6 00 ac 8c 01 8c 00 00 94",
+      "asx_sha256": "3568b48b460d63284166014e1e76cabcbf7f7e1fa4bad5d4d7d920461b83a89c",
+      "expected": {
+        "string0": "HELLO",
+        "string1": "HELLO"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "STRLASS",
+      "intent": "STRLASS",
+      "source": "string outcome\r\nproc main\r\nstring first,second\r\nfirst = \"HELLO\"\r\nsecond = first\r\noutcome = second\r\nendproc\r\n",
+      "source_sha256": "444e8d11bee59d8f0ac0792a7b2f0ffaf7d70c56f856f39803b5c12baf19262d",
+      "hex": "01 d2 a2 00 cf ac a0 00 00 aa b8 08 81 62 cd 63 5a 00 ac a0 51 00 a0 00 00 00 ac 8c 00 a0 51 00 00 95",
+      "asx_sha256": "b1cb3cbc951cc3060d13558ee6047a17241210bd4d7d2b8c36bb874e0f92abc8",
+      "expected": {
+        "string0": "HELLO"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "STRINIT",
+      "intent": "STRINIT",
+      "source": "string outcome\r\nproc main\r\nstring localv = \"HELLO\"\r\noutcome = localv\r\nendproc\r\n",
+      "source_sha256": "fdcc47a89137681bbd3c6edd0d012c836f70934fd9b3ac3059cff85cafae3bd2",
+      "hex": "01 d2 51 00 ac a0 00 00 aa b8 86 7d 3a 13 05 78 00 cf ac 8c 00 a0 00 00 00 95",
+      "asx_sha256": "fb52f26936079a98bea1664c1493e6156fd657b4b3355a7afa97537c5477e4f0",
+      "expected": {
+        "string0": "HELLO"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "STRMAX",
+      "intent": "STRMAX",
+      "source": "string outcome\r\nproc main\r\ncall helper with \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\r\nendproc\r\nproc helper\r\nstrparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "93c95a7abf145f54418749f5b972cc5dd5d4832e20d8c7725869c50fd2837616",
+      "hex": "01 cf d0 cd aa 03 d9 c0 6a 76 3c 24 36 9a 3c 08 2a 22 fa 8e c0 6a 76 3c 24 36 9a 3c 08 2a 22 fa 8e c0 6a 76 3c 24 36 9a 3c 08 2a 22 fa 8e c0 6a 76 3c 24 36 9a 3c 08 2a 22 fa 8e c0 6a 76 3c 24 36 9a 3c 08 2a 22 fa 8e c0 6a 76 3c 24 36 9a 3c 08 2a 22 fa 8e c0 6a c8 60 00 00 00 d2 af ff 94 cf ac 8c 00 96 57 00 00 95",
+      "asx_sha256": "6f86afbc9f2de1b3cddb0a862053294c93705fc4ba6960e508927853ec8c41b1",
+      "expected": {
+        "string0": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "STRNEST",
+      "intent": "STRNEST",
+      "source": "string outcome\r\nproc main\r\ncall first with \"HELLO\"\r\nendproc\r\nproc first\r\nstrparm value\r\ncall second with value\r\nendproc\r\nproc second\r\nstrparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "8f8b03add822158a9b1886299243ce32fd2015f7d6e99836d7bf08541e93a12c",
+      "hex": "01 cf d0 cd aa b8 8e c7 6e 81 47 32 c8 15 00 00 00 d2 af ff 94 cf d0 cd 96 57 00 c8 24 00 00 00 d2 af ff 95 cf ac 8c 00 96 57 00 00 95",
+      "asx_sha256": "ceb0c3de34e650e937cc6bcc96466b93998f8155e9f090719e982d23192457fd",
+      "expected": {
+        "string0": "HELLO"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "INTS2",
+      "intent": "INTS2",
+      "source": "integer first,second\r\nproc main\r\ncall helper with 7 9\r\nendproc\r\nproc helper\r\nintparm va,vb\r\nfirst = va\r\nsecond = vb\r\nendproc\r\n",
+      "source_sha256": "5aeed1263105fcf4ff27c6786718386c25e16ba041506d7c6849e6738cb25d17",
+      "hex": "00 cf d0 cc b5 07 cc b5 09 c8 12 00 00 00 d2 fc ff 94 cf 5b 00 8d 00 97 0a 00 5b 00 8d 01 97 08 00 95",
+      "asx_sha256": "7d0c994afb8e20f067e0fc738615774ca6028cac28227e56ee84c656dd34d937",
+      "expected": {
+        "integer0": 7,
+        "integer1": 9
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "LONGS2",
+      "intent": "LONGS2",
+      "source": "long first,second\r\nproc main\r\ncall helper with 65537 65539\r\nendproc\r\nproc helper\r\nlongparm va,vb\r\nfirst = va\r\nsecond = vb\r\nendproc\r\n",
+      "source_sha256": "1b31a345bd18dd2df0e9139738bb4ea307f1bc39da65e02170f3ef4133a99954",
+      "hex": "00 cf d0 cc ac 01 00 01 00 cc ac 03 00 01 00 c8 18 00 00 00 d2 f8 ff 94 cf 5b 05 8e 00 98 0e 00 5b 05 8e 01 98 0a 00 95",
+      "asx_sha256": "323f12b8f9128559e7314ef52ae16773ecc1b18d94c9593eefee520c2aab4514",
+      "expected": {
+        "long0": 65537,
+        "long1": 65539
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "STRS2",
+      "intent": "STRS2",
+      "source": "string first,second\r\nproc main\r\ncall helper with \"FIRST\" \"SECOND\"\r\nendproc\r\nproc helper\r\nstrparm va,vb\r\nfirst = va\r\nsecond = vb\r\nendproc\r\n",
+      "source_sha256": "0185ed296a44fdce3a9a6c109aae2b3379ca7bda4abfaf8fe003101742b5ad45",
+      "hex": "02 cf d0 cd aa b8 8e c5 72 87 4e 37 cd aa b9 0c 70 5c 1a f6 95 49 c8 1f 00 00 00 d2 5e ff 94 cf ac 8c 00 96 a8 00 00 ac 8c 01 96 57 00 00 95",
+      "asx_sha256": "f9301cf2a4ac7031908147e8cb1897457b5d966ee611d6cc44ff983be7f04f02",
+      "expected": {
+        "string0": "FIRST",
+        "string1": "SECOND"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "FLOAT",
+      "intent": "FLOAT",
+      "source": "integer outcome\r\nproc main\r\ncall helper with 7.0\r\nendproc\r\nproc helper\r\nfloatparm value\r\noutcome = 1\r\nendproc\r\n",
+      "source_sha256": "450c2eefb7d40afae2eff07f53e9c4cf507831f91e36b8c3c8a1db1fb6787959",
+      "hex": "00 cf d0 cc ad 00 00 00 00 00 00 1c 40 c8 16 00 00 00 d2 f8 ff 94 cf 5b 00 8d 00 ab 01 00 95",
+      "asx_sha256": "4f77eb9a40b68dfab35fa03f6ed4f3b456be680bcb3ac18884c7cfcf64207421",
+      "expected": {
+        "error": "float"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "INTEVAL",
+      "intent": "INTEVAL",
+      "source": "integer outcome\r\nproc main\r\ninteger argument\r\nargument = 3 + 4 * 2\r\ncall helper with argument\r\nendproc\r\nproc helper\r\nintparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "0bb3debd94b9c9209c84028fb7c1f3d684bdf79c9d4422a17ed5702c229d0f07",
+      "hex": "00 d2 02 00 cf 7d 00 ab 04 00 ab 02 00 79 00 00 00 ab 03 00 79 00 79 00 5b 00 a1 00 00 79 00 d0 cc a1 00 00 c8 2d 00 00 00 d2 fe ff 95 cf 5b 00 8d 00 97 08 00 95",
+      "asx_sha256": "1c6f2f39292cf0d9aaec5c8eda48d7b18d66fe2ec530931858759b4c092fe777",
+      "expected": {
+        "integer0": 11
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "LONGEVAL",
+      "intent": "LONGEVAL",
+      "source": "long outcome\r\nproc main\r\nlong argument\r\nargument = 65537 + 5L\r\ncall helper with argument\r\nendproc\r\nproc helper\r\nlongparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "7db082bd614813efde764056681130e6ebabfddeddde491e7040becd45e4c5c5",
+      "hex": "00 d2 04 00 cf 00 05 ac 01 00 01 00 ac 05 00 00 00 7a 00 5b 05 a2 00 00 7a 00 d0 cc a2 00 00 c8 28 00 00 00 d2 fc ff 95 cf 5b 05 8e 00 98 0a 00 95",
+      "asx_sha256": "e978e10a23d33082bdf2cc905d1fb026b90f75547843341fbbee4e3b6c87a139",
+      "expected": {
+        "long0": 65542
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "NESTEVAL",
+      "intent": "NESTEVAL",
+      "source": "integer outcome\r\nproc main\r\ncall first with 7\r\nendproc\r\nproc first\r\nintparm value\r\ninteger intermediate\r\nintermediate = value + 5\r\ncall second with intermediate\r\nendproc\r\nproc second\r\nintparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "080c0a46a4b1b820436b0d641f8ebf9d59edba98642d45ad8ba498ca12d2e4a8",
+      "hex": "00 cf d0 cc b5 07 c8 0f 00 00 00 d2 fe ff 94 d2 02 00 cf 00 00 97 08 00 ab 05 00 79 00 5b 00 a1 00 00 79 00 d0 cc a1 00 00 c8 32 00 00 00 d2 fe ff 95 cf 5b 00 8d 00 97 08 00 95",
+      "asx_sha256": "1b1a0416af3c74e3a30a5e6160e04bea1ecc31955ad553dc260a57c684b602f9",
+      "expected": {
+        "integer0": 12
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "LOCEVAL",
+      "intent": "LOCEVAL",
+      "source": "integer outcome\r\nproc main\r\ninteger localv = 3\r\ninteger argument\r\nargument = localv + 4\r\ncall helper with argument\r\nendproc\r\nproc helper\r\nintparm value\r\ninteger localv = 5\r\noutcome = value + localv\r\nendproc\r\n",
+      "source_sha256": "94b04a0d4167d966e51be1385c0d299812fe31c790593223fc639594df855958",
+      "hex": "00 d2 04 00 5b 00 a1 00 00 ab 03 00 cf 00 00 a1 00 00 ab 04 00 79 00 5b 00 a1 02 00 79 00 d0 cc a1 02 00 c8 2c 00 00 00 d2 fe ff 95 d2 02 00 5b 00 a1 00 00 ab 05 00 cf 00 00 97 08 00 a1 00 00 79 00 5b 00 8d 00 79 00 95",
+      "asx_sha256": "4aaf9c20211d255b8fa5afba552d0a337b36b7305297b1a645e6c0651e55c2e7",
+      "expected": {
+        "integer0": 12
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "STRRECUR",
+      "intent": "string argument recursion must reach native stack guard and free live global string",
+      "source": "string live\r\nproc main\r\nlive = \"LIVE\"\r\ncall helper with live\r\nendproc\r\nproc helper\r\nstrparm value\r\ncall helper with value\r\nendproc\r\n",
+      "source_sha256": "d11f08d77a09612eb60cf3ce521e842051343c0c9f2003488f280cf31766644a",
+      "hex": "01 cf ac 8c 00 aa b7 0e 51 4e 9d 10 00 d0 cd 8c 00 c8 1a 00 00 00 d2 af ff 94 cf d0 cd 96 57 00 c8 1a 00 00 00 d2 af ff 95",
+      "asx_sha256": "1f5681a3df3fd537e158f0bfea714fd85309ec8c856c958137e3979a23be1b8e",
+      "expected": {
+        "string0": "LIVE",
+        "error": "stack",
+        "limit": 65000
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "PARZERO",
+      "intent": "division error inside active typed frame with live global string",
+      "source": "string live\r\nproc main\r\nlive = \"ALIVE\"\r\ncall helper with 7\r\nendproc\r\nproc helper\r\nintparm value\r\nvalue = value / 0\r\nendproc\r\n",
+      "source_sha256": "414948524c4c263a30f204252fa40739ac5415282261cf07018801d39a78f72c",
+      "hex": "01 cf ac 8c 00 aa b8 0f 46 51 90 21 ec 00 d0 cc b5 07 c8 1b 00 00 00 d2 fe ff 94 cf 26 00 97 08 00 ab 00 00 79 00 5b 00 97 08 00 79 00 95",
+      "asx_sha256": "f0ca3a4bf5c919ad8455a8821232516b7ff853815ec33f7d71ecf4669ed1da42",
+      "expected": {
+        "string0": "ALIVE",
+        "error": "divide_zero"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "PARFHEAP",
+      "intent": "unavailable float parameter after global assignment must unwind and free string",
+      "source": "string live\r\nproc main\r\nlive = \"ALIVE\"\r\ncall helper with 7.0\r\nendproc\r\nproc helper\r\nfloatparm value\r\nendproc\r\n",
+      "source_sha256": "5b1f9c78fa13919a96aaf6ee03359a4f3d749beff5c4197af1d73fd6d1b03ea1",
+      "hex": "01 cf ac 8c 00 aa b8 0f 46 51 90 21 ec 00 d0 cc ad 00 00 00 00 00 00 1c 40 c8 22 00 00 00 d2 f8 ff 94 cf 95",
+      "asx_sha256": "e6a127759851c9d613b30973c66d6da07c47e1f9d77677b3bc783298c4110ba3",
+      "expected": {
+        "string0": "ALIVE",
+        "error": "float"
+      },
+      "dos_excluded": false
+    }
+  ],
+  "rejected": [
+    {
+      "name": "INTEXPR",
+      "source": "integer outcome\r\nproc main\r\ncall helper with 3 + 4 * 2\r\nendproc\r\nproc helper\r\nintparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "ab62fc12d9daba15b7a27894c0a404308779b8bb52964262cda6e64783536a7b",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> +",
+        "Error C001 Line 3: Invalid token ==> *"
+      ],
+      "log_sha256": "479c89aa2c0c77d92863f7ca984070320794d43547141c6490b3c04f68b45a0d"
+    },
+    {
+      "name": "LONGEXPR",
+      "source": "long outcome\r\nproc main\r\ncall helper with 65537 + 5L\r\nendproc\r\nproc helper\r\nlongparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "c60d5e9ea168cd7fe02d7f9a5dabaaba2d7c31be4eca885fbd6bcd375d6d2a96",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> +"
+      ],
+      "log_sha256": "0718101d6db4cb6aff8f967117fe80aa51fea40d1e493a19087b445c8949b8c2"
+    },
+    {
+      "name": "NESTED",
+      "source": "integer outcome\r\nproc main\r\ncall first with 7\r\nendproc\r\nproc first\r\nintparm value\r\ncall second with value + 5\r\nendproc\r\nproc second\r\nintparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "aa31dffaafa11fc0275cbfaed3e33296fadc313cd383c736d6a22165d706d584",
+      "errors": [
+        "Error C001 Line 7: Invalid token ==> +"
+      ],
+      "log_sha256": "8c154aac37d3874b3b26cd10303eb9debd740b9f7dff49c26ec4998dabfebc70"
+    },
+    {
+      "name": "LOCALS",
+      "source": "integer outcome\r\nproc main\r\ninteger localv = 3\r\ncall helper with localv + 4\r\nendproc\r\nproc helper\r\nintparm value\r\ninteger localv = 5\r\noutcome = value + localv\r\nendproc\r\n",
+      "source_sha256": "56714a2de7825d6920219fa5620a8395745e30f6d9eb03e97db42f51b33e2a36",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> +"
+      ],
+      "log_sha256": "9b76b2830349267c072820cf91b6f399a5449f47970c13a7cab5b7c8cba66b87"
+    },
+    {
+      "name": "BADCOUNT",
+      "source": "integer outcome\r\nproc main\r\ncall helper\r\nendproc\r\nproc helper\r\nintparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "e6328023c37e0fe2ebf0c96c424970e4dcb9c164f235bfadacde772e9e8ca7cf",
+      "errors": [
+        "Error C046 Line 3: Invalid number of parameters"
+      ],
+      "log_sha256": "115c054d00d0bfe1b4582d36e61b3c28e439f81e20e98acb874d032272d9803e"
+    },
+    {
+      "name": "BADTYPE",
+      "source": "integer outcome\r\nproc main\r\ncall helper with \"HELLO\"\r\nendproc\r\nproc helper\r\nintparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "c8aae107deb7b24c214043c148196b170396154bc7b252053e47ccf7d489167c",
+      "errors": [
+        "Error C049 Line 3: Mismatched parameter type"
+      ],
+      "log_sha256": "f693dd18376a32aecaec26cdb1e1a30db12fe10c70b6dd61d944c7dd92da7079"
+    },
+    {
+      "name": "BADLONG",
+      "source": "long outcome\r\nproc main\r\ncall helper with 7\r\nendproc\r\nproc helper\r\nlongparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "f925b8966ed7a82e50f6c341a06c0e6fd4b5f14974ffb50acc685fc6d38ea716",
+      "errors": [
+        "Error C049 Line 3: Mismatched parameter type"
+      ],
+      "log_sha256": "ff5fe03485e69f1bee8701ac0fe51402a7f0682944afa9957297ddc66f17618d"
+    },
+    {
+      "name": "BADWITH",
+      "source": "integer outcome\r\nproc main\r\ncall helper 7\r\nendproc\r\nproc helper\r\nintparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "c7953e3f4993f9c4c43fbece0bdec603c2ca37c9792e2d5a48f76a67738de0c6",
+      "errors": [
+        "Error C047 Line 3: Missing WITH before parameter list"
+      ],
+      "log_sha256": "f74d759dc947fdc1097a250b061d464bca1b6c5d05b343bd17ecb9f51a8200b9"
+    },
+    {
+      "name": "TOOMANY",
+      "source": "integer outcome\r\nproc main\r\ncall helper with 7 9\r\nendproc\r\nproc helper\r\nintparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "a0e1383ed0e3f71f6558c1d8714f6dee742ec5ff5eafd754b649b2a4735c0974",
+      "errors": [
+        "Error C046 Line 3: Invalid number of parameters"
+      ],
+      "log_sha256": "50eab76ca6d41e2ba76122265799abc8ab7fc27a87b80e171ffd6f96ccd72e91"
+    },
+    {
+      "name": "BADSTR",
+      "source": "string outcome\r\nproc main\r\ncall helper with 7\r\nendproc\r\nproc helper\r\nstrparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "f318b627bf39f540794c168a545dbeca445bf8899430b176d60ed3984c17468b",
+      "errors": [
+        "Error C049 Line 3: Mismatched parameter type"
+      ],
+      "log_sha256": "ec037319dc92e6a456fd4dfb3a019f483ebee1e4382a0d2bf1ca34008f32f1fa"
+    },
+    {
+      "name": "ARGNOSPC",
+      "source": "integer outcome\r\nproc main\r\ncall helper with 3+4\r\nendproc\r\nproc helper\r\nintparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "c8e5bbdeb631ed048165aa46bdfd68364d86e436d31152fb5eb81784218253dd",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> +"
+      ],
+      "log_sha256": "5f75ef7640dc47355b98be7c613b416d8a2719d7d968c74d6d46e63ece8ea038"
+    },
+    {
+      "name": "ARGPAR",
+      "source": "integer outcome\r\nproc main\r\ncall helper with (3+4)\r\nendproc\r\nproc helper\r\nintparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "2d3672a777de887539154a3673a813202608d655c947a6524f2a3dcfc3800bad",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> (",
+        "Error C001 Line 3: Invalid token ==> +",
+        "Error C001 Line 3: Invalid token ==> )"
+      ],
+      "log_sha256": "b62b92a5fd1e7f80fb6efc7bc25086929af91193cae74ae9b9106bb8183c77ca"
+    },
+    {
+      "name": "ARGBRACK",
+      "source": "integer outcome\r\nproc main\r\ncall helper with [3+4]\r\nendproc\r\nproc helper\r\nintparm value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "3488d8718408adc979dcb097f95738047ecd9ee8efbeccd07b45afabb3334aff",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> [3",
+        "Error C001 Line 3: Invalid token ==> +",
+        "Error C001 Line 3: Invalid token ==> 4]"
+      ],
+      "log_sha256": "a73c8b30b986c33e051c674a2d07f511b40a071e15e2bb04c47cd1756e7c2568"
+    }
+  ],
+  "expectation_model": "Explicit source-level bank/string snapshots. Typed call arguments have independent by-value storage; mutations of formal parameters do not change caller globals. Arithmetic is precomputed into a typed local before WITH; expected values11,65542,12,12 are hand-derived. Empty/80-character strings retain exact authored content. Float service is intentionally unavailable.",
+  "findings": [
+    "WITH required; commas optional between typed actual arguments.",
+    "Direct arithmetic actual arguments rejected in spaced, unspaced, parenthesized and bracketed forms tested; precomputing into typed local accepted.",
+    "CC marks numeric actual pushes; CD string actual pushes; framedC8 call carries32-bit absolute target.",
+    "Numeric parameter selectors97/98 carry16-bit frame-relative offsets; string parameter selector96 likewise.",
+    "StringassignmentAC uses global8C indexbyte, localA0 offsetword or formal96 offsetword; authored assignment records end with00 mode byte.",
+    "Exact runtime/string ownership and parameter behavior must be established by execution tests, not these compiler observations."
+  ],
+  "prior_canonical_report": "analysis/aspect-parameters/compiler-02/report.json",
+  "prior_accepted_outputs_reproduced": 24,
+  "scope": "Original compiler output for authored scripts only, with independent expected outcomes. No original executable/application/resource bytes. Compiler corpus and maintained runtime correctness remain separate claims."
+}

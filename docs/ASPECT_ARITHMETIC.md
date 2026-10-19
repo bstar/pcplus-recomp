@@ -1,5 +1,10 @@
 # ASPECT arithmetic execution
 
+This document records the arithmetic checkpoint at `0ccf64d`. The
+[current parameter/string extension](ASPECT_PARAMETERS.md) expands the runtime
+to 39 slots and 132 compiled fixtures. Counts and identities below describe
+the arithmetic checkpoint.
+
 The standalone ASPECT owner now executes integer and long arithmetic through
 recovered PCPlus instructions, including addition, subtraction, multiplication,
 division, remainder, negation, compound assignment and compiler-generated

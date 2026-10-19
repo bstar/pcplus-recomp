@@ -10,6 +10,7 @@ unsigned runtime_live,runtime_peak_live,runtime_cleanup_count,runtime_close_coun
 unsigned runtime_at_opcode,runtime_header,runtime_alloc_calls;
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
 unsigned runtime_fail_after=0xffff;
+unsigned char runtime_string_snapshot[128][81];
 #endif
 static unsigned active;
 extern void __interrupt __far runtime_divide_interrupt(void);
@@ -21,6 +22,10 @@ extern unsigned long runtime_dword_value;
 extern unsigned char runtime_arena[0x3aca],runtime_float_bank[128][8];
 extern unsigned char runtime_system[256][8],runtime_stage_types[10],runtime_float_values[10][8];
 extern unsigned char runtime_locals[36];
+extern unsigned char runtime_string_bank_a[10][81],runtime_string_scratch[11][81];
+extern unsigned long runtime_string_pending_far;
+extern unsigned runtime_string_pending_near,runtime_string_scratch_pointer,runtime_string_scratch_index;
+extern unsigned runtime_string_check_range;
 extern void __far *runtime_strings[128];
 extern void runtime_enter(const char *path);
 extern void runtime_globals_init(void);
@@ -36,6 +41,10 @@ void runtime_reset_native(void)
     runtime_depth=0;runtime_frame=runtime_stack_pointer=base;runtime_wait_gate=0;
     runtime_source_type=runtime_target_type=runtime_lookahead=runtime_stage_index=0;
     runtime_word_value=0;runtime_dword_value=0;
+    runtime_string_pending_far=0;runtime_string_pending_near=0;
+    runtime_string_scratch_pointer=runtime_string_scratch_index=0;runtime_string_check_range=1;
+    memset(runtime_string_bank_a,0,sizeof(runtime_string_bank_a));
+    memset(runtime_string_scratch,0,sizeof(runtime_string_scratch));
     runtime_exit_state=runtime_local_count=runtime_string_count=0;
     memset(runtime_integer_a,0,sizeof(runtime_integer_a));
     memset(runtime_integer_b,0,sizeof(runtime_integer_b));memset(runtime_longs,0,sizeof(runtime_longs));
@@ -79,6 +88,12 @@ void runtime_free(void __far *pointer)
 }
 void runtime_cleanup(void)
 {
+#if defined(ASPECT_RUNTIME_DIAGNOSTIC)
+    unsigned i;
+    /* Snapshot before the native release; test values survive real far frees. */
+    for(i=0;i<runtime_string_count && i<128;++i)
+        if(runtime_strings[i])_fmemcpy(runtime_string_snapshot[i],runtime_strings[i],81);
+#endif
     ++runtime_cleanup_count;
     runtime_globals_release();
     /* Native release retains pointers; owner explicitly invalidates them. */
@@ -96,6 +111,8 @@ void runtime_finish(void)
     if(runtime_string_count)runtime_cleanup();
     if(runtime_file.handle)runtime_close((unsigned)&runtime_file);
     runtime_depth=0;runtime_stack_pointer=runtime_frame=(unsigned)runtime_arena+0x1b1a;
+    runtime_string_pending_far=0;runtime_string_pending_near=0;
+    runtime_string_scratch_pointer=runtime_string_scratch_index=0;
     if(runtime_live)runtime_set_error(ASPECT_RUN_STATE);
 }
 unsigned runtime_service(void)
@@ -123,6 +140,9 @@ unsigned aspect_runtime_run(const char *path,unsigned step_limit)
     void (__interrupt __far *previous_divide)(void);
     if(active || runtime_live || runtime_file.handle || !path || !*path || !step_limit)return ASPECT_RUN_STATE;
     active=1;runtime_error=runtime_steps=runtime_live=runtime_peak_live=0;
+#if defined(ASPECT_RUNTIME_DIAGNOSTIC)
+    memset(runtime_string_snapshot,0,sizeof(runtime_string_snapshot));
+#endif
     runtime_cleanup_count=runtime_close_count=runtime_alloc_calls=runtime_at_opcode=0;
     runtime_last_opcode=0;runtime_limit=step_limit;runtime_abi_bad=0;
     aspect_file_init(&runtime_file);

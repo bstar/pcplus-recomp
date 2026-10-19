@@ -24,15 +24,19 @@ compiled scripts through real DOS files and far-heap allocation, including
 integer/long assignments, comparisons, branches, loops and procedure frames.
 The [arithmetic extension](docs/ASPECT_ARITHMETIC.md) adds signed integer/long
 math, compound assignments and scoped DOS divide-fault recovery.
+[Typed parameters and strings](docs/ASPECT_PARAMETERS.md) now execute mixed
+arguments, nested calls, by-value mutation and real far-string assignment.
 Script compilation and execution in the maintained terminal remain unfinished.
 
 Current outputs:
 
 | Output | Inputs | Current purpose |
 | --- | --- | --- |
+| `build/aspect-parameters/PARAM.EXE` | Recovered assembly and controlled readers | Typed parameter pushes with actual native numeric/frame/stack/copy code |
+| `build/aspect-strings/STRINGS.EXE` | Recovered assembly and controlled services | String operands, literals and assignment, including actual far copy and DOS far heap |
 | `build/aspect-long/LONG.EXE` | Recovered assembly only | Native signed long multiply/divide/remainder and shift helpers, including independent actual DOS checks |
 | `build/aspect-arithmetic/ARITH.EXE` | Recovered assembly and controlled services | Native arithmetic component; controlled long/float boundaries are distinct from composed execution |
-| `build/aspect-runtime/EXECUTE.EXE` | Recovered assembly and maintained DOS resource owner | Fixed compiled-script suite;36 supported opcode slots,179 explicit unsupported stops; no terminal integration |
+| `build/aspect-runtime/EXECUTE.EXE` | Recovered assembly and maintained DOS resource owner | Fixed compiled-script suite;39 supported opcode slots,176 explicit unsupported stops; no terminal integration |
 | `build/aspect-operands/OPERANDS.EXE` | Recovered assembly and controlled services | Integer/long operand decoding; unchecked native indexing and external builtins remain explicit |
 | `build/aspect-operations/OPERATE.EXE` | Recovered assembly and controlled services | Assignment, logical/comparison and increment/decrement diagnostics; float services are unavailable |
 | `build/aspect-flow/FLOW.EXE` | Recovered assembly and modeled callbacks | Native reads/calls/frames/returns; unchecked historical behavior remains explicit |

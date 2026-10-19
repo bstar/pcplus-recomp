@@ -14,5 +14,6 @@ extern unsigned runtime_steps,runtime_last_opcode,runtime_peak_live;
 extern unsigned runtime_live,runtime_cleanup_count,runtime_close_count,runtime_abi_bad;
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
 extern unsigned runtime_fail_after;
+extern unsigned char runtime_string_snapshot[128][81];
 #endif
 #endif

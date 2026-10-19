@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "896b2151532dff5a81368b7ae151232048259f083b458a90d56f763e1d5b9aaa",
-  "source_file_count": 1610,
+  "source_snapshot_sha256": "6c7b3174dfcbeda3effb4e357cc293eb71614433c2159058dffe44c7650bd9a5",
+  "source_file_count": 1622,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,14 +16,14 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "7e5ce45bf412ab713eb7bf95683f2fb678c3b81a383b60553d03d7fddf660011",
+  "build_log_sha256": "357ec9bda2bd61f9b9940115d29ec92c88fa39ddbe3d56709d5d6d74cf515ced",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.GeCYNR/pcplus-source-proof-01rwznkr/checkout",
+  "source_checkout": "/tmp/nix-shell.Ge8fw8/pcplus-source-proof-9ch0oq8i/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
-  "scope": "76 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
-  "output_count": 76,
+  "scope": "78 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+  "output_count": 78,
   "outputs": {
     "terminal/TERMINAL.EXE": {
       "sha256": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
@@ -365,6 +365,16 @@
       "matches_workspace": true,
       "workspace_sha256": "c3786f890c44ad898a16e716888c8b0bc791bcbb061ad5f7da2442795b5770b7"
     },
+    "aspect-parameters/PARAM.EXE": {
+      "sha256": "cc6188d599b7c1a118373ca693e315ad1783dd55e84f40626cb0b4274df6eafc",
+      "matches_workspace": true,
+      "workspace_sha256": "cc6188d599b7c1a118373ca693e315ad1783dd55e84f40626cb0b4274df6eafc"
+    },
+    "aspect-strings/STRINGS.EXE": {
+      "sha256": "33fbb842582a14b34d28c9b6daba266ac80ff4938907f4007327d69c274a60b4",
+      "matches_workspace": true,
+      "workspace_sha256": "33fbb842582a14b34d28c9b6daba266ac80ff4938907f4007327d69c274a60b4"
+    },
     "aspect-long/LONG.EXE": {
       "sha256": "2cc9e26a79da879c5441cba3a75db097b051b6387d3016d44238a8d3bc6b2758",
       "matches_workspace": true,
@@ -386,9 +396,9 @@
       "workspace_sha256": "98c8d27d0fb5dde4c30edb1390a092e8823652177f7e11417952e1718bbf101b"
     },
     "aspect-runtime/EXECUTE.EXE": {
-      "sha256": "a351b3255a688311dda84bf0811baa47cf3f607f27f60e154f6f74453c9a3a3c",
+      "sha256": "b320b02b1ccbc847c9fe1292d284377eb81cbd364437b11b981b5518d7eb986a",
       "matches_workspace": true,
-      "workspace_sha256": "a351b3255a688311dda84bf0811baa47cf3f607f27f60e154f6f74453c9a3a3c"
+      "workspace_sha256": "b320b02b1ccbc847c9fe1292d284377eb81cbd364437b11b981b5518d7eb986a"
     },
     "monitor/MONITOR.EXE": {
       "sha256": "766e8cb46c6edb3269cee3ea2a7896c03628f37e6fcfe7fc17938f834e13b377",
@@ -462,6 +472,8 @@
     "standalone/build_aspect_runtime.py",
     "standalone/build_aspect_long.py",
     "standalone/build_aspect_arithmetic.py",
+    "standalone/build_aspect_parameters.py",
+    "standalone/build_aspect_strings.py",
     "standalone/check_batch_download.py",
     "standalone/check_batch_upload.py",
     "standalone/check_capture_file.py",

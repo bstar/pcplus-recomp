@@ -5,7 +5,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/aspect-runtime'
 ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm',None),
  ('globals','src/aspect/global_strings.asm',None),('stack','src/aspect/value_stack.asm',None),
- ('flow','src/aspect/control_flow.asm',None),('operands','src/aspect/numeric_operands.asm',None),
+ ('flow','src/aspect/control_flow.asm',None),('parameters','src/aspect/parameters.asm',None),('strings','src/aspect/string_operands.asm',None),('operands','src/aspect/numeric_operands.asm',None),
  ('operations','src/aspect/numeric_operations.asm',None),
  ('arithmetic','src/aspect/arithmetic.asm',None),('long','src/aspect/long_arithmetic.asm',None),('support','src/aspect/expression_support.asm',None),
  ('copy','reconstruction/erase/move_bytes.asm','ERASE_OMF'),
@@ -18,11 +18,14 @@ ERRORS={'unsupported':3,'float':4,'budget':6,'stack':9,'divide_zero':11,'native_
 C=r'''
 #include <stdio.h>
 #include <dos.h>
+#include <string.h>
 #include "runtime.h"
 #include "file_io.h"
 extern aspect_file runtime_file;
 extern unsigned runtime_string_count,runtime_depth,runtime_stack_pointer,runtime_frame;
 extern unsigned char runtime_arena[0x3aca];
+extern unsigned runtime_string_pending_near,runtime_string_scratch_pointer,runtime_string_scratch_index;
+extern unsigned long runtime_string_pending_far;
 static unsigned failures,cases;
 static unsigned long checks;
 static const char *current;
@@ -34,6 +37,8 @@ static void run(const char *path,unsigned limit,unsigned error,unsigned has_inte
  unsigned result,flags_before=cpu_flags();previous_divide=_dos_getvect(0);current=path;++cases;result=aspect_runtime_run(path,limit);
  ck(_dos_getvect(0)==previous_divide);
  ck((cpu_flags()&0x600)==(flags_before&0x600));
+ ck(runtime_string_pending_far==0 && runtime_string_pending_near==0);
+ ck(runtime_string_scratch_pointer==0 && runtime_string_scratch_index==0);
  ck(result==error);ck(runtime_live==0);ck(runtime_string_count==0);ck(runtime_file.handle==0);
  ck(runtime_depth==0);ck(runtime_stack_pointer==(unsigned)runtime_arena+0x1b1a);
  ck(runtime_frame==runtime_stack_pointer);ck(runtime_abi_bad==0);ck(runtime_peak_live==peak);
@@ -58,9 +63,12 @@ def main():
  corpus_path=ROOT/'standalone/fixtures/aspect_execution_vectors.json';corpus=json.loads(corpus_path.read_text())
  arithmetic_corpus_path=ROOT/'standalone/fixtures/aspect_arithmetic_vectors.json'
  arithmetic_corpus=json.loads(arithmetic_corpus_path.read_text())
- cases=corpus['vectors']+arithmetic_corpus['vectors']
+ parameter_corpus_path=ROOT/'standalone/fixtures/aspect_parameter_vectors.json'
+ parameter_corpus=json.loads(parameter_corpus_path.read_text())
+ parameter_cases=[dict(c,name='PARFLOAT') if c['name']=='FLOAT' else c for c in parameter_corpus['vectors']]
+ cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases
  assert len({c['name'] for c in cases})==len(cases)
- sources=[Path(__file__).resolve(),corpus_path,arithmetic_corpus_path,ROOT/'reconstruction/uart/encodings.inc',ROOT/'src/aspect/runtime.c',ROOT/'src/aspect/runtime.h',ROOT/'src/aspect/file_io.c',ROOT/'src/aspect/file_io.h']
+ sources=[Path(__file__).resolve(),corpus_path,arithmetic_corpus_path,parameter_corpus_path,ROOT/'reconstruction/uart/encodings.inc',ROOT/'src/aspect/runtime.c',ROOT/'src/aspect/runtime.h',ROOT/'src/aspect/file_io.c',ROOT/'src/aspect/file_io.h']
  objects=[];units=[]
  for name,rel,define in ASM:
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
@@ -72,13 +80,18 @@ def main():
   units.append(dict(unit=unit,start=start,end_exclusive=end,file_start=base+start,bytes=end-start,sha256=sha(p)))
  program=C
  supported={int(op,16):name for op,name in re.findall(r'%(?:el)?if op=(0x[0-9a-f]+)\n dw (\w+)',(ROOT/'src/aspect/runtime_bridge.asm').read_text())}
- assert len(supported)==36
+ assert len(supported)==39
  for case in cases:
   data=bytes.fromhex(case['hex']);assert hashlib.sha256(data).hexdigest()==case['asx_sha256']
   name=case['name']+'.ASX';(OUT/name).write_bytes(data);ex=case['expected'];error=ERRORS[ex['error']] if 'error' in ex else 0
   assert not case.get('dos_excluded',False),case['name']
-  program+=f' run("{name}",{ex.get("limit",1000)},{error},{int("integer0" in ex)},{ex.get("integer0",0)&65535}U,{int("long0" in ex)},{ex.get("long0",0)}UL,{ex.get("allocated",0)});\n'
+  program+=f' run("{name}",{ex.get("limit",1000)},{error},{int("integer0" in ex)},{ex.get("integer0",0)&65535}U,{int("long0" in ex)},{ex.get("long0",0)}UL,{ex.get("allocated",data[0])});\n'
   for key,value in ex.items():
+   if re.fullmatch(r'string[0-9]+',key):
+    index=int(key[6:]);assert 0<=index<128
+    text=value.encode('ascii');assert len(text)<=80 and b'\0' not in text
+    literal=''.join(f'\\{b:03o}' for b in text)
+    program+=f' ck(strcmp((char *)runtime_string_snapshot[{index}],"{literal}")==0);printf("STRING {name} {key}=");{{unsigned i;for(i=0;i<81 && runtime_string_snapshot[{index}][i];++i)printf("%02X",runtime_string_snapshot[{index}][i]);printf("\\n");}}\n'
    match=re.fullmatch(r'(integer|long)([0-9]+)',key)
    if match:
     kind,index=match[1],int(match[2]);assert 0<=index<128
@@ -99,6 +112,12 @@ def main():
   wire=bytearray(bytes.fromhex(next(c['hex'] for c in cases if c['name']==template)))
   assert wire[0]==0;wire[0]=2;(OUT/(name+'.ASX')).write_bytes(wire)
   program+=f' run("{name}.ASX",1000,{error},0,0,0,0UL,2);\n'
+ # Truncate the final assignment option/return after the first global was set.
+ wire=bytes.fromhex(next(c['hex'] for c in cases if c['name']=='STRGASS'))
+ assert wire[0]==2 and wire[-2:]==bytes([0,0x94])
+ (OUT/'STRSHORT.ASX').write_bytes(wire[:-2])
+ program+=' run("STRSHORT.ASX",1000,5,0,0,0,0UL,2);\n'
+ program+=' ck(strcmp((char *)runtime_string_snapshot[0],"HELLO")==0);ck(runtime_string_snapshot[1][0]==0);\n'
  program+=' run("ASSIGN.ASX",1000,0,1,7,0,0UL,0);\n'+END
  # Every unimplemented in-range slot must abort, never silently consume bytes.
  unsupported=[op for op in range(215) if op not in supported]
@@ -112,9 +131,11 @@ def main():
  '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/file_io.c'),*objects],cwd=OUT,check=True)
  report=dict(binary_sha256=sha(OUT/'EXECUTE.EXE'),sources={str(p.relative_to(ROOT)):sha(p) for p in sources},support_units=units,original_inputs=[],
   compile_flags=['8086','small model','cdecl','ASPECT_RUNTIME_DIAGNOSTIC'],fixture_count=len(cases),
-  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+11+len(unsupported),
+  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+12+len(unsupported),
+  parameter_fixture_aliases={'PARFLOAT':'FLOAT'},
+  maintained_string_fault_fixture={'STRSHORT':'STRGASS compiler bytes with final00 option and94 return removed; first global HELLO retained, second stays empty'},
   maintained_heap_fault_fixtures={'HEAPFLT':'IDIVEDGE compiler bytes with global-string count changed from0to2','HEAPZERO':'IDZ compiler bytes with global-string count changed from0to2'},
   fixture_expectations={c['name']:{'source_sha256':c['source_sha256'],'asx_sha256':c['asx_sha256'],'expected':c['expected']} for c in cases},
-  scope='Incremental actual native dispatch/operand/operation/file/heap composition executing source-owned compiled fixtures. Incomplete36-slot opcode table; unavailable services abort. Not full ASPECT or arbitrary-input safety.')
+  scope='Incremental actual native dispatch/operand/operation/file/heap composition executing source-owned compiled fixtures. Incomplete39-slot opcode table; unavailable services abort. Not full ASPECT or arbitrary-input safety.')
  (OUT/'manifest.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 if __name__=='__main__':main()

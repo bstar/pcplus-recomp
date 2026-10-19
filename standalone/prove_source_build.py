@@ -45,6 +45,8 @@ builds.append('aspect_operations')
 builds.append('aspect_runtime')
 builds.append('aspect_long')
 builds.append('aspect_arithmetic')
+builds.append('aspect_parameters')
+builds.append('aspect_strings')
 program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/build_{name}.py'],check=True)\n" for name in builds)
 owner_checks=['standalone/check_batch_download.py','standalone/check_batch_upload.py','standalone/check_capture_file.py','standalone/check_capture_session.py','standalone/check_capture_owners.py']
 owner_checks.append('standalone/check_monitor_file.py')
@@ -72,6 +74,7 @@ outputs += ['aspect-dispatch/DISPATCH.EXE']
 outputs += ['aspect-globals/GLOBALS.EXE']
 outputs += ['aspect-stack/STACK.EXE','aspect-unwind/UNWIND.EXE']
 outputs += ['aspect-flow/FLOW.EXE','aspect-file/FILE.EXE']
+outputs += ['aspect-parameters/PARAM.EXE','aspect-strings/STRINGS.EXE']
 outputs += ['aspect-long/LONG.EXE','aspect-arithmetic/ARITH.EXE']
 outputs += ['aspect-operands/OPERANDS.EXE','aspect-operations/OPERATE.EXE','aspect-runtime/EXECUTE.EXE']
 outputs += ['monitor/MONITOR.EXE','monitor-file/MONITOR.EXE','monitor-file/MOFAULT.EXE']
