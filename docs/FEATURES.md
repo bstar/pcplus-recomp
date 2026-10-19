@@ -608,3 +608,10 @@ that specific label item, not F13. DOS source compilation/fallback and remaining
 compiler/recorder/services are still required. Unconstrained emulator timing
 is not verified; bounded end-wait calibration can return pacing5. See
 [ASPECT_SCRIPT_LABEL.md](ASPECT_SCRIPT_LABEL.md).
+
+F13 DOS compiler work: the streaming lexer and declaration/procedure inventory
+now run as source-built8086 large-model C, matching the maintained host frontend
+across1154 lexical and1164 inventory cases with real DOS files and owned heap
+cleanup. These are diagnostics; ASX emission, full validation/pruning, compiler
+CLI and runtime ASP fallback remain required. See
+[ASPECT_DOS_COMPILER.md](ASPECT_DOS_COMPILER.md). F13 and all other gates stay open.

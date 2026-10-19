@@ -1450,3 +1450,30 @@ The chained label item is implemented. DOS source compilation/fallback, original
 error UI, remaining command/compiler/recorder and application services, other
 profiles/protocols, Host, immediate-forwarding ENiGMA interaction and physical
 Wi-Fi modem validation remain required. No F01–F16 gate closes.
+
+### DOS compiler frontend port
+
+Two source-built8086 DOS C stages now preserve the maintained compiler's source
+model: streaming lexing and first-pass declaration/procedure inventory. Physical
+lines retain the253-byte bound; whole files, line counters and source positions
+are32-bit. Quoted CP437 bytes and explicit NUL lengths survive lexing. Owned
+symbol/frame/parameter layouts and declaration/initializer/body source spans
+survive reusable line buffers and are retired on all allocation failures.
+
+ASPLEX passes1154 actual DOS corpus/boundary cases,2369 checks and exact token
+comparison across92290 lines/75155 tokens. ASPINV passes1164 first-pass cases
+and3326 checks, with18 allocation fault positions,200 disposal cycles, borrowed
+FILE/foreign-block preservation and six negative heap-observer cases. A
+malloc-only reproducer isolates a pinned CRT far-heap-check failure; REA evidence
+and a separate explicit-segment read-only observer distinguish that checker
+failure from frontend ownership. Production allocation remains unchanged.
+
+These executables are diagnostics and do not generate ASX. Continue the complete
+port through expressions, typed operands/commands/positional strings, statement
+validation including unused bodies, exact pruning and32-bit fixups, DOS CLI and
+transactional output, then real ASP/fallback execution under the UART lease.
+Do not substitute an emitter for a smaller language than the current host
+compiler and present it as the completed DOS port. Full native compiler coverage
+beyond the host subset remains required after that port and integration. Native grammar
+for previously unproved malformed declaration edges remains an oracle task.
+See `docs/ASPECT_DOS_COMPILER.md`. All F01–F16 gates remain open.

@@ -847,3 +847,15 @@ test-aspect-script-label-client: aspect-runner
 	python3 standalone/check_aspect_script_label_client.py
 test-aspect-script-label-parent: terminal
 	python3 standalone/check_aspect_script_label_parent.py
+
+.PHONY: aspect-compiler-lexer test-aspect-compiler-lexer aspect-compiler-unit test-aspect-compiler-unit
+all: aspect-compiler-lexer aspect-compiler-unit
+test: test-aspect-compiler-lexer test-aspect-compiler-unit
+aspect-compiler-lexer:
+	python3 standalone/build_aspect_compiler_lexer.py
+test-aspect-compiler-lexer: aspect-compiler-lexer
+	python3 standalone/check_aspect_compiler_lexer.py
+aspect-compiler-unit:
+	python3 standalone/build_aspect_compiler_unit.py
+test-aspect-compiler-unit: aspect-compiler-unit
+	python3 standalone/check_aspect_compiler_unit.py

@@ -503,3 +503,6 @@ keyboard/view reset. An idle COM move has its own confirmation and restores the 
 
 Current matched terminal/ASPECT packages use renderer capability4 to display the
 current script name after `EXECUTE`; see [the label protocol and checks](docs/ASPECT_SCRIPT_LABEL.md).
+
+The [DOS compiler port](docs/ASPECT_DOS_COMPILER.md) currently provides ASPLEX
+and ASPINV frontend diagnostics. They do not generate ASX or enable ASP execution.
