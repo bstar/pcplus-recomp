@@ -1,0 +1,184 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "analysis_image_sha256": "6cea4652377db36867cf1a663e8e0d7bbf0c296e3cb5c86dd67b6e442bb7a194",
+  "units": [
+    {
+      "name": "clear",
+      "group": "command",
+      "unit": 1,
+      "start": 60170,
+      "end": 60180,
+      "file_start": 119578,
+      "bytes": 10,
+      "sha256": "d1caf4ca43648e6d1515a7df86b0558d92b1a091a3a2ff026ca97283a67293c1",
+      "source": "src/aspect/script_file_commands.asm"
+    },
+    {
+      "name": "close",
+      "group": "command",
+      "unit": 2,
+      "start": 60180,
+      "end": 60204,
+      "file_start": 119588,
+      "bytes": 24,
+      "sha256": "18c0ad1fe4c6e3d1c76f1a4825e227ca201b4080591778d34656f553baa6efe7",
+      "source": "src/aspect/script_file_commands.asm"
+    },
+    {
+      "name": "flush",
+      "group": "command",
+      "unit": 3,
+      "start": 60204,
+      "end": 60221,
+      "file_start": 119612,
+      "bytes": 17,
+      "sha256": "389249dd95a6cf5f4e99d5ad0118df7672c2493450c18697b16e2661cfaa49e6",
+      "source": "src/aspect/script_file_commands.asm"
+    },
+    {
+      "name": "getc",
+      "group": "command",
+      "unit": 4,
+      "start": 60221,
+      "end": 60242,
+      "file_start": 119629,
+      "bytes": 21,
+      "sha256": "76f528c62a8e3d012a4e73b9544c6456c0c91d7606ae83479ded5e2e4b883687",
+      "source": "src/aspect/script_file_commands.asm"
+    },
+    {
+      "name": "gets",
+      "group": "command",
+      "unit": 5,
+      "start": 60242,
+      "end": 60366,
+      "file_start": 119650,
+      "bytes": 124,
+      "sha256": "6df7e1656eb2ab479031126ecffd5fcb9386d56af438fd8c7e3214729ae11a23",
+      "source": "src/aspect/script_file_commands.asm"
+    },
+    {
+      "name": "open",
+      "group": "command",
+      "unit": 6,
+      "start": 60366,
+      "end": 60453,
+      "file_start": 119774,
+      "bytes": 87,
+      "sha256": "743fa82f4659e0fea4873dbaf5a4b8a3b8c3492abf66c4fff70784a0fc96fefe",
+      "source": "src/aspect/script_file_commands.asm"
+    },
+    {
+      "name": "putc",
+      "group": "command",
+      "unit": 7,
+      "start": 60453,
+      "end": 60475,
+      "file_start": 119861,
+      "bytes": 22,
+      "sha256": "20cbefcabdf3ef2abbe56e6ca95ddb79f2d1cc80d675ccc0943044416c4d5870",
+      "source": "src/aspect/script_file_commands.asm"
+    },
+    {
+      "name": "puts",
+      "group": "command",
+      "unit": 8,
+      "start": 60475,
+      "end": 60497,
+      "file_start": 119883,
+      "bytes": 22,
+      "sha256": "ceb02e77d6d8abb64adea71b38bc94677ed84e5d07ee9f813a5e18d2bd0f0282",
+      "source": "src/aspect/script_file_commands.asm"
+    },
+    {
+      "name": "read",
+      "group": "command",
+      "unit": 9,
+      "start": 60497,
+      "end": 60544,
+      "file_start": 119905,
+      "bytes": 47,
+      "sha256": "db78dabefbb4a729c0bb46b336833431df9d34bbbafec53be207d611f087626e",
+      "source": "src/aspect/script_file_commands.asm"
+    },
+    {
+      "name": "seek",
+      "group": "command",
+      "unit": 10,
+      "start": 60569,
+      "end": 60622,
+      "file_start": 119977,
+      "bytes": 53,
+      "sha256": "5a4aaf1f2f13c3c8f07a0024ae8e986d6be599e9055a71077f83326dafb9f22d",
+      "source": "src/aspect/script_file_commands.asm"
+    },
+    {
+      "name": "tell",
+      "group": "command",
+      "unit": 11,
+      "start": 60544,
+      "end": 60569,
+      "file_start": 119952,
+      "bytes": 25,
+      "sha256": "a8c6debd761f926dd0151e052fef541b35d12a1122f2abfdd06b2b4d88dd7c0f",
+      "source": "src/aspect/script_file_commands.asm"
+    },
+    {
+      "name": "write",
+      "group": "command",
+      "unit": 12,
+      "start": 60622,
+      "end": 60657,
+      "file_start": 120030,
+      "bytes": 35,
+      "sha256": "59864c2095c6f1c5c8356e5fa88730d3d32ddb5e0bc08e782e4e530cfb28f74d",
+      "source": "src/aspect/script_file_commands.asm"
+    },
+    {
+      "name": "eof",
+      "group": "command",
+      "unit": 13,
+      "start": 60154,
+      "end": 60170,
+      "file_start": 119562,
+      "bytes": 16,
+      "sha256": "dea4ee3cdce1fae167fcb42a1e98eb9d5eba6f93463522fcd21d4b6306c7d9ee",
+      "source": "src/aspect/script_file_commands.asm"
+    },
+    {
+      "name": "status",
+      "group": "service",
+      "unit": 1,
+      "start": 55619,
+      "end": 55638,
+      "file_start": 111347,
+      "bytes": 19,
+      "sha256": "25508a5b0e5e872b57a960cbbfed7e7b8228e69ee8cf021a6359483c95e51aca",
+      "source": "src/aspect/script_file_services.asm"
+    },
+    {
+      "name": "lookup",
+      "group": "service",
+      "unit": 2,
+      "start": 55638,
+      "end": 55674,
+      "file_start": 111366,
+      "bytes": 36,
+      "sha256": "7cac8e74e0f333b37d6427a677a7243b68d7a860bec2079767a11566714ad350",
+      "source": "src/aspect/script_file_services.asm"
+    },
+    {
+      "name": "number",
+      "group": "service",
+      "unit": 3,
+      "start": 55674,
+      "end": 55688,
+      "file_start": 111402,
+      "bytes": 14,
+      "sha256": "aa680bd09c38f031f44a4fe0a1802b99cd5090fa8e61353a40a324b8efe51312",
+      "source": "src/aspect/script_file_services.asm"
+    }
+  ],
+  "native_bytes": 572,
+  "scope": "Exact native13 ASPECT file-command handlers and3 shared helpers. Unresolved CRT/operand/error/storage dependencies; not yet wired into the maintained application."
+}

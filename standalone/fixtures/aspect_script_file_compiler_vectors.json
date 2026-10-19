@@ -1,0 +1,1848 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "oracle_sha256": "0f31f1447eba8b38306990c6b023eac6f206db38a439b96f1e5298fd7856ada0",
+  "cases": [
+    {
+      "name": "SF000",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\neof 0 value\r\nendproc\r\n",
+      "source_sha256": "80358d311f0da491f5c0830f51e240a905fe5a19f670d7f27cc2a063d4cb3ba9",
+      "success": true,
+      "label": "eof_basic",
+      "hex": "04 cf 31 b5 00 8d 03 94",
+      "asx_sha256": "15b772c34569d9d1aa005d18139b5bcbefb84d8c40eb099a3f1d0820ec21990c"
+    },
+    {
+      "name": "SF001",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\neof h value\r\nendproc\r\n",
+      "source_sha256": "856df7b25d4eaf272cda962a10132f98b7255a6e5eaade2423121f788ec2c079",
+      "success": true,
+      "label": "eof_variable_handle",
+      "hex": "04 cf 31 8d 00 8d 03 94",
+      "asx_sha256": "b1ae3abe2f0ecaeaeaa5d9a2d7f33f3b9d5b95a636f7b4e9c95822070ceb1072"
+    },
+    {
+      "name": "SF002",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\neof -1 value\r\nendproc\r\n",
+      "source_sha256": "0030ad0507b74aca650a3ac30144410f95691c17f4dcba49f329b715b643c719",
+      "success": true,
+      "label": "eof_handle_-1",
+      "hex": "04 cf 31 ab ff ff 8d 03 94",
+      "asx_sha256": "99293a5a0479fc441bfa51e8595fe7d59bf0d34267abb22197b468cd84059274"
+    },
+    {
+      "name": "SF003",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\neof 5 value\r\nendproc\r\n",
+      "source_sha256": "947763453fcebc71a49892b0c48ea5d40567be8cd4dee56e00a623801d3aace5",
+      "success": true,
+      "label": "eof_handle_5",
+      "hex": "04 cf 31 b5 05 8d 03 94",
+      "asx_sha256": "506790dcbfaedca3d37718a1e0d677fda9085f0983b655b06521fd8e7d18d59c"
+    },
+    {
+      "name": "SF004",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\neof 6 value\r\nendproc\r\n",
+      "source_sha256": "3e870172339f4ce64dd879239d7d6f3e17c338216291a2a59f7259fe037a9e93",
+      "success": true,
+      "label": "eof_handle_6",
+      "hex": "04 cf 31 b5 06 8d 03 94",
+      "asx_sha256": "a44ffc3fd20d40bca2b5764b141a4a7583938e34cb7e2483357a7efec9f988fe"
+    },
+    {
+      "name": "SF005",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\neof 1L value\r\nendproc\r\n",
+      "source_sha256": "3a1e9a06a0f0a02bfb1948430fd126a1fa14f7d41521e056ec560598304a660d",
+      "success": false,
+      "label": "eof_handle_1L"
+    },
+    {
+      "name": "SF006",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\neof 1.0 value\r\nendproc\r\n",
+      "source_sha256": "24fe6d0eec664fc871508b9566566e2b73edce53f4a2000f5216f473a3801258",
+      "success": false,
+      "label": "eof_handle_1.0"
+    },
+    {
+      "name": "SF007",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\neof \"0\" value\r\nendproc\r\n",
+      "source_sha256": "a6573c06ef27b21a4655ed8fef2d966166e376eddf5757dc7c36e08767f15bb1",
+      "success": false,
+      "label": "eof_handle_\"0\""
+    },
+    {
+      "name": "SF008",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\neof (0) value\r\nendproc\r\n",
+      "source_sha256": "17db4a43a738633cc0c542cb25deef9d649371daa9537bcbd795b572083b5050",
+      "success": false,
+      "label": "eof_handle_(0)"
+    },
+    {
+      "name": "SF009",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\neof 0+1 value\r\nendproc\r\n",
+      "source_sha256": "412a859871d185f0e6fba97ea3eb6645745e22a7bcf53ee39b2a5d9ceb4a27ec",
+      "success": false,
+      "label": "eof_handle_0+1"
+    },
+    {
+      "name": "SF010",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\neof\r\nendproc\r\n",
+      "source_sha256": "807f9683fd7918972182d37c93d3e1c41317d48af86c2c2a5aa2e6c9c094f563",
+      "success": false,
+      "label": "eof_missing"
+    },
+    {
+      "name": "SF011",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\neof 0 value,\r\nendproc\r\n",
+      "source_sha256": "f7b890a485d7ec259dd86d71d1ea72ecb59bd9ad7acc67788d48792bb33ae83b",
+      "success": false,
+      "label": "eof_trailing"
+    },
+    {
+      "name": "SF012",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\neof 0,value\r\nendproc\r\n",
+      "source_sha256": "f1f5255bc672bbebe2dd788b28df6b35a03f68c6f727bd8cac4535c471a116f9",
+      "success": true,
+      "label": "eof_commas",
+      "hex": "04 cf 31 b5 00 8d 03 94",
+      "asx_sha256": "15b772c34569d9d1aa005d18139b5bcbefb84d8c40eb099a3f1d0820ec21990c"
+    },
+    {
+      "name": "SF013",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen 0 \"OWNED.DAT\" \"rb\"\r\nendproc\r\n",
+      "source_sha256": "5de24d505c6f22b449901b6db603beb8e566c67be5a4f6d87af76c604c1b4989",
+      "success": true,
+      "label": "fopen_basic",
+      "hex": "04 cf 3f b5 00 aa bc 15 66 fe 53 c6 63 33 61 18 9b aa b5 0e 89 09 94",
+      "asx_sha256": "afb91f55d8ba97b87072c0cddece20e0c46736f96cbf7fcfab4f4878f4bb5b4a"
+    },
+    {
+      "name": "SF014",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen h \"OWNED.DAT\" \"rb\"\r\nendproc\r\n",
+      "source_sha256": "4b009c3f21b35b0912be0aca01183ba9a0f49075292c1103056ffe51c839d6fa",
+      "success": true,
+      "label": "fopen_variable_handle",
+      "hex": "04 cf 3f 8d 00 aa bc 15 66 fe 53 c6 63 33 61 18 9b aa b5 0e 89 09 94",
+      "asx_sha256": "ea65a46c09e7be8690b64d403eac332e07b507414ee9485bceb54bb012fc59c1"
+    },
+    {
+      "name": "SF015",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen -1 \"OWNED.DAT\" \"rb\"\r\nendproc\r\n",
+      "source_sha256": "5e82b9ff909aa8ca3473bb8d9cfba818ed1d339bbc218cdfc5675fed5764cb9b",
+      "success": true,
+      "label": "fopen_handle_-1",
+      "hex": "04 cf 3f ab ff ff aa bc 8a 84 4c 15 fe 6d 11 3f 22 d3 aa b5 83 a7 57 94",
+      "asx_sha256": "3a4977bfe7dae357b6ef4775b6a44f948981c8786194f23619051894af486f8f"
+    },
+    {
+      "name": "SF016",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen 5 \"OWNED.DAT\" \"rb\"\r\nendproc\r\n",
+      "source_sha256": "72c76cbb2049db1d4d66845f80f0d8ac007a4a69941fdb6c6302ea7489df65e8",
+      "success": true,
+      "label": "fopen_handle_5",
+      "hex": "04 cf 3f b5 05 aa bc 15 66 fe 53 c6 63 33 61 18 9b aa b5 0e 89 09 94",
+      "asx_sha256": "5a1b4eca1f9cf7b3f6d179e55ff6b57bc56d3b84122ebe0f1a8baa5f662d78f8"
+    },
+    {
+      "name": "SF017",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen 6 \"OWNED.DAT\" \"rb\"\r\nendproc\r\n",
+      "source_sha256": "1965e7855d2c71203db2f81655186c6c98cd6de28dd75a07a880d59ec163e1b3",
+      "success": true,
+      "label": "fopen_handle_6",
+      "hex": "04 cf 3f b5 06 aa bc 15 66 fe 53 c6 63 33 61 18 9b aa b5 0e 89 09 94",
+      "asx_sha256": "dd0cbe80a475dac9bedbee8db15911f732b15df189b0c2c3ca06a4c365c0f549"
+    },
+    {
+      "name": "SF018",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen 1L \"OWNED.DAT\" \"rb\"\r\nendproc\r\n",
+      "source_sha256": "53827da3a8a3b6457aca3d3e9de7b953c8084b1b2d15e4325bfad97d60b275c4",
+      "success": false,
+      "label": "fopen_handle_1L"
+    },
+    {
+      "name": "SF019",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen 1.0 \"OWNED.DAT\" \"rb\"\r\nendproc\r\n",
+      "source_sha256": "470a57e8a2e28354342491adec61e0af14c408c025c63303be4216998ad479f9",
+      "success": false,
+      "label": "fopen_handle_1.0"
+    },
+    {
+      "name": "SF020",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen \"0\" \"OWNED.DAT\" \"rb\"\r\nendproc\r\n",
+      "source_sha256": "d7bcf0f28f9f53f1a27dbadceece2a7ca272603e66a320185a59f74424302622",
+      "success": false,
+      "label": "fopen_handle_\"0\""
+    },
+    {
+      "name": "SF021",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen (0) \"OWNED.DAT\" \"rb\"\r\nendproc\r\n",
+      "source_sha256": "231e4fc3582d592a638fbb18aa5263e7267022bcdebd6c33eeab2826f7832cfc",
+      "success": false,
+      "label": "fopen_handle_(0)"
+    },
+    {
+      "name": "SF022",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen 0+1 \"OWNED.DAT\" \"rb\"\r\nendproc\r\n",
+      "source_sha256": "adf71c65d10f86dadfb63264af889e7ba1d556f5b30617b6b9791db3e4a76492",
+      "success": false,
+      "label": "fopen_handle_0+1"
+    },
+    {
+      "name": "SF023",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen\r\nendproc\r\n",
+      "source_sha256": "efd01e480806d5781987a30f112a2755e7c508ccb3e530b7e0507c6f6dbaeece",
+      "success": false,
+      "label": "fopen_missing"
+    },
+    {
+      "name": "SF024",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen 0 \"OWNED.DAT\" \"rb\",\r\nendproc\r\n",
+      "source_sha256": "4314796f00b544c7024756462fcaca97641b3c1fe17b30779ddb00591c7cc8c4",
+      "success": false,
+      "label": "fopen_trailing"
+    },
+    {
+      "name": "SF025",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen 0,\"OWNED.DAT\",\"rb\"\r\nendproc\r\n",
+      "source_sha256": "4c4a83a05f1ec859f879cab1f4d77c9e814754e2fc86db7fec5109ed49c4b24c",
+      "success": true,
+      "label": "fopen_commas",
+      "hex": "04 cf 3f b5 00 aa bc 15 66 fe 53 c6 63 33 61 18 9b aa b5 0e 89 09 94",
+      "asx_sha256": "afb91f55d8ba97b87072c0cddece20e0c46736f96cbf7fcfab4f4878f4bb5b4a"
+    },
+    {
+      "name": "SF026",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclose 0\r\nendproc\r\n",
+      "source_sha256": "03093ee964d9152e8eebb01923ca8cebd6c71d5d0cc78677fc17fa70924bb43b",
+      "success": true,
+      "label": "fclose_basic",
+      "hex": "04 cf 36 b5 00 94",
+      "asx_sha256": "f07caeaa2c242a01a7bcf1638d21bd940fdf869f47e08a7110c11ed55bcf0343"
+    },
+    {
+      "name": "SF027",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclose h\r\nendproc\r\n",
+      "source_sha256": "1be86464e8e98951aacf7063fe25256ec4d629a5a918862fa355cddcc1b89112",
+      "success": true,
+      "label": "fclose_variable_handle",
+      "hex": "04 cf 36 8d 00 94",
+      "asx_sha256": "d1d0d0b58b7fc83f5f0e38e6f8eb7b5e30704be79c2a748e8c79b9e2ee00caae"
+    },
+    {
+      "name": "SF028",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclose -1\r\nendproc\r\n",
+      "source_sha256": "00a2fc51eb38616d62199105d104a558b11a420f63c672c328a548b263db8e02",
+      "success": true,
+      "label": "fclose_handle_-1",
+      "hex": "04 cf 36 ab ff ff 94",
+      "asx_sha256": "59ad442d213ab607091be32bcb967bcd3d99d1905b75d64b2db95d0aa2977bf2"
+    },
+    {
+      "name": "SF029",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclose 5\r\nendproc\r\n",
+      "source_sha256": "1a42a8687bed47afc7e0d65950282974d91231144d4e7ffa568b910d032dc996",
+      "success": true,
+      "label": "fclose_handle_5",
+      "hex": "04 cf 36 b5 05 94",
+      "asx_sha256": "a43de3ce9239401beb94f72174d1b085d0d4faae50bba929fe7d066d2be62ef5"
+    },
+    {
+      "name": "SF030",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclose 6\r\nendproc\r\n",
+      "source_sha256": "a98a3203177b0e4cb6504bf430fe626f09a39aff0b1f4b385d0c7150acc01b14",
+      "success": true,
+      "label": "fclose_handle_6",
+      "hex": "04 cf 36 b5 06 94",
+      "asx_sha256": "8936db6dd5b60877bc3131daa4e8359ae2e38cfdf3cf8c206a7934459eebdfec"
+    },
+    {
+      "name": "SF031",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclose 1L\r\nendproc\r\n",
+      "source_sha256": "f8d23d11194784a1f9d95c939a74813553f510b4d2c2dde0a245ecb0351a690f",
+      "success": false,
+      "label": "fclose_handle_1L"
+    },
+    {
+      "name": "SF032",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclose 1.0\r\nendproc\r\n",
+      "source_sha256": "0ee22bdf2d3c458c02b19657e7e53b6d6f428f3f3745a88c6c607af2721de970",
+      "success": false,
+      "label": "fclose_handle_1.0"
+    },
+    {
+      "name": "SF033",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclose \"0\"\r\nendproc\r\n",
+      "source_sha256": "98acd0c673a146a1799a1822cd5f29841075e5206c68be102a5cec5daa422577",
+      "success": false,
+      "label": "fclose_handle_\"0\""
+    },
+    {
+      "name": "SF034",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclose (0)\r\nendproc\r\n",
+      "source_sha256": "ebcdcdee7ff8f528ee808cbf2371876ff5142997c8d381e94ede8c2525cd984b",
+      "success": false,
+      "label": "fclose_handle_(0)"
+    },
+    {
+      "name": "SF035",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclose 0+1\r\nendproc\r\n",
+      "source_sha256": "533414702199bff45062fc58219670c0097285c13c53b835811421ce343d6007",
+      "success": false,
+      "label": "fclose_handle_0+1"
+    },
+    {
+      "name": "SF036",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclose\r\nendproc\r\n",
+      "source_sha256": "b8c3e5f1dbe9d3a50df925179a00dc44b698e6899de4b5102af200c492a0dd21",
+      "success": false,
+      "label": "fclose_missing"
+    },
+    {
+      "name": "SF037",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclose 0,\r\nendproc\r\n",
+      "source_sha256": "2784b8574d64bf33bcfef72e8bac078487301a174589edb3fab5e91e1260f8b3",
+      "success": false,
+      "label": "fclose_trailing"
+    },
+    {
+      "name": "SF038",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclose 0\r\nendproc\r\n",
+      "source_sha256": "03093ee964d9152e8eebb01923ca8cebd6c71d5d0cc78677fc17fa70924bb43b",
+      "success": true,
+      "label": "fclose_commas",
+      "hex": "04 cf 36 b5 00 94",
+      "asx_sha256": "f07caeaa2c242a01a7bcf1638d21bd940fdf869f47e08a7110c11ed55bcf0343"
+    },
+    {
+      "name": "SF039",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclear 0\r\nendproc\r\n",
+      "source_sha256": "4390dae416891225b943ae38cc8d9de000dca846d72812d188e6b543711edded",
+      "success": true,
+      "label": "fclear_basic",
+      "hex": "04 cf 35 b5 00 94",
+      "asx_sha256": "327086569a5c6ef34ddd7a6015ed735ff7fe913a55cc6ed4c83c64e5c72e498b"
+    },
+    {
+      "name": "SF040",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclear h\r\nendproc\r\n",
+      "source_sha256": "d23f28c172ed477bda087ebb12f8fbf132b7ba3d3e11b3a2e72b9abb7e278cdc",
+      "success": true,
+      "label": "fclear_variable_handle",
+      "hex": "04 cf 35 8d 00 94",
+      "asx_sha256": "f0f8fa5f0a697f2f19c3844a3a2bb0d66976f105b1c4e458fca3f3aa9fd23e28"
+    },
+    {
+      "name": "SF041",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclear -1\r\nendproc\r\n",
+      "source_sha256": "17f18c939742d0bd4cc88584ef7f3c1216f204534e4953a2761d7c4b5e071bcf",
+      "success": true,
+      "label": "fclear_handle_-1",
+      "hex": "04 cf 35 ab ff ff 94",
+      "asx_sha256": "c52838290d2ada863a476778ee61fdeb042432fa11a7a4737e4fb6b7692f1608"
+    },
+    {
+      "name": "SF042",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclear 5\r\nendproc\r\n",
+      "source_sha256": "864e8a5af8c4ae520765adbfe243272fa1842733d590e57ca9c4fee4c45860bb",
+      "success": true,
+      "label": "fclear_handle_5",
+      "hex": "04 cf 35 b5 05 94",
+      "asx_sha256": "64ded584bbfda266f8272a5046aa957bfbd46d13fd43dba5917f83e7685241d8"
+    },
+    {
+      "name": "SF043",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclear 6\r\nendproc\r\n",
+      "source_sha256": "8b6967241ba3af04fb68d967ca86d99ffc7554c4156f1923f1067ef6d23c5ae2",
+      "success": true,
+      "label": "fclear_handle_6",
+      "hex": "04 cf 35 b5 06 94",
+      "asx_sha256": "092456a9d16344aa4e718edf6e774b2ed3b03dc49230b72343a2d51fd31f8b8a"
+    },
+    {
+      "name": "SF044",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclear 1L\r\nendproc\r\n",
+      "source_sha256": "56cba99b2884eb20aec4ff51e33ee42fb58a27bd25014950d904e3bfd6968b75",
+      "success": false,
+      "label": "fclear_handle_1L"
+    },
+    {
+      "name": "SF045",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclear 1.0\r\nendproc\r\n",
+      "source_sha256": "e2084c1d90ac8a9ea9af6758064a5d3ea2778871b130606059329d5fd44cf9d6",
+      "success": false,
+      "label": "fclear_handle_1.0"
+    },
+    {
+      "name": "SF046",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclear \"0\"\r\nendproc\r\n",
+      "source_sha256": "243e3ed0a061981817c2c55ba918cdebaa264ef7f60995673b7e20029a093021",
+      "success": false,
+      "label": "fclear_handle_\"0\""
+    },
+    {
+      "name": "SF047",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclear (0)\r\nendproc\r\n",
+      "source_sha256": "3f448d09678cd1b99e2982b12c0d4fe0cf5859a5736cef8d6a89873ee3ad9068",
+      "success": false,
+      "label": "fclear_handle_(0)"
+    },
+    {
+      "name": "SF048",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclear 0+1\r\nendproc\r\n",
+      "source_sha256": "4a7f7bfe06611d48e396546555a43fdbb5846578402205b654d3619f35bb51dc",
+      "success": false,
+      "label": "fclear_handle_0+1"
+    },
+    {
+      "name": "SF049",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclear\r\nendproc\r\n",
+      "source_sha256": "1ec2c003cd54b5288be2fe3591d98dc343f4fdee9288b311e3cb266a949c75d4",
+      "success": false,
+      "label": "fclear_missing"
+    },
+    {
+      "name": "SF050",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclear 0,\r\nendproc\r\n",
+      "source_sha256": "5b4dcbed4766d4332b9eeaaecce8c983dfbc8d207c064c6563ea88efb6f6f7ea",
+      "success": false,
+      "label": "fclear_trailing"
+    },
+    {
+      "name": "SF051",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfclear 0\r\nendproc\r\n",
+      "source_sha256": "4390dae416891225b943ae38cc8d9de000dca846d72812d188e6b543711edded",
+      "success": true,
+      "label": "fclear_commas",
+      "hex": "04 cf 35 b5 00 94",
+      "asx_sha256": "327086569a5c6ef34ddd7a6015ed735ff7fe913a55cc6ed4c83c64e5c72e498b"
+    },
+    {
+      "name": "SF052",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfflush 0\r\nendproc\r\n",
+      "source_sha256": "23aca321755acb5c674c9ad692fbce42da8b6994968aea7e4f35e24ba5e682a0",
+      "success": true,
+      "label": "fflush_basic",
+      "hex": "04 cf 38 b5 00 94",
+      "asx_sha256": "ac0be6b07ea515f11711c0e930cb2b9a46fd17bb53a5976cf90beb9cc4c66c89"
+    },
+    {
+      "name": "SF053",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfflush h\r\nendproc\r\n",
+      "source_sha256": "a5b3befc73d3014697d11eeaeff2813d6b9fa62210aa1652d102635d5d849298",
+      "success": true,
+      "label": "fflush_variable_handle",
+      "hex": "04 cf 38 8d 00 94",
+      "asx_sha256": "96bb48bb37c90cf1f110b1bd504c77e3ad4149145507c874f6b1d9286db94ead"
+    },
+    {
+      "name": "SF054",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfflush -1\r\nendproc\r\n",
+      "source_sha256": "a5adc7a364bf95a75a3b1d716f63f3535aa96ecf88274ca83dffc30d54b87a07",
+      "success": true,
+      "label": "fflush_handle_-1",
+      "hex": "04 cf 38 ab ff ff 94",
+      "asx_sha256": "29b4f682937511ae3340bdf2bd5a60c3be6b2ac05137712fa399db28f07c653f"
+    },
+    {
+      "name": "SF055",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfflush 5\r\nendproc\r\n",
+      "source_sha256": "cd89b11f198397c227027b59a3fa6299ed419522412dc5afdd98e3313e0263aa",
+      "success": true,
+      "label": "fflush_handle_5",
+      "hex": "04 cf 38 b5 05 94",
+      "asx_sha256": "7e3fde851791f82ba2edb76143da3cb4c8435a0116068c4d1e8024c67842ee9c"
+    },
+    {
+      "name": "SF056",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfflush 6\r\nendproc\r\n",
+      "source_sha256": "046e9846112f57aa1a6ad529f17e540b16265697bdc8cd2e2bd294b6abb383fb",
+      "success": true,
+      "label": "fflush_handle_6",
+      "hex": "04 cf 38 b5 06 94",
+      "asx_sha256": "0a99faddc89eadd5df2c6fa73f25ad5af2a489a604b20d77f3c979803ede50e3"
+    },
+    {
+      "name": "SF057",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfflush 1L\r\nendproc\r\n",
+      "source_sha256": "820dc90399e5fee2626ac84bf06475afeb6bcc5489ad0d52cf7e0198228880c7",
+      "success": false,
+      "label": "fflush_handle_1L"
+    },
+    {
+      "name": "SF058",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfflush 1.0\r\nendproc\r\n",
+      "source_sha256": "ac6e3f30f700eb37d9022a806c3eeab4c2678e6b74fd452bf9266eeb4506b4a1",
+      "success": false,
+      "label": "fflush_handle_1.0"
+    },
+    {
+      "name": "SF059",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfflush \"0\"\r\nendproc\r\n",
+      "source_sha256": "5e88e0bc554b36ac70a3783fd179ceaa4406fd44eca8b56c729de11266373948",
+      "success": false,
+      "label": "fflush_handle_\"0\""
+    },
+    {
+      "name": "SF060",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfflush (0)\r\nendproc\r\n",
+      "source_sha256": "87e7902a441502012d5071be39b89b0fda329fbc3c6ba5f2d30ae70cf6b053c6",
+      "success": false,
+      "label": "fflush_handle_(0)"
+    },
+    {
+      "name": "SF061",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfflush 0+1\r\nendproc\r\n",
+      "source_sha256": "48152bd3f2c491084e5fe66c46baec9b0526fa72ddabf080a2545e02ed08c422",
+      "success": false,
+      "label": "fflush_handle_0+1"
+    },
+    {
+      "name": "SF062",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfflush\r\nendproc\r\n",
+      "source_sha256": "5f2d55527a69cc1a6947008722996fe2d4136c0484d6c52d6fc5324bdff3712c",
+      "success": false,
+      "label": "fflush_missing"
+    },
+    {
+      "name": "SF063",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfflush 0,\r\nendproc\r\n",
+      "source_sha256": "1059742bc368c51cc63e227f883ad1fd5b9502ac45c021bd07b86901a05a0e53",
+      "success": false,
+      "label": "fflush_trailing"
+    },
+    {
+      "name": "SF064",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfflush 0\r\nendproc\r\n",
+      "source_sha256": "23aca321755acb5c674c9ad692fbce42da8b6994968aea7e4f35e24ba5e682a0",
+      "success": true,
+      "label": "fflush_commas",
+      "hex": "04 cf 38 b5 00 94",
+      "asx_sha256": "ac0be6b07ea515f11711c0e930cb2b9a46fd17bb53a5976cf90beb9cc4c66c89"
+    },
+    {
+      "name": "SF065",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc 0 value\r\nendproc\r\n",
+      "source_sha256": "73833c36d30072616238f0b46d37804989be80f1d976cda59ce40b5f927e3e02",
+      "success": true,
+      "label": "fgetc_basic",
+      "hex": "04 cf 39 b5 00 8d 03 94",
+      "asx_sha256": "88aba40e112469252c7357c6a80d1e485ce7197412bc1ee8c04cfe352136e322"
+    },
+    {
+      "name": "SF066",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc h value\r\nendproc\r\n",
+      "source_sha256": "a7c1b46fbdcdafb4af495bbc850e4b8ace42cce7b72c7bfb525a9e681f73e190",
+      "success": true,
+      "label": "fgetc_variable_handle",
+      "hex": "04 cf 39 8d 00 8d 03 94",
+      "asx_sha256": "d4d4daafde944981bda7a88e1f2af7dda8f8d7ca29743bd937230b032be5bf26"
+    },
+    {
+      "name": "SF067",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc -1 value\r\nendproc\r\n",
+      "source_sha256": "95d578733f8904147db63691fd25fd1ed7dad0ea1b070181ac60d31a856ca842",
+      "success": true,
+      "label": "fgetc_handle_-1",
+      "hex": "04 cf 39 ab ff ff 8d 03 94",
+      "asx_sha256": "876455912d3b149ddb9cb0359bc64fe28846f0f97735e0c2a0baa8e0cf86bc93"
+    },
+    {
+      "name": "SF068",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc 5 value\r\nendproc\r\n",
+      "source_sha256": "c59aa593cf52d75c45fbbab1326f447bd56da608143a47f9bc01a7f04db62c75",
+      "success": true,
+      "label": "fgetc_handle_5",
+      "hex": "04 cf 39 b5 05 8d 03 94",
+      "asx_sha256": "e239d4a618bf114a52c908846b426327cd3e5c31733492c88e0567434fc305b7"
+    },
+    {
+      "name": "SF069",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc 6 value\r\nendproc\r\n",
+      "source_sha256": "4bb2faa7a2317fdcd85c05c53a4e09f295261e0853cdbac37c0049c9e3fbbbd3",
+      "success": true,
+      "label": "fgetc_handle_6",
+      "hex": "04 cf 39 b5 06 8d 03 94",
+      "asx_sha256": "265ab2e4ed2b1624182fd3f5e85152e976ea7d44bd968ff06fe4c885715bdc71"
+    },
+    {
+      "name": "SF070",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc 1L value\r\nendproc\r\n",
+      "source_sha256": "076bc592d5f72083549e3756b0813dc6629a1654ff827b123bb85d0fd169c9e0",
+      "success": false,
+      "label": "fgetc_handle_1L"
+    },
+    {
+      "name": "SF071",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc 1.0 value\r\nendproc\r\n",
+      "source_sha256": "e228003d4a6e523a75a12647b3223faf090878ed3b0366a398f6a8b6f64c8551",
+      "success": false,
+      "label": "fgetc_handle_1.0"
+    },
+    {
+      "name": "SF072",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc \"0\" value\r\nendproc\r\n",
+      "source_sha256": "4575b4319e9ff16aa6ecd88f7704cc129d8bc2a374764251b6a3e15132ed2e80",
+      "success": false,
+      "label": "fgetc_handle_\"0\""
+    },
+    {
+      "name": "SF073",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc (0) value\r\nendproc\r\n",
+      "source_sha256": "00ec898f9e465805a48915c138431914de0a7450db49bc7960082e03c3caf73f",
+      "success": false,
+      "label": "fgetc_handle_(0)"
+    },
+    {
+      "name": "SF074",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc 0+1 value\r\nendproc\r\n",
+      "source_sha256": "6271a56d474ab4f65e5984026e36bbcf0a2f513adb116255caf42bd7821016c2",
+      "success": false,
+      "label": "fgetc_handle_0+1"
+    },
+    {
+      "name": "SF075",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc\r\nendproc\r\n",
+      "source_sha256": "3e354d7312b0bd8d3b099df63be7ba0aff5e7a62972455b7d2f1980adddcb15b",
+      "success": false,
+      "label": "fgetc_missing"
+    },
+    {
+      "name": "SF076",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc 0 value,\r\nendproc\r\n",
+      "source_sha256": "cd46fcebcf13a243aa879642165268d793e006dac0ca1c3423c44419c2672cb5",
+      "success": false,
+      "label": "fgetc_trailing"
+    },
+    {
+      "name": "SF077",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc 0,value\r\nendproc\r\n",
+      "source_sha256": "d2b636f2d0b738206e898ba813835032240f4ea25c3c4aa7fcebb926c122772e",
+      "success": true,
+      "label": "fgetc_commas",
+      "hex": "04 cf 39 b5 00 8d 03 94",
+      "asx_sha256": "88aba40e112469252c7357c6a80d1e485ce7197412bc1ee8c04cfe352136e322"
+    },
+    {
+      "name": "SF078",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgets 0 buffer\r\nendproc\r\n",
+      "source_sha256": "e2f5b94877444e14f7276dc9684d2731375a70b4f82f8cce50653730ab999a84",
+      "success": true,
+      "label": "fgets_basic",
+      "hex": "04 cf 3a b5 00 8c 02 94",
+      "asx_sha256": "a22565f972f53d92cea57ef4edff58a52aa2a115bb9d6dd5c987fdba0f59af62"
+    },
+    {
+      "name": "SF079",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgets h buffer\r\nendproc\r\n",
+      "source_sha256": "3320512587ef700de3c9c957fbdde3836943493d271d290aca91fe6038e47f39",
+      "success": true,
+      "label": "fgets_variable_handle",
+      "hex": "04 cf 3a 8d 00 8c 02 94",
+      "asx_sha256": "730a81a90fff97d71e6b06b35cd6665fbbce1d59967af396999f998619711928"
+    },
+    {
+      "name": "SF080",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgets -1 buffer\r\nendproc\r\n",
+      "source_sha256": "d14dee0dccc77b6cd827a7d47967e3d9251c9edd8ee34f1efa1ea7e987907e7f",
+      "success": true,
+      "label": "fgets_handle_-1",
+      "hex": "04 cf 3a ab ff ff 8c 02 94",
+      "asx_sha256": "47c53035515999b5e5646bb0f4c7ed68fad4c4d03bed18212894960435427116"
+    },
+    {
+      "name": "SF081",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgets 5 buffer\r\nendproc\r\n",
+      "source_sha256": "fba54223feb76b164a1b156882ecf1e65d7bdee4137a2719eef73322a4bfa64e",
+      "success": true,
+      "label": "fgets_handle_5",
+      "hex": "04 cf 3a b5 05 8c 02 94",
+      "asx_sha256": "1c8fa21e5e1619c651ec1d676bea0a18f420a701764ec948a8f77e93c15e2853"
+    },
+    {
+      "name": "SF082",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgets 6 buffer\r\nendproc\r\n",
+      "source_sha256": "09aecf62f65790991145fa0ec3edaa3a9554b30362e14743dd009139e039633d",
+      "success": true,
+      "label": "fgets_handle_6",
+      "hex": "04 cf 3a b5 06 8c 02 94",
+      "asx_sha256": "b85e2573a85e7a2c6a0bf3e0dfa73f08bb60b08686aafed81d7eaa02e4bbfd2b"
+    },
+    {
+      "name": "SF083",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgets 1L buffer\r\nendproc\r\n",
+      "source_sha256": "86bd60021ef6f0d22adb50c7d68f88087a8eea865c2e01ca0a597083dd7267ef",
+      "success": false,
+      "label": "fgets_handle_1L"
+    },
+    {
+      "name": "SF084",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgets 1.0 buffer\r\nendproc\r\n",
+      "source_sha256": "1757a520cacbc42d5911009449f9c3021fd6124bbdd1ef5b9d47a1a056ba73d2",
+      "success": false,
+      "label": "fgets_handle_1.0"
+    },
+    {
+      "name": "SF085",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgets \"0\" buffer\r\nendproc\r\n",
+      "source_sha256": "7b3c429aa6b6e32894f9b4cc97d5a3ebfa3de60560833e8f936ab287bd6ce961",
+      "success": false,
+      "label": "fgets_handle_\"0\""
+    },
+    {
+      "name": "SF086",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgets (0) buffer\r\nendproc\r\n",
+      "source_sha256": "62fe5994f220bf842a2fc626d41bc646503cca0774b78d34af001f58af94e7c6",
+      "success": false,
+      "label": "fgets_handle_(0)"
+    },
+    {
+      "name": "SF087",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgets 0+1 buffer\r\nendproc\r\n",
+      "source_sha256": "1cf43219a6eb69c0e61c7a3c33db20519aaded965f4a720cebd605427c21c806",
+      "success": false,
+      "label": "fgets_handle_0+1"
+    },
+    {
+      "name": "SF088",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgets\r\nendproc\r\n",
+      "source_sha256": "75ebd2a735c6734e2e3f8c2032ace5a4e00e927cac02131344e988af9b8c8076",
+      "success": false,
+      "label": "fgets_missing"
+    },
+    {
+      "name": "SF089",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgets 0 buffer,\r\nendproc\r\n",
+      "source_sha256": "d400ea59ff50a15a3529d1c4977b0b7314184a985fa82e62bccbdb00808a9d02",
+      "success": false,
+      "label": "fgets_trailing"
+    },
+    {
+      "name": "SF090",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgets 0,buffer\r\nendproc\r\n",
+      "source_sha256": "3bdff16f8045acb964cc063ea152d2600031bda5abd540ea0acb1e830e9ed6d4",
+      "success": true,
+      "label": "fgets_commas",
+      "hex": "04 cf 3a b5 00 8c 02 94",
+      "asx_sha256": "a22565f972f53d92cea57ef4edff58a52aa2a115bb9d6dd5c987fdba0f59af62"
+    },
+    {
+      "name": "SF091",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputc 0 65\r\nendproc\r\n",
+      "source_sha256": "c6961da2a4fd2015c8713a90cd050fa83e36a878e77dd00a274c43cd90098df7",
+      "success": true,
+      "label": "fputc_basic",
+      "hex": "04 cf 40 b5 00 b5 41 94",
+      "asx_sha256": "96a81131120cbab0effff3d9b0212940fa922ffa90dc5949b0bce5f2bd999e0c"
+    },
+    {
+      "name": "SF092",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputc h 65\r\nendproc\r\n",
+      "source_sha256": "7a7bc76a1d5709bfa31805efb7dcdb9437c53e77e193b2798c5b8e7504152244",
+      "success": true,
+      "label": "fputc_variable_handle",
+      "hex": "04 cf 40 8d 00 b5 41 94",
+      "asx_sha256": "bcffe18b7f38144b4705aab544052bcbef5f3ef2e136520214ad9d408a5c3bf0"
+    },
+    {
+      "name": "SF093",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputc -1 65\r\nendproc\r\n",
+      "source_sha256": "63979c6ca751b9ee3e186a16f49206eb753590541cea0fe145cba5cd4588541d",
+      "success": true,
+      "label": "fputc_handle_-1",
+      "hex": "04 cf 40 ab ff ff b5 41 94",
+      "asx_sha256": "f82cb2748fee5a26651617a9a54d11279e912032e04299fceda9a8236d9d4b88"
+    },
+    {
+      "name": "SF094",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputc 5 65\r\nendproc\r\n",
+      "source_sha256": "47fafce35f51b8619c8fa784dab2709ffb4f9e343e4836cb9f2fd5427808fd31",
+      "success": true,
+      "label": "fputc_handle_5",
+      "hex": "04 cf 40 b5 05 b5 41 94",
+      "asx_sha256": "166b10e71ef5299733c7353b4c1fb04f60c2e645887f9bfb7959bf466f69fd89"
+    },
+    {
+      "name": "SF095",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputc 6 65\r\nendproc\r\n",
+      "source_sha256": "24b82dbb618f457a81d3019e42fd2c49ac52ac5f3c76c1af8f5a17da0866636e",
+      "success": true,
+      "label": "fputc_handle_6",
+      "hex": "04 cf 40 b5 06 b5 41 94",
+      "asx_sha256": "06241c0695e01228ebf89dbcc02ff0c7ae32b7c7ab296deb98a95ecb36383789"
+    },
+    {
+      "name": "SF096",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputc 1L 65\r\nendproc\r\n",
+      "source_sha256": "7e4ae4e7920d26a4b2b7f8d3d1206401045515b00a4b94b48133d1916d6c6412",
+      "success": false,
+      "label": "fputc_handle_1L"
+    },
+    {
+      "name": "SF097",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputc 1.0 65\r\nendproc\r\n",
+      "source_sha256": "1887e400c7e415f2c427f996a8fa4e72e5535637b7c04b00140dbdf5a3acdbfa",
+      "success": false,
+      "label": "fputc_handle_1.0"
+    },
+    {
+      "name": "SF098",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputc \"0\" 65\r\nendproc\r\n",
+      "source_sha256": "8d3803282d9051d8e5deec5eafaaae05361484641e0be8ddcb2c55b7ec742a6b",
+      "success": false,
+      "label": "fputc_handle_\"0\""
+    },
+    {
+      "name": "SF099",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputc (0) 65\r\nendproc\r\n",
+      "source_sha256": "576c76515f41053ed30a650cae31145e7e46ddb0969d9387ec4e1e420414b163",
+      "success": false,
+      "label": "fputc_handle_(0)"
+    },
+    {
+      "name": "SF100",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputc 0+1 65\r\nendproc\r\n",
+      "source_sha256": "9b78069a4f27c82128715a0aea75e01ca518d60ecb51d01ab892cceb454c8466",
+      "success": false,
+      "label": "fputc_handle_0+1"
+    },
+    {
+      "name": "SF101",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputc\r\nendproc\r\n",
+      "source_sha256": "101346a8546182687acda8ee6ce08dcdc20ef9c81d60f5df9a044d81cc93b12f",
+      "success": false,
+      "label": "fputc_missing"
+    },
+    {
+      "name": "SF102",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputc 0 65,\r\nendproc\r\n",
+      "source_sha256": "01cb2a49ee1514f196803b52431299bc0d2b6e81f90b8052d193e72d6e42a4f6",
+      "success": false,
+      "label": "fputc_trailing"
+    },
+    {
+      "name": "SF103",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputc 0,65\r\nendproc\r\n",
+      "source_sha256": "aed9b9de1c485fa6ef3112576c67ad8b96fbcff7b44887a3442baceb888ca55f",
+      "success": true,
+      "label": "fputc_commas",
+      "hex": "04 cf 40 b5 00 b5 41 94",
+      "asx_sha256": "96a81131120cbab0effff3d9b0212940fa922ffa90dc5949b0bce5f2bd999e0c"
+    },
+    {
+      "name": "SF104",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputs 0 \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "098bdf89ba1316657edd288d9851c5397164f708bf5601ea3e782888ed790090",
+      "success": true,
+      "label": "fputs_basic",
+      "hex": "04 cf 41 b5 00 aa b6 0f 58 e9 48 94",
+      "asx_sha256": "dc90de1f15ce0d129821dbf0df5b6d559c01ae64881ccb5e885601be49688fd4"
+    },
+    {
+      "name": "SF105",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputs h \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "132d50a4a41db838e173f9318be8ca01cb1020956e050f06c457def9872c9a3e",
+      "success": true,
+      "label": "fputs_variable_handle",
+      "hex": "04 cf 41 8d 00 aa b6 0f 58 e9 48 94",
+      "asx_sha256": "f49cbcd6aa3bf601ebffc297465da909153494ca3b67e4f1274c2ab4a0c83bdc"
+    },
+    {
+      "name": "SF106",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputs -1 \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "4bc3ec220d26da740c9cea3092705f261fbc7b983c303920150d520ac7a95bf4",
+      "success": true,
+      "label": "fputs_handle_-1",
+      "hex": "04 cf 41 ab ff ff aa b6 84 76 37 0a 94",
+      "asx_sha256": "5ab7a21ffd4d259a1427b63c62074b6ed1977ac2e9803ec9896529f5d5fe0cd8"
+    },
+    {
+      "name": "SF107",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputs 5 \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "6f7fa393c37bc40bfa409b7cbf93b8b4332e114df416f1b58a6d3e9948be133c",
+      "success": true,
+      "label": "fputs_handle_5",
+      "hex": "04 cf 41 b5 05 aa b6 0f 58 e9 48 94",
+      "asx_sha256": "dc6d2b7551fa1556370fa7edc3e7c035039f0a756dff8c5bfcf5cf4e4d2b78d5"
+    },
+    {
+      "name": "SF108",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputs 6 \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "1fbbe9a98f6670040c5f2b140a865097dbcb11f2da877595601697f6fb1a5b01",
+      "success": true,
+      "label": "fputs_handle_6",
+      "hex": "04 cf 41 b5 06 aa b6 0f 58 e9 48 94",
+      "asx_sha256": "2785831afae527f3b366dfbb54eb65ca9aa250b390178230185e26a773fd60ae"
+    },
+    {
+      "name": "SF109",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputs 1L \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "bbeb5b1e38be2e12c67fb4ae8767cee9c59f936358b21ad24d7894313778a6ce",
+      "success": false,
+      "label": "fputs_handle_1L"
+    },
+    {
+      "name": "SF110",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputs 1.0 \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "42ffb62fdfd30cfbe57d3b9c88d58474131e1857e7d6783d5ace59ffe61a84ff",
+      "success": false,
+      "label": "fputs_handle_1.0"
+    },
+    {
+      "name": "SF111",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputs \"0\" \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "b0c06238ed2627ca83ce7ecac8e1cd4723fe57ebc07da6ed8a38137f8d3deace",
+      "success": false,
+      "label": "fputs_handle_\"0\""
+    },
+    {
+      "name": "SF112",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputs (0) \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "ddb5d370243acc6d894720042146ad942c8bace551d0de0596b7a679ca9fba86",
+      "success": false,
+      "label": "fputs_handle_(0)"
+    },
+    {
+      "name": "SF113",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputs 0+1 \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "3be383d0b30ab60ec9d25d9b4f683c5ba94d1d1c213f565c7ef34284e9e12ee6",
+      "success": false,
+      "label": "fputs_handle_0+1"
+    },
+    {
+      "name": "SF114",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputs\r\nendproc\r\n",
+      "source_sha256": "2e7b12187a247424a2e2fdeff9a2d3905fd046071e55894bdee3c4c7823211bb",
+      "success": false,
+      "label": "fputs_missing"
+    },
+    {
+      "name": "SF115",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputs 0 \"ABC\",\r\nendproc\r\n",
+      "source_sha256": "62aa35337bd00a0c4c1adb88985612a2ef457250d128b605982848032096ae78",
+      "success": false,
+      "label": "fputs_trailing"
+    },
+    {
+      "name": "SF116",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfputs 0,\"ABC\"\r\nendproc\r\n",
+      "source_sha256": "0f890ff602102cfda5e74612be90a4412d0aa57ac20c6e830d5fdf62a7a60bbb",
+      "success": true,
+      "label": "fputs_commas",
+      "hex": "04 cf 41 b5 00 aa b6 0f 58 e9 48 94",
+      "asx_sha256": "dc90de1f15ce0d129821dbf0df5b6d559c01ae64881ccb5e885601be49688fd4"
+    },
+    {
+      "name": "SF117",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread 0 buffer 3 result\r\nendproc\r\n",
+      "source_sha256": "c5c65ca4d9b7402f110b1522305c1b9e39b6fd2a64bf2a321f521f34304608b0",
+      "success": true,
+      "label": "fread_basic",
+      "hex": "04 cf 42 b5 00 8c 02 b5 03 8d 02 94",
+      "asx_sha256": "d635b04d3bff0eec42280367b447237cb3867e592233438dd38b4dbe2ac23d99"
+    },
+    {
+      "name": "SF118",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread h buffer 3 result\r\nendproc\r\n",
+      "source_sha256": "5d24a3c3764d2d62eacf7d81169d2eda828be4423fb895d902f732af94038ed2",
+      "success": true,
+      "label": "fread_variable_handle",
+      "hex": "04 cf 42 8d 00 8c 02 b5 03 8d 02 94",
+      "asx_sha256": "986f98809265fcdeddcd3c80ab6dc58b634630800680558e41b1743c10406ae3"
+    },
+    {
+      "name": "SF119",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread -1 buffer 3 result\r\nendproc\r\n",
+      "source_sha256": "226c3d4ba6c646a03ca3b8bfae6682f7d23c734d894c8320e6bdd079af0a83ba",
+      "success": true,
+      "label": "fread_handle_-1",
+      "hex": "04 cf 42 ab ff ff 8c 02 b5 03 8d 02 94",
+      "asx_sha256": "9ba400f69522a42551180bdbfdc748b598a648a771c23243fd5edc275649d215"
+    },
+    {
+      "name": "SF120",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread 5 buffer 3 result\r\nendproc\r\n",
+      "source_sha256": "b18a9ef678bd382e386a7bccec778ced8d93a70d2c90045e440d1b40f48e3a3a",
+      "success": true,
+      "label": "fread_handle_5",
+      "hex": "04 cf 42 b5 05 8c 02 b5 03 8d 02 94",
+      "asx_sha256": "46bf1a5bae729359d5e7e556bac9589dbf8a0b098eaa2ba3627deeb0380e295d"
+    },
+    {
+      "name": "SF121",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread 6 buffer 3 result\r\nendproc\r\n",
+      "source_sha256": "2e59e83e51c33a2008cca9605893f4118803e6fada8982d69861d850bf221db8",
+      "success": true,
+      "label": "fread_handle_6",
+      "hex": "04 cf 42 b5 06 8c 02 b5 03 8d 02 94",
+      "asx_sha256": "1b2ffa22272eafcd8fd06895e20e42abc31eba097f6fc54319594ca338819b82"
+    },
+    {
+      "name": "SF122",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread 1L buffer 3 result\r\nendproc\r\n",
+      "source_sha256": "f78fa658088138407d6bbf72ffc6d6d60d68ba04b1aa6dca1cd2659951bbaeef",
+      "success": false,
+      "label": "fread_handle_1L"
+    },
+    {
+      "name": "SF123",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread 1.0 buffer 3 result\r\nendproc\r\n",
+      "source_sha256": "daa8bfc5f3fc76a1d76d94fdfbcd2f2a33be1c2e3020fe4480ff3ec8e582df33",
+      "success": false,
+      "label": "fread_handle_1.0"
+    },
+    {
+      "name": "SF124",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread \"0\" buffer 3 result\r\nendproc\r\n",
+      "source_sha256": "a29ce195af343ebf1689795cbdeb1e3ed3d24b4cb1641840d1cb98d4886b9636",
+      "success": false,
+      "label": "fread_handle_\"0\""
+    },
+    {
+      "name": "SF125",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread (0) buffer 3 result\r\nendproc\r\n",
+      "source_sha256": "d502c9d0af7b5a0cad1b77fccdaba66caf3f2e80873c8ea764f07d59fd8955b4",
+      "success": false,
+      "label": "fread_handle_(0)"
+    },
+    {
+      "name": "SF126",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread 0+1 buffer 3 result\r\nendproc\r\n",
+      "source_sha256": "b196a06d4bec309aff77c8e39b6c51779a9e1cab807174367664f44e6d1c1561",
+      "success": false,
+      "label": "fread_handle_0+1"
+    },
+    {
+      "name": "SF127",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread\r\nendproc\r\n",
+      "source_sha256": "18250cddb64c6757fbe9f2f72199ab11778f686a6de84c231d4dd633bef0dcc0",
+      "success": false,
+      "label": "fread_missing"
+    },
+    {
+      "name": "SF128",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread 0 buffer 3 result,\r\nendproc\r\n",
+      "source_sha256": "3ffce832a87af9614eda2a1f7b64643f314f70b4b0df2c0990185a604c349517",
+      "success": false,
+      "label": "fread_trailing"
+    },
+    {
+      "name": "SF129",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread 0,buffer,3,result\r\nendproc\r\n",
+      "source_sha256": "537e67a44395334e00d7a47fc38a3c81d93ca140144c40738863a45b9d55e2fd",
+      "success": true,
+      "label": "fread_commas",
+      "hex": "04 cf 42 b5 00 8c 02 b5 03 8d 02 94",
+      "asx_sha256": "d635b04d3bff0eec42280367b447237cb3867e592233438dd38b4dbe2ac23d99"
+    },
+    {
+      "name": "SF130",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite 0 \"ABC\" 3\r\nendproc\r\n",
+      "source_sha256": "500d10b4c78140d94d5057d7a770dd40cba65a6efa650c420c2aee22c098d7a4",
+      "success": true,
+      "label": "fwrite_basic",
+      "hex": "04 cf 47 b5 00 aa b6 0f 58 e9 48 b5 03 94",
+      "asx_sha256": "962f525e5f26295588507339448e9a2b520bb6e6b2bd7bc50a6f599b8c3f18c1"
+    },
+    {
+      "name": "SF131",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite h \"ABC\" 3\r\nendproc\r\n",
+      "source_sha256": "729cb70e47460e2e7b16ffa2c4e35b1370efd848edf27c72533c492e6bae5ac7",
+      "success": true,
+      "label": "fwrite_variable_handle",
+      "hex": "04 cf 47 8d 00 aa b6 0f 58 e9 48 b5 03 94",
+      "asx_sha256": "7798e1d28e30602b854de82c5cb9168fa9cd04ed38b25ab14f76a66224126493"
+    },
+    {
+      "name": "SF132",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite -1 \"ABC\" 3\r\nendproc\r\n",
+      "source_sha256": "947598cc1a921b32edc1612d85b4436d37832e07f4faebd720d2b543ec7cae29",
+      "success": true,
+      "label": "fwrite_handle_-1",
+      "hex": "04 cf 47 ab ff ff aa b6 84 76 37 0a b5 03 94",
+      "asx_sha256": "95a5370b04ece248e9a670d03910dc1c629bb04ca5fdd1ccc5d2abeb4ace9360"
+    },
+    {
+      "name": "SF133",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite 5 \"ABC\" 3\r\nendproc\r\n",
+      "source_sha256": "561ba22db492e3cd55adaa3c3d8bbda9074917456f659c97031bdafa16b231e6",
+      "success": true,
+      "label": "fwrite_handle_5",
+      "hex": "04 cf 47 b5 05 aa b6 0f 58 e9 48 b5 03 94",
+      "asx_sha256": "cc5783fcc8fa77403024924432d042f96223a90efab4d1649f0e51a1c1433b97"
+    },
+    {
+      "name": "SF134",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite 6 \"ABC\" 3\r\nendproc\r\n",
+      "source_sha256": "0c97423a26037b712c263843643e617807c8832a1e5451491c2ed046d8c79518",
+      "success": true,
+      "label": "fwrite_handle_6",
+      "hex": "04 cf 47 b5 06 aa b6 0f 58 e9 48 b5 03 94",
+      "asx_sha256": "952922cc1dbfd010a8c4317101f15861e35011756ebddca50810c55c5f464f00"
+    },
+    {
+      "name": "SF135",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite 1L \"ABC\" 3\r\nendproc\r\n",
+      "source_sha256": "fe68149b22ef9d8fe2d468a2ce599e3c3f2ae11a8c32e3c3b07bb3e9ed18190a",
+      "success": false,
+      "label": "fwrite_handle_1L"
+    },
+    {
+      "name": "SF136",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite 1.0 \"ABC\" 3\r\nendproc\r\n",
+      "source_sha256": "039296f4392fb7526671ebe97c36e214adabb085a859781a684dfa242af843cc",
+      "success": false,
+      "label": "fwrite_handle_1.0"
+    },
+    {
+      "name": "SF137",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite \"0\" \"ABC\" 3\r\nendproc\r\n",
+      "source_sha256": "4db23cf519e1960f9fd39ef1d2d616ac477a361ae39a002f6282da45e0f460b7",
+      "success": false,
+      "label": "fwrite_handle_\"0\""
+    },
+    {
+      "name": "SF138",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite (0) \"ABC\" 3\r\nendproc\r\n",
+      "source_sha256": "5ffe260f96c4f71589962d1ed50c72581619710fb132e932026e348b1b7efc4e",
+      "success": false,
+      "label": "fwrite_handle_(0)"
+    },
+    {
+      "name": "SF139",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite 0+1 \"ABC\" 3\r\nendproc\r\n",
+      "source_sha256": "28d2bbcaae0ac4d1bfc9237e944be8b7209cf5ed710e1c40efbfb950714190e8",
+      "success": false,
+      "label": "fwrite_handle_0+1"
+    },
+    {
+      "name": "SF140",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite\r\nendproc\r\n",
+      "source_sha256": "793509bd283de5dec4e37333d2aae1ab09bc7063d5d463e7312e4bea4cac5a11",
+      "success": false,
+      "label": "fwrite_missing"
+    },
+    {
+      "name": "SF141",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite 0 \"ABC\" 3,\r\nendproc\r\n",
+      "source_sha256": "db053e62b7cf33a38d98b80dcb0c17cb2ea40609092a0e525a72a25fa827642f",
+      "success": false,
+      "label": "fwrite_trailing"
+    },
+    {
+      "name": "SF142",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite 0,\"ABC\",3\r\nendproc\r\n",
+      "source_sha256": "250b1f4739e110c0cb8b3b0a96fe4d89dfd5137da0bcc7d0814ba3a5983a83bf",
+      "success": true,
+      "label": "fwrite_commas",
+      "hex": "04 cf 47 b5 00 aa b6 0f 58 e9 48 b5 03 94",
+      "asx_sha256": "962f525e5f26295588507339448e9a2b520bb6e6b2bd7bc50a6f599b8c3f18c1"
+    },
+    {
+      "name": "SF143",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek 0 0L 0\r\nendproc\r\n",
+      "source_sha256": "72765fd6f2ddf8700bdd599ee5984530c0f742fa425bdceddebfd3bfe9b48d6e",
+      "success": true,
+      "label": "fseek_basic",
+      "hex": "04 cf 43 b5 00 ac 00 00 00 00 b5 00 94",
+      "asx_sha256": "a9d2457e7124a8b2027bec0ac3f4a6a2e80c428e20a18c8452e2800557366af1"
+    },
+    {
+      "name": "SF144",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek h 0L 0\r\nendproc\r\n",
+      "source_sha256": "24dc5b90639fea94add4639c747d450ef44515ecf3d2b8aa28c94adc98b7f260",
+      "success": true,
+      "label": "fseek_variable_handle",
+      "hex": "04 cf 43 8d 00 ac 00 00 00 00 b5 00 94",
+      "asx_sha256": "6e3191e69c5101eb17cb688fcfc1014a4af028c405f1160edc9d42809679c1ba"
+    },
+    {
+      "name": "SF145",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek -1 0L 0\r\nendproc\r\n",
+      "source_sha256": "e3d30e180c0928cf27ec3e82eacbef3766e8e42c414b224572cb935ec678295e",
+      "success": true,
+      "label": "fseek_handle_-1",
+      "hex": "04 cf 43 ab ff ff ac 00 00 00 00 b5 00 94",
+      "asx_sha256": "216c06ce08f78284102ac053c8955aca48597f90ba0891e5d1fd33f3d44fcf00"
+    },
+    {
+      "name": "SF146",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek 5 0L 0\r\nendproc\r\n",
+      "source_sha256": "034145946919cb762b17ecbf819a75d402791f7c5501128919b74ccad0eef374",
+      "success": true,
+      "label": "fseek_handle_5",
+      "hex": "04 cf 43 b5 05 ac 00 00 00 00 b5 00 94",
+      "asx_sha256": "ddd366bf1a83f6ae7ddc6b7743b1160a8bf18887fadd56a36596cb15d3da9869"
+    },
+    {
+      "name": "SF147",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek 6 0L 0\r\nendproc\r\n",
+      "source_sha256": "d700cb9793536ade3d362aa9059f4115688d10a513936fd1219d17e70e46c6b7",
+      "success": true,
+      "label": "fseek_handle_6",
+      "hex": "04 cf 43 b5 06 ac 00 00 00 00 b5 00 94",
+      "asx_sha256": "96cee0c27e2df356c04725970cdc4891d40411a6ac5c46f2d13562181ce34409"
+    },
+    {
+      "name": "SF148",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek 1L 0L 0\r\nendproc\r\n",
+      "source_sha256": "57445947059786ad38c03b36308cec84c28a6619fcea48021db4c3cc6f3255ed",
+      "success": false,
+      "label": "fseek_handle_1L"
+    },
+    {
+      "name": "SF149",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek 1.0 0L 0\r\nendproc\r\n",
+      "source_sha256": "1a23c24a691f8ce2cb9c7acd767196594a325917bcdc87cbdb580f1f1829ef84",
+      "success": false,
+      "label": "fseek_handle_1.0"
+    },
+    {
+      "name": "SF150",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek \"0\" 0L 0\r\nendproc\r\n",
+      "source_sha256": "70188bf2732ed34a439dd1c6b5191cc5a3099f7e7e4e0ec31f8c7693d68e4dc4",
+      "success": false,
+      "label": "fseek_handle_\"0\""
+    },
+    {
+      "name": "SF151",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek (0) 0L 0\r\nendproc\r\n",
+      "source_sha256": "93e84c639aaab7599690433263f7ca507f714eae0c4bcd71a8d826611466bb55",
+      "success": false,
+      "label": "fseek_handle_(0)"
+    },
+    {
+      "name": "SF152",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek 0+1 0L 0\r\nendproc\r\n",
+      "source_sha256": "161ee0b40ed673538e6beb0fccc0ae6b5f16124c0872355dd02f0b48ea1bd300",
+      "success": false,
+      "label": "fseek_handle_0+1"
+    },
+    {
+      "name": "SF153",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek\r\nendproc\r\n",
+      "source_sha256": "d3a386fde7c1270f3a0065e05513ec784c4dc85f307756711afe60c174e6cfbc",
+      "success": false,
+      "label": "fseek_missing"
+    },
+    {
+      "name": "SF154",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek 0 0L 0,\r\nendproc\r\n",
+      "source_sha256": "984a4ef890520c9aa99b78ab081561d3d6696206d74368540905a67dd18886bd",
+      "success": false,
+      "label": "fseek_trailing"
+    },
+    {
+      "name": "SF155",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek 0,0L,0\r\nendproc\r\n",
+      "source_sha256": "87bf6fa4ec19b14def0637312043dfa05ffd493710a51f8ce15ec296be8bee3b",
+      "success": true,
+      "label": "fseek_commas",
+      "hex": "04 cf 43 b5 00 ac 00 00 00 00 b5 00 94",
+      "asx_sha256": "a9d2457e7124a8b2027bec0ac3f4a6a2e80c428e20a18c8452e2800557366af1"
+    },
+    {
+      "name": "SF156",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell 0 position\r\nendproc\r\n",
+      "source_sha256": "7f2ffd6a751b86b7525e7bf6ef268ea1a3d123fdee3f9fab46365e87dd03b220",
+      "success": true,
+      "label": "ftell_basic",
+      "hex": "04 cf 45 b5 00 8e 00 94",
+      "asx_sha256": "74a84bf25bb7743d13d2e83ee788624415cb9db128bff99e46b1409854328c15"
+    },
+    {
+      "name": "SF157",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell h position\r\nendproc\r\n",
+      "source_sha256": "fef78fa7ac1feced551f66bda06e03f716236c0a1295c5ed5b3b94e8415a3353",
+      "success": true,
+      "label": "ftell_variable_handle",
+      "hex": "04 cf 45 8d 00 8e 00 94",
+      "asx_sha256": "a0bd8fdf10649532e89b56d711799f14a6c7fce7341f9c02e33357a018c63f90"
+    },
+    {
+      "name": "SF158",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell -1 position\r\nendproc\r\n",
+      "source_sha256": "2e5f088832b5f67a713609be4d6fb0e52de330c00aa63a20eb217230c16a7f4d",
+      "success": true,
+      "label": "ftell_handle_-1",
+      "hex": "04 cf 45 ab ff ff 8e 00 94",
+      "asx_sha256": "8cb080fbc80ec1c1bb93195c7d2192e1855eaef02fdef7561fb062fb89713c6f"
+    },
+    {
+      "name": "SF159",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell 5 position\r\nendproc\r\n",
+      "source_sha256": "0ed391ced8bd8cf2baa566228d15935de78ad9515303106e0531830cd7e5f952",
+      "success": true,
+      "label": "ftell_handle_5",
+      "hex": "04 cf 45 b5 05 8e 00 94",
+      "asx_sha256": "829089528e51ffb56807c75e849a043259756da3e231cb076d94b7af8e86abc9"
+    },
+    {
+      "name": "SF160",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell 6 position\r\nendproc\r\n",
+      "source_sha256": "25a93120a41c46065e098e5bc480d41a1abe210666e5d381d226f53ca8e39e83",
+      "success": true,
+      "label": "ftell_handle_6",
+      "hex": "04 cf 45 b5 06 8e 00 94",
+      "asx_sha256": "abcf656d34c036e5bfcfa474ed95afc1dd8d2a66203275c132e750767d314b40"
+    },
+    {
+      "name": "SF161",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell 1L position\r\nendproc\r\n",
+      "source_sha256": "4cbf35e1e70788a05f935f81ff9283d9a03cc0d3da246cd8720e6af17e384751",
+      "success": false,
+      "label": "ftell_handle_1L"
+    },
+    {
+      "name": "SF162",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell 1.0 position\r\nendproc\r\n",
+      "source_sha256": "3fe38992c429cfabb0588346b5990f7101d4a4d98d1e30d6b8db16340f6e27be",
+      "success": false,
+      "label": "ftell_handle_1.0"
+    },
+    {
+      "name": "SF163",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell \"0\" position\r\nendproc\r\n",
+      "source_sha256": "b3a4015c2708b120e51c8c205becca01ac01d9a41fe99bda827d9005b3640267",
+      "success": false,
+      "label": "ftell_handle_\"0\""
+    },
+    {
+      "name": "SF164",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell (0) position\r\nendproc\r\n",
+      "source_sha256": "93f3ce676fbda30f083f308ceadc9518c011df659241ee8598a01dd06aac1927",
+      "success": false,
+      "label": "ftell_handle_(0)"
+    },
+    {
+      "name": "SF165",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell 0+1 position\r\nendproc\r\n",
+      "source_sha256": "704c181fee5deb0cdb74580903c3f2149876dfaed4514d6acfc02fc464a19970",
+      "success": false,
+      "label": "ftell_handle_0+1"
+    },
+    {
+      "name": "SF166",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell\r\nendproc\r\n",
+      "source_sha256": "67fc5300a526cbe6125a208a461f98390224799390c9a391aa67bafd5d8310cd",
+      "success": false,
+      "label": "ftell_missing"
+    },
+    {
+      "name": "SF167",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell 0 position,\r\nendproc\r\n",
+      "source_sha256": "01158cd57b520f479bdc6848199956556d6aa0e932aecf1db684af266cb0bda1",
+      "success": false,
+      "label": "ftell_trailing"
+    },
+    {
+      "name": "SF168",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell 0,position\r\nendproc\r\n",
+      "source_sha256": "3831f387258348e7ade874af7b0c5dd603f8bce5acee62fcca60d3cd30e0f047",
+      "success": true,
+      "label": "ftell_commas",
+      "hex": "04 cf 45 b5 00 8e 00 94",
+      "asx_sha256": "74a84bf25bb7743d13d2e83ee788624415cb9db128bff99e46b1409854328c15"
+    },
+    {
+      "name": "SF169",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen 0 path mode\r\nendproc\r\n",
+      "source_sha256": "c1a5610058c8cd888a99abcc4abc0dbee8ece08401306bcef1f4bd191a4e8006",
+      "success": true,
+      "label": "edge_169",
+      "hex": "04 cf 3f b5 00 8c 00 8c 03 94",
+      "asx_sha256": "025aea7e74ff5e982fb465a780ff7578e5955e2563b962e5273e3821a2cd3517"
+    },
+    {
+      "name": "SF170",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen 0 \"X\" READ\r\nendproc\r\n",
+      "source_sha256": "830681c3ecb3b4e2e78d1298deb48ec9cba345e7efcac4f7b934fe97b0ce52b0",
+      "success": false,
+      "label": "edge_170"
+    },
+    {
+      "name": "SF171",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen 0 \"X\"\r\nendproc\r\n",
+      "source_sha256": "f0eaa894bfc18749918f28220d506cd228b37471a24ca0efe3365c0b5f32d360",
+      "success": false,
+      "label": "edge_171"
+    },
+    {
+      "name": "SF172",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfopen 0 \"X\" \"bad\"\r\nendproc\r\n",
+      "source_sha256": "7e62a22117e53019193a020d0ab75c5e6cfdaa9ba082c4adfe35078881041ccf",
+      "success": true,
+      "label": "edge_172",
+      "hex": "04 cf 3f b5 00 aa b4 0d 6f aa b6 07 a9 80 7b 94",
+      "asx_sha256": "d2b8c7c6ec74663b20e91545a8181627d7f77230706a6eae0dca4dbdee2ad9be"
+    },
+    {
+      "name": "SF173",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc 0 result+1\r\nendproc\r\n",
+      "source_sha256": "a778ce241c6199205f69d58ea961637ecb3fe43258f5488284df48e9c9311a7b",
+      "success": false,
+      "label": "edge_173"
+    },
+    {
+      "name": "SF174",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc 0 failure\r\nendproc\r\n",
+      "source_sha256": "90b96049a2dc30c9bfa3ecb4724a2d659e1bd385d4fe6a4e928d743e923d55bc",
+      "success": false,
+      "label": "edge_174"
+    },
+    {
+      "name": "SF175",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc 0 position\r\nendproc\r\n",
+      "source_sha256": "9ae1f6844e63e067091bfa270c5d400c0c4822011ec194093a7ddd9c4642b3b2",
+      "success": false,
+      "label": "edge_175"
+    },
+    {
+      "name": "SF176",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgetc 0 1\r\nendproc\r\n",
+      "source_sha256": "79ab4de9fb19a7354e03d6ba7c773524ef6dfd92be0001c8db9189b5a09a37b0",
+      "success": false,
+      "label": "edge_176"
+    },
+    {
+      "name": "SF177",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgets 0 \"literal\"\r\nendproc\r\n",
+      "source_sha256": "e96b1ab93f8ea01058f8b4d15c77e08ded3b26c794af21cb3f6980c5e9e4581b",
+      "success": false,
+      "label": "edge_177"
+    },
+    {
+      "name": "SF178",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgets 0 buffer 3\r\nendproc\r\n",
+      "source_sha256": "4fc28f55eeebb4d6c0f6dc089731a460e7e3df2de1a70168bb42ae15a65bb323",
+      "success": false,
+      "label": "edge_178"
+    },
+    {
+      "name": "SF179",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfgets 0 buffer,\r\nendproc\r\n",
+      "source_sha256": "d400ea59ff50a15a3529d1c4977b0b7314184a985fa82e62bccbdb00808a9d02",
+      "success": false,
+      "label": "edge_179"
+    },
+    {
+      "name": "SF180",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread 0 buffer 0 result\r\nendproc\r\n",
+      "source_sha256": "d3e49c64d5f55262ed90541de1a00031feab8e39c85f6d6ac31a60c1b2c7864a",
+      "success": true,
+      "label": "edge_180",
+      "hex": "04 cf 42 b5 00 8c 02 b5 00 8d 02 94",
+      "asx_sha256": "f05b53c57691050bd7de3b163051de8f050c8670cddb505656440afed49e29a4"
+    },
+    {
+      "name": "SF181",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread 0 buffer 80 result\r\nendproc\r\n",
+      "source_sha256": "2eff75b8f9d94b96698523651e869cdfb1fd4f4383fa4e076709f22ff4729aef",
+      "success": true,
+      "label": "edge_181",
+      "hex": "04 cf 42 b5 00 8c 02 b5 50 8d 02 94",
+      "asx_sha256": "2bf6161e3109e566d6473a4443b5267af8178bca74ac08123adc7126eedadf6c"
+    },
+    {
+      "name": "SF182",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread 0 buffer 81 result\r\nendproc\r\n",
+      "source_sha256": "93238faa7bac1d61c8b90f7fb8647c6bf50b1da93a673d3af1d0093a56325ca4",
+      "success": true,
+      "label": "edge_182",
+      "hex": "04 cf 42 b5 00 8c 02 b5 51 8d 02 94",
+      "asx_sha256": "cf27c9b2597392d0513cdfd26723552915dac88ae0504424086d88a0f4dd7c64"
+    },
+    {
+      "name": "SF183",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread 0 buffer 65535 result\r\nendproc\r\n",
+      "source_sha256": "296f7ee695f9434c143076e604e597d88493e8666b472b75d93fcd333c4a6f72",
+      "success": false,
+      "label": "edge_183"
+    },
+    {
+      "name": "SF184",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread 0 buffer n result\r\nendproc\r\n",
+      "source_sha256": "0424c7bb835628198dd58665d627c49d3fc62d5e56dde7ddd8e79c7fcffa19d8",
+      "success": true,
+      "label": "edge_184",
+      "hex": "04 cf 42 b5 00 8c 02 8d 01 8d 02 94",
+      "asx_sha256": "ced25b6827505a56c5a1991af1a917a1506ec16542500b5d0ab39d4173598acb"
+    },
+    {
+      "name": "SF185",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread 0 buffer 3\r\nendproc\r\n",
+      "source_sha256": "e76dd0624170c980078af4a682fd7c3602c2e102e39a908c7e034d769716026b",
+      "success": false,
+      "label": "edge_185"
+    },
+    {
+      "name": "SF186",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfread 0 \"literal\" 3 result\r\nendproc\r\n",
+      "source_sha256": "b8a66fc65c277fe2820035bff5d7549e25eab2c7184a8e463e8209c9123a46ae",
+      "success": false,
+      "label": "edge_186"
+    },
+    {
+      "name": "SF187",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite 0 filedata n\r\nendproc\r\n",
+      "source_sha256": "78062ce03c51579c25b6a7a107b10e3a361b558a5a2ba6a0ff194fb8944be26d",
+      "success": true,
+      "label": "edge_187",
+      "hex": "04 cf 47 b5 00 8c 01 8d 01 94",
+      "asx_sha256": "e24dc510e501e6b4edd4afb4cd35a6f7c830f81446da0e205a55cb64a16c53e3"
+    },
+    {
+      "name": "SF188",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite 0 \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "43b95f024c37c6548f3026b23cb22401fe02fb86db9d8451cea39b79e26be275",
+      "success": false,
+      "label": "edge_188"
+    },
+    {
+      "name": "SF189",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite 0 \"ABC\" 0\r\nendproc\r\n",
+      "source_sha256": "42ea8706e6b1c677ec35677856f3232eeb2209c21870b393af662a49d4f93037",
+      "success": true,
+      "label": "edge_189",
+      "hex": "04 cf 47 b5 00 aa b6 0f 58 e9 48 b5 00 94",
+      "asx_sha256": "22999d933e5a154dd8ee6157dc0a88187e3d9a26abe26576daef22bfc34e59e0"
+    },
+    {
+      "name": "SF190",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfwrite 0 \"ABC\" 81\r\nendproc\r\n",
+      "source_sha256": "f68bf64f1edd970ae374cb5141f57694591bfe5ede5dc39a6746f5611a322110",
+      "success": true,
+      "label": "edge_190",
+      "hex": "04 cf 47 b5 00 aa b6 0f 58 e9 48 b5 51 94",
+      "asx_sha256": "a05021549d5b3c6679a84e9ae8cbba7dfadb19c510c00300b9cbe70e5f486284"
+    },
+    {
+      "name": "SF191",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek 0 0 0\r\nendproc\r\n",
+      "source_sha256": "6a22b4420590778bbe767f91c032e50360ce67ab2ceaa2f543efe7b4fb6b9d7c",
+      "success": true,
+      "label": "edge_191",
+      "hex": "04 cf 43 b5 00 ac 00 00 00 00 b5 00 94",
+      "asx_sha256": "a9d2457e7124a8b2027bec0ac3f4a6a2e80c428e20a18c8452e2800557366af1"
+    },
+    {
+      "name": "SF192",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek 0 -1L 2\r\nendproc\r\n",
+      "source_sha256": "96dc1850a1390870ffda45ea9cdd326115bd2fd94970a79535adb7619ecce009",
+      "success": true,
+      "label": "edge_192",
+      "hex": "04 cf 43 b5 00 ac ff ff ff ff b5 02 94",
+      "asx_sha256": "60fbb94ae3196b70532b0168f42f7c721204a9d4e45f3749928567de5496f77f"
+    },
+    {
+      "name": "SF193",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek 0 position 1\r\nendproc\r\n",
+      "source_sha256": "6eb0d9b42b14b35c7255a6d2acc4291d9c446793f433d66ae929ef0e5aaf53f0",
+      "success": true,
+      "label": "edge_193",
+      "hex": "04 cf 43 b5 00 8e 00 b5 01 94",
+      "asx_sha256": "e63221417f1bae5af53cc61d9c8a88a322c08880ca214b3af0db4779dcc8d13a"
+    },
+    {
+      "name": "SF194",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek 0 position n\r\nendproc\r\n",
+      "source_sha256": "dce1d3752e6f5a438ba05067429f8f068694f1104238957b50f45fc219b92741",
+      "success": true,
+      "label": "edge_194",
+      "hex": "04 cf 43 b5 00 8e 00 8d 01 94",
+      "asx_sha256": "f127d9a533b97a443872545787bdaacdb797abf40f29bae29e0f2092ff031099"
+    },
+    {
+      "name": "SF195",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek 0 position 3\r\nendproc\r\n",
+      "source_sha256": "fc7baeb9ca4b14d4f92fbf3a4c38a2cf0ac90476ab2f1a510453bccd75ced12c",
+      "success": true,
+      "label": "edge_195",
+      "hex": "04 cf 43 b5 00 8e 00 b5 03 94",
+      "asx_sha256": "5bf2b8aa0cb204106bb07660c737dfd9ef44f613dbb862f1f655571ba7ebb40c"
+    },
+    {
+      "name": "SF196",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek 0 position -1\r\nendproc\r\n",
+      "source_sha256": "1266648182b5bd6415b40ba35d6830c3df5796ff8583a8dd2e11501a2d8f1b4e",
+      "success": true,
+      "label": "edge_196",
+      "hex": "04 cf 43 b5 00 8e 00 ab ff ff 94",
+      "asx_sha256": "e31c10bdad044ae49f189bacb5a08ca100990138f06254769f53a2778789d3a1"
+    },
+    {
+      "name": "SF197",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek 0 position 1L\r\nendproc\r\n",
+      "source_sha256": "a60e8306a23d9966222a5d638fed34437045086a0d2f8389c99f225b8da1d405",
+      "success": false,
+      "label": "edge_197"
+    },
+    {
+      "name": "SF198",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nfseek 0 position\r\nendproc\r\n",
+      "source_sha256": "18687fb4a63f5a75b6317ef976597525ad177c500ab0cfa94ab0587c045390d1",
+      "success": false,
+      "label": "edge_198"
+    },
+    {
+      "name": "SF199",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell 0 n\r\nendproc\r\n",
+      "source_sha256": "8ccdafe2217fdbd821602c889a095dc3f8600b0ebff28b2390c1f48e3c3a8a82",
+      "success": false,
+      "label": "edge_199"
+    },
+    {
+      "name": "SF200",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell 0 0L\r\nendproc\r\n",
+      "source_sha256": "dbd839b5d7feea04a3e3b1beed20a2b52e3b1feaeb529af381d4b4dd4f2f1aa2",
+      "success": false,
+      "label": "edge_200"
+    },
+    {
+      "name": "SF201",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell 0 position,\r\nendproc\r\n",
+      "source_sha256": "01158cd57b520f479bdc6848199956556d6aa0e932aecf1db684af266cb0bda1",
+      "success": false,
+      "label": "edge_201"
+    },
+    {
+      "name": "SF202",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\nftell 0 position+1L\r\nendproc\r\n",
+      "source_sha256": "6bb7c3e24d61293c42371293cd19660b8937cf2b5eb3c24e18c957cb65f1eaeb",
+      "success": false,
+      "label": "edge_202"
+    },
+    {
+      "name": "SF203",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ninteger localh\r\neof localh value\r\nendproc\r\n",
+      "source_sha256": "04ae0572b3664360a36d278e8669c28d56ad1c033526b2de0b03195ae795a3f9",
+      "success": true,
+      "label": "eof_local",
+      "hex": "04 d2 02 00 cf 31 a1 00 00 8d 03 95",
+      "asx_sha256": "92e320d588c068df6f33483f41c9fcdc0650c5f89764638560e61c165a835ad8"
+    },
+    {
+      "name": "SF204",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm filehandle\r\neof filehandle value\r\nendproc\r\n",
+      "source_sha256": "761bbf121824ddffb4bd47e91e15b9e08bbeac38172d0b3ba717b92493ef8d72",
+      "success": true,
+      "label": "eof_parameter",
+      "hex": "04 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 31 97 08 00 8d 03 95",
+      "asx_sha256": "c1bfaa5d4f77c6015a6bb6c38d7bab7afd89d5a2c7260e8cc3067ecddb100542"
+    },
+    {
+      "name": "SF205",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ninteger localh\r\nfopen localh \"OWNED.DAT\" \"rb\"\r\nendproc\r\n",
+      "source_sha256": "064c8d000dc47605d741b5158f02e53a0cefc6baa5cbf88e7a0214a4e25c72e2",
+      "success": true,
+      "label": "fopen_local",
+      "hex": "04 d2 02 00 cf 3f a1 00 00 aa bc 0e 26 5c 59 4a 5b 75 c5 0c 71 aa b5 07 49 67 95",
+      "asx_sha256": "44c6899e83213faf4a1635a763fa191f3968f6ca956ad530a63d1c07563545bc"
+    },
+    {
+      "name": "SF206",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm filehandle\r\nfopen filehandle \"OWNED.DAT\" \"rb\"\r\nendproc\r\n",
+      "source_sha256": "f47ec59901966c486d66b7e5eecf4561a27bf5712c302ccda638f2e1bf28fe4a",
+      "success": true,
+      "label": "fopen_parameter",
+      "hex": "04 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 3f 97 08 00 aa bc 90 4a 8c 2f 3a c3 f5 3f fa ad aa b5 89 6d 97 95",
+      "asx_sha256": "94e3d832ce07a9a3b26117ec4fcf01a596a1bdb47c4ab86dca382efcbab50bee"
+    },
+    {
+      "name": "SF207",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ninteger localh\r\nfclose localh\r\nendproc\r\n",
+      "source_sha256": "cf7e63d56a697411cb68d3b7e4c1bdce956747d44fa24391a2e0fe637d7b0499",
+      "success": true,
+      "label": "fclose_local",
+      "hex": "04 d2 02 00 cf 36 a1 00 00 95",
+      "asx_sha256": "dea2346f8e99301d0015eaa3d2afa3ae28ea60b99ffd757221959c54d4dc988c"
+    },
+    {
+      "name": "SF208",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm filehandle\r\nfclose filehandle\r\nendproc\r\n",
+      "source_sha256": "bbe6d4eb3f7312e250a83ed164d696efa30e7ce4b1df4dc10b86302d6fce9eda",
+      "success": true,
+      "label": "fclose_parameter",
+      "hex": "04 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 36 97 08 00 95",
+      "asx_sha256": "7eb3e1241fd0dcef7824c08d48632bf03518bec6ecfc434c928eed0839c776b0"
+    },
+    {
+      "name": "SF209",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ninteger localh\r\nfclear localh\r\nendproc\r\n",
+      "source_sha256": "1c57dec548be10d6840ee62b41ad51e4764230aad04a01827d687b3805f8fe7c",
+      "success": true,
+      "label": "fclear_local",
+      "hex": "04 d2 02 00 cf 35 a1 00 00 95",
+      "asx_sha256": "acf8088dfe5e9ef0372fcc62dff1102b0438d30b88a14631171eaf48808d001a"
+    },
+    {
+      "name": "SF210",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm filehandle\r\nfclear filehandle\r\nendproc\r\n",
+      "source_sha256": "dbb282cd0bc61058960bff03d6cfd3217ead750b1794417db3291b9b5c47145a",
+      "success": true,
+      "label": "fclear_parameter",
+      "hex": "04 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 35 97 08 00 95",
+      "asx_sha256": "7d11e45f075feaef5d66c68d289905244d778c86a4ac0a0f2b44457e010d9fa1"
+    },
+    {
+      "name": "SF211",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ninteger localh\r\nfflush localh\r\nendproc\r\n",
+      "source_sha256": "47dbf89baaa8472ad4534bffe9669c217399c3e7c5e767289f45400d21f92ba1",
+      "success": true,
+      "label": "fflush_local",
+      "hex": "04 d2 02 00 cf 38 a1 00 00 95",
+      "asx_sha256": "e85825622c1cd3fe3da1dd3a5ff5f2717508ccaf1543c600fd64b9afa44dee7a"
+    },
+    {
+      "name": "SF212",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm filehandle\r\nfflush filehandle\r\nendproc\r\n",
+      "source_sha256": "9d51d8769d02367a9437bef940a40e747c096daca7c897c31c160c072d60d6bd",
+      "success": true,
+      "label": "fflush_parameter",
+      "hex": "04 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 38 97 08 00 95",
+      "asx_sha256": "a4c09333171ed34a1c8c6602d0eefd39e2f835043f160acb10792a57f013fad2"
+    },
+    {
+      "name": "SF213",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ninteger localh\r\nfgetc localh value\r\nendproc\r\n",
+      "source_sha256": "d48f1f0ffaabc576d534479903fa246271362e32090aa0471408004bc831404e",
+      "success": true,
+      "label": "fgetc_local",
+      "hex": "04 d2 02 00 cf 39 a1 00 00 8d 03 95",
+      "asx_sha256": "99241d4f7392eafc1bb1cc121c31deabb12ce7f13b96f1f25bbc19a126f33d25"
+    },
+    {
+      "name": "SF214",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm filehandle\r\nfgetc filehandle value\r\nendproc\r\n",
+      "source_sha256": "c74d18e27abac7403e9bcaf19c305881a351362a7322783f346e57909a68b118",
+      "success": true,
+      "label": "fgetc_parameter",
+      "hex": "04 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 39 97 08 00 8d 03 95",
+      "asx_sha256": "4730d8b5b971b992ed720e61946b16588fd74be146fb8e8ac104b2c699bc0051"
+    },
+    {
+      "name": "SF215",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ninteger localh\r\nfgets localh buffer\r\nendproc\r\n",
+      "source_sha256": "495fb4946560d20f9c625ce1dc1e575f03822aaf303999c66de028c6ce813671",
+      "success": true,
+      "label": "fgets_local",
+      "hex": "04 d2 02 00 cf 3a a1 00 00 8c 02 95",
+      "asx_sha256": "ecff5766f1ed3b86f127747b4e6c63486647996bb8edfb62889a006fdf2db829"
+    },
+    {
+      "name": "SF216",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm filehandle\r\nfgets filehandle buffer\r\nendproc\r\n",
+      "source_sha256": "2a9b53ac55d3c35f48f850eaa84fd30912f78dfa2627c55bad299f828a418cdf",
+      "success": true,
+      "label": "fgets_parameter",
+      "hex": "04 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 3a 97 08 00 8c 02 95",
+      "asx_sha256": "bf6f9b89890ab821c57af2834f8af9338b58bcb81fa6892c598c07a7571aa0a8"
+    },
+    {
+      "name": "SF217",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ninteger localh\r\nfputc localh 65\r\nendproc\r\n",
+      "source_sha256": "1eadae853248f11dba8d16deda89ba10e542725ea90a6c52a6801ef61340d884",
+      "success": true,
+      "label": "fputc_local",
+      "hex": "04 d2 02 00 cf 40 a1 00 00 b5 41 95",
+      "asx_sha256": "dbc22b3ac7bdb8fd112c5a9d94e3ac40ac69b4fe5bcaf651fe944084208aa30b"
+    },
+    {
+      "name": "SF218",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm filehandle\r\nfputc filehandle 65\r\nendproc\r\n",
+      "source_sha256": "8b0ac3e3dc0891568f668cec51a5ae7525102cd7590a526a64c7879c733dec43",
+      "success": true,
+      "label": "fputc_parameter",
+      "hex": "04 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 40 97 08 00 b5 41 95",
+      "asx_sha256": "22468ec34854e96f5bcef112b829643b376f60d157694e44c5560c2f9a8e9e32"
+    },
+    {
+      "name": "SF219",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ninteger localh\r\nfputs localh \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "63dbc49fc1d7ff8b758b58bf3f4a01199f29eda7f23e73e68f51e1f2bd0710ce",
+      "success": true,
+      "label": "fputs_local",
+      "hex": "04 d2 02 00 cf 41 a1 00 00 aa b6 08 18 47 4e 95",
+      "asx_sha256": "44dbd30a176cb76f217fd0a358057b28d9161c8f9197a6fd3b21f2b03b31fef5"
+    },
+    {
+      "name": "SF220",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm filehandle\r\nfputs filehandle \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "cd162c69a20965ae7a3a97048f0c592d8f3123b8d07067b77bdf99a7e23bf2d7",
+      "success": true,
+      "label": "fputs_parameter",
+      "hex": "04 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 41 97 08 00 aa b6 8a 3c 77 24 95",
+      "asx_sha256": "206d2bbc51ee2a007018f496a74fdb8a8f1b0aaa96229b6f70fe1219355b9338"
+    },
+    {
+      "name": "SF221",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ninteger localh\r\nfread localh buffer 3 result\r\nendproc\r\n",
+      "source_sha256": "b9034ff0f9067d8e4d8b5fad55f0954ca70260f8a7c67bef96301e508029ae83",
+      "success": true,
+      "label": "fread_local",
+      "hex": "04 d2 02 00 cf 42 a1 00 00 8c 02 b5 03 8d 02 95",
+      "asx_sha256": "cae540b8577b870d6e34dbcb086b5c92c384bf23eacf2e11597f8e3aa15848a1"
+    },
+    {
+      "name": "SF222",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm filehandle\r\nfread filehandle buffer 3 result\r\nendproc\r\n",
+      "source_sha256": "b401f447802a8c936b22e0d274a09ef0ffd6564d5c90f54cfa1d0306b7343a87",
+      "success": true,
+      "label": "fread_parameter",
+      "hex": "04 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 42 97 08 00 8c 02 b5 03 8d 02 95",
+      "asx_sha256": "154ece7bf77545eeb58e69338f83623ada64c0ff85b10ef7e76519d225980055"
+    },
+    {
+      "name": "SF223",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ninteger localh\r\nfwrite localh \"ABC\" 3\r\nendproc\r\n",
+      "source_sha256": "97d90ef25ce6d48b4e5ec2acb5a0d63b38c8c298dd7fe119e075aa5ce6b32604",
+      "success": true,
+      "label": "fwrite_local",
+      "hex": "04 d2 02 00 cf 47 a1 00 00 aa b6 08 18 47 4e b5 03 95",
+      "asx_sha256": "8ac7c212a8ce46bf9fd520d99d4d999c71b27b7969491d9a70e2a9f9f8e95741"
+    },
+    {
+      "name": "SF224",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm filehandle\r\nfwrite filehandle \"ABC\" 3\r\nendproc\r\n",
+      "source_sha256": "8ac0c9625bd407a23db2fe67ae18b84de2380c527918a07c0a3f247b5b2a1303",
+      "success": true,
+      "label": "fwrite_parameter",
+      "hex": "04 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 47 97 08 00 aa b6 8a 3c 77 24 b5 03 95",
+      "asx_sha256": "84cff8a2d70dc875797e3a8f5ea47fc836171c5975a3ce5c6446376a0025edb2"
+    },
+    {
+      "name": "SF225",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ninteger localh\r\nfseek localh 0L 0\r\nendproc\r\n",
+      "source_sha256": "422774d392c03492861457ac52d09c5dc7f0cb2cd05059cc0b80d4449478b98e",
+      "success": true,
+      "label": "fseek_local",
+      "hex": "04 d2 02 00 cf 43 a1 00 00 ac 00 00 00 00 b5 00 95",
+      "asx_sha256": "739fba31ac76dba9641ef8b458af53ec98ba69ed9f8623d8297d8a4aed13fe8e"
+    },
+    {
+      "name": "SF226",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm filehandle\r\nfseek filehandle 0L 0\r\nendproc\r\n",
+      "source_sha256": "bdddf214c0b8023ff6b5100777ef3d0845d2322cab16d3ca40542e2cca8a6c79",
+      "success": true,
+      "label": "fseek_parameter",
+      "hex": "04 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 43 97 08 00 ac 00 00 00 00 b5 00 95",
+      "asx_sha256": "272cbcbf0f6fbb4b1455ffd92d3bf8314355c51e51702d36d078aca822a820fe"
+    },
+    {
+      "name": "SF227",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ninteger localh\r\nftell localh position\r\nendproc\r\n",
+      "source_sha256": "6be6137c12ee6baf1fef0af5ba1253048433f8da33d2ef407a41fd1188850e5b",
+      "success": true,
+      "label": "ftell_local",
+      "hex": "04 d2 02 00 cf 45 a1 00 00 8e 00 95",
+      "asx_sha256": "0ca6d0d379936103df12e979c98ec724469e954ac95cc6488d127fe04abf8b49"
+    },
+    {
+      "name": "SF228",
+      "source": "integer h,n,result,value\r\nlong position\r\nstring path,filedata,buffer,mode\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm filehandle\r\nftell filehandle position\r\nendproc\r\n",
+      "source_sha256": "98c32f2e230e2622f8a12656d0af00b1f7cf5bdd8079a1e770021b14080b9961",
+      "success": true,
+      "label": "ftell_parameter",
+      "hex": "04 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 45 97 08 00 8e 00 95",
+      "asx_sha256": "ff67dd4e2f910b74cc65f48c53740e1da790a498cd03dcc43f3c1c71d71979a2"
+    }
+  ],
+  "scope": "Frozen authored original compiler outcomes for13 file commands including EOF; maintained compiler/runtime integration remains pending."
+}

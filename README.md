@@ -82,6 +82,11 @@ with the original comparison/error semantics. Both maintained compilers support
 their atomic string operands; real DOS tests cover file/directory effects,
 retained current drive/directory and the terminal's login-child handoff.
 
+The [script-file component](docs/ASPECT_SCRIPT_FILES.md) recovers the thirteen
+native file commands and shared helpers. Its backend and compiler/application
+integration remain in progress; these commands are not available in the packaged
+runtime yet.
+
 Current outputs:
 
 | Output | Inputs | Current purpose |
