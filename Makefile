@@ -1,4 +1,13 @@
 .DEFAULT_GOAL := all
+.PHONY: aspect-when test-aspect-when aspect-renderer-policy test-aspect-renderer-policy
+aspect-when:
+	python3 standalone/build_aspect_when.py
+test-aspect-when: aspect-when
+	python3 standalone/check_aspect_when.py
+aspect-renderer-policy:
+	python3 standalone/build_aspect_renderer_policy.py
+test-aspect-renderer-policy: aspect-renderer-policy
+	python3 standalone/check_aspect_renderer_policy.py
 MODULES := escape attributes screen text reports erase cursor_state cursor_shape scroll modes render input_dispatch csi ui_windows modem_commands modem_responses modem_send directory_dial directory_accounting keyboard_mapping keyboard_detection line_edit meta_keys character_edit program_exec terminal_reset transfer_blocks transfer_receive transfer_send transfer_files transfer_session transfer_uart
 .PHONY: aspect-resident-service test-aspect-resident-service test-aspect-resident-service-dos aspect-resident-bridge test-aspect-resident-bridge test-aspect-resident-bridge-dos test-aspect-serial-unread-dos
 aspect-resident-service:

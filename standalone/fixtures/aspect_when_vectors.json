@@ -1,0 +1,593 @@
+{
+  "schema": "aspect-when-corpus-v1",
+  "scope": "Authored original-compiler grammar outcomes. Accepted compilation is not an assertion of native safe runtime acceptance; numeric slots outside0..2 are compiler-permissive but bounded at runtime. Only flow_cases below have independently frozen composed runtime expectations.",
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "provenance": {
+    "report_sha256": "85be69deff8c489f770df4e2ae9b5b40135af213de751db364fc104c457b18b7",
+    "probe_sha256": "2457fa4767591a82f40e2f8408a75e2411b2888aa008c0217ac5f540b8386e78",
+    "fullflow_original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "fullflow_report_sha256": "b739a3f1cb66c256f1ae0f3a0478ab48cf3aa1e8788e2be6f6ea9619073d4f1c"
+  },
+  "vectors": [
+    {
+      "name": "FORM0",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 1 \"HELLO\" transmit \"HI\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "ee5ab5a386d73b94271475975746a4db647e28922eec3d04a34ed0b2678c4cac",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf d6 01 b5 01 aa b8 91 31 9e 47 cb 30 32 aa b5 0b c9 20 94",
+      "asx_sha256": "1bf51b7b047ab891908c086d0430c7c2652b575d0ce45f494b5313bfadc80cea"
+    },
+    {
+      "name": "FORM1",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 0 \"HELLO\" transmit \"HI\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "fb971415b1882564f4552283b867ad40f8eea30a879323c3c78983a77204d69e",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf d6 01 b5 00 aa b8 91 31 9e 47 cb 30 32 aa b5 0b c9 20 94",
+      "asx_sha256": "80acc1f2937d18bb7d5e94e9b86cdfd561977a46f7bb5abd575aa132fe4e069e"
+    },
+    {
+      "name": "FORM2",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 3 \"HELLO\" transmit \"HI\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "10cc74419579857d8d5377ed9b5c483d1c53ef14ad4c2719c1f1407653daa79f",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf d6 01 b5 03 aa b8 91 31 9e 47 cb 30 32 aa b5 0b c9 20 94",
+      "asx_sha256": "1dcd458a161e28e3d74752084f825d113153877f9ec0e0ff9a14eebc4ffc6a1f"
+    },
+    {
+      "name": "FORM3",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 4 \"HELLO\" transmit \"HI\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "4490607c5b57f7b3e002c3e78a85cb1cb45e8fc370294a9db89511eff9b2ff41",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf d6 01 b5 04 aa b8 91 31 9e 47 cb 30 32 aa b5 0b c9 20 94",
+      "asx_sha256": "40fdf08d5556097da036b7ffeb5cd2728497ceb66f05c7e7bfe413786c8e20a1"
+    },
+    {
+      "name": "FORM7",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 1 \"HELLO\" call worker\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "c84745a11a04632d87789c6de0387bdd8323ff9ef02e9e150ba4ede7e1c0253c",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf d6 01 b5 01 aa b8 91 31 9e 47 cb 30 07 c7 15 00 00 00 94 cf 94",
+      "asx_sha256": "b170498ce32e092d4b80d910f61055a05103a4611225ad6cfb0d5630012b9be1"
+    },
+    {
+      "name": "FORM16",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\ncwhen 1\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "4f747bf1299bc3552dba69b7d1ae5929e2699e665cdf5db3469778165f991a54",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf 1c 01 b5 01 94",
+      "asx_sha256": "12fe9b4c46d588e9045baead3e74cc0e154a2ddb96445654f776ef9b4fcdbf1f"
+    },
+    {
+      "name": "FORM17",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\ncwhen 0\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "d984db0ec1da6587b1669977c011227b9ac5957f92384f1583b5679eab20386b",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf 1c 01 b5 00 94",
+      "asx_sha256": "f280a5d56f909eeaf9cbce3d327fb7941f3ae5815ecc3d57350f00eb2d958267"
+    },
+    {
+      "name": "FORM18",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\ncwhen 3\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "5e3d90d62f21054f6043e98756aa0b6597b5a0862acbf828e67aa22cd3ef4aa6",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf 1c 01 b5 03 94",
+      "asx_sha256": "3bf97651723ce0fefedaffd890b4b3c960e9c9cb24ea9c4ae345fdbcefa253fc"
+    },
+    {
+      "name": "FORM19",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\ncwhen 4\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "0bef084cf93e4cd2bb7741b8c9145d755d6597452f35112c93b483b9c3e4a4b7",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf 1c 01 b5 04 94",
+      "asx_sha256": "0c20f2353a815f2cd74889f65040c09e4e3c5cad4f84e0a4adafd7b4ded5a91e"
+    },
+    {
+      "name": "FORM22",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen index pattern transmit response\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "4cf710a5369f7b26df33ec49a4a5654bc667f76c12b0a031f5bdd3844061db4a",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf d6 01 8d 00 8c 00 32 8c 01 94",
+      "asx_sha256": "9e70033aa0b56c6cefbcf3f2ca76d5b6bee16d9950bc26870a212cd8c82621d8"
+    },
+    {
+      "name": "FORM23",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nset whencase on\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "90e52e7abfded7638b84073e501de9d635ff57d26d17b31d091e2145ebc20709",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf 9e 56 01 94",
+      "asx_sha256": "790bf857126cfc49cfd1b2e03599b3d8884ab7d978e988572ca14037be4a94d5"
+    },
+    {
+      "name": "FORM24",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nset whencase off\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "77e75a4ce25e019ad0ef638f5c10825d3ba4b0d67bd3e549da85f15061d43d97",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf 9e 56 00 94",
+      "asx_sha256": "fa9e0f4f4938422e446b32ea547da65d7b084941db64d89e0f4c798a9bbae6aa"
+    },
+    {
+      "name": "SLOT2",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 2 \"HELLO\" transmit \"HI\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "63d44405e8593acc65552eceda7a1de4db333677e1a4a3923bbf896440725655",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf d6 01 b5 02 aa b8 91 31 9e 47 cb 30 32 aa b5 0b c9 20 94",
+      "asx_sha256": "6ba714a1ae9eeacce2a092e4e75ce529eb1fb756a246b6e4e8dffd71ef22929b"
+    },
+    {
+      "name": "NEGATIVE",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen -1 \"HELLO\" transmit \"HI\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "594dc35cb020d961b05e00bf6b569278e9344cf714f2765b732b1457a2770ece",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf d6 01 ab ff ff aa b8 06 13 50 85 93 26 32 aa b5 8c 43 44 94",
+      "asx_sha256": "6358e5da937d4657c4fa912aef9bca45716c60889535e61681c879b877de071e"
+    },
+    {
+      "name": "CWNEG",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\ncwhen -1\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "b14ee628d588971bbc01986adf5975461e3e5be1839d217f7a8ae0cfd795d0ba",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf 1c 01 ab ff ff 94",
+      "asx_sha256": "4126b17e0d0c4f6b6dba23d0faf7e31ebf62e1ad2617eaf9c0bab4a64dae2f00"
+    },
+    {
+      "name": "CALLFRAM",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 1 \"HELLO\" call worker\r\nendproc\r\nproc worker\r\ninteger x\r\nendproc\r\n",
+      "source_sha256": "752087b0e9f1885bf368798b182ae4bb3644c98022f08d7cdaade8176371203c",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf d6 01 b5 01 aa b8 91 31 9e 47 cb 30 07 c8 15 00 00 00 94 d2 02 00 cf 95",
+      "asx_sha256": "2b0ce86ddfdcddf4f0d5b0238474f9c17a8ca2b1f5b42c66289afe4baadc49b6"
+    },
+    {
+      "name": "REPLACE",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 0 \"A\" transmit \"X\"\r\nwhen 0 \"B\" transmit \"Y\"\r\ncwhen 0\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "bdc34e7170181e6065803ed9f994a53c28bc73b6763a2de83ccd853c9fa52d57",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf d6 01 b5 00 aa b4 8d 2a 32 aa b4 06 2f d6 01 b5 00 aa b4 03 4d 32 aa b4 88 54 1c 01 b5 00 94",
+      "asx_sha256": "28fdac175c92673707081e7b50b7d2546c542be93d5a313ac9e786244d25e949"
+    },
+    {
+      "name": "EMPTY",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 0 \"\" transmit \"\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "d9a65a230f2e6ecbe2263baa405942e10f0390dd64fcaed62e15742809ef2731",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf d6 01 b5 00 6e 13 32 6e 13 94",
+      "asx_sha256": "125cf4ee47a3db1ba8975cf1191fb59b54def5f0ebc6121785ad78c531611e2c"
+    },
+    {
+      "name": "CONTROL",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 0 \"^M^@^^\" transmit \"^M^@^^\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "b2823d39a765f0fad63de9c4a8ca248fac93af36787922cf34a94333eb1ad76c",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf d6 01 b5 00 aa b9 92 47 a6 59 bf 3f 59 32 aa b9 90 59 48 17 75 b7 3f 94",
+      "asx_sha256": "cdf80dc1df3c091c9fc3cf9a17445b5cbf2ce4f3dffff78dd2c06593c0104559"
+    },
+    {
+      "name": "CASELOW",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 0 \"aBc\" transmit \"xYz\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "f1695e9be98a72f96ee0cdaf4e9cf2cbd9768642f66597583274e38da1291ad4",
+      "source_encoding": "cp437",
+      "asx_hex": "02 cf d6 01 b5 00 aa b6 8f 4a 9b 5e 32 aa b6 0a 7d 24 99 94",
+      "asx_sha256": "2f9aad52e5eb0386262b8a0fbcbf7129b906f4e9ceffe263b58a2cd08f0603f5"
+    },
+    {
+      "name": "LOCAL",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nstring p = \"P\",r = \"R\"\r\nwhen 0 p transmit r\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "585ae0f9b6f7fd1e4218169242f026e7364f0593e4727aaa4b9b48235941814f",
+      "source_encoding": "cp437",
+      "asx_hex": "02 d2 a2 00 ac a0 00 00 aa b4 83 45 00 ac a0 51 00 aa b4 0c f9 00 cf d6 01 b5 00 a0 00 00 32 a0 51 00 95",
+      "asx_sha256": "6f31bffa80f607e7738119130c0d195cccb6dac0bcb14e55f039c069194f4298"
+    },
+    {
+      "name": "P39",
+      "source": "proc main\r\nwhen 0 \"PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP\" transmit \"R\"\r\nendproc\r\n",
+      "source_sha256": "5e46998e0a654280c065570fccce2c166cb30a219ae42e26b4201eea61600c42",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf d6 01 b5 00 aa da b1 4b 4b 09 85 a9 31 79 45 39 cf 33 17 9d 4b 4b 09 85 a9 31 79 45 39 cf 33 17 9d 4b 4b 09 85 a9 31 79 45 39 cf 33 17 9d 32 aa b4 06 29 94",
+      "asx_sha256": "0897d604ffaa6ca1d8c7b3f5c4174ae4e46e7dfc7ce77525be56e6ce4cdf2b77"
+    },
+    {
+      "name": "R39",
+      "source": "proc main\r\nwhen 0 \"P\" transmit \"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\"\r\nendproc\r\n",
+      "source_sha256": "f156c1370c8e46a2a3a4e294a231ebec695077097d04e4edef1c8d6a3f09ce80",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf d6 01 b5 00 aa b4 8b 4b 32 aa da 2a 8b 6f d3 69 5d 29 71 f9 1d 99 57 57 05 8b 6f d3 69 5d 29 71 f9 1d 99 57 57 05 8b 6f d3 69 5d 29 71 f9 1d 99 57 57 05 94",
+      "asx_sha256": "e5795ebecafd50945c3fe37ed8a4179f27ffe2e96005a09e5fb2e3213bd634e5"
+    },
+    {
+      "name": "P40",
+      "source": "proc main\r\nwhen 0 \"PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP\" transmit \"R\"\r\nendproc\r\n",
+      "source_sha256": "b225804886d430d34e5c484d69c5ea5b0af6450a046b3eb4476fd1a9e790a15c",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf d6 01 b5 00 aa db b2 4b 4b 09 85 a9 31 79 45 39 cf 33 17 9d 4b 4b 09 85 a9 31 79 45 39 cf 33 17 9d 4b 4b 09 85 a9 31 79 45 39 cf 33 17 9d 4b 32 aa b4 87 35 94",
+      "asx_sha256": "50bb717a22b50bc95687f486ee811e700aef1a2b48d36cfa9b4cb755ff3a5036"
+    },
+    {
+      "name": "R40",
+      "source": "proc main\r\nwhen 0 \"P\" transmit \"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\"\r\nendproc\r\n",
+      "source_sha256": "267196decf6159695af365f7ed1552214025ecd5d9aa6bbc716e3b42fe7a974d",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf d6 01 b5 00 aa b4 8b 4b 32 aa db 2b 8b 6f d3 69 5d 29 71 f9 1d 99 57 57 05 8b 6f d3 69 5d 29 71 f9 1d 99 57 57 05 8b 6f d3 69 5d 29 71 f9 1d 99 57 57 05 8b 94",
+      "asx_sha256": "60a7400dbd78a079cae5c48d9ecc928d36afd3320441abcf867093d6e2e8f320"
+    },
+    {
+      "name": "P41",
+      "source": "proc main\r\nwhen 0 \"PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP\" transmit \"R\"\r\nendproc\r\n",
+      "source_sha256": "3a7a320e933dd18d35da3bdfdf697666960a5a353264bbd45ff8e35726426851",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf d6 01 b5 00 aa dc b3 4b 4b 09 85 a9 31 79 45 39 cf 33 17 9d 4b 4b 09 85 a9 31 79 45 39 cf 33 17 9d 4b 4b 09 85 a9 31 79 45 39 cf 33 17 9d 4b 4b 32 aa b4 08 57 94",
+      "asx_sha256": "4ba18e584d96236d0a02e554ebec16c48e4283cd62c898683808c1ea157a9272"
+    },
+    {
+      "name": "R41",
+      "source": "proc main\r\nwhen 0 \"P\" transmit \"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\"\r\nendproc\r\n",
+      "source_sha256": "f75c11614d6d5420975999c614ee668a093ed74209f0bbc773f1d6d7aa5feebd",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf d6 01 b5 00 aa b4 8b 4b 32 aa dc 2c 8b 6f d3 69 5d 29 71 f9 1d 99 57 57 05 8b 6f d3 69 5d 29 71 f9 1d 99 57 57 05 8b 6f d3 69 5d 29 71 f9 1d 99 57 57 05 8b 6f 94",
+      "asx_sha256": "c6646577f5bd6c6d691d87cd79558c1cbad20e9ec3fcc1c3006cc6e74c807417"
+    },
+    {
+      "name": "P80",
+      "source": "proc main\r\nwhen 0 \"PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP\" transmit \"R\"\r\nendproc\r\n",
+      "source_sha256": "72b66fc1159c7ebf19736f93998f5a1421451ef4e3ea585011756d92699f010c",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf d6 01 b5 00 aa 03 da 4b 4b 09 85 a9 31 79 45 39 cf 33 17 9d 4b 4b 09 85 a9 31 79 45 39 cf 33 17 9d 4b 4b 09 85 a9 31 79 45 39 cf 33 17 9d 4b 4b 09 85 a9 31 79 45 39 cf 33 17 9d 4b 4b 09 85 a9 31 79 45 39 cf 33 17 9d 4b 4b 09 85 a9 31 79 45 39 cf 33 17 9d 4b 4b 32 aa b4 8b 4d 94",
+      "asx_sha256": "10224930ad996c44670d236b30427e4df218fdfbed337782d15ed377f9b920c7"
+    },
+    {
+      "name": "R80",
+      "source": "proc main\r\nwhen 0 \"P\" transmit \"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\"\r\nendproc\r\n",
+      "source_sha256": "dc7b9bc7fc2ce8e6159b08f0412318a91584e9fab26355c98d62dc6eb9343772",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf d6 01 b5 00 aa b4 8b 4b 32 aa 03 53 8b 6f d3 69 5d 29 71 f9 1d 99 57 57 05 8b 6f d3 69 5d 29 71 f9 1d 99 57 57 05 8b 6f d3 69 5d 29 71 f9 1d 99 57 57 05 8b 6f d3 69 5d 29 71 f9 1d 99 57 57 05 8b 6f d3 69 5d 29 71 f9 1d 99 57 57 05 8b 6f d3 69 5d 29 71 f9 1d 99 57 57 05 8b 6f 94",
+      "asx_sha256": "3d12b8914686e6b91022a9615fb95726ea1f614ed078b274d33a0d2486eaa700"
+    },
+    {
+      "name": "DISC0",
+      "source": "proc main\r\nwhen disconnect transmit \"BYE\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "c3f42ccc0fb2c79f19ce2afb8e1ad2666335a91ba5d171c84ccb2377f2188fd6",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf d6 00 32 aa b6 0c c3 30 10 94",
+      "asx_sha256": "266b20abe02fe2b4077780f2f5c8f53231c193294ba9474152a299019884d7f9"
+    },
+    {
+      "name": "DISC1",
+      "source": "proc main\r\nwhen disconnect call worker\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "3166be6a054fc285715791027f1a9a6cc026de9e6a9e47955f1a4e7e093e5157",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf d6 00 07 c7 0b 00 00 00 94 cf 94",
+      "asx_sha256": "b38d5bbb8c2f7afda1a692afa04dbf8215030b9e28e8f47b554a2ee1a2f3c429"
+    },
+    {
+      "name": "DISC2",
+      "source": "proc main\r\ncwhen disconnect\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "bb28dcf4e4be6f289995a333261c68eb7178300273845a21b73481bb1c89a1a0",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf 1c 00 94",
+      "asx_sha256": "b9c8ffb9c0a040b1a24997c0a47c3537adfb6aa4021a3b019a32ab7902a87c60"
+    },
+    {
+      "name": "FLOWPLN",
+      "source": "proc main\r\nwhen 0 \"A\" call worker\r\nwaitfor \"END\" FOREVER\r\ntransmit \"AFTER\"\r\nendproc\r\nproc worker\r\ntransmit \"EVENT\"\r\nendproc\r\n",
+      "source_sha256": "b5641cde8c764b70bec0a94c80a0d58e0a2edd9482c959f7cc19782432da9b7c",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf d6 01 b5 00 aa b4 8b 3c 07 c7 23 00 00 00 d4 aa b6 0d 4a 53 8b 01 1a bf aa b8 8d 22 0d ad 28 87 94 cf bf aa b8 0f 4a 5b 8c 19 fb 94",
+      "asx_sha256": "712876c0d437d4592f297a15ca302fcb32ffc90eb1b72829714caf746e89e48a"
+    },
+    {
+      "name": "FLOWFRM",
+      "source": "proc main\r\nwhen 0 \"A\" call worker\r\nwaitfor \"END\" FOREVER\r\ntransmit \"AFTER\"\r\nendproc\r\nproc worker\r\ninteger temp\r\ntransmit \"EVENT\"\r\nendproc\r\n",
+      "source_sha256": "b3004eebb97e9bb641d4702754e6948af0b066a4835123e085f10f11c09399a5",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf d6 01 b5 00 aa b4 8b 3c 07 c8 23 00 00 00 d4 aa b6 0d 4a 53 8b 01 1a bf aa b8 8d 22 0d ad 28 87 94 d2 02 00 cf bf aa b8 87 3a 0f 28 2f 4f 95",
+      "asx_sha256": "1d2a57d67da31783ad534e2bc180bb5501354a6b48143e21e18607687a47f1be"
+    },
+    {
+      "name": "FLOWDUAL",
+      "source": "proc main\r\nwhen 0 \"A\" call first\r\nwhen 1 \"B\" call second\r\nwaitfor \"END\" FOREVER\r\ntransmit \"AFTER\"\r\nendproc\r\nproc first\r\ntransmit \"FIRST\"\r\nendproc\r\nproc second\r\ntransmit \"SECOND\"\r\nendproc\r\n",
+      "source_sha256": "f226afaf9fdd9cbce7c70bf5746a065376aaaa453990a5db41000e311395664f",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf d6 01 b5 00 aa b4 8b 3c 07 c7 31 00 00 00 d6 01 b5 01 aa b4 82 77 07 c7 3c 00 00 00 d4 aa b6 04 10 59 7d 01 1a bf aa b8 90 9a c5 4f 6e 19 94 cf bf aa b8 06 11 54 8b 9a 2b 94 cf bf aa b9 89 1a 28 c2 38 43 6d 94",
+      "asx_sha256": "eac18ba2254c818d1b004d00d6bffdf60118d771a7c8e1b448b1eadc3cd007a3"
+    },
+    {
+      "name": "FLOWGC",
+      "source": "integer value\r\nproc main\r\ncomgetc value\r\nendproc\r\n",
+      "source_sha256": "2397e489231e84584da469c7dca419251e270313eb6150d54569f6cb2485dda3",
+      "source_encoding": "cp437",
+      "asx_hex": "00 cf c9 8d 00 94",
+      "asx_sha256": "66ff5606a36f9440913fada403157d758bcc812b5a0f5b4255671cbd0259a5da"
+    }
+  ],
+  "compiler_rejected": [
+    {
+      "name": "FORM4",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen \"HELLO\" transmit \"HI\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "bbf3a04c1af57f8ff7ddc1a127513d8bafe49115b5f8b2f5b65f1b746630d717",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> HELLO",
+        "Error C023 Line 4: Invalid string constant (quotes missing) ==> TRANSMIT",
+        "Error C001 Line 4: Invalid token ==> HI"
+      ]
+    },
+    {
+      "name": "FORM5",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 1 \"HELLO\" \"HI\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "502b37cdba9262a686eab735b684e62aefc23604cf855dc509818db7a6bd45d1",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> HI"
+      ]
+    },
+    {
+      "name": "FORM6",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen \"HELLO\" \"HI\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "15a940cb3ecb32536bd5f9a9ba695e5e600b1872a93f88ed84769e9586235051",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> HELLO",
+        "Error C006 Line 4: Missing token"
+      ]
+    },
+    {
+      "name": "FORM8",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 1 \"HELLO\" gosub worker\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "6905bae2550c86d0aa275bda2ceeb21c952a0efddae7a77089b960cc5be10512",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> GOSUB",
+        "Error C002 Line 4: Unexpected token ==> WORKER"
+      ]
+    },
+    {
+      "name": "FORM9",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 1 \"HELLO\" goto worker\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "4ce6a502f84ef911cb1c6ccfe51999c5e448284e2a15e50c5f8be41e112d0a08",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> GOTO",
+        "Error C002 Line 4: Unexpected token ==> WORKER"
+      ]
+    },
+    {
+      "name": "FORM10",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 1 \"HELLO\" worker\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "7327ce0c1a9eb53e7e1a10987617a67aafd517c8ee47a78ff08a69ee26e38b86",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> WORKER"
+      ]
+    },
+    {
+      "name": "FORM11",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 1 \"HELLO\" message \"HI\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "b7f6d5065770d7d49d1f82ab548eece6e28dcc2a63433f5a411ba2c84d35e06f",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> MESSAGE",
+        "Error C002 Line 4: Unexpected token ==> HI"
+      ]
+    },
+    {
+      "name": "FORM12",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 1 \"HELLO\" exit\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "44190d16c882fcdfd80a8f1a2a12d67105a758e16191ff95945f5fade06ad5a4",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> EXIT"
+      ]
+    },
+    {
+      "name": "FORM13",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 1 \"HELLO\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "9e4ff13fe7ae5b0d3c543f1a8c551effdba8027b6b5bbcfca405c511f031952a",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C006 Line 4: Missing token"
+      ]
+    },
+    {
+      "name": "FORM14",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 1\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "1e24b616287edb125f809723e0b13ddcadb46468fc405362c8b3fc31e657cd2a",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C006 Line 4: Missing token",
+        "Error C006 Line 4: Missing token"
+      ]
+    },
+    {
+      "name": "FORM15",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "7b97e2342a37f91e92d8f8aed01fa2514f09d0166727feecf30816ea08e19154",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C006 Line 4: Missing token",
+        "Error C006 Line 4: Missing token",
+        "Error C006 Line 4: Missing token"
+      ]
+    },
+    {
+      "name": "FORM20",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\ncwhen\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "304d025d043f6c639f7b7f184844910009a2ba1426ecf569e084c70c5189f8c4",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C006 Line 4: Missing token"
+      ]
+    },
+    {
+      "name": "FORM21",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\ncwhen all\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "0f4c3ad06e9802a374c002ea6e1b697149ccd7689cfbbc3bc903be081f767b4f",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> ALL"
+      ]
+    },
+    {
+      "name": "NOSLOT",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen transmit \"PING\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "81fbd8e9a7b997165a888b52db3dd1fba93d722c3a257f528e15b1693a61973f",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> TRANSMIT",
+        "Error C006 Line 4: Missing token"
+      ]
+    },
+    {
+      "name": "NOSCALL",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen call worker\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "036b50d990e5348694bfe7b16adac4672ba08edf92be196e619e099cd9d0a7aa",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> CALL",
+        "Error C023 Line 4: Invalid string constant (quotes missing) ==> WORKER",
+        "Error C006 Line 4: Missing token"
+      ]
+    },
+    {
+      "name": "NULLSLOT",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen , \"HELLO\" transmit \"HI\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "a8fabd02c61ba82e38f45752d599f54f4587aa5d4d3a3c3591c153d96ec6a25d",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> ,"
+      ]
+    },
+    {
+      "name": "LONGSLOT",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 1L \"HELLO\" transmit \"HI\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "26b5c46dce31bb9e528a4ed9bede91b8ca05139c15293b172f4a16aa639d07ed",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> 1L"
+      ]
+    },
+    {
+      "name": "FLT",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 1.0 \"HELLO\" transmit \"HI\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "19ede802c52dc64900f35e75a3aa12495888045738be75158aa66dd7d67cfb61",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> 1.0"
+      ]
+    },
+    {
+      "name": "CWNONE",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\ncwhen\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "304d025d043f6c639f7b7f184844910009a2ba1426ecf569e084c70c5189f8c4",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C006 Line 4: Missing token"
+      ]
+    },
+    {
+      "name": "CWCOMMA",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\ncwhen ,\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "220eae9e976f795051614ddf90c77769d26d2c1075431a4e4889c9c329beba26",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> ,"
+      ]
+    },
+    {
+      "name": "CWEXPR",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\ncwhen index+1\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "321e480ada211a3c9ca94ef68d81e62488d9c34173c24e520b840238971f12b1",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> +",
+        "Error C002 Line 4: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "WCYES",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nset whencase yes\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "76e085b5e273a77cff7bebf4da1410a911da2ca0ef0c7f2cf3790d329d29a73f",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> YES"
+      ]
+    },
+    {
+      "name": "WCTEXT",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nset whencase \"ON\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "86061c3c5969a1224551a66f0506484e04394450ca61031ef870d5255e557ada",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> ON"
+      ]
+    },
+    {
+      "name": "WCINT",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nset whencase 1\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "e57186f1f3d5234346a88a60b60253eb3f2d29ed8ef3ec79f77fd405d709bf0b",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C001 Line 4: Invalid token ==> 1"
+      ]
+    },
+    {
+      "name": "CALLARG",
+      "source": "integer index\r\nstring pattern,response\r\nproc main\r\nwhen 1 \"HELLO\" call worker with 1\r\nendproc\r\nproc worker\r\nintparm x\r\nendproc\r\n",
+      "source_sha256": "28dc2e936b3274e7e0794321ccd557944461fbd5f27905b4bf2009985d726533",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C002 Line 4: Unexpected token ==> WITH",
+        "Error C002 Line 4: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "P81",
+      "source": "proc main\r\nwhen 0 \"PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP\" transmit \"R\"\r\nendproc\r\n",
+      "source_sha256": "26a9f0a3175e8d6c028836683946175700796a3325b70597db874ff7f9e54110",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C043 Line 2: Maximum token length exceeded ==> PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
+      ]
+    },
+    {
+      "name": "R81",
+      "source": "proc main\r\nwhen 0 \"P\" transmit \"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\"\r\nendproc\r\n",
+      "source_sha256": "cd933bb5c2968da50107438157f4c1f8afefc8632ffb780b6e9ca41d5091d6da",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C043 Line 2: Maximum token length exceeded ==> RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+      ]
+    },
+    {
+      "name": "DISC3",
+      "source": "proc main\r\nwhen disconnect \"HELLO\" transmit \"BYE\"\r\nendproc\r\nproc worker\r\nendproc\r\n",
+      "source_sha256": "6a76d4768ad97f1674982c89762ce5933745e7fde7b4dd7864c509e493b81450",
+      "source_encoding": "cp437",
+      "errors": [
+        "Error C001 Line 2: Invalid token ==> HELLO",
+        "Error C002 Line 2: Unexpected token ==> TRANSMIT",
+        "Error C002 Line 2: Unexpected token ==> BYE"
+      ]
+    }
+  ],
+  "flow_cases": {
+    "FLOWGC": {
+      "rx_hex": "41",
+      "tx_hex": "",
+      "display_hex": "41"
+    },
+    "FLOWPLN": {
+      "rx_hex": "41454e44",
+      "tx_hex": "4556454e544146544552",
+      "display_hex": "41454e44"
+    },
+    "FLOWFRM": {
+      "rx_hex": "41454e44",
+      "tx_hex": "4556454e544146544552",
+      "display_hex": "41454e44"
+    },
+    "FLOWDUAL": {
+      "rx_hex": "4142454e44",
+      "tx_hex": "5345434f4e4446495253544146544552",
+      "display_hex": "4142454e44"
+    }
+  }
+}
