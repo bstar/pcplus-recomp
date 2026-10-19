@@ -5,6 +5,7 @@
 #include "receive_runtime.h"
 #if defined(ASPECT_RUNTIME_SERIAL)
 #include "serial.h"
+#include "resident_render.h"
 #endif
 extern unsigned runtime_receive_display,runtime_receive_suppress_echo,runtime_receive_pattern_count;
 extern unsigned char runtime_receive_translation_table[256];
@@ -21,9 +22,15 @@ void runtime_receive_begin(unsigned mode){receive_mode=mode;receive_count=0;}
 void runtime_receive_reset(void)
 {
  unsigned i;
- /* Original reset D6EA enables display; successful open D770 increments the
-  * suppression counter. COMGETC's selector therefore suppresses echo. */
- runtime_receive_display=runtime_receive_suppress_echo=1;runtime_receive_pattern_count=0;
+ /* E382 is the native flow gate itself: runtime_open sets it before the
+  * compiled main CF decrements it. A raw diagnostic platform has no renderer;
+  * only an admitted full terminal capability enables native display. */
+#if defined(ASPECT_RUNTIME_SERIAL)
+ runtime_receive_display=aspect_render_active()?1:0;
+#else
+ runtime_receive_display=0;
+#endif
+ runtime_receive_pattern_count=0;
  for(i=0;i<256;++i){
 #if defined(ASPECT_RUNTIME_SERIAL)
   runtime_receive_translation_table[i]=(unsigned char)(runtime_serial_ready()?aspect_serial_translate(i):i);
@@ -77,4 +84,14 @@ unsigned runtime_receive_character(unsigned echo,unsigned delayed)
  unsigned value=runtime_receive_policy_byte(echo,delayed);
  runtime_receive_note_byte(value);
  return value;
+}
+/* Native4C74 emit callback: argument is already mapped exactly once. */
+void runtime_receive_render_byte(unsigned value)
+{
+#if defined(ASPECT_RUNTIME_SERIAL)
+ unsigned result=aspect_render_active()?aspect_render_emit(value):ASPECT_RUN_UNSUPPORTED;
+ if(result)runtime_set_error(result);
+#else
+ (void)value;runtime_set_error(ASPECT_RUN_UNSUPPORTED);
+#endif
 }

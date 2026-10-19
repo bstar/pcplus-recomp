@@ -229,6 +229,47 @@ def inspect_terminal_memory(binary,map_path):
   redisplay_bridges+=1
  bridges+=redisplay_bridges
  extra['redisplay_bridge_pairs_verified']=redisplay_bridges
+ if any(c['name']=='ASPECT_CODE' for c in code_segments):
+  aspect_code=next(c for c in code_segments if c['name']=='ASPECT_CODE')
+  aspect_seg=aspect_code['relative_segment']
+  assert aspect_code['kind']=='FARCODE' and aspect_code['offset']==0
+  assert all(c['relative_segment']!=aspect_seg for c in code_segments if c['name']!='ASPECT_CODE'),'ASPECT CS aliases other code'
+  services=('terminal_render_prepare','terminal_render_revoke','terminal_render_validate',
+            'terminal_render_failure_notice','terminal_render_unsupported',
+            'terminal_render_typed_abort','terminal_render_read','terminal_render_read_now',
+            'terminal_render_unread','terminal_render_send','terminal_render_string',
+            'terminal_render_poll','terminal_render_cancel','terminal_render_control',
+            'terminal_render_set_modes','terminal_render_reset_modes')
+  for name in services+('resident_bridge_entry','resident_bridge_initialize',
+                         'resident_bridge_disable','resident_bridge_callback',
+                         'resident_bridge_abort','resident_bridge_caller_ds',
+                         '_aspect_render_admit','_aspect_render_preflight_modes',
+                         '_aspect_render_preflight_control','_aspect_render_client_admit'):
+   assert symbols[name][0]==aspect_seg and symbols[name][1]<aspect_code['bytes'],(name,'ASPECT far code identity')
+  # Verify the actual resident adapters refer to relocated far service entries.
+  # Symbol placement alone cannot prove the inter-segment calling convention.
+  resident_lo=near_code['relative_segment']*16+near_code['offset']
+  resident=image[start+resident_lo:start+resident_lo+near_code['bytes']]
+  references=0
+  for name in services:
+   target=struct.pack('<HH',symbols[name][1],aspect_seg)
+   matches=[i for i in range(len(resident)-4)
+            if resident[i] in (0x9a,0xea) and resident[i+1:i+5]==target
+            and resident_lo+i+3 in relocations]
+   assert matches,(name,'missing relocated resident far call/jump')
+   references+=len(matches)
+  assert symbols['terminal_aspect_emit_resident'][0]==symbols['terminal_receive_character'][0]==near_code['relative_segment']
+  near_call('terminal_aspect_emit_resident','terminal_receive_character',prefix=b'\x50',suffix=b'\x83\xc4\x02\xcb')
+  handoff=address('_script_handoff')
+  assert near_start<=handoff and handoff+48<=near_start+near_size
+  for offset,name in ((40,'_script_render_offset'),(42,'_script_render_segment'),
+                      (44,'_script_render_token'),(46,'_script_render_version')):
+   assert address(name)==handoff+offset,(name,'ASIOv4 capability layout')
+  for name in ('terminal_aspect_active','terminal_aspect_adopt'):
+   assert near_start<=address(name) and address(name)+2<=near_start+near_size
+  assert address('terminal_aspect_adopt')==address('terminal_aspect_active')+2
+  extra.update(aspect_far_services_verified=len(services),aspect_resident_far_references_verified=references,
+               aspect_emit_cdecl_bridge_verified=True,aspect_handoff_bytes=48,aspect_renderer_state_bytes=4)
  extra.update(resident_code_bytes=near_code['bytes'],resident_code_spare_bytes=65536-near_code['bytes'],code_segments=code_segments,far_code_bridge_pairs_verified=bridges)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'

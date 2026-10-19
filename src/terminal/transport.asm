@@ -30,6 +30,8 @@ extern terminal_translation_edit_start
 extern terminal_redisplay_key,terminal_clipboard_remaining
 extern terminal_menu_pending,terminal_deferred_count,terminal_deferred_head,terminal_deferred_tail
 extern terminal_parser_active,_redisplay_active,_command_menu_active
+extern terminal_aspect_active,terminal_render_read,terminal_render_unread
+extern terminal_render_poll,terminal_render_send,terminal_render_string
 global terminal_menu_pending_poll
 global terminal_poll_io,terminal_enqueue_al,terminal_tick_low,terminal_clock_ticks
 global ansi_next_byte,ansi_unread_byte,csi_transmit_byte,csi_transmit_string
@@ -60,6 +62,11 @@ terminal_clock_ticks:
 ; Consume one actual RX byte, including NUL, or return ffff after36 BIOS ticks.
 ; Continue servicing flow, bounded TX and keyboard/Alt-X while waiting.
 ansi_next_byte:
+ cmp word [terminal_aspect_active],0
+ je .ordinary
+ call far terminal_render_read
+ ret
+.ordinary:
  push bp
  push si
  push di
@@ -97,6 +104,11 @@ ansi_next_byte:
 
 ; Original parser calls this only immediately after consuming a byte.
 ansi_unread_byte:
+ cmp word [terminal_aspect_active],0
+ je .ordinary
+ call far terminal_render_unread
+ ret
+.ordinary:
  jmp uart_unreceive_byte
 
 ; AL -> bounded TX queue. No busy wait, no local echo. AX is preserved.
@@ -123,6 +135,13 @@ terminal_enqueue_al:
 
 ; Original report/output ABI: word argument, callee cleanup RET2.
 csi_transmit_byte:
+ cmp word [terminal_aspect_active],0
+ je .ordinary
+ mov bx,sp
+ mov ax,[ss:bx+2]
+ call far terminal_render_send
+ ret 2
+.ordinary:
  push bp
  mov bp,sp
  push si
@@ -137,6 +156,13 @@ csi_transmit_byte:
  ret 2
 
 csi_transmit_string:
+ cmp word [terminal_aspect_active],0
+ je .ordinary
+ mov bx,sp
+ mov ax,[ss:bx+2]
+ call far terminal_render_string
+ ret 2
+.ordinary:
  push bp
  mov bp,sp
  push si
@@ -159,6 +185,11 @@ csi_transmit_string:
  ret 2
 
 terminal_poll_io:
+ cmp word [terminal_aspect_active],0
+ je .ordinary
+ call far terminal_render_poll
+ ret
+.ordinary:
  push bp
  push si
  push di
@@ -408,6 +439,11 @@ terminal_menu_pending_poll:
 ; UART/modem/TX service without consuming a BIOS key. Used by capture prompt.
 global terminal_poll_serial
 terminal_poll_serial:
+ cmp word [terminal_aspect_active],0
+ je .ordinary
+ call far terminal_render_poll
+ ret
+.ordinary:
  push bp
  push si
  push di

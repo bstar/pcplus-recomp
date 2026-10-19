@@ -32,15 +32,20 @@ conditions, with CP437 behavior preserved.
 [Decimal conversions](docs/ASPECT_CONVERSIONS.md) add ATOI/ATOL/ITOA/LTOA.
 The [maintained host compiler](docs/ASPECT_COMPILER.md) now emits the tested
 ASPECT subset directly from authored source. The diagnostic build compiles all
-351 fixtures and compares them with the original oracle before DOS execution.
+377 fixtures and compares them with the original oracle before DOS execution.
 Full script compilation, application command coverage and terminal scheduling
 remain unfinished.
 
 [Directory-bound scripts](docs/DIRECTORY_SCRIPTS.md) now receive a private selected
 record, current-call date and queued raw input. The native directory expressions
 are documented [here](docs/ASPECT_DIRECTORY.md). Automatic Synchronet login
-authenticates but currently fails the full-screen editor test because WAITFOR
-does not share the terminal renderer. That workflow remains an open gate.
+now passes automatic login and all 12 stock-editor checks through draft abort.
+The [shared renderer](docs/ASPECT_RENDERER.md) uses the parent's actual ANSI
+engine and retains screen, cursor and scrollback across the child process.
+Its supported profile and owner restrictions remain explicit.
+[Current BBS workflows](docs/ASPECT_BBS_WORKFLOWS.md) retain the ENiGMA
+immediate-forwarding editor failures alongside a passing automatic script/editor
+run with explicit 30 ms modem buffering and standard keys.
 
 The [DOS script runner](docs/ASPECT_RUNNER.md) now adds File → A → Run script
 through the terminal's Alt-Z menu. `ASPECT.EXE` runs as a separate DOS child
@@ -51,7 +56,8 @@ unfinished. [Character and line input](docs/ASPECT_RECEIVE.md) adds
 COMGETC/COMGETCD, RGET and WAITQUIET, with the native timing and status rules
 kept distinct from the raw child platform services. [Input policy](docs/ASPECT_INPUT_POLICY.md)
 now inherits the terminal's XLT or seven-bit setting while returning unread
-bytes unchanged. Full rendering and script events remain unfinished.
+bytes unchanged. Shared rendering is available for admitted connected scripts;
+script events and other application services remain unfinished.
 [Connected script sessions](docs/ASPECT_SCRIPT_SESSION.md) use the selected COM
 port and resume automatically on success; a live script login followed by stock
 Synchronet editor interaction is verified in DOS.

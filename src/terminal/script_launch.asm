@@ -16,6 +16,7 @@ extern terminal_translation_enabled,terminal_translation_mode,terminal_translati
 extern terminal_directory_context_valid,terminal_directory_context
 extern terminal_program_active,terminal_program_pending,_command_menu_active,_redisplay_active
 extern directory_pending,directory_pending_count,directory_pending_year,directory_pending_month,directory_pending_day
+extern terminal_render_prepare,terminal_render_revoke,terminal_render_validate
 global terminal_directory_script_connected
 ; One call per successful directory connection. Reuse the manual launch owner
 ; and filename storage; no separate armed flag or mutable directory bytes.
@@ -266,6 +267,9 @@ terminal_script_prepare:
  mov [_script_soft_flow],ax
  mov ax,[uart_hardware_flow]
  mov [_script_hard_flow],ax
+ call far terminal_render_prepare
+ or ax,ax
+ jnz .bad_policy
  mov ax,terminal_translation_edit_tail
  push ax
  mov ax,terminal_translation_edit_executable
@@ -325,15 +329,16 @@ script_marker: db 'ASPECT',0
 ; return prompt/parent ISR restoration. It never accepts pointers from child.
 SEGMENT _TEXT
 terminal_script_complete:
+ call far terminal_render_revoke
  cmp word [script_handoff+22],1
  jne .missing
  cmp word [script_handoff],0x5341
  jne .bad
  cmp word [script_handoff+2],0x4f49
  jne .bad
- cmp word [script_handoff+4],3
+ cmp word [script_handoff+4],4
  jne .bad
- cmp word [script_handoff+6],40
+ cmp word [script_handoff+6],48
  jne .bad
  mov ax,[process_psp]
  cmp [script_handoff+8],ax
@@ -356,6 +361,10 @@ terminal_script_complete:
  xor ax,[_script_directory_month]
  xor ax,[_script_directory_day]
  xor ax,[_script_directory_delta]
+ xor ax,[_script_render_offset]
+ xor ax,[_script_render_segment]
+ xor ax,[_script_render_token]
+ xor ax,[_script_render_version]
  xor ax,[uart_rx_count]
  cmp word [uart_rx_count],0
  je .check_guard
@@ -365,6 +374,9 @@ terminal_script_complete:
 .check_guard:
  cmp [script_handoff+20],ax
  jne .bad
+ call far terminal_render_validate
+ or ax,ax
+ jnz .bad
  call script_directory_policy
  cmp ax,[_script_directory_entry]
  jne .bad
@@ -428,6 +440,11 @@ _script_directory_year: dw 0
 _script_directory_month: dw 0
 _script_directory_day: dw 0
 _script_directory_delta: dw 0
+global _script_render_offset,_script_render_segment,_script_render_token,_script_render_version
+_script_render_offset: dw 0
+_script_render_segment: dw 0
+_script_render_token: dw 0
+_script_render_version: dw 0
 _script_divisor:
 script_divisor: dw 0
 _script_lcr:

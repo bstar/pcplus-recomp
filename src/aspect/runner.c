@@ -3,6 +3,7 @@
 #include "runtime.h"
 #include "serial.h"
 #include "serial_runtime.h"
+#include "resident_render.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -41,6 +42,16 @@ static unsigned budget(const char *text,unsigned *value)
  if(!number)return 0;
  *value=(unsigned)number;return 1;
 }
+static void render_error(unsigned result)
+{
+ char text[192];unsigned i,n;
+ n=(unsigned)sprintf(text,"ASPECT: %s (error %u, opcode %02X, step %u",
+   result<sizeof(errors)/sizeof(errors[0])?errors[result]:"runtime error",result,runtime_last_opcode,runtime_steps);
+ if(runtime_native_error_code)n+=(unsigned)sprintf(text+n,", native %u",runtime_native_error_code);
+ if(runtime_serial_error)n+=(unsigned)sprintf(text+n,", serial %u",runtime_serial_error);
+ text[n++]=')';text[n++]=13;text[n++]=10;
+ for(i=0;i<n && i<sizeof(text);++i)if(aspect_render_emit((unsigned char)text[i]))break;
+}
 int main(int argc,char **argv)
 {
  unsigned limit=10000,result=0,i,has_budget=0,serial_status;
@@ -67,10 +78,14 @@ int main(int argc,char **argv)
   if(serial_status){runtime_serial_error=serial_status;if(!result)result=ASPECT_RUN_SERIAL;}
  }
  if(result){
+  if(aspect_render_active())render_error(result);
+  else{
   fprintf(stderr,"ASPECT: %s (error %u, opcode %02X, step %u",result<sizeof(errors)/sizeof(errors[0])?errors[result]:"runtime error",result,runtime_last_opcode,runtime_steps);
   if(runtime_native_error_code)fprintf(stderr,", native %u",runtime_native_error_code);
   if(runtime_serial_error)fprintf(stderr,", serial %u",runtime_serial_error);
   fputs(")\n",stderr);
+  }
  }
+ serial_status=aspect_render_finish();if(serial_status && !result)result=serial_status;
  return (int)result;
 }

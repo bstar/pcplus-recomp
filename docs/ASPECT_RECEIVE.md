@@ -62,19 +62,26 @@ universal value. COMDATA builtin20 returns the current receive count.
 ## Platform services and remaining gaps
 
 Successful original script opening increments E382 after resetting E37E to
-one, so COMGETC/CD's display selector suppresses echo by default. The maintained
-owner supplies that effective state. Native direct reads through4C3C, used by
-RGET/WAITQUIET and the earlier WAITFOR, have a different display path.
+one, but the compiled main procedure's CF immediately decrements E382 to zero.
+COMGETC/CD therefore display in the normal main-procedure state. E382 is the
+same physical word used by flow and receive suppression; treating the opening
+value as a permanent default was incorrect. The maintained runtime now aliases
+those owners. [Native WHEN compositions](ASPECT_WHEN.md) execute the actual
+dispatcher and main CF and independently verify that COMGETC displays A and
+stores65. Native direct reads through4C3C, used by RGET/WAITQUIET and WAITFOR,
+have a separate display selector.
 
-The current maintained child supplies raw received bytes to that path. It does
-not reproduce the complete original4C74 translation, pattern-monitor and
-terminal-rendering wrapper. In particular, native rendering can consume ANSI
-continuation bytes; raw delivery is not equivalent for every ANSI stream.
+An admitted connected child now routes mapped lead bytes through the
+[actual parent renderer](ASPECT_RENDERER.md). Parser continuation reads remain
+raw and bypass translation and WAITFOR matching. Standalone raw diagnostics
+explicitly disable display because they have no renderer service; they do not
+establish the native application's display default. Pattern/event monitoring
+remains unintegrated.
 E2F8 is a pattern/event-monitor count, not a file-capture flag. Native startup
 uses explicit identity-table initialization and configured loading/masking;
 serialized zero bytes are not evidence of an active zero translation table.
-Inheritance of the parent translation policy and complete terminal services
-remain application integration work.
+The parent translation policy is inherited. Remaining terminal services and
+event integration are still application work.
 
 The existing UART lease, ASIO unread-byte handback and serviced return-key
 prompt are reused. COMGETCD's cooperative wait and every receive call keep

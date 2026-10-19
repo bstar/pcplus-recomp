@@ -32,7 +32,7 @@ def main():
                     '\r\nStart: TERMINAL COM1 38400 8N1 SOFT\r\n'
                     'Scripts: Alt-Z, File, A Run script, then HELLO.ASX.\r\n'
                     'Connected scripts resume automatically after success.\r\n'
-                    'Offline scripts and errors wait for a key before returning.\r\n'
+                    'Offline scripts wait for a key before returning.\r\n'
                     'Or run directly: ASPECT HELLO.ASX\r\n'
                     '\r\nScripts run as a separate DOS process. This interpreter implements\r\n'
                     'a subset of ASPECT, including TRANSMIT and WAITFOR.\r\n'
@@ -45,7 +45,10 @@ def main():
                     'Direct use requires DTR asserted; unread input needs a parent.\r\n'
                     'Menu scripts inherit the selected input XLT or seven-bit policy.\r\n'
                     'Unread bytes return unchanged for the terminal to process.\r\n'
-                    'Full terminal rendering inside scripts is pending.\r\n'
+                    'Connected scripts share the terminal ANSI screen and history\r\n'
+                    'in supported 80x25 profiles when file/printer owners are closed.\r\n'
+                    'Admitted script errors return to the terminal with a notice.\r\n'
+                    'Other script events and application services remain incomplete.\r\n'
                     'Use Escape to cancel. Unknown commands report an error.\r\n'
                     'PRMEDIT edits an existing supported profile; no profile is bundled.\r\n')
     (OUT / 'README.TXT').write_bytes(instructions.encode('ascii'))

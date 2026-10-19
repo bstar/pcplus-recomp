@@ -1221,3 +1221,37 @@ from that flat experiment; neither advertises a renderer capability. Parent code
 and data headroom require far-code placement and checked reuse of its stack.
 Full renderer integration, renderer stack measurement and all acceptance tests
 above remain open.
+
+## Shared renderer checkpoint and current next work
+
+The preceding directory/resident-service sections retain earlier checkpoint
+results. The [integrated renderer checkpoint](docs/ASPECT_RENDERER.md) supersedes
+their integration status: ASIOv4 now calls the actual parent ANSI engine from
+the DOS child, with checked stack switching, child callback ownership, typed
+unwind and retained screen/cursor/history. Current terminal/child hashes are
+`dacbd777…e66ae` / `3369c3cb…d2ddbf`. Parent DS/SS uses65,488 bytes (48 spare);
+ASPECT policy/bridge code occupies its own far segment.
+
+Actual product validation passes10 DOS cases/300 checks, including raw parser
+continuations, lead-only XLT, nested controls, complete mode-list rejection,
+timeout/cancel, far-history retention, unchanged file/printer ownership and
+resumed keyboard input. Parent client admission passes22 cases; linked script
+launch passes22 groups/104 inputs; generic PROGRAM and transport regressions
+also pass. A fresh source-only checkout reproduces all91 outputs byte-for-byte.
+The initial fresh-tree manifest comparison exposed NASM's absolute THEADR path;
+repository-relative assembly source arguments fix metadata reproducibility
+without changing the terminal binary. The failed proof is retained separately.
+
+[BBS workflow evidence](docs/ASPECT_BBS_WORKFLOWS.md) now passes strict automatic
+Synchronet login and all12 stock-editor checks. Stock ENiGMA automatic login
+works; its editor passes with explicit30ms modem buffering and network keys.
+Immediate forwarding and the alternative control-key profile retain Home/Insert
+failures. None of these results proves physical modem behavior.
+
+Next: integrate recovered WHEN/CWHEN and its deferred procedure dispatch;
+complete remaining ASPECT families, compile-on-demand and application bindings;
+expand renderer owner/profile support and stack/timing coverage; test physical
+RS-232/Wi-Fi modems and the remaining F01–F16 application requirements. The
+[602-byte WHEN component](docs/ASPECT_WHEN.md) passes independent CPU/DOS and
+native full-flow composition checks, but is not yet linked into the application.
+Every full-application gate remains open.

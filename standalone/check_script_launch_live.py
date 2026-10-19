@@ -13,7 +13,16 @@ from check_transport import Transport
 import struct
 class Script(Editor):
  def __init__(self):
-  super().__init__();self.handback=b'';self.handback_status=0;self.live_prompt_calls=0;self.handoff_tamper=None
+  super().__init__()
+  # Actual startup snapshot and physical BDA contract required for renderer
+  # admission. No product policy or capture callback is replaced here.
+  self.uc.mem_write(0x449,b'\x03'+struct.pack('<H',80))
+  self.uc.mem_write(0x462,b'\0');self.uc.mem_write(0x484,b'\x18')
+  for initializer in ['_capture_file_initialize','_snapshot_file_initialize',
+                      '_monitor_file_initialize','_capture_session_initialize','_printer_device_initialize']:
+   assert self.call(initializer)==0
+  assert self.call('terminal_reset_capture')==0
+  self.handback=b'';self.handback_status=0;self.live_prompt_calls=0;self.handoff_tamper=None
  def restored(self):
   assert bytes(self.uc.mem_read(0xb8000,4000))==self.original_screen
   assert (self.mode,self.columns,self.page,self.cursor,self.shape)==(3,80,0,0x0611,0x060f)
@@ -55,6 +64,21 @@ def main():
   m=Script()
   m.install_program_name();m.child_status=0;return m
  def path(m,p):m.uc.mem_write(m.symbols['_command_menu_script'],p+b'\0')
+ def prepare_phase(m):
+  # Direct unit call represents PROGRAM's actual quiet pre-EXEC phase.
+  # The normal safe-point cases below reach this phase through product code.
+  assert m.get('terminal_program_pending') and m.get('terminal_program_kind')==4
+  m.put('terminal_program_pending',0);m.put('terminal_program_active',1)
+  return m.call('terminal_script_prepare')
+ def descriptor(m):return struct.unpack('<I22H',m.uc.mem_read(m.symbols['_script_handoff'],48))
+ def guard(d):
+  g=d[3]^d[4]^d[5]^0xa510
+  for value in [*d[7:9],*d[11:]]:g^=value
+  return g
+ def capability(d):
+  assert d[1:3]==(4,48) and d[19] and d[20] and d[21] and d[22]==1,d
+  assert d[9]==guard(d),d
+
  for p in [b'TEST.ASX',b'D:\\TEST.ASX',b'D:\\SCRIPTS\\TEST.ASX',b'D:TEST.ASX',b'\\TEST.ASX']:
   m=model();path(m,p);assert m.call('terminal_script_start')==0
   assert m.get('terminal_program_pending') and m.get('terminal_program_kind')==4 and not m.children
@@ -69,7 +93,7 @@ def main():
   for name,offset in [('rbr',0),('thr',0),('ier',1),('lcr',3),('mcr',4),('lsr',5),('msr',6)]:
    m.put('uart_port_'+name,base+offset)
   assert m.call('terminal_script_start')==0
-  assert m.call('terminal_script_prepare')==0
+  assert prepare_phase(m)==0
   tail=bytes(m.uc.mem_read(m.symbols['terminal_translation_edit_tail'],96)).split(b'\0',1)[0]
   assert b' /S'+str(port).encode()+b':0003:03:H:' in tail,tail
  done('selected-COM1-through4-independent-of-native-active-slot-zero',4)
@@ -77,7 +101,7 @@ def main():
   m=model();path(m,b'TEST.ASX');m.put('terminal_port_number',port)
   m.put('uart_port_thr',base);m.put('terminal_irq_vector',vector)
   assert m.call('terminal_script_start')==0
-  assert m.call('terminal_script_prepare')==1 and not m.children
+  assert prepare_phase(m)==1 and not m.children
  done('invalid-COM-base-and-child-unsupported-custom-IRQ-refused-before-EXEC',4)
  for status in [0,7]:
   m=model();path(m,b'TEST.ASX');m.put('connection_state',6);m.child_status=status
@@ -138,13 +162,14 @@ def main():
   if entry:
    m.put('terminal_directory_context_valid',1)
    m.uc.mem_write(m.symbols['terminal_directory_context'],struct.pack('<H',entry))
-  assert m.call('terminal_script_start')==0 and m.call('terminal_script_prepare')==0
-  d=struct.unpack('<I18H',m.uc.mem_read(m.symbols['_script_handoff'],40))
-  assert d[1:3]==(3,40) and d[7:9]==(count,start if count else 0)
+  assert m.call('terminal_script_start')==0 and prepare_phase(m)==0
+  d=descriptor(m)
+  capability(d)
+  assert d[7:9]==(count,start if count else 0)
   pointer=m.symbols['terminal_directory_context']-m.data_base+252 if entry else 0
-  assert d[13:]==(entry,pointer,0,0,0,0)
-  assert d[9]==d[3]^d[4]^d[5]^0xa510^d[7]^d[8]^d[11]^d[12]^entry^pointer
- done('ASIOv3-retains-wrapped-full-raw-preload-and-selected-directory-in-quiet-parent',3)
+  assert d[13:19]==(entry,pointer,0,0,0,0)
+  assert d[9]==guard(d)
+ done('ASIOv4-retains-wrapped-full-raw-preload-and-selected-directory-in-quiet-parent',3)
  for selected,pending,delta in [(True,True,1),(True,True,0),(True,False,7),(False,True,1)]:
   m=model();path(m,b'TEST.ASX')
   if selected:
@@ -154,13 +179,12 @@ def main():
   for name,value in [('year',2024),('month',2),('day',29),('count',delta)]:
    m.put('directory_pending_'+name,value)
   context=bytes(m.uc.mem_read(m.symbols['terminal_directory_context'],366))
-  assert m.call('terminal_script_start')==0 and m.call('terminal_script_prepare')==0
-  d=struct.unpack('<I18H',m.uc.mem_read(m.symbols['_script_handoff'],40))
+  assert m.call('terminal_script_start')==0 and prepare_phase(m)==0
+  d=descriptor(m)
   expected=(2024,2,29,delta) if selected and pending else (0,0,0,0)
-  assert d[15:]==expected,d
-  guard=d[3]^d[4]^d[5]^0xa510
-  for n in [*d[7:9],*d[11:]]:guard^=n
-  assert d[9]==guard
+  capability(d)
+  assert d[15:19]==expected,d
+  assert d[9]==guard(d)
   assert bytes(m.uc.mem_read(m.symbols['terminal_directory_context'],366))==context
  done('pending-accounting-projection-guard-preserves-parent-context-including-counter-wrap',4)
  m=model();path(m,b'TEST.ASX');m.put('uart_software_flow',1);m.put('uart_hardware_flow',1)
@@ -201,22 +225,23 @@ def main():
   m.uc.mem_write(m.symbols['terminal_translation_table'],bytes(i^85 for i in range(256)))
   assert m.call('terminal_script_start')==0;m.keys.append(32);m.safe()
   assert len(m.children)==1 and m.get('terminal_program_status')==4;m.restored()
-  descriptor=struct.unpack('<I18H',m.uc.mem_read(m.symbols['_script_handoff'],40))
+  d=descriptor(m)
   pointer=m.symbols['terminal_translation_table']-m.data_base if mode==1 else 0
-  assert descriptor[1]==3 and descriptor[11:]==(pointer,mode,0,0,0,0,0,0),descriptor
-  assert descriptor[9]==descriptor[3]^descriptor[4]^descriptor[5]^0xa510^pointer^mode
- done('ASIOv3-parent-policy-mode-enabled-dequeuemask-and-existing-table-pointer-guard',3)
+  capability(d)
+  assert d[11:19]==(pointer,mode,0,0,0,0,0,0),d
+  assert d[9]==guard(d)
+ done('ASIOv4-parent-policy-mode-enabled-dequeuemask-and-existing-table-pointer-guard',3)
  for mode,enabled,mask in [(3,0,255),(0,1,255),(1,0,255),(1,1,127),(2,1,127),(2,0,255),(0,0,127)]:
   m=model();path(m,b'TEST.ASX');m.put('terminal_translation_mode',mode)
   m.put('terminal_translation_enabled',enabled);m.put('uart_rx_mask',mask)
   assert m.call('terminal_script_start')==0;m.keys.append(32);m.safe()
   assert not m.children and m.get('terminal_program_status')==5;m.restored()
- done('ASIOv2-inconsistent-mode-enabled-and-UARTmask-denied-before-child',7)
- for offset,value in [(4,2),(20,0),(24,1),(26,1),(28,1),(30,1),(32,2026),(34,10),(36,19),(38,1)]:
+ done('ASIOv4-inconsistent-mode-enabled-and-UARTmask-denied-before-child',7)
+ for offset,value in [(4,2),(20,0),(24,1),(26,1),(28,1),(30,1),(32,2026),(34,10),(36,19),(38,1),(40,1),(42,1),(44,0),(46,2)]:
   m=model();path(m,b'TEST.ASX');m.handoff_tamper=(offset,value)
   assert m.call('terminal_script_start')==0;m.keys.append(32);m.safe()
   assert len(m.children)==1 and m.get('terminal_program_status')==5;m.restored()
- done('ASIOv3-parent-completion-rejects-version-guard-table-mode-and-directory-and-projection-mutation',10)
+ done('ASIOv4-parent-completion-rejects-version-guard-table-mode-and-directory-and-projection-and-capability-mutation',14)
  for stored,want in [(b'LOGON',b'LOGON.ASX'),(b'go.asx',b'GO.ASX'),(b'D:go',b'D:GO.ASX')]:
   m=model();m.put('terminal_directory_context_valid',1);m.put('connection_state',6)
   m.uc.mem_write(m.symbols['terminal_directory_context'],struct.pack('<H',7))
@@ -228,8 +253,34 @@ def main():
   m.safe();assert len(m.children)==1 and m.get('terminal_program_status')==4 and not m.live_prompt_calls
   m.restored()
  done('directory-connected-queues-normalized-compiled-script-through-real-foreground-owner',3)
+ # Whole owner and complex-glyph admission runs in the real checked quiet
+ # PROGRAM phase, with no EXEC/callback substitution or renderer BEGIN.
+ for symbol in ['_capture_file_result','_snapshot_file_result','_monitor_file_result','_history_file_result','_printer_device_result']:
+  for offset in [10,12]:
+   m=model();path(m,b'TEST.ASX');assert m.call('terminal_script_start')==0
+   m.uc.mem_write(m.symbols[symbol]+offset,b'\x01\0')
+   before=bytes(m.uc.mem_read(m.symbols[symbol],32))
+   assert prepare_phase(m)==1 and not m.children
+   assert bytes(m.uc.mem_read(m.symbols[symbol],32))==before
+ done('checked-quiet-admission-refuses-open-and-uncertain-capture-snapshot-monitor-history-PRN',10)
+ for kind in ['attribute-plane','line-flags','unterminated-keyslot','CGA','viewport','complex-mode','BDA-mode','BDA-width','BDA-page','BDA-rows']:
+  m=model();path(m,b'TEST.ASX');assert m.call('terminal_script_start')==0
+  if kind=='attribute-plane':m.uc.mem_write(m.symbols['screen_attribute_cells']+19,b'\x80')
+  if kind=='line-flags':m.uc.mem_write(m.symbols['screen_line_flags']+3,b'\x40')
+  if kind=='unterminated-keyslot':m.uc.mem_write(m.symbols['terminal_keymap']+12,b'X'*12)
+  if kind=='CGA':m.put('text_cga_status_port',0x3da)
+  if kind=='viewport':m.put('screen_viewport_active',1)
+  if kind=='complex-mode':m.put('terminal_mode_372c',1)
+  if kind=='BDA-mode':m.uc.mem_write(0x449,b'\x07')
+  if kind=='BDA-width':m.uc.mem_write(0x44a,struct.pack('<H',40))
+  if kind=='BDA-page':m.uc.mem_write(0x462,b'\x01')
+  if kind=='BDA-rows':m.uc.mem_write(0x484,b'\x31')
+  screen=bytes(m.uc.mem_read(0xb8000,4000))
+  assert prepare_phase(m)==1 and not m.children,kind
+  assert bytes(m.uc.mem_read(0xb8000,4000))==screen
+ done('real-renderer-admission-refuses-complex-glyph-keymap-CGA-viewport-and-BDA-geometry-before-view-mutation',10)
  result=dict(passed=True,binary_sha256=hashlib.sha256(BINARY.read_bytes()).hexdigest(),cases=cases,
-  inputs=sum(x['inputs'] for x in cases),checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),manifest_sha256=hashlib.sha256((ROOT/'build/terminal/manifest.json').read_bytes()).hexdigest(),sources={p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in ['src/terminal/script_launch.asm','src/terminal/script_launch.c','src/redisplay/command_menu.c','src/terminal/program_actions.asm','src/terminal/config_abi.inc','src/aspect/serial_handoff.h','src/uart/api.asm',__file__.split(str(ROOT)+'/')[-1]]},
-  limitations=['DOS EXEC boundary modeled; interpreter semantics and actual child launch require separate DOS test.','Child owns a raw UART lease; terminal emulation/history are suspended until ASIO returns unread data. Capture closes before child; existing PROGRAM owner restores screen/UART.'])
+  inputs=sum(x['inputs'] for x in cases),checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),manifest_sha256=hashlib.sha256((ROOT/'build/terminal/manifest.json').read_bytes()).hexdigest(),sources={p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in ['src/terminal/script_launch.asm','src/terminal/script_launch.c','src/redisplay/command_menu.c','src/terminal/program_actions.asm','src/terminal/config_abi.inc','src/aspect/serial_handoff.h','src/aspect/renderer_policy.c','src/terminal/aspect_renderer.asm','src/terminal/terminal_reset.asm','src/uart/api.asm',__file__.split(str(ROOT)+'/')[-1]]},
+  limitations=['DOS EXEC boundary modeled; interpreter semantics and actual child launch require separate DOS test.','The modeled child only publishes unread bytes, never calls BEGIN; no renderer adoption is fabricated. Full child/parent shared renderer execution has separate actual DOS coverage. Capture closes before child; ordinary PROGRAM fallback restores the unadopted old view.'])
  (ROOT/'build/terminal/script-launch-live-checks.json').write_text(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':main()

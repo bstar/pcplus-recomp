@@ -17,9 +17,17 @@
 BITS 16
 CPU 8086
 %include "resident_bridge.inc"
+%ifdef RESIDENT_BRIDGE_FAR
+SEGMENT ASPECT_CODE public class=FARCODE use16
+%else
 SEGMENT _TEXT public class=CODE use16
+%endif
 global resident_bridge_initialize,resident_bridge_disable,resident_bridge_entry
 global resident_bridge_callback,resident_bridge_abort
+global resident_bridge_caller_ds
+resident_bridge_caller_ds:
+ mov ax,[cs:rb_caller_ss]
+ ret
 resident_bridge_initialize:
  pushf
  push bx

@@ -1,5 +1,6 @@
 #ifndef PCPLUS_ASPECT_SERIAL_HANDOFF_H
 #define PCPLUS_ASPECT_SERIAL_HANDOFF_H
+#include "resident_render.h"
 /* Maintained DOS child ABI, not a native PCPlus structure. All unsigned16,
  * near DS=SS host; descriptor lives in retained parent's DOS allocation.
  * Publication: child writes data/status/count, then returned=1 last. */
@@ -35,4 +36,9 @@ typedef struct aspect_serial_handoff_v3 {
  unsigned year,month,day,delta;
 } aspect_serial_handoff_v3;
 typedef char aspect_serial_handoff_v3_size_check[sizeof(aspect_serial_handoff_v3)==ASIO_V3_SIZE?1:-1];
+typedef struct aspect_serial_handoff_v4 {
+ aspect_serial_handoff_v3 base;
+ unsigned render_offset,render_segment,render_token,render_version;
+} aspect_serial_handoff_v4;
+typedef char aspect_serial_handoff_v4_size_check[sizeof(aspect_serial_handoff_v4)==ASIO_V4_SIZE?1:-1];
 #endif

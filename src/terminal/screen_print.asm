@@ -23,6 +23,7 @@ extern terminal_sink_3988_enabled,terminal_printer_failure
 extern terminal_printer_fault_epoch,terminal_abort
 extern terminal_controller_run,terminal_controller_active,terminal_controller_last_action
 global csi_media_copy,terminal_screen_print
+extern terminal_aspect_active
 %macro save 0
  push bp
  push ax
@@ -46,6 +47,11 @@ global csi_media_copy,terminal_screen_print
 %endmacro
 
 csi_media_copy:
+ cmp word [terminal_aspect_active],0
+ je .ordinary
+ mov ax,0xe084
+ jmp terminal_abort
+.ordinary:
  save
  xor di,di
  cmp word [ansi_parameter_count],0

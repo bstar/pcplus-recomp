@@ -6,6 +6,7 @@
 #include <string.h>
 #if defined(ASPECT_RUNTIME_SERIAL)
 #include "serial.h"
+#include "resident_render.h"
 #endif
 unsigned runtime_serial_error;
 extern unsigned runtime_serial_case_sensitive,runtime_serial_wait_result;
@@ -86,8 +87,12 @@ unsigned runtime_serial_read_raw(void)
 }
 unsigned runtime_serial_receive(unsigned delayed)
 {
- /* Selected raw display policy; native4C74 still owns mapping exactly once. */
+ /* Full displayed4C3C path only with an admitted actual resident engine. */
+#if defined(ASPECT_RUNTIME_SERIAL)
+ return runtime_receive_character(aspect_render_active()?1:0,delayed);
+#else
  return runtime_receive_character(0,delayed);
+#endif
 }
 unsigned runtime_serial_character_delay(unsigned delay)
 {

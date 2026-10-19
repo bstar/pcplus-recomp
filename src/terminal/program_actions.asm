@@ -6,6 +6,7 @@ SEGMENT _TEXT public class=CODE use16
 extern uart_break_hold
 extern process_psp,process_keep_paragraphs,process_minimum_paragraphs
 extern terminal_stack_top,terminal_far_storage_end,_program_execute
+extern terminal_aspect_adopt,terminal_render_failure_notice
 extern redisplay_snapshot_end,redisplay_view_end
 extern terminal_snapshot_image_end,browser_screen_end,ed_screen_end
 extern terminal_clock_ticks,terminal_macro_tx_epoch,terminal_tx_count
@@ -365,6 +366,15 @@ terminal_program_poll:
  jne .return_prompt
  call terminal_setup_complete
 .return_prompt:
+ cmp word [terminal_program_kind],4
+ jne .ordinary_view
+ cmp word [terminal_aspect_adopt],1
+ jne .ordinary_view
+ cmp word [terminal_program_status],5
+ jne .restore_port
+ call far terminal_render_failure_notice
+ jmp .restore_port
+.ordinary_view:
  ; A successful online script must resume the terminal immediately. A welcome
  ; stream can exceed the bounded raw ring while a user acknowledges console
  ; output; native inline scripting does not insert that application pause.

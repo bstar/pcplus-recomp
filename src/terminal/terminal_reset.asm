@@ -307,6 +307,7 @@ csi_reset_terminal:
  ret
 
 SEGMENT _DATA public align=16 class=DATA use16
+global reset_ready
 reset_ready: dw 0
 reset_word_addresses:
  dw csi_terminal_id

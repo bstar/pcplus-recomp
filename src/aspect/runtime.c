@@ -9,6 +9,7 @@
 #include <string.h>
 #if defined(ASPECT_RUNTIME_SERIAL)
 #include "../config/resource_path.h"
+#include "resident_render.h"
 extern unsigned __cdecl aspect_serial_psp(void);
 #endif
 
@@ -172,6 +173,13 @@ void runtime_console_emit_byte(unsigned value)
     else runtime_console_output[runtime_console_output_size++]=byte;
 #else
     unsigned written;
+#if defined(ASPECT_RUNTIME_SERIAL)
+    if(aspect_render_active()){
+        unsigned result=aspect_render_emit(byte);
+        if(result)runtime_set_error(result);
+        return;
+    }
+#endif
     if(_dos_write(1,&byte,1,&written) || written!=1)runtime_set_error(ASPECT_RUN_IO);
 #endif
 }

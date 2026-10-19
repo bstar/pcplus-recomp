@@ -269,11 +269,21 @@ _small_code_:
  jmp terminal_shutdown
 
 global terminal_abort,terminal_shutdown
+extern terminal_aspect_active,terminal_render_unsupported,terminal_render_typed_abort
 terminal_abort:
+ cmp word [terminal_aspect_active],0
+ je .ordinary
+ jmp far terminal_render_unsupported
+.ordinary:
  ; Reached by explicit unsupported-service boundaries at arbitrary call depth.
  mov [csi_unimplemented_service],ax
  mov word [terminal_exit_code],2
 terminal_shutdown:
+ cmp word [terminal_aspect_active],0
+ je .ordinary
+ mov ax,10
+ jmp far terminal_render_typed_abort
+.ordinary:
  ; Discard parser/renderer frames, then unwind only resources actually acquired.
  cli
  mov ax,DGROUP

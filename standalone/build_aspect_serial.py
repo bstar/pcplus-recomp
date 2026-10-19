@@ -32,5 +32,5 @@ int main(int argc,char **argv){
 }
 ''')
 subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-os','-k8192','-I'+str(ROOT/'src/aspect'),'-fm=serial.map','-fe=SERIAL.EXE',str(OUT/'main.c'),str(ROOT/'src/aspect/serial.c'),*objects],cwd=OUT,check=True)
-sources += [ROOT/'src/aspect/serial.c',ROOT/'src/aspect/serial.h',ROOT/'src/aspect/serial_handoff.h',ROOT/'reconstruction/directory_accounting/patch.asm',Path(__file__).resolve()]
+sources += [ROOT/'src/aspect/serial.c',ROOT/'src/aspect/serial.h',ROOT/'src/aspect/serial_handoff.h',ROOT/'src/aspect/resident_render.h',ROOT/'reconstruction/directory_accounting/patch.asm',Path(__file__).resolve()]
 (OUT/'manifest.json').write_text(json.dumps(dict(binary_sha256=hashlib.sha256((OUT/'SERIAL.EXE').read_bytes()).hexdigest(),original_inputs=[],sources={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}),indent=2)+'\n')

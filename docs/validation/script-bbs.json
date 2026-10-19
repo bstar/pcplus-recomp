@@ -1,0 +1,155 @@
+{
+  "current_terminal_sha256": "dacbd777fbd5afaf441ad46ec559be2b95c53fd5ba9c1219ebfb865cd48e66ae",
+  "current_runner_sha256": "3369c3cb30c55153ad009be1c244af52efdb11117e5efd9d877fe50651d2ddbf",
+  "recorder_sha256": "c61f2897c9e2114a2c69fc4ec78dd41fd6d6c89a29b1c6c2b1cd2e9ecf715d05",
+  "cases": {
+    "render-v4-dac-enigma-immediate": {
+      "server": "enigma",
+      "terminal_sha256": "dacbd777fbd5afaf441ad46ec559be2b95c53fd5ba9c1219ebfb865cd48e66ae",
+      "runner_sha256": null,
+      "automatic_script_login": false,
+      "editor_passed": false,
+      "checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "no_post_saved": true,
+        "insert_toggled_overtype": false,
+        "home_moves_before_marker": false
+      },
+      "keyboard_profile": "network",
+      "modem_packet_delay_ms": 0,
+      "workflow_checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "no_post_saved": true,
+        "insert_toggled_overtype": false,
+        "home_moves_before_marker": false
+      },
+      "evidence": {
+        "build/bbs-lab/results/enigma/render-v4-dac-enigma-immediate/experiment.json": "bbd579776389b86f74611a0d430f4587c552580c16f552772d87e66bb70f5d5b",
+        "build/bbs-lab/results/enigma/render-v4-dac-enigma-immediate/result.json": "0001ffc8d4e14032581ddcbeff978f3405e60f889895d61515ff61b0953bb537",
+        "build/bbs-lab/results/enigma/render-v4-dac-enigma-immediate/semantic-audit.json": "5f892fd4454cde64afaa9559c9044ec44e570577318ffc82e9d0b2e46eecace9"
+      }
+    },
+    "render-v4-dac-enigma-script02": {
+      "server": "enigma",
+      "terminal_sha256": "dacbd777fbd5afaf441ad46ec559be2b95c53fd5ba9c1219ebfb865cd48e66ae",
+      "runner_sha256": "3369c3cb30c55153ad009be1c244af52efdb11117e5efd9d877fe50651d2ddbf",
+      "automatic_script_login": true,
+      "editor_passed": false,
+      "checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "no_post_saved": true,
+        "insert_toggled_overtype": false,
+        "home_moves_before_marker": false
+      },
+      "keyboard_profile": "enigma-editor",
+      "modem_packet_delay_ms": 0,
+      "workflow_checks": {
+        "DOS_harness": true,
+        "current_terminal": true,
+        "current_runner": true,
+        "inputs_unchanged": true,
+        "stock_server_unchanged": true,
+        "credentials_not_in_keyboard": true,
+        "script_credentials_once": true,
+        "no_other_login_text_before_script": true,
+        "authenticated_server_log": true,
+        "no_error_or_blocking_return_prompt": true,
+        "resumed_parent_editor": false,
+        "no_post_saved": true
+      },
+      "evidence": {
+        "build/bbs-lab/script-login/render-v4-dac-enigma-script02/checks.json": "e2fe33894f3c5911ed7bec2ed76e5b8a3161c934518b1b6682229665ed0d7e1f",
+        "build/bbs-lab/results/enigma/render-v4-dac-enigma-script02/result.json": "21b949d7d25fb7a897bb07703ad81c8982f97fd83e3cee6b64fbae54341cf180",
+        "build/bbs-lab/results/enigma/render-v4-dac-enigma-script02/semantic-audit.json": "1a88b315f4aae0feb9ad7e752e51244e871d6c2a7b127356831f36a4b190df56"
+      }
+    },
+    "render-v4-dac-enigma-script-buffer30": {
+      "server": "enigma",
+      "terminal_sha256": "dacbd777fbd5afaf441ad46ec559be2b95c53fd5ba9c1219ebfb865cd48e66ae",
+      "runner_sha256": "3369c3cb30c55153ad009be1c244af52efdb11117e5efd9d877fe50651d2ddbf",
+      "automatic_script_login": true,
+      "editor_passed": true,
+      "checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "no_post_saved": true,
+        "insert_toggled_overtype": true,
+        "home_moves_before_marker": true
+      },
+      "keyboard_profile": "network",
+      "modem_packet_delay_ms": 30,
+      "workflow_checks": {
+        "DOS_harness": true,
+        "current_terminal": true,
+        "current_runner": true,
+        "inputs_unchanged": true,
+        "stock_server_unchanged": true,
+        "credentials_not_in_keyboard": true,
+        "script_credentials_once": true,
+        "no_other_login_text_before_script": true,
+        "authenticated_server_log": true,
+        "no_error_or_blocking_return_prompt": true,
+        "resumed_parent_editor": true,
+        "no_post_saved": true
+      },
+      "evidence": {
+        "build/bbs-lab/script-login/render-v4-dac-enigma-script-buffer30/checks.json": "f7197c9d5b235cf86cc1af873f6db633ebfab50cd6f172011120e92b97476061",
+        "build/bbs-lab/results/enigma/render-v4-dac-enigma-script-buffer30/result.json": "a6a6b02dd23d5739e034c854a815c62f7dc9e96ccc08b65d3607be4796b67c44",
+        "build/bbs-lab/results/enigma/render-v4-dac-enigma-script-buffer30/semantic-audit.json": "e6f98a2a83b136e6c270d26cb1e85d03775368051fe31888a964190af7a41c6b"
+      }
+    },
+    "render-v4-dac-sync": {
+      "server": "synchronet",
+      "terminal_sha256": "dacbd777fbd5afaf441ad46ec559be2b95c53fd5ba9c1219ebfb865cd48e66ae",
+      "runner_sha256": "3369c3cb30c55153ad009be1c244af52efdb11117e5efd9d877fe50651d2ddbf",
+      "automatic_script_login": true,
+      "editor_passed": true,
+      "checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "draft_aborted": true,
+        "insert_toggled_overtype": true,
+        "home_marker_at_line_start": true,
+        "end_marker_at_line_end": true,
+        "delete_erases_final_character": true,
+        "tab_advances_to_next_stop": true,
+        "page_keys_report_document_boundaries": true,
+        "ctrl_y_delete_line_response": true
+      },
+      "keyboard_profile": "network",
+      "modem_packet_delay_ms": 0,
+      "workflow_checks": {
+        "DOS_harness": true,
+        "current_terminal": true,
+        "current_runner": true,
+        "inputs_unchanged": true,
+        "credentials_not_in_keyboard": true,
+        "script_credentials_once": true,
+        "no_other_login_text_before_script": true,
+        "authenticated_display": true,
+        "no_error_or_blocking_return_prompt": true,
+        "resumed_parent_editor": true,
+        "draft_aborted": true
+      },
+      "evidence": {
+        "build/bbs-lab/script-login/render-v4-dac-sync/checks.json": "10ea6b0d776a36037b34c8b7baacb8d5945b9a83264fa2f3e7e99526b5d49be7",
+        "build/bbs-lab/results/synchronet/render-v4-dac-sync/result.json": "c7a779e682cf40d579e5bc21f7ddf2b626dd08b8a8bf4e5c8d8ef54a151a02dc",
+        "build/bbs-lab/results/synchronet/render-v4-dac-sync/semantic-audit.json": "52379a999b905c2eb3496e7fb1818d804cce50031a42e449bc8a5da1b9095a8f"
+      }
+    }
+  },
+  "scope": "Actual local DOSBox-X script/editor evidence. Synchronet automatic login passes with immediate forwarding. Stock ENiGMA passes with explicit 30ms modem buffering and default network keys; immediate default-key and control-key runs retain editor failures. Owned local accounts, unsaved drafts, CTS held ready. No physical modem, arbitrary-network or full-application completion claim."
+}

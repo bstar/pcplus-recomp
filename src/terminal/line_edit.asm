@@ -127,6 +127,7 @@ csi_service_daf2:
 ; linked here: it neither services flow nor times out. Keep the observable byte
 ; terminator/local-Escape contract while preserving Alt-X and a36-tick deadline.
 global terminal_wait_control_n
+extern terminal_aspect_active,terminal_render_read_now
 terminal_wait_control_n:
  push bp
  push si
@@ -148,7 +149,13 @@ terminal_wait_control_n:
  cmp word [connection_state],6
  jne .done ; Return RX ownership to an active modem operation.
 .receive:
+ cmp word [terminal_aspect_active],0
+ je .ordinary_receive
+ call far terminal_render_read_now
+ jmp .received
+.ordinary_receive:
  call uart_receive_byte
+.received:
  cmp ax,14
  je .done
  call terminal_tick_low

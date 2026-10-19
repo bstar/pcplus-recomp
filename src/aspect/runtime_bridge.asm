@@ -479,12 +479,24 @@ receive_policy_raw_common:
  mov ax,[_runtime_error]
  jmp fail
 .done: ret
-; Nonzero WHEN monitoring or rendered output requires application services.
-; No current source command enables these paths. Never fake ANSI rendering.
+; WHEN remains unsupported; displayed output uses the admitted real parent
+; terminal engine, never an ad-hoc query recognizer.
 global aspect_receive_policy_pattern_byte,aspect_receive_policy_emit_byte
 aspect_receive_policy_pattern_byte:
-aspect_receive_policy_emit_byte:
  jmp unsupported
+extern _runtime_receive_render_byte
+aspect_receive_policy_emit_byte:
+ push bp
+ mov bp,sp
+ push word [bp+4]
+ call _runtime_receive_render_byte
+ add sp,2
+ pop bp
+ cmp word [_runtime_error],0
+ je .done
+ mov ax,[_runtime_error]
+ jmp fail
+.done: ret
 
 SEGMENT _DATA public class=DATA use16
 GROUP DGROUP _DATA
@@ -522,7 +534,6 @@ scalar aspect_receive_policy_pattern_count,_runtime_receive_pattern_count
 global aspect_receive_policy_display
 aspect_receive_policy_display:
 scalar aspect_receive_display,_runtime_receive_display
-scalar aspect_receive_suppress_echo,_runtime_receive_suppress_echo
 scalar aspect_console_message_mode,_runtime_console_message_mode
 scalar aspect_serial_case_sensitive,_runtime_serial_case_sensitive
 scalar aspect_serial_wait_result,_runtime_serial_wait_result
@@ -534,6 +545,9 @@ scalar aspect_serial_rx_count,_runtime_serial_rx_count
 %endif
 scalar aspect_flow_depth,_runtime_depth
 scalar aspect_flow_frame,_runtime_frame
+global aspect_receive_suppress_echo,_runtime_receive_suppress_echo
+aspect_receive_suppress_echo:
+_runtime_receive_suppress_echo:
 scalar aspect_flow_wait_gate,_runtime_wait_gate
 scalar aspect_stack_pointer,_runtime_stack_pointer
 scalar aspect_ops_source_type,_runtime_source_type
