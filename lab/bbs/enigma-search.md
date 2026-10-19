@@ -141,3 +141,9 @@ GETDIR/DOSVER/DISKFREE before authentication. Its QUERY.LOG must contain the roo
 C directory, a numeric major/minor version and positive free-space result. This
 adds a twenty-second check to the same custom route; [system-query validation](../../docs/ASPECT_SYSTEM_QUERY.md)
 keeps actual native controls and the maintained DOSVER writeback fix separate.
+
+`--environment-login` adds GETENV/PUTENV before all earlier probes. Two independent
+assignments must remain readable after the shared native command buffer is reused;
+deletion must clear lookup. ENV.LOG must be exactly `ONE|TWO|`, adding a
+twenty-third check. [Environment validation](../../docs/ASPECT_ENVIRONMENT.md)
+separates the native borrowed-pointer defect from maintained process ownership.

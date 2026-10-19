@@ -13,6 +13,7 @@ SEGMENT _TEXT public class=CODE use16
 extern aspect_dispatch,aspect_abort,session_setjmp
 extern aspect_path_chdir,aspect_path_mkdir,aspect_path_rmdir,aspect_path_delete
 extern aspect_system_diskfree,aspect_system_dosver,aspect_system_getdir
+extern aspect_environment_get,aspect_environment_put
 extern aspect_script_file_setting
 extern aspect_script_file_clear,aspect_script_file_close,aspect_script_file_flush
 extern aspect_script_file_getc,aspect_script_file_gets,aspect_script_file_open
@@ -889,7 +890,11 @@ _runtime_arena: times 0x3aca db 0
 aspect_dispatch_handlers:
 %assign op 0
 %rep 215
-%if op=0x25
+%if op=0x4c
+ dw aspect_environment_get
+%elif op=0x8b
+ dw aspect_environment_put
+%elif op=0x25
  dw aspect_system_diskfree
 %elif op=0x29
  dw aspect_system_dosver

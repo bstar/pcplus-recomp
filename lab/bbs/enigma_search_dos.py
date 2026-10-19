@@ -28,7 +28,8 @@ async def run(args):
     sources.update({f'source_board/{p}':server/p for p in [*metadata['source_inputs'],'core/client.js']})
     sources.update({'terminal':binary,'staged_terminal':stage/'TERMINAL.EXE','runner':Path(__file__),'harness':Path(test_dos.__file__),
                     'fixture':ROOT/'lab/bbs/enigma_search_fixture.py','notes_fixture':ROOT/'lab/bbs/enigma_notes_fixture.py'})
-    system_queries=getattr(args,'system_query_login',False)
+    environment_login=getattr(args,'environment_login',False)
+    system_queries=getattr(args,'system_query_login',False) or environment_login
     timestamp_login=getattr(args,'timestamp_login',False) or system_queries
     script_login=getattr(args,'script_login',False) or getattr(args,'file_info_login',False) or getattr(args,'enumeration_login',False) or getattr(args,'attribute_login',False) or timestamp_login
     if script_login:
@@ -36,7 +37,7 @@ async def run(args):
         for rel in ('aspect-runner/ASPECT.EXE','aspect-compiler-dos/ASPCOMP.EXE'):
             original=ROOT/'build'/rel;dest=stage/original.name;shutil.copyfile(original,dest)
             sources[rel]=original;sources['staged/'+dest.name]=dest
-        (stage/'LOGON.ASP').write_bytes(source(getattr(args,'file_info_login',False),getattr(args,'enumeration_login',False),getattr(args,'attribute_login',False),timestamp_login,system_queries).replace('\n','\r\n').encode('ascii'))
+        (stage/'LOGON.ASP').write_bytes(source(getattr(args,'file_info_login',False),getattr(args,'enumeration_login',False),getattr(args,'attribute_login',False),timestamp_login,system_queries,environment_login).replace('\n','\r\n').encode('ascii'))
         sources['login_source']=stage/'LOGON.ASP'
         sources['login_driver']=ROOT/'lab/bbs/enigma_script_login.py'
     before={p:sha(f) for p,f in sources.items()};count=messages(candidate)
@@ -99,7 +100,7 @@ async def run(args):
         from compiler import compile_source
         from enigma_script_login import source
         compiled=stage/'LOGON.ASX';trace=stage/'LOGIN.LOG'
-        checks.update(DOS_source_compiler=compiled.is_file() and compiled.read_bytes()==compile_source(source(getattr(args,'file_info_login',False),getattr(args,'enumeration_login',False),getattr(args,'attribute_login',False),timestamp_login,system_queries)),
+        checks.update(DOS_source_compiler=compiled.is_file() and compiled.read_bytes()==compile_source(source(getattr(args,'file_info_login',False),getattr(args,'enumeration_login',False),getattr(args,'attribute_login',False),timestamp_login,system_queries,environment_login)),
             native_file_trace=trace.is_file() and trace.read_bytes()==b'STARTAUTHREADY',
             no_keyboard_credentials='loclab' not in keys.replace(' ','') and 'LoC-Lab-2026!' not in keys.replace(' ',''))
         login_evidence=dict(runner_sha256=before['aspect-runner/ASPECT.EXE'],compiler_sha256=before['aspect-compiler-dos/ASPCOMP.EXE'],
@@ -128,6 +129,10 @@ async def run(args):
             and re.fullmatch(rb'[0-9]{1,3}\.[0-9]{2,3}',fields[1]) is not None
             and fields[2].isdigit() and int(fields[2])>0)
         login_evidence['system_query_trace_sha256']=sha(query_trace) if query_trace.is_file() else None
+    if environment_login:
+        environment_trace=stage/'ENV.LOG'
+        checks['native_environment_trace']=environment_trace.is_file() and environment_trace.read_bytes()==b'ONE|TWO|'
+        login_evidence['environment_trace_sha256']=sha(environment_trace) if environment_trace.is_file() else None
     result=dict(passed=all(checks.values()),script_login=login_evidence,checks=checks,terminal_sha256=sha(binary),source_modules=metadata['source_modules'],
         source_inputs={k:before['source_board/'+k] for k in metadata['source_inputs']},input_hashes=before,
         pages=pages,expected_pages=expected_pages,selected=selected,expected_selected=expected_selected,
@@ -147,4 +152,5 @@ if __name__=='__main__':
     p.add_argument('--attribute-login',action='store_true',help='Require native attribute roundtrip/global-writeback trace before source login')
     p.add_argument('--timestamp-login',action='store_true',help='Require native file timestamp/global-writeback trace before source login')
     p.add_argument('--system-query-login',action='store_true',help='Require GETDIR/DOSVER/DISKFREE plus all earlier file probes before source login')
+    p.add_argument('--environment-login',action='store_true',help='Require native environment ownership/update/delete before all earlier source login probes')
     a=p.parse_args();raise SystemExit(asyncio.run(run(a)))

@@ -206,7 +206,7 @@ def main():
 }
 '''
     (out / 'harness.c').write_text(program)
-    cs = ['runtime.c', 'script_file_runtime.c', 'file_info_runtime.c', 'file_times_runtime.c', 'enumeration_runtime.c', 'file_io.c', 'script_path.c', 'serial_runtime.c', 'receive_runtime.c', 'directory_runtime.c', 'when_runtime.c', 'set_runtime.c', 'find_runtime.c']
+    cs = ['runtime.c', 'environment_runtime.c', 'script_file_runtime.c', 'file_info_runtime.c', 'file_times_runtime.c', 'enumeration_runtime.c', 'file_io.c', 'script_path.c', 'serial_runtime.c', 'receive_runtime.c', 'directory_runtime.c', 'when_runtime.c', 'set_runtime.c', 'find_runtime.c']
     for native in (False, True):
         name = 'NATIVE' if native else 'QUERYVM'
         objects = [str(ROOT / 'build/aspect-system-query/system_query.obj') if native and n == 'system_query' else str(COMPONENT / (n + '.obj')) for n, _, _ in ASM]

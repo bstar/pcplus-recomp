@@ -669,3 +669,10 @@ Actual DOS passes341 invocations/2,899 assertions across distinct retained drive
 directories, native free-space arithmetic, raw errors and corrected DOSVER
 writeback. A14-check native control retains the lost global.103 slots are now
 supported and112 rejected; all whole-application gates remain open.
+
+F13 now includes [GETENV/PUTENV](ASPECT_ENVIRONMENT.md),555 exact native+237 reused
+bytes and697 paired cases, with a process environment owner replacing native
+temporary-buffer aliasing. The403 real DOS invocations/3,119 assertions prove
+independent values, native case/status rules, EXECUTE/invocation persistence,
+ordinary child inheritance, automatic exit restoration and fault/heap/JFT cleanup.
+105 slots are now supported and110 rejected; all application gates remain open.

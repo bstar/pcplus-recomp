@@ -103,7 +103,9 @@ separate native lost-global/destructive-input behavior from corrected writeback
 and private setter copies;248 repeated VM runs cover timestamps and cleanup.
 The [DOS system queries](docs/ASPECT_SYSTEM_QUERY.md) add GETDIR/DISKFREE/DOSVER,
 with native free-space arithmetic and corrected DOSVER far-global writeback.
-The dispatcher now supports103 of215 slots; full ASPECT remains unfinished.
+[Environment commands](docs/ASPECT_ENVIRONMENT.md) add GETENV/PUTENV through the
+native CRT and owned persistent values, with DOS child inheritance and automatic
+exit cleanup. The dispatcher now supports105 of215 slots; full ASPECT remains unfinished.
 
 The [integrated script-file commands](docs/ASPECT_SCRIPT_FILE_RUNTIME.md) now
 connect both compilers and the interpreter to the owned DOS backend. Thirteen
@@ -124,7 +126,7 @@ Current outputs:
 | `build/aspect-strings/STRINGS.EXE` | Recovered assembly and controlled services | String operands, literals and assignment, including actual far copy and DOS far heap |
 | `build/aspect-long/LONG.EXE` | Recovered assembly only | Native signed long multiply/divide/remainder and shift helpers, including independent actual DOS checks |
 | `build/aspect-arithmetic/ARITH.EXE` | Recovered assembly and controlled services | Native arithmetic component; controlled long/float boundaries are distinct from composed execution |
-| `build/aspect-runtime/EXECUTE.EXE` | Maintained source compiler, recovered assembly and maintained DOS resource owner | Fixed source-compiled suite;103 opcode slots including native DOS/directory/free-space and filesystem queries/rename/path/stream commands, EXECUTE/BREAK/FETCH/FIND/SWITCH/CASE and thirteen SET setters;112 unsupported slots and243 unsupported SET subcommands |
+| `build/aspect-runtime/EXECUTE.EXE` | Maintained source compiler, recovered assembly and maintained DOS resource owner | Fixed source-compiled suite;105 opcode slots including environment/DOS/directory/free-space and filesystem queries/rename/path/stream commands, EXECUTE/BREAK/FETCH/FIND/SWITCH/CASE and thirteen SET setters;110 unsupported slots and243 unsupported SET subcommands |
 | `build/aspect-runner/ASPECT.EXE` | Recovered instructions and maintained DOS CLI/resource owner | Execute trusted compiled scripts; raw stdout, Escape cancellation and an optional checked UART lease |
 | `build/aspect-receive-commands/RECEIVE.EXE` | Recovered assembly and controlled platform callbacks | Character, line and quiet-line input, native delayed read and DOS time, COMDATA/FOREVER |
 | `build/aspect-serial-commands/SERIAL.EXE` | Recovered assembly and controlled device/time callbacks | TRANSMIT/WAITFOR and native formatter, timeout, case, clock and result primitives |

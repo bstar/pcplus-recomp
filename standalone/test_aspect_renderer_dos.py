@@ -468,7 +468,7 @@ def main():
    table=bytearray(range(256));table[ord('z')]=27;table[27]=ord('!');table[ord('[')]=ord('{');files['TEST.XLT']=bytes(table);extra+=' /X:D:\\TEST.XLT'
   keys=('p1400 escape p3200 space p700 r e a d y p700 a-x' if case.get('cancel') else 'p8500 space p700 r e a d y p700 a-x' if case.get('clean_timeout') else 'p5000 space p700 r e a d y p700 a-x')
   result=harness.run(name,'success',keys,directory=bytes(payload),prm=bytes(settings),arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1'+extra,
-    files=files,banner=case['banner'],working_drive='d',observer='RENDER')
+    files=files,banner=case['banner'],working_drive='d',observer='RENDER',environment=case.get('environment'))
   wire=(folder/'serial.bin').read_bytes();screen=(folder/'SCREEN.BIN').read_bytes();raw=(folder/'RENDER.BIN').read_bytes();header=struct.unpack_from('<7H',raw)
   checks=result['checks'];checks.update(passive_EXEC_observed=header[:4]==(0x524e,1,1,1),child_exit_expected=(header[6]==0)==(case['success'] or case.get('clean_timeout',False)),
    parent_JFT_unchanged=raw[14:34]==raw[34:54],all_parent_sink_owners_unchanged=raw[54:470]==raw[470:886],

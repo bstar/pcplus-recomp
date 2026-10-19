@@ -89,6 +89,19 @@ must exclude original executables and private install/configuration data.
 
 ## Current application work
 
+The [environment integration](docs/ASPECT_ENVIRONMENT.md) adds GETENV/PUTENV,
+555 exact native+237 reused bytes and697 paired source/original cases. The48
+original compiler outcomes match19 accepted/29 rejected forms; the complete DOS
+compiler passes1,932 cases. The owned vector/value adapter fixes native temporary
+buffer aliasing while preserving uppercase assignment, exact matching, empty
+names and deletion-shrink policy. Its403 DOS invocations/3,119 assertions verify
+cross-invocation/EXECUTE persistence, real child inheritance, automatic exit
+restore, faults and heap/JFT/ABI ownership. A9-check native control reproduces
+loss of the first variable; parent login also passes.105 slots are implemented
+and110 rejected;1,111 composed cases/26,686 assertions pass. All23 expanded isolated
+ENiGMA checks pass;271 products reproduce without originals and the DOS package
+is refreshed. Live deployment/physical validation and full gates stay open.
+
 The [DOS system queries](docs/ASPECT_SYSTEM_QUERY.md) add GETDIR/DISKFREE/DOSVER
 through both compilers and production ASPECT. Their167 exact native bytes pass
 3,782 paired component/original cases;113 original compiler outcomes match38
@@ -96,7 +109,7 @@ accepted/75 rejected forms. The full DOS compiler passes1,879 cases. The341 real
 DOS invocations/2,899 assertions cover per-drive directories, native arithmetic,
 raw invalid-drive errors, destinations, six streams, EXECUTE and fault cleanup.
 A14-check native control separates original lost DOSVER globals from maintained
-destination/flush correction. The runtime implements103 slots and rejects112;
+destination/flush correction. That checkpoint implemented103 slots and rejected112;
 1,113 composed cases/26,730 assertions and parent login pass. Existing timestamp
 and directory-mutation regressions remain passing. All22 expanded isolated
 ENiGMA checks pass, and258 products reproduce without originals. The DOS package

@@ -1010,3 +1010,13 @@ test-aspect-system-query-compiler:
 	python3 standalone/check_aspect_system_query_compiler.py
 all: aspect-system-query
 test: test-aspect-system-query test-aspect-system-query-compiler
+
+.PHONY: aspect-environment test-aspect-environment test-aspect-environment-compiler
+aspect-environment:
+	python3 standalone/build_aspect_environment.py
+test-aspect-environment: aspect-environment
+	python3 standalone/check_aspect_environment.py
+test-aspect-environment-compiler:
+	python3 standalone/check_aspect_environment_compiler.py
+all: aspect-environment
+test: test-aspect-environment test-aspect-environment-compiler

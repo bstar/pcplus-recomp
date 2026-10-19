@@ -1,8 +1,9 @@
 # ASPECT DOS system queries
 
 Both maintained compilers and the production interpreter support DISKFREE,
-DOSVER and GETDIR. The runtime now implements103 of215 opcode slots and rejects
-112. The full application, compiler/recorder and physical modem gates remain open.
+DOSVER and GETDIR. That checkpoint implemented103 of215 slots and rejected112.
+[Environment commands](ASPECT_ENVIRONMENT.md) extend it to105/110. The full
+application, compiler/recorder and physical modem gates remain open.
 
 ```text
 long available

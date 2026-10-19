@@ -1,0 +1,107 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "unit": 1,
+      "name": "get-command",
+      "start": 59243,
+      "end": 59290,
+      "file_start": 114971,
+      "bytes": 47,
+      "sha256": "980ed06f8c2f5a27b3ffbc89f0bfccda5becedfc65886767d06c1108e28c3dc7"
+    },
+    {
+      "unit": 2,
+      "name": "put-command",
+      "start": 59427,
+      "end": 59460,
+      "file_start": 115155,
+      "bytes": 33,
+      "sha256": "3f4cd85a0db213a5e8bd65e58230ff9cb90499bab9adb512315f92cc6e095708"
+    },
+    {
+      "unit": 3,
+      "name": "copy-result",
+      "start": 61621,
+      "end": 61698,
+      "file_start": 117349,
+      "bytes": 77,
+      "sha256": "cc80f9dfc61332abe90f47657a01ca62e7252532d19a4689819c1660555ae7b2"
+    },
+    {
+      "unit": 4,
+      "name": "get-native",
+      "start": 36370,
+      "end": 36459,
+      "file_start": 40978,
+      "bytes": 89,
+      "sha256": "47da130f504a3997dffedea1d88185004e7acf774dd2cb22ad328a0b6215921f"
+    },
+    {
+      "unit": 5,
+      "name": "put-native",
+      "start": 38400,
+      "end": 38608,
+      "file_start": 43008,
+      "bytes": 208,
+      "sha256": "d8f71db2a2e46b4f3a88755894d6fb9da91089d0947d0f42193cb44153344b41"
+    },
+    {
+      "unit": 6,
+      "name": "find-native",
+      "start": 38608,
+      "end": 38709,
+      "file_start": 43216,
+      "bytes": 101,
+      "sha256": "08aad5e4b35b0fd2abace0a101f19d868be31e35872a811528a09847082f531e"
+    }
+  ],
+  "reused": [
+    {
+      "name": "strcpy",
+      "start": 33384,
+      "end": 33434,
+      "file_start": 37992,
+      "bytes": 50,
+      "sha256": "353e318feb16fbe3f0d4351c433976bb22913a51bdef8bc36a85be96f0509f26",
+      "source": "reconstruction/program_exec/strcpy.asm"
+    },
+    {
+      "name": "upper",
+      "start": 37160,
+      "end": 37190,
+      "file_start": 41768,
+      "bytes": 30,
+      "sha256": "3299a60b2a07441474a86c70a338c58e3cf407df6850dc9799822b8dd9610210",
+      "source": "reconstruction/directory_dial/uppercase.asm"
+    },
+    {
+      "name": "strlen",
+      "start": 36120,
+      "end": 36147,
+      "file_start": 40728,
+      "bytes": 27,
+      "sha256": "feaf2f2cbbdb93b3dcb85e3c8584eaf239cb48d619549f99e746423641c62a9d",
+      "source": "reconstruction/program_exec/strlen.asm"
+    },
+    {
+      "name": "strncmp",
+      "start": 39942,
+      "end": 40000,
+      "file_start": 44550,
+      "bytes": 58,
+      "sha256": "add13f77f634b2e1728faaa50c7ab13b40dfc138e3317bb96b60f7374c650406",
+      "source": "reconstruction/program_exec/strncmp.asm"
+    },
+    {
+      "name": "move",
+      "start": 34228,
+      "end": 34300,
+      "file_start": 38836,
+      "bytes": 72,
+      "sha256": "8f2d99034340eacf7ddcbe1a27e39d854b79bd600525001cb9979524a7d74fb6",
+      "source": "reconstruction/erase/move_bytes.asm"
+    }
+  ],
+  "scope": "Numerical identities only. Native PUTENV stores borrowed pointers, case-sensitive table matching and whole assignment uppercase. CRT vector realloc is a boundary; owned runtime wrapper is separate."
+}

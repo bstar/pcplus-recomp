@@ -1,0 +1,550 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "harness_sha256": "8b4a32dccac8856701f36abc0f417b9154cf19493d38681fb595d11327bfe54a",
+  "cases": [
+    {
+      "name": "EV000",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv \r\nendproc\r\n",
+      "source_sha256": "3f8c1be647addef7fbc7c55099f58d2fdeb7e5983d4fa7189355d3886b74055a",
+      "success": false,
+      "label": "getenv ",
+      "log_sha256": "96e30316f02a8e5c847ad287999dbf45676e2c33e2c52e5fc0befe25d41df7e1",
+      "errors": [
+        "Error C006 Line 5: Missing token",
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "EV001",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv \"PATH\"\r\nendproc\r\n",
+      "source_sha256": "8cce4414be674878c7613dda7f86861714f3a0e90423e83536626a312a28b042",
+      "success": false,
+      "label": "getenv \"PATH\"",
+      "log_sha256": "100952bf2374f1053092466ea8368b91d51a3c1dca116a9ea4afcae16292acd2",
+      "errors": [
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "EV002",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv \"PATH\" value\r\nendproc\r\n",
+      "source_sha256": "9ee47fb6dd54d56c1f7ab0841f77760496711718a6c6822e4ef2425248fd0e97",
+      "success": true,
+      "label": "getenv \"PATH\" value",
+      "log_sha256": "00b858401b48a5e8a050048be82db49fe056888fcff0f31b984a6e3b10df2ca8",
+      "errors": [],
+      "hex": "02 cf 4c aa b7 0e 55 46 9b 13 8c 01 94",
+      "asx_sha256": "f2962e0263644b402b399bc5c860338a88e199596547b6a6f7ce3e3d38b0b9ab"
+    },
+    {
+      "name": "EV003",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv name value\r\nendproc\r\n",
+      "source_sha256": "c4e291c436e01d87fd7a23dfa860eb477c7680d8e60dd9f633776d08f08b23bf",
+      "success": true,
+      "label": "getenv name value",
+      "log_sha256": "a26185e4ad50fea3f54521b68b4c7383d9ea04d662616f0b72211cbf70c2d993",
+      "errors": [],
+      "hex": "02 cf 4c 8c 00 8c 01 94",
+      "asx_sha256": "0029accf141ef2cf208bfbae8ba47b9961fabca7391363e0a7745d9ef393ffef"
+    },
+    {
+      "name": "EV004",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv name,value\r\nendproc\r\n",
+      "source_sha256": "4f878ce84cc2191ae1e3cb14838b40ceab6165ed8354f46a17f7dfcd7d932dbc",
+      "success": true,
+      "label": "getenv name,value",
+      "log_sha256": "3bb1f8b4d874c05a87d8526077b2d4811d2898984eab47d062a34c28e41965cf",
+      "errors": [],
+      "hex": "02 cf 4c 8c 00 8c 01 94",
+      "asx_sha256": "0029accf141ef2cf208bfbae8ba47b9961fabca7391363e0a7745d9ef393ffef"
+    },
+    {
+      "name": "EV005",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv name ,value\r\nendproc\r\n",
+      "source_sha256": "93237ce9ab41de85c09b3f849bc5e9354d795249a5191d9b2c6082301f019890",
+      "success": true,
+      "label": "getenv name ,value",
+      "log_sha256": "38a5702e6ee13f080aec3c9e1600f5062cce4cb8695a4df881cf4b2d6042515d",
+      "errors": [],
+      "hex": "02 cf 4c 8c 00 8c 01 94",
+      "asx_sha256": "0029accf141ef2cf208bfbae8ba47b9961fabca7391363e0a7745d9ef393ffef"
+    },
+    {
+      "name": "EV006",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv name,,value\r\nendproc\r\n",
+      "source_sha256": "10a6faafb65fd3fcc2f33137a575b6ea7193c0b5ef085181c704281dacc90d9d",
+      "success": false,
+      "label": "getenv name,,value",
+      "log_sha256": "3a8fcaf57fc5f5e53669c3a1d18ec443a7927d524729c144971cdd731a957d9d",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> ,",
+        "Error C002 Line 5: Unexpected token ==> ,",
+        "Error C002 Line 5: Unexpected token ==> VALUE"
+      ]
+    },
+    {
+      "name": "EV007",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv ,name value\r\nendproc\r\n",
+      "source_sha256": "37dfe97f96777951bad547b87150263d394c8d77da366a018574ac29997b5ab4",
+      "success": false,
+      "label": "getenv ,name value",
+      "log_sha256": "614c8005f3f7b2105ac1475b7ef4bf6c3c112ffcf1053cb893d068d0eed77ed8",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ,",
+        "Error C002 Line 5: Unexpected token ==> VALUE"
+      ]
+    },
+    {
+      "name": "EV008",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv name value,\r\nendproc\r\n",
+      "source_sha256": "e712e083c49c4aa6a185244a985078423b788b208fdf9249beb43e5221c1d223",
+      "success": false,
+      "label": "getenv name value,",
+      "log_sha256": "b8497464a440786d6e0358a9704db29f7ac048bafe7075372b6df2c002b4f61b",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "EV009",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv name (value)\r\nendproc\r\n",
+      "source_sha256": "e16e684fc8999a637b974726821c20947e01abc701c4a8f37f50fe7bfc5f1e5b",
+      "success": false,
+      "label": "getenv name (value)",
+      "log_sha256": "c20aec2a2375e21604674c7eddbbd7172a7f66cf1e1893f22f90810c92a5504e",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> (",
+        "Error C002 Line 5: Unexpected token ==> VALUE",
+        "Error C002 Line 5: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "EV010",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv (name) value\r\nendproc\r\n",
+      "source_sha256": "fa9c13be8122916266d0e947893547da9c1d9490c6cf54fa3eeee3c1168e82ae",
+      "success": false,
+      "label": "getenv (name) value",
+      "log_sha256": "9b6619e4be7236d3bbb642e85029c51d62bc657a963294319ad22d74e4e586f9",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> (",
+        "Error C002 Line 5: Unexpected token ==> )",
+        "Error C002 Line 5: Unexpected token ==> VALUE"
+      ]
+    },
+    {
+      "name": "EV011",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv name+\"X\" value\r\nendproc\r\n",
+      "source_sha256": "823154003d586d2c5485109d272ef4afd306f39bb6c3b3a1cbb44ceb1bbcba3f",
+      "success": false,
+      "label": "getenv name+\"X\" value",
+      "log_sha256": "f182451a7704d49eb44edad9294ca5758f62119f40aed27b05af16bc22a142b9",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> +",
+        "Error C002 Line 5: Unexpected token ==> X",
+        "Error C002 Line 5: Unexpected token ==> VALUE"
+      ]
+    },
+    {
+      "name": "EV012",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv name value+\"X\"\r\nendproc\r\n",
+      "source_sha256": "1cefe6d86462656e776f2fb6379f0d0922df747f5b9a35034331e05fb9d48e6b",
+      "success": false,
+      "label": "getenv name value+\"X\"",
+      "log_sha256": "17fe668862d2116ae2083bbe6bb2703591e5a3f655a32d5d88b2446f927f3e01",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> +",
+        "Error C002 Line 5: Unexpected token ==> X"
+      ]
+    },
+    {
+      "name": "EV013",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv name value value\r\nendproc\r\n",
+      "source_sha256": "1cad75a15bada5617d81f5256725a2602c569286ae9ccb11517d96a3edfa9474",
+      "success": false,
+      "label": "getenv name value value",
+      "log_sha256": "2c3d14e0a4ec9d747c04ec1d1dc0277c7d0d397366ab8a78638a9eb8975adbf1",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> VALUE"
+      ]
+    },
+    {
+      "name": "EV014",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv name \"X\"\r\nendproc\r\n",
+      "source_sha256": "ed6e1a24f3a660cfd5b92423b0df8fb09ff8860b7d4f882be98a26056643bd25",
+      "success": false,
+      "label": "getenv name \"X\"",
+      "log_sha256": "076146bcf5b07b1efed9dc0b460f1d193abfb12f8b6f581dc27d2068e4cb5298",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> X"
+      ]
+    },
+    {
+      "name": "EV015",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv name $NULL\r\nendproc\r\n",
+      "source_sha256": "028d94f380d19335635cc6d63679af997fbf724f93ac407fed9ec3ad680798cb",
+      "success": false,
+      "label": "getenv name $NULL",
+      "log_sha256": "c253e7ffb98f253d245c01f6fa0f2be3c343cef55fa9bbe820d7f21b16aec945",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> $NULL"
+      ]
+    },
+    {
+      "name": "EV016",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv name $FDATE\r\nendproc\r\n",
+      "source_sha256": "b74c220a72dfed4e7ba499c9a0a6336cd1a41f506f38c6698a453b2456c1a82f",
+      "success": false,
+      "label": "getenv name $FDATE",
+      "log_sha256": "09261c3c58d678b6f5af65820a3f1b91f23e9c3cf3182e6660371ed13b785421",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> $FDATE"
+      ]
+    },
+    {
+      "name": "EV017",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv name s0\r\nendproc\r\n",
+      "source_sha256": "3bf60669fcc471f27f9c8685056e11c714f2210da6e7e810d13ee9a802d54997",
+      "success": true,
+      "label": "getenv name s0",
+      "log_sha256": "dac376bc56d2e9334777cfc275d7194ee8513b94d03ad341688b61544ab0d614",
+      "errors": [],
+      "hex": "02 cf 4c 8c 00 64 00 94",
+      "asx_sha256": "2042ec84888c860359632ea786a2f87575843fca3733cd28c35b108004519d2c"
+    },
+    {
+      "name": "EV018",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv number value\r\nendproc\r\n",
+      "source_sha256": "b9f550acf4201ea065f468bd90d9e15cf4c623428913919be98c7e2694fd913f",
+      "success": false,
+      "label": "getenv number value",
+      "log_sha256": "3197ffaa6a4ffa95fd1f993f1424fbb2a9dfe6c650aa59f0dc3b345333446e0b",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> NUMBER"
+      ]
+    },
+    {
+      "name": "EV019",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv name number\r\nendproc\r\n",
+      "source_sha256": "ba824fb023ada714830ce6cd5f0f97074ff74f8dac6689f2808dbbaf2512165c",
+      "success": false,
+      "label": "getenv name number",
+      "log_sha256": "7872e8624b4fbd53d7c4026edd9fdc98d3654344fff6b7593ed3773461b9f5c5",
+      "errors": [
+        "Error C024 Line 5: Invalid string variable ==> NUMBER"
+      ]
+    },
+    {
+      "name": "EV020",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv name wide\r\nendproc\r\n",
+      "source_sha256": "881097e772c260bdaba776b471f8ba4e0f38ef286ad3b467041f21d0189659e1",
+      "success": false,
+      "label": "getenv name wide",
+      "log_sha256": "a4f564ed01da2dc428e41ec45cf215fa11d576b80322874dd761c5d00788f2ad",
+      "errors": [
+        "Error C024 Line 5: Invalid string variable ==> WIDE"
+      ]
+    },
+    {
+      "name": "EV021",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv name ON\r\nendproc\r\n",
+      "source_sha256": "19ddd0d265fdc8f8257ab6e8ba8fd3aa095ca29fa3ab68e74c8b2fc8477ebe4c",
+      "success": false,
+      "label": "getenv name ON",
+      "log_sha256": "b0866d2a0b917752b648dbf826e3c6a5ac8523f93de6557867a6b7a15e0b0850",
+      "errors": [
+        "Error C024 Line 5: Invalid string variable ==> ON"
+      ]
+    },
+    {
+      "name": "EV022",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv \"\" value\r\nendproc\r\n",
+      "source_sha256": "a55920f370132f72f7f0b2e8db3380e9fee6d0621cfef2c81a26f2867eaa5dda",
+      "success": true,
+      "label": "getenv \"\" value",
+      "log_sha256": "f3283dc2a60061d92daeeea831ae34ef07e85212f2ebfa71f5378b4664634639",
+      "errors": [],
+      "hex": "02 cf 4c 6e 13 8c 01 94",
+      "asx_sha256": "b100c1662b16081f1aedaa6d9879b5abaeebbc5dff2c039d0f457785d1622547"
+    },
+    {
+      "name": "EV023",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv \"A=B\" value\r\nendproc\r\n",
+      "source_sha256": "1876b53f24718974c0d4ea7e94e776d60fb17d6be7031669ed136e54f07dac44",
+      "success": true,
+      "label": "getenv \"A=B\" value",
+      "log_sha256": "a2372ccbe731dd6b0a7caf5c7211acc4080d20d3010b6cbeee2024bf81a5f49b",
+      "errors": [],
+      "hex": "02 cf 4c aa b6 0d 46 42 89 8c 01 94",
+      "asx_sha256": "9f873f456417e86c2f50320d9afe3df1daa7d2a3c3740434dc7942a1c8915627"
+    },
+    {
+      "name": "EV024",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv \r\nendproc\r\n",
+      "source_sha256": "79913b67e6e56a9060f6d6929eec375763b440bcd1694b59c6f98eed1613afe9",
+      "success": false,
+      "label": "putenv ",
+      "log_sha256": "fc757a273bc28e2a53af0b298f375770af64224e51a52bb0c2e1406b637272f5",
+      "errors": [
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "EV025",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv \"A=Mixed\"\r\nendproc\r\n",
+      "source_sha256": "c7a26a73a5f6b47b6a4840b3d580f83593b79b9d98c4f9294dbc75e185bae37b",
+      "success": true,
+      "label": "putenv \"A=Mixed\"",
+      "log_sha256": "6701c5810c13c46c07c048d2e86736e64a5dc79d1abcf26a858294e6e8a3ca21",
+      "errors": [],
+      "hex": "02 cf 8b aa ba 11 46 42 94 34 1f 84 3b 94",
+      "asx_sha256": "fd4bb4221450b3966d6a64ba8c35d24a0940bbd00010bde0051d36b9ecba3a2a"
+    },
+    {
+      "name": "EV026",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv name\r\nendproc\r\n",
+      "source_sha256": "d30d83e3dcc5cb1e5850a6d37f2053490ff8fc84a458a6719e538dc0331c9f08",
+      "success": true,
+      "label": "putenv name",
+      "log_sha256": "7fb2a1429ac26c0b2728e9f4dc1ba3cad57869e2fc59fd6e0902b09cbb0f7aec",
+      "errors": [],
+      "hex": "02 cf 8b 8c 00 94",
+      "asx_sha256": "f72e56878e517608c9a18f571adc0350deef794056fb4597aa7438a71aaba8a4"
+    },
+    {
+      "name": "EV027",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv s0\r\nendproc\r\n",
+      "source_sha256": "1fbda86537ef7711fb113d063239d7fef8b8b81d24ce1e058499bb5a9dc4198d",
+      "success": true,
+      "label": "putenv s0",
+      "log_sha256": "d0455d6a033b81647a49a2c9305f5311c40c92e0f3bbd907230965307ca44414",
+      "errors": [],
+      "hex": "02 cf 8b 64 00 94",
+      "asx_sha256": "2d2a3fc220bc3f1c5c6a8b93b8462dce9c76b0072c9fce36823425085d673296"
+    },
+    {
+      "name": "EV028",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv $NULL\r\nendproc\r\n",
+      "source_sha256": "73a19fe6e5fd25f5c833fad008bee1f5b47988fb0719beff6c4140cabe4229f8",
+      "success": true,
+      "label": "putenv $NULL",
+      "log_sha256": "644e296f3cf0eb4edcf7987b2b57d105c0f23d4ac2531e1a32aa6d177a3404fe",
+      "errors": [],
+      "hex": "02 cf 8b 6e 13 94",
+      "asx_sha256": "33235b24d053edc8c0084d17ff5d7457ab75c56ce53ff245749140a77799ac81"
+    },
+    {
+      "name": "EV029",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv $FDATE\r\nendproc\r\n",
+      "source_sha256": "57bce3b78a61c3e693f47b76ec3030887f004f06fabfbc95a050debee515985d",
+      "success": true,
+      "label": "putenv $FDATE",
+      "log_sha256": "0621b0869ac0ea9b7df37f38feb0b636daaac1e42ba10469096ca2cb30c5879f",
+      "errors": [],
+      "hex": "02 cf 8b 6e 0a 94",
+      "asx_sha256": "786a87e29123f78b6bd4af883c7db95b0489d434d6ea9b51c27ff07050a1a58e"
+    },
+    {
+      "name": "EV030",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv \"\"\r\nendproc\r\n",
+      "source_sha256": "98111cce0a1d08896f33abe94406ca00c4501047cd9f823401c0f97a63a14b50",
+      "success": true,
+      "label": "putenv \"\"",
+      "log_sha256": "405f9278d97aa0e5cbe7df7474d9d96aff87f451801a57fe219e540dc4700b1f",
+      "errors": [],
+      "hex": "02 cf 8b 6e 13 94",
+      "asx_sha256": "33235b24d053edc8c0084d17ff5d7457ab75c56ce53ff245749140a77799ac81"
+    },
+    {
+      "name": "EV031",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv number\r\nendproc\r\n",
+      "source_sha256": "27d4b0a4160589ec320b6851fdf2eb11e2d8bcf4d52554ceb4e570537eef8c22",
+      "success": false,
+      "label": "putenv number",
+      "log_sha256": "5fdd69dc98d7b3ab4fd20f3c8bb8f0cacfb39705cb7e9d475a26335cd66d6a63",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> NUMBER"
+      ]
+    },
+    {
+      "name": "EV032",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv wide\r\nendproc\r\n",
+      "source_sha256": "228f751d680daa992a06f791a4fb8ce416aed6139a48af5f4509e0504102588d",
+      "success": false,
+      "label": "putenv wide",
+      "log_sha256": "6ec2c25637be7868fff980721b467007e7a5981348fee59fd3b40147161198c3",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> WIDE"
+      ]
+    },
+    {
+      "name": "EV033",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv ON\r\nendproc\r\n",
+      "source_sha256": "9bf09beb968afad52cb04a33814b3c4c17919acba0666192aae531f4dd9d6d4a",
+      "success": false,
+      "label": "putenv ON",
+      "log_sha256": "92dc25d83cacd79f0278b1da6271e23ff25c15aa3a68d96dc8112358c392ea58",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ON"
+      ]
+    },
+    {
+      "name": "EV034",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv (name)\r\nendproc\r\n",
+      "source_sha256": "af7ea0146fb2e87db1f18ca10ea9f3a5c61dfe6a9be4f4da6466c88a8e60735f",
+      "success": false,
+      "label": "putenv (name)",
+      "log_sha256": "9960fdcdcb8060da58223f1136c116b4c8a9e443ae48e33ea2c2d3ecf3b508b9",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> (",
+        "Error C002 Line 5: Unexpected token ==> NAME",
+        "Error C002 Line 5: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "EV035",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv name+\"X\"\r\nendproc\r\n",
+      "source_sha256": "5ea9cc5d610171ad482950f7432962fb3809ce93c66208f3c3e00e16a04d512b",
+      "success": false,
+      "label": "putenv name+\"X\"",
+      "log_sha256": "42c2e528f8cca5475195134c616f2b44454b2f0dfa7246029254464cf5fff9e9",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> +",
+        "Error C002 Line 5: Unexpected token ==> X"
+      ]
+    },
+    {
+      "name": "EV036",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv name,\r\nendproc\r\n",
+      "source_sha256": "de82d6e993174b9bd04b8e8734daa40896f7dae84f618ed5f7934307e74f3e30",
+      "success": false,
+      "label": "putenv name,",
+      "log_sha256": "88262696d21918cf8116bf6f2c338e91913e842afd465d176e326fc822c6db72",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "EV037",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv ,name\r\nendproc\r\n",
+      "source_sha256": "b19beb0ae9dad4827b87ffadfca975c188b38e7bc872a14bf10b3de597cd99c3",
+      "success": false,
+      "label": "putenv ,name",
+      "log_sha256": "109a4fcd588ba68028261f4952350e72d7dd4033171c4bc5a42286b4f0a0bd13",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ,",
+        "Error C002 Line 5: Unexpected token ==> NAME"
+      ]
+    },
+    {
+      "name": "EV038",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv name value\r\nendproc\r\n",
+      "source_sha256": "b8d97886380c178b534afe125be3a0a7f8daae6f7c5e4bc4cd3b60098c63f609",
+      "success": false,
+      "label": "putenv name value",
+      "log_sha256": "06cc79635d13cfea59bf1f81f051ada4ed597600375a23572ee9ea3d02b33558",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> VALUE"
+      ]
+    },
+    {
+      "name": "EV039",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv \"A=B\" \"C=D\"\r\nendproc\r\n",
+      "source_sha256": "b3784f91eb8af5ad5154ac8d2d81892f7e754fe2da7b9977394f8de1ebf479a5",
+      "success": false,
+      "label": "putenv \"A=B\" \"C=D\"",
+      "log_sha256": "446d852c55b6ffe6fa5bcc2907328b812d0fd77625d86d5bff11e123092d14eb",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> C=D"
+      ]
+    },
+    {
+      "name": "EV040",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nstring localname=\"A=B\",localvalue\r\ngetenv localname localvalue\r\nendproc\r\n",
+      "source_sha256": "4fc2b54246e57b9f69f7016ce88afd716d13ff045c0484e62b9026c5edc0a9a0",
+      "success": true,
+      "label": "string localname=\"A=B\",localvalue\ngetenv localname localvalue",
+      "log_sha256": "9a2ef5f28da5e6b194f668afdbcce5081dc8242855ce091aa5fc178580360f25",
+      "errors": [],
+      "hex": "02 d2 a2 00 ac a0 00 00 aa b6 86 08 20 c1 00 cf 4c a0 00 00 a0 51 00 95",
+      "asx_sha256": "f1a5bb5e6a0e90f4b9a05f39176af8b2f9cfbd9d2ad9086f5b6c1b6154b365e2"
+    },
+    {
+      "name": "EV041",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ncall worker with \"A\" \"B\"\r\nendproc\r\nproc worker\r\nstrparm namearg\r\nstrparm valuearg\r\ngetenv namearg valuearg\r\nendproc\r\n",
+      "source_sha256": "2091584ff8688dae1392197596ec691c971bdd841df96899761fe282719113f4",
+      "success": true,
+      "label": "call worker with \"A\" \"B\"",
+      "log_sha256": "5551a7226ba91af3126e5e182d0ff1113c9ebb2430f6dae269956d9ec9a6bf10",
+      "errors": [],
+      "hex": "02 cf d0 cd aa b4 8c 9a cd aa b4 05 89 c8 16 00 00 00 d2 5e ff 94 cf 4c 96 a8 00 96 57 00 95",
+      "asx_sha256": "0d2e09fa0f26243596cf233a412b594309ceb8771078e30f3b18c2a670e65d74"
+    },
+    {
+      "name": "EV042",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\" value\r\nendproc\r\n",
+      "source_sha256": "3cd410b82c23f8cc28f2fccb061896865cf95a60ea12b972341c16fbeeff6e30",
+      "success": true,
+      "label": "getenv \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\" value",
+      "log_sha256": "a642e742a2ce3276c37a862dde420805d6ae68a572c2a34aa05b2b8ac8c145d3",
+      "errors": [],
+      "hex": "02 cf 4c aa 03 5a 5d 5d 9f 23 ff 77 2f 63 6f d9 75 91 0b 5d 5d 9f 23 ff 77 2f 63 6f d9 75 91 0b 5d 5d 9f 23 ff 77 2f 63 6f d9 75 91 0b 5d 5d 9f 23 ff 77 2f 63 6f d9 75 91 0b 5d 5d 9f 23 ff 77 2f 63 6f d9 75 91 0b 5d 5d 9f 23 ff 77 2f 63 6f d9 75 91 0b 5d 5d 8c 01 94",
+      "asx_sha256": "ed787716070982eadd319dbb3e1ea2fbd014d63bd852fabd1a678a201964afd0"
+    },
+    {
+      "name": "EV043",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ngetenv \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\" value\r\nendproc\r\n",
+      "source_sha256": "4a10b8704501e7f798bed1396d623943a8917f7434de4b118b8d1e9be1fc4689",
+      "success": false,
+      "label": "getenv \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\" value",
+      "log_sha256": "a4feb8d235efcf6014c0eb80672b79a76599272925e6e367bf88871d89354e0c",
+      "errors": [
+        "Error C043 Line 5: Maximum token length exceeded ==> XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+      ]
+    },
+    {
+      "name": "EV044",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nstring localname=\"A=B\",localvalue\r\nputenv localname\r\nendproc\r\n",
+      "source_sha256": "04f1e8826f5456c483419886ac171961a3eed462b6ce3b5a37b69992560f4170",
+      "success": true,
+      "label": "string localname=\"A=B\",localvalue\nputenv localname",
+      "log_sha256": "0c081e542aa90076c17875501205ca71602497db4fb674256791b4d579725448",
+      "errors": [],
+      "hex": "02 d2 a2 00 ac a0 00 00 aa b6 86 08 20 c1 00 cf 8b a0 00 00 95",
+      "asx_sha256": "65e578e2c2bd6441ee60c889df0c5735708db10d324237d400d2738acf677239"
+    },
+    {
+      "name": "EV045",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\ncall worker with \"A\" \"B\"\r\nendproc\r\nproc worker\r\nstrparm namearg\r\nstrparm valuearg\r\nputenv namearg\r\nendproc\r\n",
+      "source_sha256": "ef1686c7efb2a02792e0ee1ed6d4e92d49a7b0f78963e0d6cd8ec6b4cc6f89e6",
+      "success": true,
+      "label": "call worker with \"A\" \"B\"",
+      "log_sha256": "95ba433546fae467922bbf643cb4f77df402a2d27c8d39fcb8328e55f2308790",
+      "errors": [],
+      "hex": "02 cf d0 cd aa b4 8c 9a cd aa b4 05 89 c8 16 00 00 00 d2 5e ff 94 cf 8b 96 a8 00 95",
+      "asx_sha256": "19fa3745a4b2f2051c87f13d004a97ee86001c50590d86fc080693dd9eb80f2a"
+    },
+    {
+      "name": "EV046",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"\r\nendproc\r\n",
+      "source_sha256": "fc1b52fbcfbcc8ebd947a9a23a080f5f664cf93ca9e3c2c246f4cbd1297deda2",
+      "success": true,
+      "label": "putenv \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"",
+      "log_sha256": "8f53dd8be80e88deab210dc7ae9ccea791ee910be614303e6ec0fee1a646d3ab",
+      "errors": [],
+      "hex": "02 cf 8b aa 03 5a 5d 5d 9f 23 ff 77 2f 63 6f d9 75 91 0b 5d 5d 9f 23 ff 77 2f 63 6f d9 75 91 0b 5d 5d 9f 23 ff 77 2f 63 6f d9 75 91 0b 5d 5d 9f 23 ff 77 2f 63 6f d9 75 91 0b 5d 5d 9f 23 ff 77 2f 63 6f d9 75 91 0b 5d 5d 9f 23 ff 77 2f 63 6f d9 75 91 0b 5d 5d 94",
+      "asx_sha256": "d52e09d132a168a495e503182548f43012d8c226066d53078521989b7090147c"
+    },
+    {
+      "name": "EV047",
+      "source": "integer number\r\nlong wide\r\nstring name,value\r\nproc main\r\nputenv \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"\r\nendproc\r\n",
+      "source_sha256": "da279bb3fa86e74a9179c0a3f6fa04b2e661591fd3c4bfa4ff158cf44a0a60ba",
+      "success": false,
+      "label": "putenv \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"",
+      "log_sha256": "9d63e8820a95a5a58d0c42a8d514a8c88ba9e1ea36479eaf32d067ac26a11c98",
+      "errors": [
+        "Error C043 Line 5: Maximum token length exceeded ==> XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+      ]
+    }
+  ],
+  "scope": "Authored source compilation only; expected values fixed independently before runtime execution."
+}

@@ -175,7 +175,7 @@ def main():
 }
 '''
  (out/'harness.c').write_text(program)
- cs=['runtime.c','script_file_runtime.c','file_info_runtime.c','file_times_runtime.c','enumeration_runtime.c','file_io.c','script_path.c','serial_runtime.c','receive_runtime.c','directory_runtime.c','when_runtime.c','set_runtime.c','find_runtime.c']
+ cs=['runtime.c','environment_runtime.c','script_file_runtime.c','file_info_runtime.c','file_times_runtime.c','enumeration_runtime.c','file_io.c','script_path.c','serial_runtime.c','receive_runtime.c','directory_runtime.c','when_runtime.c','set_runtime.c','find_runtime.c']
  for native in (False,True):
   name='NATIVE' if native else 'TIMEVM';objects=[str(ROOT/'build/aspect-file-times/file_times.obj') if native and n=='file_times' else str(COMPONENT/(n+'.obj')) for n,_,_ in ASM]
   subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dASPECT_RUNTIME_DIAGNOSTIC',*(['-dTIME_NATIVE_CONTROL','-wcd=202'] if native else []),'-i='+str(ROOT/'src/aspect'),'-i='+str(ROOT/'standalone'),'-fm='+str(out/(name+'.map')),'-fe='+str(stage/(name+'.EXE')),str(out/'harness.c'),str(ROOT/'standalone/compiler_heap_snapshot.c'),*[str(ROOT/'src/aspect'/n) for n in cs],*objects],cwd=out,check=True)

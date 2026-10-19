@@ -101,7 +101,7 @@ def main():
   if case['name']=='CSELF':program+=' ck(runtime_steps==40);ck(runtime_cleanup_count==runtime_close_count);ck(runtime_close_count>1);\n'
  program+=' printf("CHAIN %u cases %u checks %u failures\\n",cases,checks,failures);return failures?1:0;}\n'
  (OUT/'harness.c').write_text(program)
- cs=['runtime.c','script_file_runtime.c','file_info_runtime.c','file_times_runtime.c','enumeration_runtime.c','file_io.c','script_path.c','serial_runtime.c','receive_runtime.c','directory_runtime.c','when_runtime.c','set_runtime.c','find_runtime.c']
+ cs=['runtime.c','environment_runtime.c','script_file_runtime.c','file_info_runtime.c','file_times_runtime.c','enumeration_runtime.c','file_io.c','script_path.c','serial_runtime.c','receive_runtime.c','directory_runtime.c','when_runtime.c','set_runtime.c','find_runtime.c']
  subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dASPECT_RUNTIME_DIAGNOSTIC','-i='+str(ROOT/'src/aspect'),'-fm=CHAIN.map','-fe=CHAIN.EXE',str(OUT/'harness.c'),*[str(ROOT/'src/aspect'/p) for p in cs],*[str(COMPONENT/(name+'.obj')) for name,_,_ in ASM]],cwd=OUT,check=True)
  conf=f'[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\ncycles=max\n[mixer]\nnosound=true\n[autoexec]\n@echo off\nmount c "{OUT}"\nc:\nCHAIN >RESULT.TXT\nif errorlevel 1 goto failed\necho PASS>PASS.TXT\ngoto done\n:failed\necho FAIL>FAIL.TXT\n:done\nexit\n'
  (OUT/'dosbox.conf').write_text(conf)

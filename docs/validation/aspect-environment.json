@@ -1,0 +1,179 @@
+{
+  "passed": true,
+  "terminal_sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+  "runner_sha256": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+  "compiler_sha256": "0f58f46f9cec25810fc53d331aaaf318f61d9f5b684598ef2b0ecba361bde8b3",
+  "native_bytes": 555,
+  "reused_bytes": 237,
+  "component_cases": 697,
+  "original_comparisons": 697,
+  "supported_opcodes": 105,
+  "unsupported_opcodes": 110,
+  "evidence": {
+    "native": {
+      "path": "build/aspect-environment/checks.json",
+      "sha256": "5d22c7e934004a8dc887c1a89975cfea738c312deff46942da05cfb8dab26faf"
+    },
+    "original": {
+      "path": "build/aspect-environment/native-checks.json",
+      "sha256": "5352d807e99f14cd53bbda2157eb9cb1eb270d853fe3072a4fab254c1b85ef5d"
+    },
+    "host": {
+      "path": "build/aspect-environment/compiler-checks.json",
+      "sha256": "9f90bba3245adafdcc2b9a36455c89db87c103a43af0cdcbab06ffb9dd2b92d5"
+    },
+    "compiler": {
+      "path": "build/aspect-compiler-dos/checks.json",
+      "sha256": "bfe1144f338e3e9736e1e31fdcf1dddc74f034e12e3b316a7e82a8b8f9373814"
+    },
+    "runtime": {
+      "path": "build/aspect-runtime/checks.json",
+      "sha256": "ae6ecacd03fe74fa9a90da66a56242af72c307267382bd3b6ffeb3291e9524eb"
+    },
+    "VM": {
+      "path": "build/aspect-environment-dos/integrated-02/checks.json",
+      "sha256": "19c419d1a71766877728ef14b9011bc126e95ecd04034e304025535294450081"
+    },
+    "queries": {
+      "path": "build/aspect-system-query-dos/environment-regression-01/checks.json",
+      "sha256": "cfaa1ab8eb5e7c3a4dbb64084886084782d19cf24ecac2e1cca9b52fa1bbd531"
+    },
+    "timestamps": {
+      "path": "build/aspect-file-times-dos/environment-regression-01/checks.json",
+      "sha256": "5b77c57efc682a0139e41a04750777d2b38a873d77dc8f908517e48d7856a459"
+    },
+    "parent": {
+      "path": "build/aspect-environment-parent-dos/integrated-01/checks.json",
+      "sha256": "a1efe46aa7c830cc115d851f897ec644af86fb84c113fbf28d3f12113f79ea8b"
+    },
+    "ENiGMA": {
+      "path": "build/bbs-lab/results/enigma/owned-environment-login-01/search-checks.json",
+      "sha256": "a60704c4b6031e1196c2563cbdd7d6c9efc249f947bfee6914da2c23d1365d47"
+    }
+  },
+  "original_compiler": {
+    "cases": 48,
+    "accepted": 19,
+    "rejected": 29
+  },
+  "DOS_compiler": {
+    "cases": 1932,
+    "accepted": 1008,
+    "rejected": 924
+  },
+  "VM": {
+    "cases": 403,
+    "assertions": 3119,
+    "rounds": 31,
+    "native_control": "NATIVE_ENV_CONTROL 9 checks 0 failures first-value=missing second=TWO"
+  },
+  "runtime_summary": "ASPECT_RUNTIME 1111 cases 26686 checks 0 failures",
+  "parent_checks": {
+    "renderer_post_sent": true,
+    "DOS_expected_exit": true,
+    "hardware_restored": true,
+    "PRM_unchanged": true,
+    "binary_unchanged": true,
+    "no_peer_errors": true,
+    "no_unexpected_commands": true,
+    "directory_expected_updates_only": true,
+    "fixture_unchanged_LOGIN.ASP": true,
+    "fixture_unchanged_LOGIN.ASX": true,
+    "fixture_unchanged_RENDER.COM": true,
+    "actual_init_and_dial": true,
+    "actual_DOS_CPR": true,
+    "actual_DOS_DA": true,
+    "actual_screen_snapshot": true,
+    "passive_EXEC_observed": true,
+    "child_exit_expected": true,
+    "parent_JFT_unchanged": true,
+    "all_parent_sink_owners_unchanged": true,
+    "explicit_password_only": true,
+    "ordinary_parent_keyboard_resumes": true,
+    "initial_CPR_before_password": true,
+    "no_automatic_redial": true,
+    "frozen_inputs": true,
+    "post_query_sent_after_password": true,
+    "post_return_cursor_coherent": true,
+    "video_0_0": true,
+    "far_history_retained_across_EXEC_return": true,
+    "far_history_bounds": true,
+    "native_renderer_updated_far_history": true,
+    "environment_before_login": true
+  },
+  "ENiGMA_checks": {
+    "DOS_harness": true,
+    "unique_authenticated_session": true,
+    "exact_owned_modules": true,
+    "inputs_unchanged": true,
+    "no_post_saved": true,
+    "real_search_route": true,
+    "title_search": true,
+    "index_selection": true,
+    "index_paging": true,
+    "selected_game_details": true,
+    "diz_page": true,
+    "nfo_navigation": true,
+    "bottom_content": true,
+    "empty_search": true,
+    "DOS_source_compiler": true,
+    "native_file_trace": true,
+    "no_keyboard_credentials": true,
+    "native_file_info": true,
+    "native_enumeration_trace": true,
+    "native_attribute_trace": true,
+    "native_timestamp_trace": true,
+    "native_system_query_trace": true,
+    "native_environment_trace": true
+  },
+  "core_objects_identical": {
+    "runtime": "320babd091e298bdedf11c4b6a6dbbf0fc6b80a54a350ee9366995aa97a43158",
+    "environment_runtime": "0d3a2a6f23ae73805970ef924c65684342f953a5b7e119063e59c2bf9cf36d42",
+    "script_file_runtime": "5c462b8f7448dd4e6ebb1bef8dcd3b039b177b3a73c26aca50c0c5c4c06bccb2",
+    "file_info_runtime": "fa3f7f6b34a307e80fe67905b9c8f3efb1ec86acb2da3d0577fdde8bec8bf5d3",
+    "file_times_runtime": "58ff0a4546d5f096ff905ae485f6235013f56ecd0be9d305e9c8fc787bd8a52b",
+    "enumeration_runtime": "5e5b36e3e8d24a7a514d2ccccf0f50171634e99bd1608342e4c9f6fe23b1b396",
+    "file_io": "7a26f2b102e98887ef6f978effc8c38c08cf738b22db301a9b03f6ba64667e72",
+    "script_path": "d38436fead2c3966bf3a8413b6650962c335793c2fe611a334db328f597e6446",
+    "serial_runtime": "25201f14abdce19105d771df095faa7d3a0157e1145f9ab4a28b480701596ffd",
+    "receive_runtime": "4d985ebabf7d175a7d6809fd097408865a089db6145de5f14298692920cdf2bb",
+    "directory_runtime": "b83b8c4b33cd4985a7853744914e32e87b87c98c78a2bba933119575b71459d2",
+    "when_runtime": "3be45454cbec79036f09aa05efc1d8bf6b3bea141e8a418b123448e789874db8",
+    "set_runtime": "2a00ab8f80979f27312b1b81969c1cda9614995f432faadfb125242bb4ede63f",
+    "find_runtime": "e112d5b2d1cf6834a3597b79422f2452d37ec9e29953a306227009c3242d316b"
+  },
+  "platform_probe": {
+    "probe.c": "c0c5986ccea4d3ce0f4a4350e394f3bb71e36ea0aa4866c4b89408f6362d80df",
+    "PROBE.EXE": "b1401d718e64b3619a724c6bcca839fca8e0cee40eb92d4e23cdfe129b34ac02",
+    "RESULT.TXT": "1ccaaaadf99a71b4e914bb0b6cfbd276096ebfbf8f103c475f820502533c36b1"
+  },
+  "REA": {
+    "bundle_sha256": "0d5e109b815b6a2bd8e14adb10e0e1d1559edabd64f8691f7c8a397be7cc726b",
+    "evidence_ids": [
+      "ev_2a7875620d58eec85cf9dd20bfcb547d1b1cce414d4ecf486a02c7c15b6d1e6f",
+      "ev_451993f42a50a6eacafb9393b52b42b1d529cb4b306df37c865885f2d9c8fe51",
+      "ev_68e055c4b228a44aacfc97938f5bf6c2913490b614663c16e4193279b9a53d47",
+      "ev_9b5f620758bcb1e3e55e491c9e00fb22d6a67ada7f16739c3f84c909768298c7",
+      "ev_c03965c7bafecd0f75ad7a73f3463cb948940293b47c5658505e58c67fbab85e",
+      "ev_e4e9cb37fc40e357fbcd8fefcd94736e17d15db623498f6411c49ba240feee51",
+      "ev_e57e56b74315f4e6bd441d040feb39d7bed693659ecda24aa0273acbf0d74f84"
+    ]
+  },
+  "source_build_proof": {
+    "path": "docs/validation/application-components-source-build.json",
+    "sha256": "6c8b2146fcac78d54f6ac038ca8b12bf70f8b8527858003d60a759612a78ddd6",
+    "outputs": 271
+  },
+  "package_manifest_sha256": "234c224af128097284b918d6265b48745b846a4db05d4c94fc35e2d8fe9e3e4c",
+  "recorder_sha256": "8fb4fc68ea94e021ac076cc85aca28157487a1f73e351f9bc0801dce79c493e1",
+  "maintained_policy": "Native case-sensitive CRT/whole assignment uppercase; owned persistent vector/value storage, ordinary environ publication and automatic restore/free at process exit. Native deletion-shrink failure semantics retained.",
+  "retained_characterization": "Native command control loses first assignment through reused borrowed buffer. Watcom also borrows and rejects empty names. Initial harness missing stdlib failed before DOS execution.",
+  "live_server_modified": false,
+  "physical_modem_validated": false,
+  "whole_application_gates_closed": [],
+  "remaining": [
+    "110 ASPECT opcode slots, remaining selectors/recorder and full F01-F16 application requirements.",
+    "Original returning-warning UI; arbitrary native bytecode/table safety and external environment writers.",
+    "Approved live ENiGMA decoder installation and actual catalog/editor/transfer acceptance; physical RS-232 Wi-Fi modem validation."
+  ]
+}

@@ -1,5 +1,6 @@
 """Prompt-driven source login for the isolated synthetic loclab account only."""
-def source(file_info=False,enumeration=False,file_attributes=False,file_times=False,system_queries=False):
+def source(file_info=False,enumeration=False,file_attributes=False,file_times=False,system_queries=False,environment=False):
+ system_queries=system_queries or environment
  file_times=file_times or system_queries
  file_attributes=file_attributes or file_times
  enumeration=enumeration or file_attributes
@@ -49,7 +50,8 @@ ltoa probe_free probe_number
 fputs 4 probe_number
 fclose 4
 ''' if system_queries else ''
- return ('integer cancel_done,scan_done\n'+('long probe_size\n' if file_info else '')+('string probe_number\n' if enumeration else '')+('string probe_attrs\n' if file_attributes else '')+('string probe_date,probe_time\n' if file_times else '')+('integer probe_version_len\nlong probe_free\nstring probe_dir,probe_version\n' if system_queries else '')+'proc main\ninteger attempts\n'+probe+enum_probe+attr_probe+time_probe+query_probe+
+ environment_probe='putenv "LOC_A=one"\nif failure\nexit\nendif\nputenv "LOC_B=two"\nif failure\nexit\nendif\ngetenv "loc_a" env_a\ngetenv "loc_b" env_b\nstrcmp env_a "ONE"\nif failure\nexit\nendif\nstrcmp env_b "TWO"\nif failure\nexit\nendif\nputenv "LOC_A="\ngetenv "loc_a" env_empty\nstrcmp env_empty $NULL\nif failure\nexit\nendif\nfopen 4 "ENV.LOG" "wb"\nfputs 4 env_a\nfputs 4 "|"\nfputs 4 env_b\nfputs 4 "|"\nfputs 4 env_empty\nfclose 4\nputenv "LOC_B="\n' if environment else ''
+ return ('integer cancel_done,scan_done\n'+('long probe_size\n' if file_info else '')+('string probe_number\n' if enumeration else '')+('string probe_attrs\n' if file_attributes else '')+('string probe_date,probe_time\n' if file_times else '')+('integer probe_version_len\nlong probe_free\nstring probe_dir,probe_version\n' if system_queries else '')+('string env_a,env_b,env_empty\n' if environment else '')+'proc main\ninteger attempts\n'+probe+enum_probe+attr_probe+time_probe+query_probe+environment_probe+
  'fopen 5 "LOGIN.LOG" "wb"\nfputs 5 "START"\n'
  'cancel_done=0\nscan_done=0\nattempts=0\n'
  'waitfor "lOGIN" 25\ntransmit "^M"\n'
