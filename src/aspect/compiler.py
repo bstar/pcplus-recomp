@@ -29,6 +29,10 @@ TYPED_BUILTINS = {**{name: (0, slot) for name, slot in BUILTINS.items()},
                   **{name: (1, slot) for name, slot in LONG_BUILTINS.items()},
                   **{name: (3, slot) for name, slot in STRING_BUILTINS.items()}}
 SIZES = (2, 4, 8, 81)
+SET_BOOLEAN = {'display': 0x12, 'findcase': 0x23, 'switchcase': 0x44,
+               'waitcase': 0x55, 'whencase': 0x56, 'keys': 0x29,
+               'rxdata': 0x3B, 'msg_crlf': 0x2E}
+SET_INTEGER = {'pausechar': 0x30, 'txpace': 0x4C}
 OPS = {"+": 0x00, "-": 0xB5, "*": 0x7D, "/": 0x26, "%": 0x7B,
        "==": 0x32, "!=": 0x7F, "<": 0x6D, ">": 0x54,
        "<=": 0x68, ">=": 0x48}
@@ -399,13 +403,32 @@ class Compiler:
             args.append(parser.parse(7))
         return args
 
+    def set_command(self, tokens):
+        if len(tokens) < 3:
+            self.error('SET requires a setting and value')
+        setting = tokens[1]
+        if setting in SET_BOOLEAN or setting == 'duplex':
+            values = ('full', 'half') if setting == 'duplex' else ('off', 'on')
+            if len(tokens) != 3 or tokens[2] not in values:
+                self.error(f'SET {setting.upper()} requires {"/".join(values).upper()}')
+            self.emit(0x9E, 0x18 if setting == 'duplex' else SET_BOOLEAN[setting],
+                      values.index(tokens[2]))
+        elif setting in SET_INTEGER:
+            # Range checks belong to the native runtime reader. The original
+            # compiler also emits out-of-range integer constants unchanged.
+            operands = tokens[3:] if tokens[2] == ',' else tokens[2:]
+            parser = Expression(operands, self.line)
+            node = parser.parse(7)
+            if parser.pos != len(parser.tokens) or operands[0] == '(':
+                self.error(f'SET {setting.upper()} requires an atomic integer operand')
+            value = self.word_argument(node)
+            self.emit(0x9E, SET_INTEGER[setting])
+            self.operand(value, compact=True)
+        else:
+            self.error(f'unsupported SET setting {setting}')
+
     def when_command(self, tokens):
         command = tokens[0]
-        if command == 'set':
-            if len(tokens) != 3 or tokens[1] != 'whencase' or tokens[2] not in ('on', 'off'):
-                self.error('supported SET form is SET WHENCASE ON/OFF')
-            self.emit(0x9E, 0x56, int(tokens[2] == 'on'))
-            return
         # Commas are separators in native compiler input. They cannot replace
         # the required slot itself, and a slot expression/parenthesis is not
         # part of this atomic-operand command grammar.
@@ -459,7 +482,10 @@ class Compiler:
 
     def command(self, tokens):
         command = tokens[0]
-        if command in ('when', 'cwhen', 'set'):
+        if command == 'set':
+            self.set_command(tokens)
+            return
+        if command in ('when', 'cwhen'):
             self.when_command(tokens)
             return
         args = self.arguments(tokens[1:])

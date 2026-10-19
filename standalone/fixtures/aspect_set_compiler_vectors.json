@@ -1,0 +1,459 @@
+{
+  "schema": "aspect-set-compiler-v1",
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "private_report": "analysis/aspect-set/compiler-01/report.json",
+  "private_report_sha256": "c91a54f042a0063c1247d8f29c0e2e87eb16832b80dc837d8fdce38b5e513dd3",
+  "private_probe_sha256": "ebc530096a4b039e5047c37ecd9cf01bc3a814e43c0e928e19128fbfcb59c9c7",
+  "freezer_sha256": "a8f57c979b72f4ddb7bf1a81437bbf57feac73776169a290b1bf63cdb9e055ed",
+  "private_followup_report": "analysis/aspect-set/compiler-02/report.json",
+  "private_followup_report_sha256": "8a34594b30bca7d839786bcf9a51d3f0066809a25a4ad5e33463aa7dffcfa350",
+  "private_followup_probe_sha256": "766756b0bdd908de476ff57963da385f05db10180f942147c5a35c3052e9919d",
+  "source_encoding": "cp437",
+  "vectors": [
+    {
+      "name": "S00",
+      "label": "DISPLAYON",
+      "source": "integer setting\r\nproc main\r\nset DISPLAY ON\r\nendproc\r\n",
+      "source_sha256": "ebb3659ceb3b8ff0e11c9124aeb41282116b0799e233b3954166928b68545696",
+      "hex": "00 cf 9e 12 01 94",
+      "asx_sha256": "983bce0e426c075b241ecc2a6ec8255fb0e6befe3655d7f5eda694d0cf5605f6"
+    },
+    {
+      "name": "S01",
+      "label": "DISPLAYOFF",
+      "source": "integer setting\r\nproc main\r\nset DISPLAY OFF\r\nendproc\r\n",
+      "source_sha256": "bceaa59a93dcc1985d2433870d49021deaabd07d2944fb3d92e373070fea4570",
+      "hex": "00 cf 9e 12 00 94",
+      "asx_sha256": "ab0a0270dcd3b1701234620f676740f2b9ba512589756ee2cb3a09d88b41db7c"
+    },
+    {
+      "name": "S02",
+      "label": "FINDCASEON",
+      "source": "integer setting\r\nproc main\r\nset FINDCASE ON\r\nendproc\r\n",
+      "source_sha256": "3241f5da99d38f9967be3c2bbf3de7b6e1e49d380d6c16a6adea43401b0de8d4",
+      "hex": "00 cf 9e 23 01 94",
+      "asx_sha256": "bceedc44660452ef4d6aee4d49b518793b4101ac190046481585973c21ed78f0"
+    },
+    {
+      "name": "S03",
+      "label": "FINDCASEOFF",
+      "source": "integer setting\r\nproc main\r\nset FINDCASE OFF\r\nendproc\r\n",
+      "source_sha256": "376b205de9083080acf9fd0fcc8c4ede73946a6a75fff823cc8bbf484b531561",
+      "hex": "00 cf 9e 23 00 94",
+      "asx_sha256": "7cea7cf4ef2982e45f7997cff0a46d1aa05a96ab5c467e03f929334bf91bef2e"
+    },
+    {
+      "name": "S04",
+      "label": "WAITCASEON",
+      "source": "integer setting\r\nproc main\r\nset WAITCASE ON\r\nendproc\r\n",
+      "source_sha256": "b5effe30bf17a7f952bd680ba801c5cb31c2364e9d91084841cc887eb03a15e2",
+      "hex": "00 cf 9e 55 01 94",
+      "asx_sha256": "c38d36276d04e5d56ca0892d494269c0b6b91e6366b8a6464ecdd39411953930"
+    },
+    {
+      "name": "S05",
+      "label": "WAITCASEOFF",
+      "source": "integer setting\r\nproc main\r\nset WAITCASE OFF\r\nendproc\r\n",
+      "source_sha256": "75231f43602a4a7b49d7fbd6f38f51da9c325de274d1b6a98a052806aae43686",
+      "hex": "00 cf 9e 55 00 94",
+      "asx_sha256": "ae7986ee039b298563d434c0bd9eaca0986a1a8cda5c2692d04b19fe47fd2945"
+    },
+    {
+      "name": "S06",
+      "label": "SWITCHCASEON",
+      "source": "integer setting\r\nproc main\r\nset SWITCHCASE ON\r\nendproc\r\n",
+      "source_sha256": "8fc999b3a8719f4ff30f7119fb5bebf993c402babb60f8f202b9617a4cc66d35",
+      "hex": "00 cf 9e 44 01 94",
+      "asx_sha256": "00669af15029dd28f9d91ef0690326284d97ae5ca1f769b4811d12a06abf5332"
+    },
+    {
+      "name": "S07",
+      "label": "SWITCHCASEOFF",
+      "source": "integer setting\r\nproc main\r\nset SWITCHCASE OFF\r\nendproc\r\n",
+      "source_sha256": "2e2df8e4859c73dfb6e01eb8fca73609e460b2ff793ff0529d5ad326906a1971",
+      "hex": "00 cf 9e 44 00 94",
+      "asx_sha256": "6f0be1f32dc8945cc45852811327b2fe840f3c52fd571ed038feead093e45de0"
+    },
+    {
+      "name": "S08",
+      "label": "WHENCASEON",
+      "source": "integer setting\r\nproc main\r\nset WHENCASE ON\r\nendproc\r\n",
+      "source_sha256": "23a4ca4e5ad9fb8a74af36d0ae98c4d06e86daee0d50d91030680b238171157a",
+      "hex": "00 cf 9e 56 01 94",
+      "asx_sha256": "f37a890d95fe23c2df758df173c343e3be53ec34ce80e3a16bdf9cbdaf9c6c70"
+    },
+    {
+      "name": "S09",
+      "label": "WHENCASEOFF",
+      "source": "integer setting\r\nproc main\r\nset WHENCASE OFF\r\nendproc\r\n",
+      "source_sha256": "81046ec921a8eeb504afdd36dab099f1a86c66fe25d6d6ce3f0c98002c13e00d",
+      "hex": "00 cf 9e 56 00 94",
+      "asx_sha256": "f607abb763e4373f9612a2b7d0f49558343c362cede797674ff4471f9ab32a8c"
+    },
+    {
+      "name": "S10",
+      "label": "KEYSON",
+      "source": "integer setting\r\nproc main\r\nset KEYS ON\r\nendproc\r\n",
+      "source_sha256": "2ab5b8d2d1a4ebd4b0e4cb52964d4175bcee0e86ac27cfe8a193fa336446539d",
+      "hex": "00 cf 9e 29 01 94",
+      "asx_sha256": "913a41fed75efa4e145d7e180d899c88ed42cc1dd5a82ccd3c341287ea423e55"
+    },
+    {
+      "name": "S11",
+      "label": "KEYSOFF",
+      "source": "integer setting\r\nproc main\r\nset KEYS OFF\r\nendproc\r\n",
+      "source_sha256": "2c380227545b3da1c09a7b7d82b3c42a7c780492895e9dd9ed84ac6bd3203a5a",
+      "hex": "00 cf 9e 29 00 94",
+      "asx_sha256": "f5f4ab570d7950f230aafd002ad81184e3bc1a2942c720622c8966358deb643c"
+    },
+    {
+      "name": "S12",
+      "label": "RXDATAON",
+      "source": "integer setting\r\nproc main\r\nset RXDATA ON\r\nendproc\r\n",
+      "source_sha256": "f18333c7f255f16b88ed223ae6d084752d9ba0f0c24fc40462dc4b376da2d968",
+      "hex": "00 cf 9e 3b 01 94",
+      "asx_sha256": "2ee59678c203edb96e35cfd1e577bd299f3ef3964d6d9061552e01180e0be4a5"
+    },
+    {
+      "name": "S13",
+      "label": "RXDATAOFF",
+      "source": "integer setting\r\nproc main\r\nset RXDATA OFF\r\nendproc\r\n",
+      "source_sha256": "a308349eb43f7c048fbb76b9b586aed9ad64448b317faa142c4a2732bce4e7fc",
+      "hex": "00 cf 9e 3b 00 94",
+      "asx_sha256": "c829598039f3977ce4c830fb3efb3ea926ddab3a2f3d601f9591f420b081ddd1"
+    },
+    {
+      "name": "S14",
+      "label": "MSG_CRLFON",
+      "source": "integer setting\r\nproc main\r\nset MSG_CRLF ON\r\nendproc\r\n",
+      "source_sha256": "8dde5d9fdf8eb8acb2b21214c8a8feb43185561443e433d8e789609af9fd0fd2",
+      "hex": "00 cf 9e 2e 01 94",
+      "asx_sha256": "1d4636917b9fdc5bf450f283b3476eb4c016dc4e809ed7e50f89393bd6439f32"
+    },
+    {
+      "name": "S15",
+      "label": "MSG_CRLFOFF",
+      "source": "integer setting\r\nproc main\r\nset MSG_CRLF OFF\r\nendproc\r\n",
+      "source_sha256": "933859a71dd89935314b070dd3d0ccf37ace20a3665c6894f30edc55c72b5f9d",
+      "hex": "00 cf 9e 2e 00 94",
+      "asx_sha256": "8d0392e3bd1dc6d51097721505554b507221abea1fa5d87faaa5932dec61e051"
+    },
+    {
+      "name": "S16",
+      "label": "DUPFULL",
+      "source": "integer setting\r\nproc main\r\nset duplex FULL\r\nendproc\r\n",
+      "source_sha256": "95cd8c38d6c8e69d4838514baa0818ad75dc770a0cd9f5bf03e5d6cad70ddaa7",
+      "hex": "00 cf 9e 18 00 94",
+      "asx_sha256": "00206ccb2c4d47f8a9efd9bfb86838e0b3a68f9161fee74432ae74ff8939758b"
+    },
+    {
+      "name": "S17",
+      "label": "DUPHALF",
+      "source": "integer setting\r\nproc main\r\nset duplex HALF\r\nendproc\r\n",
+      "source_sha256": "7029287a8731ae2234a318a6cd163fc3a1fc17c4303bb1b5237e7eee73b992a3",
+      "hex": "00 cf 9e 18 01 94",
+      "asx_sha256": "bd2f51e38161b590cc56a266dd7c16acda618ae69b54f40732e54b3ea6f87f4a"
+    },
+    {
+      "name": "S20",
+      "label": "PACE0",
+      "source": "integer setting\r\nproc main\r\nset txpace 0\r\nendproc\r\n",
+      "source_sha256": "e3c8848aa686009a163b0d1b76888769c125db6455143f883c575776d2827ece",
+      "hex": "00 cf 9e 4c b5 00 94",
+      "asx_sha256": "c57b9faf67008573b745f7812bfa0e56c899a858f8e7a7256ceeaa1b80457d32"
+    },
+    {
+      "name": "S21",
+      "label": "PACE1",
+      "source": "integer setting\r\nproc main\r\nset txpace 1\r\nendproc\r\n",
+      "source_sha256": "22a817b5c78a1b5506e943ca26e74fea8ae2a552565bf8e7de8fa8e7214e6b6b",
+      "hex": "00 cf 9e 4c b5 01 94",
+      "asx_sha256": "772e517ff86a919ba820f109bb7f2f0fa3cae00b2cae95362554593b93f77ae0"
+    },
+    {
+      "name": "S22",
+      "label": "PACE2",
+      "source": "integer setting\r\nproc main\r\nset txpace 999\r\nendproc\r\n",
+      "source_sha256": "d8f97c6891b5b3eec676d6a29890ae194976699b3a7943d6d1e24c99f7516b19",
+      "hex": "00 cf 9e 4c ab e7 03 94",
+      "asx_sha256": "2923f6abe75193d4b12fb143a227b736eac8e186a84f0fd700b45a05e0e36e07"
+    },
+    {
+      "name": "S23",
+      "label": "PACE3",
+      "source": "integer setting\r\nproc main\r\nset txpace 1000\r\nendproc\r\n",
+      "source_sha256": "b144ae456c0ae64099e625a5316196dc58ec6457fb11782894af9e45291baf98",
+      "hex": "00 cf 9e 4c ab e8 03 94",
+      "asx_sha256": "54599ae67c5c2fbd36112922387e4cc5ae5c746f04226dbfeec8808e1ca25a78"
+    },
+    {
+      "name": "S24",
+      "label": "PACE4",
+      "source": "integer setting\r\nproc main\r\nset txpace -1\r\nendproc\r\n",
+      "source_sha256": "a23056efb60f945a07bb29245a7aa01dc9761bf97eb7d6305a0c82a794cb1e20",
+      "hex": "00 cf 9e 4c ab ff ff 94",
+      "asx_sha256": "ad1a036f89e71afa73ac6b83e2f6319a9993aa72cb5919d799e372d506cf6413"
+    },
+    {
+      "name": "S26",
+      "label": "PACE6",
+      "source": "integer setting\r\nproc main\r\nset txpace setting\r\nendproc\r\n",
+      "source_sha256": "b940de8c5cc2344e02da8a99dd75ceafd2d2a25d27cb74a3c44adcddb40e2a6c",
+      "hex": "00 cf 9e 4c 8d 00 94",
+      "asx_sha256": "d9552225717bca7504417b34df0923f6300139a4e7acaca0bd212cf09832fda8"
+    },
+    {
+      "name": "S27",
+      "label": "PAUSE0",
+      "source": "integer setting\r\nproc main\r\nset pausechar 32\r\nendproc\r\n",
+      "source_sha256": "b893700a8607ba2092b6792c17483bfff234f8e7f6928bfa321097f0a858626e",
+      "hex": "00 cf 9e 30 b5 20 94",
+      "asx_sha256": "f288ad76dea90daf604762ed4066a6cbe62da46ef37ca5f3c3881cd103e90053"
+    },
+    {
+      "name": "S28",
+      "label": "PAUSE1",
+      "source": "integer setting\r\nproc main\r\nset pausechar 126\r\nendproc\r\n",
+      "source_sha256": "d4cf051dddb6e2bd140cc45fd3eb5871397bf9665ea0734aa55797d30ce94c5a",
+      "hex": "00 cf 9e 30 b5 7e 94",
+      "asx_sha256": "e53fa17cc1caacfbfb8ea1c314f0a49e24de67f0333979026b9e5e98c2047f9e"
+    },
+    {
+      "name": "S29",
+      "label": "PAUSE2",
+      "source": "integer setting\r\nproc main\r\nset pausechar 31\r\nendproc\r\n",
+      "source_sha256": "06bd6a7ef5c82525f8630c01581cac4d1a966c1a0a80939271311e267981e8bd",
+      "hex": "00 cf 9e 30 b5 1f 94",
+      "asx_sha256": "0752326b5ce4bf3f514b507d2d45f50b22a102c21a7c8d8f97772584b6235931"
+    },
+    {
+      "name": "S30",
+      "label": "PAUSE3",
+      "source": "integer setting\r\nproc main\r\nset pausechar 127\r\nendproc\r\n",
+      "source_sha256": "b034b2a82bdc378b4b7be6b188c136c778b4cf70bf3ac0dcd0038b206ca9bfd6",
+      "hex": "00 cf 9e 30 b5 7f 94",
+      "asx_sha256": "c4ed3a151cfbb8e11b56ffe1735cd8db46930cc78c03c1cfa146d5ac7962938f"
+    },
+    {
+      "name": "S32",
+      "label": "PAUSE5",
+      "source": "integer setting\r\nproc main\r\nset pausechar setting\r\nendproc\r\n",
+      "source_sha256": "10d8d2f92d0072c9a302c25d285daeee6f48d927bf1d6323c539e11899f89823",
+      "hex": "00 cf 9e 30 8d 00 94",
+      "asx_sha256": "d7a766789ea496392dd38f2851a1b83d43068955fbf778a938519d2834c80340"
+    },
+    {
+      "name": "N03",
+      "label": "COMMA",
+      "source": "integer setting\r\nproc main\r\nset txpace ,1\r\nendproc\r\n",
+      "source_sha256": "0b549050fa4473cf9f55aae1a4e74bc39d9ed10c44dfcdd779e0322ec6af547d",
+      "hex": "00 cf 9e 4c b5 01 94",
+      "asx_sha256": "772e517ff86a919ba820f109bb7f2f0fa3cae00b2cae95362554593b93f77ae0"
+    },
+    {
+      "name": "N04",
+      "label": "PCOMMA",
+      "source": "integer setting\r\nproc main\r\nset pausechar ,126\r\nendproc\r\n",
+      "source_sha256": "798aa15a4543063a036763c40c9f961a1d24d0a3cf54c6d9e19e2695498507d7",
+      "hex": "00 cf 9e 30 b5 7e 94",
+      "asx_sha256": "e53fa17cc1caacfbfb8ea1c314f0a49e24de67f0333979026b9e5e98c2047f9e"
+    },
+    {
+      "name": "N10",
+      "label": "LOCAL",
+      "source": "integer setting\r\nproc main\r\ninteger localvar\r\nset txpace localvar\r\nendproc\r\n",
+      "source_sha256": "993a2c8f588e9737444ba074203c3e8a60719b024d47a6d0a413dfd13214b0c5",
+      "hex": "00 d2 02 00 cf 9e 4c a1 00 00 95",
+      "asx_sha256": "00264f5f7035ca27cd47215f7fb6a44db87d10a7de897b684eb9f718403bea16"
+    },
+    {
+      "name": "PARM",
+      "label": "integerparameter",
+      "source": "proc main\r\ncall worker with 126\r\nendproc\r\nproc worker\r\nintparm item\r\nset pausechar item\r\nendproc\r\n",
+      "source_sha256": "737d702007bee1c9f94c64ad844db3c2cb3feaf63c2213cd73a87a6961c1a4a8",
+      "hex": "00 cf d0 cc b5 7e c8 0f 00 00 00 d2 fe ff 94 cf 9e 30 97 08 00 95",
+      "asx_sha256": "70dd3b96f676a5d0eb9cc9faae9fd159e28e8799fcc74e85f735ac438b2e6347"
+    }
+  ],
+  "rejected": [
+    {
+      "name": "S18",
+      "label": "DUPON",
+      "source": "integer setting\r\nproc main\r\nset duplex ON\r\nendproc\r\n",
+      "source_sha256": "000e1fead1adf19b71196e80fa1ba6b62fdf130b044a6083ce91b82c8ee8014d",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> ON"
+      ]
+    },
+    {
+      "name": "S19",
+      "label": "DUPOFF",
+      "source": "integer setting\r\nproc main\r\nset duplex OFF\r\nendproc\r\n",
+      "source_sha256": "c709dee11fdb8b0aebcb0e1a078c46fd049a056c7e3ffb20a71db9819f881010",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> OFF"
+      ]
+    },
+    {
+      "name": "S25",
+      "label": "PACE5",
+      "source": "integer setting\r\nproc main\r\nset txpace 10L\r\nendproc\r\n",
+      "source_sha256": "c87cc219b6aa171d8fb1b2bbae8bd92e70d469729b0d8082331b749900a9e9e1",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 10L"
+      ]
+    },
+    {
+      "name": "S31",
+      "label": "PAUSE4",
+      "source": "integer setting\r\nproc main\r\nset pausechar \"~\"\r\nendproc\r\n",
+      "source_sha256": "5c92fe2bfba65837dbf390d9234617b477589e1d7d94299cfb54d51f1203ed25",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> ~"
+      ]
+    },
+    {
+      "name": "S33",
+      "label": "BOOL0",
+      "source": "integer setting\r\nproc main\r\nset display 1\r\nendproc\r\n",
+      "source_sha256": "018c66cbce66240bdb7fbabd16708f845ccba979528fe663090703561743a43e",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> 1"
+      ]
+    },
+    {
+      "name": "S34",
+      "label": "BOOL1",
+      "source": "integer setting\r\nproc main\r\nset display setting\r\nendproc\r\n",
+      "source_sha256": "54d46c4226b9fa6a3ac484efec66b92998a4a5916a1ddbb6e181f497447cdaf3",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> SETTING"
+      ]
+    },
+    {
+      "name": "S35",
+      "label": "BOOL2",
+      "source": "integer setting\r\nproc main\r\nset display YES\r\nendproc\r\n",
+      "source_sha256": "0c7fec2fbf9c3f4d758d78d7b43bb9851eef37ed9c55acba9fc36551cc4924f0",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> YES"
+      ]
+    },
+    {
+      "name": "N00",
+      "label": "PAREN",
+      "source": "integer setting\r\nproc main\r\nset txpace (1)\r\nendproc\r\n",
+      "source_sha256": "40252680d47cfd062b96c1a34a2836e3574c7e45e210132968ba256cdd9bd8de",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> (",
+        "Error C002 Line 3: Unexpected token ==> 1",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "N01",
+      "label": "CONSTEXP",
+      "source": "integer setting\r\nproc main\r\nset txpace 1+2\r\nendproc\r\n",
+      "source_sha256": "315ea9577f11b71e62bcf37e73c154df8e5afa0934ac679433defbb4b4861d37",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 2"
+      ]
+    },
+    {
+      "name": "N02",
+      "label": "VAREXP",
+      "source": "integer setting\r\nproc main\r\nset txpace setting+1\r\nendproc\r\n",
+      "source_sha256": "ff04a3f75529f38ab65cf3c7bb5c3183657dbbfa07261fe60c215779d70fd65d",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "N05",
+      "label": "FLOAT",
+      "source": "integer setting\r\nproc main\r\nset txpace 1.0\r\nendproc\r\n",
+      "source_sha256": "08071700312df3f6f7831ee94637b11b09c61d7124630b3c2dedebb91cdf35b9",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 1.0"
+      ]
+    },
+    {
+      "name": "N06",
+      "label": "BIGINT",
+      "source": "integer setting\r\nproc main\r\nset txpace 32768\r\nendproc\r\n",
+      "source_sha256": "c96d3202ac5afa069123c5a383b70a577b91151f627130921e31abfeb48145b0",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 32768"
+      ]
+    },
+    {
+      "name": "N07",
+      "label": "LONGPAUS",
+      "source": "integer setting\r\nproc main\r\nset pausechar 126L\r\nendproc\r\n",
+      "source_sha256": "c85bba38f6a2c18d8e5aa584be13edb021ba83e4d63171f5200c803f8d162bd8",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 126L"
+      ]
+    },
+    {
+      "name": "N08",
+      "label": "STRVAR",
+      "source": "integer setting\r\nstring textvar\r\nproc main\r\nset txpace textvar\r\nendproc\r\n",
+      "source_sha256": "51457ed56a8e41d73882e13207b143c7d0abd924f445142ef915d330f63de666",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> TEXTVAR"
+      ]
+    },
+    {
+      "name": "N09",
+      "label": "LONGVAR",
+      "source": "integer setting\r\nlong longvar\r\nproc main\r\nset txpace longvar\r\nendproc\r\n",
+      "source_sha256": "25182d597ba51462f3e97451039dce9bbec1b81bd44b2d3fde29f5b4cb4eb6b1",
+      "errors": [
+        "Error C021 Line 4: Invalid numeric variable or constant ==> LONGVAR"
+      ]
+    },
+    {
+      "name": "N11",
+      "label": "EXTRA",
+      "source": "integer setting\r\nproc main\r\nset txpace 1,2\r\nendproc\r\n",
+      "source_sha256": "971e54be6249c2fd930239a6ae3c7ca0d002a0932742ba8a09a3924e6c6ab7ca",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> 2"
+      ]
+    },
+    {
+      "name": "N12",
+      "label": "FLAGCOM",
+      "source": "integer setting\r\nproc main\r\nset display ON,\r\nendproc\r\n",
+      "source_sha256": "8f7c5fddbcab70909cb217517cfbbad6e394c961b2213a89a4d71f33c01394bc",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "N13",
+      "label": "BOOLPAR",
+      "source": "integer setting\r\nproc main\r\nset display (ON)\r\nendproc\r\n",
+      "source_sha256": "70e5c03f2d4a0a41b66c1519eff3429fa4b457ddfc60256b7832d404d0defd3b",
+      "errors": [
+        "Error C001 Line 3: Invalid token ==> (",
+        "Error C002 Line 3: Unexpected token ==> ON",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "ARRAY",
+      "label": "arraybrackets",
+      "source": "integer values[2]\r\nproc main\r\nset txpace values[1]\r\nendproc\r\n",
+      "source_sha256": "a984ab27209cf8bc70ae55f702f8437e0f755d0ddba453c089e3dece67afd78e",
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> VALUES[2]",
+        "Error C021 Line 3: Invalid numeric variable or constant ==> VALUES[1]"
+      ]
+    }
+  ],
+  "scope": "Selected SET source grammar/encoding only. This corpus does not establish runtime support or complete SET/compiler coverage."
+}

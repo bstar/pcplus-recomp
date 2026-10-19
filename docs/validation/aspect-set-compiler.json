@@ -1,0 +1,85 @@
+{
+  "schema": "aspect-set-compiler-validation-v1",
+  "passed": true,
+  "scope": "Selected host compiler grammar/encoding. DOS runtime SET support remains WHENCASE only; full application gates stay open.",
+  "original_inputs": [],
+  "sources": {
+    "src/aspect/compiler.py": "f88d2038c95ace6a67c1fca3ab6a26da661a883743d789d257a7184040e47344",
+    "standalone/freeze_aspect_set_compiler.py": "a8f57c979b72f4ddb7bf1a81437bbf57feac73776169a290b1bf63cdb9e055ed",
+    "standalone/test_aspect_set_compiler.py": "fa7543784ae3aa9e9ff726484472c08259d2d4043039b0d58cea1d36ce601ea0",
+    "standalone/fixtures/aspect_set_compiler_vectors.json": "3c7b2e6a0997faa0d2953bfacc5caba997b5cd18c55816c2833b646e04356602",
+    "docs/ASPECT_SET_COMPILER.md": "d6a164e2ca4abe0dbec37ea8a68400785da27cecdff856fa1cf623c5c883a660",
+    "standalone/record_aspect_set_compiler.py": "d997e839e121e92afb2979ca8bf42e73296c987cffa28bbba6db26a35774e12a"
+  },
+  "oracle": {
+    "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+    "report_sha256": "c91a54f042a0063c1247d8f29c0e2e87eb16832b80dc837d8fdce38b5e513dd3",
+    "followup_report_sha256": "8a34594b30bca7d839786bcf9a51d3f0066809a25a4ad5e33463aa7dffcfa350"
+  },
+  "reports": {
+    "build/aspect-set-compiler/checks.json": {
+      "sha256": "9282a48c1648a57804aecabe8b38443fdc650454d69be6fdefbe169d3706f76a",
+      "result": {
+        "passed": true,
+        "original_inputs": [],
+        "counts": {
+          "accepted": 33,
+          "rejected": 19,
+          "presentation": 33
+        },
+        "compiler_sha256": "f88d2038c95ace6a67c1fca3ab6a26da661a883743d789d257a7184040e47344",
+        "checker_sha256": "fa7543784ae3aa9e9ff726484472c08259d2d4043039b0d58cea1d36ce601ea0",
+        "fixture_sha256": "3c7b2e6a0997faa0d2953bfacc5caba997b5cd18c55816c2833b646e04356602",
+        "scope": "Host compiler grammar/emission only; DOS runtime SET support remains limited to WHENCASE."
+      }
+    },
+    "build/aspect-compiler/checks.json": {
+      "sha256": "9da5400529b2f4ae47473ccd4a57e5b1257dad43a5ffb389b8a72d5e20a10f7d",
+      "result": {
+        "scope": "Host source compiler tests; frozen public original outcomes are data, no original executable is read.",
+        "original_inputs": [],
+        "success": true,
+        "test_methods": 10,
+        "frozen_vectors_checked": 377,
+        "presentation_variants_checked": 377,
+        "frozen_rejections_checked": 88,
+        "compiler_sha256": "f88d2038c95ace6a67c1fca3ab6a26da661a883743d789d257a7184040e47344",
+        "checker_sha256": "800381fd5c3fe203027b9874ce37cbcb6ba26923e161e4be467be5c751746aa0",
+        "fixture_sha256": {
+          "execution": "2fe02fbc44993cb35e2d9ca9ed6a003070e458dcec4de485d43a7af5a0ce80e4",
+          "arithmetic": "18424774c5bf1856a6aefd04bd7973556c3e375ce402aefee08c6224317f15f4",
+          "parameter": "025c4de5e5681b0a502d566b73555b225610f6293dda69f7f38cb78448a88b67",
+          "string_command": "e6095291b2b868e440bbfc4de735d1130d216546119817788ca66306234a78ee",
+          "conversion": "95296153ff69e7c2c7974af0df17a8a4d1ab2524242f636b9c128aa1b8ee3781",
+          "compiler_validation": "7604d6e801ff1dbed3f7a1d58287c49afe6f5dcbb0c099a3d607ed9f5c5d8c7a",
+          "console": "43693c61e265b31a13324adb550335b0c37238dd737419edcc4b3b598693b60e",
+          "serial": "5b0913c888b2fe19274f9868de9706ee3e4430c6517018c74dd7638d534f1a49",
+          "receive": "41518818a3bfa97bae66277ef04ecf730717cdca31b87f582b310d24793062dc",
+          "directory": "80b38259968e5f1a3c5c5d388fa40928ecd7ed759ffc916158f4632a4ae57676"
+        }
+      }
+    },
+    "build/aspect-when-compiler/checks.json": {
+      "sha256": "b4ca4c29afeb5a5ff36f6ef789f6362605e91400c574180c342f9abd7be6b2bd",
+      "result": {
+        "passed": true,
+        "original_inputs": [],
+        "scope": "Compiler grammar/encoding only; native flag runs four controlled native source component compositions with explicit FILE/platform boundaries. No production WHEN integration claim.",
+        "compiler_sha256": "f88d2038c95ace6a67c1fca3ab6a26da661a883743d789d257a7184040e47344",
+        "checker_sha256": "298f76920a77d0c4ad670fb8c8331c2777ee6c6e7b4adc4397b76760712dd924",
+        "fixtures": {
+          "standalone/fixtures/aspect_when_vectors.json": "be1d33b309bd42cbfaa63599d47d1bcfb16238ae80f26ff11f49722b1c12d969",
+          "standalone/fixtures/aspect_when_compiler_vectors.json": "3af789975d9275dd1657d03c248e5c3e8d5b7dca05bf6f2a2d3ffa068122de93"
+        },
+        "native_bindings": {},
+        "counts": {
+          "accepted": 40,
+          "rejected": 33,
+          "presentation": 40,
+          "authored_rejected": 10,
+          "native_compositions": 0
+        }
+      }
+    }
+  }
+}

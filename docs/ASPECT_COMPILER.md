@@ -13,6 +13,7 @@ Use the pinned toolchain:
 ./tools/dev --command python src/aspect/compiler.py example.ASP -o example.ASX
 ./tools/dev --command python standalone/test_aspect_compiler.py
 ./tools/dev --command python standalone/test_aspect_when_compiler.py
+./tools/dev --command python standalone/test_aspect_set_compiler.py
 ```
 
 The importable interface is `compile_source(source: str) -> bytes`. Unsupported
@@ -46,6 +47,11 @@ It preserves an existing output if compilation fails.
   fixups and rejects parameterized handlers. The [runtime owner](ASPECT_WHEN_RUNTIME.md)
   now executes these events; compiler-only conformance remains documented in
   [ASPECT_WHEN_COMPILER.md](ASPECT_WHEN_COMPILER.md).
+* Selected `set` emission: DISPLAY, FINDCASE, SWITCHCASE, WAITCASE, WHENCASE,
+  KEYS, RXDATA and MSG_CRLF take ON/OFF; DUPLEX takes FULL/HALF;
+  PAUSECHAR and TXPACE take atomic integer operands. Compiler acceptance does
+  not imply runtime support: the maintained DOS runner currently executes
+  only SET WHENCASE. See [SET compiler evidence](ASPECT_SET_COMPILER.md).
 * `atoi`, `atol`, `itoa`, `ltoa`, `message`, `exit`, `pause`, `transmit` and
   `waitfor`, `comgetc`, `comgetcd`, `rget` and `waitquiet` command emission. Their availability
   in any application depends on that application's runtime service wiring.

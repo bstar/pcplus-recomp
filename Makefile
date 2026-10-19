@@ -56,9 +56,12 @@ package:
 	python3 standalone/package_dos.py
 
 .PHONY: test-aspect-compiler
-test: test-aspect-compiler
+test: test-aspect-compiler test-aspect-set-compiler
 test-aspect-compiler:
 	python3 standalone/test_aspect_compiler.py
+.PHONY: test-aspect-set-compiler
+test-aspect-set-compiler:
+	python3 standalone/test_aspect_set_compiler.py
 
 .PHONY: aspect-conversions test-aspect-conversions test-aspect-conversions-compat aspect-conversion-services test-aspect-conversion-services test-aspect-conversion-services-compat
 all: aspect-conversions aspect-conversion-services
