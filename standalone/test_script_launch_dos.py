@@ -2,7 +2,7 @@
 """Actual source-built ASPECT child from live terminal menu and duplex resume.
 All files are synthetic under build; no vendor executable/private script used.
 """
-import hashlib,json,shutil,struct,subprocess,sys
+import argparse,hashlib,json,shutil,struct,subprocess,sys
 from pathlib import Path
 import test_connection_dos as harness
 ROOT=harness.ROOT
@@ -88,6 +88,7 @@ prompt: db 'Press a key to return to the terminal.',0
  return (OUT/'SCRIPT.COM').read_bytes()
 
 def main():
+ parser=argparse.ArgumentParser();parser.add_argument('--case');parser.add_argument('--expected-exit',type=int,default=0);args=parser.parse_args()
  OUT.mkdir(parents=True,exist_ok=True)
  terminal=harness.BINARY;runner=ROOT/'build/aspect-runner/ASPECT.EXE'
  assert runner.is_file(),'Build source-only ASPECT runner first'
@@ -99,27 +100,43 @@ def main():
  unsupported=bytes.fromhex('00 cf fd 94')
  for name,data,helper,escape,want in [
   ('script-child-success',compiled,True,False,5),
+  ('script-serial-handback',compile_source('proc main\ntransmit "READY^M"\nwaitfor "MATCH" 5\nmessage "SCRIPT LIVE"\nendproc\n'),True,False,5),
   ('script-child-unsupported',unsupported,True,False,2),
   ('script-child-missing',compiled,False,False,2),
   ('script-prompt-cancel',compiled,True,True,0)]:
+  if args.case and name!=args.case:continue
   fixture=OUT/name;fixture.mkdir(exist_ok=True)
   shutil.copyfile(terminal,fixture/'TERMINAL.EXE')
   (fixture/'ASPECT.EXE').unlink(missing_ok=True)
   if helper:shutil.copyfile(runner,fixture/'ASPECT.EXE')
   harness.BINARY=fixture/'TERMINAL.EXE'
-  keys='p2200 a-z p300 a p300 '+('escape p300 escape' if escape else 't e s t . a s x enter p1100 space')+' p500 r e a d y p700 a-x'
-  result=harness.run(name,'direct',keys,working_drive='d',arguments='@D:\\TEST.PRM',files={'TEST.ASX':data,'SCRIPT.COM':observer},observer='SCRIPT')
+  keys='p2200 a-z p300 a p300 '+('escape p300 escape' if escape else 't e s t . a s x enter '+('p3000' if name=='script-serial-handback' else 'p1100')+' space')+' p500 r e a d y p700 a-x'
+  serial=name=='script-serial-handback'
+  result=harness.run(name,'success' if serial else 'direct',keys,expected=args.expected_exit,working_drive='d',arguments='@D:\\TEST.PRM'+(' /D:CaseTest:23' if serial else ''),files={'TEST.ASX':data,'SCRIPT.COM':observer},observer=None if serial else 'SCRIPT',online_updates=[(4,b'MATCH\x1b[2;1HREMAINDER')] if serial else ())
   folder=ROOT/'build/connection-dos'/name
-  magic,bits,ticks,_=struct.unpack('<4H',(folder/'SCRIPT.BIN').read_bytes())
-  result['checks'].update(observed_expected_child_console=magic==0x4d43 and ticks>0 and bits==want,
-   ordinary_keyboard_resumes=b'ready' in (folder/'serial.bin').read_bytes(),
+  magic,bits,ticks,_=(0,0,0,0) if serial else struct.unpack('<4H',(folder/'SCRIPT.BIN').read_bytes())
+  if not serial:result['checks']['observed_expected_child_console']=magic==0x4d43 and ticks>0 and bits==want
+  result['checks'].update(ordinary_keyboard_resumes=b'ready' in (folder/'serial.bin').read_bytes(),
    runner_and_terminal_unchanged=hashlib.sha256(terminal.read_bytes()).hexdigest()==digest and hashlib.sha256(runner.read_bytes()).hexdigest()==rdigest)
-  result['passed']=all(result['checks'].values());result['observer_bits']=bits
+  if serial:
+   wire=(folder/'serial.bin').read_bytes();screen=(folder/'SCREEN.BIN').read_bytes()
+   result['checks'].update(native_script_transmit_on_actual_owned_port=b'READY\r' in wire,unread_serial_suffix_reaches_parent_parser=screen[160:178:2]==b'REMAINDER')
+  result['passed']=all(result['checks'].values());result['observer_bits']=None if serial else bits
   (folder/'result.json').write_text(json.dumps(result,indent=2)+'\n')
   assert result['passed'],result;cases.append(result)
  harness.BINARY=terminal
- result=dict(passed=True,cases=cases,terminal_sha256=digest,runner_sha256=rdigest,
-  limitations=['Virtual UART/nullmodem and DOSBox-X only; physical hardware remains unverified.','Child console output independently sampled by INT1C; source-built interpreter does not receive live terminal UART scheduling.'],
+ history=[]
+ for old in ['failed-serial-handback-observer','failed-serial-handback-no-observer','failed-serial-handback-exit6']:
+  folder=OUT/old
+  if folder.exists():
+   prior=json.loads((folder/'result.json').read_text())
+   history.append(dict(case=old,terminal_sha256=prior['binary_sha256'],runner_sha256=rdigest,
+    failed_checks=[k for k,v in prior['checks'].items() if not v],
+    confirmed_terminal_exit=6,characterization=old.endswith('exit6'),
+    reason='Parent UART IRQ/IER remained disabled during PROGRAM return-key wait; trailing incoming UART bytes overran RBR. Script-only serviced prompt restores parent ISR and polls flow before waiting.',
+    artifact_sha256={str(f.relative_to(ROOT)):hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(folder.iterdir()) if f.name in ['result.json','serial.bin','SCREEN.BIN','BEFORE.BIN','AFTER.BIN','dosbox.conf']}))
+ result=dict(passed=True,cases=cases,terminal_sha256=digest,runner_sha256=rdigest,regression_history=history,case_filter=args.case,expected_terminal_exit=args.expected_exit,
+  limitations=['Virtual UART/nullmodem and DOSBox-X only; physical hardware remains unverified.','Child console output independently sampled by INT1C. Dedicated ASIOv1 lease returns unread bytes; raw child receive is distinct from terminal screen rendering.'],
   source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
  (OUT/'checks.json').write_text(json.dumps(result,indent=2)+'\n')
  print('Script launch actual DOS:',len(cases),'cases passed')

@@ -1,0 +1,708 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "private_report": "analysis/aspect-serial/compiler-04/report.json",
+  "private_report_sha256": "640274fd65c0f55ae9ec91060cf197a029d3f2c858c4e6279ce31166ad76b0cc",
+  "probe_sha256": "09e576f9144385a93589d517842e731056520ff798f7f5a55605312788384ef4",
+  "freezer_sha256": "f4e1c0d05bd9566e2ca6a94721a1336b9f180c92f4d864b9f044f983d0bcfba5",
+  "source_encoding": "cp437",
+  "vectors": [
+    {
+      "name": "SXTX",
+      "source": "\r\nproc main\r\ntransmit \"AT^M\"\r\nendproc\r\n",
+      "source_sha256": "f91e67d06244bd56e55eb2647c686dd55474425dbfcdcec178261d6f860a8da1",
+      "hex": "00 cf bf aa b7 0c 60 8d 05 6a 94",
+      "asx_sha256": "7b4bec3fc32ceb1a0dfc215ecd919cd158bb51849adb848f260215dc7181aed6",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "41540d",
+        "stdout_hex": ""
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SXEMPTY",
+      "source": "\r\nproc main\r\ntransmit \"\"\r\nendproc\r\n",
+      "source_sha256": "3e3883562038c99c80e23c74690d260ba47407c81d045dfc6bfd30c45447beb4",
+      "hex": "00 cf bf 6e 13 94",
+      "asx_sha256": "4e2fc279e765c3edf1f9901b9d9f37c2b8ff76ed9033d274c937eea991a24583",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": ""
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SXCTL",
+      "source": "\r\nproc main\r\ntransmit \"A^MB^JC^AD\"\r\nendproc\r\n",
+      "source_sha256": "26b5e1abd51399dde9efab3864507e624498b046e18427556aedae13ea7d1b6a",
+      "hex": "00 cf bf aa bd 12 60 97 f4 5f 29 cb 8a 75 46 4f 94",
+      "asx_sha256": "6b1265af1f731890b90b21096ee44d4d4a244e35311a00e94dc8c2a7619d8d52",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "410d420a430144",
+        "stdout_hex": ""
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SXHIGH",
+      "source": "\r\nproc main\r\ntransmit \"\u00e9\u00c7\"\r\nendproc\r\n",
+      "source_sha256": "f3d90391534f8a9b161252a5581b5d0c5690bd32b8668f58df9abef67a5e01b9",
+      "hex": "00 cf bf aa b5 0a a1 b9 94",
+      "asx_sha256": "fad8aac6dd253f4409b94b20ea49703930f459b226bdfd19e51c5482692b8e39",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "8280",
+        "stdout_hex": ""
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SXCARA",
+      "source": "\r\nproc main\r\ntransmit \"^@^^\"\r\nendproc\r\n",
+      "source_sha256": "71e4ffd465c2f58e622777a6373927e61cfe2457d2cf9d4de30f096356be9b8f",
+      "hex": "00 cf bf aa b7 0c 7d 79 05 7b 94",
+      "asx_sha256": "1d086cab6797bf2182698a104ec927afb0e1643e2a884c4e45543d828cb50222",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "001e",
+        "stdout_hex": ""
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SXPAUSE",
+      "source": "\r\nproc main\r\ntransmit \"A~B\"\r\nendproc\r\n",
+      "source_sha256": "820df73c693dc309ef0e2724ab99e116f7320639b4efe324773ab00cc3a0c313",
+      "hex": "00 cf bf aa b6 0b 60 b7 e9 94",
+      "asx_sha256": "98adb84450411a6dbc50599067b2e94be44f5af03b1314ef3582083bcd619f20",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "4142",
+        "stdout_hex": ""
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SXLOCAL",
+      "source": "\r\nproc main\r\nstring linebuf = \"LOCAL^M\"\r\ntransmit linebuf\r\nendproc\r\n",
+      "source_sha256": "ce12c3c06d1da1a12d1261d6b6f9216f9dc3b0b9c77aa68a56b2893b1448b014",
+      "hex": "00 d2 51 00 ac a0 00 00 aa ba 88 81 44 0a fa 75 41 48 00 cf bf a0 00 00 95",
+      "asx_sha256": "d917ad49117c1e57c053e2f21f77b070a1b28312a452e6f9d916bcc67fee298f",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "4c4f43414c0d",
+        "stdout_hex": ""
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SXGLOBAL",
+      "source": "string linebuf\r\nproc main\r\nlinebuf = \"GLOBAL^M\"\r\ntransmit linebuf\r\nendproc\r\n",
+      "source_sha256": "e3309a3d3c8fe0469891f3b0ea978b2986d0d434aa8826d41598728711dbc6e2",
+      "hex": "01 cf ac 8c 00 aa bb 12 4c 51 96 0d e8 6b 35 58 00 bf 8c 00 94",
+      "asx_sha256": "98964c16bbbd33ce8cc5298c229615bbf90b47d980badebdd1001a69de5eee2b",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "474c4f42414c0d",
+        "stdout_hex": "",
+        "string0": "GLOBAL^M"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SXPARM",
+      "source": "\r\nproc main\r\ncall worker with \"PARAM^M\"\r\nendproc\r\nproc worker\r\nstrparm linebuf\r\ntransmit linebuf\r\nendproc\r\n",
+      "source_sha256": "0838609b282d557ef389873c0bfe171c48072ab94103878b6fed037419f32ba5",
+      "hex": "00 cf d0 cd aa ba 90 cf 6a 87 3c 30 53 a6 c8 17 00 00 00 d2 af ff 94 cf bf 96 57 00 95",
+      "asx_sha256": "a78f72586d8dfa943acf4ad479da529af45c3657883f3af569b1ca89a85407be",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "504152414d0d",
+        "stdout_hex": ""
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SXMAX",
+      "source": "\r\nproc main\r\ntransmit \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\r\nendproc\r\n",
+      "source_sha256": "7480051a6d6c66acd2da89dda82a4ee93e9b3c4eb34a03f1112796a9fd934bb5",
+      "hex": "00 cf bf aa 03 58 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a e8 5e 0c c2 88 58 46 4c 46 18 f4 60 7a 94",
+      "asx_sha256": "3d4e0b0ee677583bf50ce32a3c10c8a3ae8c44a705f61ecdb7984b313d2e845e",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "4141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141",
+        "stdout_hex": ""
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SXTWICE",
+      "source": "\r\nproc main\r\ntransmit \"ONE^M\"\r\ntransmit \"TWO^M\"\r\nendproc\r\n",
+      "source_sha256": "b0475656974e6b8552dc69acbd80f47bf25409edfb3a61a711e9f71f3f0ecec4",
+      "hex": "00 cf bf aa b8 0d 6e 87 ec 7b 18 bf aa b8 8b 37 40 78 b7 06 94",
+      "asx_sha256": "8517a09c0c0172b40020ebf1f5e81191ac84e951f009ed7001b21c5eb39cc979",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "4f4e450d54574f0d",
+        "stdout_hex": ""
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWHIT",
+      "source": "integer outcome\r\nproc main\r\ntransmit \"READY^M\"\r\nwaitfor \"login:\" 2\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "80581c4e74af55b047cce262abaacab760a5c4c3d04d98b338b00f4143b3ff6d",
+      "hex": "00 cf bf aa ba 0f 71 7e e8 61 24 df 94 d4 aa b9 8e 4d 36 c0 4c a3 b9 01 b5 02 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 3b 00 00 00 79 00 76 aa b8 8c 48 76 35 38 c7 62 46 00 00 00 76 aa ba 92 ad c8 48 6e 16 8a 3d 94",
+      "asx_sha256": "2ead38ac9227e77c5641c48a86f28f1d0bae58aafc02215811d8532cc1ddf52f",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "52454144590d",
+        "integer0": 1,
+        "stdout_hex": "4d415443480d0a"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "6e6f697365204c6f47694e3a545241494c",
+        "send_after_tx_hex": "52454144590d",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWCASE",
+      "source": "integer outcome\r\nproc main\r\ntransmit \"READY^M\"\r\nwaitfor \"login:\" 1\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "c5a461efbadf4828cfefaa95d2c35347761c35b6a69f0ce5b2c5bf2e33afd85f",
+      "hex": "00 cf bf aa ba 0f 71 7e e8 61 24 df 94 d4 aa b9 8e 4d 36 c0 4c a3 b9 01 b5 01 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 3b 00 00 00 79 00 76 aa b8 8c 48 76 35 38 c7 62 46 00 00 00 76 aa ba 92 ad c8 48 6e 16 8a 3d 94",
+      "asx_sha256": "1839c5b86f6609cd0ca16d54d39c65a160f292fd8e0425d3060274bfc5d2bb6c",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "52454144590d",
+        "integer0": 1,
+        "stdout_hex": "4d415443480d0a"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "4c4f47494e3a",
+        "send_after_tx_hex": "52454144590d",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWEMPTY",
+      "source": "integer outcome\r\nproc main\r\nwaitfor \"\" 0\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "d2fd532bbc528a18f87ba320668a89fd6d774164eb029d7322bac2c69f82dcdb",
+      "hex": "00 cf d4 6e 13 01 b5 00 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 29 00 00 00 79 00 76 aa b8 91 36 9a 4f c2 29 62 34 00 00 00 76 aa ba 8b 0d 2a 36 0c 4a ae 49 94",
+      "asx_sha256": "357f966282f858e9b299241cfc4d214ceff6df68b11c6665c79d3a32889e1104",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "error": "operand",
+        "native_error": 1
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWZERO",
+      "source": "integer outcome\r\nproc main\r\nwaitfor \"missing\" 0\r\noutcome = waitfor\r\nendproc\r\n",
+      "source_sha256": "e9ee3bdb182dc044b7e2c2531d53b65263543b5e4986001200b646dcffa68bcb",
+      "hex": "00 cf d4 aa ba 0f 8c a2 1a 90 34 ef ae 01 b5 00 5b 00 8d 00 6f 1c 94",
+      "asx_sha256": "dc9ce927e22bd0316af59db0777becef28ec5cb5651ee7aa944134656b921a02",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "error": "operand",
+        "native_error": 1
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWNOHIT",
+      "source": "integer outcome\r\nproc main\r\ntransmit \"READY^M\"\r\nwaitfor \"absent\" 1\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "9555618c32e371de45cc3dbbf51b7baea7433e29d54a433c95eabc9cf5fb02e4",
+      "hex": "00 cf bf aa ba 0f 71 7e e8 61 24 df 94 d4 aa b9 8e 42 29 cc 48 a3 f3 01 b5 01 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 3b 00 00 00 79 00 76 aa b8 8c 48 76 35 38 c7 62 46 00 00 00 76 aa ba 92 ad c8 48 6e 16 8a 3d 94",
+      "asx_sha256": "983f9c7866b74880e53a0c61573cfa8d37d71dd9c1365b3d5f8b82a4d9c6882b",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "52454144590d",
+        "integer0": 0,
+        "stdout_hex": "54494d454f55540d0a"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "6e6f697365",
+        "send_after_tx_hex": "52454144590d",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWPREFIX",
+      "source": "integer outcome\r\nproc main\r\ntransmit \"READY^M\"\r\nwaitfor \"ABAAB\" 1\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "898992c33dee6a43481f6d08f1bfb751cebefe9608d6b43e447976d2ed634e4b",
+      "hex": "00 cf bf aa ba 0f 71 7e e8 61 24 df 94 d4 aa b8 8d 22 09 9a 24 77 01 b5 01 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 3a 00 00 00 79 00 76 aa b8 0b 6a 58 2b ea 8f 62 45 00 00 00 76 aa ba 11 59 4e 94 10 f6 74 2b 94",
+      "asx_sha256": "575216927d8b7705f84963aa1fdfce15928c15369054e29c91adb34b92f66ea6",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "52454144590d",
+        "integer0": 0,
+        "stdout_hex": "54494d454f55540d0a"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "41424142414142",
+        "send_after_tx_hex": "52454144590d",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWOVER",
+      "source": "integer outcome\r\nproc main\r\ntransmit \"READY^M\"\r\nwaitfor \"ABC\" 2\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "421e4264bb94cee40ac5cc233337032bff15a4480c1deb142b37da762dbeefa6",
+      "hex": "00 cf bf aa ba 0f 71 7e e8 61 24 df 94 d4 aa b6 8b 22 09 9c 01 b5 02 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 38 00 00 00 79 00 76 aa b8 09 94 60 6b 7c 4d 62 43 00 00 00 76 aa ba 0f 73 82 f4 62 1a d6 9b 94",
+      "asx_sha256": "f3ab42713f6a2a5813218816bf81618a895f1eb34bd8c7e12443fe19dca1dc96",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "52454144590d",
+        "integer0": 1,
+        "stdout_hex": "4d415443480d0a"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "41414243",
+        "send_after_tx_hex": "52454144590d",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWHIGH",
+      "source": "integer outcome\r\nproc main\r\ntransmit \"READY^M\"\r\nwaitfor \"\u00e9\" 1\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "3f4d701e5962d6b939cc6eed01ae7df4c6d00f3d5168d4ba01ce9f31751759f9",
+      "hex": "00 cf bf aa ba 0f 71 7e e8 61 24 df 94 d4 aa b4 89 63 01 b5 01 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 36 00 00 00 79 00 76 aa b8 07 58 88 71 62 4d 62 41 00 00 00 76 aa ba 0d 71 60 24 ec 96 5a 8d 94",
+      "asx_sha256": "52428ce5d838f70c33a89427e75d3c4e15cbdd7e9cc42226e7e16711bad63a7f",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "52454144590d",
+        "integer0": 0,
+        "stdout_hex": "54494d454f55540d0a"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "90",
+        "send_after_tx_hex": "52454144590d",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWSTRICT",
+      "source": "integer outcome\r\nproc main\r\ntransmit \"READY^M\"\r\nwaitfor \"login:\" 1\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "c5a461efbadf4828cfefaa95d2c35347761c35b6a69f0ce5b2c5bf2e33afd85f",
+      "hex": "00 cf bf aa ba 0f 71 7e e8 61 24 df 94 d4 aa b9 8e 4d 36 c0 4c a3 b9 01 b5 01 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 3b 00 00 00 79 00 76 aa b8 8c 48 76 35 38 c7 62 46 00 00 00 76 aa ba 92 ad c8 48 6e 16 8a 3d 94",
+      "asx_sha256": "1839c5b86f6609cd0ca16d54d39c65a160f292fd8e0425d3060274bfc5d2bb6c",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "52454144590d",
+        "integer0": 0,
+        "stdout_hex": "54494d454f55540d0a"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "4c4f47494e3a",
+        "send_after_tx_hex": "52454144590d",
+        "case_sensitive": true,
+        "dos_peer": false
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWMID",
+      "source": "integer outcome\r\nproc main\r\nwaitfor \"missing\" 1\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "8203dfff518737a45792772bd7aa94c291d226090de69b008632b5899ccd0227",
+      "hex": "00 cf d4 aa ba 0f 8c a2 1a 90 34 ef ae 01 b5 01 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 31 00 00 00 79 00 76 aa b8 8d 2e 08 ad 26 7d 62 3c 00 00 00 76 aa ba 93 3d a2 48 c4 30 50 37 94",
+      "asx_sha256": "8c7f51718f743f1d0274684f45e3ea52d75bdc35fac89d7a6a4a397d80c39002",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "integer0": 0,
+        "stdout_hex": "54494d454f55540d0a"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": false,
+        "initial_ticks": 1573032,
+        "tick_step": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWLOCAL",
+      "source": "integer outcome\r\nproc main\r\nstring needle = \"READY\"\r\ntransmit \"READY^M\"\r\nwaitfor needle 2\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "8618a7bbc0ed246e22b8e10531316e8adc16ce9c547cf9efa91a582cdd6c3fc9",
+      "hex": "00 d2 51 00 ac a0 00 00 aa b8 86 87 3a 08 fd 82 00 cf bf aa ba 08 1d 50 7a 8b 30 7b 52 d4 a0 00 00 01 b5 02 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 45 00 00 00 79 00 76 aa b8 8b 30 2a 7d 9c 01 62 50 00 00 00 76 aa ba 91 4f 44 06 7a a8 36 7d 95",
+      "asx_sha256": "2413f7246c924f34e9ddd6278b4f925646540632ceb72c33145ea408328674f2",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "52454144590d",
+        "integer0": 1,
+        "stdout_hex": "4d415443480d0a"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "7265616479",
+        "send_after_tx_hex": "52454144590d",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWPARM",
+      "source": "integer outcome\r\nproc main\r\ncall worker with \"READY\"\r\nendproc\r\nproc worker\r\nstrparm needle\r\ntransmit \"READY^M\"\r\nwaitfor needle 2\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "31d048fc95ff0e895653fc57db4b81a4fbf3eed40ecde2074da11271f3d67bda",
+      "hex": "00 cf d0 cd aa b8 8e d1 6e 76 3f 3c c8 15 00 00 00 d2 af ff 94 cf bf aa ba 0f 71 7e e8 61 24 df 94 d4 96 57 00 01 b5 02 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 49 00 00 00 79 00 76 aa b8 86 82 36 1b fc 71 62 54 00 00 00 76 aa ba 8c 7d 44 42 40 38 0e d3 95",
+      "asx_sha256": "de7a29928a91e4a04f64d14c15fa6f2059e51ab3306471f613c68833086abaa3",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "52454144590d",
+        "integer0": 1,
+        "stdout_hex": "4d415443480d0a"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "7265616479",
+        "send_after_tx_hex": "52454144590d",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWDEF",
+      "source": "integer outcome\r\nproc main\r\ntransmit \"READY^M\"\r\nwaitfor \"READY\"\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "9ae7bda4caf41d8e30c2260765bcd3320fa42a2b6ec15c9014a9a916dcc74753",
+      "hex": "00 cf bf aa ba 0f 71 7e e8 61 24 df 94 d4 aa b8 8d 33 0c 9a 27 8e 00 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 38 00 00 00 79 00 76 aa b8 09 94 60 6b 7c 4d 62 43 00 00 00 76 aa ba 0f 73 82 f4 62 1a d6 9b 94",
+      "asx_sha256": "bc6d9f2ed573e9cc714516ee0a988283ee7746382f440aacd5a4f8eee84e6e84",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "52454144590d",
+        "integer0": 1,
+        "stdout_hex": "4d415443480d0a"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "5245414459",
+        "send_after_tx_hex": "52454144590d",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWEMP1",
+      "source": "integer outcome\r\nproc main\r\nwaitfor \"\" 1\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "e44c8b724caada0dfe68a8d7093af5456e0b38f1bbdd215c57ddb03638dc6b5b",
+      "hex": "00 cf d4 6e 13 01 b5 01 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 29 00 00 00 79 00 76 aa b8 91 36 9a 4f c2 29 62 34 00 00 00 76 aa ba 8b 0d 2a 36 0c 4a ae 49 94",
+      "asx_sha256": "b31f114ee397e403af12e7f4fe036a3d797fbb08d20110aea0222e6e6d7332a8",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "integer0": 1,
+        "stdout_hex": "4d415443480d0a"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWEMPDEF",
+      "source": "integer outcome\r\nproc main\r\nwaitfor \"\"\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "fca77744208f6c5be8cc42597a287f09188d965ba80e0cb937769413721e70a4",
+      "hex": "00 cf d4 6e 13 00 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 27 00 00 00 79 00 76 aa b8 8f 48 3c 0d 78 a1 62 32 00 00 00 76 aa ba 89 49 02 30 26 4a 3e 89 94",
+      "asx_sha256": "ccd8beedb8930857d03befa80178570f32592eac6928fd0dff91846c7e12f0ba",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "integer0": 1,
+        "stdout_hex": "4d415443480d0a"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWEMPF",
+      "source": "integer outcome\r\nproc main\r\nwaitfor \"\" FOREVER\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "61b6e03dd4379d65a64e526fa37d30e2fb0f6c19f57c1ccdc1981c9882b8c828",
+      "hex": "00 cf d4 6e 13 01 1a 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 28 00 00 00 79 00 76 aa b8 10 f4 c2 59 1a 81 62 33 00 00 00 76 aa ba 0a 8d 66 ce 5c 5a 2c 73 94",
+      "asx_sha256": "e52c9465d495688e296f07282e57114abb32a6946042feed30e9ee05997c3ff2",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "integer0": 1,
+        "stdout_hex": "4d415443480d0a"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWFOREM",
+      "source": "integer outcome\r\nproc main\r\ntransmit \"READY^M\"\r\nwaitfor \"READY\" FOREVER\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "0a080adc825e57572c6048c28b09ad9b8e0342e73aa49bf2d0a5e5ec5e2aa1ab",
+      "hex": "00 cf bf aa ba 0f 71 7e e8 61 24 df 94 d4 aa b8 8d 33 0c 9a 27 8e 01 1a 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 39 00 00 00 79 00 76 aa b8 8a 76 3c 49 3e 31 62 44 00 00 00 76 aa ba 90 d3 72 82 40 32 4a ad 94",
+      "asx_sha256": "e5310401012546a29c88cc01604a972d44d8c5c2384c8a1764cf33ef66591bc8",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "52454144590d",
+        "integer0": 1,
+        "stdout_hex": "4d415443480d0a"
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "5245414459",
+        "send_after_tx_hex": "52454144590d",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWSTAT",
+      "source": "integer outcome\r\nproc main\r\nwaitfor \"\" 0\r\noutcome = waitfor\r\nif outcome\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"TIMEOUT\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "d2fd532bbc528a18f87ba320668a89fd6d774164eb029d7322bac2c69f82dcdb",
+      "hex": "00 cf d4 6e 13 01 b5 00 5b 00 8d 00 6f 1c 5b 00 79 00 8d 00 15 29 00 00 00 79 00 76 aa b8 91 36 9a 4f c2 29 62 34 00 00 00 76 aa ba 8b 0d 2a 36 0c 4a ae 49 94",
+      "asx_sha256": "357f966282f858e9b299241cfc4d214ceff6df68b11c6665c79d3a32889e1104",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "error": "operand",
+        "native_error": 1
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "SWBAD",
+      "source": "\r\nproc main\r\nwaitfor \"READY\" -1\r\nendproc\r\n",
+      "source_sha256": "19100cc0f529cb732e60e29b52e3c5415aebe75aba7a67ad8a42a6a28044c97e",
+      "hex": "00 cf d4 aa b8 0d 71 7e e8 61 24 01 ab ff ff 94",
+      "asx_sha256": "0975fc6ac12f63d18235f2ba54622079c8649cd65017b456fe6a6e42618cd49c",
+      "source_encoding": "cp437",
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "error": "operand",
+        "native_error": 1
+      },
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "case_sensitive": false,
+        "dos_peer": true
+      },
+      "dos_excluded": false
+    }
+  ],
+  "compiler_only": [
+    {
+      "name": "SWFOREV",
+      "source": "\r\nproc main\r\nwaitfor \"missing\" FOREVER\r\nendproc\r\n",
+      "source_sha256": "125c9e127250d69bd4f89d20403d4b3ebae930232fe62bd482db611aef78ba16",
+      "hex": "00 cf d4 aa ba 0f 8c a2 1a 90 34 ef ae 01 1a 94",
+      "asx_sha256": "1e933468ba75f5a499af85e53b62ea300e6e71969a08d2a6c32d42a29bbf6263",
+      "source_encoding": "cp437",
+      "expected": {},
+      "dos_excluded": true,
+      "dos_excluded_reason": "The actual FOREVER enum1A is indefinite with a nonempty needle and no queued input."
+    },
+    {
+      "name": "SWLONG",
+      "source": "\r\nproc main\r\nwaitfor \"READY\" 32767\r\nendproc\r\n",
+      "source_sha256": "f6683b2e5f420390dcc4d1f9c57c166d2c151400d622da983385bc740e75e2ec",
+      "hex": "00 cf d4 aa b8 0d 71 7e e8 61 24 01 ab ff 7f 94",
+      "asx_sha256": "5a4776aa6e073a368218dc9487e4b17d822eea90a8d2e914cb06e7b5f44ecbac",
+      "source_encoding": "cp437",
+      "expected": {},
+      "dos_excluded": true,
+      "dos_excluded_reason": "Avoid a32767-second timeout in execution; compiler grammar evidence only."
+    }
+  ],
+  "rejected": [
+    {
+      "name": "SWMISS",
+      "source": "\r\nproc main\r\nwaitfor\r\nendproc\r\n",
+      "source_sha256": "cba4dec66c45cd3551c9e096b0b3be5f4ca24653f7ade06c876235cd977fae19",
+      "errors": [
+        "Error C006 Line 3: Missing token"
+      ]
+    },
+    {
+      "name": "SWFLOAT",
+      "source": "\r\nproc main\r\nwaitfor \"READY\" 1.0\r\nendproc\r\n",
+      "source_sha256": "326362bb052d12a76c68af86f10d8b0ef0a3ecad37c051c404cdb97d6f7bb74c",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> 1.0"
+      ]
+    },
+    {
+      "name": "SWEXTRA",
+      "source": "\r\nproc main\r\nwaitfor \"READY\" 1 2\r\nendproc\r\n",
+      "source_sha256": "300daa126ad24872d32ced94ddaa4c2034c36fb1fea2c42750d4121fd4a9aaaf",
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> 2"
+      ]
+    },
+    {
+      "name": "SXMISS",
+      "source": "\r\nproc main\r\ntransmit\r\nendproc\r\n",
+      "source_sha256": "8b6ca7ea78f52aa078f5d442228ac6b5eef02bcfb76e49fbf33aeb24caa05224",
+      "errors": [
+        "Error C006 Line 3: Missing token"
+      ]
+    },
+    {
+      "name": "SXNUM",
+      "source": "\r\nproc main\r\ntransmit 1\r\nendproc\r\n",
+      "source_sha256": "e51f1f35f3aec3af6a3702a4cc93f0f9f9a3a5beafe5ff65270aed623d944dee",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> 1"
+      ]
+    }
+  ],
+  "expectation_model": "Explicit authored predictions fixed before maintained VM/UART execution. Native TRANSMIT interprets caret controls, ^@ wireNUL, ^^ wire1E, and consumes default pausechar~ as10BIOS transitions. WAITFOR matches ASCII-insensitively by default, builtin28 reads nativeE39A (1match/0timeout), omitted timeout30seconds, FOREVER enum1A indefinite; numeric0 faults native1, positive timeout18BIOS ticks per second with day wrap. Its mismatch restart only retains a matching first character, so ABABAAB misses ABAAB. Empty needle with no queued RX immediately succeeds. SWSTRICT explicitly models case_sensitive backend state; SWMID models BIOS midnight. Neither is claimed as a production source setting or wall-clock DOS test.",
+  "superseded": {
+    "corpus_sha256": "322c63d9aea6ac1f0f7a365f129ab47bc21077e9dc061936c60c22aab4c67f8f",
+    "reason": "Initial timeout0 prediction was wrong: corrected static E9F5 recovery distinguishes numeric0 native1 from FOREVER enum1A. Prior32 sources preserved; failed composed evidence retained in build/aspect-runtime/serial-failed-01.txt/json."
+  },
+  "scope": "37 authored original compiler cases,32 accepted5 rejected;30 bounded runtime vectors2 compiler-only waits. Independent actual DOS nullmodem peer eligibility recorded per vector; no physical-modem or complete PCPlus claim."
+}

@@ -26,6 +26,16 @@ extern aspect_string_status,aspect_string_success
 extern aspect_convert_atoi,aspect_convert_atol,aspect_convert_itoa,aspect_convert_ltoa
 extern aspect_console_message,aspect_console_exit,aspect_console_pause,aspect_console_native_wait_second
 extern _runtime_console_emit_byte,_runtime_console_cancel_poll
+extern aspect_serial_transmit,aspect_serial_wait_for,aspect_serial_wait_status,aspect_serial_native_clock
+extern _runtime_serial_ready,_runtime_serial_send,_runtime_serial_receive,_runtime_serial_character_delay
+extern _runtime_serial_pause
+%ifdef ASPECT_RUNTIME_SERIAL
+extern _runtime_serial_wait_second
+%endif
+extern _runtime_error
+%ifndef ASPECT_RUNTIME_SERIAL
+extern _runtime_serial_clock
+%endif
 extern _runtime_file,_runtime_reset_native,_runtime_open,_runtime_alloc,_runtime_free
 extern _runtime_cleanup,_runtime_close,_runtime_finish,_runtime_service,_runtime_read
 extern _runtime_native_error,_runtime_set_error,_runtime_header
@@ -252,12 +262,17 @@ aspect_operand_builtin_integer:
  mov bp,sp
  cmp word [bp+4],21
  je .status
+ cmp word [bp+4],28
+ je .wait_status
  cmp word [bp+4],27
  jne unsupported
  call aspect_string_success
  jmp short .done
 .status:
  call aspect_string_status
+ jmp short .done
+.wait_status:
+ call aspect_serial_wait_status
 .done:
  pop bp
  ret 2
@@ -289,7 +304,58 @@ aspect_string_upper: jmp directory_dial_upper_original
 global aspect_console_emit_byte,aspect_console_cancel_poll,aspect_console_wait_second
 aspect_console_emit_byte: jmp _runtime_console_emit_byte
 aspect_console_cancel_poll: jmp _runtime_console_cancel_poll
-aspect_console_wait_second: jmp aspect_console_native_wait_second
+aspect_console_wait_second:
+%ifdef ASPECT_RUNTIME_SERIAL
+ call _runtime_serial_ready
+ or ax,ax
+ jz .native
+ call _runtime_serial_wait_second
+ or ax,ax
+ jnz fail
+ ret
+.native:
+%endif
+ jmp aspect_console_native_wait_second
+
+; Maintained platform admission and bounded UART adapters. Missing serial
+; attachment is explicit unsupported; native matcher/formatting remains intact.
+runtime_serial_transmit:
+ call _runtime_serial_ready
+ or ax,ax
+ jz unsupported
+ jmp aspect_serial_transmit
+runtime_serial_wait_for:
+ call _runtime_serial_ready
+ or ax,ax
+ jz unsupported
+ jmp aspect_serial_wait_for
+global aspect_serial_send_byte,aspect_serial_receive,aspect_serial_character_delay
+%macro serial_argument_adapter 2
+%1:
+ push bp
+ mov bp,sp
+ push word [bp+4]
+ call %2
+ add sp,2
+ pop bp
+ cmp word [_runtime_error],0
+ je %%done
+ mov ax,[_runtime_error]
+ jmp fail
+%%done:
+ ret 2
+%endmacro
+serial_argument_adapter aspect_serial_send_byte,_runtime_serial_send
+serial_argument_adapter aspect_serial_receive,_runtime_serial_receive
+serial_argument_adapter aspect_serial_character_delay,_runtime_serial_character_delay
+global aspect_serial_clock,aspect_serial_pause_ticks
+%ifdef ASPECT_RUNTIME_SERIAL
+aspect_serial_clock: jmp aspect_serial_native_clock
+serial_argument_adapter aspect_serial_pause_ticks,_runtime_serial_pause
+%else
+aspect_serial_clock: jmp _runtime_serial_clock
+serial_argument_adapter aspect_serial_pause_ticks,_runtime_serial_pause
+%endif
 
 SEGMENT _DATA public class=DATA use16
 GROUP DGROUP _DATA
@@ -313,6 +379,14 @@ aspect_convert_ctype:
 %2: dw 0
 %endmacro
 scalar aspect_console_message_mode,_runtime_console_message_mode
+scalar aspect_serial_case_sensitive,_runtime_serial_case_sensitive
+scalar aspect_serial_wait_result,_runtime_serial_wait_result
+scalar aspect_serial_pause_character,_runtime_serial_pause_character
+scalar aspect_serial_local_echo,_runtime_serial_local_echo
+scalar aspect_serial_character_delay_value,_runtime_serial_character_delay_value
+%ifndef ASPECT_RUNTIME_SERIAL
+scalar aspect_serial_rx_count,_runtime_serial_rx_count
+%endif
 scalar aspect_flow_depth,_runtime_depth
 scalar aspect_flow_frame,_runtime_frame
 scalar aspect_flow_wait_gate,_runtime_wait_gate
@@ -499,6 +573,8 @@ aspect_dispatch_handlers:
  dw aspect_expr_branch_true
 %elif op=0xbd
  dw aspect_expr_branch_false_alias
+%elif op=0xbf
+ dw runtime_serial_transmit
 %elif op=0xc6
  dw aspect_arith_bit_xor
 %elif op=0xc7
@@ -515,8 +591,23 @@ aspect_dispatch_handlers:
  dw aspect_flow_gate_increment
 %elif op=0xd2
  dw aspect_flow_reserve_locals
+%elif op=0xd4
+ dw runtime_serial_wait_for
 %else
  dw unsupported
 %endif
 %assign op op+1
+%endrep
+global aspect_serial_ctype
+aspect_serial_ctype:
+%assign serial_char 0
+%rep 256
+%if serial_char >= 'a' && serial_char <= 'z'
+ db 2
+%elif serial_char >= '0' && serial_char <= '9'
+ db 4
+%else
+ db 0
+%endif
+%assign serial_char serial_char+1
 %endrep

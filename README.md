@@ -32,14 +32,16 @@ conditions, with CP437 behavior preserved.
 [Decimal conversions](docs/ASPECT_CONVERSIONS.md) add ATOI/ATOL/ITOA/LTOA.
 The [maintained host compiler](docs/ASPECT_COMPILER.md) now emits the tested
 ASPECT subset directly from authored source. The diagnostic build compiles all
-267 fixtures and compares them with the original oracle before DOS execution.
+297 fixtures and compares them with the original oracle before DOS execution.
 Full script compilation, application command coverage and terminal scheduling
 remain unfinished.
 
 The [DOS script runner](docs/ASPECT_RUNNER.md) now adds File → A → Run script
 through the terminal's Alt-Z menu. `ASPECT.EXE` runs as a separate DOS child
-with MESSAGE/EXIT/PAUSE support and returns through the PROGRAM owner. Live
-serial scripting remains unfinished. Stage the terminal, sibling helpers and
+with MESSAGE/EXIT/PAUSE support and returns through the PROGRAM owner. Selected serial scripts now use the active port through a checked child
+handoff. [Serial scripting](docs/ASPECT_SERIAL.md) adds TRANSMIT, WAITFOR,
+flow control and exact unread-byte return; full application services remain
+unfinished. Stage the terminal, sibling helpers and
 an authored HELLO example with `./tools/build package`; files appear in
 `build/dos-package` without original executables or private profiles.
 
@@ -55,8 +57,10 @@ Current outputs:
 | `build/aspect-strings/STRINGS.EXE` | Recovered assembly and controlled services | String operands, literals and assignment, including actual far copy and DOS far heap |
 | `build/aspect-long/LONG.EXE` | Recovered assembly only | Native signed long multiply/divide/remainder and shift helpers, including independent actual DOS checks |
 | `build/aspect-arithmetic/ARITH.EXE` | Recovered assembly and controlled services | Native arithmetic component; controlled long/float boundaries are distinct from composed execution |
-| `build/aspect-runtime/EXECUTE.EXE` | Maintained source compiler, recovered assembly and maintained DOS resource owner | Fixed source-compiled script suite;57 supported opcode slots,158 explicit unsupported stops |
-| `build/aspect-runner/ASPECT.EXE` | Recovered instructions and maintained DOS CLI/resource owner | Execute trusted compiled scripts; raw stdout and Escape cancellation; no live serial scripting |
+| `build/aspect-runtime/EXECUTE.EXE` | Maintained source compiler, recovered assembly and maintained DOS resource owner | Fixed source-compiled script suite;59 supported opcode slots,156 explicit unsupported stops |
+| `build/aspect-runner/ASPECT.EXE` | Recovered instructions and maintained DOS CLI/resource owner | Execute trusted compiled scripts; raw stdout, Escape cancellation and an optional checked UART lease |
+| `build/aspect-serial-commands/SERIAL.EXE` | Recovered assembly and controlled device/time callbacks | TRANSMIT/WAITFOR and native formatter, timeout, case, clock and result primitives |
+| `build/aspect-serial/SERIAL.EXE` | Maintained DOS owner and recovered UART core | Checked UART ownership, flow control and parent unread-byte handback |
 | `build/aspect-console/CONSOLE.EXE` | Recovered assembly and controlled platform callbacks | MESSAGE/EXIT/PAUSE, caret transform, print loops and native BIOS delays |
 | `build/aspect-operands/OPERANDS.EXE` | Recovered assembly and controlled services | Integer/long operand decoding; unchecked native indexing and external builtins remain explicit |
 | `build/aspect-operations/OPERATE.EXE` | Recovered assembly and controlled services | Assignment, logical/comparison and increment/decrement diagnostics; float services are unavailable |

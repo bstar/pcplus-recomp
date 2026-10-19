@@ -13,7 +13,7 @@ sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import CompileError, compile_source  # noqa: E402
 
 CORPORA = ('execution', 'arithmetic', 'parameter', 'string_command',
-           'conversion', 'compiler_validation', 'console')
+           'conversion', 'compiler_validation', 'console', 'serial')
 COUNTS = {'frozen_vectors_checked': 0, 'presentation_variants_checked': 0,
           'frozen_rejections_checked': 0}
 
@@ -38,14 +38,15 @@ class CompilerTests(unittest.TestCase):
                 self.assertEqual(hashlib.sha256(actual).hexdigest(), vector['asx_sha256'])
                 COUNTS['frozen_vectors_checked'] += 1
             count += 1
-        self.assertGreaterEqual(count, 270)
+        self.assertGreaterEqual(count, 297)
 
-    def test_console_original_compiler_rejections(self):
-        data = json.loads((ROOT / 'standalone/fixtures/aspect_console_vectors.json').read_text())
-        for vector in data['rejected']:
-            with self.subTest(name=vector['name']), self.assertRaises(CompileError):
-                compile_source(vector['source'])
-            COUNTS['frozen_rejections_checked'] += 1
+    def test_console_and_serial_original_compiler_rejections(self):
+        for corpus in ('console', 'serial'):
+            data = json.loads((ROOT / f'standalone/fixtures/aspect_{corpus}_vectors.json').read_text())
+            for vector in data['rejected']:
+                with self.subTest(corpus=corpus, name=vector['name']), self.assertRaises(CompileError):
+                    compile_source(vector['source'])
+                COUNTS['frozen_rejections_checked'] += 1
 
     def test_case_whitespace_and_symbol_renaming(self):
         # Changes lexical presentation, not source line numbers or string bytes.

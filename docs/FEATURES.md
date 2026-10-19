@@ -407,3 +407,33 @@ pass.57of215slots execute;158abort. The compiler matches270acceptedvectors and
 launch/package,79configuration/128totalfarbridges and65,344nearbytes. This is
 DOSchild integration, not live serial scripting. Complete application/script
 scheduling and all F01–F16 whole-application gates remain open.
+
+## ASPECT serial scripting checkpoint
+
+The [serial scripting checkpoint](ASPECT_SERIAL.md) adds TRANSMIT/WAITFOR
+and their supporting formatter, timeout, case, clock and result primitives:
+523 exact native bytes, 1,261 paired CPU scenarios, all220 instructions and
+11,057 DOS assertions. The source-built interpreter now implements59 slots
+and explicitly rejects156;297 runtime fixtures compile from maintained source,
+and302 accepted frozen compiler outputs plus302 presentation variants pass.
+The composed DOS diagnostic passes465 cases/8,047 checks. The production CLI
+passes21 cases/105 checks.
+
+The Script menu now lends the UART to its separate DOS child using a validated
+ASIOv1 parent allocation and4096-byte unread return buffer. Software, hardware
+and combined flow policies are preserved, while vector/PIC/UART state and
+unread data return to the terminal. The return-key prompt reacquires reception
+and services flow control while keeping the child console visible; pre-fix
+actual DOS errorlevel6 regressions remain retained. Source-owned adapters provide raw received
+bytes, cooperative flow/cancel service during pauses, bounded stalls and
+explicit errors for overflow or unread data without a parent. This does not
+recover every original read/render/XLT/capture/scheduling service.
+
+Independent actual DOS scripts pass28 cases/224 checks. Two owned-local
+Synchronet/ENiGMA modem greeting cases pass16 checks with exact unread tails;
+these cases do not log in or establish complete menu compatibility. The native
+numeric-zero WAITFOR timeout prediction was corrected using E9F5: numeric0 is
+invalid, FOREVER is distinct enum1A. Prior failed evidence remains retained.
+Nonzero calibrated character delay, SET, most application commands, full
+compiler/VM/recorder, original UI, physical modem validation and all F01–F16
+whole-application gates remain open.

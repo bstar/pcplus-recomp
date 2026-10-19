@@ -1,0 +1,21 @@
+#ifndef PCPLUS_ASPECT_SERIAL_H
+#define PCPLUS_ASPECT_SERIAL_H
+/* Maintained explicit DOS UART lease. Nearcdecl DS=SS. No default port.
+ * /S1:0003:03:S means COM1, divisor3, LCR03, software flow; B preserves both software and hardware flow.
+ * Driver owns its IRQ/vector until close. All byte operations are bounded;
+ * caller supplies instruction/time limits and keyboard cancellation policy. */
+enum { ASPECT_SERIAL_OK=0,ASPECT_SERIAL_ARGUMENT=1,ASPECT_SERIAL_BUSY=2,
+ ASPECT_SERIAL_ABSENT=3,ASPECT_SERIAL_STATE=4,ASPECT_SERIAL_OVERFLOW=5,
+ ASPECT_SERIAL_UNREAD=6,ASPECT_SERIAL_PENDING=7,ASPECT_SERIAL_LINE=8 };
+extern unsigned aspect_serial_active,aspect_serial_status,aspect_serial_rx_count;
+/* Optional :ssss:oooo ASIOv1 parent descriptor suffix; validated before IO. */
+unsigned __cdecl aspect_serial_open(const char *option);
+unsigned __cdecl aspect_serial_close(void);
+unsigned __cdecl aspect_serial_available(void);
+/* read returns a raw byte or ffff if empty/disabled/failed. */
+unsigned __cdecl aspect_serial_read(void);
+/* 0 accepted;1 flow/THRE busy;2 disabled/fatal. */
+unsigned __cdecl aspect_serial_try_write(unsigned byte);
+unsigned __cdecl aspect_serial_poll(void);
+unsigned long __cdecl aspect_serial_ticks(void);
+#endif

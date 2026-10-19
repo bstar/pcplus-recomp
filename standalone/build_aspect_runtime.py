@@ -7,6 +7,7 @@ ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm'
  ('globals','src/aspect/global_strings.asm',None),('stack','src/aspect/value_stack.asm',None),
  ('conversions','src/aspect/conversions.asm',None),('conversion_services','src/aspect/conversion_services.asm',None),
  ('console','src/aspect/console_commands.asm',None),
+ ('serial_commands','src/aspect/serial_commands.asm',None),
  ('flow','src/aspect/control_flow.asm',None),('parameters','src/aspect/parameters.asm',None),('strings','src/aspect/string_operands.asm',None),('string_commands','src/aspect/string_commands.asm',None),('string_services','src/aspect/string_services.asm',None),
  ('string_strlen','reconstruction/program_exec/strlen.asm','PROGRAM_EXEC_OMF'),('string_strncmp','reconstruction/program_exec/strncmp.asm','PROGRAM_EXEC_OMF'),
  ('string_concat','reconstruction/directory_dial/append.asm','DIRECTORY_DIAL_OMF'),('string_upper','reconstruction/directory_dial/uppercase.asm','DIRECTORY_DIAL_OMF'),('operands','src/aspect/numeric_operands.asm',None),
@@ -18,13 +19,14 @@ ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm'
  ('bridge','src/aspect/runtime_bridge.asm',None)]
 SUPPORT=[(1,0xd2a0,0xd2d6,109184-0xd0d0),(2,0xd3f2,0xd408,109184-0xd0d0),
  (3,0xdb7d,0xdc48,109184-0xd0d0),(4,0xde4d,0xdf04,109184-0xd0d0),(5,0x9ac0,0x9ae7,0x1200)]
-ERRORS={'unsupported':3,'float':4,'budget':6,'stack':9,'divide_zero':11,'native_int0':12,'operand':7}
+ERRORS={'unsupported':3,'float':4,'budget':6,'stack':9,'divide_zero':11,'native_int0':12,'operand':7,'cancelled':13,'serial':14}
 C=r'''
 #include <stdio.h>
 #include <dos.h>
 #include <string.h>
 #include "runtime.h"
 #include "file_io.h"
+#include "serial_runtime.h"
 extern aspect_file runtime_file;
 extern unsigned runtime_string_count,runtime_depth,runtime_stack_pointer,runtime_frame;
 extern unsigned char runtime_arena[0x3aca];
@@ -62,6 +64,10 @@ static void numeric_value(unsigned is_long,unsigned index,unsigned long expected
  value=is_long?runtime_longs[index]:runtime_integer_b[index];ck(value==expected);
  printf("VALUE %s %s%u=%lu\n",current,is_long?"long":"integer",index,value);
 }
+static void serial_output(const char *expected,unsigned count){unsigned i;
+ ck(runtime_serial_tx_size==count);ck(memcmp(runtime_serial_tx,expected,count)==0);
+ printf("TX %s ",current);for(i=0;i<runtime_serial_tx_size;++i)printf("%02X",runtime_serial_tx[i]);printf("\n");
+}
 int main(void){FILE *done;
 '''
 END=r'''
@@ -92,7 +98,9 @@ def main():
  compiler_corpus=json.loads(compiler_corpus_path.read_text())
  console_corpus_path=ROOT/'standalone/fixtures/aspect_console_vectors.json'
  console_corpus=json.loads(console_corpus_path.read_text())
- cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']+conversion_corpus['vectors']+compiler_corpus['vectors']+console_corpus['vectors']
+ serial_corpus_path=ROOT/'standalone/fixtures/aspect_serial_vectors.json'
+ serial_corpus=json.loads(serial_corpus_path.read_text())
+ cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']+conversion_corpus['vectors']+compiler_corpus['vectors']+console_corpus['vectors']+serial_corpus['vectors']
  # Historical PAUSE oracle expected an unsupported stop before opcode88 recovery.
  # Its authored seven-second script now executes the recovered native delay.
  cases=[dict(c,expected={}) if c['name']=='PAUSE' else c for c in cases]
@@ -103,6 +111,7 @@ def main():
  sources.append(compiler_corpus_path)
  sources.append(ROOT/'src/aspect/compiler.py')
  sources.append(console_corpus_path)
+ sources += [serial_corpus_path,ROOT/'src/aspect/serial_runtime.c',ROOT/'src/aspect/serial_runtime.h']
  for name,rel,define in ASM:
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
   subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))
@@ -113,18 +122,27 @@ def main():
   units.append(dict(unit=unit,start=start,end_exclusive=end,file_start=base+start,bytes=end-start,sha256=sha(p)))
  program=C
  supported={int(op,16):name for op,name in re.findall(r'%(?:el)?if op=(0x[0-9a-f]+)\n dw (\w+)',(ROOT/'src/aspect/runtime_bridge.asm').read_text())}
- assert len(supported)==57
+ assert len(supported)==59
  for case in cases:
   source=case['source'];assert hashlib.sha256(source.encode('cp437')).hexdigest()==case['source_sha256']
   data=compile_source(source)
   assert data==bytes.fromhex(case['hex']) and hashlib.sha256(data).hexdigest()==case['asx_sha256'],case['name']
   name=case['name']+'.ASX';(OUT/name).write_bytes(data);ex=case['expected'];error=ERRORS[ex['error']] if 'error' in ex else 0
   assert not case.get('dos_excluded',False),case['name']
+  serial=case.get('serial')
+  if serial:
+   incoming=bytes.fromhex(serial.get('input_hex',''));trigger=bytes.fromhex(serial.get('send_after_tx_hex',''))
+   lit=lambda data:''.join(f'\\{byte:03o}' for byte in data)
+   flags=int(serial.get('enabled',True)) | (2 if serial.get('case_sensitive') else 0)
+   program+=f' runtime_serial_fixture((const unsigned char *)"{lit(incoming)}",{len(incoming)},(const unsigned char *)"{lit(trigger)}",{len(trigger)},{flags},{serial.get("initial_ticks",0)}UL,{serial.get("tick_step",1)}UL);\n'
+  else:program+=' runtime_serial_fixture_disable();\n'
   program+=f' run("{name}",{ex.get("limit",1000)},{error},{int("integer0" in ex)},{ex.get("integer0",0)&65535}U,{int("long0" in ex)},{ex.get("long0",0)}UL,{ex.get("allocated",data[0])});\n'
   if 'native_error' in ex:program+=f' ck(runtime_native_error_code=={ex["native_error"]});printf("NATIVE {name} code=%u\\n",runtime_native_error_code);\n'
   output=bytes.fromhex(ex.get('stdout_hex',''));assert len(output)<=1024
   literal=''.join(f'\\{byte:03o}' for byte in output)
   program+=f' output("{literal}",{len(output)});\n'
+  tx=bytes.fromhex(ex.get('tx_hex',''));literal=''.join(f'\\{byte:03o}' for byte in tx)
+  program+=f' serial_output("{literal}",{len(tx)});\n'
   for key,value in ex.items():
    if re.fullmatch(r'string[0-9]+',key):
     index=int(key[6:]);assert 0<=index<128
@@ -136,6 +154,7 @@ def main():
     kind,index=match[1],int(match[2]);assert 0<=index<128
     program+=f' numeric_value({int(kind=="long")},{index},{value}UL);\n'
 
+ program+=' runtime_serial_fixture_disable();\n'
  # Malformed fixtures stop at header/read/unsupported boundaries, not arbitrary unsafe operands.
  for name,data,error in [('NOHEADER',b'',2),('BADHEAD',bytes.fromhex('81 cf 94'),2),('BADOP',bytes.fromhex('00 ff'),3),('TRUNC',bytes.fromhex('00 cf 5b 00 8d 00 ab 07'),5)]:
   (OUT/(name+'.ASX')).write_bytes(data);program+=f' run("{name}.ASX",1000,{error},0,0,0,0UL,0);\n'
@@ -165,7 +184,7 @@ def main():
  program=program.replace(END,extra+END)
  (OUT/'diagnostic.c').write_text(program)
  subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dASPECT_RUNTIME_DIAGNOSTIC',
- '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/file_io.c'),*objects],cwd=OUT,check=True)
+ '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/serial_runtime.c'),*objects],cwd=OUT,check=True)
  report=dict(binary_sha256=sha(OUT/'EXECUTE.EXE'),sources={str(p.relative_to(ROOT)):sha(p) for p in sources},support_units=units,original_inputs=[],
   compile_flags=['8086','small model','cdecl','ASPECT_RUNTIME_DIAGNOSTIC'],fixture_count=len(cases),
   supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+12+len(unsupported),
@@ -173,6 +192,6 @@ def main():
   maintained_string_fault_fixture={'STRSHORT':'STRGASS compiler bytes with final00 option and94 return removed; first global HELLO retained, second stays empty'},
   maintained_heap_fault_fixtures={'HEAPFLT':'IDIVEDGE compiler bytes with global-string count changed from0to2','HEAPZERO':'IDZ compiler bytes with global-string count changed from0to2'},
   fixture_expectations={c['name']:{'source_sha256':c['source_sha256'],'asx_sha256':c['asx_sha256'],'expected':c['expected']} for c in cases},
-  scope='Incremental actual native dispatch/operand/operation/file/heap composition executing source-owned compiled fixtures. Incomplete57-slot opcode table; unavailable services abort. Not full ASPECT or arbitrary-input safety.')
+  scope='Incremental actual native dispatch/operand/operation/file/heap composition executing source-owned compiled fixtures. Incomplete59-slot opcode table; serial queue/clock inputs are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
  (OUT/'manifest.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 if __name__=='__main__':main()

@@ -1,13 +1,15 @@
 /* Maintained DOS command-line owner for trusted, locally compiled ASX files.
  * Recovered handlers retain native unchecked operand/frame behavior. */
 #include "runtime.h"
+#include "serial.h"
+#include "serial_runtime.h"
 #include <stdio.h>
 #include <string.h>
 
 static const char *errors[]={"success","cannot open script","invalid script header",
  "unsupported command or service","floating-point service unavailable","file or output error",
  "instruction budget exhausted","invalid operand","out of memory","script stack overflow",
- "invalid runtime state","division by zero","CPU arithmetic fault","cancelled"};
+ "invalid runtime state","division by zero","CPU arithmetic fault","cancelled","serial service error"};
 
 static unsigned folded(unsigned c){return c>='a'&&c<='z'?c-32:c;}
 static unsigned path_ok(const char *path)
@@ -41,17 +43,33 @@ static unsigned budget(const char *text,unsigned *value)
 }
 int main(int argc,char **argv)
 {
- unsigned limit=10000,result;
+ unsigned limit=10000,result=0,i,has_budget=0,serial_status;
+ const char *serial_option=0;
  if(argc==2 && (!strcmp(argv[1],"/?") || !strcmp(argv[1],"--help"))){
-  puts("ASPECT script.ASX [instruction-budget:1..65535]");return 0;
+  puts("ASPECT script.ASX [instruction-budget:1..65535] [/S1:0003:03:N]");return 0;
  }
- if(argc<2 || argc>3 || !path_ok(argv[1]) || (argc==3 && !budget(argv[2],&limit))){
-  fputs("Usage: ASPECT script.ASX [instruction-budget:1..65535]\n",stderr);return 64;
+ if(argc<2 || argc>4 || !path_ok(argv[1]))result=64;
+ for(i=2;i<(unsigned)argc && !result;++i){
+  if(argv[i][0]=='/' && (argv[i][1]=='S'||argv[i][1]=='s')){
+   if(serial_option)result=64;else serial_option=argv[i];
+  }else if(has_budget || !budget(argv[i],&limit))result=64;else has_budget=1;
  }
- result=aspect_runtime_run(argv[1],limit);
+ if(result){
+  fputs("Usage: ASPECT script.ASX [instruction-budget:1..65535] [/S1:0003:03:N]\n",stderr);return 64;
+ }
+ if(serial_option){
+  serial_status=aspect_serial_open(serial_option);
+  if(serial_status){runtime_serial_error=serial_status;result=ASPECT_RUN_SERIAL;}
+ }
+ if(!result)result=aspect_runtime_run(argv[1],limit);
+ if(serial_option && aspect_serial_active){
+  serial_status=aspect_serial_close();
+  if(serial_status){runtime_serial_error=serial_status;if(!result)result=ASPECT_RUN_SERIAL;}
+ }
  if(result){
   fprintf(stderr,"ASPECT: %s (error %u, opcode %02X, step %u",result<sizeof(errors)/sizeof(errors[0])?errors[result]:"runtime error",result,runtime_last_opcode,runtime_steps);
   if(runtime_native_error_code)fprintf(stderr,", native %u",runtime_native_error_code);
+  if(runtime_serial_error)fprintf(stderr,", serial %u",runtime_serial_error);
   fputs(")\n",stderr);
  }
  return (int)result;

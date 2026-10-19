@@ -86,7 +86,7 @@ SEGMENT _DATA public class=DATA use16
 global terminal_translation_edit_executable,terminal_translation_edit_tail
 global terminal_translation_edit_status
 terminal_translation_edit_executable: times 64 db 0
-terminal_translation_edit_tail: times 68 db 0
+terminal_translation_edit_tail: times 96 db 0
 terminal_translation_edit_status: dw 0 ;1queued,2applied,3declined,4unavailable,5read,6unsafe,7child.
 edit_command: db 'XLTEDIT',0
 edit_unavailable: db 'Input table editor unavailable.',0

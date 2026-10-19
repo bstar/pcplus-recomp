@@ -1,6 +1,14 @@
 /* Maintained direct Script child argument validation, not native scheduling.
  * No DOS, UART or script execution here. DS=SS, bounded near buffers. */
 #include "../config/resource_path.h"
+#include "../aspect/serial_handoff.h"
+#include <dos.h>
+extern aspect_serial_handoff script_handoff;
+extern unsigned script_divisor,script_lcr;
+extern unsigned script_port_index,script_soft_flow,script_hard_flow;
+extern unsigned script_parent_ring;
+static char digit(unsigned value){return value<10?(char)(value+'0'):(char)(value-10+'A');}
+static char *hexword(char *p,unsigned n){*p++=digit(n>>12);*p++=digit((n>>8)&15);*p++=digit((n>>4)&15);*p++=digit(n&15);return p;}
 static unsigned span(const void *p,unsigned n)
 {return p && (unsigned long)(unsigned)p+n<=65536UL;}
 static unsigned apart(const void *a,unsigned n,const void *b,unsigned m)
@@ -15,8 +23,8 @@ static unsigned device(const char *p,unsigned n)
 }
 unsigned __cdecl terminal_script_prepare(unsigned psp,char *executable,char *tail)
 {
- unsigned i=1,start=1,base=0,extension=0,dot=0,c;
- if(!span(executable,64)||!span(tail,68)||!apart(executable,64,tail,68)||tail[0]!=' ')return 1;
+ unsigned i=1,start=1,base=0,extension=0,dot=0,c,status,ds;char *p;
+ if(!span(executable,64)||!span(tail,96)||!apart(executable,64,tail,96)||tail[0]!=' ')return 1;
  /* Optional drive and root; every following component is a strict DOS83 name.
   * Reject shell syntax, whitespace, traversal and device aliases even though
   * direct EXEC does not invoke a command interpreter. */
@@ -26,7 +34,21 @@ unsigned __cdecl terminal_script_prepare(unsigned psp,char *executable,char *tai
   c=(unsigned char)tail[i];
   if(!c || c=='\\'){
    if(!base || (dot&&!extension) || device(tail+start,base))return 1;
-   if(!c)return resource_program_path(psp,"ASPECT.EXE",executable)?2:0;
+   if(!c){
+    status=resource_program_path(psp,"ASPECT.EXE",executable);if(status)return 2;
+    if(script_port_index>3 || !script_divisor || (script_lcr&192))return 1;
+    ds=FP_SEG((void __far *)&script_handoff);
+    script_handoff.magic=ASIO_MAGIC;script_handoff.version=1;script_handoff.size=28;
+    script_handoff.parent_psp=psp;script_handoff.parent_ds=ds;
+    script_handoff.ring=(unsigned)script_parent_ring;script_handoff.capacity=4096;
+    script_handoff.count=script_handoff.status=script_handoff.returned=script_handoff.reserved0=script_handoff.reserved1=0;
+    script_handoff.guard=psp^ds^(unsigned)script_parent_ring^ASIO_GUARD;
+    p=tail+i;*p++=' ';*p++='/';*p++='S';*p++='1'+script_port_index;*p++=':';
+    p=hexword(p,script_divisor);*p++=':';*p++=digit(script_lcr>>4);*p++=digit(script_lcr&15);*p++=':';
+    *p++=script_soft_flow?(script_hard_flow?'B':'S'):script_hard_flow?'H':'N';*p++=':';
+    p=hexword(p,ds);*p++=':';p=hexword(p,(unsigned)&script_handoff);*p=0;
+    return 0;
+   }
    start=i+1;base=extension=dot=0;continue;
   }
   if(c=='.'){if(!base||dot)return 1;dot=1;continue;}

@@ -30,7 +30,7 @@ extern terminal_translation_reload_run
 extern terminal_translation_reload_status
 extern terminal_translation_edit_prepare,terminal_translation_edit_complete
 extern terminal_translation_edit_executable,terminal_translation_edit_tail
-extern terminal_script_prepare
+extern terminal_script_prepare,terminal_script_complete,terminal_script_return_key
 extern terminal_translation_edit_status
 global terminal_program_initialize,terminal_program_start,terminal_program_poll
 global terminal_program_cancel
@@ -343,6 +343,16 @@ terminal_program_poll:
  ; A child may leave its UART ISR/interrupt-enable state behind. Quiet that
  ; port and restore its baseline vector before drawing or waiting for a key.
  call program_quiet_uart
+ cmp word [terminal_program_kind],4
+ jne .not_script_complete
+ call terminal_script_complete
+ ; A serial Script relinquished its IRQ before DOS return. Reacquire now,
+ ; before displaying/waiting on the child console; otherwise in-flight remote
+ ; bytes can overrun RBR for the entire return-key wait.
+ call program_restore_uart
+ call program_resume_flow
+ sti
+.not_script_complete:
  cmp word [terminal_program_kind],3
  jne .setup_complete
  ; A failed/misbehaving editor must still leave its question readable.
@@ -382,6 +392,11 @@ terminal_program_poll:
  cmp word [terminal_setup_key_consumed],1
  je .restore_screen
 .read_return_key:
+ cmp word [terminal_program_kind],4
+ jne .ordinary_return_key
+ call terminal_script_return_key
+ jmp .restore_screen
+.ordinary_return_key:
  xor ax,ax
  int 0x16
 .restore_screen:
@@ -410,7 +425,10 @@ terminal_program_poll:
  jne .restore_port
  call terminal_setup_profile_finish
 .restore_port:
+ cmp word [terminal_program_kind],4
+ je .port_restored ;Script's serviced console already owns the parent ISR.
  call program_restore_uart
+.port_restored:
  mov word [terminal_program_active],0
  call program_resume_flow
  jmp .done

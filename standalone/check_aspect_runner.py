@@ -66,12 +66,17 @@ def main():
     extras = [('MISSING', 'ABSENT.ASX', None, 1), ('BADHEAD', 'BAD.ASX', None, 2),
               ('ARGS', None, None, 64), ('LIMIT0', 'HELLO.ASX', '0', 64),
               ('LIMITBIG', 'HELLO.ASX', '65536', 64), ('LIMITBAD', 'HELLO.ASX', '12x', 64),
-              ('DEVICE', 'CON.ASX', None, 64), ('HELP', '/?', None, 0)]
+              ('DEVICE', 'CON.ASX', None, 64), ('HELP', '/?', None, 0),
+              ('SERPORT','HELLO.ASX','/S0:0003:03:N',14),
+              ('SERDIV','HELLO.ASX','/S1:0000:03:N',14),
+              ('SERLCR','HELLO.ASX','/S1:0003:83:N',14),
+              ('SERFLOW','HELLO.ASX','/S1:0003:03:X',14),
+              ('SERPTR','HELLO.ASX','/S1:0003:03:N:0000:0000',14)]
     (tests / 'BAD.ASX').write_bytes(b'\x81')
     (tests / 'ABSENT.ASX').unlink(missing_ok=True)
     for name, file, limit, error in extras:
         program += f' run("{name}",{json.dumps(file) if file else "0"},{json.dumps(limit) if limit else "0"},{error},0);\n'
-        expectations[name] = dict(exit=error, stdout_hex=('ASPECT script.ASX [instruction-budget:1..65535]\r\n'.encode().hex() if name=='HELP' else ''))
+        expectations[name] = dict(exit=error, stdout_hex=('ASPECT script.ASX [instruction-budget:1..65535] [/S1:0003:03:N]\r\n'.encode().hex() if name=='HELP' else ''))
     program += ' printf("RUNNER %u cases %u checks %u failures\\n",cases,checks,failed);return failed?1:0;}\n'
     (tests / 'harness.c').write_text(program)
     subprocess.run(['wcl', '-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-k4096',
@@ -86,7 +91,7 @@ def main():
                        stdout=log, stderr=log, timeout=45, check=True)
     result = (tests / 'RESULT.TXT').read_text()
     assert (tests / 'PASS.TXT').exists() and not (tests / 'FAIL.TXT').exists(), result
-    assert 'RUNNER 16 cases 80 checks 0 failures' in result, result
+    assert 'RUNNER 21 cases 105 checks 0 failures' in result, result
     for name, expected in expectations.items():
         output, error = (tests / (name + '.OUT')).read_bytes(), (tests / (name + '.ERR')).read_bytes()
         assert output.hex() == expected['stdout_hex'], (name, output)
@@ -98,8 +103,8 @@ def main():
     report = dict(passed=True, original_inputs=[], binary_sha256=sha(OUT / 'ASPECT.EXE'),
                   manifest_sha256=sha(OUT / 'manifest.json'), checker_sha256=sha(Path(__file__)),
                   compiler_sha256=sha(ROOT / 'src/aspect/compiler.py'), result_sha256=sha(tests / 'RESULT.TXT'),
-                  DOS_summary='RUNNER 16 cases 80 checks 0 failures', cases=expectations,
-                  scope='Actual production DOS CLI spawned16 times with independent handles; exact stdout/stderr, statuses, BIOS Escape, native delay and INT0 restoration. Fixed trusted source cases, not arbitrary-bytecode safety or serial service integration.')
+                  DOS_summary='RUNNER 21 cases 105 checks 0 failures', cases=expectations,
+                  scope='Actual production DOS CLI spawned21 times with independent handles; exact stdout/stderr, statuses, BIOS Escape, native delay, malformed serial handoff admission and INT0 restoration. Fixed trusted source cases, not arbitrary-bytecode safety or complete serial scripting.')
     (OUT / 'checks.json').write_text(json.dumps(report, indent=2) + '\n')
     print(report['DOS_summary'])
 

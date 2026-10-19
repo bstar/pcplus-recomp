@@ -643,3 +643,24 @@ test: test-translation-edit
 test-translation-edit: terminal xlt-editor setup
 	python3 standalone/check_translation_edit_live.py
 	python3 standalone/test_translation_edit_dos.py --label "edit-$$(date -u +%Y%m%dT%H%M%S%N)" --sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)"
+
+# Native serial commands and the source-owned DOS UART lease are distinct proofs.
+.PHONY: aspect-serial-commands test-aspect-serial-commands test-aspect-serial-commands-compat aspect-serial test-aspect-serial test-aspect-serial-dos test-aspect-script-serial-dos test-aspect-serial-bbs
+all: aspect-serial-commands aspect-serial
+test: test-aspect-serial-commands test-aspect-serial
+aspect-serial-commands:
+	python3 standalone/build_aspect_serial_commands.py
+test-aspect-serial-commands:
+	python3 standalone/check_aspect_serial_commands.py
+test-aspect-serial-commands-compat:
+	python3 standalone/check_aspect_serial_commands.py --original analysis/pcplus-install/PCPLUS.EXE
+aspect-serial:
+	python3 standalone/build_aspect_serial.py
+test-aspect-serial: aspect-serial
+	python3 standalone/check_aspect_serial.py
+test-aspect-serial-dos:
+	python3 standalone/test_aspect_serial_dos.py
+test-aspect-script-serial-dos:
+	python3 standalone/test_aspect_script_serial_dos.py
+test-aspect-serial-bbs:
+	python3 standalone/test_aspect_serial_bbs.py

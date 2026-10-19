@@ -215,7 +215,7 @@ class Compiler:
         if tag == 'string':
             return 3
         if tag == 'symbol':
-            if node[1] in ('success', 'failure'):
+            if node[1] in ('success', 'failure', 'waitfor'):
                 return 0
             if node[1] == '$null' or re.fullmatch(r's[0-9]', node[1]):
                 return 3
@@ -229,7 +229,7 @@ class Compiler:
         return max(self.kind(node[2]), self.kind(node[3]))
 
     def lvalue(self, node):
-        if node[0] != 'symbol' or node[1] in ('success', 'failure', '$null'):
+        if node[0] != 'symbol' or node[1] in ('success', 'failure', 'waitfor', '$null'):
             self.error('variable destination required')
         if re.fullmatch(r's[0-9]', node[1]):
             return 3, bytes((0x64, int(node[1][1])))
@@ -266,8 +266,8 @@ class Compiler:
                 i = (index * stride) % 13
                 self.emit((char + (table[i] if (i + parity) % 2 == 0 else -table[i])) & 255)
         elif tag == 'symbol':
-            if node[1] in ('success', 'failure'):
-                self.emit(0x6F, 27 if node[1] == 'success' else 21)
+            if node[1] in ('success', 'failure', 'waitfor'):
+                self.emit(0x6F, {'success': 27, 'failure': 21, 'waitfor': 28}[node[1]])
             elif node[1] == '$null':
                 self.emit(0x6E, 19)
             else:
@@ -441,11 +441,14 @@ class Compiler:
         if optional:
             self.emit(int(len(args) > len(signature)))
             if len(args) > len(signature):
-                if self.kind(args[-1]) == 3:
-                    self.error('numeric count required')
-                value = (self.word_argument(args[-1]) if command == 'waitfor'
-                         else self.atomic(args[-1]))
-                self.operand(value, compact=True)
+                if command == 'waitfor' and args[-1] == ('symbol', 'forever'):
+                    self.emit(0x1A)
+                else:
+                    if self.kind(args[-1]) == 3:
+                        self.error('numeric count required')
+                    value = (self.word_argument(args[-1]) if command == 'waitfor'
+                             else self.atomic(args[-1]))
+                    self.operand(value, compact=True)
 
     def word_argument(self, node):
         value = self.atomic(node)

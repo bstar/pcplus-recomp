@@ -53,6 +53,8 @@ builds.append('aspect_conversions')
 builds.append('aspect_conversion_services')
 builds.append('aspect_console')
 builds.append('aspect_runner')
+builds.append('aspect_serial_commands')
+builds.append('aspect_serial')
 program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/build_{name}.py'],check=True)\n" for name in builds)
 owner_checks=['standalone/check_batch_download.py','standalone/check_batch_upload.py','standalone/check_capture_file.py','standalone/check_capture_session.py','standalone/check_capture_owners.py']
 owner_checks.append('standalone/check_monitor_file.py')
@@ -85,6 +87,7 @@ outputs += ['aspect-stack/STACK.EXE','aspect-unwind/UNWIND.EXE']
 outputs += ['aspect-flow/FLOW.EXE','aspect-file/FILE.EXE']
 outputs += ['aspect-string-services/SERVICES.EXE','aspect-string-commands/STRCMD.EXE']
 outputs += ['aspect-conversions/CONVERT.EXE','aspect-conversion-services/CONVERT.EXE']
+outputs += ['aspect-serial-commands/SERIAL.EXE','aspect-serial/SERIAL.EXE']
 outputs += ['aspect-console/CONSOLE.EXE','aspect-runner/ASPECT.EXE','aspect-runner/tests/RUNTEST.EXE']
 outputs += ['aspect-parameters/PARAM.EXE','aspect-strings/STRINGS.EXE']
 outputs += ['aspect-long/LONG.EXE','aspect-arithmetic/ARITH.EXE']

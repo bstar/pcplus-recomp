@@ -43,6 +43,6 @@ def main():
   check_sha256=sha(Path(__file__).resolve()),result_sha256=sha(OUT/'RESULT.TXT'),optional_original=optional,
   original_inputs=[] if optional is None else [str(args.original)],fixture_count=manifest['fixture_count'],
   unsupported_slot_cases=manifest['unsupported_slot_cases'],
-  scope='Actual recovered dispatcher executes source-compiled authored ASX through real DOS files/far heap, native MESSAGE/EXIT/PAUSE and maintained resource owner. Incomplete57-slot command surface; all158 unsupported in-range slots abort. No full compiler/VM, arbitrary-bytecode safety or terminal serial-service integration.')
+  scope='Actual recovered dispatcher executes source-compiled authored ASX through real DOS files/far heap and native console/serial commands. Serial queue/clock/device boundaries are explicit diagnostic models. Incomplete59-slot command surface; all156 unsupported in-range slots abort. No full compiler/VM or arbitrary-bytecode safety.')
  (OUT/('checks-native.json' if optional else 'checks.json')).write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
 if __name__=='__main__':main()

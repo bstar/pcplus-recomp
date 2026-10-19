@@ -7,8 +7,11 @@
 enum { ASPECT_RUN_OK=0,ASPECT_RUN_OPEN,ASPECT_RUN_HEADER,ASPECT_RUN_UNSUPPORTED,
        ASPECT_RUN_FLOAT,ASPECT_RUN_IO,ASPECT_RUN_BUDGET,ASPECT_RUN_OPERAND,
        ASPECT_RUN_HEAP,ASPECT_RUN_STACK,ASPECT_RUN_STATE,ASPECT_RUN_DIVIDE_ZERO,ASPECT_RUN_ARITHMETIC_FAULT,
-       ASPECT_RUN_CANCELLED };
+       ASPECT_RUN_CANCELLED,ASPECT_RUN_SERIAL };
 unsigned aspect_runtime_run(const char *path,unsigned step_limit);
+void runtime_set_error(unsigned error);
+unsigned runtime_console_cancel_poll(void);
+extern unsigned runtime_error;
 extern unsigned runtime_integer_a[10],runtime_integer_b[128];
 extern unsigned long runtime_longs[128];
 extern unsigned runtime_steps,runtime_last_opcode,runtime_peak_live;

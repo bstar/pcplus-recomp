@@ -97,10 +97,10 @@ ENTRY(table,"Edit input table               Alt-F8",
  "Capture closes while the UART and interrupt belong to the editor.");
 ENTRY(script,"Run script",
  "Run a compiled ASPECT script from a local DOS file.\n"
- "Enter a DOS 8.3 path, then Enter; Escape cancels. The terminal pauses\n"
- "its port and closes capture for the child, then restores its screen.\n"
- "Script console output appears before the return-key prompt. Serial\n"
- "script commands are not implemented; this does not automate the BBS.");
+ "Enter a DOS 8.3 path; Escape cancels. The script temporarily owns\n"
+ "the current port. Capture closes; the terminal restores its screen\n"
+ "and received data after the script returns. Console output remains\n"
+ "visible until you press a key. Unsupported commands report an error.");
 ENTRY(using,"Using the command menu",
  "Alt-Z opens this menu. Left/Right or Tab changes the menu group.\n"
  "Up/Down or Home/End selects a command; a listed letter runs it.\n"

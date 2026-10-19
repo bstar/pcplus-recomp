@@ -66,3 +66,8 @@ uart_poll_flow:
 SEGMENT _DATA public class=DATA use16
 global uart_break_hold
 uart_break_hold: dw 0
+; Standard C DOS hosts may place CONST/_DATA ahead of this module's own data.
+; Explicit group fixups keep uart_break_hold DS-relative in that layout too.
+SEGMENT _BSS public class=BSS use16
+SEGMENT STACK stack class=STACK use16
+GROUP DGROUP _DATA _BSS STACK
