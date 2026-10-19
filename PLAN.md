@@ -1,5 +1,12 @@
 # Complete DOS rebuild plan
 
+Current compatibility priority: the user's [owned ENiGMA board](lab/bbs/enigma-owned.md).
+DOS-compiled login and custom game/DIZ/NFO page entry work, but immediate NFO
+scrolling fails despite correct outgoing keys. The bounded decoder candidate
+passes actual DOS editor and byte-exact ZMODEM workflows in isolation; it is
+not installed on the live board. Keep that distinction in compatibility claims
+and validate the actual custom menus and physical modem separately.
+
 Latest keyboard checkpoint: [shared key output](docs/ASPECT_KEY_OUTPUT.md) routes
 script-time keys through the actual parent classifier/profile and child-owned
 UART. Capability6 retains inherited BIOS selection and adds checked duplex

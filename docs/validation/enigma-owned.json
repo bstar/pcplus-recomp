@@ -1,0 +1,172 @@
+{
+  "evaluation_recorded": true,
+  "compatibility_complete": false,
+  "recorder_sha256": "a2d226e59e78b37f7f42314cb6df2c37b4bf50fa2fc79cb6075d35b000859d05",
+  "terminal_sha256": "eae23158210bf4a5d47e3c8d7c01e9da2ea25d5b62dd9c707588eea8698efdab",
+  "server_revision": "237cd9743d6978a940dd66db0e78f6ab8ccd3e37",
+  "stock_client_sha256": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+  "isolated_candidate_client_sha256": "8cb3b4c8d439e0c43a09d9caf87b69560b3df1b51de053d70f2dc9b6dc9ea31b",
+  "candidate_report": {
+    "path": "build/bbs-lab/owned-enigma-framer-02/report.json",
+    "sha256": "f9b84e18d7e177057e10cd2375b185c2233e5cddb48749ba99858078cd8f808a",
+    "tests": [
+      {
+        "name": "framer",
+        "exit_code": 0,
+        "checks": 1638
+      },
+      {
+        "name": "stock-counterexample",
+        "exit_code": 0,
+        "checks": 109
+      },
+      {
+        "name": "candidate-client-editor",
+        "exit_code": 0,
+        "checks": 112
+      },
+      {
+        "name": "upstream-regressions",
+        "exit_code": 0,
+        "checks": null
+      }
+    ]
+  },
+  "live_unmodified_runs": [
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-files-05/owned-server-checks.json",
+      "sha256": "654dd721c38419c6b3cecb1647d8171522d84d27083388cdca0c153d35f829b5",
+      "passed": true,
+      "mode": "files",
+      "checks": {
+        "DOS_harness": true,
+        "authenticated_probe": true,
+        "main_menu": true,
+        "inputs_unchanged": true,
+        "no_post_saved": true,
+        "staged_products_unchanged": true,
+        "DOS_source_compiled": true,
+        "game_details": true,
+        "diz_page": true,
+        "nfo_page": true
+      },
+      "profile": "network",
+      "scroll": {
+        "passed": false,
+        "page_headers": [
+          [
+            "1",
+            "15",
+            "24"
+          ]
+        ],
+        "down_wire": true,
+        "page_down_wire": true,
+        "scope": "Supplemental actual DOS NFO navigation audit: expected final page10-24 of24 after Down and PageDown; original view-entry checks remain separately scoped."
+      },
+      "scroll_sha256": "9764b23e96724c521937a1a1f99e004309c9434dee608e6f55464d9c89dbc930"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-editor-04/owned-server-checks.json",
+      "sha256": "f75ac70e7580886ec407938aff7414603e42905d29cc05245dcda237664b0433",
+      "passed": false,
+      "mode": "editor",
+      "checks": {
+        "DOS_harness": true,
+        "authenticated_probe": true,
+        "main_menu": true,
+        "inputs_unchanged": true,
+        "no_post_saved": true,
+        "staged_products_unchanged": true,
+        "DOS_source_compiled": true,
+        "editor_entered": true,
+        "home_moves_before_marker": false,
+        "insert_toggled_overtype": false
+      },
+      "profile": "network"
+    }
+  ],
+  "isolated_patched_runs": [
+    {
+      "mode": "editor",
+      "path": "build/bbs-lab/results/enigma/owned-revision-framed-editor-02-wrapper/experiment.json",
+      "sha256": "62d3aabcccb759bbe4f6caade2535c7e67da68b77830e601a6970a9391a4be85",
+      "checks": {
+        "dos_normal_exit": true,
+        "hardware_restored": true,
+        "screen_captured": true,
+        "bbs_connected": true,
+        "bbs_display_received": true,
+        "configuration_unchanged": true,
+        "binary_unchanged_during_run": true
+      },
+      "editor_checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "experimental_editor_entered": true,
+        "no_post_saved": true,
+        "insert_toggled_overtype": true,
+        "home_moves_before_marker": true
+      },
+      "audit_sha256": "9c150acf2a4abcef89a235f85f89db5f273be7e4ec14162055faabccdee8defb"
+    },
+    {
+      "mode": "editor-transfer",
+      "path": "build/bbs-lab/results/enigma/owned-revision-framed-transfer-01-wrapper/experiment.json",
+      "sha256": "69e88f33ac2cad0685cb72f9468c0a640bb6161bce196c200b047492d96cce73",
+      "checks": {
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "screen_captured": true,
+        "bbs_connected": true,
+        "binary_unchanged": true,
+        "payload_fixture_unchanged": true,
+        "observed_decoded_offsets_match": true,
+        "configuration_unchanged": true,
+        "automatic_invitation_then_receiver_negotiation": true,
+        "no_manual_transfer_keys": true,
+        "ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed": true,
+        "posttransfer_actual_menu_input_response": true,
+        "actual_validated_protocol": true,
+        "DOS_exact_length_PCXTEST.BIN": true,
+        "only_expected_received_files": true,
+        "unique_server_session_and_ordered_menus": true,
+        "same_session_editor_then_transfer": true,
+        "no_editor_post_saved": true,
+        "discard_menu_used": true,
+        "no_leftover_staging": true
+      },
+      "payload_sha256": {
+        "PCXTEST.BIN": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6"
+      }
+    }
+  ],
+  "live_server_patched_by_this_work": false,
+  "modem_packet_delay_ms": 0,
+  "whole_application_gates_closed": [],
+  "original_inputs": [],
+  "limitations": [
+    "The isolated decoder fix is not installed on the live service.",
+    "Live view-entry checks do not imply successful arrow/page-key navigation; inspect the separate scroll audit.",
+    "Captured runtime data and private account/config files remain ignored and unpublished.",
+    "Physical RS-232 Wi-Fi modem behavior and full application compatibility remain unverified."
+  ],
+  "excluded_control_profile_run": {
+    "path": "build/bbs-lab/results/enigma-owned/owned-editor-control-01/owned-server-checks.json",
+    "sha256": "4f18ebdea882f48dc1be43d5619030aba929d9ce23f18d7e8cd65b3291f54fc8",
+    "checks": {
+      "DOS_harness": true,
+      "authenticated_probe": true,
+      "main_menu": true,
+      "inputs_unchanged": false,
+      "no_post_saved": true,
+      "staged_products_unchanged": true,
+      "DOS_source_compiled": true,
+      "editor_entered": true,
+      "home_moves_before_marker": false,
+      "insert_toggled_overtype": false
+    },
+    "reason": "File-menu configuration/module changed during capture. Retained as an unmatched failed run; no fallback compatibility claim."
+  }
+}

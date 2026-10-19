@@ -37,6 +37,12 @@ installed dependencies:
   --output build/bbs-lab/key-stream-check-new
 ```
 
+For an explicitly selected newer checkout, supply both `--revision` and
+`--client-sha256` with its expected commit and clean client hash. The default
+pins are unchanged. This still exports an isolated candidate and never patches
+the selected source or running service. Current owned-server compatibility
+work is tracked in [ENiGMA owned-server testing](../../enigma-owned.md).
+
 The output directory must be new. The runner verifies the source revision,
 tracked cleanliness and original client hash, exports a separate candidate,
 applies the patch there, and reuses only the fixture's installed `node_modules`.

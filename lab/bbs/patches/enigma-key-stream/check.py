@@ -24,6 +24,10 @@ def sha(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, required=True)
+    parser.add_argument("--revision", default=REVISION,
+                        help="explicit expected upstream revision; default pinned lab revision")
+    parser.add_argument("--client-sha256", default=CLIENT_SHA256,
+                        help="explicit expected unmodified client hash; required for another revision")
     parser.add_argument("--output", type=Path, required=True,
                         help="new directory, refused if it already exists")
     args = parser.parse_args()
@@ -33,7 +37,7 @@ def main():
         ["git", "-C", str(source), "rev-parse", "HEAD"], text=True).strip()
     dirty = subprocess.check_output(
         ["git", "-C", str(source), "status", "--porcelain", "--untracked-files=no"], text=True)
-    if revision != REVISION or dirty or sha(source / "core/client.js") != CLIENT_SHA256:
+    if revision != args.revision or dirty or sha(source / "core/client.js") != args.client_sha256:
         raise SystemExit("Refusing source: expected clean pinned ENiGMA revision/client")
     if (source / "core/key_stream.js").exists():
         raise SystemExit("Refusing source with an existing experimental key framer")
@@ -44,7 +48,7 @@ def main():
     candidate.mkdir()
     archive = output / "source.tar"
     with archive.open("wb") as handle:
-        subprocess.run(["git", "-C", str(source), "archive", REVISION],
+        subprocess.run(["git", "-C", str(source), "archive", revision],
                        stdout=handle, check=True)
     with tarfile.open(archive) as handle:
         handle.extractall(candidate, filter="data")
@@ -88,7 +92,7 @@ def main():
         print(f"{name}: exit {result.returncode}", flush=True)
         if result.returncode:
             raise SystemExit(f"Failed: see {log}")
-    if sha(source / "core/client.js") != CLIENT_SHA256:
+    if sha(source / "core/client.js") != args.client_sha256:
         raise SystemExit("Stock client changed during experiment")
     report["passed"] = True
     report["stock_client_unchanged"] = True

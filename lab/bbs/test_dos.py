@@ -13,6 +13,7 @@ from directory_test_support import accounting_check
 
 async def run(args):
  binary=ROOT/'build/terminal/TERMINAL.EXE'
+ if getattr(args,'binary',None):binary=args.binary.resolve()
  digest=hashlib.sha256(binary.read_bytes()).hexdigest()
  output=ROOT/'build/bbs-lab/results'/args.name/args.label
  output.mkdir(parents=True,exist_ok=True)

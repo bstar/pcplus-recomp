@@ -32,7 +32,9 @@ def audit(name,label,expect_page_down=True,disconnect=False,keyboard_profile='ne
   stock_server=log==stock_log
   with log.open('rb') as f:f.seek(start);rows=[json.loads(x) for x in f if x.strip()]
   rows=[r for r in rows if datetime.fromisoformat(r['time'].replace('Z','+00:00')).timestamp()<=(out/'result.json').stat().st_mtime]
-  sessions={r['sessionId'] for r in rows if r.get('menuName')=='telnetConnected'};assert len(sessions)==1,sessions
+  connected={r['sessionId'] for r in rows if r.get('menuName')=='telnetConnected'}
+  authenticated={r['sessionId'] for r in rows if r.get('msg')=='User "loclab" successfully logged in'}
+  sessions=connected & authenticated;assert len(sessions)==1,sessions
   session=sessions.pop();rows=[r for r in rows if r.get('sessionId')==session];menus=[r['menuName'] for r in rows if r.get('menuName')]
   entered='messageBaseNewPost' in menus;left=entered and 'messageBaseMainMenu' in menus[menus.index('messageBaseNewPost')+1:]
   checks['stock_editor_entered' if stock_server else 'experimental_editor_entered']=entered
