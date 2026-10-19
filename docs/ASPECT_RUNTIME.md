@@ -2,9 +2,11 @@
 
 This document records the initial 24-slot checkpoint at `1dbbc04`. The
 [arithmetic extension](ASPECT_ARITHMETIC.md) added numeric math; the
-[current parameter/string extension](ASPECT_PARAMETERS.md) expands it to 39 slots,
+[parameter/string extension](ASPECT_PARAMETERS.md) expanded it to 39 slots,
 132 compiled fixtures and 320 composed DOS cases. Counts and artifact identity
 below describe the initial checkpoint.
+The latest [WHEN runtime checkpoint](ASPECT_WHEN_RUNTIME.md) covers66 opcode
+slots, with SET limited to WHENCASE, and825 actual DOS cases. It remains partial.
 
 The standalone owner now executes selected compiled ASX scripts using recovered
 8086 instructions and actual DOS files and far-heap allocations. The fixed

@@ -1,6 +1,6 @@
 # ASPECT WHEN native component
 
-`src/aspect/when.asm` recovers 602 native instruction bytes for WHEN/CWHEN registration, slot selection, receive pattern monitoring, action triggering and the resident disconnect/keyboard service. This is a native component, not an integrated WHEN implementation in the maintained application. Subsequent compiler-only integration is documented in `ASPECT_WHEN_COMPILER.md`; the component itself does not wire runtime or application services.
+`src/aspect/when.asm` recovers 602 native instruction bytes for WHEN/CWHEN registration, slot selection, receive pattern monitoring, action triggering and the resident disconnect/keyboard service. This document describes the native component. [Compiler conformance](ASPECT_WHEN_COMPILER.md) and the subsequent [DOS runtime integration](ASPECT_WHEN_RUNTIME.md) document its application wiring and remaining platform limits.
 
 ## Build and validation
 
@@ -97,4 +97,4 @@ All compositions end with depth0, gate0, original frame6800 and VM stack7000. WA
 
 Native evidence: registration `ev_2655c976f9495aeb77f30f95468db58ba4e652743a7959afa9d3f6e924f9d059`, cancellation `ev_5dbc34cf4b5cb30176730e799279b5f606fdb39b21d9168f3072edb582ead612`, slot `ev_1642a990dd84d27e2feb9f1c652461e9a9061f7b33474f4b6446458030a1dae6`, monitor `ev_ecf427221dda369399a0b942379ff7decf9928213296f2c904836bee01c029e9`, trigger `ev_5b047fe51704da0fc1e29d7595425c9cb5d81b0816ac153008bbedb5eb738035`. The private frozen compiler/full-flow ledgers are `analysis/aspect-when/ledger.json` and `flow-ledger-01.json`. Public corpus provenance records their report/probe hashes. Earlier failed ABI replay is retained privately, rather than silently discarded.
 
-The separate compiler-only increment emits WHEN, CWHEN and SET WHENCASE records; it does not add runtime support. Runtime ownership, startup/reset, native carrier policy, renderer/event recursion, timeout/cancel while calls are pending, error unwinding, frame exhaustion, source-buffer aliasing and production lifecycle require explicit integration and composed tests. Source/component completion does not close the full ASPECT or whole-application reconstruction gate.
+The subsequent runtime increment links this component to actual FILE/flow/frame ownership, shared receive state, carrier sampling and the resident renderer. See [runtime validation and limits](ASPECT_WHEN_RUNTIME.md), including pending-call timeout/cancel, typed error and frame-exhaustion tests. Complete native keyboard/UI, wider lifecycle coverage and physical hardware remain required. Source/component integration does not close the full ASPECT or whole-application reconstruction gate.

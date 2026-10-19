@@ -1,0 +1,611 @@
+{
+  "schema": 1,
+  "scope": "Authored actual DOS runtime integration vectors. Sources compile with maintained compiler; expected TX/status are independently specified from native matcher/flow/service evidence, not inferred from product output. Serial queue/clock/carrier are declared diagnostic inputs. No original executable or private account data.",
+  "vectors": [
+    {
+      "name": "WPLAIN",
+      "source": "proc main\r\nwhen 0 \"A\" call worker\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\nproc worker\r\ntransmit \"EVENT\"\r\nendproc\r\n",
+      "source_sha256": "ebfb857f9dcdd3d6fe0811db35f2b28371a8eaa4f791e205954367f48a8caec7",
+      "hex": "00cfd601b500aab48b3c07c72d000000bfaab80f574a880f00d4aab68b26159d01b501bfaab88c3c7b353ad194cfbfaab80ec62d10537194",
+      "asx_sha256": "fddb4436bfd1cdff96ba43363b6176596c4f4382734a6da3151773269fe5b17a",
+      "serial": {
+        "enabled": true,
+        "input_hex": "41454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "52454144594556454e544146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WFRAME",
+      "source": "proc main\r\nwhen 0 \"A\" call worker\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\nproc worker\r\ninteger temp\r\ntransmit \"EVENT\"\r\nendproc\r\n",
+      "source_sha256": "d44c99422a3bee370fb4ba4173edf88bdb1de3364cb252aa2e7abdbd4f0ec245",
+      "hex": "00cfd601b500aab48b3c07c82d000000bfaab80f574a880f00d4aab68b26159d01b501bfaab88c3c7b353ad194d20200cfbfaab8867a4b0c077d95",
+      "asx_sha256": "0865e379ff062af498d25e2beed923a7c58475bcbbd41b992f463998fb832b2c",
+      "serial": {
+        "enabled": true,
+        "input_hex": "41454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "52454144594556454e544146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WDUAL",
+      "source": "proc main\r\nwhen 0 \"A\" call first\r\nwhen 1 \"B\" call second\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\nproc first\r\ntransmit \"FIRST\"\r\nendproc\r\nproc second\r\ntransmit \"SECOND\"\r\nendproc\r\n",
+      "source_sha256": "23edcc075ca3d9b888ca2120984954024556c89f2446cde37cdbc54725820c00",
+      "hex": "00cfd601b500aab48b3c07c73b000000d601b501aab4827707c746000000bfaab8061d507a8b30d4aab68e9ecd3f01b501bfaab88f3c410d7aab94cfbfaab8115df057d47394cfbfaab98848fe2630492d94",
+      "asx_sha256": "ccd874088c193ca7024cc2efa7bf80a57b4e9d59b5fafe6eb19472f414fdd03d",
+      "serial": {
+        "enabled": true,
+        "input_hex": "4142454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "52454144595345434f4e4446495253544146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WIDLE",
+      "source": "proc main\r\nwhen 0 \"A\" call worker\r\ntransmit \"AFTER\"\r\nendproc\r\nproc worker\r\ntransmit \"EVENT\"\r\nendproc\r\n",
+      "source_sha256": "cf785a5f8a36f734ac63026ba70a1a89eec973e70f1366895331b7e52aec87e8",
+      "hex": "00cfd601b500aab48b3c07c71a000000bfaab80f464b9b10f994cfbfaab8912eaf40cd3594",
+      "asx_sha256": "12625f0e9f7e998e5ae8c402254fc8d9e095cd54f299ffe1ce3fe7cede1b9f32",
+      "serial": {
+        "enabled": true,
+        "input_hex": "41",
+        "send_after_tx_hex": "",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "4556454e544146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WIDLED2",
+      "source": "proc main\r\nwhen 0 \"A\" call first\r\nwhen 1 \"B\" call second\r\ntransmit \"AFTER\"\r\nendproc\r\nproc first\r\ntransmit \"FIRST\"\r\nendproc\r\nproc second\r\ntransmit \"SECOND\"\r\nendproc\r\n",
+      "source_sha256": "75823882ad055c51843695a8199d3844cc6bd536018e6a244ce08d834c869646",
+      "hex": "00cfd601b500aab48b3c07c728000000d601b501aab4827707c733000000bfaab8060c518d8c2994cfbfaab8880d2cd13c4994cfbfaab90b2a4a4e54658b94",
+      "asx_sha256": "88d118c5e2dbd4c92bdb839b45d70eaa7b67d7410bfa9bcd54fe9a96a4927eeb",
+      "serial": {
+        "enabled": true,
+        "input_hex": "4142",
+        "send_after_tx_hex": "",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "5345434f4e4446495253544146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WIDLENOM",
+      "source": "proc main\r\nwhen 0 \"A\" call worker\r\ntransmit \"AFTER\"\r\nendproc\r\nproc worker\r\ntransmit \"EVENT\"\r\nendproc\r\n",
+      "source_sha256": "cf785a5f8a36f734ac63026ba70a1a89eec973e70f1366895331b7e52aec87e8",
+      "hex": "00cfd601b500aab48b3c07c71a000000bfaab80f464b9b10f994cfbfaab8912eaf40cd3594",
+      "asx_sha256": "12625f0e9f7e998e5ae8c402254fc8d9e095cd54f299ffe1ce3fe7cede1b9f32",
+      "serial": {
+        "enabled": true,
+        "input_hex": "5859",
+        "send_after_tx_hex": "",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "4146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WTXSLOTS",
+      "source": "proc main\r\nwhen 0 \"A\" transmit \"0\"\r\nwhen 1 \"A\" transmit \"1\"\r\nwhen 2 \"A\" transmit \"2\"\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\n",
+      "source_sha256": "e24bde7bc8dc2211e43864bac91c979cea9aeda13885ec31b6ca0ee338fc5d4b",
+      "hex": "00cfd601b500aab48b3c32aab40469d601b501aab40d5832aab4865ad601b502aab4833632aab40837bfaab886873a08fd82d4aab60eeccf4901b501bfaab80f464b9b10f994",
+      "asx_sha256": "6740ddaa92df8b5d0400c4f01cd055c7734a9d99f9eba187f03973f3bc89f3b9",
+      "serial": {
+        "enabled": true,
+        "input_hex": "41454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "52454144593031324146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WTXREARM",
+      "source": "proc main\r\nwhen 0 \"AA\" transmit \"Q\"\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\n",
+      "source_sha256": "88b0caac130133058424e9f40dd75472ba02161a21b8b8f662cf9a8421ac6294",
+      "hex": "00cfd601b500aab58c3c3c32aab4850abfaab80f574a880f00d4aab68b26159d01b501bfaab88c3c7b353ad194",
+      "asx_sha256": "97b27322492e0ca5f2ed402a0135570502ee95de4ae767b17cfa039e813a630a",
+      "serial": {
+        "enabled": true,
+        "input_hex": "41414141454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "524541445951514146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WINSENS",
+      "source": "proc main\r\nwhen 0 \"Ab\" transmit \"Q\"\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\n",
+      "source_sha256": "ccb9acdccce5fa690f0af631215724184fb465e69c75b1a731173a233f35528f",
+      "hex": "00cfd601b500aab58c3c5d32aab4850abfaab80f574a880f00d4aab68b26159d01b501bfaab88c3c7b353ad194",
+      "asx_sha256": "02b97813c385d0352271a78d3c251dca6c43239859805a49885cfbc7564729dc",
+      "serial": {
+        "enabled": true,
+        "input_hex": "6142454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "5245414459514146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WSENSHIT",
+      "source": "proc main\r\nset whencase on\r\nwhen 0 \"Ab\" transmit \"Q\"\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\n",
+      "source_sha256": "ab364d1c2663b5aa1c5b1bb107d37e8040bd5c9b76f39cbf2f5b2af39d9b84ed",
+      "hex": "00cf9e5601d601b500aab5044ca932aab40970bfaab88747fe242554d4aab60f5cf54901b501bfaab810e8c7591c8b94",
+      "asx_sha256": "e499e57135c934f8b67c8338f2a0908e851e92f4d1ea0179339ec1da2bb920aa",
+      "serial": {
+        "enabled": true,
+        "input_hex": "4162454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "5245414459514146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WSENSMIS",
+      "source": "proc main\r\nset whencase on\r\nwhen 0 \"Ab\" transmit \"Q\"\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\n",
+      "source_sha256": "ab364d1c2663b5aa1c5b1bb107d37e8040bd5c9b76f39cbf2f5b2af39d9b84ed",
+      "hex": "00cf9e5601d601b500aab5044ca932aab40970bfaab88747fe242554d4aab60f5cf54901b501bfaab810e8c7591c8b94",
+      "asx_sha256": "e499e57135c934f8b67c8338f2a0908e851e92f4d1ea0179339ec1da2bb920aa",
+      "serial": {
+        "enabled": true,
+        "input_hex": "6162454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "52454144594146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WCASEOFF",
+      "source": "proc main\r\nset whencase on\r\nset whencase off\r\nwhen 0 \"Ab\" transmit \"Q\"\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\n",
+      "source_sha256": "153990177ec38c2ed209fbeb516aa2802219f50414a662ae98f94963d726a714",
+      "hex": "00cf9e56019e5600d601b500aab588244b32aab48d3abfaab80b6f5c18eba0d4aab687fe2f2d01b501bfaab8880829d32e4794",
+      "asx_sha256": "16b14462c7b8780a9ab7ad9973c08fed4205d5b2c1c51f7022bd5ca426178899",
+      "serial": {
+        "enabled": true,
+        "input_hex": "6162454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "5245414459514146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WCANCEL",
+      "source": "proc main\r\nwhen 0 \"A\" transmit \"BAD\"\r\ncwhen 0\r\ncwhen 0\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\n",
+      "source_sha256": "f1c953e3972c0a1dcfda5cd651ba4d79e84b8c9f995cafc254effe80ff93d597",
+      "hex": "00cfd601b500aab48b3c32aab6067b5ec51c01b5001c01b500bfaab88ed16e763f3cd4aab60a4a196301b501bfaab80b5e5d2bec9994",
+      "asx_sha256": "4da65303debd16f6677a740a61bea7aa8214120e1408a9a05ce8e912238def07",
+      "serial": {
+        "enabled": true,
+        "input_hex": "41454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "52454144594146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WREPLACE",
+      "source": "proc main\r\nwhen 0 \"A\" transmit \"BAD\"\r\nwhen 0 \"B\" transmit \"Q\"\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\n",
+      "source_sha256": "7754cb5a10996b43ec4b021830c9279d0cc3d4223b1d528dcf6e0ed477045c78",
+      "hex": "00cfd601b500aab48b3c32aab6067b5ec5d601b500aab4034d32aab4884cbfaab8061d507a8b30d4aab68e9ecd3f01b501bfaab88f3c410d7aab94",
+      "asx_sha256": "dce73d05b0c0bb5c6098038ffdea03ad158c4f3f14c8f99237a9ce8a53813100",
+      "serial": {
+        "enabled": true,
+        "input_hex": "4142454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "5245414459514146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WFALLBK",
+      "source": "proc main\r\nwhen 0 \"ABAAB\" transmit \"BAD\"\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\n",
+      "source_sha256": "67d8986d51f113a962869428a13cac4e325765ee40b08a383f58bf3e666dd2ae",
+      "hex": "00cfd601b500aab88f3c3dfa769b32aab60a470c63bfaab8881928c02d4ed4aab60410597d01b501bfaab81158ed59c67194",
+      "asx_sha256": "c36c98300e60021922ecff7d9a67aeb23d2cbd4403a3a3217604b4602ef14997",
+      "serial": {
+        "enabled": true,
+        "input_hex": "41424142414142454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "52454144594146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WPREFIX",
+      "source": "proc main\r\nwhen 0 \"ABAAB\" transmit \"Q\"\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\n",
+      "source_sha256": "afefaf6192a20cac4eb3ce9ad02077cd82390f49e4bbbc2d5bfa884a19042f03",
+      "hex": "00cfd601b500aab88f3c3dfa769b32aab40856bfaab886873a08fd82d4aab60eeccf4901b501bfaab80f464b9b10f994",
+      "asx_sha256": "4aa0d3bd9794ef2e20c2e61cae44dec11e5210178b45491fab7938c5eaf80d0f",
+      "serial": {
+        "enabled": true,
+        "input_hex": "4142414142454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "5245414459514146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WCARET",
+      "source": "proc main\r\nwhen 0 \"^M\" transmit \"Q^@\"\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\n",
+      "source_sha256": "b88a41fd89d5954ca432fc5fbe63d0078c9233d839e7ccb94b548c401bf3cb84",
+      "hex": "00cfd601b500aab58c594832aab6870a3f29bfaab81169ec46c578d4aab68d4049fd01b501bfaab88ec06f89403594",
+      "asx_sha256": "00a8b3166ff899a9967957035d337e67131a5812064712e1e4b1d361a8631b0f",
+      "serial": {
+        "enabled": true,
+        "input_hex": "0d454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "524541445951004146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WHIGH",
+      "source": "proc main\r\nwhen 0 \"\u00e9\" transmit \"\u00c7\"\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\n",
+      "source_sha256": "6fb78d70e2bc59e586a6c281b932d9a3400e60fed3e1f6ac4112ea2f601f7c12",
+      "hex": "00cfd601b500aab48b7d32aab404b9bfaab88ed16e763f3cd4aab60a4a196301b501bfaab80b5e5d2bec9994",
+      "asx_sha256": "1f5efe26fa1e6762f5469817cdd07802382b18abad2947abd2c65e0a713dc55c",
+      "serial": {
+        "enabled": true,
+        "input_hex": "82454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "5245414459804146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WTRUNC",
+      "source": "proc main\r\nwhen 0 \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\" transmit \"Q\"\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\n",
+      "source_sha256": "d1a39a9c41e1ca5cb22bf80d57f8098d83109f922bbeab35454d293c9ba62a94",
+      "hex": "00cfd601b500aae5bc5353118db139814d41d73b1fa55353118db139814d41d73b1fa55353118db139814d41d73b1fa55353118db139814d41d73b32aab4850abfaab80f574a880f00d4aab68b26159d01b501bfaab88c3c7b353ad194",
+      "asx_sha256": "b70070fae9e9611eca571b5f7b06c89009e775f0a3183d7c3401880b322dadb5",
+      "serial": {
+        "enabled": true,
+        "input_hex": "58585858585858585858585858585858585858585858585858585858585858585858585858585858454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "5245414459514146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WRGET",
+      "source": "string linebuf\r\nproc main\r\nwhen 0 \"A\" call worker\r\ntransmit \"READY\"\r\nrget linebuf 1 1\r\ntransmit \"AFTER\"\r\nendproc\r\nproc worker\r\ntransmit \"EVENT\"\r\nendproc\r\n",
+      "source_sha256": "8a503ca2b9f6f9b50c4ab4a59b291c4eb4d6878feff221ef8d1e1e0054291d6b",
+      "hex": "01cfd601b500aab48c9a07c72c000000bfaab810f9c6461b92ce8c0001b50101b501bfaab80c46117350d394cfbfaab88ec47f7a493794",
+      "asx_sha256": "b23fb2a592b991e97e31527599c712483b85c0b1f530d6dfc84ba227e87fe5b9",
+      "serial": {
+        "enabled": true,
+        "input_hex": "410d",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "52454144594556454e544146544552",
+        "stdout_hex": "",
+        "string0": "A"
+      }
+    },
+    {
+      "name": "WQUIET",
+      "source": "proc main\r\nwhen 0 \"A\" call worker\r\ntransmit \"READY\"\r\nwaitquiet 1 2\r\ntransmit \"AFTER\"\r\nendproc\r\nproc worker\r\ntransmit \"EVENT\"\r\nendproc\r\n",
+      "source_sha256": "5af1efd2a65781b165ff00f468422a28349920426818dece7124230dddf48aba",
+      "hex": "00cfd601b500aab48b3c07c72a000000bfaab80f574a880f00d501b50101b502bfaab80988656b7e5794cfbfaab88b283f6ea70d94",
+      "asx_sha256": "ba1c067114bc130cc502fc3d580e2df98e78772cc046af4c45e1b789887b547d",
+      "serial": {
+        "enabled": true,
+        "input_hex": "41",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "52454144594556454e544146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WTOUT",
+      "source": "proc main\r\nwhen 0 \"A\" call worker\r\ntransmit \"READY\"\r\nwaitfor \"NEVER\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\nproc worker\r\ntransmit \"EVENT\"\r\nendproc\r\n",
+      "source_sha256": "87489b9306dae1182c2efc574edf72cb9a77b049b3e5e245aae3632a26aeb423",
+      "hex": "00cfd601b500aab48b3c07c72f000000bfaab80f574a880f00d4aab88d2f0caf288701b501bfaab88ec06f89403594cfbfaab810ecd74a258d94",
+      "asx_sha256": "083b1f38147a79dcc399afff9712c25e97dbdec11a210c4ca5729e9df0d03226",
+      "serial": {
+        "enabled": true,
+        "input_hex": "41",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "52454144594556454e544146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WDCTX",
+      "source": "proc main\r\nwhen disconnect transmit \"BYE\"\r\npause 0\r\npause 0\r\nendproc\r\n",
+      "source_sha256": "a358d5ee8865b53b33dccbc805dfdf46c2e9d894b5ebfbaea5f2b69904da9a25",
+      "hex": "00cfd60032aab60cc3301088b50088b50094",
+      "asx_sha256": "b06b0d546733a797a62d52f065e4c25d9a6ceb6a77d9451f4ff7fcc7e8952c3b",
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "425945",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WDCHIGH",
+      "source": "proc main\r\nwhen disconnect transmit \"BAD\"\r\npause 0\r\nendproc\r\n",
+      "source_sha256": "1e8aaa6dbc9a38e3943a89ee739015dda84daa95525304ab877a70b5143ba208",
+      "hex": "00cfd60032aab60cc3180f88b50094",
+      "asx_sha256": "0378245b3a10a01f3c458f99484f34ac0af37a5f7bb2c3095b3e1a0d01b029f4",
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "carrier_present": true,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WDCCAN",
+      "source": "proc main\r\nwhen disconnect transmit \"BAD\"\r\ncwhen disconnect\r\npause 0\r\nendproc\r\n",
+      "source_sha256": "97e7bfb27e6580b42ccb9925a5decf8880286bd4916934786778c30a527c0383",
+      "hex": "00cfd60032aab60cc3180f1c0088b50094",
+      "asx_sha256": "5e3e1b03518f4f7319a36236a30a97b9f1409e4d126e077de5441ef6a7da6ec8",
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "carrier_present": true,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WDCCALL",
+      "source": "proc main\r\nwhen disconnect call worker\r\ntransmit \"READY\"\r\nwaitfor \"NEVER\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\nproc worker\r\ntransmit \"EVENT\"\r\nendproc\r\n",
+      "source_sha256": "be413074c0a7850fd92de85317a53db3e44240089c83116b358fee8a966a42e0",
+      "hex": "00cfd60007c729000000bfaab8099964587d5ed4aab88743fe39264d01b501bfaab8880829d32e4794cfbfaab80a1c5b50536b94",
+      "asx_sha256": "6a7c3553bbbcf431a02b5c06590bcf01ca44c978cab3be6e7186e210314bb06d",
+      "serial": {
+        "enabled": true,
+        "input_hex": "41",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": true,
+        "carrier_drop_after_input": true
+      },
+      "expected": {
+        "tx_hex": "52454144594556454e544146544552",
+        "stdout_hex": ""
+      }
+    },
+    {
+      "name": "WDCNONE",
+      "source": "proc main\r\nwhen disconnect transmit \"BAD\"\r\nendproc\r\n",
+      "source_sha256": "96ac0f908654efe1296cc2b1c7a5e3335ffd675bf550c1fdc92ecd4a33e2c4e3",
+      "hex": "00cfd60032aab60cc3180f94",
+      "asx_sha256": "cbe39e1bcc148daf1f0cb0f52a109621b523280747bca0ce51527d0819caf600",
+      "serial": {
+        "enabled": false,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "error": "unsupported"
+      }
+    },
+    {
+      "name": "WSLOTHI",
+      "source": "proc main\r\nwhen 3 \"A\" transmit \"BAD\"\r\nendproc\r\n",
+      "source_sha256": "dd5c5280181f3438ff970283bdd4f80c0b53985a49151eed7e82e63779f89f87",
+      "hex": "00cfd601b503aab48b3c32aab6067b5ec594",
+      "asx_sha256": "0625251fddbfe444146626a2c10dd1486687148d3f19d0e13aa36c46f216b2c3",
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "native_error": 1,
+        "error": "operand"
+      }
+    },
+    {
+      "name": "WSLOTNEG",
+      "source": "proc main\r\ncwhen -1\r\nendproc\r\n",
+      "source_sha256": "d9acea1a3aad145ed71ebc8328e853e822e69744a783d9cb207bdfd9361a7a4e",
+      "hex": "00cf1c01abffff94",
+      "asx_sha256": "3e8fe9de91ca849ef8b43794db6202c4f49c40efdfb0a17c77d5fee5da7ae264",
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "native_error": 1,
+        "error": "operand"
+      }
+    },
+    {
+      "name": "WERROR",
+      "source": "string hold\r\nproc main\r\nhold = \"OWNED\"\r\nwhen 0 \"A\" call worker\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\nproc worker\r\ninteger local_value\r\nlocal_value = 7 / 0\r\nendproc\r\n",
+      "source_sha256": "2f9ae710194fd2f0ba37c22d8467bb2acce741ddb262a730ec075f32342b0525",
+      "hex": "01cfac8c00aab80f545c9510eb00d601b500aab48d2a07c839000000bfaab81169ec46c578d4aab68d4049fd01b501bfaab88ec06f89403594d20200cf2600ab0700ab000079005b00a10000790095",
+      "asx_sha256": "77a015b475c9300d29fd58760038571b4c7aae9b8df218573d9e6c8b0f69b504",
+      "serial": {
+        "enabled": true,
+        "input_hex": "41454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "5245414459",
+        "stdout_hex": "",
+        "error": "divide_zero"
+      }
+    },
+    {
+      "name": "WFRAMEOV",
+      "source": "string hold\r\nproc main\r\nhold = \"OWNED\"\r\nwhen 0 \"A\" call worker\r\ntransmit \"READY\"\r\nwaitfor \"END\" forever\r\ntransmit \"AFTER\"\r\nendproc\r\nproc worker\r\ninteger temp\r\ntransmit \"EVENT\"\r\nendproc\r\n",
+      "source_sha256": "645a3ee383aca592447d7df2ec06aecbae24a30e1c09b675a58a3db8dbfef746",
+      "hex": "01cfac8c00aab80f545c9510eb00d601b500aab48d2a07c838000000bfaab81169ec46c578d4aab68d4049fd011abfaab80d607ffb621d94d20200cfbfaab807509d626d5995",
+      "asx_sha256": "1793f882e13b71b0c5d1d565f87368503dc6885f6f1e73b9a7e3ce53d2182d9c",
+      "serial": {
+        "enabled": true,
+        "input_hex": "4141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "5245414459",
+        "stdout_hex": "",
+        "native_error": 105,
+        "error": "stack"
+      }
+    },
+    {
+      "name": "WBUDGET",
+      "source": "proc main\r\nwhen 0 \"A\" call worker\r\ntransmit \"READY\"\r\nwaitfor \"END\" 1\r\ntransmit \"AFTER\"\r\nendproc\r\nproc worker\r\ninteger local_value\r\nwhile 1\r\nlocal_value += 1\r\nendwhile\r\nendproc\r\n",
+      "source_sha256": "f6dad6b92c56925482d16fb45e30d9ddefd1450af88d32bc9c6543f2594e22d8",
+      "hex": "00cfd601b500aab48b3c07c82d000000bfaab80f574a880f00d4aab68b26159d01b501bfaab88c3c7b353ad194d20200cf5b007900ab0100155500000079000000a10000ab010079005b00a100007900623100000095",
+      "asx_sha256": "1acb79ea985a36d0c6a3da6a2d97af5df4d22f6a3bc4ef026924e31c5d15167e",
+      "serial": {
+        "enabled": true,
+        "input_hex": "41454e44",
+        "send_after_tx_hex": "5245414459",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "5245414459",
+        "stdout_hex": "",
+        "error": "budget",
+        "limit": 50
+      }
+    },
+    {
+      "name": "WAFTER",
+      "source": "proc main\r\ntransmit \"CLEAN\"\r\nendproc\r\n",
+      "source_sha256": "b9e964220d8bda60c95d37ad4dd6f98ffe892398339346c2c2882f744d7c59f5",
+      "hex": "00cfbfaab80c4817644ccf94",
+      "asx_sha256": "7cf58f8bb1fefbdfe2b6492985e5762281ead5f75403bb6c64a39c1a0530126c",
+      "serial": {
+        "enabled": true,
+        "input_hex": "",
+        "send_after_tx_hex": "",
+        "carrier_present": false,
+        "carrier_drop_after_input": false
+      },
+      "expected": {
+        "tx_hex": "434c45414e",
+        "stdout_hex": ""
+      }
+    }
+  ]
+}

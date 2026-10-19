@@ -8,6 +8,7 @@ extern aspect_dispatch,aspect_abort,session_setjmp
 extern aspect_globals_initialize,aspect_globals_release
 extern aspect_flow_gate_decrement,aspect_flow_gate_increment,aspect_flow_seek
 extern aspect_flow_call_operand,aspect_flow_call_framed,aspect_flow_return,aspect_flow_return_framed
+extern aspect_flow_call,aspect_flow_push_frame
 extern aspect_flow_jump,aspect_flow_reserve_locals
 extern aspect_expr_branch_false,aspect_expr_branch_true,aspect_expr_branch_false_alias
 extern aspect_ops_logical_and,aspect_ops_logical_not,aspect_ops_logical_or
@@ -32,6 +33,12 @@ extern aspect_receive_native_seconds,aspect_receive_available_status,aspect_rece
 extern _runtime_receive_character,_runtime_receive_raw_character,_runtime_receive_begin
 extern _runtime_serial_read_raw
 extern aspect_receive_policy_read
+extern aspect_when_register,aspect_when_cancel,aspect_when_monitor,aspect_when_service
+extern _runtime_when_poll,_runtime_when_cancel_poll,_runtime_when_idle_allowed
+extern _runtime_when_host_poll,_runtime_serial_carrier
+extern _runtime_when_key_ready,_runtime_when_read_key,_runtime_when_confirm_abort
+extern _runtime_when_abort,_runtime_when_dispatch_key
+extern _runtime_when_monitor_begin,_runtime_when_monitor_end
 %ifndef ASPECT_RUNTIME_SERIAL
 extern _runtime_receive_seconds
 %endif
@@ -322,7 +329,7 @@ aspect_operand_builtin_long:
 
 global aspect_dispatch_wait,aspect_dispatch_shutdown
  global aspect_abort_tell,aspect_abort_format,aspect_abort_print
-aspect_dispatch_wait:
+aspect_dispatch_wait: jmp aspect_serial_receive
 aspect_dispatch_shutdown:
 aspect_abort_tell:
 aspect_abort_format:
@@ -343,7 +350,7 @@ aspect_string_concat: jmp directory_dial_append_original
 aspect_string_upper: jmp directory_dial_upper_original
 global aspect_console_emit_byte,aspect_console_cancel_poll,aspect_console_wait_second
 aspect_console_emit_byte: jmp _runtime_console_emit_byte
-aspect_console_cancel_poll: jmp _runtime_console_cancel_poll
+aspect_console_cancel_poll: jmp _runtime_when_cancel_poll
 aspect_console_wait_second:
  call _runtime_serial_ready
  or ax,ax
@@ -479,11 +486,27 @@ receive_policy_raw_common:
  mov ax,[_runtime_error]
  jmp fail
 .done: ret
-; WHEN remains unsupported; displayed output uses the admitted real parent
-; terminal engine, never an ad-hoc query recognizer.
+; Native WHEN sees only the once-translated lead, before rendered output.
+; Its action executes native flow/FILE/frame code; no synchronous handler shim.
 global aspect_receive_policy_pattern_byte,aspect_receive_policy_emit_byte
 aspect_receive_policy_pattern_byte:
- jmp unsupported
+ push bp
+ mov bp,sp
+ call _runtime_when_monitor_begin
+ cmp word [_runtime_error],0
+ jne .failed
+ push word [bp+4]
+ call aspect_when_monitor
+ call _runtime_when_monitor_end
+ cmp word [_runtime_error],0
+ je .done
+.failed:
+ pop bp
+ mov ax,[_runtime_error]
+ jmp fail
+.done:
+ pop bp
+ ret 2
 extern _runtime_receive_render_byte
 aspect_receive_policy_emit_byte:
  push bp
@@ -497,6 +520,39 @@ aspect_receive_policy_emit_byte:
  mov ax,[_runtime_error]
  jmp fail
 .done: ret
+
+; Native service callbacks. Platform poll never calls the service recursively.
+global _runtime_when_native_service,aspect_when_host_poll,aspect_when_carrier
+ global aspect_when_key_ready,aspect_when_read_key,aspect_when_confirm_abort
+ global aspect_when_abort,aspect_when_dispatch_key
+global aspect_dispatch_idle_allowed
+aspect_dispatch_idle_allowed: jmp _runtime_when_idle_allowed
+_runtime_when_native_service: jmp aspect_when_service
+aspect_when_host_poll: jmp _runtime_when_host_poll
+aspect_when_carrier: jmp _runtime_serial_carrier
+aspect_when_key_ready: jmp _runtime_when_key_ready
+aspect_when_read_key: jmp _runtime_when_read_key
+aspect_when_confirm_abort: jmp _runtime_when_confirm_abort
+aspect_when_abort: jmp _runtime_when_abort
+aspect_when_dispatch_key:
+ push ax
+ call _runtime_when_dispatch_key
+ pop bx
+ ret
+runtime_when_register:
+ call _runtime_serial_ready
+ or ax,ax
+ jz unsupported
+ jmp aspect_when_register
+runtime_when_set:
+ call aspect_dispatch_read
+ cmp ax,0x56
+ jne unsupported
+ call aspect_dispatch_read
+ cmp ax,1
+ ja aspect_operand_invalid
+ mov [aspect_when_case_sensitive],ax
+ ret
 
 SEGMENT _DATA public class=DATA use16
 GROUP DGROUP _DATA
@@ -530,7 +586,17 @@ aspect_receive_clock_sample: times 4 dw 0
 global aspect_receive_policy_table,_runtime_receive_translation_table
 aspect_receive_policy_table:
 _runtime_receive_translation_table: times 256 db 0
+global aspect_when_active_count
+aspect_when_active_count:
 scalar aspect_receive_policy_pattern_count,_runtime_receive_pattern_count
+ global aspect_when_records,_runtime_when_records
+aspect_when_records:
+_runtime_when_records: times 344 db 0
+scalar aspect_when_disconnect_armed,_runtime_when_disconnect_armed
+scalar aspect_when_case_sensitive,_runtime_when_case_sensitive
+scalar aspect_when_keyboard_disabled,_runtime_when_keyboard_disabled
+scalar aspect_when_last_key,_runtime_when_last_key
+scalar aspect_when_pending_key,_runtime_when_pending_key
 global aspect_receive_policy_display
 aspect_receive_policy_display:
 scalar aspect_receive_display,_runtime_receive_display
@@ -542,6 +608,8 @@ scalar aspect_serial_local_echo,_runtime_serial_local_echo
 scalar aspect_serial_character_delay_value,_runtime_serial_character_delay_value
 %ifndef ASPECT_RUNTIME_SERIAL
 scalar aspect_serial_rx_count,_runtime_serial_rx_count
+%else
+extern aspect_serial_rx_count
 %endif
 scalar aspect_flow_depth,_runtime_depth
 scalar aspect_flow_frame,_runtime_frame
@@ -581,10 +649,16 @@ _runtime_dword_value: dd 0
  global aspect_flow_stream,aspect_dispatch_stream
 aspect_flow_stream:
 aspect_dispatch_stream: dw _runtime_file
- global aspect_dispatch_argument,aspect_dispatch_paused,aspect_dispatch_seek_enabled,aspect_dispatch_wait_disabled
+ global aspect_dispatch_argument,aspect_dispatch_seek_enabled,aspect_dispatch_wait_disabled
 aspect_dispatch_argument: times 10 db 0
-aspect_dispatch_paused: dw 0
-aspect_dispatch_seek_enabled: dw 0
+; Native8E20 andE2F8 are shared UART count and WHEN active count.
+%ifndef ASPECT_RUNTIME_SERIAL
+global aspect_dispatch_paused
+aspect_dispatch_paused equ aspect_serial_rx_count
+%else
+extern aspect_dispatch_paused
+%endif
+aspect_dispatch_seek_enabled equ aspect_when_active_count
  global aspect_dispatch_next_script
 ; Native E104 is shared by scratch reads and the next-script pointer.
 aspect_dispatch_next_script equ aspect_string_scratch_pointer
@@ -698,6 +772,10 @@ aspect_dispatch_handlers:
  dw aspect_console_message
 %elif op=0x88
  dw aspect_console_pause
+%elif op=0x1c
+ dw aspect_when_cancel
+%elif op=0x9e
+ dw runtime_when_set
 %elif op=0x9a
  dw aspect_strcmd_compare_bytes
 %elif op=0xa4
@@ -760,6 +838,8 @@ aspect_dispatch_handlers:
  dw runtime_serial_wait_for
 %elif op=0xd5
  dw runtime_receive_wait_quiet
+%elif op=0xd6
+ dw runtime_when_register
 %else
  dw unsupported
 %endif

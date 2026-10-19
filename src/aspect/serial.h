@@ -31,5 +31,7 @@ unsigned __cdecl aspect_serial_unread(void);
 /* 0 accepted;1 flow/THRE busy;2 disabled/fatal. */
 unsigned __cdecl aspect_serial_try_write(unsigned byte);
 unsigned __cdecl aspect_serial_poll(void);
+/* Physical MSR DCD bit80; ffff if closed, with no port access. */
+unsigned __cdecl aspect_serial_carrier(void);
 unsigned long __cdecl aspect_serial_ticks(void);
 #endif

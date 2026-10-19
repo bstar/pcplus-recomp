@@ -4,7 +4,7 @@ BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
 extern uart_save_hardware_state,uart_restore_hardware_state
-extern uart_install_interrupt,uart_restore_interrupt,uart_receive_byte
+extern uart_install_interrupt,uart_restore_interrupt,uart_receive_byte,uart_carrier_detect
 extern uart_try_write,uart_poll_flow,uart_mask_irq
 extern uart_saved_ds,uart_previous_irq_offset,uart_previous_irq_segment
 extern uart_break_hold
@@ -13,6 +13,13 @@ global _aspect_serial_backend_open,_aspect_serial_backend_close
  global _aspect_serial_available,_aspect_serial_read,_aspect_serial_try_write
  global _aspect_serial_unread
  global _aspect_serial_poll,_aspect_serial_ticks
+global _aspect_serial_carrier
+_aspect_serial_carrier:
+ cmp word [_aspect_serial_active],0
+ je .closed
+ jmp uart_carrier_detect
+.closed: mov ax,0xffff
+ ret
 _aspect_serial_backend_open:
  push bp
  mov bp,sp
@@ -391,6 +398,8 @@ w uart_rx_dropped,0
 global _aspect_serial_rx_count,aspect_serial_rx_count
 aspect_serial_rx_count:
 _aspect_serial_rx_count:
+global aspect_dispatch_paused
+aspect_dispatch_paused:
 w uart_rx_count,0
 w uart_rx_mask,255
 w uart_port_lcr,0x3fb

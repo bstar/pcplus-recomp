@@ -1259,3 +1259,34 @@ SET WHENCASE, passes40 new frozen outputs/variants and43 rejection cases, and
 keeps all377 earlier outputs unchanged. Four source/native compositions verify
 deferred calls and shared gate behavior; production event wiring remains next.
 Every full-application gate remains open.
+
+## Native WHEN runtime checkpoint
+
+The [production event runtime](docs/ASPECT_WHEN_RUNTIME.md) now links the exact
+native602-byte component into ASPECT.EXE, with actual FILE/deferred-call/frame
+ownership, shared E2F8/E382/UART state, WHENCASE and physical DCD sampling.
+The active runner is `0f00aa3e…60ef`; parent `dacbd777…e66ae` is unchanged.
+The dispatcher exposes66 slots, with SET limited to WHENCASE;149 other slots
+and255 other SET subcommands stop explicitly. Native keyboard confirmation/UI,
+remaining ASPECT families and all full-application gates remain unfinished.
+
+Validation passes825 actual DOS cases/18,298 checks, eight full-terminal cases/
+315 checks with passively observed pending calls, five raw-UART WHEN cases,
+1,061 carrier/alias CPU inputs, child callback/IRQ tests and all existing28
+serial-script plus15 directory/preload regressions. The raw backend preserves
+queued bytes when no renderer/pattern consumer exists; admitted application
+sessions and active patterns retain native idle draining. Failed unconditional
+raw draining and frozen-clock fixture attempts remain preserved. Explicit
+composed receive expectations retain the original component fixtures and are
+corroborated by independent original full-flow traces.
+
+Actual Synchronet login now uses WHEN to send the username during WAITFOR and
+still passes all12 editor checks through draft abort. Stock ENiGMA login/editor
+passes with explicit30ms modem buffering; its immediate-forwarding limitation
+remains. All91 outputs reproduce from a fresh source-only checkout. The
+[checkpoint record](docs/validation/aspect-when-runtime.json) binds these results.
+
+Next work includes remaining native SET and ASPECT command families, complete
+keyboard/UI and settings integration, supported profile/owner expansion and
+the remaining F01–F16 application requirements. Physical RS-232/Wi-Fi modem
+validation is still required; this checkpoint does not complete the goal.

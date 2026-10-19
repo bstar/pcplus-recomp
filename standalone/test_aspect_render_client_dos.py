@@ -64,8 +64,8 @@ endpoint:
  jmp .return
 .begin:
  inc word [cs:results]
- cmp word [cs:reject_begin],0
- jne .denied
+ cmp word [cs:reject_begin],1
+ je .denied
  cmp word [bx],0x5243
  jne .bad
  cmp word [bx+2],1
@@ -87,7 +87,9 @@ endpoint:
  jae .bad
  mov [cs:bytes+si],bl
  inc word [cs:results+6]
- cmp bl,'!'
+ cmp word [cs:reject_begin],3
+ jne .okay
+ cmp bl,'A'
  jne .okay
  ; One explicit fixture byte requests actual callback operations. No escape
  ; sequence recognizer, terminal parser or generated reply is present here.
@@ -174,10 +176,11 @@ int main(int argc,char **argv){
  descriptor.base.base.magic=ASIO_MAGIC;descriptor.base.base.version=4;descriptor.base.base.size=48;
  descriptor.base.base.parent_psp=psp;descriptor.base.base.parent_ds=ds;descriptor.base.base.ring=(unsigned)ring.bytes;descriptor.base.base.capacity=4096;
  ring.before=0x1357;ring.after=0x2468;ring.bytes[0]='Z';descriptor.base.base.count=1;
+ if(mode==3){ring.bytes[0]='A';ring.bytes[1]='Z';descriptor.base.base.count=2;}
  descriptor.render_offset=endpoint_offset();descriptor.render_segment=endpoint_segment();descriptor.render_token=0x7123;descriptor.render_version=1;
  if(mode==2)descriptor.render_token=0;
- descriptor.base.base.guard=psp^ds^(unsigned)ring.bytes^ASIO_GUARD^1^descriptor.render_offset^descriptor.render_segment^descriptor.render_token^1;
- endpoint_config(mode==1);sprintf(option,"/S1:0003:03:N:%04X:%04X",ds,(unsigned)&descriptor);
+ descriptor.base.base.guard=psp^ds^(unsigned)ring.bytes^ASIO_GUARD^descriptor.base.base.count^descriptor.render_offset^descriptor.render_segment^descriptor.render_token^1;
+ endpoint_config(mode);sprintf(option,"/S1:0003:03:N:%04X:%04X",ds,(unsigned)&descriptor);
  mcr=inp(0x3fc);outp(0x3fc,mcr|1);hardware(before);vec=_dos_getvect(12);
  o=open("OUT.BIN",O_CREAT|O_TRUNC|O_WRONLY|O_BINARY,S_IREAD|S_IWRITE);e=open("ERR.BIN",O_CREAT|O_TRUNC|O_WRONLY|O_BINARY,S_IREAD|S_IWRITE);oo=dup(1);ee=dup(2);dup2(o,1);dup2(e,2);close(o);close(e);
  rc=spawnl(P_WAIT,"ASPECT.EXE","ASPECT","CASE.ASX",option,(char *)0);
@@ -201,7 +204,7 @@ def main():
  cases=[]
  for name,mode,source,expected in [
   ('message',0,'proc main\nmessage "HELLO"\nendproc\n',0),
-  ('callback',0,'proc main\nmessage "!"\npause 2\nendproc\n',0),
+  ('callback',3,'integer value\nproc main\ncomgetc value\npause 2\nendproc\n',0),
   ('error-render',0,'proc main\nmessage "BEFORE"\nendproc\n',1),
   ('denied',1,'proc main\nmessage "NEVER"\nendproc\n',14),
   ('invalid-token',2,'proc main\nmessage "NEVER"\nendproc\n',14)]:
@@ -236,15 +239,15 @@ def main():
   data=(folder/'RESULT.BIN').read_bytes();rc,ok=struct.unpack_from('<2H',data);lease=struct.unpack_from('<I22H',data,4);results=struct.unpack_from('<10H',data,52);emitted=data[72:]
   stdout=(folder/'OUT.BIN').read_bytes();stderr=(folder/'ERR.BIN').read_bytes()
   checks={'exit':rc==expected,'hardware-vector-PIC-MCB-ring':ok==1,'DOS-pass':(folder/'PASS.TXT').exists()}
-  if mode==0:
+  if mode in (0,3):
    checks.update(begin=results[0]==1,end=results[2]==1,stderr_empty=not stderr,stdout_empty=not stdout,handback=lease[10]==1 and lease[8]==0)
-   if name=='callback':checks.update(raw_unread_raw=results[4:7]==(90,0,90),send_poll_error=results[7:10]==(0,1,0),wire=bytes(wire)==b'R',message=emitted==b'!\r\n')
-   elif name=='message':checks['message']=emitted==b'HELLO\r\n'
+   if name=='callback':checks.update(raw_unread_raw=results[4:7]==(90,0,90),send_poll_error=results[7:10]==(0,1,0),wire=bytes(wire)==b'R',message=emitted==b'A')
+   elif name=='message':checks['native_idle_then_message']=emitted==b'ZHELLO\r\n'
    else:checks['bounded_error']=emitted.startswith(b'ASPECT: cannot open script (error 1,') and emitted.endswith(b')\r\n') and len(emitted)<192
   elif mode==1:checks.update(begin=results[0]==1,noemit=results[1]==0,end=results[2]==0,restored_handback=lease[10]==1 and lease[8]==4)
   else:checks.update(noRPC=results[:3]==(0,0,0),not_adopted=lease[10]==0)
   result=dict(case=name,checks=checks,passed=all(checks.values()),exit=rc,results=results,emitted_hex=emitted.hex(),wire_hex=wire.hex())
   cases.append(result);print(json.dumps(result),flush=True)
- report=dict(binary_sha256=digest,checker_sha256=sha(__file__),manifest_sha256=sha(ROOT/'build/aspect-runner/manifest.json'),original_inputs=[],cases=cases,passed=all(c['passed'] for c in cases),limitations=['Lifecycle/callback endpoint fixture only; not a terminal parser, query recognizer or full parent engine proof.','Actual DOSBox-X 8086 COM1 virtual UART and loopback only; native hardware untested.'])
+ report=dict(binary_sha256=digest,checker_sha256=sha(__file__),manifest_sha256=sha(ROOT/'build/aspect-runner/manifest.json'),original_inputs=[],regression_history=[{'path':'build/aspect-render-client-history/pre-WHEN-idle-C9-fixture','reason':'Old MESSAGE callback fixture assumed no native8E20 idle drain; frozenWHEN integration correctly drained preloadZ before MESSAGE.'}],cases=cases,passed=all(c['passed'] for c in cases),limitations=['Lifecycle/callback endpoint fixture only; not a terminal parser, query recognizer or full parent engine proof. COMGETC C9 bypasses native idle drain to expose the queuedZ to callback read/unread/read; plain MESSAGE expects native idle leadZ first.','Actual DOSBox-X 8086 COM1 virtual UART and loopback only; native hardware untested.'])
  (OUT/'checks.json').write_text(json.dumps(report,indent=2)+'\n');assert sha(binary)==digest;assert report['passed']
 if __name__=='__main__':main()

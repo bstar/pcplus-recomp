@@ -43,8 +43,9 @@ It preserves an existing output if compilation fails.
   `S0` through `S9` are recognized operands.
 * `when` with TRANSMIT/CALL actions, `cwhen`, DISCONNECT forms and
   `set whencase on/off` emission. WHEN CALL uses absolute C7/C8 procedure
-  fixups and rejects parameterized handlers; application runtime support
-  remains a separate integration step. See `ASPECT_WHEN_COMPILER.md`.
+  fixups and rejects parameterized handlers. The [runtime owner](ASPECT_WHEN_RUNTIME.md)
+  now executes these events; compiler-only conformance remains documented in
+  [ASPECT_WHEN_COMPILER.md](ASPECT_WHEN_COMPILER.md).
 * `atoi`, `atol`, `itoa`, `ltoa`, `message`, `exit`, `pause`, `transmit` and
   `waitfor`, `comgetc`, `comgetcd`, `rget` and `waitquiet` command emission. Their availability
   in any application depends on that application's runtime service wiring.

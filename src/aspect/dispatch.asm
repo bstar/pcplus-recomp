@@ -45,6 +45,12 @@ extern aspect_dispatch_finish
 extern aspect_dispatch_argument,aspect_dispatch_paused,aspect_dispatch_wait_disabled
 extern aspect_dispatch_seek_enabled,aspect_dispatch_stream,aspect_dispatch_handlers
 extern aspect_dispatch_exit_state,aspect_dispatch_next_script
+%ifdef ASPECT_RUNTIME_SERIAL
+; Maintained raw-platform compatibility: without a renderer or pattern owner,
+; leave queued bytes for explicit receive commands or the parent's ASIO return.
+; Full admitted application and pattern-active paths retain native idle drain.
+extern aspect_dispatch_idle_allowed
+%endif
 %endif
 aspect_dispatch:
  push bp
@@ -77,6 +83,11 @@ aspect_dispatch:
  jnz .exit
  call aspect_dispatch_read
  mov_load si,ax
+%ifdef ASPECT_RUNTIME_SERIAL
+ call aspect_dispatch_idle_allowed
+ or ax,ax
+ jz .dispatch
+%endif
  cmp word [aspect_dispatch_paused],byte 0
  jz .dispatch
  cmp si,0xc7

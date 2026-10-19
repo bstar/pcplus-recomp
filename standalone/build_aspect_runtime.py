@@ -10,6 +10,7 @@ ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm'
  ('serial_commands','src/aspect/serial_commands.asm',None),
  ('receive_commands','src/aspect/receive_commands.asm',None),
  ('receive_policy','src/aspect/receive_policy.asm',None),
+ ('when','src/aspect/when.asm',None),
  ('directory','src/aspect/directory_builtins.asm',None),
  ('flow','src/aspect/control_flow.asm',None),('parameters','src/aspect/parameters.asm',None),('strings','src/aspect/string_operands.asm',None),('string_commands','src/aspect/string_commands.asm',None),('string_services','src/aspect/string_services.asm',None),
  ('string_strlen','reconstruction/program_exec/strlen.asm','PROGRAM_EXEC_OMF'),('string_strncmp','reconstruction/program_exec/strncmp.asm','PROGRAM_EXEC_OMF'),
@@ -32,6 +33,8 @@ C=r'''
 #include "serial_runtime.h"
 #include "receive_runtime.h"
 #include "directory_runtime.h"
+#include "when_runtime.h"
+extern unsigned runtime_receive_pattern_count,runtime_wait_gate;
 extern aspect_file runtime_file;
 extern unsigned runtime_string_count,runtime_depth,runtime_stack_pointer,runtime_frame;
 extern unsigned char runtime_arena[0x3aca];
@@ -45,7 +48,9 @@ static unsigned cpu_flags(void);
 static void ck(unsigned ok){++checks;if(!ok){++failures;printf("FAIL %s check=%lu opcode=%u steps=%u\n",current,checks,runtime_last_opcode,runtime_steps);}}
 static void run(const char *path,unsigned limit,unsigned error,unsigned has_integer,unsigned integer_value,unsigned has_long,unsigned long long_value,unsigned peak){
  void (__interrupt __far *previous_divide)(void);
- unsigned result,flags_before=cpu_flags();previous_divide=_dos_getvect(0);current=path;++cases;result=aspect_runtime_run(path,limit);
+ unsigned result,flags_before=cpu_flags();FILE *marker;previous_divide=_dos_getvect(0);current=path;++cases;
+ marker=fopen("ACTIVE.TXT","w");if(marker){fprintf(marker,"%s\n",path);fclose(marker);}
+ printf("BEGIN %s\n",path);fflush(stdout);result=aspect_runtime_run(path,limit);
  ck(_dos_getvect(0)==previous_divide);
  ck((cpu_flags()&0x600)==(flags_before&0x600));
  ck(runtime_string_pending_far==0 && runtime_string_pending_near==0);
@@ -53,6 +58,8 @@ static void run(const char *path,unsigned limit,unsigned error,unsigned has_inte
  ck(result==error);ck(runtime_live==0);ck(runtime_string_count==0);ck(runtime_file.handle==0);
  ck(runtime_depth==0);ck(runtime_stack_pointer==(unsigned)runtime_arena+0x1b1a);
  ck(runtime_frame==runtime_stack_pointer);ck(runtime_abi_bad==0);ck(runtime_peak_live==peak);
+ ck(runtime_receive_pattern_count==0);ck(runtime_when_disconnect_armed==0);ck(runtime_wait_gate==0);
+ {unsigned slot;for(slot=0;slot<3;++slot)ck(runtime_when_records[84+slot*86]==0 && runtime_when_records[85+slot*86]==0);}
  if(has_integer)ck(runtime_integer_b[0]==integer_value);
  if(has_long)ck(runtime_longs[0]==long_value);
  printf("CASE %s error=%u steps=%u peak=%u cleanup=%u close=%u int0=%u long0=%lu\n",path,result,runtime_steps,runtime_peak_live,runtime_cleanup_count,runtime_close_count,runtime_integer_b[0],runtime_longs[0]);
@@ -157,9 +164,23 @@ def main():
  serial_corpus=json.loads(serial_corpus_path.read_text())
  receive_corpus_path=ROOT/'standalone/fixtures/aspect_receive_vectors.json'
  receive_corpus=json.loads(receive_corpus_path.read_text())
+ receive_overrides_path=ROOT/'standalone/fixtures/aspect_receive_runtime_overrides.json'
+ receive_overrides=json.loads(receive_overrides_path.read_text())
+ assert receive_overrides['component_fixture']==str(receive_corpus_path.relative_to(ROOT))
+ assert receive_overrides['component_fixture_sha256']==sha(receive_corpus_path)
+ receive_cases=[]
+ for case in receive_corpus['vectors']:
+  override=receive_overrides['overrides'].get(case['name'])
+  if override:
+   assert case['expected']==override['component_expected'],case['name']
+   case=dict(case,expected=override['expected'],serial={**case['serial'],**override['serial']})
+  receive_cases.append(case)
+ assert set(receive_overrides['overrides'])<={case['name'] for case in receive_cases}
  directory_corpus_path=ROOT/'standalone/fixtures/aspect_directory_vectors.json'
  directory_corpus=json.loads(directory_corpus_path.read_text())
- cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']+conversion_corpus['vectors']+compiler_corpus['vectors']+console_corpus['vectors']+serial_corpus['vectors']+receive_corpus['vectors']+directory_corpus['vectors']
+ when_corpus_path=ROOT/'standalone/fixtures/aspect_when_runtime_vectors.json'
+ when_corpus=json.loads(when_corpus_path.read_text())
+ cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']+conversion_corpus['vectors']+compiler_corpus['vectors']+console_corpus['vectors']+serial_corpus['vectors']+receive_cases+directory_corpus['vectors']+when_corpus['vectors']
  # Historical PAUSE oracle expected an unsupported stop before opcode88 recovery.
  # Its authored seven-second script now executes the recovered native delay.
  cases=[dict(c,expected={}) if c['name']=='PAUSE' else c for c in cases]
@@ -172,6 +193,7 @@ def main():
  sources.append(console_corpus_path)
  sources += [ROOT/'reconstruction/translation/receive.asm',receive_corpus_path,serial_corpus_path,ROOT/'src/aspect/serial_runtime.c',ROOT/'src/aspect/serial_runtime.h',ROOT/'src/aspect/receive_runtime.c',ROOT/'src/aspect/receive_runtime.h']
  sources += [directory_corpus_path,ROOT/'src/aspect/directory_runtime.c',ROOT/'src/aspect/directory_runtime.h']
+ sources += [when_corpus_path,receive_overrides_path,ROOT/'src/aspect/when_runtime.c',ROOT/'src/aspect/when_runtime.h']
  for name,rel,define in ASM:
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
   subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))
@@ -182,7 +204,7 @@ def main():
   units.append(dict(unit=unit,start=start,end_exclusive=end,file_start=base+start,bytes=end-start,sha256=sha(p)))
  program=C
  supported={int(op,16):name for op,name in re.findall(r'%(?:el)?if op=(0x[0-9a-f]+)\n dw (\w+)',(ROOT/'src/aspect/runtime_bridge.asm').read_text())}
- assert len(supported)==63
+ assert len(supported)==66
  # ACV2 adds explicit owned-directory metadata to ACV1's diagnostic inputs.
  table=bytearray(b'ACV2'+struct.pack('<H',len(cases)))
  def block(data):
@@ -201,7 +223,8 @@ def main():
   if serial:
    incoming=bytes.fromhex(serial.get('input_hex',''));trigger=bytes.fromhex(serial.get('send_after_tx_hex',''))
    assert len(incoming)<=4096 and len(trigger)<=1024
-   flags=int(serial.get('enabled',True)) | (2 if serial.get('case_sensitive') else 0)
+   flags=(int(serial.get('enabled',True)) | (2 if serial.get('case_sensitive') else 0)
+          | (4 if serial.get('carrier_present') else 0) | (8 if serial.get('carrier_drop_after_input') else 0))
    table+=struct.pack('<HHHIIHH',len(incoming),len(trigger),flags,serial.get('initial_ticks',0),serial.get('tick_step',1),serial.get('initial_seconds',0),serial.get('seconds_step',1))+incoming+trigger
   directory=case.get('directory');table+=struct.pack('<H',bool(directory))
   if directory:
@@ -232,6 +255,15 @@ def main():
  for name,data,error in [('NOHEADER',b'',2),('BADHEAD',bytes.fromhex('81 cf 94'),2),('BADOP',bytes.fromhex('00 ff'),3),('TRUNC',bytes.fromhex('00 cf 5b 00 8d 00 ab 07'),5)]:
   (OUT/(name+'.ASX')).write_bytes(data);program+=f' run("{name}.ASX",1000,{error},0,0,0,0UL,0);\n'
  (OUT/'MISSING.ASX').unlink(missing_ok=True);program+=' run("MISSING.ASX",1000,1,0,0,0,0UL,0);\n'
+ # SET is a command family: this owner supports WHENCASE only. Exercise every
+ # other subcommand rather than claiming all of opcode9E is implemented.
+ for sub in range(256):
+  if sub!=0x56:(OUT/f'S{sub:02X}.ASX').write_bytes(bytes([0,0x9e,sub]))
+ program+=' {unsigned sub;char path[12];for(sub=0;sub<256;++sub)if(sub!=0x56){sprintf(path,"S%02X.ASX",sub);run(path,1000,3,0,0,0,0UL,0);}}\n'
+ for name,wire,error in [('SETTRUNC',bytes([0,0x9e]),5),('SETVALTR',bytes([0,0x9e,0x56]),5),
+                         ('SETBOOL2',bytes([0,0x9e,0x56,2]),7),('SETBOOLF',bytes([0,0x9e,0x56,255]),7)]:
+  (OUT/(name+'.ASX')).write_bytes(wire)
+  program+=f' run("{name}.ASX",1000,{error},0,0,0,0UL,0);\n'
  program+=' runtime_fail_after=0;run("STRINGS.ASX",1000,8,0,0,0,0UL,0);\n'
  program+=' runtime_fail_after=1;run("STRINGS.ASX",1000,8,0,0,0,0UL,1);\n'
  program+=' runtime_fail_after=0xffff;run("STRINGS.ASX",1000,0,0,0,0,0UL,2);\n'
@@ -257,15 +289,17 @@ def main():
  program=program.replace(END,extra+END)
  (OUT/'diagnostic.c').write_text(program)
  subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dASPECT_RUNTIME_DIAGNOSTIC',
- '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),str(ROOT/'src/aspect/directory_runtime.c'),*objects],cwd=OUT,check=True)
+ '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/when_runtime.c'),*objects],cwd=OUT,check=True)
  report=dict(binary_sha256=sha(OUT/'EXECUTE.EXE'),sources={str(p.relative_to(ROOT)):sha(p) for p in sources},support_units=units,original_inputs=[],
   compile_flags=['8086','small model','cdecl','ASPECT_RUNTIME_DIAGNOSTIC'],fixture_count=len(cases),
-  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+15+len(unsupported),
+  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+15+len(unsupported)+259,
+  SET_family=dict(supported_subcommands={'56':'WHENCASE'},unsupported_subcommands_tested=255,truncated_or_invalid_boolean_cases=4),
   fixture_data={'file':'CASES.DAT','schema':'ACV2','sha256':sha(OUT/'CASES.DAT'),'bytes':len(table),'cases':len(cases)},
   parameter_fixture_aliases={'PARFLOAT':'FLOAT'},
+  composed_receive_overrides=receive_overrides,
   maintained_string_fault_fixture={'STRSHORT':'STRGASS compiler bytes with final00 option and94 return removed; first global HELLO retained, second stays empty'},
   maintained_heap_fault_fixtures={'HEAPFLT':'IDIVEDGE compiler bytes with global-string count changed from0to2','HEAPZERO':'IDZ compiler bytes with global-string count changed from0to2'},
   fixture_expectations={c['name']:{'source_sha256':c['source_sha256'],'asx_sha256':c['asx_sha256'],'expected':c['expected']} for c in cases},
-  scope='Incremental actual native dispatch/operand/operation/file/heap composition executing source-owned compiled fixtures. Incomplete63-slot opcode table; serial queue/clock inputs are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
+  scope='Incremental actual native dispatch/operand/operation/file/heap/WHEN composition executing source-owned compiled fixtures. Incomplete66-slot opcode table; SET supports WHENCASE only. Serial queue/clock/carrier inputs are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
  (OUT/'manifest.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 if __name__=='__main__':main()

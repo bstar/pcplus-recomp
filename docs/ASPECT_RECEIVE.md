@@ -75,13 +75,14 @@ An admitted connected child now routes mapped lead bytes through the
 [actual parent renderer](ASPECT_RENDERER.md). Parser continuation reads remain
 raw and bypass translation and WAITFOR matching. Standalone raw diagnostics
 explicitly disable display because they have no renderer service; they do not
-establish the native application's display default. Pattern/event monitoring
-remains unintegrated.
+establish the native application's display default. [Native WHEN monitoring
+and deferred calls](ASPECT_WHEN_RUNTIME.md) now run before display on translated
+leads; parser continuations bypass both monitors.
 E2F8 is a pattern/event-monitor count, not a file-capture flag. Native startup
 uses explicit identity-table initialization and configured loading/masking;
 serialized zero bytes are not evidence of an active zero translation table.
-The parent translation policy is inherited. Remaining terminal services and
-event integration are still application work.
+The parent translation policy is inherited. Broader terminal, event and UI
+services remain application work.
 
 The existing UART lease, ASIO unread-byte handback and serviced return-key
 prompt are reused. COMGETCD's cooperative wait and every receive call keep

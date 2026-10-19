@@ -3,8 +3,10 @@
 `ASPECT.EXE` now runs compiled scripts as a source-built DOS program. The terminal
 has a File → A → Run script action that prompts for a DOS filename, launches
 the sibling interpreter and returns through the existing PROGRAM handoff.
-Scripts run as a separate DOS process. Live serial scripting and complete
-ASPECT/application integration remain unfinished.
+Scripts run as a separate DOS process. Live serial and renderer support and
+[native WHEN events](ASPECT_WHEN_RUNTIME.md) are now integrated with explicit
+limits. The counts and validation record below retain the original console
+checkpoint; complete ASPECT/application integration remains unfinished.
 
 The [frozen validation record](validation/aspect-console.json) binds current
 sources, native comparisons, compiler/runner results, terminal launch checks

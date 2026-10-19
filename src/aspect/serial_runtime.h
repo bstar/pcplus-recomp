@@ -3,6 +3,8 @@
 void runtime_serial_reset(void);
 unsigned runtime_serial_ready(void);
 unsigned runtime_serial_poll(void);
+/* Physical MSR80, or explicit diagnostic fixture flags4(high)/8(drop at EOF). */
+unsigned runtime_serial_carrier(void);
 unsigned runtime_serial_send(unsigned byte);
 unsigned runtime_serial_read_raw(void);
 unsigned runtime_serial_receive(unsigned delayed);

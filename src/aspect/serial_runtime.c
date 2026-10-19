@@ -4,6 +4,7 @@
 #include "serial_runtime.h"
 #include "receive_runtime.h"
 #include <string.h>
+extern unsigned runtime_receive_display;
 #if defined(ASPECT_RUNTIME_SERIAL)
 #include "serial.h"
 #include "resident_render.h"
@@ -53,6 +54,18 @@ unsigned runtime_serial_poll(void)
 #endif
  return runtime_error;
 }
+unsigned runtime_serial_carrier(void)
+{
+ if(!runtime_serial_ready()){runtime_set_error(ASPECT_RUN_UNSUPPORTED);return 1;}
+ if(runtime_serial_poll())return 1; /* Error aborts before a disconnect action. */
+#if defined(ASPECT_RUNTIME_DIAGNOSTIC)
+ return (flags&4) && !((flags&8) && input_at>=input_size)?128:0;
+#elif defined(ASPECT_RUNTIME_SERIAL)
+ return aspect_serial_carrier();
+#else
+ return 1;
+#endif
+}
 unsigned runtime_serial_send(unsigned byte)
 {
  if(!runtime_serial_ready()){runtime_set_error(ASPECT_RUN_UNSUPPORTED);return runtime_error;}
@@ -89,7 +102,7 @@ unsigned runtime_serial_receive(unsigned delayed)
 {
  /* Full displayed4C3C path only with an admitted actual resident engine. */
 #if defined(ASPECT_RUNTIME_SERIAL)
- return runtime_receive_character(aspect_render_active()?1:0,delayed);
+ return runtime_receive_character(runtime_receive_display,delayed);
 #else
  return runtime_receive_character(0,delayed);
 #endif

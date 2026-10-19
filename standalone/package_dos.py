@@ -48,7 +48,8 @@ def main():
                     'Connected scripts share the terminal ANSI screen and history\r\n'
                     'in supported 80x25 profiles when file/printer owners are closed.\r\n'
                     'Admitted script errors return to the terminal with a notice.\r\n'
-                    'Other script events and application services remain incomplete.\r\n'
+                    'WHEN/CWHEN, deferred CALL and SET WHENCASE are available.\r\n'
+                    'Other script and application services remain incomplete.\r\n'
                     'Use Escape to cancel. Unknown commands report an error.\r\n'
                     'PRMEDIT edits an existing supported profile; no profile is bundled.\r\n')
     (OUT / 'README.TXT').write_bytes(instructions.encode('ascii'))

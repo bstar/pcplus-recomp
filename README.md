@@ -36,7 +36,8 @@ ASPECT subset directly from authored source. The diagnostic build compiles all
 Full script compilation, application command coverage and terminal scheduling
 remain unfinished.
 [WHEN compiler support](docs/ASPECT_WHEN_COMPILER.md) adds 40 separately checked
-outputs; production event dispatch remains unintegrated.
+outputs. The [DOS event runtime](docs/ASPECT_WHEN_RUNTIME.md) now executes native
+matching and deferred calls, including local frames and disconnect actions.
 
 [Directory-bound scripts](docs/DIRECTORY_SCRIPTS.md) now receive a private selected
 record, current-call date and queued raw input. The native directory expressions
@@ -58,8 +59,8 @@ unfinished. [Character and line input](docs/ASPECT_RECEIVE.md) adds
 COMGETC/COMGETCD, RGET and WAITQUIET, with the native timing and status rules
 kept distinct from the raw child platform services. [Input policy](docs/ASPECT_INPUT_POLICY.md)
 now inherits the terminal's XLT or seven-bit setting while returning unread
-bytes unchanged. Shared rendering is available for admitted connected scripts;
-script events and other application services remain unfinished.
+bytes unchanged. Shared rendering and native WHEN events are available for
+admitted connected scripts; other application services remain unfinished.
 [Connected script sessions](docs/ASPECT_SCRIPT_SESSION.md) use the selected COM
 port and resume automatically on success; a live script login followed by stock
 Synchronet editor interaction is verified in DOS.
@@ -80,7 +81,7 @@ Current outputs:
 | `build/aspect-strings/STRINGS.EXE` | Recovered assembly and controlled services | String operands, literals and assignment, including actual far copy and DOS far heap |
 | `build/aspect-long/LONG.EXE` | Recovered assembly only | Native signed long multiply/divide/remainder and shift helpers, including independent actual DOS checks |
 | `build/aspect-arithmetic/ARITH.EXE` | Recovered assembly and controlled services | Native arithmetic component; controlled long/float boundaries are distinct from composed execution |
-| `build/aspect-runtime/EXECUTE.EXE` | Maintained source compiler, recovered assembly and maintained DOS resource owner | Fixed source-compiled script suite with generated CASES.DAT expectations;63 supported opcode slots,152 explicit unsupported stops |
+| `build/aspect-runtime/EXECUTE.EXE` | Maintained source compiler, recovered assembly and maintained DOS resource owner | Fixed source-compiled suite;66 opcode slots with WHENCASE-only SET,149 unsupported slots and255 unsupported SET subcommands |
 | `build/aspect-runner/ASPECT.EXE` | Recovered instructions and maintained DOS CLI/resource owner | Execute trusted compiled scripts; raw stdout, Escape cancellation and an optional checked UART lease |
 | `build/aspect-receive-commands/RECEIVE.EXE` | Recovered assembly and controlled platform callbacks | Character, line and quiet-line input, native delayed read and DOS time, COMDATA/FOREVER |
 | `build/aspect-serial-commands/SERIAL.EXE` | Recovered assembly and controlled device/time callbacks | TRANSMIT/WAITFOR and native formatter, timeout, case, clock and result primitives |

@@ -5,6 +5,7 @@
 #include "serial.h"
 #include "serial_runtime.h"
 #include "receive_runtime.h"
+#include "when_runtime.h"
 unsigned aspect_render_parent_entry[2];
 aspect_render_client aspect_render_client_record;
 static unsigned attached,callback_error;
@@ -56,7 +57,7 @@ unsigned __cdecl aspect_render_finish(void)
 }
 /* Called only by the far callback's checked child DS=SS stack. A closed UART
  * permits plain diagnostic rendering, not new receive/transmit operations. */
-unsigned __cdecl aspect_render_callback_dispatch(unsigned operation,unsigned value)
+static unsigned callback_dispatch(unsigned operation,unsigned value)
 {
  unsigned result;
  if(operation==ASPECT_RENDER_ERROR)return callback_error?callback_error:(aspect_serial_active?runtime_error:0);
@@ -75,4 +76,11 @@ unsigned __cdecl aspect_render_callback_dispatch(unsigned operation,unsigned val
  case ASPECT_RENDER_SEND:return runtime_serial_send(value&255);
  default:callback_error=ASPECT_RUN_STATE;return callback_error;
  }
+}
+
+unsigned __cdecl aspect_render_callback_dispatch(unsigned operation,unsigned value)
+{
+ unsigned result;
+ runtime_when_defer_begin();result=callback_dispatch(operation,value);runtime_when_defer_end();
+ return result;
 }

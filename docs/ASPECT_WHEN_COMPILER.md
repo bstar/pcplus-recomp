@@ -1,6 +1,6 @@
 # WHEN compiler conformance
 
-The maintained host compiler emits recovered WHEN, CWHEN and SET WHENCASE records. This is compiler integration only: the production runner/application does not gain WHEN runtime wiring from this change. The separate native component and its renderer/carrier/lifecycle boundaries are documented in `ASPECT_WHEN.md`.
+The maintained host compiler emits recovered WHEN, CWHEN and SET WHENCASE records. This document records compiler conformance. The subsequent [DOS runtime integration](ASPECT_WHEN_RUNTIME.md) supplies event wiring, with explicit renderer/carrier/lifecycle boundaries. The native component is documented in `ASPECT_WHEN.md`.
 
 Supported forms are `WHEN integer string TRANSMIT string`, `WHEN integer string CALL procedure`, the corresponding `WHEN DISCONNECT` actions without a pattern, `CWHEN integer`, `CWHEN DISCONNECT`, and `SET WHENCASE ON/OFF`. Operands are atomic and typed; numeric expressions or parentheses around a slot, CALL arguments/parameterized handlers, and other action commands are rejected. Optional commas after operands follow the bounded original grammar. Numeric slot values outside0..2 remain compiler-permissive, matching original emission; the native bounded reader rejects them during execution. The source compiler does not disguise a literal3 as the special DISCONNECT prefix.
 

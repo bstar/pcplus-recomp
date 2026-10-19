@@ -1,0 +1,183 @@
+{
+  "component_fixture": "standalone/fixtures/aspect_receive_vectors.json",
+  "component_fixture_sha256": "41518818a3bfa97bae66277ef04ecf730717cdca31b87f582b310d24793062dc",
+  "scope": "Explicit composed-runtime expectations; original isolated receive fixture and its bytes/expectations remain unchanged. Native full-flow RG0/RG1/GCLEFT/RGGLOB probes corroborate UARTcount alias and suffix drain. RGGLOB timeout additionally uses an explicitly advancing diagnostic clock.",
+  "overrides": {
+    "RG0": {
+      "component_expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 4,
+        "string0": "HELLO"
+      },
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0,
+        "string0": "HELLO"
+      },
+      "serial": {},
+      "reason": "Actual native dispatcher drains queued suffix before the next ordinary assignment; full-program COMDATA consequently reads0."
+    },
+    "RG1": {
+      "component_expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 2,
+        "string0": "A"
+      },
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0,
+        "string0": "A"
+      },
+      "serial": {},
+      "reason": "Actual native dispatcher drains queued suffix before the next ordinary assignment; full-program COMDATA consequently reads0."
+    },
+    "RG2": {
+      "component_expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 2,
+        "string0": "A"
+      },
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0,
+        "string0": "A"
+      },
+      "serial": {},
+      "reason": "Actual native dispatcher drains queued suffix before the next ordinary assignment; full-program COMDATA consequently reads0."
+    },
+    "RG9": {
+      "component_expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 2,
+        "string0": "A"
+      },
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0,
+        "string0": "A"
+      },
+      "serial": {},
+      "reason": "Actual native dispatcher drains queued suffix before the next ordinary assignment; full-program COMDATA consequently reads0."
+    },
+    "RG10": {
+      "component_expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 4,
+        "string0": "HELLO"
+      },
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0,
+        "string0": "HELLO"
+      },
+      "serial": {},
+      "reason": "Actual native dispatcher drains queued suffix before the next ordinary assignment; full-program COMDATA consequently reads0."
+    },
+    "RG11": {
+      "component_expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 2,
+        "string0": "A"
+      },
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0,
+        "string0": "A"
+      },
+      "serial": {},
+      "reason": "Actual native dispatcher drains queued suffix before the next ordinary assignment; full-program COMDATA consequently reads0."
+    },
+    "RGGLOB": {
+      "component_expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0,
+        "integer1": 1,
+        "integer2": 0,
+        "string0": "NEW"
+      },
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 1,
+        "integer1": 0,
+        "integer2": 0,
+        "string0": ""
+      },
+      "serial": {
+        "seconds_step": 1
+      },
+      "reason": "Actual native dispatcher shares8E20 with UARTcount and drains before ordinary assignment whenE382=0; component receive expectations refer to the isolated handler, not full dispatcher. RGGLOB additionally starts its receive after an earlier main assignment drained input, so advancing diagnostic clock establishes the expected timeout."
+    },
+    "RGTM0": {
+      "component_expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 1,
+        "integer1": 0,
+        "integer2": 4,
+        "string0": ""
+      },
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 1,
+        "integer1": 0,
+        "integer2": 0,
+        "string0": ""
+      },
+      "serial": {},
+      "reason": "Actual native dispatcher drains queued suffix before the next ordinary assignment; full-program COMDATA consequently reads0."
+    },
+    "STATDATA": {
+      "component_expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 3
+      },
+      "expected": {
+        "tx_hex": "",
+        "stdout_hex": "",
+        "integer0": 0
+      },
+      "serial": {},
+      "reason": "Actual native dispatcher drains queued suffix before the next ordinary assignment; full-program COMDATA consequently reads0."
+    }
+  }
+}
