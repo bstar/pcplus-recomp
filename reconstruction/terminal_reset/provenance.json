@@ -268,7 +268,8 @@
     "cf86": "screen_line_flags",
     "d004": "reset_data_d004",
     "d008": "csi_erase_attribute",
-    "d122": "screen_doublewidth_enabled"
+    "d122": "screen_doublewidth_enabled",
+    "d464": "terminal_reset_script_label"
   },
   "services": {
     "6c20": "text_fill_cells",

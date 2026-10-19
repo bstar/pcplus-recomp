@@ -62,6 +62,7 @@ extern reset_data_4346
 extern reset_data_4350
 extern reset_data_46c1
 extern reset_data_46c4
+extern terminal_reset_script_label
 %define short
 %else
 ORG 0x2fb8
@@ -123,6 +124,7 @@ ORG 0x2fb8
 %define reset_data_4350 0x4350
 %define reset_data_46c1 0x46c1
 %define reset_data_46c4 0x46c4
+%define terminal_reset_script_label 0xd464
 %endif
 %include "encodings.inc"
 terminal_reset_status_refresh:
@@ -181,7 +183,7 @@ L_3036: jmp short L_3024
 L_3038: cmp word [meta_script_active],0x0
 L_303d: jz short L_304b
 L_303f: mov word [bp-0x4],0x1
-L_3044: mov word [bp-0x2],0xd464
+L_3044: mov word [bp-0x2],terminal_reset_script_label
 L_3049: jmp short L_307a
 L_304b: cmp word [keyboard_state_373c],0x0
 L_3050: jnz short L_3063

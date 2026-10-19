@@ -1,0 +1,1947 @@
+{
+  "schema": "aspect-set-native-validation-v1",
+  "passed": true,
+  "scope": "Recovered source component and script-label relocation. ASPECT.EXE still supports SET WHENCASE only; full native status/RPC and application gates remain open.",
+  "sources": {
+    "src/aspect/set_commands.asm": "623ccd79e810d8902636ac209a07759fee16758d64aed145f7951d910b9985ed",
+    "standalone/build_aspect_set.py": "b867fae1d084eaae51a70ccf5b5affcfdfd0fd87abbeaa54dfc281f0f75fe420",
+    "standalone/check_aspect_set.py": "917d79ec1aba3a5b9ab9a83e6b0ffbe58b0f2418d9840e104be3f93afaaf77de",
+    "standalone/fixtures/aspect_set_native_units.json": "6730fd7deedd1167882536872264ae8b1e9e86cbcdba1b126f89951f12da76e1",
+    "reconstruction/terminal_reset/status_refresh.asm": "a5c3d7412524e38cf3e4de1aa1879934241d7947a9385759402c50b85439e85f",
+    "reconstruction/terminal_reset/recover.py": "de3b449a69d4c43266b3e54ca19ccc0465483b1bf8006e38ce93724bc8650e8e",
+    "reconstruction/terminal_reset/provenance.json": "06f167b4d6576bf62e37f36e0403ad55dc23a1e5b6f521f579005288a1c28e1f",
+    "standalone/terminal_reset_host.asm": "b2d7c60699b3f3dee4272338d3f764caa7a285e199619d010e72e8c7cc5d6e5f",
+    "standalone/check_terminal_reset.py": "e3255a74566dea76eb02e6f5fc741264bf540a9a973667045514a51db65d5fb4",
+    "standalone/prove_source_build.py": "ff099ae882570236550bcd7ae45ae7c2ac5d22bbe3c312b1fb91707bd4c3f202",
+    "docs/ASPECT_SET_NATIVE.md": "39809dc9b1316d64641ae0be857b49bc20c84bbde66cd415050cc094c794ab0a",
+    "standalone/record_aspect_set.py": "6b2dec67b32d6996e7ce69d4f144f370bc9e44d32e3af6db636cf5e3c1315b07"
+  },
+  "native_bytes": 225,
+  "reports": {
+    "build/aspect-set/manifest.json": {
+      "sha256": "2663cd03b56dcc6ba60d961e650f88bfc45d0b51d17dd9c0356dfb2622addd03",
+      "result": {
+        "original_inputs": [],
+        "source_sha256": "623ccd79e810d8902636ac209a07759fee16758d64aed145f7951d910b9985ed",
+        "builder_sha256": "b867fae1d084eaae51a70ccf5b5affcfdfd0fd87abbeaa54dfc281f0f75fe420",
+        "baseline_sha256": "6730fd7deedd1167882536872264ae8b1e9e86cbcdba1b126f89951f12da76e1",
+        "object_sha256": "dc79408b51e75ae8430e0cab2b32a9ef37bce5f7f22bcc042b7ffe32e5716e1e",
+        "units": [
+          {
+            "unit": 1,
+            "start": 21592,
+            "end_exclusive": 21612,
+            "file_offset": 26200,
+            "bytes": 20,
+            "sha256": "eadb4fa80afa5f52ffef368433325a45ee2eddfea1d400b27ca4aa5b5cb162fb"
+          },
+          {
+            "unit": 2,
+            "start": 59067,
+            "end_exclusive": 59101,
+            "file_offset": 121771,
+            "bytes": 34,
+            "sha256": "626d50f3a5138b684a9d04d21ad2022abde290d997bac56c22e4b035429b4f13"
+          },
+          {
+            "unit": 3,
+            "start": 59731,
+            "end_exclusive": 59739,
+            "file_offset": 122435,
+            "bytes": 8,
+            "sha256": "0c71c9e7b72aaca7c9b5a14d277744c0d413a1785b15bfaa769eb448d874eae1"
+          },
+          {
+            "unit": 4,
+            "start": 59795,
+            "end_exclusive": 59803,
+            "file_offset": 122499,
+            "bytes": 8,
+            "sha256": "f012b3ec0b031bb0cd46b858f150a1313024501de4cba865e18e31dacf43f5b4"
+          },
+          {
+            "unit": 5,
+            "start": 59932,
+            "end_exclusive": 59940,
+            "file_offset": 122636,
+            "bytes": 8,
+            "sha256": "2da4f655ecdb0aff3c3cc9f7b1e4e9aba16d5edbb7eecc1ecb8265aa44e45173"
+          },
+          {
+            "unit": 6,
+            "start": 59977,
+            "end_exclusive": 59985,
+            "file_offset": 122681,
+            "bytes": 8,
+            "sha256": "1db7ce21ca0e6339c98d112478a66625500f3156b3e894db689b47a4c4ae4ace"
+          },
+          {
+            "unit": 7,
+            "start": 60013,
+            "end_exclusive": 60021,
+            "file_offset": 122717,
+            "bytes": 8,
+            "sha256": "6272ee1d0f04e2c7b1a65c49f089b1d9c4ff19c96fa3789a1e8d6d12f0828421"
+          },
+          {
+            "unit": 8,
+            "start": 60340,
+            "end_exclusive": 60348,
+            "file_offset": 123044,
+            "bytes": 8,
+            "sha256": "9aabcb9306c1df67e07c36799439c9c57275befa7df1c333751fbdaca0ed4098"
+          },
+          {
+            "unit": 9,
+            "start": 60535,
+            "end_exclusive": 60543,
+            "file_offset": 123239,
+            "bytes": 8,
+            "sha256": "8a1f7326b2799dc62c3036268b7780132072cc58fc72c950e56f722652e81404"
+          },
+          {
+            "unit": 10,
+            "start": 60983,
+            "end_exclusive": 60999,
+            "file_offset": 123687,
+            "bytes": 16,
+            "sha256": "cedf08f72d5bb8e861e49bee30abecdff765b7b3441916c59f663e2b1e323073"
+          },
+          {
+            "unit": 11,
+            "start": 60077,
+            "end_exclusive": 60100,
+            "file_offset": 122781,
+            "bytes": 23,
+            "sha256": "7a0491015ec1871a201788168e98b5753d6bf382d4a67cada744f8b929c8b4f7"
+          },
+          {
+            "unit": 12,
+            "start": 60790,
+            "end_exclusive": 60816,
+            "file_offset": 123494,
+            "bytes": 26,
+            "sha256": "7fd57b3ee84fbfc4cafd187dce95b9bad571b2c40c463fd6d61179a373a4d1ca"
+          },
+          {
+            "unit": 13,
+            "start": 56743,
+            "end_exclusive": 56781,
+            "file_offset": 112471,
+            "bytes": 38,
+            "sha256": "3530cc1fa0db1e5e40130053822e9051307e5c6806d7f800e2ab810c7408d10f"
+          },
+          {
+            "unit": 14,
+            "start": 56825,
+            "end_exclusive": 56837,
+            "file_offset": 112553,
+            "bytes": 12,
+            "sha256": "4a2e4b651e9a28b75308a9b80b9fb86e770adcbea7723c4bd3d18bdda147ddf3"
+          }
+        ],
+        "native_bytes": 225,
+        "source_dependencies": {
+          "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919"
+        }
+      }
+    },
+    "build/aspect-set/checks.json": {
+      "sha256": "ca2c38e0c46764444624637cee0da7d968d843bf8b642ef5af19c9c830fc9c15",
+      "result": {
+        "passed": true,
+        "cases": 3487,
+        "native_bytes": 225,
+        "instruction_count": 101,
+        "all_source_instructions_visited": true,
+        "instruction_addresses": [
+          "0x5458",
+          "0x545e",
+          "0x5461",
+          "0x5463",
+          "0x5465",
+          "0x5469",
+          "0xdda7",
+          "0xdda8",
+          "0xddaa",
+          "0xddab",
+          "0xddae",
+          "0xddb0",
+          "0xddb3",
+          "0xddb5",
+          "0xddb7",
+          "0xddba",
+          "0xddbc",
+          "0xddbe",
+          "0xddbf",
+          "0xddc2",
+          "0xddc3",
+          "0xddc6",
+          "0xddc7",
+          "0xddc9",
+          "0xddca",
+          "0xddf9",
+          "0xddfc",
+          "0xddfd",
+          "0xde00",
+          "0xde01",
+          "0xde04",
+          "0xe6bb",
+          "0xe6bc",
+          "0xe6be",
+          "0xe6c3",
+          "0xe6c5",
+          "0xe6c8",
+          "0xe6cb",
+          "0xe6cd",
+          "0xe6cf",
+          "0xe6d2",
+          "0xe6d4",
+          "0xe6d7",
+          "0xe6d9",
+          "0xe6da",
+          "0xe953",
+          "0xe956",
+          "0xe957",
+          "0xe95a",
+          "0xe993",
+          "0xe996",
+          "0xe997",
+          "0xe99a",
+          "0xea1c",
+          "0xea1f",
+          "0xea20",
+          "0xea23",
+          "0xea49",
+          "0xea4c",
+          "0xea4d",
+          "0xea50",
+          "0xea6d",
+          "0xea70",
+          "0xea71",
+          "0xea74",
+          "0xeaad",
+          "0xeab2",
+          "0xeab4",
+          "0xeab7",
+          "0xeaba",
+          "0xeabb",
+          "0xeabe",
+          "0xeabf",
+          "0xeac0",
+          "0xeac3",
+          "0xebb4",
+          "0xebb7",
+          "0xebb8",
+          "0xebbb",
+          "0xec77",
+          "0xec7a",
+          "0xec7b",
+          "0xec7e",
+          "0xed76",
+          "0xed7b",
+          "0xed7d",
+          "0xed80",
+          "0xed81",
+          "0xed84",
+          "0xed87",
+          "0xed88",
+          "0xed8c",
+          "0xed8f",
+          "0xee37",
+          "0xee3a",
+          "0xee3b",
+          "0xee3e",
+          "0xee3f",
+          "0xee42",
+          "0xee43",
+          "0xee46"
+        ],
+        "original_inputs": [],
+        "checker_sha256": "917d79ec1aba3a5b9ab9a83e6b0ffbe58b0f2418d9840e104be3f93afaaf77de",
+        "manifest_sha256": "2663cd03b56dcc6ba60d961e650f88bfc45d0b51d17dd9c0356dfb2622addd03",
+        "source_sha256": "623ccd79e810d8902636ac209a07759fee16758d64aed145f7951d910b9985ed",
+        "scope": "Actual225 recovered SET instructions with explicit byte reader, bounded integer operand, GET destination and status refresh models. Tests dispatcher/table, raw boolean/counter writes, all valid selected numeric values, rejects, GET helpers, byte sign extension, decimal16-bit arithmetic and near ABI. No full GET grammar, original UI/renderer, actual DOS application, UART or modem claim."
+      }
+    },
+    "build/aspect-set/checks-original.json": {
+      "sha256": "de8384cad4c672f0f63e96691c066151b80fcb07bfdcdbcfc272e5d93d5eba14",
+      "result": {
+        "passed": true,
+        "cases": 3487,
+        "native_bytes": 225,
+        "instruction_count": 101,
+        "all_source_instructions_visited": true,
+        "instruction_addresses": [
+          "0x5458",
+          "0x545e",
+          "0x5461",
+          "0x5463",
+          "0x5465",
+          "0x5469",
+          "0xdda7",
+          "0xdda8",
+          "0xddaa",
+          "0xddab",
+          "0xddae",
+          "0xddb0",
+          "0xddb3",
+          "0xddb5",
+          "0xddb7",
+          "0xddba",
+          "0xddbc",
+          "0xddbe",
+          "0xddbf",
+          "0xddc2",
+          "0xddc3",
+          "0xddc6",
+          "0xddc7",
+          "0xddc9",
+          "0xddca",
+          "0xddf9",
+          "0xddfc",
+          "0xddfd",
+          "0xde00",
+          "0xde01",
+          "0xde04",
+          "0xe6bb",
+          "0xe6bc",
+          "0xe6be",
+          "0xe6c3",
+          "0xe6c5",
+          "0xe6c8",
+          "0xe6cb",
+          "0xe6cd",
+          "0xe6cf",
+          "0xe6d2",
+          "0xe6d4",
+          "0xe6d7",
+          "0xe6d9",
+          "0xe6da",
+          "0xe953",
+          "0xe956",
+          "0xe957",
+          "0xe95a",
+          "0xe993",
+          "0xe996",
+          "0xe997",
+          "0xe99a",
+          "0xea1c",
+          "0xea1f",
+          "0xea20",
+          "0xea23",
+          "0xea49",
+          "0xea4c",
+          "0xea4d",
+          "0xea50",
+          "0xea6d",
+          "0xea70",
+          "0xea71",
+          "0xea74",
+          "0xeaad",
+          "0xeab2",
+          "0xeab4",
+          "0xeab7",
+          "0xeaba",
+          "0xeabb",
+          "0xeabe",
+          "0xeabf",
+          "0xeac0",
+          "0xeac3",
+          "0xebb4",
+          "0xebb7",
+          "0xebb8",
+          "0xebbb",
+          "0xec77",
+          "0xec7a",
+          "0xec7b",
+          "0xec7e",
+          "0xed76",
+          "0xed7b",
+          "0xed7d",
+          "0xed80",
+          "0xed81",
+          "0xed84",
+          "0xed87",
+          "0xed88",
+          "0xed8c",
+          "0xed8f",
+          "0xee37",
+          "0xee3a",
+          "0xee3b",
+          "0xee3e",
+          "0xee3f",
+          "0xee42",
+          "0xee43",
+          "0xee46"
+        ],
+        "original_inputs": [
+          {
+            "sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+            "scope": "Static exact selected byte comparison"
+          }
+        ],
+        "checker_sha256": "917d79ec1aba3a5b9ab9a83e6b0ffbe58b0f2418d9840e104be3f93afaaf77de",
+        "manifest_sha256": "2663cd03b56dcc6ba60d961e650f88bfc45d0b51d17dd9c0356dfb2622addd03",
+        "source_sha256": "623ccd79e810d8902636ac209a07759fee16758d64aed145f7951d910b9985ed",
+        "scope": "Actual225 recovered SET instructions with explicit byte reader, bounded integer operand, GET destination and status refresh models. Tests dispatcher/table, raw boolean/counter writes, all valid selected numeric values, rejects, GET helpers, byte sign extension, decimal16-bit arithmetic and near ABI. No full GET grammar, original UI/renderer, actual DOS application, UART or modem claim."
+      }
+    },
+    "build/terminal-reset/checks-original.json": {
+      "sha256": "05c321ac2b6a8b789bb3292b2302aa9c4928254b5fd73175c03c71e69a4fa6fb",
+      "result": {
+        "passed": true,
+        "binary_sha256": "8bdd8c62707ef4c1761c734a9481cad18be991aeed3cadd6194c527f14408e32",
+        "cases": [
+          {
+            "case": "complete-soft-reset-stable-80column-hidden-status-real-clear-home-geometry-tabs",
+            "passed": true
+          },
+          {
+            "case": "all-profile-derived-prefix-flags-and-honest-mandatory-KEY-dependency",
+            "passed": true
+          },
+          {
+            "case": "actual-80-and132-width-state-helper",
+            "passed": true
+          },
+          {
+            "case": "geometry-wide-transition-exposes-real-far-allocation-boundary",
+            "passed": true
+          },
+          {
+            "case": "actual-CRTC-underline-register-and-BDA-height-contract",
+            "passed": true
+          },
+          {
+            "case": "native-special-zero-reset-preserves-screen-attribute-and-saved-cursor",
+            "passed": true
+          },
+          {
+            "case": "actual-far-shadow-clear-uses-configured-normal-attribute",
+            "passed": true
+          },
+          {
+            "case": "status-script-label-pointer-relocates-before-explicit-UART-boundary",
+            "passed": true
+          },
+          {
+            "case": "native-default-cursor-shape-through-real-BIOS-helper",
+            "passed": true
+          }
+        ],
+        "genuine_original_comparisons": 47,
+        "scope": "Full native soft-reset only for stable80-column geometry/status-hidden synthetic state. Nonzero profile prefix stops explicitly at original mandatory KEY loader; far allocation/UI/repair are not fake no-ops. Only video/CRTC hardware modeled."
+      }
+    },
+    "build/terminal-reset/dos-results.json": {
+      "sha256": "c922098eeb65a4c0451761e695ef663cc01e83b25a2bdf1cbe6ed88db287da98",
+      "result": {
+        "passed": true,
+        "binary_sha256": "8bdd8c62707ef4c1761c734a9481cad18be991aeed3cadd6194c527f14408e32",
+        "checks": [
+          "native terminal_reset(0) returns on stable80-column/status-hidden configuration",
+          "real video rectangle cleared and cursor homed",
+          "current attribute reset and default tabs generated"
+        ],
+        "scope": "Actual DOSBox-X8086 soft-reset path only. Full profile reset still requires explicit KEY loader; no no-op dependency replacement."
+      }
+    },
+    "docs/validation/application-components-source-build.json": {
+      "sha256": "6a3e0d53bd94cf8f4f6598756cccc993a5f63013d4d9389f87ddcae94b91f8bb",
+      "result": {
+        "passed": true,
+        "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
+        "source_snapshot_sha256": "7f3bdf5e4a88d509d81a81f5b3394ad5f9f537daaf7bcd43297ae70d34dad24b",
+        "source_file_count": 1796,
+        "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
+        "excluded_top_level_paths": [
+          ".git",
+          "analysis",
+          "build",
+          "install",
+          "original",
+          "originals"
+        ],
+        "original_executable_present": false,
+        "original_install_present": false,
+        "REA_database_present": false,
+        "previous_build_outputs_present": false,
+        "build_log_sha256": "c319af6a51144f7f76fc98b29331455bcfafc7cdfdd4b2f7d3fbaf7415b5b71f",
+        "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
+        "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
+        "source_checkout": "/tmp/nix-shell.jIg2I1/pcplus-source-proof-2r13kxp4/checkout",
+        "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
+        "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
+        "scope": "106 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+        "output_count": 106,
+        "outputs": {
+          "terminal/TERMINAL.EXE": {
+            "sha256": "dacbd777fbd5afaf441ad46ec559be2b95c53fd5ba9c1219ebfb865cd48e66ae",
+            "matches_workspace": true,
+            "workspace_sha256": "dacbd777fbd5afaf441ad46ec559be2b95c53fd5ba9c1219ebfb865cd48e66ae"
+          },
+          "config-dos/CONFIG.EXE": {
+            "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
+            "matches_workspace": true,
+            "workspace_sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78"
+          },
+          "config-dos/CFGFAULT.EXE": {
+            "sha256": "e0a307b0c064cdb210889c8e57cead17f5bf4dde523b8679e5e96a5cfa9cd82a",
+            "matches_workspace": true,
+            "workspace_sha256": "e0a307b0c064cdb210889c8e57cead17f5bf4dde523b8679e5e96a5cfa9cd82a"
+          },
+          "config-replace/REPLACE.EXE": {
+            "sha256": "14daea33ed04c9639633f4ede3c951745c2c4ef36cf10f7b9d790265facb11a6",
+            "matches_workspace": true,
+            "workspace_sha256": "14daea33ed04c9639633f4ede3c951745c2c4ef36cf10f7b9d790265facb11a6"
+          },
+          "config-replace/REPFAULT.EXE": {
+            "sha256": "cc19bb968bb1ea389c6841f9ae935bdd69960841cb6a604b53eb003ee12fbc46",
+            "matches_workspace": true,
+            "workspace_sha256": "cc19bb968bb1ea389c6841f9ae935bdd69960841cb6a604b53eb003ee12fbc46"
+          },
+          "config-abi/ABI.EXE": {
+            "sha256": "ee150a767d6072441b8727c246040f4fb02676c435ff7dd0104de46125b3adbe",
+            "matches_workspace": true,
+            "workspace_sha256": "ee150a767d6072441b8727c246040f4fb02676c435ff7dd0104de46125b3adbe"
+          },
+          "ui-windows/WINDOWS.EXE": {
+            "sha256": "fbf6cabd1539075134062d99e4477c7eb7a229325e6fa50791adc11867420671",
+            "matches_workspace": true,
+            "workspace_sha256": "fbf6cabd1539075134062d99e4477c7eb7a229325e6fa50791adc11867420671"
+          },
+          "modem-commands/MODEMCMD.EXE": {
+            "sha256": "f7bcd936b4a8966c2b79352147db4c3d4f3250630f7703852291b78020f7e9e3",
+            "matches_workspace": true,
+            "workspace_sha256": "f7bcd936b4a8966c2b79352147db4c3d4f3250630f7703852291b78020f7e9e3"
+          },
+          "modem-responses/MODEMRSP.EXE": {
+            "sha256": "ee2c7450aff4d1a8df36e9e3040d187a1db14f0463f93958a8dfeaaadc573414",
+            "matches_workspace": true,
+            "workspace_sha256": "ee2c7450aff4d1a8df36e9e3040d187a1db14f0463f93958a8dfeaaadc573414"
+          },
+          "modem-send/MODEMSND.EXE": {
+            "sha256": "e7cfa5511c5a0fa10b1158f6137eeb585fef1aa8c20bf3b206e435aef14f4809",
+            "matches_workspace": true,
+            "workspace_sha256": "e7cfa5511c5a0fa10b1158f6137eeb585fef1aa8c20bf3b206e435aef14f4809"
+          },
+          "directory-dial/DIRDIAL.EXE": {
+            "sha256": "84f502735fd9e87ff4d22ff58702bdedf01847e6c53b3b4442902d490a77a0f2",
+            "matches_workspace": true,
+            "workspace_sha256": "84f502735fd9e87ff4d22ff58702bdedf01847e6c53b3b4442902d490a77a0f2"
+          },
+          "directory-browser/BROWSER.EXE": {
+            "sha256": "5fd4c103817f6134893f4a0d623147725c574c2cdd492692ca34ad1f18967cbd",
+            "matches_workspace": true,
+            "workspace_sha256": "5fd4c103817f6134893f4a0d623147725c574c2cdd492692ca34ad1f18967cbd"
+          },
+          "directory-editor/EDITOR.EXE": {
+            "sha256": "0158e88c0db97faf16872873b9917a7b29519ede7ccdfdd79e345effe37d849c",
+            "matches_workspace": true,
+            "workspace_sha256": "0158e88c0db97faf16872873b9917a7b29519ede7ccdfdd79e345effe37d849c"
+          },
+          "directory-accounting/DIRSTATS.EXE": {
+            "sha256": "8dbe12f0b2b365cd1d6d986b82122251c22230f0e973e22faaf2fb51807faae4",
+            "matches_workspace": true,
+            "workspace_sha256": "8dbe12f0b2b365cd1d6d986b82122251c22230f0e973e22faaf2fb51807faae4"
+          },
+          "keyboard-mapping/MAPPING.EXE": {
+            "sha256": "0816a43d53bb5e2602a00b8f56e795e50d40c8d8b8ad155aa827d74998e8f977",
+            "matches_workspace": true,
+            "workspace_sha256": "0816a43d53bb5e2602a00b8f56e795e50d40c8d8b8ad155aa827d74998e8f977"
+          },
+          "keyboard-detection/KBDMODE.EXE": {
+            "sha256": "5e268db564750f1525016e4b89b3b64525a2dfb75587d755b9da5fcc93a813a0",
+            "matches_workspace": true,
+            "workspace_sha256": "5e268db564750f1525016e4b89b3b64525a2dfb75587d755b9da5fcc93a813a0"
+          },
+          "line-edit/LINES.EXE": {
+            "sha256": "7a10bc8c2a2883cdb447933dd1628647d2a61ba5fe133c94d5cbf21ec018a9b6",
+            "matches_workspace": true,
+            "workspace_sha256": "7a10bc8c2a2883cdb447933dd1628647d2a61ba5fe133c94d5cbf21ec018a9b6"
+          },
+          "meta-keys/METAKEYS.EXE": {
+            "sha256": "dd2a111d900d309fa2cf5e40f1dacfd38c959ac01086fdfb31de6c2d9d80f713",
+            "matches_workspace": true,
+            "workspace_sha256": "dd2a111d900d309fa2cf5e40f1dacfd38c959ac01086fdfb31de6c2d9d80f713"
+          },
+          "character-edit/CHAREDIT.EXE": {
+            "sha256": "ff8c65cea099092ba50908d0b6b4e5bb1901509b9303b744ee0191f7bcaa82f6",
+            "matches_workspace": true,
+            "workspace_sha256": "ff8c65cea099092ba50908d0b6b4e5bb1901509b9303b744ee0191f7bcaa82f6"
+          },
+          "process/PROCESS.EXE": {
+            "sha256": "7da5229e3cbc16de2c994fadaf5556c34a105afa4813ce64646fa5b543892a05",
+            "matches_workspace": true,
+            "workspace_sha256": "7da5229e3cbc16de2c994fadaf5556c34a105afa4813ce64646fa5b543892a05"
+          },
+          "process/PROGRAM.EXE": {
+            "sha256": "c9d32557bc40fd4542ea888b0181c111edee7abffc324ffd2242eb17cc7abeaa",
+            "matches_workspace": true,
+            "workspace_sha256": "c9d32557bc40fd4542ea888b0181c111edee7abffc324ffd2242eb17cc7abeaa"
+          },
+          "process/CHILD.COM": {
+            "sha256": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f",
+            "matches_workspace": true,
+            "workspace_sha256": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f"
+          },
+          "program-exec/EXECUTOR.EXE": {
+            "sha256": "aec4daeba2e9d9fd49a0df325455c25a8bd95c3015f797dc4123169b0c3bbe0b",
+            "matches_workspace": true,
+            "workspace_sha256": "aec4daeba2e9d9fd49a0df325455c25a8bd95c3015f797dc4123169b0c3bbe0b"
+          },
+          "program-exec/CHILD.COM": {
+            "sha256": "fccf1fea18c1c5f803d4d3331ce845eab9bd2cae7659797e2bf909723c871c24",
+            "matches_workspace": true,
+            "workspace_sha256": "fccf1fea18c1c5f803d4d3331ce845eab9bd2cae7659797e2bf909723c871c24"
+          },
+          "terminal-reset/RESET.EXE": {
+            "sha256": "8bdd8c62707ef4c1761c734a9481cad18be991aeed3cadd6194c527f14408e32",
+            "matches_workspace": true,
+            "workspace_sha256": "8bdd8c62707ef4c1761c734a9481cad18be991aeed3cadd6194c527f14408e32"
+          },
+          "transfer-blocks/BLOCKS.EXE": {
+            "sha256": "b9eecad4fce1ea76e5f870d7706ce449ca00db99c1ffa99b03e14334ab54d3a1",
+            "matches_workspace": true,
+            "workspace_sha256": "b9eecad4fce1ea76e5f870d7706ce449ca00db99c1ffa99b03e14334ab54d3a1"
+          },
+          "transfer-receive/RECEIVE.EXE": {
+            "sha256": "7f2da1865bcd4b7bbe1fa466e9bfc2e759de514109787516c330a28797f26e8e",
+            "matches_workspace": true,
+            "workspace_sha256": "7f2da1865bcd4b7bbe1fa466e9bfc2e759de514109787516c330a28797f26e8e"
+          },
+          "transfer-send/SEND.EXE": {
+            "sha256": "437f069804ac8b6eeff6307944286ed7c4db3d8f4761b2b90873c6ab52014a75",
+            "matches_workspace": true,
+            "workspace_sha256": "437f069804ac8b6eeff6307944286ed7c4db3d8f4761b2b90873c6ab52014a75"
+          },
+          "transfer-files/FILES.EXE": {
+            "sha256": "427a7997d12a9933389aa63210a6c425b13ca597730378a628618ff3339e9b30",
+            "matches_workspace": true,
+            "workspace_sha256": "427a7997d12a9933389aa63210a6c425b13ca597730378a628618ff3339e9b30"
+          },
+          "transfer-session/SESSION.EXE": {
+            "sha256": "6297cab2c881e11885d23a814ffaf45967749e88a09f8f9d17949f8ca6a79302",
+            "matches_workspace": true,
+            "workspace_sha256": "6297cab2c881e11885d23a814ffaf45967749e88a09f8f9d17949f8ca6a79302"
+          },
+          "transfer-uart/TUART.EXE": {
+            "sha256": "b976f8a928dc052b7cfc4c2adf3b34f7e869e1b4748ba2d6f30d2652a90db28b",
+            "matches_workspace": true,
+            "workspace_sha256": "b976f8a928dc052b7cfc4c2adf3b34f7e869e1b4748ba2d6f30d2652a90db28b"
+          },
+          "download-file/DOWNLOAD.EXE": {
+            "sha256": "99199a1fcf86ec55fa79c1d6f93ff882e9624895f0232fa9e465a1a65df9d1fe",
+            "matches_workspace": true,
+            "workspace_sha256": "99199a1fcf86ec55fa79c1d6f93ff882e9624895f0232fa9e465a1a65df9d1fe"
+          },
+          "download-file/DLFAULT.EXE": {
+            "sha256": "b7457f18de99106d11101509d6cad8cb486a444d76664612255af22176bfc615",
+            "matches_workspace": true,
+            "workspace_sha256": "b7457f18de99106d11101509d6cad8cb486a444d76664612255af22176bfc615"
+          },
+          "transfer-session-composite/TRANSFER.EXE": {
+            "sha256": "c6cb27a6b24a4c95eb4f6b5a12e5c23fb88fa41a076e82800b9a4e888d21a906",
+            "matches_workspace": true,
+            "workspace_sha256": "c6cb27a6b24a4c95eb4f6b5a12e5c23fb88fa41a076e82800b9a4e888d21a906"
+          },
+          "transfer-storage/TRANSFER.EXE": {
+            "sha256": "ec3957d3770636eeb11eb4cdf699902d4027258d87a8c06a532ff45f26842883",
+            "matches_workspace": true,
+            "workspace_sha256": "ec3957d3770636eeb11eb4cdf699902d4027258d87a8c06a532ff45f26842883"
+          },
+          "upload-file/UPLOAD.EXE": {
+            "sha256": "d9e9b6cf95010f76575187722b5b474ee349cbf9560b332604a952b302e22914",
+            "matches_workspace": true,
+            "workspace_sha256": "d9e9b6cf95010f76575187722b5b474ee349cbf9560b332604a952b302e22914"
+          },
+          "upload-file/UPFAULT.EXE": {
+            "sha256": "1565f10e9890a70beee4149ea404b441892b357441175a907e31ddc1d5f9d17d",
+            "matches_workspace": true,
+            "workspace_sha256": "1565f10e9890a70beee4149ea404b441892b357441175a907e31ddc1d5f9d17d"
+          },
+          "transfer-metadata/METADATA.EXE": {
+            "sha256": "efc26c3ca221739ac7c72b34707865407f4ab2ee223f4efdf751b148ea5b89b7",
+            "matches_workspace": true,
+            "workspace_sha256": "efc26c3ca221739ac7c72b34707865407f4ab2ee223f4efdf751b148ea5b89b7"
+          },
+          "batch-header/HEADER.EXE": {
+            "sha256": "5fc883e06f588b13f7d61a3704e8fbdab789d69f10cf998a25d79abe60e06524",
+            "matches_workspace": true,
+            "workspace_sha256": "5fc883e06f588b13f7d61a3704e8fbdab789d69f10cf998a25d79abe60e06524"
+          },
+          "batch-download/BATCHDL.EXE": {
+            "sha256": "62fe933a6eecb5028e801de2c4959c47981890141cff1da98ec67927b7b1d367",
+            "matches_workspace": true,
+            "workspace_sha256": "62fe933a6eecb5028e801de2c4959c47981890141cff1da98ec67927b7b1d367"
+          },
+          "batch-download/BDFAULT.EXE": {
+            "sha256": "f599d2b4e1e429324f32a0cd6fd16a120fe5f30c19b78935ecdbb48ac6fae5d3",
+            "matches_workspace": true,
+            "workspace_sha256": "f599d2b4e1e429324f32a0cd6fd16a120fe5f30c19b78935ecdbb48ac6fae5d3"
+          },
+          "batch-upload/BATCH.EXE": {
+            "sha256": "f68598d90743fbe867a6f4be15ebb78991b342c0bc12d8d109c669e332c7dcd3",
+            "matches_workspace": true,
+            "workspace_sha256": "f68598d90743fbe867a6f4be15ebb78991b342c0bc12d8d109c669e332c7dcd3"
+          },
+          "batch-upload/BUFAULT.EXE": {
+            "sha256": "d839641df58da79e2e98d03de5bd1e768f3ab593569e8e14255b9456c0a35fae",
+            "matches_workspace": true,
+            "workspace_sha256": "d839641df58da79e2e98d03de5bd1e768f3ab593569e8e14255b9456c0a35fae"
+          },
+          "capture-file/CAPTURE.EXE": {
+            "sha256": "532cec80d51f5cba16ce98d008a21eb6dd777db2b0079ece0e7b39c49ce980d5",
+            "matches_workspace": true,
+            "workspace_sha256": "532cec80d51f5cba16ce98d008a21eb6dd777db2b0079ece0e7b39c49ce980d5"
+          },
+          "capture-file/CAPFAULT.EXE": {
+            "sha256": "90424c20cf0847c77aee9aa5ba5c1d084fecf223967400d5b9835d487cc20775",
+            "matches_workspace": true,
+            "workspace_sha256": "90424c20cf0847c77aee9aa5ba5c1d084fecf223967400d5b9835d487cc20775"
+          },
+          "capture-session/CAPSESS.EXE": {
+            "sha256": "771e2fd702017b25d53e8f0694592258abce08677f17d803212038e27971ba07",
+            "matches_workspace": true,
+            "workspace_sha256": "771e2fd702017b25d53e8f0694592258abce08677f17d803212038e27971ba07"
+          },
+          "capture-session/CSFAULT.EXE": {
+            "sha256": "5b630566b588e95652f1bd9a99c9c0d71c81102f4fe81692ff5deb1892e36b04",
+            "matches_workspace": true,
+            "workspace_sha256": "5b630566b588e95652f1bd9a99c9c0d71c81102f4fe81692ff5deb1892e36b04"
+          },
+          "clipboard/CLIPCORE.EXE": {
+            "sha256": "a14ecea00b50dc2ca0e2c3954bd9567884078220c34b595907035ea59f072ee8",
+            "matches_workspace": true,
+            "workspace_sha256": "a14ecea00b50dc2ca0e2c3954bd9567884078220c34b595907035ea59f072ee8"
+          },
+          "snapshot/SNAPSHOT.EXE": {
+            "sha256": "fdcc00355ace42b426cc320d779dc51c0b3ae8a0d47abf3a7bac3973417f69c9",
+            "matches_workspace": true,
+            "workspace_sha256": "fdcc00355ace42b426cc320d779dc51c0b3ae8a0d47abf3a7bac3973417f69c9"
+          },
+          "capture-owners/OWNERS.EXE": {
+            "sha256": "14199a9e0765dc962232dae877e761822f165eebc6a79d608945a533cd04353a",
+            "matches_workspace": true,
+            "workspace_sha256": "14199a9e0765dc962232dae877e761822f165eebc6a79d608945a533cd04353a"
+          },
+          "capture-owners/OWFAULT.EXE": {
+            "sha256": "db7d4bd9b922e5af1759c6bc595d61f14d417f4724efd156647b55b66d643554",
+            "matches_workspace": true,
+            "workspace_sha256": "db7d4bd9b922e5af1759c6bc595d61f14d417f4724efd156647b55b66d643554"
+          },
+          "printer/PRINTER.EXE": {
+            "sha256": "2b699e0a2646abdf9b61c50277725d69932a6d29afdd8fb77308aa5d268eec90",
+            "matches_workspace": true,
+            "workspace_sha256": "2b699e0a2646abdf9b61c50277725d69932a6d29afdd8fb77308aa5d268eec90"
+          },
+          "print_screen/PRINTSCR.EXE": {
+            "sha256": "4383b3799c4c6dc0bda05daf447d80bb5d09af2c7a1fcb14921f592b1eca1201",
+            "matches_workspace": true,
+            "workspace_sha256": "4383b3799c4c6dc0bda05daf447d80bb5d09af2c7a1fcb14921f592b1eca1201"
+          },
+          "printer-device/PRINTER.EXE": {
+            "sha256": "07308264cb1d4c6ec70ed46e103d288027b1d33227d00d040fd824da9d87ef52",
+            "matches_workspace": true,
+            "workspace_sha256": "07308264cb1d4c6ec70ed46e103d288027b1d33227d00d040fd824da9d87ef52"
+          },
+          "print_controller/PRINTCTL.EXE": {
+            "sha256": "8095449ff1fbc10c718f9b3916c03ceec1dabe92b3e743004fd69fe129fa118b",
+            "matches_workspace": true,
+            "workspace_sha256": "8095449ff1fbc10c718f9b3916c03ceec1dabe92b3e743004fd69fe129fa118b"
+          },
+          "setup/PRMEDIT.EXE": {
+            "sha256": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646",
+            "matches_workspace": true,
+            "workspace_sha256": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646"
+          },
+          "live-configuration/LIVE.EXE": {
+            "sha256": "3ff4960670b7417417dbb3ce40603ed808079dbc48dd35141468ce282dac6729",
+            "matches_workspace": true,
+            "workspace_sha256": "3ff4960670b7417417dbb3ce40603ed808079dbc48dd35141468ce282dac6729"
+          },
+          "directory-context/CONTEXT.EXE": {
+            "sha256": "b425b2884e91b47323fd549a8f6ca0b3f575c29abfb1a4b448973b8531a14449",
+            "matches_workspace": true,
+            "workspace_sha256": "b425b2884e91b47323fd549a8f6ca0b3f575c29abfb1a4b448973b8531a14449"
+          },
+          "xlt-editor/XLTEDIT.EXE": {
+            "sha256": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10",
+            "matches_workspace": true,
+            "workspace_sha256": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+          },
+          "resource-path/RESOURCE.EXE": {
+            "sha256": "4809ccecf3bc736bf49daf64a7b311b0ededdfe241751da5e2cfec95474b1736",
+            "matches_workspace": true,
+            "workspace_sha256": "4809ccecf3bc736bf49daf64a7b311b0ededdfe241751da5e2cfec95474b1736"
+          },
+          "live-translation-child/CHDIR.EXE": {
+            "sha256": "aa2e5ea120ee97c32c1865c7b85343333c2dd9c5db99e771ad0ae1cd949e0441",
+            "matches_workspace": true,
+            "workspace_sha256": "aa2e5ea120ee97c32c1865c7b85343333c2dd9c5db99e771ad0ae1cd949e0441"
+          },
+          "aspect-literal/LITERAL.EXE": {
+            "sha256": "bcd47845d6bea3a692599323095f29460a8dbecd15d57ecbd47f5c1358c5c1f2",
+            "matches_workspace": true,
+            "workspace_sha256": "bcd47845d6bea3a692599323095f29460a8dbecd15d57ecbd47f5c1358c5c1f2"
+          },
+          "aspect-dispatch/DISPATCH.EXE": {
+            "sha256": "68288f66c17e188bbbae1813594639dd88eae5e050a483ae91af764f6aff7b4f",
+            "matches_workspace": true,
+            "workspace_sha256": "68288f66c17e188bbbae1813594639dd88eae5e050a483ae91af764f6aff7b4f"
+          },
+          "aspect-globals/GLOBALS.EXE": {
+            "sha256": "cb96ac730aefadb56b16a25196104d0bad8fc13d44d98a8977c9d4a6c9b67cb1",
+            "matches_workspace": true,
+            "workspace_sha256": "cb96ac730aefadb56b16a25196104d0bad8fc13d44d98a8977c9d4a6c9b67cb1"
+          },
+          "aspect-stack/STACK.EXE": {
+            "sha256": "35afb60eb6ac3381ace5cd7b67810579ec945d7d4e23eb92707baa86f8326993",
+            "matches_workspace": true,
+            "workspace_sha256": "35afb60eb6ac3381ace5cd7b67810579ec945d7d4e23eb92707baa86f8326993"
+          },
+          "aspect-unwind/UNWIND.EXE": {
+            "sha256": "df2113e8d4d89448c4e1427e1923a1a84ae91b1c8ffd27b37be3497b37234456",
+            "matches_workspace": true,
+            "workspace_sha256": "df2113e8d4d89448c4e1427e1923a1a84ae91b1c8ffd27b37be3497b37234456"
+          },
+          "aspect-flow/FLOW.EXE": {
+            "sha256": "181160210ffb6e15b60b8d67d5a287b09a8cce7136f180591b9426f820edcc27",
+            "matches_workspace": true,
+            "workspace_sha256": "181160210ffb6e15b60b8d67d5a287b09a8cce7136f180591b9426f820edcc27"
+          },
+          "aspect-file/FILE.EXE": {
+            "sha256": "c3786f890c44ad898a16e716888c8b0bc791bcbb061ad5f7da2442795b5770b7",
+            "matches_workspace": true,
+            "workspace_sha256": "c3786f890c44ad898a16e716888c8b0bc791bcbb061ad5f7da2442795b5770b7"
+          },
+          "aspect-string-services/SERVICES.EXE": {
+            "sha256": "aa331784777b77dbcc44e049c7831bac99ff7b6941c5e260b784b79f2356254e",
+            "matches_workspace": true,
+            "workspace_sha256": "aa331784777b77dbcc44e049c7831bac99ff7b6941c5e260b784b79f2356254e"
+          },
+          "aspect-string-commands/STRCMD.EXE": {
+            "sha256": "9b333410db88ce1fdbd3ff3aeff06de2a742176a5e22ba0dd687d1a60486d059",
+            "matches_workspace": true,
+            "workspace_sha256": "9b333410db88ce1fdbd3ff3aeff06de2a742176a5e22ba0dd687d1a60486d059"
+          },
+          "aspect-conversions/CONVERT.EXE": {
+            "sha256": "d964e1ebd36168a2e67e68a930da9f501121cc88537d11bb0f139d4eb05f803c",
+            "matches_workspace": true,
+            "workspace_sha256": "d964e1ebd36168a2e67e68a930da9f501121cc88537d11bb0f139d4eb05f803c"
+          },
+          "aspect-conversion-services/CONVERT.EXE": {
+            "sha256": "f9ef2f6f6ecc8adaeeed69769ccd863281f665996ff32423b4d5428feb0fb73c",
+            "matches_workspace": true,
+            "workspace_sha256": "f9ef2f6f6ecc8adaeeed69769ccd863281f665996ff32423b4d5428feb0fb73c"
+          },
+          "aspect-receive-policy/POLICY.EXE": {
+            "sha256": "b4940e3aefa08af2831d806c88568240d932fdfe904c4ab4c84b42fe48a4b5dc",
+            "matches_workspace": true,
+            "workspace_sha256": "b4940e3aefa08af2831d806c88568240d932fdfe904c4ab4c84b42fe48a4b5dc"
+          },
+          "aspect-directory/DIRBUILT.EXE": {
+            "sha256": "9788de45b5781604de55a86a822089d6090e885071f93026414de7d1289d399c",
+            "matches_workspace": true,
+            "workspace_sha256": "9788de45b5781604de55a86a822089d6090e885071f93026414de7d1289d399c"
+          },
+          "aspect-set/unit1.bin": {
+            "sha256": "eadb4fa80afa5f52ffef368433325a45ee2eddfea1d400b27ca4aa5b5cb162fb",
+            "matches_workspace": true,
+            "workspace_sha256": "eadb4fa80afa5f52ffef368433325a45ee2eddfea1d400b27ca4aa5b5cb162fb"
+          },
+          "aspect-set/unit2.bin": {
+            "sha256": "626d50f3a5138b684a9d04d21ad2022abde290d997bac56c22e4b035429b4f13",
+            "matches_workspace": true,
+            "workspace_sha256": "626d50f3a5138b684a9d04d21ad2022abde290d997bac56c22e4b035429b4f13"
+          },
+          "aspect-set/unit3.bin": {
+            "sha256": "0c71c9e7b72aaca7c9b5a14d277744c0d413a1785b15bfaa769eb448d874eae1",
+            "matches_workspace": true,
+            "workspace_sha256": "0c71c9e7b72aaca7c9b5a14d277744c0d413a1785b15bfaa769eb448d874eae1"
+          },
+          "aspect-set/unit4.bin": {
+            "sha256": "f012b3ec0b031bb0cd46b858f150a1313024501de4cba865e18e31dacf43f5b4",
+            "matches_workspace": true,
+            "workspace_sha256": "f012b3ec0b031bb0cd46b858f150a1313024501de4cba865e18e31dacf43f5b4"
+          },
+          "aspect-set/unit5.bin": {
+            "sha256": "2da4f655ecdb0aff3c3cc9f7b1e4e9aba16d5edbb7eecc1ecb8265aa44e45173",
+            "matches_workspace": true,
+            "workspace_sha256": "2da4f655ecdb0aff3c3cc9f7b1e4e9aba16d5edbb7eecc1ecb8265aa44e45173"
+          },
+          "aspect-set/unit6.bin": {
+            "sha256": "1db7ce21ca0e6339c98d112478a66625500f3156b3e894db689b47a4c4ae4ace",
+            "matches_workspace": true,
+            "workspace_sha256": "1db7ce21ca0e6339c98d112478a66625500f3156b3e894db689b47a4c4ae4ace"
+          },
+          "aspect-set/unit7.bin": {
+            "sha256": "6272ee1d0f04e2c7b1a65c49f089b1d9c4ff19c96fa3789a1e8d6d12f0828421",
+            "matches_workspace": true,
+            "workspace_sha256": "6272ee1d0f04e2c7b1a65c49f089b1d9c4ff19c96fa3789a1e8d6d12f0828421"
+          },
+          "aspect-set/unit8.bin": {
+            "sha256": "9aabcb9306c1df67e07c36799439c9c57275befa7df1c333751fbdaca0ed4098",
+            "matches_workspace": true,
+            "workspace_sha256": "9aabcb9306c1df67e07c36799439c9c57275befa7df1c333751fbdaca0ed4098"
+          },
+          "aspect-set/unit9.bin": {
+            "sha256": "8a1f7326b2799dc62c3036268b7780132072cc58fc72c950e56f722652e81404",
+            "matches_workspace": true,
+            "workspace_sha256": "8a1f7326b2799dc62c3036268b7780132072cc58fc72c950e56f722652e81404"
+          },
+          "aspect-set/unit10.bin": {
+            "sha256": "cedf08f72d5bb8e861e49bee30abecdff765b7b3441916c59f663e2b1e323073",
+            "matches_workspace": true,
+            "workspace_sha256": "cedf08f72d5bb8e861e49bee30abecdff765b7b3441916c59f663e2b1e323073"
+          },
+          "aspect-set/unit11.bin": {
+            "sha256": "7a0491015ec1871a201788168e98b5753d6bf382d4a67cada744f8b929c8b4f7",
+            "matches_workspace": true,
+            "workspace_sha256": "7a0491015ec1871a201788168e98b5753d6bf382d4a67cada744f8b929c8b4f7"
+          },
+          "aspect-set/unit12.bin": {
+            "sha256": "7fd57b3ee84fbfc4cafd187dce95b9bad571b2c40c463fd6d61179a373a4d1ca",
+            "matches_workspace": true,
+            "workspace_sha256": "7fd57b3ee84fbfc4cafd187dce95b9bad571b2c40c463fd6d61179a373a4d1ca"
+          },
+          "aspect-set/unit13.bin": {
+            "sha256": "3530cc1fa0db1e5e40130053822e9051307e5c6806d7f800e2ab810c7408d10f",
+            "matches_workspace": true,
+            "workspace_sha256": "3530cc1fa0db1e5e40130053822e9051307e5c6806d7f800e2ab810c7408d10f"
+          },
+          "aspect-set/unit14.bin": {
+            "sha256": "4a2e4b651e9a28b75308a9b80b9fb86e770adcbea7723c4bd3d18bdda147ddf3",
+            "matches_workspace": true,
+            "workspace_sha256": "4a2e4b651e9a28b75308a9b80b9fb86e770adcbea7723c4bd3d18bdda147ddf3"
+          },
+          "aspect-set/set_commands.obj": {
+            "sha256": "dc79408b51e75ae8430e0cab2b32a9ef37bce5f7f22bcc042b7ffe32e5716e1e",
+            "matches_workspace": true,
+            "workspace_sha256": "dc79408b51e75ae8430e0cab2b32a9ef37bce5f7f22bcc042b7ffe32e5716e1e"
+          },
+          "aspect-receive-commands/RECEIVE.EXE": {
+            "sha256": "71080402c11a32f5711ca29bac1e52c11b82315bede3d19e7a6a44b8afb3dec1",
+            "matches_workspace": true,
+            "workspace_sha256": "71080402c11a32f5711ca29bac1e52c11b82315bede3d19e7a6a44b8afb3dec1"
+          },
+          "aspect-runtime/CASES.DAT": {
+            "sha256": "300ff0ada64e0d5e0ebbd58e78eb0b9b17733a830f8c2d571411f3f7734f2880",
+            "matches_workspace": true,
+            "workspace_sha256": "300ff0ada64e0d5e0ebbd58e78eb0b9b17733a830f8c2d571411f3f7734f2880"
+          },
+          "aspect-serial-commands/SERIAL.EXE": {
+            "sha256": "1246c0cec286893de01953bb5cd6b6a7917a566dc34b2c79d583576edf100725",
+            "matches_workspace": true,
+            "workspace_sha256": "1246c0cec286893de01953bb5cd6b6a7917a566dc34b2c79d583576edf100725"
+          },
+          "aspect-serial/SERIAL.EXE": {
+            "sha256": "d08d69cb7372bd4aedbda7596627e66a9095cb87749da393112c288dc36b4d55",
+            "matches_workspace": true,
+            "workspace_sha256": "d08d69cb7372bd4aedbda7596627e66a9095cb87749da393112c288dc36b4d55"
+          },
+          "aspect-console/CONSOLE.EXE": {
+            "sha256": "080d3623f7cb5813ac7348d0f9444e14d7d409598acc5a4a0554429fe32778d5",
+            "matches_workspace": true,
+            "workspace_sha256": "080d3623f7cb5813ac7348d0f9444e14d7d409598acc5a4a0554429fe32778d5"
+          },
+          "aspect-runner/ASPECT.EXE": {
+            "sha256": "0f00aa3e44da029ca7727f38f1e1af6db08a84a712cb30b03e990219cf3c60ef",
+            "matches_workspace": true,
+            "workspace_sha256": "0f00aa3e44da029ca7727f38f1e1af6db08a84a712cb30b03e990219cf3c60ef"
+          },
+          "aspect-runner/tests/RUNTEST.EXE": {
+            "sha256": "9f5268058dce303dcefa3f6cc9b014846cf7f06393fc5e56e54efa1661cdd04c",
+            "matches_workspace": true,
+            "workspace_sha256": "9f5268058dce303dcefa3f6cc9b014846cf7f06393fc5e56e54efa1661cdd04c"
+          },
+          "aspect-parameters/PARAM.EXE": {
+            "sha256": "cc6188d599b7c1a118373ca693e315ad1783dd55e84f40626cb0b4274df6eafc",
+            "matches_workspace": true,
+            "workspace_sha256": "cc6188d599b7c1a118373ca693e315ad1783dd55e84f40626cb0b4274df6eafc"
+          },
+          "aspect-strings/STRINGS.EXE": {
+            "sha256": "33fbb842582a14b34d28c9b6daba266ac80ff4938907f4007327d69c274a60b4",
+            "matches_workspace": true,
+            "workspace_sha256": "33fbb842582a14b34d28c9b6daba266ac80ff4938907f4007327d69c274a60b4"
+          },
+          "aspect-long/LONG.EXE": {
+            "sha256": "2cc9e26a79da879c5441cba3a75db097b051b6387d3016d44238a8d3bc6b2758",
+            "matches_workspace": true,
+            "workspace_sha256": "2cc9e26a79da879c5441cba3a75db097b051b6387d3016d44238a8d3bc6b2758"
+          },
+          "aspect-arithmetic/ARITH.EXE": {
+            "sha256": "a56ff61e7cd4db2756dcdd870600a8e4bf81cff59ad31e0b1407232fae7919c8",
+            "matches_workspace": true,
+            "workspace_sha256": "a56ff61e7cd4db2756dcdd870600a8e4bf81cff59ad31e0b1407232fae7919c8"
+          },
+          "aspect-operands/OPERANDS.EXE": {
+            "sha256": "fb07492fb48bfa0d0cca760fc33c1c884c0551627b58b51df2778b6e310f897e",
+            "matches_workspace": true,
+            "workspace_sha256": "fb07492fb48bfa0d0cca760fc33c1c884c0551627b58b51df2778b6e310f897e"
+          },
+          "aspect-operations/OPERATE.EXE": {
+            "sha256": "98c8d27d0fb5dde4c30edb1390a092e8823652177f7e11417952e1718bbf101b",
+            "matches_workspace": true,
+            "workspace_sha256": "98c8d27d0fb5dde4c30edb1390a092e8823652177f7e11417952e1718bbf101b"
+          },
+          "aspect-runtime/EXECUTE.EXE": {
+            "sha256": "b8c100366aa1c62578e1df0970d788e223abf96100af9c41d0dd7646e1257efe",
+            "matches_workspace": true,
+            "workspace_sha256": "b8c100366aa1c62578e1df0970d788e223abf96100af9c41d0dd7646e1257efe"
+          },
+          "monitor/MONITOR.EXE": {
+            "sha256": "766e8cb46c6edb3269cee3ea2a7896c03628f37e6fcfe7fc17938f834e13b377",
+            "matches_workspace": true,
+            "workspace_sha256": "766e8cb46c6edb3269cee3ea2a7896c03628f37e6fcfe7fc17938f834e13b377"
+          },
+          "monitor-file/MONITOR.EXE": {
+            "sha256": "d6fa5642e9b41ebc467823257fe81a5ce4896978b7e28d99a0522dc63c8dd542",
+            "matches_workspace": true,
+            "workspace_sha256": "d6fa5642e9b41ebc467823257fe81a5ce4896978b7e28d99a0522dc63c8dd542"
+          },
+          "monitor-file/MOFAULT.EXE": {
+            "sha256": "bb0b7ab2b9c79e52b9e33369e91bfaa84f5ad2ec13691e2fb80bdd3fc17651d2",
+            "matches_workspace": true,
+            "workspace_sha256": "bb0b7ab2b9c79e52b9e33369e91bfaa84f5ad2ec13691e2fb80bdd3fc17651d2"
+          }
+        },
+        "build_scripts": [
+          "standalone/build_terminal.py",
+          "standalone/build_config_dos.py",
+          "standalone/build_config_replace.py",
+          "standalone/build_config_abi.py",
+          "standalone/build_ui_windows.py",
+          "standalone/build_modem_commands.py",
+          "standalone/build_modem_responses.py",
+          "standalone/build_modem_send.py",
+          "standalone/build_directory_dial.py",
+          "standalone/build_directory_browser.py",
+          "standalone/build_directory_editor.py",
+          "standalone/build_directory_accounting.py",
+          "standalone/build_keyboard_mapping.py",
+          "standalone/build_keyboard_detection.py",
+          "standalone/build_line_edit.py",
+          "standalone/build_meta_keys.py",
+          "standalone/build_character_edit.py",
+          "standalone/build_process.py",
+          "standalone/build_program_exec.py",
+          "standalone/build_terminal_reset.py",
+          "standalone/build_transfer_blocks.py",
+          "standalone/build_transfer_receive.py",
+          "standalone/build_transfer_send.py",
+          "standalone/build_transfer_files.py",
+          "standalone/build_transfer_session.py",
+          "standalone/build_transfer_uart.py",
+          "standalone/build_download_file.py",
+          "standalone/build_transfer_session_composite.py",
+          "standalone/build_transfer_storage.py",
+          "standalone/build_upload_file.py",
+          "standalone/build_transfer_metadata.py",
+          "standalone/build_batch_header.py",
+          "standalone/build_clipboard.py",
+          "standalone/build_snapshot.py",
+          "standalone/build_printer.py",
+          "standalone/build_monitor.py",
+          "standalone/build_print_screen.py",
+          "standalone/build_print_controller.py",
+          "standalone/build_setup.py",
+          "standalone/build_live_configuration.py",
+          "standalone/build_directory_context.py",
+          "standalone/build_xlt_editor.py",
+          "standalone/build_live_translation_child.py",
+          "standalone/build_aspect_literal.py",
+          "standalone/build_aspect_dispatch.py",
+          "standalone/build_aspect_globals.py",
+          "standalone/build_aspect_stack.py",
+          "standalone/build_aspect_unwind.py",
+          "standalone/build_aspect_flow.py",
+          "standalone/build_aspect_file.py",
+          "standalone/build_aspect_operands.py",
+          "standalone/build_aspect_operations.py",
+          "standalone/build_aspect_runtime.py",
+          "standalone/build_aspect_long.py",
+          "standalone/build_aspect_arithmetic.py",
+          "standalone/build_aspect_parameters.py",
+          "standalone/build_aspect_strings.py",
+          "standalone/build_aspect_string_services.py",
+          "standalone/build_aspect_string_commands.py",
+          "standalone/build_aspect_conversions.py",
+          "standalone/build_aspect_conversion_services.py",
+          "standalone/build_aspect_console.py",
+          "standalone/build_aspect_runner.py",
+          "standalone/build_aspect_serial_commands.py",
+          "standalone/build_aspect_serial.py",
+          "standalone/build_aspect_receive_commands.py",
+          "standalone/build_aspect_receive_policy.py",
+          "standalone/build_aspect_directory.py",
+          "standalone/build_aspect_set.py",
+          "standalone/check_batch_download.py",
+          "standalone/check_batch_upload.py",
+          "standalone/check_capture_file.py",
+          "standalone/check_capture_session.py",
+          "standalone/check_capture_owners.py",
+          "standalone/check_monitor_file.py",
+          "standalone/check_printer_device.py",
+          "standalone/test_resource_path_dos.py",
+          "standalone/test_aspect_compiler.py",
+          "standalone/test_aspect_set_compiler.py",
+          "standalone/check_aspect_set.py",
+          "standalone/check_aspect_runner.py",
+          "standalone/check_aspect_directory.py",
+          "standalone/package_dos.py"
+        ]
+      }
+    }
+  },
+  "retained_original_replay": {
+    "analysis/aspect-set/native-replay-01.json": {
+      "sha256": "81e6c0449f70bc2694b15b94d34c751c7a24d7f18b5157bf326c756286da75ce",
+      "result": {
+        "passed": true,
+        "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+        "compiler_report_sha256": "c91a54f042a0063c1247d8f29c0e2e87eb16832b80dc837d8fdce38b5e513dd3",
+        "checker_sha256": "7614ae7b14f3e1df2e72216ff97e9106b77c35449b715a4f75b8ff1d72048133",
+        "predictions_sha256": "ce7487744e5f36f7632d2d13c4a5550b4765ba32a9409be2daf0b8b0a7287a0e",
+        "cases": [
+          {
+            "name": "S00",
+            "label": "DISPLAYON",
+            "selector": 18,
+            "expected_value": 1,
+            "expected_error": 0,
+            "passed": true,
+            "value": 1,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "ebb3659ceb3b8ff0e11c9124aeb41282116b0799e233b3954166928b68545696",
+            "asx_sha256": "983bce0e426c075b241ecc2a6ec8255fb0e6befe3655d7f5eda694d0cf5605f6"
+          },
+          {
+            "name": "S01",
+            "label": "DISPLAYOFF",
+            "selector": 18,
+            "expected_value": 0,
+            "expected_error": 0,
+            "passed": true,
+            "value": 0,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "bceaa59a93dcc1985d2433870d49021deaabd07d2944fb3d92e373070fea4570",
+            "asx_sha256": "ab0a0270dcd3b1701234620f676740f2b9ba512589756ee2cb3a09d88b41db7c"
+          },
+          {
+            "name": "S02",
+            "label": "FINDCASEON",
+            "selector": 35,
+            "expected_value": 1,
+            "expected_error": 0,
+            "passed": true,
+            "value": 1,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "3241f5da99d38f9967be3c2bbf3de7b6e1e49d380d6c16a6adea43401b0de8d4",
+            "asx_sha256": "bceedc44660452ef4d6aee4d49b518793b4101ac190046481585973c21ed78f0"
+          },
+          {
+            "name": "S03",
+            "label": "FINDCASEOFF",
+            "selector": 35,
+            "expected_value": 0,
+            "expected_error": 0,
+            "passed": true,
+            "value": 0,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "376b205de9083080acf9fd0fcc8c4ede73946a6a75fff823cc8bbf484b531561",
+            "asx_sha256": "7cea7cf4ef2982e45f7997cff0a46d1aa05a96ab5c467e03f929334bf91bef2e"
+          },
+          {
+            "name": "S04",
+            "label": "WAITCASEON",
+            "selector": 85,
+            "expected_value": 1,
+            "expected_error": 0,
+            "passed": true,
+            "value": 1,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "b5effe30bf17a7f952bd680ba801c5cb31c2364e9d91084841cc887eb03a15e2",
+            "asx_sha256": "c38d36276d04e5d56ca0892d494269c0b6b91e6366b8a6464ecdd39411953930"
+          },
+          {
+            "name": "S05",
+            "label": "WAITCASEOFF",
+            "selector": 85,
+            "expected_value": 0,
+            "expected_error": 0,
+            "passed": true,
+            "value": 0,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "75231f43602a4a7b49d7fbd6f38f51da9c325de274d1b6a98a052806aae43686",
+            "asx_sha256": "ae7986ee039b298563d434c0bd9eaca0986a1a8cda5c2692d04b19fe47fd2945"
+          },
+          {
+            "name": "S06",
+            "label": "SWITCHCASEON",
+            "selector": 68,
+            "expected_value": 1,
+            "expected_error": 0,
+            "passed": true,
+            "value": 1,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "8fc999b3a8719f4ff30f7119fb5bebf993c402babb60f8f202b9617a4cc66d35",
+            "asx_sha256": "00669af15029dd28f9d91ef0690326284d97ae5ca1f769b4811d12a06abf5332"
+          },
+          {
+            "name": "S07",
+            "label": "SWITCHCASEOFF",
+            "selector": 68,
+            "expected_value": 0,
+            "expected_error": 0,
+            "passed": true,
+            "value": 0,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "2e2df8e4859c73dfb6e01eb8fca73609e460b2ff793ff0529d5ad326906a1971",
+            "asx_sha256": "6f0be1f32dc8945cc45852811327b2fe840f3c52fd571ed038feead093e45de0"
+          },
+          {
+            "name": "S08",
+            "label": "WHENCASEON",
+            "selector": 86,
+            "expected_value": 1,
+            "expected_error": 0,
+            "passed": true,
+            "value": 1,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "23a4ca4e5ad9fb8a74af36d0ae98c4d06e86daee0d50d91030680b238171157a",
+            "asx_sha256": "f37a890d95fe23c2df758df173c343e3be53ec34ce80e3a16bdf9cbdaf9c6c70"
+          },
+          {
+            "name": "S09",
+            "label": "WHENCASEOFF",
+            "selector": 86,
+            "expected_value": 0,
+            "expected_error": 0,
+            "passed": true,
+            "value": 0,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "81046ec921a8eeb504afdd36dab099f1a86c66fe25d6d6ce3f0c98002c13e00d",
+            "asx_sha256": "f607abb763e4373f9612a2b7d0f49558343c362cede797674ff4471f9ab32a8c"
+          },
+          {
+            "name": "S10",
+            "label": "KEYSON",
+            "selector": 41,
+            "expected_value": 1,
+            "expected_error": 0,
+            "passed": true,
+            "value": 1,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "2ab5b8d2d1a4ebd4b0e4cb52964d4175bcee0e86ac27cfe8a193fa336446539d",
+            "asx_sha256": "913a41fed75efa4e145d7e180d899c88ed42cc1dd5a82ccd3c341287ea423e55"
+          },
+          {
+            "name": "S11",
+            "label": "KEYSOFF",
+            "selector": 41,
+            "expected_value": 0,
+            "expected_error": 0,
+            "passed": true,
+            "value": 0,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "2c380227545b3da1c09a7b7d82b3c42a7c780492895e9dd9ed84ac6bd3203a5a",
+            "asx_sha256": "f5f4ab570d7950f230aafd002ad81184e3bc1a2942c720622c8966358deb643c"
+          },
+          {
+            "name": "S12",
+            "label": "RXDATAON",
+            "selector": 59,
+            "expected_value": 1,
+            "expected_error": 0,
+            "passed": true,
+            "value": 1,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "f18333c7f255f16b88ed223ae6d084752d9ba0f0c24fc40462dc4b376da2d968",
+            "asx_sha256": "2ee59678c203edb96e35cfd1e577bd299f3ef3964d6d9061552e01180e0be4a5"
+          },
+          {
+            "name": "S13",
+            "label": "RXDATAOFF",
+            "selector": 59,
+            "expected_value": 0,
+            "expected_error": 0,
+            "passed": true,
+            "value": 0,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "a308349eb43f7c048fbb76b9b586aed9ad64448b317faa142c4a2732bce4e7fc",
+            "asx_sha256": "c829598039f3977ce4c830fb3efb3ea926ddab3a2f3d601f9591f420b081ddd1"
+          },
+          {
+            "name": "S14",
+            "label": "MSG_CRLFON",
+            "selector": 46,
+            "expected_value": 1,
+            "expected_error": 0,
+            "passed": true,
+            "value": 1,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "8dde5d9fdf8eb8acb2b21214c8a8feb43185561443e433d8e789609af9fd0fd2",
+            "asx_sha256": "1d4636917b9fdc5bf450f283b3476eb4c016dc4e809ed7e50f89393bd6439f32"
+          },
+          {
+            "name": "S15",
+            "label": "MSG_CRLFOFF",
+            "selector": 46,
+            "expected_value": 0,
+            "expected_error": 0,
+            "passed": true,
+            "value": 0,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "933859a71dd89935314b070dd3d0ccf37ace20a3665c6894f30edc55c72b5f9d",
+            "asx_sha256": "8d0392e3bd1dc6d51097721505554b507221abea1fa5d87faaa5932dec61e051"
+          },
+          {
+            "name": "S16",
+            "label": "DUPFULL",
+            "selector": 24,
+            "expected_value": 0,
+            "expected_error": 0,
+            "passed": true,
+            "value": 0,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "95cd8c38d6c8e69d4838514baa0818ad75dc770a0cd9f5bf03e5d6cad70ddaa7",
+            "asx_sha256": "00206ccb2c4d47f8a9efd9bfb86838e0b3a68f9161fee74432ae74ff8939758b"
+          },
+          {
+            "name": "S17",
+            "label": "DUPHALF",
+            "selector": 24,
+            "expected_value": 1,
+            "expected_error": 0,
+            "passed": true,
+            "value": 1,
+            "refresh": 1,
+            "wire_position": 5,
+            "source_sha256": "7029287a8731ae2234a318a6cd163fc3a1fc17c4303bb1b5237e7eee73b992a3",
+            "asx_sha256": "bd2f51e38161b590cc56a266dd7c16acda618ae69b54f40732e54b3ea6f87f4a"
+          },
+          {
+            "name": "S20",
+            "label": "PACE0",
+            "selector": 76,
+            "expected_value": 0,
+            "expected_error": 0,
+            "passed": true,
+            "value": 0,
+            "refresh": 1,
+            "wire_position": 6,
+            "source_sha256": "e3c8848aa686009a163b0d1b76888769c125db6455143f883c575776d2827ece",
+            "asx_sha256": "c57b9faf67008573b745f7812bfa0e56c899a858f8e7a7256ceeaa1b80457d32"
+          },
+          {
+            "name": "S21",
+            "label": "PACE1",
+            "selector": 76,
+            "expected_value": 1,
+            "expected_error": 0,
+            "passed": true,
+            "value": 1,
+            "refresh": 1,
+            "wire_position": 6,
+            "source_sha256": "22a817b5c78a1b5506e943ca26e74fea8ae2a552565bf8e7de8fa8e7214e6b6b",
+            "asx_sha256": "772e517ff86a919ba820f109bb7f2f0fa3cae00b2cae95362554593b93f77ae0"
+          },
+          {
+            "name": "S22",
+            "label": "PACE2",
+            "selector": 76,
+            "expected_value": 999,
+            "expected_error": 0,
+            "passed": true,
+            "value": 999,
+            "refresh": 1,
+            "wire_position": 7,
+            "source_sha256": "d8f97c6891b5b3eec676d6a29890ae194976699b3a7943d6d1e24c99f7516b19",
+            "asx_sha256": "2923f6abe75193d4b12fb143a227b736eac8e186a84f0fd700b45a05e0e36e07"
+          },
+          {
+            "name": "S23",
+            "label": "PACE3",
+            "selector": 76,
+            "expected_value": 1000,
+            "expected_error": 1,
+            "passed": true,
+            "value": 4660,
+            "refresh": 0,
+            "wire_position": 7,
+            "source_sha256": "b144ae456c0ae64099e625a5316196dc58ec6457fb11782894af9e45291baf98",
+            "asx_sha256": "54599ae67c5c2fbd36112922387e4cc5ae5c746f04226dbfeec8808e1ca25a78"
+          },
+          {
+            "name": "S24",
+            "label": "PACE4",
+            "selector": 76,
+            "expected_value": -1,
+            "expected_error": 1,
+            "passed": true,
+            "value": 4660,
+            "refresh": 0,
+            "wire_position": 7,
+            "source_sha256": "a23056efb60f945a07bb29245a7aa01dc9761bf97eb7d6305a0c82a794cb1e20",
+            "asx_sha256": "ad1a036f89e71afa73ac6b83e2f6319a9993aa72cb5919d799e372d506cf6413"
+          },
+          {
+            "name": "S26",
+            "label": "PACE6",
+            "selector": 76,
+            "expected_value": 64,
+            "expected_error": 0,
+            "passed": true,
+            "value": 64,
+            "refresh": 1,
+            "wire_position": 6,
+            "source_sha256": "b940de8c5cc2344e02da8a99dd75ceafd2d2a25d27cb74a3c44adcddb40e2a6c",
+            "asx_sha256": "d9552225717bca7504417b34df0923f6300139a4e7acaca0bd212cf09832fda8"
+          },
+          {
+            "name": "S27",
+            "label": "PAUSE0",
+            "selector": 48,
+            "expected_value": 32,
+            "expected_error": 0,
+            "passed": true,
+            "value": 32,
+            "refresh": 1,
+            "wire_position": 6,
+            "source_sha256": "b893700a8607ba2092b6792c17483bfff234f8e7f6928bfa321097f0a858626e",
+            "asx_sha256": "f288ad76dea90daf604762ed4066a6cbe62da46ef37ca5f3c3881cd103e90053"
+          },
+          {
+            "name": "S28",
+            "label": "PAUSE1",
+            "selector": 48,
+            "expected_value": 126,
+            "expected_error": 0,
+            "passed": true,
+            "value": 126,
+            "refresh": 1,
+            "wire_position": 6,
+            "source_sha256": "d4cf051dddb6e2bd140cc45fd3eb5871397bf9665ea0734aa55797d30ce94c5a",
+            "asx_sha256": "e53fa17cc1caacfbfb8ea1c314f0a49e24de67f0333979026b9e5e98c2047f9e"
+          },
+          {
+            "name": "S29",
+            "label": "PAUSE2",
+            "selector": 48,
+            "expected_value": 31,
+            "expected_error": 1,
+            "passed": true,
+            "value": 52,
+            "refresh": 0,
+            "wire_position": 6,
+            "source_sha256": "06bd6a7ef5c82525f8630c01581cac4d1a966c1a0a80939271311e267981e8bd",
+            "asx_sha256": "0752326b5ce4bf3f514b507d2d45f50b22a102c21a7c8d8f97772584b6235931"
+          },
+          {
+            "name": "S30",
+            "label": "PAUSE3",
+            "selector": 48,
+            "expected_value": 127,
+            "expected_error": 1,
+            "passed": true,
+            "value": 52,
+            "refresh": 0,
+            "wire_position": 6,
+            "source_sha256": "b034b2a82bdc378b4b7be6b188c136c778b4cf70bf3ac0dcd0038b206ca9bfd6",
+            "asx_sha256": "c4ed3a151cfbb8e11b56ffe1735cd8db46930cc78c03c1cfa146d5ac7962938f"
+          },
+          {
+            "name": "S32",
+            "label": "PAUSE5",
+            "selector": 48,
+            "expected_value": 64,
+            "expected_error": 0,
+            "passed": true,
+            "value": 64,
+            "refresh": 1,
+            "wire_position": 6,
+            "source_sha256": "10d8d2f92d0072c9a302c25d285daeee6f48d927bf1d6323c539e11899f89823",
+            "asx_sha256": "d7a766789ea496392dd38f2851a1b83d43068955fbf778a938519d2834c80340"
+          }
+        ],
+        "query_cases": [
+          {
+            "selector": 18,
+            "passed": true,
+            "queried": 4660,
+            "actual_GET_command_executed": false
+          },
+          {
+            "selector": 35,
+            "passed": true,
+            "queried": 4660,
+            "actual_GET_command_executed": false
+          },
+          {
+            "selector": 85,
+            "passed": true,
+            "queried": 4660,
+            "actual_GET_command_executed": false
+          },
+          {
+            "selector": 68,
+            "passed": true,
+            "queried": 4660,
+            "actual_GET_command_executed": false
+          },
+          {
+            "selector": 86,
+            "passed": true,
+            "queried": 4660,
+            "actual_GET_command_executed": false
+          },
+          {
+            "selector": 41,
+            "passed": true,
+            "queried": 4660,
+            "actual_GET_command_executed": false
+          },
+          {
+            "selector": 59,
+            "passed": true,
+            "queried": 4660,
+            "actual_GET_command_executed": false
+          },
+          {
+            "selector": 46,
+            "passed": true,
+            "queried": 4660,
+            "actual_GET_command_executed": false
+          },
+          {
+            "selector": 24,
+            "passed": true,
+            "queried": 4660,
+            "actual_GET_command_executed": false
+          },
+          {
+            "selector": 48,
+            "passed": true,
+            "queried": 52,
+            "actual_GET_command_executed": false
+          },
+          {
+            "selector": 76,
+            "passed": true,
+            "queried": 4660,
+            "actual_GET_command_executed": false
+          },
+          {
+            "selector": 48,
+            "passed": true,
+            "queried": 65535,
+            "noncanonical_state": true
+          }
+        ],
+        "raw_boolean_overwrites_shared_counter": {
+          "initial": 2,
+          "stored": 255
+        },
+        "instruction_addresses": [
+          "0x12fb8",
+          "0x14cb4",
+          "0x14cb5",
+          "0x14cb9",
+          "0x14cbc",
+          "0x14cc0",
+          "0x14cc4",
+          "0x14cc6",
+          "0x14cc8",
+          "0x14cca",
+          "0x14ccc",
+          "0x14cce",
+          "0x14ccf",
+          "0x14efb",
+          "0x15458",
+          "0x1545e",
+          "0x15461",
+          "0x15463",
+          "0x15465",
+          "0x15469",
+          "0x1bc07",
+          "0x1bd6f",
+          "0x1bf5b",
+          "0x1bfeb",
+          "0x1c25b",
+          "0x1c4d7",
+          "0x1c6f3",
+          "0x1c867",
+          "0x1c96f",
+          "0x1c9c3",
+          "0x1ca8f",
+          "0x1dc48",
+          "0x1dc4b",
+          "0x1dc4e",
+          "0x1dc51",
+          "0x1dc53",
+          "0x1dc56",
+          "0x1dc58",
+          "0x1dc5a",
+          "0x1dc5c",
+          "0x1dc5e",
+          "0x1dc60",
+          "0x1dc61",
+          "0x1dca0",
+          "0x1dca3",
+          "0x1dca5",
+          "0x1dca7",
+          "0x1dcab",
+          "0x1dcb9",
+          "0x1dcbc",
+          "0x1dcbd",
+          "0x1dcc0",
+          "0x1dd68",
+          "0x1dd69",
+          "0x1dd6b",
+          "0x1dd6c",
+          "0x1dd6f",
+          "0x1dd71",
+          "0x1dd76",
+          "0x1dd78",
+          "0x1dd7b",
+          "0x1dd7d",
+          "0x1dd80",
+          "0x1dd82",
+          "0x1dd85",
+          "0x1dd86",
+          "0x1dd93",
+          "0x1dd95",
+          "0x1dd96",
+          "0x1dd98",
+          "0x1dd99",
+          "0x1dda7",
+          "0x1dda8",
+          "0x1ddaa",
+          "0x1ddab",
+          "0x1ddae",
+          "0x1ddb0",
+          "0x1ddb3",
+          "0x1ddb5",
+          "0x1ddb7",
+          "0x1ddba",
+          "0x1ddbc",
+          "0x1ddbe",
+          "0x1ddbf",
+          "0x1ddc2",
+          "0x1ddc3",
+          "0x1ddc6",
+          "0x1ddc7",
+          "0x1ddc9",
+          "0x1ddca",
+          "0x1ddf9",
+          "0x1ddfc",
+          "0x1ddfd",
+          "0x1de00",
+          "0x1de01",
+          "0x1de04",
+          "0x1de3a",
+          "0x1e0f1",
+          "0x1e0f2",
+          "0x1e0f7",
+          "0x1e0f9",
+          "0x1e0fd",
+          "0x1e100",
+          "0x1e104",
+          "0x1e108",
+          "0x1e10a",
+          "0x1e10c",
+          "0x1e10e",
+          "0x1e110",
+          "0x1e112",
+          "0x1e113",
+          "0x1e129",
+          "0x1e12a",
+          "0x1e12b",
+          "0x1e12f",
+          "0x1e132",
+          "0x1e136",
+          "0x1e13a",
+          "0x1e13c",
+          "0x1e13e",
+          "0x1e140",
+          "0x1e142",
+          "0x1e144",
+          "0x1e14b",
+          "0x1e14d",
+          "0x1e151",
+          "0x1e154",
+          "0x1e158",
+          "0x1e15c",
+          "0x1e15e",
+          "0x1e160",
+          "0x1e162",
+          "0x1e164",
+          "0x1e166",
+          "0x1e16d",
+          "0x1e16f",
+          "0x1e171",
+          "0x1e173",
+          "0x1e174",
+          "0x1e175",
+          "0x1e6bb",
+          "0x1e6bc",
+          "0x1e6be",
+          "0x1e6c3",
+          "0x1e6c5",
+          "0x1e6c8",
+          "0x1e6cb",
+          "0x1e6cd",
+          "0x1e6cf",
+          "0x1e6d2",
+          "0x1e6d4",
+          "0x1e6d7",
+          "0x1e6d9",
+          "0x1e6da",
+          "0x1e953",
+          "0x1e956",
+          "0x1e957",
+          "0x1e95a",
+          "0x1e993",
+          "0x1e996",
+          "0x1e997",
+          "0x1e99a",
+          "0x1ea1c",
+          "0x1ea1f",
+          "0x1ea20",
+          "0x1ea23",
+          "0x1ea49",
+          "0x1ea4c",
+          "0x1ea4d",
+          "0x1ea50",
+          "0x1ea6d",
+          "0x1ea70",
+          "0x1ea71",
+          "0x1ea74",
+          "0x1eaad",
+          "0x1eab2",
+          "0x1eab4",
+          "0x1eab7",
+          "0x1eaba",
+          "0x1eabb",
+          "0x1eabe",
+          "0x1eabf",
+          "0x1eac0",
+          "0x1eac3",
+          "0x1ebb4",
+          "0x1ebb7",
+          "0x1ebb8",
+          "0x1ebbb",
+          "0x1ec77",
+          "0x1ec7a",
+          "0x1ec7b",
+          "0x1ec7e",
+          "0x1ed76",
+          "0x1ed7b",
+          "0x1ed7d",
+          "0x1ed80",
+          "0x1ed81",
+          "0x1ed84",
+          "0x1ed87",
+          "0x1ed88",
+          "0x1ed8c",
+          "0x1ed8f",
+          "0x1ee37",
+          "0x1ee3a",
+          "0x1ee3b",
+          "0x1ee3e",
+          "0x1ee3f",
+          "0x1ee42",
+          "0x1ee43",
+          "0x1ee46"
+        ],
+        "scope": "Actual resident5458/table and overlay19 selectedSET wrappers/generichelper plus original16integer/bounds/decimal/byteparsers. EXEinitializedDS andownedFILEbuffer/global64. Nativeerror1 stopped atnonlocalerrorboundary; statusrefresh2FB8 and GETdestinationDE3A explicitmodels. No compilerGETgrammar/UI/renderer/UART/hardware or originalfullapplication claim."
+      }
+    },
+    "analysis/aspect-set/display-policy-replay-01.json": {
+      "sha256": "0de2a74a38cf468482fbc6b0bb761532fe8fbcf551cc77c50b1f9eac0510a0ca",
+      "result": {
+        "passed": true,
+        "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+        "checker_sha256": "b1f36ef6070049a12cd5addc6ad76d549abf9c5a9034a4702c17f3ec3214ece9",
+        "inherited_checker_sha256": "7614ae7b14f3e1df2e72216ff97e9106b77c35449b715a4f75b8ff1d72048133",
+        "cases": [
+          {
+            "name": "display-0-lead-selector",
+            "passed": true,
+            "remaining_hex": "5b33316d",
+            "renderer_calls": [],
+            "scope": "0610 capture only; actual parser continuation notexecuted underON"
+          },
+          {
+            "name": "display-1-lead-selector",
+            "passed": true,
+            "remaining_hex": "5b33316d",
+            "renderer_calls": [
+              27
+            ],
+            "scope": "0610 capture only; actual parser continuation notexecuted underON"
+          },
+          {
+            "name": "display-off-retains-lead-monitor",
+            "passed": true,
+            "tx_hex": "484954",
+            "renderer_calls": []
+          },
+          {
+            "name": "display-off-maps-lead-once-before-monitor",
+            "passed": true,
+            "tx_hex": "484954"
+          },
+          {
+            "name": "display-off-direct-print-still-enters-renderer",
+            "passed": true,
+            "renderer_calls": [
+              79,
+              75
+            ]
+          },
+          {
+            "name": "display-off-half-duplex-tx-echo-still-enters-renderer",
+            "passed": true,
+            "renderer_calls": [
+              90
+            ],
+            "tx_hex": "5a"
+          }
+        ],
+        "scope": "Actual selectedSET/read4C3C/4C74/mapping/WHENmonitor/trigger/nativecaretTX/directprint instructions. FILE/refresh, rawUART/TX/delay and0610capture modeled. No realrenderer/parser/reentrancy/hardware claim; no residentservicelifecycle emulated."
+      }
+    }
+  },
+  "retained_REA": {
+    "generic_bool": {
+      "path": "analysis/pcplus-overlay-19/functions/0x1e6bb-asm.json",
+      "evidence_id": "ev_0eac28aff291b49ec3d0558f8f05ee1eedb3010924224c14dc0014c056185ef8",
+      "sha256": "43774dacbf192ee029c5c2e6ec793cac5c3dd4aed9f06c3478c0050d9d2971ba"
+    },
+    "decimal_bounds": {
+      "path": "analysis/pcplus-overlay-anchored-16/functions/0x1dda7-asm.json",
+      "evidence_id": "ev_c83f8fc5153ef8704ecf7828b52bc9309a198836822c9abf045419b163d1a79b",
+      "sha256": "811c62243ba53ab90d713771d3bb26afbca4ad8bf2ae9ca087b8f276aadc8a8d"
+    },
+    "bounded_integer": {
+      "path": "analysis/pcplus-overlay-anchored-16/functions/0x1dd68-asm.json",
+      "evidence_id": "ev_1b4dff7b878078ff486bb5b20176cda5f8a6b2279c45975cd1632745306f5858",
+      "sha256": "4d12f3d825532c8f98e7ee7b6afc54e3297035219c3b566645af7dc0f1b7370e"
+    },
+    "status_refresh": {
+      "path": "analysis/pcplus-main/functions/0x12fb8-asm.json",
+      "evidence_id": "ev_37f3de96121de4b87b610528664677582883ea518eaecb770ba29ed10ada9cbe",
+      "sha256": "44ab6525193c52172431b7e7799a82e2292ac9684427d5f30d4fe2d55fc50c82"
+    },
+    "receive_map_monitor_display": {
+      "path": "analysis/pcplus-main/functions/0x14c74-asm.json",
+      "evidence_id": "ev_aa8288c1f502830e947c26f8e0cde1db5fada05464a5b78939afac5a39be3da8",
+      "sha256": "19d65a3229e5b61c96022e48d829ca4945447ffc0af74a6a4764e4e55fed781b"
+    },
+    "calibrated_delay": {
+      "path": "analysis/pcplus-main/functions/0x16b72-asm.json",
+      "evidence_id": "ev_a30bfa2cee5690318dc8252472fd4570367e365219605a4b4a1e2253170377fc",
+      "sha256": "76b3608f664ae847a2fb903b6fa8957717954d4bcedad0d77d3965b3d0f0f92e"
+    },
+    "format_print75e8": {
+      "path": "analysis/pcplus-main/functions/0x175e8-asm.json",
+      "evidence_id": "ev_66145bc4e929b3601579df8553ba01115e84583cc89791856f6373412b96a1e0",
+      "sha256": "59ebc559b714241c5cd6614717df9eef34bc6a4bb41087e2d8219314a62e3e53"
+    },
+    "charfill7630": {
+      "path": "analysis/pcplus-main/functions/0x17630-asm.json",
+      "evidence_id": "ev_886d51619d021c33169246f2179d4bdf65a8176e78d66f21f794e02415f42c56",
+      "sha256": "9eef765c9e0f21599e4cb98d27dddd1e42a18f9b081ef83792fe79e15b147c3d"
+    }
+  },
+  "native_bindings": [
+    {
+      "selector": 18,
+      "keyword": "DISPLAY",
+      "data_address": "0xe37e",
+      "handler": "0xe953"
+    },
+    {
+      "selector": 35,
+      "keyword": "FINDCASE",
+      "data_address": "0xe392",
+      "handler": "0xea1c"
+    },
+    {
+      "selector": 85,
+      "keyword": "WAITCASE",
+      "data_address": "0xe396",
+      "handler": "0xee37"
+    },
+    {
+      "selector": 68,
+      "keyword": "SWITCHCASE",
+      "data_address": "0xe394",
+      "handler": "0xec77"
+    },
+    {
+      "selector": 86,
+      "keyword": "WHENCASE",
+      "data_address": "0xe398",
+      "handler": "0xee3f"
+    },
+    {
+      "selector": 41,
+      "keyword": "KEYS",
+      "data_address": "0xe380",
+      "handler": "0xea49"
+    },
+    {
+      "selector": 59,
+      "keyword": "RXDATA",
+      "data_address": "0xe382",
+      "handler": "0xebb4"
+    },
+    {
+      "selector": 46,
+      "keyword": "MSG_CRLF",
+      "data_address": "0xe38a",
+      "handler": "0xea6d"
+    },
+    {
+      "selector": 24,
+      "keyword": "DUPLEX",
+      "data_address": "0x1d1a",
+      "handler": "0xe993"
+    },
+    {
+      "selector": 48,
+      "keyword": "PAUSECHAR",
+      "data_address": "0x1d66",
+      "handler": "0xeaad"
+    },
+    {
+      "selector": 76,
+      "keyword": "TXPACE",
+      "data_address": "0x1d68",
+      "handler": "0xed76"
+    }
+  ],
+  "frozen_discovery_ledger_sha256": "6f95b9f26588d2a3ed69e891a662a0931fee7b23f3c61f767e624f16afef603e",
+  "discovery_note": "The retained discovery ledger predates the D464 relocation correction; current corrected source and linked regression are bound above."
+}

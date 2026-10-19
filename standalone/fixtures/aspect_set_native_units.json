@@ -1,0 +1,120 @@
+{
+  "units": [
+    {
+      "unit": 1,
+      "start": 21592,
+      "end_exclusive": 21612,
+      "file_offset": 26200,
+      "bytes": 20,
+      "sha256": "eadb4fa80afa5f52ffef368433325a45ee2eddfea1d400b27ca4aa5b5cb162fb"
+    },
+    {
+      "unit": 2,
+      "start": 59067,
+      "end_exclusive": 59101,
+      "file_offset": 121771,
+      "bytes": 34,
+      "sha256": "626d50f3a5138b684a9d04d21ad2022abde290d997bac56c22e4b035429b4f13"
+    },
+    {
+      "unit": 3,
+      "start": 59731,
+      "end_exclusive": 59739,
+      "file_offset": 122435,
+      "bytes": 8,
+      "sha256": "0c71c9e7b72aaca7c9b5a14d277744c0d413a1785b15bfaa769eb448d874eae1"
+    },
+    {
+      "unit": 4,
+      "start": 59795,
+      "end_exclusive": 59803,
+      "file_offset": 122499,
+      "bytes": 8,
+      "sha256": "f012b3ec0b031bb0cd46b858f150a1313024501de4cba865e18e31dacf43f5b4"
+    },
+    {
+      "unit": 5,
+      "start": 59932,
+      "end_exclusive": 59940,
+      "file_offset": 122636,
+      "bytes": 8,
+      "sha256": "2da4f655ecdb0aff3c3cc9f7b1e4e9aba16d5edbb7eecc1ecb8265aa44e45173"
+    },
+    {
+      "unit": 6,
+      "start": 59977,
+      "end_exclusive": 59985,
+      "file_offset": 122681,
+      "bytes": 8,
+      "sha256": "1db7ce21ca0e6339c98d112478a66625500f3156b3e894db689b47a4c4ae4ace"
+    },
+    {
+      "unit": 7,
+      "start": 60013,
+      "end_exclusive": 60021,
+      "file_offset": 122717,
+      "bytes": 8,
+      "sha256": "6272ee1d0f04e2c7b1a65c49f089b1d9c4ff19c96fa3789a1e8d6d12f0828421"
+    },
+    {
+      "unit": 8,
+      "start": 60340,
+      "end_exclusive": 60348,
+      "file_offset": 123044,
+      "bytes": 8,
+      "sha256": "9aabcb9306c1df67e07c36799439c9c57275befa7df1c333751fbdaca0ed4098"
+    },
+    {
+      "unit": 9,
+      "start": 60535,
+      "end_exclusive": 60543,
+      "file_offset": 123239,
+      "bytes": 8,
+      "sha256": "8a1f7326b2799dc62c3036268b7780132072cc58fc72c950e56f722652e81404"
+    },
+    {
+      "unit": 10,
+      "start": 60983,
+      "end_exclusive": 60999,
+      "file_offset": 123687,
+      "bytes": 16,
+      "sha256": "cedf08f72d5bb8e861e49bee30abecdff765b7b3441916c59f663e2b1e323073"
+    },
+    {
+      "unit": 11,
+      "start": 60077,
+      "end_exclusive": 60100,
+      "file_offset": 122781,
+      "bytes": 23,
+      "sha256": "7a0491015ec1871a201788168e98b5753d6bf382d4a67cada744f8b929c8b4f7"
+    },
+    {
+      "unit": 12,
+      "start": 60790,
+      "end_exclusive": 60816,
+      "file_offset": 123494,
+      "bytes": 26,
+      "sha256": "7fd57b3ee84fbfc4cafd187dce95b9bad571b2c40c463fd6d61179a373a4d1ca"
+    },
+    {
+      "unit": 13,
+      "start": 56743,
+      "end_exclusive": 56781,
+      "file_offset": 112471,
+      "bytes": 38,
+      "sha256": "3530cc1fa0db1e5e40130053822e9051307e5c6806d7f800e2ab810c7408d10f"
+    },
+    {
+      "unit": 14,
+      "start": 56825,
+      "end_exclusive": 56837,
+      "file_offset": 112553,
+      "bytes": 12,
+      "sha256": "4a2e4b651e9a28b75308a9b80b9fb86e770adcbea7723c4bd3d18bdda147ddf3"
+    }
+  ],
+  "native_bytes": 225,
+  "schema": "aspect-set-native-byte-baseline-v1",
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "scope": "Hash/range baseline for selected225 recovered instruction bytes only; no original payload or runtime support claim."
+}

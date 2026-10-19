@@ -8,6 +8,12 @@ original binary, initialized data, private configuration or REA database is a
 normal build input. All retained static REA evidence IDs, file offsets and byte
 hashes are in `provenance.json`.
 
+The SET recovery pass corrected an OMF relocation omission in the status
+routine's script-label pointer at3044. `terminal_reset_script_label` now replaces
+the fixed D464 immediate in relocatable builds; flat native bytes are unchanged.
+The linked/original regression checks the actual label pointer and bytes before
+the explicit UART-status dependency. See [SET recovery](ASPECT_SET_NATIVE.md).
+
 | CS range, end excluded | Bytes | Export |
 |---|---:|---|
 |20a4..246c|968|terminal_reset_native|

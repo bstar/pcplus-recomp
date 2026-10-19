@@ -16,6 +16,9 @@ for directory in (ROOT/'reconstruction').iterdir():
   proof=json.loads(path.read_text());STATE.update({int(k,16):v for k,v in proof.get('state',{}).items() if isinstance(v,str) and re.fullmatch(r'[0-9a-f]{4}',k) and int(k,16)>=0x1000})
 STATE.update({0x1d18:'csi_terminal_id',0x1d32:'attributes_normal_value',0x7a8c:'reset_video_cells',0xce02:'reset_shadow_bytes',0x1d46:'reset_status_hidden',0x3254:'reset_wide_mode',0x469a:'reset_geometry_initialized',0x7a6e:'reset_underline_supported',0x7a90:'reset_crtc_port',0x1d2c:'reset_underline_enabled',0x7a86:'reset_underline_suppressed',0x1d2e:'reset_configured_wide',0x9016:'reset_saved_scroll',0x903c:'reset_saved_duplex',0x1d26:'reset_duplex',0xcc4a:'reset_scratch',0xcf86:'screen_line_flags'})
 CODE_POINTERS={0xbb8f:'terminal_reset_input_attribute',0xbb9b:'terminal_reset_input_plain'}
+# This pointer is stored directly in a BP local, rather than first loaded into
+# AX/BX/etc. The generic immediate scan below must not omit its relocation.
+STATE[0xd464]='terminal_reset_script_label'
 # Discover all native DS references and immediate data pointers for relocatable
 # OMF storage. Unknown semantics retain address-based names, never guessed data.
 for _,start,end in UNITS:

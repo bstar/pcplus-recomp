@@ -191,6 +191,8 @@ SEGMENT _DATA public class=DATA use16
  times 256 db 0
 global reset_data_image
 reset_data_image: resb 0xd600
+global terminal_reset_script_label
+terminal_reset_script_label equ reset_data_image+0xd464
 global ansi_charset_g0_flag_a
 ansi_charset_g0_flag_a equ reset_data_image+0xcde0
 global ansi_charset_g0_flag_graphics

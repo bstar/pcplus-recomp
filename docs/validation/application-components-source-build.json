@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "2e5e5e35412d34a3d8d50a447bd162fe8dffbec0791aeb6b0b2b656a6414a7cb",
-  "source_file_count": 1783,
+  "source_snapshot_sha256": "7f3bdf5e4a88d509d81a81f5b3394ad5f9f537daaf7bcd43297ae70d34dad24b",
+  "source_file_count": 1796,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,14 +16,14 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "488506f9d2eaf59663afd38c40db8fae7861f0c202d4b3c22c28a1ae7b6079d5",
+  "build_log_sha256": "c319af6a51144f7f76fc98b29331455bcfafc7cdfdd4b2f7d3fbaf7415b5b71f",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.p3xgd2/pcplus-source-proof-z0gl6pmn/checkout",
+  "source_checkout": "/tmp/nix-shell.jIg2I1/pcplus-source-proof-2r13kxp4/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
-  "scope": "91 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
-  "output_count": 91,
+  "scope": "106 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+  "output_count": 106,
   "outputs": {
     "terminal/TERMINAL.EXE": {
       "sha256": "dacbd777fbd5afaf441ad46ec559be2b95c53fd5ba9c1219ebfb865cd48e66ae",
@@ -146,9 +146,9 @@
       "workspace_sha256": "fccf1fea18c1c5f803d4d3331ce845eab9bd2cae7659797e2bf909723c871c24"
     },
     "terminal-reset/RESET.EXE": {
-      "sha256": "4e7cd57c0f73ad6a84642eedc3f4823548aa4ba0d5968f711c4c62310d52b72e",
+      "sha256": "8bdd8c62707ef4c1761c734a9481cad18be991aeed3cadd6194c527f14408e32",
       "matches_workspace": true,
-      "workspace_sha256": "4e7cd57c0f73ad6a84642eedc3f4823548aa4ba0d5968f711c4c62310d52b72e"
+      "workspace_sha256": "8bdd8c62707ef4c1761c734a9481cad18be991aeed3cadd6194c527f14408e32"
     },
     "transfer-blocks/BLOCKS.EXE": {
       "sha256": "b9eecad4fce1ea76e5f870d7706ce449ca00db99c1ffa99b03e14334ab54d3a1",
@@ -395,6 +395,81 @@
       "matches_workspace": true,
       "workspace_sha256": "9788de45b5781604de55a86a822089d6090e885071f93026414de7d1289d399c"
     },
+    "aspect-set/unit1.bin": {
+      "sha256": "eadb4fa80afa5f52ffef368433325a45ee2eddfea1d400b27ca4aa5b5cb162fb",
+      "matches_workspace": true,
+      "workspace_sha256": "eadb4fa80afa5f52ffef368433325a45ee2eddfea1d400b27ca4aa5b5cb162fb"
+    },
+    "aspect-set/unit2.bin": {
+      "sha256": "626d50f3a5138b684a9d04d21ad2022abde290d997bac56c22e4b035429b4f13",
+      "matches_workspace": true,
+      "workspace_sha256": "626d50f3a5138b684a9d04d21ad2022abde290d997bac56c22e4b035429b4f13"
+    },
+    "aspect-set/unit3.bin": {
+      "sha256": "0c71c9e7b72aaca7c9b5a14d277744c0d413a1785b15bfaa769eb448d874eae1",
+      "matches_workspace": true,
+      "workspace_sha256": "0c71c9e7b72aaca7c9b5a14d277744c0d413a1785b15bfaa769eb448d874eae1"
+    },
+    "aspect-set/unit4.bin": {
+      "sha256": "f012b3ec0b031bb0cd46b858f150a1313024501de4cba865e18e31dacf43f5b4",
+      "matches_workspace": true,
+      "workspace_sha256": "f012b3ec0b031bb0cd46b858f150a1313024501de4cba865e18e31dacf43f5b4"
+    },
+    "aspect-set/unit5.bin": {
+      "sha256": "2da4f655ecdb0aff3c3cc9f7b1e4e9aba16d5edbb7eecc1ecb8265aa44e45173",
+      "matches_workspace": true,
+      "workspace_sha256": "2da4f655ecdb0aff3c3cc9f7b1e4e9aba16d5edbb7eecc1ecb8265aa44e45173"
+    },
+    "aspect-set/unit6.bin": {
+      "sha256": "1db7ce21ca0e6339c98d112478a66625500f3156b3e894db689b47a4c4ae4ace",
+      "matches_workspace": true,
+      "workspace_sha256": "1db7ce21ca0e6339c98d112478a66625500f3156b3e894db689b47a4c4ae4ace"
+    },
+    "aspect-set/unit7.bin": {
+      "sha256": "6272ee1d0f04e2c7b1a65c49f089b1d9c4ff19c96fa3789a1e8d6d12f0828421",
+      "matches_workspace": true,
+      "workspace_sha256": "6272ee1d0f04e2c7b1a65c49f089b1d9c4ff19c96fa3789a1e8d6d12f0828421"
+    },
+    "aspect-set/unit8.bin": {
+      "sha256": "9aabcb9306c1df67e07c36799439c9c57275befa7df1c333751fbdaca0ed4098",
+      "matches_workspace": true,
+      "workspace_sha256": "9aabcb9306c1df67e07c36799439c9c57275befa7df1c333751fbdaca0ed4098"
+    },
+    "aspect-set/unit9.bin": {
+      "sha256": "8a1f7326b2799dc62c3036268b7780132072cc58fc72c950e56f722652e81404",
+      "matches_workspace": true,
+      "workspace_sha256": "8a1f7326b2799dc62c3036268b7780132072cc58fc72c950e56f722652e81404"
+    },
+    "aspect-set/unit10.bin": {
+      "sha256": "cedf08f72d5bb8e861e49bee30abecdff765b7b3441916c59f663e2b1e323073",
+      "matches_workspace": true,
+      "workspace_sha256": "cedf08f72d5bb8e861e49bee30abecdff765b7b3441916c59f663e2b1e323073"
+    },
+    "aspect-set/unit11.bin": {
+      "sha256": "7a0491015ec1871a201788168e98b5753d6bf382d4a67cada744f8b929c8b4f7",
+      "matches_workspace": true,
+      "workspace_sha256": "7a0491015ec1871a201788168e98b5753d6bf382d4a67cada744f8b929c8b4f7"
+    },
+    "aspect-set/unit12.bin": {
+      "sha256": "7fd57b3ee84fbfc4cafd187dce95b9bad571b2c40c463fd6d61179a373a4d1ca",
+      "matches_workspace": true,
+      "workspace_sha256": "7fd57b3ee84fbfc4cafd187dce95b9bad571b2c40c463fd6d61179a373a4d1ca"
+    },
+    "aspect-set/unit13.bin": {
+      "sha256": "3530cc1fa0db1e5e40130053822e9051307e5c6806d7f800e2ab810c7408d10f",
+      "matches_workspace": true,
+      "workspace_sha256": "3530cc1fa0db1e5e40130053822e9051307e5c6806d7f800e2ab810c7408d10f"
+    },
+    "aspect-set/unit14.bin": {
+      "sha256": "4a2e4b651e9a28b75308a9b80b9fb86e770adcbea7723c4bd3d18bdda147ddf3",
+      "matches_workspace": true,
+      "workspace_sha256": "4a2e4b651e9a28b75308a9b80b9fb86e770adcbea7723c4bd3d18bdda147ddf3"
+    },
+    "aspect-set/set_commands.obj": {
+      "sha256": "dc79408b51e75ae8430e0cab2b32a9ef37bce5f7f22bcc042b7ffe32e5716e1e",
+      "matches_workspace": true,
+      "workspace_sha256": "dc79408b51e75ae8430e0cab2b32a9ef37bce5f7f22bcc042b7ffe32e5716e1e"
+    },
     "aspect-receive-commands/RECEIVE.EXE": {
       "sha256": "71080402c11a32f5711ca29bac1e52c11b82315bede3d19e7a6a44b8afb3dec1",
       "matches_workspace": true,
@@ -550,6 +625,7 @@
     "standalone/build_aspect_receive_commands.py",
     "standalone/build_aspect_receive_policy.py",
     "standalone/build_aspect_directory.py",
+    "standalone/build_aspect_set.py",
     "standalone/check_batch_download.py",
     "standalone/check_batch_upload.py",
     "standalone/check_capture_file.py",
@@ -559,6 +635,8 @@
     "standalone/check_printer_device.py",
     "standalone/test_resource_path_dos.py",
     "standalone/test_aspect_compiler.py",
+    "standalone/test_aspect_set_compiler.py",
+    "standalone/check_aspect_set.py",
     "standalone/check_aspect_runner.py",
     "standalone/check_aspect_directory.py",
     "standalone/package_dos.py"

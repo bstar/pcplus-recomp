@@ -58,12 +58,15 @@ builds.append('aspect_serial')
 builds.append('aspect_receive_commands')
 builds.append('aspect_receive_policy')
 builds.append('aspect_directory')
+builds.append('aspect_set')
 program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/build_{name}.py'],check=True)\n" for name in builds)
 owner_checks=['standalone/check_batch_download.py','standalone/check_batch_upload.py','standalone/check_capture_file.py','standalone/check_capture_session.py','standalone/check_capture_owners.py']
 owner_checks.append('standalone/check_monitor_file.py')
 owner_checks.append('standalone/check_printer_device.py')
 owner_checks.append('standalone/test_resource_path_dos.py')
 owner_checks.append('standalone/test_aspect_compiler.py')
+owner_checks.append('standalone/test_aspect_set_compiler.py')
+owner_checks.append('standalone/check_aspect_set.py')
 owner_checks.append('standalone/check_aspect_runner.py')
 owner_checks.append('standalone/check_aspect_directory.py')
 owner_checks.append('standalone/package_dos.py')
@@ -93,6 +96,8 @@ outputs += ['aspect-string-services/SERVICES.EXE','aspect-string-commands/STRCMD
 outputs += ['aspect-conversions/CONVERT.EXE','aspect-conversion-services/CONVERT.EXE']
 outputs += ['aspect-receive-policy/POLICY.EXE']
 outputs += ['aspect-directory/DIRBUILT.EXE']
+outputs += [f'aspect-set/unit{n}.bin' for n in range(1,15)]
+outputs += ['aspect-set/set_commands.obj']
 outputs += ['aspect-receive-commands/RECEIVE.EXE','aspect-runtime/CASES.DAT']
 outputs += ['aspect-serial-commands/SERIAL.EXE','aspect-serial/SERIAL.EXE']
 outputs += ['aspect-console/CONSOLE.EXE','aspect-runner/ASPECT.EXE','aspect-runner/tests/RUNTEST.EXE']

@@ -25,6 +25,15 @@ startup/schema/default generation, packaging and target hardware validation.
 Modern BBS interaction and independent source-only rebuilding remain required
 regressions across that work. Physical Wi-Fi modem testing is still outstanding.
 
+ASPECT now includes native WHEN/CWHEN matching and deferred handlers through
+the actual resident terminal renderer, with DOS/runtime and scoped modern BBS
+regressions. The host compiler emits eleven selected SET settings. Their225-byte
+native component and the corrected status script-label relocation are verified,
+but production SET remains limited to WHENCASE while native status services and
+session-setting adoption are integrated. See `docs/ASPECT_WHEN_RUNTIME.md` and
+`docs/ASPECT_SET_NATIVE.md`; complete scripting, keyboard/UI and recorder remain
+part of the full application goal.
+
 ZMODEM now has live Alt-R/Alt-S/F2 dispatch, CONFIG_CODE placement, ten verified
 far callbacks, checked source seek/skip, exact variable receive packets and
 serviced UI/UART ownership. Linked workflows and independent actual DOS lrzsz

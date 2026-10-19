@@ -107,6 +107,19 @@ def run(compare=False):
    m.call('terminal_reset_clear_shadow');assert bytes(m.uc.mem_read(0x60000,4000))==b' \x07'*2000
   both(execute,lambda m:bytes(m.uc.mem_read(0x60000,4000)))
  check('actual-far-shadow-clear-uses-configured-normal-attribute',shadow)
+ def script_status_pointer():
+  def execute(m):
+   m.put('reset_status_hidden',0);m.put('meta_script_active',1)
+   label=m.symbols['terminal_reset_script_label']
+   m.uc.mem_write(label,b'OWNED.ASX\0')
+   try:m.call('terminal_reset_status_refresh',limit=1000000)
+   except Dependency as e:assert e.args==(0xaa5c,)
+   else:raise AssertionError('Status UART dependency was silently skipped')
+   pointer=struct.unpack('<H',m.uc.mem_read(m.data_base+m.uc.reg_read(UC_X86_REG_BP)-2,2))[0]
+   assert pointer==label-m.data_base,('Unrelocated script label',hex(pointer),hex(label-m.data_base))
+   assert bytes(m.uc.mem_read(m.data_base+pointer,10))==b'OWNED.ASX\0'
+  both(execute,lambda m:bytes(m.uc.mem_read(m.symbols['terminal_reset_script_label'],10)))
+ check('status-script-label-pointer-relocates-before-explicit-UART-boundary',script_status_pointer)
  def cursor():
   for configured in (0,1):
    def execute(m):

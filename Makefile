@@ -1,4 +1,13 @@
 .DEFAULT_GOAL := all
+.PHONY: aspect-set test-aspect-set test-aspect-set-compat
+all: aspect-set
+aspect-set:
+	python3 standalone/build_aspect_set.py
+test-aspect-set: aspect-set
+	python3 standalone/check_aspect_set.py
+test-aspect-set-compat: aspect-set
+	python3 standalone/check_aspect_set.py --original analysis/pcplus-originals/PCPLUS-main-2.01.EXE
+test: test-aspect-set
 .PHONY: aspect-when test-aspect-when aspect-renderer-policy test-aspect-renderer-policy
 aspect-when:
 	python3 standalone/build_aspect_when.py

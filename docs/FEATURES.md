@@ -511,3 +511,15 @@ immediate forwarding still fails Home on its recorded de47 build; the matched
 30ms buffering experiment passes, with both retained separately. Full script
 rendering/events/recorder, other application work, custom IRQ inheritance and
 physical Wi-Fi modem validation remain required. All F01–F16 gates remain open.
+
+The later [WHEN runtime](ASPECT_WHEN_RUNTIME.md) checkpoint adds real resident
+rendering, native receive matching and deferred handlers, including a WHEN-driven
+Synchronet login/editor workflow. Its825 DOS runtime cases and eight terminal
+compositions are separate from compiler-only conformance. The subsequent
+[SET component](ASPECT_SET_NATIVE.md) adds225 exact native bytes,3,487 CPU cases
+covering101 instructions, and a linked/original regression correcting the status
+script-label relocation. The compiler emits eleven settings; production SET
+still supports only WHENCASE pending native status/RPC integration. Fresh source
+builds reproduce106 checked outputs, including fifteen SET component artifacts.
+These increments do not close the full compiler/recorder, UI/settings, transfer,
+Host, hardware or other F01–F16 requirements.
