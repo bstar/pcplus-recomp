@@ -1477,3 +1477,35 @@ compiler and present it as the completed DOS port. Full native compiler coverage
 beyond the host subset remains required after that port and integration. Native grammar
 for previously unproved malformed declaration edges remains an oracle task.
 See `docs/ASPECT_DOS_COMPILER.md`. All F01–F16 gates remain open.
+
+### DOS expression and operand emission
+
+The third maintained DOS frontend stage parses typed expressions and emits
+expression/assignment fragments with exact operand bytes, coercions, temporary
+allocation, short-circuit branches and positional CP437 string encoding. File
+positions and branch patches remain32-bit. A bounded AST and recyclable branch
+pool live outside the recursive stack. The borrowed FILE writer checks range
+and I/O failures and restores the append cursor after patches.
+
+An integer-only2048-bit decimal converter preserves IEEE754 nearest/even
+rounding with no FPU. Actual DOS testing found a pinned CRT `strtod` subnormal
+rounding mismatch; the replacement matches the host on that retained regression,
+seeded decimal inputs, halfway ties and overflow/underflow boundaries. No
+production allocator or floating-point runtime was patched.
+
+ASPEXP's3459 actual8086 DOS cases compare2530 accepted fragments byte-for-byte
+with the maintained host and reject929. The suite includes existing corpus
+assignments, nested booleans, typed symbol spaces, readonly destinations,
+string bounds, temporary exhaustion and real prefixes beyond64KiB. Separate
+writer/ownership checks and six actual CLI children exercise errors and resource
+lifetime. The malformed WORD operand `-32768.0` triggers a host TypeError; DOS
+returns typed rejection, with native grammar still unproved for that edge.
+
+ASPEXP emits an AEX1 developer envelope, not a complete ASX program. The fresh
+source proof reproduces152 normal products, including this new diagnostic;
+interactive TERMINAL and ASPECT bytes retain the previous checkpoint. Continue
+with full body/initializer validation, statement/command compilation and exact
+pruning, complete ASX output, transactional CLI and nested runtime fallback.
+The full compiler/recorder, application services, other UI/protocol/emulation
+workflows, Host, ENiGMA immediate-forwarding interaction and physical modem
+validation remain required. No F01–F16 application gate is closed.

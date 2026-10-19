@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "recorder_sha256": "71ba89cfe89d8d80b48a12243044606567788e6f05405286222f62c1bc55281e",
+  "recorder_sha256": "a6d47a2e0ad757f27f111684ca999533b6646f74733eb3e241616a3d5d9e3191",
   "reports": {
     "lexer": {
       "manifest_sha256": "d5c2a09b77b7e156d2458f46e780d9cad9eb20c4f7a5126648593a698f6d9120",
@@ -136,10 +136,74 @@
         "original_inputs": [],
         "scope": "Actual DOS8086 large-model first-pass symbols, procedure/parameter/local layout and source ranges against maintained host pass with emission disabled. Native near-heap checker and independent explicit-segment far-heap observer restore used entry identity/size after every allocation failure and200 successful disposal cycles; borrowed FILE and foreign heap block retained. Expression/body validation, dead procedure elimination, ASX output and runtime compilation remain pending."
       }
+    },
+    "expression": {
+      "manifest_sha256": "25070f737baf4a7ec8382070cb1a53ea68a8343ccd40de6fbc1d54138159a1bf",
+      "checks_sha256": "487d1a1a3a97456e3e80bac47b3fcc8ef51d622d35db58bbc075b7d143e14c14",
+      "report": {
+        "passed": true,
+        "case_count": 3459,
+        "accepted": 2530,
+        "rejected": 929,
+        "binary_sha256": "c4d0c4d764c49c8a40ad811223f949b8824876efd6c190a3085b00515e1666c4",
+        "manifest_sha256": "25070f737baf4a7ec8382070cb1a53ea68a8343ccd40de6fbc1d54138159a1bf",
+        "checker_sha256": "002c656054c05036358a392dddda07afa12f1e92ba9dada143429815806fd9ae",
+        "host_compiler_sha256": "5fc4281e7a26f70e6becf962c8ed6e7a253ca4bc1ee4fa5487a5ab42a0470812",
+        "fixture_sources": {
+          "standalone/fixtures/aspect_arithmetic_vectors.json": "18424774c5bf1856a6aefd04bd7973556c3e375ce402aefee08c6224317f15f4",
+          "standalone/fixtures/aspect_break_compiler_vectors.json": "7b5f7ca6c45e6746f03362eb184232ebcf7b271210c3732a0be62714647b308a",
+          "standalone/fixtures/aspect_break_native_units.json": "02b884e3e19f239d8e836ee4a70a632027ee9dff2d6ae65dc3ebc5ef63fe5e78",
+          "standalone/fixtures/aspect_break_runtime_vectors.json": "3116a6b04e629677bf8c60f8e11c3326b04aefc7f6589b54de950b08cbd64771",
+          "standalone/fixtures/aspect_chain_compiler_vectors.json": "58bed52ef95f99601398df15542a0ee07dbbbb03a52397860abf67ae165c5b2a",
+          "standalone/fixtures/aspect_chain_native_units.json": "c115775cf248d19ccea52af4f9729aa8ff5e671a0411299f9bfe72cc2b4575f9",
+          "standalone/fixtures/aspect_compiler_validation_vectors.json": "7604d6e801ff1dbed3f7a1d58287c49afe6f5dcbb0c099a3d607ed9f5c5d8c7a",
+          "standalone/fixtures/aspect_console_vectors.json": "43693c61e265b31a13324adb550335b0c37238dd737419edcc4b3b598693b60e",
+          "standalone/fixtures/aspect_conversion_vectors.json": "95296153ff69e7c2c7974af0df17a8a4d1ab2524242f636b9c128aa1b8ee3781",
+          "standalone/fixtures/aspect_directory_vectors.json": "80b38259968e5f1a3c5c5d388fa40928ecd7ed759ffc916158f4632a4ae57676",
+          "standalone/fixtures/aspect_end_wait_native.json": "712f5d7c215d15e747f21e9c6b7b7391ebfead162080d319495574ad09f07418",
+          "standalone/fixtures/aspect_execution_vectors.json": "2fe02fbc44993cb35e2d9ca9ed6a003070e458dcec4de485d43a7af5a0ce80e4",
+          "standalone/fixtures/aspect_fetch_native_units.json": "d966032ecdc3fee0b76b883236c3ec494ea28b8b1a87c29bf41973f662e4532f",
+          "standalone/fixtures/aspect_find_case_compiler_vectors.json": "cb781c6b5f82a30d45af684a88ba41f1f9eb9255f443c64eb021959028e81c72",
+          "standalone/fixtures/aspect_find_case_native_units.json": "ed0b3870476ad67296d37ece99cacb51881382c867b25033f151345d7472c6f5",
+          "standalone/fixtures/aspect_find_case_runtime_vectors.json": "80b1ea787876a0f04366b06298a91f3b9db669fa7668272daf8c57acf26adc92",
+          "standalone/fixtures/aspect_literal_vectors.json": "bba820322dd748752ad67b040a5b1a67dfbe6762509ad7ec48805815103e5e9e",
+          "standalone/fixtures/aspect_parameter_vectors.json": "025c4de5e5681b0a502d566b73555b225610f6293dda69f7f38cb78448a88b67",
+          "standalone/fixtures/aspect_receive_runtime_overrides.json": "b473807e571a122c0401a7e4eff6ff0d1ae8b72b7b2ce523ebe5b3b80bd5ca81",
+          "standalone/fixtures/aspect_receive_vectors.json": "41518818a3bfa97bae66277ef04ecf730717cdca31b87f582b310d24793062dc",
+          "standalone/fixtures/aspect_serial_vectors.json": "5b0913c888b2fe19274f9868de9706ee3e4430c6517018c74dd7638d534f1a49",
+          "standalone/fixtures/aspect_set_compiler_vectors.json": "3c7b2e6a0997faa0d2953bfacc5caba997b5cd18c55816c2833b646e04356602",
+          "standalone/fixtures/aspect_set_native_units.json": "6730fd7deedd1167882536872264ae8b1e9e86cbcdba1b126f89951f12da76e1",
+          "standalone/fixtures/aspect_set_runtime_vectors.json": "fb78b644fbed9afdc2beabef6075839103afe809d1176578b81f0546f8d5c24d",
+          "standalone/fixtures/aspect_string_command_vectors.json": "e6095291b2b868e440bbfc4de735d1130d216546119817788ca66306234a78ee",
+          "standalone/fixtures/aspect_when_compiler_vectors.json": "3af789975d9275dd1657d03c248e5c3e8d5b7dca05bf6f2a2d3ffa068122de93",
+          "standalone/fixtures/aspect_when_runtime_vectors.json": "27188a8468758d8af49fc2a055e05a9db51dca7e39b47c69959246e264a05e9b",
+          "standalone/fixtures/aspect_when_vectors.json": "be1d33b309bd42cbfaa63599d47d1bcfb16238ae80f26ff11f49722b1c12d969"
+        },
+        "fragments_sha256": "48388c50de048ec6b3338096a23bd006b40dca3c32acfda5197673974d2311e1",
+        "case_manifest_sha256": "f8495b5033e38ebf972a7692d3f758dbdccc41120bb64793d9b50b4ae26884e1",
+        "DOS_summary": "API 1356 checks 0 failures\nEXPRESSION 3459 cases 0 failures",
+        "host_exception_edges": [
+          {
+            "index": 3102,
+            "error": "unsupported operand type(s) for &: 'float' and 'int'"
+          }
+        ],
+        "original_inputs": [],
+        "scope": "Actual8086 DOS software-float expression/operand and assignment fragment equality. Statement grammar, complete ASX emission and runtime compiler integration remain unfinished.",
+        "API_summary": "API 1356 checks 0 failures",
+        "ownership_cycles": 100,
+        "CLI_children": 6,
+        "reused_sources": {
+          "standalone/check_aspect_compiler_unit.py": "9d2dc8c76d87872088b98d18835bacf176e1ffb9844d4bc723b9121687d070b8",
+          "standalone/check_aspect_compiler_lexer.py": "29b9a24513978a6724355e6ac1c8a96cc32a21ad122ecf7c2e22e465d80e3628",
+          "standalone/compiler_heap_snapshot.c": "e8ec917dad1831310e99debbcc9e422430fbcd4c7442c0d4f922718afe260017",
+          "standalone/compiler_heap_snapshot.h": "22059de2b8b206a7029e71e44a90af584bc55d33ebf45dd36c3531f8a24005bd"
+        }
+      }
     }
   },
-  "source_proof_sha256": "3a88332d8a8620a52c9e28ad4d02640de80d40e54093751ba6a2c2fe6dab5168",
-  "reproduced_output_count": 151,
+  "source_proof_sha256": "44367e15fe61a137aa899e29c47215cde1762c70bab7e1bb1474f3352cdbf38a",
+  "reproduced_output_count": 152,
   "application_bytes_unchanged_from_prior_label_checkpoint": true,
   "CRT_analysis": {
     "evidence_id": "ev_d1a5f2f22b386770e1316405e3db283a854074f3496c79f5004bb421f01b9b66",
@@ -153,20 +217,22 @@
   },
   "compiler_stages_completed": [
     "streaming lexical frontend",
-    "declaration/procedure inventory and owned source ranges"
+    "declaration/procedure inventory and owned source ranges",
+    "typed expression parsing and exact operand/assignment fragments with short-circuit DWORD patches",
+    "integer-only decimal to IEEE754 nearest/even conversion"
   ],
   "required_remaining": [
-    "expression and full body/initializer validation",
-    "typed operand/command and positional string emission",
+    "full body/initializer and command validation",
     "all statement families and exact procedure pruning",
-    "32-bit ASX fixups and exact output parity",
+    "complete ASX files and procedure/control-flow fixups beyond64KiB",
     "DOS compiler CLI and transactional output",
     "runtime ASP/fallback integration preserving UART/file/settings ownership",
     "full native compiler coverage beyond the host subset, recorder and remaining F01-F16 requirements"
   ],
   "limitations": [
-    "ASPLEX/ASPINV are diagnostics and cannot generate ASX.",
-    "Successful inventory is not a valid-program/compiler acceptance claim.",
+    "ASPLEX/ASPINV/ASPEXP are diagnostics and cannot generate complete ASX programs.",
+    "Successful inventory or expression fragment is not a valid-program/compiler acceptance claim.",
+    "The host compiler TypeErrors when a WORD operand is -32768.0; the DOS frontend rejects it as a typed error. Native grammar remains unproved for this malformed command operand.",
     "Native grammar for previously unproved malformed declaration edges remains an oracle task.",
     "Physical hardware and modem compatibility are not established by these frontend tests."
   ],

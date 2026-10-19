@@ -68,6 +68,7 @@ builds.append('aspect_chain_native')
 builds.append('aspect_end_wait_native')
 builds.append('aspect_compiler_lexer')
 builds.append('aspect_compiler_unit')
+builds.append('aspect_compiler_expression')
 builds.append('status_helpers')
 builds.append('status_renderer')
 program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/build_{name}.py'],check=True)\n" for name in builds)
@@ -136,6 +137,7 @@ outputs += ['aspect-fetch-native/fetch_command.obj','aspect-fetch-native/break_c
 outputs += ['aspect-chain-native/'+name for name in ['command.bin','file_open.bin','finish.bin','scratch.bin','strcpy.bin','dispatch.bin','chain_command.obj']]
 outputs += ['aspect-end-wait-native/'+name for name in ['end_wait.bin','receive-1.bin','receive-2.bin','end_wait.obj']]
 outputs += ['aspect-compiler-lexer/ASPLEX.EXE','aspect-compiler-unit/ASPINV.EXE']
+outputs += ['aspect-compiler-expression/ASPEXP.EXE']
 outputs += [f'status-helpers/unit{n}.bin' for n in range(1,5)]
 outputs += ['status-helpers/STATUS.EXE','status-renderer/STATUS.EXE']
 outputs += ['aspect-receive-commands/RECEIVE.EXE','aspect-runtime/CASES.DAT']
