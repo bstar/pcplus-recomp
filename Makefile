@@ -1,4 +1,20 @@
+.DEFAULT_GOAL := all
 MODULES := escape attributes screen text reports erase cursor_state cursor_shape scroll modes render input_dispatch csi ui_windows modem_commands modem_responses modem_send directory_dial directory_accounting keyboard_mapping keyboard_detection line_edit meta_keys character_edit program_exec terminal_reset transfer_blocks transfer_receive transfer_send transfer_files transfer_session transfer_uart
+.PHONY: aspect-resident-service test-aspect-resident-service test-aspect-resident-service-dos aspect-resident-bridge test-aspect-resident-bridge test-aspect-resident-bridge-dos test-aspect-serial-unread-dos
+aspect-resident-service:
+	python3 standalone/build_aspect_resident_service.py
+test-aspect-resident-service: aspect-resident-service
+	python3 standalone/check_aspect_resident_service.py
+test-aspect-resident-service-dos: aspect-resident-service
+	python3 standalone/test_aspect_resident_service_dos.py
+aspect-resident-bridge:
+	python3 standalone/build_aspect_resident_bridge.py
+test-aspect-resident-bridge: aspect-resident-bridge
+	python3 standalone/check_aspect_resident_bridge.py
+test-aspect-resident-bridge-dos: aspect-resident-bridge
+	python3 standalone/test_aspect_resident_bridge_dos.py
+test-aspect-serial-unread-dos: aspect-serial
+	python3 standalone/test_aspect_serial_unread_dos.py
 .PHONY: all serial parser keyboard config-dos $(MODULES) $(addprefix test-,$(MODULES)) test test-driver test-parser test-keyboard test-config test-config-dos test-parser-compat test-csi-relocation test-modes-relocation test-input-relocation test-terminal-services compat test-compat test-modem clean
 
 all: serial parser keyboard $(MODULES) config-dos config-replace config-abi directory-browser directory-editor process download-file upload-file transfer-metadata batch-header transfer-session-composite transfer-storage terminal

@@ -24,6 +24,10 @@ unsigned __cdecl aspect_serial_available(void);
 /* read returns a dequeued byte (mode2 masks7bits), orffff if unavailable. It
  * never applies the mode1 table; the native receive adapter owns that step. */
 unsigned __cdecl aspect_serial_read(void);
+/* One-shot rollback of the last successful API read, preserving its raw cell.
+ * Empty/failed read and open/close invalidate it. IF is preserved. Returns0,
+ * STATE4 without queue mutation, or fatal OVERFLOW5 if IRQ filled the ring. */
+unsigned __cdecl aspect_serial_unread(void);
 /* 0 accepted;1 flow/THRE busy;2 disabled/fatal. */
 unsigned __cdecl aspect_serial_try_write(unsigned byte);
 unsigned __cdecl aspect_serial_poll(void);

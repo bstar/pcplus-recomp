@@ -1211,3 +1211,13 @@ need a large bidirectional state protocol; the resident service avoids that
 duplication and still requires the explicit stack/ownership proofs above.
 Complete WHEN dispatch, remaining ASPECT families, compile-on-demand, directory
 bindings, all F01–F16 application gates and hardware validation remain required.
+
+The [resident-service prerequisites](docs/ASPECT_RESIDENT_SERVICE.md) now include
+an isolated actual DOS cross-EXEC stack/callback proof and bounded raw unread.
+Unread passes 107 CPU inputs, four new DOS rollback cases and six baseline DOS
+cases. The isolated service passes 32 calls/callbacks, nested refusals and real
+timer-handler execution on the parent stack. The reusable OMF bridge is separate
+from that flat experiment; neither advertises a renderer capability. Parent code
+and data headroom require far-code placement and checked reuse of its stack.
+Full renderer integration, renderer stack measurement and all acceptance tests
+above remain open.

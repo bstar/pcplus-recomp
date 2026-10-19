@@ -214,6 +214,60 @@ def main():
   assert m.open(b'/S1:0003:03:N'+suffix)==1 and not m.writes and bytes(m.uc.mem_read(0x18700,114))==before
  m=Serial();suffix=m.descriptor3(entry=0,record=0,date=(2026,10,19,1));assert m.open(b'/S1:0003:03:N'+suffix)==1 and not m.writes
  done('ASIOv3-absent-year-coherence-invalid-Gregorian-date-and-noentry-projection-before-IO',10)
+ for flags in [2,0x202]:
+  m=Serial();assert m.call('_aspect_serial_unread',eflags=flags)==4 and not m.writes
+  assert m.open()==0;writes=len(m.writes)
+  assert m.call('_aspect_serial_unread',eflags=flags)==4 and len(m.writes)==writes
+  m.receive_irq(b'AB');assert m.call('_aspect_serial_read',eflags=flags)==65
+  assert bool(m.uc.reg_read(UC_X86_REG_EFLAGS)&512)==bool(flags&512)
+  m.call('_aspect_serial_poll');assert m.call('_aspect_serial_try_write',[90])==0
+  before=(m.get('uart_rx_read'),m.get('uart_rx_count'));writes=len(m.writes)
+  regs={'bx':0x1234,'si':0x5678,'di':0x9abc,'bp':0x7777,'es':0x3333,'eflags':flags}
+  for n,v in regs.items():m.uc.reg_write(globals()['UC_X86_REG_'+n.upper()],v)
+  assert m.call('_aspect_serial_unread',eflags=flags)==0
+  assert bool(m.uc.reg_read(UC_X86_REG_EFLAGS)&512)==bool(flags&512)
+  for n,v in regs.items():
+   if n!='eflags':assert m.uc.reg_read(globals()['UC_X86_REG_'+n.upper()])==v
+  assert len(m.writes)==writes and m.get('uart_rx_count')==before[1]+1
+  state=(m.get('uart_rx_read'),m.get('uart_rx_count'))
+  assert m.call('_aspect_serial_unread',eflags=flags)==4 and (m.get('uart_rx_read'),m.get('uart_rx_count'))==state
+  assert bytes(m.call('_aspect_serial_read') for _ in range(2))==b'AB'
+  assert m.call('_aspect_serial_read')==0xffff
+  assert m.call('_aspect_serial_unread',eflags=flags)==4
+  assert m.call('_aspect_serial_close')==0;m.restored()
+  assert m.call('_aspect_serial_unread',eflags=flags)==4
+ done('unread-one-shot-invalid-empty-close-pollTX-no-token-read-invention-callee-registers-IF0and1',2)
+ for mode in [0,1,2]:
+  m=Serial();suffix=m.descriptor3(entry=0,record=0,mode=mode)
+  m.uc.mem_write(0x18500,bytes(i^85 for i in range(256)))
+  assert m.open(b'/S1:0003:03:N'+suffix)==0
+  base=m.symbols['uart_rx_buffer']-m.data_base;m.put('uart_rx_read',base+4095);m.put('uart_rx_write',base+4095)
+  m.receive_irq(b'\xff\x80');assert m.call('_aspect_serial_read')==(127 if mode==2 else 255)
+  assert m.get('uart_rx_read')==base
+  assert m.call('_aspect_serial_unread')==0 and m.get('uart_rx_read')==base+4095 and m.get('uart_rx_count')==2
+  assert m.call('_aspect_serial_close')==0;m.restored()
+  assert bytes(m.uc.mem_read(m.target,2))==b'\xff\x80'
+ done('unread-native-last-to-base-wrap-retains-raw-cell-under-identity-table-and7bit-dequeue',3)
+ for start in [0,4095]:
+  m=Serial();assert m.open()==0;base=m.symbols['uart_rx_buffer']-m.data_base
+  m.put('uart_rx_read',base+start);m.put('uart_rx_write',base+start)
+  m.receive_irq(b'A'*4096);assert m.call('_aspect_serial_read')==65
+  m.receive_irq(b'B');assert m.get('uart_rx_count')==4096
+  state=(m.get('uart_rx_read'),m.get('uart_rx_write'),bytes(m.uc.mem_read(m.symbols['uart_rx_buffer'],4096)));writes=len(m.writes)
+  assert m.call('_aspect_serial_unread')==5 and m.get('_aspect_serial_status')==5
+  assert (m.get('uart_rx_read'),m.get('uart_rx_write'),bytes(m.uc.mem_read(m.symbols['uart_rx_buffer'],4096)))==state
+  assert m.get('uart_rx_count')==4096 and len(m.writes)==writes
+  assert m.call('_aspect_serial_unread')==4
+  assert m.call('_aspect_serial_close')==5;m.restored()
+ done('unread-actual-ISR-fills-freed-slot-before-rollback-full-ring-fatal-no-overwrite-two-wraps',2)
+ m=Serial();assert m.open()==0;m.receive_irq(b'AB')
+ assert m.call('_aspect_serial_read')==65 and m.call('_aspect_serial_read')==66
+ assert m.call('_aspect_serial_unread')==0 and m.call('_aspect_serial_read')==66
+ m.put('uart_rx_read',m.get('uart_rx_read')+1);state=(m.get('uart_rx_read'),m.get('uart_rx_count'));writes=len(m.writes)
+ assert m.call('_aspect_serial_unread')==4 and (m.get('uart_rx_read'),m.get('uart_rx_count'))==state and len(m.writes)==writes
+ m.put('_aspect_serial_status',5);assert m.call('_aspect_serial_read')==0xffff and m.call('_aspect_serial_unread')==4
+ assert m.call('_aspect_serial_close')==5;m.restored()
+ done('unread-only-latest-read-pointer-mismatch-and-failed-read-invalidation',1)
  result=dict(passed=True,groups=cases,inputs=sum(x['inputs'] for x in cases),binary_sha256=hashlib.sha256(uart.BINARY.read_bytes()).hexdigest(),checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),manifest_sha256=hashlib.sha256((OUT/'manifest.json').read_bytes()).hexdigest(),limitations=['Kernel/ports modeled; actualDOS loopback test separately required.','Standard COM1..4 ports/IRQ masks are modeled; separate actual DOS backend tests use COM1 only.'],original_inputs=[])
  (OUT/'checks.json').write_text(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':main()

@@ -11,6 +11,7 @@ extern uart_break_hold
 extern _aspect_serial_preload
 global _aspect_serial_backend_open,_aspect_serial_backend_close
  global _aspect_serial_available,_aspect_serial_read,_aspect_serial_try_write
+ global _aspect_serial_unread
  global _aspect_serial_poll,_aspect_serial_ticks
 _aspect_serial_backend_open:
  push bp
@@ -21,6 +22,7 @@ _aspect_serial_backend_open:
  push es
  cmp word [_aspect_serial_active],0
  jne .busy
+ mov word [serial_unread_valid],0
  mov ax,[bp+4]
  cmp ax,3
  ja .arg
@@ -170,13 +172,20 @@ _aspect_serial_read:
  push bx
  push si
  push di
+ mov word [serial_unread_valid],0
  cmp word [_aspect_serial_active],1
  jne .empty
  cmp word [_aspect_serial_status],0
  jne .empty
  pushf
  cli
+ mov bx,[uart_rx_read]
+ mov [serial_unread_slot],bx
  call uart_receive_byte
+ cmp ax,0xffff
+ je .read_done
+ mov word [serial_unread_valid],1
+.read_done:
  popf
  pop di
  pop si
@@ -186,6 +195,50 @@ _aspect_serial_read:
  mov ax,0xffff
  pop di
  pop si
+ pop bx
+ ret
+; Bounded one-shot rollback of the last successful API dequeue. Unlike native
+; ABDE, never enables IF unconditionally and never increments a full ring.
+; Ring cells retain raw bytes even when the API read applied its7-bit mask.
+_aspect_serial_unread:
+ push bx
+ pushf
+ cli
+ mov ax,4
+ cmp word [serial_unread_valid],1
+ mov word [serial_unread_valid],0
+ jne .done
+ cmp word [_aspect_serial_active],1
+ jne .done
+ cmp word [_aspect_serial_status],0
+ jne .done
+ cmp word [uart_rx_dropped],0
+ jne .overflow
+ cmp word [uart_rx_count],4096
+ jae .overflow
+ mov bx,[serial_unread_slot]
+ cmp bx,uart_rx_buffer
+ jb .done
+ cmp bx,uart_rx_buffer+4095
+ ja .done
+ mov ax,bx
+ inc ax
+ cmp bx,uart_rx_buffer+4095
+ jne .expected
+ mov ax,uart_rx_buffer
+.expected:
+ cmp ax,[uart_rx_read]
+ mov ax,4
+ jne .done
+ mov [uart_rx_read],bx
+ inc word [uart_rx_count]
+ xor ax,ax
+ jmp .done
+.overflow:
+ mov word [_aspect_serial_status],5
+ mov ax,5
+.done:
+ popf
  pop bx
  ret
 _aspect_serial_try_write:
@@ -249,6 +302,7 @@ _aspect_serial_backend_close:
  push si
  push di
  push es
+ mov word [serial_unread_valid],0
  cmp word [_aspect_serial_active],1
  jne .done
  ; Never spin or consume RX to hide a lifecycle failure. Parent handback is a
@@ -318,6 +372,8 @@ SEGMENT _DATA public class=DATA use16
 w _aspect_serial_active,0
 w _aspect_serial_status,0
 w _aspect_serial_handoff_enabled,0
+w serial_unread_valid,0
+w serial_unread_slot,0
 w serial_vector,12
 serial_bases: dw 0x3f8,0x2f8,0x3e8,0x2e8
 serial_vectors: dw 12,11,12,11
