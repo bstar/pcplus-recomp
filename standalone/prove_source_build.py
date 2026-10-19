@@ -74,11 +74,13 @@ builds.append('status_helpers')
 builds.append('status_renderer')
 builds.append('keyboard_reverse_tab')
 builds.append('attribute_boundary')
+builds.append('attribute_repair')
 program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/build_{name}.py'],check=True)\n" for name in builds)
 owner_checks=['standalone/check_batch_download.py','standalone/check_batch_upload.py','standalone/check_capture_file.py','standalone/check_capture_session.py','standalone/check_capture_owners.py']
 owner_checks.append('standalone/check_keyboard_reverse_tab.py')
 owner_checks.append('standalone/check_terminal_key_edit.py')
 owner_checks.append('standalone/check_attribute_boundary.py')
+owner_checks.append('standalone/check_attribute_repair.py')
 owner_checks.append('standalone/check_terminal_reverse_tab.py')
 owner_checks.append('standalone/check_monitor_file.py')
 owner_checks.append('standalone/check_printer_device.py')
@@ -150,6 +152,7 @@ outputs += [f'status-helpers/unit{n}.bin' for n in range(1,5)]
 outputs += ['status-helpers/STATUS.EXE','status-renderer/STATUS.EXE']
 outputs += ['keyboard-reverse-tab/reverse_tab.bin','keyboard-reverse-tab/reverse_tab.obj','keyboard-reverse-tab/left-oracle.bin']
 outputs += ['attribute-boundary/'+name+'.'+suffix for name in ('boundary','position','offset','divide') for suffix in ('bin','obj')]
+outputs += ['attribute-repair/'+name+'.'+suffix for name in ('attribute_repair-write','attribute_repair-advance','attribute_repair-repair','attribute_boundary-position','erase-default_attribute','erase-previous_attribute','text-char') for suffix in ('bin','obj')]
 outputs += ['aspect-receive-commands/RECEIVE.EXE','aspect-runtime/CASES.DAT']
 outputs += ['aspect-serial-commands/SERIAL.EXE','aspect-serial/SERIAL.EXE']
 outputs += ['aspect-console/CONSOLE.EXE','aspect-runner/ASPECT.EXE','aspect-runner/tests/RUNTEST.EXE']

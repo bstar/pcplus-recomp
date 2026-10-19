@@ -1,0 +1,68 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/attribute_repair/write.asm",
+      "start": 11322,
+      "end": 11378,
+      "bytes": 56,
+      "instructions": 25,
+      "sha256": "01e9a7d69533d6ba2bae6ed752aa69d10c86de6f62eb61faf8ee79bc49ee97c8",
+      "matched_original": true,
+      "file_offset": 15930
+    },
+    {
+      "file": "reconstruction/attribute_repair/advance.asm",
+      "start": 11506,
+      "end": 11575,
+      "bytes": 69,
+      "instructions": 28,
+      "sha256": "00594f665d55bc4de67226f1fe79c502395e33c864414e4a80c64f4aa777efd0",
+      "matched_original": true,
+      "file_offset": 16114
+    },
+    {
+      "file": "reconstruction/attribute_repair/repair.asm",
+      "start": 11672,
+      "end": 11946,
+      "bytes": 274,
+      "instructions": 113,
+      "sha256": "99d8b6d4f1f654c18a2e8a8583b77cfb6082dfb2867f2abe8a41ac1944026261",
+      "matched_original": true,
+      "file_offset": 16280
+    }
+  ],
+  "state": {
+    "900c": "screen_cursor_wrap",
+    "399c": "screen_cursor_row",
+    "399e": "screen_cursor_column",
+    "325c": "erase_cell_count",
+    "3346": "screen_attribute_offset",
+    "1f70": "attributes_current",
+    "39c4": "screen_attributes_base",
+    "39c2": "erase_attribute_values_base",
+    "1d36": "attributes_protected_value",
+    "1d32": "attributes_normal_value",
+    "cdfa": "screen_viewport_enabled",
+    "5dea": "erase_shadow_offset",
+    "ce2e": "screen_viewport_left",
+    "7a72": "screen_columns",
+    "325a": "screen_attribute_row_bytes"
+  },
+  "services": {
+    "2b86": "attribute_position_to_video",
+    "2d38": "erase_default_attribute",
+    "2d4c": "erase_previous_attribute",
+    "6c84": "text_write_char"
+  },
+  "limitations": [
+    "Native routines require valid geometry, bounded cursor offset and metadata/value storage. Application admission is separate.",
+    "Repaint delegates visible writes to recovered text_write_char and hidden viewport writes to the supplied shadow far pointer.",
+    "This component is not yet bound into the application; protected scrolling admission remains unchanged."
+  ],
+  "rea_evidence": {
+    "0x2c3a": "ev_d63e7b7d265d17bf760c635ad693f9e334d37416eba14e47425126b55ad1281d",
+    "0x2cf2": "ev_4f8f8f3ebcf4e0586108151870cc92586265a163247141a2592b4082c9629a1d",
+    "0x2d98": "ev_4ab18267a860061b33b0bdd2abff5eebfe38b8a8c31cac2c6c1126d9f006f8cf"
+  }
+}

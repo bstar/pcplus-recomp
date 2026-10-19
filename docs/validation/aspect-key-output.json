@@ -150,8 +150,8 @@
       "scope": "Immediate modeled modem, unsaved editor then exact ZMODEM transfer and file-list return. This is not the live LAN board or physical modem."
     }
   ],
-  "reproduced_outputs": 164,
-  "source_proof_sha256": "3a4d93e3d692438182236954da3056c5bda9371c76e72e61e9900ad9018f169a",
+  "reproduced_outputs": 178,
+  "source_proof_sha256": "a2d862f588f893ffaf7ea0ea0b6c0393ac485b1e429d2d34cace1bc17a1a4243",
   "original_inputs": [],
   "whole_application_gates_closed": [],
   "retained_fixture_failures": [

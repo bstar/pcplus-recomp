@@ -1,4 +1,12 @@
 .DEFAULT_GOAL := all
+.PHONY: attribute-repair test-attribute-repair
+attribute-repair:
+	python3 standalone/build_attribute_repair.py
+test-attribute-repair: attribute-repair
+	python3 standalone/check_attribute_repair.py
+all: attribute-repair
+test: test-attribute-repair
+
 .PHONY: attribute-boundary test-attribute-boundary
 attribute-boundary:
 	python3 standalone/build_attribute_boundary.py

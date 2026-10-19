@@ -55,6 +55,13 @@ startup/schema/default generation, packaging and target hardware validation.
 Modern BBS interaction and independent source-only rebuilding remain required
 regressions across that work. Physical Wi-Fi modem testing is still outstanding.
 
+The [attribute-repair component](docs/ATTRIBUTE_REPAIR.md) now recovers399 exact
+bytes for2D98/2C3A/2CF2. Its1928 CPU cases execute real coordinate, default,
+previous-attribute and byte-video dependencies, including full metadata/video
+comparisons and shadow viewport transitions. This is component evidence only:
+bind the checked far application bridge next, then exercise protected scrolling
+and rerun DOS/BBS regressions. Existing pre-wire rejection remains in place.
+
 ASPECT now includes native WHEN/CWHEN matching and deferred handlers through
 the actual resident terminal renderer. Twelve SET setters/FETCH getters and native
 FIND/FOUND/SWITCH/CASE run in DOS with checked temporary ownership. The runtime

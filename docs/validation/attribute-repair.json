@@ -1,0 +1,131 @@
+{
+  "passed": true,
+  "production_integration": false,
+  "builder_sha256": "df2911e6312f2bd42435b14661cb88b51b45db3e76e9cb5e3554c73b0985de19",
+  "recorder_sha256": "806e1b22215f5dd0b87712eae3039f266cf0f77ad6f00a84e1dfd6825cf14bb4",
+  "provenance": {
+    "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "units": [
+      {
+        "file": "reconstruction/attribute_repair/write.asm",
+        "start": 11322,
+        "end": 11378,
+        "bytes": 56,
+        "instructions": 25,
+        "sha256": "01e9a7d69533d6ba2bae6ed752aa69d10c86de6f62eb61faf8ee79bc49ee97c8",
+        "matched_original": true,
+        "file_offset": 15930
+      },
+      {
+        "file": "reconstruction/attribute_repair/advance.asm",
+        "start": 11506,
+        "end": 11575,
+        "bytes": 69,
+        "instructions": 28,
+        "sha256": "00594f665d55bc4de67226f1fe79c502395e33c864414e4a80c64f4aa777efd0",
+        "matched_original": true,
+        "file_offset": 16114
+      },
+      {
+        "file": "reconstruction/attribute_repair/repair.asm",
+        "start": 11672,
+        "end": 11946,
+        "bytes": 274,
+        "instructions": 113,
+        "sha256": "99d8b6d4f1f654c18a2e8a8583b77cfb6082dfb2867f2abe8a41ac1944026261",
+        "matched_original": true,
+        "file_offset": 16280
+      }
+    ],
+    "state": {
+      "900c": "screen_cursor_wrap",
+      "399c": "screen_cursor_row",
+      "399e": "screen_cursor_column",
+      "325c": "erase_cell_count",
+      "3346": "screen_attribute_offset",
+      "1f70": "attributes_current",
+      "39c4": "screen_attributes_base",
+      "39c2": "erase_attribute_values_base",
+      "1d36": "attributes_protected_value",
+      "1d32": "attributes_normal_value",
+      "cdfa": "screen_viewport_enabled",
+      "5dea": "erase_shadow_offset",
+      "ce2e": "screen_viewport_left",
+      "7a72": "screen_columns",
+      "325a": "screen_attribute_row_bytes"
+    },
+    "services": {
+      "2b86": "attribute_position_to_video",
+      "2d38": "erase_default_attribute",
+      "2d4c": "erase_previous_attribute",
+      "6c84": "text_write_char"
+    },
+    "limitations": [
+      "Native routines require valid geometry, bounded cursor offset and metadata/value storage. Application admission is separate.",
+      "Repaint delegates visible writes to recovered text_write_char and hidden viewport writes to the supplied shadow far pointer.",
+      "This component is not yet bound into the application; protected scrolling admission remains unchanged."
+    ],
+    "rea_evidence": {
+      "0x2c3a": "ev_d63e7b7d265d17bf760c635ad693f9e334d37416eba14e47425126b55ad1281d",
+      "0x2cf2": "ev_4f8f8f3ebcf4e0586108151870cc92586265a163247141a2592b4082c9629a1d",
+      "0x2d98": "ev_4ab18267a860061b33b0bdd2abff5eebfe38b8a8c31cac2c6c1126d9f006f8cf"
+    }
+  },
+  "checks": {
+    "passed": true,
+    "cases": 1928,
+    "groups": {
+      "repair": 1860,
+      "advance": 32,
+      "write": 36
+    },
+    "checker_sha256": "306096b9774c756afff4fa1c46458c2d599748cd466cc3bf0d75c61d58fd1fef",
+    "manifest_sha256": "a137769c72eb7bdad9bc5f5613083d39899ec2ff7e91c272535455590a4d6cbf",
+    "native_entries_executed": [
+      "0x2d98",
+      "0x2c3a",
+      "0x2cf2",
+      "0x2b86",
+      "0x2d38",
+      "0x2d4c",
+      "0x6c84"
+    ],
+    "original_inputs": [],
+    "production_integration": false,
+    "scope": "All seven real recovered routines execute. Reference checks full metadata/value guards, character/attribute video and shadow bytes, native early marker termination, mode3 tail repair, row/viewport transitions and callee stack/register ABI. Only CGA retrace port reads are modeled. Application protected scrolling and physical hardware remain unverified."
+  },
+  "sources": {
+    "reconstruction/attribute_repair/write.asm": "d9ebb80d5df3df702f8ecbddbb12b9d881a64da4680fda195d302ba033ec8039",
+    "reconstruction/attribute_repair/advance.asm": "b997514bf893c6ab05e39bd5da9b320e1f0c0b3b63868939c2758f584ede5032",
+    "reconstruction/attribute_repair/repair.asm": "8b4274daecb08984bb224a686abd48224b5d027ceef213749cc0f2ee247dfcda",
+    "reconstruction/attribute_boundary/position.asm": "40d7455cefecce9ca85e636f166fb66a82ef99c4c2b3d2ef3644aa7c004ae4f0",
+    "reconstruction/erase/default_attribute.asm": "5d366fde862b74ebf6c7264a8c5b814bba230978831cb2b8b02006a3ef27e8eb",
+    "reconstruction/erase/previous_attribute.asm": "515cfccc074a11cafba547e51e26be1f754d70f01bdd43e475fc1d49caafa394",
+    "reconstruction/text/char.asm": "dafe4c306ed6d6f1bace9c0a4651258fe601cf0360e8400c1bb582eba1c2d41f"
+  },
+  "outputs": {
+    "build/attribute-repair/attribute_repair-write.bin": "01e9a7d69533d6ba2bae6ed752aa69d10c86de6f62eb61faf8ee79bc49ee97c8",
+    "build/attribute-repair/attribute_repair-write.obj": "95a6a6f508367ba0d70a6d4c39987b1363e26e6a426a4c8240b8c589ea9b6e44",
+    "build/attribute-repair/attribute_repair-advance.bin": "00594f665d55bc4de67226f1fe79c502395e33c864414e4a80c64f4aa777efd0",
+    "build/attribute-repair/attribute_repair-advance.obj": "39e76d630b641c5158735e12350d6a3d341bf03a441300bf345bf87f36f6e1b7",
+    "build/attribute-repair/attribute_repair-repair.bin": "99d8b6d4f1f654c18a2e8a8583b77cfb6082dfb2867f2abe8a41ac1944026261",
+    "build/attribute-repair/attribute_repair-repair.obj": "14242cf498d0bbc22343a36e1ff90bd074acd7ff9b0fb2884e752b2185a54675",
+    "build/attribute-repair/attribute_boundary-position.bin": "ff5392796104687586c8bbef1e099a976c8d327fcddead5e462122a667a03e1b",
+    "build/attribute-repair/attribute_boundary-position.obj": "2a258a837b9825d62b2cee40e34d5b612bb6fa987f1b7fb4a372eb8da480103e",
+    "build/attribute-repair/erase-default_attribute.bin": "9a24c2dd2a967e15d97b897490d44ac2019deea27a39a0cba17b3367fa81d180",
+    "build/attribute-repair/erase-default_attribute.obj": "2f0070dc8ae614c66d0e974ad3dc5e0fb7c1267ff5a91d42a8177663034f6131",
+    "build/attribute-repair/erase-previous_attribute.bin": "25f355e2712d0e280d8e1364d77e61de4c8c22566342d91bf38e6a6664f94caf",
+    "build/attribute-repair/erase-previous_attribute.obj": "fab8333ecdf32660d4329b9a58fdc39d18bb34e9b18020fd89fd2ee57d213a72",
+    "build/attribute-repair/text-char.bin": "2e800efd0916e83873500ec7575d08c0e89c024f047bfb276e4075bb6939b8bf",
+    "build/attribute-repair/text-char.obj": "97237f222ace226604972b06476905a20b11435472630f15d5e724166f6c9128"
+  },
+  "source_build_outputs": 178,
+  "source_build_proof_sha256": "a2d862f588f893ffaf7ea0ea0b6c0393ac485b1e429d2d34cace1bc17a1a4243",
+  "original_inputs": [],
+  "whole_application_gates_closed": [],
+  "limitations": [
+    "Component is not yet bound to application2D98; existing protected-path pre-wire admission is unchanged.",
+    "Viewport advance caches native visibility until left/physical-width/row boundaries; arbitrary right edges and inactive-left0 quirks are characterized, not fixed.",
+    "Only CGA retrace input is modeled; physical display, modem and timing validation remain open."
+  ]
+}
