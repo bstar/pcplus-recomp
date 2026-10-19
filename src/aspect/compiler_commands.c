@@ -12,6 +12,7 @@ static const command commands[]={
  {"strupr","d",0xb4,0},{"substr","dsnn",0xb6,0},{"pause","v",0x88,0}
 };
 static const command file_commands[]={
+ {"diskfree","vl",0x25,0},{"dosver","d",0x29,0},{"getdir","vd",0x4b,0},
  {"getfdate","sd",0x4e,0},{"getftime","sd",0x51,0},{"setfdate","ss",0xa0,0},{"setftime","ss",0xa1,0},
  {"getfattr","sd",0x4d,0},{"setfattr","ss",0x9f,0},
  {"findfirst","sS",0x3c,0},{"findnext","",0x3d,0},

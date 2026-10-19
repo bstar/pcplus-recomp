@@ -1,0 +1,69 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "unit": 1,
+      "name": "diskfree",
+      "start": 59065,
+      "end": 59089,
+      "file_start": 118473,
+      "bytes": 24,
+      "sha256": "0b2e5d7e40a5642f841f548914747d982ce29433f6da5f36d7e1013d68cd5202"
+    },
+    {
+      "unit": 2,
+      "name": "dosver",
+      "start": 59089,
+      "end": 59121,
+      "file_start": 118497,
+      "bytes": 32,
+      "sha256": "5c58917d4c8664c419270922fe00a2c580ea9c2dc6de0079fc2093adb2f74aeb"
+    },
+    {
+      "unit": 3,
+      "name": "getdir",
+      "start": 59169,
+      "end": 59225,
+      "file_start": 118577,
+      "bytes": 56,
+      "sha256": "3b93e861384f6f46f8ae490be5de05e0056dd9aa4430ac34eb6d9383c283e793"
+    },
+    {
+      "unit": 4,
+      "name": "current-drive",
+      "start": 23758,
+      "end": 23765,
+      "file_start": 28366,
+      "bytes": 7,
+      "sha256": "fc6f6e8e7ed66c73c491da933390f3f2ff52ec64e9d9cef98d50b35b4415da77"
+    },
+    {
+      "unit": 5,
+      "name": "current-directory",
+      "start": 23765,
+      "end": 23784,
+      "file_start": 28373,
+      "bytes": 19,
+      "sha256": "c17c23e6045436d2eed7ada6bfaf83cc4303f65f4960d6fc7e50b97b4f140016"
+    },
+    {
+      "unit": 6,
+      "name": "free-helper",
+      "start": 30906,
+      "end": 30930,
+      "file_start": 35514,
+      "bytes": 24,
+      "sha256": "d6d2c6a4fe4ba3a142211b98f9c3fd4694d682ed2e517c69e29d36342e59af6d"
+    },
+    {
+      "unit": 7,
+      "name": "version-helper",
+      "start": 62116,
+      "end": 62121,
+      "file_start": 121524,
+      "bytes": 5,
+      "sha256": "dce15146889a221c52d1e8cb964776fef36e0235e16e11a7bcc8cc06e46ee38e"
+    }
+  ],
+  "scope": "Numeric locations/hashes only. Native DOS19/47/36/30 helpers; DISKFREE truncates first multiplication to16bits, errors return FFFFFFFF. GETDIR formats prefix before DOS result. DOSVER source reader baseline retained separately from maintained destination/flush."
+}

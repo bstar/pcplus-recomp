@@ -1,0 +1,1297 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "harness_sha256": "7b2694f0e969acca244540ac306cc85c9995db26c541d98788494a5adac3eb5a",
+  "cases": [
+    {
+      "name": "SQ000",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree \r\nendproc\r\n",
+      "source_sha256": "09ac812bc10bb16741427262687501eaea53c6b4b90bb01fcb33405164c7c6da",
+      "success": false,
+      "label": "diskfree ",
+      "log_sha256": "60585d65e39a37688cf2f1962ba5858f41b8abc28548a44b4dd9dac42c92d93a",
+      "errors": [
+        "Error C006 Line 6: Missing token",
+        "Error C006 Line 6: Missing token"
+      ]
+    },
+    {
+      "name": "SQ001",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0\r\nendproc\r\n",
+      "source_sha256": "d06de5bc49ccd76b3cba72832b371cd52eb12d4bf8c6af773aa40bfc6e0230aa",
+      "success": false,
+      "label": "diskfree 0",
+      "log_sha256": "9359bb4003105089f97723a85edf5049d06597b2b3cb77cce2f37323f17e80b7",
+      "errors": [
+        "Error C006 Line 6: Missing token"
+      ]
+    },
+    {
+      "name": "SQ002",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0 bytes\r\nendproc\r\n",
+      "source_sha256": "637cb0fbdd110bafa5a81013fbd4f08603b24e5e947c1583df23d41f1915f0d4",
+      "success": true,
+      "label": "diskfree 0 bytes",
+      "log_sha256": "47c0f8ba3b6dc9e2b44f04478b5fa079bb2e3e174a86e2d7724eeddee9393555",
+      "errors": [],
+      "hex": "02 cf 25 b5 00 8e 00 94",
+      "asx_sha256": "d5a216cbffe8c9e06d9c4f81090657230be310f4a68432132d2fe306f5cfb360"
+    },
+    {
+      "name": "SQ003",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0 path\r\nendproc\r\n",
+      "source_sha256": "b72bac4f3be00894103304f66d73507588d16d44167d56077b8f73a97cdb7fa8",
+      "success": false,
+      "label": "diskfree 0 path",
+      "log_sha256": "bb98505c01fa4505ae71638884e34582a940c634083c7dfa41f74249ec3b5115",
+      "errors": [
+        "Error C022 Line 6: Invalid numeric variable ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ004",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree drive bytes\r\nendproc\r\n",
+      "source_sha256": "61bbd60e322fcf0ce69a1579bb32d531fddf98321392dba184f944e6d2d94c03",
+      "success": true,
+      "label": "diskfree drive bytes",
+      "log_sha256": "fd5ddc59d80d8082dc8cadfd701591c646bca041243dd50ae07a938cba0369d4",
+      "errors": [],
+      "hex": "02 cf 25 8d 00 8e 00 94",
+      "asx_sha256": "496d207c0cb3457cc8987959db14992b303d93bfb77dc02f5ae0e22c9bcbbac4"
+    },
+    {
+      "name": "SQ005",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree drive path\r\nendproc\r\n",
+      "source_sha256": "811e5b13d2a727e1034c25a03a172fbac5b9085d8d7182417c18099004fa315f",
+      "success": false,
+      "label": "diskfree drive path",
+      "log_sha256": "05ee8100acc28b72d3fe5c50a4e2b4f35308ca6f42f37e0522e68ad8beee00b2",
+      "errors": [
+        "Error C022 Line 6: Invalid numeric variable ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ006",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0,bytes\r\nendproc\r\n",
+      "source_sha256": "7233eb7b5e06807b0148883f773d7fdf467e4a45ab2c74f6a39696504f0a8894",
+      "success": true,
+      "label": "diskfree 0,bytes",
+      "log_sha256": "80c81f86d1ce2c6804b21518ad40f637eafd573cee2259435eb8ea477029f372",
+      "errors": [],
+      "hex": "02 cf 25 b5 00 8e 00 94",
+      "asx_sha256": "d5a216cbffe8c9e06d9c4f81090657230be310f4a68432132d2fe306f5cfb360"
+    },
+    {
+      "name": "SQ007",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0,path\r\nendproc\r\n",
+      "source_sha256": "4292f1f97cc8ce3dfc98a79d61c30e96a04bf896ae6ba9e429a3c943cba9b1bb",
+      "success": false,
+      "label": "diskfree 0,path",
+      "log_sha256": "818c80a52f527071e2efd15502f5c489ef1d1473e1a00aa26401c654d4ea3ce9",
+      "errors": [
+        "Error C022 Line 6: Invalid numeric variable ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ008",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0 ,path\r\nendproc\r\n",
+      "source_sha256": "a05710b01a3d10870ae8dd25086b6bf3dd9d31d14730a1adcc576ec897036bad",
+      "success": false,
+      "label": "diskfree 0 ,path",
+      "log_sha256": "20929a5281fe0eb268dec16633bb2183c64aab2d9ab1e4e84f59cf90f5c04c53",
+      "errors": [
+        "Error C022 Line 6: Invalid numeric variable ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ009",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0,,path\r\nendproc\r\n",
+      "source_sha256": "6556d56e4693846c6976adaefff31e14e7399eae94abea0f7ec7941450fc2421",
+      "success": false,
+      "label": "diskfree 0,,path",
+      "log_sha256": "059025358c53f4e547ef4d315199a22360070b27ba7e537c151bad60df5ce06d",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> ,",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ010",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree ,0 path\r\nendproc\r\n",
+      "source_sha256": "0d5c30b50154660329677e636899e68efa47df3676c90510d9ed77d303be05c2",
+      "success": false,
+      "label": "diskfree ,0 path",
+      "log_sha256": "d43e9bc401034620781dba553de99b5e689c4156ad0b0323df5d5aeb3c5df8e0",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> ,",
+        "Error C025 Line 6: Invalid identifier ==> 0",
+        "Error C002 Line 6: Unexpected token ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ011",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0 path,\r\nendproc\r\n",
+      "source_sha256": "8f736c0210f9de4c6d1807469c63aa9a908bebc809ac0f8da7c745c9b53f54bd",
+      "success": false,
+      "label": "diskfree 0 path,",
+      "log_sha256": "fa99d208a979eb6808ec913f6d6a3a5550485dbc1ddbda2ab0eb7e102c25e4ca",
+      "errors": [
+        "Error C022 Line 6: Invalid numeric variable ==> PATH",
+        "Error C002 Line 6: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "SQ012",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0 (path)\r\nendproc\r\n",
+      "source_sha256": "0e85c06d0279ac6e4e41f3bbbe3f6028cceaa1f835bfeac4a76446d873c7bfe1",
+      "success": false,
+      "label": "diskfree 0 (path)",
+      "log_sha256": "88d7d2dd76d432065da8473911178f4d8b0f48f59361f89bd88c9cc84b7df01a",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> (",
+        "Error C002 Line 6: Unexpected token ==> PATH",
+        "Error C002 Line 6: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "SQ013",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree (drive) path\r\nendproc\r\n",
+      "source_sha256": "97ff726632aba211bf0d920006bc80d16615b7c1cb59eaa32e95af8327714938",
+      "success": false,
+      "label": "diskfree (drive) path",
+      "log_sha256": "fc135115b43ff240c8d22745bcd9a912a5b2b27d59e5c3eb388bd8dee6b10778",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> (",
+        "Error C022 Line 6: Invalid numeric variable ==> DRIVE",
+        "Error C002 Line 6: Unexpected token ==> )",
+        "Error C002 Line 6: Unexpected token ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ014",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree drive+1 path\r\nendproc\r\n",
+      "source_sha256": "bf72f22ae0ff8aa505f1b42a9910a7ea8cde49146cc3f19b6dbde0298fc42f5e",
+      "success": false,
+      "label": "diskfree drive+1 path",
+      "log_sha256": "8707717db2226f58622226e64be6e111d28c7b21fae189533ee800d4c7881ec1",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> +",
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ015",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree -1 path\r\nendproc\r\n",
+      "source_sha256": "25fd8b2328265a79c53cd532f5f2bef3a900cd2925ebcda9209b17d07b5c3cf0",
+      "success": false,
+      "label": "diskfree -1 path",
+      "log_sha256": "2f1fde466cd987829dbec327ee8bbb3b73aabf06093a0fa675cb5cb3ef6d31b3",
+      "errors": [
+        "Error C022 Line 6: Invalid numeric variable ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ016",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 26 path\r\nendproc\r\n",
+      "source_sha256": "419b10ee0b2104eb835022fee20a0727db2ff7c3ec96c4e41a06a23043475571",
+      "success": false,
+      "label": "diskfree 26 path",
+      "log_sha256": "7678539b710e9362bcc9564e234b59d7aa96765a8a3517d166885a0f10a49e9e",
+      "errors": [
+        "Error C022 Line 6: Invalid numeric variable ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ017",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 27 path\r\nendproc\r\n",
+      "source_sha256": "c4ac697e6ef47270a79cf5d12974ccba3d9a74b9b0da0c64f93353648e850dd5",
+      "success": false,
+      "label": "diskfree 27 path",
+      "log_sha256": "5e75a189c21317b46a9edd10c72bcd2194daa7f4b98cb47a8f68d867d8123aef",
+      "errors": [
+        "Error C022 Line 6: Invalid numeric variable ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ018",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 65535 path\r\nendproc\r\n",
+      "source_sha256": "fa363fbdc9507f603cdedd3c46ae692703b3f2d349b0f6dcd9a4d3512d421d67",
+      "success": false,
+      "label": "diskfree 65535 path",
+      "log_sha256": "4c11725fc04acba3820ad695e13ae46886c3cd85cf75df61a12739bcaf3c7326",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> 65535",
+        "Error C022 Line 6: Invalid numeric variable ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ019",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0 result\r\nendproc\r\n",
+      "source_sha256": "601fb82366b4041687f2d0b4b0ffde80377cf0c609df8d7d2cc6c05dc9028572",
+      "success": false,
+      "label": "diskfree 0 result",
+      "log_sha256": "d0b7a22a9d48bb351cced5e28ac44cbf692eac40cd226d27a0a8e86adaa82457",
+      "errors": [
+        "Error C022 Line 6: Invalid numeric variable ==> RESULT"
+      ]
+    },
+    {
+      "name": "SQ020",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0 realnum\r\nendproc\r\n",
+      "source_sha256": "4c2ff1d7bb9c497c32955bbcd2fe27ed01c6013171cb68a8ba3232fcf680f2fd",
+      "success": false,
+      "label": "diskfree 0 realnum",
+      "log_sha256": "13ffaf38e34f5f2322410261b1cafc41a13bd44dbdd98ecbf51ab1efd74a82a5",
+      "errors": [
+        "Error C022 Line 6: Invalid numeric variable ==> REALNUM"
+      ]
+    },
+    {
+      "name": "SQ021",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0 \"X\"\r\nendproc\r\n",
+      "source_sha256": "2f8a0b02c487ecb50213e7c26d162baeb28565c0256d509867b4a9b1e3a7ccae",
+      "success": false,
+      "label": "diskfree 0 \"X\"",
+      "log_sha256": "f800cc05bcf6ffca64c1c490b1800bb4ef29263fb1c18acb955bc8c987d3b2ff",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> X"
+      ]
+    },
+    {
+      "name": "SQ022",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0 $FDATE\r\nendproc\r\n",
+      "source_sha256": "8af0253b0740cc39044dfb2fa716c3f97db0caf8a62f482375222bf1a717911a",
+      "success": false,
+      "label": "diskfree 0 $FDATE",
+      "log_sha256": "461f125bb175e29723e595c6cba94f70eb909a8c85d2f47c0556de14e8710077",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> $FDATE"
+      ]
+    },
+    {
+      "name": "SQ023",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0 s0\r\nendproc\r\n",
+      "source_sha256": "433c763a5f89f141298d1523b73edd3e85b99905a9b44c8e5f1e99a195557836",
+      "success": false,
+      "label": "diskfree 0 s0",
+      "log_sha256": "c3813c0c2efd70773192ad90d36292b1e8270b3ffd371551404ca2b0d36ddf4c",
+      "errors": [
+        "Error C022 Line 6: Invalid numeric variable ==> S0"
+      ]
+    },
+    {
+      "name": "SQ024",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0 path+\"X\"\r\nendproc\r\n",
+      "source_sha256": "54665b7a1131343f2a8a8dd0045fe1b540051ae8df2312caffcbe37bab92f492",
+      "success": false,
+      "label": "diskfree 0 path+\"X\"",
+      "log_sha256": "31712beb8e19fbbf3418d34dfbcfc157f0b6d913068fc0dbaff64941e71c9fb7",
+      "errors": [
+        "Error C022 Line 6: Invalid numeric variable ==> PATH",
+        "Error C002 Line 6: Unexpected token ==> +",
+        "Error C002 Line 6: Unexpected token ==> X"
+      ]
+    },
+    {
+      "name": "SQ025",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0 path bytes\r\nendproc\r\n",
+      "source_sha256": "979570402f0cae3fb34378d3113da1195a535c309cc2c0056d1aed4009f70077",
+      "success": false,
+      "label": "diskfree 0 path bytes",
+      "log_sha256": "b1568b35c689593b855c234cf18c874cb99d08108a6b7462c1ed38a0fd86b3c2",
+      "errors": [
+        "Error C022 Line 6: Invalid numeric variable ==> PATH",
+        "Error C002 Line 6: Unexpected token ==> BYTES"
+      ]
+    },
+    {
+      "name": "SQ026",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0L path\r\nendproc\r\n",
+      "source_sha256": "9ddfa8ca27dbce1aeb247cb85782aeea5abd48d2a275160879cc23cdb2e3fc5d",
+      "success": false,
+      "label": "diskfree 0L path",
+      "log_sha256": "9299c30b71b04a46a0ab7954e3d69479173c7185b685d146548ab9abe7109dc0",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> 0L",
+        "Error C022 Line 6: Invalid numeric variable ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ027",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0.0 path\r\nendproc\r\n",
+      "source_sha256": "98cdeaa0cb5d30727705e213de6b92218b5a430773049f59c0148755cc91dbc1",
+      "success": false,
+      "label": "diskfree 0.0 path",
+      "log_sha256": "1320952d015db0e802e2156bb5eb20192c156e15d5a52c01ce5bde124ad0c211",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> 0.0",
+        "Error C022 Line 6: Invalid numeric variable ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ028",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0 ON\r\nendproc\r\n",
+      "source_sha256": "d5e09212315a0a1cceba00b8b2e2cc4a925144d350d4fb1a9726d4327781645b",
+      "success": false,
+      "label": "diskfree 0 ON",
+      "log_sha256": "c4ad2d5b0ba658911cc63f8694287aa9033c4a1c04772c931e858c0eff30f858",
+      "errors": [
+        "Error C022 Line 6: Invalid numeric variable ==> ON"
+      ]
+    },
+    {
+      "name": "SQ029",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree ON path\r\nendproc\r\n",
+      "source_sha256": "5942b30fc6a92246d0308608631c91e107b6cb2edfe94dd9cfce42190db375c7",
+      "success": false,
+      "label": "diskfree ON path",
+      "log_sha256": "5464ec88a2c370df0eaeba8b57775bd5fd5379488b9fca9de2e3dce7cf9cb8ba",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> ON",
+        "Error C022 Line 6: Invalid numeric variable ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ030",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir \r\nendproc\r\n",
+      "source_sha256": "d9be83c3c05e51e1ca8ea5df9454b48869854dde1234078642c88c547b3377be",
+      "success": false,
+      "label": "getdir ",
+      "log_sha256": "905bfd0d7055c6470b202bd56da01914676988128b87e1841a75bec345ff204f",
+      "errors": [
+        "Error C006 Line 6: Missing token",
+        "Error C006 Line 6: Missing token"
+      ]
+    },
+    {
+      "name": "SQ031",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0\r\nendproc\r\n",
+      "source_sha256": "1cdef7cef38e315336edb125994ce59c0565a4816ec18b5b7dc4a35e041b58dd",
+      "success": false,
+      "label": "getdir 0",
+      "log_sha256": "2331ca6ed92d92f75731be5f683c9a5987edc3045c1f337b2cfb2d6a279e340b",
+      "errors": [
+        "Error C006 Line 6: Missing token"
+      ]
+    },
+    {
+      "name": "SQ032",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0 bytes\r\nendproc\r\n",
+      "source_sha256": "52616415682a056233ffaeaa9eab58ef9ac9a2619842e756cb2ffbd8b4efa7c1",
+      "success": false,
+      "label": "getdir 0 bytes",
+      "log_sha256": "e02a3e8bc3fb7198d1985263a57b580c622205d2e3c6d2719cabdd3533f5d370",
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> BYTES"
+      ]
+    },
+    {
+      "name": "SQ033",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0 path\r\nendproc\r\n",
+      "source_sha256": "09cd9d98ed3f258ba09a1dd71524d7f47522425e87115ed13e7efd80c2bf27c9",
+      "success": true,
+      "label": "getdir 0 path",
+      "log_sha256": "c9778daa86c413a6c50a894a8c75cdf5d98f05067f6bd6a87aaa27d5e709db45",
+      "errors": [],
+      "hex": "02 cf 4b b5 00 8c 00 94",
+      "asx_sha256": "a2acabddcee31ec832e9393d2feaf0f225d8cc8d38bd7f57b8e12eed99d7de50"
+    },
+    {
+      "name": "SQ034",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir drive bytes\r\nendproc\r\n",
+      "source_sha256": "0470290441171e63cc662b07c4c24154696c4e90e3e77124c2dce8a8a6f3762e",
+      "success": false,
+      "label": "getdir drive bytes",
+      "log_sha256": "5c8287aefc5000ed25d84ac358ca3b87058a4f7e1672d47d7988d547d4e72573",
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> BYTES"
+      ]
+    },
+    {
+      "name": "SQ035",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir drive path\r\nendproc\r\n",
+      "source_sha256": "b8cd0d0b782c0225a42dded5c334a6f4825e4d2516f6fcf7de1d9a9536a5ccad",
+      "success": true,
+      "label": "getdir drive path",
+      "log_sha256": "8cb734d2a95f1ab4818c3ee681fdc9c509ac2f8961207c3c6d8b1b37f084c908",
+      "errors": [],
+      "hex": "02 cf 4b 8d 00 8c 00 94",
+      "asx_sha256": "59b673fbc63da667f6ea0818d6f660ff13ce634ca5d6d887a6cac706c5ae4301"
+    },
+    {
+      "name": "SQ036",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0,bytes\r\nendproc\r\n",
+      "source_sha256": "d2f77cde9869989c1e4615e4dd16c614772b63208ebb0a96dd6baf762ab95ff0",
+      "success": false,
+      "label": "getdir 0,bytes",
+      "log_sha256": "b034d89dc386d12bcb909c1c3dccf7f4db1902d26b83f661057566754f2063d8",
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> BYTES"
+      ]
+    },
+    {
+      "name": "SQ037",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0,path\r\nendproc\r\n",
+      "source_sha256": "92868ea50d9ca0957c7274d58e51d9fe1dfce2e7db3d16892df807db4424186a",
+      "success": true,
+      "label": "getdir 0,path",
+      "log_sha256": "b77bbdd1204139baf58e48c43d7b27c1d9f75ebb61b513501316c5f3032c4038",
+      "errors": [],
+      "hex": "02 cf 4b b5 00 8c 00 94",
+      "asx_sha256": "a2acabddcee31ec832e9393d2feaf0f225d8cc8d38bd7f57b8e12eed99d7de50"
+    },
+    {
+      "name": "SQ038",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0 ,path\r\nendproc\r\n",
+      "source_sha256": "fdea125e65961160d2ac25e3aa23b3944fb70be8ce06886e3e789dceb0392e2f",
+      "success": true,
+      "label": "getdir 0 ,path",
+      "log_sha256": "282717c67f9b1e00fe7f67795f3021ff35290a121ed45da457cfa57f0208ec08",
+      "errors": [],
+      "hex": "02 cf 4b b5 00 8c 00 94",
+      "asx_sha256": "a2acabddcee31ec832e9393d2feaf0f225d8cc8d38bd7f57b8e12eed99d7de50"
+    },
+    {
+      "name": "SQ039",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0,,path\r\nendproc\r\n",
+      "source_sha256": "96c2cfd96e0aba9af6410136f5ea312792c19c2bf9077251f10cc06a02415422",
+      "success": false,
+      "label": "getdir 0,,path",
+      "log_sha256": "b4af96047c57e0c4b3bae2d61d2a05f8fe999cb6131aae77211d27d9a92de004",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> ,",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ040",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir ,0 path\r\nendproc\r\n",
+      "source_sha256": "09fc94b51d9823dfa02384478e22ad4ba063876e683fda41bc1840b383d1f434",
+      "success": false,
+      "label": "getdir ,0 path",
+      "log_sha256": "d96fd62549ec32576f926223dbaec2d031bc7834064334148be436ea145a29cc",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> ,",
+        "Error C025 Line 6: Invalid identifier ==> 0",
+        "Error C002 Line 6: Unexpected token ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ041",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0 path,\r\nendproc\r\n",
+      "source_sha256": "61d8fb983507cb240f5ef618c67e95970e89a8cbef327b22b704a7d0a363a604",
+      "success": false,
+      "label": "getdir 0 path,",
+      "log_sha256": "02514bea2f5c18099096d938d0af03f920dd612d3ecd3401ff2d1abb5ce04215",
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "SQ042",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0 (path)\r\nendproc\r\n",
+      "source_sha256": "f1cc1ef0a0971ed11f4313874808ce86a42a4114365df910081f201da829b77b",
+      "success": false,
+      "label": "getdir 0 (path)",
+      "log_sha256": "e063927739a043d6774c02c0b65bb1585f63b9346fa2a480f673e5fe02c92210",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> (",
+        "Error C002 Line 6: Unexpected token ==> PATH",
+        "Error C002 Line 6: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "SQ043",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir (drive) path\r\nendproc\r\n",
+      "source_sha256": "3b19d13589f5a09a9dd3da4f710b109882af94bceefd8432ba1c87e69a4b0a2e",
+      "success": false,
+      "label": "getdir (drive) path",
+      "log_sha256": "4f13fe2c613bc0de48735e353c23f5ed0c2cb5ec00865dc163c891b82693d1e3",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> (",
+        "Error C024 Line 6: Invalid string variable ==> DRIVE",
+        "Error C002 Line 6: Unexpected token ==> )",
+        "Error C002 Line 6: Unexpected token ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ044",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir drive+1 path\r\nendproc\r\n",
+      "source_sha256": "13800d5975a3b74ecc8ae92c0e57a134c703fc417ede846ca7f5485c74aaabde",
+      "success": false,
+      "label": "getdir drive+1 path",
+      "log_sha256": "e7c7b21df1ad23d6cb290c37a69008add0cda8c92c7232bc5d6d73ff2c1cf3b9",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> +",
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ045",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir -1 path\r\nendproc\r\n",
+      "source_sha256": "9c269524f693eadfb4f6344aafc68ff4939c7c8915495026326dd45f33c231a5",
+      "success": true,
+      "label": "getdir -1 path",
+      "log_sha256": "ded9ff60b34c4f9e8fd3df63fca1f832cecf5af8f723a77207dc2c0a4d797beb",
+      "errors": [],
+      "hex": "02 cf 4b ab ff ff 8c 00 94",
+      "asx_sha256": "6dbe76444bb5954d510e1e47c414ec6cc1c87290e5bdf4fc00ddaf255126203f"
+    },
+    {
+      "name": "SQ046",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 26 path\r\nendproc\r\n",
+      "source_sha256": "dfe8cec4567bd3f1b3c66ff74df66948249f83669b1687560c3a135f46b8e5cd",
+      "success": true,
+      "label": "getdir 26 path",
+      "log_sha256": "1b8b1a0a8e2dd8aee4904e9d250302146b29ad0199e845950c4bb5b81e27ce82",
+      "errors": [],
+      "hex": "02 cf 4b b5 1a 8c 00 94",
+      "asx_sha256": "6cab995e775f9092e4b6e2ba0fac9d6a54edb89caf8ae1db0f0e6d9c6dc7d53a"
+    },
+    {
+      "name": "SQ047",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 27 path\r\nendproc\r\n",
+      "source_sha256": "4b4095caf7b01c99c1914240f12a051ad29de78a3fae6bcc37328e2c88f72f9b",
+      "success": true,
+      "label": "getdir 27 path",
+      "log_sha256": "c5dfc5c1ef657d2d0be76bf5d2b4f604d5f85ef175ab265b21e7f91510306f2b",
+      "errors": [],
+      "hex": "02 cf 4b b5 1b 8c 00 94",
+      "asx_sha256": "9cf8ee3276f471f382b31f815f7d9e8fedf1327ccc63b2e43603a4f411243bb4"
+    },
+    {
+      "name": "SQ048",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 65535 path\r\nendproc\r\n",
+      "source_sha256": "aba16ed3dc57da18c3f21d29d999377ac2708516e634b446ac303732184e0f7e",
+      "success": false,
+      "label": "getdir 65535 path",
+      "log_sha256": "d87dd28fca067a9d7cd87eddedce52188e14c8352efde5f95b124c52f9678929",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> 65535"
+      ]
+    },
+    {
+      "name": "SQ049",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0 result\r\nendproc\r\n",
+      "source_sha256": "ac48f3f9ff0f7e94cd668ee84ab49cdca22666dcc1a4870f0bbfa6c01dcbd5ab",
+      "success": false,
+      "label": "getdir 0 result",
+      "log_sha256": "a72d7c4819ed0b32df88d941757a98fadb0ff388225d9f39bdd427c9178bef3f",
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> RESULT"
+      ]
+    },
+    {
+      "name": "SQ050",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0 realnum\r\nendproc\r\n",
+      "source_sha256": "55f6e9915bef7c774912cbe7f5713751cd9caab68689492a3217ffe1b2e9bd11",
+      "success": false,
+      "label": "getdir 0 realnum",
+      "log_sha256": "79b27cf6a38829ee1d733b5c29daf15d05ba4f6a945ea75bf46b0b5a0a60d4af",
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> REALNUM"
+      ]
+    },
+    {
+      "name": "SQ051",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0 \"X\"\r\nendproc\r\n",
+      "source_sha256": "fc087d9b7a05070c1e6193c205650acd9c1305d48edfa2a51430de64ce588020",
+      "success": false,
+      "label": "getdir 0 \"X\"",
+      "log_sha256": "64111190119bfc844c7763f5e93731e83f1de7756346ecd1beefefaba059631e",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> X"
+      ]
+    },
+    {
+      "name": "SQ052",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0 $FDATE\r\nendproc\r\n",
+      "source_sha256": "2f43f04a8d78ed72306cfdba351717669455b942400113764cfc80635e1b5bbb",
+      "success": false,
+      "label": "getdir 0 $FDATE",
+      "log_sha256": "198173c5df349e03923fdd8fc450c4e082d2cdf9585c05da713c75518d407e9f",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> $FDATE"
+      ]
+    },
+    {
+      "name": "SQ053",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0 s0\r\nendproc\r\n",
+      "source_sha256": "c96e174e5f5c21c37a67c2c311421e1d5f1dcf8631ce17b94898cab80995d9ea",
+      "success": true,
+      "label": "getdir 0 s0",
+      "log_sha256": "37da8ab65f0c842d1a954a0d402d3ac71a95467e431b6cfb56be061ce66c48c4",
+      "errors": [],
+      "hex": "02 cf 4b b5 00 64 00 94",
+      "asx_sha256": "67341feca9c2fee232d65b669076b8700325974e461a39b378d4c2ff04580422"
+    },
+    {
+      "name": "SQ054",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0 path+\"X\"\r\nendproc\r\n",
+      "source_sha256": "1dad2d2a879344d1e1d5568059af136188d3cc09603d1860592ee6492e6def25",
+      "success": false,
+      "label": "getdir 0 path+\"X\"",
+      "log_sha256": "7e79bad1d6f709c41325db42cb128f87e7c170d3b5994b82d8b01ba7a423a04c",
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> +",
+        "Error C002 Line 6: Unexpected token ==> X"
+      ]
+    },
+    {
+      "name": "SQ055",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0 path bytes\r\nendproc\r\n",
+      "source_sha256": "c21441af04017ca57132be4df76b1acb5b3752b86ae9451ecd70946586201579",
+      "success": false,
+      "label": "getdir 0 path bytes",
+      "log_sha256": "64246cbcdf915ca5169b095651dd3655032868d8073421b15a3a04de69273a9a",
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> BYTES"
+      ]
+    },
+    {
+      "name": "SQ056",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0L path\r\nendproc\r\n",
+      "source_sha256": "a1262e3e5e26b7413dcbc98154b61a416683d409b9d7ba8e550154295f33aa9f",
+      "success": false,
+      "label": "getdir 0L path",
+      "log_sha256": "bf9f658ed0b39691ed5be86c76e316054977d7537c4f72ebe0b3f69bf8ce92ec",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> 0L"
+      ]
+    },
+    {
+      "name": "SQ057",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0.0 path\r\nendproc\r\n",
+      "source_sha256": "24cf4dd88f00e9c2982fb3248e17d03ae666d45f8c7c69f59ba6be1b5601d534",
+      "success": false,
+      "label": "getdir 0.0 path",
+      "log_sha256": "464116c9551b0d8c302c7d7dd3f96376cded1990dd1e1dac86e9e5e8a32ff0bd",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> 0.0"
+      ]
+    },
+    {
+      "name": "SQ058",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0 ON\r\nendproc\r\n",
+      "source_sha256": "cfe00680c3a4a64afe4bc8e0954f666f73942c87a26d540f8d40a287f467294d",
+      "success": false,
+      "label": "getdir 0 ON",
+      "log_sha256": "53d69e04351cd317386f7f57611644eb406c6b9187d8f82f238a0e55ce1c8022",
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> ON"
+      ]
+    },
+    {
+      "name": "SQ059",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir ON path\r\nendproc\r\n",
+      "source_sha256": "66f44618b0a607e0bebc02ca0888c249aa4c4ebd221bf8f270157cc9e2d1edad",
+      "success": false,
+      "label": "getdir ON path",
+      "log_sha256": "04d3bb50c89a7c25e17877440950b4a8903ea82a91b60e43a80b04709afff421",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> ON"
+      ]
+    },
+    {
+      "name": "SQ060",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndosver \r\nendproc\r\n",
+      "source_sha256": "4ab758f50faab7a56b2f3c416d04494aac48284e205eb9e897af8e595ac283a0",
+      "success": false,
+      "label": "dosver ",
+      "log_sha256": "b2d6c99a232f0018a0dcef37ca53cc203afcfe7766df6fbe69999bffba0dd2c3",
+      "errors": [
+        "Error C006 Line 6: Missing token"
+      ]
+    },
+    {
+      "name": "SQ061",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndosver path\r\nendproc\r\n",
+      "source_sha256": "4d2b602b443bcb271b79db7d43f8ae2bd93ee84aacf6208792478f22086a1f62",
+      "success": true,
+      "label": "dosver path",
+      "log_sha256": "419e601544c3cedb2e064f0666bc93d675cc429b1b3e33e6977f89ceb387d1ed",
+      "errors": [],
+      "hex": "02 cf 29 8c 00 94",
+      "asx_sha256": "b72a3e3b11e0180c886a5ee42fdf98359e6590094b7895bf1d491374b502d5b8"
+    },
+    {
+      "name": "SQ062",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndosver value\r\nendproc\r\n",
+      "source_sha256": "b700a553525ebfcee017f4a1557267bc20e57b2fc7a49030b9a51693c9ac86d2",
+      "success": true,
+      "label": "dosver value",
+      "log_sha256": "ff1e585dcdc5d3352a21bec1499459be6ff3d80c21a63a5d7ac6edcb865e4aa7",
+      "errors": [],
+      "hex": "02 cf 29 8c 01 94",
+      "asx_sha256": "eebd6e2856de20dff44efe4fcab87ecf201d4911895564dbe7c3e7dd94791fa6"
+    },
+    {
+      "name": "SQ063",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndosver s0\r\nendproc\r\n",
+      "source_sha256": "a3ea36b33187c273143a0f894beeb4bf22a799ec210164bacd656ec187585aaf",
+      "success": true,
+      "label": "dosver s0",
+      "log_sha256": "1b7e7d6557b3ece24f1948328e4d43d9c154bd7d7f62db4ab3cba3da700cb1b4",
+      "errors": [],
+      "hex": "02 cf 29 64 00 94",
+      "asx_sha256": "68b348be97cd94f308a118c55bc62e1262291ee8b25aa0cc052575ccf5a8bb23"
+    },
+    {
+      "name": "SQ064",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndosver $FDATE\r\nendproc\r\n",
+      "source_sha256": "b3b3aec071074accc3469630f824bba1e37288512b35eee52313e158a3cd8dfa",
+      "success": false,
+      "label": "dosver $FDATE",
+      "log_sha256": "a3e3220ad4d26d0b04c27dac6cbb6355bf7fb900cf17fb558852e5b27f5a988b",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> $FDATE"
+      ]
+    },
+    {
+      "name": "SQ065",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndosver $NULL\r\nendproc\r\n",
+      "source_sha256": "dce580ea7389408804cd0fe24565642b2102e1bed0ef8649489e9485a94da5a9",
+      "success": false,
+      "label": "dosver $NULL",
+      "log_sha256": "a30367b2064efe3b2b4781044cc783807f5d626e2bb5372980fe1f6ba1657a42",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> $NULL"
+      ]
+    },
+    {
+      "name": "SQ066",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndosver \"\"\r\nendproc\r\n",
+      "source_sha256": "f58d13b1403de793dc88ed0ab820167881ecfac168adf36e9fcda9a21f13abef",
+      "success": false,
+      "label": "dosver \"\"",
+      "log_sha256": "7daa1136f19aaa659819f52bc279f4ee8a490399baf02525a288afab217dfef9",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> $NULL"
+      ]
+    },
+    {
+      "name": "SQ067",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndosver result\r\nendproc\r\n",
+      "source_sha256": "6362e44aadff48c57c65107aa723c070890b0be586bfd8beb206b97eec4a0a2c",
+      "success": false,
+      "label": "dosver result",
+      "log_sha256": "b32ccd0cc605f5977935c80f38ebc24b814b0ea6f8c2812c0642928cdff27026",
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> RESULT"
+      ]
+    },
+    {
+      "name": "SQ068",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndosver bytes\r\nendproc\r\n",
+      "source_sha256": "f04d7d28df7b2678cf484b221c17a835773f04d33a26466d9b86042cc79d942f",
+      "success": false,
+      "label": "dosver bytes",
+      "log_sha256": "bcc204ef3ae5481cb4b91c4a53dbf9fee959fd0ce93f269feeb9fb6187648a22",
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> BYTES"
+      ]
+    },
+    {
+      "name": "SQ069",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndosver realnum\r\nendproc\r\n",
+      "source_sha256": "38626b7b231a6f9a73a363958f935f7ebaffdddec93dec29848f04495e91c9f2",
+      "success": false,
+      "label": "dosver realnum",
+      "log_sha256": "752cb7a9cf178524170318ab96f8c85802f39b7acdbc8cd901e715f345e95400",
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> REALNUM"
+      ]
+    },
+    {
+      "name": "SQ070",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndosver path,\r\nendproc\r\n",
+      "source_sha256": "9d2920911842b3c15e47dd5831c169e8d40727ee6719c7e6dcc6923d351fafc0",
+      "success": false,
+      "label": "dosver path,",
+      "log_sha256": "31265287be9bbcd85ceae26fed509f5e5de4a155c8f69976b92ccf3038a942d4",
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "SQ071",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndosver ,path\r\nendproc\r\n",
+      "source_sha256": "86039239ef48b1ad7b4a204350bfd816024793c31d97589b9ec78c7e5684d6b9",
+      "success": false,
+      "label": "dosver ,path",
+      "log_sha256": "4e00a1c6b26182aafc7821214413d0511dfffcc8b083238a8ce07794d2afe664",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> ,",
+        "Error C002 Line 6: Unexpected token ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ072",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndosver (path)\r\nendproc\r\n",
+      "source_sha256": "dd00b4b9520b57255d4911cc0c0ea182b881d23c3ab5b5fbf437647342b13fb2",
+      "success": false,
+      "label": "dosver (path)",
+      "log_sha256": "fd09d0aa03d4c5007aa920dc8a487820a0d2c8be872b40fe07fb29b52cf98588",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> (",
+        "Error C002 Line 6: Unexpected token ==> PATH",
+        "Error C002 Line 6: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "SQ073",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndosver path+\"X\"\r\nendproc\r\n",
+      "source_sha256": "fc38c31cce4f1d0c910e8cc0da84089b3085e146fce36a5c341ef46344f8a91d",
+      "success": false,
+      "label": "dosver path+\"X\"",
+      "log_sha256": "b99006669b4fc2e8d0d200d43951a2b62750cc6d61636ced8610f1e43819e748",
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> +",
+        "Error C002 Line 6: Unexpected token ==> X"
+      ]
+    },
+    {
+      "name": "SQ074",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndosver path value\r\nendproc\r\n",
+      "source_sha256": "84576b510b89921a0cda7597c056fcc35008c6f5fa6d043d7dc2e061369cc853",
+      "success": false,
+      "label": "dosver path value",
+      "log_sha256": "fc62630f13e6f491495a3f59a7147d3cbc68ca641f3de9a4c391323c432f69ea",
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> VALUE"
+      ]
+    },
+    {
+      "name": "SQ075",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\nlong localval\r\ndiskfree 0 localval\r\nendproc\r\n",
+      "source_sha256": "034dc94869bc79e7811d2fe5ceece5142f39ed239c3b4444518f413927af4a6c",
+      "success": true,
+      "label": "long localval\ndiskfree 0 localval",
+      "log_sha256": "2cfd71c9d698bc907a44c3857f6b0f3788faba3ce7575a3c4ad07a2f12c57383",
+      "errors": [],
+      "hex": "02 d2 04 00 cf 25 b5 00 a2 00 00 95",
+      "asx_sha256": "945fb42c8aa7e9496c2e9b6621a91412f406aacac4a2896475523bf9b3c5b3a9"
+    },
+    {
+      "name": "SQ076",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ncall worker with 0L\r\nendproc\r\nproc worker\r\nlongparm paramval\r\ndiskfree 0 paramval\r\nendproc\r\n",
+      "source_sha256": "1b9b4cbc1dae9515e0c33101339573eccb07df96b59826eb7b9a3c56c66ae9a9",
+      "success": true,
+      "label": "call worker with 0L",
+      "log_sha256": "239023d924f08f203f605252b6fecdb4ec656723d4ca056f97795bf5ae15b726",
+      "errors": [],
+      "hex": "02 cf d0 cc ac 00 00 00 00 c8 12 00 00 00 d2 fc ff 94 cf 25 b5 00 98 0a 00 95",
+      "asx_sha256": "a342fef2a88aafb26b4d8141023e1bd0e0a35fa3ac9d9980d52f5cc17877aedd"
+    },
+    {
+      "name": "SQ077",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\nstring localval\r\ngetdir 0 localval\r\nendproc\r\n",
+      "source_sha256": "5dff0156e122ceb53830c8b5e018cb3122d489310905ce8a9513e7cbb67e1b9a",
+      "success": true,
+      "label": "string localval\ngetdir 0 localval",
+      "log_sha256": "0ee39c2d121997d6539c73547a3573b87b5a02d502cc7b26a9fcee9044788c56",
+      "errors": [],
+      "hex": "02 d2 51 00 cf 4b b5 00 a0 00 00 95",
+      "asx_sha256": "ed9832c599cd5423e84d7fa072d5048cd0d26cf6ce3825c2115346c1bfba7a22"
+    },
+    {
+      "name": "SQ078",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ncall worker with \"X\"\r\nendproc\r\nproc worker\r\nstrparm paramval\r\ngetdir 0 paramval\r\nendproc\r\n",
+      "source_sha256": "8c9a9edf04bdb70becee5dd0fabe918e17668e6c087fd60e15c8fc16107be9b2",
+      "success": true,
+      "label": "call worker with \"X\"",
+      "log_sha256": "5d5a1a6b337df58b2f89be5829c667fe3b6852d4b24bc95da7c1cbdd144f6d89",
+      "errors": [],
+      "hex": "02 cf d0 cd aa b4 8d 41 c8 11 00 00 00 d2 af ff 94 cf 4b b5 00 96 57 00 95",
+      "asx_sha256": "41114f7a5c041b02c1fed2bf03d516a3daec3ee9fd79084ceb4d8779635312f8"
+    },
+    {
+      "name": "SQ079",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\nstring localval\r\ndosver localval\r\nendproc\r\n",
+      "source_sha256": "e64e4fae1a8cebafce69b85b782d71056c496e8ec90d67a0be506361bb3acf4b",
+      "success": true,
+      "label": "string localval\ndosver localval",
+      "log_sha256": "2aec52dc9053e33cdb5f5fcaf6e7f6fff2c29e312fb8d71e35f6f77f52c3cadb",
+      "errors": [],
+      "hex": "02 d2 51 00 cf 29 a0 00 00 95",
+      "asx_sha256": "1a2792b815d2811eda5f32423693526e119cf5eb4744e53c873c78559a68e54a"
+    },
+    {
+      "name": "SQ080",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ncall worker with \"X\"\r\nendproc\r\nproc worker\r\nstrparm paramval\r\ndosver paramval\r\nendproc\r\n",
+      "source_sha256": "dba6f01e69ac431a57efd2abc363aab179d916112beeb9ddf2ac56d81cec963b",
+      "success": true,
+      "label": "call worker with \"X\"",
+      "log_sha256": "4808849890812988319dc6d658f3f16c999c45f364da28c3a5abda057386af72",
+      "errors": [],
+      "hex": "02 cf d0 cd aa b4 8d 41 c8 11 00 00 00 d2 af ff 94 cf 29 96 57 00 95",
+      "asx_sha256": "b75ddb3b81c317a3b6559900167cf8ad5b50f48f3a2803fb7ad018407ddc06af"
+    },
+    {
+      "name": "SQ081",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree -1 bytes\r\nendproc\r\n",
+      "source_sha256": "4b9a4cb8d51cbd9220792dd25feb1039b3155850dd52f0881cb5a7c70965e0ec",
+      "success": true,
+      "label": "diskfree -1 bytes",
+      "log_sha256": "b340d57d646aeed7edaae6cf73358fd38f09a48121454b3890d69cdcffe362a2",
+      "errors": [],
+      "hex": "02 cf 25 ab ff ff 8e 00 94",
+      "asx_sha256": "f72d5eedf68dd4b8d6a19ea826783318d85c3da2e3d985e6373b3a7f4d7cda04"
+    },
+    {
+      "name": "SQ082",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 0 bytes\r\nendproc\r\n",
+      "source_sha256": "637cb0fbdd110bafa5a81013fbd4f08603b24e5e947c1583df23d41f1915f0d4",
+      "success": true,
+      "label": "diskfree 0 bytes",
+      "log_sha256": "1d5c4401d0ced52357614f1c18b6218147a200d29e68447f30e4e8d95af7bff0",
+      "errors": [],
+      "hex": "02 cf 25 b5 00 8e 00 94",
+      "asx_sha256": "d5a216cbffe8c9e06d9c4f81090657230be310f4a68432132d2fe306f5cfb360"
+    },
+    {
+      "name": "SQ083",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 1 bytes\r\nendproc\r\n",
+      "source_sha256": "d75c2a851e8cbaa59eaecdda69cb0bb8cde221ba19d2be9c4efd0fd310bb0c84",
+      "success": true,
+      "label": "diskfree 1 bytes",
+      "log_sha256": "6fe5e310ffce6e441a9f7d89c157c78bf7bdef22773c13200b5d05e25ec2cb9f",
+      "errors": [],
+      "hex": "02 cf 25 b5 01 8e 00 94",
+      "asx_sha256": "393d0c6008e0616a3433191696b1a40dfcdb6b35b5d8f3bf2eee9ae7fa1fc38c"
+    },
+    {
+      "name": "SQ084",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 26 bytes\r\nendproc\r\n",
+      "source_sha256": "ba2485ec963fe2b60b34ac0d57d623f151bbcba85adca2981297a5cbc69a0a07",
+      "success": true,
+      "label": "diskfree 26 bytes",
+      "log_sha256": "f87a9e389547313b0ca543decab4db2aa4be9b1c6ba01f2b9bf9aeee7363d3a3",
+      "errors": [],
+      "hex": "02 cf 25 b5 1a 8e 00 94",
+      "asx_sha256": "e8c725678770ebf04c5cf29b1e5816b68cd703265c275f9c32acd6e1bb010679"
+    },
+    {
+      "name": "SQ085",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 27 bytes\r\nendproc\r\n",
+      "source_sha256": "96897449a22e785d7124cadafada4cc12ab27c6c67e94f6bd4443a85539b7c4a",
+      "success": true,
+      "label": "diskfree 27 bytes",
+      "log_sha256": "764d2a5403136b1bb3cc5736022243df4c647dce47503293600e98f62b11f92a",
+      "errors": [],
+      "hex": "02 cf 25 b5 1b 8e 00 94",
+      "asx_sha256": "441eab57c409d15b0b850222438bb633aa05722df478403fccc5d5f7e749f44b"
+    },
+    {
+      "name": "SQ086",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 255 bytes\r\nendproc\r\n",
+      "source_sha256": "3a5544867884a5e753b50e49730c439d540f4ebbcab8d4ed5e9abac267e5cc44",
+      "success": true,
+      "label": "diskfree 255 bytes",
+      "log_sha256": "af72724d4ef2dcbcb3750a419ec3d33bc1327eaed648736bd0a4446eae91fe2b",
+      "errors": [],
+      "hex": "02 cf 25 b5 ff 8e 00 94",
+      "asx_sha256": "b84d07ab28a908f5c11e9631dda514f2eee0d691ac830b959d410d9bf18e29f6"
+    },
+    {
+      "name": "SQ087",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 256 bytes\r\nendproc\r\n",
+      "source_sha256": "d91b492c279106bdcc39c47540e5fe1e880b03b26e6cc1fb8d3ce9a05c90db89",
+      "success": true,
+      "label": "diskfree 256 bytes",
+      "log_sha256": "da429115aedab621f29a3eb66f6d3667d937f116bb4d84ba0efabc414cc7d516",
+      "errors": [],
+      "hex": "02 cf 25 ab 00 01 8e 00 94",
+      "asx_sha256": "a70c8362068ada6f539c11df79cecbbd9e26213fd29c848cee2b66160dd3f646"
+    },
+    {
+      "name": "SQ088",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 32767 bytes\r\nendproc\r\n",
+      "source_sha256": "a6aac5e7f2609a6cd876b65cd8353559a33626c1ae862fa09e70ab9ccbdbcc52",
+      "success": true,
+      "label": "diskfree 32767 bytes",
+      "log_sha256": "0fc20453809acce33e1bd5b055234c4b0829c0083eff69cb6cd0673527ae2dbe",
+      "errors": [],
+      "hex": "02 cf 25 ab ff 7f 8e 00 94",
+      "asx_sha256": "bdd5baaa1aab5ea5c0e3a8165c9c2a7e4b5562386c5fc42ca88504cb01ac279f"
+    },
+    {
+      "name": "SQ089",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 32768 bytes\r\nendproc\r\n",
+      "source_sha256": "531320f2f4429972a183b96e3f7292e089c30461ec701a5202771ba72936a354",
+      "success": false,
+      "label": "diskfree 32768 bytes",
+      "log_sha256": "e93eea0b76dc9d57d3eccccc03e1078092b5dec818e7617edeb818d93d7546eb",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> 32768"
+      ]
+    },
+    {
+      "name": "SQ090",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 65535 bytes\r\nendproc\r\n",
+      "source_sha256": "1e583547d354ec224ef120d9def006bf3c513c92c3269e3466924ad092413db0",
+      "success": false,
+      "label": "diskfree 65535 bytes",
+      "log_sha256": "8f09dec84dee0e8f600c26d92fe1ff65a46056fad044f5e820e25f1fad66f2e1",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> 65535"
+      ]
+    },
+    {
+      "name": "SQ091",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 1L bytes\r\nendproc\r\n",
+      "source_sha256": "ff713837aab9e7313b99649323ccfa1ad90a3401ebdc85f6b410b6d0037aa57c",
+      "success": false,
+      "label": "diskfree 1L bytes",
+      "log_sha256": "45ff6c7b40811c222293fde39b97c03c3b8f938a7ba50e27066b6d8cb6a2f67a",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> 1L"
+      ]
+    },
+    {
+      "name": "SQ092",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 1.0 bytes\r\nendproc\r\n",
+      "source_sha256": "8d4fc09bd18f05266e75a9627b9ad855e11bf4cdfe916d45411b0e3b0bd09395",
+      "success": false,
+      "label": "diskfree 1.0 bytes",
+      "log_sha256": "101206a2f8370e4bf957d6e9f578e17f602eed52f0cf7366a1bca1a3aff1b3df",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> 1.0"
+      ]
+    },
+    {
+      "name": "SQ093",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree 1+1 bytes\r\nendproc\r\n",
+      "source_sha256": "adda86dea5c8e37932bcdcf8d33bf92837bd15958f5f95affa9a0bbd61e2dc24",
+      "success": false,
+      "label": "diskfree 1+1 bytes",
+      "log_sha256": "9afbbb9c2c9b236e677ca37b2025bfceef4d11e6170f380bc3d4b1e2dc0a5b88",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> +",
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> BYTES"
+      ]
+    },
+    {
+      "name": "SQ094",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree (1) bytes\r\nendproc\r\n",
+      "source_sha256": "1b25f892285f635609bcec5a5c3360c204c1b4b802a1630bbe7fb88135242cea",
+      "success": false,
+      "label": "diskfree (1) bytes",
+      "log_sha256": "957b624c4bcff51a1d20ad2cb4a4515a11a7d085037e91b5910a48fdee47bb41",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> (",
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> )",
+        "Error C002 Line 6: Unexpected token ==> BYTES"
+      ]
+    },
+    {
+      "name": "SQ095",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree i0 bytes\r\nendproc\r\n",
+      "source_sha256": "75b14b21956ee70001abf2ee014b6e7a737d00ee6dfc6996f8427ea7c19263c0",
+      "success": false,
+      "label": "diskfree i0 bytes",
+      "log_sha256": "69b8e04d24e0a5998c378ca2f85baf96d5a21022badd478b1fbc90d49f9d7523",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> I0"
+      ]
+    },
+    {
+      "name": "SQ096",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ndiskfree failure bytes\r\nendproc\r\n",
+      "source_sha256": "881f69f35de3eea35f2b7a21f5e6258c52982becf58cd76440d055f98c412493",
+      "success": true,
+      "label": "diskfree failure bytes",
+      "log_sha256": "f16788104e8bc7650a6414ce5295631a7e42c5134022f2fbbacaf31ea517f065",
+      "errors": [],
+      "hex": "02 cf 25 6f 15 8e 00 94",
+      "asx_sha256": "6bc72755dd741741edf7f17e20ba2acac5eec9ae01f74acc3b20d845df8fa409"
+    },
+    {
+      "name": "SQ097",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir -1 path\r\nendproc\r\n",
+      "source_sha256": "9c269524f693eadfb4f6344aafc68ff4939c7c8915495026326dd45f33c231a5",
+      "success": true,
+      "label": "getdir -1 path",
+      "log_sha256": "82eebe06108e8a43d2a9b2e34b3ec8d67bab63dccc2b74d92f8f83b8ded53ed0",
+      "errors": [],
+      "hex": "02 cf 4b ab ff ff 8c 00 94",
+      "asx_sha256": "6dbe76444bb5954d510e1e47c414ec6cc1c87290e5bdf4fc00ddaf255126203f"
+    },
+    {
+      "name": "SQ098",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 0 path\r\nendproc\r\n",
+      "source_sha256": "09cd9d98ed3f258ba09a1dd71524d7f47522425e87115ed13e7efd80c2bf27c9",
+      "success": true,
+      "label": "getdir 0 path",
+      "log_sha256": "2533e8db8df06b6bd9982e6d386927a3e459d0d457c2f93d0c47f50c0a1ce85d",
+      "errors": [],
+      "hex": "02 cf 4b b5 00 8c 00 94",
+      "asx_sha256": "a2acabddcee31ec832e9393d2feaf0f225d8cc8d38bd7f57b8e12eed99d7de50"
+    },
+    {
+      "name": "SQ099",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 1 path\r\nendproc\r\n",
+      "source_sha256": "de1dedb779260ea19dd71bd8d30a35e02b1677c24f4cb960254731cddc9e56a3",
+      "success": true,
+      "label": "getdir 1 path",
+      "log_sha256": "d1ffcf0a2f57a945a7188ccb754cf0ca8afbe63613bd0847d70e4b9624444ba1",
+      "errors": [],
+      "hex": "02 cf 4b b5 01 8c 00 94",
+      "asx_sha256": "e90ea4d44577a69101742fa35b66b05c2ce6bd9481baffcc572974bc77e6fa3c"
+    },
+    {
+      "name": "SQ100",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 26 path\r\nendproc\r\n",
+      "source_sha256": "dfe8cec4567bd3f1b3c66ff74df66948249f83669b1687560c3a135f46b8e5cd",
+      "success": true,
+      "label": "getdir 26 path",
+      "log_sha256": "23374a82c7bb4ee8cd7a0c5400ef5599665d223a1f497720d4b385b9285aad13",
+      "errors": [],
+      "hex": "02 cf 4b b5 1a 8c 00 94",
+      "asx_sha256": "6cab995e775f9092e4b6e2ba0fac9d6a54edb89caf8ae1db0f0e6d9c6dc7d53a"
+    },
+    {
+      "name": "SQ101",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 27 path\r\nendproc\r\n",
+      "source_sha256": "4b4095caf7b01c99c1914240f12a051ad29de78a3fae6bcc37328e2c88f72f9b",
+      "success": true,
+      "label": "getdir 27 path",
+      "log_sha256": "7f2aaf94fc1581dd8fb5c7e8c3e87e6fb77dc90b62e213ba93cab3bff7f9a9c9",
+      "errors": [],
+      "hex": "02 cf 4b b5 1b 8c 00 94",
+      "asx_sha256": "9cf8ee3276f471f382b31f815f7d9e8fedf1327ccc63b2e43603a4f411243bb4"
+    },
+    {
+      "name": "SQ102",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 255 path\r\nendproc\r\n",
+      "source_sha256": "dc02875142d130f29792f167dd6ce310b54b2619a2cc42bfb58fea9731c38aab",
+      "success": true,
+      "label": "getdir 255 path",
+      "log_sha256": "2a325f9640f81f69912ca065a438ec15425a319d23c65dbf6145cc0034557ff8",
+      "errors": [],
+      "hex": "02 cf 4b b5 ff 8c 00 94",
+      "asx_sha256": "03fe3a697acf765e7ab1b73ecd16e9a22987daf55dceb36709209f21c3a469b2"
+    },
+    {
+      "name": "SQ103",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 256 path\r\nendproc\r\n",
+      "source_sha256": "30207af3f55ea313f16fa6bbe58f14b677fe4f7090cbbcac593af79d47a53a65",
+      "success": true,
+      "label": "getdir 256 path",
+      "log_sha256": "0bb540a0b870770d73c71d86b86dd040ca8e899c8bb6f027c8882f393e973d55",
+      "errors": [],
+      "hex": "02 cf 4b ab 00 01 8c 00 94",
+      "asx_sha256": "e2240da82eeefdd847fa8cb9ec6e521970e369724d3cd3be4ecde868d1b70697"
+    },
+    {
+      "name": "SQ104",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 32767 path\r\nendproc\r\n",
+      "source_sha256": "f0e422085132ea8ece05022f638667b8b8ba45efff3a00aa7b8c1a2cddec5129",
+      "success": true,
+      "label": "getdir 32767 path",
+      "log_sha256": "e31219a26c654ade151a42c5be83bfafcefe2fcc5108585dba61500da624a5b5",
+      "errors": [],
+      "hex": "02 cf 4b ab ff 7f 8c 00 94",
+      "asx_sha256": "f65d29f8cd0489dda81acb7bea6c0f6291af346322b260fe47d0531e0152cff7"
+    },
+    {
+      "name": "SQ105",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 32768 path\r\nendproc\r\n",
+      "source_sha256": "bfd084646a17400ac8434b231fa81793984e1d0925b1d04bd6a46c89230fc123",
+      "success": false,
+      "label": "getdir 32768 path",
+      "log_sha256": "f17586333593e6962e3a92d665c6be1a35de0b1eb4e5ed99dd264200cd2b922d",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> 32768"
+      ]
+    },
+    {
+      "name": "SQ106",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 65535 path\r\nendproc\r\n",
+      "source_sha256": "aba16ed3dc57da18c3f21d29d999377ac2708516e634b446ac303732184e0f7e",
+      "success": false,
+      "label": "getdir 65535 path",
+      "log_sha256": "608bd1253ee723ddd40ea8428122e9c3bc17a6d3d444b18b362c603e7c0651ac",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> 65535"
+      ]
+    },
+    {
+      "name": "SQ107",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 1L path\r\nendproc\r\n",
+      "source_sha256": "60078753d25e44bcb2035a42ff1aef8e8af3262448cff5bd64d9c889879759ba",
+      "success": false,
+      "label": "getdir 1L path",
+      "log_sha256": "914aefb332ac55b73a8fc62c1e4d66f578871d9648f6b26c3363dc19b77db2e3",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> 1L"
+      ]
+    },
+    {
+      "name": "SQ108",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 1.0 path\r\nendproc\r\n",
+      "source_sha256": "5d7b2a67c6b4bf62bd723aefe7fe5454ea1a4ac1804757e196d6a36d46f41191",
+      "success": false,
+      "label": "getdir 1.0 path",
+      "log_sha256": "44ec3e67fa61de25cfc716d9e3e12cc392a7d8a166d6615817f14f6b516f2f54",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> 1.0"
+      ]
+    },
+    {
+      "name": "SQ109",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir 1+1 path\r\nendproc\r\n",
+      "source_sha256": "26b7d70564efe8a44190cb968f1ae62a423fce94b02e5ba54e39904cf6e012d2",
+      "success": false,
+      "label": "getdir 1+1 path",
+      "log_sha256": "85738a254c9a92b4c071c19090282ae3523fba4f9d3f2b061968b956071f8173",
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> +",
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ110",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir (1) path\r\nendproc\r\n",
+      "source_sha256": "2206853361ae60d9800db0ceae6ccb1f85ee20eb0301999bbe242393da84e641",
+      "success": false,
+      "label": "getdir (1) path",
+      "log_sha256": "b91457afcd2371ffbdfd432dd06696585962d5156a94da6442f621388f85a802",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> (",
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> )",
+        "Error C002 Line 6: Unexpected token ==> PATH"
+      ]
+    },
+    {
+      "name": "SQ111",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir i0 path\r\nendproc\r\n",
+      "source_sha256": "5a91d9294aeccfe508e616551e4585e105f49d92265c758840fd1799553f454f",
+      "success": false,
+      "label": "getdir i0 path",
+      "log_sha256": "6c6177c8af9d6fccbd9255a9c9f4b573dad326dac4026c6afbed458f417b71b5",
+      "errors": [
+        "Error C021 Line 6: Invalid numeric variable or constant ==> I0"
+      ]
+    },
+    {
+      "name": "SQ112",
+      "source": "integer drive,result\r\nlong bytes\r\nfloat realnum\r\nstring path,value\r\nproc main\r\ngetdir failure path\r\nendproc\r\n",
+      "source_sha256": "4605f06d3217886ba8bd0b1949f03863cf2d34867231cc2832f483c9fb52295c",
+      "success": true,
+      "label": "getdir failure path",
+      "log_sha256": "60c01cff41f460b59033b6caf03d4ae02752acd5061e881cfd822dd96dbbd46e",
+      "errors": [],
+      "hex": "02 cf 4b 6f 15 8c 00 94",
+      "asx_sha256": "1d7f0dfa8fea1548b1b4b5e9e1b16cf3e01a75cebdde3ec3eaf59873fb12fdc2"
+    }
+  ],
+  "scope": "Authored source compilation only; expected values fixed independently before runtime execution."
+}

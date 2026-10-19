@@ -549,6 +549,7 @@ class Compiler:
             self.operand(self.atomic(node), compact=True)
             return
         file_commands = {
+            'diskfree': (0x25, 'vl'), 'dosver': (0x29, 'd'), 'getdir': (0x4B, 'vd'),
             'getfdate': (0x4E, 'sd'), 'getftime': (0x51, 'sd'),
             'setfdate': (0xA0, 'ss'), 'setftime': (0xA1, 'ss'),
             'getfattr': (0x4D, 'sd'), 'setfattr': (0x9F, 'ss'),

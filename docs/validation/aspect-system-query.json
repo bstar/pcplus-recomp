@@ -1,0 +1,175 @@
+{
+  "passed": true,
+  "terminal_sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+  "runner_sha256": "d87da1512bddf7b8ad976788389acbd8636cf86a445a9c3e95bacb3b2a07984d",
+  "compiler_sha256": "67ce6686d6fff1226c11d434d05c4287eb7e7f79808105e3c26e1e980bcda8da",
+  "native_bytes": 167,
+  "supported_opcodes": 103,
+  "unsupported_opcodes": 112,
+  "evidence": {
+    "native": {
+      "path": "build/aspect-system-query/checks.json",
+      "sha256": "82341549084fd8e7e5210bf1338bbc92c4c736858f0bde4403e498abd66d5c4b"
+    },
+    "original": {
+      "path": "build/aspect-system-query/native-checks.json",
+      "sha256": "2748a5e73effaea44bb260f7e13e2494ec1cc0401d36bd3e57a86d6d8a2427e3"
+    },
+    "host": {
+      "path": "build/aspect-system-query/compiler-checks.json",
+      "sha256": "c1c91496d9d2cdfc6f9a8cc6a54eade8464c3ba77c66395e27ceae5cd81472cd"
+    },
+    "compiler": {
+      "path": "build/aspect-compiler-dos/checks.json",
+      "sha256": "7aacf31bf40364c7db428cb60edf3728f9acd8cc7a6356edc1bda3690fae92bf"
+    },
+    "runtime": {
+      "path": "build/aspect-runtime/checks.json",
+      "sha256": "60b620fd1830ef7c2075e584b75d9aedcdaa76ba29bbd2e9fd8e1c9b9c286ad0"
+    },
+    "VM": {
+      "path": "build/aspect-system-query-dos/integrated-03/checks.json",
+      "sha256": "1786e09b3c0bf4006ae7608f98e1546f6337169c2fbda2a6f6e103a808a75d36"
+    },
+    "timestamps": {
+      "path": "build/aspect-file-times-dos/queries-regression-01/checks.json",
+      "sha256": "d92aab1ee19a896f1447bc406d161d296cf1b17ae5e8b1047c37dbfa8b3747b4"
+    },
+    "paths": {
+      "path": "build/aspect-paths-dos/queries-regression-01/checks.json",
+      "sha256": "412792dbe83e0f7e8b9a5aa24f0357380314035d22dda86f49fcdc59191cd8d3"
+    },
+    "parent": {
+      "path": "build/aspect-system-query-parent-dos/integrated-01/checks.json",
+      "sha256": "cda4736fd60f47e5ec2f110091cc944c1e88283ae317e8b85fc47643b44b5356"
+    },
+    "ENiGMA": {
+      "path": "build/bbs-lab/results/enigma/owned-system-queries-login-01/search-checks.json",
+      "sha256": "1dc44a56f76e420d1ea1140a0fb760222ed027d1e0c18cb542a7ff149883d5ab"
+    }
+  },
+  "component_cases": 3782,
+  "original_comparisons": 3782,
+  "original_compiler": {
+    "cases": 113,
+    "accepted": 38,
+    "rejected": 75
+  },
+  "DOS_compiler": {
+    "cases": 1879,
+    "accepted": 989,
+    "rejected": 890
+  },
+  "VM": {
+    "cases": 341,
+    "assertions": 2899,
+    "rounds": 31,
+    "native_control": "NATIVE_QUERY_CONTROL 14 checks 0 failures DOSVER-global=OLD"
+  },
+  "runtime_summary": "ASPECT_RUNTIME 1113 cases 26730 checks 0 failures",
+  "parent_checks": {
+    "renderer_post_sent": true,
+    "DOS_expected_exit": true,
+    "hardware_restored": true,
+    "PRM_unchanged": true,
+    "binary_unchanged": true,
+    "no_peer_errors": true,
+    "no_unexpected_commands": true,
+    "directory_expected_updates_only": true,
+    "fixture_unchanged_LOGIN.ASP": true,
+    "fixture_unchanged_LOGIN.ASX": true,
+    "fixture_unchanged_RENDER.COM": true,
+    "actual_init_and_dial": true,
+    "actual_DOS_CPR": true,
+    "actual_DOS_DA": true,
+    "actual_screen_snapshot": true,
+    "passive_EXEC_observed": true,
+    "child_exit_expected": true,
+    "parent_JFT_unchanged": true,
+    "all_parent_sink_owners_unchanged": true,
+    "explicit_password_only": true,
+    "ordinary_parent_keyboard_resumes": true,
+    "initial_CPR_before_password": true,
+    "no_automatic_redial": true,
+    "frozen_inputs": true,
+    "post_query_sent_after_password": true,
+    "post_return_cursor_coherent": true,
+    "video_0_0": true,
+    "far_history_retained_across_EXEC_return": true,
+    "far_history_bounds": true,
+    "native_renderer_updated_far_history": true,
+    "system_queries_before_login": true
+  },
+  "ENiGMA_checks": {
+    "DOS_harness": true,
+    "unique_authenticated_session": true,
+    "exact_owned_modules": true,
+    "inputs_unchanged": true,
+    "no_post_saved": true,
+    "real_search_route": true,
+    "title_search": true,
+    "index_selection": true,
+    "index_paging": true,
+    "selected_game_details": true,
+    "diz_page": true,
+    "nfo_navigation": true,
+    "bottom_content": true,
+    "empty_search": true,
+    "DOS_source_compiler": true,
+    "native_file_trace": true,
+    "no_keyboard_credentials": true,
+    "native_file_info": true,
+    "native_enumeration_trace": true,
+    "native_attribute_trace": true,
+    "native_timestamp_trace": true,
+    "native_system_query_trace": true
+  },
+  "query_traces": {
+    "parent": "D:\\|5.00|2013265920",
+    "isolated_ENiGMA": "C:\\|5.00|2013265920"
+  },
+  "core_objects_identical": {
+    "runtime": "320babd091e298bdedf11c4b6a6dbbf0fc6b80a54a350ee9366995aa97a43158",
+    "script_file_runtime": "5c462b8f7448dd4e6ebb1bef8dcd3b039b177b3a73c26aca50c0c5c4c06bccb2",
+    "file_info_runtime": "fa3f7f6b34a307e80fe67905b9c8f3efb1ec86acb2da3d0577fdde8bec8bf5d3",
+    "file_times_runtime": "58ff0a4546d5f096ff905ae485f6235013f56ecd0be9d305e9c8fc787bd8a52b",
+    "enumeration_runtime": "5e5b36e3e8d24a7a514d2ccccf0f50171634e99bd1608342e4c9f6fe23b1b396",
+    "file_io": "7a26f2b102e98887ef6f978effc8c38c08cf738b22db301a9b03f6ba64667e72",
+    "script_path": "d38436fead2c3966bf3a8413b6650962c335793c2fe611a334db328f597e6446",
+    "serial_runtime": "25201f14abdce19105d771df095faa7d3a0157e1145f9ab4a28b480701596ffd",
+    "receive_runtime": "4d985ebabf7d175a7d6809fd097408865a089db6145de5f14298692920cdf2bb",
+    "directory_runtime": "b83b8c4b33cd4985a7853744914e32e87b87c98c78a2bba933119575b71459d2",
+    "when_runtime": "3be45454cbec79036f09aa05efc1d8bf6b3bea141e8a418b123448e789874db8",
+    "set_runtime": "2a00ab8f80979f27312b1b81969c1cda9614995f432faadfb125242bb4ede63f",
+    "find_runtime": "e112d5b2d1cf6834a3597b79422f2452d37ec9e29953a306227009c3242d316b"
+  },
+  "REA": {
+    "bundle_sha256": "b14715794a97437930af3a610e4a4c43eca8d1ccfbe794fb1ed4016d608e34a9",
+    "evidence_ids": [
+      "ev_01d75683006cb18acc3703623da2b07d68c4c8440360b0b0f123455d628afe80",
+      "ev_168a11e95f59ab75b8b440b3615afaa9ed2d76097c6e6f9b53aeca50942738b9",
+      "ev_721553cd71dfe34691382c806eb75581d45c94b10ea5f16659a77750f797312c",
+      "ev_8dfd2c39245d8eb79f727b42e798fae91524f6a4fe1cb15dd8e7049e694d0bbc",
+      "ev_9480dc24b03312731aa7ee7fc22d2569618c5e5bfcef2e40fa61fc403d66a4f1",
+      "ev_dda7221d5fc98824fee4e4d86c101a5e9d1a685d43ee1433dc376eb2a16427a7",
+      "ev_faab0e4bf9c7b4dbddda6dbfdc4bfa83d62396405c6e36efd1456f06bcedf52b"
+    ]
+  },
+  "source_build_proof": {
+    "path": "docs/validation/application-components-source-build.json",
+    "sha256": "df7f69af1565fd06e2a5ec4bb45494d403b2965e8adb49118e008977b3face1a",
+    "outputs": 258
+  },
+  "package_manifest_sha256": "2de25df3665bfd49b923c7515a6702a2639942f14a972c33cc3595ae3c26c48a",
+  "recorder_sha256": "f0d4d1ba4ffc9f05acaff1cd683cd9cfa923389779d5a2dd6f0a0353071d19a5",
+  "maintained_policy": "DOSVER destination/flush; exact native GETDIR prefix/error and DISKFREE first-product truncation/comparison policies retained.",
+  "retained_failures": "Fixture used built-in Z as absent and misescaped generated paths. Corrected fresh fixture uses unmapped E/canonical paths. Native DOSVER control retains OLD global.",
+  "live_server_modified": false,
+  "physical_modem_validated": false,
+  "whole_application_gates_closed": [],
+  "remaining": [
+    "112 ASPECT opcode slots, remaining selectors, recorder and all F01-F16 application requirements.",
+    "Approved live ENiGMA decoder installation and full actual-catalog/editor/transfer acceptance.",
+    "Physical RS-232 Wi-Fi modem timing/flow control and filesystem/platform behavior."
+  ]
+}

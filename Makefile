@@ -1000,3 +1000,13 @@ test-aspect-file-times-compiler:
 	python3 standalone/check_aspect_file_times_compiler.py
 all: aspect-file-times
 test: test-aspect-file-times test-aspect-file-times-compiler
+
+.PHONY: aspect-system-query test-aspect-system-query test-aspect-system-query-compiler
+aspect-system-query:
+	python3 standalone/build_aspect_system_query.py
+test-aspect-system-query: aspect-system-query
+	python3 standalone/check_aspect_system_query.py
+test-aspect-system-query-compiler:
+	python3 standalone/check_aspect_system_query_compiler.py
+all: aspect-system-query
+test: test-aspect-system-query test-aspect-system-query-compiler

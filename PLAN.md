@@ -89,6 +89,19 @@ must exclude original executables and private install/configuration data.
 
 ## Current application work
 
+The [DOS system queries](docs/ASPECT_SYSTEM_QUERY.md) add GETDIR/DISKFREE/DOSVER
+through both compilers and production ASPECT. Their167 exact native bytes pass
+3,782 paired component/original cases;113 original compiler outcomes match38
+accepted/75 rejected forms. The full DOS compiler passes1,879 cases. The341 real
+DOS invocations/2,899 assertions cover per-drive directories, native arithmetic,
+raw invalid-drive errors, destinations, six streams, EXECUTE and fault cleanup.
+A14-check native control separates original lost DOSVER globals from maintained
+destination/flush correction. The runtime implements103 slots and rejects112;
+1,113 composed cases/26,730 assertions and parent login pass. Existing timestamp
+and directory-mutation regressions remain passing. All22 expanded isolated
+ENiGMA checks pass, and258 products reproduce without originals. The DOS package
+is refreshed; the live board and physical modem remain separate. Full gates remain open.
+
 The [timestamp integration](docs/ASPECT_FILE_TIMES.md) adds GETFDATE/GETFTIME and
 SETFDATE/SETFTIME through both compilers and the production child. Its390 exact
 native+87 reused CRT bytes pass507 source/original cases. The108 original compiler
@@ -97,7 +110,7 @@ An actual native-core control reproduces lost globals and destructively parsed
 inputs; the maintained destination/flush/private-copy adapters fix both. The248
 same-process VM invocations pass2,901 assertions, including year pivots,leap day,
 seconds/opposite-field preservation,six streams,EXECUTE and late-fault cleanup.
-The runtime implements100 slots and rejects115;1,116 composed cases/26,796 checks
+That checkpoint implemented100 slots and rejected115;1,116 composed cases/26,796 checks
 pass. The279 attribute/310 enumeration/155 query/341 stream regressions still pass.
 Parent login and all21 expanded isolated ENiGMA checks pass;250 outputs reproduce
 without originals. All whole-application gates remain open.

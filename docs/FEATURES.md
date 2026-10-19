@@ -660,5 +660,12 @@ F13 now includes GETFDATE/GETFTIME/SETFDATE/SETFTIME through a native-prefix str
 adapter. [Timestamp evidence](ASPECT_FILE_TIMES.md) binds390 exact+87 reused bytes,
 507 component/original cases,108 original compiler outcomes and248 real DOS VM
 invocations. A native control separates lost-global/destructive-input behavior
-from maintained writeback/input-copy corrections.100 slots are supported and115
-explicitly rejected; every whole-application gate remains open.
+from maintained writeback/input-copy corrections. That checkpoint supported100
+slots and rejected115; every whole-application gate remains open.
+
+F13 also includes [GETDIR/DISKFREE/DOSVER](ASPECT_SYSTEM_QUERY.md), with167 exact
+native bytes,3,782 paired component/original cases and113 original compiler cases.
+Actual DOS passes341 invocations/2,899 assertions across distinct retained drive
+directories, native free-space arithmetic, raw errors and corrected DOSVER
+writeback. A14-check native control retains the lost global.103 slots are now
+supported and112 rejected; all whole-application gates remain open.

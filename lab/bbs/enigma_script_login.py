@@ -1,5 +1,6 @@
 """Prompt-driven source login for the isolated synthetic loclab account only."""
-def source(file_info=False,enumeration=False,file_attributes=False,file_times=False):
+def source(file_info=False,enumeration=False,file_attributes=False,file_times=False,system_queries=False):
+ file_times=file_times or system_queries
  file_attributes=file_attributes or file_times
  enumeration=enumeration or file_attributes
  file_info=file_info or enumeration
@@ -22,7 +23,33 @@ def source(file_info=False,enumeration=False,file_attributes=False,file_times=Fa
   'if failure\nexit\nendif\nstrcmp probe_date " 3-07-93"\nif failure\nexit\nendif\n'
   'strcmp probe_time "13:45"\nif failure\nexit\nendif\nfopen 4 "TIME.LOG" "wb"\n'
   'fputs 4 probe_date\nfputs 4 "|"\nfputs 4 probe_time\nfclose 4\n') if file_times else ''
- return ('integer cancel_done,scan_done\n'+('long probe_size\n' if file_info else '')+('string probe_number\n' if enumeration else '')+('string probe_attrs\n' if file_attributes else '')+('string probe_date,probe_time\n' if file_times else '')+'proc main\ninteger attempts\n'+probe+enum_probe+attr_probe+time_probe+
+ query_probe=r'''getdir 0 probe_dir
+if failure
+exit
+endif
+strcmp probe_dir "C:\"
+if failure
+exit
+endif
+dosver probe_version
+strlen probe_version probe_version_len
+if probe_version_len < 4
+exit
+endif
+diskfree 0 probe_free
+if probe_free <= 0L
+exit
+endif
+fopen 4 "QUERY.LOG" "wb"
+fputs 4 probe_dir
+fputs 4 "|"
+fputs 4 probe_version
+fputs 4 "|"
+ltoa probe_free probe_number
+fputs 4 probe_number
+fclose 4
+''' if system_queries else ''
+ return ('integer cancel_done,scan_done\n'+('long probe_size\n' if file_info else '')+('string probe_number\n' if enumeration else '')+('string probe_attrs\n' if file_attributes else '')+('string probe_date,probe_time\n' if file_times else '')+('integer probe_version_len\nlong probe_free\nstring probe_dir,probe_version\n' if system_queries else '')+'proc main\ninteger attempts\n'+probe+enum_probe+attr_probe+time_probe+query_probe+
  'fopen 5 "LOGIN.LOG" "wb"\nfputs 5 "START"\n'
  'cancel_done=0\nscan_done=0\nattempts=0\n'
  'waitfor "lOGIN" 25\ntransmit "^M"\n'

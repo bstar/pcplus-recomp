@@ -1,8 +1,9 @@
 # ASPECT file date and time
 
 The maintained compilers and production DOS interpreter now support GETFDATE,
-GETFTIME, SETFDATE and SETFTIME. The dispatcher implements 100 of 215 opcode slots
-and explicitly rejects 115. All whole-application gates remain open.
+GETFTIME, SETFDATE and SETFTIME. That checkpoint implemented100 of215 opcode slots
+and rejected115. [DOS system queries](ASPECT_SYSTEM_QUERY.md) extend it to103/112.
+All whole-application gates remain open.
 
 ```text
 string date_value,time_value

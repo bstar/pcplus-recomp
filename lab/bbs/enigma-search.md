@@ -135,3 +135,9 @@ through the DOS-compiled source and requires TIME.LOG to be exactly
 ` 3-07-93|13:45`. This adds a twenty-first check before the same custom navigation
 route. [Timestamp validation](../../docs/ASPECT_FILE_TIMES.md) binds the actual
 native-core control and maintained stdio/writeback/input-copy adapters separately.
+
+`--system-query-login` includes all earlier probes and additionally requires
+GETDIR/DOSVER/DISKFREE before authentication. Its QUERY.LOG must contain the root
+C directory, a numeric major/minor version and positive free-space result. This
+adds a twenty-second check to the same custom route; [system-query validation](../../docs/ASPECT_SYSTEM_QUERY.md)
+keeps actual native controls and the maintained DOSVER writeback fix separate.
