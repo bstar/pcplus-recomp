@@ -23,8 +23,9 @@ BUILTINS = {'comdata': 20, 'failure': 21, 'forever': 22, 'found': 23,
             'success': 27, 'waitfor': 28, '$d_entry': 3}
 STRING_BUILTINS = {'$d_ldate': 0, '$d_kbdfile': 1, '$d_metakey': 2,
                    '$d_name': 3, '$d_note': 4, '$d_phone': 5,
-                   '$d_pword': 6, '$d_script': 7, '$null': 19}
-LONG_BUILTINS = {'$d_baud': 0}
+                   '$d_pword': 6, '$d_script': 7, '$null': 19,
+                   '$fattr': 9, '$fdate': 10, '$fext': 11, '$filename': 12, '$fname': 13, '$ftime': 14}
+LONG_BUILTINS = {'$d_baud': 0, '$fsize': 1}
 TYPED_BUILTINS = {**{name: (0, slot) for name, slot in BUILTINS.items()},
                   **{name: (1, slot) for name, slot in LONG_BUILTINS.items()},
                   **{name: (3, slot) for name, slot in STRING_BUILTINS.items()}}
@@ -548,6 +549,7 @@ class Compiler:
             self.operand(self.atomic(node), compact=True)
             return
         file_commands = {
+            'findfirst': (0x3C, 'sS'), 'findnext': (0x3D, ''),
             'isfile': (0x60, 's'), 'getfsize': (0x50, 'sl'), 'rename': (0x93, 'ss'),
             'eof': (0x31, 'vi'), 'fclear': (0x35, 'v'), 'fclose': (0x36, 'v'),
             'fflush': (0x38, 'v'), 'fgetc': (0x39, 'vi'), 'fgets': (0x3A, 'vd'),
@@ -560,6 +562,12 @@ class Compiler:
             parser = Expression(tokens[1:], self.line)
             self.emit(opcode)
             for index, role in enumerate(signature):
+                if role == 'S':
+                    present = parser.pos < len(parser.tokens)
+                    self.emit(int(present))
+                    if not present:
+                        break
+                    role = 's'
                 if index and parser.pos < len(parser.tokens) and parser.tokens[parser.pos] == ',':
                     parser.pos += 1
                 if parser.pos == len(parser.tokens) or parser.tokens[parser.pos] in ('(', ','):

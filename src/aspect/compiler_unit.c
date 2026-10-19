@@ -52,7 +52,7 @@ static int type(const aspect_compiler_line *line,unsigned *parameter)
 static unsigned reserved(const char *name)
 {
  static const char *names[]={"text","comdata","failure","forever","found","success","waitfor",
- "$d_entry","$d_ldate","$d_kbdfile","$d_metakey","$d_name","$d_note","$d_phone","$d_pword","$d_script","$null","$d_baud"};
+ "$d_entry","$d_ldate","$d_kbdfile","$d_metakey","$d_name","$d_note","$d_phone","$d_pword","$d_script","$null","$d_baud","$fattr","$fdate","$fext","$filename","$fname","$ftime","$fsize"};
  unsigned i;for(i=0;i<sizeof(names)/sizeof(names[0]);++i)if(!strcmp(name,names[i]))return 1;
  return 0;
 }

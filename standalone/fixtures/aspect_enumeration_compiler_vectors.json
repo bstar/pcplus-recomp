@@ -1,0 +1,475 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "harness_sha256": "a501ec59ad4693065d1f14eea32d298c7665591a067ea38516f44ca9bf6eb80f",
+  "cases": [
+    {
+      "name": "EF000",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst \r\nendproc\r\n",
+      "source_sha256": "c24dce749a78d73981bc9f7cdc26bee0dbb32401b3a44cd3e189be9f4bc17dfc",
+      "success": false,
+      "label": "findfirst ",
+      "errors": [
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "EF001",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst \"*.ZIP\"\r\nendproc\r\n",
+      "source_sha256": "5efe7fbaa972d52e9064ff9a281fd4ab224a5d80dfb8735d3d4e83867c0641d6",
+      "success": true,
+      "label": "findfirst \"*.ZIP\"",
+      "errors": [],
+      "hex": "03 cf 3c aa b8 0f 2f 33 a1 14 f7 00 94",
+      "asx_sha256": "b0d15ac5aa863d354c53e02ed5d07f40bbe569fe1eb9675c8a3102bb5181a0b1"
+    },
+    {
+      "name": "EF002",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst \"\"\r\nendproc\r\n",
+      "source_sha256": "3a66c2a1926a003efad3a838b72efead968670217ae09afcbb6757bacb8602b0",
+      "success": true,
+      "label": "findfirst \"\"",
+      "errors": [],
+      "hex": "03 cf 3c 6e 13 00 94",
+      "asx_sha256": "fa275c0bdfe87a565bbee92f0333ead45c0f247853ed5f40ddac2fd7a280c9eb"
+    },
+    {
+      "name": "EF003",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst pattern\r\nendproc\r\n",
+      "source_sha256": "a98997ce2e8955e00d0f72acc2aa188dd77702d11a03293f665c95a92b78512a",
+      "success": true,
+      "label": "findfirst pattern",
+      "errors": [],
+      "hex": "03 cf 3c 8c 00 00 94",
+      "asx_sha256": "ba78c462299ca7bd7d6b910b4c410340c0289c8869d24afad0e9c3b6ac6724b8"
+    },
+    {
+      "name": "EF004",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst 1\r\nendproc\r\n",
+      "source_sha256": "0970b5e818527e211bfceb694ef3987babd0445f60f321c8af96137923e02f31",
+      "success": false,
+      "label": "findfirst 1",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> 1"
+      ]
+    },
+    {
+      "name": "EF005",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst 1L\r\nendproc\r\n",
+      "source_sha256": "817f88bf8ca2f04828d37026ac4c560a7102a7ec30af1d59519bbde374aaf351",
+      "success": false,
+      "label": "findfirst 1L",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> 1L"
+      ]
+    },
+    {
+      "name": "EF006",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst 1.0\r\nendproc\r\n",
+      "source_sha256": "99fb65c4fe4174d4291adb3bcd7ec6f0e0819336ad8f20849a6af9ac446256bb",
+      "success": false,
+      "label": "findfirst 1.0",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> 1.0"
+      ]
+    },
+    {
+      "name": "EF007",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst (pattern)\r\nendproc\r\n",
+      "source_sha256": "79047b804a1bd28b9c789bd7bb6ad0dcbab85264e086c63f16bc12463e3f5b97",
+      "success": false,
+      "label": "findfirst (pattern)",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> (",
+        "Error C002 Line 5: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "EF008",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst pattern+\"X\"\r\nendproc\r\n",
+      "source_sha256": "1a3b5b59d6f0545baf30d7d4a40a1bd566c000dfbde03d05d4871d6e6850a2e3",
+      "success": false,
+      "label": "findfirst pattern+\"X\"",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> +",
+        "Error C002 Line 5: Unexpected token ==> X"
+      ]
+    },
+    {
+      "name": "EF009",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst ,pattern\r\nendproc\r\n",
+      "source_sha256": "97d35d42dcd60dc48f6d53bd964c465a03e1eed36406eed6c808c0c2b91f187f",
+      "success": false,
+      "label": "findfirst ,pattern",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ,"
+      ]
+    },
+    {
+      "name": "EF010",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst pattern,\r\nendproc\r\n",
+      "source_sha256": "a698f11c29aeb1a19d4a985b9d8bef91ac3c6c85f63f195f830b9f265e2838cd",
+      "success": false,
+      "label": "findfirst pattern,",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ,"
+      ]
+    },
+    {
+      "name": "EF011",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst \"X\" \"R\"\r\nendproc\r\n",
+      "source_sha256": "f66c3bfe524eca838d37ae251fc7cdaa161cc4615b6780258b2d2a7b0c8072a5",
+      "success": true,
+      "label": "findfirst \"X\" \"R\"",
+      "errors": [],
+      "hex": "03 cf 3c aa b4 0b 5d 01 aa b4 84 19 94",
+      "asx_sha256": "9dcf695104aab9646a740d8386fd0330ad1c4d686f53b7ba30f21579f5793027"
+    },
+    {
+      "name": "EF012",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst \"X\",\"R\"\r\nendproc\r\n",
+      "source_sha256": "bcf58dfcbbfeafdf3f48ff3e00239aeea15968cc018319da0348e5c3f7e9dbc8",
+      "success": true,
+      "label": "findfirst \"X\",\"R\"",
+      "errors": [],
+      "hex": "03 cf 3c aa b4 0b 5d 01 aa b4 84 19 94",
+      "asx_sha256": "9dcf695104aab9646a740d8386fd0330ad1c4d686f53b7ba30f21579f5793027"
+    },
+    {
+      "name": "EF013",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst \"X\",\r\nendproc\r\n",
+      "source_sha256": "edc9fb1abfd986e43d6c14de590aa0a3dd936fee16e5853784927a112be9b499",
+      "success": false,
+      "label": "findfirst \"X\",",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ,"
+      ]
+    },
+    {
+      "name": "EF014",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst \"X\",,\"R\"\r\nendproc\r\n",
+      "source_sha256": "10101a6ed9fc389402a448ff2043354971b4b01de6877765bcf5ecaaeb4e0fc9",
+      "success": false,
+      "label": "findfirst \"X\",,\"R\"",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ,",
+        "Error C002 Line 5: Unexpected token ==> ,",
+        "Error C002 Line 5: Unexpected token ==> R"
+      ]
+    },
+    {
+      "name": "EF015",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst \"X\" \"R\",\r\nendproc\r\n",
+      "source_sha256": "4cb31114684216e9dceef3d1268b9b0cf29011d6c32a67f6a5e097ec4309f1a5",
+      "success": false,
+      "label": "findfirst \"X\" \"R\",",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "EF016",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst \"X\" (attr)\r\nendproc\r\n",
+      "source_sha256": "afa6e93dce9b8d2441917615144d9b863f9ac0a116ee77d61cdea001f599693a",
+      "success": false,
+      "label": "findfirst \"X\" (attr)",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> (",
+        "Error C002 Line 5: Unexpected token ==> ATTR",
+        "Error C002 Line 5: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "EF017",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst \"X\" attr\r\nendproc\r\n",
+      "source_sha256": "c6a285387d31d1d46fe2119b013eb533bd208cf643464a0e4ddca9c4fe0e760a",
+      "success": true,
+      "label": "findfirst \"X\" attr",
+      "errors": [],
+      "hex": "03 cf 3c aa b4 0b 5d 01 8c 01 94",
+      "asx_sha256": "615f361dbb3067aba0ce6629a09710024fcc2f3053cb3dc2f45a9eb0c84f376a"
+    },
+    {
+      "name": "EF018",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst \"X\" attr+\"H\"\r\nendproc\r\n",
+      "source_sha256": "d903bbc8d43f54f0fe6897c49d85e7946e0dcda704cffde87f654798ca69c918",
+      "success": false,
+      "label": "findfirst \"X\" attr+\"H\"",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> +",
+        "Error C002 Line 5: Unexpected token ==> H"
+      ]
+    },
+    {
+      "name": "EF019",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst \"X\" 1\r\nendproc\r\n",
+      "source_sha256": "a6104d416a2378511505c186edf2430bde021ded48875a2ed690ef5438ed4b7f",
+      "success": false,
+      "label": "findfirst \"X\" 1",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> 1"
+      ]
+    },
+    {
+      "name": "EF020",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst \"X\" result\r\nendproc\r\n",
+      "source_sha256": "9a8298326113888b9f7df92f78dd75cc05dff3fc6cbb501a7e6c0d022a5d2e31",
+      "success": false,
+      "label": "findfirst \"X\" result",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> RESULT"
+      ]
+    },
+    {
+      "name": "EF021",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst \"X\" size\r\nendproc\r\n",
+      "source_sha256": "89b12dce4eb6d4a70b0ec488e8aa5ab2fd5e62a83e007d3a36aea458ed0d21fc",
+      "success": false,
+      "label": "findfirst \"X\" size",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> SIZE"
+      ]
+    },
+    {
+      "name": "EF022",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst \"X\" ON\r\nendproc\r\n",
+      "source_sha256": "b38ac78ae38f462d6fd26c0bb76f052c4f3b3580fc97f2644be4d5c24b522dc3",
+      "success": false,
+      "label": "findfirst \"X\" ON",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ON"
+      ]
+    },
+    {
+      "name": "EF023",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindfirst \"X\" \"?\"\r\nendproc\r\n",
+      "source_sha256": "8801962300ecca252e784f7f51287b74f1c26f2fc20c199bd4e2288303314636",
+      "success": true,
+      "label": "findfirst \"X\" \"?\"",
+      "errors": [],
+      "hex": "03 cf 3c aa b4 0b 5d 01 aa b4 84 06 94",
+      "asx_sha256": "2366af0bc7d6b49c5660f35391d3417db4e65c2e185d37eb53c6d41365656c20"
+    },
+    {
+      "name": "EF024",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindnext \r\nendproc\r\n",
+      "source_sha256": "3393f9674fea37f5584baac73c16a36e87c187c8b92627601d08adfe11831d4a",
+      "success": true,
+      "label": "findnext ",
+      "errors": [],
+      "hex": "03 cf 3d 94",
+      "asx_sha256": "d66e63ca2791acca9461a1974a8c2103bdb8a832c9810edf5781ad81131aa42b"
+    },
+    {
+      "name": "EF025",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindnext 1\r\nendproc\r\n",
+      "source_sha256": "a8990baafc2e5fe6c0b2f2b72ea0e5f94d38051af3e170aeeedd79797532d5d6",
+      "success": false,
+      "label": "findnext 1",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "name": "EF026",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindnext \"X\"\r\nendproc\r\n",
+      "source_sha256": "3d928aa943c940c7e897e1e73ce55169c37431a1ccd468e9a739aae656692d1a",
+      "success": false,
+      "label": "findnext \"X\"",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> X"
+      ]
+    },
+    {
+      "name": "EF027",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindnext ,\r\nendproc\r\n",
+      "source_sha256": "61cd0f22215c79e30f6ca65ffca78ea65cac40c8fae2b8c1bca2a2a424aa901f",
+      "success": false,
+      "label": "findnext ,",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "EF028",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindnext ()\r\nendproc\r\n",
+      "source_sha256": "4915fd92a36e952d8f8bd1be7c9d0533998b37ad7f5c5b140ca7fd295181f728",
+      "success": false,
+      "label": "findnext ()",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> (",
+        "Error C002 Line 5: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "EF029",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nfindnext pattern\r\nendproc\r\n",
+      "source_sha256": "32527e2bbbb36b6e6cfaba67c9649e8291fdb4f525549321e2ea47d9ffa4f847",
+      "success": false,
+      "label": "findnext pattern",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> PATTERN"
+      ]
+    },
+    {
+      "name": "EF030",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nvalue=$FATTR\r\nendproc\r\n",
+      "source_sha256": "a684b5fcaba069a8c4c443df03b294f47ed571e5bca14ff8fdaace3b137dfc0c",
+      "success": true,
+      "label": "value=$FATTR",
+      "errors": [],
+      "hex": "03 cf ac 8c 02 6e 09 00 94",
+      "asx_sha256": "1c0790e7ee8719b6cc26b96db937adc40778a7672f32e2d135b27240f05c1361"
+    },
+    {
+      "name": "EF031",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\n$FATTR=\"X\"\r\nendproc\r\n",
+      "source_sha256": "9dc8464e2d903649c862b4e92ba831a6f34e0528e28eddb52c3310e64aeb4500",
+      "success": false,
+      "label": "$FATTR=\"X\"",
+      "errors": [
+        "Error C020 Line 5: Invalid command or expression token ==> $FATTR"
+      ]
+    },
+    {
+      "name": "EF032",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nvalue=$FDATE\r\nendproc\r\n",
+      "source_sha256": "a51fafd83f192aa9d78f7fb95a1775df82ee40e58e890ea034508c5d934d7b06",
+      "success": true,
+      "label": "value=$FDATE",
+      "errors": [],
+      "hex": "03 cf ac 8c 02 6e 0a 00 94",
+      "asx_sha256": "8ecf1768e781cbd4bf26e3dbb136f9cec78616bb09cacc96b26ed0546da5a33f"
+    },
+    {
+      "name": "EF033",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\n$FDATE=\"X\"\r\nendproc\r\n",
+      "source_sha256": "4cdfdf6508cd0fbb9fc605792e613e5e0db514b5ef409dd87784069d860c090d",
+      "success": false,
+      "label": "$FDATE=\"X\"",
+      "errors": [
+        "Error C020 Line 5: Invalid command or expression token ==> $FDATE"
+      ]
+    },
+    {
+      "name": "EF034",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nvalue=$FEXT\r\nendproc\r\n",
+      "source_sha256": "791b6b680ada36cf12cb8bf18f1020b7e2582bed947c82cbfc94e6f425dd4704",
+      "success": true,
+      "label": "value=$FEXT",
+      "errors": [],
+      "hex": "03 cf ac 8c 02 6e 0b 00 94",
+      "asx_sha256": "5732ffb595db8f63d795eed37bc7f4cd0a54a10aab2e86e121fb53198725bbf6"
+    },
+    {
+      "name": "EF035",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\n$FEXT=\"X\"\r\nendproc\r\n",
+      "source_sha256": "5cb2f59575c54acf2d7f4c5db0842af2eb4ae7d9e8e016c6763db61dbcb6a5e7",
+      "success": false,
+      "label": "$FEXT=\"X\"",
+      "errors": [
+        "Error C020 Line 5: Invalid command or expression token ==> $FEXT"
+      ]
+    },
+    {
+      "name": "EF036",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nvalue=$FILENAME\r\nendproc\r\n",
+      "source_sha256": "7b2315c01adefaa5652dac0ad4600cf21957919d82e008aafa090b6dff30ffef",
+      "success": true,
+      "label": "value=$FILENAME",
+      "errors": [],
+      "hex": "03 cf ac 8c 02 6e 0c 00 94",
+      "asx_sha256": "2f45fd252ab3e72614e0275330958ec1ee66617b419efecfb6e0b484e9b6f0c4"
+    },
+    {
+      "name": "EF037",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\n$FILENAME=\"X\"\r\nendproc\r\n",
+      "source_sha256": "dad813d139a3bdc5f9b92bf6e49e9b211adb9074190f6afb0da63e4501f75f62",
+      "success": false,
+      "label": "$FILENAME=\"X\"",
+      "errors": [
+        "Error C020 Line 5: Invalid command or expression token ==> $FILENAME"
+      ]
+    },
+    {
+      "name": "EF038",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nvalue=$FNAME\r\nendproc\r\n",
+      "source_sha256": "830e9859e10c5c1941d730a31a4fea9f4a9777dae10abc65f54a44df0f001208",
+      "success": true,
+      "label": "value=$FNAME",
+      "errors": [],
+      "hex": "03 cf ac 8c 02 6e 0d 00 94",
+      "asx_sha256": "93abbc3074266b5714dbd1560b94dc72db8210c966223b40cfdb42504f82a26e"
+    },
+    {
+      "name": "EF039",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\n$FNAME=\"X\"\r\nendproc\r\n",
+      "source_sha256": "bf4027bc82b9c70fd2febf63ae83974aad41070380ec2b1809d4935694a47638",
+      "success": false,
+      "label": "$FNAME=\"X\"",
+      "errors": [
+        "Error C020 Line 5: Invalid command or expression token ==> $FNAME"
+      ]
+    },
+    {
+      "name": "EF040",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nvalue=$FTIME\r\nendproc\r\n",
+      "source_sha256": "ca32db13156568984b5a26ba22f962161d99a0cd8e9564ae8059f442e91819e5",
+      "success": true,
+      "label": "value=$FTIME",
+      "errors": [],
+      "hex": "03 cf ac 8c 02 6e 0e 00 94",
+      "asx_sha256": "9625a50ffde17c7885d1cbdab5580e1344bae07bd243345a3dab8fe199a26ca1"
+    },
+    {
+      "name": "EF041",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\n$FTIME=\"X\"\r\nendproc\r\n",
+      "source_sha256": "79cf4221eae802cb1f5b5fe2702c0df25c46150e68066f166a61a8df616b12cb",
+      "success": false,
+      "label": "$FTIME=\"X\"",
+      "errors": [
+        "Error C020 Line 5: Invalid command or expression token ==> $FTIME"
+      ]
+    },
+    {
+      "name": "EF042",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nsize=$FSIZE\r\nendproc\r\n",
+      "source_sha256": "b0c9c25a6721f5a0d8e979029588d2082f9bbfa56a0ffdaf0675c762dfb2c266",
+      "success": true,
+      "label": "size=$FSIZE",
+      "errors": [],
+      "hex": "03 cf 5b 05 8e 00 70 01 94",
+      "asx_sha256": "e1d9076e659f2e329d1ba8e1034f1eecc501dbf9679af754a5036a0f96964ede"
+    },
+    {
+      "name": "EF043",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\n$FSIZE=1L\r\nendproc\r\n",
+      "source_sha256": "19eb30750dbdb9a8bfad9b546eaf76e01241fe8182b679be2f82c55c407ad192",
+      "success": false,
+      "label": "$FSIZE=1L",
+      "errors": [
+        "Error C044 Line 5: Invalid variable operand"
+      ]
+    },
+    {
+      "name": "EF044",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\nstring localpath\r\nfindfirst localpath \"H\"\r\nendproc\r\n",
+      "source_sha256": "a1799afc2419a0eeeea1cbdaaf57b26de39f58d2f90909a19718ec4aef8cd6bb",
+      "success": true,
+      "label": "string localpath\nfindfirst localpath \"H\"",
+      "errors": [],
+      "hex": "03 d2 51 00 cf 3c a0 00 00 01 aa b4 87 2b 95",
+      "asx_sha256": "a12564ea3dcab70d03f92f6603ee3406cb3776342167c441a8cce4ea6c5a622c"
+    },
+    {
+      "name": "EF045",
+      "source": "integer result\r\nlong size\r\nstring pattern,attr,value\r\nproc main\r\ncall worker with \"*.*\" \"RH\"\r\nendproc\r\nproc worker\r\nstrparm path\r\nstrparm attrs\r\nfindfirst path attrs\r\nendproc\r\n",
+      "source_sha256": "5ed20cb7a1d2585020a4a3502808ed3c6a0e5361c308d2da55fb647df064aefb",
+      "success": true,
+      "label": "call worker with \"*.*\" \"RH\"",
+      "errors": [],
+      "hex": "03 cf d0 cd aa b6 8e 83 ad 25 cd aa b5 08 6f 5f c8 19 00 00 00 d2 5e ff 94 cf 3c 96 a8 00 01 96 57 00 95",
+      "asx_sha256": "544130c5679d0582ac5327e9d118e1c975a6c6ba772dd534388b6bfffb282415"
+    }
+  ],
+  "scope": "Authored source compilation only; expected values fixed independently before runtime execution."
+}

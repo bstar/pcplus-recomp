@@ -1,10 +1,15 @@
 """Prompt-driven source login for the isolated synthetic loclab account only."""
-def source(file_info=False):
+def source(file_info=False,enumeration=False):
+ file_info=file_info or enumeration
  probe=('fopen 4 \"FILECHK.TMP\" \"wb\"\nfputs 4 \"proof\"\nfclose 4\n'
   'getfsize \"FILECHK.TMP\" probe_size\nif failure\nexit\nendif\n'
   'if probe_size != 5L\nexit\nendif\nrename \"FILECHK.TMP\" \"FILECHK.BIN\"\n'
   'if failure\nexit\nendif\nisfile \"FILECHK.BIN\"\nif failure\nexit\nendif\n') if file_info else ''
- return ('integer cancel_done,scan_done\n'+('long probe_size\n' if file_info else '')+'proc main\ninteger attempts\n'+probe+
+ enum_probe=('findfirst "FILECHK.BIN"\nif found\nfopen 4 "FIND.LOG" "wb"\n'
+  'fputs 4 $FILENAME\nfputs 4 "|"\nfputs 4 $FNAME\nfputs 4 "|"\n'
+  'fputs 4 $FEXT\nfputs 4 "|"\nltoa $FSIZE probe_number\nfputs 4 probe_number\nfclose 4\n'
+  'else\nexit\nendif\nfindnext\nif found\nexit\nendif\n') if enumeration else ''
+ return ('integer cancel_done,scan_done\n'+('long probe_size\n' if file_info else '')+('string probe_number\n' if enumeration else '')+'proc main\ninteger attempts\n'+probe+enum_probe+
  'fopen 5 "LOGIN.LOG" "wb"\nfputs 5 "START"\n'
  'cancel_done=0\nscan_done=0\nattempts=0\n'
  'waitfor "lOGIN" 25\ntransmit "^M"\n'

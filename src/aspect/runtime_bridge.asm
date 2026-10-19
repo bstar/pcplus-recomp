@@ -2,6 +2,9 @@
 ; Near DS=SS. Actual DOS files/far heap; unsupported commands/services abort.
 ; This table is deliberately incomplete and never treats an unknown slot as NOP.
 extern aspect_file_info_isfile,aspect_file_info_size,aspect_file_info_rename
+extern aspect_enumeration_first,aspect_enumeration_next,aspect_enumeration_size
+extern aspect_enumeration_attributes,aspect_enumeration_date,aspect_enumeration_extension
+extern aspect_enumeration_filename,aspect_enumeration_basename,aspect_enumeration_time
 BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
@@ -307,11 +310,27 @@ aspect_string_builtin:
  pop bp
  ret 2
 .other:
+ cmp word [bp+4],9
+ jb .empty
+ cmp word [bp+4],14
+ ja .empty
+ push bx
+ mov bx,[bp+4]
+ sub bx,9
+ shl bx,1
+ call [cs:enumeration_string_getters+bx]
+ pop bx
+ pop bp
+ ret 2
+.empty:
  cmp word [bp+4],19
  jne unsupported
  mov ax,empty_script
  pop bp
  ret 2
+enumeration_string_getters:
+ dw aspect_enumeration_attributes,aspect_enumeration_date,aspect_enumeration_extension
+ dw aspect_enumeration_filename,aspect_enumeration_basename,aspect_enumeration_time
 directory_string_getters:
  dw aspect_directory_builtin_ldate,aspect_directory_builtin_kbdfile
  dw aspect_directory_builtin_metakey,aspect_directory_builtin_name
@@ -360,8 +379,13 @@ aspect_operand_builtin_integer:
  pop bp
  ret 2
 aspect_operand_builtin_long:
- mov ax,3
- jmp fail
+ push bp
+ mov bp,sp
+ cmp word [bp+4],1
+ jne unsupported
+ call aspect_enumeration_size
+ pop bp
+ ret 2
 
 global aspect_dispatch_wait,aspect_dispatch_shutdown
  global aspect_abort_tell,aspect_abort_format,aspect_abort_print
@@ -862,7 +886,11 @@ _runtime_arena: times 0x3aca db 0
 aspect_dispatch_handlers:
 %assign op 0
 %rep 215
-%if op=0x60
+%if op=0x3c
+ dw aspect_enumeration_first
+%elif op=0x3d
+ dw aspect_enumeration_next
+%elif op=0x60
  dw aspect_file_info_isfile
 %elif op=0x50
  dw aspect_file_info_size

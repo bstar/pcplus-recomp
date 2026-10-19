@@ -1,8 +1,8 @@
 # ASPECT filesystem queries and rename
 
 The maintained DOS compiler, host compiler and production `ASPECT.EXE` now
-support `ISFILE`, `GETFSIZE` and `RENAME`. The dispatcher implements 92 of 215
-slots; 123 remain explicitly unsupported. This advances F13 without closing
+support `ISFILE`, `GETFSIZE` and `RENAME`. That checkpoint implemented92 of215 slots and rejected123. The later
+[file enumeration integration](ASPECT_ENUMERATION.md) extends this to94/121. This advances F13 without closing
 any whole-application gate.
 
 ```text

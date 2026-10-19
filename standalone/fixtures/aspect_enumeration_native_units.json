@@ -1,0 +1,78 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "unit": 1,
+      "name": "first",
+      "start": 61360,
+      "end": 61416,
+      "file_start": 120768,
+      "bytes": 56,
+      "sha256": "753b4e368042e089c7c62878b9dfbb1dd615b8042ad5a4ca8cada8f68ada312b"
+    },
+    {
+      "unit": 2,
+      "name": "next",
+      "start": 61416,
+      "end": 61435,
+      "file_start": 120824,
+      "bytes": 19,
+      "sha256": "1b897bed1d76cbb7db535649814888da346f3c345b4d9c3e5aa043df6bda72d2"
+    },
+    {
+      "unit": 3,
+      "name": "parse",
+      "start": 60836,
+      "end": 60963,
+      "file_start": 120244,
+      "bytes": 127,
+      "sha256": "0754f3273cc893766798f15a135947f884207da51c777825a39ca0cf366cb4bb"
+    },
+    {
+      "unit": 4,
+      "name": "attributes",
+      "start": 60963,
+      "end": 61039,
+      "file_start": 120371,
+      "bytes": 76,
+      "sha256": "9db45689af89b29ee1dd2e8e7b344ef07a190c9ef82a4113bffba864f0a111c8"
+    },
+    {
+      "unit": 5,
+      "name": "fix",
+      "start": 61435,
+      "end": 61582,
+      "file_start": 120843,
+      "bytes": 147,
+      "sha256": "5c43ab230a745b1a6fb1825c67114bf245dfe27469c8c04eccc8c38f9053accc"
+    },
+    {
+      "unit": 6,
+      "name": "search",
+      "start": 23380,
+      "end": 23584,
+      "file_start": 27988,
+      "bytes": 204,
+      "sha256": "b599dcd4fed2c02a98892c1f47911eb2d94a652de7773fca9470b84fd544f236"
+    },
+    {
+      "unit": 7,
+      "name": "size",
+      "start": 55914,
+      "end": 55922,
+      "file_start": 111642,
+      "bytes": 8,
+      "sha256": "92666360c30e806edc4501796fcee1f7a6ff15dc8ffc0fe2b3ebd75321d7cf85"
+    },
+    {
+      "unit": 8,
+      "name": "getters",
+      "start": 56005,
+      "end": 56043,
+      "file_start": 111733,
+      "bytes": 38,
+      "sha256": "f0535168d105990b4d39896abc04602b81fca4012dc13a2a03434a20a0c2564a"
+    }
+  ],
+  "scope": "Native file enumeration handlers,attribute parser/formatter,result fixup,DOS search services and six string/one long getters; source-only numerical hashes and locations. Native DTA side effect and display-format dependencies are explicit."
+}

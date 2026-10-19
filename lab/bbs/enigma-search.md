@@ -117,3 +117,9 @@ The normal fourteen route checks and three script checks remain required; an
 additional exact-output check requires FILECHK.BIN to contain `proof` and the
 old FILECHK.TMP to be absent. This mode yields eighteen checks and is bound in
 [filesystem query/rename validation](../../docs/ASPECT_FILE_INFO.md).
+
+`--enumeration-login` includes the query/rename probe, enumerates its resulting
+file and writes the native builtin values as `FILECHK.BIN|FILECHK|BIN|5` before
+authentication. The exact trace adds a nineteenth check to the unchanged route
+checks. [Enumeration validation](../../docs/ASPECT_ENUMERATION.md) binds this
+mode to the actual DOS compiler/runner and isolated patched owned modules.

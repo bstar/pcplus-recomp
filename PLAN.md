@@ -81,14 +81,27 @@ must exclude original executables and private install/configuration data.
 
 ## Current application work
 
+The [enumeration integration](docs/ASPECT_ENUMERATION.md) adds FINDFIRST/FINDNEXT
+and the seven native file metadata builtins. Its675 exact native bytes pass885
+component cases and a matching original replay. Both compilers match46 original
+outcomes (17 accepted/29 rejected); the DOS compiler passes1,610 cases. Actual
+DOS covers shared FOUND state, file/hidden/directory masks, retained failed-search
+fields, unrelated DTA owners and EXECUTE continuity. A guarded runtime fixes the
+native no-dot volume null write without altering flat recovery. The dispatcher
+now implements94 slots and rejects121;1,122 composed cases/26,928 checks pass.
+The310 repeated DOS VM runs pass22,377 assertions;155 query/341 stream runs
+remain passing. Parent login and all19 expanded ENiGMA checks pass as well.
+A fresh original-free rebuild reproduces234 outputs. All whole-application
+gates remain open.
+
 The [filesystem query/rename integration](docs/ASPECT_FILE_INFO.md) adds native
 ISFILE, GETFSIZE and RENAME through both compilers and the production DOS child.
 The original compiler oracle covers84 cases (17 accepted/67 rejected);177 exact
 instruction bytes pass322 component cases and a matching original replay.
 The full DOS compiler passes1,564 cases. Repeated actual VM queries, six occupied
 script streams and mid-command faults pass155 invocations/1,103 assertions with
-stable heap/JFT ownership. The dispatcher now implements92 slots and rejects123;
-the composed DOS suite passes1,124 cases/26,972 checks. A real terminal child
+stable heap/JFT ownership. That checkpoint implemented92 slots and rejected123;
+its composed DOS suite passed1,124 cases/26,972 checks. A real terminal child
 gates login on these file checks and returns to working parent input. All18
 expanded isolated ENiGMA checks pass after DOS-compiled query/rename login, and
 225 outputs reproduce without original inputs. All gates remain open.

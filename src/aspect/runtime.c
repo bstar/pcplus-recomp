@@ -4,6 +4,7 @@
 #include "find_runtime.h"
 #include "script_file_runtime.h"
 #include "file_info_runtime.h"
+#include "enumeration_runtime.h"
 #include "file_io.h"
 #include "script_path.h"
 #include "serial_runtime.h"
@@ -85,6 +86,7 @@ void runtime_reset_native(void)
     runtime_console_message_mode=1;
     runtime_set_reset();
     runtime_find_reset();
+    runtime_enumeration_reset();
     runtime_set_error(runtime_script_files_reset());
     runtime_set_error(runtime_file_info_reset());
     runtime_serial_reset();runtime_receive_reset();runtime_when_reset();runtime_directory_reset();

@@ -12,6 +12,7 @@ static const command commands[]={
  {"strupr","d",0xb4,0},{"substr","dsnn",0xb6,0},{"pause","v",0x88,0}
 };
 static const command file_commands[]={
+ {"findfirst","sS",0x3c,0},{"findnext","",0x3d,0},
  {"isfile","s",0x60,0},{"getfsize","sl",0x50,0},{"rename","ss",0x93,0},
  {"eof","vi",0x31,0},{"fclear","v",0x35,0},{"fclose","v",0x36,0},
  {"fflush","v",0x38,0},{"fgetc","vi",0x39,0},{"fgets","vd",0x3a,0},
@@ -103,9 +104,11 @@ static void file_command(pc_compiler *c,const command *cmd)
  unsigned i,n;char role;aspect_compiler_value value;
  emit(c,cmd->opcode);c->expression.position=1;
  for(i=0;cmd->roles[i]&&pc_ready(c);++i){
+  role=cmd->roles[i];
+  if(role=='S'){emit(c,c->expression.position<c->expression.last);if(c->expression.position==c->expression.last)return;role='s';}
   if(i&&pc_equal(c,c->expression.position,","))++c->expression.position;
   if(c->expression.position==c->expression.last||pc_equal(c,c->expression.position,"(")||pc_equal(c,c->expression.position,",")){bad(c);return;}
-  n=parse(c);if(!pc_ready(c))return;role=cmd->roles[i];
+  n=parse(c);if(!pc_ready(c))return;
   if(role=='d'||role=='i'||role=='l')destination(c,n,role=='d'?3:role=='i'?0:1);
   else if(role=='v')operand(c,n,1);
   else{

@@ -74,7 +74,7 @@ The [native SET runtime](docs/ASPECT_SET_RUNTIME.md),
 and getters, checked near temporary ownership, configured serial BREAK and
 native notice/status rendering. TXPACE and BREAK use bounded IRQ-live
 calibration around the recovered delay loop. The current DOS suite passes
-1124 cases/26972 checks; five actual parent/child BREAK pulse/cancel cases also pass.
+1122 cases/26928 checks; five actual parent/child BREAK pulse/cancel cases also pass.
 Physical UART timing and full-application requirements remain open.
 
 [Filesystem commands](docs/ASPECT_PATHS.md) add CHDIR, MKDIR, RMDIR and DELETE
@@ -85,7 +85,12 @@ retained current drive/directory and the terminal's login-child handoff.
 [Filesystem queries and rename](docs/ASPECT_FILE_INFO.md) add ISFILE, GETFSIZE
 and RENAME with native comparison behavior and independent temporary-file
 ownership. DOS compiler, repeated VM cleanup, parent login and eighteen-check
-owned ENiGMA regressions pass. The dispatcher now implements92 of215 slots.
+owned ENiGMA regressions pass. That checkpoint implemented92 slots; file enumeration below extends it to94.
+
+[File enumeration](docs/ASPECT_ENUMERATION.md) adds FINDFIRST/FINDNEXT and the
+native filename/extension/attribute/date/time/size builtins. Shared FOUND state,
+DOS DTA ownership and EXECUTE continuation are covered in actual DOS. The runtime
+implements94 slots and explicitly rejects121; full scripting remains unfinished.
 
 The [integrated script-file commands](docs/ASPECT_SCRIPT_FILE_RUNTIME.md) now
 connect both compilers and the interpreter to the owned DOS backend. Thirteen
@@ -106,7 +111,7 @@ Current outputs:
 | `build/aspect-strings/STRINGS.EXE` | Recovered assembly and controlled services | String operands, literals and assignment, including actual far copy and DOS far heap |
 | `build/aspect-long/LONG.EXE` | Recovered assembly only | Native signed long multiply/divide/remainder and shift helpers, including independent actual DOS checks |
 | `build/aspect-arithmetic/ARITH.EXE` | Recovered assembly and controlled services | Native arithmetic component; controlled long/float boundaries are distinct from composed execution |
-| `build/aspect-runtime/EXECUTE.EXE` | Maintained source compiler, recovered assembly and maintained DOS resource owner | Fixed source-compiled suite;92 opcode slots including native filesystem queries/rename/path/stream commands, EXECUTE/BREAK/FETCH/FIND/SWITCH/CASE and thirteen SET setters;123 unsupported slots and243 unsupported SET subcommands |
+| `build/aspect-runtime/EXECUTE.EXE` | Maintained source compiler, recovered assembly and maintained DOS resource owner | Fixed source-compiled suite;94 opcode slots including native filesystem queries/rename/path/stream commands, EXECUTE/BREAK/FETCH/FIND/SWITCH/CASE and thirteen SET setters;121 unsupported slots and243 unsupported SET subcommands |
 | `build/aspect-runner/ASPECT.EXE` | Recovered instructions and maintained DOS CLI/resource owner | Execute trusted compiled scripts; raw stdout, Escape cancellation and an optional checked UART lease |
 | `build/aspect-receive-commands/RECEIVE.EXE` | Recovered assembly and controlled platform callbacks | Character, line and quiet-line input, native delayed read and DOS time, COMDATA/FOREVER |
 | `build/aspect-serial-commands/SERIAL.EXE` | Recovered assembly and controlled device/time callbacks | TRANSMIT/WAITFOR and native formatter, timeout, case, clock and result primitives |

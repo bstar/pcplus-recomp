@@ -642,3 +642,9 @@ and production ASPECT. [Filesystem query/rename evidence](ASPECT_FILE_INFO.md)
 covers84 original compiler outcomes,177 exact native bytes,322 component/original
 cases,155 repeated actual DOS VM invocations and terminal-parent login gating.
 The dispatcher has92 supported/123 unsupported slots; this does not close F13.
+
+F13 now includes FINDFIRST/FINDNEXT and seven native file metadata builtins.
+[Enumeration evidence](ASPECT_ENUMERATION.md) retains675 exact native bytes,
+885 component/original cases,46 compiler outcomes and actual DOS DTA/EXECUTE/
+shared FOUND ownership. The runtime has94 supported/121 unsupported opcode slots;
+all F01–F16 application gates remain open.
