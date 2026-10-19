@@ -28,14 +28,15 @@ regressions across that work. Physical Wi-Fi modem testing is still outstanding.
 ASPECT now includes native WHEN/CWHEN matching and deferred handlers through
 the actual resident terminal renderer. Twelve SET setters/FETCH getters and native
 FIND/FOUND/SWITCH/CASE run in DOS with checked temporary ownership. The runtime
-supports71 opcode slots;144 remain unsupported. Status staging and ASIOv4
-capability3 are live. See `docs/ASPECT_WHEN_RUNTIME.md`,
+supports72 opcode slots;143 remain unsupported. EXECUTE replaces compiled
+scripts with retained session state. Status staging and ASIOv4 capability4
+publish current script labels through a bounded scalar transfer. See `docs/ASPECT_WHEN_RUNTIME.md`,
 `docs/ASPECT_SET_RUNTIME.md` and `docs/ASPECT_FIND_CASE_RUNTIME.md`.
 
 Serial BREAK now executes through native opcode0D, SET09 and FETCH37, with
-ASIOv4 capability3 inheriting the raw configured word and owning the actual
+ASIOv4 capability4 inheriting the raw configured word and owning the actual
 native notice/cursor bracket. Five actual DOS product cases cover configured
-350/1000, raw65535, zero and in-pulse Escape cleanup. The expanded1147-case DOS
+350/1000, raw65535, zero and in-pulse Escape cleanup. The expanded1146-case DOS
 suite checks all twelve FETCH getters and244 unsupported selectors. The parent
 Alt-B timing policy remains separate. See `docs/ASPECT_BREAK_RUNTIME.md` and its
 native/transport evidence. Complete scripting, keyboard/UI and recorder remain
@@ -1423,3 +1424,29 @@ compiler/recorder/remaining command families, other profiles/protocols, Host,
 modern BBS immediate-forwarding issues and physical Wi-Fi modem validation.
 All F01–F16 gates remain open. See `docs/ASPECT_CHAIN_RUNTIME.md` and
 `docs/validation/aspect-chain-runtime.json` for scope and bound evidence.
+
+### Current script label across EXECUTE
+
+Renderer capability4 now publishes the accepted compiled script basename
+through an ordered synchronous scalar-byte pull. The parent checks the active
+child/UART lease, stages at most13 bytes on its own stack, validates8.3/ASX,
+updates a separate owned label and calls native STATUS. Drawing preflight
+failure restores the old label and validity. Preparation/revoke retire the
+label without changing the invocation path or saved directory/configuration.
+Child duplex overrides survive the refresh without changing parent policy.
+
+37 child and29 parent linked CPU cases cover transfer lifetime, malformed
+labels, callback failures, rollback, original invocation-path preservation and
+revoke fallback. The existing85-case native STATUS suite passes. Actual DOS
+checks sample NEXT.ASX after chaining, including a half-duplex override and
+retained BREAK/WHENCASE; production CLI and the synthetic five-case RPC fixture
+also pass. The latter uses an explicit fixed12000-cycle clock. Unconstrained
+DOSBox max cycles can hit existing bounded end-wait pacing5, reproduced on
+pre-label e464f08; retain that limitation and failed evidence rather than
+claiming timing support beyond the measured range. See ASPECT_SCRIPT_LABEL.md
+and docs/validation/aspect-script-label.json for exact evidence/scope.
+
+The chained label item is implemented. DOS source compilation/fallback, original
+error UI, remaining command/compiler/recorder and application services, other
+profiles/protocols, Host, immediate-forwarding ENiGMA interaction and physical
+Wi-Fi modem validation remain required. No F01–F16 gate closes.

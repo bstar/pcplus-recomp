@@ -840,3 +840,10 @@ test-aspect-chain-serial-dos: aspect-runner
 .PHONY: test-aspect-chain-status-dos
 test-aspect-chain-status-dos: terminal aspect-runner
 	python3 standalone/test_aspect_chain_status_dos.py --label "chain-$$(date -u +%Y%m%dT%H%M%S%N)" --terminal-sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)" --runner-sha256 "$$(sha256sum build/aspect-runner/ASPECT.EXE | cut -d' ' -f1)"
+
+.PHONY: test-aspect-script-label-client test-aspect-script-label-parent
+test: test-aspect-script-label-client test-aspect-script-label-parent
+test-aspect-script-label-client: aspect-runner
+	python3 standalone/check_aspect_script_label_client.py
+test-aspect-script-label-parent: terminal
+	python3 standalone/check_aspect_script_label_parent.py

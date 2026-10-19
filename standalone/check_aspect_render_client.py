@@ -15,7 +15,7 @@ class Client(q.Machine):
   self.put('__STACKLOW',0xc000);self.put('__STACKTOP',0xe000)
   self.uc.mem_write(0x61100,b'\xb8\0\0\xcb') # Explicit BEGIN/EMIT/END success boundary.
   self.uc.mem_write(self.data_base+0xb000,b'/S1:0003:03:N:6200:0100\0')
-  self.desc=0x62100;self.words=[0x4f495341,4,48,0x6000,0x6200,0x1000,4096,0,0,0,0,0,0,0,0,0,0,0,0,0x100,0x6100,0x7123,3]
+  self.desc=0x62100;self.words=[0x4f495341,4,48,0x6000,0x6200,0x1000,4096,0,0,0,0,0,0,0,0,0,0,0,0,0x100,0x6100,0x7123,4]
   self.publish()
  def publish(self):
   w=self.words;w[9]=w[3]^w[4]^w[5]^0xa510
@@ -73,7 +73,7 @@ def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
  cases=[]
  def done(name,n):cases.append(dict(case=name,inputs=n,passed=True));print(name,n,flush=True)
- for i,v in [(6,4095),(20,0),(21,0),(22,2),(13,1),(15,2026),(7,4097),(8,4096)]:
+ for i,v in [(6,4095),(20,0),(21,0),(22,3),(13,1),(15,2026),(7,4097),(8,4096)]:
   m=Client();m.words[i]=v;m.publish();assert m.open()==1 and not m.writes and not m.get('_aspect_serial_active')
  done('invalid-capability-preload-projection-before-UART',8)
  # Valid token + invalid far entry must fail even with a freshly valid guard.

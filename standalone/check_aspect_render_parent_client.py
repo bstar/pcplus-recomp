@@ -10,13 +10,13 @@ BINARY=ROOT/'build/terminal/TERMINAL.EXE';MAP=ROOT/'build/terminal/terminal.map'
 
 def main():
  symbols={name:(int(seg,16),int(off,16)) for seg,off,name in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',MAP.read_text(),re.M|re.I)}
- cases=['valid','Z-owner','wrong-PSP','parent-PSP','DS-before-PSP','near-client-wrap','bad-signature','wrong-owner','zero-allocation','physical-overflow','client-outside','client-in-PSP','bad-magic','bad-version','zero-token','wrong-token','callback-in-PSP','callback-after-end','callback-physical-overflow','callback-alias','null-output','output-near-wrap']
+ cases=['valid','Z-owner','wrong-PSP','parent-PSP','DS-before-PSP','near-client-wrap','bad-signature','wrong-owner','zero-allocation','physical-overflow','client-outside','client-in-PSP','bad-magic','bad-version','old-capability3','zero-token','wrong-token','callback-in-PSP','callback-after-end','callback-physical-overflow','callback-alias','null-output','output-near-wrap']
  results=[]
  for name in cases:
   image=DosImage(BINARY,MAP);u=image.uc
   psp,parent,ds,offset,token=0x8000,0xff0,0x8200,0x1000,0x1432
   mcb=bytearray(b'M'+struct.pack('<HH',psp,0x800)+b'\0'*11)
-  client=[0x5243,3,token,0x20,0x8010]
+  client=[0x5243,4,token,0x20,0x8010]
   output=image.stage_near(b'\xa5'*4)
   if name=='Z-owner':mcb[0]=ord('Z')
   if name=='wrong-PSP':psp=0xff
@@ -31,6 +31,7 @@ def main():
   if name=='client-in-PSP':ds,offset=0x8000,0x80
   if name=='bad-magic':client[0]=0
   if name=='bad-version':client[1]=2
+  if name=='old-capability3':client[1]=3
   if name=='zero-token':token=0
   if name=='wrong-token':client[2]^=1
   if name=='callback-in-PSP':client[3:]=[0x80,0x8000]

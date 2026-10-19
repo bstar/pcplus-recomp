@@ -66,7 +66,7 @@ extern resident_bridge_caller_ds,resident_bridge_callback,resident_bridge_abort
 extern _aspect_render_admit,_aspect_render_preflight_control
 extern _aspect_render_preflight_modes
 extern _aspect_render_client_admit
-extern terminal_status_live,terminal_break_ui
+extern terminal_status_live,terminal_break_ui,terminal_script_label_update
 extern terminal_break_delay_units
 extern _script_handoff
 global terminal_render_prepare,terminal_render_revoke,terminal_render_validate,terminal_render_typed_abort
@@ -88,6 +88,7 @@ terminal_render_prepare:
  jnz .done
  mov word [terminal_aspect_active],0
  mov word [terminal_aspect_adopt],0
+ mov word [terminal_script_label_valid],0
  mov word [cs:render_attached],0
  mov word [cs:render_callback],0
  mov word [cs:render_callback+2],0
@@ -110,7 +111,7 @@ terminal_render_prepare:
  mov word [_script_render_segment],seg resident_bridge_entry
  mov ax,[cs:render_token]
  mov [_script_render_token],ax
- mov word [_script_render_version],3
+ mov word [_script_render_version],4
  xor ax,ax
 .done:
  pop es
@@ -133,6 +134,7 @@ terminal_render_revoke:
  mov word [cs:render_callback],0
  mov word [cs:render_callback+2],0
  mov word [terminal_aspect_active],0
+ mov word [terminal_script_label_valid],0
  retf
 
 terminal_render_validate:
@@ -145,7 +147,7 @@ terminal_render_validate:
  cmp [_script_render_token],ax
  mov ax,1
  jne .done
- cmp word [_script_render_version],3
+ cmp word [_script_render_version],4
  jne .done
  xor ax,ax
 .done:
@@ -221,6 +223,8 @@ render_body:
  je .break_policy
  cmp di,5
  je .break_notice
+ cmp di,6
+ je .script_label
  cmp di,1
  jne .state
  cmp bx,255
@@ -278,6 +282,98 @@ render_body:
  or ax,ax
  jnz .done
  call far terminal_break_ui
+ ret
+.script_label:
+ cmp bx,0xffff
+ je .label_admit
+ cmp bx,255
+ ja .operand
+.label_admit:
+ cmp word [_script_handoff+22],0
+ jne .serial
+ push bx
+ call _aspect_render_admit
+ pop bx
+ or ax,ax
+ jnz .done
+ push bp
+ mov bp,sp
+ sub sp,16
+ mov [bp-2],bx
+ push ds
+ pop es
+ lea di,[bp-16]
+ xor ax,ax
+ mov cx,13
+ rep stosb
+ lea di,[bp-16]
+ xor cx,cx
+.label_pull:
+ mov bx,cx
+ mov ax,7
+ call resident_bridge_callback
+ push ax
+ xor bx,bx
+ mov ax,4
+ call resident_bridge_callback
+ or ax,ax
+ jnz .label_callback_error
+ pop ax
+ cmp ax,255
+ ja .label_state
+ or al,al
+ jz .label_complete
+ cmp cx,12
+ jae .label_operand
+ cmp al,32
+ jb .label_operand
+ cmp al,127
+ je .label_operand
+ cmp al,0x5c
+ je .label_operand
+ cmp al,':'
+ je .label_operand
+ cmp al,'/'
+ je .label_operand
+ mov [di],al
+ inc di
+ inc cx
+ jmp .label_pull
+.label_complete:
+ mov byte [di],0
+ cmp cx,5
+ jb .label_operand
+ cmp byte [di-4],'.'
+ jne .label_operand
+ cmp byte [di-3],'A'
+ jne .label_operand
+ cmp byte [di-2],'S'
+ jne .label_operand
+ cmp byte [di-1],'X'
+ jne .label_operand
+ lea si,[bp-16]
+ sub cx,4
+.label_stem:
+ lodsb
+ cmp al,'.'
+ je .label_operand
+ loop .label_stem
+ lea si,[bp-16]
+ mov bx,[bp-2]
+ call far terminal_script_label_update
+ jmp .label_return
+.label_callback_error:
+ pop dx
+ cmp ax,14
+ jbe .label_return
+.label_state:
+ mov ax,10
+ jmp .label_return
+.label_operand:
+ mov ax,7
+.label_return:
+ mov sp,bp
+ pop bp
  ret
 .serial:
  mov ax,14
@@ -505,5 +601,8 @@ render_unsupported: dw 0
 
 SEGMENT _DATA public class=DATA use16
 global terminal_aspect_active,terminal_aspect_adopt
+global terminal_script_label_valid,terminal_script_label
+terminal_script_label_valid: dw 0
+terminal_script_label: times 13 db 0
 terminal_aspect_active: dw 0
 terminal_aspect_adopt: dw 0

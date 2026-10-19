@@ -62,7 +62,26 @@ endpoint:
  je .end
  cmp ax,4
  je .policy
+ cmp ax,6
+ je .label
  mov ax,10
+ jmp .return
+.label:
+ xor si,si
+.label_byte:
+ mov bx,si
+ mov ax,7
+ call far [cs:callback]
+ cmp ax,255
+ ja .bad
+ or ax,ax
+ jz .label_done
+ inc si
+ cmp si,13
+ jb .label_byte
+ jmp .bad
+.label_done:
+ xor ax,ax
  jmp .return
 .policy:
  or bx,bx
@@ -77,7 +96,7 @@ endpoint:
  je .denied
  cmp word [bx],0x5243
  jne .bad
- cmp word [bx+2],3
+ cmp word [bx+2],4
  jne .bad
  cmp word [bx+4],0x7123
  jne .bad
@@ -99,6 +118,8 @@ endpoint:
  cmp word [cs:reject_begin],3
  jne .okay
  cmp bl,'A'
+ jne .okay
+ cmp word [cs:results+16],0
  jne .okay
  ; One explicit fixture byte requests actual callback operations. No escape
  ; sequence recognizer, terminal parser or generated reply is present here.
@@ -237,7 +258,7 @@ def main():
    except OSError as e:
     if not stop.is_set():errors.append(str(e))
   t=threading.Thread(target=peer,daemon=True);t.start()
-  config=f'''[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\ncycles=max\n[mixer]\nnosound=true\n[serial]\nserial1=nullmodem server:127.0.0.1 port:{server.getsockname()[1]} transparent:1\nserial2=disabled\nserial3=disabled\nserial4=disabled\n[autoexec]\n@echo off\nmount c "{folder}"\nc:\nPARENT {mode}\nif errorlevel 1 goto fail\necho PASS>PASS.TXT\ngoto done\n:fail\necho FAIL>FAIL.TXT\n:done\nexit\n'''
+  config=f'''[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\ncycles=fixed 12000\n[mixer]\nnosound=true\n[serial]\nserial1=nullmodem server:127.0.0.1 port:{server.getsockname()[1]} transparent:1\nserial2=disabled\nserial3=disabled\nserial4=disabled\n[autoexec]\n@echo off\nmount c "{folder}"\nc:\nPARENT {mode}\nif errorlevel 1 goto fail\necho PASS>PASS.TXT\ngoto done\n:fail\necho FAIL>FAIL.TXT\n:done\nexit\n'''
   (folder/'dosbox.conf').write_text(config)
   try:
    with (folder/'dosbox.log').open('w') as log:subprocess.run(['dosbox-x','-fastlaunch','-nogui','-conf',str(folder/'dosbox.conf')],stdout=log,stderr=log,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),timeout=20,check=True)
@@ -257,6 +278,6 @@ def main():
   else:checks.update(noRPC=results[:3]==(0,0,0),not_adopted=lease[10]==0)
   result=dict(case=name,checks=checks,passed=all(checks.values()),exit=rc,results=results,emitted_hex=emitted.hex(),wire_hex=wire.hex())
   cases.append(result);print(json.dumps(result),flush=True)
- report=dict(binary_sha256=digest,checker_sha256=sha(__file__),manifest_sha256=sha(ROOT/'build/aspect-runner/manifest.json'),original_inputs=[],regression_history=[{'path':'build/aspect-render-client-history/pre-WHEN-idle-C9-fixture','reason':'Old MESSAGE callback fixture assumed no native8E20 idle drain; frozenWHEN integration correctly drained preloadZ before MESSAGE.'}],cases=cases,passed=all(c['passed'] for c in cases),limitations=['Lifecycle/callback endpoint fixture only; not a terminal parser, query recognizer or full parent engine proof. COMGETC C9 bypasses native idle drain to expose the queuedZ to callback read/unread/read; plain MESSAGE expects native idle leadZ first.','Actual DOSBox-X 8086 COM1 virtual UART and loopback only; native hardware untested.'])
+ report=dict(binary_sha256=digest,checker_sha256=sha(__file__),manifest_sha256=sha(ROOT/'build/aspect-runner/manifest.json'),original_inputs=[],regression_history=[{'path':'build/aspect-render-client-history/label-cap4-pacing-limit-diagnosis','reason':'Both pre-label and label builds hit bounded pacing5 at unconstrained max cycles during native end-wait. Fixed12000 is an explicit supported clock fixture; one-shot callback stimulus prevents error rendering from replacing first results.'},{'path':'build/aspect-render-client-history/pre-WHEN-idle-C9-fixture','reason':'Old MESSAGE callback fixture assumed no native8E20 idle drain; frozenWHEN integration correctly drained preloadZ before MESSAGE.'}],cases=cases,passed=all(c['passed'] for c in cases),limitations=['Lifecycle/callback endpoint fixture only; not a terminal parser, query recognizer or full parent engine proof. COMGETC C9 bypasses native idle drain to expose the queuedZ to callback read/unread/read; plain MESSAGE expects native idle leadZ first.','Actual DOSBox-X 8086 COM1 virtual UART and loopback only; native hardware untested.'])
  (OUT/'checks.json').write_text(json.dumps(report,indent=2)+'\n');assert sha(binary)==digest;assert report['passed']
 if __name__=='__main__':main()

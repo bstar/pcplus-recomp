@@ -500,3 +500,6 @@ From the running terminal, **Alt-F10** opens the same editor for an explicit
 BREAK edits apply during the session. A separate Y/N choice applies baud,
 line format and flow on the current port. Profiles4/6 have a separate confirmed
 keyboard/view reset. An idle COM move has its own confirmation and restores the old port before acquiring the new one; see [COM changes](docs/PORT_HANDOFF.md) and [setup from the terminal](docs/SETUP_LIVE.md).
+
+Current matched terminal/ASPECT packages use renderer capability4 to display the
+current script name after `EXECUTE`; see [the label protocol and checks](docs/ASPECT_SCRIPT_LABEL.md).

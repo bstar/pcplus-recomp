@@ -8,7 +8,8 @@ extern ui_flow_region_cells,ui_flow_video_base,ui_flow_coordinate_base,ui_flow_s
 extern screen_columns,csi_terminal_id,terminal_tab_wrap
 extern terminal_baud_low,terminal_baud_high,terminal_parity,terminal_data_bits,terminal_stop_bits
 extern modes_value_1d1a,terminal_program_active,_command_menu_script
-global terminal_status_live
+global terminal_status_live,terminal_script_label_update
+extern terminal_script_label_valid,terminal_script_label
 terminal_status_live:
  push bp
  mov bp,sp
@@ -61,6 +62,10 @@ terminal_status_live:
 .rate_found:
  mov [bp-4],cx
  mov si,_command_menu_script
+ cmp word [terminal_script_label_valid],1
+ jne .invocation
+ mov si,terminal_script_label
+.invocation:
  mov di,si
  mov cx,64
 .label_scan:
@@ -128,6 +133,45 @@ terminal_status_live:
 .unsupported:
  mov ax,3
 .done:
+ mov sp,bp
+ pop bp
+ retf
+ ; SI=checked parent stack label13B, BX=duplex snapshot. Roll back label on
+ ; STATUS preflight failure. No child pointer enters this function.
+terminal_script_label_update:
+ push bp
+ mov bp,sp
+ sub sp,16
+ push si
+ push di
+ push es
+ push ds
+ pop es
+ mov dx,si
+ mov ax,[terminal_script_label_valid]
+ mov [bp-2],ax
+ mov si,terminal_script_label
+ lea di,[bp-16]
+ mov cx,13
+ rep movsb
+ mov si,dx
+ mov di,terminal_script_label
+ mov cx,13
+ rep movsb
+ mov word [terminal_script_label_valid],1
+ call far terminal_status_live
+ or ax,ax
+ jz .done
+ mov dx,[bp-2]
+ mov [terminal_script_label_valid],dx
+ lea si,[bp-16]
+ mov di,terminal_script_label
+ mov cx,13
+ rep movsb
+.done:
+ pop es
+ pop di
+ pop si
  mov sp,bp
  pop bp
  retf

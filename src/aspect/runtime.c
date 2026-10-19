@@ -16,6 +16,7 @@
 #include "../config/resource_path.h"
 #include "resident_render.h"
 extern unsigned __cdecl aspect_serial_psp(void);
+extern unsigned runtime_set_duplex_changed,runtime_serial_local_echo;
 #endif
 
 aspect_file runtime_file;
@@ -125,6 +126,8 @@ unsigned runtime_open(unsigned owner,const char *path)
 #if defined(ASPECT_RUNTIME_SERIAL)
     if(aspect_render_active()){
         status=aspect_render_policy_inherit();
+        if(status){runtime_set_error(status);aspect_file_close(&runtime_file);return 0;}
+        status=aspect_render_script_label(normalized,runtime_set_duplex_changed?runtime_serial_local_echo:65535U);
         if(status){runtime_set_error(status);aspect_file_close(&runtime_file);return 0;}
     }
 #endif

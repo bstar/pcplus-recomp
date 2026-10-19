@@ -600,3 +600,11 @@ owner for attached rendering; raw ASIO preserves unread input.72/215 opcode
 slots are supported. DOS source compilation/fallback, chained parent filename
 labels, recorder/full compiler/remaining services and F13 remain open. See
 [ASPECT_CHAIN_RUNTIME.md](ASPECT_CHAIN_RUNTIME.md). No F01–F16 gate closes.
+
+F13 current-label update: capability4 scalar transfer now refreshes native
+STATUS with the accepted script basename after EXECUTE, preserving invocation
+and parent configuration ownership and temporary child duplex. This closes
+that specific label item, not F13. DOS source compilation/fallback and remaining
+compiler/recorder/services are still required. Unconstrained emulator timing
+is not verified; bounded end-wait calibration can return pacing5. See
+[ASPECT_SCRIPT_LABEL.md](ASPECT_SCRIPT_LABEL.md).

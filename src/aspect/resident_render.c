@@ -10,6 +10,8 @@ unsigned aspect_render_parent_entry[2];
 aspect_render_client aspect_render_client_record;
 static unsigned attached,callback_error;
 static unsigned policy_queried,policy_wait,policy_received;
+static unsigned label_wait,label_next,label_done;
+static unsigned char script_label[13];
 extern unsigned runtime_serial_break_units;
 extern unsigned __cdecl aspect_render_client_prepare(void);
 extern unsigned __cdecl aspect_render_client_check(void);
@@ -27,7 +29,7 @@ unsigned __cdecl aspect_render_prepare(unsigned offset,unsigned segment,unsigned
  aspect_render_client_record.token=token;
  aspect_render_client_record.callback_offset=aspect_render_callback_offset();
  aspect_render_client_record.callback_segment=aspect_render_code_segment();
- callback_error=0;aspect_render_policy_reset();
+ callback_error=label_wait=0;aspect_render_policy_reset();
  return aspect_render_client_prepare();
 }
 unsigned __cdecl aspect_render_attach(void)
@@ -97,6 +99,33 @@ unsigned __cdecl aspect_render_break_notice(unsigned end)
  if(aspect_render_client_check())return ASPECT_RUN_STATE;
  return result?result:callback_error;
 }
+unsigned __cdecl aspect_render_script_label(const char *path,unsigned duplex)
+{
+ const char *leaf=path;unsigned i,n,result;
+ unsigned char staged[13];
+ if(!attached || aspect_render_client_check() || label_wait)return ASPECT_RUN_STATE;
+ if(!aspect_serial_active)return ASPECT_RUN_SERIAL;
+ if(!path || (duplex!=65535U && duplex>255))return ASPECT_RUN_OPERAND;
+ for(n=0;n<=81 && path[n];++n)if(path[n]=='\\' || path[n]==':')leaf=path+n+1;
+ if(n>81)return ASPECT_RUN_OPERAND;
+ n=(unsigned)(path+n-leaf);
+ if(n<5 || n>12 || leaf[n-4]!='.' || leaf[n-3]!='A' || leaf[n-2]!='S' || leaf[n-1]!='X')return ASPECT_RUN_OPERAND;
+ for(i=0;i<n;++i){
+  unsigned char ch=(unsigned char)leaf[i];
+  if(ch<32 || ch==127 || ch=='/' || (ch=='.' && i!=n-4))return ASPECT_RUN_OPERAND;
+  staged[i]=ch;
+ }
+ staged[n]=0;
+ for(i=n+1;i<13;++i)staged[i]=0;
+ for(i=0;i<13;++i)script_label[i]=staged[i];
+ callback_error=label_next=label_done=0;label_wait=1;
+ result=typed(aspect_render_request(ASPECT_RENDER_SCRIPT_LABEL,duplex));
+ label_wait=0;
+ if(aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(result)return result;
+ if(callback_error)return callback_error;
+ return label_done?0:ASPECT_RUN_STATE;
+}
 /* Called only by the far callback's checked child DS=SS stack. A closed UART
  * permits plain diagnostic rendering, not new receive/transmit operations. */
 static unsigned callback_dispatch(unsigned operation,unsigned value)
@@ -109,6 +138,11 @@ static unsigned callback_dispatch(unsigned operation,unsigned value)
  }
  if(!aspect_serial_active){callback_error=ASPECT_RUN_SERIAL;return operation==ASPECT_RENDER_RAW_WAIT || operation==ASPECT_RENDER_RAW_NOW?65535U:callback_error;}
  switch(operation){
+ case ASPECT_RENDER_LABEL_BYTE:
+  if(!label_wait || label_done || value>=13 || value!=label_next){callback_error=ASPECT_RUN_STATE;return 65535U;}
+  ++label_next;
+  if(!script_label[value])label_done=1;
+  return script_label[value];
  case ASPECT_RENDER_BREAK_VALUE:
   if(!policy_wait || policy_received){callback_error=ASPECT_RUN_STATE;return callback_error;}
   runtime_serial_break_units=value;policy_received=1;return 0;

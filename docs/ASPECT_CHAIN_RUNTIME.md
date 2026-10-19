@@ -48,9 +48,10 @@ stops as unsupported; missing ASX does not yet find/compile an ASP fallback.
 The original invokes ASPCOMP.EXE and has different missing-source/error UI.
 The authored Python compiler supplies source-built ASX on the host, not a DOS
 compiler dependency. Neither the original compiler nor original executable is
-an application build input. Parent STATUS still shows the invocation's initial
-script label rather than a replacement target; the native D464 label refresh
-requires a subsequent owned parent/child operation. These are open plan items.
+an application build input. The capability4 parent/child operation now publishes the current compiled
+script basename and refreshes native STATUS after each accepted file open.
+The invocation filename remains unchanged. See [ASPECT_SCRIPT_LABEL.md](ASPECT_SCRIPT_LABEL.md).
+DOS compilation/fallback and original error UI remain open plan items.
 
 ## End-of-script receive
 

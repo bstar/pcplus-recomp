@@ -38,7 +38,7 @@ def main():
                   sources={str(p.relative_to(ROOT)): sha(p) for p in sources},
                   platform='8086 DOS, small model, near DS=SS, cdecl, 8192-byte stack',
                   diagnostic_build=False,
-                  scope='DOS CLI for trusted source-compiled ASX; partial72-slot runtime with native WHEN/CWHEN and twelve SET setters and native FETCH queries; Native FIND/SWITCH/CASE consume shared setting state with checked near temporary ownership. Calibrated cooperative TXPACE/BREAK use explicit IRQ-live ownership. Capability3 inherits raw BREAK duration and brackets the native notice/cursor. Optional owned UART with validated parent ASIO handback and resident rendering. EXECUTE replaces compiled scripts with retained session state; ASP compilation and chained parent status labels remain open. No complete script/UI scheduling or arbitrary-bytecode safety.')
+                  scope='DOS CLI for trusted source-compiled ASX; partial72-slot runtime with native WHEN/CWHEN and twelve SET setters and native FETCH queries; Native FIND/SWITCH/CASE consume shared setting state with checked near temporary ownership. Calibrated cooperative TXPACE/BREAK use explicit IRQ-live ownership. Capability4 publishes the current script label through checked scalar callbacks, inherits raw BREAK duration and brackets the native notice/cursor. Optional owned UART with validated parent ASIO handback and resident rendering. EXECUTE replaces compiled scripts with retained session state; DOS ASP compilation remains open. No complete script/UI scheduling or arbitrary-bytecode safety.')
     (OUT / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')
     print('ASPECT.EXE', result['binary_sha256'])
 
