@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "9dbd8fad7af5320f17ec693dae4ec5c7ee11ad6d189c53f159cd598d6b69bb16",
-  "source_file_count": 2053,
+  "source_snapshot_sha256": "614f69043d6cc6962cdf90cf4767ed529b5d8cf09a1ccf67dfe5e51ac08b886a",
+  "source_file_count": 2060,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,19 +16,19 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "844ee106dea1b80e4150ee68e4f4a17dd31f3c68239e399a8cfff0276afb3f4f",
+  "build_log_sha256": "d24d3df3ca2e63de52b4ecefade728921e8cdd946fc2aae62d7e166a108f5fdd",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.yPOrBn/pcplus-source-proof-ll6fn4it/checkout",
+  "source_checkout": "/tmp/nix-shell.f7VgMS/pcplus-source-proof-i9t01m73/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
   "scope": "178 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
   "output_count": 178,
   "outputs": {
     "terminal/TERMINAL.EXE": {
-      "sha256": "d418fca35f3ed3e4adbe7f87eb236f10660ddcc813cb73acfbe5abeac05627cd",
+      "sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
       "matches_workspace": true,
-      "workspace_sha256": "d418fca35f3ed3e4adbe7f87eb236f10660ddcc813cb73acfbe5abeac05627cd"
+      "workspace_sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52"
     },
     "config-dos/CONFIG.EXE": {
       "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
@@ -1015,6 +1015,8 @@
     "standalone/check_zmodem_names.py",
     "standalone/check_zmodem_name_ui.py",
     "standalone/check_line_edit_live.py",
+    "standalone/check_line_callbacks_live.py",
+    "standalone/check_line_controller_layout.py",
     "standalone/check_line_attributes_live.py",
     "standalone/check_terminal_reverse_tab.py",
     "standalone/check_monitor_file.py",

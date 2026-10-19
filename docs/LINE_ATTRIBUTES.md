@@ -64,3 +64,7 @@ ASPECT renderer edits and a fresh source-only rebuild. See
 [the validation record](validation/line-attributes.json). Viewport/general video
 support, complete keyboard/UI behavior, live server installation, physical modem
 validation and all whole-application gates remain open.
+
+The public controller now also executes through [checked far entries](LINE_CONTROLLER_FAR.md),
+freeing resident address space while retaining this metadata policy and native
+video/repair dependencies. Its current placement has a separate validation record.

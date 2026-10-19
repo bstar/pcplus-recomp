@@ -264,8 +264,17 @@ def inspect_terminal_memory(binary,map_path):
   resident_lo=near_code['relative_segment']*16+near_code['offset']
   resident=image[start+resident_lo:start+resident_lo+near_code['bytes']]
   references=0
+  controller_read_references=0
   for name in services:
    target=struct.pack('<HH',symbols[name][1],aspect_seg)
+   if name=='terminal_render_read_now':
+    owner_lo=address('line_controller_code_start');owner_hi=address('line_controller_code_end')
+    owner=image[start+owner_lo:start+owner_hi]
+    matches=[i for i in range(len(owner)-4) if owner[i]==0x9a and owner[i+1:i+5]==target
+             and owner_lo+i+3 in relocations]
+    assert len(matches)==1,(name,'missing relocated far-controller call')
+    controller_read_references=len(matches)
+    continue
    matches=[i for i in range(len(resident)-4)
             if resident[i] in (0x9a,0xea) and resident[i+1:i+5]==target
             and resident_lo+i+3 in relocations]
@@ -282,25 +291,44 @@ def inspect_terminal_memory(binary,map_path):
    assert near_start<=address(name) and address(name)+2<=near_start+near_size
   assert address('terminal_aspect_adopt')==address('terminal_aspect_active')+2
   extra.update(aspect_far_services_verified=len(services),aspect_resident_far_references_verified=references,
+               aspect_controller_read_references_verified=controller_read_references,
                aspect_emit_cdecl_bridge_verified=True,aspect_handoff_bytes=48,aspect_renderer_state_bytes=4)
+  controller_start=address('line_controller_code_start');controller_end=address('line_controller_code_end')
+  assert symbols['line_controller_code_start'][0]==symbols['line_controller_code_end'][0]==aspect_seg
+  assert aspect_seg*16<=controller_start<controller_end<=aspect_seg*16+aspect_code['bytes']
+  controller=image[start+controller_start:start+controller_end]
+  controller_entries=(('csi_service_d668','line_insert_controller_far'),('csi_service_d73c','line_delete_controller_far'),
+                      ('csi_service_daf2','line_alternate_controller_far'),('terminal_wait_control_n','line_wait_controller_far'))
+  for entry,target in controller_entries:
+   assert symbols[entry][0]==near_code['relative_segment'] and controller_start<=address(target)<controller_end
+   far_call(entry,target)
   line_references=0
+  def line_calls(source_bytes,source_start,target,wanted,opcode=0x9a):
+   encoded=bytes([opcode])+struct.pack('<HH',symbols[target][1],symbols[target][0])
+   matches=[i for i in range(len(source_bytes)-4) if source_bytes[i:i+5]==encoded and source_start+i+3 in relocations]
+   assert len(matches)==wanted,(target,'line controller relocated far references')
   for name,wanted in (('terminal_line_insert_far',1),('terminal_line_delete_far',2)):
    assert symbols[name][0]==aspect_seg and symbols[name][1]<aspect_code['bytes'],(name,'line-plane far owner')
-   target=struct.pack('<HH',symbols[name][1],aspect_seg)
-   matches=[i for i in range(len(resident)-4) if resident[i]==0x9a and resident[i+1:i+5]==target
-            and resident_lo+i+3 in relocations]
-   assert len(matches)==wanted,(name,'line-plane resident entry references')
-   line_references+=len(matches)
+   line_calls(controller,controller_start,name,wanted);line_references+=wanted
   aspect_lo=aspect_seg*16
   aspect_bytes=image[start+aspect_lo:start+aspect_lo+aspect_code['bytes']]
   for bridge,target in (('line_native_insert_far','csi_insert_line'),('line_native_delete_far','csi_delete_line')):
    assert symbols[bridge][0]==symbols[target][0]==near_code['relative_segment']
    near_call(bridge,target,suffix=b'\xcb')
-   encoded=b'\x9a'+struct.pack('<HH',symbols[bridge][1],symbols[bridge][0])
-   matches=[i for i in range(len(aspect_bytes)-4) if aspect_bytes[i:i+5]==encoded and aspect_lo+i+3 in relocations]
-   assert len(matches)==1,(bridge,'line-plane relocated native video callback')
-  extra.update(line_attribute_far_entries_verified=2,line_attribute_resident_references_verified=line_references,
-               line_attribute_video_callbacks_verified=2)
+   line_calls(aspect_bytes,aspect_lo,bridge,2)
+  for bridge,target,count in (('line_tick_far','terminal_tick_low',2),('line_poll_far','terminal_poll_io',1),('line_receive_far','uart_receive_byte',1)):
+   assert symbols[bridge][0]==symbols[target][0]==near_code['relative_segment']
+   near_call(bridge,target,suffix=b'\xcb');line_calls(controller,controller_start,bridge,count)
+  assert symbols['attribute_screen_set_cursor_far'][0]==near_code['relative_segment']
+  near_call('attribute_screen_set_cursor_far','screen_set_cursor',suffix=b'\xcb')
+  line_calls(controller,controller_start,'attribute_screen_set_cursor_far',3)
+  assert symbols['attribute_repair_admit_far'][0]==aspect_seg
+  line_calls(controller,controller_start,'attribute_repair_admit_far',1)
+  assert symbols['repair_abort_far'][0]==near_code['relative_segment']
+  line_calls(controller,controller_start,'repair_abort_far',1,opcode=0xea)
+  extra.update(line_attribute_far_entries_verified=2,line_attribute_controller_references_verified=line_references,
+               line_attribute_video_callbacks_verified=2,line_controller_entry_pairs_verified=4,
+               line_controller_register_callbacks_verified=3,line_controller_code_bytes=controller_end-controller_start)
  if 'terminal_status_live' in symbols:
   status_seg=next(c['relative_segment'] for c in code_segments if c['name']=='CONFIG_CODE')
   for name in ('terminal_status_live','status_renderer_refresh','terminal_reset_status_refresh',

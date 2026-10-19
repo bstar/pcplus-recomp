@@ -1,0 +1,292 @@
+{
+  "passed": true,
+  "terminal_sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+  "reports": {
+    "paired": {
+      "path": "build/terminal/line-controller-far-checks.json",
+      "sha256": "a183ef30e8a878f70ddbd4ea09632107997fd5a098aebc818831ad96e4de4eef"
+    },
+    "callbacks": {
+      "path": "build/terminal/line-callback-live-checks.json",
+      "sha256": "e79be960621a47577d1dc3ac0ec40e27cdc2172b2526cef49f823f7f5394f343"
+    },
+    "layout": {
+      "path": "build/terminal/line-controller-layout-checks.json",
+      "sha256": "b98ff2b395bf9da96266c07480759368fd16d3542ce832d7b783e088d6208080"
+    },
+    "policy": {
+      "path": "build/terminal/line-edit-live-checks.json",
+      "sha256": "0d2bfe7c4c261ea4dd8ad4d9dbb7046f746408c9bff4cfe289e3ddece22c415f"
+    },
+    "attributes": {
+      "path": "build/terminal/line-attributes-live-checks.json",
+      "sha256": "69c30a698919bd8276a8cfb7a8b808db42babbe627b6185281fedee0c10f3708"
+    },
+    "ABI": {
+      "path": "build/terminal/config-far-checks.json",
+      "sha256": "798a08e5e43fe7f2130733a69665b95bd8798560644ead19c4ce8b72a7a0709d"
+    },
+    "DOS": {
+      "path": "build/line-attributes-dos/controller-far-01/checks.json",
+      "sha256": "d24fc84e59af20ac0e071f183ab1dcdf850d436b963041e7a1f3d58674c5fc3b"
+    },
+    "ASPECT": {
+      "path": "build/aspect-renderer-dos/controller-far-02/checks.json",
+      "sha256": "6af47dbaef66c437c818fa20c751990af55641625d837ad1bfbc78ee2e93c043"
+    },
+    "keys": {
+      "path": "build/aspect-keys-dos/controller-far-keys-01/checks.json",
+      "sha256": "ac7b6c71a7f802678b1937658bdc69fe268c1fb88d1a0e2769df067956fb1823"
+    },
+    "ENiGMA": {
+      "path": "build/bbs-lab/results/enigma/controller-far-search-01/search-checks.json",
+      "sha256": "9b098b8c0c27e716781c496f3506f39500f4e737fa1c4bebac5b5c8785909b22"
+    }
+  },
+  "baseline": {
+    "commit": "7477a19",
+    "terminal_sha256": "d418fca35f3ed3e4adbe7f87eb236f10660ddcc813cb73acfbe5abeac05627cd",
+    "map_sha256": "7c334dd14ed63d4239413c2277c25f0864e1e7028bde28abbd3d246b399cba5a",
+    "manifest_sha256": "6d73c78059714efef6c624d70c4d696854c6a5a47d427a1b45db31f09d0b7423",
+    "source_only_proof_from_git": true,
+    "actual_ASPECT_wait": {
+      "path": "build/aspect-renderer-dos/line-controller-baseline-01/checks.json",
+      "sha256": "dededf40410f9b643f7c7cf72104af1dfe93d5c4d2884e51243d19d7c851ea1d"
+    }
+  },
+  "resident_layout": {
+    "before_bytes": 65526,
+    "after_bytes": 65246,
+    "freed_bytes": 280,
+    "before_available": 10,
+    "after_available": 290,
+    "far_controller_bytes": 335,
+    "data_stack_bytes": 64832,
+    "loaded_module_before": 156008,
+    "loaded_module_after": 156056,
+    "allocated_module_before": 343824,
+    "allocated_module_after": 343872
+  },
+  "paired": {
+    "lines": 192,
+    "waits": 96,
+    "callbacks": 24
+  },
+  "current_source_only_callbacks": 24,
+  "damaged_layouts_rejected": 45,
+  "actual_DOS": {
+    "checks": {
+      "canonical_DOS_harness": true,
+      "fixture_and_exit_seen": true,
+      "DS_equals_SS": true,
+      "temporary_state_restored": true,
+      "cursor_preserved": true,
+      "post_edit_cursor_snapshots": true,
+      "flags_and_guards": true,
+      "values_and_guards": true,
+      "video_byte_exact": true,
+      "last_row_CPR": true,
+      "inputs_unchanged": true
+    },
+    "state": [
+      19521,
+      1,
+      1,
+      0,
+      10607,
+      10607,
+      1,
+      7,
+      2000,
+      24,
+      79,
+      4
+    ],
+    "capture_sha256": "564b6d0444d97a4d8f247c0da3e402dc3c85dc61cbac590f80a5df3021975d99"
+  },
+  "ASPECT": {
+    "cases": [
+      "original-control-N-wait",
+      "native-edits-origin-scroll"
+    ],
+    "ORIGINAL_wait_policy_verified": true,
+    "half_duplex_cell_keys_passed": true
+  },
+  "ENiGMA": {
+    "checks": {
+      "DOS_harness": true,
+      "unique_authenticated_session": true,
+      "exact_owned_modules": true,
+      "inputs_unchanged": true,
+      "no_post_saved": true,
+      "real_search_route": true,
+      "title_search": true,
+      "index_selection": true,
+      "index_paging": true,
+      "selected_game_details": true,
+      "diz_page": true,
+      "nfo_navigation": true,
+      "bottom_content": true,
+      "empty_search": true
+    },
+    "source_modules": {
+      "mods/loc_game_details/loc_game_details.js": "0711413e29c01f0cf3cef7f89b3dc607515381a67a23e1a58205aa6d7a20efb8",
+      "mods/black_flag_files/helpers.js": "e4f6c1df6dbb9d6282d0534150c9149889637d34f01665691ca3bc5d19a06235",
+      "mods/black_flag_files/black_flag_files.js": "20a6d544cb820ac3840c1d271cfd41c7e0fb1c42600100756367845b147cf535",
+      "mods/black_flag_files/search.js": "d159e1fd6936e13613321a92cf68f93681de083cf68a9cb65d8f891cb6b54236"
+    },
+    "live_client_sha256": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+    "live_server_modified": false
+  },
+  "source_build": {
+    "path": "docs/validation/application-components-source-build.json",
+    "sha256": "d87d4b9c4421ac0f9dac8958882cb13c8790b7c6e3ba070e52a0433c4eabaadd",
+    "outputs": 178,
+    "previous_build_outputs_present": false
+  },
+  "memory_layout": {
+    "near_bytes": 64832,
+    "near_spare_bytes": 704,
+    "near_relative_segment": 7646,
+    "far_relative_segment": 17042,
+    "shadow_offset": 0,
+    "history_offset": 0,
+    "far_bytes": 71192,
+    "history_relative_segment": 17554,
+    "history_bytes": 63000,
+    "far_end_linear": 343864,
+    "stack_end_linear": 187168,
+    "loaded_module_bytes": 156056,
+    "minimum_allocated_module_bytes": 343872,
+    "retained_parent_paragraphs": 21508,
+    "far_pointer_relocations_verified": true,
+    "snapshot_relative_segment": 12948,
+    "snapshot_image_offset": 63504,
+    "snapshot_bytes": 2000,
+    "snapshot_end_linear": 272672,
+    "ui_screen_buffers": {
+      "browser_screen": {
+        "relative_segment": 11698,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 187168,
+        "end_linear": 191168
+      },
+      "ed_screen": {
+        "relative_segment": 11698,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 191168,
+        "end_linear": 195168
+      },
+      "program_screen": {
+        "relative_segment": 11698,
+        "offset": 8000,
+        "bytes": 4000,
+        "start_linear": 195168,
+        "end_linear": 199168
+      },
+      "redisplay_live": {
+        "relative_segment": 11698,
+        "offset": 12000,
+        "bytes": 4000,
+        "start_linear": 199168,
+        "end_linear": 203168
+      },
+      "redisplay_view": {
+        "relative_segment": 11698,
+        "offset": 16000,
+        "bytes": 4000,
+        "start_linear": 203168,
+        "end_linear": 207168
+      }
+    },
+    "far_ui_storage_bytes": 20000,
+    "redisplay_snapshot_bytes": 63000,
+    "redisplay_snapshot_end_linear": 270168,
+    "redisplay_row_index_bytes": 494,
+    "redisplay_row_index_relative_segment": 12948,
+    "redisplay_row_index_offset": 63000,
+    "redisplay_row_index_end_linear": 270662,
+    "controller_bridge_pairs_verified": 22,
+    "modem_bridge_pairs_verified": 23,
+    "command_menu_far_code_verified": true,
+    "ymodem_far_code_verified": true,
+    "zmodem_far_callbacks_verified": 10,
+    "configuration_bridge_pairs_verified": 79,
+    "redisplay_bridge_pairs_verified": 4,
+    "aspect_far_services_verified": 16,
+    "aspect_resident_far_references_verified": 20,
+    "aspect_controller_read_references_verified": 1,
+    "aspect_emit_cdecl_bridge_verified": true,
+    "aspect_handoff_bytes": 48,
+    "aspect_renderer_state_bytes": 4,
+    "line_attribute_far_entries_verified": 2,
+    "line_attribute_controller_references_verified": 3,
+    "line_attribute_video_callbacks_verified": 2,
+    "line_controller_entry_pairs_verified": 4,
+    "line_controller_register_callbacks_verified": 3,
+    "line_controller_code_bytes": 335,
+    "status_far_bridge_pairs_verified": 5,
+    "status_script_label_bytes": 15,
+    "resident_code_bytes": 65246,
+    "resident_code_spare_bytes": 290,
+    "code_segments": [
+      {
+        "name": "_TEXT",
+        "kind": "CODE",
+        "relative_segment": 0,
+        "offset": 0,
+        "bytes": 65246
+      },
+      {
+        "name": "ASPECT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4078,
+        "offset": 0,
+        "bytes": 6332
+      },
+      {
+        "name": "CONFIG_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4474,
+        "offset": 0,
+        "bytes": 47795
+      },
+      {
+        "name": "MODEM_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 7462,
+        "offset": 0,
+        "bytes": 1483
+      },
+      {
+        "name": "PRINT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 7555,
+        "offset": 0,
+        "bytes": 1449
+      }
+    ],
+    "far_code_bridge_pairs_verified": 128
+  },
+  "sources": {
+    "src/terminal/line_edit.asm": "80ab29555433523a1d446904700398c2bedb0472eda5c2f47595831647f912b9",
+    "src/terminal/line_controller.asm": "986f9c5640d81f47814e7b643feb88dbc4c19df4928dc606a599eab0d61e2793",
+    "src/terminal/attribute_boundary.asm": "897fd9ef67f3b0dcda54ca4381489b40102b06bcb4ba86ca8a52ea33babf8c75",
+    "standalone/terminal_memory.py": "5bd8ad1a7780f643ac442de285fe51ebdee4133796923ca1e4240985aeac2577",
+    "standalone/test_aspect_renderer_dos.py": "a82b94072dd6d5b8ca16be3ceffb8f6228ee833f9500dd9578bc6ffc2bb7ba91",
+    "standalone/check_line_controller_far.py": "b02464798d019efc8ce46454c25c760b3878186b50356abd1d688d87b03d5ed3",
+    "standalone/check_line_callbacks_live.py": "08940fff8891e1a1ce1233855ea19505b2d3c0c6744caa9424500861cd521caa",
+    "standalone/check_line_controller_layout.py": "65b8aa55cde3ef1d89ec6d48eaa896f233931628929ae2cc922313437a38024f"
+  },
+  "recorder_sha256": "b14d23204f84041418963efbb91a22305d00d03516a67bb3c8c94c27fcb165dd",
+  "whole_application_gates_closed": [],
+  "scope": "Source-owned line controller placement with unchanged public near interfaces and typed register-only callbacks.280 resident bytes recovered. Independent current-only callback/layout tests, frozen-source-built paired state behavior, real DOS plane fixture, actual ASPECT native edits/ORIGINAL wait/representative cell keys, owned-source ENiGMA navigation and178-output fresh rebuild. No original executable in ordinary builds.",
+  "limitations": [
+    "Code remains loaded in the far segment; loaded and minimum allocated module sizes each grow48 bytes.",
+    "The paired characterization explicitly reads the prior maintained binary; ordinary builds and current-only source-proof checks do not.",
+    "Protected-plane DOS coverage uses the documented test-only state fixture. Normal BBS/ASPECT coverage uses supported defaults.",
+    "Live server installation, physical timing/modem validation and complete application gates remain open."
+  ]
+}

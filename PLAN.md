@@ -35,6 +35,14 @@ screen ownership. Seventeen linked cases and an independent actual DOS timer
 observer cover that display. Persistent filename catalog integration and the
 remaining software gates still need their implementations.
 
+The [line controller](docs/LINE_CONTROLLER_FAR.md) now lives in ASPECT_CODE behind
+four checked resident entries. Resident space grows from10 to290 bytes while
+DS=SS storage remains64832 bytes. Paired192 line/96 wait cases preserve the prior
+behavior;24 current-only callback cases and45 malformed-layout rejections cover
+the explicit far ABI. Actual DOS plane guards, ASPECT native edits/Control-N wait
+and the owned ENiGMA route remain current regressions. This placement enables
+remaining application work; no whole-application gate closes.
+
 Latest keyboard checkpoint: [shared key output](docs/ASPECT_KEY_OUTPUT.md) routes
 script-time keys through the actual parent classifier/profile and child-owned
 UART. Capability6 retains inherited BIOS selection and adds checked duplex

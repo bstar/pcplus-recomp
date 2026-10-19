@@ -22,6 +22,7 @@ def definitions():
   ESC+b'[r'+ESC+b'[1;1H'+ESC+b'[KFIRST BYTE SAFE'+QUERY+DA)
  return [
   dict(name='queries-before-login',source=source,banner=header+b'LOGIN:',success=True,post=QUERY,post_reply=ESC+b'[1;22R',screen=[(0,0,'FIRST BYTE SAFE')]),
+  dict(name='original-control-N-wait',source=source,banner=header+ESC+b'[Mdiscard-me\x0eLOGIN:',success=True,ansi_policy='ORIGINAL',post=QUERY,post_reply=ESC+b'[1;22R',screen=[(0,0,'FIRST BYTE SAFE')]),
   dict(name='native-edits-origin-scroll',source=source,banner=advanced+b'LOGIN:',success=True,post=QUERY,post_reply=ESC+b'[1;22R',extra_reply=ESC+b'[2;7R',screen=[(0,0,'FIRST BYTE SAFE'),(1,0,'BBBB'),(2,0,'CCCC'),(3,0,'DDDD'),(9,0,'ABCZ'),(10,0,'LINE4'),(6,0,'COLOR')],red=(6,0,5)),
   dict(name='nested-CSI-control',source=source,banner=header+ESC+b'[1;\x072H'+QUERY+ESC+b'[1;1H'+ESC+b'[KFIRST BYTE SAFE'+QUERY+DA+b'LOGIN:',success=True,post=QUERY,post_reply=ESC+b'[1;22R',extra_reply=ESC+b'[1;2R',screen=[(0,0,'FIRST BYTE SAFE')]),
   dict(name='native-RIS',source=source,banner=ESC+b'[5;6H'+ESC+b'[31mOLD'+ESC+b'c'+b'FIRST BYTE SAFE'+QUERY+DA+b'LOGIN:',success=True,post=QUERY,post_reply=ESC+b'[1;22R',screen=[(0,0,'FIRST BYTE SAFE')],blank=(4,5,3)),
@@ -461,6 +462,7 @@ def main():
   payload=bytearray(directory());payload[302:311]=b'LOGIN\0\0\0\0';payload[325:336]=b'Synth42\0\0\0\0'
   files={'LOGIN.ASP':case['source'].encode('cp437'),'LOGIN.ASX':compile_source(case['source']),'RENDER.COM':compiled_observer}
   settings=bytearray(prm());extra=' /A:NETWORK'
+  if case.get('ansi_policy')=='ORIGINAL':extra=' /A:ORIGINAL'
   if case.get('seven'):struct.pack_into('<H',settings,0x1d64-0x1b84,2)
   if case.get('xlt'):
    table=bytearray(range(256));table[ord('z')]=27;table[27]=ord('!');table[ord('[')]=ord('{');files['TEST.XLT']=bytes(table);extra+=' /X:D:\\TEST.XLT'
