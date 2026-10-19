@@ -36,6 +36,9 @@ async def run(args):
     os.umask(0o077)
     assert ipaddress.ip_address(args.host).is_private, 'Explicit owned private endpoint required'
     assert re.fullmatch(r'[A-Za-z0-9_-]+', args.label)
+    # Explicit wire fragment, since artwork may split the visible title with
+    # SGR changes. Restrict it to literal ASPECT string characters.
+    assert re.fullmatch(r'[A-Za-z0-9 \[\]_-]{1,40}', args.main_menu_text)
     server = args.server_root.resolve()
     account = json.loads(args.account_json.read_text())
     password = account['password']
@@ -51,6 +54,7 @@ async def run(args):
                                   'config/config.hjson')]
     sources += list((server / 'config/menus').rglob('*.hjson'))
     sources += list((server / 'mods').rglob('*.js'))
+    sources += list((server / 'mods').rglob('*.json'))
     binary = ROOT / 'build/terminal/TERMINAL.EXE'
     before = {str(p): sha(p) for p in sources + [binary, Path(__file__), Path(test_dos.__file__)]}
     revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=server, text=True).strip()
@@ -75,7 +79,7 @@ async def run(args):
               'when 1 "nAH" call cancel\r\n'
               'when 2 "erform global newscan" call decline\r\n'
               f'transmit "{password}^M"\r\n'
-              'while attempts < 60\r\nwaitfor "Main Menu" 1\r\n'
+              f'while attempts < 60\r\nwaitfor "{args.main_menu_text}" 1\r\n'
               'if waitfor\r\nexitwhile\r\nendif\r\nattempts += 1\r\nendwhile\r\n'
               'cwhen 0\r\ncwhen 1\r\ncwhen 2\r\nendproc\r\n'
               'proc advance\r\ncwhen 0\r\nwaitquiet 1 5\r\n'
@@ -163,7 +167,8 @@ async def run(args):
     own = [r for r in rows if r.get('sessionId') in sessions]
     (out / 'server-session.jsonl').write_text(''.join(json.dumps(r) + '\n' for r in own))
     checks = dict(DOS_harness=code == 0 and result['passed'],
-        authenticated_probe=len(sessions) == 1, main_menu='Main Menu' in clean,
+        authenticated_probe=len(sessions) == 1,
+        main_menu=args.main_menu_text in clean,
         inputs_unchanged=before == {str(p): sha(p) for p in sources + [binary, Path(__file__), Path(test_dos.__file__)]},
         no_post_saved=not any('posted message to' in r.get('msg', '') for r in own))
     checks['staged_products_unchanged'] = all(sha(stage/name)==digest for name,digest in staged.items())
@@ -183,7 +188,8 @@ async def run(args):
     report = dict(passed=all(checks.values()), checks=checks, mode=args.mode,
         endpoint=dict(address=args.host, port=args.port), server_revision=revision,
         server_root=str(server), binary_sha256=sha(binary), keymap_sha256=sha(keymap),
-        keyboard_profile=args.profile, modem_packet_delay_ms=0, input_hashes=before,
+        keyboard_profile=args.profile, main_menu_text=args.main_menu_text,
+        modem_packet_delay_ms=0, input_hashes=before,
         message_count_before=count_before, message_count_after=message_count(server),
         scope='Actual source-built DOS terminal through immediate modeled UART/modem and byte-transparent local relay to an explicitly owned LAN ENiGMA. Existing regular validation account. No code/config changes, no submitted messages, no physical modem claim.')
     (out / 'owned-server-checks.json').write_text(json.dumps(report, indent=2) + '\n')
@@ -200,4 +206,6 @@ if __name__ == '__main__':
     parser.add_argument('--label', required=True)
     parser.add_argument('--mode', choices=['files', 'editor'], required=True)
     parser.add_argument('--profile', choices=['network', 'enigma-editor'], default='network')
+    parser.add_argument('--main-menu-text', default='Main Menu',
+                        help='Literal contiguous wire fragment identifying the configured main menu')
     raise SystemExit(asyncio.run(run(parser.parse_args())))

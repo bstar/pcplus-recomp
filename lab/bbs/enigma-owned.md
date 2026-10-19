@@ -1,5 +1,10 @@
 # Owned ENiGMA compatibility
 
+The current [acceptance matrix](../../docs/ENIGMA_COMPATIBILITY.md) tracks the
+Classic Pillars menu, live navigation failures, staged fixes and untested doors.
+For that menu, pass `--main-menu-text '[ LoC ]'` to the live DOS driver; its old
+literal `Main Menu` wait does not match the newly decorated heading.
+
 The user's running board is `~/projects/black-flag-bbs`, revision
 `237cd9743d6978a940dd66db0e78f6ab8ccd3e37`, with a custom file index and game
 details module. The separately named `~/projects/enigma` directory was empty.

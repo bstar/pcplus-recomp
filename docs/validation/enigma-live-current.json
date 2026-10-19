@@ -1,0 +1,95 @@
+{
+  "compatibility_complete": false,
+  "live_server_modified": false,
+  "physical_modem_validated": false,
+  "server_revision": "237cd9743d6978a940dd66db0e78f6ab8ccd3e37",
+  "live_client_sha256": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+  "terminal_sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+  "driver_sha256": "6a7949ee7b2561c21e03c378a92e438d2a70fe053864c6461b58f95fe6e3eba5",
+  "main_menu_text": "[ LoC ]",
+  "live_file_navigation": {
+    "passed": false,
+    "checks": {
+      "DOS_harness": true,
+      "authenticated_probe": true,
+      "main_menu": true,
+      "inputs_unchanged": true,
+      "no_post_saved": true,
+      "staged_products_unchanged": true,
+      "DOS_source_compiled": true,
+      "game_details": true,
+      "diz_page": true,
+      "nfo_page": true,
+      "nfo_scrolled": false
+    },
+    "page_headers": [
+      [
+        "1",
+        "15",
+        "24"
+      ],
+      [
+        "2",
+        "16",
+        "24"
+      ]
+    ],
+    "navigation_keys_emitted": {
+      "down": true,
+      "page_down": true
+    },
+    "evidence": [
+      {
+        "path": "build/bbs-lab/results/enigma-owned/owned-pillars-files-01/owned-server-checks.json",
+        "sha256": "e60e64cd5205ffaa195aa100925c27992a2f55f6218347ca75dae4afc02c08dc"
+      },
+      {
+        "path": "build/bbs-lab/results/enigma-owned/owned-pillars-files-01/bbs-sent.bin",
+        "sha256": "2187ebb0836a1581b8edb1c7bbaede9202f96582396990d78fe20e0a862005a0"
+      },
+      {
+        "path": "build/bbs-lab/results/enigma-owned/owned-pillars-files-01/display.bin",
+        "sha256": "10f4fffa21c244c4a078a6a1629967ea4d140cdb16581f1c89f97d90e85ae63c"
+      },
+      {
+        "path": "build/bbs-lab/results/enigma-owned/owned-pillars-files-01/server-session.jsonl",
+        "sha256": "918fff42d6748fe8e63914353cdb97809653f753600b5949e8dbb604918ec514"
+      }
+    ]
+  },
+  "decoder_replay": {
+    "counterexample": {
+      "evidence": {
+        "path": "build/bbs-lab/owned-current-client-counterexample.log",
+        "sha256": "4800edd936b409401b4077153efb88ba102a9c24bca0b79f03491d3db0aa3422"
+      },
+      "result": {
+        "passed": true,
+        "fixed": false,
+        "checks": 109,
+        "demonstrated_fragmentation_failures": 74,
+        "editor_fragmentation_failures": 9
+      }
+    },
+    "candidate": {
+      "evidence": {
+        "path": "build/bbs-lab/owned-current-client-candidate.log",
+        "sha256": "adae122122fddc6d08ac5012e1f4c8c27e96bd3801bc636b83eccd60c22f05be"
+      },
+      "result": {
+        "passed": true,
+        "fixed": true,
+        "checks": 112,
+        "demonstrated_fragmentation_failures": 0,
+        "editor_fragmentation_failures": 0
+      }
+    }
+  },
+  "isolated_route_validation": "docs/validation/aspect-file-times.json",
+  "remaining": [
+    "Install and validate staged decoder on the live service after deployment authorization.",
+    "Full live search/index/editor/transfer acceptance with current menus and actual catalog.",
+    "DOS doors and physical RS-232 Wi-Fi modem acceptance."
+  ],
+  "whole_application_gates_closed": []
+}
