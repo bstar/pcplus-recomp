@@ -379,6 +379,11 @@ settings/UI and physical modem transfers remain open. See
 [download storage](docs/DOWNLOAD_STORAGE.md), [sender](docs/TRANSFER_SEND.md),
 [native file behavior](docs/TRANSFER_FILES.md) and [UART callbacks](docs/TRANSFER_UART.md).
 
+ZMODEM framing is now implemented as a separate maintained source component;
+run `./tools/build test-zmodem-wire` for its independent oracle and 8086 DOS
+checks. [Wire codec](docs/ZMODEM_WIRE.md) and [native evidence](docs/ZMODEM_NATIVE.md)
+describe its scope. ZMODEM session engines and terminal integration remain open.
+
 
 For an existing2.01 PRM in the current DOS directory, build both applications
 with `./tools/build terminal setup`, then run `TERMINAL /S @PCPLUS.PRM` in DOS.

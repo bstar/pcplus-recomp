@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "host_checks": 5027,
+  "DOS_vectors": 822,
+  "DOS_streams": 55,
+  "DOS_summary": "822 vectors; 55 streams; 7309 checks; 0 failures",
+  "isolated_source_build_byte_identical": true,
+  "tools": {
+    "gcc": "/nix/store/l5qkpzsr4gxvksh45b3nhxbkyr5cviar-gcc-wrapper-15.3.0/bin/gcc",
+    "wcl": "/nix/store/wks50wdhsyxs7wx9gvqlwjgavhkkdag1-open-watcom-v2-0-unstable-2026-04-11/bin/wcl",
+    "dosbox-x": "/nix/store/cb0mas86nyk9lgzjas06nr688dpwbs86-dosbox-x-2026.07.02/bin/dosbox-x"
+  },
+  "vectors_sha256": "8bc2b1277e5331bd2239aaded909039c1c7381edcb74b4048c43d222aa1a3096",
+  "streams_sha256": "1b38210cf1866f94f15d96bc229a436a994454d848b33b1b0b6783d170697533",
+  "binary_sha256": "e74fab6ca58894ffe519fc689dd1d403d649f54876a41cdb108202a4e6d9eaae",
+  "sources": {
+    "src/transfer/zmodem_wire.c": "9e78914c19bb208e92246a8850f1a5430708db279ca588f423f89b6a70646149",
+    "src/transfer/zmodem_wire.h": "524a2fe2ae43ba15baa20fbe24efd1947725dcc92337f03618f0d474030801c5",
+    "standalone/zmodem_wire_host.c": "334db066c623ad5b49d671248642a6459c45e8dea988e30c94415761e45b5da8",
+    "standalone/check_zmodem_wire.py": "d2638ac80f4d2a019fcfb4bb74b86a1f2a22453f3ccc672f5822df39189e22db"
+  },
+  "scope": "Maintained wire codec only: independent Python oracle, host C, source-built 8086 DOS vectors and near-span guards. No sender/receiver, UART, file owner, modern peer or throughput validation."
+}

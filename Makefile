@@ -372,6 +372,11 @@ test-ymodem-far: terminal
 	python3 standalone/check_config_far_live.py
 	python3 standalone/check_ymodem_far_live.py
 
+.PHONY: test-zmodem-wire
+test: test-zmodem-wire
+test-zmodem-wire:
+	python3 standalone/check_zmodem_wire.py
+
 .PHONY: setup test-setup
 all: setup
 test: test-setup
