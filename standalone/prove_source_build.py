@@ -59,6 +59,8 @@ builds.append('aspect_receive_commands')
 builds.append('aspect_receive_policy')
 builds.append('aspect_directory')
 builds.append('aspect_set')
+builds.append('aspect_txpace')
+builds.append('aspect_find_case')
 builds.append('status_helpers')
 builds.append('status_renderer')
 program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/build_{name}.py'],check=True)\n" for name in builds)
@@ -69,10 +71,13 @@ owner_checks.append('standalone/test_resource_path_dos.py')
 owner_checks.append('standalone/test_aspect_compiler.py')
 owner_checks.append('standalone/test_aspect_set_compiler.py')
 owner_checks.append('standalone/check_aspect_set.py')
+owner_checks.append('standalone/check_aspect_txpace.py')
+owner_checks.append('standalone/check_aspect_find_case.py')
 owner_checks.append('standalone/check_status_helpers.py')
 owner_checks.append('standalone/check_status_renderer.py')
 owner_checks.append('standalone/check_status_live.py')
 owner_checks.append('standalone/check_aspect_runner.py')
+owner_checks.append('standalone/check_aspect_txpace_linked.py')
 owner_checks.append('standalone/check_aspect_directory.py')
 owner_checks.append('standalone/package_dos.py')
 program+=''.join(f"subprocess.run(['python3',{name!r}],check=True)\n" for name in owner_checks)
@@ -103,6 +108,10 @@ outputs += ['aspect-receive-policy/POLICY.EXE']
 outputs += ['aspect-directory/DIRBUILT.EXE']
 outputs += [f'aspect-set/unit{n}.bin' for n in range(1,15)]
 outputs += ['aspect-set/set_commands.obj']
+outputs += ['aspect-txpace/delay.bin','aspect-txpace/native.obj','aspect-txpace/txpace.obj','aspect-txpace/TXPACE.EXE']
+outputs += [f'aspect-find-case/find_commands-{unit}.bin' for unit in range(1,5)]
+outputs += [f'aspect-find-case/case_commands-{unit}.bin' for unit in range(1,3)]
+outputs += ['aspect-find-case/find_commands.obj','aspect-find-case/case_commands.obj']
 outputs += [f'status-helpers/unit{n}.bin' for n in range(1,5)]
 outputs += ['status-helpers/STATUS.EXE','status-renderer/STATUS.EXE']
 outputs += ['aspect-receive-commands/RECEIVE.EXE','aspect-runtime/CASES.DAT']

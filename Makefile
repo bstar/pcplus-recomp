@@ -24,6 +24,20 @@ test-aspect-set: aspect-set
 test-aspect-set-compat: aspect-set
 	python3 standalone/check_aspect_set.py --original analysis/pcplus-originals/PCPLUS-main-2.01.EXE
 test: test-aspect-set
+.PHONY: aspect-txpace test-aspect-txpace
+aspect-txpace:
+	python3 standalone/build_aspect_txpace.py
+test-aspect-txpace: aspect-txpace
+	python3 standalone/check_aspect_txpace.py
+all: aspect-txpace
+test: test-aspect-txpace
+.PHONY: aspect-find-case test-aspect-find-case
+aspect-find-case:
+	python3 standalone/build_aspect_find_case.py
+test-aspect-find-case: aspect-find-case
+	python3 standalone/check_aspect_find_case.py
+all: aspect-find-case
+test: test-aspect-find-case
 .PHONY: aspect-when test-aspect-when aspect-renderer-policy test-aspect-renderer-policy
 aspect-when:
 	python3 standalone/build_aspect_when.py
@@ -760,3 +774,7 @@ test-aspect-serial-preload-dos:
 	python3 standalone/test_aspect_serial_preload_dos.py
 test-aspect-script-directory-dos:
 	python3 standalone/test_aspect_script_directory_dos.py
+
+.PHONY: test-aspect-txpace-linked
+test-aspect-txpace-linked: aspect-runner
+	python3 standalone/check_aspect_txpace_linked.py

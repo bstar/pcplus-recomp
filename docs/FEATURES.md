@@ -548,3 +548,12 @@ cases/152 checks,85 linked staging cases,47 client inputs,22 parent admission
 cases, five DOS callbacks, eight WHEN/315 checks and112 reproducible outputs
 support this checkpoint. Other SET handlers, alternate live key labels, broader
 renderer owners and all whole-application gates remain unfinished.
+
+
+The [native SET runtime](ASPECT_SET_RUNTIME.md) adds all eleven selected setters
+through the recovered225-byte component, actual native consumers where those
+commands are already implemented, and a bounded IRQ-live calibrated TXPACE
+service.853 DOS runtime cases/19000 checks include38 integration vectors; six
+actual UART cases and six terminal status compositions distinguish platform,
+consumer and renderer proofs. FIND/CASE command integration and shared-session
+adoption remain open, as do all F01–F16 gates.

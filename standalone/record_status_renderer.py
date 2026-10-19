@@ -26,7 +26,7 @@ def main():
     assert checks['checker_sha256'] == sha(ROOT / 'standalone/check_status_renderer.py')
     proof_path = ROOT / 'docs/validation/application-components-source-build.json'
     proof = json.loads(proof_path.read_text())
-    assert proof['passed'] and proof['output_count'] == 112
+    assert proof['passed'] and proof['output_count'] >= 112
     for name, path in (('status-renderer/STATUS.EXE', binary),
                        ('status-helpers/STATUS.EXE', ROOT / 'build/status-helpers/STATUS.EXE')):
         output = proof['outputs'][name]

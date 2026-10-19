@@ -1329,3 +1329,35 @@ Next: integrate the recovered225-byte SET dispatcher/handlers into the productio
 child, resolve raw-byte boolean/shared RXDATA semantics and real setting users,
 then connect the recovered calibrated TXPACE service. Full keyboard/UI,
 compiler/recorder, other profiles/protocols, Host and all F01–F16 remain open.
+
+
+## Native SET and calibrated TXPACE checkpoint
+
+The [production SET runtime](docs/ASPECT_SET_RUNTIME.md) now links225 native bytes
+and all eleven selected setters, leaving245 selector failures explicit. Native
+raw-byte booleans replace the old WHENCASE-only validation. RXDATA aliases the
+actual shared flow gate; KEYS ON disables native local-key service. Successful
+SET tail-calls actual parent status, including DISPLAY OFF and explicit HALF
+status projection. Child settings are not yet adopted into parent configuration.
+FINDCASE/SWITCHCASE state has recovered command consumers awaiting integration.
+
+The maintained IRQ-live TXPACE calibration measures the exact38-byte6B72 loop
+without masking UART IRQs. Bounded clock/IF/queue checks and cooperative low-level
+polls are explicit deviations from the original masked startup calibration.
+Diagnostics pass853 actual DOS cases/19000 checks, with38 SET vectors; six actual
+UART cases cover pacing/NUL/pause/HALF/WAITCASE semantics. Six terminal cases
+check live status and a paced password; independent component and existing
+WHEN/client/BBS/source-build proofs are bound in
+`docs/validation/aspect-set-runtime.json`.
+
+Next: integrate native FIND and SWITCH/CASE plus source grammar, then continue
+remaining ASPECT/recorder, native keyboard/UI, settings/session adoption, broader
+emulations/protocols, Host and physical RS-232/Wi-Fi modem validation. All F01–F16
+whole-application requirements remain open.
+
+
+A separate [FIND/SWITCH/CASE recovery](docs/ASPECT_FIND_CASE.md) adds401 exact
+native bytes in six units and two relocatable objects.2642 CPU cases visit all
+199 recovered instructions; near allocation, operands/FILE seeks and loader/UI
+boundaries are explicit models. The consumer component remains unlinked. The
+fresh-source proof now reproduces124 outputs including it and calibrated TXPACE.

@@ -49,6 +49,7 @@ static void render_error(unsigned result)
    result<sizeof(errors)/sizeof(errors[0])?errors[result]:"runtime error",result,runtime_last_opcode,runtime_steps);
  if(runtime_native_error_code)n+=(unsigned)sprintf(text+n,", native %u",runtime_native_error_code);
  if(runtime_serial_error)n+=(unsigned)sprintf(text+n,", serial %u",runtime_serial_error);
+ if(runtime_serial_pacing_error)n+=(unsigned)sprintf(text+n,", pacing %u",runtime_serial_pacing_error);
  text[n++]=')';text[n++]=13;text[n++]=10;
  for(i=0;i<n && i<sizeof(text);++i)if(aspect_render_emit((unsigned char)text[i]))break;
 }
@@ -83,6 +84,7 @@ int main(int argc,char **argv)
   fprintf(stderr,"ASPECT: %s (error %u, opcode %02X, step %u",result<sizeof(errors)/sizeof(errors[0])?errors[result]:"runtime error",result,runtime_last_opcode,runtime_steps);
   if(runtime_native_error_code)fprintf(stderr,", native %u",runtime_native_error_code);
   if(runtime_serial_error)fprintf(stderr,", serial %u",runtime_serial_error);
+  if(runtime_serial_pacing_error)fprintf(stderr,", pacing %u",runtime_serial_pacing_error);
   fputs(")\n",stderr);
   }
  }

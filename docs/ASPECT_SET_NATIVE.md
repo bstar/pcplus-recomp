@@ -5,10 +5,10 @@ and a relocatable OMF object. All flat units match PCPlus2.01 original ranges
 and SHA256 values. Ordinary builds read maintained source and a public hash/range
 baseline, with no original executable or installed configuration.
 
-This component is not yet linked into ASPECT.EXE. The maintained runtime still
-supports only SET WHENCASE. The [compiler checkpoint](ASPECT_SET_COMPILER.md)
-already emits the selected eleven settings; application integration must also
-provide the native status refresh and setting lifetimes.
+The production [SET runtime](ASPECT_SET_RUNTIME.md) now links this component,
+with all eleven compiler-emitted setters and actual parent status refresh.
+FIND/CASE consumers, persistent session adoption and other SET selectors remain
+unfinished. The [compiler proof](ASPECT_SET_COMPILER.md) covers grammar separately.
 
 ```sh
 ./tools/build test-aspect-set
@@ -47,8 +47,9 @@ RXDATA writes E382, shared with the interpreter flow gate and receive echo
 suppression. It overwrites the counter; it does not update an independent
 receive-enable flag. KEYS ON writes1 to E380, disabling native local key service.
 PAUSECHAR stores only the low byte at1D66 after checking32..126; its query helper
-sign-extends that byte. TXPACE stores a checked0..999 word at1D68. Actual nonzero
-transmit pacing still needs the calibrated6B72 platform service.
+sign-extends that byte. TXPACE stores a checked0..999 word at1D68. Nonzero production
+transmit pacing now uses the checked IRQ-live calibrated6B72 service described
+in [ASPECT_TXPACE.md](ASPECT_TXPACE.md).
 
 DISPLAY OFF affects received-lead rendering through4C3C/4C74. Mapping and WHEN
 matching continue. Direct print, half-duplex transmit echo and status refresh
@@ -61,10 +62,12 @@ incorrect.
 
 The [live parent service](LIVE_STATUS.md) now stages bounded parent state and
 executes the recovered515-byte status body,175-byte helpers and actual text
-services through capability2 STATUS. SET WHENCASE uses that path while its UART
-lease is live. The normal row is integrated; live alternate key labels and
-other SET handlers remain unfinished. Four actual DOS cases pass152 checks,
-and85 linked cases cover staging and rejection before drawing/MSR input.
+services through capability2 STATUS. All eleven integrated SET setters use
+that path while the UART lease is live. The normal row is integrated; live
+alternate key labels and other SET selectors remain unfinished. The original
+four-case status proof passes152 checks; the later six-case SET composition
+passes228 checks, including HALF projection and DISPLAY OFF.85 linked cases
+cover staging and rejection before drawing/MSR input.
 
 The earlier literal D464 script-label relocation was replaced with
 `terminal_reset_script_label`; the flat build retains the native address.

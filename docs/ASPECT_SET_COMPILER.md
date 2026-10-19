@@ -1,9 +1,10 @@
 # Selected SET compiler forms
 
 The host compiler now emits eleven selected SET settings from authored source.
-The maintained DOS interpreter still supports only SET WHENCASE; other SET
-subcommands continue to stop explicitly as unsupported. This checkpoint extends
-source compilation while native runtime dependencies are being recovered.
+The production interpreter now links these eleven native setters; other SET
+subcommands stop explicitly. See [ASPECT_SET_RUNTIME.md](ASPECT_SET_RUNTIME.md)
+for real consumers, current invocation lifetimes and remaining dependencies.
+This compiler proof establishes source grammar and bytes separately.
 
 | Source setting | Subcommand | Value encoding |
 | --- | --- | --- |

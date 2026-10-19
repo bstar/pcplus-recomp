@@ -11,6 +11,7 @@ ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm'
  ('receive_commands','src/aspect/receive_commands.asm',None),
  ('receive_policy','src/aspect/receive_policy.asm',None),
  ('when','src/aspect/when.asm',None),
+ ('set_commands','src/aspect/set_commands.asm',None),
  ('directory','src/aspect/directory_builtins.asm',None),
  ('flow','src/aspect/control_flow.asm',None),('parameters','src/aspect/parameters.asm',None),('strings','src/aspect/string_operands.asm',None),('string_commands','src/aspect/string_commands.asm',None),('string_services','src/aspect/string_services.asm',None),
  ('string_strlen','reconstruction/program_exec/strlen.asm','PROGRAM_EXEC_OMF'),('string_strncmp','reconstruction/program_exec/strncmp.asm','PROGRAM_EXEC_OMF'),
@@ -34,6 +35,7 @@ C=r'''
 #include "receive_runtime.h"
 #include "directory_runtime.h"
 #include "when_runtime.h"
+#include "set_runtime.h"
 extern unsigned runtime_receive_pattern_count,runtime_wait_gate;
 extern aspect_file runtime_file;
 extern unsigned runtime_string_count,runtime_depth,runtime_stack_pointer,runtime_frame;
@@ -180,6 +182,8 @@ def main():
  directory_corpus=json.loads(directory_corpus_path.read_text())
  when_corpus_path=ROOT/'standalone/fixtures/aspect_when_runtime_vectors.json'
  when_corpus=json.loads(when_corpus_path.read_text())
+ set_corpus_path=ROOT/'standalone/fixtures/aspect_set_runtime_vectors.json'
+ set_corpus=json.loads(set_corpus_path.read_text())
  cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']+conversion_corpus['vectors']+compiler_corpus['vectors']+console_corpus['vectors']+serial_corpus['vectors']+receive_cases+directory_corpus['vectors']+when_corpus['vectors']
  # Historical PAUSE oracle expected an unsupported stop before opcode88 recovery.
  # Its authored seven-second script now executes the recovered native delay.
@@ -193,6 +197,8 @@ def main():
  sources.append(console_corpus_path)
  sources += [ROOT/'reconstruction/translation/receive.asm',receive_corpus_path,serial_corpus_path,ROOT/'src/aspect/serial_runtime.c',ROOT/'src/aspect/serial_runtime.h',ROOT/'src/aspect/receive_runtime.c',ROOT/'src/aspect/receive_runtime.h']
  sources += [directory_corpus_path,ROOT/'src/aspect/directory_runtime.c',ROOT/'src/aspect/directory_runtime.h']
+ sources += [ROOT/'src/aspect/set_runtime.c',ROOT/'src/aspect/set_runtime.h']
+ sources.append(set_corpus_path)
  sources += [when_corpus_path,receive_overrides_path,ROOT/'src/aspect/when_runtime.c',ROOT/'src/aspect/when_runtime.h']
  for name,rel,define in ASM:
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
@@ -255,15 +261,46 @@ def main():
  for name,data,error in [('NOHEADER',b'',2),('BADHEAD',bytes.fromhex('81 cf 94'),2),('BADOP',bytes.fromhex('00 ff'),3),('TRUNC',bytes.fromhex('00 cf 5b 00 8d 00 ab 07'),5)]:
   (OUT/(name+'.ASX')).write_bytes(data);program+=f' run("{name}.ASX",1000,{error},0,0,0,0UL,0);\n'
  (OUT/'MISSING.ASX').unlink(missing_ok=True);program+=' run("MISSING.ASX",1000,1,0,0,0,0UL,0);\n'
- # SET is a command family: this owner supports WHENCASE only. Exercise every
- # other subcommand rather than claiming all of opcode9E is implemented.
+ # Native SET dispatch uses a complete owned table; unimplemented selectors
+ # remain typed failures. These eleven setters do not implement GET grammar.
+ set_supported={0x12:'DISPLAY',0x18:'DUPLEX',0x23:'FINDCASE',0x29:'KEYS',0x2e:'MSG_CRLF',0x30:'PAUSECHAR',0x3b:'RXDATA',0x44:'SWITCHCASE',0x4c:'TXPACE',0x55:'WAITCASE',0x56:'WHENCASE'}
  for sub in range(256):
-  if sub!=0x56:(OUT/f'S{sub:02X}.ASX').write_bytes(bytes([0,0x9e,sub]))
- program+=' {unsigned sub;char path[12];for(sub=0;sub<256;++sub)if(sub!=0x56){sprintf(path,"S%02X.ASX",sub);run(path,1000,3,0,0,0,0UL,0);}}\n'
+  if sub not in set_supported:(OUT/f'S{sub:02X}.ASX').write_bytes(bytes([0,0x9e,sub]))
+ condition=' && '.join(f'sub!={sub}' for sub in set_supported)
+ program+=' {unsigned sub;char path[12];for(sub=0;sub<256;++sub)if('+condition+'){sprintf(path,"S%02X.ASX",sub);run(path,1000,3,0,0,0,0UL,0);}}\n'
  for name,wire,error in [('SETTRUNC',bytes([0,0x9e]),5),('SETVALTR',bytes([0,0x9e,0x56]),5),
-                         ('SETBOOL2',bytes([0,0x9e,0x56,2]),7),('SETBOOLF',bytes([0,0x9e,0x56,255]),7)]:
+                         ('SETBOOL2',bytes([0,0xcf,0x9e,0x56,2,0xd0,0x94]),0),('SETBOOLF',bytes([0,0xcf,0x9e,0x56,255,0xd0,0x94]),0)]:
   (OUT/(name+'.ASX')).write_bytes(wire)
   program+=f' run("{name}.ASX",1000,{error},0,0,0,0UL,0);\n'
+  if name in ('SETBOOL2','SETBOOLF'):
+   program+=f' ck(runtime_set_refresh_count==1);ck(runtime_set_observed[10]=={wire[4]});\n'
+ for case in set_corpus['vectors']:
+  source=case['source'];wire=compile_source(source)
+  assert hashlib.sha256(source.encode('cp437')).hexdigest()==case['source_sha256']
+  assert wire==bytes.fromhex(case['hex']) and hashlib.sha256(wire).hexdigest()==case['asx_sha256']
+  name=case['name']+'.ASX';assert len(case['name'])<=8
+  (OUT/name).write_bytes(wire);expected=case['expected']
+  if case.get('serial'):
+   serial=case['serial'];incoming=bytes.fromhex(serial.get('input_hex',''));trigger=bytes.fromhex(serial.get('send_after_tx_hex',''))
+   literal=lambda data: '"'+''.join('\\x'+f'{byte:02x}' for byte in data)+'"'
+   program+=f' runtime_serial_fixture((const unsigned char *){literal(incoming)},{len(incoming)},(const unsigned char *){literal(trigger)},{len(trigger)},1,0,1);\n'
+  else:
+   program+=' runtime_serial_fixture_disable();\n'
+  program+=f' run("{name}",1000,{expected["error"]},0,0,0,0UL,0);\n'
+  program+=f' ck(runtime_set_refresh_count=={expected["refreshes"]});\n'
+  if 'setting_index' in expected:
+   program+=f' ck(runtime_set_observed[{expected["setting_index"]}]=={expected["setting_value"]});\n'
+  if 'native_error' in expected:
+   program+=f' ck(runtime_native_error_code=={expected["native_error"]});\n'
+  output=bytes.fromhex(expected['stdout_hex'])
+  literal=''.join('\\x'+f'{byte:02x}' for byte in output)
+  program+=f' output("{literal}",{len(output)});\n'
+  if 'tx_hex' in expected:
+   tx=bytes.fromhex(expected['tx_hex']);literal=''.join('\\x'+f'{byte:02x}' for byte in tx)
+   program+=f' serial_output("{literal}",{len(tx)});\n'
+  if 'paced_units' in expected:
+   program+=f' ck(runtime_serial_paced_units=={expected["paced_units"]}UL);ck(runtime_serial_paced_calls=={expected["paced_calls"]});\n'
+ program+=' runtime_serial_fixture_disable();\n'
  program+=' runtime_fail_after=0;run("STRINGS.ASX",1000,8,0,0,0,0UL,0);\n'
  program+=' runtime_fail_after=1;run("STRINGS.ASX",1000,8,0,0,0,0UL,1);\n'
  program+=' runtime_fail_after=0xffff;run("STRINGS.ASX",1000,0,0,0,0,0UL,2);\n'
@@ -289,17 +326,17 @@ def main():
  program=program.replace(END,extra+END)
  (OUT/'diagnostic.c').write_text(program)
  subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dASPECT_RUNTIME_DIAGNOSTIC',
- '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/when_runtime.c'),*objects],cwd=OUT,check=True)
+ '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),*objects],cwd=OUT,check=True)
  report=dict(binary_sha256=sha(OUT/'EXECUTE.EXE'),sources={str(p.relative_to(ROOT)):sha(p) for p in sources},support_units=units,original_inputs=[],
   compile_flags=['8086','small model','cdecl','ASPECT_RUNTIME_DIAGNOSTIC'],fixture_count=len(cases),
-  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+15+len(unsupported)+259,
-  SET_family=dict(supported_subcommands={'56':'WHENCASE'},unsupported_subcommands_tested=255,truncated_or_invalid_boolean_cases=4),
+  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+15+len(unsupported)+(256-len(set_supported))+4+len(set_corpus['vectors']),
+  SET_family=dict(supported_subcommands={f'{key:02x}':value for key,value in set_supported.items()},unsupported_subcommands_tested=256-len(set_supported),truncated_cases=2,raw_boolean_cases=2,integration_vectors=len(set_corpus['vectors'])),
   fixture_data={'file':'CASES.DAT','schema':'ACV2','sha256':sha(OUT/'CASES.DAT'),'bytes':len(table),'cases':len(cases)},
   parameter_fixture_aliases={'PARFLOAT':'FLOAT'},
   composed_receive_overrides=receive_overrides,
   maintained_string_fault_fixture={'STRSHORT':'STRGASS compiler bytes with final00 option and94 return removed; first global HELLO retained, second stays empty'},
   maintained_heap_fault_fixtures={'HEAPFLT':'IDIVEDGE compiler bytes with global-string count changed from0to2','HEAPZERO':'IDZ compiler bytes with global-string count changed from0to2'},
   fixture_expectations={c['name']:{'source_sha256':c['source_sha256'],'asx_sha256':c['asx_sha256'],'expected':c['expected']} for c in cases},
-  scope='Incremental actual native dispatch/operand/operation/file/heap/WHEN composition executing source-owned compiled fixtures. Incomplete66-slot opcode table; SET supports WHENCASE only. Serial queue/clock/carrier inputs are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
+  scope='Incremental actual native dispatch/operand/operation/file/heap/WHEN/SET composition executing source-owned compiled fixtures. Incomplete66-slot opcode table; eleven native SET setters, while FIND/CASE consumers remain separate work. Serial queue/clock/carrier inputs and status-tail snapshots are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
  (OUT/'manifest.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 if __name__=='__main__':main()

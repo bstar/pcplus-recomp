@@ -9,14 +9,18 @@ unsigned runtime_serial_send(unsigned byte);
 unsigned runtime_serial_read_raw(void);
 unsigned runtime_serial_receive(unsigned delayed);
 unsigned runtime_serial_character_delay(unsigned delay);
+unsigned runtime_serial_prepare_pacing(void);
 unsigned runtime_serial_pause(unsigned ticks);
 unsigned runtime_serial_wait_second(void);
 extern unsigned runtime_serial_error;
+extern unsigned runtime_serial_pacing_error;
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
 void runtime_serial_fixture(const unsigned char *,unsigned,const unsigned char *,unsigned,unsigned,unsigned long,unsigned long);
 void runtime_serial_fixture_disable(void);
 unsigned long runtime_serial_clock(void);
 extern unsigned char runtime_serial_tx[1024];
 extern unsigned runtime_serial_tx_size;
+extern unsigned long runtime_serial_paced_units;
+extern unsigned runtime_serial_paced_calls;
 #endif
 #endif

@@ -1,0 +1,96 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "module": "find_commands",
+      "unit": 1,
+      "start": 20404,
+      "end": 20470,
+      "file_offset": 25012,
+      "length": 66,
+      "sha256": "e82456228d2bd2206610ad2574835e4d608593c3bd05c59193bc4934694d1714"
+    },
+    {
+      "module": "find_commands",
+      "unit": 2,
+      "start": 37190,
+      "end": 37286,
+      "file_offset": 41798,
+      "length": 96,
+      "sha256": "a9040687a57da38c5dbe4adfb8f48bf038bf9d6de24af856b84f873d359bba31"
+    },
+    {
+      "module": "find_commands",
+      "unit": 3,
+      "start": 56539,
+      "end": 56616,
+      "file_offset": 66267,
+      "length": 77,
+      "sha256": "62af3e557976f088764d6534cc4cb5f5a07365db8c71fe3214c80fa7dddfbc4f"
+    },
+    {
+      "module": "find_commands",
+      "unit": 4,
+      "start": 38756,
+      "end": 38790,
+      "file_offset": 43364,
+      "length": 34,
+      "sha256": "72e0d0a8f4d386067e6089fc42fdb13a03463affaeab5d129773b16fa7399ef8"
+    },
+    {
+      "module": "case_commands",
+      "unit": 1,
+      "start": 54130,
+      "end": 54175,
+      "file_offset": 109858,
+      "length": 45,
+      "sha256": "ef4fe899969e28529f07c2ce1aae0b76bc77dc5db16cd5bb3096476db929c058"
+    },
+    {
+      "module": "case_commands",
+      "unit": 2,
+      "start": 54175,
+      "end": 54258,
+      "file_offset": 109903,
+      "length": 83,
+      "sha256": "d64de62f8d769588ab6032aea281f27903806110a72b3b7fbd1490888904854f"
+    }
+  ],
+  "evidence": {
+    "find": "ev_a8e6f63aa7559b03f5f26fa46b77410207bd2a79f0894e44b77adb78d8ece4aa",
+    "strstr": "ev_8b7826f70682441f851a1f58459a2c6d7dd382a94726aae85553b35b0d78e7bc",
+    "insensitive": "ev_1d1b0693dbd5f3d63692385c2e48c78594874e352426a5b6f585328dcc12bd64",
+    "duplicate": "ev_c301892c45e732b07a9ddd112c35fbfd2e2b7d670a67bb567fcb65e87e6d4763",
+    "switch": "ev_5da52d37cfc90f6d0817abfa8954c91290e806efc2384a3c70527cd9a6857d22",
+    "case": "ev_40a376dd122d0a0899897fad9b455bb17ac04ea98f9db09e043bf78aa589a3bb",
+    "defaults": "ev_7f2a37333c76fe8f326ecc36a6ef20a640284f710c20b9e47a19c3288aa55d92",
+    "defaults_xrefs": "ev_1fb90194af3d1f6003df01ae5223e932131970f296f427f37cbe75f273c84b23"
+  },
+  "scope": "Recovered code and public hashes/ranges only; no original executable or initialized data. FIND nearalloc/free remain explicit ownership dependencies.",
+  "dispatch_bindings": {
+    "FIND": {
+      "opcode": 59,
+      "resident_entry": 20404
+    },
+    "SWITCH": {
+      "opcode": 184,
+      "resident_thunk": 49335,
+      "overlay": 16,
+      "entry": 54130
+    },
+    "CASE": {
+      "opcode": 15,
+      "resident_thunk": 52131,
+      "overlay": 16,
+      "entry": 54175
+    },
+    "authority": "Derived from pinned original DS:4B08 215-word table and exact resident overlay stubs; MESSAGE/WAITFOR/EXIT entries independently checked."
+  },
+  "native_state": {
+    "FINDCASE": "E392 word, zero insensitive/nonzero sensitive",
+    "SWITCHCASE": "E394 word, zero insensitive/nonzero sensitive for stringCASE only",
+    "FOUND": "E39C word written byFIND; getter23 atoverlay16DA14",
+    "switch_snapshot": "E322 string81/E374 integerword/E376 typebyte; global, no nested-stack promise",
+    "defaults": "overlay02D6EA writes E394=0 atD6F3,E392=0 atD6F6; C1D7 initializesonce atresident4B27 before4B30CHAINrestart; doesnotproveFOUND/switchsnapshot reset."
+  }
+}

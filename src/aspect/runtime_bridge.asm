@@ -36,7 +36,11 @@ extern aspect_receive_policy_read
 extern aspect_when_register,aspect_when_cancel,aspect_when_monitor,aspect_when_service
 extern _runtime_when_poll,_runtime_when_cancel_poll,_runtime_when_idle_allowed
 extern _runtime_when_host_poll,_runtime_serial_carrier
-extern _runtime_when_status_refresh
+extern _runtime_set_status_refresh
+extern aspect_set_dispatch,aspect_set_display,aspect_set_duplex,aspect_set_findcase
+extern aspect_set_keys,aspect_set_msg_crlf,aspect_set_rxdata,aspect_set_switchcase
+extern aspect_set_waitcase,aspect_set_whencase,aspect_set_pausechar,aspect_set_txpace
+extern aspect_string_store_integer
 extern _runtime_when_key_ready,_runtime_when_read_key,_runtime_when_confirm_abort
 extern _runtime_when_abort,_runtime_when_dispatch_key
 extern _runtime_when_monitor_begin,_runtime_when_monitor_end
@@ -545,17 +549,19 @@ runtime_when_register:
  or ax,ax
  jz unsupported
  jmp aspect_when_register
-runtime_when_set:
- call aspect_dispatch_read
- cmp ax,0x56
- jne unsupported
- call aspect_dispatch_read
- cmp ax,1
- ja aspect_operand_invalid
- mov [aspect_when_case_sensitive],ax
- call _runtime_when_status_refresh
+; Native5458 reads its selector through the checked FILE adapter, calls this
+; complete owned256-entry table and tail-calls native status. Boolean values
+; remain raw bytes as in E6BB, rather than the earlier WHENCASE-only0/1 policy.
+global aspect_set_status_refresh,aspect_set_query_integer
+aspect_set_status_refresh:
+ call _runtime_set_status_refresh
  or ax,ax
  jnz fail
+ ret
+aspect_set_query_integer: jmp aspect_string_store_integer
+runtime_set_duplex:
+ call aspect_set_duplex
+ mov word [_runtime_set_duplex_changed],1
  ret
 
 SEGMENT _DATA public class=DATA use16
@@ -610,6 +616,42 @@ scalar aspect_serial_wait_result,_runtime_serial_wait_result
 scalar aspect_serial_pause_character,_runtime_serial_pause_character
 scalar aspect_serial_local_echo,_runtime_serial_local_echo
 scalar aspect_serial_character_delay_value,_runtime_serial_character_delay_value
+scalar aspect_set_query_mode,_runtime_set_query_mode
+scalar aspect_set_findcase_value,_runtime_set_findcase_value
+scalar aspect_set_switchcase_value,_runtime_set_switchcase_value
+global _runtime_set_duplex_changed
+_runtime_set_duplex_changed: dw 0
+global aspect_set_table
+aspect_set_table:
+%assign setting 0
+%rep 256
+%if setting=0x12
+ dw aspect_set_display
+%elif setting=0x18
+ dw runtime_set_duplex
+%elif setting=0x23
+ dw aspect_set_findcase
+%elif setting=0x29
+ dw aspect_set_keys
+%elif setting=0x2e
+ dw aspect_set_msg_crlf
+%elif setting=0x30
+ dw aspect_set_pausechar
+%elif setting=0x3b
+ dw aspect_set_rxdata
+%elif setting=0x44
+ dw aspect_set_switchcase
+%elif setting=0x4c
+ dw aspect_set_txpace
+%elif setting=0x55
+ dw aspect_set_waitcase
+%elif setting=0x56
+ dw aspect_set_whencase
+%else
+ dw unsupported
+%endif
+%assign setting setting+1
+%endrep
 %ifndef ASPECT_RUNTIME_SERIAL
 scalar aspect_serial_rx_count,_runtime_serial_rx_count
 %else
@@ -779,7 +821,7 @@ aspect_dispatch_handlers:
 %elif op=0x1c
  dw aspect_when_cancel
 %elif op=0x9e
- dw runtime_when_set
+ dw aspect_set_dispatch
 %elif op=0x9a
  dw aspect_strcmd_compare_bytes
 %elif op=0xa4

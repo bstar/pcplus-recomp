@@ -13,19 +13,6 @@ extern unsigned runtime_receive_pattern_count,runtime_wait_gate;
 extern unsigned __cdecl runtime_when_native_service(void);
 unsigned runtime_when_deferred,runtime_when_pending_service;
 static unsigned service_busy,monitor_busy;
-unsigned runtime_when_status_refresh(void)
-{
-#if defined(ASPECT_RUNTIME_SERIAL)
- unsigned result;
- /* Raw-only callers retain the existing WHENCASE policy. An admitted full
-  * terminal uses the actual parent status body, independent of DISPLAY. */
- if(aspect_render_active()){
-  result=aspect_render_status(65535U);
-  if(result)runtime_set_error(result);
- }
-#endif
- return runtime_error;
-}
 static void disarm(void)
 {
  unsigned i;

@@ -1,0 +1,570 @@
+{
+  "schema": 1,
+  "scope": "Authored DOS integration expectations frozen before execution. Native SET writes observed at the status tail in diagnostic builds; actual live status is proved separately. FINDCASE/SWITCHCASE consumers require separate command recovery. No original/compiler executable or private configuration input.",
+  "setting_order": [
+    "DISPLAY",
+    "DUPLEX",
+    "FINDCASE",
+    "KEYS",
+    "MSG_CRLF",
+    "PAUSECHAR",
+    "RXDATA",
+    "SWITCHCASE",
+    "TXPACE",
+    "WAITCASE",
+    "WHENCASE"
+  ],
+  "vectors": [
+    {
+      "name": "ZDISPLA0",
+      "source": "proc main\r\nset display off\r\nendproc\r\n",
+      "source_sha256": "ef0e420ef507e2bd5586655e927d0700e136df374cf11bfb7b61795f60f16857",
+      "hex": "00cf9e120094",
+      "asx_sha256": "ab0a0270dcd3b1701234620f676740f2b9ba512589756ee2cb3a09d88b41db7c",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 0,
+        "setting_value": 0
+      }
+    },
+    {
+      "name": "ZDISPLA1",
+      "source": "proc main\r\nset display on\r\nendproc\r\n",
+      "source_sha256": "c6a36186668633b4f79b7a78b26be03fa5b6cd87d9584b0d62ce4664a4951d9a",
+      "hex": "00cf9e120194",
+      "asx_sha256": "983bce0e426c075b241ecc2a6ec8255fb0e6befe3655d7f5eda694d0cf5605f6",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 0,
+        "setting_value": 1
+      }
+    },
+    {
+      "name": "ZFINDCA0",
+      "source": "proc main\r\nset findcase off\r\nendproc\r\n",
+      "source_sha256": "5b9fda8c0d21d94bc9c0ce68deca37f48f362f76b7a64901022b878540967ec4",
+      "hex": "00cf9e230094",
+      "asx_sha256": "7cea7cf4ef2982e45f7997cff0a46d1aa05a96ab5c467e03f929334bf91bef2e",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 2,
+        "setting_value": 0
+      }
+    },
+    {
+      "name": "ZFINDCA1",
+      "source": "proc main\r\nset findcase on\r\nendproc\r\n",
+      "source_sha256": "79d64f0cd373ddcb185b24b238f540dfe5d8e2a0e37f91412c380653f4e9ef69",
+      "hex": "00cf9e230194",
+      "asx_sha256": "bceedc44660452ef4d6aee4d49b518793b4101ac190046481585973c21ed78f0",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 2,
+        "setting_value": 1
+      }
+    },
+    {
+      "name": "ZKEYS0",
+      "source": "proc main\r\nset keys off\r\nendproc\r\n",
+      "source_sha256": "b54f0b3c61a1ceca157100c9f540e7d79f80954e6b9f8d84f6af26f3f30dbda7",
+      "hex": "00cf9e290094",
+      "asx_sha256": "f5f4ab570d7950f230aafd002ad81184e3bc1a2942c720622c8966358deb643c",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 3,
+        "setting_value": 0
+      }
+    },
+    {
+      "name": "ZKEYS1",
+      "source": "proc main\r\nset keys on\r\nendproc\r\n",
+      "source_sha256": "a4ea2c19fbe6df6d47e44c87a2578a9a82df62c01296505e99756aad09b0a96d",
+      "hex": "00cf9e290194",
+      "asx_sha256": "913a41fed75efa4e145d7e180d899c88ed42cc1dd5a82ccd3c341287ea423e55",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 3,
+        "setting_value": 1
+      }
+    },
+    {
+      "name": "ZMSG_CR0",
+      "source": "proc main\r\nset msg_crlf off\r\nendproc\r\n",
+      "source_sha256": "470fc6b944224dfbecbdfd87c184fd65d02c404cd7c790a3171376a75847757c",
+      "hex": "00cf9e2e0094",
+      "asx_sha256": "8d0392e3bd1dc6d51097721505554b507221abea1fa5d87faaa5932dec61e051",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 4,
+        "setting_value": 0
+      }
+    },
+    {
+      "name": "ZMSG_CR1",
+      "source": "proc main\r\nset msg_crlf on\r\nendproc\r\n",
+      "source_sha256": "6c97b104e88d8c41c131ced7f8e2a6ecdd37c9d97ded3e7746da77fba5eabba4",
+      "hex": "00cf9e2e0194",
+      "asx_sha256": "1d4636917b9fdc5bf450f283b3476eb4c016dc4e809ed7e50f89393bd6439f32",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 4,
+        "setting_value": 1
+      }
+    },
+    {
+      "name": "ZRXDATA0",
+      "source": "proc main\r\nset rxdata off\r\nendproc\r\n",
+      "source_sha256": "61a0b6e500bca4eb72a6712f0145819aa6bd75f363228fb8dbc369edb45ca220",
+      "hex": "00cf9e3b0094",
+      "asx_sha256": "c829598039f3977ce4c830fb3efb3ea926ddab3a2f3d601f9591f420b081ddd1",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 6,
+        "setting_value": 0
+      }
+    },
+    {
+      "name": "ZRXDATA1",
+      "source": "proc main\r\nset rxdata on\r\nendproc\r\n",
+      "source_sha256": "0dbf8915c84539e0b0b9d25e29de0d8136918ca17083e8a395e5a465dbbab4cb",
+      "hex": "00cf9e3b0194",
+      "asx_sha256": "2ee59678c203edb96e35cfd1e577bd299f3ef3964d6d9061552e01180e0be4a5",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 6,
+        "setting_value": 1
+      }
+    },
+    {
+      "name": "ZSWITCH0",
+      "source": "proc main\r\nset switchcase off\r\nendproc\r\n",
+      "source_sha256": "c644cf489d377f4147e02ea9614f03b6b0c2d78e1548e3f0884458c88cc32699",
+      "hex": "00cf9e440094",
+      "asx_sha256": "6f0be1f32dc8945cc45852811327b2fe840f3c52fd571ed038feead093e45de0",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 7,
+        "setting_value": 0
+      }
+    },
+    {
+      "name": "ZSWITCH1",
+      "source": "proc main\r\nset switchcase on\r\nendproc\r\n",
+      "source_sha256": "406bcc5d82d6579d22a4667fd8dc0ea5bcfadd540d6a9a6fd372288bb5a1467b",
+      "hex": "00cf9e440194",
+      "asx_sha256": "00669af15029dd28f9d91ef0690326284d97ae5ca1f769b4811d12a06abf5332",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 7,
+        "setting_value": 1
+      }
+    },
+    {
+      "name": "ZWAITCA0",
+      "source": "proc main\r\nset waitcase off\r\nendproc\r\n",
+      "source_sha256": "075a2b80b428741704ec598c5931a37d5887095efacc9875c06b15ac54c68e3d",
+      "hex": "00cf9e550094",
+      "asx_sha256": "ae7986ee039b298563d434c0bd9eaca0986a1a8cda5c2692d04b19fe47fd2945",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 9,
+        "setting_value": 0
+      }
+    },
+    {
+      "name": "ZWAITCA1",
+      "source": "proc main\r\nset waitcase on\r\nendproc\r\n",
+      "source_sha256": "2e570ef22e461cde34d6ffd7149400819fd4c6293041d7a9bd392325c0327f21",
+      "hex": "00cf9e550194",
+      "asx_sha256": "c38d36276d04e5d56ca0892d494269c0b6b91e6366b8a6464ecdd39411953930",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 9,
+        "setting_value": 1
+      }
+    },
+    {
+      "name": "ZWHENCA0",
+      "source": "proc main\r\nset whencase off\r\nendproc\r\n",
+      "source_sha256": "64ef9d5ef96d8ed7d2e42d0642a1ff80f3fa7933ef241bb2be034a06348c096d",
+      "hex": "00cf9e560094",
+      "asx_sha256": "f607abb763e4373f9612a2b7d0f49558343c362cede797674ff4471f9ab32a8c",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 10,
+        "setting_value": 0
+      }
+    },
+    {
+      "name": "ZWHENCA1",
+      "source": "proc main\r\nset whencase on\r\nendproc\r\n",
+      "source_sha256": "b5c7bf89fbb52e71e7d46c9602d9ecefcf24642c94f9e1ababc8db5b2e1311ee",
+      "hex": "00cf9e560194",
+      "asx_sha256": "f37a890d95fe23c2df758df173c343e3be53ec34ce80e3a16bdf9cbdaf9c6c70",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 10,
+        "setting_value": 1
+      }
+    },
+    {
+      "name": "ZDUPLEX0",
+      "source": "proc main\r\nset duplex full\r\nendproc\r\n",
+      "source_sha256": "d89a401557cd2c9b14d36d68e0e8724b841cd8dcb688a49812d03f2ece3e8220",
+      "hex": "00cf9e180094",
+      "asx_sha256": "00206ccb2c4d47f8a9efd9bfb86838e0b3a68f9161fee74432ae74ff8939758b",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 1,
+        "setting_value": 0
+      }
+    },
+    {
+      "name": "ZDUPLEX1",
+      "source": "proc main\r\nset duplex half\r\nendproc\r\n",
+      "source_sha256": "23faa5ddd69b48006bfe5f3139c8fb721486c21900c51ef509d6458f802b5ed7",
+      "hex": "00cf9e180194",
+      "asx_sha256": "bd2f51e38161b590cc56a266dd7c16acda618ae69b54f40732e54b3ea6f87f4a",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 1,
+        "setting_value": 1
+      }
+    },
+    {
+      "name": "ZPAUSE32",
+      "source": "proc main\r\nset pausechar 32\r\nendproc\r\n",
+      "source_sha256": "f71bfc2b1dbd0f18bc8abe47356d71d2887cc63df37f4610b696d2d91272f7be",
+      "hex": "00cf9e30b52094",
+      "asx_sha256": "f288ad76dea90daf604762ed4066a6cbe62da46ef37ca5f3c3881cd103e90053",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 5,
+        "setting_value": 32
+      }
+    },
+    {
+      "name": "ZPC126",
+      "source": "proc main\r\nset pausechar 126\r\nendproc\r\n",
+      "source_sha256": "0cc2069a0ec517d258f7834e190e8cbc2c13f9fa220b55e0c96b4d09f4125fab",
+      "hex": "00cf9e30b57e94",
+      "asx_sha256": "e53fa17cc1caacfbfb8ea1c314f0a49e24de67f0333979026b9e5e98c2047f9e",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 5,
+        "setting_value": 126
+      }
+    },
+    {
+      "name": "ZPCNEG",
+      "source": "proc main\r\nset pausechar -1\r\nendproc\r\n",
+      "source_sha256": "1239790f533d4d7e1e32bd213fe43fd420a0fdf97fda900ab4c560124834f03a",
+      "hex": "00cf9e30abffff94",
+      "asx_sha256": "2a3bc1d5cca7aa0db68fc82ef5c55b74d30f0d857f476f3358c44332418274fd",
+      "expected": {
+        "error": 7,
+        "stdout_hex": "",
+        "refreshes": 0,
+        "native_error": 1
+      }
+    },
+    {
+      "name": "ZPC31",
+      "source": "proc main\r\nset pausechar 31\r\nendproc\r\n",
+      "source_sha256": "2664dd021a50d6443a53bcc1ebc068bfd7e24db92ca79b02cc572641ef2063e1",
+      "hex": "00cf9e30b51f94",
+      "asx_sha256": "0752326b5ce4bf3f514b507d2d45f50b22a102c21a7c8d8f97772584b6235931",
+      "expected": {
+        "error": 7,
+        "stdout_hex": "",
+        "refreshes": 0,
+        "native_error": 1
+      }
+    },
+    {
+      "name": "ZPC127",
+      "source": "proc main\r\nset pausechar 127\r\nendproc\r\n",
+      "source_sha256": "46d892186d53283db1b2c1728b65b600a7f83fdbbb19cd85a071173dabe71e4c",
+      "hex": "00cf9e30b57f94",
+      "asx_sha256": "c4ed3a151cfbb8e11b56ffe1735cd8db46930cc78c03c1cfa146d5ac7962938f",
+      "expected": {
+        "error": 7,
+        "stdout_hex": "",
+        "refreshes": 0,
+        "native_error": 1
+      }
+    },
+    {
+      "name": "ZTXPACE0",
+      "source": "proc main\r\nset txpace 0\r\nendproc\r\n",
+      "source_sha256": "709389585140261e14a8f9c3f16e4e4df3ddb2b52ce05f14b98b4d28bee49330",
+      "hex": "00cf9e4cb50094",
+      "asx_sha256": "c57b9faf67008573b745f7812bfa0e56c899a858f8e7a7256ceeaa1b80457d32",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 8,
+        "setting_value": 0
+      }
+    },
+    {
+      "name": "ZTX999",
+      "source": "proc main\r\nset txpace 999\r\nendproc\r\n",
+      "source_sha256": "d0f1cbf435adb2eb108028a18becab70fa572c712c9b22e8dd80a7baa0cbd697",
+      "hex": "00cf9e4cabe70394",
+      "asx_sha256": "2923f6abe75193d4b12fb143a227b736eac8e186a84f0fd700b45a05e0e36e07",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 8,
+        "setting_value": 999
+      }
+    },
+    {
+      "name": "ZTXNEG",
+      "source": "proc main\r\nset txpace -1\r\nendproc\r\n",
+      "source_sha256": "e17516d32ddf41be8719cb1f1d5f6559cb3f38eb2ffa51d30ed613023804edbc",
+      "hex": "00cf9e4cabffff94",
+      "asx_sha256": "ad1a036f89e71afa73ac6b83e2f6319a9993aa72cb5919d799e372d506cf6413",
+      "expected": {
+        "error": 7,
+        "stdout_hex": "",
+        "refreshes": 0,
+        "native_error": 1
+      }
+    },
+    {
+      "name": "ZTX1000",
+      "source": "proc main\r\nset txpace 1000\r\nendproc\r\n",
+      "source_sha256": "c3fdc235ebbba8a71c711679a8d6118bdfc647ef29f21ed3f6bc81f569a602d8",
+      "hex": "00cf9e4cabe80394",
+      "asx_sha256": "54599ae67c5c2fbd36112922387e4cc5ae5c746f04226dbfeec8808e1ca25a78",
+      "expected": {
+        "error": 7,
+        "stdout_hex": "",
+        "refreshes": 0,
+        "native_error": 1
+      }
+    },
+    {
+      "name": "ZPCVAR",
+      "source": "proc main\r\ninteger value\r\nvalue = 65\r\nset pausechar value\r\nendproc\r\n",
+      "source_sha256": "69c3641ac6e250997e61032c41710283f28930466e1629df32e4c49bdf4c5b6a",
+      "hex": "00d20200cf5b00a10000ab41009e30a1000095",
+      "asx_sha256": "d3674eee583de5d81aa0a86256157fc0c09380203f59f359e53586a0ab3b765e",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 5,
+        "setting_value": 65
+      }
+    },
+    {
+      "name": "ZTXVAR",
+      "source": "proc main\r\ninteger value\r\nvalue = 37\r\nset txpace value\r\nendproc\r\n",
+      "source_sha256": "aa5cbeefa3c210f8175ea3f88c5e3efc2531bce2db8d5052a2da6f69fa3c3c1e",
+      "hex": "00d20200cf5b00a10000ab25009e4ca1000095",
+      "asx_sha256": "a80f5e80c71cd572cf2da124af8773454f0b13d9b7d94dceabda1a5d51017cfd",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 1,
+        "setting_index": 8,
+        "setting_value": 37
+      }
+    },
+    {
+      "name": "ZMSG0",
+      "source": "proc main\r\nset msg_crlf off\r\nmessage \"A\"\r\nmessage \"B\"\r\nendproc\r\n",
+      "source_sha256": "f512a6cc8ad5af0fe26dedb26ba272c2253478c2756241ae04d4ed595da049f0",
+      "hex": "00cf9e2e0076aab48c9a76aab4061994",
+      "asx_sha256": "461b41fd9748d11cac4b6046179b12497d44c33760170df3f9570fa8e460a06f",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "4142",
+        "refreshes": 1,
+        "setting_index": 4,
+        "setting_value": 0
+      }
+    },
+    {
+      "name": "ZMSG1",
+      "source": "proc main\r\nset msg_crlf on\r\nmessage \"A\"\r\nmessage \"B\"\r\nendproc\r\n",
+      "source_sha256": "424a3d878745b704607eaec2d3c8883d49556f43821a84cb4d23945e1ae0a762",
+      "hex": "00cf9e2e0176aab48c9a76aab4061994",
+      "asx_sha256": "ddc35ee6f2021aecfcea781a6898cd8cdc2a63983e5ee0878a257f00b6890968",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "410d0a420d0a",
+        "refreshes": 1,
+        "setting_index": 4,
+        "setting_value": 1
+      }
+    },
+    {
+      "name": "ZREPEAT",
+      "source": "proc main\r\nset duplex half\r\nset duplex full\r\nset display off\r\nset display on\r\nendproc\r\n",
+      "source_sha256": "e894fbca4557ec2e41a0617709f9114635ebbfa65e5be1fb857cb5fa8c399518",
+      "hex": "00cf9e18019e18009e12009e120194",
+      "asx_sha256": "8ccd772bbe640db73de639f980659c2ada131c8feee45db5bdde6070af0383c7",
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "refreshes": 4,
+        "setting_index": 1,
+        "setting_value": 0
+      }
+    },
+    {
+      "name": "ZPACE3",
+      "source": "proc main\r\nset txpace 37\r\ntransmit \"ABC\"\r\nendproc\r\n",
+      "source_sha256": "c05ab10f3e1e05d4aab5e4bb58ba4fde9e7aa7de9dfeccc28a441510dc61e00e",
+      "hex": "00cf9e4cb525bfaab60f58e94894",
+      "asx_sha256": "950f30ef51b748e2e0a39195f3ec75d83c4c15a86472a8dc538586c3977c8b57",
+      "serial": {
+        "dos_peer": true
+      },
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "tx_hex": "414243",
+        "refreshes": 1,
+        "paced_units": 111,
+        "paced_calls": 3
+      }
+    },
+    {
+      "name": "ZPACENUL",
+      "source": "proc main\r\nset txpace 37\r\ntransmit \"A^@B\"\r\nendproc\r\n",
+      "source_sha256": "bec8e5d7ba341ea42c41224a88d0d7d0fd2847446b961d4447edc5ef3cbd9c8f",
+      "hex": "00cf9e4cb525bfaab710580545c394",
+      "asx_sha256": "7170cc17a65518090a9854a894b1f8b911fd5a800dbb33a2c6cc03f96c209c49",
+      "serial": {
+        "dos_peer": true
+      },
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "tx_hex": "410042",
+        "refreshes": 1,
+        "paced_units": 74,
+        "paced_calls": 2
+      }
+    },
+    {
+      "name": "ZPACEPAU",
+      "source": "proc main\r\nset pausechar 65\r\nset txpace 37\r\ntransmit \"AXB\"\r\nendproc\r\n",
+      "source_sha256": "e2bfd12c7741fbccb41e50d80e57a7ef3e8570a2ba919a8ff410c8f5dd40230e",
+      "hex": "00cf9e30b5419e4cb525bfaab608185d4d94",
+      "asx_sha256": "3f300cecc6afa8612dfe021ffcfe5d4a15bd32f14bf93eac53d03e5652c2b797",
+      "serial": {
+        "dos_peer": true
+      },
+      "expected": {
+        "error": 0,
+        "stdout_hex": "",
+        "tx_hex": "5842",
+        "refreshes": 2,
+        "paced_units": 74,
+        "paced_calls": 2
+      }
+    },
+    {
+      "name": "ZPACEHDX",
+      "source": "proc main\r\nset duplex half\r\nset txpace 37\r\ntransmit \"A^@B\"\r\nendproc\r\n",
+      "source_sha256": "6cac601aef0afce9eb222d13cf894a4dc3cd7b0566cdf0bf17b40f22a8c3d4bc",
+      "hex": "00cf9e18019e4cb525bfaab788fa3f290994",
+      "asx_sha256": "2693fefab906b14417f513f1fff0bd7913c723a189c7ee20c191dab4337d5417",
+      "serial": {
+        "dos_peer": true
+      },
+      "expected": {
+        "error": 0,
+        "stdout_hex": "4142",
+        "tx_hex": "410042",
+        "refreshes": 2,
+        "paced_units": 74,
+        "paced_calls": 2
+      }
+    },
+    {
+      "name": "ZWAITOFF",
+      "source": "proc main\r\nset waitcase off\r\ntransmit \"READY\"\r\nwaitfor \"LOGIN:\" 1\r\nif waitfor\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"MISS\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "5164962992fbc860fcb53a9ab98e19c87da1a50c180296d85bdb3c46f29c6414",
+      "hex": "00cf9e5500bfaab890abc43c6d20d4aab90fcd26124e6b4501b5015b0079006f1c1536000000790076aab806184c8d8a1f623e00000076aab709244e5e5894",
+      "asx_sha256": "78b4d145138bcbee7660fa568682c6b9644c07b56a90d9dc7c477728478cabe5",
+      "serial": {
+        "dos_peer": true,
+        "input_hex": "6c6f67696e3a",
+        "send_after_tx_hex": "5245414459"
+      },
+      "expected": {
+        "error": 0,
+        "stdout_hex": "4d415443480d0a",
+        "tx_hex": "5245414459",
+        "refreshes": 1
+      }
+    },
+    {
+      "name": "ZWAITON",
+      "source": "proc main\r\nset waitcase on\r\ntransmit \"READY\"\r\nwaitfor \"LOGIN:\" 1\r\nif waitfor\r\nmessage \"MATCH\"\r\nelse\r\nmessage \"MISS\"\r\nendif\r\nendproc\r\n",
+      "source_sha256": "e52f5bf4a599efd7b3c29c12eafad490c4707d09dcf7360a18dc84e5494945ba",
+      "hex": "00cf9e5501bfaab890abc43c6d20d4aab90fcd26124e6b4501b5015b0079006f1c1536000000790076aab806184c8d8a1f623e00000076aab709244e5e5894",
+      "asx_sha256": "0e197d77dcf269410f3d1a876d71142c678a20e9dc6ea77bda3558a6613bbd15",
+      "serial": {
+        "dos_peer": true,
+        "input_hex": "6c6f67696e3a",
+        "send_after_tx_hex": "5245414459"
+      },
+      "expected": {
+        "error": 0,
+        "stdout_hex": "4d4953530d0a",
+        "tx_hex": "5245414459",
+        "refreshes": 1
+      }
+    }
+  ]
+}

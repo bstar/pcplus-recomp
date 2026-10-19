@@ -1,5 +1,6 @@
 #include "runtime.h"
 #include "when_runtime.h"
+#include "set_runtime.h"
 #include "file_io.h"
 #include "serial_runtime.h"
 #include "receive_runtime.h"
@@ -59,6 +60,7 @@ void runtime_reset_native(void)
     runtime_word_value=0;runtime_dword_value=0;runtime_string_compare_result=0;runtime_native_error_code=0;
     /* Native overlay2 D6EA initializes MESSAGE line-feed mode E38A to1. */
     runtime_console_message_mode=1;
+    runtime_set_reset();
     runtime_serial_reset();runtime_receive_reset();runtime_when_reset();runtime_directory_reset();
     runtime_string_pending_far=0;runtime_string_pending_near=0;
     runtime_string_scratch_pointer=runtime_string_scratch_index=0;runtime_string_check_range=1;

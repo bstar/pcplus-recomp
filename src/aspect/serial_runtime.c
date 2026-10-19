@@ -8,14 +8,18 @@ extern unsigned runtime_receive_display;
 #if defined(ASPECT_RUNTIME_SERIAL)
 #include "serial.h"
 #include "resident_render.h"
+#include "txpace.h"
 #endif
 unsigned runtime_serial_error;
+unsigned runtime_serial_pacing_error;
 extern unsigned runtime_serial_case_sensitive,runtime_serial_wait_result;
 extern unsigned runtime_serial_pause_character,runtime_serial_local_echo,runtime_serial_character_delay_value;
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
 extern unsigned runtime_serial_rx_count;
 unsigned char runtime_serial_tx[1024];
 unsigned runtime_serial_tx_size;
+unsigned long runtime_serial_paced_units;
+unsigned runtime_serial_paced_calls;
 static const unsigned char *input,*trigger;
 static unsigned input_size,input_at,trigger_size,flags,released;
 static unsigned long clock_value,clock_step,initial_clock;
@@ -28,11 +32,14 @@ static void release(void)
 #endif
 void runtime_serial_reset(void)
 {
- runtime_serial_error=runtime_serial_wait_result=0;runtime_serial_case_sensitive=0;
+ runtime_serial_error=runtime_serial_pacing_error=runtime_serial_wait_result=0;runtime_serial_case_sensitive=0;
  runtime_serial_pause_character=126;runtime_serial_local_echo=runtime_serial_character_delay_value=0;
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
+ runtime_serial_paced_units=runtime_serial_paced_calls=0;
  input_at=runtime_serial_tx_size=0;released=0;clock_value=initial_clock;
  runtime_serial_case_sensitive=(flags&2)!=0;release();
+#elif defined(ASPECT_RUNTIME_SERIAL)
+ aspect_txpace_reset();
 #endif
 }
 unsigned runtime_serial_ready(void)
@@ -107,11 +114,45 @@ unsigned runtime_serial_receive(unsigned delayed)
  return runtime_receive_character(0,delayed);
 #endif
 }
+#if defined(ASPECT_RUNTIME_SERIAL)
+static unsigned runtime_serial_pacing_step(unsigned phase)
+{
+ /* Service only transport/flow and immediate cancellation. A calibration or
+  * pacing callback cannot enter WHEN, matching, parser or a resident RPC. */
+ if(runtime_console_cancel_poll())return runtime_error;
+ if((phase==ASPECT_TXPACE_BEFORE_MEASURE || phase==ASPECT_TXPACE_ALIGN) &&
+    aspect_serial_available()>2048U){
+  runtime_set_error(ASPECT_RUN_SERIAL);return runtime_error;
+ }
+ return runtime_error;
+}
+#endif
+unsigned runtime_serial_prepare_pacing(void)
+{
+#if defined(ASPECT_RUNTIME_SERIAL)
+ unsigned status;
+ if(!runtime_serial_ready()){runtime_set_error(ASPECT_RUN_UNSUPPORTED);return runtime_error;}
+ if(!aspect_txpace_ready()){
+  status=aspect_txpace_prepare(runtime_serial_pacing_step);
+  if(status){runtime_serial_pacing_error=status;runtime_set_error(ASPECT_RUN_SERIAL);}
+ }
+#endif
+ return runtime_error;
+}
 unsigned runtime_serial_character_delay(unsigned delay)
 {
- /* Source-owned defaults use zero. Native calibrated nonzero delay is not
-  * replaced with an inaccurate host timing constant. SET remains unsupported. */
+ if(delay>999U){runtime_set_error(ASPECT_RUN_OPERAND);return runtime_error;}
+#if defined(ASPECT_RUNTIME_DIAGNOSTIC)
+ /* Record requested native units, not invented elapsed BIOS/host time. */
+ ++runtime_serial_paced_calls;runtime_serial_paced_units+=delay;
+#elif defined(ASPECT_RUNTIME_SERIAL)
+ if(delay && !runtime_serial_prepare_pacing()){
+  unsigned status=aspect_txpace_delay(delay,runtime_serial_pacing_step);
+  if(status){runtime_serial_pacing_error=status;runtime_set_error(ASPECT_RUN_SERIAL);}
+ }
+#else
  if(delay)runtime_set_error(ASPECT_RUN_UNSUPPORTED);
+#endif
  return runtime_error;
 }
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
