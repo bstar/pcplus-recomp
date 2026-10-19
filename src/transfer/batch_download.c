@@ -64,10 +64,17 @@ static unsigned directory(const char *p,char *out)
   * remove one optional nonroot suffix, and still reject doubled separators. */
  if(n>1 && out[n-1]=='\\' && !(n==3 && out[1]==':'))out[--n]=0;
  if(n==1 && out[0]=='.')return 1;
+ /* A drive alone means its current directory, not its root. Keep an
+  * explicit dot so attributes and later checked file paths agree. */
+ if(n==2 && out[1]==':'){out[2]='.';out[3]=0;return out[0]>='A' && out[0]<='Z';}
  start=0;
  if(n>=2 && out[1]==':'){if(out[0]<'A' || out[0]>'Z')return 0;start=2;}
  if(out[start]=='\\'){++start;if(start==n)return 1;}
  if(start==n)return 0;
+ if(out[start]=='.' && start+1==n){
+  if(start && out[start-1]=='\\')out[start]=0;
+  return 1;
+ }
  for(end=start;;++end){
   if(out[end]=='\\' || !out[end]){
    if(!leaf(out+start,end-start))return 0;
@@ -81,6 +88,9 @@ static unsigned paths(const char *name,char *target,char *stage)
  unsigned n=0,i=0,j;
  while(batch_download_result.directory[n])++n;
  if(n==1 && batch_download_result.directory[0]=='.')n=0;
+ /* The checked per-file grammar needs a drive-relative leaf, not a dot
+  * component. C:NAME resolves against C's current directory. */
+ if(n==3 && batch_download_result.directory[1]==':' && batch_download_result.directory[2]=='.')n=2;
  memcpy(target,batch_download_result.directory,n);
  if(n && target[n-1]!='\\' && target[n-1]!=':')target[n++]='\\';
  for(j=0;name[j];++j){if(n+j>=63)return 0;target[n+j]=(char)fold((unsigned char)name[j]);}

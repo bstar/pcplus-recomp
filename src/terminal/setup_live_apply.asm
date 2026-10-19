@@ -10,6 +10,7 @@ GROUP DGROUP _DATA _BSS
 SEGMENT _TEXT public class=CODE use16
 extern _live_setup_bind,_live_setup_begin,_live_setup_finish,_live_setup_abort
 extern _live_setup_finish_policy,_live_setup_acknowledge
+extern _live_setup_transfer_settings,_terminal_transfer_preferences
 extern terminal_config_path,terminal_option_mask,terminal_directory_context
 extern terminal_directory_context_valid,terminal_configuration_values
 extern terminal_modem_settings,terminal_directory_plan,terminal_dial_target
@@ -244,6 +245,10 @@ terminal_setup_complete:
  mov [terminal_modem_settings+MI_BREAK_DELAY],ax
  mov [terminal_break_delay_units],ax
 .display:
+ mov ax,_terminal_transfer_preferences
+ push ax
+ call _live_setup_transfer_settings
+ add sp,2
  mov ax,terminal_setup_plan
  call terminal_apply_live_configuration
  mov ax,[terminal_setup_outcome+4]

@@ -548,7 +548,7 @@ their existing guards. Incoming UART/parser/history/capture/replies continue.
 The menu implementation and code-based text/table reside in CONFIG_CODE, adding
 only48 bytes of near state. Resident code and85 bridge pairs remain unchanged.
 Five linked groups/149 declared inputs and three production DOS observer/file/
-PRMEDIT workflows pass. The isolated Nix build reproduces64 byte-identical
+PRMEDIT workflows pass. The isolated Nix build reproduces 64 byte-identical
 outputs. See `docs/COMMAND_MENU.md`. Original layout, mouse paths, full settings/
 key editing and other geometries remain open; F02 and all other whole-application
 gates remain open.
@@ -635,7 +635,7 @@ Near data/stack stays64,480 bytes. Retained parent memory including PSP grows
 by464 bytes to315,200; this creates segment capacity rather than reducing total
 RAM. There are60 configuration bridge pairs and109 total. The focused suite
 passes413 linked inputs and269 malformed-image rejections. A fresh checkout
-reproduces64 outputs; its413 linked migration checks use no historical build
+reproduces 64 outputs; its413 linked migration checks use no historical build
 artifacts, original executables or installation data. The baseline's297 compiled
 input hashes are independently authenticated against the published source commit.
 
@@ -767,3 +767,33 @@ reproduces 64 outputs. Runtime remains d791eb10. Startup/live transfer-setting
 adoption, checked destination reconciliation and automatic transfer entry remain
 required, followed by actual DOS/Synchronet/ENiGMA workflows. All F01–F16 gates
 remain open.
+
+## Canonical automatic ZMODEM reception
+
+Runtime 731418bd now uses the proved saved preferences for CRC-valid hex ZRQINIT
+reception without local Alt-R/F2/filename keys. Startup stages serial, optional
+modem, retained directory context and transfer settings from one PRM read.
+Successful settings children adopt checked preferences from the same frozen
+image; invalid requests/files preserve existing plans. The existing 44-byte
+serial and 628-byte live-plan layouts stay intact.
+
+The foreground recognizer preserves rejected/expired bytes before translation
+and native parsing, services a 36-tick inactivity deadline across BIOS midnight,
+and flushes before local key owner changes. Existing exclusive transfer/file
+owners perform UI restoration, exact writes, checked close and no-overwrite
+installation. Drive-relative current-directory paths now agree across directory
+and per-file validation, with actual DOS verification in a separate CWD.
+
+All 80 terminal commands pass, alongside 60 preference inputs, 384 damaged ABI
+images, 21 normal/38 fault storage cases, three actual DOS/lrzsz automatic batches
+and automatic downloads on both stock Synchronet and ENiGMA. A fresh source-only
+snapshot reproduces 64 outputs. Earlier startup, midnight and path-extension
+failures remain explicit in the retained evidence. See `docs/ZMODEM_AUTOSTART.md`
+and `docs/validation/zmodem-autostart.json` for exact hashes, bounds and scope.
+
+Near data/stack use 65,296 bytes with 240 spare; resident CODE uses 63,630 bytes
+with 1,906 spare. Additional placement work remains necessary as the application
+grows. Canonical invitations are implemented; binary/noncanonical automatic
+invites, persisted resume, broader timing/physical modem testing, remaining
+protocols/emulations/UI, ASPECT and Host remain required. The ENiGMA fragmented
+key interaction remains unresolved. No F01–F16 gate is closed by this component.

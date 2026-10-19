@@ -1,0 +1,2958 @@
+{
+  "passed": true,
+  "binary_sha256": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
+  "memory": {
+    "near_bytes": 65296,
+    "near_spare_bytes": 240,
+    "near_relative_segment": 6760,
+    "far_relative_segment": 16154,
+    "shadow_offset": 0,
+    "history_offset": 0,
+    "far_bytes": 71192,
+    "history_relative_segment": 16666,
+    "history_bytes": 63000,
+    "far_end_linear": 329656,
+    "stack_end_linear": 173456,
+    "loaded_module_bytes": 141886,
+    "minimum_allocated_module_bytes": 329664,
+    "retained_parent_paragraphs": 20620,
+    "far_pointer_relocations_verified": true,
+    "snapshot_relative_segment": 12091,
+    "snapshot_image_offset": 63008,
+    "snapshot_bytes": 2000,
+    "snapshot_end_linear": 258464,
+    "ui_screen_buffers": {
+      "browser_screen": {
+        "relative_segment": 10841,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 173456,
+        "end_linear": 177456
+      },
+      "ed_screen": {
+        "relative_segment": 10841,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 177456,
+        "end_linear": 181456
+      },
+      "program_screen": {
+        "relative_segment": 10841,
+        "offset": 8000,
+        "bytes": 4000,
+        "start_linear": 181456,
+        "end_linear": 185456
+      },
+      "redisplay_live": {
+        "relative_segment": 10841,
+        "offset": 12000,
+        "bytes": 4000,
+        "start_linear": 185456,
+        "end_linear": 189456
+      },
+      "redisplay_view": {
+        "relative_segment": 10841,
+        "offset": 16000,
+        "bytes": 4000,
+        "start_linear": 189456,
+        "end_linear": 193456
+      }
+    },
+    "far_ui_storage_bytes": 20000,
+    "redisplay_snapshot_bytes": 63000,
+    "redisplay_snapshot_end_linear": 256456,
+    "controller_bridge_pairs_verified": 22,
+    "modem_bridge_pairs_verified": 23,
+    "command_menu_far_code_verified": true,
+    "ymodem_far_code_verified": true,
+    "zmodem_far_callbacks_verified": 10,
+    "configuration_bridge_pairs_verified": 78,
+    "redisplay_bridge_pairs_verified": 4,
+    "resident_code_bytes": 63630,
+    "resident_code_spare_bytes": 1906,
+    "code_segments": [
+      {
+        "name": "_TEXT",
+        "kind": "CODE",
+        "relative_segment": 0,
+        "offset": 0,
+        "bytes": 63630
+      },
+      {
+        "name": "CONFIG_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 3977,
+        "offset": 0,
+        "bytes": 41581
+      },
+      {
+        "name": "MODEM_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 6576,
+        "offset": 0,
+        "bytes": 1483
+      },
+      {
+        "name": "PRINT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 6669,
+        "offset": 0,
+        "bytes": 1449
+      }
+    ],
+    "far_code_bridge_pairs_verified": 127
+  },
+  "linked": {
+    "preferences": {
+      "passed": true,
+      "cases": [
+        {
+          "case": "single-PRM-read-atomic-startup-with-and-without-modem-plans",
+          "inputs": 24,
+          "passed": true
+        },
+        {
+          "case": "invalid-transfer-preference-keeps-all-startup-plans-unchanged",
+          "inputs": 3,
+          "passed": true
+        },
+        {
+          "case": "startup-null-alias-and-wrap-arguments-refuse-before-loading",
+          "inputs": 12,
+          "passed": true
+        },
+        {
+          "case": "directory-null-alias-and-wrap-arguments-refuse-before-any-read",
+          "inputs": 14,
+          "passed": true
+        },
+        {
+          "case": "ten-argument-directory-reader-retains-selection-and-preferences",
+          "inputs": 3,
+          "passed": true
+        },
+        {
+          "case": "successful-child-adopts-transfer-preferences-and-consumes-offer",
+          "inputs": 3,
+          "passed": true
+        },
+        {
+          "case": "invalid-child-path-preserves-active-transfer-preferences",
+          "inputs": 1,
+          "passed": true
+        }
+      ],
+      "binary_sha256": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
+      "scope": "Actual linked startup readers, ten-word bridge and live PROGRAM/settings adoption. Only synthetic DOS/file boundaries modeled; no actual DOS/BBS preference workflow claim."
+    },
+    "invitations": {
+      "passed": true,
+      "cases": [
+        {
+          "case": "UART-invitation-starts-checked-receiver-without-prompt-four-sizes",
+          "passed": true
+        },
+        {
+          "case": "ordinary-truncated-corrupt-other-header-and-command-input-preserved",
+          "passed": true
+        },
+        {
+          "case": "nineteen-truncations-expire-at-serviced-36-tick-deadline",
+          "passed": true
+        },
+        {
+          "case": "midnight-and-low-word-rollover-preserve-complete-deadline",
+          "passed": true
+        },
+        {
+          "case": "disabled-format-and-twelve-owner-boundaries-flush-held-input",
+          "passed": true
+        }
+      ],
+      "binary_sha256": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
+      "scope": "Linked UART invitation, foreground recognizer, automatic admission, UI bypass and checked ZMODEM file owner. BIOS/UART/ticks/DOS kernel modeled, independent peer scripts; ordinary input observed without patching product callbacks. No actual DOS or BBS automatic-reception claim."
+    },
+    "bridges": {
+      "passed": true,
+      "binary_sha256": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
+      "configuration_bridge_pairs_verified": 78,
+      "entry_argument_counts": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "rejected_mutations": [
+        "_terminal_preferences_read:near-argument-offset",
+        "_terminal_preferences_read:far-target",
+        "_terminal_preferences_read:near-return",
+        "_terminal_preferences_read:far-argument-offset",
+        "_terminal_preferences_read:implementation-target",
+        "_terminal_preferences_read:far-return",
+        "_terminal_directory_preferences_read:near-argument-offset",
+        "_terminal_directory_preferences_read:far-target",
+        "_terminal_directory_preferences_read:near-return",
+        "_terminal_directory_preferences_read:far-argument-offset",
+        "_terminal_directory_preferences_read:implementation-target",
+        "_terminal_directory_preferences_read:far-return",
+        "_directory_live_decode:near-argument-offset",
+        "_directory_live_decode:far-target",
+        "_directory_live_decode:near-return",
+        "_directory_live_decode:far-argument-offset",
+        "_directory_live_decode:implementation-target",
+        "_directory_live_decode:far-return",
+        "_directory_live_read:near-argument-offset",
+        "_directory_live_read:far-target",
+        "_directory_live_read:near-return",
+        "_directory_live_read:far-argument-offset",
+        "_directory_live_read:implementation-target",
+        "_directory_live_read:far-return",
+        "_directory_live_read_context:near-argument-offset",
+        "_directory_live_read_context:far-target",
+        "_directory_live_read_context:near-return",
+        "_directory_live_read_context:far-argument-offset",
+        "_directory_live_read_context:implementation-target",
+        "_directory_live_read_context:far-return",
+        "_directory_live_context_matches:near-argument-offset",
+        "_directory_live_context_matches:far-target",
+        "_directory_live_context_matches:near-return",
+        "_directory_live_context_matches:far-argument-offset",
+        "_directory_live_context_matches:implementation-target",
+        "_directory_live_context_matches:far-return",
+        "_live_configuration_decode:near-argument-offset",
+        "_live_configuration_decode:far-target",
+        "_live_configuration_decode:near-return",
+        "_live_configuration_decode:far-argument-offset",
+        "_live_configuration_decode:implementation-target",
+        "_live_configuration_decode:far-return",
+        "_live_setup_bind:near-argument-offset",
+        "_live_setup_bind:far-target",
+        "_live_setup_bind:near-return",
+        "_live_setup_bind:far-argument-offset",
+        "_live_setup_bind:implementation-target",
+        "_live_setup_bind:far-return",
+        "_live_setup_begin:near-argument-offset",
+        "_live_setup_begin:far-target",
+        "_live_setup_begin:near-return",
+        "_live_setup_begin:far-argument-offset",
+        "_live_setup_begin:implementation-target",
+        "_live_setup_begin:far-return",
+        "_live_setup_finish:near-argument-offset",
+        "_live_setup_finish:far-target",
+        "_live_setup_finish:near-return",
+        "_live_setup_finish:far-argument-offset",
+        "_live_setup_finish:implementation-target",
+        "_live_setup_finish:far-return",
+        "_live_setup_abort:near-argument-offset",
+        "_live_setup_abort:far-target",
+        "_live_setup_abort:near-return",
+        "_live_setup_abort:far-argument-offset",
+        "_live_setup_abort:implementation-target",
+        "_live_setup_abort:far-return",
+        "_live_setup_finish_policy:near-argument-offset",
+        "_live_setup_finish_policy:far-target",
+        "_live_setup_finish_policy:near-return",
+        "_live_setup_finish_policy:far-argument-offset",
+        "_live_setup_finish_policy:implementation-target",
+        "_live_setup_finish_policy:far-return",
+        "_live_setup_acknowledge:near-argument-offset",
+        "_live_setup_acknowledge:far-target",
+        "_live_setup_acknowledge:near-return",
+        "_live_setup_acknowledge:far-argument-offset",
+        "_live_setup_acknowledge:implementation-target",
+        "_live_setup_acknowledge:far-return",
+        "_xlt_dos_read:near-argument-offset",
+        "_xlt_dos_read:far-target",
+        "_xlt_dos_read:near-return",
+        "_xlt_dos_read:far-argument-offset",
+        "_xlt_dos_read:implementation-target",
+        "_xlt_dos_read:far-return",
+        "_xlt_dos_read_default:near-argument-offset",
+        "_xlt_dos_read_default:far-target",
+        "_xlt_dos_read_default:near-return",
+        "_xlt_dos_read_default:far-argument-offset",
+        "_xlt_dos_read_default:implementation-target",
+        "_xlt_dos_read_default:far-return",
+        "_xlt_live_bind:near-argument-offset",
+        "_xlt_live_bind:far-target",
+        "_xlt_live_bind:near-return",
+        "_xlt_live_bind:far-argument-offset",
+        "_xlt_live_bind:implementation-target",
+        "_xlt_live_bind:far-return",
+        "_xlt_live_stage:near-argument-offset",
+        "_xlt_live_stage:far-target",
+        "_xlt_live_stage:near-return",
+        "_xlt_live_stage:far-argument-offset",
+        "_xlt_live_stage:implementation-target",
+        "_xlt_live_stage:far-return",
+        "_xlt_live_commit:near-argument-offset",
+        "_xlt_live_commit:far-target",
+        "_xlt_live_commit:near-return",
+        "_xlt_live_commit:far-argument-offset",
+        "_xlt_live_commit:implementation-target",
+        "_xlt_live_commit:far-return",
+        "_xlt_live_initialize:near-argument-offset",
+        "_xlt_live_initialize:far-target",
+        "_xlt_live_initialize:near-return",
+        "_xlt_live_initialize:far-argument-offset",
+        "_xlt_live_initialize:implementation-target",
+        "_xlt_live_initialize:far-return",
+        "_xlt_live_reload:near-argument-offset",
+        "_xlt_live_reload:far-target",
+        "_xlt_live_reload:near-return",
+        "_xlt_live_reload:far-argument-offset",
+        "_xlt_live_reload:implementation-target",
+        "_xlt_live_reload:far-return",
+        "_xlt_live_editor:near-argument-offset",
+        "_xlt_live_editor:far-target",
+        "_xlt_live_editor:near-return",
+        "_xlt_live_editor:far-argument-offset",
+        "_xlt_live_editor:implementation-target",
+        "_xlt_live_editor:far-return",
+        "_redisplay_event:near-argument-offset",
+        "_redisplay_event:far-target",
+        "_redisplay_event:near-return",
+        "_redisplay_event:far-argument-offset",
+        "_redisplay_event:implementation-target",
+        "_redisplay_event:far-return",
+        "_program_execute:near-argument-offset",
+        "_program_execute:far-target",
+        "_program_execute:near-return",
+        "_program_execute:far-argument-offset",
+        "_program_execute:implementation-target",
+        "_program_execute:far-return",
+        "_ymodem_run:near-argument-offset",
+        "_ymodem_run:far-target",
+        "_ymodem_run:near-return",
+        "_ymodem_run:far-argument-offset",
+        "_ymodem_run:implementation-target",
+        "_ymodem_run:far-return",
+        "_batch_header_end:near-argument-offset",
+        "_batch_header_end:far-target",
+        "_batch_header_end:near-return",
+        "_batch_header_end:far-argument-offset",
+        "_batch_header_end:implementation-target",
+        "_batch_header_end:far-return",
+        "_batch_header_encode:near-argument-offset",
+        "_batch_header_encode:far-target",
+        "_batch_header_encode:near-return",
+        "_batch_header_encode:far-argument-offset",
+        "_batch_header_encode:implementation-target",
+        "_batch_header_encode:far-return",
+        "_batch_header_decode:near-argument-offset",
+        "_batch_header_decode:far-target",
+        "_batch_header_decode:near-return",
+        "_batch_header_decode:far-argument-offset",
+        "_batch_header_decode:implementation-target",
+        "_batch_header_decode:far-return",
+        "_terminal_zmodem_store:near-argument-offset",
+        "_terminal_zmodem_store:far-target",
+        "_terminal_zmodem_store:near-return",
+        "_terminal_zmodem_store:far-argument-offset",
+        "_terminal_zmodem_store:implementation-target",
+        "_terminal_zmodem_store:far-return",
+        "_terminal_autostart_initialize:near-argument-offset",
+        "_terminal_autostart_initialize:far-target",
+        "_terminal_autostart_initialize:near-return",
+        "_terminal_autostart_initialize:far-argument-offset",
+        "_terminal_autostart_initialize:implementation-target",
+        "_terminal_autostart_initialize:far-return",
+        "_terminal_autostart_flush:near-argument-offset",
+        "_terminal_autostart_flush:far-target",
+        "_terminal_autostart_flush:near-return",
+        "_terminal_autostart_flush:far-argument-offset",
+        "_terminal_autostart_flush:implementation-target",
+        "_terminal_autostart_flush:far-return",
+        "_terminal_autostart_poll:near-argument-offset",
+        "_terminal_autostart_poll:far-target",
+        "_terminal_autostart_poll:near-return",
+        "_terminal_autostart_poll:far-argument-offset",
+        "_terminal_autostart_poll:implementation-target",
+        "_terminal_autostart_poll:far-return",
+        "_terminal_autostart_input:near-argument-offset",
+        "_terminal_autostart_input:far-target",
+        "_terminal_autostart_input:near-return",
+        "_terminal_autostart_input:far-argument-offset",
+        "_terminal_autostart_input:implementation-target",
+        "_terminal_autostart_input:far-return",
+        "_live_setup_transfer_settings:near-argument-offset",
+        "_live_setup_transfer_settings:far-target",
+        "_live_setup_transfer_settings:near-return",
+        "_live_setup_transfer_settings:far-argument-offset",
+        "_live_setup_transfer_settings:implementation-target",
+        "_live_setup_transfer_settings:far-return",
+        "_config_terminal_auto_deliver:service-far-target",
+        "_config_terminal_auto_deliver:resident-call-frame",
+        "_config_terminal_auto_allowed:service-far-target",
+        "_config_terminal_auto_allowed:resident-call-frame",
+        "_config_terminal_auto_start:service-far-target",
+        "_config_terminal_auto_start:resident-call-frame",
+        "_config_terminal_auto_ticks:service-far-target",
+        "_config_terminal_auto_ticks:resident-call-frame",
+        "config_memmove_service_:service-far-target",
+        "config_memmove_service_:resident-call-frame",
+        "_config_clipboard_transport:service-far-target",
+        "_config_clipboard_transport:resident-call-frame",
+        "config_strcmp_service_:service-far-target",
+        "config_strcmp_service_:resident-call-frame",
+        "_config_history_file:service-far-target",
+        "_config_history_file:resident-call-frame",
+        "_config_process_run:service-far-target",
+        "_config_process_run:resident-call-frame",
+        "_config_xlt_open:service-far-target",
+        "_config_xlt_open:resident-call-frame",
+        "_config_xlt_read:service-far-target",
+        "_config_xlt_read:resident-call-frame",
+        "_config_xlt_close:service-far-target",
+        "_config_xlt_close:resident-call-frame",
+        "config_memcpy_service_:service-far-target",
+        "config_memcpy_service_:resident-call-frame",
+        "config_memset_service_:service-far-target",
+        "config_memset_service_:resident-call-frame",
+        "config_memcmp_service_:service-far-target",
+        "config_memcmp_service_:resident-call-frame",
+        "config_strchr_service_:service-far-target",
+        "config_strchr_service_:resident-call-frame",
+        "config_canonical_service_:service-far-target",
+        "config_canonical_service_:resident-call-frame",
+        "_config_terminal_decode:service-far-target",
+        "_config_terminal_decode:resident-call-frame",
+        "_config_modem_decode:service-far-target",
+        "_config_modem_decode:resident-call-frame",
+        "_config_prm_read:service-far-target",
+        "_config_prm_read:resident-call-frame",
+        "_config_directory_read:service-far-target",
+        "_config_directory_read:resident-call-frame",
+        "_config_number_expand:service-far-target",
+        "_config_number_expand:resident-call-frame",
+        "_config_live_expand:service-far-target",
+        "_config_live_expand:resident-call-frame",
+        "config_u4div_service_:service-far-target",
+        "config_u4div_service_:resident-call-frame",
+        "config_u4mul_service_:service-far-target",
+        "config_u4mul_service_:resident-call-frame",
+        "_config_ym_crc:service-far-target",
+        "_config_ym_crc:resident-call-frame",
+        "_config_ym_read:service-far-target",
+        "_config_ym_read:resident-call-frame",
+        "_config_ym_put:service-far-target",
+        "_config_ym_put:resident-call-frame",
+        "_config_ym_unread:service-far-target",
+        "_config_ym_unread:resident-call-frame",
+        "_config_ym_poll:service-far-target",
+        "_config_ym_poll:resident-call-frame",
+        "_config_ym_progress:service-far-target",
+        "_config_ym_progress:resident-call-frame",
+        "_config_bd_begin:service-far-target",
+        "_config_bd_begin:resident-call-frame",
+        "_config_bd_open:service-far-target",
+        "_config_bd_open:resident-call-frame",
+        "_config_bd_append:service-far-target",
+        "_config_bd_append:resident-call-frame",
+        "_config_bd_finish:service-far-target",
+        "_config_bd_finish:resident-call-frame",
+        "_config_bd_cleanup:service-far-target",
+        "_config_bd_cleanup:resident-call-frame",
+        "_config_bu_begin:service-far-target",
+        "_config_bu_begin:resident-call-frame",
+        "_config_bu_read:service-far-target",
+        "_config_bu_read:resident-call-frame",
+        "_config_bu_next:service-far-target",
+        "_config_bu_next:resident-call-frame",
+        "_config_bu_close:service-far-target",
+        "_config_bu_close:resident-call-frame",
+        "_config_bu_abort:service-far-target",
+        "_config_bu_abort:resident-call-frame",
+        "config_strcpy_service_:service-far-target",
+        "config_strcpy_service_:resident-call-frame",
+        "_config_bu_seek:service-far-target",
+        "_config_bu_seek:resident-call-frame",
+        "_config_bu_skip:service-far-target",
+        "_config_bu_skip:resident-call-frame",
+        "_config_bd_exact:service-far-target",
+        "_config_bd_exact:resident-call-frame",
+        "_config_clipboard_transport_service:missing-MZ-relocation",
+        "config_strcmp_service_:missing-MZ-relocation",
+        "_config_history_file_service:missing-MZ-relocation",
+        "_program_execute:missing-MZ-relocation",
+        "_config_process_run_service:missing-MZ-relocation",
+        "_redisplay_event:missing-MZ-relocation",
+        "_xlt_live_bind:missing-MZ-relocation",
+        "_xlt_live_stage:missing-MZ-relocation",
+        "_xlt_live_commit:missing-MZ-relocation",
+        "_xlt_live_initialize:missing-MZ-relocation",
+        "_xlt_live_reload:missing-MZ-relocation",
+        "_xlt_live_editor:missing-MZ-relocation",
+        "_xlt_dos_read_default:missing-MZ-relocation",
+        "_xlt_dos_read:missing-MZ-relocation",
+        "_config_xlt_open_service:missing-MZ-relocation",
+        "_config_xlt_read_service:missing-MZ-relocation",
+        "_config_xlt_close_service:missing-MZ-relocation",
+        "_directory_live_read_context:missing-MZ-relocation",
+        "_live_configuration_decode:missing-MZ-relocation",
+        "config_memcpy_service_:missing-MZ-relocation",
+        "_config_number_expand_service:missing-MZ-relocation",
+        "_live_setup_bind:missing-MZ-relocation",
+        "_live_setup_begin:missing-MZ-relocation",
+        "_live_setup_finish:missing-MZ-relocation",
+        "_live_setup_abort:missing-MZ-relocation",
+        "_live_setup_finish_policy:missing-MZ-relocation",
+        "_live_setup_acknowledge:missing-MZ-relocation",
+        "config_canonical_service_:missing-MZ-relocation",
+        "_config_live_expand_service:missing-MZ-relocation",
+        "_ymodem_run:missing-MZ-relocation",
+        "_batch_header_end:missing-MZ-relocation",
+        "_batch_header_encode:missing-MZ-relocation",
+        "_batch_header_decode:missing-MZ-relocation",
+        "config_u4div_service_:missing-MZ-relocation",
+        "config_u4mul_service_:missing-MZ-relocation",
+        "_config_ym_crc_service:missing-MZ-relocation",
+        "_config_ym_read_service:missing-MZ-relocation",
+        "_config_ym_put_service:missing-MZ-relocation",
+        "_config_ym_unread_service:missing-MZ-relocation",
+        "_config_ym_poll_service:missing-MZ-relocation",
+        "_config_ym_progress_service:missing-MZ-relocation",
+        "_config_bd_begin_service:missing-MZ-relocation",
+        "_config_bd_open_service:missing-MZ-relocation",
+        "_config_bd_append_service:missing-MZ-relocation",
+        "_config_bd_finish_service:missing-MZ-relocation",
+        "_config_bd_cleanup_service:missing-MZ-relocation",
+        "_config_bu_begin_service:missing-MZ-relocation",
+        "_config_bu_read_service:missing-MZ-relocation",
+        "_config_bu_next_service:missing-MZ-relocation",
+        "_config_bu_close_service:missing-MZ-relocation",
+        "_config_bu_abort_service:missing-MZ-relocation",
+        "_terminal_zmodem_store:missing-MZ-relocation",
+        "config_strcpy_service_:missing-MZ-relocation",
+        "_config_bu_seek_service:missing-MZ-relocation",
+        "_config_bu_skip_service:missing-MZ-relocation",
+        "_config_bd_exact_service:missing-MZ-relocation",
+        "_terminal_preferences_read:missing-new-entry-relocation",
+        "_terminal_directory_preferences_read:missing-new-entry-relocation",
+        "_terminal_autostart_initialize:missing-new-entry-relocation",
+        "_terminal_autostart_flush:missing-new-entry-relocation",
+        "_terminal_autostart_poll:missing-new-entry-relocation",
+        "_terminal_autostart_input:missing-new-entry-relocation",
+        "_live_setup_transfer_settings:missing-new-entry-relocation",
+        "zmodem-callback-0-field-0",
+        "zmodem-callback-0-field-2",
+        "zmodem-callback-0-missing-relocation",
+        "zmodem-callback-1-field-0",
+        "zmodem-callback-1-field-2",
+        "zmodem-callback-1-missing-relocation",
+        "zmodem-callback-2-field-0",
+        "zmodem-callback-2-field-2",
+        "zmodem-callback-2-missing-relocation",
+        "zmodem-callback-3-field-0",
+        "zmodem-callback-3-field-2",
+        "zmodem-callback-3-missing-relocation",
+        "zmodem-callback-4-field-0",
+        "zmodem-callback-4-field-2",
+        "zmodem-callback-4-missing-relocation",
+        "zmodem-callback-5-field-0",
+        "zmodem-callback-5-field-2",
+        "zmodem-callback-5-missing-relocation",
+        "zmodem-callback-6-field-0",
+        "zmodem-callback-6-field-2",
+        "zmodem-callback-6-missing-relocation",
+        "zmodem-callback-7-field-0",
+        "zmodem-callback-7-field-2",
+        "zmodem-callback-7-missing-relocation",
+        "zmodem-callback-8-field-0",
+        "zmodem-callback-8-field-2",
+        "zmodem-callback-8-missing-relocation",
+        "zmodem-callback-9-field-0",
+        "zmodem-callback-9-field-2",
+        "zmodem-callback-9-missing-relocation",
+        "missing-class",
+        "oversized-code",
+        "incomplete-C-extent"
+      ],
+      "memory": {
+        "near_bytes": 65296,
+        "near_spare_bytes": 240,
+        "near_relative_segment": 6760,
+        "far_relative_segment": 16154,
+        "shadow_offset": 0,
+        "history_offset": 0,
+        "far_bytes": 71192,
+        "history_relative_segment": 16666,
+        "history_bytes": 63000,
+        "far_end_linear": 329656,
+        "stack_end_linear": 173456,
+        "loaded_module_bytes": 141886,
+        "minimum_allocated_module_bytes": 329664,
+        "retained_parent_paragraphs": 20620,
+        "far_pointer_relocations_verified": true,
+        "snapshot_relative_segment": 12091,
+        "snapshot_image_offset": 63008,
+        "snapshot_bytes": 2000,
+        "snapshot_end_linear": 258464,
+        "ui_screen_buffers": {
+          "browser_screen": {
+            "relative_segment": 10841,
+            "offset": 0,
+            "bytes": 4000,
+            "start_linear": 173456,
+            "end_linear": 177456
+          },
+          "ed_screen": {
+            "relative_segment": 10841,
+            "offset": 4000,
+            "bytes": 4000,
+            "start_linear": 177456,
+            "end_linear": 181456
+          },
+          "program_screen": {
+            "relative_segment": 10841,
+            "offset": 8000,
+            "bytes": 4000,
+            "start_linear": 181456,
+            "end_linear": 185456
+          },
+          "redisplay_live": {
+            "relative_segment": 10841,
+            "offset": 12000,
+            "bytes": 4000,
+            "start_linear": 185456,
+            "end_linear": 189456
+          },
+          "redisplay_view": {
+            "relative_segment": 10841,
+            "offset": 16000,
+            "bytes": 4000,
+            "start_linear": 189456,
+            "end_linear": 193456
+          }
+        },
+        "far_ui_storage_bytes": 20000,
+        "redisplay_snapshot_bytes": 63000,
+        "redisplay_snapshot_end_linear": 256456,
+        "controller_bridge_pairs_verified": 22,
+        "modem_bridge_pairs_verified": 23,
+        "command_menu_far_code_verified": true,
+        "ymodem_far_code_verified": true,
+        "zmodem_far_callbacks_verified": 10,
+        "configuration_bridge_pairs_verified": 78,
+        "redisplay_bridge_pairs_verified": 4,
+        "resident_code_bytes": 63630,
+        "resident_code_spare_bytes": 1906,
+        "code_segments": [
+          {
+            "name": "_TEXT",
+            "kind": "CODE",
+            "relative_segment": 0,
+            "offset": 0,
+            "bytes": 63630
+          },
+          {
+            "name": "CONFIG_CODE",
+            "kind": "FARCODE",
+            "relative_segment": 3977,
+            "offset": 0,
+            "bytes": 41581
+          },
+          {
+            "name": "MODEM_CODE",
+            "kind": "FARCODE",
+            "relative_segment": 6576,
+            "offset": 0,
+            "bytes": 1483
+          },
+          {
+            "name": "PRINT_CODE",
+            "kind": "FARCODE",
+            "relative_segment": 6669,
+            "offset": 0,
+            "bytes": 1449
+          }
+        ],
+        "far_code_bridge_pairs_verified": 127
+      },
+      "scope": "Serialized DOS MZ and linker-map validation of 33 explicit near-cdecl entries including zero and ten arguments, ten compiler register callbacks, 24 resident word-cdecl callbacks and eleven explicit zero-argument callbacks and ten typed far ZMODEM callback pointers; exact argument-copy frames, target calls/returns, relocations and full configuration C extent. Independent CPU candidate/directory/owner suites and actual DOS child allocation exercise behavior."
+    },
+    "protocol_regression": {
+      "passed": true,
+      "binary_sha256": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
+      "inputs": 78,
+      "cases": [
+        {
+          "case": "bridge-False-65-0",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-65-1",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-65-1023",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-65-1024",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-65-1025",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-65-65539",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-67-0",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-67-1",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-67-1023",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-67-1024",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-67-1025",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-67-65539",
+          "passed": true
+        },
+        {
+          "case": "foreground-owner-False",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-65-0",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-65-1",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-65-1023",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-65-1024",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-65-1025",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-65-65539",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-67-0",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-67-1",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-67-1023",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-67-1024",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-67-1025",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-67-65539",
+          "passed": true
+        },
+        {
+          "case": "foreground-owner-True",
+          "passed": true
+        },
+        {
+          "case": "checked-source-resume-0",
+          "passed": true
+        },
+        {
+          "case": "checked-source-resume-3",
+          "passed": true
+        },
+        {
+          "case": "checked-source-resume-8",
+          "passed": true
+        },
+        {
+          "case": "file-fault-False-write",
+          "passed": true
+        },
+        {
+          "case": "file-fault-False-short",
+          "passed": true
+        },
+        {
+          "case": "file-fault-False-close",
+          "passed": true
+        },
+        {
+          "case": "file-fault-False-install",
+          "passed": true
+        },
+        {
+          "case": "file-fault-True-open",
+          "passed": true
+        },
+        {
+          "case": "file-fault-True-seek",
+          "passed": true
+        },
+        {
+          "case": "file-fault-True-read",
+          "passed": true
+        },
+        {
+          "case": "file-fault-True-short",
+          "passed": true
+        },
+        {
+          "case": "file-fault-True-close",
+          "passed": true
+        },
+        {
+          "case": "ZedZap-HARD-CRC-65-length-2048",
+          "passed": true,
+          "clock": "Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time."
+        },
+        {
+          "case": "ZedZap-HARD-CRC-65-length-4096",
+          "passed": true,
+          "clock": "Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time."
+        },
+        {
+          "case": "ZedZap-HARD-CRC-65-length-8192",
+          "passed": true,
+          "clock": "Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time."
+        },
+        {
+          "case": "ZedZap-HARD-CRC-65-length-16385",
+          "passed": true,
+          "clock": "Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time."
+        },
+        {
+          "case": "ZedZap-HARD-CRC-67-length-2048",
+          "passed": true,
+          "clock": "Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time."
+        },
+        {
+          "case": "ZedZap-HARD-CRC-67-length-4096",
+          "passed": true,
+          "clock": "Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time."
+        },
+        {
+          "case": "ZedZap-HARD-CRC-67-length-8192",
+          "passed": true,
+          "clock": "Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time."
+        },
+        {
+          "case": "ZedZap-HARD-CRC-67-length-16385",
+          "passed": true,
+          "clock": "Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time."
+        },
+        {
+          "case": "windowed-65-delayed-full-window",
+          "passed": true
+        },
+        {
+          "case": "windowed-65-capacity-independent-of-ACK",
+          "passed": true
+        },
+        {
+          "case": "windowed-65-open-frame-reposition",
+          "passed": true
+        },
+        {
+          "case": "windowed-67-delayed-full-window",
+          "passed": true
+        },
+        {
+          "case": "windowed-67-capacity-independent-of-ACK",
+          "passed": true
+        },
+        {
+          "case": "windowed-67-open-frame-reposition",
+          "passed": true
+        },
+        {
+          "case": "paced-accepted-prefix-replay",
+          "passed": true,
+          "status": 0,
+          "fault": 0,
+          "budget": 540,
+          "modeled_ticks_per_ACK": 100,
+          "replay_start": 800,
+          "replay_ACK_ticks": [
+            900,
+            1000,
+            1100,
+            1200,
+            1300,
+            1400,
+            1500,
+            1600
+          ],
+          "native_refreshes": [
+            {
+              "tick": 0,
+              "kbytes": 0,
+              "replay": false
+            },
+            {
+              "tick": 100,
+              "kbytes": 1,
+              "replay": false
+            },
+            {
+              "tick": 200,
+              "kbytes": 2,
+              "replay": false
+            },
+            {
+              "tick": 300,
+              "kbytes": 3,
+              "replay": false
+            },
+            {
+              "tick": 400,
+              "kbytes": 4,
+              "replay": false
+            },
+            {
+              "tick": 500,
+              "kbytes": 5,
+              "replay": false
+            },
+            {
+              "tick": 600,
+              "kbytes": 6,
+              "replay": false
+            },
+            {
+              "tick": 700,
+              "kbytes": 7,
+              "replay": false
+            },
+            {
+              "tick": 800,
+              "kbytes": 8,
+              "replay": false
+            },
+            {
+              "tick": 900,
+              "kbytes": 1,
+              "replay": true
+            },
+            {
+              "tick": 1000,
+              "kbytes": 2,
+              "replay": true
+            },
+            {
+              "tick": 1100,
+              "kbytes": 3,
+              "replay": true
+            },
+            {
+              "tick": 1200,
+              "kbytes": 4,
+              "replay": true
+            },
+            {
+              "tick": 1300,
+              "kbytes": 5,
+              "replay": true
+            },
+            {
+              "tick": 1400,
+              "kbytes": 6,
+              "replay": true
+            },
+            {
+              "tick": 1500,
+              "kbytes": 7,
+              "replay": true
+            },
+            {
+              "tick": 1600,
+              "kbytes": 8,
+              "replay": true
+            },
+            {
+              "tick": 1600,
+              "kbytes": 8,
+              "replay": true
+            }
+          ],
+          "remaining_script": 0,
+          "scope": "Linked production engine/adapter/UART/watchdog. Only BIOS clock schedule and peer/kernel hardware modeled. Whole replay exceeds inactivity budget; each confirmed-ACK interval is below it. No physical timing claim."
+        },
+        {
+          "case": "accepted-progress-budget-0-300",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-0-600",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-0-1200",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-0-2400",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-0-4800",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-0-9600",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-0-19200",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-0-115200",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-1-300",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-1-600",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-1-1200",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-1-2400",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-1-4800",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-1-9600",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-1-19200",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-1-115200",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-2-300",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-2-600",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-2-1200",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-2-2400",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-2-4800",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-2-9600",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-2-19200",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-2-115200",
+          "passed": true
+        },
+        {
+          "case": "saved-receive-with-missing-OO-honest-footer",
+          "passed": true
+        }
+      ],
+      "test_sha256": "8f74a204bc22230d603ae0fd152f9c7a52cee56391eee16af23731dd99607d1d",
+      "scope": "Actual linked CONFIG_CODE engine/codec/far callback table, checked batch storage/source seek, serviced physical UART ISR and foreground owner. Independent exact Python wire scripts; only hardware/BIOS/DOS kernel boundaries modeled. Not actual DOS/BBS or physical modem evidence."
+    }
+  },
+  "terminal_regression": {
+    "passed": true,
+    "binary_sha256": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
+    "commands": [
+      {
+        "command": "python3 standalone/build_terminal.py",
+        "exit_code": 0,
+        "seconds": 0.965
+      },
+      {
+        "command": "python3 standalone/build_setup.py",
+        "exit_code": 0,
+        "seconds": 0.114
+      },
+      {
+        "command": "python3 standalone/build_live_configuration.py",
+        "exit_code": 0,
+        "seconds": 0.064
+      },
+      {
+        "command": "python3 standalone/check_terminal_zmodem_live.py",
+        "exit_code": 0,
+        "seconds": 391.596
+      },
+      {
+        "command": "python3 standalone/build_clipboard.py",
+        "exit_code": 0,
+        "seconds": 0.064
+      },
+      {
+        "command": "python3 standalone/check_transfer_preferences_live.py",
+        "exit_code": 0,
+        "seconds": 0.665
+      },
+      {
+        "command": "python3 standalone/check_autostart_live.py",
+        "exit_code": 0,
+        "seconds": 21.746
+      },
+      {
+        "command": "python3 standalone/test_resource_path_dos.py",
+        "exit_code": 0,
+        "seconds": 0.214
+      },
+      {
+        "command": "python3 standalone/check_resource_lookup.py",
+        "exit_code": 0,
+        "seconds": 11.733
+      },
+      {
+        "command": "python3 standalone/test_resource_lookup_dos.py",
+        "exit_code": 0,
+        "seconds": 25.948
+      },
+      {
+        "command": "python3 standalone/check_translation_live.py",
+        "exit_code": 0,
+        "seconds": 0.665
+      },
+      {
+        "command": "python3 standalone/check_translation_modes.py",
+        "exit_code": 0,
+        "seconds": 3.019
+      },
+      {
+        "command": "python3 standalone/test_translation_live_dos.py",
+        "exit_code": 0,
+        "seconds": 23.498
+      },
+      {
+        "command": "python3 standalone/check_live_translation.py",
+        "exit_code": 0,
+        "seconds": 3.168
+      },
+      {
+        "command": "python3 standalone/test_live_translation_dos.py",
+        "exit_code": 0,
+        "seconds": 77.722
+      },
+      {
+        "command": "python3 standalone/check_setup_startup.py",
+        "exit_code": 0,
+        "seconds": 0.214
+      },
+      {
+        "command": "python3 standalone/test_setup_startup_dos.py",
+        "exit_code": 0,
+        "seconds": 18.893
+      },
+      {
+        "command": "python3 standalone/check_setup_live.py",
+        "exit_code": 0,
+        "seconds": 0.665
+      },
+      {
+        "command": "python3 standalone/check_live_setup_owner.py",
+        "exit_code": 0,
+        "seconds": 7.575
+      },
+      {
+        "command": "python3 standalone/check_live_setup_policy.py",
+        "exit_code": 0,
+        "seconds": 4.471
+      },
+      {
+        "command": "python3 standalone/check_live_setup_link.py",
+        "exit_code": 0,
+        "seconds": 2.368
+      },
+      {
+        "command": "python3 standalone/check_live_setup_profile.py",
+        "exit_code": 0,
+        "seconds": 1.666
+      },
+      {
+        "command": "python3 standalone/check_port_handoff.py",
+        "exit_code": 0,
+        "seconds": 0.916
+      },
+      {
+        "command": "python3 standalone/check_live_setup_port.py",
+        "exit_code": 0,
+        "seconds": 1.667
+      },
+      {
+        "command": "python3 standalone/test_setup_port_dos.py",
+        "exit_code": 0,
+        "seconds": 80.22
+      },
+      {
+        "command": "python3 standalone/check_live_setup_apply.py",
+        "exit_code": 0,
+        "seconds": 1.116
+      },
+      {
+        "command": "python3 standalone/test_setup_live_dos.py",
+        "exit_code": 0,
+        "seconds": 81.852
+      },
+      {
+        "command": "python3 standalone/check_config_far_live.py",
+        "exit_code": 0,
+        "seconds": 1.066
+      },
+      {
+        "command": "python3 standalone/check_live_configuration.py --terminal",
+        "exit_code": 0,
+        "seconds": 42.478
+      },
+      {
+        "command": "python3 standalone/check_modem_far_live.py",
+        "exit_code": 0,
+        "seconds": 9.179
+      },
+      {
+        "command": "python3 standalone/check_terminal_break_live.py",
+        "exit_code": 0,
+        "seconds": 1.316
+      },
+      {
+        "command": "python3 standalone/check_ui_screen_far.py",
+        "exit_code": 0,
+        "seconds": 1.216
+      },
+      {
+        "command": "python3 standalone/check_far_code_live.py",
+        "exit_code": 0,
+        "seconds": 0.315
+      },
+      {
+        "command": "python3 standalone/check_terminal_print_controller_live.py",
+        "exit_code": 0,
+        "seconds": 4.471
+      },
+      {
+        "command": "python3 standalone/check_terminal_screen_print_live.py",
+        "exit_code": 0,
+        "seconds": 10.68
+      },
+      {
+        "command": "python3 standalone/check_terminal_printer_live.py",
+        "exit_code": 0,
+        "seconds": 0.815
+      },
+      {
+        "command": "python3 standalone/check_terminal_monitor_live.py",
+        "exit_code": 0,
+        "seconds": 1.416
+      },
+      {
+        "command": "python3 standalone/check_terminal_snapshot_live.py",
+        "exit_code": 0,
+        "seconds": 1.617
+      },
+      {
+        "command": "python3 standalone/check_terminal_capture_live.py",
+        "exit_code": 0,
+        "seconds": 1.015
+      },
+      {
+        "command": "python3 standalone/check_redisplay_live.py",
+        "exit_code": 0,
+        "seconds": 24.353
+      },
+      {
+        "command": "python3 standalone/test_redisplay_dos.py",
+        "exit_code": 0,
+        "seconds": 8.478
+      },
+      {
+        "command": "python3 standalone/check_history_export_live.py",
+        "exit_code": 0,
+        "seconds": 43.535
+      },
+      {
+        "command": "python3 standalone/test_history_export_dos.py",
+        "exit_code": 0,
+        "seconds": 21.293
+      },
+      {
+        "command": "python3 standalone/check_far_storage_live.py",
+        "exit_code": 0,
+        "seconds": 2.468
+      },
+      {
+        "command": "python3 standalone/test_far_storage_dos.py",
+        "exit_code": 0,
+        "seconds": 7.424
+      },
+      {
+        "command": "python3 standalone/check_terminal_transfer_live.py",
+        "exit_code": 0,
+        "seconds": 3.72
+      },
+      {
+        "command": "python3 standalone/check_terminal_upload_live.py",
+        "exit_code": 0,
+        "seconds": 22.798
+      },
+      {
+        "command": "python3 standalone/check_program_actions_live.py",
+        "exit_code": 0,
+        "seconds": 1.266
+      },
+      {
+        "command": "python3 standalone/check_terminal_reset_live.py",
+        "exit_code": 0,
+        "seconds": 0.465
+      },
+      {
+        "command": "python3 standalone/test_program_actions_dos.py",
+        "exit_code": 0,
+        "seconds": 34.163
+      },
+      {
+        "command": "python3 standalone/test_terminal_reset_live_dos.py",
+        "exit_code": 0,
+        "seconds": 9.829
+      },
+      {
+        "command": "python3 standalone/check_transport.py",
+        "exit_code": 0,
+        "seconds": 1.416
+      },
+      {
+        "command": "python3 standalone/check_key_output.py",
+        "exit_code": 0,
+        "seconds": 1.967
+      },
+      {
+        "command": "python3 standalone/check_key_live.py",
+        "exit_code": 0,
+        "seconds": 0.815
+      },
+      {
+        "command": "python3 standalone/check_meta_actions_live.py",
+        "exit_code": 0,
+        "seconds": 2.618
+      },
+      {
+        "command": "python3 standalone/check_character_edit_live.py",
+        "exit_code": 0,
+        "seconds": 0.765
+      },
+      {
+        "command": "python3 standalone/test_meta_actions_dos.py",
+        "exit_code": 0,
+        "seconds": 19.342
+      },
+      {
+        "command": "python3 standalone/check_line_edit_live.py",
+        "exit_code": 0,
+        "seconds": 0.515
+      },
+      {
+        "command": "python3 standalone/check_terminal_options.py --binary build/terminal/TERMINAL.EXE --map build/terminal/terminal.map",
+        "exit_code": 0,
+        "seconds": 0.465
+      },
+      {
+        "command": "python3 lab/bbs/check_formfeed.py",
+        "exit_code": 0,
+        "seconds": 0.214
+      },
+      {
+        "command": "python3 lab/bbs/check_enigma_controls.py",
+        "exit_code": 0,
+        "seconds": 0.114
+      },
+      {
+        "command": "python3 standalone/check_terminal_ui.py",
+        "exit_code": 0,
+        "seconds": 0.064
+      },
+      {
+        "command": "python3 standalone/test_terminal.py",
+        "exit_code": 0,
+        "seconds": 15.788
+      },
+      {
+        "command": "python3 standalone/test_terminal_keys.py",
+        "exit_code": 0,
+        "seconds": 23.501
+      },
+      {
+        "command": "python3 standalone/check_terminal_config.py",
+        "exit_code": 0,
+        "seconds": 0.465
+      },
+      {
+        "command": "python3 standalone/check_startup_import.py --check-invalid-abi",
+        "exit_code": 0,
+        "seconds": 0.365
+      },
+      {
+        "command": "python3 standalone/check_connection.py",
+        "exit_code": 0,
+        "seconds": 1.266
+      },
+      {
+        "command": "python3 standalone/check_directory_live.py",
+        "exit_code": 0,
+        "seconds": 3.319
+      },
+      {
+        "command": "python3 standalone/check_directory_context.py",
+        "exit_code": 0,
+        "seconds": 19.593
+      },
+      {
+        "command": "python3 standalone/test_directory_context_terminal.py",
+        "exit_code": 0,
+        "seconds": 7.175
+      },
+      {
+        "command": "python3 standalone/check_directory_actions.py",
+        "exit_code": 0,
+        "seconds": 0.415
+      },
+      {
+        "command": "python3 standalone/test_terminal_config.py",
+        "exit_code": 0,
+        "seconds": 13.184
+      },
+      {
+        "command": "python3 standalone/test_connection_dos.py",
+        "exit_code": 0,
+        "seconds": 26.803
+      },
+      {
+        "command": "python3 standalone/test_directory_terminal.py",
+        "exit_code": 0,
+        "seconds": 57.051
+      },
+      {
+        "command": "python3 standalone/check_clipboard.py",
+        "exit_code": 0,
+        "seconds": 26.204
+      },
+      {
+        "command": "python3 standalone/test_clipboard_dos.py",
+        "exit_code": 0,
+        "seconds": 0.966
+      },
+      {
+        "command": "python3 standalone/check_clipboard_live.py",
+        "exit_code": 0,
+        "seconds": 13.584
+      },
+      {
+        "command": "python3 standalone/test_clipboard_live_dos.py",
+        "exit_code": 0,
+        "seconds": 15.389
+      },
+      {
+        "command": "python3 standalone/check_clipboard_settings.py",
+        "exit_code": 0,
+        "seconds": 27.055
+      },
+      {
+        "command": "python3 standalone/test_clipboard_settings_dos.py",
+        "exit_code": 0,
+        "seconds": 41.882
+      }
+    ],
+    "seconds": 685.052,
+    "complete": true,
+    "execution_concurrency": 2,
+    "execution_note": "Build prerequisites sequential; two independent test processes with isolated fixture directories/ephemeral peer ports. No BBS probes run concurrently."
+  },
+  "source_only_rebuild": {
+    "outputs": 64,
+    "byte_identical": true,
+    "snapshot_sha256": "dfc81acb40c3e4f7091c60a4f3bd930d739fe2c2e8122312409de96ed71962d6"
+  },
+  "actual_DOS": [
+    {
+      "passed": true,
+      "case": "rx-default",
+      "checks": {
+        "actual_terminal_ready": true,
+        "independent_peer_exit_zero": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "no_peer_errors": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "exact_destination": true,
+        "source_unchanged": true,
+        "screen_restored": true,
+        "no_stages": true,
+        "binary_unchanged": true,
+        "saved_preferences_unchanged": true,
+        "no_manual_transfer_keys": true
+      },
+      "errors": [],
+      "binary_sha256": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
+      "peer_command": [
+        "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/sz",
+        "-b",
+        "-q",
+        "-L",
+        "1024",
+        "EMPTY.BIN",
+        "ODD.BIN",
+        "ALL.BIN"
+      ],
+      "peer_exit": 0,
+      "keys": [
+        "p15000",
+        "r",
+        "e",
+        "a",
+        "d",
+        "y",
+        "p1500",
+        "a-x"
+      ],
+      "recipe_bounds": {
+        "after_ms": 15000,
+        "transfer_timeout": 65,
+        "resume_timeout": 25.0,
+        "DOS_timeout": 100
+      },
+      "files": {
+        "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "4a52d18f2409cca12e871a1095c79105803fc511852579d1884fa96f52ace240"
+      },
+      "scope": "Actual DOSBox-X saved automatic invitation without transfer keys;  maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with independent pinned lrzsz stdio peer. Synthetic local media, no BBS login or physical modem claim."
+    },
+    {
+      "passed": true,
+      "case": "rx-default",
+      "checks": {
+        "actual_terminal_ready": true,
+        "independent_peer_exit_zero": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "no_peer_errors": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "exact_destination": true,
+        "source_unchanged": true,
+        "screen_restored": true,
+        "no_stages": true,
+        "binary_unchanged": true,
+        "saved_preferences_unchanged": true,
+        "no_manual_transfer_keys": true
+      },
+      "errors": [],
+      "binary_sha256": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
+      "peer_command": [
+        "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/sz",
+        "-b",
+        "-q",
+        "-8",
+        "-L",
+        "8192",
+        "EMPTY.BIN",
+        "ODD.BIN",
+        "ALL.BIN"
+      ],
+      "peer_exit": 0,
+      "keys": [
+        "p60000",
+        "r",
+        "e",
+        "a",
+        "d",
+        "y",
+        "p1500",
+        "a-x"
+      ],
+      "recipe_bounds": {
+        "after_ms": 60000,
+        "transfer_timeout": 70.0,
+        "resume_timeout": 70.0,
+        "DOS_timeout": 150
+      },
+      "files": {
+        "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+      },
+      "scope": "Actual DOSBox-X saved automatic invitation without transfer keys;  maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with independent pinned lrzsz stdio peer. Synthetic local media, no BBS login or physical modem claim."
+    },
+    {
+      "passed": true,
+      "case": "rx-crc16",
+      "checks": {
+        "actual_terminal_ready": true,
+        "independent_peer_exit_zero": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "no_peer_errors": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "exact_destination": true,
+        "source_unchanged": true,
+        "screen_restored": true,
+        "no_stages": true,
+        "binary_unchanged": true,
+        "saved_preferences_unchanged": true,
+        "no_manual_transfer_keys": true
+      },
+      "errors": [],
+      "binary_sha256": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
+      "peer_command": [
+        "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/sz",
+        "-b",
+        "-q",
+        "-o",
+        "-8",
+        "-L",
+        "8192",
+        "EMPTY.BIN",
+        "ODD.BIN",
+        "ALL.BIN"
+      ],
+      "peer_exit": 0,
+      "keys": [
+        "p60000",
+        "r",
+        "e",
+        "a",
+        "d",
+        "y",
+        "p1500",
+        "a-x"
+      ],
+      "recipe_bounds": {
+        "after_ms": 60000,
+        "transfer_timeout": 70.0,
+        "resume_timeout": 70.0,
+        "DOS_timeout": 150
+      },
+      "files": {
+        "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+      },
+      "scope": "Actual DOSBox-X saved automatic invitation without transfer keys;  maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with independent pinned lrzsz stdio peer. Synthetic local media, no BBS login or physical modem claim."
+    }
+  ],
+  "actual_BBS": [
+    {
+      "passed": true,
+      "standard_completion": true,
+      "name": "synchronet",
+      "label": "zmodem-auto-7314-sync-1",
+      "mode": "download",
+      "binary_sha256": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
+      "payload_sha256": {
+        "PCXTEST.BIN": "2d10c92c0212b12674a7c5fd7aaba6af4afb2a7d8a7356ce1b5521fc96180cdc"
+      },
+      "checks": {
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "screen_captured": true,
+        "bbs_connected": true,
+        "binary_unchanged": true,
+        "payload_fixture_unchanged": true,
+        "observed_decoded_offsets_match": true,
+        "configuration_unchanged": true,
+        "directory_accounting_exact": true,
+        "automatic_invitation_then_receiver_negotiation": true,
+        "no_manual_transfer_keys": true,
+        "ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed": true,
+        "posttransfer_actual_menu_input_response": true,
+        "actual_validated_protocol": true,
+        "DOS_exact_length_PCXTEST.BIN": true,
+        "only_expected_received_files": true,
+        "no_leftover_staging": true
+      },
+      "errors": [],
+      "serial": {
+        "com": 2,
+        "baud": 19200,
+        "flow": "HARD"
+      }
+    },
+    {
+      "passed": true,
+      "standard_completion": true,
+      "name": "enigma",
+      "label": "zmodem-auto-7314-enigma-1",
+      "mode": "download",
+      "binary_sha256": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
+      "payload_sha256": {
+        "PCXTEST.BIN": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6"
+      },
+      "checks": {
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "screen_captured": true,
+        "bbs_connected": true,
+        "binary_unchanged": true,
+        "payload_fixture_unchanged": true,
+        "observed_decoded_offsets_match": true,
+        "configuration_unchanged": true,
+        "directory_accounting_exact": true,
+        "automatic_invitation_then_receiver_negotiation": true,
+        "no_manual_transfer_keys": true,
+        "ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed": true,
+        "posttransfer_actual_menu_input_response": true,
+        "actual_validated_protocol": true,
+        "DOS_exact_length_PCXTEST.BIN": true,
+        "only_expected_received_files": true,
+        "unique_server_session_and_ordered_menus": true,
+        "no_leftover_staging": true
+      },
+      "errors": [],
+      "serial": {
+        "com": 2,
+        "baud": 19200,
+        "flow": "HARD"
+      }
+    }
+  ],
+  "storage": {
+    "passed": true,
+    "checks": {
+      "normal_and_fault_DOS_exit": true,
+      "normal_cases": true,
+      "fault_cases": true,
+      "DATA/BIG.BIN": true,
+      "DATA/ZERO.BIN": true,
+      "DATA/UNKNOWN.BIN": true,
+      "DATA/PCRX.$$$": true,
+      "ROOT.BIN": true,
+      "HERE.BIN": true,
+      "EXACT.BIN": true,
+      "REL/DRIVE.BIN": true,
+      "REL/DOT.BIN": true,
+      "ROOTDOT.BIN": true,
+      "only_foreign_stage_remains": true
+    },
+    "normal_cases": [
+      "PASS source initialized cookie clears dirty own BSS exactly once",
+      "PASS actual trailing directory separator normalizes",
+      "PASS known size above64K opens exclusive stage",
+      "PASS accepted wire DWORD and trimmed stored DWORD cross64K",
+      "PASS actual checked close then no-overwrite rename",
+      "PASS repeated finish cleanup do not double count or delete installed file",
+      "PASS known zero installs empty file",
+      "PASS unknown length retains all binary padding",
+      "PASS short later file abort preserves previous installs",
+      "PASS actual preexisting target never overwritten",
+      "PASS prepare foreign fixed stage",
+      "PASS actual foreign stage never adopted",
+      "PASS parent traversal rejects without result mutation",
+      "PASS explicit DOS root parent supported",
+      "PASS explicit current directory supported",
+      "PASS prepare separate drive current directory",
+      "PASS drive-relative current directory supported",
+      "PASS explicit drive-relative dot supported",
+      "PASS restore root after drive-relative checks",
+      "PASS absolute root dot normalizes without changing drive semantics",
+      "PASS actual unpadded variable packet installs exact bytes",
+      "CASES 21"
+    ],
+    "fault_cases": [
+      "PASS first initialization refuses preexisting shared handle unchanged",
+      "PASS source initialized cookie clears dirty own BSS exactly once",
+      "PASS directory DOS error recorded before create",
+      "PASS failed directory begin cannot authorize open or cleanup foreign state",
+      "PASS regular file cannot become batch directory",
+      "PASS optional trailing separator removed before directory inspection",
+      "PASS doubled trailing separators reject unchanged before IO",
+      "PASS target inspection failure retains DOS error",
+      "PASS exclusive create failure never acquires ownership",
+      "PASS foreign PCRX stage never adopted or deleted",
+      "PASS first batch file installed",
+      "PASS duplicate target never overwritten",
+      "PASS short EOT rejected before install",
+      "PASS failed later file preserves earlier installed file",
+      "PASS extra distinct data frame poisons declared length",
+      "PASS positive short write poisons file and records actual stored count",
+      "PASS short write cleanup removes only owned partial",
+      "PASS write DOS error and exact partial count retained",
+      "PASS impossible write count rejects without counter advance",
+      "PASS rename failure retains checked closed stage",
+      "PASS explicit install retry never repeats close",
+      "PASS concurrent destination appearance preserved",
+      "PASS race cleanup cannot delete competing target",
+      "PASS delete failure retains owned stage and cleanup error",
+      "PASS reinitialize and rebegin cannot orphan cleanup stage",
+      "PASS cleanup retry never closes recycled handle",
+      "PASS active handle survives repeated initialization and begin unchanged",
+      "PASS invalid near spans aliases and frame counts reject unchanged",
+      "PASS unsafe header and near wrap reject before file IO",
+      "PASS wire DWORD overflow fails before write",
+      "PASS completed file DWORD overflow rejects before install",
+      "PASS known zero installs empty without data frame",
+      "PASS unknown size retains complete accepted frames",
+      "PASS variable count rejects unchanged",
+      "PASS zero no IO and exact unpadded short packet",
+      "PASS variable short write poisons install",
+      "PASS ambiguous close forbids installation",
+      "PASS uncertain close retries never reset snapshot close remove or rename",
+      "CASES 38"
+    ],
+    "binaries": {
+      "BATCHDL.EXE": "62fe933a6eecb5028e801de2c4959c47981890141cff1da98ec67927b7b1d367",
+      "BDFAULT.EXE": "f599d2b4e1e429324f32a0cd6fd16a120fe5f30c19b78935ecdbb48ac6fae5d3"
+    },
+    "sources": {
+      "src/transfer/batch_download.c": "15513b4d890fdf36e5c796dd7bb724913135e154773075123029f37dd192b9ba",
+      "src/transfer/batch_download.h": "0ff16a21e89672e21a097e758e04297d573a5e3dc4ed5f297da79e376d882f21",
+      "src/transfer/batch_header.c": "5003de29446cc1ec3a3776dcb1798b2763a6f1d556e866abe7e207cc39b49aa5",
+      "src/transfer/batch_header.h": "90b6691b30d0b60018bc05fe9b72932a2e913806913b326a15ab1ab15c69ad0b",
+      "src/transfer/download_file.c": "ce8d41645e5fe4b3ab81c791f8aa6c3634d98bd0d5f8bb6afd698052391ade68",
+      "src/transfer/download_file.h": "12793ce2eb2007ad499bbb1d9a43800a7eca28f9a26f82eef4edc4500315d6a0",
+      "src/transfer/download_fs.c": "60f29a5dcfc60eda2b4cd4a86397b62528b5eeceb68f5337d7bea1a6878d34e6",
+      "src/transfer/download_fs.h": "5ae3364e19981588631f3cb913c7eb3ad9e66937e37bfddb6fb3675dede22a92",
+      "standalone/batch_download_host.c": "de8a68f2eeb70cc9b792dd29fca40de847297585826adb08f6a60bbeb18433b0",
+      "standalone/check_batch_download.py": "f45ddcfaa204b32de2b992f91f0807c450bf5ee0dd2751e1aed8a1fa43842213"
+    },
+    "scope": "Actual DOSBox-X8086 source-built maintained per-file batch storage owner with real codec and exact-write/checked-close/no-overwrite backend; normal DOS files and compiled FS fault boundaries. No UART/protocol framing, original binary, full batch engine or crash atomicity claim."
+  },
+  "midnight_paired": {
+    "passed": true,
+    "cases": [
+      {
+        "binary_sha256": "f0fdb62c218a856fef9651469b504c995bad7208d7bebdb7c4478dfb843ae16c",
+        "released_after_one_tick": "2a",
+        "released_at_deadline": "2a"
+      },
+      {
+        "binary_sha256": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
+        "released_after_one_tick": "",
+        "released_at_deadline": "2a"
+      }
+    ],
+    "scope": "Identical linked fixture on retained f0fd and current7314 MZ/map; only test input selection changes, no product instructions or callbacks patched. One tick across midnight must retain the prefix,36 ticks must release it."
+  },
+  "earlier_validated_prototype": {
+    "binary_sha256": "f0fdb62c218a856fef9651469b504c995bad7208d7bebdb7c4478dfb843ae16c",
+    "regression": {
+      "passed": true,
+      "binary_sha256": "f0fdb62c218a856fef9651469b504c995bad7208d7bebdb7c4478dfb843ae16c",
+      "commands": [
+        {
+          "command": "python3 standalone/build_terminal.py",
+          "exit_code": 0,
+          "seconds": 0.915
+        },
+        {
+          "command": "python3 standalone/build_setup.py",
+          "exit_code": 0,
+          "seconds": 0.064
+        },
+        {
+          "command": "python3 standalone/build_live_configuration.py",
+          "exit_code": 0,
+          "seconds": 0.064
+        },
+        {
+          "command": "python3 standalone/check_terminal_zmodem_live.py",
+          "exit_code": 0,
+          "seconds": 388.243
+        },
+        {
+          "command": "python3 standalone/build_clipboard.py",
+          "exit_code": 0,
+          "seconds": 0.064
+        },
+        {
+          "command": "python3 standalone/check_transfer_preferences_live.py",
+          "exit_code": 0,
+          "seconds": 0.565
+        },
+        {
+          "command": "python3 standalone/check_autostart_live.py",
+          "exit_code": 0,
+          "seconds": 21.844
+        },
+        {
+          "command": "python3 standalone/test_resource_path_dos.py",
+          "exit_code": 0,
+          "seconds": 0.164
+        },
+        {
+          "command": "python3 standalone/check_resource_lookup.py",
+          "exit_code": 0,
+          "seconds": 11.884
+        },
+        {
+          "command": "python3 standalone/test_resource_lookup_dos.py",
+          "exit_code": 0,
+          "seconds": 25.953
+        },
+        {
+          "command": "python3 standalone/check_translation_live.py",
+          "exit_code": 0,
+          "seconds": 0.665
+        },
+        {
+          "command": "python3 standalone/check_translation_modes.py",
+          "exit_code": 0,
+          "seconds": 3.018
+        },
+        {
+          "command": "python3 standalone/test_translation_live_dos.py",
+          "exit_code": 0,
+          "seconds": 23.547
+        },
+        {
+          "command": "python3 standalone/check_live_translation.py",
+          "exit_code": 0,
+          "seconds": 3.218
+        },
+        {
+          "command": "python3 standalone/test_live_translation_dos.py",
+          "exit_code": 0,
+          "seconds": 77.73
+        },
+        {
+          "command": "python3 standalone/check_setup_startup.py",
+          "exit_code": 0,
+          "seconds": 0.214
+        },
+        {
+          "command": "python3 standalone/test_setup_startup_dos.py",
+          "exit_code": 0,
+          "seconds": 18.994
+        },
+        {
+          "command": "python3 standalone/check_setup_live.py",
+          "exit_code": 0,
+          "seconds": 0.665
+        },
+        {
+          "command": "python3 standalone/check_live_setup_owner.py",
+          "exit_code": 0,
+          "seconds": 7.475
+        },
+        {
+          "command": "python3 standalone/check_live_setup_policy.py",
+          "exit_code": 0,
+          "seconds": 4.421
+        },
+        {
+          "command": "python3 standalone/check_live_setup_link.py",
+          "exit_code": 0,
+          "seconds": 2.318
+        },
+        {
+          "command": "python3 standalone/check_live_setup_profile.py",
+          "exit_code": 0,
+          "seconds": 1.666
+        },
+        {
+          "command": "python3 standalone/check_port_handoff.py",
+          "exit_code": 0,
+          "seconds": 0.916
+        },
+        {
+          "command": "python3 standalone/check_live_setup_port.py",
+          "exit_code": 0,
+          "seconds": 1.667
+        },
+        {
+          "command": "python3 standalone/test_setup_port_dos.py",
+          "exit_code": 0,
+          "seconds": 80.098
+        },
+        {
+          "command": "python3 standalone/check_live_setup_apply.py",
+          "exit_code": 0,
+          "seconds": 1.116
+        },
+        {
+          "command": "python3 standalone/test_setup_live_dos.py",
+          "exit_code": 0,
+          "seconds": 81.892
+        },
+        {
+          "command": "python3 standalone/check_config_far_live.py",
+          "exit_code": 0,
+          "seconds": 1.065
+        },
+        {
+          "command": "python3 standalone/check_live_configuration.py --terminal",
+          "exit_code": 0,
+          "seconds": 42.38
+        },
+        {
+          "command": "python3 standalone/check_modem_far_live.py",
+          "exit_code": 0,
+          "seconds": 9.176
+        },
+        {
+          "command": "python3 standalone/check_terminal_break_live.py",
+          "exit_code": 0,
+          "seconds": 1.316
+        },
+        {
+          "command": "python3 standalone/check_ui_screen_far.py",
+          "exit_code": 0,
+          "seconds": 1.216
+        },
+        {
+          "command": "python3 standalone/check_far_code_live.py",
+          "exit_code": 0,
+          "seconds": 0.314
+        },
+        {
+          "command": "python3 standalone/check_terminal_print_controller_live.py",
+          "exit_code": 0,
+          "seconds": 4.419
+        },
+        {
+          "command": "python3 standalone/check_terminal_screen_print_live.py",
+          "exit_code": 0,
+          "seconds": 10.73
+        },
+        {
+          "command": "python3 standalone/check_terminal_printer_live.py",
+          "exit_code": 0,
+          "seconds": 0.816
+        },
+        {
+          "command": "python3 standalone/check_terminal_monitor_live.py",
+          "exit_code": 0,
+          "seconds": 1.416
+        },
+        {
+          "command": "python3 standalone/check_terminal_snapshot_live.py",
+          "exit_code": 0,
+          "seconds": 1.617
+        },
+        {
+          "command": "python3 standalone/check_terminal_capture_live.py",
+          "exit_code": 0,
+          "seconds": 1.015
+        },
+        {
+          "command": "python3 standalone/check_redisplay_live.py",
+          "exit_code": 0,
+          "seconds": 24.452
+        },
+        {
+          "command": "python3 standalone/test_redisplay_dos.py",
+          "exit_code": 0,
+          "seconds": 8.477
+        },
+        {
+          "command": "python3 standalone/check_history_export_live.py",
+          "exit_code": 0,
+          "seconds": 43.523
+        },
+        {
+          "command": "python3 standalone/test_history_export_dos.py",
+          "exit_code": 0,
+          "seconds": 21.298
+        },
+        {
+          "command": "python3 standalone/check_far_storage_live.py",
+          "exit_code": 0,
+          "seconds": 2.468
+        },
+        {
+          "command": "python3 standalone/test_far_storage_dos.py",
+          "exit_code": 0,
+          "seconds": 7.425
+        },
+        {
+          "command": "python3 standalone/check_terminal_transfer_live.py",
+          "exit_code": 0,
+          "seconds": 3.719
+        },
+        {
+          "command": "python3 standalone/check_terminal_upload_live.py",
+          "exit_code": 0,
+          "seconds": 22.545
+        },
+        {
+          "command": "python3 standalone/check_program_actions_live.py",
+          "exit_code": 0,
+          "seconds": 1.266
+        },
+        {
+          "command": "python3 standalone/check_terminal_reset_live.py",
+          "exit_code": 0,
+          "seconds": 0.415
+        },
+        {
+          "command": "python3 standalone/test_program_actions_dos.py",
+          "exit_code": 0,
+          "seconds": 34.167
+        },
+        {
+          "command": "python3 standalone/test_terminal_reset_live_dos.py",
+          "exit_code": 0,
+          "seconds": 9.779
+        },
+        {
+          "command": "python3 standalone/check_transport.py",
+          "exit_code": 0,
+          "seconds": 1.417
+        },
+        {
+          "command": "python3 standalone/check_key_output.py",
+          "exit_code": 0,
+          "seconds": 1.968
+        },
+        {
+          "command": "python3 standalone/check_key_live.py",
+          "exit_code": 0,
+          "seconds": 0.815
+        },
+        {
+          "command": "python3 standalone/check_meta_actions_live.py",
+          "exit_code": 0,
+          "seconds": 2.617
+        },
+        {
+          "command": "python3 standalone/check_character_edit_live.py",
+          "exit_code": 0,
+          "seconds": 0.765
+        },
+        {
+          "command": "python3 standalone/test_meta_actions_dos.py",
+          "exit_code": 0,
+          "seconds": 19.296
+        },
+        {
+          "command": "python3 standalone/check_line_edit_live.py",
+          "exit_code": 0,
+          "seconds": 0.515
+        },
+        {
+          "command": "python3 standalone/check_terminal_options.py --binary build/terminal/TERMINAL.EXE --map build/terminal/terminal.map",
+          "exit_code": 0,
+          "seconds": 0.465
+        },
+        {
+          "command": "python3 lab/bbs/check_formfeed.py",
+          "exit_code": 0,
+          "seconds": 0.214
+        },
+        {
+          "command": "python3 lab/bbs/check_enigma_controls.py",
+          "exit_code": 0,
+          "seconds": 0.114
+        },
+        {
+          "command": "python3 standalone/check_terminal_ui.py",
+          "exit_code": 0,
+          "seconds": 0.064
+        },
+        {
+          "command": "python3 standalone/test_terminal.py",
+          "exit_code": 0,
+          "seconds": 15.786
+        },
+        {
+          "command": "python3 standalone/test_terminal_keys.py",
+          "exit_code": 0,
+          "seconds": 23.654
+        },
+        {
+          "command": "python3 standalone/check_terminal_config.py",
+          "exit_code": 0,
+          "seconds": 0.465
+        },
+        {
+          "command": "python3 standalone/check_startup_import.py --check-invalid-abi",
+          "exit_code": 0,
+          "seconds": 0.415
+        },
+        {
+          "command": "python3 standalone/check_connection.py",
+          "exit_code": 0,
+          "seconds": 1.316
+        },
+        {
+          "command": "python3 standalone/check_directory_live.py",
+          "exit_code": 0,
+          "seconds": 3.319
+        },
+        {
+          "command": "python3 standalone/check_directory_context.py",
+          "exit_code": 0,
+          "seconds": 19.945
+        },
+        {
+          "command": "python3 standalone/test_directory_context_terminal.py",
+          "exit_code": 0,
+          "seconds": 7.175
+        },
+        {
+          "command": "python3 standalone/check_directory_actions.py",
+          "exit_code": 0,
+          "seconds": 0.415
+        },
+        {
+          "command": "python3 standalone/test_terminal_config.py",
+          "exit_code": 0,
+          "seconds": 13.185
+        },
+        {
+          "command": "python3 standalone/test_connection_dos.py",
+          "exit_code": 0,
+          "seconds": 26.806
+        },
+        {
+          "command": "python3 standalone/test_directory_terminal.py",
+          "exit_code": 0,
+          "seconds": 57.053
+        },
+        {
+          "command": "python3 standalone/check_clipboard.py",
+          "exit_code": 0,
+          "seconds": 26.506
+        },
+        {
+          "command": "python3 standalone/test_clipboard_dos.py",
+          "exit_code": 0,
+          "seconds": 0.966
+        },
+        {
+          "command": "python3 standalone/check_clipboard_live.py",
+          "exit_code": 0,
+          "seconds": 13.535
+        },
+        {
+          "command": "python3 standalone/test_clipboard_live_dos.py",
+          "exit_code": 0,
+          "seconds": 15.388
+        },
+        {
+          "command": "python3 standalone/check_clipboard_settings.py",
+          "exit_code": 0,
+          "seconds": 27.555
+        },
+        {
+          "command": "python3 standalone/test_clipboard_settings_dos.py",
+          "exit_code": 0,
+          "seconds": 41.936
+        }
+      ],
+      "seconds": 683.537,
+      "complete": true,
+      "execution_concurrency": 2,
+      "execution_note": "Build prerequisites sequential; two independent test processes with isolated fixture directories/ephemeral peer ports. No BBS probes run concurrently."
+    },
+    "actual_DOS": [
+      {
+        "passed": true,
+        "case": "rx-default",
+        "checks": {
+          "actual_terminal_ready": true,
+          "independent_peer_exit_zero": true,
+          "posttransfer_DSR": true,
+          "posttransfer_keyboard": true,
+          "no_peer_errors": true,
+          "DOS_normal_exit": true,
+          "hardware_restored": true,
+          "exact_destination": true,
+          "source_unchanged": true,
+          "screen_restored": true,
+          "no_stages": true,
+          "binary_unchanged": true,
+          "saved_preferences_unchanged": true,
+          "no_manual_transfer_keys": true
+        },
+        "errors": [],
+        "binary_sha256": "f0fdb62c218a856fef9651469b504c995bad7208d7bebdb7c4478dfb843ae16c",
+        "peer_command": [
+          "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/sz",
+          "-b",
+          "-q",
+          "-L",
+          "1024",
+          "EMPTY.BIN",
+          "ODD.BIN",
+          "ALL.BIN"
+        ],
+        "peer_exit": 0,
+        "keys": [
+          "p15000",
+          "r",
+          "e",
+          "a",
+          "d",
+          "y",
+          "p1500",
+          "a-x"
+        ],
+        "recipe_bounds": {
+          "after_ms": 15000,
+          "transfer_timeout": 65,
+          "resume_timeout": 25.0,
+          "DOS_timeout": 100
+        },
+        "files": {
+          "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+          "ALL.BIN": "4a52d18f2409cca12e871a1095c79105803fc511852579d1884fa96f52ace240"
+        },
+        "scope": "Actual DOSBox-X saved automatic invitation without transfer keys;  maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with independent pinned lrzsz stdio peer. Synthetic local media, no BBS login or physical modem claim."
+      },
+      {
+        "passed": true,
+        "case": "rx-default",
+        "checks": {
+          "actual_terminal_ready": true,
+          "independent_peer_exit_zero": true,
+          "posttransfer_DSR": true,
+          "posttransfer_keyboard": true,
+          "no_peer_errors": true,
+          "DOS_normal_exit": true,
+          "hardware_restored": true,
+          "exact_destination": true,
+          "source_unchanged": true,
+          "screen_restored": true,
+          "no_stages": true,
+          "binary_unchanged": true,
+          "saved_preferences_unchanged": true,
+          "no_manual_transfer_keys": true
+        },
+        "errors": [],
+        "binary_sha256": "f0fdb62c218a856fef9651469b504c995bad7208d7bebdb7c4478dfb843ae16c",
+        "peer_command": [
+          "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/sz",
+          "-b",
+          "-q",
+          "-8",
+          "-L",
+          "8192",
+          "EMPTY.BIN",
+          "ODD.BIN",
+          "ALL.BIN"
+        ],
+        "peer_exit": 0,
+        "keys": [
+          "p60000",
+          "r",
+          "e",
+          "a",
+          "d",
+          "y",
+          "p1500",
+          "a-x"
+        ],
+        "recipe_bounds": {
+          "after_ms": 60000,
+          "transfer_timeout": 70.0,
+          "resume_timeout": 70.0,
+          "DOS_timeout": 150
+        },
+        "files": {
+          "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+          "ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+        },
+        "scope": "Actual DOSBox-X saved automatic invitation without transfer keys;  maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with independent pinned lrzsz stdio peer. Synthetic local media, no BBS login or physical modem claim."
+      },
+      {
+        "passed": true,
+        "case": "rx-crc16",
+        "checks": {
+          "actual_terminal_ready": true,
+          "independent_peer_exit_zero": true,
+          "posttransfer_DSR": true,
+          "posttransfer_keyboard": true,
+          "no_peer_errors": true,
+          "DOS_normal_exit": true,
+          "hardware_restored": true,
+          "exact_destination": true,
+          "source_unchanged": true,
+          "screen_restored": true,
+          "no_stages": true,
+          "binary_unchanged": true,
+          "saved_preferences_unchanged": true,
+          "no_manual_transfer_keys": true
+        },
+        "errors": [],
+        "binary_sha256": "f0fdb62c218a856fef9651469b504c995bad7208d7bebdb7c4478dfb843ae16c",
+        "peer_command": [
+          "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/sz",
+          "-b",
+          "-q",
+          "-o",
+          "-8",
+          "-L",
+          "8192",
+          "EMPTY.BIN",
+          "ODD.BIN",
+          "ALL.BIN"
+        ],
+        "peer_exit": 0,
+        "keys": [
+          "p60000",
+          "r",
+          "e",
+          "a",
+          "d",
+          "y",
+          "p1500",
+          "a-x"
+        ],
+        "recipe_bounds": {
+          "after_ms": 60000,
+          "transfer_timeout": 70.0,
+          "resume_timeout": 70.0,
+          "DOS_timeout": 150
+        },
+        "files": {
+          "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+          "ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+        },
+        "scope": "Actual DOSBox-X saved automatic invitation without transfer keys;  maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with independent pinned lrzsz stdio peer. Synthetic local media, no BBS login or physical modem claim."
+      }
+    ],
+    "actual_BBS": [
+      {
+        "passed": true,
+        "standard_completion": true,
+        "name": "synchronet",
+        "label": "zmodem-auto-f0fd-sync-1",
+        "mode": "download",
+        "binary_sha256": "f0fdb62c218a856fef9651469b504c995bad7208d7bebdb7c4478dfb843ae16c",
+        "payload_sha256": {
+          "PCXTEST.BIN": "2d10c92c0212b12674a7c5fd7aaba6af4afb2a7d8a7356ce1b5521fc96180cdc"
+        },
+        "checks": {
+          "DOS_normal_exit": true,
+          "hardware_restored": true,
+          "screen_captured": true,
+          "bbs_connected": true,
+          "binary_unchanged": true,
+          "payload_fixture_unchanged": true,
+          "observed_decoded_offsets_match": true,
+          "configuration_unchanged": true,
+          "directory_accounting_exact": true,
+          "automatic_invitation_then_receiver_negotiation": true,
+          "no_manual_transfer_keys": true,
+          "ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed": true,
+          "posttransfer_actual_menu_input_response": true,
+          "actual_validated_protocol": true,
+          "DOS_exact_length_PCXTEST.BIN": true,
+          "only_expected_received_files": true,
+          "no_leftover_staging": true
+        },
+        "errors": [],
+        "serial": {
+          "com": 2,
+          "baud": 19200,
+          "flow": "HARD"
+        }
+      },
+      {
+        "passed": true,
+        "standard_completion": true,
+        "name": "enigma",
+        "label": "zmodem-auto-f0fd-enigma-1",
+        "mode": "download",
+        "binary_sha256": "f0fdb62c218a856fef9651469b504c995bad7208d7bebdb7c4478dfb843ae16c",
+        "payload_sha256": {
+          "PCXTEST.BIN": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6"
+        },
+        "checks": {
+          "DOS_normal_exit": true,
+          "hardware_restored": true,
+          "screen_captured": true,
+          "bbs_connected": true,
+          "binary_unchanged": true,
+          "payload_fixture_unchanged": true,
+          "observed_decoded_offsets_match": true,
+          "configuration_unchanged": true,
+          "directory_accounting_exact": true,
+          "automatic_invitation_then_receiver_negotiation": true,
+          "no_manual_transfer_keys": true,
+          "ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed": true,
+          "posttransfer_actual_menu_input_response": true,
+          "actual_validated_protocol": true,
+          "DOS_exact_length_PCXTEST.BIN": true,
+          "only_expected_received_files": true,
+          "unique_server_session_and_ordered_menus": true,
+          "no_leftover_staging": true
+        },
+        "errors": [],
+        "serial": {
+          "com": 2,
+          "baud": 19200,
+          "flow": "HARD"
+        }
+      }
+    ],
+    "midnight_counterexample": {
+      "expected_failure": true,
+      "runtime": "f0fdb62c218a856fef9651469b504c995bad7208d7bebdb7c4478dfb843ae16c",
+      "before_tick": 1573039,
+      "after_tick": 0,
+      "elapsed_ticks": 1,
+      "released_hex": "2a",
+      "reason": "A still-valid candidate is flushed after one tick at midnight instead of reaching the36-tick inactivity deadline."
+    }
+  },
+  "failed_drive_extension": {
+    "passed": false,
+    "checks": {
+      "normal_and_fault_DOS_exit": false,
+      "normal_cases": false,
+      "fault_cases": false,
+      "DATA/BIG.BIN": true,
+      "DATA/ZERO.BIN": true,
+      "DATA/UNKNOWN.BIN": true,
+      "DATA/PCRX.$$$": true,
+      "ROOT.BIN": true,
+      "HERE.BIN": true,
+      "EXACT.BIN": true,
+      "REL/DRIVE.BIN": false,
+      "REL/DOT.BIN": false,
+      "ROOTDOT.BIN": true,
+      "only_foreign_stage_remains": true
+    },
+    "normal_cases": [
+      "PASS source initialized cookie clears dirty own BSS exactly once",
+      "PASS actual trailing directory separator normalizes",
+      "PASS known size above64K opens exclusive stage",
+      "PASS accepted wire DWORD and trimmed stored DWORD cross64K",
+      "PASS actual checked close then no-overwrite rename",
+      "PASS repeated finish cleanup do not double count or delete installed file",
+      "PASS known zero installs empty file",
+      "PASS unknown length retains all binary padding",
+      "PASS short later file abort preserves previous installs",
+      "PASS actual preexisting target never overwritten",
+      "PASS prepare foreign fixed stage",
+      "PASS actual foreign stage never adopted",
+      "PASS parent traversal rejects without result mutation",
+      "PASS explicit DOS root parent supported",
+      "PASS explicit current directory supported",
+      "PASS prepare separate drive current directory",
+      "FAIL drive-relative current directory supported",
+      "FAIL explicit drive-relative dot supported",
+      "PASS restore root after drive-relative checks",
+      "PASS absolute root dot normalizes without changing drive semantics",
+      "PASS actual unpadded variable packet installs exact bytes",
+      "CASES 21"
+    ],
+    "fault_cases": [],
+    "binaries": {
+      "BATCHDL.EXE": "2d69a659d38526a68b2e5c418a9472d1180d862969f8989a03adc782c0444386",
+      "BDFAULT.EXE": "36eb4e74cf2beb07a8e73737a74955c8968f7bcff52fcbd49fb2c3b299794205"
+    },
+    "sources": {
+      "src/transfer/batch_download.c": "70f2cfb0e0173a24c685688c20366e3dac316ce97f9fbed28bb7ec27943eb1af",
+      "src/transfer/batch_download.h": "0ff16a21e89672e21a097e758e04297d573a5e3dc4ed5f297da79e376d882f21",
+      "src/transfer/batch_header.c": "5003de29446cc1ec3a3776dcb1798b2763a6f1d556e866abe7e207cc39b49aa5",
+      "src/transfer/batch_header.h": "90b6691b30d0b60018bc05fe9b72932a2e913806913b326a15ab1ab15c69ad0b",
+      "src/transfer/download_file.c": "ce8d41645e5fe4b3ab81c791f8aa6c3634d98bd0d5f8bb6afd698052391ade68",
+      "src/transfer/download_file.h": "12793ce2eb2007ad499bbb1d9a43800a7eca28f9a26f82eef4edc4500315d6a0",
+      "src/transfer/download_fs.c": "60f29a5dcfc60eda2b4cd4a86397b62528b5eeceb68f5337d7bea1a6878d34e6",
+      "src/transfer/download_fs.h": "5ae3364e19981588631f3cb913c7eb3ad9e66937e37bfddb6fb3675dede22a92",
+      "standalone/batch_download_host.c": "de8a68f2eeb70cc9b792dd29fca40de847297585826adb08f6a60bbeb18433b0",
+      "standalone/check_batch_download.py": "f45ddcfaa204b32de2b992f91f0807c450bf5ee0dd2751e1aed8a1fa43842213"
+    },
+    "scope": "Actual DOSBox-X8086 source-built maintained per-file batch storage owner with real codec and exact-write/checked-close/no-overwrite backend; normal DOS files and compiled FS fault boundaries. No UART/protocol framing, original binary, full batch engine or crash atomicity claim."
+  },
+  "failed_prototype": {
+    "report": {
+      "passed": false,
+      "binary_sha256": "f8df666aa39b0942a75485184ab8b285997a2f03ab1b48bfc6aa6f116770f889",
+      "cases": [
+        {
+          "passed": false,
+          "case": "rx-default",
+          "checks": {
+            "no_peer_errors": false,
+            "DOS_normal_exit": false,
+            "hardware_restored": true,
+            "exact_destination": false,
+            "source_unchanged": true,
+            "posttransfer_DSR": false,
+            "posttransfer_keyboard": false,
+            "screen_restored": false,
+            "no_stages": true,
+            "binary_unchanged": true,
+            "saved_preferences_unchanged": true,
+            "no_manual_transfer_keys": true
+          },
+          "errors": [
+            "ConnectionResetError(104, 'Connection reset by peer')"
+          ],
+          "binary_sha256": "f8df666aa39b0942a75485184ab8b285997a2f03ab1b48bfc6aa6f116770f889",
+          "peer_command": null,
+          "peer_exit": null,
+          "keys": [
+            "p15000",
+            "r",
+            "e",
+            "a",
+            "d",
+            "y",
+            "p1500",
+            "a-x"
+          ],
+          "recipe_bounds": {
+            "after_ms": 15000,
+            "transfer_timeout": 65,
+            "resume_timeout": 25.0,
+            "DOS_timeout": 100
+          },
+          "files": {
+            "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+            "ALL.BIN": "4a52d18f2409cca12e871a1095c79105803fc511852579d1884fa96f52ace240"
+          },
+          "scope": "Actual DOSBox-X saved automatic invitation without transfer keys;  maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with independent pinned lrzsz stdio peer. Synthetic local media, no BBS login or physical modem claim."
+        }
+      ]
+    },
+    "reason": "Early recognizer initialization clobbered AX before PROGRAM saved the PSP; fixed by preserving AX. Original failed artifacts retained; prototype executable not retained."
+  },
+  "sources": {
+    "standalone/check_autostart_live.py": "d2c5ba4c921164d86810853682d972e5f2595bec2f0d2a2c4ef88c1ec4ffcd50",
+    "standalone/check_transfer_preferences_live.py": "cf832b50a49306818bd031f4060598aa2f1b24f72d192c8076184542da8ca044",
+    "standalone/test_terminal_zmodem_dos.py": "19b64ae9d6b2c6396a864000b7456dc799735abf249899c2b2fa9dd0bd347d6b",
+    "lab/bbs/test_zmodem_dos.py": "1fc79da49031d97ee9f658dcfacbdb5a815302e1ae8394ff9d65b6fc73972eb1",
+    "standalone/record_autostart.py": "cb558acecb6a6c7531b40d0023f2144947a43341ba2b485f9b708ee7dc4ecb82",
+    "src/config/terminal_preferences.h": "3622a4523f767806d2dfe5972b19412afe9bd1a60daa46c9dba5e5d726cafaa1",
+    "src/config/terminal_preferences.c": "b0c18423540583f7cebc6d797804e69b8e0885894d926d0611bebcb5a674716f",
+    "src/transfer/terminal_autostart.c": "79cef3d967729459037fcbfa58d17878395b5183d70ddbfaccf6249e669cfc95",
+    "src/transfer/batch_download.c": "15513b4d890fdf36e5c796dd7bb724913135e154773075123029f37dd192b9ba",
+    "standalone/batch_download_host.c": "de8a68f2eeb70cc9b792dd29fca40de847297585826adb08f6a60bbeb18433b0",
+    "standalone/check_batch_download.py": "f45ddcfaa204b32de2b992f91f0807c450bf5ee0dd2751e1aed8a1fa43842213"
+  },
+  "artifacts": {
+    "build/application-source-proof/build.log": "fb462c88b3b51eab804b65635502e3b5e43adc2118fc9ef943b3b0460cfe1113",
+    "build/application-source-proof/result.json": "3a448aa26177c8301c0fee22aff8c53f06b92cc1d638b16fc02c6251eb4282ce",
+    "build/application-source-proof/snapshot.json": "467254abc8473007956dde17a49a00d359d54a419113230ed056cf08e22e9c35",
+    "build/batch-download/result.json": "ddfbb34d5c3599a25d474a38f920ba2e7eda211c2dca89f6f2b3edb7e52fc84f",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/RECV/PCXTEST.BIN": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/SCREEN.BIN": "06c5308a9438db962b8d265b24b9e484ce1685447f36ff2055d75caf60402d94",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/TEST.DIR": "1ecf3b7d23649da245a2534e4bad6fecaedfe91a64df25b7a113b16369525b65",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/TEST.PRM": "a18cfbd50e1c22f81ac4d80b2122e9f79fbdb06067776d4f14f8080e1135922c",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/bbs-sent.bin": "468d47ea3cdfea5353dcec730143ae0502625fabe686c102483e4dfa01a4e6b6",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/bbs-wire.bin": "14ba347f8618ea428b4400b0d7cd66df72c15ba9440a280d83f1b5e3dce0af7b",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/display.bin": "14e978299b881a2a8933ab4659ddb1a5a13facabb04c01cddaf1d0aaecd7156c",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/dosbox.conf": "f7e6ff509785ce12edf78ecf0e2d2c61195a20b89e44356aab8b1d7c933e0c0b",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/dosbox.log": "244dbffa9b21d473f420421b5bfa7a6ed2ade74ae9e074914a4d191225b00c7f",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/modem.json": "2b34b9a8eb9eb7d27bc6133fc3d3ccf8aac720304cb0902a608cd8ccb47e3ba3",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/protocol.json": "008a142b144b6a4f616b8aed4a48c46a0712fe74c2c4e79c38a051da0cc4ba46",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/result.json": "c41b390c0732f71ac24bcaa71f0fffddf5c8265ec7cbe359dc1e3b84a73d3575",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/screen.txt": "4cfdf334b9f1ba89ceee86e65c4c403f4af4ede46817e5bbb56c3a94fb86e622",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/serial-received.bin": "d95f10122ecb0b14c8a5382f1f835c08e71c6480ea3b828490e960418682f4f0",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/serial-sent.bin": "14e978299b881a2a8933ab4659ddb1a5a13facabb04c01cddaf1d0aaecd7156c",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/server-log-start.json": "9d4b2d7b2cf0cfd1404c482ab4ee14dfad738763370888ca220e910338f32c18",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/server-session-audit.json": "709654a616271f8ec9718e5fd56f912699153c8ee2d83210e508a41b5d181fad",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/server-session.jsonl": "53ad4cd84dfcb24cb27d1b2375b98b075237d587f5dcff3dae5ee3ab6f940e57",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/server-source-metadata.json": "187e31b1885ddb8fd17ccd5cec6e269ea6b5f8737aa57132e3465b97fc0f28ae",
+    "build/bbs-lab/results/enigma/zmodem-auto-7314-enigma-1/trace.json": "448c6c69ee9c7ac6e7255b7a454bb7fe45a49c2ef16cdb775d53288ab63d9862",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/RECV/PCXTEST.BIN": "2d10c92c0212b12674a7c5fd7aaba6af4afb2a7d8a7356ce1b5521fc96180cdc",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/SCREEN.BIN": "6dc8268b1e4028805e213868074e39588982dd97dcf0f9240ebf3be1b5761507",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/SNAP.COM": "e256249dfb9b684604001e8e848319eacefc958d8e2613373ab5ccb3e86d2fa3",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/TEST.DIR": "373cdd3c923b5b11c6ba6895f903b2a009c04499f177f387aefbfc208f59648c",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/TEST.PRM": "a18cfbd50e1c22f81ac4d80b2122e9f79fbdb06067776d4f14f8080e1135922c",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/bbs-sent.bin": "a6714cda4a2c4658b041f1c056721e564a2182db1483909796d502ee560bd18f",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/bbs-wire.bin": "988060e6afa44690c11b75a3dbf6f5c2fd76671ea6d786e9ad8dadc32a9f3b4a",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/display.bin": "deb07e494259e8dc8c8e7ce2977abe4b9fb4cd81be9afd58aebba11592eeecc8",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/dosbox.conf": "26d5fcd662f20a57060cfbb52270e0a4f47bcd7fff014f2e1fa3fa8a464733b1",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/dosbox.log": "13dab1ff36a097a058487ccc55ec208d7b98ecdd90404413c4ad3353a55ff412",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/modem.json": "3db10f27d98d9be4883437cd454152ccad68a74c6be6f234b6859adb08ddbda6",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/protocol.json": "302431fcb6592778cf6fc100b0e8ad8cf810b51f8ba66c243d7bcf7ea4e53a3f",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/result.json": "a52e3629a3e45aa6e7f06f456ff1e8bfc82bbfb116e6e2f2cc8bb35a38fd443b",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/sampler.asm": "b978c8f5bfbfc6825a0dc2345480ee4fe3f79b89965e743b29283a9706f5e85d",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/screen.txt": "d8dc50db051d85032e29d07b9dcc1a8118039ba842b6bbe8765734f46b9bf2a7",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/serial-received.bin": "73cb63dd8d2962bb1f6f296a97f87f7921d265fcc3b31f5d4c94a6722912f3ed",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/serial-sent.bin": "deb07e494259e8dc8c8e7ce2977abe4b9fb4cd81be9afd58aebba11592eeecc8",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/server-source-metadata.json": "11354e25c5fe8c3afafc13f1e0a429da64bc74bf32a1bc27a3be93d749d57150",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1/trace.json": "c5204b4b63ad167609ed4a5b45e38e44f3b9611b64481ac5885c742f5d3414e6",
+    "build/bbs-lab/results/synchronet/zmodem-auto-7314-sync-1-logon.json": "104a7e75ee5f847d0501faab7f9c78622a338b9004e42d05f724cdd63a76ab43",
+    "build/bbs-lab/zmodem-auto-7314-enigma-1-command.json": "56394a5ceebffaa57060b38b705c75ccb6b8f5dcd86084820c81f866ab4cf46f",
+    "build/bbs-lab/zmodem-auto-7314-sync-1-command.json": "82fe9dbb8162529c688fd02847c87e15f029b68eecab8f899fc38070f5f842c3",
+    "build/bbs-lab/zmodem-logon-readback.json": "42bb46b9646f5bc03aff03c202eb0ccf18e7c087373d4ace88a0e5f97f6b5d76",
+    "build/checkpoints/autostart-d23b-paths/BATCHDL.EXE": "2d69a659d38526a68b2e5c418a9472d1180d862969f8989a03adc782c0444386",
+    "build/checkpoints/autostart-d23b-paths/BDFAULT.EXE": "36eb4e74cf2beb07a8e73737a74955c8968f7bcff52fcbd49fb2c3b299794205",
+    "build/checkpoints/autostart-d23b-paths/TERMINAL.EXE": "d23b8eb7e3e29536ebd1a1caac4c2f2140e170b8a172f60c2d03db521142910a",
+    "build/checkpoints/autostart-d23b-paths/batch_download.c": "70f2cfb0e0173a24c685688c20366e3dac316ce97f9fbed28bb7ec27943eb1af",
+    "build/checkpoints/autostart-d23b-paths/batch_download_host.c": "de8a68f2eeb70cc9b792dd29fca40de847297585826adb08f6a60bbeb18433b0",
+    "build/checkpoints/autostart-d23b-paths/manifest.json": "39a85e1ae31e349b2afcb2e5e26ccca135646e00da71b0d44f39099f6de9ffe7",
+    "build/checkpoints/autostart-d23b-paths/result.json": "222ef197c6a2b92a555a9d7a93b7ff06a237d629d3e681e79744a665292547d3",
+    "build/checkpoints/autostart-d23b-paths/run/BATCHDL.EXE": "2d69a659d38526a68b2e5c418a9472d1180d862969f8989a03adc782c0444386",
+    "build/checkpoints/autostart-d23b-paths/run/BDFAULT.EXE": "36eb4e74cf2beb07a8e73737a74955c8968f7bcff52fcbd49fb2c3b299794205",
+    "build/checkpoints/autostart-d23b-paths/run/DATA/BIG.BIN": "0a6aa080f0da59ee5f45d0cb7ed8f114848295de0ed71bf51d022b541f3093f7",
+    "build/checkpoints/autostart-d23b-paths/run/DATA/PCRX.$$$": "656771905e1ef731f65cd0a0d9fb061238380a1a012e6abdf846ecc7d2ea36fd",
+    "build/checkpoints/autostart-d23b-paths/run/DATA/UNKNOWN.BIN": "0ce76078269e03f9bbaba9ef0fe134a1beb36978b568448ae262c2d8548ec226",
+    "build/checkpoints/autostart-d23b-paths/run/DATA/ZERO.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/checkpoints/autostart-d23b-paths/run/EXACT.BIN": "0fa994e844408a8a1d73e71a3af529bbcb2a8870604bb8ded15150d3c059eb53",
+    "build/checkpoints/autostart-d23b-paths/run/FAIL.TXT": "765489fd1b16cabfd78a744ff35dbeccd0d050fb1bff907dca6e1eafa8d44938",
+    "build/checkpoints/autostart-d23b-paths/run/HERE.BIN": "ab897fbdedfa502b2d839b6a56100887dccdc507555c282e59589e06300a62e2",
+    "build/checkpoints/autostart-d23b-paths/run/NORMAL.TXT": "b3480760727d1db0602358ca6969221a8c4d8785ca056edd0ac2c5241cc2db2b",
+    "build/checkpoints/autostart-d23b-paths/run/ROOT.BIN": "ab897fbdedfa502b2d839b6a56100887dccdc507555c282e59589e06300a62e2",
+    "build/checkpoints/autostart-d23b-paths/run/ROOTDOT.BIN": "ab897fbdedfa502b2d839b6a56100887dccdc507555c282e59589e06300a62e2",
+    "build/checkpoints/autostart-d23b-paths/terminal.map": "1d0e4e1fa6b6ef1217ad0e2a2c3230a5e07961ddb46f68f8719f0885ae8fbbb6",
+    "build/checkpoints/autostart-f0fd/TERMINAL.EXE": "f0fdb62c218a856fef9651469b504c995bad7208d7bebdb7c4478dfb843ae16c",
+    "build/checkpoints/autostart-f0fd/application-components-source-build.json": "a25326bf40ac387713f004e898a256946456b8f177bde429167a6630b9d76413",
+    "build/checkpoints/autostart-f0fd/autostart-live-checks.json": "7a7e146ecab1743072c91447df1a3d451588a8145f2cd80749bd7f5b05db7475",
+    "build/checkpoints/autostart-f0fd/autostart-regression.json": "e8d7d6ff90f2ab1cbae22d14c7155e5ad876daffe7610daab84419a25720f0c2",
+    "build/checkpoints/autostart-f0fd/autostart-regression.log": "97142b059ce9350bed16d386093147c09dee866bcad86d09d30f50a155333aef",
+    "build/checkpoints/autostart-f0fd/config-far-checks.json": "dcf1b248732db34959366d173165ea76a9dbf669b5ba35256d604d99ece92516",
+    "build/checkpoints/autostart-f0fd/manifest.json": "e3a00d7c6a309242ede42a046f0a4b0b916f40974913d10b4b80ad4aabcee1b7",
+    "build/checkpoints/autostart-f0fd/midnight-counterexample.json": "ca545b65bdc6d7fe576336cec99ddbaae1b97dbfe712f49d637dc3f7da1191d7",
+    "build/checkpoints/autostart-f0fd/record_autostart.py": "07efe1ded00bb683797889304c9dea8eb8d45bb7638267ac52007215b6a87fb0",
+    "build/checkpoints/autostart-f0fd/result.json": "7491ebc721ab96222dcfb692962c1f6fbbfa8bdbdb3b90ce005cfb30a8468cbd",
+    "build/checkpoints/autostart-f0fd/snapshot.json": "7c2a5823091a68fb740f19ba8f8c86ad1758e13636b4408db9236a8589acb205",
+    "build/checkpoints/autostart-f0fd/source-snapshot-reference.json": "6502b3475d940837fa1021acd9a2806ee1aaff00f91f2a8230c3b94e35e68bff",
+    "build/checkpoints/autostart-f0fd/terminal-source-build.json": "6fe682e3c05ba74000d8f0faa91c583cc1124c0937395b7e7989dcab734b4642",
+    "build/checkpoints/autostart-f0fd/terminal.map": "f9bfd9d24f6a4933879ad50526c0fc6ec377a0f5871c9ae4be2d60ec5ab6be6c",
+    "build/checkpoints/autostart-f0fd/transfer-preferences-live-checks.json": "c7e63377c99bed9618a0b584a1e7e3d875058d375d13921551578093dad351ca",
+    "build/checkpoints/autostart-f0fd/validation.json": "dfbd1eba75c8e9cda5cd656feaed1f2870ada63a64eec9076350d471b77e991a",
+    "build/terminal/TERMINAL.EXE": "731418bde8f3264d5f6c987195eb54b20c86a2981259ea1c721ba252e3c9a776",
+    "build/terminal/autostart-final-regression/00.log": "ecd3466b1a550ff5382524c80e55874a78e255855d3107c3969b57b5eb04a6c7",
+    "build/terminal/autostart-final-regression/01.log": "0d0a63cd6208bb320a9384c46df1927867674cecd0238a5f30e4acda375c5bc6",
+    "build/terminal/autostart-final-regression/02.log": "c39af208b4dc3545269825c2882bc885b3c276a1e021162191eed0a74392d50f",
+    "build/terminal/autostart-final-regression/03.log": "2868b233b4ead413d8ebeea88e1f727c192b074fdd0ac9a536762a62779f18d4",
+    "build/terminal/autostart-final-regression/04.log": "151197bbc4c7d6f0061b1d37981403e8064710bbab8a089d3757508d85a80ea8",
+    "build/terminal/autostart-final-regression/05.log": "ab5b236ef87204f3879d5bd318946f611d0aa40717ecd301169a08e03f12ad33",
+    "build/terminal/autostart-final-regression/06.log": "c2994b4d0332814cf6c4ecc64e90d888a2638301b399258d44d09ee393533e83",
+    "build/terminal/autostart-final-regression/07.log": "ceb8faf100da5204d8a2312da159f8446d6fc1a849a4eaa6fc8acb1da7f32dee",
+    "build/terminal/autostart-final-regression/08.log": "9a8d0282dbb1a21bc32fb16ac68b17ab4ff54871de8040d33078d99ae6cd9ce6",
+    "build/terminal/autostart-final-regression/09.log": "395254489a3dc4316ab4e07cbfe82d9c4140931207fd2defae36554fb68a6018",
+    "build/terminal/autostart-final-regression/10.log": "442d24fc6d0d1b9e6fedb3c5904b4f0a7c83139ac1a2d322a7fa49c10fc2ed06",
+    "build/terminal/autostart-final-regression/11.log": "443ac36308683a04c3f69ce50e7a078d3ff08a1a398a92aa2e0fa545f98ae30d",
+    "build/terminal/autostart-final-regression/12.log": "70e0c61e19d31d59a38318fc3864000127a92df05ec2fa012073aff19ec17a37",
+    "build/terminal/autostart-final-regression/13.log": "816017ea4f92ee04c56304e2011eac38df43e386a406fd2ef881be5fc388bdc0",
+    "build/terminal/autostart-final-regression/14.log": "fa927fa462d68551d41c29feea3c02e7a27300fc6cfeefa18a25d7f66784cc15",
+    "build/terminal/autostart-final-regression/15.log": "70fc6742d87f12af0ce4fe91c9403fed48875ac5179dfa1640b9c56f6f7a6546",
+    "build/terminal/autostart-final-regression/16.log": "48a97168bb8fa263d93ce63f4485f6c688d4142a554219a952d8e06ef52c6622",
+    "build/terminal/autostart-final-regression/17.log": "7ae91f5849f6714f7c235833ac504c7ed00ece9b7694b9098d173d80aa30bba5",
+    "build/terminal/autostart-final-regression/18.log": "d5c2888e5f6a262b21e1e414f5ba6e84cd2cbb240b50b5d8cf19c21e6fd79d35",
+    "build/terminal/autostart-final-regression/19.log": "f1095a65e8d71951fdd5a615b72d6940803915e6235a435cba5f759cf7afdd78",
+    "build/terminal/autostart-final-regression/20.log": "ca918184957508bd76e21a5e35e7a810bd666473fe08cda4945d337d6796dcb2",
+    "build/terminal/autostart-final-regression/21.log": "532faaa41b6ccfd506ec3f6cd29be28bc2e115ab4a539d4e8d072bcdeaf26537",
+    "build/terminal/autostart-final-regression/22.log": "5de862bbdba7eda8096548100020f997ac13f05d3128d2874c45130cfa4abe7f",
+    "build/terminal/autostart-final-regression/23.log": "424ed605b7a5bd7335bdd86d6de49b4e54b823d82e3e57e953afd35b10aac46e",
+    "build/terminal/autostart-final-regression/24.log": "926b79c3ec8b47dd892158685b6154c552baf62ad00ea4e0172b85bb87078453",
+    "build/terminal/autostart-final-regression/25.log": "5c68b7e3626feb4a10054d5cea7979f4d4a45fc2ab5ff3fea218edc11e073b6d",
+    "build/terminal/autostart-final-regression/26.log": "0840236ff0a7be2695fe5dae9b8ad6be52d1bbb35d05fd22a816fe80fb4eafbb",
+    "build/terminal/autostart-final-regression/27.log": "8576d2e9ebec4fa424781f8d722b2e08b2e89641a9b96a86e09c011a01683f7d",
+    "build/terminal/autostart-final-regression/28.log": "daf163de2047487d83384fb1729fb8800f8ab0f493c0522f202f96ac78417510",
+    "build/terminal/autostart-final-regression/29.log": "e18e8483af7ad5a2e9e25976c05098a07a8af9445d87a7ed0bc2c5e468253f02",
+    "build/terminal/autostart-final-regression/30.log": "b6853d0b42bbd8ee93339e4194ea345bec8d31f45443cfbbde5d029df13fa1bf",
+    "build/terminal/autostart-final-regression/31.log": "0cf999a0360e87e9db59dcfb407868ada4b0d0b9dd0e34009d318d0b0e77248d",
+    "build/terminal/autostart-final-regression/32.log": "6bb8381953323999445fd1369cc8304f0b6ebc0f4c49c4220aac822853db2908",
+    "build/terminal/autostart-final-regression/33.log": "8bb96c989f889d402e1e7d6c867277a5fcd391d1195a2927d280d887f6539de6",
+    "build/terminal/autostart-final-regression/34.log": "d11499b603e12f37a0c8806041d310cfd249d7e79b036602c8226e2fb68483b2",
+    "build/terminal/autostart-final-regression/35.log": "fea9c5b985920bc9dc9414795277d061fb7295909da9cd29305279b1f9987d41",
+    "build/terminal/autostart-final-regression/36.log": "f567a17400896d78fecd558838c3e72ecfeab6ef4670f4e52b507504ce19b917",
+    "build/terminal/autostart-final-regression/37.log": "a333bf3ee06265a50181a9ae819aa094eae4238aac91bc83f28d6fe04f85a414",
+    "build/terminal/autostart-final-regression/38.log": "17fada5205666f0fa1c0fef65f51d37768a92471b4cd4fbdf1ccdda13534ae76",
+    "build/terminal/autostart-final-regression/39.log": "6501f0b4cd84b8f77f2ffac49db749a606ed25accc3eb42a70ea673dc24f244b",
+    "build/terminal/autostart-final-regression/40.log": "141b3622461a41e9bce827d69c019e4de2c8fd01ef2025d40328b9ebcbb6358d",
+    "build/terminal/autostart-final-regression/41.log": "67fa1cd3a33bb852dd9be4b2abe0cdb6dfc0cc0f3c2d0684e3fa84399c7d6f2c",
+    "build/terminal/autostart-final-regression/42.log": "82dd18124cbad22402234db8278d56036cec28db137be5b92211a1dd25fbf0f5",
+    "build/terminal/autostart-final-regression/43.log": "edf54cf1636126e3aa148412728ba7d3661e686de7124de670d3f6dd7cbfa870",
+    "build/terminal/autostart-final-regression/44.log": "e97b5108152340a2ba1a4529c48871c11afd577b38ec7d779ba493f046c3929e",
+    "build/terminal/autostart-final-regression/45.log": "3fd19642621588401d891b2904e51bf986a803af22fb8a4d1b4ff487f8763fa3",
+    "build/terminal/autostart-final-regression/46.log": "b9bddbeddb61e12a69a4a5b5ad159b351adb5489af3debe1de39549cf967cf57",
+    "build/terminal/autostart-final-regression/47.log": "9cea55ad019caedf90e41349d355b6d7f9a1adf054232d25f0ff4fc2575e53df",
+    "build/terminal/autostart-final-regression/48.log": "e1b8b8802b0bc1cc6a7e872e0871c381383c86601d0257ebf3f067bf6f6e89a7",
+    "build/terminal/autostart-final-regression/49.log": "0c08b2c1805462a37f52464d1db2019b7722bede53d0bc7c323d4f4c12a13ac7",
+    "build/terminal/autostart-final-regression/50.log": "459d5f411047dd1b5efc2acf5d529063f2c8c696335a8f65bc5fbf248756579d",
+    "build/terminal/autostart-final-regression/51.log": "93abe9fd96c9b43ac606ce048aedb1e627a471caee8e413110ce4f4b953c301d",
+    "build/terminal/autostart-final-regression/52.log": "4452e75ee5632154412c4989884c436d977f0574a434a1f34d368dd33d6fa515",
+    "build/terminal/autostart-final-regression/53.log": "0928b8a6026e17664bb826234ed3e1338a11afda80e04f16a6afb23cd733f633",
+    "build/terminal/autostart-final-regression/54.log": "081a77b2830e708a52e6e7f7602e565c1cb6b18c3d42617c481bd6046eaf3b10",
+    "build/terminal/autostart-final-regression/55.log": "89bc45d990368a7318b8a8ad6f2f3dcba3be807a6aa4d4a20089f7e51689dc1e",
+    "build/terminal/autostart-final-regression/56.log": "7877deee4ab9bb68ed77d710d47a2bf4b7cde06ddff174cc1f7bf01ef855e973",
+    "build/terminal/autostart-final-regression/57.log": "91791f2568b78eab29cfa8d9a092c745d1e2efb350f07a0f80abc93be5506fef",
+    "build/terminal/autostart-final-regression/58.log": "80822c547437dd57a879fba25e545210cf32319ed11f055c18ada9a909759823",
+    "build/terminal/autostart-final-regression/59.log": "101b243a3ff77642971cacc19d87355022293ae7a997056ce1f1dd5e3b7f3097",
+    "build/terminal/autostart-final-regression/60.log": "5981252c7f1cd051fb48819756033539ff4a71862d745f2b3458dc5798bd6b90",
+    "build/terminal/autostart-final-regression/61.log": "4e1ca6e22f16b433069c7f9ff7d80fbe076e892c3860042133425f0219d42aad",
+    "build/terminal/autostart-final-regression/62.log": "ffd49495059f2ac062fe2ec8a52604a8953de0b2f803085df4477102a3aff086",
+    "build/terminal/autostart-final-regression/63.log": "43acd6e8939d69bb4c83c02ab2079acde4c9b2971ec5498db41f5981bd496fa0",
+    "build/terminal/autostart-final-regression/64.log": "b338da52c61273fd1cd3ad40e968c235ce87d8d35047d9a4cdf947a3375c7502",
+    "build/terminal/autostart-final-regression/65.log": "550d98dd3bc17d96e5c40b46901be635543e4fca78a8a3030f798a3e6105f7d2",
+    "build/terminal/autostart-final-regression/66.log": "63aae7fb1b16bd38efa0c1ada19b72aeec3bec0dbf86056496776968d17e6818",
+    "build/terminal/autostart-final-regression/67.log": "b89fdef54b1a35ae90b1c3a4f66f236bfe7bbe7b85bace703bd265d7199931f0",
+    "build/terminal/autostart-final-regression/68.log": "61522979dc7ed08476ee7bb8f09365270c1da07dce4835434b83bf36d261ed19",
+    "build/terminal/autostart-final-regression/69.log": "1de1beb9bac53c71b368415c8524ad6887675753e6e835090754403e7d7583df",
+    "build/terminal/autostart-final-regression/70.log": "73b5455bbcd5f9bcd2e85f5306fa35edb8affa6998301c164f7762e82f7b0f02",
+    "build/terminal/autostart-final-regression/71.log": "c5b3353fa02d13c89d10b5ded1adcd882ebbf1c98355f5882beadd9481218e1a",
+    "build/terminal/autostart-final-regression/72.log": "630c3ca49b78357b73d51b313f28fd8003be04b82442f7c32b3e55f5e272d962",
+    "build/terminal/autostart-final-regression/73.log": "8e8f03bdaeaf5c51f71b466eb26780e0e635981b3572639e2dd88560ddb4cf66",
+    "build/terminal/autostart-final-regression/74.log": "062ab95c7e62150930c220877d4f92c36bb3ad607e336269dba212ec37342ffb",
+    "build/terminal/autostart-final-regression/75.log": "be9d9b89b26f441ba75138981a37cda45d2a306cbd09fe03d5d76bec448c7465",
+    "build/terminal/autostart-final-regression/76.log": "68f112ae2e12424d1412fce7ed18dd06f904f37ddc59014b1d00a87a880f8bc2",
+    "build/terminal/autostart-final-regression/77.log": "8d82f681508bc5985559a753b6f8aa5ee3d78c240345720b56533b81fc6ace52",
+    "build/terminal/autostart-final-regression/78.log": "71b4d7fd0de7da061b61a78f1b3bbd6d1d10bd39f6d84e2a834e6ae8253188c4",
+    "build/terminal/autostart-final-regression/79.log": "37be33186806125c2cdda72eb9d3a7a56f502ade640fbad375294e0926905dfe",
+    "build/terminal/autostart-final-regression.json": "1e2fa9c909b0f0e50711d707f5aceca1fb2b83c979bc348ab19d1826749de299",
+    "build/terminal/autostart-final-regression.log": "a9db29a2762da52320e13ada94c0685219a0d137ff598200d8e9e54197512c7e",
+    "build/terminal/autostart-live-checks.json": "77376ae7a794db55212f189b10e287c2b90f2a567a1ca31f2c6308507f6e2f97",
+    "build/terminal/autostart-midnight-paired.json": "40f6ef60d084b9ce0f81b522ca90ddd64a4c5fbe1a698b16bb408fe0ef308cf7",
+    "build/terminal/config-far-checks.json": "89567cf562ff0964ecfbe2c77d9519b4e9cca5526c4fd81fcf0f2e9584260eed",
+    "build/terminal/manifest.json": "40f0c2ed3b4c3fcaf689a07f262c4f2c03cc72d52faa400fcae258241d7df372",
+    "build/terminal/recheck-autostart-midnight.py": "97c414108aec312d694c85d023332b9c2641e5bc55f87806fd7fdd3d0146dfe1",
+    "build/terminal/terminal-zmodem-live-checks.json": "4b4917a9155fd3ce70bad1e7e93ce08ef3c4ab03cdf8d4cfa0ffae63665361d6",
+    "build/terminal/terminal.map": "da13cdea09b0fa3ed0463575a729400214fe9e3a090201fbc3c52570ddb4c926",
+    "build/terminal/transfer-preferences-live-checks.json": "6dba01ebd3c6209000ba8edb7aaec2e1199ba04ea215e54e9b1844ccc0325c36",
+    "build/terminal-zmodem-dos/auto-7314-large/checks.json": "b93d5138f1d19129b7e6b1688ffe6436e21eef6507a1267aff70e6121c5fc1a9",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/AUTO.PRM": "d612d47c9d58cc36045c36ce93284a3b462dca67a9f3651d3d6e65c453747d40",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/PEER/ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/PEER/EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/PEER/ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/RECV/ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/RECV/EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/RECV/ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/SCREEN.BIN": "c8974c95c464968622087a53983e68dd67fbe4c56f26602a9e676712b51de822",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/dosbox.conf": "1c7e3b14821027d4f5658fefb42ed1b3c3fc46535f50c97de3cc0e3c0bd5e461",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/dosbox.log": "17e6eccbf174f22552db58f2522d266138f8482d7f2eb2344567d3cebfbb3475",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/events.json": "0c7767e1550d43420537edc92da0a8f87366cd07def0044c90601c023fe616b5",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/peer-stderr.log": "72cd96d243f85a3d1e30f2f036d4dc3171e5d6836cb8f90187ca5cbac74a74e3",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/peer.bin": "7b8bb1cad4b1bd7888641124ec299c5e07ba4fb921dd0513e746e460e0ae1492",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/result.json": "2a57a3f28a45c53df7eea917186066bc94ec3632389af7610d56d3f8c8c4fe9c",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-crc16/serial.bin": "2fd402fc036c2b13a38bc1a616a426ec16f6f75a5aa182139c1270379a886109",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/AUTO.PRM": "d612d47c9d58cc36045c36ce93284a3b462dca67a9f3651d3d6e65c453747d40",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/PEER/ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/PEER/EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/PEER/ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/RECV/ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/RECV/EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/RECV/ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/SCREEN.BIN": "c8974c95c464968622087a53983e68dd67fbe4c56f26602a9e676712b51de822",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/dosbox.conf": "809ae41ab2f05afd45fec385b0c44a3656f3e95970a92f04c3132f3df486ca1d",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/dosbox.log": "59608e9acf1c8a8ebfaf93735369725d19fd5d78629c6e78f9b53cac40ef5fbd",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/events.json": "d0fe9f21b449cf051c99b15bff9fe5c3ed4669039cc859b9d2474597c5d07fad",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/peer-stderr.log": "72cd96d243f85a3d1e30f2f036d4dc3171e5d6836cb8f90187ca5cbac74a74e3",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/peer.bin": "69161c5fb77fa5ee15c5e1e3b1e4df195fe4273e98a570dbc818d51c54b20663",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/result.json": "959bc2597b2484e2f6738eb291cc437c4fb83c3a02ebc955c8e3dec20074837d",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/terminal-zmodem-dos/auto-7314-large/rx-default/serial.bin": "2fd402fc036c2b13a38bc1a616a426ec16f6f75a5aa182139c1270379a886109",
+    "build/terminal-zmodem-dos/auto-7314-small/checks.json": "be3b96e0781f033595eafb5c2d345a61bdfd090c4ba0e449a7fd9ecfa534d30c",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/AUTO.PRM": "d612d47c9d58cc36045c36ce93284a3b462dca67a9f3651d3d6e65c453747d40",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/PEER/ALL.BIN": "4a52d18f2409cca12e871a1095c79105803fc511852579d1884fa96f52ace240",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/PEER/EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/PEER/ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/RECV/ALL.BIN": "4a52d18f2409cca12e871a1095c79105803fc511852579d1884fa96f52ace240",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/RECV/EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/RECV/ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/SCREEN.BIN": "c8974c95c464968622087a53983e68dd67fbe4c56f26602a9e676712b51de822",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/dosbox.conf": "387e65f1cd9023d992398f0344d16ca0ff1144fd1afe995c69a179ea75624ef9",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/dosbox.log": "ddb500fcc038a8ddaffaaf458629397d5dc946e89c0512fd85ed24539690d34d",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/events.json": "9651edc942d9bb38d4f2a7435dea7c1af7b7cbf376f3b0fb834e071d474a7679",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/peer-stderr.log": "72cd96d243f85a3d1e30f2f036d4dc3171e5d6836cb8f90187ca5cbac74a74e3",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/peer.bin": "dd282601d75047fd5f6cc06c79d5efd89100aac98756b724f9de5d0c05327646",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/result.json": "bca7a195da50ae947d058abc3f75eef6ee91f15b6d9624a3982cbe3509ffbd50",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/terminal-zmodem-dos/auto-7314-small/rx-default/serial.bin": "28fe7439713a9f41b8a2b9d1acdb628b98f87eaeaf5e4ed6f4529ac318033fa3",
+    "build/terminal-zmodem-dos/auto-f8df-first/checks.json": "10a6e161d7e983792382f32279bdc83b390199fa0a31a8cb4ef0644c0f2f0c3a",
+    "build/terminal-zmodem-dos/auto-f8df-first/rx-default/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/terminal-zmodem-dos/auto-f8df-first/rx-default/AUTO.PRM": "d612d47c9d58cc36045c36ce93284a3b462dca67a9f3651d3d6e65c453747d40",
+    "build/terminal-zmodem-dos/auto-f8df-first/rx-default/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/terminal-zmodem-dos/auto-f8df-first/rx-default/FAIL.TXT": "765489fd1b16cabfd78a744ff35dbeccd0d050fb1bff907dca6e1eafa8d44938",
+    "build/terminal-zmodem-dos/auto-f8df-first/rx-default/PEER/ALL.BIN": "4a52d18f2409cca12e871a1095c79105803fc511852579d1884fa96f52ace240",
+    "build/terminal-zmodem-dos/auto-f8df-first/rx-default/PEER/EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/terminal-zmodem-dos/auto-f8df-first/rx-default/PEER/ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+    "build/terminal-zmodem-dos/auto-f8df-first/rx-default/SCREEN.BIN": "ff795e0ed64050d305ab232b61a76ffef7763c4e9baa429712c036bfe545f9c3",
+    "build/terminal-zmodem-dos/auto-f8df-first/rx-default/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/terminal-zmodem-dos/auto-f8df-first/rx-default/dosbox.conf": "b1a4f042d9596d70a7a74ba01d4682d0c4e5e005b450591a892956452bcef561",
+    "build/terminal-zmodem-dos/auto-f8df-first/rx-default/dosbox.log": "8632daa415390b80c3696d399f7568a7c2c5ae8c8c43aed7c113def8f9fe744c",
+    "build/terminal-zmodem-dos/auto-f8df-first/rx-default/events.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "build/terminal-zmodem-dos/auto-f8df-first/rx-default/peer.bin": "e2a01260914db8c007353f1b4450c52dbccc3531e4ffb4a59f832bff12a01b91",
+    "build/terminal-zmodem-dos/auto-f8df-first/rx-default/result.json": "bfed0985519a4f51d9a4442641522dcbc88cab813fcc137cddc658531a885500",
+    "build/terminal-zmodem-dos/auto-f8df-first/rx-default/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/terminal-zmodem-dos/auto-f8df-first/rx-default/serial.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/validation/application-components-source-build.json": "ab1ace6195e3d55e87f89e298d5a390ca7142f95741afc8dcc060a10491a58e3",
+    "docs/validation/terminal-source-build.json": "307c5d2d7d36f236c1eb4a1d14305899f085c2b378b95182392a92baa5ed45fb"
+  },
+  "scope": "Canonical CRC-valid hex ZRQINIT automatic receive with saved enable/directory preferences; modeled linked ownership plus actual DOS/lrzsz and stock Synchronet/ENiGMA downloads without manual transfer keys. Parser continuations remain raw; software flow/non-8-bit/dedicated owners exclude recognition. Other invitation forms, persisted resume, broader line/peer timing, physical modem behavior and all F01-F16 whole-application gates remain open."
+}

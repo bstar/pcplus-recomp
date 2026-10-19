@@ -2,8 +2,8 @@
 
 PRMEDIT now exposes Auto Download and Download directory on its TERMINAL page,
 bringing the mapped editor to 48 fields. This checkpoint implements editing and a
-checked decoder. The terminal does not yet adopt these fields or automatically
-start reception. The native locations and original consumer evidence are in
+checked decoder. The terminal now adopts these fields and can start canonical ZMODEM reception
+automatically; see [the integration and current validation](ZMODEM_AUTOSTART.md). The native locations and original consumer evidence are in
 [ZMODEM_AUTOSTART_NATIVE.md](ZMODEM_AUTOSTART_NATIVE.md).
 
 | Setting | PRM location | Maintained representation |
@@ -38,10 +38,9 @@ Spelling, case and slash direction remain unchanged for nonempty decoded paths.
 Current-directory resolution is deferred until transfer start. A syntactically
 valid directory does not prove drive availability, directory existence, free
 space or sufficient room for each incoming filename. The actual checked batch
-file owner must enforce those conditions. Drive-relative current-directory
-forms such as `C:`/`C:.` also need explicit reconciliation with that owner's
-normalizer before terminal integration; accepting them here does not prove
-end-to-end transfer support.
+file owner must enforce those conditions. The checked batch owner now reconciles drive-relative current-directory
+forms such as `C:`/`C:.`; actual DOS file tests verify that they select the
+drive's current directory instead of its root.
 
 The new 63-byte field scrolls horizontally while editing, so its final characters
 remain visible within the existing 53-column field area. Older field indexes and
@@ -75,7 +74,8 @@ the corrected recipe uses a literal slash, following the upstream
 It did not require a product change. Exact hashes and scoped reports are in
 [validation/transfer-settings.json](validation/transfer-settings.json).
 
-Startup/live adoption, recognizer ownership/deadline integration, automatic
-receiver entry, destination-owner reconciliation, actual DOS/BBS automatic
-downloads and physical modem validation remain unfinished. No F01–F16
+Startup/live adoption, invitation/deadline ownership and actual DOS automatic
+reception are now integrated; their newer evidence is in ZMODEM_AUTOSTART.md.
+Broader BBS/loss coverage and
+physical modem validation remain unfinished. No F01–F16
 whole-application gate closes at this checkpoint.

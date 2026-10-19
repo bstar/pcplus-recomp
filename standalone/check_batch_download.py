@@ -54,7 +54,7 @@ exit
   checks={'normal_and_fault_DOS_exit':process.returncode==0 and all((run/n).exists() for n in ['NORMAL.OK','FAULT.OK']) and not (run/'FAIL.TXT').exists(),
    'normal_cases':logs['NORMAL.TXT'].count('PASS ')>=15 and 'FAIL ' not in logs['NORMAL.TXT'],
    'fault_cases':logs['FAULT.TXT'].count('PASS ')>=29 and 'FAIL ' not in logs['FAULT.TXT']}
-  for path,expected in {'DATA/BIG.BIN':payload*65+payload[:1],'DATA/ZERO.BIN':b'','DATA/UNKNOWN.BIN':payload+payload[:128],'DATA/PCRX.$$$':b'foreign','ROOT.BIN':payload[:1],'HERE.BIN':payload[:1],'EXACT.BIN':payload[:3]}.items():
+  for path,expected in {'DATA/BIG.BIN':payload*65+payload[:1],'DATA/ZERO.BIN':b'','DATA/UNKNOWN.BIN':payload+payload[:128],'DATA/PCRX.$$$':b'foreign','ROOT.BIN':payload[:1],'HERE.BIN':payload[:1],'EXACT.BIN':payload[:3],'REL/DRIVE.BIN':payload[:1],'REL/DOT.BIN':payload[:1],'ROOTDOT.BIN':payload[:1]}.items():
    checks[path]=(run/path).is_file() and (run/path).read_bytes()==expected
   checks['only_foreign_stage_remains']=not (run/'PCRX.$$$').exists() and not any((run/'DATA'/n).exists() for n in ['LATER.BIN','FOREIGN.BIN'])
   sources=set(common+[ROOT/'src/transfer/download_fs.c',ROOT/'src/transfer/batch_download.h',ROOT/'src/transfer/batch_header.h',ROOT/'src/transfer/download_file.h',ROOT/'src/transfer/download_fs.h',Path(__file__).resolve()])

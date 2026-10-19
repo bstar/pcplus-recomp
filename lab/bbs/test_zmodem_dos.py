@@ -11,7 +11,7 @@ from pathlib import Path
 from test_transfer_dos import (ROOT,BINARY,owned_file,ObservedModem,timestamp,
  offset_after,audit_enigma_server,SAMPLER,config_image,RATES,modem_fixture,
  directory_image,directory_prm,accounting_check)
-from audit_zmodem import audit_batch,audit_controls,self_check
+from audit_zmodem import audit_batch,audit_controls,self_check,scan
 
 def parse_files(values):
  result={}
@@ -38,10 +38,12 @@ async def run(a):
   for name,data in expected.items():
    assert not (directory/name).exists(),'Server target collision: '+name
    source=send/name;source.write_bytes(data);st=source.stat();source_stats[name]=(st.st_ino,st.st_size,st.st_mtime_ns)
- assert a.keys.lower().split().count('f2')>=2,'Keys must explicitly select DOS ZMODEM with F2'
+ if a.auto_download:
+  assert a.mode=='download' and not {'a-r','a-s','f2'}&set(a.keys.lower().split()),'Automatic download must have no local transfer keys'
+ else:assert a.keys.lower().split().count('f2')>=2,'Keys must explicitly select DOS ZMODEM with F2'
  fixture=None;directory_fixture=None;automatic=a.dial_fixture or a.directory_fixture
  command=f'TERMINAL COM{a.com} {a.baud} {a.flow}'
- if a.config_fixture or automatic:
+ if a.config_fixture or automatic or a.auto_download:
   fixture=config_image(port=a.com,baud=RATES.index(a.baud),soft=0,hard=int(a.flow=='HARD'),normal=7)
   if automatic:
    modem=bytearray(modem_fixture(timeout=45))
@@ -49,6 +51,8 @@ async def run(a):
    fixture=bytes(modem)
   if a.directory_fixture:
    fixture=directory_prm(port=1,baud=6,soft=0,hard=int(a.flow=='HARD'));directory_fixture=directory_image(entry=a.entry,target=f'lab.local:{a.port}'.encode(),port=a.com,baud=RATES.index(a.baud));(output/'TEST.DIR').write_bytes(directory_fixture)
+  if a.auto_download:
+   raw=bytearray(fixture);raw[0x42c:0x42e]=b'\x01\0';path=b'D:\\RECV\\\0';raw[0x31c:0x31c+len(path)]=path;fixture=bytes(raw)
   (output/'TEST.PRM').write_bytes(fixture);command='TERMINAL @D:\\TEST.PRM'
   if a.directory_fixture:command+=' /E:D:\\TEST.DIR'+('' if a.directory_browser else f' /N:{a.entry}')
   elif a.dial_fixture:command+=f' /D:lab.local:{a.port}'
@@ -139,6 +143,13 @@ exit
   post_time=timestamp(modem.trace,'dos',post_at)
   other=bytes(modem.keyboard if direction=='bbs' else modem.display)
   audit['controls']=audit_controls(audit,other,modem.trace,direction,post_time,False)
+  if a.auto_download:
+   invitations=[h for h in scan(bytes(modem.display),minimum) if h['type']==0 and h['format']==66 and h['position']>>24==0 and timestamp(modem.trace,'bbs',h['offset'])<=first_time]
+   assert invitations,'No CRC-valid data invitation preceding ZFILE'
+   invitation_time=timestamp(modem.trace,'bbs',invitations[0]['end']-1)
+   assert any(h['type']==1 and invitation_time<=timestamp(modem.trace,'dos',h['offset'])<=first_time for h in scan(bytes(modem.keyboard))),'No receiver negotiation after invitation'
+   checks['automatic_invitation_then_receiver_negotiation']=True
+   checks['no_manual_transfer_keys']=not {'a-r','a-s','f2'}&set(a.keys.lower().split())
   checks['ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed']=True
   bbs_tail_offset=offset_after(modem.trace,'bbs',post_time);assert bbs_tail_offset is not None
   tail=bytes(modem.display[bbs_tail_offset:]);pos=0
@@ -189,7 +200,7 @@ def main():
  p.add_argument('--wait',type=int,default=3);p.add_argument('--timeout',type=int,default=180)
  p.add_argument('--com',type=int,choices=range(1,5),default=2);p.add_argument('--baud',type=int,choices=RATES,default=19200)
  p.add_argument('--flow',choices=['HARD','NONE'],default='HARD')
- p.add_argument('--config-fixture',action='store_true');p.add_argument('--dial-fixture',action='store_true')
+ p.add_argument('--auto-download',action='store_true');p.add_argument('--config-fixture',action='store_true');p.add_argument('--dial-fixture',action='store_true')
  p.add_argument('--directory-fixture',action='store_true');p.add_argument('--directory-browser',action='store_true')
  p.add_argument('--entry',type=int,choices=range(1,201),default=3);a=p.parse_args()
  assert bytes.fromhex(a.start_input_hex) and bytes.fromhex(a.post_input_hex)

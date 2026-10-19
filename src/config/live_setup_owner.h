@@ -1,6 +1,7 @@
 #ifndef PCPLUS_LIVE_SETUP_OWNER_H
 #define PCPLUS_LIVE_SETUP_OWNER_H
 #include "live_configuration.h"
+#include "transfer_import.h"
 typedef struct live_setup_result {
  unsigned status,source_status,applied_mask,deferred_mask;
 } live_setup_result;
@@ -46,5 +47,10 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
  * the stored separator changes. This advances the source-rate baseline for future autobaud
  * preservation, so reverting a previously applied rate is not ignored. */
 unsigned __cdecl live_setup_acknowledge(unsigned committed_baud_mask);
+/* Validated transfer preferences from the last successful finish. Only the
+ * foreground owner commits them after child/choice validation and before ack.
+ * No reread, hardware or active-global mutation. Invalid/aborted/acked offers
+ * cannot be reused. Mask8192 reports an independently adopted preference edit. */
+unsigned __cdecl live_setup_transfer_settings(transfer_import_settings *destination);
 unsigned __cdecl live_setup_abort(unsigned unused);
 #endif

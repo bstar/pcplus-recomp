@@ -1,3 +1,5 @@
+CONFIG_ENTRY _terminal_preferences_read,5
+CONFIG_ENTRY _terminal_directory_preferences_read,10
 ; Near public C names and exact caller-cleaned word counts.
 CONFIG_ENTRY _directory_live_decode,7
 CONFIG_ENTRY _directory_live_read,8
@@ -71,3 +73,14 @@ CONFIG_REGISTER config_strcpy_service_,strcpy_
 CONFIG_CDECL _config_bu_seek,_batch_upload_seek,2
 CONFIG_ZERO _config_bu_skip,_batch_upload_skip
 CONFIG_CDECL _config_bd_exact,_batch_download_exact,2
+
+CONFIG_ENTRY _terminal_autostart_initialize,0
+CONFIG_ENTRY _terminal_autostart_flush,0
+CONFIG_ENTRY _terminal_autostart_poll,0
+CONFIG_ENTRY _terminal_autostart_input,1
+CONFIG_CDECL _config_terminal_auto_deliver,_terminal_auto_deliver,1
+CONFIG_ZERO _config_terminal_auto_allowed,_terminal_auto_allowed
+CONFIG_ZERO _config_terminal_auto_start,_terminal_auto_start
+CONFIG_ZERO _config_terminal_auto_ticks,_terminal_auto_ticks
+CONFIG_REGISTER config_memmove_service_,memmove_
+CONFIG_ENTRY _live_setup_transfer_settings,1

@@ -49,8 +49,9 @@ remain partial VT220/ANSI implementations, not claims of complete emulation.
 The Terminal page includes a decimal0..255 clipboard separator at PRM04EA;
 see [startup and live settings](CLIPBOARD_SETTINGS.md). Auto Download and Download
 directory are also editable; their checked decoder and current integration
-limits are documented in [transfer settings](TRANSFER_SETTINGS.md). Saving these
-two fields does not yet enable automatic reception in the terminal.
+limits are documented in [transfer settings](TRANSFER_SETTINGS.md). The maintained terminal now adopts them for
+[automatic ZMODEM reception](ZMODEM_AUTOSTART.md), within its documented input
+and destination limits.
 
 Six command strings use native caret notation. Eleven response slots hold
 already-expanded bytes, so their editor uses hex pairs, for example

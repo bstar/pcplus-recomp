@@ -87,11 +87,11 @@
 
 ; Explicit near-cdecl -> far wrapper -> near-C implementation. Both wrappers
 ; copy only declared argument words, retaining DS=SS and caller-owned slots.
-; Separate entry family supports these known1..9-word APIs; it does not change
+; Separate entry family supports these known0..10-word APIs; it does not change
 ; the modem callback family's1..4-word contract or accept variadic/RET N APIs.
 %macro NEAR_CDECL_ENTRY 2
- %if %2 < 1 || %2 > 9
-  %error Only explicitly declared1..9-word entries are supported
+ %if %2 < 0 || %2 > 10
+  %error Only explicitly declared0..10-word entries are supported
  %endif
  extern %1 %+ _far
  global %1
@@ -109,8 +109,8 @@
  ret
 %endmacro
 %macro FAR_CDECL_ENTRY 2
- %if %2 < 1 || %2 > 9
-  %error Only explicitly declared1..9-word entries are supported
+ %if %2 < 0 || %2 > 10
+  %error Only explicitly declared0..10-word entries are supported
  %endif
  extern %1 %+ _impl
  global %1 %+ _far

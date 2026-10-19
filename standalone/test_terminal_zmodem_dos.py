@@ -9,6 +9,7 @@ from test_terminal import SAMPLER
 from test_terminal_transfer_dos import Peer
 from test_terminal_ymodem_dos import BatchPeer
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/terminal-zmodem-dos';BINARY=ROOT/'build/terminal/TERMINAL.EXE'
+def r_automatic(recipe):return bool(recipe.get('automatic'))
 class ZPeer(Peer):
  def __init__(self,r,path):
   self.path=path;self.child=None;self.peer_exit=None;self.resume_timeout=r.get('resume_timeout',80)
@@ -18,8 +19,9 @@ class ZPeer(Peer):
    conn,_=self.server.accept();self.conn=conn
    with conn:
     conn.settimeout(.1);self.ready();deadline=time.monotonic()+20
-    while b'\x18' not in self.pending and time.monotonic()<deadline:self.receive()
-    assert b'\x18' in self.pending,'No actual DOS ZMODEM start'
+    if not r_automatic(self.recipe):
+     while b'\x18' not in self.pending and time.monotonic()<deadline:self.receive()
+     assert b'\x18' in self.pending,'No actual DOS ZMODEM start'
     self.log('protocol-start')
     sending=self.recipe['direction']=='tx'
     self.command=[shutil.which('rz' if sending else 'sz'),'-b','-q']+self.recipe['flags']
@@ -60,6 +62,12 @@ def run_case(r,a):
  peer=ZPeer(r,out);peer.thread.start()
  filename='D:\\RECV\\' if r['direction']=='rx' else 'D:\\SEND\\*.BIN'
  keys=['p1500','a-r' if r['direction']=='rx' else 'a-s','p300','f2','p100','f2','p200']+list(filename)+['enter','p'+str(a.after_ms),'r','e','a','d','y','p1500','a-x']
+ arguments=''
+ if r_automatic(r):
+  from terminal_config_fixtures import image
+  config_image=image(port=1,autodownload=1,download=b'D:\\RECV\\')
+  (out/'AUTO.PRM').write_bytes(config_image);arguments=' @AUTO.PRM'
+  keys=['p'+str(a.after_ms),'r','e','a','d','y','p1500','a-x']
  serial='\n'.join(f'serial{i}='+(f'nullmodem server:127.0.0.1 port:{peer.port} transparent:1 rxdelay:200 txdelay:1' if i==1 else 'disabled') for i in range(1,5))
  conf=f'''[sdl]
 output=surface
@@ -78,7 +86,7 @@ mount d "{out}"
 d:
 SNAP B
 ADDKEY {' '.join(keys)}
-C:\\TERMINAL COM1 38400 8N1 HARD
+C:\\TERMINAL COM1 38400 8N1 HARD{arguments}
 if errorlevel 1 goto fail
 echo PASS>PASS.TXT
 goto capture
@@ -109,17 +117,21 @@ exit
   screen_restored=len(read('SCREEN.BIN'))==4000 and read('SCREEN.BIN')[:28:2]==b'AFTER TRANSFER',
   no_stages=not any(p.name.upper().startswith(('PCRX.','PCZRX.')) for p in out.rglob('*')),
   binary_unchanged=hashlib.sha256(BINARY.read_bytes()).hexdigest()==a.sha256)
+ if r_automatic(r):
+  checks['saved_preferences_unchanged']=read('AUTO.PRM')==config_image
+  checks['no_manual_transfer_keys']='a-r' not in keys and 'f2' not in keys and 'enter' not in keys
  (out/'events.json').write_text(json.dumps(peer.events,indent=2)+'\n')
  (out/'serial.bin').write_bytes(peer.wire);(out/'peer.bin').write_bytes(peer.sent)
  result=dict(passed=all(checks.values()),case=r['name'],checks=checks,errors=peer.errors,binary_sha256=a.sha256,peer_command=getattr(peer,'command',None),peer_exit=peer.peer_exit,
-  keys=keys,recipe_bounds=dict(after_ms=a.after_ms,transfer_timeout=r['transfer_timeout'],resume_timeout=r['resume_timeout'],DOS_timeout=a.timeout),files={n:hashlib.sha256(d).hexdigest() for n,d in r['files']},scope='Actual DOSBox-X BIOS F2 protocol selection, maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with independent pinned lrzsz stdio peer. Synthetic local media, no BBS login or physical modem claim.')
+  keys=keys,recipe_bounds=dict(after_ms=a.after_ms,transfer_timeout=r['transfer_timeout'],resume_timeout=r['resume_timeout'],DOS_timeout=a.timeout),files={n:hashlib.sha256(d).hexdigest() for n,d in r['files']},scope=('Actual DOSBox-X saved automatic invitation without transfer keys; ' if r_automatic(r) else 'Actual DOSBox-X BIOS F2 protocol selection; ')+ ' maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with independent pinned lrzsz stdio peer. Synthetic local media, no BBS login or physical modem claim.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(r['name'],json.dumps(result),flush=True);return result
 def main():
- p=argparse.ArgumentParser();p.add_argument('--sha256',required=True);p.add_argument('--label',required=True);p.add_argument('--jobs',type=int,default=2,choices=(1,2));p.add_argument('--after-ms',type=int,default=15000);p.add_argument('--large',action='store_true');p.add_argument('--case',action='append');p.add_argument('--timeout',type=int,default=100);p.add_argument('--zedzap',action='store_true');a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--sha256',required=True);p.add_argument('--label',required=True);p.add_argument('--jobs',type=int,default=2,choices=(1,2));p.add_argument('--after-ms',type=int,default=15000);p.add_argument('--large',action='store_true');p.add_argument('--case',action='append');p.add_argument('--timeout',type=int,default=100);p.add_argument('--zedzap',action='store_true');p.add_argument('--automatic',action='store_true');a=p.parse_args()
  assert a.label.replace('-','').replace('_','').isalnum();assert hashlib.sha256(BINARY.read_bytes()).hexdigest()==a.sha256
  OUT.mkdir(exist_ok=True);files=[('EMPTY.BIN',b''),('ODD.BIN',b'A'),('ALL.BIN',bytes(range(256))*(257 if a.large else 4)+b'\0\x1a\xff@\r')]
  rows=[dict(name='rx-default',direction='rx',flags=[],files=files),dict(name='rx-crc16',direction='rx',flags=['-o'],files=files),dict(name='tx-default',direction='tx',flags=[],files=files),dict(name='tx-escape',direction='tx',flags=['-e'],files=files)]
- rows=[r for r in rows if not a.case or r['name'] in a.case];assert rows
+ rows=[r for r in rows if (not a.case or r['name'] in a.case) and (not a.automatic or r['direction']=='rx')];assert rows
+ for r in rows:r['automatic']=a.automatic
  for r in rows:r['transfer_timeout']=max(65,a.after_ms/1000+10);r['zedzap']=a.zedzap;r['resume_timeout']=min(a.timeout,max(10,a.after_ms/1000+10))
  with (OUT/'.lock').open('w') as lock:
   fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)

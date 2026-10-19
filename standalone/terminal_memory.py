@@ -195,7 +195,7 @@ def inspect_terminal_memory(binary,map_path):
    fields=line.replace(',',' ').split();kind,name=fields[:2]
    if kind=='CONFIG_ENTRY':
     assert len(fields)==3
-    count=int(fields[2]);assert 1<=count<=9
+    count=int(fields[2]);assert 0<=count<=10
     assert symbols[name][0]==near_code['relative_segment']
     assert symbols[name+'_far'][0]==symbols[name+'_impl'][0]==config_seg
     prefix=cdecl_prefix(count,4);suffix=b'\x8d\x66\x00\x5d\xc3'
@@ -218,7 +218,7 @@ def inspect_terminal_memory(binary,map_path):
     else:assert len(fields)==3
     near_call(name+'_resident',target,prefix=prefix,suffix=suffix)
    config_bridges+=1
-  assert config_bridges==66,'Incomplete configuration ABI validation'
+  assert config_bridges==78,'Incomplete configuration ABI validation'
   bridges+=config_bridges
   extra['configuration_bridge_pairs_verified']=config_bridges
  redisplay_bridges=0

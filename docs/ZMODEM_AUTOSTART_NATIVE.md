@@ -27,7 +27,11 @@ profile `3cd9d21bc233a2347f0fed1a0c26c0e45668a7f3052b5e412f5c16e41c7e55dd`.
 The resident handler `11a8..123b` is **absent from the retained procedure
 exports**. Its instructions below were decoded from the verified original
 resident slice using GNU objdump (GNU Binutils)2.47, i8086/Intel mode. They are
-not REA-returned pseudocode and have no invented REA Evidence ID. The exact
+not REA-returned pseudocode and have no invented REA Evidence ID. The same
+handler also exists as recovered exact assembly in
+`reconstruction/input_controls/cancel.asm`; see [INPUT_CONTROLS.md](INPUT_CONTROLS.md).
+This review reuses and corroborates that recovery, rather than claiming the
+handler was previously absent from the reconstruction. The exact
 148-byte slice, original file offsets `23a8..243b` inclusive, has SHA-256
 `c03ba8dc253cd662c4e1737901860fec220ae7114a90e648e720922a6062932b`.
 

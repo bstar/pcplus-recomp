@@ -8,6 +8,8 @@ GROUP DGROUP _DATA _BSS
 SEGMENT _TEXT public class=CODE use16
 extern _terminal_import_read,terminal_config_path,terminal_option_mask
 extern _terminal_startup_read,terminal_connection_prepare
+extern _terminal_preferences_read,_terminal_directory_preferences_read
+extern _terminal_transfer_preferences
 extern _directory_live_read_context,terminal_directory_choose
 extern terminal_directory_path,terminal_directory_entry,terminal_directory_codes
 extern terminal_dial_target
@@ -75,6 +77,8 @@ terminal_load_configuration:
  jnz .directory
  mov ax,terminal_configuration_io
  push ax
+ mov ax,_terminal_transfer_preferences
+ push ax
  test word [terminal_option_mask],32
  jz .serial_only
  mov ax,terminal_modem_settings
@@ -83,10 +87,12 @@ terminal_load_configuration:
  push ax
  mov ax,terminal_config_path
  push ax
- call _terminal_startup_read
- add sp,8
+ call _terminal_preferences_read
+ add sp,10
  jmp .loaded
 .directory:
+ mov ax,_terminal_transfer_preferences
+ push ax
  mov ax,terminal_directory_context
  push ax
  mov ax,terminal_directory_io
@@ -103,8 +109,8 @@ terminal_load_configuration:
  push ax
  mov ax,terminal_config_path
  push ax
- call _directory_live_read_context
- add sp,18
+ call _terminal_directory_preferences_read
+ add sp,20
  mov [terminal_directory_status],ax
  or ax,ax
  jz .directory_loaded
@@ -126,12 +132,14 @@ terminal_load_configuration:
  xor ax,ax
  jmp .loaded
 .serial_only:
+ xor ax,ax
+ push ax ;No modem plan for serial-only startup.
  mov ax,terminal_configuration_values
  push ax
  mov ax,terminal_config_path
  push ax
- call _terminal_import_read
- add sp,6
+ call _terminal_preferences_read
+ add sp,10
 .loaded:
 .failure:
  mov [terminal_configuration_status],ax

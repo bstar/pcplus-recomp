@@ -19,6 +19,8 @@ extern terminal_redisplay_before,terminal_redisplay_idle,terminal_redisplay_stop
 extern _redisplay_search_pending,_redisplay_export_pending
 extern _history_file_event
 extern terminal_run_startup_setup
+extern _terminal_autostart_initialize,_terminal_autostart_flush
+extern _terminal_autostart_poll,_terminal_autostart_input
 extern terminal_setup_bind
 extern terminal_load_configuration
 extern terminal_select_directory
@@ -56,6 +58,9 @@ _small_code_:
  mov sp,terminal_stack_top
  sti
  cld
+ push ax ;PSP segment remains the PROGRAM initializer input.
+ call _terminal_autostart_initialize
+ pop ax
  call terminal_program_initialize
  push ax
  call _terminal_transfer_initialize
@@ -180,6 +185,7 @@ _small_code_:
  call uart_enable
  call terminal_connection_start
 .loop:
+ call _terminal_autostart_poll
  call terminal_poll_io
  cmp word [terminal_quit],0
  jne terminal_shutdown
@@ -224,7 +230,9 @@ _small_code_:
  jc .loop
  call terminal_transfer_filter
  jc .loop
- call terminal_receive_input
+ push ax
+ call _terminal_autostart_input
+ add sp,2
  jmp .loop
 .idle:
  call terminal_redisplay_idle
@@ -248,7 +256,7 @@ _small_code_:
  jmp terminal_shutdown
 .configuration_error:
  mov dx,configuration_argument
- cmp ax,13
+ cmp ax,14
  ja .configuration_message
  mov bx,ax
  dec bx
@@ -273,6 +281,7 @@ terminal_shutdown:
  mov ss,ax
  mov sp,terminal_stack_top
  sti
+ call _terminal_autostart_flush
  call terminal_redisplay_stop
  call terminal_break_cancel
  call terminal_macro_cancel
@@ -415,6 +424,8 @@ configuration_messages: dw configuration_io,configuration_serial,configuration_f
  dw configuration_setup
  dw configuration_translation
  dw configuration_clipboard
+ dw configuration_transfer
+configuration_transfer: db 'Invalid download directory in configuration.',13,10,'$'
 configuration_clipboard: db 'Configuration clipboard separator must be 0..255.',13,10,'$'
 configuration_translation: db 'Invalid input translation mode or 256-byte XLT table.',13,10,'$'
 configuration_setup: db 'Could not run PRMEDIT setup successfully. Check PRMEDIT.EXE and the PRM file.',13,10,'$'

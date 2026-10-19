@@ -106,6 +106,8 @@ terminal:
 test-terminal: setup live-configuration
 
 test-terminal: terminal
+	python3 standalone/check_transfer_preferences_live.py
+	python3 standalone/check_autostart_live.py
 	python3 standalone/test_resource_path_dos.py
 	python3 standalone/check_resource_lookup.py
 	python3 standalone/test_resource_lookup_dos.py

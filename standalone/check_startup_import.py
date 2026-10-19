@@ -15,7 +15,7 @@ ROOT=Path(__file__).resolve().parents[1]
 BINARY=ROOT/'build/terminal/TERMINAL.EXE';MAP=ROOT/'build/terminal/terminal.map'
 def fixture():
  raw=bytearray(modem_fixture());serial=terminal_fixture()
- for at,size in [(0,10),(0x174,32),(0x194,12),(0x1ae,10),(0x1e0,2),(0x4ea,2)]:raw[at:at+size]=serial[at:at+size]
+ for at,size in [(0,10),(0x174,32),(0x194,12),(0x1ae,10),(0x1e0,2),(0x4ea,2),(0x31c,64),(0x42c,2)]:raw[at:at+size]=serial[at:at+size]
  return bytes(raw)
 def terminal_expected(raw):
  words=lambda at:struct.unpack_from('<H',raw,at)[0]

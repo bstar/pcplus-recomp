@@ -201,9 +201,21 @@ It preserves rejected/truncated bytes across 6,510 host and 8086 DOS vectors;
 original behavior and lists pending settings, ownership and BBS integration.
 Automatic reception is not enabled, and F08 remains open.
 
-The mapped PRMEDIT editor now exposes Auto Download and Download directory,
+At checkpoint `fd2b490`, the mapped PRMEDIT editor exposed Auto Download and Download directory,
 with a separate checked transfer-settings decoder and 48 mapped fields.
 [TRANSFER_SETTINGS.md](TRANSFER_SETTINGS.md) records 450 model inputs, 19 DOS
 editor/owner workflows, seven production clipboard/settings regressions and a
-fresh 64-output source-only rebuild. These saved preferences are not yet adopted
-by the terminal; automatic reception and F08 remain open.
+fresh 64-output source-only rebuild. At that checkpoint the preferences were not yet adopted
+by the terminal; the integration below advances that work.
+
+
+The `731418bd` runtime adds canonical CRC-valid automatic ZMODEM reception,
+one-image startup staging and live-child preference adoption. Serviced partial
+prefixes return to the normal parser on expiry or local-owner changes; BIOS
+midnight preserves the inactivity interval. The checked file owner now handles
+drive-relative current directories. All 80 terminal commands, 60 preference
+inputs, 384 damaged-MZ guards, three actual DOS and two stock BBS automatic
+workflows pass; 64 outputs rebuild byte-identically without originals. See
+[ZMODEM_AUTOSTART.md](ZMODEM_AUTOSTART.md). The ENiGMA fragmented-key issue,
+other invitation forms, wider protocols/UI, ASPECT, Host, physical peers and
+all F01–F16 whole-application gates remain open.

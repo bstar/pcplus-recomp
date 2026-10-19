@@ -61,6 +61,7 @@ transfer_start_direction:
  jne .done
 .start:
  mov [terminal_transfer_direction],ax
+ mov word [terminal_transfer_automatic],0
  call terminal_macro_cancel
  call terminal_program_cancel
  mov word [terminal_transfer_pending],1
@@ -298,6 +299,7 @@ terminal_transfer_poll:
  call terminal_transfer_ui_restore
  mov word [terminal_transfer_phase],0
  mov word [terminal_transfer_active],0
+ mov word [terminal_transfer_automatic],0
  call terminal_connection_notice
 .done:
  pop es
@@ -819,6 +821,8 @@ GLOBAL terminal_transfer_eot_deferred,_terminal_transfer_eot_deferred
 GLOBAL terminal_transfer_native_status,_terminal_transfer_native_status
 GLOBAL terminal_transfer_filename,_terminal_transfer_filename
 GLOBAL terminal_transfer_protocol,_terminal_transfer_protocol,_terminal_transfer_direction
+GLOBAL terminal_transfer_automatic
+terminal_transfer_automatic: dw 0
 terminal_transfer_pending: dw 0
 terminal_transfer_active: dw 0
 _terminal_transfer_direction:

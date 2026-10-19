@@ -1,8 +1,10 @@
-# Automatic ZMODEM reception: invitation recognition
+# Automatic ZMODEM reception
 
-Automatic reception remains unfinished. This checkpoint adds a source-owned,
-separately tested invitation recognizer; it does not enable automatic transfers
-in the terminal or change the current application executable.
+The maintained terminal can start ZMODEM reception from a CRC-valid canonical
+invitation when the saved Auto Download preference is enabled. It uses the
+configured download directory and the existing checked exclusive receiver,
+without the Alt-R/F2/filename prompt. Broader original compatibility and the
+whole-application feature gates remain unfinished.
 
 ## Original behavior and maintained policy
 
@@ -15,8 +17,7 @@ ring. Those are original observations, not the implementation used here.
 The maintained recognizer requires a complete canonical hex ZRQINIT invitation:
 `**`, ZDLE, `B`, fourteen hex digits, CR and LF. The first decoded byte must be
 zero, ZF0 must select data transfer, and the five header bytes must agree with
-their CRC16. Uppercase hex and
-historical parity-marked LF are accepted. The optional trailing XON remains
+their CRC16. Uppercase hex and historical parity-marked LF are accepted. The optional trailing XON remains
 unconsumed for the transfer owner. This deliberately requires stronger evidence
 than the original three-byte trigger and has not been represented as identical
 original behavior.
@@ -62,19 +63,85 @@ and binary identities are recorded in
 [validation/zmodem-autostart-recognizer.json](validation/zmodem-autostart-recognizer.json).
 This proves the recognizer contract, not live terminal or BBS integration.
 
-## Work still required
+## Terminal integration
 
-The mapped editor and checked transfer-settings decoder now cover both fields;
-see [TRANSFER_SETTINGS.md](TRANSFER_SETTINGS.md). Connect that decoder to startup
-and live adoption, then reconcile the directory with the checked file owner,
-including current-directory and drive-relative forms.
-Connect recognition to serviced terminal input with
-correct translation, capture, native parser continuation, printer/controller,
-monitor, PROGRAM and pending-transfer boundaries. Start the existing exclusive
-ZMODEM receiver without an Alt-R/F2 prompt and preserve its checked destination,
-cancellation and restoration semantics. Exercise enabled/disabled settings,
-fragmentation, partial-header expiry, ordinary text, owner changes and failure
-paths in the linked application and actual DOS. Then verify automatic downloads
-and post-transfer interaction on the owned Synchronet and ENiGMA fixtures.
+Startup reads the PRM once and stages serial, optional modem, directory context
+and transfer preferences before committing any settings. The ten-word directory
+entry has an explicit checked near/far bridge. Invalid paths leave the plans
+unchanged. Without an explicit PRM the source-owned preference starts disabled
+with current directory `.`. The recovered native three-byte trigger remains
+inactive; this feature does not enable its unsafe UART lookahead path.
 
-All F01–F16 whole-application gates remain open.
+A successful settings child validates transfer preferences from the same bound
+image as other settings. Change bit 8192 identifies an independent preference
+edit. The foreground owner adopts the validated preference before acknowledging
+the offer; failed children, invalid images and expired offers do not adopt it.
+The existing 44-byte serial and 628-byte live-plan layouts remain unchanged.
+
+Only acquired octets enter the recognizer; the main loop excludes the UART
+empty-read sentinel. Ordinary main-loop bytes enter the recognizer after connection, monitor,
+controller and transfer filtering and before translation/native parsing.
+Rejected/released bytes return through that same translation/parser path. No
+protocol bytes are prepended to the UART ring. The original emulation-mode
+gates are retained. Detection is also disabled during local/dedicated owners,
+queued macros/PROGRAM, transfer admission, break, non-eight-bit input or software
+flow control. Native parser continuations keep their existing raw input owner.
+
+A held candidate expires after 36 BIOS ticks without another candidate byte.
+The foreground loop services the timeout. Before dispatching a local key it
+flushes any held prefix, preserving its order before a view, PROGRAM, monitor,
+manual transfer or configuration transition. Shutdown also releases the prefix.
+A validated invitation queues the existing exclusive receive owner, selects
+ZMODEM and copies the decoded directory. The normal transfer UI still saves and
+restores its rows/cursor but skips filename input. Admission refusal replays the
+complete invitation as ordinary bytes. The automatic flag is cleared on exit;
+manual transfers continue through their existing prompt.
+
+The first actual DOS prototype exposed PSP-register clobbering by the new early
+initializer. The initializer now preserves AX before the existing PROGRAM/PSP
+initialization. That failed attempt remains under
+`build/terminal-zmodem-dos/auto-f8df-first`; it is not a passing workflow.
+
+## Current validation and remaining work
+
+Runtime `731418bd` passes the linked invitation/receiver tests, including four
+file sizes, nineteen incomplete-header deadlines, midnight/low-word rollover, malformed/command headers and
+fourteen ownership/format gates. Separate preference tests cover 60 inputs: one-read
+startup, invalid-path atomicity, null/alias/wrap guards, ten-word directory
+context and successful/failed live-child adoption. Its bridge checker rejects 384 damaged images.
+
+Three actual DOS/lrzsz automatic-reception sessions pass: a small three-file
+batch plus CRC16/CRC32 large batches with 8 KiB receive packets. They use only
+post-transfer keyboard input, verify exact files/source/configuration, normal
+exit, restored hardware/screen and resumed terminal replies. A fresh source-only
+snapshot reproduces 64 current outputs. Stock Synchronet and ENiGMA download workflows also pass without local
+transfer keys, including invitation/negotiation chronology, checked files, saved
+configuration/directory integrity and post-transfer menu input. The full
+80-command regression passes. Exact source, binary, report and retained-artifact
+hashes are in [validation/zmodem-autostart.json](validation/zmodem-autostart.json).
+
+Drive-relative current-directory forms now use the checked batch owner's
+normalizer: `C:`/`C:.` inspect the drive current directory and produce `C:NAME`
+file/stage paths, rather than introducing a dot component into the stricter
+per-file grammar. Actual DOS tests change C's current directory to a separate
+folder and verify the files land there. Absolute root-dot forms normalize to
+the root. Existing stage/collision/close guards remain unchanged. Directory existence
+and combined filename bounds are checked before file ownership. Short writes
+and disk errors follow the existing checked close/cleanup policy. Binary/noncanonical invitations,
+persisted receive resume, wider loss/line timing, physical modems, complete
+original UI/emulations/protocols, ASPECT and Host remain required. All F01–F16
+whole-application gates remain open.
+
+The earlier `f0fdb62c` prototype passed its 80-command regression and its three DOS
+and two BBS workflows, but a later linked midnight counterexample showed a
+candidate flushing after one tick at BIOS midnight. The final elapsed-time
+calculation normalizes that rollover and keeps the 36-tick deadline. The first
+drive-path extension also exposed a mismatch with the stricter per-file grammar;
+its failed actual DOS component artifacts are retained separately from passing
+results. Neither earlier outcome is rewritten as a final passing test.
+
+The final image uses 65,296 near bytes (240 spare), 63,630 resident code bytes
+(1,906 spare) and 20,620 retained parent paragraphs including the PSP. These are
+checked linker/MZ bounds, not a claim that the remaining application will fit
+without further memory placement work. The complete schema/UI and physical
+modem validation remain open.

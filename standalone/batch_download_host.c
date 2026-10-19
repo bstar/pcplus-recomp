@@ -106,6 +106,11 @@ static void normal(void)
  saved=batch_download_result;check(batch_download_begin("C:\\..\\DATA")==BD_ARGUMENT && !memcmp(&saved,&batch_download_result,sizeof(saved)),"parent traversal rejects without result mutation");
  check(batch_download_begin("C:\\")==BD_OK && open_file("ROOT.BIN",1,1)==BD_OK && batch_download_append(payload,128)==BD_OK && batch_download_finish()==BD_OK,"explicit DOS root parent supported");
  check(batch_download_begin(".")==BD_OK && open_file("HERE.BIN",1,1)==BD_OK && batch_download_append(payload,128)==BD_OK && batch_download_finish()==BD_OK,"explicit current directory supported");
+ check(_mkdir("REL")==0 && _chdir("REL")==0,"prepare separate drive current directory");
+ check(batch_download_begin("C:")==BD_OK && !strcmp(batch_download_result.directory,"C:.") && open_file("DRIVE.BIN",1,1)==BD_OK && batch_download_append(payload,128)==BD_OK && batch_download_finish()==BD_OK,"drive-relative current directory supported");
+ check(batch_download_begin("C:.")==BD_OK && open_file("DOT.BIN",1,1)==BD_OK && batch_download_append(payload,128)==BD_OK && batch_download_finish()==BD_OK,"explicit drive-relative dot supported");
+ check(_chdir("..")==0,"restore root after drive-relative checks");
+ check(batch_download_begin("C:/./")==BD_OK && !strcmp(batch_download_result.directory,"C:\\") && open_file("ROOTDOT.BIN",1,1)==BD_OK && batch_download_append(payload,128)==BD_OK && batch_download_finish()==BD_OK,"absolute root dot normalizes without changing drive semantics");
  check(open_file("EXACT.BIN",0,0)==BD_OK && batch_download_exact(0,0)==BD_OK && batch_download_exact(payload,3)==BD_OK && batch_download_finish()==BD_OK && batch_download_result.wire==3 && batch_download_result.stored==3,"actual unpadded variable packet installs exact bytes");
 }
 #endif

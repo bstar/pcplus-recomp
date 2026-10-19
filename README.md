@@ -8,6 +8,8 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 passes logged-in ZMODEM uploads and downloads against local Synchronet and ENiGMA,
 including 8 KiB reception and bounded windowed sending.
 [Results, replay recovery and remaining interaction limits](docs/WINDOWED_ZMODEM.md).
+Saved Auto Download and Download directory now support
+[automatic ZMODEM reception](docs/ZMODEM_AUTOSTART.md) on both local BBS fixtures.
 
 Current outputs:
 
@@ -389,8 +391,12 @@ selected, then enter a receive directory or send filespec. The live engine uses
 checked batch storage/source seeking and serviced UART ownership; independent
 actual DOS peer transfers pass. See [live ZMODEM](docs/LIVE_ZMODEM.md),
 [sessions](docs/ZMODEM_SESSION.md), [wire codec](docs/ZMODEM_WIRE.md) and
-[native evidence](docs/ZMODEM_NATIVE.md). Logged-in stock BBS workflows,
-windowed sending, auto-download and physical modem validation remain open.
+[native evidence](docs/ZMODEM_NATIVE.md). [Windowed sending](docs/WINDOWED_ZMODEM.md)
+and [automatic reception](docs/ZMODEM_AUTOSTART.md) pass selected local BBS
+workflows. Enable Auto Download and set an existing Download directory in
+PRMEDIT to skip the local receive prompt; select ZMODEM at the remote BBS.
+Other invitation forms, persisted resume, broader UI/protocols and physical
+modem validation remain open.
 
 
 For an existing2.01 PRM in the current DOS directory, build both applications

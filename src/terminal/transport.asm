@@ -9,6 +9,7 @@ extern keyboard_poll,terminal_read_key
 extern terminal_quit,terminal_exit_code
 extern keyboard_classify_raw,terminal_enqueue_key_slot
 extern terminal_ansi_wait_active,terminal_ansi_wait_cancel
+extern _terminal_autostart_flush
 extern terminal_connection_poll,terminal_connection_cancel,terminal_connection_start
 extern terminal_connection_exit,connection_state,connection_enabled
 extern terminal_macro_active,terminal_macro_start,terminal_macro_poll,terminal_macro_cancel
@@ -204,6 +205,9 @@ terminal_poll_io:
  call menu_pending_cancel
  jmp .done
 .dispatch_key:
+ push ax
+ call _terminal_autostart_flush
+ pop ax
  call terminal_redisplay_key
  jc .done
  cmp ax,0x3000 ; Native Alt-B, including dedicated/raw controller mode.

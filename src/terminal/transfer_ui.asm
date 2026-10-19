@@ -8,6 +8,7 @@ extern session_blocks_accepted
 extern terminal_transfer_direction,terminal_upload_blocks_accepted
 extern terminal_transfer_protocol,_ymodem_current
 extern _terminal_zmodem_kbytes
+extern terminal_transfer_automatic
 GLOBAL terminal_transfer_ui_open,terminal_transfer_ui_restore,terminal_transfer_ui_progress
 GLOBAL terminal_transfer_ui_receiving
 terminal_transfer_ui_open:
@@ -48,6 +49,11 @@ terminal_transfer_ui_open:
  mov cx,160
  rep stosw
  call ui_title
+ cmp word [terminal_transfer_automatic],1
+ jne .manual
+ mov ax,1
+ jmp .done
+.manual:
  mov word [transfer_ui_length],0
  mov byte [terminal_transfer_filename],0
  mov cx,0x0607

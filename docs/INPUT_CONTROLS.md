@@ -21,7 +21,11 @@ direction flag remain the real-mode integration requirements.
 The two new DS words are `terminal_control_mode_9026` (`9026`) and
 `terminal_control_mode_1fb0` (`1fb0`). Both default to zero in the maintained
 application; names remain neutral because their complete emulation/protocol
-semantics are not yet reconstructed. Existing `terminal_dec_keys` (`8fe8`),
+semantics were not yet reconstructed at that checkpoint. The later
+[automatic-reception investigation](ZMODEM_AUTOSTART_NATIVE.md) proves that
+DS1fb0 is the saved Auto Download word. The maintained terminal uses its
+separate CRC-validating recognizer and leaves the recovered native lookahead
+gate disabled. Existing `terminal_dec_keys` (`8fe8`),
 `terminal_newline_mode_9020` (`9020`), `terminal_tab_wrap` (`903e`), current
 attribute/cursor/profile state retain their existing aliases.
 
