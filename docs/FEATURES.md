@@ -648,3 +648,10 @@ F13 now includes FINDFIRST/FINDNEXT and seven native file metadata builtins.
 885 component/original cases,46 compiler outcomes and actual DOS DTA/EXECUTE/
 shared FOUND ownership. The runtime has94 supported/121 unsupported opcode slots;
 all F01–F16 application gates remain open.
+
+F13 now includes GETFATTR/SETFATTR with exact native helpers and explicit corrected
+far-global writeback. [Attribute evidence](ASPECT_FILE_ATTRIBUTES.md) binds100
+native+203 reused bytes,1,081 component/original cases,54 original compiler outcomes
+and279 repeated DOS VM invocations. A real native-wrapper control preserves the
+original lost-global-write bug separately.96 slots are supported and119 rejected;
+all whole-application gates remain open.

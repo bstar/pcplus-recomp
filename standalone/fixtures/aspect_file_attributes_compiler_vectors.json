@@ -1,0 +1,570 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "harness_sha256": "da6d5ee21f75fa5944b200ebde9dddbc55cfe39f63bad5cdd9ac6fe49fe71dbb",
+  "cases": [
+    {
+      "name": "AT000",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \r\nendproc\r\n",
+      "source_sha256": "71a2e2802719269caf2eab314692e4aaab81acb93e11b5ccdbb952c021c44312",
+      "success": false,
+      "label": "getfattr ",
+      "errors": [
+        "Error C006 Line 5: Missing token",
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "AT001",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \"X\"\r\nendproc\r\n",
+      "source_sha256": "f0870cec72532b52c28024cb2bab5e17a17f5a427803f9df814d8ca0e1b9b40f",
+      "success": false,
+      "label": "getfattr \"X\"",
+      "errors": [
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "AT002",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \"X\" value\r\nendproc\r\n",
+      "source_sha256": "6bd45222be8ea2669bda28467a19c820d20a43c99e4f10ee3ce5ce278987c84f",
+      "success": true,
+      "label": "getfattr \"X\" value",
+      "errors": [],
+      "hex": "03 cf 4d aa b4 0b 5d 8c 02 94",
+      "asx_sha256": "01bb981eb5554990cbb2a9b61bddfecec03b85892c032918c7585c686facb6ed"
+    },
+    {
+      "name": "AT003",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \"X\" \"R\"\r\nendproc\r\n",
+      "source_sha256": "9031419e4cf11c4e030773880a3c8515e318fe784477aba6e6239e3eb2ecf10e",
+      "success": false,
+      "label": "getfattr \"X\" \"R\"",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> R"
+      ]
+    },
+    {
+      "name": "AT004",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr path attrs\r\nendproc\r\n",
+      "source_sha256": "7a79cd44d7579e75bb73224be2f1053d7246133ea141f60693b68213db9338ce",
+      "success": true,
+      "label": "getfattr path attrs",
+      "errors": [],
+      "hex": "03 cf 4d 8c 00 8c 01 94",
+      "asx_sha256": "69ae9397a46a3f21c08454e0d069a90c8908fa35ca362daa2f95bcdb3b153bce"
+    },
+    {
+      "name": "AT005",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \"X\",value\r\nendproc\r\n",
+      "source_sha256": "b771103923966c968b7738382c7094be770ab6dba8ea6b39fd0402946f5fae09",
+      "success": true,
+      "label": "getfattr \"X\",value",
+      "errors": [],
+      "hex": "03 cf 4d aa b4 0b 5d 8c 02 94",
+      "asx_sha256": "01bb981eb5554990cbb2a9b61bddfecec03b85892c032918c7585c686facb6ed"
+    },
+    {
+      "name": "AT006",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \"X\" 1\r\nendproc\r\n",
+      "source_sha256": "ad85c1f9bc3523d9d7acdcf6189a3ce322acfee88f6168b0b2d8c95b8cb4a6d4",
+      "success": false,
+      "label": "getfattr \"X\" 1",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> 1"
+      ]
+    },
+    {
+      "name": "AT007",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \"X\" size\r\nendproc\r\n",
+      "source_sha256": "63ec1eb63e1db647b7d573c71775b13ce47551e77db8f2280be7ace95c257e78",
+      "success": false,
+      "label": "getfattr \"X\" size",
+      "errors": [
+        "Error C024 Line 5: Invalid string variable ==> SIZE"
+      ]
+    },
+    {
+      "name": "AT008",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \"X\" result\r\nendproc\r\n",
+      "source_sha256": "90fff969e3198b6eebf678cf0b34f0e488f4cf00d58e89463be5b8f71fe5a13a",
+      "success": false,
+      "label": "getfattr \"X\" result",
+      "errors": [
+        "Error C024 Line 5: Invalid string variable ==> RESULT"
+      ]
+    },
+    {
+      "name": "AT009",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr ,path value\r\nendproc\r\n",
+      "source_sha256": "07768f3e55ba5f55b116f381cca4731fbf02655812c0f51d3c0f0d9ccb4bbad6",
+      "success": false,
+      "label": "getfattr ,path value",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ,",
+        "Error C002 Line 5: Unexpected token ==> VALUE"
+      ]
+    },
+    {
+      "name": "AT010",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr path value,\r\nendproc\r\n",
+      "source_sha256": "11f6432572de4a15b73fdab3cc0a509e44abfe69c183de26f4e9d1ce7897c619",
+      "success": false,
+      "label": "getfattr path value,",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "AT011",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr path,,value\r\nendproc\r\n",
+      "source_sha256": "89e3b77f1b034f868763c9c5cab982d520400732eaafc1f631936a366d01572a",
+      "success": false,
+      "label": "getfattr path,,value",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> ,",
+        "Error C002 Line 5: Unexpected token ==> ,",
+        "Error C002 Line 5: Unexpected token ==> VALUE"
+      ]
+    },
+    {
+      "name": "AT012",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr path (value)\r\nendproc\r\n",
+      "source_sha256": "1ccbeb8164800da57ff4f9a4dcc0b8d507fa4c7ca750d6161e8aab414a590b87",
+      "success": false,
+      "label": "getfattr path (value)",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> (",
+        "Error C002 Line 5: Unexpected token ==> VALUE",
+        "Error C002 Line 5: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "AT013",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr path value+\"X\"\r\nendproc\r\n",
+      "source_sha256": "a7f73c25bb76028926281320bf175a62a8fd3105c05d27dc0e95fbee9de9d6be",
+      "success": false,
+      "label": "getfattr path value+\"X\"",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> +",
+        "Error C002 Line 5: Unexpected token ==> X"
+      ]
+    },
+    {
+      "name": "AT014",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \"X\" $FATTR\r\nendproc\r\n",
+      "source_sha256": "1e588e5ea4d832b022b6a70415b964f8833b0427272533f02a5f70367d4c4bfb",
+      "success": false,
+      "label": "getfattr \"X\" $FATTR",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> $FATTR"
+      ]
+    },
+    {
+      "name": "AT015",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \"X\" $NULL\r\nendproc\r\n",
+      "source_sha256": "f6fb82a40f50e75f228c1cadf2ceedad9d700c87f8b1b171206590fe4a57b8d5",
+      "success": false,
+      "label": "getfattr \"X\" $NULL",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> $NULL"
+      ]
+    },
+    {
+      "name": "AT016",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \"X\" s0\r\nendproc\r\n",
+      "source_sha256": "a81816561e40ecd27608bf018e57f63dad5a45603c181fb193b3ac5917ef0dac",
+      "success": true,
+      "label": "getfattr \"X\" s0",
+      "errors": [],
+      "hex": "03 cf 4d aa b4 0b 5d 64 00 94",
+      "asx_sha256": "8ffdd6c927a427e0069e24e41db30e4f081b9f2fa4cce517bf6d4ab17431ddc6"
+    },
+    {
+      "name": "AT017",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \"X\" ON\r\nendproc\r\n",
+      "source_sha256": "e24598f822877636557c7ead755c2e659330e82c83b49faaf151a88522c82faf",
+      "success": false,
+      "label": "getfattr \"X\" ON",
+      "errors": [
+        "Error C024 Line 5: Invalid string variable ==> ON"
+      ]
+    },
+    {
+      "name": "AT018",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \"X\" \"\"\r\nendproc\r\n",
+      "source_sha256": "b71901ef86dc255b50ae219a8df8ebd1a9a6d7758f349fbaabeda6fd4bb0d9c5",
+      "success": false,
+      "label": "getfattr \"X\" \"\"",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> $NULL"
+      ]
+    },
+    {
+      "name": "AT019",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \"X\" ,value\r\nendproc\r\n",
+      "source_sha256": "3fd22a8bf739c59a2e9706c6c07b0912f211e8a65a8ea66ffb2840c7be168e14",
+      "success": true,
+      "label": "getfattr \"X\" ,value",
+      "errors": [],
+      "hex": "03 cf 4d aa b4 0b 5d 8c 02 94",
+      "asx_sha256": "01bb981eb5554990cbb2a9b61bddfecec03b85892c032918c7585c686facb6ed"
+    },
+    {
+      "name": "AT020",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr (path) attrs\r\nendproc\r\n",
+      "source_sha256": "816ab22f1481d4e3c37289cee9c69586a6603bd488f1bde6d5f68fa3bed08369",
+      "success": false,
+      "label": "getfattr (path) attrs",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> (",
+        "Error C002 Line 5: Unexpected token ==> )",
+        "Error C002 Line 5: Unexpected token ==> ATTRS"
+      ]
+    },
+    {
+      "name": "AT021",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr path+\"X\" attrs\r\nendproc\r\n",
+      "source_sha256": "3522ac6b0eb298c006f2c626725f180a6a768d3ebd7f9fb9ad146d384883af72",
+      "success": false,
+      "label": "getfattr path+\"X\" attrs",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> +",
+        "Error C002 Line 5: Unexpected token ==> X",
+        "Error C002 Line 5: Unexpected token ==> ATTRS"
+      ]
+    },
+    {
+      "name": "AT022",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \"X\" value attrs\r\nendproc\r\n",
+      "source_sha256": "008630b382b8f02f2649ef3b619a5e9278da03718f41ca50adcf15a07b45322c",
+      "success": false,
+      "label": "getfattr \"X\" value attrs",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> ATTRS"
+      ]
+    },
+    {
+      "name": "AT023",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \r\nendproc\r\n",
+      "source_sha256": "86bae806392abd01f59dff5785ee8582b6b952819eb9093ef32d873867fee873",
+      "success": false,
+      "label": "setfattr ",
+      "errors": [
+        "Error C006 Line 5: Missing token",
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "AT024",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \"X\"\r\nendproc\r\n",
+      "source_sha256": "08feeda208fb0a823f307fcd2eb55d9c424e6c47eae1dbe58973a879278fc8c8",
+      "success": false,
+      "label": "setfattr \"X\"",
+      "errors": [
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "AT025",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \"X\" value\r\nendproc\r\n",
+      "source_sha256": "9ca24bfb6b264a705378a0cd6a19fe6aaf4e528904fa09bb5bc8be08c70eb584",
+      "success": true,
+      "label": "setfattr \"X\" value",
+      "errors": [],
+      "hex": "03 cf 9f aa b4 0b 5d 8c 02 94",
+      "asx_sha256": "57ae8371acd845e113f45eaf5cf90f618c4d555eb710afafa52cdefcddcb0bc4"
+    },
+    {
+      "name": "AT026",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \"X\" \"R\"\r\nendproc\r\n",
+      "source_sha256": "7a0a7c9d483c42691b24a80b994cff536c1eefd9584174ad04fc4a111c658d6d",
+      "success": true,
+      "label": "setfattr \"X\" \"R\"",
+      "errors": [],
+      "hex": "03 cf 9f aa b4 0b 5d aa b4 03 5d 94",
+      "asx_sha256": "e49cb8de5325532e77a5f9fdc4423792a5747954824f6ed6dd5ad4ce44d0788c"
+    },
+    {
+      "name": "AT027",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr path attrs\r\nendproc\r\n",
+      "source_sha256": "aa89e0b1bb6be8eb8f11c96a73fa71f85aad780a2bbc4cae888cb08274a8c0a6",
+      "success": true,
+      "label": "setfattr path attrs",
+      "errors": [],
+      "hex": "03 cf 9f 8c 00 8c 01 94",
+      "asx_sha256": "4bbe4d418aa4f47efc3b9afd120c2f00c45ebadc79259bec108d4f624c66280a"
+    },
+    {
+      "name": "AT028",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \"X\",value\r\nendproc\r\n",
+      "source_sha256": "364e6809a2bf657e0671055f7dc821dc229d79fe28c52b1ca3c76d77480a273c",
+      "success": true,
+      "label": "setfattr \"X\",value",
+      "errors": [],
+      "hex": "03 cf 9f aa b4 0b 5d 8c 02 94",
+      "asx_sha256": "57ae8371acd845e113f45eaf5cf90f618c4d555eb710afafa52cdefcddcb0bc4"
+    },
+    {
+      "name": "AT029",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \"X\" 1\r\nendproc\r\n",
+      "source_sha256": "1746e1216401b19f6b6c002143bba62283d1c1566c3f1c22fd6fcf8cc96b7d2e",
+      "success": false,
+      "label": "setfattr \"X\" 1",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> 1"
+      ]
+    },
+    {
+      "name": "AT030",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \"X\" size\r\nendproc\r\n",
+      "source_sha256": "9a7f31ea3cc695eee4e3562f80492957aa0db9071b1192d8844837a8a93a2b7c",
+      "success": false,
+      "label": "setfattr \"X\" size",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> SIZE"
+      ]
+    },
+    {
+      "name": "AT031",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \"X\" result\r\nendproc\r\n",
+      "source_sha256": "f2c4373cc8ce7917e0de3db7adfdf3e8d35d2415c1e6eab5c4192b3c79af4a93",
+      "success": false,
+      "label": "setfattr \"X\" result",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> RESULT"
+      ]
+    },
+    {
+      "name": "AT032",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr ,path value\r\nendproc\r\n",
+      "source_sha256": "5c4ab3ebcfd7f5ec6d3987ce06cb0c9d40e08e941f541264a81e275e6b083bda",
+      "success": false,
+      "label": "setfattr ,path value",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ,",
+        "Error C002 Line 5: Unexpected token ==> VALUE"
+      ]
+    },
+    {
+      "name": "AT033",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr path value,\r\nendproc\r\n",
+      "source_sha256": "c07f40606fbdca2e18af61d6dceb1541baa1e0c6d7b46e93d20c4223c4a03c59",
+      "success": false,
+      "label": "setfattr path value,",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "AT034",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr path,,value\r\nendproc\r\n",
+      "source_sha256": "af272095a43355c04386a043cf3be541f91f78279815b7754d67ff4f1b0cb31e",
+      "success": false,
+      "label": "setfattr path,,value",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ,",
+        "Error C002 Line 5: Unexpected token ==> ,",
+        "Error C002 Line 5: Unexpected token ==> VALUE"
+      ]
+    },
+    {
+      "name": "AT035",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr path (value)\r\nendproc\r\n",
+      "source_sha256": "d944ba6b12a3e7a52caf361f9131a2ed3dd9de93800362408ba8f985022708c1",
+      "success": false,
+      "label": "setfattr path (value)",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> (",
+        "Error C002 Line 5: Unexpected token ==> VALUE",
+        "Error C002 Line 5: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "AT036",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr path value+\"X\"\r\nendproc\r\n",
+      "source_sha256": "74e7316d16fc98d2d72a8852faa66ba8788e8a56cead7d032ac6f82f9b222b97",
+      "success": false,
+      "label": "setfattr path value+\"X\"",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> +",
+        "Error C002 Line 5: Unexpected token ==> X"
+      ]
+    },
+    {
+      "name": "AT037",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \"X\" $FATTR\r\nendproc\r\n",
+      "source_sha256": "5e6659070f4222e4c4704d30422c2a952593bb2308368d60b82d4d8835a6fb21",
+      "success": true,
+      "label": "setfattr \"X\" $FATTR",
+      "errors": [],
+      "hex": "03 cf 9f aa b4 0b 5d 6e 09 94",
+      "asx_sha256": "d0451c5bbf1d1ba95c412abd909b0597ed3fb0a5df143d00c61e354eda889894"
+    },
+    {
+      "name": "AT038",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \"X\" $NULL\r\nendproc\r\n",
+      "source_sha256": "fff2aeef526cf7a998bf4f9bb2dd1e04acbab5c325ae365eef374a456a7ad1ff",
+      "success": true,
+      "label": "setfattr \"X\" $NULL",
+      "errors": [],
+      "hex": "03 cf 9f aa b4 0b 5d 6e 13 94",
+      "asx_sha256": "ae6cfd2b7757ac6e03ebcb26333ac306d71de622e3c7293e095b28e7ad655101"
+    },
+    {
+      "name": "AT039",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \"X\" s0\r\nendproc\r\n",
+      "source_sha256": "c2fec2fa2e6e55e31a4f0a5c1c7680f84060bf3c30a0095f5c6b7a302b25d1ab",
+      "success": true,
+      "label": "setfattr \"X\" s0",
+      "errors": [],
+      "hex": "03 cf 9f aa b4 0b 5d 64 00 94",
+      "asx_sha256": "bf7baf130a60ac147ff5171fe49547468158dfcf59163a8e13065f1a9e996f52"
+    },
+    {
+      "name": "AT040",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \"X\" ON\r\nendproc\r\n",
+      "source_sha256": "af19c4f0e7ec3b615c06123a5c6cd987d33b4285dfb04662f7264aee695727ce",
+      "success": false,
+      "label": "setfattr \"X\" ON",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ON"
+      ]
+    },
+    {
+      "name": "AT041",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \"X\" \"\"\r\nendproc\r\n",
+      "source_sha256": "8e2a9393c1f173e4854e34414aed6d9044896e0044e2451c30fbac43be86f711",
+      "success": true,
+      "label": "setfattr \"X\" \"\"",
+      "errors": [],
+      "hex": "03 cf 9f aa b4 0b 5d 6e 13 94",
+      "asx_sha256": "ae6cfd2b7757ac6e03ebcb26333ac306d71de622e3c7293e095b28e7ad655101"
+    },
+    {
+      "name": "AT042",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \"X\" ,value\r\nendproc\r\n",
+      "source_sha256": "9f3c7e6a88b3e193bf8d2d6db1942f9b8d7bdfa5866071a5d959fcfdea1a6fda",
+      "success": true,
+      "label": "setfattr \"X\" ,value",
+      "errors": [],
+      "hex": "03 cf 9f aa b4 0b 5d 8c 02 94",
+      "asx_sha256": "57ae8371acd845e113f45eaf5cf90f618c4d555eb710afafa52cdefcddcb0bc4"
+    },
+    {
+      "name": "AT043",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr (path) attrs\r\nendproc\r\n",
+      "source_sha256": "e48349d5a6717384d87e0990f95c249bdaad9c6045d8de35290fe413715a3872",
+      "success": false,
+      "label": "setfattr (path) attrs",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> (",
+        "Error C002 Line 5: Unexpected token ==> )",
+        "Error C002 Line 5: Unexpected token ==> ATTRS"
+      ]
+    },
+    {
+      "name": "AT044",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr path+\"X\" attrs\r\nendproc\r\n",
+      "source_sha256": "f99f92b31d7572e9c471b5c5a96ebd9aebf36d56cf58bc78dad20c5836cce4ff",
+      "success": false,
+      "label": "setfattr path+\"X\" attrs",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> +",
+        "Error C002 Line 5: Unexpected token ==> X",
+        "Error C002 Line 5: Unexpected token ==> ATTRS"
+      ]
+    },
+    {
+      "name": "AT045",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \"X\" value attrs\r\nendproc\r\n",
+      "source_sha256": "9d9b53acceec0bad564fb15d507aa105c483acef700022d52413319dfbcbc245",
+      "success": false,
+      "label": "setfattr \"X\" value attrs",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> ATTRS"
+      ]
+    },
+    {
+      "name": "AT046",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nstring localpath,localattrs\r\ngetfattr localpath localattrs\r\nendproc\r\n",
+      "source_sha256": "5cc7756d05ba9a91bd795c296afb9d2e69e5cdab0cd8be1f81c4706373ac812c",
+      "success": true,
+      "label": "string localpath,localattrs\ngetfattr localpath localattrs",
+      "errors": [],
+      "hex": "03 d2 a2 00 cf 4d a0 00 00 a0 51 00 95",
+      "asx_sha256": "d59d62bcace5a46df1e78c8de79321cf3f479b6648d4f1f13b8b665c9a22de3e"
+    },
+    {
+      "name": "AT047",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ncall worker with \"X\" \"R\"\r\nendproc\r\nproc worker\r\nstrparm patharg\r\nstrparm attrsarg\r\ngetfattr patharg attrsarg\r\nendproc\r\n",
+      "source_sha256": "26a6876a001f92b7dbaab0feaf8a0decef568ede77855619fc6d671b8b6d9fd2",
+      "success": true,
+      "label": "call worker with \"X\" \"R\"",
+      "errors": [],
+      "hex": "03 cf d0 cd aa b4 8c b1 cd aa b4 05 99 c8 16 00 00 00 d2 5e ff 94 cf 4d 96 a8 00 96 57 00 95",
+      "asx_sha256": "7d9d8143d62414a15a72a51cf65ed811cf058975eff8b71b39c0aef1adee4db6"
+    },
+    {
+      "name": "AT048",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \"X\" \"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\"\r\nendproc\r\n",
+      "source_sha256": "a0b24abcdb2726a8b2473deb1e6fcbd992af08eff08c936116cecf7a9f3fa6b0",
+      "success": false,
+      "label": "getfattr \"X\" \"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\"",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+      ]
+    },
+    {
+      "name": "AT049",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ngetfattr \"X\" \"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\"\r\nendproc\r\n",
+      "source_sha256": "7f0e51ff46c460187cbe9bd0ad61b3ae1de45ad2fb500210d84a6fe46307b0eb",
+      "success": false,
+      "label": "getfattr \"X\" \"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\"",
+      "errors": [
+        "Error C043 Line 5: Maximum token length exceeded ==> RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+        "Error C025 Line 5: Invalid identifier ==> RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+      ]
+    },
+    {
+      "name": "AT050",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nstring localpath,localattrs\r\nsetfattr localpath localattrs\r\nendproc\r\n",
+      "source_sha256": "84a003fb0ff6db22de9b51f94a949199ed16853ad14743c1eeb89b702cbf036e",
+      "success": true,
+      "label": "string localpath,localattrs\nsetfattr localpath localattrs",
+      "errors": [],
+      "hex": "03 d2 a2 00 cf 9f a0 00 00 a0 51 00 95",
+      "asx_sha256": "2eb3c731ac68c922051bc15fb814eaced0df76299ab2b7b792e76bec52a921a9"
+    },
+    {
+      "name": "AT051",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\ncall worker with \"X\" \"R\"\r\nendproc\r\nproc worker\r\nstrparm patharg\r\nstrparm attrsarg\r\nsetfattr patharg attrsarg\r\nendproc\r\n",
+      "source_sha256": "807021a1a71ad9449f09849b47f3f97b09d70566c1d5e0242c78928bcc777c3e",
+      "success": true,
+      "label": "call worker with \"X\" \"R\"",
+      "errors": [],
+      "hex": "03 cf d0 cd aa b4 8c b1 cd aa b4 05 99 c8 16 00 00 00 d2 5e ff 94 cf 9f 96 a8 00 96 57 00 95",
+      "asx_sha256": "701ba58f63cf4ef2076d9f550a36b067cea76fa7418694c1c3a86e2a40cafa38"
+    },
+    {
+      "name": "AT052",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \"X\" \"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\"\r\nendproc\r\n",
+      "source_sha256": "d6534112b3678060a98858fc40a1889d1ced9f665a09de7505a894b9698fbe37",
+      "success": true,
+      "label": "setfattr \"X\" \"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\"",
+      "errors": [],
+      "hex": "03 cf 9f aa b4 0b 5d aa 03 52 5d 99 6f 71 57 69 1d 8b 29 57 d3 f9 05 5d 99 6f 71 57 69 1d 8b 29 57 d3 f9 05 5d 99 6f 71 57 69 1d 8b 29 57 d3 f9 05 5d 99 6f 71 57 69 1d 8b 29 57 d3 f9 05 5d 99 6f 71 57 69 1d 8b 29 57 d3 f9 05 5d 99 6f 71 57 69 1d 8b 29 57 d3 f9 05 5d 99 94",
+      "asx_sha256": "e10cb0caebb559ae4211e801220236ba4726f2a14114abb1bc6f2d84036197db"
+    },
+    {
+      "name": "AT053",
+      "source": "integer result\r\nlong size\r\nstring path,attrs,value\r\nproc main\r\nsetfattr \"X\" \"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\"\r\nendproc\r\n",
+      "source_sha256": "991d9c87870c5e276e93f952ab1b79fe0bba6eb7234f7ac4490e0216c89bc87f",
+      "success": false,
+      "label": "setfattr \"X\" \"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\"",
+      "errors": [
+        "Error C043 Line 5: Maximum token length exceeded ==> RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+      ]
+    }
+  ],
+  "scope": "Authored source compilation only; expected values fixed independently before runtime execution."
+}

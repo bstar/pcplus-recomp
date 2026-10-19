@@ -1,0 +1,42 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "unit": 1,
+      "name": "get",
+      "start": 60741,
+      "end": 60777,
+      "file_start": 120149,
+      "bytes": 36,
+      "sha256": "ee60a1abb4a67d4efac918844ca9b3620221400580f5a4edbbcb12c88963d1a5"
+    },
+    {
+      "unit": 2,
+      "name": "set",
+      "start": 60777,
+      "end": 60805,
+      "file_start": 120185,
+      "bytes": 28,
+      "sha256": "ca70d91c9c5b6c5af1d27ecfaf96dbab520551b02dea78a96e2d15b00cb71051"
+    },
+    {
+      "unit": 3,
+      "name": "read",
+      "start": 62225,
+      "end": 62243,
+      "file_start": 121633,
+      "bytes": 18,
+      "sha256": "98ef3c2bfc344b925a35be6000d71a19b02e213a66eb28eddbf69bbecf3d10d6"
+    },
+    {
+      "unit": 4,
+      "name": "write",
+      "start": 62243,
+      "end": 62261,
+      "file_start": 121651,
+      "bytes": 18,
+      "sha256": "943b484bb346ffcac444498daf5c7b4f1783d9c9a6d4b6b025ae6b2bb122a688"
+    }
+  ],
+  "scope": "Numerical instruction provenance only; GET read-pointer/no-flush policy retained in flat recovery. Production destination/writeback adaptation is explicit."
+}

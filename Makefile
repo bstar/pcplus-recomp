@@ -980,3 +980,13 @@ test-aspect-enumeration-compiler:
 	python3 standalone/check_aspect_enumeration_compiler.py
 all: aspect-enumeration
 test: test-aspect-enumeration test-aspect-enumeration-compiler
+
+.PHONY: aspect-file-attributes test-aspect-file-attributes test-aspect-file-attributes-compiler
+aspect-file-attributes:
+	python3 standalone/build_aspect_file_attributes.py
+test-aspect-file-attributes: aspect-file-attributes
+	python3 standalone/check_aspect_file_attributes.py
+test-aspect-file-attributes-compiler:
+	python3 standalone/check_aspect_file_attributes_compiler.py
+all: aspect-file-attributes
+test: test-aspect-file-attributes test-aspect-file-attributes-compiler

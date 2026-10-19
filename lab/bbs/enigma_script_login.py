@@ -1,5 +1,6 @@
 """Prompt-driven source login for the isolated synthetic loclab account only."""
-def source(file_info=False,enumeration=False):
+def source(file_info=False,enumeration=False,file_attributes=False):
+ enumeration=enumeration or file_attributes
  file_info=file_info or enumeration
  probe=('fopen 4 \"FILECHK.TMP\" \"wb\"\nfputs 4 \"proof\"\nfclose 4\n'
   'getfsize \"FILECHK.TMP\" probe_size\nif failure\nexit\nendif\n'
@@ -9,7 +10,13 @@ def source(file_info=False,enumeration=False):
   'fputs 4 $FILENAME\nfputs 4 "|"\nfputs 4 $FNAME\nfputs 4 "|"\n'
   'fputs 4 $FEXT\nfputs 4 "|"\nltoa $FSIZE probe_number\nfputs 4 probe_number\nfclose 4\n'
   'else\nexit\nendif\nfindnext\nif found\nexit\nendif\n') if enumeration else ''
- return ('integer cancel_done,scan_done\n'+('long probe_size\n' if file_info else '')+('string probe_number\n' if enumeration else '')+'proc main\ninteger attempts\n'+probe+enum_probe+
+ attr_probe=('setfattr "FILECHK.BIN" "RHS"\nif failure\nexit\nendif\n'
+  'getfattr "FILECHK.BIN" probe_attrs\nif failure\nexit\nendif\nstrcmp probe_attrs "RHS"\n'
+  'if failure\nexit\nendif\nfopen 4 "ATTR.LOG" "wb"\nfputs 4 probe_attrs\nfputs 4 "|"\n'
+  'setfattr "FILECHK.BIN" ""\nif failure\nexit\nendif\ngetfattr "FILECHK.BIN" probe_attrs\n'
+  'if failure\nexit\nendif\nstrcmp probe_attrs $NULL\nif failure\nexit\nendif\n'
+  'fputs 4 probe_attrs\nfclose 4\n') if file_attributes else ''
+ return ('integer cancel_done,scan_done\n'+('long probe_size\n' if file_info else '')+('string probe_number\n' if enumeration else '')+('string probe_attrs\n' if file_attributes else '')+'proc main\ninteger attempts\n'+probe+enum_probe+attr_probe+
  'fopen 5 "LOGIN.LOG" "wb"\nfputs 5 "START"\n'
  'cancel_done=0\nscan_done=0\nattempts=0\n'
  'waitfor "lOGIN" 25\ntransmit "^M"\n'

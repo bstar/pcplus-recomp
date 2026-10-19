@@ -123,3 +123,9 @@ file and writes the native builtin values as `FILECHK.BIN|FILECHK|BIN|5` before
 authentication. The exact trace adds a nineteenth check to the unchanged route
 checks. [Enumeration validation](../../docs/ASPECT_ENUMERATION.md) binds this
 mode to the actual DOS compiler/runner and isolated patched owned modules.
+
+`--attribute-login` includes the existing query/rename and enumeration probes,
+then sets/gets RHS and clears/gets an empty far-global attribute string before
+authentication. ATTR.LOG must be exactly `RHS|`, adding a twentieth check to the
+same custom navigation route. [Attribute validation](../../docs/ASPECT_FILE_ATTRIBUTES.md)
+binds the source-built DOS compiler/runner and independent native-wrapper control.

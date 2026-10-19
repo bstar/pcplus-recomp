@@ -69,6 +69,7 @@ builds.append('aspect_end_wait_native')
 builds.append('aspect_paths')
 builds.append('aspect_file_info')
 builds.append('aspect_enumeration')
+builds.append('aspect_file_attributes')
 builds.append('aspect_script_files')
 builds.append('aspect_script_file_backend')
 builds.append('aspect_compiler_lexer')
@@ -87,6 +88,8 @@ owner_checks.append('standalone/check_terminal_key_edit.py')
 owner_checks.append('standalone/check_attribute_boundary.py')
 owner_checks.append('standalone/check_attribute_repair.py')
 owner_checks.append('standalone/check_attribute_repair_live.py')
+owner_checks.append('standalone/check_aspect_file_attributes.py')
+owner_checks.append('standalone/check_aspect_file_attributes_compiler.py')
 owner_checks.append('standalone/check_aspect_enumeration.py')
 owner_checks.append('standalone/check_aspect_enumeration_compiler.py')
 owner_checks.append('standalone/check_aspect_file_info.py')
@@ -176,6 +179,8 @@ outputs += ['aspect-file-info/'+u['name']+'.bin' for u in json.loads((ROOT/'stan
 outputs += ['aspect-file-info/file_info.obj']
 outputs += ['aspect-enumeration/'+u['name']+'.bin' for u in json.loads((ROOT/'standalone/fixtures/aspect_enumeration_native_units.json').read_text())['units']]
 outputs += ['aspect-enumeration/enumeration.obj']
+outputs += ['aspect-file-attributes/'+u['name']+'.bin' for u in json.loads((ROOT/'standalone/fixtures/aspect_file_attributes_native_units.json').read_text())['units']]
+outputs += ['aspect-file-attributes/reused-parse.bin','aspect-file-attributes/reused-attributes.bin','aspect-file-attributes/file_attributes.obj']
 outputs += ['aspect-script-file-backend/SCRIPTIO.EXE']
 outputs += ['aspect-compiler-lexer/ASPLEX.EXE','aspect-compiler-unit/ASPINV.EXE']
 outputs += ['aspect-compiler-expression/ASPEXP.EXE']

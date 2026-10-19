@@ -2,7 +2,8 @@
 
 The maintained compilers and production DOS interpreter now support FINDFIRST,
 FINDNEXT, `$FILENAME`, `$FNAME`, `$FEXT`, `$FATTR`, `$FDATE`, `$FTIME` and `$FSIZE`.
-The runtime implements 94 of 215 opcode slots and explicitly rejects 121. The
+That checkpoint implemented94 of215 opcode slots and rejected121. The later
+[file attributes integration](ASPECT_FILE_ATTRIBUTES.md) extends this to96/119. The
 whole ASPECT language, recorder and F01–F16 application gates remain open.
 
 ```text

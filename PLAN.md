@@ -81,14 +81,28 @@ must exclude original executables and private install/configuration data.
 
 ## Current application work
 
+The [file attribute integration](docs/ASPECT_FILE_ATTRIBUTES.md) adds GETFATTR and
+SETFATTR through both compilers and the production DOS child. Its100 exact bytes
+plus203 reused parser/formatter bytes pass1,081 source/original cases. The54-case
+original compiler corpus matches19 accepted/35 rejected outcomes; the full DOS
+compiler passes1,664 cases. An actual native-wrapper control reproduces lost far
+global writeback; the maintained destination/flush adaptation fixes it. The279
+same-process VM runs pass2,403 assertions, including all RHSA masks, four output
+classes, six streams, shared FOUND, EXECUTE and fault cleanup. The dispatcher now
+implements96 slots and rejects119;1,120 composed cases/26,884 checks pass. The
+310 enumeration/155 query/341 stream regressions still pass. Parent login and
+all20 expanded isolated ENiGMA checks pass;241 outputs reproduce without originals.
+All whole-application gates remain open.
+
+
 The [enumeration integration](docs/ASPECT_ENUMERATION.md) adds FINDFIRST/FINDNEXT
 and the seven native file metadata builtins. Its675 exact native bytes pass885
 component cases and a matching original replay. Both compilers match46 original
 outcomes (17 accepted/29 rejected); the DOS compiler passes1,610 cases. Actual
 DOS covers shared FOUND state, file/hidden/directory masks, retained failed-search
 fields, unrelated DTA owners and EXECUTE continuity. A guarded runtime fixes the
-native no-dot volume null write without altering flat recovery. The dispatcher
-now implements94 slots and rejects121;1,122 composed cases/26,928 checks pass.
+native no-dot volume null write without altering flat recovery. That checkpoint
+implemented94 slots and rejected121;1,122 composed cases/26,928 checks pass.
 The310 repeated DOS VM runs pass22,377 assertions;155 query/341 stream runs
 remain passing. Parent login and all19 expanded ENiGMA checks pass as well.
 A fresh original-free rebuild reproduces234 outputs. All whole-application
