@@ -365,6 +365,16 @@ terminal_program_poll:
  jne .return_prompt
  call terminal_setup_complete
 .return_prompt:
+ ; A successful online script must resume the terminal immediately. A welcome
+ ; stream can exceed the bounded raw ring while a user acknowledges console
+ ; output; native inline scripting does not insert that application pause.
+ cmp word [terminal_program_kind],4
+ jne .ordinary_prompt
+ cmp word [terminal_program_status],4
+ jne .ordinary_prompt
+ cmp word [connection_state],6
+ je .restore_screen
+.ordinary_prompt:
  cmp word [terminal_program_kind],2
  je .restore_screen ;Reload owns its confirmation/failure acknowledgement.
  ; Original PROGRAM asks for a local key after the command. BIOS output avoids

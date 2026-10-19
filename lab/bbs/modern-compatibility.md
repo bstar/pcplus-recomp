@@ -6,7 +6,47 @@ The source-built DOS terminal is tested against owned loopback instances of
 COM2/19200/8N1/HARD through the modeled Hayes/Telnet modem. Nix supplies the
 toolchains. These results do not establish physical Wi-Fi modem compatibility.
 
-## Latest editor-tested build
+## Connected-script session
+
+Terminal `15a9e713903e630964003d2411c857b7211aea6c9878a6ef35aca8198d5fb18f`
+now logs into owned Synchronet through a menu-launched, source-built ASPECT
+script on COM2/19200/8N1/HARD. Credentials come from the script, with WAITFOR
+gating the password. Automatic terminal resume then passes all12 stock-editor
+checks and eight measured key sequences, ending with draft abort. The retained
+label is `script-session-final-15a9`; see the
+[session record](../../docs/validation/aspect-script-session.json) and
+[integration details](../../docs/ASPECT_SCRIPT_SESSION.md).
+
+The new workflow exposed and corrected selection of COM1 from native active
+slot0 during a COM2 session. Successful connected scripts now resume without
+an acknowledgement pause while welcome data arrives. Earlier failures remain
+retained. The ENiGMA comparisons below retain the separately tested de47 build;
+this Synchronet script workflow does not establish a new ENiGMA result.
+
+## Input-policy build: stock editor checks
+
+Terminal `de47e2b08851e1178d0b4fbb2d949ae15de78b23604b14ffa8420f2f3153e84b`
+passes all12 stock Synchronet editor checks on COM2/19200/8N1/HARD, with
+all eight measured key sequences and draft abort. The retained label is
+`editor-input-policy-de47-hard`.
+
+The same build reaches the stock ENiGMA editor with immediate modem forwarding,
+emits all eight expected key sequences, and closes without saving a post.
+Home positioning fails; Insert/overtype passes in this particular run. The
+retained label is `editor-input-policy-de47-immediate`. The current
+[editor aggregate](../../docs/validation/bbs-editors.json) consequently remains
+false. Earlier failures and the packet-buffering comparisons remain preserved;
+they are not replaced by the new terminal identity. Neither result establishes
+physical modem behavior or complete BBS compatibility.
+
+The matching `editor-input-policy-de47-buffer30` run passes all seven ENiGMA
+checks and eight key-wire checks with explicit30 ms buffering. The
+[paired record](../../docs/validation/bbs-enigma-packetization.json) binds the
+same executable, recipe, serial settings and PRM for both runs. Immediate input
+still fails Home; buffering is a local workaround without a TCP boundary or
+physical modem guarantee.
+
+## Earlier editor-tested build and paired buffering experiment
 
 This runtime includes saved clipboard separator settings and the serviced filename clipboard, 63 KB redisplay and frozen-history export, confirmed live input-mode changes, bounded default-XLT
 PCPLUS directory lookup, saved translation modes, explicit XLT input translation,

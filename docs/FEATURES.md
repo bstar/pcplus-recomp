@@ -489,3 +489,25 @@ The current interpreter still implements63 slots and rejects152 explicitly;
 coverage remains358 frozen outputs plus358 presentation variants. This advances
 F03/F05/F09/F13/F16 without closing any whole-application gate. Logged-in modern
 BBS workflows and actual hardware remain required beyond greeting regressions.
+
+## Connected ASPECT login and terminal resume
+
+[Connected script sessions](ASPECT_SCRIPT_SESSION.md) fix a live COM2
+handoff defect: native active IRQ-table slot0 was incorrectly used as COM1.
+The child now receives the selected terminal COM number, and incompatible
+standard-base/IRQ mappings fail before EXEC. Successful connected scripts resume
+the terminal immediately; errors and offline console scripts retain their
+serviced acknowledgement prompt. This removes a pause during incoming welcome
+art that caused a retained abnormal DOS exit after successful authentication.
+The exact errorlevel of that earlier exit was not captured.
+
+An actual menu-launched source-built script now sends the synthetic local
+Synchronet credentials, gates its password with native WAITFOR, then returns to
+a terminal that passes all12 stock-editor checks and eight key-wire checks,
+ending in draft abort. Current linked launch checks pass17 groups/65 inputs,
+all seven terminal Script DOS workflows pass, and90 outputs reproduce without
+originals. The runner is unchanged; parent DS/SS remains65408. Earlier ENiGMA
+immediate forwarding still fails Home on its recorded de47 build; the matched
+30ms buffering experiment passes, with both retained separately. Full script
+rendering/events/recorder, other application work, custom IRQ inheritance and
+physical Wi-Fi modem validation remain required. All F01–F16 gates remain open.

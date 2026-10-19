@@ -8,7 +8,8 @@ extern terminal_translation_edit_executable,terminal_translation_edit_tail
 extern _command_menu_script,_terminal_script_prepare
 extern terminal_program_command,terminal_program_status
 extern uart_rx_count,uart_rx_dropped,uart_rx_buffer,uart_rx_read,uart_rx_write
-extern uart_port_lcr,uart_port_thr,uart_port_index,uart_software_flow,uart_hardware_flow
+extern uart_port_lcr,uart_port_thr,uart_software_flow,uart_hardware_flow
+extern terminal_port_number,terminal_irq_vector
 extern uart_rts_lowered,terminal_parser_active,terminal_ansi_wait_active
 extern terminal_translation_enabled,terminal_translation_mode,terminal_translation_table,uart_rx_mask
 script_translation_policy:
@@ -122,7 +123,20 @@ terminal_script_prepare:
  mov dx,[uart_port_lcr]
  mov al,[script_lcr]
  out dx,al
- mov ax,[uart_port_index]
+ ; The terminal installs its selected UART in native slot0. That slot is not
+ ; the BIOS COM number. The child uses the actual one-based session selection.
+ mov ax,[terminal_port_number]
+ dec ax
+ cmp ax,3
+ ja .bad_policy
+ mov bx,ax
+ shl bx,1
+ mov dx,[cs:script_bases+bx]
+ cmp dx,[uart_port_thr]
+ jne .bad_policy
+ mov dx,[cs:script_vectors+bx]
+ cmp dx,[terminal_irq_vector]
+ jne .bad_policy ;The current child ABI supports standard IRQs only.
  mov [_script_port_index],ax
  mov ax,[uart_software_flow]
  mov [_script_soft_flow],ax
@@ -139,6 +153,8 @@ terminal_script_prepare:
 .bad_policy:
  mov ax,1
  ret
+script_bases: dw 0x3f8,0x2f8,0x3e8,0x2e8
+script_vectors: dw 12,11,12,11
 
 ; Serviced return-key wait. Parent IRQ buffers incoming bytes; only bounded
 ; foreground flow control runs here. Never parse/render onto the child console.

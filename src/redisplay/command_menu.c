@@ -99,8 +99,8 @@ ENTRY(script,"Run script",
  "Run a compiled ASPECT script from a local DOS file.\n"
  "Enter a DOS 8.3 path; Escape cancels. The script temporarily owns\n"
  "the current port. Capture closes; the terminal restores its screen\n"
- "and received data after the script returns. Console output remains\n"
- "visible until you press a key. Unsupported commands report an error.");
+ "and received data after the script returns. Connected scripts resume\n"
+ "automatically on success. Offline scripts/errors wait for a key.");
 ENTRY(using,"Using the command menu",
  "Alt-Z opens this menu. Left/Right or Tab changes the menu group.\n"
  "Up/Down or Home/End selects a command; a listed letter runs it.\n"

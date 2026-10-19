@@ -1,5 +1,9 @@
 # ASPECT input translation and parent policy
 
+The later [connected-session checkpoint](ASPECT_SCRIPT_SESSION.md) corrects
+selected-port handoff and connected-success return behavior. This input-policy
+record retains the products and results measured at its own checkpoint.
+
 Scripts launched from the terminal now inherit its selected input translation
 table or seven-bit policy. COMGETC, COMGETCD, RGET, WAITFOR and WAITQUIET apply
 the policy once. Unread bytes remain raw when returned to the terminal, which

@@ -46,6 +46,9 @@ COMGETC/COMGETCD, RGET and WAITQUIET, with the native timing and status rules
 kept distinct from the raw child platform services. [Input policy](docs/ASPECT_INPUT_POLICY.md)
 now inherits the terminal's XLT or seven-bit setting while returning unread
 bytes unchanged. Full rendering and script events remain unfinished.
+[Connected script sessions](docs/ASPECT_SCRIPT_SESSION.md) use the selected COM
+port and resume automatically on success; a live script login followed by stock
+Synchronet editor interaction is verified in DOS.
 Stage the terminal, sibling helpers and
 an authored HELLO example with `./tools/build package`; files appear in
 `build/dos-package` without original executables or private profiles.

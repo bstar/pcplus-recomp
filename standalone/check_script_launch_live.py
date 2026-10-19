@@ -61,6 +61,31 @@ def main():
   m.keys.append(32);m.safe();assert len(m.children)==1 and m.children[0]['path']==b'D:\\APP\\ASPECT.EXE' and m.children[0]['tail'].startswith(b' '+p+b' /S1:0003:03:H:')
   assert m.get('terminal_program_status')==4 and not m.get('terminal_program_active');m.restored()
  done('relative-drive-rooted-direct-sibling-child-and-real-foreground-restore',5)
+ # Native terminal slot0 is a live IRQ-table slot, not a COM identifier.
+ # Execute prepare independently of the modeled COM1 hardware boundary.
+ for port,base,vector in [(1,0x3f8,12),(2,0x2f8,11),(3,0x3e8,12),(4,0x2e8,11)]:
+  m=model();path(m,b'TEST.ASX');m.put('terminal_port_number',port)
+  m.put('uart_port_index',0);m.put('terminal_irq_vector',vector)
+  for name,offset in [('rbr',0),('thr',0),('ier',1),('lcr',3),('mcr',4),('lsr',5),('msr',6)]:
+   m.put('uart_port_'+name,base+offset)
+  assert m.call('terminal_script_start')==0
+  assert m.call('terminal_script_prepare')==0
+  tail=bytes(m.uc.mem_read(m.symbols['terminal_translation_edit_tail'],96)).split(b'\0',1)[0]
+  assert b' /S'+str(port).encode()+b':0003:03:H:' in tail,tail
+ done('selected-COM1-through4-independent-of-native-active-slot-zero',4)
+ for port,base,vector in [(0,0x3f8,12),(5,0x3f8,12),(2,0x3f8,11),(2,0x2f8,12)]:
+  m=model();path(m,b'TEST.ASX');m.put('terminal_port_number',port)
+  m.put('uart_port_thr',base);m.put('terminal_irq_vector',vector)
+  assert m.call('terminal_script_start')==0
+  assert m.call('terminal_script_prepare')==1 and not m.children
+ done('invalid-COM-base-and-child-unsupported-custom-IRQ-refused-before-EXEC',4)
+ for status in [0,7]:
+  m=model();path(m,b'TEST.ASX');m.put('connection_state',6);m.child_status=status
+  if status:m.keys.append(32)
+  assert m.call('terminal_script_start')==0;m.safe();m.restored()
+  assert len(m.children)==1 and m.get('terminal_program_status')==(5 if status else 4)
+  assert (m.live_prompt_calls>0)==bool(status)
+ done('connected-success-resumes-without-key-and-error-retains-serviced-prompt',2)
  for p in [b'',b'..\\T.ASX',b'.\\T.ASX',b'LONGNAME9.ASX',b'T.LONG',b'T A.ASX',b'T.ASX /c',b'CON.ASX',b'D:\\COM1\\T.ASX',b'T;X',b'T".ASX',b'T*',b'D:\\',b'T/ABC']:
   m=model();path(m,p);assert m.call('terminal_script_start')==0;m.keys.append(32);m.safe()
   assert not m.children and m.get('terminal_program_status')==5;m.restored()
