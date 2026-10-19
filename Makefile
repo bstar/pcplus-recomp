@@ -48,6 +48,10 @@ test-status-live: terminal
 .PHONY: aspect-set test-aspect-set test-aspect-set-compat
 .PHONY: aspect-paths test-aspect-paths test-aspect-path-compiler
 .PHONY: aspect-script-files test-aspect-script-files
+.PHONY: test-aspect-script-file-compiler
+test: test-aspect-script-file-compiler
+test-aspect-script-file-compiler:
+	python3 standalone/check_aspect_script_file_compiler.py
 .PHONY: aspect-script-file-backend test-aspect-script-file-backend
 all: aspect-script-file-backend
 test: test-aspect-script-file-backend

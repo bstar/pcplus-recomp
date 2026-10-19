@@ -1,0 +1,132 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "oracle_sha256": "c99bf8d56f52a1878dc706ecbae3eb988d8ca0e0e99f649693e5708a6aea077e",
+  "cases": [
+    {
+      "name": "FS000",
+      "source": "integer setting_value\r\nlong wide\r\nproc main\r\nset fgets_crlf on\r\nendproc\r\n",
+      "source_sha256": "82a6611fbdd78ff09dd66ceaaf154be9433ca5164453549e05f391a27fdc4b9d",
+      "success": true,
+      "label": "on",
+      "hex": "00 cf 9e 22 01 94",
+      "asx_sha256": "26004ffa4459287e5ec4b0de4d0b3ad69308c963864611ffbe9caf48900da506"
+    },
+    {
+      "name": "FS001",
+      "source": "integer setting_value\r\nlong wide\r\nproc main\r\nset fgets_crlf off\r\nendproc\r\n",
+      "source_sha256": "343155674299e10e5e5814163ba76f2d522c4aba7593b994c0d9881afa20acb7",
+      "success": true,
+      "label": "off",
+      "hex": "00 cf 9e 22 00 94",
+      "asx_sha256": "a7c1c671862e4873cc03c619c93e3b61573a93d7c4cdfac970b1654ddb89914e"
+    },
+    {
+      "name": "FS002",
+      "source": "integer setting_value\r\nlong wide\r\nproc main\r\nfetch fgets_crlf setting_value\r\nendproc\r\n",
+      "source_sha256": "30518047843e645d970d42db2b13075007abe64d33421326b1de18183e4a7c56",
+      "success": true,
+      "label": "query",
+      "hex": "00 cf 37 22 8d 00 94",
+      "asx_sha256": "4ddef8e259072a596164529d1c99f37c6bf6da2a29c38b73c08b67c22b5f684e"
+    },
+    {
+      "name": "FS003",
+      "source": "integer setting_value\r\nlong wide\r\nproc main\r\nset fgets_crlf 1\r\nendproc\r\n",
+      "source_sha256": "94865f16ba08b2ff7e65044f730b9f1c40b64f5b74dd44d4815fdef06f73c020",
+      "success": false,
+      "label": "numeric"
+    },
+    {
+      "name": "FS004",
+      "source": "integer setting_value\r\nlong wide\r\nproc main\r\nset fgets_crlf ,on\r\nendproc\r\n",
+      "source_sha256": "1cc9866b6bceb42ad09c2ec3e973b86ea21cf4188b40bb3c5dbd22033dd42e7f",
+      "success": true,
+      "label": "comma",
+      "hex": "00 cf 9e 22 01 94",
+      "asx_sha256": "26004ffa4459287e5ec4b0de4d0b3ad69308c963864611ffbe9caf48900da506"
+    },
+    {
+      "name": "FS005",
+      "source": "integer setting_value\r\nlong wide\r\nproc main\r\nset fgets_crlf on,\r\nendproc\r\n",
+      "source_sha256": "089a057503dc41bcbc50bc53b3b1089d2a9e87ae9cc866588960f7253b73de93",
+      "success": false,
+      "label": "trailing"
+    },
+    {
+      "name": "FS006",
+      "source": "integer setting_value\r\nlong wide\r\nproc main\r\nset fgets_crlf\r\nendproc\r\n",
+      "source_sha256": "c91bb257f7f58e39befb115211cf62d865f3ee7bcd733c00a4442ec3d5e1f851",
+      "success": false,
+      "label": "missing"
+    },
+    {
+      "name": "FS007",
+      "source": "integer setting_value\r\nlong wide\r\nproc main\r\nfetch fgets_crlf\r\nendproc\r\n",
+      "source_sha256": "21b241defcae41247764cda438e607c0fb4f6b285ab1034f1d2fa3c9eddcf031",
+      "success": false,
+      "label": "query_missing"
+    },
+    {
+      "name": "FS008",
+      "source": "integer setting_value\r\nlong wide\r\nproc main\r\nfetch fgets_crlf 1\r\nendproc\r\n",
+      "source_sha256": "a6b7ccbc6cb60a11a335669a750b366691970bdfa6a855e360ea262a73fdadc4",
+      "success": false,
+      "label": "query_constant"
+    },
+    {
+      "name": "FS009",
+      "source": "integer setting_value\r\nlong wide\r\nproc main\r\nfetch fgets_crlf wide\r\nendproc\r\n",
+      "source_sha256": "5467ec2a00b04c4d7381c57209b20fcbe73d16f05e162c1b51c23a3aa1dc3ede",
+      "success": false,
+      "label": "query_long"
+    },
+    {
+      "name": "FS010",
+      "source": "integer setting_value\r\nlong wide\r\nproc main\r\nfetch fgets_crlf ,setting_value\r\nendproc\r\n",
+      "source_sha256": "aeacc8081f9f9dfc9e3919efa122ccb76022985c01f11eb458ff7ca1dd84b70e",
+      "success": true,
+      "label": "query_comma",
+      "hex": "00 cf 37 22 8d 00 94",
+      "asx_sha256": "4ddef8e259072a596164529d1c99f37c6bf6da2a29c38b73c08b67c22b5f684e"
+    },
+    {
+      "name": "FS011",
+      "source": "integer setting_value\r\nlong wide\r\nproc main\r\nfetch fgets_crlf setting_value,\r\nendproc\r\n",
+      "source_sha256": "31861ed8d42b5fb86ed70e72cd0e64e35d07abd0dadda0d0a3a716200a59175b",
+      "success": false,
+      "label": "query_trailing"
+    },
+    {
+      "name": "FS012",
+      "source": "integer setting_value\r\nlong wide\r\nproc main\r\nfetch fgets_crlf (setting_value)\r\nendproc\r\n",
+      "source_sha256": "f2fc4c369df6ceb95b4d38f54222534adbeff6240b96b11a9e0f89f35a118984",
+      "success": false,
+      "label": "query_paren"
+    },
+    {
+      "name": "FS013",
+      "source": "integer setting_value\r\nlong wide\r\nproc main\r\nfetch fgets_crlf setting_value+1\r\nendproc\r\n",
+      "source_sha256": "40f29cd9e6af82ad038681b79aaa5aecc8790ddbceaf588356911363ffcb7e4d",
+      "success": false,
+      "label": "query_expr"
+    },
+    {
+      "name": "FS014",
+      "source": "\r\nproc main\r\ninteger setting_value\r\nfetch fgets_crlf setting_value\r\nendproc\r\n",
+      "source_sha256": "07661d8c782be3647d0925a57871b0f6dba8f749da945f7cabf7b4696d917328",
+      "success": true,
+      "label": "query_local",
+      "hex": "00 d2 02 00 cf 37 22 a1 00 00 95",
+      "asx_sha256": "99543c47ed398d5fbf6993a515a242e828b19062272ba8b7e7523d8f247e3825"
+    },
+    {
+      "name": "FS015",
+      "source": "\r\nproc main\r\ncall worker with 0\r\nendproc\r\nproc worker\r\nintparm setting_value\r\nfetch fgets_crlf setting_value\r\nendproc\r\n",
+      "source_sha256": "6cd94447942125bee21e3be7645c5eb0e046fdc3b62609bcc1c80030d4c0c361",
+      "success": true,
+      "label": "query_parameter",
+      "hex": "00 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 37 22 97 08 00 95",
+      "asx_sha256": "419bbea80dc994edc4b4bd45f117a9f4a37c0e0ce30c1d88428b3d8c4db007cc"
+    }
+  ]
+}

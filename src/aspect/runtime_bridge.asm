@@ -6,6 +6,11 @@ CPU 8086
 SEGMENT _TEXT public class=CODE use16
 extern aspect_dispatch,aspect_abort,session_setjmp
 extern aspect_path_chdir,aspect_path_mkdir,aspect_path_rmdir,aspect_path_delete
+extern aspect_script_file_setting
+extern aspect_script_file_clear,aspect_script_file_close,aspect_script_file_flush
+extern aspect_script_file_getc,aspect_script_file_gets,aspect_script_file_open
+extern aspect_script_file_putc,aspect_script_file_puts,aspect_script_file_read
+extern aspect_script_file_seek,aspect_script_file_tell,aspect_script_file_write,aspect_script_file_eof
 extern aspect_globals_initialize,aspect_globals_release
 extern aspect_flow_gate_decrement,aspect_flow_gate_increment,aspect_flow_seek
 extern aspect_flow_call_operand,aspect_flow_call_framed,aspect_flow_return,aspect_flow_return_framed
@@ -729,6 +734,8 @@ aspect_set_table:
  dw aspect_set_display
 %elif setting=0x18
  dw runtime_set_duplex
+%elif setting=0x22
+ dw aspect_script_file_setting
 %elif setting=0x23
  dw aspect_set_findcase
 %elif setting=0x29
@@ -870,6 +877,32 @@ aspect_dispatch_handlers:
  dw aspect_chain_command
 %elif op=0x37
  dw aspect_fetch_command
+%elif op=0x31
+ dw aspect_script_file_eof
+%elif op=0x35
+ dw aspect_script_file_clear
+%elif op=0x36
+ dw aspect_script_file_close
+%elif op=0x38
+ dw aspect_script_file_flush
+%elif op=0x39
+ dw aspect_script_file_getc
+%elif op=0x3a
+ dw aspect_script_file_gets
+%elif op=0x3f
+ dw aspect_script_file_open
+%elif op=0x40
+ dw aspect_script_file_putc
+%elif op=0x41
+ dw aspect_script_file_puts
+%elif op=0x42
+ dw aspect_script_file_read
+%elif op=0x43
+ dw aspect_script_file_seek
+%elif op=0x45
+ dw aspect_script_file_tell
+%elif op=0x47
+ dw aspect_script_file_write
 %elif op=0x11
  dw aspect_path_chdir
 %elif op=0x79

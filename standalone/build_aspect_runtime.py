@@ -22,6 +22,8 @@ ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm'
  ('fetch_command','src/aspect/fetch_command.asm',None),
  ('find_commands','src/aspect/find_commands.asm',None),('case_commands','src/aspect/case_commands.asm',None),
  ('directory','src/aspect/directory_builtins.asm',None),
+ ('script_file_setting','src/aspect/script_file_setting.asm',None),
+ ('script_file_commands','src/aspect/script_file_commands.asm',None),('script_file_services','src/aspect/script_file_services.asm',None),('script_file_bridge','src/aspect/script_file_bridge.asm',None),
  ('path_commands','src/aspect/path_commands.asm',None),('path_services','src/aspect/path_services.asm',None),('path_state','src/aspect/path_state.asm',None),
  ('path_error_access','reconstruction/program_exec/error_access.asm','PROGRAM_EXEC_OMF'),
  ('path_error_exec','reconstruction/program_exec/error_exec.asm','PROGRAM_EXEC_OMF'),
@@ -51,6 +53,7 @@ C=r'''
 #include "when_runtime.h"
 #include "set_runtime.h"
 #include "find_runtime.h"
+#include "script_file_runtime.h"
 extern unsigned runtime_receive_pattern_count,runtime_wait_gate,runtime_set_duplex_changed;
 extern aspect_file runtime_file;
 extern unsigned runtime_string_count,runtime_depth,runtime_stack_pointer,runtime_frame;
@@ -72,7 +75,7 @@ static void run(const char *path,unsigned limit,unsigned error,unsigned has_inte
  ck((cpu_flags()&0x600)==(flags_before&0x600));
  ck(runtime_string_pending_far==0 && runtime_string_pending_near==0);
  ck(runtime_string_scratch_pointer==0 && runtime_string_scratch_index==0);
- ck(result==error);ck(runtime_live==0);ck(runtime_find_live==0);ck(runtime_string_count==0);ck(runtime_file.handle==0);
+ ck(result==error);ck(runtime_live==0);ck(runtime_find_live==0);ck(runtime_script_file_live==0);ck(runtime_string_count==0);ck(runtime_file.handle==0);
  ck(runtime_depth==0);ck(runtime_stack_pointer==(unsigned)runtime_arena+0x1b1a);
  ck(runtime_frame==runtime_stack_pointer);ck(runtime_abi_bad==0);ck(runtime_peak_live==peak);
  ck(runtime_receive_pattern_count==0);ck(runtime_when_disconnect_armed==0);ck(runtime_wait_gate==0);
@@ -208,7 +211,7 @@ def main():
  # Its authored seven-second script now executes the recovered native delay.
  cases=[dict(c,expected={}) if c['name']=='PAUSE' else c for c in cases]
  assert len({c['name'] for c in cases})==len(cases)
- sources=[Path(__file__).resolve(),corpus_path,arithmetic_corpus_path,parameter_corpus_path,command_corpus_path,ROOT/'reconstruction/uart/encodings.inc',ROOT/'src/aspect/runtime.c',ROOT/'src/aspect/runtime.h',ROOT/'src/aspect/file_io.c',ROOT/'src/aspect/file_io.h',ROOT/'src/aspect/script_path.c',ROOT/'src/aspect/script_path.h']
+ sources=[Path(__file__).resolve(),corpus_path,arithmetic_corpus_path,parameter_corpus_path,command_corpus_path,ROOT/'reconstruction/uart/encodings.inc',ROOT/'src/aspect/runtime.c',ROOT/'src/aspect/runtime.h',ROOT/'src/aspect/script_file_runtime.c',ROOT/'src/aspect/script_file_runtime.h',ROOT/'src/aspect/file_io.c',ROOT/'src/aspect/file_io.h',ROOT/'src/aspect/script_path.c',ROOT/'src/aspect/script_path.h']
  objects=[];units=[]
  sources.append(conversion_corpus_path)
  sources.append(compiler_corpus_path)
@@ -239,7 +242,7 @@ def main():
  program=C.replace('result=aspect_runtime_run(path,limit);',near_admission+'result=aspect_runtime_run(path,limit);')
  program=program.replace(' ck(result==error);',near_observe+' ck(result==error);')
  supported={int(op,16):name for op,name in re.findall(r'%(?:el)?if op=(0x[0-9a-f]+)\n dw (\w+)',(ROOT/'src/aspect/runtime_bridge.asm').read_text())}
- assert len(supported)==76
+ assert len(supported)==89
  # ACV2 adds explicit owned-directory metadata to ACV1's diagnostic inputs.
  table=bytearray(b'ACV2'+struct.pack('<H',len(cases)))
  def block(data):
@@ -292,7 +295,7 @@ def main():
  (OUT/'MISSING.ASX').unlink(missing_ok=True);program+=' run("MISSING.ASX",1000,1,0,0,0,0UL,0);\n'
  # Native SET dispatch uses a complete owned table; unimplemented selectors
  # remain typed failures. GET is a separate interactive-input instruction.
- set_supported={0x09:'BREAK',0x12:'DISPLAY',0x18:'DUPLEX',0x23:'FINDCASE',0x29:'KEYS',0x2e:'MSG_CRLF',0x30:'PAUSECHAR',0x3b:'RXDATA',0x44:'SWITCHCASE',0x4c:'TXPACE',0x55:'WAITCASE',0x56:'WHENCASE'}
+ set_supported={0x22:'FGETS_CRLF',0x09:'BREAK',0x12:'DISPLAY',0x18:'DUPLEX',0x23:'FINDCASE',0x29:'KEYS',0x2e:'MSG_CRLF',0x30:'PAUSECHAR',0x3b:'RXDATA',0x44:'SWITCHCASE',0x4c:'TXPACE',0x55:'WAITCASE',0x56:'WHENCASE'}
  for sub in range(256):
   if sub not in set_supported:(OUT/f'S{sub:02X}.ASX').write_bytes(bytes([0,0x9e,sub]))
  condition=' && '.join(f'sub!={sub}' for sub in set_supported)
@@ -367,7 +370,7 @@ def main():
  program=program.replace(END,extra+END)
  (OUT/'diagnostic.c').write_text(program)
  subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dASPECT_RUNTIME_DIAGNOSTIC',
- '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/script_path.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),*objects],cwd=OUT,check=True)
+ '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/script_file_runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/script_path.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),*objects],cwd=OUT,check=True)
  report=dict(binary_sha256=sha(OUT/'EXECUTE.EXE'),sources={str(p.relative_to(ROOT)):sha(p) for p in sources},support_units=units,original_inputs=[],
   compile_flags=['8086','small model','cdecl','ASPECT_RUNTIME_DIAGNOSTIC'],fixture_count=len(cases),
   supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+15+len(unsupported)+(256-len(set_supported))+4+len(set_corpus['vectors'])+(256-len(set_supported))+len(break_corpus['raw_getters'])+2,
@@ -380,6 +383,6 @@ def main():
   maintained_string_fault_fixture={'STRSHORT':'STRGASS compiler bytes with final00 option and94 return removed; first global HELLO retained, second stays empty'},
   maintained_heap_fault_fixtures={'HEAPFLT':'IDIVEDGE compiler bytes with global-string count changed from0to2','HEAPZERO':'IDZ compiler bytes with global-string count changed from0to2'},
   fixture_expectations={c['name']:{'source_sha256':c['source_sha256'],'asx_sha256':c['asx_sha256'],'expected':c['expected']} for c in cases},
-  scope='Incremental actual native dispatch/operand/operation/file/heap/WHEN/SET/FIND/CASE composition executing source-owned compiled fixtures. Incomplete76-slot opcode table; twelve native SET setters and FETCH queries and shared FIND/CASE consumers. Serial queue/clock/carrier inputs and status-tail snapshots are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
+  scope='Incremental actual native dispatch/operand/operation/file/heap/WHEN/SET/FIND/CASE composition executing source-owned compiled fixtures. Incomplete89-slot opcode table; thirteen native SET setters and FETCH queries and shared FIND/CASE consumers. Serial queue/clock/carrier inputs and status-tail snapshots are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
  (OUT/'manifest.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 if __name__=='__main__':main()

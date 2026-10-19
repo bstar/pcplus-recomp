@@ -81,21 +81,30 @@ must exclude original executables and private install/configuration data.
 
 ## Current application work
 
+The [integrated ASPECT file commands](docs/ASPECT_SCRIPT_FILE_RUNTIME.md) now
+run through both compilers, the actual interpreter and production terminal child.
+The 245-case original compiler corpus matches (126 accepted/119 rejected), and
+the DOS compiler passes 1,480 cases. The 341 same-process VM invocations verify
+retained file handles through EXECUTE and cleanup after normal/error/budget exits;
+three parent cases also cover divide error and actual BIOS Escape cancellation.
+The DOS-compiled owned ENiGMA login writes its exact file trace and passes all
+17 custom search/DIZ/NFO checks afterward. Native file/setting checks pass 6,090
+cases and a matching original replay. The runtime has 89 supported slots, 126
+unsupported slots and thirteen SET/FETCH selectors. All application gates remain open.
+
 The [owned script-file backend](docs/ASPECT_SCRIPT_FILE_BACKEND.md) now runs the
 thirteen native handlers with actual DOS stdio. Its 7,976 assertions cover binary/
 text bytes, EOF/CRLF/control-Z, append, long/negative seeks, read-only writes,
 real DOS-close faults and 100 six-slot cleanup rounds with retained heap/JFT
 identity. REA's negative-seek guard corrected a real Watcom discrepancy. The
-backend is still a linked component: next connect both compilers, runtime
-dispatch/SET and real completion/abort/EXECUTE lifetimes and parent handoffs.
+backend checkpoint remains a separate component record; the application
+integration above now supplies compiler, lifecycle and parent-handoff evidence.
 
-The [script-file recovery](docs/ASPECT_SCRIPT_FILES.md) now supplies 572 exact
-native bytes for thirteen commands (including EOF) and three shared helpers.
-The 5,828 CPU cases and separate original replay cover slot/status/destination
-semantics; the original compiler oracle has 119 accepted and 110 rejected authored
-programs. This component is not yet wired into the maintained 76-slot runtime.
-The owned backend checkpoint above strengthens this with real DOS filesystem
-evidence; compiler/runtime/setting integration and terminal-child tests remain.
+The initial [script-file recovery](docs/ASPECT_SCRIPT_FILES.md) supplied 572 exact
+native bytes for thirteen commands (including EOF) and three shared helpers,
+with 5,828 CPU cases and a 229-program original compiler corpus. Its historical
+record predates the application integration above, which adds FGETS_CRLF and
+the larger compiler, native, VM, parent and BBS suites.
 
 The [ASPECT path commands](docs/ASPECT_PATHS.md) add native CHDIR, MKDIR, RMDIR
 and DELETE to both maintained compilers and the DOS child. The 210 exact native
@@ -104,7 +113,8 @@ matching original replay. Four DOS-compiled filesystem scripts pass 19 status
 checks, including retained CWD/drive and the distinct comparison/error semantics.
 The real terminal login child also completes relative directory creation/removal
 before sending its password, then resumes parent keyboard input. Supported
-opcode slots grow from 72 to 76; 139 remain unsupported. No application gate closes.
+opcode slots grew from 72 to 76 at that checkpoint; the current stream-command
+integration above extends this to 89. No application gate closes.
 
 The maintained terminal now includes directory editing/accounting, live settings
 with confirmed idle serial/profile/translation changes, XMODEM/YMODEM/ZMODEM transfers,

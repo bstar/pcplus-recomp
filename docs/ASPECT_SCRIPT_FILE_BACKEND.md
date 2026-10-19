@@ -6,12 +6,13 @@ eight-byte near prefix; only the backend owns the real CRT `FILE *`. Each owned
 stream has a fixed 512-byte buffer. The native command bodies and their existing
 572-byte flat baselines are unchanged.
 
-This is a linked component diagnostic, not application integration. Its typed
+This backend checkpoint is a linked component diagnostic. Its typed
 operand readers, destination writeback, returning warning and lowercase helper
 are explicit fixture boundaries. Real native slot lookup, command bodies,
 comparison/EOF stores and CRLF/control-Z handling call actual DOS stdio. The
-maintained interpreter and both compilers still need these commands wired in.
-The packaged runtime remains at 76 supported opcode slots.
+[subsequent application integration](ASPECT_SCRIPT_FILE_RUNTIME.md) connects the
+maintained interpreter and both compilers, raising the packaged runtime to 89
+supported opcode slots.
 
 The original dispatcher initializes once, restarts after `EXECUTE` without
 reinitializing file slots, and calls its outer resource cleanup after the final
@@ -69,7 +70,7 @@ the negative-seek probe remain there. The
 capture, all output hashes, current native replay, source-only build and REA
 lifetime/seek evidence.
 
-Remaining work includes compiler grammar/destination integration, dispatch and
-`FGETS_CRLF` SET/FETCH, real script cleanup across completion/abort/EXECUTE,
-terminal-child handoffs and deeper original CRT equivalence. No whole-application
-gate closes.
+Compiler grammar/destinations, dispatch, `FGETS_CRLF` SET/FETCH, actual script
+cleanup across completion/abort/EXECUTE and terminal-child handoffs now pass the
+application integration tests. Deeper original CRT equivalence and the broader
+language/application requirements remain. No whole-application gate closes.

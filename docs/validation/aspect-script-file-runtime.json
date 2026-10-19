@@ -1,0 +1,535 @@
+{
+  "passed": true,
+  "terminal_sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+  "runner_sha256": "6b3cbcc8d3b9889daa9ab07465d65f2ab2e63a3c1582897d34c74eca07a40b5c",
+  "compiler_sha256": "c29764d427166ca61b8d9c4f19e59407f6d5aff9142ea7082f5256cb37d9de25",
+  "supported_opcodes": 89,
+  "unsupported_opcodes": 126,
+  "supported_SET_FETCH": 13,
+  "evidence": {
+    "native": {
+      "path": "build/aspect-script-files/checks.json",
+      "sha256": "9b7c2d629a66bfe66b11084b7c44547e8e43fafb517dd43df87ee4d14b9a62e6"
+    },
+    "original": {
+      "path": "build/aspect-script-files/native-checks.json",
+      "sha256": "ba4bf056dac09b98b999cc8dac5774c16555158c2cbf235e56d83d169f574401"
+    },
+    "host": {
+      "path": "build/aspect-script-files/compiler-checks.json",
+      "sha256": "f545a3dea79502ff55a0b0b129d346f2e93c77abe90b09ff2e50d3800c99e899"
+    },
+    "compiler": {
+      "path": "build/aspect-compiler-dos/checks.json",
+      "sha256": "7b26d932a1e175f48b024c00809743682bbbdf0afd23c0671e4ac3b0892996b6"
+    },
+    "runtime": {
+      "path": "build/aspect-runtime/checks.json",
+      "sha256": "ec0fe5b5216583c6cd53e6d2b877482971399cdb85a7d4b09c717c9828d43184"
+    },
+    "VM": {
+      "path": "build/aspect-script-files-dos/integrated-04/checks.json",
+      "sha256": "af057ab042a94a429dfb21f022e7746bba83d61876901c04ded72dcdede0f0a9"
+    },
+    "parent": {
+      "path": "build/aspect-script-files-parent-dos/files-parent-01/checks.json",
+      "sha256": "8e953544912985f0573ceee32799b15e9a5c65be6ce1dd1781a4153919678cfd"
+    },
+    "ENiGMA": {
+      "path": "build/bbs-lab/results/enigma/owned-file-script-login-02/search-checks.json",
+      "sha256": "8eba3df29a7f7ac1c74e121d34b71060c62551be6e6973812750325f4e957011"
+    }
+  },
+  "native_instruction_bytes": 580,
+  "reused_boolean_bytes": 34,
+  "native": {
+    "passed": true,
+    "cases": 6090,
+    "original_comparisons": 0,
+    "checker_sha256": "ca91470521bd283ad631c6e203e1875b8866eafef8445a90e0b03f0487eed524",
+    "manifest_sha256": "79a3e5aab92029e9997e4c7f1ce29c34514812282c08cfb1f0c875f10c96ba61",
+    "instruction_addresses": 320,
+    "scope": "Actual recovered13 file handlers,3 helpers and native FGETS_CRLF SET/FETCH wrapper with explicit operand/CRT/string/error-return models. Native slot-table, comparison, EOF destination, CRLF/controlZ and byte/count/long destination effects; full nonstack DS, stack and BP/SI/DI/DS=SS/DF checks. Models do not prove real stdio, fatal unwind, filesystem, arbitrary bytecode or integrated application behavior."
+  },
+  "original_replay": {
+    "passed": true,
+    "cases": 6090,
+    "original_comparisons": 6090,
+    "checker_sha256": "ca91470521bd283ad631c6e203e1875b8866eafef8445a90e0b03f0487eed524",
+    "manifest_sha256": "79a3e5aab92029e9997e4c7f1ce29c34514812282c08cfb1f0c875f10c96ba61",
+    "instruction_addresses": 320,
+    "scope": "Actual recovered13 file handlers,3 helpers and native FGETS_CRLF SET/FETCH wrapper with explicit operand/CRT/string/error-return models. Native slot-table, comparison, EOF destination, CRLF/controlZ and byte/count/long destination effects; full nonstack DS, stack and BP/SI/DI/DS=SS/DF checks. Models do not prove real stdio, fatal unwind, filesystem, arbitrary bytecode or integrated application behavior."
+  },
+  "host_compiler": {
+    "passed": true,
+    "accepted": 126,
+    "rejected": 119,
+    "fixtures": {
+      "standalone/fixtures/aspect_script_file_compiler_vectors.json": "19e9acfc8e85aabcd971c2d6d83c97851ba9525269673b58f01cef94a0202d1b",
+      "standalone/fixtures/aspect_script_file_setting_vectors.json": "485e9bd7cd6c04536a4daf61f0edf3910aab4cc1beff8f861e97cf5d3ac2a87f"
+    },
+    "additional_invalid": 6,
+    "validation_fixture_sha256": "029bd31233d944134b5d1f98513578a94e520c73349f439c04e20e654228afa5",
+    "checker_sha256": "b1b3e782f030cc97b930397442ad9fa03b0fa360285cba778c545b790e0ea123",
+    "compiler_sha256": "bd68c5aa979bb361291627f059895cf3bdc2679ff5a9869dffec67f21f02d2d8",
+    "original_inputs": [],
+    "scope": "245 frozen authored original compiler cases: exact accepted ASX and matching rejection for13 file commands and FGETS_CRLF SET/FETCH. Runtime/filesystem behavior verified separately."
+  },
+  "DOS_compiler": {
+    "passed": true,
+    "case_count": 1480,
+    "accepted": 865,
+    "rejected": 615,
+    "binary_sha256": "c29764d427166ca61b8d9c4f19e59407f6d5aff9142ea7082f5256cb37d9de25",
+    "manifest_sha256": "e5e7e69d48c05da3107ef4a939ddcdefd869d5aa755dd77b6d4718cec5ec074f",
+    "checker_sha256": "4d9d647a6e511078a5351b44ce5616bbc1b5924782bb61ac348c206b23e50976",
+    "host_compiler_sha256": "bd68c5aa979bb361291627f059895cf3bdc2679ff5a9869dffec67f21f02d2d8",
+    "fixture_sources": {
+      "standalone/fixtures/aspect_arithmetic_vectors.json": "18424774c5bf1856a6aefd04bd7973556c3e375ce402aefee08c6224317f15f4",
+      "standalone/fixtures/aspect_break_compiler_vectors.json": "7b5f7ca6c45e6746f03362eb184232ebcf7b271210c3732a0be62714647b308a",
+      "standalone/fixtures/aspect_break_native_units.json": "02b884e3e19f239d8e836ee4a70a632027ee9dff2d6ae65dc3ebc5ef63fe5e78",
+      "standalone/fixtures/aspect_break_runtime_vectors.json": "3116a6b04e629677bf8c60f8e11c3326b04aefc7f6589b54de950b08cbd64771",
+      "standalone/fixtures/aspect_chain_compiler_vectors.json": "58bed52ef95f99601398df15542a0ee07dbbbb03a52397860abf67ae165c5b2a",
+      "standalone/fixtures/aspect_chain_native_units.json": "c115775cf248d19ccea52af4f9729aa8ff5e671a0411299f9bfe72cc2b4575f9",
+      "standalone/fixtures/aspect_compiler_validation_vectors.json": "7604d6e801ff1dbed3f7a1d58287c49afe6f5dcbb0c099a3d607ed9f5c5d8c7a",
+      "standalone/fixtures/aspect_console_vectors.json": "43693c61e265b31a13324adb550335b0c37238dd737419edcc4b3b598693b60e",
+      "standalone/fixtures/aspect_conversion_vectors.json": "95296153ff69e7c2c7974af0df17a8a4d1ab2524242f636b9c128aa1b8ee3781",
+      "standalone/fixtures/aspect_declaration_edges.json": "ad0b8ba7daa117bd96f109c766ba2f270219764bf4a586363cbf4833952b726b",
+      "standalone/fixtures/aspect_directory_vectors.json": "80b38259968e5f1a3c5c5d388fa40928ecd7ed759ffc916158f4632a4ae57676",
+      "standalone/fixtures/aspect_end_wait_native.json": "712f5d7c215d15e747f21e9c6b7b7391ebfead162080d319495574ad09f07418",
+      "standalone/fixtures/aspect_execution_vectors.json": "2fe02fbc44993cb35e2d9ca9ed6a003070e458dcec4de485d43a7af5a0ce80e4",
+      "standalone/fixtures/aspect_fetch_native_units.json": "d966032ecdc3fee0b76b883236c3ec494ea28b8b1a87c29bf41973f662e4532f",
+      "standalone/fixtures/aspect_find_case_compiler_vectors.json": "cb781c6b5f82a30d45af684a88ba41f1f9eb9255f443c64eb021959028e81c72",
+      "standalone/fixtures/aspect_find_case_native_units.json": "ed0b3870476ad67296d37ece99cacb51881382c867b25033f151345d7472c6f5",
+      "standalone/fixtures/aspect_find_case_runtime_vectors.json": "80b1ea787876a0f04366b06298a91f3b9db669fa7668272daf8c57acf26adc92",
+      "standalone/fixtures/aspect_literal_vectors.json": "bba820322dd748752ad67b040a5b1a67dfbe6762509ad7ec48805815103e5e9e",
+      "standalone/fixtures/aspect_parameter_vectors.json": "025c4de5e5681b0a502d566b73555b225610f6293dda69f7f38cb78448a88b67",
+      "standalone/fixtures/aspect_path_compiler_vectors.json": "b4e9dab6879171c9adf52e24aadb626860a8a904ec26f6d8332144166510d7aa",
+      "standalone/fixtures/aspect_path_native_units.json": "4ce418ca05ace1b8391b74c490c938df8e873b0a35d95c68d0f1231cef01cbc8",
+      "standalone/fixtures/aspect_receive_runtime_overrides.json": "b473807e571a122c0401a7e4eff6ff0d1ae8b72b7b2ce523ebe5b3b80bd5ca81",
+      "standalone/fixtures/aspect_receive_vectors.json": "41518818a3bfa97bae66277ef04ecf730717cdca31b87f582b310d24793062dc",
+      "standalone/fixtures/aspect_script_file_compiler_vectors.json": "19e9acfc8e85aabcd971c2d6d83c97851ba9525269673b58f01cef94a0202d1b",
+      "standalone/fixtures/aspect_script_file_native_units.json": "aaabc9db126f2eed9ae1491409e2bd2e1f388f979c1ccce09b4a1390e090ef99",
+      "standalone/fixtures/aspect_script_file_setting_vectors.json": "485e9bd7cd6c04536a4daf61f0edf3910aab4cc1beff8f861e97cf5d3ac2a87f",
+      "standalone/fixtures/aspect_script_file_validation_vectors.json": "029bd31233d944134b5d1f98513578a94e520c73349f439c04e20e654228afa5",
+      "standalone/fixtures/aspect_serial_vectors.json": "5b0913c888b2fe19274f9868de9706ee3e4430c6517018c74dd7638d534f1a49",
+      "standalone/fixtures/aspect_set_compiler_vectors.json": "3c7b2e6a0997faa0d2953bfacc5caba997b5cd18c55816c2833b646e04356602",
+      "standalone/fixtures/aspect_set_native_units.json": "6730fd7deedd1167882536872264ae8b1e9e86cbcdba1b126f89951f12da76e1",
+      "standalone/fixtures/aspect_set_runtime_vectors.json": "fb78b644fbed9afdc2beabef6075839103afe809d1176578b81f0546f8d5c24d",
+      "standalone/fixtures/aspect_string_command_vectors.json": "e6095291b2b868e440bbfc4de735d1130d216546119817788ca66306234a78ee",
+      "standalone/fixtures/aspect_when_compiler_vectors.json": "3af789975d9275dd1657d03c248e5c3e8d5b7dca05bf6f2a2d3ffa068122de93",
+      "standalone/fixtures/aspect_when_runtime_vectors.json": "27188a8468758d8af49fc2a055e05a9db51dca7e39b47c69959246e264a05e9b",
+      "standalone/fixtures/aspect_when_vectors.json": "be1d33b309bd42cbfaa63599d47d1bcfb16238ae80f26ff11f49722b1c12d969"
+    },
+    "DOS_summary": "PROGRAM 1480 cases 0 failures",
+    "API_summary": "API 1693 checks 0 failures",
+    "ownership_summary": "OWNERSHIP 26 program and29 inventory failures,100 successful cycles",
+    "CLI_children": 11,
+    "fault_CLI_children": 2,
+    "fault_binaries": {
+      "FAULT.EXE": "1b8c3624c9e8094da5e6dd184063c36516ce7b619ea4f606bc209380ae7ff9c8",
+      "FAILBACK.EXE": "fb056fb3df80b2809cc5101eee28f30cc2fb9633f8758ae080eb5631a03393f0"
+    },
+    "runtime_child_sha256": "6b3cbcc8d3b9889daa9ab07465d65f2ab2e63a3c1582897d34c74eca07a40b5c",
+    "runtime_asx_sha256": "c55d6e3d34b440734e5513d220ee9b6fe9c5c0237c362f98bfe142a7e493c569",
+    "case_manifest_sha256": "52e3863b53451006a13a01a37b535f2fa1ef5e4630b9c7f9f8a9b64d2620aff1",
+    "reused_sources": {
+      "standalone/check_aspect_compiler_lexer.py": "29b9a24513978a6724355e6ac1c8a96cc32a21ad122ecf7c2e22e465d80e3628",
+      "standalone/compiler_heap_snapshot.c": "e8ec917dad1831310e99debbcc9e422430fbcd4c7442c0d4f922718afe260017",
+      "standalone/compiler_heap_snapshot.h": "22059de2b8b206a7029e71e44a90af584bc55d33ebf45dd36c3531f8a24005bd"
+    },
+    "original_inputs": [],
+    "scope": "Complete maintained host grammar under8086 DOS, staged CLI publication including forced rollback/restoration failures and owned fault cleanup, followed by actual execution of DOS-compiled bytecode in maintained ASPECT. Runtime source loading is validated separately; full native language expansion remains unfinished."
+  },
+  "runtime": {
+    "passed": true,
+    "DOS_summary": "ASPECT_RUNTIME 1127 cases 27038 checks 0 failures",
+    "binary_sha256": "669d011d64badfce261efad7b9ecb37ea1aa422235d447b610ac759cdd7a5a63",
+    "manifest_sha256": "859d58ca8eec62cc52018808b3aba11f73e713377b2c31ba50d82029f79e3cf1",
+    "check_sha256": "0109ce207eb31b27eb903b9df4f44680c73be78ba3428cf14e0ce6318df52d49",
+    "result_sha256": "e2bf45371d2925928923865708c2d91ab2825380ba389e3cf913f96a6245284b",
+    "optional_original": null,
+    "original_inputs": [],
+    "fixture_count": 444,
+    "unsupported_slot_cases": 126,
+    "directory_metadata": {
+      "cases": 18,
+      "default_noentry_cases": 2,
+      "unsupported_baud_cases": 1,
+      "host_binding_checks": 164,
+      "fixture_sha256": "80b38259968e5f1a3c5c5d388fa40928ecd7ed759ffc916158f4632a4ae57676",
+      "scope": "Independent ACV2 parse, exact authored114B/entry binding, and actualDOS output/tx/value lines. No private original input."
+    },
+    "fixture_data_sha256": "60686f912586032385df812a63e0a0cdadb7e3333da01dae4ebbea846c72e16e",
+    "fixture_schema": "ACV2",
+    "SET_family": {
+      "supported_subcommands": {
+        "22": "FGETS_CRLF",
+        "09": "BREAK",
+        "12": "DISPLAY",
+        "18": "DUPLEX",
+        "23": "FINDCASE",
+        "29": "KEYS",
+        "2e": "MSG_CRLF",
+        "30": "PAUSECHAR",
+        "3b": "RXDATA",
+        "44": "SWITCHCASE",
+        "4c": "TXPACE",
+        "55": "WAITCASE",
+        "56": "WHENCASE"
+      },
+      "unsupported_subcommands_tested": 243,
+      "truncated_cases": 2,
+      "raw_boolean_cases": 2,
+      "integration_vectors": 38
+    },
+    "supported_slot_count": 89,
+    "scope": "Actual recovered dispatcher executes source-compiled authored ASX through real DOS files/far and near heaps and native console/serial/WHEN/SET/FIND/CASE commands. Serial queue/clock/carrier and requested pacing units are explicit diagnostic models. Supported slots and unsupported coverage are bound to the manifest; full compiler/VM and arbitrary-bytecode safety remain unfinished."
+  },
+  "VM": {
+    "passed": true,
+    "cases": 341,
+    "assertions": 4727,
+    "far_used_blocks": 0,
+    "near_used_blocks": 13,
+    "same_process_rounds": 31,
+    "DOS_summary": "FILE_VM 341 cases 4727 checks 0 failures farheap0 nearheap13 JFT-preserved",
+    "source_compiler_and_host_equal": 13,
+    "source_cli_child_verified": true,
+    "runner_sha256": "6b3cbcc8d3b9889daa9ab07465d65f2ab2e63a3c1582897d34c74eca07a40b5c",
+    "compiler_sha256": "c29764d427166ca61b8d9c4f19e59407f6d5aff9142ea7082f5256cb37d9de25",
+    "checker_sha256": "474b31da1eba3010b15df72b31ffdd8d12f4e6292a39e24f29f5f2d0b9b1a504",
+    "inputs": {
+      "build/aspect-runner/ASPECT.EXE": "6b3cbcc8d3b9889daa9ab07465d65f2ab2e63a3c1582897d34c74eca07a40b5c",
+      "build/aspect-compiler-dos/ASPCOMP.EXE": "c29764d427166ca61b8d9c4f19e59407f6d5aff9142ea7082f5256cb37d9de25",
+      "src/aspect/compiler.py": "bd68c5aa979bb361291627f059895cf3bdc2679ff5a9869dffec67f21f02d2d8",
+      "standalone/test_aspect_script_files_dos.py": "474b31da1eba3010b15df72b31ffdd8d12f4e6292a39e24f29f5f2d0b9b1a504"
+    },
+    "harness_sha256": "f3dd6cb2b97f84a2c3bc22eed0eece55e202759e364403ff3902ee9149340cae",
+    "native_objects": {
+      "dispatch": "5a0aa140ef214d726c03555d8f51cadddd8a1a6f911f8da2736ec78f9cda34b0",
+      "abort": "9a40f2f05f5187cd95bfb3e5355bc790335b91d9629b7eaa43349cb9e794245c",
+      "keyboard_normalizers": "7f2ffc1298e4daa4333cb82d25a99edfebe8909e16530181c0495f7b7040b41a",
+      "keyboard_detection": "bddf234152af645768dbc660c01a738e4082b5c746a5207e8fe0101152bdb2b1",
+      "keyboard_owner": "61b5c6d6278881019e84b8209b58dfcf3082fe39157bacd6da1ca8e632bff15a",
+      "keyboard_api": "6a02facb226c07cac1a74c0aaf183a3460c194427aa5f9a5f3fa1f6581192755",
+      "globals": "029b739581918411c547bbe27a15cbb63d0acd4b3f064abd21b66cc998e6bae9",
+      "stack": "c5f58d70175aaea06c93779a48b5a196446c5e7b17095eb3b4d2904e1a73e951",
+      "conversions": "028a044d58f0a8d978dff856b0c6ffe0b2cc5026e9ce95d1dc6e8d8f4562e018",
+      "conversion_services": "4ec3190eb33326d803ef16bdd0c009d8ffb2347ab67ad51e843edd79142a7879",
+      "console": "6a9fad10c37a4802ba09050e44178c3082ea9ac9a85f0e3475f7ba9da9da242f",
+      "serial_commands": "344968511920e3ba78b49239f14ea8168ed1923d910e8d25d60ca087c6d981cd",
+      "receive_commands": "3ffddce1777033a3ecc8bcd601b58a4fa9a960a3b9003fb324677f302c721054",
+      "receive_policy": "0a1909e1c7010fb7199a1ac02ab8c3c35f6ed3bdb24344dc6191c174b6505a80",
+      "when": "0e81ca655fa983e34da82f09df1cd7075319b489f2b378904c0b3208b017a222",
+      "set_commands": "a9500712281aa4347928a94a7404c01dd8f2e0eca4bf350dbbed8a42e8cc4a21",
+      "break_commands": "569a1ca5083e262d19ef0b21d97be5f6152a8cfc56500881901276d0cb52eabc",
+      "end_wait": "a1673c5483e9f9d6cc07533b21bff587932baec6f946716295d06fdad2065534",
+      "chain_command": "e157bfbb44aa8cc5cb86a19df312407ab3d62b7048c09e8bb2f93931a34c9083",
+      "fetch_command": "7846992c3a2e3e2b6aca5e5907377cb284e6516087ead963b06ef97f170c8e3a",
+      "find_commands": "061645a15b8abb4993e2687ab6c6a35366b656911ae1b578f3cf4801bc88e8a1",
+      "case_commands": "57c90b1746e734ee6c503d0b4dc895425826c6b6c18f53f1efbf1d15a3878f20",
+      "directory": "8e675670aa5b46bb89f7489885520a3ca6e850b0b8093a102b8fbbb43096453b",
+      "script_file_setting": "4729b18176d1bddcb988ba31421803b12b02a182252f4b06de314238ddc6cdd8",
+      "script_file_commands": "17740f89ccbfb2da08ab02d98c8fdbb038e864042020b60b4cc90d2790907054",
+      "script_file_services": "1d74b5b03ebcc48f55a73174511ca5eb5396316579301cf33f70daf0ebc3148a",
+      "script_file_bridge": "816cae6e017920d8e7afd933b8f37d245d469a03a58b3d8ca8b83392dc8e641f",
+      "path_commands": "68c6a438f6c6c80d8b69f7bb174ddab41f09a66ee9f205e928c13f44cd29e5f5",
+      "path_services": "ff814c701653c2b6604fd99fb4ca7e7b3d6b9f2db77944a2e139902e2ed2b9b3",
+      "path_state": "9fe9d68b2f03a43d3074f52489acd7aa70b67a8f1195df28e1e15a7c7077e831",
+      "path_error_access": "effc723e542f1c36090a9c395752690eb8e08de780cbe9346cfa51f4a6112057",
+      "path_error_exec": "b84092d8e34443599234516de629ee6a05ccb69e3665a9dda1c3010b56be1fde",
+      "path_map_error": "ae0db00b8033da046cc4c0f886318d3d82b8bb8205902af3672823233d4344ea",
+      "flow": "678d2951a9b825bf58f8bb00d48bf3f745660a298f9bc0586f4526c8c6df30cc",
+      "parameters": "2e8e911119f1e0dd359aa90eee9c09331b56ff19d94ee65742c3ad02ef28aac5",
+      "strings": "1718ee2076219bdfc3206fab1aecb3c2ff7fb80be0ca354390606f1a97f2add9",
+      "string_commands": "2f485158596ecba8be77a99f32994d118287775e304fe0e7bd667b3b3390802c",
+      "string_services": "3037960ab7e77e9486d49652e3c55fcd991f8b9cfc94bceef4b3c8b7c284bcbc",
+      "string_strlen": "e838811b0c2d0e38e744011c87fbb8b621345c578d25f820a9d63f19ec3f51f6",
+      "string_strncmp": "bc39d3d37421b6eb78d9b8c173403a7f14df9525953de2bfaffaefe06fd6b168",
+      "string_strcpy": "d47f63d89d1802dc91c4b63bc175cb09fb5e406450c5477fc44a77bd47c8f4e2",
+      "string_strcmpi": "82e0b78449a907150217ad098cb91115b7465569ddccfd32c7503ab9f9074bab",
+      "string_concat": "dd4c2c4fcf848cca3e813a1bcad4275807a3a76de0dd687f8fca26847d1f5e66",
+      "string_upper": "df6294bcd5990ed45f36e484bc29045711cd209469ee49b9192db1a3f79ffedd",
+      "operands": "c47f536bb56345f674cbed074c3df4ac7630c373a4d28f3f0a981efa24ccc53e",
+      "operations": "29b4cc5cbd74265cc9552542c7290968b5fd52fa76674d7d709e1bce3d27322f",
+      "arithmetic": "fe6209b1c42f82f033c620bf68a6235b2c94244c80af634a42b358ac9719230b",
+      "long": "752aaff2819d1f47b35b799f90494f12b634895bd2426d55b3e536cae59365db",
+      "support": "212b2a982f54a2dbe8ad6e641841b138e7bedd2ea7470e3ea153b479564f2d5f",
+      "copy": "004d6f9bd7c5a4bd4c439119e9dc68ba27ad7cd45620d717478428342dd2adc3",
+      "setjmp": "368493fdb27779f737d2426b34657fbe0bfcbef270dd5275deb468f0857bd991",
+      "longjmp": "6e8783ff0dd23a0ae67e67b73bf43abec7740a54b3b8025e9b1cf2cc06fb72d7",
+      "bridge": "7b3613ac78dff067c4ad1d81447e1e0f2fa66a18309fb92a62ae39a8b4e9701c"
+    },
+    "fixture_sources": {
+      "NORMAL": "integer bytes_read,last_char,eof_before,eof_after,cleared,setting_before,setting_after\nlong position\nstring block,line1,line2\nproc main\nfetch fgets_crlf setting_before\nset fgets_crlf ,off\nfetch fgets_crlf setting_after\nfopen 0 \"DATA.BIN\" \"w+b\"\nfputs 0 \"ABC\"\nfputc 0 0\nfwrite 0 \"XYZ\" 3\nftell 0 position\nfseek 0 0L 0\nfread 0 block 7 bytes_read\neof 0 eof_before\nfgetc 0 last_char\neof 0 eof_after\nfclear 0\neof 0 cleared\nfopen 1 \"LINE.BIN\" \"wb\"\nfputs 1 \"A\"\nfputc 1 13\nfputc 1 10\nfputs 1 \"B\"\nfputc 1 10\nfclose 1\nfopen 1 \"LINE.BIN\" \"rb\"\nfgets 1 line1\nfgets 1 line2\nfclose 1\nfflush 0\nendproc\n",
+      "ABORT": "integer result,zero\nproc main\nfopen 0 \"ABORT.BIN\" \"wb\"\nfputs 0 \"abort\"\nresult=1/zero\nendproc\n",
+      "CHAIN1": "proc main\nfopen 0 \"CHAIN.BIN\" \"w+b\"\nfputs 0 \"first\"\nexecute \"CHAIN2\"\nendproc\n",
+      "CHAIN2": "integer count\nlong position\nstring block\nproc main\nfputs 0 \"second\"\nftell 0 position\nfseek 0 0L 0\nfread 0 block 11 count\nendproc\n",
+      "CHFAIL": "proc main\nfopen 0 \"CHERR.BIN\" \"wb\"\nfputs 0 \"retained\"\nexecute \"NOFILE\"\nendproc\n",
+      "RANGE": "proc main\nfopen 6 \"WRONG.BIN\" \"wb\"\nendproc\n",
+      "COUNT": "proc main\nfopen 0 \"COUNT.BIN\" \"wb\"\nfputs 0 \"safe\"\nfwrite 0 \"ABC\" 81\nendproc\n",
+      "CLOSED": "proc main\nfclose 0\nendproc\n",
+      "OPENFAIL": "integer result\nproc main\nfopen 0 \"ABSENT\\NO.BIN\" \"rb\"\nresult=failure\nendproc\n",
+      "BUDGET": "proc main\nfopen 0 \"BUDGET.BIN\" \"wb\"\nfputs 0 \"budget\"\nwhile 1\nendwhile\nendproc\n",
+      "SIX": "proc main\nfopen 0 \"SIX0.BIN\" \"wb\"\nfputs 0 \"owned0\"\nfopen 1 \"SIX1.BIN\" \"wb\"\nfputs 1 \"owned1\"\nfopen 2 \"SIX2.BIN\" \"wb\"\nfputs 2 \"owned2\"\nfopen 3 \"SIX3.BIN\" \"wb\"\nfputs 3 \"owned3\"\nfopen 4 \"SIX4.BIN\" \"wb\"\nfputs 4 \"owned4\"\nfopen 5 \"SIX5.BIN\" \"wb\"\nfputs 5 \"owned5\"\nendproc\n",
+      "PARAM": "proc main\ninteger handle=3\nstring name=\"PARAM.BIN\"\ncall worker with handle name\nendproc\nproc worker\nintparm filehandle\nstrparm filename\nfopen filehandle filename \"wb\"\nfputs filehandle \"parameter\"\nendproc\n",
+      "CLISRC": "proc main\nfopen 0 \"CLI.BIN\" \"wb\"\nfputs 0 \"source-child\"\nendproc\n"
+    },
+    "files": {
+      "DATA.BIN": {
+        "bytes": 7,
+        "sha256": "7503240dcaff2a2de095d49eb0baf5a5c212ce4c5923a251e4387ebcffc6de17"
+      },
+      "LINE.BIN": {
+        "bytes": 5,
+        "sha256": "4251f6fcb362ff199d419e7f08a23653701a09b70b08c10d3d0ed4ed2dbd5b92"
+      },
+      "ABORT.BIN": {
+        "bytes": 5,
+        "sha256": "3a53db8a2c8a17ee3ea667bc146718c004d4446dee670a46d426e563ced7bc2f"
+      },
+      "CHAIN.BIN": {
+        "bytes": 11,
+        "sha256": "da83f63e1a473003712c18f5afc5a79044221943d1083c7c5a7ac7236d85e8d2"
+      },
+      "CHERR.BIN": {
+        "bytes": 8,
+        "sha256": "ca67bd59cc4116ac80db5f64cbf4747f26ba929c85e8cc689a6123368d08719b"
+      },
+      "COUNT.BIN": {
+        "bytes": 4,
+        "sha256": "8b3369944dd2a3fab39e32d1aeb1f763946a458ae3e6368a46432adc8f3a0860"
+      },
+      "BUDGET.BIN": {
+        "bytes": 6,
+        "sha256": "0af96a8ed622a394e8b2a239284ee46e9a7a7b0ec38191bbd08571b171118dd6"
+      },
+      "CLI.BIN": {
+        "bytes": 12,
+        "sha256": "4ba9a455f6a33f629bb29e497e61c057726b8367e05725780dd2ef1eb7d4873e"
+      },
+      "PARAM.BIN": {
+        "bytes": 9,
+        "sha256": "6390361dfdff141a9223d632accf61242133a92d83f2a71be7233bb1cdbacca2"
+      },
+      "SIX0.BIN": {
+        "bytes": 6,
+        "sha256": "f45f327abc5e7173c610a0e25aeaf225112eeaf5ffbe291287b235d62488251c"
+      },
+      "SIX1.BIN": {
+        "bytes": 6,
+        "sha256": "e4cc4ac228d8b6fde6fdfff3c5ce862a115660e8118ed1548b2c2278a74e0870"
+      },
+      "SIX2.BIN": {
+        "bytes": 6,
+        "sha256": "bc5f85765c8c43f11c33174c4e5b4e9b916c7e44513d0d3179ab7b0b714dc763"
+      },
+      "SIX3.BIN": {
+        "bytes": 6,
+        "sha256": "299d42e773c70a7468895fc78f6687fd4163b8beccc9e2877e12cf3d640b30a8"
+      },
+      "SIX4.BIN": {
+        "bytes": 6,
+        "sha256": "f8143232abf5614b7fd22cddf54db551309e2c814669e4ac5ecdbcebb02d785a"
+      },
+      "SIX5.BIN": {
+        "bytes": 6,
+        "sha256": "640f87bae86bd144205fb602edc33c9d932b0142f29beb5a08d2a2ad2a471e0b"
+      }
+    },
+    "result_sha256": "b7f236fa81418e12f7cb5b7a2f37509a247ca18e33ae00e1339c4ae92e7ae15b",
+    "scope": "Actual DOS ASPCOMP output plus explicit ASP CLI child and full native VM/owned stdio in341 invocations within one process. Normal/divide-error/range/closed-slot/count/budget/missing-chain cleanup, successful EXECUTE with retained file slot, native global string writes and SET/FETCH tested. Near/far used heap and JFT preserved after warmup; actual user cancellation and parent handoff are separate."
+  },
+  "core_C_objects_identical": {
+    "runtime": "912b4286f716f61ed705252a5910f300b16348af7ee9c569022f983045932212",
+    "script_file_runtime": "5c462b8f7448dd4e6ebb1bef8dcd3b039b177b3a73c26aca50c0c5c4c06bccb2",
+    "file_io": "7a26f2b102e98887ef6f978effc8c38c08cf738b22db301a9b03f6ba64667e72",
+    "script_path": "d38436fead2c3966bf3a8413b6650962c335793c2fe611a334db328f597e6446",
+    "serial_runtime": "25201f14abdce19105d771df095faa7d3a0157e1145f9ab4a28b480701596ffd",
+    "receive_runtime": "4d985ebabf7d175a7d6809fd097408865a089db6145de5f14298692920cdf2bb",
+    "directory_runtime": "b83b8c4b33cd4985a7853744914e32e87b87c98c78a2bba933119575b71459d2",
+    "when_runtime": "3be45454cbec79036f09aa05efc1d8bf6b3bea141e8a418b123448e789874db8",
+    "set_runtime": "2a00ab8f80979f27312b1b81969c1cda9614995f432faadfb125242bb4ede63f",
+    "find_runtime": "e112d5b2d1cf6834a3597b79422f2452d37ec9e29953a306227009c3242d316b"
+  },
+  "parent": {
+    "checks": [
+      {
+        "case": "file-login",
+        "checks": {
+          "renderer_post_sent": true,
+          "DOS_expected_exit": true,
+          "hardware_restored": true,
+          "PRM_unchanged": true,
+          "binary_unchanged": true,
+          "no_peer_errors": true,
+          "no_unexpected_commands": true,
+          "directory_expected_updates_only": true,
+          "fixture_unchanged_LOGIN.ASP": true,
+          "fixture_unchanged_LOGIN.ASX": true,
+          "fixture_unchanged_RENDER.COM": true,
+          "actual_init_and_dial": true,
+          "actual_DOS_CPR": true,
+          "actual_DOS_DA": true,
+          "actual_screen_snapshot": true,
+          "passive_EXEC_observed": true,
+          "child_exit_expected": true,
+          "parent_JFT_unchanged": true,
+          "all_parent_sink_owners_unchanged": true,
+          "explicit_password_only": true,
+          "ordinary_parent_keyboard_resumes": true,
+          "initial_CPR_before_password": true,
+          "no_automatic_redial": true,
+          "frozen_inputs": true,
+          "post_query_sent_after_password": true,
+          "post_return_cursor_coherent": true,
+          "video_0_0": true,
+          "far_history_retained_across_EXEC_return": true,
+          "far_history_bounds": true,
+          "native_renderer_updated_far_history": true,
+          "owned_file_flushed_before_parent_return": true
+        }
+      },
+      {
+        "case": "file-error",
+        "checks": {
+          "DOS_expected_exit": true,
+          "hardware_restored": true,
+          "PRM_unchanged": true,
+          "binary_unchanged": true,
+          "no_peer_errors": true,
+          "no_unexpected_commands": true,
+          "directory_expected_updates_only": true,
+          "fixture_unchanged_LOGIN.ASP": true,
+          "fixture_unchanged_LOGIN.ASX": true,
+          "fixture_unchanged_RENDER.COM": true,
+          "actual_init_and_dial": true,
+          "actual_DOS_CPR": true,
+          "actual_DOS_DA": true,
+          "actual_screen_snapshot": true,
+          "passive_EXEC_observed": true,
+          "child_exit_expected": true,
+          "parent_JFT_unchanged": true,
+          "all_parent_sink_owners_unchanged": true,
+          "explicit_password_only": true,
+          "ordinary_parent_keyboard_resumes": true,
+          "initial_CPR_before_password": true,
+          "no_automatic_redial": true,
+          "frozen_inputs": true,
+          "typed_error_stays_in_parent": true,
+          "far_history_retained_across_EXEC_return": true,
+          "far_history_bounds": true,
+          "owned_file_flushed_before_parent_return": true
+        }
+      },
+      {
+        "case": "file-cancel",
+        "checks": {
+          "DOS_expected_exit": true,
+          "hardware_restored": true,
+          "PRM_unchanged": true,
+          "binary_unchanged": true,
+          "no_peer_errors": true,
+          "no_unexpected_commands": true,
+          "directory_expected_updates_only": true,
+          "fixture_unchanged_LOGIN.ASP": true,
+          "fixture_unchanged_LOGIN.ASX": true,
+          "fixture_unchanged_RENDER.COM": true,
+          "actual_init_and_dial": true,
+          "actual_DOS_CPR": true,
+          "actual_DOS_DA": true,
+          "actual_screen_snapshot": true,
+          "passive_EXEC_observed": true,
+          "child_exit_expected": true,
+          "parent_JFT_unchanged": true,
+          "all_parent_sink_owners_unchanged": true,
+          "explicit_password_only": true,
+          "ordinary_parent_keyboard_resumes": true,
+          "initial_CPR_before_password": true,
+          "no_automatic_redial": true,
+          "frozen_inputs": true,
+          "typed_error_stays_in_parent": true,
+          "far_history_retained_across_EXEC_return": true,
+          "far_history_bounds": true,
+          "owned_file_flushed_before_parent_return": true
+        }
+      }
+    ],
+    "files": {
+      "file-login": {
+        "name": "PARENT.BIN",
+        "bytes": 6,
+        "sha256": "e47125968b3b71049fbc4802d1e40a71ea1359decfabacf70b34588037d4ff0c"
+      },
+      "file-error": {
+        "name": "ERROR.BIN",
+        "bytes": 5,
+        "sha256": "ca00fccfb408989eddc401062c4d1219a6aceb6b9b55412357f1790862e8f178"
+      },
+      "file-cancel": {
+        "name": "CANCEL.BIN",
+        "bytes": 9,
+        "sha256": "8b47045eb7b8ca42aa967f33ee1d014ba89f8d1ac207426b482d34b5c0d90935"
+      }
+    }
+  },
+  "ENiGMA": {
+    "checks": {
+      "DOS_harness": true,
+      "unique_authenticated_session": true,
+      "exact_owned_modules": true,
+      "inputs_unchanged": true,
+      "no_post_saved": true,
+      "real_search_route": true,
+      "title_search": true,
+      "index_selection": true,
+      "index_paging": true,
+      "selected_game_details": true,
+      "diz_page": true,
+      "nfo_navigation": true,
+      "bottom_content": true,
+      "empty_search": true,
+      "DOS_source_compiler": true,
+      "native_file_trace": true,
+      "no_keyboard_credentials": true
+    },
+    "script_login": {
+      "runner_sha256": "6b3cbcc8d3b9889daa9ab07465d65f2ab2e63a3c1582897d34c74eca07a40b5c",
+      "compiler_sha256": "c29764d427166ca61b8d9c4f19e59407f6d5aff9142ea7082f5256cb37d9de25",
+      "source_sha256": "7e9f12f1fa80cdc0f8c2254025bd6dff89c0d1bf03730e26abc6ee639d6674a4",
+      "compiled_sha256": "1ac54ce275ce23ec4c526c2102c64a0428c3a2aad3630e392e8d7ed0a9d7c662",
+      "trace_sha256": "b1367524062dbfd1ab0e28187abe17516e82d9874f974ab6d50d09f3e5f88a8c",
+      "trace_bytes": 14
+    },
+    "source_modules": {
+      "mods/loc_game_details/loc_game_details.js": "0711413e29c01f0cf3cef7f89b3dc607515381a67a23e1a58205aa6d7a20efb8",
+      "mods/black_flag_files/helpers.js": "e4f6c1df6dbb9d6282d0534150c9149889637d34f01665691ca3bc5d19a06235",
+      "mods/black_flag_files/black_flag_files.js": "20a6d544cb820ac3840c1d271cfd41c7e0fb1c42600100756367845b147cf535",
+      "mods/black_flag_files/search.js": "d159e1fd6936e13613321a92cf68f93681de083cf68a9cb65d8f891cb6b54236",
+      "mods/loc_transfer_protocol_select/loc_transfer_protocol_select.js": "9450bbb9faab72b52ac58a684408443a805e5ce33fd585b9cb694b7881c473e0",
+      "mods/loc_download_ready/loc_download_ready.js": "859ea1b0d395c127e7aafcf9b954a0939e11921e6c19fb3d2b3053915bce4207"
+    },
+    "scope": "Actual DOS and immediate19200/HARD modeled modem through exact owned F/S menu, ANSI search art, search/index/details modules and selected theme settings. Real SQLite search over30 generated ZIPs with synthetic notes; list navigation, detail selection, NFO scroll, no-result search and return stack. Isolated patched server, not live-board installation or physical RS-232 validation."
+  },
+  "SET_recovery": {
+    "bundle_sha256": "aea5116ea36eafcef277209429a55f0379fb7c00d1611abbbff6bcb4de2f2fa8",
+    "evidence_id": "ev_9b81fe70424e28f9cb56926deb6fab7c867cb26a30acc597fbc71e846a49f13e"
+  },
+  "source_build_proof": {
+    "path": "docs/validation/application-components-source-build.json",
+    "sha256": "cd84431f7b5ebe2218051e79a26a7ad370fbf98c2976b41ba86b5b26e707958c",
+    "outputs": 219
+  },
+  "package_manifest_sha256": "11f62e953974533a02498d5a25bb7601c8c7e13a6b03b8a359e25aa59e8c382f",
+  "recorder_sha256": "883f658248b1c53fb91e4922284a0ae77cd49ea19e59cc3ea021382df4ac7be6",
+  "live_server_modified": false,
+  "physical_modem_validated": false,
+  "whole_application_gates_closed": [],
+  "retained_fixture_failure": "integrated-01 counted a missing chained ASX as an extra failed data-file FOPEN; all31 CHFAIL expectations failed, while the actual open/close counts were1/1. Corrected fixture passes without product changes.",
+  "remaining": [
+    "Original interactive returning-warning/unchecked closed-slot policy and broader CRT equivalence.",
+    "Remaining ASPECT commands/recorder and complete application gates.",
+    "Approved live ENiGMA decoder installation, actual catalog and physical modem validation."
+  ]
+}

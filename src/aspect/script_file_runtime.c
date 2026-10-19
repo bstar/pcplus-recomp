@@ -1,6 +1,5 @@
 /* Owned DOS stdio behind the recovered eight-byte near FILE prefix.
  * Script slots survive EXECUTE; the invocation's finish closes them all.
- * This component has not yet been connected to the interpreter/compiler.
  * Native FCLEAR edits prefix bits directly, so prepare reconciles clearerr.
  */
 #include "script_file_runtime.h"

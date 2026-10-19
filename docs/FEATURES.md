@@ -187,6 +187,13 @@ drive/CWD are verified separately from the actual terminal login-child handoff.
 This adds four supported slots (76 total, 139 unsupported); it does not close
 F13, F15 or any whole-application gate.
 
+The [stream-command integration](ASPECT_SCRIPT_FILE_RUNTIME.md) subsequently adds
+thirteen file commands and FGETS_CRLF SET/FETCH, with both compilers and real
+normal/error/cancel/EXECUTE file ownership. The current runtime has 89 supported
+slots and 126 unsupported slots. Actual DOS repeated-invocation and parent-child
+tests plus the isolated owned ENiGMA source login pass; complete language/recorder,
+original warning/CRT equivalence and all whole-application gates remain open.
+
 The modem segmentation checkpoint in `MODEM_FAR_CODE.md` extends F01 with a
 separate controller/sender CS and explicit caller-cleaned stack adapters. It
 frees1,184 resident code bytes and validates44 bridge pairs plus retained modem

@@ -3,9 +3,10 @@
 Thirteen original command handlers and their three shared helpers are now
 recovered as readable assembly: 572 exact instruction bytes, sixteen source-built
 flat command/helper files and two relocatable OMF objects.
-They are a component checkpoint. The maintained application still has 76
-supported opcode slots; these commands are not yet linked into its dispatcher
-or implemented by its host/DOS compilers.
+The [application integration](ASPECT_SCRIPT_FILE_RUNTIME.md) now connects these
+commands and the additional eight-byte FGETS_CRLF SET/FETCH wrapper to both
+compilers and the maintained 89-slot runtime. The original 572-byte recovery
+record remains a separate historical component checkpoint.
 
 The native interface uses six numbered slots, 0 through 5. The recovered slot
 reader delegates to the existing bounded integer reader. The original compiler
@@ -14,7 +15,8 @@ the runtime range policy determines their outcome. The frozen authored compiler
 corpus contains 229 programs: 119 accepted outputs and 110 rejections. It includes
 local variables and parameters, commas, missing arguments, wrong types, expressions
 and seek/count limits. This is original-compiler evidence, not maintained-compiler
-conformance yet.
+conformance at that initial checkpoint. Current compiler conformance is recorded
+by the linked application integration.
 
 | Command operands | Native effects |
 | --- | --- |
@@ -55,14 +57,13 @@ They do not execute real filesystem operations or prove a real CRT backend.
 ./tools/dev --command make test-aspect-script-files
 ```
 
-The [owned DOS backend](ASPECT_SCRIPT_FILE_BACKEND.md) now runs these handlers
+The [owned DOS backend](ASPECT_SCRIPT_FILE_BACKEND.md) runs these handlers
 against real files in a linked diagnostic, including binary/text I/O, seeks,
-EOF/error flags and six-slot repeated cleanup. Required next work is actual
-interpreter lifecycle integration across normal return, abort and EXECUTE,
-deeper original CRT equivalence and borrowed-stream/fatal-warning policy.
-Integrate the two compilers, the `EOF` destination and the `FGETS_CRLF`
-setter, and run real DOS file contents/seek/EOF/failure tests and terminal child
-handoffs. Keep those checks on owned test media. No whole-application gate closes.
+EOF/error flags and six-slot repeated cleanup. Remaining work includes deeper
+original CRT equivalence and borrowed-stream/fatal-warning policy. Both
+compilers, the interpreter lifecycle, EOF destination, FGETS_CRLF setting and
+terminal handoffs are now covered by the application integration. Keep filesystem
+checks on owned test media. No whole-application gate closes.
 
 The [recovery record](validation/aspect-script-files-native.json) binds source,
 compiler fixtures, REA evidence identities, CPU replay and the fresh original-free

@@ -177,8 +177,19 @@
       "bytes": 14,
       "sha256": "aa680bd09c38f031f44a4fe0a1802b99cd5090fa8e61353a40a324b8efe51312",
       "source": "src/aspect/script_file_services.asm"
+    },
+    {
+      "name": "setting",
+      "group": "setting",
+      "unit": 1,
+      "start": 59924,
+      "end": 59932,
+      "file_start": 122628,
+      "bytes": 8,
+      "sha256": "d18f7be1014e5e90d589fc7fd4c4751ad65f9c0fd4b6dcd34d437a0ed78fa6ef",
+      "source": "src/aspect/script_file_setting.asm"
     }
   ],
-  "native_bytes": 572,
-  "scope": "Exact native13 ASPECT file-command handlers and3 shared helpers. Unresolved CRT/operand/error/storage dependencies; not yet wired into the maintained application."
+  "native_bytes": 580,
+  "scope": "Exact native13 file commands,3 shared helpers and FGETS_CRLF SET/FETCH wrapper; CRT/operand boundaries supplied by the maintained owner."
 }

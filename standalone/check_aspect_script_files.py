@@ -14,6 +14,9 @@ class Machine:
   for unit in self.units:
    code=original[unit['file_start']:unit['file_start']+unit['bytes']] if original else (OUT/(unit['name']+'.bin')).read_bytes()
    assert hashlib.sha256(code).hexdigest()==unit['sha256'];self.u.mem_write(0x10000+unit['start'],code)
+  boolean=next(u for u in json.loads((ROOT/'standalone/fixtures/aspect_set_native_units.json').read_text())['units'] if u['unit']==2)
+  code=original[boolean['file_offset']:boolean['file_offset']+boolean['bytes']] if original else (OUT/'boolean.bin').read_bytes()
+  assert hashlib.sha256(code).hexdigest()==boolean['sha256'];self.u.mem_write(0x1e6bb,code)
   self.u.hook_add(UC_HOOK_CODE,self.hook)
  def word(self,offset):return int.from_bytes(self.u.mem_read(DATA+offset,2),'little')
  def put(self,offset,value):self.u.mem_write(DATA+offset,(value&65535).to_bytes(2,'little'))
@@ -28,7 +31,8 @@ class Machine:
   sp=u.reg_read(UC_X86_REG_SP)
   arg=lambda n:self.word(sp+2*n)
   fn=at-0x10000
-  if fn==0xdd68:
+  if fn==0x4cb4:self.events.append(('boolean',self.result));self.ret(self.result)
+  elif fn==0xdd68:
    bounds=(arg(1),arg(2));assert bounds in ((5,0),(2,0)),bounds
    value=self.slot if bounds==(5,0) else self.origin;self.events.append(('range',*bounds,value));self.ret(value,4)
   elif fn==0x4efb:
@@ -67,10 +71,10 @@ class Machine:
   elif fn==0x853a:
    assert (arg(1),arg(2),arg(3),arg(4))==(0x5000,self.position&65535,(self.position>>16)&65535,self.origin)
    self.events.append(('seek',));self.ret(self.result)
- def run(self,name,slot=0,flags=0,result=0,keep=0,text=0,payload=b'ABC\r\n',count=3,opened=True,check=1,position=0x12345678,origin=0):
+ def run(self,name,slot=0,flags=0,result=0,keep=0,text=0,payload=b'ABC\r\n',count=3,opened=True,check=1,position=0x12345678,origin=0,query=0):
   u=self.u;u.mem_write(DATA,b'\xa5'*65536);self.slot=slot;self.result=result;self.number=65;self.count=count;self.position=position;self.origin=origin;self.payload=payload
   self.events=[];self.visited=set();self.returned=False;self.strings=[0x5300,0x5400] if name=='open' else [0x5600]
-  self.put(0xe39e+slot*2,0x5000 if opened else 0);self.put(0xe3aa,0xa55a);self.put(0xe37c,check);self.put(0xe388,keep);self.put(0xd124,0x9abc);self.put(0x4b06,0x5500)
+  self.put(0xe39e+slot*2,0x5000 if opened else 0);self.put(0xe3aa,0xa55a);self.put(0xe37c,check);self.put(0xe388,keep);self.put(0xe38e,query);self.put(0xd124,0x9abc);self.put(0x4b06,0x5500)
   u.mem_write(DATA+0x5000,b'\0'*8);u.mem_write(DATA+0x5006,bytes([flags,7]));u.mem_write(DATA+0x7b2b+7,bytes([text]))
   for offset,value in [(0x5300,b'OWNED.DAT\0'),(0x5400,b'RB\0'),(0x5500,b'untouched\0'),(0x5600,b'Z'*81)]:u.mem_write(DATA+offset,value)
   self.put(0x5700,0xa55a);self.put(0x5800,0xa55a);self.put(0x5802,0xa55a);self.put(0xf200,0xf800)
@@ -84,8 +88,11 @@ class Machine:
   assert [u.reg_read(r) for r in (UC_X86_REG_BP,UC_X86_REG_SI,UC_X86_REG_DI,UC_X86_REG_DS,UC_X86_REG_SS)]==[0xbabe,0x1234,0x5678,0x3000,0x3000]
   assert not u.reg_read(UC_X86_REG_EFLAGS)&0x400
   expected=bytearray(before);status=0x9abc
-  if name not in ('status',):expected[0xe3aa:0xe3ac]=slot.to_bytes(2,'little')
-  if name=='clear':expected[0x5006]=flags&0xcf
+  if name not in ('status','setting'):expected[0xe3aa:0xe3ac]=slot.to_bytes(2,'little')
+  if name=='setting':
+   if query:expected[0x5700:0x5702]=keep.to_bytes(2,'little')
+   else:expected[0xe388:0xe38a]=result.to_bytes(2,'little')
+  elif name=='clear':expected[0x5006]=flags&0xcf
   elif name=='close':expected[0xe39e+2*slot:0xe3a0+2*slot]=b'\0\0';status=result&65535
   elif name=='open':
    expected[0xe39e+2*slot:0xe3a0+2*slot]=(result&65535).to_bytes(2,'little');expected[0x5500:0x5503]=b'rb\0';status=int(result==0)
@@ -137,9 +144,11 @@ def main():
   case('read',count=count_,payload=payload)
  for origin,position,result in itertools.product(range(3),(0,1,-1,0x7fffffff,-0x80000000),(0,-1)):
   case('seek',origin=origin,position=position,result=result)
+ for value in range(256):case('setting',result=value)
+ for value in (0,1,255,256,32768,65535):case('setting',keep=value,query=1)
  for result in (0x10000,0x12345678,0x1234ffff,0x7fffffff,-1,-0x80000000):
   case('tell',result=result)
  assert all(0x10000+unit['start'] in seen for unit in machines[0].units)
- report=dict(passed=True,cases=count,original_comparisons=count if raw else 0,checker_sha256=sha(Path(__file__)),manifest_sha256=sha(OUT/'manifest.json'),instruction_addresses=len(seen),scope='Actual recovered13 file handlers and3 helpers with explicit operand/CRT/string/error-return models. Native slot-table, comparison, EOF destination, CRLF/controlZ and byte/count/long destination effects; full nonstack DS, stack and BP/SI/DI/DS=SS/DF checks. Models do not prove real stdio, fatal unwind, filesystem, arbitrary bytecode or integrated application behavior.')
+ report=dict(passed=True,cases=count,original_comparisons=count if raw else 0,checker_sha256=sha(Path(__file__)),manifest_sha256=sha(OUT/'manifest.json'),instruction_addresses=len(seen),scope='Actual recovered13 file handlers,3 helpers and native FGETS_CRLF SET/FETCH wrapper with explicit operand/CRT/string/error-return models. Native slot-table, comparison, EOF destination, CRLF/controlZ and byte/count/long destination effects; full nonstack DS, stack and BP/SI/DI/DS=SS/DF checks. Models do not prove real stdio, fatal unwind, filesystem, arbitrary bytecode or integrated application behavior.')
  (OUT/('native-checks.json' if raw else 'checks.json')).write_text(json.dumps(report,indent=2)+'\n');print('Native ASPECT script files:',count,'cases,',report['original_comparisons'],'original comparisons PASS')
 if __name__=='__main__':main()

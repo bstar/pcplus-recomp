@@ -28,6 +28,15 @@ async def run(args):
     sources.update({f'source_board/{p}':server/p for p in [*metadata['source_inputs'],'core/client.js']})
     sources.update({'terminal':binary,'staged_terminal':stage/'TERMINAL.EXE','runner':Path(__file__),'harness':Path(test_dos.__file__),
                     'fixture':ROOT/'lab/bbs/enigma_search_fixture.py','notes_fixture':ROOT/'lab/bbs/enigma_notes_fixture.py'})
+    script_login=getattr(args,'script_login',False)
+    if script_login:
+        from enigma_script_login import source
+        for rel in ('aspect-runner/ASPECT.EXE','aspect-compiler-dos/ASPCOMP.EXE'):
+            original=ROOT/'build'/rel;dest=stage/original.name;shutil.copyfile(original,dest)
+            sources[rel]=original;sources['staged/'+dest.name]=dest
+        (stage/'LOGON.ASP').write_bytes(source().replace('\n','\r\n').encode('ascii'))
+        sources['login_source']=stage/'LOGON.ASP'
+        sources['login_driver']=ROOT/'lab/bbs/enigma_script_login.py'
     before={p:sha(f) for p,f in sources.items()};count=messages(candidate)
     log_inode,log_offset=log.stat().st_ino,log.stat().st_size
     canonical=json.loads((ROOT/'lab/bbs/editor-recipes.json').read_text())['enigma_unsaved']['keyboard_input']
@@ -37,12 +46,19 @@ async def run(args):
           'enter p1400 i p400 n p400 down p400 pgdown p400 up p400 pgup p400 '
           'end p400 home p400 q p1000 q p1000 c-y Z Z Z N O M A T C H enter '
           'p1400 q p1000 escape p800 Q enter p1000')
-    keys=prefix+body
+    keys=('p85000 ' if script_login else prefix)+body
     assert len('ADDKEY p1000 '+keys+' p2000 a-x')<500
     options=argparse.Namespace(name='enigma',label=args.label,port=PORT,com=2,baud=19200,flow='HARD',packet_delay_ms=0,
-        dial_fixture=True,directory_fixture=False,directory_browser=False,entry=3,binary=stage/'TERMINAL.EXE',
+        dial_fixture=True,directory_fixture=script_login,directory_browser=False,entry=3,binary=stage/'TERMINAL.EXE',
         config_fixture=False,keymap_fixture=ROOT/'build/keyboard-profiles/NETWORK.KBD',server_log=log,keys=keys,wait=2,timeout=190)
-    with (out/'harness.log').open('w') as capture,contextlib.redirect_stdout(capture):code=await test_dos.run(options)
+    directory=test_dos.directory_image
+    def bound_directory(**options):
+        data=bytearray(directory(**options));at=250+(options['entry']-1)*114
+        data[at+52:at+61]=b'LOGON\0\0\0\0';return bytes(data)
+    if script_login:test_dos.directory_image=bound_directory
+    try:
+        with (out/'harness.log').open('w') as capture,contextlib.redirect_stdout(capture):code=await test_dos.run(options)
+    finally:test_dos.directory_image=directory
     harness=json.loads((out/'result.json').read_text())
     display=re.sub(rb'\x1b\[[0-?]*[ -/]*[@-~]',b'',(out/'display.bin').read_bytes()).decode('cp437',errors='replace')
     (out/'display-clean.txt').write_text(display)
@@ -74,7 +90,20 @@ async def run(args):
         diz_page='FILE_ID.DIZ | lines 1-6/6' in display and 'Synthetic FILE_ID.DIZ' in display,
         nfo_navigation=pages==expected_pages,bottom_content='PCPLUS NFO LINE 22 : synthetic game 01' in display,
         empty_search='Titles / filenames: ZZZNOMATCH' in display and '0 matches | 0 displayed' in display and 'No matching files.' in display)
-    result=dict(passed=all(checks.values()),checks=checks,terminal_sha256=sha(binary),source_modules=metadata['source_modules'],
+    login_evidence=None
+    if script_login:
+        import sys
+        sys.path.insert(0,str(ROOT/'src/aspect'))
+        from compiler import compile_source
+        from enigma_script_login import source
+        compiled=stage/'LOGON.ASX';trace=stage/'LOGIN.LOG'
+        checks.update(DOS_source_compiler=compiled.is_file() and compiled.read_bytes()==compile_source(source()),
+            native_file_trace=trace.is_file() and trace.read_bytes()==b'STARTAUTHREADY',
+            no_keyboard_credentials='loclab' not in keys.replace(' ','') and 'LoC-Lab-2026!' not in keys.replace(' ',''))
+        login_evidence=dict(runner_sha256=before['aspect-runner/ASPECT.EXE'],compiler_sha256=before['aspect-compiler-dos/ASPCOMP.EXE'],
+            source_sha256=before['login_source'],compiled_sha256=sha(compiled) if compiled.exists() else None,
+            trace_sha256=sha(trace) if trace.exists() else None,trace_bytes=trace.stat().st_size if trace.exists() else 0)
+    result=dict(passed=all(checks.values()),script_login=login_evidence,checks=checks,terminal_sha256=sha(binary),source_modules=metadata['source_modules'],
         source_inputs={k:before['source_board/'+k] for k in metadata['source_inputs']},input_hashes=before,
         pages=pages,expected_pages=expected_pages,selected=selected,expected_selected=expected_selected,
         ranges=ranges,expected_ranges=expected_ranges,route=route,expected_route=expected_route,
@@ -87,5 +116,5 @@ async def run(args):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--candidate',type=Path,required=True);p.add_argument('--server-root',type=Path,required=True);p.add_argument('--label',required=True)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--candidate',type=Path,required=True);p.add_argument('--server-root',type=Path,required=True);p.add_argument('--label',required=True);p.add_argument('--script-login',action='store_true',help='Actual DOS compiler/ASPECT login with owned file trace on the synthetic loclab fixture')
     a=p.parse_args();raise SystemExit(asyncio.run(run(a)))

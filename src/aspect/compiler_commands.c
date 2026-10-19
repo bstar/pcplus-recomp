@@ -11,12 +11,19 @@ static const command commands[]={
  {"strpoke","dnn",0xb1,0},{"strset","dn",0xb2,1},{"strupdt","dsnn",0xb3,0},
  {"strupr","d",0xb4,0},{"substr","dsnn",0xb6,0},{"pause","v",0x88,0}
 };
+static const command file_commands[]={
+ {"eof","vi",0x31,0},{"fclear","v",0x35,0},{"fclose","v",0x36,0},
+ {"fflush","v",0x38,0},{"fgetc","vi",0x39,0},{"fgets","vd",0x3a,0},
+ {"fopen","vss",0x3f,0},{"fputc","vv",0x40,0},{"fputs","vs",0x41,0},
+ {"fread","vdvi",0x42,0},{"fseek","vqv",0x43,0},
+ {"ftell","vl",0x45,0},{"fwrite","vsv",0x47,0}
+};
 typedef struct setting {const char *name;unsigned selector,integer;} setting;
 static const setting settings[]={
  {"display",0x12,0},{"findcase",0x23,0},{"switchcase",0x44,0},
  {"waitcase",0x55,0},{"whencase",0x56,0},{"keys",0x29,0},
  {"rxdata",0x3b,0},{"msg_crlf",0x2e,0},{"duplex",0x18,0},
- {"pausechar",0x30,1},{"txpace",0x4c,1},{"break",9,1}
+ {"pausechar",0x30,1},{"txpace",0x4c,1},{"break",9,1},{"fgets_crlf",0x22,0}
 };
 static void bad(pc_compiler *c){pc_error(c,ASPECT_COMPILE_SYNTAX);}
 static unsigned parse(pc_compiler *c){return aspect_compiler_parse_expression(&c->expression,7);}
@@ -56,8 +63,9 @@ static void set_fetch(pc_compiler *c,unsigned fetch)
  if(c->line.count<3||which==65535U){bad(c);return;}
  if(!fetch&&!settings[which].integer){
   const char *off=which==8?"full":"off",*on=which==8?"half":"on";
-  if(c->line.count!=3||(!pc_equal(c,2,off)&&!pc_equal(c,2,on))){bad(c);return;}
-  emit(c,0x9e);emit(c,settings[which].selector);emit(c,pc_equal(c,2,on));return;
+  first=pc_equal(c,1,"fgets_crlf")&&pc_equal(c,2,",")?3:2;
+  if(c->line.count!=first+1||(!pc_equal(c,first,off)&&!pc_equal(c,first,on))){bad(c);return;}
+  emit(c,0x9e);emit(c,settings[which].selector);emit(c,pc_equal(c,first,on));return;
  }
  first=pc_equal(c,2,",")?3:2;
  if(first==c->line.count||pc_equal(c,first,"(")){bad(c);return;}
@@ -88,6 +96,28 @@ static void path_command(pc_compiler *c,unsigned opcode)
  if(c->line.count<2||pc_equal(c,1,"(")||pc_equal(c,1,",")){bad(c);return;}
  n=parse(c);if(c->expression.position!=c->expression.last||kind(c,n)!=3){bad(c);return;}
  emit(c,opcode);operand(c,n,0);
+}
+static void file_command(pc_compiler *c,const command *cmd)
+{
+ unsigned i,n;char role;aspect_compiler_value value;
+ emit(c,cmd->opcode);c->expression.position=1;
+ for(i=0;cmd->roles[i]&&pc_ready(c);++i){
+  if(i&&pc_equal(c,c->expression.position,","))++c->expression.position;
+  if(c->expression.position==c->expression.last||pc_equal(c,c->expression.position,"(")||pc_equal(c,c->expression.position,",")){bad(c);return;}
+  n=parse(c);if(!pc_ready(c))return;role=cmd->roles[i];
+  if(role=='d'||role=='i'||role=='l')destination(c,n,role=='d'?3:role=='i'?0:1);
+  else if(role=='v')operand(c,n,1);
+  else{
+   if(aspect_compiler_atomic(&c->expression,n,&value)){pc_ready(c);return;}
+   if(role=='s'&&kind(c,n)!=3){bad(c);return;}
+   if(role=='q'){
+    if(value.tag==ASPECT_EXPR_CONSTANT&&value.kind!=2)value.kind=1;
+    else if(kind(c,n)!=1){bad(c);return;}
+   }
+   aspect_compiler_emit_operand(&c->expression,&c->output,&value,1);
+  }
+ }
+ if(c->expression.position!=c->expression.last)bad(c);
 }
 static void execute(pc_compiler *c)
 {
@@ -121,6 +151,8 @@ void pc_commands(pc_compiler *c)
 {
  unsigned args[ASPECT_COMPILER_TOKEN_MAX],count,i,j,n,dest,expected,optional,command_index=65535U;
  char role;aspect_compiler_value value;const command *cmd;
+ for(i=0;i<sizeof(file_commands)/sizeof(file_commands[0]);++i)
+  if(pc_equal(c,0,file_commands[i].name)){file_command(c,&file_commands[i]);return;}
  if(pc_equal(c,0,"chdir")){path_command(c,0x11);return;}
  if(pc_equal(c,0,"mkdir")){path_command(c,0x79);return;}
  if(pc_equal(c,0,"rmdir")){path_command(c,0x99);return;}

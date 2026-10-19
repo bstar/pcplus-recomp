@@ -18,12 +18,17 @@ def main():
     fixture = ROOT / 'standalone/fixtures/aspect_script_file_native_units.json'
     proof = json.loads(fixture.read_text())
     for unit in proof['units']:
-        key = 'ASPECT_SCRIPT_FILE' + ('_SERVICE' if unit['group'] == 'service' else '')
+        key = {'command':'ASPECT_SCRIPT_FILE','service':'ASPECT_SCRIPT_FILE_SERVICE','setting':'ASPECT_SCRIPT_FILE_SETTING'}[unit['group']]
         target = OUT / (unit['name'] + '.bin')
         subprocess.run(['nasm', '-fbin', '-Ireconstruction/uart/', '-D' + key + '_FLAT',
                         '-D' + key + '_UNIT=' + str(unit['unit']), unit['source'],
                         '-o', str(target)], cwd=ROOT, check=True)
         assert target.stat().st_size == unit['bytes'] and sha(target) == unit['sha256'], unit['name']
+    boolean = OUT / 'boolean.bin'
+    subprocess.run(['nasm','-fbin','-Ireconstruction/uart/','-DASPECT_SET_FLAT','-DASPECT_SET_UNIT=2','src/aspect/set_commands.asm','-o',str(boolean)],cwd=ROOT,check=True)
+    baseline = json.loads((ROOT / 'standalone/fixtures/aspect_set_native_units.json').read_text())
+    boolean_unit = next(u for u in baseline['units'] if u['unit']==2)
+    assert sha(boolean) == boolean_unit['sha256']
     sources = sorted({u['source'] for u in proof['units']})
     objects = {}
     for source in sources:
@@ -32,10 +37,10 @@ def main():
                         '-o', str(obj)], cwd=ROOT, check=True)
         objects[obj.name] = sha(obj)
     report = dict(passed=True, native_bytes=proof['native_bytes'], units=proof['units'],
-                  objects=objects, original_inputs=[],
+                  objects=objects, reused_boolean=boolean_unit, original_inputs=[],
                   sources={str(p.relative_to(ROOT)): sha(p) for p in
                            [*[ROOT / s for s in sources], fixture, Path(__file__),
-                            ROOT / 'reconstruction/uart/encodings.inc']},
+                            ROOT / 'reconstruction/uart/encodings.inc', ROOT / 'src/aspect/set_commands.asm', ROOT / 'standalone/fixtures/aspect_set_native_units.json']},
                   scope=proof['scope'])
     (OUT / 'manifest.json').write_text(json.dumps(report, indent=2) + '\n')
     print('ASPECT script files:', report['native_bytes'], 'native instruction bytes PASS')

@@ -31,14 +31,14 @@ TYPED_BUILTINS = {**{name: (0, slot) for name, slot in BUILTINS.items()},
 SIZES = (2, 4, 8, 81)
 SET_BOOLEAN = {'display': 0x12, 'findcase': 0x23, 'switchcase': 0x44,
                'waitcase': 0x55, 'whencase': 0x56, 'keys': 0x29,
-               'rxdata': 0x3B, 'msg_crlf': 0x2E}
+               'rxdata': 0x3B, 'msg_crlf': 0x2E, 'fgets_crlf': 0x22}
 SET_INTEGER = {'pausechar': 0x30, 'txpace': 0x4C, 'break': 0x09}
 # Proved FETCH families have integer destinations, including byte/boolean fields.
 # Keep this whitelist separate from future SET additions.
 FETCH_SETTINGS = {'break': 0x09, 'display': 0x12, 'duplex': 0x18,
                   'findcase': 0x23, 'keys': 0x29, 'msg_crlf': 0x2E,
                   'pausechar': 0x30, 'rxdata': 0x3B, 'switchcase': 0x44,
-                  'txpace': 0x4C, 'waitcase': 0x55, 'whencase': 0x56}
+                  'txpace': 0x4C, 'waitcase': 0x55, 'whencase': 0x56, 'fgets_crlf': 0x22}
 OPS = {"+": 0x00, "-": 0xB5, "*": 0x7D, "/": 0x26, "%": 0x7B,
        "==": 0x32, "!=": 0x7F, "<": 0x6D, ">": 0x54,
        "<=": 0x68, ">=": 0x48}
@@ -416,10 +416,11 @@ class Compiler:
         setting = tokens[1]
         if setting in SET_BOOLEAN or setting == 'duplex':
             values = ('full', 'half') if setting == 'duplex' else ('off', 'on')
-            if len(tokens) != 3 or tokens[2] not in values:
+            index = 3 if setting == 'fgets_crlf' and len(tokens) > 2 and tokens[2] == ',' else 2
+            if len(tokens) != index + 1 or tokens[index] not in values:
                 self.error(f'SET {setting.upper()} requires {"/".join(values).upper()}')
             self.emit(0x9E, 0x18 if setting == 'duplex' else SET_BOOLEAN[setting],
-                      values.index(tokens[2]))
+                      values.index(tokens[index]))
         elif setting in SET_INTEGER:
             # Range checks belong to the native runtime reader. The original
             # compiler also emits out-of-range integer constants unchanged.
@@ -545,6 +546,44 @@ class Compiler:
                 self.error(f'{command} requires one atomic string')
             self.emit({'chdir': 0x11, 'mkdir': 0x79, 'rmdir': 0x99, 'delete': 0x20}[command])
             self.operand(self.atomic(node), compact=True)
+            return
+        file_commands = {
+            'eof': (0x31, 'vi'), 'fclear': (0x35, 'v'), 'fclose': (0x36, 'v'),
+            'fflush': (0x38, 'v'), 'fgetc': (0x39, 'vi'), 'fgets': (0x3A, 'vd'),
+            'fopen': (0x3F, 'vss'), 'fputc': (0x40, 'vv'), 'fputs': (0x41, 'vs'),
+            'fread': (0x42, 'vdvi'), 'fseek': (0x43, 'vqv'),
+            'ftell': (0x45, 'vl'), 'fwrite': (0x47, 'vsv'),
+        }
+        if command in file_commands:
+            opcode, signature = file_commands[command]
+            parser = Expression(tokens[1:], self.line)
+            self.emit(opcode)
+            for index, role in enumerate(signature):
+                if index and parser.pos < len(parser.tokens) and parser.tokens[parser.pos] == ',':
+                    parser.pos += 1
+                if parser.pos == len(parser.tokens) or parser.tokens[parser.pos] in ('(', ','):
+                    self.error(f'{command} requires atomic operands')
+                node = parser.parse(7)
+                if role in 'dil':
+                    expected = {'d': 3, 'i': 0, 'l': 1}[role]
+                    kind, wire = self.lvalue(node)
+                    if kind != expected:
+                        self.error(f'{command} destination type mismatch')
+                    self.emit(wire)
+                elif role == 'v':
+                    self.operand(self.word_argument(node), compact=True)
+                else:
+                    value = self.atomic(node)
+                    if role == 's' and self.kind(node) != 3:
+                        self.error(f'{command} requires a string')
+                    if role == 'q':
+                        if value[0] == 'constant' and value[1] != 2:
+                            value = ('constant', 1, value[2])
+                        elif self.kind(node) != 1:
+                            self.error('FSEEK requires a long offset')
+                    self.operand(value, compact=True)
+            if parser.pos != len(parser.tokens):
+                self.error(f'unexpected {command} operands')
             return
         args = self.arguments(tokens[1:])
         if command in ('rget', 'waitquiet'):

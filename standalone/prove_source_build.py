@@ -118,6 +118,7 @@ owner_checks.append('standalone/check_aspect_directory.py')
 owner_checks.append('standalone/check_aspect_paths.py')
 owner_checks.append('standalone/check_aspect_path_compiler.py')
 owner_checks.append('standalone/check_aspect_script_files.py')
+owner_checks.append('standalone/check_aspect_script_file_compiler.py')
 owner_checks.append('standalone/check_aspect_script_file_backend.py')
 owner_checks.append('standalone/package_dos.py')
 program+=''.join(f"subprocess.run(['python3',{name!r}],check=True)\n" for name in owner_checks)
@@ -164,7 +165,7 @@ outputs += [f'aspect-paths/service{n}.bin' for n in range(1,6)]
 outputs += ['aspect-paths/'+name+'.bin' for name in ('error_map','error_access','error_exec','map_error')]
 outputs += ['aspect-paths/'+name+'.obj' for name in ('path_commands','path_services','path_state','error_access','error_exec','map_error')]
 outputs += ['aspect-script-files/'+u['name']+'.bin' for u in json.loads((ROOT/'standalone/fixtures/aspect_script_file_native_units.json').read_text())['units']]
-outputs += ['aspect-script-files/script_file_commands.obj','aspect-script-files/script_file_services.obj']
+outputs += ['aspect-script-files/script_file_commands.obj','aspect-script-files/script_file_services.obj','aspect-script-files/script_file_setting.obj','aspect-script-files/boolean.bin']
 outputs += ['aspect-script-file-backend/SCRIPTIO.EXE']
 outputs += ['aspect-compiler-lexer/ASPLEX.EXE','aspect-compiler-unit/ASPINV.EXE']
 outputs += ['aspect-compiler-expression/ASPEXP.EXE']

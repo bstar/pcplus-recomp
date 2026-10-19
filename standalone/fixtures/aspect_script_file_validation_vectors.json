@@ -1,0 +1,35 @@
+{
+  "cases": [
+    {
+      "name": "malformed-file-0",
+      "source": "integer result\nstring buffer\nproc main\nfseek 0 * 0\nendproc\n",
+      "accepted": false
+    },
+    {
+      "name": "malformed-file-1",
+      "source": "integer result\nstring buffer\nproc main\nfseek 0 0L *\nendproc\n",
+      "accepted": false
+    },
+    {
+      "name": "malformed-file-2",
+      "source": "integer result\nstring buffer\nproc main\nfopen * \"X\" \"rb\"\nendproc\n",
+      "accepted": false
+    },
+    {
+      "name": "malformed-file-3",
+      "source": "integer result\nstring buffer\nproc main\nfread 0 buffer * result\nendproc\n",
+      "accepted": false
+    },
+    {
+      "name": "malformed-file-4",
+      "source": "integer result\nstring buffer\nproc main\nfputc 0 *\nendproc\n",
+      "accepted": false
+    },
+    {
+      "name": "malformed-file-5",
+      "source": "integer result\nstring buffer\nproc main\neof * result\nendproc\n",
+      "accepted": false
+    }
+  ],
+  "scope": "New malformed operand regressions for maintained compiler error handling; authored inputs, not original-compiler oracle outcomes."
+}

@@ -99,3 +99,14 @@ actual catalog. Physical Wi-Fi modem timing and the decoder's100ms incomplete
 key deadline remain unverified. These tests close no whole-application gate.
 The [validation record](../../docs/validation/enigma-search.json) distinguishes
 navigation results from transfer results and the retained live failures.
+
+`enigma_search_dos.py --script-login` additionally stages the current ASPECT and
+DOS compiler, binds LOGON.ASP through the real dialing-directory record, and
+leaves the keyboard recipe free of login credentials. The source-driven login
+uses only the synthetic loclab account. A slot-5 data file spans its deferred
+WHEN callbacks and must finish as exactly `STARTAUTHREADY`; the DOS-generated
+LOGON.ASX must equal host output. The ordinary fourteen navigation checks still
+apply, yielding seventeen checks in this mode. The
+[ASPECT file integration](../../docs/ASPECT_SCRIPT_FILE_RUNTIME.md) records the
+successful current run with this stronger compiler/runner/file-owner boundary.
+It remains an isolated patched-server test with generated data.
