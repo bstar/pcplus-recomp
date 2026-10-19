@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "304412e382bcb6b89ec4f341288fe71339173418a55c623bd220903544993e3a",
-  "source_file_count": 2037,
+  "source_snapshot_sha256": "814ac69eba22fdf3df49c993ed4ab2380c71156b9c96baba14053f4ec1877a4c",
+  "source_file_count": 2047,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,14 +16,14 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "d0b8166ff1734a8ccdc57db59f3d82dc43dda199582f5c01a9a8fa03a86a3a33",
+  "build_log_sha256": "3b03de18d559e13c5c3bce5a256fc7c06cb443f93ec434f1f425b6bcb564ea52",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.b6EXrX/pcplus-source-proof-os67g4io/checkout",
+  "source_checkout": "/tmp/nix-shell.9mdM6i/pcplus-source-proof-ap67_7wb/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
   "scope": "Source-only interactive DOS terminal with imported keyboard/action settings, directory UI, recovered line/character editing, maintained current-profile RIS, bounded process handoff, retained far shadow/history and live checked XMODEM receive/send and maintained CRC YMODEM batch ownership; full PCPlus application remains incomplete.",
-  "binary_sha256": "14ab0f99b57643cf5f6ba2befed2099bc617b62453de17e157566a280e365d17",
+  "binary_sha256": "128a71effbc213b2e178b902b4a9b676008d0c9736d0f608b5616333331e709b",
   "matches_workspace_binary": true,
   "matches_workspace_manifest": true,
   "manifest": {
@@ -36,72 +36,72 @@
       "normalized_object_sha256": "01bd96165308ac2fd147d3634ee5e4495488fdcbdd11903889d2f8e37ac614e1"
     },
     "kind": "source-only-interactive-dos-terminal",
-    "binary_sha256": "14ab0f99b57643cf5f6ba2befed2099bc617b62453de17e157566a280e365d17",
-    "data_stack_bytes": 64800,
+    "binary_sha256": "128a71effbc213b2e178b902b4a9b676008d0c9736d0f608b5616333331e709b",
+    "data_stack_bytes": 64832,
     "memory_layout": {
-      "near_bytes": 64800,
-      "near_spare_bytes": 736,
-      "near_relative_segment": 7603,
-      "far_relative_segment": 16997,
+      "near_bytes": 64832,
+      "near_spare_bytes": 704,
+      "near_relative_segment": 7620,
+      "far_relative_segment": 17016,
       "shadow_offset": 0,
       "history_offset": 0,
       "far_bytes": 71192,
-      "history_relative_segment": 17509,
+      "history_relative_segment": 17528,
       "history_bytes": 63000,
-      "far_end_linear": 343144,
-      "stack_end_linear": 186448,
-      "loaded_module_bytes": 155340,
-      "minimum_allocated_module_bytes": 343152,
-      "retained_parent_paragraphs": 21463,
+      "far_end_linear": 343448,
+      "stack_end_linear": 186752,
+      "loaded_module_bytes": 155640,
+      "minimum_allocated_module_bytes": 343456,
+      "retained_parent_paragraphs": 21482,
       "far_pointer_relocations_verified": true,
-      "snapshot_relative_segment": 12903,
+      "snapshot_relative_segment": 12922,
       "snapshot_image_offset": 63504,
       "snapshot_bytes": 2000,
-      "snapshot_end_linear": 271952,
+      "snapshot_end_linear": 272256,
       "ui_screen_buffers": {
         "browser_screen": {
-          "relative_segment": 11653,
+          "relative_segment": 11672,
           "offset": 0,
           "bytes": 4000,
-          "start_linear": 186448,
-          "end_linear": 190448
+          "start_linear": 186752,
+          "end_linear": 190752
         },
         "ed_screen": {
-          "relative_segment": 11653,
+          "relative_segment": 11672,
           "offset": 4000,
           "bytes": 4000,
-          "start_linear": 190448,
-          "end_linear": 194448
+          "start_linear": 190752,
+          "end_linear": 194752
         },
         "program_screen": {
-          "relative_segment": 11653,
+          "relative_segment": 11672,
           "offset": 8000,
           "bytes": 4000,
-          "start_linear": 194448,
-          "end_linear": 198448
+          "start_linear": 194752,
+          "end_linear": 198752
         },
         "redisplay_live": {
-          "relative_segment": 11653,
+          "relative_segment": 11672,
           "offset": 12000,
           "bytes": 4000,
-          "start_linear": 198448,
-          "end_linear": 202448
+          "start_linear": 198752,
+          "end_linear": 202752
         },
         "redisplay_view": {
-          "relative_segment": 11653,
+          "relative_segment": 11672,
           "offset": 16000,
           "bytes": 4000,
-          "start_linear": 202448,
-          "end_linear": 206448
+          "start_linear": 202752,
+          "end_linear": 206752
         }
       },
       "far_ui_storage_bytes": 20000,
       "redisplay_snapshot_bytes": 63000,
-      "redisplay_snapshot_end_linear": 269448,
+      "redisplay_snapshot_end_linear": 269752,
       "redisplay_row_index_bytes": 494,
-      "redisplay_row_index_relative_segment": 12903,
+      "redisplay_row_index_relative_segment": 12922,
       "redisplay_row_index_offset": 63000,
-      "redisplay_row_index_end_linear": 269942,
+      "redisplay_row_index_end_linear": 270246,
       "controller_bridge_pairs_verified": 22,
       "modem_bridge_pairs_verified": 23,
       "command_menu_far_code_verified": true,
@@ -138,19 +138,19 @@
           "kind": "FARCODE",
           "relative_segment": 4448,
           "offset": 0,
-          "bytes": 47527
+          "bytes": 47795
         },
         {
           "name": "MODEM_CODE",
           "kind": "FARCODE",
-          "relative_segment": 7419,
+          "relative_segment": 7436,
           "offset": 0,
           "bytes": 1483
         },
         {
           "name": "PRINT_CODE",
           "kind": "FARCODE",
-          "relative_segment": 7512,
+          "relative_segment": 7529,
           "offset": 0,
           "bytes": 1449
         }
@@ -327,7 +327,7 @@
       "src/terminal/transfer_actions.asm": "a190aeec4094285c1b5f6556997fea7415b501dacae5462af10d40bd141bfd8f",
       "src/terminal/transfer_native_state.asm": "b652550ccbcf4811dbcfb0ff8a872cc7c87228c3edefe6391a987e776b3a8288",
       "src/terminal/transfer_sender_state.asm": "ca81106b44d8184e866db66b570981f23ba1a3465aee739f2713c34029479e15",
-      "src/terminal/transfer_ui.asm": "b9367119e7f0be446fbe84e1681f8e3ff974ac6d3a902f423cea5d3b124950c7",
+      "src/terminal/transfer_ui.asm": "6a0569572e307c6afc42660ff797e56dc043f1f081fd38f547b77d8418c536d1",
       "src/terminal/translation.asm": "166421735869efc18bfa4290f1711c240b4b0f1d9430ca3a974d897964599f5d",
       "src/terminal/translation_edit.asm": "9de688d9bf95ea3196dd37e6651d244519b146756eddd28f4abe6a6aae26e003",
       "src/terminal/translation_reload.asm": "b8d75068437a79706bd2873f14c1824de7f3785c5460bed253c7e8cc59e187cd",
@@ -388,7 +388,7 @@
       "src/transfer/zmodem.c": "8b91ddec13aa22a492ba07464502bda57809507b63d0b5ea245ded5b5df0c7b4",
       "src/transfer/zmodem_wire.c": "fdae5d7c899ac2b32efe4b2f9d14d6c66ca323263b2fff5bf5da33f5915c1a6b",
       "src/transfer/zmodem_name.c": "7720ba62c132c79b57fc329de0f8afc30312756ed5e9e6610345e03298478b2c",
-      "src/transfer/terminal_zmodem.c": "7d2e91349e062e660b4017f45db378d1cfa2c7bf793f875a90e6888c7c01118b",
+      "src/transfer/terminal_zmodem.c": "559088d84833087344d8c8819a57bcbdc1cb351cc987c7247f01a6a5f72be973",
       "src/transfer/zmodem_autostart.c": "a232cdcbc084949d53c1634c9012aa16ec793a349eb47bd50b6c2b146178f7c0",
       "src/transfer/terminal_autostart.c": "79cef3d967729459037fcbfa58d17878395b5183d70ddbfaccf6249e669cfc95",
       "src/capture/capture_file.c": "a6317c04819cd93c336a5b2431d295890a13380c2168bb570594f263df744739",

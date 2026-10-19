@@ -8,7 +8,9 @@
 #include "upload_file.h"
 #include <stddef.h>
 #include <string.h>
+#include <dos.h>
 extern char terminal_transfer_filename[64];
+extern unsigned char terminal_transfer_ui_visible;
 extern unsigned terminal_transfer_fault,terminal_transfer_cleanup_status;
 unsigned terminal_zmodem_kbytes;
 unsigned long terminal_zmodem_files;
@@ -17,6 +19,31 @@ typedef struct live_zmodem {
  unsigned long observed,files;
 } live_zmodem;
 typedef char fits_arena[sizeof(live_zmodem)<=10240?1:-1];
+/* The transfer UI already owns/saves the bottom two rows. Keep this bounded
+ * presentation in CONFIG_CODE: no extra resident code or persistent buffer.
+ * A trailing '~' marks a remote name wider than its 46-column field. */
+static void name_text(unsigned __far *video,const char *text,unsigned count)
+{
+ unsigned i;unsigned char c;
+ for(i=0;i<count;++i){
+  c=*text;if(c)++text;
+  video[i]=0x1f00 | (c ? (c<32 || c==127 ? '?' : c) : ' ');
+ }
+}
+static void received_name(live_zmodem *p,const batch_header_result *header,unsigned skip)
+{
+ unsigned __far *video;unsigned i;
+ if(!terminal_transfer_ui_visible)return;
+ video=MK_FP(0xb800,3840);
+ name_text(video,"Remote: ",8);
+ name_text(video+8,p->session.name,46);
+ /* Only consult the next byte when the bounded prefix had no terminator. */
+ for(i=0;i<46 && p->session.name[i];++i){}
+ if(i==46 && p->session.name[46])video[53]=0x1f7e;
+ name_text(video+54,skip?"  Skip: ":"  Save: ",8);
+ name_text(video+62,header->name,12);
+ for(i=74;i<80;++i)video[i]=0x1f20;
+}
 static void progress(live_zmodem *p)
 {
  unsigned long kb=p->session.position>>10;
@@ -64,8 +91,9 @@ unsigned ZM_FAR __cdecl terminal_zmodem_open_received(void *ctx,const batch_head
  live_zmodem *p=ctx;batch_header_result advisory=*header;unsigned r;
  advisory.flags&=~BH_LENGTH;advisory.size=0;
  r=batch_download_open(&advisory);
- if(r==BD_STORAGE && batch_download_result.file.first_status==TF_CONFLICT)return ZM_DONE;
+ if(r==BD_STORAGE && batch_download_result.file.first_status==TF_CONFLICT){received_name(p,header,1);return ZM_DONE;}
  if(r)return ZM_FILE;
+ received_name(p,header,0);
  p->observed=0;ymodem_io_progress();return 0;
 }
 unsigned ZM_FAR __cdecl terminal_zmodem_write_received(void *ctx,const void *data,unsigned n)

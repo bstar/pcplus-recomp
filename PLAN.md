@@ -23,14 +23,17 @@ wire identity during retries and uses checked skip on existing targets.
 The exact custom D download now passes as `8868026D.ZIP`, with all1301 bytes,
 ZMODEM completion and subsequent NFO interaction verified. The446 host and68
 8086 DOS cases include a real alias collision and unchanged-file behavior.
-Complete filename UI/catalog integration, live installation and physical
+Persistent filename catalog integration, live installation and physical
 modem testing remain open along with the whole-application gates.
 
 The [same-connection receive/skip/receive](lab/bbs/enigma-repeat-download.md)
 workflow now passes in the full DOS terminal, including unchanged file identity
 and timestamps, exact second-file bytes and NFO interaction after all three
-protocol processes. Seven passive-audit corruptions reject. Filename UI/catalog
-integration and the remaining software gates still need their implementations.
+protocol processes. Seven passive-audit corruptions reject. The transfer footer
+now displays remote and local Save/Skip names with bounded truncation and saved
+screen ownership. Seventeen linked cases and an independent actual DOS timer
+observer cover that display. Persistent filename catalog integration and the
+remaining software gates still need their implementations.
 
 Latest keyboard checkpoint: [shared key output](docs/ASPECT_KEY_OUTPUT.md) routes
 script-time keys through the actual parent classifier/profile and child-owned

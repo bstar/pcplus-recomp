@@ -5,7 +5,7 @@ The existing DOS keyboard/UART harness is unchanged. Its modem class is replaced
 only by the passive stream observer; synthetic PRM fields enable automatic
 ZMODEM reception into the owned test drive. No protocol response is fabricated.
 """
-import argparse,asyncio,contextlib,hashlib,json,re,shutil,sys,zlib
+import argparse,asyncio,contextlib,hashlib,json,re,shutil,struct,sys,zlib
 from pathlib import Path
 import test_dos
 ROOT=Path(__file__).resolve().parents[2]
@@ -85,6 +85,7 @@ async def run(args):
     inputs={p:candidate/p for p in [*fixture['fixture_inputs'],*fixture['source_modules']]}
     inputs.update({'terminal':binary,'staged_terminal':stage/'TERMINAL.EXE','runner':Path(__file__),
         'harness':Path(test_dos.__file__),'observer':ROOT/'lab/bbs/test_transfer_dos.py','auditor':ROOT/'lab/bbs/audit_zmodem.py'})
+    if args.observe_labels:inputs['label_observer']=ROOT/'lab/bbs/zmodem_label_watch.py'
     before={p:sha(f) for p,f in inputs.items()};posts=messages(candidate)
     canonical=json.loads((ROOT/'lab/bbs/editor-recipes.json').read_text())['enigma_unsaved']['keyboard_input']
     prefix=canonical[:canonical.index('M enter')].replace('n p6000 n p3000 enter','n p6000 enter')
@@ -95,7 +96,10 @@ async def run(args):
     observed=[];snapshots=[];finished=asyncio.Event()
     class Observer(ObservedModem):
         def __init__(self,*a,**kw):super().__init__(*a,**kw);observed.append(self)
-    original_modem=test_dos.Modem;original_fixture=test_dos.modem_fixture
+    original_modem=test_dos.Modem;original_fixture=test_dos.modem_fixture;original_sampler=test_dos.SAMPLER
+    if args.observe_labels:
+        from zmodem_label_watch import SAMPLER
+        test_dos.SAMPLER=SAMPLER
     def settings(**kwargs):
         data=bytearray(original_fixture(**kwargs));data[0x42c:0x42e]=b'\x01\0';path=b'D:\\RECV\\\0';data[0x31c:0x31c+len(path)]=path;return bytes(data)
     async def watch():
@@ -115,7 +119,7 @@ async def run(args):
     try:
         with (out/'harness.log').open('w') as capture,contextlib.redirect_stdout(capture):code=await test_dos.run(options)
     finally:
-        test_dos.Modem=original_modem;test_dos.modem_fixture=original_fixture;finished.set();await task
+        test_dos.Modem=original_modem;test_dos.modem_fixture=original_fixture;test_dos.SAMPLER=original_sampler;finished.set();await task
     assert len(observed)==1
     modem=observed[0];stream=bytes(modem.display);opposite=bytes(modem.keyboard)
     (out/'trace.json').write_text(json.dumps(modem.trace,indent=2)+'\n')
@@ -142,9 +146,23 @@ async def run(args):
         finish_snapshots=len(snapshots)==3,
         existing_alias_unchanged=len(snapshots)==3 and snapshots[0]['files'].get(a)==snapshots[1]['files'].get(a)==snapshots[2]['files'].get(a),
         no_stage_after_each_finish=all('PCRX.$$$' not in s['files'] for s in snapshots))
+    labels=[]
+    if args.observe_labels:
+        raw=(out/'LABELS.BIN').read_bytes();assert len(raw)==2566
+        magic,count,ticks=struct.unpack_from('<3H',raw);assert magic==0x4e5a and 0<count<=16 and ticks
+        frames=[raw[6+i*160:6+(i+1)*160] for i in range(count)]
+        wanted=[]
+        for wire,skip in [(names[0],False),(names[0],True),(names[1],False)]:
+            text=('Remote: '+wire.ljust(46)+('  Skip: ' if skip else '  Save: ')+alias(wire).ljust(12)).ljust(80).encode()
+            wanted.append(b''.join(bytes((c,0x1f)) for c in text))
+        at=0
+        for frame in frames:
+            if at<3 and frame==wanted[at]:at+=1
+        checks['actual_DOS_save_skip_save_labels']=at==3
+        labels=[f[::2].decode('cp437') for f in frames]
     result=dict(passed=all(checks.values()) and not errors,checks=checks,errors=errors,transactions=transactions,
         terminal_sha256=sha(binary),input_hashes=before,snapshots=snapshots,wire_names=names,local_names=[a,b],
-        runner_sha256=sha(Path(__file__)),source_modules=fixture['source_modules'],
+        runner_sha256=sha(Path(__file__)),observed_labels=labels,source_modules=fixture['source_modules'],
         scope='One actual DOS/ENiGMA connection: receive long-name ZIP A, explicitly ZSKIP existing alias A, then receive ZIP B. Passive CRC/data/receiver-control/ZFIN-OO and NFO input-response audits; per-finish inode/mtime/ctime/hash snapshots, checked real DOS storage and restored hardware. Isolated staged server and modeled19200/HARD modem; no live/physical claim.')
     (out/'repeat-checks.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(dict(passed=result['passed'],checks=checks,errors=errors),indent=2))
@@ -152,5 +170,5 @@ async def run(args):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--candidate',type=Path,required=True);p.add_argument('--label',required=True)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--candidate',type=Path,required=True);p.add_argument('--label',required=True);p.add_argument('--observe-labels',action='store_true')
     a=p.parse_args();raise SystemExit(asyncio.run(run(a)))

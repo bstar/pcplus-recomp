@@ -11,6 +11,7 @@ extern _terminal_zmodem_kbytes
 extern terminal_transfer_automatic
 GLOBAL terminal_transfer_ui_open,terminal_transfer_ui_restore,terminal_transfer_ui_progress
 GLOBAL terminal_transfer_ui_receiving
+GLOBAL _terminal_transfer_ui_visible
 terminal_transfer_ui_open:
  push bp
  push bx
@@ -301,6 +302,7 @@ transfer_ui_saved: times 320 db 0
 transfer_ui_cursor: dw 0
 transfer_ui_shape: dw 0
 transfer_ui_length: dw 0
+_terminal_transfer_ui_visible:
 transfer_ui_visible: db 0
 transfer_ui_title: db ' Download: XMODEM   [F2] Protocol   [Enter] Start   [Esc] Cancel',0
 transfer_ui_running: db ' Receiving XMODEM   [Esc] Cancel                    Blocks:',0

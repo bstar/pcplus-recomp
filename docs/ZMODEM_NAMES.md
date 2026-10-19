@@ -62,8 +62,18 @@ then receive ZIP02 in the same connection. The first file's inode, timestamps,
 size and hash remain unchanged. Three protocol finishes each return to usable
 game-specific NFO input; seven corrupted audit inputs reject.
 
+The transfer footer now shows `Remote:` alongside the actual local `Save:`
+name, or `Skip:` when a target already exists. The remote field is46 columns;
+a trailing `~` marks truncation, while the full engine identity remains intact.
+This uses the existing saved bottom-row owner and restores it on return. It adds
+no transfer workspace or resident instructions. Independent linked cases cover
+short names, the46-column boundary,255-byte names, existing files and screen
+restoration; an independent DOS timer observer checks the real display during
+the same receive/skip/receive ENiGMA workflow. See the
+[filename UI validation](validation/zmodem-name-ui.json).
+
 The historical [search evaluation](validation/enigma-search.json) retains the
 pre-fix failure and paired production-codec replay. The new adapter handles
 that wire/local distinction before the unchanged strict codec. The live board
 remains unmodified; its staged key decoder, physical Wi-Fi modem validation,
-full filename UI/catalog integration and whole-application gates remain open.
+persistent filename catalog integration and whole-application gates remain open.

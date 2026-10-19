@@ -674,6 +674,7 @@ test-zmodem: test-zmodem-wire test-zmodem-autostart
 test-terminal: test-terminal-zmodem-live
 test-terminal-zmodem-live: terminal
 	python3 standalone/check_terminal_zmodem_live.py
+	python3 standalone/check_zmodem_name_ui.py
 
 .PHONY: test-zmodem-owners-live
 test: test-zmodem-owners-live

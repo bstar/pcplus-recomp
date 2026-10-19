@@ -45,3 +45,11 @@ and generated archives are used. This does not install the staged decoder on
 the live board, test its actual catalog or replace physical RS-232 Wi-Fi modem
 validation. No whole-application gate closes. See the
 [validation record](../../docs/validation/enigma-repeat-download.json).
+
+The optional `--observe-labels` mode installs an independent test-only INT1C
+observer through the hardware sampler. It records bounded unique80-column
+footer frames without calling DOS from the interrupt. Collection restores the
+original timer chain before the ordinary after-hardware sample. The test requires
+the actual Save ZIP01, Skip ZIP01 and Save ZIP02 rows in order, with correct
+remote/local names and all80 attributes. Raw observer program, generated assembly
+and capture hashes are bound in the [filename UI record](../../docs/validation/zmodem-name-ui.json).
