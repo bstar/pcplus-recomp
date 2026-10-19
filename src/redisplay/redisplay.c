@@ -20,7 +20,8 @@ static word __far *view;
 static word length,top,visible,position,shape,direct_clipboard;
 static word query_size,query_edit,found,last_match;
 static char query[40];
-static word checkpoints[247];
+extern word __far redisplay_row_index[247];
+#define checkpoints redisplay_row_index
 static word search_start,search_cursor;
 static word export_edit,export_phase,export_at,export_size,export_notice,oldest_skip;
 static char export_path[64];
@@ -113,14 +114,30 @@ static void bottom(void)
 {
  word i;top=line_at(length?length-1:0);for(i=1;i<23;++i)top=previous(top);
 }
-static void label(word at,const char *s,word attribute)
+/* Keep fixed UI prose with CONFIG code, following command_menu.c. */
+#define REDISPLAY_TEXT __based(__segname("_CODE"))
+static const char REDISPLAY_TEXT redisplay_text_0[]="PCPLUS  Redisplay | Up/Down PgUp/PgDn Home/End / Search F3 W Write C Clip Esc";
+static const char REDISPLAY_TEXT redisplay_text_1[]="File: ";
+static const char REDISPLAY_TEXT redisplay_text_2[]="Append frozen history: Enter starts; Esc cancels. DOS 8.3 path, up to63 bytes.";
+static const char REDISPLAY_TEXT redisplay_text_3[]="Appending history; incoming data continues. Esc cancels; written bytes remain.";
+static const char REDISPLAY_TEXT redisplay_text_4[]="History appended. W writes again; Esc returns to the live screen.";
+static const char REDISPLAY_TEXT redisplay_text_5[]="Export canceled. A partial append may remain. W retries; Esc returns.";
+static const char REDISPLAY_TEXT redisplay_text_6[]="Export failed; partial output may remain. Check the file/disk before retrying.";
+static const char REDISPLAY_TEXT redisplay_text_7[]="Cannot open history file. Check path, attributes and active file owners.";
+static const char REDISPLAY_TEXT redisplay_text_8[]="History is empty; no file was created. Esc returns to the live screen.";
+static const char REDISPLAY_TEXT redisplay_text_9[]="Search: ";
+static const char REDISPLAY_TEXT redisplay_text_10[]="Searching... Incoming data continues; Esc returns to the live screen.";
+static const char REDISPLAY_TEXT redisplay_text_11[]="History is empty. Incoming data continues; Esc returns to the live screen.";
+static const char REDISPLAY_TEXT redisplay_text_12[]="No match. / changes search; F3 repeats. Incoming data continues.";
+static const char REDISPLAY_TEXT redisplay_text_13[]="Frozen history; incoming data continues. / searches; Esc returns to live screen.";
+static void label(word at,const char __far *s,word attribute)
 {while(*s && at<2000)view[at++]=attribute|(byte)*s++;}
 static void draw(void)
 {
  word i,p=top,row,col;byte b;
  for(i=0;i<2000;++i)view[i]=0x0720;
  for(i=0;i<80;++i)view[i]=view[1920+i]=0x1f20;
- label(1,"PCPLUS  Redisplay | Up/Down PgUp/PgDn Home/End / Search F3 W Write C Clip Esc",0x1f00);
+ label(1,redisplay_text_0,0x1f00);
  for(row=1;row<24 && p<length;++row){col=0;
   while(p<length){b=snapshot[p++];if(b==13)break;
    if(b==9){col+=8-(col&7);}else{
@@ -131,20 +148,20 @@ static void draw(void)
  }
  if(export_edit){
   for(i=1840;i<1920;++i)view[i]=0x1f20;
-  label(1841,"File: ",0x1f00);label(1847,export_path,0x1f00);
-  label(1921,"Append frozen history: Enter starts; Esc cancels. DOS 8.3 path, up to63 bytes.",0x1f00);
+  label(1841,redisplay_text_1,0x1f00);label(1847,export_path,0x1f00);
+  label(1921,redisplay_text_2,0x1f00);
  }
- else if(redisplay_export_pending)label(1921,"Appending history; incoming data continues. Esc cancels; written bytes remain.",0x1f00);
- else if(export_notice==1)label(1921,"History appended. W writes again; Esc returns to the live screen.",0x1f00);
- else if(export_notice==2)label(1921,"Export canceled. A partial append may remain. W retries; Esc returns.",0x1f00);
- else if(export_notice==3)label(1921,"Export failed; partial output may remain. Check the file/disk before retrying.",0x1f00);
- else if(export_notice==4)label(1921,"Cannot open history file. Check path, attributes and active file owners.",0x1f00);
- else if(export_notice==5)label(1921,"History is empty; no file was created. Esc returns to the live screen.",0x1f00);
- else if(query_edit)label(1921,"Search: ",0x1f00);
- else if(redisplay_search_pending)label(1921,"Searching... Incoming data continues; Esc returns to the live screen.",0x1f00);
- else if(!length)label(1921,"History is empty. Incoming data continues; Esc returns to the live screen.",0x1f00);
- else if(!found)label(1921,"No match. / changes search; F3 repeats. Incoming data continues.",0x1f00);
- else label(1921,"Frozen history; incoming data continues. / searches; Esc returns to live screen.",0x1f00);
+ else if(redisplay_export_pending)label(1921,redisplay_text_3,0x1f00);
+ else if(export_notice==1)label(1921,redisplay_text_4,0x1f00);
+ else if(export_notice==2)label(1921,redisplay_text_5,0x1f00);
+ else if(export_notice==3)label(1921,redisplay_text_6,0x1f00);
+ else if(export_notice==4)label(1921,redisplay_text_7,0x1f00);
+ else if(export_notice==5)label(1921,redisplay_text_8,0x1f00);
+ else if(query_edit)label(1921,redisplay_text_9,0x1f00);
+ else if(redisplay_search_pending)label(1921,redisplay_text_10,0x1f00);
+ else if(!length)label(1921,redisplay_text_11,0x1f00);
+ else if(!found)label(1921,redisplay_text_12,0x1f00);
+ else label(1921,redisplay_text_13,0x1f00);
  if(query_edit && !export_edit && !redisplay_export_pending)label(1929,query,0x1f00);
  if(visible){copy((word __far *)MK_FP(0xb800,0),view);hide();}
 }

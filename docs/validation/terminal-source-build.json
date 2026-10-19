@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "7f3bdf5e4a88d509d81a81f5b3394ad5f9f537daaf7bcd43297ae70d34dad24b",
-  "source_file_count": 1796,
+  "source_snapshot_sha256": "687ce103ea2a69c525abb4a6744b2f14605e52cc6941518b6d77001a5be5f6a7",
+  "source_file_count": 1797,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,14 +16,14 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "c319af6a51144f7f76fc98b29331455bcfafc7cdfdd4b2f7d3fbaf7415b5b71f",
+  "build_log_sha256": "8a7e2a707f19e16f85ff6d19a376b438b0e9de2f06dccf9c87d49194f717f453",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.jIg2I1/pcplus-source-proof-2r13kxp4/checkout",
+  "source_checkout": "/tmp/nix-shell.GxuB2W/pcplus-source-proof-jygve9ev/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
   "scope": "Source-only interactive DOS terminal with imported keyboard/action settings, directory UI, recovered line/character editing, maintained current-profile RIS, bounded process handoff, retained far shadow/history and live checked XMODEM receive/send and maintained CRC YMODEM batch ownership; full PCPlus application remains incomplete.",
-  "binary_sha256": "dacbd777fbd5afaf441ad46ec559be2b95c53fd5ba9c1219ebfb865cd48e66ae",
+  "binary_sha256": "44a477b47d85ec2741e0ab7d5098b54f073150738750bbd421abb773f9831951",
   "matches_workspace_binary": true,
   "matches_workspace_manifest": true,
   "manifest": {
@@ -36,68 +36,72 @@
       "normalized_object_sha256": "01bd96165308ac2fd147d3634ee5e4495488fdcbdd11903889d2f8e37ac614e1"
     },
     "kind": "source-only-interactive-dos-terminal",
-    "binary_sha256": "dacbd777fbd5afaf441ad46ec559be2b95c53fd5ba9c1219ebfb865cd48e66ae",
-    "data_stack_bytes": 65488,
+    "binary_sha256": "44a477b47d85ec2741e0ab7d5098b54f073150738750bbd421abb773f9831951",
+    "data_stack_bytes": 64096,
     "memory_layout": {
-      "near_bytes": 65488,
-      "near_spare_bytes": 48,
-      "near_relative_segment": 7162,
-      "far_relative_segment": 16568,
+      "near_bytes": 64096,
+      "near_spare_bytes": 1440,
+      "near_relative_segment": 7220,
+      "far_relative_segment": 16570,
       "shadow_offset": 0,
       "history_offset": 0,
       "far_bytes": 71192,
-      "history_relative_segment": 17080,
+      "history_relative_segment": 17082,
       "history_bytes": 63000,
-      "far_end_linear": 336280,
-      "stack_end_linear": 180080,
-      "loaded_module_bytes": 148474,
-      "minimum_allocated_module_bytes": 336288,
-      "retained_parent_paragraphs": 21034,
+      "far_end_linear": 336312,
+      "stack_end_linear": 179616,
+      "loaded_module_bytes": 148500,
+      "minimum_allocated_module_bytes": 336336,
+      "retained_parent_paragraphs": 21036,
       "far_pointer_relocations_verified": true,
-      "snapshot_relative_segment": 12505,
-      "snapshot_image_offset": 63008,
+      "snapshot_relative_segment": 12476,
+      "snapshot_image_offset": 63504,
       "snapshot_bytes": 2000,
-      "snapshot_end_linear": 265088,
+      "snapshot_end_linear": 265120,
       "ui_screen_buffers": {
         "browser_screen": {
-          "relative_segment": 11255,
+          "relative_segment": 11226,
           "offset": 0,
           "bytes": 4000,
-          "start_linear": 180080,
-          "end_linear": 184080
+          "start_linear": 179616,
+          "end_linear": 183616
         },
         "ed_screen": {
-          "relative_segment": 11255,
+          "relative_segment": 11226,
           "offset": 4000,
           "bytes": 4000,
-          "start_linear": 184080,
-          "end_linear": 188080
+          "start_linear": 183616,
+          "end_linear": 187616
         },
         "program_screen": {
-          "relative_segment": 11255,
+          "relative_segment": 11226,
           "offset": 8000,
           "bytes": 4000,
-          "start_linear": 188080,
-          "end_linear": 192080
+          "start_linear": 187616,
+          "end_linear": 191616
         },
         "redisplay_live": {
-          "relative_segment": 11255,
+          "relative_segment": 11226,
           "offset": 12000,
           "bytes": 4000,
-          "start_linear": 192080,
-          "end_linear": 196080
+          "start_linear": 191616,
+          "end_linear": 195616
         },
         "redisplay_view": {
-          "relative_segment": 11255,
+          "relative_segment": 11226,
           "offset": 16000,
           "bytes": 4000,
-          "start_linear": 196080,
-          "end_linear": 200080
+          "start_linear": 195616,
+          "end_linear": 199616
         }
       },
       "far_ui_storage_bytes": 20000,
       "redisplay_snapshot_bytes": 63000,
-      "redisplay_snapshot_end_linear": 263080,
+      "redisplay_snapshot_end_linear": 262616,
+      "redisplay_row_index_bytes": 494,
+      "redisplay_row_index_relative_segment": 12476,
+      "redisplay_row_index_offset": 63000,
+      "redisplay_row_index_end_linear": 263110,
       "controller_bridge_pairs_verified": 22,
       "modem_bridge_pairs_verified": 23,
       "command_menu_far_code_verified": true,
@@ -132,19 +136,19 @@
           "kind": "FARCODE",
           "relative_segment": 4246,
           "offset": 0,
-          "bytes": 43701
+          "bytes": 44639
         },
         {
           "name": "MODEM_CODE",
           "kind": "FARCODE",
-          "relative_segment": 6978,
+          "relative_segment": 7036,
           "offset": 0,
           "bytes": 1483
         },
         {
           "name": "PRINT_CODE",
           "kind": "FARCODE",
-          "relative_segment": 7071,
+          "relative_segment": 7129,
           "offset": 0,
           "bytes": 1449
         }
@@ -290,7 +294,7 @@
       "src/terminal/print_controller.asm": "e7af0782119e00d8563c214c1a469fd548f547f332f6c6e663dfe9594f792d92",
       "src/terminal/printer.asm": "70ac5cb8b90bc2d7a4ec1ee1a071a6c2f1a351e37ac2bbd49dc2e629674b629b",
       "src/terminal/program_actions.asm": "4223c869b72ab404ed606c92e9d1e6782398fc0a5640dfc88921ff6b6c0bf4aa",
-      "src/terminal/redisplay.asm": "00d3e4f90c9cf26b4ea700d6be157c9f9ad682f66c9c47090112589085c5ffe1",
+      "src/terminal/redisplay.asm": "39664f56fb1a2eabf339cd7ac79e8303ab755674c6fae7b6c1683c87b7eb0e16",
       "src/terminal/screen_print.asm": "1054967a6bc331c56e7aa5c3dc87671bf3900b25cc1180cc83533bf3c285ec21",
       "src/terminal/script_launch.asm": "56b93b00407fe4ccd7ddb48c74bff86ab75eee529519e42a2963698e9dbbd736",
       "src/terminal/services.asm": "b26ec41349cf958bfc0331dcbe25e15ca35dec35de37d0be0093b525d0d0a6bf",
@@ -340,7 +344,7 @@
       "src/translation/xlt_default.c": "a9f3b1ba201063f4684ff25333846cfc2b7e915712017d09e245c643c7240932",
       "src/config/resource_path.c": "6415ca340fdad3d8938c708584f0bdf50fbfee76c6001d2f14a8d8de8f036c3a",
       "src/translation/xlt_live.c": "18620ad0a53369435f9c7e92f13a9458e3ef5591fa20b7d2dbbe6d4bea269fa5",
-      "src/redisplay/redisplay.c": "59edfc8022766e3060cb89427781ba37310afa1073ff054f96e278401957aca0",
+      "src/redisplay/redisplay.c": "5ecce2f5d461bd5be0b12664642811e84e1c8c81506a720efed645d44d4dfa6b",
       "src/redisplay/command_menu.c": "500aeac680a3e9b7643638f5fb29bf2d83cb418ff9a5a90006f8fb41e0e8184d",
       "src/terminal/script_launch.c": "3214063fb684606cbd3c1cac2cdebd50cc6089fc340ca5a1b72e8e92ab8c6ca5",
       "src/clipboard/clipboard.c": "9547621a8ebce3c8707eceaa087a59735945523818a19f215b4e9027a224147a",
@@ -449,7 +453,7 @@
       "reconstruction/transfer_files/provenance.json": "153d0b6718ca60f34b65f9c91bae7a018467771f49cd69c53a3743e6273ee359",
       "reconstruction/transfer_blocks/provenance.json": "d208524987aa9e314c71a0320cda9da46da26da4eb3455bb7b73783ebce8c608",
       "src/transfer/native_link.py": "b36aea74a0961141f301f1d4275d077f3ec27ca04ea2685384a0110477bd588f",
-      "standalone/terminal_memory.py": "8685accb334b8ae28c802f44a0e9a1d9182b47c10c6ca298287267cbe3b69ea7",
+      "standalone/terminal_memory.py": "51a29b72b05bf4ae76a31f09ae16d8b628d219e2d016150bfbd87f981d5484a7",
       "reconstruction/transfer_send/session.asm": "559f40abb2abd6724e22f71580c52fd8d15ec773b51347ac91bda02e045b220b",
       "reconstruction/transfer_send/cancel.asm": "9324066078aff11935a1bc5e315598344b182c1fae8077611e2c4af1aa652762",
       "reconstruction/transfer_blocks/crc_buffer.asm": "00083b3c0f6143b8b0119f0c5690f32b54b2c981f474ed5ce1529336d8db1ad4",

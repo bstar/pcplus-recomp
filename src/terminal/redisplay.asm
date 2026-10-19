@@ -189,4 +189,9 @@ SEGMENT REDISPLAY_STORAGE public align=16 class=FAR_DATA use16
 global redisplay_snapshot,redisplay_snapshot_end
 redisplay_snapshot: resb 63000
 redisplay_snapshot_end:
+; The row index is used only by the far-aware C viewer, never as a near DOS
+; buffer. Keep it beside the retained snapshot, outside the DS=SS group.
+global _redisplay_row_index,_redisplay_row_index_end
+_redisplay_row_index: resw 247
+_redisplay_row_index_end:
 extern terminal_history_buffer

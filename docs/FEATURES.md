@@ -523,3 +523,10 @@ still supports only WHENCASE pending native status/RPC integration. Fresh source
 builds reproduce106 checked outputs, including fifteen SET component artifacts.
 These increments do not close the full compiler/recorder, UI/settings, transfer,
 Host, hardware or other F01–F16 requirements.
+
+The [status memory prerequisite](STATUS_MEMORY.md) moves fixed redisplay prose
+to CONFIG_CODE and its247-word row index to retained far storage, leaving1,440
+near bytes instead of48. Linked full-history cases, actual DOS redisplay/export/
+clipboard workflows, all eight WHEN renderer compositions, scoped Synchronet
+and30ms-buffered ENiGMA editors, and106 reproducible outputs pass. Native status
+and SET integration remain open.

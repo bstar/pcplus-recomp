@@ -33,6 +33,9 @@ but production SET remains limited to WHENCASE while native status services and
 session-setting adoption are integrated. See `docs/ASPECT_WHEN_RUNTIME.md` and
 `docs/ASPECT_SET_NATIVE.md`; complete scripting, keyboard/UI and recorder remain
 part of the full application goal.
+`docs/STATUS_MEMORY.md` records the status prerequisite: fixed redisplay prose
+and its row index now live outside DGROUP, increasing near headroom from48 to
+1,440 bytes while retaining the8KiB stack and checked DOS child-memory extents.
 
 ZMODEM now has live Alt-R/Alt-S/F2 dispatch, CONFIG_CODE placement, ten verified
 far callbacks, checked source seek/skip, exact variable receive packets and

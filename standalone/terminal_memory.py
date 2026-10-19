@@ -72,6 +72,19 @@ def inspect_terminal_memory(binary,map_path):
  for buf in ui_buffers.values():assert snap_hi<=buf['start_linear'] or snap_lo>=buf['end_linear']
  static_end=max(static_end,snap_hi)
  extra.update(redisplay_snapshot_bytes=63000,redisplay_snapshot_end_linear=snap_hi)
+ # The far-aware viewer's row index shares the frozen-snapshot segment. It
+ # must survive the parent's DOS memory shrink before a child EXEC as well.
+ index_lo=address('_redisplay_row_index');index_hi=address('_redisplay_row_index_end')
+ index_seg,index_off=symbols['_redisplay_row_index']
+ assert index_seg==snap_seg and index_lo==snap_hi and index_hi-index_lo==494
+ assert index_off+494<=65536 and index_lo>=module_bytes
+ assert index_hi<=near_start or index_lo>=near_start+near_size
+ assert index_hi<=shadow or index_lo>=far_end
+ if 'terminal_snapshot_image' in symbols:assert index_hi<=frozen or index_lo>=frozen_end
+ for buf in ui_buffers.values():assert index_hi<=buf['start_linear'] or index_lo>=buf['end_linear']
+ static_end=max(static_end,index_hi)
+ extra.update(redisplay_row_index_bytes=494,redisplay_row_index_relative_segment=index_seg,
+              redisplay_row_index_offset=index_off,redisplay_row_index_end_linear=index_hi)
  # All executable segments must fit their real-mode segment and survive EXEC.
  code_segments=[]
  for name,kind,group,cseg,coff,csize in re.findall(r'^(\w+)\s+(CODE|FARCODE)\s+(\S+)\s+([0-9a-f]{4}):([0-9a-f]{4})\s+([0-9a-f]+)',listing,re.M|re.I):
