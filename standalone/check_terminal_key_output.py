@@ -15,7 +15,7 @@ class Machine(DosImage):
   self.segment=self.base_segment+next(s['relative_segment'] for s in manifest['memory_layout']['code_segments'] if s['name']=='ASPECT_CODE')
   self.events=[];self.echo_counts=[];self.uc.hook_add(UC_HOOK_CODE,self.endpoint)
  def endpoint(self,uc,address,size,_):
-  kind={self.symbols['terminal_key_echo_far']:'echo',self.symbols['terminal_key_cursor_far']:'cursor'}.get(address)
+  kind={self.symbols['terminal_key_echo_far']:'echo',self.symbols['terminal_key_cursor_far']:'cursor',self.symbols['terminal_key_edit_far']:'edit'}.get(address)
   if not kind:return
   self.events.append((kind,uc.reg_read(UC_X86_REG_AX)))
   self.echo_counts.append(self.get('terminal_tx_count'))
@@ -38,7 +38,7 @@ class Machine(DosImage):
   self.events=[];self.echo_counts=[]
 def main():
  OUT.mkdir(exist_ok=True);m=Machine();cases=0
- half_unsupported={7,8,9,54,55}
+ half_unsupported={7}
  string_echo=set(range(7))|set(range(28,38))|{78}
  cursor={50:1,72:1,51:2,73:2,52:3,74:3,53:4,75:4,76:5}
  for profile in (4,6):
@@ -55,6 +55,7 @@ def main():
      if slot in string_echo:events=[('echo',b) for b in bindings[slot]]
      elif slot==10:events=[('echo',8)]
      elif slot in cursor:events=[('cursor',cursor[slot])]
+     elif slot in (8,9,54,55):events=[('edit',int(slot in (9,55)))]
     assert m.events==events,(profile,half,slot,m.events,events)
     assert m.echo_counts==[len(m.wire())]*len(events)
     assert not m.get('terminal_quit');cases+=1
@@ -81,6 +82,6 @@ def main():
  assert m.get('terminal_quit')==1 and m.get('terminal_exit_code')==3;cases+=1
  m.clear();m.put('modes_value_1d1a',1);assert m.run(ord('k'),65535)==0 and m.events==[('echo',ord('k'))];cases+=1
  m.clear();assert m.run(ord('k'),256)==7 and not m.wire() and not m.events;cases+=1
- report=dict(passed=True,cases=cases,all79_slots=True,profiles=[4,6],duplex=[0,1],binary_sha256=sha(ROOT/'build/terminal/TERMINAL.EXE'),checker_sha256=sha(Path(__file__)),original_inputs=[],scope='Actual product far key core, raw classifier, bindings and queue instructions. Echo/cursor scalar endpoints are explicit recording fixtures; actual renderer and child UART covered separately. Full/half, FF wire/echo distinction, literal/control, native no-op/local rejection, aliases, malformed binding and atomic capacity failure. Half reverse-tab/insert/delete remain unsupported before output.')
+ report=dict(passed=True,cases=cases,all79_slots=True,profiles=[4,6],duplex=[0,1],binary_sha256=sha(ROOT/'build/terminal/TERMINAL.EXE'),checker_sha256=sha(Path(__file__)),original_inputs=[],scope='Actual product far key core, raw classifier, bindings, editing admission and queue instructions. Echo/cursor/edit scalar endpoints are explicit recording fixtures; actual video/native editing and child UART covered separately. Full/half, FF wire/echo distinction, literal/control, native no-op/local rejection, aliases, malformed binding and atomic capacity failure. Half reverse-tab remains unsupported before output.')
  (OUT/'checks.json').write_text(json.dumps(report,indent=2)+'\n');print('Shared terminal key output',cases,'cases PASS')
 if __name__=='__main__':main()

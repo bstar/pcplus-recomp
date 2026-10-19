@@ -27,6 +27,15 @@ keypad, Tab and Enter bindings echo their original stored bytes; FF remains FF
 for local echo, unlike its wire encoding. Enhanced Home's native slot56 has
 no local echo; legacy Home's slot76 moves the cursor.
 
+Half-duplex Insert/Delete now call the actual recovered ICH/DCH helpers once.
+Both standard and enhanced identities perform checked admission before any
+binding reaches the wire. Unsupported geometry, metadata pointers and complex
+delete-repair spans return unsupported without wire/video mutation. Admission
+restores the parser parameter count, and echo does not route through a CSI
+repetition wrapper or change that count. Existing CSI error/no-op behavior is
+preserved. These echo helpers implement the native cell edits, not a new local
+insert-mode toggle.
+
 Renderer capability6 retains capability5's BIOS inheritance. The ASIO
 descriptor remains version4/48 bytes, with6 included in its guard. Older
 capabilities1–5 are rejected before UART access. A key request must pull its
@@ -64,6 +73,14 @@ echo, and typed half-duplex editing failure before output. Existing parent
 renderer/query, history, handles, sink-owner and post-return keyboard checks
 remain active.
 
+The current12 DOS cases include actual half-duplex Insert/Delete video edits
+and continued script execution, with reverse-Tab retained as the explicit
+unsupported-key case. A separate55-case product replay exercises the real
+video/native editing helpers in both profiles, standard/enhanced keys,
+single/doublewidth cells, unchanged cursor/parser parameters and pre-wire
+geometry/metadata rejection. The837-case scalar-boundary test separately
+checks dispatch, bindings, wire encoding and ordering.
+
 Earlier failed fixtures are retained privately. `shared-keys-02` omitted the
 three displayed END characters from its cursor predictions. `shared-keys-04`
 asked enhanced Home for legacy Home echo; explicit STANDARD BIOS selection now
@@ -75,8 +92,9 @@ or treating output after script return as script output.
 
 Local menus, transfers, macros/HOOK/PROGRAM dispatch, native abort confirmation
 and original status/selection post-actions are unfinished during scripts.
-Half-duplex reverse-Tab and Insert/Delete echo services are not linked and
-return unsupported before any wire or echo output; full-duplex bindings work.
+Half-duplex reverse-Tab is not linked and returns unsupported before any wire
+or echo output; full-duplex bindings work. Insert/Delete retain explicit
+preflight rejection for unsupported geometry/repair.
 Original blocking per-binding pacing remains outside the maintained queue
 policy, as it was before this integration. A raw script without an admitted
 parent still has no keyboard-profile/UI owner and reports unsupported for

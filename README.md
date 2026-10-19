@@ -506,8 +506,9 @@ current script name after `EXECUTE`; see [the label protocol and checks](docs/AS
 The same capability inherits the parent's standard/enhanced BIOS selection;
 see [ASPECT keyboard acquisition](docs/ASPECT_KEYBOARD.md).
 Ordinary keys during scripts now use the parent's selected profile and the
-child UART through [shared key output](docs/ASPECT_KEY_OUTPUT.md). Local commands
-and several half-duplex editing actions remain unfinished.
+child UART through [shared key output](docs/ASPECT_KEY_OUTPUT.md), including
+checked native half-duplex Insert/Delete echo. Local commands and half-duplex
+reverse-Tab remain unfinished.
 
 The [DOS compiler port](docs/ASPECT_DOS_COMPILER.md) provides `ASPCOMP.EXE`
 for the maintained ASPECT language subset. `ASPECT` compiles explicit ASP files

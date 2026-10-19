@@ -76,6 +76,7 @@ builds.append('keyboard_reverse_tab')
 program='import subprocess\n'+''.join(f"subprocess.run(['python3','standalone/build_{name}.py'],check=True)\n" for name in builds)
 owner_checks=['standalone/check_batch_download.py','standalone/check_batch_upload.py','standalone/check_capture_file.py','standalone/check_capture_session.py','standalone/check_capture_owners.py']
 owner_checks.append('standalone/check_keyboard_reverse_tab.py')
+owner_checks.append('standalone/check_terminal_key_edit.py')
 owner_checks.append('standalone/check_monitor_file.py')
 owner_checks.append('standalone/check_printer_device.py')
 owner_checks.append('standalone/test_resource_path_dos.py')

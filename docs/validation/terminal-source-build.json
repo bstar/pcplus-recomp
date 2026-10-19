@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "afaa4a027c3d2e1d8943ccf898e53bd12eb89281b14de093e1faa2d804f0c9c5",
-  "source_file_count": 1992,
+  "source_snapshot_sha256": "283ff6f9dc30477316b214c05e2fbdf3b285f16dd12ffb019c054173b6f78c7f",
+  "source_file_count": 1994,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,14 +16,14 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "a6a563fe9969c424e88a1ef790dfb3c73c29b0a5e1e9cc446a0597a6f8455217",
+  "build_log_sha256": "c97e9d113d129a056790e4cb767b1fe96483f55044a974a19b1b8240d2fbef61",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.D4XH54/pcplus-source-proof-9nh62yss/checkout",
+  "source_checkout": "/tmp/nix-shell.GnNTBX/pcplus-source-proof-v82omfux/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
   "scope": "Source-only interactive DOS terminal with imported keyboard/action settings, directory UI, recovered line/character editing, maintained current-profile RIS, bounded process handoff, retained far shadow/history and live checked XMODEM receive/send and maintained CRC YMODEM batch ownership; full PCPlus application remains incomplete.",
-  "binary_sha256": "eae23158210bf4a5d47e3c8d7c01e9da2ea25d5b62dd9c707588eea8698efdab",
+  "binary_sha256": "2da16bc0aa1f3f7e0fb111c05591ec98cd3a9516368a4a911a904bef887f1bd4",
   "matches_workspace_binary": true,
   "matches_workspace_manifest": true,
   "manifest": {
@@ -36,72 +36,72 @@
       "normalized_object_sha256": "01bd96165308ac2fd147d3634ee5e4495488fdcbdd11903889d2f8e37ac614e1"
     },
     "kind": "source-only-interactive-dos-terminal",
-    "binary_sha256": "eae23158210bf4a5d47e3c8d7c01e9da2ea25d5b62dd9c707588eea8698efdab",
+    "binary_sha256": "2da16bc0aa1f3f7e0fb111c05591ec98cd3a9516368a4a911a904bef887f1bd4",
     "data_stack_bytes": 64768,
     "memory_layout": {
       "near_bytes": 64768,
       "near_spare_bytes": 768,
-      "near_relative_segment": 7427,
-      "far_relative_segment": 16819,
+      "near_relative_segment": 7435,
+      "far_relative_segment": 16827,
       "shadow_offset": 0,
       "history_offset": 0,
       "far_bytes": 71192,
-      "history_relative_segment": 17331,
+      "history_relative_segment": 17339,
       "history_bytes": 63000,
-      "far_end_linear": 340296,
-      "stack_end_linear": 183600,
-      "loaded_module_bytes": 152484,
-      "minimum_allocated_module_bytes": 340320,
-      "retained_parent_paragraphs": 21285,
+      "far_end_linear": 340424,
+      "stack_end_linear": 183728,
+      "loaded_module_bytes": 152612,
+      "minimum_allocated_module_bytes": 340448,
+      "retained_parent_paragraphs": 21293,
       "far_pointer_relocations_verified": true,
-      "snapshot_relative_segment": 12725,
+      "snapshot_relative_segment": 12733,
       "snapshot_image_offset": 63504,
       "snapshot_bytes": 2000,
-      "snapshot_end_linear": 269104,
+      "snapshot_end_linear": 269232,
       "ui_screen_buffers": {
         "browser_screen": {
-          "relative_segment": 11475,
+          "relative_segment": 11483,
           "offset": 0,
           "bytes": 4000,
-          "start_linear": 183600,
-          "end_linear": 187600
+          "start_linear": 183728,
+          "end_linear": 187728
         },
         "ed_screen": {
-          "relative_segment": 11475,
+          "relative_segment": 11483,
           "offset": 4000,
           "bytes": 4000,
-          "start_linear": 187600,
-          "end_linear": 191600
+          "start_linear": 187728,
+          "end_linear": 191728
         },
         "program_screen": {
-          "relative_segment": 11475,
+          "relative_segment": 11483,
           "offset": 8000,
           "bytes": 4000,
-          "start_linear": 191600,
-          "end_linear": 195600
+          "start_linear": 191728,
+          "end_linear": 195728
         },
         "redisplay_live": {
-          "relative_segment": 11475,
+          "relative_segment": 11483,
           "offset": 12000,
           "bytes": 4000,
-          "start_linear": 195600,
-          "end_linear": 199600
+          "start_linear": 195728,
+          "end_linear": 199728
         },
         "redisplay_view": {
-          "relative_segment": 11475,
+          "relative_segment": 11483,
           "offset": 16000,
           "bytes": 4000,
-          "start_linear": 199600,
-          "end_linear": 203600
+          "start_linear": 199728,
+          "end_linear": 203728
         }
       },
       "far_ui_storage_bytes": 20000,
       "redisplay_snapshot_bytes": 63000,
-      "redisplay_snapshot_end_linear": 266600,
+      "redisplay_snapshot_end_linear": 266728,
       "redisplay_row_index_bytes": 494,
-      "redisplay_row_index_relative_segment": 12725,
+      "redisplay_row_index_relative_segment": 12733,
       "redisplay_row_index_offset": 63000,
-      "redisplay_row_index_end_linear": 267094,
+      "redisplay_row_index_end_linear": 267222,
       "controller_bridge_pairs_verified": 22,
       "modem_bridge_pairs_verified": 23,
       "command_menu_far_code_verified": true,
@@ -116,41 +116,41 @@
       "aspect_renderer_state_bytes": 4,
       "status_far_bridge_pairs_verified": 5,
       "status_script_label_bytes": 15,
-      "resident_code_bytes": 65294,
-      "resident_code_spare_bytes": 242,
+      "resident_code_bytes": 65380,
+      "resident_code_spare_bytes": 156,
       "code_segments": [
         {
           "name": "_TEXT",
           "kind": "CODE",
           "relative_segment": 0,
           "offset": 0,
-          "bytes": 65294
+          "bytes": 65380
         },
         {
           "name": "ASPECT_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4081,
+          "relative_segment": 4087,
           "offset": 0,
-          "bytes": 3849
+          "bytes": 3886
         },
         {
           "name": "CONFIG_CODE",
           "kind": "FARCODE",
-          "relative_segment": 4322,
+          "relative_segment": 4330,
           "offset": 0,
           "bytes": 46724
         },
         {
           "name": "MODEM_CODE",
           "kind": "FARCODE",
-          "relative_segment": 7243,
+          "relative_segment": 7251,
           "offset": 0,
           "bytes": 1483
         },
         {
           "name": "PRINT_CODE",
           "kind": "FARCODE",
-          "relative_segment": 7336,
+          "relative_segment": 7344,
           "offset": 0,
           "bytes": 1449
         }
@@ -267,7 +267,7 @@
       "src/terminal/boundaries.asm": "33659c9d03aff791099d7b2f188f37350910379b46519ba09bd24eb5cb8b7f8f",
       "src/terminal/break_actions.asm": "1f203505825f9175dc1df1c4397aecd198bddaab0094613cee30fb60e3b4c7a9",
       "src/terminal/capture.asm": "d2b7a1e4fbb3f70fc349c2b68acd5c3fb02e9ebad68ca8bfc88e23e688deca22",
-      "src/terminal/character_edit.asm": "da72275f8e991eb168992f9a3407dee58ad356602505f8b91ccd26c0cfab4c16",
+      "src/terminal/character_edit.asm": "d8dd1dea198b19e2da1d84450dc633ce3f6094a618dd9f17c689e878fba906ad",
       "src/terminal/clipboard.asm": "a43fbc09ff47f52461259cc109055b6a041a5022c584746945d177b83551741e",
       "src/terminal/config_bridge.asm": "8c28d14c60e90a9463c66a2f80675d95cfe0ac9e995cf440aebca08edd05c72e",
       "src/terminal/config_far.asm": "9ff538417f2adcce72f3679ec606a73e2b8de4e3caf29a1eb88d45db618d9f9c",
@@ -283,7 +283,7 @@
       "src/terminal/directory_edit_save.asm": "926235807dd032aec6662bd1bed44b05e25ec07b9f70ee9ab9081c8b787841fd",
       "src/terminal/directory_editor.asm": "8361e42aedbdceae88d5bc2d9d0072c835349ef34616941aac4a9e1096e2850d",
       "src/terminal/key_configuration.asm": "f2aa075a9ba3d615566f1a2105e50f3378ccc368af09c53b34b2155345f8f430",
-      "src/terminal/key_dispatch.asm": "de45a42bf31ead5d7189014cf8e56f17e8c3919a0016d8b9d083f3fff1d7c465",
+      "src/terminal/key_dispatch.asm": "e82988b000fdf840e39a9efc384e39577e4a00a9b662f1afbe6d79a3e91e1876",
       "src/terminal/key_output.asm": "e1577a02f1f1166682533779f6c358590a9e09bc8bf9dde022dd054e11dc08a0",
       "src/terminal/keyboard_data.asm": "05a64cd482cf50e2cc6d5eee18220b4b493cd4e7498aaa8adeb77b1ad1c56d1a",
       "src/terminal/line_edit.asm": "5972ce56da98ccc945bb0a43e259d9e095abe6d0caf56fd8d5ccfb90bd86536f",

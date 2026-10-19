@@ -21,8 +21,13 @@ csi_service_d270:
  push es
  xor di,di
  call character_edit_prepare
- jc .done
+ jc .failed
  call csi_insert_character
+ jmp .done
+.failed:
+ or ax,ax
+ jz .done
+ jmp terminal_abort
 .done:
  pop es
  pop di
@@ -37,8 +42,13 @@ csi_service_d440:
  push es
  mov di,1
  call character_edit_prepare
- jc .done
+ jc .failed
  call csi_delete_character
+ jmp .done
+.failed:
+ or ax,ax
+ jz .done
+ jmp terminal_abort
 .done:
  pop es
  pop di
@@ -133,11 +143,70 @@ character_edit_prepare:
  ret
 .outside:
  mov word [ansi_parameters],1
+ xor ax,ax
  stc
  ret
 .unsupported_attributes:
  mov ax,0x2d98
- jmp terminal_abort
+ stc
+ ret
+
+; AX0 insert/1 delete. Keyboard admission precedes all wire/echo effects.
+; Preserve parser count and caller registers; unsupported layouts return3.
+global terminal_key_edit_admit_far,terminal_key_edit_far
+terminal_key_edit_admit_far:
+ push bp
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push es
+ push word [ansi_parameters]
+ mov di,ax
+ call character_edit_prepare
+ jc .reject
+ xor ax,ax
+ jmp .restore
+.reject:
+ mov ax,3
+.restore:
+ pop word [ansi_parameters]
+ pop es
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop bp
+ retf
+
+; One original helper call, after checked keyboard admission. No CSI count.
+terminal_key_edit_far:
+ push ax
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push bp
+ push es
+ or ax,ax
+ jnz .delete
+ call csi_insert_character
+ jmp .done
+.delete:
+ call csi_delete_character
+.done:
+ pop es
+ pop bp
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ retf
 
 ansi_escape_service_dac6:
  push bp

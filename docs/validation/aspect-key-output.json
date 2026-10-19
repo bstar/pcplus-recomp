@@ -1,17 +1,24 @@
 {
   "passed": true,
   "renderer_capability": 6,
-  "recorder_sha256": "4b8b6e2f9ba125a746c7317bb9aaca91499e7db5786ff165d40e50ba5e49e561",
-  "terminal_sha256": "eae23158210bf4a5d47e3c8d7c01e9da2ea25d5b62dd9c707588eea8698efdab",
+  "recorder_sha256": "25d0e404fab1f91badaaf89aabcdfaff6fb194f3d0fb2958dce704a205e1afd6",
+  "terminal_sha256": "2da16bc0aa1f3f7e0fb111c05591ec98cd3a9516368a4a911a904bef887f1bd4",
   "runner_sha256": "2cef1bd3a42eb39ef148db6b16eb0ef68e3965b0e7fe19042f44b23ebfbf916d",
   "compiler_sha256": "cf924b18ae099619f6f83c8127b03e2b2ca39ce3f41a16f336e28585cc5e5941",
   "reports": [
     {
       "path": "build/terminal-key-output/checks.json",
-      "sha256": "24c29cf7d65a869970413afa4022c20ff33efed1133d125636a3ef159671adac",
-      "checker_sha256": "8b488e406c28c4cd45f29af46528764dae4f4556da45927238d4fd44c7c90a55",
+      "sha256": "e94739db91d5c63c929b1858bf9b823165cca3f2aec7268394d322e9c3c6fff2",
+      "checker_sha256": "59fcda9e5c504c7016242342a03d4c04c69788936575e813407189df9eeaf5f6",
       "cases": 837,
-      "scope": "Actual product far key core, raw classifier, bindings and queue instructions. Echo/cursor scalar endpoints are explicit recording fixtures; actual renderer and child UART covered separately. Full/half, FF wire/echo distinction, literal/control, native no-op/local rejection, aliases, malformed binding and atomic capacity failure. Half reverse-tab/insert/delete remain unsupported before output."
+      "scope": "Actual product far key core, raw classifier, bindings, editing admission and queue instructions. Echo/cursor/edit scalar endpoints are explicit recording fixtures; actual video/native editing and child UART covered separately. Full/half, FF wire/echo distinction, literal/control, native no-op/local rejection, aliases, malformed binding and atomic capacity failure. Half reverse-tab remains unsupported before output."
+    },
+    {
+      "path": "build/terminal-key-output/edit-checks.json",
+      "sha256": "7002678410964ea3915af570c0b96e2888605a8db22d1c61e723972d22b9089d",
+      "checker_sha256": "897c2ef8a1373a58ace41a5659488bdb4d857ba4eff838d95a4288805b570d18",
+      "cases": 55,
+      "scope": "Actual shared key core, checked admission, native ICH/DCH and video/memory helpers. Hardware boundaries only are modeled. Both profiles, four standard/enhanced key identities, single/doublewidth edits, unchanged cursor/parser parameters and invalid/repair admission before any wire or video mutation. No physical keyboard/modem claim."
     },
     {
       "path": "build/terminal-key-output/native-echo.json",
@@ -28,10 +35,10 @@
       "scope": "Actual child key request/callback code and guarded stacks; explicit scalar parent boundary. Exact16bit key, inherited/changed duplex, one callback per request, missing/duplicate/nonzero selector, typed errors, retry cleanup, unsolicited/closed/old capability rejection. Actual parent profile/UART/echo tested separately."
     },
     {
-      "path": "build/aspect-keys-dos/shared-keys-05/checks.json",
-      "sha256": "f9e82ac10f31d36443f2188739438f9831f6546866e852d7876bfce9399de420",
-      "checker_sha256": "f2737b20be5a2e6f04634a6e6b5e57be0e3988f1ae612667b5284be9d4bb94be",
-      "cases": 10,
+      "path": "build/aspect-keys-dos/half-edit-01/checks.json",
+      "sha256": "9125036940ba4adf2b4bd879f06b661faaa41038ebbf4180521862d960c0d336",
+      "checker_sha256": "186f6365fc43b65f5709ecd711e0bef3a8b0f40127588863a01879f5baeee06f",
+      "cases": 12,
       "scope": "Actual DOS BIOS keys during ASPECT WAITFOR, shared selected parent profile bindings, child-owned UART and real renderer echo. Owned peer withholds END until typed done, then script sends its password marker and continues; later parent keys still work. ANSI/VT220 full/half and binary custom KBD. No physical modem or full local-key/UI/macro claim."
     },
     {
@@ -56,8 +63,74 @@
       "scope": "Actual production nested DOS compiler and8086 ASPECT UART IRQ across N/S/H/B flow. Checked proactive XOFF/XON for S/B, raw IRQ reception, retained numeric/BREAK state, native compiled bytecode, exact unread ASIO return, vectors/PIC/MCR/guards. No resident-renderer, physical modem or external BBS claim."
     }
   ],
+  "regressions": [
+    {
+      "path": "build/terminal/character-edit-live-checks.json",
+      "sha256": "15c87aa2553a6596bf76cc9469cb8d3a9f69d2d0283c1f61032e11eea38041f5",
+      "checker_sha256": "701a430729023caf7a56f4817ad0bc71028435f4e973a6812bc076b0c68fcc89",
+      "cases": 9,
+      "scope": "Actual linked UART IRQ, input/CSI/ESC dispatcher, maintained bounds and recovered character helpers/video/movers; hardware-only BIOS video/keyboard/UART/tick oracle. Fixed80x25 live geometry; complex attribute repair rejected before mutation, viewport support remains diagnostic-only."
+    },
+    {
+      "path": "build/terminal-keys/result.json",
+      "sha256": "97ec8e6b42df3cb6f74a23e6bda5ecb2419dac0fd89a060e6c0aeca3f7f3653a",
+      "checker_sha256": "7fb4bf4c564d4e83d140853e41b7fc87a49c83febf80c85585e7d9a8ffc5e49b",
+      "cases": 10,
+      "scope": "Actual DOS BIOS events, startup profile selection, strict synthetic KBD import, FF-to-wire-NUL conversion, live sender/UART and restored IRQ/PIC/register state. No installed mappings or physical modem."
+    }
+  ],
+  "BBS": [
+    {
+      "server": "stock Synchronet",
+      "path": "build/bbs-lab/script-login/half-edit-sync-01/checks.json",
+      "sha256": "f237956ab238afbe708022f8ea7058d3561829292ca00c95c470d0f8405e9b91",
+      "checks": {
+        "DOS_harness": true,
+        "current_terminal": true,
+        "current_runner": true,
+        "source_compilation": true,
+        "inputs_unchanged": true,
+        "credentials_not_in_keyboard": true,
+        "script_credentials_once": true,
+        "no_other_login_text_before_script": true,
+        "authenticated_display": true,
+        "no_error_or_blocking_return_prompt": true,
+        "resumed_parent_editor": true,
+        "draft_aborted": true
+      }
+    },
+    {
+      "server": "isolated patched ENiGMA",
+      "path": "build/bbs-lab/results/enigma/half-edit-enigma-transfer-01-wrapper/experiment.json",
+      "sha256": "ec316183725ba774f417646ff170438aa620d41372472f78da970e965ade2e54",
+      "checks": {
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "screen_captured": true,
+        "bbs_connected": true,
+        "binary_unchanged": true,
+        "payload_fixture_unchanged": true,
+        "observed_decoded_offsets_match": true,
+        "configuration_unchanged": true,
+        "automatic_invitation_then_receiver_negotiation": true,
+        "no_manual_transfer_keys": true,
+        "ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed": true,
+        "posttransfer_actual_menu_input_response": true,
+        "actual_validated_protocol": true,
+        "DOS_exact_length_PCXTEST.BIN": true,
+        "only_expected_received_files": true,
+        "unique_server_session_and_ordered_menus": true,
+        "same_session_editor_then_transfer": true,
+        "no_editor_post_saved": true,
+        "discard_menu_used": true,
+        "no_leftover_staging": true
+      },
+      "transfer_sha256": "070cece8b83798491c2e2520d2c21924964061235096db1cdc71a763a325df7a",
+      "scope": "Immediate modeled modem, unsaved editor then exact ZMODEM transfer and file-list return. This is not the live LAN board or physical modem."
+    }
+  ],
   "reproduced_outputs": 156,
-  "source_proof_sha256": "93e0864caf02ced66a5e93a89203472a432540f08b717b6365ced229761686d0",
+  "source_proof_sha256": "9c11d61640e5968e39781c2d2fd16b125a5e3cc5be832f2f4909826b324070d5",
   "original_inputs": [],
   "whole_application_gates_closed": [],
   "retained_fixture_failures": [
@@ -68,11 +141,15 @@
     {
       "label": "shared-keys-04",
       "reason": "Enhanced Home was incorrectly expected to perform legacy Home echo; corrected fixture explicitly selects STANDARD BIOS."
+    },
+    {
+      "label": "half-edit-source-proof",
+      "reason": "New55-case checker passed but could not write its report in a fresh checkout; corrected independent output-directory creation."
     }
   ],
   "limitations": [
     "Local menus/macros/HOOK/PROGRAM and abort confirmation remain unfinished during scripts.",
-    "Half-duplex reverse-Tab and Insert/Delete echo return unsupported before output.",
+    "Half-duplex reverse-Tab still returns unsupported before output; Insert/Delete reject unsupported geometry/repair before output.",
     "Original blocking pacing and complete status/selection post-actions remain unfinished.",
     "Native echo services in the CPU oracle are explicit recording boundaries; real rendering is exercised separately in DOS.",
     "Physical BIOS, UART and Wi-Fi modem remain unverified; no complete application or universal BBS compatibility claim."

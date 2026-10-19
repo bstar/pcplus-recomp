@@ -45,7 +45,8 @@ Production integration must bind the cursor, signed-division, protected-home
 and attribute-repair services, validate table bounds and inconsistent wrap
 modes before output, and exercise actual DOS screen and UART behavior. The
 original table search assumes an FE terminator and has no30-byte bound. Full
-Insert/Delete echo and all F01–F16 application gates remain open.
+Insert/Delete echo is covered separately by the shared keyboard integration;
+all F01–F16 application gates remain open.
 
 The [component record](validation/keyboard-reverse-tab.json) binds its native
 baseline, checker and builder to the fresh156-output source-only rebuild.
@@ -63,4 +64,4 @@ with source offsets89888 and90352 in the verified original. They are already
 linked for CSI editing. Keyboard integration should reuse those helpers with
 preflight before wire output and preserve parser parameters, rather than
 recovering duplicate implementations. The mapping is static loader evidence;
-it does not establish completed half-duplex keyboard behavior.
+its runtime use is tested separately in [shared keyboard output](ASPECT_KEY_OUTPUT.md).

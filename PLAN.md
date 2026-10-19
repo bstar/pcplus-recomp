@@ -11,8 +11,10 @@ Latest keyboard checkpoint: [shared key output](docs/ASPECT_KEY_OUTPUT.md) route
 script-time keys through the actual parent classifier/profile and child-owned
 UART. Capability6 retains inherited BIOS selection and adds checked duplex
 snapshots and native-derived echo. Shared output covers all79 binding slots;
-local commands/macros and half-duplex reverse-Tab/Insert/Delete echo remain
-unfinished. Continue full keyboard/UI integration; no F01–F16 gate closes.
+local commands/macros and half-duplex reverse-Tab echo remain unfinished.
+Half-duplex Insert/Delete now use the real ICH/DCH helpers with pre-wire
+admission and parser-parameter preservation. Continue full keyboard/UI
+integration; no F01–F16 gate closes.
 
 The [native reverse-Tab routine](docs/KEYBOARD_REVERSE_TAB.md) is now recovered
 as226 exact bytes and a relocatable object, with3846 CPU cases. A combined
@@ -20,9 +22,10 @@ native reverse-Tab/cursor-left replay characterizes recursive retry under
 inconsistent wrap flags. Production binding, bounded table/mode admission and
 actual DOS echo tests remain required before removing the current rejection.
 The half-duplex Insert/Delete trampolines resolve to the existing recovered
-CSI ICH/DCH routines in overlay12. Reuse those real helpers with checked
-preflight before wire output, preserve parser parameters and verify actual
-parent/child DOS echo; their current keyboard rejection remains in place.
+CSI ICH/DCH routines in overlay12. Those real helpers now run through checked
+preflight before wire output, with parser parameters preserved and actual
+parent/child DOS video echo covered. Reverse-Tab, full local-key UI/macros and
+the complete original status/selection actions remain open.
 
 The goal is a maintained, source-built PCPlus application that runs in DOS and
 works with the intended RS-232 Wi-Fi modem/BBS setup. A diagnostic or patched

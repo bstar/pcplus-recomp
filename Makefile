@@ -899,6 +899,7 @@ test: test-aspect-keyboard-policy
 .PHONY: test-terminal-key-output test-aspect-key-client test-keyboard-echo-native
 test-terminal-key-output: terminal
 	python3 standalone/check_terminal_key_output.py
+	python3 standalone/check_terminal_key_edit.py
 test-aspect-key-client: aspect-runner
 	python3 standalone/check_aspect_key_client.py
 test-keyboard-echo-native: keyboard_mapping
