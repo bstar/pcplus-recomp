@@ -1,0 +1,505 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "private_report": "analysis/aspect-conversions/compiler-02/report.json",
+  "private_report_sha256": "20ac61d1a13ab75b3e481394769aeccab3d05ea8732fd02d701b775d4f200463",
+  "probe_sha256": "1e93e884d04c4e5486f35e423391e7ed37c5bff990d34d9d635c468c84ad7d13",
+  "freezer_sha256": "38532d79d661dcf472e7a68c53daa27ff214ebab0b3b297438b19f2f40fb51a8",
+  "source_encoding": "cp437",
+  "vectors": [
+    {
+      "name": "CVIZERO",
+      "source": "integer outcome\r\nproc main\r\natoi \"0\" outcome\r\nendproc\r\n",
+      "source_sha256": "77d02bdc943520e7bc94d268cbdb629c5aabc2f10e499358eaf430af8b6e03ee",
+      "hex": "00 cf 06 aa b4 09 4f 8d 00 94",
+      "asx_sha256": "6309f915befd07f61952e9eba752e3c683a8cf33011ab71bc14cb7cb3b378c64",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVIPOS",
+      "source": "integer outcome\r\nproc main\r\natoi \"12345\" outcome\r\nendproc\r\n",
+      "source_sha256": "bfa16f248b9b3a75ed6476aa4cf6240555a633c9dd4fee1772cbd4822b5aefa7",
+      "hex": "00 cf 06 aa b8 0d 50 6b da 51 00 8d 00 94",
+      "asx_sha256": "e246a204e22ce589f250c65e22102babdd280da81e33130253d96ddd34e77307",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 12345
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVINEG",
+      "source": "integer outcome\r\nproc main\r\natoi \"-12345\" outcome\r\nendproc\r\n",
+      "source_sha256": "54525c4f2e87f4a63663dccc1db0fb4566d31b0a64eb2f4fd5fe76954510e2d8",
+      "hex": "00 cf 06 aa b9 0e 4c 6a d9 50 ff b6 8d 00 94",
+      "asx_sha256": "b628d30fabaeb8211010525f39568b9ccc6f22235be1f058d9638142422fddb8",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 53191
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVIMIN",
+      "source": "integer outcome\r\nproc main\r\natoi \"-32768\" outcome\r\nendproc\r\n",
+      "source_sha256": "53d51c5ad4d48f06070c8322d3c08e442eade6158775965c3d3e99be4c437812",
+      "hex": "00 cf 06 aa b9 0e 4c 6c d9 54 01 b9 8d 00 94",
+      "asx_sha256": "d617ab1be6bed86b26f03757ebc778178263b21c3a42ff3c6d919a1d9db36052",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 32768
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVIMAX",
+      "source": "integer outcome\r\nproc main\r\natoi \"32767\" outcome\r\nendproc\r\n",
+      "source_sha256": "6b48278d877f0a450856bf868802e3f3d6a9fbf78746439070ec042221fa2427",
+      "hex": "00 cf 06 aa b8 0d 52 6b de 53 02 8d 00 94",
+      "asx_sha256": "cccb56097b4e51fa41319a980283c3e3e979e5ca3a7143f75f4bc8704573bab2",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 32767
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVIWRAP",
+      "source": "integer outcome\r\nproc main\r\natoi \"65537\" outcome\r\nendproc\r\n",
+      "source_sha256": "df35c89ffa098439187e3b0814058c1d5935ec997fae48abe56c8ded474c38b4",
+      "hex": "00 cf 06 aa b8 0d 55 6e dc 50 02 8d 00 94",
+      "asx_sha256": "ad8dc244601f67422c59e4db25a341560976fd3a91c4112370fe808552851815",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVIEMPTY",
+      "source": "integer outcome\r\nproc main\r\natoi \"\" outcome\r\nendproc\r\n",
+      "source_sha256": "181748839edc55d617fecfa3c9b72db82bde4bf3295bb4c9275ac6da15558d8d",
+      "hex": "00 cf 06 6e 13 8d 00 94",
+      "asx_sha256": "8a87ffce99834090882dd03602cf43ceef05ad95eb9f3fff19633d0dfe1d70ee",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVINONE",
+      "source": "integer outcome\r\nproc main\r\natoi \"abc\" outcome\r\nendproc\r\n",
+      "source_sha256": "95470e516e14e3a19af2e7a4f94dd054c687b04bde19814f528e3dfd1f013706",
+      "hex": "00 cf 06 aa b6 0b 80 9b 0a 8d 00 94",
+      "asx_sha256": "6beeb887f8abe182bee11eb53610d50bac570315f40c37003fe5ea1dc75f1074",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVIPRE",
+      "source": "integer outcome\r\nproc main\r\natoi \"cost: 42 dollars\" outcome\r\nendproc\r\n",
+      "source_sha256": "e73409d5c3b3fa817d114e6a32aa451fa1f85bd1dbe1f4856ba37fe6262848c7",
+      "hex": "00 cf 06 aa c3 18 82 a8 1a 91 05 a1 7b 49 25 6f 74 43 1f 80 ab 1a 8d 00 94",
+      "asx_sha256": "3e6b92a4a65d14b296f5a5588c19d46c2ed80b531e611724ac937e8051bf12ca",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 42
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVIJUNK",
+      "source": "integer outcome\r\nproc main\r\natoi \"x-.x--7z\" outcome\r\nendproc\r\n",
+      "source_sha256": "e496d2ae442a4b8778eaf0797db818d5fe5a3ef5a1052d71c144a8326727fee5",
+      "hex": "00 cf 06 aa bb 10 97 66 d5 95 f8 ae 7e 91 8d 00 94",
+      "asx_sha256": "3e45e4533a9fbc5447df1d8106e2618946935f95a0518128b2dd0ccbcfa6f612",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 65529
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVIDOT",
+      "source": "integer outcome\r\nproc main\r\natoi \".75\" outcome\r\nendproc\r\n",
+      "source_sha256": "76322fef67c4ad62553e3a1817adf298cf1ea4b8542abd8b9fbb319bd1e21d51",
+      "hex": "00 cf 06 aa b6 0b 4d 70 dc 8d 00 94",
+      "asx_sha256": "ffbe9616dc36890b3c313503f10452b990f71e12a93615df780b23b6d6349db6",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 75
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVISIGN",
+      "source": "integer outcome\r\nproc main\r\natoi \"+12\" outcome\r\nendproc\r\n",
+      "source_sha256": "835fc154fbbca0048aded2bed011c02151c24c7817de37886c2021fe0be3bba5",
+      "hex": "00 cf 06 aa b6 0b 4a 6a d9 8d 00 94",
+      "asx_sha256": "e99152b7f07ec4260fe3a1b098025d397e5ddbd3f5b0485e1548bbafe1dbe786",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 12
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVIHI",
+      "source": "integer outcome\r\nproc main\r\natoi \"\u00e9\u00c7-17\" outcome\r\nendproc\r\n",
+      "source_sha256": "a79b94493d5c429f64c90feabce184277a8c9137b6a12176ae96fb1cb7258886",
+      "hex": "00 cf 06 aa b8 0d a1 b9 d4 4e 02 8d 00 94",
+      "asx_sha256": "f765eee5e38f2bd5f64ddb2265a0254484ae2a8aef73b79951ca8022a2543f47",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 65519
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVILONG",
+      "source": "integer outcome\r\nproc main\r\natoi \"4294967297\" outcome\r\nendproc\r\n",
+      "source_sha256": "c15ccb493f6ed02a23bd7fd94d6a53b263c4bc96169e3cf66c32bf5393710530",
+      "hex": "00 cf 06 aa bd 12 53 6b e0 51 04 b7 7e 49 3e 42 8d 00 94",
+      "asx_sha256": "a6ca8f07673ddb3eba71a9cd0bbfa7732b62c1337a7e20aff07c5fbc2a35825b",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVISUFF",
+      "source": "integer outcome\r\nproc main\r\natoi \"12.99\" outcome\r\nendproc\r\n",
+      "source_sha256": "99138e76ca78dbeaf2a4819337c40dd41998fa90f6e72bfe2ff8bcc560b6201e",
+      "hex": "00 cf 06 aa b8 0d 50 6b d5 56 04 8d 00 94",
+      "asx_sha256": "7ada6082b488c1a953f9f27ea2aa2669923906fe10a09ae83cbe7e2e94e888e5",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 12
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVIWS",
+      "source": "integer outcome\r\nproc main\r\natoi \"  \t-21\" outcome\r\nendproc\r\n",
+      "source_sha256": "4350dd44f43cf256917d15b738c259644ed9664706c3fb204067bd32d0035bc9",
+      "hex": "00 cf 06 aa b9 0e 3f 59 b0 4a fd b2 8d 00 94",
+      "asx_sha256": "cd744199b35fbb2bb26163b1553835aa3ae437a5af5f8cc1b45bbcbb40096e4f",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 65515
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVIZNEG",
+      "source": "integer outcome\r\nproc main\r\natoi \"-0\" outcome\r\nendproc\r\n",
+      "source_sha256": "54c2299b18ed6c5306beb5787eef99dc77a4136f801a88f5340d2e023acae819",
+      "hex": "00 cf 06 aa b5 0a 4c 69 8d 00 94",
+      "asx_sha256": "6a427942a318ba6e79520b24b315edc8906728e343482c09c470412189a4a973",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVINAN",
+      "source": "integer outcome\r\nproc main\r\natoi \"--..\" outcome\r\nendproc\r\n",
+      "source_sha256": "51e7cc67ea75abd19e1f68dfdc12c8509210ab7574f3a86ecb32d6957ddadbc0",
+      "hex": "00 cf 06 aa b7 0c 4c 66 d5 4b 8d 00 94",
+      "asx_sha256": "12b170c44192ab454116a02ad3c8bfa8f5d062da060c1e6a6c50d2233e603f70",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVLZERO",
+      "source": "long outcome\r\nproc main\r\natol \"0\" outcome\r\nendproc\r\n",
+      "source_sha256": "916568d6208cb9b26901f1b293869a6809a093ddc6b6fdbc5ae191ab8a379b20",
+      "hex": "00 cf 07 aa b4 09 4f 8e 00 94",
+      "asx_sha256": "58c08fa4cb2135ae9a2a8bdbcf21e4803f001769d89b46bb06aca626dfe6b136",
+      "source_encoding": "cp437",
+      "expected": {
+        "long0": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVLPOS",
+      "source": "long outcome\r\nproc main\r\natol \"2147483647\" outcome\r\nendproc\r\n",
+      "source_sha256": "95c4dfbee58601874ce220c04a95bc7b9e38486a3992c63cca9c04076eea5720",
+      "hex": "00 cf 07 aa bd 12 51 6a db 54 ff b9 7a 4d 39 42 8e 00 94",
+      "asx_sha256": "004df27806f4b399b1394ad723851a45eb249c9ed2a985a8397a40861e1a4c6e",
+      "source_encoding": "cp437",
+      "expected": {
+        "long0": 2147483647
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVLMIN",
+      "source": "long outcome\r\nproc main\r\natol \"-2147483648\" outcome\r\nendproc\r\n",
+      "source_sha256": "b3fe7e91e74328584aa1f6d2450d1bb24bb1b0c2902e026723c0fe7a236519b3",
+      "hex": "00 cf 07 aa be 13 4c 6b d8 51 02 b5 7f 4a 3b 3f 3d 8e 00 94",
+      "asx_sha256": "c5494268f8675accc615bbc09ffb335e131fe09a442700238d56a1093815e630",
+      "source_encoding": "cp437",
+      "expected": {
+        "long0": 2147483648
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVLMAX",
+      "source": "long outcome\r\nproc main\r\natol \"4294967295\" outcome\r\nendproc\r\n",
+      "source_sha256": "47ef308ce54f7f7b51cda8bf5900b4cc8c9e07d0da38487d4437c4174a0a49dc",
+      "hex": "00 cf 07 aa bd 12 53 6b e0 51 04 b7 7e 49 3e 40 8e 00 94",
+      "asx_sha256": "e0de19837ae89ec26a37b921f68a529caf4316b2cf44d44b48efc29e42e69992",
+      "source_encoding": "cp437",
+      "expected": {
+        "long0": 4294967295
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVLWRAP",
+      "source": "long outcome\r\nproc main\r\natol \"4294967296\" outcome\r\nendproc\r\n",
+      "source_sha256": "69581df3e880b75a51b46090bed16aaa9162b6034009485e43336237805895b9",
+      "hex": "00 cf 07 aa bd 12 53 6b e0 51 04 b7 7e 49 3e 41 8e 00 94",
+      "asx_sha256": "e786c077a6d0a3f337b63d8a282d0daa6a8cdee7ea42c2449f48cde8ccd74191",
+      "source_encoding": "cp437",
+      "expected": {
+        "long0": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVLNEG",
+      "source": "long outcome\r\nproc main\r\natol \"-4294967295\" outcome\r\nendproc\r\n",
+      "source_sha256": "ee4cc39e12bda1736d7e4f271cb5419f87944a6dc2f05ee313e1dab057550f4d",
+      "hex": "00 cf 07 aa be 13 4c 6d d9 56 ff ba 7d 4e 37 44 3a 8e 00 94",
+      "asx_sha256": "5199cbf4e508e6b5da65d5b9a38352d56cd6a86e73e79e588f3287af88d0b6ed",
+      "source_encoding": "cp437",
+      "expected": {
+        "long0": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVLPRE",
+      "source": "long outcome\r\nproc main\r\natol \"abc -7654321end\" outcome\r\nendproc\r\n",
+      "source_sha256": "0acee532f27abd9c24bd5fb938725e2fc0fb6e07db381b612cb753a2f50980a7",
+      "hex": "00 cf 07 aa c2 17 80 9b 0a 3d f8 b8 7d 4c 39 3e 37 08 18 8d 9d 8e 00 94",
+      "asx_sha256": "a631bd2923fd4d82475c1292366e17163494550e96329676fa0c9652132fa43b",
+      "source_encoding": "cp437",
+      "expected": {
+        "long0": 4287312975
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVLEMPTY",
+      "source": "long outcome\r\nproc main\r\natol \"\" outcome\r\nendproc\r\n",
+      "source_sha256": "6905ea27dc584f322a2c2e67e02f1b9bd0b36076e627ed97c254ee8de25ac311",
+      "hex": "00 cf 07 6e 13 8e 00 94",
+      "asx_sha256": "310dda6055ab43e5c6af235c1d20e6217b7a8e85b70b1a128fda3f1d7ea55148",
+      "source_encoding": "cp437",
+      "expected": {
+        "long0": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVTZERO",
+      "source": "string outcome\r\nproc main\r\nitoa 0 outcome\r\nendproc\r\n",
+      "source_sha256": "e4f4bf6456c952226d4692d6fd0076df6f399256f858feefc8cc020b1c2ab348",
+      "hex": "01 cf 61 b5 00 8c 00 94",
+      "asx_sha256": "fa46c9d03601d23d2445e53d561649e2de1e2f3b803566bed6958942c51620fe",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "0"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVTPOS",
+      "source": "string outcome\r\nproc main\r\nitoa 32767 outcome\r\nendproc\r\n",
+      "source_sha256": "956fd0c55ea091d50bcf0973eebeef4002338e8b803941a7eca87d9d4e0c5de5",
+      "hex": "01 cf 61 ab ff 7f 8c 00 94",
+      "asx_sha256": "0ae00747f77621f6ff7cadeee0537cf79bea40a84a377eed2150e27ac69ecd05",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "32767"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVTMIN",
+      "source": "string outcome\r\nproc main\r\nitoa -32768 outcome\r\nendproc\r\n",
+      "source_sha256": "806b81cbbdb075ddeec8ed846a827ec371b5509f3d5af0222b739b2ddc16d835",
+      "hex": "01 cf 61 ab 00 80 8c 00 94",
+      "asx_sha256": "ff97ff980b660b05e1cd70717d90c85a5a7ba6a30cc9339b38b3d44a575554ed",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "-32768"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVTNEG",
+      "source": "string outcome\r\nproc main\r\nitoa -1 outcome\r\nendproc\r\n",
+      "source_sha256": "922740af838840670fc0eff4859fde73f4a7126126a20a609c20dca7fe5e063a",
+      "hex": "01 cf 61 ab ff ff 8c 00 94",
+      "asx_sha256": "916004e26c207cade4cce958683dee3c800909aa342a9f20e7de39139c535ebd",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "-1"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVUZERO",
+      "source": "string outcome\r\nproc main\r\nltoa 0L outcome\r\nendproc\r\n",
+      "source_sha256": "3f12963355a1748e6f02011854ad99b8593bdc39a57263fba7618fd35de2db47",
+      "hex": "01 cf 6e ac 00 00 00 00 8c 00 94",
+      "asx_sha256": "0af534158394b1d09081fb3828b858644ff8ab60815205d5f1fbd871b79e6b6e",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "0"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVUMAX",
+      "source": "string outcome\r\nproc main\r\nltoa 2147483647L outcome\r\nendproc\r\n",
+      "source_sha256": "58d56d258d43b471b4d554fba0e8d085929bbfcf79dab9721b44127735518ea1",
+      "hex": "01 cf 6e ac ff ff ff 7f 8c 00 94",
+      "asx_sha256": "d4225a34a79f9bcabb49f11e6caeae5e9c6fde03c7e1e84fa2686cb834e05795",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "2147483647"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVUMIN",
+      "source": "string outcome\r\nproc main\r\nltoa -2147483648L outcome\r\nendproc\r\n",
+      "source_sha256": "a68fb2e8646ed01034978d834e585cc189fabde9c50e0509bba8de4e9a6b8b94",
+      "hex": "01 cf 6e ac 00 00 00 80 8c 00 94",
+      "asx_sha256": "32254ec476e756f0e9fe8d746cb117f1f25fd363945c4318b3fdcc18736649c0",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "-2147483648"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVUNEG",
+      "source": "string outcome\r\nproc main\r\nltoa -1L outcome\r\nendproc\r\n",
+      "source_sha256": "ffbe7af4accec300ccc18caba573f20dcd1be053408a67ca9b32fc9721fe26be",
+      "hex": "01 cf 6e ac ff ff ff ff 8c 00 94",
+      "asx_sha256": "fba4af8047aa781955d286d5bb085f077d91253647e2d64f52fb04394c57937c",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "-1"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVILOC",
+      "source": "integer outcome\r\nproc main\r\nstring value = \"x-123\"\r\natoi value outcome\r\nendproc\r\n",
+      "source_sha256": "efa212386d2423619fd46ef5b14494b5e5d867883f2e8e23454f7c63df38347a",
+      "hex": "00 d2 51 00 ac a0 00 00 aa b8 86 ad 22 f8 eb 5c 00 cf 06 a0 00 00 8d 00 95",
+      "asx_sha256": "3df150c28c8e45bc26a42f6316dd4596d10be892a032dc88c6912f697e8880d6",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 65413
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVIPARM",
+      "source": "integer outcome\r\nproc main\r\ncall helper with \"v=321\"\r\nendproc\r\nproc helper\r\nstrparm value\r\natoi value outcome\r\nendproc\r\n",
+      "source_sha256": "2a4419c3c0336b8919670f17eb1d62e798fd1dead7d3e5d2eec74361315eb1b0",
+      "hex": "00 cf d0 cd aa b8 8e f5 66 68 2d 14 c8 15 00 00 00 d2 af ff 94 cf 06 96 57 00 8d 00 95",
+      "asx_sha256": "a59c5ef28e5d8bfa4a59871e4e58b5d670f57ada4e0116628b5eeeee9add451f",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 321
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVTLOC",
+      "source": "string outcome\r\nproc main\r\ninteger number = -42\r\nstring value\r\nitoa number value\r\noutcome = value\r\nendproc\r\n",
+      "source_sha256": "b56aec97d3f134d674972e1ed32bb96d3fe3f7d21ed3931a608cc5c9ff960d5a",
+      "hex": "01 d2 53 00 5b 00 a1 00 00 ab d6 ff cf 61 a1 00 00 a0 02 00 ac 8c 00 a0 02 00 00 95",
+      "asx_sha256": "4a037de413a7bc7356830966a08a21b4d2bdec3bbcd8ea56f6824a53333bdbdf",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "-42"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "CVCHAIN",
+      "source": "string outcome\r\ninteger number\r\nproc main\r\natoi \"n=-123\" number\r\nitoa number outcome\r\nendproc\r\n",
+      "source_sha256": "ef947d18abb6ef01f51a06309a150f061f5b1cae3463a34cac0547a29ac20ea5",
+      "hex": "01 cf 06 aa b9 0f ef 14 f8 36 4f 3e 8d 00 61 8d 00 8c 00 94",
+      "asx_sha256": "e562f161dff2b15a1d60b80422a94b4a2e5900febe6dbf40a1b7e954fa904653",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 65413,
+        "string0": "-123"
+      },
+      "dos_excluded": false
+    }
+  ],
+  "rejected": [
+    {
+      "name": "CVORDER",
+      "source": "integer outcome\r\nproc main\r\natoi outcome \"123\"\r\nendproc\r\n",
+      "source_sha256": "a8fd0ec005d3066c31abeca1f19680b8010e45f4d91c176575c0944f57bd7714",
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> OUTCOME",
+        "Error C025 Line 3: Invalid identifier ==> 123"
+      ]
+    },
+    {
+      "name": "CVTMISS",
+      "source": "string outcome\r\nproc main\r\nitoa outcome\r\nendproc\r\n",
+      "source_sha256": "2de7b6226ba5a41f8aa61c19710d9fcc4040e269ad2600e5efb1b811ebe27e76",
+      "errors": [
+        "Error C021 Line 3: Invalid numeric variable or constant ==> OUTCOME",
+        "Error C006 Line 3: Missing token"
+      ]
+    },
+    {
+      "name": "CVBADTY",
+      "source": "string outcome\r\nproc main\r\natoi \"123\" outcome\r\nendproc\r\n",
+      "source_sha256": "eb3c5dd456733165fa34129a66780bc70f0932282dd26b3eda1e460db0c2f989",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> OUTCOME"
+      ]
+    },
+    {
+      "name": "CVLTYPE",
+      "source": "integer outcome\r\nproc main\r\natol \"123\" outcome\r\nendproc\r\n",
+      "source_sha256": "d0b3708d8e93a42aa5cc07384c96e6d67e4127740a0bde971981b41c40653bcd",
+      "errors": [
+        "Error C022 Line 3: Invalid numeric variable ==> OUTCOME"
+      ]
+    }
+  ],
+  "expectation_model": "Explicit predictions in authored probe before composed execution. Native scanner skips nonnumeric prefix; integer conversion starts at digit or minus immediately followed by digit, parses decimal prefix, wraps32bits, returns low16bits for ATOI. ITOA/LTOA emit signed decimal. No maintained runtime output informs expectations.",
+  "scope": "42 authored compiler cases,38 accepted; no claim of complete numeric/string/float grammar."
+}

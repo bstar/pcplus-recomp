@@ -382,3 +382,18 @@ See `docs/ASPECT_STRING_COMMANDS.md` and its frozen validation report. Only the
 selected command surface is established: other string/format/builtin services,
 float/compiler/recorder and terminal scheduling/memory integration remain open.
 The interactive terminal remains731418bd; all F01–F16 gates remain open.
+
+
+F13 now has [decimal conversions and a maintained host compiler](ASPECT_CONVERSIONS.md):
+218 exact command/scanner bytes plus312 CRT bytes,1,711 command CPU scenarios,
+8,282 DOS assertions and104of104 command instruction addresses. CRT testing adds
+4,943 CPU vectors and1,234 actual DOS vectors/6,694 assertions.54of215 runtime
+slots now execute;161 explicitly abort. The maintained compiler emits237 authored
+fixtures byte for byte against the frozen oracle, plus237 presentation variants.
+The diagnostic build compiles their source before410 DOS cases/6,090 assertions.
+Independent nested-expression cases establish distinct temporary indices and
+boolean jump fixups; source compilation itself no longer depends on ASPCOMP.
+The host compiler covers the tested grammar, not full ASPECT or a DOS-hosted
+compiler. Float/formatting/recorder, serial/UI bindings and terminal memory/
+scheduling remain required. See `ASPECT_COMPILER.md` and the frozen conversion
+report. All F01–F16 whole-application gates remain open.

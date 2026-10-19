@@ -4,6 +4,27 @@ MODULES := escape attributes screen text reports erase cursor_state cursor_shape
 all: serial parser keyboard $(MODULES) config-dos config-replace config-abi directory-browser directory-editor process download-file upload-file transfer-metadata batch-header transfer-session-composite transfer-storage terminal
 
 
+.PHONY: test-aspect-compiler
+test: test-aspect-compiler
+test-aspect-compiler:
+	python3 standalone/test_aspect_compiler.py
+
+.PHONY: aspect-conversions test-aspect-conversions test-aspect-conversions-compat aspect-conversion-services test-aspect-conversion-services test-aspect-conversion-services-compat
+all: aspect-conversions aspect-conversion-services
+test: test-aspect-conversions test-aspect-conversion-services
+aspect-conversions:
+	python3 standalone/build_aspect_conversions.py
+test-aspect-conversions:
+	python3 standalone/check_aspect_conversions.py
+test-aspect-conversions-compat:
+	python3 standalone/check_aspect_conversions.py --original analysis/pcplus-install/PCPLUS.EXE
+aspect-conversion-services:
+	python3 standalone/build_aspect_conversion_services.py
+test-aspect-conversion-services: aspect-conversion-services
+	python3 standalone/check_aspect_conversion_services.py
+test-aspect-conversion-services-compat: aspect-conversion-services
+	python3 standalone/check_aspect_conversion_services.py --original
+
 .PHONY: aspect-string-services test-aspect-string-services test-aspect-string-services-compat aspect-string-commands test-aspect-string-commands test-aspect-string-commands-compat
 all: aspect-string-services aspect-string-commands
 test: test-aspect-string-services test-aspect-string-commands

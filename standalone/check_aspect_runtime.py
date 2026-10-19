@@ -27,7 +27,10 @@ def main():
   assert original[0x25950+0x4942]==0
   assert struct.unpack_from('<H',original,0x25950+0x4cb6+21*2)[0]==0xcc6f
   assert struct.unpack_from('<H',original,0x25950+0x4cb6+27*2)[0]==0xbc97
-  optional=dict(comparison_builtins={'21':'FAILURE/DA0C reads compare result','27':'SUCCESS/DA28 returns result==0'},original_sha256=ORIGINAL,exact_support_bytes=sum(u['bytes'] for u in manifest['support_units']),units=manifest['support_units'],empty_string_builtin=dict(index=19,resident_thunk='C2C7',overlay=16,entry='DAFB',returned_DS_offset='4942',observed_first_byte=0,maintained_scope='Only builtin19 returns an owned empty string; other string builtins remain unsupported.'))
+  # Scanner consumes only decimal-digit bit04, not the other CRT flags.
+  assert original[0x25950+0x776c:0x25950+0x776c+13]==b'-.0123456789\0'
+  assert [i for i,flags in enumerate(original[0x25950+0x7caf:0x25950+0x7caf+256]) if flags&4]==list(range(48,58))
+  optional=dict(conversion_scanner_data={'candidate_DS_offset':'776C','candidates':'-.0123456789','ctype_DS_offset':'7CAF','observed_digit_bit':4,'digit_bytes':list(range(48,58)),'maintained_scope':'Only consumed bit04 reproduced; other original CRT flags are absent.'},comparison_builtins={'21':'FAILURE/DA0C reads compare result','27':'SUCCESS/DA28 returns result==0'},original_sha256=ORIGINAL,exact_support_bytes=sum(u['bytes'] for u in manifest['support_units']),units=manifest['support_units'],empty_string_builtin=dict(index=19,resident_thunk='C2C7',overlay=16,entry='DAFB',returned_DS_offset='4942',observed_first_byte=0,maintained_scope='Only builtin19 returns an owned empty string; other string builtins remain unsupported.'))
  for name in ['DONE.TXT','PASS.TXT','FAIL.TXT']:(OUT/name).unlink(missing_ok=True)
  conf=f'''[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\ncycles=max\n[mixer]\nnosound=true\n[autoexec]\n@echo off\nmount c "{OUT}"\nc:\nEXECUTE >RESULT.TXT\nif errorlevel 1 goto failed\necho PASS>PASS.TXT\ngoto done\n:failed\necho FAIL>FAIL.TXT\n:done\nexit\n'''
  (OUT/'dosbox.conf').write_text(conf)
@@ -40,6 +43,6 @@ def main():
   check_sha256=sha(Path(__file__).resolve()),result_sha256=sha(OUT/'RESULT.TXT'),optional_original=optional,
   original_inputs=[] if optional is None else [str(args.original)],fixture_count=manifest['fixture_count'],
   unsupported_slot_cases=manifest['unsupported_slot_cases'],
-  scope='Actual recovered dispatcher executes compiled authored ASX through real DOS files/far heap and maintained resource owner. Incomplete50-slot command surface; all165 unsupported in-range slots abort. No full compiler/VM, arbitrary-bytecode safety or terminal integration.')
+  scope='Actual recovered dispatcher executes compiled authored ASX through real DOS files/far heap and maintained resource owner. Incomplete54-slot command surface; all161 unsupported in-range slots abort. No full compiler/VM, arbitrary-bytecode safety or terminal integration.')
  (OUT/('checks-native.json' if optional else 'checks.json')).write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
 if __name__=='__main__':main()

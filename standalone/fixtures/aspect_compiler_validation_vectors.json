@@ -1,0 +1,194 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "private_report": "analysis/aspect-compiler-validation/compiler-01/report.json",
+  "private_report_sha256": "3812326cc6dad73f98c4222e1e7879537f95343bc26f59abde3aff4f36aad0c0",
+  "probe_sha256": "558a0b4412cce5cb02b3faaa1a245e3ab16893076964cb6491900dde29231f0b",
+  "freezer_sha256": "967b6ab1741f2bd65fdeea030383bdfeae5a3e62523f4715d6d59256365fa477",
+  "source_encoding": "cp437",
+  "vectors": [
+    {
+      "name": "NESTSUB",
+      "source": "integer a,b,c,d,z\r\nproc main\r\na = 2\r\nb = 3\r\nc = 4\r\nd = 5\r\nz = (a+b)-(c+d)\r\nendproc\r\n",
+      "source_sha256": "83ea36e747c5db0f0fb48854a29a48af7898b21ec1dd181f5fb28dfda787d5cc",
+      "hex": "00 cf 5b 00 8d 00 ab 02 00 5b 00 8d 01 ab 03 00 5b 00 8d 02 ab 04 00 5b 00 8d 03 ab 05 00 00 00 8d 00 8d 01 79 00 00 00 8d 02 8d 03 79 01 b5 00 79 00 79 01 79 00 5b 00 8d 04 79 00 94",
+      "asx_sha256": "7c3e6e3f91d9c2cdf97c379d93821587fd1a6ef6283a71a39556e1e2b6b2c81e",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer4": 65532
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "NESTMUL",
+      "source": "integer a,b,c,d,z\r\nproc main\r\na = 2\r\nb = 3\r\nc = 4\r\nd = 5\r\nz = (a+b)*(c-d)\r\nendproc\r\n",
+      "source_sha256": "e6198202338d7779a982f6a56f30c05fe159574e5b1124bf5363469f072595f0",
+      "hex": "00 cf 5b 00 8d 00 ab 02 00 5b 00 8d 01 ab 03 00 5b 00 8d 02 ab 04 00 5b 00 8d 03 ab 05 00 00 00 8d 00 8d 01 79 00 b5 00 8d 02 8d 03 79 01 7d 00 79 00 79 01 79 00 5b 00 8d 04 79 00 94",
+      "asx_sha256": "08fef81d9b2687c8003520e1bd4fa72619c3cfa9c74218bd07e0ce6ab092ac5d",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer4": 65531
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "NESTDIV",
+      "source": "integer a,b,c,d,z\r\nproc main\r\na = 2\r\nb = 3\r\nc = 4\r\nd = 5\r\nz = (a+b)/(c-d)\r\nendproc\r\n",
+      "source_sha256": "5d71ab5cef48b9ba9e13ad6e696f3f0d048fa155e48c519fa8a134b6ecdf5d87",
+      "hex": "00 cf 5b 00 8d 00 ab 02 00 5b 00 8d 01 ab 03 00 5b 00 8d 02 ab 04 00 5b 00 8d 03 ab 05 00 00 00 8d 00 8d 01 79 00 b5 00 8d 02 8d 03 79 01 26 00 79 00 79 01 79 00 5b 00 8d 04 79 00 94",
+      "asx_sha256": "2f641c9fb9e09bd76ac58578e5a8e5ee17e9c9cda3ba5cf00238231786439cfe",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer4": 65531
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "NESTMOD",
+      "source": "integer a,b,c,d,z\r\nproc main\r\na = 2\r\nb = 3\r\nc = 4\r\nd = 5\r\nz = (a+b)%(c-d)\r\nendproc\r\n",
+      "source_sha256": "56c8f149019815c59a5ca63571977a62c00cc484d3a15fe49801df4e00fbe3b7",
+      "hex": "00 cf 5b 00 8d 00 ab 02 00 5b 00 8d 01 ab 03 00 5b 00 8d 02 ab 04 00 5b 00 8d 03 ab 05 00 00 00 8d 00 8d 01 79 00 b5 00 8d 02 8d 03 79 01 7b 00 79 00 79 01 79 00 5b 00 8d 04 79 00 94",
+      "asx_sha256": "bed024ec82edf847f2f35ef85e1b4a63a0314a5ce48008831b04c4df9e0e7174",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer4": 0
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "NESTCMP",
+      "source": "integer a,b,c,d,z\r\nproc main\r\na = 2\r\nb = 3\r\nc = 4\r\nd = 5\r\nz = (a+b)<(c+d)\r\nendproc\r\n",
+      "source_sha256": "6fe1c5d3f4bc188f95a0a553e55485484d9e814f13295d03830c5dbffefb359c",
+      "hex": "00 cf 5b 00 8d 00 ab 02 00 5b 00 8d 01 ab 03 00 5b 00 8d 02 ab 04 00 5b 00 8d 03 ab 05 00 00 00 8d 00 8d 01 79 00 00 00 8d 02 8d 03 79 01 6d 00 79 00 79 01 79 00 5b 00 8d 04 79 00 94",
+      "asx_sha256": "3c0da6cb8cd3bd0f1a376d1ec9cdb9bbddb3ee4a3911e341494f328334dd487a",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer4": 1
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "NESTADD",
+      "source": "integer a,b,c,d,z\r\nproc main\r\na = 2\r\nb = 3\r\nc = 4\r\nd = 5\r\nz = (a+b)+(c+d)\r\nendproc\r\n",
+      "source_sha256": "81e9edc17a99ece8ca88a60e8ab7d44f3b498d8a70518fe374186208306fcff5",
+      "hex": "00 cf 5b 00 8d 00 ab 02 00 5b 00 8d 01 ab 03 00 5b 00 8d 02 ab 04 00 5b 00 8d 03 ab 05 00 00 00 8d 00 8d 01 79 00 00 00 8d 02 8d 03 79 01 00 00 79 00 79 01 79 00 5b 00 8d 04 79 00 94",
+      "asx_sha256": "fd0000a2fc7e4f2174b355d50ddbaf8e75d0383c148f13c56ee4007c85f6820e",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer4": 14
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "BOOLAND",
+      "source": "integer a,b,c,d,z\r\nproc main\r\na = 2\r\nb = 3\r\nc = 4\r\nd = 5\r\nif 0 && 1\r\nz = 7\r\nelse\r\nz = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "6f015f4c68109ef002a98034a411a7e0d7dc193b124682c7245ea9189768456c",
+      "hex": "00 cf 5b 00 8d 00 ab 02 00 5b 00 8d 01 ab 03 00 5b 00 8d 02 ab 04 00 5b 00 8d 03 ab 05 00 62 2f 00 00 00 5b 00 79 00 ab 01 00 62 36 00 00 00 5b 00 79 00 ab 00 00 15 49 00 00 00 79 00 5b 00 8d 04 ab 07 00 62 50 00 00 00 5b 00 8d 04 ab 09 00 94",
+      "asx_sha256": "facc687d0e4892152aaefb3469ce7ac4bb7abfddf9479ceb584eeaefce9125fa",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer4": 9
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "BOOLOR",
+      "source": "integer a,b,c,d,z\r\nproc main\r\na = 2\r\nb = 3\r\nc = 4\r\nd = 5\r\nif 1 || 0\r\nz = 7\r\nelse\r\nz = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "bd229c4716373c74469364fc3e739ee8310550b667d57c55e13d857b46dd911e",
+      "hex": "00 cf 5b 00 8d 00 ab 02 00 5b 00 8d 01 ab 03 00 5b 00 8d 02 ab 04 00 5b 00 8d 03 ab 05 00 62 2f 00 00 00 5b 00 79 00 ab 00 00 62 36 00 00 00 5b 00 79 00 ab 01 00 15 49 00 00 00 79 00 5b 00 8d 04 ab 07 00 62 50 00 00 00 5b 00 8d 04 ab 09 00 94",
+      "asx_sha256": "b72ac724d8f0c05fa8f19c65b810d8f42f0d1d82ac7a47a7fd07d67d404a5c0c",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer4": 7
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "BOOLA11",
+      "source": "integer a,b,c,d,z\r\nproc main\r\na = 2\r\nb = 3\r\nc = 4\r\nd = 5\r\nif 1 && 1\r\nz = 7\r\nelse\r\nz = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "eb57a6fc591e294f56e19e65ad120f3125beea2d1e5d6f6b9612a6b88d9936c8",
+      "hex": "00 cf 5b 00 8d 00 ab 02 00 5b 00 8d 01 ab 03 00 5b 00 8d 02 ab 04 00 5b 00 8d 03 ab 05 00 5b 00 79 00 ab 01 00 62 31 00 00 00 5b 00 79 00 ab 00 00 15 44 00 00 00 79 00 5b 00 8d 04 ab 07 00 62 4b 00 00 00 5b 00 8d 04 ab 09 00 94",
+      "asx_sha256": "aba91c1d27801fb3621be6f1a451e895037229b4c5d02decad93fbe47cefc19a",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer4": 7
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "BOOLO00",
+      "source": "integer a,b,c,d,z\r\nproc main\r\na = 2\r\nb = 3\r\nc = 4\r\nd = 5\r\nif 0 || 0\r\nz = 7\r\nelse\r\nz = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "065319a72b9b78f6d38704b054625bf98d852738ccb49ce56e974c0aaf061b52",
+      "hex": "00 cf 5b 00 8d 00 ab 02 00 5b 00 8d 01 ab 03 00 5b 00 8d 02 ab 04 00 5b 00 8d 03 ab 05 00 5b 00 79 00 ab 00 00 62 31 00 00 00 5b 00 79 00 ab 01 00 15 44 00 00 00 79 00 5b 00 8d 04 ab 07 00 62 4b 00 00 00 5b 00 8d 04 ab 09 00 94",
+      "asx_sha256": "d160676cfc22f1948fe01ef0f030403789973d12de92b6275b2b893b46409530",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer4": 9
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "BOOLMIX",
+      "source": "integer a,b,c,d,z\r\nproc main\r\na = 2\r\nb = 3\r\nc = 4\r\nd = 5\r\nif 1 || 0 && 0\r\nz = 7\r\nelse\r\nz = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "7aa34884559484f1955a66511f0417c41030fdc1ce385576060915bb17fe6184",
+      "hex": "00 cf 5b 00 8d 00 ab 02 00 5b 00 8d 01 ab 03 00 5b 00 8d 02 ab 04 00 5b 00 8d 03 ab 05 00 62 3e 00 00 00 62 32 00 00 00 62 32 00 00 00 62 3e 00 00 00 5b 00 79 00 ab 00 00 62 45 00 00 00 5b 00 79 00 ab 01 00 15 58 00 00 00 79 00 5b 00 8d 04 ab 07 00 62 5f 00 00 00 5b 00 8d 04 ab 09 00 94",
+      "asx_sha256": "1cc9ecbafc57d0988d902168ecb1936d911f517ea805f6aacd49541f17b40224",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer4": 7
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "BOOLVAR",
+      "source": "integer a,b,c,d,z\r\nproc main\r\na = 2\r\nb = 3\r\nc = 4\r\nd = 5\r\nif a && b\r\nz = 7\r\nelse\r\nz = 9\r\nendif\r\nendproc\r\n",
+      "source_sha256": "1fc8016aaa7419188f898e64bae984945887ef0535b1f18fda27112a0dd1674a",
+      "hex": "00 cf 5b 00 8d 00 ab 02 00 5b 00 8d 01 ab 03 00 5b 00 8d 02 ab 04 00 5b 00 8d 03 ab 05 00 bd 38 00 00 00 8d 00 bd 38 00 00 00 8d 01 5b 00 79 00 ab 01 00 62 3f 00 00 00 5b 00 79 00 ab 00 00 15 52 00 00 00 79 00 5b 00 8d 04 ab 07 00 62 59 00 00 00 5b 00 8d 04 ab 09 00 94",
+      "asx_sha256": "fe837a2a4765a5a64ef30c6b1cb44e367e3eec91bbea121739df9c6499815b6d",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer4": 7
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "NEWFRAME",
+      "source": "integer output\r\nproc main\r\ninteger rose = 17,oak = 4\r\noutput = rose * 3 - oak\r\nendproc\r\n",
+      "source_sha256": "098db6fbff7ae2686e98ecf20e2148a9121d3e8417e5760fecf0349af2cca53b",
+      "hex": "00 d2 04 00 5c 00 a1 00 00 ab 11 00 79 00 5b 00 a1 02 00 ab 04 00 cf 7d 00 a1 00 00 ab 03 00 79 00 b5 00 79 00 a1 02 00 79 00 5b 00 8d 00 79 00 95",
+      "asx_sha256": "f2b07a7d63c4c99d8bd9212ae56fbc8f0d259c7175c53ac11331cf741da241db",
+      "source_encoding": "cp437",
+      "expected": {
+        "integer0": 47
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "NEWSTR",
+      "source": "string output\r\nproc main\r\noutput = \"WiFi\"\r\nstrcat output \" modem\"\r\nstrupr output\r\nendproc\r\n",
+      "source_sha256": "01838cb7daa00b5c52dd78d82c994f9c03fe89395cd1cfbb4cede09f782a4530",
+      "hex": "01 cf ac 8c 00 aa b7 0e 5c 6e 8d 34 00 aa 8c 00 aa b9 90 1b 68 28 99 be 4e 00 b4 8c 00 94",
+      "asx_sha256": "16abbc4f63e2cc09e3039e1d259edccd48eebbfca23bcbbbbc8a39e12a2ce891",
+      "source_encoding": "cp437",
+      "expected": {
+        "string0": "WIFI MODEM"
+      },
+      "dos_excluded": false
+    },
+    {
+      "name": "NEWCONV",
+      "source": "string output\r\nlong number\r\nproc main\r\natol \"count:-123456end\" number\r\nltoa number output\r\nendproc\r\n",
+      "source_sha256": "bf5bb3216d117d5366fc0ae60181aed1eb578e8a5262343b99ccbb5db8464b21",
+      "hex": "01 cf 07 aa c3 19 e4 46 40 73 91 45 d4 36 6b 4a 53 7c e9 e6 45 2f 8e 00 6e 8e 00 8c 00 94",
+      "asx_sha256": "45049f5198dbe0a1eace35297673f39dc8356138c20a97489f7999ca433c274f",
+      "source_encoding": "cp437",
+      "expected": {
+        "long0": 4294843840,
+        "string0": "-123456"
+      },
+      "dos_excluded": false
+    }
+  ],
+  "rejected": [],
+  "expectation_model": "Independent arithmetic, signed division/remainder, conventional boolean precedence and explicit string predictions fixed before composed execution. Nested operands require distinct expression staging slots.",
+  "scope": "15 novel emission cases beyond the previous222 fixtures; no complete compiler claim."
+}

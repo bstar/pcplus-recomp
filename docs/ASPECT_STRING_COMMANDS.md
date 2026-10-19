@@ -1,5 +1,10 @@
 # ASPECT string commands and comparison status
 
+This records checkpoint `1a9be49`. The subsequent
+[conversion/compiler checkpoint](ASPECT_CONVERSIONS.md) extends the runtime to
+54 slots and 237 source-compiled fixtures; the counts below describe this
+earlier checkpoint.
+
 The standalone interpreter now executes concatenation, comparison, length,
 ASCII case conversion, byte access, fill, update and substring commands using
 recovered PCPlus instructions. It also implements the original comparison

@@ -994,3 +994,31 @@ See `docs/ASPECT_STRING_COMMANDS.md` and its frozen validation report. Only the
 selected command surface is established: other string/format/builtin services,
 float/compiler/recorder and terminal scheduling/memory integration remain open.
 The interactive terminal remains731418bd; all F01–F16 gates remain open.
+
+## ASPECT decimal conversions and maintained source compiler
+
+The interpreter now adds four native conversion commands, ATOI/ATOL/ITOA/LTOA,
+with the original numeric candidate scanner and CRT instructions:218 handler/
+scanner bytes and312 CRT bytes. The command component passes1,711 CPU scenarios,
+8,282 actual DOS assertions and all104 instruction addresses; optional native
+comparison checks all46 linked ranges. The CRT component passes4,943 CPU vectors
+and1,234 actual DOS vectors/6,694 assertions. Invalid radix characterization is
+CPU-only and does not claim safe arbitrary native calls.
+
+A maintained Python host compiler emits the established ASPECT grammar from
+source without the original compiler. It generates typed symbols, frame offsets,
+indexed expression temporaries, branch/call fixups, short-circuit conditions,
+parameter pushes, string literals and recovered commands. The runtime diagnostic
+build now compiles all237 authored source fixtures, compares emission with the
+frozen original oracle and executes the generated ASX in DOS. Its410-case suite
+passes6,090 assertions.54of215 slots are wired;161 still abort explicitly.
+
+Fifteen independent new compiler cases exposed concurrent temporary indexing
+and boolean fixups beyond the earlier222 fixtures.38 new conversions cover
+prefix scanning, CP437, overflow, signed limits, locals, parameters and roundtrips.
+See `docs/ASPECT_CONVERSIONS.md`, `docs/ASPECT_COMPILER.md` and the frozen
+conversion/compiler evidence. The compiler covers the tested subset and runs on
+the host; it does not implement the full language or a DOS-hosted compiler.
+Floating services, formatting, recorder, terminal bindings and scheduling,
+memory placement and the complete application remain required. All F01–F16
+whole-application gates remain open.

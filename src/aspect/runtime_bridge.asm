@@ -23,6 +23,7 @@ extern aspect_strcmd_lower,aspect_strcmd_get_char,aspect_strcmd_set_char,aspect_
 extern aspect_strcmd_subcopy,aspect_strcmd_upper,aspect_strcmd_substr
 extern program_strlen,program_strncmp,directory_dial_append_original,directory_dial_upper_original
 extern aspect_string_status,aspect_string_success
+extern aspect_convert_atoi,aspect_convert_atol,aspect_convert_itoa,aspect_convert_ltoa
 extern _runtime_file,_runtime_reset_native,_runtime_open,_runtime_alloc,_runtime_free
 extern _runtime_cleanup,_runtime_close,_runtime_finish,_runtime_service,_runtime_read
 extern _runtime_native_error,_runtime_set_error,_runtime_header
@@ -286,6 +287,20 @@ aspect_string_upper: jmp directory_dial_upper_original
 
 SEGMENT _DATA public class=DATA use16
 GROUP DGROUP _DATA
+; Maintained scanner data: only native ctype bit04 (decimal digit) is read.
+; Other flags from the original CRT table are outside this owner's contract.
+global aspect_convert_candidate_chars,aspect_convert_ctype
+aspect_convert_candidate_chars: db '-.0123456789',0
+aspect_convert_ctype:
+%assign convert_char 0
+%rep 256
+%if convert_char >= '0' && convert_char <= '9'
+ db 4
+%else
+ db 0
+%endif
+%assign convert_char convert_char+1
+%endrep
 %macro scalar 2
  global %1,%2
 %1:
@@ -385,6 +400,10 @@ aspect_dispatch_handlers:
  dw aspect_arith_bit_and
 %elif op=0x03
  dw aspect_ops_logical_and
+%elif op=0x06
+ dw aspect_convert_atoi
+%elif op=0x07
+ dw aspect_convert_atol
 %elif op=0x13
  dw aspect_arith_bit_not
 %elif op=0x15
@@ -429,6 +448,10 @@ aspect_dispatch_handlers:
  dw aspect_flow_return
 %elif op=0x95
  dw aspect_flow_return_framed
+%elif op=0x61
+ dw aspect_convert_itoa
+%elif op=0x6e
+ dw aspect_convert_ltoa
 %elif op=0x9a
  dw aspect_strcmd_compare_bytes
 %elif op=0xa4
