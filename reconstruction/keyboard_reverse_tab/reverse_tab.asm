@@ -2,7 +2,11 @@
 BITS 16
 CPU 8086
 %ifdef KEYBOARD_REVERSE_TAB_OMF
+%ifdef KEYBOARD_ECHO_FAR
+SEGMENT ASPECT_CODE public align=16 class=FARCODE use16
+%else
 SEGMENT _TEXT public class=CODE use16
+%endif
 global keyboard_reverse_tab
 extern screen_cursor_left
 extern screen_adjust_attribute_boundary

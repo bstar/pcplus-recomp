@@ -1,0 +1,147 @@
+{
+  "passed": true,
+  "production_integration": true,
+  "recorder_sha256": "ab00632fe75fcfd1049a350938a6617a22016456de3788f463d5c31aa470a35c",
+  "builder_sha256": "5203e6b4f50dbf4ad668c2a7090ba06c1ede5512cb1384bd587acb864cff94d8",
+  "provenance": {
+    "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "units": [
+      {
+        "file": "reconstruction/attribute_boundary/boundary.asm",
+        "start": 10972,
+        "end": 11142,
+        "bytes": 170,
+        "instructions": 70,
+        "sha256": "9d4d9e809a976f32a560f65193450f08e0b666e9a0dfe6ebff19d732c80fd06b",
+        "matched_original": true,
+        "file_offset": 15580
+      },
+      {
+        "file": "reconstruction/attribute_boundary/position.asm",
+        "start": 11142,
+        "end": 11230,
+        "bytes": 88,
+        "instructions": 34,
+        "sha256": "ff5392796104687586c8bbef1e099a976c8d327fcddead5e462122a667a03e1b",
+        "matched_original": true,
+        "file_offset": 15750
+      },
+      {
+        "file": "reconstruction/attribute_boundary/offset.asm",
+        "start": 11230,
+        "end": 11276,
+        "bytes": 46,
+        "instructions": 19,
+        "sha256": "267f92a559864274942212ac4b611d61dd7691d1b83e29b0aea2d34b3ae564ce",
+        "matched_original": true,
+        "file_offset": 15838
+      },
+      {
+        "file": "reconstruction/attribute_boundary/divide.asm",
+        "start": 33548,
+        "end": 33560,
+        "bytes": 12,
+        "instructions": 7,
+        "sha256": "e5c14b9ddb162e5cf322974b45c5633d17471c2b151dab2aec8dd2544e486def",
+        "matched_original": true,
+        "file_offset": 38156
+      }
+    ],
+    "state": {
+      "39c4": "screen_attributes_base",
+      "325c": "erase_cell_count",
+      "325a": "screen_attribute_row_bytes",
+      "cdfa": "screen_viewport_enabled",
+      "3256": "screen_viewport_active",
+      "7a7e": "screen_viewport_right",
+      "ce2e": "screen_viewport_left",
+      "7a72": "screen_columns"
+    },
+    "services": {
+      "1bbe": "screen_set_cursor",
+      "376d": "attribute_boundary_notice"
+    },
+    "limitations": [
+      "Native entry assumes a valid bounded attribute plane and nonzero row width. Application admission is separate.",
+      "Cursor positioning and the no-writable-cell notification are external services.",
+      "Viewport conversion is recovered; complete application viewport ownership remains unfinished."
+    ],
+    "rea_evidence": {
+      "0x2adc": "ev_d75dd65a13553e4742db7f30d1a50dfe3d14b2e666f686d77d058c9a76a83e4e",
+      "0x2b86": "ev_087aa230ed995ec3a6e3e060ea79a3e8edd7592fffb7562f95cebf07eb8eb152",
+      "0x2bde": "ev_d4fdefeb3b5c08083bf2f27decd2646661bb907dce848db9102c617bd60a71f1",
+      "0x830c": "ev_b7e2aee6447f1486f524d08b70ed8284a1df9872fffb6b89775e635353848ae6"
+    }
+  },
+  "component": {
+    "path": "build/attribute-boundary/checks.json",
+    "sha256": "34860fcf9d4acf0429685a84e61b33c57d29493ce0fe90c5fe640cce37ad8133",
+    "checks": {
+      "passed": true,
+      "cases": 718,
+      "checker_sha256": "82a2fa059b3f263fef7ede9dcbe55ba417c767b38183a612ecf16005eeb11e72",
+      "manifest_sha256": "dfe151f8f619075ddc27741eb9d5421b4ea7398aaa0b64406dcc43ca6a9f5060",
+      "original_inputs": [],
+      "scope": "Actual recovered boundary scanner, offset/viewport coordinate helpers and native signed divide. Circular forward/backward protection search, all-protected notice/home, exact callee cleanup and preserved registers. Cursor positioning and notification are explicit recording models; complete application viewport ownership and physical audio/video remain unverified."
+    }
+  },
+  "linked": {
+    "path": "build/terminal-key-output/reverse-tab-checks.json",
+    "sha256": "24af202b95cdce47b55ed6f93ea0c8283c815c5fbba3488ec2f9c7b316478758",
+    "checks": {
+      "passed": true,
+      "cases": 630,
+      "binary_sha256": "2356ffff300e34a17977a9000a6a1f9026a8440742c802c676a12d8a307095da",
+      "checker_sha256": "0891fd73e142bd21a822014759511dc8dd1154203d570587a742bfce3ad39c0b",
+      "original_inputs": [],
+      "scope": "Actual shared key core, checked far admission, recovered reverse Tab, boundary/coordinate/division/protected-home and real resident cursor helpers. Hardware-only BIOS/CRT models include adversarial notice-register clobbering. Table/mode matrix, protected/circular fields,1..25-row planes, doublewidth and pre-wire malformed/unsafe-state rejection; video/metadata/parser parameters unchanged. No physical BIOS/modem or full application/viewport claim."
+    }
+  },
+  "code_segments": [
+    {
+      "name": "_TEXT",
+      "kind": "CODE",
+      "relative_segment": 0,
+      "offset": 0,
+      "bytes": 65442
+    },
+    {
+      "name": "ASPECT_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 4091,
+      "offset": 0,
+      "bytes": 5100
+    },
+    {
+      "name": "CONFIG_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 4410,
+      "offset": 0,
+      "bytes": 46724
+    },
+    {
+      "name": "MODEM_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 7331,
+      "offset": 0,
+      "bytes": 1483
+    },
+    {
+      "name": "PRINT_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 7424,
+      "offset": 0,
+      "bytes": 1449
+    }
+  ],
+  "source_build_outputs": 164,
+  "source_build_proof_sha256": "3a4d93e3d692438182236954da3056c5bda9371c76e72e61e9900ad9018f169a",
+  "original_inputs": [],
+  "whole_application_gates_closed": [],
+  "limitations": [
+    "Application admission supports consistent80-column,1..25-row B800 geometry; viewport ownership is unfinished.",
+    "The notice uses the maintained BIOS bell provider, rather than original PIT tone timing/settings.",
+    "Protected scrolling/repaint2D98 and related services remain unfinished; keyboard paths needing them fail before output.",
+    "Component cursor/notice endpoints and application BIOS/CRT hardware are explicitly modeled; physical machine/modem/audio validation remains open."
+  ]
+}

@@ -50,6 +50,16 @@ the child. `src/aspect/resident_render.c` owns the request and callback lifetime
 and `src/terminal/aspect_renderer.asm` validates the live lease, desktop and
 policy before invoking the shared routine.
 
+Reverse Tab now executes the recovered native routine with the selected tab
+stops and protected-field metadata. Checked admission precedes all wire/echo
+effects. Its real boundary/coordinate/division/protected-home services share
+ASPECT_CODE and use explicit far bridges to resident cursor and notice code.
+Malformed tables and nonprogressing native wrap are rejected before mutation.
+Protected navigation bypasses unused tab-table validation. Paths requiring
+unrecovered protected scrolling/repair remain explicit pre-wire failures;
+they are not replaced with cursor no-ops. See [reverse Tab](KEYBOARD_REVERSE_TAB.md)
+and [attribute boundaries](ATTRIBUTE_BOUNDARY.md).
+
 ## Validation
 
 The [checkpoint record](validation/aspect-key-output.json) binds the current
@@ -73,13 +83,20 @@ echo, and typed half-duplex editing failure before output. Existing parent
 renderer/query, history, handles, sink-owner and post-return keyboard checks
 remain active.
 
-The current12 DOS cases include actual half-duplex Insert/Delete video edits
-and continued script execution, with reverse-Tab retained as the explicit
-unsupported-key case. A separate55-case product replay exercises the real
+The current16 DOS cases include actual half-duplex Insert/Delete video edits,
+default/custom reverse-Tab stops and continued script execution. An unsupported
+local Alt-F9 key retains typed-error cleanup coverage. A separate55-case product replay exercises the real
 video/native editing helpers in both profiles, standard/enhanced keys,
 single/doublewidth cells, unchanged cursor/parser parameters and pre-wire
 geometry/metadata rejection. The837-case scalar-boundary test separately
 checks dispatch, bindings, wire encoding and ordering.
+
+An additional630-case linked replay exercises actual reverse-Tab/native field
+navigation and near/far bridges with hardware-only models. It includes
+1..25-row planes, empty/malformed tables, circular fields, doublewidth rows,
+pre-wire rejection and a bell BIOS that clobbers registers. The718-case
+component test separately verifies exact boundary and viewport-coordinate
+instructions with declared cursor/notice recording boundaries.
 
 Earlier failed fixtures are retained privately. `shared-keys-02` omitted the
 three displayed END characters from its cursor predictions. `shared-keys-04`
@@ -92,9 +109,10 @@ or treating output after script return as script output.
 
 Local menus, transfers, macros/HOOK/PROGRAM dispatch, native abort confirmation
 and original status/selection post-actions are unfinished during scripts.
-Half-duplex reverse-Tab is not linked and returns unsupported before any wire
-or echo output; full-duplex bindings work. Insert/Delete retain explicit
-preflight rejection for unsupported geometry/repair.
+Reverse-Tab and Insert/Delete retain explicit preflight rejection for
+unsupported geometry/repair. Protected scrolling and complete viewport/audio
+configuration remain unfinished; full-duplex bindings still transmit without
+requiring a supported local-echo plane.
 Original blocking per-binding pacing remains outside the maintained queue
 policy, as it was before this integration. A raw script without an admitted
 parent still has no keyboard-profile/UI owner and reports unsupported for

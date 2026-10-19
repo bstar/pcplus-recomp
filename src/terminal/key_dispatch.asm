@@ -60,6 +60,7 @@ SEGMENT ASPECT_CODE public align=16 class=FARCODE use16
 extern terminal_keymap,modes_value_1d1a,terminal_aspect_active
 extern terminal_tx_count,terminal_quit,terminal_exit_code
 extern terminal_key_edit_admit_far,terminal_key_edit_far
+extern terminal_key_reverse_tab_admit_far,terminal_key_reverse_tab_far
 global terminal_key_output
 ; AX raw normalized key; BX effective duplex byte,FFFF=parent selection.
 ; Return typed ASPECT0/3/7/14. BP/SI/DI/ES preserved, BX/CX/DX/flags scratch.
@@ -119,11 +120,6 @@ terminal_key_output:
  jmp .success
 .binding:
  mov bp,ax
- or di,di
- jz .locate
- ; Reverse-tab awaits checked table/mode admission and service binding.
- cmp ax,7
- je .unsupported
 .locate:
  mov bx,12
  mul bx
@@ -143,6 +139,13 @@ terminal_key_output:
 .capacity:
  or di,di
  jz .queue_capacity
+ cmp bp,7
+ jne .edit_check
+ call far terminal_key_reverse_tab_admit_far
+ or ax,ax
+ jnz .done
+ jmp .queue_capacity
+.edit_check:
  xor ax,ax
  cmp bp,8
  je .edit_admit
@@ -190,6 +193,8 @@ terminal_key_output:
  cmp bp,78
  je .echo_string
 .special_echo:
+ cmp bp,7
+ je .reverse_tab
  xor ax,ax
  cmp bp,8
  je .edit
@@ -234,6 +239,9 @@ terminal_key_output:
  jmp .success
 .edit:
  call far terminal_key_edit_far
+ jmp .success
+.reverse_tab:
+ call far terminal_key_reverse_tab_far
  jmp .success
 .echo_string:
  ; Native3ADB echoes stored FF as FF; only wire emission translates it to NUL.

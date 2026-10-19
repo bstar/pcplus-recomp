@@ -10,6 +10,7 @@ from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'build/terminal';OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
+modules += ['attribute_boundary','keyboard_reverse_tab']
 sources=[]
 for module in modules:
  sources += sorted((ROOT/'reconstruction'/module).glob('*.asm'))
@@ -28,12 +29,17 @@ sources += [ROOT/'src/aspect/resident_bridge.asm']
 sources += [ROOT/'src/status/status_renderer_bridge.asm',ROOT/'src/status/status_helpers.asm',
  ROOT/'reconstruction/terminal_reset/status_refresh.asm',ROOT/'reconstruction/terminal_reset/status_fill.asm',
  ROOT/'reconstruction/program_exec/strlen.asm']
+sources += [ROOT/'reconstruction/terminal_reset/protected_home.asm']
 render_import_adapters={}
 sources.append(ROOT/'src/aspect/break_cursor_read.asm')
 objects=[]
 for index,source in enumerate(sources):
  obj=OUT/f'unit-{index}.obj';objects.append(str(obj));options=[]
  if source.parent.parent.name=='reconstruction':options=['-D'+source.parent.name.upper()+'_OMF']
+ if source.parent.name in ('attribute_boundary','keyboard_reverse_tab') or source.name=='protected_home.asm':
+  options += ['-DKEYBOARD_ECHO_FAR','-Dscreen_set_cursor=attribute_screen_set_cursor',
+   '-Dscreen_cursor_left=attribute_screen_cursor_left','-Dscreen_cursor_right=attribute_screen_cursor_right',
+   '-Dscreen_adjust_attribute_boundary=attribute_boundary_local']
  if source==ROOT/'src/aspect/resident_bridge.asm':options+=['-DRESIDENT_BRIDGE_FAR']
  if source.parent==ROOT/'reconstruction/terminal_reset':
   options+=['-DSTATUS_CONFIG_CODE','-Dtext_fill_cells=status_text_fill','-Dtext_write_packed=status_text_packed',

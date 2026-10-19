@@ -1,0 +1,70 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/attribute_boundary/boundary.asm",
+      "start": 10972,
+      "end": 11142,
+      "bytes": 170,
+      "instructions": 70,
+      "sha256": "9d4d9e809a976f32a560f65193450f08e0b666e9a0dfe6ebff19d732c80fd06b",
+      "matched_original": true,
+      "file_offset": 15580
+    },
+    {
+      "file": "reconstruction/attribute_boundary/position.asm",
+      "start": 11142,
+      "end": 11230,
+      "bytes": 88,
+      "instructions": 34,
+      "sha256": "ff5392796104687586c8bbef1e099a976c8d327fcddead5e462122a667a03e1b",
+      "matched_original": true,
+      "file_offset": 15750
+    },
+    {
+      "file": "reconstruction/attribute_boundary/offset.asm",
+      "start": 11230,
+      "end": 11276,
+      "bytes": 46,
+      "instructions": 19,
+      "sha256": "267f92a559864274942212ac4b611d61dd7691d1b83e29b0aea2d34b3ae564ce",
+      "matched_original": true,
+      "file_offset": 15838
+    },
+    {
+      "file": "reconstruction/attribute_boundary/divide.asm",
+      "start": 33548,
+      "end": 33560,
+      "bytes": 12,
+      "instructions": 7,
+      "sha256": "e5c14b9ddb162e5cf322974b45c5633d17471c2b151dab2aec8dd2544e486def",
+      "matched_original": true,
+      "file_offset": 38156
+    }
+  ],
+  "state": {
+    "39c4": "screen_attributes_base",
+    "325c": "erase_cell_count",
+    "325a": "screen_attribute_row_bytes",
+    "cdfa": "screen_viewport_enabled",
+    "3256": "screen_viewport_active",
+    "7a7e": "screen_viewport_right",
+    "ce2e": "screen_viewport_left",
+    "7a72": "screen_columns"
+  },
+  "services": {
+    "1bbe": "screen_set_cursor",
+    "376d": "attribute_boundary_notice"
+  },
+  "limitations": [
+    "Native entry assumes a valid bounded attribute plane and nonzero row width. Application admission is separate.",
+    "Cursor positioning and the no-writable-cell notification are external services.",
+    "Viewport conversion is recovered; complete application viewport ownership remains unfinished."
+  ],
+  "rea_evidence": {
+    "0x2adc": "ev_d75dd65a13553e4742db7f30d1a50dfe3d14b2e666f686d77d058c9a76a83e4e",
+    "0x2b86": "ev_087aa230ed995ec3a6e3e060ea79a3e8edd7592fffb7562f95cebf07eb8eb152",
+    "0x2bde": "ev_d4fdefeb3b5c08083bf2f27decd2646661bb907dce848db9102c617bd60a71f1",
+    "0x830c": "ev_b7e2aee6447f1486f524d08b70ed8284a1df9872fffb6b89775e635353848ae6"
+  }
+}

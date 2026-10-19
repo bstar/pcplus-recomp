@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "production_integration": false,
-  "recorder_sha256": "9a459942b101ad9b5a06b6ce67e0d1d2167995b5c373174b552cafe5b03aa989",
+  "production_integration": true,
+  "recorder_sha256": "96da5110e8b7648c2ee131c33a75ff4f4332df8d6c4ca7c9781a258e3efde762",
   "builder_sha256": "e45f01d7611258d3c33aab2d782f6af28dec666816780491b2756fac9fdc2c63",
   "checks": {
     "passed": true,
@@ -24,10 +24,10 @@
       "returned": false,
       "scope": "Actual reverse-tab and cursor-left instructions. Screen-set-cursor is the declared scalar model; preserves row1/column0 in this case. Characterizes inherited recursion, not a safety fix."
     },
-    "manifest_sha256": "a0d3a44742112c1094c7cad24fc80f0032d378e679dc4c757113b90e79085b45"
+    "manifest_sha256": "294947f0bebf845508308b7e9020ac3aca18b9bd7d919aeffbdabd3239226eb8"
   },
   "report_path": "build/keyboard-reverse-tab/checks.json",
-  "report_sha256": "d1c8f16bd02e52d7fcecf1e11b5ef21b8b6ac99412b215afb2f1c6fb192e1c53",
+  "report_sha256": "b6b92f22de3da999604438beb02934ba9b715f1f82cba6d4466a9057e3d0fb55",
   "provenance": {
     "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
     "units": [
@@ -75,14 +75,30 @@
       "undefined_listing": "ev_642fb8fa9d9a12470cd8535e3d4aab08919280f44dd810ceed8a10acad3cf792"
     }
   },
-  "source_build_outputs": 156,
-  "source_build_proof_sha256": "9c11d61640e5968e39781c2d2fd16b125a5e3cc5be832f2f4909826b324070d5",
+  "source_build_outputs": 164,
+  "source_build_proof_sha256": "3a4d93e3d692438182236954da3056c5bda9371c76e72e61e9900ad9018f169a",
+  "linked": {
+    "path": "build/terminal-key-output/reverse-tab-checks.json",
+    "sha256": "24af202b95cdce47b55ed6f93ea0c8283c815c5fbba3488ec2f9c7b316478758",
+    "checks": {
+      "passed": true,
+      "cases": 630,
+      "binary_sha256": "2356ffff300e34a17977a9000a6a1f9026a8440742c802c676a12d8a307095da",
+      "checker_sha256": "0891fd73e142bd21a822014759511dc8dd1154203d570587a742bfce3ad39c0b",
+      "original_inputs": [],
+      "scope": "Actual shared key core, checked far admission, recovered reverse Tab, boundary/coordinate/division/protected-home and real resident cursor helpers. Hardware-only BIOS/CRT models include adversarial notice-register clobbering. Table/mode matrix, protected/circular fields,1..25-row planes, doublewidth and pre-wire malformed/unsafe-state rejection; video/metadata/parser parameters unchanged. No physical BIOS/modem or full application/viewport claim."
+    }
+  },
+  "DOS": {
+    "path": "build/aspect-keys-dos/reverse-tab-01/checks.json",
+    "sha256": "2ff12cbef77a6db0179cf281b2edaacf717f86df8a06815fb6ab684c35e573d6",
+    "cases": 16
+  },
   "original_inputs": [],
   "whole_application_gates_closed": [],
   "remaining": [
-    "Bind actual cursor/attribute/division/protected-home services.",
-    "Validate table termination/bounds and inconsistent mode combinations before any keyboard wire/echo effect.",
-    "Exercise actual DOS display, child-owned UART and error cleanup before enabling production half-duplex reverse Tab.",
-    "Recover full Insert/Delete echo services; finish all application gates."
+    "Complete protected scrolling/repair and general viewport services; their unsafe paths remain pre-wire rejections.",
+    "Complete original audio/settings behavior; the notice currently uses the maintained BIOS bell provider.",
+    "Finish local-key UI/macros, all application gates and physical-machine/modem validation."
   ]
 }

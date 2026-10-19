@@ -2,8 +2,8 @@
 
 The original half-duplex Shift-Tab path calls resident routine0BC0. Its complete
 226 bytes are now recovered and assembled as both a flat baseline and an OMF
-object. This component is a prerequisite for replacing the current explicit
-unsupported result; it is not yet linked into the production keyboard path.
+object. The live shared keyboard path now calls this recovered routine after
+bounded admission, including during admitted ASPECT sessions.
 
 REA12.1.2 identifies source offset1DC0 for linear address10BC0 in the verified
 2.01 original, SHA-256
@@ -39,17 +39,35 @@ does not move under that configuration, so the pair does not return within
 20000 instructions. The screen-position callback remains a scalar model;
 the inherited recursion and cursor-left control flow are real recovered code.
 This is characterized behavior, not a fixed production vulnerability. The
-production path still rejects half-duplex reverse Tab before wire/echo output.
+production preflight now rejects this nonprogressing configuration before any
+wire, cursor or video effect. The original flat routine remains byte-exact.
 
-Production integration must bind the cursor, signed-division, protected-home
-and attribute-repair services, validate table bounds and inconsistent wrap
-modes before output, and exercise actual DOS screen and UART behavior. The
-original table search assumes an FE terminator and has no30-byte bound. Full
-Insert/Delete echo is covered separately by the shared keyboard integration;
-all F01–F16 application gates remain open.
+The application binds the real cursor, signed-division, protected-home and
+[attribute-boundary services](ATTRIBUTE_BOUNDARY.md). They share ASPECT_CODE
+with explicit near/far bridges to resident cursor and notice providers. This
+avoids exceeding the resident64KB segment; an initial near-only link failed
+by940 bytes and is retained in the private build log.
+
+Plain-tab admission requires a strictly increasing, FE-terminated prefix within
+the30-byte table. Empty tables retain native mode-dependent no-op/home behavior.
+Only the branch that reads stops validates that table: protected navigation
+does not fail because of unused tab data. Read-only lookahead checks the actual
+protected path before transmission. It rejects doublewidth underflow,
+nonprogressing reverse wrap, stale offsets from suppressed wrap and protected
+scroll paths that would reach the still-unrecovered repair services. It does
+not move the cursor or consume those mode flags while deciding admission.
+
+The630 linked cases exercise native code and far bridges on ordinary and
+protected fields, circular boundaries,1..25-row planes, doublewidth rows,
+malformed tables, empty tables and mode guards. Rejected calls preserve cursor,
+video, metadata and parser parameters and emit no bytes. Full-duplex bindings
+still transmit without requiring a local echo plane. The16 actual DOS cases
+include default/custom reverse-tab stops in both profiles, script continuation
+and retained unsupported local-key handling. Insert/Delete echo is covered
+separately by shared keyboard integration. All F01–F16 gates remain open.
 
 The [component record](validation/keyboard-reverse-tab.json) binds its native
-baseline, checker and builder to the fresh156-output source-only rebuild.
+baseline, linked checker and builder to the fresh source-only rebuild.
 An initial expanded proof failed only because NASM's OMF module header used
 an absolute checkout path. The builder now supplies a stable relative source
 path; the failed report remains at

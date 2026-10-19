@@ -81,7 +81,7 @@ The OMF objects intentionally leave these as external symbols:
 | `screen_viewport_enter` | `482a` | No stack arguments; called before activating the left viewport. Full behavior not recovered here. |
 | `screen_viewport_leave` | `4850` | No stack arguments; called before restoring viewport offset. Full behavior not recovered here. |
 | `screen_viewport_refresh` | `2fb8` | No stack arguments; refresh after viewport transition. Full behavior not recovered here. |
-| `screen_adjust_attribute_boundary` | `2adc` | First stack argument is attribute-plane offset, second direction/selection flag; must remove four argument bytes. Called when tested cell bits `81` require adjustment. Full behavior not recovered here. |
+| `screen_adjust_attribute_boundary` | `2adc` | First stack argument is attribute-plane offset, second direction/selection flag; removes four argument bytes. Called for tested cell bits `81`. The standalone screen diagnostic retains an explicit callback boundary; the application now uses the recovered [attribute-boundary scanner](ATTRIBUTE_BOUNDARY.md) through checked far bridges. |
 | `screen_wrap_forward` | `12c8` | No arguments; original sets column zero and branches into line-advance logic at `1d88`, including scrolling dependencies. |
 
 The diagnostic links **fail-fast trap boundaries** for those five services. They

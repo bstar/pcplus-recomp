@@ -10,10 +10,6 @@ csi_service_12c8:
  jmp screen_wrap_forward
 extern csi_clear_tabs
 extern csi_reset_scroll_region
-global screen_adjust_attribute_boundary
-screen_adjust_attribute_boundary:
- mov ax,0x2adc
- jmp csi_unimplemented
 global screen_viewport_refresh
 extern terminal_capture_native_refresh
 screen_viewport_refresh:

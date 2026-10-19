@@ -14,10 +14,11 @@ class Machine(DosImage):
   manifest=json.loads((ROOT/'build/terminal/manifest.json').read_text())
   self.segment=self.base_segment+next(s['relative_segment'] for s in manifest['memory_layout']['code_segments'] if s['name']=='ASPECT_CODE')
   self.events=[];self.echo_counts=[];self.uc.hook_add(UC_HOOK_CODE,self.endpoint)
+  self.uc.mem_write(self.symbols['terminal_tab_stops'],bytes(range(0,80,8))+b'\xfe'*20)
  def endpoint(self,uc,address,size,_):
-  kind={self.symbols['terminal_key_echo_far']:'echo',self.symbols['terminal_key_cursor_far']:'cursor',self.symbols['terminal_key_edit_far']:'edit'}.get(address)
+  kind={self.symbols['terminal_key_echo_far']:'echo',self.symbols['terminal_key_cursor_far']:'cursor',self.symbols['terminal_key_edit_far']:'edit',self.symbols['terminal_key_reverse_tab_far']:'reverse_tab'}.get(address)
   if not kind:return
-  self.events.append((kind,uc.reg_read(UC_X86_REG_AX)))
+  self.events.append((kind,0 if kind=='reverse_tab' else uc.reg_read(UC_X86_REG_AX)))
   self.echo_counts.append(self.get('terminal_tx_count'))
   sp=uc.reg_read(UC_X86_REG_SP);ip,cs=struct.unpack('<HH',uc.mem_read(self.data_base+sp,4))
   uc.reg_write(UC_X86_REG_SP,sp+4);uc.reg_write(UC_X86_REG_CS,cs);uc.reg_write(UC_X86_REG_IP,ip)
@@ -25,7 +26,7 @@ class Machine(DosImage):
   uc=self.uc;sp=self.offset('terminal_stack_top')-4
   for reg,value in [(UC_X86_REG_CS,self.segment),(UC_X86_REG_DS,self.ds),(UC_X86_REG_SS,self.ds),(UC_X86_REG_SP,sp),(UC_X86_REG_AX,key),(UC_X86_REG_BX,duplex),(UC_X86_REG_BP,0xbabe),(UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678),(UC_X86_REG_ES,0x7200),(UC_X86_REG_EFLAGS,0x202)]:uc.reg_write(reg,value)
   uc.mem_write(self.data_base+sp,struct.pack('<HH',self.return_offset,self.base_segment));self.returned=False
-  uc.emu_start(self.symbols['terminal_key_output'],0,count=100000)
+  uc.emu_start(self.symbols['terminal_key_output'],0,count=1000000)
   assert self.returned and uc.reg_read(UC_X86_REG_SP)==sp+4
   assert [uc.reg_read(r) for r in (UC_X86_REG_BP,UC_X86_REG_SI,UC_X86_REG_DI,UC_X86_REG_ES)]==[0xbabe,0x1234,0x5678,0x7200]
   assert uc.reg_read(UC_X86_REG_DS)==uc.reg_read(UC_X86_REG_SS)==self.ds
@@ -38,7 +39,7 @@ class Machine(DosImage):
   self.events=[];self.echo_counts=[]
 def main():
  OUT.mkdir(exist_ok=True);m=Machine();cases=0
- half_unsupported={7}
+ half_unsupported=set()
  string_echo=set(range(7))|set(range(28,38))|{78}
  cursor={50:1,72:1,51:2,73:2,52:3,74:3,53:4,75:4,76:5}
  for profile in (4,6):
@@ -56,6 +57,7 @@ def main():
      elif slot==10:events=[('echo',8)]
      elif slot in cursor:events=[('cursor',cursor[slot])]
      elif slot in (8,9,54,55):events=[('edit',int(slot in (9,55)))]
+     elif slot==7:events=[('reverse_tab',0)]
     assert m.events==events,(profile,half,slot,m.events,events)
     assert m.echo_counts==[len(m.wire())]*len(events)
     assert not m.get('terminal_quit');cases+=1
@@ -82,6 +84,6 @@ def main():
  assert m.get('terminal_quit')==1 and m.get('terminal_exit_code')==3;cases+=1
  m.clear();m.put('modes_value_1d1a',1);assert m.run(ord('k'),65535)==0 and m.events==[('echo',ord('k'))];cases+=1
  m.clear();assert m.run(ord('k'),256)==7 and not m.wire() and not m.events;cases+=1
- report=dict(passed=True,cases=cases,all79_slots=True,profiles=[4,6],duplex=[0,1],binary_sha256=sha(ROOT/'build/terminal/TERMINAL.EXE'),checker_sha256=sha(Path(__file__)),original_inputs=[],scope='Actual product far key core, raw classifier, bindings, editing admission and queue instructions. Echo/cursor/edit scalar endpoints are explicit recording fixtures; actual video/native editing and child UART covered separately. Full/half, FF wire/echo distinction, literal/control, native no-op/local rejection, aliases, malformed binding and atomic capacity failure. Half reverse-tab remains unsupported before output.')
+ report=dict(passed=True,cases=cases,all79_slots=True,profiles=[4,6],duplex=[0,1],binary_sha256=sha(ROOT/'build/terminal/TERMINAL.EXE'),checker_sha256=sha(Path(__file__)),original_inputs=[],scope='Actual product far key core, raw classifier, bindings, editing/reverse-tab admission and queue instructions. Echo/cursor/edit/reverse-tab scalar endpoints are explicit recording fixtures; actual video/native editing, protected navigation and child UART covered separately. All79 slots full/half on valid standard geometry/tabs, FF wire/echo distinction, literal/control, native no-op/local rejection, aliases, malformed binding and atomic capacity failure.')
  (OUT/'checks.json').write_text(json.dumps(report,indent=2)+'\n');print('Shared terminal key output',cases,'cases PASS')
 if __name__=='__main__':main()

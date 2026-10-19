@@ -1,4 +1,11 @@
 .DEFAULT_GOAL := all
+.PHONY: attribute-boundary test-attribute-boundary
+attribute-boundary:
+	python3 standalone/build_attribute_boundary.py
+test-attribute-boundary: attribute-boundary
+	python3 standalone/check_attribute_boundary.py
+all: attribute-boundary
+test: test-attribute-boundary
 .PHONY: keyboard-reverse-tab test-keyboard-reverse-tab
 keyboard-reverse-tab:
 	python3 standalone/build_keyboard_reverse_tab.py
@@ -900,6 +907,7 @@ test: test-aspect-keyboard-policy
 test-terminal-key-output: terminal
 	python3 standalone/check_terminal_key_output.py
 	python3 standalone/check_terminal_key_edit.py
+	python3 standalone/check_terminal_reverse_tab.py
 test-aspect-key-client: aspect-runner
 	python3 standalone/check_aspect_key_client.py
 test-keyboard-echo-native: keyboard_mapping

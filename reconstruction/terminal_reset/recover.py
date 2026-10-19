@@ -91,6 +91,9 @@ def main():
      text=branch[1]+' '+(branch[2]+' ' if branch[2] else '')+symbol
     for k,v in CODE_POINTERS.items():text=text.replace(f'0x{k:x}',v)
     header.append(f'L_{at:04x}: '+text)
+   if name=='protected_home':
+    at=header.index('SEGMENT _TEXT public class=CODE use16')
+    header[at:at+1]=['%ifdef KEYBOARD_ECHO_FAR','SEGMENT ASPECT_CODE public align=16 class=FARCODE use16','%else','SEGMENT _TEXT public class=CODE use16','%endif']
    path=SOURCE/(name+'.asm');path.write_text('\n'.join(header)+'\n')
    subprocess.run(['nasm','-f','bin','-I',str(ROOT/'reconstruction/uart')+'/',str(path),'-o',str(work/'whole.bin')],check=True)
    assert (work/'whole.bin').read_bytes()==blob,name

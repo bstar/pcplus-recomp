@@ -12,18 +12,25 @@ CUSTOM_WIRE=b'keys\0KBDCUSTOMUPCUSTOMTAB\r\ndone'
 def definitions():
  cases=[];header=renderer.ESC+b'[2J'+renderer.ESC+b'[HFIRST BYTE SAFE'+renderer.QUERY+renderer.DA+b'LOGIN:'
  for profile in (4,6):
-  for kind in ('full','half','custom','halfhome','halfedit','halfcell'):
+  for kind in ('full','half','custom','halfhome','halfedit','halfcell','halftab','halfctab'):
    half=kind.startswith('half');unsupported=kind=='halfedit'
    source='proc main\nwaitfor "LOGIN:" 5\nset duplex full\ntransmit "KEYREADY"\n'+('set duplex half\n' if half else '')+'waitfor "END" 12\nif waitfor\nset duplex full\ntransmit $D_PWORD\ntransmit "^M"\npause 1\nendif\nendproc\n'
    wire=b'' if unsupported else b'keys\x1b[Hkeydone' if kind=='halfhome' else HALF_WIRE if half else CUSTOM_WIRE if kind=='custom' else FULL_WIRE
-   keys='s-tab' if unsupported else 'k e y s p120 home p120 k e y d o n e' if kind=='halfhome' else HALF_KEYS if half else 'k e y s p120 f1 p120 up p120 tab p120 enter p120 d o n e' if kind=='custom' else FULL_KEYS
+   keys='a-f9' if unsupported else 'k e y s p120 home p120 k e y d o n e' if kind=='halfhome' else HALF_KEYS if half else 'k e y s p120 f1 p120 up p120 tab p120 enter p120 d o n e' if kind=='custom' else FULL_KEYS
    screen=[(0,0,'keydoneEND')] if kind=='halfhome' else [(0,0,'FIRST BYTE SAFE')]+([] if unsupported else [(0,21,'keyxdoneEND' if half else 'END')])
    reply=b'[1;11R' if kind=='halfhome' else b'[1;33R' if half else b'[1;25R'
    if kind=='halfcell':
     wire=b'keys\x1b[D\x1b[D\x1b[2~X\x1b[3~\x1b[Cdone'
     keys='k e y s p120 left p120 left p120 ins p120 X p120 del p120 right p120 d o n e'
     screen=[(0,0,'FIRST BYTE SAFE'),(0,21,'keXsdoneEND')]
-   cases.append(dict(name='script-keys-%d-%s'%(profile,kind),source=source,banner=header,success=not unsupported,profile=profile,bios_policy='STANDARD' if kind=='halfhome' else 'ENHANCED',custom=kind=='custom',key_wire=wire,keys='p1800 '+keys+' p2500 space p700 r e a d y p700 a-x',post=renderer.QUERY,post_reply=renderer.ESC+reply,screen=screen))
+   banner=header
+   if kind in ('halftab','halfctab'):
+    wire=b'keys\x1b[Zdone';keys='k e y s p120 s-tab p120 d o n e'
+    screen=[(0,0,'FIRST BYTE SAFE'),(0,21,'keydoneEND')];reply=b'[1;32R'
+    if kind=='halfctab':
+     banner=renderer.ESC+b'[3g'+renderer.ESC+b'[1;13H'+renderer.ESC+b'H'+renderer.ESC+b'[1;20H'+renderer.ESC+b'H'+renderer.ESC+b'[1;31H'+renderer.ESC+b'H'+header
+     screen=[(0,0,'FIRST BYTE SAFELOGIdoneEND')];reply=b'[1;27R'
+   cases.append(dict(name='script-keys-%d-%s'%(profile,kind),source=source,banner=banner,success=not unsupported,profile=profile,bios_policy='STANDARD' if kind=='halfhome' else 'ENHANCED',custom=kind=='custom',key_wire=wire,keys='p1800 '+keys+' p2500 space p700 r e a d y p700 a-x',post=renderer.QUERY,post_reply=renderer.ESC+reply,screen=screen))
  return cases
 def encode(v):
  if isinstance(v,bytes):return dict(hex=v.hex())
