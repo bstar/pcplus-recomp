@@ -548,6 +548,7 @@ class Compiler:
             self.operand(self.atomic(node), compact=True)
             return
         file_commands = {
+            'isfile': (0x60, 's'), 'getfsize': (0x50, 'sl'), 'rename': (0x93, 'ss'),
             'eof': (0x31, 'vi'), 'fclear': (0x35, 'v'), 'fclose': (0x36, 'v'),
             'fflush': (0x38, 'v'), 'fgetc': (0x39, 'vi'), 'fgets': (0x3A, 'vd'),
             'fopen': (0x3F, 'vss'), 'fputc': (0x40, 'vv'), 'fputs': (0x41, 'vs'),

@@ -636,3 +636,9 @@ across1154 lexical and1164 inventory cases with real DOS files and owned heap
 cleanup. These are diagnostics; ASX emission, full validation/pruning, compiler
 CLI and runtime ASP fallback remain required. See
 [ASPECT_DOS_COMPILER.md](ASPECT_DOS_COMPILER.md). F13 and all other gates stay open.
+
+F13 now includes native ISFILE/GETFSIZE/RENAME through both maintained compilers
+and production ASPECT. [Filesystem query/rename evidence](ASPECT_FILE_INFO.md)
+covers84 original compiler outcomes,177 exact native bytes,322 component/original
+cases,155 repeated actual DOS VM invocations and terminal-parent login gating.
+The dispatcher has92 supported/123 unsupported slots; this does not close F13.

@@ -1,6 +1,10 @@
 """Prompt-driven source login for the isolated synthetic loclab account only."""
-def source():
- return ('integer cancel_done,scan_done\nproc main\ninteger attempts\n'
+def source(file_info=False):
+ probe=('fopen 4 \"FILECHK.TMP\" \"wb\"\nfputs 4 \"proof\"\nfclose 4\n'
+  'getfsize \"FILECHK.TMP\" probe_size\nif failure\nexit\nendif\n'
+  'if probe_size != 5L\nexit\nendif\nrename \"FILECHK.TMP\" \"FILECHK.BIN\"\n'
+  'if failure\nexit\nendif\nisfile \"FILECHK.BIN\"\nif failure\nexit\nendif\n') if file_info else ''
+ return ('integer cancel_done,scan_done\n'+('long probe_size\n' if file_info else '')+'proc main\ninteger attempts\n'+probe+
  'fopen 5 "LOGIN.LOG" "wb"\nfputs 5 "START"\n'
  'cancel_done=0\nscan_done=0\nattempts=0\n'
  'waitfor "lOGIN" 25\ntransmit "^M"\n'

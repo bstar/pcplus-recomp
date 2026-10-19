@@ -110,3 +110,10 @@ apply, yielding seventeen checks in this mode. The
 [ASPECT file integration](../../docs/ASPECT_SCRIPT_FILE_RUNTIME.md) records the
 successful current run with this stronger compiler/runner/file-owner boundary.
 It remains an isolated patched-server test with generated data.
+
+`--file-info-login` includes source-driven login and requires native ISFILE,
+GETFSIZE and RENAME on a five-byte generated probe before credentials are sent.
+The normal fourteen route checks and three script checks remain required; an
+additional exact-output check requires FILECHK.BIN to contain `proof` and the
+old FILECHK.TMP to be absent. This mode yields eighteen checks and is bound in
+[filesystem query/rename validation](../../docs/ASPECT_FILE_INFO.md).

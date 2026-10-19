@@ -12,6 +12,7 @@ static const command commands[]={
  {"strupr","d",0xb4,0},{"substr","dsnn",0xb6,0},{"pause","v",0x88,0}
 };
 static const command file_commands[]={
+ {"isfile","s",0x60,0},{"getfsize","sl",0x50,0},{"rename","ss",0x93,0},
  {"eof","vi",0x31,0},{"fclear","v",0x35,0},{"fclose","v",0x36,0},
  {"fflush","v",0x38,0},{"fgetc","vi",0x39,0},{"fgets","vd",0x3a,0},
  {"fopen","vss",0x3f,0},{"fputc","vv",0x40,0},{"fputs","vs",0x41,0},

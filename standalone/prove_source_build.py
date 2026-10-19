@@ -67,6 +67,7 @@ builds.append('aspect_fetch_native')
 builds.append('aspect_chain_native')
 builds.append('aspect_end_wait_native')
 builds.append('aspect_paths')
+builds.append('aspect_file_info')
 builds.append('aspect_script_files')
 builds.append('aspect_script_file_backend')
 builds.append('aspect_compiler_lexer')
@@ -85,6 +86,8 @@ owner_checks.append('standalone/check_terminal_key_edit.py')
 owner_checks.append('standalone/check_attribute_boundary.py')
 owner_checks.append('standalone/check_attribute_repair.py')
 owner_checks.append('standalone/check_attribute_repair_live.py')
+owner_checks.append('standalone/check_aspect_file_info.py')
+owner_checks.append('standalone/check_aspect_file_info_compiler.py')
 owner_checks.append('standalone/check_zmodem_names.py')
 owner_checks.append('standalone/check_zmodem_name_ui.py')
 owner_checks.append('standalone/check_line_edit_live.py')
@@ -166,6 +169,8 @@ outputs += ['aspect-paths/'+name+'.bin' for name in ('error_map','error_access',
 outputs += ['aspect-paths/'+name+'.obj' for name in ('path_commands','path_services','path_state','error_access','error_exec','map_error')]
 outputs += ['aspect-script-files/'+u['name']+'.bin' for u in json.loads((ROOT/'standalone/fixtures/aspect_script_file_native_units.json').read_text())['units']]
 outputs += ['aspect-script-files/script_file_commands.obj','aspect-script-files/script_file_services.obj','aspect-script-files/script_file_setting.obj','aspect-script-files/boolean.bin']
+outputs += ['aspect-file-info/'+u['name']+'.bin' for u in json.loads((ROOT/'standalone/fixtures/aspect_file_info_native_units.json').read_text())['units']]
+outputs += ['aspect-file-info/file_info.obj']
 outputs += ['aspect-script-file-backend/SCRIPTIO.EXE']
 outputs += ['aspect-compiler-lexer/ASPLEX.EXE','aspect-compiler-unit/ASPINV.EXE']
 outputs += ['aspect-compiler-expression/ASPEXP.EXE']

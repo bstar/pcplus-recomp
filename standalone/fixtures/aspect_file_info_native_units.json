@@ -1,0 +1,51 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "unit": 1,
+      "name": "isfile",
+      "start": 59281,
+      "end": 59300,
+      "bytes": 19,
+      "file_start": 118689,
+      "sha256": "dfce939f5ee809942b666fb1aa71477a620e432cdc4e902d2f68d21d225a3a33"
+    },
+    {
+      "unit": 2,
+      "name": "getfsize",
+      "start": 60666,
+      "end": 60741,
+      "bytes": 75,
+      "file_start": 120074,
+      "sha256": "2ebd1d92fb4b23c29940ec7b5686303034c8fa020dcf757084e366f3c7cc080a"
+    },
+    {
+      "unit": 3,
+      "name": "rename",
+      "start": 59598,
+      "end": 59619,
+      "bytes": 21,
+      "file_start": 119006,
+      "sha256": "3347918305fd5ef7d73964aa3c19335fdc614e529f369f24fe3fe9653484ce47"
+    },
+    {
+      "unit": 4,
+      "name": "test",
+      "start": 13939,
+      "end": 13978,
+      "bytes": 39,
+      "file_start": 18547,
+      "sha256": "725a3785b7b81f078626df0a04987c8b008377422f4436250031bc3fc692e87d"
+    },
+    {
+      "unit": 5,
+      "name": "move",
+      "start": 62164,
+      "end": 62187,
+      "bytes": 23,
+      "file_start": 121572,
+      "sha256": "342a4560a46f75f897c29fc7bd1fcae0dc3db285367d06d1d47b6e207c6dab91"
+    }
+  ],
+  "scope": "Numeric locations/hashes only. ISFILE and GETFSIZE rb literals verified in original initialized data. RENAME uses native DS snapshot; DOS close/seek result policy retained."
+}

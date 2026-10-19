@@ -3,7 +3,8 @@
 Both maintained compilers and the production `ASPECT.EXE` now support `EOF`,
 `FCLEAR`, `FCLOSE`, `FFLUSH`, `FGETC`, `FGETS`, `FOPEN`, `FPUTC`, `FPUTS`,
 `FREAD`, `FWRITE`, `FSEEK` and `FTELL`, plus `SET/FETCH FGETS_CRLF`.
-The dispatcher supports 89 of 215 opcode slots; 126 remain unsupported.
+This checkpoint supported89 of215 opcode slots and rejected126. The later
+[filesystem query/rename integration](ASPECT_FILE_INFO.md) extends that to92/123.
 Thirteen SET/FETCH selectors are implemented, with 243 explicitly unsupported.
 This does not establish the complete ASPECT language or close an application gate.
 

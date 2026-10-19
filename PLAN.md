@@ -81,6 +81,19 @@ must exclude original executables and private install/configuration data.
 
 ## Current application work
 
+The [filesystem query/rename integration](docs/ASPECT_FILE_INFO.md) adds native
+ISFILE, GETFSIZE and RENAME through both compilers and the production DOS child.
+The original compiler oracle covers84 cases (17 accepted/67 rejected);177 exact
+instruction bytes pass322 component cases and a matching original replay.
+The full DOS compiler passes1,564 cases. Repeated actual VM queries, six occupied
+script streams and mid-command faults pass155 invocations/1,103 assertions with
+stable heap/JFT ownership. The dispatcher now implements92 slots and rejects123;
+the composed DOS suite passes1,124 cases/26,972 checks. A real terminal child
+gates login on these file checks and returns to working parent input. All18
+expanded isolated ENiGMA checks pass after DOS-compiled query/rename login, and
+225 outputs reproduce without original inputs. All gates remain open.
+
+
 The [integrated ASPECT file commands](docs/ASPECT_SCRIPT_FILE_RUNTIME.md) now
 run through both compilers, the actual interpreter and production terminal child.
 The 245-case original compiler corpus matches (126 accepted/119 rejected), and
@@ -89,8 +102,9 @@ retained file handles through EXECUTE and cleanup after normal/error/budget exit
 three parent cases also cover divide error and actual BIOS Escape cancellation.
 The DOS-compiled owned ENiGMA login writes its exact file trace and passes all
 17 custom search/DIZ/NFO checks afterward. Native file/setting checks pass 6,090
-cases and a matching original replay. The runtime has 89 supported slots, 126
-unsupported slots and thirteen SET/FETCH selectors. All application gates remain open.
+cases and a matching original replay. That checkpoint had89 supported slots and126
+unsupported slots; query/rename above now extends it to92/123, with the same
+thirteen SET/FETCH selectors. All application gates remain open.
 
 The [owned script-file backend](docs/ASPECT_SCRIPT_FILE_BACKEND.md) now runs the
 thirteen native handlers with actual DOS stdio. Its 7,976 assertions cover binary/

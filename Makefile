@@ -960,3 +960,13 @@ test-aspect-key-client: aspect-runner
 test-keyboard-echo-native: keyboard_mapping
 	python3 standalone/check_keyboard_echo_native.py
 test: test-terminal-key-output test-aspect-key-client test-keyboard-echo-native
+
+.PHONY: aspect-file-info test-aspect-file-info test-aspect-file-info-compiler
+aspect-file-info:
+	python3 standalone/build_aspect_file_info.py
+test-aspect-file-info: aspect-file-info
+	python3 standalone/check_aspect_file_info.py
+test-aspect-file-info-compiler:
+	python3 standalone/check_aspect_file_info_compiler.py
+all: aspect-file-info
+test: test-aspect-file-info test-aspect-file-info-compiler

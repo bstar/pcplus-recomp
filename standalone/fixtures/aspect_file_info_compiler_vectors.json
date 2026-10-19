@@ -1,0 +1,880 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "harness_sha256": "2b4079ccd146e6f568e2a1c95f4469755823141e75533a89adf66d325decd660",
+  "cases": [
+    {
+      "name": "FI000",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile \r\nendproc\r\n",
+      "source_sha256": "1ab42f59c1ed7409cb7d352e83c6cb139698f20ad6a8f0da96e120dea2985929",
+      "success": false,
+      "label": "isfile ",
+      "errors": [
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "FI001",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile \"X\"\r\nendproc\r\n",
+      "source_sha256": "f4c39670e5890c5e43984eb931635b1829572ac6abc9b3e5ae07773f2716a984",
+      "success": true,
+      "label": "isfile \"X\"",
+      "errors": [],
+      "hex": "02 cf 60 aa b4 0b 5d 94",
+      "asx_sha256": "8c033a2ce65c5e332f1015cc30828baf210a387d8d7a577785e0cee172ee2999"
+    },
+    {
+      "name": "FI002",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile \"\"\r\nendproc\r\n",
+      "source_sha256": "ce73eb5398ae9eb079bf311a31f6b430744e3b97386285cf4e6239948747d98f",
+      "success": true,
+      "label": "isfile \"\"",
+      "errors": [],
+      "hex": "02 cf 60 6e 13 94",
+      "asx_sha256": "2d3d76d58bc79a1792b25c581fb5b986bb86e5c26026defaf07e26ec1816becb"
+    },
+    {
+      "name": "FI003",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile path\r\nendproc\r\n",
+      "source_sha256": "51d76a155e96e2b6cd574752a686ce278351c6c4ec51f35d505da19295f81457",
+      "success": true,
+      "label": "isfile path",
+      "errors": [],
+      "hex": "02 cf 60 8c 00 94",
+      "asx_sha256": "41b72d452b428ba93075e7bf5333d184ed174995e3bcb62420d46f63800ec4bb"
+    },
+    {
+      "name": "FI004",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile 1\r\nendproc\r\n",
+      "source_sha256": "7962c65ccae4ac0e432073fe0ae3cc2ac8cc6de5e8c53bbd7637c55fbe0057c0",
+      "success": false,
+      "label": "isfile 1",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> 1"
+      ]
+    },
+    {
+      "name": "FI005",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile 1L\r\nendproc\r\n",
+      "source_sha256": "41044e296efd00c7cde6cf9ee024ac97efe83dcb2f76f655e64da972eef0933b",
+      "success": false,
+      "label": "isfile 1L",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> 1L"
+      ]
+    },
+    {
+      "name": "FI006",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile 1.0\r\nendproc\r\n",
+      "source_sha256": "86b53524c0bd6e46c7f7e61c1a3cc05babdb4c7b028bbc1137779fd493f632ce",
+      "success": false,
+      "label": "isfile 1.0",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> 1.0"
+      ]
+    },
+    {
+      "name": "FI007",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile (path)\r\nendproc\r\n",
+      "source_sha256": "c4fd6b6370f8274755b7a36937906d40787b24a9d797137d73493ffa8082f363",
+      "success": false,
+      "label": "isfile (path)",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> (",
+        "Error C002 Line 5: Unexpected token ==> PATH",
+        "Error C002 Line 5: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FI008",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile path+\"X\"\r\nendproc\r\n",
+      "source_sha256": "d2b7eb1281a162722bbf717fae940b4dc1be77b7d07a030e9edc85a6156596d5",
+      "success": false,
+      "label": "isfile path+\"X\"",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> +",
+        "Error C002 Line 5: Unexpected token ==> X"
+      ]
+    },
+    {
+      "name": "FI009",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile ,path\r\nendproc\r\n",
+      "source_sha256": "1e809b0a64a20b058cf6517ade90df842c60dc3ef6a864e52f9da3d440345efe",
+      "success": false,
+      "label": "isfile ,path",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ,",
+        "Error C002 Line 5: Unexpected token ==> PATH"
+      ]
+    },
+    {
+      "name": "FI010",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile path,\r\nendproc\r\n",
+      "source_sha256": "85928373d14ccd20acc67f8db545f99544ba085a2c510c82a7539c284ad51474",
+      "success": false,
+      "label": "isfile path,",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FI011",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile path,\"Y\"\r\nendproc\r\n",
+      "source_sha256": "1b5466fdd71bf3e28ab4692058839efbe7e619249aecc8fdd40902eb854c03be",
+      "success": false,
+      "label": "isfile path,\"Y\"",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> Y"
+      ]
+    },
+    {
+      "name": "FI012",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile path \"Y\",\r\nendproc\r\n",
+      "source_sha256": "053a17d843b5ea32add1c6c2fd91fd68c07e424ffc5744d5fe243c48294bd75f",
+      "success": false,
+      "label": "isfile path \"Y\",",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> Y",
+        "Error C002 Line 5: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FI013",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile \"X\" value\r\nendproc\r\n",
+      "source_sha256": "00bf35dc22d12c5596df5642ec3822bbdba38fab23d91ae4c256f1b1e2fe3b34",
+      "success": false,
+      "label": "isfile \"X\" value",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> VALUE"
+      ]
+    },
+    {
+      "name": "FI014",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile \"X\" size\r\nendproc\r\n",
+      "source_sha256": "8c52d5f110cbc7ced7325a268d51c9623a06861dfa55de02b249adde2bcdeef7",
+      "success": false,
+      "label": "isfile \"X\" size",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> SIZE"
+      ]
+    },
+    {
+      "name": "FI015",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile \"X\" destination\r\nendproc\r\n",
+      "source_sha256": "46f6c3192b471477dd2cc0aa56b15e550d0762174d4c455259fc3dba06b3a9be",
+      "success": false,
+      "label": "isfile \"X\" destination",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FI016",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile \"X\" \"Y\"\r\nendproc\r\n",
+      "source_sha256": "ca545cb4cb39e730f2b50cd75f1ebce5b282c8d34ee19d8ae3646fa8e2bbd2f1",
+      "success": false,
+      "label": "isfile \"X\" \"Y\"",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> Y"
+      ]
+    },
+    {
+      "name": "FI017",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile path size\r\nendproc\r\n",
+      "source_sha256": "46a3aca985d736b57c49efda6083103266d53f07fc60c639b55d0a0a7a8632b7",
+      "success": false,
+      "label": "isfile path size",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> SIZE"
+      ]
+    },
+    {
+      "name": "FI018",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile path destination\r\nendproc\r\n",
+      "source_sha256": "0431eb1dcced8a9162ad94cbc115b37a6ef2bfbaec7f712526520dc97075e925",
+      "success": false,
+      "label": "isfile path destination",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FI019",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile \"X\",size\r\nendproc\r\n",
+      "source_sha256": "2c6380f9bb30a64859ef2e3571b0cb16b1c8f1e2795b93acf0ae9dbf9606d87c",
+      "success": false,
+      "label": "isfile \"X\",size",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> SIZE"
+      ]
+    },
+    {
+      "name": "FI020",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile size \"X\"\r\nendproc\r\n",
+      "source_sha256": "4d39ed47e51d6221652d64fed78d3c87cc927388f01025d11ff121a064ac4380",
+      "success": false,
+      "label": "isfile size \"X\"",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> SIZE",
+        "Error C002 Line 5: Unexpected token ==> X"
+      ]
+    },
+    {
+      "name": "FI021",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile \"X\" size+1L\r\nendproc\r\n",
+      "source_sha256": "617dd00afe82a3c7e70df48a3d3f8b392c47ca7fe24df685628139bd25170103",
+      "success": false,
+      "label": "isfile \"X\" size+1L",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> SIZE",
+        "Error C002 Line 5: Unexpected token ==> +",
+        "Error C002 Line 5: Unexpected token ==> 1L"
+      ]
+    },
+    {
+      "name": "FI022",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile \"X\" 1L\r\nendproc\r\n",
+      "source_sha256": "d35ea0e0317b1c26f874bec91e4e71840434c034c0612ad02a00a8d91b07e1b6",
+      "success": false,
+      "label": "isfile \"X\" 1L",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> 1L"
+      ]
+    },
+    {
+      "name": "FI023",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile \"X\" failure\r\nendproc\r\n",
+      "source_sha256": "ec11d40050b88039a2a964a2449d6a466f7083d1fe38aa9e740baecd771333b3",
+      "success": false,
+      "label": "isfile \"X\" failure",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> FAILURE"
+      ]
+    },
+    {
+      "name": "FI024",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile \"X\" ,size\r\nendproc\r\n",
+      "source_sha256": "37d356c746f084a1fa85b19c70775e13649de92dc46e034dcd71050d8162e071",
+      "success": false,
+      "label": "isfile \"X\" ,size",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> SIZE"
+      ]
+    },
+    {
+      "name": "FI025",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nisfile \"X\" ,,size\r\nendproc\r\n",
+      "source_sha256": "671b01dd49259404f5cba8e1826ce61f3603ae643a6d5d83b6ead29bd6e05fc2",
+      "success": false,
+      "label": "isfile \"X\" ,,size",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> ,",
+        "Error C002 Line 5: Unexpected token ==> ,",
+        "Error C002 Line 5: Unexpected token ==> SIZE"
+      ]
+    },
+    {
+      "name": "FI026",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize \r\nendproc\r\n",
+      "source_sha256": "b4f6dbae19c19ef7f3da5c0a893a4efbe2d54e7e78d513cb1ef2844124fb87f3",
+      "success": false,
+      "label": "getfsize ",
+      "errors": [
+        "Error C006 Line 5: Missing token",
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "FI027",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize \"X\"\r\nendproc\r\n",
+      "source_sha256": "5dfe12d8397bc8a6284a0238db65a74a770515479796a578d19a8bd4742999c1",
+      "success": false,
+      "label": "getfsize \"X\"",
+      "errors": [
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "FI028",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize \"\"\r\nendproc\r\n",
+      "source_sha256": "c99e67897e9b45378b222292efe578f752d8fe52a326b400d52a47f4b43003fe",
+      "success": false,
+      "label": "getfsize \"\"",
+      "errors": [
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "FI029",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize path\r\nendproc\r\n",
+      "source_sha256": "6cbc3941005b42cfb817198ddf4c326de618e777c21da1bf3ea39f9024a3373b",
+      "success": false,
+      "label": "getfsize path",
+      "errors": [
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "FI030",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize 1\r\nendproc\r\n",
+      "source_sha256": "73c05842c619091d84c4354b76b0e50d13b630e1fc2883c9742c53ac0776138c",
+      "success": false,
+      "label": "getfsize 1",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> 1",
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "FI031",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize 1L\r\nendproc\r\n",
+      "source_sha256": "6c900f07f5007d2688a25494abe809ca6b3004145030afc033cbdd3c46d878ea",
+      "success": false,
+      "label": "getfsize 1L",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> 1L",
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "FI032",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize 1.0\r\nendproc\r\n",
+      "source_sha256": "c5567316c9971a92edd36bfe5bb44b8d77c1045d8b951b8adc7ce8f3e6ede5dc",
+      "success": false,
+      "label": "getfsize 1.0",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> 1.0",
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "FI033",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize (path)\r\nendproc\r\n",
+      "source_sha256": "0b3cd5df88cac20b75040f186bdfb072895599b312fac8cd01bf6de30f8c214b",
+      "success": false,
+      "label": "getfsize (path)",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> (",
+        "Error C022 Line 5: Invalid numeric variable ==> PATH",
+        "Error C002 Line 5: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FI034",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize path+\"X\"\r\nendproc\r\n",
+      "source_sha256": "a1c760c954f66a175eabf491d1abe6b8f6a3ff31e4da7fa44220aee12c937ffd",
+      "success": false,
+      "label": "getfsize path+\"X\"",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> +",
+        "Error C002 Line 5: Unexpected token ==> X"
+      ]
+    },
+    {
+      "name": "FI035",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize ,path\r\nendproc\r\n",
+      "source_sha256": "fef664920236b3400e133eb9354bc65153ed90bb89d731ca11b4bdbb27d0afbd",
+      "success": false,
+      "label": "getfsize ,path",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ,",
+        "Error C022 Line 5: Invalid numeric variable ==> PATH"
+      ]
+    },
+    {
+      "name": "FI036",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize path,\r\nendproc\r\n",
+      "source_sha256": "7639dffaeaf7fa2188784ade62aa91827bb3ef425e8fa5e72492b66f00a5a9ba",
+      "success": false,
+      "label": "getfsize path,",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> ,"
+      ]
+    },
+    {
+      "name": "FI037",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize path,\"Y\"\r\nendproc\r\n",
+      "source_sha256": "469a832e09d89eb2251dd2236bbafdf4c0a99289f386588731385b930f058c9e",
+      "success": false,
+      "label": "getfsize path,\"Y\"",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> Y"
+      ]
+    },
+    {
+      "name": "FI038",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize path \"Y\",\r\nendproc\r\n",
+      "source_sha256": "2de5013c71f20e821432396ccf3c0c4e655680463f40bb44136e9a88fc02aadb",
+      "success": false,
+      "label": "getfsize path \"Y\",",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> Y",
+        "Error C002 Line 5: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FI039",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize \"X\" value\r\nendproc\r\n",
+      "source_sha256": "41f04408d937b62bdd4c8d2892054ac5351a63db991b42d87c447c06c725bf72",
+      "success": false,
+      "label": "getfsize \"X\" value",
+      "errors": [
+        "Error C022 Line 5: Invalid numeric variable ==> VALUE"
+      ]
+    },
+    {
+      "name": "FI040",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize \"X\" size\r\nendproc\r\n",
+      "source_sha256": "dadfe1d6941815e4405cffcb477d091075a9b15865dba12c9b167115b853a259",
+      "success": true,
+      "label": "getfsize \"X\" size",
+      "errors": [],
+      "hex": "02 cf 50 aa b4 0b 5d 8e 00 94",
+      "asx_sha256": "2d5da8c24666353a7b6cdf22a04ac5736e2942daa95bb8f3b2edb759a53eacab"
+    },
+    {
+      "name": "FI041",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize \"X\" destination\r\nendproc\r\n",
+      "source_sha256": "a3ad41d7596ea289a816f2c335498db41e5cd20cdd989f3b61fd78a6a701146a",
+      "success": false,
+      "label": "getfsize \"X\" destination",
+      "errors": [
+        "Error C022 Line 5: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FI042",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize \"X\" \"Y\"\r\nendproc\r\n",
+      "source_sha256": "db0f0f70a0d852331a63e1f9a68efdef3b92b3039a3d027bf12845b44307c694",
+      "success": false,
+      "label": "getfsize \"X\" \"Y\"",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> Y"
+      ]
+    },
+    {
+      "name": "FI043",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize path size\r\nendproc\r\n",
+      "source_sha256": "6386a73e1018c481be03bd48a2a94496cedae06562c01f0dd9978bb47ac2cf70",
+      "success": true,
+      "label": "getfsize path size",
+      "errors": [],
+      "hex": "02 cf 50 8c 00 8e 00 94",
+      "asx_sha256": "a2bfecbad19d3b6b9c386477022114fc8f9bc7943681c1731ced9f33d9a3e45e"
+    },
+    {
+      "name": "FI044",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize path destination\r\nendproc\r\n",
+      "source_sha256": "398c1078079e299aa811aa789ebae3ef6d078f5af0f9065b7382e685bff2d064",
+      "success": false,
+      "label": "getfsize path destination",
+      "errors": [
+        "Error C022 Line 5: Invalid numeric variable ==> DESTINATION"
+      ]
+    },
+    {
+      "name": "FI045",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize \"X\",size\r\nendproc\r\n",
+      "source_sha256": "3b5e7da1f421df737d061a5c681e10a91a6188cf125537c461d5c240f551ba13",
+      "success": true,
+      "label": "getfsize \"X\",size",
+      "errors": [],
+      "hex": "02 cf 50 aa b4 0b 5d 8e 00 94",
+      "asx_sha256": "2d5da8c24666353a7b6cdf22a04ac5736e2942daa95bb8f3b2edb759a53eacab"
+    },
+    {
+      "name": "FI046",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize size \"X\"\r\nendproc\r\n",
+      "source_sha256": "accc6d0cfae007caee29b4a4ba7115b99f130aee447ff1d50d414968e8180737",
+      "success": false,
+      "label": "getfsize size \"X\"",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> SIZE",
+        "Error C025 Line 5: Invalid identifier ==> X"
+      ]
+    },
+    {
+      "name": "FI047",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize \"X\" size+1L\r\nendproc\r\n",
+      "source_sha256": "159eb41ae4372f390d785adfff78c6a1e0fb2c1a1eb75783430ec45d6ddd7b87",
+      "success": false,
+      "label": "getfsize \"X\" size+1L",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> +",
+        "Error C002 Line 5: Unexpected token ==> 1L"
+      ]
+    },
+    {
+      "name": "FI048",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize \"X\" 1L\r\nendproc\r\n",
+      "source_sha256": "6e47fc15a6ddc2f09f8e22a92531fe055f35db7be0d1aea083548dfbfd019670",
+      "success": false,
+      "label": "getfsize \"X\" 1L",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> 1L"
+      ]
+    },
+    {
+      "name": "FI049",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize \"X\" failure\r\nendproc\r\n",
+      "source_sha256": "a3931e834a8aa18094a8a8bf7ee4df47ab6fcffeca2a5c87e10c06337e5d6d2e",
+      "success": false,
+      "label": "getfsize \"X\" failure",
+      "errors": [
+        "Error C022 Line 5: Invalid numeric variable ==> FAILURE"
+      ]
+    },
+    {
+      "name": "FI050",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize \"X\" ,size\r\nendproc\r\n",
+      "source_sha256": "7943d5d876ca44bd83de80d5a12816653bc10435becb418fae2f5e685d2e38c8",
+      "success": true,
+      "label": "getfsize \"X\" ,size",
+      "errors": [],
+      "hex": "02 cf 50 aa b4 0b 5d 8e 00 94",
+      "asx_sha256": "2d5da8c24666353a7b6cdf22a04ac5736e2942daa95bb8f3b2edb759a53eacab"
+    },
+    {
+      "name": "FI051",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ngetfsize \"X\" ,,size\r\nendproc\r\n",
+      "source_sha256": "6be114673a7d8963ed4e31dfdbb1306acc3198f8605a7faf49dbd6ebb155a593",
+      "success": false,
+      "label": "getfsize \"X\" ,,size",
+      "errors": [
+        "Error C025 Line 5: Invalid identifier ==> ,",
+        "Error C002 Line 5: Unexpected token ==> ,",
+        "Error C002 Line 5: Unexpected token ==> SIZE"
+      ]
+    },
+    {
+      "name": "FI052",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename \r\nendproc\r\n",
+      "source_sha256": "b6f6464d747cb4bb283fd74fa498e330c0a0804036357923ccc01303e6a8799b",
+      "success": false,
+      "label": "rename ",
+      "errors": [
+        "Error C006 Line 5: Missing token",
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "FI053",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename \"X\"\r\nendproc\r\n",
+      "source_sha256": "7afb2c5b5dcc7c7a7606e72237c756fa6154945bc890c25c75267c2a3faa6c66",
+      "success": false,
+      "label": "rename \"X\"",
+      "errors": [
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "FI054",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename \"\"\r\nendproc\r\n",
+      "source_sha256": "b2ad24f637f92a2688515e3bb7cb112a03f453ee104e3edfd4bc1ed9e57856bd",
+      "success": false,
+      "label": "rename \"\"",
+      "errors": [
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "FI055",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename path\r\nendproc\r\n",
+      "source_sha256": "da1ef615389c574bb030f6d65f6f9792ae42335b5619b5e48b2375fac9492e73",
+      "success": false,
+      "label": "rename path",
+      "errors": [
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "FI056",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename 1\r\nendproc\r\n",
+      "source_sha256": "101f24192c9f93a3c2bcb5efd921d3434be3479a7d54e592114d929463047c58",
+      "success": false,
+      "label": "rename 1",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> 1",
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "FI057",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename 1L\r\nendproc\r\n",
+      "source_sha256": "e2de4f8c229f08476990ffb18fe74b6bdcd7194d3a1c32c39c867a0dfa45d249",
+      "success": false,
+      "label": "rename 1L",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> 1L",
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "FI058",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename 1.0\r\nendproc\r\n",
+      "source_sha256": "8022cfa244ed5803b85d12e0632d36dd249ca1397f6c1251eb781998aac4d963",
+      "success": false,
+      "label": "rename 1.0",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> 1.0",
+        "Error C006 Line 5: Missing token"
+      ]
+    },
+    {
+      "name": "FI059",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename (path)\r\nendproc\r\n",
+      "source_sha256": "0b5a3e396bed8772214445d7279aec311dc28f288bda386727b58e5132124534",
+      "success": false,
+      "label": "rename (path)",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> (",
+        "Error C002 Line 5: Unexpected token ==> )"
+      ]
+    },
+    {
+      "name": "FI060",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename path+\"X\"\r\nendproc\r\n",
+      "source_sha256": "f96a8df7f89d110267b6b2f1c84573a9e65c793a2ee8d32247e4eef9b906b44e",
+      "success": false,
+      "label": "rename path+\"X\"",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> +",
+        "Error C002 Line 5: Unexpected token ==> X"
+      ]
+    },
+    {
+      "name": "FI061",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename ,path\r\nendproc\r\n",
+      "source_sha256": "63109b4d800f3f4623848cdfef7aac006fe50dd7924f046d100450c03d57cd13",
+      "success": false,
+      "label": "rename ,path",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ,"
+      ]
+    },
+    {
+      "name": "FI062",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename path,\r\nendproc\r\n",
+      "source_sha256": "b61f311b76efe2c3b2a369d54127bc39b662d6dec23a01eaeda9ef350ec69665",
+      "success": false,
+      "label": "rename path,",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ,"
+      ]
+    },
+    {
+      "name": "FI063",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename path,\"Y\"\r\nendproc\r\n",
+      "source_sha256": "375d4ae3fd226f8b451e5ee14a16e863ed3048e7fac87e075500e18869044480",
+      "success": true,
+      "label": "rename path,\"Y\"",
+      "errors": [],
+      "hex": "02 cf 93 8c 00 aa b4 0d 70 94",
+      "asx_sha256": "a78ce3ea80f0f44d5466de107f28cc0975e59398817106ee29fae965a600bc8e"
+    },
+    {
+      "name": "FI064",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename path \"Y\",\r\nendproc\r\n",
+      "source_sha256": "5b6e4f2168bfaddbddfc4e22f922a02a6ef46732d8018248d4431ea0803ff669",
+      "success": false,
+      "label": "rename path \"Y\",",
+      "errors": [
+        "Error C002 Line 5: Unexpected token ==> ,"
+      ]
+    },
+    {
+      "name": "FI065",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename \"X\" value\r\nendproc\r\n",
+      "source_sha256": "d4996f4ebd993a57b9c8c07cfcab40ea0e4e435c2f197a996d6bfec3ae255894",
+      "success": false,
+      "label": "rename \"X\" value",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> VALUE"
+      ]
+    },
+    {
+      "name": "FI066",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename \"X\" size\r\nendproc\r\n",
+      "source_sha256": "a99f7435b5f9d930cda0641b0cc031a22260d8e236e1865b02df381b53c85297",
+      "success": false,
+      "label": "rename \"X\" size",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> SIZE"
+      ]
+    },
+    {
+      "name": "FI067",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename \"X\" destination\r\nendproc\r\n",
+      "source_sha256": "04ea1741e1f2ad84cd28e03c81ebca54092f00ad4b57c1793cbf11c51437c33a",
+      "success": true,
+      "label": "rename \"X\" destination",
+      "errors": [],
+      "hex": "02 cf 93 aa b4 0b 5d 8c 01 94",
+      "asx_sha256": "e4d943c3434a1d22c14d276d7943f997055d0126e18c9da92ecad442dace2f72"
+    },
+    {
+      "name": "FI068",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename \"X\" \"Y\"\r\nendproc\r\n",
+      "source_sha256": "83d00217ce31da3fa6d107086d8d3d93c4692aea5dc9de9f16ff0d886e2b1fa1",
+      "success": true,
+      "label": "rename \"X\" \"Y\"",
+      "errors": [],
+      "hex": "02 cf 93 aa b4 0b 5d aa b4 03 64 94",
+      "asx_sha256": "e7ed28569458e08598a03e0cbdf7bfd7c6b8998b88b861b7810b9dcdd2ff0256"
+    },
+    {
+      "name": "FI069",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename path size\r\nendproc\r\n",
+      "source_sha256": "a0bf2abd07977ce1ae794cdd1d4b16b700e8621a0c42bcba2ce2551d33af44a3",
+      "success": false,
+      "label": "rename path size",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> SIZE"
+      ]
+    },
+    {
+      "name": "FI070",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename path destination\r\nendproc\r\n",
+      "source_sha256": "ed5b073bb7d356bd32531e8da381d84241e10c89812e70f38dfd468c67155908",
+      "success": true,
+      "label": "rename path destination",
+      "errors": [],
+      "hex": "02 cf 93 8c 00 8c 01 94",
+      "asx_sha256": "d03763d6a1f277c65c57aaaaa90a68b730d016d4b18cef4fb63f8212adc40a92"
+    },
+    {
+      "name": "FI071",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename \"X\",size\r\nendproc\r\n",
+      "source_sha256": "1c117f71534c142ee23b2619ae3f46e222b5e60339ed23f41c751b67fe3330d5",
+      "success": false,
+      "label": "rename \"X\",size",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> SIZE"
+      ]
+    },
+    {
+      "name": "FI072",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename size \"X\"\r\nendproc\r\n",
+      "source_sha256": "9899440ad52bed7595e7235235c32971c1943e04f6a7cbb68673e16843cb8252",
+      "success": false,
+      "label": "rename size \"X\"",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> SIZE"
+      ]
+    },
+    {
+      "name": "FI073",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename \"X\" size+1L\r\nendproc\r\n",
+      "source_sha256": "37b5baf8df9db25740a89fa636419f7f3355e86dabe2e8f61bb64f05e1eb14a5",
+      "success": false,
+      "label": "rename \"X\" size+1L",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> SIZE",
+        "Error C002 Line 5: Unexpected token ==> +",
+        "Error C002 Line 5: Unexpected token ==> 1L"
+      ]
+    },
+    {
+      "name": "FI074",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename \"X\" 1L\r\nendproc\r\n",
+      "source_sha256": "7cf22da386e5d3dd9112a119fc8e2688f8d9f8ae0b91efb53a755b81fd0c5512",
+      "success": false,
+      "label": "rename \"X\" 1L",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> 1L"
+      ]
+    },
+    {
+      "name": "FI075",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename \"X\" failure\r\nendproc\r\n",
+      "source_sha256": "aadabe79a5febda8efcf8bc1754c239bdce6113bced66c27981187d8baab4331",
+      "success": false,
+      "label": "rename \"X\" failure",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> FAILURE"
+      ]
+    },
+    {
+      "name": "FI076",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename \"X\" ,size\r\nendproc\r\n",
+      "source_sha256": "6b386dbb9077e6764ae229553ace281495f1df2e88e5e4915fe751f774593605",
+      "success": false,
+      "label": "rename \"X\" ,size",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> SIZE"
+      ]
+    },
+    {
+      "name": "FI077",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nrename \"X\" ,,size\r\nendproc\r\n",
+      "source_sha256": "b8d25af948db02f980354884ad19f6391f207b81e0dc14c75f4ad05302df428d",
+      "success": false,
+      "label": "rename \"X\" ,,size",
+      "errors": [
+        "Error C023 Line 5: Invalid string constant (quotes missing) ==> ,",
+        "Error C002 Line 5: Unexpected token ==> ,",
+        "Error C002 Line 5: Unexpected token ==> SIZE"
+      ]
+    },
+    {
+      "name": "FI078",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nstring localpath\r\nlong localsize\r\nisfile localpath\r\nendproc\r\n",
+      "source_sha256": "1fbafe868a8daf5ab0809a6ca9721b7df1f1f0d5f76f1d034a0f8662225af3aa",
+      "success": true,
+      "label": "string localpath\nlong localsize\nisfile localpath",
+      "errors": [],
+      "hex": "02 d2 55 00 cf 60 a0 00 00 95",
+      "asx_sha256": "2652b98825f15920cb7de108844c7dfb053be6938f1868ca74f51215b4820623"
+    },
+    {
+      "name": "FI079",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nstring localpath\r\nlong localsize\r\ngetfsize localpath localsize\r\nendproc\r\n",
+      "source_sha256": "229a237b37f76c5f10681e66534e0cd7eb22890cf68ba146ebc477b53ad9d5ec",
+      "success": true,
+      "label": "string localpath\nlong localsize\ngetfsize localpath localsize",
+      "errors": [],
+      "hex": "02 d2 55 00 cf 50 a0 00 00 a2 51 00 95",
+      "asx_sha256": "18e8f88f5b1fda357f79ab050f0df88ff4c9b88549299a25f2de1db340aa2d44"
+    },
+    {
+      "name": "FI080",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\nstring localpath\r\nlong localsize\r\nrename localpath \"Y\"\r\nendproc\r\n",
+      "source_sha256": "3a810a49fc6164a96f6b73e1c2d161a3398aa8afd385050ec6927e6d5d420821",
+      "success": true,
+      "label": "string localpath\nlong localsize\nrename localpath \"Y\"",
+      "errors": [],
+      "hex": "02 d2 55 00 cf 93 a0 00 00 aa b4 07 76 95",
+      "asx_sha256": "e72e3f661b26d39551b3f7281f965262728ba740c0d96c370393f194a17688a1"
+    },
+    {
+      "name": "FI081",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ncall worker with \"X\" 0L\r\nendproc\r\nproc worker\r\nstrparm p\r\nlongparm q\r\nisfile p\r\nendproc\r\n",
+      "source_sha256": "7981f484a3e24a2ac5178ccce4e836a01f1d8464c3f68f0e56a4b169c7eb4c70",
+      "success": true,
+      "label": "call worker with \"X\" 0L",
+      "errors": [],
+      "hex": "02 cf d0 cd aa b4 8c b1 cc ac 00 00 00 00 c8 17 00 00 00 d2 ab ff 94 cf 60 96 5b 00 95",
+      "asx_sha256": "dfddba87396a17e875c289746fb22da93049385093dfa4930214ad17a0343f53"
+    },
+    {
+      "name": "FI082",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ncall worker with \"X\" 0L\r\nendproc\r\nproc worker\r\nstrparm p\r\nlongparm q\r\ngetfsize p q\r\nendproc\r\n",
+      "source_sha256": "639ca858f13b4686b0456968d15aa028f67e0b0a130b7f2e1130e6558b9497b4",
+      "success": true,
+      "label": "call worker with \"X\" 0L",
+      "errors": [],
+      "hex": "02 cf d0 cd aa b4 8c b1 cc ac 00 00 00 00 c8 17 00 00 00 d2 ab ff 94 cf 50 96 5b 00 98 0a 00 95",
+      "asx_sha256": "ec34c504c9e790c089e2e45cb1e79754ac33b6f3143a8f7cc536ba63826870d6"
+    },
+    {
+      "name": "FI083",
+      "source": "integer value\r\nlong size\r\nstring path,destination\r\nproc main\r\ncall worker with \"X\" 0L\r\nendproc\r\nproc worker\r\nstrparm p\r\nlongparm q\r\nrename p p\r\nendproc\r\n",
+      "source_sha256": "0a147bae085dea893ce5d75f104739fbc6f11566c137d4b43ea9a06fe9b9e70b",
+      "success": true,
+      "label": "call worker with \"X\" 0L",
+      "errors": [],
+      "hex": "02 cf d0 cd aa b4 8c b1 cc ac 00 00 00 00 c8 17 00 00 00 d2 ab ff 94 cf 93 96 5b 00 96 5b 00 95",
+      "asx_sha256": "dfcc2301d00392cbb9124a55188329dbe36bab4258a8b6213e1f6aedf533a74f"
+    }
+  ],
+  "scope": "Authored source compilation only; expected values fixed independently before runtime execution."
+}

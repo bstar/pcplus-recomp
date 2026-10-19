@@ -1,6 +1,7 @@
 ; Maintained experimental owner bridges for recovered ASPECT instructions.
 ; Near DS=SS. Actual DOS files/far heap; unsupported commands/services abort.
 ; This table is deliberately incomplete and never treats an unknown slot as NOP.
+extern aspect_file_info_isfile,aspect_file_info_size,aspect_file_info_rename
 BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
@@ -861,7 +862,13 @@ _runtime_arena: times 0x3aca db 0
 aspect_dispatch_handlers:
 %assign op 0
 %rep 215
-%if op=0x00
+%if op=0x60
+ dw aspect_file_info_isfile
+%elif op=0x50
+ dw aspect_file_info_size
+%elif op=0x93
+ dw aspect_file_info_rename
+%elif op=0x00
  dw aspect_arith_add
 %elif op=0x02
  dw aspect_arith_bit_and
