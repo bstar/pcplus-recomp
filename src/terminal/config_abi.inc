@@ -17,6 +17,7 @@ CONFIG_ENTRY _xlt_live_stage,2
 CONFIG_ENTRY _xlt_live_commit,2
 CONFIG_ENTRY _xlt_live_initialize,5
 CONFIG_ENTRY _xlt_live_reload,3
+CONFIG_ENTRY _xlt_live_editor,3
 CONFIG_ENTRY _redisplay_event,3
 CONFIG_ENTRY _program_execute,2
 CONFIG_ENTRY _ymodem_run,2

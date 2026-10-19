@@ -70,7 +70,7 @@ def main():
    (1,1,0x2300,'connection_state',0),(1,2,0x3000,'uart_break_hold',1),
    (2,0,0x8400,'_redisplay_active',1),(2,1,0x8300,'_clipboard_ui_active',1),
    (2,2,0x2b1c,'terminal_monitor_active',2),(0,6,0x2d00,'terminal_quit',1),
-   (3,1,0x7000,'terminal_translation_reload_status',4)]:
+   (3,1,0x7000,'terminal_translation_reload_status',4),(3,2,0x6f00,'terminal_translation_edit_status',4)]:
    m=Menu();direct=Menu()
    if key==0x3000:
     for model in (m,direct):
@@ -89,7 +89,7 @@ def main():
   m=MenuPrinter();assert m.begin()==0
   m.choose(0,4);m.log(b'HELD');m.choose(0,4);m.log(b'LIVE');m.choose(0,3)
   assert m.contents()==b'LIVE' and not m.get('terminal_sink_398a_enabled')
-  return 19
+  return 20
  check('normal-transfer-capture-break-monitor-viewer-clipboard-exit-dispatch-and-mnemonics',handoff)
  def incoming():
   m=Menu();m.open_menu();m.key(0x3b00);screen=bytes(m.uc.mem_read(0xb8000,4000))
@@ -116,8 +116,9 @@ def main():
   m=Menu();m.uc.mem_write(0x484,b'\x31');m.key(0x2c00);assert not m.get('_command_menu_active') and not m.get('terminal_quit')
   m=Menu();m.open_menu();m.key(0x7100);assert m.get('_command_menu_active') and not m.get('terminal_program_pending')
   m.key(0x7000);assert m.get('_command_menu_active') and not m.get('terminal_program_pending')
+  m.key(0x6f00);assert m.get('_command_menu_active') and not m.get('terminal_program_pending')
   m.key(0x2d00);assert m.get('terminal_quit') and not m.get('_redisplay_active')
-  return len(flags)+8
+  return len(flags)+9
  check('every-open-owner-geometry-modem-guard-nested-setup-suppression-and-direct-AltX',ownership)
  result=dict(passed=True,binary_sha256=hashlib.sha256((ROOT/'build/terminal/TERMINAL.EXE').read_bytes()).hexdigest(),
   cases=rows,inputs=sum(r['inputs'] for r in rows),sources={p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in

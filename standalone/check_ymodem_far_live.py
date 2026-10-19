@@ -114,12 +114,11 @@ def main():
  assert all(returns.values()),returns
  done('real-UART-CRC-framing-file-owners-and-all-eighteen-callback-return-frames',4)
  manifest=json.loads((ROOT/'build/terminal/manifest.json').read_text())
- # Fixed migration limits; the recorder separately authenticates the published
- # baseline. This ordinary check needs no ignored historical build artifacts.
- assert manifest['memory_layout']['near_bytes']==64480
- assert manifest['memory_layout']['resident_code_bytes']==61970
- assert manifest['memory_layout']['resident_code_spare_bytes']==3566
- assert manifest['memory_layout']['retained_parent_paragraphs']*16==315200
+ # Exact savings belong to the historical migration report; later features
+ # consume that capacity. Keep placement/near ABI limits independently checked.
+ assert manifest['memory_layout']['ymodem_far_code_verified']
+ assert manifest['memory_layout']['near_bytes']<65536
+ assert manifest['memory_layout']['resident_code_bytes']<65536
  result=dict(passed=True,binary_sha256=hashlib.sha256((ROOT/'build/terminal/TERMINAL.EXE').read_bytes()).hexdigest(),
   inputs=sum(g['inputs'] for g in groups),cases=groups,compiler_import_counts=counts,callback_returns_observed=seen,public_entry_returns_observed=returns,
   compiler_object_sha256=hashlib.sha256(before).hexdigest(),normalized_object_sha256=hashlib.sha256(after).hexdigest(),

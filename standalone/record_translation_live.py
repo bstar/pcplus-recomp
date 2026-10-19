@@ -30,8 +30,8 @@ def main():
     for report in (linked, modes, original_modes, dos, frames, regression):
         assert report['passed'] and report['binary_sha256'] == binary
     assert linked['inputs'] == 783 and len(linked['cases']) == 4
-    assert frames['configuration_bridge_pairs_verified'] == 60
-    assert len(frames['rejected_mutations']) == 269
+    assert frames['configuration_bridge_pairs_verified'] == 61
+    assert len(frames['rejected_mutations']) == 276
     assert modes['inputs'] == original_modes['inputs'] == 561
     assert len(original_modes['original_cases']) == 5
     assert original_modes['original_sha256'] == '6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904'

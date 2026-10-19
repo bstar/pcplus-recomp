@@ -646,3 +646,42 @@ and offer checked acceptance after return. Merely opening a current-directory
 file with the same leaf would edit the wrong table for valid fallback sources.
 The complete feature gates, remaining terminal emulations,
 protocols, ASPECT, Host, packaging and physical target validation remain open.
+
+### Direct selected-table editor
+
+Alt-F8 and Setup/Edit input table now run the maintained XLTEDIT child for the
+frozen selected table. The helper is located beside the launching executable
+through a bounded DOS3+ PSP environment trailer, independent of CWD and PCPLUS.
+The child receives a quoted absolute filename; file save/recovery stays in that
+file's directory. The existing PROGRAM UART/IRQ owner drains before execution,
+quiets child state and restores readable text mode before a separate checked
+snapshot/Y confirmation. Failed execution, nonzero child exit, failed reads,
+decline and late ownership changes retain the active mapping. The PRM image,
+mode/enabled flag and driver mask are unchanged. See `docs/TRANSLATION_EDIT.md`.
+
+The offline document now accepts DOS8.3 leaves or absolute paths up to63 bytes,
+including CP437 bytes. Both recovery filenames are siblings of that target;
+separate buffers cover a73-byte recovery path for a short leaf at the target
+limit. Existing baseline, exclusive creation, no-overwrite installation,
+rollback and retained-recovery behavior remain enforced.
+
+The `61db3a61` application passes55 linked action/builder inputs and eight actual
+production DOS editor workflows: accept/decline, discard, environment/explicit
+sources, changed CWD, menu entry and absent helper. An isolated original-free
+checkout passes the same55 linked inputs. The offline suite passes22 DOS cases,
+including293 filesystem assertions,931 fault assertions and87 path/trailer
+assertions. All77 terminal regression commands pass and64 outputs reproduce
+byte for byte. One new three-word configuration entry brings the bridges to61
+configuration/110 total;276 damaged frames/layouts reject.
+
+The action adds240 near bytes and252 resident code bytes relative to `4a1295a`.
+Near data/stack is64,720 bytes, resident code62,222 and retained parent317,136
+including PSP. The new component report verifies all eight exact saved PRMs as
+unchanged. The four existing DOS menu workflows, six clipboard/transfer workflows,
+eleven explicit reload workflows and parser-split menu probe pass. Selected
+stock downloads pass on Synchronet and ENiGMA, including post-download search.
+Synchronet editor semantics pass; immediate ENiGMA Home/Insert still fail while
+the separate30ms buffering experiment passes. No post was saved, and the
+synthetic logon exemption was restored and independently read back.
+The full application gates remain open, including complete settings/key editing,
+other emulations/protocols, ASPECT, Host, packaging and physical target testing.

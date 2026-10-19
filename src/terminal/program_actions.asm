@@ -28,6 +28,9 @@ extern terminal_setup_key_consumed,terminal_setup_link_status
 extern terminal_setup_profile_finish
 extern terminal_translation_reload_run
 extern terminal_translation_reload_status
+extern terminal_translation_edit_prepare,terminal_translation_edit_complete
+extern terminal_translation_edit_executable,terminal_translation_edit_tail
+extern terminal_translation_edit_status
 global terminal_program_initialize,terminal_program_start,terminal_program_poll
 global terminal_program_cancel
 global terminal_program_prepare_link
@@ -276,6 +279,8 @@ terminal_program_poll:
 .execute_child:
  mov ax,terminal_program_result
  push ax
+ cmp word [terminal_program_kind],3
+ je .edit_child
  cmp word [terminal_program_kind],1
  je .setup_child
  mov ax,terminal_program_command
@@ -294,13 +299,27 @@ terminal_program_poll:
  call _process_run
  add sp,6
  jmp .child_status
+.edit_child:
+ call terminal_translation_edit_prepare
+ or ax,ax
+ jnz .setup_denied
+ mov ax,terminal_translation_edit_tail
+ push ax
+ mov ax,terminal_translation_edit_executable
+ push ax
+ call _process_run
+ add sp,6
+ jmp .child_status
 .setup_denied:
  add sp,2 ;Release only the already-pushed result pointer; no EXEC happened.
 .child_status:
  or ax,ax
  jnz .record_status
  cmp word [terminal_program_kind],1
+ je .check_child_exit
+ cmp word [terminal_program_kind],3
  jne .record_status
+.check_child_exit:
  cmp word [terminal_program_result+4],0
  je .record_status
  mov ax,1
@@ -313,6 +332,14 @@ terminal_program_poll:
  ; A child may leave its UART ISR/interrupt-enable state behind. Quiet that
  ; port and restore its baseline vector before drawing or waiting for a key.
  call program_quiet_uart
+ cmp word [terminal_program_kind],3
+ jne .setup_complete
+ ; A failed/misbehaving editor must still leave its question readable.
+ mov ax,3
+ int 0x10
+ call terminal_translation_edit_complete
+ jmp .restore_screen
+.setup_complete:
  cmp word [terminal_program_kind],1
  jne .return_prompt
  call terminal_setup_complete
@@ -588,7 +615,12 @@ terminal_program_cancel:
  je .clear
  mov word [terminal_program_status],3
  cmp word [terminal_program_kind],2
+ je .reload_cancel
+ cmp word [terminal_program_kind],3
  jne .clear
+ mov word [terminal_translation_edit_status],4
+ jmp .clear
+.reload_cancel:
  mov word [terminal_translation_reload_status],4
 .clear:
  mov word [terminal_program_pending],0
@@ -623,7 +655,7 @@ SEGMENT _DATA public align=16 class=DATA use16
 global terminal_program_pending,terminal_program_active,terminal_program_status
 global terminal_program_command,terminal_program_result
 global terminal_program_kind
-terminal_program_kind: dw 0 ;0 PROGRAM/COMSPEC,1 PRMEDIT,2 same-table reload (no child).
+terminal_program_kind: dw 0 ;0 PROGRAM/COMSPEC,1 PRMEDIT,2 reload (no child),3 XLTEDIT.
 terminal_program_pending: dw 0
 terminal_program_active: dw 0
 terminal_program_status: dw 0

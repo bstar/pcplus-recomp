@@ -222,7 +222,7 @@
       "observed_errors": []
     }
   ],
-  "terminal_sha256": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
+  "terminal_sha256": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
   "editor_sha256": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
   "sources": {
     "src/terminal/setup_startup.asm": "6f0e39c27edef7d769711a82af0766f8e6d7a67d785ab3b0e02a09ecc2277328",

@@ -205,7 +205,7 @@ def inspect_terminal_memory(binary,map_path):
     else:assert len(fields)==3
     near_call(name+'_resident',target,prefix=prefix,suffix=suffix)
    config_bridges+=1
-  assert config_bridges==60,'Incomplete configuration ABI validation'
+  assert config_bridges==61,'Incomplete configuration ABI validation'
   bridges+=config_bridges
   extra['configuration_bridge_pairs_verified']=config_bridges
  redisplay_bridges=0

@@ -11,16 +11,18 @@ no original executable, installation or REA database is a build input.
 ./tools/build test-xlt-editor
 ```
 
-Copy `build/xlt-editor/XLTEDIT.EXE` to the DOS directory containing the table:
+Copy `build/xlt-editor/XLTEDIT.EXE` beside TERMINAL.EXE for Alt-F8 use, or run it
+from an offline DOS prompt:
 
 ```dos
 XLTEDIT PCPLUS.XLT
+XLTEDIT D:\TABLES\PCPLUS.XLT
 ```
 
 `XLTEDIT /N NEW.XLT` explicitly stages a new identity table. It requires a missing
-target and creates nothing until F1. Names are current-directory ASCII 8.3 leaves
-using letters, digits, `_` and `-`, with an optional extension. DOS devices and
-the reserved recovery names are rejected. An 80-column BIOS text screen in mode
+target and creates nothing until F1. Names may be current-directory DOS8.3 leaves
+or absolute drive-rooted paths up to63 bytes, including CP437 filename bytes.
+DOS devices, relative parents and the reserved recovery names are rejected. An 80-column BIOS text screen in mode
 2, 3 or 7 is required. The active page's 2,000 cells, cursor position and cursor
 shape are restored on exit.
 
@@ -43,7 +45,9 @@ This is an offline editor. F3 and F4 do not enable/disable the running terminal'
 mode or change a PRM image. That differs from the original parent's shared-memory
 editor. Select the saved mode with PRMEDIT at startup, use a confirmed
 [Alt-F10 mode change](LIVE_TRANSLATION_SETUP.md), or select a table explicitly
-with `/X:FILE.XLT`. A dedicated same-mode live reload/editor command remains open.
+with `/X:FILE.XLT`. [Alt-F9 reload](TRANSLATION_RELOAD.md) and the
+[Alt-F8 editor command](TRANSLATION_EDIT.md) now offer explicit, confirmed
+adoption of the selected table. The child itself never changes terminal memory.
 
 ## Save and recovery
 
@@ -52,7 +56,7 @@ rereads all 256 baseline bytes. External changes, truncation or a missing target
 refuse the save and retain edits. A new target must still be missing. An unchanged
 existing table returns success without filesystem I/O.
 
-The owner creates `XLTEDIT.$$$` exclusively, writes exactly 256 bytes and checks
+The owner creates `XLTEDIT.$$$` exclusively beside the target, writes exactly 256 bytes and checks
 close before touching the existing target. Replacement moves the old target to
 `XLTEDIT.BAK`, installs the stage using DOS no-overwrite rename, then deletes the
 backup. Failed installation attempts to restore the backup. Existing stage or
@@ -72,8 +76,8 @@ automatic recovery-file deletion or version conversion.
 
 [Editor validation](validation/xlt-editor.json) records executable/source hashes,
 293 production DOS filesystem-owner assertions, 931 assertions with injected DOS
-failures, and 17 additional actual DOS keyboard/entry workflows (19 reported
-cases in total). The fault build links the production document and checked loader
+failures,87 path/trailer assertions and19 additional actual DOS keyboard/entry
+workflows (22 reported cases in total). The fault build links the production document and checked loader
 to deterministic filesystem adapters. It covers create/write/short-write/close,
 rename/rollback/cleanup and baseline-read errors, retained edits, recovery locks,
 collisions, and argument rejection before I/O.

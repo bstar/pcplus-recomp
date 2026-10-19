@@ -29,4 +29,9 @@ unsigned __cdecl xlt_live_initialize(unsigned psp,unsigned mode,const char *path
  * 0/2; result8 is always required. No fallback after source selection. Active
  * mode/mask are caller-owned and must remain mode1/FF throughout acceptance. */
 unsigned __cdecl xlt_live_reload(unsigned action,unsigned char *table,xlt_dos_result *result);
+/* Prepare direct XLTEDIT execution for the frozen active table. The executable
+ * is a sibling of the DOS3+ PSP program name, not a CWD/PATH/PCPLUS lookup.
+ * Output executable64 and quoted tail68 must be external and disjoint. No IO
+ * or owner mutation; any failure preserves both outputs. */
+unsigned __cdecl xlt_live_editor(unsigned psp,char *executable,char *tail);
 #endif

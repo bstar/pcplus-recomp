@@ -15,7 +15,7 @@ def main():
  assert manifest['binary_sha256']==runtime
  linked=read('build/terminal/command-menu-checks.json');dos_path=Path('build/command-menu-dos')/a.label/'checks.json';dos=read(dos_path)
  for r in (linked,dos):assert r['passed'] and r['binary_sha256']==runtime;sources(r)
- assert linked['inputs']==151 and len(linked['cases'])==5 and len(dos['cases'])==4
+ assert linked['inputs']==153 and len(linked['cases'])==5 and len(dos['cases'])==4
  assert dos['editor_sha256']==sha('build/setup/PRMEDIT.EXE')
  artifacts=[dos_path,Path('build/terminal/command-menu-checks.json'),Path('build/terminal/manifest.json')]
  for i,case in enumerate(dos['cases']):
@@ -51,11 +51,11 @@ def main():
   artifacts.extend(p.relative_to(ROOT) for p in sorted((ROOT/folder).rglob('*')) if p.is_file())
  artifacts.extend(p.relative_to(ROOT) for p in sorted((ROOT/dos_path.parent).iterdir()) if p.is_file())
  memory=manifest['memory_layout'];assert memory['command_menu_far_code_verified']
- assert memory['far_code_bridge_pairs_verified']==109 and memory['configuration_bridge_pairs_verified']==60
- assert memory['near_bytes']==64480 and memory['resident_code_bytes']==61970
+ assert memory['far_code_bridge_pairs_verified']==110 and memory['configuration_bridge_pairs_verified']==61
+ assert memory['near_bytes']==64720 and memory['resident_code_bytes']==62222
  pending=read('build/terminal/menu-pending-checks.json');assert pending['passed'] and pending['binary_sha256']==runtime and pending['inputs']==36
  sources(pending);artifacts.append(Path('build/terminal/menu-pending-checks.json'))
- frames=read('build/terminal/config-far-checks.json');assert frames['passed'] and frames['binary_sha256']==runtime and len(frames['rejected_mutations'])==269
+ frames=read('build/terminal/config-far-checks.json');assert frames['passed'] and frames['binary_sha256']==runtime and len(frames['rejected_mutations'])==276
  regression=read('build/terminal/setup-profile-regression.json');commands=subprocess.check_output(['make','-n','test-terminal'],cwd=ROOT,text=True).splitlines()
  assert len(commands)==77 and regression['passed'] and regression['complete'] and regression['binary_sha256']==runtime
  assert commands==[r['command'] for r in regression['commands']] and all(r['exit_code']==0 for r in regression['commands'])
@@ -81,6 +81,6 @@ def main():
    selected_menu_clipboard_downloads_passed=True,all_recorded_attempts_passed=stock['all_recorded_runs_passed']),
   stock_editor_regression=dict(report=editors_path,synchronet_passed=True,
    enigma_immediate_passed=packet['immediate_editor_passed'],enigma_buffered_passed=packet['buffered_editor_passed'],packetization_report=packet_path),
-  scope='Maintained Alt-Z command menu,19 items/five groups, contextual topic help and31-character ASCII prose search. Shared live/frozen screen owner and existing-command dispatch after close.151 menu and36 pending-entry linked inputs, four actual DOS observer/file/PRMEDIT/partial-CSI workflows;77-command terminal regression and64 byte-identical source-only outputs. Original layout/mouse/full settings, other geometries and physical modem remain open; no whole-application gate is closed.')
+  scope='Maintained Alt-Z command menu,20 items/five groups, contextual topic help and31-character ASCII prose search. Shared live/frozen screen owner and existing-command dispatch after close.153 menu and36 pending-entry linked inputs, four actual DOS observer/file/PRMEDIT/partial-CSI workflows;77-command terminal regression and64 byte-identical source-only outputs. Original layout/mouse/full settings, other geometries and physical modem remain open; no whole-application gate is closed.')
  (ROOT/'docs/validation/command-menu.json').write_text(json.dumps(result,indent=2)+'\n');print('Recorded command menu',runtime)
 if __name__=='__main__':main()

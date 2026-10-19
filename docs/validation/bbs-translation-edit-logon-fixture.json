@@ -1,0 +1,32 @@
+{
+  "user": "LABUSER",
+  "number": 1,
+  "level": 50,
+  "logons_today": 65,
+  "bit": 2048,
+  "before": 0,
+  "active": 2048,
+  "restored": true,
+  "scope": "Temporary synthetic-account daily-logon exemption only; editor/server quota policy unchanged.",
+  "after": 0,
+  "run_label": "editor-translation-edit-61db-hard",
+  "binary_sha256": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
+  "independent_persisted_readback": {
+    "number": 1,
+    "level": 50,
+    "exemptions": 0,
+    "logons_today": 67
+  },
+  "retained_artifacts": {
+    "build/bbs-lab/results/synchronet/translation-edit-editor-61db-logon.begin.js": "ad90cb4ebc013c400b082fd07adf936ed4531132d161333483884911cd0f58c9",
+    "build/bbs-lab/results/synchronet/translation-edit-editor-61db-logon.begin.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/bbs-lab/results/synchronet/translation-edit-editor-61db-logon.begin.stdout": "c342f6253235d9314026cc5d921ca053f5124e13ba4de632d629b9053f4c7466",
+    "build/bbs-lab/results/synchronet/translation-edit-editor-61db-logon.end.js": "852254b4e4ced042444d03237973ea732cb2c102d515ae1b13c15929d09dc17b",
+    "build/bbs-lab/results/synchronet/translation-edit-editor-61db-logon.end.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/bbs-lab/results/synchronet/translation-edit-editor-61db-logon.end.stdout": "f96ec504bd1d2393398e63436f33fc0635ab70770a7b784d2c165e127d9a4571",
+    "build/bbs-lab/results/synchronet/translation-edit-editor-61db-logon.json": "3aee47210aa83e9e335c716c53227a4654908604ab91996af88152ed207745d5",
+    "build/bbs-lab/results/synchronet/translation-edit-editor-61db-logon.verify.js": "951a1840905417a1dcc67f898465a80265249b9ce50f8df7651f3e3f2f4e66e4",
+    "build/bbs-lab/results/synchronet/translation-edit-editor-61db-logon.verify.json": "f6d60d50fdaffe9bd1c59dbf91e0cd01dc54a1f07362abb78a54ec8e69b9b1f2",
+    "build/bbs-lab/results/synchronet/translation-edit-editor-61db-logon.verify.stdout": "53d3744da21f10efc2e85cfcc7c7efd6f714279de400d3bb799b8d72882f0fbe"
+  }
+}

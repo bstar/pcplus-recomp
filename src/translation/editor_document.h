@@ -3,7 +3,7 @@
 #include "xlt_dos.h"
 typedef struct xlt_document {
  unsigned char baseline[256],staged[256];
- char target[13];
+ char target[64];
  unsigned loaded,exists,locked;
 } xlt_document;
 typedef struct xlt_document_result {
@@ -12,8 +12,9 @@ typedef struct xlt_document_result {
  xlt_dos_result io;
 } xlt_document_result;
 enum { XE_OK=0,XE_ARGUMENT,XE_LOAD,XE_CHANGED,XE_CONFLICT,XE_IO,XE_LOCKED };
-/* Near-cdecl DOS16, DS=SS. ASCII8.3 leaf in a nonwrapping13-byte buffer;
- * letters/digits/_/- and optional extension, no devices or recovery names.
+/* Near-cdecl DOS16, DS=SS. DOS8.3 leaf or absolute drive-rooted path,
+ * at most63 bytes plus NUL. No devices, relative parents or recovery names.
+ * Stage/backup files are always siblings of the target, including full paths.
  * new_file1 explicitly stages a missing identity table; no file is created
  * until save. new_file0 requires an existing valid256-byte file. Failed open
  * preserves the entire document. Arguments/result extents must be disjoint.

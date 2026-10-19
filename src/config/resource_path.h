@@ -11,4 +11,9 @@ enum { RESOURCE_PATH_OK=0, RESOURCE_PATH_ARGUMENT, RESOURCE_PATH_ABSENT,
  * environment terminator before copying. Output cannot alias PSP/environment.
  * MCB shape/extent checks are not a complete DOS heap ownership proof. */
 unsigned __cdecl resource_pcplus_path(unsigned psp,const char *leaf,char *output);
+/* DOS3+ environment trailer: one fully qualified launching executable name.
+ * Select a sibling of that executable, independent of CWD and PCPLUS values.
+ * Same64-byte output/extent rules; malformed/missing trailers fail closed.
+ * No file probes or fallback to a different directory. */
+unsigned __cdecl resource_program_path(unsigned psp,const char *leaf,char *output);
 #endif

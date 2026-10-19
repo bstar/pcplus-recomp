@@ -86,9 +86,9 @@ def main():
   observed_before_wire_hex=oldwire.hex(),after_case=after_case,identical_DOS_key_recipe=True,
   scope='Early Y was retained during TX drain, then a BIOS-only prompt consumed r and leaked y before eady. Controlled actual DOS SOFT pause reproduces failed post-input service; the same recipe passes with FIFO-first local prompt reads. Before source identities are retained from a prior isolated build snapshot, not a published source commit.')
  artifacts.extend(p.relative_to(ROOT) for directory in (ROOT/oldbase,ROOT/failed) for p in sorted(directory.rglob('*')) if p.is_file())
- memory=manifest['memory_layout'];assert memory['near_bytes']==64480 and memory['resident_code_bytes']==61970
- assert memory['configuration_bridge_pairs_verified']==60 and memory['far_code_bridge_pairs_verified']==109
- frames=read('build/terminal/config-far-checks.json');assert frames['passed'] and frames['binary_sha256']==runtime and len(frames['rejected_mutations'])==269
+ memory=manifest['memory_layout'];assert memory['near_bytes']==64720 and memory['resident_code_bytes']==62222
+ assert memory['configuration_bridge_pairs_verified']==61 and memory['far_code_bridge_pairs_verified']==110
+ frames=read('build/terminal/config-far-checks.json');assert frames['passed'] and frames['binary_sha256']==runtime and len(frames['rejected_mutations'])==276
  regression=read('build/terminal/setup-profile-regression.json');commands=subprocess.check_output(['make','-n','test-terminal'],cwd=ROOT,text=True).splitlines()
  assert len(commands)==77 and regression['passed'] and regression['complete'] and regression['binary_sha256']==runtime
  assert commands==[c['command'] for c in regression['commands']] and all(c['exit_code']==0 for c in regression['commands'])
@@ -102,6 +102,6 @@ def main():
   sources={n:sha(n) for n in ['standalone/record_translation_reload.py','standalone/test_translation_reload_dos.py','standalone/check_setup_model.py','standalone/check_directory_live.py']},
   retained_artifacts={str(p):sha(p) for p in artifacts},
   source_rebuild=dict(report='docs/validation/application-components-source-build.json',output_count=64,source_snapshot_sha256=proof['source_snapshot_sha256'],linked_inputs_without_originals=66,linked_report=str(clean_path)),
-  scope='Maintained AltF9/menu same-table reload from the frozen actual canonical source. Exact checked snapshot, Y/decline/failure retention, PROGRAM drain/IRQ/video owner without EXEC, queued input and unchanged mode/mask.66 linked inputs,eleven actual DOS COPY/DEL and table reload workflows,269 rejected frames/layouts,77 terminal regression commands and64 byte-identical source outputs. Dedicated live XLTEDIT, complete UI/application and physical UART/modem remain open; no whole-application gate is closed.')
+  scope='Maintained AltF9/menu same-table reload from the frozen actual canonical source. Exact checked snapshot, Y/decline/failure retention, PROGRAM drain/IRQ/video owner without EXEC, queued input and unchanged mode/mask.66 linked inputs,eleven actual DOS COPY/DEL and table reload workflows,276 rejected frames/layouts,77 terminal regression commands and64 byte-identical source outputs. The dedicated live XLTEDIT command has separate evidence in translation-edit.json. Complete UI/application and physical UART/modem remain open; no whole-application gate is closed.')
  (ROOT/'docs/validation/translation-reload.json').write_text(json.dumps(report,indent=2)+'\n');print('Recorded live table reload',runtime)
 if __name__=='__main__':main()

@@ -18,6 +18,9 @@ IDENTITY = bytes(range(256))
 
 
 def build():
+    subprocess.run(BASE + ['-i='+str(ROOT/'src/config'), '-fe=PATHS.EXE', *map(str, COMMON),
+                          str(ROOT/'src/config/resource_path.c'),
+                          str(ROOT/'standalone/xlt_editor_paths_host.c')], cwd=OUT, check=True)
     subprocess.run(BASE + ['-fe=OWNER.EXE', *map(str, COMMON),
                           str(ROOT / 'standalone/xlt_editor_owner_host.c')], cwd=OUT, check=True)
     subprocess.run(BASE + ['-fe=FAULT.EXE', str(SOURCE / 'editor_document.c'),
@@ -35,10 +38,12 @@ def run(name, program, keys='', fixtures=None, prelude='', expected_exit=0):
     if directory.exists():
         shutil.rmtree(directory)
     directory.mkdir(parents=True)
-    for exe in ['XLTEDIT.EXE', 'UI.EXE', 'OWNER.EXE', 'FAULT.EXE']:
+    for exe in ['XLTEDIT.EXE', 'UI.EXE', 'OWNER.EXE', 'FAULT.EXE', 'PATHS.EXE']:
         shutil.copyfile(OUT / exe, directory / exe)
     for filename, data in (fixtures or {}).items():
-        (directory / filename).write_bytes(data)
+        target=directory / filename
+        target.parent.mkdir(parents=True,exist_ok=True)
+        target.write_bytes(data)
     schedule = 'ADDKEY p750 ' + ' p100 '.join(keys.split()) if keys else ''
     # Require an exact exit status, including the invalid-file entry paths.
     conf = f'''[sdl]
@@ -85,7 +90,7 @@ exit
 def main():
     build()
     cases = []
-    for name in ['owner', 'fault']:
+    for name in ['owner', 'fault', 'paths']:
         d = run(name, name.upper())
         log = (d / 'LOG.TXT').read_text().strip()
         assert 'XLT ' + name.upper() + ' PASS' in log, log
@@ -123,6 +128,15 @@ def main():
         cases.append(dict(case=name, passed=True, exact_file=True,
                           screen_restored=program.startswith('UI ')))
         print(name, 'passed', flush=True)
+    for name, target in [('absolute-path','CFG/TABLE.XLT'),('quoted-short-name','MYDIR~1/TABLE.XLT')]:
+        dos_path='C:\\'+target.replace('/','\\')
+        d=run(name,'XLTEDIT "'+dos_path+'"','enter home del 2 5 5 enter f1 escape',
+              {target:IDENTITY,'TABLE.XLT':b'root','XLTEDIT.BAK':b'keep'})
+        assert (d/target).read_bytes()==b'\xff'+IDENTITY[1:]
+        assert (d/'TABLE.XLT').read_bytes()==b'root' and (d/'XLTEDIT.BAK').read_bytes()==b'keep'
+        assert not (d/target).parent.joinpath('XLTEDIT.BAK').exists()
+        assert not (d/target).parent.joinpath('XLTEDIT.$$$').exists()
+        cases.append(dict(case=name,passed=True,exact_file=True))
     for name, keys, exists in [
             ('new-cancel', 'escape y', False),
             ('new-save', 'f1 escape', True)]:
@@ -143,11 +157,11 @@ def main():
             assert (d / filename).read_bytes() == contents, (name, filename)
         cases.append(dict(case=name, passed=True, exact_file=True))
     binaries = {name: hashlib.sha256((OUT / name).read_bytes()).hexdigest()
-                for name in ['XLTEDIT.EXE', 'OWNER.EXE', 'FAULT.EXE', 'UI.EXE']}
+                for name in ['XLTEDIT.EXE', 'OWNER.EXE', 'FAULT.EXE', 'UI.EXE', 'PATHS.EXE']}
     inputs = list(SOURCE.glob('editor*.[ch]')) + [SOURCE / n for n in
               ['xlt_dos.c', 'xlt_dos.h', 'xlt_dos_fs.c', 'xlt_dos_fs.h']]
     inputs += list((ROOT / 'standalone').glob('xlt_editor_*_host.c'))
-    inputs += [Path(__file__).resolve(), ROOT / 'standalone/build_xlt_editor.py']
+    inputs += [Path(__file__).resolve(), ROOT / 'standalone/build_xlt_editor.py', ROOT/'src/config/resource_path.c', ROOT/'src/config/resource_path.h']
     result = dict(passed=True, cases=cases, binaries=binaries,
                   sources={str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
                            for p in inputs},

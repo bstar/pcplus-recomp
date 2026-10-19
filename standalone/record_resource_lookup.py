@@ -36,7 +36,7 @@ def main():
     assert generic['binary_sha256'] == sha('build/resource-path/RESOURCE.EXE')
     frames = read('build/terminal/config-far-checks.json')
     assert frames['passed'] and frames['binary_sha256'] == runtime
-    assert frames['configuration_bridge_pairs_verified'] == 60 and len(frames['rejected_mutations']) == 269
+    assert frames['configuration_bridge_pairs_verified'] == 61 and len(frames['rejected_mutations']) == 276
     regression = read('build/terminal/setup-profile-regression.json')
     assert regression['passed'] and regression['complete'] and regression['binary_sha256'] == runtime
     expected = subprocess.check_output(['make', '-n', 'test-terminal'], cwd=ROOT, text=True).splitlines()

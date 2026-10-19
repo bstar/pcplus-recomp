@@ -10,6 +10,8 @@ extern terminal_ansi_wait_active,_redisplay_active,uart_rx_mask
 extern _xlt_live_reload,terminal_connection_notice
 extern terminal_read_foreground_key
 global terminal_translation_reload_start,terminal_translation_reload_run
+global terminal_translation_reload_safe
+terminal_translation_reload_safe:
 reload_safe:
  mov ax,[terminal_parser_active]
  or ax,[terminal_macro_active]

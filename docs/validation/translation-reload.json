@@ -1,109 +1,109 @@
 {
   "passed": true,
-  "binary_sha256": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
+  "binary_sha256": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
   "memory_layout": {
-    "near_bytes": 64480,
-    "near_spare_bytes": 1056,
-    "near_relative_segment": 5891,
-    "far_relative_segment": 15234,
+    "near_bytes": 64720,
+    "near_spare_bytes": 816,
+    "near_relative_segment": 5997,
+    "far_relative_segment": 15355,
     "shadow_offset": 0,
     "history_offset": 0,
     "far_bytes": 71192,
-    "history_relative_segment": 15746,
+    "history_relative_segment": 15867,
     "history_bytes": 63000,
-    "far_end_linear": 314936,
-    "stack_end_linear": 158736,
-    "loaded_module_bytes": 127217,
-    "minimum_allocated_module_bytes": 314960,
-    "retained_parent_paragraphs": 19700,
+    "far_end_linear": 316872,
+    "stack_end_linear": 160672,
+    "loaded_module_bytes": 129165,
+    "minimum_allocated_module_bytes": 316880,
+    "retained_parent_paragraphs": 19821,
     "far_pointer_relocations_verified": true,
-    "snapshot_relative_segment": 11171,
+    "snapshot_relative_segment": 11292,
     "snapshot_image_offset": 63008,
     "snapshot_bytes": 2000,
-    "snapshot_end_linear": 243744,
+    "snapshot_end_linear": 245680,
     "ui_screen_buffers": {
       "browser_screen": {
-        "relative_segment": 9921,
+        "relative_segment": 10042,
         "offset": 0,
         "bytes": 4000,
-        "start_linear": 158736,
-        "end_linear": 162736
+        "start_linear": 160672,
+        "end_linear": 164672
       },
       "ed_screen": {
-        "relative_segment": 9921,
+        "relative_segment": 10042,
         "offset": 4000,
         "bytes": 4000,
-        "start_linear": 162736,
-        "end_linear": 166736
+        "start_linear": 164672,
+        "end_linear": 168672
       },
       "program_screen": {
-        "relative_segment": 9921,
+        "relative_segment": 10042,
         "offset": 8000,
         "bytes": 4000,
-        "start_linear": 166736,
-        "end_linear": 170736
+        "start_linear": 168672,
+        "end_linear": 172672
       },
       "redisplay_live": {
-        "relative_segment": 9921,
+        "relative_segment": 10042,
         "offset": 12000,
         "bytes": 4000,
-        "start_linear": 170736,
-        "end_linear": 174736
+        "start_linear": 172672,
+        "end_linear": 176672
       },
       "redisplay_view": {
-        "relative_segment": 9921,
+        "relative_segment": 10042,
         "offset": 16000,
         "bytes": 4000,
-        "start_linear": 174736,
-        "end_linear": 178736
+        "start_linear": 176672,
+        "end_linear": 180672
       }
     },
     "far_ui_storage_bytes": 20000,
     "redisplay_snapshot_bytes": 63000,
-    "redisplay_snapshot_end_linear": 241736,
+    "redisplay_snapshot_end_linear": 243672,
     "controller_bridge_pairs_verified": 22,
     "modem_bridge_pairs_verified": 23,
     "command_menu_far_code_verified": true,
     "ymodem_far_code_verified": true,
-    "configuration_bridge_pairs_verified": 60,
+    "configuration_bridge_pairs_verified": 61,
     "redisplay_bridge_pairs_verified": 4,
-    "resident_code_bytes": 61970,
-    "resident_code_spare_bytes": 3566,
+    "resident_code_bytes": 62222,
+    "resident_code_spare_bytes": 3314,
     "code_segments": [
       {
         "name": "_TEXT",
         "kind": "CODE",
         "relative_segment": 0,
         "offset": 0,
-        "bytes": 61970
+        "bytes": 62222
       },
       {
         "name": "CONFIG_CODE",
         "kind": "FARCODE",
-        "relative_segment": 3874,
+        "relative_segment": 3889,
         "offset": 0,
-        "bytes": 29319
+        "bytes": 30769
       },
       {
         "name": "MODEM_CODE",
         "kind": "FARCODE",
-        "relative_segment": 5707,
+        "relative_segment": 5813,
         "offset": 0,
         "bytes": 1483
       },
       {
         "name": "PRINT_CODE",
         "kind": "FARCODE",
-        "relative_segment": 5800,
+        "relative_segment": 5906,
         "offset": 0,
         "bytes": 1449
       }
     ],
-    "far_code_bridge_pairs_verified": 109
+    "far_code_bridge_pairs_verified": 110
   },
   "linked": {
     "passed": true,
-    "binary_sha256": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
+    "binary_sha256": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
     "inputs": 66,
     "cases": [
       {
@@ -197,23 +197,23 @@
       "standalone/check_live_translation.py": "0d089cf6c17d914cfee74b928ecfe5faa86b7de220039d302f0943a6afe4d205",
       "standalone/live_setup_kernel.py": "b36cec472912401a60de34c051284e16922c86594614190c426e57611e415618",
       "standalone/check_program_actions_live.py": "13c88e8322ac917d8e03cd70f679fd6d942d1cfffbc3b1fc64389d77eafeecae",
-      "src/translation/xlt_live.c": "0f4d0861cde02102cc87d34b725c4f4ed1bb1c7456e6d6c10cc4770bf0406fd0",
-      "src/translation/xlt_live.h": "94b0c4cd346bf8e5a9c58fad445896ad55146943c42b8b8e141eda07eed6c54c",
+      "src/translation/xlt_live.c": "18620ad0a53369435f9c7e92f13a9458e3ef5591fa20b7d2dbbe6d4bea269fa5",
+      "src/translation/xlt_live.h": "500365c2c1bfc32b9b1bf09a392315c8b71c5f12918b191f627d4088dc021b17",
       "src/terminal/translation.asm": "166421735869efc18bfa4290f1711c240b4b0f1d9430ca3a974d897964599f5d",
       "src/terminal/meta_actions.asm": "b00d791d08867078aa4328c09d20addd7908ba39a165b49c93243de977ba6f3a",
-      "src/terminal/translation_reload.asm": "14fe03ae093d962afa4b754b1a8c7eb975b37838c10d5ab814552f6a1b81772e",
-      "src/terminal/program_actions.asm": "2b23781d1b05b808c127bf91a0971c3eb960b58e72b8e10a30db3bc2f552adc0",
-      "src/terminal/transport.asm": "2fc814b5c038f2fd75008a35c7cb46e248fbb0f545570093e9cb68f55758da6d",
-      "src/redisplay/command_menu.c": "582924e7c9cfcd53a3daa1c28035c8ed01d6e92095928fc9f9363dc7043f524a"
+      "src/terminal/translation_reload.asm": "b8d75068437a79706bd2873f14c1824de7f3785c5460bed253c7e8cc59e187cd",
+      "src/terminal/program_actions.asm": "8da284d777d36a85c9f5405657096635226c8a76f95466016cdbad57fb147604",
+      "src/terminal/transport.asm": "9448e54099668dcbb1e69aba1e46b0e87ca7026ce355b25504387594d0b6c63f",
+      "src/redisplay/command_menu.c": "46a23dd8ed84422d51c9ce58aabfceb08a6e68038e4c80e45ca469b1560d0bf4"
     },
     "scope": "Actual linked startup canonical selection and explicit reload, C staging, configuration far frames, menu/keyboard dispatch, PROGRAM UART/IRQ/video handoff and real BIOS answers. Only hardware/DOS boundaries modeled. Late state/disk changes occur at the BIOS boundary; no product function replaced. Actual DOS workflow remains separate."
   },
   "actual_DOS": {
     "passed": true,
-    "binary_sha256": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
+    "binary_sha256": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
     "cases": [
       {
-        "case": "xlt-reload-reload-far-18b9-accept",
+        "case": "xlt-reload-reload-edit-61db-accept",
         "passed": true,
         "checks": {
           "expected_DOS_exit": true,
@@ -245,7 +245,7 @@
         }
       },
       {
-        "case": "xlt-reload-reload-far-18b9-decline",
+        "case": "xlt-reload-reload-edit-61db-decline",
         "passed": true,
         "checks": {
           "expected_DOS_exit": true,
@@ -277,7 +277,7 @@
         }
       },
       {
-        "case": "xlt-reload-reload-far-18b9-short",
+        "case": "xlt-reload-reload-edit-61db-short",
         "passed": true,
         "checks": {
           "expected_DOS_exit": true,
@@ -309,7 +309,7 @@
         }
       },
       {
-        "case": "xlt-reload-reload-far-18b9-missing",
+        "case": "xlt-reload-reload-edit-61db-missing",
         "passed": true,
         "checks": {
           "expected_DOS_exit": true,
@@ -341,7 +341,7 @@
         }
       },
       {
-        "case": "xlt-reload-reload-far-18b9-explicit",
+        "case": "xlt-reload-reload-edit-61db-explicit",
         "passed": true,
         "checks": {
           "expected_DOS_exit": true,
@@ -373,7 +373,7 @@
         }
       },
       {
-        "case": "xlt-reload-reload-far-18b9-fallback",
+        "case": "xlt-reload-reload-edit-61db-fallback",
         "passed": true,
         "checks": {
           "expected_DOS_exit": true,
@@ -405,7 +405,7 @@
         }
       },
       {
-        "case": "xlt-reload-reload-far-18b9-cwd",
+        "case": "xlt-reload-reload-edit-61db-cwd",
         "passed": true,
         "checks": {
           "expected_DOS_exit": true,
@@ -440,7 +440,7 @@
         }
       },
       {
-        "case": "xlt-reload-reload-far-18b9-early-answer",
+        "case": "xlt-reload-reload-edit-61db-early-answer",
         "passed": true,
         "checks": {
           "expected_DOS_exit": true,
@@ -474,7 +474,7 @@
         }
       },
       {
-        "case": "xlt-reload-reload-far-18b9-menu",
+        "case": "xlt-reload-reload-edit-61db-menu",
         "passed": true,
         "checks": {
           "expected_DOS_exit": true,
@@ -506,7 +506,7 @@
         }
       },
       {
-        "case": "xlt-reload-reload-far-18b9-identity",
+        "case": "xlt-reload-reload-edit-61db-identity",
         "passed": true,
         "checks": {
           "expected_DOS_exit": true,
@@ -535,7 +535,7 @@
         "expected_file_mutations": {}
       },
       {
-        "case": "xlt-reload-reload-far-18b9-sevenbit",
+        "case": "xlt-reload-reload-edit-61db-sevenbit",
         "passed": true,
         "checks": {
           "expected_DOS_exit": true,
@@ -569,10 +569,10 @@
       "standalone/test_setup_startup_dos.py": "5d93e08de0dfea4f26a4f022648fb475ed458385831389c115d4aa8b4932c730",
       "standalone/check_setup_model.py": "9db01a381fed9a6951e9d17639320d48be0dd0657c15849ce53a987206d59676",
       "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
-      "src/terminal/translation_reload.asm": "14fe03ae093d962afa4b754b1a8c7eb975b37838c10d5ab814552f6a1b81772e",
-      "src/terminal/program_actions.asm": "2b23781d1b05b808c127bf91a0971c3eb960b58e72b8e10a30db3bc2f552adc0",
-      "src/translation/xlt_live.c": "0f4d0861cde02102cc87d34b725c4f4ed1bb1c7456e6d6c10cc4770bf0406fd0",
-      "src/translation/xlt_live.h": "94b0c4cd346bf8e5a9c58fad445896ad55146943c42b8b8e141eda07eed6c54c"
+      "src/terminal/translation_reload.asm": "b8d75068437a79706bd2873f14c1824de7f3785c5460bed253c7e8cc59e187cd",
+      "src/terminal/program_actions.asm": "8da284d777d36a85c9f5405657096635226c8a76f95466016cdbad57fb147604",
+      "src/translation/xlt_live.c": "18620ad0a53369435f9c7e92f13a9458e3ef5591fa20b7d2dbbe6d4bea269fa5",
+      "src/translation/xlt_live.h": "500365c2c1bfc32b9b1bf09a392315c8b71c5f12918b191f627d4088dc021b17"
     },
     "scope": "Actual DOS production PROGRAM/COMMAND COPY or DEL changes owned table files, then AltF9 or menu reload confirms/declines/acknowledges failure. Exact file mutations, unchanged sources/PRM, independent UART/PIC/vector/divisor samples, post-return input transform and real cursor reply. No test child, original executable, BBS or physical modem claim."
   },
@@ -612,14 +612,14 @@
       "observed_errors": []
     },
     "observed_before_wire_hex": "1b5b306e1b5b313b3132521311211b5b306e13117965616479",
-    "after_case": "xlt-reload-reload-far-18b9-early-answer",
+    "after_case": "xlt-reload-reload-edit-61db-early-answer",
     "identical_DOS_key_recipe": true,
     "scope": "Early Y was retained during TX drain, then a BIOS-only prompt consumed r and leaked y before eady. Controlled actual DOS SOFT pause reproduces failed post-input service; the same recipe passes with FIFO-first local prompt reads. Before source identities are retained from a prior isolated build snapshot, not a published source commit."
   },
   "call_frames": {
     "passed": true,
-    "binary_sha256": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
-    "configuration_bridge_pairs_verified": 60,
+    "binary_sha256": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
+    "configuration_bridge_pairs_verified": 61,
     "entry_argument_counts": [
       1,
       2,
@@ -739,6 +739,12 @@
       "_xlt_live_reload:far-argument-offset",
       "_xlt_live_reload:implementation-target",
       "_xlt_live_reload:far-return",
+      "_xlt_live_editor:near-argument-offset",
+      "_xlt_live_editor:far-target",
+      "_xlt_live_editor:near-return",
+      "_xlt_live_editor:far-argument-offset",
+      "_xlt_live_editor:implementation-target",
+      "_xlt_live_editor:far-return",
       "_redisplay_event:near-argument-offset",
       "_redisplay_event:far-target",
       "_redisplay_event:near-return",
@@ -858,6 +864,7 @@
       "_xlt_live_commit:missing-MZ-relocation",
       "_xlt_live_initialize:missing-MZ-relocation",
       "_xlt_live_reload:missing-MZ-relocation",
+      "_xlt_live_editor:missing-MZ-relocation",
       "_xlt_dos_read_default:missing-MZ-relocation",
       "_xlt_dos_read:missing-MZ-relocation",
       "_config_xlt_open_service:missing-MZ-relocation",
@@ -902,115 +909,115 @@
       "incomplete-C-extent"
     ],
     "memory": {
-      "near_bytes": 64480,
-      "near_spare_bytes": 1056,
-      "near_relative_segment": 5891,
-      "far_relative_segment": 15234,
+      "near_bytes": 64720,
+      "near_spare_bytes": 816,
+      "near_relative_segment": 5997,
+      "far_relative_segment": 15355,
       "shadow_offset": 0,
       "history_offset": 0,
       "far_bytes": 71192,
-      "history_relative_segment": 15746,
+      "history_relative_segment": 15867,
       "history_bytes": 63000,
-      "far_end_linear": 314936,
-      "stack_end_linear": 158736,
-      "loaded_module_bytes": 127217,
-      "minimum_allocated_module_bytes": 314960,
-      "retained_parent_paragraphs": 19700,
+      "far_end_linear": 316872,
+      "stack_end_linear": 160672,
+      "loaded_module_bytes": 129165,
+      "minimum_allocated_module_bytes": 316880,
+      "retained_parent_paragraphs": 19821,
       "far_pointer_relocations_verified": true,
-      "snapshot_relative_segment": 11171,
+      "snapshot_relative_segment": 11292,
       "snapshot_image_offset": 63008,
       "snapshot_bytes": 2000,
-      "snapshot_end_linear": 243744,
+      "snapshot_end_linear": 245680,
       "ui_screen_buffers": {
         "browser_screen": {
-          "relative_segment": 9921,
+          "relative_segment": 10042,
           "offset": 0,
           "bytes": 4000,
-          "start_linear": 158736,
-          "end_linear": 162736
+          "start_linear": 160672,
+          "end_linear": 164672
         },
         "ed_screen": {
-          "relative_segment": 9921,
+          "relative_segment": 10042,
           "offset": 4000,
           "bytes": 4000,
-          "start_linear": 162736,
-          "end_linear": 166736
+          "start_linear": 164672,
+          "end_linear": 168672
         },
         "program_screen": {
-          "relative_segment": 9921,
+          "relative_segment": 10042,
           "offset": 8000,
           "bytes": 4000,
-          "start_linear": 166736,
-          "end_linear": 170736
+          "start_linear": 168672,
+          "end_linear": 172672
         },
         "redisplay_live": {
-          "relative_segment": 9921,
+          "relative_segment": 10042,
           "offset": 12000,
           "bytes": 4000,
-          "start_linear": 170736,
-          "end_linear": 174736
+          "start_linear": 172672,
+          "end_linear": 176672
         },
         "redisplay_view": {
-          "relative_segment": 9921,
+          "relative_segment": 10042,
           "offset": 16000,
           "bytes": 4000,
-          "start_linear": 174736,
-          "end_linear": 178736
+          "start_linear": 176672,
+          "end_linear": 180672
         }
       },
       "far_ui_storage_bytes": 20000,
       "redisplay_snapshot_bytes": 63000,
-      "redisplay_snapshot_end_linear": 241736,
+      "redisplay_snapshot_end_linear": 243672,
       "controller_bridge_pairs_verified": 22,
       "modem_bridge_pairs_verified": 23,
       "command_menu_far_code_verified": true,
       "ymodem_far_code_verified": true,
-      "configuration_bridge_pairs_verified": 60,
+      "configuration_bridge_pairs_verified": 61,
       "redisplay_bridge_pairs_verified": 4,
-      "resident_code_bytes": 61970,
-      "resident_code_spare_bytes": 3566,
+      "resident_code_bytes": 62222,
+      "resident_code_spare_bytes": 3314,
       "code_segments": [
         {
           "name": "_TEXT",
           "kind": "CODE",
           "relative_segment": 0,
           "offset": 0,
-          "bytes": 61970
+          "bytes": 62222
         },
         {
           "name": "CONFIG_CODE",
           "kind": "FARCODE",
-          "relative_segment": 3874,
+          "relative_segment": 3889,
           "offset": 0,
-          "bytes": 29319
+          "bytes": 30769
         },
         {
           "name": "MODEM_CODE",
           "kind": "FARCODE",
-          "relative_segment": 5707,
+          "relative_segment": 5813,
           "offset": 0,
           "bytes": 1483
         },
         {
           "name": "PRINT_CODE",
           "kind": "FARCODE",
-          "relative_segment": 5800,
+          "relative_segment": 5906,
           "offset": 0,
           "bytes": 1449
         }
       ],
-      "far_code_bridge_pairs_verified": 109
+      "far_code_bridge_pairs_verified": 110
     },
-    "scope": "Serialized DOS MZ and linker-map validation of twenty-four explicit near-cdecl entries, eight compiler register callbacks, twenty-one resident word-cdecl callbacks and seven explicit zero-argument callbacks; exact argument-copy frames, target calls/returns, relocations and full configuration C extent. Independent CPU candidate/directory/owner suites and actual DOS child allocation exercise behavior."
+    "scope": "Serialized DOS MZ and linker-map validation of twenty-five explicit near-cdecl entries, eight compiler register callbacks, twenty-one resident word-cdecl callbacks and seven explicit zero-argument callbacks; exact argument-copy frames, target calls/returns, relocations and full configuration C extent. Independent CPU candidate/directory/owner suites and actual DOS child allocation exercise behavior."
   },
   "terminal_regression": {
     "passed": true,
-    "binary_sha256": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
+    "binary_sha256": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
     "commands": [
       {
         "command": "python3 standalone/build_terminal.py",
         "exit_code": 0,
-        "seconds": 0.915
+        "seconds": 0.916
       },
       {
         "command": "python3 standalone/build_setup.py",
@@ -1035,12 +1042,12 @@
       {
         "command": "python3 standalone/check_resource_lookup.py",
         "exit_code": 0,
-        "seconds": 11.935
+        "seconds": 12.186
       },
       {
         "command": "python3 standalone/test_resource_lookup_dos.py",
         "exit_code": 0,
-        "seconds": 26.809
+        "seconds": 26.908
       },
       {
         "command": "python3 standalone/check_translation_live.py",
@@ -1050,27 +1057,27 @@
       {
         "command": "python3 standalone/check_translation_modes.py",
         "exit_code": 0,
-        "seconds": 3.07
+        "seconds": 3.12
       },
       {
         "command": "python3 standalone/test_translation_live_dos.py",
         "exit_code": 0,
-        "seconds": 24.255
+        "seconds": 24.305
       },
       {
         "command": "python3 standalone/check_live_translation.py",
         "exit_code": 0,
-        "seconds": 3.169
+        "seconds": 3.119
       },
       {
         "command": "python3 standalone/test_live_translation_dos.py",
         "exit_code": 0,
-        "seconds": 78.25
+        "seconds": 78.249
       },
       {
         "command": "python3 standalone/check_setup_startup.py",
         "exit_code": 0,
-        "seconds": 0.265
+        "seconds": 0.214
       },
       {
         "command": "python3 standalone/test_setup_startup_dos.py",
@@ -1080,42 +1087,42 @@
       {
         "command": "python3 standalone/check_setup_live.py",
         "exit_code": 0,
-        "seconds": 0.716
+        "seconds": 0.666
       },
       {
         "command": "python3 standalone/check_live_setup_owner.py",
         "exit_code": 0,
-        "seconds": 7.427
+        "seconds": 7.528
       },
       {
         "command": "python3 standalone/check_live_setup_policy.py",
         "exit_code": 0,
-        "seconds": 4.372
+        "seconds": 4.321
       },
       {
         "command": "python3 standalone/check_live_setup_link.py",
         "exit_code": 0,
-        "seconds": 2.368
+        "seconds": 2.318
       },
       {
         "command": "python3 standalone/check_live_setup_profile.py",
         "exit_code": 0,
-        "seconds": 1.717
+        "seconds": 1.667
       },
       {
         "command": "python3 standalone/check_port_handoff.py",
         "exit_code": 0,
-        "seconds": 0.966
+        "seconds": 0.916
       },
       {
         "command": "python3 standalone/check_live_setup_port.py",
         "exit_code": 0,
-        "seconds": 1.667
+        "seconds": 1.617
       },
       {
         "command": "python3 standalone/test_setup_port_dos.py",
         "exit_code": 0,
-        "seconds": 80.497
+        "seconds": 80.506
       },
       {
         "command": "python3 standalone/check_live_setup_apply.py",
@@ -1125,7 +1132,7 @@
       {
         "command": "python3 standalone/test_setup_live_dos.py",
         "exit_code": 0,
-        "seconds": 82.461
+        "seconds": 82.624
       },
       {
         "command": "python3 standalone/check_config_far_live.py",
@@ -1135,17 +1142,17 @@
       {
         "command": "python3 standalone/check_live_configuration.py --terminal",
         "exit_code": 0,
-        "seconds": 44.904
+        "seconds": 45.159
       },
       {
         "command": "python3 standalone/check_modem_far_live.py",
         "exit_code": 0,
-        "seconds": 9.581
+        "seconds": 9.68
       },
       {
         "command": "python3 standalone/check_terminal_break_live.py",
         "exit_code": 0,
-        "seconds": 1.366
+        "seconds": 1.367
       },
       {
         "command": "python3 standalone/check_ui_screen_far.py",
@@ -1160,17 +1167,17 @@
       {
         "command": "python3 standalone/check_terminal_print_controller_live.py",
         "exit_code": 0,
-        "seconds": 4.773
+        "seconds": 4.471
       },
       {
         "command": "python3 standalone/check_terminal_screen_print_live.py",
         "exit_code": 0,
-        "seconds": 11.335
+        "seconds": 10.832
       },
       {
         "command": "python3 standalone/check_terminal_printer_live.py",
         "exit_code": 0,
-        "seconds": 0.866
+        "seconds": 0.816
       },
       {
         "command": "python3 standalone/check_terminal_monitor_live.py",
@@ -1180,7 +1187,7 @@
       {
         "command": "python3 standalone/check_terminal_snapshot_live.py",
         "exit_code": 0,
-        "seconds": 1.667
+        "seconds": 1.666
       },
       {
         "command": "python3 standalone/check_terminal_capture_live.py",
@@ -1190,7 +1197,7 @@
       {
         "command": "python3 standalone/check_redisplay_live.py",
         "exit_code": 0,
-        "seconds": 25.102
+        "seconds": 24.653
       },
       {
         "command": "python3 standalone/test_redisplay_dos.py",
@@ -1200,17 +1207,17 @@
       {
         "command": "python3 standalone/check_history_export_live.py",
         "exit_code": 0,
-        "seconds": 43.732
+        "seconds": 43.987
       },
       {
         "command": "python3 standalone/test_history_export_dos.py",
         "exit_code": 0,
-        "seconds": 21.445
+        "seconds": 21.446
       },
       {
         "command": "python3 standalone/check_far_storage_live.py",
         "exit_code": 0,
-        "seconds": 2.519
+        "seconds": 2.468
       },
       {
         "command": "python3 standalone/test_far_storage_dos.py",
@@ -1220,12 +1227,12 @@
       {
         "command": "python3 standalone/check_terminal_transfer_live.py",
         "exit_code": 0,
-        "seconds": 3.669
+        "seconds": 3.72
       },
       {
         "command": "python3 standalone/check_terminal_upload_live.py",
         "exit_code": 0,
-        "seconds": 22.65
+        "seconds": 22.702
       },
       {
         "command": "python3 standalone/check_program_actions_live.py",
@@ -1240,42 +1247,42 @@
       {
         "command": "python3 standalone/test_program_actions_dos.py",
         "exit_code": 0,
-        "seconds": 34.369
+        "seconds": 34.371
       },
       {
         "command": "python3 standalone/test_terminal_reset_live_dos.py",
         "exit_code": 0,
-        "seconds": 9.929
+        "seconds": 9.93
       },
       {
         "command": "python3 standalone/check_transport.py",
         "exit_code": 0,
-        "seconds": 1.417
+        "seconds": 1.416
       },
       {
         "command": "python3 standalone/check_key_output.py",
         "exit_code": 0,
-        "seconds": 2.017
+        "seconds": 1.968
       },
       {
         "command": "python3 standalone/check_key_live.py",
         "exit_code": 0,
-        "seconds": 0.815
+        "seconds": 0.816
       },
       {
         "command": "python3 standalone/check_meta_actions_live.py",
         "exit_code": 0,
-        "seconds": 2.618
+        "seconds": 2.568
       },
       {
         "command": "python3 standalone/check_character_edit_live.py",
         "exit_code": 0,
-        "seconds": 0.765
+        "seconds": 0.715
       },
       {
         "command": "python3 standalone/test_meta_actions_dos.py",
         "exit_code": 0,
-        "seconds": 19.793
+        "seconds": 19.795
       },
       {
         "command": "python3 standalone/check_line_edit_live.py",
@@ -1305,12 +1312,12 @@
       {
         "command": "python3 standalone/test_terminal.py",
         "exit_code": 0,
-        "seconds": 16.138
+        "seconds": 16.141
       },
       {
         "command": "python3 standalone/test_terminal_keys.py",
         "exit_code": 0,
-        "seconds": 24.2
+        "seconds": 24.153
       },
       {
         "command": "python3 standalone/check_terminal_config.py",
@@ -1325,22 +1332,22 @@
       {
         "command": "python3 standalone/check_connection.py",
         "exit_code": 0,
-        "seconds": 1.316
+        "seconds": 1.266
       },
       {
         "command": "python3 standalone/check_directory_live.py",
         "exit_code": 0,
-        "seconds": 3.319
+        "seconds": 3.269
       },
       {
         "command": "python3 standalone/check_directory_context.py",
         "exit_code": 0,
-        "seconds": 19.745
+        "seconds": 19.846
       },
       {
         "command": "python3 standalone/test_directory_context_terminal.py",
         "exit_code": 0,
-        "seconds": 7.225
+        "seconds": 7.226
       },
       {
         "command": "python3 standalone/check_directory_actions.py",
@@ -1350,22 +1357,22 @@
       {
         "command": "python3 standalone/test_terminal_config.py",
         "exit_code": 0,
-        "seconds": 13.986
+        "seconds": 14.037
       },
       {
         "command": "python3 standalone/test_connection_dos.py",
         "exit_code": 0,
-        "seconds": 27.105
+        "seconds": 27.107
       },
       {
         "command": "python3 standalone/test_directory_terminal.py",
         "exit_code": 0,
-        "seconds": 58.157
+        "seconds": 58.207
       },
       {
         "command": "python3 standalone/check_clipboard.py",
         "exit_code": 0,
-        "seconds": 26.504
+        "seconds": 26.654
       },
       {
         "command": "python3 standalone/test_clipboard_dos.py",
@@ -1375,25 +1382,25 @@
       {
         "command": "python3 standalone/check_clipboard_live.py",
         "exit_code": 0,
-        "seconds": 13.588
+        "seconds": 13.534
       },
       {
         "command": "python3 standalone/test_clipboard_live_dos.py",
         "exit_code": 0,
-        "seconds": 15.491
+        "seconds": 15.49
       },
       {
         "command": "python3 standalone/check_clipboard_settings.py",
         "exit_code": 0,
-        "seconds": 27.211
+        "seconds": 27.008
       },
       {
         "command": "python3 standalone/test_clipboard_settings_dos.py",
         "exit_code": 0,
-        "seconds": 42.388
+        "seconds": 42.437
       }
     ],
-    "seconds": 485.994,
+    "seconds": 486.009,
     "complete": true,
     "execution_concurrency": 2,
     "execution_note": "Build prerequisites sequential; two independent test processes with isolated fixture directories/ephemeral peer ports. No BBS probes run concurrently."
@@ -1534,7 +1541,7 @@
     "src/terminal/port_handoff.asm": "b0e6308448299cd5d159656fa6d4a38b67bd56635255020d62b044f850e371e2",
     "src/terminal/print_controller.asm": "e7af0782119e00d8563c214c1a469fd548f547f332f6c6e663dfe9594f792d92",
     "src/terminal/printer.asm": "70ac5cb8b90bc2d7a4ec1ee1a071a6c2f1a351e37ac2bbd49dc2e629674b629b",
-    "src/terminal/program_actions.asm": "2b23781d1b05b808c127bf91a0971c3eb960b58e72b8e10a30db3bc2f552adc0",
+    "src/terminal/program_actions.asm": "8da284d777d36a85c9f5405657096635226c8a76f95466016cdbad57fb147604",
     "src/terminal/redisplay.asm": "00d3e4f90c9cf26b4ea700d6be157c9f9ad682f66c9c47090112589085c5ffe1",
     "src/terminal/screen_print.asm": "b26ee7e09cbb66d7da311083b1c8c53e5fa6016e9c9f00e3ebb7238df2658f5a",
     "src/terminal/services.asm": "cfc5f50208990db802f79d4f809560618e5579ff0ca8b5c74501ba46975c1546",
@@ -1553,8 +1560,9 @@
     "src/terminal/transfer_sender_state.asm": "ca81106b44d8184e866db66b570981f23ba1a3465aee739f2713c34029479e15",
     "src/terminal/transfer_ui.asm": "bf1cbbde3ab6351788fe8c7e3d856e767d92501b22ecdfffbccb1509c0fea230",
     "src/terminal/translation.asm": "166421735869efc18bfa4290f1711c240b4b0f1d9430ca3a974d897964599f5d",
-    "src/terminal/translation_reload.asm": "14fe03ae093d962afa4b754b1a8c7eb975b37838c10d5ab814552f6a1b81772e",
-    "src/terminal/transport.asm": "2fc814b5c038f2fd75008a35c7cb46e248fbb0f545570093e9cb68f55758da6d",
+    "src/terminal/translation_edit.asm": "ecb56f9fe81104c364be829519512bdac601ad41a652649f110081200fe7dec3",
+    "src/terminal/translation_reload.asm": "b8d75068437a79706bd2873f14c1824de7f3785c5460bed253c7e8cc59e187cd",
+    "src/terminal/transport.asm": "9448e54099668dcbb1e69aba1e46b0e87ca7026ce355b25504387594d0b6c63f",
     "src/terminal/uart_data.asm": "4c37a129341e01667df80f17940791946667f4b0c081accd4e18230f29904789",
     "src/terminal/ui_screen_far.asm": "876b4b10ced4d03d4616c89e4861333c522d3747f2e15d01ef3a4413ad03d736",
     "src/terminal/upload_actions.asm": "512f26336ead890f022f463d86d555320f40cfd47eac508928588e407e5cbfb5",
@@ -1578,10 +1586,10 @@
     "src/translation/xlt_dos.c": "b2383aa97088a59751412b71de9d5570fdd683c5ed3615025ecb810fe3258b4b",
     "src/translation/xlt_dos_fs.c": "459ea2c9d41515b0aa67e11eb9f178cd44404cba6b3eee69769b426124963a26",
     "src/translation/xlt_default.c": "a9f3b1ba201063f4684ff25333846cfc2b7e915712017d09e245c643c7240932",
-    "src/config/resource_path.c": "1afd131147061bc5d73871ac1354d0e63d3b9d08686401ca3a989d5fb8d154d5",
-    "src/translation/xlt_live.c": "0f4d0861cde02102cc87d34b725c4f4ed1bb1c7456e6d6c10cc4770bf0406fd0",
+    "src/config/resource_path.c": "6415ca340fdad3d8938c708584f0bdf50fbfee76c6001d2f14a8d8de8f036c3a",
+    "src/translation/xlt_live.c": "18620ad0a53369435f9c7e92f13a9458e3ef5591fa20b7d2dbbe6d4bea269fa5",
     "src/redisplay/redisplay.c": "59edfc8022766e3060cb89427781ba37310afa1073ff054f96e278401957aca0",
-    "src/redisplay/command_menu.c": "582924e7c9cfcd53a3daa1c28035c8ed01d6e92095928fc9f9363dc7043f524a",
+    "src/redisplay/command_menu.c": "46a23dd8ed84422d51c9ce58aabfceb08a6e68038e4c80e45ca469b1560d0bf4",
     "src/clipboard/clipboard.c": "9547621a8ebce3c8707eceaa087a59735945523818a19f215b4e9027a224147a",
     "src/clipboard/clipboard_ui.c": "d9907992805a4414102fbdfb194163b17a6ef06934c72fd7c4173170ad4f7632",
     "src/transfer/download_file.c": "ce8d41645e5fe4b3ab81c791f8aa6c3634d98bd0d5f8bb6afd698052391ade68",
@@ -1613,7 +1621,7 @@
     "reconstruction/ansi/dispatch-layout.inc": "1fab8c56d84c54bef9b5938b4f13d14fee0199ec1c813a643edd71d9d31aa949",
     "src/config/live_configuration.h": "505914805431837d100fb3905f436a4d28653f969ce337989e2700d53f0adb2c",
     "src/config/live_setup_owner.h": "e8f502ace10377639ebd7537661676cb6babe6880beb7413abbf86b6d3eaa8f1",
-    "src/config/resource_path.h": "feb56d096bf9b833c0ec911b13c0aa799531ff14137dc738bda69cf0fb6cf260",
+    "src/config/resource_path.h": "187327178d79148592c3fe42783ee38ff701500b836a0b54424ed13a6a158e31",
     "src/directory/directory_actions.h": "e7363dad30620b97c6b7fd799d70d386439aa178c5b9d23659b6f2b9c3a423f5",
     "src/directory/directory_dos.h": "4e5c3d971839de9899f2c0927d1bf8c5723ae14d2a123590381fd5706db5e72b",
     "src/directory/directory_live.h": "faf28dd51b916e78ab1b45762bb819987a617525d323f8c53ec22b459d5966ba",
@@ -1675,23 +1683,23 @@
     "reconstruction/transfer_files/provenance.json": "153d0b6718ca60f34b65f9c91bae7a018467771f49cd69c53a3743e6273ee359",
     "reconstruction/transfer_blocks/provenance.json": "d208524987aa9e314c71a0320cda9da46da26da4eb3455bb7b73783ebce8c608",
     "src/transfer/native_link.py": "b36aea74a0961141f301f1d4275d077f3ec27ca04ea2685384a0110477bd588f",
-    "standalone/terminal_memory.py": "3acf6a81b80acf4a39889676fd5fa7fb9ae03dafd74d2de4a750ac5f8f870802",
+    "standalone/terminal_memory.py": "46191b746d65faa65142ebc0f320ff0714f99462e4140800bcbcf889b9fe3dc0",
     "reconstruction/transfer_send/session.asm": "559f40abb2abd6724e22f71580c52fd8d15ec773b51347ac91bda02e045b220b",
     "reconstruction/transfer_send/cancel.asm": "9324066078aff11935a1bc5e315598344b182c1fae8077611e2c4af1aa652762",
     "reconstruction/transfer_blocks/crc_buffer.asm": "00083b3c0f6143b8b0119f0c5690f32b54b2c981f474ed5ce1529336d8db1ad4",
     "reconstruction/transfer_send/provenance.json": "99f92f7daba16a6a4ea2ba1a9465cb81a5f0b917cf351bf70794542e6defb0da",
     "src/transfer/native_sender_link.py": "0eff16fe2149432b60807fdc3d7c480caedd04138d4184090c8417ace1f43f3e",
     "standalone/omf_imports.py": "b831a013f7dcb19bd1250bb9a73bf56218d24f48a6fe22feb86b6fc677db7473",
-    "src/terminal/config_abi.inc": "3a3267cde0825f88ab9ed97614479c0141334a50fcae28621c85ca2bfb1e507b",
+    "src/terminal/config_abi.inc": "360a54050d8233baca4125ad6428370e2d30adfe273c9debe1c4556b2dafa028",
     "src/terminal/controller_abi.inc": "33de629fa3bbb35914c9070e067514c9520d16ff5d7ae7d9ea41173e72454c4e",
     "src/terminal/far_bridge.inc": "fecaf08907a2a5e78e7f870166a91fbc7295df5708aac682d3320a3e09e764c5",
     "src/terminal/modem_abi.inc": "8e31794dee81e3bd23e205473038af44cf3ee9869cd0e32076f03bb08b857b7b",
-    "src/translation/editor_document.h": "97de7b53fef15ac8c29b7b2c81694e7c3cc294ec9ca39b5761eae7b4bddb75cf",
+    "src/translation/editor_document.h": "a46c7fe767a74eaa75486f19b53144436ff9148eef807f4b8023a859a6eb7eec",
     "src/translation/editor_fs.h": "a0115c8ce308758ab3a1212b9c39e771948f037f2aa9f1cbe1c8432e7bc12f2d",
     "src/translation/xlt_default.h": "2fedd74f0e4edf43e2fdc3766951221e0e8413d6429b1b4753ea5ba1d3735d47",
     "src/translation/xlt_dos.h": "ce90b566203b37cf3022ace866d93737dad0205dcbc70c9b40cc85942c6b51aa",
     "src/translation/xlt_dos_fs.h": "cb9e938aa83780f314947b75da7b99e491a8ea325839fa9f53991fde3543f7d9",
-    "src/translation/xlt_live.h": "94b0c4cd346bf8e5a9c58fad445896ad55146943c42b8b8e141eda07eed6c54c",
+    "src/translation/xlt_live.h": "500365c2c1bfc32b9b1bf09a392315c8b71c5f12918b191f627d4088dc021b17",
     "src/key_mapping/key_actions_dos.h": "c546bdbf201f31f1f36aa937280a32c636af84bc8798256d4024e5af66ca494e",
     "src/key_mapping/keymap_dos.h": "934d66751a563a8c1d44aa17eaa8375e930cd3dfeb90c5d77e5a27fbe9f9969c",
     "src/key_mapping/keymap_dos_fs.h": "542038d5338a3b397f1251b09ae0d5b2978db7c20fcdb03b98f12c555e994fec",
@@ -1699,212 +1707,212 @@
     "src/key_mapping/keymap_dos.inc": "a9e9e8f3a981411efa44fc4255f0bb03469d5de1285787efe2f1855b33ba4c8f"
   },
   "sources": {
-    "standalone/record_translation_reload.py": "09ace631dfd46ec7705d1dadf7d3c2f424c7761a251bf65650b708544d6f688f",
+    "standalone/record_translation_reload.py": "83b73dd1eb22797d5c8c4babecc3a4d0fe37c7756d39eca4f9fb280acacafdaf",
     "standalone/test_translation_reload_dos.py": "a909ab8e13951e6ce5aefdf40e787bf34fb65a8d920486daf4e43732c578e5e8",
     "standalone/check_setup_model.py": "9db01a381fed9a6951e9d17639320d48be0dd0657c15849ce53a987206d59676",
     "standalone/check_directory_live.py": "dd48e5038bb8dbb6e5814e259dcacd42e0c0e181f3a81a539082f14b33cf31e9"
   },
   "retained_artifacts": {
-    "build/translation-reload-dos/reload-far-18b9/checks.json": "bef5b1b18e0a7b6635fabdf577e4f5ea97489642546abd389e5b68b5c6e1ef61",
-    "build/terminal/translation-reload-checks.json": "9fd683419dfdf39428a10e8a6dd33ce9b3dd5e1ed595701472eb64281d2cb13d",
-    "build/terminal/manifest.json": "13b07ba059c9e9b4b091981bc5e3b45db73ffc1acbe9ce7545a7ade7fa71760c",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/PCPLUS.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/SCREEN.BIN": "cc393b0ad7fddbee9c1ec05a412a322ab93359971c510f3cabfb8e61c1ea2546",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/TERMINAL.EXE": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/TEST.KEY": "3aa156c5ed11847b1547c5eff792cb1ad6d3e1ecca05ea5ef00497ee1f349488",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/WATCH.BIN": "f09916ce97dd2edc642fceb07cff648c8ff30dabe92b2a0a9ad71dc1fb1c3b9b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/dosbox.conf": "6a5ca03f497518c28bba47e859d348125e7558762ec2369fe0075aeeb5fc7b96",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/dosbox.log": "32b68aba1202995c5bf72f05e7fb397a167d4003d2c171f7e387e90302b48305",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/result.json": "6b6259a0a4eeeda3cb3cd83206df8bd800769cc42925fac18922fb4ee8b9c46f",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/setup-startup/xlt-reload-reload-far-18b9-accept/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/PCPLUS.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/SCREEN.BIN": "a1f30a9a395d5335505671c4d3d4736ce5d4679f982e3e278ca1107e85d049cc",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/TERMINAL.EXE": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/TEST.KEY": "3aa156c5ed11847b1547c5eff792cb1ad6d3e1ecca05ea5ef00497ee1f349488",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/WATCH.BIN": "f09916ce97dd2edc642fceb07cff648c8ff30dabe92b2a0a9ad71dc1fb1c3b9b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/dosbox.conf": "b3e875045965d8837042b2a5b5d4d8b2fa68eed5214358d95a26becd369d2c03",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/dosbox.log": "49fa3a8675a0ef81f3002f1ea470086da449f9cd9149eaa9880585747b6252d9",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/result.json": "ebe8dbd46ddea15cb953838a5aafdf217b5671e079f788dfcf022611d06fd40a",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/setup-startup/xlt-reload-reload-far-18b9-decline/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/NEW.XLT": "80bd5cb5a9ca35dcdea1d59b5f1778f4114f6215af38004a02a99a1d37383648",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/PCPLUS.XLT": "80bd5cb5a9ca35dcdea1d59b5f1778f4114f6215af38004a02a99a1d37383648",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/SCREEN.BIN": "a1f30a9a395d5335505671c4d3d4736ce5d4679f982e3e278ca1107e85d049cc",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/TERMINAL.EXE": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/TEST.KEY": "3aa156c5ed11847b1547c5eff792cb1ad6d3e1ecca05ea5ef00497ee1f349488",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/WATCH.BIN": "f09916ce97dd2edc642fceb07cff648c8ff30dabe92b2a0a9ad71dc1fb1c3b9b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/dosbox.conf": "0e8aa59c214b63a8ac46ca01273c979be8973f9770dcc0105ed9f6e4e51fb712",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/dosbox.log": "b5dc1f490b5b9bca1412c79eee9a55c700855311296103993d58abd3bb6b1c3e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/result.json": "2627973dfc31a1d4301d7844da3c26427e648988e0d372030b542208f7a3842b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/setup-startup/xlt-reload-reload-far-18b9-short/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/SCREEN.BIN": "a1f30a9a395d5335505671c4d3d4736ce5d4679f982e3e278ca1107e85d049cc",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/TERMINAL.EXE": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/TEST.KEY": "09fd234c127de2d473ab5b07c7d8e8007c57e2d8d236230d08b3ef4a10109169",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/WATCH.BIN": "f09916ce97dd2edc642fceb07cff648c8ff30dabe92b2a0a9ad71dc1fb1c3b9b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/dosbox.conf": "60f54bbfb2d204712e4a09fcf5471671bab54f74efe925b08f3cbe9277f4f4a1",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/dosbox.log": "e91b1e33e40691e664f16e51ad74bbc12f5e828f615dcebf011e4f6041e259f2",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/result.json": "c036fc900b19bf75a08435ebcec25b17ca5923b84f9ab75ec70cd6c672f216f0",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/setup-startup/xlt-reload-reload-far-18b9-missing/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/CUSTOM.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/SCREEN.BIN": "cc393b0ad7fddbee9c1ec05a412a322ab93359971c510f3cabfb8e61c1ea2546",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/TERMINAL.EXE": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/TEST.KEY": "eb89088b708c47d292ec91d5bf4f5a08381f526dadc7a94c1cad1b4b06d5bf72",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/WATCH.BIN": "f09916ce97dd2edc642fceb07cff648c8ff30dabe92b2a0a9ad71dc1fb1c3b9b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/dosbox.conf": "915bd28a710ec391c70cf40fdffe127409ee14cdc1b48e5f050ec023cc8e7f87",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/dosbox.log": "58ac79cc4cbaf01f7e04aa7817ed358823041945ede7a03a53cee3cf54a1a165",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/result.json": "7b20a11103451c89363ab7c8368c5064834462ad363901a9adb94eaa705d0730",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/setup-startup/xlt-reload-reload-far-18b9-explicit/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/AFTER.BIN": "cacc7272acd6175046aae3e7f2bd95785e368f8bf22865c01434de4456b63a6c",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/BEFORE.BIN": "cacc7272acd6175046aae3e7f2bd95785e368f8bf22865c01434de4456b63a6c",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/CFG/PCPLUS.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/SCREEN.BIN": "cc393b0ad7fddbee9c1ec05a412a322ab93359971c510f3cabfb8e61c1ea2546",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/TERMINAL.EXE": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/TEST.KEY": "682a221e087d09d484833510a74495693d611d2366ed6c64df2fa2e38259ccad",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/WATCH.BIN": "f09916ce97dd2edc642fceb07cff648c8ff30dabe92b2a0a9ad71dc1fb1c3b9b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/dosbox.conf": "8196e9f05c7a288dc7294b075a92aeb8b52a858e1bf2b43f60cbfbe6835e12a3",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/dosbox.log": "b91140b7e6b7b6381e9de619a1e42a7c556284fa190f9d49b7ab3c4938cc7807",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/result.json": "6819e1302e6a3cd872bba16079ac19e87586e4d232dd65a28443f1cd2ef5ae41",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/setup-startup/xlt-reload-reload-far-18b9-fallback/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/CWD.TXT": "b7b7692a8fa0855111060d65638245d5797faf58a66612ebdc89a5f05c159415",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/OTHER/PCPLUS.XLT": "8c4d51291f5fc24d2a82815eef7940620cec9fd9571569ff3f0baf314fe9ba8a",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/PCPLUS.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/SCREEN.BIN": "cc393b0ad7fddbee9c1ec05a412a322ab93359971c510f3cabfb8e61c1ea2546",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/TERMINAL.EXE": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/TEST.KEY": "818be5aa36fbeb41d5a7423a3744f78ae13c210b81c8256fbc5bd278bb7860e4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/WATCH.BIN": "77646e9183f992bb0e8b8a04216b51bb9ba8551069c809b36f9681c3c53aec41",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/dosbox.conf": "ba26cb7c3196d7affa1cd5b9b73b6b55781841845940cc5d1b6f3a2d3ea338d0",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/dosbox.log": "b9e1e7887d690b67fb2712d752d18d2a70408596cf03729dad8931a954a2e0cd",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/result.json": "5cab33ef81740cd271ff447800b165132d9f0a674a5abe033d13e9c7838c7204",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/setup-startup/xlt-reload-reload-far-18b9-cwd/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/PCPLUS.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/SCREEN.BIN": "cc393b0ad7fddbee9c1ec05a412a322ab93359971c510f3cabfb8e61c1ea2546",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/TERMINAL.EXE": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/TEST.KEY": "3aa156c5ed11847b1547c5eff792cb1ad6d3e1ecca05ea5ef00497ee1f349488",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/WATCH.BIN": "6e7f558f55a40b284fc298ec9cd526a0ee08b70d42bf3f5da4b673322db2cb0c",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/dosbox.conf": "2fe725c91f130e4f6b4df234f162bfb63b917e79e80cf359c6495bbc1a26c104",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/dosbox.log": "6647a06e55feb4abdcce6dc7765dfd481b3b29c87fd542ed686ed1ea89abf040",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/result.json": "dba51bc96ced34717e12117a0562fbf30bcf493e06b89f52fe69f778dea795c1",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/setup-startup/xlt-reload-reload-far-18b9-early-answer/serial.bin": "0c236c4f393c42e9f0cf2f0fed10e59b76d2ea28088b99c91d0b6fbfe0b1381d",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/PCPLUS.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/SCREEN.BIN": "cc393b0ad7fddbee9c1ec05a412a322ab93359971c510f3cabfb8e61c1ea2546",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/TERMINAL.EXE": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/TEST.KEY": "3aa156c5ed11847b1547c5eff792cb1ad6d3e1ecca05ea5ef00497ee1f349488",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/WATCH.BIN": "5f3b8eda06d92b3ed757ea476ddbb39bf825d3439f4287729ff65b78239d0953",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/dosbox.conf": "2fab704fbe661b72b212dbf634b5fb95ec5e59aaaf48ca387586830235abb5ec",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/dosbox.log": "08e19e61e2a549edc2bbcae838f2522f284f41cce77c2bcfa19be5cfd231c87c",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/result.json": "c28de5e9930df2a287e9ba2a937144a36d79a62d2b6846cda675b3243dddea53",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/setup-startup/xlt-reload-reload-far-18b9-menu/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/PCPLUS.XLT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/SCREEN.BIN": "59b30f98b90965a1db0dec044edfff324964a438e1e4fffa09f4bc53b75e7799",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/TERMINAL.EXE": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/TEST.PRM": "1e8093442ec88ac15b83b5d0bc91b8b753d4c24e7792bbd2f128bc8a4859e96d",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/WATCH.BIN": "9a0a4ea48a1d7881dde28f64fe9853a55d67208a0c172c8438376ec7827cfb7e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/dosbox.conf": "4e687321ab96d6f2f9781cbfb8788955023dd5ed4eef6055ca0cb3f2451b818b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/dosbox.log": "209f75c2b6edda4cf1b0faaa53e255cfd8ac7dd63398789a0393bff4a5242c33",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/result.json": "be3c0a213592450b8ccd997384e6e9c27aee1e8d105a691a04b4452128d486eb",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/setup-startup/xlt-reload-reload-far-18b9-identity/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/PCPLUS.XLT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/SCREEN.BIN": "59b30f98b90965a1db0dec044edfff324964a438e1e4fffa09f4bc53b75e7799",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/TERMINAL.EXE": "18b99f973731d74eaa214e0ef69e61f89b1545b8a632dc5dfdb6a66ddcd399e7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/TEST.PRM": "f000a30baf1e87d529881c363645a1f1f96d6681fc6046bd140d05d09f124740",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/WATCH.BIN": "9a0a4ea48a1d7881dde28f64fe9853a55d67208a0c172c8438376ec7827cfb7e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/dosbox.conf": "fed8863597932015baa16e67f894411cd96388d5acccdba91cec4cf07507f1f3",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/dosbox.log": "79f47642d981f13ba69385a4209d395acab471c29a4a13d2f263d8fc308fd5f7",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/result.json": "f596048ec16e2611c53aaa59b6dc9b1a6b1d234d5d0cf5eeefaf0b95dc83383e",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
-    "build/setup-startup/xlt-reload-reload-far-18b9-sevenbit/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
+    "build/translation-reload-dos/reload-edit-61db/checks.json": "4469cd136f802c18cd2ecbae54217c98485d807320816f09b28430219cab6389",
+    "build/terminal/translation-reload-checks.json": "a43b68a19f208511a37b51d8e53f8c1692c649715ac05b73147be096032bea04",
+    "build/terminal/manifest.json": "5852f9dce1c020edb61d12a8cb6b799c86e3a9810d86aaf9d5055e49612817b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/PCPLUS.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/SCREEN.BIN": "cc393b0ad7fddbee9c1ec05a412a322ab93359971c510f3cabfb8e61c1ea2546",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/TERMINAL.EXE": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/TEST.KEY": "3aa156c5ed11847b1547c5eff792cb1ad6d3e1ecca05ea5ef00497ee1f349488",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/WATCH.BIN": "f09916ce97dd2edc642fceb07cff648c8ff30dabe92b2a0a9ad71dc1fb1c3b9b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/dosbox.conf": "de4c7ec2ca5636c3e3a5613ee47dc97f8cebd8e64c4aba7355ec6bc69eeb3d50",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/dosbox.log": "8eb514e3aadc8a4eb4b6aab50b99ce73f2155bdf14f95926657ec6267e72cb40",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/result.json": "204c3df437ef17833c9644374abb19f5e31475c5437fbe9fecca3ed0e9e7c1f9",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/setup-startup/xlt-reload-reload-edit-61db-accept/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/PCPLUS.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/SCREEN.BIN": "a1f30a9a395d5335505671c4d3d4736ce5d4679f982e3e278ca1107e85d049cc",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/TERMINAL.EXE": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/TEST.KEY": "3aa156c5ed11847b1547c5eff792cb1ad6d3e1ecca05ea5ef00497ee1f349488",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/WATCH.BIN": "f09916ce97dd2edc642fceb07cff648c8ff30dabe92b2a0a9ad71dc1fb1c3b9b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/dosbox.conf": "64139a16eb8e0388f861f2c59407b2ceaa8e78416178d59ffccc0b3c83e4aa34",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/dosbox.log": "e55a2fcea5a745bdc1fbc19390a3fb90c8716908f949be2c13a52a7efe07ce38",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/result.json": "141c9d30f5a7a3aa27962a5910f02fc227c25ffefe4a472f0548375de3ab0f56",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/setup-startup/xlt-reload-reload-edit-61db-decline/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/NEW.XLT": "80bd5cb5a9ca35dcdea1d59b5f1778f4114f6215af38004a02a99a1d37383648",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/PCPLUS.XLT": "80bd5cb5a9ca35dcdea1d59b5f1778f4114f6215af38004a02a99a1d37383648",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/SCREEN.BIN": "a1f30a9a395d5335505671c4d3d4736ce5d4679f982e3e278ca1107e85d049cc",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/TERMINAL.EXE": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/TEST.KEY": "3aa156c5ed11847b1547c5eff792cb1ad6d3e1ecca05ea5ef00497ee1f349488",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/WATCH.BIN": "f09916ce97dd2edc642fceb07cff648c8ff30dabe92b2a0a9ad71dc1fb1c3b9b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/dosbox.conf": "8b663c51244dccdab96e1627df288e62a345dda6e7ad9fc02cae3c28df79bcbe",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/dosbox.log": "56df367cd0834c3cbc9f240456927a21f085fdbc2e1b3f03b9bb3800b0ec4d8e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/result.json": "fbd0d8efd848fb8d4e4bc741fd3cfadeaa1929f191054a3e752564fcd03ce56e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/setup-startup/xlt-reload-reload-edit-61db-short/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/SCREEN.BIN": "a1f30a9a395d5335505671c4d3d4736ce5d4679f982e3e278ca1107e85d049cc",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/TERMINAL.EXE": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/TEST.KEY": "09fd234c127de2d473ab5b07c7d8e8007c57e2d8d236230d08b3ef4a10109169",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/WATCH.BIN": "f09916ce97dd2edc642fceb07cff648c8ff30dabe92b2a0a9ad71dc1fb1c3b9b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/dosbox.conf": "76dafc68adeee5ae765bdf2220dad59e031a2d1cde772b79b0854119c46c2322",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/dosbox.log": "a7ac6ffacc7b911f03339fa64851f1cf9726db1762f04b1437929743d5c5963e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/result.json": "0bd3d24d1723efe9fa6eec0dad026002d899d8c045dbca92404ea72dfe8db03c",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/setup-startup/xlt-reload-reload-edit-61db-missing/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/CUSTOM.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/SCREEN.BIN": "cc393b0ad7fddbee9c1ec05a412a322ab93359971c510f3cabfb8e61c1ea2546",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/TERMINAL.EXE": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/TEST.KEY": "eb89088b708c47d292ec91d5bf4f5a08381f526dadc7a94c1cad1b4b06d5bf72",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/WATCH.BIN": "f09916ce97dd2edc642fceb07cff648c8ff30dabe92b2a0a9ad71dc1fb1c3b9b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/dosbox.conf": "02eb7d2da78501fe6c14cdcaaafaae931f75d13bc242fb7764f457f1b83a528a",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/dosbox.log": "8b409317622e8ad391f5f98bf85881f0472e7dd08e7151248d5e2faa21b25b22",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/result.json": "d626112f335a3784d1a3ae0447967fc978539f124afe7aa8d37c2716f74737b6",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/setup-startup/xlt-reload-reload-edit-61db-explicit/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/AFTER.BIN": "cacc7272acd6175046aae3e7f2bd95785e368f8bf22865c01434de4456b63a6c",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/BEFORE.BIN": "cacc7272acd6175046aae3e7f2bd95785e368f8bf22865c01434de4456b63a6c",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/CFG/PCPLUS.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/SCREEN.BIN": "cc393b0ad7fddbee9c1ec05a412a322ab93359971c510f3cabfb8e61c1ea2546",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/TERMINAL.EXE": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/TEST.KEY": "682a221e087d09d484833510a74495693d611d2366ed6c64df2fa2e38259ccad",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/WATCH.BIN": "f09916ce97dd2edc642fceb07cff648c8ff30dabe92b2a0a9ad71dc1fb1c3b9b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/dosbox.conf": "1580c9dceccc40daf0225c8ae6278e51e9a050925892179c1d3952d83e609892",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/dosbox.log": "4f7d56b2aff0f7c4b95c68519c9c3daad1e09aca4fcac1084ca8a85681c6ffc3",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/result.json": "dfadbae86f14213d61c25ecf5ee2ce63a1275cafb5769976fae47d1570efe96b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/setup-startup/xlt-reload-reload-edit-61db-fallback/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/CWD.TXT": "b7b7692a8fa0855111060d65638245d5797faf58a66612ebdc89a5f05c159415",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/OTHER/PCPLUS.XLT": "8c4d51291f5fc24d2a82815eef7940620cec9fd9571569ff3f0baf314fe9ba8a",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/PCPLUS.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/SCREEN.BIN": "cc393b0ad7fddbee9c1ec05a412a322ab93359971c510f3cabfb8e61c1ea2546",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/TERMINAL.EXE": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/TEST.KEY": "818be5aa36fbeb41d5a7423a3744f78ae13c210b81c8256fbc5bd278bb7860e4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/WATCH.BIN": "77646e9183f992bb0e8b8a04216b51bb9ba8551069c809b36f9681c3c53aec41",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/dosbox.conf": "76816e500c9af0b93880589348ac074dd921b950434149884c828d3ff9bd2ff6",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/dosbox.log": "82b35930a9fadedb9524ff9e11b7c97f69cddfbbcc7d3a6631c6ebf75e918d7a",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/result.json": "fbb908cc0c13f5bac6ce93213a891cef6abf9bce777ec9eb2dbe918ff6fcda37",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/setup-startup/xlt-reload-reload-edit-61db-cwd/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/PCPLUS.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/SCREEN.BIN": "cc393b0ad7fddbee9c1ec05a412a322ab93359971c510f3cabfb8e61c1ea2546",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/TERMINAL.EXE": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/TEST.KEY": "3aa156c5ed11847b1547c5eff792cb1ad6d3e1ecca05ea5ef00497ee1f349488",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/WATCH.BIN": "6e7f558f55a40b284fc298ec9cd526a0ee08b70d42bf3f5da4b673322db2cb0c",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/dosbox.conf": "a1d63118dccfc4526054617682908e92c0fe4c788af441cc4d46afe00c6ce0ff",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/dosbox.log": "aa9962bb8bfdec61572f0db2c4780819785ad9f0f7a34b293d7c5bad50e0ee56",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/result.json": "2e7f733089afc795745bc552df7cb8c9253131610efd65f5b8eb380717516152",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/setup-startup/xlt-reload-reload-edit-61db-early-answer/serial.bin": "0c236c4f393c42e9f0cf2f0fed10e59b76d2ea28088b99c91d0b6fbfe0b1381d",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/PCPLUS.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/SCREEN.BIN": "cc393b0ad7fddbee9c1ec05a412a322ab93359971c510f3cabfb8e61c1ea2546",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/TERMINAL.EXE": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/TEST.KEY": "3aa156c5ed11847b1547c5eff792cb1ad6d3e1ecca05ea5ef00497ee1f349488",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/TEST.PRM": "223fc51946de8ff1783169fb21b0a1a1f2add169533ceaea01c7c2417c5c4a78",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/WATCH.BIN": "5f3b8eda06d92b3ed757ea476ddbb39bf825d3439f4287729ff65b78239d0953",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/dosbox.conf": "698645291fcbfda3f3c2cf484183ae67f10ba6d7ecefd52b57e7ecaff2598dbd",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/dosbox.log": "56b5213987981c00ff1dc8e4427052fbbd7f3064b1bc025d27ac0442c006fad4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/result.json": "1d684ac08759bee522af97160b8e5a537bb74a8a29107dded8af1245f63d3dfb",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/setup-startup/xlt-reload-reload-edit-61db-menu/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/PCPLUS.XLT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/SCREEN.BIN": "59b30f98b90965a1db0dec044edfff324964a438e1e4fffa09f4bc53b75e7799",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/TERMINAL.EXE": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/TEST.PRM": "1e8093442ec88ac15b83b5d0bc91b8b753d4c24e7792bbd2f128bc8a4859e96d",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/WATCH.BIN": "9a0a4ea48a1d7881dde28f64fe9853a55d67208a0c172c8438376ec7827cfb7e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/dosbox.conf": "d5dd609befdeb4b336be301337c5ee1aaf1294f3089bcbabb501b7ebe872ce5d",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/dosbox.log": "97dcbee465f77523d006487e7b56ec213f86c892751205433f819631423b57e1",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/result.json": "33fb90e38e94bb24e20453dc39f79167a1a2c371dd72f29e5ba701be9ce44fe3",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/setup-startup/xlt-reload-reload-edit-61db-identity/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/AFTER.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/BEFORE.BIN": "11c2cb3cc0d222ed4518b33685627e3236a3bc5551e0373368d9eda7908f8e5e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/NEW.XLT": "637b32d2767f50cac8e0b4ec9d3255329b8b6f43c31ed806f6137fb723edf0b4",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/PCPLUS.XLT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/PRMEDIT.EXE": "c2022d1464ae886b816231aad74e234bb3b7fdfb254b2f1a0d1bf28f7b8bb6a7",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/SCREEN.BIN": "59b30f98b90965a1db0dec044edfff324964a438e1e4fffa09f4bc53b75e7799",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/TERMINAL.EXE": "61db3a6181a21c9adf12093e792136443f52803f73d7381939e9941c6a7171f2",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/TEST.PRM": "f000a30baf1e87d529881c363645a1f1f96d6681fc6046bd140d05d09f124740",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/WATCH.BIN": "9a0a4ea48a1d7881dde28f64fe9853a55d67208a0c172c8438376ec7827cfb7e",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/WATCH.COM": "132bf206dea7fd442e248a2a1c265e87abc10fbc941646ab06e6f49de68bc62b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/dosbox.conf": "00012039ede660775e757eeb83bde071dde5ce23d3287d1fb84406cae8c89f48",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/dosbox.log": "c5c65da5b5bd1109ef5b4e6315b22ae0e648c54e8f72db4594c8818ebd5493dc",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/result.json": "7389d7d59a0b4dfac5a559242fc4c510b10f16c7a2b71ac8823d8fcb137ea24b",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/setup-startup/xlt-reload-reload-edit-61db-sevenbit/serial.bin": "4f035f2a2640be7967de4d38bf7e09f99ca11044624f6ff767bb87647eee170b",
     "build/checkpoints/ad5d/TERMINAL.EXE": "ad5d5db808eb8726439284dc2e683d202870b0964ff21ffe7e46b9b813d5baa0",
     "build/checkpoints/ad5d/manifest.json": "fd281390e98c045b40c23b3d59caf0a4399a0322b7b9e27a80760ae886030334",
     "build/checkpoints/ad5d/source-inputs/reconstruction/ansi/dispatch-layout.inc": "1fab8c56d84c54bef9b5938b4f13d14fee0199ec1c813a643edd71d9d31aa949",
@@ -2225,16 +2233,16 @@
     "build/setup-startup/xlt-reload-typeahead-ad5d-before-early-answer/result.json": "54ebf08e0f74782e70b87bfcd27f5ef56d8fe5be8cf03e072eb1f94406904f73",
     "build/setup-startup/xlt-reload-typeahead-ad5d-before-early-answer/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
     "build/setup-startup/xlt-reload-typeahead-ad5d-before-early-answer/serial.bin": "a04b3bb3430c1c619827963a9951643b89a60068fed1575b12ef766b86d63626",
-    "build/application-source-proof/translation-reload-linked-checks.json": "9fd683419dfdf39428a10e8a6dd33ce9b3dd5e1ed595701472eb64281d2cb13d",
-    "build/terminal/config-far-checks.json": "efc91422026fda01785f923fdb630471b90b1655d243fb4d3dcc82066685532b",
-    "build/terminal/setup-profile-regression.json": "b9cb68749314ee41f47a171957445aa063dce3114fcb3e31e0d752cd22a8cdb6"
+    "build/application-source-proof/translation-reload-linked-checks.json": "a43b68a19f208511a37b51d8e53f8c1692c649715ac05b73147be096032bea04",
+    "build/terminal/config-far-checks.json": "878e118a01da035bd2c902806c9686b6eb6d9e5f1abae17ed7f84fa5320b4180",
+    "build/terminal/setup-profile-regression.json": "ae47e93643c429318ebe6bbb7df422acd2dd69b5f979d9ca5dff640634cdd056"
   },
   "source_rebuild": {
     "report": "docs/validation/application-components-source-build.json",
     "output_count": 64,
-    "source_snapshot_sha256": "8b405af67892e3faa44ba40b99d2f5b67c246a2dc590f87570a788e8d775d4ff",
+    "source_snapshot_sha256": "10f98caac26bc4ad9fe47ddd2d743024f2d76ee4d2e5866a4e7697d5234de900",
     "linked_inputs_without_originals": 66,
     "linked_report": "build/application-source-proof/translation-reload-linked-checks.json"
   },
-  "scope": "Maintained AltF9/menu same-table reload from the frozen actual canonical source. Exact checked snapshot, Y/decline/failure retention, PROGRAM drain/IRQ/video owner without EXEC, queued input and unchanged mode/mask.66 linked inputs,eleven actual DOS COPY/DEL and table reload workflows,269 rejected frames/layouts,77 terminal regression commands and64 byte-identical source outputs. Dedicated live XLTEDIT, complete UI/application and physical UART/modem remain open; no whole-application gate is closed."
+  "scope": "Maintained AltF9/menu same-table reload from the frozen actual canonical source. Exact checked snapshot, Y/decline/failure retention, PROGRAM drain/IRQ/video owner without EXEC, queued input and unchanged mode/mask.66 linked inputs,eleven actual DOS COPY/DEL and table reload workflows,276 rejected frames/layouts,77 terminal regression commands and64 byte-identical source outputs. The dedicated live XLTEDIT command has separate evidence in translation-edit.json. Complete UI/application and physical UART/modem remain open; no whole-application gate is closed."
 }

@@ -437,3 +437,9 @@ test-command-menu: terminal setup
 test-translation-reload: terminal setup
 	python3 standalone/check_translation_reload_live.py
 	python3 standalone/test_translation_reload_dos.py --label "reload-$$(date -u +%Y%m%dT%H%M%S%N)" --sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)"
+
+.PHONY: test-translation-edit
+test: test-translation-edit
+test-translation-edit: terminal xlt-editor setup
+	python3 standalone/check_translation_edit_live.py
+	python3 standalone/test_translation_edit_dos.py --label "edit-$$(date -u +%Y%m%dT%H%M%S%N)" --sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)"

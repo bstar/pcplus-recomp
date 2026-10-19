@@ -65,13 +65,13 @@ static unsigned number(unsigned selected,const char *label,unsigned initial,unsi
 static const char *saved(void)
 {
  if(xlt_document_save(&document,&result)==XE_OK)return "Table saved.";
- if(document.locked)return result.installed?"Installed, but recovery cleanup failed. Inspect XLTEDIT.BAK / XLTEDIT.$$$.":"Recovery files retained. Exit and inspect XLTEDIT.BAK / XLTEDIT.$$$.";
+ if(document.locked)return result.installed?"Table installed; recovery files remain beside it. Exit and inspect them.":"Recovery files remain beside table: XLTEDIT.BAK / XLTEDIT.$$$.";
  if(result.status==XE_CHANGED)return "File changed outside this editor. Reload to review before saving.";
  return "Save failed. Changes retained. Check access and XLTEDIT.BAK / XLTEDIT.$$$.";
 }
 static void run(void)
 {
- unsigned selected=0,k,c,scan,value;char path[13];const char *message="Select a byte with arrows; Enter changes its replacement.";
+ unsigned selected=0,k,c,scan,value;char path[64];const char *message="Select a byte with arrows; Enter changes its replacement.";
  for(;;){
   draw(selected,message);k=key();c=k&255;scan=k>>8;
   if(c==27){if(!xlt_document_dirty(&document) || confirm(selected,"Discard unsaved changes and exit? Y / N"))return;continue;}
@@ -79,7 +79,7 @@ static void run(void)
   if(scan==0x3c || scan==0x49 || scan==0x51){selected^=128;continue;}
   if(scan==0x3d){
    if(xlt_document_dirty(&document) && !confirm(selected,"Discard unsaved changes and reload from disk? Y / N"))continue;
-   memcpy(path,document.target,13);
+   memcpy(path,document.target,64);
    message=xlt_document_open(path,0,&document,&result)==XE_OK?"Table reloaded.":"Reload failed. Current changes retained.";continue;
   }
   if(scan==0x3e){message=xlt_document_identity(&document)==XE_OK?"Identity staged. F1 saves; Esc can discard.":"Recovery state is locked. Exit and inspect files.";continue;}
@@ -94,10 +94,10 @@ static void run(void)
 }
 int main(int argc,char **argv)
 {
- char path[13];unsigned create=0;
+ char path[64];unsigned create=0;
  if(argc==3 && !strcmp(argv[1],"/N")){create=1;++argv;--argc;}
- if(argc!=2 || strlen(argv[1])>12){puts("Usage: XLTEDIT [/N] filename.XLT\n/N stages a new identity table; F1 creates it. Use an 8.3 leaf.");return 1;}
- memset(path,0,13);strcpy(path,argv[1]);
+ if(argc!=2 || strlen(argv[1])>63){puts("Usage: XLTEDIT [/N] filename.XLT\nUse an 8.3 leaf or absolute drive path (63 bytes).\n/N stages a new identity table; F1 creates it.");return 1;}
+ memset(path,0,64);strcpy(path,argv[1]);
  if(xlt_document_open(path,create,&document,&result)){printf("Cannot open table: status %u, DOS error %u.\n",result.status,result.dos_error?result.dos_error:result.io.dos_error);return 2;}
  if(!screen_start()){puts("XLTEDIT requires an 80-column text screen (mode 2, 3 or 7).");return 3;}
  run();screen_end();return 0;

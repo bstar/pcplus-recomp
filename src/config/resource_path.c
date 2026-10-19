@@ -68,3 +68,50 @@ unsigned __cdecl resource_pcplus_path(unsigned psp,const char *leaf,char *output
  memcpy(stage+used,leaf,n+1);memcpy(output,stage,used+n+1);
  return RESOURCE_PATH_OK;
 }
+
+unsigned __cdecl resource_program_path(unsigned psp,const char *leaf,char *output)
+{
+ const unsigned char __far *bytes;
+ const unsigned char __far *mcb;
+ unsigned segment,paragraphs,n,i,c,prefix=0;
+ unsigned long at,end,start,limit,out_linear;
+ char stage[RESOURCE_PATH_CAPACITY];
+ n=name_size(leaf);
+ if(!n || !extent(output,64) || !separate(leaf,n+1,output,64))return RESOURCE_PATH_ARGUMENT;
+ out_linear=(unsigned long)FP_SEG((char __far *)output)*16UL+FP_OFF((char __far *)output);
+ if(!psp || (unsigned long)psp*16UL+256UL>1048576UL || overlap(out_linear,64,(unsigned long)psp*16UL,256))return RESOURCE_PATH_ENVIRONMENT;
+ segment=*(const unsigned __far *)MK_FP(psp,0x2c);
+ if(!segment)return RESOURCE_PATH_ABSENT;
+ mcb=(const unsigned char __far *)MK_FP(segment-1,0);paragraphs=mcb[3]|((unsigned)mcb[4]<<8);
+ if((mcb[0]!='M' && mcb[0]!='Z') || !paragraphs || (unsigned long)segment+paragraphs>65536UL)return RESOURCE_PATH_ENVIRONMENT;
+ limit=(unsigned long)paragraphs*16UL;if(limit>65536UL)limit=65536UL;
+ if(overlap(out_linear,64,(unsigned long)segment*16UL,limit))return RESOURCE_PATH_ENVIRONMENT;
+ bytes=(const unsigned char __far *)MK_FP(segment,0);at=0;
+ while(at<limit){
+  if(!bytes[(unsigned)at]){
+   if(!at){if(limit<2 || bytes[1])return RESOURCE_PATH_ENVIRONMENT;at=2;}else ++at;
+   break;
+  }
+  while(at<limit && bytes[(unsigned)at])++at;
+  if(at==limit)return RESOURCE_PATH_ENVIRONMENT;++at;
+ }
+ if(at+2>=limit || bytes[(unsigned)at]!=1 || bytes[(unsigned)(at+1)]!=0)return RESOURCE_PATH_ENVIRONMENT;
+ start=at+2;end=start;
+ while(end<limit && bytes[(unsigned)end]){
+  c=bytes[(unsigned)end];
+  if(c<32 || c==127 || c=='"' || c=='*' || c=='?' || c=='/' || c=='<' || c=='>' || c=='|')return RESOURCE_PATH_ENVIRONMENT;
+  if(c=='\\'){
+   if(end-start>=64)return RESOURCE_PATH_SIZE;
+   prefix=(unsigned)(end-start+1);
+  }
+  ++end;
+ }
+ if(end==limit || end-start<4 || prefix<3 || prefix>=end-start ||
+    !((bytes[(unsigned)start]>='A' && bytes[(unsigned)start]<='Z') ||
+      (bytes[(unsigned)start]>='a' && bytes[(unsigned)start]<='z')) ||
+    bytes[(unsigned)(start+1)]!=':' || bytes[(unsigned)(start+2)]!='\\')return RESOURCE_PATH_ENVIRONMENT;
+ if(prefix+n>=64)return RESOURCE_PATH_SIZE;
+ for(i=0;i<prefix;++i)stage[i]=(char)bytes[(unsigned)(start+i)];
+ memcpy(stage+prefix,leaf,n+1);memcpy(output,stage,prefix+n+1);
+ return RESOURCE_PATH_OK;
+}

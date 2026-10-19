@@ -20,7 +20,7 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 | `build/ui-windows/WINDOWS.EXE` | Recovered and maintained assembly source only | Packed window snapshots and original flow-message service |
 | `build/modem-commands/MODEMCMD.EXE` | Recovered and maintained assembly source only | Original caret decoder with bounded source-owned wrapper |
 | `build/modem-responses/MODEMRSP.EXE` | Maintained and recovered assembly source only | Response matching and classification; dial-attempt object remains unlinked |
-| `build/xlt-editor/XLTEDIT.EXE` | Maintained C source only | Offline 256-byte translation-table editor with checked save/recovery; see [XLT editor](docs/XLT_EDITOR.md) |
+| `build/xlt-editor/XLTEDIT.EXE` | Maintained C source only | 256-byte translation-table editor, offline or launched with Alt-F8, with checked save/recovery; see [XLT editor](docs/XLT_EDITOR.md) |
 | `build/setup/PRMEDIT.EXE` | Maintained C source only | Offline five-page editor for46 mapped PRM fields with staged validation and checked replacement; see [setup editor](docs/SETUP_EDITOR.md) |
 | `build/terminal/TERMINAL.EXE` | Maintained C and recovered/maintained assembly source only | Serial terminal with PRM startup, directory editing, staged saves and bounded modem dialing |
 | `build/standalone/SERIAL.EXE` | Maintained assembly source only | Independently linked DOS diagnostic exercising the recovered UART module |
@@ -43,7 +43,7 @@ Resident near-call interfaces and DS=SS remain
 compatible; the builder checks far-call relocations, segment bounds and retained
 code across PROGRAM. [Private UI screens](docs/UI_FAR_STORAGE.md) also live
 in far storage: browser, nested editor and PROGRAM retain separate full frames,
-leaving13,152 bytes of capacity for more shared data/stack definitions. Full application
+with the builder enforcing the shared64KiB data/stack boundary. Full application
 and dynamic-overlay work remains open.
 
 
@@ -53,6 +53,11 @@ contextual help and `/` searches topics. Escape returns to the live terminal.
 Incoming data continues while browsing. If a partial ANSI sequence is being
 received, Alt-Z waits for parsing to finish and retains following keys locally;
 Escape cancels that pending request.
+
+**Alt-F8** opens [XLTEDIT for the selected table](docs/TRANSLATION_EDIT.md).
+Place XLTEDIT.EXE beside TERMINAL.EXE. F1 saves in the editor; after Escape,
+Y applies a checked snapshot to the terminal. Other answers retain the active
+mapping. The selected absolute table path survives directory changes.
 
 Ctrl-PgUp now opens [serviced redisplay](docs/LIVE_REDISPLAY.md): 63,000 characters
 of history, line/page navigation, case-insensitive search and a preserved live

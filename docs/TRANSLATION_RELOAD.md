@@ -87,6 +87,7 @@ frame/layout mutations. Near data/stack remains 64,480 bytes; resident code is
 61,970 bytes with 3,566 spare. The parent retains 315,200 bytes including PSP.
 Reload logic remains in CONFIG_CODE; its selected canonical path stays near.
 
-Opening XLTEDIT as a dedicated terminal command, full original settings/UI and
+The dedicated [Alt-F8 XLTEDIT command](TRANSLATION_EDIT.md) now edits that same
+selected source through a direct DOS child. Full original settings/UI and
 physical UART/Wi-Fi modem validation remain open. This component does not close
 F05, F06 or any whole-application gate.

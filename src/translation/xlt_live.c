@@ -125,3 +125,17 @@ unsigned __cdecl xlt_live_reload(unsigned action,unsigned char *table,xlt_dos_re
  memcpy(owner.current,active_path,64);
  status=xlt_live_stage(1,result);if(!status)owner.reload=1;return status;
 }
+
+unsigned __cdecl xlt_live_editor(unsigned psp,char *executable,char *tail)
+{
+ char program[64],command[68];unsigned n,c;
+ if(!external(executable,64) || !external(tail,68) || !separate(executable,64,tail,68))return XLT_DOS_ARGUMENT;
+ if(active_bound!=1 || !active_path[0])return XLT_LIVE_STATE;
+ for(n=0;n<64 && active_path[n];++n){c=(unsigned char)active_path[n];if(c<32 || c==127 || c=='"')return XLT_DOS_RESOURCE;}
+ if(!n || n==64)return XLT_DOS_RESOURCE;
+ memset(program,0,sizeof(program));
+ if(resource_program_path(psp,"XLTEDIT.EXE",program))return XLT_DOS_RESOURCE;
+ memset(command,0,sizeof(command));command[0]=' ';command[1]='"';
+ memcpy(command+2,active_path,n);command[n+2]='"';
+ memcpy(executable,program,sizeof(program));memcpy(tail,command,sizeof(command));return XLT_DOS_OK;
+}
