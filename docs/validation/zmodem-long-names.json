@@ -1,0 +1,143 @@
+{
+  "passed": true,
+  "terminal_sha256": "14ab0f99b57643cf5f6ba2befed2099bc617b62453de17e157566a280e365d17",
+  "wire_name_limit": 255,
+  "local_name_policy": "Preserve safe DOS83; otherwise ASCII-case-folded CRC32 as eight hex digits plus safe short extension or DAT",
+  "collision_policy": "Exact active wire identity; existing local targets explicitly ZSKIP with no overwrite",
+  "collision_example": {
+    "first": "Game 9P4Ppbwljq4gg3.ZIP",
+    "second": "Game o6dYr6fHK42eTT.ZIP",
+    "alias": "4F09E7D3.ZIP",
+    "policy": "Active identity mismatch aborts; existing target is explicitly skipped without overwrite"
+  },
+  "reports": {
+    "names": {
+      "path": "build/zmodem-names/checks.json",
+      "sha256": "113ed61eb5b22649702c9cfd1bd154bef03cb45317ece51616f3a283847975e4",
+      "cases": 446,
+      "scope": "Independent Python CRC32/local-name oracle, actual C bounded metadata codec and actual ZMODEM engine with recording transport/storage callbacks. Full wire identity, CRC16/32 retry and collision/skip policy. No DOS filesystem or BBS completion claim from host callbacks."
+    },
+    "engine": {
+      "path": "build/zmodem-session/checks.json",
+      "sha256": "6bca7fff17012f8737ef7e74a3f55f5fba281b071b690ccd3f1ae15481cfe5d6",
+      "cases": 92,
+      "scope": "Maintained session engine with host transport/storage callbacks and independent pinned lrzsz pipes; optional selected stock Synchronet sexyz stdio helper uses two nonempty files only. No DOS filesystem/16-bit callback ABI, terminal UART/UI, physical modem or BBS session claim."
+    },
+    "window": {
+      "path": "build/zmodem-window/checks.json",
+      "sha256": "3d4a9cc508c14209dce7bc0c16fb6e586401af7627969b19e1e333ecb47b40f4",
+      "cases": 79,
+      "scope": "Independent reactive Python CRC/header/data peer; host C callbacks, full duplex/overlap and finite-capacity policy, delayed/fragmented/stale ACK, window and buffer invariants, midstream/EOF recovery, future ACK, raw CAN and confirmed-progress separation. No actual DOS/UART/BBS or physical timing claim."
+    },
+    "DOS": {
+      "path": "build/zmodem-dos/checks.json",
+      "sha256": "0caf523d05ba6987b7264f19390308c36a8df2ee1e7bc1a0e1a123a0debe84e8",
+      "cases": 68,
+      "scope": "Actual source-built 8086 DOS session engine with far callbacks and real checked receive filesystem owner. Wire input is scripted, source callbacks diagnostic stdio; not the terminal source/transport/UI adapter or a live DOS UART/BBS session."
+    }
+  },
+  "game_download": {
+    "path": "build/bbs-lab/results/enigma/owned-game-transfer-long-01-wrapper/characterization.json",
+    "sha256": "a966d1609b9f853141137485c0e2118056cd1e592e37e9e13eb4b927f292d9b4",
+    "checks": {
+      "DOS_normal_exit": true,
+      "hardware_restored": true,
+      "screen_captured": true,
+      "bbs_connected": true,
+      "binary_unchanged": true,
+      "payload_fixture_unchanged": true,
+      "observed_decoded_offsets_match": true,
+      "configuration_unchanged": true,
+      "automatic_invitation_then_receiver_negotiation": true,
+      "no_manual_transfer_keys": true,
+      "ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed": true,
+      "posttransfer_actual_menu_input_response": true,
+      "actual_validated_protocol": true,
+      "DOS_exact_length_PCPLUS PROBE 01 (1991).ZIP": true,
+      "only_expected_received_files": true,
+      "unique_server_session_and_ordered_menus": true,
+      "no_leftover_staging": true
+    },
+    "wire_name": "PCPLUS PROBE 01 (1991).ZIP",
+    "local_name": "8868026D.ZIP",
+    "bytes": 1301,
+    "payload_sha256": "7c7079d0ff6f5352713fdd8c1ba83b36767927e3112410eb8535caa6fbd75e1e",
+    "protocol_sha256": "da57450fdd9fd3da3c6476ed0735f4e782970c7bd76daddd13e9afff96860e37"
+  },
+  "regressions": {
+    "path": "docs/validation/aspect-key-output.json",
+    "sha256": "2f0a38332890df9bb64823c627ece06c62f6f42e0da019ddca6dc23248caaf25"
+  },
+  "source_proof": {
+    "path": "docs/validation/application-components-source-build.json",
+    "sha256": "f33f8c6c3edaee1e6369515600b44ad111979d6f01d201f8aa97acb8388d7454",
+    "outputs": 178
+  },
+  "data_stack_bytes": 64800,
+  "code_segments": [
+    {
+      "name": "_TEXT",
+      "kind": "CODE",
+      "relative_segment": 0,
+      "offset": 0,
+      "bytes": 65502
+    },
+    {
+      "name": "ASPECT_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 4094,
+      "offset": 0,
+      "bytes": 5660
+    },
+    {
+      "name": "CONFIG_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 4448,
+      "offset": 0,
+      "bytes": 47527
+    },
+    {
+      "name": "MODEM_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 7419,
+      "offset": 0,
+      "bytes": 1483
+    },
+    {
+      "name": "PRINT_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 7512,
+      "offset": 0,
+      "bytes": 1449
+    }
+  ],
+  "sources": {
+    "src/transfer/zmodem.c": "8b91ddec13aa22a492ba07464502bda57809507b63d0b5ea245ded5b5df0c7b4",
+    "src/transfer/zmodem.h": "cfd8eb86ae05928b672a46e45af87f080595b7d46472780bef3c31e7aff07f05",
+    "src/transfer/zmodem_name.c": "7720ba62c132c79b57fc329de0f8afc30312756ed5e9e6610345e03298478b2c",
+    "src/transfer/zmodem_name.h": "b63f56b0c01b40dc0e4a75e0a7f0bd2c3ae2ae04c3724cda01037a38ad02e3f5",
+    "src/transfer/batch_header.c": "5003de29446cc1ec3a3776dcb1798b2763a6f1d556e866abe7e207cc39b49aa5",
+    "src/transfer/batch_header.h": "90b6691b30d0b60018bc05fe9b72932a2e913806913b326a15ab1ab15c69ad0b",
+    "src/transfer/terminal_zmodem.c": "7d2e91349e062e660b4017f45db378d1cfa2c7bf793f875a90e6888c7c01118b"
+  },
+  "reference_checkers": {
+    "standalone/check_batch_header.py": "179eeb22e309403e6b754b23e2897b4f43cea28fadf1babc150b1e2b6d0464fc",
+    "standalone/check_zmodem.py": "177008c3014a7c38ac1b9d12fa346c5739b28bd3d2c69e951a5840333812ed2b",
+    "standalone/check_zmodem_wire.py": "ced7cec6ed33f9b2b9e8056893398b7d394aeaaa5b95c21f7f7e2ca8bc328c94",
+    "standalone/check_zmodem_names.py": "44fcb18c63c57d4f2e9dc5f4615033d7699839f3d89f8fb4cd0542bc2cfa82b5"
+  },
+  "recorder_sha256": "bb977166c761fc23f0b46b8ba5cb696306137e95bded781ae23b08927dc6ae51",
+  "original_inputs": [],
+  "whole_application_gates_closed": [],
+  "live_server_modified": false,
+  "retained_failure": {
+    "path": "build/zmodem-session/long-name-regression.log",
+    "reason": "Initial adapter padded a short-name missing metadata terminator; existing regression rejected it. Final codec requires both terminators within the actual frame."
+  },
+  "limitations": [
+    "A different remote name with the same local alias is explicitly skipped if that target exists; receiving to another directory preserves both.",
+    "Full filename UI/catalog mapping remains unfinished; wire names are bounded opaque bytes with ASCII-only case folding.",
+    "Actual BBS download uses an isolated staged ENiGMA decoder; live install/catalog and physical RS-232 Wi-Fi modem validation remain open.",
+    "No complete PCPlus or universal BBS compatibility claim."
+  ]
+}

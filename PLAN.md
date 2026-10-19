@@ -16,15 +16,15 @@ index/search route and physical modem remain separate requirements.
 
 The [owned search/index route](lab/bbs/enigma-search.md) now passes DOS
 navigation with the actual selected menus, art and modules over30 generated
-ZIPs, plus11 real SQLite/FTS query checks. Keep game-download handling separate:
-the current batch metadata codec accepts only DOS8.3 names, while these board
-archives have long names. Exercise the actual custom D download and implement
-validated wire-name/local-name handling rather than substituting BIN fixtures.
-The actual custom download now confirms this gap: a CRC-valid long-name ZIP
-offer reaches DOS, transfer fails and no file is saved. The production-linked
-metadata replay returns `BH_NAME`; changing only the filename to a DOS8.3 name
-returns `BH_OK`. Implement separate bounded wire/local names, deterministic
-collision handling and repeat the exact ZIP/menu-return test next.
+ZIPs, plus11 real SQLite/FTS query checks. The historical long-name download
+failure is retained in its evaluation. [Wire/local filename separation](docs/ZMODEM_NAMES.md)
+now maps bounded ZMODEM basenames to deterministic DOS aliases, retains full
+wire identity during retries and uses checked skip on existing targets.
+The exact custom D download now passes as `8868026D.ZIP`, with all1301 bytes,
+ZMODEM completion and subsequent NFO interaction verified. The446 host and68
+8086 DOS cases include a real alias collision and unchanged-file behavior.
+Complete filename UI/catalog integration, live installation and physical
+modem testing remain open along with the whole-application gates.
 
 Latest keyboard checkpoint: [shared key output](docs/ASPECT_KEY_OUTPUT.md) routes
 script-time keys through the actual parent classifier/profile and child-owned

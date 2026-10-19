@@ -24,7 +24,7 @@ def main():
  assert live['checker_sha256']==sha('standalone/check_terminal_reverse_tab.py')
  assert live['binary_sha256']==sha('build/terminal/TERMINAL.EXE')
  assert proof['outputs']['terminal/TERMINAL.EXE']['sha256']==live['binary_sha256']
- dos_path='build/aspect-keys-dos/attribute-repair-01/checks.json';dos=read(dos_path)
+ dos_path='build/aspect-keys-dos/long-names-01/checks.json';dos=read(dos_path)
  assert dos['passed'] and len(dos['cases'])==16
  assert dos['terminal_sha256']==live['binary_sha256']
  assert dos['checker_sha256']==sha('standalone/test_aspect_keys_dos.py')

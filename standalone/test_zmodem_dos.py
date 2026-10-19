@@ -12,14 +12,15 @@ import subprocess
 from check_zmodem import h,meta,offer,payload
 from check_zmodem_wire import packet
 from zmodem_window_vectors import vectors
+from check_zmodem_names import alias
 
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/zmodem-dos'
 def main():
     OUT.mkdir(parents=True,exist_ok=True);lock=(OUT/'.lock').open('w');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
-    src=ROOT/'src/transfer';sources=[src/n for n in ('zmodem.c','zmodem_wire.c','batch_header.c','download_file.c','download_fs.c')]+[ROOT/'standalone/zmodem_host.c']
+    src=ROOT/'src/transfer';sources=[src/n for n in ('zmodem.c','zmodem_wire.c','zmodem_name.c','batch_header.c','download_file.c','download_fs.c')]+[ROOT/'standalone/zmodem_host.c']
     subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k8192','-i='+str(src),'-fe=SESSION.EXE',*map(str,sources)],cwd=OUT,check=True)
     isolated=OUT/'source-only';isolated.mkdir(exist_ok=True)
-    headers=[src/n for n in ('zmodem.h','zmodem_wire.h','batch_header.h','download_file.h','download_fs.h')]
+    headers=[src/n for n in ('zmodem.h','zmodem_wire.h','zmodem_name.h','batch_header.h','download_file.h','download_fs.h')]
     for p in sources+headers:shutil.copy2(p,isolated/p.name)
     subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k8192','-i=.','-fe=SESSION.EXE',*[p.name for p in sources]],cwd=isolated,check=True)
     assert (isolated/'SESSION.EXE').read_bytes()==(OUT/'SESSION.EXE').read_bytes()
@@ -47,6 +48,18 @@ def main():
             for off in range(0,n,1024):rx+=h(3,min(off+1024,n));tx+=payload(data[off:off+1024],off,fmt)
             rx+=h(1,0x22000000 if fmt==67 else 0x02000000)+h(8);tx+=h(11,n,fmt)+h(8)+b'OO'
             case(f'send-{fmt}-{n}',True,rx,{},expected_wire=tx,source_files={'TEST.BIN':data},checks={'closes':1,'uncertain':0})
+    for fmt in (65,67):
+        name='PCPLUS PROBE 01 (1991).ZIP';local=alias(name.encode()).decode()
+        wire=offer(name,6,fmt)+payload(b'ABC',0,fmt)+offer(name,6,fmt)+payload(b'DEF',3,fmt)+h(11,6,fmt)+h(8)+b'OO'
+        case(f'long-name-retry-{fmt}',False,wire,{local:b'ABCDEF'})
+    name='PCPLUS PROBE 01 (1991).ZIP';local=alias(name.encode()).decode()
+    case('long-name-existing-alias-skipped',False,offer(name,3)+h(8)+b'OO',{},preexisting={local:b'ORIGINAL'},expected_wire=h(1,0x23000000)+h(5)+h(8))
+    a='Game 9P4Ppbwljq4gg3.ZIP';b='Game o6dYr6fHK42eTT.ZIP'
+    case('long-active-alias-collision',False,offer(a,6)+payload(b'ABC')+offer(b,6),{},expected_status=6)
+    case('long-committed-alias-collision',False,offer(a,3)+payload(b'ABC')+h(11,3)+offer(b,3)+h(8)+b'OO',{'4F09E7D3.ZIP':b'ABC'},expected_wire=h(1,0x23000000)+h(9)+h(3,3)+h(1,0x23000000)+h(5)+h(8))
+    long='A'*251+'.ZIP';local=alias(long.encode()).decode()
+    case('wire-name-255',False,offer(long,3)+payload(b'ABC')+h(11,3)+h(8)+b'OO',{local:b'ABC'})
+    case('wire-name-256-rejected',False,offer('A'*252+'.ZIP',3),{},expected_status=6)
     for end in (104,105,106,107):
         wire=offer('TEST.BIN',999)+h(10,0,67)+packet(b'ABC',67,end,0)
         wire+=(h(10,3,67) if end in (104,107) else b'')+packet(b'DEF',67,107,0)+h(11,6)+h(8)+b'OO'
@@ -116,7 +129,7 @@ c:
         assert {p.name for p in path.iterdir()}==expected_names,item['label']
         if item['wire'] is not None:assert (path/'OUT.BIN').read_bytes()==item['wire'],item['label']
         results.append(dict(label=item['label'],passed=True,result=fields,input_sha256=hashlib.sha256((path/'IN.BIN').read_bytes()).hexdigest(),output_sha256=hashlib.sha256((path/'OUT.BIN').read_bytes()).hexdigest()))
-    inputs=sources+headers+[Path(__file__).resolve(),ROOT/'standalone/check_zmodem.py',ROOT/'standalone/zmodem_window_vectors.py',ROOT/'standalone/check_zmodem_wire.py',ROOT/'nix/flake.nix',ROOT/'nix/flake.lock',ROOT/'tools/dev']
+    inputs=sources+headers+[Path(__file__).resolve(),ROOT/'standalone/check_zmodem.py',ROOT/'standalone/check_zmodem_names.py',ROOT/'standalone/zmodem_window_vectors.py',ROOT/'standalone/check_zmodem_wire.py',ROOT/'nix/flake.nix',ROOT/'nix/flake.lock',ROOT/'tools/dev']
     result=dict(passed=True,DOS_cases=len(results),cases=results,binary_sha256=hashlib.sha256((OUT/'SESSION.EXE').read_bytes()).hexdigest(),isolated_source_build_byte_identical=True,
         tools={name:shutil.which(name) for name in ('wcl','dosbox-x')},
         sources={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs},

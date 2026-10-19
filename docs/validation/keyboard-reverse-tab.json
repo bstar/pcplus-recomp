@@ -1,7 +1,7 @@
 {
   "passed": true,
   "production_integration": true,
-  "recorder_sha256": "e1bad055a1a3d812988534999ee72d15635283ac1e86e9b2dd7e8e7d1b80bd25",
+  "recorder_sha256": "ed3e86989058723047523a491e1dac91c49392c31541b5fb29d76b8aa4bf537f",
   "builder_sha256": "e45f01d7611258d3c33aab2d782f6af28dec666816780491b2756fac9fdc2c63",
   "checks": {
     "passed": true,
@@ -76,22 +76,22 @@
     }
   },
   "source_build_outputs": 178,
-  "source_build_proof_sha256": "84dffb5d6a176ff647d9b086739678faf3ee4f5cc2634a71d797dfbc2b2d25d1",
+  "source_build_proof_sha256": "f33f8c6c3edaee1e6369515600b44ad111979d6f01d201f8aa97acb8388d7454",
   "linked": {
     "path": "build/terminal-key-output/reverse-tab-checks.json",
-    "sha256": "c2b8340c7fbc908eac97ff7bec123c247778f3aaa7f4572a554d62a9255f0593",
+    "sha256": "1903e56797c97c2726b2f4c0dc39a4c7ab0c8d12834feec8f3f7c038dd020d51",
     "checks": {
       "passed": true,
       "cases": 630,
-      "binary_sha256": "e6d170f2bba5a32f5ec3a92d61a17b4b1c3e40ca75b29886423bcedc33d5eab9",
+      "binary_sha256": "14ab0f99b57643cf5f6ba2befed2099bc617b62453de17e157566a280e365d17",
       "checker_sha256": "2416b487be143a5c26e6f5cd6656715d6bb6031fe490da39afdd423199146552",
       "original_inputs": [],
       "scope": "Actual shared key core, checked far admission, recovered reverse Tab, boundary/coordinate/division/protected-home and real resident cursor helpers. Hardware-only BIOS/CRT models include adversarial notice-register clobbering. Table/mode matrix, protected/circular fields,1..25-row planes, doublewidth and pre-wire malformed/unsafe-state rejection; video/metadata/parser parameters unchanged. No physical BIOS/modem or full application/viewport claim."
     }
   },
   "DOS": {
-    "path": "build/aspect-keys-dos/attribute-repair-01/checks.json",
-    "sha256": "cf78fb1e38579466b68cf71d92583b2106f41b4d14bb7942131aaeadc99ea9c2",
+    "path": "build/aspect-keys-dos/long-names-01/checks.json",
+    "sha256": "99bac32b1454445161c4887f5b1caa72bdb9c3dc6ad085c72144aa15ccd1fcc1",
     "cases": 16
   },
   "original_inputs": [],

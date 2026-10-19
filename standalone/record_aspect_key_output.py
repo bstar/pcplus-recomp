@@ -23,7 +23,7 @@ def main():
         ('build/attribute-repair/live-checks.json', 'standalone/check_attribute_repair_live.py', 'binary_sha256', terminal),
         ('build/terminal-key-output/native-echo.json', 'standalone/check_keyboard_echo_native.py', None, None),
         ('build/aspect-keyboard/key-client-checks.json', 'standalone/check_aspect_key_client.py', 'runner_sha256', runner),
-        ('build/aspect-keys-dos/attribute-repair-01/checks.json', 'standalone/test_aspect_keys_dos.py', 'runner_sha256', runner),
+        ('build/aspect-keys-dos/long-names-01/checks.json', 'standalone/test_aspect_keys_dos.py', 'runner_sha256', runner),
         ('build/aspect-keyboard/checks.json', 'standalone/check_aspect_keyboard.py', 'runner_sha256', runner),
         ('build/aspect-source-compile/checks.json', 'standalone/check_aspect_source_compile.py', 'runner_sha256', runner),
         ('build/aspect-source-serial-dos/checks.json', 'standalone/check_aspect_source_serial_dos.py', 'runner_sha256', runner),
@@ -64,17 +64,17 @@ def main():
         regressions.append(dict(path=path, sha256=sha(path), checker_sha256=sha(checker),
                                 cases=len(data['cases']), scope=data['scope']))
     bbs = []
-    sync_path = 'build/bbs-lab/script-login/attribute-repair-sync-01/checks.json'
+    sync_path = 'build/bbs-lab/script-login/long-names-sync-01/checks.json'
     sync = json.loads((ROOT / sync_path).read_text())
     assert sync['passed'] and all(sync['checks'].values())
     assert sync['terminal_sha256'] == terminal and sync['runner_sha256'] == runner
     bbs.append(dict(server='stock Synchronet', path=sync_path, sha256=sha(sync_path), checks=sync['checks']))
-    enigma_path = 'build/bbs-lab/results/enigma/attribute-repair-enigma-transfer-02-wrapper/experiment.json'
+    enigma_path = 'build/bbs-lab/results/enigma/long-names-enigma-transfer-01-wrapper/experiment.json'
     enigma = json.loads((ROOT / enigma_path).read_text())
     assert enigma['passed'] and enigma['inputs_unchanged']
     assert enigma['input_hashes']['build/terminal/TERMINAL.EXE'] == terminal
     assert enigma['message_count_before'] == enigma['message_count_after']
-    transfer_path = 'build/bbs-lab/results/enigma/attribute-repair-enigma-transfer-02/result.json'
+    transfer_path = 'build/bbs-lab/results/enigma/long-names-enigma-transfer-01/result.json'
     transfer = json.loads((ROOT / transfer_path).read_text())
     assert transfer['passed'] and all(transfer['checks'].values())
     assert transfer['binary_sha256'] == terminal

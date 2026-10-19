@@ -96,14 +96,14 @@
   },
   "linked": {
     "path": "build/attribute-repair/live-checks.json",
-    "sha256": "95411712da8bc5eb7068eb281493f4ed7e62d75e00ed268cc694d1252218103d",
+    "sha256": "8e1cc61de05f3c3c4b973d6ea43e34a772618ea78c76dd96e42dc577c2fac445",
     "checks": {
       "passed": true,
       "cases": 925,
       "consumer_cases": 39,
       "prewire_cases": 12,
       "geometry_errors": 17,
-      "binary_sha256": "e6d170f2bba5a32f5ec3a92d61a17b4b1c3e40ca75b29886423bcedc33d5eab9",
+      "binary_sha256": "14ab0f99b57643cf5f6ba2befed2099bc617b62453de17e157566a280e365d17",
       "checker_sha256": "f2d864e273db897501566ea8324f95e765712be80199b697ee2b26a87d061e9a",
       "reference_sha256": "306096b9774c756afff4fa1c46458c2d599748cd466cc3bf0d75c61d58fd1fef",
       "original_inputs": [],
@@ -130,19 +130,19 @@
       "kind": "FARCODE",
       "relative_segment": 4448,
       "offset": 0,
-      "bytes": 46724
+      "bytes": 47527
     },
     {
       "name": "MODEM_CODE",
       "kind": "FARCODE",
-      "relative_segment": 7369,
+      "relative_segment": 7419,
       "offset": 0,
       "bytes": 1483
     },
     {
       "name": "PRINT_CODE",
       "kind": "FARCODE",
-      "relative_segment": 7462,
+      "relative_segment": 7512,
       "offset": 0,
       "bytes": 1449
     }
@@ -173,10 +173,10 @@
     "build/attribute-repair/text-char.obj": "97237f222ace226604972b06476905a20b11435472630f15d5e724166f6c9128"
   },
   "source_build_outputs": 178,
-  "source_build_proof_sha256": "84dffb5d6a176ff647d9b086739678faf3ee4f5cc2634a71d797dfbc2b2d25d1",
+  "source_build_proof_sha256": "f33f8c6c3edaee1e6369515600b44ad111979d6f01d201f8aa97acb8388d7454",
   "DOS_and_BBS": {
     "path": "docs/validation/aspect-key-output.json",
-    "sha256": "e9df280c42b161cb8d682008dac758509cd02557cc6d0a6eb26bc60e1e343670"
+    "sha256": "2f0a38332890df9bb64823c627ece06c62f6f42e0da019ddca6dc23248caaf25"
   },
   "original_inputs": [],
   "whole_application_gates_closed": [],

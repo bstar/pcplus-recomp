@@ -72,7 +72,7 @@ c_sources += sorted((ROOT/'src/clipboard').glob('*.c'))
 c_sources += [ROOT/'src/transfer'/name for name in ['download_file.c','download_fs.c','native_file_bridge.c','terminal_receive.c']]
 c_sources += [ROOT/'src/transfer'/name for name in ['upload_file.c','upload_fs.c','terminal_upload.c']]
 c_sources += [ROOT/'src/transfer'/name for name in ['batch_header.c','batch_download.c','batch_upload.c','batch_upload_fs.c','ymodem.c','terminal_ymodem.c']]
-c_sources += [ROOT/'src/transfer'/name for name in ['zmodem.c','zmodem_wire.c','terminal_zmodem.c']]
+c_sources += [ROOT/'src/transfer'/name for name in ['zmodem.c','zmodem_wire.c','zmodem_name.c','terminal_zmodem.c']]
 c_sources += [ROOT/'src/transfer'/name for name in ['zmodem_autostart.c','terminal_autostart.c']]
 c_sources += sorted((ROOT/'src/capture').glob('*.c'))
 c_sources += sorted((ROOT/'src/printer').glob('*.c'))
@@ -90,7 +90,7 @@ config_sources.add(ROOT/'src/terminal/script_launch.c')
 config_sources.update((ROOT/'src/clipboard').glob('*.c'))
 config_sources.add(ROOT/'src/process/program.c')
 config_sources.update({ROOT/'src/transfer/ymodem.c',ROOT/'src/transfer/batch_header.c'})
-config_sources.update({ROOT/'src/transfer'/name for name in ['zmodem.c','zmodem_wire.c','terminal_zmodem.c']})
+config_sources.update({ROOT/'src/transfer'/name for name in ['zmodem.c','zmodem_wire.c','zmodem_name.c','terminal_zmodem.c']})
 config_aliases={'terminal_script_prepare':'terminal_script_prepare_impl'}
 config_aliases.update({name:name+'_impl' for name in ['directory_live_decode','directory_live_read','directory_live_read_context','directory_live_context_matches','live_configuration_decode','live_setup_bind','live_setup_begin','live_setup_finish','live_setup_abort','live_setup_finish_policy','live_setup_acknowledge']})
 config_aliases.update({name:'config_'+name+'_service' for name in ['memcpy','memset','memcmp','strchr','strcmp']})
@@ -153,7 +153,7 @@ inputs += sorted((ROOT/'src/clipboard').glob('*.h'))
 inputs += sorted((ROOT/'src/redisplay').glob('*.h'))
 inputs += [ROOT/'src/transfer'/name for name in ['download_file.h','download_fs.h','native_file_bridge.h','upload_file.h','upload_fs.h','batch_header.h','batch_download.h','batch_upload.h','batch_upload_fs.h','ymodem.h']]+native['inputs']+[ROOT/'standalone/terminal_memory.py']
 inputs += sender['inputs']
-inputs += [ROOT/'src/transfer/zmodem.h',ROOT/'src/transfer/zmodem_wire.h',ROOT/'src/transfer/zmodem_autostart.h']
+inputs += [ROOT/'src/transfer/zmodem.h',ROOT/'src/transfer/zmodem_wire.h',ROOT/'src/transfer/zmodem_name.h',ROOT/'src/transfer/zmodem_autostart.h']
 inputs += [ROOT/'standalone/omf_imports.py']
 inputs += sorted((ROOT/'src/terminal').glob('*.inc'))
 inputs += sorted((ROOT/'src/translation').glob('*.h'))

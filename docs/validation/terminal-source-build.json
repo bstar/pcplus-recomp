@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "4702d3b182cbea3647374e7cd2e75a6d72c96c67c72aad1aabcc176f4463e7ff",
-  "source_file_count": 2020,
+  "source_snapshot_sha256": "304412e382bcb6b89ec4f341288fe71339173418a55c623bd220903544993e3a",
+  "source_file_count": 2037,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,14 +16,14 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "43573e5bace4c03e19c1f407111381e27992a3fcb405fac4b8b94ce25807b59e",
+  "build_log_sha256": "d0b8166ff1734a8ccdc57db59f3d82dc43dda199582f5c01a9a8fa03a86a3a33",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.uc3zUL/pcplus-source-proof-o2e6m_6e/checkout",
+  "source_checkout": "/tmp/nix-shell.b6EXrX/pcplus-source-proof-os67g4io/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
   "scope": "Source-only interactive DOS terminal with imported keyboard/action settings, directory UI, recovered line/character editing, maintained current-profile RIS, bounded process handoff, retained far shadow/history and live checked XMODEM receive/send and maintained CRC YMODEM batch ownership; full PCPlus application remains incomplete.",
-  "binary_sha256": "e6d170f2bba5a32f5ec3a92d61a17b4b1c3e40ca75b29886423bcedc33d5eab9",
+  "binary_sha256": "14ab0f99b57643cf5f6ba2befed2099bc617b62453de17e157566a280e365d17",
   "matches_workspace_binary": true,
   "matches_workspace_manifest": true,
   "manifest": {
@@ -36,72 +36,72 @@
       "normalized_object_sha256": "01bd96165308ac2fd147d3634ee5e4495488fdcbdd11903889d2f8e37ac614e1"
     },
     "kind": "source-only-interactive-dos-terminal",
-    "binary_sha256": "e6d170f2bba5a32f5ec3a92d61a17b4b1c3e40ca75b29886423bcedc33d5eab9",
-    "data_stack_bytes": 64768,
+    "binary_sha256": "14ab0f99b57643cf5f6ba2befed2099bc617b62453de17e157566a280e365d17",
+    "data_stack_bytes": 64800,
     "memory_layout": {
-      "near_bytes": 64768,
-      "near_spare_bytes": 768,
-      "near_relative_segment": 7553,
-      "far_relative_segment": 16945,
+      "near_bytes": 64800,
+      "near_spare_bytes": 736,
+      "near_relative_segment": 7603,
+      "far_relative_segment": 16997,
       "shadow_offset": 0,
       "history_offset": 0,
       "far_bytes": 71192,
-      "history_relative_segment": 17457,
+      "history_relative_segment": 17509,
       "history_bytes": 63000,
-      "far_end_linear": 342312,
-      "stack_end_linear": 185616,
-      "loaded_module_bytes": 154500,
-      "minimum_allocated_module_bytes": 342336,
-      "retained_parent_paragraphs": 21411,
+      "far_end_linear": 343144,
+      "stack_end_linear": 186448,
+      "loaded_module_bytes": 155340,
+      "minimum_allocated_module_bytes": 343152,
+      "retained_parent_paragraphs": 21463,
       "far_pointer_relocations_verified": true,
-      "snapshot_relative_segment": 12851,
+      "snapshot_relative_segment": 12903,
       "snapshot_image_offset": 63504,
       "snapshot_bytes": 2000,
-      "snapshot_end_linear": 271120,
+      "snapshot_end_linear": 271952,
       "ui_screen_buffers": {
         "browser_screen": {
-          "relative_segment": 11601,
+          "relative_segment": 11653,
           "offset": 0,
           "bytes": 4000,
-          "start_linear": 185616,
-          "end_linear": 189616
+          "start_linear": 186448,
+          "end_linear": 190448
         },
         "ed_screen": {
-          "relative_segment": 11601,
+          "relative_segment": 11653,
           "offset": 4000,
           "bytes": 4000,
-          "start_linear": 189616,
-          "end_linear": 193616
+          "start_linear": 190448,
+          "end_linear": 194448
         },
         "program_screen": {
-          "relative_segment": 11601,
+          "relative_segment": 11653,
           "offset": 8000,
           "bytes": 4000,
-          "start_linear": 193616,
-          "end_linear": 197616
+          "start_linear": 194448,
+          "end_linear": 198448
         },
         "redisplay_live": {
-          "relative_segment": 11601,
+          "relative_segment": 11653,
           "offset": 12000,
           "bytes": 4000,
-          "start_linear": 197616,
-          "end_linear": 201616
+          "start_linear": 198448,
+          "end_linear": 202448
         },
         "redisplay_view": {
-          "relative_segment": 11601,
+          "relative_segment": 11653,
           "offset": 16000,
           "bytes": 4000,
-          "start_linear": 201616,
-          "end_linear": 205616
+          "start_linear": 202448,
+          "end_linear": 206448
         }
       },
       "far_ui_storage_bytes": 20000,
       "redisplay_snapshot_bytes": 63000,
-      "redisplay_snapshot_end_linear": 268616,
+      "redisplay_snapshot_end_linear": 269448,
       "redisplay_row_index_bytes": 494,
-      "redisplay_row_index_relative_segment": 12851,
+      "redisplay_row_index_relative_segment": 12903,
       "redisplay_row_index_offset": 63000,
-      "redisplay_row_index_end_linear": 269110,
+      "redisplay_row_index_end_linear": 269942,
       "controller_bridge_pairs_verified": 22,
       "modem_bridge_pairs_verified": 23,
       "command_menu_far_code_verified": true,
@@ -138,19 +138,19 @@
           "kind": "FARCODE",
           "relative_segment": 4448,
           "offset": 0,
-          "bytes": 46724
+          "bytes": 47527
         },
         {
           "name": "MODEM_CODE",
           "kind": "FARCODE",
-          "relative_segment": 7369,
+          "relative_segment": 7419,
           "offset": 0,
           "bytes": 1483
         },
         {
           "name": "PRINT_CODE",
           "kind": "FARCODE",
-          "relative_segment": 7462,
+          "relative_segment": 7512,
           "offset": 0,
           "bytes": 1449
         }
@@ -385,8 +385,9 @@
       "src/transfer/batch_upload_fs.c": "bcbf8fe35d713c6229dcf0bd3cf713e55570eca76cb5827088cc449f359310fe",
       "src/transfer/ymodem.c": "83c8802337c04ea9d100a11eaf4578bc89b46a28e9f94825fa70fa1ed8f2a20a",
       "src/transfer/terminal_ymodem.c": "bedff77b97e211fe9d4d090e6e058ee4da1a6fc55c06d5719fe467cf7c45fd6c",
-      "src/transfer/zmodem.c": "b7022e040385e38a8e1e9ff9310389c45cb934f6317209e1428bdff8098908b2",
+      "src/transfer/zmodem.c": "8b91ddec13aa22a492ba07464502bda57809507b63d0b5ea245ded5b5df0c7b4",
       "src/transfer/zmodem_wire.c": "fdae5d7c899ac2b32efe4b2f9d14d6c66ca323263b2fff5bf5da33f5915c1a6b",
+      "src/transfer/zmodem_name.c": "7720ba62c132c79b57fc329de0f8afc30312756ed5e9e6610345e03298478b2c",
       "src/transfer/terminal_zmodem.c": "7d2e91349e062e660b4017f45db378d1cfa2c7bf793f875a90e6888c7c01118b",
       "src/transfer/zmodem_autostart.c": "a232cdcbc084949d53c1634c9012aa16ec793a349eb47bd50b6c2b146178f7c0",
       "src/transfer/terminal_autostart.c": "79cef3d967729459037fcbfa58d17878395b5183d70ddbfaccf6249e669cfc95",
@@ -485,8 +486,9 @@
       "reconstruction/transfer_blocks/crc_buffer.asm": "00083b3c0f6143b8b0119f0c5690f32b54b2c981f474ed5ce1529336d8db1ad4",
       "reconstruction/transfer_send/provenance.json": "99f92f7daba16a6a4ea2ba1a9465cb81a5f0b917cf351bf70794542e6defb0da",
       "src/transfer/native_sender_link.py": "0eff16fe2149432b60807fdc3d7c480caedd04138d4184090c8417ace1f43f3e",
-      "src/transfer/zmodem.h": "5f90b5944609e8141f6bbb5f77456f44677b23f335d74c1bbfc92b0d29955ce7",
+      "src/transfer/zmodem.h": "cfd8eb86ae05928b672a46e45af87f080595b7d46472780bef3c31e7aff07f05",
       "src/transfer/zmodem_wire.h": "3dd5631882942ee5eaf195ff00dc7e838828ae0a6ecd89a8fa7eeef4511ddd68",
+      "src/transfer/zmodem_name.h": "b63f56b0c01b40dc0e4a75e0a7f0bd2c3ae2ae04c3724cda01037a38ad02e3f5",
       "src/transfer/zmodem_autostart.h": "fbace38b9a9e02971ca62109007ecdafd081ccb6327c4b0d6a9c025e21d7ff7d",
       "standalone/omf_imports.py": "b831a013f7dcb19bd1250bb9a73bf56218d24f48a6fe22feb86b6fc677db7473",
       "src/terminal/config_abi.inc": "bfd298deb578b079832df988d7c6eef451e1cddca67571ee0505c9f742afeaaa",

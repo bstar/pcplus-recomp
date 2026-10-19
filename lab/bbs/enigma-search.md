@@ -39,15 +39,18 @@ Transfer success is recorded separately from navigation. The current batch
 metadata codec currently accepts only DOS8.3 basenames; long-name handling is
 a separate compatibility requirement, not replaced with an easier BIN fixture.
 
-The actual custom download sends a CRC-valid ZFILE offer for
+The retained pre-fix custom download sent a CRC-valid ZFILE offer for
 `PCPLUS PROBE 01 (1991).ZIP` (1301 bytes), but transfer fails and no file is
 saved. DOS exits normally, restores hardware and leaves no staging file. A
 separate replay sends the captured metadata through the production-linked
 decoder: it returns `BH_NAME` without altering its result. Changing only the
 filename to `PROBE01.ZIP` makes the same metadata return `BH_OK`. This identifies
 the filename limitation separately from menu navigation and CRC framing.
-Wire/local filename separation and collision handling must be implemented
-before this game-download workflow can pass.
+The new [wire/local filename adapter](../../docs/ZMODEM_NAMES.md) now passes
+this exact download as `8868026D.ZIP`, with byte-exact storage, full ZMODEM
+completion and NFO input/response afterward. The historical failure record
+remains unchanged; the new filename validation record binds the corrected
+binary and tests separately.
 
 Run the [keyboard experiment](patches/enigma-key-stream/README.md) first to
 create a fresh checked candidate for the owned upstream revision, then:

@@ -477,6 +477,8 @@ settings/UI and physical modem transfers remain open. See
 [download storage](docs/DOWNLOAD_STORAGE.md), [sender](docs/TRANSFER_SEND.md),
 [native file behavior](docs/TRANSFER_FILES.md) and [UART callbacks](docs/TRANSFER_UART.md).
 
+ZMODEM downloads accept [long wire filenames](docs/ZMODEM_NAMES.md) through
+deterministic DOS aliases, with full retry identity and checked existing-file skip.
 ZMODEM is available through Alt-R/Alt-S: press F2 in the prompt until ZMODEM is
 selected, then enter a receive directory or send filespec. The live engine uses
 checked batch storage/source seeking and serviced UART ownership; independent

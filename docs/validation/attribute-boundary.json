@@ -87,11 +87,11 @@
   },
   "linked": {
     "path": "build/terminal-key-output/reverse-tab-checks.json",
-    "sha256": "c2b8340c7fbc908eac97ff7bec123c247778f3aaa7f4572a554d62a9255f0593",
+    "sha256": "1903e56797c97c2726b2f4c0dc39a4c7ab0c8d12834feec8f3f7c038dd020d51",
     "checks": {
       "passed": true,
       "cases": 630,
-      "binary_sha256": "e6d170f2bba5a32f5ec3a92d61a17b4b1c3e40ca75b29886423bcedc33d5eab9",
+      "binary_sha256": "14ab0f99b57643cf5f6ba2befed2099bc617b62453de17e157566a280e365d17",
       "checker_sha256": "2416b487be143a5c26e6f5cd6656715d6bb6031fe490da39afdd423199146552",
       "original_inputs": [],
       "scope": "Actual shared key core, checked far admission, recovered reverse Tab, boundary/coordinate/division/protected-home and real resident cursor helpers. Hardware-only BIOS/CRT models include adversarial notice-register clobbering. Table/mode matrix, protected/circular fields,1..25-row planes, doublewidth and pre-wire malformed/unsafe-state rejection; video/metadata/parser parameters unchanged. No physical BIOS/modem or full application/viewport claim."
@@ -117,25 +117,25 @@
       "kind": "FARCODE",
       "relative_segment": 4448,
       "offset": 0,
-      "bytes": 46724
+      "bytes": 47527
     },
     {
       "name": "MODEM_CODE",
       "kind": "FARCODE",
-      "relative_segment": 7369,
+      "relative_segment": 7419,
       "offset": 0,
       "bytes": 1483
     },
     {
       "name": "PRINT_CODE",
       "kind": "FARCODE",
-      "relative_segment": 7462,
+      "relative_segment": 7512,
       "offset": 0,
       "bytes": 1449
     }
   ],
   "source_build_outputs": 178,
-  "source_build_proof_sha256": "84dffb5d6a176ff647d9b086739678faf3ee4f5cc2634a71d797dfbc2b2d25d1",
+  "source_build_proof_sha256": "f33f8c6c3edaee1e6369515600b44ad111979d6f01d201f8aa97acb8388d7454",
   "original_inputs": [],
   "whole_application_gates_closed": [],
   "limitations": [

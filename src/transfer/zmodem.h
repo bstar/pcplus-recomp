@@ -2,6 +2,7 @@
 #define PCPLUS_ZMODEM_H
 #include "zmodem_wire.h"
 #include "batch_header.h"
+#include "zmodem_name.h"
 #ifdef __WATCOMC__
 #define ZM_FAR __far
 #else
@@ -39,7 +40,8 @@ typedef struct zm_session {
  unsigned status,cleanup_status,sending,owned,format,control,block,retries;
  unsigned phase,skipped,window,capacity;
  zw_u32 position,size,files,bytes;
- char name[13];
+ /* Full bounded remote identity on receive; next() still supplies DOS83 on send. */
+ char name[ZM_WIRE_NAME_MAX+1];
  zw_decoder decoder;
  unsigned char data[1024];
  /* Only consumed/CRC-accepted receive data can be acknowledged. Once handed

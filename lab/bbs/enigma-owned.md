@@ -110,3 +110,10 @@ generated catalog. It passes11 real SQLite/FTS query checks and the DOS
 F/S search → paged index → selected game → DIZ/NFO → empty-search/return route.
 This covers the actual selected routing in isolation; the live catalog and
 service remain unchanged, and game-download results are evaluated separately.
+
+The native [ZMODEM name adapter](../../docs/ZMODEM_NAMES.md) now handles the
+generated catalog's actual long ZIP filename through that custom D action.
+DOS saves the byte-exact archive under its checked deterministic alias and
+returns to usable NFO input. Existing targets retain the checked skip policy;
+the host and8086 DOS tests include an actual CRC32 alias collision. This adds
+client-side transfer evidence without changing the live board's decoder.

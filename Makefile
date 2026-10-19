@@ -1,5 +1,9 @@
 .DEFAULT_GOAL := all
 .PHONY: attribute-repair test-attribute-repair
+.PHONY: test-zmodem-names
+test-zmodem-names:
+	python3 standalone/check_zmodem_names.py
+test: test-zmodem-names
 attribute-repair:
 	python3 standalone/build_attribute_repair.py
 test-attribute-repair: attribute-repair

@@ -99,7 +99,7 @@ class WindowPeer(Fixture):
 
 def build():
  OUT.mkdir(parents=True,exist_ok=True)
- files=[ROOT/'src/transfer'/n for n in ('zmodem.c','zmodem.h','zmodem_wire.c','zmodem_wire.h','batch_header.c','batch_header.h')]
+ files=[ROOT/'src/transfer'/n for n in ('zmodem.c','zmodem.h','zmodem_wire.c','zmodem_wire.h','zmodem_name.c','zmodem_name.h','batch_header.c','batch_header.h')]
  subprocess.run(['gcc','-std=c89','-Wall','-Wextra','-Werror','-Wno-misleading-indentation','-shared','-fPIC',*[str(p) for p in files if p.suffix=='.c'],'-o',str(OUT/'session.so')],check=True)
  lib=C.CDLL(str(OUT/'session.so'));lib.zm_run.argtypes=[C.c_void_p,C.c_void_p,C.c_void_p,C.c_uint]
  return lib,files

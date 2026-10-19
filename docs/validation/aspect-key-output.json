@@ -1,28 +1,28 @@
 {
   "passed": true,
   "renderer_capability": 6,
-  "recorder_sha256": "f34c1d3540fe3eb12f4be0536deaa1e07076813a03b6450e2ad5694c18fe2c41",
-  "terminal_sha256": "e6d170f2bba5a32f5ec3a92d61a17b4b1c3e40ca75b29886423bcedc33d5eab9",
+  "recorder_sha256": "08a702589b0a5dd48e94f77dec8ace5a0c928002a9f069dec663da8afaa6d47c",
+  "terminal_sha256": "14ab0f99b57643cf5f6ba2befed2099bc617b62453de17e157566a280e365d17",
   "runner_sha256": "2cef1bd3a42eb39ef148db6b16eb0ef68e3965b0e7fe19042f44b23ebfbf916d",
   "compiler_sha256": "cf924b18ae099619f6f83c8127b03e2b2ca39ce3f41a16f336e28585cc5e5941",
   "reports": [
     {
       "path": "build/terminal-key-output/checks.json",
-      "sha256": "cdffbccfa2e8935fa6c0b1ac2857c28f38b2e0d31b9aaa980ffd1c96756d693e",
+      "sha256": "859b9c255901cc9897539adbeb95277787e362ecb44a92dd6dcb8e79bfb96e84",
       "checker_sha256": "a6ba22748266d2613ca570290f5ea8df1ee0201e5faa006cb3d659859b93fd9c",
       "cases": 837,
       "scope": "Actual product far key core, raw classifier, bindings, editing/reverse-tab admission and queue instructions. Echo/cursor/edit/reverse-tab scalar endpoints are explicit recording fixtures; actual video/native editing, protected navigation and child UART covered separately. All79 slots full/half on valid standard geometry/tabs, FF wire/echo distinction, literal/control, native no-op/local rejection, aliases, malformed binding and atomic capacity failure."
     },
     {
       "path": "build/terminal-key-output/edit-checks.json",
-      "sha256": "a0c74e34cd03b1043f02dd362d7e83c7c8e44a187bc4770a76fcc973a9efcaa9",
+      "sha256": "d2bb98a502c196cb61b16c0fbf860d48d35a7b326fa1bfa57bb1591b9af1d7ab",
       "checker_sha256": "76cd628c33b47f697b8bd5761245b18efaed180c59d99a43b7cc10b057c3ee7e",
       "cases": 55,
       "scope": "Actual shared key core, checked admission, native ICH/DCH and video/memory/attribute repair helpers. Hardware boundaries only are modeled. Both profiles, four standard/enhanced key identities, single/doublewidth edits, unchanged cursor/parser parameters, valid marker deletion and invalid geometry before wire/video mutation. Deep repair/video/value comparisons are in the separate live repair check. No physical keyboard/modem claim."
     },
     {
       "path": "build/terminal-key-output/reverse-tab-checks.json",
-      "sha256": "c2b8340c7fbc908eac97ff7bec123c247778f3aaa7f4572a554d62a9255f0593",
+      "sha256": "1903e56797c97c2726b2f4c0dc39a4c7ab0c8d12834feec8f3f7c038dd020d51",
       "checker_sha256": "2416b487be143a5c26e6f5cd6656715d6bb6031fe490da39afdd423199146552",
       "cases": 630,
       "scope": "Actual shared key core, checked far admission, recovered reverse Tab, boundary/coordinate/division/protected-home and real resident cursor helpers. Hardware-only BIOS/CRT models include adversarial notice-register clobbering. Table/mode matrix, protected/circular fields,1..25-row planes, doublewidth and pre-wire malformed/unsafe-state rejection; video/metadata/parser parameters unchanged. No physical BIOS/modem or full application/viewport claim."
@@ -36,7 +36,7 @@
     },
     {
       "path": "build/attribute-repair/live-checks.json",
-      "sha256": "95411712da8bc5eb7068eb281493f4ed7e62d75e00ed268cc694d1252218103d",
+      "sha256": "8e1cc61de05f3c3c4b973d6ea43e34a772618ea78c76dd96e42dc577c2fac445",
       "checker_sha256": "f2d864e273db897501566ea8324f95e765712be80199b697ee2b26a87d061e9a",
       "cases": 925,
       "scope": "Actual application RET2 resident bridge, checked far repair and real coordinate/default/previous/video dependencies. Full flag/value guards and video, cursor/DS=SS/callee ABI, malformed geometry before mutation; actual scroll, wrapped reverse Tab and repeated parser/keyboard DCH consumers. Invalid repair backing/geometry rejects keys before wire/cursor/parser/video/plane changes. Native whole-plane metadata shift with partial video regions is characterized. No viewport or physical hardware compatibility claim."
@@ -56,8 +56,8 @@
       "scope": "Actual child key request/callback code and guarded stacks; explicit scalar parent boundary. Exact16bit key, inherited/changed duplex, one callback per request, missing/duplicate/nonzero selector, typed errors, retry cleanup, unsolicited/closed/old capability rejection. Actual parent profile/UART/echo tested separately."
     },
     {
-      "path": "build/aspect-keys-dos/attribute-repair-01/checks.json",
-      "sha256": "cf78fb1e38579466b68cf71d92583b2106f41b4d14bb7942131aaeadc99ea9c2",
+      "path": "build/aspect-keys-dos/long-names-01/checks.json",
+      "sha256": "99bac32b1454445161c4887f5b1caa72bdb9c3dc6ad085c72144aa15ccd1fcc1",
       "checker_sha256": "312f1a39e1d93e8f31fcbded3a71046d417128f35f9c687db344a115b3e66c6b",
       "cases": 16,
       "scope": "Actual DOS BIOS keys during ASPECT WAITFOR, shared selected parent profile bindings, child-owned UART and real renderer echo. Owned peer withholds END until typed done, then script sends its password marker and continues; later parent keys still work. ANSI/VT220 full/half and binary custom KBD. No physical modem or full local-key/UI/macro claim."
@@ -87,21 +87,21 @@
   "regressions": [
     {
       "path": "build/terminal/character-edit-live-checks.json",
-      "sha256": "73f7575f36a6e7ea66439a9f53d3cf9f42496cb2533e77e82f429837dee14004",
+      "sha256": "b31ae5c69b72aa0e1150643d7cda26aa3a7e86d6750dcd42b426a517f41e2259",
       "checker_sha256": "34dca08ffbe6b714dbda4073fb734cab7c05ef0573bd7855bad17dabb7f67639",
       "cases": 9,
       "scope": "Actual linked UART IRQ, input/CSI/ESC dispatcher, maintained bounds and recovered character helpers/video/movers/attribute repair; hardware-only BIOS video/keyboard/UART/tick oracle. Fixed80x25 live geometry; complete repair video/value comparisons are in the live repair replay. Viewport support remains diagnostic-only."
     },
     {
       "path": "build/terminal/line-edit-live-checks.json",
-      "sha256": "b5c104f48194ad9e0a68d8ddf84370f1b97844bdc4ac457474061583aab8a4ac",
+      "sha256": "a73234b43b9bab1d1af42f5d3fe180fba97a4be564fdc140ab70b191cc2db41a",
       "checker_sha256": "30b51c52ade58f716b15a39f5ccf1ad664b17dca60bae9224f63e7953492ce3f",
       "cases": 8,
       "scope": "Actual linked live line policy, recovered line/erase/cursor and UART/keyboard instructions. Hardware-only video/UART/BIOS keyboard/tick oracle; no product service stub. NETWORK is intentional maintained compatibility policy; ORIGINAL alternate wait bounded36ticks. No physical modem or complete terminal claim."
     },
     {
       "path": "build/terminal-keys/result.json",
-      "sha256": "88d5fdff3ba260e63ef3c30b60f3bd180c9cc06902650ecf8ede7c54cef9e525",
+      "sha256": "cd076f68bc2c2e220413c234c8b6d0ed90318171962f86e36e7ae3afc7d2f928",
       "checker_sha256": "7fb4bf4c564d4e83d140853e41b7fc87a49c83febf80c85585e7d9a8ffc5e49b",
       "cases": 10,
       "scope": "Actual DOS BIOS events, startup profile selection, strict synthetic KBD import, FF-to-wire-NUL conversion, live sender/UART and restored IRQ/PIC/register state. No installed mappings or physical modem."
@@ -110,8 +110,8 @@
   "BBS": [
     {
       "server": "stock Synchronet",
-      "path": "build/bbs-lab/script-login/attribute-repair-sync-01/checks.json",
-      "sha256": "d5f90df7ca6e0a0ba9c3f02f6eacc660cc703bff317543969afd16128ff1c7da",
+      "path": "build/bbs-lab/script-login/long-names-sync-01/checks.json",
+      "sha256": "214befd2163bda314ccf238b2c6df83ab444272f365d5a7f85509f23d84418cf",
       "checks": {
         "DOS_harness": true,
         "current_terminal": true,
@@ -129,8 +129,8 @@
     },
     {
       "server": "isolated patched ENiGMA",
-      "path": "build/bbs-lab/results/enigma/attribute-repair-enigma-transfer-02-wrapper/experiment.json",
-      "sha256": "d0c3ab7929b49edeb8860b499be269918d93c72ee8184a01e80d2d77c83c647f",
+      "path": "build/bbs-lab/results/enigma/long-names-enigma-transfer-01-wrapper/experiment.json",
+      "sha256": "84255e79fa6080b25d5501a5f2597219ff87dc96a3cf6dad2ea6a7e27bca575c",
       "checks": {
         "DOS_normal_exit": true,
         "hardware_restored": true,
@@ -153,12 +153,12 @@
         "discard_menu_used": true,
         "no_leftover_staging": true
       },
-      "transfer_sha256": "07eb1e44993a61c13187c7b848628c9ff8bc132e3de469291f2921544b10499a",
+      "transfer_sha256": "ab8f02257c9113e96fb71131f7fd82b64870bebf2ff3ba8c606ae0043ce18a4e",
       "scope": "Immediate modeled modem, unsaved editor then exact ZMODEM transfer and file-list return. This is not the live LAN board or physical modem."
     }
   ],
   "reproduced_outputs": 178,
-  "source_proof_sha256": "84dffb5d6a176ff647d9b086739678faf3ee4f5cc2634a71d797dfbc2b2d25d1",
+  "source_proof_sha256": "f33f8c6c3edaee1e6369515600b44ad111979d6f01d201f8aa97acb8388d7454",
   "original_inputs": [],
   "whole_application_gates_closed": [],
   "retained_fixture_failures": [

@@ -72,7 +72,7 @@ static unsigned finish(zm_session *s)
 }
 static unsigned receive(zm_session *s)
 {
- unsigned r,type,count,ending,i;batch_header_result meta;
+ unsigned r,type,count,ending,same;batch_header_result meta;
  if(receive_init(s))return s->status;
  while(!s->status && s->retries<LIMIT){
   s->phase=1;r=event(s);
@@ -95,23 +95,21 @@ static unsigned receive(zm_session *s)
    if(type==ZSINIT){header(s,ZACK,0,ZW_HEX);++s->retries;continue;}
    count=s->decoder.count;
    if(count>1024)return fail(s,ZM_PROTOCOL);
-   for(i=0;i<count && s->io.rx[i];++i){}
-   if(i==count)return fail(s,ZM_PROTOCOL);
-   for(++i;i<count && s->io.rx[i];++i){}
-   if(i==count)return fail(s,ZM_PROTOCOL);
-   for(i=count;i<1024;++i)s->io.rx[i]=0;
-   if(!count || batch_header_decode(s->io.rx,1024,&meta)!=BH_OK || meta.kind!=BH_FILE)return fail(s,ZM_PROTOCOL);
+   if(zm_name_decode(s->io.rx,count,s->data,&meta)!=BH_OK || meta.kind!=BH_FILE)return fail(s,ZM_PROTOCOL);
+   same=!strcmp(s->name,(const char *)s->io.rx);
    if(s->owned){
-    if(strcmp(s->name,meta.name))return fail(s,ZM_PROTOCOL);
+    if(!same)return fail(s,ZM_PROTOCOL);
    }else{
+    /* Retain identity before a callback or response reuses the wire arena. */
+    strcpy(s->name,(const char *)s->io.rx);
     s->owned=1;r=s->ops->open_received(s->context,&meta);
     if(r==ZM_DONE){
      s->owned=0;if(s->skipped!=0xffffU)++s->skipped;
-     if(!strcmp(s->name,meta.name))++s->retries;else{s->retries=0;strcpy(s->name,meta.name);}
+     if(same)++s->retries;else s->retries=0;
      header(s,ZSKIP,0,ZW_HEX);continue;
     }
     if(r)return fail(s,ZM_FILE);
-    s->owned=1;s->position=0;s->size=meta.size;strcpy(s->name,meta.name);s->retries=0;
+    s->owned=1;s->position=0;s->size=meta.size;s->retries=0;
    }
    header(s,ZRPOS,s->position,ZW_HEX);continue;
   }
@@ -176,7 +174,7 @@ static unsigned offer(zm_session *s)
  unsigned r,type;
  s->phase=0;
  for(s->retries=0;s->retries<LIMIT && !s->status;++s->retries){
-  if(batch_header_encode(s->name,sizeof(s->name),s->size,s->data,128)!=BH_OK)return fail(s,ZM_FILE);
+  if(batch_header_encode(s->name,13,s->size,s->data,128)!=BH_OK)return fail(s,ZM_FILE);
   if(header(s,ZFILE,0x01000000UL,s->format) || data(s,128,ZW_CRCW))break;
   for(;;){
    r=event(s);if(r!=ZW_HEADER)break;type=s->decoder.header[0];

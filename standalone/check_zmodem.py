@@ -28,7 +28,7 @@ class PacketIO(C.Union):
     _fields_=[('rx',C.c_ubyte*8192),('wire',C.c_ubyte*8192)]
 class Session(C.Structure):
     _fields_=[('ops',P),('context',P)]+[(n,U) for n in ('status','cleanup_status','sending','owned','format','control','block','retries','phase','skipped','window','capacity')]+[
-        (n,D) for n in ('position','size','files','bytes')]+[('name',C.c_char*13),('decoder',Decoder),('data',C.c_ubyte*1024),('io',PacketIO)]
+        (n,D) for n in ('position','size','files','bytes')]+[('name',C.c_char*256),('decoder',Decoder),('data',C.c_ubyte*1024),('io',PacketIO)]
 
 def h(t,pos=0,fmt=66):return header(bytes([t])+pos.to_bytes(4,'little'),fmt,0)
 def meta(name,size):return name.encode()+b'\0'+str(size).encode()+b'\0'
@@ -117,7 +117,7 @@ def main():
     lock=(OUT/'.lock').open('w');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
     runroot=OUT/'runs'/datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     runroot.mkdir(parents=True)
-    sources=[ROOT/'src/transfer'/n for n in ('zmodem.c','zmodem.h','zmodem_wire.c','zmodem_wire.h','batch_header.c','batch_header.h')]
+    sources=[ROOT/'src/transfer'/n for n in ('zmodem.c','zmodem.h','zmodem_wire.c','zmodem_wire.h','zmodem_name.c','zmodem_name.h','batch_header.c','batch_header.h')]
     subprocess.run(['gcc','-std=c89','-Wall','-Wextra','-Werror','-Wno-misleading-indentation','-shared','-fPIC',*[str(p) for p in sources if p.suffix=='.c'],'-o',str(OUT/'session.so')],check=True)
     lib=C.CDLL(str(OUT/'session.so'));lib.zm_run.argtypes=[P,P,P,U];cases=[]
     def check(label,good):assert good,label;cases.append(label)
