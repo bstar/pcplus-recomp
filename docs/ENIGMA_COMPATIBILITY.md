@@ -4,11 +4,12 @@ The target includes the user's running `~/projects/black-flag-bbs` checkout,
 its configured menus and modules, and the source-built DOS client. Passing
 an isolated stock BBS is insufficient. Compatibility is not complete.
 
-The [current live validation](validation/enigma-live-current.json) records a
+The [October 19 live validation](validation/enigma-live-20261019.json) records a
 fresh DOS run with the correct Classic Pillars prompt: login, menu, details,
-DIZ and NFO entry pass, but NFO scrolling fails. Both Down and PageDown are
-present on the client-to-server wire; the only NFO header remains lines1–15
-of24. All source/configuration fingerprints remain unchanged. A fresh replay
+DIZ and NFO entry pass, but complete NFO scrolling fails. Both Down and PageDown
+are present on the client-to-server wire. Down advances from lines1–15 to2–16
+of24; PageDown never reaches the final page. All source/configuration
+fingerprints remain unchanged. A fresh replay
 of the live Client reproduces74 fragmented-key and9 editor differences; the
 staged candidate passes112 checks with neither difference. The candidate is
 still separate from the running board.

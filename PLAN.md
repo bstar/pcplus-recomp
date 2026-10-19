@@ -1,6 +1,11 @@
 # Complete DOS rebuild plan
 
 Current compatibility priority: the user's [owned ENiGMA board](lab/bbs/enigma-owned.md).
+The [October 19 live retest](docs/validation/enigma-live-20261019.json) confirms
+login/search/DIZ/NFO entry and one-line Down scrolling, but PageDown still
+fails despite correct outgoing bytes. The same checkout reproduces74 fragmented
+key differences and9 editor differences; the staged candidate has zero in112
+replay checks. The running service remains unchanged.
 DOS-compiled login and custom game/DIZ/NFO page entry work, but immediate NFO
 scrolling fails despite correct outgoing keys. The bounded decoder candidate
 passes actual DOS editor and byte-exact ZMODEM workflows in isolation; it is

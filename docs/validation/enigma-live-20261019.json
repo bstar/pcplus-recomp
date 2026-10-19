@@ -1,0 +1,90 @@
+{
+  "date": "2026-10-19",
+  "compatibility_complete": false,
+  "live_server_modified": false,
+  "physical_modem_validated": false,
+  "server_root": "~/projects/black-flag-bbs",
+  "server_revision": "237cd9743d6978a940dd66db0e78f6ab8ccd3e37",
+  "terminal_sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+  "live_client_sha256": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+  "main_menu_text": "[ LoC ]",
+  "live_file_navigation": {
+    "passed": false,
+    "checks": {
+      "DOS_harness": true,
+      "authenticated_probe": true,
+      "main_menu": true,
+      "inputs_unchanged": true,
+      "no_post_saved": true,
+      "staged_products_unchanged": true,
+      "DOS_source_compiled": true,
+      "game_details": true,
+      "diz_page": true,
+      "nfo_page": true,
+      "nfo_scrolled": false
+    },
+    "page_headers": [
+      [
+        1,
+        15,
+        24
+      ],
+      [
+        2,
+        16,
+        24
+      ]
+    ],
+    "navigation_keys_emitted": {
+      "down": true,
+      "page_down": true
+    }
+  },
+  "decoder_replay": {
+    "decoder-stock": {
+      "passed": true,
+      "fixed": false,
+      "checks": 109,
+      "demonstrated_fragmentation_failures": 74,
+      "editor_fragmentation_failures": 9
+    },
+    "decoder-candidate": {
+      "passed": true,
+      "fixed": true,
+      "checks": 112,
+      "demonstrated_fragmentation_failures": 0,
+      "editor_fragmentation_failures": 0
+    }
+  },
+  "evidence": [
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-current-20261019-files-01/owned-server-checks.json",
+      "sha256": "fb084014496ce8a40330809cd101c9aae47c6fb1c71f8792e3d64f355b870bce"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-current-20261019-files-01/bbs-sent.bin",
+      "sha256": "2187ebb0836a1581b8edb1c7bbaede9202f96582396990d78fe20e0a862005a0"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-current-20261019-files-01/display.bin",
+      "sha256": "98423d46f9d5fc10f372f14faac944da160fe0e01fb10bf8bde073fe14a6e578"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-current-20261019-files-01/server-session.jsonl",
+      "sha256": "86ab80ea5cfd52fd09cc56115a22a73452fb64578c018d130cd88dada7fb8361"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-current-20261019-files-01/decoder-stock.log",
+      "sha256": "7949dc84bf9fa1d0d5d39a1311b875f0276f1a4ab89faa3fd74aba9932e7e9e6"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-current-20261019-files-01/decoder-candidate.log",
+      "sha256": "90eb0b558a5a9ccb79f79d77d501047be0aa0b552873e51b146ef0ad58abf083"
+    }
+  ],
+  "remaining": [
+    "Live decoder deployment and repeat navigation/editor acceptance.",
+    "Live transfer, cancellation, reconnect and door acceptance.",
+    "Physical RS-232 Wi-Fi modem timing and flow control."
+  ]
+}
