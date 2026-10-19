@@ -863,3 +863,11 @@ aspect-compiler-expression:
 	python3 standalone/build_aspect_compiler_expression.py
 test-aspect-compiler-expression: aspect-compiler-expression
 	python3 standalone/check_aspect_compiler_expression.py
+
+.PHONY: aspect-compiler-dos test-aspect-compiler-dos
+all: aspect-compiler-dos
+test: test-aspect-compiler-dos
+aspect-compiler-dos:
+	python3 standalone/build_aspect_compiler_dos.py
+test-aspect-compiler-dos: aspect-compiler-dos aspect-runner
+	python3 standalone/check_aspect_compiler_dos.py

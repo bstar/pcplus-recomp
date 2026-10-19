@@ -22,6 +22,13 @@ static void variable(aspect_compiler_output *o,const aspect_compiler_symbol_info
  else if(info->space==ASPECT_SYMBOL_GLOBAL){aspect_compiler_emit_byte(o,globals[info->kind]);aspect_compiler_emit_byte(o,info->index);}
  else{aspect_compiler_emit_byte(o,info->space==ASPECT_SYMBOL_LOCAL?locals[info->kind]:params[info->kind]);aspect_compiler_emit_word(o,info->index);}
 }
+unsigned aspect_compiler_emit_destination(aspect_compiler_expression *e,aspect_compiler_output *o,unsigned index,unsigned *kind)
+{
+ aspect_compiler_symbol_info info;
+ if(!ready(e,o)||!kind)return 1;
+ if(!lvalue(e,index,&info))return 1;
+ *kind=info.kind;variable(o,&info);return o->status||e->status?1:0;
+}
 void aspect_compiler_emit_operand(aspect_compiler_expression *e,aspect_compiler_output *o,const aspect_compiler_value *v,unsigned compact)
 {
  static const unsigned char table[13]={0xb3,0x35,0x0b,0xc7,0x47,0x29,0x1d,0xfb,0x1f,0x7f,0x05,0x59,0x17};

@@ -11,11 +11,12 @@ OUT = ROOT / 'build/dos-package'
 
 
 def main():
-    for name in ['terminal', 'setup', 'xlt_editor', 'aspect_runner']:
+    for name in ['terminal', 'setup', 'xlt_editor', 'aspect_runner', 'aspect_compiler_dos']:
         subprocess.run([sys.executable, str(ROOT / f'standalone/build_{name}.py')], check=True)
     OUT.mkdir(parents=True, exist_ok=True)
     files = {'TERMINAL.EXE': 'terminal/TERMINAL.EXE', 'ASPECT.EXE': 'aspect-runner/ASPECT.EXE',
-             'PRMEDIT.EXE': 'setup/PRMEDIT.EXE', 'XLTEDIT.EXE': 'xlt-editor/XLTEDIT.EXE'}
+             'PRMEDIT.EXE': 'setup/PRMEDIT.EXE', 'XLTEDIT.EXE': 'xlt-editor/XLTEDIT.EXE',
+             'ASPCOMP.EXE': 'aspect-compiler-dos/ASPCOMP.EXE'}
     for leaf, relative in files.items():
         shutil.copyfile(ROOT / 'build' / relative, OUT / leaf)
     sys.path.insert(0, str(ROOT / 'src/aspect'))
@@ -34,6 +35,11 @@ def main():
                     'Connected scripts resume automatically after success.\r\n'
                     'Offline scripts wait for a key before returning.\r\n'
                     'Or run directly: ASPECT HELLO.ASX\r\n'
+                    'Compile in DOS: ASPCOMP HELLO.ASP\r\n'
+                    'Or select an output: ASPCOMP HELLO.ASP DEMO.ASX\r\n'
+                    'A failed compile preserves an existing output.\r\n'
+                    'The compiler covers the maintained ASPECT language subset.\r\n'
+                    'Compile ASP first; automatic source compilation is not enabled.\r\n'
                     '\r\nScripts run as a separate DOS process. This interpreter implements\r\n'
                     'a subset of ASPECT, including TRANSMIT and WAITFOR.\r\n'
                     'The menu lends the active port and returns unread data on exit.\r\n'

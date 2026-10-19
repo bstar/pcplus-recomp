@@ -152,6 +152,7 @@ class Compiler:
         self.fixups = []
         self.line = 1
         self.proc = None
+        self.declaration_lines = []
 
     def error(self, message):
         raise CompileError(f"line {self.line}: {message}")
@@ -620,7 +621,7 @@ class Compiler:
         # positive token is long-classified, but this command expects a word.
         minimum = (node[0] == 'unary' and node[1] == '-' and
                    node[2][0] == 'constant' and node[2][2] == 32768 and
-                   not node[2][3])
+                   node[2][1] != 2 and not node[2][3])
         if self.kind(node) != 0 and not minimum:
             self.error('integer command operand required')
         if value[0] == 'constant':
@@ -843,6 +844,16 @@ class Compiler:
         return [proc for name, proc in self.procedures.items() if name in included]
 
     def emit_procedures(self, procedures):
+        # The inventory can omit a trailing part with unmatched parentheses.
+        # Native compiler C037/C038 still reject it, including unused bodies.
+        for self.line, tokens in self.declaration_lines:
+            depth = 0
+            for token in tokens:
+                depth += (token == '(') - (token == ')')
+                if depth < 0:
+                    self.error('missing left parenthesis in declaration')
+            if depth:
+                self.error('missing right parenthesis in declaration')
         self.emit(self.counts[3])
         # The original retains this prefix when the first declared procedure
         # is unused and removed, leaving a jump to the following MAIN.
@@ -880,6 +891,7 @@ class Compiler:
                     self.error('unmatched endproc')
                 current = None
             elif tokens[0] in TYPES or tokens[0] in PARMS:
+                self.declaration_lines.append((self.line, tokens))
                 self.declarations(tokens, current, self.line)
             elif current is None:
                 self.error('statement outside procedure')

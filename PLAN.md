@@ -1509,3 +1509,40 @@ pruning, complete ASX output, transactional CLI and nested runtime fallback.
 The full compiler/recorder, application services, other UI/protocol/emulation
 workflows, Host, ENiGMA immediate-forwarding interaction and physical modem
 validation remain required. No F01–F16 application gate is closed.
+
+### Complete maintained compiler on DOS
+
+ASPCOMP.EXE now ports the maintained host grammar into a source-built8086 DOS
+compiler. All current statements, commands, SET/FETCH, WHEN/CWHEN and typed
+calls emit complete ASX. Every body and initializer is validated before exact
+iterative zero-reference pruning; MAIN and mutually referenced dead cycles are
+retained. Procedure declaration order, initial MAIN jump, parameter/frame
+cleanup, implicit CASE fallthrough and32-bit file/branch targets match the host.
+
+An independent original compiler oracle confirms two accepted declaration
+outputs and eight rejected malformed declaration/WORD edges. Both maintained
+compilers now reject unmatched declaration parentheses, including omitted
+trailing inventory parts and unused/global/parameter declarations. The WORD
+operand -32768.0 is a typed error, correcting the prior host TypeError.
+
+The1173 actual DOS whole-program cases compare718 accepted ASX files exactly
+and reject455. They include the existing corpus, dead cycles/chains, malformed
+unused initializers/bodies, typed parameters, large discarded tails and complete
+bytecode/procedure/conditional targets beyond64KiB. The suite runs on8086 with
+FPU disabled. An actual DOS-compiled69-byte script executes in the maintained
+ASPECT interpreter and prints0,1,2 and COMPILED IN DOS.
+
+There are1693 API/publication checks,26 program and29 inventory allocation fault
+positions,100 successful compiler ownership cycles,11 production CLI children
+and two diagnostic CLI children. Tests preserve borrowed FILE/foreign heap
+ownership, reject same-FILE input/output and readonly output, and verify both
+actual DOS rename rollback and retained backup bytes when restoration is forced
+to fail. Normal publication uses a reserved sibling staging file and preserves
+existing output on compilation failure. The DOS package includes ASPCOMP.
+
+Fresh original-free source builds reproduce153 normal products. TERMINAL and
+ASPECT retain the prior application bytes. Automatic ASP/missing-ASX fallback,
+nested EXEC INT0/PSP/vector isolation, UART/settings/file/label preservation and
+actual BBS workflow integration remain next. Full native compiler families
+beyond the maintained subset, recorder and all F01–F16 application requirements
+remain open. See `docs/ASPECT_DOS_COMPILER.md` and its validation ledger.

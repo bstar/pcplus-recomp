@@ -27,6 +27,15 @@ def vectors():
 
 
 class CompilerTests(unittest.TestCase):
+    def test_original_declaration_and_word_boundaries(self):
+        path = ROOT / 'standalone/fixtures/aspect_declaration_edges.json'
+        data = json.loads(path.read_text())
+        for vector in data['vectors']:
+            self.assertEqual(compile_source(vector['source']), bytes.fromhex(vector['hex']))
+        for vector in data['rejected']:
+            with self.subTest(name=vector['name']), self.assertRaises(CompileError):
+                compile_source(vector['source'])
+
     def test_frozen_original_compiler_vectors(self):
         count = 0
         for corpus, vector in vectors():

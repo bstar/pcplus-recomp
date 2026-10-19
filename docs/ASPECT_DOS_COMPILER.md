@@ -2,19 +2,23 @@
 
 The DOS compiler is being ported from the maintained host compiler, preserving
 its existing language coverage and original-compiler bytecode expectations.
-The first three C stages now run under8086 DOS. They are developer diagnostics,
-not an ASPCOMP replacement: none generates a complete ASX program, and the interpreter still
-reports unsupported when an ASP needs compilation.
+The maintained host compiler grammar now has a source-built8086 DOS port,
+`ASPCOMP.EXE`, producing complete ASX programs. The interpreter still reports
+unsupported when an ASP needs compilation; automatic runtime compilation is the
+next integration task. Original language families beyond the maintained host
+subset and the recorder remain unfinished. ASPLEX/ASPINV/ASPEXP are separate
+developer diagnostics.
 
 The normal builds use the pinned Nix Open Watcom toolchain, large-model C and
 an8192-byte stack for lexer/inventory and32768 bytes for recursive expression
-parsing/emission. They read only maintained C sources and public headers.
+parsing/emission and complete compilation. They read only maintained C sources
+and public headers.
 Neither the original compiler/executable, host ASPECT compiler, fixture database nor REA
 analysis is an input to their application build.
 
 ```sh
-./tools/build aspect-compiler-lexer aspect-compiler-unit aspect-compiler-expression
-./tools/build test-aspect-compiler-lexer test-aspect-compiler-unit test-aspect-compiler-expression
+./tools/build aspect-compiler-lexer aspect-compiler-unit aspect-compiler-expression aspect-compiler-dos
+./tools/build test-aspect-compiler-lexer test-aspect-compiler-unit test-aspect-compiler-expression test-aspect-compiler-dos
 ```
 
 ## Streaming lexical stage
@@ -36,13 +40,13 @@ Read/length/character/position failures are sticky, and neither the reader nor
 token copier closes the source. The ALX1 output from ASPLEX is a diagnostic
 stream, not bytecode.
 
-Actual DOS tests compare all1154 unique corpus/boundary sources with the host
+Actual DOS tests compare all1164 unique corpus/boundary sources with the host
 regex, including accepted lexical forms inside grammatically rejected sources.
-The comparison covers92290 physical lines,75155 tokens and2130319 output bytes.
+The comparison covers92324 physical lines,75247 tokens and2131983 output bytes.
 It checks exact normalized bytes, spans, original source positions, four actual
 CLI outcomes, source offsets/line counts beyond65535, reader errors, unchanged
 output on rejected token copies and borrowed FILE lifetime. The diagnostic
-reports2369 DOS checks. This is lexical evidence, not language acceptance.
+reports2389 DOS checks. This is lexical evidence, not language acceptance.
 
 ## Declaration and procedure inventory
 
@@ -62,8 +66,8 @@ allocation. A loaded unit rejects another load until retired; disposal is
 idempotent. Large-model pointers allow records to use memory outside DGROUP.
 The AUN1 stream from ASPINV is an inventory diagnostic, not ASX.
 
-The1164 actual DOS first-pass cases compare with the maintained host's
-collection pass with emission disabled.1123 produce an inventory and41 fail in
+The1174 actual DOS first-pass cases compare with the maintained host's
+collection pass with emission disabled.1133 produce an inventory and41 fail in
 this pass. Comparisons cover complete symbol/procedure order, type/space/index,
 frame size, parameter bytes, initializer token slices/chaining and all retained
 source ranges. Unknown or malformed body expressions can legitimately pass an
@@ -73,7 +77,7 @@ Eighteen allocation-failure positions and200 successful load/dispose cycles
 restore independently observed heap allocation addresses and sizes. A foreign
 block and the borrowed source stay live. Six controlled heap corruptions or
 capacity failures test the observer's rejection paths. The final suite performs
-3326 checks, including actual ASPINV CLI children.
+3346 checks, including actual ASPINV CLI children.
 
 ## Pinned CRT heap-check boundary
 
@@ -131,9 +135,9 @@ byte-for-byte and929 reject. Cases include existing source corpus assignments,
 seeded mixed expressions, integer wrap with original boolean truth, all typed
 symbol spaces, invalid destinations, string bounds/NUL/CP437, recursive bounds,
 temporary255/256, decimal rounding ties and overflow/underflow boundaries.
-The host raises `TypeError` for the malformed WORD operand `-32768.0`; the DOS
-frontend returns a typed rejection. This is explicitly recorded, not asserted to
-be an established original-compiler grammar rule.
+The original compiler rejects the malformed WORD operand `-32768.0` with C021.
+Both maintained compilers now return a typed rejection; the earlier host
+`TypeError` is corrected using that independent DOS oracle.
 
 Separate1356 DOS API checks exercise patch bounds, real offsets above64KiB, cursor
 restoration, read-only output, sticky write errors and caller FILE ownership.
@@ -144,36 +148,85 @@ and overflowing line numbers, missing source and usage rejection.
 
 ASPEXP's `AEX1` header and following expression/assignment bytes are a developer
 fragment protocol. They are not a loadable ASX program. No statement compiler or
-runtime source fallback is enabled by this checkpoint. A fresh source checkout
-without originals or analysis reproduces152 normal outputs, including ASPEXP;
+runtime source fallback is enabled by the fragment tool. A fresh source checkout
+without originals or analysis reproduces153 normal outputs, including ASPCOMP;
 production TERMINAL/ASPECT executables retain the previous checkpoint's bytes.
+
+## Complete maintained DOS compiler
+
+`compiler_program.c` combines the inventory, expressions and real FILE writer
+with complete maintained statement and procedure emission. `compiler_commands.c`
+ports all current command/setting/FETCH/WHEN forms. Typed calls retain parameter
+order and frame cleanup. IF/ELSEIF/ELSE, WHILE and SWITCH keep exact implicit CASE
+fallthrough, DEFAULT and nearest-loop exit/continue behavior.
+
+The compiler validates every body and initializer before discarding procedures.
+An independent ten-case original DOS compiler probe confirms rejection of
+unmatched declaration parentheses, including global/parameter declarations and
+unused procedures, and the real WORD boundary above. Two accepted declaration
+cases retain frozen original ASX bytes. Both host and DOS compilers validate all
+retained declaration lines so a trailing malformed part cannot disappear in the
+inventory pass. The inventory diagnostic itself deliberately remains a first
+pass and is not a whole-program acceptance check.
+
+Procedure selection repeatedly removes zero-reference procedures, preserving
+MAIN and mutually referenced dead cycles. Declaration order and the initial
+jump when the first declaration is not MAIN remain exact. An initial full
+validation emission is discarded and truncated before the final selected pass,
+so removed tails cannot survive in ASX. Procedure/condition/CASE targets remain
+32-bit, including actual outputs beyond64KiB.
+
+The1173 actual8086 DOS program cases match the host:718 complete accepted ASX
+files are byte-identical and455 reject. Cases include the entire existing source
+corpus, native declaration edges, typed parameters, nested loops, dead chains and
+cycles, invalid unused initializers/bodies, large pruned tails and complete
+program/conditional/call targets beyond64KiB. The suite runs with FPU disabled.
+
+There are1693 additional API/publication checks. Twenty-six program allocation
+failures and29 inventory allocation failures restore live allocation identity
+and sizes, preserve a foreign allocation and leave borrowed FILEs owned by the
+caller. One hundred successful full compiler cycles repeat that ownership check.
+Same-FILE source/output is rejected, writable scratch output is truncated, and
+read-only output returns an I/O error.
+
+The CLI compiles into an exclusively reserved sibling staging name, closes the
+source and compiled file, then publishes the validated result. Replacement keeps
+a backup until rename succeeds, restores it on a failed publication rename and
+reports its path if restoration fails. Eleven actual CLI children cover default
+and explicit output, replacement, syntax/missing-input errors, source collision,
+missing output directory and directory targets. Two additional diagnostic CLI
+children force the publication rename to fail: one verifies actual DOS rollback,
+and the other also fails restoration and verifies that the backup retains the
+previous bytes. The latter backup is restored by the test caller. Normal ASPCOMP
+links no fault hook. Tested failures preserve source and prior ASX data; all
+temporary files and successfully retired backup names are checked.
+
+A DOS-produced69-byte ASX then runs in the actual maintained ASPECT interpreter,
+printing0,1,2 and COMPILED IN DOS through arithmetic, looping, conversion and a
+procedure call. This verifies explicit compilation and execution, not automatic
+ASP loading, serial ownership or physical modem behavior.
+
+The package now includes ASPCOMP. Inside DOS, from the staged program directory:
+
+```text
+ASPCOMP HELLO.ASP
+ASPECT HELLO.ASX
+```
+
+An explicit output is also supported: `ASPCOMP HELLO.ASP DEMO.ASX`. Output must
+be a distinct `.ASX` path. Normal application builds do not read original
+compiler executables, host compiler code, fixtures or REA databases.
 
 ## Remaining compiler work
 
-The target remains a working DOS compiler and runtime source fallback, not these
-diagnostics. Continue the port through these stages:
+1. Integrate explicit ASP and missing-ASX ASP fallback into the checked loader.
+   Preserve UART lease, flow/error handling, settings, filename label,
+   file/global cleanup and source namespace across compiler invocation.
+2. Scope INT0 ownership across nested compiler EXEC so a compiler fault cannot
+   reenter an interpreter trap with the compiler's DS/SS. Verify child PSP,
+   vector restoration, errors/cancellation and the actual DOS/BBS workflows.
+3. Expand beyond the maintained host grammar to full original compiler coverage,
+   add the recorder and finish the remaining application services. Additional
+   malformed/native language edges still need independent original evidence.
 
-1. Integrate the verified expression/operand stages into complete statement and
-   command compilation, preserving existing host/original vectors.
-2. Emit complete ASX programs; preserve32-bit procedure/control-flow fixups in
-   addition to the verified expression branch and positional string behavior.
-3. Validate every initializer and body, including unused procedures. Retain
-   declaration source lines so malformed or omitted inventory parts cannot
-   disappear from validation unnoticed. Native grammar for previously unproved
-   malformed declaration edges still needs an original-compiler oracle.
-4. Implement all current statement, command, argument, WHEN and settings forms.
-   Validate unused bodies before repeated zero-reference pruning; preserve
-   mutually referenced dead cycles and the original first-procedure jump rule.
-5. Provide the DOS compiler CLI and transactional output/error handling. Compare
-   complete emitted ASX with the existing host and frozen original compiler
-   corpus, including files and branch targets beyond64KiB.
-6. Integrate explicit ASP and missing-ASX ASP fallback into the checked loader.
-   Preserve the UART lease, flow/error handling, script settings, filename label,
-   file/global cleanup and source namespace across compiler invocation; test the
-   actual result in DOS and the local BBS workflows. Scope INT0 ownership
-   across nested compiler EXEC so a compiler fault cannot reenter an interpreter
-   trap with the compiler's DS/SS; verify child PSP and vector restoration.
-
-Full original compiler coverage beyond the maintained host subset, scripting
-recorder and remaining application services stay in scope. No F01–F16 gate is
-closed by these frontend stages.
+No F01–F16 whole-application gate is closed by this compiler checkpoint.

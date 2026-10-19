@@ -1,0 +1,105 @@
+{
+  "schema": "aspect-declaration-edges-v1",
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "probe_sha256": "e17228c65c55d083a00490e64b3c528ee5f5d5b54751841309c7705f1a900c81",
+  "batch_sha256": "67571781d63677c361f87b83df3102a7e4ee57e7898a34937ea5da01173d343a",
+  "vectors": [
+    {
+      "name": "CLOSED",
+      "source": "proc main\ninteger a=(1)\nendproc\n",
+      "source_sha256": "016a6166df6b57a7f72c53c244db94869b9f2ea83170c3216b59e0f73c5cbb40",
+      "log_sha256": "ee118b885f387a17a9f66f1eaa030d56577ce1c99511927e001b6ab03d808428",
+      "hex": "00d202005b00a10000ab0100cf95",
+      "asx_sha256": "3cc6ceccc8b93cf78d34480306ca2156f436a894bfaddabd9ff555ff59a5e389"
+    },
+    {
+      "name": "NESTINIT",
+      "source": "proc main\ninteger a=(1+(2)),b=3\nendproc\n",
+      "source_sha256": "f362a7b2609620f3fd0538219d2398bca019790e188f181424884a81841c5f3a",
+      "log_sha256": "52d4aaa5175157cc2258b80c71abc4781bdbe81c7a65b869e40141d866c8c94c",
+      "hex": "00d204000000ab0100ab020079005c00a10000790079005b00a10200ab0300cf95",
+      "asx_sha256": "0363e2d6597c2e1324304acfab20929e187beb6298ab2f5eae17b55a263d1283"
+    }
+  ],
+  "rejected": [
+    {
+      "name": "MISSEND",
+      "source": "proc main\ninteger a=(1\nendproc\n",
+      "source_sha256": "e818634b83eb0efa403d30c4cbfb892982c0a8ce5163a3b49420f2d7d00055eb",
+      "log_sha256": "219c39d89823fc968eb9c253d2f536e77c23f51774f4b9f49bc294ef47b6e79c",
+      "errors": [
+        "Error C037 Line 2: Missing right paren"
+      ]
+    },
+    {
+      "name": "TRAIL",
+      "source": "proc main\ninteger a=1,b=(2\nendproc\n",
+      "source_sha256": "3a4a457b43dd123e5a28d653af36f94f6c08eaf6750e58532d28146f9480c3da",
+      "log_sha256": "b977fb0267adf0b90fa269edacfc82d9069a669ae302057441e273726f462a1b",
+      "errors": [
+        "Error C037 Line 2: Missing right paren"
+      ]
+    },
+    {
+      "name": "NEGDEPTH",
+      "source": "proc main\ninteger a=1)\nendproc\n",
+      "source_sha256": "cdbc7ac0e018fa5fba6524a9be9ca414c587fdf89f014f1a171d917d3b3c7be3",
+      "log_sha256": "81898d8f8af9e64bb4d38ed4bfe4275be9b2b04789b77917d88ba07785a2894e",
+      "errors": [
+        "Error C038 Line 2: Missing left paren"
+      ]
+    },
+    {
+      "name": "EMPTYRHS",
+      "source": "proc main\ninteger a=\nendproc\n",
+      "source_sha256": "bd42cd4e3af79f4d193d3541a8587653f58865db4ccd9814cd0b898d0a5770ee",
+      "log_sha256": "11dbc3f32cca2a93aa7a68b1038698c0a380ab2721b943ae46ed4cd6eb1c9300",
+      "errors": [
+        "Error C036 Line 2: Missing operand"
+      ]
+    },
+    {
+      "name": "UNUSED",
+      "source": "proc removed\ninteger a=(1\nendproc\nproc main\nendproc\n",
+      "source_sha256": "fecc917f1f8dba53fd077bc64d8c3bcb2b53e38d1d30128c69b2250c2d9f6c0f",
+      "log_sha256": "f4b692f2e5a65739526279a802cc0698a43e921eb4ffacd4c3d378d7315307f7",
+      "errors": [
+        "Error C037 Line 2: Missing right paren"
+      ]
+    },
+    {
+      "name": "GLOBAL",
+      "source": "integer a(\nproc main\nendproc\n",
+      "source_sha256": "dd23713bd30eb969ef8776f679c440b8e91193f2166c8c6908e04b01de79c07a",
+      "log_sha256": "1e8c10425c98571aafa2d18e93e80cf962e9b946417335575b8b4b156768a131",
+      "errors": [
+        "Error C048 Line 1: Missing comma in token list",
+        "Error C025 Line 1: Invalid identifier ==> ("
+      ]
+    },
+    {
+      "name": "PARAM",
+      "source": "proc worker\nintparm a(\nendproc\nproc main\nendproc\n",
+      "source_sha256": "96d1e1c7999f9162063a0e46a288b3f07b7a6ecb8e66191bf150ac810a396b3b",
+      "log_sha256": "11e655880391ec0d2402814f98fbbe4c1bae497d29ccddc5e8b2ebd7d961c52c",
+      "errors": [
+        "Error C048 Line 2: Missing comma in token list",
+        "Error C025 Line 2: Invalid identifier ==> ("
+      ]
+    },
+    {
+      "name": "WORDREAL",
+      "source": "proc main\npause -32768.0\nendproc\n",
+      "source_sha256": "1c7a07abd5ebf9105337979950080217c77b0bd7ba4c1f486ffe92ea6d4efb53",
+      "log_sha256": "e67893f877fc55aa67d5995b22dc1f1356a9fa058c7d33759fc62334c7a879b6",
+      "errors": [
+        "Error C021 Line 2: Invalid numeric variable or constant ==> -32768.0"
+      ]
+    }
+  ],
+  "scope": "Actual original DOS compiler outcomes for authored malformed declaration and WORD real boundary cases. No static decompilation or runtime VM claim.",
+  "provenance": {
+    "report": "analysis/aspect-declaration-edges/compiler-02/report.json",
+    "report_sha256": "5be2f4d7af45f2286efa6f3fa504df05d1f26186328523975951e41634947320"
+  }
+}
