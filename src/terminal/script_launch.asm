@@ -10,6 +10,29 @@ extern terminal_program_command,terminal_program_status
 extern uart_rx_count,uart_rx_dropped,uart_rx_buffer,uart_rx_read,uart_rx_write
 extern uart_port_lcr,uart_port_thr,uart_port_index,uart_software_flow,uart_hardware_flow
 extern uart_rts_lowered,terminal_parser_active,terminal_ansi_wait_active
+extern terminal_translation_enabled,terminal_translation_mode,terminal_translation_table,uart_rx_mask
+script_translation_policy:
+ mov ax,[terminal_translation_mode]
+ cmp ax,2
+ ja .bad
+ mov dx,255
+ xor cx,cx
+ cmp ax,1
+ jne .mask
+ inc cx
+.mask:
+ cmp ax,2
+ jne .check
+ mov dx,127
+.check:
+ cmp [terminal_translation_enabled],cx
+ jne .bad
+ cmp [uart_rx_mask],dx
+ jne .bad
+ ret
+.bad:
+ mov ax,0xffff
+ ret
 
 extern uart_poll_flow,keyboard_poll,terminal_read_key,terminal_defer_key
 extern terminal_quit,terminal_exit_code,uart_port_lsr
@@ -70,6 +93,16 @@ terminal_script_prepare:
  call script_admit
  or ax,ax
  jnz .done
+ call script_translation_policy
+ cmp ax,2
+ ja .bad_policy
+ mov [script_handoff+26],ax
+ xor bx,bx
+ cmp ax,1
+ jne .policy_staged
+ mov bx,terminal_translation_table
+.policy_staged:
+ mov [script_handoff+24],bx
  ; Save and restore LCR around divisor latch reads, never read/discard RBR.
  mov dx,[uart_port_lcr]
  in al,dx
@@ -103,6 +136,9 @@ terminal_script_prepare:
  call _terminal_script_prepare
  add sp,6
 .done: ret
+.bad_policy:
+ mov ax,1
+ ret
 
 ; Serviced return-key wait. Parent IRQ buffers incoming bytes; only bounded
 ; foreground flow control runs here. Never parse/render onto the child console.
@@ -155,7 +191,7 @@ terminal_script_complete:
  jne .bad
  cmp word [script_handoff+2],0x4f49
  jne .bad
- cmp word [script_handoff+4],1
+ cmp word [script_handoff+4],2
  jne .bad
  cmp word [script_handoff+6],28
  jne .bad
@@ -172,11 +208,19 @@ terminal_script_complete:
  xor ax,dx
  xor ax,uart_rx_buffer
  xor ax,0xa510
+ xor ax,[script_handoff+24]
+ xor ax,[script_handoff+26]
  cmp [script_handoff+20],ax
  jne .bad
- cmp word [script_handoff+24],0
+ mov ax,[terminal_translation_mode]
+ cmp [script_handoff+26],ax
  jne .bad
- cmp word [script_handoff+26],0
+ xor bx,bx
+ cmp ax,1
+ jne .check_table
+ mov bx,terminal_translation_table
+.check_table:
+ cmp [script_handoff+24],bx
  jne .bad
  mov ax,[script_handoff+16]
  cmp ax,4096

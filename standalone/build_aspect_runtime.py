@@ -9,6 +9,7 @@ ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm'
  ('console','src/aspect/console_commands.asm',None),
  ('serial_commands','src/aspect/serial_commands.asm',None),
  ('receive_commands','src/aspect/receive_commands.asm',None),
+ ('receive_policy','src/aspect/receive_policy.asm',None),
  ('flow','src/aspect/control_flow.asm',None),('parameters','src/aspect/parameters.asm',None),('strings','src/aspect/string_operands.asm',None),('string_commands','src/aspect/string_commands.asm',None),('string_services','src/aspect/string_services.asm',None),
  ('string_strlen','reconstruction/program_exec/strlen.asm','PROGRAM_EXEC_OMF'),('string_strncmp','reconstruction/program_exec/strncmp.asm','PROGRAM_EXEC_OMF'),
  ('string_concat','reconstruction/directory_dial/append.asm','DIRECTORY_DIAL_OMF'),('string_upper','reconstruction/directory_dial/uppercase.asm','DIRECTORY_DIAL_OMF'),('operands','src/aspect/numeric_operands.asm',None),
@@ -161,7 +162,7 @@ def main():
  sources.append(compiler_corpus_path)
  sources.append(ROOT/'src/aspect/compiler.py')
  sources.append(console_corpus_path)
- sources += [receive_corpus_path,serial_corpus_path,ROOT/'src/aspect/serial_runtime.c',ROOT/'src/aspect/serial_runtime.h',ROOT/'src/aspect/receive_runtime.c',ROOT/'src/aspect/receive_runtime.h']
+ sources += [ROOT/'reconstruction/translation/receive.asm',receive_corpus_path,serial_corpus_path,ROOT/'src/aspect/serial_runtime.c',ROOT/'src/aspect/serial_runtime.h',ROOT/'src/aspect/receive_runtime.c',ROOT/'src/aspect/receive_runtime.h']
  for name,rel,define in ASM:
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
   subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))

@@ -1,8 +1,8 @@
 {
   "passed": true,
   "source_snapshot": "Fresh maintained public tracked+untracked source snapshot; entire analysis/original/install paths, REA databases and previous build outputs absent before compilation.",
-  "source_snapshot_sha256": "00bab670b3e0210627c2eb74a0cde92abaf0412cb27ec674762058c9292c7c42",
-  "source_file_count": 1699,
+  "source_snapshot_sha256": "134539d50f3b30c2e24f62efb84721178225f0e0e30784077b4794cd51336bc6",
+  "source_file_count": 1706,
   "snapshot_digest_recipe": "SHA256 UTF8 json.dumps(files,sort_keys=True,separators=(comma,colon)); each file hash covers exact copied bytes",
   "excluded_top_level_paths": [
     ".git",
@@ -16,19 +16,19 @@
   "original_install_present": false,
   "REA_database_present": false,
   "previous_build_outputs_present": false,
-  "build_log_sha256": "e320e92ef8b4d36cf83a03da235b7402362ce3310399e8890b2211532d8cd443",
+  "build_log_sha256": "672d74612dba02aae689567e5e10ea6ea1572b897139cd03cda0e298bde78615",
   "toolchain": "Pinned Nix development shell from copied nix/flake.lock; NASM/Open Watcom DOS8086 small model where applicable.",
   "proof_artifacts": "build/application-source-proof/{snapshot.json,build.log,result.json}",
-  "source_checkout": "/tmp/nix-shell.4yuA8s/pcplus-source-proof-kizaafdm/checkout",
+  "source_checkout": "/tmp/nix-shell.agCSxD/pcplus-source-proof-yxwao2uq/checkout",
   "scope_note": "Snapshot taken after current runtime freeze; test/docs metadata may subsequently change. Exact runtime source hashes independently reconciled against workspace manifest.",
   "limitation": "Actual isolated source-tree rebuild, not a hermetic filesystem sandbox or complete PCPlus application reconstruction.",
-  "scope": "89 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
-  "output_count": 89,
+  "scope": "90 current interactive-terminal, maintained application-component and native diagnostic outputs; complete PCPlus application remains unfinished.",
+  "output_count": 90,
   "outputs": {
     "terminal/TERMINAL.EXE": {
-      "sha256": "adb289d33bb0d8070c20f2f92b89ac188a951cae3811d08f507ba6a849515559",
+      "sha256": "de47e2b08851e1178d0b4fbb2d949ae15de78b23604b14ffa8420f2f3153e84b",
       "matches_workspace": true,
-      "workspace_sha256": "adb289d33bb0d8070c20f2f92b89ac188a951cae3811d08f507ba6a849515559"
+      "workspace_sha256": "de47e2b08851e1178d0b4fbb2d949ae15de78b23604b14ffa8420f2f3153e84b"
     },
     "config-dos/CONFIG.EXE": {
       "sha256": "5296627117cf875b803bc52516cfb6bd274c2a9a822e8a79f04a0585f9e6ad78",
@@ -385,6 +385,11 @@
       "matches_workspace": true,
       "workspace_sha256": "f9ef2f6f6ecc8adaeeed69769ccd863281f665996ff32423b4d5428feb0fb73c"
     },
+    "aspect-receive-policy/POLICY.EXE": {
+      "sha256": "b4940e3aefa08af2831d806c88568240d932fdfe904c4ab4c84b42fe48a4b5dc",
+      "matches_workspace": true,
+      "workspace_sha256": "b4940e3aefa08af2831d806c88568240d932fdfe904c4ab4c84b42fe48a4b5dc"
+    },
     "aspect-receive-commands/RECEIVE.EXE": {
       "sha256": "71080402c11a32f5711ca29bac1e52c11b82315bede3d19e7a6a44b8afb3dec1",
       "matches_workspace": true,
@@ -401,9 +406,9 @@
       "workspace_sha256": "1246c0cec286893de01953bb5cd6b6a7917a566dc34b2c79d583576edf100725"
     },
     "aspect-serial/SERIAL.EXE": {
-      "sha256": "9f00c5691296adf58e404413382271c1c418ecb483067d64ce5c4a17edb15fba",
+      "sha256": "854382640f726a08e8e48d6079e24ef29357dda4d6dd21b2e4a44fdb2da2d28d",
       "matches_workspace": true,
-      "workspace_sha256": "9f00c5691296adf58e404413382271c1c418ecb483067d64ce5c4a17edb15fba"
+      "workspace_sha256": "854382640f726a08e8e48d6079e24ef29357dda4d6dd21b2e4a44fdb2da2d28d"
     },
     "aspect-console/CONSOLE.EXE": {
       "sha256": "080d3623f7cb5813ac7348d0f9444e14d7d409598acc5a4a0554429fe32778d5",
@@ -411,9 +416,9 @@
       "workspace_sha256": "080d3623f7cb5813ac7348d0f9444e14d7d409598acc5a4a0554429fe32778d5"
     },
     "aspect-runner/ASPECT.EXE": {
-      "sha256": "0f647186f01e5a475ccfcf80e62f1137216cd09c040d22e78acb34835ae56a46",
+      "sha256": "7cef723eac035535734ac18d12499ff2e3e223557fbf29a9e2a65ead92568134",
       "matches_workspace": true,
-      "workspace_sha256": "0f647186f01e5a475ccfcf80e62f1137216cd09c040d22e78acb34835ae56a46"
+      "workspace_sha256": "7cef723eac035535734ac18d12499ff2e3e223557fbf29a9e2a65ead92568134"
     },
     "aspect-runner/tests/RUNTEST.EXE": {
       "sha256": "9f5268058dce303dcefa3f6cc9b014846cf7f06393fc5e56e54efa1661cdd04c",
@@ -451,9 +456,9 @@
       "workspace_sha256": "98c8d27d0fb5dde4c30edb1390a092e8823652177f7e11417952e1718bbf101b"
     },
     "aspect-runtime/EXECUTE.EXE": {
-      "sha256": "07e607e0687c1803c882348fba488b6c671d4e230f8bf811841af93a489c2211",
+      "sha256": "2c308cf9186d19d4d8e34869f206766d97ccbd63e41f914c36195dc70b1d3273",
       "matches_workspace": true,
-      "workspace_sha256": "07e607e0687c1803c882348fba488b6c671d4e230f8bf811841af93a489c2211"
+      "workspace_sha256": "2c308cf9186d19d4d8e34869f206766d97ccbd63e41f914c36195dc70b1d3273"
     },
     "monitor/MONITOR.EXE": {
       "sha256": "766e8cb46c6edb3269cee3ea2a7896c03628f37e6fcfe7fc17938f834e13b377",
@@ -538,6 +543,7 @@
     "standalone/build_aspect_serial_commands.py",
     "standalone/build_aspect_serial.py",
     "standalone/build_aspect_receive_commands.py",
+    "standalone/build_aspect_receive_policy.py",
     "standalone/check_batch_download.py",
     "standalone/check_batch_upload.py",
     "standalone/check_capture_file.py",

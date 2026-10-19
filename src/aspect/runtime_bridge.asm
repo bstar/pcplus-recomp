@@ -29,7 +29,9 @@ extern _runtime_console_emit_byte,_runtime_console_cancel_poll
 extern aspect_serial_transmit,aspect_serial_wait_for,aspect_serial_wait_status,aspect_serial_native_clock
 extern aspect_receive_comgetc,aspect_receive_comgetcd,aspect_receive_rget,aspect_receive_wait_quiet
 extern aspect_receive_native_seconds,aspect_receive_available_status,aspect_receive_forever
-extern _runtime_receive_character,_runtime_receive_begin
+extern _runtime_receive_character,_runtime_receive_raw_character,_runtime_receive_begin
+extern _runtime_serial_read_raw
+extern aspect_receive_policy_read
 %ifndef ASPECT_RUNTIME_SERIAL
 extern _runtime_receive_seconds
 %endif
@@ -407,11 +409,12 @@ aspect_receive_seconds: jmp aspect_receive_native_seconds
 aspect_receive_seconds: jmp _runtime_receive_seconds
 %endif
 aspect_receive_raw_read:
- xor ax,ax
- push ax
- call _runtime_serial_receive
- add sp,2
- ret
+ call _runtime_serial_read_raw
+ cmp word [_runtime_error],0
+ je .done
+ mov ax,[_runtime_error]
+ jmp fail
+.done: ret
 aspect_receive_character:
  push bp
  mov bp,sp
@@ -425,6 +428,39 @@ aspect_receive_character:
  mov ax,[_runtime_error]
  jmp fail
 .done: ret 4
+
+; Retain native4C74's mapping/call order. Direct script reads select display0
+; until the full terminal renderer is connected; COMGETC uses native selector.
+global _runtime_receive_policy_byte
+_runtime_receive_policy_byte:
+ push bp
+ mov bp,sp
+ push word [bp+6]
+ push word [bp+4]
+ call aspect_receive_policy_read
+ pop bp
+ ret
+global aspect_receive_policy_raw,aspect_receive_policy_delayed
+aspect_receive_policy_raw:
+ xor ax,ax
+ jmp receive_policy_raw_common
+aspect_receive_policy_delayed:
+ mov ax,1
+receive_policy_raw_common:
+ push ax
+ call _runtime_receive_raw_character
+ add sp,2
+ cmp word [_runtime_error],0
+ je .done
+ mov ax,[_runtime_error]
+ jmp fail
+.done: ret
+; Nonzero WHEN monitoring or rendered output requires application services.
+; No current source command enables these paths. Never fake ANSI rendering.
+global aspect_receive_policy_pattern_byte,aspect_receive_policy_emit_byte
+aspect_receive_policy_pattern_byte:
+aspect_receive_policy_emit_byte:
+ jmp unsupported
 
 SEGMENT _DATA public class=DATA use16
 GROUP DGROUP _DATA
@@ -449,6 +485,12 @@ aspect_convert_ctype:
 %endmacro
 global aspect_receive_clock_sample
 aspect_receive_clock_sample: times 4 dw 0
+global aspect_receive_policy_table,_runtime_receive_translation_table
+aspect_receive_policy_table:
+_runtime_receive_translation_table: times 256 db 0
+scalar aspect_receive_policy_pattern_count,_runtime_receive_pattern_count
+global aspect_receive_policy_display
+aspect_receive_policy_display:
 scalar aspect_receive_display,_runtime_receive_display
 scalar aspect_receive_suppress_echo,_runtime_receive_suppress_echo
 scalar aspect_console_message_mode,_runtime_console_message_mode

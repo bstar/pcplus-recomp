@@ -23,7 +23,7 @@ static unsigned device(const char *p,unsigned n)
 }
 unsigned __cdecl terminal_script_prepare(unsigned psp,char *executable,char *tail)
 {
- unsigned i=1,start=1,base=0,extension=0,dot=0,c,status,ds;char *p;
+ unsigned i=1,start=1,base=0,extension=0,dot=0,c,status,ds,translation;char *p;
  if(!span(executable,64)||!span(tail,96)||!apart(executable,64,tail,96)||tail[0]!=' ')return 1;
  /* Optional drive and root; every following component is a strict DOS83 name.
   * Reject shell syntax, whitespace, traversal and device aliases even though
@@ -38,11 +38,17 @@ unsigned __cdecl terminal_script_prepare(unsigned psp,char *executable,char *tai
     status=resource_program_path(psp,"ASPECT.EXE",executable);if(status)return 2;
     if(script_port_index>3 || !script_divisor || (script_lcr&192))return 1;
     ds=FP_SEG((void __far *)&script_handoff);
-    script_handoff.magic=ASIO_MAGIC;script_handoff.version=1;script_handoff.size=28;
+    /* Match the actual main-loop policy: table only when enabled; mode2 is
+     * disabled-table plus ISR7-bit mask. Reject inconsistent live settings. */
+    /* Resident prepare has validated/staged the actual live policy in these
+     * existing descriptor words before crossing the CONFIG_CODE bridge. */
+    translation=script_handoff.reserved1;if(translation>2)return 1;
+    script_handoff.magic=ASIO_MAGIC;script_handoff.version=ASIO_VERSION_TRANSLATION;script_handoff.size=28;
     script_handoff.parent_psp=psp;script_handoff.parent_ds=ds;
     script_handoff.ring=(unsigned)script_parent_ring;script_handoff.capacity=4096;
-    script_handoff.count=script_handoff.status=script_handoff.returned=script_handoff.reserved0=script_handoff.reserved1=0;
-    script_handoff.guard=psp^ds^(unsigned)script_parent_ring^ASIO_GUARD;
+    script_handoff.count=script_handoff.status=script_handoff.returned=0;
+    script_handoff.guard=psp^ds^(unsigned)script_parent_ring^ASIO_GUARD^
+     script_handoff.reserved0^script_handoff.reserved1;
     p=tail+i;*p++=' ';*p++='/';*p++='S';*p++='1'+script_port_index;*p++=':';
     p=hexword(p,script_divisor);*p++=':';*p++=digit(script_lcr>>4);*p++=digit(script_lcr&15);*p++=':';
     *p++=script_soft_flow?(script_hard_flow?'B':'S'):script_hard_flow?'H':'N';*p++=':';

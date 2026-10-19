@@ -43,7 +43,10 @@ handoff. [Serial scripting](docs/ASPECT_SERIAL.md) adds TRANSMIT, WAITFOR,
 flow control and exact unread-byte return; full application services remain
 unfinished. [Character and line input](docs/ASPECT_RECEIVE.md) adds
 COMGETC/COMGETCD, RGET and WAITQUIET, with the native timing and status rules
-kept distinct from the raw child platform services. Stage the terminal, sibling helpers and
+kept distinct from the raw child platform services. [Input policy](docs/ASPECT_INPUT_POLICY.md)
+now inherits the terminal's XLT or seven-bit setting while returning unread
+bytes unchanged. Full rendering and script events remain unfinished.
+Stage the terminal, sibling helpers and
 an authored HELLO example with `./tools/build package`; files appear in
 `build/dos-package` without original executables or private profiles.
 
@@ -51,6 +54,7 @@ Current outputs:
 
 | Output | Inputs | Current purpose |
 | --- | --- | --- |
+| `build/aspect-receive-policy/POLICY.EXE` | Recovered assembly and controlled callbacks | Native receive mapping and displayed adapter; production mapping inherits the parent input policy |
 | `build/aspect-conversions/CONVERT.EXE` | Recovered assembly and controlled services | Four conversion commands and scanner with actual CRT/string/frame/writeback code |
 | `build/aspect-conversion-services/CONVERT.EXE` | Recovered assembly | Native decimal parser, integer formatter and strcspn bitmap |
 | `build/aspect-string-services/SERVICES.EXE` | Recovered assembly and controlled operand/address callbacks | Actual CRT helpers and compare-status services |

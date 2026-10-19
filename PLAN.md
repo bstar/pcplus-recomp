@@ -1117,3 +1117,23 @@ before an81st non-CR store. These differences are documented, with original
 quirks retained in bounded component tests. Full compiler, ASPECT application
 services/invocation/recorder, other features, physical modem validation and all
 F01–F16 whole-application gates remain open.
+
+## ASPECT receive-policy integration
+
+[Input-policy integration](docs/ASPECT_INPUT_POLICY.md) composes83 exact native
+policy bytes (64 reused,19 adapter) with the child UART owner. ASIOv2 retains
+the28-byte descriptor and adds validated XLT/seven-bit inheritance, while unread
+handback remains raw. The parent adds no DATA storage and retains DS/SS65408.
+Native policy checks pass8824 paired CPU cases/424036 DOS assertions/37 covered
+instructions. Independent actual DOS mapping passes24 cases/192 checks; four
+backend snapshot cases and seven terminal Script workflows also pass. The
+existing28 serial,15 receive and two local BBS greeting cases pass on the same
+runner. Ninety outputs reproduce in the fresh source-only proof.
+
+Production uses exact4C74 mapping with display0. Full renderer/ANSI continuation
+consumption, WHEN callbacks, complete ASPECT and recorder remain unfinished.
+The current interpreter still implements63 slots and rejects152 explicitly;
+515 diagnostic cases/9091 checks and21 CLI cases/105 checks pass. Compiler
+coverage remains358 frozen outputs plus358 presentation variants. This advances
+F03/F05/F09/F13/F16 without closing any whole-application gate. Logged-in modern
+BBS workflows and actual hardware remain required beyond greeting regressions.

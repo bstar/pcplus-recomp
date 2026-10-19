@@ -72,9 +72,9 @@ unsigned runtime_serial_send(unsigned byte)
 #endif
  return runtime_error;
 }
-unsigned runtime_serial_receive(unsigned ignored)
+unsigned runtime_serial_read_raw(void)
 {
- unsigned value=65535U;(void)ignored;
+ unsigned value=65535U;
  if(!runtime_serial_ready()){runtime_set_error(ASPECT_RUN_UNSUPPORTED);return value;}
  if(runtime_console_cancel_poll())return value;
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
@@ -82,8 +82,12 @@ unsigned runtime_serial_receive(unsigned ignored)
 #elif defined(ASPECT_RUNTIME_SERIAL)
  value=aspect_serial_read();runtime_serial_poll();
 #endif
- runtime_receive_note_byte(value);
  return value;
+}
+unsigned runtime_serial_receive(unsigned delayed)
+{
+ /* Selected raw display policy; native4C74 still owns mapping exactly once. */
+ return runtime_receive_character(0,delayed);
 }
 unsigned runtime_serial_character_delay(unsigned delay)
 {

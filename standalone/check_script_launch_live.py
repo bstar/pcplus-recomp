@@ -13,7 +13,7 @@ from check_transport import Transport
 import struct
 class Script(Editor):
  def __init__(self):
-  super().__init__();self.handback=b'';self.handback_status=0;self.live_prompt_calls=0
+  super().__init__();self.handback=b'';self.handback_status=0;self.live_prompt_calls=0;self.handoff_tamper=None
  def restored(self):
   assert bytes(self.uc.mem_read(0xb8000,4000))==self.original_screen
   assert (self.mode,self.columns,self.page,self.cursor,self.shape)==(3,80,0,0x0611,0x060f)
@@ -44,6 +44,8 @@ class Script(Editor):
    # independently executed by check_aspect_serial.py.
    at=self.symbols['_script_handoff'];ring=self.symbols['uart_rx_buffer']
    u.mem_write(ring,self.handback);u.mem_write(at+16,struct.pack('<2H',len(self.handback),self.handback_status));u.mem_write(at+22,b'\x01\x00')
+   if self.handoff_tamper:
+    offset,value=self.handoff_tamper;u.mem_write(at+offset,struct.pack('<H',value))
   return result
 
 def main():
@@ -137,6 +139,28 @@ def main():
   if key==0x2d00:assert m.get('terminal_quit')==1
   else:assert m.get('terminal_deferred_count')==1
  done('serviced-Script-prompt-AltX-quits-and-AltH-defers-until-live-screen-restored',2)
+ for mode in [0,1,2]:
+  m=model();path(m,b'TEST.ASX');m.put('terminal_translation_mode',mode)
+  m.put('terminal_translation_enabled',int(mode==1));m.put('uart_rx_mask',127 if mode==2 else 255)
+  m.uc.mem_write(m.symbols['terminal_translation_table'],bytes(i^85 for i in range(256)))
+  assert m.call('terminal_script_start')==0;m.keys.append(32);m.safe()
+  assert len(m.children)==1 and m.get('terminal_program_status')==4;m.restored()
+  descriptor=struct.unpack('<I12H',m.uc.mem_read(m.symbols['_script_handoff'],28))
+  pointer=m.symbols['terminal_translation_table']-m.data_base if mode==1 else 0
+  assert descriptor[1]==2 and descriptor[11:]==(pointer,mode),descriptor
+  assert descriptor[9]==descriptor[3]^descriptor[4]^descriptor[5]^0xa510^pointer^mode
+ done('ASIOv2-parent-policy-mode-enabled-ISRmask-and-existing-table-pointer-guard',3)
+ for mode,enabled,mask in [(3,0,255),(0,1,255),(1,0,255),(1,1,127),(2,1,127),(2,0,255),(0,0,127)]:
+  m=model();path(m,b'TEST.ASX');m.put('terminal_translation_mode',mode)
+  m.put('terminal_translation_enabled',enabled);m.put('uart_rx_mask',mask)
+  assert m.call('terminal_script_start')==0;m.keys.append(32);m.safe()
+  assert not m.children and m.get('terminal_program_status')==5;m.restored()
+ done('ASIOv2-inconsistent-mode-enabled-and-UARTmask-denied-before-child',7)
+ for offset,value in [(4,1),(20,0),(24,1),(26,1)]:
+  m=model();path(m,b'TEST.ASX');m.handoff_tamper=(offset,value)
+  assert m.call('terminal_script_start')==0;m.keys.append(32);m.safe()
+  assert len(m.children)==1 and m.get('terminal_program_status')==5;m.restored()
+ done('ASIOv2-parent-completion-rejects-version-guard-table-mode-mutation',4)
  result=dict(passed=True,binary_sha256=hashlib.sha256(BINARY.read_bytes()).hexdigest(),cases=cases,
   inputs=sum(x['inputs'] for x in cases),checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),manifest_sha256=hashlib.sha256((ROOT/'build/terminal/manifest.json').read_bytes()).hexdigest(),sources={p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in ['src/terminal/script_launch.asm','src/terminal/script_launch.c','src/redisplay/command_menu.c','src/terminal/program_actions.asm','src/terminal/config_abi.inc','src/aspect/serial_handoff.h','src/uart/api.asm',__file__.split(str(ROOT)+'/')[-1]]},
   limitations=['DOS EXEC boundary modeled; interpreter semantics and actual child launch require separate DOS test.','Child owns a raw UART lease; terminal emulation/history are suspended until ASIO returns unread data. Capture closes before child; existing PROGRAM owner restores screen/UART.'])

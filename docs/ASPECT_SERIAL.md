@@ -1,5 +1,9 @@
 # ASPECT serial commands and DOS port ownership
 
+The later [input-policy integration](ASPECT_INPUT_POLICY.md) adds native receive
+mapping and ASIOv2 XLT/seven-bit inheritance. This document's ASIOv1 validation
+remains a historical checkpoint; version1 parents are still supported.
+
 The source-built ASPECT child now executes `TRANSMIT` and `WAITFOR` against the
 terminal's selected UART. File → A → Run script temporarily lends the port to
 `ASPECT.EXE`, then restores the terminal and returns bytes that the script left

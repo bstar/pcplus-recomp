@@ -42,7 +42,9 @@ def main():
                     'LINK sends CR and waits 10 seconds for login:; edit LINK.ASP as needed.\r\n'
                     'It does not dial or send a username/password.\r\n'
                     'Direct use requires DTR asserted; unread input needs a parent.\r\n'
-                    'Serial waits read raw bytes; full terminal rendering is pending.\r\n'
+                    'Menu scripts inherit the selected input XLT or seven-bit policy.\r\n'
+                    'Unread bytes return unchanged for the terminal to process.\r\n'
+                    'Full terminal rendering inside scripts is pending.\r\n'
                     'Use Escape to cancel. Unknown commands report an error.\r\n'
                     'PRMEDIT edits an existing supported profile; no profile is bundled.\r\n')
     (OUT / 'README.TXT').write_bytes(instructions.encode('ascii'))

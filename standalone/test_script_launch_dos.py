@@ -101,6 +101,8 @@ def main():
  for name,data,helper,escape,want in [
   ('script-child-success',compiled,True,False,5),
   ('script-serial-handback',compile_source('proc main\ntransmit "READY^M"\nwaitfor "MATCH" 5\nmessage "SCRIPT LIVE"\nendproc\n'),True,False,5),
+  ('script-serial-table',compile_source('proc main\ntransmit "READY^M"\nwaitfor "MATCH" 5\nmessage "SCRIPT LIVE"\nendproc\n'),True,False,5),
+  ('script-serial-7bit',compile_source('proc main\ntransmit "READY^M"\nwaitfor "MATCH" 5\nmessage "SCRIPT LIVE"\nendproc\n'),True,False,5),
   ('script-child-unsupported',unsupported,True,False,2),
   ('script-child-missing',compiled,False,False,2),
   ('script-prompt-cancel',compiled,True,True,0)]:
@@ -110,9 +112,16 @@ def main():
   (fixture/'ASPECT.EXE').unlink(missing_ok=True)
   if helper:shutil.copyfile(runner,fixture/'ASPECT.EXE')
   harness.BINARY=fixture/'TERMINAL.EXE'
-  keys='p2200 a-z p300 a p300 '+('escape p300 escape' if escape else 't e s t . a s x enter '+('p3000' if name=='script-serial-handback' else 'p1100')+' space')+' p500 r e a d y p700 a-x'
-  serial=name=='script-serial-handback'
-  result=harness.run(name,'success' if serial else 'direct',keys,expected=args.expected_exit,working_drive='d',arguments='@D:\\TEST.PRM'+(' /D:CaseTest:23' if serial else ''),files={'TEST.ASX':data,'SCRIPT.COM':observer},observer=None if serial else 'SCRIPT',online_updates=[(4,b'MATCH\x1b[2;1HREMAINDER')] if serial else ())
+  serial=name.startswith('script-serial-')
+  keys='p2200 a-z p300 a p300 '+('escape p300 escape' if escape else 't e s t . a s x enter '+('p3000' if serial else 'p1100')+' space')+' p500 r e a d y p700 a-x'
+  files={'TEST.ASX':data,'SCRIPT.COM':observer};extra='';prm=None;match=b'MATCH'
+  if name=='script-serial-table':
+   table=bytearray(range(256));table[ord('z')]=ord('M');files['TEST.XLT']=bytes(table)
+   extra=' /X:D:\\TEST.XLT';match=b'zATCH'
+  if name=='script-serial-7bit':
+   prm=bytearray(harness.fixture());struct.pack_into('<H',prm,0x1d64-0x1b84,2);prm=bytes(prm)
+   match=bytes(c|128 for c in b'MATCH')
+  result=harness.run(name,'success' if serial else 'direct',keys,expected=args.expected_exit,working_drive='d',arguments='@D:\\TEST.PRM'+(' /D:CaseTest:23' if serial else '')+extra,prm=prm,files=files,observer=None if serial else 'SCRIPT',online_updates=[(4,match+b'\x1b[2;1HREMAINDER')] if serial else ())
   folder=ROOT/'build/connection-dos'/name
   magic,bits,ticks,_=(0,0,0,0) if serial else struct.unpack('<4H',(folder/'SCRIPT.BIN').read_bytes())
   if not serial:result['checks']['observed_expected_child_console']=magic==0x4d43 and ticks>0 and bits==want
@@ -143,7 +152,7 @@ def main():
     reason='Parent UART IRQ/IER remained disabled during PROGRAM return-key wait; trailing incoming UART bytes overran RBR. Script-only serviced prompt restores parent ISR and polls flow before waiting.',
     artifact_sha256={str(f.relative_to(ROOT)):hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(folder.iterdir()) if f.name in ['result.json','serial.bin','SCREEN.BIN','BEFORE.BIN','AFTER.BIN','dosbox.conf']}))
  result=dict(passed=True,cases=cases,terminal_sha256=digest,runner_sha256=rdigest,regression_history=history,case_filter=args.case,expected_terminal_exit=args.expected_exit,
-  limitations=['Virtual UART/nullmodem and DOSBox-X only; physical hardware remains unverified.','Child console output independently sampled by INT1C. Dedicated ASIOv1 lease returns unread bytes; raw child receive is distinct from terminal screen rendering.'],
+  limitations=['Virtual UART/nullmodem and DOSBox-X only; physical hardware remains unverified.','Child console output independently sampled by INT1C. Dedicated ASIOv1/v2 lease returns raw unread bytes; inherited table/dequeue-mask policy is distinct from terminal screen rendering.'],
   source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
  (OUT/'checks.json').write_text(json.dumps(result,indent=2)+'\n')
  print('Script launch actual DOS:',len(cases),'cases passed')

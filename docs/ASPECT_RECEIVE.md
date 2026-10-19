@@ -1,5 +1,9 @@
 # ASPECT character, line and quiet-line input
 
+This is the receive-command checkpoint. The later
+[input-policy integration](ASPECT_INPUT_POLICY.md) adds native mapping and
+parent XLT/seven-bit inheritance; its validation record binds the newer products.
+
 The receive increment adds COMGETC, COMGETCD, RGET and WAITQUIET to the
 source-built interpreter, plus COMDATA and FOREVER integer operands. These
 advance the scripting and serial application work; the full application and

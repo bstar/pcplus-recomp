@@ -678,3 +678,15 @@ test-aspect-receive-commands-compat:
 .PHONY: test-aspect-script-receive-dos
 test-aspect-script-receive-dos:
 	python3 standalone/test_aspect_script_receive_dos.py
+
+.PHONY: aspect-receive-policy test-aspect-receive-policy test-aspect-receive-policy-compat test-aspect-script-translation-dos
+all: aspect-receive-policy
+test: test-aspect-receive-policy
+aspect-receive-policy:
+	python3 standalone/build_aspect_receive_policy.py
+test-aspect-receive-policy:
+	python3 standalone/check_aspect_receive_policy.py
+test-aspect-receive-policy-compat:
+	python3 standalone/check_aspect_receive_policy.py --original analysis/pcplus-install/PCPLUS.EXE
+test-aspect-script-translation-dos:
+	python3 standalone/test_aspect_script_translation_dos.py

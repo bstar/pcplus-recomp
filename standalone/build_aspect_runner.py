@@ -15,7 +15,7 @@ def main():
     sources = [Path(__file__).resolve(), ROOT / 'standalone/build_aspect_runtime.py',
                *[ROOT / 'src/aspect' / name for name in ['runner.c', 'runtime.c', 'runtime.h', 'file_io.c', 'file_io.h',
                    'serial_runtime.c','serial_runtime.h','receive_runtime.c','receive_runtime.h','serial.c','serial.h','serial_handoff.h']],
-               ROOT / 'reconstruction/uart/encodings.inc',ROOT/'reconstruction/uart/layout.inc']
+               ROOT/'reconstruction/translation/receive.asm', ROOT / 'reconstruction/uart/encodings.inc',ROOT/'reconstruction/uart/layout.inc']
     serial_asm=[('uart','reconstruction/uart/core.asm','UART_OMF'),('uart_api','src/uart/api.asm',None),
                 ('serial_backend','src/aspect/serial_backend.asm',None)]
     for name, relative, define in ASM+serial_asm:

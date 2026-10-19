@@ -4,20 +4,27 @@
 #include <dos.h>
 extern unsigned char uart_rx_buffer[];
 extern unsigned uart_rx_read,uart_rx_count;
-extern unsigned uart_software_flow;
+extern unsigned uart_software_flow,uart_rx_mask;
 extern unsigned char uart_flow_pending;
 extern unsigned aspect_serial_handoff_enabled;
 extern unsigned __cdecl aspect_serial_backend_close(void);
 extern unsigned __cdecl aspect_serial_psp(void);
 extern unsigned __cdecl aspect_serial_tx_empty(void);
 static aspect_serial_handoff __far *handoff;
+static unsigned char input_translation[256];
+static unsigned input_translation_mode;
+unsigned __cdecl aspect_serial_translate(unsigned byte)
+{return input_translation_mode==ASIO_XLT_TABLE?input_translation[byte&255U]:(byte&255U);}
+unsigned __cdecl aspect_serial_translation_policy(void)
+{return input_translation_mode;}
 extern unsigned __cdecl aspect_serial_backend_open(unsigned,unsigned,unsigned,unsigned);
 static unsigned hex(unsigned c)
 {if(c>='0'&&c<='9')return c-'0';if(c>='a'&&c<='f')return c-'a'+10;if(c>='A'&&c<='F')return c-'A'+10;return 65535U;}
 unsigned __cdecl aspect_serial_open(const char *p)
 {
  unsigned i,v,divisor=0,lcr=0,flow,segment=0,offset=0,status,parent;
- unsigned long begin,end,address,ring;
+ unsigned long begin,end,address,ring,table;
+ unsigned mode=0,table_offset=0,guard;
  unsigned char __far *mcb;
  aspect_serial_handoff __far *candidate=0;
  if(!p || (unsigned long)(unsigned)p+14UL>65536UL)return ASPECT_SERIAL_ARGUMENT;
@@ -39,19 +46,39 @@ unsigned __cdecl aspect_serial_open(const char *p)
   end=begin+(unsigned long)*(unsigned __far *)(mcb+3)*16UL;
   if(end>1048576UL || address<begin || address+ASIO_SIZE>end)return ASPECT_SERIAL_ARGUMENT;
   candidate=(aspect_serial_handoff __far *)MK_FP(segment,offset);
-  if(candidate->magic!=ASIO_MAGIC || candidate->version!=ASIO_VERSION || candidate->size!=ASIO_SIZE ||
+  if(candidate->magic!=ASIO_MAGIC || (candidate->version!=ASIO_VERSION && candidate->version!=ASIO_VERSION_TRANSLATION) || candidate->size!=ASIO_SIZE ||
    candidate->parent_psp!=parent || !candidate->parent_psp ||
-   candidate->capacity!=4096 || candidate->count || candidate->status || candidate->returned || candidate->reserved0 || candidate->reserved1 ||
-   candidate->guard!=(candidate->parent_psp^candidate->parent_ds^candidate->ring^ASIO_GUARD) ||
+   candidate->capacity!=4096 || candidate->count || candidate->status || candidate->returned ||
    (unsigned long)candidate->ring+4096UL>65536UL)return ASPECT_SERIAL_ARGUMENT;
+  guard=candidate->parent_psp^candidate->parent_ds^candidate->ring^ASIO_GUARD;
+  if(candidate->version==ASIO_VERSION){
+   if(candidate->reserved0 || candidate->reserved1)return ASPECT_SERIAL_ARGUMENT;
+  }else{
+   table_offset=candidate->reserved0;mode=candidate->reserved1;
+   if(mode>ASIO_XLT_MASK7F || (mode!=ASIO_XLT_TABLE && table_offset))return ASPECT_SERIAL_ARGUMENT;
+   guard^=table_offset^mode;
+  }
+  if(candidate->guard!=guard)return ASPECT_SERIAL_ARGUMENT;
   ring=(unsigned long)candidate->parent_ds*16UL+candidate->ring;
   if(end>1048576UL || address<begin || address+ASIO_SIZE>end || ring<begin || ring+4096UL>end ||
     (address<ring+4096UL && ring<address+ASIO_SIZE))return ASPECT_SERIAL_ARGUMENT;
+  if(mode==ASIO_XLT_TABLE){
+   table=(unsigned long)candidate->parent_ds*16UL+table_offset;
+   if((unsigned long)table_offset+256UL>65536UL || table<begin || table+256UL>end ||
+      table+256UL>1048576UL || (table<address+ASIO_SIZE && address<table+256UL) ||
+      (table<ring+4096UL && ring<table+256UL))return ASPECT_SERIAL_ARGUMENT;
+  }
  }
  flow=(unsigned char)p[12];if(flow>='a'&&flow<='z')flow-=32;
  if(flow!='N'&&flow!='S'&&flow!='H'&&flow!='B')return ASPECT_SERIAL_ARGUMENT;
+ /* Rejected reopen must not change an active owner's effective table. */
+ if(aspect_serial_active)return ASPECT_SERIAL_BUSY;
+ for(i=0;i<256;++i)input_translation[i]=mode==ASIO_XLT_TABLE?
+  *(unsigned char __far *)MK_FP(candidate->parent_ds,table_offset+i):
+  (unsigned char)i;
+ input_translation_mode=mode;
  status=aspect_serial_backend_open(p[2]-'1',divisor,lcr,flow);
- if(!status){handoff=candidate;aspect_serial_handoff_enabled=candidate!=0;}
+ if(!status){uart_rx_mask=mode==ASIO_XLT_MASK7F?127U:255U;handoff=candidate;aspect_serial_handoff_enabled=candidate!=0;}
  return status;
 }
 

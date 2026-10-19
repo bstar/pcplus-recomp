@@ -347,11 +347,12 @@ global uart_rx_buffer
 uart_rx_buffer: resb 4096
 
 ; C ABI aliases to the same recovered driver state (no duplicate storage).
-global _uart_rx_buffer,_uart_rx_read,_uart_rx_count,_uart_software_flow,_uart_flow_pending
+global _uart_rx_buffer,_uart_rx_read,_uart_rx_count,_uart_software_flow,_uart_flow_pending,_uart_rx_mask
 _uart_rx_buffer equ uart_rx_buffer
 _uart_rx_read equ uart_rx_read
 _uart_rx_count equ uart_rx_count
 _uart_software_flow equ uart_software_flow
 _uart_flow_pending equ uart_flow_pending
+_uart_rx_mask equ uart_rx_mask
 SEGMENT STACK stack class=STACK use16
 GROUP DGROUP _DATA _BSS STACK

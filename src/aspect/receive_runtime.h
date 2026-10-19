@@ -3,6 +3,7 @@
 void runtime_receive_reset(void);
 void runtime_receive_begin(unsigned mode);
 void runtime_receive_note_byte(unsigned value);
+unsigned runtime_receive_raw_character(unsigned delayed);
 unsigned runtime_receive_character(unsigned echo,unsigned delayed);
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
 void runtime_receive_fixture(unsigned seconds,unsigned step);

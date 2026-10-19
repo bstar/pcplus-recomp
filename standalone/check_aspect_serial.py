@@ -77,7 +77,7 @@ def main():
   assert d[7]==size and d[8]==0 and d[10]==1,d
   assert bytes(m.uc.mem_read(m.target,size))==data
  done('ASIOvalidated-parent-allocation-wrap-full-ring-exact-publication-after-restore',4)
- for offset,value in [(0,0),(4,2),(6,26),(8,123),(14,4095),(16,1),(18,1),(20,0),(22,1),(24,1),(26,1)]:
+ for offset,value in [(0,0),(4,3),(6,26),(8,123),(14,4095),(16,1),(18,1),(20,0),(22,1),(24,1),(26,1)]:
   m=Serial();suffix=m.descriptor();m.uc.mem_write(m.desc+offset,struct.pack('<H',value));before=bytes(m.uc.mem_read(m.target,4096))
   assert m.open(b'/S1:0003:03:N'+suffix)==1 and not m.writes and bytes(m.uc.mem_read(m.target,4096))==before
  done('ASIOidentity-version-count-status-publication-reserved-guard-reject-before-IO',11)
@@ -123,6 +123,34 @@ def main():
  assert m.tx==[0x11,65] and m.get('uart_rx_count')==0
  assert m.call('_aspect_serial_close')==0;m.restored()
  done('combined-B-XON-bypasses-CTS-but-data-requires-both-CTS-and-peer-XON',1)
+ for mode in [0,1,2]:
+  m=Serial();suffix=m.descriptor();table=0x500 if mode==1 else 0
+  m.uc.mem_write(m.desc+4,struct.pack('<H',2))
+  m.uc.mem_write(m.desc+24,struct.pack('<2H',table,mode))
+  m.uc.mem_write(m.desc+20,struct.pack('<H',m.parent_psp^0x1800^0x1000^0xa510^table^mode))
+  expected=bytes(i^0x55 for i in range(256))
+  m.uc.mem_write(0x18500,expected)
+  assert m.open(b'/S1:0003:03:N'+suffix)==0
+  assert m.call('_aspect_serial_translation_policy')==mode
+  assert m.get('uart_rx_mask')==(127 if mode==2 else 255)
+  m.uc.mem_write(0x18500,bytes(256)) # Snapshot is independent of later parent edits.
+  assert bytes(m.call('_aspect_serial_translate',[i]) for i in range(256))==(expected if mode==1 else bytes(range(256)))
+  assert m.call('_aspect_serial_translate',[0xffa5])==(0xa5^0x55 if mode==1 else 0xa5)
+  assert m.open()==2 and m.call('_aspect_serial_translation_policy')==mode
+  m.receive_irq(b'\xe1\xff\x80');assert m.call('_aspect_serial_read')==(0x61 if mode==2 else 0xe1)
+  assert m.call('_aspect_serial_close')==0
+  assert bytes(m.uc.mem_read(m.target,2))==b'\xff\x80','ASIO must preserve raw unread bytes'
+  m.restored()
+ done('ASIOv2-effective-table256-immutable-identity-and-dequeue7bit-raw-unread-handback',3)
+ for mode,table,corrupt in [(3,0,False),(0,0x500,False),(2,0x500,False),(1,0x100,False),(1,0x1000,False),(1,0xff80,False),(1,0x500,True),(1,0xf000,False)]:
+  m=Serial();suffix=m.descriptor()
+  m.uc.mem_write(m.desc+4,struct.pack('<H',2));m.uc.mem_write(m.desc+24,struct.pack('<2H',table,mode))
+  m.uc.mem_write(m.desc+20,struct.pack('<H',m.parent_psp^0x1800^0x1000^0xa510^table^mode^int(corrupt)))
+  if table==0xf000:m.uc.mem_write((m.parent_psp-1)*16+3,struct.pack('<H',0xa10))
+  before=bytes(m.uc.mem_read(m.desc,28))
+  assert m.open(b'/S1:0003:03:N'+suffix)==1 and not m.writes
+  assert bytes(m.uc.mem_read(m.desc,28))==before
+ done('ASIOv2-guard-mode-table-span-MCBextent-and-descriptor-ring-overlap-before-IO',8)
  result=dict(passed=True,groups=cases,inputs=sum(x['inputs'] for x in cases),binary_sha256=hashlib.sha256(uart.BINARY.read_bytes()).hexdigest(),checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),manifest_sha256=hashlib.sha256((OUT/'manifest.json').read_bytes()).hexdigest(),limitations=['Kernel/ports modeled; actualDOS loopback test separately required.','Standard COM1..4 ports/IRQ masks are modeled; separate actual DOS backend tests use COM1 only.'],original_inputs=[])
  (OUT/'checks.json').write_text(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':main()
