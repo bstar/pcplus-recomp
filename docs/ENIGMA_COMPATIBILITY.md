@@ -4,7 +4,7 @@ The target includes the user's running `~/projects/black-flag-bbs` checkout,
 its configured menus and modules, and the source-built DOS client. Passing
 an isolated stock BBS is insufficient. Compatibility is not complete.
 
-The [latest live recheck](validation/enigma-recheck-20261019.json) again passes
+The [latest live recheck](validation/enigma-current-20261019.json) again passes
 login, menu, details, DIZ and NFO entry but fails final-page NFO scrolling.
 No tested live code/configuration changes or submitted messages were observed.
 Expanded actual Client replay includes Right and PageDown: the current decoder
