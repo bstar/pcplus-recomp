@@ -1103,3 +1103,12 @@ test-aspect-external-unwind-policy:
 test-aspect-external-unwind-source: aspect-external-unwind aspect-runner aspect-compiler-dos terminal
 	python3 -c 'import sys; sys.path.insert(0,"standalone"); import build_aspect_process as p; p.main(p.ROOT/"standalone/aspect_process_diagnostic.c")'
 	python3 standalone/check_aspect_unwind_source.py
+
+.PHONY: native-mouse test-native-mouse test-native-mouse-source
+native-mouse:
+	python3 standalone/build_native_mouse.py
+test-native-mouse: native-mouse
+	python3 standalone/check_native_mouse.py
+	python3 standalone/test_native_mouse_dos.py
+test-native-mouse-source: native-mouse
+	python3 standalone/check_native_mouse_source.py

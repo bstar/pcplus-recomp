@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+The [native mouse primitives](docs/NATIVE_MOUSE.md) now recover368 original bytes
+for PROGRAM's probe/init/registration plus the real callback/event processor.
+All117 linked inputs, an actual8086 DOS driver/callback self-check with foreign
+DS and a separate SS, and a blank source-only rebuild pass. Zero scales retain
+their real divide fault in the baseline; maintained configuration admission,
+event consumption/UI mappings and cross-child callback ownership remain required
+before live integration. No normal mouse feature or whole-application gate closes.
+
 The [foreground external-program unwind](docs/ASPECT_UNWIND.md) now covers actual
 8086 divide, foreign-DS divide, native typed abort and direct dispatcher longjmp
 at 22 owner boundaries. Its 92 DOS cases restore the full independent15,050-byte

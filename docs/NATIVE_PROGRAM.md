@@ -95,6 +95,9 @@ and [foreground unwind](ASPECT_UNWIND.md) supply actual ASPECT streams/ASX,
 selected resources, renderer leases and synchronous nonlocal recovery in separate
 experimental builds. Original macro keyboard, mouse/window and error-notice
 services still need composition before normal publication.
+The [mouse primitives](NATIVE_MOUSE.md) now provide exact probe/init/callback
+source and actual foreign-DS/SS execution; configuration/event consumption and
+their application suspension/restoration owner remain required.
 Standard BIOS ROM font geometry is covered; arbitrary downloaded fonts, other
 adapters, original additional views and physical Wi-Fi modem timing remain open.
 The current terminal renderer still admits 80x25 mode3/page0. The new component

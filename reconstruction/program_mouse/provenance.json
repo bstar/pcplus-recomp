@@ -1,0 +1,87 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/program_mouse/probe.asm",
+      "start": 30388,
+      "end": 30440,
+      "file_offset": 34996,
+      "bytes": 52,
+      "sha256": "4d25610bc6e42145f8c9f07e43c5a920f99efcf9264e4ac1a189812c52aa91c6",
+      "rea_evidence_id": "ev_adf1497918c50af55f000507989f2f2be7cb21c84cdc42b4b00e817bf2fb3520",
+      "mapping_evidence_id": "ev_a2ef74300d77de31d761e52be26c37dffd312c3b706e5153d814d27a9861b9ec"
+    },
+    {
+      "file": "reconstruction/program_mouse/init.asm",
+      "start": 30442,
+      "end": 30498,
+      "file_offset": 35050,
+      "bytes": 56,
+      "sha256": "39b913249e0c7947b637403d91e301be44aadfd17224128536321cda20766d74",
+      "rea_evidence_id": "ev_985cf022006f0acd4e9941587102f6f0e608bccfe57c594bbb9d8210d98b0665",
+      "mapping_evidence_id": "ev_ef1ddbe021d03a0a2cc4c33a08f5c9854f5672aeeea450759c3afe964d766c14"
+    },
+    {
+      "file": "reconstruction/program_mouse/bind.asm",
+      "start": 32658,
+      "end": 32672,
+      "file_offset": 37266,
+      "bytes": 14,
+      "sha256": "a99d69751e44c6d7b399808c95f7a57191a722dba057c0187a20eb3c22794f7d",
+      "rea_evidence_id": "ev_5da5f23c6eb317eb21b36c021120995de92b0d939c8cfa808188ee8db4d9fb5d",
+      "mapping_evidence_id": "ev_f45eacbe77bcfc24db6cce3db7948733ffc7f5cbea1188f20b851cf9f593d1d5"
+    },
+    {
+      "file": "reconstruction/program_mouse/callback.asm",
+      "start": 32882,
+      "end": 32921,
+      "file_offset": 37490,
+      "bytes": 39,
+      "sha256": "d1151868b554398db654aeb788f1de5abc4c2abfe37fbb0a5822bbd54e49ea0d",
+      "rea_evidence_id": "ev_24240fd93a9e3c90b51c04ed2470671c9b267d36c8f2544fbe1cbc813cf53a87",
+      "mapping_evidence_id": "ev_b4c41c74fd3d75f3d440a1cc3f8b16bb92fcec2c2029501af68d06887355f3bf"
+    },
+    {
+      "file": "reconstruction/program_mouse/events.asm",
+      "start": 32922,
+      "end": 33116,
+      "file_offset": 37530,
+      "bytes": 194,
+      "sha256": "846cb9756224b974160c65dad35ccfcddaacd56db1e659b92c4845c12c647072",
+      "rea_evidence_id": "ev_24240fd93a9e3c90b51c04ed2470671c9b267d36c8f2544fbe1cbc813cf53a87",
+      "mapping_evidence_id": "ev_4557a8c6758d259d8c974fd08a3cb2ed37ec7545fd662dc3720598140fc9c2a6"
+    },
+    {
+      "file": "reconstruction/program_mouse/absolute.asm",
+      "start": 40294,
+      "end": 40307,
+      "file_offset": 44902,
+      "bytes": 13,
+      "sha256": "2c1f539c7cb335945fb246ee00f45624cee46494f55fb3fa181f6491c95171ed",
+      "rea_evidence_id": "ev_2349aaa3e06c1edba446c7fc9e6da96e95cd267ee704d30b230bf68217c491f3",
+      "mapping_evidence_id": "ev_4a623380246642d6fbc4dbd5fdda535cce64d000307472f1e5938b9b2ff8d27f"
+    }
+  ],
+  "state": {
+    "0x5dee": "mouse_enabled",
+    "0x7a50": "mouse_scale_x",
+    "0x7a52": "mouse_scale_y",
+    "0x7a54": "mouse_present",
+    "0x7a56": "mouse_flags",
+    "0x7a58": "mouse_motion_x",
+    "0x7a5a": "mouse_motion_y",
+    "0x7a5c": "mouse_base_x",
+    "0x7a5e": "mouse_base_y",
+    "0x7a60": "mouse_button_pending",
+    "0x7a62": "mouse_count",
+    "0x7a64": "mouse_code",
+    "0x8072": "mouse_depth"
+  },
+  "callback_analysis": "No Ghidra procedure at18074; callback/event boundaries reconstructed from registration, complete REA byte read and decoded far/near returns. No callback pseudocode claimed.",
+  "limitations": [
+    "Module primitives only; no live terminal/PROGRAM publication.",
+    "Native scale words are unchecked. Zero causes real divide fault; a maintained admission guard is required.",
+    "Native callback installs its DS and supports a foreign SS through BP-based stack access. Later C/VM integrations retain their own ABI requirements.",
+    "INT33 driver behavior and physical mouse input are separate from linked boundary replay."
+  ]
+}
