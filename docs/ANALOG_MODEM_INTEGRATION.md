@@ -114,10 +114,18 @@ matches3559200 overlapping caller samples after a stable60ms delay. Both offline
 decoders recover the DOS input exactly. This clean run does not resolve -05.
 
 The [receive trace](../lab/bbs/synthmodem-receive-trace.md) documents both captures.
-Source/API checks also confirm progressive discard remains enabled despite
-fixed jitter prefetch bounds. Paired Nix-built i386 d-modem variants exist; the
-explicit DISCARD_NONE candidate still needs VM/runtime and fault tests before
-claiming a modem-path fix. See [the build/API receipt](validation/synthmodem-jitter-policy.json).
+The [paired VM comparison](../lab/bbs/synthmodem-jitter-vm.md) now reproduces a
+policy failure: releasing300ms of ordered, unmodified queued RTP causes the
+rebuilt baseline to insert89 bytes at the same CPR boundary while shrinking its
+audio delay. The explicit DISCARD_NONE candidate preserves the waveform and all
+34 upstream/6000 downstream diagnostic bytes. Both builds train and pass the
+direct route; independent image/transport checks isolate the d-modem change.
+The normal candidate also passes the full DOS/ENiGMA main/message/file route in
+cohort -07, with19 producer/19 independent checks and64/46908 exact upstream/
+downstream bytes. Only d-modem changes in that image; no trace daemon is added.
+Editors, broader loss/timing, sustained data, transfers and physical acceptance
+remain separate. This does not prove the exact historical
+six-byte event's cause. See [the VM receipt](validation/synthmodem-jitter-vm.json).
 
 The helper still has an in-band carrier/data ambiguity: literal NO CARRIER can
 be consumed as status, while a slowly fragmented real result can become data.

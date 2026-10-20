@@ -7,9 +7,16 @@ byte passes through the real originating DSP, PCMU/RTP, external/internal SIP,
 CallSession, pool, guest answering DSP, rebuilt helper and Telnet proxy.
 There is no direct DOS-to-BBS data shortcut.
 
+The preferred normal test image now uses the Nix-built DISCARD_NONE d-modem.
+Cohort -07 passes19 producer and19 independent audit checks with64 exact DOS
+online bytes and46908 exact BBS display bytes. It uses normal init and no extra
+diagnostic ports. The [paired VM counterexample](synthmodem-jitter-vm.md)
+separately establishes the discard-policy correction under a lossless timing
+change; broader BBS/hardware acceptance remains open.
+
 ```sh
 ./tools/modem-dev --command python3 lab/bbs/synthmodem_audio_dos.py \
-  --runtime build/bbs-lab/synthmodem-sparse-runtime-01/runtime \
+  --runtime build/bbs-lab/synthmodem-jitter-runtime-01/runtime --dmodem candidate \
   --output build/bbs-lab/synthmodem-audio-dos-new
 
 ./tools/modem-dev --command python3 lab/bbs/audit_synthmodem_audio_dos.py \
@@ -73,7 +80,7 @@ actual final menu. The harness owns a separate emulator process group so a
 forced test stop can also retire quit-dialog descendants retaining its serial
 socket. A forced stop never counts as normal DOS return or hardware restoration.
 
-## Current result: menus and cleanup pass; upstream bytes fail
+## Preserved -05 result: menus and cleanup pass; upstream bytes fail
 
 `synthmodem-audio-dos-05` uses the Nix-built sparse-helper runtime, whose normal
 init, DSP, kernel and39 gateway source files retain their accepted identities.
@@ -125,9 +132,29 @@ this run. See [the trace guide](synthmodem-receive-trace.md) and
 
 The earlier -05 failure remains preserved and unresolved. The additional
 observers/export daemon and timing conditions are explicit; a clean diagnostic
-run is not proof that the original intermittent insertion has been fixed. Next
-compare paired rebuilt d-modem jitter policies under controlled timing, retain
-actual guest PCM and repeat the full DOS byte audit.
+run is not proof that the original intermittent insertion has been fixed. The
+subsequent paired comparison and normal candidate run below establish the
+specific discard-policy fix and its DOS integration.
+
+## Normal rebuilt candidate cohort
+
+`synthmodem-audio-dos-07` uses the normal gateway image with only d-modem
+replaced by the pinned Nix-built candidate. Normal init, the guest DSP, helper,
+kernel and39 source files retain their accepted identities; no trace daemon or
+additional chardev is present. The validator independently checks every archive
+entry and the selected ELF hash before starting DOS.
+
+All19 producer and19 independent checks pass: numeric dialing, real DSP CONNECT,
+online CONNECT> destination entry, authenticated Main -> Messages -> Main ->
+Files, exact64 upstream and46908 downstream bytes, DA/CPR, normal DOS exit,
+UART/vector restoration, selected-directory accounting and actual SIP/VM
+cleanup. The BBS source/configuration and DOS executable/profile stay unchanged.
+
+The [paired VM test](synthmodem-jitter-vm.md) separately reproduces89 inserted
+bytes after CPR with progressive discard and shows that DISCARD_NONE preserves
+the waveform and authored data under the same ordered backlog release. This
+normal run verifies that candidate in the full DOS path. The exact historical
+-05 cause remains uncertain because its guest PCM/timing was not captured.
 
 ## Limits and remaining tasks
 

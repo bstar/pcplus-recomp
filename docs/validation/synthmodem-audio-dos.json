@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Latest diagnostic DOS cohort passes19 producer/19 audit checks with exact guest PCM; earlier six-byte upstream insertion remains unresolved.",
+  "status": "Normal rebuilt DISCARD_NONE candidate passes19 producer/19 audit checks and exact64 upstream/46908 downstream bytes; controlled VM comparison proves its discard-policy fix. Complete BBS/modem acceptance remains open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -1436,6 +1436,301 @@
         "equals_authored_upstream": true
       },
       "offline_caller_receipt_sha256": "43af6476fdde4f27cf9f37d8dbb62ec0656f5dcf9250e7c56b8814aa69ea3199"
+    },
+    "synthmodem-audio-dos-07": {
+      "passed": true,
+      "checks": {
+        "DOS_normal_exit": true,
+        "script_completed": true,
+        "UART_restored": true,
+        "keyboard_helper_retired": true,
+        "numeric_AT_only": true,
+        "real_DSP_CONNECT": true,
+        "authenticated": true,
+        "ordered_menus": true,
+        "DOS_DA": true,
+        "DOS_CPR": true,
+        "final_file_menu": true,
+        "profile_unchanged": true,
+        "directory_accounting": true,
+        "no_relay_errors": true,
+        "no_gateway_errors": true,
+        "VM_exited": true,
+        "no_post_saved": true,
+        "inputs_unchanged": true,
+        "server_unchanged": true
+      },
+      "frozen_inputs": {
+        "lab/bbs/synthmodem_audio_dos.py": "7c5683b2120833dd1b1829bee21b7b22a503402a5abbd2cbc5027e91fa4f6ff2",
+        "lab/bbs/synthmodem_audio_serial.js": "2fcdeee5c2527c83afba55d88a2ccfa8e6c07d8eea6485b731de7499f9b9281b",
+        "lab/bbs/audio_exit_keys.asm": "d6cfd993351d3bc6fdfed133e0a20a137c3a882988ee65dcef38c80d15b7ecd9",
+        "lab/bbs/audio_get_vector.asm": "a4dcbe3717c43f5914ee3503099d250fd7810610b8c25f4c0c18c2d4d403e817",
+        "lab/bbs/synthmodem_bbs_dos.py": "0e6a302d5a5ecb124689c8c3989d2efe8ab210eaa982991d088778d126c18fb2",
+        "lab/bbs/enigma.py": "526fcd6eb468ec7a85630685872d27a937abbc6b61f48ad8391a2353e5686017",
+        "lab/bbs/synthmodem_sparse_runtime.py": "f3743c82c191e70bb233b08623a08a545b0e7b7d1d15759af18312ec0cffad42",
+        "lab/bbs/synthmodem_vm_control.py": "7eb30e96af9a7e7cd319cd645a68331c0386aa3dda3e9eba68ca5563b5b8a456",
+        "docs/validation/synthmodem-sparse.json": "c1af9919cb1ec643fd2fc2cc236ed8c304d8050790ca6033fb0589e074c9002c",
+        "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+        "standalone/directory_fixtures.py": "e4b0cf7ad4a2c408f2a11d093b2c568633aa8bed6ff62cb53f6f67ff3aa5962c",
+        "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+        "src/aspect/compiler.py": "a9785fb90db89da8d4c423d2737f5143a2da75e4e41605a5d97f3ebf7b9c4f01",
+        "nix/flake.nix": "7cda07d3ab9fb050ef3c959781e4cb93ab2fab72f915d6206d980458ab297aa0",
+        "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+        "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
+        "build/terminal/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+        "build/terminal/terminal.map": "8b1f7f07d7f617936765de21fed74a71ec28c7c5ce45e8519802cf62689c86b1",
+        "build/aspect-runner/ASPECT.EXE": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+        "docs/validation/synthmodem-gateway.json": "b45a3889492327899bdaa5817b4951da95b81bb07bdd69319b4814008504a6a0",
+        "lab/bbs/synthmodem_jitter_runtime.py": "8f3ddf164a4ec7f0b36fa8efbdd51265149b17c8f0c02ba5ee45d78de537a618",
+        "docs/validation/synthmodem-jitter-policy.json": "4850cb6e88bf6edfb9831065d1acae1c7ea29f20cd56f92fc0a09b3c1af73278",
+        "nix/dmodem.nix": "f4f3ea0b2050bdc4064702907ef94294326c509bb38130b4b3c1f2822e1519f2",
+        "tools/build-dmodem": "6ffe06ad3d9ad48ae0a7ae73b9d6c0df3d1e61191fee23b17b4c166f93646bdc"
+      },
+      "runtime_inputs": {
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/bzImage": "2bac10d87a024026de6c00539ea70d19194169b6b99111d9178815b470d77dbe",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/candidate.cpio.gz": "6e544921faaa65db34a75fd2ed5eee2dcf59ea7f987571b91d2e4c3f2ef5b855",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/config.js": "6cfa6057b31bebb90d52f12956a3166a389308b703c17480acdc59fdb05f681f",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/index.js": "8aac80d7f4e68c25d02f29b16d2dc82b78d3f5ecee57562315fda4efb3494791",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/vm/qemu-runner/QemuVM.js": "2b15088c2a4d8a2002bcd4b153d38d06fc6e9863cb7a9990dbcac1875b082a76",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/vm/qemu-runner/SlmodemVM.js": "8578c0d7fcb5b96648856422ef56a9178f155ddb86321300b8e63f3220c61cdc",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/vm/qemu-runner/qemu-args.js": "61975545b19201092d3e0f53dd324e46a05e432f0ace7ac3bc3c0f63abf1b3ea",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/vm/qemu-runner/transport.js": "54cec57e3b78a5b4a82e3289dac645be4b7d49da5f2ed697f3a9d5e0e4742570",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/backends/ModemBackendPool.js": "58d6e2690a0a8170e1da2387abd935fa373b93b239805dd596fb4a578c7a0044",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/backends/PjsipBackend.js": "99e3c39ae8aacc48a630c1361146b8b6a0e82639c4fcb54ab61ea8c615eb9099",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/AudioCapture.js": "843dc3267c927cdb07d46d299613228508a71f85180bc76f46931d27bf196965",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/Handshake.js": "2c8e9bf37157159ebee8d441e15b1b241bb46233c6d36f710d77c3cedee2d97b",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/ModemDSP.js": "18986bc99ba59756e7841902dcc93ccf328bb59e4e0671446be286695882e967",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/Primitives.js": "f63b3e3fcee64169af3343ea7ef73ffb68fff24356c021564f62b7e4c8a434af",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/V8.js": "145c661bbbff383cc7af622b98fcd423f1d66fae2d2e464b308cf3a2c0edcb40",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/V8Sequencer.js": "3379d253f990a83d1dd3612383a17b5534c47d1635870fb16177a8e1c3e36452",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/rtp/Codec.js": "ffe6cacafda853769e3cbd8e532e3d36213a85ed04042eaebc57ba54155e5256",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/rtp/RtpBridge.js": "3cc7626381626e764344621bd52c3c0ffb1dfe203bbcf7047437914af0fbe6e9",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/rtp/RtpSession.js": "72d6298f50c0823fa1a42a8eaf234885809ae08cb477b2b17bfdef6241aefe44",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/session/CallSession.js": "4122886fc628ebabc03bdd4b622de163926d55c0db6199c2b47ea75dacfbf49c",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/sip/PublicHostResolver.js": "5431bacf4dcd1c4027c467d28db8e3d510b700ecc8d441a9d0b0316580b6ffea",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/sip/SipDialog.js": "571440469511a3861a5faae9cf805b1f6555bc2ee1f95cc5b6b8a9dcae9aa4fd",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/sip/SipParser.js": "e5a5dae109bc251acb7623d922dd8bc9284f14f8221bb16f7b0a82846dac8cc8",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/sip/SipServer.js": "7a8971607c0b285b97941d28ba1462db8a0eabdc39997189d4f977b315b624ec",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/sip/SipUacInternal.js": "89e0fd9a27e8960bd2a989942d0671d3dc7526b98c6447246d9b80bf28ecffff",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/sip/VmRegistrar.js": "0dd8dd1107bdcf94539fd8c63a642ee67151a2dc45931ed5edcb518945281401",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/telnet/TelnetProxy.js": "18c0a9ed59aa4cb48186514da4ddc94954e7db207eb71c39769bdac8f7be3353",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/tunnel/UdpTcpTunnel.js": "c560a03a61530d812e809c729f3816ba721e577a52723d4e8cbbcd7ecfa66f0d",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/protocols/Bell103.js": "d7d1ae488e24da9e54e6fc5a586287045d25fe321f81821ea62b8fb25dd7379a",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/protocols/FskCommon.js": "27ee865d11b747aeace4e6acbc4daae2c38efab3ca9c09cdad9bc567fbfb60a7",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/protocols/V21.js": "00473e940f46f754e4397f41dcee2e70b17bd679f694d7e13eb542f2a270e864",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/protocols/V22Common.js": "51a473f0b638691c8c81048236e2e72dca2993a5d0240229cd07bf9c436b1123",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/protocols/V22Demodulator.js": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/protocols/V22RxRRC.js": "42d6d85522a4e26b6d92f70e344b4f65d7d31cd579e2283811899b9ea878fe2b",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/protocols/V23.js": "54af2ce2d86726c84424dc033637efcb2d0cf79c9a5b63e680f1ad4e0b7d93a9",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/protocols/V22.js": "1bd6cb66be0033bde88e52b03ca923fab2181ae9343ac5db2569eb34c9fec45a"
+      },
+      "server_inputs": {
+        "main.js": "1b2f4c9747380dbd77ddfbc918d24c4ce225c7dd51331e75d8c2102d852bfda9",
+        "core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+        "package-lock.json": "8fcaecda3a4b1756ad295be95486cbdd5b9afea005949ac3da8822224c822d56",
+        "config/config.hjson": "daae39792955eaf7b99c45fc936d54b153f62ea0d3f77672f45a8ace756a7dbc",
+        "config/menus/loc-activitypub.hjson": "82861725a47e5892bbfd2251feb02ca0bb46707516a872cf373b350b704c9fe7",
+        "config/menus/loc-doors.hjson": "fb012c018ec054a7e3261f2b4ef28dc568742b0936bfc56ba9377745f8c43530",
+        "config/menus/loc-file_base.hjson": "9d9a02672bcd18b122827e6112ecfd99a4e7ff2916052847de26a87c6808f6c2",
+        "config/menus/loc-login.hjson": "215f943d381a2acc4c1713ff14331efaee19c474218428eac6b64f77b9355f18",
+        "config/menus/loc-main.hjson": "dc2fd404bbb8a35bc5c8bb43b3fe66378173cd8d87d0ab25978af16bda15d227",
+        "config/menus/loc-message_base.hjson": "607939acb6818c7c5fb50a2d90b04fed1b92d50f51fb9ca4215cef06644d2540",
+        "config/menus/loc-new_user.hjson": "04f466f10cc5c169c03186bc8a7fde7b18d5d938e7f0b70873d74bae15161cec",
+        "config/menus/loc-private_mail.hjson": "ffb59f0d6f2d592181d2bc304d46e9e2a3b71a14c2d6cd65a639f6b0c6f3d382"
+      },
+      "generated_inputs": {
+        "program/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+        "program/ASPECT.EXE": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+        "program/AUDIO.ASP": "8d860f84e63e7041d1e92eda03396e7add03717534d490e5a1f475e168cadaed",
+        "program/AUDIO.ASX": "ba9fa59944a89ed7ac810fa36c5e38e4a4b9aa4e128e13ec6ded13fab11dfd13",
+        "program/EXITKEY.COM": "5774df028ae1daf1f1d1815fe7a82cfdc9c8346add7eb699740e5863f55a5fb1",
+        "program/KEYVEC.COM": "fcbe508ffd8e54b24db8e77ce1b70a32917097cf6d21a0a3bb8bb229aa3ffd91"
+      },
+      "server_revision": "6c25317168b762f7d9088a54d3f8295438827a0e",
+      "server_menus": [
+        "telnetConnected",
+        "matrix",
+        "login",
+        "fullLoginSequenceLoginArt",
+        "fullLoginSequenceLastCallers",
+        "fullLoginSequenceWhosOnline",
+        "fullLoginSequenceOnelinerz",
+        "fullLoginSequenceNewScanConfirm",
+        "fullLoginSequenceUserStats",
+        "mainMenu",
+        "messageBaseMainMenu",
+        "mainMenu",
+        "fileBaseMainMenu"
+      ],
+      "script_stages": "BRIDGE|FORM|MAIN|MESSAGES|RETURN|FILES|",
+      "receive_trace": false,
+      "dmodem_variant": "candidate",
+      "gateway": {
+        "commands": [
+          "ATZ",
+          "ATD1"
+        ],
+        "events": [
+          {
+            "type": "ready",
+            "seconds": 4.319804194
+          },
+          {
+            "type": "serial-client",
+            "seconds": 4.505986626
+          },
+          {
+            "type": "command",
+            "seconds": 4.670242992,
+            "command": "ATZ"
+          },
+          {
+            "type": "command",
+            "seconds": 4.99895606,
+            "command": "ATD1"
+          },
+          {
+            "type": "numeric-call",
+            "seconds": 4.999319295
+          },
+          {
+            "type": "answer-CONNECT",
+            "seconds": 9.279664915,
+            "bps": 1200,
+            "protocol": "V22"
+          },
+          {
+            "type": "caller-CONNECT",
+            "seconds": 9.653537505,
+            "bps": 1200,
+            "protocol": "V22"
+          },
+          {
+            "type": "serial-CONNECT",
+            "seconds": 9.653770665
+          },
+          {
+            "type": "shutdown",
+            "seconds": 450.573663215,
+            "reason": "serial-close"
+          },
+          {
+            "type": "session-ended",
+            "seconds": 450.575065888,
+            "callId": "fsk1wb4dkpk@127.0.0.1",
+            "reason": "serial-close"
+          }
+        ],
+        "errors": [],
+        "ended": {
+          "callId": "fsk1wb4dkpk@127.0.0.1",
+          "reason": "serial-close"
+        },
+        "callerInfo": {
+          "bps": 1200,
+          "protocol": "V22"
+        },
+        "answerInfo": {
+          "bps": 1200,
+          "protocol": "V22"
+        },
+        "stats": {
+          "extToInt": {
+            "packets": 22253,
+            "bytes": 3827516
+          },
+          "intToExt": {
+            "packets": 22253,
+            "bytes": 3827516
+          },
+          "extToIntDrops": 0,
+          "intToExtDrops": 0,
+          "extFirstSrc": "127.0.0.1:53898",
+          "intFirstSrc": "127.0.0.1:10002"
+        },
+        "negotiated": {
+          "remoteRtpAddr": "127.0.0.1",
+          "remoteRtpPort": 42000,
+          "codec": {
+            "codec": "PCMU",
+            "rate": 8000
+          }
+        },
+        "pool": "stopped",
+        "backendStates": [
+          "STOPPED"
+        ],
+        "VM_exited": true,
+        "receiveTrace": null,
+        "sourceScope": "Synthetic ATZ/ATD1 front end only; online bytes cross actual external/internal SIP, CallSession/pool, RTP, originating and guest answering DSP, and Telnet. DOSBox UART/modem status lines remain emulated."
+      },
+      "captures_sha256": {
+        "node.log": "a67898f37dc70e6f00b2a401d5e2e74a261084437ed4c9cb77a63a7025a54e0f",
+        "dosbox.log": "75cff46d28512ad06c9e364f48fd787f2b98529517b64a59f7a9a991764b2250",
+        "qemu-0.log": "49e3a5a48c419b1e5ba8a9124a1617fc47e51c605e498649faa26724e7bdd0d9",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "KEYOLD.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+        "KEYNEW.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+        "SCREEN.BIN": "7d1a2976f59aafd8e6b54769f52f5479bec3d5b0039d386aeb0af3676ab3c726",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial-in.bin": "9d3b03aaa43f440284341c00ace198937dabd63b7b1b38ba9d95e00e6e7af8a1",
+        "serial-out.bin": "c1d7b67fda97f74618e352a941c7c1d799c02f57ecfc31431e60a99382002fed",
+        "caller-decoded.bin": "e35f0c8e4343d352422ad7f2fdce37a69ca634ffa707bc3b4f9fe8fc816c16a0",
+        "control-wire.bin": "0200c651a538a4ff7f1d7a563b3192214aed60e03ab320663f911c0baff58eb0",
+        "rtp-from-answer.bin": "1d864bbed31242d57ec1e677eaa9eb00025121152b4c868d6650045697c5adb9",
+        "rtp-from-caller.bin": "7017e8daf5e54647f25fcac6a62f72e5d3673e6bcd507200a636c37dac6f22bf",
+        "sip-to-server.bin": "672663ae9fd275386559ecd371c9e2202bcd74d209296b088d0732747d08ebf8",
+        "sip-to-caller.bin": "f882c32a62c31024c68f670d5e45363a024c46627d25e8bc977a82a9641e5755",
+        "server-session.jsonl": "50f6b57f2173f1f3f6cc9191b3a273fa5f0b209728c2055d0d7fbc76eb22876a",
+        "bbs-input.bin": "b6c45acf0baecc49c3136f9a9c040cdcf64714d3d97b92bd4ea0c0c15dd31b33",
+        "bbs-output.bin": "5e808d37cc58469b879528fc62865de0a0652034e5147b808f5b3131028b4556"
+      },
+      "scope": "Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to owned stock ENiGMA. No physical modem/ATA/UART acceptance.",
+      "producer_result_sha256": "e53320f770158e13bdc4c1808c42fd1a4b98d721976a58dedb12d66157354073",
+      "independent_audit": {
+        "passed": true,
+        "checks": {
+          "numeric_command_prefix": true,
+          "single_normal_post_train_hold": true,
+          "serial_equals_post_hold_guest_decode": true,
+          "online_target_after_numeric_call": true,
+          "guest_equals_Telnet_application_input": true,
+          "decoded_audio_equals_serial_output": true,
+          "complete_BBS_display_survives_DSP": true,
+          "single_real_carrier": true,
+          "real_DOS_terminal_replies": true,
+          "authoritative_login": true,
+          "authoritative_menu_order": true,
+          "script_and_normal_DOS_return": true,
+          "actual_UART_restored": true,
+          "keyboard_timer_vector_restored": true,
+          "continuous_rtp-from-answer.bin": true,
+          "continuous_rtp-from-caller.bin": true,
+          "actual_external_SIP": true,
+          "actual_internal_BYE": true,
+          "capture_hashes": true
+        },
+        "producer_sha256": "e53320f770158e13bdc4c1808c42fd1a4b98d721976a58dedb12d66157354073",
+        "auditor_sha256": "c8b698bbc4baab48e88581f571b8216258e65b337e0439faf4369253146c29f0",
+        "payloads": {
+          "BBS_input_bytes": 48,
+          "BBS_display_bytes": 46908,
+          "BBS_input_sha256": "f6066df3a8d0aad2df83dbcac94715d46a0c3b4ffce934c89100ab9da253e274",
+          "BBS_display_sha256": "5f3f265549812d151b9f677245ca59f2ced4efb21db555cf28ea54e1b0650e43",
+          "display_offset_in_caller": 187,
+          "guest_DATA_RX_bytes": 64,
+          "pre_proxy_training_tail_bytes": 0,
+          "pre_proxy_training_tail_hex": "",
+          "unadjusted_serial_guest_identity": true
+        },
+        "scope": "Independent read-only actual DOS/ASPECT, BBS authoritative logs, guest frames, serial/Telnet byte identity, RTP continuity, SIP and cleanup audit. No physical modem/ATA claim."
+      },
+      "independent_audit_sha256": "edf47e3ff7078bf0bc86b25cdae3a7809325edbdafd9424fb0771e965b534f09"
     }
   },
   "diagnosis": {
@@ -1481,13 +1776,13 @@
     "offline_evidence_sha256": "fb6931b33b5382e73b5ac3e99a5becacdc23ac13d120ab8d58c392db1706aea1"
   },
   "remaining": [
-    "Reproduce/resolve intermittent six-byte insertion from -05; traced -06 passes with 3559200 exact PCM samples after60ms and no inserted bytes.",
-    "Compose and verify the isolated REGISTER-ownership and pool-timer candidates with real guest refresh and DSP teardown.",
+    "The historical six-byte event lacks guest PCM/timing; its exact association remains unproven. A controlled same-boundary discard-policy failure is reproduced and fixed in the tested candidate.",
+    "Compose and verify REGISTER-ownership and pool-timer candidates with real guest refresh and DSP teardown.",
     "Resolve helper literal carrier-result/data ambiguity and slowly fragmented carrier results.",
-    "Editors/transfers/Synchronet through this audio path, sustained pressure and physical Boca/SPA2102 acceptance remain open.",
+    "Editors/transfers/Synchronet through the rebuilt audio path, sustained pressure, loss/fault behavior and physical Boca/SPA2102 acceptance remain open.",
     "All F01-F16 whole-application completion gates remain open."
   ],
-  "current_cohort": "synthmodem-audio-dos-06",
+  "current_cohort": "synthmodem-audio-dos-07",
   "latest_cohort_passed": true,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {

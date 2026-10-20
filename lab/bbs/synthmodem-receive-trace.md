@@ -98,6 +98,10 @@ DISCARD_NONE gives3000 normal reads and zero sequence gaps. The raw library
 counters are retained in the [receipt](../../docs/validation/synthmodem-jitter-policy.json).
 This establishes a policy effect, not the cause of the earlier DOS failure.
 
-Runtime comparisons, packet delay/loss tests and the full DOS byte audit remain
-required before accepting any jitter-policy change. No14.4 or Boca/ATA result
+The [paired VM comparison](synthmodem-jitter-vm.md) now boots both builds and
+reproduces upstream corruption after a lossless, ordered backlog release. The
+candidate preserves the waveform and all authored bytes under that profile;
+the independent comparison verifies that only d-modem differs in the images.
+Normal DOS/BBS composition, broader packet delay/loss tests and transfers remain
+separate acceptance gates. No14.4 or Boca/ATA result
 follows from a1200-bps software diagnostic.

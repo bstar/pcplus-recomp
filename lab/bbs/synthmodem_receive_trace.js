@@ -2,6 +2,7 @@
 // Diagnostic caller bursts/idle, actual VM DSP, unchanged binaries, PCM export.
 const assert=require('assert/strict'),fs=require('fs'),path=require('path'),net=require('net'),dgram=require('dgram');
 const runtime=path.resolve(process.argv[2]),out=path.resolve(process.argv[3]),src=n=>path.join(runtime,'source',n);
+const networkProfile=process.argv[4]||'direct';assert(['direct','buffered-release'].includes(networkProfile));
 const config=require(src('config.js'));config.logging.level='info';config.logging.colorize=false;config.modem.native.forceProtocol='V22';
 const {PjsipBackend}=require(src('src/backends/PjsipBackend.js'));
 const {ModemDSP}=require(src('src/dsp/ModemDSP.js'));
@@ -9,11 +10,12 @@ const {RtpSession}=require(src('src/rtp/RtpSession.js'));
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function until(fn,ms,label){const end=Date.now()+ms;while(!fn()){assert(Date.now()<end,label);await sleep(10);}}
 const record=b=>{const h=Buffer.alloc(4);h.writeUInt32LE(b.length);return Buffer.concat([h,b]);};
-const events=[],wire=[],callerData=[],guestData=[],rtpCaller=[],rtpAnswer=[],rtpGuest=[],errors=[],checks={};
+const events=[],wire=[],callerData=[],guestData=[],rtpCaller=[],rtpAnswer=[],rtpGuest=[],rtpDelayed=[],errors=[],checks={};
 const event=(type,v={})=>events.push({type,ns:process.hrtime.bigint().toString(),...v});
 function packet(type,target,b){target.push(Buffer.from(b));event(type,{packet:target.length-1,sequence:b.length>=12?b.readUInt16BE(2):null,timestamp:b.length>=12?b.readUInt32BE(4):null});}
 async function main(){
- let exportSocket,exportBuffer=Buffer.alloc(0),child,callerInfo,answerInfo,exception,stats,ext,caller,atText='';
+ let exportSocket,exportBuffer=Buffer.alloc(0),child,callerInfo,answerInfo,exception,stats,ext,caller,relay,delayTimer,atText='';
+ let delayMs=networkProfile==='buffered-release'?300:0;const delayed=[];
  const exportServer=net.createServer(s=>{assert(!exportSocket);exportSocket=s;s.on('data',b=>exportBuffer=Buffer.concat([exportBuffer,b]));s.on('error',e=>errors.push(e.message));});
  await new Promise(r=>exportServer.listen(0,'127.0.0.1',r));process.env.PCPLUS_TRACE_PORT=String(exportServer.address().port);
  const atInit=['AT&K0','AT+MS=22,0,1200,1200','AT\\N0','AT%C0'];
@@ -34,19 +36,29 @@ async function main(){
   b.controlSocket.on('data',v=>{wire.push(Buffer.from(v));event('guest-control',{bytes:v.length});});
   b.sendAt('ATE0');await until(()=>/\bOK\b/.test(atText),5000,'ATE0');atText='';
   ext=dgram.createSocket('udp4');caller=dgram.createSocket('udp4');for(const s of [ext,caller])await new Promise(r=>s.bind(0,'127.0.0.1',r));
-  rtp.adoptSocket(caller);rtp.setRemote('127.0.0.1',ext.address().port);rtp.setCodec('PCMU',0);
-  caller.on('message',v=>packet('rtp-from-answer',rtpAnswer,v));ext.on('message',v=>packet('rtp-from-caller',rtpCaller,v));
+  if(networkProfile==='buffered-release'){
+   relay=dgram.createSocket('udp4');await new Promise(r=>relay.bind(0,'127.0.0.1',r));
+   const forward=v=>relay.send(v,ext.address().port,'127.0.0.1',e=>{if(e)errors.push(e.message);});
+   relay.on('message',v=>{packet('rtp-from-caller',rtpCaller,v);if(!delayMs){forward(v);return;}assert(delayed.length<64,'Bounded delay queue');delayed.push({v:Buffer.from(v),due:performance.now()+delayMs});});
+   delayTimer=setInterval(()=>{while(delayed.length && delayed[0].due<=performance.now())forward(delayed.shift().v);},2);
+   relay.release=()=>{event('network-delay-release',{bufferedPackets:delayed.length,previousDelayMs:delayMs});delayMs=0;while(delayed.length)forward(delayed.shift().v);};
+   ext.on('message',v=>packet('rtp-after-delay',rtpDelayed,v));
+  }else ext.on('message',v=>packet('rtp-from-caller',rtpCaller,v));
+  rtp.adoptSocket(caller);rtp.setRemote('127.0.0.1',relay?relay.address().port:ext.address().port);rtp.setCodec('PCMU',0);
+  caller.on('message',v=>packet('rtp-from-answer',rtpAnswer,v));
   await b.activate({extRtpSocket:ext,extPeer:{address:'127.0.0.1',port:caller.address().port}});
   b._tunnel.udp.rtp.on('message',v=>packet('rtp-to-guest',rtpGuest,v));
   checks.real_RING_and_init_OK=/\bRING\b/.test(atText) && !/\bERROR\b/.test(atText);dsp.start();
   await until(()=>callerInfo && answerInfo,30000,'Both DSP CONNECT');checks.both_DSP_CONNECT=callerInfo.bps===1200 && answerInfo.bps===1200;
   await sleep(6500);onlineStart=Buffer.concat(guestData).length;event('workload-start',{guestPrefixBytes:onlineStart});
   b.write(down);transmit(Buffer.from('127.0.0.1:45505\r'));await sleep(1500);transmit(Buffer.from('\x1b[?1;2c'));await sleep(300);transmit(Buffer.from('\x1b[1;1R'));
+  if(relay){await sleep(500);relay.release();}
   await sleep(45000);transmit(Buffer.from('NEXT\r'));await sleep(1500);
   await until(()=>Buffer.concat(callerData).length>=down.length,15000,'Downstream payload deadline');
   observed=Buffer.concat(guestData);event('workload-end',{guestBytes:observed.length});
   checks.upstream_exact_after_declared_idle=observed.subarray(onlineStart).equals(Buffer.concat(sent));
   checks.downstream_exact=Buffer.concat(callerData).equals(down);
+  if(relay)checks.delay_route_preserves_order_and_payload=delayed.length===0 && rtpDelayed.every((v,i)=>v.equals(rtpCaller[i]));
   await until(()=>exportSocket,5000,'Diagnostic export socket');event('export-start');exportSocket.write('DUMP\n');
   for(const name of ['modem_rx_8k.raw','modem_rx.raw','modem_tx.raw']){
    await until(()=>exportBuffer.includes(10),10000,'Export header');const at=exportBuffer.indexOf(10),header=exportBuffer.subarray(0,at).toString().trim().split(/\s+/);exportBuffer=exportBuffer.subarray(at+1);
@@ -58,14 +70,15 @@ async function main(){
   await b.stop();await until(()=>child.exitCode!==null || child.signalCode!==null,5000,'QEMU exit');checks.teardown=b.state==='STOPPED' && b.controlSocket===null;
  }catch(e){exception=e.stack;errors.push(e.message);}
  finally{
-  dsp.stop();rtp.close();await b.stop();if(ext)await new Promise(r=>ext.close(r));exportSocket?.destroy();await new Promise(r=>exportServer.close(r));
+  dsp.stop();rtp.close();if(delayTimer)clearInterval(delayTimer);await b.stop();if(relay)await new Promise(r=>relay.close(r));if(ext)await new Promise(r=>ext.close(r));exportSocket?.destroy();await new Promise(r=>exportServer.close(r));
   const files={'caller-decoded.bin':Buffer.concat(callerData),'guest-decoded.bin':Buffer.concat(guestData),'guest-workload.bin':observed||Buffer.alloc(0),
    'control-wire.bin':Buffer.concat(wire),'rtp-from-caller.bin':Buffer.concat(rtpCaller.map(record)),'rtp-from-answer.bin':Buffer.concat(rtpAnswer.map(record)),
    'rtp-to-guest.bin':Buffer.concat(rtpGuest.map(record)),'expected-upstream.bin':Buffer.concat(sent),'expected-downstream.bin':down};
+  if(relay)files['rtp-after-delay.bin']=Buffer.concat(rtpDelayed.map(record));
   for(const [name,v] of Object.entries(files))fs.writeFileSync(path.join(out,name),v);
   fs.writeFileSync(path.join(out,'timing.jsonl'),events.map(v=>JSON.stringify(v)+'\n').join(''));
-  checks.no_errors=errors.length===0;const result={passed:!exception && Object.values(checks).every(Boolean),checks,errors,exception,callerInfo,answerInfo,onlineStart,stats,atInit,node:process.version,
-   scope:'Diagnostic-only actual native/VM V22 DSP, internal SIP/RTP and existing guest PCM dumps. Extra export daemon/chardev, otherwise unchanged runtime binaries. Authored burst/idle workload; no external SIP gateway, DOS/BBS or physical modem/ATA.'};
+  checks.no_errors=errors.length===0;const result={passed:!exception && Object.values(checks).every(Boolean),checks,errors,exception,callerInfo,answerInfo,onlineStart,stats,atInit,node:process.version,networkProfile,
+   scope:'Diagnostic-only actual native/VM V22 DSP, internal SIP/RTP and existing guest PCM dumps. Extra export daemon/chardev; selected runtime binaries pinned by Python. Optional bounded FIFO network delay/release, no payload changes. Authored workload; no external SIP gateway, DOS/BBS or physical modem/ATA.'};
   fs.writeFileSync(path.join(out,'node-result.json'),JSON.stringify(result,null,2)+'\n');
  }
  assert(!exception,exception);

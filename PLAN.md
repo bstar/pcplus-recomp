@@ -23,13 +23,25 @@ Both offline caller/guest decoders recover exactly the DOS input. Neither run
 reproduces the earlier -05 six-byte insertion, which remains an open intermittent
 failure; a later clean run is not proof of a fix.
 
-PJSIP2.15.1 source and an actual library API test confirm that fixed prefetch
-bounds do not disable progressive frame discard. Its balanced sequence fixture
-skips24 sequence numbers under the baseline policy; explicit DISCARD_NONE
-preserves all3000 reads. Paired source-built static i386 d-modem binaries now
-build through pinned Nix; only the candidate adds that explicit setting.
-Boot/compare those rebuilt binaries with controlled packet timing next, then
-repeat DOS/BBS acceptance. They are not in the accepted or installed runtime.
+The [paired rebuilt d-modem VM test](lab/bbs/synthmodem-jitter-vm.md) now
+confirms a modem-data corruption mechanism: a lossless, ordered300ms backlog
+release causes the baseline's progressive discard to shrink guest audio delay
+and insert89 bytes immediately after CPR. The DISCARD_NONE candidate preserves
+34 upstream/6000 downstream bytes and486400 exact overlapping PCM samples at a
+constant360ms delay. Both builds also pass direct-route training/data/cleanup.
+An independent audit passes23 invariants per variant and6 comparison gates,
+including that only d-modem differs in the boot archives. This fixes the
+controlled policy failure; the historical six-byte event lacks PCM/timing and
+its exact cause remains unproven.
+
+A [normal candidate image](lab/bbs/synthmodem_jitter_runtime.py) replaces only
+d-modem in the accepted sparse-helper gateway, without extra init or diagnostic
+ports. This normal candidate now passes19 producer and19 independent checks in
+cohort -07:64 exact upstream and46908 exact downstream bytes, all four menus,
+normal DOS return, UART/vector restoration and SIP/VM cleanup. The preferred
+test image is `build/bbs-lab/synthmodem-jitter-runtime-01/runtime`, selected with
+`--dmodem candidate`. Broader timing/loss, sustained data, transfers and physical acceptance
+remain separate gates; the earlier Nix build/API receipt retains its scope.
 
 Separate [pool timer](lab/bbs/patches/synthmodem-pool/README.md) and
 [REGISTER ownership](lab/bbs/patches/synthmodem-registrar/README.md) candidates

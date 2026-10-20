@@ -1,0 +1,1028 @@
+{
+  "passed": true,
+  "checks": {
+    "all_provenance_and_transport_invariants": true,
+    "same_fixture_sources": true,
+    "same_kernel_and_JS_sources": true,
+    "only_dmodem_differs_in_boot_archives": true,
+    "baseline_counterexample_reproduced": true,
+    "candidate_preserves_upstream_and_PCM": true
+  },
+  "cohorts": {
+    "baseline": {
+      "checks": {
+        "immutable_source": true,
+        "immutable_runtime": true,
+        "captures_match_receipt": true,
+        "analysis_inputs_match": true,
+        "analysis_source_matches": true,
+        "authored_expected_bytes": true,
+        "caller_output_exact": true,
+        "offline_caller_exact": true,
+        "offline-caller.json_identity": true,
+        "offline-guest.json_identity": true,
+        "real_training_and_cleanup": true,
+        "correct_variant": true,
+        "actual_single_guest_carrier": true,
+        "guest_frames_equal_observed_data": true,
+        "workload_is_actual_guest_prefix": true,
+        "one_bounded_lossless_release": true,
+        "declared_post_training_idle": true,
+        "rtp-from-caller.bin_continuous": true,
+        "rtp-after-delay.bin_continuous": true,
+        "rtp-to-guest.bin_continuous": true,
+        "rtp-after-delay.bin_unaltered_prefix": true,
+        "rtp-to-guest.bin_unaltered_prefix": true,
+        "boot_image_selected_binary": true
+      },
+      "upstream_exact": false,
+      "guest_workload_bytes": 123,
+      "offline_guest_exact": false,
+      "PCM": {
+        "unique_anchors": 244,
+        "offset_histogram": {
+          "2800": 54,
+          "2720": 1,
+          "2560": 1,
+          "1040": 1,
+          "960": 1,
+          "880": 1,
+          "800": 2,
+          "720": 2,
+          "640": 1,
+          "560": 3,
+          "480": 4,
+          "400": 173
+        },
+        "offset_changes": [
+          {
+            "RTP_frame": 140,
+            "guest_sample": 25200,
+            "offset_samples": 2800
+          },
+          {
+            "RTP_frame": 710,
+            "guest_sample": 116320,
+            "offset_samples": 2720
+          },
+          {
+            "RTP_frame": 730,
+            "guest_sample": 119360,
+            "offset_samples": 2560
+          },
+          {
+            "RTP_frame": 930,
+            "guest_sample": 149840,
+            "offset_samples": 1040
+          },
+          {
+            "RTP_frame": 940,
+            "guest_sample": 151360,
+            "offset_samples": 960
+          },
+          {
+            "RTP_frame": 950,
+            "guest_sample": 152880,
+            "offset_samples": 880
+          },
+          {
+            "RTP_frame": 960,
+            "guest_sample": 154400,
+            "offset_samples": 800
+          },
+          {
+            "RTP_frame": 980,
+            "guest_sample": 157520,
+            "offset_samples": 720
+          },
+          {
+            "RTP_frame": 1010,
+            "guest_sample": 162240,
+            "offset_samples": 640
+          },
+          {
+            "RTP_frame": 1030,
+            "guest_sample": 165360,
+            "offset_samples": 560
+          },
+          {
+            "RTP_frame": 1060,
+            "guest_sample": 170080,
+            "offset_samples": 480
+          },
+          {
+            "RTP_frame": 1110,
+            "guest_sample": 178000,
+            "offset_samples": 400
+          }
+        ],
+        "dominant_offset_samples": 400,
+        "dominant_offset_ms": 50.0,
+        "compared_samples": 488880,
+        "differing_samples": 152393,
+        "first_difference_sample": 21488,
+        "last_difference_sample": 177999,
+        "leading_padding_is_silence": true,
+        "guest_PCM_equals_delayed_RTP_prefix": false
+      },
+      "upstream_changes": [
+        {
+          "operation": "insert",
+          "expected_start": 29,
+          "expected_end": 29,
+          "actual_start": 29,
+          "actual_end": 118,
+          "expected_hex": "",
+          "actual_hex": "a447f871e1d0e01ad8bf89f0ddf6f09d01ef85f268322448e87cf42966fce7b653c7fcb92ae73eddf4de95ffcfc9eafe7bfe68a4f0ab11e3f899e082dff055dcfbab16fc9801f61e06fa0894f64ca3f988d3cdc4e7ff3cfcf5"
+        }
+      ],
+      "release": [
+        {
+          "type": "network-delay-release",
+          "ns": "877213468842644",
+          "bufferedPackets": 15,
+          "previousDelayMs": 300
+        }
+      ],
+      "producer_passed": false,
+      "producer_sha256": "e201f5f1d2541e9f7a970069a966a3d9ced2d15d285f9187dee22dfdf587ae93",
+      "PCM_analysis_sha256": "2322cf23881a331824699aa52dbee6c68b19ee6d8e807ce1dd593d24fc6a204f",
+      "captures_sha256": {
+        "node.log": "728dc877b16317282729cb39bedb97ae7ba6ae3ff69fcda35d735b3ec5aea148",
+        "qemu.log": "9730f8a4066023f97e8f230e38d7d6b060667f78a4136a645e9ed4030ac427bd",
+        "modem_rx_8k.raw": "535b799217d7e09d02558bae577874c3b145256727ac37b5a8c5f498b21e707e",
+        "modem_rx.raw": "2640f26da078f3eb56640ab0433b798336c1e427dd5e087fbafd4222c05e483a",
+        "modem_tx.raw": "b7fc6d1a0ca354f686e5c26a6dcf9bf1a6c23d656cf57fd2b966f8301fd9fcb1",
+        "caller-decoded.bin": "460406ec4a2289eb17503450678b73b7efbeb5abd0c05e149dd32d0db6f59867",
+        "guest-decoded.bin": "c3df2379b276f8e60fa3834d7cc22b4953fdf6524fc073f978a623488f6e3032",
+        "guest-workload.bin": "c3df2379b276f8e60fa3834d7cc22b4953fdf6524fc073f978a623488f6e3032",
+        "control-wire.bin": "c7dad5e5f5a125e1e0782bee7acf2a107b96387e9437dd99bc98c3fa2af64f95",
+        "rtp-from-caller.bin": "6e65ceb4436f8f02f64ccb13e307fcad88d7b59541ceb92768a7c0c8a468583b",
+        "rtp-from-answer.bin": "cf19b1da7960e164531971aaf1597b23733a4e930ea43318eda23e4497e89163",
+        "rtp-to-guest.bin": "7c049e3ff74f401ee81e589833f4b68e7ffe0d406c7260b850af2038b0ddf951",
+        "expected-upstream.bin": "e10431fd532176071847e272eec19653c37c153ad577457449e66e85af4bc806",
+        "expected-downstream.bin": "460406ec4a2289eb17503450678b73b7efbeb5abd0c05e149dd32d0db6f59867",
+        "rtp-after-delay.bin": "6e65ceb4436f8f02f64ccb13e307fcad88d7b59541ceb92768a7c0c8a468583b",
+        "timing.jsonl": "e9168e1b97c53b5d5cea20dc50d26aeee9692d3b932bf0c97bba13978268a814"
+      },
+      "frozen_inputs": {
+        "lab/bbs/synthmodem_receive_trace.py": "ad4b0dd5d13feed63ca2fcecd1244f86644a516864521a83c33a72d77623f7bd",
+        "lab/bbs/synthmodem_receive_trace.js": "bcc5d13a97e70011b6fe2dc35e61a357e44c5593e1ad9bcd08fbba485119c929",
+        "lab/bbs/receive_trace_export.sh": "3f6c38c30c3f4624319814e4601e290cad6cee89d5bc82bc6ee6fad17457cdea",
+        "lab/bbs/qemu_trace_wrapper.py": "f1cdbcceef18e389d3625378d5d7567d398cdaa4f330cf82ae6d89372dff98f0",
+        "lab/bbs/synthmodem_sparse_runtime.py": "f3743c82c191e70bb233b08623a08a545b0e7b7d1d15759af18312ec0cffad42",
+        "lab/bbs/synthmodem_vm_control.py": "7eb30e96af9a7e7cd319cd645a68331c0386aa3dda3e9eba68ca5563b5b8a456",
+        "docs/validation/synthmodem-gateway.json": "b45a3889492327899bdaa5817b4951da95b81bb07bdd69319b4814008504a6a0",
+        "docs/validation/synthmodem-sparse.json": "c1af9919cb1ec643fd2fc2cc236ed8c304d8050790ca6033fb0589e074c9002c",
+        "nix/flake.nix": "7cda07d3ab9fb050ef3c959781e4cb93ab2fab72f915d6206d980458ab297aa0",
+        "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+        "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
+        "nix/dmodem.nix": "f4f3ea0b2050bdc4064702907ef94294326c509bb38130b4b3c1f2822e1519f2",
+        "tools/build-dmodem": "6ffe06ad3d9ad48ae0a7ae73b9d6c0df3d1e61191fee23b17b4c166f93646bdc",
+        "docs/validation/synthmodem-jitter-policy.json": "4850cb6e88bf6edfb9831065d1acae1c7ea29f20cd56f92fc0a09b3c1af73278"
+      },
+      "tested_inputs": {
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/bzImage": "2bac10d87a024026de6c00539ea70d19194169b6b99111d9178815b470d77dbe",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/candidate.cpio.gz": "ed2238b6987470bcd462bd65626853af31994453e7e8b289befbbb3e05ef8abd",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/config.js": "6cfa6057b31bebb90d52f12956a3166a389308b703c17480acdc59fdb05f681f",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/index.js": "8aac80d7f4e68c25d02f29b16d2dc82b78d3f5ecee57562315fda4efb3494791",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/vm/qemu-runner/QemuVM.js": "2b15088c2a4d8a2002bcd4b153d38d06fc6e9863cb7a9990dbcac1875b082a76",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/vm/qemu-runner/SlmodemVM.js": "8578c0d7fcb5b96648856422ef56a9178f155ddb86321300b8e63f3220c61cdc",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/vm/qemu-runner/qemu-args.js": "61975545b19201092d3e0f53dd324e46a05e432f0ace7ac3bc3c0f63abf1b3ea",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/vm/qemu-runner/transport.js": "54cec57e3b78a5b4a82e3289dac645be4b7d49da5f2ed697f3a9d5e0e4742570",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/backends/ModemBackendPool.js": "58d6e2690a0a8170e1da2387abd935fa373b93b239805dd596fb4a578c7a0044",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/backends/PjsipBackend.js": "99e3c39ae8aacc48a630c1361146b8b6a0e82639c4fcb54ab61ea8c615eb9099",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/dsp/AudioCapture.js": "843dc3267c927cdb07d46d299613228508a71f85180bc76f46931d27bf196965",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/dsp/Handshake.js": "2c8e9bf37157159ebee8d441e15b1b241bb46233c6d36f710d77c3cedee2d97b",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/dsp/ModemDSP.js": "18986bc99ba59756e7841902dcc93ccf328bb59e4e0671446be286695882e967",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/dsp/Primitives.js": "f63b3e3fcee64169af3343ea7ef73ffb68fff24356c021564f62b7e4c8a434af",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/dsp/V8.js": "145c661bbbff383cc7af622b98fcd423f1d66fae2d2e464b308cf3a2c0edcb40",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/dsp/V8Sequencer.js": "3379d253f990a83d1dd3612383a17b5534c47d1635870fb16177a8e1c3e36452",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/rtp/Codec.js": "ffe6cacafda853769e3cbd8e532e3d36213a85ed04042eaebc57ba54155e5256",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/rtp/RtpBridge.js": "3cc7626381626e764344621bd52c3c0ffb1dfe203bbcf7047437914af0fbe6e9",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/rtp/RtpSession.js": "72d6298f50c0823fa1a42a8eaf234885809ae08cb477b2b17bfdef6241aefe44",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/session/CallSession.js": "4122886fc628ebabc03bdd4b622de163926d55c0db6199c2b47ea75dacfbf49c",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/sip/PublicHostResolver.js": "5431bacf4dcd1c4027c467d28db8e3d510b700ecc8d441a9d0b0316580b6ffea",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/sip/SipDialog.js": "571440469511a3861a5faae9cf805b1f6555bc2ee1f95cc5b6b8a9dcae9aa4fd",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/sip/SipParser.js": "e5a5dae109bc251acb7623d922dd8bc9284f14f8221bb16f7b0a82846dac8cc8",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/sip/SipServer.js": "7a8971607c0b285b97941d28ba1462db8a0eabdc39997189d4f977b315b624ec",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/sip/SipUacInternal.js": "89e0fd9a27e8960bd2a989942d0671d3dc7526b98c6447246d9b80bf28ecffff",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/sip/VmRegistrar.js": "0dd8dd1107bdcf94539fd8c63a642ee67151a2dc45931ed5edcb518945281401",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/telnet/TelnetProxy.js": "18c0a9ed59aa4cb48186514da4ddc94954e7db207eb71c39769bdac8f7be3353",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/tunnel/UdpTcpTunnel.js": "c560a03a61530d812e809c729f3816ba721e577a52723d4e8cbbcd7ecfa66f0d",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/dsp/protocols/Bell103.js": "d7d1ae488e24da9e54e6fc5a586287045d25fe321f81821ea62b8fb25dd7379a",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/dsp/protocols/FskCommon.js": "27ee865d11b747aeace4e6acbc4daae2c38efab3ca9c09cdad9bc567fbfb60a7",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/dsp/protocols/V21.js": "00473e940f46f754e4397f41dcee2e70b17bd679f694d7e13eb542f2a270e864",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/dsp/protocols/V22Common.js": "51a473f0b638691c8c81048236e2e72dca2993a5d0240229cd07bf9c436b1123",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/dsp/protocols/V22Demodulator.js": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/dsp/protocols/V22RxRRC.js": "42d6d85522a4e26b6d92f70e344b4f65d7d31cd579e2283811899b9ea878fe2b",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/dsp/protocols/V23.js": "54af2ce2d86726c84424dc033637efcb2d0cf79c9a5b63e680f1ad4e0b7d93a9",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-buffered-01/runtime/source/src/dsp/protocols/V22.js": "1bd6cb66be0033bde88e52b03ca923fab2181ae9343ac5db2569eb34c9fec45a"
+      }
+    },
+    "candidate": {
+      "checks": {
+        "immutable_source": true,
+        "immutable_runtime": true,
+        "captures_match_receipt": true,
+        "analysis_inputs_match": true,
+        "analysis_source_matches": true,
+        "authored_expected_bytes": true,
+        "caller_output_exact": true,
+        "offline_caller_exact": true,
+        "offline-caller.json_identity": true,
+        "offline-guest.json_identity": true,
+        "real_training_and_cleanup": true,
+        "correct_variant": true,
+        "actual_single_guest_carrier": true,
+        "guest_frames_equal_observed_data": true,
+        "workload_is_actual_guest_prefix": true,
+        "one_bounded_lossless_release": true,
+        "declared_post_training_idle": true,
+        "rtp-from-caller.bin_continuous": true,
+        "rtp-after-delay.bin_continuous": true,
+        "rtp-to-guest.bin_continuous": true,
+        "rtp-after-delay.bin_unaltered_prefix": true,
+        "rtp-to-guest.bin_unaltered_prefix": true,
+        "boot_image_selected_binary": true
+      },
+      "upstream_exact": true,
+      "guest_workload_bytes": 34,
+      "offline_guest_exact": true,
+      "PCM": {
+        "unique_anchors": 256,
+        "offset_histogram": {
+          "2880": 256
+        },
+        "offset_changes": [
+          {
+            "RTP_frame": 140,
+            "guest_sample": 25280,
+            "offset_samples": 2880
+          }
+        ],
+        "dominant_offset_samples": 2880,
+        "dominant_offset_ms": 360.0,
+        "compared_samples": 486400,
+        "differing_samples": 0,
+        "first_difference_sample": null,
+        "last_difference_sample": null,
+        "leading_padding_is_silence": true,
+        "guest_PCM_equals_delayed_RTP_prefix": true
+      },
+      "upstream_changes": [],
+      "release": [
+        {
+          "type": "network-delay-release",
+          "ns": "877330775179198",
+          "bufferedPackets": 15,
+          "previousDelayMs": 300
+        }
+      ],
+      "producer_passed": true,
+      "producer_sha256": "298da0220a624ccf6eb4e36873353e20ba81500020f5a4543b9458a99ebbe8ce",
+      "PCM_analysis_sha256": "f9d181a404af3ce52a464a946a9407c25b20fd210780334bd90b92b48542770d",
+      "captures_sha256": {
+        "node.log": "bbc75bfd410be21c5b95c94829b2502abcc44e43c05653413e6bd84000629c4b",
+        "qemu.log": "4569bf82a0c98ea1834333d8a39ffff73d7a2bfc390a819c509f8edde71f7be1",
+        "modem_rx_8k.raw": "acef51b340587ebfea6e21cdbd1db4016d3980affa3b874e649b50e56c7a3912",
+        "modem_rx.raw": "35503e6b0958ab2373a95e3069e2625f921d7858ed58f8f79e23971bbb9c2e43",
+        "modem_tx.raw": "4742ef2e9434407261b0e337f6d64e154056f51ace0c2d9c1d03d704f036a904",
+        "caller-decoded.bin": "460406ec4a2289eb17503450678b73b7efbeb5abd0c05e149dd32d0db6f59867",
+        "guest-decoded.bin": "e10431fd532176071847e272eec19653c37c153ad577457449e66e85af4bc806",
+        "guest-workload.bin": "e10431fd532176071847e272eec19653c37c153ad577457449e66e85af4bc806",
+        "control-wire.bin": "80abef8d8770f594d26f65ffe7e01c4aad8932f17fb94ee579109b568d4983c7",
+        "rtp-from-caller.bin": "fa14a9ac2e91b291433a24da4d49c1d74cd555f77f57d32072aefa814c01ae04",
+        "rtp-from-answer.bin": "c413374598fc5b2a67bd00f6b53324714b2c0d4516ac02845fc4682f799b23ca",
+        "rtp-to-guest.bin": "699a455817b0aa04c0e96e1414a6569f92cb48ca55440644e68d12a6b7cfbdf6",
+        "expected-upstream.bin": "e10431fd532176071847e272eec19653c37c153ad577457449e66e85af4bc806",
+        "expected-downstream.bin": "460406ec4a2289eb17503450678b73b7efbeb5abd0c05e149dd32d0db6f59867",
+        "rtp-after-delay.bin": "fa14a9ac2e91b291433a24da4d49c1d74cd555f77f57d32072aefa814c01ae04",
+        "timing.jsonl": "771eb59891c01a3c8ae41a2e86c7f56ccff575a8d45e8d099914c5e96d36d94d"
+      },
+      "frozen_inputs": {
+        "lab/bbs/synthmodem_receive_trace.py": "ad4b0dd5d13feed63ca2fcecd1244f86644a516864521a83c33a72d77623f7bd",
+        "lab/bbs/synthmodem_receive_trace.js": "bcc5d13a97e70011b6fe2dc35e61a357e44c5593e1ad9bcd08fbba485119c929",
+        "lab/bbs/receive_trace_export.sh": "3f6c38c30c3f4624319814e4601e290cad6cee89d5bc82bc6ee6fad17457cdea",
+        "lab/bbs/qemu_trace_wrapper.py": "f1cdbcceef18e389d3625378d5d7567d398cdaa4f330cf82ae6d89372dff98f0",
+        "lab/bbs/synthmodem_sparse_runtime.py": "f3743c82c191e70bb233b08623a08a545b0e7b7d1d15759af18312ec0cffad42",
+        "lab/bbs/synthmodem_vm_control.py": "7eb30e96af9a7e7cd319cd645a68331c0386aa3dda3e9eba68ca5563b5b8a456",
+        "docs/validation/synthmodem-gateway.json": "b45a3889492327899bdaa5817b4951da95b81bb07bdd69319b4814008504a6a0",
+        "docs/validation/synthmodem-sparse.json": "c1af9919cb1ec643fd2fc2cc236ed8c304d8050790ca6033fb0589e074c9002c",
+        "nix/flake.nix": "7cda07d3ab9fb050ef3c959781e4cb93ab2fab72f915d6206d980458ab297aa0",
+        "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+        "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
+        "nix/dmodem.nix": "f4f3ea0b2050bdc4064702907ef94294326c509bb38130b4b3c1f2822e1519f2",
+        "tools/build-dmodem": "6ffe06ad3d9ad48ae0a7ae73b9d6c0df3d1e61191fee23b17b4c166f93646bdc",
+        "docs/validation/synthmodem-jitter-policy.json": "4850cb6e88bf6edfb9831065d1acae1c7ea29f20cd56f92fc0a09b3c1af73278"
+      },
+      "tested_inputs": {
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/bzImage": "2bac10d87a024026de6c00539ea70d19194169b6b99111d9178815b470d77dbe",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/candidate.cpio.gz": "98aeee8042019b48284b93401ce038e373db07e03ae5748c3e5fe72a0e445523",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/config.js": "6cfa6057b31bebb90d52f12956a3166a389308b703c17480acdc59fdb05f681f",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/index.js": "8aac80d7f4e68c25d02f29b16d2dc82b78d3f5ecee57562315fda4efb3494791",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/vm/qemu-runner/QemuVM.js": "2b15088c2a4d8a2002bcd4b153d38d06fc6e9863cb7a9990dbcac1875b082a76",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/vm/qemu-runner/SlmodemVM.js": "8578c0d7fcb5b96648856422ef56a9178f155ddb86321300b8e63f3220c61cdc",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/vm/qemu-runner/qemu-args.js": "61975545b19201092d3e0f53dd324e46a05e432f0ace7ac3bc3c0f63abf1b3ea",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/vm/qemu-runner/transport.js": "54cec57e3b78a5b4a82e3289dac645be4b7d49da5f2ed697f3a9d5e0e4742570",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/backends/ModemBackendPool.js": "58d6e2690a0a8170e1da2387abd935fa373b93b239805dd596fb4a578c7a0044",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/backends/PjsipBackend.js": "99e3c39ae8aacc48a630c1361146b8b6a0e82639c4fcb54ab61ea8c615eb9099",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/dsp/AudioCapture.js": "843dc3267c927cdb07d46d299613228508a71f85180bc76f46931d27bf196965",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/dsp/Handshake.js": "2c8e9bf37157159ebee8d441e15b1b241bb46233c6d36f710d77c3cedee2d97b",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/dsp/ModemDSP.js": "18986bc99ba59756e7841902dcc93ccf328bb59e4e0671446be286695882e967",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/dsp/Primitives.js": "f63b3e3fcee64169af3343ea7ef73ffb68fff24356c021564f62b7e4c8a434af",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/dsp/V8.js": "145c661bbbff383cc7af622b98fcd423f1d66fae2d2e464b308cf3a2c0edcb40",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/dsp/V8Sequencer.js": "3379d253f990a83d1dd3612383a17b5534c47d1635870fb16177a8e1c3e36452",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/rtp/Codec.js": "ffe6cacafda853769e3cbd8e532e3d36213a85ed04042eaebc57ba54155e5256",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/rtp/RtpBridge.js": "3cc7626381626e764344621bd52c3c0ffb1dfe203bbcf7047437914af0fbe6e9",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/rtp/RtpSession.js": "72d6298f50c0823fa1a42a8eaf234885809ae08cb477b2b17bfdef6241aefe44",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/session/CallSession.js": "4122886fc628ebabc03bdd4b622de163926d55c0db6199c2b47ea75dacfbf49c",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/sip/PublicHostResolver.js": "5431bacf4dcd1c4027c467d28db8e3d510b700ecc8d441a9d0b0316580b6ffea",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/sip/SipDialog.js": "571440469511a3861a5faae9cf805b1f6555bc2ee1f95cc5b6b8a9dcae9aa4fd",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/sip/SipParser.js": "e5a5dae109bc251acb7623d922dd8bc9284f14f8221bb16f7b0a82846dac8cc8",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/sip/SipServer.js": "7a8971607c0b285b97941d28ba1462db8a0eabdc39997189d4f977b315b624ec",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/sip/SipUacInternal.js": "89e0fd9a27e8960bd2a989942d0671d3dc7526b98c6447246d9b80bf28ecffff",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/sip/VmRegistrar.js": "0dd8dd1107bdcf94539fd8c63a642ee67151a2dc45931ed5edcb518945281401",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/telnet/TelnetProxy.js": "18c0a9ed59aa4cb48186514da4ddc94954e7db207eb71c39769bdac8f7be3353",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/tunnel/UdpTcpTunnel.js": "c560a03a61530d812e809c729f3816ba721e577a52723d4e8cbbcd7ecfa66f0d",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/dsp/protocols/Bell103.js": "d7d1ae488e24da9e54e6fc5a586287045d25fe321f81821ea62b8fb25dd7379a",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/dsp/protocols/FskCommon.js": "27ee865d11b747aeace4e6acbc4daae2c38efab3ca9c09cdad9bc567fbfb60a7",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/dsp/protocols/V21.js": "00473e940f46f754e4397f41dcee2e70b17bd679f694d7e13eb542f2a270e864",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/dsp/protocols/V22Common.js": "51a473f0b638691c8c81048236e2e72dca2993a5d0240229cd07bf9c436b1123",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/dsp/protocols/V22Demodulator.js": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/dsp/protocols/V22RxRRC.js": "42d6d85522a4e26b6d92f70e344b4f65d7d31cd579e2283811899b9ea878fe2b",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/dsp/protocols/V23.js": "54af2ce2d86726c84424dc033637efcb2d0cf79c9a5b63e680f1ad4e0b7d93a9",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-buffered-01/runtime/source/src/dsp/protocols/V22.js": "1bd6cb66be0033bde88e52b03ca923fab2181ae9343ac5db2569eb34c9fec45a"
+      }
+    }
+  },
+  "changed_archive_bodies": [
+    "usr/local/bin/d-modem"
+  ],
+  "auditor_sha256": "ac51f63bef9df5ff5da1541c4f2034d58266aa7eeb69e914551c583271aeab3f",
+  "build_ledger_sha256": "4850cb6e88bf6edfb9831065d1acae1c7ea29f20cd56f92fc0a09b3c1af73278",
+  "scope": "Independent actual-VM binary/source/archive identities, framed guest data, exact caller payload, RTP continuity and lossless timing-route comparison. Candidate acceptance is limited to this controlled V22/1200 diagnostic, not full DOS/BBS/hardware or proof of the earlier intermittent event.",
+  "cohort": "synthmodem-jitter-vm-audit-01",
+  "producer_audit_sha256": "1661c2357e54b9c4ed81be9b4d37b7ca16b0c0e1659cca1d593def56b65c46b5",
+  "direct_cohorts": {
+    "synthmodem-jitter-vm-base-direct-01": {
+      "passed": true,
+      "checks": {
+        "registered": true,
+        "real_RING_and_init_OK": true,
+        "both_DSP_CONNECT": true,
+        "upstream_exact_after_declared_idle": true,
+        "downstream_exact": true,
+        "guest_PCM_export": true,
+        "teardown": true,
+        "no_errors": true,
+        "immutable_inputs": true
+      },
+      "errors": [],
+      "callerInfo": {
+        "bps": 1200,
+        "protocol": "V22"
+      },
+      "answerInfo": {
+        "bps": 1200,
+        "protocol": "V22"
+      },
+      "onlineStart": 0,
+      "stats": {
+        "extToInt": {
+          "packets": 3092,
+          "bytes": 531824
+        },
+        "intToExt": {
+          "packets": 3092,
+          "bytes": 531824
+        },
+        "extToIntDrops": 0,
+        "intToExtDrops": 0,
+        "extFirstSrc": "127.0.0.1:38233",
+        "intFirstSrc": "127.0.0.1:10002"
+      },
+      "atInit": [
+        "AT&K0",
+        "AT+MS=22,0,1200,1200",
+        "AT\\N0",
+        "AT%C0"
+      ],
+      "node": "v24.18.1",
+      "networkProfile": "direct",
+      "scope": "Diagnostic-only actual native/VM V22 DSP, internal SIP/RTP and existing guest PCM dumps. Extra export daemon/chardev; selected runtime binaries pinned by Python. Optional bounded FIFO network delay/release, no payload changes. Authored workload; no external SIP gateway, DOS/BBS or physical modem/ATA.",
+      "runtime_inputs": {
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/bzImage": "2bac10d87a024026de6c00539ea70d19194169b6b99111d9178815b470d77dbe",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/candidate.cpio.gz": "7317dd602fa2cd94c388c28afac7997e53539f1ed425ab9b916d60d318921d2f",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/config.js": "6cfa6057b31bebb90d52f12956a3166a389308b703c17480acdc59fdb05f681f",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/index.js": "8aac80d7f4e68c25d02f29b16d2dc82b78d3f5ecee57562315fda4efb3494791",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/vm/qemu-runner/QemuVM.js": "2b15088c2a4d8a2002bcd4b153d38d06fc6e9863cb7a9990dbcac1875b082a76",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/vm/qemu-runner/SlmodemVM.js": "8578c0d7fcb5b96648856422ef56a9178f155ddb86321300b8e63f3220c61cdc",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/vm/qemu-runner/qemu-args.js": "61975545b19201092d3e0f53dd324e46a05e432f0ace7ac3bc3c0f63abf1b3ea",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/vm/qemu-runner/transport.js": "54cec57e3b78a5b4a82e3289dac645be4b7d49da5f2ed697f3a9d5e0e4742570",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/backends/ModemBackendPool.js": "58d6e2690a0a8170e1da2387abd935fa373b93b239805dd596fb4a578c7a0044",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/backends/PjsipBackend.js": "99e3c39ae8aacc48a630c1361146b8b6a0e82639c4fcb54ab61ea8c615eb9099",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/AudioCapture.js": "843dc3267c927cdb07d46d299613228508a71f85180bc76f46931d27bf196965",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/Handshake.js": "2c8e9bf37157159ebee8d441e15b1b241bb46233c6d36f710d77c3cedee2d97b",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/ModemDSP.js": "18986bc99ba59756e7841902dcc93ccf328bb59e4e0671446be286695882e967",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/Primitives.js": "f63b3e3fcee64169af3343ea7ef73ffb68fff24356c021564f62b7e4c8a434af",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/V8.js": "145c661bbbff383cc7af622b98fcd423f1d66fae2d2e464b308cf3a2c0edcb40",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/V8Sequencer.js": "3379d253f990a83d1dd3612383a17b5534c47d1635870fb16177a8e1c3e36452",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/rtp/Codec.js": "ffe6cacafda853769e3cbd8e532e3d36213a85ed04042eaebc57ba54155e5256",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/rtp/RtpBridge.js": "3cc7626381626e764344621bd52c3c0ffb1dfe203bbcf7047437914af0fbe6e9",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/rtp/RtpSession.js": "72d6298f50c0823fa1a42a8eaf234885809ae08cb477b2b17bfdef6241aefe44",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/session/CallSession.js": "4122886fc628ebabc03bdd4b622de163926d55c0db6199c2b47ea75dacfbf49c",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/sip/PublicHostResolver.js": "5431bacf4dcd1c4027c467d28db8e3d510b700ecc8d441a9d0b0316580b6ffea",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/sip/SipDialog.js": "571440469511a3861a5faae9cf805b1f6555bc2ee1f95cc5b6b8a9dcae9aa4fd",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/sip/SipParser.js": "e5a5dae109bc251acb7623d922dd8bc9284f14f8221bb16f7b0a82846dac8cc8",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/sip/SipServer.js": "7a8971607c0b285b97941d28ba1462db8a0eabdc39997189d4f977b315b624ec",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/sip/SipUacInternal.js": "89e0fd9a27e8960bd2a989942d0671d3dc7526b98c6447246d9b80bf28ecffff",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/sip/VmRegistrar.js": "0dd8dd1107bdcf94539fd8c63a642ee67151a2dc45931ed5edcb518945281401",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/telnet/TelnetProxy.js": "18c0a9ed59aa4cb48186514da4ddc94954e7db207eb71c39769bdac8f7be3353",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/tunnel/UdpTcpTunnel.js": "c560a03a61530d812e809c729f3816ba721e577a52723d4e8cbbcd7ecfa66f0d",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/protocols/Bell103.js": "d7d1ae488e24da9e54e6fc5a586287045d25fe321f81821ea62b8fb25dd7379a",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/protocols/FskCommon.js": "27ee865d11b747aeace4e6acbc4daae2c38efab3ca9c09cdad9bc567fbfb60a7",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/protocols/V21.js": "00473e940f46f754e4397f41dcee2e70b17bd679f694d7e13eb542f2a270e864",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/protocols/V22Common.js": "51a473f0b638691c8c81048236e2e72dca2993a5d0240229cd07bf9c436b1123",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/protocols/V22Demodulator.js": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/protocols/V22RxRRC.js": "42d6d85522a4e26b6d92f70e344b4f65d7d31cd579e2283811899b9ea878fe2b",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/protocols/V23.js": "54af2ce2d86726c84424dc033637efcb2d0cf79c9a5b63e680f1ad4e0b7d93a9",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/protocols/V22.js": "1bd6cb66be0033bde88e52b03ca923fab2181ae9343ac5db2569eb34c9fec45a"
+      },
+      "tested_inputs": {
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/bzImage": "2bac10d87a024026de6c00539ea70d19194169b6b99111d9178815b470d77dbe",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/candidate.cpio.gz": "ed2238b6987470bcd462bd65626853af31994453e7e8b289befbbb3e05ef8abd",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/config.js": "6cfa6057b31bebb90d52f12956a3166a389308b703c17480acdc59fdb05f681f",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/index.js": "8aac80d7f4e68c25d02f29b16d2dc82b78d3f5ecee57562315fda4efb3494791",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/vm/qemu-runner/QemuVM.js": "2b15088c2a4d8a2002bcd4b153d38d06fc6e9863cb7a9990dbcac1875b082a76",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/vm/qemu-runner/SlmodemVM.js": "8578c0d7fcb5b96648856422ef56a9178f155ddb86321300b8e63f3220c61cdc",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/vm/qemu-runner/qemu-args.js": "61975545b19201092d3e0f53dd324e46a05e432f0ace7ac3bc3c0f63abf1b3ea",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/vm/qemu-runner/transport.js": "54cec57e3b78a5b4a82e3289dac645be4b7d49da5f2ed697f3a9d5e0e4742570",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/backends/ModemBackendPool.js": "58d6e2690a0a8170e1da2387abd935fa373b93b239805dd596fb4a578c7a0044",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/backends/PjsipBackend.js": "99e3c39ae8aacc48a630c1361146b8b6a0e82639c4fcb54ab61ea8c615eb9099",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/dsp/AudioCapture.js": "843dc3267c927cdb07d46d299613228508a71f85180bc76f46931d27bf196965",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/dsp/Handshake.js": "2c8e9bf37157159ebee8d441e15b1b241bb46233c6d36f710d77c3cedee2d97b",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/dsp/ModemDSP.js": "18986bc99ba59756e7841902dcc93ccf328bb59e4e0671446be286695882e967",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/dsp/Primitives.js": "f63b3e3fcee64169af3343ea7ef73ffb68fff24356c021564f62b7e4c8a434af",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/dsp/V8.js": "145c661bbbff383cc7af622b98fcd423f1d66fae2d2e464b308cf3a2c0edcb40",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/dsp/V8Sequencer.js": "3379d253f990a83d1dd3612383a17b5534c47d1635870fb16177a8e1c3e36452",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/rtp/Codec.js": "ffe6cacafda853769e3cbd8e532e3d36213a85ed04042eaebc57ba54155e5256",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/rtp/RtpBridge.js": "3cc7626381626e764344621bd52c3c0ffb1dfe203bbcf7047437914af0fbe6e9",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/rtp/RtpSession.js": "72d6298f50c0823fa1a42a8eaf234885809ae08cb477b2b17bfdef6241aefe44",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/session/CallSession.js": "4122886fc628ebabc03bdd4b622de163926d55c0db6199c2b47ea75dacfbf49c",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/sip/PublicHostResolver.js": "5431bacf4dcd1c4027c467d28db8e3d510b700ecc8d441a9d0b0316580b6ffea",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/sip/SipDialog.js": "571440469511a3861a5faae9cf805b1f6555bc2ee1f95cc5b6b8a9dcae9aa4fd",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/sip/SipParser.js": "e5a5dae109bc251acb7623d922dd8bc9284f14f8221bb16f7b0a82846dac8cc8",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/sip/SipServer.js": "7a8971607c0b285b97941d28ba1462db8a0eabdc39997189d4f977b315b624ec",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/sip/SipUacInternal.js": "89e0fd9a27e8960bd2a989942d0671d3dc7526b98c6447246d9b80bf28ecffff",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/sip/VmRegistrar.js": "0dd8dd1107bdcf94539fd8c63a642ee67151a2dc45931ed5edcb518945281401",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/telnet/TelnetProxy.js": "18c0a9ed59aa4cb48186514da4ddc94954e7db207eb71c39769bdac8f7be3353",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/tunnel/UdpTcpTunnel.js": "c560a03a61530d812e809c729f3816ba721e577a52723d4e8cbbcd7ecfa66f0d",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/dsp/protocols/Bell103.js": "d7d1ae488e24da9e54e6fc5a586287045d25fe321f81821ea62b8fb25dd7379a",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/dsp/protocols/FskCommon.js": "27ee865d11b747aeace4e6acbc4daae2c38efab3ca9c09cdad9bc567fbfb60a7",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/dsp/protocols/V21.js": "00473e940f46f754e4397f41dcee2e70b17bd679f694d7e13eb542f2a270e864",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/dsp/protocols/V22Common.js": "51a473f0b638691c8c81048236e2e72dca2993a5d0240229cd07bf9c436b1123",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/dsp/protocols/V22Demodulator.js": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/dsp/protocols/V22RxRRC.js": "42d6d85522a4e26b6d92f70e344b4f65d7d31cd579e2283811899b9ea878fe2b",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/dsp/protocols/V23.js": "54af2ce2d86726c84424dc033637efcb2d0cf79c9a5b63e680f1ad4e0b7d93a9",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-base-direct-01/runtime/source/src/dsp/protocols/V22.js": "1bd6cb66be0033bde88e52b03ca923fab2181ae9343ac5db2569eb34c9fec45a"
+      },
+      "frozen_inputs": {
+        "lab/bbs/synthmodem_receive_trace.py": "ad4b0dd5d13feed63ca2fcecd1244f86644a516864521a83c33a72d77623f7bd",
+        "lab/bbs/synthmodem_receive_trace.js": "bcc5d13a97e70011b6fe2dc35e61a357e44c5593e1ad9bcd08fbba485119c929",
+        "lab/bbs/receive_trace_export.sh": "3f6c38c30c3f4624319814e4601e290cad6cee89d5bc82bc6ee6fad17457cdea",
+        "lab/bbs/qemu_trace_wrapper.py": "f1cdbcceef18e389d3625378d5d7567d398cdaa4f330cf82ae6d89372dff98f0",
+        "lab/bbs/synthmodem_sparse_runtime.py": "f3743c82c191e70bb233b08623a08a545b0e7b7d1d15759af18312ec0cffad42",
+        "lab/bbs/synthmodem_vm_control.py": "7eb30e96af9a7e7cd319cd645a68331c0386aa3dda3e9eba68ca5563b5b8a456",
+        "docs/validation/synthmodem-gateway.json": "b45a3889492327899bdaa5817b4951da95b81bb07bdd69319b4814008504a6a0",
+        "docs/validation/synthmodem-sparse.json": "c1af9919cb1ec643fd2fc2cc236ed8c304d8050790ca6033fb0589e074c9002c",
+        "nix/flake.nix": "7cda07d3ab9fb050ef3c959781e4cb93ab2fab72f915d6206d980458ab297aa0",
+        "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+        "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
+        "nix/dmodem.nix": "f4f3ea0b2050bdc4064702907ef94294326c509bb38130b4b3c1f2822e1519f2",
+        "tools/build-dmodem": "6ffe06ad3d9ad48ae0a7ae73b9d6c0df3d1e61191fee23b17b4c166f93646bdc",
+        "docs/validation/synthmodem-jitter-policy.json": "4850cb6e88bf6edfb9831065d1acae1c7ea29f20cd56f92fc0a09b3c1af73278"
+      },
+      "producer_exit": 0,
+      "dmodem_variant": "baseline",
+      "dmodem_build": [
+        {
+          "drvPath": "/nix/store/l7407bgh35indlrwmg1dmydxqpji0xsm-pcplus-dmodem-baseline-i386-b1752e4d0039e0cff72735924e03aa99922723a8.drv",
+          "outputs": {
+            "out": "/nix/store/f52ycwdbiryrmvhyiqc52hkw8n74imy2-pcplus-dmodem-baseline-i386-b1752e4d0039e0cff72735924e03aa99922723a8"
+          }
+        }
+      ],
+      "captures_sha256": {
+        "node.log": "07376a753e69e800302b18404d29e822133b282ed3f612d16d61f3b91f5702bf",
+        "qemu.log": "494244200f9c36773833856fa554e3f84ef0484683e5427fc6c8da7bdb26b2f5",
+        "modem_rx_8k.raw": "ce6192965cc0e4b2eed484bc35e10a6d834a7bd023cc821460f9ec1ce39e2a05",
+        "modem_rx.raw": "6a36bd55901e1fec315e65cf58063146679e1fbfac1a112defaecf29e2f8b187",
+        "modem_tx.raw": "e3b5ec3499d77adfc7702e89b642ed52d68071baf33af9dfc9a647bc64f23ee4",
+        "caller-decoded.bin": "460406ec4a2289eb17503450678b73b7efbeb5abd0c05e149dd32d0db6f59867",
+        "guest-decoded.bin": "e10431fd532176071847e272eec19653c37c153ad577457449e66e85af4bc806",
+        "guest-workload.bin": "e10431fd532176071847e272eec19653c37c153ad577457449e66e85af4bc806",
+        "control-wire.bin": "16b10957c91119adfe532ca35a3fe1e8a1074d7d4c878a897d49e726dad054ad",
+        "rtp-from-caller.bin": "4e78c08165cf00964cf873531d798f0ede03db7ba6b366166d7ff0cb4bddc077",
+        "rtp-from-answer.bin": "093afddee7f315f2428ff34e6e40a6b8beaef549498a7fc74300245e1802fdd1",
+        "rtp-to-guest.bin": "e620677e34866a651a12f16c7ec090bd733a318cd3c3e64dc73b63313d50b167",
+        "expected-upstream.bin": "e10431fd532176071847e272eec19653c37c153ad577457449e66e85af4bc806",
+        "expected-downstream.bin": "460406ec4a2289eb17503450678b73b7efbeb5abd0c05e149dd32d0db6f59867",
+        "timing.jsonl": "95c2177ded5db6d631c2aeadab5caf63b020c4f600ce6a986002dc821d085d16"
+      },
+      "PCM_analysis": {
+        "external_RTP_equals_tunnel_RTP": false,
+        "common_RTP_prefix_exact": true,
+        "external_packets": 3102,
+        "tunnel_packets": 3092,
+        "guest_frames": 3043,
+        "exact_PCM_frame_matches": 131,
+        "guest_frames_not_found_in_RTP": 2909,
+        "frame_alignment_changes": [
+          {
+            "operation": "replace",
+            "RTP_frame_start": 131,
+            "RTP_frame_end": 3092,
+            "guest_frame_start": 131,
+            "guest_frame_end": 3043
+          }
+        ],
+        "packet_arrival_gaps": {
+          "rtp-from-caller": {
+            "packets": 3102,
+            "max_gap_ms": 36.263406,
+            "over40ms": 0,
+            "over100ms": 0
+          },
+          "rtp-to-guest": {
+            "packets": 3092,
+            "max_gap_ms": 36.099798,
+            "over40ms": 0,
+            "over100ms": 0
+          }
+        },
+        "upstream_changes": [],
+        "sample_alignment": {
+          "unique_anchors": 261,
+          "offset_histogram": {
+            "400": 261
+          },
+          "offset_changes": [
+            {
+              "RTP_frame": 140,
+              "guest_sample": 22800,
+              "offset_samples": 400
+            }
+          ],
+          "dominant_offset_samples": 400,
+          "dominant_offset_ms": 50.0,
+          "compared_samples": 486480,
+          "differing_samples": 0,
+          "first_difference_sample": null,
+          "last_difference_sample": null,
+          "leading_padding_is_silence": true,
+          "guest_PCM_equals_delayed_RTP_prefix": true
+        },
+        "pre_workload_guest_bytes": 0,
+        "frozen_inputs": {
+          "rtp-from-caller.bin": "4e78c08165cf00964cf873531d798f0ede03db7ba6b366166d7ff0cb4bddc077",
+          "rtp-to-guest.bin": "e620677e34866a651a12f16c7ec090bd733a318cd3c3e64dc73b63313d50b167",
+          "modem_rx_8k.raw": "ce6192965cc0e4b2eed484bc35e10a6d834a7bd023cc821460f9ec1ce39e2a05",
+          "timing.jsonl": "95c2177ded5db6d631c2aeadab5caf63b020c4f600ce6a986002dc821d085d16",
+          "expected-upstream.bin": "e10431fd532176071847e272eec19653c37c153ad577457449e66e85af4bc806",
+          "guest-workload.bin": "e10431fd532176071847e272eec19653c37c153ad577457449e66e85af4bc806",
+          "result.json": "6158536240bc13c8bbec33b7666a8b0213ee3adeaf61d26e4b1d12ff25a9f391"
+        },
+        "analyzer_sha256": "cb9ba521f16018e368601e2b696814acc5d2da3567ea41ad6905d7bfc5d564c1",
+        "scope": "Exact G.711 decoding/frame-hash alignment and observed host UDP arrival times. Changed guest PCM proves a media-path difference, not its internal cause. No physical modem/ATA."
+      },
+      "offline_guest": {
+        "samples": 486880,
+        "decoded_bytes": 34,
+        "equals_authored_upstream": true,
+        "checker_sha256": "cf790f59a84746f0bd2e8cea1f85b4643a34746bd31e9bc2daa7cd845e51c829",
+        "capture_sha256": "ce6192965cc0e4b2eed484bc35e10a6d834a7bd023cc821460f9ec1ce39e2a05",
+        "decoder_sha256": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+        "scope": "Offline native QAM decode of actual guest pre-resampling 8kHz PCM. Distinct from the proprietary guest DSP; no injected live bytes or connection flags."
+      },
+      "producer_sha256": "6158536240bc13c8bbec33b7666a8b0213ee3adeaf61d26e4b1d12ff25a9f391"
+    },
+    "synthmodem-jitter-vm-candidate-direct-01": {
+      "passed": true,
+      "checks": {
+        "registered": true,
+        "real_RING_and_init_OK": true,
+        "both_DSP_CONNECT": true,
+        "upstream_exact_after_declared_idle": true,
+        "downstream_exact": true,
+        "guest_PCM_export": true,
+        "teardown": true,
+        "no_errors": true,
+        "immutable_inputs": true
+      },
+      "errors": [],
+      "callerInfo": {
+        "bps": 1200,
+        "protocol": "V22"
+      },
+      "answerInfo": {
+        "bps": 1200,
+        "protocol": "V22"
+      },
+      "onlineStart": 0,
+      "stats": {
+        "extToInt": {
+          "packets": 3095,
+          "bytes": 532340
+        },
+        "intToExt": {
+          "packets": 3095,
+          "bytes": 532340
+        },
+        "extToIntDrops": 0,
+        "intToExtDrops": 0,
+        "extFirstSrc": "127.0.0.1:38736",
+        "intFirstSrc": "127.0.0.1:10002"
+      },
+      "atInit": [
+        "AT&K0",
+        "AT+MS=22,0,1200,1200",
+        "AT\\N0",
+        "AT%C0"
+      ],
+      "node": "v24.18.1",
+      "networkProfile": "direct",
+      "scope": "Diagnostic-only actual native/VM V22 DSP, internal SIP/RTP and existing guest PCM dumps. Extra export daemon/chardev; selected runtime binaries pinned by Python. Optional bounded FIFO network delay/release, no payload changes. Authored workload; no external SIP gateway, DOS/BBS or physical modem/ATA.",
+      "runtime_inputs": {
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/bzImage": "2bac10d87a024026de6c00539ea70d19194169b6b99111d9178815b470d77dbe",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/candidate.cpio.gz": "7317dd602fa2cd94c388c28afac7997e53539f1ed425ab9b916d60d318921d2f",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/config.js": "6cfa6057b31bebb90d52f12956a3166a389308b703c17480acdc59fdb05f681f",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/index.js": "8aac80d7f4e68c25d02f29b16d2dc82b78d3f5ecee57562315fda4efb3494791",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/vm/qemu-runner/QemuVM.js": "2b15088c2a4d8a2002bcd4b153d38d06fc6e9863cb7a9990dbcac1875b082a76",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/vm/qemu-runner/SlmodemVM.js": "8578c0d7fcb5b96648856422ef56a9178f155ddb86321300b8e63f3220c61cdc",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/vm/qemu-runner/qemu-args.js": "61975545b19201092d3e0f53dd324e46a05e432f0ace7ac3bc3c0f63abf1b3ea",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/vm/qemu-runner/transport.js": "54cec57e3b78a5b4a82e3289dac645be4b7d49da5f2ed697f3a9d5e0e4742570",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/backends/ModemBackendPool.js": "58d6e2690a0a8170e1da2387abd935fa373b93b239805dd596fb4a578c7a0044",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/backends/PjsipBackend.js": "99e3c39ae8aacc48a630c1361146b8b6a0e82639c4fcb54ab61ea8c615eb9099",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/AudioCapture.js": "843dc3267c927cdb07d46d299613228508a71f85180bc76f46931d27bf196965",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/Handshake.js": "2c8e9bf37157159ebee8d441e15b1b241bb46233c6d36f710d77c3cedee2d97b",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/ModemDSP.js": "18986bc99ba59756e7841902dcc93ccf328bb59e4e0671446be286695882e967",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/Primitives.js": "f63b3e3fcee64169af3343ea7ef73ffb68fff24356c021564f62b7e4c8a434af",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/V8.js": "145c661bbbff383cc7af622b98fcd423f1d66fae2d2e464b308cf3a2c0edcb40",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/V8Sequencer.js": "3379d253f990a83d1dd3612383a17b5534c47d1635870fb16177a8e1c3e36452",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/rtp/Codec.js": "ffe6cacafda853769e3cbd8e532e3d36213a85ed04042eaebc57ba54155e5256",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/rtp/RtpBridge.js": "3cc7626381626e764344621bd52c3c0ffb1dfe203bbcf7047437914af0fbe6e9",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/rtp/RtpSession.js": "72d6298f50c0823fa1a42a8eaf234885809ae08cb477b2b17bfdef6241aefe44",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/session/CallSession.js": "4122886fc628ebabc03bdd4b622de163926d55c0db6199c2b47ea75dacfbf49c",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/sip/PublicHostResolver.js": "5431bacf4dcd1c4027c467d28db8e3d510b700ecc8d441a9d0b0316580b6ffea",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/sip/SipDialog.js": "571440469511a3861a5faae9cf805b1f6555bc2ee1f95cc5b6b8a9dcae9aa4fd",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/sip/SipParser.js": "e5a5dae109bc251acb7623d922dd8bc9284f14f8221bb16f7b0a82846dac8cc8",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/sip/SipServer.js": "7a8971607c0b285b97941d28ba1462db8a0eabdc39997189d4f977b315b624ec",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/sip/SipUacInternal.js": "89e0fd9a27e8960bd2a989942d0671d3dc7526b98c6447246d9b80bf28ecffff",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/sip/VmRegistrar.js": "0dd8dd1107bdcf94539fd8c63a642ee67151a2dc45931ed5edcb518945281401",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/telnet/TelnetProxy.js": "18c0a9ed59aa4cb48186514da4ddc94954e7db207eb71c39769bdac8f7be3353",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/tunnel/UdpTcpTunnel.js": "c560a03a61530d812e809c729f3816ba721e577a52723d4e8cbbcd7ecfa66f0d",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/protocols/Bell103.js": "d7d1ae488e24da9e54e6fc5a586287045d25fe321f81821ea62b8fb25dd7379a",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/protocols/FskCommon.js": "27ee865d11b747aeace4e6acbc4daae2c38efab3ca9c09cdad9bc567fbfb60a7",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/protocols/V21.js": "00473e940f46f754e4397f41dcee2e70b17bd679f694d7e13eb542f2a270e864",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/protocols/V22Common.js": "51a473f0b638691c8c81048236e2e72dca2993a5d0240229cd07bf9c436b1123",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/protocols/V22Demodulator.js": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/protocols/V22RxRRC.js": "42d6d85522a4e26b6d92f70e344b4f65d7d31cd579e2283811899b9ea878fe2b",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/protocols/V23.js": "54af2ce2d86726c84424dc033637efcb2d0cf79c9a5b63e680f1ad4e0b7d93a9",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-runtime-01/runtime/source/src/dsp/protocols/V22.js": "1bd6cb66be0033bde88e52b03ca923fab2181ae9343ac5db2569eb34c9fec45a"
+      },
+      "tested_inputs": {
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/bzImage": "2bac10d87a024026de6c00539ea70d19194169b6b99111d9178815b470d77dbe",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/candidate.cpio.gz": "98aeee8042019b48284b93401ce038e373db07e03ae5748c3e5fe72a0e445523",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/config.js": "6cfa6057b31bebb90d52f12956a3166a389308b703c17480acdc59fdb05f681f",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/index.js": "8aac80d7f4e68c25d02f29b16d2dc82b78d3f5ecee57562315fda4efb3494791",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/vm/qemu-runner/QemuVM.js": "2b15088c2a4d8a2002bcd4b153d38d06fc6e9863cb7a9990dbcac1875b082a76",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/vm/qemu-runner/SlmodemVM.js": "8578c0d7fcb5b96648856422ef56a9178f155ddb86321300b8e63f3220c61cdc",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/vm/qemu-runner/qemu-args.js": "61975545b19201092d3e0f53dd324e46a05e432f0ace7ac3bc3c0f63abf1b3ea",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/vm/qemu-runner/transport.js": "54cec57e3b78a5b4a82e3289dac645be4b7d49da5f2ed697f3a9d5e0e4742570",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/backends/ModemBackendPool.js": "58d6e2690a0a8170e1da2387abd935fa373b93b239805dd596fb4a578c7a0044",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/backends/PjsipBackend.js": "99e3c39ae8aacc48a630c1361146b8b6a0e82639c4fcb54ab61ea8c615eb9099",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/dsp/AudioCapture.js": "843dc3267c927cdb07d46d299613228508a71f85180bc76f46931d27bf196965",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/dsp/Handshake.js": "2c8e9bf37157159ebee8d441e15b1b241bb46233c6d36f710d77c3cedee2d97b",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/dsp/ModemDSP.js": "18986bc99ba59756e7841902dcc93ccf328bb59e4e0671446be286695882e967",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/dsp/Primitives.js": "f63b3e3fcee64169af3343ea7ef73ffb68fff24356c021564f62b7e4c8a434af",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/dsp/V8.js": "145c661bbbff383cc7af622b98fcd423f1d66fae2d2e464b308cf3a2c0edcb40",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/dsp/V8Sequencer.js": "3379d253f990a83d1dd3612383a17b5534c47d1635870fb16177a8e1c3e36452",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/rtp/Codec.js": "ffe6cacafda853769e3cbd8e532e3d36213a85ed04042eaebc57ba54155e5256",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/rtp/RtpBridge.js": "3cc7626381626e764344621bd52c3c0ffb1dfe203bbcf7047437914af0fbe6e9",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/rtp/RtpSession.js": "72d6298f50c0823fa1a42a8eaf234885809ae08cb477b2b17bfdef6241aefe44",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/session/CallSession.js": "4122886fc628ebabc03bdd4b622de163926d55c0db6199c2b47ea75dacfbf49c",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/sip/PublicHostResolver.js": "5431bacf4dcd1c4027c467d28db8e3d510b700ecc8d441a9d0b0316580b6ffea",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/sip/SipDialog.js": "571440469511a3861a5faae9cf805b1f6555bc2ee1f95cc5b6b8a9dcae9aa4fd",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/sip/SipParser.js": "e5a5dae109bc251acb7623d922dd8bc9284f14f8221bb16f7b0a82846dac8cc8",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/sip/SipServer.js": "7a8971607c0b285b97941d28ba1462db8a0eabdc39997189d4f977b315b624ec",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/sip/SipUacInternal.js": "89e0fd9a27e8960bd2a989942d0671d3dc7526b98c6447246d9b80bf28ecffff",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/sip/VmRegistrar.js": "0dd8dd1107bdcf94539fd8c63a642ee67151a2dc45931ed5edcb518945281401",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/telnet/TelnetProxy.js": "18c0a9ed59aa4cb48186514da4ddc94954e7db207eb71c39769bdac8f7be3353",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/tunnel/UdpTcpTunnel.js": "c560a03a61530d812e809c729f3816ba721e577a52723d4e8cbbcd7ecfa66f0d",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/dsp/protocols/Bell103.js": "d7d1ae488e24da9e54e6fc5a586287045d25fe321f81821ea62b8fb25dd7379a",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/dsp/protocols/FskCommon.js": "27ee865d11b747aeace4e6acbc4daae2c38efab3ca9c09cdad9bc567fbfb60a7",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/dsp/protocols/V21.js": "00473e940f46f754e4397f41dcee2e70b17bd679f694d7e13eb542f2a270e864",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/dsp/protocols/V22Common.js": "51a473f0b638691c8c81048236e2e72dca2993a5d0240229cd07bf9c436b1123",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/dsp/protocols/V22Demodulator.js": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/dsp/protocols/V22RxRRC.js": "42d6d85522a4e26b6d92f70e344b4f65d7d31cd579e2283811899b9ea878fe2b",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/dsp/protocols/V23.js": "54af2ce2d86726c84424dc033637efcb2d0cf79c9a5b63e680f1ad4e0b7d93a9",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-vm-candidate-direct-01/runtime/source/src/dsp/protocols/V22.js": "1bd6cb66be0033bde88e52b03ca923fab2181ae9343ac5db2569eb34c9fec45a"
+      },
+      "frozen_inputs": {
+        "lab/bbs/synthmodem_receive_trace.py": "ad4b0dd5d13feed63ca2fcecd1244f86644a516864521a83c33a72d77623f7bd",
+        "lab/bbs/synthmodem_receive_trace.js": "bcc5d13a97e70011b6fe2dc35e61a357e44c5593e1ad9bcd08fbba485119c929",
+        "lab/bbs/receive_trace_export.sh": "3f6c38c30c3f4624319814e4601e290cad6cee89d5bc82bc6ee6fad17457cdea",
+        "lab/bbs/qemu_trace_wrapper.py": "f1cdbcceef18e389d3625378d5d7567d398cdaa4f330cf82ae6d89372dff98f0",
+        "lab/bbs/synthmodem_sparse_runtime.py": "f3743c82c191e70bb233b08623a08a545b0e7b7d1d15759af18312ec0cffad42",
+        "lab/bbs/synthmodem_vm_control.py": "7eb30e96af9a7e7cd319cd645a68331c0386aa3dda3e9eba68ca5563b5b8a456",
+        "docs/validation/synthmodem-gateway.json": "b45a3889492327899bdaa5817b4951da95b81bb07bdd69319b4814008504a6a0",
+        "docs/validation/synthmodem-sparse.json": "c1af9919cb1ec643fd2fc2cc236ed8c304d8050790ca6033fb0589e074c9002c",
+        "nix/flake.nix": "7cda07d3ab9fb050ef3c959781e4cb93ab2fab72f915d6206d980458ab297aa0",
+        "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+        "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
+        "nix/dmodem.nix": "f4f3ea0b2050bdc4064702907ef94294326c509bb38130b4b3c1f2822e1519f2",
+        "tools/build-dmodem": "6ffe06ad3d9ad48ae0a7ae73b9d6c0df3d1e61191fee23b17b4c166f93646bdc",
+        "docs/validation/synthmodem-jitter-policy.json": "4850cb6e88bf6edfb9831065d1acae1c7ea29f20cd56f92fc0a09b3c1af73278"
+      },
+      "producer_exit": 0,
+      "dmodem_variant": "candidate",
+      "dmodem_build": [
+        {
+          "drvPath": "/nix/store/k88d8ybm1k7mvkk3bixnw5y3gwbs2fz9-pcplus-dmodem-no-discard-i386-b1752e4d0039e0cff72735924e03aa99922723a8.drv",
+          "outputs": {
+            "out": "/nix/store/030qklysscnn8qri19s8zwjbynbzv9a2-pcplus-dmodem-no-discard-i386-b1752e4d0039e0cff72735924e03aa99922723a8"
+          }
+        }
+      ],
+      "captures_sha256": {
+        "node.log": "09491940e0fb694bab3b8eac0e8a0433d6e2fe1100ff87004c6766f7b4230571",
+        "qemu.log": "3c95bb14489cf43d9ba4d66c4c9b11bee98d187249f66e72aedde347ef5cb730",
+        "modem_rx_8k.raw": "6eaa8f81cd0002b290a59a47a078fcd2861a39ef16b992dbe65459b7ea755e20",
+        "modem_rx.raw": "cc7ab4f9ac7a969e7826b422fa0464ae7681d14663e0353817c9d389841b65fd",
+        "modem_tx.raw": "91035d52d7a9354246dc19e0d9826a5e516a55e18654c422fb05b08f8055a099",
+        "caller-decoded.bin": "460406ec4a2289eb17503450678b73b7efbeb5abd0c05e149dd32d0db6f59867",
+        "guest-decoded.bin": "e10431fd532176071847e272eec19653c37c153ad577457449e66e85af4bc806",
+        "guest-workload.bin": "e10431fd532176071847e272eec19653c37c153ad577457449e66e85af4bc806",
+        "control-wire.bin": "a2d8c47d239ed6770076c77fd0d1ed71940a6f36bae5af0cee716c0bd6ef2ff7",
+        "rtp-from-caller.bin": "0b69a38081ea8a1c8d5e4ae3e1367fd6cd62184119738f9b521b0a29ba86e810",
+        "rtp-from-answer.bin": "5d10ce1369aecb8eff631ba7bcc76042d39ddecce15c32f90960ee1880f6a7fa",
+        "rtp-to-guest.bin": "3c3298dfd94dc120af0eaa4cfcba7fc425a9b0e24e69c25b7f1e749643d3559a",
+        "expected-upstream.bin": "e10431fd532176071847e272eec19653c37c153ad577457449e66e85af4bc806",
+        "expected-downstream.bin": "460406ec4a2289eb17503450678b73b7efbeb5abd0c05e149dd32d0db6f59867",
+        "timing.jsonl": "404183451974077dbf07e64d7407f9096ee6f8c1973d47ce90a6d978bc39f683"
+      },
+      "PCM_analysis": {
+        "external_RTP_equals_tunnel_RTP": false,
+        "common_RTP_prefix_exact": true,
+        "external_packets": 3106,
+        "tunnel_packets": 3095,
+        "guest_frames": 3043,
+        "exact_PCM_frame_matches": 3040,
+        "guest_frames_not_found_in_RTP": 0,
+        "frame_alignment_changes": [
+          {
+            "operation": "insert",
+            "RTP_frame_start": 0,
+            "RTP_frame_end": 0,
+            "guest_frame_start": 0,
+            "guest_frame_end": 3
+          },
+          {
+            "operation": "delete",
+            "RTP_frame_start": 3040,
+            "RTP_frame_end": 3095,
+            "guest_frame_start": 3043,
+            "guest_frame_end": 3043
+          }
+        ],
+        "packet_arrival_gaps": {
+          "rtp-from-caller": {
+            "packets": 3106,
+            "max_gap_ms": 35.5968,
+            "over40ms": 0,
+            "over100ms": 0
+          },
+          "rtp-to-guest": {
+            "packets": 3095,
+            "max_gap_ms": 35.457457,
+            "over40ms": 0,
+            "over100ms": 0
+          }
+        },
+        "upstream_changes": [],
+        "sample_alignment": {
+          "unique_anchors": 260,
+          "offset_histogram": {
+            "480": 260
+          },
+          "offset_changes": [
+            {
+              "RTP_frame": 140,
+              "guest_sample": 22880,
+              "offset_samples": 480
+            }
+          ],
+          "dominant_offset_samples": 480,
+          "dominant_offset_ms": 60.0,
+          "compared_samples": 486400,
+          "differing_samples": 0,
+          "first_difference_sample": null,
+          "last_difference_sample": null,
+          "leading_padding_is_silence": true,
+          "guest_PCM_equals_delayed_RTP_prefix": true
+        },
+        "pre_workload_guest_bytes": 0,
+        "frozen_inputs": {
+          "rtp-from-caller.bin": "0b69a38081ea8a1c8d5e4ae3e1367fd6cd62184119738f9b521b0a29ba86e810",
+          "rtp-to-guest.bin": "3c3298dfd94dc120af0eaa4cfcba7fc425a9b0e24e69c25b7f1e749643d3559a",
+          "modem_rx_8k.raw": "6eaa8f81cd0002b290a59a47a078fcd2861a39ef16b992dbe65459b7ea755e20",
+          "timing.jsonl": "404183451974077dbf07e64d7407f9096ee6f8c1973d47ce90a6d978bc39f683",
+          "expected-upstream.bin": "e10431fd532176071847e272eec19653c37c153ad577457449e66e85af4bc806",
+          "guest-workload.bin": "e10431fd532176071847e272eec19653c37c153ad577457449e66e85af4bc806",
+          "result.json": "479d941d7fd9625656277644d6d90d791d67d2dd447afacdb08ad3297d05f597"
+        },
+        "analyzer_sha256": "cb9ba521f16018e368601e2b696814acc5d2da3567ea41ad6905d7bfc5d564c1",
+        "scope": "Exact G.711 decoding/frame-hash alignment and observed host UDP arrival times. Changed guest PCM proves a media-path difference, not its internal cause. No physical modem/ATA."
+      },
+      "offline_guest": {
+        "samples": 486880,
+        "decoded_bytes": 34,
+        "equals_authored_upstream": true,
+        "checker_sha256": "cf790f59a84746f0bd2e8cea1f85b4643a34746bd31e9bc2daa7cd845e51c829",
+        "capture_sha256": "6eaa8f81cd0002b290a59a47a078fcd2861a39ef16b992dbe65459b7ea755e20",
+        "decoder_sha256": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+        "scope": "Offline native QAM decode of actual guest pre-resampling 8kHz PCM. Distinct from the proprietary guest DSP; no injected live bytes or connection flags."
+      },
+      "producer_sha256": "479d941d7fd9625656277644d6d90d791d67d2dd447afacdb08ad3297d05f597"
+    }
+  },
+  "remaining": [
+    "The original six-byte DOS event lacked guest PCM; do not equate this controlled reproduction with proof of that historical cause.",
+    "Normal candidate main/message/file workflow passes19 producer/19 independent checks. Editors, transfers, Synchronet and broader faults remain open.",
+    "Packet loss, larger jitter, sustained data/clock drift, transfers and physical Boca/SPA2102 acceptance remain open."
+  ],
+  "normal_DOS_cohort": "synthmodem-audio-dos-07",
+  "normal_DOS": {
+    "producer_sha256": "e53320f770158e13bdc4c1808c42fd1a4b98d721976a58dedb12d66157354073",
+    "checks": {
+      "DOS_normal_exit": true,
+      "script_completed": true,
+      "UART_restored": true,
+      "keyboard_helper_retired": true,
+      "numeric_AT_only": true,
+      "real_DSP_CONNECT": true,
+      "authenticated": true,
+      "ordered_menus": true,
+      "DOS_DA": true,
+      "DOS_CPR": true,
+      "final_file_menu": true,
+      "profile_unchanged": true,
+      "directory_accounting": true,
+      "no_relay_errors": true,
+      "no_gateway_errors": true,
+      "VM_exited": true,
+      "no_post_saved": true,
+      "inputs_unchanged": true,
+      "server_unchanged": true
+    },
+    "frozen_inputs": {
+      "lab/bbs/synthmodem_audio_dos.py": "7c5683b2120833dd1b1829bee21b7b22a503402a5abbd2cbc5027e91fa4f6ff2",
+      "lab/bbs/synthmodem_audio_serial.js": "2fcdeee5c2527c83afba55d88a2ccfa8e6c07d8eea6485b731de7499f9b9281b",
+      "lab/bbs/audio_exit_keys.asm": "d6cfd993351d3bc6fdfed133e0a20a137c3a882988ee65dcef38c80d15b7ecd9",
+      "lab/bbs/audio_get_vector.asm": "a4dcbe3717c43f5914ee3503099d250fd7810610b8c25f4c0c18c2d4d403e817",
+      "lab/bbs/synthmodem_bbs_dos.py": "0e6a302d5a5ecb124689c8c3989d2efe8ab210eaa982991d088778d126c18fb2",
+      "lab/bbs/enigma.py": "526fcd6eb468ec7a85630685872d27a937abbc6b61f48ad8391a2353e5686017",
+      "lab/bbs/synthmodem_sparse_runtime.py": "f3743c82c191e70bb233b08623a08a545b0e7b7d1d15759af18312ec0cffad42",
+      "lab/bbs/synthmodem_vm_control.py": "7eb30e96af9a7e7cd319cd645a68331c0386aa3dda3e9eba68ca5563b5b8a456",
+      "docs/validation/synthmodem-sparse.json": "c1af9919cb1ec643fd2fc2cc236ed8c304d8050790ca6033fb0589e074c9002c",
+      "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+      "standalone/directory_fixtures.py": "e4b0cf7ad4a2c408f2a11d093b2c568633aa8bed6ff62cb53f6f67ff3aa5962c",
+      "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+      "src/aspect/compiler.py": "a9785fb90db89da8d4c423d2737f5143a2da75e4e41605a5d97f3ebf7b9c4f01",
+      "nix/flake.nix": "7cda07d3ab9fb050ef3c959781e4cb93ab2fab72f915d6206d980458ab297aa0",
+      "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+      "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
+      "build/terminal/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+      "build/terminal/terminal.map": "8b1f7f07d7f617936765de21fed74a71ec28c7c5ce45e8519802cf62689c86b1",
+      "build/aspect-runner/ASPECT.EXE": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+      "docs/validation/synthmodem-gateway.json": "b45a3889492327899bdaa5817b4951da95b81bb07bdd69319b4814008504a6a0",
+      "lab/bbs/synthmodem_jitter_runtime.py": "8f3ddf164a4ec7f0b36fa8efbdd51265149b17c8f0c02ba5ee45d78de537a618",
+      "docs/validation/synthmodem-jitter-policy.json": "4850cb6e88bf6edfb9831065d1acae1c7ea29f20cd56f92fc0a09b3c1af73278",
+      "nix/dmodem.nix": "f4f3ea0b2050bdc4064702907ef94294326c509bb38130b4b3c1f2822e1519f2",
+      "tools/build-dmodem": "6ffe06ad3d9ad48ae0a7ae73b9d6c0df3d1e61191fee23b17b4c166f93646bdc"
+    },
+    "runtime_inputs": {
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/bzImage": "2bac10d87a024026de6c00539ea70d19194169b6b99111d9178815b470d77dbe",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/candidate.cpio.gz": "6e544921faaa65db34a75fd2ed5eee2dcf59ea7f987571b91d2e4c3f2ef5b855",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/config.js": "6cfa6057b31bebb90d52f12956a3166a389308b703c17480acdc59fdb05f681f",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/index.js": "8aac80d7f4e68c25d02f29b16d2dc82b78d3f5ecee57562315fda4efb3494791",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/vm/qemu-runner/QemuVM.js": "2b15088c2a4d8a2002bcd4b153d38d06fc6e9863cb7a9990dbcac1875b082a76",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/vm/qemu-runner/SlmodemVM.js": "8578c0d7fcb5b96648856422ef56a9178f155ddb86321300b8e63f3220c61cdc",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/vm/qemu-runner/qemu-args.js": "61975545b19201092d3e0f53dd324e46a05e432f0ace7ac3bc3c0f63abf1b3ea",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/vm/qemu-runner/transport.js": "54cec57e3b78a5b4a82e3289dac645be4b7d49da5f2ed697f3a9d5e0e4742570",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/backends/ModemBackendPool.js": "58d6e2690a0a8170e1da2387abd935fa373b93b239805dd596fb4a578c7a0044",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/backends/PjsipBackend.js": "99e3c39ae8aacc48a630c1361146b8b6a0e82639c4fcb54ab61ea8c615eb9099",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/AudioCapture.js": "843dc3267c927cdb07d46d299613228508a71f85180bc76f46931d27bf196965",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/Handshake.js": "2c8e9bf37157159ebee8d441e15b1b241bb46233c6d36f710d77c3cedee2d97b",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/ModemDSP.js": "18986bc99ba59756e7841902dcc93ccf328bb59e4e0671446be286695882e967",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/Primitives.js": "f63b3e3fcee64169af3343ea7ef73ffb68fff24356c021564f62b7e4c8a434af",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/V8.js": "145c661bbbff383cc7af622b98fcd423f1d66fae2d2e464b308cf3a2c0edcb40",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/V8Sequencer.js": "3379d253f990a83d1dd3612383a17b5534c47d1635870fb16177a8e1c3e36452",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/rtp/Codec.js": "ffe6cacafda853769e3cbd8e532e3d36213a85ed04042eaebc57ba54155e5256",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/rtp/RtpBridge.js": "3cc7626381626e764344621bd52c3c0ffb1dfe203bbcf7047437914af0fbe6e9",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/rtp/RtpSession.js": "72d6298f50c0823fa1a42a8eaf234885809ae08cb477b2b17bfdef6241aefe44",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/session/CallSession.js": "4122886fc628ebabc03bdd4b622de163926d55c0db6199c2b47ea75dacfbf49c",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/sip/PublicHostResolver.js": "5431bacf4dcd1c4027c467d28db8e3d510b700ecc8d441a9d0b0316580b6ffea",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/sip/SipDialog.js": "571440469511a3861a5faae9cf805b1f6555bc2ee1f95cc5b6b8a9dcae9aa4fd",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/sip/SipParser.js": "e5a5dae109bc251acb7623d922dd8bc9284f14f8221bb16f7b0a82846dac8cc8",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/sip/SipServer.js": "7a8971607c0b285b97941d28ba1462db8a0eabdc39997189d4f977b315b624ec",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/sip/SipUacInternal.js": "89e0fd9a27e8960bd2a989942d0671d3dc7526b98c6447246d9b80bf28ecffff",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/sip/VmRegistrar.js": "0dd8dd1107bdcf94539fd8c63a642ee67151a2dc45931ed5edcb518945281401",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/telnet/TelnetProxy.js": "18c0a9ed59aa4cb48186514da4ddc94954e7db207eb71c39769bdac8f7be3353",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/tunnel/UdpTcpTunnel.js": "c560a03a61530d812e809c729f3816ba721e577a52723d4e8cbbcd7ecfa66f0d",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/protocols/Bell103.js": "d7d1ae488e24da9e54e6fc5a586287045d25fe321f81821ea62b8fb25dd7379a",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/protocols/FskCommon.js": "27ee865d11b747aeace4e6acbc4daae2c38efab3ca9c09cdad9bc567fbfb60a7",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/protocols/V21.js": "00473e940f46f754e4397f41dcee2e70b17bd679f694d7e13eb542f2a270e864",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/protocols/V22Common.js": "51a473f0b638691c8c81048236e2e72dca2993a5d0240229cd07bf9c436b1123",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/protocols/V22Demodulator.js": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/protocols/V22RxRRC.js": "42d6d85522a4e26b6d92f70e344b4f65d7d31cd579e2283811899b9ea878fe2b",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/protocols/V23.js": "54af2ce2d86726c84424dc033637efcb2d0cf79c9a5b63e680f1ad4e0b7d93a9",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-jitter-runtime-01/runtime/source/src/dsp/protocols/V22.js": "1bd6cb66be0033bde88e52b03ca923fab2181ae9343ac5db2569eb34c9fec45a"
+    },
+    "audit": {
+      "passed": true,
+      "checks": {
+        "numeric_command_prefix": true,
+        "single_normal_post_train_hold": true,
+        "serial_equals_post_hold_guest_decode": true,
+        "online_target_after_numeric_call": true,
+        "guest_equals_Telnet_application_input": true,
+        "decoded_audio_equals_serial_output": true,
+        "complete_BBS_display_survives_DSP": true,
+        "single_real_carrier": true,
+        "real_DOS_terminal_replies": true,
+        "authoritative_login": true,
+        "authoritative_menu_order": true,
+        "script_and_normal_DOS_return": true,
+        "actual_UART_restored": true,
+        "keyboard_timer_vector_restored": true,
+        "continuous_rtp-from-answer.bin": true,
+        "continuous_rtp-from-caller.bin": true,
+        "actual_external_SIP": true,
+        "actual_internal_BYE": true,
+        "capture_hashes": true
+      },
+      "producer_sha256": "e53320f770158e13bdc4c1808c42fd1a4b98d721976a58dedb12d66157354073",
+      "auditor_sha256": "c8b698bbc4baab48e88581f571b8216258e65b337e0439faf4369253146c29f0",
+      "payloads": {
+        "BBS_input_bytes": 48,
+        "BBS_display_bytes": 46908,
+        "BBS_input_sha256": "f6066df3a8d0aad2df83dbcac94715d46a0c3b4ffce934c89100ab9da253e274",
+        "BBS_display_sha256": "5f3f265549812d151b9f677245ca59f2ced4efb21db555cf28ea54e1b0650e43",
+        "display_offset_in_caller": 187,
+        "guest_DATA_RX_bytes": 64,
+        "pre_proxy_training_tail_bytes": 0,
+        "pre_proxy_training_tail_hex": "",
+        "unadjusted_serial_guest_identity": true
+      },
+      "scope": "Independent read-only actual DOS/ASPECT, BBS authoritative logs, guest frames, serial/Telnet byte identity, RTP continuity, SIP and cleanup audit. No physical modem/ATA claim."
+    },
+    "audit_sha256": "edf47e3ff7078bf0bc86b25cdae3a7809325edbdafd9424fb0771e965b534f09"
+  }
+}
