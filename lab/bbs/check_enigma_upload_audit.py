@@ -23,8 +23,35 @@ def unknown_times(stream,expected):
     assert seen==set(expected)
 
 
-def replay(stream,opposite,trace,expected,require_unknown=False):
-    audit=audit_batch(stream,expected)
+def canceled_prefix(stream,opposite,trace,expected):
+    cancel_at=stream.index(b'\x18'*8+b'\x08'*10);when=timestamp(trace,'dos',cancel_at)
+    first=next(h for h in scan(stream) if h['type']==4)
+    meta=packet(stream,first['end'],first['format'])
+    from audit_zmodem import metadata
+    assert metadata(meta['payload'])==('PCUP01.BIN',len(expected['PCUP01.BIN']))
+    data=next(h for h in scan(stream,meta['end']) if h['type']==10)
+    body=packet(stream,data['end'],data['format'])
+    assert body['payload'] and body['payload']==expected['PCUP01.BIN'][:body['length']]
+    assert body['end']<cancel_at and not any(h['type']==11 and h['offset']<cancel_at for h in scan(stream))
+    ack=next(h for h in scan(opposite) if h['type']==3 and h['position']>=1024 and timestamp(trace,'bbs',h['offset'])<when)
+    search=stream.index(b'S\r',cancel_at+18)
+    return dict(offset=cancel_at,first_offer=first,first_data={k:v for k,v in body.items() if k!='payload'},ack=ack,first_search=search)
+
+
+def canceled_snapshot(snapshot):
+    assert len(snapshot)==1 and not snapshot[0]['installed']
+    assert all(not r['entries'] for r in snapshot[0]['entries'])
+    assert not snapshot[0]['temporary_files'] and snapshot[0]['source_files_unchanged']
+
+
+def replay(stream,opposite,trace,expected,require_unknown=False,cancel_first=False):
+    cancel=canceled_prefix(stream,opposite,trace,expected) if cancel_first else None
+    audit=audit_batch(stream,expected,cancel['first_search']+2 if cancel else 0)
+    if cancel:
+        first=offset_after(trace,'bbs',timestamp(trace,'dos',cancel['first_search']))
+        retry=offset_after(trace,'bbs',timestamp(trace,'dos',audit['start']))
+        assert first is not None and retry is not None
+        assert b'NFO | lines 1-15/24' in opposite[first:retry] and b'PCPLUS NFO LINE 01 : synthetic game 01' in opposite[first:retry],'No NFO between cancel and retry'
     if require_unknown:unknown_times(stream,expected)
     post=stream.index(b'S\r',offset_after(trace,'dos',timestamp(trace,'dos',audit['end']-1)))
     when=timestamp(trace,'dos',post)
@@ -64,11 +91,16 @@ def main(args):
     expected={p.name:p.read_bytes() for p in (out/'SEND').iterdir()};assert any(not v for v in expected.values()) and any(v for v in expected.values())
     stream=(out/'serial-received.bin').read_bytes();opposite=(out/'display.bin').read_bytes();trace=json.loads((out/'trace.json').read_text())
     bounds=result.get('received_date_bounds_ns');require_unknown=bounds is not None
-    audited=replay(stream,opposite,trace,expected,require_unknown);rows=json.loads((out/'server-upload-metadata.json').read_text());catalog(rows,expected,candidate,bounds)
+    cancel_first=result.get('cancel_first',False)
+    snapshot=json.loads((out/'cancel-upload-snapshots.json').read_text()) if cancel_first else None
+    if cancel_first:canceled_snapshot(snapshot)
+    audited=replay(stream,opposite,trace,expected,require_unknown,cancel_first);rows=json.loads((out/'server-upload-metadata.json').read_text());catalog(rows,expected,candidate,bounds)
     cases=[]
-    def reject(label,sent=stream,received=opposite,times=trace,source=expected,entries=rows):
-        try:replay(sent,received,times,source,require_unknown);catalog(entries,source,candidate,bounds)
-        except (AssertionError,ValueError,TypeError,KeyError,OSError) as e:cases.append(dict(case=label,rejected=True,reason=str(e)))
+    def reject(label,sent=stream,received=opposite,times=trace,source=expected,entries=rows,cancel_snapshot=snapshot):
+        try:
+            replay(sent,received,times,source,require_unknown,cancel_first);catalog(entries,source,candidate,bounds)
+            if cancel_first:canceled_snapshot(cancel_snapshot)
+        except (AssertionError,ValueError,TypeError,KeyError,OSError,StopIteration) as e:cases.append(dict(case=label,rejected=True,reason=str(e)))
         else:raise AssertionError('Damaged upload evidence passed: '+label)
     def damage(data,at):
         changed=bytearray(data);changed[at]^=1;return bytes(changed)
@@ -103,8 +135,21 @@ def main(args):
         changed=raw[:end-1]+b'1'+raw[end:]
         altered=stream[:h['end']]+encode_packet(changed,h['format'],p['ending'],0)+stream[p['end']:]
         reject('valid-CRC-nonzero-invented-time',sent=altered)
+    if cancel_first:
+        cancel=canceled_prefix(stream,opposite,trace,expected)
+        reject('missing-cancel-burst',sent=damage(stream,cancel['offset']))
+        changed=bytearray(opposite)
+        for h in scan(opposite):
+            if h['type']==3 and timestamp(trace,'bbs',h['offset'])<timestamp(trace,'dos',cancel['offset']):changed[h['offset']+4]^=1
+        reject('no-peer-ACK-before-Escape',received=bytes(changed))
+        start=offset_after(trace,'bbs',timestamp(trace,'dos',cancel['first_search']))
+        reject('missing-between-cancel-retry-NFO',received=damage(opposite,opposite.index(b'NFO | lines',start)))
+        for field,value,label in [('installed',['PCUP01.BIN'],'canceled-file-installed'),('temporary_files',['retained/PCUP01.BIN'],'canceled-temp-retained'),('source_files_unchanged',False,'source-modified-after-cancel')]:
+            changed=copy.deepcopy(snapshot);changed[0][field]=value;reject(label,cancel_snapshot=changed)
+        changed=copy.deepcopy(snapshot);changed[0]['entries'][0]['entries']=[{'fileName':'PCUP01.BIN'}];reject('canceled-catalog-entry',cancel_snapshot=changed)
+        reject('cancel-without-confirmed-retry',sent=stream[:cancel['first_search']+2])
     report=dict(passed=True,cases=cases,checker_sha256=sha(Path(__file__)),auditor_sha256=sha(ROOT/'lab/bbs/audit_zmodem.py'),
-        capture_hashes={p:sha(out/p) for p in ('upload-checks.json','serial-received.bin','display.bin','trace.json','server-upload-metadata.json')},
+        capture_hashes={p:sha(out/p) for p in ('upload-checks.json','serial-received.bin','display.bin','trace.json','server-upload-metadata.json',*(['cancel-upload-snapshots.json'] if cancel_first else []))},
         scope='Actual retained two-file upload wire and official FileEntry metadata; each payload/empty-file/finish/timing/menu/catalog corruption must reject. No protocol replies generated.')
     (out/'upload-audit-negative-checks.json').write_text(json.dumps(report,indent=2)+'\n');print('Upload audit:',len(cases),'corruptions rejected')
 

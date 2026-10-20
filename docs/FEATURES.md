@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+The [ENiGMA upload cancellation checkpoint](validation/enigma-upload-cancel.json)
+adds actual DOS Escape/NFO/retry/NFO and a staged per-upload server ownership
+correction. Its 21 checks and 22 damaged-evidence rejections retain the original
+server cleanup failure. Fourteen component ownership checks and 141 upstream
+regressions pass; all 31 DOS products are unchanged. This covers one additional
+cancellation workflow and closes no whole-application gate.
+
 The [ENiGMA upload date checkpoint](validation/enigma-upload-time.json) fixes
 invented receiver dates by emitting explicit unknown time. The actual DOS route
 passes 15 checks, and 14 evidence corruptions reject. Scan acknowledgement and

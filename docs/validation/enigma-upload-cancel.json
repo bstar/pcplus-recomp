@@ -1,0 +1,348 @@
+{
+  "date": "2026-10-20",
+  "passed": true,
+  "whole_application_gates_closed": [],
+  "checks": {
+    "DOS_harness": true,
+    "inputs_unchanged": true,
+    "source_files_unchanged": true,
+    "no_post_saved": true,
+    "all_server_files_and_metadata": true,
+    "only_expected_installed_files": true,
+    "DOS_compiler_exact": true,
+    "script_login_trace": true,
+    "received_creation_dates_current": true,
+    "canceled_upload_not_installed": true,
+    "canceled_temporary_data_removed": true,
+    "source_files_unchanged_after_cancel": true,
+    "observed_two_complete_form_key_sequences": true,
+    "explicit_unknown_time_on_wire": true,
+    "observer_keys_delivered_exactly": true,
+    "cancel_after_valid_data_and_ACK": true,
+    "NFO_between_cancel_and_retry": true,
+    "exact_binary_and_empty_batch_then_NFO": true,
+    "unique_authenticated_session": true,
+    "actual_upload_and_return_route": true,
+    "failed_then_successful_protocol_process": true
+  },
+  "form_events": [
+    {
+      "key": "Escape",
+      "row": 25,
+      "column": 19,
+      "file": "canceled upload",
+      "tick": 1693
+    },
+    {
+      "key": "Enter",
+      "row": 25,
+      "column": 1,
+      "file": "scan pause",
+      "tick": 3185
+    },
+    {
+      "key": "Tab",
+      "row": 6,
+      "column": 52,
+      "file": "EMPTY.BIN",
+      "tick": 3286
+    },
+    {
+      "key": "Tab",
+      "row": 9,
+      "column": 52,
+      "file": "EMPTY.BIN",
+      "tick": 3359
+    },
+    {
+      "key": "Enter",
+      "row": 14,
+      "column": 60,
+      "file": "EMPTY.BIN",
+      "tick": 3432
+    },
+    {
+      "key": "Tab",
+      "row": 6,
+      "column": 52,
+      "file": "PCUP01.BIN",
+      "tick": 3511
+    },
+    {
+      "key": "Tab",
+      "row": 9,
+      "column": 52,
+      "file": "PCUP01.BIN",
+      "tick": 3584
+    },
+    {
+      "key": "Enter",
+      "row": 14,
+      "column": 60,
+      "file": "PCUP01.BIN",
+      "tick": 3657
+    }
+  ],
+  "first_cancel": {
+    "first_valid_packet_bytes": 1024,
+    "peer_ACK_position": 1024,
+    "no_EOF": true
+  },
+  "canceled_snapshot": {
+    "installed_files": 0,
+    "catalog_entries": 0,
+    "temporary_data_files": 0,
+    "source_files_unchanged": true
+  },
+  "installed_files": {
+    "PCUP01.BIN": {
+      "bytes": 65539,
+      "sha256": "aa9083a24261026a5dfbf5182257be491d98e9d7127485b147b87992ea201388"
+    },
+    "EMPTY.BIN": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "corruptions_rejected": 22,
+  "baseline_shared_cleanup_reproduced": true,
+  "ownership_checks": [
+    {
+      "case": "each-upload-has-unique-tracked-owner",
+      "passed": true
+    },
+    {
+      "case": "creator-forwards-owner-to-protocol",
+      "passed": true
+    },
+    {
+      "case": "success-cleanup-removes-only-its-own-data",
+      "passed": true
+    },
+    {
+      "case": "repeated-cleanup-preserves-another-upload",
+      "passed": true
+    },
+    {
+      "case": "transfer-retains-the-creator-owner",
+      "passed": true
+    },
+    {
+      "case": "failure-identity-preserved",
+      "passed": true
+    },
+    {
+      "case": "failure-removes-partial-before-callback",
+      "passed": true
+    },
+    {
+      "case": "failed-upload-releases-free-time",
+      "passed": true
+    },
+    {
+      "case": "successful-receive-keeps-data-for-details",
+      "passed": true
+    },
+    {
+      "case": "selector-preserves-the-creator-owner",
+      "passed": true
+    },
+    {
+      "case": "details-cleanup-retires-only-that-owner",
+      "passed": true
+    },
+    {
+      "case": "caller-owned-directory-is-not-removed",
+      "passed": true
+    },
+    {
+      "case": "untyped-owner-is-not-a-cleanup-authority",
+      "passed": true
+    },
+    {
+      "case": "final-owner-cleaned-independently",
+      "passed": true
+    }
+  ],
+  "upstream_regressions": 141,
+  "staged_server": {
+    "original_core": {
+      "core/upload.js": "3b9289a322b482950a5c4b5680e62bf646dc2f863e220f583babcf29bd996ffe",
+      "core/file_transfer.js": "a6e1e8b02947b9c2ac6eb7adff695f2633f445d749aedb874ffb5242f1aaba8e",
+      "core/file_transfer_protocol_select.js": "5dcfa68335915d8260950ed414f363db8aeb4fff65a3f017177e17931fc7cacd",
+      "core/file_entry.js": "618516d4c7db0fa6b26edf241ac0313e46eb8839f18a472af136ff56e11e0aa0",
+      "core/file_base_area.js": "e04901527df27e4e73006d28cfc66666383b773dbb5e978411e5e0bd01656a26"
+    },
+    "staged_core": {
+      "core/upload.js": "2b99df79423779012126410b3faaacb6ccf10aef9e79831b5651ab7a95b7b231",
+      "core/file_transfer.js": "1ffc90fbdcbef65d3b59aa4703960c79516d2f581026a52e2fb481af64a8d958",
+      "core/file_transfer_protocol_select.js": "4943d0cfdeb6321bd116514b210f55a6ed29c3fe81249c58a5b5f4e035f706bd",
+      "core/file_entry.js": "618516d4c7db0fa6b26edf241ac0313e46eb8839f18a472af136ff56e11e0aa0",
+      "core/file_base_area.js": "e04901527df27e4e73006d28cfc66666383b773dbb5e978411e5e0bd01656a26"
+    },
+    "changed": [
+      "core/file_transfer.js",
+      "core/file_transfer_protocol_select.js",
+      "core/upload.js"
+    ],
+    "inputs": {
+      "lab/bbs/patches/enigma-upload-temp/stage.py": "fe0da8a59c2cb0d7652d943560eaf947c492dbf7ec40dbd0a61e5b274de26739",
+      "lab/bbs/patches/enigma-upload-temp/upload-temp.patch": "2ca87e8f0f9dd79e02009a21cfce0c7a6db2610bb9a189726c60dc0bb7360d9b"
+    },
+    "scope": "Isolated per-upload tracked-session patch; the running board remains unchanged. Original source fingerprints remain in source_inputs; staged inputs are explicit."
+  },
+  "original_core_failure": {
+    "DOS_harness": true,
+    "inputs_unchanged": true,
+    "source_files_unchanged": true,
+    "no_post_saved": true,
+    "all_server_files_and_metadata": true,
+    "only_expected_installed_files": true,
+    "DOS_compiler_exact": true,
+    "script_login_trace": true,
+    "received_creation_dates_current": true,
+    "canceled_upload_not_installed": true,
+    "canceled_temporary_data_removed": false,
+    "source_files_unchanged_after_cancel": true,
+    "observed_two_complete_form_key_sequences": true,
+    "explicit_unknown_time_on_wire": true,
+    "observer_keys_delivered_exactly": true,
+    "cancel_after_valid_data_and_ACK": true,
+    "NFO_between_cancel_and_retry": true,
+    "exact_binary_and_empty_batch_then_NFO": true,
+    "unique_authenticated_session": true,
+    "actual_upload_and_return_route": true,
+    "failed_then_successful_protocol_process": true
+  },
+  "retained_harness_failure": {
+    "label": "owned-upload-cancel-01",
+    "reason": "Unsupported esc token stopped the later ADDKEY commands; bounded DOS harness timeout. Later runs use escape."
+  },
+  "retained_upstream_invocation_failure": "The first Mocha command omitted test/setup.js. The standard bootstrapped command passes all 141 checks.",
+  "application_code_changed": false,
+  "unchanged_application_products": 31,
+  "source_products": {
+    "aspect-process-parent/ASPECT.EXE": "cd580a12fda2e38edbac6fa9ebd19727b11c9e8393b1a6fe561531164bebb63d",
+    "aspect-fault/ASPECT.EXE": "bbeb4c85546d0cb0e6c94801d78c4472e4a77efe7cb1a1c6dab6e7e2b03f5c7e",
+    "aspect-process/ASPECT.EXE": "ccf0aeaf2f58ef8628335f170df859a01217885dc6e58ea7433f648bbee57025",
+    "aspect-runner/ASPECT.EXE": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+    "aspect-compiler-dos/ASPCOMP.EXE": "3470c718df0d21fad4635b99f6c3b2e5d307637581728bdb639e6e9521a9c931",
+    "terminal-process/TERMINAL.EXE": "80eb796f2404f06382da9e22f869c534c3a0b9d174ebcbc19019f9df0e302aad",
+    "terminal/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+    "native-program/PROGRAM.EXE": "582a6844f454de92e66fad3e6694b26b1fdee6565d91ce563e8ebc38d8afb8d1",
+    "native-program/OWN1.COM": "4a02a70aa7ddec17648947eb822a045a3bbc5666485d0861277f784632640a39",
+    "native-program/OWN2.COM": "e496c8227feaeee3abe5d00a2ac8a77624a0070a2e41d82215dadf912171a4b5",
+    "native-display/DISPLAY.EXE": "0e6dc8e4e852e0f940b810a7aefbae2378c3c18985ddcf2dea1c01f5544dd6cf",
+    "native-display/VIDEO.COM": "e38463e46b8f8c42f2bcd90a1e9707ace08ae63704fa16e317a87df3fbb39605",
+    "process-serial/PSERIAL.EXE": "7cf3775f5e26ab6e83023744c6ddfaec9de57073449570fe514c0584ee4c9619",
+    "process-serial/UART1.COM": "a7bb9817a9401d7c0127d68b5bc38f5f9a2b47e34827c4daeee471857deb654e",
+    "process-serial/UART2.COM": "3dda15dc346ef3ddfc42eb6b54890254590dd6fc7ce48f1c116d9d84cc862f3f",
+    "native-process/NATIVE.EXE": "03723b988eab3df0cf7c128a1c6fc8356045b2bc0aac3865ab8f975ee300a7e0",
+    "native-process/NAMES.EXE": "0485267021744f48db472a3c6a6ebe10beabb3ac64d3b673c2748a8e1e0e8409",
+    "native-process/CHILD.COM": "0c8bb3b2499821ac74ddd47e4cc58ee34a633d7537be5f15db7ab80f878f9f18",
+    "native-process/DIVIDE.COM": "a2d4de6488769a320efd699e9c8e367574f7d398f9b1b63a30a22b099fb90e79",
+    "native-process/VECT.COM": "ca624aef48dfd14a782633e6253fdc817c6df15c61aaafe73ffc814a1f01b79f",
+    "native-process/RESIDENT.COM": "b56878449a5528fa3403207d369262e3a5422d2d489cce2f323727579bc200a8",
+    "native-process/EMPTY.COM": "fb3899847c3e4e1e817dd8f80108e41a46693128b4aa3a8306f3d86cdbaa79d6",
+    "native-process/FLAGS.COM": "83c3623d9e7e8db33301b96448910701f95033debff389462ef8c4d7e92489c0",
+    "native-process/E17.COM": "c3a5760861de337896c7259bb44f6c05284278040d22d4fc9cb42688d8d247e1",
+    "native-process/E21.COM": "def6a10413daf417e92cc622ffbeb96dd3abf12796f9ca071662503c1ce781b1",
+    "native-process/E22.COM": "f9903bca908e88fc0c10aa4ac088a180493ac66d8d2c911dcf8eae362b5a0b6b",
+    "native-process/CHILD.EXE": "63080cc4387cd191b3ae0495ad21b023e266689336c4f29c22190246b2a2c8df",
+    "terminal-mouse/TERMINAL.EXE": "8bd0d5ab6f6e8b83b87be6ba1202e419ddeab55bbd53644ee82a7da48d4cc950",
+    "terminal-mouse-process/TERMINAL.EXE": "1af63634144416f0076f60bd545bedaf0dd87a615fef9aad221e432509a190c6",
+    "setup/PRMEDIT.EXE": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646",
+    "setup-mouse/PRMEDIT.EXE": "0f0dafd6b783bf8ae5d170ddd4448273057cf7ff168e8e21d74ef1be657e8128"
+  },
+  "original_build_inputs": [],
+  "evidence": [
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-cancel-03/upload-checks.json",
+      "sha256": "3f61a1b673aca0aea254426fca086b5780f081c43e923eebace4b6f6d55fa678"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-cancel-03/upload-audit-negative-checks.json",
+      "sha256": "8e8608df2b1b2c6ded9f9383868f9afa10c717211a0e644f8b4aecbcaa031a85"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-cancel-03/cancel-upload-snapshots.json",
+      "sha256": "2ace5553912f600a2bd581f10749a0df5680299e077be764c0981493d00508f3"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-cancel-03/LABELS.BIN",
+      "sha256": "fc584e15c829604d5f0164600a68868a4f3a2bb6b82ed14ccc1a61ed878e5f3b"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-cancel-03/upload-form-events.json",
+      "sha256": "597788e075e6c45263f9a0e547e1f4c26f37c0696b1225e83d72d4ebf2bfee53"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-cancel-03/server-upload-metadata.json",
+      "sha256": "bb79ee1c7b87d322d35924d533a1684e7a3eb91255a3fb2dfbc3ba4aa642f5d2"
+    },
+    {
+      "path": "build/bbs-lab/owned-enigma-tx-cancel-03/candidate/search-instance.json",
+      "sha256": "2dbc545bd2bad7ada0c3564fa420e6b713e7a135ca6214bf2040c91a50329324"
+    },
+    {
+      "path": "build/bbs-lab/owned-enigma-tx-cancel-03/candidate/upload-temp-experiment.json",
+      "sha256": "c9431c17c8a6fcd9801cb29b1af01067ef5d09c2992c3f292866374a05633c29"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-cancel-02/upload-checks.json",
+      "sha256": "b3032489c0dee157f61d0d37c31ebf9f27ba48f4d44456bff6e939c8a2916b2a"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-cancel-02/cancel-upload-snapshots.json",
+      "sha256": "a9722b46e961b6f14334aaa90c39c7293ba9800bb197b313ab995dcceaca650a"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-cancel-01/upload-checks.json",
+      "sha256": "431abba9c73111b19322ba89dcf5791024ee2e7fa44e5e36b3a5f5e51ca336c9"
+    },
+    {
+      "path": "build/bbs-lab/upload-temp-unit/original-01/checks.json",
+      "sha256": "674e8d6658c8a71750363226fa288be42ee8a10436fc33e52b7764504bf367ba"
+    },
+    {
+      "path": "build/bbs-lab/upload-temp-unit/fixed-01/checks.json",
+      "sha256": "837595172e1ef33db56907944d07ce02ecf605c61a2512c0d323a16aa2baa337"
+    },
+    {
+      "path": "build/bbs-lab/upload-temp-unit/upstream-bootstrapped-01.json",
+      "sha256": "62b7c02147ca70542d8a64ab7577f66e760e6f2dacefa08d78dbcc2372f8537b"
+    },
+    {
+      "path": "build/bbs-lab/upload-temp-unit/upstream-bootstrapped-01.log",
+      "sha256": "cdce21cfcd20a065dc5137f056accb2518599f54bceb2eef9d9255859b92b12a"
+    },
+    {
+      "path": "build/bbs-lab/upload-temp-unit/upstream-01.log",
+      "sha256": "0cf4cf072a3bc49347139433c4e10f4b89a73e94400c37002092edacc92c2034"
+    },
+    {
+      "path": "docs/validation/enigma-upload-time.json",
+      "sha256": "a2025adf5beeeb277c19fc403cf4b6cbc525343c727ffc4c86af3430d6437fcd"
+    }
+  ],
+  "sources": {
+    "lab/bbs/enigma_upload_dos.py": "111dda3e3a7144660785b1755f3cba851e2a838f3654ca3eb964a809f28d42dd",
+    "lab/bbs/enigma_upload_cancel_watch.py": "54bcb3dcb7b74df0040bb2f839fec3b7f82b135e2bbef28ecc5e0b5b87542287",
+    "lab/bbs/check_enigma_upload_audit.py": "f40ae5ebd3c460c3fbf1ac98d8fa4a7fa95f51eb08285560b6a49d3fd6e4e247",
+    "lab/bbs/enigma_key_stream_fixture.py": "50db08aec6e3fd0c4e881356fe521dd875e081dd6a9e9b6a9898c49e44aef822",
+    "lab/bbs/patches/enigma-upload-temp/stage.py": "fe0da8a59c2cb0d7652d943560eaf947c492dbf7ec40dbd0a61e5b274de26739",
+    "lab/bbs/patches/enigma-upload-temp/check.js": "9b359941dce0e75e0309cfd0f0f84c1339511a63597756837fd3748c96da0510",
+    "lab/bbs/patches/enigma-upload-temp/upload-temp.patch": "2ca87e8f0f9dd79e02009a21cfce0c7a6db2610bb9a189726c60dc0bb7360d9b"
+  },
+  "recorder_sha256": "59cf33eb9cbeba5f49e42863879af69ef1e749bbc119d116f863dab4b481cf01",
+  "nix_inputs": {
+    "nix/flake.nix": "7f069dd8346be02006737101a2790b99a881411fa75b657316f75b090816c15f",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+  },
+  "limitations": [
+    "Isolated keyboard-decoder candidate plus explicit three-module upload ownership patch; neither is installed on the running board.",
+    "Modeled 19200/HARD UART. Physical modem, upload carrier loss and original source-date preservation remain open.",
+    "The ownership component uses real module methods/files but does not establish simultaneous BBS connections or cleanup under filesystem/spawn errors.",
+    "Unrelated protocol-list temporary tracking and full application requirements remain open."
+  ]
+}

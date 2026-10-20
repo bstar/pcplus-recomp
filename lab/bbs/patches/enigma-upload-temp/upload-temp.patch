@@ -1,0 +1,103 @@
+--- a/core/upload.js
++++ b/core/upload.js
+@@ -25,7 +25,8 @@
+ //  deps
+ const async = require('async');
+ const _ = require('lodash');
+-const temptmp = require('temptmp').createTrackedSession('upload');
++const TempSession = require('temptmp');
++const { randomUUID } = require('crypto');
+ const paths = require('path');
+ const sanatizeFilename = require('sanitize-filename');
+ 
+@@ -92,6 +93,8 @@
+             this.areaInfo = options.lastMenuResult.areaInfo;
+             this.uploadType = options.lastMenuResult.uploadType;
+         }
++
++        this.uploadTempSession = _.get(options, 'lastMenuResult.uploadTempSession');
+ 
+         this.availAreas = getSortedAvailableFileAreas(this.client, { writeAcs: true });
+ 
+@@ -215,7 +218,9 @@
+     }
+ 
+     performUpload(cb) {
+-        temptmp.mkdir({ prefix: 'enigul-' }, (err, tempRecvDirectory) => {
++        const tempSession = TempSession.createTrackedSession(`upload-${randomUUID()}`);
++        this.uploadTempSession = tempSession;
++        tempSession.mkdir({ prefix: 'enigul-' }, (err, tempRecvDirectory) => {
+             if (err) {
+                 return cb(err);
+             }
+@@ -233,6 +238,7 @@
+                     direction: 'recv',
+                     uploadAreaInfo: this.availAreas[areaIndex],
+                     uploadType: this.uploadType,
++                    uploadTempSession: tempSession,
+                 },
+             };
+ 
+@@ -446,12 +452,17 @@
+         );
+     }
+ 
+-    cleanupTempFiles() {
+-        temptmp.cleanup(paths => {
++    cleanupTempFiles(cb = () => {}) {
++        const session = this.uploadTempSession;
++        if (!(session instanceof TempSession)) {
++            return cb([]); //  Never delete an unowned caller-supplied directory.
++        }
++        session.cleanup(paths => {
+             Log.debug(
+-                { paths: paths, sessionId: temptmp.sessionId },
+-                'Temporary files cleaned up'
++                { paths: paths, sessionId: session.sessionId },
++                'Temporary upload files cleaned up'
+             );
++            return cb(paths);
+         });
+     }
+ 
+--- a/core/file_transfer.js
++++ b/core/file_transfer.js
+@@ -31,7 +31,8 @@
+ const async = require('async');
+ const _ = require('lodash');
+ const pty = require('node-pty');
+-const temptmp = require('temptmp').createTrackedSession('transfer_file');
++const TempSession = require('temptmp');
++const temptmp = TempSession.createTrackedSession('transfer_file');
+ const paths = require('path');
+ const fs = require('graceful-fs');
+ 
+@@ -66,6 +67,7 @@
+         super(options);
+ 
+         this.config = this.menuConfig.config || {};
++        this.uploadTempSession = _.get(options, 'extraArgs.uploadTempSession');
+ 
+         //
+         //  Most options can be set via extraArgs or config block
+@@ -574,6 +576,10 @@
+         try {
+             this.recvFiles(err => {
+                 release();
++                if (err && this.uploadTempSession instanceof TempSession) {
++                    //  The receiver has exited; retire only the creator's upload.
++                    return this.uploadTempSession.cleanup(() => cb(err));
++                }
+                 return cb(err);
+             });
+         } catch (e) {
+--- a/core/file_transfer_protocol_select.js
++++ b/core/file_transfer_protocol_select.js
+@@ -114,6 +114,7 @@
+                         tempRecvDirectory: this.extraArgs.recvDirectory,
+                         areaInfo: this.extraArgs.uploadAreaInfo,
+                         uploadType: this.extraArgs.uploadType,
++                        uploadTempSession: this.extraArgs.uploadTempSession,
+                     },
+                 });
+             }

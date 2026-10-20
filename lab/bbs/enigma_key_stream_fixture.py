@@ -107,7 +107,7 @@ def verify_running(candidate):
     return candidate / "logs/enigma-bbs.log"
 
 
-def start(candidate):
+def start(candidate, private_tmp=False):
     assert not pid(candidate), "Owned instance already running"
     metadata = json.loads((candidate / "instance.json").read_text())
     assert sha(candidate / "core/client.js") == metadata["client_sha256"]
@@ -115,12 +115,18 @@ def start(candidate):
     assert sha(candidate / "config/config.hjson") == metadata["config_sha256"]
     executable = shutil.which("node")
     assert executable and str(Path(executable).resolve()).startswith("/nix/store/")
+    environment = dict(os.environ)
+    if private_tmp:
+        temporary = candidate / 'runtime-tmp'
+        temporary.mkdir(exist_ok=True)
+        assert not temporary.is_symlink() and temporary.resolve().parent == candidate
+        environment.update(TMPDIR=str(temporary), TMP=str(temporary), TEMP=str(temporary))
     with socket.socket() as check:
         check.bind(("127.0.0.1", PORT))
     with (candidate / "instance.log").open("ab") as log:
         process = subprocess.Popen([executable, str(candidate / "main.js")], cwd=candidate,
                                    stdin=subprocess.DEVNULL, stdout=log, stderr=log,
-                                   start_new_session=True)
+                                   start_new_session=True, env=environment)
     (candidate / "instance.pid").write_text(str(process.pid) + "\n")
     deadline = time.monotonic() + 15
     while time.monotonic() < deadline:
@@ -152,5 +158,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=["setup", "start", "stop"])
     parser.add_argument("--candidate", type=Path, required=True)
+    parser.add_argument("--private-tmp", action="store_true", help="Start with temporary files inside the owned candidate")
     args = parser.parse_args()
-    globals()[args.action](owned(args.candidate))
+    assert not args.private_tmp or args.action == 'start'
+    if args.action == 'start':start(owned(args.candidate), args.private_tmp)
+    else:globals()[args.action](owned(args.candidate))

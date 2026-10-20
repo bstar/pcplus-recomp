@@ -1,5 +1,17 @@
 # Complete DOS rebuild plan
 
+The [ENiGMA upload cancellation workflow](lab/bbs/enigma-cancel-upload.md)
+now proves Escape after valid data/ACK, NFO input, a full binary/empty retry
+and NFO input again in one DOS process. The original upload core passes the
+client recovery checks but retains canceled temporary data. A separate staged
+three-module ownership patch passes all 21 checks; 14 actual-module ownership
+checks and 141 bootstrapped upstream regressions pass. Twenty-two damaged
+captures/snapshots reject. The [record](docs/validation/enigma-upload-cancel.json)
+keeps the original failure and invalid harness recipe separate. All 31 DOS
+products are unchanged. Live deployment, physical modem/upload carrier loss,
+source dates, broader cleanup fault/concurrency cases and whole-application
+gates remain open.
+
 The [ENiGMA upload date fix](lab/bbs/enigma-upload-time.md) explicitly sends
 unknown time instead of omitting the field. Six actual receiver comparisons
 reproduce absent-field bad dates and verify corrected engine output.

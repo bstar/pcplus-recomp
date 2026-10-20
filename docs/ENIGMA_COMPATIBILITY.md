@@ -4,6 +4,17 @@ The target includes the user's running `~/projects/black-flag-bbs` checkout,
 its configured menus and modules, and the source-built DOS client. Passing
 an isolated stock BBS is insufficient. Compatibility is not complete.
 
+The [upload cancellation test](../lab/bbs/enigma-cancel-upload.md) now covers
+Escape during acknowledged data, NFO interaction, a complete retry and NFO
+interaction afterward in one DOS process. It finds a server-side temporary-file
+leak in the original upload core. The explicit scoped-ownership candidate
+passes all 21 checks, 14 ownership-method checks and 141 upstream regressions;
+22 corrupted captures/snapshots reject. The
+[record](validation/enigma-upload-cancel.json) distinguishes the original-core
+failure from the staged fix. No DOS application code or running-board code
+changes in this checkpoint; all 31 DOS products retain their previous identities.
+Physical modem, upload carrier loss and broader cleanup failure cases stay open.
+
 The [upload date fix](../lab/bbs/enigma-upload-time.md) now advertises unknown
 time explicitly. Actual receiver comparisons reproduce the missing-field date
 problem and verify current creation dates with the corrected engine. The fresh
