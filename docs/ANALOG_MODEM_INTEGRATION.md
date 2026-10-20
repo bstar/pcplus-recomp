@@ -92,6 +92,20 @@ Links below pin the reviewed source; future versions require rechecking.
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
 
+## Authenticated stock BBS checkpoint
+
+[Stock ENiGMA through the candidate](../lab/bbs/synthmodem-enigma.md) now passes
+34 producer checks over menu and unsaved-editor sessions, plus exact serial/TCP
+payload and authoritative server/video audits. Login and named menu order are
+confirmed, Home moves to line start, Insert toggles overtype, and no post is
+saved. The measured editor escape sequences arrived whole at the TCP observer;
+this pass does not establish arbitrary-fragmentation tolerance or replace earlier
+stock ENiGMA failures. The [receipt](validation/synthmodem-enigma.json) keeps
+those scopes explicit. No server, application or candidate code was changed.
+
+These are synthetic-call, real-DOS/BBS software tests. SIP/DSP/audio, BBS file
+transfer through this exact path and physical modem acceptance remain open.
+
 ## DOS transfer composition checkpoint
 
 [Actual DOS transfer tests](../lab/bbs/synthmodem-dos.md) now pass84 checks over

@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+The [stock ENiGMA/SynthModem sessions](lab/bbs/synthmodem-enigma.md) pass34
+checks plus serial/server/video audits: authenticated Main -> Messages -> Main
+-> Files and an unsaved editor with Home/Insert behavior. All eight exercised
+keys reach the server; measured escape sequences arrive whole at the observer.
+This path has no timed batching, but it does not resolve earlier stock-server
+fragmentation failures on other paths. Application, bridge candidate and server
+are unchanged. Logged-in transfers, SIP/audio, hardware and full gates stay open.
+
 The [DOS/SynthModem transfer composition](lab/bbs/synthmodem-dos.md) passes84
 checks across small and65797-byte upload/download batches through the actual
 candidate proxy and independent lrzsz. Independent stream/file/hardware audits

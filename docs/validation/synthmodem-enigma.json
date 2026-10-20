@@ -1,0 +1,315 @@
+{
+  "passed": true,
+  "producer_checks": 34,
+  "runs": [
+    {
+      "label": "synthmodem-enigma-menus-01",
+      "producer": {
+        "passed": true,
+        "route": "menus",
+        "checks": {
+          "DOS_normal_exit": true,
+          "hardware_restored": true,
+          "no_relay_errors": true,
+          "relay_stopped": true,
+          "numeric_local_call": true,
+          "actual_DOS_DA": true,
+          "actual_DOS_CPR": true,
+          "authenticated": true,
+          "no_post_saved": true,
+          "profile_unchanged": true,
+          "inputs_unchanged": true,
+          "candidate_unchanged": true,
+          "server_unchanged": true,
+          "no_unsupported_terminal": true,
+          "ordered_main_messages_main_files": true,
+          "final_file_menu_visible": true
+        },
+        "session": "XEUX2dgWOWE",
+        "menus": [
+          "telnetConnected",
+          "matrix",
+          "login",
+          "fullLoginSequenceLoginArt",
+          "fullLoginSequenceLastCallers",
+          "fullLoginSequenceWhosOnline",
+          "fullLoginSequenceOnelinerz",
+          "fullLoginSequenceNewScanConfirm",
+          "fullLoginSequenceUserStats",
+          "mainMenu",
+          "messageBaseMainMenu",
+          "mainMenu",
+          "fileBaseMainMenu"
+        ],
+        "frozen_inputs": {
+          "lab/bbs/synthmodem_bbs_dos.py": "cd96dddbeda9b7a834130699b218f703c4892d713d9b3148fbb30b36edcb1801",
+          "lab/bbs/synthmodem_serial.js": "62a3ad7993cd1201ebb5fe47122df0b908fdba73908e22c33ba40d20906d210d",
+          "lab/bbs/enigma.py": "526fcd6eb468ec7a85630685872d27a937abbc6b61f48ad8391a2353e5686017",
+          "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+          "lab/bbs/editor-recipes.json": "72777d66ae84bd488f551cdb367deadbb47d4a4405f921f0d1ab0d578b1a3649",
+          "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+          "standalone/terminal_config_fixtures.py": "dd38f8a0c6c77d5d2ec2120c1f3d6b8a755525d11e2f6d986a056a3d0d8e4df4",
+          "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+          "build/terminal/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+          "build/terminal/terminal.map": "8b1f7f07d7f617936765de21fed74a71ec28c7c5ce45e8519802cf62689c86b1"
+        },
+        "candidate_sha256": {
+          "src/telnet/TelnetProxy.js": "ddec07546b2d98fb6400c6e0eaa468332389f76bba2ad825a363b1216e0f36d8",
+          "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+          "config.js": "3d6d33a25b8d86cde88d02ae538846592a020e8d64063abdb231a6ba7b27d49e",
+          "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5"
+        },
+        "server_revision": "6c25317168b762f7d9088a54d3f8295438827a0e",
+        "server_sha256": {
+          "main.js": "1b2f4c9747380dbd77ddfbc918d24c4ce225c7dd51331e75d8c2102d852bfda9",
+          "core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+          "config/config.hjson": "daae39792955eaf7b99c45fc936d54b153f62ea0d3f77672f45a8ace756a7dbc",
+          "package-lock.json": "8fcaecda3a4b1756ad295be95486cbdd5b9afea005949ac3da8822224c822d56",
+          "config/menus/loc-activitypub.hjson": "82861725a47e5892bbfd2251feb02ca0bb46707516a872cf373b350b704c9fe7",
+          "config/menus/loc-doors.hjson": "fb012c018ec054a7e3261f2b4ef28dc568742b0936bfc56ba9377745f8c43530",
+          "config/menus/loc-file_base.hjson": "9d9a02672bcd18b122827e6112ecfd99a4e7ff2916052847de26a87c6808f6c2",
+          "config/menus/loc-login.hjson": "215f943d381a2acc4c1713ff14331efaee19c474218428eac6b64f77b9355f18",
+          "config/menus/loc-main.hjson": "dc2fd404bbb8a35bc5c8bb43b3fe66378173cd8d87d0ab25978af16bda15d227",
+          "config/menus/loc-message_base.hjson": "607939acb6818c7c5fb50a2d90b04fed1b92d50f51fb9ca4215cef06644d2540",
+          "config/menus/loc-new_user.hjson": "04f466f10cc5c169c03186bc8a7fde7b18d5d938e7f0b70873d74bae15161cec",
+          "config/menus/loc-private_mail.hjson": "ffb59f0d6f2d592181d2bc304d46e9e2a3b71a14c2d6cd65a639f6b0c6f3d382"
+        },
+        "wire_sha256": {
+          "to-bbs.bin": "2b9ec072a2f766fd190a4fd71ae0cfe0d1f14523926317b438738f7e00ad98df",
+          "from-bbs.bin": "354112b67ea07ff79e6297986abbc8ad84c5342450d4184363c79adfb06faa3f",
+          "sent.bin": "a05be6918be49c7c192e2d580ccfe5a4511f8cd56b84c14485de18e290c6793c",
+          "display.bin": "5f3430b651bf4f2ce02b7303ef46427b124bfc70b4ccfb03a6f3a48e61181762",
+          "SCREEN.BIN": "61591a4af2d96c1d451ea21612a67bee310322ce1fb2d9ab151ae7936b049bb2",
+          "server-session.jsonl": "cde0a53f6aeaf87cafec79ca9c435b4de2c730702760327692fa8cf8aa6f6019"
+        },
+        "scope": "Actual DOS and isolated SynthModem TelnetProxy against owned stock ENiGMA on loopback. Synthetic ATZ/ATD1 call; transparent immediate relay has no timed buffering or terminal replies. No SIP/audio, physical modem or full BBS compatibility claim."
+      },
+      "audit": {
+        "evidence_audited": true,
+        "workflow_passed": true,
+        "route": "menus",
+        "serial_payload_exact": true,
+        "display_payload_exact": true,
+        "authenticated": true,
+        "no_post_saved": true,
+        "semantic": {
+          "ordered_main_messages_main_files": true,
+          "final_file_menu_visible": true
+        },
+        "observed_editor_keys": null,
+        "auditor_sha256": "b83098fccd7e7c0638e4fbb4db33be2cd5ff188c83f6845334f7d3f0d7c223b5",
+        "codec_sha256": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f"
+      },
+      "extra_capture_sha256": {
+        "node-serial-in.bin": "af9ee1b8e0c520651e5af990b35b8e5b9f92d44c0e63044283a79fbffec95a08",
+        "node-serial-out.bin": "3fab81ac9f00e08bdbd2e081bbb6ced9e1f95148f9acebaa5b812047fa73c959",
+        "chunk-trace.json": "d0f596a51206fa8bb49e378776951fcbefe1116cfea8d0f98cabd7450643fe8c",
+        "dosbox.conf": "bc86f3aeaf588e324b5114554736b544ab9a10a216cffe8de2f2474b0bdc9247"
+      }
+    },
+    {
+      "label": "synthmodem-enigma-editor-01",
+      "producer": {
+        "passed": true,
+        "route": "editor",
+        "checks": {
+          "DOS_normal_exit": true,
+          "hardware_restored": true,
+          "no_relay_errors": true,
+          "relay_stopped": true,
+          "numeric_local_call": true,
+          "actual_DOS_DA": true,
+          "actual_DOS_CPR": true,
+          "authenticated": true,
+          "no_post_saved": true,
+          "profile_unchanged": true,
+          "inputs_unchanged": true,
+          "candidate_unchanged": true,
+          "server_unchanged": true,
+          "no_unsupported_terminal": true,
+          "editor_entered": true,
+          "typed_draft_sent": true,
+          "home_moves_before_marker": true,
+          "insert_toggles_overtype": true
+        },
+        "session": "eMUwLgabknv",
+        "menus": [
+          "telnetConnected",
+          "matrix",
+          "login",
+          "fullLoginSequenceLoginArt",
+          "fullLoginSequenceLastCallers",
+          "fullLoginSequenceWhosOnline",
+          "fullLoginSequenceOnelinerz",
+          "fullLoginSequenceNewScanConfirm",
+          "fullLoginSequenceUserStats",
+          "mainMenu",
+          "messageBaseMainMenu",
+          "messageBaseNewPost"
+        ],
+        "frozen_inputs": {
+          "lab/bbs/synthmodem_bbs_dos.py": "cd96dddbeda9b7a834130699b218f703c4892d713d9b3148fbb30b36edcb1801",
+          "lab/bbs/synthmodem_serial.js": "62a3ad7993cd1201ebb5fe47122df0b908fdba73908e22c33ba40d20906d210d",
+          "lab/bbs/enigma.py": "526fcd6eb468ec7a85630685872d27a937abbc6b61f48ad8391a2353e5686017",
+          "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+          "lab/bbs/editor-recipes.json": "72777d66ae84bd488f551cdb367deadbb47d4a4405f921f0d1ab0d578b1a3649",
+          "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+          "standalone/terminal_config_fixtures.py": "dd38f8a0c6c77d5d2ec2120c1f3d6b8a755525d11e2f6d986a056a3d0d8e4df4",
+          "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+          "build/terminal/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+          "build/terminal/terminal.map": "8b1f7f07d7f617936765de21fed74a71ec28c7c5ce45e8519802cf62689c86b1"
+        },
+        "candidate_sha256": {
+          "src/telnet/TelnetProxy.js": "ddec07546b2d98fb6400c6e0eaa468332389f76bba2ad825a363b1216e0f36d8",
+          "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+          "config.js": "3d6d33a25b8d86cde88d02ae538846592a020e8d64063abdb231a6ba7b27d49e",
+          "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5"
+        },
+        "server_revision": "6c25317168b762f7d9088a54d3f8295438827a0e",
+        "server_sha256": {
+          "main.js": "1b2f4c9747380dbd77ddfbc918d24c4ce225c7dd51331e75d8c2102d852bfda9",
+          "core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+          "config/config.hjson": "daae39792955eaf7b99c45fc936d54b153f62ea0d3f77672f45a8ace756a7dbc",
+          "package-lock.json": "8fcaecda3a4b1756ad295be95486cbdd5b9afea005949ac3da8822224c822d56",
+          "config/menus/loc-activitypub.hjson": "82861725a47e5892bbfd2251feb02ca0bb46707516a872cf373b350b704c9fe7",
+          "config/menus/loc-doors.hjson": "fb012c018ec054a7e3261f2b4ef28dc568742b0936bfc56ba9377745f8c43530",
+          "config/menus/loc-file_base.hjson": "9d9a02672bcd18b122827e6112ecfd99a4e7ff2916052847de26a87c6808f6c2",
+          "config/menus/loc-login.hjson": "215f943d381a2acc4c1713ff14331efaee19c474218428eac6b64f77b9355f18",
+          "config/menus/loc-main.hjson": "dc2fd404bbb8a35bc5c8bb43b3fe66378173cd8d87d0ab25978af16bda15d227",
+          "config/menus/loc-message_base.hjson": "607939acb6818c7c5fb50a2d90b04fed1b92d50f51fb9ca4215cef06644d2540",
+          "config/menus/loc-new_user.hjson": "04f466f10cc5c169c03186bc8a7fde7b18d5d938e7f0b70873d74bae15161cec",
+          "config/menus/loc-private_mail.hjson": "ffb59f0d6f2d592181d2bc304d46e9e2a3b71a14c2d6cd65a639f6b0c6f3d382"
+        },
+        "wire_sha256": {
+          "to-bbs.bin": "6462360bbe01e4508dac0a7e25a62e78722438d29be3c39627231c69ee1837a9",
+          "from-bbs.bin": "e334daee1b3edf9671f584d0c60c4ff010bd4c29c139adf2ec894a5100724138",
+          "sent.bin": "feae48356bd12ca069dd7f46f14816be07b14d70a0a562b1911ad404c2ac6935",
+          "display.bin": "390102b3becb1eba25520a5c3efb41529b761b1db90563fc781256925830e0f8",
+          "SCREEN.BIN": "95ed5f6c1ff5557e5ccd75735358b0f28810fd5303e28e5f275064d8eef1dbec",
+          "server-session.jsonl": "0c54ef05a510d2f94db2265a7ee7b2a9d0ababf78b4027b9b61d60267f56c15a"
+        },
+        "scope": "Actual DOS and isolated SynthModem TelnetProxy against owned stock ENiGMA on loopback. Synthetic ATZ/ATD1 call; transparent immediate relay has no timed buffering or terminal replies. No SIP/audio, physical modem or full BBS compatibility claim."
+      },
+      "audit": {
+        "evidence_audited": true,
+        "workflow_passed": true,
+        "route": "editor",
+        "serial_payload_exact": true,
+        "display_payload_exact": true,
+        "authenticated": true,
+        "no_post_saved": true,
+        "semantic": {
+          "editor_entered": true,
+          "typed_draft_sent": true,
+          "home_moves_before_marker": true,
+          "insert_toggles_overtype": true
+        },
+        "observed_editor_keys": {
+          "home": [
+            "1b5b48"
+          ],
+          "end": [
+            "1b5b46"
+          ],
+          "insert": [
+            "1b5b327e"
+          ],
+          "delete": [
+            "1b5b337e"
+          ],
+          "page_up": [
+            "1b5b357e"
+          ],
+          "page_down": [
+            "1b5b367e"
+          ],
+          "tab": [
+            "09"
+          ],
+          "delete_line": [
+            "19"
+          ]
+        },
+        "auditor_sha256": "b83098fccd7e7c0638e4fbb4db33be2cd5ff188c83f6845334f7d3f0d7c223b5",
+        "codec_sha256": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f"
+      },
+      "observed_key_chunk_spans": {
+        "home": {
+          "wire_hex": "1b5b48",
+          "offset": 109,
+          "observer_chunks": [
+            {
+              "offset": 109,
+              "count": 3
+            }
+          ]
+        },
+        "end": {
+          "wire_hex": "1b5b46",
+          "offset": 113,
+          "observer_chunks": [
+            {
+              "offset": 113,
+              "count": 3
+            }
+          ]
+        },
+        "insert": {
+          "wire_hex": "1b5b327e",
+          "offset": 124,
+          "observer_chunks": [
+            {
+              "offset": 124,
+              "count": 4
+            }
+          ]
+        },
+        "delete": {
+          "wire_hex": "1b5b337e",
+          "offset": 120,
+          "observer_chunks": [
+            {
+              "offset": 120,
+              "count": 4
+            }
+          ]
+        },
+        "page_up": {
+          "wire_hex": "1b5b357e",
+          "offset": 131,
+          "observer_chunks": [
+            {
+              "offset": 131,
+              "count": 4
+            }
+          ]
+        },
+        "page_down": {
+          "wire_hex": "1b5b367e",
+          "offset": 135,
+          "observer_chunks": [
+            {
+              "offset": 135,
+              "count": 4
+            }
+          ]
+        }
+      },
+      "extra_capture_sha256": {
+        "node-serial-in.bin": "b4bb71131af54c2a31fbcd1dcb8f62ffa2be65451b7b9eceab1c43405712158d",
+        "node-serial-out.bin": "1baa8c795da42af0c00e4a52c6ad8c8bb5ea28e537e8f3b9f2d8677d411434d0",
+        "chunk-trace.json": "4437d337fee52c342cc63ce4d05a4f2212259a42ac9f835e16539f9a0b933d7e",
+        "dosbox.conf": "e98c242f635f9dfc9ac5b58cf7855200f7b08ed03c9f9e552719ce2136ddced1"
+      }
+    }
+  ],
+  "application_changed": false,
+  "candidate_changed": false,
+  "server_changed": false,
+  "limitations": [
+    "Authenticated menus and unsaved editor only; no logged-in BBS file transfer.",
+    "Measured escape keys arrived complete at the TCP observer; no arbitrary-fragmentation guarantee.",
+    "Prior immediate-bridge/fragmented stock ENiGMA failures remain open.",
+    "Synthetic Hayes call; no SIP/DSP/RTP, analog audio or Boca/SPA2102 hardware test."
+  ]
+}

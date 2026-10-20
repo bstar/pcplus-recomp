@@ -10,6 +10,8 @@ checks the actual upstream proxy and a maintained Telnet patch without starting
 SIP/audio or changing a service. It is separate from the existing Hayes test
 bridge and from physical modem acceptance. The [DOS composition](synthmodem-dos.md)
 adds actual DOS ZMODEM transfers through that candidate with an independent peer.
+[Authenticated stock ENiGMA sessions](synthmodem-enigma.md) add menu/editor
+checks through the candidate, with packet-boundary limits kept explicit.
 
 
 The [Infocom save-edge workflow](enigma-infocom-edges.md) covers actual DOS

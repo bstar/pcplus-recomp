@@ -1,5 +1,11 @@
 # Modern BBS compatibility checkpoint
 
+The [SynthModem candidate path](synthmodem-enigma.md) passes authenticated stock
+ENiGMA menus and an unsaved editor with34 checks and exact serial/server audits.
+It uses the actual candidate TelnetProxy and no timed batching. Measured escape
+keys arrived complete at its observer; this does not replace the immediate
+Python-bridge fragmentation failures below or establish hardware compatibility.
+
 The [composed candidate](enigma-combined.md) now passes seven actual DOS routes
 with keyboard, transfer ownership, save validation and both v86 changes installed
 together. Two reference peers additionally preserve an active upload through
