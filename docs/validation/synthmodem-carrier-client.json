@@ -1,0 +1,111 @@
+{
+  "passed": true,
+  "checks": {
+    "acknowledged_DOWN_flushes_real_PTY_input_and_socket_is_cloexec": {
+      "passed": true
+    },
+    "legacy_optout_preserves_PTY_input": {
+      "passed": true
+    },
+    "delayed_listener_startup": {
+      "passed": true
+    },
+    "missing_listener_timeout": {
+      "passed": true,
+      "elapsed_seconds": 5.0102248270995915
+    },
+    "overlong_path_rejected": {
+      "passed": true,
+      "elapsed_seconds": 0.0018836999079212546
+    },
+    "hello_wrong_version": {
+      "passed": true
+    },
+    "hello_wrong_type": {
+      "passed": true
+    },
+    "hello_short_packet": {
+      "passed": true
+    },
+    "hello_oversize_packet": {
+      "passed": true
+    },
+    "hello_peer_closed": {
+      "passed": true
+    },
+    "hello_no_ack_timeout": {
+      "passed": true
+    },
+    "down_wrong_version": {
+      "passed": true
+    },
+    "down_wrong_type": {
+      "passed": true
+    },
+    "down_short_packet": {
+      "passed": true
+    },
+    "down_oversize_packet": {
+      "passed": true
+    },
+    "down_peer_closed": {
+      "passed": true
+    },
+    "down_no_ack_timeout": {
+      "passed": true
+    },
+    "actual_daemon_startup_long_path": {
+      "passed": true
+    },
+    "actual_daemon_startup_missing_helper": {
+      "passed": true
+    },
+    "actual_daemon_startup_invalid_HELLO_ack": {
+      "passed": true
+    }
+  },
+  "compiler": "gcc (GCC) 15.3.0",
+  "command": [
+    "cc",
+    "-std=gnu11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-O2",
+    "/home/bstar/projects/pcplus-recomp/lab/bbs/patches/synthmodem-carrier/carrier_client.c",
+    "/home/bstar/projects/pcplus-recomp/lab/bbs/patches/synthmodem-carrier/client_probe.c",
+    "-o",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/carrier-client-03/client-probe"
+  ],
+  "executable_sha256": "edc53193ed175f9c89ea8aeb6556e38b0bdece8b2d5fcceb818b93949186da5c",
+  "frozen_inputs": {
+    "lab/bbs/patches/synthmodem-carrier/carrier_client.c": "32c8f4e3371d90ad76b0ec4771f01f4df93084e6f6450ae7239f6160515d6db4",
+    "lab/bbs/patches/synthmodem-carrier/carrier_client.h": "547156d7c68eee44cbdd1e3709db1a5ae907b8e22a85ea5ca38894927b428355",
+    "lab/bbs/patches/synthmodem-carrier/carrier_protocol.h": "2242d0963d602470fc547e1ebd06bf95a84c24863a689cdf5de4aaf8ab35057a",
+    "lab/bbs/patches/synthmodem-carrier/client_probe.c": "de8b499903b6b57fe3426c22f25bc575a543d6490d9b6c34ca4fc4642bb83b6e",
+    "lab/bbs/test_carrier_client.py": "e61b12d8c940062e46e056bce3a071f5c67ad0d156b84a5626eb39d5d858c725",
+    "nix/flake.nix": "7cda07d3ab9fb050ef3c959781e4cb93ab2fab72f915d6206d980458ab297aa0",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+    "tools/bbs-dev": "8b612f697c23466c10f48f31370afa469dce4331e5af6aca971f4fecf34388fa"
+  },
+  "scope": "Production carrier client, synthetic Unix seqpacket peer, real Linux PTY; optional actual daemon startup failure checks. No helper server, modem_stop execution, SIP/DSP or physical modem/ATA.",
+  "modem_executable": "/nix/store/1jy10ihw6z40y4v8wwd98c08b6plh873-pcplus-slmodemd-carrier-i386-b1752e4d0039e0cff72735924e03aa99922723a8/bin/slmodemd",
+  "modem_executable_sha256": "4db5c47a59080fd5543bf8e470a13a73c268285f6d951479de9127a260fe97b5",
+  "candidate_build": [
+    {
+      "drvPath": "/nix/store/rscpnvp0m9jb1c1q1wa2mikgwrnp2d7a-pcplus-slmodemd-carrier-i386-b1752e4d0039e0cff72735924e03aa99922723a8.drv",
+      "outputs": {
+        "out": "/nix/store/1jy10ihw6z40y4v8wwd98c08b6plh873-pcplus-slmodemd-carrier-i386-b1752e4d0039e0cff72735924e03aa99922723a8"
+      }
+    }
+  ],
+  "candidate_ELF32_i386_static": true,
+  "candidate_build_inputs": {
+    "nix/slmodem.nix": "a46d8e9c94dd60c53b581df84e10a9de3bec23ed5c0454cef00e87fa23acf40f",
+    "nix/slmodem-sources.json": "a7abbf8be4b7e57b756975830539a39e1ab21d0ad9d255105b94d617f4c857ac",
+    "nix/slmodem-carrier.nix": "9fc2083592631cce61966020499c63b101cad18d0be6bcf99280611155bdb5e9",
+    "tools/build-slmodem": "a50e6f75ec1966588bf141ed1754aaecc1add001a5ec0827c2b2f8caaf6006d7",
+    "tools/build-slmodem-carrier": "30c7219e4db8c644c22f022904b84b7fb2775e9d270036335dc9d5078e3ace9c",
+    "lab/bbs/patches/synthmodem-carrier/slmodem.patch": "c18745f50ac08fbb91caa8c422b01307f0a0b4bcc6bb41fba1ba72c5a0d601de"
+  }
+}

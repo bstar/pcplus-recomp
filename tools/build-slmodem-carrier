@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eu
+pcplus_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+cd "$pcplus_root"
+exec nix --extra-experimental-features 'nix-command flakes' build --impure --expr \
+  'let flake = builtins.getFlake (toString ./nix); in import ./nix/slmodem-carrier.nix { nixpkgs = flake.inputs.nixpkgs; system = builtins.currentSystem; }' "$@"

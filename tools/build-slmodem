@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+pcplus_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+pcplus_target=${1:-baseline}
+case "$pcplus_target" in baseline) ;; *) echo 'Use baseline' >&2; exit 64 ;; esac
+if [ "$#" -gt 0 ]; then shift; fi
+cd "$pcplus_root"
+exec nix --extra-experimental-features 'nix-command flakes' build --impure --expr \
+  "let flake = builtins.getFlake (toString ./nix); in (import ./nix/slmodem.nix { nixpkgs = flake.inputs.nixpkgs; system = builtins.currentSystem; }).$pcplus_target" "$@"

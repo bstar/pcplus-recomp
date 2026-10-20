@@ -1,0 +1,56 @@
+--- a/Makefile
++++ b/Makefile
+@@ -32,7 +32,7 @@
+ 	modem_param.o modem_debug.o homolog_data.o
+ dp-objs:= dp_sinus.o dp_dummy.o dp_v8_shim.o dp_vpcm_shim.o v8_open_stub.o
+ sysdep-objs:= sysdep_common.o
+-all-objs:= modem_cmdline.o $(modem-objs) $(dp-objs) dsplibs.o $(sysdep-objs) 
++all-objs:= carrier_client.o modem_cmdline.o $(modem-objs) $(dp-objs) dsplibs.o $(sysdep-objs) 
+ 
+ all: slmodemd modem_test
+ 
+--- a/modem.c
++++ b/modem.c
+@@ -52,6 +52,7 @@
+ 
+ #include <modem.h>
+ #include <modem_debug.h>
++#include "carrier_client.h"
+ 
+ 
+ #define XMIT_SIZE 4096
+@@ -1192,6 +1193,11 @@
+         int ret = 0;
+         MODEM_DBG("modem_stop..\n");
+ 
++	/* Stop the host data path before entering AT mode or writing results. */
++	if (m->started && pcplus_carrier_down(m->pty) < 0) {
++		MODEM_ERR("carrier status acknowledgement failed.\n");
++		_exit(1);
++	}
+ 	m->process = NULL;
+ 
+ 	if(m->started) {
+--- a/modem_main.c
++++ b/modem_main.c
+@@ -83,6 +83,7 @@
+ 
+ #include <modem.h>
+ #include <modem_debug.h>
++#include "carrier_client.h"
+ 
+ #define INFO(fmt,args...) fprintf(stderr, fmt , ##args );
+ #define ERR(fmt,args...) fprintf(stderr, "error: " fmt , ##args );
+@@ -1684,6 +1685,12 @@
+ 	int ret = 0;
+ 	struct passwd *pwd;
+ 
++	/* The helper listens before the PTY exists; complete the control
++	 * handshake before device setup, fork/exec or PTY creation. */
++	if (pcplus_carrier_start() < 0) {
++		perror("carrier status startup");
++		return 1;
++	}
+ 	modem_debug_init(basename(dev_name));
+ 
+ 	ret = device_setup(&device, dev_name);

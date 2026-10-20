@@ -130,6 +130,10 @@ six-byte event's cause. See [the VM receipt](validation/synthmodem-jitter-vm.jso
 The helper still has an in-band carrier/data ambiguity: literal NO CARRIER can
 be consumed as status, while a slowly fragmented real result can become data.
 Out-of-band carrier reporting remains required. The
+[rebuilt modem-wrapper checkpoint](../lab/bbs/synthmodem-slmodem.md) establishes
+a Nix-built baseline through actual V.22 DSP and tests the opt-in carrier-channel
+client; its helper receiver and real carrier-loss integration remain unfinished.
+The
 [combined lifecycle runtime](../lab/bbs/synthmodem-lifecycle.md) now verifies
 the pool-timer and REGISTER-ownership fixes through the actual VM/DSP path.
 DOS -08 passes 19 producer/19 byte/11 SIP checks, with one successful guest
