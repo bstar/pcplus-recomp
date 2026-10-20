@@ -1030,3 +1030,10 @@ test-aspect-external-compiler:
 	python3 standalone/check_aspect_external_compiler.py
 all: aspect-external
 test: test-aspect-external test-aspect-external-compiler
+
+# Component-only process foundation; no ASPECT runtime slots are published.
+.PHONY: native-process test-native-process
+native-process:
+	python3 standalone/build_native_process.py
+test-native-process: native-process
+	python3 standalone/test_native_process_dos.py

@@ -10,6 +10,12 @@ The next step is the application executor/controller below. A direct call to a
 generic spawn function would leave required display, keyboard and UART ownership
 unimplemented, and is not substituted for that controller.
 
+The [native process foundation](NATIVE_PROCESS.md) now supplies real recovered
+environment/tail/spawn/EXEC with maintained allocator/trap bindings:20 actual DOS
+cases/678 assertions, including real memory exhaustion and arena restoration.
+It is an explicit component target; application display/UART/shared-state
+ownership, namespace policies and these three runtime slots remain unfinished.
+
 ## Recorded grammar and behavior
 
 DOS and RUN take one atomic string and optionally NOCLEAR or WAIT. One comma

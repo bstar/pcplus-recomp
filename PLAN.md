@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+The [native process foundation](docs/NATIVE_PROCESS.md) now launches owned COM,
+EXE and batch children through1,393 byte-verified recovered bytes with real CRT
+bindings. All20 actual DOS cases/678 assertions pass, including real exhaustion,
+foreign-DS divide, vector restoration, raw0307 resident status, arena fallback,
+empty/current environments and six held streams. Three failed attempts remain
+retained; keeping near-heap capacity fixes the discovered post-EXEC fopen ENOMEM.
+This is component-only: native namespace policy, production shared-state binding,
+display/WAIT/NOCLEAR, UART ownership and ASPECT continuation/publication remain
+required. RUN/DOS/SHELL remain unsupported; no application gate closes.
+
 Current compatibility priority: the user's [owned ENiGMA board](lab/bbs/enigma-owned.md).
 The [October 19 live retest](docs/validation/enigma-live-20261019.json) confirms
 login/search/DIZ/NFO entry and one-line Down scrolling, but PageDown still
