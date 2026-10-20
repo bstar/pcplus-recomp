@@ -1,5 +1,20 @@
 # Complete DOS rebuild plan
 
+The user's primary acceptance criterion is compatibility. Prioritize the DOS
+client's complete ENiGMA and Synchronet workflows: login, menu navigation,
+full-screen editing, transfers, door interaction and return to the terminal.
+Keep stock-server results separate from results requiring owned server patches;
+passing a patched fixture does not establish compatibility with other boards.
+Prefer measured behavior fixes over exact historical behavior where they differ,
+while preserving original reconstruction and explicit regressions. Physical
+RS232/WiFi-modem checks remain required before claiming hardware compatibility.
+
+The [guarded break owner](docs/BREAK_OWNER.md) passes132 checks and four actual
+DOS child executions. Its43 declared source inputs reproduce both test binaries
+without originals; all31 earlier DOS products remain unchanged. This supports
+safe child return but is a separate diagnostic. PROGRAM/ASPECT integration and
+nonlocal transition recovery validation remain open.
+
 Native reconstruction resumes with the [PROGRAM break services](docs/PROGRAM_BREAK.md):
 117 exact bytes recovered through REA,48 source/original install/restore cases,
 eight interrupt frames and16 actual DOS cases. A fresh eight-input source tree

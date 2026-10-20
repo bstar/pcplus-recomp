@@ -1051,6 +1051,14 @@ test-program-break-source: program-break
 test-program-break-original: program-break
 	python3 standalone/check_program_break.py --original
 
+.PHONY: break-owner test-break-owner test-break-owner-source
+break-owner:
+	python3 standalone/build_break_owner.py
+test-break-owner: break-owner
+	python3 standalone/test_break_owner_dos.py
+test-break-owner-source: break-owner
+	python3 standalone/check_break_owner_source.py
+
 native-display:
 	python3 standalone/build_native_display.py
 test-native-display: native-display
