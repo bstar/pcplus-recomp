@@ -1,0 +1,76 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/program_display/snapshot.asm",
+      "start": 27582,
+      "end": 27632,
+      "file_offset": 32190,
+      "bytes": 50,
+      "sha256": "164dc8ffafd40e92ac35748da7c406bab2ca02d88b1fafc0d9b55f760193ebe5",
+      "rea_evidence_id": "ev_ac7d90ed8ae0a2dc8b649c76f874230e491d45b8c80e941dcbe4bfefc936258e"
+    },
+    {
+      "file": "reconstruction/program_display/restore.asm",
+      "start": 30040,
+      "end": 30089,
+      "file_offset": 34648,
+      "bytes": 49,
+      "sha256": "b09b806dfc742a30e693288cb672da6825b25b1c9cdf49f9d5ed6f94bb66b2cf",
+      "rea_evidence_id": "ev_4959ff5d180ec0c84656738e2f8c77a1d6c7241c23f3318135deb9ba0f43ab11"
+    },
+    {
+      "file": "reconstruction/program_display/geometry.asm",
+      "start": 27930,
+      "end": 28106,
+      "file_offset": 32538,
+      "bytes": 176,
+      "sha256": "37019f34750db6a11e9df4ee69bc9ec80e3ba8e674ea4953b85db52f1ec36d2b",
+      "rea_evidence_id": "ev_f023afd9e2ef7182dbaf48f2f4693299a3627322109a691056e99c4ce4e7eb6c"
+    },
+    {
+      "file": "reconstruction/program_display/snow_enable.asm",
+      "start": 30638,
+      "end": 30653,
+      "file_offset": 35246,
+      "bytes": 15,
+      "sha256": "aeb0332b6f43a6fbd8a691b197b2036c863ea3c5832b0602ac5ae8e44024288d",
+      "rea_evidence_id": "ev_d73c4e7b64c9b374609b0bf3b3cf6cd9f0178557d6eade8a6c43ca58089980cb"
+    },
+    {
+      "file": "reconstruction/program_display/snow_disable.asm",
+      "start": 30654,
+      "end": 30674,
+      "file_offset": 35262,
+      "bytes": 20,
+      "sha256": "2cc6e3631df4700f866b38ea1f726e830474355ea81536da84aca5593cd1ab0f",
+      "rea_evidence_id": "ev_a9dc13ecc72ed1929018e5d3d25664daae72cffe649a28d8e9f200b7d9f530fa"
+    }
+  ],
+  "state": {
+    "0x7a66": "display_legacy",
+    "0x7a72": "display_columns",
+    "0x7a74": "display_rows",
+    "0x7a76": "display_mode",
+    "0x7a78": "display_segment",
+    "0x7a7a": "display_stride",
+    "0x7a7c": "display_bytes",
+    "0x7a7e": "display_last_column",
+    "0x7a80": "display_last_row",
+    "0x7a82": "display_last_line",
+    "0x7a85": "display_cursor_row",
+    "0x7a86": "display_mono",
+    "0x7a88": "display_cursor_start",
+    "0x7a8a": "display_cursor_end",
+    "0x7a8c": "display_cells",
+    "0x7a8e": "display_status_port",
+    "0x7a90": "display_crt",
+    "0x7a92": "display_snow"
+  },
+  "limitations": [
+    "Names are analyst annotations. Geometry preserves native byte writes and16-bit arithmetic.",
+    "Native CGA snow wait is unbounded; live hardware timing is not established.",
+    "Heap, geometry admission and owned snapshot lifetime are maintained platform bindings.",
+    "Full PROGRAM UI/WAIT/cursor/font/UART controller remains unintegrated."
+  ]
+}

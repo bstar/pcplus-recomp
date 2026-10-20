@@ -1038,3 +1038,10 @@ native-process:
 test-native-process: native-process
 	python3 standalone/test_native_process_dos.py
 	python3 standalone/test_native_process_dos.py --namespace
+
+.PHONY: native-display test-native-display
+native-display:
+	python3 standalone/build_native_display.py
+test-native-display: native-display
+	python3 standalone/check_native_display.py
+	python3 standalone/test_native_display_dos.py

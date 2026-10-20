@@ -22,6 +22,12 @@ alongside the separate678-assertion core regression. Nested allocations and
 far-backed arena restoration are real. Production binding of those policies
 and the remaining controller ownership requirements below are still open.
 
+The [native display dependencies](NATIVE_DISPLAY.md) now supply310 exact bytes
+for geometry, snapshot, restore/free and CGA blank/unblank. All963 CPU/original
+comparisons and13,045 actual DOS assertions pass, including a real graphics-mode
+child and matching-mode restoration. This does not yet supply the surrounding
+mode/font/cursor/WAIT/NOCLEAR or UART controller.
+
 ## Recorded grammar and behavior
 
 DOS and RUN take one atomic string and optionally NOCLEAR or WAIT. One comma

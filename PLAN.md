@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+The [native display dependencies](docs/NATIVE_DISPLAY.md) now bind310 exact
+bytes to963 CPU/original comparisons and13,045 actual DOS assertions. Geometry,
+far-backed snapshot and native restore/free work in40/80-column color, monochrome
+and VGA50-row views. A real graphics-mode child proves mismatch rejection and
+matching-mode snapshot restoration. Original CGA retrace waiting is characterized,
+not claimed hardware-safe. Production mode/font/cursor/WAIT/NOCLEAR and serial
+handoff remain required; the full PROGRAM controller and RUN/DOS/SHELL slots
+remain unpublished.
+
 The [native namespace extension](docs/NATIVE_NAMESPACE.md) now binds2,440 exact
 bytes to55 DOS cases/2,053 assertions plus a separate678-assertion core regression.
 It verifies current-directory/PATH and COM/EXE/BAT order, qualified names,

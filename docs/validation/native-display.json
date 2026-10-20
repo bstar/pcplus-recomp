@@ -1,0 +1,131 @@
+{
+  "passed": true,
+  "component_only": true,
+  "whole_application_gates_closed": [],
+  "build_original_inputs": [],
+  "runtime_external_commands_enabled": false,
+  "native_display_bytes": 310,
+  "units": [
+    {
+      "file": "reconstruction/program_display/snapshot.asm",
+      "start": 27582,
+      "end": 27632,
+      "file_offset": 32190,
+      "bytes": 50,
+      "sha256": "164dc8ffafd40e92ac35748da7c406bab2ca02d88b1fafc0d9b55f760193ebe5",
+      "rea_evidence_id": "ev_ac7d90ed8ae0a2dc8b649c76f874230e491d45b8c80e941dcbe4bfefc936258e"
+    },
+    {
+      "file": "reconstruction/program_display/restore.asm",
+      "start": 30040,
+      "end": 30089,
+      "file_offset": 34648,
+      "bytes": 49,
+      "sha256": "b09b806dfc742a30e693288cb672da6825b25b1c9cdf49f9d5ed6f94bb66b2cf",
+      "rea_evidence_id": "ev_4959ff5d180ec0c84656738e2f8c77a1d6c7241c23f3318135deb9ba0f43ab11"
+    },
+    {
+      "file": "reconstruction/program_display/geometry.asm",
+      "start": 27930,
+      "end": 28106,
+      "file_offset": 32538,
+      "bytes": 176,
+      "sha256": "37019f34750db6a11e9df4ee69bc9ec80e3ba8e674ea4953b85db52f1ec36d2b",
+      "rea_evidence_id": "ev_f023afd9e2ef7182dbaf48f2f4693299a3627322109a691056e99c4ce4e7eb6c"
+    },
+    {
+      "file": "reconstruction/program_display/snow_enable.asm",
+      "start": 30638,
+      "end": 30653,
+      "file_offset": 35246,
+      "bytes": 15,
+      "sha256": "aeb0332b6f43a6fbd8a691b197b2036c863ea3c5832b0602ac5ae8e44024288d",
+      "rea_evidence_id": "ev_d73c4e7b64c9b374609b0bf3b3cf6cd9f0178557d6eade8a6c43ca58089980cb"
+    },
+    {
+      "file": "reconstruction/program_display/snow_disable.asm",
+      "start": 30654,
+      "end": 30674,
+      "file_offset": 35262,
+      "bytes": 20,
+      "sha256": "2cc6e3631df4700f866b38ea1f726e830474355ea81536da84aca5593cd1ab0f",
+      "rea_evidence_id": "ev_a9dc13ecc72ed1929018e5d3d25664daae72cffe649a28d8e9f200b7d9f530fa"
+    }
+  ],
+  "sources": {
+    "standalone/build_native_display.py": "3203522c4f285beee213506de76a11dcfa8c39b16ab1350a931e3ccf1e434dc9",
+    "reconstruction/program_display/provenance.json": "6b3a2f47120c20ba43cac11f074da5daf7ca85f388a1ba87739be0f3fe41cb27",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/program_display/snapshot.asm": "b14553105adce657970031110614ad769cd5208ec1580660cb71cffc69183ce5",
+    "reconstruction/program_display/restore.asm": "0afe70fb362c90e08977a9daf1b9f73b533398b1fb837cf64067efd1ae1e7f3e",
+    "reconstruction/program_display/geometry.asm": "c6c57bcfc5779d770ee85ba5bcd1414455ef35891f0703b8a6564e70dd199f85",
+    "reconstruction/program_display/snow_enable.asm": "acfc80bf0dac30c7733784fafe7bb25ae9f50358a8539e149604fc7a75a57ab9",
+    "reconstruction/program_display/snow_disable.asm": "2ca6e6e84047f235d2c994a8bfb319f664b80442cb4b36ec7a61f76cb7612990",
+    "src/process/native_display_state.asm": "26ea6dcf8f0d13972b5eb14a234581199603087bf17bdc0de19975d5919c7353",
+    "src/process/native_display.c": "95ed06fd3e6871d48016577adb19dac7b9bf951b780a9cb56985302d7a98fa39",
+    "src/process/native_process.c": "6549e7115410a43a7cb1bca8c92b0494130809a62bbe0e8003c53b6fdb88d3ba",
+    "standalone/native_display_diagnostic.c": "5c3f3d9d08e89a35dfbd32b92b22521e00d28975ce80dcd0197f3967629c5264",
+    "standalone/native_display_child.asm": "bd7096bb9f5b90b0dd0f7297e813d0d5877085acd0a3470624c9302fb5f87124",
+    "src/process/native_display.h": "3ae3ba9e3ace78524bbf0a3e4bd3b1a4c44888483583d9ed1320d7e6a97f0f18"
+  },
+  "process_manifest_sha256": "40075d73180d3b0a40a70d291657d4bef7b197e2984ce13e8ecd62b803c632e5",
+  "binary_sha256": "0e6dc8e4e852e0f940b810a7aefbae2378c3c18985ddcf2dea1c01f5544dd6cf",
+  "DOS_assertions": 13045,
+  "CPU_cases": 963,
+  "analyst_original_comparisons": 963,
+  "checks": [
+    "Exact40x25/color80x25/mono80x25 and VGA80x50 cell restoration through real far heap.",
+    "Owned DOS graphics child exit37, geometry mismatch retains snapshot, matching-mode retry restores and frees.",
+    "Allocation failure leaves video untouched; BUSY/repeated restore/discard do not double-free.",
+    "Graphics/nonzero-page/oversized BDA geometry reject before snapshot allocation.",
+    "Raw geometry byte stores, row29 clamp, sixteen-bit overflow and native even-byte copy truncation.",
+    "Declared CGA ports prove blank/copy/unblank ordering and characterize an unbounded no-retrace wait."
+  ],
+  "limitations": [
+    "Names are analyst annotations. Geometry preserves native byte writes and16-bit arithmetic.",
+    "Native CGA snow wait is unbounded; live hardware timing is not established.",
+    "Heap, geometry admission and owned snapshot lifetime are maintained platform bindings.",
+    "Full PROGRAM UI/WAIT/cursor/font/UART controller remains unintegrated.",
+    "No BIOS mode/font/cursor restoration, WAIT/NOCLEAR lifecycle, production state or UART owner is enabled by this component."
+  ],
+  "evidence": {
+    "build/native-display/runs/run-798b969aeace4f46896ee8acdc99e543/result.json": "8ca0837bed11d40a49eca1ac16d62e6ad28c4670382dc71baa8920c56414e6a4",
+    "build/native-display/runs/run-798b969aeace4f46896ee8acdc99e543/manifest.json": "60eabe866f1a029ae7a9a48c9b90618da5464f2ad5138c6b0a7a75656570ae1d",
+    "build/native-display/runs/run-798b969aeace4f46896ee8acdc99e543/CHECKS.TXT": "92853c40b95b451a9579ea580672d8ebc0168c4aba94b956d4f3080b72181090",
+    "build/native-display/cpu-original.json": "f8c1ef4f6fa7e6033e1164b6141a36e86ef9e057008fdeffa078359a30685e9f"
+  },
+  "recorder_sha256": "a4323e67b3e1602c3c96e4e7f0f518eb7f86622cc140f4194d0163d9326dd7f6",
+  "DOS_checker_sha256": "2befd914d5ba486141f5118c56d56c087755211f1f8e0773d1696e6d99c46a59",
+  "CPU_checker_sha256": "97ee80beadb52719133ea8c82ac769b4a70280a07a467975c178c6fad8b983ed",
+  "REA_mapping_evidence": [
+    {
+      "address": "0x16bbe",
+      "file_offset": 32190,
+      "evidence_id": "ev_8a1f54c3a4ca2a85f9a6e359d5970b8fa6e43b6341940e4e0825c56568f141f4"
+    },
+    {
+      "address": "0x17558",
+      "file_offset": 34648,
+      "evidence_id": "ev_94170a2540eb07a6f5e3475e8cb4d1900f9f0322cad27cd08dfcea287da2530f"
+    },
+    {
+      "address": "0x16d1a",
+      "file_offset": 32538,
+      "evidence_id": "ev_bf2a9ba6d733919ade796c50ad5d806e479e93db6f4d1d12063a040d53acd134"
+    },
+    {
+      "address": "0x177ae",
+      "file_offset": 35246,
+      "evidence_id": "ev_5d6ee1fbf818ffb42cfa0522d5da1aa2ef69165c65ce5428fb744881c540ba7a"
+    },
+    {
+      "address": "0x177be",
+      "file_offset": 35262,
+      "evidence_id": "ev_f94cb33d5aa4d2c94c7af74cb13ba74776adcc578308d2bcfc8d2d96774dea09"
+    }
+  ],
+  "retained_REA_bundle": {
+    "path": "analysis/program-display-02.rea.json",
+    "sha256": "3979386bb09f246b13b8b48e4f8aec82e4bf5f03f391b8f6c91e4ccc83d99732"
+  }
+}
