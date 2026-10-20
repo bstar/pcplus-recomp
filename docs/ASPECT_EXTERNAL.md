@@ -2,13 +2,21 @@
 
 The maintained host and DOS compilers now emit native DOS, RUN and SHELL records.
 Their native frontends assemble and pass CPU and actual DOS ABI checks. **General
-external execution is not enabled in the interpreter.** These three slots still
+external execution is not enabled in the normal interpreter.** These three slots still
 stop with explicit unsupported error3. The supported runtime count remains105
 of215; no application gate closes.
 
+The [experimental full-VM binding](ASPECT_PROCESS.md) now executes all three
+through actual ASPECT streams, ASX continuation and the composed PROGRAM owner.
+It passes 56 COM1/COM2 N/S/H/B DOS cases/1,712 assertions, with exact command/flow
+audits, real command-shell entry/exit, nested DOS source compilation and recovery
+after script errors. An 8,365-byte fallback actually overlaps and restores a live
+local frame. The separately built 108-slot variant rejects attached renderers;
+normal publication still requires the real parent and selected-resource leases.
+
 The [composed PROGRAM component](NATIVE_PROGRAM.md) now joins recovered process
 and display services with real UART ownership in eight actual DOS cases.
-The next step is production VM/renderer/parent-lease integration below. A direct
+The next step is production renderer/parent-lease integration below. A direct
 call to a generic spawn function would leave these owners unimplemented and is
 not substituted for that controller.
 
@@ -144,6 +152,10 @@ not reference the new handlers yet.
    directory/translation/render leases and environment persistence across actual
    execution. Exercise nested source compilation after return and ordinary
    parent/BBS input, plus Escape/timeout/error unwinding at the relevant boundaries.
+   The experimental raw/local variant now supplies actual numbered-stream,
+   buffered-ASX, local-frame, environment/settings, enumeration and subsequent
+   DOS compiler evidence. This does not complete selected ASIOv4 resources,
+   attached rendering or nonlocal faults during an owned external operation.
 6. Publish all three runtime handlers only after these ownership paths have real
    implementations and application evidence. Then repeat the whole runtime,
    source compiler/EXECUTE, terminal handoff and intended BBS workflows. Partial

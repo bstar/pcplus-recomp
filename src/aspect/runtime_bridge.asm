@@ -9,6 +9,14 @@ extern aspect_enumeration_attributes,aspect_enumeration_date,aspect_enumeration_
 extern aspect_enumeration_filename,aspect_enumeration_basename,aspect_enumeration_time
 BITS 16
 CPU 8086
+%assign external_commands_enabled 0
+%ifdef ASPECT_EXTERNAL_COMMANDS
+%ifndef ASPECT_EXTERNAL_PROCESS
+ %error External opcodes require guarded process ownership
+%endif
+extern aspect_external_dos,aspect_external_run,aspect_external_shell
+%assign external_commands_enabled 1
+%endif
 SEGMENT _TEXT public class=CODE use16
 extern aspect_dispatch,aspect_abort,session_setjmp
 extern aspect_path_chdir,aspect_path_mkdir,aspect_path_rmdir,aspect_path_delete
@@ -1072,6 +1080,12 @@ aspect_dispatch_handlers:
  dw aspect_expr_branch_false_alias
 %elif op=0xbf
  dw runtime_serial_transmit
+%elif op=0x28 && external_commands_enabled
+ dw aspect_external_dos
+%elif op=0x9b && external_commands_enabled
+ dw aspect_external_run
+%elif op=0xa3 && external_commands_enabled
+ dw aspect_external_shell
 %elif op=0xc9
  dw runtime_receive_comgetc
 %elif op=0xca

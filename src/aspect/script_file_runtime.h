@@ -30,4 +30,10 @@ unsigned runtime_script_file_read(void *,unsigned,unsigned,aspect_script_file_pr
 unsigned runtime_script_file_write(const void *,unsigned,unsigned,aspect_script_file_prefix *);
 int runtime_script_file_seek(aspect_script_file_prefix *,long,int);
 long runtime_script_file_tell(aspect_script_file_prefix *);
+#if defined(ASPECT_EXTERNAL_PROCESS)
+/* Flush pending output, retain real CRT owners/prefixes/positions and list
+ * private descriptors for the DOS inheritance bracket. No stream is closed. */
+unsigned runtime_script_files_external_begin(unsigned *,unsigned *);
+unsigned runtime_script_files_external_end(void);
+#endif
 #endif

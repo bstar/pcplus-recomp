@@ -48,6 +48,9 @@ _native_child_divide:
  int 0x21
 GROUP DGROUP _DATA
 SEGMENT _DATA public class=DATA use16
+%ifdef NATIVE_PROCESS_SHARED_PATH
+extern program_errno,program_dos_error,program_dos_major
+%else
 global program_errno,program_dos_error,program_dos_major
 global _native_crt_error,_native_dos_error,_native_dos_major
 program_errno:
@@ -58,6 +61,7 @@ program_dos_error:
 _native_dos_error: dw 0
 program_dos_major:
 _native_dos_major: db 3
+%endif
 global program_pair_low,program_pair_high,program_exec_active
 global _native_pair_low,_native_pair_high,_native_exec_active
 program_pair_low:

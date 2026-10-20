@@ -1063,3 +1063,14 @@ test-native-program: native-program
 	python3 standalone/test_native_program_dos.py
 test-native-program-source: native-program
 	python3 standalone/check_native_program_source.py
+
+# Experimental VM binding only; normal ASPECT remains105 slots.
+.PHONY: aspect-process test-aspect-process test-aspect-process-source
+aspect-process:
+	python3 standalone/build_aspect_process.py
+test-aspect-process:
+	python3 standalone/test_aspect_process_dos.py
+	python3 standalone/check_process_handles.py
+	python3 standalone/check_aspect_process_policy.py
+test-aspect-process-source:
+	python3 standalone/check_aspect_process_source.py

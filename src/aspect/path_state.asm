@@ -11,8 +11,18 @@ global program_errno,program_dos_error,program_dos_major,program_error_map
 global _runtime_path_errno,_runtime_path_dos_error
 program_errno:
 _runtime_path_errno: dw 0
+%ifdef ASPECT_EXTERNAL_PROCESS
+global _native_crt_error,_native_dos_error,_native_dos_major
+_native_crt_error equ program_errno
+%endif
 program_dos_error:
+%ifdef ASPECT_EXTERNAL_PROCESS
+_runtime_path_dos_error:
+_native_dos_error: dw 0
+_native_dos_major:
+%else
 _runtime_path_dos_error: db 0
+%endif
 program_dos_major: db 3
 program_error_map:
 %endif

@@ -8,7 +8,15 @@ from build_aspect_runtime import ROOT, ASM, sha
 OUT = ROOT / 'build/aspect-runner'
 
 
-def main():
+def main(extension=None):
+    # Only the separately named experimental process builder supplies this.
+    # Default production inputs/flags and opcode coverage remain unchanged.
+    output=extension['output'] if extension else OUT
+    feature_flags=['-DASPECT_EXTERNAL_PROCESS','-DASPECT_EXTERNAL_COMMANDS'] if extension else []
+    main_source=extension.get('driver',ROOT/'src/aspect/runner.c') if extension else ROOT/'src/aspect/runner.c'
+    diagnostic_driver=main_source!=ROOT/'src/aspect/runner.c'
+    if extension and diagnostic_driver:feature_flags.append('-DASPECT_EXTERNAL_DIAGNOSTIC')
+    output.mkdir(parents=True,exist_ok=True)
     OUT.mkdir(parents=True, exist_ok=True)
     include = '-I' + str(ROOT / 'reconstruction/uart') + '/'
     objects = []
@@ -19,30 +27,44 @@ def main():
                ROOT/'src/config/resource_path.c',ROOT/'src/config/resource_path.h',
                ROOT/'src/keyboard/api.h',
                ROOT/'reconstruction/directory_accounting/patch.asm']
+    compiled_sources=[p for p in sources if p.suffix=='.c']
     serial_asm=[('uart','reconstruction/uart/core.asm','UART_OMF'),('uart_api','src/uart/api.asm',None),
                 ('txpace','src/aspect/txpace.asm',None),
                 ('serial_backend','src/aspect/serial_backend.asm',None),
                 ('resident_client','src/aspect/resident_render_client.asm',None)]
+    if extension:
+        sources += extension['sources']
+        compiled_sources=[p for p in compiled_sources if p!=ROOT/'src/aspect/runner.c']+[main_source,*extension['c_sources']]
+        serial_asm += [('process_serial','src/aspect/process_serial.asm',None),
+                       ('external_commands','src/aspect/external_commands.asm',None)]
     for name, relative, define in ASM+serial_asm:
-        source, obj = ROOT / relative, OUT / (name + '.obj')
+        source, obj = ROOT / relative, output / (name + '.obj')
         sources.append(source)
-        subprocess.run(['nasm', '-f', 'obj', include] + (['-D' + define] if define else []) +
+        subprocess.run(['nasm', '-f', 'obj', include] + feature_flags + (['-D' + define] if define else []) +
                        (['-DASPECT_RUNTIME_SERIAL'] if name in ('bridge','dispatch') else []) +
                        [str(source), '-o', str(obj)], check=True)
         objects.append(str(obj))
+    if extension:objects += extension['objects']
     subprocess.run(['wcl', '-q', '-bt=dos', '-0', '-ms', '-ecc', '-s', '-w4', '-we', '-k8192','-dASPECT_RUNTIME_SERIAL',
-                    '-i=' + str(ROOT / 'src/aspect'), '-fm=ASPECT.map', '-fe=ASPECT.EXE',
-                    str(ROOT / 'src/aspect/runner.c'), str(ROOT / 'src/aspect/runtime.c'),str(ROOT/'src/aspect/environment_runtime.c'),str(ROOT/'src/aspect/script_file_runtime.c'),str(ROOT/'src/aspect/file_info_runtime.c'),str(ROOT/'src/aspect/file_times_runtime.c'),str(ROOT/'src/aspect/enumeration_runtime.c'),
+                    *feature_flags, *(['-DNATIVE_PROCESS_DIAGNOSTIC'] if extension else []),
+                    '-i=' + str(ROOT / 'src/aspect'), '-i='+str(ROOT/'src/process'), '-fm=ASPECT.map', '-fe=ASPECT.EXE',
+                    str(main_source), str(ROOT / 'src/aspect/runtime.c'),str(ROOT/'src/aspect/environment_runtime.c'),str(ROOT/'src/aspect/script_file_runtime.c'),str(ROOT/'src/aspect/file_info_runtime.c'),str(ROOT/'src/aspect/file_times_runtime.c'),str(ROOT/'src/aspect/enumeration_runtime.c'),
                     str(ROOT / 'src/aspect/file_io.c'),str(ROOT/'src/aspect/source_compile.c'),str(ROOT/'src/aspect/script_path.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),
-                    str(ROOT/'src/aspect/serial.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/resident_render.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),str(ROOT/'src/aspect/txpace.c'),str(ROOT/'src/config/resource_path.c'), *objects], cwd=OUT, check=True)
-    result = dict(binary_sha256=sha(OUT / 'ASPECT.EXE'), original_inputs=[],
+                    str(ROOT/'src/aspect/serial.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/resident_render.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),str(ROOT/'src/aspect/txpace.c'),str(ROOT/'src/config/resource_path.c'),
+                    *([str(p) for p in extension['c_sources']] if extension else []),*objects], cwd=output, check=True)
+    result = dict(binary_sha256=sha(output / 'ASPECT.EXE'), original_inputs=[],
                   objects={p.name:sha(p) for p in [*[Path(p) for p in objects],
-                      *[OUT/(p.stem+'.o') for p in sources if p.suffix=='.c']]},
+                      *[output/(p.stem+'.o') for p in compiled_sources]]},
                   sources={str(p.relative_to(ROOT)): sha(p) for p in sources},
                   platform='8086 DOS, small model, near DS=SS, cdecl, 8192-byte stack',
                   diagnostic_build=False,
                   scope='DOS CLI for trusted ASX and maintained ASP compilation; partial105-slot runtime with native WHEN/CWHEN and thirteen SET/FETCH families and owned six-slot file streams. Explicit ASP or missing-ASX fallback invokes sibling ASPCOMP with scoped compiler faults and owned UART flow. EXECUTE retains session state and publishes current ASX labels. Capability6 retains inherited BIOS selection and adds shared parent profile key output through the child UART, with checked duplex snapshots and native-derived echo. Local UI/macros, half-duplex reverse-tab/insert/delete, full language/recorder, physical timing and arbitrary-bytecode safety remain unfinished.')
-    (OUT / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')
+    if extension:
+        result.update(experimental_external_commands=True,production_dispatch_changed=False,
+            diagnostic_build=diagnostic_driver,
+            main_source=str(main_source.relative_to(ROOT)),
+            scope='Experimental108-slot raw/local ASPECT with composed PROGRAM, private DOS handles and real script/ASX ownership checks. Attached parent rendering rejects before execution; full application publication remains open.')
+    (output / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')
     print('ASPECT.EXE', result['binary_sha256'])
 
 

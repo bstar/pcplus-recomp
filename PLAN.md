@@ -1,5 +1,18 @@
 # Complete DOS rebuild plan
 
+The [experimental ASPECT process binding](docs/ASPECT_PROCESS.md) now runs the
+native DOS/RUN/SHELL frontends in the actual VM. Its 56 COM1/COM2 N/S/H/B DOS
+cases pass 1,712 assertions, exact command/flow audits and real inherited-handle
+counterexamples. Six numbered streams, the buffered ASX owner, local frames,
+settings/environment, enumeration and nested DOS source compilation survive.
+An 8,365-byte fallback overlaps and restores the actual live frame. Script
+divide/budget failures recover into another invocation in the same process.
+Nineteen linked JFT cases and 14 modeled error-policy cases pass; 23 DOS products
+reproduce from a fresh source tree. Normal ASPECT remains byte-identical at 105 slots; the 108-slot variant is
+separate and rejects attached renderers. Actual parent/selected leases, original
+macro/mouse/window/error-notice services, nonlocal parent-fault cleanup, broader
+views, live BBS acceptance and physical modem/hardware work remain open.
+
 The [composed PROGRAM controller](docs/NATIVE_PROGRAM.md) now joins recovered
 process/display services and the gated UART owner, adding 439 exact native UI
 bytes. Eight COM1/COM2 N/S/H/B DOS cases pass 381,336 assertions across real child

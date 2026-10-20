@@ -16,6 +16,11 @@
 #include <io.h>
 #include <bios.h>
 #include <string.h>
+#if defined(ASPECT_EXTERNAL_PROCESS)
+#include "../process/native_program.h"
+#include "../process/native_display.h"
+#include "../process/process_handles.h"
+#endif
 #if defined(ASPECT_RUNTIME_SERIAL)
 #include "../config/resource_path.h"
 #include "resident_render.h"
@@ -36,12 +41,30 @@ unsigned runtime_console_output_size;
 #endif
 static unsigned active,end_wait_started;
 static unsigned compiler_scope;
-extern void runtime_end_wait_native(void);
 extern void __interrupt __far runtime_divide_interrupt(void);
+#if defined(ASPECT_EXTERNAL_PROCESS)
+static unsigned external_scope;
+unsigned runtime_external_scope(unsigned entering)
+{
+ if(!active||entering>1||compiler_scope)return ASPECT_RUN_STATE;
+ if(entering){
+  if(external_scope||runtime_error||_dos_getvect(0)!=runtime_divide_interrupt)return ASPECT_RUN_STATE;
+  external_scope=1;
+ }else{
+  if(!external_scope)return ASPECT_RUN_STATE;external_scope=0;
+  if(_dos_getvect(0)!=runtime_divide_interrupt)return ASPECT_RUN_STATE;
+ }
+ return 0;
+}
+#endif
+extern void runtime_end_wait_native(void);
 extern void __interrupt __far runtime_compiler_interrupt(void);
 unsigned runtime_compiler_scope(unsigned entering)
 {
  if(!active||entering>1)return ASPECT_RUN_STATE;
+#if defined(ASPECT_EXTERNAL_PROCESS)
+ if(external_scope)return ASPECT_RUN_STATE;
+#endif
  if(entering){
   if(compiler_scope||_dos_getvect(0)!=runtime_divide_interrupt)return ASPECT_RUN_STATE;
   compiler_scope=1;_dos_setvect(0,runtime_compiler_interrupt);
@@ -287,8 +310,14 @@ unsigned aspect_runtime_run(const char *path,unsigned step_limit)
 {
     void (__interrupt __far *previous_divide)(void);
     if(active || runtime_live || runtime_find_live || runtime_script_file_live || runtime_file_info_live || runtime_file_times_live || runtime_file.handle || !path || !*path || !step_limit)return ASPECT_RUN_STATE;
+#if defined(ASPECT_EXTERNAL_PROCESS)
+    if(external_scope||process_handles_active||native_process_busy||native_program_busy||native_program_waiting||native_display_owned)return ASPECT_RUN_STATE;
+#endif
     active=1;runtime_error=runtime_steps=runtime_live=runtime_peak_live=0;
     compiler_scope=0;
+#if defined(ASPECT_EXTERNAL_PROCESS)
+    external_scope=0;
+#endif
 #if defined(ASPECT_RUNTIME_SERIAL)
     runtime_compiler_calls=runtime_compiler_exit=runtime_compiler_dos_error=0;
 #endif
