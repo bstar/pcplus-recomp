@@ -68,6 +68,7 @@ exit
         assertions=bool(match) and match[1]==str(port) and match[2]==flow and int(match[4])==0,
         exact_wire=bytes(wire)==expected,peer_stages=sent==['initial','after','finished'],peer_no_error=not errors,
         actual_child=(folder/'CHILD.OUT').is_file() and (folder/'CHILD.OUT').read_bytes()==f'COM{port}S'.encode(),
+        child_unchanged=sha(folder/f'OWN{port}.COM')==manifest['children'][f'OWN{port}.COM'],
         executable_unchanged=sha(folder/'PROGRAM.EXE')==manifest['binary_sha256'])
     report=dict(passed=all(checks.values()),checks=checks,assertions=int(match[3]) if match else 0,
         port=port,flow=flow,timed_out=timeout,elapsed=round(time.monotonic()-started,3),
@@ -80,11 +81,17 @@ exit
 
 
 def main():
+    global OUT
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--label',default='run-'+uuid.uuid4().hex)
     parser.add_argument('--port',type=int,choices=(1,2),action='append');parser.add_argument('--flow',choices=list('NSHB'),action='append')
+    parser.add_argument('--break-owner',action='store_true')
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
+    checker_hash=sha(Path(__file__))
+    if args.break_owner:OUT=ROOT/'build/native-program-break'
     folder=OUT/'runs'/args.label;folder.mkdir(parents=True,exist_ok=False)
     manifest=json.loads((OUT/'manifest.json').read_text());shutil.copyfile(OUT/'manifest.json',folder/'manifest.json')
+    assert bool(manifest.get('break_owner'))==args.break_owner
+    for name,digest in manifest['children'].items():assert sha(OUT/name)==digest,name
     for p,h in manifest['sources'].items():
         assert sha(ROOT/p)==h,p
         dest=folder/'sources'/p;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/p,dest)
@@ -94,6 +101,8 @@ def main():
         if not reports[-1]['passed']:break
     result=dict(passed=all(r['passed'] for r in reports),cases=reports,binary_sha256=manifest['binary_sha256'],
         manifest_sha256=sha(folder/'manifest.json'),checker_sha256=sha(Path(__file__)),scope=manifest['scope'])
+    for p,h in manifest['sources'].items():assert sha(ROOT/p)==h,p
+    assert sha(Path(__file__))==checker_hash,'Checker changed during execution'
     (folder/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(folder)
     return 0 if result['passed'] else 1
 

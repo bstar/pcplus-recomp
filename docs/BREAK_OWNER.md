@@ -3,7 +3,8 @@
 The source-built owner wraps the recovered INT1B/INT23 services with an explicit
 parent/child lifetime. This addresses reliable child return, a prerequisite for
 using external programs from the terminal. It is currently a separate diagnostic;
-normal PROGRAM and ASPECT do not yet publish this owner.
+normal PROGRAM and ASPECT do not yet publish this owner. A separately selected
+composed PROGRAM build now binds it around real child execution.
 
 `native_break_open(0/1)` captures the caller's vectors, extended-break setting,
 PSP and the native routines' nine saved bytes. It rejects reentry. Policy1
@@ -51,7 +52,46 @@ A fresh tree containing only43 declared source/provenance files reproduces both
 BRKOWN.EXE and BRKCHLD.COM without originals, existing objects or REA databases.
 All31 previous DOS products retain their hashes.
 
-Foreign-DS/SS instruction-level checks, interruption during individual install
-steps, integration with the foreground unwind/PSP owners, full PROGRAM execution,
-BBS sessions and physical modem/keyboard operation remain unproven by this test.
-No full application gate closes here.
+## Transition recovery and composed PROGRAM
+
+`standalone/check_break_owner.py` executes the actual linked owner instructions
+with modeled DOS21 services. Eighteen admission cases cover foreign SS,
+DS=SS outside the linked DGROUP, IF0 and an invalid policy. They require no DOS,
+BIOS or port calls and guard data outside the active stack. Recovery after each
+of195 DOS-service boundaries covers open, suspend, resume and close crossed with
+both policies and initial break settings. Resume cases include foreign child
+vectors and a changed break flag. Two further quarantine cases retain unknown
+foreground vectors and reject a foreign PSP until the caller repairs ownership.
+Each abandonment discards the near stack and invokes recovery on a fresh
+foreground DS=SS stack; this is an explicit checkpoint model, not an injected
+hardware interrupt or a corrupt DOS-kernel simulation.
+
+```sh
+./tools/build test-native-program-break
+./tools/build test-native-program-break-source
+```
+
+The opt-in `NATIVE_PROGRAM_BREAK_OWNER` controller captures a per-call baseline,
+suspends before EXEC/SYSTEM, reinstalls parent handlers before WAIT, and closes
+after restoring the view. It skips WAIT on a break-owner failure. Failed cleanup
+retains the busy controller and recovery metadata rather than permitting reuse.
+The unwind recovery branch requires the process owner to restore PSP first and
+closes the break owner before UART/view recovery. It still needs actual full-VM
+unwind validation; its presence is not proof of that integration.
+
+The [composed receipt](validation/program-break-owner.json) binds eight actual
+DOS routes: COM1/COM2 crossed with no, software, hardware and combined flow
+control. Each route passes47771 assertions, including real child mutation of
+INT1B/23 and extended checking, inherited-vector/break witnesses, both initial
+break settings, WAIT/reentry, saved and unsaved views,40-column and43/50-row
+views, missing programs, allocation failures, SYSTEM and a closed UART. The
+independent peer verifies the exact wire and queued input. A fresh source tree
+reproduces22 products including the guarded controller and source-owned children.
+
+The ordinary controller also passes all eight routes. Its diagnostic executable
+has a new hash after conditional diagnostic code shifts `CHECK` line constants;
+the other30 baseline executables, including the normal terminal, keep their
+hashes. Neither the normal terminal nor ASPECT gains published external commands
+from this option. Application-wide parent ownership, actual VM nonlocal recovery,
+asynchronous fault boundaries, physical modem/keyboard testing and all full
+application gates remain open.

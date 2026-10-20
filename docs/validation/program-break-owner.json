@@ -1,0 +1,667 @@
+{
+  "date": "2026-10-20",
+  "passed": true,
+  "whole_application_gates_closed": [],
+  "guarded_matrix": {
+    "label": "break-program-matrix-03",
+    "routes": 8,
+    "dos_assertions": 382168,
+    "cases": [
+      {
+        "passed": true,
+        "checks": {
+          "DOS_pass": true,
+          "assertions": true,
+          "exact_wire": true,
+          "peer_stages": true,
+          "peer_no_error": true,
+          "actual_child": true,
+          "child_unchanged": true,
+          "executable_unchanged": true
+        },
+        "assertions": 47771,
+        "port": 1,
+        "flow": "N",
+        "timed_out": false,
+        "elapsed": 0.766,
+        "tx_hex": "445246",
+        "expected_tx_hex": "445246",
+        "peer_errors": [],
+        "artifacts": {
+          "PROGRAM.EXE": "c9b2a1f3d1f5b4aa60a257584026f4350ffcf33fcea51c4f82867593b1ad439b",
+          "OWN1.COM": "bfd3c6db86ad577742346a3541312fee0b5248bfed7dac7a2fe34dc04f93de5a",
+          "PCPTEST.BAT": "42832d91c52b13832b909f0af31d544aabb5a3642e6403a171afa207ba52070e",
+          "dosbox.conf": "141045f3b72e1927609a28825205721c3b798dd30ae8167e85ef73b9ed8a9ab9",
+          "dosbox.log": "f3ee65cb117681017c2a9e1b4e4493abd65e197f50d1ba74e6a2f24ae8d58326",
+          "CHECKS.TXT": "f11ea329c241438c4a330d85a382d78b008c4c28ba05bfbb848451cff7ed1136",
+          "HOLD0.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD1.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD2.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD3.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD4.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD5.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "CHILD.OUT": "8674ff44ac67e777272b4fba9abd89b47133895831e02dfc1b87f40061e57494",
+          "SYS.OUT": "61b654fcc1d411fabc76bcac63cd41ce1a62385ac121b179247da4cf46c49737",
+          "CLOSED.OUT": "61b654fcc1d411fabc76bcac63cd41ce1a62385ac121b179247da4cf46c49737",
+          "RESULT.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+          "wire.bin": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+        }
+      },
+      {
+        "passed": true,
+        "checks": {
+          "DOS_pass": true,
+          "assertions": true,
+          "exact_wire": true,
+          "peer_stages": true,
+          "peer_no_error": true,
+          "actual_child": true,
+          "child_unchanged": true,
+          "executable_unchanged": true
+        },
+        "assertions": 47771,
+        "port": 1,
+        "flow": "S",
+        "timed_out": false,
+        "elapsed": 0.816,
+        "tx_hex": "1144131152131113111311131113111311131113111311131113111311131113114613",
+        "expected_tx_hex": "1144131152131113111311131113111311131113111311131113111311131113114613",
+        "peer_errors": [],
+        "artifacts": {
+          "PROGRAM.EXE": "c9b2a1f3d1f5b4aa60a257584026f4350ffcf33fcea51c4f82867593b1ad439b",
+          "OWN1.COM": "bfd3c6db86ad577742346a3541312fee0b5248bfed7dac7a2fe34dc04f93de5a",
+          "PCPTEST.BAT": "00c5b2fa30c6de76f5c14a52fb00be151d52059f508ce048eacc146926f9811d",
+          "dosbox.conf": "f02d72022339b05f9921f53b767cde7df86cdd5d794ad33dfbaa30b99bc0fd01",
+          "dosbox.log": "ade41f4ae320b46ac5221dae6d7b1d504c89b09450cbb5a1318d72227d7f3cae",
+          "CHECKS.TXT": "487b8545bba111e5dce65de2475b68f7340b9643a15347b4bde7c9e840a5f276",
+          "HOLD0.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD1.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD2.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD3.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD4.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD5.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "CHILD.OUT": "8674ff44ac67e777272b4fba9abd89b47133895831e02dfc1b87f40061e57494",
+          "SYS.OUT": "61b654fcc1d411fabc76bcac63cd41ce1a62385ac121b179247da4cf46c49737",
+          "CLOSED.OUT": "61b654fcc1d411fabc76bcac63cd41ce1a62385ac121b179247da4cf46c49737",
+          "RESULT.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+          "wire.bin": "96e92592ba9fa850ced508016cf5fc7feb04c7b6227731af8eba9ab4fab5d278"
+        }
+      },
+      {
+        "passed": true,
+        "checks": {
+          "DOS_pass": true,
+          "assertions": true,
+          "exact_wire": true,
+          "peer_stages": true,
+          "peer_no_error": true,
+          "actual_child": true,
+          "child_unchanged": true,
+          "executable_unchanged": true
+        },
+        "assertions": 47771,
+        "port": 1,
+        "flow": "H",
+        "timed_out": false,
+        "elapsed": 0.866,
+        "tx_hex": "445246",
+        "expected_tx_hex": "445246",
+        "peer_errors": [],
+        "artifacts": {
+          "PROGRAM.EXE": "c9b2a1f3d1f5b4aa60a257584026f4350ffcf33fcea51c4f82867593b1ad439b",
+          "OWN1.COM": "bfd3c6db86ad577742346a3541312fee0b5248bfed7dac7a2fe34dc04f93de5a",
+          "PCPTEST.BAT": "5fd2079b952155f6bb1fd54c9925bf6c5c50689904979bf1fb73bcc7d8804a91",
+          "dosbox.conf": "dfaecc09d5586631fcd6aa382672bbc5690b53aff49bf17efbde1e9ad56d2c2b",
+          "dosbox.log": "8f59eff169d6264e0742504b3b3be3b86ec47ed2632408d6b9007cf3d372e9f2",
+          "CHECKS.TXT": "435ce32fdad48ba0c1844709104be5a7f5d1164886aee2a940e7265504b019e7",
+          "HOLD0.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD1.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD2.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD3.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD4.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD5.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "CHILD.OUT": "8674ff44ac67e777272b4fba9abd89b47133895831e02dfc1b87f40061e57494",
+          "SYS.OUT": "61b654fcc1d411fabc76bcac63cd41ce1a62385ac121b179247da4cf46c49737",
+          "CLOSED.OUT": "61b654fcc1d411fabc76bcac63cd41ce1a62385ac121b179247da4cf46c49737",
+          "RESULT.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+          "wire.bin": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+        }
+      },
+      {
+        "passed": true,
+        "checks": {
+          "DOS_pass": true,
+          "assertions": true,
+          "exact_wire": true,
+          "peer_stages": true,
+          "peer_no_error": true,
+          "actual_child": true,
+          "child_unchanged": true,
+          "executable_unchanged": true
+        },
+        "assertions": 47771,
+        "port": 1,
+        "flow": "B",
+        "timed_out": false,
+        "elapsed": 0.916,
+        "tx_hex": "1144131152131113111311131113111311131113111311131113111311131113114613",
+        "expected_tx_hex": "1144131152131113111311131113111311131113111311131113111311131113114613",
+        "peer_errors": [],
+        "artifacts": {
+          "PROGRAM.EXE": "c9b2a1f3d1f5b4aa60a257584026f4350ffcf33fcea51c4f82867593b1ad439b",
+          "OWN1.COM": "bfd3c6db86ad577742346a3541312fee0b5248bfed7dac7a2fe34dc04f93de5a",
+          "PCPTEST.BAT": "91f5ecd084acc24b20015c353665ee6d258e6a2edab31529a5aa7729bb820afb",
+          "dosbox.conf": "b494e26e8d2d83ca5bf1b919964f2bdddccc7a87e2c786e6716e37565faa2b82",
+          "dosbox.log": "7ded6b73e41966646d131389e516ab1e9c6e18ec149753142664dc6d42e70864",
+          "CHECKS.TXT": "de6abdbbaec067ebe8094c252f37ca73547865f260bef95a6d2978263824b7df",
+          "HOLD0.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD1.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD2.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD3.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD4.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD5.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "CHILD.OUT": "8674ff44ac67e777272b4fba9abd89b47133895831e02dfc1b87f40061e57494",
+          "SYS.OUT": "61b654fcc1d411fabc76bcac63cd41ce1a62385ac121b179247da4cf46c49737",
+          "CLOSED.OUT": "61b654fcc1d411fabc76bcac63cd41ce1a62385ac121b179247da4cf46c49737",
+          "RESULT.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+          "wire.bin": "96e92592ba9fa850ced508016cf5fc7feb04c7b6227731af8eba9ab4fab5d278"
+        }
+      },
+      {
+        "passed": true,
+        "checks": {
+          "DOS_pass": true,
+          "assertions": true,
+          "exact_wire": true,
+          "peer_stages": true,
+          "peer_no_error": true,
+          "actual_child": true,
+          "child_unchanged": true,
+          "executable_unchanged": true
+        },
+        "assertions": 47771,
+        "port": 2,
+        "flow": "N",
+        "timed_out": false,
+        "elapsed": 0.866,
+        "tx_hex": "445246",
+        "expected_tx_hex": "445246",
+        "peer_errors": [],
+        "artifacts": {
+          "PROGRAM.EXE": "c9b2a1f3d1f5b4aa60a257584026f4350ffcf33fcea51c4f82867593b1ad439b",
+          "OWN2.COM": "75f1c8a0ccf3fc862bab6e7ee3df6f38772799c91665831d61f7b5aa8e451950",
+          "PCPTEST.BAT": "d56d9c422d7228b00864600e21b652ad58fd48a4bb2d703bb1bdd133fc8ae39c",
+          "dosbox.conf": "094c3f271d34886886e7e4e6bc76724c0f8f28f85ba6a451771434cf4edbc1dd",
+          "dosbox.log": "e189b3108f4061104e68789810b34717bae809e1d99da5449c61ecd5a9cda2b0",
+          "CHECKS.TXT": "048d654a40f5a136731964478cc32b32112d0fd96f9c099fe98dae8bf43ab59b",
+          "HOLD0.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD1.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD2.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD3.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD4.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD5.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "CHILD.OUT": "47326e27368dfd1ee387f99986c2d8865405477d84086b1d8a4223d63985b5a3",
+          "SYS.OUT": "61b654fcc1d411fabc76bcac63cd41ce1a62385ac121b179247da4cf46c49737",
+          "CLOSED.OUT": "61b654fcc1d411fabc76bcac63cd41ce1a62385ac121b179247da4cf46c49737",
+          "RESULT.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+          "wire.bin": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+        }
+      },
+      {
+        "passed": true,
+        "checks": {
+          "DOS_pass": true,
+          "assertions": true,
+          "exact_wire": true,
+          "peer_stages": true,
+          "peer_no_error": true,
+          "actual_child": true,
+          "child_unchanged": true,
+          "executable_unchanged": true
+        },
+        "assertions": 47771,
+        "port": 2,
+        "flow": "S",
+        "timed_out": false,
+        "elapsed": 0.866,
+        "tx_hex": "1144131152131113111311131113111311131113111311131113111311131113114613",
+        "expected_tx_hex": "1144131152131113111311131113111311131113111311131113111311131113114613",
+        "peer_errors": [],
+        "artifacts": {
+          "PROGRAM.EXE": "c9b2a1f3d1f5b4aa60a257584026f4350ffcf33fcea51c4f82867593b1ad439b",
+          "OWN2.COM": "75f1c8a0ccf3fc862bab6e7ee3df6f38772799c91665831d61f7b5aa8e451950",
+          "PCPTEST.BAT": "76ec6f17f03f6a36c36da5c2aa8cf4602d12e4365629e270f0c1f5f906e58b48",
+          "dosbox.conf": "88624f6666f579d29911a96436403a093e491d0febcfa8a93f5f077e87640da0",
+          "dosbox.log": "b3a73744403caa95434437a33bc0c2b8f59d454bcdadd395773cc452f06cb226",
+          "CHECKS.TXT": "f87611a4980bfebfa384b506ae6efd55bc555eddda56319f25afb5f1a02c65ae",
+          "HOLD0.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD1.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD2.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD3.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD4.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD5.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "CHILD.OUT": "47326e27368dfd1ee387f99986c2d8865405477d84086b1d8a4223d63985b5a3",
+          "SYS.OUT": "61b654fcc1d411fabc76bcac63cd41ce1a62385ac121b179247da4cf46c49737",
+          "CLOSED.OUT": "61b654fcc1d411fabc76bcac63cd41ce1a62385ac121b179247da4cf46c49737",
+          "RESULT.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+          "wire.bin": "96e92592ba9fa850ced508016cf5fc7feb04c7b6227731af8eba9ab4fab5d278"
+        }
+      },
+      {
+        "passed": true,
+        "checks": {
+          "DOS_pass": true,
+          "assertions": true,
+          "exact_wire": true,
+          "peer_stages": true,
+          "peer_no_error": true,
+          "actual_child": true,
+          "child_unchanged": true,
+          "executable_unchanged": true
+        },
+        "assertions": 47771,
+        "port": 2,
+        "flow": "H",
+        "timed_out": false,
+        "elapsed": 0.866,
+        "tx_hex": "445246",
+        "expected_tx_hex": "445246",
+        "peer_errors": [],
+        "artifacts": {
+          "PROGRAM.EXE": "c9b2a1f3d1f5b4aa60a257584026f4350ffcf33fcea51c4f82867593b1ad439b",
+          "OWN2.COM": "75f1c8a0ccf3fc862bab6e7ee3df6f38772799c91665831d61f7b5aa8e451950",
+          "PCPTEST.BAT": "d569af3cdbca55af6ec9a122eb6fb7510d4e751a2ede834c5b96e9eb08f193f8",
+          "dosbox.conf": "508d3df10c350278b378124fd149f011910b2da66630fcdc81e3ac548bc9fb3e",
+          "dosbox.log": "e65ec0fa89eb53e26cf6ec783e0f13ba2b1f41c1724e34c695f450481bf85eaf",
+          "CHECKS.TXT": "70874057013a34604deca89f873e950897d1d5bc5e56e59c34f80b05cded2208",
+          "HOLD0.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD1.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD2.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD3.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD4.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD5.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "CHILD.OUT": "47326e27368dfd1ee387f99986c2d8865405477d84086b1d8a4223d63985b5a3",
+          "SYS.OUT": "61b654fcc1d411fabc76bcac63cd41ce1a62385ac121b179247da4cf46c49737",
+          "CLOSED.OUT": "61b654fcc1d411fabc76bcac63cd41ce1a62385ac121b179247da4cf46c49737",
+          "RESULT.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+          "wire.bin": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+        }
+      },
+      {
+        "passed": true,
+        "checks": {
+          "DOS_pass": true,
+          "assertions": true,
+          "exact_wire": true,
+          "peer_stages": true,
+          "peer_no_error": true,
+          "actual_child": true,
+          "child_unchanged": true,
+          "executable_unchanged": true
+        },
+        "assertions": 47771,
+        "port": 2,
+        "flow": "B",
+        "timed_out": false,
+        "elapsed": 0.766,
+        "tx_hex": "1144131152131113111311131113111311131113111311131113111311131113114613",
+        "expected_tx_hex": "1144131152131113111311131113111311131113111311131113111311131113114613",
+        "peer_errors": [],
+        "artifacts": {
+          "PROGRAM.EXE": "c9b2a1f3d1f5b4aa60a257584026f4350ffcf33fcea51c4f82867593b1ad439b",
+          "OWN2.COM": "75f1c8a0ccf3fc862bab6e7ee3df6f38772799c91665831d61f7b5aa8e451950",
+          "PCPTEST.BAT": "167992477b45969b2c61ac014d270dac2bf7cfddbf5bf5d33f0f7990f7058c0c",
+          "dosbox.conf": "3da11bf4faa6e9cb9cdfcbe2944cf217a96bfcc780309ac44042a918e4133f17",
+          "dosbox.log": "cb6e86646c56ea821d4052673e7cceae0ccd651ed5af7134131994fc5b954bcc",
+          "CHECKS.TXT": "726745e03996d39066ff2d4894e4520109360348e733536dc7506055ad0a1460",
+          "HOLD0.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD1.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD2.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD3.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD4.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "HOLD5.DAT": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+          "CHILD.OUT": "47326e27368dfd1ee387f99986c2d8865405477d84086b1d8a4223d63985b5a3",
+          "SYS.OUT": "61b654fcc1d411fabc76bcac63cd41ce1a62385ac121b179247da4cf46c49737",
+          "CLOSED.OUT": "61b654fcc1d411fabc76bcac63cd41ce1a62385ac121b179247da4cf46c49737",
+          "RESULT.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+          "wire.bin": "96e92592ba9fa850ced508016cf5fc7feb04c7b6227731af8eba9ab4fab5d278"
+        }
+      }
+    ],
+    "binary_sha256": "c9b2a1f3d1f5b4aa60a257584026f4350ffcf33fcea51c4f82867593b1ad439b"
+  },
+  "default_matrix": {
+    "label": "break-default-matrix-03",
+    "routes": 8,
+    "dos_assertions": 381336,
+    "binary_sha256": "1d317131eb6c42a4c5f2384803b66f01d361bdcee85dd0f6e1261247451d9388"
+  },
+  "source_reproduction": {
+    "label": "guarded-source-02",
+    "products": {
+      "native-program-break/PROGRAM.EXE": {
+        "expected": "c9b2a1f3d1f5b4aa60a257584026f4350ffcf33fcea51c4f82867593b1ad439b",
+        "actual": "c9b2a1f3d1f5b4aa60a257584026f4350ffcf33fcea51c4f82867593b1ad439b"
+      },
+      "native-program-break/OWN1.COM": {
+        "expected": "bfd3c6db86ad577742346a3541312fee0b5248bfed7dac7a2fe34dc04f93de5a",
+        "actual": "bfd3c6db86ad577742346a3541312fee0b5248bfed7dac7a2fe34dc04f93de5a"
+      },
+      "native-program-break/OWN2.COM": {
+        "expected": "75f1c8a0ccf3fc862bab6e7ee3df6f38772799c91665831d61f7b5aa8e451950",
+        "actual": "75f1c8a0ccf3fc862bab6e7ee3df6f38772799c91665831d61f7b5aa8e451950"
+      },
+      "native-display/DISPLAY.EXE": {
+        "expected": "0e6dc8e4e852e0f940b810a7aefbae2378c3c18985ddcf2dea1c01f5544dd6cf",
+        "actual": "0e6dc8e4e852e0f940b810a7aefbae2378c3c18985ddcf2dea1c01f5544dd6cf"
+      },
+      "native-display/VIDEO.COM": {
+        "expected": "e38463e46b8f8c42f2bcd90a1e9707ace08ae63704fa16e317a87df3fbb39605",
+        "actual": "e38463e46b8f8c42f2bcd90a1e9707ace08ae63704fa16e317a87df3fbb39605"
+      },
+      "process-serial/PSERIAL.EXE": {
+        "expected": "7cf3775f5e26ab6e83023744c6ddfaec9de57073449570fe514c0584ee4c9619",
+        "actual": "7cf3775f5e26ab6e83023744c6ddfaec9de57073449570fe514c0584ee4c9619"
+      },
+      "process-serial/UART1.COM": {
+        "expected": "a7bb9817a9401d7c0127d68b5bc38f5f9a2b47e34827c4daeee471857deb654e",
+        "actual": "a7bb9817a9401d7c0127d68b5bc38f5f9a2b47e34827c4daeee471857deb654e"
+      },
+      "process-serial/UART2.COM": {
+        "expected": "3dda15dc346ef3ddfc42eb6b54890254590dd6fc7ce48f1c116d9d84cc862f3f",
+        "actual": "3dda15dc346ef3ddfc42eb6b54890254590dd6fc7ce48f1c116d9d84cc862f3f"
+      },
+      "native-process/NATIVE.EXE": {
+        "expected": "03723b988eab3df0cf7c128a1c6fc8356045b2bc0aac3865ab8f975ee300a7e0",
+        "actual": "03723b988eab3df0cf7c128a1c6fc8356045b2bc0aac3865ab8f975ee300a7e0"
+      },
+      "native-process/NAMES.EXE": {
+        "expected": "0485267021744f48db472a3c6a6ebe10beabb3ac64d3b673c2748a8e1e0e8409",
+        "actual": "0485267021744f48db472a3c6a6ebe10beabb3ac64d3b673c2748a8e1e0e8409"
+      },
+      "native-process/CHILD.COM": {
+        "expected": "0c8bb3b2499821ac74ddd47e4cc58ee34a633d7537be5f15db7ab80f878f9f18",
+        "actual": "0c8bb3b2499821ac74ddd47e4cc58ee34a633d7537be5f15db7ab80f878f9f18"
+      },
+      "native-process/DIVIDE.COM": {
+        "expected": "a2d4de6488769a320efd699e9c8e367574f7d398f9b1b63a30a22b099fb90e79",
+        "actual": "a2d4de6488769a320efd699e9c8e367574f7d398f9b1b63a30a22b099fb90e79"
+      },
+      "native-process/VECT.COM": {
+        "expected": "ca624aef48dfd14a782633e6253fdc817c6df15c61aaafe73ffc814a1f01b79f",
+        "actual": "ca624aef48dfd14a782633e6253fdc817c6df15c61aaafe73ffc814a1f01b79f"
+      },
+      "native-process/RESIDENT.COM": {
+        "expected": "b56878449a5528fa3403207d369262e3a5422d2d489cce2f323727579bc200a8",
+        "actual": "b56878449a5528fa3403207d369262e3a5422d2d489cce2f323727579bc200a8"
+      },
+      "native-process/EMPTY.COM": {
+        "expected": "fb3899847c3e4e1e817dd8f80108e41a46693128b4aa3a8306f3d86cdbaa79d6",
+        "actual": "fb3899847c3e4e1e817dd8f80108e41a46693128b4aa3a8306f3d86cdbaa79d6"
+      },
+      "native-process/FLAGS.COM": {
+        "expected": "83c3623d9e7e8db33301b96448910701f95033debff389462ef8c4d7e92489c0",
+        "actual": "83c3623d9e7e8db33301b96448910701f95033debff389462ef8c4d7e92489c0"
+      },
+      "native-process/E17.COM": {
+        "expected": "c3a5760861de337896c7259bb44f6c05284278040d22d4fc9cb42688d8d247e1",
+        "actual": "c3a5760861de337896c7259bb44f6c05284278040d22d4fc9cb42688d8d247e1"
+      },
+      "native-process/E21.COM": {
+        "expected": "def6a10413daf417e92cc622ffbeb96dd3abf12796f9ca071662503c1ce781b1",
+        "actual": "def6a10413daf417e92cc622ffbeb96dd3abf12796f9ca071662503c1ce781b1"
+      },
+      "native-process/E22.COM": {
+        "expected": "f9903bca908e88fc0c10aa4ac088a180493ac66d8d2c911dcf8eae362b5a0b6b",
+        "actual": "f9903bca908e88fc0c10aa4ac088a180493ac66d8d2c911dcf8eae362b5a0b6b"
+      },
+      "native-process/CHILD.EXE": {
+        "expected": "63080cc4387cd191b3ae0495ad21b023e266689336c4f29c22190246b2a2c8df",
+        "actual": "63080cc4387cd191b3ae0495ad21b023e266689336c4f29c22190246b2a2c8df"
+      },
+      "break-owner/BRKOWN.EXE": {
+        "expected": "84911c914fd5b9f0eaa24ff56c543c847a9dd8e89c31841a2547b8a085da2232",
+        "actual": "84911c914fd5b9f0eaa24ff56c543c847a9dd8e89c31841a2547b8a085da2232"
+      },
+      "break-owner/BRKCHLD.COM": {
+        "expected": "af76334f4a2f947ed4abdaa7156113062b62c3277240e3313201cce6a58dd870",
+        "actual": "af76334f4a2f947ed4abdaa7156113062b62c3277240e3313201cce6a58dd870"
+      }
+    },
+    "source_files": 91,
+    "original_inputs": []
+  },
+  "owner_model": {
+    "passed": true,
+    "admissions": 18,
+    "abandoned_service_boundaries": 195,
+    "quarantine_cases": 2,
+    "operations": [
+      {
+        "operation": "open",
+        "initial": 0,
+        "policy": 0,
+        "services": 11
+      },
+      {
+        "operation": "open",
+        "initial": 0,
+        "policy": 1,
+        "services": 12
+      },
+      {
+        "operation": "open",
+        "initial": 1,
+        "policy": 0,
+        "services": 11
+      },
+      {
+        "operation": "open",
+        "initial": 1,
+        "policy": 1,
+        "services": 13
+      },
+      {
+        "operation": "suspend",
+        "initial": 0,
+        "policy": 0,
+        "services": 9
+      },
+      {
+        "operation": "suspend",
+        "initial": 0,
+        "policy": 1,
+        "services": 9
+      },
+      {
+        "operation": "suspend",
+        "initial": 1,
+        "policy": 0,
+        "services": 9
+      },
+      {
+        "operation": "suspend",
+        "initial": 1,
+        "policy": 1,
+        "services": 10
+      },
+      {
+        "operation": "resume",
+        "initial": 0,
+        "policy": 0,
+        "services": 14
+      },
+      {
+        "operation": "resume",
+        "initial": 0,
+        "policy": 1,
+        "services": 15
+      },
+      {
+        "operation": "resume",
+        "initial": 1,
+        "policy": 0,
+        "services": 14
+      },
+      {
+        "operation": "resume",
+        "initial": 1,
+        "policy": 1,
+        "services": 16
+      },
+      {
+        "operation": "close",
+        "initial": 0,
+        "policy": 0,
+        "services": 13
+      },
+      {
+        "operation": "close",
+        "initial": 0,
+        "policy": 1,
+        "services": 13
+      },
+      {
+        "operation": "close",
+        "initial": 1,
+        "policy": 0,
+        "services": 13
+      },
+      {
+        "operation": "close",
+        "initial": 1,
+        "policy": 1,
+        "services": 13
+      }
+    ],
+    "binary_sha256": "84911c914fd5b9f0eaa24ff56c543c847a9dd8e89c31841a2547b8a085da2232",
+    "checker_sha256": "ccf90798e4e8c6ef87967224d4710d0397e51d8b8722ca2366747fa1c7aa608c",
+    "scope": "Actual linked owner instructions; explicit modeled DOS21 vectors/break/PSP. Each DOS-service cut abandons the C stack and calls recovery from a fresh DS=SS foreground stack. Not asynchronous IRQ, kernel corruption or full VM unwind proof."
+  },
+  "baseline": {
+    "unchanged": 30,
+    "changed_diagnostics": {
+      "native-program/PROGRAM.EXE": {
+        "before": "582a6844f454de92e66fad3e6694b26b1fdee6565d91ce563e8ebc38d8afb8d1",
+        "after": "1d317131eb6c42a4c5f2384803b66f01d361bdcee85dd0f6e1261247451d9388"
+      }
+    },
+    "diagnostic_isolation": {
+      "passed": true,
+      "reference_diagnostic_revision": "518e3bf",
+      "reference_diagnostic_source_sha256": "a0bccd6734c498b0fae7b3b561ba27325387ac3cc8efac877d254eb25ca48940",
+      "binary_sha256": "582a6844f454de92e66fad3e6694b26b1fdee6565d91ce563e8ebc38d8afb8d1",
+      "scope": "Current default controller and dependencies rebuilt from current declared sources with only the versioned baseline diagnostic substituted; recovers the baseline PROGRAM.EXE hash, isolating the diagnostic source as the cause of its changed hash."
+    }
+  },
+  "sources": {
+    "standalone/build_native_display.py": "3203522c4f285beee213506de76a11dcfa8c39b16ab1350a931e3ccf1e434dc9",
+    "reconstruction/program_display/provenance.json": "6b3a2f47120c20ba43cac11f074da5daf7ca85f388a1ba87739be0f3fe41cb27",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/program_display/snapshot.asm": "b14553105adce657970031110614ad769cd5208ec1580660cb71cffc69183ce5",
+    "reconstruction/program_display/restore.asm": "0afe70fb362c90e08977a9daf1b9f73b533398b1fb837cf64067efd1ae1e7f3e",
+    "reconstruction/program_display/geometry.asm": "c6c57bcfc5779d770ee85ba5bcd1414455ef35891f0703b8a6564e70dd199f85",
+    "reconstruction/program_display/snow_enable.asm": "acfc80bf0dac30c7733784fafe7bb25ae9f50358a8539e149604fc7a75a57ab9",
+    "reconstruction/program_display/snow_disable.asm": "2ca6e6e84047f235d2c994a8bfb319f664b80442cb4b36ec7a61f76cb7612990",
+    "src/process/native_display_state.asm": "5a75b9b93f29fe9b622b0e7306eda7e3cf4943593b25fd5170d5369baa8a678b",
+    "src/process/native_display.c": "7a7bfefb0c98d09e4fa193d07fb015de868c84ffd8d3a9e1e9f907e06087544b",
+    "src/process/native_process.c": "a6b511dd27ff0e117302d079b4d3708ef21bfb2c9a9cd2bb35369ae404df2222",
+    "standalone/native_display_diagnostic.c": "5c3f3d9d08e89a35dfbd32b92b22521e00d28975ce80dcd0197f3967629c5264",
+    "standalone/native_display_child.asm": "bd7096bb9f5b90b0dd0f7297e813d0d5877085acd0a3470624c9302fb5f87124",
+    "src/process/native_display.h": "3ae3ba9e3ace78524bbf0a3e4bd3b1a4c44888483583d9ed1320d7e6a97f0f18",
+    "standalone/build_process_serial.py": "e343dcdb3b3d13ec654600be6fd93d5c029613f34a112799663ce4fff20f0abb",
+    "reconstruction/uart/core.asm": "9c0a38a7a305c5eec8e1c2299da74953656d33bdcae63f9866d7ef2d576fa52f",
+    "src/uart/api.asm": "ea76dd20ce14ccc8f9a6af725a05202f7888e1b7cb349d93a96f8faa16f9ae6d",
+    "src/aspect/serial_backend.asm": "d059e3c561ba49d41df0cd3e6b4023f9d9248e8b4e36912ca6d47b3c570161d2",
+    "src/aspect/process_serial.asm": "1fd0487719c3a3965dcc14ce27a865c471b6a2d0c117f06ac991ef54de1ff88d",
+    "src/aspect/serial.c": "d96924c4e439052b5bc4062c09964230cdd5424ba30b4ec0ea53a05d963690eb",
+    "src/aspect/process_serial.c": "171b4003ba71d90931b0f27f5ebda8756ca7d08ef26034c215666eea97dcc3f7",
+    "standalone/process_serial_diagnostic.c": "b8b3fcbd29d33094d356300a1f1900ccea534ef8e25dccbdcabeb0eadbf3132e",
+    "src/aspect/process_serial.h": "7c174fbce4a9214dc3536aa09ad6f34bb32dadf39551949f0e8323600a6a44f5",
+    "src/aspect/serial.h": "2d8a7972238bfddc8180c69d62bde1fa02d10dab3c6178a64978b7eb4ffce23b",
+    "src/aspect/serial_handoff.h": "51db79078c78294d7f247da793839d8114ae6680e8fa5798b681b1c32648e7eb",
+    "src/aspect/resident_render.h": "57592908878e07073f01b28bf8868b224c402ee2c936676b360a9f5b9cb15b16",
+    "reconstruction/uart/layout.inc": "1e732d890b17486bdace3f978276ce48e55da318df70787aa54475203fa9bd21",
+    "reconstruction/directory_accounting/patch.asm": "3ed899cd9515303cf7906d572ee87d0a884a7dca90b8cf14ac1ff316b30200ac",
+    "standalone/process_serial_child.asm": "39b7e6ae35f6fa42681223d18feb8e84c7d2703fb7770da0434af231e6ff9760",
+    "reconstruction/program_exec/environment_tail.asm": "642d85d6237c4d1aa2243097a6253701121b7c65c6776bccfc41e1a72513afea",
+    "reconstruction/program_exec/spawn_extension.asm": "95d35a985707366aff26a6be4c2e4aa64b72a41e3d1d82cea42da56fb84ecea8",
+    "reconstruction/program_exec/exec.asm": "218d9dbdad87475c77c0c489800fa9fd0ebcbf591f17cb266b0a28195c23a456",
+    "reconstruction/program_exec/scratch.asm": "e9813896aec7f4390d7fbd5323b7621448d43b0c6be1d764297beb86c089e15c",
+    "reconstruction/program_exec/get_ds.asm": "c98c2d6535c41beae3d72fd3b0686a588bc5c10fb904a632688456d5ddc675c2",
+    "reconstruction/program_exec/getenv.asm": "1b94c41e62c740850d37f2363d7389f2f300f98db6ba23e95d2f751f4529ee5a",
+    "reconstruction/program_exec/strcpy.asm": "4c2420d76d56a852b2ff6bb2ebfbf567b082c6880b2bd715f698ebd2d9941299",
+    "reconstruction/program_exec/strlen.asm": "a3a4f98217c60ca930b83060071be356bb2340740f6a994e450fecab13d0f5af",
+    "reconstruction/program_exec/strchr.asm": "59f83b99f393c355753f86d518381ce0c2f20a92df2e0b600a8384fb5f4dc665",
+    "reconstruction/program_exec/strncmp.asm": "2e89c2421cecb48e24858b98b648aa1af0603d75b99de1715997032f91b0a35c",
+    "reconstruction/program_exec/error_exec.asm": "00e4999b1e61c3877cb139078111487c15032caa3c53195edd24a3f26b192ba1",
+    "reconstruction/program_exec/map_error.asm": "00244ad9b12bcb6e7c9dc3efd943d50b30ea2461ebb83c8849cf8524cfb9ad59",
+    "reconstruction/program_exec/error_lookup.asm": "b034445986eedbe083e11cd0171743eb7389bf71e895fde4f6ddfbea997e4b26",
+    "reconstruction/program_exec/spawnv.asm": "471b9e248b81857260b7a4abc8c63457c4956e3383599ac2cac1bdcb8a25e99f",
+    "reconstruction/program_exec/spawn_search.asm": "53729c1346950c9bbf9110f172ed5de56d7161b8df1330e429dea76bec96609f",
+    "reconstruction/program_exec/system.asm": "2783830444752b4793c5cd73799fe46571dd87f1d2a5c39a5e1d57baedb5eb81",
+    "reconstruction/program_exec/access.asm": "fa33faa6c39fb0292874db01b09665a2d2575fcf8503a8c48595d3eecc533480",
+    "reconstruction/program_exec/error_access.asm": "62df0d78cf626f371a947e0716f553aa01cc39c86c109b8d07ece1637764710e",
+    "reconstruction/program_exec/strrchr.asm": "49c6429f13940689fd3e5d29b668245fc43e781c0eb764ffc5c793d93660d312",
+    "reconstruction/program_exec/strcmpi.asm": "7ff7a20853855aa9b2166ea84103aa0d4c3c8b3bbfc0de34be15c86e166964be",
+    "reconstruction/program_exec/strcat.asm": "9ab94800cb6c43d766a724210fb4078bf32ed7e5442bf2880695d27d6d33b3f8",
+    "reconstruction/program_exec/path_component.asm": "6f3b3953eaddd918b9c5996e6369477a442b6ea54e5d80a251e36997d5feac01",
+    "src/process/native_process_state.asm": "f319625c042dafe480730ccf349ed3a11b8fbe4030579cf752b6ae694f3a7875",
+    "standalone/native_process_diagnostic.c": "b4ee9bf62dde5bfeee917d9815b03b53ad6b8adb61ca50db8154e0feb47c1466",
+    "standalone/native_process_child.asm": "7fd3794fac4d9bdf199625d9b89044f3a42d35f5cb2d69a9995dd2a9b2a9c619",
+    "standalone/build_native_process.py": "c343717350a2adc523bbaca29510fd1c8c54f91f9565bc64f28f5eb457028cfb",
+    "src/process/native_process.h": "cb9115a469b56a18c0232cabcabd37dc163b093016274f8c53494682e7930d32",
+    "reconstruction/program_exec/provenance.json": "dea1a491c50dcbfdd28ac810ff17857c62f8c4155b1d79aaa744696ae8947f7f",
+    "standalone/native_namespace_cases.inc": "45a7277bd71105b6ce5bc0e5b2c9f7ea0e111cdd2fe180c132e8c0a5fff9e30f",
+    "standalone/native_process_exe_child.c": "2470ae5d4e35a2b326448c1ce30af3921b1debe89828513650e92d0e83f631c6",
+    "reconstruction/program_break/install.asm": "c76ea6efb5c2f8c6f2425b0e56e8c52923705dc10869b49030f2196f18adf929",
+    "reconstruction/program_break/restore.asm": "3c7534c97d9b48ec9e987705ac9b63238f83f03608ef576b36511f07c3a1fedf",
+    "reconstruction/program_break/ignore.asm": "f82c168d94bcceae53c319fb892175563ef3a403dbbe29b4ba823bb6189b1280",
+    "src/process/break_owner.c": "e63de1d56a1078e6b91b7ef9bce54806179c42f3906bce3c7fce82e761592d9c",
+    "standalone/break_owner_diagnostic.c": "f4b55a652b4d68fe2ec552ad7b07f8e6d3482e4ceeae0a4cb23add2e5d7d5389",
+    "src/process/break_owner.asm": "c603cfe12b26e0c9796e0eb36e48ed719e97e610d87eaf998ccd520f4c95f47f",
+    "standalone/break_owner_child.asm": "04ffcf41588bfb468b2f97901bd55d3ebb36103ee2c35a0450b48754bc5c2bf8",
+    "reconstruction/program_break/abi.inc": "fb3534541a801cf698108fa82d65f4840bf7a46af1841231adc166bf63f24d03",
+    "reconstruction/program_break/provenance.json": "8bbe51fd6417d0a194c76a7c368a0733270e6c7c8635d9fa0d4b8f71b80faaa6",
+    "src/process/break_owner.h": "3d71b5f21308fa9a6da922c3de267631f3a2319263a85292406bb762f4f670ad",
+    "standalone/build_break_owner.py": "2ac23ef61fed43cf7eabcb7176334334749d994d9f6c9c252f262e2609ba5f45",
+    "reconstruction/program_ui/provenance.json": "ea7cf6e3e92da71a06921b9106514642458a361cd5c177f9bc90b348fa0aa790",
+    "reconstruction/program_ui/scroll.asm": "b5cb519b3edcb8a86dcd40764ea6b24933d45bfb4fdf43d52d821672d4122884",
+    "reconstruction/program_ui/text.asm": "d9cef80cd9fae124cf63eb596a293746a8e8de679d30c9ea11228ab0596bc9d7",
+    "reconstruction/program_ui/cell_offset.asm": "9064c4a63d7ae1668e533f851767779951acc9c23c674fa9e2ea9c082706944c",
+    "reconstruction/program_ui/cursor.asm": "dac8ddb81da4e77050386cb3b2cda6b74c1960834eab4341ae9d53f24222798e",
+    "reconstruction/program_ui/cursor_shape.asm": "3dc779a5ad0053a86a3f6ca90c5fb58a2b46f5ed94a6c078a68152baea901602",
+    "reconstruction/program_ui/cursor_policy_one.asm": "ff0423b4c8352da807ab135889bbddcb52a7d4bf4e29a3288ed6e7f53c372e72",
+    "reconstruction/program_ui/cursor_policy_zero.asm": "1a28cf165b535b6cd3bf49972d189cbad514a8110cdb4f0ae2a61f5509ce0f69",
+    "reconstruction/program_ui/mode.asm": "eeccbc12dc1bafd827c816a590582dc1abf79efadaeaa492f862abaf41e6670d",
+    "reconstruction/program_ui/scanlines.asm": "69874e0454dff22bb02e752e0baafcb3e2333443c8b2f226c52e33928b202e53",
+    "reconstruction/program_ui/cursor_eight.asm": "0b418dd1ac6019a6b90aa742340d19d30d458d2786bbffcf2df4c704e63436ec",
+    "reconstruction/program_ui/fill.asm": "6c0678fa6e50f61c99a29dd1ab3448a497a2b6ffb657fa93b0f5ea81d415a973",
+    "reconstruction/program_ui/clear.asm": "aad89f18c5ca0ad6d152b7e3968891a63b2b92c5732a81d1e1f27bfd9111aabc",
+    "reconstruction/program_ui/snow_cell.asm": "4200155b4cb6e34565f9184bec558877631edfff824973d7a5df6a8c4f56c356",
+    "reconstruction/program_ui/wait.asm": "e1296ad2ddd11df509ae0827e65be9e292a71bb9952f91a61473d573474b775c",
+    "src/process/program_ui.asm": "b28e61814a17e2980af01ba7558a4cab87e83ed01b2c31ce3a81c652298313f8",
+    "src/process/native_program.c": "67b02d38c06a58a14fa896618ac3af1a8b0be8c41a253b21dae74dd2eb5a5cd8",
+    "standalone/native_program_diagnostic.c": "b13744c499cc664f333c32f37e922e5f43b38ae42592e13bb404e6d2993f6111",
+    "src/process/native_program.h": "aa4c47af663aba8ea4138737f0df86484bc0bc9f132163746ff61ca09843508f",
+    "standalone/build_native_program.py": "c38c370d457085ef31d4af9454d6ec0c37e7bcad6def0f420a6e6c712ef67b0d",
+    "standalone/native_program_child.asm": "342e2baae93e6f91eea7a5e61e302c3ab275dd2c4fd26d18f09a07b2e671f340"
+  },
+  "checkers": {
+    "standalone/check_break_owner.py": "ccf90798e4e8c6ef87967224d4710d0397e51d8b8722ca2366747fa1c7aa608c",
+    "standalone/test_native_program_dos.py": "62d9accf31971af986390357388bd0f735eb6e7302b0d448a5937e6a6077da61",
+    "standalone/check_native_program_source.py": "642d7e03d901100a2532825d01efe531c884638f9c6c9230191f9a0f10ce8ba6"
+  },
+  "rejected_attempts": [
+    {
+      "label": "break-default-matrix-02",
+      "reason": "Preflight rejected a stale build-script source hash before DOS execution; rebuilt default products and passed under fresh label."
+    }
+  ],
+  "limits": [
+    "Opt-in composed controller only; normal terminal/ASPECT publication unchanged",
+    "Per-call ownership; application-wide parent lease remains open",
+    "Owner service boundaries use modeled DOS; actual full-VM nonlocal recovery remains open",
+    "No new BBS or physical RS232/WiFi-modem acceptance claimed"
+  ]
+}

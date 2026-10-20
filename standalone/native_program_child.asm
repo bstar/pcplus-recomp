@@ -123,6 +123,48 @@ jmp short .record
 .text:
 mov word [es:0],0x2e4e
 .record:
+%ifdef BREAK_OWNER_TEST
+; Record actual child inheritance before deliberately replacing both handlers.
+push ds
+push cs
+pop ds
+mov ax,0x351b
+int 0x21
+mov [break_witness],bx
+mov [break_witness+2],es
+mov ax,0x3523
+int 0x21
+mov [break_witness+4],bx
+mov [break_witness+6],es
+mov ax,0x3300
+int 0x21
+mov [break_witness+8],dl
+mov dx,break_name
+xor cx,cx
+mov ah,0x3c
+int 0x21
+jc failed
+mov bx,ax
+mov dx,break_witness
+mov cx,9
+mov ah,0x40
+int 0x21
+jc failed
+cmp ax,9
+jne failed
+mov ah,0x3e
+int 0x21
+mov dx,handler
+mov ax,0x251b
+int 0x21
+mov dx,handler
+mov ax,0x2523
+int 0x21
+mov ax,0x3301
+mov dl,1
+int 0x21
+pop ds
+%endif
 mov dx,name
 xor cx,cx
 mov ah,0x3c
@@ -151,3 +193,7 @@ command: db 0
 expected: db 'CTRLVAR=OWNED',0
 cells: dw 0
 video: dw 0
+%ifdef BREAK_OWNER_TEST
+break_name: db 'BRKWIT.BIN',0
+break_witness: times 9 db 0
+%endif

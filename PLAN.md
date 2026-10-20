@@ -9,7 +9,16 @@ Prefer measured behavior fixes over exact historical behavior where they differ,
 while preserving original reconstruction and explicit regressions. Physical
 RS232/WiFi-modem checks remain required before claiming hardware compatibility.
 
-The [guarded break owner](docs/BREAK_OWNER.md) passes132 checks and four actual
+The opt-in [composed PROGRAM break owner](docs/BREAK_OWNER.md) passes all eight
+COM1/COM2 flow-control routes,47771 DOS assertions each, and a22-product fresh
+source rebuild. Its linked owner rejects18 invalid admissions and recovers at
+195 modeled DOS-service abandonments, with two quarantine cases. The ordinary
+controller also passes all eight routes;30 baseline executables retain hashes
+while the PROGRAM diagnostic's embedded assertion line constants change. The
+normal terminal/ASPECT publication is unchanged. Actual full-VM nonlocal recovery,
+application-wide ownership and all full application gates remain open.
+
+The preceding [guarded break owner](docs/BREAK_OWNER.md) passes132 checks and four actual
 DOS child executions. Its43 declared source inputs reproduce both test binaries
 without originals; all31 earlier DOS products remain unchanged. This supports
 safe child return but is a separate diagnostic. PROGRAM/ASPECT integration and

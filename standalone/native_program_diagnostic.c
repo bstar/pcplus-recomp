@@ -16,6 +16,35 @@ static const char prompt[]="Press any key to continue ...";
 static native_program_result nested;
 static void check(unsigned value,unsigned line){++checks;if(!value){++failures;printf("FAIL %u\n",line);}}
 #define CHECK(x) check((x)!=0,__LINE__)
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+#include "break_owner.h"
+typedef void (__interrupt __far *break_irq)(void);
+static unsigned char break_flag(void)
+{union REGS a,b;a.x.ax=0x3300;int86(0x21,&a,&b);return b.h.dl;}
+static void set_break_flag(unsigned char flag)
+{union REGS a,b;a.x.ax=0x3301;a.h.dl=flag;int86(0x21,&a,&b);}
+static unsigned __cdecl checked_program_execute(const char *program,const char *tail,
+ unsigned processor,unsigned wait,unsigned save,native_program_result *result)
+{
+ break_irq one,twenty_three;unsigned char flag,witness[9];unsigned status;FILE *f;
+ /* The timer's intentional reentry must perform no DOS operation. */
+ if(native_program_busy)return native_program_execute(program,tail,processor,wait,save,result);
+ one=_dos_getvect(0x1b);twenty_three=_dos_getvect(0x23);flag=break_flag();
+ if(!processor)remove("BRKWIT.BIN");
+ status=native_program_execute(program,tail,processor,wait,save,result);
+ CHECK(native_break_phase()==BREAK_CLOSED);
+ CHECK(_dos_getvect(0x1b)==one&&_dos_getvect(0x23)==twenty_three&&break_flag()==flag);
+ if(status==0&&!processor&&(result->process.child_status==37||result->process.child_status==247)){
+  f=fopen("BRKWIT.BIN","rb");CHECK(f!=0);
+  if(f){CHECK(fread(witness,1,9,f)==9);fclose(f);
+   CHECK(*(unsigned *)witness==FP_OFF(one)&&*(unsigned *)(witness+2)==FP_SEG(one));
+   CHECK(*(unsigned *)(witness+4)==FP_OFF(twenty_three)&&*(unsigned *)(witness+6)==FP_SEG(twenty_three));
+   CHECK(witness[8]==flag);}
+ }
+ return status;
+}
+#define native_program_execute checked_program_execute
+#endif
 static void __interrupt __far timer(void)
 {
  if(native_program_waiting&&!wait_seen&&++wait_ticks>=3){
@@ -63,6 +92,9 @@ static void text_case(const char *child,unsigned value,unsigned rows)
 {
  unsigned i,count,height,segment;unsigned __far *video;
  union REGS in,out;native_program_result result;
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ set_break_flag(value&1);
+#endif
  if(rows==43)program_ui_scanlines(1);
  else program_ui_scanlines(2);
  mode(value);
@@ -87,11 +119,17 @@ int main(int argc,char **argv)
  static char environment[]="CTRLVAR=OWNED";
  static const unsigned char initial[]={0,0x1a,0x80,0xff},after[]={'N','E','X','T'};
  union REGS in,out;
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ unsigned char caller_break=break_flag();
+#endif
  setvbuf(stdout,0,_IONBF,0);if(argc!=2)return 99;
  port=argv[1][2]-'0';base=port==1?0x3f8:0x2f8;vector=port==1?12:11;mask=port==1?16:8;
  old_uart=_dos_getvect(vector);pic=inp(0x21);mcr=inp(base+4);lcr=inp(base+3);
  outp(base+3,lcr&127);ier=inp(base+1);outp(base+3,lcr|128);dll=inp(base);dlm=inp(base+1);outp(base+3,lcr);
  outp(base+4,mcr|1);CHECK(aspect_serial_open(argv[1])==0);our_uart=_dos_getvect(vector);
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ set_break_flag(0);
+#endif
  CHECK(putenv(environment)==0);
  for(i=0;i<6;++i){sprintf(name,"HOLD%u.DAT",i);held[i]=fopen(name,"wb+");CHECK(held[i]!=0);
   if(!held[i])return 99;for(j=0;j<256;++j)fputc(j,held[i]);fflush(held[i]);CHECK(fseek(held[i],i+9,SEEK_SET)==0);}
@@ -157,6 +195,9 @@ int main(int argc,char **argv)
  /* Give DOSBox's separate nullmodem packet-flush timer one BIOS tick after
   * the hardware TEMT drain, so emulator exit cannot erase its final XOFF. */
  {unsigned long tick=aspect_serial_ticks();while(aspect_serial_ticks()==tick);}
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ CHECK(native_break_phase()==BREAK_CLOSED);set_break_flag(caller_break);
+#endif
  printf("PROGRAM COM%u %c %u checks %u failures\n",port,argv[1][12],checks,failures);
  return failures?1:0;
 }

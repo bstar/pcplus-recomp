@@ -1,5 +1,15 @@
 # Full application reconstruction checklist
 
+The [guarded PROGRAM binding](validation/program-break-owner.json) passes eight
+COM1/COM2 flow-control routes with actual child vector/break mutations and47771
+DOS assertions per route. A fresh source tree reproduces22 products. The linked
+owner rejects18 invalid admissions and recovers after195 modeled DOS-service
+abandonments; two quarantine cases retain ownership until repair. The ordinary
+controller's eight routes pass too, and an isolated baseline-diagnostic rebuild
+reproduces its earlier binary exactly. Actual full-VM nonlocal recovery and
+application-wide ownership remain open; normal terminal/ASPECT publication is
+unchanged and no F01–F16 gate closes.
+
 The [PROGRAM break component](validation/program-break.json) adds117 exact
 original instruction bytes,48 paired cases,eight interrupt frames and16 actual
 DOS cases. Its source-only rebuild reproduces the linked diagnostic while the

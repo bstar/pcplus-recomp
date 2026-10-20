@@ -1,6 +1,9 @@
 #include "native_program.h"
 #include "native_display.h"
 #include "process_serial.h"
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+#include "break_owner.h"
+#endif
 #include <dos.h>
 #include <string.h>
 #if defined(ASPECT_EXTERNAL_UNWIND)
@@ -64,12 +67,20 @@ unsigned __cdecl native_program_execute(const char *program,const char *tail,
     aspect_process_serial_detached||aspect_serial_active==2)return NATIVE_PROGRAM_BUSY;
  /* Check before taking a near pointer to a stack local for memset/copy. */
  if(data_segment()!=stack_segment()||!result)return NATIVE_PROGRAM_ARGUMENT;
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ if(native_break_phase()!=BREAK_CLOSED)return NATIVE_PROGRAM_BUSY;
+#endif
  memset(&local,0,sizeof(local));local.process.child_status=local.wait_key=65535U;
  local.process.status=NATIVE_PROCESS_STATE;
  if(!program||!*program||program[0]=='['||processor>1||wait>1||save_screen>1||!interrupt_flag()){
   local.status=NATIVE_PROGRAM_ARGUMENT;*result=local;return local.status;
  }
  native_program_busy=1;
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ /* A per-call owner retains the actual caller baseline across every child.
+  * Application-wide Ctrl-Break ownership remains a separate parent lease. */
+ if(native_break_open(1)!=BREAK_OK){local.status=NATIVE_PROGRAM_BREAK;goto cleanup;}
+#endif
  status=native_display_probe();if(status)goto display_rejected;
  mode=native_display_mode;rows=native_display_rows;columns=native_display_columns;
  height=*(unsigned __far *)MK_FP(0x40,0x85);
@@ -93,9 +104,16 @@ unsigned __cdecl native_program_execute(const char *program,const char *tail,
  /* Native PROGRAM clears errno before entering SYSTEM/spawnl. A previous
   * missing target must not become the next successful child's UI error. */
  native_crt_error=native_dos_error=0;
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ if(native_break_suspend()!=BREAK_OK){local.status=NATIVE_PROGRAM_BREAK;goto serial_return;}
+#endif
  if(processor)status=native_process_system(program,0,&local.process);
  else status=native_process_search(program,tail,0,&local.process);
  if(status)local.status=NATIVE_PROGRAM_PROCESS;
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ if(native_break_resume()!=BREAK_OK)local.status=NATIVE_PROGRAM_BREAK;
+serial_return:
+#endif
  /* Reclaim child-mutated UART/vector before any WAIT. Never lose queued
   * input to the original PROGRAM reset/uart_enable path's RBR discard. */
  local.serial_status=aspect_process_serial_resume();
@@ -111,7 +129,11 @@ unsigned __cdecl native_program_execute(const char *program,const char *tail,
   * even when BIOS geometry itself is unchanged. The application owner must
   * consume this result when its actual renderer is bound. */
  if(!save_screen&&(changed||local.process.child_status==247))local.view_reset=1;
- if(wait&&!local.serial_status){
+ if(wait&&!local.serial_status
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+    &&local.status!=NATIVE_PROGRAM_BREAK
+#endif
+    ){
   external_phase(EXTERNAL_WAIT);
   program_ui_wait_message=wait_message;
   native_display_viewport=(rows-1)<<8;key_status=0;native_program_waiting=1;
@@ -134,6 +156,14 @@ cleanup:
  /* Failed capture/pause must leave the owner's previous view intact. A
   * failed restore is explicit and retires storage; it is never success. */
  if(native_display_owned)native_display_discard();
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ /* Quarantine keeps the controller busy and its recovery metadata alive.
+  * Never advertise a reusable parent while resident callbacks are owned. */
+ if(native_break_close()!=BREAK_OK){
+  local.status=NATIVE_PROGRAM_BREAK;native_program_waiting=0;
+  *result=local;return local.status;
+ }
+#endif
 #if defined(ASPECT_EXTERNAL_UNWIND)
  held.valid=0;
 #endif
@@ -145,6 +175,10 @@ unsigned __cdecl native_program_recover(unsigned *view_reset)
  unsigned status=0,changed;
  if(view_reset)*view_reset=0;
  if(!native_program_busy&&!held.valid)return 0;
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ /* The process owner must restore the parent PSP before this call. */
+ if(native_break_recover()!=BREAK_OK)return NATIVE_PROGRAM_BREAK;
+#endif
  if(aspect_process_serial_detached){status=aspect_process_serial_resume();if(status)status=NATIVE_PROGRAM_SERIAL;}
  if(held.valid){
   changed=native_display_probe()||native_display_mode!=held.mode||native_display_rows!=held.rows||
