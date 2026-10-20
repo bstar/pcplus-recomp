@@ -7,6 +7,14 @@ data, reconnect and transfer runs. No physical compatibility or 14400-bps claim
 is established; the adapter has not arrived. PCPlus remains a serial terminal,
 with SIP/audio/Telnet handled by the Linux bridge.
 
+The [Node/helper VM composition](lab/bbs/synthmodem-vm.md#nodehelper-composition)
+now passes19 checks and independent raw-stream audits. Actual candidate classes
+receive the guest CONNECT, pause BBS reads under a stalled modem endpoint,
+recover16777219 exact bytes each way and retire ownership on hangup. The pinned
+Nix-built helper/runtime are unchanged. Normal SIP/DSP startup, full composed
+DOS/BBS workflows, native flow credit, reverse TCP pressure and analog hardware
+remain open; synthetic CONNECT14400 proves no modulation compatibility.
+
 The [booted i386 helper checkpoint](lab/bbs/synthmodem-vm.md) now uses a pinned
 Nix static32-bit build inside the upstream kernel/runtime. Fourteen actual VM
 checks and an independent wire/payload audit pass, including16777219 exact bytes

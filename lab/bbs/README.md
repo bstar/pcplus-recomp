@@ -15,8 +15,10 @@ checks through the candidate, with packet-boundary limits kept explicit.
 The separate [control-helper candidate](patches/synthmodem-control/README.md)
 checks coalesced-frame ownership and slow-PTY writes without changing VM images.
 The [Node writer candidate](patches/synthmodem-pressure/README.md) adds valid
-wire-frame splitting and owned drain propagation; combined VM acceptance remains
-separate from both host checkpoints.
+wire-frame splitting and owned drain propagation. The separate
+[booted VM composition](synthmodem-vm.md#nodehelper-composition) now verifies
+their shared path, exact duplex data, pressure propagation and teardown.
+Normal SIP/DSP startup and physical acceptance remain open.
 
 
 The [Infocom save-edge workflow](enigma-infocom-edges.md) covers actual DOS

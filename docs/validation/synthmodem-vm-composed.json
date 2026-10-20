@@ -1,0 +1,140 @@
+{
+  "passed": true,
+  "checks": {
+    "guest_hello": true,
+    "actual_guest_backend_CONNECT": true,
+    "coalesced_commands_exact": true,
+    "bbs_reads_paused": true,
+    "retained_ring_bounded": true,
+    "forward_exact": true,
+    "session_survives_pressure": true,
+    "drain_observed": true,
+    "reverse_exact": true,
+    "telnet_observer_complete": true,
+    "teardown_retires_writer": true,
+    "teardown_removes_drains": true,
+    "session_closed": true,
+    "no_errors": true,
+    "guest_exit_after_actual_session_teardown": true,
+    "frozen_inputs_unchanged": true,
+    "independent_forward_audit": true,
+    "independent_guest_reverse_audit": true,
+    "independent_bbs_reverse_audit": true
+  },
+  "errors": [],
+  "forward_bytes": 16777219,
+  "reverse_bytes": 16777219,
+  "payload_sha256": "18a38005f8d075ef78597b4e16417c65ec9a823be88f9a7af1a69ea8bda9bb8e",
+  "forward_sha256": "18a38005f8d075ef78597b4e16417c65ec9a823be88f9a7af1a69ea8bda9bb8e",
+  "reverse_sha256": "18a38005f8d075ef78597b4e16417c65ec9a823be88f9a7af1a69ea8bda9bb8e",
+  "paused": {
+    "ring": 20258,
+    "socket": 69425
+  },
+  "drains": 4,
+  "connected": 1,
+  "modem_payload_offset": 193,
+  "control_wire_bytes": 16875643,
+  "bbs_wire_bytes": 16842761,
+  "connect": {
+    "bps": 14400,
+    "protocol": "V32bis"
+  },
+  "node": "v24.18.1",
+  "configuration": {
+    "holdMs": 0,
+    "quiescenceMs": 0,
+    "attachMaxMs": 100,
+    "terminalType": "ANSI",
+    "cols": 80,
+    "rows": 25,
+    "negotiateOptions": false,
+    "menuEscape": null
+  },
+  "scope": "Actual candidate backend parser/writer and CallSession attach/teardown with booted i386 helper. Synthetic modem endpoint and modeled SIP ownership; no DSP/SIP/audio, DOS/BBS software or hardware.",
+  "frozen_inputs": {
+    "lab/bbs/synthmodem_vm_composed.py": "35e8a9dc57e2979af126a93912dc35933c6478c8eee672c74cf978b78a468ab7",
+    "lab/bbs/synthmodem_vm_composed.js": "6a623f2f0bce831868a875fda468422f755593380a3c85c14fd370b3e8931bc7",
+    "lab/bbs/synthmodem_vm_control.py": "7eb30e96af9a7e7cd319cd645a68331c0386aa3dda3e9eba68ca5563b5b8a456",
+    "nix/flake.nix": "5587806a7fb8d1cf907c816cd7f1661c2496b8248395960ed84089e191687b3b",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+    "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
+    "lab/bbs/patches/synthmodem-control/control.patch": "752bfef57ec7ae4dbffa819603900e94a6b5181be6c46a3c2f91aba1e0094e4e",
+    "docs/validation/synthmodem-pressure.json": "fd7dd2986e583ef5865bff5060ee33f9356ecc29b04167495442ae5d7638ea83"
+  },
+  "candidate_sha256": {
+    "config.js": "3d6d33a25b8d86cde88d02ae538846592a020e8d64063abdb231a6ba7b27d49e",
+    "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+    "vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+    "src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+    "src/backends/PjsipBackend.js": "99e3c39ae8aacc48a630c1361146b8b6a0e82639c4fcb54ab61ea8c615eb9099",
+    "src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+    "src/session/CallSession.js": "164b2f6394ff77acd1829fcae236745509d63b50b373f7ebb2d20a35309f712b",
+    "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+    "src/telnet/TelnetProxy.js": "18c0a9ed59aa4cb48186514da4ddc94954e7db207eb71c39769bdac8f7be3353"
+  },
+  "upstream_revision": "b1752e4d0039e0cff72735924e03aa99922723a8",
+  "Nix_build": [
+    {
+      "drvPath": "/nix/store/6cvys9xlbnz3rpcvql2xyh1liqrgv9x1-synthmodem-control-candidate-b1752e4-pcplus.drv",
+      "outputs": {
+        "out": "/nix/store/2ic5d10s465ny2rfv852x251gnqdf5rg-synthmodem-control-candidate-b1752e4-pcplus"
+      }
+    }
+  ],
+  "helper_sha256": "434b7f536cfb2ea58c5a5e739fea8540a7a27600733d2bc280f301e39ed0706c",
+  "media_sha256": {
+    "bzImage": "2bac10d87a024026de6c00539ea70d19194169b6b99111d9178815b470d77dbe",
+    "rootfs-slmodemd-pjsip.cpio.gz": "c52f230a8b38a8e3476b4a669948e02dd615a367ab0f649251e93209fd659ead"
+  },
+  "candidate_image_sha256": "60d9fba4b986dc4ecd4b39e4e389bb7b144bc4b8ca0c5fb146d5db74a980c8fa",
+  "archive_entries_changed": [
+    "usr/local/bin/modemd-ctrl"
+  ],
+  "archive_entries_added": [
+    "lab-init"
+  ],
+  "qemu_command": [
+    "qemu-system-i386",
+    "-machine",
+    "pc",
+    "-accel",
+    "tcg",
+    "-m",
+    "128",
+    "-smp",
+    "1",
+    "-display",
+    "none",
+    "-monitor",
+    "none",
+    "-serial",
+    "file:/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-vm-composed-01/console.log",
+    "-no-reboot",
+    "-nic",
+    "none",
+    "-kernel",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-vm-cache/vm/images/bzImage",
+    "-initrd",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-vm-composed-01/candidate.cpio.gz",
+    "-append",
+    "console=ttyS0 rdinit=/lab-init panic=-1",
+    "-device",
+    "virtio-serial-pci,id=serial0",
+    "-chardev",
+    "socket,id=p1,host=127.0.0.1,port=36779",
+    "-device",
+    "virtserialport,bus=serial0.0,nr=1,chardev=p1,name=lab.port1",
+    "-chardev",
+    "socket,id=p2,host=127.0.0.1,port=43029",
+    "-device",
+    "virtserialport,bus=serial0.0,nr=2,chardev=p2,name=lab.port2"
+  ],
+  "qemu_version": "QEMU emulator version 11.0.3",
+  "guest_frames": 32773,
+  "wire_sha256": {
+    "control-wire.bin": "e752673d776641136b99c36072ef865d53c51c5dde384cf2b22e65a7dd75df52",
+    "modem-wire.bin": "0229b5183e14e21a2615929f59baec54f52db3a2fa1b0981d61295e62a1085b9",
+    "bbs-wire.bin": "bd579d5b13d5143c97657d90e7ccf3627b7b29e7040c576943ab5ce0c6341ae1"
+  }
+}

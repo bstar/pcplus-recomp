@@ -3,7 +3,9 @@
 The maintained control-helper source patch now builds as a static Intel i386
 Linux executable through the pinned Nix toolchain and runs inside the upstream
 32-bit VM kernel/runtime. This advances the helper beyond host-only testing.
-It does not boot the full SIP/DSP stack or compose the Node pressure writer yet.
+The standalone helper test below does not boot the full SIP/DSP stack. A
+separate [Node/helper composition test](#nodehelper-composition) now connects
+the actual pressure candidate to that same rebuilt guest helper.
 
 ```sh
 ./tools/modem-dev --command python3 lab/bbs/synthmodem_vm_control.py \
@@ -54,8 +56,52 @@ the14 checks, independent raw-frame/payload audit, source/media hashes, Nix
 derivation, QEMU command and archive identity. Accepted cohort:
 `synthmodem-vm-control-02`.
 
-Next: connect the actual Node pressure candidate to this rebuilt helper in one
-VM test, then run the normal slmodemd/PJSIP stack and real DOS/BBS workflows.
+Next: run the normal slmodemd/PJSIP stack and real DOS/BBS workflows through
+the composed candidate.
 Native DSP flow credit, serial-to-BBS pressure, SIP/audio, Boca V.8/14.4 negotiation
 and physical SPA2102 acceptance remain open. No installed service or live BBS was
 changed.
+
+## Node/helper composition
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/synthmodem_vm_composed.py \
+  --candidate build/bbs-lab/synthmodem-pressure-05/candidate \
+  --output build/bbs-lab/synthmodem-vm-composed-new
+```
+
+Use a fresh output directory. The candidate must match every file in the
+pressure receipt; stage it with the pressure checker first if absent. The VM
+media must already be present from the standalone helper test above. Both tests
+use the same Nix-built static i386 helper and checksum-pinned runtime media.
+
+The Node driver uses the actual PjsipBackend constructor/control parser/writer
+and CallSession attachment/teardown methods. The unopened SIP/RTP resource
+imports reject invocation, and session resource ownership is supplied by the
+harness. QEMU startup and socket connection are externally orchestrated. The
+guest receives ATZ/ATD1; its synthetic modem endpoint supplies OK/CONNECT14400.
+The actual helper and Node parser must enter connected mode without forcing
+the backend connected flag. Zero post-train hold/quiescence is explicit lab
+configuration, not a validated audio-training policy.
+
+The synthetic modem then enters a loopback server address as online data. The
+server offers Telnet BINARY in both directions. Pausing the modem-side reader
+must propagate pressure across the guest/helper/control socket until the
+actual proxy pauses its BBS socket. Resuming recovers16777219 exact bytes;
+the reverse path transfers the same all-byte pattern while read continuously.
+The reverse test does not establish reverse-TCP pressure support.
+
+The accepted `synthmodem-vm-composed-01` cohort passes19 checks. Four drain events
+were observed; at the measured pause the retained ring held20258 bytes and the
+Node socket held69425 wire bytes. Both payload hashes are
+`18a38005f8d075ef78597b4e16417c65ec9a823be88f9a7af1a69ea8bda9bb8e`.
+Actual session hangup closes the control socket, retires the writer/drain owner
+and produces the expected guest helper error exit1 followed by VM poweroff.
+
+The Python audit independently decodes all32773 guest frames, reconstructs the
+hostname plus reverse payload, checks forward modem bytes and decodes the BBS
+stream without using the candidate codec. The
+[receipt](../../docs/validation/synthmodem-vm-composed.json) binds raw wire hashes,
+all candidate files, harness inputs, Nix build, image delta and tool versions.
+The synthetic CONNECT14400 is a parser fixture: it proves no V.32bis negotiation.
+No real modem DSP, SIP/RTP/audio, DOS client, BBS software or hardware runs here.

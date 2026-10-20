@@ -92,6 +92,22 @@ Links below pin the reviewed source; future versions require rechecking.
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
 
+## Composed Node/helper VM checkpoint
+
+The [combined VM test](../lab/bbs/synthmodem-vm.md#nodehelper-composition) passes19
+checks with the actual candidate Node parser/writer/session methods connected
+to the Nix-built i386 helper. The guest's synthetic CONNECT triggers backend
+attachment, a stalled modem endpoint pauses BBS reads, both16777219-byte payloads
+match and actual session teardown retires writer/drain ownership before guest
+exit. Independent Python audits reconstruct all guest frames and both payloads.
+See the [receipt](validation/synthmodem-vm-composed.json).
+
+This composes the separately tested Node and C candidates; it does not run
+normal SIP/DSP startup. The modem endpoint and BBS TCP peer are synthetic, and
+session SIP ownership is modeled. CONNECT14400 is a result-code fixture, not
+V.32bis training. DSP/native credit, reverse TCP pressure, DOS/BBS composition
+through this complete candidate and all analog/hardware acceptance remain open.
+
 ## Booted rebuilt-helper checkpoint
 
 The [i386 VM helper test](../lab/bbs/synthmodem-vm.md) now passes14 checks plus an
@@ -103,7 +119,7 @@ transport close produces the expected helper exit and VM poweroff. See the
 [receipt](validation/synthmodem-vm-control.json).
 
 The second virtio character port is a modem endpoint stand-in. The normal
-SIP/DSP startup is bypassed, no Node writer is connected yet, and no physical
+SIP/DSP startup is bypassed, no Node writer is connected in this standalone run, and no physical
 handshake/audio or DOS/BBS compatibility is established by these VM checks.
 Normal runtime images, installed services and the live board remain untouched.
 
@@ -123,8 +139,9 @@ its writable high-water mark plus an accepted frame. False means accepted then
 paused, not a request to replay the frame. Capacity/replaced-channel failures
 hang up instead of silently continuing, and teardown removes stale drain owners.
 
-This source candidate is not installed. It has not yet been composed with the
-C helper in a rebuilt VM or tested with actual DSP/SIP/audio and DOS/BBS. Native
+This source candidate is not installed. The combined VM checkpoint above now
+composes it with the C helper; actual DSP/SIP/audio and DOS/BBS remain untested
+through that complete composition. Native
 DSP flow credit, serial-to-BBS pressure and physical hardware remain open.
 
 ## Bidirectional helper backpressure checkpoint
@@ -304,7 +321,7 @@ acceptance; historical checkpoint sections above describe their own frozen input
 | --- | --- | --- |
 | Serial/controller | Linked and DOS synthetic-call tests cover selectable DTE, numeric dialing, DCD history/loss, DTR cleanup and timeout budgets. | Actual Boca identity/results, COM/IRQ, CTS/RTS, DCD/DTR and UART load. |
 | Telnet/CP437/binary transport | Isolated codec candidate passes fragmentation/all-byte checks; synthetic-call DOS/BBS transfer receipts exist. | Candidate integration through the complete SIP/DSP path; physical display and transfers. |
-| Modem data pressure | Node writer and booted i386 helper pass separate pressure checks. | Compose those components; resolve native DSP flow credit and serial-to-BBS TCP pressure. |
+| Modem data pressure | Node writer and booted i386 helper pass separate and composed pressure checks. | Normal SIP/DSP integration; resolve native DSP flow credit and serial-to-BBS TCP pressure. |
 | Answering protocol | Pinned source describes VM-first auto mode and legacy native fallback. | Prove a shared protocol with this Boca; V.8 and V.32bis/14400 are unverified. |
 | Hardware/audio | Equipment and topology selected; adapter ordered. | All analog connection, audible handshake and end-to-end acceptance. |
 
