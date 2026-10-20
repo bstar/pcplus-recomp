@@ -1,5 +1,8 @@
 # CLI exit ownership
 
+The [attached-terminal follow-up](PARENT_EXIT.md) now verifies retained child
+return, lease retirement, error display and continued serial operation.
+
 The banked ASPECT CLI now checks callback ownership before returning to DOS.
 Ordinary cleanup still closes its script, UART and renderer owners. The final
 guard restores the startup PSP and retries safe break-owner recovery. If the
@@ -75,8 +78,8 @@ checks. A fresh tree with only declared sources reproduces29 DOS products,
 including the normal CLI, both probes, attached terminal, compiler and process
 components, without originals, prior objects or REA databases.
 
-The standalone CLI quarantine path is covered. A quarantined child returning to
-the attached terminal still needs its own acceptance test. Normal dispatch
+The standalone and non-mouse attached quarantine paths are covered. The
+mouse-enabled parent and same-session retry still need acceptance. Normal dispatch
 publication, application-wide parent lifetime, the remaining native services
 and physical RS232/WiFi-modem/keyboard acceptance remain open. No F01–F16 gate
 closes from this checkpoint.

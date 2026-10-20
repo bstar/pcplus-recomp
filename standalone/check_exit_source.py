@@ -5,10 +5,13 @@ from pathlib import Path
 from build_exit_owner import ROOT,sha
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--label',default='source-'+uuid.uuid4().hex)
+    parser.add_argument('--attached',action='store_true')
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     folder=ROOT/'build/exit-owner/source-proofs'/args.label;folder.mkdir(parents=True,exist_ok=False)
     fresh=folder/'source';sources={}
-    for name in ['exit-owner','aspect-process-break','aspect-exit-break','aspect-fault-break','terminal-process','aspect-compiler-dos']:
+    components=['exit-owner','aspect-process-break','aspect-exit-break','aspect-fault-break','terminal-process','aspect-compiler-dos']
+    if args.attached:components+=['aspect-exit-parent','terminal']
+    for name in components:
         manifest=json.loads((ROOT/'build'/name/'manifest.json').read_text())
         for path,digest in manifest['sources'].items():
             assert path not in sources or sources[path]==digest,path;sources[path]=digest
@@ -32,6 +35,7 @@ process.main(root/'standalone/aspect_fault_driver.c',parent_render=True,output=r
 compiler.main()
 subprocess.run([sys.executable,'standalone/build_terminal.py','--external-render'],check=True)
 '''
+    if args.attached:code+="probe.main(attached=True)\nsubprocess.run([sys.executable,'standalone/build_terminal.py'],check=True)\n"
     with (folder/'build.log').open('w') as log:
         result=subprocess.run([sys.executable,'-c',code],cwd=fresh,stdout=log,stderr=log,timeout=180)
     products=['exit-owner/EXITPAR.EXE','exit-owner/EXITKID.EXE','aspect-process-break/ASPECT.EXE',
@@ -41,10 +45,11 @@ subprocess.run([sys.executable,'standalone/build_terminal.py','--external-render
         'native-display/DISPLAY.EXE','native-display/VIDEO.COM','process-serial/PSERIAL.EXE',
         'process-serial/UART1.COM','process-serial/UART2.COM','native-process/NATIVE.EXE','native-process/NAMES.EXE']
     products+=['native-process/'+n for n in json.loads((ROOT/'build/native-process/manifest.json').read_text())['children']]
+    if args.attached:products+=['aspect-exit-parent/ASPECT.EXE','terminal/TERMINAL.EXE']
     compared={n:dict(expected=sha(ROOT/'build'/n),actual=sha(fresh/'build'/n)) for n in products} if not result.returncode else {}
     report=dict(passed=result.returncode==0 and len(compared)==len(products) and
         all(p['expected']==p['actual'] for p in compared.values()),exit_code=result.returncode,
-        source_files=len(sources),sources=sources,products=compared,original_inputs=[],
+        attached=args.attached,source_files=len(sources),sources=sources,products=compared,original_inputs=[],
         checker_sha256=sha(Path(__file__)),build_log_sha256=sha(folder/'build.log'),
         scope='Fresh declared-source tree: normal banked CLI, actual exit/fault probes, attached terminal, compiler and recovered process components. No original executable, object cache or REA database.')
     (folder/'result.json').write_text(json.dumps(report,indent=2)+'\n')

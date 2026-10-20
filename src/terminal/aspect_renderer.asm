@@ -6,6 +6,7 @@ CPU 8086
 %include "resident_bridge.inc"
 %ifdef ASPECT_EXTERNAL_RENDER
  %define RENDER_CAPABILITY 7
+ extern terminal_program_result
 %else
  %define RENDER_CAPABILITY 6
 %endif
@@ -189,6 +190,20 @@ terminal_render_failure_notice:
  call far terminal_aspect_emit_resident
  jmp .next
 .done:
+%ifdef ASPECT_EXTERNAL_RENDER
+ cmp byte [terminal_program_result+5],3 ;DOS4D retained-process mode.
+ jne .notice_finished
+ mov si,render_retained_text
+.retained:
+ mov al,[cs:si]
+ inc si
+ or al,al
+ jz .notice_finished
+ xor ah,ah
+ call far terminal_aspect_emit_resident
+ jmp .retained
+.notice_finished:
+%endif
  pop es
  pop bp
  pop di
@@ -200,6 +215,9 @@ terminal_render_failure_notice:
  popf
  retf
 render_failure_text: db 13,10,'ASPECT returned an error.',13,10,0
+%ifdef ASPECT_EXTERNAL_RENDER
+render_retained_text: db 'ASPECT memory retained.',13,10,0
+%endif
 
 render_psp:
  push bx

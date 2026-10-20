@@ -1,10 +1,18 @@
 # Full application reconstruction checklist
 
+The [attached retained-child handoff](PARENT_EXIT.md) accepts eight COM/flow
+routes with296 checks, actual DOS31/4D/MCB/callback evidence and continued
+parent keyboard/serial/query operation. The opt-in parent identifies retained
+memory;13 normal routes pass518 checks without a false notice. A31-product
+fresh source tree reproduces both parent variants and probes. Mouse-enabled
+fatal return, same-session retry, normal publication and all full gates remain
+open.
+
 The [CLI exit owner](EXIT_OWNER.md) adds validated DOS31 retention when callbacks
 or leases cannot be released. Twelve exit cases and an actual ASPECT RUN/WAIT
 quarantine preserve code/data/callbacks after memory pressure. Thirteen normal
 attached workflows and all93 fault/control routes pass with the guard enabled;
-29 source products reproduce without originals. Fatal return to the attached
+29 source products reproduce without originals. Fatal return to the mouse-enabled
 terminal, normal publication, full parent lifetime and all F01–F16 gates remain
 open.
 

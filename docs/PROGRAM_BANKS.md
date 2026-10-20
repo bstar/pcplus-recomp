@@ -70,7 +70,7 @@ changes INT1B and enables extended checking. Cross-port cases cover combined,
 software and no flow control, including a fault inside WAIT.
 
 Normal terminal/ASPECT publication remains unchanged. Application-wide parent
-ownership, the attached parent's fatal-retention path, faults during individual native
+ownership, the mouse-enabled parent's fatal-retention path, faults during individual native
 instructions/DOS kernel operations, remaining window/macro/error services and
 physical modem/keyboard acceptance remain open. The modeled service cuts do
 not prove those asynchronous cases. No full application gate closes here.

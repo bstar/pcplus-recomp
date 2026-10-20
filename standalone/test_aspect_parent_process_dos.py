@@ -9,7 +9,7 @@ sys.path.insert(0,str(ROOT/'src/aspect'))
 from compiler import compile_source
 
 
-def prepare_observer(out,offsets,map_path):
+def prepare_observer(out,offsets,map_path,exit_map=None):
     render.observer(offsets)
     source=(out/'observer.asm').read_text()
     resources=[('terminal_directory_context_valid',2),('terminal_directory_context',496),
@@ -169,17 +169,118 @@ resource_table: dw RESOURCE_TABLE
     assert source.count(old)==1;source=source.replace(old,' mov di,after_history\n call copy_history\n'+final+' inc word [exec_done]')
     sample='nested_count: dw 0\nleased_count: dw 0\nresource_mismatches: dw 0\nlease_on_return: dw 0\nlease_begins: dw 0\nlease_ends: dw 0\nlease_refreshes: dw 0\nfinal_owned: dw 0\nfinal_begins: dw 0\nfinal_ends: dw 0\nfinal_refreshes: dw 0\nrecords_overflow: dw 0\nactive_record: dw 0\nnested_records: times 32*70 db 0\nresource_before: times '+str(size)+' db 0\nresource_after: times '+str(size)+' db 0\n'
     source=source.replace('sample_end:',sample+'sample_end:').replace('resident_end:',extra+'\nresident_end:')
+    if exit_map is not None:source=exit_observer(source,exit_map)
     (out/'observer.asm').write_text(source)
     subprocess.run(['nasm','-fbin',str(out/'observer.asm'),'-o',str(out/'RENDER.COM')],check=True)
     return (out/'RENDER.COM').read_bytes(),size
 
 
+def exit_observer(source,map_path):
+    """Observe actual DOS31/4D and invoke only the known retained test ISR."""
+    symbols={n:(int(s,16),int(o,16)) for s,o,n in re.findall(
+        r'^([0-9a-f]{4}):([0-9a-f]{4})[*+]?\s+(\w+)\s*$',map_path.read_text(),re.M|re.I)}
+    data_seg,hits=symbols['_aspect_exit_hits'];extra_seg,extra=symbols['_aspect_exit_extra']
+    assert data_seg==extra_seg
+    hook=r''' cmp byte [ss:bp+17],0x4d
+ jne .ordinary
+ cmp word [cs:exec_done],1
+ jne .ordinary
+ mov ah,0x62
+ int 0x21
+ cmp bx,[cs:parent_psp]
+ jne .chain
+ restore
+ pushf
+ call far [cs:old21]
+ save
+ mov bp,sp
+ mov ax,[ss:bp+16]
+ mov [cs:retained_raw_status],ax
+ mov ax,[ss:bp+18]
+ mov [ss:bp+24],ax
+ restore
+ iret
+.ordinary:
+'''
+    old=' mov bp,sp\n cmp byte [ss:bp+17],0x4b'
+    assert source.count(old)==1;source=source.replace(old,' mov bp,sp\n'+hook+' cmp byte [ss:bp+17],0x4b')
+    old='.exit_check:\n cmp byte [ss:bp+17],0x4c\n jne .chain'
+    new='.exit_check:\n cmp byte [ss:bp+17],0x4c\n je .outer_exit\n cmp byte [ss:bp+17],0x31\n jne .chain\n.outer_exit:'
+    assert source.count(old)==1;source=source.replace(old,new)
+    old=' mov al,[ss:bp+16]\n xor ah,ah\n mov [cs:exit_code],ax'
+    capture=r''' mov al,[ss:bp+17]
+ xor ah,ah
+ mov [cs:retained_function],ax
+ cmp ax,0x31
+ jne .exit_recorded
+ mov [cs:retained_psp],bx
+ dec bx
+ mov es,bx
+ mov ax,[es:1]
+ mov [cs:retained_owner_before],ax
+ mov ax,[es:3]
+ mov [cs:retained_paras_before],ax
+.exit_recorded:
+'''
+    assert source.count(old)==1;source=source.replace(old,capture+old)
+    after=r''' cmp word [cs:retained_function],0x31
+ jne .retained_checked
+ mov ax,[cs:retained_psp]
+ dec ax
+ mov es,ax
+ mov ax,[es:1]
+ mov [cs:retained_owner_after],ax
+ mov ax,[es:3]
+ mov [cs:retained_paras_after],ax
+ xor ax,ax
+ mov es,ax
+ mov ax,[es:0x1b*4]
+ mov [cs:retained_vector_off],ax
+ mov ax,[es:0x1b*4+2]
+ mov [cs:retained_vector_seg],ax
+ mov ax,[cs:retained_psp]
+ add ax,0x10+DATA_SEG
+ mov es,ax
+ mov ax,[es:HITS_OFF]
+ mov [cs:retained_hits_before],ax
+ mov ax,[es:EXTRA_OFF]
+ mov [cs:retained_extra],ax
+ dec ax
+ mov es,ax
+ mov ax,[es:1]
+ mov [cs:retained_extra_owner],ax
+ mov ax,[es:3]
+ mov [cs:retained_extra_paras],ax
+ mov ax,[cs:retained_extra]
+ mov es,ax
+ mov ax,[es:0]
+ mov [cs:retained_extra_word],ax
+ ; This known source-owned callback is the only active probe operation.
+ int 0x1b
+ mov ax,[cs:retained_psp]
+ add ax,0x10+DATA_SEG
+ mov es,ax
+ mov ax,[es:HITS_OFF]
+ mov [cs:retained_hits_after],ax
+.retained_checked:
+'''
+    for token,value in {'DATA_SEG':data_seg,'HITS_OFF':hits,'EXTRA_OFF':extra}.items():after=after.replace(token,str(value))
+    old=' inc word [exec_done]';assert source.count(old)==1;source=source.replace(old,after+old)
+    names=['function','psp','owner_before','paras_before','owner_after','paras_after',
+        'vector_off','vector_seg','hits_before','hits_after','raw_status','extra','extra_owner','extra_paras','extra_word']
+    old='nested_count: dw 0';assert source.count(old)==1
+    return source.replace(old,''.join('retained_'+n+': dw 0\n' for n in names)+old)
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--label',default='parent-'+uuid.uuid4().hex);parser.add_argument('--case',action='append')
     parser.add_argument('--break-owner',action='store_true')
+    parser.add_argument('--exit-probe',action='store_true')
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
-    out=ROOT/('build/aspect-parent-break' if args.break_owner else 'build/aspect-parent-process')/args.label;out.mkdir(parents=True,exist_ok=False)
+    if args.exit_probe:assert args.break_owner
+    out=ROOT/('build/aspect-parent-exit' if args.exit_probe else 'build/aspect-parent-break' if args.break_owner else 'build/aspect-parent-process')/args.label;out.mkdir(parents=True,exist_ok=False)
     parent=ROOT/'build/terminal-process/TERMINAL.EXE';child=ROOT/('build/aspect-process-break/ASPECT.EXE' if args.break_owner else 'build/aspect-process-parent/ASPECT.EXE')
+    if args.exit_probe:child=ROOT/'build/aspect-exit-parent/ASPECT.EXE'
     identities={}
     for product in (parent,child,ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE'):
         manifest=json.loads((product.parent/'manifest.json').read_text())
@@ -191,10 +292,12 @@ def main():
         target=out/'sources'/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,target)
     render.OUT=out
     offsets=render.map_offsets(parent.parent/'terminal.map')
-    observer,resource_size=prepare_observer(out,offsets,parent.parent/'terminal.map')
+    observer,resource_size=prepare_observer(out,offsets,parent.parent/'terminal.map',child.parent/'ASPECT.map' if args.exit_probe else None)
     harness=render.adapter();results=[]
     cases=[dict(name=k,kind=k,option=o,port=1,flow='H',translation='identity',full=False) for k,o in [('G',''),('T',' NOCLEAR'),('W',' WAIT'),('R',' NOCLEAR'),('F','')]]
     cases += [dict(name=f'full-{port}-{flow}',kind='FULL',option='',port=port,flow=flow,translation=('table' if (port+ord(flow))%2 else 'seven'),full=True) for port in (1,2) for flow in 'NSHB']
+    if args.exit_probe:
+        cases=[dict(name=f'Q-{port}-{flow}',kind='G',option=' WAIT',port=port,flow=flow,translation='identity',full=False) for port in [1,2] for flow in 'NSHB']
     if args.case:cases=[c for c in cases if c['name'] in args.case];assert {c['name'] for c in cases}==set(args.case)
     for case in cases:
         name,kind,option,port,flow=(case[k] for k in ('name','kind','option','port','flow'));full=case['full'];folder=out/name;folder.mkdir()
@@ -231,7 +334,8 @@ def main():
         if case['translation']=='table':
             table=bytearray(range(256));table[ord('z')]=27;table[27]=ord('!');table[ord('[')]=ord('{');files['TEST.XLT']=bytes(table);extra=' /X:D:\\TEST.XLT';banner=banner.replace(b'\x1b',b'z');post=post.replace(b'\x1b',b'z')
         if case['translation']=='seven':struct.pack_into('<H',settings,0x1d64-0x1b84,2);banner=bytes(x|128 for x in banner);post=bytes(x|128 for x in post)
-        harness.RENDER_POST=post;harness.RENDER_TRIGGER=b'Synth42\r'
+        harness.RENDER_POST=b'\x1b[2;1H'+post if args.exit_probe else post
+        harness.RENDER_TRIGGER=b'ready' if args.exit_probe else b'Synth42\r'
         result=harness.run(name,'success','p6500 space p700 r e a d y p700 a-x',directory=bytes(payload),prm=bytes(settings),com=port,
             arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK'+extra,files=files,
             banner=banner,working_drive='d',observer='RENDER')
@@ -244,8 +348,8 @@ def main():
             entry=raw[at+26+i*70:at+26+(i+1)*70];lease,result_word,carry=struct.unpack_from('<3H',entry,64)
             records.append(dict(name=entry[:64].split(b'\0',1)[0].decode('cp437'),lease=lease,result=result_word,carry=carry))
         successful=[r for r in records if not r['carry']]
-        fatal=kind=='F';calls=9 if full else 1
-        checks.update(outer_ASPECT_exit=header[:4]==(0x524e,1,1,1) and header[6]==(14 if fatal else 0),
+        fatal=kind=='F' or args.exit_probe;calls=9 if full else 1
+        checks.update(outer_ASPECT_exit=header[:4]==(0x524e,1,1,1) and header[6]==(10 if args.exit_probe else 14 if fatal else 0),
             real_nested_EXEC_observed=len(successful)==(9 if full else 1) and not resources[11],
             owned_parent_lease=sum(r['lease']!=0 for r in successful)==(8 if full else 1) and resources[3]==(1 if full or kind in 'TR' else 2),
             parent_resources_unchanged=resources[2]==0,
@@ -259,19 +363,32 @@ def main():
             expected_parent_error=(b'ASPECT returned an error.' in screen[::2])==fatal)
         if kind in 'TR':checks['NOCLEAR_visible_child_text']=screen[20*160:20*160+2]==b'C\x4f'
         if not fatal:checks['post_child_CPR']=b'\x1b[2;1R' in wire[wire.find(b'Synth42\r')+8:]
-        if kind in 'GW':checks['saved_parent_screen_restored']=screen[:42:2]==b'FIRST BYTE SAFELOGIN:'
+        if kind in 'GW' and not fatal:checks['saved_parent_screen_restored']=screen[:42:2]==b'FIRST BYTE SAFELOGIN:'
+        retained=None
+        if not args.exit_probe:checks['no_false_retention_notice']=b'ASPECT memory retained.' not in screen[::2]
+        if args.exit_probe:
+            retained=struct.unpack_from('<15H',raw,at-30)
+            symbols={n:(int(s,16),int(o,16)) for s,o,n in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+]?\s+(\w+)\s*$',(child.parent/'ASPECT.map').read_text(),re.M|re.I)}
+            code_seg,code_off=symbols['_aspect_exit_foreign']
+            checks.update(actual_DOS31_and_4D=retained[0]==0x31 and retained[10]==0x030a,
+                retained_main_MCB=retained[1]==retained[2]==retained[4] and retained[3]==retained[5] and retained[3]>0,
+                retained_source_ISR=retained[6:8]==(code_off,retained[1]+0x10+code_seg),
+                retained_callback_invoked=retained[8:10]==(0,1),
+                retained_extra_MCB=retained[12]==retained[1] and retained[13:15]==(0x20,0xa55a),
+                retained_memory_notice=b'ASPECT memory retained.' in screen[::2],
+                continued_parent_CPR=b'\x1b[2;1R' in wire[wire.find(b'ready')+5:])
         if full:
             checks['DOS_source_compiler']=(folder/'NEXT.ASX').is_file() and (folder/'NEXT.ASX').read_bytes()==compile_source(next_source)
             checks['real_command_shell']=(folder/'SHELL.OUT').is_file() and (folder/'SHELL.OUT').read_bytes()==b'SHELLREAL'
             checks['pending_stream_output']=(folder/'WRITE.BIN').is_file() and (folder/'WRITE.BIN').read_bytes()==b'pending5'
-        result.update(passed=all(checks.values()),passive_header=header,resource_words=resources,nested_EXEC=records,compared_parent_bytes=resource_size,configuration=case)
+        result.update(passed=all(checks.values()),passive_header=header,resource_words=resources,nested_EXEC=records,compared_parent_bytes=resource_size,configuration=case,retained_words=retained)
         (folder/'result.json').write_text(json.dumps(result,indent=2)+'\n');results.append(result)
         print(name,'FINAL PASS' if result['passed'] else 'FINAL FAIL',flush=True)
     for name,digest in identities.items():assert sha(ROOT/name)==digest,name
-    report=dict(passed=all(r['passed'] for r in results),experimental_break_owner=args.break_owner,cases=results,parent_sha256=sha(parent),child_sha256=sha(child),
+    report=dict(passed=all(r['passed'] for r in results),experimental_break_owner=args.break_owner,exit_probe=args.exit_probe,cases=results,parent_sha256=sha(parent),child_sha256=sha(child),
         source_hashes=identities,
         checker_sha256=sha(Path(__file__)),observer_sha256=sha(out/'RENDER.COM'),
-        scope='Experimental capability7; real attached parent renderer, selected synthetic directory, actual DOS child and UART mutation. No physical modem or whole-application publication.')
+        scope=('Actual retained child return through capability7; observer records DOS31/4D/MCBs and invokes only the known retained test ISR. Real renderer/UART reacquisition; no state repair or physical modem claim.' if args.exit_probe else 'Experimental capability7; real attached parent renderer, selected synthetic directory, actual DOS child and UART mutation. No physical modem or whole-application publication.'))
     (out/'result.json').write_text(json.dumps(report,indent=2)+'\n')
     return 0 if report['passed'] else 1
 
