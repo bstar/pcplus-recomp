@@ -5,6 +5,7 @@
 ; number20 fields are rendered; password/script/KEY/META are never displayed.
 BITS 16
 CPU 8086
+%include "trap_wait.inc"
 %include "directory_dos.inc"
 SEGMENT _TEXT public class=CODE use16
 extern _directory_dos_page
@@ -100,8 +101,7 @@ terminal_directory_choose:
 .paint:
  call browser_paint
 .key:
- xor ah,ah
- int 0x16
+ TERMINAL_WAIT_KEY ah
  cmp al,27
  je .cancel
  cmp al,13

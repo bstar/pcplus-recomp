@@ -1,5 +1,12 @@
 # Application trap ownership
 
+The [foreground cancellation follow-up](TERMINAL_CANCEL.md) adds checked dialog
+key waits and polls the trap flag in serial-only and transfer service paths.
+Its30 actual DOS cancellation cases include accepted partial-transfer cleanup
+and the separate script error-return wait.
+Shared epilogues preserve the earlier retained allocation floors; the process
+bank is now661 bytes. See that follow-up for current sizes and BBS results.
+
 The opt-in `terminal-traps` and `terminal-traps-mouse` products install owned
 INT1B/23/24 handlers before configuration and UART acquisition. They use the
 banked EXEC backend and final-exit allocation guard. Normal publication is
@@ -79,8 +86,9 @@ complete BBS workflows and nonlocal application-error recovery remain separate.
 The retry proof covers one retained failure and one successful retry, not
 unlimited quarantine or reclamation. No full application gate closes.
 
-The keyboard/mouse near-code spare is686/536 bytes; DS=SS spare is672/640.
-The process bank grows to676 bytes. All linked code banks contribute to the
+At the initial trap-owner checkpoint the keyboard/mouse near-code spare
+is686/536 bytes; DS=SS spare is672/640. The process bank is676 bytes there.
+All linked code banks contribute to the
 retained minimum and retain the checked near/far EXEC bridge.
 
 Use the pinned Nix toolchain:

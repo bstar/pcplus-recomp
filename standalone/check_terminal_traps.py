@@ -12,6 +12,7 @@ class Machine:
         self.image=DosImage(OUT/'TERMINAL.EXE',OUT/'terminal.map');self.u=self.image.uc
         self.map={n:(self.image.base_segment+int(s,16),int(o,16)) for s,o,n in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+]?\s+(\w+)\s*$',(OUT/'terminal.map').read_text(),re.M|re.I)}
         self.psp=0xff0;self.flag=flag;self.version=5;self.calls=[];self.done=None
+        self.bios_key=None;self.bios_calls=[]
         self.image.put('process_psp',self.psp)
         self.baseline=[(0x111,0xf000),(0x222,0xf000),(0x333,0xf000)]
         for index,pair in zip([0x1b,0x23,0x24],self.baseline):self.vector(index,*pair)
@@ -22,6 +23,13 @@ class Machine:
         seg,off=self.map['terminal_trap_break'];cs,ip=self.map['terminal_trap_critical']
         return [(off,seg),(off,seg),(ip,cs)]
     def interrupt(self,u,n,_):
+        if n==0x16:
+            ah=u.reg_read(UC_X86_REG_AX)>>8;self.bios_calls.append(ah)
+            assert self.bios_key is not None
+            if ah==1:u.reg_write(UC_X86_REG_EFLAGS,u.reg_read(UC_X86_REG_EFLAGS)&~0x40)
+            elif ah==0:u.reg_write(UC_X86_REG_AX,self.bios_key)
+            else:raise AssertionError(ah)
+            return
         assert n==0x21
         ax=u.reg_read(UC_X86_REG_AX);self.calls.append(ax)
         if ax>>8==0x30:u.reg_write(UC_X86_REG_AX,self.version)
@@ -117,8 +125,20 @@ def main():
     assert m.vectors()==m.ours() and m.image.get('terminal_trap_child')==0
     m=Machine();assert m.call('open')==0;assert m.call('open')==1
     assert m.call('close')==0 and m.vectors()==m.baseline
+    keys=[]
+    for key in [0,0x011b,0x4b00,0x1c0d]:
+        m=Machine();assert m.call('open')==0;m.bios_key=key
+        assert m.call('key')==key and m.bios_calls==[1,0]
+        assert m.image.get('terminal_quit')==0
+        keys.append(key)
+    m=Machine();assert m.call('open')==0;m.handler('break')
+    assert m.call('key')==0x011b and not m.bios_calls and m.image.get('terminal_quit')==1
+    m=Machine();assert m.call('key')==0x011b and not m.bios_calls
+    m=Machine();assert m.call('open')==0
+    assert m.call('key',flags=2)==0x011b and not m.bios_calls
     report=dict(passed=True,lifecycle_flags=lifecycle,invalid_admissions=invalid,events=events,unfailable_critical='held',
         quarantine_vectors=quarantines,self_baselines_rejected=self_baselines,IF0_foreign_PSP_resume=True,cancelled_child_rejected=True,reentry_rejected=True,
+        dialog_keys=keys,dialog_pending_cancel=True,dialog_closed_and_IF0_rejected=True,
         binary_sha256=sha(OUT/'TERMINAL.EXE'),checker_sha256=sha(Path(__file__)),loader_sha256=sha(ROOT/'standalone/dos_image.py'),
         scope='Actual linked trap instructions and foreign-DS interrupt frames; modeled DOS version/PSP/break services. Critical holding and explicit vector repair are modeled, not live kernel corruption recovery.')
     (OUT/'trap-model.json').write_text(json.dumps(report,indent=2)+'\n');print('Trap owner lifecycle,foreign frames,typed events,quarantine and holding checks PASS')

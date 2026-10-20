@@ -3,6 +3,7 @@
 ; existing session. No screen repaint or transport reset is performed here.
 BITS 16
 CPU 8086
+%include "trap_wait.inc"
 GROUP DGROUP _DATA _BSS
 %include "terminal_import.inc"
 %include "modem_import.inc"
@@ -281,8 +282,7 @@ setup_port_choice:
  int 0x10
  jmp .text
 .key:
- xor ax,ax
- int 0x16
+ TERMINAL_WAIT_KEY ax
  mov word [terminal_setup_key_consumed],1
  cmp al,'Y'
  je .accept
@@ -327,8 +327,7 @@ setup_profile_choice:
  int 0x10
  jmp .text
 .key:
- xor ax,ax
- int 0x16
+ TERMINAL_WAIT_KEY ax
  mov word [terminal_setup_key_consumed],1
  cmp al,'Y'
  je .accept
@@ -366,8 +365,7 @@ setup_serial_choice:
  int 0x10
  jmp .text
 .key:
- xor ax,ax
- int 0x16
+ TERMINAL_WAIT_KEY ax
  mov word [terminal_setup_key_consumed],1
  cmp al,'Y'
  je .accept

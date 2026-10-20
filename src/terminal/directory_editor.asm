@@ -7,6 +7,7 @@
 BITS 16
 CPU 8086
 %include "directory_dos.inc"
+%include "trap_wait.inc"
 SEGMENT _TEXT public class=CODE use16
 extern terminal_screen_save_far,terminal_screen_restore_far,text_video_segment
 global terminal_directory_edit
@@ -74,8 +75,7 @@ terminal_directory_edit:
 .redraw:
  call ed_paint
 .key:
- xor ah,ah
- int 0x16
+ TERMINAL_WAIT_KEY ah
  cmp al,27
  je .restore
  cmp al,9

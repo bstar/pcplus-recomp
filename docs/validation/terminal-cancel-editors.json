@@ -1,0 +1,136 @@
+{
+  "recorded": true,
+  "binary_sha256": "8f513e45275a003e3493a2c2a700468808bdf5c3ff5e9a62c846074b45a66290",
+  "runs": [
+    {
+      "server": "synchronet",
+      "label": "cancel-synchronet-editor-01",
+      "modem_packet_delay_ms": 0,
+      "editor_passed": true,
+      "checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "draft_aborted": true,
+        "insert_toggled_overtype": true,
+        "home_marker_at_line_start": true,
+        "end_marker_at_line_end": true,
+        "delete_erases_final_character": true,
+        "tab_advances_to_next_stop": true,
+        "page_keys_report_document_boundaries": true,
+        "ctrl_y_delete_line_response": true
+      },
+      "observed_key_wire": {
+        "home": true,
+        "end": true,
+        "insert": true,
+        "delete": true,
+        "page_up": true,
+        "page_down": true,
+        "tab": true,
+        "delete_line_ctrl_y": true
+      },
+      "evidence": {
+        "build/bbs-lab/results/synchronet/cancel-synchronet-editor-01/result.json": "8cfb8d85d8dd238f07d069d2b114330ae44bfb1069a60b65b1c4bd5936b93e96",
+        "build/bbs-lab/results/synchronet/cancel-synchronet-editor-01/semantic-audit.json": "d8ea0631489dbdcdfca76f95d0235d48866d020c8e21d76d57ecb917e7cef5f3",
+        "build/bbs-lab/results/synchronet/cancel-synchronet-editor-01/dosbox.conf": "080a35ca9f864b65ffac8ee99794a303cb5a18f8d18436c352f29b98ff39159c",
+        "build/bbs-lab/results/synchronet/cancel-synchronet-editor-01/serial-received.bin": "271c714a3ec4d2d5a2cb636691138b5c2adfce8ec8d25cbd7ff39b14bf9f0538",
+        "build/bbs-lab/results/synchronet/cancel-synchronet-editor-01/display.bin": "77a5a95e0f709e8e84dfd6737666f5a80017e350062a905313f2c5b74c14c844",
+        "build/bbs-lab/results/synchronet/cancel-synchronet-editor-01/SCREEN.BIN": "e9cda479a1b4279eda85f0eadd4ee06dbdd2dbf74356bc435bca6e8d1b31cd40",
+        "build/bbs-lab/results/synchronet/cancel-synchronet-editor-01/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/synchronet/cancel-synchronet-editor-01/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+      }
+    },
+    {
+      "server": "enigma",
+      "label": "cancel-enigma-editor-buffered-01",
+      "modem_packet_delay_ms": 30,
+      "editor_passed": true,
+      "checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "no_post_saved": true,
+        "insert_toggled_overtype": true,
+        "home_moves_before_marker": true
+      },
+      "observed_key_wire": {
+        "home": true,
+        "end": true,
+        "insert": true,
+        "delete": true,
+        "page_up": true,
+        "page_down": true,
+        "tab": true,
+        "delete_line_ctrl_y": true
+      },
+      "evidence": {
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-buffered-01/result.json": "ba4c879c7e607a67c1be45872fc0e98bb2e8cfdbf1401d430acb1a3bf1f191bb",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-buffered-01/semantic-audit.json": "2fbce9e16b160e7db8415413bd29df50ad7699e0fc7edba1aa5b7b6587f8af2f",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-buffered-01/dosbox.conf": "f39c023664fd1883aa84e5b447467452e73a0ceb286366f0dc97761a9e2f61c5",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-buffered-01/serial-received.bin": "e2ac8be3a323add1bea14055c8d25ff7badf37921fb3cc9fe3278918f1ae3397",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-buffered-01/display.bin": "c7354a46815b1e36d1f310e3b8aab5d2bd1130e9246d752d41b3c06818c590fb",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-buffered-01/SCREEN.BIN": "95ed5f6c1ff5557e5ccd75735358b0f28810fd5303e28e5f275064d8eef1dbec",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-buffered-01/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-buffered-01/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-buffered-01/server-log-start.json": "251a52556977b3676d536d126cd2df34bf778b6bc8002a76c3e8f475819dad32",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-buffered-01/server-session.jsonl": "34c1acbf03b61adb2f13a6fbd469c885e935ad31f89463904230abc7719c10f1"
+      }
+    },
+    {
+      "server": "enigma",
+      "label": "cancel-enigma-editor-immediate-01",
+      "modem_packet_delay_ms": 0,
+      "editor_passed": false,
+      "checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "no_post_saved": true,
+        "insert_toggled_overtype": false,
+        "home_moves_before_marker": true
+      },
+      "observed_key_wire": {
+        "home": true,
+        "end": true,
+        "insert": true,
+        "delete": true,
+        "page_up": true,
+        "page_down": true,
+        "tab": true,
+        "delete_line_ctrl_y": true
+      },
+      "evidence": {
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-immediate-01/result.json": "d9ff2e6cc9a240a39c5eb90008b3af8d295e412108937ce0db9e7ae84114c539",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-immediate-01/semantic-audit.json": "25f10c4d3440786fb8b2a9071ce48bb4a1a9b2987496d58f476fcc0bc0885570",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-immediate-01/dosbox.conf": "5c1a89840f1eaedb51c00653ee5f44bcf3279b12e90dbcd6c03aff22d4d6189d",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-immediate-01/serial-received.bin": "d7789c407d3f122cf50ae8ee9b415391086a39220f4d3c57d14c6e3a4c13495c",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-immediate-01/display.bin": "d79a3e21ca24c01d082e3d3f34e7a405c3041ce460c98eb8f93e778bd120be07",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-immediate-01/SCREEN.BIN": "17c00ffcf3edb2566c34f02c14c791503cb6d3394a791fdcc780d6bf51668a92",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-immediate-01/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-immediate-01/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-immediate-01/server-log-start.json": "a235eb13683028938bf9eed7c5b5f507cd97534d0fdd92e62b40058baa8e4e6b",
+        "build/bbs-lab/results/enigma/cancel-enigma-editor-immediate-01/server-session.jsonl": "149fb8a88274214c177c71c073bc96b123589a478f236bc0bf13e6b92c3505d0"
+      }
+    }
+  ],
+  "immediate_ENiGMA_passed": false,
+  "stock_ENiGMA_commit": "6c25317168b762f7d9088a54d3f8295438827a0e",
+  "stock_source_sha256": {
+    "core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+    "core/multi_line_edit_text_view.js": "687eb7ae3355cea0e91a30f80134a87b9060bc26f11f1661c7c4f7cfb0d47ce7"
+  },
+  "auditor_sha256": "919d373b4879560219fe10049f1df74b76cbcf03c6a738b58caf7b685ed79845",
+  "audit_sources": {
+    "lab/bbs/test_dos.py": "4f4f1119d52e59664073ec61b3ecb54b7d5e5dab0e9ecf90d7e6b827344bf6d6",
+    "lab/bbs/editor_dos_probe.py": "e151b915529b28aa293408114feed5617f0a41099cdf83c059e743869f58a932",
+    "lab/bbs/check_editor_dos.py": "6857d87a4e476d5237ad2b03eef32180f415901034b426dc84a2d6c203d30783",
+    "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+    "lab/bbs/editor-recipes.json": "72777d66ae84bd488f551cdb367deadbb47d4a4405f921f0d1ab0d578b1a3649",
+    "lab/bbs/synchronet-editor-recipe.json": "a2cce7cd32d8b18a722286b4b27af92f9fe5a60007702330ab225a3820c2b221"
+  },
+  "scope": "Keyboard trap-enabled client, stock local editors, unsaved synthetic drafts. Synchronet immediate and ENiGMA buffered passes remain distinct from immediate ENiGMA outcome. No mouse-BBS, physical modem, multiline editing, transfer or door acceptance claim."
+}

@@ -347,6 +347,10 @@ terminal_transfer_service:
  push si
  push di
  push es
+%ifdef TERMINAL_TRAPS
+ extern terminal_trap_poll
+ call far terminal_trap_poll
+%endif
  call uart_poll_flow
  cmp word [terminal_quit],0
  je .rx

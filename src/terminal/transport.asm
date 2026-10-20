@@ -194,10 +194,6 @@ csi_transmit_string:
  ret 2
 
 terminal_poll_io:
-%ifdef TERMINAL_TRAPS
- extern terminal_trap_poll
- call far terminal_trap_poll
-%endif
  cmp word [terminal_aspect_active],0
  je .ordinary
  call far terminal_render_poll
@@ -445,6 +441,10 @@ terminal_menu_pending_poll:
 ; UART/modem/TX service without consuming a BIOS key. Used by capture prompt.
 global terminal_poll_serial
 terminal_poll_serial:
+%ifdef TERMINAL_TRAPS
+ extern terminal_trap_poll
+ call far terminal_trap_poll
+%endif
  cmp word [terminal_aspect_active],0
  je .ordinary
  call far terminal_render_poll

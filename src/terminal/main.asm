@@ -112,6 +112,11 @@ _small_code_:
  jmp terminal_shutdown
 .configured:
  call terminal_select_directory
+%ifdef TERMINAL_TRAPS
+ call far terminal_trap_poll
+ cmp word [terminal_quit],0
+ jne terminal_shutdown
+%endif
  or ax,ax
  jz .load_configuration
  cmp ax,1

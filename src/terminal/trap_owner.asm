@@ -8,6 +8,7 @@ GROUP TRAP_GROUP TRAP_CODE
 extern process_psp,terminal_quit,terminal_exit_code
 global terminal_trap_open,terminal_trap_suspend,terminal_trap_resume,terminal_trap_close
 global terminal_trap_poll,terminal_trap_break,terminal_trap_critical,terminal_trap_hold
+global terminal_trap_key
 %macro save 0
  push bp
  push bx
@@ -18,14 +19,7 @@ global terminal_trap_poll,terminal_trap_break,terminal_trap_critical,terminal_tr
  push es
 %endmacro
 %macro restore 0
- pop es
- pop di
- pop si
- pop dx
- pop cx
- pop bx
- pop bp
- retf
+ jmp trap_return
 %endmacro
 context:
  call segments
@@ -238,8 +232,7 @@ terminal_trap_open:
  call failed_admission
  restore
 .invalid_context:
- mov ax,1
- restore
+ jmp trap_invalid
 terminal_trap_suspend:
  save
  call context
@@ -270,11 +263,9 @@ terminal_trap_suspend:
  call failed_admission
  restore
 .failed:
- call failure
- restore
+ jmp trap_failed
 .invalid_context:
- mov ax,1
- restore
+ jmp trap_invalid
 terminal_trap_resume:
  save
  ; DOS2-style EXEC can return IF0/foreign context. The backend first restores
@@ -303,11 +294,9 @@ terminal_trap_resume:
  xor ax,ax
  restore
 .failed:
- call failure
- restore
+ jmp trap_failed
 .invalid_context:
- mov ax,1
- restore
+ jmp trap_invalid
 terminal_trap_close:
  save
  call context
@@ -342,10 +331,34 @@ terminal_trap_close:
  xor ax,ax
  restore
 .failed:
- call failure
- restore
+ jmp trap_failed
 .invalid_context:
- mov ax,1
+ jmp trap_invalid
+; Quiesced parent dialog read: service only cancellation, never the live parser
+; or UART onto the saved dialog screen. Preserve the old BIOS read's registers.
+; Caller uses Escape to unwind its existing screen/staging owner normally.
+terminal_trap_key:
+ save
+ call context
+ jc .cancel
+.wait:
+ cmp word [terminal_trap_phase],1
+ jne .cancel
+ call far terminal_trap_poll
+ cmp word [terminal_quit],0
+ jne .cancel
+ mov ah,1
+ int 0x16
+ jnz .read
+ sti
+ hlt
+ jmp .wait
+.read:
+ xor ah,ah
+ int 0x16
+ restore
+.cancel:
+ mov ax,0x011b
  restore
 terminal_trap_poll:
  pushf
@@ -393,6 +406,22 @@ terminal_trap_hold:
  sti
  hlt
  jmp terminal_trap_hold
+; Every far owner/key entry has the same seven-word saved-register frame.
+; Share its epilogue to keep conventional RAM available to nested DOS tools.
+trap_failed:
+ call failure
+ jmp short trap_return
+trap_invalid:
+ mov ax,1
+trap_return:
+ pop es
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop bp
+ retf
 indices: dw 0x1b*4,0x23*4,0x24*4
 SEGMENT _DATA public class=DATA use16
 global terminal_trap_phase,terminal_trap_pending,terminal_trap_owner,terminal_trap_originals

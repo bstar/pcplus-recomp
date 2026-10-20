@@ -1,5 +1,21 @@
 # Complete DOS rebuild plan
 
+The [foreground cancellation checkpoint](docs/TERMINAL_CANCEL.md) now closes
+the specific blocking-dialog/transfer polling gap under the opt-in trap policy.
+Three negative controls need a rescue key;30 fixed DOS routes pass570 checks
+without one, including a real acknowledged partial XMODEM transfer and cleanup.
+Twenty trap cases,26 normal ASPECT workflows, two retained retries and three
+normal/queued-answer controls pass;18 products reproduce. Shared epilogues and
+unused EXEC-state removal preserve the previous retained allocation floors,
+fixing the initial mouse/nested-compiler heap regression. Default controls and
+the standalone directory binaries retain their previous hashes.
+
+Stock editor results remain explicit: Synchronet immediate and ENiGMA30ms
+buffered pass, while immediate ENiGMA still fails Home/Insert. Continue the
+remaining application lifetime/nonlocal-error audit and full modern BBS
+workflows before normal publication; hardware and all full application gates
+remain open. The historical checkpoints below retain their original scope.
+
 The opt-in [application trap owner](docs/TERMINAL_TRAPS.md) now protects
 INT1B/23/24 before UART ownership and suspends/resumes around maintained EXEC.
 Twenty actual DOS cases pass with an independent raw-witness audit;26 normal

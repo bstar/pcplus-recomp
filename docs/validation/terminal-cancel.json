@@ -1,0 +1,759 @@
+{
+  "passed": true,
+  "routes": [
+    {
+      "mouse": false,
+      "case": "browser",
+      "ticks_to_exit": 0,
+      "hardware_active": 0,
+      "program_active": 0,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 16
+    },
+    {
+      "mouse": false,
+      "case": "editor",
+      "ticks_to_exit": 0,
+      "hardware_active": 0,
+      "program_active": 0,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 16
+    },
+    {
+      "mouse": false,
+      "case": "capture",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 0,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 19
+    },
+    {
+      "mouse": false,
+      "case": "download",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 0,
+      "transfer_active": 1,
+      "accepted_blocks": 0,
+      "checks": 19
+    },
+    {
+      "mouse": false,
+      "case": "receive",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 0,
+      "transfer_active": 1,
+      "accepted_blocks": 0,
+      "checks": 18
+    },
+    {
+      "mouse": false,
+      "case": "receive-partial",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 0,
+      "transfer_active": 1,
+      "accepted_blocks": 1,
+      "checks": 22
+    },
+    {
+      "mouse": false,
+      "case": "upload",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 0,
+      "transfer_active": 1,
+      "accepted_blocks": 0,
+      "checks": 19
+    },
+    {
+      "mouse": false,
+      "case": "send",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 0,
+      "transfer_active": 1,
+      "accepted_blocks": 0,
+      "checks": 19
+    },
+    {
+      "mouse": false,
+      "case": "program",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 1,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 20
+    },
+    {
+      "mouse": false,
+      "case": "reload",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 1,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 19
+    },
+    {
+      "mouse": false,
+      "case": "serial",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 1,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 20
+    },
+    {
+      "mouse": false,
+      "case": "profile",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 1,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 20
+    },
+    {
+      "mouse": false,
+      "case": "translation",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 1,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 20
+    },
+    {
+      "mouse": false,
+      "case": "port",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 1,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 20
+    },
+    {
+      "mouse": true,
+      "case": "browser",
+      "ticks_to_exit": 0,
+      "hardware_active": 0,
+      "program_active": 0,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 16
+    },
+    {
+      "mouse": true,
+      "case": "editor",
+      "ticks_to_exit": 0,
+      "hardware_active": 0,
+      "program_active": 0,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 16
+    },
+    {
+      "mouse": true,
+      "case": "capture",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 0,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 19
+    },
+    {
+      "mouse": true,
+      "case": "download",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 0,
+      "transfer_active": 1,
+      "accepted_blocks": 0,
+      "checks": 19
+    },
+    {
+      "mouse": true,
+      "case": "receive",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 0,
+      "transfer_active": 1,
+      "accepted_blocks": 0,
+      "checks": 18
+    },
+    {
+      "mouse": true,
+      "case": "receive-partial",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 0,
+      "transfer_active": 1,
+      "accepted_blocks": 1,
+      "checks": 22
+    },
+    {
+      "mouse": true,
+      "case": "upload",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 0,
+      "transfer_active": 1,
+      "accepted_blocks": 0,
+      "checks": 19
+    },
+    {
+      "mouse": true,
+      "case": "send",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 0,
+      "transfer_active": 1,
+      "accepted_blocks": 0,
+      "checks": 19
+    },
+    {
+      "mouse": true,
+      "case": "program",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 1,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 20
+    },
+    {
+      "mouse": true,
+      "case": "reload",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 1,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 19
+    },
+    {
+      "mouse": true,
+      "case": "serial",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 1,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 20
+    },
+    {
+      "mouse": true,
+      "case": "profile",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 1,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 20
+    },
+    {
+      "mouse": true,
+      "case": "translation",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 1,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 20
+    },
+    {
+      "mouse": true,
+      "case": "port",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 1,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 20
+    },
+    {
+      "mouse": false,
+      "case": "script-return",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 1,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 18
+    },
+    {
+      "mouse": true,
+      "case": "script-return",
+      "ticks_to_exit": 0,
+      "hardware_active": 1,
+      "program_active": 1,
+      "transfer_active": 0,
+      "accepted_blocks": 0,
+      "checks": 18
+    }
+  ],
+  "checks": 570,
+  "baseline": [
+    {
+      "case": "browser",
+      "rescue_keys": 1,
+      "ticks_to_exit": 36,
+      "witness_sha256": "ae82cae055a233f6429823667e3b89a9c1ffe46c0a9e2a281f6fff9b572411fa",
+      "binary_sha256": "bf3ed3dce797ae728dbe6c1a9144e2c90da8e36fe6850de8d5ae269d20788d1f"
+    },
+    {
+      "case": "capture",
+      "rescue_keys": 1,
+      "ticks_to_exit": 37,
+      "witness_sha256": "d44be3778f24118ccea5037cf0df314b33dc806eb27bdba3f0205cf1b22aa846",
+      "binary_sha256": "bf3ed3dce797ae728dbe6c1a9144e2c90da8e36fe6850de8d5ae269d20788d1f"
+    },
+    {
+      "case": "download",
+      "rescue_keys": 1,
+      "ticks_to_exit": 37,
+      "witness_sha256": "89e388d400a4a43663c6351de30ddde07c6175d639e02e31f0443d5bd718c249",
+      "binary_sha256": "bf3ed3dce797ae728dbe6c1a9144e2c90da8e36fe6850de8d5ae269d20788d1f"
+    }
+  ],
+  "labels": {
+    "keyboard": "cancel-final-keyboard-01",
+    "mouse": "cancel-final-mouse-01",
+    "script_keyboard": "cancel-script-return-keyboard-02",
+    "script_mouse": "cancel-script-return-mouse-02",
+    "trap_keyboard": "cancel-final-trap-keyboard-01",
+    "trap_mouse": "cancel-final-trap-mouse-01",
+    "normal_keyboard": "cancel-final-normal-keyboard-01",
+    "normal_mouse": "cancel-final-normal-mouse-01",
+    "retry_keyboard": "cancel-final-retry-keyboard-01",
+    "retry_mouse": "cancel-final-retry-mouse-01",
+    "prompt": "cancel-final-prompt-01",
+    "source": "cancel-final-source-01",
+    "baseline": "cancel-baseline-03"
+  },
+  "regressions": [
+    {
+      "kind": "trap",
+      "receipt": "build/terminal-trap-tests/cancel-final-trap-keyboard-01/result.json",
+      "sha256": "96dc35862d42fcd9ed6e0f3a1009aaade1f4c50dafc22bb83a8bde5f7c6c8f23",
+      "cases": 10
+    },
+    {
+      "kind": "trap",
+      "receipt": "build/terminal-trap-tests/cancel-final-trap-mouse-01/result.json",
+      "sha256": "ae174b16282959911cec4e8ad561198c779273030629f39e4883233a51fe9d1e",
+      "cases": 10
+    },
+    {
+      "kind": "ASPECT",
+      "receipt": "build/aspect-parent-break-guarded-banked-traps/cancel-final-normal-keyboard-01/result.json",
+      "sha256": "58c81d8f88c6c56b774414e47b5cdc9e046306f5c1c1143fdb5030011a3c7499",
+      "cases": 13,
+      "checks": 518
+    },
+    {
+      "kind": "ASPECT",
+      "receipt": "build/aspect-parent-break-mouse-guarded-banked-traps/cancel-final-normal-mouse-01/result.json",
+      "sha256": "ccb4193f862905601dcfc53ca53961259cb9bc1c44494d84473e228857c902ea",
+      "cases": 13,
+      "checks": 648
+    },
+    {
+      "kind": "retained-retry",
+      "receipt": "build/aspect-parent-exit-retry-guarded-banked-traps/cancel-final-retry-keyboard-01/result.json",
+      "sha256": "dac477db82f02b0c6189ba3984ea0294945592ab744ab64e35583abf0cd7a34a",
+      "cases": 1,
+      "checks": 61
+    },
+    {
+      "kind": "retained-retry",
+      "receipt": "build/aspect-parent-exit-mouse-retry-guarded-banked-traps/cancel-final-retry-mouse-01/result.json",
+      "sha256": "7d4de37ae355182645711cd42b337ea1e149ff66c004c352f5ef6cd3bcc1efa3",
+      "cases": 1,
+      "checks": 71
+    },
+    {
+      "kind": "prompt",
+      "receipt": "build/terminal-cancel-controls/cancel-final-prompt-01/result.json",
+      "sha256": "c4d03cb40bca56832f804d872330f2ede1b96495236745ee1ed6965834544e22",
+      "cases": 3
+    }
+  ],
+  "products": {
+    "build/terminal-traps/TERMINAL.EXE": "8f513e45275a003e3493a2c2a700468808bdf5c3ff5e9a62c846074b45a66290",
+    "build/terminal-traps-mouse/TERMINAL.EXE": "1ac244627828a5f6f4258fbe2062fdbd5461c00d7cdc68324764e66145ee99da"
+  },
+  "evidence": {
+    "build/terminal-cancel-tests/cancel-final-keyboard-01/browser": {
+      "CANCEL.BIN": "181cfcc6f8b22de4780acbfb7c8dbb0c83a152dc649339d0ee79da4de68975bf",
+      "CANCEL.VID": "a36a2726b3ff111b0ca94d83df2958e23f61185af8d21e72d0176a02258d555f",
+      "SCREEN.BIN": "633e848a491f78311143454e8caf7dfaacb2d4d45ee0abc1a3ebd931d88667a2",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "9526ebbe9845ca96ba336a099d9691cb7b0b38d293dfc5582733b6886a22c0a3",
+      "serial.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build/terminal-cancel-tests/cancel-final-keyboard-01/editor": {
+      "CANCEL.BIN": "181cfcc6f8b22de4780acbfb7c8dbb0c83a152dc649339d0ee79da4de68975bf",
+      "CANCEL.VID": "d069b37cb3e08536b5057d47e4de8e48c005f9b5c917b30d5fd25646e0666020",
+      "SCREEN.BIN": "f42b749868420b0fb3faed932f559e0d087321c2944a8729876a43e20c52dcc3",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "b28ef6eac03a617330ec2604f19eb5d8b247ea57cd7b212c3634ecc34c4f7de8",
+      "serial.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build/terminal-cancel-tests/cancel-final-keyboard-01/capture": {
+      "CANCEL.BIN": "90e3923de7620c1514ca843ddaef0b4a72aaec6a1be102110ce6eb428b23ae87",
+      "CANCEL.VID": "8b989e0f1f2098e63cd9ac4e95a1e2a50d9f53fbbdec28504fa87e1ad1db81dd",
+      "SCREEN.BIN": "b92523e3964134c34cd8d7858fadf021a9c2888959ce32d6237fc8f1885c28b7",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "7995457de2e82e7be5793f86a3c5a131462236f3e2c8015a9413dc21f001106a",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-keyboard-01/download": {
+      "CANCEL.BIN": "8a84686649334abaeff7e4908e710dda148b19dde23b434c32df8079731dc3ab",
+      "CANCEL.VID": "de250b4005781cceaa36716e242be77e06dde4bf9433466078ca261406324755",
+      "SCREEN.BIN": "a8edeb5634886c71b5d02ebbb4796ccb59305e66f274e1ec15c4ec22f3421136",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "5509a3d7710c44f807bd093dd836a4018c15ec381f661e53ee8b0c1767201949",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-keyboard-01/receive": {
+      "CANCEL.BIN": "8a84686649334abaeff7e4908e710dda148b19dde23b434c32df8079731dc3ab",
+      "CANCEL.VID": "4d328cc7b810c787d28f5af00cb342c18ab75fbe7ea6a9ea8d90d76e1745c4a7",
+      "SCREEN.BIN": "a8edeb5634886c71b5d02ebbb4796ccb59305e66f274e1ec15c4ec22f3421136",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "87f3e377cfc1ca16a15e433aa697ac22cfef9a7c7ba8b55a3724a252a986039a",
+      "serial.bin": "28a52ef0513165bfab456471b700ad074191981694b3ba349bc7cc92c647405a"
+    },
+    "build/terminal-cancel-tests/cancel-final-keyboard-01/receive-partial": {
+      "CANCEL.BIN": "434ea10ddf3ac60e4add234e8db8c5381f149a17753521709714780c6a9bdd2e",
+      "CANCEL.VID": "60b09a0721fd488a62972e0084c35357244be99ccce49727b184fd6ccb367c3e",
+      "SCREEN.BIN": "a8edeb5634886c71b5d02ebbb4796ccb59305e66f274e1ec15c4ec22f3421136",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "e1cc39ff3b97a66985a9ff46beed8f0de306db50a45a8159f6c3ccd870be5bb0",
+      "serial.bin": "19d508f54d75df4bef686a7afdf394cb32dfb5902db28ed2c25ea231193d51d0"
+    },
+    "build/terminal-cancel-tests/cancel-final-keyboard-01/upload": {
+      "CANCEL.BIN": "8a84686649334abaeff7e4908e710dda148b19dde23b434c32df8079731dc3ab",
+      "CANCEL.VID": "8e2e06250d4b1c26eb35c69f8f77ea61862ee2fb94392eddcd2e5541228257b2",
+      "SCREEN.BIN": "f3d69d194a2cc5938a8c00a33cf13e421e1490137fd140a3fb626b52edf0aeb1",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "0c6d4ca4875ace3d26d47fbce9ff1aa051727c99a44bf5de5908b597296ddc6e",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-keyboard-01/send": {
+      "CANCEL.BIN": "8a84686649334abaeff7e4908e710dda148b19dde23b434c32df8079731dc3ab",
+      "CANCEL.VID": "c25e0e5bb99dfdf4312c82325467127fc5d4b3dd2f95b335db3806a751d36c83",
+      "SCREEN.BIN": "f3d69d194a2cc5938a8c00a33cf13e421e1490137fd140a3fb626b52edf0aeb1",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "2c8deaed265b88184b068dea49ddbe626b745bd22caffa13887f04716ead1e28",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-keyboard-01/program": {
+      "CANCEL.BIN": "9cbcd8cf7d5b36b57af56743dbc5ca8fc280fce1182527567207311429b44bc3",
+      "CANCEL.VID": "9f989fd52ca99dd5f8cf6e771061e2b61825898bdb71d088a9775e2f7a1aa618",
+      "SCREEN.BIN": "b92523e3964134c34cd8d7858fadf021a9c2888959ce32d6237fc8f1885c28b7",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "6e167ac3230a52c3fddb9adf9f2a17d80d76c847a2d997edca9cef6048e71fa7",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-keyboard-01/reload": {
+      "CANCEL.BIN": "9cbcd8cf7d5b36b57af56743dbc5ca8fc280fce1182527567207311429b44bc3",
+      "CANCEL.VID": "1910ec1d86a1820af8f974bc62a157ac10522ceafad84a41c47b09e2dc3fb75e",
+      "SCREEN.BIN": "b92523e3964134c34cd8d7858fadf021a9c2888959ce32d6237fc8f1885c28b7",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "3a809a892772b03e3f2bf8a8813b4480b15c158b7fe050e0b90aa63b7a2e8958",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-keyboard-01/serial": {
+      "CANCEL.BIN": "9cbcd8cf7d5b36b57af56743dbc5ca8fc280fce1182527567207311429b44bc3",
+      "CANCEL.VID": "c27a861efbca532039d9316dd5a514cc00cfcf21815ceb47e55c471a647372c8",
+      "SCREEN.BIN": "b92523e3964134c34cd8d7858fadf021a9c2888959ce32d6237fc8f1885c28b7",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "f628921dd6b4df0c044bc13f793614ac2596d99a45d68cf0680a7e1322ae51e8",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-keyboard-01/profile": {
+      "CANCEL.BIN": "9cbcd8cf7d5b36b57af56743dbc5ca8fc280fce1182527567207311429b44bc3",
+      "CANCEL.VID": "56fc54555365a3026ca93794c5b27f39450b22c67c5896ed678a13aed572998f",
+      "SCREEN.BIN": "b92523e3964134c34cd8d7858fadf021a9c2888959ce32d6237fc8f1885c28b7",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "4c1e11774231d93bcd94a1e7e9664a18aadc85205786ac011e74f6e0807fcd37",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-keyboard-01/translation": {
+      "CANCEL.BIN": "9cbcd8cf7d5b36b57af56743dbc5ca8fc280fce1182527567207311429b44bc3",
+      "CANCEL.VID": "ab6013ef671c98947669702734e2a8303a226e3436e70e409b4568ea656b2707",
+      "SCREEN.BIN": "b92523e3964134c34cd8d7858fadf021a9c2888959ce32d6237fc8f1885c28b7",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "9f8b5b30af7fe728ca6073430e5aad65e4bd8c68e8f1a58d32b56dc5dc10f526",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-keyboard-01/port": {
+      "CANCEL.BIN": "9cbcd8cf7d5b36b57af56743dbc5ca8fc280fce1182527567207311429b44bc3",
+      "CANCEL.VID": "94ae318dbaa3e39b95da370e0d31156f07343b7b5ae17961124d5fc53c3808ce",
+      "SCREEN.BIN": "b92523e3964134c34cd8d7858fadf021a9c2888959ce32d6237fc8f1885c28b7",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "d9588a42d56e91e2975da2e583ad33138e50594d35214ee2e99f19c0c0ddc488",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-mouse-01/browser": {
+      "CANCEL.BIN": "181cfcc6f8b22de4780acbfb7c8dbb0c83a152dc649339d0ee79da4de68975bf",
+      "CANCEL.VID": "a36a2726b3ff111b0ca94d83df2958e23f61185af8d21e72d0176a02258d555f",
+      "SCREEN.BIN": "93f35ac7c91a20faa3899c38f371c35ed9f1fcb99a5784d2e167be1e8f744976",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "9e1ca45e15ac43662310dfc1cf744bca05d69d7a8777ac2ca9794080bf06abf6",
+      "serial.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build/terminal-cancel-tests/cancel-final-mouse-01/editor": {
+      "CANCEL.BIN": "181cfcc6f8b22de4780acbfb7c8dbb0c83a152dc649339d0ee79da4de68975bf",
+      "CANCEL.VID": "d069b37cb3e08536b5057d47e4de8e48c005f9b5c917b30d5fd25646e0666020",
+      "SCREEN.BIN": "c32747d1658b863b4cc6d4900ab4b0eff87dfbbd01900978220ce32a1b50e115",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "f31a4944811935be179c290fc09279987448d557693e967d1d5a7e92babddbc1",
+      "serial.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build/terminal-cancel-tests/cancel-final-mouse-01/capture": {
+      "CANCEL.BIN": "90e3923de7620c1514ca843ddaef0b4a72aaec6a1be102110ce6eb428b23ae87",
+      "CANCEL.VID": "8b989e0f1f2098e63cd9ac4e95a1e2a50d9f53fbbdec28504fa87e1ad1db81dd",
+      "SCREEN.BIN": "b92523e3964134c34cd8d7858fadf021a9c2888959ce32d6237fc8f1885c28b7",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "fa98f49ba753802c0f0358fac54ed8fcd4787c1e7963f36e0e34345816f09c16",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-mouse-01/download": {
+      "CANCEL.BIN": "8a84686649334abaeff7e4908e710dda148b19dde23b434c32df8079731dc3ab",
+      "CANCEL.VID": "de250b4005781cceaa36716e242be77e06dde4bf9433466078ca261406324755",
+      "SCREEN.BIN": "a8edeb5634886c71b5d02ebbb4796ccb59305e66f274e1ec15c4ec22f3421136",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "15776680969e0d136e39f41807169ff67901b1cbdb299ae7ebe194e4b1610172",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-mouse-01/receive": {
+      "CANCEL.BIN": "8a84686649334abaeff7e4908e710dda148b19dde23b434c32df8079731dc3ab",
+      "CANCEL.VID": "4d328cc7b810c787d28f5af00cb342c18ab75fbe7ea6a9ea8d90d76e1745c4a7",
+      "SCREEN.BIN": "a8edeb5634886c71b5d02ebbb4796ccb59305e66f274e1ec15c4ec22f3421136",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "cb7ed7c5a90c70780934b07fbab788022bc59ad906fde2e0f2b9ab4518f2a21b",
+      "serial.bin": "28a52ef0513165bfab456471b700ad074191981694b3ba349bc7cc92c647405a"
+    },
+    "build/terminal-cancel-tests/cancel-final-mouse-01/receive-partial": {
+      "CANCEL.BIN": "434ea10ddf3ac60e4add234e8db8c5381f149a17753521709714780c6a9bdd2e",
+      "CANCEL.VID": "60b09a0721fd488a62972e0084c35357244be99ccce49727b184fd6ccb367c3e",
+      "SCREEN.BIN": "a8edeb5634886c71b5d02ebbb4796ccb59305e66f274e1ec15c4ec22f3421136",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "5d28cc0c9dc4526da428639c1369028d4797c672207d33c7d10476230f745d73",
+      "serial.bin": "19d508f54d75df4bef686a7afdf394cb32dfb5902db28ed2c25ea231193d51d0"
+    },
+    "build/terminal-cancel-tests/cancel-final-mouse-01/upload": {
+      "CANCEL.BIN": "8a84686649334abaeff7e4908e710dda148b19dde23b434c32df8079731dc3ab",
+      "CANCEL.VID": "8e2e06250d4b1c26eb35c69f8f77ea61862ee2fb94392eddcd2e5541228257b2",
+      "SCREEN.BIN": "f3d69d194a2cc5938a8c00a33cf13e421e1490137fd140a3fb626b52edf0aeb1",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "deec70a80cf87782c0e62b2327eb756585526451d20a6774bc085be281d4c8d3",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-mouse-01/send": {
+      "CANCEL.BIN": "8a84686649334abaeff7e4908e710dda148b19dde23b434c32df8079731dc3ab",
+      "CANCEL.VID": "c25e0e5bb99dfdf4312c82325467127fc5d4b3dd2f95b335db3806a751d36c83",
+      "SCREEN.BIN": "f3d69d194a2cc5938a8c00a33cf13e421e1490137fd140a3fb626b52edf0aeb1",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "842ece393c7c7a04666aa3b1674de38f4ee7e4a5535950b7f9dd3732fae2aa80",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-mouse-01/program": {
+      "CANCEL.BIN": "9cbcd8cf7d5b36b57af56743dbc5ca8fc280fce1182527567207311429b44bc3",
+      "CANCEL.VID": "9f989fd52ca99dd5f8cf6e771061e2b61825898bdb71d088a9775e2f7a1aa618",
+      "SCREEN.BIN": "b92523e3964134c34cd8d7858fadf021a9c2888959ce32d6237fc8f1885c28b7",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "6361e4895f83ba4ac03a12ba2fb341d9ebf0d80c89944c70fd3e27db3067675d",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-mouse-01/reload": {
+      "CANCEL.BIN": "9cbcd8cf7d5b36b57af56743dbc5ca8fc280fce1182527567207311429b44bc3",
+      "CANCEL.VID": "1910ec1d86a1820af8f974bc62a157ac10522ceafad84a41c47b09e2dc3fb75e",
+      "SCREEN.BIN": "b92523e3964134c34cd8d7858fadf021a9c2888959ce32d6237fc8f1885c28b7",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "be9579497d0e27a5e477c97258eb18a2195bf3802dfbadecdfc8b7a1ea265038",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-mouse-01/serial": {
+      "CANCEL.BIN": "9cbcd8cf7d5b36b57af56743dbc5ca8fc280fce1182527567207311429b44bc3",
+      "CANCEL.VID": "c27a861efbca532039d9316dd5a514cc00cfcf21815ceb47e55c471a647372c8",
+      "SCREEN.BIN": "b92523e3964134c34cd8d7858fadf021a9c2888959ce32d6237fc8f1885c28b7",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "adcb0d6fa743b8d8272a94d07967fc5465d02937193a47d491d9caa0facecbe6",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-mouse-01/profile": {
+      "CANCEL.BIN": "9cbcd8cf7d5b36b57af56743dbc5ca8fc280fce1182527567207311429b44bc3",
+      "CANCEL.VID": "56fc54555365a3026ca93794c5b27f39450b22c67c5896ed678a13aed572998f",
+      "SCREEN.BIN": "b92523e3964134c34cd8d7858fadf021a9c2888959ce32d6237fc8f1885c28b7",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "beeddf42987f74554b20d1b72950e0ce4f5f5800b3e841073457049fd494422a",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-mouse-01/translation": {
+      "CANCEL.BIN": "9cbcd8cf7d5b36b57af56743dbc5ca8fc280fce1182527567207311429b44bc3",
+      "CANCEL.VID": "ab6013ef671c98947669702734e2a8303a226e3436e70e409b4568ea656b2707",
+      "SCREEN.BIN": "b92523e3964134c34cd8d7858fadf021a9c2888959ce32d6237fc8f1885c28b7",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "cce59b51a2581723074d729c57514eda94429ec394c51d7f2aae351505484260",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-final-mouse-01/port": {
+      "CANCEL.BIN": "9cbcd8cf7d5b36b57af56743dbc5ca8fc280fce1182527567207311429b44bc3",
+      "CANCEL.VID": "94ae318dbaa3e39b95da370e0d31156f07343b7b5ae17961124d5fc53c3808ce",
+      "SCREEN.BIN": "b92523e3964134c34cd8d7858fadf021a9c2888959ce32d6237fc8f1885c28b7",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "6a9c4edb36f12faa5a05a7650c95268c4760f548deab5c1ad239e5124205201c",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-script-return-keyboard-02/script-return": {
+      "CANCEL.BIN": "9cbcd8cf7d5b36b57af56743dbc5ca8fc280fce1182527567207311429b44bc3",
+      "CANCEL.VID": "20b9c14b4f013f0d980fae1230d2c4318b7094d64ca6f01e033d94a59b7a34b6",
+      "SCREEN.BIN": "b92523e3964134c34cd8d7858fadf021a9c2888959ce32d6237fc8f1885c28b7",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "e262ea1f0f1e6a3362df4c47e260a5d3d40d258426490edd0226f84586ce61e6",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    },
+    "build/terminal-cancel-tests/cancel-script-return-mouse-02/script-return": {
+      "CANCEL.BIN": "9cbcd8cf7d5b36b57af56743dbc5ca8fc280fce1182527567207311429b44bc3",
+      "CANCEL.VID": "20b9c14b4f013f0d980fae1230d2c4318b7094d64ca6f01e033d94a59b7a34b6",
+      "SCREEN.BIN": "b92523e3964134c34cd8d7858fadf021a9c2888959ce32d6237fc8f1885c28b7",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "result.json": "c9a9f7cf3ec83144c63c2368df6d9ee40a86273cd0928c9bad5fb76c38eb9124",
+      "serial.bin": "b9ff2ae2b17b5ba9a102fb7a42eef0a72d39e637cbb6ce32bf5a64a4052113fb"
+    }
+  },
+  "retained_parent_paragraphs": {
+    "build/terminal-traps/TERMINAL.EXE": 21635,
+    "build/terminal-traps-mouse/TERMINAL.EXE": 21823
+  },
+  "unchanged_directory_controls": {
+    "build/directory-editor/EDITOR.EXE": "0158e88c0db97faf16872873b9917a7b29519ede7ccdfdd79e345effe37d849c",
+    "build/directory-browser/BROWSER.EXE": "5fd4c103817f6134893f4a0d623147725c574c2cdd492692ca34ad1f18967cbd"
+  },
+  "directory_builder_sources": {
+    "standalone/build_directory_editor.py": "db499770728f69962443c557501492fc9c1a6584a6513a0802a74d95d4f77cd6",
+    "standalone/build_directory_browser.py": "ce570ffa46d3083ed99955557c9add8a2c7e3f8d4982b4837736810b1c03a267",
+    "src/terminal/trap_wait.inc": "d8741303a5f2c600c7ac78c4ab4b85da0cf35a7fb65fe4148e30dbdb0e2516e8"
+  },
+  "source_products": {
+    "terminal-traps": {
+      "expected": "8f513e45275a003e3493a2c2a700468808bdf5c3ff5e9a62c846074b45a66290",
+      "actual": "8f513e45275a003e3493a2c2a700468808bdf5c3ff5e9a62c846074b45a66290"
+    },
+    "terminal-traps-probe-0": {
+      "expected": "2c6bd57399c4ebf44e6054f5192382cb845947b296404caef3a1272decc3a875",
+      "actual": "2c6bd57399c4ebf44e6054f5192382cb845947b296404caef3a1272decc3a875"
+    },
+    "terminal-traps-probe-1": {
+      "expected": "a703fec51f02e951d2e4540cb31bf3d896ef8770a296b81f8679a7a95de875db",
+      "actual": "a703fec51f02e951d2e4540cb31bf3d896ef8770a296b81f8679a7a95de875db"
+    },
+    "terminal-traps-probe-2": {
+      "expected": "87b663ef79630f05eafb98ab9d2bc981f12c3f18feabca31c5ead144f161449d",
+      "actual": "87b663ef79630f05eafb98ab9d2bc981f12c3f18feabca31c5ead144f161449d"
+    },
+    "terminal-traps-probe-3": {
+      "expected": "efd81feb09076879f7d9f7bf70670c5ba99b6163751b06eb71328551e5dd5b8e",
+      "actual": "efd81feb09076879f7d9f7bf70670c5ba99b6163751b06eb71328551e5dd5b8e"
+    },
+    "terminal-traps-probe-4": {
+      "expected": "cb03b40169aa68fdd942b136f1256f72d35126dbb2e7ecf9779ee4932ded8775",
+      "actual": "cb03b40169aa68fdd942b136f1256f72d35126dbb2e7ecf9779ee4932ded8775"
+    },
+    "terminal-traps-mouse": {
+      "expected": "1ac244627828a5f6f4258fbe2062fdbd5461c00d7cdc68324764e66145ee99da",
+      "actual": "1ac244627828a5f6f4258fbe2062fdbd5461c00d7cdc68324764e66145ee99da"
+    },
+    "terminal-traps-mouse-probe-0": {
+      "expected": "90a2a4bec5697d3553ad6ffff4facbd2a76178130e208b64815f88786bc01a42",
+      "actual": "90a2a4bec5697d3553ad6ffff4facbd2a76178130e208b64815f88786bc01a42"
+    },
+    "terminal-traps-mouse-probe-1": {
+      "expected": "015491bc0eb68f2480cea0abfd950ce630815f7f2c02f5a9c6e04df0e8fbd997",
+      "actual": "015491bc0eb68f2480cea0abfd950ce630815f7f2c02f5a9c6e04df0e8fbd997"
+    },
+    "terminal-traps-mouse-probe-2": {
+      "expected": "8fc33808653888fa70e84ae6830f8a0604998f76627dbabd157167a8f3ac116f",
+      "actual": "8fc33808653888fa70e84ae6830f8a0604998f76627dbabd157167a8f3ac116f"
+    },
+    "terminal-traps-mouse-probe-3": {
+      "expected": "a3d23bf7770930542b8ad841961254f76bdd96b7acc0381fb1b9a91d28800674",
+      "actual": "a3d23bf7770930542b8ad841961254f76bdd96b7acc0381fb1b9a91d28800674"
+    },
+    "terminal-traps-mouse-probe-4": {
+      "expected": "d9b63ad2f7ed7f5cc270c74d7770c92b27af6c003db48b90e2b02008b026e75a",
+      "actual": "d9b63ad2f7ed7f5cc270c74d7770c92b27af6c003db48b90e2b02008b026e75a"
+    },
+    "terminal": {
+      "expected": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+      "actual": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c"
+    },
+    "terminal-process": {
+      "expected": "365b8bef8465cb1c0d2d7765b75ccdc4eb1b966fcc3c4e69137659267e58e045",
+      "actual": "365b8bef8465cb1c0d2d7765b75ccdc4eb1b966fcc3c4e69137659267e58e045"
+    },
+    "terminal-mouse": {
+      "expected": "8bd0d5ab6f6e8b83b87be6ba1202e419ddeab55bbd53644ee82a7da48d4cc950",
+      "actual": "8bd0d5ab6f6e8b83b87be6ba1202e419ddeab55bbd53644ee82a7da48d4cc950"
+    },
+    "terminal-mouse-process": {
+      "expected": "56a17e0fc630fb85dd624fc3289bed66b1a569d35302d24c42428ebd2a40a128",
+      "actual": "56a17e0fc630fb85dd624fc3289bed66b1a569d35302d24c42428ebd2a40a128"
+    },
+    "terminal-process-bank": {
+      "expected": "a501d9c612f51f94a25e4a0822722ef15616e5b7fe11ad7dc5db0e3c60a2bac2",
+      "actual": "a501d9c612f51f94a25e4a0822722ef15616e5b7fe11ad7dc5db0e3c60a2bac2"
+    },
+    "terminal-process-bank-mouse": {
+      "expected": "6b22c240fd8d5294efc7330ac56a4b04980a3e3e65d1f3e99c207e74ee8d18f8",
+      "actual": "6b22c240fd8d5294efc7330ac56a4b04980a3e3e65d1f3e99c207e74ee8d18f8"
+    }
+  },
+  "source_receipt_sha256": "e5b301fad33245ce22e10444c1daf67f882166a213fd4504bc0c1eaf9e8a0e0e",
+  "linked_model_sha256": "2981390b85c8909a529862d3a63eda7f8f3262116195d61e2f411236c3b1aa26",
+  "auditor_sha256": "917e77728f4d35cc9cddd348a9baf90145104e8cc86b7feb91e607c4a0191780",
+  "scope": "Actual modal/transfer cancellation from synthetic timer INT1B, quiet CTS-ready nullmodem, ordinary DOS exit16, restoration and partial-stage removal; modeled key API boundaries. No physical device/BREAK, other kernel, continuous hostile stream, blocked CTS or all nonlocal-error claim."
+}

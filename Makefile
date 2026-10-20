@@ -1169,7 +1169,7 @@ test-terminal-process-bank-source: terminal-process-bank terminal-exit terminal 
 	python3 standalone/build_terminal.py --external-render
 	python3 standalone/check_terminal_process_source.py
 
-.PHONY: terminal-traps test-terminal-traps test-terminal-traps-ui test-terminal-traps-source test-terminal-traps-retry
+.PHONY: terminal-traps test-terminal-traps test-terminal-traps-ui test-terminal-traps-source test-terminal-traps-retry test-terminal-cancel
 terminal-traps:
 	python3 standalone/build_terminal_traps.py
 test-terminal-traps: terminal-traps
@@ -1186,6 +1186,12 @@ test-terminal-traps-source: terminal-traps terminal-process-bank terminal termin
 test-terminal-traps-retry: terminal-traps aspect-parent-retry aspect-compiler-dos
 	python3 standalone/test_aspect_parent_process_dos.py --break-owner --exit-probe --retry --terminal-exit-guard --process-bank --traps
 	python3 standalone/test_aspect_parent_process_dos.py --break-owner --exit-probe --retry --terminal-exit-guard --process-bank --traps --mouse
+test-terminal-cancel: terminal-traps
+	python3 standalone/check_terminal_traps.py
+	python3 standalone/test_terminal_cancel_dos.py
+	python3 standalone/test_terminal_cancel_dos.py --mouse
+	python3 standalone/test_terminal_cancel_script_wait.py
+	python3 standalone/test_terminal_cancel_script_wait.py --mouse
 
 .PHONY: native-program-break test-native-program-break test-native-program-break-source
 native-program-break:

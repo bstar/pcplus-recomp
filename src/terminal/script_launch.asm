@@ -288,6 +288,10 @@ script_vectors: dw 12,11,12,11
 ; foreground flow control runs here. Never parse/render onto the child console.
 terminal_script_return_key:
 .loop:
+%ifdef TERMINAL_TRAPS
+ extern terminal_trap_poll
+ call far terminal_trap_poll
+%endif
  mov dx,[uart_port_lsr]
  in al,dx
  test al,2

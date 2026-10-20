@@ -2,6 +2,7 @@
 ; No shell/script/HOOK execution is substituted for those unfinished services.
 BITS 16
 CPU 8086
+%include "trap_wait.inc"
 SEGMENT _TEXT public class=CODE use16
 extern uart_break_hold
 extern terminal_option_mask,terminal_actions_path,_key_actions_dos_read
@@ -315,10 +316,18 @@ terminal_take_deferred_key:
 ; drained. CF distinguishes an empty FIFO from every valid BIOS word, even0.
 global terminal_read_foreground_key
 terminal_read_foreground_key:
+%ifdef TERMINAL_TRAPS
+ extern terminal_trap_poll,terminal_quit
+ call far terminal_trap_poll
+ cmp word [terminal_quit],0
+ je .queued
+ mov ax,0x011b
+ ret
+.queued:
+%endif
  call terminal_take_deferred_key
  jnc .done
- xor ax,ax
- int 0x16
+ TERMINAL_WAIT_KEY ax
 .done:
  ret
 

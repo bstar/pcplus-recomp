@@ -2,6 +2,7 @@
 ; Native433d/896a remain separately recovered; this is the small-model host policy.
 BITS 16
 CPU 8086
+%include "trap_wait.inc"
 SEGMENT _TEXT public class=CODE use16
 extern uart_break_hold
 extern process_psp,process_keep_paragraphs,process_minimum_paragraphs
@@ -423,8 +424,7 @@ terminal_program_poll:
  call terminal_script_return_key
  jmp .restore_screen
 .ordinary_return_key:
- xor ax,ax
- int 0x16
+ TERMINAL_WAIT_KEY ax
 .restore_screen:
  ; Recreate the supported video mode even if a child left graphics or new fonts.
  mov ax,3

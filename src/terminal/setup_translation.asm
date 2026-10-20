@@ -1,6 +1,7 @@
 ; Confirmed input-mode handoff inside the already-quiesced settings owner.
 BITS 16
 CPU 8086
+%include "trap_wait.inc"
 %include "terminal_import.inc"
 SEGMENT _TEXT public class=CODE use16
 extern _xlt_live_bind,_xlt_live_stage,_xlt_live_commit,process_psp
@@ -57,8 +58,7 @@ terminal_setup_translation_choice:
  int 0x10
  jmp .text
 .key:
- xor ax,ax
- int 0x16
+ TERMINAL_WAIT_KEY ax
  mov word [terminal_setup_key_consumed],1
  cmp al,'Y'
  je .accept
