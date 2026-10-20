@@ -1193,6 +1193,13 @@ test-terminal-cancel: terminal-traps
 	python3 standalone/test_terminal_cancel_script_wait.py
 	python3 standalone/test_terminal_cancel_script_wait.py --mouse
 
+.PHONY: test-kernel-critical
+# Optional runtime lab: downloads a checksum-pinned FreeDOS distribution.
+# No DOS image is an input to the ordinary application build or default tests.
+test-kernel-critical: terminal-traps
+	python3 standalone/test_kernel_critical_dos.py --operation create
+	python3 standalone/test_kernel_critical_dos.py --operation append
+
 .PHONY: native-program-break test-native-program-break test-native-program-break-source
 native-program-break:
 	python3 standalone/build_native_program.py --break-owner

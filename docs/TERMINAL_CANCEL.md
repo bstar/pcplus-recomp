@@ -77,7 +77,9 @@ The existing bounded CAN send/drain policy remains in force for stalled CTS or
 a peer that continues binary traffic; this receipt does not promise identical
 latency in those conditions. Actual DOS device critical errors, additional
 nonlocal-error paths, other kernels, physical Ctrl-Break/modem behavior and all
-whole-application gates remain open.
+whole-application gates remain open. The later
+[booted-kernel capture test](KERNEL_CRITICAL.md) supplies real FreeDOS critical
+create/append/close evidence without changing this checkpoint's binaries.
 
 Run through the pinned Nix shell:
 

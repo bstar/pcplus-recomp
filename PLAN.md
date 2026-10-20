@@ -1,5 +1,18 @@
 # Complete DOS rebuild plan
 
+The [booted-kernel critical-error lab](docs/KERNEL_CRITICAL.md) now passes four
+FreeDOS create/append cases and42 independent parent assertions. Genuine BIOS
+write-protection faults reach INT24; creation exits16 and buffered append/close
+retains the existing specific cleanup error12. Live final owner state, original
+vectors/flag, UART state and full media hashes are audited. Writable controls
+prove exact data output. The application binaries are unchanged; the optional
+runtime lab uses checksum-pinned public FreeDOS media outside ordinary builds.
+
+Continue critical/nonlocal coverage while ASPECT/nested PROGRAM owns DOS, the
+non-Fail policy and booted-kernel mouse ownership, alongside complete modern
+BBS workflows. No kernel-lab pass closes normal publication, physical modem
+acceptance or any whole-application gate. Immediate ENiGMA remains unresolved.
+
 The [foreground cancellation checkpoint](docs/TERMINAL_CANCEL.md) now closes
 the specific blocking-dialog/transfer polling gap under the opt-in trap policy.
 Three negative controls need a rescue key;30 fixed DOS routes pass570 checks

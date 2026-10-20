@@ -1,5 +1,10 @@
 # Application trap ownership
 
+The [booted-kernel follow-up](KERNEL_CRITICAL.md) validates actual FreeDOS
+write-protection critical errors during capture creation and buffered append/
+close. The four writable/protected controls preserve the existing error
+precedence and application hashes; other DOS/kernel/device paths remain open.
+
 The [foreground cancellation follow-up](TERMINAL_CANCEL.md) adds checked dialog
 key waits and polls the trap flag in serial-only and transfer service paths.
 Its30 actual DOS cancellation cases include accepted partial-transfer cleanup
