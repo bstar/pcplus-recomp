@@ -5,6 +5,12 @@ and Mystic servers. Downloaded server programs, source checkouts, user databases
 wire captures and DOS snapshots stay under ignored `build/bbs-lab/`.
 All listeners must bind loopback. Accounts and messages are synthetic.
 
+The [isolated SynthModem transport candidate](patches/synthmodem-telnet/README.md)
+checks the actual upstream proxy and a maintained Telnet patch without starting
+SIP/audio or changing a service. It is separate from the existing Hayes test
+bridge and from physical modem acceptance.
+
+
 The [Infocom save-edge workflow](enigma-infocom-edges.md) covers actual DOS
 cancellation, invalid/missing names, overwrite and recovery after malformed
 restore. It stages an explicit server candidate after reproducing an owned

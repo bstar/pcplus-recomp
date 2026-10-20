@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+The [isolated SynthModem Telnet candidate](lab/bbs/patches/synthmodem-telnet/README.md)
+reproduces five stock defects and passes1220 assertions, including every byte
+under fragmentation and actual loopback TCP duplex. Its source patch adds
+streaming negotiation/IAC handling, correct TTYPE/NAWS settings, binary-safe
+menu defaults and stale-socket isolation. No service or DOS executable changes.
+Full DOS/BBS transfer, slow-modem backpressure, SIP/audio and Boca hardware
+acceptance remain open; the separate hardware integration target continues.
+
 The [analog-modem software checkpoint](docs/ANALOG_MODEM_INTEGRATION.md#source-built-software-prerequisite-checkpoint)
 passes49 linked inputs and15 DOS checks, plus the existing46-input connection
 suite. DOS dials numeric local target1 and sends the BBS hostname only after

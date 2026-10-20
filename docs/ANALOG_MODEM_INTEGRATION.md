@@ -91,6 +91,24 @@ Links below pin the reviewed source; future versions require rechecking.
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
 
+## Isolated bridge transport candidate
+
+The [SynthModem Telnet candidate](../lab/bbs/patches/synthmodem-telnet/README.md)
+now reproduces five stock-proxy findings and passes1220 assertions with its
+maintained streaming codec. The [receipt](validation/synthmodem-telnet.json)
+binds the upstream revision, original files, candidate, test source and Node
+version. Tests include all256 bytes under fragmentation, TTYPE/NAWS/BINARY,
+NVT handling, bounded malformed subnegotiation, opt-in menu escapes, stale socket
+isolation and a real loopback TCP duplex exchange. It also corrects NAWS reading
+from `config.terminal` rather than the actual `config.telnet` fields.
+
+This is a separately staged source candidate, not a deployed or upstream fix.
+The original source findings above remain valid for the pinned stock version.
+Run `lab/bbs/patches/synthmodem-telnet/check.py` through `tools/dev` as documented
+there. No DSP, SIP/RTP, DOS application, modem or real BBS is exercised by this
+checkpoint. Complete DOS/BBS transfers, slow-modem backpressure and hardware
+acceptance remain open; do not treat byte-oracle success as a file-transfer pass.
+
 ## Source-built software prerequisite checkpoint
 
 [The recorded receipt](validation/analog-modem.json) binds 49 linked-instruction

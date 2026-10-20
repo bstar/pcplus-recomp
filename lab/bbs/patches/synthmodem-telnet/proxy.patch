@@ -1,0 +1,178 @@
+--- a/src/telnet/TelnetProxy.js
++++ b/src/telnet/TelnetProxy.js
+@@ -13,6 +13,7 @@
+ const net            = require('net');
+ const dns            = require('dns');
+ const { EventEmitter } = require('events');
++const { TelnetCodec } = require('./TelnetCodec');
+ const config         = require('../../config');
+ const { makeLogger } = require('../logger');
+ 
+@@ -52,6 +53,7 @@
+     this._txCallback   = null; // fn(Buffer) — called to send data to modem
+     this._idleTimer    = null;
+     this._connectTimer = null;
++    this._telnet = null;
+ 
+     // Menu-idle heartbeat — see _scheduleMenuHeartbeat for rationale.
+     this._menuHeartbeat = null;
+@@ -90,23 +92,19 @@
+     this._scheduleMenuHeartbeat();
+ 
+     if (this._state === STATE.PROXYING) {
+-      // Ctrl+] (0x1D) — escape back to menu
+-      if (data.length === 1 && data[0] === 0x1D) {
++      // Disabled by default: an in-band escape consumes valid binary bytes.
++      // An explicit opt-in is independent of receive chunk boundaries.
++      const escape = cfg.proxyEscapeByte;
++      const index = Number.isInteger(escape) && escape >= 0 && escape <= 255
++        ? data.indexOf(escape) : -1;
++      if (index >= 0) {
++        this._forwardInput(data.subarray(0, index));
+         this._sendLine('\r\n[Escape — returning to menu]');
+         this._returnToMenu();
++        this.receive(data.subarray(index + 1));
+         return;
+       }
+-      // Ctrl+\ (0x1C) also accepted as escape
+-      if (data.length === 1 && data[0] === 0x1C) {
+-        this._sendLine('\r\n[Escape — returning to menu]');
+-        this._returnToMenu();
+-        return;
+-      }
+-      // Forward to remote telnet server
+-      if (this._tcpSocket && !this._tcpSocket.destroyed) {
+-        this._tcpSocket.write(data);
+-        this._resetIdleTimer();
+-      }
++      this._forwardInput(data);
+       return;
+     }
+ 
+@@ -131,6 +129,19 @@
+         }
+       }
+     }
++  }
++
++  _forwardInput(data) {
++    if (data.length && this._tcpSocket && !this._tcpSocket.destroyed) {
++      this._tcpSocket.write(this._telnet.encode(data));
++      this._resetIdleTimer();
++    }
++  }
++
++  _escapeHelp() {
++    return Number.isInteger(cfg.proxyEscapeByte)
++      ? 'Configured in-band menu escape is enabled; disable it for binary transfers.'
++      : 'In-band menu escape disabled; remote close returns to menu. QUIT there hangs up.';
+   }
+ 
+   // ─── Terminal output ──────────────────────────────────────────────────────────
+@@ -255,7 +266,7 @@
+     this._sendLine('  QUIT          Disconnect');
+     this._sendLine('  HELP          Show this help');
+     this._sendLine('');
+-    this._sendLine('While connected: press Ctrl+] then type QUIT to return to menu.');
++    this._sendLine(this._escapeHelp());
+     this._sendLine('');
+   }
+ 
+@@ -279,35 +290,46 @@
+       this._returnToMenu();
+     }, cfg.connectTimeoutMs);
+ 
+-    this._tcpSocket = net.connect(port, host, () => {
++    const socket = net.connect(port, host, () => {
++      if (this._tcpSocket !== socket) return;
+       clearTimeout(this._connectTimer);
+       this._connectTimer = null;
+       this._state = STATE.PROXYING;
+       log.info(`Connected to ${host}:${port}`);
+-      this._sendLine(`Connected to ${host}:${port}. Press Ctrl+] then QUIT to disconnect.`);
++      this._sendLine(`Connected to ${host}:${port}.`);
++      this._sendLine(this._escapeHelp());
+       this._sendLine('');
+       this._startIdleTimer();
+ 
+-      // Send telnet negotiation if enabled
+-      if (cfg.negotiateOptions) {
+-        this._sendTelnetInit();
+-      }
++      this._telnet = new TelnetCodec({
++        send: data => { if (this._tcpSocket && !this._tcpSocket.destroyed) this._tcpSocket.write(data); },
++        display: data => this._send(data),
++        terminalType: cfg.terminalType,
++        terminalCols: cfg.terminalCols,
++        terminalRows: cfg.terminalRows,
++      });
++      // Parsing is still required when unsolicited initial offers are disabled.
++      if (cfg.negotiateOptions) this._telnet.start();
+     });
+ 
+-    this._tcpSocket.on('data', data => {
+-      // Forward from remote server to modem client
+-      this._send(data);
++    this._tcpSocket = socket;
++    socket.on('data', data => {
++      if (this._tcpSocket !== socket) return;
++      if (this._state !== STATE.PROXYING || !this._telnet) return;
++      this._telnet.feed(data);
+       this._resetIdleTimer();
+     });
+ 
+-    this._tcpSocket.on('error', err => {
++    socket.on('error', err => {
++      if (this._tcpSocket !== socket) return;
+       clearTimeout(this._connectTimer);
+       log.warn(`TCP error to ${host}:${port}`, { err: err.message });
+       this._sendLine(`\r\nConnection error: ${err.message}`);
+       this._returnToMenu();
+     });
+ 
+-    this._tcpSocket.on('close', () => {
++    socket.on('close', () => {
++      if (this._tcpSocket !== socket) return;
+       if (this._state === STATE.PROXYING) {
+         this._sendLine('\r\nConnection closed by remote host.');
+         this._returnToMenu();
+@@ -324,30 +346,6 @@
+       }
+       return host === pattern || host.startsWith(pattern.replace(/\/\d+$/, ''));
+     });
+-  }
+-
+-  // ─── Telnet option negotiation ────────────────────────────────────────────────
+-
+-  _sendTelnetInit() {
+-    // WILL ECHO — we handle echo
+-    // DO SUPPRESS-GO-AHEAD — suppress GA
+-    // WILL NAWS — send window size
+-    // WILL TTYPE — terminal type
+-    const neg = Buffer.from([
+-      IAC, WILL, OPT_ECHO,
+-      IAC, WILL, OPT_SUPPRESS_GA,
+-      IAC, DO,   OPT_SUPPRESS_GA,
+-      IAC, WILL, OPT_TTYPE,
+-      IAC, WILL, OPT_NAWS,
+-      // NAWS: send cols and rows
+-      IAC, SB, OPT_NAWS,
+-        (tcfg.terminalCols >> 8) & 0xFF, tcfg.terminalCols & 0xFF,
+-        (tcfg.terminalRows >> 8) & 0xFF, tcfg.terminalRows & 0xFF,
+-      IAC, SE,
+-    ]);
+-    if (this._tcpSocket && !this._tcpSocket.destroyed) {
+-      this._tcpSocket.write(neg);
+-    }
+   }
+ 
+   // ─── Idle timer ───────────────────────────────────────────────────────────────
+@@ -458,6 +456,8 @@
+   // ─── Return to menu ───────────────────────────────────────────────────────────
+ 
+   _closeConnection() {
++    if (this._connectTimer) { clearTimeout(this._connectTimer); this._connectTimer = null; }
++    this._telnet = null;
+     if (this._idleTimer) { clearTimeout(this._idleTimer); this._idleTimer = null; }
+     if (this._tcpSocket) {
+       this._tcpSocket.destroy();
