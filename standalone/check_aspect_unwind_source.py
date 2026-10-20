@@ -14,14 +14,17 @@ from build_aspect_process import ROOT, sha
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label', default='source-' + uuid.uuid4().hex)
+    parser.add_argument('--mouse', action='store_true')
     args = parser.parse_args()
     assert re.fullmatch(r'[A-Za-z0-9_-]+', args.label)
-    folder = ROOT / 'build/aspect-unwind/source-proofs' / args.label
+    folder = ROOT / ('build/aspect-unwind-mouse/source-proofs' if args.mouse else 'build/aspect-unwind/source-proofs') / args.label
     folder.mkdir(parents=True, exist_ok=False)
     source = folder / 'source'
     sources = {}
-    for name in ('terminal-process', 'aspect-process-parent', 'aspect-fault',
-                 'aspect-process', 'aspect-compiler-dos', 'aspect-runner'):
+    names = ['terminal-process', 'aspect-process-parent', 'aspect-fault',
+             'aspect-process', 'aspect-compiler-dos', 'aspect-runner']
+    if args.mouse:names += ['terminal-mouse', 'terminal-mouse-process']
+    for name in names:
         manifest = json.loads((ROOT / 'build' / name / 'manifest.json').read_text())
         for path, digest in manifest['sources'].items():
             assert path not in sources or sources[path] == digest, path
@@ -50,6 +53,8 @@ runner.main()
 subprocess.run([sys.executable,'standalone/build_terminal.py','--external-render'],check=True)
 subprocess.run([sys.executable,'standalone/build_terminal.py'],check=True)
 '''
+    if args.mouse:
+        code += "subprocess.run([sys.executable,'standalone/build_terminal.py','--mouse'],check=True)\nsubprocess.run([sys.executable,'standalone/build_terminal.py','--mouse','--external-render'],check=True)\n"
     with (folder / 'build.log').open('w') as log:
         result = subprocess.run([sys.executable, '-c', code], cwd=source,
                                 stdout=log, stderr=log, timeout=300)
@@ -64,12 +69,13 @@ subprocess.run([sys.executable,'standalone/build_terminal.py'],check=True)
                 'native-process/NAMES.EXE']
     products += ['native-process/' + name for name in json.loads(
         (ROOT / 'build/native-process/manifest.json').read_text())['children']]
+    if args.mouse:products += ['terminal-mouse/TERMINAL.EXE', 'terminal-mouse-process/TERMINAL.EXE']
     compared = {name: dict(expected=sha(ROOT / 'build' / name),
                            actual=sha(source / 'build' / name))
                 for name in products} if not result.returncode else {}
-    report = dict(passed=not result.returncode and len(compared) == 27 and
+    report = dict(passed=not result.returncode and len(compared) == (29 if args.mouse else 27) and
                   all(p['expected'] == p['actual'] for p in compared.values()),
-                  original_inputs=[], source_files=len(sources), sources=sources,
+                  original_inputs=[], experimental_mouse=args.mouse, source_files=len(sources), sources=sources,
                   products=compared, exit_code=result.returncode,
                   checker_sha256=sha(Path(__file__)), log_sha256=sha(folder / 'build.log'),
                   scope='Fresh declared-source tree: normal products, compiler, capability7 parent/child, raw diagnostic, fault diagnostic and20 process components. No originals, previous objects or REA databases.')

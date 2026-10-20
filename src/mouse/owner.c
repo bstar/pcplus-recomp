@@ -41,6 +41,12 @@ static struct {
  mouse_settings settings;
  unsigned char native[28];
 } held;
+#ifdef TERMINAL_MOUSE
+/* Trusted, once-only assembly startup, before any driver ownership exists.
+ * DOS does not promise zeroed C BSS. This is not a lifecycle reset API. */
+void __cdecl mouse_owner_bootstrap(void)
+{unsigned i;for(i=0;i<sizeof(held);++i)((unsigned char *)&held)[i]=0;}
+#endif
 static unsigned extent(const void *p,unsigned bytes)
 {return p&&(unsigned long)(unsigned)p+bytes<=65536UL;}
 static unsigned valid(const mouse_settings *s)

@@ -12,11 +12,12 @@ BANK_TRACE = {}
 
 
 class Owner(DosImage):
-    def __init__(self):
-        manifest = json.loads((OUT / 'manifest.json').read_text())
+    def __init__(self, binary=None, map_path=None, *, bank=False, dos_memory=False):
+        manifest = json.loads((OUT / 'manifest.json').read_text()) if binary is None else dict(bank=bank,dos_memory=dos_memory)
         self.bank = manifest.get('bank', False)
         name = 'MOUSEBNK' if self.bank else 'MOUSEKEY'
-        super().__init__(OUT / (name + '.EXE'), OUT / (name + '.map'))
+        assert binary is None or map_path is not None
+        super().__init__(binary or OUT / (name + '.EXE'), map_path or OUT / (name + '.map'))
         self.dos_memory = manifest['dos_memory']
         self.vector = (0x7000, 0x40)
         self.driver = bytes((i * 19 + 7) & 255 for i in range(256))

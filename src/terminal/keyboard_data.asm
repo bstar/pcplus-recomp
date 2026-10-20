@@ -13,6 +13,7 @@ keyboard_debug_callback:
  ret
 SEGMENT _DATA public align=16 class=DATA use16
 GROUP DGROUP _DATA
+%ifndef TERMINAL_MOUSE
 global keyboard_queue_count,keyboard_queue_index,keyboard_queue_active
 global keyboard_queue_peek,keyboard_queue_values,keyboard_bios_mode,keyboard_debug_gate
 keyboard_queue_count: dw 0
@@ -23,3 +24,4 @@ keyboard_debug_gate: dw -1
 keyboard_queue_peek: times 6 dw 0
 keyboard_queue_values: times 64 dw 0
 keyboard_bios_mode: db 0
+%endif

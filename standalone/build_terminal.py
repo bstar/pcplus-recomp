@@ -9,8 +9,8 @@ from terminal_memory import inspect_terminal_memory
 from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
 import argparse
-parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--external-render',action='store_true');args=parser.parse_args()
-OUT=ROOT/('build/terminal-process' if args.external_render else 'build/terminal');OUT.mkdir(parents=True,exist_ok=True)
+parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true');args=parser.parse_args()
+OUT=ROOT/('build/terminal-mouse-process' if args.external_render and args.mouse else 'build/terminal-mouse' if args.mouse else 'build/terminal-process' if args.external_render else 'build/terminal');OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
 sources=[]
@@ -32,6 +32,15 @@ sources += [ROOT/'src/status/status_renderer_bridge.asm',ROOT/'src/status/status
  ROOT/'reconstruction/terminal_reset/status_refresh.asm',ROOT/'reconstruction/terminal_reset/status_fill.asm',
  ROOT/'reconstruction/program_exec/strlen.asm']
 sources += [ROOT/'reconstruction/terminal_reset/protected_home.asm']
+mouse_units=[]
+if args.mouse:
+ mouse_provenance=json.loads((ROOT/'reconstruction/program_mouse/provenance.json').read_text())
+ mouse_units=[ROOT/u['file'] for u in mouse_provenance['units']]
+ sources += [ROOT/'src/mouse/terminal.asm',*mouse_units,ROOT/'reconstruction/program_mouse/defaults.asm',ROOT/'src/mouse/state.asm',ROOT/'src/mouse/platform.asm',ROOT/'src/mouse/dos_memory.asm']
+ for source,unit in zip(mouse_units,mouse_provenance['units']):
+  flat=OUT/('mouse-baseline-'+source.stem+'.bin')
+  subprocess.run(['nasm','-fbin','-I',str(ROOT/'reconstruction/uart')+'/',str(source),'-o',str(flat)],check=True)
+  assert hashlib.sha256(flat.read_bytes()).hexdigest()==unit['sha256']
 render_import_adapters={}
 sources.append(ROOT/'src/aspect/break_cursor_read.asm')
 objects=[]
@@ -48,6 +57,11 @@ for index,source in enumerate(sources):
    '-Dscreen_adjust_attribute_boundary=attribute_boundary_local']
  if source==ROOT/'src/aspect/resident_bridge.asm':options+=['-DRESIDENT_BRIDGE_FAR']
  if args.external_render:options+=['-DASPECT_EXTERNAL_RENDER']
+ if args.mouse:
+  options+=['-DTERMINAL_MOUSE']
+  if source in mouse_units or source in (ROOT/'src/mouse/platform.asm',ROOT/'src/mouse/dos_memory.asm'):
+   options+=['-D_TEXT=MOUSE_CODE','-DCODE=FARCODE']
+  if source==ROOT/'src/mouse/platform.asm':options+=['-DMOUSE_BANK']
  if source.parent==ROOT/'reconstruction/terminal_reset':
   options+=['-DSTATUS_CONFIG_CODE','-Dtext_fill_cells=status_text_fill','-Dtext_write_packed=status_text_packed',
    '-Dterminal_reset_ui_75e8=status_ui_printf','-Dterminal_reset_ui_7630=status_character_fill',
@@ -81,6 +95,7 @@ c_sources += sorted((ROOT/'src/capture').glob('*.c'))
 c_sources += sorted((ROOT/'src/printer').glob('*.c'))
 c_sources += [ROOT/'src/aspect/renderer_client.c',ROOT/'src/aspect/renderer_policy.c']
 c_sources += [ROOT/'src/status/status_formatter.c']
+if args.mouse:c_sources += [ROOT/'src/mouse/owner.c',ROOT/'src/mouse/terminal.c']
 config_sources={ROOT/'src/directory/directory_live.c',ROOT/'src/config/live_configuration.c',ROOT/'src/config/live_setup_owner.c'}
 config_sources.update({ROOT/'src/config'/name for name in ['terminal_preferences.c','transfer_import.c']})
 config_sources.update({ROOT/'src/transfer'/name for name in ['zmodem_autostart.c','terminal_autostart.c']})
@@ -127,6 +142,12 @@ for source in c_sources:
  options=['-nt=CONFIG_CODE','-nc=FARCODE']+['-d'+name+'='+alias for name,alias in config_aliases.items()] if source in config_sources else []
  if source.parent==ROOT/'src/aspect':options=['-nt=ASPECT_CODE','-nc=FARCODE']
  if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
+ if args.mouse:
+  options+=['-dTERMINAL_MOUSE']
+  if source.parent==ROOT/'src/mouse':
+   mouse_names=['mouse_settings_decode','mouse_owner_open','mouse_owner_suspend','mouse_owner_resume','mouse_owner_close','mouse_owner_key','mouse_owner_phase','mouse_owner_bytes',
+    'terminal_mouse_bootstrap','terminal_mouse_stage','terminal_mouse_start','terminal_mouse_pause','terminal_mouse_resume','terminal_mouse_stop']
+   options+=['-nt=MOUSE_CODE','-nc=FARCODE','-ecc','-dMOUSE_DOS_PLATFORM',*['-d'+n+'='+n+'_impl' for n in mouse_names]]
  if source==ROOT/'src/status/status_formatter.c':options=['-ecc']
  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we',*options,'-i='+str(ROOT/'src/config'),'-i='+str(ROOT/'src/directory'),'-i='+str(ROOT/'src/key_mapping'),'-i='+str(ROOT/'src/process'),'-i='+str(ROOT/'src/transfer'),'-fo='+str(obj),str(source)],cwd=OUT,check=True)
  if source==ROOT/'src/transfer/batch_header.c':
@@ -136,6 +157,10 @@ for source in c_sources:
 config_end=ROOT/'src/config/far_end.asm';config_end_obj=OUT/'config-end.obj'
 subprocess.run(['nasm','-f','obj',str(config_end),'-o',str(config_end_obj)],check=True)
 objects.append(str(config_end_obj));sources.append(config_end)
+if args.mouse:
+ mouse_end=ROOT/'src/mouse/far_end.asm';mouse_end_obj=OUT/'mouse-end.obj'
+ subprocess.run(['nasm','-fobj',str(mouse_end),'-o',str(mouse_end_obj)],check=True)
+ objects.append(str(mouse_end_obj));sources.append(mouse_end)
 native=build_native_receiver(ROOT,OUT)
 objects += list(map(str,native['objects']))
 sender=build_native_sender(ROOT,OUT)
@@ -162,6 +187,7 @@ inputs += [ROOT/'standalone/omf_imports.py',Path(__file__).resolve()]
 inputs += sorted((ROOT/'src/terminal').glob('*.inc'))
 inputs += sorted((ROOT/'src/translation').glob('*.h'))
 inputs += sorted((ROOT/'src/key_mapping').glob('*.h'))+sorted((ROOT/'src/key_mapping').glob('*.inc'))
+if args.mouse:inputs += [ROOT/'src/mouse/owner.h',ROOT/'reconstruction/program_mouse/provenance.json',ROOT/'reconstruction/program_mouse/defaults.json']
 manifest={'aspect_renderer_import_adapters':render_import_adapters,'kind':'source-only-interactive-dos-terminal','binary_sha256':hashlib.sha256((OUT/'TERMINAL.EXE').read_bytes()).hexdigest(),'data_stack_bytes':int(group[1],16),'memory_layout':memory,'sources':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs},'limitations':['Interactive terminal milestone, not the complete PCPlus application.','Explicit /X:FILE.XLT stages an exact256-byte input table before UART ownership. Normal terminal bytes translate after connection/raw-monitor/controller/transfer filtering; parser continuations, TX and binary/dedicated owners stay raw. RIS preserves selection. Saved PRM modes0/1/2 select identity, current-directory then bounded PCPLUS-environment PCPLUS.XLT lookup, or a7-bit driver mask; /X overrides valid saved modes. Binary transfers reject non-FF masks. AltF10 mode changes use a frozen pre-child current/PCPLUS namespace, checked table staging and separate confirmation before table/enabled/mask commit while serial ownership is handed off. Explicit /X pins its selection. Queued raw input uses the accepted mode after return. Alt-F9 or Setup/Reload input table stages the frozen active canonical source and asks before accepting a same-mode reload over the drained PROGRAM UART owner, without DOS EXEC. Failed/declined reloads retain the table; queued input uses an accepted table. Startup canonical source paths are limited to63 bytes, including resolved CWD. Alt-F8/menu launches sibling XLTEDIT for the frozen active canonical table via a bounded DOS3+ PSP trailer and direct EXEC. A fresh checked snapshot requires separate confirmation after return. The editor accepts DOS8.3 leaves and absolute63-byte paths with same-parent recovery. Complete resource and settings integration remain unfinished.','Selected ANSI/ordinary controls and ASCII/raw CP437 output; all79 raw keyboard binding slots, function/modifier/keypad banks and bounded binary output now integrated. Specialized controls, fonts, other profiles and full UI remain unfinished.','Maintained /S @8.3-leaf runs local source-built PRMEDIT.EXE directly before UART ownership; failure stops startup and successful return reloads through existing validation/CLI precedence. Alt-F10 invokes the editor through the live PROGRAM handoff for an explicit current-directory8.3 leaf. A canonical startup binding, validated candidate and selective commit adopt display, pacing, future modem commands/responses and BREAK; A separate Y/N choice permits same-port baud/line/flow changes after old-format XON/TEMT handoff; Supported4/6 profile changes use a separate confirmation, staged canonical KBD selection and clean RIS/view baseline. Confirmed COM moves require idle ports, preserve target DTR, restore old hardware/vector ownership and recheck acquisition after profile confirmation. No automatic hangup/redial, original PCSETUP ABI, complete emulation collection or source of defaults.', 'Standard BIOS-listed COM1..4; explicit partial2.01 PRM import and CLI category overrides. Explicit KBD profile import stages and validates before UART access. AUTO BIOS detection and manual STANDARD/ENHANCED selection supported; no complete PRM schema/default generation.','Explicit-target and directory/browser MODEM/DIRECT connections supported. Native 16-field editor stages changes until acceptance; explicit saves use validated full-file staging and backup replacement.', 'Successful directory connections queue date/call-count updates for deferred foreground persistence. Replacement does not guarantee crash atomicity or concurrent-writer exclusion.', 'Stored password remains private metadata, masked in the editor and never automatically transmitted. Scripts, KEY/META bindings and HALF mode fail explicitly; cycles, advanced transfers, Host and the complete original settings/UI remain unfinished.','NETWORK line editing clips counts to the active region and preserves the column. ORIGINAL ANSI CSI M uses a serviced36-tick discard wait; the exact unbounded original helper is not linked. Complex attribute repair remains explicit. Supported-profile RIS restores a captured source-owned startup state and keymap without DOS/file IO.', 'KBD defaults are maintained network choices, not recovered factory per-profile blocks. Unknown original local actions stop explicitly; Explicit /T:FILE.KEY stages ten actions before UART installation. Alt1..Alt0 execute bounded nonblocking TEXT; PROGRAM uses bounded COMSPEC/PATH lookup, static-parent DOS EXEC, serial handoff, screen restoration and a return key prompt. ASPECT/HOOK execution and binding UI remain unfinished.', 'Alt-G freezes80x25 characters through recovered row helpers and appends checked PCPLUS.SCR rows via an independent canonical-path file owner. Far memory is retained across PROGRAM. Full original snapshot/printer/script/UI modes remain unfinished.', 'Alt-F1/F2 processed text capture uses checked append/exclusive creation, pause/resume and periodic buffering. Alt-F3 toggles CR-adds-LF. Write/close failures retain partial logs and sticky exit12; PROGRAM closes capture before EXEC. Full capture/printer/settings/UI and ASPECT modes remain unfinished.', 'Ctrl-backslash enters a serviced raw monitor using the actual UART and renderer. Explicit Y replaces PCPLUS.DMP through a third checked canonical-path owner; other answers select view-only. Binary256-byte buffering, periodic flush and failure-aware shutdown preserve text-capture ownership. Nested local/KEY/PROGRAM owners are blocked; the exact original owner/resolver/prompt remain separate diagnostics. Native HOOK and complete monitor/UI geometry remain unfinished.', 'AltR receives ordinary XMODEM CRC/checksum128/1024 using the real UART and checked staged DOS storage. HARD/NONE only; SOFT rejects before staging. FinalACK follows checked installation. AltS uses the native ordinary sender with checked read-only DOS source files and automatic1K blocks; only actual ACKs advance maintained progress. F2 inside the transfer prompt selects maintained CRC YMODEM batch transfer with checked per-file ownership and exact declared lengths. Window/streaming/other protocols, full transfer settings/UI and physical peers remain unfinished.', 'CtrlPgUp opens a maintained63000-byte frozen history viewer in80x25 BIOS mode3/page0 with local line/page/Home/End navigation, ASCII case-insensitive incremental search/F3 and Escape return to the updated live screen. UART/parser/history/capture/replies continue, with frame swaps at top-level receive/idle and64 search candidates per turn. W appends the frozen snapshot through a fourth checked file owner, expanding CR to CRLF in128-source-byte foreground chunks. Append/create, short writes, cancellation, close ambiguity and DOS child inheritance are checked. Alt-= opens a maintained filename clipboard and C enters it from redisplay. The15-entry list supports bounded extraction, add/edit/delete/purge, tags, runtime decimal separator and one/all/tagged paste. Whole-packet TX admission requires an empty queue; cancellation removes only the unsent prefix and preserves later parser replies. Single removal waits for actual UART acceptance, and connection queue resets retain the entry as interrupted. PRM04EA imports a validated0..255 separator through the44-byte settings plan; PRMEDIT offers46 fields. Live setup applies deliberate saved separator edits and preserves session R across canceled/no-op/unrelated returns using an acknowledged source baseline in the628-byte candidate owner. Full native UI, transfer-prompt workflows and other geometries remain unfinished.', 'PROGRAM preserves DTR, pauses configured flow and releases its UART IRQ during child execution; NONE cannot guarantee incoming-data preservation while a child owns the machine. No physical UART/modem/public BBS validation. ENiGMA editor escape-fragmentation behavior remains a server/packetization compatibility boundary.']}
 manifest['limitations'].append('Alt-Z opens a source-owned five-group command menu, contextual help and bounded ASCII help search. Existing commands run only after the shared redisplay owner restores the live screen; history/clipboard re-enter their usual guards. Incoming UART/parser/history/replies continue while browsing. Menu code and read-only text reside in CONFIG_CODE, with only bounded state/query bytes near. Original pull-down layout, advertised mouse paths, full settings/key editing and other video geometries remain unfinished.')
 manifest['limitations'].append('An otherwise eligible Alt-Z read during normal parser ownership is retained until a distinct resident foreground service can recheck all guards. All BIOS key values, including AX0, retain their key meaning. Subsequent keys remain in the existing32-word typeahead FIFO; repeated Alt-Z coalesces. Escape cancels locally; Alt-X/Alt-H cancel then use normal dispatch. Changed owners/geometry or foreground stop discard the owned pending typeahead. Overflow retains the existing explicit exit3 policy. This is maintained behavior; it does not identify the cause of the earlier unobserved Synchronet refusal.')
@@ -169,5 +195,6 @@ manifest['compiler_helper_adapters']={'import_counts':helper_adapters['import_co
 (OUT/'compiler-helper-adapters.json').write_text(json.dumps({'binary_sha256':manifest['binary_sha256'],**helper_adapters},indent=2)+'\n')
 manifest['limitations'].append('Maintained YMODEM framing and header codec execute in CONFIG_CODE with unchanged near data and protocol logic. Explicit callbacks bridge resident UART/CRC/file owners; zero-argument callbacks have their own declared family. Newly compiled batch_header OMF imports for Watcom32-bit arithmetic are renamed to local register adapters; all code/data/fixup records and external indices are preserved. Original ordinary XMODEM modules remain resident and unchanged.')
 manifest['experimental_external_render']=args.external_render
+manifest['experimental_mouse']=args.mouse
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 print('Built',str((OUT/'TERMINAL.EXE').relative_to(ROOT)),manifest['binary_sha256'],'DS/SS bytes',manifest['data_stack_bytes'])

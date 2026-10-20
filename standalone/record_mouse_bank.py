@@ -26,6 +26,7 @@ def main():
         parser.add_argument('--' + variant + '-run', required=True)
         parser.add_argument('--' + variant + '-source', required=True)
     parser.add_argument('--application-source', required=True)
+    parser.add_argument('--application-mouse-source', action='store_true')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     for value in vars(args).values():
@@ -78,14 +79,16 @@ def main():
                 bank_execution_entries=model['bank_execution_entries'],
                 owner_imports=manifest['owner_imports'], CRT_libraries=[])
             evidence += [folder / 'MOUSEBNK.map', folder / 'link.lnk']
-    app_dir = ROOT / 'build/aspect-unwind/source-proofs' / args.application_source
+    app_dir = ROOT / ('build/aspect-unwind-mouse/source-proofs' if args.application_mouse_source else 'build/aspect-unwind/source-proofs') / args.application_source
     application = read(app_dir / 'result.json')
     preceding = read(ROOT / 'docs/validation/aspect-unwind.json')
-    assert application['passed'] and application['original_inputs'] == [] and len(application['products']) == 27
+    assert application['passed'] and application['original_inputs'] == [] and len(application['products']) == (29 if args.application_mouse_source else 27)
     assert application['checker_sha256'] == sha(ROOT / 'standalone/check_aspect_unwind_source.py')
     assert application['log_sha256'] == sha(app_dir / 'build.log')
     current(application['sources'], app_dir / 'source')
-    for name, pair in application['products'].items():
+    normal_products={p:v for p,v in application['products'].items() if not p.startswith(('terminal-mouse/', 'terminal-mouse-process/'))}
+    assert len(normal_products)==27
+    for name, pair in normal_products.items():
         assert pair['actual'] == pair['expected'] == preceding['products'][name]['actual']
         assert pair['actual'] == sha(ROOT / 'build' / name) == sha(app_dir / 'source/build' / name)
     evidence += [app_dir / 'result.json', app_dir / 'build.log', ROOT / 'docs/validation/aspect-unwind.json']
@@ -93,12 +96,12 @@ def main():
         normal_mouse_enabled=False, whole_application_gates_closed=[], original_build_inputs=[],
         variants=variants, linked_policy_cases=244, actual_DOS_assertions=130,
         native_code_and_guard_bytes=599, original_default_table_bytes=30,
-        preserved_application_products={p:v['actual'] for p,v in application['products'].items()},
+        preserved_application_products={p:v['actual'] for p,v in normal_products.items()},
         prior_161_DOS_cases_carried_by_unchanged_binary_identity=True,
         evidence=[dict(path=str(p.relative_to(ROOT)), sha256=sha(p)) for p in evidence],
         nix_inputs={p:sha(ROOT / p) for p in ('nix/flake.nix', 'nix/flake.lock')},
         recorder_sha256=sha(Path(__file__)),
-        limitations=['Banked mouse ownership is not yet connected to terminal menus, startup settings UI or ASPECT.',
+        limitations=['Normal builds keep mouse disabled; selectable terminal integration has separate acceptance.',
                      'Changed INT33 quarantine is repaired explicitly by the diagnostic before termination.',
                      'Events are injected through the native foreign-DS/SS callback; physical input and other DOS kernels remain untested.',
                      'The CRT-free host deliberately contains 60000 bytes of near-code padding to force a different mouse-bank CS.',

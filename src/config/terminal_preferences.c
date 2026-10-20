@@ -1,5 +1,8 @@
 #include "terminal_preferences.h"
 #include <string.h>
+#ifdef TERMINAL_MOUSE
+extern unsigned __cdecl terminal_mouse_stage(const unsigned char *,unsigned);
+#endif
 static unsigned extent(const void *p,unsigned n)
 {return p && (unsigned long)(unsigned)p+n<=65536UL;}
 static unsigned separate(const void *a,unsigned an,const void *b,unsigned bn)
@@ -29,6 +32,9 @@ unsigned __cdecl terminal_preferences_read(const char *path,terminal_import_sett
  status=terminal_import_decode(&image,&s);if(status)return status;
  if(modem && modem_import_decode(&image,&m))return 7;
  if(transfer_import_decode(&image,&t))return 14;
+#ifdef TERMINAL_MOUSE
+ if(terminal_mouse_stage(image.bytes,sizeof(image.bytes)))return 15;
+#endif
  memcpy(serial,&s,sizeof(s));if(modem)memcpy(modem,&m,sizeof(m));
  memcpy(transfer,&t,sizeof(t));return 0;
 }
@@ -63,6 +69,9 @@ unsigned __cdecl terminal_directory_preferences_read(const char *path,const char
  if(c.selection.entry_number!=entry){status=DIRECTORY_LIVE_RECORD;goto failed;}
  status=directory_live_decode(&image,&c.selection,codes,&s,&m,&d,&decoded);
  memcpy(result,&decoded,sizeof(decoded));if(status)return status;
+#ifdef TERMINAL_MOUSE
+ if(terminal_mouse_stage(image.bytes,sizeof(image.bytes))){result->status=15;return 15;}
+#endif
  memcpy(serial,&s,sizeof(s));memcpy(modem,&m,sizeof(m));memcpy(plan,&d,sizeof(d));
  memcpy(context,&c,sizeof(c));memcpy(transfer,&t,sizeof(t));return 0;
 failed:result->status=status;return status;

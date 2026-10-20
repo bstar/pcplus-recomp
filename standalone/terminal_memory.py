@@ -349,6 +349,38 @@ def inspect_terminal_memory(binary,map_path):
   near_call('status_uart_resident','status_carrier_read')
   assert near_start<=address('terminal_reset_script_label') and address('terminal_reset_script_label')+15<=near_start+near_size
   extra.update(status_far_bridge_pairs_verified=5,status_script_label_bytes=15)
+ if 'terminal_mouse_code_start' in symbols:
+  mouse_code=next(c for c in code_segments if c['name']=='MOUSE_CODE')
+  mouse_seg=mouse_code['relative_segment']
+  assert mouse_code['offset']==0 and all(c['relative_segment']!=mouse_seg for c in code_segments if c['name']!='MOUSE_CODE')
+  assert address('terminal_mouse_code_start')==mouse_seg*16
+  assert address('terminal_mouse_code_end')-address('terminal_mouse_code_start')==mouse_code['bytes']
+  for name,count,caller in [('_terminal_mouse_bootstrap',0,near_code['relative_segment']),
+      ('_terminal_mouse_start',0,near_code['relative_segment']),
+      ('_terminal_mouse_pause',0,near_code['relative_segment']),
+      ('_terminal_mouse_resume',0,near_code['relative_segment']),
+      ('_terminal_mouse_stage',2,config_seg)]:
+   assert symbols[name][0]==caller
+   assert symbols[name+'_far'][0]==symbols[name+'_impl'][0]==mouse_seg
+   prefix=cdecl_prefix(count,4);suffix=b'\x8d\x66\x00\x5d\xc3'
+   assert raw(name,len(prefix)+5+len(suffix))==prefix+b'\x9a'+struct.pack('<HH',symbols[name+'_far'][1],mouse_seg)+suffix
+   assert address(name)+len(prefix)+3 in relocations
+   near_call(name+'_far',name+'_impl',prefix=cdecl_prefix(count,6),suffix=b'\x8d\x66\x00\x5d\xcb')
+  for name in ('poll','read'):
+   near_call('mouse_keyboard_'+name+'_resident','keyboard_'+name)
+   assert symbols['_mouse_platform_'+name][0]==mouse_seg
+  for name in ('mouse_callback','mouse_depth','_mouse_owner_bootstrap','_mouse_owner_open_impl',
+      '_mouse_owner_suspend_impl','_mouse_owner_resume_impl','_mouse_owner_close_impl','terminal_mouse_exit'):
+   assert symbols[name][0]==mouse_seg,name
+  assert symbols['mouse_count']==symbols['keyboard_queue_count']
+  assert symbols['mouse_code']==symbols['keyboard_queue_index']
+  assert symbols['mouse_button_pending']==symbols['keyboard_queue_active']
+  assert raw('mouse_enabled',6)==bytes([1]*6)
+  assert raw('keyboard_queue_peek',12)==struct.pack('<6H',0x4800,0x4d00,0x5000,0x4b00,0x1c0d,0x011b)
+  assert raw('keyboard_queue_values',12)==struct.pack('<6H',0x4800,0x4d00,0x5000,0x4b00,0x000d,0x001b)
+  assert b'\xb8\x0e\x31\xcd\x21' in raw('terminal_mouse_exit',96),'Missing typed retained-memory fallback'
+  extra.update(mouse_bridge_pairs_verified=7,mouse_code_bytes=mouse_code['bytes'],mouse_shared_native_state_bytes=28)
+  bridges+=7
  extra.update(resident_code_bytes=near_code['bytes'],resident_code_spare_bytes=65536-near_code['bytes'],code_segments=code_segments,far_code_bridge_pairs_verified=bridges)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'

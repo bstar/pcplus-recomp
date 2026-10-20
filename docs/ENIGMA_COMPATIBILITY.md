@@ -19,6 +19,12 @@ navigation keys, empty search, return stack and byte conservation. This is a
 real socket/DOS test; it cannot guarantee TCP receive boundaries or establish
 physical RS-232 modem compatibility.
 
+The [selectable mouse-enabled terminal](TERMINAL_MOUSE.md) separately passes20
+checks on the isolated owned search/index/details fixture with DOS-compiled
+ASPECT login and20ms-paced client bytes. Its PRM fixture explicitly supplies
+8/4 scales. This adds regression coverage for that application build; it does
+not install the candidate on the live board or erase live editor failures.
+
 The fresh actual DOS editor comparison passes all seven audited checks on the
 patched instance, including Home positioning, Insert/overtype and no saved post.
 The live and isolated tests use the same terminal binary. Their menus and

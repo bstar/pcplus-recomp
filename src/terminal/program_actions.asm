@@ -253,6 +253,12 @@ terminal_program_poll:
  rep movsw
  pop es
  pop ds
+%ifdef TERMINAL_MOUSE
+ extern _terminal_mouse_pause,_terminal_mouse_resume
+ call _terminal_mouse_pause
+ or ax,ax
+ jnz .mouse_failed
+%endif
  mov word [terminal_program_pending],0
  mov word [terminal_program_active],1
  mov word [terminal_program_status],2
@@ -449,6 +455,14 @@ terminal_program_poll:
  je .port_restored ;Script's serviced console already owns the parent ISR.
  call program_restore_uart
 .port_restored:
+%ifdef TERMINAL_MOUSE
+ call _terminal_mouse_resume
+ or ax,ax
+ jz .mouse_ready
+ mov word [terminal_exit_code],14
+ mov word [terminal_quit],1
+.mouse_ready:
+%endif
  mov word [terminal_program_active],0
  call program_resume_flow
  jmp .done
@@ -457,6 +471,13 @@ terminal_program_poll:
  ; fresh while the foreground main loop drains it before DOS EXEC.
  call program_progress
  jmp .done
+%ifdef TERMINAL_MOUSE
+.mouse_failed:
+ call terminal_program_cancel
+ mov word [terminal_exit_code],14
+ mov word [terminal_quit],1
+ jmp .done
+%endif
 .cancel:
  call terminal_program_cancel
  jmp .done

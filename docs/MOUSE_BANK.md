@@ -5,6 +5,8 @@ An assembly-started parent executes that combination without linking a C runtime
 or initializing a CRT heap. This removes the allocator/startup obstacle recorded
 in [mouse/keyboard composition](MOUSE_KEYBOARD.md). It does not yet connect mouse
 ownership to the interactive terminal's startup, menus or ASPECT controller.
+The subsequent [selectable terminal integration](TERMINAL_MOUSE.md) supplies
+startup/PROGRAM/shutdown bindings and its own acceptance evidence.
 The [validation receipt](validation/mouse-bank.json) records the exact scope.
 
 ## Allocation and release

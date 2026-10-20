@@ -58,6 +58,12 @@ _small_code_:
  mov sp,terminal_stack_top
  sti
  cld
+%ifdef TERMINAL_MOUSE
+ extern _terminal_mouse_bootstrap,_terminal_mouse_start,terminal_mouse_exit
+ push ax
+ call _terminal_mouse_bootstrap
+ pop ax
+%endif
  push ax ;PSP segment remains the PROGRAM initializer input.
  call _terminal_autostart_initialize
  pop ax
@@ -116,6 +122,11 @@ _small_code_:
  or ax,ax
  jnz .configuration_error
  call terminal_setup_bind
+%ifdef TERMINAL_MOUSE
+ call _terminal_mouse_start
+ or ax,ax
+ jnz .configuration_error
+%endif
  ; Require a standard BIOS-listed serial port before changing its registers.
  mov bx,[terminal_port_number]
  dec bx
@@ -256,7 +267,11 @@ _small_code_:
  jmp terminal_shutdown
 .configuration_error:
  mov dx,configuration_argument
+%ifdef TERMINAL_MOUSE
+ cmp ax,15
+%else
  cmp ax,14
+%endif
  ja .configuration_message
  mov bx,ax
  dec bx
@@ -405,6 +420,9 @@ terminal_shutdown:
  mov ah,9
  int 0x21
 .dos_exit:
+%ifdef TERMINAL_MOUSE
+ call far terminal_mouse_exit
+%endif
  mov ax,[terminal_exit_code]
  mov ah,0x4c
  int 0x21
@@ -435,6 +453,10 @@ configuration_messages: dw configuration_io,configuration_serial,configuration_f
  dw configuration_translation
  dw configuration_clipboard
  dw configuration_transfer
+%ifdef TERMINAL_MOUSE
+ dw configuration_mouse
+configuration_mouse: db 'Could not apply mouse settings. Scales must be 1..999.',13,10,'$'
+%endif
 configuration_transfer: db 'Invalid download directory in configuration.',13,10,'$'
 configuration_clipboard: db 'Configuration clipboard separator must be 0..255.',13,10,'$'
 configuration_translation: db 'Invalid input translation mode or 256-byte XLT table.',13,10,'$'

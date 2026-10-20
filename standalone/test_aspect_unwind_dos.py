@@ -27,10 +27,11 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--label',default='unwind-'+uuid.uuid4().hex)
     parser.add_argument('--phase',type=int,action='append');parser.add_argument('--kind',choices=['D','A','F','L'],action='append')
     parser.add_argument('--port',type=int,choices=[1,2],default=1);parser.add_argument('--flow',choices=list('NSHB'),default='H');parser.add_argument('--control',action='store_true')
+    parser.add_argument('--mouse',action='store_true')
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     phases=args.phase or list(range(1,23));assert all(1<=p<=22 for p in phases)
-    out=ROOT/'build/aspect-unwind/runs'/args.label;out.mkdir(parents=True,exist_ok=False)
-    parent=ROOT/'build/terminal-process/TERMINAL.EXE';child=ROOT/'build/aspect-fault/ASPECT.EXE'
+    out=ROOT/('build/aspect-unwind-mouse/runs' if args.mouse else 'build/aspect-unwind/runs')/args.label;out.mkdir(parents=True,exist_ok=False)
+    parent=ROOT/('build/terminal-mouse-process/TERMINAL.EXE' if args.mouse else 'build/terminal-process/TERMINAL.EXE');child=ROOT/'build/aspect-fault/ASPECT.EXE'
     sources={}
     for product in (parent,child):
         manifest=json.loads((product.parent/'manifest.json').read_text());assert manifest['binary_sha256']==sha(product)
@@ -57,8 +58,10 @@ def main():
         (folder/'CHILD.LOG').write_bytes(b'')
         payload=bytearray(directory(port=port));payload[302:311]=b'LOGIN\0\0\0\0';payload[325:336]=b'Synth42\0\0\0\0'
         harness.RENDER_POST=render.QUERY;harness.RENDER_TRIGGER=b'Synth42\r'
+        settings=bytearray(prm(port=port,soft=int(flow in 'SB'),hard=int(flow in 'HB')))
+        if args.mouse:struct.pack_into('<HH',settings,0x4e4,8,4)
         result=harness.run(name,'success','p6500 space p700 r e a d y p700 a-x',directory=bytes(payload),
-            prm=prm(port=port,soft=int(flow in 'SB'),hard=int(flow in 'HB')),com=port,
+            prm=bytes(settings),com=port,
             arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK',files=files,environment={'PCPFAULT':str(phase)+kind},
             banner=b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0cLOGIN:',working_drive='d',observer='RENDER')
         report=struct.unpack('<20H',(folder/'FAULT.BIN').read_bytes()) if (folder/'FAULT.BIN').is_file() else ()
@@ -82,7 +85,7 @@ def main():
         result.update(passed=all(checks.values()),phase=phase,kind=kind,port=port,flow=flow,report_words=report,passive_header=head,owner_words=words,compared_parent_bytes=size)
         (folder/'result.json').write_text(json.dumps(result,indent=2)+'\n');results.append(result)
         print(name,'FINAL PASS' if result['passed'] else 'FINAL FAIL '+','.join(k for k,v in checks.items() if not v),flush=True)
-    report=dict(passed=all(r['passed'] for r in results),cases=results,parent_sha256=sha(parent),child_sha256=sha(child),sources=sources,
+    report=dict(passed=all(r['passed'] for r in results),experimental_mouse=args.mouse,cases=results,parent_sha256=sha(parent),child_sha256=sha(child),sources=sources,
         checker_sha256=sha(Path(__file__)),observer_sha256=sha(out/'RENDER.COM'),
         scope='Actual DOS checkpoint recovery and same-process VM/UART/renderer reuse. Diagnostic probes raise real DIV or native typed abort; kernel/BIOS/allocator corruption and recursive recovery faults are not simulated.')
     (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');return 0 if report['passed'] else 1

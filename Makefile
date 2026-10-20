@@ -1139,3 +1139,20 @@ test-mouse-bank: mouse-bank
 	python3 standalone/test_mouse_keyboard_dos.py --bank
 test-mouse-bank-source: mouse-bank
 	python3 standalone/check_mouse_keyboard_source.py --bank
+
+# Selectable terminal integration; preserve the normal application products.
+.PHONY: terminal-mouse terminal-mouse-process test-terminal-mouse test-terminal-mouse-source test-terminal-mouse-unwind
+terminal-mouse:
+	python3 standalone/build_terminal.py --mouse
+terminal-mouse-process:
+	python3 standalone/build_terminal.py --mouse --external-render
+test-terminal-mouse: terminal-mouse
+	python3 standalone/check_terminal_mouse.py
+	python3 standalone/test_terminal_mouse_dos.py
+test-terminal-mouse-source: terminal-mouse terminal-mouse-process aspect-external-unwind aspect-process aspect-runner aspect-compiler-dos terminal
+	python3 standalone/check_aspect_unwind_source.py --mouse
+test-terminal-mouse-unwind: terminal-mouse-process aspect-external-unwind
+	python3 standalone/test_aspect_unwind_dos.py --mouse --kind D --kind A --kind F --kind L --control
+	python3 standalone/test_aspect_unwind_dos.py --mouse --phase 9 --kind D --port 2 --flow B
+	python3 standalone/test_aspect_unwind_dos.py --mouse --phase 6 --kind D --port 1 --flow S
+	python3 standalone/test_aspect_unwind_dos.py --mouse --phase 10 --kind D --port 2 --flow N

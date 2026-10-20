@@ -38,6 +38,12 @@ async def run(args):
    command+=' /E:D:\\TEST.DIR'
    if not args.directory_browser:command+=f' /N:{args.entry}'
   elif args.dial_fixture:command+=f' /D:lab.local:{args.port}'
+  if getattr(args,'mouse_scales',None):
+   import struct
+   sx,sy=args.mouse_scales
+   assert 1<=sx<=999 and 1<=sy<=999
+   fixture=bytearray(fixture);struct.pack_into('<HH',fixture,0x4e4,sx,sy)
+   fixture=bytes(fixture);(output/'TEST.PRM').write_bytes(fixture)
  keymap=None
  if args.keymap_fixture:
   keymap=args.keymap_fixture.read_bytes()

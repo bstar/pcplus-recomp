@@ -77,6 +77,13 @@ outside the guarantee. `check_fragment_relay.py` exercises all256 byte values,
 escape sequences, binary data and teardown with a send still pending. Early
 teardown must report incomplete byte conservation rather than passing.
 
+`--mouse-terminal` selects `build/terminal-mouse/TERMINAL.EXE` and explicitly
+sets the generated PRM scales to8/4. Its source manifest and bytes are checked
+before staging. Combined with `--script-login --network-byte-delay-ms 20`, this
+passes20 checks for the selectable mouse integration. The ordinary terminal,
+keyboard mapping, modem forwarding and server fixture remain the defaults when
+the option is absent. This does not imply physical mouse or modem coverage.
+
 Run the [keyboard experiment](patches/enigma-key-stream/README.md) first to
 create a fresh checked candidate for the owned upstream revision, then:
 

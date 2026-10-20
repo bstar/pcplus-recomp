@@ -28,8 +28,10 @@ keyboard_bios_mode:
 _keyboard_bios_mode: db 0
 keyboard_debug_gate: dw -1
 SEGMENT _TEXT public class=CODE use16
+%ifndef TERMINAL_MOUSE
 global keyboard_debug_callback
 keyboard_debug_callback:
  ; The unrelated debug UI is unimplemented; its disabled gate cannot succeed.
  mov ax,0x4cf1
  int 0x21
+%endif

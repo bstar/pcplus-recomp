@@ -23,7 +23,12 @@ async def run(args):
     for p,h in metadata['source_inputs'].items():assert sha(server/p)==h,p
     for p,h in metadata['source_modules'].items():assert sha(candidate/p)==h,p
     out=ROOT/'build/bbs-lab/results/enigma'/args.label;out.mkdir(parents=True,exist_ok=False)
-    stage=out/'program';stage.mkdir();binary=ROOT/'build/terminal/TERMINAL.EXE'
+    stage=out/'program';stage.mkdir();mouse=getattr(args,'mouse_terminal',False)
+    binary=ROOT/('build/terminal-mouse/TERMINAL.EXE' if mouse else 'build/terminal/TERMINAL.EXE')
+    if mouse:
+        terminal_manifest=json.loads((binary.parent/'manifest.json').read_text())
+        assert terminal_manifest['experimental_mouse'] and terminal_manifest['binary_sha256']==sha(binary)
+        assert all(sha(ROOT/p)==h for p,h in terminal_manifest['sources'].items())
     shutil.copyfile(binary,stage/'TERMINAL.EXE')
     sources={f'candidate/{p}':candidate/p for p in [*metadata['fixture_inputs'],*metadata['source_modules']]}
     sources.update({f'source_board/{p}':server/p for p in [*metadata['source_inputs'],'core/client.js']})
@@ -42,6 +47,7 @@ async def run(args):
         sources['login_source']=stage/'LOGON.ASP'
         sources['login_driver']=ROOT/'lab/bbs/enigma_script_login.py'
     sources['fragment_relay']=ROOT/'lab/bbs/fragment_relay.py'
+    if mouse:sources['terminal_manifest']=binary.parent/'manifest.json'
     before={p:sha(f) for p,f in sources.items()};count=messages(candidate)
     log_inode,log_offset=log.stat().st_ino,log.stat().st_size
     canonical=json.loads((ROOT/'lab/bbs/editor-recipes.json').read_text())['enigma_unsaved']['keyboard_input']
@@ -56,6 +62,7 @@ async def run(args):
     options=argparse.Namespace(name='enigma',label=args.label,port=PORT,com=2,baud=19200,flow='HARD',packet_delay_ms=0,
         dial_fixture=True,directory_fixture=script_login,directory_browser=False,entry=3,binary=stage/'TERMINAL.EXE',
         config_fixture=False,keymap_fixture=ROOT/'build/keyboard-profiles/NETWORK.KBD',server_log=log,keys=keys,wait=2,timeout=190)
+    if mouse:options.mouse_scales=(8,4)
     directory=test_dos.directory_image
     def bound_directory(**options):
         data=bytearray(directory(**options));at=250+(options['entry']-1)*114
@@ -146,7 +153,7 @@ async def run(args):
         environment_trace=stage/'ENV.LOG'
         checks['native_environment_trace']=environment_trace.is_file() and environment_trace.read_bytes()==b'ONE|TWO|'
         login_evidence['environment_trace_sha256']=sha(environment_trace) if environment_trace.is_file() else None
-    result=dict(passed=all(checks.values()),script_login=login_evidence,network_experiment=network_report,checks=checks,terminal_sha256=sha(binary),source_modules=metadata['source_modules'],
+    result=dict(passed=all(checks.values()),experimental_mouse=mouse,script_login=login_evidence,network_experiment=network_report,checks=checks,terminal_sha256=sha(binary),source_modules=metadata['source_modules'],
         source_inputs={k:before['source_board/'+k] for k in metadata['source_inputs']},input_hashes=before,
         pages=pages,expected_pages=expected_pages,selected=selected,expected_selected=expected_selected,
         ranges=ranges,expected_ranges=expected_ranges,route=route,expected_route=expected_route,
@@ -167,4 +174,5 @@ if __name__=='__main__':
     p.add_argument('--system-query-login',action='store_true',help='Require GETDIR/DOSVER/DISKFREE plus all earlier file probes before source login')
     p.add_argument('--environment-login',action='store_true',help='Require native environment ownership/update/delete before all earlier source login probes')
     p.add_argument('--network-byte-delay-ms',type=int,choices=range(31),default=0,help='Pace each client-to-server byte through a separate loopback relay; does not guarantee TCP receive boundaries')
+    p.add_argument('--mouse-terminal',action='store_true',help='Use the source-built banked mouse terminal with explicit PRM scales8/4')
     a=p.parse_args();raise SystemExit(asyncio.run(run(a)))

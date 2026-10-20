@@ -702,3 +702,15 @@ cases and130 DOS assertions. Each variant reproduces three products from a fresh
 source tree, and27 earlier application products remain byte-identical. Startup
 settings/menu/ASPECT publication, quarantine handling in the application and
 physical input remain open; no whole-application gate closes.
+
+The subsequent [selectable terminal mouse integration](TERMINAL_MOUSE.md) binds
+startup PRM staging, actual menu input, PROGRAM/ASPECT-parent suspension/resume
+and shutdown to that owner. Its independent DOS observer passes seven workflows/
+69 assertions, including a menu action through the registered callback and an
+actual030Eh retained-memory quarantine followed by controlled test-only repair.
+The production policy passes17 linked cases, the capability7 parent passes92
+actual fault-recovery cases, and29 source-built products reproduce while the
+preceding27 remain unchanged. The isolated ENiGMA route passes20 checks with
+DOS-compiled login and20ms-paced bytes. Startup-directory/return-prompt mouse,
+live settings UI/adoption, the ASPECT child's own mouse services and physical
+input remain open. The ordinary build keeps mouse disabled; no gate closes.
