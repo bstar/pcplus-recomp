@@ -1,0 +1,104 @@
+--- a/src/dsp/protocols/V22.js
++++ b/src/dsp/protocols/V22.js
+@@ -603,12 +603,19 @@
+       // its (closed-source) DSP follows the spec and emits the
+       // guard tone — that was the user-observation that nailed the
+       // root cause.
+-      guardTone:     true,
++      guardTone:     isAnswer,
+     });
+     this.demodulator = new QAMDemodulator({
+       carrier:       rxCarrier,
+       bitsPerSymbol: 2,
+     });
++    this.demodulator.on('training-done', info => {
++      if (this._role === 'originate' && info.bitRate === 1200 &&
++          this._phase === 'call-sb1') {
++        this._phase = 'call-final';
++        this._origRemaining = Math.round(765 * SR / 1000);
++      }
++    });
+     this.demodulator.on('data', buf => {
+       if (this._phase === V22_HS_PHASE.DATA) this.emit('data', buf);
+     });
+@@ -624,6 +631,62 @@
+     // Listener-notification state (for the 'listening' event when we
+     // enter waiting-for-scrambled-response mode)
+     this._emittedListening   = false;
++  }
++
++  // V.22 6.3.1.1: caller listens for USB1, waits 456 ms, then sends
++  // scrambled marking. Only the high-channel answerer emits a guard tone.
++  _generateOriginate(n) {
++    if (this._phase === V22_HS_PHASE.INIT) {
++      this._phase = 'call-usb1';
++      this._origUsbSamples = 0;
++      this._origTotal = 0;
++    }
++    this._origTotal += n;
++    if (this._phase !== V22_HS_PHASE.DATA && this._origTotal > SR * 20) {
++      this._remoteDetected = false;
++      this._enterPhase(V22_HS_PHASE.DATA); // ready(false) is rejected upstream
++    }
++    const out = new Float32Array(n);
++    let at = 0;
++    while (at < n) {
++      const silent = this._phase === 'call-usb1' || this._phase === 'call-delay';
++      const timed = this._phase === 'call-delay' || this._phase === 'call-final';
++      const take = timed ? Math.min(n - at, this._origRemaining) : n - at;
++      if (!silent) out.set(this.modulator.generate(take), at);
++      at += take;
++      if (timed) {
++        this._origRemaining -= take;
++        if (this._origRemaining === 0) {
++          if (this._phase === 'call-delay') {
++            this._phase = 'call-sb1';
++            this.modulator.setMode('scr-ones');
++          } else this._enterPhase(V22_HS_PHASE.DATA);
++        }
++      }
++    }
++    return out;
++  }
++
++  _trackOriginate(samples) {
++    if (this._phase !== 'call-usb1') return;
++    const energy = hz => {
++      const c = 2 * Math.cos(2 * Math.PI * hz / SR);
++      let s1 = 0, s2 = 0;
++      for (const x of samples) { const s = x + c*s1 - s2; s2 = s1; s1 = s; }
++      return Math.sqrt(Math.max(0, s1*s1 + s2*s2 - c*s1*s2)) / samples.length;
++    };
++    // USB1 in the high channel is the 2250 Hz line. Reject plain ANS,
++    // guard tone, silence and ordinary scrambled data before starting TX.
++    const usb = energy(2250);
++    if (usb > 0.003 && usb > 3 * Math.max(energy(2100), energy(2400)) &&
++        usb > 0.5 * energy(1800)) {
++      this._origUsbSamples += samples.length;
++      if (this._origUsbSamples >= Math.round(155 * SR / 1000)) {
++        this._remoteDetected = true;
++        this._phase = 'call-delay';
++        this._origRemaining = Math.round(456 * SR / 1000);
++      }
++    } else this._origUsbSamples = 0;
+   }
+ 
+   _enterPhase(phase) {
+@@ -838,11 +900,15 @@
+   }
+ 
+   write(data)           { this.modulator.write(data); }
+-  generateAudio(n)      { this._advanceHandshake(n); return this.modulator.generate(n); }
++  generateAudio(n)      {
++    if (this._role === 'originate') return this._generateOriginate(n);
++    this._advanceHandshake(n); return this.modulator.generate(n);
++  }
+   receiveAudio(samples) {
+     // Feed the demodulator first so symbolMag updates before we check it.
+     this.demodulator.process(samples);
+-    this._trackRxDetection(samples);
++    if (this._role === 'originate') this._trackOriginate(samples);
++    else this._trackRxDetection(samples);
+   }
+   reset() {
+     this.modulator.reset(); this.demodulator.reset();

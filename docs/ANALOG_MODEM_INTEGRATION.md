@@ -94,6 +94,22 @@ Links below pin the reviewed source; future versions require rechecking.
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
 
+## Negotiated software DSP checkpoint
+
+The [V.22 training test](../lab/bbs/synthmodem-training.md) now completes actual
+native-originating/VM-answering DSP training at1200 and exchanges exact1058-byte
+payloads each way, including all256 byte values. Stock native originating
+startup fails; a separately staged role-specific source candidate fixes that
+caller. No connected flag or decoded bytes are injected. Full decoded streams,
+guest DATA_RX frames and captured RTP continuity are independently audited.
+The [receipt](validation/synthmodem-training.json) binds the fixed software
+profile and unchanged Nix-built helper/runtime inputs.
+
+This establishes software data mode beyond the earlier silence-caller test.
+CallSession/Telnet/DOS/BBS composition, other modulation protocols and physical
+Boca/SPA2102 acceptance remain open. In particular, V32bis direct entry remains
+separate from successful training; no14400 claim follows from this V.22 pass.
+
 ## Normal answering-stack checkpoint
 
 The [normal VM runtime test](../lab/bbs/synthmodem-runtime.md) now exercises

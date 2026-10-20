@@ -27,6 +27,11 @@ the rebuilt helper. A direct V32bis entry probe is separate from successful
 modem training. Decoded data, external gateway/session integration and physical
 acceptance remain open.
 
+The [negotiated V.22 DSP test](synthmodem-training.md) adds actual originating
+and answering DSP CONNECT plus exact all-byte duplex data. Its isolated native
+caller fix is separate from the answering stack. Full gateway/CallSession,
+Telnet/DOS/BBS composition and physical acceptance remain open.
+
 
 The [Infocom save-edge workflow](enigma-infocom-edges.md) covers actual DOS
 cancellation, invalid/missing names, overwrite and recovery after malformed

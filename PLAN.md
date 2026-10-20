@@ -7,6 +7,14 @@ data, reconnect and transfer runs. No physical compatibility or 14400-bps claim
 is established; the adapter has not arrived. PCPlus remains a serial terminal,
 with SIP/audio/Telnet handled by the Linux bridge.
 
+The [negotiated V.22 DSP path](lab/bbs/synthmodem-training.md) now trains an
+isolated native originating candidate with the normal VM answering DSP at1200,
+then recovers exact1058-byte all-byte payloads in both directions. The stock
+caller fails; the candidate corrects its answer-style startup/guard behavior.
+Source/boot inputs and raw RTP/control captures are audited independently.
+Full CallSession/Telnet/DOS/BBS composition, other protocols and physical
+acceptance remain open; this does not establish14400-bps connectivity.
+
 The [normal SynthModem answering stack](lab/bbs/synthmodem-runtime.md) now runs
 the rebuilt helper under unchanged production init: actual REGISTER, AT queries,
 RING/ATA, INVITE/PCMU audio, BYE and resource cleanup are exercised. An explicit
