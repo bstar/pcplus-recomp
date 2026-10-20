@@ -89,6 +89,14 @@ _small_code_:
  call far terminal_exit_guard_begin
  jc terminal_shutdown
 %endif
+%ifdef TERMINAL_TRAPS
+ extern terminal_trap_open,terminal_trap_close,terminal_trap_poll
+ push ax
+ call far terminal_trap_open
+ or ax,ax
+ pop ax
+ jnz terminal_shutdown
+%endif
  call terminal_parse_options
  jnc .configured
  cmp ax,1
@@ -131,6 +139,11 @@ _small_code_:
  call _terminal_mouse_start
  or ax,ax
  jnz .configuration_error
+%endif
+%ifdef TERMINAL_TRAPS
+ call far terminal_trap_poll
+ cmp word [terminal_quit],0
+ jne terminal_shutdown
 %endif
  ; Require a standard BIOS-listed serial port before changing its registers.
  mov bx,[terminal_port_number]
@@ -201,6 +214,15 @@ _small_code_:
  call uart_enable
  call terminal_connection_start
 .loop:
+%ifdef TERMINAL_TRAPS
+ call far terminal_trap_poll
+ cmp word [terminal_quit],0
+ jne terminal_shutdown
+%endif
+%ifdef TERMINAL_TRAP_PROBE
+ extern terminal_trap_probe_poll
+ call far terminal_trap_probe_poll
+%endif
  call _terminal_autostart_poll
  call terminal_poll_io
  cmp word [terminal_quit],0
@@ -427,6 +449,16 @@ terminal_shutdown:
 .dos_exit:
 %ifdef TERMINAL_MOUSE
  call far terminal_mouse_exit
+%endif
+%ifdef TERMINAL_TRAPS
+ %ifdef TERMINAL_TRAP_PROBE
+ extern terminal_trap_probe_closing,terminal_trap_probe_report
+ call far terminal_trap_probe_closing
+ %endif
+ call far terminal_trap_close
+ %ifdef TERMINAL_TRAP_PROBE
+ call far terminal_trap_probe_report
+ %endif
 %endif
 %ifdef TERMINAL_EXIT_GUARD
  call far terminal_exit_guard_finish

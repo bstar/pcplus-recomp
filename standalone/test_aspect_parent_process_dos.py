@@ -287,21 +287,25 @@ def main():
     parser.add_argument('--retry',action='store_true')
     parser.add_argument('--terminal-exit-guard',action='store_true')
     parser.add_argument('--process-bank',action='store_true')
+    parser.add_argument('--traps',action='store_true')
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     if args.exit_probe:assert args.break_owner
     if args.retry:assert args.exit_probe
     if args.terminal_exit_guard:assert args.break_owner
     if args.process_bank:assert args.terminal_exit_guard
+    if args.traps:assert args.process_bank and not args.exit_probe
     directory_name='aspect-parent-exit' if args.exit_probe else 'aspect-parent-break' if args.break_owner else 'aspect-parent-process'
     if args.mouse:directory_name+='-mouse'
     if args.retry:directory_name+='-retry'
     if args.terminal_exit_guard:directory_name+='-guarded'
     if args.process_bank:directory_name+='-banked'
+    if args.traps:directory_name+='-traps'
     out=ROOT/'build'/directory_name/args.label;out.mkdir(parents=True,exist_ok=False)
     parent=ROOT/'build/terminal-process/TERMINAL.EXE';child=ROOT/('build/aspect-process-break/ASPECT.EXE' if args.break_owner else 'build/aspect-process-parent/ASPECT.EXE')
     if args.mouse:parent=ROOT/'build/terminal-mouse-process/TERMINAL.EXE'
     if args.terminal_exit_guard:parent=ROOT/('build/terminal-exit-mouse/TERMINAL.EXE' if args.mouse else 'build/terminal-exit/TERMINAL.EXE')
     if args.process_bank:parent=ROOT/('build/terminal-process-bank-mouse/TERMINAL.EXE' if args.mouse else 'build/terminal-process-bank/TERMINAL.EXE')
+    if args.traps:parent=ROOT/('build/terminal-traps-mouse/TERMINAL.EXE' if args.mouse else 'build/terminal-traps/TERMINAL.EXE')
     if args.exit_probe:child=ROOT/'build/aspect-exit-parent/ASPECT.EXE'
     if args.retry:child=ROOT/'build/aspect-exit-retry/ASPECT.EXE'
     identities={}

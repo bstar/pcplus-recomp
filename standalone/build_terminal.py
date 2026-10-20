@@ -10,13 +10,17 @@ from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
 import argparse
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
-parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');args=parser.parse_args()
+parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
 if args.exit_probe is not None:assert args.exit_guard
 if args.process_bank:assert args.exit_guard and args.external_render
+if args.traps:assert args.process_bank
+if args.trap_probe is not None:assert args.traps and args.exit_probe is None
 out_name='terminal-mouse-process' if args.external_render and args.mouse else 'terminal-mouse' if args.mouse else 'terminal-process' if args.external_render else 'terminal'
 if args.exit_guard:out_name='terminal-exit-mouse' if args.mouse else 'terminal-exit'
 if args.process_bank:out_name='terminal-process-bank-mouse' if args.mouse else 'terminal-process-bank'
+if args.traps:out_name='terminal-traps-mouse' if args.mouse else 'terminal-traps'
 if args.exit_probe is not None:out_name+='-probe-'+str(args.exit_probe)
+if args.trap_probe is not None:out_name+='-probe-'+str(args.trap_probe)
 OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
@@ -65,6 +69,8 @@ for index,source in enumerate(sources):
  if source==ROOT/'src/aspect/resident_bridge.asm':options+=['-DRESIDENT_BRIDGE_FAR']
  if args.external_render:options+=['-DASPECT_EXTERNAL_RENDER']
  if args.exit_guard:options+=['-DTERMINAL_EXIT_GUARD']
+ if args.traps:options+=['-DTERMINAL_TRAPS']
+ if args.trap_probe is not None:options+=['-DTERMINAL_TRAP_PROBE='+str(args.trap_probe)]
  if args.process_bank and source==ROOT/'src/process/dos_exec.asm':options+=['-DPROCESS_CODE_BANK']
  if args.exit_probe is not None:options+=['-DTERMINAL_EXIT_PROBE='+str(args.exit_probe)]
  if args.mouse:
@@ -209,5 +215,7 @@ manifest['experimental_mouse']=args.mouse
 manifest['terminal_exit_guard']=args.exit_guard
 manifest['terminal_exit_probe']=args.exit_probe
 manifest['banked_process']=args.process_bank
+manifest['terminal_traps']=args.traps
+manifest['terminal_trap_probe']=args.trap_probe
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 print('Built',str((OUT/'TERMINAL.EXE').relative_to(ROOT)),manifest['binary_sha256'],'DS/SS bytes',manifest['data_stack_bytes'])

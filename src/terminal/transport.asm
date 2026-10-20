@@ -194,6 +194,10 @@ csi_transmit_string:
  ret 2
 
 terminal_poll_io:
+%ifdef TERMINAL_TRAPS
+ extern terminal_trap_poll
+ call far terminal_trap_poll
+%endif
  cmp word [terminal_aspect_active],0
  je .ordinary
  call far terminal_render_poll

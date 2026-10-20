@@ -19,6 +19,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label', default='mouse-' + uuid.uuid4().hex)
     parser.add_argument('--process-bank',action='store_true')
+    parser.add_argument('--traps',action='store_true')
     parser.add_argument('--terminal-exit-guard',action='store_true')
     parser.add_argument('--exit-report',action='store_true')
     parser.add_argument('--case', action='append', choices=['normal', 'menu', 'program', 'quarantine', 'invalid-scale', 'no-driver', 'unsupported-driver','live-save','live-cancel','live-invalid','live-child-failed','startup-repair'])
@@ -29,6 +30,9 @@ def main():
     binary = ROOT / 'build/terminal-mouse/TERMINAL.EXE'
     if args.terminal_exit_guard:binary=ROOT/'build/terminal-exit-mouse/TERMINAL.EXE'
     if args.process_bank:binary=ROOT/'build/terminal-process-bank-mouse/TERMINAL.EXE'
+    if args.traps:
+        assert args.process_bank and not args.exit_report
+        binary=ROOT/'build/terminal-traps-mouse/TERMINAL.EXE'
     if args.exit_report:
         assert args.process_bank or args.terminal_exit_guard
         binary=binary.parent.with_name(binary.parent.name+'-probe-0')/'TERMINAL.EXE'

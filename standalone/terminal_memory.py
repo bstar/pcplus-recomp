@@ -395,7 +395,10 @@ def inspect_terminal_memory(binary,map_path):
   assert raw('mouse_enabled',6)==bytes([1]*6)
   assert raw('keyboard_queue_peek',12)==struct.pack('<6H',0x4800,0x4d00,0x5000,0x4b00,0x1c0d,0x011b)
   assert raw('keyboard_queue_values',12)==struct.pack('<6H',0x4800,0x4d00,0x5000,0x4b00,0x000d,0x001b)
-  assert b'\xb8\x0e\x31\xcd\x21' in raw('terminal_mouse_exit',96),'Missing typed retained-memory fallback'
+  if 'terminal_trap_open' in symbols:
+   code=raw('terminal_mouse_exit',96)
+   assert b'\x9a'+struct.pack('<HH',*reversed(symbols['terminal_exit_guard_mouse_held'])) in code
+  else:assert b'\xb8\x0e\x31\xcd\x21' in raw('terminal_mouse_exit',96),'Missing typed retained-memory fallback'
   extra.update(mouse_bridge_pairs_verified=10,mouse_code_bytes=mouse_code['bytes'],mouse_shared_native_state_bytes=28)
   bridges+=10
  bridges+=extra.get('process_bridge_pairs_verified',0)

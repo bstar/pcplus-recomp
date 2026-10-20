@@ -1169,6 +1169,21 @@ test-terminal-process-bank-source: terminal-process-bank terminal-exit terminal 
 	python3 standalone/build_terminal.py --external-render
 	python3 standalone/check_terminal_process_source.py
 
+.PHONY: terminal-traps test-terminal-traps test-terminal-traps-ui test-terminal-traps-source
+terminal-traps:
+	python3 standalone/build_terminal_traps.py
+test-terminal-traps: terminal-traps
+	python3 standalone/check_terminal_traps.py
+	python3 standalone/test_terminal_traps_dos.py
+	python3 standalone/test_terminal_traps_dos.py --mouse
+test-terminal-traps-ui: terminal-traps aspect-banked-cli aspect-compiler-dos setup-mouse
+	python3 standalone/test_aspect_parent_process_dos.py --break-owner --terminal-exit-guard --process-bank --traps
+	python3 standalone/test_aspect_parent_process_dos.py --break-owner --terminal-exit-guard --process-bank --traps --mouse
+	python3 standalone/test_terminal_mouse_dos.py --process-bank --traps --case program --case quarantine --case startup-repair --case live-save
+test-terminal-traps-source: terminal-traps terminal-process-bank terminal terminal-mouse terminal-mouse-process
+	python3 standalone/build_terminal.py --external-render
+	python3 standalone/check_terminal_traps_source.py
+
 .PHONY: native-program-break test-native-program-break test-native-program-break-source
 native-program-break:
 	python3 standalone/build_native_program.py --break-owner

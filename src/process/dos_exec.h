@@ -2,7 +2,7 @@
 #define PCPLUS_DOS_EXEC_H
 typedef unsigned process_status_code;
 enum {PROCESS_OK=0,PROCESS_ARGUMENT,PROCESS_RESIZE,PROCESS_EXEC,PROCESS_BUSY,
- PROCESS_ENVIRONMENT,PROCESS_COMMAND};
+ PROCESS_ENVIRONMENT,PROCESS_COMMAND,PROCESS_TRAP};
 typedef struct process_result {
  unsigned status,dos_error,child_status,retained_paragraphs;
 } process_result;

@@ -1,5 +1,19 @@
 # Complete DOS rebuild plan
 
+The opt-in [application trap owner](docs/TERMINAL_TRAPS.md) now protects
+INT1B/23/24 before UART ownership and suspends/resumes around maintained EXEC.
+Twenty actual DOS cases pass with an independent raw-witness audit;26 normal
+ASPECT workflows pass1166 checks, four mouse workflows pass, and18 products
+reproduce from declared source only. Normal exit restores the caller baseline;
+unknown ownership retains the validated allocation. Critical Fail permission
+and modeled holding are explicit. This closes no complete application gate.
+
+Next, adapt the retained-ASPECT retry observer to distinguish a valid retained
+ISR from the application's restored caller vector, then validate retry under
+the trap policy. Repeat the Synchronet/ENiGMA acceptance workflows against the
+new products. ENiGMA immediate-forwarding Home/Insert behavior, physical modem
+acceptance, normal publication and remaining application services remain open.
+
 The [terminal process bank](docs/TERMINAL_PROCESS_BANK.md) moves the maintained
 EXEC backend behind a checked near/far three-word ABI, saving594/592 near-code
 bytes and leaving746/596 spare in keyboard/mouse parents. The68-input model,
@@ -17,14 +31,8 @@ fourteen source products reproduce. Asynchronous Ctrl-Break/critical-error
 ownership, normal publication, remaining services and hardware/BBS acceptance
 remain open.
 
-Next parent-lifetime work is to install separate application-owned
-Ctrl-Break/critical-error traps before UART ownership, using the process bank's
-recovered near-code headroom.
-Every startup/live EXEC path must suspend and resume that ownership, and
-asynchronous cancellation must reach foreground cleanup rather than freeing
-live callbacks. Existing mouse-retention paths also need the shared validated
-whole-allocation policy before normal publication. Test these boundaries with
-actual DOS child/cancellation workflows and retain the stock BBS acceptance scope.
+The process bank supplies the near-code headroom for the opt-in trap owner
+above. Historical checkpoints below retain their original validation scope.
 
 The [same-session script retry](docs/PARENT_RETRY.md) now passes sixteen COM/flow
 routes across keyboard and mouse parents, with1008 checks. After actual DOS31

@@ -121,6 +121,9 @@ _process_run:
  mov word [process_status],0
  mov word [process_dos_error],0
  mov word [process_child_status],0
+%ifdef TERMINAL_TRAPS
+ mov byte [process_trap_held],0
+%endif
  mov ax,[bp+4]
  mov [process_path],ax
  mov ax,[bp+8]
@@ -174,6 +177,13 @@ _process_run:
  mov word [process_parameters+12],ds
  mov bx,process_parameters
  mov dx,[process_path]
+%ifdef TERMINAL_TRAPS
+ extern terminal_trap_suspend,terminal_trap_resume
+ call far terminal_trap_suspend
+ or ax,ax
+ jnz .trap_failed
+ mov byte [process_trap_held],1
+%endif
  mov [cs:process_saved_ds],ds
  mov [cs:process_saved_ss],ss
  mov [cs:process_saved_sp],sp
@@ -189,6 +199,12 @@ _process_run:
  mov ss,[cs:process_saved_ss]
  mov sp,[cs:process_saved_sp]
  mov ds,[cs:process_saved_ds]
+%ifdef TERMINAL_TRAPS
+ call far terminal_trap_resume
+ or ax,ax
+ jnz .trap_failed
+ mov byte [process_trap_held],0
+%endif
  sti
  cmp byte [cs:process_exec_failed],0
  je .child_returned
@@ -201,6 +217,12 @@ _process_run:
  int 0x21
  mov [process_child_status],ax
 .finish:
+%ifdef TERMINAL_TRAPS
+ jmp short .result
+.trap_failed:
+ mov word [process_status],7
+.result:
+%endif
  mov di,[process_result]
  or di,di
  jz .status
@@ -320,6 +342,9 @@ process_path: dw 0
 process_result: dw 0
 process_path_length: dw 0
 process_tail_length: dw 0
+%ifdef TERMINAL_TRAPS
+process_trap_held: db 0
+%endif
 process_command_tail: times 128 db 0
 process_parameters: times 14 db 0
 process_fcb1: times 37 db 0

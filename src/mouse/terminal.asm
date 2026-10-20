@@ -77,9 +77,14 @@ terminal_mouse_exit:
  mov ah,9
  int 0x21
  pop ds
+%ifdef TERMINAL_TRAPS
+ extern terminal_exit_guard_mouse_held
+ call far terminal_exit_guard_mouse_held
+%else
  mov dx,[process_keep_paragraphs]
  mov ax,0x310e
  int 0x21
+%endif
 .released:
  retf
 retained_message: db 13,10,'Mouse restore failed; application memory retained.',13,10,'$'

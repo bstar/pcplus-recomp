@@ -8,6 +8,14 @@ extern process_psp,process_keep_paragraphs,process_busy
 extern terminal_program_active,terminal_program_pending,terminal_aspect_active
 extern hardware_active,terminal_exit_code
 global terminal_exit_guard_begin,terminal_exit_guard_finish,terminal_exit_guard_hold
+%ifdef TERMINAL_TRAPS
+extern terminal_trap_phase
+global terminal_exit_guard_mouse_held
+terminal_exit_guard_mouse_held:
+ or word [terminal_exit_guard_reason],4
+ mov word [terminal_exit_code],14
+ retf
+%endif
 %macro save 0
  push ax
  push bx
@@ -171,6 +179,9 @@ terminal_exit_guard_finish:
  or ax,[terminal_program_active]
  or ax,[terminal_program_pending]
  or ax,[terminal_aspect_active]
+%ifdef TERMINAL_TRAPS
+ or ax,[terminal_trap_phase]
+%endif
  xor dx,dx
  mov dl,[hardware_active]
  or ax,dx
@@ -249,6 +260,12 @@ terminal_exit_guard_finish:
 .retain:
  mov dx,[terminal_exit_guard_paragraphs]
  mov ax,0x310f
+%ifdef TERMINAL_TRAPS
+ test word [terminal_exit_guard_reason],4
+ jz .retain_status
+ mov al,14
+.retain_status:
+%endif
  int 0x21
 terminal_exit_guard_hold:
  sti

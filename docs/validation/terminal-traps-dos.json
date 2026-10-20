@@ -1,0 +1,380 @@
+{
+  "passed": true,
+  "actual_DOS_cases": 20,
+  "cases": [
+    {
+      "mouse": false,
+      "case": "00",
+      "result": "build/terminal-trap-tests/trap-matrix-keyboard-01/00/result.json",
+      "files": {
+        "result.json": "7f9543c60d6ce0159f65455c5d2f449e26d09bfc410a5eb5ab38640de8c31ed2",
+        "TRAPWIT.BIN": "37e05aee69ee4b169c1d815a4ce4c1d36e0d4bcce77b61d0218d98807e12427a",
+        "CHILTRAP.BIN": "61348b2f87365225dc3819f71106c814f1b7d4283217c7f38fe88cb987b34610",
+        "TRAPPAR.OUT": "e6f75e7a4dbe4df959abf5d150ded8fffe1b17297d5aa37ce227a0b27b55ac62"
+      },
+      "terminal_sha256": "9445ca6a482992135893c3484d93186e5b9f783ebe71488687de0aa69eb0994b"
+    },
+    {
+      "mouse": false,
+      "case": "01",
+      "result": "build/terminal-trap-tests/trap-matrix-keyboard-01/01/result.json",
+      "files": {
+        "result.json": "bb42795c459b447a6555ac153b81f86a453b4c1041be6ace00e6298fc8a8a149",
+        "TRAPWIT.BIN": "6c8d4efae0e6dd76bfd8da8173b5ddf873a513a30c139c3ed3a5e3a13113a5c7",
+        "CHILTRAP.BIN": "1c46dfc8de784d83ae4fe5ae4240027772c5f1aa7ce266af4bd87ca11cdb2663",
+        "TRAPPAR.OUT": "fbe84cd3c4319ccf753ccd5b11b2fd3ba249acee11b05a13058b8e402d1287c7"
+      },
+      "terminal_sha256": "9445ca6a482992135893c3484d93186e5b9f783ebe71488687de0aa69eb0994b"
+    },
+    {
+      "mouse": false,
+      "case": "10",
+      "result": "build/terminal-trap-tests/trap-matrix-keyboard-01/10/result.json",
+      "files": {
+        "result.json": "457a4c308da68c4e9761e2eaba71cf7396330a8b463154fb100bf5d75e2b7377",
+        "TRAPWIT.BIN": "03f61299809846c8d6f44156f56a85a1b4c0ab6b28f687bc6ae25b4b219aff05",
+        "CHILTRAP.BIN": "61348b2f87365225dc3819f71106c814f1b7d4283217c7f38fe88cb987b34610",
+        "TRAPPAR.OUT": "c0d109a5df9b4e2d1bfc3d6c5e762a56f0c0377a2cee54b39c544f93fd3a8871"
+      },
+      "terminal_sha256": "28bfb428cc0ffe797f1e2b44997c807169caef9f4fd8d73108253820d7534581"
+    },
+    {
+      "mouse": false,
+      "case": "11",
+      "result": "build/terminal-trap-tests/trap-matrix-keyboard-01/11/result.json",
+      "files": {
+        "result.json": "08478d7994f763abce5b867fca559a68510bd9a9675c401ce75a59b31ca0e0a5",
+        "TRAPWIT.BIN": "9a72336bb8eaf7e50a0d6ad2e1434532c55d58c3643dee11d1e856821b4f5861",
+        "CHILTRAP.BIN": "1c46dfc8de784d83ae4fe5ae4240027772c5f1aa7ce266af4bd87ca11cdb2663",
+        "TRAPPAR.OUT": "f0e7421af43f1459efd9963a60304dbef48a33dd60e57f47950b6973cba250bf"
+      },
+      "terminal_sha256": "28bfb428cc0ffe797f1e2b44997c807169caef9f4fd8d73108253820d7534581"
+    },
+    {
+      "mouse": false,
+      "case": "20",
+      "result": "build/terminal-trap-tests/trap-matrix-keyboard-01/20/result.json",
+      "files": {
+        "result.json": "178eb192d7937bf524869b6ef994822cd39fe44a95c0336ae956d567e30a490c",
+        "TRAPWIT.BIN": "0f4677fb299b0ac913a2f60ea8324319d6e13f95cbd1a7b368f27d261ac959d1",
+        "CHILTRAP.BIN": "61348b2f87365225dc3819f71106c814f1b7d4283217c7f38fe88cb987b34610",
+        "TRAPPAR.OUT": "16039fadc2b373c690539f79779b62ce16d52826eee15ee06064f78e6ec33e0e"
+      },
+      "terminal_sha256": "c93957d9127c00c525f775372a8e3f63e1e12aa2f71a839832b6a5eb21a15a10"
+    },
+    {
+      "mouse": false,
+      "case": "21",
+      "result": "build/terminal-trap-tests/trap-matrix-keyboard-01/21/result.json",
+      "files": {
+        "result.json": "a53f637c52e8a8d59edb274712f795d74b73d893649a9ed09410f017e36d6d46",
+        "TRAPWIT.BIN": "35e6cfea7771e859ae273a236816a243c0b031b13ac4369faf6e3aad8cc0fd70",
+        "CHILTRAP.BIN": "1c46dfc8de784d83ae4fe5ae4240027772c5f1aa7ce266af4bd87ca11cdb2663",
+        "TRAPPAR.OUT": "5491e0b14b6b0d8b1041d6688640aea6d4030ac1bb19d66f63ab3ad1c689872f"
+      },
+      "terminal_sha256": "c93957d9127c00c525f775372a8e3f63e1e12aa2f71a839832b6a5eb21a15a10"
+    },
+    {
+      "mouse": false,
+      "case": "30",
+      "result": "build/terminal-trap-tests/trap-matrix-keyboard-01/30/result.json",
+      "files": {
+        "result.json": "1c4751d3abef32a48341cf1a8a7b037a9ea1db36995e481c67e96af80eed1d6a",
+        "TRAPWIT.BIN": "1851767d21eb909ed3e150284dd628a44f2f7e22502dc2dfc730faf8eb4a6728",
+        "CHILTRAP.BIN": "61348b2f87365225dc3819f71106c814f1b7d4283217c7f38fe88cb987b34610",
+        "TRAPPAR.OUT": "46a6c3511720cd0180e43f70ff54772c3b29559cd7f28cc5b11efe328edcbd24"
+      },
+      "terminal_sha256": "a4e077c686545bc0f8597858d72010cd439f9a8144c271a31cd84cfab380ccb1"
+    },
+    {
+      "mouse": false,
+      "case": "31",
+      "result": "build/terminal-trap-tests/trap-matrix-keyboard-01/31/result.json",
+      "files": {
+        "result.json": "e8d0f624436a0bc4a12132681a60f421f2bc64ef2cae58476806f07048b24590",
+        "TRAPWIT.BIN": "884ce104928f62a6f1d534dc90e089d5b7691459f8d9ba90707fb9dc677c22df",
+        "CHILTRAP.BIN": "1c46dfc8de784d83ae4fe5ae4240027772c5f1aa7ce266af4bd87ca11cdb2663",
+        "TRAPPAR.OUT": "195d000275d8be1ea09a1e4bf8e84811fcfeb9c562768a64818137c47a918266"
+      },
+      "terminal_sha256": "a4e077c686545bc0f8597858d72010cd439f9a8144c271a31cd84cfab380ccb1"
+    },
+    {
+      "mouse": false,
+      "case": "40",
+      "result": "build/terminal-trap-tests/trap-matrix-keyboard-01/40/result.json",
+      "files": {
+        "result.json": "3c8127d79207a06c96c60b0011ef64a186901f0afe9c8cb9715a7a1d561e7535",
+        "TRAPWIT.BIN": "bc3631b8cd0ec452547e4cbfc0545fcb34a86b30b81cc391cadc3ef45bc06318",
+        "CHILTRAP.BIN": "61348b2f87365225dc3819f71106c814f1b7d4283217c7f38fe88cb987b34610",
+        "TRAPPAR.OUT": "e35a22d216799206b082e772bdaf13aa9d3656c25edde4ed0a61e9bee2d4fece"
+      },
+      "terminal_sha256": "f0e9266c24fe811980c2102e5aab5c27c275f416836161cacb8207279607c40d"
+    },
+    {
+      "mouse": false,
+      "case": "41",
+      "result": "build/terminal-trap-tests/trap-matrix-keyboard-01/41/result.json",
+      "files": {
+        "result.json": "db51fbc12dac074c626d924ed0e861ec50413677e2032c138419e20123980c4c",
+        "TRAPWIT.BIN": "e44e2956ff7ef322bb1e94fc47826310cca88719a536c0ae34fa6881e90f6413",
+        "CHILTRAP.BIN": "1c46dfc8de784d83ae4fe5ae4240027772c5f1aa7ce266af4bd87ca11cdb2663",
+        "TRAPPAR.OUT": "db58fb16bc51ab4603c2a1d9f8803e539de9c490ff1a44a6adb537aa3a97850a"
+      },
+      "terminal_sha256": "f0e9266c24fe811980c2102e5aab5c27c275f416836161cacb8207279607c40d"
+    },
+    {
+      "mouse": true,
+      "case": "00",
+      "result": "build/terminal-trap-tests/trap-matrix-mouse-01/00/result.json",
+      "files": {
+        "result.json": "2796a276df21472eeb653c0745b3f2f0f99bb77c793332fdcf04ae63d8ad7431",
+        "TRAPWIT.BIN": "0c46e3a2e433a1b654698c864663f770dcadd9718598cba0ca97073ec256faa5",
+        "CHILTRAP.BIN": "61348b2f87365225dc3819f71106c814f1b7d4283217c7f38fe88cb987b34610",
+        "TRAPPAR.OUT": "e6f75e7a4dbe4df959abf5d150ded8fffe1b17297d5aa37ce227a0b27b55ac62"
+      },
+      "terminal_sha256": "3e3a328e400dab049577099c5ceb37b59b1f661b604865a5718281669feb1c91"
+    },
+    {
+      "mouse": true,
+      "case": "01",
+      "result": "build/terminal-trap-tests/trap-matrix-mouse-01/01/result.json",
+      "files": {
+        "result.json": "6c02f1fdc5f21d711d7ac9e82369ef3337be9470c2dab0ebbb5f40526afee51d",
+        "TRAPWIT.BIN": "a8547d805f84bce4dabed6fb705181dbc593cb410c13b0d94f931cf646d5e6d5",
+        "CHILTRAP.BIN": "1c46dfc8de784d83ae4fe5ae4240027772c5f1aa7ce266af4bd87ca11cdb2663",
+        "TRAPPAR.OUT": "fbe84cd3c4319ccf753ccd5b11b2fd3ba249acee11b05a13058b8e402d1287c7"
+      },
+      "terminal_sha256": "3e3a328e400dab049577099c5ceb37b59b1f661b604865a5718281669feb1c91"
+    },
+    {
+      "mouse": true,
+      "case": "10",
+      "result": "build/terminal-trap-tests/trap-matrix-mouse-01/10/result.json",
+      "files": {
+        "result.json": "01ced421ebd28554df93a5855d44730a9355521b9bbac76a4d6a4460c70120a8",
+        "TRAPWIT.BIN": "8524f422bc1c9a4e6d4b0f4d7083a3005173949339657c6d14ca0f2c30c9a104",
+        "CHILTRAP.BIN": "61348b2f87365225dc3819f71106c814f1b7d4283217c7f38fe88cb987b34610",
+        "TRAPPAR.OUT": "c0d109a5df9b4e2d1bfc3d6c5e762a56f0c0377a2cee54b39c544f93fd3a8871"
+      },
+      "terminal_sha256": "fd856d596993c07f966d8dcd4c31aa51724a4d7f87a4594c15509f3d2de76038"
+    },
+    {
+      "mouse": true,
+      "case": "11",
+      "result": "build/terminal-trap-tests/trap-matrix-mouse-01/11/result.json",
+      "files": {
+        "result.json": "de1eddb84b4fc5d9e09cb831e1d2523c54f5f365b4f0ccfdc7187f7bf1a76f8f",
+        "TRAPWIT.BIN": "53da05f42acc87ae1a15782f19bc06031ef8a72cd751fd21ddb11a694640fa41",
+        "CHILTRAP.BIN": "1c46dfc8de784d83ae4fe5ae4240027772c5f1aa7ce266af4bd87ca11cdb2663",
+        "TRAPPAR.OUT": "f0e7421af43f1459efd9963a60304dbef48a33dd60e57f47950b6973cba250bf"
+      },
+      "terminal_sha256": "fd856d596993c07f966d8dcd4c31aa51724a4d7f87a4594c15509f3d2de76038"
+    },
+    {
+      "mouse": true,
+      "case": "20",
+      "result": "build/terminal-trap-tests/trap-matrix-mouse-01/20/result.json",
+      "files": {
+        "result.json": "f0537604909c49bf441cffde567ea811e4ae52ef0e9771e917accbcfb651844d",
+        "TRAPWIT.BIN": "d0ba5b6024a951a7d0eaec09c2287b0972e15fb5148b4ac43b274cb9be7b0fc0",
+        "CHILTRAP.BIN": "61348b2f87365225dc3819f71106c814f1b7d4283217c7f38fe88cb987b34610",
+        "TRAPPAR.OUT": "16039fadc2b373c690539f79779b62ce16d52826eee15ee06064f78e6ec33e0e"
+      },
+      "terminal_sha256": "ddb144baee3c2f84d2d5d5f9738804d2f3ee5b94f17ebdcc59274e1eeaf4dd19"
+    },
+    {
+      "mouse": true,
+      "case": "21",
+      "result": "build/terminal-trap-tests/trap-matrix-mouse-01/21/result.json",
+      "files": {
+        "result.json": "9184facbc5c9cf8a8381d34bff259932e71d184fb1371e035ae510b7bb919094",
+        "TRAPWIT.BIN": "22cdea4f7a0a59d4c4c1d08195a6ee3223c766bdfc2a9e8cfee32a7a8cc18ba6",
+        "CHILTRAP.BIN": "1c46dfc8de784d83ae4fe5ae4240027772c5f1aa7ce266af4bd87ca11cdb2663",
+        "TRAPPAR.OUT": "5491e0b14b6b0d8b1041d6688640aea6d4030ac1bb19d66f63ab3ad1c689872f"
+      },
+      "terminal_sha256": "ddb144baee3c2f84d2d5d5f9738804d2f3ee5b94f17ebdcc59274e1eeaf4dd19"
+    },
+    {
+      "mouse": true,
+      "case": "30",
+      "result": "build/terminal-trap-tests/trap-matrix-mouse-01/30/result.json",
+      "files": {
+        "result.json": "ab700a381f4ec504f1e53097ba36d56edf6e7631a82cd39555815d6c4a42f610",
+        "TRAPWIT.BIN": "6ca849ef461ea1ec9cdfdc2711a83c03c7796e93e9ae024c8977b9c67ec34d57",
+        "CHILTRAP.BIN": "61348b2f87365225dc3819f71106c814f1b7d4283217c7f38fe88cb987b34610",
+        "TRAPPAR.OUT": "46a6c3511720cd0180e43f70ff54772c3b29559cd7f28cc5b11efe328edcbd24"
+      },
+      "terminal_sha256": "806793068513bef4c8e897da9325eb50a53107c8ba46c856d9d7b4887d107816"
+    },
+    {
+      "mouse": true,
+      "case": "31",
+      "result": "build/terminal-trap-tests/trap-matrix-mouse-01/31/result.json",
+      "files": {
+        "result.json": "97ca325c9c9c9f429ac67c0f39183046d6c0a61140a36a655d44aa069d8fe43a",
+        "TRAPWIT.BIN": "c94698993f18ac0378d7ea2238c4cdef2732762d2ee22623c0bdb7acf6a6fa24",
+        "CHILTRAP.BIN": "1c46dfc8de784d83ae4fe5ae4240027772c5f1aa7ce266af4bd87ca11cdb2663",
+        "TRAPPAR.OUT": "195d000275d8be1ea09a1e4bf8e84811fcfeb9c562768a64818137c47a918266"
+      },
+      "terminal_sha256": "806793068513bef4c8e897da9325eb50a53107c8ba46c856d9d7b4887d107816"
+    },
+    {
+      "mouse": true,
+      "case": "40",
+      "result": "build/terminal-trap-tests/trap-matrix-mouse-01/40/result.json",
+      "files": {
+        "result.json": "5cfad1214d1e2a76acd72a09f28621d335cf4debd9386b6b314682512770b136",
+        "TRAPWIT.BIN": "c320d0e632bf14ee6230720cc5dfefa99eda7dc9a848a63e8edd890628b2777c",
+        "CHILTRAP.BIN": "61348b2f87365225dc3819f71106c814f1b7d4283217c7f38fe88cb987b34610",
+        "TRAPPAR.OUT": "312956e93f73b81be48e2408ec7193ec3af58ea889c1100c177d3eac811c648a"
+      },
+      "terminal_sha256": "d70f8f7816da703762360c64a2f765c2b5dcbe4a31552071edfb562b24890f70"
+    },
+    {
+      "mouse": true,
+      "case": "41",
+      "result": "build/terminal-trap-tests/trap-matrix-mouse-01/41/result.json",
+      "files": {
+        "result.json": "a6e79bd3c8adbabb2a3e04a4e3492fe34f6a9080ae7c37900b379be3d14485a1",
+        "TRAPWIT.BIN": "66a056c0475b392c8e0ae805de8fa6d8e73f9c155e44a3c9308255e1fa58e13f",
+        "CHILTRAP.BIN": "1c46dfc8de784d83ae4fe5ae4240027772c5f1aa7ce266af4bd87ca11cdb2663",
+        "TRAPPAR.OUT": "ceca47a5399a52fe75994165237092a6164ae88d817b6f5c7642fb9b05acfa8f"
+      },
+      "terminal_sha256": "d70f8f7816da703762360c64a2f765c2b5dcbe4a31552071edfb562b24890f70"
+    }
+  ],
+  "linked_model": {
+    "passed": true,
+    "lifecycle_flags": [
+      0,
+      1
+    ],
+    "invalid_admissions": [
+      "if0",
+      "foreign-ds",
+      "foreign-ss",
+      "DOS2",
+      "foreign-psp"
+    ],
+    "events": [
+      "break",
+      "critical"
+    ],
+    "unfailable_critical": "held",
+    "quarantine_vectors": [
+      27,
+      35,
+      36
+    ],
+    "self_baselines_rejected": [
+      27,
+      35,
+      36
+    ],
+    "IF0_foreign_PSP_resume": true,
+    "cancelled_child_rejected": true,
+    "reentry_rejected": true,
+    "binary_sha256": "16ebccb92e60df0e73c18dffb15c3d3fac1b005fc81a62a40afe205f0c9193e3",
+    "checker_sha256": "2aa27a935a6b43725127f459d4d05aea425229ad24e403c611b1dc41ccd9aa05",
+    "loader_sha256": "319e92316365f6acbdb406eb964dab1a22bc2e6ca57e3062e085527a17d2822c",
+    "scope": "Actual linked trap instructions and foreign-DS interrupt frames; modeled DOS version/PSP/break services. Critical holding and explicit vector repair are modeled, not live kernel corruption recovery."
+  },
+  "linked_model_receipt_sha256": "c4108ceaab4ca6371fd14e723f9fc548c66d9583a1a2deb088458b525998fb46",
+  "regressions": [
+    {
+      "receipt": "build/aspect-parent-break-guarded-banked-traps/traps-normal-kbd-01/result.json",
+      "sha256": "7324e3e406c3eeccab6dd1611c8b37e3c88ea0c7eab0a701176302d70aa7ec9c",
+      "cases": 13,
+      "assertions": 518
+    },
+    {
+      "receipt": "build/aspect-parent-break-mouse-guarded-banked-traps/traps-normal-mouse-01/result.json",
+      "sha256": "5c745b2cc3ae309b6b712a2953549179d502afc698e1ea30a22928ab49382269",
+      "cases": 13,
+      "assertions": 648
+    },
+    {
+      "receipt": "build/terminal-mouse-tests/traps-mouse-owners-01/checks.json",
+      "sha256": "8abeb8e50554c6a246c218fcd3cf5f89ef3a401b7ed7c30e934014473a69d7fe",
+      "cases": 4,
+      "assertions": 68
+    }
+  ],
+  "source_products": {
+    "terminal-traps": {
+      "expected": "bf3ed3dce797ae728dbe6c1a9144e2c90da8e36fe6850de8d5ae269d20788d1f",
+      "actual": "bf3ed3dce797ae728dbe6c1a9144e2c90da8e36fe6850de8d5ae269d20788d1f"
+    },
+    "terminal-traps-probe-0": {
+      "expected": "9445ca6a482992135893c3484d93186e5b9f783ebe71488687de0aa69eb0994b",
+      "actual": "9445ca6a482992135893c3484d93186e5b9f783ebe71488687de0aa69eb0994b"
+    },
+    "terminal-traps-probe-1": {
+      "expected": "28bfb428cc0ffe797f1e2b44997c807169caef9f4fd8d73108253820d7534581",
+      "actual": "28bfb428cc0ffe797f1e2b44997c807169caef9f4fd8d73108253820d7534581"
+    },
+    "terminal-traps-probe-2": {
+      "expected": "c93957d9127c00c525f775372a8e3f63e1e12aa2f71a839832b6a5eb21a15a10",
+      "actual": "c93957d9127c00c525f775372a8e3f63e1e12aa2f71a839832b6a5eb21a15a10"
+    },
+    "terminal-traps-probe-3": {
+      "expected": "a4e077c686545bc0f8597858d72010cd439f9a8144c271a31cd84cfab380ccb1",
+      "actual": "a4e077c686545bc0f8597858d72010cd439f9a8144c271a31cd84cfab380ccb1"
+    },
+    "terminal-traps-probe-4": {
+      "expected": "f0e9266c24fe811980c2102e5aab5c27c275f416836161cacb8207279607c40d",
+      "actual": "f0e9266c24fe811980c2102e5aab5c27c275f416836161cacb8207279607c40d"
+    },
+    "terminal-traps-mouse": {
+      "expected": "16ebccb92e60df0e73c18dffb15c3d3fac1b005fc81a62a40afe205f0c9193e3",
+      "actual": "16ebccb92e60df0e73c18dffb15c3d3fac1b005fc81a62a40afe205f0c9193e3"
+    },
+    "terminal-traps-mouse-probe-0": {
+      "expected": "3e3a328e400dab049577099c5ceb37b59b1f661b604865a5718281669feb1c91",
+      "actual": "3e3a328e400dab049577099c5ceb37b59b1f661b604865a5718281669feb1c91"
+    },
+    "terminal-traps-mouse-probe-1": {
+      "expected": "fd856d596993c07f966d8dcd4c31aa51724a4d7f87a4594c15509f3d2de76038",
+      "actual": "fd856d596993c07f966d8dcd4c31aa51724a4d7f87a4594c15509f3d2de76038"
+    },
+    "terminal-traps-mouse-probe-2": {
+      "expected": "ddb144baee3c2f84d2d5d5f9738804d2f3ee5b94f17ebdcc59274e1eeaf4dd19",
+      "actual": "ddb144baee3c2f84d2d5d5f9738804d2f3ee5b94f17ebdcc59274e1eeaf4dd19"
+    },
+    "terminal-traps-mouse-probe-3": {
+      "expected": "806793068513bef4c8e897da9325eb50a53107c8ba46c856d9d7b4887d107816",
+      "actual": "806793068513bef4c8e897da9325eb50a53107c8ba46c856d9d7b4887d107816"
+    },
+    "terminal-traps-mouse-probe-4": {
+      "expected": "d70f8f7816da703762360c64a2f765c2b5dcbe4a31552071edfb562b24890f70",
+      "actual": "d70f8f7816da703762360c64a2f765c2b5dcbe4a31552071edfb562b24890f70"
+    },
+    "terminal": {
+      "expected": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+      "actual": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c"
+    },
+    "terminal-process": {
+      "expected": "365b8bef8465cb1c0d2d7765b75ccdc4eb1b966fcc3c4e69137659267e58e045",
+      "actual": "365b8bef8465cb1c0d2d7765b75ccdc4eb1b966fcc3c4e69137659267e58e045"
+    },
+    "terminal-mouse": {
+      "expected": "8bd0d5ab6f6e8b83b87be6ba1202e419ddeab55bbd53644ee82a7da48d4cc950",
+      "actual": "8bd0d5ab6f6e8b83b87be6ba1202e419ddeab55bbd53644ee82a7da48d4cc950"
+    },
+    "terminal-mouse-process": {
+      "expected": "56a17e0fc630fb85dd624fc3289bed66b1a569d35302d24c42428ebd2a40a128",
+      "actual": "56a17e0fc630fb85dd624fc3289bed66b1a569d35302d24c42428ebd2a40a128"
+    },
+    "terminal-process-bank": {
+      "expected": "a501d9c612f51f94a25e4a0822722ef15616e5b7fe11ad7dc5db0e3c60a2bac2",
+      "actual": "a501d9c612f51f94a25e4a0822722ef15616e5b7fe11ad7dc5db0e3c60a2bac2"
+    },
+    "terminal-process-bank-mouse": {
+      "expected": "6b22c240fd8d5294efc7330ac56a4b04980a3e3e65d1f3e99c207e74ee8d18f8",
+      "actual": "6b22c240fd8d5294efc7330ac56a4b04980a3e3e65d1f3e99c207e74ee8d18f8"
+    }
+  },
+  "source_receipt_sha256": "6faa11b3a0fa718afb1993f72cb9de8964a177a1192175e20491761ba813ebe6",
+  "auditor_sha256": "0d42ec30abfd25330c3a10d02cc9962e0458c6449f56e10eaea3ce43cb0a8993",
+  "scope": "Kernel Ctrl-C, synthetic INT1B/critical events, raw startup-child trap handoff, normal restoration and unknown-vector retention. Physical devices, full BBS acceptance and retained-ASPECT retry are not established by this receipt."
+}
