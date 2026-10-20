@@ -4,15 +4,26 @@ The target includes the user's running `~/projects/black-flag-bbs` checkout,
 its configured menus and modules, and the source-built DOS client. Passing
 an isolated stock BBS is insufficient. Compatibility is not complete.
 
+The [upload date fix](../lab/bbs/enigma-upload-time.md) now advertises unknown
+time explicitly. Actual receiver comparisons reproduce the missing-field date
+problem and verify current creation dates with the corrected engine. The fresh
+DOS run passes 15 checks through scan acknowledgement, both detail forms, exact
+large/empty uploads, date/catalog audits and NFO return; 14 damaged-evidence
+cases reject. The [record](validation/enigma-upload-time.json) retains earlier
+failed navigation attempts and a fresh 31-product source proof. Original source
+dates, upload interruption, live deployment and physical modem acceptance are
+still unverified.
+
 The [upload workflow](../lab/bbs/enigma-upload.md) now passes 11 actual DOS
 checks for each of two binary/empty ZMODEM batches, including a 65,539-byte file.
 The test uses the owned upload forms/protocol selector, verifies exact installed
 bytes and official FileEntry size/hash/uploader/description, and returns through
 search/index to usable NFO input. Each capture rejects 13 evidence corruptions.
 The [record](validation/enigma-upload.json) preserves the earlier failed form
-schedules. Received filesystem dates are not accepted: empty uploads acquire
-invalid future dates. Upload interruption, live-board deployment and physical
-modem acceptance remain open. The 31 DOS application products are unchanged.
+schedules. Those earlier captures have invalid empty-file dates; the correction above
+adds date acceptance checks. Upload interruption, live-board deployment and physical
+modem acceptance remain open. At that earlier checkpoint, all 31 DOS
+application products were unchanged.
 
 The [carrier-loss workflow](../lab/bbs/enigma-carrier.md) now tests an aborted
 download, real emulated DCD loss, partial cleanup, redial, second ASPECT login,

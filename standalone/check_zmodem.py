@@ -32,6 +32,7 @@ class Session(C.Structure):
 
 def h(t,pos=0,fmt=66):return header(bytes([t])+pos.to_bytes(4,'little'),fmt,0)
 def meta(name,size):return name.encode()+b'\0'+str(size).encode()+b'\0'
+def send_meta(name,size):return name.encode()+b'\0'+str(size).encode()+b' 0\0'
 def offer(name,size,fmt=67):return h(4,0,fmt)+packet(meta(name,size),fmt,107,0)
 def payload(data,offset=0,fmt=67,end=107):return h(10,offset,fmt)+packet(data,fmt,end,0)
 
@@ -136,7 +137,7 @@ def main():
             for off in range(0,n,1024):rx+=h(3,min(off+1024,n))
             rx+=h(1,0x22000000 if fmt==67 else 0x02000000)+h(8)
             f=Fixture(lib,rx,[('TEST.BIN',body)]);check(f'send-{fmt}-{n}',f.run(True)==0 and f.session.files==1 and f.session.bytes==n and f.source is None)
-            expected=h(0)+h(4,0x01000000,fmt)+packet(meta('TEST.BIN',n).ljust(128,b'\0'),fmt,107,0)
+            expected=h(0)+h(4,0x01000000,fmt)+packet(send_meta('TEST.BIN',n).ljust(128,b'\0'),fmt,107,0)
             for off in range(0,n,1024):expected+=payload(body[off:off+1024],off,fmt)
             expected+=h(11,n,fmt)+h(8)+b'OO'
             check(f'send-wire-{fmt}-{n}',bytes(f.tx)==expected)
@@ -173,7 +174,7 @@ def main():
     f=Fixture(lib,h(1,0x22000000)+h(13,7),[('TEST.BIN',b'ABCDEF')]);check('reject-CRC-prefix-beyond-EOF',f.run(True)==6)
     for capacity in (1,7,128):
         data=bytes(range(17));rx=h(1,0x22000000|capacity)+h(9)
-        expected=h(0)+h(4,0x01000000,67)+packet(meta('TEST.BIN',17).ljust(128,b'\0'),67,107,0)
+        expected=h(0)+h(4,0x01000000,67)+packet(send_meta('TEST.BIN',17).ljust(128,b'\0'),67,107,0)
         for off in range(0,len(data),capacity):
             rx+=h(3,min(off+capacity,len(data)));expected+=payload(data[off:off+capacity],off)
         rx+=h(1,0x22000000|capacity)+h(8);expected+=h(11,17,67)+h(8)+b'OO'

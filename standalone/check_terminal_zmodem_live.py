@@ -8,7 +8,7 @@ from pathlib import Path
 from unicorn.x86_const import *
 from check_terminal_ymodem_live import LiveYmodem
 from check_terminal_transfer_live import LiveTransfer,ROOT,BINARY
-from check_zmodem import h,meta,offer,payload
+from check_zmodem import h,meta,send_meta,offer,payload
 from check_zmodem_wire import packet
 from zmodem_window_vectors import vectors
 from check_zmodem_progress_live import run_case as progress_case
@@ -21,7 +21,7 @@ class LiveZmodem(LiveYmodem):
   self.filename=b'SEND.BIN' if sending else b'D:\\RECV\\'
   if sending:
    self.script.append((h(0),h(1,0x22000000 if fmt==67 else 0x02000000)))
-   self.script.append((h(4,0x01000000,fmt)+packet(meta('SEND.BIN',len(source)).ljust(128,b'\0'),fmt,107,0),h(9,resume)))
+   self.script.append((h(4,0x01000000,fmt)+packet(send_meta('SEND.BIN',len(source)).ljust(128,b'\0'),fmt,107,0),h(9,resume)))
    for off in range(resume,len(source),1024):self.script.append((payload(source[off:off+1024],off,fmt),h(3,min(off+1024,len(source)))))
    self.script.append((h(11,len(source),fmt),h(1,0x22000000 if fmt==67 else 0x02000000)))
    self.script.append((h(8),h(8)));self.script.append((b'OO',b'APP'))

@@ -1,14 +1,24 @@
 # Complete DOS rebuild plan
 
+The [ENiGMA upload date fix](lab/bbs/enigma-upload-time.md) explicitly sends
+unknown time instead of omitting the field. Six actual receiver comparisons
+reproduce absent-field bad dates and verify corrected engine output.
+The full DOS upload now passes 15 checks, including the visible scan pause,
+both detail forms, exact 65,539-byte/empty storage, current creation dates and
+NFO interaction. Fourteen damaged-evidence cases reject. A fresh 31-product
+source proof changes only the four terminal variants; both packages are staged.
+Source-date preservation, upload interruption, live decoder deployment,
+physical modem acceptance and all whole-application gates remain open.
+
 The [owned ENiGMA upload workflow](lab/bbs/enigma-upload.md) now checks two-file
 ZMODEM batches through the board's selected upload menus and protocol selector.
 Both 1,501-byte and 65,539-byte binaries, each paired with an empty file, pass
 exact storage, official FileEntry metadata, unchanged source and post-upload
 NFO checks. The [record](docs/validation/enigma-upload.json) retains failed UI
-schedules and 13 rejected corruptions per successful capture. Empty-file
-filesystem dates are invalid and remain an explicit follow-up; timestamp
-preservation, upload interruption, live deployment and physical modem acceptance
-are not established. The 31 application products are unchanged.
+schedules and 13 rejected corruptions per successful capture. The earlier empty-file
+filesystem dates were invalid; the correction is described above. Upload
+interruption, live deployment and physical modem acceptance are not established.
+At that earlier checkpoint, all 31 application products were unchanged.
 
 The latest [ENiGMA carrier work](lab/bbs/enigma-carrier.md) adds interrupted
 receive, actual emulated DCD loss, partial-file cleanup, redial, second scripted

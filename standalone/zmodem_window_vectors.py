@@ -1,7 +1,7 @@
 """Literal independent delayed-ACK schedules, shared by DOS/linked fixtures.
 These schedules specify packet endings and peer replies; no product code runs.
 """
-from check_zmodem import h,meta
+from check_zmodem import h,meta,send_meta
 from check_zmodem_wire import packet
 
 def vectors(fmt=67,name='TEST.BIN',include_long=False):
@@ -34,7 +34,7 @@ def vectors(fmt=67,name='TEST.BIN',include_long=False):
  result=[]
  for label,size,capacity,actions in schedules:
   body=(bytes(range(256))*((size+255)//256))[:size];ready=h(1,(0x23000000 if fmt==67 else 0x03000000)|capacity)
-  rx=list(ready+h(9));tx=h(0)+h(4,0x01000000,fmt)+packet(meta(name,size).ljust(128,b'\0'),fmt,W,0);script=[(h(0),ready),(h(4,0x01000000,fmt)+packet(meta(name,size).ljust(128,b'\0'),fmt,W,0),h(9))]
+  rx=list(ready+h(9));tx=h(0)+h(4,0x01000000,fmt)+packet(send_meta(name,size).ljust(128,b'\0'),fmt,W,0);script=[(h(0),ready),(h(4,0x01000000,fmt)+packet(send_meta(name,size).ljust(128,b'\0'),fmt,W,0),h(9))]
   offset=0
   for action in actions:
    if isinstance(action,tuple) and action[0]=='eof-rewind':

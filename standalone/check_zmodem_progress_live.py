@@ -3,7 +3,7 @@
 from collections import deque
 import hashlib,json
 from pathlib import Path
-from check_zmodem import h,meta
+from check_zmodem import h,send_meta
 from check_zmodem_wire import packet
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -13,7 +13,7 @@ def run_case(factory):
  for start in (1024,3072,5120):
   one.extend([(h(10,start,67),b''),(packet(body[start:start+1024],67,Q,0),h(3,start+1024)),(packet(body[start+1024:start+2048],67,W,0),h(3,start+2048))])
  one.extend([(h(10,7168,67),b''),(packet(body[7168:8192],67,Q,0),h(3,8192)),(packet(body[8192:],67,E,0),b'')])
- script=[(h(0),ready),(h(4,0x01000000,67)+packet(meta('SEND.BIN',size).ljust(128,b'\0'),67,W,0),h(9)),*one,(h(11,size,67),h(9)),*one,(h(11,size,67),ready),(h(8),h(8)),(b'OO',b'APP')]
+ script=[(h(0),ready),(h(4,0x01000000,67)+packet(send_meta('SEND.BIN',size).ljust(128,b'\0'),67,W,0),h(9)),*one,(h(11,size,67),h(9)),*one,(h(11,size,67),ready),(h(8),h(8)),(b'OO',b'APP')]
  acks={h(3,pos) for pos in range(1024,8193,1024)}
  class Paced(factory):
   def __init__(self):

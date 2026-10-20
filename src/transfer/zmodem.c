@@ -178,6 +178,12 @@ static unsigned offer(zm_session *s)
  s->phase=0;
  for(s->retries=0;s->retries<LIMIT && !s->status;++s->retries){
   if(batch_header_encode(s->name,13,s->size,s->data,128)!=BH_OK)return fail(s,ZM_FILE);
+  /* No source timestamp is available through this ABI. Advertise unknown
+   * explicitly: some SEXYZ receivers use an uninitialized date when the
+   * optional field is absent. Keep the shared YMODEM codec unchanged.
+   * The checked encoder bounds name+NUL+DWORD length below24 bytes. */
+  r=0;while(s->data[r])++r;++r;while(s->data[r])++r;
+  s->data[r++]=' ';s->data[r]='0';
   if(header(s,ZFILE,0x01000000UL,s->format) || data(s,128,ZW_CRCW))break;
   for(;;){
    r=event(s);if(r!=ZW_HEADER)break;type=s->decoder.header[0];

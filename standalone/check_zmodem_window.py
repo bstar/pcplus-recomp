@@ -2,7 +2,7 @@
 """Independent reactive peer checks for bounded maintained ZMODEM sending."""
 import ctypes as C,hashlib,json,subprocess,sys
 from pathlib import Path
-from check_zmodem import Fixture,Session,h,meta,ROOT
+from check_zmodem import Fixture,Session,h,meta,send_meta,ROOT
 sys.path.insert(0,str(ROOT/'lab/bbs'))
 from audit_zmodem import header,packet
 OUT=ROOT/'build/zmodem-window'
@@ -58,7 +58,7 @@ class WindowPeer(Fixture):
     item=packet(raw,0,self.fmt);del self.buffer[:item['end']]
     data=item['payload'];ending=item['ending']
     if self.mode=='metadata':
-     assert data==meta('TEST.BIN',len(self.body)).ljust(128,b'\0') and ending==107
+     assert data==send_meta('TEST.BIN',len(self.body)).ljust(128,b'\0') and ending==107
      self.reply(h(9));self.mode=None;self.must_sync=True
     else:
      if not data:

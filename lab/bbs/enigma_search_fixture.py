@@ -101,7 +101,7 @@ def setup_search(candidate,server,transfer_bytes=0,uploads=False):
         assert db.execute('PRAGMA integrity_check').fetchone()==notes.execute('PRAGMA integrity_check').fetchone()==('ok',)
         assert db.execute("SELECT COUNT(*) FROM file_fts WHERE file_fts MATCH 'PCPLUS PROBE'").fetchone()[0]>=30
     assert before=={p:sha(server/p) for p in sources},'Source changed during setup'
-    inputs=['config/menus/loc-main.hjson','config/config.hjson','local/catalog/notes/index.sqlite3',str(theme_path.relative_to(candidate)),*asset_hashes,'core/client.js','core/key_stream.js']
+    inputs=['config/menus/loc-main.hjson','config/config.hjson','local/catalog/notes/index.sqlite3',str(theme_path.relative_to(candidate)),*asset_hashes,'core/client.js','core/key_stream.js','helpers/sexyz']
     metadata.update(source_inputs={**metadata['source_modules'],**before},fixture_inputs={p:sha(candidate/p) for p in inputs},
         selected_menus=selected,selected_theme=list(selected_theme),
         menu_selection_sha256=hashlib.sha256(json.dumps(dict(menus=selected_menus,prompts=selected_prompts,theme=selected_theme),sort_keys=True).encode()).hexdigest(),

@@ -4,14 +4,28 @@ import argparse,copy,hashlib,json
 from functools import lru_cache
 from unittest.mock import patch
 from pathlib import Path
-from audit_zmodem import scan,audit_batch,audit_controls
+from audit_zmodem import scan,packet,audit_batch,audit_controls
 from test_transfer_dos import timestamp,offset_after
 from enigma_key_stream_fixture import ROOT,owned
 from enigma_notes_dos import sha
 
 
-def replay(stream,opposite,trace,expected):
+def unknown_times(stream,expected):
+    seen=set()
+    for h in scan(stream):
+        if h['type']!=4:continue
+        raw=packet(stream,h['end'],h['format'])['payload']
+        name,attrs=raw.split(b'\0',1);name=name.decode('ascii').upper()
+        assert name in expected and len(raw)==128
+        value,padding=attrs.split(b'\0',1)
+        assert value==str(len(expected[name])).encode()+b' 0' and not any(padding),'ZFILE time is not explicitly unknown'
+        seen.add(name)
+    assert seen==set(expected)
+
+
+def replay(stream,opposite,trace,expected,require_unknown=False):
     audit=audit_batch(stream,expected)
+    if require_unknown:unknown_times(stream,expected)
     post=stream.index(b'S\r',offset_after(trace,'dos',timestamp(trace,'dos',audit['end']-1)))
     when=timestamp(trace,'dos',post)
     # The auditor asks for the same chunk times thousands of times. Each
@@ -30,7 +44,7 @@ def replay(stream,opposite,trace,expected):
     return audit
 
 
-def catalog(rows,expected,candidate):
+def catalog(rows,expected,candidate,date_bounds=None):
     assert {r['name'] for r in rows}==set(expected)
     for row in rows:
         name=row['name'];assert len(row['entries'])==1;e=row['entries'][0]
@@ -39,6 +53,8 @@ def catalog(rows,expected,candidate):
         assert path.read_bytes()==expected[name] and e['fileSha256']==hashlib.sha256(expected[name]).hexdigest()
         assert e['meta']['byte_size']==len(expected[name]) and e['meta']['upload_by_username']=='loclab'
         assert e['desc']==Path(name).stem,'Upload details were changed unintentionally'
+        if date_bounds is not None:
+            assert date_bounds[0]<=path.stat().st_mtime_ns<=date_bounds[1],'Received filesystem date is not a current creation date'
 
 
 def main(args):
@@ -47,10 +63,11 @@ def main(args):
     result=json.loads((out/'upload-checks.json').read_text());assert result['passed'] and all(result['checks'].values())
     expected={p.name:p.read_bytes() for p in (out/'SEND').iterdir()};assert any(not v for v in expected.values()) and any(v for v in expected.values())
     stream=(out/'serial-received.bin').read_bytes();opposite=(out/'display.bin').read_bytes();trace=json.loads((out/'trace.json').read_text())
-    audited=replay(stream,opposite,trace,expected);rows=json.loads((out/'server-upload-metadata.json').read_text());catalog(rows,expected,candidate)
+    bounds=result.get('received_date_bounds_ns');require_unknown=bounds is not None
+    audited=replay(stream,opposite,trace,expected,require_unknown);rows=json.loads((out/'server-upload-metadata.json').read_text());catalog(rows,expected,candidate,bounds)
     cases=[]
     def reject(label,sent=stream,received=opposite,times=trace,source=expected,entries=rows):
-        try:replay(sent,received,times,source);catalog(entries,source,candidate)
+        try:replay(sent,received,times,source,require_unknown);catalog(entries,source,candidate,bounds)
         except (AssertionError,ValueError,TypeError,KeyError,OSError) as e:cases.append(dict(case=label,rejected=True,reason=str(e)))
         else:raise AssertionError('Damaged upload evidence passed: '+label)
     def damage(data,at):
@@ -77,6 +94,15 @@ def main(args):
     changed=copy.deepcopy(rows);changed[0]['entries'][0]['fileSha256']='0'*64;reject('wrong-catalog-hash',entries=changed)
     changed=copy.deepcopy(rows);changed[0]['entries'][0]['areaTag']='pcplus_games';reject('wrong-area',entries=changed)
     changed=copy.deepcopy(rows);changed[0]['entries'][0]['desc']='UNRELATED';reject('wrong-description',entries=changed)
+    if require_unknown:
+        # Keep a valid data CRC. The date policy must reject this independently
+        # of damaged framing or a changed transfer length.
+        from check_zmodem_wire import packet as encode_packet
+        h=next(h for h in scan(stream) if h['type']==4);p=packet(stream,h['end'],h['format'])
+        raw=p['payload'];at=raw.index(b'\0')+1;end=raw.index(b'\0',at)
+        changed=raw[:end-1]+b'1'+raw[end:]
+        altered=stream[:h['end']]+encode_packet(changed,h['format'],p['ending'],0)+stream[p['end']:]
+        reject('valid-CRC-nonzero-invented-time',sent=altered)
     report=dict(passed=True,cases=cases,checker_sha256=sha(Path(__file__)),auditor_sha256=sha(ROOT/'lab/bbs/audit_zmodem.py'),
         capture_hashes={p:sha(out/p) for p in ('upload-checks.json','serial-received.bin','display.bin','trace.json','server-upload-metadata.json')},
         scope='Actual retained two-file upload wire and official FileEntry metadata; each payload/empty-file/finish/timing/menu/catalog corruption must reject. No protocol replies generated.')

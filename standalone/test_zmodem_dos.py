@@ -9,7 +9,7 @@ import re
 import shutil
 import struct
 import subprocess
-from check_zmodem import h,meta,offer,payload
+from check_zmodem import h,meta,send_meta,offer,payload
 from check_zmodem_wire import packet
 from zmodem_window_vectors import vectors
 from check_zmodem_names import alias
@@ -44,7 +44,7 @@ def main():
             wire+=h(11,n,fmt)+h(8)+b'OO';expected+=h(1,0x23002000)+h(8)
             case(f'receive-{fmt}-{n}',False,wire,{'TEST.BIN':data},expected_wire=expected)
             rx=h(1,0x22000000 if fmt==67 else 0x02000000)+h(9)
-            tx=h(0)+h(4,0x01000000,fmt)+packet(meta('TEST.BIN',n).ljust(128,b'\0'),fmt,107,0)
+            tx=h(0)+h(4,0x01000000,fmt)+packet(send_meta('TEST.BIN',n).ljust(128,b'\0'),fmt,107,0)
             for off in range(0,n,1024):rx+=h(3,min(off+1024,n));tx+=payload(data[off:off+1024],off,fmt)
             rx+=h(1,0x22000000 if fmt==67 else 0x02000000)+h(8);tx+=h(11,n,fmt)+h(8)+b'OO'
             case(f'send-{fmt}-{n}',True,rx,{},expected_wire=tx,source_files={'TEST.BIN':data},checks={'closes':1,'uncertain':0})
@@ -69,7 +69,7 @@ def main():
     case('CRC-duplicate-offer-zero-size-estimate',False,wire,{'TEST.BIN':b'ABCDEF'})
     for offset in (0,3,6):
         rx=h(1,0x22000000)+h(9,offset)+(h(3,6) if offset<6 else b'')+h(1,0x22000000)+h(8)
-        tx=h(0)+h(4,0x01000000,67)+packet(meta('TEST.BIN',6).ljust(128,b'\0'),67,107,0)
+        tx=h(0)+h(4,0x01000000,67)+packet(send_meta('TEST.BIN',6).ljust(128,b'\0'),67,107,0)
         if offset<6:tx+=payload(b'ABCDEF'[offset:],offset)
         tx+=h(11,6,67)+h(8)+b'OO'
         case(f'send-resume-{offset}',True,rx,{},source_files={'TEST.BIN':b'ABCDEF'},expected_wire=tx)
@@ -88,7 +88,7 @@ def main():
     for name,data in (('missing-filename-NUL',b'TEST.BIN'),('missing-metadata-NUL',b'TEST.BIN\x00123'),('unsafe-filename',meta('../X',3))):
         case(name,False,h(4,0,67)+packet(data,67,107,0),{},expected_status=6)
     data=bytes(range(17));rx=h(1,0x23000007)+h(9)
-    tx=h(0)+h(4,0x01000000,67)+packet(meta('TEST.BIN',17).ljust(128,b'\0'),67,107,0)
+    tx=h(0)+h(4,0x01000000,67)+packet(send_meta('TEST.BIN',17).ljust(128,b'\0'),67,107,0)
     for off in range(0,17,7):rx+=h(3,min(off+7,17));tx+=payload(data[off:off+7],off)
     rx+=h(1,0x23000007)+h(8);tx+=h(11,17,67)+h(8)+b'OO'
     case('finite-receiver-buffer-seven',True,rx,{},source_files={'TEST.BIN':data},expected_wire=tx)

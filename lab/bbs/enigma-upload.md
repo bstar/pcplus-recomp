@@ -16,10 +16,11 @@ Both files must match the transmitted size, SHA-256 and exact bytes without
 XMODEM padding. The official ENiGMA `FileEntry` API must return exactly one entry
 for each name, in the owned area/storage with the correct uploader. The capture
 replay additionally checks that the prefilled descriptions were preserved.
-Source-file inode/size/mtime/hash remain unchanged. Received filesystem dates
-are a separate unresolved issue: both empty uploads acquired invalid future
-dates, and the sender currently omits optional mtime metadata. These byte/catalog
-checks do not establish timestamp preservation. Actual DOS compiler output,
+Source-file inode/size/mtime/hash remain unchanged. The captures at this
+checkpoint have invalid empty-file dates and omitted optional mtime metadata.
+The later [date compatibility fix](enigma-upload-time.md) makes the sender
+advertise unknown time explicitly and adds received-date checks; original
+source-date preservation remains open. Actual DOS compiler output,
 ASPECT login trace, directory accounting and original device restoration remain
 canonical harness checks. No keyboard credentials or invented protocol replies
 are used; only the isolated synthetic account's existing login script is compiled.
@@ -37,21 +38,20 @@ Its three-Tab recipe did not accept both detail forms. A small batch passed
 with two paced Tabs per form. The first larger batch also transferred exactly,
 but its form keys arrived before the queued processing/detail screens finished
 arriving. That attempt did not install the files or reach the NFO page.
-The larger-file recipe now budgets additional time for those screens and the
-transition between forms. Acceptance depends on stored bytes, descriptions,
+That checkpoint added time for those screens and the transition between
+forms. The later [date workflow](enigma-upload-time.md) replaces fixed Tab
+counts with visible scan-pause and focus-driven BIOS keys. Acceptance depends on stored bytes, descriptions,
 metadata and subsequent NFO input; elapsed time or protocol exit alone cannot
 pass it. These failed captures remain separate from successful evidence.
 A still earlier attempt used the BBS-only shell, which lacks NASM; that is an
 environment failure before DOS execution, not a client failure.
 
-For the timestamp follow-up, the local companion Synchronet source's
-`zmodem_parse_zfile_subpacket()` initializes `current_file_time` but declares
-`tmptime` without initialization, then assigns it after `sscanf()` even if the
-optional time field was absent. The current sender emits only filename and
-length. This is a concrete source-level suspect, not a verified disassembly of
-the installed helper. Keep the failing filesystem dates; test explicit unknown
-mtime metadata and the receiver's missing-field behavior before closing this
-issue. Any DOS sender change needs transfer regressions and a new source proof.
+The later [date follow-up](enigma-upload-time.md) reproduces missing-field
+behavior against the actual selected helper and tests explicit unknown time.
+Its companion source assigns an uninitialized temporary after a partial time
+parse; that source observation is separate from the executable evidence. The
+historical captures here retain their original invalid filesystem dates.
+The newer sender and acceptance tests are documented in that follow-up.
 
 After exporting a fresh checked candidate, prepare and run it using the pinned
 Nix environments:

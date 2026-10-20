@@ -1,11 +1,21 @@
 # Full application reconstruction checklist
 
+The [ENiGMA upload date checkpoint](validation/enigma-upload-time.json) fixes
+invented receiver dates by emitting explicit unknown time. The actual DOS route
+passes 15 checks, and 14 evidence corruptions reject. Scan acknowledgement and
+per-file focus-driven keys now replace unreliable fixed Tab counts. All 31
+source products reproduce; only four terminal variants change and both DOS
+packages are refreshed. Original source-date preservation and the full feature
+gates remain open.
+
 The [ENiGMA upload checkpoint](validation/enigma-upload.json) adds actual DOS
 binary/empty batches through the owned upload UI, exact installed data and
 FileEntry catalog checks, and post-upload NFO interaction. Two sizes include a
 65,539-byte binary; 13 damaged captures/catalogs reject for each successful run.
-Empty-file filesystem dates remain invalid, so timestamp handling is still open.
-The 31 application products are unchanged; this closes no whole-application gate.
+Those earlier empty-file dates are invalid; the later checkpoint above fixes
+the missing-field compatibility problem.
+At that earlier checkpoint, all 31 application products were unchanged; no
+whole-application gate closed.
 
 This inventory preserves the scope of a maintained, source-built PCPlus 2.01
 application for DOS. A serial diagnostic, an ANSI terminal, and a patched original
