@@ -1,12 +1,22 @@
 # Complete DOS rebuild plan
 
-The [native process foundation](docs/NATIVE_PROCESS.md) now launches owned COM,
+The [native namespace extension](docs/NATIVE_NAMESPACE.md) now binds2,440 exact
+bytes to55 DOS cases/2,053 assertions plus a separate678-assertion core regression.
+It verifies current-directory/PATH and COM/EXE/BAT order, qualified names,
+access-denied stopping, SYSTEM fallback/query, three simultaneous allocations,
+each allocation failure and far-backed environment restoration. Actual command
+outputs are required. The initial recursive CHECK.BAT fixture collision remains
+retained as a failed incomplete attempt. These component policies still need
+production shared-state/display/UART/interpreter integration; RUN/DOS/SHELL and
+all whole-application gates remain open.
+
+The earlier [native process foundation](docs/NATIVE_PROCESS.md) launched owned COM,
 EXE and batch children through1,393 byte-verified recovered bytes with real CRT
 bindings. All20 actual DOS cases/678 assertions pass, including real exhaustion,
 foreign-DS divide, vector restoration, raw0307 resident status, arena fallback,
 empty/current environments and six held streams. Three failed attempts remain
 retained; keeping near-heap capacity fixes the discovered post-EXEC fopen ENOMEM.
-This is component-only: native namespace policy, production shared-state binding,
+This is component-only: production namespace and shared-state binding,
 display/WAIT/NOCLEAR, UART ownership and ASPECT continuation/publication remain
 required. RUN/DOS/SHELL remain unsupported; no application gate closes.
 

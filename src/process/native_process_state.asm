@@ -2,13 +2,40 @@
 BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
-extern program_spawn_extension
+extern native_spawn_extension_recovered,program_spawn_search,program_system
+extern native_access_recovered,_native_extension_checked
 extern _native_allocate,_native_release,_native_backup_alloc,_native_backup_free
 extern _native_copy
-global _native_spawn_extension,_native_child_divide
+global _native_spawn_extension,_native_spawn_search,_native_system,_native_child_divide
+global _native_extension_recovered,program_spawn_extension,program_access
 global program_service_92a8,program_service_92a4,program_service_860f
 global program_service_85fc,program_service_9286
 _native_spawn_extension: jmp program_spawn_extension
+_native_extension_recovered: jmp native_spawn_extension_recovered
+program_spawn_extension: jmp _native_extension_checked
+_native_spawn_search: jmp program_spawn_search
+_native_system: jmp program_system
+; Native access(NULL) otherwise points DOS at unrelated DS:0000 contents.
+program_access:
+ push bp
+ mov bp,sp
+ cmp word [bp+4],0
+ jne .original
+ mov word [program_errno],2
+ mov word [program_dos_error],2
+ mov ax,0xffff
+ pop bp
+ ret
+.original:
+ pop bp
+ jmp native_access_recovered
+; Overlay/load-and-go mode is outside the admitted P_WAIT process owner.
+global program_service_93ca
+program_service_93ca:
+ mov word [program_errno],22
+ mov word [program_dos_error],12
+ mov ax,0xffff
+ ret
 program_service_92a8: jmp _native_allocate
 program_service_92a4: jmp _native_release
 program_service_860f: jmp _native_backup_alloc
@@ -56,6 +83,18 @@ program_fcb2: times 37 db 0
 global program_batch_prefix,program_comspec_name2
 program_batch_prefix: db '/c ',0
 program_comspec_name2: db 'COMSPEC',0
+global program_comspec_name,program_switch_c,program_default_shell
+global program_path_name,program_state_7dc9,program_extensions,program_extension2
+program_comspec_name: db 'COMSPEC',0
+program_switch_c: db '/c',0
+program_default_shell: db 'command.com',0
+program_path_name: db 'PATH',0
+program_state_7dc9: db '\',0
+native_ext_bat: db '.bat',0
+native_ext_exe: db '.exe',0
+native_ext_com: db '.com',0
+program_extensions: dw native_ext_bat,native_ext_exe
+program_extension2: dw native_ext_com
 ; The Borland inherited-handle environment extension is disabled: these are
 ; source-built Watcom children, whose DOS handles are inherited by DOS EXEC.
 global program_state_7b52,program_state_7b29,program_state_7b2a

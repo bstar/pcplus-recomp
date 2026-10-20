@@ -14,7 +14,13 @@ The [native process foundation](NATIVE_PROCESS.md) now supplies real recovered
 environment/tail/spawn/EXEC with maintained allocator/trap bindings:20 actual DOS
 cases/678 assertions, including real memory exhaustion and arena restoration.
 It is an explicit component target; application display/UART/shared-state
-ownership, namespace policies and these three runtime slots remain unfinished.
+ownership, production namespace binding and these three runtime slots remain unfinished.
+
+The [namespace extension](NATIVE_NAMESPACE.md) now adds real native PATH,
+COM/EXE/BAT order and SYSTEM fallback:55 DOS cases/2,053 assertions pass,
+alongside the separate678-assertion core regression. Nested allocations and
+far-backed arena restoration are real. Production binding of those policies
+and the remaining controller ownership requirements below are still open.
 
 ## Recorded grammar and behavior
 

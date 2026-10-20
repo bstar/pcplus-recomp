@@ -11,6 +11,8 @@ from build_native_process import ROOT,OUT,sha
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label',required=True)
+    parser.add_argument('--retain-initial-failures',action='store_true',
+                        help='bind the three locally retained initial process attempts')
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     run=OUT/'runs'/args.label
     manifest=json.loads((OUT/'manifest.json').read_text())
@@ -31,7 +33,7 @@ def main():
     assert any(c['path']=='CHILD.EXE' and c['child_status']==37 for c in cases)
     assert sum(c['path']=='EMPTY.COM' and c['child_status']==37 for c in cases)==2
     failed=[]
-    for label in ('native-process-01','native-process-02','native-process-03'):
+    for label in (('native-process-01','native-process-02','native-process-03') if args.retain_initial_failures else ()):
         folder=OUT/'runs'/label;path=folder/'result.json'
         old=json.loads(path.read_text());assert not old['passed']
         old_manifest=json.loads((folder/'manifest.json').read_text())
@@ -46,14 +48,14 @@ def main():
         retained_failed_attempts=failed,recorder_sha256=sha(Path(__file__)),
         checker_sha256=report['checker_sha256'],
         limitations=[
-            'Qualified direct COM/EXE and native batch/COMSPEC primitive only; PATH/extension/system-command policy remains unintegrated.',
+            'This core run exercises direct COM/EXE and native batch/COMSPEC; namespace coverage is recorded separately.',
             'No application display, WAIT/NOCLEAR or UART release/restore owner; no ASPECT runtime slots enabled.',
             'Six ordinary held CRT streams, live heap guards and patterned arena; not full ASPECT stream/lease/continuation acceptance.',
             'Native CRT platform state is separately owned in this component; production shared-state binding remains required.',
             'Source-owned heap padding, pointer admission and trap bracket are maintained adapters, not recovered native bytes.',
             'DOSBox-X8086 only; physical hardware and RS-232 Wi-Fi modem acceptance remain open.'])
     (ROOT/'docs/validation/native-process.json').write_text(json.dumps(result,indent=2)+'\n')
-    print('Recorded 20 actual DOS process cases /678 assertions and three retained failed attempts; runtime slots remain unpublished.')
+    print('Recorded 20 actual DOS process cases /678 assertions;',len(failed),'retained failed attempts; runtime slots remain unpublished.')
 
 
 if __name__=='__main__':main()

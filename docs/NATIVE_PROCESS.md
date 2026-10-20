@@ -1,7 +1,9 @@
 # Native DOS process foundation
 
-The [component validation](validation/native-process.json) binds1,393 exact
-recovered bytes to20 actual8086 DOS process cases and678 assertions. It launches
+The [core validation](validation/native-process.json) retains20 actual8086 DOS
+process cases and678 assertions. The [namespace extension](NATIVE_NAMESPACE.md)
+now binds2,440 recovered bytes to55 cases/2,053 assertions, adding1,047 exact
+bytes for PATH/extension/SYSTEM/access helpers. The component launches
 source-owned COM and EXE children, handles native batch/COMSPEC execution and
 returns the raw DOS4D termination/exit word. The ASPECT RUN, DOS and SHELL slots
 remain unpublished. This component has no display, keyboard or UART controller
@@ -22,11 +24,12 @@ execution integration remains a separate requirement. Lookup retains native
 case-sensitive COMSPEC semantics. Batch admission requires a `.BAT` filename
 and a nonempty bounded COMSPEC. Native batch construction retains its recorded
 four-character suffix removal; the actual owned batch writes `BATCH.OUT`.
-Qualified direct execution has no integrated PATH or extension-search policy.
+The separate search and SYSTEM APIs now integrate native namespace policies;
+their semantics and additional maintained boundaries are in the namespace ledger.
 
 ## Ownership and memory
 
-The native near allocation receives four additional zeroed padding bytes.
+Each native near allocation has an owned-list header and receives four additional zeroed padding bytes.
 They define empty-list termination and the optional DOS environment suffix
 without depending on uninitialized heap contents. They do not count as native
 recovered instruction bytes.
@@ -39,7 +42,8 @@ builder use its paragraph-aligned part, then restores it before returning. The
 additional four bytes must fit the arena's capacity; otherwise allocation fails.
 The native overlong-tail cleanup passes the arena to near-free; the adapter
 recognizes that owner, restores the backup and retires it instead of freeing
-the arena. Final cleanup also retires any remaining owned allocation.
+the arena. Final cleanup drains any remaining near owners and reports a typed
+state failure instead of accepting a native cleanup omission.
 
 The source platform supplies complete DOS EXEC parameter-block/FCB storage,
 CS save cells and private CRT state. Its DOS error cell is a full word because
@@ -76,7 +80,8 @@ allocation consumes all available paragraphs and success after its release.
 ./tools/dev --command python3 standalone/record_native_process.py --label NEW
 ```
 
-`./tools/build test-native-process` builds and runs with a fresh generated label.
+`./tools/build test-native-process` builds and runs core and namespace executables
+with fresh generated labels.
 This is an explicit component target, outside the normal application build;
 it reads no originals, installations or REA databases. Flat native units must
 match the recorded original byte hashes before their OMF objects link. Actual
@@ -91,7 +96,7 @@ incorrect vector-mask expectation; the next two exposed the near-heap regrowth
 failure. Later successful runs do not relabel those attempts as passing.
 
 Remaining controller work is listed in [ASPECT external commands](ASPECT_EXTERNAL.md):
-native PATH/extension/system-command policies, shared application state, actual
+production integration of the tested namespace policies, shared application state, actual
 WAIT/NOCLEAR display/font/cursor handling, UART release/restore, full interpreter
 continuation/lease/error paths and final runtime publication with BBS/hardware
 acceptance. The standalone process backend is a foundation for those tasks.

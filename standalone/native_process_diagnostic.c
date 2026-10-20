@@ -22,6 +22,7 @@ static unsigned psp(void);
 static void __interrupt __far sentinel(void) {}
 static char *environment[]={"LABVAR=OWNED","COMSPEC=Z:\\COMMAND.COM",0};
 static char **selected_environment=environment;
+static unsigned selected_route,expected_errno,expected_dos;
 static unsigned flags(void);
 #pragma aux flags = "pushf" "pop ax" value [ax] modify [];
 static unsigned char arena_value(unsigned i){return (unsigned char)(i*17U+9U);}
@@ -35,7 +36,9 @@ static void run_case(const char *path,const char *tail,unsigned kind,unsigned st
  void (__interrupt __far *z)(void),(__interrupt __far *b)(void),(__interrupt __far *c)(void);
  z=_dos_getvect(0);b=_dos_getvect(0x23);c=_dos_getvect(0x24);
  prepare_arena();native_pair_low=0x1234;native_pair_high=0x5678;
- CHECK(native_process_run(path,tail,selected_environment,kind,&r)==status);
+ if(selected_route==2)CHECK(native_process_search(path,tail,selected_environment,&r)==status);
+ else if(selected_route==3)CHECK(native_process_system(path,selected_environment,&r)==status);
+ else CHECK(native_process_run(path,tail,selected_environment,kind,&r)==status);
  CHECK(!(flags()&0x400));
  CHECK(r.status==status);CHECK(r.child_status==child);
  CHECK(arena_ok());CHECK(native_pair_low==0x1234&&native_pair_high==0x5678);
@@ -43,21 +46,27 @@ static void run_case(const char *path,const char *tail,unsigned kind,unsigned st
  CHECK(native_dos_major==3);
  CHECK(_dos_getvect(0)==z&&_dos_getvect(0x23)==b&&_dos_getvect(0x24)==c);
  CHECK(_nheapchk()==_HEAPOK||_nheapchk()==_HEAPEMPTY);
- printf("CASE %s status=%u child=%u errno=%u dos=%u vectors=%u\n",path,r.status,r.child_status,r.crt_error,r.dos_error,r.changed_vectors);
+ printf("CASE %s status=%u child=%u errno=%u dos=%u vectors=%u route=%u\n",path?path:"<query>",r.status,r.child_status,r.crt_error,r.dos_error,r.changed_vectors,selected_route);
  /* DOS termination restores the child's saved INT23/24 automatically. INT0
   * remains changed until the maintained parent bracket restores it. */
- if(!strcmp(path,"VECT.COM"))CHECK(r.changed_vectors==1);
- if(status==NATIVE_PROCESS_EXEC){CHECK(r.crt_error==(!strcmp(path,"ABSENT.COM")?2:7));CHECK(r.dos_error==(!strcmp(path,"ABSENT.COM")?2:10));}
+ if(path&&!strcmp(path,"VECT.COM"))CHECK(r.changed_vectors==1);
+ if(status==NATIVE_PROCESS_EXEC){
+  CHECK(r.crt_error==(selected_route?expected_errno:!strcmp(path,"ABSENT.COM")?2:7));
+  CHECK(r.dos_error==(selected_route?expected_dos:!strcmp(path,"ABSENT.COM")?2:10));}
  if(status==NATIVE_PROCESS_MEMORY){CHECK(r.crt_error==12);CHECK(r.dos_error==8);}
  {unsigned i;for(i=0;i<6;++i)if(held[i]){CHECK(ftell(held[i])==2);CHECK(fgetc(held[i])=='2');CHECK(fseek(held[i],2,SEEK_SET)==0);}
   for(i=0;i<256;++i)if(near_guard[i]!=0xa1)break;CHECK(i==256);
   for(i=0;i<1024;++i)if(far_guard[i]!=0xd6)break;CHECK(i==1024);}
 }
+#ifdef NATIVE_NAMESPACE
+#include "native_namespace_cases.inc"
+#endif
 int main(void)
 {
  native_process_result r;char tail[126];unsigned i,near_count,far_count,largest,block;
  char *empty_environment[]={0};char **saved_environment;
  FILE *f;void (__interrupt __far *original)(void);
+ setvbuf(stdout,0,_IONBF,0);
  near_guard=_nmalloc(256);far_guard=_fmalloc(1024);
  if(!near_guard||!far_guard)return 1;
  memset(near_guard,0xa1,256);_fmemset(far_guard,0xd6,1024);
@@ -113,6 +122,9 @@ int main(void)
  CHECK(native_process_run("CHILD.COM",0,environment,2,&r)==NATIVE_PROCESS_ARGUMENT);
  CHECK(native_process_run("X",0,environment,0,&r)==NATIVE_PROCESS_ARGUMENT);
  prepare_arena();CHECK(native_process_run((char *)runtime_arena,0,environment,1,&r)==NATIVE_PROCESS_ARGUMENT);CHECK(arena_ok());
+#ifdef NATIVE_NAMESPACE
+ namespace_cases();
+#endif
  CHECK(_dos_getvect(0)==sentinel);_dos_setvect(0,original);
  for(i=0;i<6;++i)if(held[i])CHECK(fclose(held[i])==0);
  _nfree(near_guard);_ffree(far_guard);

@@ -11,13 +11,20 @@ extern unsigned native_backup_extent;
 extern char **environ;
 char **native_environment;
 unsigned native_process_busy;
-static void *near_allocation;
+struct allocation {struct allocation *next;unsigned size;};
+static struct allocation *allocations;
+static unsigned owner_error;
 static void __far *backup;
 static unsigned backup_size;
 #if defined(NATIVE_PROCESS_DIAGNOSTIC)
 unsigned native_fail_near,native_fail_far,native_near_calls,native_far_calls;
+unsigned native_fail_at,native_owned_count,native_owned_peak;
+unsigned native_target_calls;
 #endif
 extern int __cdecl native_spawn_extension(unsigned,const char *,char **,char **,unsigned);
+extern int __cdecl native_extension_recovered(unsigned,const char *,char **,char **,unsigned);
+extern int __cdecl native_spawn_search(unsigned,const char *,char **,char **);
+extern int __cdecl native_system(const char *);
 extern void __interrupt __far native_child_divide(void);
 static unsigned data_segment(void);
 #pragma aux data_segment = "mov ax,ds" value [ax] modify [];
@@ -39,11 +46,22 @@ void __cdecl native_copy(unsigned ss,unsigned so,unsigned ds,unsigned dest,unsig
 }
 void *__cdecl native_allocate(unsigned size)
 {
+ struct allocation *item;
+ unsigned long total=(unsigned long)size+4+sizeof(*item);
 #if defined(NATIVE_PROCESS_DIAGNOSTIC)
- ++native_near_calls;if(native_fail_near)return 0;
+ ++native_near_calls;
+ if(native_fail_near||(native_fail_at&&native_near_calls==native_fail_at))goto failed;
 #endif
- near_allocation=_nmalloc(size+4);if(near_allocation)memset(near_allocation,0,size+4);
- return near_allocation;
+ if(total>65535UL)goto failed;
+ item=_nmalloc((unsigned)total);if(!item)goto failed;
+ item->next=allocations;item->size=size+4;allocations=item;
+ memset(item+1,0,size+4);
+#if defined(NATIVE_PROCESS_DIAGNOSTIC)
+ ++native_owned_count;if(native_owned_count>native_owned_peak)native_owned_peak=native_owned_count;
+#endif
+ return item+1;
+failed:
+ native_crt_error=12;native_dos_error=8;return 0;
 }
 void __far *__cdecl native_backup_alloc(unsigned size)
 {
@@ -63,10 +81,19 @@ static void restore_arena(void)
 }
 void __cdecl native_release(void *pointer)
 {
+ struct allocation **at,*item;
  /* Native overlong-tail failure calls near-free even after fallback. This
   * adapter must retire the saved arena; it must never free the VM arena. */
  if(pointer==runtime_arena){restore_arena();return;}
- if(pointer){_nfree(pointer);if(pointer==near_allocation)near_allocation=0;}
+ if(!pointer)return;
+ for(at=&allocations;*at;at=&(*at)->next)if((void *)(*at+1)==pointer){
+  item=*at;*at=item->next;_nfree(item);
+#if defined(NATIVE_PROCESS_DIAGNOSTIC)
+  --native_owned_count;
+#endif
+  return;
+ }
+ owner_error=1;
 }
 static unsigned disjoint(const void *pointer,unsigned size)
 {
@@ -87,7 +114,9 @@ static unsigned length(const char *pointer,unsigned maximum,unsigned *count)
 static unsigned validate(const char *path,const char *tail,char **environment,unsigned kind)
 {
  unsigned n,i,size;unsigned long bytes=1;char *comspec=0;
- if(kind>1||!length(path,127,&n)||!n||path[0]=='[')return 0;
+ if(kind>3)return 0;
+ if(kind==3){if(path&&!length(path,125,&n))return 0;}
+ else if(!length(path,127,&n)||!n||path[0]=='[')return 0;
  if(!kind&&(n<4||stricmp(path+n-4,".BAT")))return 0;
  if(tail&&!length(tail,125,&size))return 0;
  if(environment)for(i=0;;++i){
@@ -95,7 +124,7 @@ static unsigned validate(const char *path,const char *tail,char **environment,un
   if(!environment[i])break;
   if(!length(environment[i],32766,&size))return 0;
   bytes+=size+1;if(bytes>32767UL)return 0;
-  if(!strncmp(environment[i],"COMSPEC=",8))comspec=environment[i]+8;
+  if(!comspec&&!strncmp(environment[i],"COMSPEC=",8))comspec=environment[i]+8;
  }
  /* The native batch builder subtracts the four-byte suffix and has no early
   * path-size check. Admit only bounded tails before it writes the stack. */
@@ -104,9 +133,36 @@ static unsigned validate(const char *path,const char *tail,char **environment,un
   size=0;if(tail)size=strlen(tail)+1;
   if(n-4+3+size>125)return 0;
  }
+ if(comspec&&!length(comspec,127,&size))return 0;
  return 1;
 }
-unsigned __cdecl native_process_run(const char *path,const char *tail,
+/* Every selected target passes here, including a BAT found deep in PATH.
+ * The native batch prefix copy precedes its argv bound checks. Reject an
+ * oversized composed batch tail before that copy can overrun its stack. */
+int __cdecl native_extension_checked(unsigned mode,const char *path,char **argv,
+ char **environment,unsigned kind)
+{
+ unsigned n,i,size;unsigned long total;
+#if defined(NATIVE_PROCESS_DIAGNOSTIC)
+ ++native_target_calls;
+#endif
+ if(mode||!length(path,259,&n)||!n)goto bad;
+ if(!kind){
+  if(n<4||stricmp(path+n-4,".BAT"))goto bad;
+  total=n-1;
+  if(argv&&argv[0])for(i=1;argv[i];++i){
+   if(!length(argv[i],125,&size))goto large;
+   total+=size+1;if(total>125)goto large;
+  }
+  if(total>125)goto large;
+ }
+ return native_extension_recovered(mode,path,argv,environment,kind);
+large:
+ native_crt_error=7;native_dos_error=10;return -1;
+bad:
+ native_crt_error=22;native_dos_error=12;return -1;
+}
+static unsigned run(const char *path,const char *tail,
  char **environment,unsigned kind,native_process_result *result)
 {
  native_process_result local;char *arguments[3];unsigned psp,status,child;
@@ -117,7 +173,7 @@ unsigned __cdecl native_process_run(const char *path,const char *tail,
  if(!environment)environment=environ;
  if(!validate(path,tail,environment,kind)){local.status=NATIVE_PROCESS_ARGUMENT;*result=local;return local.status;}
  native_process_busy=1;native_environment=environment;
- near_allocation=0;backup=0;backup_size=0;
+ allocations=0;owner_error=0;backup=0;backup_size=0;
  arguments[0]=(char *)path;arguments[1]=(char *)tail;arguments[2]=0;
  psp=current_psp();zero=_dos_getvect(0);brk=_dos_getvect(0x23);critical=_dos_getvect(0x24);
  _dos_setvect(0,native_child_divide);
@@ -127,7 +183,9 @@ unsigned __cdecl native_process_run(const char *path,const char *tail,
   * Release only unused far heap storage; never guess PSP allocation bounds. */
  _fheapshrink();status=NATIVE_PROCESS_OK;
  if(!status){
-  child=(unsigned)native_spawn_extension(0,path,arguments,environment,kind);
+  if(kind==3)child=(unsigned)native_system(path);
+  else if(kind==2)child=(unsigned)native_spawn_search(0,path,arguments,environment);
+  else child=(unsigned)native_spawn_extension(0,path,arguments,environment,kind);
   local.child_status=child;
   if(child==65535U)status=native_crt_error==12?NATIVE_PROCESS_MEMORY:NATIVE_PROCESS_EXEC;
  }
@@ -136,7 +194,22 @@ unsigned __cdecl native_process_run(const char *path,const char *tail,
      (_dos_getvect(0x23)!=brk?2:0)|(_dos_getvect(0x24)!=critical?4:0);
  if(current_psp()!=psp)restore_psp(psp);
  _dos_setvect(0,zero);_dos_setvect(0x23,brk);_dos_setvect(0x24,critical);
- restore_arena();if(near_allocation)native_release(near_allocation);
+ restore_arena();
+ /* Native routines should have retired every nested name/PATH/environment
+  * allocation themselves. Drain any remaining owner and report the fault. */
+ if(allocations){owner_error=1;while(allocations)native_release(allocations+1);}
+ if(owner_error)status=NATIVE_PROCESS_STATE;
  native_environment=0;native_process_busy=0;
  local.status=status;*result=local;return status;
 }
+unsigned __cdecl native_process_run(const char *path,const char *tail,
+ char **environment,unsigned kind,native_process_result *result)
+{
+ return run(path,tail,environment,kind>1?4:kind,result);
+}
+unsigned __cdecl native_process_search(const char *path,const char *tail,
+ char **environment,native_process_result *result)
+{return run(path,tail,environment,2,result);}
+unsigned __cdecl native_process_system(const char *command,char **environment,
+ native_process_result *result)
+{return run(command,0,environment,3,result);}

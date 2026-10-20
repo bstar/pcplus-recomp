@@ -28,6 +28,9 @@ handler: iret
  std
  stc
  int 0x21
+%elifdef CHILD_EXIT
+ mov ax,0x4c00+CHILD_EXIT
+ int 0x21
 %else
  push ds
  pop es

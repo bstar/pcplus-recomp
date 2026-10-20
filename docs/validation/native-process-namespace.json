@@ -1,0 +1,818 @@
+{
+  "passed": true,
+  "component_only": true,
+  "runtime_external_commands_enabled": false,
+  "whole_application_gates_closed": [],
+  "original_inputs": [],
+  "native_bytes": 2440,
+  "added_native_bytes": 1047,
+  "units": [
+    {
+      "file": "reconstruction/program_exec/environment_tail.asm",
+      "start": 26058,
+      "end": 26698,
+      "bytes": 640,
+      "instructions": 270,
+      "sha256": "8248f6fe028be0d80e79770ef75c549e49c5ad08a33f05ab70e403e7220d0aeb",
+      "matched_original": true,
+      "file_offset": 30666
+    },
+    {
+      "file": "reconstruction/program_exec/spawn_extension.asm",
+      "start": 26698,
+      "end": 26862,
+      "bytes": 164,
+      "instructions": 69,
+      "sha256": "7be1387e66402e612b38250334eea78c9e1da28ee201eca4ac02a37dab844fd2",
+      "matched_original": true,
+      "file_offset": 31306
+    },
+    {
+      "file": "reconstruction/program_exec/exec.asm",
+      "start": 27170,
+      "end": 27402,
+      "bytes": 232,
+      "instructions": 88,
+      "sha256": "0ba5c9dfa9868aba85005dfb19fc377fbbdf5150aaaa6b20b460f90475139035",
+      "matched_original": true,
+      "file_offset": 31778
+    },
+    {
+      "file": "reconstruction/program_exec/scratch.asm",
+      "start": 27160,
+      "end": 27170,
+      "file_offset": 31768,
+      "bytes": 10,
+      "instructions": 0,
+      "sha256": "01d448afd928065458cf670b60f5a594d735af0172c8d67f22a81680132681ca",
+      "matched_original": true,
+      "kind": "CS-owned writable save cells, not instructions"
+    },
+    {
+      "file": "reconstruction/program_exec/get_ds.asm",
+      "start": 30384,
+      "end": 30387,
+      "bytes": 3,
+      "instructions": 2,
+      "sha256": "62c8c8f666f7746933e2ce364cafa0b6c9d1013a45019ccb6140d287a60cbb87",
+      "matched_original": true,
+      "file_offset": 34992
+    },
+    {
+      "file": "reconstruction/program_exec/getenv.asm",
+      "start": 36370,
+      "end": 36459,
+      "bytes": 89,
+      "instructions": 44,
+      "sha256": "47da130f504a3997dffedea1d88185004e7acf774dd2cb22ad328a0b6215921f",
+      "matched_original": true,
+      "file_offset": 40978
+    },
+    {
+      "file": "reconstruction/program_exec/strcpy.asm",
+      "start": 33384,
+      "end": 33434,
+      "bytes": 50,
+      "instructions": 26,
+      "sha256": "353e318feb16fbe3f0d4351c433976bb22913a51bdef8bc36a85be96f0509f26",
+      "matched_original": true,
+      "file_offset": 37992
+    },
+    {
+      "file": "reconstruction/program_exec/strlen.asm",
+      "start": 36120,
+      "end": 36147,
+      "bytes": 27,
+      "instructions": 15,
+      "sha256": "feaf2f2cbbdb93b3dcb85e3c8584eaf239cb48d619549f99e746423641c62a9d",
+      "matched_original": true,
+      "file_offset": 40728
+    },
+    {
+      "file": "reconstruction/program_exec/strchr.asm",
+      "start": 35882,
+      "end": 35924,
+      "bytes": 42,
+      "instructions": 24,
+      "sha256": "5f75e040b310c90655f98a393c981cfcfb030ce2377c86090da3259d9be46a16",
+      "matched_original": true,
+      "file_offset": 40490
+    },
+    {
+      "file": "reconstruction/program_exec/strncmp.asm",
+      "start": 39942,
+      "end": 40000,
+      "bytes": 58,
+      "instructions": 32,
+      "sha256": "add13f77f634b2e1728faaa50c7ab13b40dfc138e3317bb96b60f7374c650406",
+      "matched_original": true,
+      "file_offset": 44550
+    },
+    {
+      "file": "reconstruction/program_exec/error_exec.asm",
+      "start": 37941,
+      "end": 37954,
+      "bytes": 13,
+      "instructions": 7,
+      "sha256": "a081dcb2bee0f638efa1f7024f1d61f19f6184c74d901c572d83593df8893930",
+      "matched_original": true,
+      "file_offset": 42549
+    },
+    {
+      "file": "reconstruction/program_exec/map_error.asm",
+      "start": 37960,
+      "end": 38005,
+      "bytes": 45,
+      "instructions": 21,
+      "sha256": "11faaf8dc3b7e95852ada932b1c7347ffa88c3d7ac2f3f86f3a50425c812237e",
+      "matched_original": true,
+      "file_offset": 42568
+    },
+    {
+      "file": "reconstruction/program_exec/error_lookup.asm",
+      "start": 31574,
+      "end": 31594,
+      "file_offset": 185510,
+      "bytes": 20,
+      "instructions": 0,
+      "sha256": "e54227eaec51d70b2278c5771501d26a8cc3245ebfcfa3f1b1058d62dd9d0ced",
+      "matched_original": true,
+      "kind": "overlay32 DSdata table, not resident instructions"
+    },
+    {
+      "file": "reconstruction/program_exec/spawnv.asm",
+      "start": 26862,
+      "end": 27159,
+      "bytes": 297,
+      "instructions": 128,
+      "sha256": "ae5d475c8505677bb3ac9cacd66f3128c5363f2339d9eed5e6657101d9de4ded",
+      "matched_original": true,
+      "file_offset": 31470
+    },
+    {
+      "file": "reconstruction/program_exec/spawn_search.asm",
+      "start": 42150,
+      "end": 42472,
+      "bytes": 322,
+      "instructions": 132,
+      "sha256": "1b93fd24bfae1a1ba8d4c2c6f920bdd4f0da3d1ee8adc5d603f6d0264d16181e",
+      "matched_original": true,
+      "file_offset": 46758
+    },
+    {
+      "file": "reconstruction/program_exec/system.asm",
+      "start": 35178,
+      "end": 35321,
+      "bytes": 143,
+      "instructions": 57,
+      "sha256": "a5c86acf197abd68ffeb438e9a30ba890fb8b69f1a8af5112c476bda8ca5eb95",
+      "matched_original": true,
+      "file_offset": 39786
+    },
+    {
+      "file": "reconstruction/program_exec/access.asm",
+      "start": 37802,
+      "end": 37833,
+      "bytes": 31,
+      "instructions": 13,
+      "sha256": "acde85238ef93d618fc0de979240083b191b9df671ff205afd4f6520f3e82984",
+      "matched_original": true,
+      "file_offset": 42410
+    },
+    {
+      "file": "reconstruction/program_exec/error_access.asm",
+      "start": 37920,
+      "end": 37928,
+      "bytes": 8,
+      "instructions": 5,
+      "sha256": "82df84fbae801403c8ca1b1dc46f4c69f34e8e05a794afed0833def65240f3d0",
+      "matched_original": true,
+      "file_offset": 42528
+    },
+    {
+      "file": "reconstruction/program_exec/strrchr.asm",
+      "start": 33734,
+      "end": 33777,
+      "bytes": 43,
+      "instructions": 26,
+      "sha256": "5f6ab9e1351300b25837034129bf0c0d84e402143defc9c2c693e0e658190ed9",
+      "matched_original": true,
+      "file_offset": 38342
+    },
+    {
+      "file": "reconstruction/program_exec/strcmpi.asm",
+      "start": 37854,
+      "end": 37920,
+      "bytes": 66,
+      "instructions": 34,
+      "sha256": "bb8e1e5bdee061f59e841a05341de62cfd10bc7d50c1311d54c8a7cead089911",
+      "matched_original": true,
+      "file_offset": 42462
+    },
+    {
+      "file": "reconstruction/program_exec/strcat.asm",
+      "start": 35818,
+      "end": 35881,
+      "bytes": 63,
+      "instructions": 30,
+      "sha256": "0aac00553b07b350f4e89e58af55407468ad315950b1cd4b41514f87d06a2a81",
+      "matched_original": true,
+      "file_offset": 40426
+    },
+    {
+      "file": "reconstruction/program_exec/path_component.asm",
+      "start": 43238,
+      "end": 43312,
+      "bytes": 74,
+      "instructions": 36,
+      "sha256": "be87ee2c9086c87158baff1c6d4999bed83fd095e7b35e12b83868e08eaf89d9",
+      "matched_original": true,
+      "file_offset": 47846
+    }
+  ],
+  "sources": {
+    "reconstruction/program_exec/environment_tail.asm": "642d85d6237c4d1aa2243097a6253701121b7c65c6776bccfc41e1a72513afea",
+    "reconstruction/program_exec/spawn_extension.asm": "95d35a985707366aff26a6be4c2e4aa64b72a41e3d1d82cea42da56fb84ecea8",
+    "reconstruction/program_exec/exec.asm": "218d9dbdad87475c77c0c489800fa9fd0ebcbf591f17cb266b0a28195c23a456",
+    "reconstruction/program_exec/scratch.asm": "e9813896aec7f4390d7fbd5323b7621448d43b0c6be1d764297beb86c089e15c",
+    "reconstruction/program_exec/get_ds.asm": "c98c2d6535c41beae3d72fd3b0686a588bc5c10fb904a632688456d5ddc675c2",
+    "reconstruction/program_exec/getenv.asm": "1b94c41e62c740850d37f2363d7389f2f300f98db6ba23e95d2f751f4529ee5a",
+    "reconstruction/program_exec/strcpy.asm": "4c2420d76d56a852b2ff6bb2ebfbf567b082c6880b2bd715f698ebd2d9941299",
+    "reconstruction/program_exec/strlen.asm": "a3a4f98217c60ca930b83060071be356bb2340740f6a994e450fecab13d0f5af",
+    "reconstruction/program_exec/strchr.asm": "59f83b99f393c355753f86d518381ce0c2f20a92df2e0b600a8384fb5f4dc665",
+    "reconstruction/program_exec/strncmp.asm": "2e89c2421cecb48e24858b98b648aa1af0603d75b99de1715997032f91b0a35c",
+    "reconstruction/program_exec/error_exec.asm": "00e4999b1e61c3877cb139078111487c15032caa3c53195edd24a3f26b192ba1",
+    "reconstruction/program_exec/map_error.asm": "00244ad9b12bcb6e7c9dc3efd943d50b30ea2461ebb83c8849cf8524cfb9ad59",
+    "reconstruction/program_exec/error_lookup.asm": "b034445986eedbe083e11cd0171743eb7389bf71e895fde4f6ddfbea997e4b26",
+    "reconstruction/program_exec/spawnv.asm": "471b9e248b81857260b7a4abc8c63457c4956e3383599ac2cac1bdcb8a25e99f",
+    "reconstruction/program_exec/spawn_search.asm": "53729c1346950c9bbf9110f172ed5de56d7161b8df1330e429dea76bec96609f",
+    "reconstruction/program_exec/system.asm": "2783830444752b4793c5cd73799fe46571dd87f1d2a5c39a5e1d57baedb5eb81",
+    "reconstruction/program_exec/access.asm": "fa33faa6c39fb0292874db01b09665a2d2575fcf8503a8c48595d3eecc533480",
+    "reconstruction/program_exec/error_access.asm": "62df0d78cf626f371a947e0716f553aa01cc39c86c109b8d07ece1637764710e",
+    "reconstruction/program_exec/strrchr.asm": "49c6429f13940689fd3e5d29b668245fc43e781c0eb764ffc5c793d93660d312",
+    "reconstruction/program_exec/strcmpi.asm": "7ff7a20853855aa9b2166ea84103aa0d4c3c8b3bbfc0de34be15c86e166964be",
+    "reconstruction/program_exec/strcat.asm": "9ab94800cb6c43d766a724210fb4078bf32ed7e5442bf2880695d27d6d33b3f8",
+    "reconstruction/program_exec/path_component.asm": "6f3b3953eaddd918b9c5996e6369477a442b6ea54e5d80a251e36997d5feac01",
+    "src/process/native_process_state.asm": "30cc6fd6ed8b78fe359025aa205d2c5218887b74c18143c76f4eed032960b6d2",
+    "src/process/native_process.c": "6549e7115410a43a7cb1bca8c92b0494130809a62bbe0e8003c53b6fdb88d3ba",
+    "standalone/native_process_diagnostic.c": "b4ee9bf62dde5bfeee917d9815b03b53ad6b8adb61ca50db8154e0feb47c1466",
+    "standalone/native_process_child.asm": "7fd3794fac4d9bdf199625d9b89044f3a42d35f5cb2d69a9995dd2a9b2a9c619",
+    "standalone/build_native_process.py": "c343717350a2adc523bbaca29510fd1c8c54f91f9565bc64f28f5eb457028cfb",
+    "src/process/native_process.h": "e4af17c53809fd7e1947ab410f07a0d5e512e872c1daf93ec7722ea71ac718cd",
+    "reconstruction/program_exec/provenance.json": "dea1a491c50dcbfdd28ac810ff17857c62f8c4155b1d79aaa744696ae8947f7f",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "standalone/native_namespace_cases.inc": "45a7277bd71105b6ce5bc0e5b2c9f7ea0e111cdd2fe180c132e8c0a5fff9e30f",
+    "standalone/native_process_exe_child.c": "2470ae5d4e35a2b326448c1ce30af3921b1debe89828513650e92d0e83f631c6"
+  },
+  "DOS": {
+    "cases": 55,
+    "assertions": 2053,
+    "rows": [
+      {
+        "path": "CHILD.COM",
+        "status": 0,
+        "child_status": 37,
+        "crt_error": 0,
+        "dos_error": 0,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "CHILD.COM",
+        "status": 0,
+        "child_status": 37,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "ABSENT.COM",
+        "status": 3,
+        "child_status": 65535,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "DIVIDE.COM",
+        "status": 0,
+        "child_status": 12,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "VECT.COM",
+        "status": 0,
+        "child_status": 42,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 1,
+        "route": 0
+      },
+      {
+        "path": "CHILD.COM",
+        "status": 0,
+        "child_status": 37,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "CHILD.COM",
+        "status": 3,
+        "child_status": 65535,
+        "crt_error": 7,
+        "dos_error": 10,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "CHILD.COM",
+        "status": 4,
+        "child_status": 65535,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "CHILD.EXE",
+        "status": 0,
+        "child_status": 37,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "EMPTY.COM",
+        "status": 0,
+        "child_status": 37,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "EMPTY.COM",
+        "status": 0,
+        "child_status": 37,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "CHILD.COM",
+        "status": 0,
+        "child_status": 37,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "CHILD.COM",
+        "status": 4,
+        "child_status": 65535,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "CHILD.COM",
+        "status": 0,
+        "child_status": 37,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "ABSENT.COM",
+        "status": 3,
+        "child_status": 65535,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "DIVIDE.COM",
+        "status": 0,
+        "child_status": 12,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "VECT.COM",
+        "status": 0,
+        "child_status": 42,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 1,
+        "route": 0
+      },
+      {
+        "path": "FLAGS.COM",
+        "status": 0,
+        "child_status": 51,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "RESIDENT.COM",
+        "status": 0,
+        "child_status": 775,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "OWNED.BAT",
+        "status": 0,
+        "child_status": 0,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 0
+      },
+      {
+        "path": "PRIOR",
+        "status": 0,
+        "child_status": 17,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "PRIOR",
+        "status": 0,
+        "child_status": 37,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "PRIOR",
+        "status": 0,
+        "child_status": 0,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "PRIOR.bAt",
+        "status": 0,
+        "child_status": 0,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "PICK",
+        "status": 0,
+        "child_status": 17,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "PICK",
+        "status": 0,
+        "child_status": 21,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "PICK",
+        "status": 0,
+        "child_status": 22,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "ONE\\ONLY.COM",
+        "status": 3,
+        "child_status": 65535,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "C:ONLY.COM",
+        "status": 3,
+        "child_status": 65535,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "TWO/ONLY.COM",
+        "status": 0,
+        "child_status": 22,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "CUSTOM.XYZ",
+        "status": 0,
+        "child_status": 17,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "STOP.COM",
+        "status": 3,
+        "child_status": 65535,
+        "crt_error": 13,
+        "dos_error": 5,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "ONLY",
+        "status": 3,
+        "child_status": 65535,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "ONLY",
+        "status": 0,
+        "child_status": 22,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "ONLY",
+        "status": 3,
+        "child_status": 65535,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "ONLY",
+        "status": 3,
+        "child_status": 65535,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "ONLY",
+        "status": 3,
+        "child_status": 65535,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "ONLY",
+        "status": 3,
+        "child_status": 65535,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "ENVCHK",
+        "status": 0,
+        "child_status": 37,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "ENVCHK",
+        "status": 0,
+        "child_status": 37,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "ENVCHK",
+        "status": 4,
+        "child_status": 65535,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "ENVCHK",
+        "status": 4,
+        "child_status": 65535,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "ENVCHK",
+        "status": 4,
+        "child_status": 65535,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "ENVCHK",
+        "status": 4,
+        "child_status": 65535,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 2
+      },
+      {
+        "path": "echo SYSPASS>SYSTEM.OUT",
+        "status": 0,
+        "child_status": 0,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 3
+      },
+      {
+        "path": "echo FALLBACK>FALL.OUT",
+        "status": 0,
+        "child_status": 0,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 3
+      },
+      {
+        "path": "echo DENIED>DENIED.OUT",
+        "status": 0,
+        "child_status": 0,
+        "crt_error": 13,
+        "dos_error": 5,
+        "changed_vectors": 0,
+        "route": 3
+      },
+      {
+        "path": "echo NOCOMSPEC>NOCSPEC.OUT",
+        "status": 0,
+        "child_status": 0,
+        "crt_error": 13,
+        "dos_error": 5,
+        "changed_vectors": 0,
+        "route": 3
+      },
+      {
+        "path": "<query>",
+        "status": 0,
+        "child_status": 0,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 3
+      },
+      {
+        "path": "<query>",
+        "status": 0,
+        "child_status": 0,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 3
+      },
+      {
+        "path": "<query>",
+        "status": 0,
+        "child_status": 1,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 3
+      },
+      {
+        "path": "echo NEVER>NEVER.OUT",
+        "status": 0,
+        "child_status": 17,
+        "crt_error": 2,
+        "dos_error": 2,
+        "changed_vectors": 0,
+        "route": 3
+      },
+      {
+        "path": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        "status": 3,
+        "child_status": 65535,
+        "crt_error": 7,
+        "dos_error": 10,
+        "changed_vectors": 0,
+        "route": 3
+      },
+      {
+        "path": "echo OOM>OOM.OUT",
+        "status": 4,
+        "child_status": 65535,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 3
+      },
+      {
+        "path": "echo RECOVER>RECOVER.OUT",
+        "status": 0,
+        "child_status": 0,
+        "crt_error": 12,
+        "dos_error": 8,
+        "changed_vectors": 0,
+        "route": 3
+      }
+    ],
+    "marker_sha256": {
+      "SYSTEM.OUT": "2ebed3fef3ff8c7e4bc3246481b920832393ad1f22f5367ea138c33a4124362e",
+      "FALL.OUT": "1fab5026d4eaa420e111c7c8c4d0b3bd5e9a5c63d2803280bbc1fdfb1b0887b0",
+      "DENIED.OUT": "6624135d6abeee4bcd0d41b5ed65f1a6c9334f4e560d95a889d1b79d9bb07511",
+      "NOCSPEC.OUT": "fb696e4b926f41071e46f54d5fd4495c8be8e14c60de6a58e50d6047cf7a5bcf",
+      "RECOVER.OUT": "26f82d70f54a5b66a44ebaa3a3970823118b63ec3816bfe3ee4c110dd0671609",
+      "PRIOR.OUT": "820cd7bef7f873b29158441b3722661d2d3b48947ab47eb780795fa76ecf7e97"
+    },
+    "maximum_live_allocations": 3,
+    "remaining_owned_allocations": 0,
+    "evidence": {
+      "build/native-process/runs/native-namespace-04/result.json": "4f98b60c83926fdb0fa36d9c868d13450f5ba953f243e4ef43e095dcfd99769a",
+      "build/native-process/runs/native-namespace-04/manifest.json": "40075d73180d3b0a40a70d291657d4bef7b197e2984ce13e8ecd62b803c632e5",
+      "build/native-process/runs/native-namespace-04/CHECKS.TXT": "b2451e04dbe96200663005986bd31036f7910179e22392a5285fe358733d8b91"
+    }
+  },
+  "core_regression": {
+    "assertions": 678,
+    "evidence": {
+      "build/native-process/runs/native-namespace-core-04/result.json": "9d585d01836f0b6c32ebf25ae5664b6502b89368c9b6a193821067522cab5b91",
+      "build/native-process/runs/native-namespace-core-04/CHECKS.TXT": "772d19a9a3327aa169b899993ce872a26a9379fb768387697fc9393d46620912"
+    }
+  },
+  "recorder_sha256": "93302a20a88f032dda57b081bd8228ef7c121796724d310b95e92779225b2fd7",
+  "checker_sha256": "2de2321f5ce81dd66363cd3e55a26373456df7e27ff546153c6c08082e08b270",
+  "maintained_adapters": [
+    "Linked ownership list for nested native name/PATH/environment allocations.",
+    "Explicit native ENOMEM12/DOS8 translation from Watcom allocator failure.",
+    "Batch size admission before the native unchecked prefix copy.",
+    "NULL access guard for command-processor availability query.",
+    "Typed rejection of the unadmitted overlay/load-and-go mode."
+  ],
+  "limitations": [
+    "No production shared-state, display/WAIT/NOCLEAR or UART ownership; no runtime slots published.",
+    "Native PATH quirks retained: a leading empty component stops search; no shell quoting is invented.",
+    "Invalid executable-format coverage and full ASPECT continuation/lease/handler integration remain open.",
+    "Modeled DOSBox-X8086, not physical hardware or RS-232 Wi-Fi modem acceptance."
+  ],
+  "retained_incomplete_attempt": {
+    "passed": false,
+    "completed_report_present": false,
+    "outcome": "Observed30-second subprocess timeout after CHECK selected the harness CHECK.BAT recursively.",
+    "evidence": {
+      "build/native-process/runs/native-namespace-02/manifest.json": "4aa7b18c07f048a607fc4f3df80a501475e127842904bb2e60c2020e8573e22b",
+      "build/native-process/runs/native-namespace-02/sources/standalone/native_namespace_cases.inc": "2cb39ef12881eb81bb6f27c7ec93afe904651d3f2b54d63bc35c66e539149716",
+      "build/native-process/runs/native-namespace-02/CHECK.BAT": "c2fb1d65c3281985719046db5dd145a2419627766ce197b28d78679d7915d6a6",
+      "build/native-process/runs/native-namespace-02/dosbox.log": "9a380353f35c908e2426d8f45f1bf857e0fb524ff1f70dcb86cce53a175996e2"
+    },
+    "repeated_harness_redirections": 4,
+    "correction": "Use ENVCHK as target, PCPTEST.BAT as harness, unbuffered assertions and a fresh run."
+  }
+}

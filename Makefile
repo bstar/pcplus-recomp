@@ -1037,3 +1037,4 @@ native-process:
 	python3 standalone/build_native_process.py
 test-native-process: native-process
 	python3 standalone/test_native_process_dos.py
+	python3 standalone/test_native_process_dos.py --namespace
