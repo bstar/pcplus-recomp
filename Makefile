@@ -1135,6 +1135,20 @@ test-aspect-parent-retry-mouse: aspect-parent-retry terminal-mouse-process aspec
 test-aspect-parent-retry-source: aspect-parent-retry aspect-parent-exit exit-owner aspect-exit-probe aspect-banked-cli aspect-banked aspect-compiler-dos terminal terminal-mouse terminal-mouse-process
 	python3 standalone/check_exit_source.py --attached --mouse --retry
 
+.PHONY: terminal-exit test-terminal-exit test-terminal-exit-process test-terminal-exit-source
+terminal-exit:
+	python3 standalone/build_terminal_exit.py
+test-terminal-exit: terminal-exit
+	python3 standalone/check_terminal_exit.py
+	python3 standalone/test_terminal_exit_dos.py
+	python3 standalone/test_terminal_exit_dos.py --mouse
+test-terminal-exit-process: terminal-exit aspect-banked-cli aspect-compiler-dos
+	python3 standalone/test_aspect_parent_process_dos.py --break-owner --terminal-exit-guard
+	python3 standalone/test_aspect_parent_process_dos.py --break-owner --terminal-exit-guard --mouse
+test-terminal-exit-source: terminal-exit terminal terminal-mouse terminal-mouse-process
+	python3 standalone/build_terminal.py --external-render
+	python3 standalone/check_terminal_exit_source.py
+
 .PHONY: native-program-break test-native-program-break test-native-program-break-source
 native-program-break:
 	python3 standalone/build_native_program.py --break-owner

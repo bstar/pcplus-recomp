@@ -1,5 +1,9 @@
 # CLI exit ownership
 
+The [terminal final-exit guard](TERMINAL_EXIT.md) now separately protects the
+parent's normal DOS4C boundary after cleanup. Its final IVT scan and current-MCB
+retention do not replace application-wide asynchronous trap ownership.
+
 The [attached-terminal follow-up](PARENT_EXIT.md) now verifies retained child
 return, lease retirement, error display and continued serial operation.
 

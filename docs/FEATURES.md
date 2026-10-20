@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+The [terminal final-exit guard](TERMINAL_EXIT.md) audits execution state and
+interrupt references before DOS4C, retaining the complete validated allocation
+on unresolved ownership. Sixteen DOS cases pass288 parent assertions;26 normal
+ASPECT workflows and two retained-child retries pass1292 checks. The instruction
+model covers all256 slots and the CP/M gateway;14 products reproduce from source.
+Asynchronous traps, full ownership, normal publication and all full gates remain open.
+
 The [same-session retry](PARENT_RETRY.md) passes sixteen keyboard/mouse COM/flow
 routes and1008 checks: a second ASPECT script completes PROGRAM, serial and file
 work after actual child retention, while preserving the first retained ISR/MCBs.

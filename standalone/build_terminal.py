@@ -9,8 +9,13 @@ from terminal_memory import inspect_terminal_memory
 from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
 import argparse
-parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true');args=parser.parse_args()
-OUT=ROOT/('build/terminal-mouse-process' if args.external_render and args.mouse else 'build/terminal-mouse' if args.mouse else 'build/terminal-process' if args.external_render else 'build/terminal');OUT.mkdir(parents=True,exist_ok=True)
+parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
+parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);args=parser.parse_args()
+if args.exit_probe is not None:assert args.exit_guard
+out_name='terminal-mouse-process' if args.external_render and args.mouse else 'terminal-mouse' if args.mouse else 'terminal-process' if args.external_render else 'terminal'
+if args.exit_guard:out_name='terminal-exit-mouse' if args.mouse else 'terminal-exit'
+if args.exit_probe is not None:out_name+='-probe-'+str(args.exit_probe)
+OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
 sources=[]
@@ -57,6 +62,8 @@ for index,source in enumerate(sources):
    '-Dscreen_adjust_attribute_boundary=attribute_boundary_local']
  if source==ROOT/'src/aspect/resident_bridge.asm':options+=['-DRESIDENT_BRIDGE_FAR']
  if args.external_render:options+=['-DASPECT_EXTERNAL_RENDER']
+ if args.exit_guard:options+=['-DTERMINAL_EXIT_GUARD']
+ if args.exit_probe is not None:options+=['-DTERMINAL_EXIT_PROBE='+str(args.exit_probe)]
  if args.mouse:
   options+=['-DTERMINAL_MOUSE']
   if source in mouse_units or source in (ROOT/'src/mouse/platform.asm',ROOT/'src/mouse/dos_memory.asm'):
@@ -196,5 +203,7 @@ manifest['compiler_helper_adapters']={'import_counts':helper_adapters['import_co
 manifest['limitations'].append('Maintained YMODEM framing and header codec execute in CONFIG_CODE with unchanged near data and protocol logic. Explicit callbacks bridge resident UART/CRC/file owners; zero-argument callbacks have their own declared family. Newly compiled batch_header OMF imports for Watcom32-bit arithmetic are renamed to local register adapters; all code/data/fixup records and external indices are preserved. Original ordinary XMODEM modules remain resident and unchanged.')
 manifest['experimental_external_render']=args.external_render
 manifest['experimental_mouse']=args.mouse
+manifest['terminal_exit_guard']=args.exit_guard
+manifest['terminal_exit_probe']=args.exit_probe
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 print('Built',str((OUT/'TERMINAL.EXE').relative_to(ROOT)),manifest['binary_sha256'],'DS/SS bytes',manifest['data_stack_bytes'])

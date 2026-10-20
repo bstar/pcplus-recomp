@@ -1,5 +1,23 @@
 # Complete DOS rebuild plan
 
+The [terminal final-exit guard](docs/TERMINAL_EXIT.md) now retains a validated
+parent allocation if execution or an interrupt reference remains at its DOS4C
+boundary. Sixteen DOS cases pass288 parent assertions;26 normal attached routes
+pass1166 checks and two retained-child retry controls pass126. The linked model
+covers256 vector slots, malformed boundaries and legacy CP/M gateway handling;
+fourteen source products reproduce. Asynchronous Ctrl-Break/critical-error
+ownership, normal publication, remaining services and hardware/BBS acceptance
+remain open.
+
+Next parent-lifetime work is to move the near DOS process glue into a code bank
+(the guarded mouse terminal has four near-code bytes spare), then install
+separate application-owned Ctrl-Break/critical-error traps before UART ownership.
+Every startup/live EXEC path must suspend and resume that ownership, and
+asynchronous cancellation must reach foreground cleanup rather than freeing
+live callbacks. Existing mouse-retention paths also need the shared validated
+whole-allocation policy before normal publication. Test these boundaries with
+actual DOS child/cancellation workflows and retain the stock BBS acceptance scope.
+
 The [same-session script retry](docs/PARENT_RETRY.md) now passes sixteen COM/flow
 routes across keyboard and mouse parents, with1008 checks. After actual DOS31
 retention, the same CLI executable runs a second script and nested DOS child,

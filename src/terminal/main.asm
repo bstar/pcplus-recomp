@@ -84,6 +84,11 @@ _small_code_:
  add sp,6
  call _printer_device_initialize
  pop ax
+%ifdef TERMINAL_EXIT_GUARD
+ extern terminal_exit_guard_begin,terminal_exit_guard_finish
+ call far terminal_exit_guard_begin
+ jc terminal_shutdown
+%endif
  call terminal_parse_options
  jnc .configured
  cmp ax,1
@@ -422,6 +427,9 @@ terminal_shutdown:
 .dos_exit:
 %ifdef TERMINAL_MOUSE
  call far terminal_mouse_exit
+%endif
+%ifdef TERMINAL_EXIT_GUARD
+ call far terminal_exit_guard_finish
 %endif
  mov ax,[terminal_exit_code]
  mov ah,0x4c
