@@ -1112,3 +1112,12 @@ test-native-mouse: native-mouse
 	python3 standalone/test_native_mouse_dos.py
 test-native-mouse-source: native-mouse
 	python3 standalone/check_native_mouse_source.py
+
+.PHONY: mouse-keyboard test-mouse-keyboard test-mouse-keyboard-source
+mouse-keyboard:
+	python3 standalone/build_mouse_keyboard.py
+test-mouse-keyboard: mouse-keyboard
+	python3 standalone/check_mouse_keyboard.py
+	python3 standalone/test_mouse_keyboard_dos.py
+test-mouse-keyboard-source: mouse-keyboard
+	python3 standalone/check_mouse_keyboard_source.py

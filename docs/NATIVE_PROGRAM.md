@@ -96,8 +96,10 @@ selected resources, renderer leases and synchronous nonlocal recovery in separat
 experimental builds. Original macro keyboard, mouse/window and error-notice
 services still need composition before normal publication.
 The [mouse primitives](NATIVE_MOUSE.md) now provide exact probe/init/callback
-source and actual foreign-DS/SS execution; configuration/event consumption and
-their application suspension/restoration owner remain required.
+source and actual foreign-DS/SS execution. The later [composed owner](MOUSE_KEYBOARD.md)
+adds initial configuration, native event consumption and driver suspension/
+restoration through independent DOS children. Binding it into this controller,
+the actual parent/fault paths and UI remains required.
 Standard BIOS ROM font geometry is covered; arbitrary downloaded fonts, other
 adapters, original additional views and physical Wi-Fi modem timing remain open.
 The current terminal renderer still admits 80x25 mode3/page0. The new component

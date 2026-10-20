@@ -7,6 +7,10 @@ match **368 original bytes**, including the callback's two-byte CS guard and a
 reading an original executable, installed configuration or REA database.
 This is a component; live mouse support and PROGRAM integration remain open.
 
+The newer [mouse/keyboard composition](MOUSE_KEYBOARD.md) identifies and binds
+its original consumer/tables, adds guarded initial configuration and opaque
+driver-state ownership, and tests real DOS child handoff in a separate product.
+
 The [validation ledger](validation/native-mouse.json) records 117 linked cases,
 one actual 8086 DOS self-check and a blank source-only rebuild. Existing normal
 application products are unchanged; no full feature gate closes.
@@ -97,7 +101,8 @@ builder inputs into a blank tree. It validates all six flat region hashes and
 reproduces `MOUSE.EXE` exactly. The analyst-only `recover.py` explicitly requires
 the ignored original and retained REA records; ordinary builds never invoke it.
 
-Remaining work includes scale/enable configuration admission, complete event
-consumption and UI mappings, owned driver/callback suspension and restoration
-across real PROGRAM/ASPECT children and faults, original keyboard/window/error
+Initial scale/enable admission, native event consumption and independent child
+handoff now have the composed evidence above. Remaining work includes live
+settings/UI activation and owned driver/callback suspension and restoration
+through the actual PROGRAM/ASPECT parent and faults, original macro/window/error
 services, physical mouse/modem tests and full application acceptance.

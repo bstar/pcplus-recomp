@@ -1,0 +1,16 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "overlay_id": 32,
+  "overlay_file_offset": 153936,
+  "overlay_sha256": "41b5e49c3f2bc40b7007d311af4282d9724b4cf0b11a696ca2bd6062ef4132c7",
+  "DS_start": 24046,
+  "DS_end": 24076,
+  "bytes": 30,
+  "sha256": "c478eec1681336972d199424cac6dea98e0d66365bf131deba6cf74d763e47ee",
+  "source_file_offset": 177982,
+  "analysis_artifact_sha256": "512c593255f2cc1e4fea400d78028d27c3790efdbcb0c6e38f8546954ea39a60",
+  "rea_evidence_id": "ev_fa5e0d08d7086b2a1cb1eec1c4a703327d3f9c92df323653b3ae6e656ed84366",
+  "limitations": [
+    "Startup-data overlay, absent from the resident-only MZ initialized image. Static synthetic overlay context only; never executed."
+  ]
+}

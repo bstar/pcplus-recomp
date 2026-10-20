@@ -64,6 +64,7 @@ from file/memory-image start, not from original executable start.
 | `019e` | `1d22` | Scroll-enable state, consumed by recovered linefeed. |
 | `01ae`, `01b0`, `01b2`, `01b4`, `01b6` | `1d32..1d3a` | Configured normal, bold, additional preset, reverse and underline attributes; see ATTRIBUTES.md. |
 | `03ec` | `1f70` | Current attribute word, also mutated by recovered SGR helpers. This illustrates that the legacy image contains live state as well as configuration values. |
+| `04e4`, `04e6` | `2068`, `206a` | Mouse X/Y motion scales. Startup and PROGRAM pass these to native mouse initialization; setup overlay19 uses parent16's signed bounds1..999. The lossless host codec retains all16-bit values; the [maintained mouse owner](MOUSE_KEYBOARD.md) rejects values outside those bounds before driver mutation. |
 
 The baud labels pointed to by DS29de's nine-word table are:
 300,1200,2400,4800,9600,19200,38400,57600,115200. The table stores **pointers to

@@ -79,15 +79,18 @@ inheritance and no private queue.
 coverage and the remaining script-time dispatch boundary.
 
 The original queue peek base is DS:5df4h, while dequeue uses DS:5e00h, twelve
-bytes later. Neither read routine advances the queue index; the producer has
-not been reconstructed. The host preserves the separation and tests it rather
-than assuming a conventional ring buffer. The host's debug callback only counts
+bytes later. The later [mouse/keyboard composition](MOUSE_KEYBOARD.md) identifies
+the native mouse producer: its event code is the index, its repetition count
+is the queue count, and its button-pending word is the active flag. The six
+original peek words differ from the read words for Enter/Escape. Neither read
+routine advances the index because this is a repeated mouse event, not a ring.
+The original keyboard-only host retains independent tables. Its debug callback only counts
 invocations; the original callback at 57aeh creates a diagnostic display and
 requires application UI services outside this unit.
 
 ## Integration and remaining scope
 
-The live application disables the private queue and uses one foreground BIOS
+The live application still disables the private queue and uses one foreground BIOS
 reader after a successful peek. Raw classification covers all79 slot identities;
 maintained network defaults and explicit `/K` profile import provide their
 contents. DECCKM updates matching arrow strings across the selected map, and

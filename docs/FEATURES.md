@@ -87,7 +87,9 @@ The later [foreground PROGRAM recovery](ASPECT_UNWIND.md) adds161 actual DOS
 cases and27 reproduced products in a separate experimental build. The
 [native mouse foundation](NATIVE_MOUSE.md) adds368 exact original bytes,
 117 linked inputs and actual8086 DOS foreign-DS/SS callback evidence. Mouse
-configuration/event consumption and application ownership remain unfinished;
+configuration/event consumption now have a separate [composed owner](MOUSE_KEYBOARD.md)
+with76 linked cases,42 actual DOS assertions and three fresh products. Live
+activation and application ownership remain unfinished;
 these components close neither F02 nor the complete scripting/source-build gates.
 
 ZMODEM now runs from Alt-R/Alt-S/F2 through CONFIG_CODE engine/codec/far callbacks,

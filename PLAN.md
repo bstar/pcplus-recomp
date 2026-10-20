@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+The [mouse/keyboard composition](docs/MOUSE_KEYBOARD.md) now joins the native
+producer and original keyboard reader on one shared event/count state, with
+the original30-byte default maps. Maintained PRM scale admission and driver-state
+ownership pass76 linked cases and42 actual8086 DOS assertions, including two real
+children, changed-vector quarantine and repaired exact576-byte driver/28-byte
+native restoration. Three source-only products reproduce. The preceding27
+application products remain byte-identical through a new fresh-source proof.
+Normal live mouse activation, real PROGRAM/ASPECT/fault integration, banked code
+and a parent-compatible allocator for the assembly-started terminal
+and UI dispatch remain open; this is a separate component and closes no feature gate.
+
 The [native mouse primitives](docs/NATIVE_MOUSE.md) now recover368 original bytes
 for PROGRAM's probe/init/registration plus the real callback/event processor.
 All117 linked inputs, an actual8086 DOS driver/callback self-check with foreign

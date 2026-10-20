@@ -1,6 +1,6 @@
 ; Recovered PCPlus 2.01 keyboard routines, not original source.
 ; Flat mode preserves four original ranges; OMF mode links explicit state and callback.
-; See docs/KEYBOARD.md for ABI, queue-base ambiguity, and integration boundaries.
+; See docs/KEYBOARD.md for ABI, mouse peek/read tables and integration boundaries.
 BITS 16
 CPU 8086
 %include "encodings.inc"
