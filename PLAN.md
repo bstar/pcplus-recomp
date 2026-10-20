@@ -7,6 +7,13 @@ data, reconnect and transfer runs. No physical compatibility or 14400-bps claim
 is established; the adapter has not arrived. PCPlus remains a serial terminal,
 with SIP/audio/Telnet handled by the Linux bridge.
 
+The hardware target's [work order and completion gates](docs/ANALOG_MODEM_INTEGRATION.md#work-order-and-completion-gates)
+prioritize carrier/data separation and full audio-path pressure/editor/transfer
+checks before physical commissioning. Boca identification and adapter arrival
+remain prerequisites for selecting physical modem commands and testing audible
+training, DCD/DTR and negotiated rates. Keep official-distribution packages,
+then Nixpkgs, as the workstation dependency policy; do not use AUR/yay/paru.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

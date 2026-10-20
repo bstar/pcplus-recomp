@@ -406,6 +406,26 @@ any workstation Wi-Fi segment. Preserve stock firmware and document every change
 
 ## Acceptance tasks and evidence
 
+### Work order and completion gates
+
+Keep this target alongside the full application rebuild. The next work follows
+this order; completing a software gate never checks off a hardware gate.
+
+| Order | Work item | Evidence needed to close it |
+| --- | --- | --- |
+| 1 — software | Separate carrier status from online payload in the VM helper. | Literal `NO CARRIER` and fragmented status-like bytes survive binary payloads; actual carrier loss stops queued transmission and ends the session without replaying stale bytes. The current in-band matcher remains a concrete open defect. |
+| 2 — software | Complete flow-pressure and BBS workflow coverage on the combined runtime. | Sustained duplex counts/hashes, bounded queues, recovery after stalls, and actual Synchronet/ENiGMA editor and upload/download sessions through SIP/audio/DSP. Separate synthetic transport results do not close this gate. |
+| 3 — hardware identification | Identify the Boca and obtain matching documentation. | Model/chipset/firmware, UART, COM/base/IRQ, supported modulation and documented initialization, speaker, fixed-DTE, flow and carrier commands. Leave the Boca initialization profile unset until those facts are available. |
+| 4 — adapter commissioning | Save the SPA2102 configuration and configure PHONE 1 routing/audio using existing firmware. | Recorded firmware/settings and a reachable Linux SIP endpoint, then a real audible handshake, modem CONNECT, DCD assertion and `CONNECT>` in PCPlus. Adapter arrival is required. |
+| 5 — physical acceptance | Run connection, display, sustained-data, disconnect/reconnect and transfer tests separately. | Completed commissioning worksheets with byte hashes, UART errors, result strings, timings and failure recovery; explicitly record the negotiated protocol and rate. |
+| 6 — higher-speed investigation | Establish whether this Boca can negotiate with the selected backend without V.8. | Actual negotiated V.32bis data and clean sustained transfers before accepting 14400 bps. Direct datapump entry and a synthetic CONNECT result are insufficient. |
+
+No default Boca command string or production service is installed by this plan.
+The bridge's software-modem commands and numeric lab dial target are test inputs,
+not a discovered configuration for the physical modem or adapter. Record the
+actual local telephone destination only after configuring the SPA2102 route;
+enter the remote BBS address after `CONNECT>`.
+
 All hardware tasks remain unchecked until the adapter arrives and the DOS PC
 is connected. Do software-only bridge tests first without relabeling them as
 analog modem results.
