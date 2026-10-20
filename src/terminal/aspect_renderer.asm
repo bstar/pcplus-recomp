@@ -4,6 +4,11 @@
 BITS 16
 CPU 8086
 %include "resident_bridge.inc"
+%ifdef ASPECT_EXTERNAL_RENDER
+ %define RENDER_CAPABILITY 7
+%else
+ %define RENDER_CAPABILITY 6
+%endif
 SEGMENT _TEXT public class=CODE use16
 extern terminal_receive_character,terminal_stack_top,process_psp
 extern terminal_program_active,terminal_program_kind
@@ -92,6 +97,9 @@ terminal_render_prepare:
  mov word [terminal_aspect_adopt],0
  mov word [terminal_script_label_valid],0
  mov word [cs:render_attached],0
+%ifdef ASPECT_EXTERNAL_RENDER
+ mov word [cs:render_program_owned],0
+%endif
  mov word [cs:render_callback],0
  mov word [cs:render_callback+2],0
  call _aspect_render_admit
@@ -113,7 +121,7 @@ terminal_render_prepare:
  mov word [_script_render_segment],seg resident_bridge_entry
  mov ax,[cs:render_token]
  mov [_script_render_token],ax
- mov word [_script_render_version],6
+ mov word [_script_render_version],RENDER_CAPABILITY
  xor ax,ax
 .done:
  pop es
@@ -133,6 +141,9 @@ terminal_render_revoke:
  pop bx
  call resident_bridge_disable
  mov word [cs:render_attached],0
+%ifdef ASPECT_EXTERNAL_RENDER
+ mov word [cs:render_program_owned],0
+%endif
  mov word [cs:render_callback],0
  mov word [cs:render_callback+2],0
  mov word [terminal_aspect_active],0
@@ -149,7 +160,7 @@ terminal_render_validate:
  cmp [_script_render_token],ax
  mov ax,1
  jne .done
- cmp word [_script_render_version],6
+ cmp word [_script_render_version],RENDER_CAPABILITY
  jne .done
  xor ax,ax
 .done:
@@ -217,6 +228,14 @@ render_body:
  mov ax,[cs:render_caller_ds]
  cmp ax,[cs:render_child_ds]
  jne .state
+%ifdef ASPECT_EXTERNAL_RENDER
+ cmp di,10
+ je .program_end
+ cmp word [cs:render_program_owned],0
+ jne .state
+ cmp di,9
+ je .program_begin
+%endif
  cmp di,2
  je .end
  cmp di,3
@@ -451,6 +470,45 @@ render_body:
 .serial:
  mov ax,14
  ret
+%ifdef ASPECT_EXTERNAL_RENDER
+.program_begin:
+ cmp bx,1
+ ja .operand
+ cmp word [_script_handoff+22],0
+ jne .serial
+ push bx
+ call _aspect_render_admit
+ pop bx
+ or ax,ax
+ jnz .done
+ inc bx ;1 NOCLEAR,2 SAVE; zero means no external owner.
+ mov [cs:render_program_owned],bx
+ inc word [cs:render_program_begins]
+ xor ax,ax
+ ret
+.program_end:
+ cmp word [cs:render_program_owned],0
+ je .state
+ cmp bx,1
+ ja .operand
+ ; A saved view cannot request the native NOCLEAR geometry refresh.
+ cmp bx,0
+ je .program_retire
+ cmp word [cs:render_program_owned],1
+ jne .state
+ inc word [cs:render_program_refreshes]
+.program_retire:
+ mov word [cs:render_program_owned],0
+ inc word [cs:render_program_ends]
+ cmp word [_script_handoff+22],0
+ jne .serial
+ ; PROGRAM has restored BIOS geometry and the saved cursor. Parent metadata
+ ; never left this suspended allocation. Re-admit the actual fixed80x25 view,
+ ; including NOCLEAR/raw247 refresh; do not RIS-clear the child's visible text
+ ; or replace the profile/keymap/history with startup defaults.
+ call _aspect_render_admit
+ ret
+%endif
 .begin:
  cmp word [cs:render_attached],0
  jne .state
@@ -671,6 +729,14 @@ render_saved_wait: dw 0
 render_started: dw 0
 render_remaining: dw 0
 render_unsupported: dw 0
+%ifdef ASPECT_EXTERNAL_RENDER
+global render_program_owned,render_program_begins,render_program_ends,render_program_refreshes
+global render_body,render_attached,render_child_ds,render_child_psp
+render_program_owned: dw 0
+render_program_begins: dw 0
+render_program_ends: dw 0
+render_program_refreshes: dw 0
+%endif
 
 SEGMENT _DATA public class=DATA use16
 global terminal_aspect_active,terminal_aspect_adopt

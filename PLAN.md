@@ -1,5 +1,18 @@
 # Complete DOS rebuild plan
 
+The [attached PROGRAM integration](docs/ASPECT_PARENT_PROCESS.md) now passes 13
+actual DOS cases/505 checks: COM1/COM2 N/S/H/B full workflows, focused SAVE/WAIT/
+NOCLEAR/exit247 cases and a fatal DTR-change recovery. All 77 renderer leases
+retire; a passive observer compares 10,276 exact parent bytes around each nested
+EXEC attempt, including real selected-directory, translation, settings, keymap
+and renderer state. Six numbered streams, nested source compilation, enumeration
+and continued parent input pass. Seventy-seven linked owner-policy cases and 25
+fresh source products pass. This is a separate capability7 parent/child build;
+normal capability6 TERMINAL and 105-slot ASPECT remain byte-identical, as does
+the prior 56-case raw diagnostic. Nonlocal faults during external ownership,
+original macro/mouse/window/error notices, broader views, live BBS acceptance
+and physical modem/hardware remain open before normal publication.
+
 The [experimental ASPECT process binding](docs/ASPECT_PROCESS.md) now runs the
 native DOS/RUN/SHELL frontends in the actual VM. Its 56 COM1/COM2 N/S/H/B DOS
 cases pass 1,712 assertions, exact command/flow audits and real inherited-handle
@@ -9,7 +22,8 @@ An 8,365-byte fallback overlaps and restores the actual live frame. Script
 divide/budget failures recover into another invocation in the same process.
 Nineteen linked JFT cases and 14 modeled error-policy cases pass; 23 DOS products
 reproduce from a fresh source tree. Normal ASPECT remains byte-identical at 105 slots; the 108-slot variant is
-separate and rejects attached renderers. Actual parent/selected leases, original
+separate and rejects attached renderers. The newer capability7 proof above adds
+actual parent/selected-resource coverage. Original
 macro/mouse/window/error-notice services, nonlocal parent-fault cleanup, broader
 views, live BBS acceptance and physical modem/hardware work remain open.
 
@@ -19,10 +33,10 @@ bytes. Eight COM1/COM2 N/S/H/B DOS cases pass 381,336 assertions across real chi
 execution, WAIT/NOCLEAR, cursor/mode recovery, standard 40/80-column and 25/43/50-row
 views, six held C streams and arena-backed environment fallback. Twenty DOS
 products reproduce from a fresh source-only tree. The current 105 runtime slots
-are unchanged: actual ASPECT VM/stream/continuation, parent renderer/ASIOv4,
-directory/translation/settings and macro/mouse/window owners still need binding
-before DOS/RUN/SHELL can be enabled. Full application and hardware goals remain
-open; ordinary C stream coverage is not completed ASPECT stream integration.
+remain unchanged. The later VM and attached-parent proofs above supply actual
+stream/continuation and selected-resource evidence beyond this component. Full
+nonlocal cleanup and macro/mouse/window ownership still precede normal opcode
+publication; full application and hardware goals remain open.
 
 The [external UART owner](docs/PROCESS_SERIAL.md) now passes41 linked modeled
 cases and eight actual COM1/COM2 N/S/H/B DOS cases/448 assertions. It releases

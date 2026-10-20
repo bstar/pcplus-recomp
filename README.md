@@ -4,9 +4,10 @@ An incremental source reconstruction of ProComm Plus 2.01, focused first on
 serial communication, ANSI terminal handling and BBS compatibility.
 The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 
-An [experimental ASPECT process binding](docs/ASPECT_PROCESS.md) now preserves
-real script streams and VM continuation across DOS program execution. It remains
-separate from the normal interpreter while parent-renderer integration continues.
+The [experimental attached PROGRAM binding](docs/ASPECT_PARENT_PROCESS.md) now
+preserves actual parent rendering, selected resources, script streams and VM
+continuation across DOS program execution. Normal builds remain unchanged while
+complete fault cleanup and UI ownership are finished.
 
 **This is not yet a complete PCPlus source rebuild.** The current terminal
 passes logged-in ZMODEM uploads and downloads against local Synchronet and ENiGMA,

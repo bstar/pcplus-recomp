@@ -23,6 +23,36 @@ extern unsigned __cdecl aspect_render_callback_offset(void);
 extern unsigned __cdecl aspect_render_code_segment(void);
 static unsigned typed(unsigned result)
 {return result<=ASPECT_RUN_SERIAL?result:ASPECT_RUN_STATE;}
+#if defined(ASPECT_EXTERNAL_RENDER)
+static unsigned program_owned;
+unsigned __cdecl aspect_render_program_begin(unsigned save_screen)
+{
+ unsigned result;
+ if(!attached || program_owned || policy_wait || keyboard_wait || key_wait || label_wait ||
+    save_screen>1 || aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
+ result=typed(aspect_render_request(ASPECT_RENDER_PROGRAM_BEGIN,save_screen));
+ if(!result)program_owned=1;
+ return result;
+}
+unsigned __cdecl aspect_render_program_end(unsigned view_reset)
+{
+ unsigned result;
+ if(!attached || !program_owned || view_reset>1 || aspect_render_client_check())return ASPECT_RUN_STATE;
+ result=aspect_render_request(ASPECT_RENDER_PROGRAM_END,view_reset);
+ /* The parent's END retires on success, rejected view3 or returned UART14.
+  * Argument/state/bridge failures can reject before retirement. Keep our
+  * owner for a valid END retry and continue blocking ordinary rendering. */
+ if(!result || result==ASPECT_RUN_UNSUPPORTED || result==ASPECT_RUN_SERIAL)program_owned=0;
+ return typed(result);
+}
+#endif
+#if defined(ASPECT_EXTERNAL_RENDER)
+static unsigned service_check(void)
+{return program_owned?ASPECT_RUN_STATE:aspect_render_client_check();}
+#else
+#define service_check aspect_render_client_check
+#endif
 unsigned __cdecl aspect_render_prepare(unsigned offset,unsigned segment,unsigned token)
 {
  if(attached)return ASPECT_RUN_STATE;
@@ -38,7 +68,7 @@ unsigned __cdecl aspect_render_prepare(unsigned offset,unsigned segment,unsigned
 unsigned __cdecl aspect_render_attach(void)
 {
  unsigned result;
- if(attached || aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(attached || service_check())return ASPECT_RUN_STATE;
  result=typed(aspect_render_request(ASPECT_RENDER_BEGIN,(unsigned)&aspect_render_client_record));
  if(!result)attached=1;
  return result;
@@ -47,17 +77,17 @@ unsigned __cdecl aspect_render_active(void){return attached;}
 unsigned __cdecl aspect_render_emit(unsigned byte)
 {
  unsigned result;
- if(!attached || aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(!attached || service_check())return ASPECT_RUN_STATE;
  callback_error=0;
  result=typed(aspect_render_request(ASPECT_RENDER_EMIT,byte&255));
- if(aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(service_check())return ASPECT_RUN_STATE;
  return result?result:callback_error;
 }
 unsigned __cdecl aspect_render_finish(void)
 {
  unsigned result;
  if(!attached)return 0;
- if(aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(service_check())return ASPECT_RUN_STATE;
  result=typed(aspect_render_request(ASPECT_RENDER_END,0));
  if(!result)attached=0;
  return result;
@@ -65,12 +95,12 @@ unsigned __cdecl aspect_render_finish(void)
 unsigned __cdecl aspect_render_status(unsigned duplex)
 {
  unsigned result;
- if(!attached || aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(!attached || service_check())return ASPECT_RUN_STATE;
  if(!aspect_serial_active)return ASPECT_RUN_SERIAL;
  if(duplex!=65535U && duplex>255)return ASPECT_RUN_OPERAND;
  callback_error=0;
  result=typed(aspect_render_request(ASPECT_RENDER_STATUS,duplex));
- if(aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(service_check())return ASPECT_RUN_STATE;
  return result?result:callback_error;
 }
 void __cdecl aspect_render_policy_reset(void)
@@ -78,14 +108,14 @@ void __cdecl aspect_render_policy_reset(void)
 unsigned __cdecl aspect_render_policy_inherit(void)
 {
  unsigned result;
- if(!attached || aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(!attached || service_check())return ASPECT_RUN_STATE;
  if(!aspect_serial_active)return ASPECT_RUN_SERIAL;
  if(policy_queried)return 0;
  if(policy_wait)return ASPECT_RUN_STATE;
  callback_error=policy_received=0;policy_wait=1;
  result=typed(aspect_render_request(ASPECT_RENDER_BREAK_POLICY,0));
  policy_wait=0;
- if(aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(service_check())return ASPECT_RUN_STATE;
  if(result)return result;
  if(callback_error)return callback_error;
  if(!policy_received)return ASPECT_RUN_STATE;
@@ -94,25 +124,25 @@ unsigned __cdecl aspect_render_policy_inherit(void)
 unsigned __cdecl aspect_render_break_notice(unsigned end)
 {
  unsigned result;
- if(!attached || aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(!attached || service_check())return ASPECT_RUN_STATE;
  if(!aspect_serial_active)return ASPECT_RUN_SERIAL;
  if(end>1)return ASPECT_RUN_OPERAND;
  callback_error=0;
  result=typed(aspect_render_request(ASPECT_RENDER_BREAK_NOTICE,end));
- if(aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(service_check())return ASPECT_RUN_STATE;
  return result?result:callback_error;
 }
 unsigned __cdecl aspect_render_keyboard_inherit(void)
 {
  unsigned result;
- if(!attached || aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(!attached || service_check())return ASPECT_RUN_STATE;
  if(!aspect_serial_active)return ASPECT_RUN_SERIAL;
  if(keyboard_queried)return 0;
  if(keyboard_wait)return ASPECT_RUN_STATE;
  callback_error=keyboard_received=0;keyboard_wait=1;
  result=typed(aspect_render_request(ASPECT_RENDER_KEYBOARD_POLICY,0));
  keyboard_wait=0;
- if(aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(service_check())return ASPECT_RUN_STATE;
  if(result)return result;
  if(callback_error)return callback_error;
  if(!keyboard_received)return ASPECT_RUN_STATE;
@@ -121,12 +151,12 @@ unsigned __cdecl aspect_render_keyboard_inherit(void)
 unsigned __cdecl aspect_render_key(unsigned key)
 {
  unsigned result;
- if(!attached || aspect_render_client_check() || key_wait)return ASPECT_RUN_STATE;
+ if(!attached || service_check() || key_wait)return ASPECT_RUN_STATE;
  if(!aspect_serial_active)return ASPECT_RUN_SERIAL;
  callback_error=key_policy_read=0;key_wait=1;
  result=typed(aspect_render_request(ASPECT_RENDER_KEY,key));
  key_wait=0;
- if(aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(service_check())return ASPECT_RUN_STATE;
  if(result)return result;
  if(callback_error)return callback_error;
  return key_policy_read?0:ASPECT_RUN_STATE;
@@ -135,7 +165,7 @@ unsigned __cdecl aspect_render_script_label(const char *path,unsigned duplex)
 {
  const char *leaf=path;unsigned i,n,result;
  unsigned char staged[13];
- if(!attached || aspect_render_client_check() || label_wait)return ASPECT_RUN_STATE;
+ if(!attached || service_check() || label_wait)return ASPECT_RUN_STATE;
  if(!aspect_serial_active)return ASPECT_RUN_SERIAL;
  if(!path || (duplex!=65535U && duplex>255))return ASPECT_RUN_OPERAND;
  for(n=0;n<=81 && path[n];++n)if(path[n]=='\\' || path[n]==':')leaf=path+n+1;
@@ -153,7 +183,7 @@ unsigned __cdecl aspect_render_script_label(const char *path,unsigned duplex)
  callback_error=label_next=label_done=0;label_wait=1;
  result=typed(aspect_render_request(ASPECT_RENDER_SCRIPT_LABEL,duplex));
  label_wait=0;
- if(aspect_render_client_check())return ASPECT_RUN_STATE;
+ if(service_check())return ASPECT_RUN_STATE;
  if(result)return result;
  if(callback_error)return callback_error;
  return label_done?0:ASPECT_RUN_STATE;
@@ -163,6 +193,9 @@ unsigned __cdecl aspect_render_script_label(const char *path,unsigned duplex)
 static unsigned callback_dispatch(unsigned operation,unsigned value)
 {
  unsigned result;
+#if defined(ASPECT_EXTERNAL_RENDER)
+ if(program_owned){callback_error=ASPECT_RUN_STATE;return operation==ASPECT_RENDER_RAW_WAIT || operation==ASPECT_RENDER_RAW_NOW?65535U:callback_error;}
+#endif
  if(operation==ASPECT_RENDER_ERROR)return callback_error?callback_error:(aspect_serial_active?runtime_error:0);
  if(operation==ASPECT_RENDER_POLL){
   if(!aspect_serial_active)return 0;

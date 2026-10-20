@@ -9,13 +9,18 @@
  * preserved. Each context runs DS=SS on its own checked stack slice. */
 #define ASIO_VERSION_RENDER 4U
 #define ASIO_V4_SIZE 48U
+#if defined(ASPECT_EXTERNAL_RENDER)
+#define ASPECT_RENDER_CAP_VERSION 7U
+#else
 #define ASPECT_RENDER_CAP_VERSION 6U
+#endif
 #define ASPECT_RENDER_CLIENT_MAGIC 0x5243U
 #define ASPECT_RENDER_CLIENT_SIZE 10U
 enum { ASPECT_RENDER_BEGIN=0, ASPECT_RENDER_EMIT=1, ASPECT_RENDER_END=2,
  ASPECT_RENDER_STATUS=3, ASPECT_RENDER_BREAK_POLICY=4,
  ASPECT_RENDER_BREAK_NOTICE=5, ASPECT_RENDER_SCRIPT_LABEL=6,
- ASPECT_RENDER_KEYBOARD_POLICY=7, ASPECT_RENDER_KEY=8 };
+ ASPECT_RENDER_KEYBOARD_POLICY=7, ASPECT_RENDER_KEY=8,
+ ASPECT_RENDER_PROGRAM_BEGIN=9, ASPECT_RENDER_PROGRAM_END=10 };
 enum { ASPECT_RENDER_RAW_WAIT=0, ASPECT_RENDER_UNREAD=1,
  ASPECT_RENDER_SEND=2, ASPECT_RENDER_POLL=3, ASPECT_RENDER_ERROR=4,
  ASPECT_RENDER_RAW_NOW=5, ASPECT_RENDER_BREAK_VALUE=6,
@@ -51,4 +56,10 @@ unsigned __cdecl aspect_render_break_notice(unsigned end);
 /* Synchronous scalar-byte pull; label is never a parent-dereferenced pointer. */
 unsigned __cdecl aspect_render_script_label(const char *,unsigned duplex);
 unsigned __cdecl aspect_render_finish(void);
+#if defined(ASPECT_EXTERNAL_RENDER)
+/* Capability7 only. The parent rejects rendering/callback requests until END.
+ * END rechecks the real view and retires the lease even on a failed probe. */
+unsigned __cdecl aspect_render_program_begin(unsigned save_screen);
+unsigned __cdecl aspect_render_program_end(unsigned view_reset);
+#endif
 #endif

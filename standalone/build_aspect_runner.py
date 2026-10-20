@@ -13,6 +13,7 @@ def main(extension=None):
     # Default production inputs/flags and opcode coverage remain unchanged.
     output=extension['output'] if extension else OUT
     feature_flags=['-DASPECT_EXTERNAL_PROCESS','-DASPECT_EXTERNAL_COMMANDS'] if extension else []
+    if extension and extension.get('parent_render'):feature_flags.append('-DASPECT_EXTERNAL_RENDER')
     main_source=extension.get('driver',ROOT/'src/aspect/runner.c') if extension else ROOT/'src/aspect/runner.c'
     diagnostic_driver=main_source!=ROOT/'src/aspect/runner.c'
     if extension and diagnostic_driver:feature_flags.append('-DASPECT_EXTERNAL_DIAGNOSTIC')
@@ -61,9 +62,11 @@ def main(extension=None):
                   scope='DOS CLI for trusted ASX and maintained ASP compilation; partial105-slot runtime with native WHEN/CWHEN and thirteen SET/FETCH families and owned six-slot file streams. Explicit ASP or missing-ASX fallback invokes sibling ASPCOMP with scoped compiler faults and owned UART flow. EXECUTE retains session state and publishes current ASX labels. Capability6 retains inherited BIOS selection and adds shared parent profile key output through the child UART, with checked duplex snapshots and native-derived echo. Local UI/macros, half-duplex reverse-tab/insert/delete, full language/recorder, physical timing and arbitrary-bytecode safety remain unfinished.')
     if extension:
         result.update(experimental_external_commands=True,production_dispatch_changed=False,
+            experimental_parent_render=bool(extension.get('parent_render')),
             diagnostic_build=diagnostic_driver,
             main_source=str(main_source.relative_to(ROOT)),
             scope='Experimental108-slot raw/local ASPECT with composed PROGRAM, private DOS handles and real script/ASX ownership checks. Attached parent rendering rejects before execution; full application publication remains open.')
+        if extension.get('parent_render'):result['scope']='Experimental108-slot ASPECT with capability7 attached parent PROGRAM lease, private streams and real UART/display/process controller. Normal capability6/105-slot application is unchanged; complete application ownership and physical acceptance remain open.'
     (output / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')
     print('ASPECT.EXE', result['binary_sha256'])
 

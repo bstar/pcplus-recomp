@@ -1074,3 +1074,14 @@ test-aspect-process:
 	python3 standalone/check_aspect_process_policy.py
 test-aspect-process-source:
 	python3 standalone/check_aspect_process_source.py
+
+.PHONY: aspect-parent-process test-aspect-parent-process test-aspect-parent-process-source
+aspect-parent-process:
+	python3 standalone/build_aspect_process.py --parent-render
+	python3 standalone/build_terminal.py --external-render
+test-aspect-parent-process: aspect-parent-process aspect-compiler-dos
+	python3 standalone/test_aspect_parent_process_dos.py
+	python3 standalone/check_aspect_parent_process.py
+	python3 standalone/check_aspect_program_client.py
+test-aspect-parent-process-source: aspect-parent-process aspect-runner aspect-compiler-dos terminal
+	python3 standalone/check_aspect_parent_process_source.py

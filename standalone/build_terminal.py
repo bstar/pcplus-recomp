@@ -8,7 +8,9 @@ from transfer.native_sender_link import build_native_sender
 from terminal_memory import inspect_terminal_memory
 from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'build/terminal';OUT.mkdir(parents=True,exist_ok=True)
+import argparse
+parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--external-render',action='store_true');args=parser.parse_args()
+OUT=ROOT/('build/terminal-process' if args.external_render else 'build/terminal');OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
 sources=[]
@@ -45,6 +47,7 @@ for index,source in enumerate(sources):
    '-Dscreen_cursor_left=attribute_screen_cursor_left','-Dscreen_cursor_right=attribute_screen_cursor_right',
    '-Dscreen_adjust_attribute_boundary=attribute_boundary_local']
  if source==ROOT/'src/aspect/resident_bridge.asm':options+=['-DRESIDENT_BRIDGE_FAR']
+ if args.external_render:options+=['-DASPECT_EXTERNAL_RENDER']
  if source.parent==ROOT/'reconstruction/terminal_reset':
   options+=['-DSTATUS_CONFIG_CODE','-Dtext_fill_cells=status_text_fill','-Dtext_write_packed=status_text_packed',
    '-Dterminal_reset_ui_75e8=status_ui_printf','-Dterminal_reset_ui_7630=status_character_fill',
@@ -123,6 +126,7 @@ for source in c_sources:
  obj=OUT/(source.stem+'.obj');objects.append(str(obj))
  options=['-nt=CONFIG_CODE','-nc=FARCODE']+['-d'+name+'='+alias for name,alias in config_aliases.items()] if source in config_sources else []
  if source.parent==ROOT/'src/aspect':options=['-nt=ASPECT_CODE','-nc=FARCODE']
+ if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
  if source==ROOT/'src/status/status_formatter.c':options=['-ecc']
  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we',*options,'-i='+str(ROOT/'src/config'),'-i='+str(ROOT/'src/directory'),'-i='+str(ROOT/'src/key_mapping'),'-i='+str(ROOT/'src/process'),'-i='+str(ROOT/'src/transfer'),'-fo='+str(obj),str(source)],cwd=OUT,check=True)
  if source==ROOT/'src/transfer/batch_header.c':
@@ -154,7 +158,7 @@ inputs += sorted((ROOT/'src/redisplay').glob('*.h'))
 inputs += [ROOT/'src/transfer'/name for name in ['download_file.h','download_fs.h','native_file_bridge.h','upload_file.h','upload_fs.h','batch_header.h','batch_download.h','batch_upload.h','batch_upload_fs.h','ymodem.h']]+native['inputs']+[ROOT/'standalone/terminal_memory.py']
 inputs += sender['inputs']
 inputs += [ROOT/'src/transfer/zmodem.h',ROOT/'src/transfer/zmodem_wire.h',ROOT/'src/transfer/zmodem_name.h',ROOT/'src/transfer/zmodem_autostart.h']
-inputs += [ROOT/'standalone/omf_imports.py']
+inputs += [ROOT/'standalone/omf_imports.py',Path(__file__).resolve()]
 inputs += sorted((ROOT/'src/terminal').glob('*.inc'))
 inputs += sorted((ROOT/'src/translation').glob('*.h'))
 inputs += sorted((ROOT/'src/key_mapping').glob('*.h'))+sorted((ROOT/'src/key_mapping').glob('*.inc'))
@@ -164,5 +168,6 @@ manifest['limitations'].append('An otherwise eligible Alt-Z read during normal p
 manifest['compiler_helper_adapters']={'import_counts':helper_adapters['import_counts'],'record_policy':'Only EXTDEF names/record lengths/checksums change; symbol indices, code, data, local symbols and fixups are preserved.'}
 (OUT/'compiler-helper-adapters.json').write_text(json.dumps({'binary_sha256':manifest['binary_sha256'],**helper_adapters},indent=2)+'\n')
 manifest['limitations'].append('Maintained YMODEM framing and header codec execute in CONFIG_CODE with unchanged near data and protocol logic. Explicit callbacks bridge resident UART/CRC/file owners; zero-argument callbacks have their own declared family. Newly compiled batch_header OMF imports for Watcom32-bit arithmetic are renamed to local register adapters; all code/data/fixup records and external indices are preserved. Original ordinary XMODEM modules remain resident and unchanged.')
+manifest['experimental_external_render']=args.external_render
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
-print('Built build/terminal/TERMINAL.EXE',manifest['binary_sha256'],'DS/SS bytes',manifest['data_stack_bytes'])
+print('Built',str((OUT/'TERMINAL.EXE').relative_to(ROOT)),manifest['binary_sha256'],'DS/SS bytes',manifest['data_stack_bytes'])

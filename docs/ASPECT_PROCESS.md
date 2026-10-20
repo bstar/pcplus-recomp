@@ -7,6 +7,10 @@ survive actual child execution. This is an 108-slot experimental build; the norm
 105-slot interpreter remains byte-identical and still rejects these three slots.
 No whole-application gate closes.
 
+The newer [capability7 attached integration](ASPECT_PARENT_PROCESS.md) adds a
+separate parent/child build with actual renderer and selected-resource evidence.
+The raw build described here retains its explicit attached-parent rejection.
+
 The [ledger](validation/aspect-process.json) binds 56 actual 8086 DOS cases:
 COM1/COM2 crossed with N/S/H/B flow and seven workflows. All 1,712 DOS assertions
 pass, together with independent per-command status/flag and exact wire audits.

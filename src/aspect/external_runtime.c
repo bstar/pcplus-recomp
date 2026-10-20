@@ -19,12 +19,22 @@ int runtime_external_execute(const char *program,const char *tail,
 {
  aspect_file saved_file;long position,physical;
  unsigned descriptors[7],count=0,status=0,scope=0,streams=0,handles=0,other;
+#if defined(ASPECT_EXTERNAL_RENDER)
+ unsigned parent=0,view_reset=0;
+#endif
  native_program_result result;
  runtime_external_raw_status=65535U;
  /* This rejects an attached parent before flushing or altering any owner.
   * The production renderer capability remains unchanged and unpublished. */
+#if !defined(ASPECT_EXTERNAL_RENDER)
  if(aspect_render_active()){runtime_set_error(ASPECT_RUN_STATE);return -1;}
+#endif
  if(runtime_external_scope(1)){runtime_set_error(ASPECT_RUN_STATE);return -1;}scope=1;
+#if defined(ASPECT_EXTERNAL_RENDER)
+ if(aspect_render_active()){
+  status=aspect_render_program_begin(save_screen);if(status)goto done;parent=1;
+ }
+#endif
  if(!runtime_file.handle||(position=aspect_file_tell(&runtime_file))<0||
     (physical=ftell(runtime_file.handle))<0){status=ASPECT_RUN_IO;goto done;}
  saved_file=runtime_file;
@@ -33,6 +43,9 @@ int runtime_external_execute(const char *program,const char *tail,
  if(process_handles_begin(descriptors,count)){status=ASPECT_RUN_STATE;goto done;}handles=1;
  ++runtime_external_calls;
  other=native_program_execute(program,tail,processor,wait,save_screen,&result);
+#if defined(ASPECT_EXTERNAL_RENDER)
+ if(other!=NATIVE_PROGRAM_BUSY)view_reset=result.view_reset;
+#endif
  /* Restore the actual JFT mapping before any parent ftell/stream operation,
   * including cleanup after a missing target or admission/allocation failure. */
  if(process_handles_end())status=ASPECT_RUN_STATE;handles=0;
@@ -49,6 +62,9 @@ int runtime_external_execute(const char *program,const char *tail,
 done:
  if(handles&&process_handles_end()&&!status)status=ASPECT_RUN_STATE;
  if(streams){other=runtime_script_files_external_end();if(other&&!status)status=other;}
+#if defined(ASPECT_EXTERNAL_RENDER)
+ if(parent){other=aspect_render_program_end(view_reset);if(other&&!status)status=other;}
+#endif
  if(scope){other=runtime_external_scope(0);if(other&&!status)status=other;}
  if(status)runtime_set_error(status);
 #if defined(ASPECT_EXTERNAL_DIAGNOSTIC)

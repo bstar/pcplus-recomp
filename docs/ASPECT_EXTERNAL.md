@@ -14,6 +14,10 @@ after script errors. An 8,365-byte fallback actually overlaps and restores a liv
 local frame. The separately built 108-slot variant rejects attached renderers;
 normal publication still requires the real parent and selected-resource leases.
 
+The [newer capability7 integration](ASPECT_PARENT_PROCESS.md) now supplies actual
+attached parent/selected-resource evidence in a separate build. Normal publication
+still requires complete nonlocal cleanup and the remaining original UI services.
+
 The [composed PROGRAM component](NATIVE_PROGRAM.md) now joins recovered process
 and display services with real UART ownership in eight actual DOS cases.
 The next step is production renderer/parent-lease integration below. A direct
