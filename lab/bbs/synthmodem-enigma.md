@@ -59,7 +59,41 @@ account. It does not install packages or start/reconfigure a server. Original
 test recipes come from `editor-recipes.json`; the unsaved editor route never
 sends Enter after body editing starts and closes the connection without saving.
 
-SIP/RTP, answering-modem DSP, analog audio, physical modem/UART timing, full BBS
-file transfers and the Boca/SPA2102 remain untested here. The independent-peer
+## Logged-in automatic download
+
+The [download receipt](../../docs/validation/synthmodem-enigma-download.json)
+adds21 checks plus an independent audit through this same candidate. An actual
+DOS/BBS session searches for the existing owned `PCXTEST.BIN`, tags it, selects
+Download and starts the existing ZedZap helper. The PRM enables automatic ZMODEM
+reception into `D:\RECV\`; there are no Alt-R/Alt-S/F2 transfer keys.
+
+All11521 bytes arrive exactly, with CRC-validated ZFILE/data/ZEOF/ZFIN/OO and
+four corroborated opposite-direction controls. Observed packet payload sizes
+are1024,2048,4096 and4353 bytes. A new real keyboard search succeeds after the
+transfer. The official FileEntry API's download count advances17 ->18, its source
+bytes remain unchanged, staging disappears and UART state restores. The readonly
+auditor reconstructs decoded stream timing from raw TCP chunks, repeats the
+protocol/control audit and compares complete serial payloads and stored files.
+
+The owned fixture already has the helper path configured and ZedZap sorted
+first. No server configuration, source or running process was changed for this
+run, and no protocol-selector arrow behavior is established. Source hashes in
+the earlier menu/editor receipt identify their earlier test-harness revision;
+they remain historical results, not reruns under this new download branch.
+
+```sh
+./tools/dev --command python3 lab/bbs/synthmodem_bbs_dos.py \
+  --candidate build/bbs-lab/synthmodem-telnet-03/candidate \
+  --output build/bbs-lab/synthmodem-enigma-download-new --route download
+./tools/dev --command python3 lab/bbs/audit_synthmodem_bbs.py \
+  --output build/bbs-lab/synthmodem-enigma-download-new
+```
+
+The exact source fixture and helper are additional frozen runtime inputs, never
+ordinary application build inputs. Uploads, other protocols and error/retry/cancel
+routes through this BBS path remain open.
+
+SIP/RTP, answering-modem DSP, analog audio, physical modem/UART timing, broader BBS
+transfers and the Boca/SPA2102 remain untested here. The independent-peer
 [ZMODEM composition](synthmodem-dos.md) remains separate evidence. All complete
 PCPlus application gates remain open.

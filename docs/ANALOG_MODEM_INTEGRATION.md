@@ -92,6 +92,18 @@ Links below pin the reviewed source; future versions require rechecking.
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
 
+## Logged-in BBS download checkpoint
+
+[Automatic ZMODEM download through the candidate](../lab/bbs/synthmodem-enigma.md#logged-in-automatic-download)
+now passes21 checks plus independent audits against the owned ENiGMA lab. The
+11521-byte fixture matches exactly, the complete CRC/EOF/final handshake is
+validated in both directions, the official download counter advances and a new
+keyboard search succeeds after return. Saved PRM preferences start reception;
+no manual transfer keys or injected replies are used. The existing helper and
+selector-first configuration are frozen unchanged. See the
+[receipt](validation/synthmodem-enigma-download.json). Upload, other protocols,
+error/retry/cancel, SIP/audio and hardware acceptance remain open.
+
 ## Authenticated stock BBS checkpoint
 
 [Stock ENiGMA through the candidate](../lab/bbs/synthmodem-enigma.md) now passes
@@ -103,8 +115,8 @@ this pass does not establish arbitrary-fragmentation tolerance or replace earlie
 stock ENiGMA failures. The [receipt](validation/synthmodem-enigma.json) keeps
 those scopes explicit. No server, application or candidate code was changed.
 
-These are synthetic-call, real-DOS/BBS software tests. SIP/DSP/audio, BBS file
-transfer through this exact path and physical modem acceptance remain open.
+These are synthetic-call, real-DOS/BBS software tests. SIP/DSP/audio, BBS upload
+and broader transfer workflows through this path and physical acceptance remain open.
 
 ## DOS transfer composition checkpoint
 

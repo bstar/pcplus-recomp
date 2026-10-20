@@ -1,5 +1,12 @@
 # Complete DOS rebuild plan
 
+The [logged-in SynthModem/ENiGMA download](lab/bbs/synthmodem-enigma.md#logged-in-automatic-download)
+passes21 checks plus independent serial/protocol/file audits. Automatic DOS
+reception stores the exact11521-byte fixture; CRC-valid ZFILE/data/ZEOF/ZFIN/OO,
+opposite controls, official download count and post-transfer search are confirmed.
+The existing lab helper selects ZedZap first; no server, bridge or application
+code changes. BBS uploads, other protocols, faults and physical acceptance stay open.
+
 The [stock ENiGMA/SynthModem sessions](lab/bbs/synthmodem-enigma.md) pass34
 checks plus serial/server/video audits: authenticated Main -> Messages -> Main
 -> Files and an unsaved editor with Home/Insert behavior. All eight exercised

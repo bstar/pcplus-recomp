@@ -1,5 +1,11 @@
 # Modern BBS compatibility checkpoint
 
+The [SynthModem/ENiGMA automatic download](synthmodem-enigma.md#logged-in-automatic-download)
+passes21 checks and independent protocol/file/serial audits through the actual
+candidate. The11521-byte file, complete final handshake, official counter and
+post-transfer search match. Upload and fault paths through this bridge remain
+open, as do earlier stock-server fragmentation and physical acceptance.
+
 The [SynthModem candidate path](synthmodem-enigma.md) passes authenticated stock
 ENiGMA menus and an unsaved editor with34 checks and exact serial/server audits.
 It uses the actual candidate TelnetProxy and no timed batching. Measured escape

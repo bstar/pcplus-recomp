@@ -1,0 +1,358 @@
+{
+  "passed": true,
+  "checks": 21,
+  "label": "synthmodem-enigma-download-01",
+  "producer": {
+    "passed": true,
+    "route": "download",
+    "checks": {
+      "DOS_normal_exit": true,
+      "hardware_restored": true,
+      "no_relay_errors": true,
+      "relay_stopped": true,
+      "numeric_local_call": true,
+      "actual_DOS_DA": true,
+      "actual_DOS_CPR": true,
+      "authenticated": true,
+      "no_post_saved": true,
+      "profile_unchanged": true,
+      "inputs_unchanged": true,
+      "candidate_unchanged": true,
+      "server_unchanged": true,
+      "no_unsupported_terminal": true,
+      "complete_ZMODEM_protocol": true,
+      "posttransfer_search_response": true,
+      "exact_download": true,
+      "only_expected_downloads": true,
+      "no_receive_stages": true,
+      "no_manual_transfer_keys": true,
+      "official_download_counter_incremented": true
+    },
+    "session": "Q1UgZepWN74",
+    "menus": [
+      "telnetConnected",
+      "matrix",
+      "login",
+      "fullLoginSequenceLoginArt",
+      "fullLoginSequenceLastCallers",
+      "fullLoginSequenceWhosOnline",
+      "fullLoginSequenceOnelinerz",
+      "fullLoginSequenceNewScanConfirm",
+      "fullLoginSequenceUserStats",
+      "mainMenu",
+      "fileBaseMainMenu",
+      "fileBaseSearch",
+      "fileBaseListEntries",
+      "fileBaseSearch",
+      "fileBaseMainMenu",
+      "fileBaseDownloadManager",
+      "fileTransferProtocolSelection",
+      "sendFilesToUser",
+      "fileTransferProtocolSelection",
+      "fileBaseMainMenu",
+      "fileBaseSearch",
+      "fileBaseListEntries",
+      "fileBaseSearch"
+    ],
+    "frozen_inputs": {
+      "lab/bbs/synthmodem_bbs_dos.py": "25154ce52a46dc8cd78f16fdf6f9cd1eaa6e53801cc77cb16c9a89389ef9607a",
+      "lab/bbs/synthmodem_serial.js": "62a3ad7993cd1201ebb5fe47122df0b908fdba73908e22c33ba40d20906d210d",
+      "lab/bbs/enigma.py": "526fcd6eb468ec7a85630685872d27a937abbc6b61f48ad8391a2353e5686017",
+      "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+      "lab/bbs/editor-recipes.json": "72777d66ae84bd488f551cdb367deadbb47d4a4405f921f0d1ab0d578b1a3649",
+      "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+      "standalone/terminal_config_fixtures.py": "dd38f8a0c6c77d5d2ec2120c1f3d6b8a755525d11e2f6d986a056a3d0d8e4df4",
+      "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+      "build/terminal/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+      "build/terminal/terminal.map": "8b1f7f07d7f617936765de21fed74a71ec28c7c5ce45e8519802cf62689c86b1",
+      "lab/bbs/audit_zmodem.py": "510ad0fd519c8fa279599956d13852f984a1e32e49e4588e1c482749829d5ad9",
+      "lab/bbs/enigma_transfer.py": "12fd33f7c97c9279c622dd2baa32978d386d1153ab98d553402157e7c5069692",
+      "lab/bbs/test_transfer_dos.py": "d8cbd432c3b1e9dab4dd7fc841defff5b18e379592a935b43a010657cd967964",
+      "build/bbs-lab/enigma/source/file_base/pcplus_transfer/PCXTEST.BIN": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6",
+      "build/bbs-lab/enigma/helpers/sexyz": "d1aeb1347fee332be75dd638dd4cb10a1bf7c418d96d0ebb79ca90470b0ed4bd"
+    },
+    "candidate_sha256": {
+      "src/telnet/TelnetProxy.js": "ddec07546b2d98fb6400c6e0eaa468332389f76bba2ad825a363b1216e0f36d8",
+      "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+      "config.js": "3d6d33a25b8d86cde88d02ae538846592a020e8d64063abdb231a6ba7b27d49e",
+      "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5"
+    },
+    "server_revision": "6c25317168b762f7d9088a54d3f8295438827a0e",
+    "server_sha256": {
+      "main.js": "1b2f4c9747380dbd77ddfbc918d24c4ce225c7dd51331e75d8c2102d852bfda9",
+      "core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+      "config/config.hjson": "daae39792955eaf7b99c45fc936d54b153f62ea0d3f77672f45a8ace756a7dbc",
+      "package-lock.json": "8fcaecda3a4b1756ad295be95486cbdd5b9afea005949ac3da8822224c822d56",
+      "config/menus/loc-activitypub.hjson": "82861725a47e5892bbfd2251feb02ca0bb46707516a872cf373b350b704c9fe7",
+      "config/menus/loc-doors.hjson": "fb012c018ec054a7e3261f2b4ef28dc568742b0936bfc56ba9377745f8c43530",
+      "config/menus/loc-file_base.hjson": "9d9a02672bcd18b122827e6112ecfd99a4e7ff2916052847de26a87c6808f6c2",
+      "config/menus/loc-login.hjson": "215f943d381a2acc4c1713ff14331efaee19c474218428eac6b64f77b9355f18",
+      "config/menus/loc-main.hjson": "dc2fd404bbb8a35bc5c8bb43b3fe66378173cd8d87d0ab25978af16bda15d227",
+      "config/menus/loc-message_base.hjson": "607939acb6818c7c5fb50a2d90b04fed1b92d50f51fb9ca4215cef06644d2540",
+      "config/menus/loc-new_user.hjson": "04f466f10cc5c169c03186bc8a7fde7b18d5d938e7f0b70873d74bae15161cec",
+      "config/menus/loc-private_mail.hjson": "ffb59f0d6f2d592181d2bc304d46e9e2a3b71a14c2d6cd65a639f6b0c6f3d382"
+    },
+    "wire_sha256": {
+      "to-bbs.bin": "400a2de2159759e4a1aacb9574ee1499c0e63dd96a92c66dc90c36828e944495",
+      "from-bbs.bin": "52b8d65c8ff5fd6f1d7f5bd3f423e318d3a4acc91eb364cc61687e33504565ed",
+      "sent.bin": "85c95de8215080a70749e457bc8314a2123a31f29609d9c473304640e1b0c021",
+      "display.bin": "74d6f9cf754b7f4ad66083d17dd36d9979c428208ab09da1eac009dbf64b8820",
+      "SCREEN.BIN": "085fd350492f11cb3f6bea298f4cbb8ba15697cef7fa0b18bae26ee96ba257f7",
+      "server-session.jsonl": "62ef1e6cd46ea41d3ce45fc4a6300087a4924f02bd2b1c0149e5b1d7556a9f12"
+    },
+    "scope": "Actual DOS and isolated SynthModem TelnetProxy against owned stock ENiGMA on loopback. Synthetic ATZ/ATD1 call; transparent immediate relay has no timed buffering or terminal replies. No SIP/audio, physical modem or full BBS compatibility claim."
+  },
+  "audit": {
+    "evidence_audited": true,
+    "workflow_passed": true,
+    "route": "download",
+    "serial_payload_exact": true,
+    "display_payload_exact": true,
+    "authenticated": true,
+    "no_post_saved": true,
+    "semantic": {
+      "complete_ZMODEM_protocol": true,
+      "exact_download": true,
+      "only_expected_downloads": true,
+      "official_download_counter_incremented": true,
+      "posttransfer_search_response": true
+    },
+    "observed_editor_keys": null,
+    "auditor_sha256": "e28f26830b1c1d3f960089275ea83bec58688350dec3e9d9d77623318e76c923",
+    "codec_sha256": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f"
+  },
+  "protocol": {
+    "start": 58049,
+    "end": 70090,
+    "files": [
+      {
+        "name": "PCXTEST.BIN",
+        "length": 11521,
+        "start": 58049,
+        "end": 70068,
+        "sha256": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6",
+        "packets": [
+          {
+            "offset": 58127,
+            "end": 59191,
+            "crc_end": 59190,
+            "ending": 107,
+            "length": 1024,
+            "sha256": "1a4ef89b50f6077813e6dc7e67ba1f2b00df10876e26b86fc143d9bc7b19697e",
+            "verified_before": 0,
+            "replayed": false,
+            "position": 1024,
+            "after_eof": false
+          },
+          {
+            "offset": 59204,
+            "end": 61322,
+            "crc_end": 61322,
+            "ending": 105,
+            "length": 2048,
+            "sha256": "b2ad568adb6eefd8da9e2420256f6989a7d9e5e2bbb7d01b0835b0a96a9c9aaa",
+            "verified_before": 1024,
+            "replayed": false,
+            "position": 3072,
+            "after_eof": false
+          },
+          {
+            "offset": 61322,
+            "end": 65552,
+            "crc_end": 65552,
+            "ending": 105,
+            "length": 4096,
+            "sha256": "393c9c945ec79f2c616fc381a5b9218ad961c57cc3eed36abd1b7412e66eccb1",
+            "verified_before": 3072,
+            "replayed": false,
+            "position": 7168,
+            "after_eof": false
+          },
+          {
+            "offset": 65552,
+            "end": 70047,
+            "crc_end": 70047,
+            "ending": 104,
+            "length": 4353,
+            "sha256": "8bb482c2bcad16b9140ba45d823e9bb5e8d854d4e0c00526f84cbc5ed5fc03ee",
+            "verified_before": 7168,
+            "replayed": false,
+            "position": 11521,
+            "after_eof": false
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "kind": "header",
+        "offset": 58049,
+        "end": 58063,
+        "format": 67,
+        "type": 4,
+        "position": 16908288,
+        "header": "0400000201"
+      },
+      {
+        "kind": "metadata",
+        "name": "PCXTEST.BIN",
+        "offset": 58063,
+        "end": 58114,
+        "crc_end": 58113,
+        "ending": 107,
+        "length": 44,
+        "sha256": "9bc36315042f475a78586dd231bf213c45dc8a12688da9bbe318c311273e52de"
+      },
+      {
+        "kind": "header",
+        "offset": 58114,
+        "end": 58127,
+        "format": 67,
+        "type": 10,
+        "position": 0,
+        "header": "0a00000000"
+      },
+      {
+        "kind": "data",
+        "name": "PCXTEST.BIN",
+        "offset": 58127,
+        "end": 59191,
+        "crc_end": 59190,
+        "ending": 107,
+        "length": 1024,
+        "sha256": "1a4ef89b50f6077813e6dc7e67ba1f2b00df10876e26b86fc143d9bc7b19697e",
+        "verified_before": 0,
+        "replayed": false,
+        "position": 1024,
+        "after_eof": false
+      },
+      {
+        "kind": "header",
+        "offset": 59191,
+        "end": 59204,
+        "format": 67,
+        "type": 10,
+        "position": 1024,
+        "header": "0a00040000"
+      },
+      {
+        "kind": "data",
+        "name": "PCXTEST.BIN",
+        "offset": 59204,
+        "end": 61322,
+        "crc_end": 61322,
+        "ending": 105,
+        "length": 2048,
+        "sha256": "b2ad568adb6eefd8da9e2420256f6989a7d9e5e2bbb7d01b0835b0a96a9c9aaa",
+        "verified_before": 1024,
+        "replayed": false,
+        "position": 3072,
+        "after_eof": false
+      },
+      {
+        "kind": "data",
+        "name": "PCXTEST.BIN",
+        "offset": 61322,
+        "end": 65552,
+        "crc_end": 65552,
+        "ending": 105,
+        "length": 4096,
+        "sha256": "393c9c945ec79f2c616fc381a5b9218ad961c57cc3eed36abd1b7412e66eccb1",
+        "verified_before": 3072,
+        "replayed": false,
+        "position": 7168,
+        "after_eof": false
+      },
+      {
+        "kind": "data",
+        "name": "PCXTEST.BIN",
+        "offset": 65552,
+        "end": 70047,
+        "crc_end": 70047,
+        "ending": 104,
+        "length": 4353,
+        "sha256": "8bb482c2bcad16b9140ba45d823e9bb5e8d854d4e0c00526f84cbc5ed5fc03ee",
+        "verified_before": 7168,
+        "replayed": false,
+        "position": 11521,
+        "after_eof": false
+      },
+      {
+        "kind": "header",
+        "offset": 70047,
+        "end": 70068,
+        "format": 66,
+        "type": 11,
+        "position": 11521,
+        "header": "0b012d0000"
+      },
+      {
+        "kind": "header",
+        "offset": 70068,
+        "end": 70088,
+        "format": 66,
+        "type": 8,
+        "position": 0,
+        "header": "0800000000"
+      }
+    ],
+    "finish": {
+      "offset": 70068,
+      "last_header_offset": 70068,
+      "end": 70090
+    },
+    "controls": [
+      {
+        "type": 9,
+        "position": 0,
+        "offset": 93,
+        "seconds": 83.42080494796392
+      },
+      {
+        "type": 3,
+        "position": 1024,
+        "offset": 114,
+        "seconds": 83.71753703407012,
+        "recovery": false
+      },
+      {
+        "type": 1,
+        "position": 587210752,
+        "offset": 134,
+        "seconds": 86.31150468706619
+      },
+      {
+        "type": 8,
+        "position": 0,
+        "offset": 155,
+        "seconds": 86.35994747199584
+      }
+    ]
+  },
+  "metadata": {
+    "file": "PCXTEST.BIN",
+    "source_size": 11521,
+    "source_sha256": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6",
+    "download_count_before": 17,
+    "download_count_after": 18
+  },
+  "extra_capture_sha256": {
+    "node-serial-in.bin": "302c22bbc2feebc6578696a38c9f8882ed30e0177dd58c71159b938cb0eb447b",
+    "node-serial-out.bin": "73803294092f0f85a40642065e8e4f0806b2f01ff48bcf711a99349f58822ed0",
+    "chunk-trace.json": "a3288ccba34d4961e07e3081094a4d7ec66e17a2a94a6c70f805728fc6017967",
+    "decoded-trace.json": "0d49bb74a535b243095f6d3b5b740acd4532592abb2cb2b523d7c2914d84f5a7",
+    "file-metadata.json": "ae86cfccedb3259be5c7d13a299fd4d375db3275ca1107cba9517ebf758b1432",
+    "protocol.json": "72c84adf4156cf745a7e123d93e23db897e9d9537d0b2ffbc0cb9386848dec39",
+    "MODEM.PRM": "e1dfaee9303d98eeec2e108beec749200bc0c0da5aa106b491b9ae3ad1ca59be",
+    "dosbox.conf": "20e40f7a10889f84989d51fcb5f20466726e37845e74f57afbbec014e2bfc1dd"
+  },
+  "application_changed": false,
+  "candidate_changed": false,
+  "server_changed": false,
+  "limits": [
+    "Existing owned lab helper/configuration selects ZedZap first; no arrow-based protocol-selector claim.",
+    "One logged-in automatic BBS download; upload, other protocols, failures/retry/cancel remain open.",
+    "No SIP/RTP, answering-modem DSP, analog audio, physical DCD/CTS or Boca/SPA2102 test.",
+    "Earlier stock ENiGMA input fragmentation failures remain open."
+  ]
+}
