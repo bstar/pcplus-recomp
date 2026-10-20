@@ -1,5 +1,12 @@
 # Complete DOS rebuild plan
 
+The [DOS/SynthModem transfer composition](lab/bbs/synthmodem-dos.md) passes84
+checks across small and65797-byte upload/download batches through the actual
+candidate proxy and independent lrzsz. Independent stream/file/hardware audits
+pass; BIOS keyboard selection and post-transfer terminal recovery are real DOS
+paths. Application and candidate bytes are unchanged. SIP/audio, physical modem,
+logged-in BBS transfers, error/retry/cancel and backpressure remain open.
+
 The [isolated SynthModem Telnet candidate](lab/bbs/patches/synthmodem-telnet/README.md)
 reproduces five stock defects and passes1220 assertions, including every byte
 under fragmentation and actual loopback TCP duplex. Its source patch adds

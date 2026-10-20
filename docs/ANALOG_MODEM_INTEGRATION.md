@@ -2,8 +2,9 @@
 
 Compatibility is the priority. This adds a hardware acceptance target to the
 ongoing source-built DOS PCPlus reconstruction; it does not replace the full
-application plan or establish hardware compatibility. Status: planned, source
-review only; no adapter, analog carrier, handshake audio or Boca test has run.
+application plan or establish hardware compatibility. Hardware testing remains
+planned; DOS/bridge software checkpoints are recorded below. No adapter, analog
+carrier, handshake audio or Boca test has run.
 
 ## Equipment and connection
 
@@ -90,6 +91,22 @@ Links below pin the reviewed source; future versions require rechecking.
   payloads. Unit-test fragmented negotiation and every byte, then correct the
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
+
+## DOS transfer composition checkpoint
+
+[Actual DOS transfer tests](../lab/bbs/synthmodem-dos.md) now pass84 checks over
+four routes through the exact candidate proxy: small and65797-byte batches,
+uploaded and downloaded with independent lrzsz. Numeric ATD1 precedes the bridge
+prompt and keyboard-entered server address. ANSI TTYPE/NAWS and BINARY are
+observed, both streams decode exactly, files match, terminal input/display
+resume, UART state restores and staging files disappear. The
+[independent audited receipt](validation/synthmodem-dos.json) freezes the DOS
+executable, candidate/config/logger, test helpers and wire hashes. No production
+application or bridge change was needed for this checkpoint.
+
+These tests use a synthetic call adapter and independent local transfer peer,
+not a real BBS or SIP/DSP/audio. Full BBS workflows, other transfer protocols,
+error/retry/cancel, slow-modem backpressure and Boca/SPA2102 acceptance remain open.
 
 ## Isolated bridge transport candidate
 

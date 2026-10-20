@@ -1,0 +1,358 @@
+{
+  "passed": true,
+  "checks": 84,
+  "cohorts": [
+    {
+      "label": "synthmodem-dos-03",
+      "producer": {
+        "passed": true,
+        "large": false,
+        "frozen_inputs": {
+          "lab/bbs/synthmodem_dos.py": "224548f7e3dfd9b045024f28e728ddb4eeec9a4eb8eac5f2db4dab1d8986e2b9",
+          "lab/bbs/synthmodem_serial.js": "62a3ad7993cd1201ebb5fe47122df0b908fdba73908e22c33ba40d20906d210d",
+          "standalone/test_terminal_zmodem_dos.py": "19b64ae9d6b2c6396a864000b7456dc799735abf249899c2b2fa9dd0bd347d6b",
+          "standalone/test_terminal_ymodem_dos.py": "8461bfa39bd76bf869ecf778e867fea1a97287da070abdf66377fbcb6ded92ee",
+          "standalone/test_terminal_transfer_dos.py": "1d9922cd2dea880a6559afdd86aceaa878937148846eaffc150bf8de5123bc76",
+          "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+          "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+          "standalone/terminal_config_fixtures.py": "dd38f8a0c6c77d5d2ec2120c1f3d6b8a755525d11e2f6d986a056a3d0d8e4df4",
+          "build/terminal/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+          "build/terminal/terminal.map": "8b1f7f07d7f617936765de21fed74a71ec28c7c5ce45e8519802cf62689c86b1"
+        },
+        "candidate_sha256": {
+          "config.js": "3d6d33a25b8d86cde88d02ae538846592a020e8d64063abdb231a6ba7b27d49e",
+          "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+          "src/telnet/TelnetProxy.js": "ddec07546b2d98fb6400c6e0eaa468332389f76bba2ad825a363b1216e0f36d8",
+          "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e"
+        },
+        "tools": {
+          "node": "v24.18.1",
+          "sz": "sz (lrzsz) 0.12.20",
+          "rz": "rz (lrzsz) 0.12.20"
+        },
+        "cases": [
+          {
+            "passed": true,
+            "direction": "rx",
+            "checks": {
+              "actual_terminal_ready": true,
+              "independent_peer_exit_zero": true,
+              "posttransfer_DSR": true,
+              "posttransfer_keyboard": true,
+              "DOS_normal_exit": true,
+              "hardware_restored": true,
+              "no_peer_errors": true,
+              "no_relay_errors": true,
+              "threads_stopped": true,
+              "exact_destination": true,
+              "sources_unchanged": true,
+              "numeric_local_call": true,
+              "BINARY_both_directions": true,
+              "TTYPE_ANSI": true,
+              "NAWS_80x25": true,
+              "inbound_Telnet_payload_exact": true,
+              "outbound_Telnet_payload_exact": true,
+              "screen_restored": true,
+              "no_stages": true,
+              "profile_unchanged": true,
+              "binary_unchanged": true
+            },
+            "peer_errors": [],
+            "relay_errors": [],
+            "peer_command": [
+              "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/sz",
+              "-b",
+              "-q",
+              "-L",
+              "1024",
+              "EMPTY.BIN",
+              "ODD.BIN",
+              "ALL.BIN"
+            ],
+            "peer_exit": 0,
+            "files": {
+              "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+              "ALL.BIN": "4a52d18f2409cca12e871a1095c79105803fc511852579d1884fa96f52ace240"
+            },
+            "binary_sha256": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+            "trace_sha256": {
+              "telnet-in.bin": "a584ae777c81052e6fcd471f88c4fa416429c3a9403a672864e116dcdfbdc4ef",
+              "telnet-out.bin": "66ffb5681b19155b7881952056d78bf2c1faeea909481129cc89e91ebd1a756f",
+              "terminal-in.bin": "a56fad7eca00e56cb5b44280d51969419c0e9ce09f08da8a814fe975fbfb193a",
+              "terminal-out.bin": "b8dc879835e340513a47e1faa7b73107a6d7bace9c4f355ef167adc5ec27abbb"
+            },
+            "literal_FF_payload_counts": {
+              "from_DOS": 0,
+              "to_DOS": 5
+            },
+            "scope": "Actual DOS controller, BIOS keys, UART, files and ZMODEM with independent lrzsz through actual candidate TelnetProxy and loopback TCP. Synthetic Hayes call and server framing; no SIP/audio, physical modem or real BBS."
+          },
+          {
+            "passed": true,
+            "direction": "tx",
+            "checks": {
+              "actual_terminal_ready": true,
+              "independent_peer_exit_zero": true,
+              "posttransfer_DSR": true,
+              "posttransfer_keyboard": true,
+              "DOS_normal_exit": true,
+              "hardware_restored": true,
+              "no_peer_errors": true,
+              "no_relay_errors": true,
+              "threads_stopped": true,
+              "exact_destination": true,
+              "sources_unchanged": true,
+              "numeric_local_call": true,
+              "BINARY_both_directions": true,
+              "TTYPE_ANSI": true,
+              "NAWS_80x25": true,
+              "inbound_Telnet_payload_exact": true,
+              "outbound_Telnet_payload_exact": true,
+              "screen_restored": true,
+              "no_stages": true,
+              "profile_unchanged": true,
+              "binary_unchanged": true
+            },
+            "peer_errors": [],
+            "relay_errors": [],
+            "peer_command": [
+              "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/rz",
+              "-b",
+              "-q"
+            ],
+            "peer_exit": 0,
+            "files": {
+              "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+              "ALL.BIN": "4a52d18f2409cca12e871a1095c79105803fc511852579d1884fa96f52ace240"
+            },
+            "binary_sha256": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+            "trace_sha256": {
+              "telnet-in.bin": "9552edf0ea0c6fefc3141a022d3b08e32c90de6c760ba1ce36ba4ce70bbc75d8",
+              "telnet-out.bin": "a44736053fca706daa3b4014649c895608f6135107dd5f4391dda647dd2825aa",
+              "terminal-in.bin": "975d1075fd7dbb18b0c1a1d76087c1e5f267032177f75222ad414c50268749f4",
+              "terminal-out.bin": "7faf9faa0cd2c014b8ddcd1b5af91cadd2d88412ea37d9c122aa7cf4cfbc26f8"
+            },
+            "literal_FF_payload_counts": {
+              "from_DOS": 0,
+              "to_DOS": 0
+            },
+            "scope": "Actual DOS controller, BIOS keys, UART, files and ZMODEM with independent lrzsz through actual candidate TelnetProxy and loopback TCP. Synthetic Hayes call and server framing; no SIP/audio, physical modem or real BBS."
+          }
+        ]
+      },
+      "independent_audit": {
+        "passed": true,
+        "cases": [
+          {
+            "direction": "rx",
+            "checks": 21,
+            "files": {
+              "EMPTY.BIN": 0,
+              "ODD.BIN": 1,
+              "ALL.BIN": 1029
+            },
+            "both_decoded_streams_exact": true,
+            "files_and_hardware_exact": true
+          },
+          {
+            "direction": "tx",
+            "checks": 21,
+            "files": {
+              "ALL.BIN": 1029,
+              "EMPTY.BIN": 0,
+              "ODD.BIN": 1
+            },
+            "both_decoded_streams_exact": true,
+            "files_and_hardware_exact": true
+          }
+        ],
+        "auditor_sha256": "33591157c5593cd7015aaa945426b267607b610296d4bd028579ba2c990bb5f6",
+        "independent_codec_sha256": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f"
+      }
+    },
+    {
+      "label": "synthmodem-dos-large-02",
+      "producer": {
+        "passed": true,
+        "large": true,
+        "frozen_inputs": {
+          "lab/bbs/synthmodem_dos.py": "224548f7e3dfd9b045024f28e728ddb4eeec9a4eb8eac5f2db4dab1d8986e2b9",
+          "lab/bbs/synthmodem_serial.js": "62a3ad7993cd1201ebb5fe47122df0b908fdba73908e22c33ba40d20906d210d",
+          "standalone/test_terminal_zmodem_dos.py": "19b64ae9d6b2c6396a864000b7456dc799735abf249899c2b2fa9dd0bd347d6b",
+          "standalone/test_terminal_ymodem_dos.py": "8461bfa39bd76bf869ecf778e867fea1a97287da070abdf66377fbcb6ded92ee",
+          "standalone/test_terminal_transfer_dos.py": "1d9922cd2dea880a6559afdd86aceaa878937148846eaffc150bf8de5123bc76",
+          "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+          "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+          "standalone/terminal_config_fixtures.py": "dd38f8a0c6c77d5d2ec2120c1f3d6b8a755525d11e2f6d986a056a3d0d8e4df4",
+          "build/terminal/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+          "build/terminal/terminal.map": "8b1f7f07d7f617936765de21fed74a71ec28c7c5ce45e8519802cf62689c86b1"
+        },
+        "candidate_sha256": {
+          "config.js": "3d6d33a25b8d86cde88d02ae538846592a020e8d64063abdb231a6ba7b27d49e",
+          "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+          "src/telnet/TelnetProxy.js": "ddec07546b2d98fb6400c6e0eaa468332389f76bba2ad825a363b1216e0f36d8",
+          "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e"
+        },
+        "tools": {
+          "node": "v24.18.1",
+          "sz": "sz (lrzsz) 0.12.20",
+          "rz": "rz (lrzsz) 0.12.20"
+        },
+        "cases": [
+          {
+            "passed": true,
+            "direction": "rx",
+            "checks": {
+              "actual_terminal_ready": true,
+              "independent_peer_exit_zero": true,
+              "posttransfer_DSR": true,
+              "posttransfer_keyboard": true,
+              "DOS_normal_exit": true,
+              "hardware_restored": true,
+              "no_peer_errors": true,
+              "no_relay_errors": true,
+              "threads_stopped": true,
+              "exact_destination": true,
+              "sources_unchanged": true,
+              "numeric_local_call": true,
+              "BINARY_both_directions": true,
+              "TTYPE_ANSI": true,
+              "NAWS_80x25": true,
+              "inbound_Telnet_payload_exact": true,
+              "outbound_Telnet_payload_exact": true,
+              "screen_restored": true,
+              "no_stages": true,
+              "profile_unchanged": true,
+              "binary_unchanged": true
+            },
+            "peer_errors": [],
+            "relay_errors": [],
+            "peer_command": [
+              "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/sz",
+              "-b",
+              "-q",
+              "-L",
+              "1024",
+              "EMPTY.BIN",
+              "ODD.BIN",
+              "ALL.BIN"
+            ],
+            "peer_exit": 0,
+            "files": {
+              "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+              "ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+            },
+            "binary_sha256": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+            "trace_sha256": {
+              "telnet-in.bin": "294cfc6f9696765b285a27c092364d5a4201adf627f76c06f228091c27a598e5",
+              "telnet-out.bin": "0118515aad8b9fb5164cbb7ccf3ae32bc3328613c6d56a0de0d7a442c451df3f",
+              "terminal-in.bin": "ebfa2ebae97e398ba0376926b80cb2adf4166b37cdeb8ec8da6435e56566dcbc",
+              "terminal-out.bin": "8b680cc6811a3d9cae04fc68f6382b0758ef69cf45a774939459bd061b9636c9"
+            },
+            "literal_FF_payload_counts": {
+              "from_DOS": 0,
+              "to_DOS": 258
+            },
+            "scope": "Actual DOS controller, BIOS keys, UART, files and ZMODEM with independent lrzsz through actual candidate TelnetProxy and loopback TCP. Synthetic Hayes call and server framing; no SIP/audio, physical modem or real BBS."
+          },
+          {
+            "passed": true,
+            "direction": "tx",
+            "checks": {
+              "actual_terminal_ready": true,
+              "independent_peer_exit_zero": true,
+              "posttransfer_DSR": true,
+              "posttransfer_keyboard": true,
+              "DOS_normal_exit": true,
+              "hardware_restored": true,
+              "no_peer_errors": true,
+              "no_relay_errors": true,
+              "threads_stopped": true,
+              "exact_destination": true,
+              "sources_unchanged": true,
+              "numeric_local_call": true,
+              "BINARY_both_directions": true,
+              "TTYPE_ANSI": true,
+              "NAWS_80x25": true,
+              "inbound_Telnet_payload_exact": true,
+              "outbound_Telnet_payload_exact": true,
+              "screen_restored": true,
+              "no_stages": true,
+              "profile_unchanged": true,
+              "binary_unchanged": true
+            },
+            "peer_errors": [],
+            "relay_errors": [],
+            "peer_command": [
+              "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/rz",
+              "-b",
+              "-q"
+            ],
+            "peer_exit": 0,
+            "files": {
+              "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+              "ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+            },
+            "binary_sha256": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+            "trace_sha256": {
+              "telnet-in.bin": "1e900cde0fb8904d4c697ea63efbf169f99966023f0ef998663ce7b9ef62c09f",
+              "telnet-out.bin": "5c7edf711b88e72669ae5362d4230a3e593357fe7f79303bb537a903db0442b2",
+              "terminal-in.bin": "a57a7bdc64b536ef0ad78c63a164e0d3feaa2fb3dcb804760491b94245c06109",
+              "terminal-out.bin": "4898371da8468727f1d7b69889a1ddd492e176c9947fe035b2ac2c11e53856bd"
+            },
+            "literal_FF_payload_counts": {
+              "from_DOS": 0,
+              "to_DOS": 0
+            },
+            "scope": "Actual DOS controller, BIOS keys, UART, files and ZMODEM with independent lrzsz through actual candidate TelnetProxy and loopback TCP. Synthetic Hayes call and server framing; no SIP/audio, physical modem or real BBS."
+          }
+        ]
+      },
+      "independent_audit": {
+        "passed": true,
+        "cases": [
+          {
+            "direction": "rx",
+            "checks": 21,
+            "files": {
+              "EMPTY.BIN": 0,
+              "ODD.BIN": 1,
+              "ALL.BIN": 65797
+            },
+            "both_decoded_streams_exact": true,
+            "files_and_hardware_exact": true
+          },
+          {
+            "direction": "tx",
+            "checks": 21,
+            "files": {
+              "ALL.BIN": 65797,
+              "EMPTY.BIN": 0,
+              "ODD.BIN": 1
+            },
+            "both_decoded_streams_exact": true,
+            "files_and_hardware_exact": true
+          }
+        ],
+        "auditor_sha256": "33591157c5593cd7015aaa945426b267607b610296d4bd028579ba2c990bb5f6",
+        "independent_codec_sha256": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f"
+      }
+    }
+  ],
+  "application_changed": false,
+  "candidate_changed": false,
+  "limits": [
+    "Synthetic Hayes call and server framing; no SIP/RTP, answering-modem DSP or analog audio.",
+    "Independent lrzsz peer, not a logged-in BBS transfer.",
+    "DOSBox-X nullmodem holds physical CTS ready; no physical DCD/CTS or line throughput evidence.",
+    "Cancellation/retry, modem backpressure and actual Boca/SPA2102 remain open."
+  ],
+  "failed_attempts": [
+    "synthmodem-dos-01: transferred and restored correctly; invalid bidirectional literal-FF presence assertion.",
+    "synthmodem-dos-02 and synthmodem-dos-large-01: uploads exact, but literal-FF presence still incorrectly required after ZMODEM escaped FF; final cohorts compare full payload streams instead."
+  ]
+}

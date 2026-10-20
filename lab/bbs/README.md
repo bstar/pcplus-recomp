@@ -8,7 +8,8 @@ All listeners must bind loopback. Accounts and messages are synthetic.
 The [isolated SynthModem transport candidate](patches/synthmodem-telnet/README.md)
 checks the actual upstream proxy and a maintained Telnet patch without starting
 SIP/audio or changing a service. It is separate from the existing Hayes test
-bridge and from physical modem acceptance.
+bridge and from physical modem acceptance. The [DOS composition](synthmodem-dos.md)
+adds actual DOS ZMODEM transfers through that candidate with an independent peer.
 
 
 The [Infocom save-edge workflow](enigma-infocom-edges.md) covers actual DOS
