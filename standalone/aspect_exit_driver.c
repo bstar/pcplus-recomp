@@ -8,6 +8,13 @@
 #include <dos.h>
 #include <i86.h>
 #include <stdio.h>
+#ifdef ASPECT_EXIT_RETRY
+#include <string.h>
+#include <errno.h>
+#include <malloc.h>
+#include "../src/aspect/process_serial.h"
+static unsigned retry_observation[10];
+#endif
 typedef void (__interrupt __far *irq)(void);
 static irq old_timer;
 static volatile unsigned fired;
@@ -30,10 +37,34 @@ static void __interrupt __far timer(void)
 static unsigned psp(void);
 #pragma aux psp = "mov ah,0x62" "int 0x21" "mov ax,bx" value [ax] modify [ax bx];
 void runtime_external_observe(unsigned a,unsigned b,unsigned c,unsigned d)
-{(void)a;(void)b;(void)c;(void)d;}
+{
+#ifdef ASPECT_EXIT_RETRY
+ retry_observation[0]=a;retry_observation[1]=b;retry_observation[2]=c;retry_observation[3]=d;
+ retry_observation[4]=native_break_phase();retry_observation[5]=native_program_busy;
+ retry_observation[6]=native_program_waiting;retry_observation[7]=aspect_process_serial_detached;
+ retry_observation[8]=aspect_serial_active;retry_observation[9]=runtime_error;
+#else
+ (void)a;(void)b;(void)c;(void)d;
+#endif
+}
 static unsigned exit_run(const char *path,unsigned limit)
 {
  unsigned result,record[13],i;FILE *file;union REGS a,b;
+#ifdef ASPECT_EXIT_RETRY
+ /* A second invocation in the same terminal session exercises ordinary CLI
+  * execution. Only the designated first script injects a foreground fault. */
+ if(!stricmp(path,"RETRY.ASX")){
+  unsigned normal=aspect_runtime_run(path,limit),error=errno,written;int handle;
+  unsigned evidence[3];evidence[0]=normal;evidence[1]=error;evidence[2]=_memavl();
+  if(!_dos_creat("RETRYWIT.BIN",0,&handle)){
+   _dos_write(handle,evidence,sizeof(evidence),&written);_dos_close(handle);
+   if(!_dos_creat("RETRYDBG.BIN",0,&handle)){
+    _dos_write(handle,retry_observation,sizeof(retry_observation),&written);_dos_close(handle);
+   }
+  }
+  return normal;
+ }
+#endif
  a.x.ax=0x3301;a.h.dl=0;int86(0x21,&a,&b);
  if(_dos_allocmem(0x20,&aspect_exit_extra))return 8;
  for(i=0;i<256;++i)((unsigned __far *)MK_FP(aspect_exit_extra,0))[i]=0xa55a;

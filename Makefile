@@ -1125,6 +1125,16 @@ test-aspect-parent-exit-mouse-normal: terminal-mouse-process aspect-banked-cli a
 test-aspect-parent-exit-mouse-source: aspect-parent-exit exit-owner aspect-exit-probe aspect-banked-cli aspect-banked aspect-compiler-dos terminal terminal-mouse terminal-mouse-process
 	python3 standalone/check_exit_source.py --attached --mouse
 
+.PHONY: aspect-parent-retry test-aspect-parent-retry test-aspect-parent-retry-mouse test-aspect-parent-retry-source
+aspect-parent-retry:
+	python3 standalone/build_aspect_exit_probe.py --attached --retry
+test-aspect-parent-retry: aspect-parent-retry aspect-banked-cli aspect-compiler-dos
+	python3 standalone/test_aspect_parent_process_dos.py --break-owner --exit-probe --retry
+test-aspect-parent-retry-mouse: aspect-parent-retry terminal-mouse-process aspect-compiler-dos
+	python3 standalone/test_aspect_parent_process_dos.py --break-owner --exit-probe --retry --mouse
+test-aspect-parent-retry-source: aspect-parent-retry aspect-parent-exit exit-owner aspect-exit-probe aspect-banked-cli aspect-banked aspect-compiler-dos terminal terminal-mouse terminal-mouse-process
+	python3 standalone/check_exit_source.py --attached --mouse --retry
+
 .PHONY: native-program-break test-native-program-break test-native-program-break-source
 native-program-break:
 	python3 standalone/build_native_program.py --break-owner

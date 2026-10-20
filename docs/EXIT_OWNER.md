@@ -79,7 +79,8 @@ including the normal CLI, both probes, attached terminal, compiler and process
 components, without originals, prior objects or REA databases.
 
 The standalone and both attached quarantine paths are covered, including the
-[mouse-enabled parent follow-up](PARENT_EXIT.md). Same-session retry still needs acceptance. Normal dispatch
+[mouse-enabled parent follow-up](PARENT_EXIT.md) and the
+[same-session retry](PARENT_RETRY.md). Normal dispatch
 publication, application-wide parent lifetime, the remaining native services
 and physical RS232/WiFi-modem/keyboard acceptance remain open. No F01–F16 gate
 closes from this checkpoint.

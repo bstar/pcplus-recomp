@@ -6,14 +6,14 @@ from build_aspect_process import ROOT,sha
 def read(path):return json.loads(path.read_text())
 def current(sources):
     for name,digest in sources.items():assert sha(ROOT/name)==digest,name
-def mouse_evidence(sub,case,parent,retained):
+def mouse_evidence(sub,case,parent,retained,resource_copies=2):
     """Decode the independent observer bytes rather than trusting PASS flags."""
     names=('seen before_mask before_off before_seg resume_mask resume_off resume_seg '
         'depth_before depth_after returned_ds scale_x scale_y count_before count_after '
         'menu_stage menu_count menu_code button_count button_code after_mask after_off '
         'after_seg state_bytes state_equal suspended_mask suspended_off suspended_seg').split()
     raw=(sub/'RENDER.BIN').read_bytes()
-    at=len(raw)-26-32*70-case['compared_parent_bytes']*2-(30 if retained else 0)-4150
+    at=len(raw)-26-32*70-case['compared_parent_bytes']*resource_copies-(30 if retained else 0)-4150
     fields=dict(zip(names,struct.unpack_from('<27H',raw,at)))
     assert fields==case['mouse_probe']
     header=struct.unpack_from('<7H',raw)

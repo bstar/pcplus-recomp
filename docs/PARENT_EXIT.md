@@ -1,5 +1,9 @@
 # Retained ASPECT return to the terminal
 
+The [same-session retry follow-up](PARENT_RETRY.md) now verifies a second
+successful ASPECT/PROGRAM/serial/file lifetime after retention in both parent
+variants, while the first retained callback and allocations remain valid.
+
 The [mouse-enabled receipt](validation/parent-exit-mouse.json) extends this
 checkpoint to the capability7 terminal with native mouse support: eight retained
 child routes pass376 checks and thirteen normal routes pass648 checks. Both COM
@@ -98,8 +102,7 @@ terminal remains64832 data/stack bytes and65368 resident code bytes, with the
 new text/logic in its existing ASPECT code bank.
 
 Retained allocations/remaining handles intentionally persist; automatic repair
-or unloading is not implemented. A normal script
-retry in the same DOS session after retention, normal dispatch publication,
+or unloading is not implemented. Normal dispatch publication,
 remaining native services, broader application ownership and physical
 RS232/WiFi-modem/keyboard acceptance remain open. This checkpoint closes no
 F01–F16 full application gate.

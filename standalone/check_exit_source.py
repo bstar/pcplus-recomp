@@ -7,13 +7,16 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--label',default='source-'+uuid.uuid4().hex)
     parser.add_argument('--attached',action='store_true')
     parser.add_argument('--mouse',action='store_true')
+    parser.add_argument('--retry',action='store_true')
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     if args.mouse:assert args.attached
+    if args.retry:assert args.attached
     folder=ROOT/'build/exit-owner/source-proofs'/args.label;folder.mkdir(parents=True,exist_ok=False)
     fresh=folder/'source';sources={}
     components=['exit-owner','aspect-process-break','aspect-exit-break','aspect-fault-break','terminal-process','aspect-compiler-dos']
     if args.attached:components+=['aspect-exit-parent','terminal']
     if args.mouse:components+=['terminal-mouse','terminal-mouse-process']
+    if args.retry:components+=['aspect-exit-retry']
     for name in components:
         manifest=json.loads((ROOT/'build'/name/'manifest.json').read_text())
         for path,digest in manifest['sources'].items():
@@ -42,6 +45,7 @@ subprocess.run([sys.executable,'standalone/build_terminal.py','--external-render
     if args.mouse:
         for flags in [['--mouse'],['--mouse','--external-render']]:
             code+=f"subprocess.run([sys.executable,'standalone/build_terminal.py',*{flags!r}],check=True)\n"
+    if args.retry:code+="probe.main(attached=True,retry=True)\n"
     with (folder/'build.log').open('w') as log:
         result=subprocess.run([sys.executable,'-c',code],cwd=fresh,stdout=log,stderr=log,timeout=180)
     products=['exit-owner/EXITPAR.EXE','exit-owner/EXITKID.EXE','aspect-process-break/ASPECT.EXE',
@@ -53,10 +57,11 @@ subprocess.run([sys.executable,'standalone/build_terminal.py','--external-render
     products+=['native-process/'+n for n in json.loads((ROOT/'build/native-process/manifest.json').read_text())['children']]
     if args.attached:products+=['aspect-exit-parent/ASPECT.EXE','terminal/TERMINAL.EXE']
     if args.mouse:products+=['terminal-mouse/TERMINAL.EXE','terminal-mouse-process/TERMINAL.EXE']
+    if args.retry:products+=['aspect-exit-retry/ASPECT.EXE']
     compared={n:dict(expected=sha(ROOT/'build'/n),actual=sha(fresh/'build'/n)) for n in products} if not result.returncode else {}
     report=dict(passed=result.returncode==0 and len(compared)==len(products) and
         all(p['expected']==p['actual'] for p in compared.values()),exit_code=result.returncode,
-        attached=args.attached,mouse=args.mouse,source_files=len(sources),sources=sources,products=compared,original_inputs=[],
+        attached=args.attached,mouse=args.mouse,retry=args.retry,source_files=len(sources),sources=sources,products=compared,original_inputs=[],
         checker_sha256=sha(Path(__file__)),build_log_sha256=sha(folder/'build.log'),
         scope='Fresh declared-source tree: normal banked CLI, actual exit/fault probes, attached terminal, compiler and recovered process components. No original executable, object cache or REA database.')
     (folder/'result.json').write_text(json.dumps(report,indent=2)+'\n')

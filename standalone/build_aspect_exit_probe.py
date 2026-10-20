@@ -4,15 +4,18 @@ import argparse,json
 from pathlib import Path
 import build_aspect_process as process
 ROOT=process.ROOT;OUT=ROOT/'build/aspect-exit-break';sha=process.sha
-def main(attached=False):
+def main(attached=False,retry=False):
     global OUT
-    OUT=ROOT/('build/aspect-exit-parent' if attached else 'build/aspect-exit-break')
-    process.main(ROOT/'standalone/aspect_exit_driver.c',output=OUT,parent_render=attached,break_owner=True)
+    if retry:assert attached
+    OUT=ROOT/('build/aspect-exit-retry' if retry else 'build/aspect-exit-parent' if attached else 'build/aspect-exit-break')
+    process.main(ROOT/('standalone/aspect_exit_retry_driver.c' if retry else 'standalone/aspect_exit_driver.c'),output=OUT,parent_render=attached,break_owner=True)
     manifest=json.loads((OUT/'manifest.json').read_text())
     manifest['sources'][str(Path(__file__).relative_to(ROOT))]=sha(Path(__file__))
+    if retry:manifest['sources']['standalone/aspect_exit_driver.c']=sha(ROOT/'standalone/aspect_exit_driver.c')
     manifest['exit_probe_attached']=attached
+    manifest['exit_probe_retry']=retry
     manifest['scope']='Actual banked ASPECT CLI and exit guard; controlled timer mutates INT1B during real RUN WAIT. '+('Attached terminal observes retained MCBs, invokes the known test callback and resumes serial I/O.' if attached else 'Callback/code retention tested by independent recovered EXEC parent after process exit.')
     (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--attached',action='store_true')
-    main(parser.parse_args().attached)
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--attached',action='store_true');parser.add_argument('--retry',action='store_true')
+    args=parser.parse_args();main(args.attached,args.retry)
