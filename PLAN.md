@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+The [two-session ENiGMA upload checkpoint](lab/bbs/enigma-concurrent-upload.md)
+uses actual loopback reference peers to keep upload B active through A's
+cancel/NFO/retry/details/NFO route. B's inode and source prefix survive both
+cleanup paths. B then completes details, acknowledges the new user's achievement
+pages and reaches its NFO. All 18 workflow checks and 19 corrupted-evidence cases
+pass; the [record](docs/validation/enigma-concurrent-upload.json) retains four
+harness failures and binds the unchanged staged core and 31 application products.
+This supplements DOS acceptance. Concurrent DOS clients, broader multiuser
+operations, live deployment, physical modem testing and all full application
+gates remain open.
+
 The [ENiGMA transfer-owner checkpoint](lab/bbs/enigma-transfer-owner.md)
 extends cancellation recovery to deletion errors and per-transfer file lists.
 The earlier tracked-session candidate can stall on a rejected cleanup promise;

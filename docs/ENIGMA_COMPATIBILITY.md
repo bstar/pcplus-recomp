@@ -4,6 +4,16 @@ The target includes the user's running `~/projects/black-flag-bbs` checkout,
 its configured menus and modules, and the source-built DOS client. Passing
 an isolated stock BBS is insufficient. Compatibility is not complete.
 
+The [two-session upload test](../lab/bbs/enigma-concurrent-upload.md) now verifies
+actual simultaneous loopback BBS sessions using declared reference peers.
+Upload B continues receiving source-backed data while A cancels, opens NFO,
+retries successfully and reopens NFO. B's temporary inode and valid prefix
+survive both cleanup paths. B then finishes and opens NFO after acknowledging
+its two new-user achievement pages. All 18 checks and 19 evidence rejections
+pass; the [record](validation/enigma-concurrent-upload.json) retains four harness
+failures. The core candidate and 31 DOS products are unchanged. Concurrent DOS
+clients, other multiuser features and live/physical acceptance remain open.
+
 The [transfer-owner workflow](../lab/bbs/enigma-transfer-owner.md) additionally
 covers a modeled upload cleanup denial with actual DOS/network recovery. It
 retains the partial after EACCES, keeps the NFO interactive, retires the failed
@@ -16,7 +26,7 @@ unhandled deletion rejection. File-list ownership is also scoped per transfer.
 A separate actual DOS receive/skip/receive regression passes 13 checks with
 NFO return after each transaction; seven damaged captures reject.
 All 31 application products remain unchanged. The running board is unchanged;
-real simultaneous sessions and physical modem/upload carrier loss remain open.
+broader simultaneous-session workflows and physical modem/upload carrier loss remain open.
 
 The [upload cancellation test](../lab/bbs/enigma-cancel-upload.md) now covers
 Escape during acknowledged data, NFO interaction, a complete retry and NFO

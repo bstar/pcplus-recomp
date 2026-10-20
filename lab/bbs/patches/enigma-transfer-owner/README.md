@@ -44,6 +44,12 @@ private filesystem data with explicit provider fault models. It also covers
 file-list write failures, independent owners, callback completion and exit
 continuation. It does not establish simultaneous BBS sessions.
 
+The later [two-session network test](../../enigma-concurrent-upload.md) verifies
+active-upload preservation across another client's cancellation and successful
+details cleanup using two actual reference-peer connections. Concurrent DOS
+clients, file-list protocols and combined deletion-error concurrency remain
+separate acceptance work.
+
 See [DOS/network acceptance](../../enigma-transfer-owner.md) for the separate
 normal and deletion-error workflows. Physical modem acceptance, upload carrier
 loss, original source dates and full application reconstruction remain open.

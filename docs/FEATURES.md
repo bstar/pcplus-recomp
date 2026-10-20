@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+The [concurrent ENiGMA upload record](validation/enigma-concurrent-upload.json)
+adds 18 checks on two real reference-peer sessions, with 19 damaged evidence
+variants rejected. An active upload retains its inode and exact source prefix
+while the other client cancels, opens NFO, retries and opens NFO again. Both
+files finish with correct uploader metadata; the new user's achievement notices
+are acknowledged before Search. Four harness failures remain documented. This
+is server concurrency evidence, not concurrent DOS/physical modem acceptance;
+all 31 application products are unchanged and no whole-application gate closes.
+
 The [transfer-owner checkpoint](validation/enigma-transfer-owner.json) adds
 39 actual helper/module checks with modeled filesystem failures and 141 upstream
 regressions. Separate actual DOS routes pass 21 normal-cleanup checks and 24

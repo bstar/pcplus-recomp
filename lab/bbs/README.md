@@ -5,6 +5,11 @@ and Mystic servers. Downloaded server programs, source checkouts, user databases
 wire captures and DOS snapshots stay under ignored `build/bbs-lab/`.
 All listeners must bind loopback. Accounts and messages are synthetic.
 
+The [concurrent upload workflow](enigma-concurrent-upload.md) keeps one actual
+reference-peer upload active while another cancels, visits NFO, retries and
+visits NFO again. It also checks new-user achievement interruptions before
+File Base input resumes. This supplements the DOS and deletion-error tests.
+
 For the owned server, the [transfer-owner workflow](enigma-transfer-owner.md)
 extends upload cancellation/NFO/retry coverage to a modeled deletion error.
 Its candidate also scopes protocol file lists per transfer and keeps failed
