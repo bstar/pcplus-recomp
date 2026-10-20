@@ -1,0 +1,157 @@
+{
+  "date": "2026-10-20",
+  "passed": true,
+  "whole_application_gates_closed": [],
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/program_break/install.asm",
+      "start": 29960,
+      "bytes": 80,
+      "file_offset": 34568,
+      "sha256": "f89f6d9d4b5983035eeddbf2c49e1895451e890d5c61248a8185929a929765bb",
+      "read_evidence": "ev_d6125775e9bcdcc0131c8ae6de557f98b91ffe48e19180d07234ed2360f9fcf4",
+      "mapping_evidence": "ev_cb13336b8ded0a420336aa070ff8a2811792e4ae7dab5a345dfa3d94a38a3640"
+    },
+    {
+      "file": "reconstruction/program_break/restore.asm",
+      "start": 30090,
+      "bytes": 36,
+      "file_offset": 34698,
+      "sha256": "0d50e110bd8df6f8b392d008895d26a881d499d0b8f4579717c2a5d66099e57f",
+      "read_evidence": "ev_da3a528da79438ec05f5c16ef3a4f42ed4984bb10f78bbfa624c90d9003f8db2",
+      "mapping_evidence": "ev_04c98aa671cbac3a926896ba41f548cfcb224075ade0497e1217111cdda0344d"
+    },
+    {
+      "file": "reconstruction/program_break/ignore.asm",
+      "start": 32656,
+      "bytes": 1,
+      "file_offset": 37264,
+      "sha256": "7a4a4b50f5121ed5310ece45a7eeb7af5545af63ee2ae52add4f37788f075b1d",
+      "read_evidence": "ev_cff775fa5fa1458ead7dffc847ab22841b1942829990dcd55a2621ee9c724892",
+      "mapping_evidence": "ev_d9e662e784bed32c1d9b7394ec1dd3122da9ba473c659c38a42d8dc71c8bea4e"
+    }
+  ],
+  "recovered_bytes": 117,
+  "linked_cases": 48,
+  "original_comparisons": 48,
+  "interrupt_frame_cases": 8,
+  "DOS": {
+    "passed": true,
+    "cases": 16,
+    "label": "dos-20261020102535",
+    "binary_sha256": "ba5316088a0857baf98e4691017edd8dc1f891c64f6bb410a55a2f96669c4aeb",
+    "checks": [
+      "Four flags crossed with real initial and child break0/1 settings",
+      "Actual DOS21 gets/sets both vectors, installed offsets/CS verified",
+      "Actual INT1B/INT23 IRET preserves CPU flags",
+      "Saved vectors restored after simulated child vector replacement",
+      "Original conditional break policy checked; native callee stack cleanup and DS=SS checked",
+      "Independent original vectors and break state restored before exit"
+    ],
+    "scope": "Source-linked recovered native code under DOSBox-X8086; software interrupts and simulated child changes, no child EXEC, physical keyboard or production owner binding."
+  },
+  "source_rebuild": {
+    "passed": true,
+    "inputs": 8,
+    "binary_sha256": "ba5316088a0857baf98e4691017edd8dc1f891c64f6bb410a55a2f96669c4aeb",
+    "fresh_tree": "build/program-break/source-only-445aesh7",
+    "scope": "Fresh tree contains only declared assembly/encoding/diagnostic/build source and numerical provenance. No original executable, prior object, analysis database or REA session is a build input."
+  },
+  "manifest": {
+    "binary_sha256": "ba5316088a0857baf98e4691017edd8dc1f891c64f6bb410a55a2f96669c4aeb",
+    "recovered_bytes": 117,
+    "inputs": {
+      "reconstruction/program_break/abi.inc": "fb3534541a801cf698108fa82d65f4840bf7a46af1841231adc166bf63f24d03",
+      "reconstruction/program_break/provenance.json": "8bbe51fd6417d0a194c76a7c368a0733270e6c7c8635d9fa0d4b8f71b80faaa6",
+      "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+      "standalone/program_break_diagnostic.asm": "aa3942fe422e4fa914e21bdff4fdf602d41582306e5b5a03ea4144fdda6d2bb2",
+      "standalone/build_program_break.py": "5e2e5e7502f7d243ca62b707ffa870f91e7b9a3bc614ccb644293603d33cb33f",
+      "reconstruction/program_break/install.asm": "c76ea6efb5c2f8c6f2425b0e56e8c52923705dc10869b49030f2196f18adf929",
+      "reconstruction/program_break/restore.asm": "3c7534c97d9b48ec9e987705ac9b63238f83f03608ef576b36511f07c3a1fedf",
+      "reconstruction/program_break/ignore.asm": "f82c168d94bcceae53c319fb892175563ef3a403dbbe29b4ba823bb6189b1280"
+    }
+  },
+  "previous_products_unchanged": 31,
+  "previous_product_hashes": {
+    "aspect-process-parent/ASPECT.EXE": "cd580a12fda2e38edbac6fa9ebd19727b11c9e8393b1a6fe561531164bebb63d",
+    "aspect-fault/ASPECT.EXE": "bbeb4c85546d0cb0e6c94801d78c4472e4a77efe7cb1a1c6dab6e7e2b03f5c7e",
+    "aspect-process/ASPECT.EXE": "ccf0aeaf2f58ef8628335f170df859a01217885dc6e58ea7433f648bbee57025",
+    "aspect-runner/ASPECT.EXE": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+    "aspect-compiler-dos/ASPCOMP.EXE": "3470c718df0d21fad4635b99f6c3b2e5d307637581728bdb639e6e9521a9c931",
+    "terminal-process/TERMINAL.EXE": "80eb796f2404f06382da9e22f869c534c3a0b9d174ebcbc19019f9df0e302aad",
+    "terminal/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+    "native-program/PROGRAM.EXE": "582a6844f454de92e66fad3e6694b26b1fdee6565d91ce563e8ebc38d8afb8d1",
+    "native-program/OWN1.COM": "4a02a70aa7ddec17648947eb822a045a3bbc5666485d0861277f784632640a39",
+    "native-program/OWN2.COM": "e496c8227feaeee3abe5d00a2ac8a77624a0070a2e41d82215dadf912171a4b5",
+    "native-display/DISPLAY.EXE": "0e6dc8e4e852e0f940b810a7aefbae2378c3c18985ddcf2dea1c01f5544dd6cf",
+    "native-display/VIDEO.COM": "e38463e46b8f8c42f2bcd90a1e9707ace08ae63704fa16e317a87df3fbb39605",
+    "process-serial/PSERIAL.EXE": "7cf3775f5e26ab6e83023744c6ddfaec9de57073449570fe514c0584ee4c9619",
+    "process-serial/UART1.COM": "a7bb9817a9401d7c0127d68b5bc38f5f9a2b47e34827c4daeee471857deb654e",
+    "process-serial/UART2.COM": "3dda15dc346ef3ddfc42eb6b54890254590dd6fc7ce48f1c116d9d84cc862f3f",
+    "native-process/NATIVE.EXE": "03723b988eab3df0cf7c128a1c6fc8356045b2bc0aac3865ab8f975ee300a7e0",
+    "native-process/NAMES.EXE": "0485267021744f48db472a3c6a6ebe10beabb3ac64d3b673c2748a8e1e0e8409",
+    "native-process/CHILD.COM": "0c8bb3b2499821ac74ddd47e4cc58ee34a633d7537be5f15db7ab80f878f9f18",
+    "native-process/DIVIDE.COM": "a2d4de6488769a320efd699e9c8e367574f7d398f9b1b63a30a22b099fb90e79",
+    "native-process/VECT.COM": "ca624aef48dfd14a782633e6253fdc817c6df15c61aaafe73ffc814a1f01b79f",
+    "native-process/RESIDENT.COM": "b56878449a5528fa3403207d369262e3a5422d2d489cce2f323727579bc200a8",
+    "native-process/EMPTY.COM": "fb3899847c3e4e1e817dd8f80108e41a46693128b4aa3a8306f3d86cdbaa79d6",
+    "native-process/FLAGS.COM": "83c3623d9e7e8db33301b96448910701f95033debff389462ef8c4d7e92489c0",
+    "native-process/E17.COM": "c3a5760861de337896c7259bb44f6c05284278040d22d4fc9cb42688d8d247e1",
+    "native-process/E21.COM": "def6a10413daf417e92cc622ffbeb96dd3abf12796f9ca071662503c1ce781b1",
+    "native-process/E22.COM": "f9903bca908e88fc0c10aa4ac088a180493ac66d8d2c911dcf8eae362b5a0b6b",
+    "native-process/CHILD.EXE": "63080cc4387cd191b3ae0495ad21b023e266689336c4f29c22190246b2a2c8df",
+    "terminal-mouse/TERMINAL.EXE": "8bd0d5ab6f6e8b83b87be6ba1202e419ddeab55bbd53644ee82a7da48d4cc950",
+    "terminal-mouse-process/TERMINAL.EXE": "1af63634144416f0076f60bd545bedaf0dd87a615fef9aad221e432509a190c6",
+    "setup/PRMEDIT.EXE": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646",
+    "setup-mouse/PRMEDIT.EXE": "0f0dafd6b783bf8ae5d170ddd4448273057cf7ff168e8e21d74ef1be657e8128"
+  },
+  "retained_failures": [
+    {
+      "path": "build/program-break/dos",
+      "reason": "Unqualified BREAK invoked the shell built-in; required output check rejected it."
+    },
+    {
+      "path": "build/program-break/dos-explicit-01",
+      "reason": "This DOSBox-X shell also treated BREAK.EXE as the built-in. Diagnostic renamed BRKVEC.EXE; both earlier runs excluded."
+    }
+  ],
+  "followup_frontier": {
+    "addresses": [
+      "0x140c9",
+      "0x140df",
+      "0x15c20"
+    ],
+    "evidence": [
+      "ev_cfb6d81d387b2f2045f96982b84bd32a416c32948b5bb5d8408172a9bdf0c426",
+      "ev_258c71f5d19543a9462e95faa5e4fbf3532b55342863d4a4f978eff53e7a0af5",
+      "ev_00078c020d6bb10806525f415dea7b037b1ca26f09198509086d69011bbf5353"
+    ],
+    "observation": "Conditional wrappers call5c20 with0/1; it writes index14h to port DS7a90, then31 or BDA0485 minus1 to the next port. No hardware purpose or runtime integration inferred."
+  },
+  "evidence": {
+    "build/program-break/component-checks.json": "122224c162e0b030e888aeb894a6b32c8404c2e66cb38c0b6f061a114e1b50b2",
+    "build/program-break/original-checks.json": "2c1a9733e3fd7a4c0243787b1e4a584d609f1ef527c69ef6bffd6b4f16b8816b",
+    "build/program-break/dos-checks.json": "09426e82e2f04588783d0c82f5d32d842107a15a512abb794d920f9982e3c6af",
+    "build/program-break/source-checks.json": "e17142c950813e9b2fe12834621a98ccd88b5273b5dce2abb33468d53213a4d8",
+    "build/program-break/manifest.json": "5d83af88b6769e30c0a9a30463736db568d7c57c24fadd339858b080003d7305",
+    "analysis/program-break-01.rea.json": "a0436e4e6e7cc34a6a827f2df5e9c4ba6116a5d4c9dca910209ebbbabea46d8a",
+    "analysis/program-break-followup-01.rea.json": "4ab405b98500589e4412b682ce4db691a813883602b06cbd9f2e4b19fe3f34b9"
+  },
+  "nix_lock_sha256": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+  "limitations": [
+    "Native component only; no production controller binding or nested ownership policy.",
+    "7f90 is a source-mapped CF byte referenced by7508; Ghidra has no function at that entry.",
+    "Decompiler guessed phantom parameters for758a; decoded RET and assembly define the recovered ABI.",
+    "DOS services are modeled in linked comparisons; actual DOSBox-X8086 cases exercise real DOS services/software interrupts, not a physical Ctrl-Break key or arbitrary DOS kernels.",
+    "Child changes are simulated in the parent, not EXEC acceptance.",
+    "Native routines do not provide guarded nested ownership or foreground fault/PSP/parent leases. Normal PROGRAM/ASPECT publication and F01-F16 remain open."
+  ],
+  "test_sources": {
+    "standalone/check_program_break.py": "9dcb4890ade73aa1dc46831fc2507b42badfe4be2d2c440015cbadd752e1eb0a",
+    "standalone/test_program_break_dos.py": "e3e4eccd7e041d3fe6127220fcb2c0464cb5c59577f09bfc88544d5a858415ec",
+    "standalone/check_program_break_source.py": "9ca15238bd58173cfe198b4ef62716d3cd3cd196a1e56a21aa7ab6c2c6d35c39",
+    "reconstruction/program_break/recover.py": "d5614761a5d967c15b4662ccaed77e1b5ca9309212125df5eb54c212d860cc03",
+    "Makefile": "cc12a3d66a5da5bf252274ff452b987490d77e54dfc8c9b5e338c96720eb2c05"
+  }
+}

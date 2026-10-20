@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+Native reconstruction resumes with the [PROGRAM break services](docs/PROGRAM_BREAK.md):
+117 exact bytes recovered through REA,48 source/original install/restore cases,
+eight interrupt frames and16 actual DOS cases. A fresh eight-input source tree
+reproduces BRKVEC.EXE; all31 earlier DOS products remain unchanged. The original
+conditional break policy and two rejected shell-name collisions are retained in
+the [receipt](docs/validation/program-break.json). Guarded parent/PSP/trap lifetime,
+macro/window/error services and normal external-opcode publication remain open;
+no full application gate closes.
+
 The [combined checkpoint](lab/bbs/enigma-combined.md) installs five compatibility
 candidate families together and passes all seven DOS routes: 101 checks and 80
 damaged captures rejected, plus 12 cumulative evidence corruptions. Two reference

@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+The [PROGRAM break component](validation/program-break.json) adds117 exact
+original instruction bytes,48 paired cases,eight interrupt frames and16 actual
+DOS cases. Its source-only rebuild reproduces the linked diagnostic while the
+31 earlier DOS products remain unchanged. These services still need guarded
+application ownership and controller binding; no F01–F16 gate closes.
+
 The [combined ENiGMA record](validation/enigma-combined.json) accepts seven
 specific DOS workflows with five staged server patch families installed together:
 101 checks, 80 route-evidence corruptions and 12 cumulative corruptions. A

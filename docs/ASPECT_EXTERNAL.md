@@ -1,5 +1,10 @@
 # ASPECT external command frontends
 
+The [native Ctrl-Break services](PROGRAM_BREAK.md) now supply117 exact bytes for
+PROGRAM's INT1B/23 save/install/restore and IRET handler. Their component,
+original comparison, actual DOS and source-only proofs do not yet supply the
+guarded application owner or publish any external opcode.
+
 The maintained host and DOS compilers now emit native DOS, RUN and SHELL records.
 Their native frontends assemble and pass CPU and actual DOS ABI checks. **General
 external execution is not enabled in the normal interpreter.** These three slots still

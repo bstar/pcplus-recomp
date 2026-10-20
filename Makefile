@@ -1040,7 +1040,17 @@ test-native-process: native-process
 	python3 standalone/test_native_process_dos.py
 	python3 standalone/test_native_process_dos.py --namespace
 
-.PHONY: native-display test-native-display
+.PHONY: native-display test-native-display program-break test-program-break test-program-break-source test-program-break-original
+program-break:
+	python3 standalone/build_program_break.py
+test-program-break: program-break
+	python3 standalone/check_program_break.py
+	python3 standalone/test_program_break_dos.py
+test-program-break-source: program-break
+	python3 standalone/check_program_break_source.py
+test-program-break-original: program-break
+	python3 standalone/check_program_break.py --original
+
 native-display:
 	python3 standalone/build_native_display.py
 test-native-display: native-display
