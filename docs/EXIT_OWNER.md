@@ -78,8 +78,8 @@ checks. A fresh tree with only declared sources reproduces29 DOS products,
 including the normal CLI, both probes, attached terminal, compiler and process
 components, without originals, prior objects or REA databases.
 
-The standalone and non-mouse attached quarantine paths are covered. The
-mouse-enabled parent and same-session retry still need acceptance. Normal dispatch
+The standalone and both attached quarantine paths are covered, including the
+[mouse-enabled parent follow-up](PARENT_EXIT.md). Same-session retry still needs acceptance. Normal dispatch
 publication, application-wide parent lifetime, the remaining native services
 and physical RS232/WiFi-modem/keyboard acceptance remain open. No F01–F16 gate
 closes from this checkpoint.

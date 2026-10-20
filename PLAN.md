@@ -1,11 +1,18 @@
 # Complete DOS rebuild plan
 
+The [mouse-enabled retained-child handoff](docs/PARENT_EXIT.md) now passes eight
+COM/flow routes and376 checks, plus thirteen normal workflows and648 checks.
+The independent observer verifies driver suspension during ASPECT, native
+callback/menu operation after return, and byte-identical startup/shutdown
+driver state. A fresh source tree reproduces33 products. Same-session script
+retry, normal publication, full ownership and physical acceptance remain open.
+
 The [retained-child handoff](docs/PARENT_EXIT.md) now passes eight COM/flow routes
 and296 checks through the attached terminal: real DOS31/4D status, retained
 MCBs/callback, retired renderer lease and resumed keyboard/UART/parser replies.
 The opt-in parent identifies retained memory. Thirteen normal routes pass518
 checks without a false notice; a raw parent repeats277 pressure checks, and31
-source products reproduce. Mouse-enabled fatal return, same-session script
+source products reproduce. Same-session script
 retry, normal publication, full ownership and physical acceptance remain open.
 
 The [CLI exit owner](docs/EXIT_OWNER.md) now recovers safe ownership or retains
@@ -13,7 +20,7 @@ the full validated PSP allocation before a callback can dangle. Twelve exit
 cases pass1162 parent assertions; a real RUN/WAIT quarantine passes277 more
 after memory pressure. The banked CLI passes13 normal attached workflows and
 all93 fault/control routes with the guard enabled. A fresh source tree
-reproduces29 products. The mouse-enabled terminal's fatal-retention path, normal
+reproduces29 products. Normal
 publication, application-wide ownership and physical acceptance remain open;
 no full application gate closes.
 

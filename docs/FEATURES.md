@@ -1,19 +1,25 @@
 # Full application reconstruction checklist
 
+The [mouse-enabled attached handoff](PARENT_EXIT.md) adds eight retained-child
+routes with376 checks and thirteen normal routes with648 checks. Native mouse
+events operate the real command menu after return, and all576 driver-state
+bytes match startup at shutdown. A fresh tree reproduces33 products. Same-session
+script retry, normal publication, physical acceptance and all full gates remain open.
+
 The [attached retained-child handoff](PARENT_EXIT.md) accepts eight COM/flow
 routes with296 checks, actual DOS31/4D/MCB/callback evidence and continued
 parent keyboard/serial/query operation. The opt-in parent identifies retained
 memory;13 normal routes pass518 checks without a false notice. A31-product
-fresh source tree reproduces both parent variants and probes. Mouse-enabled
-fatal return, same-session retry, normal publication and all full gates remain
+fresh source tree reproduces both parent variants and probes. Same-session
+retry, normal publication and all full gates remain
 open.
 
 The [CLI exit owner](EXIT_OWNER.md) adds validated DOS31 retention when callbacks
 or leases cannot be released. Twelve exit cases and an actual ASPECT RUN/WAIT
 quarantine preserve code/data/callbacks after memory pressure. Thirteen normal
 attached workflows and all93 fault/control routes pass with the guard enabled;
-29 source products reproduce without originals. Fatal return to the mouse-enabled
-terminal, normal publication, full parent lifetime and all F01–F16 gates remain
+29 source products reproduce without originals. Normal publication, full parent
+lifetime and all F01–F16 gates remain
 open.
 
 The [PROGRAM code banks](PROGRAM_BANKS.md) provide far entries for the guarded

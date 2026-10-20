@@ -9,7 +9,7 @@ sys.path.insert(0,str(ROOT/'src/aspect'))
 from compiler import compile_source
 
 
-def prepare_observer(out,offsets,map_path,exit_map=None):
+def prepare_observer(out,offsets,map_path,exit_map=None,mouse_probe=False):
     render.observer(offsets)
     source=(out/'observer.asm').read_text()
     resources=[('terminal_directory_context_valid',2),('terminal_directory_context',496),
@@ -170,8 +170,12 @@ resource_table: dw RESOURCE_TABLE
     sample='nested_count: dw 0\nleased_count: dw 0\nresource_mismatches: dw 0\nlease_on_return: dw 0\nlease_begins: dw 0\nlease_ends: dw 0\nlease_refreshes: dw 0\nfinal_owned: dw 0\nfinal_begins: dw 0\nfinal_ends: dw 0\nfinal_refreshes: dw 0\nrecords_overflow: dw 0\nactive_record: dw 0\nnested_records: times 32*70 db 0\nresource_before: times '+str(size)+' db 0\nresource_after: times '+str(size)+' db 0\n'
     source=source.replace('sample_end:',sample+'sample_end:').replace('resident_end:',extra+'\nresident_end:')
     if exit_map is not None:source=exit_observer(source,exit_map)
+    if mouse_probe:
+        from mouse_parent_probe import instrument
+        source=instrument(source,map_path,offsets)
     (out/'observer.asm').write_text(source)
     subprocess.run(['nasm','-fbin',str(out/'observer.asm'),'-o',str(out/'RENDER.COM')],check=True)
+    assert (out/'RENDER.COM').stat().st_size<=0xff00,'Observer exceeds DOS COM load limit'
     return (out/'RENDER.COM').read_bytes(),size
 
 
@@ -276,10 +280,14 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--label',default='parent-'+uuid.uuid4().hex);parser.add_argument('--case',action='append')
     parser.add_argument('--break-owner',action='store_true')
     parser.add_argument('--exit-probe',action='store_true')
+    parser.add_argument('--mouse',action='store_true')
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     if args.exit_probe:assert args.break_owner
-    out=ROOT/('build/aspect-parent-exit' if args.exit_probe else 'build/aspect-parent-break' if args.break_owner else 'build/aspect-parent-process')/args.label;out.mkdir(parents=True,exist_ok=False)
+    directory_name='aspect-parent-exit' if args.exit_probe else 'aspect-parent-break' if args.break_owner else 'aspect-parent-process'
+    if args.mouse:directory_name+='-mouse'
+    out=ROOT/'build'/directory_name/args.label;out.mkdir(parents=True,exist_ok=False)
     parent=ROOT/'build/terminal-process/TERMINAL.EXE';child=ROOT/('build/aspect-process-break/ASPECT.EXE' if args.break_owner else 'build/aspect-process-parent/ASPECT.EXE')
+    if args.mouse:parent=ROOT/'build/terminal-mouse-process/TERMINAL.EXE'
     if args.exit_probe:child=ROOT/'build/aspect-exit-parent/ASPECT.EXE'
     identities={}
     for product in (parent,child,ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE'):
@@ -287,12 +295,13 @@ def main():
         assert manifest['binary_sha256']==sha(product)
         identities.update(manifest['sources'])
     identities.update({str(p.relative_to(ROOT)):sha(p) for p in [Path(__file__),ROOT/'src/aspect/compiler.py',*[ROOT/'standalone'/n for n in ('aspect_parent_child.asm','aspect_process_shell.asm','test_aspect_renderer_dos.py','test_connection_dos.py','test_terminal.py','directory_fixtures.py','modem_fixtures.py','terminal_config_fixtures.py','directory_test_support.py')]]})
+    if args.mouse:identities['standalone/mouse_parent_probe.py']=sha(ROOT/'standalone/mouse_parent_probe.py')
     for name,digest in identities.items():
         assert sha(ROOT/name)==digest,name
         target=out/'sources'/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,target)
     render.OUT=out
     offsets=render.map_offsets(parent.parent/'terminal.map')
-    observer,resource_size=prepare_observer(out,offsets,parent.parent/'terminal.map',child.parent/'ASPECT.map' if args.exit_probe else None)
+    observer,resource_size=prepare_observer(out,offsets,parent.parent/'terminal.map',child.parent/'ASPECT.map' if args.exit_probe else None,args.mouse)
     harness=render.adapter();results=[]
     cases=[dict(name=k,kind=k,option=o,port=1,flow='H',translation='identity',full=False) for k,o in [('G',''),('T',' NOCLEAR'),('W',' WAIT'),('R',' NOCLEAR'),('F','')]]
     cases += [dict(name=f'full-{port}-{flow}',kind='FULL',option='',port=port,flow=flow,translation=('table' if (port+ord(flow))%2 else 'seven'),full=True) for port in (1,2) for flow in 'NSHB']
@@ -329,6 +338,7 @@ def main():
             files['SHELLGO.COM']=(folder/'SHELLGO.COM').read_bytes()
         (folder/'CHILD.LOG').write_bytes(b'')
         settings=bytearray(prm(port=port,soft=int(flow in 'SB'),hard=int(flow in 'HB')));extra=''
+        if args.mouse:struct.pack_into('<HH',settings,0x4e4,8,4)
         payload=bytearray(directory(port=port));payload[302:311]=b'LOGIN\0\0\0\0';payload[325:336]=b'Synth42\0\0\0\0'
         banner=b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0cLOGIN:';post=render.QUERY
         if case['translation']=='table':
@@ -336,7 +346,8 @@ def main():
         if case['translation']=='seven':struct.pack_into('<H',settings,0x1d64-0x1b84,2);banner=bytes(x|128 for x in banner);post=bytes(x|128 for x in post)
         harness.RENDER_POST=b'\x1b[2;1H'+post if args.exit_probe else post
         harness.RENDER_TRIGGER=b'ready' if args.exit_probe else b'Synth42\r'
-        result=harness.run(name,'success','p6500 space p700 r e a d y p700 a-x',directory=bytes(payload),prm=bytes(settings),com=port,
+        keys='p6500 space p700 '+('a-z p1500 ' if args.mouse else '')+'r e a d y p700 a-x'
+        result=harness.run(name,'success',keys,directory=bytes(payload),prm=bytes(settings),com=port,
             arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK'+extra,files=files,
             banner=banner,working_drive='d',observer='RENDER')
         wire=(folder/'serial.bin').read_bytes();screen=(folder/'SCREEN.BIN').read_bytes();raw=(folder/'RENDER.BIN').read_bytes()
@@ -365,6 +376,7 @@ def main():
         if not fatal:checks['post_child_CPR']=b'\x1b[2;1R' in wire[wire.find(b'Synth42\r')+8:]
         if kind in 'GW' and not fatal:checks['saved_parent_screen_restored']=screen[:42:2]==b'FIRST BYTE SAFELOGIN:'
         retained=None
+        mouse=None
         if not args.exit_probe:checks['no_false_retention_notice']=b'ASPECT memory retained.' not in screen[::2]
         if args.exit_probe:
             retained=struct.unpack_from('<15H',raw,at-30)
@@ -377,15 +389,33 @@ def main():
                 retained_extra_MCB=retained[12]==retained[1] and retained[13:15]==(0x20,0xa55a),
                 retained_memory_notice=b'ASPECT memory retained.' in screen[::2],
                 continued_parent_CPR=b'\x1b[2;1R' in wire[wire.find(b'ready')+5:])
+        if args.mouse:
+            from mouse_parent_probe import WORDS,BUFFER,BYTES
+            start=at-(30 if args.exit_probe else 0)-BYTES
+            mouse=dict(zip(WORDS,struct.unpack_from('<'+str(len(WORDS))+'H',raw,start)))
+            syms={n:(int(s,16),int(o,16)) for s,o,n in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+]?\s+(\w+)\s*$',(parent.parent/'terminal.map').read_text(),re.M|re.I)}
+            cb_seg,cb_off=syms['mouse_callback'];expected=(cb_off,header[5]+0x10+cb_seg)
+            before_at=start+len(WORDS)*2;driver_bytes=mouse['state_bytes']
+            capture=folder/'PCPLUS.SCR'
+            checks.update(mouse_registered_after_return=mouse['seen']==1 and (mouse['resume_off'],mouse['resume_seg'])==expected and mouse['resume_mask']==0x0b,
+                mouse_suspended_for_ASPECT=mouse['suspended_mask']==0,
+                mouse_foreign_DS_restored=mouse['returned_ds']==0x40,
+                mouse_callback_depth=mouse['depth_before']==mouse['depth_after']==65535,
+                mouse_PRM_scale=(mouse['scale_x'],mouse['scale_y'])==(8,4),
+                neutral_mouse_event_preserves_queue=mouse['count_before']==mouse['count_after']==0,
+                mouse_menu_native_events=(mouse['menu_stage'],mouse['menu_count'],mouse['menu_code'],mouse['button_count'],mouse['button_code'])==(2,2,2,1,4),
+                mouse_menu_screen_action=capture.is_file() and capture.stat().st_size>0 and b'Command Menu' not in capture.read_bytes(),
+                original_mouse_registration_restored=(mouse['after_mask'],mouse['after_off'],mouse['after_seg'])==(mouse['before_mask'],mouse['before_off'],mouse['before_seg']),
+                original_mouse_driver_state=0<driver_bytes<=BUFFER and mouse['state_equal']==1 and raw[before_at:before_at+driver_bytes]==raw[before_at+BUFFER:before_at+BUFFER+driver_bytes])
         if full:
             checks['DOS_source_compiler']=(folder/'NEXT.ASX').is_file() and (folder/'NEXT.ASX').read_bytes()==compile_source(next_source)
             checks['real_command_shell']=(folder/'SHELL.OUT').is_file() and (folder/'SHELL.OUT').read_bytes()==b'SHELLREAL'
             checks['pending_stream_output']=(folder/'WRITE.BIN').is_file() and (folder/'WRITE.BIN').read_bytes()==b'pending5'
-        result.update(passed=all(checks.values()),passive_header=header,resource_words=resources,nested_EXEC=records,compared_parent_bytes=resource_size,configuration=case,retained_words=retained)
+        result.update(passed=all(checks.values()),passive_header=header,resource_words=resources,nested_EXEC=records,compared_parent_bytes=resource_size,configuration=case,retained_words=retained,mouse_probe=mouse)
         (folder/'result.json').write_text(json.dumps(result,indent=2)+'\n');results.append(result)
         print(name,'FINAL PASS' if result['passed'] else 'FINAL FAIL',flush=True)
     for name,digest in identities.items():assert sha(ROOT/name)==digest,name
-    report=dict(passed=all(r['passed'] for r in results),experimental_break_owner=args.break_owner,exit_probe=args.exit_probe,cases=results,parent_sha256=sha(parent),child_sha256=sha(child),
+    report=dict(passed=all(r['passed'] for r in results),experimental_mouse=args.mouse,experimental_break_owner=args.break_owner,exit_probe=args.exit_probe,cases=results,parent_sha256=sha(parent),child_sha256=sha(child),
         source_hashes=identities,
         checker_sha256=sha(Path(__file__)),observer_sha256=sha(out/'RENDER.COM'),
         scope=('Actual retained child return through capability7; observer records DOS31/4D/MCBs and invokes only the known retained test ISR. Real renderer/UART reacquisition; no state repair or physical modem claim.' if args.exit_probe else 'Experimental capability7; real attached parent renderer, selected synthetic directory, actual DOS child and UART mutation. No physical modem or whole-application publication.'))
