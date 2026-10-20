@@ -1,5 +1,19 @@
 # Complete DOS rebuild plan
 
+The [ENiGMA transfer-owner checkpoint](lab/bbs/enigma-transfer-owner.md)
+extends cancellation recovery to deletion errors and per-transfer file lists.
+The earlier tracked-session candidate can stall on a rejected cleanup promise;
+that failure is retained. Explicit owners pass 39 component checks and 141
+upstream regressions. Normal DOS cancellation/NFO/retry/NFO passes 21 checks;
+the same route with one modeled EACCES passes 24, retaining the partial until
+the next upload retries cleanup. Their audits reject 22 and 26 corruptions.
+A separate download regression passes 13 checks across receive/skip/receive
+and NFO return after each transaction, with seven damaged captures rejected.
+The [record](docs/validation/enigma-transfer-owner.json) binds staged source
+and all 31 unchanged application products. Live deployment, simultaneous BBS
+sessions, physical modem/upload carrier loss, source dates and full application
+gates remain open.
+
 The [ENiGMA upload cancellation workflow](lab/bbs/enigma-cancel-upload.md)
 now proves Escape after valid data/ACK, NFO input, a full binary/empty retry
 and NFO input again in one DOS process. The original upload core passes the

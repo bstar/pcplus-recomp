@@ -28,6 +28,8 @@ async def run(args):
     assert 1<=args.upload_bytes<=65539
     candidate=owned(args.candidate);log=verify_running(candidate)
     cancel_first=getattr(args,'cancel_first',False)
+    cleanup_error=getattr(args,'cleanup_error',False)
+    assert not cleanup_error or cancel_first
     sampler=SAMPLER;decode_forms=form_events;temporary=None
     if cancel_first:
         assert args.upload_bytes>=32768
@@ -37,6 +39,9 @@ async def run(args):
         environment=(Path('/proc')/str(pid(candidate))/'environ').read_bytes().split(b'\0')
         assert b'TMPDIR='+str(temporary).encode() in environment,'Start the owned fixture with --private-tmp'
         assert not any(p.is_file() for p in temporary.rglob('*')),'Preserve earlier temporary files; use a fresh fixture'
+        if cleanup_error:
+            assert b'PCPLUS_ENIGMA_FAULT_LOG='+str(candidate/'cleanup-fault-events.jsonl').encode() in environment
+            assert not (candidate/'cleanup-fault-events.jsonl').exists()
     fixture=json.loads((candidate/'search-instance.json').read_text());assert fixture['upload_fixture']
     inputs={p:candidate/p for p in [*fixture['fixture_inputs'],*fixture['source_modules']]}
     for p,h in {**fixture['fixture_inputs'],**fixture['source_modules']}.items():assert sha(inputs[p])==h,p
@@ -54,6 +59,7 @@ async def run(args):
         time_auditor=ROOT/'lab/bbs/check_enigma_upload_audit.py',form_observer=ROOT/'lab/bbs/enigma_upload_watch.py',
         observer_base=ROOT/'lab/bbs/zmodem_label_watch.py')
     if cancel_first:inputs.update(cancel_observer=ROOT/'lab/bbs/enigma_upload_cancel_watch.py',fixture_owner=ROOT/'lab/bbs/enigma_key_stream_fixture.py')
+    if cleanup_error:inputs['fault_preload']=ROOT/'lab/bbs/patches/enigma-transfer-owner/fault-once.js'
     before={p:sha(f) for p,f in inputs.items()};posts=messages(candidate)
     upload='U enter p1600 tab tab tab enter p1600 enter p1000 '
     sender='a-s p300 f2 f2 D : \\ S E N D \\ '
@@ -116,7 +122,8 @@ async def run(args):
     if cancel_first:
         (out/'cancel-upload-snapshots.json').write_text(json.dumps(snapshots,indent=2)+'\n')
         checks['canceled_upload_not_installed']=len(snapshots)==1 and not snapshots[0]['installed'] and all(not r['entries'] for r in snapshots[0]['entries'])
-        checks['canceled_temporary_data_removed']=len(snapshots)==1 and not snapshots[0]['temporary_files']
+        if not cleanup_error:checks['canceled_temporary_data_removed']=len(snapshots)==1 and not snapshots[0]['temporary_files']
+        else:checks['cleanup_failure_retains_partial_for_retry']=len(snapshots)==1 and bool(snapshots[0]['temporary_files'])
         checks['source_files_unchanged_after_cancel']=len(snapshots)==1 and snapshots[0]['source_files_unchanged']
     forms=[]
     try:
@@ -168,10 +175,19 @@ async def run(args):
     if cancel_first:
         exits=[r.get('exitCode') for r in own if r.get('msg')=='Process exited']
         checks['failed_then_successful_protocol_process']=len(exits)==2 and exits[0]!=0 and exits[1]==0
+    faults=[]
+    if cleanup_error:
+        fault_path=candidate/'cleanup-fault-events.jsonl'
+        faults=[json.loads(line) for line in fault_path.read_text().splitlines()] if fault_path.exists() else []
+        (out/'cleanup-fault-events.json').write_text(json.dumps(faults,indent=2)+'\n')
+        checks['one_modeled_cleanup_error']=len(faults)==1 and faults[0].get('code')=='EACCES' and faults[0].get('operation')=='rm' and faults[0].get('injected') is True
+        checks['cleanup_error_logged']=len([r for r in own if r.get('msg')=='Upload temporary cleanup failed' and r.get('code')=='EACCES'])==1
+        checks['failed_owner_retired_on_retry']=not any(p.is_file() for p in temporary.rglob('*'))
     result=dict(passed=all(checks.values()) and not errors,checks=checks,errors=errors,metadata_checks=metadata_checks,
         protocol=protocol,menus=menus,terminal_sha256=before['terminal/TERMINAL.EXE'],input_hashes=before,
         received_date_bounds_ns=date_bounds,received_dates_current=date_checks,
         cancel_first=cancel_first,canceled_protocol=canceled,cancel_snapshots=snapshots,
+        cleanup_error_expected=cleanup_error,filesystem_faults=faults,
         expected={name:dict(bytes=len(data),sha256=sha(send/name)) for name,data in expected.items()},
         scope='One actual DOS/owned ENiGMA session: DOS-built ASPECT login, real upload form/protocol selector, binary and empty ZMODEM batch, official FileEntry API/storage audit, details acceptance and NFO input afterward. Synthetic account/area, modeled19200/HARD UART; no live board or physical modem claim.')
     (out/'upload-checks.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(dict(passed=result['passed'],checks=checks,metadata_checks=metadata_checks,errors=errors,menus=menus),indent=2))
@@ -182,4 +198,5 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--candidate',type=Path,required=True);p.add_argument('--label',required=True)
     p.add_argument('--upload-bytes',type=int,default=1501,help='Generated binary size1..65539; empty file is always included')
     p.add_argument('--cancel-first',action='store_true',help='Cancel a nonempty upload, open NFO, retry the batch, reopen NFO in the same DOS session')
+    p.add_argument('--cleanup-error',action='store_true',help='Require one staged modeled cleanup denial, responsive NFO, and retirement on retry')
     raise SystemExit(asyncio.run(run(p.parse_args())))

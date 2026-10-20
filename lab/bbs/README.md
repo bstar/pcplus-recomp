@@ -5,6 +5,12 @@ and Mystic servers. Downloaded server programs, source checkouts, user databases
 wire captures and DOS snapshots stay under ignored `build/bbs-lab/`.
 All listeners must bind loopback. Accounts and messages are synthetic.
 
+For the owned server, the [transfer-owner workflow](enigma-transfer-owner.md)
+extends upload cancellation/NFO/retry coverage to a modeled deletion error.
+Its candidate also scopes protocol file lists per transfer and keeps failed
+cleanup retryable. This remains separate from live-board deployment and physical
+modem acceptance.
+
 See the [current Synchronet and ENiGMA compatibility checkpoint](modern-compatibility.md)
 for current editor results, the paired modem-buffering experiment, and which
 menu/transfer results belong to earlier executable builds. The matched

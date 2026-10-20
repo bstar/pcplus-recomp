@@ -1,0 +1,620 @@
+{
+  "date": "2026-10-20",
+  "passed": true,
+  "whole_application_gates_closed": [],
+  "workflows": {
+    "normal_cleanup": {
+      "checks": {
+        "DOS_harness": true,
+        "inputs_unchanged": true,
+        "source_files_unchanged": true,
+        "no_post_saved": true,
+        "all_server_files_and_metadata": true,
+        "only_expected_installed_files": true,
+        "DOS_compiler_exact": true,
+        "script_login_trace": true,
+        "received_creation_dates_current": true,
+        "canceled_upload_not_installed": true,
+        "canceled_temporary_data_removed": true,
+        "source_files_unchanged_after_cancel": true,
+        "observed_two_complete_form_key_sequences": true,
+        "explicit_unknown_time_on_wire": true,
+        "observer_keys_delivered_exactly": true,
+        "cancel_after_valid_data_and_ACK": true,
+        "NFO_between_cancel_and_retry": true,
+        "exact_binary_and_empty_batch_then_NFO": true,
+        "unique_authenticated_session": true,
+        "actual_upload_and_return_route": true,
+        "failed_then_successful_protocol_process": true
+      },
+      "corruptions_rejected": 22,
+      "form_events": [
+        {
+          "key": "Escape",
+          "row": 25,
+          "column": 19,
+          "file": "canceled upload",
+          "tick": 1693
+        },
+        {
+          "key": "Enter",
+          "row": 25,
+          "column": 1,
+          "file": "scan pause",
+          "tick": 3185
+        },
+        {
+          "key": "Tab",
+          "row": 6,
+          "column": 52,
+          "file": "PCUP01.BIN",
+          "tick": 3286
+        },
+        {
+          "key": "Tab",
+          "row": 9,
+          "column": 52,
+          "file": "PCUP01.BIN",
+          "tick": 3359
+        },
+        {
+          "key": "Enter",
+          "row": 14,
+          "column": 60,
+          "file": "PCUP01.BIN",
+          "tick": 3432
+        },
+        {
+          "key": "Tab",
+          "row": 6,
+          "column": 52,
+          "file": "EMPTY.BIN",
+          "tick": 3511
+        },
+        {
+          "key": "Tab",
+          "row": 9,
+          "column": 52,
+          "file": "EMPTY.BIN",
+          "tick": 3584
+        },
+        {
+          "key": "Enter",
+          "row": 14,
+          "column": 60,
+          "file": "EMPTY.BIN",
+          "tick": 3657
+        }
+      ],
+      "first_valid_packet_bytes": 1024,
+      "peer_ACK_position": 1024,
+      "canceled_partial_retained": false,
+      "source_files_unchanged": true,
+      "installed_files": {
+        "PCUP01.BIN": {
+          "bytes": 65539,
+          "sha256": "aa9083a24261026a5dfbf5182257be491d98e9d7127485b147b87992ea201388"
+        },
+        "EMPTY.BIN": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "terminal_sha256": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c"
+    },
+    "modeled_cleanup_denial": {
+      "checks": {
+        "DOS_harness": true,
+        "inputs_unchanged": true,
+        "source_files_unchanged": true,
+        "no_post_saved": true,
+        "all_server_files_and_metadata": true,
+        "only_expected_installed_files": true,
+        "DOS_compiler_exact": true,
+        "script_login_trace": true,
+        "received_creation_dates_current": true,
+        "canceled_upload_not_installed": true,
+        "cleanup_failure_retains_partial_for_retry": true,
+        "source_files_unchanged_after_cancel": true,
+        "observed_two_complete_form_key_sequences": true,
+        "explicit_unknown_time_on_wire": true,
+        "observer_keys_delivered_exactly": true,
+        "cancel_after_valid_data_and_ACK": true,
+        "NFO_between_cancel_and_retry": true,
+        "exact_binary_and_empty_batch_then_NFO": true,
+        "unique_authenticated_session": true,
+        "actual_upload_and_return_route": true,
+        "failed_then_successful_protocol_process": true,
+        "one_modeled_cleanup_error": true,
+        "cleanup_error_logged": true,
+        "failed_owner_retired_on_retry": true
+      },
+      "corruptions_rejected": 26,
+      "form_events": [
+        {
+          "key": "Escape",
+          "row": 25,
+          "column": 19,
+          "file": "canceled upload",
+          "tick": 1693
+        },
+        {
+          "key": "Enter",
+          "row": 25,
+          "column": 1,
+          "file": "scan pause",
+          "tick": 3185
+        },
+        {
+          "key": "Tab",
+          "row": 6,
+          "column": 52,
+          "file": "EMPTY.BIN",
+          "tick": 3285
+        },
+        {
+          "key": "Tab",
+          "row": 9,
+          "column": 52,
+          "file": "EMPTY.BIN",
+          "tick": 3358
+        },
+        {
+          "key": "Enter",
+          "row": 14,
+          "column": 60,
+          "file": "EMPTY.BIN",
+          "tick": 3431
+        },
+        {
+          "key": "Tab",
+          "row": 6,
+          "column": 52,
+          "file": "PCUP01.BIN",
+          "tick": 3510
+        },
+        {
+          "key": "Tab",
+          "row": 9,
+          "column": 52,
+          "file": "PCUP01.BIN",
+          "tick": 3583
+        },
+        {
+          "key": "Enter",
+          "row": 14,
+          "column": 60,
+          "file": "PCUP01.BIN",
+          "tick": 3656
+        }
+      ],
+      "first_valid_packet_bytes": 1024,
+      "peer_ACK_position": 1024,
+      "canceled_partial_retained": true,
+      "source_files_unchanged": true,
+      "installed_files": {
+        "PCUP01.BIN": {
+          "bytes": 65539,
+          "sha256": "aa9083a24261026a5dfbf5182257be491d98e9d7127485b147b87992ea201388"
+        },
+        "EMPTY.BIN": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "terminal_sha256": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c"
+    }
+  },
+  "ownership_checks": [
+    {
+      "case": "direct-construction-is-not-authority",
+      "passed": true
+    },
+    {
+      "case": "prototype-forgery-is-not-authority",
+      "passed": true
+    },
+    {
+      "case": "genuine-independent-directories",
+      "passed": true
+    },
+    {
+      "case": "temporary-directory-is-private",
+      "passed": true
+    },
+    {
+      "case": "directory-cannot-be-reassigned",
+      "passed": true
+    },
+    {
+      "case": "role-cannot-be-substituted",
+      "passed": true
+    },
+    {
+      "case": "retirement-preserves-an-active-peer",
+      "passed": true
+    },
+    {
+      "case": "closed-owner-completes-without-new-IO",
+      "passed": true
+    },
+    {
+      "case": "callback-error-is-preserved",
+      "passed": true
+    },
+    {
+      "case": "failed-retirement-retains-data-and-owner",
+      "passed": true
+    },
+    {
+      "case": "explicit-retry-retires-only-failed-owners",
+      "passed": true
+    },
+    {
+      "case": "sync-throw-completion-is-asynchronous",
+      "passed": true
+    },
+    {
+      "case": "synchronous-delete-throw-becomes-callback-error",
+      "passed": true
+    },
+    {
+      "case": "concurrent-callers-share-one-removal",
+      "passed": true
+    },
+    {
+      "case": "duplicate-provider-completion-does-not-change-results",
+      "passed": true
+    },
+    {
+      "case": "new-operation-starts-failed-retirement",
+      "passed": true
+    },
+    {
+      "case": "new-operation-retries-failed-retirement",
+      "passed": true
+    },
+    {
+      "case": "creation-error-produces-no-owner",
+      "passed": true
+    },
+    {
+      "case": "creation-throw-is-delivered-as-an-error",
+      "passed": true
+    },
+    {
+      "case": "failed-cleanup-does-not-replace-receive-error",
+      "passed": true
+    },
+    {
+      "case": "failed-cleanup-does-not-hold-free-time",
+      "passed": true
+    },
+    {
+      "case": "cleanup-failure-is-logged-and-data-recoverable",
+      "passed": true
+    },
+    {
+      "case": "failed-upload-can-be-retired-after-repair",
+      "passed": true
+    },
+    {
+      "case": "details-cleanup-delivers-filesystem-error",
+      "passed": true
+    },
+    {
+      "case": "legacy-spawn-throw-preserves-error-and-retires-owner",
+      "passed": true
+    },
+    {
+      "case": "successful-receive-keeps-data-for-details",
+      "passed": true
+    },
+    {
+      "case": "selector-retains-genuine-owner",
+      "passed": true
+    },
+    {
+      "case": "details-retire-only-their-directory",
+      "passed": true
+    },
+    {
+      "case": "forged-owner-cannot-delete-caller-directory",
+      "passed": true
+    },
+    {
+      "case": "file-list-arguments-and-bytes-are-preserved",
+      "passed": true
+    },
+    {
+      "case": "file-list-cleanup-preserves-another-transfer",
+      "passed": true
+    },
+    {
+      "case": "file-list-cleanup-error-is-delivered",
+      "passed": true
+    },
+    {
+      "case": "file-list-retirement-can-be-retried",
+      "passed": true
+    },
+    {
+      "case": "failed-list-write-preserves-error-and-retires-directory",
+      "passed": true
+    },
+    {
+      "case": "list-write-throw-becomes-callback-error",
+      "passed": true
+    },
+    {
+      "case": "compound-preparation-and-cleanup-fault-preserves-primary-error",
+      "passed": true
+    },
+    {
+      "case": "cleanup-error-does-not-block-menu-return",
+      "passed": true
+    },
+    {
+      "case": "no-unhandled-rejection-from-tested-failures",
+      "passed": true
+    },
+    {
+      "case": "exit-attempts-other-owners-after-one-removal-fails",
+      "passed": true
+    }
+  ],
+  "modeled_filesystem_boundaries": [
+    "rm callback EACCES",
+    "rm synchronous EIO throw",
+    "rm duplicate callback",
+    "mkdtemp callback/throw ENOSPC",
+    "file-list write callback/throw EIO",
+    "exit rmSync EACCES"
+  ],
+  "repeated_download": {
+    "checks": {
+      "DOS_harness": true,
+      "inputs_unchanged": true,
+      "unique_authenticated_session": true,
+      "three_protocol_processes_in_order": true,
+      "no_post_saved": true,
+      "receive_skip_receive": true,
+      "file_A_exact": true,
+      "file_B_exact": true,
+      "only_expected_files": true,
+      "finish_snapshots": true,
+      "existing_alias_unchanged": true,
+      "no_stage_after_each_finish": true,
+      "actual_DOS_save_skip_save_labels": true
+    },
+    "corruptions_rejected": 7,
+    "transfer_order": [
+      "received",
+      "skipped-existing",
+      "received"
+    ],
+    "NFO_after_each_transfer": true,
+    "private_temporary_data_removed": true
+  },
+  "retained_v1_failure": {
+    "reproduced": true,
+    "completion_callbacks": 0,
+    "free_time_depth": 0,
+    "unhandled_rejection_code": "EACCES",
+    "partial_retained": true,
+    "checker_sha256": "b8451ed854fd88ec6a65cd3c8a4a20b2a47eb5dca696164516a77cd1cf3bdd5e",
+    "transfer_sha256": "1ffc90fbdcbef65d3b59aa4703960c79516d2f581026a52e2fb481af64a8d958",
+    "temptmp_sha256": "669b17f4feb4bdd836e97a6a34588873e043d73812491502415ec6e80fb05309",
+    "scope": "Actual staged-v1 receive/cleanup wrapper and tracked-session dependency. Rejected deletion provider is modeled; temporary files are real. No live board or DOS session claim."
+  },
+  "upstream_regressions": 141,
+  "staged_server": {
+    "original_core": {
+      "core/upload.js": "3b9289a322b482950a5c4b5680e62bf646dc2f863e220f583babcf29bd996ffe",
+      "core/file_transfer.js": "a6e1e8b02947b9c2ac6eb7adff695f2633f445d749aedb874ffb5242f1aaba8e",
+      "core/file_transfer_protocol_select.js": "5dcfa68335915d8260950ed414f363db8aeb4fff65a3f017177e17931fc7cacd",
+      "core/file_entry.js": "618516d4c7db0fa6b26edf241ac0313e46eb8839f18a472af136ff56e11e0aa0",
+      "core/file_base_area.js": "e04901527df27e4e73006d28cfc66666383b773dbb5e978411e5e0bd01656a26"
+    },
+    "staged_core": {
+      "core/upload.js": "9b9315b200ec62298a5e811d18da1e8d664b26f802f1344f8f28e29f67f91b5a",
+      "core/file_transfer.js": "a4dd5db6d6020bfd1e7b2c9055d6f07051fa4e7b7dfb6c16770ffcb14076a682",
+      "core/file_transfer_protocol_select.js": "ae54adcbfaf85970499888ccf57331593f914b82509fa4cdd72d371ca680b99a",
+      "core/file_entry.js": "618516d4c7db0fa6b26edf241ac0313e46eb8839f18a472af136ff56e11e0aa0",
+      "core/file_base_area.js": "e04901527df27e4e73006d28cfc66666383b773dbb5e978411e5e0bd01656a26",
+      "core/transfer_temp_owner.js": "fad639e8c4febc6900ea9f641787af34f39a55d8184a37c6e90134034de192cd"
+    },
+    "changed": [
+      "core/file_transfer.js",
+      "core/file_transfer_protocol_select.js",
+      "core/transfer_temp_owner.js",
+      "core/upload.js"
+    ],
+    "authored_core": {
+      "core/transfer_temp_owner.js": {
+        "source": "lab/bbs/patches/enigma-transfer-owner/transfer_temp_owner.js",
+        "sha256": "fad639e8c4febc6900ea9f641787af34f39a55d8184a37c6e90134034de192cd"
+      }
+    },
+    "inputs": {
+      "lab/bbs/patches/enigma-transfer-owner/stage.py": "8eec307cf97beda71efb7b26f64bea3110ea7c2c6505d90d83a510519e6e98d8",
+      "lab/bbs/patches/enigma-transfer-owner/transfer-owner.patch": "bedfe568d9ea788eb913bbeaa85348b705ed965745d83105ce87162d25982472",
+      "lab/bbs/patches/enigma-transfer-owner/transfer_temp_owner.js": "fad639e8c4febc6900ea9f641787af34f39a55d8184a37c6e90134034de192cd"
+    },
+    "scope": "Isolated explicit transfer owners. Callback/throw cleanup errors retire only their owner and remain retryable. Running board and DOS products are unchanged."
+  },
+  "live_client_sha256": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+  "live_server_modified": false,
+  "application_code_changed": false,
+  "unchanged_application_products": 31,
+  "source_products": {
+    "aspect-process-parent/ASPECT.EXE": "cd580a12fda2e38edbac6fa9ebd19727b11c9e8393b1a6fe561531164bebb63d",
+    "aspect-fault/ASPECT.EXE": "bbeb4c85546d0cb0e6c94801d78c4472e4a77efe7cb1a1c6dab6e7e2b03f5c7e",
+    "aspect-process/ASPECT.EXE": "ccf0aeaf2f58ef8628335f170df859a01217885dc6e58ea7433f648bbee57025",
+    "aspect-runner/ASPECT.EXE": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+    "aspect-compiler-dos/ASPCOMP.EXE": "3470c718df0d21fad4635b99f6c3b2e5d307637581728bdb639e6e9521a9c931",
+    "terminal-process/TERMINAL.EXE": "80eb796f2404f06382da9e22f869c534c3a0b9d174ebcbc19019f9df0e302aad",
+    "terminal/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+    "native-program/PROGRAM.EXE": "582a6844f454de92e66fad3e6694b26b1fdee6565d91ce563e8ebc38d8afb8d1",
+    "native-program/OWN1.COM": "4a02a70aa7ddec17648947eb822a045a3bbc5666485d0861277f784632640a39",
+    "native-program/OWN2.COM": "e496c8227feaeee3abe5d00a2ac8a77624a0070a2e41d82215dadf912171a4b5",
+    "native-display/DISPLAY.EXE": "0e6dc8e4e852e0f940b810a7aefbae2378c3c18985ddcf2dea1c01f5544dd6cf",
+    "native-display/VIDEO.COM": "e38463e46b8f8c42f2bcd90a1e9707ace08ae63704fa16e317a87df3fbb39605",
+    "process-serial/PSERIAL.EXE": "7cf3775f5e26ab6e83023744c6ddfaec9de57073449570fe514c0584ee4c9619",
+    "process-serial/UART1.COM": "a7bb9817a9401d7c0127d68b5bc38f5f9a2b47e34827c4daeee471857deb654e",
+    "process-serial/UART2.COM": "3dda15dc346ef3ddfc42eb6b54890254590dd6fc7ce48f1c116d9d84cc862f3f",
+    "native-process/NATIVE.EXE": "03723b988eab3df0cf7c128a1c6fc8356045b2bc0aac3865ab8f975ee300a7e0",
+    "native-process/NAMES.EXE": "0485267021744f48db472a3c6a6ebe10beabb3ac64d3b673c2748a8e1e0e8409",
+    "native-process/CHILD.COM": "0c8bb3b2499821ac74ddd47e4cc58ee34a633d7537be5f15db7ab80f878f9f18",
+    "native-process/DIVIDE.COM": "a2d4de6488769a320efd699e9c8e367574f7d398f9b1b63a30a22b099fb90e79",
+    "native-process/VECT.COM": "ca624aef48dfd14a782633e6253fdc817c6df15c61aaafe73ffc814a1f01b79f",
+    "native-process/RESIDENT.COM": "b56878449a5528fa3403207d369262e3a5422d2d489cce2f323727579bc200a8",
+    "native-process/EMPTY.COM": "fb3899847c3e4e1e817dd8f80108e41a46693128b4aa3a8306f3d86cdbaa79d6",
+    "native-process/FLAGS.COM": "83c3623d9e7e8db33301b96448910701f95033debff389462ef8c4d7e92489c0",
+    "native-process/E17.COM": "c3a5760861de337896c7259bb44f6c05284278040d22d4fc9cb42688d8d247e1",
+    "native-process/E21.COM": "def6a10413daf417e92cc622ffbeb96dd3abf12796f9ca071662503c1ce781b1",
+    "native-process/E22.COM": "f9903bca908e88fc0c10aa4ac088a180493ac66d8d2c911dcf8eae362b5a0b6b",
+    "native-process/CHILD.EXE": "63080cc4387cd191b3ae0495ad21b023e266689336c4f29c22190246b2a2c8df",
+    "terminal-mouse/TERMINAL.EXE": "8bd0d5ab6f6e8b83b87be6ba1202e419ddeab55bbd53644ee82a7da48d4cc950",
+    "terminal-mouse-process/TERMINAL.EXE": "1af63634144416f0076f60bd545bedaf0dd87a615fef9aad221e432509a190c6",
+    "setup/PRMEDIT.EXE": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646",
+    "setup-mouse/PRMEDIT.EXE": "0f0dafd6b783bf8ae5d170ddd4448273057cf7ff168e8e21d74ef1be657e8128"
+  },
+  "original_build_inputs": [],
+  "evidence": [
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-normal-01/upload-checks.json",
+      "sha256": "3308a8640a0a8858cfd537ad386423e2dac6b4281804b90c50a1f9208b9f4fe0"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-normal-01/upload-audit-negative-checks.json",
+      "sha256": "aad14872c6e61c8ea3515735514d72e73b024bdee897c9a9e9d9ee4dcc03ef0c"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-normal-01/cancel-upload-snapshots.json",
+      "sha256": "2ace5553912f600a2bd581f10749a0df5680299e077be764c0981493d00508f3"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-normal-01/LABELS.BIN",
+      "sha256": "3f775c0b7aeef3c11c75d4f6d657045970ad28b2a1d30c5c511ee7f90c7c8891"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-normal-01/upload-form-events.json",
+      "sha256": "65c08ecdba4c700ecba87a8e1b17bd6ffa1d5b912df3a4eaf1db6f89ec8f4f3a"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-normal-01/server-upload-metadata.json",
+      "sha256": "2e64e530d8a4cc5e9da66dd9ff50dfb7f368efd7786f37e87145f3a5647ee7b8"
+    },
+    {
+      "path": "build/bbs-lab/owned-enigma-transfer-owner-02/candidate/search-instance.json",
+      "sha256": "c2d7c402212301889eb2c7c6f87ef4d8cda8868e0eec077b9a91fc06044f1ee9"
+    },
+    {
+      "path": "build/bbs-lab/owned-enigma-transfer-owner-02/candidate/transfer-owner-experiment.json",
+      "sha256": "74c886ca5cba9e906500ee13cb1f3cd3ac6b2862182ddb085eb0351f29d8c0f1"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-fault-01/upload-checks.json",
+      "sha256": "99a6fb380989b74cd42e8e7a952d0f1c8fe9e7a50e95e391496330ecabe80825"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-fault-01/upload-audit-negative-checks.json",
+      "sha256": "2846fd863bbc9a258559d942b8efdfb3b606c31fff7a8a2d092983d4c7e428b6"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-fault-01/cancel-upload-snapshots.json",
+      "sha256": "30f95238af2091c3740f81966aef352ff3c04766cc7199486b63e792e5f47ac5"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-fault-01/LABELS.BIN",
+      "sha256": "be86056c0c6fd26ce98f41766b0198865733604bf76691121b3033780ffe4042"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-fault-01/upload-form-events.json",
+      "sha256": "1db5d12ad85250ae9834b86f4d9eb0100f0648130c2b04aec7e58a89925e1e89"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-fault-01/server-upload-metadata.json",
+      "sha256": "d57aefcf88b96d952ac7c6657daa2777ffaf4bd75da809224df117f2292710a4"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-fault-01/cleanup-fault-events.json",
+      "sha256": "27b8b4ebdaa34b58c4c7d41d21171f3af563029bc3b2db4ff524f8b602863a77"
+    },
+    {
+      "path": "build/bbs-lab/owned-enigma-transfer-owner-03/candidate/search-instance.json",
+      "sha256": "c6daaa8cbcaed32925b577a179cc7a608353cc7ecb502495aeb10ef24d04434f"
+    },
+    {
+      "path": "build/bbs-lab/owned-enigma-transfer-owner-03/candidate/transfer-owner-experiment.json",
+      "sha256": "74c886ca5cba9e906500ee13cb1f3cd3ac6b2862182ddb085eb0351f29d8c0f1"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-download-01/repeat-checks.json",
+      "sha256": "183518a2ac8a1a04ac8c4ca2b984eefb4cf2accd7d1c28f068cf30c886bca975"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-download-01/audit-negative-checks.json",
+      "sha256": "91a608914f3bd22ccf84f3fe9458e7975b9e0a170e0cf6ff134d155ab316f57c"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-download-01/finish-file-snapshots.json",
+      "sha256": "ef561f20ad44464f820277cfb13cb72c44b43cf97315109443b1fb774a5f3e5d"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-transfer-owner-download-01/LABELS.BIN",
+      "sha256": "e10941975d82a644dc92793761bda51541d17313a25cbcd5c0b5a883a9141b32"
+    },
+    {
+      "path": "build/bbs-lab/transfer-owner-unit/owner-01/checks.json",
+      "sha256": "0c45001ae840c4f1b8de250bfbd1ecc4d0d6d980ed46c4ab6789221d4b690e26"
+    },
+    {
+      "path": "build/bbs-lab/upload-temp-faults/v1-rejection-01/checks.json",
+      "sha256": "c4c1cccbc4fda60aa7b0a3d1dccf70736cbf272c1a89fd1bc9ddf93dd16189ac"
+    },
+    {
+      "path": "build/bbs-lab/transfer-owner-unit/upstream-01/checks.json",
+      "sha256": "a55891cb64c0e20241dc867d35040dd0875b96e3215ba7d0bc9022f8cc8ecc65"
+    },
+    {
+      "path": "build/bbs-lab/transfer-owner-unit/upstream-01/tests.log",
+      "sha256": "cdce21cfcd20a065dc5137f056accb2518599f54bceb2eef9d9255859b92b12a"
+    },
+    {
+      "path": "docs/validation/enigma-upload-cancel.json",
+      "sha256": "d0ed3a9b1ae4d11e294374dbef6e6ed53e754e936fa6ee33104d5059ff7faed8"
+    },
+    {
+      "path": "docs/validation/enigma-upload-time.json",
+      "sha256": "a2025adf5beeeb277c19fc403cf4b6cbc525343c727ffc4c86af3430d6437fcd"
+    }
+  ],
+  "sources": {
+    "lab/bbs/enigma_upload_dos.py": "25a26ef11ecd12994ad08a903161f8848aa8ebdc6c76787d6c8cee707fc28479",
+    "lab/bbs/enigma_key_stream_fixture.py": "e0057943ce907f50788adfd6a9674dd4b53403a8406d73bfc008a9c632c26392",
+    "lab/bbs/check_enigma_upload_audit.py": "e44af479c411dbd4602e2c88142b58c1a586c48701fe5a8734a6ac70cd363ad3",
+    "lab/bbs/enigma_repeat_download_dos.py": "f9aea4b323b65fbeb8ed979107508736d97e13f6207be73274ec545cfb4e7ed6",
+    "lab/bbs/check_enigma_repeat_audit.py": "05fae8e14a0b3ea0a38e1bb293de23851d7451055ebf7d21a10e47ed9493273e",
+    "lab/bbs/patches/enigma-transfer-owner/transfer_temp_owner.js": "fad639e8c4febc6900ea9f641787af34f39a55d8184a37c6e90134034de192cd",
+    "lab/bbs/patches/enigma-transfer-owner/transfer-owner.patch": "bedfe568d9ea788eb913bbeaa85348b705ed965745d83105ce87162d25982472",
+    "lab/bbs/patches/enigma-transfer-owner/stage.py": "8eec307cf97beda71efb7b26f64bea3110ea7c2c6505d90d83a510519e6e98d8",
+    "lab/bbs/patches/enigma-transfer-owner/check.js": "f205d3294fdb4c5d10da630921bd34c259237b0b7d0245688955e1ea65f1d38c",
+    "lab/bbs/patches/enigma-transfer-owner/exit-probe.js": "63746e3a5dd695cb0ea9ec22803fe4f191a890761d6027e0e0b690a235af422f",
+    "lab/bbs/patches/enigma-transfer-owner/fault-once.js": "35fc6cd6f241ebe5a58032b7f4109f9e94f3e5e3d0b7fe2997c61eb6215994d2",
+    "lab/bbs/patches/enigma-upload-temp/reproduce-rejection.js": "b8451ed854fd88ec6a65cd3c8a4a20b2a47eb5dca696164516a77cd1cf3bdd5e"
+  },
+  "recorder_sha256": "862ee8667fb74caca95a46f969fcc9d0960df11894c5a7aa96400ec5e57293ba",
+  "nix_inputs": {
+    "nix/flake.nix": "7f069dd8346be02006737101a2790b99a881411fa75b657316f75b090816c15f",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+  },
+  "limitations": [
+    "Separate decoder/transfer-owner candidates; running board remains unchanged.",
+    "Deletion and other filesystem failures are modeled at provider boundaries; data and DOS/network workflows are real.",
+    "No simultaneous BBS-session acceptance, physical modem or upload carrier-loss claim.",
+    "Legacy synchronous protocol-spawn exceptions preserve the original throw after initiating cleanup; complete error UI remains open.",
+    "Source-date preservation and full F01\u2013F16 reconstruction remain open."
+  ]
+}

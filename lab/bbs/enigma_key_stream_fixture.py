@@ -107,7 +107,7 @@ def verify_running(candidate):
     return candidate / "logs/enigma-bbs.log"
 
 
-def start(candidate, private_tmp=False):
+def start(candidate, private_tmp=False, cleanup_fault=False):
     assert not pid(candidate), "Owned instance already running"
     metadata = json.loads((candidate / "instance.json").read_text())
     assert sha(candidate / "core/client.js") == metadata["client_sha256"]
@@ -121,6 +121,14 @@ def start(candidate, private_tmp=False):
         temporary.mkdir(exist_ok=True)
         assert not temporary.is_symlink() and temporary.resolve().parent == candidate
         environment.update(TMPDIR=str(temporary), TMP=str(temporary), TEMP=str(temporary))
+    if cleanup_fault:
+        assert private_tmp and not environment.get('NODE_OPTIONS')
+        fixture = json.loads((candidate / 'search-instance.json').read_text())
+        assert fixture.get('transfer_owner_experiment'), 'Fault injection requires the explicit owner candidate'
+        report = candidate / 'cleanup-fault-events.jsonl'
+        assert not report.exists(), 'Preserve earlier fault evidence; use a fresh fixture'
+        preload = ROOT / 'lab/bbs/patches/enigma-transfer-owner/fault-once.js'
+        environment.update(PCPLUS_ENIGMA_FAULT_LOG=str(report), NODE_OPTIONS='--require ' + str(preload))
     with socket.socket() as check:
         check.bind(("127.0.0.1", PORT))
     with (candidate / "instance.log").open("ab") as log:
@@ -159,7 +167,9 @@ if __name__ == "__main__":
     parser.add_argument("action", choices=["setup", "start", "stop"])
     parser.add_argument("--candidate", type=Path, required=True)
     parser.add_argument("--private-tmp", action="store_true", help="Start with temporary files inside the owned candidate")
+    parser.add_argument("--cleanup-fault-once", action="store_true", help="Model one EACCES deletion error on the isolated explicit-owner candidate")
     args = parser.parse_args()
     assert not args.private_tmp or args.action == 'start'
-    if args.action == 'start':start(owned(args.candidate), args.private_tmp)
+    assert not args.cleanup_fault_once or (args.action == 'start' and args.private_tmp)
+    if args.action == 'start':start(owned(args.candidate), args.private_tmp, args.cleanup_fault_once)
     else:globals()[args.action](owned(args.candidate))

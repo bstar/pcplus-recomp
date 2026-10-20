@@ -4,6 +4,20 @@ The target includes the user's running `~/projects/black-flag-bbs` checkout,
 its configured menus and modules, and the source-built DOS client. Passing
 an isolated stock BBS is insufficient. Compatibility is not complete.
 
+The [transfer-owner workflow](../lab/bbs/enigma-transfer-owner.md) additionally
+covers a modeled upload cleanup denial with actual DOS/network recovery. It
+retains the partial after EACCES, keeps the NFO interactive, retires the failed
+owner when the next upload begins, and completes exact binary/empty storage
+and NFO return. Normal cleanup passes 21 checks and the denial route passes 24;
+22 and 26 damaged-evidence variants reject. The staged helper and three module
+changes pass 39 ownership/fault checks plus 141 upstream regressions. The
+[record](validation/enigma-transfer-owner.json) retains the preceding candidate's
+unhandled deletion rejection. File-list ownership is also scoped per transfer.
+A separate actual DOS receive/skip/receive regression passes 13 checks with
+NFO return after each transaction; seven damaged captures reject.
+All 31 application products remain unchanged. The running board is unchanged;
+real simultaneous sessions and physical modem/upload carrier loss remain open.
+
 The [upload cancellation test](../lab/bbs/enigma-cancel-upload.md) now covers
 Escape during acknowledged data, NFO interaction, a complete retry and NFO
 interaction afterward in one DOS process. It finds a server-side temporary-file

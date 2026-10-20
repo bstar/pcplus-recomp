@@ -1,0 +1,220 @@
+--- a/core/upload.js
++++ b/core/upload.js
+@@ -25,7 +25,7 @@
+ //  deps
+ const async = require('async');
+ const _ = require('lodash');
+-const temptmp = require('temptmp').createTrackedSession('upload');
++const TempOwner = require('./transfer_temp_owner');
+ const paths = require('path');
+ const sanatizeFilename = require('sanitize-filename');
+ 
+@@ -92,6 +92,8 @@
+             this.areaInfo = options.lastMenuResult.areaInfo;
+             this.uploadType = options.lastMenuResult.uploadType;
+         }
++
++        this.uploadTempOwner = _.get(options, 'lastMenuResult.uploadTempOwner');
+ 
+         this.availAreas = getSortedAvailableFileAreas(this.client, { writeAcs: true });
+ 
+@@ -215,13 +217,14 @@
+     }
+ 
+     performUpload(cb) {
+-        temptmp.mkdir({ prefix: 'enigul-' }, (err, tempRecvDirectory) => {
++        TempOwner.createUpload((err, owner) => {
+             if (err) {
+                 return cb(err);
+             }
+ 
+             //  need a terminator for various external protocols
+-            this.tempRecvDirectory = pathWithTerminatingSeparator(tempRecvDirectory);
++            this.uploadTempOwner = owner;
++            this.tempRecvDirectory = pathWithTerminatingSeparator(owner.path);
+ 
+             const areaIndex = this.viewControllers.options
+                 .getView(MciViewIds.options.area)
+@@ -233,6 +236,7 @@
+                     direction: 'recv',
+                     uploadAreaInfo: this.availAreas[areaIndex],
+                     uploadType: this.uploadType,
++                    uploadTempOwner: owner,
+                 },
+             };
+ 
+@@ -446,12 +450,13 @@
+         );
+     }
+ 
+-    cleanupTempFiles() {
+-        temptmp.cleanup(paths => {
+-            Log.debug(
+-                { paths: paths, sessionId: temptmp.sessionId },
+-                'Temporary files cleaned up'
+-            );
++    cleanupTempFiles(cb = () => {}) {
++        const owner = this.uploadTempOwner;
++        if (!TempOwner.owns(owner, 'upload')) return cb(null);
++        owner.cleanup(err => {
++            if (err) Log.warn({ error: err.message, code: err.code, path: owner.path }, 'Upload temporary cleanup failed');
++            else Log.debug({ path: owner.path }, 'Upload temporary directory cleaned up');
++            return cb(err);
+         });
+     }
+ 
+--- a/core/file_transfer.js
++++ b/core/file_transfer.js
+@@ -31,13 +31,33 @@
+ const async = require('async');
+ const _ = require('lodash');
+ const pty = require('node-pty');
+-const temptmp = require('temptmp').createTrackedSession('transfer_file');
++const TempOwner = require('./transfer_temp_owner');
+ const paths = require('path');
+ const fs = require('graceful-fs');
+ 
+ //  some consts
+ const SYSTEM_EOL = require('os').EOL;
+-const TEMP_SUFFIX = 'enigtf-'; //  temp CWD/etc.
++function cleanupUploadOwner(mod, done) {
++    const owner = mod.uploadTempOwner;
++    if (!TempOwner.owns(owner, 'upload')) return done(null);
++    owner.cleanup(err => {
++        if (err) mod.client?.log?.warn({ error: err.message, code: err.code, path: owner.path }, 'Upload temporary cleanup failed');
++        return done(err);
++    });
++}
++
++function cleanupFileLists(mod, done) {
++    const owners = [...(mod.fileListOwners || [])].filter(owner => TempOwner.owns(owner, 'list'));
++    let pending = owners.length, firstError = null;
++    if (!pending) return done(null);
++    owners.forEach(owner => owner.cleanup(err => {
++        if (err) {
++            if (!firstError) firstError = err;
++            mod.client?.log?.warn({ error: err.message, code: err.code, path: owner.path }, 'Transfer file-list cleanup failed');
++        } else mod.fileListOwners.delete(owner);
++        if (!--pending) done(firstError);
++    }));
++}
+ 
+ /*
+     Notes
+@@ -66,6 +86,8 @@
+         super(options);
+ 
+         this.config = this.menuConfig.config || {};
++        this.uploadTempOwner = _.get(options, 'extraArgs.uploadTempOwner');
++        this.fileListOwners = new Set();
+ 
+         //
+         //  Most options can be set via extraArgs or config block
+@@ -133,6 +155,10 @@
+ 
+     isSending() {
+         return 'send' === this.direction;
++    }
++
++    cleanupTempFiles(cb = () => {}) {
++        return cleanupFileLists(this, cb);
+     }
+ 
+     restorePipeAfterExternalProc() {
+@@ -293,6 +319,7 @@
+ 
+     prepAndBuildSendArgs(filePaths, cb) {
+         const externalArgs = this.protocolConfig.external['sendArgs'];
++        const self = this;
+ 
+         async.waterfall(
+             [
+@@ -304,23 +331,24 @@
+                         return callback(null, null);
+                     }
+ 
+-                    temptmp.open(
+-                        { prefix: TEMP_SUFFIX, suffix: '.txt' },
+-                        (err, tempFileInfo) => {
+-                            if (err) {
+-                                return callback(err); //  failed to create it
+-                            }
+-
+-                            fs.write(tempFileInfo.fd, filePaths.join(SYSTEM_EOL), err => {
+-                                if (err) {
+-                                    return callback(err);
+-                                }
+-                                fs.close(tempFileInfo.fd, err => {
+-                                    return callback(err, tempFileInfo.path);
+-                                });
++                    TempOwner.createList((err, owner) => {
++                        if (err) return callback(err);
++                        self.fileListOwners.add(owner);
++                        const listPath = paths.join(owner.path, 'files.txt');
++                        let completed = false;
++                        const written = err => {
++                            if (completed) return;
++                            completed = true;
++                            if (!err) return callback(null, listPath);
++                            owner.cleanup(cleanupError => {
++                                if (!cleanupError) self.fileListOwners.delete(owner);
++                                else self.client?.log?.warn({ error: cleanupError.message, path: owner.path }, 'Failed file-list preparation cleanup');
++                                return callback(err);
+                             });
+-                        }
+-                    );
++                        };
++                        try { fs.writeFile(listPath, filePaths.join(SYSTEM_EOL), written); }
++                        catch (err) { written(err); }
++                    });
+                 },
+                 function createArgs(tempFileListPath, callback) {
+                     //  initial args: ignore {filePaths} as we must break that into it's own sep array items
+@@ -574,10 +602,13 @@
+         try {
+             this.recvFiles(err => {
+                 release();
++                if (err) return cleanupUploadOwner(this, () => cb(err));
+                 return cb(err);
+             });
+         } catch (e) {
+             release();
++            cleanupUploadOwner(this, () => {});
++            cleanupFileLists(this, () => {});
+             throw e;
+         }
+     }
+@@ -832,14 +863,7 @@
+                     }
+                 },
+                 function cleanupTempFiles(callback) {
+-                    temptmp.cleanup(paths => {
+-                        Log.debug(
+-                            { paths: paths, sessionId: temptmp.sessionId },
+-                            'Temporary files cleaned up'
+-                        );
+-                    });
+-
+-                    return callback(null);
++                    return self.cleanupTempFiles(() => callback(null));
+                 },
+                 function updateUserAndSystemStats(callback) {
+                     if (self.isSending()) {
+@@ -852,6 +876,7 @@
+             err => {
+                 if (err) {
+                     self.client.log.warn({ error: err.message }, 'File transfer error');
++                    return self.cleanupTempFiles(() => self.prevMenu());
+                 }
+ 
+                 return self.prevMenu();
+--- a/core/file_transfer_protocol_select.js
++++ b/core/file_transfer_protocol_select.js
+@@ -114,6 +114,7 @@
+                         tempRecvDirectory: this.extraArgs.recvDirectory,
+                         areaInfo: this.extraArgs.uploadAreaInfo,
+                         uploadType: this.extraArgs.uploadType,
++                        uploadTempOwner: this.extraArgs.uploadTempOwner,
+                     },
+                 });
+             }

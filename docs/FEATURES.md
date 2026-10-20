@@ -1,5 +1,15 @@
 # Full application reconstruction checklist
 
+The [transfer-owner checkpoint](validation/enigma-transfer-owner.json) adds
+39 actual helper/module checks with modeled filesystem failures and 141 upstream
+regressions. Separate actual DOS routes pass 21 normal-cleanup checks and 24
+checks with one modeled EACCES, including NFO input before retry and after exact
+binary/empty storage. Their audits reject 22 and 26 damaged evidence variants.
+The earlier tracked-session cleanup rejection is retained as a failure. All 31
+DOS products are unchanged. A repeated-download regression adds 13 checks and
+seven evidence rejections on the staged core. Deployment, physical modem
+acceptance and all full application gates remain open.
+
 The [ENiGMA upload cancellation checkpoint](validation/enigma-upload-cancel.json)
 adds actual DOS Escape/NFO/retry/NFO and a staged per-upload server ownership
 correction. Its 21 checks and 22 damaged-evidence rejections retain the original

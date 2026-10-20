@@ -38,10 +38,18 @@ def canceled_prefix(stream,opposite,trace,expected):
     return dict(offset=cancel_at,first_offer=first,first_data={k:v for k,v in body.items() if k!='payload'},ack=ack,first_search=search)
 
 
-def canceled_snapshot(snapshot):
+def canceled_snapshot(snapshot,retained=False):
     assert len(snapshot)==1 and not snapshot[0]['installed']
     assert all(not r['entries'] for r in snapshot[0]['entries'])
-    assert not snapshot[0]['temporary_files'] and snapshot[0]['source_files_unchanged']
+    assert bool(snapshot[0]['temporary_files'])==retained and snapshot[0]['source_files_unchanged']
+
+
+def cleanup_fault_evidence(events,snapshot):
+    assert len(events)==1
+    event=events[0]
+    assert event.get('injected') is True and event.get('operation')=='rm' and event.get('code')=='EACCES'
+    target=event.get('target','');assert target.startswith('enigul-') and '/' not in target and '\\' not in target
+    assert snapshot[0]['temporary_files'] and all(p.startswith(target+'/') for p in snapshot[0]['temporary_files'])
 
 
 def replay(stream,opposite,trace,expected,require_unknown=False,cancel_first=False):
@@ -92,14 +100,18 @@ def main(args):
     stream=(out/'serial-received.bin').read_bytes();opposite=(out/'display.bin').read_bytes();trace=json.loads((out/'trace.json').read_text())
     bounds=result.get('received_date_bounds_ns');require_unknown=bounds is not None
     cancel_first=result.get('cancel_first',False)
+    fault_mode=result.get('cleanup_error_expected',False);assert not fault_mode or cancel_first
+    faults=json.loads((out/'cleanup-fault-events.json').read_text()) if fault_mode else None
     snapshot=json.loads((out/'cancel-upload-snapshots.json').read_text()) if cancel_first else None
-    if cancel_first:canceled_snapshot(snapshot)
+    if cancel_first:canceled_snapshot(snapshot,fault_mode)
+    if fault_mode:cleanup_fault_evidence(faults,snapshot)
     audited=replay(stream,opposite,trace,expected,require_unknown,cancel_first);rows=json.loads((out/'server-upload-metadata.json').read_text());catalog(rows,expected,candidate,bounds)
     cases=[]
-    def reject(label,sent=stream,received=opposite,times=trace,source=expected,entries=rows,cancel_snapshot=snapshot):
+    def reject(label,sent=stream,received=opposite,times=trace,source=expected,entries=rows,cancel_snapshot=snapshot,fault_events=faults):
         try:
             replay(sent,received,times,source,require_unknown,cancel_first);catalog(entries,source,candidate,bounds)
-            if cancel_first:canceled_snapshot(cancel_snapshot)
+            if cancel_first:canceled_snapshot(cancel_snapshot,fault_mode)
+            if fault_mode:cleanup_fault_evidence(fault_events,cancel_snapshot)
         except (AssertionError,ValueError,TypeError,KeyError,OSError,StopIteration) as e:cases.append(dict(case=label,rejected=True,reason=str(e)))
         else:raise AssertionError('Damaged upload evidence passed: '+label)
     def damage(data,at):
@@ -144,12 +156,17 @@ def main(args):
         reject('no-peer-ACK-before-Escape',received=bytes(changed))
         start=offset_after(trace,'bbs',timestamp(trace,'dos',cancel['first_search']))
         reject('missing-between-cancel-retry-NFO',received=damage(opposite,opposite.index(b'NFO | lines',start)))
-        for field,value,label in [('installed',['PCUP01.BIN'],'canceled-file-installed'),('temporary_files',['retained/PCUP01.BIN'],'canceled-temp-retained'),('source_files_unchanged',False,'source-modified-after-cancel')]:
+        for field,value,label in [('installed',['PCUP01.BIN'],'canceled-file-installed'),('temporary_files',[] if fault_mode else ['retained/PCUP01.BIN'],'missing-retained-partial-after-cleanup-error' if fault_mode else 'canceled-temp-retained'),('source_files_unchanged',False,'source-modified-after-cancel')]:
             changed=copy.deepcopy(snapshot);changed[0][field]=value;reject(label,cancel_snapshot=changed)
         changed=copy.deepcopy(snapshot);changed[0]['entries'][0]['entries']=[{'fileName':'PCUP01.BIN'}];reject('canceled-catalog-entry',cancel_snapshot=changed)
         reject('cancel-without-confirmed-retry',sent=stream[:cancel['first_search']+2])
+    if fault_mode:
+        reject('missing-modeled-cleanup-error',fault_events=[])
+        reject('multiple-modeled-cleanup-errors',fault_events=faults*2)
+        changed=copy.deepcopy(faults);changed[0]['code']='OTHER';reject('wrong-modeled-cleanup-code',fault_events=changed)
+        changed=copy.deepcopy(faults);changed[0]['target']='enigul-unrelated';reject('fault-target-does-not-own-retained-data',fault_events=changed)
     report=dict(passed=True,cases=cases,checker_sha256=sha(Path(__file__)),auditor_sha256=sha(ROOT/'lab/bbs/audit_zmodem.py'),
-        capture_hashes={p:sha(out/p) for p in ('upload-checks.json','serial-received.bin','display.bin','trace.json','server-upload-metadata.json',*(['cancel-upload-snapshots.json'] if cancel_first else []))},
+        capture_hashes={p:sha(out/p) for p in ('upload-checks.json','serial-received.bin','display.bin','trace.json','server-upload-metadata.json',*(['cancel-upload-snapshots.json'] if cancel_first else []),*(['cleanup-fault-events.json'] if fault_mode else []))},
         scope='Actual retained two-file upload wire and official FileEntry metadata; each payload/empty-file/finish/timing/menu/catalog corruption must reject. No protocol replies generated.')
     (out/'upload-audit-negative-checks.json').write_text(json.dumps(report,indent=2)+'\n');print('Upload audit:',len(cases),'corruptions rejected')
 

@@ -1,5 +1,11 @@
 # Per-upload temporary ownership experiment
 
+This historical candidate is superseded by the
+[explicit transfer-owner experiment](../enigma-transfer-owner/README.md).
+`reproduce-rejection.js` demonstrates that a modeled EACCES rejection in the
+tracked-session dependency can prevent receive completion. Its earlier passing
+normal-cleanup evidence is retained; do not treat it as error-path acceptance.
+
 The owned ENiGMA upload code uses one tracked `temptmp` session named `upload`
 for every upload. Its normal cleanup therefore covers other uploads too. On a
 receiver failure, the upload pipeline is not re-entered, so its partial file

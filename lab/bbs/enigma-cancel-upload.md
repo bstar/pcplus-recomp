@@ -26,6 +26,11 @@ canceled temporary data. The separate [scoped ownership experiment](patches/enig
 addresses that server behavior; its differences are explicit in fixture
 metadata. It is not installed on the live board.
 
+The later [transfer-owner experiment](enigma-transfer-owner.md) supersedes that
+candidate after reproducing an unhandled deletion rejection in its dependency.
+It adds explicit error-aware upload/file-list owners and tests a modeled EACCES
+through actual DOS cancellation, responsive NFO input and successful retry.
+
 ```sh
 ./tools/dev --command python3 lab/bbs/enigma_upload_dos.py \
   --candidate build/bbs-lab/NEW/candidate \
