@@ -145,8 +145,9 @@ Remaining work includes startup/live settings UI, event dispatch in actual menus
 and terminal/ASPECT, ownership through the recovered PROGRAM/fault paths, fitting
 the module into the application's existing code/data segments, original macro/
 window/error services, broader BBS workflows, physical input and real DOS kernels.
-The current owner uses the diagnostic's CRT far heap. The terminal starts in
-assembly without that allocator initialization; production needs a parent-owned
-DOS allocator or a correctly initialized runtime, plus its existing banked-code
-ABI. Linking this diagnostic's objects alone would not establish that lifetime.
+The original diagnostic here uses its CRT far heap. The subsequent
+[CRT-free banked owner](MOUSE_BANK.md) adds a DOS allocation backend, explicit
+far-code adapters and an assembly-started parent with real maintained DOS EXEC.
+It proves that lifetime without CRT initialization; connecting it to the
+interactive terminal and ASPECT remains separate integration work.
 The separate live ENiGMA decoder is unchanged.

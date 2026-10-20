@@ -1121,3 +1121,21 @@ test-mouse-keyboard: mouse-keyboard
 	python3 standalone/test_mouse_keyboard_dos.py
 test-mouse-keyboard-source: mouse-keyboard
 	python3 standalone/check_mouse_keyboard_source.py
+
+.PHONY: mouse-keyboard-dos test-mouse-keyboard-dos test-mouse-keyboard-dos-source
+mouse-keyboard-dos:
+	python3 standalone/build_mouse_keyboard.py --dos-memory
+test-mouse-keyboard-dos: mouse-keyboard-dos
+	python3 standalone/check_mouse_keyboard.py --dos-memory
+	python3 standalone/test_mouse_keyboard_dos.py --dos-memory
+test-mouse-keyboard-dos-source: mouse-keyboard-dos
+	python3 standalone/check_mouse_keyboard_source.py --dos-memory
+
+.PHONY: mouse-bank test-mouse-bank test-mouse-bank-source
+mouse-bank:
+	python3 standalone/build_mouse_bank.py
+test-mouse-bank: mouse-bank
+	python3 standalone/check_mouse_keyboard.py --bank
+	python3 standalone/test_mouse_keyboard_dos.py --bank
+test-mouse-bank-source: mouse-bank
+	python3 standalone/check_mouse_keyboard_source.py --bank

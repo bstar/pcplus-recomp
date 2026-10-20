@@ -2,8 +2,11 @@
 #define PCPLUS_MOUSE_OWNER_H
 /* Maintained near-cdecl foreground owner. DS=SS, IF1 for driver operations.
  * Native IRQ callback is assembly and supports its driver's foreign DS/SS.
- * Quarantine retains all allocations; repair vector/guards before retrying
- * close. Never terminate the callback's owning allocation while held. */
+ * Quarantine retains unreleased storage; repair vector/guards before retrying
+ * close when driver state is still owned. A failed free after restoration
+ * retries storage release only. Never terminate the callback's owning
+ * allocation while driver state is held. The bank adapter copies only the
+ * declared word arguments; use the compiler's caller-cleaned C ABI. */
 typedef struct mouse_settings {
  unsigned scale_x,scale_y;
  unsigned char enabled[6];

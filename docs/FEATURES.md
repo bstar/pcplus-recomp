@@ -692,3 +692,13 @@ evidence](ASPECT_EXTERNAL.md) binds192 exact+92 reused bytes,1,514 paired cases,
 executor remains unintegrated, and all29 accepted command records explicitly
 stop at their unsupported opcode without child side effects. Runtime105/110
 and the complete PROGRAM/UI/serial requirements remain open.
+
+F01/F05 now add a [CRT-free banked mouse owner](MOUSE_BANK.md): a DOS allocator,
+eight explicit far C entries, resident native keyboard services and an
+assembly-started parent using maintained DOS EXEC. Near-code pressure forces a
+different mouse-bank CS. The bank passes84 linked cases and46 actual8086 DOS
+assertions; CRT and DOS-allocation regressions bring the totals to244 linked
+cases and130 DOS assertions. Each variant reproduces three products from a fresh
+source tree, and27 earlier application products remain byte-identical. Startup
+settings/menu/ASPECT publication, quarantine handling in the application and
+physical input remain open; no whole-application gate closes.

@@ -14,15 +14,24 @@ from build_mouse_keyboard import ROOT, OUT, sha
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label', default='owner-' + uuid.uuid4().hex)
+    variant = parser.add_mutually_exclusive_group()
+    variant.add_argument('--dos-memory', action='store_true')
+    variant.add_argument('--bank', action='store_true')
     args = parser.parse_args()
     assert re.fullmatch(r'[A-Za-z0-9_-]+', args.label)
-    folder = OUT / 'runs' / args.label
+    output = ROOT / 'build/mouse-bank' if args.bank else ROOT / 'build/mouse-keyboard-dos' if args.dos_memory else OUT
+    executable = 'MOUSEBNK.EXE' if args.bank else 'MOUSEKEY.EXE'
+    folder = output / 'runs' / args.label
     folder.mkdir(parents=True, exist_ok=False)
-    manifest = json.loads((OUT / 'manifest.json').read_text())
+    manifest = json.loads((output / 'manifest.json').read_text())
+    if args.bank:
+        assert manifest['CRT_libraries'] == [] and manifest['original_inputs'] == []
+    else:
+        assert manifest['dos_memory'] == args.dos_memory
     assert all(sha(ROOT / name) == digest for name, digest in manifest['sources'].items())
-    for name, digest in {'MOUSEKEY.EXE': manifest['binary_sha256'], **manifest['children']}.items():
-        assert sha(OUT / name) == digest
-        shutil.copyfile(OUT / name, folder / name)
+    for name, digest in {executable: manifest['binary_sha256'], **manifest['children']}.items():
+        assert sha(output / name) == digest
+        shutil.copyfile(output / name, folder / name)
     (folder / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
     config = f'''[sdl]
 output=surface
@@ -41,7 +50,7 @@ serial4=disabled
 @echo off
 mount c "{folder}"
 c:
-MOUSEKEY >CHECKS.TXT
+{executable} >CHECKS.TXT
 if errorlevel 1 goto failed
 echo PASS>PASS.TXT
 goto done
@@ -60,18 +69,19 @@ exit
         except subprocess.TimeoutExpired:
             code = -1
     text = (folder / 'CHECKS.TXT').read_text(errors='replace') if (folder / 'CHECKS.TXT').exists() else ''
-    summary = re.search(r'^MOUSEKEY checks=(\d+) failures=(\d+) driver_bytes=(\d+)$', text, re.M)
+    summary = re.search(r'^' + executable[:-4] + r' checks=(\d+) failures=(\d+) driver_bytes=(\d+)$', text, re.M)
     checks = dict(emulator_exit=code == 0, DOS_exit=(folder / 'PASS.TXT').exists() and not (folder / 'FAIL.TXT').exists(),
                   actual_self_check=bool(summary) and int(summary[1]) >= 40 and int(summary[2]) == 0 and 0 < int(summary[3]) < 65504 and 'FAIL ' not in text,
                   actual_child_marker=(folder / 'CHILD.OK').is_file() and (folder / 'CHILD.OK').read_bytes() == b'MOUSE CHILD\r\n',
                   products_unchanged=all(sha(folder / name) == digest for name, digest in
-                      {'MOUSEKEY.EXE': manifest['binary_sha256'], **manifest['children']}.items()),
+                      {executable: manifest['binary_sha256'], **manifest['children']}.items()),
                   sources_unchanged=all(sha(ROOT / name) == digest for name, digest in manifest['sources'].items()))
     report = dict(passed=all(checks.values()), checks=checks, actual_DOS_assertions=int(summary[1]) if summary else 0,
                   actual_driver_state_bytes=int(summary[3]) if summary else 0,
                   binary_sha256=manifest['binary_sha256'], checker_sha256=sha(Path(__file__)),
                   artifacts={p.name: sha(p) for p in folder.iterdir() if p.is_file()},
-                  scope='Actual8086 DOS native mouse-to-keyboard consumption and BIOS priority/fallback, typed PRM admission, opaque INT33 storage and real CRT DOS children, changed-vector quarantine and repaired close with exact driver/native-state restoration. Direct source-owned mouse events; no physical-input or production ASPECT publication claim.')
+                  scope=('CRT-free assembly parent and banked owner with maintained DOS EXEC, MCB allocation counts and retained extent checks. ' if args.bank else 'CRT diagnostic parent and spawnl children. ') +
+                  'Actual8086 DOS native mouse-to-keyboard consumption and BIOS priority/fallback, typed PRM admission, opaque INT33 storage, changed-vector quarantine and repaired close with exact driver/native-state restoration. Direct source-owned mouse events; no physical-input or production ASPECT publication claim.')
     (folder / 'result.json').write_text(json.dumps(report, indent=2) + '\n')
     print('Mouse/keyboard DOS:', 'PASS' if report['passed'] else checks, folder)
     if not report['passed']:

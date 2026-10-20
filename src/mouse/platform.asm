@@ -2,7 +2,12 @@
 BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
-extern mouse_init,mouse_probe,mouse_depth,keyboard_poll,keyboard_read
+extern mouse_init,mouse_probe,mouse_depth
+%ifdef MOUSE_BANK
+extern mouse_keyboard_poll_resident,mouse_keyboard_read_resident
+%else
+extern keyboard_poll,keyboard_read
+%endif
 global _mouse_platform_size,_mouse_platform_save,_mouse_platform_restore
 global _mouse_platform_init,_mouse_platform_reset,_mouse_platform_depth
 global _mouse_platform_poll,_mouse_platform_read
@@ -74,14 +79,22 @@ _mouse_platform_poll:
  push si
  push di
  push es
+%ifdef MOUSE_BANK
+ call far mouse_keyboard_poll_resident
+%else
  call keyboard_poll
+%endif
  jmp key_return
 _mouse_platform_read:
  push bx
  push si
  push di
  push es
+%ifdef MOUSE_BANK
+ call far mouse_keyboard_read_resident
+%else
  call keyboard_read
+%endif
 key_return:
  pop es
  pop di

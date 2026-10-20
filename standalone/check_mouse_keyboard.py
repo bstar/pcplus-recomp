@@ -3,22 +3,30 @@
 import json
 from pathlib import Path
 import struct
+import argparse
 from build_mouse_keyboard import ROOT, OUT, sha
 from dos_image import DosImage
 from unicorn import UC_HOOK_CODE, UC_HOOK_INTR, UC_HOOK_INSN
 from unicorn.x86_const import *
+BANK_TRACE = {}
 
 
 class Owner(DosImage):
     def __init__(self):
-        super().__init__(OUT / 'MOUSEKEY.EXE', OUT / 'MOUSEKEY.map')
+        manifest = json.loads((OUT / 'manifest.json').read_text())
+        self.bank = manifest.get('bank', False)
+        name = 'MOUSEBNK' if self.bank else 'MOUSEKEY'
+        super().__init__(OUT / (name + '.EXE'), OUT / (name + '.map'))
+        self.dos_memory = manifest['dos_memory']
         self.vector = (0x7000, 0x40)
         self.driver = bytes((i * 19 + 7) & 255 for i in range(256))
         self.original_driver = self.driver
         self.size = len(self.driver)
         self.present = True
         self.alloc_fail = False
-        self.alloc_offset = 0x100
+        self.alloc_offset = 0 if self.dos_memory else 0x100
+        self.free_fail = False
+        self.request_bytes = None
         self.corrupt_save = False
         self.allocations = {}
         self.events = []
@@ -32,6 +40,17 @@ class Owner(DosImage):
         raise AssertionError('Owner reached undeclared port IO')
 
     def boundary(self, uc, address, size, data):
+        if self.bank:
+            for name in ('_mouse_settings_decode_impl', '_mouse_owner_open_impl',
+                         '_mouse_owner_close_impl', '_mouse_owner_suspend_impl',
+                         '_mouse_owner_resume_impl', '_mouse_owner_key_impl',
+                         '_mouse_owner_phase_impl', '_mouse_owner_bytes_impl',
+                         'mouse_callback', 'keyboard_poll', 'keyboard_read'):
+                if address == self.symbols[name]:
+                    assert (uc.reg_read(UC_X86_REG_CS) == self.base_segment) == name.startswith('keyboard_'), name
+                    BANK_TRACE[name] = BANK_TRACE.get(name, 0) + 1
+        if self.dos_memory:
+            return
         if address not in (self.symbols['_fmalloc_'], self.symbols['_ffree_']):
             return
         ax, dx = uc.reg_read(UC_X86_REG_AX), uc.reg_read(UC_X86_REG_DX)
@@ -59,10 +78,39 @@ class Owner(DosImage):
     def interrupt(self, uc, number, data):
         ax = uc.reg_read(UC_X86_REG_AX)
         if number == 0x21:
-            assert ax == 0x3533, hex(ax)
-            uc.reg_write(UC_X86_REG_ES, self.vector[0])
-            uc.reg_write(UC_X86_REG_BX, self.vector[1])
-            self.events.append(('vector', *self.vector))
+            ah = ax >> 8
+            if ax == 0x3533:
+                uc.reg_write(UC_X86_REG_ES, self.vector[0])
+                uc.reg_write(UC_X86_REG_BX, self.vector[1])
+                self.events.append(('vector', *self.vector))
+            elif ah == 0x48 and self.dos_memory:
+                requested = self.size + 32 if self.request_bytes is None else self.request_bytes
+                paragraphs = uc.reg_read(UC_X86_REG_BX)
+                assert paragraphs == (requested + 15) // 16
+                self.events.append(('DOS-allocate', paragraphs))
+                flags = uc.reg_read(UC_X86_REG_EFLAGS)
+                if self.alloc_fail:
+                    uc.reg_write(UC_X86_REG_AX, 8)
+                    uc.reg_write(UC_X86_REG_EFLAGS, flags | 1)
+                else:
+                    assert (0x9000, 0) not in self.allocations
+                    self.allocations[(0x9000, 0)] = paragraphs * 16
+                    uc.mem_write(0x90000, bytes(paragraphs * 16))
+                    uc.reg_write(UC_X86_REG_AX, 0x9000)
+                    uc.reg_write(UC_X86_REG_EFLAGS, flags & ~1)
+            elif ah == 0x49 and self.dos_memory:
+                pointer = (uc.reg_read(UC_X86_REG_ES), 0)
+                assert pointer in self.allocations
+                self.events.append(('DOS-free', *pointer))
+                flags = uc.reg_read(UC_X86_REG_EFLAGS)
+                if self.free_fail:
+                    uc.reg_write(UC_X86_REG_AX, 7)
+                    uc.reg_write(UC_X86_REG_EFLAGS, flags | 1)
+                else:
+                    self.allocations.pop(pointer)
+                    uc.reg_write(UC_X86_REG_EFLAGS, flags & ~1)
+            else:
+                raise AssertionError('Undeclared DOS service ' + hex(ax))
         elif number == 0x16:
             ah = ax >> 8
             assert ah in (0, 1)
@@ -97,6 +145,9 @@ class Owner(DosImage):
                     uc.reg_read(UC_X86_REG_ES), uc.reg_read(UC_X86_REG_DX)) + self.driver[6:]
 
     def invoke(self, name, args=(), *, flags=0x202, foreign_ss=False):
+        if self.bank:
+            name = {'_mouse_platform_allocate':'_test_allocate',
+                    '_mouse_platform_release':'_test_release'}.get(name, name)
         ss = 0x8000 if foreign_ss else self.ds
         for register, value in [(UC_X86_REG_CS, self.base_segment), (UC_X86_REG_DS, self.ds),
                                 (UC_X86_REG_SS, ss), (UC_X86_REG_EFLAGS, flags),
@@ -106,9 +157,13 @@ class Owner(DosImage):
         sp = 0xe000 - 2 * len(words)
         self.uc.mem_write(ss * 16 + sp, struct.pack('<' + 'H' * len(words), *words))
         self.uc.reg_write(UC_X86_REG_SP, sp)
+        if self.bank:
+            self.uc.reg_write(UC_X86_REG_BX, 0x9abc)
+            self.uc.reg_write(UC_X86_REG_ES, 0x4567)
         self.returned = False
         self.uc.emu_start(self.symbols[name], 0, count=500000)
         assert self.returned and self.uc.reg_read(UC_X86_REG_SP) == sp + 2, name
+        assert bytes(self.uc.mem_read(ss * 16 + sp + 2, len(args) * 2)) == struct.pack('<' + 'H' * len(args), *args)
         assert self.uc.reg_read(UC_X86_REG_DS) == self.ds and self.uc.reg_read(UC_X86_REG_SS) == ss
         for register, value in [(UC_X86_REG_BP, 0xbabe), (UC_X86_REG_SI, 0x1234), (UC_X86_REG_DI, 0x5678)]:
             assert self.uc.reg_read(register) == value, (name, register)
@@ -121,6 +176,10 @@ class Owner(DosImage):
     def native(self):
         return bytes(self.uc.mem_read(self.symbols['mouse_scale_x'], 22)) + bytes(self.uc.mem_read(self.symbols['mouse_enabled'], 6))
 
+    def storage(self):
+        segment, offset = next(iter(self.allocations))
+        return segment * 16 + offset
+
     def phase(self):
         return self.invoke('_mouse_owner_phase')
 
@@ -130,6 +189,17 @@ class Owner(DosImage):
 
 
 def main():
+    global OUT
+    parser = argparse.ArgumentParser(description=__doc__)
+    variant = parser.add_mutually_exclusive_group()
+    variant.add_argument('--dos-memory', action='store_true')
+    variant.add_argument('--bank', action='store_true')
+    options = parser.parse_args()
+    if options.bank:
+        OUT = ROOT / 'build/mouse-bank'
+        options.dos_memory = True
+    elif options.dos_memory:
+        OUT = ROOT / 'build/mouse-keyboard-dos'
     cases = []
     for x in (0, 1, 30, 999, 1000, 32767, 65535):
         for y in (0, 1, 28, 999, 1000, 32767, 65535):
@@ -158,6 +228,8 @@ def main():
         assert not m.events and m.native() == before and m.phase() == 0
         cases.append(dict(case='admit-IF-and-SS', flags=flags, foreign_SS=foreign, passed=True))
     for kind in ('invalid-x', 'invalid-y', 'invalid-enable', 'missing', 'size-zero', 'size-overflow', 'allocate', 'wrap', 'guard'):
+        if options.dos_memory and kind == 'wrap':
+            continue  # The DOS allocator always returns a paragraph offset0.
         m = Owner()
         before = m.native()
         cfg = m.config(0 if kind == 'invalid-x' else 8, 1000 if kind == 'invalid-y' else 4,
@@ -181,7 +253,9 @@ def main():
         cases.append(dict(case='rejected-open-' + kind, passed=True))
     m = Owner()
     before = m.native()
+    assert m.invoke('_mouse_owner_bytes') == 0
     assert m.invoke('_mouse_owner_open', [m.config()]) == 0 and m.phase() == 1
+    assert m.invoke('_mouse_owner_bytes') == m.size
     assert m.symbols['mouse_count'] == m.symbols['keyboard_queue_count']
     assert m.symbols['mouse_code'] == m.symbols['keyboard_queue_index']
     assert m.symbols['mouse_button_pending'] == m.symbols['keyboard_queue_active']
@@ -215,7 +289,7 @@ def main():
         if kind == 'vector':
             m.vector = (0, 0)
         elif kind == 'guard':
-            m.uc.mem_write(0x90100, b'\x00')
+            m.uc.mem_write(m.storage(), b'\x00')
         elif kind == 'queue-index':
             m.put('mouse_count', 1)
             m.put('mouse_code', 6)
@@ -230,7 +304,7 @@ def main():
         assert m.allocations and not any(e[0] == 'driver' and e[1] != 0x15 for e in m.events[prior_events:])
         m.vector = vector
         m.size = 256
-        m.uc.mem_write(0x90100, b'\xa5')
+        m.uc.mem_write(m.storage(), b'\xa5')
         m.put('mouse_depth', 65535)
         m.close()
         cases.append(dict(case='quarantine-and-repaired-close-' + kind, passed=True))
@@ -262,7 +336,42 @@ def main():
     old = list(m.events)
     assert m.invoke('_mouse_owner_close') == 0 and m.events == old
     cases.append(dict(case='lifecycle-reentry-rejects-before-driver-and-close-is-idempotent', passed=True))
-    report = dict(passed=True, cases=cases, binary_sha256=sha(OUT / 'MOUSEKEY.EXE'),
+    if options.dos_memory:
+        for requested in (1, 15, 16, 17, 608, 65535):
+            m = Owner()
+            m.request_bytes = requested
+            assert m.invoke('_mouse_platform_allocate', [requested]) == 0
+            assert m.uc.reg_read(UC_X86_REG_DX) == 0x9000
+            events = list(m.events)
+            assert m.invoke('_mouse_platform_release', [1, 0x9000]) == 9 and m.events == events
+            assert m.invoke('_mouse_platform_release', [0, 0x9000]) == 0 and not m.allocations
+            cases.append(dict(case='DOS-paragraph-allocation-and-pointer-validation', bytes=requested, passed=True))
+        m = Owner()
+        assert m.invoke('_mouse_platform_allocate', [0]) == 0 and m.uc.reg_read(UC_X86_REG_DX) == 0
+        assert m.invoke('_mouse_platform_release', [0, 0]) == 9 and not m.events
+        cases.append(dict(case='DOS-zero-rejects-before-kernel', passed=True))
+        for opened in (False, True):
+            m = Owner()
+            before = m.native()
+            m.free_fail = True
+            m.corrupt_save = not opened
+            assert m.invoke('_mouse_owner_open', [m.config()]) == (0 if opened else 2)
+            if opened:
+                assert m.invoke('_mouse_owner_close') == 2
+            assert m.phase() == 3 and m.allocations and m.native() == before
+            events = len(m.events)
+            m.free_fail = False
+            # Driver is already restored (or never mutated). Retry needs only
+            # the owned MCB, even if its original vector is no longer selected.
+            m.vector = (0, 0)
+            assert m.invoke('_mouse_owner_close') == 0 and not m.allocations and m.phase() == 0
+            assert not any(e[0] in ('driver', 'vector') for e in m.events[events:])
+            cases.append(dict(case='DOS-free-error-retains-storage-only-until-retry', opened=opened, passed=True))
+    if options.bank:
+        assert len(BANK_TRACE) == 11, BANK_TRACE
+    report = dict(passed=True, cases=cases, binary_sha256=sha(OUT / ('MOUSEBNK.EXE' if options.bank else 'MOUSEKEY.EXE')),
+                  bank=options.bank, bank_execution_entries=BANK_TRACE,
+                  dos_memory=options.dos_memory,
                   checker_sha256=sha(Path(__file__)),
                   scope='Actual linked C owner, native producer/keyboard consumer and foreign-DS/SS callback bridge. Far heap, INT33 state/vector and BIOS input are explicit modeled boundaries; DOS child/driver execution is separate.')
     (OUT / 'checks.json').write_text(json.dumps(report, indent=2) + '\n')

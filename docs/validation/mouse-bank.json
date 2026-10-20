@@ -1,0 +1,358 @@
+{
+  "date": "2026-10-20",
+  "passed": true,
+  "component_only": true,
+  "normal_mouse_enabled": false,
+  "whole_application_gates_closed": [],
+  "original_build_inputs": [],
+  "variants": {
+    "crt": {
+      "binary_sha256": "563d7a41978d26d4e4a271a4a685706d46b425f479aeefa449de7fa5ab94975f",
+      "linked_cases": 76,
+      "actual_DOS_assertions": 42,
+      "actual_driver_state_bytes": 576,
+      "products": {
+        "MOUSEKEY.EXE": {
+          "expected": "563d7a41978d26d4e4a271a4a685706d46b425f479aeefa449de7fa5ab94975f",
+          "actual": "563d7a41978d26d4e4a271a4a685706d46b425f479aeefa449de7fa5ab94975f"
+        },
+        "MUTATE.COM": {
+          "expected": "280f3037c0708295baeb7d6474628f508f9f12a3f8e7327c29a1c34ca1daf081",
+          "actual": "280f3037c0708295baeb7d6474628f508f9f12a3f8e7327c29a1c34ca1daf081"
+        },
+        "VECTOR.COM": {
+          "expected": "7f88441ec8466c49390df0177662b70fe6f643062d60f4693240a78ac8729fee",
+          "actual": "7f88441ec8466c49390df0177662b70fe6f643062d60f4693240a78ac8729fee"
+        }
+      },
+      "source_hashes": {
+        "reconstruction/program_mouse/probe.asm": "7e8f255d298bca379f4692dde562fe0cff3cc665d14dd9060244d025ed28df48",
+        "reconstruction/program_mouse/init.asm": "fa5c5cc10dc8e73021f408d0937d7807910ef3d14c29e4488242ea46a71cd3e0",
+        "reconstruction/program_mouse/bind.asm": "50b406d7131a7d454888c12a495e523b52095e08c37db32c696275dc876754ae",
+        "reconstruction/program_mouse/callback.asm": "d9c5248c10d8c7e1861b10ba1165231727a5fb39fcd7be939e684dd93c425608",
+        "reconstruction/program_mouse/events.asm": "6ba340317c7e84cf35eca507cf0c6fff5b3b7b930de26a77cab49fc0db176ded",
+        "reconstruction/program_mouse/absolute.asm": "60d3e4f919c328fd80a547122de3f08bfc53e014daf5ef33c673f9466c4627a4",
+        "reconstruction/program_mouse/defaults.asm": "f7556959cc72d238eb4af1f403a39f3c7573cddc9a541a1c05fdcb8132c0a57b",
+        "reconstruction/keyboard/core.asm": "60059898bd121def771ddd2b604bfe46c65bbcbdfb71d0ebcdba8e3b5997036c",
+        "src/mouse/state.asm": "9f97c3756128374075249213cfa046afbe21479a2637a7d8403fe60e444ae809",
+        "src/mouse/platform.asm": "0f37db90319fb7e2d8be78c1d3bd704fd357eec46254be1cd4d4304ab9a88454",
+        "standalone/mouse_keyboard_bridge.asm": "cff9595177e76d02c90cb0bef486e49bc6cbfe4e4e015af200a78f02b538a7ed",
+        "src/mouse/owner.c": "81f5febebdd5cf4099554cfc2a9584cd5a62aef92aa34b7de8f2afd3f48e3981",
+        "standalone/mouse_keyboard_diagnostic.c": "1db4982d6831f25f2f02370c6c108ce2d921b3d23d0fc7d15f574b9b13caedd9",
+        "standalone/mouse_keyboard_child.asm": "8d06eef9f9e33bac09b1f45f169ca0c0fcb0de28e278aff51fcda6b7fd8192c8",
+        "standalone/build_mouse_keyboard.py": "be9371da51f6d8768f651b1e7a64f494cd24650726ab188cea30058229ef4af1",
+        "standalone/build_native_mouse.py": "7cfa5951928ac489636e6a2c082d5aeb1ab9096f77a011c3cfd812f2eb5b581a",
+        "src/mouse/owner.h": "2d79620568b04765cb093b56723131636d9ada9719c8e4eaf6c6ef8fff1ae919",
+        "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+        "reconstruction/keyboard/provenance.json": "607480ca125ab544f93a46c3d094685acbe4057d283365c88e3221b020d75aa4",
+        "reconstruction/program_mouse/provenance.json": "7f672eae62e737b2840ace68d313b8429c2012f77bf7060ca3f3a3a22ed08fe2",
+        "reconstruction/program_mouse/defaults.json": "fa8e9518d8494a16d5cccfed61e567afd7d06ed5087e363cdf3148bf634ff7c4",
+        "standalone/omf_imports.py": "b831a013f7dcb19bd1250bb9a73bf56218d24f48a6fe22feb86b6fc677db7473"
+      }
+    },
+    "dos": {
+      "binary_sha256": "bf2f6753e077e947a8fe59c5e13951a440d5b141b1c6c5f79814b6e2a8f307ac",
+      "linked_cases": 84,
+      "actual_DOS_assertions": 42,
+      "actual_driver_state_bytes": 576,
+      "products": {
+        "MOUSEKEY.EXE": {
+          "expected": "bf2f6753e077e947a8fe59c5e13951a440d5b141b1c6c5f79814b6e2a8f307ac",
+          "actual": "bf2f6753e077e947a8fe59c5e13951a440d5b141b1c6c5f79814b6e2a8f307ac"
+        },
+        "MUTATE.COM": {
+          "expected": "280f3037c0708295baeb7d6474628f508f9f12a3f8e7327c29a1c34ca1daf081",
+          "actual": "280f3037c0708295baeb7d6474628f508f9f12a3f8e7327c29a1c34ca1daf081"
+        },
+        "VECTOR.COM": {
+          "expected": "7f88441ec8466c49390df0177662b70fe6f643062d60f4693240a78ac8729fee",
+          "actual": "7f88441ec8466c49390df0177662b70fe6f643062d60f4693240a78ac8729fee"
+        }
+      },
+      "source_hashes": {
+        "reconstruction/program_mouse/probe.asm": "7e8f255d298bca379f4692dde562fe0cff3cc665d14dd9060244d025ed28df48",
+        "reconstruction/program_mouse/init.asm": "fa5c5cc10dc8e73021f408d0937d7807910ef3d14c29e4488242ea46a71cd3e0",
+        "reconstruction/program_mouse/bind.asm": "50b406d7131a7d454888c12a495e523b52095e08c37db32c696275dc876754ae",
+        "reconstruction/program_mouse/callback.asm": "d9c5248c10d8c7e1861b10ba1165231727a5fb39fcd7be939e684dd93c425608",
+        "reconstruction/program_mouse/events.asm": "6ba340317c7e84cf35eca507cf0c6fff5b3b7b930de26a77cab49fc0db176ded",
+        "reconstruction/program_mouse/absolute.asm": "60d3e4f919c328fd80a547122de3f08bfc53e014daf5ef33c673f9466c4627a4",
+        "reconstruction/program_mouse/defaults.asm": "f7556959cc72d238eb4af1f403a39f3c7573cddc9a541a1c05fdcb8132c0a57b",
+        "reconstruction/keyboard/core.asm": "60059898bd121def771ddd2b604bfe46c65bbcbdfb71d0ebcdba8e3b5997036c",
+        "src/mouse/state.asm": "9f97c3756128374075249213cfa046afbe21479a2637a7d8403fe60e444ae809",
+        "src/mouse/platform.asm": "0f37db90319fb7e2d8be78c1d3bd704fd357eec46254be1cd4d4304ab9a88454",
+        "standalone/mouse_keyboard_bridge.asm": "cff9595177e76d02c90cb0bef486e49bc6cbfe4e4e015af200a78f02b538a7ed",
+        "src/mouse/dos_memory.asm": "cf72befb4939e6d5d3375d46d280497906809ca87e761badb9543900d926c650",
+        "src/mouse/owner.c": "81f5febebdd5cf4099554cfc2a9584cd5a62aef92aa34b7de8f2afd3f48e3981",
+        "standalone/mouse_keyboard_diagnostic.c": "1db4982d6831f25f2f02370c6c108ce2d921b3d23d0fc7d15f574b9b13caedd9",
+        "standalone/mouse_keyboard_child.asm": "8d06eef9f9e33bac09b1f45f169ca0c0fcb0de28e278aff51fcda6b7fd8192c8",
+        "standalone/build_mouse_keyboard.py": "be9371da51f6d8768f651b1e7a64f494cd24650726ab188cea30058229ef4af1",
+        "standalone/build_native_mouse.py": "7cfa5951928ac489636e6a2c082d5aeb1ab9096f77a011c3cfd812f2eb5b581a",
+        "src/mouse/owner.h": "2d79620568b04765cb093b56723131636d9ada9719c8e4eaf6c6ef8fff1ae919",
+        "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+        "reconstruction/keyboard/provenance.json": "607480ca125ab544f93a46c3d094685acbe4057d283365c88e3221b020d75aa4",
+        "reconstruction/program_mouse/provenance.json": "7f672eae62e737b2840ace68d313b8429c2012f77bf7060ca3f3a3a22ed08fe2",
+        "reconstruction/program_mouse/defaults.json": "fa8e9518d8494a16d5cccfed61e567afd7d06ed5087e363cdf3148bf634ff7c4",
+        "standalone/omf_imports.py": "b831a013f7dcb19bd1250bb9a73bf56218d24f48a6fe22feb86b6fc677db7473"
+      }
+    },
+    "bank": {
+      "binary_sha256": "383711e101cb514f3796f65030dd6af0202494caa8e08abecbf2a3f43342820c",
+      "linked_cases": 84,
+      "actual_DOS_assertions": 46,
+      "actual_driver_state_bytes": 576,
+      "products": {
+        "MOUSEBNK.EXE": {
+          "expected": "383711e101cb514f3796f65030dd6af0202494caa8e08abecbf2a3f43342820c",
+          "actual": "383711e101cb514f3796f65030dd6af0202494caa8e08abecbf2a3f43342820c"
+        },
+        "MUTATE.COM": {
+          "expected": "280f3037c0708295baeb7d6474628f508f9f12a3f8e7327c29a1c34ca1daf081",
+          "actual": "280f3037c0708295baeb7d6474628f508f9f12a3f8e7327c29a1c34ca1daf081"
+        },
+        "VECTOR.COM": {
+          "expected": "7f88441ec8466c49390df0177662b70fe6f643062d60f4693240a78ac8729fee",
+          "actual": "7f88441ec8466c49390df0177662b70fe6f643062d60f4693240a78ac8729fee"
+        }
+      },
+      "source_hashes": {
+        "standalone/mouse_bank_host.asm": "fe7b2288b6e86f51f822164bfc93528172530de04f51defff1dabc4f1373b0a0",
+        "src/mouse/bank.asm": "4cde7b8d6640f0db351e9150f579d02e858b01925ab1728b264fc110e4fa6c7e",
+        "reconstruction/program_mouse/probe.asm": "7e8f255d298bca379f4692dde562fe0cff3cc665d14dd9060244d025ed28df48",
+        "reconstruction/program_mouse/init.asm": "fa5c5cc10dc8e73021f408d0937d7807910ef3d14c29e4488242ea46a71cd3e0",
+        "reconstruction/program_mouse/bind.asm": "50b406d7131a7d454888c12a495e523b52095e08c37db32c696275dc876754ae",
+        "reconstruction/program_mouse/callback.asm": "d9c5248c10d8c7e1861b10ba1165231727a5fb39fcd7be939e684dd93c425608",
+        "reconstruction/program_mouse/events.asm": "6ba340317c7e84cf35eca507cf0c6fff5b3b7b930de26a77cab49fc0db176ded",
+        "reconstruction/program_mouse/absolute.asm": "60d3e4f919c328fd80a547122de3f08bfc53e014daf5ef33c673f9466c4627a4",
+        "reconstruction/program_mouse/defaults.asm": "f7556959cc72d238eb4af1f403a39f3c7573cddc9a541a1c05fdcb8132c0a57b",
+        "reconstruction/keyboard/core.asm": "60059898bd121def771ddd2b604bfe46c65bbcbdfb71d0ebcdba8e3b5997036c",
+        "src/mouse/state.asm": "9f97c3756128374075249213cfa046afbe21479a2637a7d8403fe60e444ae809",
+        "src/mouse/platform.asm": "0f37db90319fb7e2d8be78c1d3bd704fd357eec46254be1cd4d4304ab9a88454",
+        "src/mouse/dos_memory.asm": "cf72befb4939e6d5d3375d46d280497906809ca87e761badb9543900d926c650",
+        "src/mouse/entries.asm": "14d39ee180c5d0aa08ddb39041c23bff686eb1d66efb588ae6523ea02178ae51",
+        "standalone/mouse_keyboard_bridge.asm": "cff9595177e76d02c90cb0bef486e49bc6cbfe4e4e015af200a78f02b538a7ed",
+        "standalone/mouse_bank_test_entry.asm": "1819c0e1cd26f40a5a5955e0c88be1afaa271329737fc463ad25a09a7131f74e",
+        "src/process/dos_exec.asm": "302abd206c9d127cdbb1f1d75487e72ecec8f1023051e37bbc066ab9b553433a",
+        "src/mouse/owner.c": "81f5febebdd5cf4099554cfc2a9584cd5a62aef92aa34b7de8f2afd3f48e3981",
+        "standalone/mouse_bank_diagnostic.c": "bf7250fd4e9f9996e0dd9df7002ec71e7f983020e58ba86d3ed31951aba9cce7",
+        "standalone/mouse_bank_end.asm": "9ba23ce7fc2921f83f9c586290492bfd7c0122bcc047ac9aadc62a432acdba30",
+        "standalone/mouse_keyboard_child.asm": "8d06eef9f9e33bac09b1f45f169ca0c0fcb0de28e278aff51fcda6b7fd8192c8",
+        "standalone/build_mouse_bank.py": "8163175cce9d2a667a15341e84df9fbe869dc0fa7afa1d9287d7d0767ad0de25",
+        "standalone/build_native_mouse.py": "7cfa5951928ac489636e6a2c082d5aeb1ab9096f77a011c3cfd812f2eb5b581a",
+        "standalone/omf_imports.py": "b831a013f7dcb19bd1250bb9a73bf56218d24f48a6fe22feb86b6fc677db7473",
+        "src/mouse/abi.inc": "ca43d704ba8fd99bb4d3d8646e82a8944854b60a954388ddd3bda822d1078192",
+        "src/mouse/owner.h": "2d79620568b04765cb093b56723131636d9ada9719c8e4eaf6c6ef8fff1ae919",
+        "src/process/dos_exec.h": "62bcea65ffdaf95388d1ba54dc1e287943e431430f0ba1d789948009dc0dd6b9",
+        "src/terminal/far_bridge.inc": "67436d9af9b878d7203851594c59d1a4a83ab89a8285882b906c6814ec970f45",
+        "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+        "reconstruction/program_mouse/provenance.json": "7f672eae62e737b2840ace68d313b8429c2012f77bf7060ca3f3a3a22ed08fe2",
+        "reconstruction/program_mouse/defaults.json": "fa8e9518d8494a16d5cccfed61e567afd7d06ed5087e363cdf3148bf634ff7c4",
+        "reconstruction/keyboard/provenance.json": "607480ca125ab544f93a46c3d094685acbe4057d283365c88e3221b020d75aa4"
+      },
+      "segments": {
+        "_TEXT": {
+          "start": 0,
+          "bytes": 63383,
+          "segment": 0
+        },
+        "MOUSE_CODE": {
+          "start": 63392,
+          "bytes": 2266,
+          "segment": 3962
+        },
+        "_DATA": {
+          "start": 65664,
+          "bytes": 304,
+          "segment": 4104
+        },
+        "MOUSESTACK": {
+          "start": 65968,
+          "bytes": 1024,
+          "segment": 4123
+        },
+        "CONST": {
+          "start": 66992,
+          "bytes": 74,
+          "segment": 4187
+        },
+        "CONST2": {
+          "start": 67066,
+          "bytes": 0,
+          "segment": 4191
+        },
+        "_BSS": {
+          "start": 67072,
+          "bytes": 1348,
+          "segment": 4192
+        },
+        "STACK": {
+          "start": 68432,
+          "bytes": 8192,
+          "segment": 4277
+        }
+      },
+      "retained_paragraphs": 4805,
+      "bank_execution_entries": {
+        "_mouse_settings_decode_impl": 55,
+        "_mouse_owner_open_impl": 22,
+        "_mouse_owner_phase_impl": 37,
+        "_mouse_owner_bytes_impl": 2,
+        "mouse_callback": 3,
+        "_mouse_owner_key_impl": 14,
+        "keyboard_poll": 11,
+        "keyboard_read": 5,
+        "_mouse_owner_suspend_impl": 5,
+        "_mouse_owner_resume_impl": 3,
+        "_mouse_owner_close_impl": 14
+      },
+      "owner_imports": [
+        "_mouse_platform_vector",
+        "_mouse_platform_size",
+        "_mouse_platform_depth",
+        "_mouse_platform_allocate",
+        "_mouse_platform_release",
+        "_mouse_platform_save",
+        "_mouse_scale_x",
+        "_mouse_enabled",
+        "_mouse_platform_init",
+        "_mouse_present",
+        "_mouse_platform_reset",
+        "_mouse_platform_restore",
+        "_mouse_scale_y",
+        "_mouse_count",
+        "_mouse_code",
+        "_mouse_platform_poll",
+        "_mouse_platform_read",
+        "_small_code_"
+      ],
+      "CRT_libraries": []
+    }
+  },
+  "linked_policy_cases": 244,
+  "actual_DOS_assertions": 130,
+  "native_code_and_guard_bytes": 599,
+  "original_default_table_bytes": 30,
+  "preserved_application_products": {
+    "aspect-process-parent/ASPECT.EXE": "cd580a12fda2e38edbac6fa9ebd19727b11c9e8393b1a6fe561531164bebb63d",
+    "aspect-fault/ASPECT.EXE": "bbeb4c85546d0cb0e6c94801d78c4472e4a77efe7cb1a1c6dab6e7e2b03f5c7e",
+    "aspect-process/ASPECT.EXE": "ccf0aeaf2f58ef8628335f170df859a01217885dc6e58ea7433f648bbee57025",
+    "aspect-runner/ASPECT.EXE": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+    "aspect-compiler-dos/ASPCOMP.EXE": "3470c718df0d21fad4635b99f6c3b2e5d307637581728bdb639e6e9521a9c931",
+    "terminal-process/TERMINAL.EXE": "2b0fdb8fd09021138f65a6b8ca82af3c8957de55d993f597428ff3c3c4b5bd27",
+    "terminal/TERMINAL.EXE": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+    "native-program/PROGRAM.EXE": "582a6844f454de92e66fad3e6694b26b1fdee6565d91ce563e8ebc38d8afb8d1",
+    "native-program/OWN1.COM": "4a02a70aa7ddec17648947eb822a045a3bbc5666485d0861277f784632640a39",
+    "native-program/OWN2.COM": "e496c8227feaeee3abe5d00a2ac8a77624a0070a2e41d82215dadf912171a4b5",
+    "native-display/DISPLAY.EXE": "0e6dc8e4e852e0f940b810a7aefbae2378c3c18985ddcf2dea1c01f5544dd6cf",
+    "native-display/VIDEO.COM": "e38463e46b8f8c42f2bcd90a1e9707ace08ae63704fa16e317a87df3fbb39605",
+    "process-serial/PSERIAL.EXE": "7cf3775f5e26ab6e83023744c6ddfaec9de57073449570fe514c0584ee4c9619",
+    "process-serial/UART1.COM": "a7bb9817a9401d7c0127d68b5bc38f5f9a2b47e34827c4daeee471857deb654e",
+    "process-serial/UART2.COM": "3dda15dc346ef3ddfc42eb6b54890254590dd6fc7ce48f1c116d9d84cc862f3f",
+    "native-process/NATIVE.EXE": "03723b988eab3df0cf7c128a1c6fc8356045b2bc0aac3865ab8f975ee300a7e0",
+    "native-process/NAMES.EXE": "0485267021744f48db472a3c6a6ebe10beabb3ac64d3b673c2748a8e1e0e8409",
+    "native-process/CHILD.COM": "0c8bb3b2499821ac74ddd47e4cc58ee34a633d7537be5f15db7ab80f878f9f18",
+    "native-process/DIVIDE.COM": "a2d4de6488769a320efd699e9c8e367574f7d398f9b1b63a30a22b099fb90e79",
+    "native-process/VECT.COM": "ca624aef48dfd14a782633e6253fdc817c6df15c61aaafe73ffc814a1f01b79f",
+    "native-process/RESIDENT.COM": "b56878449a5528fa3403207d369262e3a5422d2d489cce2f323727579bc200a8",
+    "native-process/EMPTY.COM": "fb3899847c3e4e1e817dd8f80108e41a46693128b4aa3a8306f3d86cdbaa79d6",
+    "native-process/FLAGS.COM": "83c3623d9e7e8db33301b96448910701f95033debff389462ef8c4d7e92489c0",
+    "native-process/E17.COM": "c3a5760861de337896c7259bb44f6c05284278040d22d4fc9cb42688d8d247e1",
+    "native-process/E21.COM": "def6a10413daf417e92cc622ffbeb96dd3abf12796f9ca071662503c1ce781b1",
+    "native-process/E22.COM": "f9903bca908e88fc0c10aa4ac088a180493ac66d8d2c911dcf8eae362b5a0b6b",
+    "native-process/CHILD.EXE": "63080cc4387cd191b3ae0495ad21b023e266689336c4f29c22190246b2a2c8df"
+  },
+  "prior_161_DOS_cases_carried_by_unchanged_binary_identity": true,
+  "evidence": [
+    {
+      "path": "build/mouse-keyboard/manifest.json",
+      "sha256": "0b7ec9db963ef500dd9b8fd576dfd9c740cce2b2e3066f63ee978aabc025846e"
+    },
+    {
+      "path": "build/mouse-keyboard/checks.json",
+      "sha256": "97564adf4b06fd9f1fc26ac929edac4d5549015cde3b1943e13a490da6c970a9"
+    },
+    {
+      "path": "build/mouse-keyboard/runs/bank-crt-final-01/result.json",
+      "sha256": "2c5d8f44285488ea2b45b39a607ddf64dca4291a13f9af88eaffa3b317ad7e59"
+    },
+    {
+      "path": "build/mouse-keyboard/source-proofs/bank-crt-source-01/result.json",
+      "sha256": "4aac8fcb1671466d88ad4b5971564384296b6610fc1ab5423a654c0bb3e3ffa3"
+    },
+    {
+      "path": "build/mouse-keyboard/source-proofs/bank-crt-source-01/build.log",
+      "sha256": "34d281f027c0499b28cc6011080cbb6f83c8e14c44770417b2cdbf4f30e3364c"
+    },
+    {
+      "path": "build/mouse-keyboard-dos/manifest.json",
+      "sha256": "04991ba26ffd1663ca3b2b55a2a03d41522b337c7276adf4896a0d7d1a53c841"
+    },
+    {
+      "path": "build/mouse-keyboard-dos/checks.json",
+      "sha256": "2ff8b34991ae2ffc0c0737f00151d0284de0660f8e8b57dafe66f0a8cbd134cc"
+    },
+    {
+      "path": "build/mouse-keyboard-dos/runs/bank-dos-final-01/result.json",
+      "sha256": "1e3ce0fc982b4de3d3afe13f6beae9dd0d0c7760624a591a99eb8e6edfe9a2b6"
+    },
+    {
+      "path": "build/mouse-keyboard-dos/source-proofs/bank-dos-source-01/result.json",
+      "sha256": "e789c1e1b27a483d17c6384c631f878ea2e923a4a70e050aa9e812eca2ffa095"
+    },
+    {
+      "path": "build/mouse-keyboard-dos/source-proofs/bank-dos-source-01/build.log",
+      "sha256": "1ea7fa7eb69a3e34cc5999eb1c414e79cdb0e4497bff02562170400cbf23175a"
+    },
+    {
+      "path": "build/mouse-bank/manifest.json",
+      "sha256": "fa8f6fd74dea4e832924870907695e8d30a713b2e7a781a44493b5d5af0e03ac"
+    },
+    {
+      "path": "build/mouse-bank/checks.json",
+      "sha256": "b549f9f5a56b612989655b1af842a4160ccb4d8b58359cc3f196c20b14e8d36b"
+    },
+    {
+      "path": "build/mouse-bank/runs/bank-final-02/result.json",
+      "sha256": "4eac463545d7d2ac77118fdfb9b8a52d54ff553c2dac6b3fc3fb6c16cd5ab5c8"
+    },
+    {
+      "path": "build/mouse-bank/source-proofs/bank-source-02/result.json",
+      "sha256": "805d011a675c5e5b6896ae52f2fae34cd7f22bcba589c462ba407222a2b88ec0"
+    },
+    {
+      "path": "build/mouse-bank/source-proofs/bank-source-02/build.log",
+      "sha256": "c88d8dfa2e2083f14ac7abc872b4a8a85af66d5eb68e71fa0aa82dfe1c783626"
+    },
+    {
+      "path": "build/mouse-bank/MOUSEBNK.map",
+      "sha256": "baef66008b8491be4004ec684ce15d234d9b6a56e5dc4ac9d99c5ca35c8dfa3b"
+    },
+    {
+      "path": "build/mouse-bank/link.lnk",
+      "sha256": "943f344127b1d73aaf980df3e3ab16b6409dc8e71037dd7b070f3347a4ac1f8d"
+    },
+    {
+      "path": "build/aspect-unwind/source-proofs/mouse-comments-source-01/result.json",
+      "sha256": "dc0a3b920a514dcaa4dad030ea02732149984db1bbbf3c8f7f4b6fc933a6b4cc"
+    },
+    {
+      "path": "build/aspect-unwind/source-proofs/mouse-comments-source-01/build.log",
+      "sha256": "50a43ee061d525c073650255865cb766f7adc6c35b1c640f4635ea213ad82ba0"
+    },
+    {
+      "path": "docs/validation/aspect-unwind.json",
+      "sha256": "589c6d08f4b3446eb60292462042a09087a6cbdfcd15fd4439eccfbee65341d1"
+    }
+  ],
+  "nix_inputs": {
+    "nix/flake.nix": "7f069dd8346be02006737101a2790b99a881411fa75b657316f75b090816c15f",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+  },
+  "recorder_sha256": "0a20dec705b59efb39d9fab8f5fdb500556ffc2e9adbcf9f525dea157d115a3b",
+  "limitations": [
+    "Banked mouse ownership is not yet connected to terminal menus, startup settings UI or ASPECT.",
+    "Changed INT33 quarantine is repaired explicitly by the diagnostic before termination.",
+    "Events are injected through the native foreign-DS/SS callback; physical input and other DOS kernels remain untested.",
+    "The CRT-free host deliberately contains 60000 bytes of near-code padding to force a different mouse-bank CS.",
+    "The live ENiGMA decoder remains unchanged; no whole-application gate closes."
+  ]
+}
