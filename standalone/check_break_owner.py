@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Replay linked owner admission and abandoned DOS-service transitions."""
-import hashlib
+import argparse,hashlib,re,struct
 import itertools
 import json
 from pathlib import Path
@@ -14,6 +14,9 @@ OUT=ROOT/'build/break-owner'
 class Machine:
     def __init__(self,initial=0):
         self.image=DosImage(OUT/'BRKOWN.EXE',OUT/'BRKOWN.map')
+        self.banked=OUT.name=='break-owner-far'
+        self.entries={name:(int(seg,16),int(off,16)) for seg,off,name in re.findall(
+            r'^([0-9a-f]{4}):([0-9a-f]{4})\s+(\w+)\s*$',(OUT/'BRKOWN.map').read_text(),re.M|re.I)}
         self.uc=self.image.uc
         self.baseline={0x1b:(0x1234,0x2345),0x23:(0x4567,0x5678)}
         self.vectors=dict(self.baseline);self.flag=initial;self.initial=initial
@@ -45,13 +48,29 @@ class Machine:
             self.stopped=True;u.emu_stop()
 
     def call(self,operation,args=()):
-        try:return self.image.call('_native_break_'+operation,args)
+        try:
+            if self.banked:return self.far_call('_native_break_'+operation,args)
+            return self.image.call('_native_break_'+operation,args)
         except AssertionError:
             # An explicit service-boundary abandonment is expected to bypass
             # the near return. No other assertion may count as abandonment.
             if not self.stopped or self.image.returned:raise
             self.stop_after=None;self.stopped=False
             return None
+
+    def far_call(self,name,args):
+        image=self.image;u=self.uc;segment,offset=self.entries[name]
+        for register,value in [(UC_X86_REG_CS,image.base_segment+segment),
+            (UC_X86_REG_DS,image.ds),(UC_X86_REG_SS,image.ds),(UC_X86_REG_EFLAGS,0x202),
+            (UC_X86_REG_BP,0xbabe),(UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678)]:u.reg_write(register,value)
+        words=[image.return_offset,image.code_segment,*args];sp=0xe000-len(words)*2
+        u.mem_write(image.data_base+sp,struct.pack('<'+'H'*len(words),*words))
+        u.reg_write(UC_X86_REG_SP,sp);image.returned=False
+        u.emu_start(image.symbols[name],0,count=100000)
+        assert image.returned,f'{name} did not far-return'
+        assert u.reg_read(UC_X86_REG_SP)==sp+4,f'{name} corrupted far stack'
+        assert [u.reg_read(r) for r in (UC_X86_REG_BP,UC_X86_REG_SI,UC_X86_REG_DI)]==[0xbabe,0x1234,0x5678]
+        return u.reg_read(UC_X86_REG_AX)
 
     def clean(self):
         assert self.call('phase')==0
@@ -126,12 +145,17 @@ def quarantines():
     return 2
 
 def main():
+    global OUT
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--banked',action='store_true')
+    args=parser.parse_args()
+    if args.banked:OUT=ROOT/'build/break-owner-far'
     manifest=json.loads((OUT/'manifest.json').read_text())
     assert hashlib.sha256((OUT/'BRKOWN.EXE').read_bytes()).hexdigest()==manifest['binary_sha256']
     for name,digest in manifest['sources'].items():
         assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==digest,name
     admissions=admission();cuts,boundaries=transitions();held=quarantines()
     result=dict(passed=True,admissions=admissions,abandoned_service_boundaries=cuts,
+        banked=args.banked,
         quarantine_cases=held,operations=boundaries,binary_sha256=manifest['binary_sha256'],
         checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         scope='Actual linked owner instructions; explicit modeled DOS21 vectors/break/PSP. '

@@ -1060,6 +1060,36 @@ test-break-owner: break-owner
 test-break-owner-source: break-owner
 	python3 standalone/check_break_owner_source.py
 
+.PHONY: break-owner-far test-break-owner-far test-break-owner-far-source
+break-owner-far:
+	python3 standalone/build_break_owner.py --banked
+test-break-owner-far: break-owner-far
+	python3 standalone/check_break_owner.py --banked
+	python3 standalone/test_break_owner_dos.py --banked
+test-break-owner-far-source: break-owner-far
+	python3 standalone/check_break_owner_source.py --banked
+
+.PHONY: aspect-banked test-aspect-banked test-aspect-banked-source
+aspect-banked:
+	python3 standalone/build_aspect_process.py --fault-diagnostic --break-owner
+	python3 standalone/build_terminal.py --external-render
+test-aspect-banked: aspect-banked
+	python3 standalone/check_process_banks.py
+	python3 standalone/test_aspect_unwind_dos.py --break-owner --kind D --kind A --kind F --kind L --control
+	python3 standalone/test_aspect_unwind_dos.py --break-owner --phase 9 --phase 21 --kind D --port 2 --flow B
+	python3 standalone/test_aspect_unwind_dos.py --break-owner --phase 6 --kind D --port 1 --flow S
+	python3 standalone/test_aspect_unwind_dos.py --break-owner --phase 10 --kind D --port 2 --flow N
+test-aspect-banked-source: aspect-banked
+	python3 standalone/check_aspect_banked_source.py
+
+.PHONY: native-program-far test-native-program-far test-native-program-far-source
+native-program-far:
+	python3 standalone/build_program_far.py
+test-native-program-far: native-program-far
+	python3 standalone/test_native_program_dos.py --break-owner --banked
+test-native-program-far-source: native-program-far
+	python3 standalone/check_native_program_source.py --break-owner --banked
+
 .PHONY: native-program-break test-native-program-break test-native-program-break-source
 native-program-break:
 	python3 standalone/build_native_program.py --break-owner

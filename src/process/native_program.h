@@ -1,6 +1,11 @@
 #ifndef PCPLUS_NATIVE_PROGRAM_H
 #define PCPLUS_NATIVE_PROGRAM_H
 #include "native_process.h"
+#if defined(NATIVE_PROGRAM_FAR)
+#define NATIVE_PROGRAM_CODE __far
+#else
+#define NATIVE_PROGRAM_CODE
+#endif
 /* Composed component, not yet a published ASPECT/terminal application service.
  * Text page0 with standard BIOS font geometry; caller must reconcile renderer,
  * mouse and VM/parent leases before using it in the application. */
@@ -10,10 +15,10 @@ typedef struct native_program_result {
  unsigned status,display_status,serial_status,view_reset,wait_key;
  native_process_result process;
 } native_program_result;
-unsigned __cdecl native_program_execute(const char *program,const char *tail,
+unsigned NATIVE_PROGRAM_CODE __cdecl native_program_execute(const char *program,const char *tail,
  unsigned processor,unsigned wait,unsigned save_screen,native_program_result *result);
 extern unsigned native_program_busy,native_program_waiting;
 #if defined(ASPECT_EXTERNAL_UNWIND)
-unsigned __cdecl native_program_recover(unsigned *view_reset);
+unsigned NATIVE_PROGRAM_CODE __cdecl native_program_recover(unsigned *view_reset);
 #endif
 #endif

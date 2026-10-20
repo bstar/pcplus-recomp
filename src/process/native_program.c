@@ -27,6 +27,9 @@ static unsigned key_status;
 #if defined(ASPECT_EXTERNAL_UNWIND)
 static struct {unsigned valid,mode,rows,columns,height,cursor,shape,save;} held;
 #endif
+#if defined(NATIVE_PROGRAM_FAR)
+#include "program_bank.h"
+#endif
 static char wait_message[]="Press any key to continue ...";
 static unsigned interrupt_flag(void);
 #pragma aux interrupt_flag = "pushf" "pop ax" "and ax,0x200" value [ax] modify [];
@@ -37,7 +40,7 @@ static unsigned stack_segment(void);
 /* Native WAIT tail-calls here. The maintained BIOS platform keeps the restored
  * UART ISR live, detects fatal input/flow errors, and consumes one local key.
  * No DOS read/CTRL-C checks or synthetic successful key results are used. */
-unsigned __cdecl native_program_wait_key(void)
+unsigned NATIVE_PROGRAM_CODE __cdecl native_program_wait_key(void)
 {
  union REGS in,out;unsigned status;
  external_phase(EXTERNAL_WAIT_KEY);
@@ -58,7 +61,7 @@ static unsigned restore_mode(unsigned mode,unsigned rows,unsigned height)
     *(unsigned __far *)MK_FP(0x40,0x85)!=height)return NATIVE_DISPLAY_STATE;
  return 0;
 }
-unsigned __cdecl native_program_execute(const char *program,const char *tail,
+unsigned NATIVE_PROGRAM_CODE __cdecl native_program_execute(const char *program,const char *tail,
  unsigned processor,unsigned wait,unsigned save_screen,native_program_result *result)
 {
  native_program_result local;union REGS in,out;
@@ -170,7 +173,7 @@ cleanup:
  native_program_waiting=native_program_busy=0;*result=local;return local.status;
 }
 #if defined(ASPECT_EXTERNAL_UNWIND)
-unsigned __cdecl native_program_recover(unsigned *view_reset)
+unsigned NATIVE_PROGRAM_CODE __cdecl native_program_recover(unsigned *view_reset)
 {
  unsigned status=0,changed;
  if(view_reset)*view_reset=0;

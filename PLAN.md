@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+The [PROGRAM code banks](docs/PROGRAM_BANKS.md) move the guarded owner and
+controller outside `_TEXT`, leaving1019 near-code bytes in the full fault VM.
+The dedicated far component passes all eight COM/flow routes and its22-product
+source rebuild; the full fault VM and attached terminal reproduce24 products.
+Near and far owner admission/transition tests pass, and the near owner retains
+its prior binary hash. Actual VM fault/return evidence passes93 routes and3451
+checks, bound in the banked receipt. Normal publication, application-wide lifetime and quarantine exit
+retention remain open; no full application gate closes.
+
 The user's primary acceptance criterion is compatibility. Prioritize the DOS
 client's complete ENiGMA and Synchronet workflows: login, menu navigation,
 full-screen editing, transfers, door interaction and return to the terminal.

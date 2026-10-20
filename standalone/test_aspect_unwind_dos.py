@@ -28,10 +28,11 @@ def main():
     parser.add_argument('--phase',type=int,action='append');parser.add_argument('--kind',choices=['D','A','F','L'],action='append')
     parser.add_argument('--port',type=int,choices=[1,2],default=1);parser.add_argument('--flow',choices=list('NSHB'),default='H');parser.add_argument('--control',action='store_true')
     parser.add_argument('--mouse',action='store_true')
+    parser.add_argument('--break-owner',action='store_true')
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     phases=args.phase or list(range(1,23));assert all(1<=p<=22 for p in phases)
-    out=ROOT/('build/aspect-unwind-mouse/runs' if args.mouse else 'build/aspect-unwind/runs')/args.label;out.mkdir(parents=True,exist_ok=False)
-    parent=ROOT/('build/terminal-mouse-process/TERMINAL.EXE' if args.mouse else 'build/terminal-process/TERMINAL.EXE');child=ROOT/'build/aspect-fault/ASPECT.EXE'
+    out=ROOT/('build/aspect-unwind-break/runs' if args.break_owner else 'build/aspect-unwind-mouse/runs' if args.mouse else 'build/aspect-unwind/runs')/args.label;out.mkdir(parents=True,exist_ok=False)
+    parent=ROOT/('build/terminal-mouse-process/TERMINAL.EXE' if args.mouse else 'build/terminal-process/TERMINAL.EXE');child=ROOT/('build/aspect-fault-break/ASPECT.EXE' if args.break_owner else 'build/aspect-fault/ASPECT.EXE')
     sources={}
     for product in (parent,child):
         manifest=json.loads((product.parent/'manifest.json').read_text());assert manifest['binary_sha256']==sha(product)
@@ -49,7 +50,7 @@ def main():
     for phase,kind,control in cases:
         name='child-divide-control' if control else f'p{phase:02}-{kind}';folder=out/name;folder.mkdir()
         shutil.copyfile(parent,folder/'TERMINAL.EXE');shutil.copyfile(child,folder/'ASPECT.EXE');harness.BINARY=folder/'TERMINAL.EXE'
-        subprocess.run(['nasm','-fbin','-DPORT='+hex(0x3f8 if port==1 else 0x2f8),'-DVECTOR='+str(12 if port==1 else 11),'-DIRQBIT='+str(16 if port==1 else 8),'-DREQUIRE_OUTPUT','-DMUTATE_DOS_VECTORS',str(out/'sources/standalone/aspect_parent_child.asm'),'-o',str(folder/'NESTED.COM')],check=True)
+        subprocess.run(['nasm','-fbin','-DPORT='+hex(0x3f8 if port==1 else 0x2f8),'-DVECTOR='+str(12 if port==1 else 11),'-DIRQBIT='+str(16 if port==1 else 8),'-DREQUIRE_OUTPUT','-DMUTATE_DOS_VECTORS',*(['-DMUTATE_BREAK'] if args.break_owner else []),str(out/'sources/standalone/aspect_parent_child.asm'),'-o',str(folder/'NESTED.COM')],check=True)
         subprocess.run(['nasm','-fbin','-DCHILD_DIVIDE',str(out/'sources/standalone/native_process_child.asm'),'-o',str(folder/'DIVIDE.COM')],check=True)
         first,second=scripts(phase,control)
         files={'LOGIN.ASP':first.encode(),'LOGIN.ASX':compile_source(first),'RECOVER.ASP':second.encode(),'RECOVER.ASX':compile_source(second),
@@ -85,7 +86,8 @@ def main():
         result.update(passed=all(checks.values()),phase=phase,kind=kind,port=port,flow=flow,report_words=report,passive_header=head,owner_words=words,compared_parent_bytes=size)
         (folder/'result.json').write_text(json.dumps(result,indent=2)+'\n');results.append(result)
         print(name,'FINAL PASS' if result['passed'] else 'FINAL FAIL '+','.join(k for k,v in checks.items() if not v),flush=True)
-    report=dict(passed=all(r['passed'] for r in results),experimental_mouse=args.mouse,cases=results,parent_sha256=sha(parent),child_sha256=sha(child),sources=sources,
+    for name,digest in sources.items():assert sha(ROOT/name)==digest,name
+    report=dict(passed=all(r['passed'] for r in results),experimental_mouse=args.mouse,experimental_break_owner=args.break_owner,cases=results,parent_sha256=sha(parent),child_sha256=sha(child),sources=sources,
         checker_sha256=sha(Path(__file__)),observer_sha256=sha(out/'RENDER.COM'),
         scope='Actual DOS checkpoint recovery and same-process VM/UART/renderer reuse. Diagnostic probes raise real DIV or native typed abort; kernel/BIOS/allocator corruption and recursive recovery faults are not simulated.')
     (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');return 0 if report['passed'] else 1

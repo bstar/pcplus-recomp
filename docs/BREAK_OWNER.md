@@ -1,5 +1,9 @@
 # Guarded Ctrl-Break ownership
 
+The [code-bank follow-up](PROGRAM_BANKS.md) now tests this owner and the PROGRAM
+controller across actual CS boundaries in the full fault VM. Its new validation
+is separate from the near-call checkpoint described below.
+
 The source-built owner wraps the recovered INT1B/INT23 services with an explicit
 parent/child lifetime. This addresses reliable child return, a prerequisite for
 using external programs from the terminal. It is currently a separate diagnostic;

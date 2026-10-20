@@ -83,6 +83,14 @@ start:
  cmp al,0
  jne .bad
 .mutate:
+%ifdef MUTATE_BREAK
+ mov dx,isr
+ mov ax,0x251b
+ int 0x21
+ mov ax,0x3301
+ mov dl,1
+ int 0x21
+%endif
 %ifdef MUTATE_DOS_VECTORS
  mov dx,isr
  mov ax,0x2523

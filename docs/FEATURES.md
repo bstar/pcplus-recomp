@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+The [PROGRAM code banks](PROGRAM_BANKS.md) provide far entries for the guarded
+owner/controller and explicit near-platform adapters. The fault VM now fits
+with1019 near-code bytes spare and passes93 VM fault/control routes with3451
+checks. A forced-bank component passes all eight serial
+routes, including successful WAIT return; fresh source trees reproduce22
+component and24 VM/terminal products. Full application publication, parent
+lifetime, quarantine exit retention and every F01–F16 gate remain open.
+
 The [guarded PROGRAM binding](validation/program-break-owner.json) passes eight
 COM1/COM2 flow-control routes with actual child vector/break mutations and47771
 DOS assertions per route. A fresh source tree reproduces22 products. The linked

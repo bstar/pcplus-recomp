@@ -7,7 +7,13 @@ extern display_cursor,display_cursor_shape,display_clear,display_set_mode
 extern display_scanlines,display_wait
 extern _native_program_wait_key
 global display_wait_key
-display_wait_key: jmp _native_program_wait_key
+display_wait_key:
+%ifdef NATIVE_PROGRAM_FAR
+ call far _native_program_wait_key
+ ret
+%else
+ jmp _native_program_wait_key
+%endif
 %macro enter 0
  push bp
  mov bp,sp

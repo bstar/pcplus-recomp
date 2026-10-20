@@ -7,10 +7,22 @@ typedef void (__interrupt __far *irq)(void);
 typedef struct vector_words {unsigned offset,segment;} vector_words;
 extern vector_words native_break_original_1b,native_break_original_23;
 extern unsigned char native_break_original_flag;
-extern void __cdecl native_break_install(unsigned);
-extern void __cdecl native_break_restore(void);
-extern irq __cdecl native_break_handler(void);
-extern unsigned __cdecl native_break_binding_segment(void);
+extern void NATIVE_BREAK_CODE __cdecl native_break_install(unsigned);
+extern void NATIVE_BREAK_CODE __cdecl native_break_restore(void);
+extern irq NATIVE_BREAK_CODE __cdecl native_break_handler(void);
+extern unsigned NATIVE_BREAK_CODE __cdecl native_break_binding_segment(void);
+#if defined(NATIVE_BREAK_FAR)
+/* This bank has no near CRT calls: DOS services cross explicit far adapters. */
+extern irq __far __cdecl native_break_getvect(unsigned);
+extern void __far __cdecl native_break_setvect(unsigned,irq);
+extern unsigned __far __cdecl native_break_getflag(void);
+extern void __far __cdecl native_break_setflag(unsigned);
+#define _dos_getvect native_break_getvect
+#define _dos_setvect native_break_setvect
+static void copy_bytes(void *to,const void *from,unsigned count)
+{unsigned char *d=to;const unsigned char *s=from;while(count--)*d++=*s++;}
+#define memcpy copy_bytes
+#endif
 static struct {
  irq one,twenty_three;
  unsigned psp,policy,valid,child;
@@ -29,9 +41,21 @@ static unsigned context(void)
 {return data_segment()==native_break_binding_segment()&&stack_segment()==data_segment();}
 static unsigned admitted(void){return context()&&(flags()&0x200);}
 static unsigned char break_flag(void)
-{union REGS in,out;in.x.ax=0x3300;int86(0x21,&in,&out);return out.h.dl;}
+{
+#if defined(NATIVE_BREAK_FAR)
+ return (unsigned char)native_break_getflag();
+#else
+ union REGS in,out;in.x.ax=0x3300;int86(0x21,&in,&out);return out.h.dl;
+#endif
+}
 static void set_break(unsigned char flag)
-{union REGS in,out;in.x.ax=0x3301;in.h.dl=flag;int86(0x21,&in,&out);}
+{
+#if defined(NATIVE_BREAK_FAR)
+ native_break_setflag(flag);
+#else
+ union REGS in,out;in.x.ax=0x3301;in.h.dl=flag;int86(0x21,&in,&out);
+#endif
+}
 static unsigned pool_ok(void)
 {
  return native_break_original_1b.offset==FP_OFF(held.one)&&native_break_original_1b.segment==FP_SEG(held.one)&&
@@ -49,8 +73,8 @@ static unsigned restore_baseline(void)
  _dos_setvect(0x1b,held.one);_dos_setvect(0x23,held.twenty_three);set_break(held.flag);
  return baseline();
 }
-unsigned __cdecl native_break_phase(void){return context()?phase:65535U;}
-unsigned __cdecl native_break_open(unsigned policy)
+unsigned NATIVE_BREAK_CODE __cdecl native_break_phase(void){return context()?phase:65535U;}
+unsigned NATIVE_BREAK_CODE __cdecl native_break_open(unsigned policy)
 {
  irq one,twenty_three;unsigned char flag;
  if(!admitted()||policy>1)return BREAK_ARGUMENT;
@@ -63,7 +87,7 @@ unsigned __cdecl native_break_open(unsigned policy)
  if(!pool_ok()||!ours())return quarantine();
  phase=BREAK_READY;return BREAK_OK;
 }
-unsigned __cdecl native_break_suspend(void)
+unsigned NATIVE_BREAK_CODE __cdecl native_break_suspend(void)
 {
  if(!admitted())return BREAK_ARGUMENT;
  if(phase!=BREAK_READY||!held.valid)return BREAK_STATE;
@@ -73,7 +97,7 @@ unsigned __cdecl native_break_suspend(void)
  if(!baseline())return quarantine();
  held.child=1;phase=BREAK_SUSPENDED;return BREAK_OK;
 }
-unsigned __cdecl native_break_resume(void)
+unsigned NATIVE_BREAK_CODE __cdecl native_break_resume(void)
 {
  if(!admitted())return BREAK_ARGUMENT;
  if(phase!=BREAK_SUSPENDED||!held.valid)return BREAK_STATE;
@@ -85,7 +109,7 @@ unsigned __cdecl native_break_resume(void)
  if(!pool_ok()||!ours())return quarantine();
  phase=BREAK_READY;return BREAK_OK;
 }
-unsigned __cdecl native_break_recover(void)
+unsigned NATIVE_BREAK_CODE __cdecl native_break_recover(void)
 {
  irq one,twenty_three,own;
  if(!admitted())return BREAK_ARGUMENT;
@@ -103,7 +127,7 @@ unsigned __cdecl native_break_recover(void)
  memcpy(&native_break_original_1b,held.storage,9);
  held.valid=held.child=0;phase=BREAK_CLOSED;return BREAK_OK;
 }
-unsigned __cdecl native_break_close(void)
+unsigned NATIVE_BREAK_CODE __cdecl native_break_close(void)
 {
  if(!admitted())return BREAK_ARGUMENT;
  if(phase==BREAK_CLOSED)return held.valid?BREAK_STATE:BREAK_OK;

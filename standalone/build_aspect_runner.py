@@ -14,6 +14,7 @@ def main(extension=None):
     output=extension['output'] if extension else OUT
     feature_flags=['-DASPECT_EXTERNAL_PROCESS','-DASPECT_EXTERNAL_COMMANDS','-DASPECT_EXTERNAL_UNWIND'] if extension else []
     if extension and extension.get('parent_render'):feature_flags.append('-DASPECT_EXTERNAL_RENDER')
+    if extension and extension.get('break_owner'):feature_flags+=['-DNATIVE_PROGRAM_BREAK_OWNER','-DNATIVE_BREAK_FAR','-DNATIVE_PROGRAM_FAR']
     main_source=extension.get('driver',ROOT/'src/aspect/runner.c') if extension else ROOT/'src/aspect/runner.c'
     diagnostic_driver=main_source!=ROOT/'src/aspect/runner.c'
     if extension and diagnostic_driver:feature_flags+=['-DASPECT_EXTERNAL_DIAGNOSTIC','-DNATIVE_DISPLAY_DIAGNOSTIC']
@@ -64,6 +65,7 @@ def main(extension=None):
                   scope='DOS CLI for trusted ASX and maintained ASP compilation; partial105-slot runtime with native WHEN/CWHEN and thirteen SET/FETCH families and owned six-slot file streams. Explicit ASP or missing-ASX fallback invokes sibling ASPCOMP with scoped compiler faults and owned UART flow. EXECUTE retains session state and publishes current ASX labels. Capability6 retains inherited BIOS selection and adds shared parent profile key output through the child UART, with checked duplex snapshots and native-derived echo. Local UI/macros, half-duplex reverse-tab/insert/delete, full language/recorder, physical timing and arbitrary-bytecode safety remain unfinished.')
     if extension:
         result.update(experimental_external_commands=True,production_dispatch_changed=False,
+            experimental_break_owner=bool(extension.get('break_owner')),
             experimental_fault_unwind=True,compiler_size_optimized=True,
             experimental_parent_render=bool(extension.get('parent_render')),
             diagnostic_build=diagnostic_driver,

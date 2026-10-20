@@ -2,6 +2,7 @@
 """Reproduce the owner and child using only declared source inputs."""
 from pathlib import Path
 import hashlib
+import argparse
 import json
 import shutil
 import subprocess
@@ -9,8 +10,11 @@ import sys
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'build/break-owner'
+parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--banked',action='store_true')
+args=parser.parse_args()
+OUT = ROOT / ('build/break-owner-far' if args.banked else 'build/break-owner')
 manifest = json.loads((OUT / 'manifest.json').read_text())
+assert bool(manifest.get('banked'))==args.banked
 fresh = Path(tempfile.mkdtemp(prefix='source-only-', dir=OUT))
 for name, digest in manifest['sources'].items():
     source = ROOT / name
@@ -20,10 +24,10 @@ for name, digest in manifest['sources'].items():
     shutil.copyfile(source, target)
 assert not (fresh / 'analysis').exists()
 assert not list(fresh.rglob('*.exe')) and not list(fresh.rglob('*.EXE'))
-subprocess.run([sys.executable, str(fresh / 'standalone/build_break_owner.py')], cwd=fresh, check=True)
+subprocess.run([sys.executable, str(fresh / 'standalone/build_break_owner.py'),*(['--banked'] if args.banked else [])], cwd=fresh, check=True)
 for name, expected in [('BRKOWN.EXE', manifest['binary_sha256']),
                        ('BRKCHLD.COM', manifest['child_sha256'])]:
-    assert hashlib.sha256((fresh / 'build/break-owner' / name).read_bytes()).hexdigest() == expected
+    assert hashlib.sha256((fresh / ('build/break-owner-far' if args.banked else 'build/break-owner') / name).read_bytes()).hexdigest() == expected
 receipt = dict(passed=True, inputs=len(manifest['sources']),
                binary_sha256=manifest['binary_sha256'], child_sha256=manifest['child_sha256'],
                fresh_tree=str(fresh.relative_to(ROOT)),

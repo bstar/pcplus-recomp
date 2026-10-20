@@ -16,6 +16,17 @@
 #include <string.h>
 #include <malloc.h>
 #include <dos.h>
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+#include "../src/process/break_owner.h"
+#define VECTOR_COUNT 4
+static unsigned char caller_break;
+static unsigned query_break(void);
+#pragma aux query_break = "mov ax,0x3300" "int 0x21" "xor ax,ax" "mov al,dl" value [ax] modify [ax dx];
+static void set_break(unsigned);
+#pragma aux set_break = "mov ax,0x3301" "int 0x21" parm [dx] modify [ax];
+#else
+#define VECTOR_COUNT 3
+#endif
 extern aspect_file runtime_file;
 extern char **environ;
 extern unsigned native_backup_extent;
@@ -25,12 +36,15 @@ static char *seed[128];
 static unsigned psp;
 static unsigned char jft_before[20];
 static unsigned char __far *jft;
-static void (__interrupt __far *vectors[3])(void);
+static void (__interrupt __far *vectors[VECTOR_COUNT])(void);
 extern unsigned __cdecl aspect_serial_psp(void);
 static unsigned clean(void)
 {
  unsigned i;
- for(i=0;i<3;++i)if(vectors[i]!=_dos_getvect(i?0x22+i:0))return 0;
+ for(i=0;i<VECTOR_COUNT;++i)if(vectors[i]!=_dos_getvect(i==3?0x1b:i?0x22+i:0))return 0;
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ if(native_break_phase()!=BREAK_CLOSED||query_break()!=0)return 0;
+#endif
  return !(runtime_live|runtime_abi_bad|(unsigned)runtime_file.handle|runtime_script_file_live|runtime_script_file_cleanup_errors|
   native_process_busy|native_program_busy|native_program_waiting|native_display_owned|
   process_handles_active|runtime_external_scope_active()|runtime_external_checkpoint_active()|
@@ -41,8 +55,11 @@ void runtime_external_observe(unsigned raw,unsigned processor,unsigned wait,unsi
 static unsigned fault_run(const char *path,unsigned limit)
 {
  unsigned first,i;unsigned long tick=aspect_serial_ticks();
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ set_break(0);
+#endif
  psp=aspect_serial_psp();jft=MK_FP(psp,0x18);_fmemcpy(jft_before,jft,20);
- for(i=0;i<3;++i)vectors[i]=_dos_getvect(i?0x22+i:0);
+ for(i=0;i<VECTOR_COUNT;++i)vectors[i]=_dos_getvect(i==3?0x1b:i?0x22+i:0);
  first=aspect_runtime_run(path,limit);
  report[3]=first;report[5]=runtime_external_fault_fired;report[6]=runtime_external_recoveries;
  report[7]=runtime_external_cleanup_error;report[8]=runtime_external_arena_ok;
@@ -64,6 +81,9 @@ int main(int argc,char **argv)
 {
  char **original=environ;const char *request=getenv("PCPFAULT");unsigned i,n=0;int result;FILE *file;
  if(!request)return 90;
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ caller_break=(unsigned char)query_break();
+#endif
  i=request[0]-'0';
  if(request[1]>='0'&&request[1]<='9'){i=i*10+request[1]-'0';request+=2;}else ++request;
  report[0]=0x4652;report[1]=runtime_external_fault_at=i;
@@ -74,6 +94,9 @@ int main(int argc,char **argv)
  runtime_external_arena_copy=_fmalloc(0x3aca);if(!runtime_external_arena_copy)return 91;
  native_fail_at=report[1]==8?0:2;
  result=ordinary_main(argc,argv);
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ set_break(caller_break);
+#endif
  file=fopen("FAULT.BIN","wb");if(!file)return 92;
  fwrite(report,sizeof(report),1,file);fclose(file);
  _ffree(runtime_external_arena_copy);runtime_external_arena_copy=0;

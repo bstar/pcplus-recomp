@@ -7,7 +7,7 @@
 #include <string.h>
 typedef void (__interrupt __far *irq)(void);
 extern unsigned char native_break_original_1b[9];
-extern irq __cdecl native_break_handler(void);
+extern irq NATIVE_BREAK_CODE __cdecl native_break_handler(void);
 static unsigned checks,failures,children;
 static void check(unsigned yes,unsigned line){++checks;if(!yes){++failures;printf("FAIL %u\n",line);}}
 #define CHECK(x) check((x)!=0,__LINE__)

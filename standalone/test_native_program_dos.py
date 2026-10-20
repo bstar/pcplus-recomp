@@ -85,12 +85,17 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--label',default='run-'+uuid.uuid4().hex)
     parser.add_argument('--port',type=int,choices=(1,2),action='append');parser.add_argument('--flow',choices=list('NSHB'),action='append')
     parser.add_argument('--break-owner',action='store_true')
+    parser.add_argument('--banked',action='store_true')
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     checker_hash=sha(Path(__file__))
     if args.break_owner:OUT=ROOT/'build/native-program-break'
+    if args.banked:
+        assert args.break_owner,'Banked controller requires its guarded owner'
+        OUT=ROOT/'build/native-program-far'
     folder=OUT/'runs'/args.label;folder.mkdir(parents=True,exist_ok=False)
     manifest=json.loads((OUT/'manifest.json').read_text());shutil.copyfile(OUT/'manifest.json',folder/'manifest.json')
     assert bool(manifest.get('break_owner'))==args.break_owner
+    assert bool(manifest.get('banked'))==args.banked
     for name,digest in manifest['children'].items():assert sha(OUT/name)==digest,name
     for p,h in manifest['sources'].items():
         assert sha(ROOT/p)==h,p

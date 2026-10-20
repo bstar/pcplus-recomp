@@ -14,12 +14,14 @@ ROOT = Path(__file__).resolve().parents[1]
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label', default='dos-' + datetime.datetime.now().strftime('%Y%m%d%H%M%S'))
+    parser.add_argument('--banked', action='store_true')
     args = parser.parse_args()
     assert re.fullmatch(r'[A-Za-z0-9_-]+', args.label)
-    out = ROOT / 'build/break-owner'
+    out = ROOT / ('build/break-owner-far' if args.banked else 'build/break-owner')
     run = out / args.label
     run.mkdir(exist_ok=False)
     manifest = json.loads((out / 'manifest.json').read_text())
+    assert bool(manifest.get('banked')) == args.banked
     for name, expected in [('BRKOWN.EXE', manifest['binary_sha256']),
                            ('BRKCHLD.COM', manifest['child_sha256'])]:
         data = (out / name).read_bytes()

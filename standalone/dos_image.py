@@ -26,9 +26,11 @@ class DosImage:
             value = struct.unpack('<H', self.uc.mem_read(at, 2))[0]
             self.uc.mem_write(at, struct.pack('<H', (value + self.base_segment) & 0xffff))
         listing = Path(map_path).read_text()
-        code = re.search(r'^_TEXT\s+CODE\s+\S+\s+0000:([0-9a-f]+)\s+([0-9a-f]+)', listing, re.M | re.I)
+        code = re.search(r'^_TEXT\s+CODE\s+\S+\s+([0-9a-f]+):([0-9a-f]+)\s+([0-9a-f]+)', listing, re.M | re.I)
         assert code, 'Expected one near code segment'
-        code_end = int(code[1], 16) + int(code[2], 16)
+        self.code_segment = self.base_segment + int(code[1],16)
+        self.code_base = self.code_segment * 16
+        code_end = int(code[2],16) + int(code[3],16)
         # The growing live application can occupy F000. Never let a test
         # return hook silently stop execution in the middle of product code.
         self.return_offset = 0xf000 if code_end <= 0xf000 else 0xfffe
@@ -67,13 +69,13 @@ class DosImage:
         if self.fixture_scratch_end is not None and uc.reg_read(UC_X86_REG_SS)==self.ds:
             bottom=self.offset('terminal_stack_top')-self.stack_bytes
             assert not bottom<=uc.reg_read(UC_X86_REG_SP)<self.fixture_scratch_end,'Actual stack entered caller fixture'
-        if address == self.base + self.return_offset and uc.reg_read(UC_X86_REG_CS)==self.base_segment:
+        if address == self.code_base + self.return_offset and uc.reg_read(UC_X86_REG_CS)==self.code_segment:
             self.returned = True
             uc.emu_stop()
 
     def call(self, name, arguments=(), limit=100000):
         uc = self.uc
-        for register, value in [(UC_X86_REG_CS,self.base_segment), (UC_X86_REG_DS,self.ds),
+        for register, value in [(UC_X86_REG_CS,self.code_segment), (UC_X86_REG_DS,self.ds),
             (UC_X86_REG_SS,self.ds), (UC_X86_REG_EFLAGS,0x202),
             (UC_X86_REG_BP,0xbabe), (UC_X86_REG_SI,0x1234), (UC_X86_REG_DI,0x5678)]:
             uc.reg_write(register,value)
