@@ -26,8 +26,9 @@ cleanup and final stopped state checked in both versions. No forced process exit
 or timer unref hides a failure. See the
 [receipt](../../../../docs/validation/synthmodem-pool.json).
 
-This candidate is not composed into an accepted VM/DOS runtime or installed
-bridge. Its eight process scenarios do not establish real VM cleanup or address
-the separate duplicate REGISTER response, carrier/data ambiguity, DSP pressure
-or physical modem acceptance requirements. Upstream copyright/license headers
+The later [combined lifecycle test](../../synthmodem-lifecycle.md) now verifies
+actual VM recycle/cleanup and normal DOS/BBS composition. This isolated receipt
+retains its eight modeled-backend process scenarios. No installed bridge changes;
+carrier/data ambiguity, DSP pressure and physical modem acceptance remain open.
+Upstream copyright/license headers
 remain intact; component notices are retained in the adjacent Telnet candidate.

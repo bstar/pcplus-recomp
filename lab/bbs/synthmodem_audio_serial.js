@@ -3,6 +3,7 @@
 const fs=require('fs'),path=require('path'),net=require('net'),dgram=require('dgram');
 const runtime=path.resolve(process.argv[2]),out=path.resolve(process.argv[3]),src=n=>path.join(runtime,'source',n);
 const trace=process.argv[4]==='--receive-trace'?new (require('./receive_trace_io.js').ReceiveTrace)(out):null;
+const internal=process.argv.includes('--lifecycle')?new (require('./internal_sip_capture.js').InternalSipCapture)(out):null;
 const cfg=require(src('config.js'));
 cfg.logging.level='info';cfg.logging.colorize=false;cfg.modem.backend='slmodemd-pjsip';cfg.modem.captureAudio=false;
 cfg.modem.native.forceProtocol='V22';cfg.rtp.bindAddress='127.0.0.1';cfg.rtp.portMin=42000;cfg.rtp.portMax=42100;
@@ -90,6 +91,7 @@ async function shutdown(reason){
   if(serial && !serial.destroyed)serial.destroy();await new Promise(r=>server.close(r));
   if(child)await until(()=>child.exitCode!==null || child.signalCode!==null,5000,'VM exit deadline');
   if(trace)await trace.close();
+  internal?.save();
   for(const [n,b] of Object.entries({'serial-in.bin':Buffer.concat(serialIn),'serial-out.bin':Buffer.concat(serialOut),
    'caller-decoded.bin':Buffer.concat(callerData),'control-wire.bin':Buffer.concat(control),
    'rtp-from-answer.bin':Buffer.concat(rtpRx.map(record)),'rtp-from-caller.bin':Buffer.concat(rtpTx.map(record)),
@@ -105,6 +107,7 @@ async function main(){
  if(trace)await trace.start();
  const probe=net.createServer();await new Promise(r=>probe.listen(0,'127.0.0.1',r));cfg.sip.port=probe.address().port;await new Promise(r=>probe.close(r));
  await pool.start();child=backends[0]._vmChild;backends[0].controlSocket.on('data',b=>control.push(Buffer.from(b)));
+ internal?.attach(backends[0]);
  if(trace)trace.attach(backends[0]);
  await sip.start();sip._udpSocket.on('message',b=>sipRx.push(Buffer.from(b)));
  await new Promise(r=>server.listen(0,'127.0.0.1',r));

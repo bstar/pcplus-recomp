@@ -130,9 +130,12 @@ six-byte event's cause. See [the VM receipt](validation/synthmodem-jitter-vm.jso
 The helper still has an in-band carrier/data ambiguity: literal NO CARRIER can
 be consumed as status, while a slowly fragmented real result can become data.
 Out-of-band carrier reporting remains required. The
-[pool timer](../lab/bbs/patches/synthmodem-pool/README.md) and
-[REGISTER ownership](../lab/bbs/patches/synthmodem-registrar/README.md) candidates
-have isolated reproductions and passes, but need real VM/DSP composition.
+[combined lifecycle runtime](../lab/bbs/synthmodem-lifecycle.md) now verifies
+the pool-timer and REGISTER-ownership fixes through the actual VM/DSP path.
+DOS -08 passes 19 producer/19 byte/11 SIP checks, with one successful guest
+refresh response and exact 64/46,908-byte streams. The real replacement-VM
+gateway passes 26 checks and exits about 40 ms after cleanup, versus the old
+40.53-second timer linger. No installed service is changed.
 No physical hardware has been tested; no14400 claim is made.
 
 ## Full software gateway checkpoint
@@ -414,7 +417,7 @@ acceptance; historical checkpoint sections above describe their own frozen input
 | Area | Software evidence available | Still required |
 | --- | --- | --- |
 | Serial/controller | Linked and DOS synthetic-call tests cover selectable DTE, numeric dialing, DCD history/loss, DTR cleanup and timeout budgets. | Actual Boca identity/results, COM/IRQ, CTS/RTS, DCD/DTR and UART load. |
-| Telnet/CP437/binary transport | Codec and software DSP gateway all-byte checks pass; synthetic-call DOS/BBS transfer receipts exist. | Complete DOS/audio menu and transfer runs; resolve helper status/data ambiguity; physical display and transfers. |
+| Telnet/CP437/binary transport | Codec/gateway all-byte checks and rebuilt DOS/audio main/message/file route pass; synthetic-call BBS transfer receipts exist. | Editors/transfers over the complete audio path; helper status/data ambiguity; physical display and transfers. |
 | Modem data pressure | Node writer and booted i386 helper pass separate and composed pressure checks; normal software gateway runs. | Sustained pressure through normal DSP; resolve native DSP flow credit and serial-to-BBS TCP pressure. |
 | Answering protocol | Actual native/VM software training and exact data pass at V.22/1200; explicit V32bis profile enters datapump132 directly. | A shared protocol with this Boca, physical training, V.8 and negotiated V.32bis/14400 connectivity. |
 | Hardware/audio | Equipment and topology selected; adapter ordered. | All analog connection, audible handshake and end-to-end acceptance. |
@@ -423,9 +426,12 @@ acceptance; historical checkpoint sections above describe their own frozen input
   firmware identification, supported speaker, flow, DCD/DTR and modulation controls.
 - [ ] Add fixtures from actual Boca result strings and supported command behavior
   when identified; retain the existing source-only/synthetic controller regressions.
-- [ ] Compose and validate the tested Telnet and Node/control-helper candidates
-  through normal SIP/DSP startup. Existing isolated passes are not deployment or
-  physical acceptance. Resolve remaining pressure gaps before sustained hardware tests.
+- [x] Compose the tested Telnet and Node/control-helper candidates through normal
+  SIP/DSP startup and the DOS menu route. The lifecycle receipt records actual
+  guest refresh and cleanup; this remains software evidence, not deployment or
+  physical acceptance.
+- [ ] Resolve remaining DSP/native and reverse-TCP pressure gaps before sustained
+  hardware tests, and complete editor/file-transfer workflows over the audio path.
 - [ ] Record the selected runtime's Linux dependency versions and backend/image
   identities; existing Nix lab receipts establish only their recorded software inputs.
   Simulated callers cannot establish Boca/V.8 compatibility.

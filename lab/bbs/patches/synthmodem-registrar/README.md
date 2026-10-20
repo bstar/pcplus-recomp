@@ -28,9 +28,10 @@ Eight checks per variant also cover binding refresh, unaffected OPTIONS routing,
 exact RTP/RTCP bytes, observer visibility, listener removal and clean closure.
 See the [receipt](../../../../docs/validation/synthmodem-registrar.json).
 
-This is isolated network/component evidence. It has not been composed into an
-accepted VM/DOS runtime or installed service. Repeat real guest registration
-refresh during an active DSP call and verify teardown before closing that gate.
+This receipt is isolated network/component evidence. The later
+[combined lifecycle test](../../synthmodem-lifecycle.md) now verifies actual guest
+refresh during an active DOS/DSP call and normal teardown. No installed service
+is changed by either checkpoint.
 It does not implement a general authenticated registrar. Source targets upstream
 revision `b1752e4d0039e0cff72735924e03aa99922723a8`; upstream copyright/license
 headers and the adjacent Telnet candidate's component notices remain intact.

@@ -43,13 +43,19 @@ test image is `build/bbs-lab/synthmodem-jitter-runtime-01/runtime`, selected wit
 `--dmodem candidate`. Broader timing/loss, sustained data, transfers and physical acceptance
 remain separate gates; the earlier Nix build/API receipt retains its scope.
 
-Separate [pool timer](lab/bbs/patches/synthmodem-pool/README.md) and
-[REGISTER ownership](lab/bbs/patches/synthmodem-registrar/README.md) candidates
-pass isolated lifecycle/network reproductions. Compose them into a fresh
-runtime and verify real guest refresh/teardown next; they are not in this DOS
-cohort or an installed service. Literal carrier-text collisions, pressure,
-editors/transfers/Synchronet over audio, all F01-F16 and hardware acceptance
-remain open. The adapter is still pending; no14400 claim follows.
+The [combined lifecycle runtime](lab/bbs/synthmodem-lifecycle.md) now composes
+the pool-timer and REGISTER-ownership fixes as exactly three JavaScript changes,
+with the accepted kernel/initrd unchanged. DOS cohort -08 passes 19 producer,
+19 byte-audit and 11 SIP-ownership checks: the actual guest refresh receives
+one 200 during the active call, replacing the preserved 200/405 baseline.
+The short real-VM gateway passes 26 checks, including a distinct replacement
+VM, all-byte duplex data, reconnect and natural process exit. Its shutdown lag
+falls from the paired baseline's 40.53 seconds to 39.8 ms after resources close.
+The preferred normal lab image is now
+`build/bbs-lab/synthmodem-lifecycle-runtime-01/runtime`, selected with `--lifecycle`.
+It is not installed as a service. Next exercise editors/transfers/Synchronet
+through this complete audio stack and resolve carrier-text ambiguity/pressure.
+All F01-F16 and hardware acceptance remain open; no 14400 claim follows.
 
 The [full software gateway](lab/bbs/synthmodem-gateway.md) now passes24 checks:
 actual external/internal SIP, normal CallSession and modem pool, V.22 DSP data,
@@ -57,9 +63,10 @@ default post-train hold, CONNECT> entry, BINARY/ANSI/80x25 negotiation, exact
 duplex payloads and TCP reconnect on one carrier. QUIT tears down both SIP legs
 and recycles a distinct VM. A configurable RTP bind address keeps this lab
 on loopback; four separate native binding/allocation checks pass. The DOS/ENiGMA
-attempt above completes its menu route but fails exact upstream byte integrity. Sustained
-pressure, other protocols and hardware remain open; pool timeout timer retention
-and status CRCRLF normalization are concrete remaining runtime details.
+baseline -05 fails upstream integrity; rebuilt -07/-08 now pass the normal menu
+and byte audits. Sustained pressure, other protocols and hardware remain open.
+The earlier gateway retains its old pool timer; the lifecycle candidate above
+fixes that timer. Status CRCRLF normalization remains a separate runtime gap.
 
 The [negotiated V.22 DSP path](lab/bbs/synthmodem-training.md) now trains an
 isolated native originating candidate with the normal VM answering DSP at1200,

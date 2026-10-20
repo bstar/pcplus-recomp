@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Compose real external SIP, CallSession, DSP and Telnet over loopback."""
-import argparse,hashlib,json,os,shutil,signal,struct,subprocess
+import argparse,hashlib,json,os,re,shutil,signal,struct,subprocess,time
 from pathlib import Path
 from synthmodem_vm_control import ROOT,sha
+from synthmodem_jitter_runtime import validate as validate_jitter
+from synthmodem_lifecycle_runtime import validate as validate_lifecycle
 
 def telnet(wire):
  data=bytearray();sub=[];commands=[];at=0
@@ -34,23 +36,29 @@ def records(wire):
 
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
- a=p.parse_args();runtime=a.runtime.resolve();out=a.output.resolve();assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
- ledger=ROOT/'docs/validation/synthmodem-training.json';prior=json.loads(ledger.read_text())['cohorts']['candidate'];assert prior['passed']
- reference=ROOT/'build/bbs-lab'/prior['cohort']/'runtime'
- inputs={str(runtime/Path(n).relative_to(reference)):h for n,h in prior['tested_inputs'].items()}
- assert all(sha(Path(n))==h for n,h in inputs.items()),'Runtime differs from trained candidate'
- patch=ROOT/'lab/bbs/patches/synthmodem-bind/bind.patch'
- frozen={str(ledger.relative_to(ROOT)):sha(ledger),str(patch.relative_to(ROOT)):sha(patch),**{n:sha(ROOT/n) for n in [
-  'lab/bbs/synthmodem_gateway.py','lab/bbs/synthmodem_gateway.js','lab/bbs/synthmodem_vm_control.py','nix/flake.lock','tools/modem-dev']}}
- tested=out/'runtime';shutil.copytree(runtime/'source',tested/'source')
- for n in ('bzImage','candidate.cpio.gz'):shutil.copyfile(runtime/n,tested/n)
- subprocess.run(['patch','--batch','--fuzz=0','-p1','-i',str(patch)],cwd=tested/'source',check=True)
- changed=[str(Path(n).relative_to(runtime)) for n,h in inputs.items() if sha(tested/Path(n).relative_to(runtime))!=h]
- assert sorted(changed)==['source/config.js','source/src/rtp/RtpSession.js','source/src/session/CallSession.js'],changed
+ p.add_argument('--lifecycle',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate'])
+ a=p.parse_args();assert not(a.lifecycle and a.dmodem);runtime=a.runtime.resolve();out=a.output.resolve();assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
+ names=['lab/bbs/synthmodem_gateway.py','lab/bbs/synthmodem_gateway.js','lab/bbs/synthmodem_vm_control.py','lab/bbs/synthmodem_jitter_runtime.py','lab/bbs/synthmodem_sparse_runtime.py','lab/bbs/synthmodem_lifecycle_runtime.py','nix/flake.lock','tools/modem-dev']
+ if a.lifecycle or a.dmodem:
+  inputs=validate_lifecycle(runtime) if a.lifecycle else validate_jitter(runtime,a.dmodem)
+  tested=runtime;changed=[];names+=['docs/validation/synthmodem-gateway.json','docs/validation/synthmodem-sparse.json','docs/validation/synthmodem-jitter-policy.json']
+  if a.lifecycle:names+=['docs/validation/synthmodem-pool.json','docs/validation/synthmodem-registrar.json']
+ else:
+  ledger=ROOT/'docs/validation/synthmodem-training.json';prior=json.loads(ledger.read_text())['cohorts']['candidate'];assert prior['passed']
+  reference=ROOT/'build/bbs-lab'/prior['cohort']/'runtime'
+  inputs={str(runtime/Path(n).relative_to(reference)):h for n,h in prior['tested_inputs'].items()}
+  assert all(sha(Path(n))==h for n,h in inputs.items()),'Runtime differs from trained candidate'
+  patch=ROOT/'lab/bbs/patches/synthmodem-bind/bind.patch';names+=[str(ledger.relative_to(ROOT)),str(patch.relative_to(ROOT))]
+  tested=out/'runtime';shutil.copytree(runtime/'source',tested/'source')
+  for n in ('bzImage','candidate.cpio.gz'):shutil.copyfile(runtime/n,tested/n)
+  subprocess.run(['patch','--batch','--fuzz=0','-p1','-i',str(patch)],cwd=tested/'source',check=True)
+  changed=[str(Path(n).relative_to(runtime)) for n,h in inputs.items() if sha(tested/Path(n).relative_to(runtime))!=h]
+  assert sorted(changed)==['source/config.js','source/src/rtp/RtpSession.js','source/src/session/CallSession.js'],changed
+ frozen={n:sha(ROOT/n) for n in names}
  tested_inputs={str(p):sha(p) for p in tested.rglob('*') if p.is_file()}
  with (out/'node.log').open('w') as log:
   proc=subprocess.Popen(['node',str(ROOT/'lab/bbs/synthmodem_gateway.js'),str(tested),str(out)],stdout=log,stderr=log,start_new_session=True)
-  try:proc.wait(timeout=210)
+  try:proc.wait(timeout=210);exited_ns=time.monotonic_ns()
   except BaseException:
    try:os.killpg(proc.pid,signal.SIGTERM)
    except ProcessLookupError:pass
@@ -60,6 +68,8 @@ def main():
     except ProcessLookupError:pass
    raise
  r=json.loads((out/'node-result.json').read_text());pattern=bytes(range(256))*2
+ timing=json.loads((out/'cleanup-time.json').read_text());timing['actual_process_exit_lag_ms']=(exited_ns-int(timing['resources_closed_ns']))/1e6
+ if a.lifecycle:r['checks']['warmup_timer_released']=0<=timing['before_exit_lag_ms']<2000 and 0<=timing['actual_process_exit_lag_ms']<2000
  up=b'GATEWAY-UP\r\n'+pattern+b'\r\nEND-UP\r\n';down=b'GATEWAY-DOWN\r\n'+pattern[::-1]+b'\r\nEND-DOWN\r\n'
  if r['passed']:
   decoded,subs,commands=telnet((out/'peer-0-input.bin').read_bytes())
@@ -76,8 +86,11 @@ def main():
    if kind==0x13:status.append(json.loads(payload))
   # Recover the online destination from the real guest stream, independent of
   # the Node runner's supplied target/config values.
-  destination=bytes(received).split(b'\r',1)[0]+b'\r'
-  r['checks']['independent_guest_input']=destination.startswith(b'127.0.0.1:') and received==destination+up+destination+b'QUIT\r'
+  holds=re.findall(r'Post-train hold complete .*waited (\d+)ms, dropped (\d+) bytes\)',(out/'node.log').read_text())
+  r['checks']['independent_post_train_hold']=len(holds)==1 and 6000<=int(holds[0][0])<=15500
+  dropped=int(holds[0][1]) if len(holds)==1 else 0;r['guest_preproxy_prefix_hex']=bytes(received[:dropped]).hex();online=bytes(received[dropped:])
+  destination=online.split(b'\r',1)[0]+b'\r'
+  r['checks']['independent_guest_input']=destination.startswith(b'127.0.0.1:') and online==destination+up+destination+b'QUIT\r'
   r['checks']['independent_one_carrier']=sum(s.get('event')=='connect' and s.get('rate')==1200 for s in status)==1
   caller=(out/'caller-decoded.bin').read_bytes();start=caller.index(down);end=start+len(down)
   r['checks']['independent_caller_output']=caller.count(b'CONNECT> ')==3 and caller[:start].endswith(b'\r\n') and caller[start:end]==down and b'RECONNECTED\r\n' in caller[end:]
@@ -92,7 +105,7 @@ def main():
  r['checks']['immutable_inputs']=all(sha(Path(n))==h for n,h in {**inputs,**tested_inputs}.items()) and all(sha(ROOT/n)==h for n,h in frozen.items())
  captures={p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.log')}
  r.update({'passed':proc.returncode==0 and all(r['checks'].values()),'frozen_inputs':frozen,'runtime_inputs':inputs,'tested_inputs':tested_inputs,
-  'changed_runtime_files':changed,'captures_sha256':captures,'up_bytes':len(up),'down_bytes':len(down),
+  'changed_runtime_files':changed,'captures_sha256':captures,'up_bytes':len(up),'down_bytes':len(down),'cleanup_timing':timing,'cleanup_timing_sha256':sha(out/'cleanup-time.json'),'lifecycle':a.lifecycle,'dmodem_variant':a.dmodem,
   'up_sha256':hashlib.sha256(up).hexdigest(),'down_sha256':hashlib.sha256(down).hexdigest()})
  (out/'result.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps({'passed':r['passed'],'checks':r['checks'],'result':str(out/'result.json')},indent=2))
  return 0 if r['passed'] else 1

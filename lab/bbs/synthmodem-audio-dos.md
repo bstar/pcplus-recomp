@@ -7,16 +7,17 @@ byte passes through the real originating DSP, PCMU/RTP, external/internal SIP,
 CallSession, pool, guest answering DSP, rebuilt helper and Telnet proxy.
 There is no direct DOS-to-BBS data shortcut.
 
-The preferred normal test image now uses the Nix-built DISCARD_NONE d-modem.
-Cohort -07 passes19 producer and19 independent audit checks with64 exact DOS
-online bytes and46908 exact BBS display bytes. It uses normal init and no extra
-diagnostic ports. The [paired VM counterexample](synthmodem-jitter-vm.md)
+The preferred normal test image now combines the Nix-built DISCARD_NONE d-modem
+with the [lifecycle fixes](synthmodem-lifecycle.md). Cohort -08 passes 19 producer,
+19 byte-audit and 11 SIP-ownership checks with 64 exact DOS online bytes and
+46,908 exact BBS display bytes. It uses normal init and no extra diagnostic
+ports. The [paired VM counterexample](synthmodem-jitter-vm.md)
 separately establishes the discard-policy correction under a lossless timing
 change; broader BBS/hardware acceptance remains open.
 
 ```sh
 ./tools/modem-dev --command python3 lab/bbs/synthmodem_audio_dos.py \
-  --runtime build/bbs-lab/synthmodem-jitter-runtime-01/runtime --dmodem candidate \
+  --runtime build/bbs-lab/synthmodem-lifecycle-runtime-01/runtime --lifecycle \
   --output build/bbs-lab/synthmodem-audio-dos-new
 
 ./tools/modem-dev --command python3 lab/bbs/audit_synthmodem_audio_dos.py \
@@ -171,7 +172,9 @@ No14400-bps connectivity follows from this1200-bps test.
 During the longer preserved run, a real guest registration refresh received a
 200 from VmRegistrar and an additional405 from SipUacInternal for the same
 transaction. Registration succeeded, but the duplicated request ownership needs
-cleanup before extended testing. Separate [REGISTER ownership](patches/synthmodem-registrar/README.md)
-and [pool timer](patches/synthmodem-pool/README.md) candidates pass isolated
-network/lifecycle checks; neither is composed into this runtime yet. Status
-CRCRLF normalization and carrier/data ambiguity also remain open.
+cleanup in those preserved baseline images. The [combined lifecycle runtime](synthmodem-lifecycle.md)
+now fixes that ownership: -08 passes the full 19 producer/19 byte checks and
+11 additional SIP checks, with exactly one successful real refresh response.
+Its paired fresh-VM recycle test also verifies the timer fix, reducing process
+exit lag from 40.53 seconds to 39.8 ms. Status CRCRLF normalization and
+carrier/data ambiguity remain open.

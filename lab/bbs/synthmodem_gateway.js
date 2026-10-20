@@ -33,7 +33,7 @@ async function main(){
    const b=new PjsipBackend({...opts,bootLogPath:path.join(out,`qemu-${backends.length}.log`)});backends.push(b);
    b.on('error',e=>errors.push(e.message));b.on('connected',v=>events.push({type:'answer-CONNECT',bps:v.bps}));return b;
   }});
- let session,callerSock,sipSock,uac,exception,diag,stats,ended,negotiated;
+ let session,callerSock,sipSock,uac,exception,diag,stats,ended,negotiated,replacementReadyNs;
  const text=()=>Buffer.concat(callerData),prompts=()=>text().toString('latin1').split('CONNECT> ').length-1;
  const bbs=net.createServer(p=>{
   const peer={socket:p,input:[],output:[],data:[],sub:[],negotiation:[],state:0,binaryLocal:false,binaryRemote:false,ready:false};peers.push(peer);
@@ -118,6 +118,7 @@ async function main(){
   dsp.write(Buffer.from('QUIT\r'));await until(()=>ended && uac.state==='TERMINATED',10000,'QUIT/SIP teardown deadline');
   dsp.stop();rtp.close();
   await until(()=>pool.state==='ready',45000,'Replacement warm VM deadline');
+  replacementReadyNs=process.hrtime.bigint().toString();
   checks.session_teardown=!session._active && session._rtpSock===null && session._dsp===null && writer.closed && b.listenerCount('drain')===0;
   checks.pool_recycled=backends.length===2 && backends[1]!==b && b.state==='STOPPED';
   const secondChild=backends[1]._vmChild;
@@ -131,6 +132,8 @@ async function main(){
   if(session?._active)session.hangup('cleanup');await pool.stop();
   for(const b of backends)await b.stop();if(sip._started)await sip.stop();if(sipSock)await new Promise(r=>sipSock.close(r));
   for(const p of peers)p.socket.destroy();await new Promise(r=>bbs.close(r));
+  const resourcesClosedNs=process.hrtime.bigint();
+  process.once('beforeExit',()=>{const beforeExitNs=process.hrtime.bigint();fs.writeFileSync(path.join(out,'cleanup-time.json'),JSON.stringify({replacement_ready_ns:replacementReadyNs,resources_closed_ns:resourcesClosedNs.toString(),before_exit_ns:beforeExitNs.toString(),before_exit_lag_ms:Number(beforeExitNs-resourcesClosedNs)/1e6},null,2)+'\n');});
   const captures={'caller-decoded.bin':text(),'control-wire.bin':Buffer.concat(control),
    'rtp-from-answer.bin':Buffer.concat(rtpRx.map(record)),'rtp-from-caller.bin':Buffer.concat(rtpTx.map(record)),
    'sip-to-server.bin':Buffer.concat(sipRx.map(record)),'sip-to-caller.bin':Buffer.concat(sipTx.map(record))};
