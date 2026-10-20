@@ -94,29 +94,31 @@ Links below pin the reviewed source; future versions require rechecking.
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
 
-## Actual DOS / ENiGMA audio checkpoint (failed workflow)
+## Actual DOS / ENiGMA audio checkpoint (byte integrity still fails)
 
-[The first complete DOS audio cohort](../lab/bbs/synthmodem-audio-dos.md)
-authenticates to owned stock ENiGMA using the real terminal/ASPECT child and
-software DSP gateway. The corrected script advances through the post-login
-screens but a final N is lost before guest DATA_RX. It exists in DOS serial
-output and an offline decoder recovers it from the observed caller audio.
-All earlier upstream bytes and23773 downstream display bytes match. The
-[record](validation/synthmodem-audio-dos.json) is explicitly failed; final menu,
-normal exit and hardware restoration remain unverified for these stopped runs.
+[The DOS audio cohort](../lab/bbs/synthmodem-audio-dos.md) now passes19 producer
+checks through real V.22/1200 software DSP: numeric dialing, CONNECT> entry,
+source-built terminal/ASPECT authentication, Main -> Messages -> Main -> Files,
+normal return, UART/vector restoration and directory accounting. The bounded
+sparse-helper candidate resolves the lone-N stall; the
+[stager](../lab/bbs/synthmodem_sparse_runtime.py) verifies every source/kernel
+identity and original archive entry, replacing only the helper executable.
 
-The [sparse-data helper candidate](../lab/bbs/patches/synthmodem-sparse/README.md)
-now reproduces an indefinite hold of a lone N on a real host PTY, independent
-of DSP/audio. A50ms bounded-lookahead change passes the isolated prefix and
-existing transport checks, and builds as static i386 through Nix. It has not
-yet been booted or verified through this DOS/audio workflow. A complete literal
-NO CARRIER payload still collides with status, and a slowly fragmented real
-result may be released as data; out-of-band carrier reporting remains open.
-Rebuild a separate runtime and repeat DSP/DOS tests before extending the
-menu/transfer claims. A long-call refresh also receives
-both200 and405 responses from overlapping registrar/UAC handling; registration
-succeeds but duplicate ownership remains a concrete gap. No physical hardware
-has been tested, and no14400 claim is made.
+Overall acceptance remains failed. Eighteen of19 independent audit checks pass,
+including all46908 BBS display bytes, menu order, SIP teardown, RTP continuity
+and normal cleanup. Six extra upstream bytes appear after the DOS CPR and reach
+ENiGMA. Offline caller decoding matches all64 DOS online bytes exactly; the
+actual guest RTP/jitter/DSP path remains to investigate. Three earlier bytes
+were separately discarded by the normal pre-proxy training hold. These counts
+and offsets are retained in the [receipt](validation/synthmodem-audio-dos.json).
+
+The helper still has an in-band carrier/data ambiguity: literal NO CARRIER can
+be consumed as status, while a slowly fragmented real result can become data.
+Out-of-band carrier reporting remains required. The
+[pool timer](../lab/bbs/patches/synthmodem-pool/README.md) and
+[REGISTER ownership](../lab/bbs/patches/synthmodem-registrar/README.md) candidates
+have isolated reproductions and passes, but need real VM/DSP composition.
+No physical hardware has been tested; no14400 claim is made.
 
 ## Full software gateway checkpoint
 

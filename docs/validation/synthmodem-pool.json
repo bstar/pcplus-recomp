@@ -1,0 +1,89 @@
+{
+  "passed": true,
+  "reports": {
+    "baseline": {
+      "success": {
+        "report": {
+          "passed": true,
+          "scenario": "success",
+          "backends": 1
+        },
+        "natural_process_exit_seconds": 1.5425710160052404
+      },
+      "reject": {
+        "report": {
+          "passed": true,
+          "scenario": "reject",
+          "backends": 1
+        },
+        "natural_process_exit_seconds": 1.5282790089258924
+      },
+      "timeout": {
+        "report": {
+          "passed": true,
+          "scenario": "timeout",
+          "backends": 1
+        },
+        "natural_process_exit_seconds": 1.5282538529718295
+      },
+      "recycle": {
+        "report": {
+          "passed": true,
+          "scenario": "recycle",
+          "backends": 2
+        },
+        "natural_process_exit_seconds": 1.5364693939918652
+      }
+    },
+    "candidate": {
+      "success": {
+        "report": {
+          "passed": true,
+          "scenario": "success",
+          "backends": 1
+        },
+        "natural_process_exit_seconds": 0.03515660692937672
+      },
+      "reject": {
+        "report": {
+          "passed": true,
+          "scenario": "reject",
+          "backends": 1
+        },
+        "natural_process_exit_seconds": 0.03706339106429368
+      },
+      "timeout": {
+        "report": {
+          "passed": true,
+          "scenario": "timeout",
+          "backends": 1
+        },
+        "natural_process_exit_seconds": 1.529537255060859
+      },
+      "recycle": {
+        "report": {
+          "passed": true,
+          "scenario": "recycle",
+          "backends": 2
+        },
+        "natural_process_exit_seconds": 0.047020007972605526
+      }
+    }
+  },
+  "source_inputs": {
+    "config.js": "6cfa6057b31bebb90d52f12956a3166a389308b703c17480acdc59fdb05f681f",
+    "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+    "src/backends/ModemBackendPool.js": "58d6e2690a0a8170e1da2387abd935fa373b93b239805dd596fb4a578c7a0044"
+  },
+  "frozen_inputs": {
+    "lab/bbs/patches/synthmodem-pool/check.py": "68aa675f14f9425349b61875de90db5256ad23dfc3f25dafdbbab75d256019c8",
+    "lab/bbs/patches/synthmodem-pool/check.js": "619f1cfcfadf59386838657ac567ff50f3b7235795e5d51d8a2fb6839c45985a",
+    "lab/bbs/patches/synthmodem-pool/pool.patch": "59eef8b4163b114ba2af09c0443cd8c6a811583330408c2c5ac7fa3d8ec22adc",
+    "docs/validation/synthmodem-gateway.json": "b45a3889492327899bdaa5817b4951da95b81bb07bdd69319b4814008504a6a0"
+  },
+  "candidate_sha256": "97836fc1e9c31fcad7e8bfbfba8d11e8c25bef44302d50a88441f4c554e0b156",
+  "node": "v24.18.1",
+  "scope": "Actual Node pool methods and natural process exit, modeled backend startup; no VM/SIP/DSP/DOS or installed-service change.",
+  "cohort": "synthmodem-pool-01",
+  "upstream_revision": "b1752e4d0039e0cff72735924e03aa99922723a8"
+}

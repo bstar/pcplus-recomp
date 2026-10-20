@@ -1,0 +1,49 @@
+--- a/src/tunnel/UdpTcpTunnel.js
++++ b/src/tunnel/UdpTcpTunnel.js
+@@ -39,8 +39,9 @@
+  *   'error'          fatal error — tunnel should be discarded
+  *   'echo-reply'     echo-channel frame received; payload as Buffer
+  *                    (primarily used by tests)
+- *   'frame-rx'       (channel, srcPort, dstPort, payload) — low-level
+- *                    observer for debugging
++ *   'frame-rx'       (channel, srcPort, dstPort, payload, delivery)
++ *                    synchronous observer/consumer; set delivery.consumed
++ *                    to suppress subsequent UDP delivery of an owned frame
+  *
+  * MODE
+  *
+@@ -330,7 +331,9 @@
+     const dstPort  = frame.readUInt16LE(FRAME_LEN_BYTES + 3);
+     const payload  = frame.slice(FRAME_LEN_BYTES + FRAME_HDR_FIXED);
+ 
+-    this.emit('frame-rx', channel, srcPort, dstPort, payload);
++    const delivery = { consumed: false };
++    this.emit('frame-rx', channel, srcPort, dstPort, payload, delivery);
++    if (delivery.consumed) return;
+ 
+     if (channel === CH_ECHO) {
+       this.emit('echo-reply', payload, srcPort, dstPort);
+--- a/src/sip/VmRegistrar.js
++++ b/src/sip/VmRegistrar.js
+@@ -115,9 +115,11 @@
+ 
+   start() {
+     if (this._started) return;
+-    this._frameHandler = (channel, srcPort, dstPort, payload) => {
++    this._frameHandler = (channel, srcPort, dstPort, payload, delivery) => {
+       if (channel !== CH_SIP) return;
+-      this._onSipFrame(srcPort, dstPort, payload);
++      if (this._onSipFrame(srcPort, dstPort, payload) && delivery) {
++        delivery.consumed = true;
++      }
+     };
+     this.tunnel.on('frame-rx', this._frameHandler);
+     this._started = true;
+@@ -175,6 +177,7 @@
+       return;
+     }
+     this._handleRegister(msg, srcPort, dstPort);
++    return true; // REGISTER belongs exclusively to this registrar, including errors.
+   }
+ 
+   _handleRegister(msg, srcPort, dstPort) {

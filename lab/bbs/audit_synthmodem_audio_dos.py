@@ -16,10 +16,16 @@ def main():
   if kind==0x15:data.extend(b)
   elif kind==0x13:status.append(json.loads(b))
  prefix=b'ATZ\rATD1\r';checks['numeric_command_prefix']=serial.startswith(prefix) and n['commands']==['ATZ','ATD1']
- online=serial[len(prefix):];checks['serial_equals_actual_guest_decode']=online==data
+ # The production session deliberately discards post-training tail bytes while
+ # its proxy is detached. Account for that exact sink count, never arbitrary
+ # mismatching bytes from the online stream. Preserve the prefix in the report.
+ holds=re.findall(r'Post-train hold complete .*waited (\d+)ms, dropped (\d+) bytes\)',(out/'node.log').read_text())
+ checks['single_normal_post_train_hold']=len(holds)==1 and 6000<=int(holds[0][0])<=15500
+ dropped=int(holds[0][1]) if len(holds)==1 else 0
+ online=serial[len(prefix):];checks['serial_equals_post_hold_guest_decode']=online==data[dropped:]
  target=online.split(b'\r',1)[0]+b'\r';checks['online_target_after_numeric_call']=bool(re.fullmatch(rb'127\.0\.0\.1:\d+\r',target))
  sent,_=Telnet().feed((out/'bbs-input.bin').read_bytes());display,_=Telnet().feed((out/'bbs-output.bin').read_bytes())
- checks['guest_equals_Telnet_application_input']=bytes(data)==target+sent
+ checks['guest_equals_Telnet_application_input']=bytes(data[dropped:])==target+sent
  caller=(out/'caller-decoded.bin').read_bytes()
  checks['decoded_audio_equals_serial_output']=(out/'serial-out.bin').read_bytes()==b'\r\nOK\r\n\r\nCONNECT 1200\r\n'+caller
  display_at=caller.find(display) if display else -1
@@ -33,8 +39,9 @@ def main():
   if index<len(wanted) and m==wanted[index]:index+=1
  checks['authoritative_menu_order']=index==len(wanted)
  checks['script_and_normal_DOS_return']=(out/'SCRIPT.OK').is_file() and (out/'SCRIPT.OK').read_bytes()==b'PASS' and (out/'PASS.TXT').is_file() and not (out/'FAIL.TXT').exists()
- checks['actual_UART_restored']=len((out/'BEFORE.BIN').read_bytes())==42 and (out/'BEFORE.BIN').read_bytes()==(out/'AFTER.BIN').read_bytes()
- checks['keyboard_timer_vector_restored']=len((out/'KEYOLD.BIN').read_bytes())==4 and (out/'KEYOLD.BIN').read_bytes()==(out/'KEYNEW.BIN').read_bytes()
+ def read(name):return (out/name).read_bytes() if (out/name).is_file() else b''
+ checks['actual_UART_restored']=len(read('BEFORE.BIN'))==42 and read('BEFORE.BIN')==read('AFTER.BIN')
+ checks['keyboard_timer_vector_restored']=len(read('KEYOLD.BIN'))==4 and read('KEYOLD.BIN')==read('KEYNEW.BIN')
  for name in ('rtp-from-answer.bin','rtp-from-caller.bin'):
   headers=[]
   for b in records((out/name).read_bytes()):
@@ -47,7 +54,8 @@ def main():
  result={'passed':all(checks.values()),'checks':checks,'producer_sha256':sha(out/'result.json'),
   'auditor_sha256':sha(Path(__file__)),'payloads':{'BBS_input_bytes':len(sent),'BBS_display_bytes':len(display),
    'BBS_input_sha256':hashlib.sha256(sent).hexdigest(),'BBS_display_sha256':hashlib.sha256(display).hexdigest(),
-   'display_offset_in_caller':display_at},
+   'display_offset_in_caller':display_at,'guest_DATA_RX_bytes':len(data),'pre_proxy_training_tail_bytes':dropped,
+   'pre_proxy_training_tail_hex':bytes(data[:dropped]).hex(),'unadjusted_serial_guest_identity':online==data},
   'scope':'Independent read-only actual DOS/ASPECT, BBS authoritative logs, guest frames, serial/Telnet byte identity, RTP continuity, SIP and cleanup audit. No physical modem/ATA claim.'}
  (out/'independent-audit.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2));return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

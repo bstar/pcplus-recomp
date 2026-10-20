@@ -9,7 +9,7 @@ There is no direct DOS-to-BBS data shortcut.
 
 ```sh
 ./tools/modem-dev --command python3 lab/bbs/synthmodem_audio_dos.py \
-  --runtime build/bbs-lab/synthmodem-gateway-01/runtime \
+  --runtime build/bbs-lab/synthmodem-sparse-runtime-01/runtime \
   --output build/bbs-lab/synthmodem-audio-dos-new
 
 ./tools/modem-dev --command python3 lab/bbs/audit_synthmodem_audio_dos.py \
@@ -49,8 +49,9 @@ samples that vector after return; the original/restored values must match.
 Before/after42-byte UART/PIC/vector snapshots, normal DOS return, exact selected
 directory accounting and the final file-menu screen are also required.
 
-The separate read-only audit reconstructs guest DATA_RX, compares DOS online
-bytes to actual guest-decoded input and Telnet application bytes, requires the
+The separate read-only audit reconstructs guest DATA_RX, accounts for the exact
+logged training-tail sink count before proxy attachment, compares all subsequent
+bytes to DOS online input and Telnet application bytes, and requires the
 entire BBS display in decoded audio, and compares decoded audio with serial
 output. It independently checks actual DOS DA/CPR responses, one guest carrier,
 RTP continuity, SIP teardown, server menu order, success markers, capture hashes
@@ -72,32 +73,43 @@ actual final menu. The harness owns a separate emulator process group so a
 forced test stop can also retire quit-dialog descendants retaining its serial
 socket. A forced stop never counts as normal DOS return or hardware restoration.
 
-## Current result: authentication passes, menu route fails
+## Current result: menus and cleanup pass; upstream bytes fail
 
-The corrected `synthmodem-audio-dos-03` attempt authenticates and advances through
-login artwork, last callers, online users and oneliners. At the newscan prompt,
-the DOS serial stream contains a final N which never appears in guest DATA_RX
-or the BBS application stream. All preceding upstream bytes match exactly, and
-all23773 bytes of BBS display are present in decoded caller audio. The captured
-caller RTP sequence/timestamps are continuous.
+`synthmodem-audio-dos-05` uses the Nix-built sparse-helper runtime, whose normal
+init, DSP, kernel and39 gateway source files retain their accepted identities.
+All19 producer checks pass: real training/login, Main -> Messages -> Main ->
+Files, normal DOS return, matched42-byte UART snapshots and timer-vector
+restoration, unchanged profile, selected-directory accounting and actual VM exit.
+The script does not add a second N or change the BBS.
 
-An [offline decoder](diagnose_audio_caller.js) independently recovers N at
-caller packet11541. That proves the byte was modulated into the observed caller
-audio; it does not prove what the VM's internal RTP/jitter or proprietary DSP
-receiver consumed. The record in
-[validation](../../docs/validation/synthmodem-audio-dos.json) remains failed.
-The run was stopped after its explicit FAIL-MAIN marker; normal exit, final
-menu and UART/helper restoration are not claimed for either stopped attempt.
+The independent audit still fails overall:18 of19 checks pass, but six bytes
+`4e80c84432d3` are inserted after the DOS CPR (online byte offset29), before the
+login keystroke. They exist in actual guest DATA_RX and BBS application input.
+The [offline decoder](diagnose_audio_caller.js) recovers exactly all64 DOS online
+bytes from recorded caller RTP, with no such insertion. RTP sequences/timestamps
+are continuous. This narrows the investigation to actual guest RTP/jitter/DSP
+consumption; the offline receiver cannot prove what that guest consumed.
 
-Subsequent [helper isolation](patches/synthmodem-sparse/README.md) reproduces an
-indefinite N hold on a raw host PTY: the in-band NO CARRIER parser waits for
-another byte. A bounded-lookahead candidate passes the sparse-prefix and prior
-transport checks and builds as static i386. This identifies a concrete cause
-consistent with the audio symptom without assigning the loss to DSP decoding.
-The candidate has not yet been booted or tested in this workflow. Next stage a
-separate runtime, verify sparse data over DSP and repeat this complete route.
-Do not mask the failure with duplicate keystrokes or count authentication alone
-as ENiGMA workflow compatibility. Literal carrier-text collisions remain open.
+Separately, the normal post-training hold reports discarding three bytes
+`ff42f9` before the proxy attaches and CONNECT> is issued. The audit explicitly
+accounts for that sink count, retains its raw prefix and still requires exact
+post-hold equality. It does not trim the six online bytes or accept them because
+login succeeded. All46908 bytes of downstream BBS display match, SIP teardown
+and normal DOS restoration independently pass. The
+[public receipt](../../docs/validation/synthmodem-audio-dos.json) stays failed.
+
+The earlier -03 cohort remains failed on its held N. The new helper independently
+reproduces and bounds that lookahead. Cohort -04 reaches main/message menus with
+exact upstream bytes and39064 exact downstream bytes, but its script waits for
+`Message Menu:` instead of this theme's actual `MESSAGE AREA`. It is stopped
+after FAIL-MESSAGES; normal cleanup is not claimed. The final footer assumption
+is also corrected from nonexistent `File Base >>` to the observed `File Base`
+menu description. Those fixture failures and source identities remain preserved.
+
+The sparse runtime can be reproduced with
+[`synthmodem_sparse_runtime.py`](synthmodem_sparse_runtime.py); see the
+[candidate instructions](patches/synthmodem-sparse/README.md). This is a test
+runtime, not an installed bridge change.
 
 ## Limits and remaining tasks
 
@@ -114,6 +126,7 @@ No14400-bps connectivity follows from this1200-bps test.
 During the longer preserved run, a real guest registration refresh received a
 200 from VmRegistrar and an additional405 from SipUacInternal for the same
 transaction. Registration succeeded, but the duplicated request ownership needs
-cleanup before extended testing. This is distinct from the script fixture
-failure. Existing pool timeout retention and status CRCRLF normalization are
-also still open.
+cleanup before extended testing. Separate [REGISTER ownership](patches/synthmodem-registrar/README.md)
+and [pool timer](patches/synthmodem-pool/README.md) candidates pass isolated
+network/lifecycle checks; neither is composed into this runtime yet. Status
+CRCRLF normalization and carrier/data ambiguity also remain open.

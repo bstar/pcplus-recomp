@@ -1,0 +1,40 @@
+--- a/src/backends/ModemBackendPool.js
++++ b/src/backends/ModemBackendPool.js
+@@ -307,10 +307,15 @@
+       };
+       bk.on('error', errorListener);
+ 
++      let warmupTimer;
+       try {
+         await Promise.race([
+           bk.startAsync(),
+-          _timeoutRejection(this._warmupTimeoutMs, 'warmup'),
++          new Promise((_, reject) => {
++            warmupTimer = setTimeout(() => reject(new Error(
++              `ModemBackendPool: warmup timed out after ${this._warmupTimeoutMs}ms`)),
++            this._warmupTimeoutMs);
++          }),
+         ]);
+       } catch (err) {
+         // Try to stop the half-booted backend so it doesn't linger.
+@@ -323,6 +328,8 @@
+         this._backend = null;
+         this._warmupPromise = null;
+         throw err;
++      } finally {
++        clearTimeout(warmupTimer);
+       }
+ 
+       // The error listener stays attached for the lifetime of the
+@@ -339,11 +346,4 @@
+   }
+ }
+ 
+-function _timeoutRejection(ms, label) {
+-  return new Promise((_, reject) => {
+-    setTimeout(() => reject(new Error(
+-      `ModemBackendPool: ${label} timed out after ${ms}ms`)), ms);
+-  });
+-}
+-
+ module.exports = { ModemBackendPool };

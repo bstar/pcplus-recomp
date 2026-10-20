@@ -1,0 +1,106 @@
+{
+  "passed": true,
+  "reports": {
+    "baseline": {
+      "passed": true,
+      "baseline": true,
+      "checks": {
+        "duplicate_response_reproduced": true,
+        "binding_refresh": true,
+        "duplicate_error_reproduced": true,
+        "other_SIP_still_delivered": true,
+        "RTP_RTCP_unchanged": true,
+        "stop_releases_ownership": true,
+        "observers_still_see_all_frames": true,
+        "no_errors": true
+      },
+      "responses": {
+        "1": [
+          200,
+          405
+        ],
+        "2": [
+          200,
+          405
+        ],
+        "3": [
+          400,
+          405
+        ],
+        "4": [
+          405
+        ],
+        "5": [
+          405
+        ]
+      }
+    },
+    "candidate": {
+      "passed": true,
+      "baseline": false,
+      "checks": {
+        "registration_and_refresh_exclusive": true,
+        "binding_refresh": true,
+        "error_REGISTER_has_single_owner": true,
+        "other_SIP_still_delivered": true,
+        "RTP_RTCP_unchanged": true,
+        "stop_releases_ownership": true,
+        "observers_still_see_all_frames": true,
+        "no_errors": true
+      },
+      "responses": {
+        "1": [
+          200
+        ],
+        "2": [
+          200
+        ],
+        "3": [
+          400
+        ],
+        "4": [
+          405
+        ],
+        "5": [
+          405
+        ]
+      }
+    }
+  },
+  "source_inputs": {
+    "config.js": "6cfa6057b31bebb90d52f12956a3166a389308b703c17480acdc59fdb05f681f",
+    "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+    "src/tunnel/UdpTcpTunnel.js": "c560a03a61530d812e809c729f3816ba721e577a52723d4e8cbbcd7ecfa66f0d",
+    "src/sip/VmRegistrar.js": "0dd8dd1107bdcf94539fd8c63a642ee67151a2dc45931ed5edcb518945281401",
+    "src/sip/SipParser.js": "e5a5dae109bc251acb7623d922dd8bc9284f14f8221bb16f7b0a82846dac8cc8",
+    "src/sip/SipUacInternal.js": "89e0fd9a27e8960bd2a989942d0671d3dc7526b98c6447246d9b80bf28ecffff"
+  },
+  "staged_sources": {
+    "baseline": {
+      "config.js": "6cfa6057b31bebb90d52f12956a3166a389308b703c17480acdc59fdb05f681f",
+      "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+      "src/tunnel/UdpTcpTunnel.js": "c560a03a61530d812e809c729f3816ba721e577a52723d4e8cbbcd7ecfa66f0d",
+      "src/sip/VmRegistrar.js": "0dd8dd1107bdcf94539fd8c63a642ee67151a2dc45931ed5edcb518945281401",
+      "src/sip/SipParser.js": "e5a5dae109bc251acb7623d922dd8bc9284f14f8221bb16f7b0a82846dac8cc8",
+      "src/sip/SipUacInternal.js": "89e0fd9a27e8960bd2a989942d0671d3dc7526b98c6447246d9b80bf28ecffff"
+    },
+    "candidate": {
+      "config.js": "6cfa6057b31bebb90d52f12956a3166a389308b703c17480acdc59fdb05f681f",
+      "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+      "src/tunnel/UdpTcpTunnel.js": "4f0b49567a7041a375da96a527d258c8e47a7cc521c08748c46b1eb194901b7a",
+      "src/sip/VmRegistrar.js": "d91cfe3c3faca7637ced5d2119d61d2ceedc5b1f8964973abaccc07b43d1cc08",
+      "src/sip/SipParser.js": "e5a5dae109bc251acb7623d922dd8bc9284f14f8221bb16f7b0a82846dac8cc8",
+      "src/sip/SipUacInternal.js": "89e0fd9a27e8960bd2a989942d0671d3dc7526b98c6447246d9b80bf28ecffff"
+    }
+  },
+  "frozen_inputs": {
+    "lab/bbs/patches/synthmodem-registrar/check.py": "648620de1312f0de7d3092c08c39b8cb65f17814ff650adcb9e7f2c216cdd015",
+    "lab/bbs/patches/synthmodem-registrar/check.js": "92e69705c3e5e7e162e45b0a64ad4ee094b62704bd1855a76d59dfd4b07aea7d",
+    "lab/bbs/patches/synthmodem-registrar/registrar.patch": "778d3c0f99abd0ccde19fd4015015deb020a8d523b51bee68a6e1976b749196c",
+    "docs/validation/synthmodem-gateway.json": "b45a3889492327899bdaa5817b4951da95b81bb07bdd69319b4814008504a6a0"
+  },
+  "node": "v24.18.1",
+  "scope": "Actual tunnel TCP/UDP, SIP parser, registrar and UAC methods; VM-originated packets are fixtures. No QEMU, DSP, DOS, installed services or physical hardware.",
+  "cohort": "synthmodem-registrar-01",
+  "upstream_revision": "b1752e4d0039e0cff72735924e03aa99922723a8"
+}

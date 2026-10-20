@@ -7,20 +7,28 @@ data, reconnect and transfer runs. No physical compatibility or 14400-bps claim
 is established; the adapter has not arrived. PCPlus remains a serial terminal,
 with SIP/audio/Telnet handled by the Linux bridge.
 
-The first [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now
-authenticates through numeric ATD1, real DSP CONNECT, CONNECT> destination entry
-and the directory-bound ASPECT child. The full menu route remains FAILED:
-a final N is present in DOS output and independently decoded caller RTP, but
-absent from guest DATA_RX/BBS input. Preceding upstream bytes and23773 downstream
-display bytes match. A subsequent real-PTY reproduction identifies an indefinite
-`N` hold in the helper's in-band carrier parser. The
-[sparse-data candidate](lab/bbs/patches/synthmodem-sparse/README.md) releases
-isolated prefixes after about50ms and preserves16 fault/12 PTY regressions;
-its static i386 Nix build succeeds. Boot a separate runtime and repeat DSP/DOS
-checks next. Literal carrier-text collisions remain open, and the failed audio
-workflow remains failed. Do not replace it with an authentication-only claim. Captures
-also show duplicate200/405 responses to a guest registration refresh. The
-optional Nix modem shell now includes DOSBox-X/NASM for this combined lab.
+The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
+all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
+source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal
+DOS return, UART/vector restoration and directory accounting. The sparse helper
+fix resolves the reproduced lone-N hold; corrected theme markers replace two
+invalid fixture assumptions. All prior failed cohorts remain recorded.
+
+Overall audio acceptance is still FAILED: the independent audit passes18 of19
+checks but finds six extra upstream bytes after the DOS CPR, received by both
+the guest helper and ENiGMA. Offline caller decoding matches all64 DOS online
+bytes exactly. Three earlier training-tail bytes were separately discarded by
+the normal pre-proxy hold. Investigate actual guest RTP/jitter/DSP consumption;
+menu success cannot replace exact byte integrity. All46908 BBS display bytes,
+RTP continuity, actual SIP teardown and normal cleanup pass independent checks.
+
+Separate [pool timer](lab/bbs/patches/synthmodem-pool/README.md) and
+[REGISTER ownership](lab/bbs/patches/synthmodem-registrar/README.md) candidates
+pass isolated lifecycle/network reproductions. Compose them into a fresh
+runtime and verify real guest refresh/teardown next; they are not in this DOS
+cohort or an installed service. Literal carrier-text collisions, pressure,
+editors/transfers/Synchronet over audio, all F01-F16 and hardware acceptance
+remain open. The adapter is still pending; no14400 claim follows.
 
 The [full software gateway](lab/bbs/synthmodem-gateway.md) now passes24 checks:
 actual external/internal SIP, normal CallSession and modem pool, V.22 DSP data,
@@ -28,7 +36,7 @@ default post-train hold, CONNECT> entry, BINARY/ANSI/80x25 negotiation, exact
 duplex payloads and TCP reconnect on one carrier. QUIT tears down both SIP legs
 and recycles a distinct VM. A configurable RTP bind address keeps this lab
 on loopback; four separate native binding/allocation checks pass. The DOS/ENiGMA
-attempt above now exercises this audio gateway but fails the complete menu route. Sustained
+attempt above completes its menu route but fails exact upstream byte integrity. Sustained
 pressure, other protocols and hardware remain open; pool timeout timer retention
 and status CRCRLF normalization are concrete remaining runtime details.
 

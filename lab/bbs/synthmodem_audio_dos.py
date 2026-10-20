@@ -5,6 +5,7 @@ from pathlib import Path
 import enigma
 from synthmodem_bbs_dos import Relay
 from synthmodem_vm_control import ROOT,sha
+from synthmodem_sparse_runtime import validate as validate_runtime
 sys.path.insert(0,str(ROOT/'standalone'));sys.path.insert(0,str(ROOT/'src/aspect'))
 from compiler import compile_source
 from modem_fixtures import fixture
@@ -16,16 +17,14 @@ def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
  runtime=a.runtime.resolve();out=a.output.resolve();assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
  ledger=ROOT/'docs/validation/synthmodem-gateway.json';prior=json.loads(ledger.read_text());assert prior['passed']
- reference=ROOT/'build/bbs-lab/synthmodem-gateway-01/runtime'
- runtime_inputs={str(runtime/Path(n).relative_to(reference)):h for n,h in prior['tested_inputs'].items()}
- assert all(sha(Path(n))==h for n,h in runtime_inputs.items())
+ runtime_inputs=validate_runtime(runtime)
  pid=enigma.process_pid();assert pid and Path(f'/proc/{pid}/cwd').resolve()==enigma.SOURCE.resolve()
  assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=enigma.SOURCE,text=True).strip()==enigma.COMMIT
  assert not subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],cwd=enigma.SOURCE,text=True).strip()
  server_names=['main.js','core/client.js','package-lock.json','config/config.hjson']+[str(p.relative_to(enigma.SOURCE)) for p in sorted((enigma.SOURCE/'config/menus').glob('*.hjson'))]
  server_inputs={n:sha(enigma.SOURCE/n) for n in server_names}
  names=['lab/bbs/synthmodem_audio_dos.py','lab/bbs/synthmodem_audio_serial.js','lab/bbs/audio_exit_keys.asm','lab/bbs/audio_get_vector.asm',
-  'lab/bbs/synthmodem_bbs_dos.py','lab/bbs/enigma.py','standalone/modem_fixtures.py','standalone/directory_fixtures.py',
+  'lab/bbs/synthmodem_bbs_dos.py','lab/bbs/enigma.py','lab/bbs/synthmodem_sparse_runtime.py','lab/bbs/synthmodem_vm_control.py','docs/validation/synthmodem-sparse.json','standalone/modem_fixtures.py','standalone/directory_fixtures.py',
   'standalone/test_terminal.py','src/aspect/compiler.py','nix/flake.nix','nix/flake.lock','tools/modem-dev','build/terminal/TERMINAL.EXE','build/terminal/terminal.map','build/aspect-runner/ASPECT.EXE',str(ledger.relative_to(ROOT))]
  frozen={n:sha(ROOT/n) for n in names}
  stage=out/'program';stage.mkdir()
@@ -42,9 +41,9 @@ def main():
  # to acknowledge pause/newscan prompts instead of blocking for240 seconds.
  script+='attempts=0\nwhile attempts < 240\nwaitfor "Main Menu" 1\nif waitfor\nexitwhile\nendif\nattempts += 1\nendwhile\nif attempts == 240\n'+mark('FAIL-MAIN')+'exit\nendif\n'
  script+='waitquiet 2 120\ncwhen 0\ncwhen 1\ncwhen 2\n'+mark('MAIN')+'transmit "M^M"\n'
- script+=wait('Message Menu:',150,'MESSAGES')+'waitquiet 2 120\n'+mark('MESSAGES')+'transmit "Q^M"\n'
+ script+=wait('MESSAGE AREA',150,'MESSAGES')+'waitquiet 2 120\n'+mark('MESSAGES')+'transmit "Q^M"\n'
  script+=wait('Main Menu',150,'RETURN')+'waitquiet 2 120\n'+mark('RETURN')+'transmit "F^M"\n'
- script+=wait('File Base >>',150,'FILES')+'waitquiet 2 120\n'+mark('FILES')+'fopen 0 "D:\\SCRIPT.OK" "wb"\nfputs 0 "PASS"\nfclose 0\nendproc\n'
+ script+=wait('File Base',150,'FILES')+'waitquiet 2 120\n'+mark('FILES')+'fopen 0 "D:\\SCRIPT.OK" "wb"\nfputs 0 "PASS"\nfclose 0\nendproc\n'
  script+='proc advance\ncwhen 0\nwaitquiet 2 120\nwhen 0 "eyboard" call advance\ntransmit "^M"\nendproc\n'
  script+='proc cancel\nif cancel_done == 0\ncancel_done=1\ncwhen 1\nwaitquiet 2 120\ntransmit "^["\nendif\nendproc\n'
  script+='proc decline\nif scan_done == 0\nscan_done=1\ncwhen 2\nwaitquiet 2 120\ntransmit "N"\nendif\nendproc\n'
@@ -130,7 +129,7 @@ exit
   'numeric_AT_only':n['commands']==['ATZ','ATD1'],'real_DSP_CONNECT':n.get('callerInfo',{}).get('bps')==1200 and n.get('answerInfo',{}).get('bps')==1200,
   'authenticated':any(r.get('msg')=='User "loclab" successfully logged in' for r in rows),
   'ordered_menus':at==len(wanted),'DOS_DA':b'\x1b[?1;2c' in sent,'DOS_CPR':bool(re.search(rb'\x1b\[\d+;\d+R',sent)),
-  'final_file_menu':'file base >>' in text.lower(),'profile_unchanged':read('MODEM.PRM')==profile,
+  'final_file_menu':'file base' in text.lower(),'profile_unchanged':read('MODEM.PRM')==profile,
   'directory_accounting':accounting_check(contact,read('CALL.DIR'),1),'no_relay_errors':not relay.errors and not relay.thread.is_alive(),
   'no_gateway_errors':not n['errors'],'VM_exited':n['VM_exited'] and n['pool']=='stopped',
   'no_post_saved':not any('posted message to' in r.get('msg','') for r in rows),

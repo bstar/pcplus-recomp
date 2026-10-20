@@ -37,9 +37,26 @@ fragmented beyond50ms may instead become data. Reliable carrier notification
 needs an out-of-band mechanism. Do not infer file-transfer or physical DCD
 acceptance from these checks.
 
-The new static i386 executable has not been booted in the accepted runtime.
-Rebuild a separate runtime, verify sparse data through actual DSP, then repeat
-the DOS/ENiGMA menu workflow. The failed audio receipt remains failed; neither
+The new static i386 executable now boots in a separate normal runtime and
+resolves the N stall through actual DSP/DOS. The full menu route and normal
+cleanup pass, but an independent audit finds six additional upstream bytes
+elsewhere; overall audio acceptance remains failed. See the
+[DOS checkpoint](../../synthmodem-audio-dos.md). Stage the runtime with:
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/synthmodem_sparse_runtime.py \
+  --baseline build/bbs-lab/synthmodem-gateway-01/runtime \
+  --output build/bbs-lab/synthmodem-sparse-runtime-new
+```
+
+The stager verifies all gateway source/kernel identities and every original
+archive entry, allowing only the helper executable body/size to change. It
+rebuilds through Nix and requires the accepted sparse-candidate executable hash.
+The DOS runner performs the same validation directly; a supplied staging receipt
+cannot authorize an arbitrary runtime. See the
+[staging receipt](../../../../docs/validation/synthmodem-sparse-runtime.json).
+
+The failed audio receipt remains failed; neither
 the installed bridge nor DOS application, BBS server, original images or physical
 hardware is changed by this component test.
 

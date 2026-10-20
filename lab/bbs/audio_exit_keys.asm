@@ -7,7 +7,7 @@ jmp install
 old_vector: dd 0
 state: db 0
 ticks: dw 0
-prompt: db 'File Base >>',0
+prompt: db 'File Base',0
 handler:
  pushf
  push ax
