@@ -92,6 +92,17 @@ Links below pin the reviewed source; future versions require rechecking.
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
 
+## Logged-in BBS upload checkpoint
+
+[Actual DOS upload through the candidate](../lab/bbs/synthmodem-enigma.md#logged-in-upload)
+now passes19 checks plus independent serial/protocol/server audits. A fresh
+11521-byte file and its FileEntry metadata match exactly after the real upload
+form. The final handshake, nine opposite controls, helper exit0 and subsequent
+File List are confirmed; prior files and source media remain unchanged. See the
+[receipt](validation/synthmodem-enigma-upload.json). This complements the logged-in
+download checkpoint below without establishing other protocols, fault tolerance,
+modem backpressure, SIP/audio or physical acceptance.
+
 ## Logged-in BBS download checkpoint
 
 [Automatic ZMODEM download through the candidate](../lab/bbs/synthmodem-enigma.md#logged-in-automatic-download)
@@ -101,8 +112,8 @@ validated in both directions, the official download counter advances and a new
 keyboard search succeeds after return. Saved PRM preferences start reception;
 no manual transfer keys or injected replies are used. The existing helper and
 selector-first configuration are frozen unchanged. See the
-[receipt](validation/synthmodem-enigma-download.json). Upload, other protocols,
-error/retry/cancel, SIP/audio and hardware acceptance remain open.
+[receipt](validation/synthmodem-enigma-download.json). Other protocols, error/retry/cancel, SIP/audio and hardware acceptance remain
+open; the upload checkpoint above is separate evidence.
 
 ## Authenticated stock BBS checkpoint
 

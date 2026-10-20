@@ -1,5 +1,12 @@
 # Complete DOS rebuild plan
 
+The [logged-in SynthModem/ENiGMA upload](lab/bbs/synthmodem-enigma.md#logged-in-upload)
+passes19 checks plus independent wire/protocol/metadata audits. A fresh11521-byte
+fixture is installed through the actual upload-details form, with complete final
+handshake, helper exit0 and later file-list interaction. Prior stored files and
+source media remain exact. Application, bridge and server are unchanged. Other
+protocols, failures/backpressure, SIP/audio, hardware and full gates remain open.
+
 The [logged-in SynthModem/ENiGMA download](lab/bbs/synthmodem-enigma.md#logged-in-automatic-download)
 passes21 checks plus independent serial/protocol/file audits. Automatic DOS
 reception stores the exact11521-byte fixture; CRC-valid ZFILE/data/ZEOF/ZFIN/OO,

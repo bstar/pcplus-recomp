@@ -27,6 +27,13 @@ from test_terminal import SAMPLER
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
+def file_entries(name):
+ """Read through the official FileEntry API; never manufacture database rows."""
+ assert re.fullmatch(r'PCSU\d{4}\.BIN',name)
+ script="""const c=require('./core/oputil/oputil_common');c.initConfigAndDatabases(e=>{if(e)throw e;const F=require('./core/file_entry');F.findByFileNameWildcard(process.argv[1],(e,entries)=>{if(e&&e.code!==-33002)throw e;console.log(JSON.stringify(e?[]:entries.map(f=>({fileId:f.fileId,fileName:f.fileName,areaTag:f.areaTag,storageTag:f.storageTag,filePath:f.filePath,fileSha256:f.fileSha256,meta:f.meta}))));process.exit(0);});});"""
+ return json.loads(subprocess.check_output(['node','-e',script,name],cwd=enigma.SOURCE,text=True))
+
+
 class Relay:
  """Byte-transparent loopback observer; no batching timer or protocol replies."""
  def __init__(self):
@@ -54,7 +61,9 @@ class Relay:
 
 def main():
  parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--candidate',type=Path,required=True)
- parser.add_argument('--output',type=Path,required=True);parser.add_argument('--route',choices=['menus','editor','download'],default='menus');args=parser.parse_args()
+ parser.add_argument('--output',type=Path,required=True);parser.add_argument('--route',choices=['menus','editor','download','upload'],default='menus')
+ parser.add_argument('--upload-name',help='Fresh owned PCSU0000.BIN..PCSU9999.BIN filename');args=parser.parse_args()
+ if args.route=='upload':assert args.upload_name and re.fullmatch(r'PCSU\d{4}\.BIN',args.upload_name)
  candidate,out=args.candidate.resolve(),args.output.resolve()
  assert candidate.is_relative_to(ROOT/'build') and out.is_relative_to(ROOT/'build')
  pin=json.loads((ROOT/'docs/validation/synthmodem-telnet.json').read_text())
@@ -80,8 +89,17 @@ def main():
   download_bytes=download_source.read_bytes()
   frozen_names+=['lab/bbs/audit_zmodem.py','lab/bbs/enigma_transfer.py','lab/bbs/test_transfer_dos.py',
                  str(download_source.relative_to(ROOT)),str(HELPER.relative_to(ROOT))]
+ if args.route=='upload':
+  from enigma_transfer import STORAGE,HELPER
+  assert not (STORAGE/args.upload_name).exists() and not file_entries(args.upload_name),'Upload target must be fresh'
+  frozen_names+=['lab/bbs/audit_zmodem.py','lab/bbs/enigma_transfer.py','lab/bbs/test_transfer_dos.py',str(HELPER.relative_to(ROOT))]
+  frozen_names += [str(p.relative_to(ROOT)) for p in sorted(STORAGE.iterdir()) if p.is_file()]
  frozen={n:sha(ROOT/n) for n in frozen_names}
  out.mkdir(parents=True,exist_ok=False)
+ if args.route=='upload':
+  (out/'SEND').mkdir();upload_data=bytes(range(256))*45+b'\0'
+  upload_source=out/'SEND'/args.upload_name;upload_source.write_bytes(upload_data)
+  st=upload_source.stat();upload_stat=(st.st_ino,st.st_size,st.st_mtime_ns)
  log=enigma.SOURCE/'logs/enigma-bbs.log';boundary=(log.stat().st_ino,log.stat().st_size)
  (out/'server-log-start.json').write_text(json.dumps(dict(inode=boundary[0],offset=boundary[1]))+'\n')
  relay=Relay();relay.thread.start()
@@ -96,10 +114,14 @@ def main():
   login=original.split(' M enter',1)[0]
   recipe=login+' M enter p5000 Q enter p5000 F enter p7000 a-x'
  elif args.route=='editor':recipe=original
- else:
+ elif args.route=='download':
   login=original.split(' M enter',1)[0]
   search='P C X T E S T . B I N enter p1500 enter'
   recipe=login+' F enter p2000 S enter p2000 '+search+' p2000 t p1500 q p1500 escape p1000 D enter p2000 a p1500 enter p25000 enter p2000 S enter p1500 '+search+' p3000 a-x'
+ else:
+  login=original.split(' M enter',1)[0]
+  filename=' '.join('D:\\SEND\\*.BIN')
+  recipe=login+' F enter p2000 U enter p1500 tab p1000 tab p1000 tab p1000 enter p1500 enter p1000 a-s p300 f2 p100 f2 p300 '+filename+' enter p30000 tab p1000 tab p1000 tab p1000 enter p6000 enter p2000 L enter p5000 a-x'
  keys='p3000 '+' '.join(f'127.0.0.1:{relay.port}')+' enter '+recipe+' p2000 a-x'
  assert len('ADDKEY '+keys)<500,'DOS command-line limit'
  with (out/'node.log').open('w') as node_log:
@@ -196,21 +218,36 @@ exit
     offsets[direction]+=len(data)
    assert offsets=={'to_bbs':len(sent),'from_bbs':len(display)}
    (out/'decoded-trace.json').write_text(json.dumps(decoded_trace,indent=2)+'\n')
-   protocol=audit_batch(display,{'PCXTEST.BIN':download_bytes})
-   end_time=timestamp(decoded_trace,'bbs',protocol['end']-1)
-   post=next(e for e in decoded_trace if e['direction']=='dos' and e['seconds']>end_time and b'S\r' in sent[e['offset']:e['offset']+e['size']+1])
-   protocol['controls']=audit_controls(protocol,sent,decoded_trace,'bbs',post['seconds'])
+   downloading=args.route=='download';sender='bbs' if downloading else 'dos'
+   source_stream=display if downloading else sent;opposite=sent if downloading else display
+   expected_files={'PCXTEST.BIN':download_bytes} if downloading else {args.upload_name:upload_data}
+   protocol=audit_batch(source_stream,expected_files)
+   end_time=timestamp(decoded_trace,sender,protocol['end']-1)
+   post_key=b'S\r' if downloading else b'L\r'
+   post=next(e for e in decoded_trace if e['direction']=='dos' and e['seconds']>end_time and post_key in sent[e['offset']:e['offset']+e['size']+1])
+   protocol['controls']=audit_controls(protocol,opposite,decoded_trace,sender,post['seconds'])
    checks['complete_ZMODEM_protocol']=True
-   checks['posttransfer_search_response']='fileBaseSearch' in menus[menus.index('fileTransferProtocolSelection')+1:] and 'fileBaseListEntries' in menus[menus.index('fileTransferProtocolSelection')+1:]
+   tail=menus[menus.index('fileTransferProtocolSelection')+1:]
+   if downloading:checks['posttransfer_search_response']='fileBaseSearch' in tail and 'fileBaseListEntries' in tail
+   else:checks['posttransfer_file_list']='fileBaseMainMenu' in tail and 'fileBaseListEntries' in tail
   except Exception as error:protocol_errors.append(repr(error));checks['complete_ZMODEM_protocol']=False
   for item in (protocol or {}).get('files',[]):item.pop('source',None)
   (out/'protocol.json').write_text(json.dumps(dict(protocol=protocol,errors=protocol_errors),indent=2)+'\n')
-  checks.update(exact_download=(out/'RECV/PCXTEST.BIN').is_file() and (out/'RECV/PCXTEST.BIN').read_bytes()==download_bytes,
+  if args.route=='download':
+   checks.update(exact_download=(out/'RECV/PCXTEST.BIN').is_file() and (out/'RECV/PCXTEST.BIN').read_bytes()==download_bytes,
     only_expected_downloads={p.name for p in (out/'RECV').iterdir()}=={'PCXTEST.BIN'},
     no_receive_stages=not any(p.name.startswith(('PCRX.','PCZRX.')) for p in out.rglob('*')),
     no_manual_transfer_keys=not {'a-r','a-s','f2'}&set(keys.lower().split()))
-  after=metadata('PCXTEST.BIN');(out/'file-metadata.json').write_text(json.dumps({'before':download_meta,'after':after},indent=2)+'\n')
-  checks['official_download_counter_incremented']=len(after)==1 and after[0]['meta'].get('dl_count',0)>=download_meta[0]['meta'].get('dl_count',0)+1
+   after=metadata('PCXTEST.BIN');(out/'file-metadata.json').write_text(json.dumps({'before':download_meta,'after':after},indent=2)+'\n')
+   checks['official_download_counter_incremented']=len(after)==1 and after[0]['meta'].get('dl_count',0)>=download_meta[0]['meta'].get('dl_count',0)+1
+  else:
+   after=file_entries(args.upload_name);(out/'file-metadata.json').write_text(json.dumps({'before':[],'after':after},indent=2)+'\n')
+   st=upload_source.stat()
+   checks.update(source_upload_unchanged=upload_source.read_bytes()==upload_data and (st.st_ino,st.st_size,st.st_mtime_ns)==upload_stat,
+     exact_uploaded_file=(STORAGE/args.upload_name).is_file() and (STORAGE/args.upload_name).read_bytes()==upload_data,
+     official_metadata_exact=len(after)==1 and after[0]['fileName']==args.upload_name and after[0]['fileSha256']==hashlib.sha256(upload_data).hexdigest()
+       and after[0]['meta'].get('byte_size')==len(upload_data) and after[0]['meta'].get('upload_by_username')=='loclab'
+       and after[0]['areaTag']=='pcplus_transfer' and Path(after[0]['filePath']).resolve()==(STORAGE/args.upload_name).resolve())
  for n,data in [('to-bbs.bin',relay.to_bbs),('from-bbs.bin',relay.from_bbs),('sent.bin',sent),('display.bin',display)]: (out/n).write_bytes(data)
  (out/'screen.txt').write_text(text+'\n');(out/'server-session.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in rows))
  (out/'chunk-trace.json').write_text(json.dumps(relay.trace,indent=2)+'\n')

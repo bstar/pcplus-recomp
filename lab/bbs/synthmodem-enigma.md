@@ -90,8 +90,42 @@ they remain historical results, not reruns under this new download branch.
 ```
 
 The exact source fixture and helper are additional frozen runtime inputs, never
-ordinary application build inputs. Uploads, other protocols and error/retry/cancel
-routes through this BBS path remain open.
+ordinary application build inputs. Other protocols and error/retry/cancel routes through this BBS path remain
+open; the separate upload checkpoint follows.
+
+## Logged-in upload
+
+The [upload receipt](../../docs/validation/synthmodem-enigma-upload.json) adds19
+checks and a separate audit. Actual BIOS keys select Upload, submit its form,
+choose the preconfigured first ZedZap protocol, open Alt-S and select ZMODEM with
+two F2 keys. The source pattern contains one fresh synthetic file with all byte
+values. Transfer completion is followed by the actual upload-details form and
+File Base -> File List, not merely a successful DOS exit.
+
+`PCSU0001.BIN` is installed as exactly11521 bytes. Its SHA256 is
+`c389bb63305c3380f9b00de4c7bd0e14bd2267317dde0e1d1d3e02ccb2b9f7f2`.
+The official FileEntry API confirms the filename, owned area/storage, size/hash
+and uploader loclab. It was absent before the run. CRC-valid data/EOF/ZFIN/OO
+and nine opposite-direction controls are corroborated, and the external helper
+exits0 before the later file-list visit. Serial payloads, hardware restoration,
+source inode/size/mtime/bytes and every previously stored lab file are checked.
+
+```sh
+# Use a fresh PCSU0000..PCSU9999 filename and a new output directory each time.
+./tools/dev --command python3 lab/bbs/synthmodem_bbs_dos.py \
+  --candidate build/bbs-lab/synthmodem-telnet-03/candidate \
+  --output build/bbs-lab/synthmodem-enigma-upload-new \
+  --route upload --upload-name PCSU0002.BIN
+./tools/dev --command python3 lab/bbs/audit_synthmodem_bbs.py \
+  --output build/bbs-lab/synthmodem-enigma-upload-new
+```
+
+No existing upload is removed or overwritten. The API is read for validation;
+only the real BBS helper/form installs the new file and its database entry.
+The accepted label is `synthmodem-enigma-upload-01`. Earlier menu/editor/download
+receipts retain their recorded test-harness revisions; their scope is unchanged.
+The server process, configuration, source, candidate proxy and DOS executable
+were not changed by the upload checkpoint.
 
 SIP/RTP, answering-modem DSP, analog audio, physical modem/UART timing, broader BBS
 transfers and the Boca/SPA2102 remain untested here. The independent-peer

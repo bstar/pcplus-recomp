@@ -1,5 +1,10 @@
 # Modern BBS compatibility checkpoint
 
+The [SynthModem/ENiGMA upload](synthmodem-enigma.md#logged-in-upload) passes19
+checks and serial/protocol/server audits: exact new file/metadata, actual details
+form, helper exit0 and return to the file list. It complements the download
+checkpoint; other protocols, fault tolerance and hardware remain unverified.
+
 The [SynthModem/ENiGMA automatic download](synthmodem-enigma.md#logged-in-automatic-download)
 passes21 checks and independent protocol/file/serial audits through the actual
 candidate. The11521-byte file, complete final handshake, official counter and

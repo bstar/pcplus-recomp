@@ -56,15 +56,22 @@ def audit(out):
   observed={name:[s.hex() for s in options if s in body] for name,options in keys.items()}
   assert all(observed.values()),observed
  else:
-  data=(out/'RECV/PCXTEST.BIN').read_bytes()
   metadata=json.loads((out/'file-metadata.json').read_text())
   before_meta=metadata['before'];after_meta=metadata['after']
-  assert len(before_meta)==len(after_meta)==1
-  source=Path(before_meta[0]['filePath']).resolve()
-  assert source.is_relative_to(ROOT/'build') and source.read_bytes()==data
-  assert sha(source)==before_meta[0]['fileSha256']==after_meta[0]['fileSha256']
-  assert after_meta[0]['meta']['dl_count']>=before_meta[0]['meta']['dl_count']+1
-  assert {p.name for p in (out/'RECV').iterdir()}=={'PCXTEST.BIN'}
+  downloading=report['route']=='download'
+  assert len(after_meta)==1
+  name=after_meta[0]['fileName'];server_file=Path(after_meta[0]['filePath']).resolve()
+  assert server_file.is_relative_to(ROOT/'build/bbs-lab/enigma/source/file_base/pcplus_transfer')
+  local_file=out/('RECV' if downloading else 'SEND')/name;data=local_file.read_bytes()
+  assert server_file.read_bytes()==data and sha(server_file)==sha(local_file)==after_meta[0]['fileSha256']
+  if downloading:
+   assert len(before_meta)==1 and before_meta[0]['fileSha256']==after_meta[0]['fileSha256']
+   assert after_meta[0]['meta']['dl_count']>=before_meta[0]['meta']['dl_count']+1
+   assert {p.name for p in (out/'RECV').iterdir()}=={name}
+  else:
+   assert not before_meta and re.fullmatch(r'PCSU\d{4}\.BIN',name)
+   assert after_meta[0]['meta']['byte_size']==len(data) and after_meta[0]['meta']['upload_by_username']=='loclab'
+   assert after_meta[0]['areaTag']==after_meta[0]['storageTag']=='pcplus_transfer'
   decoders={d:Telnet() for d in ['to_bbs','from_bbs']};offsets={d:0 for d in decoders};trace=[]
   for event in json.loads((out/'chunk-trace.json').read_text()):
    direction=event['direction'];wire=(out/('to-bbs.bin' if direction=='to_bbs' else 'from-bbs.bin')).read_bytes()
@@ -72,14 +79,24 @@ def audit(out):
    if packet:trace.append(dict(direction='dos' if direction=='to_bbs' else 'bbs',offset=offsets[direction],size=len(packet),seconds=event['seconds']))
    offsets[direction]+=len(packet)
   assert trace==json.loads((out/'decoded-trace.json').read_text())
-  protocol=audit_batch(display,{'PCXTEST.BIN':data})
-  end_time=timestamp(trace,'bbs',protocol['end']-1)
-  post=next(e for e in trace if e['direction']=='dos' and e['seconds']>end_time and b'S\r' in sent[e['offset']:e['offset']+e['size']+1])
-  controls=audit_controls(protocol,sent,trace,'bbs',post['seconds'])
+  sender='bbs' if downloading else 'dos';stream=display if downloading else sent
+  opposite=sent if downloading else display;post_key=b'S\r' if downloading else b'L\r'
+  protocol=audit_batch(stream,{name:data})
+  end_time=timestamp(trace,sender,protocol['end']-1)
+  post=next(e for e in trace if e['direction']=='dos' and e['seconds']>end_time and post_key in sent[e['offset']:e['offset']+e['size']+1])
+  controls=audit_controls(protocol,opposite,trace,sender,post['seconds'])
   assert controls and protocol['finish']
-  semantic.update(complete_ZMODEM_protocol=True,exact_download=True,only_expected_downloads=True,
+  semantic['complete_ZMODEM_protocol']=True
+  if downloading:semantic.update(exact_download=True,only_expected_downloads=True,
     official_download_counter_incremented=True,
     posttransfer_search_response='fileBaseSearch' in menus[menus.index('fileTransferProtocolSelection')+1:] and 'fileBaseListEntries' in menus[menus.index('fileTransferProtocolSelection')+1:])
+  else:
+   tail=menus[menus.index('fileTransferProtocolSelection')+1:]
+   semantic.update(exact_uploaded_file=True,official_metadata_exact=True,
+    posttransfer_file_list=tail.index('fileBaseMainMenu')<tail.index('fileBaseListEntries'))
+   executions=[i for i,r in enumerate(rows) if r.get('msg')=='Executing external protocol']
+   exits=[i for i,r in enumerate(rows) if r.get('msg')=='Process exited' and r.get('exitCode')==0]
+   assert len(executions)==len(exits)==1 and executions[0]<exits[0]
  for name,value in semantic.items():assert report['checks'][name]==value,(name,value)
  assert report['passed']==all(report['checks'].values())
  return dict(evidence_audited=True,workflow_passed=report['passed'],route=report['route'],
