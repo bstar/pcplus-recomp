@@ -105,8 +105,15 @@ All earlier upstream bytes and23773 downstream display bytes match. The
 [record](validation/synthmodem-audio-dos.json) is explicitly failed; final menu,
 normal exit and hardware restoration remain unverified for these stopped runs.
 
-Investigate sparse-character delivery, the VM RTP/jitter path and guest receiver
-before extending the menu/transfer claims. A long-call refresh also receives
+The [sparse-data helper candidate](../lab/bbs/patches/synthmodem-sparse/README.md)
+now reproduces an indefinite hold of a lone N on a real host PTY, independent
+of DSP/audio. A50ms bounded-lookahead change passes the isolated prefix and
+existing transport checks, and builds as static i386 through Nix. It has not
+yet been booted or verified through this DOS/audio workflow. A complete literal
+NO CARRIER payload still collides with status, and a slowly fragmented real
+result may be released as data; out-of-band carrier reporting remains open.
+Rebuild a separate runtime and repeat DSP/DOS tests before extending the
+menu/transfer claims. A long-call refresh also receives
 both200 and405 responses from overlapping registrar/UAC handling; registration
 succeeds but duplicate ownership remains a concrete gap. No physical hardware
 has been tested, and no14400 claim is made.
@@ -390,9 +397,9 @@ acceptance; historical checkpoint sections above describe their own frozen input
 | Area | Software evidence available | Still required |
 | --- | --- | --- |
 | Serial/controller | Linked and DOS synthetic-call tests cover selectable DTE, numeric dialing, DCD history/loss, DTR cleanup and timeout budgets. | Actual Boca identity/results, COM/IRQ, CTS/RTS, DCD/DTR and UART load. |
-| Telnet/CP437/binary transport | Isolated codec candidate passes fragmentation/all-byte checks; synthetic-call DOS/BBS transfer receipts exist. | Candidate integration through the complete SIP/DSP path; physical display and transfers. |
-| Modem data pressure | Node writer and booted i386 helper pass separate and composed pressure checks. | Normal SIP/DSP integration; resolve native DSP flow credit and serial-to-BBS TCP pressure. |
-| Answering protocol | Normal VM stack answers SIP and emits DSP audio; an explicit V32bis profile enters datapump132 directly. | Actual training/decoded data, a shared protocol with this Boca, V.8 and V.32bis/14400 connectivity. |
+| Telnet/CP437/binary transport | Codec and software DSP gateway all-byte checks pass; synthetic-call DOS/BBS transfer receipts exist. | Complete DOS/audio menu and transfer runs; resolve helper status/data ambiguity; physical display and transfers. |
+| Modem data pressure | Node writer and booted i386 helper pass separate and composed pressure checks; normal software gateway runs. | Sustained pressure through normal DSP; resolve native DSP flow credit and serial-to-BBS TCP pressure. |
+| Answering protocol | Actual native/VM software training and exact data pass at V.22/1200; explicit V32bis profile enters datapump132 directly. | A shared protocol with this Boca, physical training, V.8 and negotiated V.32bis/14400 connectivity. |
 | Hardware/audio | Equipment and topology selected; adapter ordered. | All analog connection, audible handshake and end-to-end acceptance. |
 
 - [ ] Identify Boca model/chipset/UART and manual; record jumpers/base/IRQ,

@@ -1,0 +1,120 @@
+{
+  "passed": true,
+  "reports": {
+    "baseline": {
+      "passed": true,
+      "checks": {
+        "actual_CONNECT": true,
+        "held_N_reproduced": true,
+        "next_byte_releases_N": true,
+        "explicit_control_EOF_exit": true
+      },
+      "release_latencies_seconds": [],
+      "helper_sha256": "81979b624de042f7d62164bccbac7209d149fad932a2249760559eba5dfb6a91"
+    },
+    "baseline_existing_faults": {
+      "passed": true,
+      "fault_cases": 16
+    },
+    "candidate": {
+      "passed": true,
+      "checks": {
+        "actual_CONNECT": true,
+        "single_N_released_as_DATA_RX": true,
+        "all_prefixes_released_without_followup": true,
+        "prefixes_remain_data_mode": true,
+        "fragmented_result_still_recognized": true,
+        "legacy_literal_collision_remains": true,
+        "explicit_control_EOF_exit": true
+      },
+      "release_latencies_seconds": [
+        0.05038072797469795,
+        0.05031700700055808,
+        0.050220594042912126,
+        0.05028302199207246,
+        0.05028693994972855,
+        0.050289564998820424,
+        0.05029153893701732,
+        0.05028591805603355,
+        0.05030163796618581,
+        0.05029438401106745
+      ],
+      "helper_sha256": "2d33ba5b7a7b1665dc464281c63a866a238cad8ce5e47f6f0c0d6dc25340f8f2"
+    },
+    "candidate_existing_faults": {
+      "passed": true,
+      "fault_cases": 16
+    },
+    "existing_actual_PTY": {
+      "passed": true,
+      "checks": {
+        "coalesced_AT_payload_and_CR_order": true,
+        "host_sender_backpressured": true,
+        "full_binary_payload_exact": true,
+        "writer_completed": true,
+        "paused_host_backpressures_PTY_writer": true,
+        "opposite_direction_live_during_host_stall": true,
+        "reverse_payload_exact": true,
+        "reverse_writer_completed": true,
+        "PTY_read_serviced_during_hangup_guard": true,
+        "hangup_bytes_and_guards": true,
+        "both_directions_stalled_before_signal": true,
+        "signal_responsive_with_both_outputs_pending": true
+      },
+      "payload_size": 262147,
+      "payload_sha256": "e8b225397fcc2e3120be1f8355ea9bd59fe95acf2851b5d2a538524f9813d904",
+      "reverse_payload_size": 1048579,
+      "reverse_payload_sha256": "7d2cacea0e70b5043e18887a0ab05359d0e6ef3c45cc561349c31447e090bf31",
+      "scope": "Actual host-built helper process, Linux raw PTY and Unix control socket. No VM, slmodemd, DSP, SIP/audio or DOS."
+    }
+  },
+  "frozen_inputs": {
+    "lab/bbs/patches/synthmodem-sparse/check.py": "88c669394b79fa7f1f5d8f08f0956bcdf1216a7e33bd702451fd6fc6558e44ea",
+    "lab/bbs/patches/synthmodem-sparse/sparse.patch": "4540a6366404c2c7488a54693d17f3fb8ae9504c71c783bdf4f8ae20592eecce",
+    "lab/bbs/patches/synthmodem-control/check.py": "e6c224ee9787e51d7adefd1f1d0453560e3cc9691ba64cf0908c86a2e1bd3151",
+    "lab/bbs/patches/synthmodem-control/faults.c": "bf5db1532ab604b9ef867088ce5cf2ab8221e6d5d343520674ca07730bd395ab"
+  },
+  "baseline_source_sha256": "1c53545face2598c741403dc5a7a9b365893e27091cfaf90777a70fde6d6b53f",
+  "candidate_source_sha256": "779c516d2352e12e3dd6324b080757139e0f279f1cfeec442e470632aa106c60",
+  "commands": [
+    [
+      "gcc",
+      "-std=gnu11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O2",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-04/baseline/vm/ctrl/modemd-ctrl.c",
+      "-o",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-04/baseline-helper"
+    ],
+    [
+      "gcc",
+      "-std=gnu11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O2",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-04/candidate/vm/ctrl/modemd-ctrl.c",
+      "-o",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-sparse-04/candidate-helper"
+    ]
+  ],
+  "limits": [
+    "Literal complete NO CARRIER in data is still ambiguous under the existing in-band policy.",
+    "Host PTY only; rebuild the i386 helper and verify real DSP/DOS before claiming a workflow fix.",
+    "A carrier-result line fragmented beyond the 50ms lookahead may be forwarded as data; reliable out-of-band carrier status remains required."
+  ],
+  "upstream_revision": "b1752e4d0039e0cff72735924e03aa99922723a8",
+  "cohort": "synthmodem-sparse-04",
+  "host_receipt_sha256": "c48f5c626945dae212ca7be0e5d9fe2d33d1c7654122d1d9f08e289d6083ddbd",
+  "nix_build": {
+    "derivation": "/nix/store/z15q16l3hcpa0q6amy04hgj9gr79am03-synthmodem-control-candidate-b1752e4-pcplus.drv",
+    "executable": "/nix/store/ifnbhwa0yy4w1xrfsbvxl4fawfa5mnyr-synthmodem-control-candidate-b1752e4-pcplus/bin/modemd-ctrl",
+    "sha256": "fd9c7505baba91003992dabc1b1970567d967a1c1c4558183e71106a3cd7d02e",
+    "file": "/nix/store/ifnbhwa0yy4w1xrfsbvxl4fawfa5mnyr-synthmodem-control-candidate-b1752e4-pcplus/bin/modemd-ctrl: ELF 32-bit LSB executable, Intel i386, version 1 (GNU/Linux), statically linked, for GNU/Linux 3.10.0, not stripped",
+    "flake_sha256": "7cda07d3ab9fb050ef3c959781e4cb93ab2fab72f915d6206d980458ab297aa0",
+    "lock_sha256": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+    "scope": "Static i386 build only; not booted or substituted in an accepted runtime."
+  }
+}

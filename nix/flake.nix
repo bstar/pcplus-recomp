@@ -48,7 +48,10 @@
         pname = "synthmodem-control-candidate";
         version = "b1752e4-pcplus";
         src = controlSource;
-        patches = [ ../lab/bbs/patches/synthmodem-control/control.patch ];
+        patches = [
+          ../lab/bbs/patches/synthmodem-control/control.patch
+          ../lab/bbs/patches/synthmodem-sparse/sparse.patch
+        ];
         buildInputs = [ pkgs.pkgsi686Linux.glibc.static ];
         dontConfigure = true;
         buildPhase = ''

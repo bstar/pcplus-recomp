@@ -1,0 +1,101 @@
+--- a/vm/ctrl/modemd-ctrl.c
++++ b/vm/ctrl/modemd-ctrl.c
+@@ -151,6 +151,7 @@
+     uint8_t pending_buf[256];
+     size_t  pending_len;
+     uint8_t pending_type;
++    long long data_pending_deadline;
+ };
+ 
+ static struct ctrl_state S;
+@@ -692,12 +693,12 @@
+  * This is the asymmetric direction: in data mode we want zero
+  * latency on real bytes (keystrokes). The deferral only happens
+  * for the trailing bytes that LOOK like the start of "NO CARRIER".
+- * Worst case we delay ≤ 9 bytes by one PTY read cycle, which is a
+- * few ms — well under the keystroke perception threshold. */
++ * Ambiguous prefixes are released as data after50ms of writable
++ * host service, even if no subsequent PTY read arrives. */
+ static void process_data_mode_bytes(const uint8_t *new_bytes, size_t n) {
+     /* If pending_buf has bytes from a previous data-mode partial
+-     * keyword detection, they were declared AT_RESPONSE (the type
+-     * they'd become if the keyword completes). Re-use the same
++     * keyword detection, they retain DATA_RX as their fallback type
++     * until a complete result line proves a transition. Re-use the same
+      * combined-buffer approach. */
+     uint8_t work[256 + 512 + 8];
+     size_t  tot = 0;
+@@ -726,7 +727,7 @@
+                            work, nc_idx);
+             }
+             pending_append(work + nc_idx, tot - nc_idx,
+-                           WIRE_TYPE_AT_RESPONSE);
++                           WIRE_TYPE_DATA_RX);
+             return;
+         }
+         /* Have "NO CARRIER ... \n". Pre-keyword as DATA_RX,
+@@ -757,7 +758,7 @@
+     }
+     if (defer_from < tot) {
+         pending_append(work + defer_from, tot - defer_from,
+-                       WIRE_TYPE_AT_RESPONSE);
++                       WIRE_TYPE_DATA_RX);
+     }
+ }
+ 
+@@ -792,6 +793,21 @@
+     struct timespec now;
+     clock_gettime(CLOCK_MONOTONIC, &now);
+     return (long long)now.tv_sec * 1000 + now.tv_nsec / 1000000;
++}
++
++/* A sparse data byte (notably N) must not await another keystroke.
++ * Bound ambiguous in-band result lookahead to50ms of writable host service.
++ * A literal complete NO CARRIER line remains ambiguous under the legacy
++ * in-band policy; this does not establish binary-safe carrier signaling. */
++static int progress_data_pending(void) {
++    if (S.data_mode && S.pending_len && S.data_pending_deadline &&
++        !host_busy() && monotonic_ms() >= S.data_pending_deadline) {
++        if (wire_write(S.host_control_fd, WIRE_TYPE_DATA_RX,
++                       S.pending_buf, S.pending_len) < 0) return -1;
++        S.pending_len = 0;
++        S.data_pending_deadline = 0;
++    }
++    return 0;
+ }
+ 
+ static int progress_hangup(void) {
+@@ -843,6 +859,9 @@
+     } else {
+         process_command_mode_bytes(buf, (size_t)n);
+     }
++    if (S.data_mode && S.pending_len) {
++        if (!S.data_pending_deadline) S.data_pending_deadline = monotonic_ms() + 50;
++    } else S.data_pending_deadline = 0;
+     if (was_data_mode && !S.data_mode && pty_busy()) {
+         LOGI("Discarding queued session data after carrier loss");
+         S.pty_tx_at = S.pty_tx_len = 0;
+@@ -986,7 +1005,7 @@
+ 
+     int status = 0;
+     while (!g_quit) {
+-        if (S.host_tx_failed || progress_hangup() < 0 || dispatch_host_frames() < 0) { status = 1; break; }
++        if (S.host_tx_failed || progress_data_pending() < 0 || progress_hangup() < 0 || dispatch_host_frames() < 0) { status = 1; break; }
+         struct pollfd pfds[2];
+         int nfds = 0;
+ 
+@@ -1004,7 +1023,13 @@
+             idx_pty = nfds++;
+         }
+ 
+-        int pr = poll(pfds, nfds, S.hangup_phase ? 10 : 1000);
++        int timeout = S.hangup_phase ? 10 : 1000;
++        if (S.data_mode && S.pending_len && S.data_pending_deadline && !host_busy()) {
++            long long left = S.data_pending_deadline - monotonic_ms();
++            if (left < 0) left = 0;
++            if (left < timeout) timeout = (int)left;
++        }
++        int pr = poll(pfds, nfds, timeout);
+         if (pr < 0) {
+             if (errno == EINTR) continue;
+             LOGE("poll: %s", strerror(errno));

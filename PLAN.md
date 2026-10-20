@@ -12,8 +12,13 @@ authenticates through numeric ATD1, real DSP CONNECT, CONNECT> destination entry
 and the directory-bound ASPECT child. The full menu route remains FAILED:
 a final N is present in DOS output and independently decoded caller RTP, but
 absent from guest DATA_RX/BBS input. Preceding upstream bytes and23773 downstream
-display bytes match. Isolate sparse-character/in-VM receive loss next; do not
-replace this failure with an authentication-only compatibility claim. Captures
+display bytes match. A subsequent real-PTY reproduction identifies an indefinite
+`N` hold in the helper's in-band carrier parser. The
+[sparse-data candidate](lab/bbs/patches/synthmodem-sparse/README.md) releases
+isolated prefixes after about50ms and preserves16 fault/12 PTY regressions;
+its static i386 Nix build succeeds. Boot a separate runtime and repeat DSP/DOS
+checks next. Literal carrier-text collisions remain open, and the failed audio
+workflow remains failed. Do not replace it with an authentication-only claim. Captures
 also show duplicate200/405 responses to a guest registration refresh. The
 optional Nix modem shell now includes DOSBox-X/NASM for this combined lab.
 
@@ -22,8 +27,8 @@ actual external/internal SIP, normal CallSession and modem pool, V.22 DSP data,
 default post-train hold, CONNECT> entry, BINARY/ANSI/80x25 negotiation, exact
 duplex payloads and TCP reconnect on one carrier. QUIT tears down both SIP legs
 and recycles a distinct VM. A configurable RTP bind address keeps this lab
-on loopback; four separate native binding/allocation checks pass. DOS and real
-BBS software have not yet run through this complete audio gateway. Sustained
+on loopback; four separate native binding/allocation checks pass. The DOS/ENiGMA
+attempt above now exercises this audio gateway but fails the complete menu route. Sustained
 pressure, other protocols and hardware remain open; pool timeout timer retention
 and status CRCRLF normalization are concrete remaining runtime details.
 

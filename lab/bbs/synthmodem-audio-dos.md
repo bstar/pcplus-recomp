@@ -89,9 +89,15 @@ receiver consumed. The record in
 The run was stopped after its explicit FAIL-MAIN marker; normal exit, final
 menu and UART/helper restoration are not claimed for either stopped attempt.
 
-Next isolate sparse single-character delivery and the in-VM receive/audio path
-with a shorter DSP fixture. Do not mask this loss by adding duplicate keystrokes
-or count authentication alone as ENiGMA workflow compatibility.
+Subsequent [helper isolation](patches/synthmodem-sparse/README.md) reproduces an
+indefinite N hold on a raw host PTY: the in-band NO CARRIER parser waits for
+another byte. A bounded-lookahead candidate passes the sparse-prefix and prior
+transport checks and builds as static i386. This identifies a concrete cause
+consistent with the audio symptom without assigning the loss to DSP decoding.
+The candidate has not yet been booted or tested in this workflow. Next stage a
+separate runtime, verify sparse data over DSP and repeat this complete route.
+Do not mask the failure with duplicate keystrokes or count authentication alone
+as ENiGMA workflow compatibility. Literal carrier-text collisions remain open.
 
 ## Limits and remaining tasks
 
