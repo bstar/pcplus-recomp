@@ -18,7 +18,14 @@ The [Node writer candidate](patches/synthmodem-pressure/README.md) adds valid
 wire-frame splitting and owned drain propagation. The separate
 [booted VM composition](synthmodem-vm.md#nodehelper-composition) now verifies
 their shared path, exact duplex data, pressure propagation and teardown.
-Normal SIP/DSP startup and physical acceptance remain open.
+This composition uses a synthetic modem endpoint; the next checkpoint covers
+normal SIP/DSP startup separately. Physical acceptance remains open.
+
+The [normal answering-stack test](synthmodem-runtime.md) now exercises startup,
+REGISTER, real AT responses, INVITE/answer, PCMU answering audio and BYE using
+the rebuilt helper. A direct V32bis entry probe is separate from successful
+modem training. Decoded data, external gateway/session integration and physical
+acceptance remain open.
 
 
 The [Infocom save-edge workflow](enigma-infocom-edges.md) covers actual DOS

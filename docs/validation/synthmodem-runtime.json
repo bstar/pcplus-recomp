@@ -1,0 +1,365 @@
+{
+  "passed": true,
+  "cohorts": {
+    "auto": {
+      "cohort": "synthmodem-runtime-auto-03",
+      "passed": true,
+      "checks": {
+        "normal_init_READY": true,
+        "actual_registrar_binding": true,
+        "helper_HELLO": true,
+        "real_modem_AT_commands": true,
+        "real_INVITE_answer": true,
+        "actual_RING": true,
+        "answer_init_accepted": true,
+        "RTP_both_directions": true,
+        "real_DSP_audio": true,
+        "silence_is_not_CONNECT": true,
+        "actual_BYE_teardown": true,
+        "resources_released": true,
+        "QEMU_stopped": true,
+        "no_errors": true,
+        "independent_sent_silence": true,
+        "independent_received_audio": true,
+        "independent_guest_SIP": true,
+        "frozen_inputs_unchanged": true
+      },
+      "errors": [],
+      "hello": "modemd-ctrl v1 build=pjsip-vm",
+      "commands": [
+        {
+          "command": "ATE0",
+          "response": "ATE0\r\r\nOK\r\n"
+        },
+        {
+          "command": "ATI",
+          "response": "SmartLink Soft Modem\r\nOK\r\n"
+        },
+        {
+          "command": "AT+MS=?",
+          "response": "(21,22,23,122,32,132,34,103,212,90,92),(0,1),(300-56000),(300-56000)\r\nOK\r\n"
+        },
+        {
+          "command": "AT+MS?",
+          "response": "92,1,300,56000\r\nOK\r\n"
+        }
+      ],
+      "profile": "auto",
+      "atInit": [],
+      "answerResponse": "\r\nRING\r\n",
+      "media": {
+        "remoteRtpAddr": "127.0.0.1",
+        "remoteRtpPort": 56512,
+        "codec": {
+          "codec": "PCMU",
+          "rate": 8000
+        }
+      },
+      "stats": {
+        "extToInt": {
+          "packets": 300,
+          "bytes": 51600
+        },
+        "intToExt": {
+          "packets": 300,
+          "bytes": 51600
+        },
+        "extToIntDrops": 0,
+        "intToExtDrops": 0,
+        "extFirstSrc": "127.0.0.1:58555",
+        "intFirstSrc": "127.0.0.1:10002"
+      },
+      "connected": 0,
+      "hangups": 0,
+      "received_packets": 300,
+      "sent_packets": 300,
+      "targetUri": "sip:modem@127.0.0.1:46424;ob",
+      "child": {
+        "exitCode": null,
+        "signalCode": "SIGKILL"
+      },
+      "node": "v24.18.1",
+      "scope": "Actual candidate PjsipBackend startup/registrar/AT/INVITE/RTP/BYE with normal upstream guest init, real slmodemd and d-modem and Nix-rebuilt helper. External caller sends only PCMU silence. No negotiated modem data, external SIP server/ATA, DOS/BBS or physical hardware.",
+      "audio": {
+        "samples": 48000,
+        "peak": 3900,
+        "mean_square": 3465253.274
+      },
+      "upstream_revision": "b1752e4d0039e0cff72735924e03aa99922723a8",
+      "frozen_inputs": {
+        "lab/bbs/synthmodem_runtime.py": "4cf3d50d8bdfda1c4d7c032284f0c9c25af14ee25018110365afd05734afc8bb",
+        "lab/bbs/synthmodem_runtime.js": "f85afd1dc59bf992eb3ca1d3bd8c4d76da2e1f2140488fe81f63ff2042d9a25f",
+        "lab/bbs/synthmodem_vm_control.py": "7eb30e96af9a7e7cd319cd645a68331c0386aa3dda3e9eba68ca5563b5b8a456",
+        "nix/flake.nix": "5587806a7fb8d1cf907c816cd7f1661c2496b8248395960ed84089e191687b3b",
+        "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+        "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
+        "lab/bbs/patches/synthmodem-control/control.patch": "752bfef57ec7ae4dbffa819603900e94a6b5181be6c46a3c2f91aba1e0094e4e",
+        "docs/validation/synthmodem-pressure.json": "fd7dd2986e583ef5865bff5060ee33f9356ecc29b04167495442ae5d7638ea83"
+      },
+      "candidate_sha256": {
+        "config.js": "3d6d33a25b8d86cde88d02ae538846592a020e8d64063abdb231a6ba7b27d49e",
+        "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+        "vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+        "src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+        "src/backends/PjsipBackend.js": "99e3c39ae8aacc48a630c1361146b8b6a0e82639c4fcb54ab61ea8c615eb9099",
+        "src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+        "src/session/CallSession.js": "164b2f6394ff77acd1829fcae236745509d63b50b373f7ebb2d20a35309f712b",
+        "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "src/telnet/TelnetProxy.js": "18c0a9ed59aa4cb48186514da4ddc94954e7db207eb71c39769bdac8f7be3353"
+      },
+      "staged_source_sha256": {
+        "config.js": "3d6d33a25b8d86cde88d02ae538846592a020e8d64063abdb231a6ba7b27d49e",
+        "src/index.js": "8aac80d7f4e68c25d02f29b16d2dc82b78d3f5ecee57562315fda4efb3494791",
+        "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+        "vm/qemu-runner/QemuVM.js": "2b15088c2a4d8a2002bcd4b153d38d06fc6e9863cb7a9990dbcac1875b082a76",
+        "vm/qemu-runner/SlmodemVM.js": "8578c0d7fcb5b96648856422ef56a9178f155ddb86321300b8e63f3220c61cdc",
+        "vm/qemu-runner/qemu-args.js": "61975545b19201092d3e0f53dd324e46a05e432f0ace7ac3bc3c0f63abf1b3ea",
+        "vm/qemu-runner/transport.js": "54cec57e3b78a5b4a82e3289dac645be4b7d49da5f2ed697f3a9d5e0e4742570",
+        "vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+        "src/backends/ModemBackendPool.js": "58d6e2690a0a8170e1da2387abd935fa373b93b239805dd596fb4a578c7a0044",
+        "src/backends/PjsipBackend.js": "99e3c39ae8aacc48a630c1361146b8b6a0e82639c4fcb54ab61ea8c615eb9099",
+        "src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+        "src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+        "src/dsp/AudioCapture.js": "843dc3267c927cdb07d46d299613228508a71f85180bc76f46931d27bf196965",
+        "src/dsp/Handshake.js": "2c8e9bf37157159ebee8d441e15b1b241bb46233c6d36f710d77c3cedee2d97b",
+        "src/dsp/ModemDSP.js": "18986bc99ba59756e7841902dcc93ccf328bb59e4e0671446be286695882e967",
+        "src/dsp/Primitives.js": "f63b3e3fcee64169af3343ea7ef73ffb68fff24356c021564f62b7e4c8a434af",
+        "src/dsp/V8.js": "145c661bbbff383cc7af622b98fcd423f1d66fae2d2e464b308cf3a2c0edcb40",
+        "src/dsp/V8Sequencer.js": "3379d253f990a83d1dd3612383a17b5534c47d1635870fb16177a8e1c3e36452",
+        "src/rtp/Codec.js": "ffe6cacafda853769e3cbd8e532e3d36213a85ed04042eaebc57ba54155e5256",
+        "src/rtp/RtpBridge.js": "3cc7626381626e764344621bd52c3c0ffb1dfe203bbcf7047437914af0fbe6e9",
+        "src/rtp/RtpSession.js": "16c98b49e3b20431da94ca85746f5f9da2b350651d8bb92fbbe647055ae8ed28",
+        "src/session/CallSession.js": "164b2f6394ff77acd1829fcae236745509d63b50b373f7ebb2d20a35309f712b",
+        "src/sip/PublicHostResolver.js": "5431bacf4dcd1c4027c467d28db8e3d510b700ecc8d441a9d0b0316580b6ffea",
+        "src/sip/SipDialog.js": "571440469511a3861a5faae9cf805b1f6555bc2ee1f95cc5b6b8a9dcae9aa4fd",
+        "src/sip/SipParser.js": "e5a5dae109bc251acb7623d922dd8bc9284f14f8221bb16f7b0a82846dac8cc8",
+        "src/sip/SipServer.js": "7a8971607c0b285b97941d28ba1462db8a0eabdc39997189d4f977b315b624ec",
+        "src/sip/SipUacInternal.js": "89e0fd9a27e8960bd2a989942d0671d3dc7526b98c6447246d9b80bf28ecffff",
+        "src/sip/VmRegistrar.js": "0dd8dd1107bdcf94539fd8c63a642ee67151a2dc45931ed5edcb518945281401",
+        "src/telnet/TelnetProxy.js": "18c0a9ed59aa4cb48186514da4ddc94954e7db207eb71c39769bdac8f7be3353",
+        "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "src/tunnel/UdpTcpTunnel.js": "c560a03a61530d812e809c729f3816ba721e577a52723d4e8cbbcd7ecfa66f0d",
+        "src/dsp/protocols/Bell103.js": "d7d1ae488e24da9e54e6fc5a586287045d25fe321f81821ea62b8fb25dd7379a",
+        "src/dsp/protocols/FskCommon.js": "27ee865d11b747aeace4e6acbc4daae2c38efab3ca9c09cdad9bc567fbfb60a7",
+        "src/dsp/protocols/V21.js": "00473e940f46f754e4397f41dcee2e70b17bd679f694d7e13eb542f2a270e864",
+        "src/dsp/protocols/V22.js": "ba5ed8e05029d37ef1830091768327630eb01916e45cb893e067c99408f6f783",
+        "src/dsp/protocols/V22Common.js": "51a473f0b638691c8c81048236e2e72dca2993a5d0240229cd07bf9c436b1123",
+        "src/dsp/protocols/V22Demodulator.js": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+        "src/dsp/protocols/V22RxRRC.js": "42d6d85522a4e26b6d92f70e344b4f65d7d31cd579e2283811899b9ea878fe2b",
+        "src/dsp/protocols/V23.js": "54af2ce2d86726c84424dc033637efcb2d0cf79c9a5b63e680f1ad4e0b7d93a9"
+      },
+      "Nix_build": [
+        {
+          "drvPath": "/nix/store/6cvys9xlbnz3rpcvql2xyh1liqrgv9x1-synthmodem-control-candidate-b1752e4-pcplus.drv",
+          "outputs": {
+            "out": "/nix/store/2ic5d10s465ny2rfv852x251gnqdf5rg-synthmodem-control-candidate-b1752e4-pcplus"
+          }
+        }
+      ],
+      "helper_sha256": "434b7f536cfb2ea58c5a5e739fea8540a7a27600733d2bc280f301e39ed0706c",
+      "media_sha256": {
+        "bzImage": "2bac10d87a024026de6c00539ea70d19194169b6b99111d9178815b470d77dbe",
+        "rootfs-slmodemd-pjsip.cpio.gz": "c52f230a8b38a8e3476b4a669948e02dd615a367ab0f649251e93209fd659ead"
+      },
+      "candidate_image_sha256": "40c0251266edfee7b61c5c70cdcf4597e01bbb77611ae8631bc8aad6c2b5b573",
+      "archive_entries_changed": [
+        "usr/local/bin/modemd-ctrl"
+      ],
+      "archive_entries_added": [],
+      "captures_sha256": {
+        "rtp-to-modem.bin": "2766c2d8fd83f833c52e554e24799fd363f7d6bd765cf54fe2c6720b73cb8945",
+        "rtp-from-modem.bin": "0952de3d751cc3769647f0f808b84fc1e1c66953d35c77937f4700e61fdc1f97",
+        "control-wire.bin": "0e6bb786accbcbdd3195334c24358a4c2c74008090b4adf86870962904ddef16",
+        "tunnel-frames.json": "7b4602ea73884a4d1c6e503dbac6dbd6f680269361ae97a95fe4d4acae180db4",
+        "qemu.log": "fbd835a4b26cfcd5482e14c9086bc18953d70fff45833a3c18d279ebcbbf7940",
+        "node.log": "9dfec2a76d1abfbd87b3a6c9262361bb495dddb8fb6e13874d4a392dcd0c5ce0"
+      },
+      "qemu_version": "QEMU emulator version 11.0.3"
+    },
+    "v32bis": {
+      "cohort": "synthmodem-runtime-v32bis-02",
+      "passed": true,
+      "checks": {
+        "normal_init_READY": true,
+        "actual_registrar_binding": true,
+        "helper_HELLO": true,
+        "real_modem_AT_commands": true,
+        "real_INVITE_answer": true,
+        "actual_RING": true,
+        "answer_init_accepted": true,
+        "RTP_both_directions": true,
+        "real_DSP_audio": true,
+        "silence_is_not_CONNECT": true,
+        "actual_BYE_teardown": true,
+        "resources_released": true,
+        "QEMU_stopped": true,
+        "no_errors": true,
+        "independent_sent_silence": true,
+        "independent_received_audio": true,
+        "independent_guest_SIP": true,
+        "direct_V32bis_entry": true,
+        "frozen_inputs_unchanged": true
+      },
+      "errors": [],
+      "hello": "modemd-ctrl v1 build=pjsip-vm",
+      "commands": [
+        {
+          "command": "ATE0",
+          "response": "ATE0\r\r\nOK\r\n"
+        },
+        {
+          "command": "ATI",
+          "response": "SmartLink Soft Modem\r\nOK\r\n"
+        },
+        {
+          "command": "AT+MS=?",
+          "response": "(21,22,23,122,32,132,34,103,212,90,92),(0,1),(300-56000),(300-56000)\r\nOK\r\n"
+        },
+        {
+          "command": "AT+MS?",
+          "response": "92,1,300,56000\r\nOK\r\n"
+        }
+      ],
+      "profile": "v32bis",
+      "atInit": [
+        "AT+MS=132,0,14400,14400"
+      ],
+      "answerResponse": "\r\nRING\r\nOK\r\n",
+      "media": {
+        "remoteRtpAddr": "127.0.0.1",
+        "remoteRtpPort": 52992,
+        "codec": {
+          "codec": "PCMU",
+          "rate": 8000
+        }
+      },
+      "stats": {
+        "extToInt": {
+          "packets": 300,
+          "bytes": 51600
+        },
+        "intToExt": {
+          "packets": 300,
+          "bytes": 51600
+        },
+        "extToIntDrops": 0,
+        "intToExtDrops": 0,
+        "extFirstSrc": "127.0.0.1:60817",
+        "intFirstSrc": "127.0.0.1:10002"
+      },
+      "connected": 0,
+      "hangups": 0,
+      "received_packets": 300,
+      "sent_packets": 300,
+      "targetUri": "sip:modem@127.0.0.1:58002;ob",
+      "child": {
+        "exitCode": null,
+        "signalCode": "SIGKILL"
+      },
+      "node": "v24.18.1",
+      "scope": "Actual candidate PjsipBackend startup/registrar/AT/INVITE/RTP/BYE with normal upstream guest init, real slmodemd and d-modem and Nix-rebuilt helper. External caller sends only PCMU silence. No negotiated modem data, external SIP server/ATA, DOS/BBS or physical hardware.",
+      "audio": {
+        "samples": 48000,
+        "peak": 4348,
+        "mean_square": 3226386.877
+      },
+      "upstream_revision": "b1752e4d0039e0cff72735924e03aa99922723a8",
+      "frozen_inputs": {
+        "lab/bbs/synthmodem_runtime.py": "4cf3d50d8bdfda1c4d7c032284f0c9c25af14ee25018110365afd05734afc8bb",
+        "lab/bbs/synthmodem_runtime.js": "f85afd1dc59bf992eb3ca1d3bd8c4d76da2e1f2140488fe81f63ff2042d9a25f",
+        "lab/bbs/synthmodem_vm_control.py": "7eb30e96af9a7e7cd319cd645a68331c0386aa3dda3e9eba68ca5563b5b8a456",
+        "nix/flake.nix": "5587806a7fb8d1cf907c816cd7f1661c2496b8248395960ed84089e191687b3b",
+        "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+        "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
+        "lab/bbs/patches/synthmodem-control/control.patch": "752bfef57ec7ae4dbffa819603900e94a6b5181be6c46a3c2f91aba1e0094e4e",
+        "docs/validation/synthmodem-pressure.json": "fd7dd2986e583ef5865bff5060ee33f9356ecc29b04167495442ae5d7638ea83"
+      },
+      "candidate_sha256": {
+        "config.js": "3d6d33a25b8d86cde88d02ae538846592a020e8d64063abdb231a6ba7b27d49e",
+        "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+        "vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+        "src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+        "src/backends/PjsipBackend.js": "99e3c39ae8aacc48a630c1361146b8b6a0e82639c4fcb54ab61ea8c615eb9099",
+        "src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+        "src/session/CallSession.js": "164b2f6394ff77acd1829fcae236745509d63b50b373f7ebb2d20a35309f712b",
+        "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "src/telnet/TelnetProxy.js": "18c0a9ed59aa4cb48186514da4ddc94954e7db207eb71c39769bdac8f7be3353"
+      },
+      "staged_source_sha256": {
+        "config.js": "3d6d33a25b8d86cde88d02ae538846592a020e8d64063abdb231a6ba7b27d49e",
+        "src/index.js": "8aac80d7f4e68c25d02f29b16d2dc82b78d3f5ecee57562315fda4efb3494791",
+        "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+        "vm/qemu-runner/QemuVM.js": "2b15088c2a4d8a2002bcd4b153d38d06fc6e9863cb7a9990dbcac1875b082a76",
+        "vm/qemu-runner/SlmodemVM.js": "8578c0d7fcb5b96648856422ef56a9178f155ddb86321300b8e63f3220c61cdc",
+        "vm/qemu-runner/qemu-args.js": "61975545b19201092d3e0f53dd324e46a05e432f0ace7ac3bc3c0f63abf1b3ea",
+        "vm/qemu-runner/transport.js": "54cec57e3b78a5b4a82e3289dac645be4b7d49da5f2ed697f3a9d5e0e4742570",
+        "vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+        "src/backends/ModemBackendPool.js": "58d6e2690a0a8170e1da2387abd935fa373b93b239805dd596fb4a578c7a0044",
+        "src/backends/PjsipBackend.js": "99e3c39ae8aacc48a630c1361146b8b6a0e82639c4fcb54ab61ea8c615eb9099",
+        "src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+        "src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+        "src/dsp/AudioCapture.js": "843dc3267c927cdb07d46d299613228508a71f85180bc76f46931d27bf196965",
+        "src/dsp/Handshake.js": "2c8e9bf37157159ebee8d441e15b1b241bb46233c6d36f710d77c3cedee2d97b",
+        "src/dsp/ModemDSP.js": "18986bc99ba59756e7841902dcc93ccf328bb59e4e0671446be286695882e967",
+        "src/dsp/Primitives.js": "f63b3e3fcee64169af3343ea7ef73ffb68fff24356c021564f62b7e4c8a434af",
+        "src/dsp/V8.js": "145c661bbbff383cc7af622b98fcd423f1d66fae2d2e464b308cf3a2c0edcb40",
+        "src/dsp/V8Sequencer.js": "3379d253f990a83d1dd3612383a17b5534c47d1635870fb16177a8e1c3e36452",
+        "src/rtp/Codec.js": "ffe6cacafda853769e3cbd8e532e3d36213a85ed04042eaebc57ba54155e5256",
+        "src/rtp/RtpBridge.js": "3cc7626381626e764344621bd52c3c0ffb1dfe203bbcf7047437914af0fbe6e9",
+        "src/rtp/RtpSession.js": "16c98b49e3b20431da94ca85746f5f9da2b350651d8bb92fbbe647055ae8ed28",
+        "src/session/CallSession.js": "164b2f6394ff77acd1829fcae236745509d63b50b373f7ebb2d20a35309f712b",
+        "src/sip/PublicHostResolver.js": "5431bacf4dcd1c4027c467d28db8e3d510b700ecc8d441a9d0b0316580b6ffea",
+        "src/sip/SipDialog.js": "571440469511a3861a5faae9cf805b1f6555bc2ee1f95cc5b6b8a9dcae9aa4fd",
+        "src/sip/SipParser.js": "e5a5dae109bc251acb7623d922dd8bc9284f14f8221bb16f7b0a82846dac8cc8",
+        "src/sip/SipServer.js": "7a8971607c0b285b97941d28ba1462db8a0eabdc39997189d4f977b315b624ec",
+        "src/sip/SipUacInternal.js": "89e0fd9a27e8960bd2a989942d0671d3dc7526b98c6447246d9b80bf28ecffff",
+        "src/sip/VmRegistrar.js": "0dd8dd1107bdcf94539fd8c63a642ee67151a2dc45931ed5edcb518945281401",
+        "src/telnet/TelnetProxy.js": "18c0a9ed59aa4cb48186514da4ddc94954e7db207eb71c39769bdac8f7be3353",
+        "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "src/tunnel/UdpTcpTunnel.js": "c560a03a61530d812e809c729f3816ba721e577a52723d4e8cbbcd7ecfa66f0d",
+        "src/dsp/protocols/Bell103.js": "d7d1ae488e24da9e54e6fc5a586287045d25fe321f81821ea62b8fb25dd7379a",
+        "src/dsp/protocols/FskCommon.js": "27ee865d11b747aeace4e6acbc4daae2c38efab3ca9c09cdad9bc567fbfb60a7",
+        "src/dsp/protocols/V21.js": "00473e940f46f754e4397f41dcee2e70b17bd679f694d7e13eb542f2a270e864",
+        "src/dsp/protocols/V22.js": "ba5ed8e05029d37ef1830091768327630eb01916e45cb893e067c99408f6f783",
+        "src/dsp/protocols/V22Common.js": "51a473f0b638691c8c81048236e2e72dca2993a5d0240229cd07bf9c436b1123",
+        "src/dsp/protocols/V22Demodulator.js": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+        "src/dsp/protocols/V22RxRRC.js": "42d6d85522a4e26b6d92f70e344b4f65d7d31cd579e2283811899b9ea878fe2b",
+        "src/dsp/protocols/V23.js": "54af2ce2d86726c84424dc033637efcb2d0cf79c9a5b63e680f1ad4e0b7d93a9"
+      },
+      "Nix_build": [
+        {
+          "drvPath": "/nix/store/6cvys9xlbnz3rpcvql2xyh1liqrgv9x1-synthmodem-control-candidate-b1752e4-pcplus.drv",
+          "outputs": {
+            "out": "/nix/store/2ic5d10s465ny2rfv852x251gnqdf5rg-synthmodem-control-candidate-b1752e4-pcplus"
+          }
+        }
+      ],
+      "helper_sha256": "434b7f536cfb2ea58c5a5e739fea8540a7a27600733d2bc280f301e39ed0706c",
+      "media_sha256": {
+        "bzImage": "2bac10d87a024026de6c00539ea70d19194169b6b99111d9178815b470d77dbe",
+        "rootfs-slmodemd-pjsip.cpio.gz": "c52f230a8b38a8e3476b4a669948e02dd615a367ab0f649251e93209fd659ead"
+      },
+      "candidate_image_sha256": "40c0251266edfee7b61c5c70cdcf4597e01bbb77611ae8631bc8aad6c2b5b573",
+      "archive_entries_changed": [
+        "usr/local/bin/modemd-ctrl"
+      ],
+      "archive_entries_added": [],
+      "captures_sha256": {
+        "rtp-to-modem.bin": "2766c2d8fd83f833c52e554e24799fd363f7d6bd765cf54fe2c6720b73cb8945",
+        "rtp-from-modem.bin": "5a89aac0b9ab57de88873199b972c798bf1d86ebdcadd199f666e7114bf6c279",
+        "control-wire.bin": "8a0f108e2d0b6cd1edf99688529bbc1f14f1124fd91732e312292e87fa23a4aa",
+        "tunnel-frames.json": "35b70e53c9b57a2a07e090af969b2c946d6b2909c9f70b474350043a451ef53e",
+        "qemu.log": "1c2c7b2900a5346193edc2828fa2b6cf6aa1d19cbf23cab401a382fc90b04aa6",
+        "node.log": "d07399c9da35897dec6e30fdd7df2ec29be438b9f875556cab0d33a0551d448e"
+      },
+      "qemu_version": "QEMU emulator version 11.0.3"
+    }
+  },
+  "scope": "Real internal SIP/VM/DSP answering stack with a silence RTP caller; no negotiated data or physical modem compatibility.",
+  "remaining": [
+    "Originating DSP peer and successful training with decoded duplex data.",
+    "Full external SIP gateway/CallSession/Telnet/DOS/BBS composition.",
+    "Native flow credit and serial-to-BBS TCP pressure.",
+    "Boca identification, SPA2102 setup, physical handshake, protocol/rate and hardware acceptance."
+  ]
+}

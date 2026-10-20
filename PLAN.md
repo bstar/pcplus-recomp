@@ -7,6 +7,15 @@ data, reconnect and transfer runs. No physical compatibility or 14400-bps claim
 is established; the adapter has not arrived. PCPlus remains a serial terminal,
 with SIP/audio/Telnet handled by the Linux bridge.
 
+The [normal SynthModem answering stack](lab/bbs/synthmodem-runtime.md) now runs
+the rebuilt helper under unchanged production init: actual REGISTER, AT queries,
+RING/ATA, INVITE/PCMU audio, BYE and resource cleanup are exercised. An explicit
+software V32bis profile enters datapump132 at configured14400 without the V.8
+answer state. The caller sends silence; no training or data connection is
+established. Negotiate with an originating DSP peer next, then run complete
+DOS/BBS workflows and eventual Boca/SPA2102 acceptance. No application or
+installed service changes are made by this isolated runtime lab.
+
 The [Node/helper VM composition](lab/bbs/synthmodem-vm.md#nodehelper-composition)
 now passes19 checks and independent raw-stream audits. Actual candidate classes
 receive the guest CONNECT, pause BBS reads under a stalled modem endpoint,

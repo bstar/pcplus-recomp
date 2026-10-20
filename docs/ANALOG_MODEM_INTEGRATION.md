@@ -74,7 +74,9 @@ Links below pin the reviewed source; future versions require rechecking.
 - Native does not provide V.32/V.32bis. If this 14.4 Boca lacks V.8, auto's
   fallback is not a demonstrated 14.4 path. Establish a supported low-speed
   baseline (V.22/1200 or V.22bis/2400 if documented by the modem), then investigate
-  legacy V.32bis answering on the VM backend. No 14.4 promise until measured;
+  legacy V.32bis answering on the VM backend. The runtime checkpoint below now
+  demonstrates direct datapump entry, but no negotiated connection.
+  No 14.4 promise until measured;
   a backend limitation may need bridge changes rather than PCPlus changes.
 - [config.js](https://github.com/synexo/synthmodem/blob/b1752e4d0039e0cff72735924e03aa99922723a8/config.js)
   defaults to a Windows QEMU path: explicitly select Linux's `qemu-system-i386`
@@ -91,6 +93,23 @@ Links below pin the reviewed source; future versions require rechecking.
   payloads. Unit-test fragmented negotiation and every byte, then correct the
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
+
+## Normal answering-stack checkpoint
+
+The [normal VM runtime test](../lab/bbs/synthmodem-runtime.md) now exercises
+actual startup/REGISTER, software modem AT queries, RING-triggered ATA, SIP
+INVITE/PCMU media, answering DSP audio, BYE and resource cleanup. Only the helper
+changes in the runtime archive; normal init and slmodemd/d-modem remain intact.
+The caller sends silence, so no modem data connection is claimed.
+
+A separate software answering profile accepts `AT+MS=132,0,14400,14400` and the
+guest creates its V32bis datapump with tx/rx rates14400 without the V.8 answer
+state. This is a concrete direct-training route to investigate with the Boca;
+it does not prove successful training or make that command appropriate for the
+Boca. The [receipt](validation/synthmodem-runtime.json) separates profiles and
+binds source, runtime, toolchain, signaling and independently decoded RTP evidence.
+An originating DSP peer, negotiated data, full gateway SIP/session integration
+and all physical acceptance remain outstanding.
 
 ## Composed Node/helper VM checkpoint
 
@@ -322,7 +341,7 @@ acceptance; historical checkpoint sections above describe their own frozen input
 | Serial/controller | Linked and DOS synthetic-call tests cover selectable DTE, numeric dialing, DCD history/loss, DTR cleanup and timeout budgets. | Actual Boca identity/results, COM/IRQ, CTS/RTS, DCD/DTR and UART load. |
 | Telnet/CP437/binary transport | Isolated codec candidate passes fragmentation/all-byte checks; synthetic-call DOS/BBS transfer receipts exist. | Candidate integration through the complete SIP/DSP path; physical display and transfers. |
 | Modem data pressure | Node writer and booted i386 helper pass separate and composed pressure checks. | Normal SIP/DSP integration; resolve native DSP flow credit and serial-to-BBS TCP pressure. |
-| Answering protocol | Pinned source describes VM-first auto mode and legacy native fallback. | Prove a shared protocol with this Boca; V.8 and V.32bis/14400 are unverified. |
+| Answering protocol | Normal VM stack answers SIP and emits DSP audio; an explicit V32bis profile enters datapump132 directly. | Actual training/decoded data, a shared protocol with this Boca, V.8 and V.32bis/14400 connectivity. |
 | Hardware/audio | Equipment and topology selected; adapter ordered. | All analog connection, audible handshake and end-to-end acceptance. |
 
 - [ ] Identify Boca model/chipset/UART and manual; record jumpers/base/IRQ,
