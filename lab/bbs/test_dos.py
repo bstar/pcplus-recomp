@@ -114,7 +114,12 @@ exit
    try:await asyncio.wait_for(process.wait(),5)
    except asyncio.TimeoutError:process.kill();await process.wait()
    code=-1
- server.close();await server.wait_closed()
+ server.close()
+ # Python3.14 waits for accepted clients as well as the listening socket.
+ # A timed-out DOS process can leave its nullmodem transport accepted here.
+ if hasattr(server,'close_clients'):server.close_clients()
+ try:await asyncio.wait_for(server.wait_closed(),3)
+ except asyncio.TimeoutError:pass
  try:await asyncio.wait_for(modem.done.wait(),2)
  except asyncio.TimeoutError:pass
  modem.save()

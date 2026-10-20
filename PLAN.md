@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+The latest [ENiGMA cancellation work](lab/bbs/enigma-cancel-download.md) fixes
+local Escape leaving the sender active and delayed binary data reaching ANSI.
+The [acceptance record](docs/validation/enigma-cancel-download.json) binds actual
+DOS cancellation/NFO/retry/NFO, repeated sessions, corrupted-capture rejection,
+bounded harness timeout and a fresh31-product source proof. Only the four
+terminal products intentionally change from the preceding settings checkpoint;
+the other27 products remain byte-identical. Live deployment, physical modem
+acceptance and all whole-application gates remain open.
+
+Earlier mouse component checkpoint:
+
 The [mouse/keyboard composition](docs/MOUSE_KEYBOARD.md) now joins the native
 producer and original keyboard reader on one shared event/count state, with
 the original30-byte default maps. Maintained PRM scale admission and driver-state

@@ -3,8 +3,11 @@
 The selectable mouse terminal now has a matching50-field `PRMEDIT.EXE` and
 adopts saved X/Y scales when setup closes. The ordinary48-field editor and27
 preceding application products remain byte-identical. The
-[acceptance receipt](validation/mouse-settings.json) records the current builds;
+[settings checkpoint receipt](validation/mouse-settings.json) records its tested builds;
 [terminal integration](TERMINAL_MOUSE.md) describes the underlying owner.
+The later [ENiGMA cancellation checkpoint](validation/enigma-cancel-download.json)
+changes the four terminal products and preserves the matching editors. Its
+source proof identifies those later binaries separately from this settings run.
 
 ```sh
 ./tools/build terminal-mouse

@@ -22,7 +22,8 @@ def parse(candidate,path):
     return json.loads(subprocess.check_output(['node','-e',code,str(candidate),str(path)],text=True))
 
 
-def setup_search(candidate,server):
+def setup_search(candidate,server,transfer_bytes=0):
+    assert 0<=transfer_bytes<=1048576
     candidate=owned(candidate);server=server.resolve();assert not pid(candidate)
     prepare(candidate,server,'framed')
     metadata=json.loads((candidate/'notes-instance.json').read_text())
@@ -72,6 +73,9 @@ def setup_search(candidate,server):
             with zipfile.ZipFile(path,'x') as z:
                 for member,text in [('FILE_ID.DIZ',diz),('PCPLUS.NFO',nfo),('README.TXT',f'Synthetic navigation archive {i:02d}.')]:
                     entry=zipfile.ZipInfo(member,date_time=(1991,1,1,0,0,0));z.writestr(entry,text.encode('ascii'))
+                if transfer_bytes and i==1:
+                    entry=zipfile.ZipInfo('TRANSFER.BIN',date_time=(1991,1,1,0,0,0))
+                    z.writestr(entry,bytes((n*73+19)&255 for n in range(transfer_bytes)))
             digest=sha(path)
             row=db.execute('INSERT INTO file(area_tag,file_sha256,file_name,storage_tag,desc,desc_long,upload_timestamp) VALUES(?,?,?,?,?,?,?)',('pcplus_games',digest,name,'exodos_games',f'Synthetic PCPlus Probe {i:02d}','Generated menu navigation fixture.','2026-01-01T00:00:00.000Z'))
             file_id=row.lastrowid
@@ -87,7 +91,7 @@ def setup_search(candidate,server):
     metadata.update(source_inputs={**metadata['source_modules'],**before},fixture_inputs={p:sha(candidate/p) for p in inputs},
         selected_menus=selected,selected_theme=list(selected_theme),
         menu_selection_sha256=hashlib.sha256(json.dumps(dict(menus=selected_menus,prompts=selected_prompts,theme=selected_theme),sort_keys=True).encode()).hexdigest(),
-        archives=archives,route='owned-search-index-details',
+        archives=archives,route='owned-search-index-details',transfer_bytes=transfer_bytes,
         scope='Exact owned search/index/details modules and selected menu/theme/ANSI inputs; synthetic users,30 generated archives and DIZ/NFO database. Main F -> S search route; no live board changes or real catalog copied.')
     (candidate/'search-instance.json').write_text(json.dumps(metadata,indent=2)+'\n')
     instance=json.loads((candidate/'instance.json').read_text());instance['config_sha256']=sha(runtime_path)
@@ -97,4 +101,5 @@ def setup_search(candidate,server):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--candidate',type=Path,required=True);p.add_argument('--server-root',type=Path,required=True)
-    a=p.parse_args();setup_search(a.candidate,a.server_root)
+    p.add_argument('--transfer-bytes',type=int,default=0,help='Add bounded generated stored payload to archive01 for cancellation tests')
+    a=p.parse_args();setup_search(a.candidate,a.server_root,a.transfer_bytes)

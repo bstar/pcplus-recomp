@@ -69,7 +69,7 @@ def audit_batch(stream,expected,minimum=0):
    if name in expected and size==len(expected[name]):first=h;break
   except (AssertionError,ValueError,UnicodeError):pass
  assert first,'No validated source-matching ZFILE'
- at=first['offset'];files=[];current=None;events=[];accepted=0;file_start=None;position=0;seen=set();finish=None;eof=None
+ at=first['offset'];files=[];current=None;events=[];accepted=0;file_start=None;position=0;seen=set();finish=None;eof=None;closing=None
  def close_file():
   nonlocal current,eof
   assert current is not None and eof is not None,'File never reached a verified final EOF'
@@ -77,6 +77,7 @@ def audit_batch(stream,expected,minimum=0):
   seen.add(current);current=None;eof=None
  while at<len(stream):
   h=next(scan(stream,at),None);assert h,'Missing complete protocol header';events.append(dict(kind='header',**h));at=h['end']
+  if closing is not None:assert h['type'] in (7,8),'File traffic after finishing began'
   if h['type']==4:
    p=packet(stream,at,h['format']);at=p['end'];name,size=metadata(p['payload'])
    assert name in expected and size==len(expected[name]) and p['ending']==107
@@ -87,12 +88,15 @@ def audit_batch(stream,expected,minimum=0):
    events.append(dict(kind='metadata',name=name,**{k:v for k,v in p.items() if k!='payload'}))
   elif h['type']==10:
    assert current is not None;position=h['position'];assert position<=accepted,'Unverified offset gap'
-   eof=None
+   # A windowed sender can retransmit already verified bytes after its EOF
+   # while the receiver's ZRINIT is in flight. Exact replay within the accepted
+   # range does not revoke that EOF. The packet loop still checks every byte,
+   # and audit_controls separately requires the receiver's completion reply.
    while True:
     p=packet(stream,at,h['format']);at=p['end'];data=p.pop('payload')
     assert data==expected[current][position:position+len(data)],'Transferred bytes differ'
     assert position+len(data)<=len(expected[current]);accepted=max(accepted,position+len(data));position+=len(data)
-    p['position']=position;parts.append(p);events.append(dict(kind='data',name=current,**p))
+    p['position']=position;p['after_eof']=eof is not None;parts.append(p);events.append(dict(kind='data',name=current,**p))
     if p['ending'] in (104,107):break
   elif h['type']==11:
    assert current is not None
@@ -100,11 +104,14 @@ def audit_batch(stream,expected,minimum=0):
    # EOF may be rejected by the receiver. Keep the active file until a later
    # offer/finish, and audit every subsequent retransmitted source byte.
    eof=at
-  elif h['type']==8:
+  elif h['type']==8 or (h['type']==7 and closing is not None):
    if current is not None:close_file()
    assert current is None and seen==set(expected)
-   # ZFIN can be retransmitted, but application text cannot substitute for OO.
-   if stream[at:at+2]==b'OO':finish=dict(offset=h['offset'],end=at+2);at+=2;break
+   # SEXYZ get_zfin alternates ZFIN/ZABORT while awaiting the receiver's ZFIN.
+   # An initial abort is never success; completion still requires literal OO
+   # and audit_controls requires the receiver's ZFIN after this first ZFIN.
+   if closing is None:closing=h['offset']
+   if stream[at:at+2]==b'OO':finish=dict(offset=closing,last_header_offset=h['offset'],end=at+2);at+=2;break
   else:assert h['type'] in (0,1,3,6,9,13,14),('Unexpected sender header',h['type'])
  assert finish and seen==set(expected),'Incomplete files or missing ZFIN/OO'
  return dict(start=first['offset'],end=at,files=files,events=events,finish=finish)
@@ -120,6 +127,12 @@ def audit_controls(audit,opposite,trace,sender,post_time,unused=False):
   lower=timestamp(trace,sender,f['start']);upper=timestamp(trace,sender,f['end']-1)
   match(9,0,lower,upper)
   for p in f['packets']:
+   if p.get('after_eof'):
+    # Already committed, byte-exact replay may still be in flight. Require
+    # the observed completion reply before that replay packet finishes;
+    # an ACK to a closed file is not a required receiver response.
+    match(1,None,timestamp(trace,sender,f['end']-1),timestamp(trace,sender,p['crc_end']-1))
+    continue
    if p['ending'] in (106,107):
     lower=timestamp(trace,sender,p['crc_end']-1)
     later=[e for e in audit['events'] if e['offset']>=p['end']]

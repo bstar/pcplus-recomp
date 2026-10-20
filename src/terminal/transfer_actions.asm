@@ -222,6 +222,24 @@ terminal_transfer_poll:
 .failed:
  cmp word [transfer_protocol_started],0
  je .finish
+ cmp word [terminal_transfer_protocol],2
+ jne .cancel_pair
+ ; The live engine's ordinary output callback refuses writes once Escape
+ ; latches a fault. Use the bounded fault-tolerant physical writer here.
+ ; ZMODEM requires at least five CAN bytes; X/YMODEM's pair is insufficient.
+ mov cx,8
+.z_cancel:
+ mov al,0x18
+ call transfer_emit_cancel
+ loop .z_cancel
+ mov cx,10
+.z_backspace:
+ mov al,8
+ call transfer_emit_cancel
+ loop .z_backspace
+ call transfer_cancel_drain
+ jmp .finish
+.cancel_pair:
  ; Best-effort bounded CAN pair; never unwind through a dead native frame.
  mov al,0x18
  call transfer_emit_cancel
@@ -512,6 +530,53 @@ transfer_emit_cancel:
  pop si
  pop dx
  pop bx
+ pop ax
+ ret
+
+; Keep canceled binary data away from the ANSI parser while the peer stops.
+; Nine quiet BIOS ticks tolerate delayed serial/modem delivery;180 total ticks
+; bound a peer that never stops. Real receive consumption retains
+; the UART driver's RTS/low-water policy; no parser or DOS callbacks run here.
+transfer_cancel_drain:
+ push ax
+ push dx
+ push si
+ call terminal_clock_ticks
+ mov [transfer_wait_tick],ax
+ mov [transfer_wait_tick+2],dx
+ mov [transfer_delay_tick],ax
+ mov [transfer_delay_tick+2],dx
+.wait:
+ call uart_poll_flow
+ cmp word [uart_rx_count],0
+ je .bounds
+ call terminal_transfer_flush_input
+ call terminal_clock_ticks
+ mov [transfer_delay_tick],ax
+ mov [transfer_delay_tick+2],dx
+.bounds:
+ mov si,transfer_wait_tick
+ call transfer_elapsed
+ or dx,dx
+ jnz .stalled
+ cmp ax,180
+ jb .quiet
+.stalled:
+ ; Returning an active binary stream to ANSI parsing is unsafe. Leave the
+ ; session with the existing ownership-failure exit rather than resume it.
+ mov word [terminal_quit],1
+ mov word [terminal_exit_code],14
+ jmp .done
+.quiet:
+ mov si,transfer_delay_tick
+ call transfer_elapsed
+ or dx,dx
+ jnz .stalled
+ cmp ax,9
+ jb .wait
+.done:
+ pop si
+ pop dx
  pop ax
  ret
 

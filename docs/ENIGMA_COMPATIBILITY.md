@@ -4,6 +4,15 @@ The target includes the user's running `~/projects/black-flag-bbs` checkout,
 its configured menus and modules, and the source-built DOS client. Passing
 an isolated stock BBS is insufficient. Compatibility is not complete.
 
+The [cancellation/retry workflow](../lab/bbs/enigma-cancel-download.md) now
+requires local Escape during actual received data, partial-file removal, usable
+NFO input, an exact larger-file retry and usable NFO input afterward. It exposed
+and corrected a missing full cancel burst and premature binary-drain release.
+The isolated [acceptance record](validation/enigma-cancel-download.json) retains
+failed attempts, repeated successful sessions, damaged-capture rejections and
+the continuous-input deadline. This does not establish live-catalog or physical
+modem cancellation acceptance.
+
 The later [October 20 focused live run](validation/enigma-focused-20261020.json)
 passes login, game details, DIZ/NFO and final-page scrolling with unchanged live
 inputs. Earlier runs of the same decoder fail scrolling. This single successful
@@ -77,7 +86,7 @@ still separate from the running board.
 | Classic Pillars main menu | Actual live DOS display contains the new menu. Its contiguous wire prompt is `[ LoC ]`; the decorated heading contains SGR boundaries and spaced letters. | Use the explicit prompt option below; do not report the old `Main Menu` text check as a terminal defect. |
 | Search, index, game details, DIZ and NFO | [Owned route](../lab/bbs/enigma-search.md) passes all selected navigation checks with the staged decoder and generated catalog, including paced network input. Live DOS reaches DIZ/NFO. | Live scrolling outcomes vary between retained runs; verify all six navigation keys, result paging, empty search and return to the actual main menu after correction. |
 | Message editor | [Owned evaluation](validation/enigma-owned.json) retains live Home/Insert failures and isolated corrected editor passes. | Repeat unsaved draft insertion, Home/End, Insert/overtype, paging and discard on the current live board. |
-| Transfers and subsequent input | [Protocol selector](validation/enigma-protocol-selector.json) covers the owned terminal selector and exact ZMODEM download. [Repeat validation](validation/enigma-repeat-download.json) covers receive, existing-file skip, second receive and usable NFO input after each. | Repeat against actual live catalog files; extend cancellation, interrupted connection/retry and upload coverage. |
+| Transfers and subsequent input | [Protocol selector](validation/enigma-protocol-selector.json) covers the owned terminal selector and exact ZMODEM download. [Repeat validation](validation/enigma-repeat-download.json) covers receive, existing-file skip, second receive and usable NFO input after each. [Cancellation validation](validation/enigma-cancel-download.json) adds Escape, partial cleanup, same-connection retry and subsequent NFO input in isolation. | Repeat against actual live catalog files; extend interrupted connection/reconnect and upload coverage, including live cancellation. |
 | Infocom door | [Live DOS validation](validation/enigma-infocom.json) passes13 checks: real library paging, Zork I entry, LOOK/NORTH/LOOK responses, worker lifecycle and clean return through Doors to Main. Eight corrupted acceptance captures reject. [Isolated SAVE/RESTORE](validation/enigma-infocom-save.json) passes11 checks across two worker lifetimes with exact owned door code and11 rejected evidence corruptions. Existing live probe saves remain unchanged. | Live SAVE/RESTORE through the actual library route, overwrite/cancel/invalid-save handling and broader story/playthrough coverage remain open. |
 | Other doors | Current board includes Global War and Barren Realms Elite. | Actual DOS client entry, play/input and return checks are still required. Infocom and file-browser passes do not cover these games. |
 | RS-232 Wi-Fi modem | Current DOS tests use modeled UART/19200/HARD flow control. | Physical modem testing, slow/fragmented input, flow-control pressure and reconnect are required. |
