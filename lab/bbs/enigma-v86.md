@@ -1,5 +1,10 @@
 # Owned DOS door compatibility
 
+The later [UART input checkpoint](enigma-v86-input.md) locates the reference
+burst stall and tests an explicit bridge candidate with actual traced and
+untraced reference routes plus both DOS regressions. The observations below
+describe the original owned worker before that candidate.
+
 The fixture copies the installed ENiGMA v86 door modules, Doors menu/layout and
 BIOS into an isolated checked keyboard-decoder candidate. It makes private,
 writable copies of the installed Global War and Barren Realms Elite images.

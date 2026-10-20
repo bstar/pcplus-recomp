@@ -1,5 +1,9 @@
 # Modern BBS compatibility checkpoint
 
+The [v86 input candidate](enigma-v86-input.md) addresses the BRE reference
+burst stall. Actual traced and untraced reference routes and both DOS door
+regressions pass; live deployment and cumulative patch validation remain open.
+
 The [owned v86 door checkpoint](enigma-v86.md) adds Global War instruction,
 pager and normal-return acceptance through the current source-built DOS
 terminal. Barren Realms name entry, confirmation, game menu and normal quit

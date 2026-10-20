@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+The [v86 input checkpoint](lab/bbs/enigma-v86-input.md) reproduces BRE reading
+only the first byte of an eight-byte burst, leaving seven pending with the
+receive interrupt asserted. An explicit UART-consumption bridge passes 25
+component checks and the actual name/confirmation/menu/quit route with tracing
+and without it. Their audits reject 15 and 13 damaged captures. Separate DOS
+BRE and Global War regressions each pass 13 checks; their audits reject ten
+and 13 corruptions. The [record](docs/validation/enigma-v86-input.json) binds
+the actual baseline and all 31 unchanged products and 566 application source
+files. Live deployment, cumulative server-patch validation, physical modem,
+overflow/error disk persistence and full application gates remain open.
+
 Compatibility remains the immediate priority. The
 [owned DOS door checkpoint](lab/bbs/enigma-v86.md) adds Global War instruction,
 pager and normal quit/Doors/Main acceptance through the source-built DOS
