@@ -19,6 +19,9 @@ extern unsigned __cdecl aspect_render_attach(void);
 static aspect_serial_handoff __far *handoff;
 static unsigned char input_translation[256];
 static unsigned compile_pause_owned;
+#if defined(ASPECT_EXTERNAL_PROCESS)
+const unsigned aspect_process_serial_c_guards=1;
+#endif
 static unsigned input_translation_mode;
 static unsigned char directory_record[114];
 static unsigned directory_entry;
@@ -69,6 +72,9 @@ unsigned __cdecl aspect_serial_open(const char *p)
  unsigned long render_address;
  unsigned char __far *mcb;
  aspect_serial_handoff __far *candidate=0;
+#if defined(ASPECT_EXTERNAL_PROCESS)
+ if(aspect_serial_active==2)return ASPECT_SERIAL_BUSY;
+#endif
  if(!p || (unsigned long)(unsigned)p+14UL>65536UL)return ASPECT_SERIAL_ARGUMENT;
  if(p[0]!='/' || (p[1]!='S'&&p[1]!='s') || p[2]<'1'||p[2]>'4'||p[3]!=':'||p[8]!=':'||p[11]!=':' )return ASPECT_SERIAL_ARGUMENT;
  for(i=4;i<8;++i){v=hex((unsigned char)p[i]);if(v>15)return ASPECT_SERIAL_ARGUMENT;divisor=divisor*16+v;}
@@ -188,6 +194,9 @@ unsigned __cdecl aspect_serial_close(void)
  unsigned status,n,at,count;
  unsigned char __far *destination;
  unsigned long start,now;
+#if defined(ASPECT_EXTERNAL_PROCESS)
+ if(aspect_serial_active==2)return ASPECT_SERIAL_BUSY;
+#endif
  if(!aspect_serial_active)return aspect_serial_status;
  /* Release owned BREAK before attempting the final flow-control drain. */
  aspect_serial_break_release();
@@ -229,6 +238,9 @@ unsigned __cdecl aspect_serial_compile_pause(void)
 }
 unsigned __cdecl aspect_serial_compile_resume(void)
 {
+#if defined(ASPECT_EXTERNAL_PROCESS)
+ if(aspect_serial_active==2)return ASPECT_SERIAL_BUSY;
+#endif
  if(!compile_pause_owned)return 0;
  compile_pause_owned=0;if(!aspect_serial_active)return 0;
  aspect_serial_compile_release();return aspect_serial_poll();

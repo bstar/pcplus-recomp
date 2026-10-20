@@ -15,8 +15,13 @@ global _aspect_serial_backend_open,_aspect_serial_backend_close
  global _aspect_serial_poll,_aspect_serial_ticks
 global _aspect_serial_carrier
 _aspect_serial_carrier:
+%ifdef ASPECT_EXTERNAL_PROCESS
+ cmp word [_aspect_serial_active],1
+ jne .closed
+%else
  cmp word [_aspect_serial_active],0
  je .closed
+%endif
  jmp uart_carrier_detect
 .closed: mov ax,0xffff
  ret
@@ -186,6 +191,13 @@ _aspect_serial_available:
  mov ax,[uart_rx_count]
 .done: ret
 _aspect_serial_read:
+%ifdef ASPECT_EXTERNAL_PROCESS
+ cmp word [_aspect_serial_active],2
+ jne .available
+ mov ax,0xffff
+ ret
+.available:
+%endif
  push bx
  push si
  push di
@@ -219,6 +231,13 @@ _aspect_serial_read:
 ; ABDE, never enables IF unconditionally and never increments a full ring.
 ; Ring cells retain raw bytes even when the API read applied its7-bit mask.
 _aspect_serial_unread:
+%ifdef ASPECT_EXTERNAL_PROCESS
+ cmp word [_aspect_serial_active],2
+ jne .available
+ mov ax,2
+ ret
+.available:
+%endif
  push bx
  pushf
  cli
@@ -373,11 +392,25 @@ _aspect_serial_break_release:
  ret
 global _aspect_serial_tx_empty
 _aspect_serial_tx_empty:
+%ifdef ASPECT_EXTERNAL_PROCESS
+ cmp word [_aspect_serial_active],2
+ jne .available
+ xor ax,ax
+ ret
+.available:
+%endif
  mov dx,[uart_port_lsr]
  in al,dx
  and ax,0x40
  ret
 _aspect_serial_poll:
+%ifdef ASPECT_EXTERNAL_PROCESS
+ cmp word [_aspect_serial_active],2
+ jne .available
+ mov ax,2
+ ret
+.available:
+%endif
  cmp word [_aspect_serial_active],1
  jne .status
  cmp word [uart_rx_dropped],0
@@ -514,6 +547,13 @@ _aspect_serial_ticks:
  pop es
  ret
 _aspect_serial_backend_close:
+%ifdef ASPECT_EXTERNAL_PROCESS
+ cmp word [_aspect_serial_active],2
+ jne .available
+ mov ax,2
+ ret
+.available:
+%endif
  push bx
  push si
  push di
@@ -590,6 +630,9 @@ SEGMENT _DATA public class=DATA use16
  %1: db %2
 %endmacro
 w _aspect_serial_active,0
+%ifdef ASPECT_EXTERNAL_PROCESS
+w serial_process_guard_level,1
+%endif
 w _aspect_serial_status,0
 w _aspect_serial_handoff_enabled,0
 w serial_break_state,0

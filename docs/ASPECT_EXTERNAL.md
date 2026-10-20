@@ -28,6 +28,13 @@ comparisons and13,045 actual DOS assertions pass, including a real graphics-mode
 child and matching-mode restoration. This does not yet supply the surrounding
 mode/font/cursor/WAIT/NOCLEAR or UART controller.
 
+The [external UART owner](PROCESS_SERIAL.md) now supplies a gated detach/restore
+path with41 linked modeled cases and eight actual COM1/COM2 N/S/H/B DOS cases
+passing448 assertions. It preserves raw queues/unread state and the startup
+baseline, reclaims child-mutated hardware and handles error/timeout recovery.
+The ordinary108-input serial regression passes and normal ASPECT is unchanged.
+Production VM/renderer/controller integration and opcode publication remain open.
+
 ## Recorded grammar and behavior
 
 DOS and RUN take one atomic string and optionally NOCLEAR or WAIT. One comma

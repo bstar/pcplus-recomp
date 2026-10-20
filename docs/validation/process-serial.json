@@ -1,0 +1,447 @@
+{
+  "passed": true,
+  "component_only": true,
+  "original_inputs": [],
+  "runtime_external_commands_enabled": false,
+  "whole_application_gates_closed": [],
+  "binary_sha256": "7cf3775f5e26ab6e83023744c6ddfaec9de57073449570fe514c0584ee4c9619",
+  "sources": {
+    "standalone/build_process_serial.py": "e343dcdb3b3d13ec654600be6fd93d5c029613f34a112799663ce4fff20f0abb",
+    "reconstruction/uart/core.asm": "9c0a38a7a305c5eec8e1c2299da74953656d33bdcae63f9866d7ef2d576fa52f",
+    "src/uart/api.asm": "ea76dd20ce14ccc8f9a6af725a05202f7888e1b7cb349d93a96f8faa16f9ae6d",
+    "src/aspect/serial_backend.asm": "d059e3c561ba49d41df0cd3e6b4023f9d9248e8b4e36912ca6d47b3c570161d2",
+    "src/aspect/process_serial.asm": "1fd0487719c3a3965dcc14ce27a865c471b6a2d0c117f06ac991ef54de1ff88d",
+    "src/aspect/serial.c": "d96924c4e439052b5bc4062c09964230cdd5424ba30b4ec0ea53a05d963690eb",
+    "src/aspect/process_serial.c": "171b4003ba71d90931b0f27f5ebda8756ca7d08ef26034c215666eea97dcc3f7",
+    "src/process/native_process.c": "6549e7115410a43a7cb1bca8c92b0494130809a62bbe0e8003c53b6fdb88d3ba",
+    "standalone/process_serial_diagnostic.c": "b8b3fcbd29d33094d356300a1f1900ccea534ef8e25dccbdcabeb0eadbf3132e",
+    "src/aspect/process_serial.h": "7c174fbce4a9214dc3536aa09ad6f34bb32dadf39551949f0e8323600a6a44f5",
+    "src/aspect/serial.h": "2d8a7972238bfddc8180c69d62bde1fa02d10dab3c6178a64978b7eb4ffce23b",
+    "src/aspect/serial_handoff.h": "51db79078c78294d7f247da793839d8114ae6680e8fa5798b681b1c32648e7eb",
+    "src/aspect/resident_render.h": "44232ebc6a8b3ef11c8e38292a5b7b55ed1fdf73ceb286aea340e2fed7e06923",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/uart/layout.inc": "1e732d890b17486bdace3f978276ce48e55da318df70787aa54475203fa9bd21",
+    "reconstruction/directory_accounting/patch.asm": "3ed899cd9515303cf7906d572ee87d0a884a7dca90b8cf14ac1ff316b30200ac",
+    "standalone/process_serial_child.asm": "39b7e6ae35f6fa42681223d18feb8e84c7d2703fb7770da0434af231e6ff9760"
+  },
+  "process_manifest_sha256": "40075d73180d3b0a40a70d291657d4bef7b197e2984ce13e8ecd62b803c632e5",
+  "CPU": {
+    "case_count": 41,
+    "cases": [
+      {
+        "case": "port-flow",
+        "port": 1,
+        "flow": "N",
+        "passed": true
+      },
+      {
+        "case": "port-flow",
+        "port": 1,
+        "flow": "S",
+        "passed": true
+      },
+      {
+        "case": "port-flow",
+        "port": 1,
+        "flow": "H",
+        "passed": true
+      },
+      {
+        "case": "port-flow",
+        "port": 1,
+        "flow": "B",
+        "passed": true
+      },
+      {
+        "case": "port-flow",
+        "port": 2,
+        "flow": "N",
+        "passed": true
+      },
+      {
+        "case": "port-flow",
+        "port": 2,
+        "flow": "S",
+        "passed": true
+      },
+      {
+        "case": "port-flow",
+        "port": 2,
+        "flow": "H",
+        "passed": true
+      },
+      {
+        "case": "port-flow",
+        "port": 2,
+        "flow": "B",
+        "passed": true
+      },
+      {
+        "case": "port-flow",
+        "port": 3,
+        "flow": "N",
+        "passed": true
+      },
+      {
+        "case": "port-flow",
+        "port": 3,
+        "flow": "S",
+        "passed": true
+      },
+      {
+        "case": "port-flow",
+        "port": 3,
+        "flow": "H",
+        "passed": true
+      },
+      {
+        "case": "port-flow",
+        "port": 3,
+        "flow": "B",
+        "passed": true
+      },
+      {
+        "case": "port-flow",
+        "port": 4,
+        "flow": "N",
+        "passed": true
+      },
+      {
+        "case": "port-flow",
+        "port": 4,
+        "flow": "S",
+        "passed": true
+      },
+      {
+        "case": "port-flow",
+        "port": 4,
+        "flow": "H",
+        "passed": true
+      },
+      {
+        "case": "port-flow",
+        "port": 4,
+        "flow": "B",
+        "passed": true
+      },
+      {
+        "case": "ring-pressure",
+        "flow": "S",
+        "count": 128,
+        "passed": true
+      },
+      {
+        "case": "ring-pressure",
+        "flow": "S",
+        "count": 3072,
+        "passed": true
+      },
+      {
+        "case": "ring-pressure",
+        "flow": "S",
+        "count": 4096,
+        "passed": true
+      },
+      {
+        "case": "ring-pressure",
+        "flow": "H",
+        "count": 128,
+        "passed": true
+      },
+      {
+        "case": "ring-pressure",
+        "flow": "H",
+        "count": 3072,
+        "passed": true
+      },
+      {
+        "case": "ring-pressure",
+        "flow": "H",
+        "count": 4096,
+        "passed": true
+      },
+      {
+        "case": "ring-pressure",
+        "flow": "B",
+        "count": 128,
+        "passed": true
+      },
+      {
+        "case": "ring-pressure",
+        "flow": "B",
+        "count": 3072,
+        "passed": true
+      },
+      {
+        "case": "ring-pressure",
+        "flow": "B",
+        "count": 4096,
+        "passed": true
+      },
+      {
+        "case": "overrun",
+        "status": 5,
+        "passed": true
+      },
+      {
+        "case": "DTR-drop",
+        "status": 8,
+        "passed": true
+      },
+      {
+        "case": "FIFO-change",
+        "status": 8,
+        "passed": true
+      },
+      {
+        "case": "TEMT-timeout",
+        "status": 7,
+        "passed": true
+      },
+      {
+        "case": "combined-fault",
+        "status": 5,
+        "passed": true
+      },
+      {
+        "case": "IF0-reject-retry",
+        "passed": true
+      },
+      {
+        "case": "closed-idempotence",
+        "passed": true
+      },
+      {
+        "case": "foreign-flow-token",
+        "passed": true
+      },
+      {
+        "case": "masked-IRQ0-bounded-restore",
+        "passed": true
+      },
+      {
+        "case": "ASIO3-nested-owner-handback",
+        "count": 0,
+        "start": 0,
+        "passed": true
+      },
+      {
+        "case": "ASIO3-nested-owner-handback",
+        "count": 9,
+        "start": 4090,
+        "passed": true
+      },
+      {
+        "case": "ASIO3-nested-owner-handback",
+        "count": 4096,
+        "start": 7,
+        "passed": true
+      },
+      {
+        "case": "preexisting-FIFO-admission",
+        "passed": true
+      },
+      {
+        "case": "foreign-vector-admission",
+        "passed": true
+      },
+      {
+        "case": "foreign-BREAK-owner",
+        "passed": true
+      },
+      {
+        "case": "pause-TEMT-timeout",
+        "passed": true
+      }
+    ],
+    "evidence_sha256": "0bbbd57050998f387b776d1e3cf746e7bc6a33c5f962b300c31704bc034baff1"
+  },
+  "DOS": {
+    "case_count": 8,
+    "assertions": 448,
+    "cases": [
+      {
+        "port": 1,
+        "flow": "N",
+        "assertions": 56,
+        "checks": {
+          "DOS_pass": true,
+          "assertions": true,
+          "exact_wire": true,
+          "peer_stages": true,
+          "peer_no_error": true,
+          "actual_child": true,
+          "executable_unchanged": true
+        },
+        "tx_hex": "445246",
+        "expected_tx_hex": "445246"
+      },
+      {
+        "port": 1,
+        "flow": "S",
+        "assertions": 56,
+        "checks": {
+          "DOS_pass": true,
+          "assertions": true,
+          "exact_wire": true,
+          "peer_stages": true,
+          "peer_no_error": true,
+          "actual_child": true,
+          "executable_unchanged": true
+        },
+        "tx_hex": "11441311524613",
+        "expected_tx_hex": "11441311524613"
+      },
+      {
+        "port": 1,
+        "flow": "H",
+        "assertions": 56,
+        "checks": {
+          "DOS_pass": true,
+          "assertions": true,
+          "exact_wire": true,
+          "peer_stages": true,
+          "peer_no_error": true,
+          "actual_child": true,
+          "executable_unchanged": true
+        },
+        "tx_hex": "445246",
+        "expected_tx_hex": "445246"
+      },
+      {
+        "port": 1,
+        "flow": "B",
+        "assertions": 56,
+        "checks": {
+          "DOS_pass": true,
+          "assertions": true,
+          "exact_wire": true,
+          "peer_stages": true,
+          "peer_no_error": true,
+          "actual_child": true,
+          "executable_unchanged": true
+        },
+        "tx_hex": "11441311524613",
+        "expected_tx_hex": "11441311524613"
+      },
+      {
+        "port": 2,
+        "flow": "N",
+        "assertions": 56,
+        "checks": {
+          "DOS_pass": true,
+          "assertions": true,
+          "exact_wire": true,
+          "peer_stages": true,
+          "peer_no_error": true,
+          "actual_child": true,
+          "executable_unchanged": true
+        },
+        "tx_hex": "445246",
+        "expected_tx_hex": "445246"
+      },
+      {
+        "port": 2,
+        "flow": "S",
+        "assertions": 56,
+        "checks": {
+          "DOS_pass": true,
+          "assertions": true,
+          "exact_wire": true,
+          "peer_stages": true,
+          "peer_no_error": true,
+          "actual_child": true,
+          "executable_unchanged": true
+        },
+        "tx_hex": "11441311524613",
+        "expected_tx_hex": "11441311524613"
+      },
+      {
+        "port": 2,
+        "flow": "H",
+        "assertions": 56,
+        "checks": {
+          "DOS_pass": true,
+          "assertions": true,
+          "exact_wire": true,
+          "peer_stages": true,
+          "peer_no_error": true,
+          "actual_child": true,
+          "executable_unchanged": true
+        },
+        "tx_hex": "445246",
+        "expected_tx_hex": "445246"
+      },
+      {
+        "port": 2,
+        "flow": "B",
+        "assertions": 56,
+        "checks": {
+          "DOS_pass": true,
+          "assertions": true,
+          "exact_wire": true,
+          "peer_stages": true,
+          "peer_no_error": true,
+          "actual_child": true,
+          "executable_unchanged": true
+        },
+        "tx_hex": "11441311524613",
+        "expected_tx_hex": "11441311524613"
+      }
+    ],
+    "evidence": {
+      "build/process-serial/runs/process-serial-04/result.json": "49434707a926bf25948b0ff8839204b220c95e8cebf9544a39b602c4c082dae2",
+      "build/process-serial/runs/process-serial-04/manifest.json": "eb09e2a4a8183f330e440c1e09c76cfe079adf6328ddaefff7cdd8589ef65a99"
+    }
+  },
+  "mixed_variants": [
+    {
+      "case": "C-guard",
+      "rejected": true,
+      "missing_symbol": "aspect_process_serial_c_guards",
+      "exit_code": 1,
+      "log_sha256": "a68e757819998ac7b9a4682826f167b04952e7a25ed248a36c33cec4798130ad",
+      "object_sha256": "49237c7276d3b3bc3bb3a192d2587da5e06c9d2982fc7041535d3501946deb88"
+    },
+    {
+      "case": "ASM-guard",
+      "rejected": true,
+      "missing_symbol": "serial_process_guard_level",
+      "exit_code": 1,
+      "log_sha256": "642742ffeaa013d63d075c43e52a5f21b73d29d938841f253bbb27bde020dc5e",
+      "object_sha256": "92216df2b74e3cf6b80e0dc08e4701d3ce8836e00d218f468dd405b1a6e0ccd2"
+    }
+  ],
+  "mixed_variant_evidence_sha256": "a210dfc0fe6d156c6708ad77805e2fbdbf494b94fe1ff422f0415a56cafff259",
+  "normal_serial_regression": {
+    "inputs": 108,
+    "evidence_sha256": "48dfe8f2f11f11e9fda6a2b55727583a17d72a383864a5798376805888431332"
+  },
+  "normal_ASPECT": {
+    "binary_sha256": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+    "manifest_sha256": "9e104ba961239d1f0b6298e5255b9c53122963a8a7b9d35260959bd21ccd0141",
+    "byte_identical_to_previous_product": true
+  },
+  "checkers": {
+    "standalone/check_process_serial.py": "6e3a13c7bbf6c10c79d9598594f0c8383cda2c77bc951092cc8e92e72043d50e",
+    "standalone/check_process_serial_variants.py": "9b3c9976283bad56d54fcac97bfa18f889707edb1773499745e247093a28081b",
+    "standalone/test_process_serial_dos.py": "a3033916ee6ced2625262f90d4339f9650d7081c653607cbac8a2b34297b8b9c",
+    "standalone/record_process_serial.py": "322043a68755736fa5c50601ee62c3d6248ea55e9159fefcdb404e989c6b7555"
+  },
+  "limitations": [
+    "ASPECT_EXTERNAL_PROCESS component variant only; normal interpreter has no external runtime handlers.",
+    "Actual DOS uses modeled nullmodem/serial hardware and cooperative peer; physical RS-232 Wi-Fi modem timing remains open.",
+    "CGA/display/font/cursor/WAIT/NOCLEAR, full VM stream/lease/error integration and ASIOv4 renderer acceptance remain open.",
+    "Unknown enabled FIFO rejects before handoff; a child-enabled FIFO is disabled with explicit LINE8 and no hardware pending-byte guarantee.",
+    "Unrelated PIC bits are retained. Masked IRQ0 yields STATE4 with bounded port recovery; global timer recovery belongs to the full controller."
+  ],
+  "retained_failed_attempt": {
+    "passed": false,
+    "reason": "Missing DGROUP local-state fixups: phase changed but detached flag/data landed outside the C group.",
+    "evidence": {
+      "build/process-serial/runs/process-serial-01/result.json": "46909bd2305f1b39f0b62bb856c670b2169a7a5b15b80f8de25a4c75ecd7917f",
+      "build/process-serial/runs/process-serial-01/manifest.json": "3ea0aaa4b762dd13963e466ee7b11f3c395371224512c29c90b32941b44cc8f2",
+      "build/process-serial/runs/process-serial-01/com1-N/CHECKS.TXT": "828dac83747a72f12480234ec790a9bb9226726fada859ae3bb984504cb2d31d"
+    }
+  }
+}

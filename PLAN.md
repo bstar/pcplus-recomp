@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+The [external UART owner](docs/PROCESS_SERIAL.md) now passes41 linked modeled
+cases and eight actual COM1/COM2 N/S/H/B DOS cases/448 assertions. It releases
+the IRQ for a real port/vector-mutating child, restores original framing/ISR,
+retains ring/unread/flow ownership and startup baseline, and reports overrun,
+line and timeout faults while reclaiming the port. ASIOv3 wrapped/full handback
+passes in the linked model. Two mixed-variant links reject, all108 normal serial
+regressions pass and the rebuilt production ASPECT is byte-identical. The first
+DGROUP failure remains retained. This is a gated component; production VM/CRT/
+renderer/display/controller integration and RUN/DOS/SHELL publication remain open.
+
 The [native display dependencies](docs/NATIVE_DISPLAY.md) now bind310 exact
 bytes to963 CPU/original comparisons and13,045 actual DOS assertions. Geometry,
 far-backed snapshot and native restore/free work in40/80-column color, monochrome

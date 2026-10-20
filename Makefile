@@ -1045,3 +1045,11 @@ native-display:
 test-native-display: native-display
 	python3 standalone/check_native_display.py
 	python3 standalone/test_native_display_dos.py
+
+.PHONY: process-serial test-process-serial
+process-serial:
+	python3 standalone/build_process_serial.py
+test-process-serial: process-serial
+	python3 standalone/check_process_serial.py
+	python3 standalone/check_process_serial_variants.py
+	python3 standalone/test_process_serial_dos.py
