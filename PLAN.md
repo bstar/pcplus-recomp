@@ -1,5 +1,17 @@
 # Complete DOS rebuild plan
 
+The [Infocom save-edge checkpoint](lab/bbs/enigma-infocom-edges.md) reproduces
+the owned worker exiting on a non-IFF restore. A separate dialog/worker/helper
+candidate validates bounded, story-matched save structures and supplies an
+immutable read snapshot. Its actual worker survives the malformed restore;
+49 component checks pass. Three DOS sessions pass13/14/14 checks for cancellation,
+invalid names, missing files, overwrite across workers and rejection followed by
+a valid restore. Their audits reject9/10/9 evidence corruptions. The
+[record](docs/validation/enigma-infocom-edges.json) retains the first candidate's
+startup mistake and binds all31 unchanged application products. Live deployment,
+the full custom library route, concurrent writers, physical modem and full
+application gates remain open.
+
 The [two-session ENiGMA upload checkpoint](lab/bbs/enigma-concurrent-upload.md)
 uses actual loopback reference peers to keep upload B active through A's
 cancel/NFO/retry/details/NFO route. B's inode and source prefix survive both

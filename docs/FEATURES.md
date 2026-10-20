@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+The [Infocom save-edge record](validation/enigma-infocom-edges.json) retains an
+actual worker crash on malformed restore and validates a separate bounded,
+immutable save-read candidate. Its49 component checks pass; actual DOS routes
+pass13 cancellation/name/missing-file checks,14 overwrite checks and14 malformed
+restore/recovery checks. Their passive audits reject9/10/9 corruptions. The
+first candidate startup failure is retained, all31 application products are
+unchanged, and no whole-application gate closes.
+
 The [concurrent ENiGMA upload record](validation/enigma-concurrent-upload.json)
 adds 18 checks on two real reference-peer sessions, with 19 damaged evidence
 variants rejected. An active upload retains its inode and exact source prefix

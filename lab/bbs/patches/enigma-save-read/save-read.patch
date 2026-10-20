@@ -1,0 +1,31 @@
+--- a/core/zmachine_door/save_dialog.js
++++ b/core/zmachine_door/save_dialog.js
+@@ -1,10 +1,17 @@
+ 'use strict';
+ const fs=require('fs'),path=require('path'),crypto=require('crypto');
+ const Base=require('glkote-term').DumbGlkOte.Dialog;
++const {openSave}=require('./save_read');
+ // Each caller/game gets a private directory selected by the BBS, never by input.
+ exports.createSaveDialog=function(directory){
+  const root=path.resolve(directory);fs.mkdirSync(root,{recursive:true,mode:0o700});
+  return class SaveDialog extends Base{
++  constructor(options){super(options);this.saveStory=options.saveStory;this.saveStackLimit=options.saveStackLimit;}
++  file_fopen(mode,ref){
++   if(mode!==2||ref.usage!=='save')return super.file_fopen(mode,ref);
++   try{return openSave(ref.filename,this.saveStory,this.saveStackLimit());}
++   catch(error){this.stdout.write('\nCannot restore this save file.\n');return null;}
++  }
+   get_user_path(){return root;}
+   get_temp_path(){return root;}
+   file_construct_ref(filename,usage){
+--- a/core/zmachine_door/zmachine_worker.js
++++ b/core/zmachine_door/zmachine_worker.js
+@@ -117,7 +117,7 @@
+     : GlkOteLib.DumbGlkOte.Dialog;
+ class WorkerDialog extends DialogBase {
+     constructor(options) {
+-        super(options);
++        super(Object.assign({}, options, { saveStory: gameData, saveStackLimit: () => vm.options.stack_len }));
+         this._preloadedAutosave = workerData.preloadedAutosave;
+     }
+ 

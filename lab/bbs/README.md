@@ -5,6 +5,11 @@ and Mystic servers. Downloaded server programs, source checkouts, user databases
 wire captures and DOS snapshots stay under ignored `build/bbs-lab/`.
 All listeners must bind loopback. Accounts and messages are synthetic.
 
+The [Infocom save-edge workflow](enigma-infocom-edges.md) covers actual DOS
+cancellation, invalid/missing names, overwrite and recovery after malformed
+restore. It stages an explicit server candidate after reproducing an owned
+worker crash; the live board and its saves remain untouched.
+
 The [concurrent upload workflow](enigma-concurrent-upload.md) keeps one actual
 reference-peer upload active while another cancels, visits NFO, retries and
 visits NFO again. It also checks new-user achievement interruptions before

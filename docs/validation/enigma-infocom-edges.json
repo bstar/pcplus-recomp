@@ -1,0 +1,441 @@
+{
+  "date": "2026-10-20",
+  "passed": true,
+  "workflows": {
+    "cancel": {
+      "checks": {
+        "commands_emitted": true,
+        "no_worker_errors": true,
+        "menu_return": true,
+        "complete_worker_lifecycles": true,
+        "cancel_invalid_and_missing_return_to_game": true,
+        "DOS_harness": true,
+        "unique_session": true,
+        "inputs_unchanged": true,
+        "no_post_saved": true,
+        "DOS_compiler_exact": true,
+        "scripted_login": true,
+        "no_file_created": true,
+        "all_files_in_owned_namespace": true
+      },
+      "corruptions_rejected": 9,
+      "saved_files": []
+    },
+    "overwrite": {
+      "checks": {
+        "commands_emitted": true,
+        "no_worker_errors": true,
+        "menu_return": true,
+        "complete_worker_lifecycles": true,
+        "overwrite_and_cross_worker_restore": true,
+        "DOS_harness": true,
+        "unique_session": true,
+        "inputs_unchanged": true,
+        "no_post_saved": true,
+        "DOS_compiler_exact": true,
+        "scripted_login": true,
+        "two_valid_different_saves_same_path": true,
+        "one_valid_final_save": true,
+        "all_files_in_owned_namespace": true
+      },
+      "corruptions_rejected": 10,
+      "saved_files": [
+        {
+          "bytes": 422,
+          "sha256": "5fde977d2af267083be2ccf76ba360708f0493d73bdfbf4febb7f994e3bfae69"
+        }
+      ]
+    },
+    "corrupt": {
+      "checks": {
+        "commands_emitted": true,
+        "no_worker_errors": true,
+        "menu_return": true,
+        "complete_worker_lifecycles": true,
+        "rejected_corruption_preserves_game_and_valid_restore": true,
+        "DOS_harness": true,
+        "unique_session": true,
+        "inputs_unchanged": true,
+        "no_post_saved": true,
+        "DOS_compiler_exact": true,
+        "scripted_login": true,
+        "good_save_unchanged": true,
+        "only_known_save_fixtures": true,
+        "all_files_in_owned_namespace": true
+      },
+      "corruptions_rejected": 9,
+      "saved_files": [
+        {
+          "bytes": 422,
+          "sha256": "5fde977d2af267083be2ccf76ba360708f0493d73bdfbf4febb7f994e3bfae69"
+        },
+        {
+          "bytes": 19,
+          "sha256": "602453522a2897840ee919444b8774002143afc14885d4ec6df8218b0a096779"
+        }
+      ]
+    }
+  },
+  "component_checks": [
+    {
+      "case": "two-real-worker-saves-accepted",
+      "passed": true
+    },
+    {
+      "case": "empty",
+      "passed": true
+    },
+    {
+      "case": "non-IFF",
+      "passed": true
+    },
+    {
+      "case": "truncated",
+      "passed": true
+    },
+    {
+      "case": "wrong-IFF-extent",
+      "passed": true
+    },
+    {
+      "case": "high-bit-FourCC-alias",
+      "passed": true
+    },
+    {
+      "case": "wrong-container-type",
+      "passed": true
+    },
+    {
+      "case": "missing-IFhd",
+      "passed": true
+    },
+    {
+      "case": "missing-CMem",
+      "passed": true
+    },
+    {
+      "case": "missing-Stks",
+      "passed": true
+    },
+    {
+      "case": "duplicate-IFhd",
+      "passed": true
+    },
+    {
+      "case": "duplicate-CMem",
+      "passed": true
+    },
+    {
+      "case": "duplicate-Stks",
+      "passed": true
+    },
+    {
+      "case": "short-identity",
+      "passed": true
+    },
+    {
+      "case": "wrong-story-release",
+      "passed": true
+    },
+    {
+      "case": "wrong-story-serial",
+      "passed": true
+    },
+    {
+      "case": "wrong-story-checksum",
+      "passed": true
+    },
+    {
+      "case": "PC-outside-story",
+      "passed": true
+    },
+    {
+      "case": "both-memory-representations",
+      "passed": true
+    },
+    {
+      "case": "trailing-compressed-zero",
+      "passed": true
+    },
+    {
+      "case": "compressed-memory-overflow",
+      "passed": true
+    },
+    {
+      "case": "short-uncompressed-memory",
+      "passed": true
+    },
+    {
+      "case": "empty-stack",
+      "passed": true
+    },
+    {
+      "case": "truncated-frame-header",
+      "passed": true
+    },
+    {
+      "case": "truncated-frame-locals",
+      "passed": true
+    },
+    {
+      "case": "truncated-evaluation-stack",
+      "passed": true
+    },
+    {
+      "case": "reserved-frame-flags",
+      "passed": true
+    },
+    {
+      "case": "return-PC-outside-story",
+      "passed": true
+    },
+    {
+      "case": "VM-stack-capacity",
+      "passed": true
+    },
+    {
+      "case": "invalid-stack-limit",
+      "passed": true
+    },
+    {
+      "case": "exact-128KiB-valid-file",
+      "passed": true
+    },
+    {
+      "case": "over-128KiB-limit",
+      "passed": true
+    },
+    {
+      "case": "immutable-snapshot-after-overwrite",
+      "passed": true
+    },
+    {
+      "case": "snapshot-start-seek",
+      "passed": true
+    },
+    {
+      "case": "snapshot-relative-seek",
+      "passed": true
+    },
+    {
+      "case": "snapshot-end-seek",
+      "passed": true
+    },
+    {
+      "case": "read-beyond-EOF",
+      "passed": true
+    },
+    {
+      "case": "negative-seek-clamps",
+      "passed": true
+    },
+    {
+      "case": "closed-read-is-EOF",
+      "passed": true
+    },
+    {
+      "case": "immutable-input-copy",
+      "passed": true
+    },
+    {
+      "case": "reject-missing",
+      "passed": true
+    },
+    {
+      "case": "reject-directory",
+      "passed": true
+    },
+    {
+      "case": "reject-symlink",
+      "passed": true
+    },
+    {
+      "case": "bounded-file-read",
+      "passed": true
+    },
+    {
+      "case": "modeled-read-error-closes-FD",
+      "passed": true
+    },
+    {
+      "case": "modeled-short-read-closes-FD",
+      "passed": true
+    },
+    {
+      "case": "actual-dialog-rejects-malformed-file",
+      "passed": true
+    },
+    {
+      "case": "actual-dialog-keeps-upstream-write-path",
+      "passed": true
+    },
+    {
+      "case": "actual-dialog-restores-valid-read",
+      "passed": true
+    }
+  ],
+  "modeled_component_boundaries": [
+    "fs.readSync EIO",
+    "fs.readSync unexpected EOF"
+  ],
+  "original_worker_failure": {
+    "corrupt_restore_survived": false,
+    "error": "Not an IFF file"
+  },
+  "fixed_worker_survived": true,
+  "staged_server": {
+    "original_core": {
+      "core/zmachine_door/save_dialog.js": "9524990c774e02c166672bbed9832ee3f70daa81137273b2f51bc2b8ad3551b5",
+      "core/zmachine_door/zmachine_worker.js": "2275e21da616c6af82a475b488cd3bfc9d6be65275b0ccfffeb40ebc4b4ebdd1"
+    },
+    "staged_core": {
+      "core/zmachine_door/save_dialog.js": "d69036bd62208c8896a58f313f090486485d925c8cd68f5ef57424b69e0bc5fc",
+      "core/zmachine_door/zmachine_worker.js": "cc42b0dff4ea565020771376b4efbe9b23aa7cfa142dff5dcff722aef1f1bd4e",
+      "core/zmachine_door/save_read.js": "acd716c3f5bbfc73a7ab3fbeed87ad8a900cbaa0b29ef71f09ac35b90acc405c"
+    },
+    "inputs": {
+      "lab/bbs/patches/enigma-save-read/stage.py": "a77438715825155e888ebc3423a7737fd5d084afe73ac79d51d41bc6041160e3",
+      "lab/bbs/patches/enigma-save-read/save-read.patch": "5ee94b5327fea93768b26c6f48eb29410d5065bede7a53b1e0fdbb43fa5c607c",
+      "lab/bbs/patches/enigma-save-read/save_read.js": "acd716c3f5bbfc73a7ab3fbeed87ad8a900cbaa0b29ef71f09ac35b90acc405c"
+    },
+    "authored_core": {
+      "core/zmachine_door/save_read.js": {
+        "source": "lab/bbs/patches/enigma-save-read/save_read.js",
+        "sha256": "acd716c3f5bbfc73a7ab3fbeed87ad8a900cbaa0b29ef71f09ac35b90acc405c"
+      }
+    },
+    "scope": "Separate candidate: bounded structural/story validation and immutable read snapshot before VM restore; write/overwrite path remains upstream."
+  },
+  "live_server_modified": false,
+  "retained_candidate_failure": "First staged initializer read VM options before prepare; deferred stack-limit lookup fixes startup.",
+  "observed_dependency_sources": {
+    "ifvms/src/common/file.js": "a8d351571355b937943e895315cab29d5d91ac213d81c952bd7cbf7b0c9b0ea3",
+    "ifvms/src/zvm/runtime.js": "ecf6a99ee293210a72ff283df005e9a5be462fea8b92fa8707249e98881724d6",
+    "ifvms/src/zvm.js": "983cba8d43ad514949f103b5b832ec84c578cc6cd16d97c011b863285069f0c4",
+    "glkote-term/src/electrofs.js": "17204fcc86426aada1098b6bc102c07aa81b029ea203247e35941a362481f0e2",
+    "glkote-term/src/glkapi.js": "fd6c4f8a18ca53bb4b52154caf8b74e88ad5fc400138d3cf2526a5f1ab445a79"
+  },
+  "source_products": {
+    "aspect-process-parent/ASPECT.EXE": "cd580a12fda2e38edbac6fa9ebd19727b11c9e8393b1a6fe561531164bebb63d",
+    "aspect-fault/ASPECT.EXE": "bbeb4c85546d0cb0e6c94801d78c4472e4a77efe7cb1a1c6dab6e7e2b03f5c7e",
+    "aspect-process/ASPECT.EXE": "ccf0aeaf2f58ef8628335f170df859a01217885dc6e58ea7433f648bbee57025",
+    "aspect-runner/ASPECT.EXE": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+    "aspect-compiler-dos/ASPCOMP.EXE": "3470c718df0d21fad4635b99f6c3b2e5d307637581728bdb639e6e9521a9c931",
+    "terminal-process/TERMINAL.EXE": "80eb796f2404f06382da9e22f869c534c3a0b9d174ebcbc19019f9df0e302aad",
+    "terminal/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+    "native-program/PROGRAM.EXE": "582a6844f454de92e66fad3e6694b26b1fdee6565d91ce563e8ebc38d8afb8d1",
+    "native-program/OWN1.COM": "4a02a70aa7ddec17648947eb822a045a3bbc5666485d0861277f784632640a39",
+    "native-program/OWN2.COM": "e496c8227feaeee3abe5d00a2ac8a77624a0070a2e41d82215dadf912171a4b5",
+    "native-display/DISPLAY.EXE": "0e6dc8e4e852e0f940b810a7aefbae2378c3c18985ddcf2dea1c01f5544dd6cf",
+    "native-display/VIDEO.COM": "e38463e46b8f8c42f2bcd90a1e9707ace08ae63704fa16e317a87df3fbb39605",
+    "process-serial/PSERIAL.EXE": "7cf3775f5e26ab6e83023744c6ddfaec9de57073449570fe514c0584ee4c9619",
+    "process-serial/UART1.COM": "a7bb9817a9401d7c0127d68b5bc38f5f9a2b47e34827c4daeee471857deb654e",
+    "process-serial/UART2.COM": "3dda15dc346ef3ddfc42eb6b54890254590dd6fc7ce48f1c116d9d84cc862f3f",
+    "native-process/NATIVE.EXE": "03723b988eab3df0cf7c128a1c6fc8356045b2bc0aac3865ab8f975ee300a7e0",
+    "native-process/NAMES.EXE": "0485267021744f48db472a3c6a6ebe10beabb3ac64d3b673c2748a8e1e0e8409",
+    "native-process/CHILD.COM": "0c8bb3b2499821ac74ddd47e4cc58ee34a633d7537be5f15db7ab80f878f9f18",
+    "native-process/DIVIDE.COM": "a2d4de6488769a320efd699e9c8e367574f7d398f9b1b63a30a22b099fb90e79",
+    "native-process/VECT.COM": "ca624aef48dfd14a782633e6253fdc817c6df15c61aaafe73ffc814a1f01b79f",
+    "native-process/RESIDENT.COM": "b56878449a5528fa3403207d369262e3a5422d2d489cce2f323727579bc200a8",
+    "native-process/EMPTY.COM": "fb3899847c3e4e1e817dd8f80108e41a46693128b4aa3a8306f3d86cdbaa79d6",
+    "native-process/FLAGS.COM": "83c3623d9e7e8db33301b96448910701f95033debff389462ef8c4d7e92489c0",
+    "native-process/E17.COM": "c3a5760861de337896c7259bb44f6c05284278040d22d4fc9cb42688d8d247e1",
+    "native-process/E21.COM": "def6a10413daf417e92cc622ffbeb96dd3abf12796f9ca071662503c1ce781b1",
+    "native-process/E22.COM": "f9903bca908e88fc0c10aa4ac088a180493ac66d8d2c911dcf8eae362b5a0b6b",
+    "native-process/CHILD.EXE": "63080cc4387cd191b3ae0495ad21b023e266689336c4f29c22190246b2a2c8df",
+    "terminal-mouse/TERMINAL.EXE": "8bd0d5ab6f6e8b83b87be6ba1202e419ddeab55bbd53644ee82a7da48d4cc950",
+    "terminal-mouse-process/TERMINAL.EXE": "1af63634144416f0076f60bd545bedaf0dd87a615fef9aad221e432509a190c6",
+    "setup/PRMEDIT.EXE": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646",
+    "setup-mouse/PRMEDIT.EXE": "0f0dafd6b783bf8ae5d170ddd4448273057cf7ff168e8e21d74ef1be657e8128"
+  },
+  "unchanged_application_products": 31,
+  "application_code_changed": false,
+  "original_build_inputs": [],
+  "whole_application_gates_closed": [],
+  "sources": {
+    "lab/bbs/enigma_infocom_edges_dos.py": "9579909cb343c0a3fc5198c40b84234439b023dcb5536c974a4958769bd69199",
+    "lab/bbs/enigma_infocom_edge_worker.js": "430f25d0fd5e02cda4dce6fe9f80db176fe9c3d24cfe00a10c4d4505aba54be4",
+    "lab/bbs/check_enigma_infocom_edges.py": "fc165931c866d4945f97849a0746edb08fec626c5165888c704225ed9bc21e75",
+    "lab/bbs/patches/enigma-save-read/check.js": "5b25933a94f9838d9f100142f6e7c5ecf37e926062066dae970553fceca591da",
+    "lab/bbs/patches/enigma-save-read/stage.py": "a77438715825155e888ebc3423a7737fd5d084afe73ac79d51d41bc6041160e3",
+    "lab/bbs/patches/enigma-save-read/save_read.js": "acd716c3f5bbfc73a7ab3fbeed87ad8a900cbaa0b29ef71f09ac35b90acc405c",
+    "lab/bbs/patches/enigma-save-read/save-read.patch": "5ee94b5327fea93768b26c6f48eb29410d5065bede7a53b1e0fdbb43fa5c607c"
+  },
+  "recorder_sha256": "be878737d9eef07c3076f00837c2f1a296882237e332ebc39439798c6f9bf538",
+  "evidence": [
+    {
+      "path": "build/bbs-lab/results/enigma/owned-infocom-cancel-01/infocom-edge-checks.json",
+      "sha256": "cf0cd3b922bd78566e14a9d3ce4708f734849d1da5b0683b10e171941cee8815"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-infocom-cancel-01/infocom-edge-audit.json",
+      "sha256": "c4a1d54155fde2a4ed5615b9e6967090bf02c6954af47fcbf38cb6779bd8560e"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-infocom-overwrite-01/infocom-edge-checks.json",
+      "sha256": "a7fe871ab297f87d5c6e382647914030cb3bfd12c3470690f0a8e99aef1b4342"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-infocom-overwrite-01/infocom-edge-audit.json",
+      "sha256": "168fc36a728197fbeef99f2178be5e607cce371fc2e748162d3f6b203d16ac15"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-infocom-overwrite-01/save-0.glksave",
+      "sha256": "a96d3632d29daf2afa45a95208c23abc0d39eddc834915c0519a110ad2306c01"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-infocom-overwrite-01/save-1.glksave",
+      "sha256": "5fde977d2af267083be2ccf76ba360708f0493d73bdfbf4febb7f994e3bfae69"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-infocom-corrupt-01/infocom-edge-checks.json",
+      "sha256": "5b741140259e0cb8dfb6732822b83164d79a9657dd7031170a4d07b1085dfc4f"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-infocom-corrupt-01/infocom-edge-audit.json",
+      "sha256": "ff759d7165eca991c37e81cca854d60cb0f1109e88c566cbcc7bfee516436335"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-infocom-corrupt-01/broken-fixture.bin",
+      "sha256": "602453522a2897840ee919444b8774002143afc14885d4ec6df8218b0a096779"
+    },
+    {
+      "path": "build/bbs-lab/owned-enigma-save-edges-02/candidate/infocom-save-instance.json",
+      "sha256": "7b5dd2d4ca722b6fb84cfb1c10f3f11570d5341227ab7721a85c45dbc392e502"
+    },
+    {
+      "path": "build/bbs-lab/owned-enigma-save-edges-02/candidate/save-read-experiment.json",
+      "sha256": "4184d7df79fb8f585449d602863319f3087904c9e3efccc10a8f09a9a444c46e"
+    },
+    {
+      "path": "build/bbs-lab/infocom-edge-worker-01/checks.json",
+      "sha256": "eecf6f6832b3c77fc367ccb766d085072cdbdd4faa96db4be043a74b8574e039"
+    },
+    {
+      "path": "build/bbs-lab/infocom-edge-worker-03/checks.json",
+      "sha256": "21508fa3860051792cb2333971183cc11176e9b08b352a05d060b41c85a727a6"
+    },
+    {
+      "path": "build/bbs-lab/infocom-save-read-unit-01/checks.json",
+      "sha256": "ef6bdffb05f10856f8214d3d2759829b54d66bb5c9e0db297ded5be5461d245b"
+    },
+    {
+      "path": "build/bbs-lab/infocom-edge-worker-02/failure.txt",
+      "sha256": "974313140c376ab927875fd8a818b1a8593ae80096fff75f32f65e82021cc74f"
+    },
+    {
+      "path": "docs/validation/enigma-upload-time.json",
+      "sha256": "a2025adf5beeeb277c19fc403cf4b6cbc525343c727ffc4c86af3430d6437fcd"
+    }
+  ],
+  "nix_inputs": {
+    "nix/flake.nix": "7f069dd8346be02006737101a2790b99a881411fa75b657316f75b090816c15f",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+  },
+  "limitations": [
+    "One owned Zork release, direct isolated ZORK menu, source-built DOS and modeled19200/HARD UART.",
+    "Validation rejects the tested structural/story/bounds faults; it does not prove all variable values in structurally valid saves are meaningful.",
+    "Immutable validated bytes prevent later file replacement from altering that read; concurrent save writers and write publication are unverified.",
+    "Live deployment/menu route, physical modem, other doors and full F01\u2013F16 reconstruction remain open."
+  ]
+}

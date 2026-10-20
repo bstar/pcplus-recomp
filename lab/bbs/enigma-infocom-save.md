@@ -68,3 +68,9 @@ save files in the actual door, other stories/doors, live decoder installation,
 full live-menu acceptance and physical RS-232 Wi-Fi modem operation remain open.
 The [ENiGMA acceptance matrix](../../docs/ENIGMA_COMPATIBILITY.md) and full
 application gates remain authoritative.
+
+The later [save-edge checkpoint](enigma-infocom-edges.md) adds isolated DOS
+overwrite, cancellation, invalid/missing names and malformed-restore recovery.
+It reproduces an original worker crash and uses an explicitly staged save-read
+candidate. Its acceptance does not install changes on the running board or
+establish the live custom library route.

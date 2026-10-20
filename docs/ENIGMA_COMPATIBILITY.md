@@ -4,6 +4,16 @@ The target includes the user's running `~/projects/black-flag-bbs` checkout,
 its configured menus and modules, and the source-built DOS client. Passing
 an isolated stock BBS is insufficient. Compatibility is not complete.
 
+The [Infocom save-edge workflows](../lab/bbs/enigma-infocom-edges.md) reproduce
+a worker crash on a non-IFF restore and test a separate save-read candidate.
+Three actual DOS sessions verify cancellation, invalid names, missing saves,
+overwrite across workers, and rejected corruption followed by a valid restore.
+They pass13/14/14 checks with9/10/9 evidence corruptions rejected;49 component
+checks pass. The [record](validation/enigma-infocom-edges.json) distinguishes
+the original crash, candidate startup correction and current acceptance. These
+are isolated direct-ZORK tests; live library/menu, concurrent save writers and
+physical modem acceptance remain open. Application products are unchanged.
+
 The [two-session upload test](../lab/bbs/enigma-concurrent-upload.md) now verifies
 actual simultaneous loopback BBS sessions using declared reference peers.
 Upload B continues receiving source-backed data while A cancels, opens NFO,
@@ -151,7 +161,7 @@ still separate from the running board.
 | Search, index, game details, DIZ and NFO | [Owned route](../lab/bbs/enigma-search.md) passes all selected navigation checks with the staged decoder and generated catalog, including paced network input. Live DOS reaches DIZ/NFO. | Live scrolling outcomes vary between retained runs; verify all six navigation keys, result paging, empty search and return to the actual main menu after correction. |
 | Message editor | [Owned evaluation](validation/enigma-owned.json) retains live Home/Insert failures and isolated corrected editor passes. | Repeat unsaved draft insertion, Home/End, Insert/overtype, paging and discard on the current live board. |
 | Transfers and subsequent input | [Protocol selector](validation/enigma-protocol-selector.json) covers the owned terminal selector and exact ZMODEM download. [Repeat validation](validation/enigma-repeat-download.json) covers receive, existing-file skip, second receive and usable NFO input after each. [Cancellation](validation/enigma-cancel-download.json) covers Escape and same-connection retry; [carrier recovery](validation/enigma-carrier.json) adds interrupted receive, redial and confirmed retry in one DOS process. | Repeat against actual live catalog files and physical modem carrier behavior; extend upload coverage, including live cancellation and reconnect. |
-| Infocom door | [Live DOS validation](validation/enigma-infocom.json) passes13 checks: real library paging, Zork I entry, LOOK/NORTH/LOOK responses, worker lifecycle and clean return through Doors to Main. Eight corrupted acceptance captures reject. [Isolated SAVE/RESTORE](validation/enigma-infocom-save.json) passes11 checks across two worker lifetimes with exact owned door code and11 rejected evidence corruptions. Existing live probe saves remain unchanged. | Live SAVE/RESTORE through the actual library route, overwrite/cancel/invalid-save handling and broader story/playthrough coverage remain open. |
+| Infocom door | [Live DOS validation](validation/enigma-infocom.json) covers library paging, gameplay and return. [Isolated SAVE/RESTORE](validation/enigma-infocom-save.json) covers two workers. [Save edges](validation/enigma-infocom-edges.json) adds cancellation, invalid/missing names, overwrite and malformed-restore recovery with the explicit candidate. Existing live saves remain unchanged. | Repeat save/restore and tested edge cases through the live library after deployment; broader malformed-state, concurrent writer, story/playthrough and physical modem coverage remain open. |
 | Other doors | Current board includes Global War and Barren Realms Elite. | Actual DOS client entry, play/input and return checks are still required. Infocom and file-browser passes do not cover these games. |
 | RS-232 Wi-Fi modem | Current DOS tests use modeled UART/19200/HARD flow control. | Physical modem testing, slow/fragmented input, flow-control pressure and reconnect are required. |
 
