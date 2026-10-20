@@ -4,6 +4,16 @@ The target includes the user's running `~/projects/black-flag-bbs` checkout,
 its configured menus and modules, and the source-built DOS client. Passing
 an isolated stock BBS is insufficient. Compatibility is not complete.
 
+The [upload workflow](../lab/bbs/enigma-upload.md) now passes 11 actual DOS
+checks for each of two binary/empty ZMODEM batches, including a 65,539-byte file.
+The test uses the owned upload forms/protocol selector, verifies exact installed
+bytes and official FileEntry size/hash/uploader/description, and returns through
+search/index to usable NFO input. Each capture rejects 13 evidence corruptions.
+The [record](validation/enigma-upload.json) preserves the earlier failed form
+schedules. Received filesystem dates are not accepted: empty uploads acquire
+invalid future dates. Upload interruption, live-board deployment and physical
+modem acceptance remain open. The 31 DOS application products are unchanged.
+
 The [carrier-loss workflow](../lab/bbs/enigma-carrier.md) now tests an aborted
 download, real emulated DCD loss, partial cleanup, redial, second ASPECT login,
 confirmed retry and NFO in one DOS process. It uses DOSBox-X's built-in modem;

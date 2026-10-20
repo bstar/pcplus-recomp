@@ -1,0 +1,300 @@
+{
+  "date": "2026-10-20",
+  "passed": true,
+  "whole_application_gates_closed": [],
+  "workflows": [
+    {
+      "label": "owned-upload-03",
+      "checks": {
+        "DOS_harness": true,
+        "inputs_unchanged": true,
+        "source_files_unchanged": true,
+        "no_post_saved": true,
+        "all_server_files_and_metadata": true,
+        "only_expected_installed_files": true,
+        "DOS_compiler_exact": true,
+        "script_login_trace": true,
+        "exact_binary_and_empty_batch_then_NFO": true,
+        "unique_authenticated_session": true,
+        "actual_upload_and_return_route": true
+      },
+      "files": {
+        "PCUP01.BIN": {
+          "bytes": 1501,
+          "sha256": "911541d8d0127ad480b0d0309b0410e309c50f115329b1d8a9ddf7cfcdc24278",
+          "area": "pcplus_upload",
+          "storage": "pcplus_upload",
+          "uploader": "loclab",
+          "description": "PCUP01",
+          "filesystem_mtime_ns": "1792488999005085760"
+        },
+        "EMPTY.BIN": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "area": "pcplus_upload",
+          "storage": "pcplus_upload",
+          "uploader": "loclab",
+          "description": "EMPTY",
+          "filesystem_mtime_ns": "93824992286765000000000"
+        }
+      },
+      "menus": [
+        "telnetConnected",
+        "matrix",
+        "login",
+        "fullLoginSequenceLoginArt",
+        "fullLoginSequenceLastCallers",
+        "fullLoginSequenceWhosOnline",
+        "fullLoginSequenceOnelinerz",
+        "fullLoginSequenceNewScanConfirm",
+        "fullLoginSequenceUserStats",
+        "mainMenu",
+        "fileBaseMainMenu",
+        "fileBaseUploadFiles",
+        "fileTransferProtocolSelection",
+        "recvFilesFromUser",
+        "fileTransferProtocolSelection",
+        "fileBaseUploadFiles",
+        "fileBaseMainMenu",
+        "fileBaseSearch",
+        "blackFlagZipResults",
+        "locGameDetails",
+        "blackFlagZipResults"
+      ],
+      "corruptions_rejected": 13,
+      "producer_sha256": "be2a45a80c4d7fc7642aa3843db1e24379a7b9615a781b1fc1ad0501c103c3e1"
+    },
+    {
+      "label": "owned-upload-large-02",
+      "checks": {
+        "DOS_harness": true,
+        "inputs_unchanged": true,
+        "source_files_unchanged": true,
+        "no_post_saved": true,
+        "all_server_files_and_metadata": true,
+        "only_expected_installed_files": true,
+        "DOS_compiler_exact": true,
+        "script_login_trace": true,
+        "exact_binary_and_empty_batch_then_NFO": true,
+        "unique_authenticated_session": true,
+        "actual_upload_and_return_route": true
+      },
+      "files": {
+        "PCUP01.BIN": {
+          "bytes": 65539,
+          "sha256": "aa9083a24261026a5dfbf5182257be491d98e9d7127485b147b87992ea201388",
+          "area": "pcplus_upload",
+          "storage": "pcplus_upload",
+          "uploader": "loclab",
+          "description": "PCUP01",
+          "filesystem_mtime_ns": "1792490038438281163"
+        },
+        "EMPTY.BIN": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "area": "pcplus_upload",
+          "storage": "pcplus_upload",
+          "uploader": "loclab",
+          "description": "EMPTY",
+          "filesystem_mtime_ns": "93824992286765000000000"
+        }
+      },
+      "menus": [
+        "telnetConnected",
+        "matrix",
+        "login",
+        "fullLoginSequenceLoginArt",
+        "fullLoginSequenceLastCallers",
+        "fullLoginSequenceWhosOnline",
+        "fullLoginSequenceOnelinerz",
+        "fullLoginSequenceNewScanConfirm",
+        "fullLoginSequenceUserStats",
+        "mainMenu",
+        "fileBaseMainMenu",
+        "fileBaseUploadFiles",
+        "fileTransferProtocolSelection",
+        "recvFilesFromUser",
+        "fileTransferProtocolSelection",
+        "fileBaseUploadFiles",
+        "fileBaseMainMenu",
+        "fileBaseSearch",
+        "blackFlagZipResults",
+        "locGameDetails",
+        "blackFlagZipResults"
+      ],
+      "corruptions_rejected": 13,
+      "producer_sha256": "7734f5d9eca1fee78c9ff1d7930cbfa2cb09f6a2a14178fefe7222e06f08c004"
+    }
+  ],
+  "unchanged_source_products": {
+    "aspect-process-parent/ASPECT.EXE": "cd580a12fda2e38edbac6fa9ebd19727b11c9e8393b1a6fe561531164bebb63d",
+    "aspect-fault/ASPECT.EXE": "bbeb4c85546d0cb0e6c94801d78c4472e4a77efe7cb1a1c6dab6e7e2b03f5c7e",
+    "aspect-process/ASPECT.EXE": "ccf0aeaf2f58ef8628335f170df859a01217885dc6e58ea7433f648bbee57025",
+    "aspect-runner/ASPECT.EXE": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+    "aspect-compiler-dos/ASPCOMP.EXE": "3470c718df0d21fad4635b99f6c3b2e5d307637581728bdb639e6e9521a9c931",
+    "terminal-process/TERMINAL.EXE": "141bc29627c0f5c86389b5024ac07897e8fd62aacdab7a419d1d0369c3c082d1",
+    "terminal/TERMINAL.EXE": "158b0c40df7f86e1eda8695b3b1e812d000838b1079ad6287786390489a1c4ed",
+    "native-program/PROGRAM.EXE": "582a6844f454de92e66fad3e6694b26b1fdee6565d91ce563e8ebc38d8afb8d1",
+    "native-program/OWN1.COM": "4a02a70aa7ddec17648947eb822a045a3bbc5666485d0861277f784632640a39",
+    "native-program/OWN2.COM": "e496c8227feaeee3abe5d00a2ac8a77624a0070a2e41d82215dadf912171a4b5",
+    "native-display/DISPLAY.EXE": "0e6dc8e4e852e0f940b810a7aefbae2378c3c18985ddcf2dea1c01f5544dd6cf",
+    "native-display/VIDEO.COM": "e38463e46b8f8c42f2bcd90a1e9707ace08ae63704fa16e317a87df3fbb39605",
+    "process-serial/PSERIAL.EXE": "7cf3775f5e26ab6e83023744c6ddfaec9de57073449570fe514c0584ee4c9619",
+    "process-serial/UART1.COM": "a7bb9817a9401d7c0127d68b5bc38f5f9a2b47e34827c4daeee471857deb654e",
+    "process-serial/UART2.COM": "3dda15dc346ef3ddfc42eb6b54890254590dd6fc7ce48f1c116d9d84cc862f3f",
+    "native-process/NATIVE.EXE": "03723b988eab3df0cf7c128a1c6fc8356045b2bc0aac3865ab8f975ee300a7e0",
+    "native-process/NAMES.EXE": "0485267021744f48db472a3c6a6ebe10beabb3ac64d3b673c2748a8e1e0e8409",
+    "native-process/CHILD.COM": "0c8bb3b2499821ac74ddd47e4cc58ee34a633d7537be5f15db7ab80f878f9f18",
+    "native-process/DIVIDE.COM": "a2d4de6488769a320efd699e9c8e367574f7d398f9b1b63a30a22b099fb90e79",
+    "native-process/VECT.COM": "ca624aef48dfd14a782633e6253fdc817c6df15c61aaafe73ffc814a1f01b79f",
+    "native-process/RESIDENT.COM": "b56878449a5528fa3403207d369262e3a5422d2d489cce2f323727579bc200a8",
+    "native-process/EMPTY.COM": "fb3899847c3e4e1e817dd8f80108e41a46693128b4aa3a8306f3d86cdbaa79d6",
+    "native-process/FLAGS.COM": "83c3623d9e7e8db33301b96448910701f95033debff389462ef8c4d7e92489c0",
+    "native-process/E17.COM": "c3a5760861de337896c7259bb44f6c05284278040d22d4fc9cb42688d8d247e1",
+    "native-process/E21.COM": "def6a10413daf417e92cc622ffbeb96dd3abf12796f9ca071662503c1ce781b1",
+    "native-process/E22.COM": "f9903bca908e88fc0c10aa4ac088a180493ac66d8d2c911dcf8eae362b5a0b6b",
+    "native-process/CHILD.EXE": "63080cc4387cd191b3ae0495ad21b023e266689336c4f29c22190246b2a2c8df",
+    "terminal-mouse/TERMINAL.EXE": "1729c3fa5f219dbbe983f7b0cd7208e7a0543fbd3d345351632ec0a7b5c41f59",
+    "terminal-mouse-process/TERMINAL.EXE": "d9a05ee6de52e382503124c4eb7b8c4ce97173cbb841bc9d7632737e5f9794b5",
+    "setup/PRMEDIT.EXE": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646",
+    "setup-mouse/PRMEDIT.EXE": "0f0dafd6b783bf8ae5d170ddd4448273057cf7ff168e8e21d74ef1be657e8128"
+  },
+  "unchanged_application_products": 31,
+  "original_build_inputs": [],
+  "retained_failures": [
+    {
+      "label": "owned-upload-02",
+      "checks": {
+        "DOS_harness": true,
+        "inputs_unchanged": true,
+        "source_files_unchanged": true,
+        "no_post_saved": true,
+        "all_server_files_and_metadata": false,
+        "only_expected_installed_files": false,
+        "DOS_compiler_exact": true,
+        "script_login_trace": true,
+        "exact_binary_and_empty_batch_then_NFO": false,
+        "unique_authenticated_session": true,
+        "actual_upload_and_return_route": false
+      },
+      "menus": [
+        "telnetConnected",
+        "matrix",
+        "login",
+        "fullLoginSequenceLoginArt",
+        "fullLoginSequenceLastCallers",
+        "fullLoginSequenceWhosOnline",
+        "fullLoginSequenceOnelinerz",
+        "fullLoginSequenceNewScanConfirm",
+        "fullLoginSequenceUserStats",
+        "mainMenu",
+        "fileBaseMainMenu",
+        "fileBaseUploadFiles",
+        "fileTransferProtocolSelection",
+        "recvFilesFromUser",
+        "fileTransferProtocolSelection",
+        "fileBaseUploadFiles"
+      ],
+      "reason": "Protocol completed; the three-Tab details recipe did not accept/persist the batch."
+    },
+    {
+      "label": "owned-upload-large-01",
+      "checks": {
+        "DOS_harness": true,
+        "inputs_unchanged": true,
+        "source_files_unchanged": true,
+        "no_post_saved": true,
+        "all_server_files_and_metadata": false,
+        "only_expected_installed_files": false,
+        "DOS_compiler_exact": true,
+        "script_login_trace": true,
+        "exact_binary_and_empty_batch_then_NFO": false,
+        "unique_authenticated_session": true,
+        "actual_upload_and_return_route": false
+      },
+      "menus": [
+        "telnetConnected",
+        "matrix",
+        "login",
+        "fullLoginSequenceLoginArt",
+        "fullLoginSequenceLastCallers",
+        "fullLoginSequenceWhosOnline",
+        "fullLoginSequenceOnelinerz",
+        "fullLoginSequenceNewScanConfirm",
+        "fullLoginSequenceUserStats",
+        "mainMenu",
+        "fileBaseMainMenu",
+        "fileBaseUploadFiles",
+        "fileTransferProtocolSelection",
+        "recvFilesFromUser",
+        "fileTransferProtocolSelection",
+        "fileBaseUploadFiles"
+      ],
+      "reason": "Protocol completed; queued processing/details output outlasted the keyboard schedule. No files were persisted or NFO reached."
+    }
+  ],
+  "evidence": [
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-03/upload-checks.json",
+      "sha256": "ac37cdb68d1416afcb0b28bc4abb60e7484af5845939601dd9285759a46874ff"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-03/upload-audit-negative-checks.json",
+      "sha256": "33b236d9878e90778f168d6465cb5f0cca94abac1c5d3fa92373339d4b84d3c7"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-03/server-upload-metadata.json",
+      "sha256": "f8c6bbd5aa72831c85b56ef520c03e81b44df279509fabbee47c2a83db6d94cb"
+    },
+    {
+      "path": "build/bbs-lab/owned-enigma-upload-01/candidate/search-instance.json",
+      "sha256": "fbb66ab195bf3b38d3336675e329f92849c5cf9cca15c454b689a52394bdeb88"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-large-02/upload-checks.json",
+      "sha256": "b721b5b79518ba0309beb7ebfe7f2032cea0dd1e2ddcd6c52ce623001a0a3870"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-large-02/upload-audit-negative-checks.json",
+      "sha256": "86fe776e9cafb182f36609a46b604bb0b11df4f258e90fa59b73cf3400884dd8"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-large-02/server-upload-metadata.json",
+      "sha256": "5cd7b12b9a3d88cc11e11f65a8953a0b486c8dc0e5edf0496c07c301fba23d6a"
+    },
+    {
+      "path": "build/bbs-lab/owned-enigma-upload-02/candidate/search-instance.json",
+      "sha256": "d3bc99aa1bb0774d0b9b79fc2877e576c380f7fe15b12b033eddf873565cedd6"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-02/upload-checks.json",
+      "sha256": "0f950f5102cdecb8c8a4e2b6ed5e9601ee6bb1615b44d22b504b2b2beeee1c2c"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-upload-large-01/upload-checks.json",
+      "sha256": "61f3a1b3a9e14abd87cdb7910e86a3fa8645d8a1b02140cb61b360a4b0845cdb"
+    },
+    {
+      "path": "docs/validation/enigma-carrier.json",
+      "sha256": "d7a8e0d6b7a136b9010f4bf64e7fed655225d460d5a5f7d9f3aabf9e01b51660"
+    }
+  ],
+  "sources": {
+    "lab/bbs/enigma_search_fixture.py": "a403ee82c062c4a2dc0da6e2b489f3879225d45ee5989bcdaa4537fe97e29e26",
+    "lab/bbs/enigma_upload_dos.py": "7734f5d9eca1fee78c9ff1d7930cbfa2cb09f6a2a14178fefe7222e06f08c004",
+    "lab/bbs/check_enigma_upload_audit.py": "f6a6fe1e1ad46c0c0109d27d422925261fea1d780a1ac0bc4a83428318efcc31",
+    "lab/bbs/audit_zmodem.py": "510ad0fd519c8fa279599956d13852f984a1e32e49e4588e1c482749829d5ad9",
+    "lab/bbs/enigma_script_login.py": "d1ca977c3913cc3bdf75639e564713205d1244ec336e18cc803eed26f856363f"
+  },
+  "recorder_sha256": "cacf1d8759d73d423a926a93af8717f12065507e236d726e665ac94dcc883e3e",
+  "nix_inputs": {
+    "nix/flake.nix": "7f069dd8346be02006737101a2790b99a881411fa75b657316f75b090816c15f",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+  },
+  "limitations": [
+    "Isolated staged ENiGMA decoder, synthetic accounts/areas/files and modeled19200/HARD modem. No live deployment or physical Wi-Fi firmware acceptance.",
+    "The smaller capture predates the optional size argument; its producer hash is retained separately. Both captures are re-audited by current code.",
+    "Filesystem timestamp acceptance remains open: both empty uploads have invalid future dates. The sender omits optional mtime; no timestamp preservation claim is made.",
+    "Upload cancellation/carrier loss and other protocols remain open. Current application/source proof is unchanged from the preceding carrier checkpoint."
+  ]
+}

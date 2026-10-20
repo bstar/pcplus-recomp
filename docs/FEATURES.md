@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+The [ENiGMA upload checkpoint](validation/enigma-upload.json) adds actual DOS
+binary/empty batches through the owned upload UI, exact installed data and
+FileEntry catalog checks, and post-upload NFO interaction. Two sizes include a
+65,539-byte binary; 13 damaged captures/catalogs reject for each successful run.
+Empty-file filesystem dates remain invalid, so timestamp handling is still open.
+The 31 application products are unchanged; this closes no whole-application gate.
+
 This inventory preserves the scope of a maintained, source-built PCPlus 2.01
 application for DOS. A serial diagnostic, an ANSI terminal, and a patched original
 are useful milestones; none satisfies this checklist alone. The application build

@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+The [owned ENiGMA upload workflow](lab/bbs/enigma-upload.md) now checks two-file
+ZMODEM batches through the board's selected upload menus and protocol selector.
+Both 1,501-byte and 65,539-byte binaries, each paired with an empty file, pass
+exact storage, official FileEntry metadata, unchanged source and post-upload
+NFO checks. The [record](docs/validation/enigma-upload.json) retains failed UI
+schedules and 13 rejected corruptions per successful capture. Empty-file
+filesystem dates are invalid and remain an explicit follow-up; timestamp
+preservation, upload interruption, live deployment and physical modem acceptance
+are not established. The 31 application products are unchanged.
+
 The latest [ENiGMA carrier work](lab/bbs/enigma-carrier.md) adds interrupted
 receive, actual emulated DCD loss, partial-file cleanup, redial, second scripted
 login and confirmed ZIP/NFO retry in one DOS process. The maintained receiver
