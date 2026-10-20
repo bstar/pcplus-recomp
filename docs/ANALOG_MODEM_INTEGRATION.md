@@ -296,14 +296,28 @@ All hardware tasks remain unchecked until the adapter arrives and the DOS PC
 is connected. Do software-only bridge tests first without relabeling them as
 analog modem results.
 
+Use the [commissioning worksheet](BOCA_COMMISSIONING.md) for each physical run.
+The following status separates prerequisites already exercised from hardware
+acceptance; historical checkpoint sections above describe their own frozen inputs.
+
+| Area | Software evidence available | Still required |
+| --- | --- | --- |
+| Serial/controller | Linked and DOS synthetic-call tests cover selectable DTE, numeric dialing, DCD history/loss, DTR cleanup and timeout budgets. | Actual Boca identity/results, COM/IRQ, CTS/RTS, DCD/DTR and UART load. |
+| Telnet/CP437/binary transport | Isolated codec candidate passes fragmentation/all-byte checks; synthetic-call DOS/BBS transfer receipts exist. | Candidate integration through the complete SIP/DSP path; physical display and transfers. |
+| Modem data pressure | Node writer and booted i386 helper pass separate pressure checks. | Compose those components; resolve native DSP flow credit and serial-to-BBS TCP pressure. |
+| Answering protocol | Pinned source describes VM-first auto mode and legacy native fallback. | Prove a shared protocol with this Boca; V.8 and V.32bis/14400 are unverified. |
+| Hardware/audio | Equipment and topology selected; adapter ordered. | All analog connection, audible handshake and end-to-end acceptance. |
+
 - [ ] Identify Boca model/chipset/UART and manual; record jumpers/base/IRQ,
   firmware identification, supported speaker, flow, DCD/DTR and modulation controls.
-- [ ] Add source-only serial/modem fixtures for actual result strings, fixed DTE,
-  DCD-never-high/loss, CTS stalls, DTR cleanup, numeric dial target and long training.
-- [ ] Test/fix bridge Telnet option state, IAC escaping, binary mode and configurable
-  transfer-safe menu escape; include arbitrary fragmentation and bytes00..FF.
-- [ ] Record Linux dependency versions and backend/image identities; run isolated
-  bridge tests. Simulated callers cannot establish Boca/V.8 compatibility.
+- [ ] Add fixtures from actual Boca result strings and supported command behavior
+  when identified; retain the existing source-only/synthetic controller regressions.
+- [ ] Compose and validate the tested Telnet and Node/control-helper candidates
+  through normal SIP/DSP startup. Existing isolated passes are not deployment or
+  physical acceptance. Resolve remaining pressure gaps before sustained hardware tests.
+- [ ] Record the selected runtime's Linux dependency versions and backend/image
+  identities; existing Nix lab receipts establish only their recorded software inputs.
+  Simulated callers cannot establish Boca/V.8 compatibility.
 - [ ] Configure and record ATA routing/audio after arrival; establish and hear a
   real handshake, observe CONNECT plus `CONNECT>` and enter a BBS hostname there.
   Record backend, protocol, negotiated line rate, fixed DTE and elapsed times.

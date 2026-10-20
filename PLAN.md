@@ -1,5 +1,12 @@
 # Complete DOS rebuild plan
 
+The ordered Boca / SPA2102 hardware path remains an integration target within
+this plan. The [commissioning worksheet](docs/BOCA_COMMISSIONING.md) records
+identity/configuration prerequisites and separate connection, display, sustained
+data, reconnect and transfer runs. No physical compatibility or 14400-bps claim
+is established; the adapter has not arrived. PCPlus remains a serial terminal,
+with SIP/audio/Telnet handled by the Linux bridge.
+
 The [booted i386 helper checkpoint](lab/bbs/synthmodem-vm.md) now uses a pinned
 Nix static32-bit build inside the upstream kernel/runtime. Fourteen actual VM
 checks and an independent wire/payload audit pass, including16777219 exact bytes
