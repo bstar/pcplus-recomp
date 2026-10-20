@@ -9,7 +9,7 @@ sys.path.insert(0,str(ROOT/'src/aspect'))
 from compiler import compile_source
 
 
-def prepare_observer(out,offsets,map_path,exit_map=None,mouse_probe=False,retry_probe=False):
+def prepare_observer(out,offsets,map_path,exit_map=None,mouse_probe=False,retry_probe=False,trap_probe=False):
     render.observer(offsets)
     source=(out/'observer.asm').read_text()
     resources=[('terminal_directory_context_valid',2),('terminal_directory_context',496),
@@ -176,6 +176,9 @@ resource_table: dw RESOURCE_TABLE
     if retry_probe:
         from parent_retry_probe import instrument
         source=instrument(source,map_path,exit_map,offsets)
+    if trap_probe:
+        from trap_parent_probe import instrument
+        source=instrument(source,map_path,exit_map,offsets,retry_probe)
     (out/'observer.asm').write_text(source)
     subprocess.run(['nasm','-fbin',str(out/'observer.asm'),'-o',str(out/'RENDER.COM')],check=True)
     assert (out/'RENDER.COM').stat().st_size<=0xff00,'Observer exceeds DOS COM load limit'
@@ -293,7 +296,7 @@ def main():
     if args.retry:assert args.exit_probe
     if args.terminal_exit_guard:assert args.break_owner
     if args.process_bank:assert args.terminal_exit_guard
-    if args.traps:assert args.process_bank and not args.exit_probe
+    if args.traps:assert args.process_bank
     directory_name='aspect-parent-exit' if args.exit_probe else 'aspect-parent-break' if args.break_owner else 'aspect-parent-process'
     if args.mouse:directory_name+='-mouse'
     if args.retry:directory_name+='-retry'
@@ -316,12 +319,13 @@ def main():
     identities.update({str(p.relative_to(ROOT)):sha(p) for p in [Path(__file__),ROOT/'src/aspect/compiler.py',*[ROOT/'standalone'/n for n in ('aspect_parent_child.asm','aspect_process_shell.asm','test_aspect_renderer_dos.py','test_connection_dos.py','test_terminal.py','directory_fixtures.py','modem_fixtures.py','terminal_config_fixtures.py','directory_test_support.py')]]})
     if args.mouse:identities['standalone/mouse_parent_probe.py']=sha(ROOT/'standalone/mouse_parent_probe.py')
     if args.retry:identities['standalone/parent_retry_probe.py']=sha(ROOT/'standalone/parent_retry_probe.py')
+    if args.traps and args.exit_probe:identities['standalone/trap_parent_probe.py']=sha(ROOT/'standalone/trap_parent_probe.py')
     for name,digest in identities.items():
         assert sha(ROOT/name)==digest,name
         target=out/'sources'/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,target)
     render.OUT=out
     offsets=render.map_offsets(parent.parent/'terminal.map')
-    observer,resource_size=prepare_observer(out,offsets,parent.parent/'terminal.map',child.parent/'ASPECT.map' if args.exit_probe else None,args.mouse,args.retry)
+    observer,resource_size=prepare_observer(out,offsets,parent.parent/'terminal.map',child.parent/'ASPECT.map' if args.exit_probe else None,args.mouse,args.retry,args.traps and args.exit_probe)
     harness=render.adapter(observer_high=args.retry);results=[]
     cases=[dict(name=k,kind=k,option=o,port=1,flow='H',translation='identity',full=False) for k,o in [('G',''),('T',' NOCLEAR'),('W',' WAIT'),('R',' NOCLEAR'),('F','')]]
     cases += [dict(name=f'full-{port}-{flow}',kind='FULL',option='',port=port,flow=flow,translation=('table' if (port+ord(flow))%2 else 'seven'),full=True) for port in (1,2) for flow in 'NSHB']
@@ -409,6 +413,14 @@ def main():
         if kind in 'GW' and not fatal:checks['saved_parent_screen_restored']=screen[:42:2]==b'FIRST BYTE SAFELOGIN:'
         retained=None
         mouse=None
+        trap_snapshot=None
+        if args.traps and args.exit_probe:
+            from trap_parent_probe import MARKER
+            assert raw.count(MARKER)==1
+            trap_snapshot=struct.unpack_from('<16H',raw,raw.index(MARKER)+len(MARKER))
+            checks['caller_traps_suspended']=trap_snapshot[0]==2 and trap_snapshot[15]==1
+            checks['caller_trap_vectors_restored']=trap_snapshot[1:7]==trap_snapshot[8:14]
+            checks['caller_break_flag_restored']=trap_snapshot[7]==trap_snapshot[14] and trap_snapshot[7] in (0,1)
         if not args.exit_probe:checks['no_false_retention_notice']=b'ASPECT memory retained.' not in screen[::2]
         if args.exit_probe:
             retained=struct.unpack_from('<15H',raw,at-30)
@@ -455,7 +467,7 @@ def main():
                 retry_real_PROGRAM=retry['nested_calls']==1 and retry['nested_carry']==0 and retry['nested_lease']==1 and retry['nested_status']==37,
                 retry_resources_unchanged=retry['resources_equal']==1,
                 retry_lease_retired=retry['final_lease']==0,
-                retry_retained_vector_preserved=all(tuple(retry[n] for n in pair)==retained[6:8] for pair in pairs),
+                retry_retained_vector_preserved=all(tuple(retry[n] for n in pair)==(trap_snapshot[1:3] if args.traps else retained[6:8]) for pair in pairs),
                 retry_retained_callback_live=(retry['callback_before'],retry['callback_after'])==(1,2),
                 retry_retained_MCB=retry['retained_owner']==retained[1] and retry['retained_paras']==retained[3],
                 retry_retained_extra=(retry['extra_owner'],retry['extra_paras'],retry['extra_word'])==(retained[1],0x20,0xa55a),
@@ -470,7 +482,7 @@ def main():
             checks['DOS_source_compiler']=(folder/'NEXT.ASX').is_file() and (folder/'NEXT.ASX').read_bytes()==compile_source(next_source)
             checks['real_command_shell']=(folder/'SHELL.OUT').is_file() and (folder/'SHELL.OUT').read_bytes()==b'SHELLREAL'
             checks['pending_stream_output']=(folder/'WRITE.BIN').is_file() and (folder/'WRITE.BIN').read_bytes()==b'pending5'
-        result.update(passed=all(checks.values()),passive_header=header,resource_words=resources,nested_EXEC=records,compared_parent_bytes=resource_size,configuration=case,retained_words=retained,mouse_probe=mouse,retry_probe=retry)
+        result.update(passed=all(checks.values()),passive_header=header,resource_words=resources,nested_EXEC=records,compared_parent_bytes=resource_size,configuration=case,retained_words=retained,mouse_probe=mouse,retry_probe=retry,trap_snapshot=trap_snapshot)
         (folder/'result.json').write_text(json.dumps(result,indent=2)+'\n');results.append(result)
         print(name,'FINAL PASS' if result['passed'] else 'FINAL FAIL',flush=True)
     for name,digest in identities.items():assert sha(ROOT/name)==digest,name

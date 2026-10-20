@@ -8,11 +8,24 @@ reproduce from declared source only. Normal exit restores the caller baseline;
 unknown ownership retains the validated allocation. Critical Fail permission
 and modeled holding are explicit. This closes no complete application gate.
 
-Next, adapt the retained-ASPECT retry observer to distinguish a valid retained
-ISR from the application's restored caller vector, then validate retry under
-the trap policy. Repeat the Synchronet/ENiGMA acceptance workflows against the
-new products. ENiGMA immediate-forwarding Home/Insert behavior, physical modem
-acceptance, normal publication and remaining application services remain open.
+The [trap-aware retry receipt](docs/validation/terminal-trap-retry.json) now
+passes sixteen COM/flow routes and1056 checks. A passive snapshot distinguishes
+the caller's restored trap vectors from the retained child's exact linked ISR;
+the observer validates its MCB/address before calling it without changing IVT.
+Two untrapped retry controls pass126 checks. The production binaries are
+unchanged from the trap-owner checkpoint.
+
+The [stock editor receipt](docs/validation/terminal-trap-editors.json) repeats
+keyboard-client compatibility under the new trap policy: Synchronet immediate
+and ENiGMA30ms-buffered workflows pass. Immediate ENiGMA still fails Home/Insert
+despite correct measured key emission; its unsaved failure remains explicit.
+This does not establish full transfer/door, mouse-BBS or physical acceptance.
+
+Next, audit the remaining application lifetime/nonlocal-error paths before
+normal publication and continue complete ENiGMA/Synchronet workflows. Resolve
+immediate-forwarding ENiGMA behavior without treating buffered or patched-server
+results as stock compatibility. Physical modem acceptance and remaining
+application services remain open; all full application gates remain open.
 
 The [terminal process bank](docs/TERMINAL_PROCESS_BANK.md) moves the maintained
 EXEC backend behind a checked near/far three-word ABI, saving594/592 near-code

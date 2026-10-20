@@ -1,0 +1,136 @@
+{
+  "recorded": true,
+  "binary_sha256": "bf3ed3dce797ae728dbe6c1a9144e2c90da8e36fe6850de8d5ae269d20788d1f",
+  "runs": [
+    {
+      "server": "synchronet",
+      "label": "traps-synchronet-editor-01",
+      "modem_packet_delay_ms": 0,
+      "editor_passed": true,
+      "checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "draft_aborted": true,
+        "insert_toggled_overtype": true,
+        "home_marker_at_line_start": true,
+        "end_marker_at_line_end": true,
+        "delete_erases_final_character": true,
+        "tab_advances_to_next_stop": true,
+        "page_keys_report_document_boundaries": true,
+        "ctrl_y_delete_line_response": true
+      },
+      "observed_key_wire": {
+        "home": true,
+        "end": true,
+        "insert": true,
+        "delete": true,
+        "page_up": true,
+        "page_down": true,
+        "tab": true,
+        "delete_line_ctrl_y": true
+      },
+      "evidence": {
+        "build/bbs-lab/results/synchronet/traps-synchronet-editor-01/result.json": "2cd3a6254f70240c7c3dd1e4c9e8250f7cbe09adfb5b55fdea5563e1accc69fa",
+        "build/bbs-lab/results/synchronet/traps-synchronet-editor-01/semantic-audit.json": "5fc1a2f6984dff93cf11eb1012a67390af7728eb743daf02a534f7d1148f32d1",
+        "build/bbs-lab/results/synchronet/traps-synchronet-editor-01/dosbox.conf": "a946648dfc01170af2baa7afe13ca53ed2693edb4bc1574a47ea6cbdbb0e22c8",
+        "build/bbs-lab/results/synchronet/traps-synchronet-editor-01/serial-received.bin": "c6f2d0a6f7e0f6320a673bb23846133cbaefaf589b5ee1ee8be63affb0c8b685",
+        "build/bbs-lab/results/synchronet/traps-synchronet-editor-01/display.bin": "ae76709ac4ff72e10a57eac972e3566b1b7eaafe5068fc81418b6000a0781d64",
+        "build/bbs-lab/results/synchronet/traps-synchronet-editor-01/SCREEN.BIN": "6caa1064444ba74d7cf220c53b685a331cf26c09696116a9754cd44c65df1687",
+        "build/bbs-lab/results/synchronet/traps-synchronet-editor-01/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/synchronet/traps-synchronet-editor-01/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+      }
+    },
+    {
+      "server": "enigma",
+      "label": "traps-enigma-editor-buffered-01",
+      "modem_packet_delay_ms": 30,
+      "editor_passed": true,
+      "checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "no_post_saved": true,
+        "insert_toggled_overtype": true,
+        "home_moves_before_marker": true
+      },
+      "observed_key_wire": {
+        "home": true,
+        "end": true,
+        "insert": true,
+        "delete": true,
+        "page_up": true,
+        "page_down": true,
+        "tab": true,
+        "delete_line_ctrl_y": true
+      },
+      "evidence": {
+        "build/bbs-lab/results/enigma/traps-enigma-editor-buffered-01/result.json": "b8c55640ab8853696e93ac10028715be9514f8eca43bc210dccccc062451cd43",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-buffered-01/semantic-audit.json": "eca49a90fbbaf8c0d9a5fee4e74a06b9a665d3f283c6171e3a57d50eead5ef3b",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-buffered-01/dosbox.conf": "6a89676829d8066d53c7382c6b2c34c4910ae2609569958cb43cec829b306e01",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-buffered-01/serial-received.bin": "e2ac8be3a323add1bea14055c8d25ff7badf37921fb3cc9fe3278918f1ae3397",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-buffered-01/display.bin": "fe70dfa0146c015f4bca4f88bd06241f1e13cf79d8b3d844f9fe22797af3b19a",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-buffered-01/SCREEN.BIN": "95ed5f6c1ff5557e5ccd75735358b0f28810fd5303e28e5f275064d8eef1dbec",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-buffered-01/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-buffered-01/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-buffered-01/server-log-start.json": "3336ee071f1ab88ffcdefb4f7816e45c0529cff934afaf6676a36fda2662c744",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-buffered-01/server-session.jsonl": "b936846b671eae47e4020f1028f2bc99d20d76966a4d5b80314a4ade2f1fe535"
+      }
+    },
+    {
+      "server": "enigma",
+      "label": "traps-enigma-editor-immediate-01",
+      "modem_packet_delay_ms": 0,
+      "editor_passed": false,
+      "checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "no_post_saved": true,
+        "insert_toggled_overtype": false,
+        "home_moves_before_marker": false
+      },
+      "observed_key_wire": {
+        "home": true,
+        "end": true,
+        "insert": true,
+        "delete": true,
+        "page_up": true,
+        "page_down": true,
+        "tab": true,
+        "delete_line_ctrl_y": true
+      },
+      "evidence": {
+        "build/bbs-lab/results/enigma/traps-enigma-editor-immediate-01/result.json": "f3133a4ff25bed2471a24c58c7482975186cb511914712cf3aff46801e3bac29",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-immediate-01/semantic-audit.json": "4bd0b9afec7fe604efdddeacc815e8b93ae8ad4e4514d184ff60513d7b6c34ac",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-immediate-01/dosbox.conf": "8674d5440fb901eb463eaaa36da5a6caf3b81d718e14f5954aed247f234ce3df",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-immediate-01/serial-received.bin": "d7789c407d3f122cf50ae8ee9b415391086a39220f4d3c57d14c6e3a4c13495c",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-immediate-01/display.bin": "9c8969cc78d22d3980f77347f0cc56e8ef81d4d97934751c7da3c2afa97c1eaa",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-immediate-01/SCREEN.BIN": "17c00ffcf3edb2566c34f02c14c791503cb6d3394a791fdcc780d6bf51668a92",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-immediate-01/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-immediate-01/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-immediate-01/server-log-start.json": "98cda3ca109d0cdd91d07fbb9cd421559beeaed599ff685ec3c329a51de72cf2",
+        "build/bbs-lab/results/enigma/traps-enigma-editor-immediate-01/server-session.jsonl": "f813b9e7dac86513abe520259b7e42fea772ca7078e4a138c21fbcf1308e4a6d"
+      }
+    }
+  ],
+  "immediate_ENiGMA_passed": false,
+  "stock_ENiGMA_commit": "6c25317168b762f7d9088a54d3f8295438827a0e",
+  "stock_source_sha256": {
+    "core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+    "core/multi_line_edit_text_view.js": "687eb7ae3355cea0e91a30f80134a87b9060bc26f11f1661c7c4f7cfb0d47ce7"
+  },
+  "auditor_sha256": "919d373b4879560219fe10049f1df74b76cbcf03c6a738b58caf7b685ed79845",
+  "audit_sources": {
+    "lab/bbs/test_dos.py": "4f4f1119d52e59664073ec61b3ecb54b7d5e5dab0e9ecf90d7e6b827344bf6d6",
+    "lab/bbs/editor_dos_probe.py": "e151b915529b28aa293408114feed5617f0a41099cdf83c059e743869f58a932",
+    "lab/bbs/check_editor_dos.py": "6857d87a4e476d5237ad2b03eef32180f415901034b426dc84a2d6c203d30783",
+    "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+    "lab/bbs/editor-recipes.json": "72777d66ae84bd488f551cdb367deadbb47d4a4405f921f0d1ab0d578b1a3649",
+    "lab/bbs/synchronet-editor-recipe.json": "a2cce7cd32d8b18a722286b4b27af92f9fe5a60007702330ab225a3820c2b221"
+  },
+  "scope": "Keyboard trap-enabled client, stock local editors, unsaved synthetic drafts. Synchronet immediate and ENiGMA buffered passes remain distinct from immediate ENiGMA outcome. No mouse-BBS, physical modem, multiline editing, transfer or door acceptance claim."
+}

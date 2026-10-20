@@ -1,0 +1,487 @@
+{
+  "passed": true,
+  "routes": [
+    {
+      "mouse": false,
+      "case": "Q-1-N",
+      "checks": 61,
+      "retained_PSP": 23778,
+      "retry_PSP": 31856,
+      "callback_hits": 2,
+      "caller_INT1B": [
+        53664,
+        61440
+      ],
+      "retained_ISR": [
+        16,
+        23794
+      ],
+      "parent_sha256": "bf3ed3dce797ae728dbe6c1a9144e2c90da8e36fe6850de8d5ae269d20788d1f"
+    },
+    {
+      "mouse": false,
+      "case": "Q-1-S",
+      "checks": 61,
+      "retained_PSP": 23778,
+      "retry_PSP": 31856,
+      "callback_hits": 2,
+      "caller_INT1B": [
+        53664,
+        61440
+      ],
+      "retained_ISR": [
+        16,
+        23794
+      ],
+      "parent_sha256": "bf3ed3dce797ae728dbe6c1a9144e2c90da8e36fe6850de8d5ae269d20788d1f"
+    },
+    {
+      "mouse": false,
+      "case": "Q-1-H",
+      "checks": 61,
+      "retained_PSP": 23778,
+      "retry_PSP": 31856,
+      "callback_hits": 2,
+      "caller_INT1B": [
+        53664,
+        61440
+      ],
+      "retained_ISR": [
+        16,
+        23794
+      ],
+      "parent_sha256": "bf3ed3dce797ae728dbe6c1a9144e2c90da8e36fe6850de8d5ae269d20788d1f"
+    },
+    {
+      "mouse": false,
+      "case": "Q-1-B",
+      "checks": 61,
+      "retained_PSP": 23778,
+      "retry_PSP": 31856,
+      "callback_hits": 2,
+      "caller_INT1B": [
+        53664,
+        61440
+      ],
+      "retained_ISR": [
+        16,
+        23794
+      ],
+      "parent_sha256": "bf3ed3dce797ae728dbe6c1a9144e2c90da8e36fe6850de8d5ae269d20788d1f"
+    },
+    {
+      "mouse": false,
+      "case": "Q-2-N",
+      "checks": 61,
+      "retained_PSP": 23778,
+      "retry_PSP": 31856,
+      "callback_hits": 2,
+      "caller_INT1B": [
+        53664,
+        61440
+      ],
+      "retained_ISR": [
+        16,
+        23794
+      ],
+      "parent_sha256": "bf3ed3dce797ae728dbe6c1a9144e2c90da8e36fe6850de8d5ae269d20788d1f"
+    },
+    {
+      "mouse": false,
+      "case": "Q-2-S",
+      "checks": 61,
+      "retained_PSP": 23778,
+      "retry_PSP": 31856,
+      "callback_hits": 2,
+      "caller_INT1B": [
+        53664,
+        61440
+      ],
+      "retained_ISR": [
+        16,
+        23794
+      ],
+      "parent_sha256": "bf3ed3dce797ae728dbe6c1a9144e2c90da8e36fe6850de8d5ae269d20788d1f"
+    },
+    {
+      "mouse": false,
+      "case": "Q-2-H",
+      "checks": 61,
+      "retained_PSP": 23778,
+      "retry_PSP": 31856,
+      "callback_hits": 2,
+      "caller_INT1B": [
+        53664,
+        61440
+      ],
+      "retained_ISR": [
+        16,
+        23794
+      ],
+      "parent_sha256": "bf3ed3dce797ae728dbe6c1a9144e2c90da8e36fe6850de8d5ae269d20788d1f"
+    },
+    {
+      "mouse": false,
+      "case": "Q-2-B",
+      "checks": 61,
+      "retained_PSP": 23778,
+      "retry_PSP": 31856,
+      "callback_hits": 2,
+      "caller_INT1B": [
+        53664,
+        61440
+      ],
+      "retained_ISR": [
+        16,
+        23794
+      ],
+      "parent_sha256": "bf3ed3dce797ae728dbe6c1a9144e2c90da8e36fe6850de8d5ae269d20788d1f"
+    },
+    {
+      "mouse": true,
+      "case": "Q-1-N",
+      "checks": 71,
+      "retained_PSP": 24005,
+      "retry_PSP": 32083,
+      "callback_hits": 2,
+      "caller_INT1B": [
+        53664,
+        61440
+      ],
+      "retained_ISR": [
+        16,
+        24021
+      ],
+      "parent_sha256": "16ebccb92e60df0e73c18dffb15c3d3fac1b005fc81a62a40afe205f0c9193e3",
+      "mouse_evidence": {
+        "driver_bytes": 576,
+        "state_restored": true,
+        "native_menu_stage": 2,
+        "capture_sha256": "b1dfeed1b49ff063fa278aaa543604ceb12dc850b5ff3b47b35c41cb0299dd0a"
+      }
+    },
+    {
+      "mouse": true,
+      "case": "Q-1-S",
+      "checks": 71,
+      "retained_PSP": 24005,
+      "retry_PSP": 32083,
+      "callback_hits": 2,
+      "caller_INT1B": [
+        53664,
+        61440
+      ],
+      "retained_ISR": [
+        16,
+        24021
+      ],
+      "parent_sha256": "16ebccb92e60df0e73c18dffb15c3d3fac1b005fc81a62a40afe205f0c9193e3",
+      "mouse_evidence": {
+        "driver_bytes": 576,
+        "state_restored": true,
+        "native_menu_stage": 2,
+        "capture_sha256": "b1dfeed1b49ff063fa278aaa543604ceb12dc850b5ff3b47b35c41cb0299dd0a"
+      }
+    },
+    {
+      "mouse": true,
+      "case": "Q-1-H",
+      "checks": 71,
+      "retained_PSP": 24005,
+      "retry_PSP": 32083,
+      "callback_hits": 2,
+      "caller_INT1B": [
+        53664,
+        61440
+      ],
+      "retained_ISR": [
+        16,
+        24021
+      ],
+      "parent_sha256": "16ebccb92e60df0e73c18dffb15c3d3fac1b005fc81a62a40afe205f0c9193e3",
+      "mouse_evidence": {
+        "driver_bytes": 576,
+        "state_restored": true,
+        "native_menu_stage": 2,
+        "capture_sha256": "b1dfeed1b49ff063fa278aaa543604ceb12dc850b5ff3b47b35c41cb0299dd0a"
+      }
+    },
+    {
+      "mouse": true,
+      "case": "Q-1-B",
+      "checks": 71,
+      "retained_PSP": 24005,
+      "retry_PSP": 32083,
+      "callback_hits": 2,
+      "caller_INT1B": [
+        53664,
+        61440
+      ],
+      "retained_ISR": [
+        16,
+        24021
+      ],
+      "parent_sha256": "16ebccb92e60df0e73c18dffb15c3d3fac1b005fc81a62a40afe205f0c9193e3",
+      "mouse_evidence": {
+        "driver_bytes": 576,
+        "state_restored": true,
+        "native_menu_stage": 2,
+        "capture_sha256": "b1dfeed1b49ff063fa278aaa543604ceb12dc850b5ff3b47b35c41cb0299dd0a"
+      }
+    },
+    {
+      "mouse": true,
+      "case": "Q-2-N",
+      "checks": 71,
+      "retained_PSP": 24005,
+      "retry_PSP": 32083,
+      "callback_hits": 2,
+      "caller_INT1B": [
+        53664,
+        61440
+      ],
+      "retained_ISR": [
+        16,
+        24021
+      ],
+      "parent_sha256": "16ebccb92e60df0e73c18dffb15c3d3fac1b005fc81a62a40afe205f0c9193e3",
+      "mouse_evidence": {
+        "driver_bytes": 576,
+        "state_restored": true,
+        "native_menu_stage": 2,
+        "capture_sha256": "b1dfeed1b49ff063fa278aaa543604ceb12dc850b5ff3b47b35c41cb0299dd0a"
+      }
+    },
+    {
+      "mouse": true,
+      "case": "Q-2-S",
+      "checks": 71,
+      "retained_PSP": 24005,
+      "retry_PSP": 32083,
+      "callback_hits": 2,
+      "caller_INT1B": [
+        53664,
+        61440
+      ],
+      "retained_ISR": [
+        16,
+        24021
+      ],
+      "parent_sha256": "16ebccb92e60df0e73c18dffb15c3d3fac1b005fc81a62a40afe205f0c9193e3",
+      "mouse_evidence": {
+        "driver_bytes": 576,
+        "state_restored": true,
+        "native_menu_stage": 2,
+        "capture_sha256": "b1dfeed1b49ff063fa278aaa543604ceb12dc850b5ff3b47b35c41cb0299dd0a"
+      }
+    },
+    {
+      "mouse": true,
+      "case": "Q-2-H",
+      "checks": 71,
+      "retained_PSP": 24005,
+      "retry_PSP": 32083,
+      "callback_hits": 2,
+      "caller_INT1B": [
+        53664,
+        61440
+      ],
+      "retained_ISR": [
+        16,
+        24021
+      ],
+      "parent_sha256": "16ebccb92e60df0e73c18dffb15c3d3fac1b005fc81a62a40afe205f0c9193e3",
+      "mouse_evidence": {
+        "driver_bytes": 576,
+        "state_restored": true,
+        "native_menu_stage": 2,
+        "capture_sha256": "b1dfeed1b49ff063fa278aaa543604ceb12dc850b5ff3b47b35c41cb0299dd0a"
+      }
+    },
+    {
+      "mouse": true,
+      "case": "Q-2-B",
+      "checks": 71,
+      "retained_PSP": 24005,
+      "retry_PSP": 32083,
+      "callback_hits": 2,
+      "caller_INT1B": [
+        53664,
+        61440
+      ],
+      "retained_ISR": [
+        16,
+        24021
+      ],
+      "parent_sha256": "16ebccb92e60df0e73c18dffb15c3d3fac1b005fc81a62a40afe205f0c9193e3",
+      "mouse_evidence": {
+        "driver_bytes": 576,
+        "state_restored": true,
+        "native_menu_stage": 2,
+        "capture_sha256": "b1dfeed1b49ff063fa278aaa543604ceb12dc850b5ff3b47b35c41cb0299dd0a"
+      }
+    }
+  ],
+  "checks": 1056,
+  "evidence": {
+    "build/aspect-parent-exit-retry-guarded-banked-traps/trap-retry-keyboard-01/Q-1-N": {
+      "RENDER.BIN": "996f0038163eeede65071afd905d5bae577adbbcc4e06fc05735001e67b50f46",
+      "result.json": "9cf66b8b33785af0f372bed84057a93634d4204dc0a3a5c2216ca7e786e20753",
+      "RETRYWIT.BIN": "88f5e5b2d1fe51ffbd5020a00c75b9d6fe2436a86241bc80e40bd10e09112ab0",
+      "RETRYDBG.BIN": "ff796bd4cb45da18fee6978d921b5cb5e939d88bc8a3d4870d95eddeb30b1c32",
+      "RETRY.OUT": "fa530c3659e21bb1608ee9d2e4be807925430053a50dea0297d40ec4e47a179c",
+      "serial.bin": "fdf584e977c5d587ab9e9dd8774ee2ee5f5e90f12cfcc1b40b292ec5e3e869e1",
+      "SCREEN.BIN": "8782d51562d741d1def670bb4441b4b6e0b6c6f96db31adc3691816ca46570f0"
+    },
+    "build/aspect-parent-exit-retry-guarded-banked-traps/trap-retry-keyboard-01/Q-1-S": {
+      "RENDER.BIN": "fb9120d6366db213057c7f1fe3d9bb44e3b781e5a4c2bb4cea17dfefb86b27fa",
+      "result.json": "48135af0077aa7ef3fd85fa14e4209a60eb4ef5c36f5fb16e1e868d5657c949c",
+      "RETRYWIT.BIN": "88f5e5b2d1fe51ffbd5020a00c75b9d6fe2436a86241bc80e40bd10e09112ab0",
+      "RETRYDBG.BIN": "ff796bd4cb45da18fee6978d921b5cb5e939d88bc8a3d4870d95eddeb30b1c32",
+      "RETRY.OUT": "fa530c3659e21bb1608ee9d2e4be807925430053a50dea0297d40ec4e47a179c",
+      "serial.bin": "01d3ff17cbb110b8774afdc7dfa20ecd552707782e73e9d7b48b5ebdf3e35a11",
+      "SCREEN.BIN": "8782d51562d741d1def670bb4441b4b6e0b6c6f96db31adc3691816ca46570f0"
+    },
+    "build/aspect-parent-exit-retry-guarded-banked-traps/trap-retry-keyboard-01/Q-1-H": {
+      "RENDER.BIN": "67972fdeb938b865083a73082294b7de07e1e93a1f1576593f7d0871c130fdf2",
+      "result.json": "d094411578dc1c16a8b96724ec44bedba907f08ffd43fdd29dde6778f9c989ba",
+      "RETRYWIT.BIN": "88f5e5b2d1fe51ffbd5020a00c75b9d6fe2436a86241bc80e40bd10e09112ab0",
+      "RETRYDBG.BIN": "ff796bd4cb45da18fee6978d921b5cb5e939d88bc8a3d4870d95eddeb30b1c32",
+      "RETRY.OUT": "fa530c3659e21bb1608ee9d2e4be807925430053a50dea0297d40ec4e47a179c",
+      "serial.bin": "fdf584e977c5d587ab9e9dd8774ee2ee5f5e90f12cfcc1b40b292ec5e3e869e1",
+      "SCREEN.BIN": "8782d51562d741d1def670bb4441b4b6e0b6c6f96db31adc3691816ca46570f0"
+    },
+    "build/aspect-parent-exit-retry-guarded-banked-traps/trap-retry-keyboard-01/Q-1-B": {
+      "RENDER.BIN": "1673a6342a368d008b3342dd493b3c1ed5e5b4e437a1c601d6038386116c939d",
+      "result.json": "d1ea6a5cbc7707fa2223060a9b8e34de5359cd19162440f61b5941fca9a741bd",
+      "RETRYWIT.BIN": "88f5e5b2d1fe51ffbd5020a00c75b9d6fe2436a86241bc80e40bd10e09112ab0",
+      "RETRYDBG.BIN": "ff796bd4cb45da18fee6978d921b5cb5e939d88bc8a3d4870d95eddeb30b1c32",
+      "RETRY.OUT": "fa530c3659e21bb1608ee9d2e4be807925430053a50dea0297d40ec4e47a179c",
+      "serial.bin": "01d3ff17cbb110b8774afdc7dfa20ecd552707782e73e9d7b48b5ebdf3e35a11",
+      "SCREEN.BIN": "8782d51562d741d1def670bb4441b4b6e0b6c6f96db31adc3691816ca46570f0"
+    },
+    "build/aspect-parent-exit-retry-guarded-banked-traps/trap-retry-keyboard-01/Q-2-N": {
+      "RENDER.BIN": "2011bf417fb8a0ba84f64518e7b8e644a3b47362c33cf6c3ef0b8a8f6cc23193",
+      "result.json": "3eaa443b3b0c53da9f822f0af92be0f881997e9d779266f69519d97fa7742a11",
+      "RETRYWIT.BIN": "88f5e5b2d1fe51ffbd5020a00c75b9d6fe2436a86241bc80e40bd10e09112ab0",
+      "RETRYDBG.BIN": "ff796bd4cb45da18fee6978d921b5cb5e939d88bc8a3d4870d95eddeb30b1c32",
+      "RETRY.OUT": "fa530c3659e21bb1608ee9d2e4be807925430053a50dea0297d40ec4e47a179c",
+      "serial.bin": "fdf584e977c5d587ab9e9dd8774ee2ee5f5e90f12cfcc1b40b292ec5e3e869e1",
+      "SCREEN.BIN": "8782d51562d741d1def670bb4441b4b6e0b6c6f96db31adc3691816ca46570f0"
+    },
+    "build/aspect-parent-exit-retry-guarded-banked-traps/trap-retry-keyboard-01/Q-2-S": {
+      "RENDER.BIN": "32c79351d816ad2a922dd23226eb6817d57f951dcd04930f1e2d77728d41a0df",
+      "result.json": "8b10b8566eb17ffb679bb54c6e8dc9c6eac5c6707cfeffc3c0e146375232178e",
+      "RETRYWIT.BIN": "88f5e5b2d1fe51ffbd5020a00c75b9d6fe2436a86241bc80e40bd10e09112ab0",
+      "RETRYDBG.BIN": "ff796bd4cb45da18fee6978d921b5cb5e939d88bc8a3d4870d95eddeb30b1c32",
+      "RETRY.OUT": "fa530c3659e21bb1608ee9d2e4be807925430053a50dea0297d40ec4e47a179c",
+      "serial.bin": "01d3ff17cbb110b8774afdc7dfa20ecd552707782e73e9d7b48b5ebdf3e35a11",
+      "SCREEN.BIN": "8782d51562d741d1def670bb4441b4b6e0b6c6f96db31adc3691816ca46570f0"
+    },
+    "build/aspect-parent-exit-retry-guarded-banked-traps/trap-retry-keyboard-01/Q-2-H": {
+      "RENDER.BIN": "bb3e84efef2d7e20af792efb808ff2ec14a6374536d5914e666b4660145bac2a",
+      "result.json": "42fe60237e9cc4da197a1134c6f9b0b5c605d5d518e8a706369be370228c34e8",
+      "RETRYWIT.BIN": "88f5e5b2d1fe51ffbd5020a00c75b9d6fe2436a86241bc80e40bd10e09112ab0",
+      "RETRYDBG.BIN": "ff796bd4cb45da18fee6978d921b5cb5e939d88bc8a3d4870d95eddeb30b1c32",
+      "RETRY.OUT": "fa530c3659e21bb1608ee9d2e4be807925430053a50dea0297d40ec4e47a179c",
+      "serial.bin": "fdf584e977c5d587ab9e9dd8774ee2ee5f5e90f12cfcc1b40b292ec5e3e869e1",
+      "SCREEN.BIN": "8782d51562d741d1def670bb4441b4b6e0b6c6f96db31adc3691816ca46570f0"
+    },
+    "build/aspect-parent-exit-retry-guarded-banked-traps/trap-retry-keyboard-01/Q-2-B": {
+      "RENDER.BIN": "3cf516c6febb34e0ca1f90b02c8974da186c2cc04b1b985f1d9338d3a7eb9d4f",
+      "result.json": "0f1285c2b1010c594c99b091d25ed8c3d3d58d72900ce0a87504ae50d3e25a98",
+      "RETRYWIT.BIN": "88f5e5b2d1fe51ffbd5020a00c75b9d6fe2436a86241bc80e40bd10e09112ab0",
+      "RETRYDBG.BIN": "ff796bd4cb45da18fee6978d921b5cb5e939d88bc8a3d4870d95eddeb30b1c32",
+      "RETRY.OUT": "fa530c3659e21bb1608ee9d2e4be807925430053a50dea0297d40ec4e47a179c",
+      "serial.bin": "01d3ff17cbb110b8774afdc7dfa20ecd552707782e73e9d7b48b5ebdf3e35a11",
+      "SCREEN.BIN": "8782d51562d741d1def670bb4441b4b6e0b6c6f96db31adc3691816ca46570f0"
+    },
+    "build/aspect-parent-exit-mouse-retry-guarded-banked-traps/trap-retry-mouse-01/Q-1-N": {
+      "RENDER.BIN": "c3f9b6bb59a4a4a175a3d4311be384d162029198e2f156301144a9ffd159d7b9",
+      "result.json": "668807e07335a2b67b1e8403cc356d4bad9807bcfd8b0b297457acfc098a316a",
+      "RETRYWIT.BIN": "88f5e5b2d1fe51ffbd5020a00c75b9d6fe2436a86241bc80e40bd10e09112ab0",
+      "RETRYDBG.BIN": "ff796bd4cb45da18fee6978d921b5cb5e939d88bc8a3d4870d95eddeb30b1c32",
+      "RETRY.OUT": "fa530c3659e21bb1608ee9d2e4be807925430053a50dea0297d40ec4e47a179c",
+      "serial.bin": "fdf584e977c5d587ab9e9dd8774ee2ee5f5e90f12cfcc1b40b292ec5e3e869e1",
+      "SCREEN.BIN": "8782d51562d741d1def670bb4441b4b6e0b6c6f96db31adc3691816ca46570f0"
+    },
+    "build/aspect-parent-exit-mouse-retry-guarded-banked-traps/trap-retry-mouse-01/Q-1-S": {
+      "RENDER.BIN": "6006578a216aff5c9074ee13bf0f2100cb4865b0fe2931fb8e403af47eecaaab",
+      "result.json": "76880b6293337e2a5aed2c570bbb3df185206a6396d67d78333336bc73e8942f",
+      "RETRYWIT.BIN": "88f5e5b2d1fe51ffbd5020a00c75b9d6fe2436a86241bc80e40bd10e09112ab0",
+      "RETRYDBG.BIN": "ff796bd4cb45da18fee6978d921b5cb5e939d88bc8a3d4870d95eddeb30b1c32",
+      "RETRY.OUT": "fa530c3659e21bb1608ee9d2e4be807925430053a50dea0297d40ec4e47a179c",
+      "serial.bin": "01d3ff17cbb110b8774afdc7dfa20ecd552707782e73e9d7b48b5ebdf3e35a11",
+      "SCREEN.BIN": "8782d51562d741d1def670bb4441b4b6e0b6c6f96db31adc3691816ca46570f0"
+    },
+    "build/aspect-parent-exit-mouse-retry-guarded-banked-traps/trap-retry-mouse-01/Q-1-H": {
+      "RENDER.BIN": "2110cf9ea992067683b7afbf70a3eb2905725237a5bf67c4a2ecbd6726a278cc",
+      "result.json": "d441fa02d5e62bbdba6e5cd4ec632f038f92d3b92205e11910cd1d11231b8d93",
+      "RETRYWIT.BIN": "88f5e5b2d1fe51ffbd5020a00c75b9d6fe2436a86241bc80e40bd10e09112ab0",
+      "RETRYDBG.BIN": "ff796bd4cb45da18fee6978d921b5cb5e939d88bc8a3d4870d95eddeb30b1c32",
+      "RETRY.OUT": "fa530c3659e21bb1608ee9d2e4be807925430053a50dea0297d40ec4e47a179c",
+      "serial.bin": "fdf584e977c5d587ab9e9dd8774ee2ee5f5e90f12cfcc1b40b292ec5e3e869e1",
+      "SCREEN.BIN": "8782d51562d741d1def670bb4441b4b6e0b6c6f96db31adc3691816ca46570f0"
+    },
+    "build/aspect-parent-exit-mouse-retry-guarded-banked-traps/trap-retry-mouse-01/Q-1-B": {
+      "RENDER.BIN": "f87a488b805b29c47036bc446afe3df9424768885a3f0cdf684209bd6fa062b9",
+      "result.json": "0d9cee51745d8c75d40d964ed834026e17407e6afcc35bcef42989a37eca4fd3",
+      "RETRYWIT.BIN": "88f5e5b2d1fe51ffbd5020a00c75b9d6fe2436a86241bc80e40bd10e09112ab0",
+      "RETRYDBG.BIN": "ff796bd4cb45da18fee6978d921b5cb5e939d88bc8a3d4870d95eddeb30b1c32",
+      "RETRY.OUT": "fa530c3659e21bb1608ee9d2e4be807925430053a50dea0297d40ec4e47a179c",
+      "serial.bin": "01d3ff17cbb110b8774afdc7dfa20ecd552707782e73e9d7b48b5ebdf3e35a11",
+      "SCREEN.BIN": "8782d51562d741d1def670bb4441b4b6e0b6c6f96db31adc3691816ca46570f0"
+    },
+    "build/aspect-parent-exit-mouse-retry-guarded-banked-traps/trap-retry-mouse-01/Q-2-N": {
+      "RENDER.BIN": "b81325d12812625ce18855b89e0c19756c980fafefec8cfe8c6cb252c834327a",
+      "result.json": "29af59c5d3dcab5addaaac36340e8b48e4260280a853b7a21857c6e7d96edfe9",
+      "RETRYWIT.BIN": "88f5e5b2d1fe51ffbd5020a00c75b9d6fe2436a86241bc80e40bd10e09112ab0",
+      "RETRYDBG.BIN": "ff796bd4cb45da18fee6978d921b5cb5e939d88bc8a3d4870d95eddeb30b1c32",
+      "RETRY.OUT": "fa530c3659e21bb1608ee9d2e4be807925430053a50dea0297d40ec4e47a179c",
+      "serial.bin": "fdf584e977c5d587ab9e9dd8774ee2ee5f5e90f12cfcc1b40b292ec5e3e869e1",
+      "SCREEN.BIN": "8782d51562d741d1def670bb4441b4b6e0b6c6f96db31adc3691816ca46570f0"
+    },
+    "build/aspect-parent-exit-mouse-retry-guarded-banked-traps/trap-retry-mouse-01/Q-2-S": {
+      "RENDER.BIN": "c00962a9bd0be45586d0e3723b0c31ed77fe3be7f929ede99fe8890cf0ea4a55",
+      "result.json": "ad09ba029257b941f234bb56d2593df2aa6ea55bf892346daf74c121bf7c2a00",
+      "RETRYWIT.BIN": "88f5e5b2d1fe51ffbd5020a00c75b9d6fe2436a86241bc80e40bd10e09112ab0",
+      "RETRYDBG.BIN": "ff796bd4cb45da18fee6978d921b5cb5e939d88bc8a3d4870d95eddeb30b1c32",
+      "RETRY.OUT": "fa530c3659e21bb1608ee9d2e4be807925430053a50dea0297d40ec4e47a179c",
+      "serial.bin": "01d3ff17cbb110b8774afdc7dfa20ecd552707782e73e9d7b48b5ebdf3e35a11",
+      "SCREEN.BIN": "8782d51562d741d1def670bb4441b4b6e0b6c6f96db31adc3691816ca46570f0"
+    },
+    "build/aspect-parent-exit-mouse-retry-guarded-banked-traps/trap-retry-mouse-01/Q-2-H": {
+      "RENDER.BIN": "a77d903a6d50ee44be757881cc48f0061574cf5ac763e961080abd8e423b5758",
+      "result.json": "7a6df750b773d0ccf52085f1931fdd9a90d1f781c8d883e2af69edc2d049fa9e",
+      "RETRYWIT.BIN": "88f5e5b2d1fe51ffbd5020a00c75b9d6fe2436a86241bc80e40bd10e09112ab0",
+      "RETRYDBG.BIN": "ff796bd4cb45da18fee6978d921b5cb5e939d88bc8a3d4870d95eddeb30b1c32",
+      "RETRY.OUT": "fa530c3659e21bb1608ee9d2e4be807925430053a50dea0297d40ec4e47a179c",
+      "serial.bin": "fdf584e977c5d587ab9e9dd8774ee2ee5f5e90f12cfcc1b40b292ec5e3e869e1",
+      "SCREEN.BIN": "8782d51562d741d1def670bb4441b4b6e0b6c6f96db31adc3691816ca46570f0"
+    },
+    "build/aspect-parent-exit-mouse-retry-guarded-banked-traps/trap-retry-mouse-01/Q-2-B": {
+      "RENDER.BIN": "927b664e5f3c59431affc2bf1b95252f6e52560e0405e47d8095685cf95bc331",
+      "result.json": "acef769564c0eb3ea42217966a819e55465d6944fc2d421117550fb42351df6d",
+      "RETRYWIT.BIN": "88f5e5b2d1fe51ffbd5020a00c75b9d6fe2436a86241bc80e40bd10e09112ab0",
+      "RETRYDBG.BIN": "ff796bd4cb45da18fee6978d921b5cb5e939d88bc8a3d4870d95eddeb30b1c32",
+      "RETRY.OUT": "fa530c3659e21bb1608ee9d2e4be807925430053a50dea0297d40ec4e47a179c",
+      "serial.bin": "01d3ff17cbb110b8774afdc7dfa20ecd552707782e73e9d7b48b5ebdf3e35a11",
+      "SCREEN.BIN": "8782d51562d741d1def670bb4441b4b6e0b6c6f96db31adc3691816ca46570f0"
+    }
+  },
+  "untrapped_controls": [
+    {
+      "receipt": "build/aspect-parent-exit-retry-guarded-banked/trap-retry-untrapped-kbd-02/result.json",
+      "sha256": "ab8f10e373e676a523d21365a6b362ba6ecf9f5f06b5532c1d207b8fca31119e",
+      "checks": 58
+    },
+    {
+      "receipt": "build/aspect-parent-exit-mouse-retry-guarded-banked/trap-retry-untrapped-mouse-02/result.json",
+      "sha256": "88829cab2ce7d99002d528663da4c7e0c802c7067036045377a389221fa0b3ce",
+      "checks": 68
+    }
+  ],
+  "auditor_sha256": "6327da7f37dfa12277a2cb8f24443cd69b93eb91309b0be1db627b42b9293bfc",
+  "mouse_auditor_sha256": "7057de561284060ec371fa5fb85d81534c4b0deb9bfbbe1c3d6bfd5bd637d56a",
+  "scope": "Actual DOS31 retention followed by real DOS4C retry and nested PROGRAM, caller trap handoff, exact retained ISR invocation and mouse restoration. No vector repair, unloading, memory-pressure overwrite or physical hardware claim."
+}

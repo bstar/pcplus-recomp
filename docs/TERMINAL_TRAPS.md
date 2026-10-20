@@ -54,12 +54,30 @@ The [hash-bound receipt](validation/terminal-traps-dos.json) records:
   twelve trap applications/probes and six unchanged controls. No original
   executable, installed configuration, REA database or prior object is copied.
 
-Actual device critical errors, other DOS kernels, physical UART/modem behavior
-and full Synchronet/ENiGMA acceptance remain separate. The trap-aware retained
-ASPECT retry observer is still needed: a retained child's known ISR can remain
-valid even though the application has restored the caller's baseline vector.
-The current adapter explicitly rejects `--traps --exit-probe`; existing
-untrapped retry evidence does not prove this new policy.
+The [trap-aware retry receipt](validation/terminal-trap-retry.json) adds16
+COM/flow routes and1056 checks. A passive32-byte snapshot records phaseCHILD,
+captured/actual1B/23/24 vectors, break flag and child window at the first EXEC.
+The second EXEC sees the caller's original INT1B before and after return. The
+observer validates the retained MCB and exact linked callback address, then
+uses a far call with an interrupt frame to that known ISR; its counter changes
+1 to2. Neither callback probe changes the three trap vectors; the surrounding
+harness still hooks INT21/1C for observation. The application itself never
+calls a retained diagnostic ISR. Two untrapped controls preserve their previous
+vector policy and pass126 checks. Rebuilt control binaries retain their hashes;
+the initial stale-manifest refusals are preserved separately.
+
+The [stock editor receipt](validation/terminal-trap-editors.json) tests the
+keyboard trap-enabled client on COM2/19200/HARD. Synchronet immediate forwarding
+passes its12 semantic checks and aborts the draft. ENiGMA with explicit30ms
+modem buffering passes seven checks. The matched immediate-forwarding ENiGMA
+run emits every measured key but fails Home positioning and Insert/overtype.
+Both ENiGMA runs close without saving a post. This preserves the known stock
+server packet-fragmentation limitation and does not claim it is fixed.
+
+Actual device critical errors, other DOS kernels, physical UART/modem behavior,
+complete BBS workflows and nonlocal application-error recovery remain separate.
+The retry proof covers one retained failure and one successful retry, not
+unlimited quarantine or reclamation. No full application gate closes.
 
 The keyboard/mouse near-code spare is686/536 bytes; DS=SS spare is672/640.
 The process bank grows to676 bytes. All linked code banks contribute to the
@@ -72,10 +90,11 @@ Use the pinned Nix toolchain:
 ./tools/build test-terminal-traps
 ./tools/build test-terminal-traps-ui
 ./tools/build test-terminal-traps-source
+./tools/build test-terminal-traps-retry
 ```
 
-Each DOS test uses a fresh label. The independent receipt can be regenerated
-against the recorded local evidence with:
+Each DOS test uses a fresh label. At checkpoint3fbb2e7, the original independent
+receipt can be regenerated against its frozen local evidence with:
 
 ```sh
 ./tools/dev --command python standalone/audit_terminal_traps_dos.py \
@@ -84,6 +103,25 @@ against the recorded local evidence with:
   --mouse-owners traps-mouse-owners-01 --source-label traps-source-01 \
   --output docs/validation/terminal-traps-dos.json
 ```
+
+The follow-up retry audit uses the current observer and these frozen labels:
+
+```sh
+./tools/dev --command python standalone/record_trap_retry.py \
+  --keyboard-label trap-retry-keyboard-01 --mouse-label trap-retry-mouse-01 \
+  --keyboard-control trap-retry-untrapped-kbd-02 \
+  --mouse-control trap-retry-untrapped-mouse-02 \
+  --output docs/validation/terminal-trap-retry.json
+./tools/dev --command python lab/bbs/record_trap_editors.py \
+  --synchronet traps-synchronet-editor-01 \
+  --enigma-buffered traps-enigma-editor-buffered-01 \
+  --enigma-immediate traps-enigma-editor-immediate-01 \
+  --output docs/validation/terminal-trap-editors.json
+```
+
+The editor recorder succeeds when evidence is recorded consistently; inspect
+`immediate_ENiGMA_passed`, which is false in this checkpoint. It does not convert
+an expected compatibility failure into an application acceptance pass.
 
 The Fail permission follows the
 [INT24 reference](https://fd.lod.bz/rbil/interrup/dos_kernel/24.html).

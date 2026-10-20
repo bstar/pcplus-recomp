@@ -1,5 +1,14 @@
 # Script retry after retained ASPECT failure
 
+The [application-trap follow-up](TERMINAL_TRAPS.md) adds16 COM/flow routes
+and1056 checks under the new parent ownership policy. Before/after the retry,
+INT1B equals the captured caller baseline. A separate exact-address/MCB-checked
+far invocation verifies that the retained source-owned ISR still works. Its
+counter changes1 to2 without reinstalling it. Two untrapped controls retain
+the vector-preservation behavior described below. No production binary changes
+are part of this observer checkpoint; stock ENiGMA immediate editor failures
+remain explicitly recorded alongside the Synchronet/buffered-ENiGMA passes.
+
 The [same-session receipt](validation/parent-retry.json) accepts sixteen routes:
 COM1/COM2 with no, software, hardware and combined flow control, using both the
 keyboard terminal and the mouse-enabled terminal. Keyboard routes pass464 checks;
