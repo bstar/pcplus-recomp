@@ -1090,6 +1090,24 @@ test-native-program-far: native-program-far
 test-native-program-far-source: native-program-far
 	python3 standalone/check_native_program_source.py --break-owner --banked
 
+.PHONY: exit-owner test-exit-owner aspect-exit-probe test-aspect-exit-probe aspect-banked-cli test-aspect-banked-cli test-exit-source
+exit-owner:
+	python3 standalone/build_exit_owner.py
+test-exit-owner: exit-owner
+	python3 standalone/check_exit_owner.py
+	python3 standalone/test_exit_owner_dos.py
+aspect-exit-probe:
+	python3 standalone/build_aspect_exit_probe.py
+test-aspect-exit-probe: exit-owner aspect-exit-probe
+	python3 standalone/test_exit_owner_dos.py --aspect
+aspect-banked-cli:
+	python3 standalone/build_aspect_process.py --parent-render --break-owner
+	python3 standalone/build_terminal.py --external-render
+test-aspect-banked-cli: aspect-banked-cli aspect-compiler-dos
+	python3 standalone/test_aspect_parent_process_dos.py --break-owner
+test-exit-source: exit-owner aspect-exit-probe aspect-banked-cli aspect-banked aspect-compiler-dos
+	python3 standalone/check_exit_source.py
+
 .PHONY: native-program-break test-native-program-break test-native-program-break-source
 native-program-break:
 	python3 standalone/build_native_program.py --break-owner

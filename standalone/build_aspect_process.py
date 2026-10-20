@@ -45,10 +45,15 @@ def main(driver=None,parent_render=False,output=None,break_owner=False):
         ui_binding=output/'program_ui_bank.obj'
         subprocess.run(['nasm','-fobj','-DNATIVE_PROGRAM_FAR',str(ROOT/'src/process/program_ui.asm'),'-o',str(ui_binding)],check=True)
         objects.append(str(ui_binding))
+        exit_binding=output/'exit_owner.obj'
+        subprocess.run(['nasm','-fobj',str(ROOT/'src/process/exit_owner.asm'),'-o',str(exit_binding)],check=True)
+        objects.append(str(exit_binding))
+        c_sources += [ROOT/'src/process/exit_owner.c',ROOT/'src/aspect/exit_runtime.c']
     sources=[ROOT/name for name in manifest['sources']]
     if break_owner:
         sources += [ROOT/name for name in json.loads((breaker.OUT/'manifest.json').read_text())['sources']]
         sources += [ROOT/'src/process/program_bank.h']
+        sources += [ROOT/'src/process/exit_owner.h',ROOT/'src/process/exit_owner.asm']
     sources += c_sources+[ROOT/'src/process/process_handles.h',ROOT/'src/aspect/external_runtime.h',ROOT/'src/aspect/external_unwind.h',Path(__file__)]
     extension=dict(output=output,objects=objects,c_sources=c_sources,sources=sources,parent_render=parent_render,break_owner=break_owner)
     if driver:extension['driver']=driver;extension['sources'].append(driver)

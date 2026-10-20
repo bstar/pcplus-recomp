@@ -6,6 +6,9 @@
 #include "resident_render.h"
 #include <stdio.h>
 #include <string.h>
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+#include "../process/exit_owner.h"
+#endif
 
 static const char *errors[]={"success","cannot open script","invalid script header",
  "unsupported command or service","floating-point service unavailable","file or output error",
@@ -69,6 +72,9 @@ int main(int argc,char **argv)
  if(result){
   fputs("Usage: ASPECT script.ASX [instruction-budget:1..65535] [/S1:0003:03:N]\n",stderr);return 64;
  }
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ if(program_exit_begin())return ASPECT_RUN_STATE;
+#endif
  if(serial_option){
   serial_status=aspect_serial_open(serial_option);
   if(serial_status){runtime_serial_error=serial_status;result=ASPECT_RUN_SERIAL;}
@@ -89,5 +95,8 @@ int main(int argc,char **argv)
   }
  }
  serial_status=aspect_render_finish();if(serial_status && !result)result=serial_status;
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ result=program_exit_finish(result);
+#endif
  return (int)result;
 }

@@ -176,9 +176,10 @@ resource_table: dw RESOURCE_TABLE
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--label',default='parent-'+uuid.uuid4().hex);parser.add_argument('--case',action='append')
+    parser.add_argument('--break-owner',action='store_true')
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
-    out=ROOT/'build/aspect-parent-process'/args.label;out.mkdir(parents=True,exist_ok=False)
-    parent=ROOT/'build/terminal-process/TERMINAL.EXE';child=ROOT/'build/aspect-process-parent/ASPECT.EXE'
+    out=ROOT/('build/aspect-parent-break' if args.break_owner else 'build/aspect-parent-process')/args.label;out.mkdir(parents=True,exist_ok=False)
+    parent=ROOT/'build/terminal-process/TERMINAL.EXE';child=ROOT/('build/aspect-process-break/ASPECT.EXE' if args.break_owner else 'build/aspect-process-parent/ASPECT.EXE')
     identities={}
     for product in (parent,child,ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE'):
         manifest=json.loads((product.parent/'manifest.json').read_text())
@@ -266,7 +267,8 @@ def main():
         result.update(passed=all(checks.values()),passive_header=header,resource_words=resources,nested_EXEC=records,compared_parent_bytes=resource_size,configuration=case)
         (folder/'result.json').write_text(json.dumps(result,indent=2)+'\n');results.append(result)
         print(name,'FINAL PASS' if result['passed'] else 'FINAL FAIL',flush=True)
-    report=dict(passed=all(r['passed'] for r in results),cases=results,parent_sha256=sha(parent),child_sha256=sha(child),
+    for name,digest in identities.items():assert sha(ROOT/name)==digest,name
+    report=dict(passed=all(r['passed'] for r in results),experimental_break_owner=args.break_owner,cases=results,parent_sha256=sha(parent),child_sha256=sha(child),
         source_hashes=identities,
         checker_sha256=sha(Path(__file__)),observer_sha256=sha(out/'RENDER.COM'),
         scope='Experimental capability7; real attached parent renderer, selected synthetic directory, actual DOS child and UART mutation. No physical modem or whole-application publication.')

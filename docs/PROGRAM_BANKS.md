@@ -1,5 +1,8 @@
 # PROGRAM code banks
 
+The [CLI exit-owner follow-up](EXIT_OWNER.md) now handles safe recovery or
+retention at process exit and validates normal attached-terminal workflows.
+
 The experimental full ASPECT fault diagnostic now runs the guarded Ctrl-Break
 owner and PROGRAM controller in separate code banks. The previous near-only
 fault diagnostic was almost at64KiB; adding the guarded controller overflowed
@@ -67,7 +70,7 @@ changes INT1B and enables extended checking. Cross-port cases cover combined,
 software and no flow control, including a fault inside WAIT.
 
 Normal terminal/ASPECT publication remains unchanged. Application-wide parent
-ownership, quarantine-to-process-exit retention, faults during individual native
+ownership, the attached parent's fatal-retention path, faults during individual native
 instructions/DOS kernel operations, remaining window/macro/error services and
 physical modem/keyboard acceptance remain open. The modeled service cuts do
 not prove those asynchronous cases. No full application gate closes here.
