@@ -11,6 +11,7 @@ import shutil
 import test_dos
 from enigma_notes_dos import sha,messages
 from enigma_key_stream_fixture import ROOT,PORT,owned,verify_running
+from fragment_relay import fragment_relay
 
 
 async def run(args):
@@ -40,6 +41,7 @@ async def run(args):
         (stage/'LOGON.ASP').write_bytes(source(getattr(args,'file_info_login',False),getattr(args,'enumeration_login',False),getattr(args,'attribute_login',False),timestamp_login,system_queries,environment_login).replace('\n','\r\n').encode('ascii'))
         sources['login_source']=stage/'LOGON.ASP'
         sources['login_driver']=ROOT/'lab/bbs/enigma_script_login.py'
+    sources['fragment_relay']=ROOT/'lab/bbs/fragment_relay.py'
     before={p:sha(f) for p,f in sources.items()};count=messages(candidate)
     log_inode,log_offset=log.stat().st_ino,log.stat().st_size
     canonical=json.loads((ROOT/'lab/bbs/editor-recipes.json').read_text())['enigma_unsaved']['keyboard_input']
@@ -59,8 +61,15 @@ async def run(args):
         data=bytearray(directory(**options));at=250+(options['entry']-1)*114
         data[at+52:at+61]=b'LOGON\0\0\0\0';return bytes(data)
     if script_login:test_dos.directory_image=bound_directory
+    network_report=None
     try:
-        with (out/'harness.log').open('w') as capture,contextlib.redirect_stdout(capture):code=await test_dos.run(options)
+        with (out/'harness.log').open('w') as capture,contextlib.redirect_stdout(capture):
+            if getattr(args,'network_byte_delay_ms',0):
+                async with fragment_relay(PORT,args.network_byte_delay_ms) as (relay_port,network_report):
+                    options.port=relay_port
+                    code=await test_dos.run(options)
+            else:
+                code=await test_dos.run(options)
     finally:test_dos.directory_image=directory
     harness=json.loads((out/'result.json').read_text())
     display=re.sub(rb'\x1b\[[0-?]*[ -/]*[@-~]',b'',(out/'display.bin').read_bytes()).decode('cp437',errors='replace')
@@ -93,6 +102,10 @@ async def run(args):
         diz_page='FILE_ID.DIZ | lines 1-6/6' in display and 'Synthetic FILE_ID.DIZ' in display,
         nfo_navigation=pages==expected_pages,bottom_content='PCPLUS NFO LINE 22 : synthetic game 01' in display,
         empty_search='Titles / filenames: ZZZNOMATCH' in display and '0 matches | 0 displayed' in display and 'No matching files.' in display)
+    if network_report is not None:
+        checks['network_byte_conservation']=network_report['byte_conservation']
+        checks['network_pacing_exercised']=network_report['client_bytes']>0
+        checks['network_relay_errors_absent']=not network_report['errors']
     login_evidence=None
     if script_login:
         import sys
@@ -133,7 +146,7 @@ async def run(args):
         environment_trace=stage/'ENV.LOG'
         checks['native_environment_trace']=environment_trace.is_file() and environment_trace.read_bytes()==b'ONE|TWO|'
         login_evidence['environment_trace_sha256']=sha(environment_trace) if environment_trace.is_file() else None
-    result=dict(passed=all(checks.values()),script_login=login_evidence,checks=checks,terminal_sha256=sha(binary),source_modules=metadata['source_modules'],
+    result=dict(passed=all(checks.values()),script_login=login_evidence,network_experiment=network_report,checks=checks,terminal_sha256=sha(binary),source_modules=metadata['source_modules'],
         source_inputs={k:before['source_board/'+k] for k in metadata['source_inputs']},input_hashes=before,
         pages=pages,expected_pages=expected_pages,selected=selected,expected_selected=expected_selected,
         ranges=ranges,expected_ranges=expected_ranges,route=route,expected_route=expected_route,
@@ -153,4 +166,5 @@ if __name__=='__main__':
     p.add_argument('--timestamp-login',action='store_true',help='Require native file timestamp/global-writeback trace before source login')
     p.add_argument('--system-query-login',action='store_true',help='Require GETDIR/DOSVER/DISKFREE plus all earlier file probes before source login')
     p.add_argument('--environment-login',action='store_true',help='Require native environment ownership/update/delete before all earlier source login probes')
+    p.add_argument('--network-byte-delay-ms',type=int,choices=range(31),default=0,help='Pace each client-to-server byte through a separate loopback relay; does not guarantee TCP receive boundaries')
     a=p.parse_args();raise SystemExit(asyncio.run(run(a)))

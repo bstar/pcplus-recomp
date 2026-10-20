@@ -67,6 +67,16 @@ marked that download as failed. The
 [selector validation](../../docs/validation/enigma-protocol-selector.json)
 records current navigation and transfer results separately from historical runs.
 
+For an actual network pacing experiment, add `--network-byte-delay-ms 20` to
+`enigma_search_dos.py` with a fresh label. A separate loopback relay forwards
+each client byte with a requested20ms delay; the modem itself remains immediate.
+The report requires unchanged byte counts/hashes in both directions, no relay
+errors, and all the same exact page, index and return-route checks. This spaces
+socket writes; TCP receive-event boundaries and physical modem timing remain
+outside the guarantee. `check_fragment_relay.py` exercises all256 byte values,
+escape sequences, binary data and teardown with a send still pending. Early
+teardown must report incomplete byte conservation rather than passing.
+
 Run the [keyboard experiment](patches/enigma-key-stream/README.md) first to
 create a fresh checked candidate for the owned upstream revision, then:
 

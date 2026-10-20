@@ -1,0 +1,212 @@
+{
+  "date": "2026-10-20",
+  "compatibility_complete": false,
+  "live_server_modified": false,
+  "physical_modem_validated": false,
+  "terminal_sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+  "isolated_navigation": {
+    "passed": true,
+    "checks": {
+      "DOS_harness": true,
+      "unique_authenticated_session": true,
+      "exact_owned_modules": true,
+      "inputs_unchanged": true,
+      "no_post_saved": true,
+      "real_search_route": true,
+      "title_search": true,
+      "index_selection": true,
+      "index_paging": true,
+      "selected_game_details": true,
+      "diz_page": true,
+      "nfo_navigation": true,
+      "bottom_content": true,
+      "empty_search": true,
+      "network_byte_conservation": true,
+      "network_pacing_exercised": true,
+      "network_relay_errors_absent": true
+    },
+    "network_experiment": {
+      "requested_byte_delay_ms": 20,
+      "streams": [
+        {
+          "direction": "client_to_server",
+          "read_bytes": 171,
+          "written_bytes": 171,
+          "writes": 171,
+          "read_sha256": "9d27bcf636917ffc2038486f340a0e2f7466fa76be5810cca9f744aa989b53fd",
+          "written_sha256": "9d27bcf636917ffc2038486f340a0e2f7466fa76be5810cca9f744aa989b53fd"
+        },
+        {
+          "direction": "server_to_client",
+          "read_bytes": 75324,
+          "written_bytes": 75324,
+          "writes": 660,
+          "read_sha256": "0f7e605939b58ceffea7becf88e82915eb8886bf6f5ce6cffebdcffe7bc90c02",
+          "written_sha256": "0f7e605939b58ceffea7becf88e82915eb8886bf6f5ce6cffebdcffe7bc90c02"
+        }
+      ],
+      "errors": [],
+      "scope": "One-byte client writes paced on loopback; TCP receive boundaries and physical modem timing are not guaranteed.",
+      "byte_conservation": true,
+      "client_bytes": 171
+    },
+    "pages": [
+      [
+        1,
+        15,
+        24
+      ],
+      [
+        2,
+        16,
+        24
+      ],
+      [
+        10,
+        24,
+        24
+      ],
+      [
+        9,
+        23,
+        24
+      ],
+      [
+        1,
+        15,
+        24
+      ],
+      [
+        10,
+        24,
+        24
+      ],
+      [
+        1,
+        15,
+        24
+      ]
+    ],
+    "selected": [
+      0,
+      1,
+      15,
+      14,
+      0,
+      29,
+      0,
+      1,
+      0
+    ],
+    "route": [
+      "fileBaseMainMenu",
+      "fileBaseSearch",
+      "blackFlagZipResults",
+      "locGameDetails",
+      "blackFlagZipResults",
+      "fileBaseSearch",
+      "blackFlagZipResults",
+      "fileBaseSearch",
+      "fileBaseMainMenu",
+      "mainMenu"
+    ]
+  },
+  "live_editor": {
+    "passed": false,
+    "checks": {
+      "DOS_harness": true,
+      "authenticated_probe": true,
+      "main_menu": true,
+      "inputs_unchanged": true,
+      "no_post_saved": true,
+      "staged_products_unchanged": true,
+      "DOS_source_compiled": true,
+      "editor_entered": true,
+      "home_moves_before_marker": false,
+      "insert_toggled_overtype": false
+    }
+  },
+  "isolated_editor": {
+    "passed": true,
+    "checks": {
+      "DOS_harness": true,
+      "typed_draft_sent": true,
+      "all_exercised_keys_emitted": true,
+      "experimental_editor_entered": true,
+      "no_post_saved": true,
+      "insert_toggled_overtype": true,
+      "home_moves_before_marker": true
+    }
+  },
+  "isolated_download": {
+    "passed": true,
+    "checks": {
+      "DOS_normal_exit": true,
+      "hardware_restored": true,
+      "screen_captured": true,
+      "bbs_connected": true,
+      "binary_unchanged": true,
+      "payload_fixture_unchanged": true,
+      "observed_decoded_offsets_match": true,
+      "configuration_unchanged": true,
+      "automatic_invitation_then_receiver_negotiation": true,
+      "no_manual_transfer_keys": true,
+      "ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed": true,
+      "posttransfer_actual_menu_input_response": true,
+      "actual_validated_protocol": true,
+      "DOS_exact_length_PCPLUS PROBE 01 (1991).ZIP": true,
+      "only_expected_received_files": true,
+      "unique_server_session_and_ordered_menus": true,
+      "no_leftover_staging": true
+    },
+    "archive_sha256": "7c7079d0ff6f5352713fdd8c1ba83b36767927e3112410eb8535caa6fbd75e1e",
+    "archive_bytes": 1301
+  },
+  "source_hashes": {
+    "mods/loc_game_details/loc_game_details.js": "0711413e29c01f0cf3cef7f89b3dc607515381a67a23e1a58205aa6d7a20efb8",
+    "mods/black_flag_files/helpers.js": "e4f6c1df6dbb9d6282d0534150c9149889637d34f01665691ca3bc5d19a06235",
+    "mods/black_flag_files/black_flag_files.js": "20a6d544cb820ac3840c1d271cfd41c7e0fb1c42600100756367845b147cf535",
+    "mods/black_flag_files/search.js": "d159e1fd6936e13613321a92cf68f93681de083cf68a9cb65d8f891cb6b54236",
+    "mods/loc_transfer_protocol_select/loc_transfer_protocol_select.js": "9450bbb9faab72b52ac58a684408443a805e5ce33fd585b9cb694b7881c473e0",
+    "mods/loc_download_ready/loc_download_ready.js": "859ea1b0d395c127e7aafcf9b954a0939e11921e6c19fb3d2b3053915bce4207",
+    "config/menus/file_base.hjson": "18e80539178e71ff6a662fd7792f59dbf303df3435309a3d9063ae34b9fe469f",
+    "art/themes/black_flag/theme.hjson": "0edc3ab8c5702eec83e3ba9ad0838bad0e50b2fc796fd867afd7494c2952c85a",
+    "art/themes/black_flag/FMENU.ANS": "28c25419a5efa84b94aad87e0e715475cf64b0efe18f97cfeaeb7dcb7069ead6",
+    "art/themes/black_flag/FILPMPT.ANS": "655d23537072a2a6092dfa2180633ea9dc1378582f5938a269ba52eecbff77d2",
+    "art/themes/black_flag/LOCSEARCH.ANS": "3904ba93feed80a80e19895b3d6843d7acc937d2c63ad98cbfe20fc50eabaa46",
+    "core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788"
+  },
+  "candidate_decoder_hashes": {
+    "core/client.js": "8cb3b4c8d439e0c43a09d9caf87b69560b3df1b51de053d70f2dc9b6dc9ea31b",
+    "core/key_stream.js": "daaac4d679b8562bfcd69b7345b7ec203169ea0f319d8dccd19c23fce261f1b4"
+  },
+  "evidence": [
+    {
+      "path": "build/bbs-lab/results/enigma/owned-search-network-20261020-01/search-checks.json",
+      "sha256": "e44c3d5406fbec3a15e8635270b779c2f5f8f25eac8130a5cd724b3513887d85"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-editor-focused-20261020-01/owned-server-checks.json",
+      "sha256": "47fb059113fd620968a37031ed0d7e83bd1a6b3c9d2818515c666a4b024b991d"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-download-focused-20261020-01-wrapper/characterization.json",
+      "sha256": "9e0892bef2c31d22baad7dbd844fba8e099738eb5b10bde8cf0d0840747886aa"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-framed-editor-focused-20261020-01-wrapper/experiment.json",
+      "sha256": "969d14bbb64b407b9014f7e3095b894888d0aa61de3c19c6c6501e4a72dbd142"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/owned-framed-editor-focused-20261020-01/semantic-audit.json",
+      "sha256": "a4ff7e75f8fb8e0795692744ae616ae5b79e31484ac17fa31dc2a73932e5476f"
+    }
+  ],
+  "recorder_sha256": "b43d5e031c1412f1bc0af9ee02bc6e5cb08bedff114b793245ba3967d88dfd88",
+  "limitations": [
+    "Paced writes do not guarantee TCP receive-event boundaries.",
+    "The decoder candidate remains separate from the live board.",
+    "Downloads use a synthetic archive on the isolated board.",
+    "Physical modem, complete live editor/transfer/door acceptance remain open."
+  ]
+}
