@@ -1,0 +1,104 @@
+{
+  "passed": true,
+  "checks": {
+    "guest_HELLO_matches_build": true,
+    "coalesced_guest_AT_exact": true,
+    "guest_actual_mode_transition": true,
+    "forward_source_backpressured": true,
+    "reverse_service_during_forward_stall": true,
+    "forward_payload_exact": true,
+    "forward_worker_complete": true,
+    "reverse_source_backpressured": true,
+    "forward_service_during_reverse_stall": true,
+    "reverse_payload_exact": true,
+    "reverse_worker_complete": true,
+    "guest_exited_after_transport_close": true,
+    "no_worker_errors": true,
+    "workers_stopped": true
+  },
+  "errors": [],
+  "frozen_inputs": {
+    "lab/bbs/synthmodem_vm_control.py": "7eb30e96af9a7e7cd319cd645a68331c0386aa3dda3e9eba68ca5563b5b8a456",
+    "nix/flake.nix": "5587806a7fb8d1cf907c816cd7f1661c2496b8248395960ed84089e191687b3b",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+    "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
+    "lab/bbs/patches/synthmodem-control/control.patch": "752bfef57ec7ae4dbffa819603900e94a6b5181be6c46a3c2f91aba1e0094e4e"
+  },
+  "Nix_build": [
+    {
+      "drvPath": "/nix/store/6cvys9xlbnz3rpcvql2xyh1liqrgv9x1-synthmodem-control-candidate-b1752e4-pcplus.drv",
+      "outputs": {
+        "out": "/nix/store/2ic5d10s465ny2rfv852x251gnqdf5rg-synthmodem-control-candidate-b1752e4-pcplus"
+      }
+    }
+  ],
+  "helper_sha256": "434b7f536cfb2ea58c5a5e739fea8540a7a27600733d2bc280f301e39ed0706c",
+  "ELF_class": "ELF32 static Intel i386",
+  "media_sha256": {
+    "bzImage": "2bac10d87a024026de6c00539ea70d19194169b6b99111d9178815b470d77dbe",
+    "rootfs-slmodemd-pjsip.cpio.gz": "c52f230a8b38a8e3476b4a669948e02dd615a367ab0f649251e93209fd659ead"
+  },
+  "candidate_image_sha256": "60d9fba4b986dc4ecd4b39e4e389bb7b144bc4b8ca0c5fb146d5db74a980c8fa",
+  "archive_entries_changed": [
+    "usr/local/bin/modemd-ctrl"
+  ],
+  "archive_entries_added": [
+    "lab-init"
+  ],
+  "forward_bytes": 16777219,
+  "forward_sha256": "179ca3c42c75ab3e8d8f7773eef6dc6ae9c88a5c5c05047d4438eeab37b43638",
+  "reverse_bytes": 16777219,
+  "reverse_sha256": "179ca3c42c75ab3e8d8f7773eef6dc6ae9c88a5c5c05047d4438eeab37b43638",
+  "qemu_command": [
+    "qemu-system-i386",
+    "-machine",
+    "pc",
+    "-accel",
+    "tcg",
+    "-m",
+    "128",
+    "-smp",
+    "1",
+    "-display",
+    "none",
+    "-monitor",
+    "none",
+    "-serial",
+    "file:/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-vm-control-02/console.log",
+    "-no-reboot",
+    "-nic",
+    "none",
+    "-kernel",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-vm-cache/vm/images/bzImage",
+    "-initrd",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-vm-control-02/candidate.cpio.gz",
+    "-append",
+    "console=ttyS0 rdinit=/lab-init panic=-1",
+    "-device",
+    "virtio-serial-pci,id=serial0",
+    "-chardev",
+    "socket,id=p1,host=127.0.0.1,port=55029",
+    "-device",
+    "virtserialport,bus=serial0.0,nr=1,chardev=p1,name=lab.port1",
+    "-chardev",
+    "socket,id=p2,host=127.0.0.1,port=57957",
+    "-device",
+    "virtserialport,bus=serial0.0,nr=2,chardev=p2,name=lab.port2"
+  ],
+  "qemu_version": "QEMU emulator version 11.0.3",
+  "scope": "Actual Nix-built i386 helper in booted upstream Linux VM over virtio control and modem-stand-in character ports. No Node writer, actual modem DSP, SIP/RTP/audio, DOS/BBS or hardware.",
+  "cohort": "synthmodem-vm-control-02",
+  "independent_audit": {
+    "passed": true,
+    "raw_control_frames": 32799,
+    "wire_sha256": "6178a8951c5f7cf6c294dc02edfa6b04b2972f4b3ff4827c425799ebee1338c9",
+    "both_payloads_exact": true,
+    "DATA_RX_probe_then_reverse_exact": true
+  },
+  "installed_services_changed": false,
+  "DOS_application_changed": false,
+  "limits": [
+    "Booted helper/virtio paths only; modem endpoint is a character-port stand-in.",
+    "No combined Node writer, slmodemd/PJSIP, DSP/audio, DOS/BBS or physical modem in this run."
+  ]
+}

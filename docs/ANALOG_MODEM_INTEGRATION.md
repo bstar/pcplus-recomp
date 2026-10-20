@@ -92,6 +92,21 @@ Links below pin the reviewed source; future versions require rechecking.
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
 
+## Booted rebuilt-helper checkpoint
+
+The [i386 VM helper test](../lab/bbs/synthmodem-vm.md) now passes14 checks plus an
+independent raw-frame/payload audit. Nix builds the patched helper as a static
+ELF32 Intel386 binary; the pinned upstream kernel boots a separate archive that
+changes only the helper and adds the lab init. Both16777219-byte payloads match,
+source writers block under pressure, opposite-direction probes remain live and
+transport close produces the expected helper exit and VM poweroff. See the
+[receipt](validation/synthmodem-vm-control.json).
+
+The second virtio character port is a modem endpoint stand-in. The normal
+SIP/DSP startup is bypassed, no Node writer is connected yet, and no physical
+handshake/audio or DOS/BBS compatibility is established by these VM checks.
+Normal runtime images, installed services and the live board remain untouched.
+
 ## Node VM-data pressure checkpoint
 
 [The Node writer candidate](../lab/bbs/patches/synthmodem-pressure/README.md)

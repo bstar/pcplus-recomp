@@ -33,11 +33,41 @@
         '';
       };
       python = pkgs.python3.withPackages (ps: [ ps.unicorn ]);
+      controlSource = pkgs.runCommand "synthmodem-control-source" {} ''
+        mkdir -p "$out/vm/ctrl"
+        cp ${pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/synexo/synthmodem/b1752e4d0039e0cff72735924e03aa99922723a8/vm/ctrl/modemd-ctrl.c";
+          sha256 = "95d30103668f3e4e894136a81841a2be64ebcddcaef8e2afb58bdb2b326a3385";
+        }} "$out/vm/ctrl/modemd-ctrl.c"
+        cp ${pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/synexo/synthmodem/b1752e4d0039e0cff72735924e03aa99922723a8/vm/ctrl/wire.h";
+          sha256 = "6d978be175e76f64c3bd7ddf21db39379759f2097f699050cb229d206c832b0d";
+        }} "$out/vm/ctrl/wire.h"
+      '';
+      controlI386 = pkgs.pkgsi686Linux.stdenv.mkDerivation {
+        pname = "synthmodem-control-candidate";
+        version = "b1752e4-pcplus";
+        src = controlSource;
+        patches = [ ../lab/bbs/patches/synthmodem-control/control.patch ];
+        buildInputs = [ pkgs.pkgsi686Linux.glibc.static ];
+        dontConfigure = true;
+        buildPhase = ''
+          runHook preBuild
+          $CC -std=gnu11 -Wall -Wextra -Werror -O2 -static \
+            vm/ctrl/modemd-ctrl.c -o modemd-ctrl
+          runHook postBuild
+        '';
+        installPhase = ''
+          mkdir -p "$out/bin"
+          cp modemd-ctrl "$out/bin/"
+        '';
+      };
     in {
       packages.${system} = {
         inherit rea;
         default = rea;
         watcom = pkgs.open-watcom-v2;
+        synthmodem-control-i386 = controlI386;
       };
       apps.${system}.rea = {
         type = "app";
@@ -57,6 +87,9 @@
         cp probe.exe "$out/"
       '';
       devShells.${system} = {
+        modem = pkgs.mkShell {
+          packages = with pkgs; [ nodejs_24 python3 qemu cpio gzip file binutils ];
+        };
         bbs = pkgs.mkShell {
           packages = with pkgs; [
             nodejs_24 python3 gcc gnumake pkg-config git curl

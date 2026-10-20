@@ -1,6 +1,8 @@
 # PCPlus reconstruction
 
 Use the pinned Nix toolchain through `./tools/build` or `./tools/dev --command`.
+The optional SynthModem VM lab uses `./tools/modem-dev --command`; its images
+and runtime binaries stay under ignored build storage, outside ordinary builds.
 The default build produces source-only DOS UART, parser/CSI, BIOS keyboard,
 cursor, attributes, text, erase and reporting diagnostics. It must not read any
 original executable, original install or generated REA database.

@@ -119,3 +119,9 @@ transition and checked decimal routines require no original artifacts. Use
 runs linked CPU tests and a DOSBox-X test with injected keys. The default build
 and aggregate test include UART, parser and keyboard units. The full application
 remains a separate reconstruction objective; see `../PLAN.md`.
+
+The optional SynthModem helper is source-built as static i386 Linux code with
+`./tools/modem-dev --command nix build ./nix#synthmodem-control-i386 --no-link`.
+The modem shell supplies pinned QEMU and archive/ELF tools.
+[Booted helper validation](../lab/bbs/synthmodem-vm.md) keeps downloaded runtime
+images and candidate archives outside normal DOS application builds.

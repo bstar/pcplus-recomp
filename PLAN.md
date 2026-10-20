@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+The [booted i386 helper checkpoint](lab/bbs/synthmodem-vm.md) now uses a pinned
+Nix static32-bit build inside the upstream kernel/runtime. Fourteen actual VM
+checks and an independent wire/payload audit pass, including16777219 exact bytes
+in each direction, observable backpressure and opposite-direction liveness.
+Only the helper and lab init differ in a separate archive. Node composition,
+normal SIP/DSP startup, DOS/BBS and physical acceptance remain open; ordinary
+application builds and installed services are unchanged.
+
 The [Node VM-pressure candidate](lab/bbs/patches/synthmodem-pressure/README.md)
 fixes reproduced oversized-wire writes, ignored pressure and swallowed loss.
 A bounded256KiB ring splits data into valid4093-byte frames; active-owner drain
