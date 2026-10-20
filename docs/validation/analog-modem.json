@@ -1,0 +1,148 @@
+{
+  "passed": true,
+  "application_changed": false,
+  "binary_sha256": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+  "model": {
+    "passed": true,
+    "binary_sha256": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+    "input_sha256": {
+      "build/terminal/terminal.map": "8b1f7f07d7f617936765de21fed74a71ec28c7c5ce45e8519802cf62689c86b1",
+      "standalone/check_analog_modem.py": "b36f8d50734ed22106ed600b0c8bc61d2ebd7e0d9c13ca5d16e5756c2f2fedda",
+      "standalone/check_connection.py": "9098b1ffa848dd82739484ac37841180f0e83880b3da1894b0389632fb307fb7",
+      "standalone/check_transport.py": "55cf5fabdae9f6d5f56085d9127e5e81656c2651283042fb81473c56b4c45b69",
+      "standalone/dos_image.py": "319e92316365f6acbdb406eb964dab1a22bc2e6ca57e3062e085527a17d2822c",
+      "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+      "standalone/terminal_config_fixtures.py": "dd38f8a0c6c77d5d2ec2120c1f3d6b8a755525d11e2f6d986a056a3d0d8e4df4"
+    },
+    "cases": [
+      {
+        "case": "numeric-local-dial-fixed-DTE-and-verbose-result-suffixes",
+        "inputs": 36,
+        "passed": true
+      },
+      {
+        "case": "DCD-never-high-current-policy-loss-clears-TX-and-redial-resets-history",
+        "inputs": 3,
+        "passed": true
+      },
+      {
+        "case": "configured-DTR-pulse-restores-only-DTR-and-preserves-current-RTS",
+        "inputs": 8,
+        "passed": true
+      },
+      {
+        "case": "long-handshake-budget-and-stalled-init-use-configured-deadline",
+        "inputs": 2,
+        "passed": true
+      }
+    ],
+    "inputs": 49,
+    "scope": "Actual linked DOS controller and UART instructions; UART registers, BIOS ticks and keyboard are modeled. Numeric target is staged after CLI validation; no analog audio, SIP, Telnet, physical DCD/CTS or Boca test.",
+    "known_limit": "CONNECT admits online without requiring DCD high; generic CONNECT first-match remains legacy behavior."
+  },
+  "DOS": {
+    "case": "analog-numeric-02",
+    "passed": true,
+    "checks": {
+      "DOS_expected_exit": true,
+      "hardware_restored": true,
+      "PRM_unchanged": true,
+      "binary_unchanged": true,
+      "no_peer_errors": true,
+      "no_unexpected_commands": true,
+      "actual_init_and_dial": true,
+      "actual_DOS_CPR": true,
+      "actual_DOS_DA": true,
+      "immediate_banner_not_dropped": true,
+      "numeric_local_dial_only": true,
+      "BBS_hostname_sent_as_online_terminal_data": true,
+      "hostname_not_used_in_ATD_command": true,
+      "bridge_prompt_displayed": true,
+      "frozen_inputs_unchanged": true
+    },
+    "commands": [
+      "ATZ",
+      "ATD1"
+    ],
+    "errors": [],
+    "seconds": 5.825,
+    "binary_sha256": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+    "command": "@D:\\TEST.PRM /D:1 COM1 38400 8N1 HARD",
+    "expected_exit": 0,
+    "working_drive": "c",
+    "environment": {},
+    "scope": "Actual DOS CLI /D:1, initialization, dial, CONNECT, ANSI replies, bridge prompt display and BIOS-keyboard hostname transmission. Synthetic serial peer; no analog carrier/audio, SIP, Telnet negotiation, remote BBS, or physical UART timing.",
+    "frozen_inputs": {
+      "build/terminal/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+      "build/terminal/terminal.map": "8b1f7f07d7f617936765de21fed74a71ec28c7c5ce45e8519802cf62689c86b1",
+      "standalone/test_analog_dial_dos.py": "1276232b0ce3d726388a5a4a6db0a7732543edee2b7799f486a42882268100a6",
+      "standalone/test_connection_dos.py": "438162021da140fda6b5b3ce9eea971ef5659b7216bd89df80fcab441096cdf3",
+      "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+      "standalone/terminal_config_fixtures.py": "dd38f8a0c6c77d5d2ec2120c1f3d6b8a755525d11e2f6d986a056a3d0d8e4df4",
+      "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+      "standalone/directory_test_support.py": "1857fae3729a5a8c9b0264bf03acabfa2cfc37d56a91a16669c36927b15d9ddc"
+    }
+  },
+  "existing_connection_suite": {
+    "passed": true,
+    "binary_sha256": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+    "cases": [
+      {
+        "case": "actual-port-command-wire-partial-connect-and-DCD-transition",
+        "passed": true,
+        "inputs": 2
+      },
+      {
+        "case": "four-failure-responses-timeout-and-CTS-stalled-bounded-cleanup",
+        "passed": true,
+        "inputs": 6
+      },
+      {
+        "case": "actual-BIOS-Escape-AltX-AltH-AltD-through-stalled-sender-and-hangup",
+        "passed": true,
+        "inputs": 8
+      },
+      {
+        "case": "original-response-autobaud-policy-and-actual-UART-divisor-setter",
+        "passed": true,
+        "inputs": 15
+      },
+      {
+        "case": "TX-ownership-and-real-recovered-XOFF-CTS-backpressure",
+        "passed": true,
+        "inputs": 4
+      },
+      {
+        "case": "live-pause-sentinel-expanded-zero-and-THRE-deadline",
+        "passed": true,
+        "inputs": 4
+      },
+      {
+        "case": "full-32bit-PIT-derived-deadlines-and-low-tick-wrap",
+        "passed": true,
+        "inputs": 6
+      },
+      {
+        "case": "notice-exact-cell-restore-and-partial-parser-yields-modem-RX",
+        "passed": true,
+        "inputs": 1
+      }
+    ],
+    "scope": "Actual linked connection state machine, decoder, expansion, matcher, keyboard and UART instructions; only port/BIOS clock/keyboard hardware boundaries modeled. Live main/RX/postmatch behavior additionally needs real DOS tests."
+  },
+  "audit": {
+    "exact_serial_hex": "41545a0d415444310d1b5b313b3136521b5b3f313b32636262732e6578616d706c650d1b",
+    "serial_sha256": "a2644ec4af214b8da63223f8cffc77feb21373046ef3b908e729c957b581c77e",
+    "screen_sha256": "df173c0f2849789c9884ae72aa90dd2f674dd3f9ca262cc4ad09609f1c17e776",
+    "hardware_snapshot_sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "all_frozen_inputs_current": true,
+    "exact_wire_sequence_checked": true,
+    "note": "Wire is ATZ, ATD1, actual DOS CPR/DA replies, typed bbs.example CR, configured exit abort ESC. No terminal replies injected."
+  },
+  "limits": [
+    "Hardware boundaries modeled in linked tests.",
+    "DOSBox-X serial peer is synthetic; no physical carrier, SIP/audio, actual Boca result strings or remote BBS test.",
+    "Current DCD-never-high admission remains a characterized limitation.",
+    "Initial DOS pilot used the same executable but a prior map hash; accepted fresh cohort is analog-numeric-02."
+  ]
+}

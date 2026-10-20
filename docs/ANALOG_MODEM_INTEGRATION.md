@@ -91,6 +91,45 @@ Links below pin the reviewed source; future versions require rechecking.
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
 
+## Source-built software prerequisite checkpoint
+
+[The recorded receipt](validation/analog-modem.json) binds 49 linked-instruction
+cases, the existing 46-input connection suite and 15 actual DOS checks to the
+same executable. A Nix source rebuild reproduced executable SHA256
+`c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c`.
+No application code or command policy changed.
+
+The new linked cases program real linked UART divisor instructions at all nine
+supported DTE rates, check verbose CONNECT suffixes with autobaud disabled,
+characterize DCD-never-high admission, require output cancellation on observed
+carrier loss, reset carrier history on redial, preserve concurrent RTS changes
+across configured DTR cleanup, and exercise a 55-second handshake budget plus
+stalled-initialization timeout. UART registers and BIOS clock remain modeled.
+
+Actual DOS executes `/D:1 COM1 38400 8N1 HARD`, sends `ATZ` and `ATD1`, renders
+the synthetic peer's `CONNECT>` prompt, then transmits typed `bbs.example` as
+online data. Exact wire order includes DOS-generated CPR/DA replies. The frozen
+PRM, executable/map and helper inputs are checked; 42-byte UART/PIC/vector
+snapshots match before/after. This establishes the numeric CLI route without
+claiming SIP, Telnet negotiation or analog hardware support.
+
+```sh
+./tools/build terminal
+./tools/dev --command python3 standalone/check_analog_modem.py
+./tools/dev --command python3 standalone/check_connection.py
+# Choose a fresh label on every run; previous evidence is preserved.
+./tools/dev --command python3 standalone/test_analog_dial_dos.py --label analog-local-001
+```
+
+`test-terminal` includes the new linked checks. The accepted DOS cohort is
+`analog-numeric-02` under ignored `build/connection-dos`; the first pilot passed
+with the identical executable, then the rebuild changed its map hash, so a
+fresh cohort was run against the final map. Earlier fixture-development
+assertions were corrected for a non-exported private symbol, cancellation
+versus hangup mode, and the full abort-plus-DTR cleanup budget. They did not
+cause production changes. Actual Boca result fixtures and physical acceptance
+below remain outstanding.
+
 ## Workstation and adapter preparation (not applied)
 
 Keep the DOS toolchain managed by pinned Nix. For later workstation dependencies,

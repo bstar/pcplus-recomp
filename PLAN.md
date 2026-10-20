@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+The [analog-modem software checkpoint](docs/ANALOG_MODEM_INTEGRATION.md#source-built-software-prerequisite-checkpoint)
+passes49 linked inputs and15 DOS checks, plus the existing46-input connection
+suite. DOS dials numeric local target1 and sends the BBS hostname only after
+the synthetic CONNECT prompt. Fixed DTE, DCD history/loss, DTR/RTS ownership and
+long handshake deadlines are checked; DCD-never-high admission stays explicit.
+The source-built application is unchanged. Analog/SIP/backend/Boca acceptance
+and bridge Telnet/binary fixes remain open.
+
 The [Boca / SPA2102 / SynthModem hardware target](docs/ANALOG_MODEM_INTEGRATION.md)
 now defines analog-handshake acceptance alongside the existing work. The adapter
 is ordered, not tested. Source review identifies standard-only COM/IRQ settings,
