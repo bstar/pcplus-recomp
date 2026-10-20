@@ -74,6 +74,16 @@ comparison includes PageDown and Right alongside the existing navigation keys.
 These deterministic clock tests do not measure operating-system scheduling,
 network latency or physical modem timing.
 
+`check_game_details.js` separately connects the actual Client to the owned
+game-details module. Its fixed-mode elapsed-time checks inject a clock into
+the candidate's existing scheduler: eight navigation keys must match their
+unfragmented results when delivered over 0, 10, 40, 80 and 99ms. Completed
+sequences must cancel their timers; lone Escape expires exactly once and
+disconnect cancels a pending prefix. These 42 checks extend the 180 partition
+and module lifecycle cases to 222. Run stock first and pass its output to the
+candidate with `--fixed --baseline STOCK_LOG`. This tests module behavior under
+a timing model; live DOS and physical modem acceptance remain separate.
+
 The frozen evidence is in
 [`docs/validation/enigma-key-stream`](../../../../docs/validation/enigma-key-stream).
 The wider F04/F05 and full application gates remain open. Required next evidence

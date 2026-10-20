@@ -78,6 +78,11 @@ display/WAIT/NOCLEAR, UART ownership and ASPECT continuation/publication remain
 required. RUN/DOS/SHELL remain unsupported; no application gate closes.
 
 Current compatibility priority: the user's [owned ENiGMA board](lab/bbs/enigma-owned.md).
+The [October 20 live recheck](docs/validation/enigma-current-20261020.json)
+again reaches game details/DIZ/NFO but fails full NFO scrolling with correct
+outgoing Down/PageDown. The isolated candidate passes 222 actual Client/module
+checks, including 42 elapsed-time/lifecycle checks; the current live decoder
+remains unchanged. Complete live acceptance and physical modem testing are open.
 The [October 19 live retest](docs/validation/enigma-live-20261019.json) confirms
 login/search/DIZ/NFO entry and one-line Down scrolling, but PageDown still
 fails despite correct outgoing bytes. The same checkout reproduces74 fragmented

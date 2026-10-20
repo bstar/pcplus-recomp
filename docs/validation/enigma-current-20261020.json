@@ -1,0 +1,141 @@
+{
+  "date": "2026-10-20",
+  "compatibility_complete": false,
+  "live_server_modified": false,
+  "physical_modem_validated": false,
+  "server_root": "~/projects/black-flag-bbs",
+  "server_revision": "237cd9743d6978a940dd66db0e78f6ab8ccd3e37",
+  "terminal_sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+  "live_file_navigation": {
+    "passed": false,
+    "checks": {
+      "DOS_harness": true,
+      "authenticated_probe": true,
+      "main_menu": true,
+      "inputs_unchanged": true,
+      "no_post_saved": true,
+      "staged_products_unchanged": true,
+      "DOS_source_compiled": true,
+      "game_details": true,
+      "diz_page": true,
+      "nfo_page": true,
+      "nfo_scrolled": false
+    },
+    "page_headers": [
+      [
+        1,
+        15,
+        24
+      ]
+    ],
+    "navigation_keys_emitted": {
+      "down": true,
+      "page_down": true
+    }
+  },
+  "source_hashes": {
+    "core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+    "mods/loc_game_details/loc_game_details.js": "0711413e29c01f0cf3cef7f89b3dc607515381a67a23e1a58205aa6d7a20efb8",
+    "mods/black_flag_files/helpers.js": "e4f6c1df6dbb9d6282d0534150c9149889637d34f01665691ca3bc5d19a06235"
+  },
+  "decoder_replay": {
+    "framer": {
+      "passed": true,
+      "checks": 1858,
+      "delayed_checks": 200,
+      "scope": "Deterministic key-framing oracle: all partitions, UTF8, byte conservation, bounded first-byte deadlines, raw takeover and close. Not a stock-server or DOS-client fix."
+    },
+    "decoder-stock": {
+      "passed": true,
+      "fixed": false,
+      "checks": 119,
+      "demonstrated_fragmentation_failures": 84,
+      "editor_fragmentation_failures": 9,
+      "scope": "Actual pinned ENiGMA Client with synthetic stream/config, key and CPR events, raw takeover, restore and close. No stock-server mutation or DOS-client fix claim."
+    },
+    "decoder-candidate": {
+      "passed": true,
+      "fixed": true,
+      "checks": 122,
+      "demonstrated_fragmentation_failures": 0,
+      "editor_fragmentation_failures": 0,
+      "scope": "Actual pinned ENiGMA Client with synthetic stream/config, key and CPR events, raw takeover, restore and close. No stock-server mutation or DOS-client fix claim."
+    },
+    "details-stock": {
+      "passed": true,
+      "fixed": false,
+      "checks": 180,
+      "timed_checks": 0,
+      "fragmented_differences": 164,
+      "unexpected_leaves": 120,
+      "checker_sha256": "1c55a4e147c50d5fccf9cfd12148c82bfb4e7c6153c49cf386ba9e8be6cd32ad",
+      "client_sha256": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+      "module_sha256": "0711413e29c01f0cf3cef7f89b3dc607515381a67a23e1a58205aa6d7a20efb8",
+      "helper_sha256": "e4f6c1df6dbb9d6282d0534150c9149889637d34f01665691ca3bc5d19a06235",
+      "node": "v24.18.1",
+      "scope": "Actual ENiGMA Client and exact owned GameDetails constructor/draw/lines/onKey/leave, selected partitions, explicit elapsed-time model, tab reset and listener teardown. Synthetic data and previous-menu boundary; no network/login/SQLite or physical modem claim."
+    },
+    "details-candidate": {
+      "passed": true,
+      "fixed": true,
+      "checks": 222,
+      "timed_checks": 42,
+      "fragmented_differences": 0,
+      "unexpected_leaves": 0,
+      "checker_sha256": "1c55a4e147c50d5fccf9cfd12148c82bfb4e7c6153c49cf386ba9e8be6cd32ad",
+      "client_sha256": "8cb3b4c8d439e0c43a09d9caf87b69560b3df1b51de053d70f2dc9b6dc9ea31b",
+      "module_sha256": "0711413e29c01f0cf3cef7f89b3dc607515381a67a23e1a58205aa6d7a20efb8",
+      "helper_sha256": "e4f6c1df6dbb9d6282d0534150c9149889637d34f01665691ca3bc5d19a06235",
+      "node": "v24.18.1",
+      "scope": "Actual ENiGMA Client and exact owned GameDetails constructor/draw/lines/onKey/leave, selected partitions, explicit elapsed-time model, tab reset and listener teardown. Synthetic data and previous-menu boundary; no network/login/SQLite or physical modem claim."
+    }
+  },
+  "evidence": [
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-20261020-01/owned-server-checks.json",
+      "sha256": "fb084014496ce8a40330809cd101c9aae47c6fb1c71f8792e3d64f355b870bce"
+    },
+    {
+      "path": "build/bbs-lab/key-stream-current-20261020-01/report.json",
+      "sha256": "fef710c013c2eb8cb6fcd4d2902e922303792eecb417284c91f80a91fa471fa4"
+    },
+    {
+      "path": "build/bbs-lab/key-stream-current-20261020-01/framer.log",
+      "sha256": "383135fcd1f7d4bff5409cd46f4e12d7f75b61758c4c12adf5d4d83950a25594"
+    },
+    {
+      "path": "build/bbs-lab/key-stream-current-20261020-01/decoder-stock.log",
+      "sha256": "9581a5325c96c515a50103b744ba91753fc123837ddd048a790043d414cae8c7"
+    },
+    {
+      "path": "build/bbs-lab/key-stream-current-20261020-01/decoder-candidate.log",
+      "sha256": "fb602ac0ba9df5933982efc6cd31f60d0f1baacb8e5d0172f9ee20940f8b0e44"
+    },
+    {
+      "path": "build/bbs-lab/key-stream-current-20261020-02/details-stock.log",
+      "sha256": "786f622a86a387f50456b364cb81b729bc11dc39896f815aa0f24cedf53b5c73"
+    },
+    {
+      "path": "build/bbs-lab/key-stream-current-20261020-02/details-candidate.log",
+      "sha256": "119e0f814ae5fecf5483d29e1aeb7d27e3e9d247ac7defa167c97c94f8661356"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-20261020-01/display.bin",
+      "sha256": "909513a6ab0b0c8a7dfac47137696bb039d41819fc645001c5faf97653aefcf7"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-20261020-01/bbs-sent.bin",
+      "sha256": "2187ebb0836a1581b8edb1c7bbaede9202f96582396990d78fe20e0a862005a0"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-20261020-01/server-session.jsonl",
+      "sha256": "7627083896f1b7263a8ce760766ae4b4163c9df6b9d62451041bf5a2aaccc2af"
+    }
+  ],
+  "recorder_sha256": "b9f7502ea6bcefa976dbd1a009863ea16b703897feb0160ca5434c41c7c3b736",
+  "limitations": [
+    "The candidate is separate from the running server.",
+    "Elapsed-time module checks use a deterministic clock, not measured network timing.",
+    "Physical modem, complete live editor/transfer/door acceptance remain open."
+  ]
+}

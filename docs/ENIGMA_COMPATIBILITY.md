@@ -4,16 +4,20 @@ The target includes the user's running `~/projects/black-flag-bbs` checkout,
 its configured menus and modules, and the source-built DOS client. Passing
 an isolated stock BBS is insufficient. Compatibility is not complete.
 
-The [latest live recheck](validation/enigma-current-20261019.json) again passes
+The [October 20 live recheck](validation/enigma-current-20261020.json) again passes
 login, menu, details, DIZ and NFO entry but fails final-page NFO scrolling.
 No tested live code/configuration changes or submitted messages were observed.
 Expanded actual Client replay includes Right and PageDown: the current decoder
 shows 84 fragmented-key and 9 editor differences; the candidate shows zero across
-122 checks. The exact owned game-details module passes 180 candidate checks with
+122 checks. The exact owned game-details module passes 222 candidate checks with
 zero differences or accidental exits. Its stock counterpart shows 164 differences
 and 120 accidental exits across synthetic partitions; these are replay cases,
 not counts of failed user sessions. The framing oracle passes 1858 checks,
-including 200 elapsed-time checks, and 123 upstream regressions pass. The candidate
+including 200 elapsed-time checks. The new module integration adds 42 explicit
+clock checks: eight navigation sequences arrive byte by byte over 0/10/40/80/99ms,
+lone Escape expires once, and disconnect cancels an incomplete sequence's timer.
+These use the actual Client and owned module with a deterministic clock; they
+do not measure network latency. The earlier 123 upstream regressions pass. The candidate
 is still separate from the running board; timing-model passes do not establish
 physical modem compatibility.
 
@@ -59,6 +63,11 @@ The main-menu option identifies a contiguous literal wire fragment for this
 configured artwork. The default remains `Main Menu` for older fixtures. The
 report records the selected fragment and hashes JSON layouts as well as module
 source. Successful authentication or NFO entry cannot satisfy scrolling.
+
+Publish a sanitized recheck receipt with `standalone/record_enigma_recheck.py`.
+It requires explicit live/replay/details labels and candidate paths, checks
+current input identities, and retains failures as failures. Credentials, endpoint
+addresses and capture contents stay out of the receipt.
 
 ## Known server input defect
 
