@@ -92,6 +92,26 @@ Links below pin the reviewed source; future versions require rechecking.
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
 
+## Node VM-data pressure checkpoint
+
+[The Node writer candidate](../lab/bbs/patches/synthmodem-pressure/README.md)
+now composes bounded frame splitting, PjsipBackend readiness, active CallSession
+ownership and BBS socket pause/resume. Upstream oversized writes throw beyond
+4093 bytes and are swallowed by the session; those defects and ignored stream
+pressure are reproduced separately. The candidate transfers16MiB exactly over
+real loopback TCP with a paused VM-side reader, and passes the existing1220
+Telnet assertions. The [receipt](validation/synthmodem-pressure.json) binds the
+source, toolchain, lifecycle/failure checks and recovered byte hash.
+
+The retained ring is256KiB; Node socket buffering remains separately bounded by
+its writable high-water mark plus an accepted frame. False means accepted then
+paused, not a request to replay the frame. Capacity/replaced-channel failures
+hang up instead of silently continuing, and teardown removes stale drain owners.
+
+This source candidate is not installed. It has not yet been composed with the
+C helper in a rebuilt VM or tested with actual DSP/SIP/audio and DOS/BBS. Native
+DSP flow credit, serial-to-BBS pressure and physical hardware remain open.
+
 ## Bidirectional helper backpressure checkpoint
 
 The [control-helper candidate](../lab/bbs/patches/synthmodem-control/README.md)
@@ -106,8 +126,9 @@ reproduced stock truncated-header failure and exact fixture comparisons.
 
 This extends the earlier one-direction checkpoint below. The VM image/prebuilt,
 installed services, DOS application and Telnet candidate remain unchanged.
-Node/DSP pressure propagation and a rebuilt-VM end-to-end test remain required
-before hardware acceptance; these host tests do not exercise SIP or modem audio.
+The separately tested Node writer above supplies VM-data pressure propagation;
+a rebuilt-VM end-to-end test and native DSP credit remain required before hardware
+acceptance. These helper host tests do not exercise SIP or modem audio.
 
 ## Control-helper backpressure checkpoint
 

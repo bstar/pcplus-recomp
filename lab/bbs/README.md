@@ -14,6 +14,9 @@ adds actual DOS ZMODEM transfers through that candidate with an independent peer
 checks through the candidate, with packet-boundary limits kept explicit.
 The separate [control-helper candidate](patches/synthmodem-control/README.md)
 checks coalesced-frame ownership and slow-PTY writes without changing VM images.
+The [Node writer candidate](patches/synthmodem-pressure/README.md) adds valid
+wire-frame splitting and owned drain propagation; combined VM acceptance remains
+separate from both host checkpoints.
 
 
 The [Infocom save-edge workflow](enigma-infocom-edges.md) covers actual DOS

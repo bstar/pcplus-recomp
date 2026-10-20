@@ -1,0 +1,87 @@
+{
+  "passed": true,
+  "upstream_revision": "b1752e4d0039e0cff72735924e03aa99922723a8",
+  "upstream_sha256": {
+    "src/backends/PjsipBackend.js": "2fcbaea78eaa91abd85cda71b4ab72de0716e60fab7aaf3fb48faa40dd12d550",
+    "src/session/CallSession.js": "48364d12210aaa0fec7ed510abe2a04532f06c301a3e388dde50102b82ecbdb4",
+    "vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+    "src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+    "src/telnet/TelnetProxy.js": "98efcb975e4fbe64303d7bb54820ccf8cf8199fe1fe8552272b00ce9c0993fd0",
+    "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+    "config.js": "3d6d33a25b8d86cde88d02ae538846592a020e8d64063abdb231a6ba7b27d49e"
+  },
+  "lab_input_sha256": {
+    "lab/bbs/patches/synthmodem-pressure/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+    "lab/bbs/patches/synthmodem-pressure/pressure.patch": "5408779a68380c694e523c614116f47c822d4c05242954fdca0a82e53f952d55",
+    "lab/bbs/patches/synthmodem-pressure/check.py": "0586dc5fa76259502ee76b3619e10f2f005aec92bc7760a208d8a399efa76258",
+    "lab/bbs/patches/synthmodem-pressure/check.js": "7b6234b6681ad9275d1d39503c3e3c5d9695e5b55e526e02afdbea4a5cd50375",
+    "lab/bbs/patches/synthmodem-pressure/README.md": "22787d5a1640fa3ae747f60946f4bf28ca8ebafffb5eae0f16d5468c4c0694a5",
+    "lab/bbs/patches/synthmodem-telnet/proxy.patch": "4912e79bc0a95305a8ed2431c22a8a5c6021ea639914db1cce85b76cbbddba52",
+    "lab/bbs/patches/synthmodem-telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+    "lab/bbs/patches/synthmodem-telnet/check.js": "e96912305e817d21c7ee3e6f95eefcc80835169137d61ac7a0c4abc8661928e1"
+  },
+  "node": "v24.18.1",
+  "candidate_sha256": {
+    "config.js": "3d6d33a25b8d86cde88d02ae538846592a020e8d64063abdb231a6ba7b27d49e",
+    "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+    "vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+    "src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+    "src/backends/PjsipBackend.js": "99e3c39ae8aacc48a630c1361146b8b6a0e82639c4fcb54ab61ea8c615eb9099",
+    "src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+    "src/session/CallSession.js": "164b2f6394ff77acd1829fcae236745509d63b50b373f7ebb2d20a35309f712b",
+    "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+    "src/telnet/TelnetProxy.js": "18c0a9ed59aa4cb48186514da4ddc94954e7db207eb71c39769bdac8f7be3353"
+  },
+  "checks": {
+    "passed": true,
+    "assertions": 9453,
+    "stock_defects": {
+      "oversize_throws": true,
+      "write_pressure_not_returned": true,
+      "session_swallows_oversize_failure": true
+    },
+    "loopback": {
+      "payload_size": 16777216,
+      "payload_sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1",
+      "drain_events": 1,
+      "retained_payload_when_paused": 36630,
+      "node_wire_bytes_when_paused": 66261
+    }
+  },
+  "telnet_regression": {
+    "passed": true,
+    "assertions": 1220,
+    "stockDefectsObserved": {
+      "dimensionsReadFromWrongConfigSection": true,
+      "negotiationLeaksToSerial": true,
+      "literalIACNotEscaped": true,
+      "singleByteMenuEscapeConsumesPayload": true,
+      "coalescedSameEscapeStaysOnline": true
+    },
+    "candidate": [
+      "all 256 bytes at every two-chunk split and singleton chunks",
+      "fragmented Telnet negotiation, TTYPE and escaped NAWS",
+      "duplicate/crossed offers and refusal",
+      "NVT CR policy and bounded malformed/oversize subnegotiation",
+      "default binary-safe forwarding and explicit chunk-independent escape opt-in",
+      "remote close/menu/reconnect with stale-socket isolation",
+      "real loopback TCP full-byte duplex"
+    ]
+  },
+  "scope": "Actual source methods plus modeled sockets/SIP/RTP and a real loopback TCP path. No VM, DSP/audio, SIP service, DOS client or hardware.",
+  "cohort": "synthmodem-pressure-05",
+  "toolchain_sha256": {
+    "nix/flake.nix": "7f069dd8346be02006737101a2790b99a881411fa75b657316f75b090816c15f",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+    "tools/dev": "abbf4bd3a4d6cb91b5f7eecc3919ccbccd15e472bc49463e9d2669adc67e0bca"
+  },
+  "application_changed": false,
+  "VM_image_changed": false,
+  "installed_services_changed": false,
+  "limits": [
+    "Isolated Node VM-data writer candidate; no rebuilt VM or C-helper integration in this run.",
+    "Physical negotiation and SIP/RTP resources are modeled; no DSP/audio, DOS or BBS test of this candidate.",
+    "Native DSP flow credit and serial-to-BBS write pressure remain open.",
+    "Earlier DOS/BBS receipts retain the previous proxy identity."
+  ]
+}

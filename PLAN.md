@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+The [Node VM-pressure candidate](lab/bbs/patches/synthmodem-pressure/README.md)
+fixes reproduced oversized-wire writes, ignored pressure and swallowed loss.
+A bounded256KiB ring splits data into valid4093-byte frames; active-owner drain
+pauses/resumes BBS reads and write failures hang up explicitly. A16MiB actual
+loopback transfer and modeled lifecycle/failure cases pass, as does the full1220
+Telnet regression. No VM/service/DOS changes. Combine with the C helper, then
+validate VM/DSP/DOS/BBS; native credit, reverse TCP pressure and hardware stay open.
+
 The [bidirectional control-helper checkpoint](lab/bbs/patches/synthmodem-control/README.md)
 adds bounded atomic host frames and nonblocking reverse writes. Sixteen fault
 cases and12 real-PTY checks pass, including262147 forward/1048579 reverse exact

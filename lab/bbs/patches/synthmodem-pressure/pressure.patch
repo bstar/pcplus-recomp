@@ -1,0 +1,148 @@
+--- a/src/backends/PjsipBackend.js
++++ b/src/backends/PjsipBackend.js
+@@ -90,6 +90,7 @@
+  */
+ 
+ const { EventEmitter } = require('events');
++const { ControlWriter } = require('./ControlWriter');
+ const { spawn }        = require('child_process');
+ const dgram            = require('dgram');
+ const net              = require('net');
+@@ -523,6 +524,7 @@
+    */
+   async stop() {
+     if (this.state === 'STOPPED' || this.state === 'IDLE') return;
++    this._clearDataWriter();
+     this._transition('STOPPED');
+ 
+     /* Stop the periodic control-chardev instrumentation timer. */
+@@ -1331,18 +1333,32 @@
+    *
+    * @param {Buffer} buf  data-mode bytes
+    */
++  _clearDataWriter() {
++    if (this._dataWriter) this._dataWriter.destroy();
++    this._dataWriter = null;
++  }
++
+   write(buf) {
+-    if (!this._connected) {
+-      log.trace('write() before connected — dropping');
+-      return;
+-    }
+-    if (!this.controlSocket) {
+-      log.warn('write() but control channel disabled');
+-      return;
+-    }
+-    const frame = wire.encode(wire.TYPE.DATA_TX, buf);
+-    this.controlSocket.write(frame);
+-  }
++    if (!this._connected || !this.controlSocket || this.controlSocket.destroyed) {
++      throw new Error('Modem control channel unavailable');
++    }
++    if (this._dataWriter && this._dataWriter.socket !== this.controlSocket) {
++      this._clearDataWriter();
++      throw new Error('Modem control channel replaced during data ownership');
++    }
++    if (!this._dataWriter) {
++      const socket = this.controlSocket;
++      const writer = this._dataWriter = new ControlWriter(socket);
++      writer.on('drain', () => {
++        if (this._dataWriter === writer && this.controlSocket === socket) this.emit('drain');
++      });
++      writer.on('error', error => {
++        if (this._dataWriter === writer && this.controlSocket === socket) this.emit('error', error);
++      });
++    }
++    return this._dataWriter.write(buf);
++  }
++
+ }
+ 
+ module.exports = { PjsipBackend };
+--- a/src/session/CallSession.js
++++ b/src/session/CallSession.js
+@@ -701,9 +701,20 @@
+       // stringify-then-send a response many seconds after the user has
+       // hung up. Silently dropping the write is the right thing; the
+       // socket is gone and so is the modem DSP channel.
++      const dsp = this._dsp;
++      const drain = () => {
++        if (this._active && this._dsp === dsp) this._telnet.resumeOutput();
++      };
++      this._dspOutputOwner = { dsp, drain };
++      dsp.on('drain', drain);
+       this._telnet.attach(buf => {
+-        if (!this._dsp) return;
+-        try { this._dsp.write(buf); } catch (_) { /* racing teardown */ }
++        if (!this._active || this._dsp !== dsp) return true;
++        try { return dsp.write(buf); }
++        catch (error) {
++          log.error(`[${this._id}] Modem write failed: ${error.message}`);
++          this.hangup('modem-write');
++          return false;
++        }
+       }, this._connectInfo);
+ 
+       // TelnetProxy requests disconnect.
+@@ -863,6 +874,11 @@
+    * @private
+    */
+   _teardownDsp() {
++    if (this._dspOutputOwner) {
++      const { dsp, drain } = this._dspOutputOwner;
++      dsp.off('drain', drain);
++      this._dspOutputOwner = null;
++    }
+     if (!this._dsp) return;
+     const dsp = this._dsp;
+     this._dsp = null;
+--- a/src/telnet/TelnetProxy.js
++++ b/src/telnet/TelnetProxy.js
+@@ -54,6 +54,7 @@
+     this._idleTimer    = null;
+     this._connectTimer = null;
+     this._telnet = null;
++    this._outputBlocked = false;
+ 
+     // Menu-idle heartbeat — see _scheduleMenuHeartbeat for rationale.
+     this._menuHeartbeat = null;
+@@ -148,12 +149,20 @@
+ 
+   _send(data) {
+     if (this._txCallback) {
+-      this._txCallback(Buffer.isBuffer(data) ? data : Buffer.from(data));
++      if (this._txCallback(Buffer.isBuffer(data) ? data : Buffer.from(data)) === false && this._state !== STATE.CLOSING) {
++        this._outputBlocked = true;
++        if (this._tcpSocket && !this._tcpSocket.destroyed) this._tcpSocket.pause();
++      }
+     }
+     // Anything we send is itself a UART frame that exercises the
+     // receiving modem's UART — so reset the heartbeat clock. The
+     // heartbeat only ticks after a sustained period of zero TX.
+     this._scheduleMenuHeartbeat();
++  }
++
++  resumeOutput() {
++    this._outputBlocked = false;
++    if (this._tcpSocket && !this._tcpSocket.destroyed) this._tcpSocket.resume();
+   }
+ 
+   _sendStr(str) {
+@@ -313,6 +322,7 @@
+     });
+ 
+     this._tcpSocket = socket;
++    if (this._outputBlocked) socket.pause();
+     socket.on('data', data => {
+       if (this._tcpSocket !== socket) return;
+       if (this._state !== STATE.PROXYING || !this._telnet) return;
+@@ -480,6 +490,8 @@
+   }
+ 
+   disconnect() {
++    this._txCallback = null;
++    this._outputBlocked = false;
+     this._closeConnection();
+     this._cancelMenuHeartbeat();
+     this._state = STATE.CLOSING;
