@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+Compatibility remains the immediate priority. The
+[owned DOS door checkpoint](lab/bbs/enigma-v86.md) adds Global War instruction,
+pager and normal quit/Doors/Main acceptance through the source-built DOS
+terminal: 13 checks and 13 damaged-capture rejections. Barren Realms name entry,
+confirmation, game menu and normal quit/Doors/Main pass 13 DOS checks and ten
+damaged-capture rejections. The [record](docs/validation/enigma-v86-doors.json)
+retains failed recipes and the unresolved reference burst-input stall, and
+binds all 31 unchanged products and 566 application source files. Private
+writable game-image clones isolate this work from the live board. This
+checkpoint does not close any full application reconstruction gate.
+
 The [Infocom save-edge checkpoint](lab/bbs/enigma-infocom-edges.md) reproduces
 the owned worker exiting on a non-IFF restore. A separate dialog/worker/helper
 candidate validates bounded, story-matched save structures and supplies an

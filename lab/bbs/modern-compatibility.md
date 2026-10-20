@@ -1,5 +1,11 @@
 # Modern BBS compatibility checkpoint
 
+The [owned v86 door checkpoint](enigma-v86.md) adds Global War instruction,
+pager and normal-return acceptance through the current source-built DOS
+terminal. Barren Realms name entry, confirmation, game menu and normal quit
+also pass through DOS. Its reference burst-input stall remains unresolved.
+These checks use private game image copies and do not change the live board.
+
 The source-built DOS terminal is tested against owned loopback instances of
 [Synchronet](https://www.synchro.net/) and
 [ENiGMA½](https://enigma-bbs.github.io/). DOSBox-X runs the DOS program with
