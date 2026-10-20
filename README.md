@@ -3,6 +3,9 @@
 An incremental source reconstruction of ProComm Plus 2.01, focused first on
 serial communication, ANSI terminal handling and BBS compatibility.
 The complete task list and current work are tracked in [PLAN.md](PLAN.md).
+The planned [Boca / SPA2102 / SynthModem integration](docs/ANALOG_MODEM_INTEGRATION.md)
+retains real analog handshakes while Linux bridges to Telnet BBSes; hardware
+compatibility and 14.4 negotiation remain unverified.
 
 The [experimental attached PROGRAM binding](docs/ASPECT_PARENT_PROCESS.md) now
 preserves actual parent rendering, selected resources, script streams and VM

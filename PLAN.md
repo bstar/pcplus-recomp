@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+The [Boca / SPA2102 / SynthModem hardware target](docs/ANALOG_MODEM_INTEGRATION.md)
+now defines analog-handshake acceptance alongside the existing work. The adapter
+is ordered, not tested. Source review identifies standard-only COM/IRQ settings,
+legacy CONNECT/autobaud and DCD policy limits, unverified non-V.8 14.4 negotiation,
+and bridge Telnet/binary/menu-escape gaps. Complete the staged software checks
+and separate connection/display/data/reconnect/transfer hardware tests there.
+PCPlus stays a serial terminal; SIP/Telnet stay on Linux. Compatibility takes
+priority, with no physical pass inferred from software or upstream reports.
+
 The [booted-kernel critical-error lab](docs/KERNEL_CRITICAL.md) now passes four
 FreeDOS create/append cases and42 independent parent assertions. Genuine BIOS
 write-protection faults reach INT24; creation exits16 and buffered append/close
@@ -687,7 +696,8 @@ resume, auto-download, broader name mapping and hardware remain required.
       timeouts and restoration in controlled replay; fix reproduced overflow
       and unbounded foreground/ISR transmission in maintained diagnostic paths.
 - [x] Expose a documented bounded transmit/flow-service API usable by the terminal application.
-- [ ] Validate supported UART/port settings and the physical Wi-Fi modem.
+- [ ] Validate supported UART/port settings and physical modems, including the
+      [Boca / SPA2102 / SynthModem target](docs/ANALOG_MODEM_INTEGRATION.md).
 
 Evidence: `docs/UART.md`, `docs/validation`, executable/map/driver results under
 `build/standalone` and DOSBox results under `build/serial-tests`. Physical testing
