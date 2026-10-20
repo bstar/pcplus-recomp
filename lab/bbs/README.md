@@ -38,6 +38,12 @@ TCP reconnect under one carrier, QUIT and actual VM recycling/exit. Its peer is
 a deterministic Telnet application; DOS and real BBS workflows through this
 complete audio path remain next, with hardware acceptance separate.
 
+The [actual DOS/ENiGMA audio attempt](synthmodem-audio-dos.md) now authenticates
+with the source-built ASPECT child, but the menu route fails on an isolated N
+present in recorded caller audio and absent from guest decode. Its failed
+receipt and exact preceding-byte/downstream comparisons are retained. Sparse
+character delivery is the next transport investigation; this is not a menu pass.
+
 
 The [Infocom save-edge workflow](enigma-infocom-edges.md) covers actual DOS
 cancellation, invalid/missing names, overwrite and recovery after malformed

@@ -125,3 +125,9 @@ The optional SynthModem helper is source-built as static i386 Linux code with
 The modem shell supplies pinned QEMU and archive/ELF tools.
 [Booted helper validation](../lab/bbs/synthmodem-vm.md) keeps downloaded runtime
 images and candidate archives outside normal DOS application builds.
+# Combined modem and DOS lab
+
+`../tools/modem-dev --command` selects the optional modem shell, including
+Node, QEMU, Python, DOSBox-X and NASM. It supports the full software audio/DOS
+lab without adding emulator images or compiled runtime binaries to ordinary
+application build inputs. Dependencies remain on the pinned Nixpkgs revision.

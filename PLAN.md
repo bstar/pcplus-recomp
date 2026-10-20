@@ -7,6 +7,16 @@ data, reconnect and transfer runs. No physical compatibility or 14400-bps claim
 is established; the adapter has not arrived. PCPlus remains a serial terminal,
 with SIP/audio/Telnet handled by the Linux bridge.
 
+The first [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now
+authenticates through numeric ATD1, real DSP CONNECT, CONNECT> destination entry
+and the directory-bound ASPECT child. The full menu route remains FAILED:
+a final N is present in DOS output and independently decoded caller RTP, but
+absent from guest DATA_RX/BBS input. Preceding upstream bytes and23773 downstream
+display bytes match. Isolate sparse-character/in-VM receive loss next; do not
+replace this failure with an authentication-only compatibility claim. Captures
+also show duplicate200/405 responses to a guest registration refresh. The
+optional Nix modem shell now includes DOSBox-X/NASM for this combined lab.
+
 The [full software gateway](lab/bbs/synthmodem-gateway.md) now passes24 checks:
 actual external/internal SIP, normal CallSession and modem pool, V.22 DSP data,
 default post-train hold, CONNECT> entry, BINARY/ANSI/80x25 negotiation, exact

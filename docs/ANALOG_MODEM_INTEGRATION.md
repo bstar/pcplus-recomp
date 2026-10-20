@@ -94,6 +94,23 @@ Links below pin the reviewed source; future versions require rechecking.
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
 
+## Actual DOS / ENiGMA audio checkpoint (failed workflow)
+
+[The first complete DOS audio cohort](../lab/bbs/synthmodem-audio-dos.md)
+authenticates to owned stock ENiGMA using the real terminal/ASPECT child and
+software DSP gateway. The corrected script advances through the post-login
+screens but a final N is lost before guest DATA_RX. It exists in DOS serial
+output and an offline decoder recovers it from the observed caller audio.
+All earlier upstream bytes and23773 downstream display bytes match. The
+[record](validation/synthmodem-audio-dos.json) is explicitly failed; final menu,
+normal exit and hardware restoration remain unverified for these stopped runs.
+
+Investigate sparse-character delivery, the VM RTP/jitter path and guest receiver
+before extending the menu/transfer claims. A long-call refresh also receives
+both200 and405 responses from overlapping registrar/UAC handling; registration
+succeeds but duplicate ownership remains a concrete gap. No physical hardware
+has been tested, and no14400 claim is made.
+
 ## Full software gateway checkpoint
 
 The [complete software path](../lab/bbs/synthmodem-gateway.md) passes24 checks

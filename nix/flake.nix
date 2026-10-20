@@ -88,7 +88,7 @@
       '';
       devShells.${system} = {
         modem = pkgs.mkShell {
-          packages = with pkgs; [ nodejs_24 python3 qemu cpio gzip file binutils ];
+          packages = with pkgs; [ nodejs_24 python3 qemu cpio gzip file binutils dosbox-x nasm ];
         };
         bbs = pkgs.mkShell {
           packages = with pkgs; [
