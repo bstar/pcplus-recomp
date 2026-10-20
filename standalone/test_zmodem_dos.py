@@ -38,10 +38,10 @@ def main():
         cases.append(dict(label=label,path=path,status=expected_status,files=expected_files,wire=expected_wire,source=source_files or {},preexisting=preexisting or {},extra=checks or {}))
     for fmt in (65,67):
         for n in (0,1,1023,1024,1025,len(body)):
-            data=body[:n];wire=offer('TEST.BIN',n,fmt);expected=h(1,0x23000000)+h(9)
+            data=body[:n];wire=offer('TEST.BIN',n,fmt);expected=h(1,0x23002000)+h(9)
             for off in range(0,n,1024):
                 wire+=payload(data[off:off+1024],off,fmt);expected+=h(3,min(off+1024,n))
-            wire+=h(11,n,fmt)+h(8)+b'OO';expected+=h(1,0x23000000)+h(8)
+            wire+=h(11,n,fmt)+h(8)+b'OO';expected+=h(1,0x23002000)+h(8)
             case(f'receive-{fmt}-{n}',False,wire,{'TEST.BIN':data},expected_wire=expected)
             rx=h(1,0x22000000 if fmt==67 else 0x02000000)+h(9)
             tx=h(0)+h(4,0x01000000,fmt)+packet(meta('TEST.BIN',n).ljust(128,b'\0'),fmt,107,0)
@@ -53,10 +53,10 @@ def main():
         wire=offer(name,6,fmt)+payload(b'ABC',0,fmt)+offer(name,6,fmt)+payload(b'DEF',3,fmt)+h(11,6,fmt)+h(8)+b'OO'
         case(f'long-name-retry-{fmt}',False,wire,{local:b'ABCDEF'})
     name='PCPLUS PROBE 01 (1991).ZIP';local=alias(name.encode()).decode()
-    case('long-name-existing-alias-skipped',False,offer(name,3)+h(8)+b'OO',{},preexisting={local:b'ORIGINAL'},expected_wire=h(1,0x23000000)+h(5)+h(8))
+    case('long-name-existing-alias-skipped',False,offer(name,3)+h(8)+b'OO',{},preexisting={local:b'ORIGINAL'},expected_wire=h(1,0x23002000)+h(5)+h(8))
     a='Game 9P4Ppbwljq4gg3.ZIP';b='Game o6dYr6fHK42eTT.ZIP'
     case('long-active-alias-collision',False,offer(a,6)+payload(b'ABC')+offer(b,6),{},expected_status=6)
-    case('long-committed-alias-collision',False,offer(a,3)+payload(b'ABC')+h(11,3)+offer(b,3)+h(8)+b'OO',{'4F09E7D3.ZIP':b'ABC'},expected_wire=h(1,0x23000000)+h(9)+h(3,3)+h(1,0x23000000)+h(5)+h(8))
+    case('long-committed-alias-collision',False,offer(a,3)+payload(b'ABC')+h(11,3)+offer(b,3)+h(8)+b'OO',{'4F09E7D3.ZIP':b'ABC'},expected_wire=h(1,0x23002000)+h(9)+h(3,3)+h(1,0x23002000)+h(5)+h(8))
     long='A'*251+'.ZIP';local=alias(long.encode()).decode()
     case('wire-name-255',False,offer(long,3)+payload(b'ABC')+h(11,3)+h(8)+b'OO',{local:b'ABC'})
     case('wire-name-256-rejected',False,offer('A'*252+'.ZIP',3),{},expected_status=6)
@@ -75,13 +75,13 @@ def main():
         case(f'send-resume-{offset}',True,rx,{},source_files={'TEST.BIN':b'ABCDEF'},expected_wire=tx)
     case('cancel-owned-stage',False,offer('TEST.BIN',3)+payload(b'ABC')+b'\x18'*5,{},expected_status=5)
     case('lost-final-OO',False,offer('TEST.BIN',3)+payload(b'ABC')+h(11,3)+h(8),{'TEST.BIN':b'ABC'},expected_status=8)
-    case('existing-target-skipped',False,offer('TEST.BIN',3)+h(8)+b'OO',{},preexisting={'TEST.BIN':b'ORIGINAL'},expected_wire=h(1,0x23000000)+h(5)+h(8))
+    case('existing-target-skipped',False,offer('TEST.BIN',3)+h(8)+b'OO',{},preexisting={'TEST.BIN':b'ORIGINAL'},expected_wire=h(1,0x23002000)+h(5)+h(8))
     # An existing foreign stage is a conflict, not an owned file to remove.
     case('foreign-stage-preserved',False,offer('TEST.BIN',3)+h(8)+b'OO',{},preexisting={'PCZRX.$$$':b'FOREIGN'},expected_status=7)
     case('write-failure',False,offer('TEST.BIN',3)+payload(b'ABC'),{},fault=4,expected_status=7,
-        expected_wire=h(1,0x23000000)+h(9)+b'\x18'*8+b'\x08'*10)
+        expected_wire=h(1,0x23002000)+h(9)+b'\x18'*8+b'\x08'*10)
     case('commit-failure-no-acknowledgement',False,offer('TEST.BIN',3)+payload(b'ABC')+h(11,3),{},fault=5,expected_status=7,
-        expected_wire=h(1,0x23000000)+h(9)+h(3,3)+b'\x18'*8+b'\x08'*10)
+        expected_wire=h(1,0x23002000)+h(9)+h(3,3)+b'\x18'*8+b'\x08'*10)
     for fault in (1,2,3):
         case(f'source-fault-{fault}',True,h(1,0x22000000)+h(9)+h(3,3)+h(1,0x22000000)+h(8),{},source_files={'TEST.BIN':b'ABC'},fault=fault,expected_status=7,
             checks={'closes':1,'uncertain':1 if fault==3 else 0})

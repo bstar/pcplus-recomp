@@ -46,7 +46,10 @@ static unsigned data(zm_session *s,unsigned n,unsigned ending)
  return length?put(s,s->io.wire,length):fail(s,ZM_PROTOCOL);
 }
 static unsigned receive_init(zm_session *s)
-{return header(s,ZRINIT,0x23000000UL,ZW_HEX);}
+/* A finite credit matches the actual packet workspace. Unlimited overlap lets
+ * a fast TCP peer queue retransmissions/EOF ahead of a slow DOS receiver's
+ * replies, even when the UART honors RTS. Request a checkpoint within8KiB. */
+{return header(s,ZRINIT,0x23002000UL,ZW_HEX);}
 static unsigned finish(zm_session *s)
 {
  unsigned i,r,v,previous=0;

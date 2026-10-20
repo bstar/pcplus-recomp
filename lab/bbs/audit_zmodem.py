@@ -95,7 +95,9 @@ def audit_batch(stream,expected,minimum=0):
    while True:
     p=packet(stream,at,h['format']);at=p['end'];data=p.pop('payload')
     assert data==expected[current][position:position+len(data)],'Transferred bytes differ'
-    assert position+len(data)<=len(expected[current]);accepted=max(accepted,position+len(data));position+=len(data)
+    assert position+len(data)<=len(expected[current]);p['verified_before']=accepted
+    p['replayed']=bool(data) and position+len(data)<=accepted
+    accepted=max(accepted,position+len(data));position+=len(data)
     p['position']=position;p['after_eof']=eof is not None;parts.append(p);events.append(dict(kind='data',name=current,**p))
     if p['ending'] in (104,107):break
   elif h['type']==11:
@@ -135,12 +137,24 @@ def audit_controls(audit,opposite,trace,sender,post_time,unused=False):
     continue
    if p['ending'] in (106,107):
     lower=timestamp(trace,sender,p['crc_end']-1)
-    later=[e for e in audit['events'] if e['offset']>=p['end']]
-    upper=min(post_time,timestamp(trace,sender,later[0]['offset'])) if later else post_time
+    # A slow receiver may ACK after a timeout-driven retransmission starts.
+    # Require a reply before new forward data or EOF, not before replay of
+    # bytes whose CRC/source range has already been verified.
+    ceiling=max(p['position'],p.get('verified_before',0))
+    forward=[q['offset'] for q in f['packets'] if q['offset']>=p['end'] and q['position']>ceiling]
+    forward += [e['offset'] for e in audit['events'] if e['offset']>=p['end'] and e['kind']=='header' and e['type'] in (4,8,11)]
+    upper=min(post_time,timestamp(trace,sender,min(forward))) if forward else post_time
+    if p.get('replayed'):
+     original=next(q for q in f['packets'] if q['offset']<p['offset'] and q['position']>=p['position'])
+     lower=timestamp(trace,sender,original['crc_end']-1)
     # ZCRCQ requests an asynchronous/cumulative ACK. It need not precede the
     # next subpacket. ZCRCW still requires its exact boundary before continuing.
     if p['ending']==106:upper=post_time
     def valid_ack(h):
+     if p.get('replayed') and h['type'] in (3,9):
+      when=timestamp(trace,other,h['offset'])
+      verified=max((q['position'] for q in f['packets'] if timestamp(trace,sender,q['crc_end']-1)<=when),default=0)
+      return p['position']<=h['position']<=verified
      if h['type']!=3:return False
      if p['ending']==107:return h['position']==p['position']
      when=timestamp(trace,other,h['offset'])
@@ -151,7 +165,10 @@ def audit_controls(audit,opposite,trace,sender,post_time,unused=False):
     assert candidates,('No ACK or verified-position recovery for subpacket',p['offset'],p['position'])
     item=candidates[0];records.append(dict(type=item['type'],position=item['position'],offset=item['offset'],seconds=timestamp(trace,other,item['offset']),recovery=item['type']==9))
   match(1,None,timestamp(trace,sender,f['end']-1),post_time)
- match(8,0,timestamp(trace,sender,audit['finish']['offset']),post_time)
+ # A sender can emit OO even when its get_zfin retry budget expires. Require
+ # the actual receiver's ZFIN before those OO bytes, not merely before a later
+ # menu key. Exact stored bytes alone do not confirm the final handshake.
+ match(8,0,timestamp(trace,sender,audit['finish']['offset']),timestamp(trace,sender,audit['end']-2))
  return records
 def self_check():
  # Literal primary CRC vectors, with independent Python reference functions.

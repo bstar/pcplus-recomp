@@ -4,6 +4,14 @@ The target includes the user's running `~/projects/black-flag-bbs` checkout,
 its configured menus and modules, and the source-built DOS client. Passing
 an isolated stock BBS is insufficient. Compatibility is not complete.
 
+The [carrier-loss workflow](../lab/bbs/enigma-carrier.md) now tests an aborted
+download, real emulated DCD loss, partial cleanup, redial, second ASPECT login,
+confirmed retry and NFO in one DOS process. It uses DOSBox-X's built-in modem;
+the Python nullmodem model does not provide that carrier behavior. The
+[current acceptance](validation/enigma-carrier.json) also requires a finite8KiB
+receive advertisement and stricter final-reply ordering. Earlier receipts retain
+their own auditor versions; exact file bytes alone do not establish confirmation.
+
 The [cancellation/retry workflow](../lab/bbs/enigma-cancel-download.md) now
 requires local Escape during actual received data, partial-file removal, usable
 NFO input, an exact larger-file retry and usable NFO input afterward. It exposed
@@ -86,7 +94,7 @@ still separate from the running board.
 | Classic Pillars main menu | Actual live DOS display contains the new menu. Its contiguous wire prompt is `[ LoC ]`; the decorated heading contains SGR boundaries and spaced letters. | Use the explicit prompt option below; do not report the old `Main Menu` text check as a terminal defect. |
 | Search, index, game details, DIZ and NFO | [Owned route](../lab/bbs/enigma-search.md) passes all selected navigation checks with the staged decoder and generated catalog, including paced network input. Live DOS reaches DIZ/NFO. | Live scrolling outcomes vary between retained runs; verify all six navigation keys, result paging, empty search and return to the actual main menu after correction. |
 | Message editor | [Owned evaluation](validation/enigma-owned.json) retains live Home/Insert failures and isolated corrected editor passes. | Repeat unsaved draft insertion, Home/End, Insert/overtype, paging and discard on the current live board. |
-| Transfers and subsequent input | [Protocol selector](validation/enigma-protocol-selector.json) covers the owned terminal selector and exact ZMODEM download. [Repeat validation](validation/enigma-repeat-download.json) covers receive, existing-file skip, second receive and usable NFO input after each. [Cancellation validation](validation/enigma-cancel-download.json) adds Escape, partial cleanup, same-connection retry and subsequent NFO input in isolation. | Repeat against actual live catalog files; extend interrupted connection/reconnect and upload coverage, including live cancellation. |
+| Transfers and subsequent input | [Protocol selector](validation/enigma-protocol-selector.json) covers the owned terminal selector and exact ZMODEM download. [Repeat validation](validation/enigma-repeat-download.json) covers receive, existing-file skip, second receive and usable NFO input after each. [Cancellation](validation/enigma-cancel-download.json) covers Escape and same-connection retry; [carrier recovery](validation/enigma-carrier.json) adds interrupted receive, redial and confirmed retry in one DOS process. | Repeat against actual live catalog files and physical modem carrier behavior; extend upload coverage, including live cancellation and reconnect. |
 | Infocom door | [Live DOS validation](validation/enigma-infocom.json) passes13 checks: real library paging, Zork I entry, LOOK/NORTH/LOOK responses, worker lifecycle and clean return through Doors to Main. Eight corrupted acceptance captures reject. [Isolated SAVE/RESTORE](validation/enigma-infocom-save.json) passes11 checks across two worker lifetimes with exact owned door code and11 rejected evidence corruptions. Existing live probe saves remain unchanged. | Live SAVE/RESTORE through the actual library route, overwrite/cancel/invalid-save handling and broader story/playthrough coverage remain open. |
 | Other doors | Current board includes Global War and Barren Realms Elite. | Actual DOS client entry, play/input and return checks are still required. Infocom and file-browser passes do not cover these games. |
 | RS-232 Wi-Fi modem | Current DOS tests use modeled UART/19200/HARD flow control. | Physical modem testing, slow/fragmented input, flow-control pressure and reconnect are required. |

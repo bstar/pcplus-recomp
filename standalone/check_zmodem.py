@@ -128,9 +128,9 @@ def main():
             for off in range(0,n,1024):wire+=payload(body[off:off+1024],off,fmt)
             wire+=h(11,n,fmt)+h(8)+b'OO'
             f=Fixture(lib,wire);check(f'receive-{fmt}-{n}',f.run()==0 and f.received=={'TEST.BIN':body} and f.session.files==1 and f.session.bytes==n)
-            expected=h(1,0x23000000)+h(9)
+            expected=h(1,0x23002000)+h(9)
             for off in range(0,n,1024):expected+=h(3,min(off+1024,n))
-            expected+=h(1,0x23000000)+h(8)
+            expected+=h(1,0x23002000)+h(8)
             check(f'receive-wire-{fmt}-{n}',bytes(f.tx)==expected)
             rx=h(1,0x22000000 if fmt==67 else 0x02000000)+h(9)
             for off in range(0,n,1024):rx+=h(3,min(off+1024,n))

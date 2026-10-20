@@ -78,3 +78,8 @@ and users are synthetic, and its staged decoder is separate from the live board.
 The test does not establish live-catalog, physical RS-232 Wi-Fi modem or complete
 application acceptance. The [acceptance record](../../docs/validation/enigma-cancel-download.json)
 keeps current evidence and earlier failed attempts separate.
+
+The later [carrier checkpoint](enigma-carrier.md) adds the built-in modem path,
+finite receive credit and final receiver-ZFIN-before-OO ordering. This earlier
+receipt identifies its own binary/auditor; its file/menu passes do not replace
+that stronger confirmation and carrier acceptance.

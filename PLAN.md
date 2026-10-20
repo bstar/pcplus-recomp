@@ -1,6 +1,14 @@
 # Complete DOS rebuild plan
 
-The latest [ENiGMA cancellation work](lab/bbs/enigma-cancel-download.md) fixes
+The latest [ENiGMA carrier work](lab/bbs/enigma-carrier.md) adds interrupted
+receive, actual emulated DCD loss, partial-file cleanup, redial, second scripted
+login and confirmed ZIP/NFO retry in one DOS process. The maintained receiver
+advertises its actual8KiB capacity; the passive audit checks final reply ordering
+and valid cumulative acknowledgments during replay. Its
+[record](docs/validation/enigma-carrier.json) separates emulator carrier evidence
+from physical modem and live-board acceptance. All whole-application gates stay open.
+
+The preceding [ENiGMA cancellation work](lab/bbs/enigma-cancel-download.md) fixes
 local Escape leaving the sender active and delayed binary data reaching ANSI.
 The [acceptance record](docs/validation/enigma-cancel-download.json) binds actual
 DOS cancellation/NFO/retry/NFO, repeated sessions, corrupted-capture rejection,

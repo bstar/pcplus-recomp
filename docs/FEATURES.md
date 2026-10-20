@@ -12,6 +12,12 @@ found or implemented. A help heading or executable string establishes an
 advertised surface, not working code or observed runtime behavior. Runtime
 verification below must use source-built modules where it claims reconstruction.
 
+The latest [ENiGMA carrier checkpoint](validation/enigma-carrier.json) proves
+interrupted receive, emulated carrier loss, partial cleanup, redial, second
+ASPECT login and a confirmed ZIP/NFO retry in one DOS process. The receiver now
+advertises8KiB credit. Host/DOS and captured-wire regressions remain distinct;
+this closes no whole-application, live-board or physical-modem gate.
+
 ## Evidence register
 
 | ID | Artifact and search boundary | What it establishes |

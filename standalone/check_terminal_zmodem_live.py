@@ -26,13 +26,13 @@ class LiveZmodem(LiveYmodem):
    self.script.append((h(11,len(source),fmt),h(1,0x22000000 if fmt==67 else 0x02000000)))
    self.script.append((h(8),h(8)));self.script.append((b'OO',b'APP'))
   else:
-   self.script.append((h(1,0x23000000),offer('ONE.BIN',len(source)+123,fmt)))
+   self.script.append((h(1,0x23002000),offer('ONE.BIN',len(source)+123,fmt)))
    reply=payload(source[:receive_block],0,fmt) if source else h(11,0,fmt)
    self.script.append((h(9),reply))
    for off in range(0,len(source),receive_block):
     nextoff=min(off+receive_block,len(source));reply=payload(source[nextoff:nextoff+receive_block],nextoff,fmt) if nextoff<len(source) else h(11,len(source),fmt)
     self.script.append((h(3,nextoff),reply))
-   self.script.append((h(1,0x23000000),h(8)));self.script.append((h(8),b'OOAPP'))
+   self.script.append((h(1,0x23002000),h(8)));self.script.append((h(8),b'OOAPP'))
  def tick_hook(self,u,address,size,data):
   # Physical HARD-flow peer honors the actual driver's RTS output. No product
   # instruction/return is skipped; BIOS clock scaling is separately declared.

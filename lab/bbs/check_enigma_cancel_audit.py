@@ -57,6 +57,10 @@ def main(args):
             if h['type']==kind and timestamp(trace,'dos',h['offset'])>=eof_time:data[h['offset']+4]^=1
         reject(label,dos=bytes(data))
     reject('missing-literal-OO',bbs=damage(stream,retry['end']-2))
+    late=copy.deepcopy(trace);finish=next(h for h in scan(opposite) if h['type']==8 and timestamp(trace,'dos',h['offset'])>=eof_time)
+    entry=next(e for e in late if e['direction']=='dos' and e['offset']<=finish['offset']<e['offset']+e['size'])
+    entry['seconds']=timestamp(trace,'bbs',retry['end']-2)+.001
+    reject('receiver-ZFIN-arrives-after-OO',times=late)
     at=stream.index(b'NFO | lines',tail,retry['start']);reject('missing-NFO-after-cancel',bbs=damage(stream,at))
     at=stream.index(b'NFO | lines',after);reject('missing-NFO-after-retry',bbs=damage(stream,at))
     replay_packets=[p for p in retry['files'][0]['packets'] if p.get('after_eof')]

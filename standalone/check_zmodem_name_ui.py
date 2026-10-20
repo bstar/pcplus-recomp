@@ -16,7 +16,7 @@ class DisplayPeer(LiveZmodem):
   self.recording=False;self.labels=set();super().__init__();self.local=local_name(wire)
   self.recording=True
   self.strict=False # Existing peer asserts ONE.BIN; this test checks its own path.
-  self.script[0]=(h(1,0x23000000),offer(wire,len(self.source)+123,67))
+  self.script[0]=(h(1,0x23002000),offer(wire,len(self.source)+123,67))
   if skip:
    self.files['D:\\RECV\\'+self.local]=bytearray(b'EXISTING')
    self.script=deque([self.script[0],(h(5),h(8)),(h(8),b'OOAPP')])

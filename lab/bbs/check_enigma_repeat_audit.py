@@ -38,6 +38,7 @@ def main(candidate,label):
     reject('ZSKIP-before-offer-chronology',times=times)
     report=dict(passed=True,cases=cases,checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         auditor_sha256=hashlib.sha256((ROOT/'lab/bbs/enigma_repeat_download_dos.py').read_bytes()).hexdigest(),
+        shared_auditor_sha256=hashlib.sha256((ROOT/'lab/bbs/audit_zmodem.py').read_bytes()).hexdigest(),
         capture_hashes={p:hashlib.sha256((out/p).read_bytes()).hexdigest() for p in ('display.bin','serial-received.bin','trace.json')},
         scope='Replays the actual retained three-transfer capture, then changes one payload/control/finish/menu/source/chronology condition at a time. Every negative must reject; no network or DOS session is started.')
     (out/'audit-negative-checks.json').write_text(json.dumps(report,indent=2)+'\n');print('Repeated-transfer audit:',len(cases),'corruptions rejected')
