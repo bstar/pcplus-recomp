@@ -18,7 +18,7 @@ sha = render.sha
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label', default='mouse-' + uuid.uuid4().hex)
-    parser.add_argument('--case', action='append', choices=['normal', 'menu', 'program', 'quarantine', 'invalid-scale', 'no-driver', 'unsupported-driver'])
+    parser.add_argument('--case', action='append', choices=['normal', 'menu', 'program', 'quarantine', 'invalid-scale', 'no-driver', 'unsupported-driver','live-save','live-cancel','live-invalid','live-child-failed','startup-repair'])
     args = parser.parse_args()
     assert re.fullmatch(r'[A-Za-z0-9_-]+', args.label)
     out = ROOT / 'build/terminal-mouse-tests' / args.label
@@ -32,7 +32,12 @@ def main():
              'standalone/terminal_mouse_observer.asm', 'standalone/test_aspect_renderer_dos.py',
              'standalone/test_connection_dos.py', 'standalone/test_terminal.py',
              'standalone/modem_fixtures.py', 'standalone/terminal_config_fixtures.py',
-             'standalone/directory_test_support.py', 'standalone/mouse_keyboard_child.asm']
+             'standalone/directory_test_support.py', 'standalone/mouse_keyboard_child.asm','standalone/mouse_settings_child.asm']
+    editor=ROOT/'build/setup-mouse/PRMEDIT.EXE'
+    editor_manifest=json.loads((editor.parent/'manifest.json').read_text())
+    assert editor_manifest['experimental_mouse'] and editor_manifest['field_count']==50
+    assert editor_manifest['binary_sha256']==sha(editor)
+    sources.update(editor_manifest['sources'])
     sources.update({p:sha(ROOT / p) for p in names})
     for name, digest in sources.items():
         assert sha(ROOT / name) == digest, name
@@ -47,6 +52,8 @@ def main():
                     '-fe=MOBS.EXE', '-fm=MOBS.map'], cwd=out, check=True)
     subprocess.run(['nasm', '-fbin', str(out / 'sources/standalone/mouse_keyboard_child.asm'),
                     '-o', str(out / 'MUTATE.COM')], check=True)
+    for name,flags in [('BADPRM',[]),('BADCHILD',['-DEXIT_FAILURE'])]:
+        subprocess.run(['nasm','-fbin',*flags,str(out/'sources/standalone/mouse_settings_child.asm'),'-o',str(out/(name+'.COM'))],check=True)
     render.OUT = out
     # Only replace the launched process with the independent DOS observer.
     # All peer bytes, hardware samples and actual production client are retained.
@@ -73,6 +80,12 @@ def main():
         ('no-driver', 'B', 'p2500 r e a d y p500 a-x'),
         ('unsupported-driver', 'U', 'p2500 r e a d y p500 a-x'),
     ]
+    edit='pgdown '+' p100 '.join(['tab']*12+['home','del','1','6','tab','home','del','8'])
+    cases += [('live-save','L','p2500 a-f10 p700 '+edit+' p100 f10 p100 escape p700 space p800 a-z p2200 r e a d y p500 a-x'),
+              ('live-cancel','S','p2500 a-f10 p700 '+edit+' p100 escape p100 y p700 space p800 a-z p2200 r e a d y p500 a-x'),
+              ('live-invalid','S','p2500 a-f10 p1000 space p1000 a-z p2200 r e a d y p500 a-x'),
+              ('live-child-failed','S','p2500 a-f10 p1000 space p1000 a-z p2200 r e a d y p500 a-x')]
+    cases += [('startup-repair','S','p1000 f10 p100 8 p100 f10 p100 4 p100 f10 p100 escape p1500 a-z p2200 r e a d y p500 a-x')]
     if args.case:
         cases = [c for c in cases if c[0] in args.case]
     results = []
@@ -86,6 +99,20 @@ def main():
         struct.pack_into('<HH', settings, 0x4e4, 0 if mode == 'R' else 8, 4)
         files = {'MOBS.EXE':(out / 'MOBS.EXE').read_bytes(), 'MUTATE.COM':(out / 'MUTATE.COM').read_bytes()}
         arguments = '@D:\\TEST.PRM /D:CaseTest:23'
+        expected=bytes(settings);updates=()
+        if name=='startup-repair':
+            struct.pack_into('<HH',settings,0x4e4,0,0)
+            expected=bytearray(settings);struct.pack_into('<HH',expected,0x4e4,8,4);expected=bytes(expected)
+            arguments='/S @TEST.PRM /D:CaseTest:23';files['PRMEDIT.EXE']=editor.read_bytes()
+        if name.startswith('live-'):
+            arguments='@TEST.PRM /D:CaseTest:23'
+            files['PRMEDIT.EXE']=editor.read_bytes() if name in ('live-save','live-cancel') else (out/('BADPRM.COM' if name=='live-invalid' else 'BADCHILD.COM')).read_bytes()
+            if name!='live-cancel':
+                expected=bytearray(settings);struct.pack_into('<HH',expected,0x4e4,0 if name=='live-invalid' else 16,8)
+                if name in ('live-invalid','live-child-failed'):
+                    struct.pack_into('<H',expected,0x1ae,30)
+                    updates=[(4.3,b'\x1b[5;1HPOST SAVE')]
+                expected=bytes(expected)
         if name == 'program':
             mapping = bytearray(540)
             for i in range(10):
@@ -97,19 +124,22 @@ def main():
             arguments += ' /T:D:\\TEST.KEY'
         banner = b'\x1b[2J\x1b[HQSTOP BYTE SAFE\x1b[6n\x1b[0c' if mode == 'Q' else None
         result = harness.run(name, 'reject' if mode == 'R' else 'success', keys,
-            prm=bytes(settings), arguments=arguments, files=files, working_drive='d', banner=banner)
+            prm=bytes(settings), prm_expected=expected,arguments=arguments, files=files, working_drive='d', banner=banner,online_updates=updates)
         report = (folder / 'MOUSE.OUT').read_text() if (folder / 'MOUSE.OUT').exists() else ''
         summary = re.fullmatch(r'MOUSEOBS checks=(\d+) failures=(\d+) child=(\d+) retained=(\d+) driver_bytes=(\d+) stage=(\d+) callback=(\d+) registrations=(\d+)\s*', report)
         checks = result['checks']
         checks['independent_mouse_observer'] = bool(summary) and int(summary[2]) == 0 and int(summary[1]) >= 9
         if mode != 'R':
             checks['real_serial_replies'] = result['checks'].get('actual_DOS_CPR', False)
-        if name in ('normal', 'menu', 'program', 'no-driver', 'unsupported-driver'):
+        if name in ('normal', 'menu', 'program', 'no-driver', 'unsupported-driver','startup-repair') or name.startswith('live-'):
             checks['ordinary_input_after_mouse_owner'] = b'ready' in (folder / 'serial.bin').read_bytes()
-        if name == 'menu':
+        if name in ('menu','startup-repair') or name.startswith('live-'):
             capture = folder / 'PCPLUS.SCR'
             checks['native_mouse_menu_action'] = bool(summary) and int(summary[6]) == 2 and capture.is_file()
             checks['snapshot_uses_live_screen'] = capture.is_file() and b'FIRST BYTE SAFE' in capture.read_bytes() and b'Command Menu' not in capture.read_bytes()
+        if name in ('live-invalid','live-child-failed'):
+            screen=(folder/'SCREEN.BIN').read_bytes()
+            checks['other_settings_not_partially_applied']=screen[640:658:2]==b'POST SAVE' and screen[641:659:2]==bytes([7])*9
         if name == 'program':
             checks['real_child_verified_callback_absent'] = (folder / 'CHILD.OK').is_file() and (folder / 'CHILD.OK').read_bytes() == b'MOUSE CHILD\r\n'
         if mode == 'Q':

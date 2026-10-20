@@ -23,7 +23,7 @@ def main():
     sources = {}
     names = ['terminal-process', 'aspect-process-parent', 'aspect-fault',
              'aspect-process', 'aspect-compiler-dos', 'aspect-runner']
-    if args.mouse:names += ['terminal-mouse', 'terminal-mouse-process']
+    if args.mouse:names += ['terminal-mouse', 'terminal-mouse-process','setup','setup-mouse']
     for name in names:
         manifest = json.loads((ROOT / 'build' / name / 'manifest.json').read_text())
         for path, digest in manifest['sources'].items():
@@ -54,7 +54,7 @@ subprocess.run([sys.executable,'standalone/build_terminal.py','--external-render
 subprocess.run([sys.executable,'standalone/build_terminal.py'],check=True)
 '''
     if args.mouse:
-        code += "subprocess.run([sys.executable,'standalone/build_terminal.py','--mouse'],check=True)\nsubprocess.run([sys.executable,'standalone/build_terminal.py','--mouse','--external-render'],check=True)\n"
+        code += "subprocess.run([sys.executable,'standalone/build_terminal.py','--mouse'],check=True)\nsubprocess.run([sys.executable,'standalone/build_terminal.py','--mouse','--external-render'],check=True)\nsubprocess.run([sys.executable,'standalone/build_setup.py'],check=True)\nsubprocess.run([sys.executable,'standalone/build_setup.py','--mouse'],check=True)\n"
     with (folder / 'build.log').open('w') as log:
         result = subprocess.run([sys.executable, '-c', code], cwd=source,
                                 stdout=log, stderr=log, timeout=300)
@@ -69,11 +69,11 @@ subprocess.run([sys.executable,'standalone/build_terminal.py'],check=True)
                 'native-process/NAMES.EXE']
     products += ['native-process/' + name for name in json.loads(
         (ROOT / 'build/native-process/manifest.json').read_text())['children']]
-    if args.mouse:products += ['terminal-mouse/TERMINAL.EXE', 'terminal-mouse-process/TERMINAL.EXE']
+    if args.mouse:products += ['terminal-mouse/TERMINAL.EXE', 'terminal-mouse-process/TERMINAL.EXE','setup/PRMEDIT.EXE','setup-mouse/PRMEDIT.EXE']
     compared = {name: dict(expected=sha(ROOT / 'build' / name),
                            actual=sha(source / 'build' / name))
                 for name in products} if not result.returncode else {}
-    report = dict(passed=not result.returncode and len(compared) == (29 if args.mouse else 27) and
+    report = dict(passed=not result.returncode and len(compared) == (31 if args.mouse else 27) and
                   all(p['expected'] == p['actual'] for p in compared.values()),
                   original_inputs=[], experimental_mouse=args.mouse, source_files=len(sources), sources=sources,
                   products=compared, exit_code=result.returncode,

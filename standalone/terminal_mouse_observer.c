@@ -99,7 +99,7 @@ int main(int argc,char **argv)
   CHECK(retained==0);
   state_io(0x16,after);CHECK(!_fmemcmp(before,after,bytes));
   callback=exchange(0,0,&mask);CHECK(callback==mouse_observer_prior&&mask==0x0b);
-  if(mode=='S')CHECK(stage==2);
+  if(mode=='S'||mode=='L')CHECK(stage==2);
   if(mode=='B'||mode=='U')CHECK(registrations==0);
   state_io(0x17,original);
  }

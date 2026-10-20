@@ -714,3 +714,14 @@ preceding27 remain unchanged. The isolated ENiGMA route passes20 checks with
 DOS-compiled login and20ms-paced bytes. Startup-directory/return-prompt mouse,
 live settings UI/adoption, the ASPECT child's own mouse services and physical
 input remain open. The ordinary build keeps mouse disabled; no gate closes.
+
+The selectable [mouse settings extension](MOUSE_SETTINGS.md) adds a50-field
+editor and transactional live X/Y adoption through the suspended owner. Its31
+linked policy cases,12 actual DOS workflows/119 assertions and470 editor-model
+inputs cover save, discard, loaded-value repair, failed/invalid child output,
+unchanged offers and repeated edits retaining the original driver snapshot.
+The ordinary48-field editor passes450 inputs and stays byte-identical alongside
+the prior27 application binaries.31 products reproduce from fresh source. The
+new parent repeats92 actual fault cases and the isolated ENiGMA route passes20
+checks. Startup-directory/return-prompt input, ASPECT mouse services, physical
+input and the full application gates remain open.

@@ -60,6 +60,10 @@ static const descriptor fields[SETUP_FIELD_COUNT]={
  F("Clipboard separator","Byte after each all/tagged name: 13 CR, 32 space, 0..255.",1,0x4ea,DECIMAL,0,255),
  F("Auto Download","0 disabled; any nonzero word enables ZMODEM automatic reception.",1,0x42c,DECIMAL,0,65535),
  F("Download directory","DOS 8.3 directory; empty uses current directory. Checked at transfer start.",1,0x31c,PATH,0,64)
+#ifdef SETUP_MOUSE
+ ,F("Mouse X scale","Horizontal movement per key, 1..999. Applies when setup closes.",1,0x4e4,DECIMAL,1,999)
+ ,F("Mouse Y scale","Vertical movement per key, 1..999. Applies when setup closes.",1,0x4e6,DECIMAL,1,999)
+#endif
 };
 static const unsigned bases[]={0x3f8,0x2f8,0x3e8,0x2e8};
 static const unsigned irqs[]={4,3,4,3};

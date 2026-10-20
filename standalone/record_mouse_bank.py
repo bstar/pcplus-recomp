@@ -82,11 +82,11 @@ def main():
     app_dir = ROOT / ('build/aspect-unwind-mouse/source-proofs' if args.application_mouse_source else 'build/aspect-unwind/source-proofs') / args.application_source
     application = read(app_dir / 'result.json')
     preceding = read(ROOT / 'docs/validation/aspect-unwind.json')
-    assert application['passed'] and application['original_inputs'] == [] and len(application['products']) == (29 if args.application_mouse_source else 27)
+    assert application['passed'] and application['original_inputs'] == [] and len(application['products']) in ((29,31) if args.application_mouse_source else (27,))
     assert application['checker_sha256'] == sha(ROOT / 'standalone/check_aspect_unwind_source.py')
     assert application['log_sha256'] == sha(app_dir / 'build.log')
     current(application['sources'], app_dir / 'source')
-    normal_products={p:v for p,v in application['products'].items() if not p.startswith(('terminal-mouse/', 'terminal-mouse-process/'))}
+    normal_products={p:v for p,v in application['products'].items() if p in preceding['products']}
     assert len(normal_products)==27
     for name, pair in normal_products.items():
         assert pair['actual'] == pair['expected'] == preceding['products'][name]['actual']

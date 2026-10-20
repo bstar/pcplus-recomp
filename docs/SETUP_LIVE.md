@@ -21,6 +21,10 @@ The foreground owner can now adopt these settings during the session:
 - Modem numeric settings, commands and response strings for future actions.
 - BREAK duration for the next Alt-B operation.
 
+The selectable mouse build additionally adopts the editor's validated X/Y scales
+after the return prompt. It retains the same original driver snapshot across
+edits; see [mouse settings](MOUSE_SETTINGS.md). Use its matching50-field editor.
+
 Baud, parity/data/stop and software/hardware flow changes on the current port
 now offer a separate confirmation: **Y** applies them, and any other key keeps
 the current link. That choice also returns to the terminal; no extra key is

@@ -26,6 +26,18 @@ class TerminalOwner(Owner):
         self.uc.mem_write(self.base+int(bss[1],16)*16+int(bss[2],16), bytes([0xa5])*int(bss[3],16))
         self.invoke('_terminal_mouse_bootstrap')
 
+    def boundary(self,uc,address,size,data):
+        if address==self.symbols.get('capture_fs_canonical_'):
+            destination=uc.reg_read(UC_X86_REG_DX)
+            uc.mem_write(self.data_base+destination,b'D:\\TEST.PRM\0'.ljust(128,b'\0'))
+            self.events.append(('canonical',))
+            uc.reg_write(UC_X86_REG_AX,0)
+            sp=uc.reg_read(UC_X86_REG_SP);ss=uc.reg_read(UC_X86_REG_SS)
+            uc.reg_write(UC_X86_REG_IP,int.from_bytes(uc.mem_read(ss*16+sp,2),'little'))
+            uc.reg_write(UC_X86_REG_SP,sp+2)
+            return
+        super().boundary(uc,address,size,data)
+
     def interrupt(self, uc, number, data):
         ax = uc.reg_read(UC_X86_REG_AX)
         if number == 0x21 and ax >> 8 == 0x4a:
@@ -74,6 +86,11 @@ class TerminalOwner(Owner):
         struct.pack_into('<HH',image,0x4e4,x,y)
         self.uc.mem_write(self.data_base+0x5000,bytes(image))
         return self.far('_terminal_mouse_stage_far',[0x5000,size])
+
+    def offer(self, x, y, size=0x4f0):
+        image=bytearray(0x4f0);struct.pack_into('<HH',image,0x4e4,x,y)
+        self.uc.mem_write(self.data_base+0x5000,bytes(image))
+        return self.far('_terminal_mouse_offer_far',[0x5000,size])
 
     def finish(self):
         self.far('terminal_mouse_exit')
@@ -131,6 +148,57 @@ def main():
         assert not any(e[0]=='driver' for e in m.events[mark:])
         assert m.events[-1]==('DOS-retain',14,m.keep)
         passed('quarantine-keeps-callback-allocation-without-unknown-driver-call',boundary=boundary)
+    m=TerminalOwner();assert m.stage(8,4)==0 and m.invoke('_terminal_mouse_start')==0
+    assert m.invoke('_terminal_mouse_pause')==0
+    native=m.native();storage=m.storage();events=len(m.events)
+    assert m.offer(16,8)==16384 and m.native()==native and len(m.events)==events
+    assert m.far('_terminal_mouse_commit_far')==0 and m.native()==native and m.storage()==storage
+    assert m.invoke('_terminal_mouse_resume')==0 and m.get('mouse_scale_x')==16 and m.get('mouse_scale_y')==8
+    m.finish();passed('live-settings-commit-retains-original-snapshot-and-allocation')
+    for x,y,size in [(0,8,0x4f0),(16,0,0x4f0),(1000,8,0x4f0),(16,1000,0x4f0),(16,8,0x4ef)]:
+        m=TerminalOwner();assert m.stage(8,4)==0 and m.invoke('_terminal_mouse_start')==0
+        assert m.invoke('_terminal_mouse_pause')==0 and m.offer(16,8)==16384
+        assert m.offer(x,y,size)==15 and m.far('_terminal_mouse_commit_far')==0
+        assert m.invoke('_terminal_mouse_resume')==0 and (m.get('mouse_scale_x'),m.get('mouse_scale_y'))==(8,4)
+        m.finish();passed('failed-offer-discards-previous-candidate',x=x,y=y,size=size)
+    m=TerminalOwner();assert m.stage(8,4)==0 and m.invoke('_terminal_mouse_start')==0
+    assert m.offer(16,8)==15
+    assert m.invoke('_terminal_mouse_pause')==0 and m.offer(16,8)==16384
+    m.far('_terminal_mouse_discard_far');assert m.far('_terminal_mouse_commit_far')==0
+    assert m.invoke('_terminal_mouse_resume')==0 and m.get('mouse_scale_y')==4
+    m.finish();passed('live-stage-needs-suspension-and-abort-does-not-adopt')
+    for fault in ('vector','size','guard','callback'):
+        m=TerminalOwner();assert m.stage(8,4)==0 and m.invoke('_terminal_mouse_start')==0
+        assert m.invoke('_terminal_mouse_pause')==0 and m.offer(16,8)==16384
+        if fault=='vector':m.vector=(0,0)
+        elif fault=='size':m.size+=1
+        elif fault=='guard':m.uc.mem_write(m.storage(),b'\0')
+        else:m.put('mouse_depth',0)
+        mark=len(m.events);assert m.far('_terminal_mouse_commit_far')==2
+        assert not any(e[0]=='driver' and e[1] in (0,0x21,0x0c,0x17) for e in m.events[mark:])
+        m.vector=(0x7000,0x40);m.size=256;m.uc.mem_write(m.storage(),b'\xa5');m.put('mouse_depth',0xffff)
+        m.finish();passed('live-commit-quarantines-without-reinitializing-untrusted-state',fault=fault)
+    m=TerminalOwner();assert m.stage(8,4)==0 and m.invoke('_terminal_mouse_start')==0
+    assert m.invoke('_terminal_mouse_pause')==0;mark=len(m.events)
+    assert m.offer(8,4)==0 and m.far('_terminal_mouse_commit_far')==0 and len(m.events)==mark
+    assert m.invoke('_terminal_mouse_resume')==0;m.finish();passed('unchanged-file-offer-needs-no-reconfigure-or-driver-call')
+    m=TerminalOwner();assert m.stage(8,4)==0 and m.invoke('_terminal_mouse_start')==0
+    storage=m.storage()
+    for x,y in [(16,8),(32,16),(8,4)]:
+        assert m.invoke('_terminal_mouse_pause')==0 and m.offer(x,y)==16384
+        assert m.far('_terminal_mouse_commit_far')==0 and m.invoke('_terminal_mouse_resume')==0
+        assert (m.get('mouse_scale_x'),m.get('mouse_scale_y'))==(x,y) and m.storage()==storage
+    assert m.events.count(('driver',0x16))==1
+    m.finish();passed('repeated-edits-and-revert-retain-one-original-driver-snapshot')
+    m=TerminalOwner();assert m.stage(8,4)==0 and m.invoke('_terminal_mouse_start')==0
+    assert m.invoke('_terminal_mouse_pause')==0 and m.offer(16,8)==16384
+    m.uc.mem_write(m.data_base+0x5000,b'TEST.PRM\0'.ljust(64,b'\0'))
+    source=bytearray(44);struct.pack_into('<H',source,42,13)
+    m.uc.mem_write(m.data_base+0x6000,bytes(source))
+    assert m.invoke('_live_setup_bind',[0x5000,0,0x6000])==0
+    assert m.invoke('_live_setup_acknowledge',[0])==0
+    assert m.invoke('_terminal_mouse_resume')==0 and (m.get('mouse_scale_x'),m.get('mouse_scale_y'))==(8,4)
+    m.finish();passed('setup-rebind-cannot-publish-a-previous-mouse-offer')
     report=dict(passed=True,cases=cases,binary_sha256=sha(OUT/'TERMINAL.EXE'),
         checker_sha256=sha(Path(__file__)),owner_boundary_checker_sha256=sha(ROOT/'standalone/check_mouse_keyboard.py'),
         scope='Linked actual terminal foreground policy with poisoned C BSS, cdecl/far staging frames, parent extent/resize/allocation errors, BIOS fallback and retained-memory boundaries. DOS and driver errors are explicit modeled boundaries; actual TSR/menu/child observations are separate.')

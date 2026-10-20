@@ -25,6 +25,11 @@ ASPECT login and20ms-paced client bytes. Its PRM fixture explicitly supplies
 8/4 scales. This adds regression coverage for that application build; it does
 not install the candidate on the live board or erase live editor failures.
 
+The [live mouse settings build](MOUSE_SETTINGS.md) repeats that same 20-check
+route successfully with the matching 50-field editor available. The test does
+not change mouse settings during its BBS session; actual DOS setup adoption has
+separate coverage. The live server's decoder hash remains unchanged.
+
 The fresh actual DOS editor comparison passes all seven audited checks on the
 patched instance, including Home positioning, Insert/overtype and no saved post.
 The live and isolated tests use the same terminal binary. Their menus and

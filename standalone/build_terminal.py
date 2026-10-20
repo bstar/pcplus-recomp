@@ -145,8 +145,8 @@ for source in c_sources:
  if args.mouse:
   options+=['-dTERMINAL_MOUSE']
   if source.parent==ROOT/'src/mouse':
-   mouse_names=['mouse_settings_decode','mouse_owner_open','mouse_owner_suspend','mouse_owner_resume','mouse_owner_close','mouse_owner_key','mouse_owner_phase','mouse_owner_bytes',
-    'terminal_mouse_bootstrap','terminal_mouse_stage','terminal_mouse_start','terminal_mouse_pause','terminal_mouse_resume','terminal_mouse_stop']
+   mouse_names=['mouse_settings_decode','mouse_owner_open','mouse_owner_suspend','mouse_owner_resume','mouse_owner_close','mouse_owner_key','mouse_owner_phase','mouse_owner_bytes','mouse_owner_reconfigure',
+    'terminal_mouse_bootstrap','terminal_mouse_stage','terminal_mouse_start','terminal_mouse_pause','terminal_mouse_resume','terminal_mouse_stop','terminal_mouse_offer','terminal_mouse_commit','terminal_mouse_discard']
    options+=['-nt=MOUSE_CODE','-nc=FARCODE','-ecc','-dMOUSE_DOS_PLATFORM',*['-d'+n+'='+n+'_impl' for n in mouse_names]]
  if source==ROOT/'src/status/status_formatter.c':options=['-ecc']
  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we',*options,'-i='+str(ROOT/'src/config'),'-i='+str(ROOT/'src/directory'),'-i='+str(ROOT/'src/key_mapping'),'-i='+str(ROOT/'src/process'),'-i='+str(ROOT/'src/transfer'),'-fo='+str(obj),str(source)],cwd=OUT,check=True)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Stage current source-built DOS programs and an authored ASPECT example."""
-import json
+import argparse,json
 from pathlib import Path
 import shutil
 import subprocess
@@ -10,25 +10,35 @@ from build_aspect_runner import ROOT, sha
 OUT = ROOT / 'build/dos-package'
 
 
-def main():
+def main(mouse=False):
+    output=ROOT/'build/dos-package-mouse' if mouse else OUT
     for name in ['terminal', 'setup', 'xlt_editor', 'aspect_runner', 'aspect_compiler_dos']:
-        subprocess.run([sys.executable, str(ROOT / f'standalone/build_{name}.py')], check=True)
-    OUT.mkdir(parents=True, exist_ok=True)
-    files = {'TERMINAL.EXE': 'terminal/TERMINAL.EXE', 'ASPECT.EXE': 'aspect-runner/ASPECT.EXE',
-             'PRMEDIT.EXE': 'setup/PRMEDIT.EXE', 'XLTEDIT.EXE': 'xlt-editor/XLTEDIT.EXE',
+        subprocess.run([sys.executable, str(ROOT / f'standalone/build_{name}.py'),
+                        *(['--mouse'] if mouse and name in ('terminal','setup') else [])], check=True)
+    output.mkdir(parents=True, exist_ok=True)
+    files = {'TERMINAL.EXE': ('terminal-mouse' if mouse else 'terminal')+'/TERMINAL.EXE', 'ASPECT.EXE': 'aspect-runner/ASPECT.EXE',
+             'PRMEDIT.EXE': ('setup-mouse' if mouse else 'setup')+'/PRMEDIT.EXE', 'XLTEDIT.EXE': 'xlt-editor/XLTEDIT.EXE',
              'ASPCOMP.EXE': 'aspect-compiler-dos/ASPCOMP.EXE'}
+    inputs={}
     for leaf, relative in files.items():
-        shutil.copyfile(ROOT / 'build' / relative, OUT / leaf)
+        source=ROOT/'build'/relative;manifest=source.parent/'manifest.json';metadata=json.loads(manifest.read_text())
+        assert metadata['binary_sha256']==sha(source)
+        assert all(not Path(p).is_absolute() and '..' not in Path(p).parts and
+                   Path(p).parts[0] not in ('analysis','build') and sha(ROOT/p)==h
+                   for p,h in metadata['sources'].items())
+        if leaf=='PRMEDIT.EXE':assert metadata['field_count']==(50 if mouse else 48)
+        inputs[leaf]={'manifest':str(manifest.relative_to(ROOT)),'sha256':sha(manifest)}
+        shutil.copyfile(source, output / leaf)
     sys.path.insert(0, str(ROOT / 'src/aspect'))
     from compiler import compile_source
     source = 'proc main\r\nmessage "ASPECT script ready"\r\nendproc\r\n'
-    (OUT / 'HELLO.ASP').write_bytes(source.encode('cp437'))
-    (OUT / 'HELLO.ASX').write_bytes(compile_source(source))
+    (output / 'HELLO.ASP').write_bytes(source.encode('cp437'))
+    (output / 'HELLO.ASX').write_bytes(compile_source(source))
     link = ('proc main\r\ntransmit "^M"\r\nwaitfor "login:" 10\r\n'
             'if waitfor\r\nmessage "Prompt received"\r\n'
             'else\r\nmessage "Prompt not received"\r\nendif\r\nendproc\r\n')
-    (OUT / 'LINK.ASP').write_bytes(link.encode('cp437'))
-    (OUT / 'LINK.ASX').write_bytes(compile_source(link))
+    (output / 'LINK.ASP').write_bytes(link.encode('cp437'))
+    (output / 'LINK.ASX').write_bytes(compile_source(link))
     instructions = ('PCPlus source reconstruction - current DOS programs\r\n'
                     '\r\nStart: TERMINAL COM1 38400 8N1 SOFT\r\n'
                     'Scripts: Alt-Z, File, A Run script, then HELLO.ASX.\r\n'
@@ -60,14 +70,22 @@ def main():
                     'Other script and application services remain incomplete.\r\n'
                     'Use Escape to cancel. Unknown commands report an error.\r\n'
                     'PRMEDIT edits an existing supported profile; no profile is bundled.\r\n')
-    (OUT / 'README.TXT').write_bytes(instructions.encode('ascii'))
-    result = dict(original_inputs=[], sources={'standalone/package_dos.py': sha(Path(__file__)),
+    if mouse:
+        instructions+=('\r\nMouse build: matching 50-field PRMEDIT is included.\r\n'
+                       'Alt-F10, Terminal page, Mouse X/Y scale: 1..999.\r\n'
+                       'F10 saves; Escape closes; acknowledge to resume with new scales.\r\n'
+                       'Setup and the return prompt use the keyboard.\r\n'
+                       'Repair before connecting: TERMINAL /S @PCPLUS.PRM\r\n'
+                       'A mouse restore failure retains memory; resolve the driver or restart DOS.\r\n')
+    (output / 'README.TXT').write_bytes(instructions.encode('ascii'))
+    result = dict(original_inputs=[],experimental_mouse=mouse,input_manifests=inputs,sources={'standalone/package_dos.py': sha(Path(__file__)),
                     'src/aspect/compiler.py': sha(ROOT / 'src/aspect/compiler.py')},
-                  files={leaf: sha(OUT / leaf) for leaf in [*files, 'HELLO.ASP', 'HELLO.ASX', 'LINK.ASP', 'LINK.ASX', 'README.TXT']},
+                  files={leaf: sha(output / leaf) for leaf in [*files, 'HELLO.ASP', 'HELLO.ASX', 'LINK.ASP', 'LINK.ASX', 'README.TXT']},
                   scope='Current source-built terminal and sibling helpers with authored example. No original executable or private configuration; full application distribution remains incomplete.')
-    (OUT / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')
-    print('DOS programs staged:', OUT)
+    (output / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')
+    print('DOS programs staged:', output)
 
 
 if __name__ == '__main__':
-    main()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--mouse',action='store_true')
+    main(parser.parse_args().mouse)

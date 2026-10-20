@@ -1,21 +1,24 @@
 #!/usr/bin/env python3
 """Actual DOS8086 editor model: lossless fields, validation and atomic edits."""
-import hashlib,json,os,struct,subprocess
+import argparse,hashlib,json,os,struct,subprocess
 from pathlib import Path
 from unicorn import UC_HOOK_INTR,UC_HOOK_INSN
 from unicorn.x86_const import UC_X86_INS_IN,UC_X86_INS_OUT,UC_X86_REG_ES,UC_X86_REG_BP,UC_X86_REG_SI,UC_X86_REG_DI,UC_X86_REG_DS,UC_X86_REG_SS
 from dos_image import DosImage
 from check_modem_import import fixture
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/setup-model'
+MOUSE=False
+FIELD_COUNT=48
 SOURCES=['src/config/setup_model.c','src/config/transfer_import.c','src/config/terminal_import.c','src/config/modem_import.c','src/config/prm_dos.c','standalone/setup_model_host.c']
 RATES=[300,1200,2400,4800,9600,19200,38400,57600,115200]
 def image():
  raw=bytearray(fixture());raw[0x31c]=0;struct.pack_into('<H',raw,0x42c,0)
  for at,v in [(0,0),(2,1),(4,0),(6,1),(8,8),(0x1e0,0),(0x4ea,13),(0x194,4),(0x198,0),(0x19a,1),(0x19c,1),(0x19e,1),*[(0x1ae+i*2,7+i) for i in range(5)],*[(0x174+i*2,v) for i,v in enumerate([0x3f8,0x2f8,0x3e8,0x2e8])],*[(0x184+i*2,v) for i,v in enumerate([4,3,4,3])]]:struct.pack_into('<H',raw,at,v)
+ if MOUSE:struct.pack_into('<HH',raw,0x4e4,8,4)
  return bytes(raw)
 def build():
  OUT.mkdir(parents=True,exist_ok=True)
- subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k8192','-i='+str(ROOT/'src/config'),'-fm=setup.map','-fe=MODEL.EXE',*[str(ROOT/p) for p in SOURCES]],cwd=OUT,check=True)
+ subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k8192',*(['-dSETUP_MOUSE'] if MOUSE else []),'-i='+str(ROOT/'src/config'),'-fm=setup.map','-fe=MODEL.EXE',*[str(ROOT/p) for p in SOURCES]],cwd=OUT,check=True)
 class Model(DosImage):
  def __init__(self):
   super().__init__(OUT/'MODEL.EXE',OUT/'setup.map')
@@ -52,13 +55,17 @@ class Model(DosImage):
   assert before==self.raw();return status,self.get_word()
  def get_word(self):return int.from_bytes(self.uc.mem_read(self.data_base+self.bad,2),'little')
 def main():
+ global OUT,MOUSE,FIELD_COUNT
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--mouse',action='store_true');args=parser.parse_args()
+ MOUSE=args.mouse;FIELD_COUNT=50 if MOUSE else 48
+ if MOUSE:OUT=ROOT/'build/setup-model-mouse'
  build();m=Model();cases=[]
  def record(name,n):cases.append({'case':name,'inputs':n,'passed':True});print(name,n,flush=True)
  assert m.validate()==(0,65535)
- for i in range(48):
+ for i in range(FIELD_COUNT):
   m.reset();status,text=m.get(i);assert status==0,(i,status)
   assert m.set(i,text)==0 and m.raw()==image(),i
- record('all48-fields-get-set-byte-identical-with-opaque-tail-data',48)
+ record('all-mapped-fields-get-set-byte-identical-with-opaque-tail-data',FIELD_COUNT)
  for index,values in [(0,[b'1',b'2',b'3',b'4']),(1,[str(v).encode() for v in RATES]),(2,[b'7',b'8']),(3,[bytes([c]) for c in b'NOEMSnoems']),(4,[b'1',b'2']),(9,[b'4',b'6']),(26,[b'0',b'350',b'65535'])]:
   for text in values:
    m.reset();assert m.set(index,text)==0,(index,text)
@@ -74,7 +81,7 @@ def main():
  for i,values in invalid.items():
   for text in values:
    m.reset();assert m.set(i,text)==2,(i,text);count+=1
- for i in range(48):
+ for i in range(FIELD_COUNT):
   m.reset();assert m.set(i,b'Z'*64)==2;count+=1
  record('invalid-numeric-parity-and-unterminated-edits-entire-image-atomic',count)
  count=0
@@ -113,9 +120,9 @@ def main():
   assert m.set(i,original)==0 and m.validate()==(0,65535);count+=1
  record('malformed-loaded-fields-view-without-normalizing-and-explicit-repair',count)
  m.reset()
- for args in [(0,m.b,0,m.t),(m.a,m.a,0,m.t),(m.a,m.b,0,m.b),(m.a,m.b,0,0xffe0),(m.a,m.b,48,m.t),(0xfc00,m.b,0,m.t)]:
+ for args in [(0,m.b,0,m.t),(m.a,m.a,0,m.t),(m.a,m.b,0,m.b),(m.a,m.b,0,0xffe0),(m.a,m.b,FIELD_COUNT,m.t),(0xfc00,m.b,0,m.t)]:
   before=m.raw();assert m.call('_setup_set',args)==1 and m.raw()==before
- for args in [(0,0,m.t,64),(m.b,0,m.b,64),(m.b,0,m.t,0),(m.b,0,m.t,1),(m.b,0,0xffe0,64),(m.b,48,m.t,64)]:assert m.call('_setup_get',args)==1
+ for args in [(0,0,m.t,64),(m.b,0,m.b,64),(m.b,0,m.t,0),(m.b,0,m.t,1),(m.b,0,0xffe0,64),(m.b,FIELD_COUNT,m.t,64)]:assert m.call('_setup_get',args)==1
  for args in [(0,m.bad),(m.b,m.b),(m.b,0),(m.b,0xffff)]:assert m.call('_setup_validate',args)==1
  record('near-cdecl-null-overlap-capacity-and-segment-wrap',16)
  # Transfer configuration is independent of the live serial-settings ABI.
@@ -159,6 +166,19 @@ def main():
   assert m.call('_transfer_import_path',[pointer,capacity])==0
  record('transfer-settings-near-null-alias-wrap-and-capacity',9)
 
+ if MOUSE:
+  count=0
+  for index,offset in [(48,0x4e4),(49,0x4e6)]:
+   for value in (1,4,8,16,999):
+    m.reset();assert m.set(index,str(value).encode())==0
+    expected=bytearray(image());struct.pack_into('<H',expected,offset,value)
+    assert m.raw()==expected and m.validate()==(0,65535);count+=1
+   for value in (0,1000,65535):
+    m.reset();assert m.set(index,str(value).encode())==2
+    broken=bytearray(image());struct.pack_into('<H',broken,offset,value);m.reset(broken)
+    assert m.get(index)[0]==3 and m.validate()==(3,index)
+    assert m.set(index,b'8')==0 and m.validate()==(0,65535);count+=1
+  record('mouse-scales-range-rejection-lossless-edits-and-loaded-value-repair',count)
  (OUT/'VALID.PRM').write_bytes(image());before=hashlib.sha256(image()).hexdigest()
  for name in ['PASS.TXT','FAIL.TXT','LOG.TXT']:(OUT/name).unlink(missing_ok=True)
  (OUT/'dosbox.conf').write_text(f'[sdl]\noutput=surface\n[mixer]\nnosound=true\n[autoexec]\n@echo off\nmount c "{OUT}"\nc:\nMODEL >LOG.TXT\nif errorlevel 1 goto fail\necho PASS>PASS.TXT\ngoto done\n:fail\necho FAIL>FAIL.TXT\n:done\nexit\n')
@@ -166,7 +186,7 @@ def main():
  assert (OUT/'PASS.TXT').exists() and b'SETUP MODEL PASS' in (OUT/'LOG.TXT').read_bytes(),(OUT/'LOG.TXT').read_bytes()
  assert hashlib.sha256((OUT/'VALID.PRM').read_bytes()).hexdigest()==before
  record('actual-DOS-c-runtime-model-and-no-file-rewrites',1)
- sources=SOURCES+['src/config/transfer_import.h','src/config/setup_model.h','src/config/terminal_import.h','src/config/modem_import.h','src/config/prm_dos.h','standalone/check_setup_model.py']
- result={'passed':True,'cases':cases,'binary_sha256':hashlib.sha256((OUT/'MODEL.EXE').read_bytes()).hexdigest(),'sources':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in sources},'scope':'Actual source-built DOS8086 C. Synthetic settings only. Pure API replay forbids interrupts and port I/O; separate DOS run checks C runtime and no rewrite. Field model only, no settings UI, save ownership or original PCSETUP child compatibility.'}
+ sources=SOURCES+['src/config/transfer_import.h','src/config/setup_model.h','src/config/terminal_import.h','src/config/modem_import.h','src/config/prm_dos.h','standalone/check_setup_model.py','standalone/check_modem_import.py','standalone/dos_image.py']
+ result={'passed':True,'experimental_mouse':MOUSE,'field_count':FIELD_COUNT,'cases':cases,'binary_sha256':hashlib.sha256((OUT/'MODEL.EXE').read_bytes()).hexdigest(),'sources':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in sources},'scope':'Actual source-built DOS8086 C. Synthetic settings only. Pure API replay forbids interrupts and port I/O; separate DOS run checks C runtime and no rewrite. Field model only, no settings UI, save ownership or original PCSETUP child compatibility.'}
  (OUT/'checks.json').write_text(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':main()

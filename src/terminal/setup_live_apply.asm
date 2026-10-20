@@ -256,6 +256,13 @@ terminal_setup_complete:
  push ax
  call _live_setup_acknowledge
  add sp,2
+%ifdef TERMINAL_MOUSE
+ or ax,ax
+ jz .done
+ mov word [terminal_setup_apply_status],7
+ mov word [terminal_exit_code],14
+ mov word [terminal_quit],1
+%endif
 .done:
  restore
 

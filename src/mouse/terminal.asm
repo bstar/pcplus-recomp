@@ -15,6 +15,9 @@ NEAR_NAMED_SERVICE mouse_keyboard_poll,keyboard_poll
 NEAR_NAMED_SERVICE mouse_keyboard_read,keyboard_read
 SEGMENT CONFIG_CODE public align=16 class=FARCODE use16
 NEAR_CDECL_ENTRY _terminal_mouse_stage,2
+NEAR_CDECL_ENTRY _terminal_mouse_offer,2
+NEAR_CDECL_ENTRY _terminal_mouse_commit,0
+NEAR_CDECL_ENTRY _terminal_mouse_discard,0
 SEGMENT MOUSE_CODE public align=16 class=FARCODE use16
 GROUP MOUSE_GROUP MOUSE_CODE
 global terminal_mouse_code_start
@@ -24,6 +27,9 @@ FAR_CDECL_ENTRY _terminal_mouse_start,0
 FAR_CDECL_ENTRY _terminal_mouse_pause,0
 FAR_CDECL_ENTRY _terminal_mouse_resume,0
 FAR_CDECL_ENTRY _terminal_mouse_stage,2
+FAR_CDECL_ENTRY _terminal_mouse_offer,2
+FAR_CDECL_ENTRY _terminal_mouse_commit,0
+FAR_CDECL_ENTRY _terminal_mouse_discard,0
 extern process_psp,process_keep_paragraphs,process_minimum_paragraphs,process_memory_released
 global _mouse_terminal_release_unused,terminal_mouse_exit
 _mouse_terminal_release_unused:

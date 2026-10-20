@@ -12,6 +12,11 @@ keyboard/view reset; COM changes offer a [confirmed idle-port move](PORT_HANDOFF
 The recovered parent protocol and missing child
 consumer are documented in [SETUP_NATIVE.md](SETUP_NATIVE.md).
 
+The selectable [mouse settings build](MOUSE_SETTINGS.md) adds two scale fields,
+for50 total. `./tools/build terminal-mouse` builds and stages that matching
+editor. The ordinary48-field executable and its existing field indices remain
+unchanged.
+
 Build and verify from the repository:
 
 ```sh

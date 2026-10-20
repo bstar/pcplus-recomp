@@ -2,6 +2,11 @@
 #include "transfer_import.h"
 extern transfer_import_settings terminal_transfer_preferences;
 #include <string.h>
+#ifdef TERMINAL_MOUSE
+extern unsigned __cdecl terminal_mouse_offer(const unsigned char *,unsigned);
+extern unsigned __cdecl terminal_mouse_commit(void);
+extern void __cdecl terminal_mouse_discard(void);
+#endif
 /* Register-ABI DOS canonicalizer and explicit cdecl native-expansion adapter.
  * Both are declared named resident services in config_abi.inc. */
 extern unsigned capture_fs_canonical(const char *,char *);
@@ -42,6 +47,9 @@ unsigned __cdecl live_setup_bind(const char *path,
  if(!external(path,64) || !external(source,sizeof(*source)) ||
   (context && !external(context,sizeof(*context))))return LIVE_SETUP_ARGUMENT;
  owner.bound=owner.pending=owner.offered_mask=owner.transfer_ready=0;
+#ifdef TERMINAL_MOUSE
+ terminal_mouse_discard();
+#endif
  if(source->clipboard_separator>255)return LIVE_SETUP_ARGUMENT;
  size=string_size(path,64);if(size<2)return LIVE_SETUP_ARGUMENT;
  if(context && !directory_live_context_matches(context,path,context->directory_path,
@@ -72,6 +80,9 @@ unsigned __cdecl live_setup_begin(const char *path,
  if(capture_fs_canonical(path,canonical) || !same(canonical,owner.canonical,128))return LIVE_SETUP_IDENTITY;
  memcpy(&owner.active,active,sizeof(*active));memcpy(owner.target,target,64);
  owner.option_mask=option_mask;owner.offered_mask=owner.transfer_ready=0;
+#ifdef TERMINAL_MOUSE
+ terminal_mouse_discard();
+#endif
  owner.offered_clipboard_separator=owner.source_clipboard_separator;owner.pending=1;return LIVE_SETUP_OK;
 }
 static unsigned command_valid(const live_configuration_plan *plan)
@@ -101,6 +112,9 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
  memset(result,0,sizeof(*result));
  if(owner.bound!=1 || owner.pending!=1){result->status=LIVE_SETUP_STATE;return result->status;}
  owner.pending=owner.transfer_ready=0;
+#ifdef TERMINAL_MOUSE
+ terminal_mouse_discard();
+#endif
  status=prm_dos_load(owner.canonical,&owner.image,&io);
  if(status){result->status=LIVE_SETUP_IO;result->source_status=status;return result->status;}
  mask=owner.option_mask&15;
@@ -134,6 +148,11 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
   owner.stage.change_mask&=~LIVE_CHANGE_CLIPBOARD;
  }
  if(!command_valid(&owner.stage)){result->status=LIVE_SETUP_COMMAND;return result->status;}
+#ifdef TERMINAL_MOUSE
+ status=terminal_mouse_offer(owner.image.bytes,sizeof(owner.image.bytes));
+ if(status==15){result->status=LIVE_SETUP_DECODE;result->source_status=15;return result->status;}
+ owner.stage.change_mask|=status;
+#endif
  /* Explicit /X fixes the effective table mode, after raw PRM validation.
   * Other mode changes require explicit permission and a foreground handoff. */
  if(owner.option_mask&16384U){
@@ -167,12 +186,19 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
  memcpy(destination,&owner.stage,sizeof(*destination));owner.transfer_ready=1;return LIVE_SETUP_OK;
 }
 unsigned __cdecl live_setup_abort(unsigned unused)
-{(void)unused;owner.pending=owner.offered_mask=owner.transfer_ready=0;owner.offered_clipboard_separator=owner.source_clipboard_separator;return LIVE_SETUP_OK;}
+{(void)unused;owner.pending=owner.offered_mask=owner.transfer_ready=0;owner.offered_clipboard_separator=owner.source_clipboard_separator;
+#ifdef TERMINAL_MOUSE
+ terminal_mouse_discard();
+#endif
+ return LIVE_SETUP_OK;}
 unsigned __cdecl live_setup_acknowledge(unsigned committed_baud_mask)
 {
  if(committed_baud_mask!=0 && committed_baud_mask!=LIVE_CHANGE_BAUD)return LIVE_SETUP_ARGUMENT;
  if(owner.bound!=1)return LIVE_SETUP_UNBOUND;
  if(committed_baud_mask && !(owner.offered_mask&LIVE_CHANGE_BAUD))return LIVE_SETUP_STATE;
+#ifdef TERMINAL_MOUSE
+ if(terminal_mouse_commit())return LIVE_SETUP_STATE;
+#endif
  if(committed_baud_mask){owner.source_baud_low=owner.offered_baud_low;owner.source_baud_high=owner.offered_baud_high;}
  owner.source_clipboard_separator=owner.offered_clipboard_separator;
  owner.offered_mask=owner.transfer_ready=0;return LIVE_SETUP_OK;

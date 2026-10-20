@@ -25,4 +25,9 @@ unsigned __cdecl mouse_owner_close(void);
 unsigned __cdecl mouse_owner_key(unsigned *);
 unsigned __cdecl mouse_owner_phase(void);
 unsigned __cdecl mouse_owner_bytes(void);
+#ifdef TERMINAL_MOUSE
+/* Suspended-owner settings update only. Original driver/native snapshots stay
+ * unchanged; next resume installs the accepted settings. */
+unsigned __cdecl mouse_owner_reconfigure(const mouse_settings *);
+#endif
 #endif

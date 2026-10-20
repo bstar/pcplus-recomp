@@ -120,7 +120,10 @@ timer:
  jmp short .done
 .menu:
  cmp word [cs:mode],'S'
+ je .menu_active
+ cmp word [cs:mode],'L'
  jne .done
+.menu_active:
  cmp word [cs:stage],2
  jae .done
  mov ax,[cs:callback]
@@ -137,6 +140,9 @@ timer:
  mov ax,1
  xor si,si
  mov di,8 ;PRM y scale4 -> two native Down repetitions
+ cmp word [cs:mode],'L'
+ jne .emit
+ mov di,16 ;Accepted live scale8 must likewise produce exactly two Down keys.
  jmp short .emit
 .select:
  cmp word [es:1130],0x7057 ;Write screen selected, not just menu entry

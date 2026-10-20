@@ -5,7 +5,11 @@
  * file I/O, parent-process memory protocol or UART access. DS=SS, near cdecl.
  * Caller owns a baseline and a separate staged image. All APIs reject overlap
  * and segment wrap before mutation. Unknown bytes remain opaque. */
+#ifdef SETUP_MOUSE
+#define SETUP_FIELD_COUNT 50U
+#else
 #define SETUP_FIELD_COUNT 48U
+#endif
 #define SETUP_TEXT_SIZE 64U
 #define SETUP_NO_FIELD 65535U
 
@@ -29,7 +33,7 @@ setup_status __cdecl setup_get(const prm_dos_image *image,unsigned index,
  * Rejected edits leave the entire staged image untouched. */
 setup_status __cdecl setup_set(const prm_dos_image *baseline,
  prm_dos_image *staged,unsigned index,const char *text);
-/* Checks all 48 mapped fields, then both existing decoder contracts. The
+/* Checks all mapped fields, then both existing decoder contracts. The
  * first bad field is returned; no changes to image. Does not identify version. */
 setup_status __cdecl setup_validate(const prm_dos_image *image,unsigned *bad_field);
 #endif

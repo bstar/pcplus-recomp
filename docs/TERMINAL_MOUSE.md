@@ -6,6 +6,8 @@ build; the ordinary terminal and the other26 preceding application products
 remain byte-identical. [Acceptance evidence](validation/terminal-mouse.json)
 separates application execution from the earlier [bank component](MOUSE_BANK.md)
 and [current component regressions](validation/mouse-bank-terminal-regression.json).
+The subsequent [live mouse settings](MOUSE_SETTINGS.md) extend this checkpoint
+with a matching50-field editor and current acceptance evidence.
 
 ```sh
 ./tools/build terminal-mouse
@@ -33,7 +35,7 @@ is introduced. Startup directory browsing and `/S` setup precede acquisition.
 
 The parent releases unused PSP memory using its existing trusted retained bound.
 The DOS allocator then owns a separate guarded block; no CRT heap initialization
-is needed. The selectable build has65372 resident code bytes and64848 near
+is needed. The initial selectable checkpoint has65372 resident code bytes and64848 near
 data/stack bytes. Its2348-byte `MOUSE_CODE` segment has a distinct CS. Static
 inspection verifies five C entry pairs, two resident keyboard services, native
 queue aliases/defaults and retention of all code/data/far buffers.
@@ -107,7 +109,7 @@ nothing in the live board and makes no TCP receive-boundary or physical-modem
 guarantee. See [ENiGMA acceptance](ENIGMA_COMPATIBILITY.md).
 
 Remaining work includes startup-directory mouse input, return-prompt mouse
-acknowledgement, live PRM settings UI/adoption, ASPECT's own mouse services,
+acknowledgement, ASPECT's own mouse services,
 other geometries and original window/macro/error services. Physical mouse and
 RS-232 modem testing, other DOS kernels and arbitrary driver/kernel corruption
 are unverified. The complete F01–F16 application gates remain open.

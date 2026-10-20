@@ -168,6 +168,7 @@ Current outputs:
 | `build/setup/PRMEDIT.EXE` | Maintained C source only | Offline five-page editor for 48 mapped PRM fields with staged validation and checked replacement; see [setup editor](docs/SETUP_EDITOR.md) |
 | `build/terminal/TERMINAL.EXE` | Maintained C and recovered/maintained assembly source only | Serial terminal with PRM startup, directory editing, staged saves and bounded modem dialing |
 | `build/terminal-mouse/TERMINAL.EXE` | Same source basis; selectable `--mouse` build | Native mouse/keyboard composition, PROGRAM suspension and safe retained-memory quarantine; see [terminal mouse](docs/TERMINAL_MOUSE.md) |
+| `build/setup-mouse/PRMEDIT.EXE` | Maintained source only; selectable50-field editor | Mouse scales and live adoption for the matching terminal; see [mouse settings](docs/MOUSE_SETTINGS.md) |
 | `build/standalone/SERIAL.EXE` | Maintained assembly source only | Independently linked DOS diagnostic exercising the recovered UART module |
 | `build/ansi/PARSER.EXE` | Maintained assembly source only | Independently linked parameter-reader diagnostic with bounds checks |
 | `build/keyboard/KEYBOARD.EXE` | Maintained assembly source only | Recovered BIOS keyboard acquisition/normalization diagnostic |

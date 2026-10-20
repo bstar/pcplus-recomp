@@ -1141,15 +1141,26 @@ test-mouse-bank-source: mouse-bank
 	python3 standalone/check_mouse_keyboard_source.py --bank
 
 # Selectable terminal integration; preserve the normal application products.
-.PHONY: terminal-mouse terminal-mouse-process test-terminal-mouse test-terminal-mouse-source test-terminal-mouse-unwind
-terminal-mouse:
+.PHONY: setup-mouse test-setup-mouse terminal-mouse terminal-mouse-process test-terminal-mouse test-terminal-mouse-source test-terminal-mouse-unwind
+setup-mouse:
+	python3 standalone/build_setup.py --mouse
+.PHONY: package-mouse test-package-mouse
+package-mouse:
+	python3 standalone/package_dos.py --mouse
+test-package-mouse: package-mouse
+	python3 standalone/test_package_mouse.py
+test-setup-mouse: setup-mouse
+	python3 standalone/check_setup_model.py --mouse
+terminal-mouse: setup-mouse
 	python3 standalone/build_terminal.py --mouse
-terminal-mouse-process:
+	cp build/setup-mouse/PRMEDIT.EXE build/terminal-mouse/PRMEDIT.EXE
+terminal-mouse-process: setup-mouse
 	python3 standalone/build_terminal.py --mouse --external-render
+	cp build/setup-mouse/PRMEDIT.EXE build/terminal-mouse-process/PRMEDIT.EXE
 test-terminal-mouse: terminal-mouse
 	python3 standalone/check_terminal_mouse.py
 	python3 standalone/test_terminal_mouse_dos.py
-test-terminal-mouse-source: terminal-mouse terminal-mouse-process aspect-external-unwind aspect-process aspect-runner aspect-compiler-dos terminal
+test-terminal-mouse-source: terminal-mouse terminal-mouse-process setup aspect-external-unwind aspect-process aspect-runner aspect-compiler-dos terminal
 	python3 standalone/check_aspect_unwind_source.py --mouse
 test-terminal-mouse-unwind: terminal-mouse-process aspect-external-unwind
 	python3 standalone/test_aspect_unwind_dos.py --mouse --kind D --kind A --kind F --kind L --control
