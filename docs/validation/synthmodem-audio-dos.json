@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "DOS/ENiGMA menu and normal cleanup pass at1200 with sparse helper, but independent byte-integrity audit fails on six inserted upstream bytes.",
+  "status": "Latest diagnostic DOS cohort passes19 producer/19 audit checks with exact guest PCM; earlier six-byte upstream insertion remains unresolved.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -1043,6 +1043,399 @@
         "scope": "Independent read-only actual DOS/ASPECT, BBS authoritative logs, guest frames, serial/Telnet byte identity, RTP continuity, SIP and cleanup audit. No physical modem/ATA claim."
       },
       "independent_audit_sha256": "61f50794fbb694406bc5febd8ab58fd2284e1af4693f437503d5812f8c85a995"
+    },
+    "synthmodem-audio-dos-06": {
+      "passed": true,
+      "checks": {
+        "DOS_normal_exit": true,
+        "script_completed": true,
+        "UART_restored": true,
+        "keyboard_helper_retired": true,
+        "numeric_AT_only": true,
+        "real_DSP_CONNECT": true,
+        "authenticated": true,
+        "ordered_menus": true,
+        "DOS_DA": true,
+        "DOS_CPR": true,
+        "final_file_menu": true,
+        "profile_unchanged": true,
+        "directory_accounting": true,
+        "no_relay_errors": true,
+        "no_gateway_errors": true,
+        "VM_exited": true,
+        "no_post_saved": true,
+        "inputs_unchanged": true,
+        "server_unchanged": true
+      },
+      "frozen_inputs": {
+        "lab/bbs/synthmodem_audio_dos.py": "238dca27764d2df52f76a54162bc1c4530eaaf18ff838a0e582e1fb59735b3d8",
+        "lab/bbs/synthmodem_audio_serial.js": "2fcdeee5c2527c83afba55d88a2ccfa8e6c07d8eea6485b731de7499f9b9281b",
+        "lab/bbs/audio_exit_keys.asm": "d6cfd993351d3bc6fdfed133e0a20a137c3a882988ee65dcef38c80d15b7ecd9",
+        "lab/bbs/audio_get_vector.asm": "a4dcbe3717c43f5914ee3503099d250fd7810610b8c25f4c0c18c2d4d403e817",
+        "lab/bbs/synthmodem_bbs_dos.py": "0e6a302d5a5ecb124689c8c3989d2efe8ab210eaa982991d088778d126c18fb2",
+        "lab/bbs/enigma.py": "526fcd6eb468ec7a85630685872d27a937abbc6b61f48ad8391a2353e5686017",
+        "lab/bbs/synthmodem_sparse_runtime.py": "f3743c82c191e70bb233b08623a08a545b0e7b7d1d15759af18312ec0cffad42",
+        "lab/bbs/synthmodem_vm_control.py": "7eb30e96af9a7e7cd319cd645a68331c0386aa3dda3e9eba68ca5563b5b8a456",
+        "docs/validation/synthmodem-sparse.json": "c1af9919cb1ec643fd2fc2cc236ed8c304d8050790ca6033fb0589e074c9002c",
+        "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+        "standalone/directory_fixtures.py": "e4b0cf7ad4a2c408f2a11d093b2c568633aa8bed6ff62cb53f6f67ff3aa5962c",
+        "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+        "src/aspect/compiler.py": "a9785fb90db89da8d4c423d2737f5143a2da75e4e41605a5d97f3ebf7b9c4f01",
+        "nix/flake.nix": "7cda07d3ab9fb050ef3c959781e4cb93ab2fab72f915d6206d980458ab297aa0",
+        "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+        "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
+        "build/terminal/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+        "build/terminal/terminal.map": "8b1f7f07d7f617936765de21fed74a71ec28c7c5ce45e8519802cf62689c86b1",
+        "build/aspect-runner/ASPECT.EXE": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+        "docs/validation/synthmodem-gateway.json": "b45a3889492327899bdaa5817b4951da95b81bb07bdd69319b4814008504a6a0",
+        "docs/validation/synthmodem-receive-trace.json": "0332ccd8feca2ffb89187ad0c77fa71b7d8816dc305284e79ae07b3fa9617e3e",
+        "lab/bbs/receive_trace_io.js": "1fa50062eb7f962bc57d575fdd3381f8dd402e532b8251069296e8f04c3f7f56",
+        "lab/bbs/qemu_trace_wrapper.py": "f1cdbcceef18e389d3625378d5d7567d398cdaa4f330cf82ae6d89372dff98f0",
+        "lab/bbs/receive_trace_export.sh": "3f6c38c30c3f4624319814e4601e290cad6cee89d5bc82bc6ee6fad17457cdea"
+      },
+      "runtime_inputs": {
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/bzImage": "2bac10d87a024026de6c00539ea70d19194169b6b99111d9178815b470d77dbe",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/candidate.cpio.gz": "bfc62ffdd35f9e8300ff3b886230af1178f6e763ec600059cd352ea9df1f3372",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/config.js": "6cfa6057b31bebb90d52f12956a3166a389308b703c17480acdc59fdb05f681f",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/index.js": "8aac80d7f4e68c25d02f29b16d2dc82b78d3f5ecee57562315fda4efb3494791",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/vm/qemu-runner/QemuVM.js": "2b15088c2a4d8a2002bcd4b153d38d06fc6e9863cb7a9990dbcac1875b082a76",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/vm/qemu-runner/SlmodemVM.js": "8578c0d7fcb5b96648856422ef56a9178f155ddb86321300b8e63f3220c61cdc",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/vm/qemu-runner/qemu-args.js": "61975545b19201092d3e0f53dd324e46a05e432f0ace7ac3bc3c0f63abf1b3ea",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/vm/qemu-runner/transport.js": "54cec57e3b78a5b4a82e3289dac645be4b7d49da5f2ed697f3a9d5e0e4742570",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/backends/ModemBackendPool.js": "58d6e2690a0a8170e1da2387abd935fa373b93b239805dd596fb4a578c7a0044",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/backends/PjsipBackend.js": "99e3c39ae8aacc48a630c1361146b8b6a0e82639c4fcb54ab61ea8c615eb9099",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/dsp/AudioCapture.js": "843dc3267c927cdb07d46d299613228508a71f85180bc76f46931d27bf196965",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/dsp/Handshake.js": "2c8e9bf37157159ebee8d441e15b1b241bb46233c6d36f710d77c3cedee2d97b",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/dsp/ModemDSP.js": "18986bc99ba59756e7841902dcc93ccf328bb59e4e0671446be286695882e967",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/dsp/Primitives.js": "f63b3e3fcee64169af3343ea7ef73ffb68fff24356c021564f62b7e4c8a434af",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/dsp/V8.js": "145c661bbbff383cc7af622b98fcd423f1d66fae2d2e464b308cf3a2c0edcb40",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/dsp/V8Sequencer.js": "3379d253f990a83d1dd3612383a17b5534c47d1635870fb16177a8e1c3e36452",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/rtp/Codec.js": "ffe6cacafda853769e3cbd8e532e3d36213a85ed04042eaebc57ba54155e5256",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/rtp/RtpBridge.js": "3cc7626381626e764344621bd52c3c0ffb1dfe203bbcf7047437914af0fbe6e9",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/rtp/RtpSession.js": "72d6298f50c0823fa1a42a8eaf234885809ae08cb477b2b17bfdef6241aefe44",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/session/CallSession.js": "4122886fc628ebabc03bdd4b622de163926d55c0db6199c2b47ea75dacfbf49c",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/sip/PublicHostResolver.js": "5431bacf4dcd1c4027c467d28db8e3d510b700ecc8d441a9d0b0316580b6ffea",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/sip/SipDialog.js": "571440469511a3861a5faae9cf805b1f6555bc2ee1f95cc5b6b8a9dcae9aa4fd",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/sip/SipParser.js": "e5a5dae109bc251acb7623d922dd8bc9284f14f8221bb16f7b0a82846dac8cc8",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/sip/SipServer.js": "7a8971607c0b285b97941d28ba1462db8a0eabdc39997189d4f977b315b624ec",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/sip/SipUacInternal.js": "89e0fd9a27e8960bd2a989942d0671d3dc7526b98c6447246d9b80bf28ecffff",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/sip/VmRegistrar.js": "0dd8dd1107bdcf94539fd8c63a642ee67151a2dc45931ed5edcb518945281401",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/telnet/TelnetProxy.js": "18c0a9ed59aa4cb48186514da4ddc94954e7db207eb71c39769bdac8f7be3353",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/tunnel/UdpTcpTunnel.js": "c560a03a61530d812e809c729f3816ba721e577a52723d4e8cbbcd7ecfa66f0d",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/dsp/protocols/Bell103.js": "d7d1ae488e24da9e54e6fc5a586287045d25fe321f81821ea62b8fb25dd7379a",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/dsp/protocols/FskCommon.js": "27ee865d11b747aeace4e6acbc4daae2c38efab3ca9c09cdad9bc567fbfb60a7",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/dsp/protocols/V21.js": "00473e940f46f754e4397f41dcee2e70b17bd679f694d7e13eb542f2a270e864",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/dsp/protocols/V22Common.js": "51a473f0b638691c8c81048236e2e72dca2993a5d0240229cd07bf9c436b1123",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/dsp/protocols/V22Demodulator.js": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/dsp/protocols/V22RxRRC.js": "42d6d85522a4e26b6d92f70e344b4f65d7d31cd579e2283811899b9ea878fe2b",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/dsp/protocols/V23.js": "54af2ce2d86726c84424dc033637efcb2d0cf79c9a5b63e680f1ad4e0b7d93a9",
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-receive-trace-01/runtime/source/src/dsp/protocols/V22.js": "1bd6cb66be0033bde88e52b03ca923fab2181ae9343ac5db2569eb34c9fec45a"
+      },
+      "server_inputs": {
+        "main.js": "1b2f4c9747380dbd77ddfbc918d24c4ce225c7dd51331e75d8c2102d852bfda9",
+        "core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+        "package-lock.json": "8fcaecda3a4b1756ad295be95486cbdd5b9afea005949ac3da8822224c822d56",
+        "config/config.hjson": "daae39792955eaf7b99c45fc936d54b153f62ea0d3f77672f45a8ace756a7dbc",
+        "config/menus/loc-activitypub.hjson": "82861725a47e5892bbfd2251feb02ca0bb46707516a872cf373b350b704c9fe7",
+        "config/menus/loc-doors.hjson": "fb012c018ec054a7e3261f2b4ef28dc568742b0936bfc56ba9377745f8c43530",
+        "config/menus/loc-file_base.hjson": "9d9a02672bcd18b122827e6112ecfd99a4e7ff2916052847de26a87c6808f6c2",
+        "config/menus/loc-login.hjson": "215f943d381a2acc4c1713ff14331efaee19c474218428eac6b64f77b9355f18",
+        "config/menus/loc-main.hjson": "dc2fd404bbb8a35bc5c8bb43b3fe66378173cd8d87d0ab25978af16bda15d227",
+        "config/menus/loc-message_base.hjson": "607939acb6818c7c5fb50a2d90b04fed1b92d50f51fb9ca4215cef06644d2540",
+        "config/menus/loc-new_user.hjson": "04f466f10cc5c169c03186bc8a7fde7b18d5d938e7f0b70873d74bae15161cec",
+        "config/menus/loc-private_mail.hjson": "ffb59f0d6f2d592181d2bc304d46e9e2a3b71a14c2d6cd65a639f6b0c6f3d382"
+      },
+      "generated_inputs": {
+        "program/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+        "program/ASPECT.EXE": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+        "program/AUDIO.ASP": "282b5567016b2973debe0a18229b13b5a7a07a2263a606b5d638e4e71e19e042",
+        "program/AUDIO.ASX": "1b0d8733a39f7a164416cd89cca6894e7d924f32266ae83cb25b0760334e76b2",
+        "program/EXITKEY.COM": "5774df028ae1daf1f1d1815fe7a82cfdc9c8346add7eb699740e5863f55a5fb1",
+        "program/KEYVEC.COM": "fcbe508ffd8e54b24db8e77ce1b70a32917097cf6d21a0a3bb8bb229aa3ffd91"
+      },
+      "server_revision": "6c25317168b762f7d9088a54d3f8295438827a0e",
+      "server_menus": [
+        "telnetConnected",
+        "matrix",
+        "login",
+        "fullLoginSequenceLoginArt",
+        "fullLoginSequenceLastCallers",
+        "fullLoginSequenceWhosOnline",
+        "fullLoginSequenceOnelinerz",
+        "fullLoginSequenceNewScanConfirm",
+        "fullLoginSequenceUserStats",
+        "mainMenu",
+        "messageBaseMainMenu",
+        "mainMenu",
+        "fileBaseMainMenu"
+      ],
+      "script_stages": "BRIDGE|FORM|MAIN|MESSAGES|RETURN|FILES|",
+      "receive_trace": true,
+      "gateway": {
+        "commands": [
+          "ATZ",
+          "ATD1"
+        ],
+        "events": [
+          {
+            "type": "ready",
+            "seconds": 4.408208502
+          },
+          {
+            "type": "serial-client",
+            "seconds": 4.657752957
+          },
+          {
+            "type": "command",
+            "seconds": 4.822108561,
+            "command": "ATZ"
+          },
+          {
+            "type": "command",
+            "seconds": 5.150408313,
+            "command": "ATD1"
+          },
+          {
+            "type": "numeric-call",
+            "seconds": 5.150806053
+          },
+          {
+            "type": "answer-CONNECT",
+            "seconds": 9.369811586,
+            "bps": 1200,
+            "protocol": "V22"
+          },
+          {
+            "type": "caller-CONNECT",
+            "seconds": 9.742920638,
+            "bps": 1200,
+            "protocol": "V22"
+          },
+          {
+            "type": "serial-CONNECT",
+            "seconds": 9.743082172
+          },
+          {
+            "type": "shutdown",
+            "seconds": 449.843768524,
+            "reason": "serial-close"
+          },
+          {
+            "type": "session-ended",
+            "seconds": 458.241747824,
+            "callId": "w7nerv7kp4i@127.0.0.1",
+            "reason": "serial-close"
+          }
+        ],
+        "errors": [],
+        "ended": {
+          "callId": "w7nerv7kp4i@127.0.0.1",
+          "reason": "serial-close"
+        },
+        "callerInfo": {
+          "bps": 1200,
+          "protocol": "V22"
+        },
+        "answerInfo": {
+          "bps": 1200,
+          "protocol": "V22"
+        },
+        "stats": {
+          "extToInt": {
+            "packets": 22211,
+            "bytes": 3820292
+          },
+          "intToExt": {
+            "packets": 22212,
+            "bytes": 3820464
+          },
+          "extToIntDrops": 0,
+          "intToExtDrops": 0,
+          "extFirstSrc": "127.0.0.1:53306",
+          "intFirstSrc": "127.0.0.1:10002"
+        },
+        "negotiated": {
+          "remoteRtpAddr": "127.0.0.1",
+          "remoteRtpPort": 42000,
+          "codec": {
+            "codec": "PCMU",
+            "rate": 8000
+          }
+        },
+        "pool": "stopped",
+        "backendStates": [
+          "STOPPED"
+        ],
+        "VM_exited": true,
+        "receiveTrace": {
+          "exported": true,
+          "scope": "Diagnostic export daemon/chardev added; existing DSP dumps and host timestamps, no DSP binary changes."
+        },
+        "sourceScope": "Synthetic ATZ/ATD1 front end only; online bytes cross actual external/internal SIP, CallSession/pool, RTP, originating and guest answering DSP, and Telnet. DOSBox UART/modem status lines remain emulated."
+      },
+      "captures_sha256": {
+        "node.log": "b9356dd2104a12c91d23eb52634b599bb5ef21fefba77e015316c21ceff49bb4",
+        "dosbox.log": "41c56141c2752724b1e0643c7cdbf6806bfb35bd727d49be53c619043f179f15",
+        "qemu-0.log": "fe0e39cefbb172891d49f1491ca79b99c28c49cbf82a7c4d511a69815e9c080d",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "KEYOLD.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+        "KEYNEW.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+        "SCREEN.BIN": "45dd6848d765049e68a46e4f31284a5fac44d395bdef14800d5ed10f82d6397f",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "guest-workload.bin": "d5ad23286a9cff7b9c261395890748c30516e7060b0203688561ae637e2a8bc7",
+        "expected-upstream.bin": "d5ad23286a9cff7b9c261395890748c30516e7060b0203688561ae637e2a8bc7",
+        "rtp-to-guest.bin": "86a636a1fc57cdd5deceb7bd77d99556a31d50f59d2601365835e4c26b52df8c",
+        "timing.jsonl": "327bbeb56f187039ac46806b9db493a0ceeab7c372613b0f8e2fcc1f4e540b88",
+        "serial-in.bin": "fa4325aed393678abf8da1d083751fb83e0ea64b7ac6d264c05b0c249a8f9461",
+        "serial-out.bin": "f0de1b9d833fc8c5b43824d292fae39e5fa67726f7637f10be3ceb6c8998d02d",
+        "caller-decoded.bin": "e85c5a0e3d7e224bbe62324481bd5fa5901eedd9863d6b160149b76409ea830d",
+        "control-wire.bin": "13df9bb06616cd135e2e8e222c0da0ac89fd90324f7664ac89cafb7a8d7a4019",
+        "rtp-from-answer.bin": "bb73a8a74aa687e526a104de21b6bd0eb60b8f14ff1883dabba0052d5d30dc60",
+        "rtp-from-caller.bin": "88f6e6b86f412d2f0dc058d25e87cc07e6bde6076402287fa03ac32075f687f3",
+        "sip-to-server.bin": "29ada34bd1b14a4e4ae44db7c3949775e9eef81801eb20b1325fec39af3f2cd1",
+        "sip-to-caller.bin": "3d50de8a7f7da1b611ec590c547d7207d854be51136e255d25835bdf0eb667e3",
+        "server-session.jsonl": "74a1b412ae7d07bebe6e1ce2bbff4cd44eb666b2efe558928a06ac69d116543f",
+        "bbs-input.bin": "b6c45acf0baecc49c3136f9a9c040cdcf64714d3d97b92bd4ea0c0c15dd31b33",
+        "bbs-output.bin": "275fd58b5521309dc49c1afebee14edcd20f16a301c1a019308054968913dcfa"
+      },
+      "scope": "Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to owned stock ENiGMA. No physical modem/ATA/UART acceptance.",
+      "producer_result_sha256": "984b751f9ee2f8cef01bed7f25fcb6cd6ac22e6c6a256fd444a888ec50df34ab",
+      "independent_audit": {
+        "passed": true,
+        "checks": {
+          "numeric_command_prefix": true,
+          "single_normal_post_train_hold": true,
+          "serial_equals_post_hold_guest_decode": true,
+          "online_target_after_numeric_call": true,
+          "guest_equals_Telnet_application_input": true,
+          "decoded_audio_equals_serial_output": true,
+          "complete_BBS_display_survives_DSP": true,
+          "single_real_carrier": true,
+          "real_DOS_terminal_replies": true,
+          "authoritative_login": true,
+          "authoritative_menu_order": true,
+          "script_and_normal_DOS_return": true,
+          "actual_UART_restored": true,
+          "keyboard_timer_vector_restored": true,
+          "continuous_rtp-from-answer.bin": true,
+          "continuous_rtp-from-caller.bin": true,
+          "actual_external_SIP": true,
+          "actual_internal_BYE": true,
+          "capture_hashes": true
+        },
+        "producer_sha256": "984b751f9ee2f8cef01bed7f25fcb6cd6ac22e6c6a256fd444a888ec50df34ab",
+        "auditor_sha256": "c8b698bbc4baab48e88581f571b8216258e65b337e0439faf4369253146c29f0",
+        "payloads": {
+          "BBS_input_bytes": 48,
+          "BBS_display_bytes": 46908,
+          "BBS_input_sha256": "f6066df3a8d0aad2df83dbcac94715d46a0c3b4ffce934c89100ab9da253e274",
+          "BBS_display_sha256": "2a16e1d3402aa2a1c5ea83363038960d819b14715451d3425a6683339aff2a75",
+          "display_offset_in_caller": 187,
+          "guest_DATA_RX_bytes": 64,
+          "pre_proxy_training_tail_bytes": 0,
+          "pre_proxy_training_tail_hex": "",
+          "unadjusted_serial_guest_identity": true
+        },
+        "scope": "Independent read-only actual DOS/ASPECT, BBS authoritative logs, guest frames, serial/Telnet byte identity, RTP continuity, SIP and cleanup audit. No physical modem/ATA claim."
+      },
+      "independent_audit_sha256": "7b5066233d5403342449c693e1d669ef28094ed8f2b74552edbe9c0051dfc025",
+      "PCM_analysis": {
+        "external_RTP_equals_tunnel_RTP": true,
+        "common_RTP_prefix_exact": true,
+        "external_packets": 22630,
+        "tunnel_packets": 22630,
+        "guest_frames": 22248,
+        "exact_PCM_frame_matches": 22245,
+        "guest_frames_not_found_in_RTP": 0,
+        "frame_alignment_changes": [
+          {
+            "operation": "insert",
+            "RTP_frame_start": 0,
+            "RTP_frame_end": 0,
+            "guest_frame_start": 0,
+            "guest_frame_end": 3
+          },
+          {
+            "operation": "delete",
+            "RTP_frame_start": 22245,
+            "RTP_frame_end": 22630,
+            "guest_frame_start": 22248,
+            "guest_frame_end": 22248
+          }
+        ],
+        "packet_arrival_gaps": {
+          "rtp-from-caller": {
+            "packets": 22630,
+            "max_gap_ms": 35.080339,
+            "over40ms": 0,
+            "over100ms": 0
+          },
+          "rtp-to-guest": {
+            "packets": 22630,
+            "max_gap_ms": 34.425905,
+            "over40ms": 0,
+            "over100ms": 0
+          }
+        },
+        "upstream_changes": [],
+        "sample_alignment": {
+          "unique_anchors": 1028,
+          "offset_histogram": {
+            "480": 1028
+          },
+          "offset_changes": [
+            {
+              "RTP_frame": 140,
+              "guest_sample": 22880,
+              "offset_samples": 480
+            }
+          ],
+          "dominant_offset_samples": 480,
+          "dominant_offset_ms": 60.0,
+          "compared_samples": 3559200,
+          "differing_samples": 0,
+          "first_difference_sample": null,
+          "last_difference_sample": null,
+          "leading_padding_is_silence": true,
+          "guest_PCM_equals_delayed_RTP_prefix": true
+        },
+        "pre_workload_guest_bytes": 0,
+        "frozen_inputs": {
+          "rtp-from-caller.bin": "88f6e6b86f412d2f0dc058d25e87cc07e6bde6076402287fa03ac32075f687f3",
+          "rtp-to-guest.bin": "86a636a1fc57cdd5deceb7bd77d99556a31d50f59d2601365835e4c26b52df8c",
+          "modem_rx_8k.raw": "855fa6cc28caa41d7754b07bc742989c0c2f466b3b4c84c95b25d7650f1ff8fe",
+          "timing.jsonl": "327bbeb56f187039ac46806b9db493a0ceeab7c372613b0f8e2fcc1f4e540b88",
+          "expected-upstream.bin": "d5ad23286a9cff7b9c261395890748c30516e7060b0203688561ae637e2a8bc7",
+          "guest-workload.bin": "d5ad23286a9cff7b9c261395890748c30516e7060b0203688561ae637e2a8bc7",
+          "result.json": "984b751f9ee2f8cef01bed7f25fcb6cd6ac22e6c6a256fd444a888ec50df34ab"
+        },
+        "analyzer_sha256": "cb9ba521f16018e368601e2b696814acc5d2da3567ea41ad6905d7bfc5d564c1",
+        "scope": "Exact G.711 decoding/frame-hash alignment and observed host UDP arrival times. Changed guest PCM proves a media-path difference, not its internal cause. No physical modem/ATA."
+      },
+      "offline_guest": {
+        "samples": 3559680,
+        "decoded_bytes": 64,
+        "equals_authored_upstream": true,
+        "checker_sha256": "cf790f59a84746f0bd2e8cea1f85b4643a34746bd31e9bc2daa7cd845e51c829",
+        "capture_sha256": "855fa6cc28caa41d7754b07bc742989c0c2f466b3b4c84c95b25d7650f1ff8fe",
+        "decoder_sha256": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+        "scope": "Offline native QAM decode of actual guest pre-resampling 8kHz PCM. Distinct from the proprietary guest DSP; no injected live bytes or connection flags."
+      },
+      "offline_guest_receipt_sha256": "4ca51eb52284ba99412141bd47c5d8565945f6811fd833aa17cc72748a479cda",
+      "offline_caller": {
+        "packets": 22630,
+        "checker_sha256": "384c5ff4036f90afdf3afa9174ef7c780c503a2541a6d5d6b55210856ae884ef",
+        "capture_sha256": "88f6e6b86f412d2f0dc058d25e87cc07e6bde6076402287fa03ac32075f687f3",
+        "decoder_sha256": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+        "scope": "Offline native QAM receiver over the observed external caller RTP packets. This does not establish what the in-VM PJSIP jitter buffer or proprietary receiver consumed.",
+        "equals_authored_upstream": true
+      },
+      "offline_caller_receipt_sha256": "43af6476fdde4f27cf9f37d8dbb62ec0656f5dcf9250e7c56b8814aa69ea3199"
     }
   },
   "diagnosis": {
@@ -1088,14 +1481,16 @@
     "offline_evidence_sha256": "fb6931b33b5382e73b5ac3e99a5becacdc23ac13d120ab8d58c392db1706aea1"
   },
   "remaining": [
-    "Resolve six inserted post-hold upstream bytes in actual guest/BBS input; offline caller decode equals all64 DOS online bytes.",
+    "Reproduce/resolve intermittent six-byte insertion from -05; traced -06 passes with 3559200 exact PCM samples after60ms and no inserted bytes.",
     "Compose and verify the isolated REGISTER-ownership and pool-timer candidates with real guest refresh and DSP teardown.",
     "Resolve helper literal carrier-result/data ambiguity and slowly fragmented carrier results.",
     "Editors/transfers/Synchronet through this audio path, sustained pressure and physical Boca/SPA2102 acceptance remain open.",
     "All F01-F16 whole-application completion gates remain open."
   ],
-  "current_cohort": "synthmodem-audio-dos-05",
-  "current_diagnosis": {
+  "current_cohort": "synthmodem-audio-dos-06",
+  "latest_cohort_passed": true,
+  "open_failure_cohort": "synthmodem-audio-dos-05",
+  "open_failure_diagnosis": {
     "offline_caller_equals_DOS_online": true,
     "DOS_online_bytes": 64,
     "offline_caller_bytes": 64,
@@ -1118,5 +1513,5 @@
     "decoder_sha256": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
     "scope": "Offline decode matches all DOS online bytes. Six inserted post-hold bytes are present at the actual guest/BBS, absent from the observed caller waveform under this independent decoder. Guest RTP/jitter/DSP consumption remains unresolved; no physical hardware claim."
   },
-  "current_diagnosis_sha256": "b058510e07bd24dd74217ffadc803a37814ce163e10014b31abc2303c0109057"
+  "open_failure_diagnosis_sha256": "b058510e07bd24dd74217ffadc803a37814ce163e10014b31abc2303c0109057"
 }

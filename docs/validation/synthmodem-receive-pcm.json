@@ -1,0 +1,183 @@
+{
+  "passed": true,
+  "status": "Capture/analysis checks pass; earlier intermittent DOS insertion remains unresolved.",
+  "cohorts": {
+    "synthmodem-receive-trace-01": {
+      "PCM_analysis": {
+        "external_RTP_equals_tunnel_RTP": false,
+        "common_RTP_prefix_exact": true,
+        "external_packets": 3100,
+        "tunnel_packets": 3090,
+        "guest_frames": 3043,
+        "exact_PCM_frame_matches": 132,
+        "guest_frames_not_found_in_RTP": 2908,
+        "frame_alignment_changes": [
+          {
+            "operation": "replace",
+            "RTP_frame_start": 132,
+            "RTP_frame_end": 3090,
+            "guest_frame_start": 132,
+            "guest_frame_end": 3043
+          }
+        ],
+        "packet_arrival_gaps": {
+          "rtp-from-caller": {
+            "packets": 3100,
+            "max_gap_ms": 35.225696,
+            "over40ms": 0,
+            "over100ms": 0
+          },
+          "rtp-to-guest": {
+            "packets": 3090,
+            "max_gap_ms": 35.079661,
+            "over40ms": 0,
+            "over100ms": 0
+          }
+        },
+        "upstream_changes": [],
+        "sample_alignment": {
+          "unique_anchors": 267,
+          "offset_histogram": {
+            "400": 267
+          },
+          "offset_changes": [
+            {
+              "RTP_frame": 140,
+              "guest_sample": 22800,
+              "offset_samples": 400
+            }
+          ],
+          "dominant_offset_samples": 400,
+          "dominant_offset_ms": 50.0,
+          "compared_samples": 486480,
+          "differing_samples": 0,
+          "first_difference_sample": null,
+          "last_difference_sample": null,
+          "leading_padding_is_silence": true,
+          "guest_PCM_equals_delayed_RTP_prefix": true
+        },
+        "pre_workload_guest_bytes": 0,
+        "frozen_inputs": {
+          "rtp-from-caller.bin": "2571609d55812d861d94c41d623cdeac7e8f8cddfb1b15c36740f5ac0cad6c17",
+          "rtp-to-guest.bin": "358660ca8c4535021bed296955f7329606d344aaeab26d79c6a9776a6fc341ec",
+          "modem_rx_8k.raw": "78f791faa025aa34463fb79925d18e3aedcb3fc7ea71f4e716f7a1f3495f03cc",
+          "timing.jsonl": "c7106aede1ad1ffa9fc832871344c852c4d83265a7a0cc5fcb5c1bf583459dec",
+          "expected-upstream.bin": "e10431fd532176071847e272eec19653c37c153ad577457449e66e85af4bc806",
+          "guest-workload.bin": "e10431fd532176071847e272eec19653c37c153ad577457449e66e85af4bc806",
+          "result.json": "a442e2a76290493cfea214a4a268d3911c59fdab7a8bd41f2e637f72faee0f86"
+        },
+        "analyzer_sha256": "cb9ba521f16018e368601e2b696814acc5d2da3567ea41ad6905d7bfc5d564c1",
+        "scope": "Exact G.711 decoding/frame-hash alignment and observed host UDP arrival times. Changed guest PCM proves a media-path difference, not its internal cause. No physical modem/ATA."
+      },
+      "offline_guest": {
+        "samples": 486880,
+        "decoded_bytes": 34,
+        "equals_authored_upstream": true,
+        "checker_sha256": "cf790f59a84746f0bd2e8cea1f85b4643a34746bd31e9bc2daa7cd845e51c829",
+        "capture_sha256": "78f791faa025aa34463fb79925d18e3aedcb3fc7ea71f4e716f7a1f3495f03cc",
+        "decoder_sha256": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+        "scope": "Offline native QAM decode of actual guest pre-resampling 8kHz PCM. Distinct from the proprietary guest DSP; no injected live bytes or connection flags."
+      },
+      "offline_guest_receipt_sha256": "2e457f5dd7355471c4f4f5f6f98e87b692bf9ef5c1e003007413cf7f8266013f",
+      "guest_pcm_sha256": {
+        "modem_rx_8k.raw": "78f791faa025aa34463fb79925d18e3aedcb3fc7ea71f4e716f7a1f3495f03cc",
+        "modem_rx.raw": "85546afc208a901dd92cb6875e74bf2e97fddc1c4be54e845473bbc4d22e24e4",
+        "modem_tx.raw": "f9c5379b536308baa5673f31b171c212626416b4bd1414e410b4e43ccebcbe01"
+      }
+    },
+    "synthmodem-audio-dos-06": {
+      "PCM_analysis": {
+        "external_RTP_equals_tunnel_RTP": true,
+        "common_RTP_prefix_exact": true,
+        "external_packets": 22630,
+        "tunnel_packets": 22630,
+        "guest_frames": 22248,
+        "exact_PCM_frame_matches": 22245,
+        "guest_frames_not_found_in_RTP": 0,
+        "frame_alignment_changes": [
+          {
+            "operation": "insert",
+            "RTP_frame_start": 0,
+            "RTP_frame_end": 0,
+            "guest_frame_start": 0,
+            "guest_frame_end": 3
+          },
+          {
+            "operation": "delete",
+            "RTP_frame_start": 22245,
+            "RTP_frame_end": 22630,
+            "guest_frame_start": 22248,
+            "guest_frame_end": 22248
+          }
+        ],
+        "packet_arrival_gaps": {
+          "rtp-from-caller": {
+            "packets": 22630,
+            "max_gap_ms": 35.080339,
+            "over40ms": 0,
+            "over100ms": 0
+          },
+          "rtp-to-guest": {
+            "packets": 22630,
+            "max_gap_ms": 34.425905,
+            "over40ms": 0,
+            "over100ms": 0
+          }
+        },
+        "upstream_changes": [],
+        "sample_alignment": {
+          "unique_anchors": 1028,
+          "offset_histogram": {
+            "480": 1028
+          },
+          "offset_changes": [
+            {
+              "RTP_frame": 140,
+              "guest_sample": 22880,
+              "offset_samples": 480
+            }
+          ],
+          "dominant_offset_samples": 480,
+          "dominant_offset_ms": 60.0,
+          "compared_samples": 3559200,
+          "differing_samples": 0,
+          "first_difference_sample": null,
+          "last_difference_sample": null,
+          "leading_padding_is_silence": true,
+          "guest_PCM_equals_delayed_RTP_prefix": true
+        },
+        "pre_workload_guest_bytes": 0,
+        "frozen_inputs": {
+          "rtp-from-caller.bin": "88f6e6b86f412d2f0dc058d25e87cc07e6bde6076402287fa03ac32075f687f3",
+          "rtp-to-guest.bin": "86a636a1fc57cdd5deceb7bd77d99556a31d50f59d2601365835e4c26b52df8c",
+          "modem_rx_8k.raw": "855fa6cc28caa41d7754b07bc742989c0c2f466b3b4c84c95b25d7650f1ff8fe",
+          "timing.jsonl": "327bbeb56f187039ac46806b9db493a0ceeab7c372613b0f8e2fcc1f4e540b88",
+          "expected-upstream.bin": "d5ad23286a9cff7b9c261395890748c30516e7060b0203688561ae637e2a8bc7",
+          "guest-workload.bin": "d5ad23286a9cff7b9c261395890748c30516e7060b0203688561ae637e2a8bc7",
+          "result.json": "984b751f9ee2f8cef01bed7f25fcb6cd6ac22e6c6a256fd444a888ec50df34ab"
+        },
+        "analyzer_sha256": "cb9ba521f16018e368601e2b696814acc5d2da3567ea41ad6905d7bfc5d564c1",
+        "scope": "Exact G.711 decoding/frame-hash alignment and observed host UDP arrival times. Changed guest PCM proves a media-path difference, not its internal cause. No physical modem/ATA."
+      },
+      "offline_guest": {
+        "samples": 3559680,
+        "decoded_bytes": 64,
+        "equals_authored_upstream": true,
+        "checker_sha256": "cf790f59a84746f0bd2e8cea1f85b4643a34746bd31e9bc2daa7cd845e51c829",
+        "capture_sha256": "855fa6cc28caa41d7754b07bc742989c0c2f466b3b4c84c95b25d7650f1ff8fe",
+        "decoder_sha256": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+        "scope": "Offline native QAM decode of actual guest pre-resampling 8kHz PCM. Distinct from the proprietary guest DSP; no injected live bytes or connection flags."
+      },
+      "offline_guest_receipt_sha256": "4ca51eb52284ba99412141bd47c5d8565945f6811fd833aa17cc72748a479cda",
+      "guest_pcm_sha256": {
+        "modem_rx_8k.raw": "855fa6cc28caa41d7754b07bc742989c0c2f466b3b4c84c95b25d7650f1ff8fe",
+        "modem_rx.raw": "ed4ad8ab3b6a75bf068f5ab633c5590cc75bf20563053e7d98cfc7627191cc49",
+        "modem_tx.raw": "6158d4c2bc8d08202eb15347c3d23f8d2b5ed72e18e8874c8637781869a5e478"
+      }
+    }
+  },
+  "frozen_sources": {
+    "lab/bbs/analyze_receive_trace.py": "cb9ba521f16018e368601e2b696814acc5d2da3567ea41ad6905d7bfc5d564c1",
+    "lab/bbs/diagnose_receive_pcm.js": "cf790f59a84746f0bd2e8cea1f85b4643a34746bd31e9bc2daa7cd845e51c829"
+  }
+}

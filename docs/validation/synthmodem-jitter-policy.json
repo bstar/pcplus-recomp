@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "upstream_revision": "b1752e4d0039e0cff72735924e03aa99922723a8",
+  "pjproject_version": "2.15.1",
+  "builds": {
+    "baseline": {
+      "build": {
+        "drvPath": "/nix/store/l7407bgh35indlrwmg1dmydxqpji0xsm-pcplus-dmodem-baseline-i386-b1752e4d0039e0cff72735924e03aa99922723a8.drv",
+        "outputs": {
+          "out": "/nix/store/f52ycwdbiryrmvhyiqc52hkw8n74imy2-pcplus-dmodem-baseline-i386-b1752e4d0039e0cff72735924e03aa99922723a8"
+        }
+      },
+      "executable_sha256": "8bb184e435b18440dcc94219ab7cf62ffbcdf82b78aa2d5095b066984444bfef",
+      "executable": "/nix/store/f52ycwdbiryrmvhyiqc52hkw8n74imy2-pcplus-dmodem-baseline-i386-b1752e4d0039e0cff72735924e03aa99922723a8/bin/d-modem",
+      "ELF32_i386_static": true,
+      "source_sha256": "c2e76759d9529bf467a918e128c5b3e15b4eaff0077d32bdc896a54e36a478a1"
+    },
+    "candidate": {
+      "build": {
+        "drvPath": "/nix/store/k88d8ybm1k7mvkk3bixnw5y3gwbs2fz9-pcplus-dmodem-no-discard-i386-b1752e4d0039e0cff72735924e03aa99922723a8.drv",
+        "outputs": {
+          "out": "/nix/store/030qklysscnn8qri19s8zwjbynbzv9a2-pcplus-dmodem-no-discard-i386-b1752e4d0039e0cff72735924e03aa99922723a8"
+        }
+      },
+      "executable_sha256": "913f2d1dddfddb94dd466e2cf23969b5a3e7e9fe31e21ab361cf1d567832ecc4",
+      "executable": "/nix/store/030qklysscnn8qri19s8zwjbynbzv9a2-pcplus-dmodem-no-discard-i386-b1752e4d0039e0cff72735924e03aa99922723a8/bin/d-modem",
+      "ELF32_i386_static": true,
+      "source_sha256": "13df3312a5e5d568d0f92083a97081c737466c53ba11d08277b3035f8b81e657"
+    },
+    "jitter-check": {
+      "build": {
+        "drvPath": "/nix/store/zaam0lrm29gj9pw7frrddiihrg3zap0h-pcplus-jitter-policy-check-i386-2.15.1.drv",
+        "outputs": {
+          "out": "/nix/store/8jchrixdjarnp9mfq50561nmkd718qzy-pcplus-jitter-policy-check-i386-2.15.1"
+        }
+      },
+      "executable_sha256": "b717851ba6815e4ee5ea8bc4832affc7f0ead7a3f1372547b654610662afb4fe",
+      "executable": "/nix/store/8jchrixdjarnp9mfq50561nmkd718qzy-pcplus-jitter-policy-check-i386-2.15.1/bin/jitter-check",
+      "ELF32_i386_static": true
+    }
+  },
+  "policy_test_output": "18:52:29.298 os_core_unix.c !pjlib 2.15.1 for POSIX initialized\nbaseline normal=2988 skipped_sequence_numbers=24 discard=0 lost=12 size=0 prefetch=2\ncandidate normal=3000 skipped_sequence_numbers=0 discard=0 lost=0 size=12 prefetch=2\nPASS: equal prefetch bounds retain progressive discard; NONE preserves sequence.\n",
+  "frozen_inputs": {
+    "nix/dmodem.nix": "f4f3ea0b2050bdc4064702907ef94294326c509bb38130b4b3c1f2822e1519f2",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+    "tools/build-dmodem": "6ffe06ad3d9ad48ae0a7ae73b9d6c0df3d1e61191fee23b17b4c166f93646bdc",
+    "lab/bbs/jitter_policy_check.c": "6854f39129f51184b4394c1446d6e4b2d8310860bbfca61de06ce221282fa9ee"
+  },
+  "candidate_source_change": "Only explicit PJMEDIA_JB_DISCARD_NONE after the existing40ms jitter settings; baseline source unchanged.",
+  "runtime_verified": false,
+  "scope": "Paired Nix source builds and actual PJSIP jitter-buffer API sequence test on Linux. No modem/VM/DOS/BBS runtime validation of either rebuilt d-modem yet; does not establish the cause of the prior insertion."
+}

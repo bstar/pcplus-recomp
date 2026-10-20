@@ -14,13 +14,22 @@ DOS return, UART/vector restoration and directory accounting. The sparse helper
 fix resolves the reproduced lone-N hold; corrected theme markers replace two
 invalid fixture assumptions. All prior failed cohorts remain recorded.
 
-Overall audio acceptance is still FAILED: the independent audit passes18 of19
-checks but finds six extra upstream bytes after the DOS CPR, received by both
-the guest helper and ENiGMA. Offline caller decoding matches all64 DOS online
-bytes exactly. Three earlier training-tail bytes were separately discarded by
-the normal pre-proxy hold. Investigate actual guest RTP/jitter/DSP consumption;
-menu success cannot replace exact byte integrity. All46908 BBS display bytes,
-RTP continuity, actual SIP teardown and normal cleanup pass independent checks.
+The [receive-audio diagnostic](lab/bbs/synthmodem-receive-trace.md) now exports
+actual guest PCM without changing either DSP binary. The short burst/idle run
+passes9 checks with486480 exact overlapping samples after50ms. The complete
+traced DOS cohort -06 passes19 producer and19 independent audit checks, exact64
+upstream/46908 downstream bytes, and3559200 exact guest PCM samples after60ms.
+Both offline caller/guest decoders recover exactly the DOS input. Neither run
+reproduces the earlier -05 six-byte insertion, which remains an open intermittent
+failure; a later clean run is not proof of a fix.
+
+PJSIP2.15.1 source and an actual library API test confirm that fixed prefetch
+bounds do not disable progressive frame discard. Its balanced sequence fixture
+skips24 sequence numbers under the baseline policy; explicit DISCARD_NONE
+preserves all3000 reads. Paired source-built static i386 d-modem binaries now
+build through pinned Nix; only the candidate adds that explicit setting.
+Boot/compare those rebuilt binaries with controlled packet timing next, then
+repeat DOS/BBS acceptance. They are not in the accepted or installed runtime.
 
 Separate [pool timer](lab/bbs/patches/synthmodem-pool/README.md) and
 [REGISTER ownership](lab/bbs/patches/synthmodem-registrar/README.md) candidates

@@ -111,6 +111,24 @@ The sparse runtime can be reproduced with
 [candidate instructions](patches/synthmodem-sparse/README.md). This is a test
 runtime, not an installed bridge change.
 
+## Full receive-trace cohort
+
+Cohort `synthmodem-audio-dos-06` uses the explicit receive-trace option and the
+accepted diagnostic image. It passes all19 producer and19 independent audit
+checks with64 exact upstream bytes and46908 exact BBS display bytes. All menu,
+SIP, RTP, normal DOS exit, UART and helper-vector checks pass. The guest dump
+matches3559200 overlapping input PCM samples after a constant480-sample/60ms
+delay. Offline native receivers recover exactly the DOS input from both external
+caller RTP and actual guest pre-resampling PCM. No training-tail bytes occur in
+this run. See [the trace guide](synthmodem-receive-trace.md) and
+[PCM receipt](../../docs/validation/synthmodem-receive-pcm.json).
+
+The earlier -05 failure remains preserved and unresolved. The additional
+observers/export daemon and timing conditions are explicit; a clean diagnostic
+run is not proof that the original intermittent insertion has been fixed. Next
+compare paired rebuilt d-modem jitter policies under controlled timing, retain
+actual guest PCM and repeat the full DOS byte audit.
+
 ## Limits and remaining tasks
 
 This is a fixed V.22/1200 software line with38400 8N1 HARD on the emulated DOS

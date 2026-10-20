@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+pcplus_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+pcplus_target=${1:-baseline}
+case "$pcplus_target" in baseline|candidate|pjproject|jitter-check) ;; *) echo 'Use baseline, candidate, pjproject or jitter-check' >&2; exit 64 ;; esac
+if [ "$#" -gt 0 ]; then shift; fi
+cd "$pcplus_root"
+# Impurity only resolves the checkout path; nixpkgs and fetched sources stay pinned.
+exec nix --extra-experimental-features 'nix-command flakes' build --impure --expr \
+  "let flake = builtins.getFlake (toString ./nix); in (import ./nix/dmodem.nix { nixpkgs = flake.inputs.nixpkgs; system = builtins.currentSystem; }).$pcplus_target" "$@"

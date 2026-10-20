@@ -94,7 +94,7 @@ Links below pin the reviewed source; future versions require rechecking.
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
 
-## Actual DOS / ENiGMA audio checkpoint (byte integrity still fails)
+## Actual DOS / ENiGMA audio checkpoint (intermittent integrity gap)
 
 [The DOS audio cohort](../lab/bbs/synthmodem-audio-dos.md) now passes19 producer
 checks through real V.22/1200 software DSP: numeric dialing, CONNECT> entry,
@@ -104,13 +104,20 @@ sparse-helper candidate resolves the lone-N stall; the
 [stager](../lab/bbs/synthmodem_sparse_runtime.py) verifies every source/kernel
 identity and original archive entry, replacing only the helper executable.
 
-Overall acceptance remains failed. Eighteen of19 independent audit checks pass,
-including all46908 BBS display bytes, menu order, SIP teardown, RTP continuity
-and normal cleanup. Six extra upstream bytes appear after the DOS CPR and reach
-ENiGMA. Offline caller decoding matches all64 DOS online bytes exactly; the
-actual guest RTP/jitter/DSP path remains to investigate. Three earlier bytes
-were separately discarded by the normal pre-proxy training hold. These counts
-and offsets are retained in the [receipt](validation/synthmodem-audio-dos.json).
+Overall acceptance remains open. Cohort -05 fails one of19 independent checks
+on six extra bytes after the DOS CPR, received by ENiGMA. Offline caller decoding
+matches all64 DOS online bytes; three earlier training-tail bytes are separately
+accounted for by the pre-proxy hold. Cohort -06 uses the added diagnostic export
+channel and passes all19 producer/19 audit checks, including exact64 upstream and
+46908 downstream bytes and normal cleanup. Its actual guest pre-resampling PCM
+matches3559200 overlapping caller samples after a stable60ms delay. Both offline
+decoders recover the DOS input exactly. This clean run does not resolve -05.
+
+The [receive trace](../lab/bbs/synthmodem-receive-trace.md) documents both captures.
+Source/API checks also confirm progressive discard remains enabled despite
+fixed jitter prefetch bounds. Paired Nix-built i386 d-modem variants exist; the
+explicit DISCARD_NONE candidate still needs VM/runtime and fault tests before
+claiming a modem-path fix. See [the build/API receipt](validation/synthmodem-jitter-policy.json).
 
 The helper still has an in-band carrier/data ambiguity: literal NO CARRIER can
 be consumed as status, while a slowly fragmented real result can become data.
