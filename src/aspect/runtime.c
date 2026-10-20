@@ -20,6 +20,9 @@
 #include "../process/native_program.h"
 #include "../process/native_display.h"
 #include "../process/process_handles.h"
+#if defined(ASPECT_EXTERNAL_UNWIND)
+#include "external_unwind.h"
+#endif
 #endif
 #if defined(ASPECT_RUNTIME_SERIAL)
 #include "../config/resource_path.h"
@@ -44,6 +47,9 @@ static unsigned compiler_scope;
 extern void __interrupt __far runtime_divide_interrupt(void);
 #if defined(ASPECT_EXTERNAL_PROCESS)
 static unsigned external_scope;
+#if defined(ASPECT_EXTERNAL_UNWIND)
+unsigned __cdecl runtime_external_scope_active(void){return external_scope;}
+#endif
 unsigned runtime_external_scope(unsigned entering)
 {
  if(!active||entering>1||compiler_scope)return ASPECT_RUN_STATE;
@@ -51,8 +57,8 @@ unsigned runtime_external_scope(unsigned entering)
   if(external_scope||runtime_error||_dos_getvect(0)!=runtime_divide_interrupt)return ASPECT_RUN_STATE;
   external_scope=1;
  }else{
-  if(!external_scope)return ASPECT_RUN_STATE;external_scope=0;
-  if(_dos_getvect(0)!=runtime_divide_interrupt)return ASPECT_RUN_STATE;
+  if(!external_scope||_dos_getvect(0)!=runtime_divide_interrupt)return ASPECT_RUN_STATE;
+  external_scope=0;
  }
  return 0;
 }
@@ -209,6 +215,11 @@ void runtime_cleanup(void)
 {
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
     unsigned i;
+#endif
+#if defined(ASPECT_EXTERNAL_UNWIND)
+    if(runtime_external_checkpoint_active())runtime_external_recover(runtime_error);
+#endif
+#if defined(ASPECT_RUNTIME_DIAGNOSTIC)
     /* Snapshot before the native release; test values survive real far frees. */
     for(i=0;i<runtime_string_count && i<128;++i)
         if(runtime_strings[i])_fmemcpy(runtime_string_snapshot[i],runtime_strings[i],81);
@@ -247,6 +258,9 @@ void runtime_end_wait_step(void)
 }
 void runtime_finish(void)
 {
+#if defined(ASPECT_EXTERNAL_UNWIND)
+    if(runtime_external_checkpoint_active())runtime_external_recover(runtime_error);
+#endif
     runtime_file_times_finish();
     runtime_file_info_finish();
     runtime_script_files_finish();
@@ -312,6 +326,9 @@ unsigned aspect_runtime_run(const char *path,unsigned step_limit)
     if(active || runtime_live || runtime_find_live || runtime_script_file_live || runtime_file_info_live || runtime_file_times_live || runtime_file.handle || !path || !*path || !step_limit)return ASPECT_RUN_STATE;
 #if defined(ASPECT_EXTERNAL_PROCESS)
     if(external_scope||process_handles_active||native_process_busy||native_program_busy||native_program_waiting||native_display_owned)return ASPECT_RUN_STATE;
+#if defined(ASPECT_EXTERNAL_UNWIND)
+    if(runtime_external_checkpoint_active())return ASPECT_RUN_STATE;
+#endif
 #endif
     active=1;runtime_error=runtime_steps=runtime_live=runtime_peak_live=0;
     compiler_scope=0;

@@ -35,5 +35,8 @@ long runtime_script_file_tell(aspect_script_file_prefix *);
  * private descriptors for the DOS inheritance bracket. No stream is closed. */
 unsigned runtime_script_files_external_begin(unsigned *,unsigned *);
 unsigned runtime_script_files_external_end(void);
+#if defined(ASPECT_EXTERNAL_UNWIND)
+unsigned runtime_script_files_external_active(void);
+#endif
 #endif
 #endif

@@ -7,10 +7,12 @@ cases and 505 checks, including COM1/COM2 crossed with N/S/H/B flow. All 77
 external leases retire. Separate parent/child policy models pass 77 linked
 cases, and a blank source tree reproduces 25 products exactly.
 
-Normal capability6 TERMINAL and the 105-slot ASPECT interpreter remain
-byte-identical. The separate raw 108-slot diagnostic also remains byte-identical
-to its earlier 56-case DOS proof. No normal opcode publication or complete
-application gate closes.
+At that checkpoint, normal capability6 TERMINAL, the 105-slot ASPECT interpreter
+and the raw diagnostic remained byte-identical to their preceding proofs.
+The newer [foreground unwind integration](ASPECT_UNWIND.md) changes the
+experimental interpreters, reruns all 56 raw and 13 parent cases, and adds 92
+fault-suite cases. Normal products remain byte-identical. No normal opcode
+publication or complete application gate closes.
 
 ## Handoff and view ownership
 
@@ -106,8 +108,10 @@ saved-screen expectation. Their captures are not counted as accepted cases.
 
 ## Remaining publication requirements
 
-Complete nonlocal-fault cleanup during external ownership before enabling the
-three slots in the normal interpreter. Bind the original macro keyboard,
+The newer [unwind proof](ASPECT_UNWIND.md) covers synchronous foreground divide,
+typed abort and direct dispatcher longjmp during external ownership. Kernel,
+BIOS, allocator corruption and recursive cleanup faults are separate boundaries.
+Before normal publication, bind the original macro keyboard,
 mouse/window and error-notice services and broader views. Repeat application
 workflows and transfers/doors against the current owned ENiGMA and Synchronet
 services, then validate loaded input, actual DOS kernels and physical RS-232

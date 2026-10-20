@@ -7,4 +7,7 @@
 unsigned __cdecl process_handles_begin(const unsigned *descriptors,unsigned count);
 unsigned __cdecl process_handles_end(void);
 extern unsigned process_handles_active;
+#if defined(ASPECT_EXTERNAL_UNWIND)
+unsigned __cdecl process_handles_recover(void);
+#endif
 #endif

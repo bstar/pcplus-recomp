@@ -95,6 +95,12 @@ extern _aspect_file_refill,_aspect_file_read,_aspect_file_seek,_aspect_file_tell
 ; No C/DOS call or DS access occurs on the interrupt frame. Parent owns vector.
 global _runtime_divide_interrupt
 _runtime_divide_interrupt:
+%ifdef ASPECT_EXTERNAL_UNWIND
+ extern runtime_external_divide_gate
+ jmp runtime_external_divide_gate
+ global runtime_divide_original
+runtime_divide_original:
+%endif
  push bp
  mov bp,sp
  mov word [ss:bp+2],runtime_divide_trap

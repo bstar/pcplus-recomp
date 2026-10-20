@@ -7,8 +7,8 @@ import build_aspect_runner as runner
 ROOT=program.ROOT;OUT=ROOT/'build/aspect-process';sha=program.sha
 
 
-def main(driver=None,parent_render=False):
-    output=ROOT/'build/aspect-process-parent' if parent_render else OUT
+def main(driver=None,parent_render=False,output=None):
+    if output is None:output=ROOT/'build/aspect-process-parent' if parent_render else OUT
     program.main();output.mkdir(parents=True,exist_ok=True)
     native=program.display.process
     process=json.loads((native.OUT/'manifest.json').read_text())
@@ -23,11 +23,11 @@ def main(driver=None,parent_render=False):
     objects += [str(program.OUT/(Path(u['file']).stem+'.obj')) for u in ui['units']]
     objects += [str(program.display.OUT/'display_state.obj'),str(program.OUT/'program_ui.obj')]
     state=ROOT/'src/process/native_process_state.asm';obj=output/'native_process_state.obj'
-    subprocess.run(['nasm','-fobj','-DNATIVE_PROCESS_SHARED_PATH',str(state),'-o',str(obj)],check=True);objects.append(str(obj))
+    subprocess.run(['nasm','-fobj','-DNATIVE_PROCESS_SHARED_PATH','-DASPECT_EXTERNAL_UNWIND',str(state),'-o',str(obj)],check=True);objects.append(str(obj))
     c_sources=[ROOT/p for p in ('src/process/native_process.c','src/process/native_display.c',
         'src/process/native_program.c','src/aspect/process_serial.c','src/process/process_handles.c','src/aspect/external_runtime.c')]
     sources=[ROOT/name for name in manifest['sources']]
-    sources += c_sources+[ROOT/'src/process/process_handles.h',ROOT/'src/aspect/external_runtime.h',Path(__file__)]
+    sources += c_sources+[ROOT/'src/process/process_handles.h',ROOT/'src/aspect/external_runtime.h',ROOT/'src/aspect/external_unwind.h',Path(__file__)]
     extension=dict(output=output,objects=objects,c_sources=c_sources,sources=sources,parent_render=parent_render)
     if driver:extension['driver']=driver;extension['sources'].append(driver)
     runner.main(extension)
@@ -35,5 +35,7 @@ def main(driver=None,parent_render=False):
 
 if __name__=='__main__':
     import argparse
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--parent-render',action='store_true')
-    main(parent_render=parser.parse_args().parent_render)
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--parent-render',action='store_true');parser.add_argument('--fault-diagnostic',action='store_true')
+    args=parser.parse_args()
+    if args.fault_diagnostic:main(ROOT/'standalone/aspect_fault_driver.c',parent_render=True,output=ROOT/'build/aspect-fault')
+    else:main(parent_render=args.parent_render)

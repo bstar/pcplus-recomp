@@ -1,12 +1,18 @@
 #include "native_display.h"
 #include <dos.h>
 #include <malloc.h>
+#if defined(ASPECT_EXTERNAL_UNWIND)
+#include "../aspect/external_unwind.h"
+#endif
 extern unsigned native_display_cells,native_display_stride;
 extern unsigned char native_display_mode;
 extern void __cdecl display_probe_native(void);
 extern void __far *__cdecl display_snapshot_native(void);
 extern void __cdecl display_restore_native(void __far *);
 static void __far *snapshot;
+#if defined(ASPECT_EXTERNAL_UNWIND)
+static void __far *pending;
+#endif
 static unsigned saved_columns,saved_rows,saved_bytes,saved_segment;
 unsigned native_display_owned;
 #if defined(NATIVE_DISPLAY_DIAGNOSTIC)
@@ -17,15 +23,28 @@ void __far *__cdecl display_platform_allocate(unsigned bytes)
 #if defined(NATIVE_DISPLAY_DIAGNOSTIC)
  ++native_display_allocs;if(native_display_fail_alloc)return 0;
 #endif
+#if defined(ASPECT_EXTERNAL_UNWIND)
+ pending=_fmalloc(bytes);if(pending)external_phase(EXTERNAL_SNAPSHOT_ALLOC);return pending;
+#else
  return _fmalloc(bytes);
+#endif
 }
 void __cdecl display_platform_free(void __far *pointer)
 {
  if(!pointer)return;
+#if defined(NATIVE_DISPLAY_DIAGNOSTIC) && !defined(ASPECT_EXTERNAL_UNWIND)
+ ++native_display_frees;
+#endif
+#if defined(ASPECT_EXTERNAL_UNWIND)
+ external_phase(EXTERNAL_SNAPSHOT_FREE);
+#endif
+ _ffree(pointer);if(pointer==snapshot){snapshot=0;native_display_owned=0;}
+#if defined(ASPECT_EXTERNAL_UNWIND)
 #if defined(NATIVE_DISPLAY_DIAGNOSTIC)
  ++native_display_frees;
 #endif
- _ffree(pointer);if(pointer==snapshot){snapshot=0;native_display_owned=0;}
+ if(pointer==pending)pending=0;
+#endif
 }
 unsigned __cdecl native_display_probe(void)
 {
@@ -58,4 +77,8 @@ unsigned __cdecl native_display_restore(void)
  display_restore_native(snapshot);return native_display_owned?NATIVE_DISPLAY_STATE:0;
 }
 void __cdecl native_display_discard(void)
-{if(snapshot)display_platform_free(snapshot);}
+{if(snapshot)display_platform_free(snapshot);
+#if defined(ASPECT_EXTERNAL_UNWIND)
+ if(pending)display_platform_free(pending);
+#endif
+}

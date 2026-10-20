@@ -1,6 +1,6 @@
 #ifndef ASPECT_EXTERNAL_RUNTIME_H
 #define ASPECT_EXTERNAL_RUNTIME_H
-/* Native command frontend ABI. A guarded raw/local experimental binding exists;
+/* Native command frontend ABI. Guarded raw and attached experimental bindings exist;
  * these handlers remain unlinked from the shipped product's dispatch table.
  * Caller removes ten bytes; program/tail are borrowed near pointers valid
  * only during this synchronous call. Return is the raw comparison status.

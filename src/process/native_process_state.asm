@@ -43,6 +43,10 @@ program_service_85fc: jmp _native_backup_free
 program_service_9286: jmp _native_copy
 ; Child must never enter a parent's DS-dependent arithmetic recovery frame.
 _native_child_divide:
+%ifdef ASPECT_EXTERNAL_UNWIND
+ extern native_external_divide_gate
+ jmp native_external_divide_gate
+%endif
  mov ax,0x4c0c
  sti
  int 0x21

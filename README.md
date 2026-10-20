@@ -6,8 +6,10 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 
 The [experimental attached PROGRAM binding](docs/ASPECT_PARENT_PROCESS.md) now
 preserves actual parent rendering, selected resources, script streams and VM
-continuation across DOS program execution. Normal builds remain unchanged while
-complete fault cleanup and UI ownership are finished.
+continuation across DOS program execution. The [foreground fault recovery](docs/ASPECT_UNWIND.md)
+also restores actual owners after divide/abort/direct-jump failures and runs a
+second script in the same process. Normal builds remain unchanged while original
+UI ownership and broader acceptance are finished.
 
 **This is not yet a complete PCPlus source rebuild.** The current terminal
 passes logged-in ZMODEM uploads and downloads against local Synchronet and ENiGMA,

@@ -17,9 +17,15 @@ unsigned __cdecl native_process_search(const char *path,const char *tail,
 unsigned __cdecl native_process_system(const char *command,char **environment,
  native_process_result *result);
 extern unsigned native_process_busy;
+#if defined(ASPECT_EXTERNAL_UNWIND)
+unsigned __cdecl native_process_recover(void);
+#endif
 #if defined(NATIVE_PROCESS_DIAGNOSTIC)
 extern unsigned native_fail_near,native_fail_far,native_near_calls,native_far_calls;
 extern unsigned native_fail_at,native_owned_count,native_owned_peak;
 extern unsigned native_target_calls;
+#if defined(ASPECT_EXTERNAL_UNWIND)
+extern unsigned native_far_owned;
+#endif
 #endif
 #endif

@@ -13,4 +13,7 @@ typedef struct native_program_result {
 unsigned __cdecl native_program_execute(const char *program,const char *tail,
  unsigned processor,unsigned wait,unsigned save_screen,native_program_result *result);
 extern unsigned native_program_busy,native_program_waiting;
+#if defined(ASPECT_EXTERNAL_UNWIND)
+unsigned __cdecl native_program_recover(unsigned *view_reset);
+#endif
 #endif

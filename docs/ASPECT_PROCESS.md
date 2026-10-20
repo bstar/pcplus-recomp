@@ -112,6 +112,8 @@ The normal dispatch table remains 105 slots. Before publication, bind the actual
 ASIOv4 renderer and selected directory/translation leases, plus the applicable
 macro keyboard, mouse/window and error-notice services. The existing terminal's
 admitted renderer is mode3/80x25/page0; the broader original views remain in scope.
-Nonlocal parent faults *during* external ownership need separate cleanup proof;
-the error tests here deliberately occur after child return. Other DOS kernels,
+The error tests in this historical raw checkpoint occur after child return.
+The newer [foreground unwind proof](ASPECT_UNWIND.md) adds actual divide/abort/
+direct-jump cleanup during owned external operations and reruns this raw suite.
+Other DOS kernels,
 physical Wi-Fi modem timing and complete live BBS workflows remain open.

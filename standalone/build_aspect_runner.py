@@ -12,11 +12,11 @@ def main(extension=None):
     # Only the separately named experimental process builder supplies this.
     # Default production inputs/flags and opcode coverage remain unchanged.
     output=extension['output'] if extension else OUT
-    feature_flags=['-DASPECT_EXTERNAL_PROCESS','-DASPECT_EXTERNAL_COMMANDS'] if extension else []
+    feature_flags=['-DASPECT_EXTERNAL_PROCESS','-DASPECT_EXTERNAL_COMMANDS','-DASPECT_EXTERNAL_UNWIND'] if extension else []
     if extension and extension.get('parent_render'):feature_flags.append('-DASPECT_EXTERNAL_RENDER')
     main_source=extension.get('driver',ROOT/'src/aspect/runner.c') if extension else ROOT/'src/aspect/runner.c'
     diagnostic_driver=main_source!=ROOT/'src/aspect/runner.c'
-    if extension and diagnostic_driver:feature_flags.append('-DASPECT_EXTERNAL_DIAGNOSTIC')
+    if extension and diagnostic_driver:feature_flags+=['-DASPECT_EXTERNAL_DIAGNOSTIC','-DNATIVE_DISPLAY_DIAGNOSTIC']
     output.mkdir(parents=True,exist_ok=True)
     OUT.mkdir(parents=True, exist_ok=True)
     include = '-I' + str(ROOT / 'reconstruction/uart') + '/'
@@ -37,6 +37,7 @@ def main(extension=None):
         sources += extension['sources']
         compiled_sources=[p for p in compiled_sources if p!=ROOT/'src/aspect/runner.c']+[main_source,*extension['c_sources']]
         serial_asm += [('process_serial','src/aspect/process_serial.asm',None),
+                       ('external_unwind','src/aspect/external_unwind.asm',None),
                        ('external_commands','src/aspect/external_commands.asm',None)]
     for name, relative, define in ASM+serial_asm:
         source, obj = ROOT / relative, output / (name + '.obj')
@@ -47,6 +48,7 @@ def main(extension=None):
         objects.append(str(obj))
     if extension:objects += extension['objects']
     subprocess.run(['wcl', '-q', '-bt=dos', '-0', '-ms', '-ecc', '-s', '-w4', '-we', '-k8192','-dASPECT_RUNTIME_SERIAL',
+                    *(['-ob','-os'] if extension else []),
                     *feature_flags, *(['-DNATIVE_PROCESS_DIAGNOSTIC'] if extension else []),
                     '-i=' + str(ROOT / 'src/aspect'), '-i='+str(ROOT/'src/process'), '-fm=ASPECT.map', '-fe=ASPECT.EXE',
                     str(main_source), str(ROOT / 'src/aspect/runtime.c'),str(ROOT/'src/aspect/environment_runtime.c'),str(ROOT/'src/aspect/script_file_runtime.c'),str(ROOT/'src/aspect/file_info_runtime.c'),str(ROOT/'src/aspect/file_times_runtime.c'),str(ROOT/'src/aspect/enumeration_runtime.c'),
@@ -62,6 +64,7 @@ def main(extension=None):
                   scope='DOS CLI for trusted ASX and maintained ASP compilation; partial105-slot runtime with native WHEN/CWHEN and thirteen SET/FETCH families and owned six-slot file streams. Explicit ASP or missing-ASX fallback invokes sibling ASPCOMP with scoped compiler faults and owned UART flow. EXECUTE retains session state and publishes current ASX labels. Capability6 retains inherited BIOS selection and adds shared parent profile key output through the child UART, with checked duplex snapshots and native-derived echo. Local UI/macros, half-duplex reverse-tab/insert/delete, full language/recorder, physical timing and arbitrary-bytecode safety remain unfinished.')
     if extension:
         result.update(experimental_external_commands=True,production_dispatch_changed=False,
+            experimental_fault_unwind=True,compiler_size_optimized=True,
             experimental_parent_render=bool(extension.get('parent_render')),
             diagnostic_build=diagnostic_driver,
             main_source=str(main_source.relative_to(ROOT)),

@@ -1,6 +1,19 @@
 # Complete DOS rebuild plan
 
-The [attached PROGRAM integration](docs/ASPECT_PARENT_PROCESS.md) now passes 13
+The [foreground external-program unwind](docs/ASPECT_UNWIND.md) now covers actual
+8086 divide, foreign-DS divide, native typed abort and direct dispatcher longjmp
+at 22 owner boundaries. Its 92 DOS cases restore the full independent15,050-byte
+arena baseline, selected parent resources, actual streams/JFT/vectors/display/UART
+and a successful second VM invocation in the same process. The 56 raw and13 parent
+regressions also pass:161 DOS cases total. There are124 linked policy cases and27
+fresh source products;20 native components and both normal products remain
+byte-identical. A retained final-vector quarantine counterexample now rejects
+without clearing ownership. Normal105-slot/capability6 publication remains
+unchanged. Original macro/mouse/window/error notices, broader views, full UI and
+language, live BBS acceptance, actual DOS kernels and physical modem/hardware
+remain required; no whole-application gate closes.
+
+The earlier [attached PROGRAM integration](docs/ASPECT_PARENT_PROCESS.md) passes 13
 actual DOS cases/505 checks: COM1/COM2 N/S/H/B full workflows, focused SAVE/WAIT/
 NOCLEAR/exit247 cases and a fatal DTR-change recovery. All 77 renderer leases
 retire; a passive observer compares 10,276 exact parent bytes around each nested
@@ -8,8 +21,9 @@ EXEC attempt, including real selected-directory, translation, settings, keymap
 and renderer state. Six numbered streams, nested source compilation, enumeration
 and continued parent input pass. Seventy-seven linked owner-policy cases and 25
 fresh source products pass. This is a separate capability7 parent/child build;
-normal capability6 TERMINAL and 105-slot ASPECT remain byte-identical, as does
-the prior 56-case raw diagnostic. Nonlocal faults during external ownership,
+normal capability6 TERMINAL and 105-slot ASPECT remain byte-identical. At that
+checkpoint the prior raw diagnostic was also unchanged; the newer unwind proof
+rebuilds and reruns it. Synchronous foreground nonlocal cleanup is covered above;
 original macro/mouse/window/error notices, broader views, live BBS acceptance
 and physical modem/hardware remain open before normal publication.
 
@@ -24,7 +38,7 @@ Nineteen linked JFT cases and 14 modeled error-policy cases pass; 23 DOS product
 reproduce from a fresh source tree. Normal ASPECT remains byte-identical at 105 slots; the 108-slot variant is
 separate and rejects attached renderers. The newer capability7 proof above adds
 actual parent/selected-resource coverage. Original
-macro/mouse/window/error-notice services, nonlocal parent-fault cleanup, broader
+macro/mouse/window/error-notice services, broader
 views, live BBS acceptance and physical modem/hardware work remain open.
 
 The [composed PROGRAM controller](docs/NATIVE_PROGRAM.md) now joins recovered

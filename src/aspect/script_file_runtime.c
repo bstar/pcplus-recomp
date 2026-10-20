@@ -31,6 +31,9 @@ unsigned runtime_script_file_open_calls,runtime_script_file_close_calls;
 unsigned runtime_script_file_cleanup_errors;
 #if defined(ASPECT_EXTERNAL_PROCESS)
 static unsigned external_held;
+#if defined(ASPECT_EXTERNAL_UNWIND)
+unsigned runtime_script_files_external_active(void){return external_held;}
+#endif
 static unsigned external_live,external_opens,external_closes;
 static struct {
  aspect_script_file_prefix prefix;

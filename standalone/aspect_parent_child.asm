@@ -83,6 +83,18 @@ start:
  cmp al,0
  jne .bad
 .mutate:
+%ifdef MUTATE_DOS_VECTORS
+ mov dx,isr
+ mov ax,0x2523
+ int 0x21
+ mov ax,0x2524
+ int 0x21
+ ; Force DOS to return the altered vectors from this child's own PSP too.
+ mov word [0x0e],isr
+ mov word [0x10],cs
+ mov word [0x12],isr
+ mov word [0x14],cs
+%endif
  ; Leave foreign UART framing/divisor, IER, MCR, IRQ vector and its PIC bit.
  ; Native PROGRAM must reclaim all of them before subsequent serial input.
  mov dx,PORT+1

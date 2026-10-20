@@ -25,6 +25,9 @@ static unsigned typed(unsigned result)
 {return result<=ASPECT_RUN_SERIAL?result:ASPECT_RUN_STATE;}
 #if defined(ASPECT_EXTERNAL_RENDER)
 static unsigned program_owned;
+#if defined(ASPECT_EXTERNAL_UNWIND)
+unsigned __cdecl aspect_render_program_active(void){return program_owned;}
+#endif
 unsigned __cdecl aspect_render_program_begin(unsigned save_screen)
 {
  unsigned result;

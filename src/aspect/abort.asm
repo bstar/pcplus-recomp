@@ -27,6 +27,12 @@ extern aspect_abort_tell,aspect_abort_format,aspect_abort_format_string,aspect_a
 extern aspect_dispatch_exit_state,aspect_dispatch_argument,session_longjmp
 %endif
 aspect_abort:
+%ifdef ASPECT_EXTERNAL_UNWIND
+ extern runtime_external_abort_gate
+ jmp runtime_external_abort_gate
+ global aspect_abort_recovered
+aspect_abort_recovered:
+%endif
  push bp
  mov_load bp,sp
  sub sp,byte 0x52

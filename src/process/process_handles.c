@@ -1,5 +1,10 @@
 #include "process_handles.h"
 #include <dos.h>
+#if defined(ASPECT_EXTERNAL_UNWIND)
+#include "../aspect/external_unwind.h"
+#else
+#define external_phase(value) ((void)0)
+#endif
 static unsigned saved_psp,saved_count,held_count,indices[7];
 static unsigned char entries[7];
 static unsigned char __far *table;
@@ -25,7 +30,7 @@ unsigned __cdecl process_handles_begin(const unsigned *descriptors,unsigned coun
  /* No DOS calls/CRT operations after the first entry changes. UART/BIOS ISRs
   * do not use this private foreground table, so no long CLI bracket is needed. */
  process_handles_active=1;
- for(i=0;i<count;++i)table[indices[i]]=255;
+ for(i=0;i<count;++i){table[indices[i]]=255;if(!i)external_phase(EXTERNAL_HANDLE_MASK);}
  return 0;
 }
 unsigned __cdecl process_handles_end(void)
@@ -34,6 +39,22 @@ unsigned __cdecl process_handles_end(void)
  if(!process_handles_active)return 1;
  bad=psp()!=saved_psp||current_table(saved_psp)!=table||
      *(unsigned __far *)MK_FP(saved_psp,0x32)!=saved_count;
- for(i=0;i<held_count;++i){if(table[indices[i]]!=255)bad=1;table[indices[i]]=entries[i];}
+ for(i=0;i<held_count;++i){if(table[indices[i]]!=255)bad=1;table[indices[i]]=entries[i];if(!i)external_phase(EXTERNAL_HANDLE_UNMASK);}
  process_handles_active=0;held_count=0;table=0;return bad;
 }
+#if defined(ASPECT_EXTERNAL_UNWIND)
+unsigned __cdecl process_handles_recover(void)
+{
+ unsigned i,bad;
+ if(!process_handles_active)return 0;
+ bad=psp()!=saved_psp||current_table(saved_psp)!=table||
+     *(unsigned __far *)MK_FP(saved_psp,0x32)!=saved_count;
+ /* BEGIN or END may have stopped between selected entries. Both our mask
+  * and the saved byte are legitimate; a third value remains a foreign edit. */
+ for(i=0;i<held_count;++i){
+  if(table[indices[i]]!=255&&table[indices[i]]!=entries[i])bad=1;
+  table[indices[i]]=entries[i];
+ }
+ process_handles_active=0;held_count=0;table=0;return bad;
+}
+#endif

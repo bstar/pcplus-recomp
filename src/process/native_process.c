@@ -4,6 +4,12 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <string.h>
+#if defined(ASPECT_EXTERNAL_UNWIND)
+#include "../aspect/external_unwind.h"
+void __cdecl native_release(void *);
+#else
+#define external_phase(value) ((void)0)
+#endif
 
 extern unsigned char runtime_arena[0x3aca];
 extern unsigned native_crt_error,native_dos_error;
@@ -16,10 +22,21 @@ static struct allocation *allocations;
 static unsigned owner_error;
 static void __far *backup;
 static unsigned backup_size;
+#if defined(ASPECT_EXTERNAL_UNWIND)
+extern unsigned native_pair_low,native_pair_high,native_exec_active;
+static struct {
+ unsigned valid,psp,pair_low,pair_high;
+ void (__interrupt __far *zero)(void),(__interrupt __far *brk)(void),(__interrupt __far *critical)(void);
+} held;
+static unsigned backup_valid;
+#endif
 #if defined(NATIVE_PROCESS_DIAGNOSTIC)
 unsigned native_fail_near,native_fail_far,native_near_calls,native_far_calls;
 unsigned native_fail_at,native_owned_count,native_owned_peak;
 unsigned native_target_calls;
+#if defined(ASPECT_EXTERNAL_UNWIND)
+unsigned native_far_owned;
+#endif
 #endif
 extern int __cdecl native_spawn_extension(unsigned,const char *,char **,char **,unsigned);
 extern int __cdecl native_extension_recovered(unsigned,const char *,char **,char **,unsigned);
@@ -41,8 +58,12 @@ void __cdecl native_copy(unsigned ss,unsigned so,unsigned ds,unsigned dest,unsig
  _fmemmove(MK_FP(ds,dest),MK_FP(ss,so),count);
  /* Clear only after the live arena has been backed up. The padding supplies
   * a defined DOS empty-list terminator/count, including an empty environment. */
- if(backup&&MK_FP(ds,dest)==backup&&ss==data_segment()&&so==(unsigned)runtime_arena)
-  memset(runtime_arena,0,count);
+ if(backup&&MK_FP(ds,dest)==backup&&ss==data_segment()&&so==(unsigned)runtime_arena){
+#if defined(ASPECT_EXTERNAL_UNWIND)
+  backup_valid=1;
+#endif
+  memset(runtime_arena,0,count);external_phase(EXTERNAL_ARENA);
+ }
 }
 void *__cdecl native_allocate(unsigned size)
 {
@@ -59,6 +80,7 @@ void *__cdecl native_allocate(unsigned size)
 #if defined(NATIVE_PROCESS_DIAGNOSTIC)
  ++native_owned_count;if(native_owned_count>native_owned_peak)native_owned_peak=native_owned_count;
 #endif
+ external_phase(EXTERNAL_NEAR);
  return item+1;
 failed:
  native_crt_error=12;native_dos_error=8;return 0;
@@ -71,14 +93,48 @@ void __far *__cdecl native_backup_alloc(unsigned size)
  if(size>sizeof(runtime_arena)-4)return 0;
  backup=_fmalloc(size+4);
  if(backup){backup_size=size+4;native_backup_extent=backup_size;}
+#if defined(ASPECT_EXTERNAL_UNWIND)
+ backup_valid=0;
+ if(backup){
+#if defined(NATIVE_PROCESS_DIAGNOSTIC)
+  ++native_far_owned;
+#endif
+  external_phase(EXTERNAL_BACKUP_ALLOC);
+ }
+#endif
  return backup;
 }
 void __cdecl native_backup_free(void __far *pointer)
-{ if(pointer){_ffree(pointer);if(pointer==backup){backup=0;backup_size=0;}} }
+{ if(pointer){_ffree(pointer);if(pointer==backup){backup=0;backup_size=0;
+#if defined(ASPECT_EXTERNAL_UNWIND)
+ backup_valid=0;
+#if defined(NATIVE_PROCESS_DIAGNOSTIC)
+ --native_far_owned;
+#endif
+#endif
+ }} }
 static void restore_arena(void)
 {
- if(backup){_fmemcpy((void __far *)runtime_arena,backup,backup_size);native_backup_free(backup);}
+ if(backup){
+#if defined(ASPECT_EXTERNAL_UNWIND)
+  if(backup_valid)
+#endif
+  _fmemcpy((void __far *)runtime_arena,backup,backup_size);native_backup_free(backup);
+ }
 }
+#if defined(ASPECT_EXTERNAL_UNWIND)
+unsigned __cdecl native_process_recover(void)
+{
+ if(!held.valid)return native_process_busy?NATIVE_PROCESS_STATE:0;
+ if(current_psp()!=held.psp)restore_psp(held.psp);
+ _dos_setvect(0,held.zero);_dos_setvect(0x23,held.brk);_dos_setvect(0x24,held.critical);
+ native_pair_low=held.pair_low;native_pair_high=held.pair_high;native_exec_active=0;
+ restore_arena();
+ while(allocations)native_release(allocations+1);
+ native_environment=0;native_process_busy=held.valid=0;
+ return owner_error?NATIVE_PROCESS_STATE:0;
+}
+#endif
 void __cdecl native_release(void *pointer)
 {
  struct allocation **at,*item;
@@ -172,11 +228,19 @@ static unsigned run(const char *path,const char *tail,
  memset(&local,0,sizeof(local));local.child_status=65535U;
  if(!environment)environment=environ;
  if(!validate(path,tail,environment,kind)){local.status=NATIVE_PROCESS_ARGUMENT;*result=local;return local.status;}
- native_process_busy=1;native_environment=environment;
+#if !defined(ASPECT_EXTERNAL_UNWIND)
+ native_process_busy=1;
+#endif
+ native_environment=environment;
  allocations=0;owner_error=0;backup=0;backup_size=0;
  arguments[0]=(char *)path;arguments[1]=(char *)tail;arguments[2]=0;
  psp=current_psp();zero=_dos_getvect(0);brk=_dos_getvect(0x23);critical=_dos_getvect(0x24);
+#if defined(ASPECT_EXTERNAL_UNWIND)
+ held.psp=psp;held.zero=zero;held.brk=brk;held.critical=critical;
+ held.pair_low=native_pair_low;held.pair_high=native_pair_high;held.valid=1;native_process_busy=1;
+#endif
  _dos_setvect(0,native_child_divide);
+ external_phase(EXTERNAL_PROCESS);
  /* Startup already releases maxalloc slack. Keep the near heap's capacity:
   * shrinking it can leave a sub-growth-quantum gap before a live far block,
   * making later fopen/malloc fail although all held owners remain valid.
@@ -187,6 +251,7 @@ static unsigned run(const char *path,const char *tail,
   else if(kind==2)child=(unsigned)native_spawn_search(0,path,arguments,environment);
   else child=(unsigned)native_spawn_extension(0,path,arguments,environment,kind);
   local.child_status=child;
+  external_phase(EXTERNAL_CHILD_RETURN);
   if(child==65535U)status=native_crt_error==12?NATIVE_PROCESS_MEMORY:NATIVE_PROCESS_EXEC;
  }
  local.crt_error=native_crt_error;local.dos_error=native_dos_error;
@@ -200,6 +265,9 @@ static unsigned run(const char *path,const char *tail,
  if(allocations){owner_error=1;while(allocations)native_release(allocations+1);}
  if(owner_error)status=NATIVE_PROCESS_STATE;
  native_environment=0;native_process_busy=0;
+#if defined(ASPECT_EXTERNAL_UNWIND)
+ held.valid=0;
+#endif
  local.status=status;*result=local;return status;
 }
 unsigned __cdecl native_process_run(const char *path,const char *tail,

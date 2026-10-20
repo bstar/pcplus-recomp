@@ -16,7 +16,9 @@ normal publication still requires the real parent and selected-resource leases.
 
 The [newer capability7 integration](ASPECT_PARENT_PROCESS.md) now supplies actual
 attached parent/selected-resource evidence in a separate build. Normal publication
-still requires complete nonlocal cleanup and the remaining original UI services.
+still requires the remaining original UI services and broader acceptance. The
+newer [foreground unwind proof](ASPECT_UNWIND.md) adds synchronous divide/abort/
+direct-jump recovery through actual owner lifetimes; its limits remain explicit.
 
 The [composed PROGRAM component](NATIVE_PROGRAM.md) now joins recovered process
 and display services with real UART ownership in eight actual DOS cases.
@@ -158,8 +160,10 @@ not reference the new handlers yet.
    parent/BBS input, plus Escape/timeout/error unwinding at the relevant boundaries.
    The experimental raw/local variant now supplies actual numbered-stream,
    buffered-ASX, local-frame, environment/settings, enumeration and subsequent
-   DOS compiler evidence. This does not complete selected ASIOv4 resources,
-   attached rendering or nonlocal faults during an owned external operation.
+   DOS compiler evidence. The later capability7 and foreground-unwind proofs
+   add actual selected ASIOv4 leases, attached rendering and synchronous faults
+   during ownership. Original macro/mouse/window/error-notice services and
+   broader views remain required.
 6. Publish all three runtime handlers only after these ownership paths have real
    implementations and application evidence. Then repeat the whole runtime,
    source compiler/EXECUTE, terminal handoff and intended BBS workflows. Partial

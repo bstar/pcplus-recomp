@@ -3,6 +3,11 @@
 #include "process_serial.h"
 #include <dos.h>
 #include <string.h>
+#if defined(ASPECT_EXTERNAL_UNWIND)
+#include "../aspect/external_unwind.h"
+#else
+#define external_phase(value) ((void)0)
+#endif
 extern unsigned char native_display_mode;
 extern unsigned native_display_viewport,native_display_cursor_start,native_display_cursor_end;
 extern unsigned native_crt_error,native_dos_error;
@@ -16,6 +21,9 @@ extern unsigned __cdecl program_ui_wait(void);
 extern unsigned __cdecl program_ui_key_available(void);
 unsigned native_program_busy,native_program_waiting;
 static unsigned key_status;
+#if defined(ASPECT_EXTERNAL_UNWIND)
+static struct {unsigned valid,mode,rows,columns,height,cursor,shape,save;} held;
+#endif
 static char wait_message[]="Press any key to continue ...";
 static unsigned interrupt_flag(void);
 #pragma aux interrupt_flag = "pushf" "pop ax" "and ax,0x200" value [ax] modify [];
@@ -29,6 +37,7 @@ static unsigned stack_segment(void);
 unsigned __cdecl native_program_wait_key(void)
 {
  union REGS in,out;unsigned status;
+ external_phase(EXTERNAL_WAIT_KEY);
  for(;;){
   if(aspect_serial_active){status=aspect_serial_poll();if(status){key_status=status;return 65535U;}}
   if(program_ui_key_available()){in.h.ah=0;int86(0x16,&in,&out);return out.x.ax;}
@@ -71,9 +80,15 @@ unsigned __cdecl native_program_execute(const char *program,const char *tail,
     !((rows==25&&(height==8||height==14||height==16))||
       ((rows==43||rows==50)&&height==8))){status=NATIVE_DISPLAY_STATE;goto display_rejected;}
  in.h.ah=3;in.h.bh=0;int86(0x10,&in,&out);cursor=out.x.dx;shape=out.x.cx;
+#if defined(ASPECT_EXTERNAL_UNWIND)
+ held.mode=mode;held.rows=rows;held.columns=columns;held.height=height;
+ held.cursor=cursor;held.shape=shape;held.save=save_screen;held.valid=1;
+#endif
  if(save_screen){status=native_display_capture();if(status)goto display_rejected;}
+ external_phase(EXTERNAL_VIEW);
  status=aspect_process_serial_pause();
  if(status){local.serial_status=status;local.status=NATIVE_PROGRAM_SERIAL;goto cleanup;}
+ external_phase(EXTERNAL_PAUSED);
  if(save_screen){program_ui_clear(7);program_ui_cursor(0x100);}
  /* Native PROGRAM clears errno before entering SYSTEM/spawnl. A previous
   * missing target must not become the next successful child's UI error. */
@@ -84,6 +99,7 @@ unsigned __cdecl native_program_execute(const char *program,const char *tail,
  /* Reclaim child-mutated UART/vector before any WAIT. Never lose queued
   * input to the original PROGRAM reset/uart_enable path's RBR discard. */
  local.serial_status=aspect_process_serial_resume();
+ external_phase(EXTERNAL_RESUMED);
  if(local.serial_status)local.status=NATIVE_PROGRAM_SERIAL;
  changed=native_display_probe()||native_display_mode!=mode||native_display_rows!=rows||
      native_display_columns!=columns||*(unsigned __far *)MK_FP(0x40,0x85)!=height;
@@ -96,6 +112,7 @@ unsigned __cdecl native_program_execute(const char *program,const char *tail,
   * consume this result when its actual renderer is bound. */
  if(!save_screen&&(changed||local.process.child_status==247))local.view_reset=1;
  if(wait&&!local.serial_status){
+  external_phase(EXTERNAL_WAIT);
   program_ui_wait_message=wait_message;
   native_display_viewport=(rows-1)<<8;key_status=0;native_program_waiting=1;
   local.wait_key=program_ui_wait();native_program_waiting=0;
@@ -105,6 +122,7 @@ unsigned __cdecl native_program_execute(const char *program,const char *tail,
   local.display_status=restore_mode(mode,rows,height);
   if(local.display_status){local.status=NATIVE_PROGRAM_DISPLAY;goto cleanup;}
   local.display_status=native_display_restore();
+  external_phase(EXTERNAL_VIEW_RETURN);
   if(local.display_status)local.status=NATIVE_PROGRAM_DISPLAY;
  }
  native_display_cursor_start=shape>>8;native_display_cursor_end=shape&255;
@@ -116,5 +134,28 @@ cleanup:
  /* Failed capture/pause must leave the owner's previous view intact. A
   * failed restore is explicit and retires storage; it is never success. */
  if(native_display_owned)native_display_discard();
+#if defined(ASPECT_EXTERNAL_UNWIND)
+ held.valid=0;
+#endif
  native_program_waiting=native_program_busy=0;*result=local;return local.status;
 }
+#if defined(ASPECT_EXTERNAL_UNWIND)
+unsigned __cdecl native_program_recover(unsigned *view_reset)
+{
+ unsigned status=0,changed;
+ if(view_reset)*view_reset=0;
+ if(!native_program_busy&&!held.valid)return 0;
+ if(aspect_process_serial_detached){status=aspect_process_serial_resume();if(status)status=NATIVE_PROGRAM_SERIAL;}
+ if(held.valid){
+  changed=native_display_probe()||native_display_mode!=held.mode||native_display_rows!=held.rows||
+   native_display_columns!=held.columns||*(unsigned __far *)MK_FP(0x40,0x85)!=held.height;
+  if(changed&&restore_mode(held.mode,held.rows,held.height))status=NATIVE_PROGRAM_DISPLAY;
+  if(native_display_owned&&native_display_restore())status=NATIVE_PROGRAM_DISPLAY;
+  if(!held.save&&changed&&view_reset)*view_reset=1;
+  native_display_cursor_start=held.shape>>8;native_display_cursor_end=held.shape&255;
+  program_ui_shape();program_ui_cursor(held.cursor);
+ }
+ native_display_discard();native_program_waiting=native_program_busy=held.valid=0;
+ return status;
+}
+#endif

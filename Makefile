@@ -1085,3 +1085,21 @@ test-aspect-parent-process: aspect-parent-process aspect-compiler-dos
 	python3 standalone/check_aspect_program_client.py
 test-aspect-parent-process-source: aspect-parent-process aspect-runner aspect-compiler-dos terminal
 	python3 standalone/check_aspect_parent_process_source.py
+
+# Explicit experimental foreground recovery; never replaces normal products.
+.PHONY: aspect-external-unwind test-aspect-external-unwind test-aspect-external-unwind-policy test-aspect-external-unwind-source
+aspect-external-unwind: aspect-parent-process
+	python3 standalone/build_aspect_process.py --fault-diagnostic
+test-aspect-external-unwind: aspect-external-unwind
+	python3 standalone/test_aspect_unwind_dos.py --kind D --kind A --kind F --kind L --control
+	python3 standalone/test_aspect_unwind_dos.py --phase 9 --kind D --port 2 --flow B
+	python3 standalone/test_aspect_unwind_dos.py --phase 6 --kind D --port 1 --flow S
+	python3 standalone/test_aspect_unwind_dos.py --phase 10 --kind D --port 2 --flow N
+test-aspect-external-unwind-policy:
+	python3 -c 'import sys; sys.path.insert(0,"standalone"); import build_aspect_process as p; p.main(p.ROOT/"standalone/aspect_process_diagnostic.c")'
+	python3 standalone/check_aspect_unwind_policy.py
+	python3 standalone/check_process_handles.py
+	python3 standalone/check_aspect_process_policy.py
+test-aspect-external-unwind-source: aspect-external-unwind aspect-runner aspect-compiler-dos terminal
+	python3 -c 'import sys; sys.path.insert(0,"standalone"); import build_aspect_process as p; p.main(p.ROOT/"standalone/aspect_process_diagnostic.c")'
+	python3 standalone/check_aspect_unwind_source.py

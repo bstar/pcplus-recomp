@@ -89,10 +89,12 @@ display assertions also pass; the old DISPLAY executable remains byte-identical.
 
 ## Remaining application work
 
-The production renderer, ASIOv4 parent callback lease, actual ASPECT VM/ASX
-continuation, owned script streams, directory/translation/settings leases,
-macro keyboard and mouse/window services still need composition. The diagnostic
-does not substitute ordinary C streams for completed ASPECT stream integration.
+This historical component proof uses ordinary C streams. The later
+[VM binding](ASPECT_PROCESS.md), [parent integration](ASPECT_PARENT_PROCESS.md)
+and [foreground unwind](ASPECT_UNWIND.md) supply actual ASPECT streams/ASX,
+selected resources, renderer leases and synchronous nonlocal recovery in separate
+experimental builds. Original macro keyboard, mouse/window and error-notice
+services still need composition before normal publication.
 Standard BIOS ROM font geometry is covered; arbitrary downloaded fonts, other
 adapters, original additional views and physical Wi-Fi modem timing remain open.
 The current terminal renderer still admits 80x25 mode3/page0. The new component

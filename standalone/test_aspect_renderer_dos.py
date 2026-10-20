@@ -431,8 +431,11 @@ buffer: times sample_end-sample db 0
  (OUT/'observer.asm').write_text(asm);subprocess.run(['nasm','-fbin',str(OUT/'observer.asm'),'-o',str(OUT/'RENDER.COM')],check=True)
  return (OUT/'RENDER.COM').read_bytes(),modes,policy_pairs,snapshots
 
-def adapter():
+def adapter(cpu=None):
  path=ROOT/'standalone/test_connection_dos.py';source=path.read_text()
+ if cpu:
+  assert cpu in ('8086','386') and source.count('cputype=386')==1
+  source=source.replace('cputype=386','cputype='+cpu)
  replacements={"out=ROOT/'build/connection-dos'/name":"out=RENDER_OUT/name",
  "checks['immediate_banner_not_dropped']=len(screen)==4000 and screen[:30:2]==b'FIRST BYTE SAFE'":"checks['actual_screen_snapshot']=len(screen)==4000",
  "if online:\n       line.append(byte)":"if online:\n       line.append(byte)\n       if RENDER_POST and not checks.get('renderer_post_sent') and RENDER_TRIGGER in line:\n        conn.sendall(RENDER_POST);checks['renderer_post_sent']=True"}

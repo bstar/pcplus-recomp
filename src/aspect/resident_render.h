@@ -61,5 +61,8 @@ unsigned __cdecl aspect_render_finish(void);
  * END rechecks the real view and retires the lease even on a failed probe. */
 unsigned __cdecl aspect_render_program_begin(unsigned save_screen);
 unsigned __cdecl aspect_render_program_end(unsigned view_reset);
+#if defined(ASPECT_EXTERNAL_UNWIND)
+unsigned __cdecl aspect_render_program_active(void);
+#endif
 #endif
 #endif
