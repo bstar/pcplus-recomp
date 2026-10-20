@@ -1,5 +1,13 @@
 # Modern BBS compatibility checkpoint
 
+The [composed candidate](enigma-combined.md) now passes seven actual DOS routes
+with keyboard, transfer ownership, save validation and both v86 changes installed
+together. Two reference peers additionally preserve an active upload through
+another client's cancel/retry, while earlier uploaded files remain unchanged.
+The [controlled-error checkpoint](enigma-v86-shutdown.md) retains actual guest
+file loss and validates deferred, atomic image persistence. Live deployment,
+physical acceptance and whole-application reconstruction remain open.
+
 The [v86 input candidate](enigma-v86-input.md) addresses the BRE reference
 burst stall. Actual traced and untraced reference routes and both DOS door
 regressions pass; live deployment and cumulative patch validation remain open.

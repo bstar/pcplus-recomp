@@ -6,7 +6,7 @@ from pathlib import Path
 import shutil
 import subprocess
 
-from enigma_key_stream_fixture import ROOT, owned, setup, pid, sha
+from enigma_key_stream_fixture import ROOT, owned, setup, pid, sha, reuse_stopped_base
 from enigma_search_fixture import parse
 
 
@@ -15,10 +15,14 @@ def state(path):
     return dict(inode=value.st_ino, bytes=value.st_size, mtime_ns=value.st_mtime_ns, sha256=sha(path))
 
 
-def prepare(candidate, server):
+def prepare(candidate, server, *, base_ready=False):
     candidate, server = owned(candidate), server.resolve()
     assert not pid(candidate)
-    setup(candidate)
+    assert not (candidate / 'v86-door-instance.json').exists()
+    if base_ready:
+        reuse_stopped_base(candidate)
+    else:
+        setup(candidate)
     modules = ['core/v86_door/' + name for name in ('v86_door.js', 'v86_worker.js', 'isolated_worker.js',
         'isolated_worker_child.js', 'fat_image.js')]
     modules += ['core/dropfile.js', 'core/door_util.js', 'mods/loc_main_menu/loc_main_menu.js',

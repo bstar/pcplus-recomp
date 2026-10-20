@@ -10,12 +10,12 @@ from pathlib import Path
 import shutil
 import subprocess
 
-from enigma_key_stream_fixture import owned, setup, pid
+from enigma_key_stream_fixture import owned, setup, pid, reuse_stopped_base
 from enigma_search_fixture import parse
 from enigma_notes_fixture import sha
 
 
-def prepare(candidate, server):
+def prepare(candidate, server, *, base_ready=False):
     candidate, server = owned(candidate), server.resolve()
     assert candidate != server and not pid(candidate)
     catalog = server / 'local/infocom/catalog.json'
@@ -30,7 +30,11 @@ def prepare(candidate, server):
     inputs = {p: sha(server / p) for p in modules}
     inputs['local/infocom/catalog.json'] = sha(catalog)
     inputs[str(story.relative_to(server))] = sha(story)
-    setup(candidate)
+    assert not (candidate / 'infocom-save-instance.json').exists()
+    if base_ready:
+        reuse_stopped_base(candidate)
+    else:
+        setup(candidate)
     for name in modules:
         target = candidate / name
         target.parent.mkdir(parents=True, exist_ok=True)

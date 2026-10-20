@@ -1,5 +1,15 @@
 # Full application reconstruction checklist
 
+The [combined ENiGMA record](validation/enigma-combined.json) accepts seven
+specific DOS workflows with five staged server patch families installed together:
+101 checks, 80 route-evidence corruptions and 12 cumulative corruptions. A
+two-reference-peer upload adds 22 checks; its audits reject 19 protocol/ownership
+and eight earlier-file preservation corruptions. Actual guest file loss on controlled
+input failure is retained; deferred image transfer/atomic persistence and modeled
+partial-write recovery pass cold DOS readback. All 31 DOS products and 566 source
+files remain unchanged. These are compatibility and server robustness results;
+they close no F01–F16 application gate or physical-modem requirement.
+
 The [Infocom save-edge record](validation/enigma-infocom-edges.json) retains an
 actual worker crash on malformed restore and validates a separate bounded,
 immutable save-read candidate. Its49 component checks pass; actual DOS routes

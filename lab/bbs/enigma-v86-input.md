@@ -1,5 +1,10 @@
 # DOS door burst-input compatibility
 
+The later [controlled shutdown checkpoint](enigma-v86-shutdown.md) addresses
+the image-transfer/flush ordering for controlled input errors and validates
+atomic-write failure recovery. The input-bridge observations below describe
+the earlier candidate before that additional stage.
+
 The earlier BRE reference stall is reproduced with a bounded UART observer in
 a fresh isolated fixture. All eight name bytes reach the guest UART in one
 synchronous call. The guest reads `L`; seven bytes remain pending with FIFO

@@ -1,5 +1,20 @@
 # Complete DOS rebuild plan
 
+The [combined checkpoint](lab/bbs/enigma-combined.md) installs five compatibility
+candidate families together and passes all seven DOS routes: 101 checks and 80
+damaged captures rejected, plus 12 cumulative evidence corruptions. Two reference
+peers pass 22 checks; their audits reject 19 protocol/ownership and eight preservation
+corruptions while earlier uploaded files retain their identity/content/
+catalog. No earlier test data is reset. The [shutdown checkpoint](lab/bbs/enigma-v86-shutdown.md)
+reproduces a completed guest file lost because the old parent finishes before
+image transfer. Deferred completion plus atomic publication passes cold guest
+readback, modeled partial-write failure and retry; audits reject 10/11/13 cases
+for baseline/fixed/fault evidence. Component coverage adds 15 atomic, 39 transfer,
+49 save-read and nine owned v86 registry/IPC checks. The
+[record](docs/validation/enigma-combined.json) binds all 31 unchanged products
+and 566 application source files. Live deployment, physical modems, abrupt
+crashes/power loss, every retry path and all full application gates remain open.
+
 The [v86 input checkpoint](lab/bbs/enigma-v86-input.md) reproduces BRE reading
 only the first byte of an eight-byte burst, leaving seven pending with the
 receive interrupt asserted. An explicit UART-consumption bridge passes 25

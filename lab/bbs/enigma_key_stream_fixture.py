@@ -107,6 +107,20 @@ def verify_running(candidate):
     return candidate / "logs/enigma-bbs.log"
 
 
+def reuse_stopped_base(candidate):
+    """Validate an explicitly composed fixture without repeating setup or DB copies."""
+    candidate = owned(candidate)
+    assert not pid(candidate), 'Composition requires a stopped instance'
+    metadata = json.loads((candidate / 'instance.json').read_text())
+    assert metadata['candidate'] == str(candidate)
+    assert metadata['address'] == '127.0.0.1' and metadata['port'] == PORT
+    for name, key in [('core/client.js', 'client_sha256'), ('core/key_stream.js', 'key_stream_sha256'),
+                      ('config/config.hjson', 'config_sha256')]:
+        assert sha(candidate / name) == metadata[key]
+    with sqlite3.connect(f'file:{candidate / "db/user.sqlite3"}?mode=ro', uri=True) as db:
+        assert {row[0] for row in db.execute('SELECT user_name FROM user')} == {'locadmin', 'loclab'}
+
+
 def start(candidate, private_tmp=False, cleanup_fault=False):
     assert not pid(candidate), "Owned instance already running"
     metadata = json.loads((candidate / "instance.json").read_text())
