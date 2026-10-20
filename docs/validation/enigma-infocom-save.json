@@ -1,0 +1,135 @@
+{
+  "passed": true,
+  "compatibility_complete": false,
+  "live_server_modified": false,
+  "physical_modem_validated": false,
+  "whole_application_gates_closed": [],
+  "terminal_sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+  "source_revision": "237cd9743d6978a940dd66db0e78f6ab8ccd3e37",
+  "source_inputs": {
+    "core/zmachine_door/zmachine_door.js": "d2022c7a7cb6cba4e3cc080bf912e9fdb2f0353d0d0a735f633df2cce729ee4b",
+    "core/zmachine_door/zmachine_worker.js": "2275e21da616c6af82a475b488cd3bfc9d6be65275b0ccfffeb40ebc4b4ebdd1",
+    "core/zmachine_door/save_dialog.js": "9524990c774e02c166672bbed9832ee3f70daa81137273b2f51bc2b8ad3551b5",
+    "local/infocom/catalog.json": "4eddecfbaf2f86e53c7d884bcfa65ffc00c3abaa78b5ddc0df3f9f6989c04202",
+    "local/infocom/games/07ba90fc9f214fba9532228a3c0ba1230eeeacf5b8dfad5d9d721762aaa5f9b4.z5": "07ba90fc9f214fba9532228a3c0ba1230eeeacf5b8dfad5d9d721762aaa5f9b4"
+  },
+  "fixture_inputs": {
+    "core/zmachine_door/zmachine_door.js": "d2022c7a7cb6cba4e3cc080bf912e9fdb2f0353d0d0a735f633df2cce729ee4b",
+    "core/zmachine_door/zmachine_worker.js": "2275e21da616c6af82a475b488cd3bfc9d6be65275b0ccfffeb40ebc4b4ebdd1",
+    "core/zmachine_door/save_dialog.js": "9524990c774e02c166672bbed9832ee3f70daa81137273b2f51bc2b8ad3551b5",
+    "local/infocom/07ba90fc9f214fba9532228a3c0ba1230eeeacf5b8dfad5d9d721762aaa5f9b4.z5": "07ba90fc9f214fba9532228a3c0ba1230eeeacf5b8dfad5d9d721762aaa5f9b4",
+    "config/menus/loc-main.hjson": "b7193b20a451fa3dc9bf427084ffe4f8119fb68754fb9c588b5cc5a810e7477f",
+    "config/config.hjson": "279b6570d398fb38ff937dccbdbdaa4d79f44d46ac2b421acd4ee4e85dd27b95",
+    "core/client.js": "8cb3b4c8d439e0c43a09d9caf87b69560b3df1b51de053d70f2dc9b6dc9ea31b",
+    "core/key_stream.js": "daaac4d679b8562bfcd69b7345b7ec203169ea0f319d8dccd19c23fce261f1b4"
+  },
+  "story_sha256": "07ba90fc9f214fba9532228a3c0ba1230eeeacf5b8dfad5d9d721762aaa5f9b4",
+  "story_version": 5,
+  "checks": {
+    "rooms_across_worker_restart": true,
+    "emitted_save_restore": true,
+    "two_worker_lifecycles": true,
+    "no_worker_errors": true,
+    "returned_to_menu": true,
+    "DOS_harness": true,
+    "unique_session": true,
+    "inputs_unchanged": true,
+    "no_post_saved": true,
+    "one_valid_story_save": true,
+    "synthetic_account_save_namespace": true
+  },
+  "negative_cases": [
+    {
+      "case": "missing-restored-room",
+      "rejected": true
+    },
+    {
+      "case": "missing-save-prompt",
+      "rejected": true
+    },
+    {
+      "case": "missing-restore-command",
+      "rejected": true
+    },
+    {
+      "case": "missing-second-game",
+      "rejected": true
+    },
+    {
+      "case": "missing-worker-stop",
+      "rejected": true
+    },
+    {
+      "case": "worker-error",
+      "rejected": true
+    },
+    {
+      "case": "missing-menu-return",
+      "rejected": true
+    },
+    {
+      "case": "empty-save",
+      "rejected": true
+    },
+    {
+      "case": "truncated-save",
+      "rejected": true
+    },
+    {
+      "case": "wrong-iff-size",
+      "rejected": true
+    },
+    {
+      "case": "wrong-story-identity",
+      "rejected": true
+    }
+  ],
+  "saved_files": [
+    {
+      "bytes": 434,
+      "sha256": "a96d3632d29daf2afa45a95208c23abc0d39eddc834915c0519a110ad2306c01"
+    }
+  ],
+  "sources": {
+    "lab/bbs/enigma_infocom_save_fixture.py": "efefd918bc14de396d6d9af461963ecec897a1e46a37375d0dafd916e1d97428",
+    "lab/bbs/enigma_infocom_save_dos.py": "3546e633d7fcccb44ea61781a073273fc8cc7c44a4947a5dce7f867980cf5a87",
+    "lab/bbs/check_enigma_infocom_save_audit.py": "b611fc318df079705a6e728ff523e5b1d17dc5dd2fa5e01c22f0a49fec9a372d",
+    "standalone/record_enigma_infocom_save.py": "99fe578b6b028b64617c365c36ab3fe26e2c84085c864b4d4933ac6c3b2798cd"
+  },
+  "evidence": {
+    "build/bbs-lab/results/enigma/infocom-save-dos-20261019-02/infocom-save-checks.json": "29564092c6f3410e43ef0b6d1a285eba3e48ee9d8e84703c6effc8b83fe3a283",
+    "build/bbs-lab/results/enigma/infocom-save-dos-20261019-02/save-audit-negative-checks.json": "56e69f62e26ac1f258026f407dbb4923edf58bcf29277a93b526ae22c087ae3b",
+    "build/bbs-lab/results/enigma/infocom-save-dos-20261019-02/display.bin": "5a36905a705747d22a92cc8a36cc1d73ef0d6488f9ce7a6ece28aef74611b4b6",
+    "build/bbs-lab/results/enigma/infocom-save-dos-20261019-02/bbs-sent.bin": "cdd12ef6ba8cb8b495f84aba20c8c3ea4657ff0e2f03d9f6e5457148c50d5fd6",
+    "build/bbs-lab/results/enigma/infocom-save-dos-20261019-02/server-session.jsonl": "ca2905dedc223c9b078440f11c29b243c72a43dc6f8de600d29f7224f59d1956",
+    "build/bbs-lab/infocom-save-20261019-02/candidate/infocom-save-instance.json": "08e462c3d47de5540be56fec89b78304fa154e7ab6c55249d8a8591dad03fdad"
+  },
+  "scope": "Exact owned door/worker/dialog, local story copy, synthetic account and direct ZORK menu. No live writes or saved games copied; not live custom menu acceptance. Actual source-built DOS terminal, immediate modeled modem, two worker lifetimes. No physical modem claim.",
+  "limitations": [
+    "One story/release, exact owned door code on an isolated stock-base instance with the staged decoder.",
+    "Direct synthetic ZORK route; live custom library/menu and live saves are untouched.",
+    "No overwrite/cancel/invalid-save or full playthrough coverage.",
+    "Live decoder deployment, other doors, physical modem and full application gates remain open."
+  ],
+  "retained_failed_attempt": {
+    "checks": {
+      "rooms_across_worker_restart": false,
+      "emitted_save_restore": true,
+      "two_worker_lifecycles": true,
+      "no_worker_errors": true,
+      "returned_to_menu": true,
+      "DOS_harness": true,
+      "unique_session": true,
+      "inputs_unchanged": true,
+      "no_post_saved": true,
+      "one_valid_story_save": true,
+      "synthetic_account_save_namespace": true
+    },
+    "evidence": {
+      "build/bbs-lab/results/enigma/infocom-save-dos-20261019-01/infocom-save-checks.json": "c100b683f87366877bb1364b45640d98297fdab9079798b75bbd11f3f6a64a0e",
+      "build/bbs-lab/results/enigma/infocom-save-dos-20261019-01/runner-attempt.py": "49570274a5c662caefcecb8ce5c433ba072d91070cf513af9f75f40e232f9b43",
+      "build/bbs-lab/results/enigma/infocom-save-dos-20261019-01/display.bin": "c848bec2d6294459d2a107a3ff6294f963c2ec999997d62165dc9cc65a4605fa"
+    },
+    "reason": "Incorrect SOUTH-to-West route assertion; corrected recipe rerun in a fresh instance."
+  }
+}

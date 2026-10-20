@@ -18,7 +18,12 @@ paging, Zork I entry, LOOK/NORTH/LOOK responses, matching worker startup/shutdow
 and return through Doors to Main. Eight independently corrupted captures reject;
 existing probe saves remain unchanged. DOS SAVE/RESTORE, Global War/Barren
 Realms Elite, the live decoder correction and physical modem acceptance remain
-open. This is additional validation, not completion of the full application.
+open. The separate [isolated DOS SAVE/RESTORE](lab/bbs/enigma-infocom-save.md)
+now passes11 checks across two worker lifetimes with the exact owned door code,
+valid Quetzal/story identity and synthetic account namespace;11 evidence
+corruptions reject. This uses a direct test menu and isolated saves, so live
+library-route SAVE/RESTORE remains open. This is additional validation, not
+completion of the full application.
 
 The [isolated exact game-details fixture](lab/bbs/enigma-notes.md) now covers
 the owned module with synthetic DIZ/NFO data. Original Client replay yields164

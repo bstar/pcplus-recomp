@@ -50,7 +50,13 @@ Zork story. It failed before connecting, and is retained separately. The driver
 now uses the catalog's actual contained path, version and SHA-256.
 
 This workflow covers one story's entry, input and clean return. It does not
-establish full playthrough compatibility, SAVE/RESTORE from DOS, Global War or
+establish full playthrough compatibility, live SAVE/RESTORE, Global War or
 Barren Realms Elite behavior, corrected NFO/editor key decoding, or physical
 RS-232 modem operation. The [ENiGMA acceptance matrix](../../docs/ENIGMA_COMPATIBILITY.md)
 and full application gates remain authoritative.
+
+The separate [isolated DOS SAVE/RESTORE workflow](enigma-infocom-save.md) now
+passes11 checks across two worker lifetimes with the exact owned door code.
+It validates an actual Quetzal save and restored location, with11 rejected
+evidence corruptions. It uses a direct synthetic menu route and isolated save
+namespace; the live library route and saved games remain untouched.
