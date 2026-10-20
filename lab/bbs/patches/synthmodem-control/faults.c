@@ -8,9 +8,9 @@
 #undef write
 #undef read
 
-static unsigned char input[8192], output[16384];
+static unsigned char input[8192], output[131072];
 static size_t input_len, output_len, write_limit;
-static int inject_errno, zero_write;
+static int inject_errno, zero_write, fail_after;
 ssize_t modeled_read(int fd, void *buf, size_t len) {
     (void)fd;
     if (len > input_len) len = input_len;
@@ -20,6 +20,8 @@ ssize_t modeled_read(int fd, void *buf, size_t len) {
 }
 ssize_t modeled_write(int fd, const void *buf, size_t len) {
     (void)fd;
+    if (fail_after == 0) { fail_after = -1; errno = EAGAIN; return -1; }
+    if (fail_after > 0) fail_after--;
     if (inject_errno) { errno = inject_errno; inject_errno = 0; return -1; }
     if (zero_write) return 0;
     if (len > write_limit) len = write_limit;
@@ -30,7 +32,7 @@ ssize_t modeled_write(int fd, const void *buf, size_t len) {
 static void reset(void) {
     memset(&S, 0, sizeof(S)); S.pty_fd = 51; S.host_control_fd = 50;
     input_len = output_len = 0; write_limit = sizeof(output);
-    inject_errno = zero_write = 0;
+    inject_errno = zero_write = 0; fail_after = -1;
 }
 static void frame(unsigned char type, const void *data, size_t len) {
     wire_encode_header(input + input_len, type, (uint16_t)len);
@@ -55,9 +57,11 @@ static int short_write_defect(void) {
 int main(void) {
 #ifndef FIXED
     int parser = parser_defect(), short_write = short_write_defect();
-    printf("{\"stock_parser_corruption\":%s,\"stock_short_write_loss\":%s}\n",
-           parser ? "true" : "false", short_write ? "true" : "false");
-    return !(parser && short_write);
+    reset(); write_limit = 1; fail_after = 1;
+    int reverse = wire_write(S.host_control_fd, WIRE_TYPE_DATA_RX, "DATA", 4) < 0 && output_len == 1;
+    printf("{\"stock_parser_corruption\":%s,\"stock_short_write_loss\":%s,\"stock_reverse_frame_truncated\":%s}\n",
+           parser ? "true" : "false", short_write ? "true" : "false", reverse ? "true" : "false");
+    return !(parser && short_write && reverse);
 #else
     if (parser_defect() || short_write_defect()) return 1;
     unsigned checks = 2;
@@ -92,6 +96,46 @@ int main(void) {
     /* Host output records the real status/AT response. No queued bytes may
      * survive into a newly entered command-mode session. */
     if (handle_pty_readable() < 0 || S.data_mode || pty_busy()) return 12;
+    checks++;
+    for (int error = 0; error < 3; error++) {
+        reset();
+        if (wire_write(S.host_control_fd, WIRE_TYPE_DATA_RX, "ABCDEFG", 7) < 0) return 13;
+        write_limit = 1;
+        if (flush_host() < 0 || output_len != 1) return 14;
+        inject_errno = error == 0 ? EINTR : error == 1 ? EAGAIN : EWOULDBLOCK;
+        if (flush_host() < 0 || output_len != 1 || !host_busy()) return 15;
+        if (wire_write(S.host_control_fd, WIRE_TYPE_DATA_RX, "HI", 2) < 0) return 16;
+        while (host_busy()) if (flush_host() < 0) return 17;
+        static const unsigned char want[] = {8,0,0x15,'A','B','C','D','E','F','G',3,0,0x15,'H','I'};
+        if (output_len != sizeof(want) || memcmp(output, want, sizeof(want))) return 18;
+        checks++;
+    }
+    for (int error = 0; error < 2; error++) {
+        reset();
+        if (wire_write(S.host_control_fd, WIRE_TYPE_DATA_RX, "XYZ", 3) < 0) return 19;
+        if (error) inject_errno = EPIPE; else zero_write = 1;
+        if (flush_host() >= 0 || !S.host_tx_failed || !host_busy()) return 20;
+        checks++;
+    }
+    reset();
+    unsigned char maximum[WIRE_MAX_PAYLOAD] = {0};
+    for (unsigned i = 0; i < 16; i++)
+        if (wire_write(S.host_control_fd, WIRE_TYPE_DATA_RX, maximum, sizeof(maximum)) < 0) return 21;
+    size_t full = S.host_tx_len;
+    if (wire_write(S.host_control_fd, WIRE_TYPE_DATA_RX, "X", 1) >= 0 ||
+        !S.host_tx_failed || S.host_tx_len != full || output_len) return 22;
+    checks++;
+    reset();
+    for (unsigned i = 0; i < 16; i++)
+        if (wire_write(S.host_control_fd, WIRE_TYPE_DATA_RX, maximum, sizeof(maximum)) < 0) return 23;
+    unsigned char original[65536]; memcpy(original, S.host_tx, sizeof(original));
+    write_limit = 4096;
+    if (flush_host() < 0 || output_len != 4096) return 24;
+    if (wire_write(S.host_control_fd, WIRE_TYPE_DATA_RX, "TAIL", 4) < 0 || S.host_tx_at) return 25;
+    while (host_busy()) if (flush_host() < 0) return 26;
+    static const unsigned char tail[] = {5,0,0x15,'T','A','I','L'};
+    if (output_len != sizeof(original) + sizeof(tail) || memcmp(output, original, sizeof(original)) ||
+        memcmp(output + sizeof(original), tail, sizeof(tail))) return 27;
     checks++;
     printf("{\"passed\":true,\"fault_cases\":%u}\n", checks);
     return 0;

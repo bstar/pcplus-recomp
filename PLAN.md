@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+The [bidirectional control-helper checkpoint](lab/bbs/patches/synthmodem-control/README.md)
+adds bounded atomic host frames and nonblocking reverse writes. Sixteen fault
+cases and12 real-PTY checks pass, including262147 forward/1048579 reverse exact
+bytes, opposite-direction progress during a stall, queue compaction and signal
+exit with both directions backpressured. Stock reverse-header truncation is
+reproduced separately. VM/prebuilts and services remain unchanged; Node/DSP
+pressure propagation, VM integration and physical acceptance are still open.
+
 The [SynthModem control-helper candidate](lab/bbs/patches/synthmodem-control/README.md)
 reproduces stock coalesced-frame payload corruption and short-write loss. Its
 source patch passes9 fault cases and7 actual Linux PTY checks, including262147

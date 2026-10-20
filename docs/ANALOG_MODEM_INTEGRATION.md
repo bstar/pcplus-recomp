@@ -92,6 +92,23 @@ Links below pin the reviewed source; future versions require rechecking.
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
 
+## Bidirectional helper backpressure checkpoint
+
+The [control-helper candidate](../lab/bbs/patches/synthmodem-control/README.md)
+now queues complete reverse header/payload frames into a fixed65536-byte buffer.
+PTY reads pause while host output is pending, with opposite-direction service
+kept live. Partial headers, EINTR/EAGAIN, queue compaction, capacity exhaustion
+and fatal writes are covered by16 fault cases. Twelve real-PTY checks pass:
+262147 exact forward bytes,1048579 exact reverse bytes, stalled readers and
+responsive shutdown with both outputs pending. The
+[receipt](validation/synthmodem-control-reverse.json) also retains an independently
+reproduced stock truncated-header failure and exact fixture comparisons.
+
+This extends the earlier one-direction checkpoint below. The VM image/prebuilt,
+installed services, DOS application and Telnet candidate remain unchanged.
+Node/DSP pressure propagation and a rebuilt-VM end-to-end test remain required
+before hardware acceptance; these host tests do not exercise SIP or modem audio.
+
 ## Control-helper backpressure checkpoint
 
 [An isolated control-helper source candidate](../lab/bbs/patches/synthmodem-control/README.md)
@@ -103,9 +120,10 @@ reads pause until it drains. Hangup guards remain serviced, and observed carrier
 loss clears queued session bytes before further output. The
 [receipt](validation/synthmodem-control.json) records the Nix GCC host build.
 
-This does not complete backpressure support. The reverse host-output path still
-needs queued recovery; PjsipBackend/CallSession ignore stream-write pressure, and
-the native DSP write interface supplies no flow credit. No VM image/prebuilt,
+The initial checkpoint left reverse host-output recovery open; the bidirectional
+checkpoint above addresses it. Backpressure support remains incomplete because
+PjsipBackend/CallSession ignore stream-write pressure and the native DSP write
+interface supplies no flow credit. No VM image/prebuilt,
 installed bridge, application, BBS or hardware was changed. Rebuild/integration
 and end-to-end tests remain required; earlier proxy/BBS receipts retain their
 unchanged candidate identity and do not test this new helper.

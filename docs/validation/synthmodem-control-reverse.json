@@ -1,0 +1,107 @@
+{
+  "passed": true,
+  "upstream_revision": "b1752e4d0039e0cff72735924e03aa99922723a8",
+  "upstream_sha256": {
+    "modemd-ctrl.c": "95d30103668f3e4e894136a81841a2be64ebcddcaef8e2afb58bdb2b326a3385",
+    "wire.h": "6d978be175e76f64c3bd7ddf21db39379759f2097f699050cb229d206c832b0d"
+  },
+  "lab_input_sha256": {
+    "control.patch": "752bfef57ec7ae4dbffa819603900e94a6b5181be6c46a3c2f91aba1e0094e4e",
+    "faults.c": "bf5db1532ab604b9ef867088ce5cf2ab8221e6d5d343520674ca07730bd395ab",
+    "check.py": "e6c224ee9787e51d7adefd1f1d0453560e3cc9691ba64cf0908c86a2e1bd3151",
+    "README.md": "d11050b8dff9f429a214154c5e76041ef8f9e522b4a1c329bd2c7f0d011acdde"
+  },
+  "candidate_sha256": "1c53545face2598c741403dc5a7a9b365893e27091cfaf90777a70fde6d6b53f",
+  "host_executable_sha256": "81979b624de042f7d62164bccbac7209d149fad932a2249760559eba5dfb6a91",
+  "gcc": "gcc (GCC) 15.3.0",
+  "reports": {
+    "stock": {
+      "stock_parser_corruption": true,
+      "stock_short_write_loss": true,
+      "stock_reverse_frame_truncated": true
+    },
+    "candidate": {
+      "passed": true,
+      "fault_cases": 16
+    },
+    "actual_PTY": {
+      "passed": true,
+      "checks": {
+        "coalesced_AT_payload_and_CR_order": true,
+        "host_sender_backpressured": true,
+        "full_binary_payload_exact": true,
+        "writer_completed": true,
+        "paused_host_backpressures_PTY_writer": true,
+        "opposite_direction_live_during_host_stall": true,
+        "reverse_payload_exact": true,
+        "reverse_writer_completed": true,
+        "PTY_read_serviced_during_hangup_guard": true,
+        "hangup_bytes_and_guards": true,
+        "both_directions_stalled_before_signal": true,
+        "signal_responsive_with_both_outputs_pending": true
+      },
+      "payload_size": 262147,
+      "payload_sha256": "e8b225397fcc2e3120be1f8355ea9bd59fe95acf2851b5d2a538524f9813d904",
+      "reverse_payload_size": 1048579,
+      "reverse_payload_sha256": "7d2cacea0e70b5043e18887a0ab05359d0e6ef3c45cc561349c31447e090bf31",
+      "scope": "Actual host-built helper process, Linux raw PTY and Unix control socket. No VM, slmodemd, DSP, SIP/audio or DOS."
+    }
+  },
+  "commands": [
+    [
+      "gcc",
+      "-std=gnu11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O2",
+      "-I/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-control-reverse-03/stock/vm/ctrl",
+      "/home/bstar/projects/pcplus-recomp/lab/bbs/patches/synthmodem-control/faults.c",
+      "-o",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-control-reverse-03/stock-faults"
+    ],
+    [
+      "gcc",
+      "-DFIXED",
+      "-std=gnu11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O2",
+      "-I/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-control-reverse-03/candidate/vm/ctrl",
+      "/home/bstar/projects/pcplus-recomp/lab/bbs/patches/synthmodem-control/faults.c",
+      "-o",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-control-reverse-03/candidate-faults"
+    ],
+    [
+      "gcc",
+      "-std=gnu11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O2",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-control-reverse-03/candidate/vm/ctrl/modemd-ctrl.c",
+      "-o",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-control-reverse-03/control-helper"
+    ]
+  ],
+  "limits": [
+    "Host build only; VM images/prebuilts unchanged.",
+    "Node/DSP pressure propagation, VM integration and physical modem acceptance remain open."
+  ],
+  "cohort": "synthmodem-control-reverse-03",
+  "toolchain_sha256": {
+    "nix/flake.nix": "7f069dd8346be02006737101a2790b99a881411fa75b657316f75b090816c15f",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+    "tools/bbs-dev": "8b612f697c23466c10f48f31370afa469dce4331e5af6aca971f4fecf34388fa"
+  },
+  "application_changed": false,
+  "VM_image_changed": false,
+  "installed_services_changed": false,
+  "independent_payload_audit": {
+    "passed": true,
+    "forward_size": 262147,
+    "reverse_size": 1048579,
+    "method": "Read saved bytes and compare independently reconstructed deterministic fixtures."
+  }
+}

@@ -1,9 +1,12 @@
 --- a/vm/ctrl/modemd-ctrl.c
 +++ b/vm/ctrl/modemd-ctrl.c
-@@ -117,6 +117,12 @@
+@@ -117,6 +117,15 @@
  struct ctrl_state {
      int pty_fd;             /* slmodemd's PTY (/dev/ttySL0 typically)  */
      int host_control_fd;    /* virtio-serial chardev or unix socket    */
++    uint8_t host_tx[65536];
++    size_t host_tx_at, host_tx_len;
++    bool host_tx_failed;
 +
 +    /* One accepted frame plus optional AT CR. Stop host reads while pending. */
 +    uint8_t pty_tx[WIRE_MAX_PAYLOAD + 1];
@@ -13,7 +16,77 @@
  
      bool data_mode;         /* false = AT mode, true = data mode       */
  
-@@ -207,7 +213,10 @@
+@@ -158,37 +167,41 @@
+  * modemd-ctrl has no linker dependency on any sibling object file.
+  * ────────────────────────────────────────────────────────────────── */
+ 
++static int host_busy(void) { return S.host_tx_at < S.host_tx_len; }
++
++static int flush_host(void) {
++    if (!host_busy()) return 0;
++    ssize_t n = write(S.host_control_fd, S.host_tx + S.host_tx_at,
++                      S.host_tx_len - S.host_tx_at);
++    if (n < 0 && (errno == EAGAIN || errno == EWOULDBLOCK || errno == EINTR)) return 0;
++    if (n <= 0) { S.host_tx_failed = true; LOGE("Host write failed"); return -1; }
++    S.host_tx_at += (size_t)n;
++    if (!host_busy()) S.host_tx_at = S.host_tx_len = 0;
++    return 0;
++}
++
+ static int wire_write(int fd, uint8_t type, const void *payload, size_t len) {
+-    if (len > WIRE_MAX_PAYLOAD) {
+-        LOGE("wire_write: payload too large (%zu > %d)", len, WIRE_MAX_PAYLOAD);
++    if (S.host_tx_failed || fd != S.host_control_fd || len > WIRE_MAX_PAYLOAD) {
++        S.host_tx_failed = true;
+         return -1;
+     }
+-    uint8_t header[WIRE_HEADER_SIZE];
+-    wire_encode_header(header, type, (uint16_t)len);
+-
+-    /* Two sequential write()s. This briefly leaves the stream in a
+-     * half-frame state between them, which is safe because we're the
+-     * only writer on this fd. */
+-    size_t written = 0;
+-    while (written < WIRE_HEADER_SIZE) {
+-        ssize_t n = write(fd, header + written, WIRE_HEADER_SIZE - written);
+-        if (n < 0) {
+-            if (errno == EINTR) continue;
+-            LOGE("wire_write: header write failed: %s", strerror(errno));
+-            return -1;
+-        }
+-        written += (size_t)n;
+-    }
+-    written = 0;
+-    while (written < len) {
+-        ssize_t n = write(fd, (const uint8_t *)payload + written, len - written);
+-        if (n < 0) {
+-            if (errno == EINTR) continue;
+-            LOGE("wire_write: payload write failed: %s", strerror(errno));
+-            return -1;
+-        }
+-        written += (size_t)n;
+-    }
++    /* Complete frames are admitted atomically. Callers that emit status from
++     * a void processor cannot hide a failure: main checks the sticky flag. */
++    size_t keep = S.host_tx_len - S.host_tx_at;
++    size_t required = WIRE_HEADER_SIZE + len;
++    if (required > sizeof(S.host_tx) - keep) {
++        S.host_tx_failed = true;
++        LOGE("Host frame queue exhausted");
++        return -1;
++    }
++    if (required > sizeof(S.host_tx) - S.host_tx_len) {
++        memmove(S.host_tx, S.host_tx + S.host_tx_at, keep);
++        S.host_tx_at = 0;
++        S.host_tx_len = keep;
++    }
++    wire_encode_header(S.host_tx + S.host_tx_len, type, (uint16_t)len);
++    memcpy(S.host_tx + S.host_tx_len + WIRE_HEADER_SIZE, payload, len);
++    S.host_tx_len += required;
+     return 0;
+ }
+ 
+@@ -207,7 +220,10 @@
      }
      if (*buf_len < (size_t)WIRE_HEADER_SIZE + plen) return 0;
      *out_type    = type;
@@ -25,7 +98,19 @@
      *out_plen    = plen;
      size_t consumed = WIRE_HEADER_SIZE + plen;
      memmove(buf, buf + consumed, *buf_len - consumed);
-@@ -744,6 +753,57 @@
+@@ -272,6 +288,11 @@
+                 }
+                 strncpy(addr.sun_path, path, sizeof(addr.sun_path) - 1);
+                 if (connect(fd, (struct sockaddr *)&addr, sizeof(addr)) == 0) {
++                    int flags = fcntl(fd, F_GETFL);
++                    if (flags < 0 || fcntl(fd, F_SETFL, flags | O_NONBLOCK) < 0) {
++                        close(fd);
++                        return -1;
++                    }
+                     LOGI("connected to %s (fd=%d)", path, fd);
+                     return fd;
+                 }
+@@ -744,6 +765,57 @@
   * Poll loop handlers
   * ────────────────────────────────────────────────────────────────── */
  
@@ -83,7 +168,7 @@
  static int handle_pty_readable(void) {
      uint8_t buf[512];
      ssize_t n = read(S.pty_fd, buf, sizeof(buf));
-@@ -765,10 +825,38 @@
+@@ -765,10 +837,38 @@
       * splitting transition lines from preceding/following bytes,
       * emit MODEM_STATUS, and flip data_mode. They never call back
       * into the poll loop. */
@@ -97,7 +182,7 @@
 +        LOGI("Discarding queued session data after carrier loss");
 +        S.pty_tx_at = S.pty_tx_len = 0;
 +    }
-+    return 0;
++    return S.host_tx_failed ? -1 : 0;
 +}
 +
 +static int dispatch_host_frames(void) {
@@ -122,7 +207,7 @@
      }
      return 0;
  }
-@@ -791,65 +879,7 @@
+@@ -791,65 +891,7 @@
      }
      S.ctrl_rx_len += (size_t)n;
  
@@ -189,26 +274,29 @@
  }
  
  /* ──────────────────────────────────────────────────────────────────────
-@@ -942,40 +972,47 @@
+@@ -942,40 +984,53 @@
      S.data_mode    = false;
      S.ctrl_rx_len  = 0;
  
 +    int status = 0;
      while (!g_quit) {
-+        if (progress_hangup() < 0 || dispatch_host_frames() < 0) { status = 1; break; }
++        if (S.host_tx_failed || progress_hangup() < 0 || dispatch_host_frames() < 0) { status = 1; break; }
          struct pollfd pfds[2];
          int nfds = 0;
  
          pfds[nfds].fd     = S.host_control_fd;
 -        pfds[nfds].events = POLLIN;
-+        pfds[nfds].events = (!pty_busy() && !S.hangup_phase) ? POLLIN : 0;
++        pfds[nfds].events = ((!pty_busy() && !S.hangup_phase) ? POLLIN : 0) |
++                             (host_busy() ? POLLOUT : 0);
          int idx_ctrl = nfds++;
  
          int idx_pty = -1;
          if (S.pty_fd >= 0) {
              pfds[nfds].fd     = S.pty_fd;
 -            pfds[nfds].events = POLLIN;
-+            pfds[nfds].events = POLLIN | (pty_busy() ? POLLOUT : 0);
++            /* One PTY input batch at a time bounds status/frame expansion.
++             * Keep PTY writes enabled independently of host-output pressure. */
++            pfds[nfds].events = (!host_busy() ? POLLIN : 0) | (pty_busy() ? POLLOUT : 0);
              idx_pty = nfds++;
          }
  
@@ -227,6 +315,9 @@
 -        }
 +        if ((pfds[idx_ctrl].revents & (POLLERR | POLLNVAL)) ||
 +            (idx_pty >= 0 && (pfds[idx_pty].revents & (POLLERR | POLLNVAL)))) { status = 1; break; }
++        if (pfds[idx_ctrl].revents & POLLOUT) {
++            if (flush_host() < 0) { status = 1; break; }
++        }
 +        /* Observe carrier/mode transitions before writing pending data. */
          if (idx_pty >= 0 &&
              (pfds[idx_pty].revents & (POLLIN | POLLHUP))) {
