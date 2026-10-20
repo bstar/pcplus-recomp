@@ -1,0 +1,161 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/program_ui/scroll.asm",
+      "start": 28380,
+      "end": 28405,
+      "file_offset": 32988,
+      "bytes": 25,
+      "sha256": "030b69e0c6597681f4d67663a739e8edf5d5ef943b7ac556ee5114d97283d8d1",
+      "rea_evidence_id": "ev_ffd65f233a2e54384a79094fd3e2b02c466283e2f6ba67695998ed25a1e437d2"
+    },
+    {
+      "file": "reconstruction/program_ui/text.asm",
+      "start": 27632,
+      "end": 27679,
+      "file_offset": 32240,
+      "bytes": 47,
+      "sha256": "b7316b90d4d2929a9485278892dca5718a0c0551d7c40613f7435e557c0a16f0",
+      "rea_evidence_id": "ev_7a855c10a4c0c0225f2d8755da435fd866ab3fa515e76e3754759ad2d8ec85d9"
+    },
+    {
+      "file": "reconstruction/program_ui/cell_offset.asm",
+      "start": 32258,
+      "end": 32270,
+      "file_offset": 36866,
+      "bytes": 12,
+      "sha256": "2f6af5067d295e49ffc695ccab98323358719eda2ea5e33efb4e012f763a6a76",
+      "rea_evidence_id": "ev_61617a2badc25bbbb4df6a41a6b0e803c1fc6caa25dd7d88e6533cd59addbcb8"
+    },
+    {
+      "file": "reconstruction/program_ui/cursor.asm",
+      "start": 28280,
+      "end": 28354,
+      "file_offset": 32888,
+      "bytes": 74,
+      "sha256": "743e345fcdb471636b2dbbb1c007f1daf3db6fc552104c2d1b7e00aeb60cb847",
+      "rea_evidence_id": "ev_a2fb1ff9b02353e7bd8644d794ccf1b8903bab67ef17b1e5912b894f5377cfab"
+    },
+    {
+      "file": "reconstruction/program_ui/cursor_shape.asm",
+      "start": 32344,
+      "end": 32369,
+      "file_offset": 36952,
+      "bytes": 25,
+      "sha256": "de802fd846d4032fdfd13e6897a69544fa736996d5ee2bc8d8225d6fb61ad250",
+      "rea_evidence_id": "ev_5c28076319840c1fa7eb355a79cee6b12183fbe1a3ff8fa45d6829ca17ed3b7a"
+    },
+    {
+      "file": "reconstruction/program_ui/cursor_policy_one.asm",
+      "start": 28106,
+      "end": 28125,
+      "file_offset": 32714,
+      "bytes": 19,
+      "sha256": "64da9d24154f1b20e9e1ae07c98d0ec0802a01367b7edc291be9528b96745351",
+      "rea_evidence_id": "ev_546019b7d72bdf5139df8ad4be8181564defc5a6441cdfd3af32834c6877b1ab"
+    },
+    {
+      "file": "reconstruction/program_ui/cursor_policy_zero.asm",
+      "start": 28250,
+      "end": 28262,
+      "file_offset": 32858,
+      "bytes": 12,
+      "sha256": "7995e95e734d0e93a0b95b4c402fb887bafbe6c38d60ec9e1269a6c8e3f789fa",
+      "rea_evidence_id": "ev_d84cc0a0bdf0394ba410f0a38c01c135ea9d52837fe105f1785b4ef29e067698"
+    },
+    {
+      "file": "reconstruction/program_ui/mode.asm",
+      "start": 28478,
+      "end": 28511,
+      "file_offset": 33086,
+      "bytes": 33,
+      "sha256": "7b0debb6a93ede1f369a110021b119710d9ba7fae9f8883b6660adbc4b5bf0e5",
+      "rea_evidence_id": "ev_a795f64b2b71fadddc43be729f8b5026037c55863fdc20acc960f7ee17a61808"
+    },
+    {
+      "file": "reconstruction/program_ui/scanlines.asm",
+      "start": 32488,
+      "end": 32527,
+      "file_offset": 37096,
+      "bytes": 39,
+      "sha256": "32e24731e5ac62462f780e4c146c1b30493107f8530f43aef156115ee392db6c",
+      "rea_evidence_id": "ev_21963e9641710a1036aefa13133fa557c5940a91ae37e13c532e05a7fc373f01"
+    },
+    {
+      "file": "reconstruction/program_ui/cursor_eight.asm",
+      "start": 32555,
+      "end": 32585,
+      "file_offset": 37163,
+      "bytes": 30,
+      "sha256": "bee8df1a5384a54cfa66c9bd89baaa6a90caa1682161a804cf4f50cdccf26c43",
+      "rea_evidence_id": "ev_b16d3fe8d678c41a171c1421e3c84cb139a6a21c77d7a6f44bbe232d111618b4"
+    },
+    {
+      "file": "reconstruction/program_ui/fill.asm",
+      "start": 27680,
+      "end": 27722,
+      "file_offset": 32288,
+      "bytes": 42,
+      "sha256": "08ea48781227a85522ff2a3f6938525b9f5d52ca6f12b262cd167949e39b7e00",
+      "rea_evidence_id": "ev_5f62f3eeb0e8d32b850bc47c1c01e71001704e22b3a8d108ce8940da944038c8"
+    },
+    {
+      "file": "reconstruction/program_ui/clear.asm",
+      "start": 28512,
+      "end": 28534,
+      "file_offset": 33120,
+      "bytes": 22,
+      "sha256": "63ba1d28cb8b7de0c14c09f349591c0004cc8bf3cb2f80eed6af9538ee9b69e2",
+      "rea_evidence_id": "ev_1da121e4e8d7e7ec9fb6b7ae104d9b0d7ca76f7104ecb199d54a20009808a7ab"
+    },
+    {
+      "file": "reconstruction/program_ui/snow_cell.asm",
+      "start": 32288,
+      "end": 32307,
+      "file_offset": 36896,
+      "bytes": 19,
+      "sha256": "7bab9cb56a22ca9a320334852827b48aeee7cb8ab1f6e43ead984650d07060b1",
+      "rea_evidence_id": "ev_47d9d5dc2a79ce169e3c98e13d06772623f92c1eed7e5522e268780647e83e03"
+    },
+    {
+      "file": "reconstruction/program_ui/wait.asm",
+      "start": 14149,
+      "end": 14189,
+      "file_offset": 18757,
+      "bytes": 40,
+      "sha256": "61a62c48bbc2e56fddf5e0f677cf6bec1404382c868b2a8cc0591e404d0b966a",
+      "rea_evidence_id": "ev_c9915dfb2702b577ccaf8b4ad7646b17e2c7be95e15101c384a2aa451ceb5bcb"
+    }
+  ],
+  "state": {
+    "0x7a66": "display_legacy",
+    "0x7a68": "display_extended_mode",
+    "0x7a6c": "display_cursor_policy",
+    "0x7a72": "display_columns",
+    "0x7a74": "display_rows",
+    "0x7a76": "display_mode_state",
+    "0x7a78": "display_segment",
+    "0x7a7a": "display_stride",
+    "0x7a7c": "display_bytes",
+    "0x7a7e": "display_last_column",
+    "0x7a80": "display_last_row",
+    "0x7a82": "display_last_line",
+    "0x7a84": "display_viewport",
+    "0x7a85": "display_cursor_row",
+    "0x7a86": "display_mono",
+    "0x7a88": "display_cursor_start",
+    "0x7a8a": "display_cursor_end",
+    "0x7a8c": "display_cells",
+    "0x7a8e": "display_status_port",
+    "0x7a90": "display_crt",
+    "0x7a92": "display_snow",
+    "0x42c2": "display_wait_message"
+  },
+  "limitations": [
+    "Names are analyst annotations. Geometry preserves native byte writes and16-bit arithmetic.",
+    "Native CGA snow wait is unbounded; live hardware timing is not established.",
+    "Heap, geometry admission and owned snapshot lifetime are maintained platform bindings.",
+    "Keyboard input and message pointer bind to the maintained platform; native mouse/window policy remains separate."
+  ]
+}

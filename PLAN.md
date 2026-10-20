@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+The [composed PROGRAM controller](docs/NATIVE_PROGRAM.md) now joins recovered
+process/display services and the gated UART owner, adding 439 exact native UI
+bytes. Eight COM1/COM2 N/S/H/B DOS cases pass 381,336 assertions across real child
+execution, WAIT/NOCLEAR, cursor/mode recovery, standard 40/80-column and 25/43/50-row
+views, six held C streams and arena-backed environment fallback. Twenty DOS
+products reproduce from a fresh source-only tree. The current 105 runtime slots
+are unchanged: actual ASPECT VM/stream/continuation, parent renderer/ASIOv4,
+directory/translation/settings and macro/mouse/window owners still need binding
+before DOS/RUN/SHELL can be enabled. Full application and hardware goals remain
+open; ordinary C stream coverage is not completed ASPECT stream integration.
+
 The [external UART owner](docs/PROCESS_SERIAL.md) now passes41 linked modeled
 cases and eight actual COM1/COM2 N/S/H/B DOS cases/448 assertions. It releases
 the IRQ for a real port/vector-mutating child, restores original framing/ISR,

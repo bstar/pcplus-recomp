@@ -6,9 +6,11 @@ external execution is not enabled in the interpreter.** These three slots still
 stop with explicit unsupported error3. The supported runtime count remains105
 of215; no application gate closes.
 
-The next step is the application executor/controller below. A direct call to a
-generic spawn function would leave required display, keyboard and UART ownership
-unimplemented, and is not substituted for that controller.
+The [composed PROGRAM component](NATIVE_PROGRAM.md) now joins recovered process
+and display services with real UART ownership in eight actual DOS cases.
+The next step is production VM/renderer/parent-lease integration below. A direct
+call to a generic spawn function would leave these owners unimplemented and is
+not substituted for that controller.
 
 The [native process foundation](NATIVE_PROCESS.md) now supplies real recovered
 environment/tail/spawn/EXEC with maintained allocator/trap bindings:20 actual DOS
@@ -34,6 +36,13 @@ passing448 assertions. It preserves raw queues/unread state and the startup
 baseline, reclaims child-mutated hardware and handles error/timeout recovery.
 The ordinary108-input serial regression passes and normal ASPECT is unchanged.
 Production VM/renderer/controller integration and opcode publication remain open.
+
+The composed component adds 439 exact native UI bytes, native WAIT drawing with
+a real BIOS key platform, cursor/mode recovery and NOCLEAR. Its 381,336 DOS
+assertions include graphics children, 40/80-column and 25/43/50-row standard views,
+six held C streams, arena-backed environment fallback and continued UART input.
+Twenty products reproduce from a fresh source-only tree. These component passes
+do not stand in for actual ASPECT stream/continuation or parent renderer leases.
 
 ## Recorded grammar and behavior
 

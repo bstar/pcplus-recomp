@@ -38,6 +38,8 @@ display_state: times 46 db 0
  %2 equ %1
 %endmacro
 field display_legacy,_native_display_legacy,0x7a66
+field display_extended_mode,_native_display_extended_mode,0x7a68
+field display_cursor_policy,_native_display_cursor_policy,0x7a6c
 field display_columns,_native_display_columns,0x7a72
 field display_rows,_native_display_rows,0x7a74
 field display_mode,_native_display_mode,0x7a76
@@ -47,6 +49,7 @@ field display_bytes,_native_display_bytes,0x7a7c
 field display_last_column,_native_display_last_column,0x7a7e
 field display_last_row,_native_display_last_row,0x7a80
 field display_last_line,_native_display_last_line,0x7a82
+field display_viewport,_native_display_viewport,0x7a84
 field display_cursor_row,_native_display_cursor_row,0x7a85
 field display_mono,_native_display_mono,0x7a86
 field display_cursor_start,_native_display_cursor_start,0x7a88

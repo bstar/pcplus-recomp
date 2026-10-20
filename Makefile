@@ -1053,3 +1053,13 @@ test-process-serial: process-serial
 	python3 standalone/check_process_serial.py
 	python3 standalone/check_process_serial_variants.py
 	python3 standalone/test_process_serial_dos.py
+
+# Composed component; application VM/renderer ownership is not published yet.
+.PHONY: native-program test-native-program test-native-program-source
+native-program:
+	python3 standalone/build_native_program.py
+test-native-program: native-program
+	python3 standalone/check_native_program_admission.py
+	python3 standalone/test_native_program_dos.py
+test-native-program-source: native-program
+	python3 standalone/check_native_program_source.py

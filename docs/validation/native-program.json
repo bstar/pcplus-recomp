@@ -1,0 +1,382 @@
+{
+  "passed": true,
+  "component_only": true,
+  "whole_application_gates_closed": [],
+  "runtime_external_commands_enabled": false,
+  "build_original_inputs": [],
+  "native_ui_bytes": 439,
+  "units": [
+    {
+      "file": "reconstruction/program_ui/scroll.asm",
+      "start": 28380,
+      "end": 28405,
+      "file_offset": 32988,
+      "bytes": 25,
+      "sha256": "030b69e0c6597681f4d67663a739e8edf5d5ef943b7ac556ee5114d97283d8d1",
+      "rea_evidence_id": "ev_ffd65f233a2e54384a79094fd3e2b02c466283e2f6ba67695998ed25a1e437d2"
+    },
+    {
+      "file": "reconstruction/program_ui/text.asm",
+      "start": 27632,
+      "end": 27679,
+      "file_offset": 32240,
+      "bytes": 47,
+      "sha256": "b7316b90d4d2929a9485278892dca5718a0c0551d7c40613f7435e557c0a16f0",
+      "rea_evidence_id": "ev_7a855c10a4c0c0225f2d8755da435fd866ab3fa515e76e3754759ad2d8ec85d9"
+    },
+    {
+      "file": "reconstruction/program_ui/cell_offset.asm",
+      "start": 32258,
+      "end": 32270,
+      "file_offset": 36866,
+      "bytes": 12,
+      "sha256": "2f6af5067d295e49ffc695ccab98323358719eda2ea5e33efb4e012f763a6a76",
+      "rea_evidence_id": "ev_61617a2badc25bbbb4df6a41a6b0e803c1fc6caa25dd7d88e6533cd59addbcb8"
+    },
+    {
+      "file": "reconstruction/program_ui/cursor.asm",
+      "start": 28280,
+      "end": 28354,
+      "file_offset": 32888,
+      "bytes": 74,
+      "sha256": "743e345fcdb471636b2dbbb1c007f1daf3db6fc552104c2d1b7e00aeb60cb847",
+      "rea_evidence_id": "ev_a2fb1ff9b02353e7bd8644d794ccf1b8903bab67ef17b1e5912b894f5377cfab"
+    },
+    {
+      "file": "reconstruction/program_ui/cursor_shape.asm",
+      "start": 32344,
+      "end": 32369,
+      "file_offset": 36952,
+      "bytes": 25,
+      "sha256": "de802fd846d4032fdfd13e6897a69544fa736996d5ee2bc8d8225d6fb61ad250",
+      "rea_evidence_id": "ev_5c28076319840c1fa7eb355a79cee6b12183fbe1a3ff8fa45d6829ca17ed3b7a"
+    },
+    {
+      "file": "reconstruction/program_ui/cursor_policy_one.asm",
+      "start": 28106,
+      "end": 28125,
+      "file_offset": 32714,
+      "bytes": 19,
+      "sha256": "64da9d24154f1b20e9e1ae07c98d0ec0802a01367b7edc291be9528b96745351",
+      "rea_evidence_id": "ev_546019b7d72bdf5139df8ad4be8181564defc5a6441cdfd3af32834c6877b1ab"
+    },
+    {
+      "file": "reconstruction/program_ui/cursor_policy_zero.asm",
+      "start": 28250,
+      "end": 28262,
+      "file_offset": 32858,
+      "bytes": 12,
+      "sha256": "7995e95e734d0e93a0b95b4c402fb887bafbe6c38d60ec9e1269a6c8e3f789fa",
+      "rea_evidence_id": "ev_d84cc0a0bdf0394ba410f0a38c01c135ea9d52837fe105f1785b4ef29e067698"
+    },
+    {
+      "file": "reconstruction/program_ui/mode.asm",
+      "start": 28478,
+      "end": 28511,
+      "file_offset": 33086,
+      "bytes": 33,
+      "sha256": "7b0debb6a93ede1f369a110021b119710d9ba7fae9f8883b6660adbc4b5bf0e5",
+      "rea_evidence_id": "ev_a795f64b2b71fadddc43be729f8b5026037c55863fdc20acc960f7ee17a61808"
+    },
+    {
+      "file": "reconstruction/program_ui/scanlines.asm",
+      "start": 32488,
+      "end": 32527,
+      "file_offset": 37096,
+      "bytes": 39,
+      "sha256": "32e24731e5ac62462f780e4c146c1b30493107f8530f43aef156115ee392db6c",
+      "rea_evidence_id": "ev_21963e9641710a1036aefa13133fa557c5940a91ae37e13c532e05a7fc373f01"
+    },
+    {
+      "file": "reconstruction/program_ui/cursor_eight.asm",
+      "start": 32555,
+      "end": 32585,
+      "file_offset": 37163,
+      "bytes": 30,
+      "sha256": "bee8df1a5384a54cfa66c9bd89baaa6a90caa1682161a804cf4f50cdccf26c43",
+      "rea_evidence_id": "ev_b16d3fe8d678c41a171c1421e3c84cb139a6a21c77d7a6f44bbe232d111618b4"
+    },
+    {
+      "file": "reconstruction/program_ui/fill.asm",
+      "start": 27680,
+      "end": 27722,
+      "file_offset": 32288,
+      "bytes": 42,
+      "sha256": "08ea48781227a85522ff2a3f6938525b9f5d52ca6f12b262cd167949e39b7e00",
+      "rea_evidence_id": "ev_5f62f3eeb0e8d32b850bc47c1c01e71001704e22b3a8d108ce8940da944038c8"
+    },
+    {
+      "file": "reconstruction/program_ui/clear.asm",
+      "start": 28512,
+      "end": 28534,
+      "file_offset": 33120,
+      "bytes": 22,
+      "sha256": "63ba1d28cb8b7de0c14c09f349591c0004cc8bf3cb2f80eed6af9538ee9b69e2",
+      "rea_evidence_id": "ev_1da121e4e8d7e7ec9fb6b7ae104d9b0d7ca76f7104ecb199d54a20009808a7ab"
+    },
+    {
+      "file": "reconstruction/program_ui/snow_cell.asm",
+      "start": 32288,
+      "end": 32307,
+      "file_offset": 36896,
+      "bytes": 19,
+      "sha256": "7bab9cb56a22ca9a320334852827b48aeee7cb8ab1f6e43ead984650d07060b1",
+      "rea_evidence_id": "ev_47d9d5dc2a79ce169e3c98e13d06772623f92c1eed7e5522e268780647e83e03"
+    },
+    {
+      "file": "reconstruction/program_ui/wait.asm",
+      "start": 14149,
+      "end": 14189,
+      "file_offset": 18757,
+      "bytes": 40,
+      "sha256": "61a62c48bbc2e56fddf5e0f677cf6bec1404382c868b2a8cc0591e404d0b966a",
+      "rea_evidence_id": "ev_c9915dfb2702b577ccaf8b4ad7646b17e2c7be95e15101c384a2aa451ceb5bcb"
+    }
+  ],
+  "sources": {
+    "standalone/build_native_display.py": "3203522c4f285beee213506de76a11dcfa8c39b16ab1350a931e3ccf1e434dc9",
+    "reconstruction/program_display/provenance.json": "6b3a2f47120c20ba43cac11f074da5daf7ca85f388a1ba87739be0f3fe41cb27",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/program_display/snapshot.asm": "b14553105adce657970031110614ad769cd5208ec1580660cb71cffc69183ce5",
+    "reconstruction/program_display/restore.asm": "0afe70fb362c90e08977a9daf1b9f73b533398b1fb837cf64067efd1ae1e7f3e",
+    "reconstruction/program_display/geometry.asm": "c6c57bcfc5779d770ee85ba5bcd1414455ef35891f0703b8a6564e70dd199f85",
+    "reconstruction/program_display/snow_enable.asm": "acfc80bf0dac30c7733784fafe7bb25ae9f50358a8539e149604fc7a75a57ab9",
+    "reconstruction/program_display/snow_disable.asm": "2ca6e6e84047f235d2c994a8bfb319f664b80442cb4b36ec7a61f76cb7612990",
+    "src/process/native_display_state.asm": "5a75b9b93f29fe9b622b0e7306eda7e3cf4943593b25fd5170d5369baa8a678b",
+    "src/process/native_display.c": "95ed06fd3e6871d48016577adb19dac7b9bf951b780a9cb56985302d7a98fa39",
+    "src/process/native_process.c": "6549e7115410a43a7cb1bca8c92b0494130809a62bbe0e8003c53b6fdb88d3ba",
+    "standalone/native_display_diagnostic.c": "5c3f3d9d08e89a35dfbd32b92b22521e00d28975ce80dcd0197f3967629c5264",
+    "standalone/native_display_child.asm": "bd7096bb9f5b90b0dd0f7297e813d0d5877085acd0a3470624c9302fb5f87124",
+    "src/process/native_display.h": "3ae3ba9e3ace78524bbf0a3e4bd3b1a4c44888483583d9ed1320d7e6a97f0f18",
+    "standalone/build_process_serial.py": "e343dcdb3b3d13ec654600be6fd93d5c029613f34a112799663ce4fff20f0abb",
+    "reconstruction/uart/core.asm": "9c0a38a7a305c5eec8e1c2299da74953656d33bdcae63f9866d7ef2d576fa52f",
+    "src/uart/api.asm": "ea76dd20ce14ccc8f9a6af725a05202f7888e1b7cb349d93a96f8faa16f9ae6d",
+    "src/aspect/serial_backend.asm": "d059e3c561ba49d41df0cd3e6b4023f9d9248e8b4e36912ca6d47b3c570161d2",
+    "src/aspect/process_serial.asm": "1fd0487719c3a3965dcc14ce27a865c471b6a2d0c117f06ac991ef54de1ff88d",
+    "src/aspect/serial.c": "d96924c4e439052b5bc4062c09964230cdd5424ba30b4ec0ea53a05d963690eb",
+    "src/aspect/process_serial.c": "171b4003ba71d90931b0f27f5ebda8756ca7d08ef26034c215666eea97dcc3f7",
+    "standalone/process_serial_diagnostic.c": "b8b3fcbd29d33094d356300a1f1900ccea534ef8e25dccbdcabeb0eadbf3132e",
+    "src/aspect/process_serial.h": "7c174fbce4a9214dc3536aa09ad6f34bb32dadf39551949f0e8323600a6a44f5",
+    "src/aspect/serial.h": "2d8a7972238bfddc8180c69d62bde1fa02d10dab3c6178a64978b7eb4ffce23b",
+    "src/aspect/serial_handoff.h": "51db79078c78294d7f247da793839d8114ae6680e8fa5798b681b1c32648e7eb",
+    "src/aspect/resident_render.h": "44232ebc6a8b3ef11c8e38292a5b7b55ed1fdf73ceb286aea340e2fed7e06923",
+    "reconstruction/uart/layout.inc": "1e732d890b17486bdace3f978276ce48e55da318df70787aa54475203fa9bd21",
+    "reconstruction/directory_accounting/patch.asm": "3ed899cd9515303cf7906d572ee87d0a884a7dca90b8cf14ac1ff316b30200ac",
+    "standalone/process_serial_child.asm": "39b7e6ae35f6fa42681223d18feb8e84c7d2703fb7770da0434af231e6ff9760",
+    "reconstruction/program_exec/environment_tail.asm": "642d85d6237c4d1aa2243097a6253701121b7c65c6776bccfc41e1a72513afea",
+    "reconstruction/program_exec/spawn_extension.asm": "95d35a985707366aff26a6be4c2e4aa64b72a41e3d1d82cea42da56fb84ecea8",
+    "reconstruction/program_exec/exec.asm": "218d9dbdad87475c77c0c489800fa9fd0ebcbf591f17cb266b0a28195c23a456",
+    "reconstruction/program_exec/scratch.asm": "e9813896aec7f4390d7fbd5323b7621448d43b0c6be1d764297beb86c089e15c",
+    "reconstruction/program_exec/get_ds.asm": "c98c2d6535c41beae3d72fd3b0686a588bc5c10fb904a632688456d5ddc675c2",
+    "reconstruction/program_exec/getenv.asm": "1b94c41e62c740850d37f2363d7389f2f300f98db6ba23e95d2f751f4529ee5a",
+    "reconstruction/program_exec/strcpy.asm": "4c2420d76d56a852b2ff6bb2ebfbf567b082c6880b2bd715f698ebd2d9941299",
+    "reconstruction/program_exec/strlen.asm": "a3a4f98217c60ca930b83060071be356bb2340740f6a994e450fecab13d0f5af",
+    "reconstruction/program_exec/strchr.asm": "59f83b99f393c355753f86d518381ce0c2f20a92df2e0b600a8384fb5f4dc665",
+    "reconstruction/program_exec/strncmp.asm": "2e89c2421cecb48e24858b98b648aa1af0603d75b99de1715997032f91b0a35c",
+    "reconstruction/program_exec/error_exec.asm": "00e4999b1e61c3877cb139078111487c15032caa3c53195edd24a3f26b192ba1",
+    "reconstruction/program_exec/map_error.asm": "00244ad9b12bcb6e7c9dc3efd943d50b30ea2461ebb83c8849cf8524cfb9ad59",
+    "reconstruction/program_exec/error_lookup.asm": "b034445986eedbe083e11cd0171743eb7389bf71e895fde4f6ddfbea997e4b26",
+    "reconstruction/program_exec/spawnv.asm": "471b9e248b81857260b7a4abc8c63457c4956e3383599ac2cac1bdcb8a25e99f",
+    "reconstruction/program_exec/spawn_search.asm": "53729c1346950c9bbf9110f172ed5de56d7161b8df1330e429dea76bec96609f",
+    "reconstruction/program_exec/system.asm": "2783830444752b4793c5cd73799fe46571dd87f1d2a5c39a5e1d57baedb5eb81",
+    "reconstruction/program_exec/access.asm": "fa33faa6c39fb0292874db01b09665a2d2575fcf8503a8c48595d3eecc533480",
+    "reconstruction/program_exec/error_access.asm": "62df0d78cf626f371a947e0716f553aa01cc39c86c109b8d07ece1637764710e",
+    "reconstruction/program_exec/strrchr.asm": "49c6429f13940689fd3e5d29b668245fc43e781c0eb764ffc5c793d93660d312",
+    "reconstruction/program_exec/strcmpi.asm": "7ff7a20853855aa9b2166ea84103aa0d4c3c8b3bbfc0de34be15c86e166964be",
+    "reconstruction/program_exec/strcat.asm": "9ab94800cb6c43d766a724210fb4078bf32ed7e5442bf2880695d27d6d33b3f8",
+    "reconstruction/program_exec/path_component.asm": "6f3b3953eaddd918b9c5996e6369477a442b6ea54e5d80a251e36997d5feac01",
+    "src/process/native_process_state.asm": "30cc6fd6ed8b78fe359025aa205d2c5218887b74c18143c76f4eed032960b6d2",
+    "standalone/native_process_diagnostic.c": "b4ee9bf62dde5bfeee917d9815b03b53ad6b8adb61ca50db8154e0feb47c1466",
+    "standalone/native_process_child.asm": "7fd3794fac4d9bdf199625d9b89044f3a42d35f5cb2d69a9995dd2a9b2a9c619",
+    "standalone/build_native_process.py": "c343717350a2adc523bbaca29510fd1c8c54f91f9565bc64f28f5eb457028cfb",
+    "src/process/native_process.h": "e4af17c53809fd7e1947ab410f07a0d5e512e872c1daf93ec7722ea71ac718cd",
+    "reconstruction/program_exec/provenance.json": "dea1a491c50dcbfdd28ac810ff17857c62f8c4155b1d79aaa744696ae8947f7f",
+    "standalone/native_namespace_cases.inc": "45a7277bd71105b6ce5bc0e5b2c9f7ea0e111cdd2fe180c132e8c0a5fff9e30f",
+    "standalone/native_process_exe_child.c": "2470ae5d4e35a2b326448c1ce30af3921b1debe89828513650e92d0e83f631c6",
+    "reconstruction/program_ui/provenance.json": "ea7cf6e3e92da71a06921b9106514642458a361cd5c177f9bc90b348fa0aa790",
+    "reconstruction/program_ui/scroll.asm": "b5cb519b3edcb8a86dcd40764ea6b24933d45bfb4fdf43d52d821672d4122884",
+    "reconstruction/program_ui/text.asm": "d9cef80cd9fae124cf63eb596a293746a8e8de679d30c9ea11228ab0596bc9d7",
+    "reconstruction/program_ui/cell_offset.asm": "9064c4a63d7ae1668e533f851767779951acc9c23c674fa9e2ea9c082706944c",
+    "reconstruction/program_ui/cursor.asm": "dac8ddb81da4e77050386cb3b2cda6b74c1960834eab4341ae9d53f24222798e",
+    "reconstruction/program_ui/cursor_shape.asm": "3dc779a5ad0053a86a3f6ca90c5fb58a2b46f5ed94a6c078a68152baea901602",
+    "reconstruction/program_ui/cursor_policy_one.asm": "ff0423b4c8352da807ab135889bbddcb52a7d4bf4e29a3288ed6e7f53c372e72",
+    "reconstruction/program_ui/cursor_policy_zero.asm": "1a28cf165b535b6cd3bf49972d189cbad514a8110cdb4f0ae2a61f5509ce0f69",
+    "reconstruction/program_ui/mode.asm": "eeccbc12dc1bafd827c816a590582dc1abf79efadaeaa492f862abaf41e6670d",
+    "reconstruction/program_ui/scanlines.asm": "69874e0454dff22bb02e752e0baafcb3e2333443c8b2f226c52e33928b202e53",
+    "reconstruction/program_ui/cursor_eight.asm": "0b418dd1ac6019a6b90aa742340d19d30d458d2786bbffcf2df4c704e63436ec",
+    "reconstruction/program_ui/fill.asm": "6c0678fa6e50f61c99a29dd1ab3448a497a2b6ffb657fa93b0f5ea81d415a973",
+    "reconstruction/program_ui/clear.asm": "aad89f18c5ca0ad6d152b7e3968891a63b2b92c5732a81d1e1f27bfd9111aabc",
+    "reconstruction/program_ui/snow_cell.asm": "4200155b4cb6e34565f9184bec558877631edfff824973d7a5df6a8c4f56c356",
+    "reconstruction/program_ui/wait.asm": "e1296ad2ddd11df509ae0827e65be9e292a71bb9952f91a61473d573474b775c",
+    "src/process/program_ui.asm": "b28e61814a17e2980af01ba7558a4cab87e83ed01b2c31ce3a81c652298313f8",
+    "src/process/native_program.c": "1072c98e3a24225025eef628363aee485032fcce0bdf49d363ead073d505ab84",
+    "standalone/native_program_diagnostic.c": "a0bccd6734c498b0fae7b3b561ba27325387ac3cc8efac877d254eb25ca48940",
+    "src/process/native_program.h": "ca91cb2b9fd674ade6e5bcc94365bee05873259f7c4dfaabdff33a607bf2dfe2",
+    "standalone/build_native_program.py": "b8eada049b73c236da2beae72d92a5f3e8e914359879a7fba7080eca24c08a0a",
+    "standalone/native_program_child.asm": "1c27f04a948efc3c663a07c55875daa051b10597c023054342ba1e144ce33d30"
+  },
+  "binary_sha256": "582a6844f454de92e66fad3e6694b26b1fdee6565d91ce563e8ebc38d8afb8d1",
+  "DOS_cases": 8,
+  "DOS_assertions": 381336,
+  "linked_admission_cases": 13,
+  "linked_admission_sha256": "b1b2c6677e79c8c4d5da8775e9ee747fe150a800a86f4874cdc1fed8d6fdd151",
+  "linked_admission_checker_sha256": "b01036395e197fe7e5ff358bc01c76da9e1018ae9a0ba987689dbdd1e818929e",
+  "source_reproduced_products": 20,
+  "source_proof_sha256": "de4e1aa0aad540d1ae10450dfa7807c45c8b0d12956985e3fe38662a4b1faf33",
+  "DOS_report_sha256": "df4ecc813eb93df908f678c1cc8baabaf9118ee939ed95a4e6b0b306b893668f",
+  "DOS_checker_sha256": "9fb77e6c15c0d425b94cf45676bfd2da7b6306e8e18b4fd2a8eb3bb2e1c4d179",
+  "source_checker_sha256": "d2860a6f70d9dcec618d65395ff9007f77261f982b95c6a41264e5615bb56b67",
+  "recorder_sha256": "6012813b8e62ffb01f41fb54234a7ed768d86a14855e1aa312cc7205b6c72439",
+  "nix_inputs": {
+    "nix/flake.nix": "7f069dd8346be02006737101a2790b99a881411fa75b657316f75b090816c15f",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+  },
+  "evidence": {
+    "build/native-program/runs/native-program-08/result.json": "df4ecc813eb93df908f678c1cc8baabaf9118ee939ed95a4e6b0b306b893668f",
+    "build/native-program/runs/native-program-08/manifest.json": "adb7e7a73b85ace78edf77c16551882f2cabe239b9fcb896d11e23a105a1b70b",
+    "build/native-program/source-proofs/native-program-source-03/result.json": "de4e1aa0aad540d1ae10450dfa7807c45c8b0d12956985e3fe38662a4b1faf33",
+    "build/native-program/source-proofs/native-program-source-03/build.log": "d5bc268d5473ebcb3b95136d988b9f73c303ff5886500714ebf68a0bee9cb092",
+    "build/native-program/admission.json": "b1b2c6677e79c8c4d5da8775e9ee747fe150a800a86f4874cdc1fed8d6fdd151"
+  },
+  "retained_REA_bundle": {
+    "path": "analysis/program-controller-ui-02.rea.json",
+    "sha256": "f75c8ff45e7b993027f109134fe0dd0ae0e3516cecbca2064fb995b39f411b2f"
+  },
+  "REA_evidence": [
+    {
+      "address": "0x16edc",
+      "file_offset": 32988,
+      "mapping_evidence_id": "ev_dd91b385ca216208dfa9a6d64c2910e74150d838d2322aa0cfd5040bf11c8c63",
+      "function_evidence_id": "ev_ffd65f233a2e54384a79094fd3e2b02c466283e2f6ba67695998ed25a1e437d2"
+    },
+    {
+      "address": "0x16bf0",
+      "file_offset": 32240,
+      "mapping_evidence_id": "ev_ea141882b79eb8308b379eee1c531d1c76a99187b887da83d43fbb705b4c61f7",
+      "function_evidence_id": "ev_7a855c10a4c0c0225f2d8755da435fd866ab3fa515e76e3754759ad2d8ec85d9"
+    },
+    {
+      "address": "0x17e02",
+      "file_offset": 36866,
+      "mapping_evidence_id": "ev_116db5c0640e6618c35daa57f69c5c01eb8c73f2b1e4939a7ad888833bd8dea8",
+      "function_evidence_id": "ev_61617a2badc25bbbb4df6a41a6b0e803c1fc6caa25dd7d88e6533cd59addbcb8"
+    },
+    {
+      "address": "0x16e78",
+      "file_offset": 32888,
+      "mapping_evidence_id": "ev_1e4ac95c6687680f6cf292210b21185f77143ae03b06ad558280af13112d3362",
+      "function_evidence_id": "ev_a2fb1ff9b02353e7bd8644d794ccf1b8903bab67ef17b1e5912b894f5377cfab"
+    },
+    {
+      "address": "0x17e58",
+      "file_offset": 36952,
+      "mapping_evidence_id": "ev_b4343cba4f562c263b6592b4736647e4d9b19862fd930c702780fc0ca6057862",
+      "function_evidence_id": "ev_5c28076319840c1fa7eb355a79cee6b12183fbe1a3ff8fa45d6829ca17ed3b7a"
+    },
+    {
+      "address": "0x16dca",
+      "file_offset": 32714,
+      "mapping_evidence_id": "ev_1b9991af5b9d0c9a769bd79538c378cc87542480c99637efe2f56c6908fad671",
+      "function_evidence_id": "ev_546019b7d72bdf5139df8ad4be8181564defc5a6441cdfd3af32834c6877b1ab"
+    },
+    {
+      "address": "0x16e5a",
+      "file_offset": 32858,
+      "mapping_evidence_id": "ev_6414048a53979517e87b33a9c76f2d23aade426ec1ca55622740b51e1b9684d3",
+      "function_evidence_id": "ev_d84cc0a0bdf0394ba410f0a38c01c135ea9d52837fe105f1785b4ef29e067698"
+    },
+    {
+      "address": "0x16f3e",
+      "file_offset": 33086,
+      "mapping_evidence_id": "ev_2916eafaba04748bbe66c9c866272c655d624e3bbe0b0ecf424019a78c613702",
+      "function_evidence_id": "ev_a795f64b2b71fadddc43be729f8b5026037c55863fdc20acc960f7ee17a61808"
+    },
+    {
+      "address": "0x17ee8",
+      "file_offset": 37096,
+      "mapping_evidence_id": "ev_81e8229d126b1d129f3d534bf1b44382c00eba8681060d0012d5f8cadc76b78a",
+      "function_evidence_id": "ev_21963e9641710a1036aefa13133fa557c5940a91ae37e13c532e05a7fc373f01"
+    },
+    {
+      "address": "0x17f2b",
+      "file_offset": 37163,
+      "mapping_evidence_id": "ev_ebd3958b5ed89e124bc184ce6b2f410f9339b8a8f7890d5573887132d996ef13",
+      "function_evidence_id": "ev_b16d3fe8d678c41a171c1421e3c84cb139a6a21c77d7a6f44bbe232d111618b4"
+    },
+    {
+      "address": "0x16c20",
+      "file_offset": 32288,
+      "mapping_evidence_id": "ev_cd15e78680e8d84ec7e05f093cd1121777480d6fe6109eff5fa276efa7241099",
+      "function_evidence_id": "ev_5f62f3eeb0e8d32b850bc47c1c01e71001704e22b3a8d108ce8940da944038c8"
+    },
+    {
+      "address": "0x16f60",
+      "file_offset": 33120,
+      "mapping_evidence_id": "ev_0550eb09e8503432cb31b499918d598778b8b17054ffc8e5654cc6913852c12f",
+      "function_evidence_id": "ev_1da121e4e8d7e7ec9fb6b7ae104d9b0d7ca76f7104ecb199d54a20009808a7ab"
+    },
+    {
+      "address": "0x17e20",
+      "file_offset": 36896,
+      "mapping_evidence_id": "ev_94ce13b751ed88149c3d01a87d9fbbd7ccb32abd9fb074b60ba9a8f30c3c9a87",
+      "function_evidence_id": "ev_47d9d5dc2a79ce169e3c98e13d06772623f92c1eed7e5522e268780647e83e03"
+    },
+    {
+      "address": "0x13745",
+      "file_offset": 18757,
+      "mapping_evidence_id": "ev_774ee554e6ae264e4ddd5395c2d6509f7c366c794be567db22686333658803c9",
+      "function_evidence_id": "ev_c9915dfb2702b577ccaf8b4ad7646b17e2c7be95e15101c384a2aa451ceb5bcb"
+    }
+  ],
+  "retained_failures": [
+    {
+      "label": "native-program-01",
+      "result_sha256": "5fff00ba770901299ebda9e7f685c37255f27c969c943e6d34fc1d8922600b65",
+      "cases": [
+        {
+          "port": 1,
+          "flow": "N",
+          "checks": {
+            "DOS_pass": true,
+            "assertions": true,
+            "exact_wire": false,
+            "peer_stages": true,
+            "peer_no_error": true,
+            "actual_child": true,
+            "executable_unchanged": true
+          },
+          "tx_hex": "4452",
+          "expected_tx_hex": "445246"
+        }
+      ]
+    },
+    {
+      "label": "native-program-02",
+      "result_sha256": "85fa0c987c3e49e6c5bb2cdaa8bda4131244be1e8d9a070eff3cd319d6f52c20",
+      "cases": [
+        {
+          "port": 1,
+          "flow": "N",
+          "checks": {
+            "DOS_pass": true,
+            "assertions": true,
+            "exact_wire": false,
+            "peer_stages": true,
+            "peer_no_error": true,
+            "actual_child": true,
+            "executable_unchanged": true
+          },
+          "tx_hex": "4452",
+          "expected_tx_hex": "445246"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Composed component, not yet linked to ASPECT VM/renderer/parent leases or the terminal application controller.",
+    "Maintained BIOS keyboard platform binds native WAIT drawing; original macro/mouse/window ownership remains open.",
+    "Standard BIOS ROM font/geometry restoration only; arbitrary downloaded fonts and hardware adapter behavior remain unverified.",
+    "Modeled nullmodem timing does not establish physical RS-232 Wi-Fi modem acceptance.",
+    "ASPECT DOS/RUN/SHELL remain unsupported; complete application requirements remain open."
+  ]
+}
