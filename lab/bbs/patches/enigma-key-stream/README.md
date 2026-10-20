@@ -65,6 +65,15 @@ The regression separates four kinds of evidence:
 - Existing upstream Client teardown, ViewController action-key, multi-line
   editor and full-screen editor focus regressions run against the candidate.
 
+The framing oracle also exercises every selected sequence one byte at a time
+over total durations of 0, 10, 40, 80 and 99 ms. These must complete as one key before
+the 100 ms deadline. Separate 50/100/150 ms inter-byte cases require byte conservation
+and timer cleanup; they intentionally do not promise recognition after expiry.
+PageUp, PageDown and End are explicit framing vectors, and the actual Client
+comparison includes PageDown and Right alongside the existing navigation keys.
+These deterministic clock tests do not measure operating-system scheduling,
+network latency or physical modem timing.
+
 The frozen evidence is in
 [`docs/validation/enigma-key-stream`](../../../../docs/validation/enigma-key-stream).
 The wider F04/F05 and full application gates remain open. Required next evidence

@@ -1,0 +1,125 @@
+{
+  "date": "2026-10-19",
+  "compatibility_complete": false,
+  "live_server_modified": false,
+  "physical_modem_validated": false,
+  "server_root": "~/projects/black-flag-bbs",
+  "server_revision": "237cd9743d6978a940dd66db0e78f6ab8ccd3e37",
+  "terminal_sha256": "dbc5e7104ea32b2cec00a47030acc579bed4c46dd6fc19ff07750df513338b52",
+  "live_file_navigation": {
+    "passed": false,
+    "checks": {
+      "DOS_harness": true,
+      "authenticated_probe": true,
+      "main_menu": true,
+      "inputs_unchanged": true,
+      "no_post_saved": true,
+      "staged_products_unchanged": true,
+      "DOS_source_compiled": true,
+      "game_details": true,
+      "diz_page": true,
+      "nfo_page": true,
+      "nfo_scrolled": false
+    },
+    "page_headers": [
+      [
+        "1",
+        "15",
+        "24"
+      ]
+    ],
+    "navigation_keys_emitted": {
+      "down": true,
+      "page_down": true
+    }
+  },
+  "decoder_replay": {
+    "decoder-stock": {
+      "passed": true,
+      "fixed": false,
+      "checks": 119,
+      "demonstrated_fragmentation_failures": 84,
+      "editor_fragmentation_failures": 9
+    },
+    "decoder-candidate": {
+      "passed": true,
+      "fixed": true,
+      "checks": 122,
+      "demonstrated_fragmentation_failures": 0,
+      "editor_fragmentation_failures": 0
+    },
+    "details-stock": {
+      "passed": true,
+      "fixed": false,
+      "checks": 180,
+      "fragmented_differences": 164,
+      "unexpected_leaves": 120,
+      "client_sha256": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+      "module_sha256": "0711413e29c01f0cf3cef7f89b3dc607515381a67a23e1a58205aa6d7a20efb8",
+      "helper_sha256": "e4f6c1df6dbb9d6282d0534150c9149889637d34f01665691ca3bc5d19a06235"
+    },
+    "details-candidate": {
+      "passed": true,
+      "fixed": true,
+      "checks": 180,
+      "fragmented_differences": 0,
+      "unexpected_leaves": 0,
+      "client_sha256": "8cb3b4c8d439e0c43a09d9caf87b69560b3df1b51de053d70f2dc9b6dc9ea31b",
+      "module_sha256": "0711413e29c01f0cf3cef7f89b3dc607515381a67a23e1a58205aa6d7a20efb8",
+      "helper_sha256": "e4f6c1df6dbb9d6282d0534150c9149889637d34f01665691ca3bc5d19a06235"
+    }
+  },
+  "framer": {
+    "checks": 1858,
+    "delayed_checks": 200,
+    "upstream_regressions_passed": 123,
+    "source_revision": "6c25317168b762f7d9088a54d3f8295438827a0e"
+  },
+  "evidence": [
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-recheck-files-20261019-02/owned-server-checks.json",
+      "sha256": "fb084014496ce8a40330809cd101c9aae47c6fb1c71f8792e3d64f355b870bce"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-recheck-files-20261019-02/bbs-sent.bin",
+      "sha256": "2187ebb0836a1581b8edb1c7bbaede9202f96582396990d78fe20e0a862005a0"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-recheck-files-20261019-02/display.bin",
+      "sha256": "7208d75641f65259dd9f6f60611af3d30100f5e9864701d3a39725c6d387c67f"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-recheck-files-20261019-02/server-session.jsonl",
+      "sha256": "b1ff1c8b04574c52df88a95be7f0ac6e9cd011b43a25caefcfa66415ded19bbe"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-recheck-files-20261019-02/decoder-stock.log",
+      "sha256": "9581a5325c96c515a50103b744ba91753fc123837ddd048a790043d414cae8c7"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-recheck-files-20261019-02/decoder-candidate.log",
+      "sha256": "fb602ac0ba9df5933982efc6cd31f60d0f1baacb8e5d0172f9ee20940f8b0e44"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-recheck-files-20261019-02/details-stock.log",
+      "sha256": "e0b09518cd7c030dc84e7493d8475593c8f6a74e595d672da579df8357c26dc0"
+    },
+    {
+      "path": "build/bbs-lab/results/enigma-owned/owned-enigma-recheck-files-20261019-02/details-candidate.log",
+      "sha256": "0619fa8606bf96d712808ff2d4b3dfff8049e8bb9c923b5b69cc8e0284b5935c"
+    },
+    {
+      "path": "build/bbs-lab/enigma-recheck-framer-20261019-03/report.json",
+      "sha256": "d91871e6864267c7f551cf6fad4bdfafc31d0825e8c394ba31484aab322b548e"
+    },
+    {
+      "path": "build/bbs-lab/enigma-recheck-framer-20261019-03/upstream-regressions.log",
+      "sha256": "acbc84382f3c6b675043e0277018ee89998420e49148b5154da880f13f50d158"
+    }
+  ],
+  "remaining": [
+    "Validate the staged decoder on the live board before declaring live navigation/editor acceptance.",
+    "Complete live transfer cancellation/reconnect and remaining door workflows.",
+    "Validate physical RS-232 Wi-Fi modem timing and flow control."
+  ]
+}

@@ -62,11 +62,13 @@ function decode(parts) {
 const vectors = [
     ['\x1b[A', 'up arrow'],
     ['\x1b[B', 'down arrow'],
+    ['\x1b[C', 'right arrow'],
     ['\x1b[D', 'left arrow'],
     ['\x1b[H', 'home'],
     ['\x1b[2~', 'insert'],
     ['\x1b[4~', 'end'],
     ['\x1b[5~', 'page up'],
+    ['\x1b[6~', 'page down'],
     ['\x1bOA', 'up arrow'],
     ['\x1b[1;5A', 'ctrl + up arrow'],
     ['\x1b[[A', 'f1'],

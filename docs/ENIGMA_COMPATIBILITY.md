@@ -4,6 +4,19 @@ The target includes the user's running `~/projects/black-flag-bbs` checkout,
 its configured menus and modules, and the source-built DOS client. Passing
 an isolated stock BBS is insufficient. Compatibility is not complete.
 
+The [latest live recheck](validation/enigma-recheck-20261019.json) again passes
+login, menu, details, DIZ and NFO entry but fails final-page NFO scrolling.
+No tested live code/configuration changes or submitted messages were observed.
+Expanded actual Client replay includes Right and PageDown: the current decoder
+shows 84 fragmented-key and 9 editor differences; the candidate shows zero across
+122 checks. The exact owned game-details module passes 180 candidate checks with
+zero differences or accidental exits. Its stock counterpart shows 164 differences
+and 120 accidental exits across synthetic partitions; these are replay cases,
+not counts of failed user sessions. The framing oracle passes 1858 checks,
+including 200 elapsed-time checks, and 123 upstream regressions pass. The candidate
+is still separate from the running board; timing-model passes do not establish
+physical modem compatibility.
+
 The [October 19 live validation](validation/enigma-live-20261019.json) records a
 fresh DOS run with the correct Classic Pillars prompt: login, menu, details,
 DIZ and NFO entry pass, but complete NFO scrolling fails. Both Down and PageDown

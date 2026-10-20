@@ -43,7 +43,10 @@ const sequences = [
     '\x1b[C',
     '\x1b[D',
     '\x1b[H',
+    '\x1b[F',
     '\x1b[2~',
+    '\x1b[5~',
+    '\x1b[6~',
     '\x1b[1;5A',
     '\x1bOA',
     '\x1bOP',
@@ -85,6 +88,38 @@ for (let split = 0; split <= 256; ++split) {
     f.tick(100);
     assert.deepEqual(Buffer.concat(f.out), data);
     ++checks;
+}
+// Exercise elapsed time as well as chunk boundaries. Page keys are longer
+// than arrows; the deadline belongs to the first byte, not each new fragment.
+let delayedChecks = 0;
+for (const value of sequences) {
+    const bytes = Buffer.from(value);
+    for (const duration of [0, 10, 40, 80, 99]) {
+        const f = fixture();
+        for (let i = 0; i < bytes.length; ++i) {
+            f.tick(Math.floor(i * duration / (bytes.length - 1)));
+            f.stream.write(bytes.subarray(i, i + 1));
+            if (i + 1 < bytes.length) assert.equal(f.out.length, 0);
+        }
+        assert.deepEqual(f.out, [bytes], value + ' elapsed=' + duration);
+        assert.equal(f.timers.size, 0);
+        ++checks;
+        ++delayedChecks;
+    }
+    // Exceeding the documented deadline can split a key, but must never
+    // lose/reorder bytes or leave a timer alive after the final flush.
+    for (const interval of [50, 100, 150]) {
+        const f = fixture();
+        for (let i = 0; i < bytes.length; ++i) {
+            f.tick(i * interval);
+            f.stream.write(bytes.subarray(i, i + 1));
+        }
+        f.tick(bytes.length * interval + 100);
+        assert.deepEqual(Buffer.concat(f.out), bytes);
+        assert.equal(f.timers.size, 0);
+        ++checks;
+        ++delayedChecks;
+    }
 }
 {
     const f = fixture();
@@ -163,6 +198,7 @@ console.log(
     JSON.stringify({
         passed: true,
         checks,
+        delayed_checks: delayedChecks,
         scope: 'Deterministic key-framing oracle: all partitions, UTF8, byte conservation, bounded first-byte deadlines, raw takeover and close. Not a stock-server or DOS-client fix.',
     }),
 );
