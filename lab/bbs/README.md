@@ -12,6 +12,8 @@ bridge and from physical modem acceptance. The [DOS composition](synthmodem-dos.
 adds actual DOS ZMODEM transfers through that candidate with an independent peer.
 [Authenticated stock ENiGMA sessions](synthmodem-enigma.md) add menu/editor
 checks through the candidate, with packet-boundary limits kept explicit.
+The separate [control-helper candidate](patches/synthmodem-control/README.md)
+checks coalesced-frame ownership and slow-PTY writes without changing VM images.
 
 
 The [Infocom save-edge workflow](enigma-infocom-edges.md) covers actual DOS

@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+The [SynthModem control-helper candidate](lab/bbs/patches/synthmodem-control/README.md)
+reproduces stock coalesced-frame payload corruption and short-write loss. Its
+source patch passes9 fault cases and7 actual Linux PTY checks, including262147
+exact bytes under reader backpressure, serviced hangup guards and pending-TX
+signal cleanup. It is host-built with Nix GCC; VM/prebuilts, services and DOS
+remain unchanged. Reverse-channel writes, Node/DSP pressure, VM integration and
+physical acceptance remain open before end-to-end backpressure can be claimed.
+
 The [logged-in SynthModem/ENiGMA upload](lab/bbs/synthmodem-enigma.md#logged-in-upload)
 passes19 checks plus independent wire/protocol/metadata audits. A fresh11521-byte
 fixture is installed through the actual upload-details form, with complete final

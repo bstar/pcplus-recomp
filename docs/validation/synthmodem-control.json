@@ -1,0 +1,99 @@
+{
+  "passed": true,
+  "upstream_revision": "b1752e4d0039e0cff72735924e03aa99922723a8",
+  "upstream_sha256": {
+    "modemd-ctrl.c": "95d30103668f3e4e894136a81841a2be64ebcddcaef8e2afb58bdb2b326a3385",
+    "wire.h": "6d978be175e76f64c3bd7ddf21db39379759f2097f699050cb229d206c832b0d"
+  },
+  "lab_input_sha256": {
+    "control.patch": "ad982a88ddf438fdbc228538cc11282acf9b25e58539d3c5edd2aea7d4cd045c",
+    "faults.c": "2153f2bf629ce04714984e7145c0312e8510cc589978ccbb8edc920dac812c63",
+    "check.py": "bf0251824a05dfb78598509ef3d37edce64aa06873c2fcc803966d8a4bbb950a",
+    "README.md": "c440966f47fdf8e19cd902749932ec608394c5d2b3708b3532f3c95b7f1c6e26"
+  },
+  "candidate_sha256": "c05fcce06bb2298145b010f82ff18c37cf8e23ff2a632df18e168c4e013b0f21",
+  "host_executable_sha256": "7ebd239490021f7d45b9d791125ec98710bb4b08a68439f3d5abeaa6938749a7",
+  "gcc": "gcc (GCC) 15.3.0",
+  "reports": {
+    "stock": {
+      "stock_parser_corruption": true,
+      "stock_short_write_loss": true
+    },
+    "candidate": {
+      "passed": true,
+      "fault_cases": 9
+    },
+    "actual_PTY": {
+      "passed": true,
+      "checks": {
+        "coalesced_AT_payload_and_CR_order": true,
+        "host_sender_backpressured": true,
+        "full_binary_payload_exact": true,
+        "writer_completed": true,
+        "PTY_read_serviced_during_hangup_guard": true,
+        "hangup_bytes_and_guards": true,
+        "signal_responsive_with_pending_TX": true
+      },
+      "payload_size": 262147,
+      "payload_sha256": "e8b225397fcc2e3120be1f8355ea9bd59fe95acf2851b5d2a538524f9813d904",
+      "scope": "Actual host-built helper process, Linux raw PTY and Unix control socket. No VM, slmodemd, DSP, SIP/audio or DOS."
+    }
+  },
+  "commands": [
+    [
+      "gcc",
+      "-std=gnu11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O2",
+      "-I/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-control-03/stock/vm/ctrl",
+      "/home/bstar/projects/pcplus-recomp/lab/bbs/patches/synthmodem-control/faults.c",
+      "-o",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-control-03/stock-faults"
+    ],
+    [
+      "gcc",
+      "-DFIXED",
+      "-std=gnu11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O2",
+      "-I/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-control-03/candidate/vm/ctrl",
+      "/home/bstar/projects/pcplus-recomp/lab/bbs/patches/synthmodem-control/faults.c",
+      "-o",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-control-03/candidate-faults"
+    ],
+    [
+      "gcc",
+      "-std=gnu11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O2",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-control-03/candidate/vm/ctrl/modemd-ctrl.c",
+      "-o",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-control-03/control-helper"
+    ]
+  ],
+  "limits": [
+    "Host build only; VM images/prebuilts unchanged.",
+    "Reverse host-output EAGAIN handling and end-to-end native/VM backpressure remain open."
+  ],
+  "cohort": "synthmodem-control-03",
+  "toolchain_sha256": {
+    "nix/flake.nix": "7f069dd8346be02006737101a2790b99a881411fa75b657316f75b090816c15f",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+    "tools/bbs-dev": "8b612f697c23466c10f48f31370afa469dce4331e5af6aca971f4fecf34388fa"
+  },
+  "reviewed_source_sha256": {
+    "src/session/CallSession.js": "48364d12210aaa0fec7ed510abe2a04532f06c301a3e388dde50102b82ecbdb4",
+    "src/backends/PjsipBackend.js": "2fcbaea78eaa91abd85cda71b4ab72de0716e60fab7aaf3fb48faa40dd12d550",
+    "src/dsp/ModemDSP.js": "18986bc99ba59756e7841902dcc93ccf328bb59e4e0671446be286695882e967",
+    "src/dsp/Handshake.js": "2c8e9bf37157159ebee8d441e15b1b241bb46233c6d36f710d77c3cedee2d97b"
+  },
+  "application_changed": false,
+  "VM_image_changed": false,
+  "installed_services_changed": false
+}

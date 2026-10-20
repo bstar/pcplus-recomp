@@ -92,6 +92,24 @@ Links below pin the reviewed source; future versions require rechecking.
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
 
+## Control-helper backpressure checkpoint
+
+[An isolated control-helper source candidate](../lab/bbs/patches/synthmodem-control/README.md)
+now fixes two reproduced upstream faults: receive-buffer compaction invalidating
+a parsed payload, and nonblocking PTY writes losing unsent bytes. Nine fault
+cases and seven real-PTY checks pass, including262147 exact binary bytes with
+the PTY reader stopped/throttled. Queue admission is bounded to one frame; host
+reads pause until it drains. Hangup guards remain serviced, and observed carrier
+loss clears queued session bytes before further output. The
+[receipt](validation/synthmodem-control.json) records the Nix GCC host build.
+
+This does not complete backpressure support. The reverse host-output path still
+needs queued recovery; PjsipBackend/CallSession ignore stream-write pressure, and
+the native DSP write interface supplies no flow credit. No VM image/prebuilt,
+installed bridge, application, BBS or hardware was changed. Rebuild/integration
+and end-to-end tests remain required; earlier proxy/BBS receipts retain their
+unchanged candidate identity and do not test this new helper.
+
 ## Logged-in BBS upload checkpoint
 
 [Actual DOS upload through the candidate](../lab/bbs/synthmodem-enigma.md#logged-in-upload)

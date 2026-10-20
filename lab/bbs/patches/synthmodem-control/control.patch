@@ -1,0 +1,250 @@
+--- a/vm/ctrl/modemd-ctrl.c
++++ b/vm/ctrl/modemd-ctrl.c
+@@ -117,6 +117,12 @@
+ struct ctrl_state {
+     int pty_fd;             /* slmodemd's PTY (/dev/ttySL0 typically)  */
+     int host_control_fd;    /* virtio-serial chardev or unix socket    */
++
++    /* One accepted frame plus optional AT CR. Stop host reads while pending. */
++    uint8_t pty_tx[WIRE_MAX_PAYLOAD + 1];
++    size_t pty_tx_at, pty_tx_len;
++    int hangup_phase;
++    long long hangup_deadline;
+ 
+     bool data_mode;         /* false = AT mode, true = data mode       */
+ 
+@@ -207,7 +213,10 @@
+     }
+     if (*buf_len < (size_t)WIRE_HEADER_SIZE + plen) return 0;
+     *out_type    = type;
+-    *out_payload = buf + WIRE_HEADER_SIZE;
++    /* Compaction invalidates pointers into buf, including a completed frame. */
++    static uint8_t payload_copy[WIRE_MAX_PAYLOAD];
++    memcpy(payload_copy, buf + WIRE_HEADER_SIZE, plen);
++    *out_payload = payload_copy;
+     *out_plen    = plen;
+     size_t consumed = WIRE_HEADER_SIZE + plen;
+     memmove(buf, buf + consumed, *buf_len - consumed);
+@@ -744,6 +753,57 @@
+  * Poll loop handlers
+  * ────────────────────────────────────────────────────────────────── */
+ 
++static int pty_busy(void) { return S.pty_tx_at < S.pty_tx_len; }
++
++static int queue_pty(const void *data, size_t len, bool cr) {
++    if (S.pty_fd < 0 || pty_busy() || len + (cr ? 1u : 0u) > sizeof(S.pty_tx)) {
++        LOGE("PTY unavailable or queue admission failed");
++        return -1;
++    }
++    memcpy(S.pty_tx, data, len);
++    if (cr) S.pty_tx[len++] = '\r';
++    S.pty_tx_at = 0;
++    S.pty_tx_len = len;
++    return 0;
++}
++
++static int flush_pty(void) {
++    if (!pty_busy()) return 0;
++    ssize_t n = write(S.pty_fd, S.pty_tx + S.pty_tx_at, S.pty_tx_len - S.pty_tx_at);
++    if (n < 0 && (errno == EAGAIN || errno == EWOULDBLOCK || errno == EINTR)) return 0;
++    if (n <= 0) { LOGE("PTY write failed: %s", n ? strerror(errno) : "zero write"); return -1; }
++    S.pty_tx_at += (size_t)n;
++    return 0;
++}
++
++static long long monotonic_ms(void) {
++    struct timespec now;
++    clock_gettime(CLOCK_MONOTONIC, &now);
++    return (long long)now.tv_sec * 1000 + now.tv_nsec / 1000000;
++}
++
++static int progress_hangup(void) {
++    switch (S.hangup_phase) {
++    case 1:
++        if (monotonic_ms() >= S.hangup_deadline) {
++            if (queue_pty("+++", 3, false) < 0) return -1;
++            S.hangup_phase = 2;
++        }
++        break;
++    case 2:
++        if (!pty_busy()) { S.hangup_deadline = monotonic_ms() + 1100; S.hangup_phase = 3; }
++        break;
++    case 3:
++        if (monotonic_ms() >= S.hangup_deadline) {
++            if (queue_pty("ATH", 3, true) < 0) return -1;
++            S.hangup_phase = 4;
++        }
++        break;
++    case 4: if (!pty_busy()) S.hangup_phase = 0; break;
++    }
++    return 0;
++}
++
+ static int handle_pty_readable(void) {
+     uint8_t buf[512];
+     ssize_t n = read(S.pty_fd, buf, sizeof(buf));
+@@ -765,10 +825,38 @@
+      * splitting transition lines from preceding/following bytes,
+      * emit MODEM_STATUS, and flip data_mode. They never call back
+      * into the poll loop. */
++    bool was_data_mode = S.data_mode;
+     if (S.data_mode) {
+         process_data_mode_bytes(buf, (size_t)n);
+     } else {
+         process_command_mode_bytes(buf, (size_t)n);
++    }
++    if (was_data_mode && !S.data_mode && pty_busy()) {
++        LOGI("Discarding queued session data after carrier loss");
++        S.pty_tx_at = S.pty_tx_len = 0;
++    }
++    return 0;
++}
++
++static int dispatch_host_frames(void) {
++    while (!pty_busy() && !S.hangup_phase) {
++        uint8_t type = 0, *payload = NULL;
++        size_t plen = 0;
++        int r = wire_try_parse(S.ctrl_rx_buf, &S.ctrl_rx_len, &type, &payload, &plen);
++        if (r <= 0) return r;
++        switch (type) {
++        case WIRE_TYPE_AT:
++            if (queue_pty(payload, plen, true) < 0) return -1;
++            break;
++        case WIRE_TYPE_DATA_TX:
++            if (S.data_mode && queue_pty(payload, plen, false) < 0) return -1;
++            break;
++        case WIRE_TYPE_HANGUP:
++            S.hangup_phase = 1;
++            S.hangup_deadline = monotonic_ms() + 1100;
++            break;
++        default: break;
++        }
+     }
+     return 0;
+ }
+@@ -791,65 +879,7 @@
+     }
+     S.ctrl_rx_len += (size_t)n;
+ 
+-    for (;;) {
+-        uint8_t  type    = 0;
+-        uint8_t *payload = NULL;
+-        size_t   plen    = 0;
+-        int r = wire_try_parse(S.ctrl_rx_buf, &S.ctrl_rx_len,
+-                               &type, &payload, &plen);
+-        if (r == 0) break;
+-        if (r < 0) return -1;
+-
+-        switch (type) {
+-        case WIRE_TYPE_AT:
+-            LOGD("AT cmd: %.*s", (int)plen, (const char *)payload);
+-            if (write(S.pty_fd, payload, plen) < 0 && errno != EIO) {
+-                LOGE("write(pty) AT: %s", strerror(errno));
+-            }
+-            {
+-                /* Append CR — slmodemd wants \r-terminated AT lines. */
+-                static const char cr = '\r';
+-                if (write(S.pty_fd, &cr, 1) < 0 && errno != EIO) {
+-                    LOGE("write(pty) CR: %s", strerror(errno));
+-                }
+-            }
+-            break;
+-
+-        case WIRE_TYPE_DATA_TX:
+-            if (!S.data_mode) {
+-                LOGD("DATA_TX in command mode — dropping %zu bytes", plen);
+-                break;
+-            }
+-            if (write(S.pty_fd, payload, plen) < 0 && errno != EIO) {
+-                LOGE("write(pty) DATA_TX: %s", strerror(errno));
+-            }
+-            break;
+-
+-        case WIRE_TYPE_HANGUP:
+-            /* Per Hayes spec, +++ needs guard time around it. slmodemd
+-             * handles the escape sequence itself on its end of the PTY,
+-             * so we just emit +++ with a pre-and-post guard then ATH\r. */
+-            LOGI("HANGUP requested");
+-            {
+-                struct timespec guard = { 1, 100 * 1000 * 1000 };  /* 1.1 s */
+-                nanosleep(&guard, NULL);
+-                if (write(S.pty_fd, "+++", 3) < 0 && errno != EIO) {
+-                    LOGE("write(pty) +++: %s", strerror(errno));
+-                }
+-                nanosleep(&guard, NULL);
+-                if (write(S.pty_fd, "ATH\r", 4) < 0 && errno != EIO) {
+-                    LOGE("write(pty) ATH: %s", strerror(errno));
+-                }
+-            }
+-            /* data_mode flips off when we see NO CARRIER or OK. */
+-            break;
+-
+-        default:
+-            LOGD("host_control: ignoring unknown type 0x%02x", type);
+-            break;
+-        }
+-    }
+-    return 0;
++    return dispatch_host_frames();
+ }
+ 
+ /* ──────────────────────────────────────────────────────────────────────
+@@ -942,40 +972,47 @@
+     S.data_mode    = false;
+     S.ctrl_rx_len  = 0;
+ 
++    int status = 0;
+     while (!g_quit) {
++        if (progress_hangup() < 0 || dispatch_host_frames() < 0) { status = 1; break; }
+         struct pollfd pfds[2];
+         int nfds = 0;
+ 
+         pfds[nfds].fd     = S.host_control_fd;
+-        pfds[nfds].events = POLLIN;
++        pfds[nfds].events = (!pty_busy() && !S.hangup_phase) ? POLLIN : 0;
+         int idx_ctrl = nfds++;
+ 
+         int idx_pty = -1;
+         if (S.pty_fd >= 0) {
+             pfds[nfds].fd     = S.pty_fd;
+-            pfds[nfds].events = POLLIN;
++            pfds[nfds].events = POLLIN | (pty_busy() ? POLLOUT : 0);
+             idx_pty = nfds++;
+         }
+ 
+-        int pr = poll(pfds, nfds, 1000);
++        int pr = poll(pfds, nfds, S.hangup_phase ? 10 : 1000);
+         if (pr < 0) {
+             if (errno == EINTR) continue;
+             LOGE("poll: %s", strerror(errno));
+-            break;
++            status = 1; break;
+         }
+         if (pr == 0) continue;
+-
+-        if (pfds[idx_ctrl].revents & (POLLIN | POLLHUP)) {
+-            if (handle_host_control_readable() < 0) break;
+-        }
++        if ((pfds[idx_ctrl].revents & (POLLERR | POLLNVAL)) ||
++            (idx_pty >= 0 && (pfds[idx_pty].revents & (POLLERR | POLLNVAL)))) { status = 1; break; }
++        /* Observe carrier/mode transitions before writing pending data. */
+         if (idx_pty >= 0 &&
+             (pfds[idx_pty].revents & (POLLIN | POLLHUP))) {
+-            if (handle_pty_readable() < 0) break;
++            if (handle_pty_readable() < 0) { status = 1; break; }
++        }
++        if (idx_pty >= 0 && (pfds[idx_pty].revents & POLLOUT)) {
++            if (flush_pty() < 0) { status = 1; break; }
++        }
++        if (pfds[idx_ctrl].revents & (POLLIN | POLLHUP)) {
++            if (handle_host_control_readable() < 0) { status = 1; break; }
+         }
+     }
+ 
+     LOGI("modemd-ctrl exiting");
+     if (S.pty_fd >= 0)          close(S.pty_fd);
+     if (S.host_control_fd >= 0) close(S.host_control_fd);
+-    return 0;
+-}
++    return status;
++}
