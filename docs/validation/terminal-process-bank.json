@@ -1,0 +1,1246 @@
+{
+  "passed": true,
+  "whole_application_gates_closed": [],
+  "banks": {
+    "terminal-process-bank": {
+      "binary_sha256": "a501d9c612f51f94a25e4a0822722ef15616e5b7fe11ad7dc5db0e3c60a2bac2",
+      "object_sha256": "5b99ddf787230d911795f72e13ca73ca58ef7382f685f76e22899bff04e6ee64",
+      "near_code_saved": 594,
+      "near_spare": 746,
+      "bank_bytes": 635,
+      "transfers": [
+        {
+          "segment": "_TEXT",
+          "offset": "000C",
+          "operation": "call",
+          "target": "PROCESS_GROUP:process_run_far",
+          "opcode": "9A"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "000C",
+          "operation": "call",
+          "target": "process_run_impl",
+          "opcode": "E8"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "001F",
+          "operation": "je",
+          "target": "L$1",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0021",
+          "operation": "jmp",
+          "target": "L$24",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "002A",
+          "operation": "je",
+          "target": "L$2",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "002C",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0034",
+          "operation": "jne",
+          "target": "L$3",
+          "opcode": "75"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0036",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "003E",
+          "operation": "jae",
+          "target": "L$4",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0040",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0048",
+          "operation": "jae",
+          "target": "L$5",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "004A",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0054",
+          "operation": "jae",
+          "target": "L$6",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0056",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "005E",
+          "operation": "jne",
+          "target": "L$7",
+          "opcode": "75"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0060",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0066",
+          "operation": "call",
+          "target": "process_string_length",
+          "opcode": "E8"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0069",
+          "operation": "jae",
+          "target": "L$8",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "006B",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0070",
+          "operation": "jne",
+          "target": "L$9",
+          "opcode": "75"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0072",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "007D",
+          "operation": "call",
+          "target": "process_owned_disjoint",
+          "opcode": "E8"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0080",
+          "operation": "jae",
+          "target": "L$10",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0082",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "008C",
+          "operation": "je",
+          "target": "L$11",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0091",
+          "operation": "call",
+          "target": "process_string_length",
+          "opcode": "E8"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0094",
+          "operation": "jae",
+          "target": "L$11",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0096",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00A2",
+          "operation": "je",
+          "target": "L$12",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00A5",
+          "operation": "call",
+          "target": "process_owned_disjoint",
+          "opcode": "E8"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00A8",
+          "operation": "jae",
+          "target": "L$12",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00AA",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00B2",
+          "operation": "je",
+          "target": "L$16",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00B7",
+          "operation": "jbe",
+          "target": "L$13",
+          "opcode": "76"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00B9",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00C1",
+          "operation": "call",
+          "target": "process_owned_disjoint",
+          "opcode": "E8"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00C4",
+          "operation": "jae",
+          "target": "L$14",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00C6",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00D1",
+          "operation": "call",
+          "target": "process_result_disjoint",
+          "opcode": "E8"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00D4",
+          "operation": "jae",
+          "target": "L$15",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00D6",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00DE",
+          "operation": "je",
+          "target": "L$16",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00E5",
+          "operation": "call",
+          "target": "process_result_disjoint",
+          "opcode": "E8"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00E8",
+          "operation": "jae",
+          "target": "L$16",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00EA",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "013E",
+          "operation": "jne",
+          "target": "L$18",
+          "opcode": "75"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "014C",
+          "operation": "jae",
+          "target": "L$17",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0157",
+          "operation": "jmp",
+          "target": "L$21",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "01BE",
+          "operation": "jae",
+          "target": "L$19",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "01DD",
+          "operation": "je",
+          "target": "L$20",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "01EC",
+          "operation": "jmp",
+          "target": "L$21",
+          "opcode": "EB"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "01FB",
+          "operation": "je",
+          "target": "L$22",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0215",
+          "operation": "jmp",
+          "target": "L$25",
+          "opcode": "EB"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "021A",
+          "operation": "jmp",
+          "target": "L$25",
+          "opcode": "EB"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0229",
+          "operation": "je",
+          "target": "L$27",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "022E",
+          "operation": "je",
+          "target": "L$28",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0233",
+          "operation": "je",
+          "target": "L$28",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0237",
+          "operation": "jae",
+          "target": "L$28",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "023A",
+          "operation": "je",
+          "target": "L$28",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "023D",
+          "operation": "jmp",
+          "target": "L$26",
+          "opcode": "EB"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0247",
+          "operation": "jae",
+          "target": "L$29",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "024E",
+          "operation": "jb",
+          "target": "L$30",
+          "opcode": "72"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0256",
+          "operation": "jb",
+          "target": "L$30",
+          "opcode": "72"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "025F",
+          "operation": "jae",
+          "target": "L$31",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0266",
+          "operation": "jae",
+          "target": "L$32",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "026C",
+          "operation": "ja",
+          "target": "L$32",
+          "opcode": "77"
+        }
+      ]
+    },
+    "terminal-process-bank-mouse": {
+      "binary_sha256": "6b22c240fd8d5294efc7330ac56a4b04980a3e3e65d1f3e99c207e74ee8d18f8",
+      "object_sha256": "5b99ddf787230d911795f72e13ca73ca58ef7382f685f76e22899bff04e6ee64",
+      "near_code_saved": 592,
+      "near_spare": 596,
+      "bank_bytes": 635,
+      "transfers": [
+        {
+          "segment": "_TEXT",
+          "offset": "000C",
+          "operation": "call",
+          "target": "PROCESS_GROUP:process_run_far",
+          "opcode": "9A"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "000C",
+          "operation": "call",
+          "target": "process_run_impl",
+          "opcode": "E8"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "001F",
+          "operation": "je",
+          "target": "L$1",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0021",
+          "operation": "jmp",
+          "target": "L$24",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "002A",
+          "operation": "je",
+          "target": "L$2",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "002C",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0034",
+          "operation": "jne",
+          "target": "L$3",
+          "opcode": "75"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0036",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "003E",
+          "operation": "jae",
+          "target": "L$4",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0040",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0048",
+          "operation": "jae",
+          "target": "L$5",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "004A",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0054",
+          "operation": "jae",
+          "target": "L$6",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0056",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "005E",
+          "operation": "jne",
+          "target": "L$7",
+          "opcode": "75"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0060",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0066",
+          "operation": "call",
+          "target": "process_string_length",
+          "opcode": "E8"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0069",
+          "operation": "jae",
+          "target": "L$8",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "006B",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0070",
+          "operation": "jne",
+          "target": "L$9",
+          "opcode": "75"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0072",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "007D",
+          "operation": "call",
+          "target": "process_owned_disjoint",
+          "opcode": "E8"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0080",
+          "operation": "jae",
+          "target": "L$10",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0082",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "008C",
+          "operation": "je",
+          "target": "L$11",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0091",
+          "operation": "call",
+          "target": "process_string_length",
+          "opcode": "E8"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0094",
+          "operation": "jae",
+          "target": "L$11",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0096",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00A2",
+          "operation": "je",
+          "target": "L$12",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00A5",
+          "operation": "call",
+          "target": "process_owned_disjoint",
+          "opcode": "E8"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00A8",
+          "operation": "jae",
+          "target": "L$12",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00AA",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00B2",
+          "operation": "je",
+          "target": "L$16",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00B7",
+          "operation": "jbe",
+          "target": "L$13",
+          "opcode": "76"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00B9",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00C1",
+          "operation": "call",
+          "target": "process_owned_disjoint",
+          "opcode": "E8"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00C4",
+          "operation": "jae",
+          "target": "L$14",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00C6",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00D1",
+          "operation": "call",
+          "target": "process_result_disjoint",
+          "opcode": "E8"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00D4",
+          "operation": "jae",
+          "target": "L$15",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00D6",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00DE",
+          "operation": "je",
+          "target": "L$16",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00E5",
+          "operation": "call",
+          "target": "process_result_disjoint",
+          "opcode": "E8"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00E8",
+          "operation": "jae",
+          "target": "L$16",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "00EA",
+          "operation": "jmp",
+          "target": "L$23",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "013E",
+          "operation": "jne",
+          "target": "L$18",
+          "opcode": "75"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "014C",
+          "operation": "jae",
+          "target": "L$17",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0157",
+          "operation": "jmp",
+          "target": "L$21",
+          "opcode": "E9"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "01BE",
+          "operation": "jae",
+          "target": "L$19",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "01DD",
+          "operation": "je",
+          "target": "L$20",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "01EC",
+          "operation": "jmp",
+          "target": "L$21",
+          "opcode": "EB"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "01FB",
+          "operation": "je",
+          "target": "L$22",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0215",
+          "operation": "jmp",
+          "target": "L$25",
+          "opcode": "EB"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "021A",
+          "operation": "jmp",
+          "target": "L$25",
+          "opcode": "EB"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0229",
+          "operation": "je",
+          "target": "L$27",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "022E",
+          "operation": "je",
+          "target": "L$28",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0233",
+          "operation": "je",
+          "target": "L$28",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0237",
+          "operation": "jae",
+          "target": "L$28",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "023A",
+          "operation": "je",
+          "target": "L$28",
+          "opcode": "74"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "023D",
+          "operation": "jmp",
+          "target": "L$26",
+          "opcode": "EB"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0247",
+          "operation": "jae",
+          "target": "L$29",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "024E",
+          "operation": "jb",
+          "target": "L$30",
+          "opcode": "72"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0256",
+          "operation": "jb",
+          "target": "L$30",
+          "opcode": "72"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "025F",
+          "operation": "jae",
+          "target": "L$31",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "0266",
+          "operation": "jae",
+          "target": "L$32",
+          "opcode": "73"
+        },
+        {
+          "segment": "PROCESS_CODE",
+          "offset": "026C",
+          "operation": "ja",
+          "target": "L$32",
+          "opcode": "77"
+        }
+      ]
+    }
+  },
+  "component_model": {
+    "passed": true,
+    "banked_process": true,
+    "inputs": 68,
+    "cases": [
+      {
+        "case": "actual-instructions-DOS-parameter-block-inherited-env-child-status-and-clobbered-context",
+        "inputs": 10,
+        "passed": true
+      },
+      {
+        "case": "DOS-resize-and-EXEC-errors-preserve-first-error-no-stale-child-and-no-child-after-resize-failure",
+        "inputs": 9,
+        "passed": true
+      },
+      {
+        "case": "empty-max-CP437-CR-LF-overlong-null-path-wrapping-result-and-invalid-host-state-before-IO",
+        "inputs": 17,
+        "passed": true
+      },
+      {
+        "case": "near-region-aliases-owned-backend-state-last-byte-NUL-and-exact-64K-result-edge",
+        "inputs": 28,
+        "passed": true
+      },
+      {
+        "case": "repeated-execution-resizes-once-optional-pointers-cleared-tail-and-failed-child-recovery",
+        "inputs": 4,
+        "passed": true
+      }
+    ],
+    "binary_sha256": "035a7639f2f77046e804ecf5b0bd76a1791d64f212f8b29a7d6cc86a1cfe61a5",
+    "checker_sha256": "56dfdc116a7d8d555bb8c9706e4ff837b64e1183415b00291b8b2599f9328d43",
+    "loader_sha256": "319e92316365f6acbdb406eb964dab1a22bc2e6ca57e3062e085527a17d2822c",
+    "scope": "Actual linked maintained public near EXEC/bounds/context entry; optional far body. Only DOS4A/29/4B/4D kernel boundary modeled. Context-clobber model changes DS/ES/SS/SP/registers before real restoration instructions. Real DOS/FCB/child execution separately tested; no live UART handoff."
+  },
+  "component_DOS": {
+    "passed": true,
+    "banked_process": true,
+    "checks": {
+      "actual_DOS_parent_checks": true,
+      "child_exact_tail": true,
+      "child_environment_inherited": true,
+      "child_actual_FCB_parse": true
+    },
+    "outputs": {
+      "PROCESS.EXE": "035a7639f2f77046e804ecf5b0bd76a1791d64f212f8b29a7d6cc86a1cfe61a5",
+      "CHILD.COM": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f"
+    },
+    "checker_sha256": "b90dc764cb86e54a3e0afa32e703266cafaa825083eb9ef58a76671deabb5905",
+    "scope": "Actual DOS8086 parent memory shrink/MCB, repeated successful EXEC with exit37, inherited synthetic environment, DOSFCBs/tails, missing child, invalid input, real resize error8 and subsequent recovery. No user program or live UART handoff."
+  },
+  "command_processor": {
+    "passed": true,
+    "banked_process": true,
+    "cases": [
+      {
+        "case": "COMSPEC",
+        "passed": true,
+        "checks": {
+          "expected_DOS_exit": true,
+          "command_processor_delivered_exact_child_arguments": true,
+          "child_environment": true,
+          "raw_command_processor_result": true
+        },
+        "raw_result": [
+          0,
+          0,
+          0,
+          671
+        ]
+      },
+      {
+        "case": "missing-COMSPEC-PATH",
+        "passed": true,
+        "checks": {
+          "expected_DOS_exit": true,
+          "command_processor_delivered_exact_child_arguments": true,
+          "child_environment": true,
+          "raw_command_processor_result": true
+        },
+        "raw_result": [
+          0,
+          0,
+          0,
+          671
+        ]
+      },
+      {
+        "case": "invalid-COMSPEC-fallback",
+        "passed": true,
+        "checks": {
+          "expected_DOS_exit": true,
+          "command_processor_delivered_exact_child_arguments": true,
+          "child_environment": true,
+          "raw_command_processor_result": true
+        },
+        "raw_result": [
+          0,
+          0,
+          0,
+          671
+        ]
+      },
+      {
+        "case": "drive-relative-PATH",
+        "passed": true,
+        "checks": {
+          "expected_DOS_exit": true,
+          "command_processor_delivered_exact_child_arguments": true,
+          "child_environment": true,
+          "raw_command_processor_result": true
+        },
+        "raw_result": [
+          0,
+          0,
+          0,
+          671
+        ]
+      },
+      {
+        "case": "DOSBox-internal-processor",
+        "passed": true,
+        "checks": {
+          "expected_DOS_exit": true,
+          "command_processor_delivered_exact_child_arguments": true,
+          "child_environment": true,
+          "raw_command_processor_result": true
+        },
+        "raw_result": [
+          0,
+          0,
+          0,
+          671
+        ]
+      }
+    ],
+    "outputs": {
+      "PROGRAM.EXE": "43340f8eaf45a1d5e523edb91d520e1d40468a3cdfe87d0d96577de9f7bb4d37",
+      "CHILD.COM": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f"
+    },
+    "checker_sha256": "d3d27a1815d42370a024c376429d900738455b890ca815ba930ba2450dad404f",
+    "scope": "Actual DOS8086 COMSPEC /c and fallback with isolated synthetic DOS media/source-owned nested child. DOSBox virtualCOMMAND.COM resolves even with emptyCOMSPEC/PATH; candidate search order and missing-processor are separately tested under explicit DOSkernel model. Its command processor returns0 although nestedCHILD returns37. No live UART or vendor UI."
+  },
+  "mouse_workflows": [
+    {
+      "case": "program",
+      "checks": 9,
+      "child": 0,
+      "retained": 0,
+      "stage": 0,
+      "report_sha256": "8e6e55a1e20adb68d96f20acf75160d332c66b4604d85b3e4432f55afb33d398"
+    },
+    {
+      "case": "quarantine",
+      "checks": 12,
+      "child": 782,
+      "retained": 1,
+      "stage": 1,
+      "report_sha256": "0af5ec4a914de38c136423a4fafd6e4a9b0e02ec585c400c2d62a6882df3788f"
+    },
+    {
+      "case": "live-save",
+      "checks": 10,
+      "child": 0,
+      "retained": 0,
+      "stage": 2,
+      "report_sha256": "ea7e385edda1bf35cd10d7d168ab7f5054444fb43583ac1229135fafd037d180"
+    },
+    {
+      "case": "startup-repair",
+      "checks": 10,
+      "child": 0,
+      "retained": 0,
+      "stage": 2,
+      "report_sha256": "b1bf674384cf77f1790b56040a58817da9b3ca3b95c3865ebdc8422230312ec1"
+    }
+  ],
+  "mouse_checks": 41,
+  "unchanged_controls": {
+    "process/PROCESS.EXE": "7da5229e3cbc16de2c994fadaf5556c34a105afa4813ce64646fa5b543892a05",
+    "process/PROGRAM.EXE": "c9d32557bc40fd4542ea888b0181c111edee7abffc324ffd2242eb17cc7abeaa",
+    "process/CHILD.COM": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f",
+    "terminal": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+    "terminal-process": "365b8bef8465cb1c0d2d7765b75ccdc4eb1b966fcc3c4e69137659267e58e045",
+    "terminal-mouse": "8bd0d5ab6f6e8b83b87be6ba1202e419ddeab55bbd53644ee82a7da48d4cc950",
+    "terminal-mouse-process": "56a17e0fc630fb85dd624fc3289bed66b1a569d35302d24c42428ebd2a40a128"
+  },
+  "exit_receipt_sha256": "f4f01da38bd56432b6bee8ec2fa6ff4aed66643c21b6012ccfd1e90e7b6d5866",
+  "source_products": {
+    "terminal-process-bank/TERMINAL.EXE": {
+      "expected": "a501d9c612f51f94a25e4a0822722ef15616e5b7fe11ad7dc5db0e3c60a2bac2",
+      "actual": "a501d9c612f51f94a25e4a0822722ef15616e5b7fe11ad7dc5db0e3c60a2bac2"
+    },
+    "terminal-process-bank-mouse/TERMINAL.EXE": {
+      "expected": "6b22c240fd8d5294efc7330ac56a4b04980a3e3e65d1f3e99c207e74ee8d18f8",
+      "actual": "6b22c240fd8d5294efc7330ac56a4b04980a3e3e65d1f3e99c207e74ee8d18f8"
+    },
+    "terminal/TERMINAL.EXE": {
+      "expected": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+      "actual": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c"
+    },
+    "terminal-process/TERMINAL.EXE": {
+      "expected": "365b8bef8465cb1c0d2d7765b75ccdc4eb1b966fcc3c4e69137659267e58e045",
+      "actual": "365b8bef8465cb1c0d2d7765b75ccdc4eb1b966fcc3c4e69137659267e58e045"
+    },
+    "terminal-mouse/TERMINAL.EXE": {
+      "expected": "8bd0d5ab6f6e8b83b87be6ba1202e419ddeab55bbd53644ee82a7da48d4cc950",
+      "actual": "8bd0d5ab6f6e8b83b87be6ba1202e419ddeab55bbd53644ee82a7da48d4cc950"
+    },
+    "terminal-mouse-process/TERMINAL.EXE": {
+      "expected": "56a17e0fc630fb85dd624fc3289bed66b1a569d35302d24c42428ebd2a40a128",
+      "actual": "56a17e0fc630fb85dd624fc3289bed66b1a569d35302d24c42428ebd2a40a128"
+    },
+    "terminal-exit/TERMINAL.EXE": {
+      "expected": "40cef7e522cdaeeec335934c53c90cfcf04861575b8af6b33321227101ae9410",
+      "actual": "40cef7e522cdaeeec335934c53c90cfcf04861575b8af6b33321227101ae9410"
+    },
+    "terminal-exit-mouse/TERMINAL.EXE": {
+      "expected": "e3e4057b05ff0fb83bba5d7fc8fbe9865abdc67629da9cb019083ece591c5cfd",
+      "actual": "e3e4057b05ff0fb83bba5d7fc8fbe9865abdc67629da9cb019083ece591c5cfd"
+    },
+    "terminal-process-bank-probe-0/TERMINAL.EXE": {
+      "expected": "06b3e7cc3710cb5861f85da5e53ee115e72af1bc36c3ba23705bbfa1e8b985a1",
+      "actual": "06b3e7cc3710cb5861f85da5e53ee115e72af1bc36c3ba23705bbfa1e8b985a1"
+    },
+    "terminal-process-bank-probe-1/TERMINAL.EXE": {
+      "expected": "45eb3c0dbc98d76c1ec993ae90868630dfd015516488e476613c4f418cf94852",
+      "actual": "45eb3c0dbc98d76c1ec993ae90868630dfd015516488e476613c4f418cf94852"
+    },
+    "terminal-process-bank-probe-2/TERMINAL.EXE": {
+      "expected": "8147804820d2c5065ef87377dd3213b5f4588e623642fac9845f4cd391ea5d68",
+      "actual": "8147804820d2c5065ef87377dd3213b5f4588e623642fac9845f4cd391ea5d68"
+    },
+    "terminal-process-bank-probe-3/TERMINAL.EXE": {
+      "expected": "9adcb8ca7b697ba60f2a162624792add2b164f0f582225285e501807edffcc3c",
+      "actual": "9adcb8ca7b697ba60f2a162624792add2b164f0f582225285e501807edffcc3c"
+    },
+    "terminal-process-bank-mouse-probe-0/TERMINAL.EXE": {
+      "expected": "99d3f470859e146d6991b0a41475e0e4140e97fa8115d788f8006f0349eda0a4",
+      "actual": "99d3f470859e146d6991b0a41475e0e4140e97fa8115d788f8006f0349eda0a4"
+    },
+    "terminal-process-bank-mouse-probe-1/TERMINAL.EXE": {
+      "expected": "9774426864056d4ad18c52873d392031fed87a5a8abc8bca4a5996764d9cf31c",
+      "actual": "9774426864056d4ad18c52873d392031fed87a5a8abc8bca4a5996764d9cf31c"
+    },
+    "terminal-process-bank-mouse-probe-2/TERMINAL.EXE": {
+      "expected": "641e55b537856c21954ac6d1f7ec0ab8fafc6ed4176fba9ee70b6466609bce74",
+      "actual": "641e55b537856c21954ac6d1f7ec0ab8fafc6ed4176fba9ee70b6466609bce74"
+    },
+    "terminal-process-bank-mouse-probe-3/TERMINAL.EXE": {
+      "expected": "9969b6b092ce3fc1a6fc5713ac01b89e84bc96d445a3e1bce47c7f939b9ce690",
+      "actual": "9969b6b092ce3fc1a6fc5713ac01b89e84bc96d445a3e1bce47c7f939b9ce690"
+    },
+    "process/PROCESS.EXE": {
+      "expected": "7da5229e3cbc16de2c994fadaf5556c34a105afa4813ce64646fa5b543892a05",
+      "actual": "7da5229e3cbc16de2c994fadaf5556c34a105afa4813ce64646fa5b543892a05"
+    },
+    "process/CHILD.COM": {
+      "expected": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f",
+      "actual": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f"
+    },
+    "process/PROGRAM.EXE": {
+      "expected": "c9d32557bc40fd4542ea888b0181c111edee7abffc324ffd2242eb17cc7abeaa",
+      "actual": "c9d32557bc40fd4542ea888b0181c111edee7abffc324ffd2242eb17cc7abeaa"
+    },
+    "process-bank/PROCESS.EXE": {
+      "expected": "035a7639f2f77046e804ecf5b0bd76a1791d64f212f8b29a7d6cc86a1cfe61a5",
+      "actual": "035a7639f2f77046e804ecf5b0bd76a1791d64f212f8b29a7d6cc86a1cfe61a5"
+    },
+    "process-bank/CHILD.COM": {
+      "expected": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f",
+      "actual": "b5ca3f99a3f96c760e2774fcd58d89bfa07a63100e57b7218355981c8202773f"
+    },
+    "process-bank/PROGRAM.EXE": {
+      "expected": "43340f8eaf45a1d5e523edb91d520e1d40468a3cdfe87d0d96577de9f7bb4d37",
+      "actual": "43340f8eaf45a1d5e523edb91d520e1d40468a3cdfe87d0d96577de9f7bb4d37"
+    }
+  },
+  "evidence": {
+    "build/process-bank": {
+      "checks.json": "988cb1c8ad796c8ac9072eaa7a49b47819ee2d8b06eb6dc0a241b25eead713d7",
+      "dos-results.json": "82d7a3f83683e491feb88218d3a72c28c209d89d0e7b761b1f45b64a75dbb778",
+      "CHILD.OUT": "cd0cdafd451fa7a0b5c9f0089d49552c7428b92372258c4637a3c9e3e200efb2",
+      "ENV.OUT": "dea15985701697af623c66310656ea20d0e46c04b4f5d8a1f5fb0b830811fe0d",
+      "FCBS.OUT": "94da6c25e7edc763530118aca19e092095558158b5ef544535203876861af4f6"
+    },
+    "build/terminal-mouse-tests/bank-mouse-lifetime-02": {
+      "checks.json": "ebdf031d8d0986a53a3572cb3aae2edff59d6a3bc86137db4d156fedf915a3a1"
+    }
+  },
+  "checker_sha256": "2d39d01e7ec6e0bd224e2fd047f31171090d2f8dbc664c544b16d9040ee3d965",
+  "limits": [
+    "Process-bank entry retains the three-word near ABI through explicit copies; modeled kernel faults remain separate from actual DOS evidence",
+    "Final guard audits DOS-restored22/23/24 targets from the PSP; this is not asynchronous Ctrl-Break or critical-error trapping",
+    "Mouse quarantine repair/reclaim occurs only in the independent controlled observer, not the product",
+    "Application-wide traps, full ownership, normal publication and physical/BBS acceptance remain open"
+  ]
+}

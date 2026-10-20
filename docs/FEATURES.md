@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+The [terminal process bank](TERMINAL_PROCESS_BANK.md) preserves the public
+near EXEC ABI while moving its implementation and saved child context out of
+the resident segment. Keyboard/mouse parents recover594/592 bytes of near code.
+DOS, ASPECT, mouse/setup, exit and retry evidence pass;22 source products
+reproduce. DOS-restored PSP vector targets are now included in the exit audit.
+Application traps, normal publication and all full gates remain open.
+
 The [terminal final-exit guard](TERMINAL_EXIT.md) audits execution state and
 interrupt references before DOS4C, retaining the complete validated allocation
 on unresolved ownership. Sixteen DOS cases pass288 parent assertions;26 normal

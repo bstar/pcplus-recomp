@@ -76,6 +76,7 @@ def main():
         invalid.append(kind)
     for index in range(256):
         m=Machine();m.begin();m.vector(index,m.psp+16,0)
+        if index in [0x22,0x23,0x24]:m.u.mem_write(m.psp*16+10+(index-0x22)*4,struct.pack('<HH',0,m.psp+16))
         assert m.call('finish')=='retained',index
         assert m.image.get('terminal_exit_guard_reason')==1 and m.image.get('terminal_exit_guard_vector')==index
     boundaries=[]
@@ -120,9 +121,17 @@ def main():
         if kind=='changed-vector31':m.vector(0x31,m.psp+16,0)
         assert m.call('finish')==('returned' if kind=='unchanged-kernel' else 'retained'),kind
         gateways.append(kind)
+    restored=[]
+    for index in [0x22,0x23,0x24]:
+        for kind in ['temporary-self','saved-self']:
+            m=Machine();m.begin()
+            if kind=='temporary-self':m.vector(index,m.psp+16,0)
+            else:m.u.mem_write(m.psp*16+10+(index-0x22)*4,struct.pack('<HH',0,m.psp+16))
+            assert m.call('finish')==('returned' if kind=='temporary-self' else 'retained')
+            restored.append(dict(index=index,kind=kind))
     result=dict(passed=True,rejected_admissions=invalid,IVT_slots=256,boundaries=boundaries,leases=leases,held_decisions=holds,
-        normal_decisions=2,gateways=gateways,binary_sha256=sha(OUT/'TERMINAL.EXE'),checker_sha256=sha(Path(__file__)),loader_sha256=sha(ROOT/'standalone/dos_image.py'),
+        normal_decisions=2,gateways=gateways,restored_vectors=restored,binary_sha256=sha(OUT/'TERMINAL.EXE'),checker_sha256=sha(Path(__file__)),loader_sha256=sha(ROOT/'standalone/dos_image.py'),
         scope='Actual linked far guard with modeled DOS PSP/retention. Invalid MCB/fail-stop is modeled, not live DOS corruption. Wrapped pointers use conservative20-bit normalization.')
     (OUT/'model-checks.json').write_text(json.dumps(result,indent=2)+'\n')
-    print('10 rejected admissions,256 IVT slots,6 boundaries,5 leases,9 held,2 normal and5 gateway decisions passed')
+    print('10 rejected admissions,256 slots,6 boundaries,5 leases,9 held,2 normal,5 gateway and6 restored-vector cases passed')
 if __name__=='__main__':main()

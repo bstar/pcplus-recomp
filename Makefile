@@ -1149,6 +1149,26 @@ test-terminal-exit-source: terminal-exit terminal terminal-mouse terminal-mouse-
 	python3 standalone/build_terminal.py --external-render
 	python3 standalone/check_terminal_exit_source.py
 
+.PHONY: terminal-process-bank test-terminal-process-bank test-terminal-process-bank-ui test-terminal-process-bank-exit test-terminal-process-bank-source
+terminal-process-bank:
+	python3 standalone/build_terminal_process_bank.py
+test-terminal-process-bank: terminal-process-bank terminal-exit
+	python3 standalone/check_terminal_process_bank.py
+	python3 standalone/check_process.py --banked
+	python3 standalone/test_process_dos.py --banked
+	python3 standalone/test_program_process_dos.py --banked
+test-terminal-process-bank-ui: terminal-process-bank aspect-banked-cli aspect-compiler-dos setup-mouse
+	python3 standalone/test_aspect_parent_process_dos.py --break-owner --terminal-exit-guard --process-bank
+	python3 standalone/test_aspect_parent_process_dos.py --break-owner --terminal-exit-guard --process-bank --mouse
+	python3 standalone/test_terminal_mouse_dos.py --process-bank --case program --case quarantine --case startup-repair --case live-save
+test-terminal-process-bank-exit: terminal-process-bank terminal-exit
+	python3 standalone/check_terminal_exit.py
+	python3 standalone/test_terminal_exit_dos.py --process-bank
+	python3 standalone/test_terminal_exit_dos.py --process-bank --mouse
+test-terminal-process-bank-source: terminal-process-bank terminal-exit terminal terminal-mouse terminal-mouse-process process
+	python3 standalone/build_terminal.py --external-render
+	python3 standalone/check_terminal_process_source.py
+
 .PHONY: native-program-break test-native-program-break test-native-program-break-source
 native-program-break:
 	python3 standalone/build_native_program.py --break-owner

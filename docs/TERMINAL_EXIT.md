@@ -1,5 +1,11 @@
 # Terminal final-exit ownership
 
+The [process-bank follow-up](TERMINAL_PROCESS_BANK.md) expands real PROGRAM and
+setup coverage and corrects a false positive for DOS-restored vectors22h/23h/24h.
+The guard audits their effective targets from PSP0A/0E/12; an unsafe saved
+self-reference still retains. Its latest banked exit receipt includes six
+explicit restored-vector model cases and the actual broader mouse workflows.
+
 The opt-in `--exit-guard` terminal now checks its final DOS4C boundary. Startup
 captures the real PSP and immutable static paragraph floor after validating
 DS=SS=DGROUP, IF1, PSP signature and MCB ownership/extent. Final cleanup restores

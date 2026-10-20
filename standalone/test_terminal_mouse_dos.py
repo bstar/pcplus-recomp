@@ -18,14 +18,23 @@ sha = render.sha
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label', default='mouse-' + uuid.uuid4().hex)
+    parser.add_argument('--process-bank',action='store_true')
+    parser.add_argument('--terminal-exit-guard',action='store_true')
+    parser.add_argument('--exit-report',action='store_true')
     parser.add_argument('--case', action='append', choices=['normal', 'menu', 'program', 'quarantine', 'invalid-scale', 'no-driver', 'unsupported-driver','live-save','live-cancel','live-invalid','live-child-failed','startup-repair'])
     args = parser.parse_args()
     assert re.fullmatch(r'[A-Za-z0-9_-]+', args.label)
     out = ROOT / 'build/terminal-mouse-tests' / args.label
     out.mkdir(parents=True, exist_ok=False)
     binary = ROOT / 'build/terminal-mouse/TERMINAL.EXE'
+    if args.terminal_exit_guard:binary=ROOT/'build/terminal-exit-mouse/TERMINAL.EXE'
+    if args.process_bank:binary=ROOT/'build/terminal-process-bank-mouse/TERMINAL.EXE'
+    if args.exit_report:
+        assert args.process_bank or args.terminal_exit_guard
+        binary=binary.parent.with_name(binary.parent.name+'-probe-0')/'TERMINAL.EXE'
     manifest = json.loads((binary.parent / 'manifest.json').read_text())
-    assert manifest['experimental_mouse'] and not manifest['experimental_external_render']
+    assert manifest['experimental_mouse'] and manifest['experimental_external_render']==(args.process_bank or args.terminal_exit_guard)
+    if args.process_bank:assert manifest['banked_process'] and manifest['terminal_exit_guard']
     assert manifest['binary_sha256'] == sha(binary)
     sources = {**manifest['sources']}
     names = ['standalone/test_terminal_mouse_dos.py', 'standalone/terminal_mouse_observer.c',

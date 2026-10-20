@@ -215,6 +215,23 @@ terminal_exit_guard_finish:
  cmp si,0xc4
  je .next
 .ordinary:
+ ; DOS4C/31 restores22/23/24 from this PSP before returning to the parent.
+ ; Audit those effective targets, including a corrupted saved self-reference.
+ cmp si,0x88
+ jb .current
+ cmp si,0x90
+ ja .current
+ push es
+ mov bx,[terminal_exit_guard_owner]
+ mov es,bx
+ mov di,si
+ sub di,0x7e ; IVT88/8C/90 -> PSP0A/0E/12.
+ mov bx,[es:di]
+ mov dx,[es:di+2]
+ pop es
+ call reference
+ jmp short .next
+.current:
  mov bx,[es:si]
  mov dx,[es:si+2]
  call reference

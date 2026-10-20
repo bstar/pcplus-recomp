@@ -12,6 +12,7 @@ def main():
     p.add_argument('--normal-label',action='append',required=True)
     p.add_argument('--retry-label',action='append',required=True)
     p.add_argument('--source-label',required=True)
+    p.add_argument('--process-bank',action='store_true')
     args=p.parse_args()
     for label in [*args.dos_label,*args.normal_label,*args.retry_label,args.source_label]:assert re.fullmatch(r'[A-Za-z0-9_-]+',label)
     dos=[];seen=set();evidence={}
@@ -24,6 +25,7 @@ def main():
             assert key not in seen;seen.add(key)
             assert case==read(sub/'result.json') and case['passed'] and all(case['checks'].values())
             product='terminal-exit-mouse-probe-' if mouse else 'terminal-exit-probe-'
+            if args.process_bank:product='terminal-process-bank-mouse-probe-' if mouse else 'terminal-process-bank-probe-'
             product=ROOT/'build'/(product+str(mode));manifest=read(product/'manifest.json')
             assert sha(sub/'TERMINAL.EXE')==sha(product/'TERMINAL.EXE')==case['child_sha256']
             assert sha(sub/'TEOBS.EXE')==sha(folder/('parent-'+str(mode))/'TEOBS.EXE')==case['parent_sha256']
@@ -51,13 +53,15 @@ def main():
     normals=[];normal_seen=set();retries=[];retry_seen=set()
     for retry,labels in [(False,args.normal_label),(True,args.retry_label)]:
         for label in labels:
-            candidates=[ROOT/'build'/(name+suffix)/label for name in ['aspect-parent-break','aspect-parent-exit'] for suffix in ['-guarded','-mouse-guarded','-retry-guarded','-mouse-retry-guarded']]
+            candidates=[ROOT/'build'/(name+suffix+('-banked' if args.process_bank else ''))/label for name in ['aspect-parent-break','aspect-parent-exit'] for suffix in ['-guarded','-mouse-guarded','-retry-guarded','-mouse-retry-guarded']]
             folders=[f for f in candidates if (f/'result.json').exists()];assert len(folders)==1,label
             folder=folders[0];run=read(folder/'result.json')
             assert run['passed'] and run['terminal_exit_guard'] and run['same_session_retry']==retry
+            if args.process_bank:assert run['banked_process']
             assert run['checker_sha256']==sha(ROOT/'standalone/test_aspect_parent_process_dos.py');current(run['source_hashes'])
             for n,h in run['source_hashes'].items():assert sha(folder/'sources'/n)==h,n
             parent=ROOT/'build'/('terminal-exit-mouse' if run['experimental_mouse'] else 'terminal-exit')/'TERMINAL.EXE'
+            if args.process_bank:parent=ROOT/'build'/('terminal-process-bank-mouse' if run['experimental_mouse'] else 'terminal-process-bank')/'TERMINAL.EXE'
             assert run['parent_sha256']==sha(parent)
             for case in run['cases']:
                 sub=folder/case['case'];key=(run['experimental_mouse'],case['case'])
@@ -80,18 +84,19 @@ def main():
     assert model['passed'] and model['IVT_slots']==256 and len(model['boundaries'])==6 and len(model['held_decisions'])==9
     assert len(model['rejected_admissions'])==10 and len(model['leases'])==5 and model['normal_decisions']==2
     assert len(model['gateways'])==5
+    assert len(model['restored_vectors'])==6
     assert model['checker_sha256']==sha(ROOT/'standalone/check_terminal_exit.py')
     assert model['loader_sha256']==sha(ROOT/'standalone/dos_image.py')
     assert model['binary_sha256']==sha(ROOT/'build/terminal-exit-mouse/TERMINAL.EXE')
-    proof=read(ROOT/'build/terminal-exit-source'/args.source_label/'result.json')
-    assert proof['passed'] and len(proof['products'])==14 and proof['original_inputs']==[];current(proof['sources'])
-    assert proof['checker_sha256']==sha(ROOT/'standalone/check_terminal_exit_source.py')
-    for n,v in proof['products'].items():assert v['expected']==v['actual']==sha(ROOT/'build'/n/'TERMINAL.EXE'),n
+    proof=read(ROOT/('build/terminal-process-source' if args.process_bank else 'build/terminal-exit-source')/args.source_label/'result.json')
+    assert proof['passed'] and len(proof['products'])==(22 if args.process_bank else 14) and proof['original_inputs']==[];current(proof['sources'])
+    assert proof['checker_sha256']==sha(ROOT/('standalone/check_terminal_process_source.py' if args.process_bank else 'standalone/check_terminal_exit_source.py'))
+    for n,v in proof['products'].items():assert v['expected']==v['actual']==sha(ROOT/'build'/n if args.process_bank else ROOT/'build'/n/'TERMINAL.EXE'),n
     baseline=read(ROOT/'docs/validation/parent-retry.json')['source_proof']['products']
     stock={n:sha(ROOT/'build'/n/'TERMINAL.EXE') for n in ['terminal','terminal-process','terminal-mouse','terminal-mouse-process']}
     for n,h in stock.items():assert baseline[n+'/TERMINAL.EXE']['expected']==h,n
-    memory={n:read(ROOT/'build'/n/'manifest.json')['memory_layout'] for n in ['terminal-exit','terminal-exit-mouse']}
-    result=dict(passed=True,whole_application_gates_closed=[],DOS_routes=dos,DOS_parent_checks=sum(c['checks'] for c in dos),normal_routes=normals,
+    memory={n:read(ROOT/'build'/n/'manifest.json')['memory_layout'] for n in (['terminal-process-bank','terminal-process-bank-mouse'] if args.process_bank else ['terminal-exit','terminal-exit-mouse'])}
+    result=dict(passed=True,banked_process=args.process_bank,whole_application_gates_closed=[],DOS_routes=dos,DOS_parent_checks=sum(c['checks'] for c in dos),normal_routes=normals,
         normal_checks=sum(c['checks'] for c in normals),retained_retry_controls=retries,model=model,source_proof=proof,
         stock_terminals_unchanged=stock,memory=memory,evidence=evidence,checker_sha256=sha(Path(__file__)),
         limits=['Opt-in final DOS4C boundary; asynchronous DOS Ctrl-Break/critical-error interception remains open',
@@ -100,6 +105,6 @@ def main():
             'IVT scan covers the full validated main PSP block; it is not a universal ownership proof for foreign driver tables or arbitrary heap-generated callbacks',
             'Existing mouse-owner quarantine still has its own DOS31 error14 path; this guard runs after successful mouse close',
             'Retained allocations are not automatically reclaimed; normal publication, full lifetime and physical/BBS acceptance remain open'])
-    (ROOT/'docs/validation/terminal-exit.json').write_text(json.dumps(result,indent=2)+'\n')
-    print('Terminal exit:16 DOS cases,26 normal workflows,2 retained retries,linked model and14 source products audited')
+    (ROOT/('docs/validation/terminal-process-bank-exit.json' if args.process_bank else 'docs/validation/terminal-exit.json')).write_text(json.dumps(result,indent=2)+'\n')
+    print('Terminal exit:16 DOS cases,26 normal workflows,2 retained retries,linked model and',len(proof['products']),'source products audited')
 if __name__=='__main__':main()

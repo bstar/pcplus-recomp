@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Run linked maintained EXEC instructions with a declared DOS kernel model."""
-import hashlib,json,struct
+import argparse,hashlib,json,struct
 from pathlib import Path
 from unicorn import UC_HOOK_INTR
 from unicorn.x86_const import (UC_X86_REG_AX,UC_X86_REG_BX,UC_X86_REG_CX,
@@ -58,6 +58,11 @@ class Kernel(DosImage):
   return answer,bytes(self.uc.mem_read(self.data_base+result,8)) if result else None
 
 def main():
+ global OUT
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--banked',action='store_true');args=parser.parse_args()
+ OUT=ROOT/('build/process-bank' if args.banked else 'build/process')
+ manifest=json.loads((OUT/'manifest.json').read_text())
+ for name,digest in manifest['sources'].items():assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==digest,name
  cases=[]
  def check(name,fn):n=fn();cases.append({'case':name,'inputs':n,'passed':True});print(name,'passed',n,flush=True)
  def normal():
@@ -126,6 +131,6 @@ def main():
   assert not k.get('process_busy') and k.get('process_child_status')==37
   return 4
  check('repeated-execution-resizes-once-optional-pointers-cleared-tail-and-failed-child-recovery',reuse)
- proof={'passed':True,'inputs':sum(c['inputs'] for c in cases),'cases':cases,'binary_sha256':hashlib.sha256((OUT/'PROCESS.EXE').read_bytes()).hexdigest(),'scope':'Actual linked maintained near EXEC/bounds/context code; only DOS4A/29/4B/4D kernel boundary modeled. Context-clobber model changes DS/ES/SS/SP/registers before real restoration instructions. Real DOS/FCB/child execution separately tested; no live UART handoff.'}
+ proof={'passed':True,'banked_process':args.banked,'inputs':sum(c['inputs'] for c in cases),'cases':cases,'binary_sha256':hashlib.sha256((OUT/'PROCESS.EXE').read_bytes()).hexdigest(),'checker_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'loader_sha256':hashlib.sha256((ROOT/'standalone/dos_image.py').read_bytes()).hexdigest(),'scope':'Actual linked maintained public near EXEC/bounds/context entry; optional far body. Only DOS4A/29/4B/4D kernel boundary modeled. Context-clobber model changes DS/ES/SS/SP/registers before real restoration instructions. Real DOS/FCB/child execution separately tested; no live UART handoff.'}
  (OUT/'checks.json').write_text(json.dumps(proof,indent=2)+'\n');print('Maintained process boundary:',proof['inputs'],'inputs passed')
 if __name__=='__main__':main()

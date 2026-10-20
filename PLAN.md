@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+The [terminal process bank](docs/TERMINAL_PROCESS_BANK.md) moves the maintained
+EXEC backend behind a checked near/far three-word ABI, saving594/592 near-code
+bytes and leaving746/596 spare in keyboard/mouse parents. The68-input model,
+actual DOS/COMSPEC routes,26 ASPECT workflows, four mouse workflows,16 exit cases
+and two retained retries pass;22 products reproduce from source. Broader setup
+coverage also fixes final-exit auditing of DOS-restored22h/23h/24h targets.
+Application-wide traps, normal publication and hardware/BBS acceptance remain open.
+
 The [terminal final-exit guard](docs/TERMINAL_EXIT.md) now retains a validated
 parent allocation if execution or an interrupt reference remains at its DOS4C
 boundary. Sixteen DOS cases pass288 parent assertions;26 normal attached routes
@@ -9,9 +17,9 @@ fourteen source products reproduce. Asynchronous Ctrl-Break/critical-error
 ownership, normal publication, remaining services and hardware/BBS acceptance
 remain open.
 
-Next parent-lifetime work is to move the near DOS process glue into a code bank
-(the guarded mouse terminal has four near-code bytes spare), then install
-separate application-owned Ctrl-Break/critical-error traps before UART ownership.
+Next parent-lifetime work is to install separate application-owned
+Ctrl-Break/critical-error traps before UART ownership, using the process bank's
+recovered near-code headroom.
 Every startup/live EXEC path must suspend and resume that ownership, and
 asynchronous cancellation must reach foreground cleanup rather than freeing
 live callbacks. Existing mouse-retention paths also need the shared validated

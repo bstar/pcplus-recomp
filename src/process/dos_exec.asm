@@ -4,13 +4,48 @@ BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
 global process_run,_process_run
+%ifdef PROCESS_CODE_BANK
+; Both public names retain the original near three-word caller-cleaned ABI.
+process_run:
+_process_run:
+ push bp
+ mov bp,sp
+ push word [bp+8]
+ push word [bp+6]
+ push word [bp+4]
+ call far process_run_far
+ lea sp,[bp]
+ pop bp
+ ret
+SEGMENT PROCESS_CODE public align=16 class=FARCODE use16
+GROUP PROCESS_GROUP PROCESS_CODE
+global terminal_process_code_start,terminal_process_code_end
+global process_run_far,process_run_impl
+global process_string_length,process_result_disjoint,process_owned_disjoint
+global process_saved_ds,process_saved_ss,process_saved_sp,process_exec_ax,process_exec_failed
+terminal_process_code_start:
+process_run_far:
+ push bp
+ mov bp,sp
+ push word [bp+10]
+ push word [bp+8]
+ push word [bp+6]
+ call process_run_impl
+ lea sp,[bp]
+ pop bp
+ retf
+%endif
 
 ; (path ASCIIZ1..127, optional tail ASCIIZ0..126, optional result8).
 ; AX0 child ran;1 invalid arguments/state;2 resize failure;3 EXEC failure;4 busy.
 ; Result WORDs: status,DOS error,child termination/exit AX,retained paragraphs.
 ; Invalid arguments/busy leave result unchanged. Preserve BP/SI/DI/DS/ES/SS/SP.
+%ifdef PROCESS_CODE_BANK
+process_run_impl:
+%else
 process_run:
 _process_run:
+%endif
  push bp
  mov bp,sp
  push si
@@ -260,6 +295,9 @@ process_saved_ss: dw 0
 process_saved_sp: dw 0
 process_exec_ax: dw 0
 process_exec_failed: db 0
+%ifdef PROCESS_CODE_BANK
+terminal_process_code_end:
+%endif
 
 SEGMENT _DATA public align=16 class=DATA use16
 GROUP DGROUP _DATA

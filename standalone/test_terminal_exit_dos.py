@@ -8,6 +8,7 @@ ROOT=render.ROOT;sha=render.sha
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--mouse',action='store_true')
+    p.add_argument('--process-bank',action='store_true')
     p.add_argument('--label',default='exit-'+uuid.uuid4().hex);p.add_argument('--case',action='append',choices=[str(m)+str(b) for m in range(4) for b in [0,1]])
     args=p.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     out=ROOT/'build/terminal-exit-tests'/args.label;out.mkdir(parents=True,exist_ok=False)
@@ -23,6 +24,7 @@ def main():
     products={}
     for mode in modes:
         binary=ROOT/'build'/('terminal-exit-mouse-probe-'+str(mode) if args.mouse else 'terminal-exit-probe-'+str(mode))/'TERMINAL.EXE'
+        if args.process_bank:binary=ROOT/'build'/('terminal-process-bank-mouse-probe-'+str(mode) if args.mouse else 'terminal-process-bank-probe-'+str(mode))/'TERMINAL.EXE'
         manifest=json.loads((binary.parent/'manifest.json').read_text())
         assert manifest['terminal_exit_guard'] and manifest['terminal_exit_probe']==mode and manifest['experimental_mouse']==args.mouse
         assert manifest['binary_sha256']==sha(binary)
@@ -51,7 +53,7 @@ def main():
             match=re.fullmatch(r'TERMEXIT mode=(\d+) break=(\d+) checks=(\d+) failures=(\d+) status=(\d+) retained=(\d+) pressure=(\d+)\s*',report)
             checks=result['checks'];checks.update(independent_parent=bool(match) and int(match[4])==0 and int(match[3])>=13,
                 serial_keyboard_before_exit=b'ready' in (folder/'serial.bin').read_bytes())
-            result.update(passed=all(checks.values()),mouse=args.mouse,mode=mode,initial_break=initial,parent_report=report,child_sha256=sha(binary),parent_sha256=sha(parent/'TEOBS.EXE'),linked_addresses=defines)
+            result.update(passed=all(checks.values()),banked_process=args.process_bank,mouse=args.mouse,mode=mode,initial_break=initial,parent_report=report,child_sha256=sha(binary),parent_sha256=sha(parent/'TEOBS.EXE'),linked_addresses=defines)
             (folder/'result.json').write_text(json.dumps(result,indent=2)+'\n');results.append(result);print(name,'FINAL PASS' if result['passed'] else 'FINAL FAIL',flush=True)
     for name,digest in identities.items():
         assert sha(ROOT/name)==digest,name

@@ -286,18 +286,22 @@ def main():
     parser.add_argument('--mouse',action='store_true')
     parser.add_argument('--retry',action='store_true')
     parser.add_argument('--terminal-exit-guard',action='store_true')
+    parser.add_argument('--process-bank',action='store_true')
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     if args.exit_probe:assert args.break_owner
     if args.retry:assert args.exit_probe
     if args.terminal_exit_guard:assert args.break_owner
+    if args.process_bank:assert args.terminal_exit_guard
     directory_name='aspect-parent-exit' if args.exit_probe else 'aspect-parent-break' if args.break_owner else 'aspect-parent-process'
     if args.mouse:directory_name+='-mouse'
     if args.retry:directory_name+='-retry'
     if args.terminal_exit_guard:directory_name+='-guarded'
+    if args.process_bank:directory_name+='-banked'
     out=ROOT/'build'/directory_name/args.label;out.mkdir(parents=True,exist_ok=False)
     parent=ROOT/'build/terminal-process/TERMINAL.EXE';child=ROOT/('build/aspect-process-break/ASPECT.EXE' if args.break_owner else 'build/aspect-process-parent/ASPECT.EXE')
     if args.mouse:parent=ROOT/'build/terminal-mouse-process/TERMINAL.EXE'
     if args.terminal_exit_guard:parent=ROOT/('build/terminal-exit-mouse/TERMINAL.EXE' if args.mouse else 'build/terminal-exit/TERMINAL.EXE')
+    if args.process_bank:parent=ROOT/('build/terminal-process-bank-mouse/TERMINAL.EXE' if args.mouse else 'build/terminal-process-bank/TERMINAL.EXE')
     if args.exit_probe:child=ROOT/'build/aspect-exit-parent/ASPECT.EXE'
     if args.retry:child=ROOT/'build/aspect-exit-retry/ASPECT.EXE'
     identities={}
@@ -466,7 +470,7 @@ def main():
         (folder/'result.json').write_text(json.dumps(result,indent=2)+'\n');results.append(result)
         print(name,'FINAL PASS' if result['passed'] else 'FINAL FAIL',flush=True)
     for name,digest in identities.items():assert sha(ROOT/name)==digest,name
-    report=dict(passed=all(r['passed'] for r in results),terminal_exit_guard=args.terminal_exit_guard,same_session_retry=args.retry,experimental_mouse=args.mouse,experimental_break_owner=args.break_owner,exit_probe=args.exit_probe,cases=results,parent_sha256=sha(parent),child_sha256=sha(child),
+    report=dict(passed=all(r['passed'] for r in results),banked_process=args.process_bank,terminal_exit_guard=args.terminal_exit_guard,same_session_retry=args.retry,experimental_mouse=args.mouse,experimental_break_owner=args.break_owner,exit_probe=args.exit_probe,cases=results,parent_sha256=sha(parent),child_sha256=sha(child),
         source_hashes=identities,
         checker_sha256=sha(Path(__file__)),observer_sha256=sha(out/'RENDER.COM'),
         scope=('Actual retained child return through capability7; observer records DOS31/4D/MCBs and invokes only the known retained test ISR. Real renderer/UART reacquisition; no state repair or physical modem claim.' if args.exit_probe else 'Experimental capability7; real attached parent renderer, selected synthetic directory, actual DOS child and UART mutation. No physical modem or whole-application publication.'))

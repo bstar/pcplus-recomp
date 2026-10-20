@@ -112,6 +112,22 @@ def inspect_terminal_memory(binary,map_path):
   assert symbols[source][0]==symbols[target][0]
   assert (symbols[source][1]+at+3+displacement)&65535==symbols[target][1],(source,'wrong near target')
  bridges=0
+ if 'terminal_process_code_start' in symbols:
+  bank=next(c for c in code_segments if c['name']=='PROCESS_CODE')
+  bank_seg=bank['relative_segment']
+  assert bank_seg!=near_code['relative_segment'] and bank['offset']==0
+  assert address('terminal_process_code_start')==bank_seg*16
+  assert address('terminal_process_code_end')-address('terminal_process_code_start')==bank['bytes']
+  assert symbols['process_run']==symbols['_process_run'] and symbols['process_run'][0]==near_code['relative_segment']
+  for name in ['process_run_far','process_run_impl','process_string_length','process_result_disjoint','process_owned_disjoint',
+               'process_saved_ds','process_saved_ss','process_saved_sp','process_exec_ax','process_exec_failed']:
+   assert symbols[name][0]==bank_seg,name
+  prefix=bytes.fromhex('55 89 e5 ff 76 08 ff 76 06 ff 76 04')
+  suffix=bytes.fromhex('8d 66 00 5d c3')
+  assert raw('process_run',22)==prefix+b'\x9a'+struct.pack('<HH',symbols['process_run_far'][1],bank_seg)+suffix
+  assert address('process_run')+15 in relocations
+  near_call('process_run_far','process_run_impl',prefix=bytes.fromhex('55 89 e5 ff 76 0a ff 76 08 ff 76 06'),suffix=bytes.fromhex('8d 66 00 5d cb'))
+  extra.update(process_bank_bytes=bank['bytes'],process_bridge_pairs_verified=1,process_near_entry_bytes=22)
  if any(c['name']=='PRINT_CODE' for c in code_segments):
   far_code=next(c for c in code_segments if c['name']=='PRINT_CODE')
   controller_seg=far_code['relative_segment']
@@ -382,6 +398,7 @@ def inspect_terminal_memory(binary,map_path):
   assert b'\xb8\x0e\x31\xcd\x21' in raw('terminal_mouse_exit',96),'Missing typed retained-memory fallback'
   extra.update(mouse_bridge_pairs_verified=10,mouse_code_bytes=mouse_code['bytes'],mouse_shared_native_state_bytes=28)
   bridges+=10
+ bridges+=extra.get('process_bridge_pairs_verified',0)
  extra.update(resident_code_bytes=near_code['bytes'],resident_code_spare_bytes=65536-near_code['bytes'],code_segments=code_segments,far_code_bridge_pairs_verified=bridges)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'
