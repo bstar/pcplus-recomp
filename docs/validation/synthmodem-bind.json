@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "checks": {
+    "default_preserves_LAN_wildcard": true,
+    "allocator_uses_selected_interface": true,
+    "native_RTP_loopback": true,
+    "independent_reservation_survives": true
+  },
+  "node": "v24.18.1",
+  "checker_sha256": "cdbe7d39e98ef682f1d72fad14829ea68f2e67832df2adb5fdc175c001c76a86",
+  "patch_sha256": "304d7a2fa387d7a5615f7c2ed5fe7f3d1c5af380611894d619801adcb8564817",
+  "source_sha256": {
+    "config.js": "6cfa6057b31bebb90d52f12956a3166a389308b703c17480acdc59fdb05f681f",
+    "src/rtp/RtpSession.js": "72d6298f50c0823fa1a42a8eaf234885809ae08cb477b2b17bfdef6241aefe44",
+    "src/session/CallSession.js": "4122886fc628ebabc03bdd4b622de163926d55c0db6199c2b47ea75dacfbf49c"
+  },
+  "scope": "Actual native RTP open and allocator on distinct loopback addresses; normal CallSession binding is verified by the separate full gateway test."
+}

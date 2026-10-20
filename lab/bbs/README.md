@@ -32,6 +32,12 @@ and answering DSP CONNECT plus exact all-byte duplex data. Its isolated native
 caller fix is separate from the answering stack. Full gateway/CallSession,
 Telnet/DOS/BBS composition and physical acceptance remain open.
 
+The [full software gateway test](synthmodem-gateway.md) composes real external
+SIP, CallSession/pool, trained DSP and Telnet. It checks binary bytes, ANSI/NAWS,
+TCP reconnect under one carrier, QUIT and actual VM recycling/exit. Its peer is
+a deterministic Telnet application; DOS and real BBS workflows through this
+complete audio path remain next, with hardware acceptance separate.
+
 
 The [Infocom save-edge workflow](enigma-infocom-edges.md) covers actual DOS
 cancellation, invalid/missing names, overwrite and recovery after malformed

@@ -1,0 +1,59 @@
+--- a/config.js
++++ b/config.js
+@@ -119,6 +119,8 @@
+   // RTP
+   // ─────────────────────────────────────────────────────────────────────────────
+   rtp: {
++    // Listener interface; keep wildcard for LAN callers, use loopback for local labs.
++    bindAddress: '0.0.0.0',
+     // UDP port range for RTP sessions (even ports used, RTCP on port+1)
+     portMin: 10000,
+     portMax: 10100,
+--- a/src/session/CallSession.js
++++ b/src/session/CallSession.js
+@@ -246,21 +246,21 @@
+        * — an external caller sending RTP before we've answered is
+        * out-of-spec and we'd discard it anyway.
+        *
+-       * Bind to 0.0.0.0 (i.e. all interfaces), NOT 127.0.0.1 — the
++       * The default bind is 0.0.0.0 (all interfaces), because the
+        * external caller is on the LAN and sends RTP to whichever
+        * IP we advertised in the SDP answer (typically our LAN
+        * address). A loopback-only bind silently drops all those
+        * packets at the kernel level. Matches RtpSession (used by
+-       * the native backend), which also binds 0.0.0.0. */
++       * the native backend), which uses the same configurable bindAddress. */
+       this._rtpSock = dgram.createSocket('udp4');
+       await new Promise((resolve, reject) => {
+         this._rtpSock.once('error', reject);
+-        this._rtpSock.bind(this._rtpPort, '0.0.0.0', () => {
++        this._rtpSock.bind(this._rtpPort, config.rtp.bindAddress || '0.0.0.0', () => {
+           this._rtpSock.removeListener('error', reject);
+           resolve();
+         });
+       });
+-      log.debug(`[${this._id}] raw RTP socket bound 0.0.0.0:${this._rtpPort} (b2bua)`);
++      log.debug(`[${this._id}] raw RTP socket bound ${config.rtp.bindAddress || '0.0.0.0'}:${this._rtpPort} (b2bua)`);
+     } else {
+       await this._rtp.open(this._rtpPort);
+       log.debug(`[${this._id}] RTP port ${this._rtpPort} open (pcm)`);
+--- a/src/rtp/RtpSession.js
++++ b/src/rtp/RtpSession.js
+@@ -114,7 +114,7 @@
+         this.emit('error', err);
+       });
+       this._socket.on('message', (msg, rinfo) => this._onPacket(msg, rinfo));
+-      this._socket.bind(localPort, () => {
++      this._socket.bind(localPort, cfg.bindAddress || '0.0.0.0', () => {
+         log.debug(`RTP socket bound to port ${localPort}`);
+         resolve();
+       });
+@@ -460,7 +460,7 @@
+     // Try to actually bind it
+     const ok = await new Promise(resolve => {
+       const s = dgram.createSocket('udp4');
+-      s.bind(p, () => { s.close(); resolve(true); });
++      s.bind(p, cfg.bindAddress || '0.0.0.0', () => { s.close(); resolve(true); });
+       s.on('error', () => resolve(false));
+     });
+     if (ok) {

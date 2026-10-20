@@ -94,6 +94,24 @@ Links below pin the reviewed source; future versions require rechecking.
   bridge or use a verified Telnet layer before claiming transfer compatibility.
   Merely disabling initial negotiation does not handle server-originated IAC.
 
+## Full software gateway checkpoint
+
+The [complete software path](../lab/bbs/synthmodem-gateway.md) passes24 checks
+using actual external/internal SIP, CallSession setup/activation/teardown,
+modem pool and both DSPs. It retains the default post-training hold, receives
+CONNECT>, enters a destination as online data, negotiates BINARY/ANSI/80x25,
+recovers exact534/538-byte duplex payloads and reconnects TCP on the same
+carrier. QUIT ends both SIP legs and recycles a distinct registered VM; actual
+QEMU process exits and independent stream audits are required. See the
+[receipt](validation/synthmodem-gateway.json).
+
+The isolated RTP bind-address candidate preserves the wildcard LAN default
+while allowing a loopback-only lab. Four native binding/allocator checks also
+pass. This test uses a software caller and deterministic Telnet peer, not DOS,
+actual BBS software, Boca or SPA2102. Those workflows, sustained data/error
+recovery and negotiated14400 remain open. Existing pool timer retention and
+status CRCRLF normalization remain recorded gaps.
+
 ## Negotiated software DSP checkpoint
 
 The [V.22 training test](../lab/bbs/synthmodem-training.md) now completes actual

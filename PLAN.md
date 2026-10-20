@@ -7,6 +7,16 @@ data, reconnect and transfer runs. No physical compatibility or 14400-bps claim
 is established; the adapter has not arrived. PCPlus remains a serial terminal,
 with SIP/audio/Telnet handled by the Linux bridge.
 
+The [full software gateway](lab/bbs/synthmodem-gateway.md) now passes24 checks:
+actual external/internal SIP, normal CallSession and modem pool, V.22 DSP data,
+default post-train hold, CONNECT> entry, BINARY/ANSI/80x25 negotiation, exact
+duplex payloads and TCP reconnect on one carrier. QUIT tears down both SIP legs
+and recycles a distinct VM. A configurable RTP bind address keeps this lab
+on loopback; four separate native binding/allocation checks pass. DOS and real
+BBS software have not yet run through this complete audio gateway. Sustained
+pressure, other protocols and hardware remain open; pool timeout timer retention
+and status CRCRLF normalization are concrete remaining runtime details.
+
 The [negotiated V.22 DSP path](lab/bbs/synthmodem-training.md) now trains an
 isolated native originating candidate with the normal VM answering DSP at1200,
 then recovers exact1058-byte all-byte payloads in both directions. The stock
