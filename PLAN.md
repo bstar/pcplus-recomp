@@ -93,6 +93,19 @@ This clean diagnostic call does not fix the retained normal-image insertions.
 Repeat the normal framed runtime with error provenance and continue receive,
 transfer/pressure/Synchronet and hardware acceptance. All F01-F16 remain open.
 
+The [normal framed editor05 and frontend provenance](lab/bbs/serial-io-evidence.md#normal-editor05-observations)
+now repeat all exercised editor semantics, normal DOS return/restoration and
+exact120-byte upstream identity without diagnostic export. The observed reset
+is specifically DOS-TCP/read/ECONNRESET at online phase,3.375ms before close and
+before modem teardown. All47983 write-invocation bytes have successful local
+callbacks, with no pending/failed/skipped write; the12-check independent
+ownership audit passes. This is not proof of peer consumption or reset intent.
+The caller is an exact47961-byte prefix, missing616 bytes of the final BBS
+Escape-menu output, so the two full downstream gates remain false. Overall
+acceptance stays false. Correlate input, BBS-output and close timing and inspect
+the actual emulator close path; do not trim the suffix or waive the reset.
+Earlier uninstrumented resets/insertions and broader acceptance remain open.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

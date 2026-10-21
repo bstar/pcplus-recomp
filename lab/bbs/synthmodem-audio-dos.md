@@ -291,6 +291,19 @@ open. This establishes one-line local editor semantics with explicit framing,
 not normal-image receive integrity, full transfers, arbitrary TCP packetization,
 physical hardware or whole-application acceptance.
 
+### Normal framing and reset-source follow-up
+
+Normal editor05 repeats the same exercised key semantics and120-byte upstream
+identity without diagnostic PCM export. The [frontend ownership audit](serial-io-evidence.md#normal-editor05-observations)
+now identifies this call's single reset as DOS-TCP/read/ECONNRESET before close
+and modem teardown. All47983 write-invocation bytes complete locally, with no
+pending/failed/skipped write. This does not prove peer consumption or that the
+reset is expected. The exact47961-byte caller prefix misses616 bytes of final
+Escape-menu output; both complete-downstream checks stay false. The
+[normal-runtime receipt](../../docs/validation/synthmodem-serial-frontend-dos.json)
+retains those failures and the positive DOS/editor/restoration checks. Correlate
+the missing suffix with actual input/BBS/close timing before changing acceptance.
+
 The [carrier DOS receipt](../../docs/validation/synthmodem-carrier-dos.json)
 records the -09 route through the actual source-built terminal and ASPECT child.
 All menus, normal return, 42-byte UART snapshot, four-byte timer-vector snapshot,

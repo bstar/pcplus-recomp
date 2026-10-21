@@ -1,0 +1,40 @@
+{
+  "passed": true,
+  "checks": {
+    "one_verbatim_write_return_and_snapshot_owned": true,
+    "failures_and_skipped_closed_writes_distinct": true,
+    "synchronous_failure_observed_and_rethrown": true,
+    "artifacts_preserve_offsets_and_ownership": true,
+    "real_TCP_reset_has_error_close_without_FIN": true,
+    "real_closed_peer_is_not_written": true
+  },
+  "observed": {
+    "events": [
+      {
+        "type": "frontend-error",
+        "code": "ECONNRESET"
+      }
+    ],
+    "closeHadError": true,
+    "ended": false,
+    "io": {
+      "attemptedBytes": 28,
+      "submittedBytes": 17,
+      "completedBytes": 17,
+      "failedCallbackBytes": 0,
+      "skippedBytes": 11,
+      "pendingBytes": 0,
+      "writeCalls": 1,
+      "scope": "Frontend write attempts, actual write calls and local callbacks only; no peer-read/UART-drain acknowledgment."
+    }
+  },
+  "scope": "Observer ownership/byte tests plus an explicit real loopback TCP RST. No inference that historical DOS/audio resets had the same source; no error suppression or peer-consumption claim.",
+  "inputs": {
+    "lab/bbs/serial_io_evidence.js": "fbaddb3e9449fe9da3663cae376880ebb69ec453229ea9b7bbdb18b3a2b3a21b",
+    "lab/bbs/check_serial_io_evidence.js": "e93747b7e61f1d76d12cc0887f738f57bfb239c9430bd04ab1b08a390f85f0bd",
+    "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
+    "nix/flake.nix": "7cda07d3ab9fb050ef3c959781e4cb93ab2fab72f915d6206d980458ab297aa0",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+  },
+  "result_sha256": "d3e4e249c7e368742d823f925c1feb5cc8fd1e67c13714f43b983cbed89a4de8"
+}
