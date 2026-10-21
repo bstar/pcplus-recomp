@@ -453,6 +453,23 @@ acceptance is only this stock XMODEM-CRC download workflow. Next: Synchronet
 audio uploads and other protocols, then sustained pressure/carrier-loss/reconnect.
 Physical Boca/SPA2102, multiline editor and all F01-F16 gates remain open.
 
+The [stock Synchronet upload preparations](docs/validation/synchronet-audio-upload-preparation.json)
+pass10 real reference checks, six actual DOS BIOS key/observer/watchdog checks,
+15 raw ASPECT wait-token matches and four read-only target/source preflight
+checks. Fresh unique11521-byte reference and actual payloads prevent duplicate
+replacement; all existing files and the source identity are required to preserve.
+The first reference misread C in the CRC banner and retained a1024-byte partial;
+its parser/captures/checkpoint3c7c26a remain retained. The corrected fresh-name
+reference consumes the full banner, then verifies14 blocks, EOT NAK/ACK, exact
+11648-byte padded storage/metadata and Files/Main return.
+The [read-only diagnosis](docs/validation/synchronet-upload-partial-publication.json)
+confirms stock indexing/U+ publication of that partial despite a helper E/error
+record. Metadata or upload labels alone cannot prove completion. Require full
+CRC/control/finish, exact full source, complete zero-error helper receive and
+ordinary whole-stream/cleanup gates on actual audio evidence. Cancellation/loss
+cleanup remains open; preserve both the partial and its metadata. Preparations
+do not grant actual audio/DOS upload or physical acceptance.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

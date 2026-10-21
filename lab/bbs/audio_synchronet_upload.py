@@ -6,7 +6,7 @@ from audio_synchronet import ROOT,RUNTIME,snapshot,message_bodies,statistics,sha
 from synchronet_transfer import BinaryPeer,AREA
 from synchronet import ENV
 NAME="SXAUDIO1.BIN"
-REFNAME="SXAUREF1.BIN"
+REFNAME="SXAUREF2.BIN"
 DESCRIPTION="Synthetic PCPlus audio upload"
 
 def payload(name):
@@ -45,6 +45,9 @@ def reference(out):
    phase('upload-confirm',b'y','Enter a description now.');phase('description',DESCRIPTION.encode()+b'\r','Protocol, Batch')
    phase('protocol',b'1','Hang up after transfer?')
    peer.binary=True;peer.text.clear();peer.octets(b'n');noise=bytearray()
+   peer.wait('Start XMODEM-1K/CRC transfer now (Ctrl-X to abort):',30)
+   banner=b'transfer now (Ctrl-X to abort):';at=peer.text.find(banner);assert at>=0
+   del peer.text[:at+len(banner)]
    while True:
     c=peer.take(1)[0]
     if c==67:break

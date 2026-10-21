@@ -1,0 +1,38 @@
+{
+  "passed": false,
+  "diagnosis_confirmed": true,
+  "original_failure_receipt": "docs/validation/synchronet-audio-upload-reference-01.json",
+  "original_failure_sha256": "d566f392370640ef96fff15e93128cf7d56af0fe3e7bf7fede423100c423ba2a",
+  "metadata": {
+    "name": "SXAUREF1.BIN",
+    "vpath": "Main/PCPLAB/SXAUREF1.BIN",
+    "from": "LABUSER",
+    "from_ip_addr": "127.0.0.1",
+    "from_host_name": "<no name>",
+    "from_protocol": "Telnet",
+    "from_port": "55400",
+    "desc": "Oct21'26  Synthetic PCPlus audio upload",
+    "cost": 1024,
+    "size": 1024,
+    "time": 1792592716,
+    "added": 1792592716,
+    "crc16": 58072,
+    "crc32": 2755537077,
+    "md5": "a5989b6fe34d602bb5abe9f931139153",
+    "sha1": "df7893f12e9d36c2fc82b6d90f398a4d8e7f782e"
+  },
+  "partial_sha256": "17be7b1bed01cd6174909a3f4d2e91649d408188a05bad4eac487c90a0cf5ae8",
+  "inputs": {
+    "lab/bbs/diagnose_synchronet_partial_publication.py": "44022895930fa79a07cf8cca64d38407ecca70b58ddb0bd5db0af21bae9727fa",
+    "lab/bbs/audio_synchronet.py": "2d9d3b8bc9bfb44b7a07d8f8b6bc5abea0393588948af1e4984ca138cbffbb38",
+    "lab/bbs/synchronet.py": "974117a9b4971bb1a13dc9483aee08b77bcc4895097133dc7147c18150300dcc"
+  },
+  "captures_sha256": {
+    "build/bbs-lab/synchronet-upload-partial-publication-01/metadata.js": "0d1a70709dc8dc0be35ef17ea58a1949801eceb05b288bdd32068afbae302554",
+    "build/bbs-lab/synchronet-upload-partial-publication-01/metadata.stdout": "94e21478e91a7de9cdbcb945a166f9adc2a05b50f82d6b119f5b23d1b1908503",
+    "build/bbs-lab/synchronet-upload-partial-publication-01/metadata.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/bbs-lab/synchronet-upload-partial-publication-01/server-session.log": "6afcc195ea86803965bdd559214d8e044eead7cfc89701b9af83e89ae239435d",
+    "build/bbs-lab/synchronet-upload-partial-publication-01/partial.bin": "17be7b1bed01cd6174909a3f4d2e91649d408188a05bad4eac487c90a0cf5ae8"
+  },
+  "scope": "Stock Synchronet/sexyz indexes the preserved1024-byte partial from the failed reference despite a receiver E/error record, and writes an upload-success log. Metadata/storage/U+ alone therefore cannot prove protocol success or source completeness. This diagnostic leaves the partial, metadata and original captures intact. Require full wire CRC/control/finish, exact known source and zero-error receive in actual audio acceptance; cancellation/loss cleanup remains open."
+}

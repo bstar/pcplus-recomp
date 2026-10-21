@@ -1,0 +1,140 @@
+{
+  "passed": true,
+  "actual_audio_accepted": false,
+  "components": {
+    "build/bbs-lab/synchronet-audio-upload-reference-02/result.json": {
+      "sha256": "0615cdc06f52b09d15759f02cfb27e1574642c02c73d3b1777304cc5adbd6a47",
+      "checks": {
+        "complete_CRC_frames_and_two_EOT_finish": true,
+        "exact_source_and_SUB_padding": true,
+        "official_metadata": true,
+        "post_transfer_file_and_main": true,
+        "server_inputs_preserved": true,
+        "message_bodies_preserved": true,
+        "source_unchanged": true,
+        "existing_files_preserved": true,
+        "only_new_expected_file": true,
+        "no_message_mail_or_download_writes": true
+      },
+      "scope": "Owned stock Synchronet/sexyz XMODEM-1K/CRC upload TCP reference. Unique11521 source bytes and127SUB padding installed with official metadata; native peer sends real CRC frames and NAK/ACK two-EOT finish, then returns to Files/Main. Reference supplies fixed CPR; not DOS/audio or physical acceptance."
+    },
+    "build/bbs-lab/audio-synchronet-upload-keys-01/result.json": {
+      "sha256": "c55d7443c6e4cc639182db5f9c29c941543ddae019c5f5153c6dde4525a4ef15",
+      "checks": [
+        {
+          "mode": "phases_with_partial_markers",
+          "passed": true,
+          "checks": {
+            "normal_DOS_return": true,
+            "exact_BIOS_keys": true,
+            "timer_restored": true
+          },
+          "probe_sha256": "c3116f2a21e6fd1665dc578106dc0177ba688c345db8c8900dc62c42bcd4a825"
+        },
+        {
+          "mode": "watchdog",
+          "passed": true,
+          "checks": {
+            "normal_DOS_return": true,
+            "exact_BIOS_keys": true,
+            "timer_restored": true
+          },
+          "probe_sha256": "6a58aa599a87f7670db090c801e78587dcbc5118aa565328ff0e491a08508851"
+        }
+      ],
+      "scope": "Actual DOS 8086 BIOS reads: observed hangup prompt leads to Alt-S; actual filename prompt receives exact local path; receiving and completion pause lead to Space, fresh Files to Q, and complete Main/footer to Alt-X. Partial/paused menus emit no premature keys. Normal path bounded below watchdog; separate watchdog and timer restoration verified. Shortened test delays, no audio or application acceptance."
+    },
+    "build/bbs-lab/synchronet-upload-audio-recipe-01/result.json": {
+      "sha256": "9d556fb68d7151635beed76c3bb6bd9390f88ab8da513f4948acd4a9cc273159",
+      "checks": [
+        {
+          "phase": "login",
+          "needle": "Login:",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "password",
+          "needle": "Password:",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "welcome",
+          "needle": "[Hit a key]",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "bulletins",
+          "needle": "Enter number of bulletin or [",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "scan",
+          "needle": "Search all groups for new messages?",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "pause",
+          "needle": "[Hit a key]",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "main",
+          "needle": "Read/Post Messages",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "files",
+          "needle": "List Files in dir",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "join",
+          "needle": "Which, ",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "area",
+          "needle": "PCPlus Lab:",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "upload",
+          "needle": "Filename:",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "upload-name",
+          "needle": "to Main PCPlus Lab?",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "upload-confirm",
+          "needle": "Enter a description now.",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "description",
+          "needle": "Protocol, ",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "protocol",
+          "needle": "Hang up after transfer?",
+          "raw_match_possible": true
+        }
+      ],
+      "scope": "Generated ASPECT recipe compiles and every remote wait token is checked against its corresponding independent raw BBS capture. Bridge prompt is outside this peer reference. Missing literal tokens identify fragile/invalid raw-match assumptions; this is neither DOS execution nor audio/native compatibility acceptance."
+    },
+    "build/bbs-lab/synchronet-audio-upload-preflight-01/result.json": {
+      "sha256": "9eee4548ab8592da6bd7d9501866d2e8d80396c5022d645798df9ec700118daf",
+      "checks": {
+        "target_absent_on_disk": true,
+        "target_absent_from_official_metadata": true,
+        "existing_files_unchanged": true,
+        "server_inputs_preserved": true
+      },
+      "scope": "Read-only FileBase.get confirms fresh target is absent; source is unique deterministic11521 bytes under ignored build storage. No server/account/config change and no actual audio/DOS upload acceptance."
+    }
+  },
+  "scope": "Preparation only:10 real stock TCP reference upload checks,6 actual DOS BIOS helper checks,15 raw ASPECT wait-token matches,4 readonly official target/source preflight checks. Failed first reference/partial publication diagnosis remain retained. Does not accept actual audio/DOS, cancellation/loss cleanup or physical hardware."
+}

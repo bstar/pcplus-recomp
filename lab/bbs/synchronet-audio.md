@@ -270,3 +270,67 @@ Acceptance is limited to this stock XMODEM-CRC download over the explicit
 monotonic-hold/key-framing audio runtime, with unchanged DOS binaries. Uploads,
 other Synchronet audio protocols, sustained pressure/carrier-loss/reconnect,
 physical Boca/SPA2102 and F01-F16 application gates remain open.
+
+## Stock XMODEM-CRC upload
+
+The upload recipe uses the same owned stock area/server/helper. It supplies a
+fresh filename, confirms that destination, supplies a synthetic description,
+selects protocol1 and declines hangup with N alone. The BIOS helper drives the
+actual Alt-S filename UI with D:\SEND\SXAUDIO1.BIN, observes sending/completion,
+dismisses the remote pause, returns through Files/Main and restores INT1C.
+No product state, UART data, protocol responses or success files are injected.
+Fresh target absence is checked through both disk and the official FileBase API
+before launch. The deterministic11521-byte payload is unique per target name;
+the original DOS inode/size/mtime and all existing server files must preserve.
+XMODEM's127SUB padding remains part of the official11648-byte stored file.
+
+The [first reference](../../docs/validation/synchronet-audio-upload-reference-01.json)
+misread a C within the CRC banner as the standalone CRC startup signal. It
+transmitted one valid block, then misread remaining text as ACK and closed.
+The1024-byte partial and all original captures remain intact; source checkpoint
+3c7c26a preserves this failed parser. The corrected reference consumes the exact
+stock startup banner first, then waits for C. A fresh reference filename avoids
+overwriting the partial and prevents duplicate-content rejection. It passes all
+14CRC-valid blocks, two-EOT NAK/ACK, exact storage/metadata and Files/Main return.
+
+The [partial-publication diagnostic](../../docs/validation/synchronet-upload-partial-publication.json)
+confirms that this failed reference's1024-byte partial is officially indexed,
+and has an upload-success entry despite the helper's E/one-error record. Thus
+storage, metadata and U+ alone cannot establish full transfer success. Actual
+acceptance additionally requires complete wire frames/CRC/sequence, all opposite
+ACKs and final EOT finish, exact full known source/padding, and the helper's
+complete zero-error receive record. Cancellation/loss cleanup remains open;
+the diagnostic does not remove or replace the partial or its metadata.
+
+```sh
+./tools/bbs-dev --command python3 lab/bbs/audio_synchronet_upload.py \
+  --output build/bbs-lab/synchronet-audio-upload-reference-NEW
+./tools/bbs-dev --command python3 lab/bbs/prepare_synchronet_audio_upload.py \
+  --output build/bbs-lab/synchronet-audio-upload-preflight-NEW
+./tools/modem-dev --command python3 lab/bbs/check_audio_synchronet_upload_keys.py \
+  --output build/bbs-lab/audio-synchronet-upload-keys-NEW
+./tools/modem-dev --command python3 lab/bbs/check_synchronet_upload_audio_recipe.py \
+  --reference build/bbs-lab/synchronet-audio-upload-reference-NEW \
+  --output build/bbs-lab/synchronet-upload-audio-recipe-NEW
+./tools/modem-dev --command python3 lab/bbs/synthmodem_synchronet_upload_audio_dos.py \
+  --runtime build/bbs-lab/synthmodem-posttrain-runtime-01/runtime \
+  --reference build/bbs-lab/synchronet-audio-upload-reference-NEW/result.json \
+  --key-checks build/bbs-lab/audio-synchronet-upload-keys-NEW/result.json \
+  --recipe-checks build/bbs-lab/synchronet-upload-audio-recipe-NEW/result.json \
+  --preflight build/bbs-lab/synchronet-audio-upload-preflight-NEW/result.json \
+  --output build/bbs-lab/synthmodem-synchronet-upload-audio-NEW
+# After natural producer exit:
+./tools/modem-dev --command python3 lab/bbs/audit_synchronet_upload_audio_dos.py COHORT
+./tools/modem-dev --command python3 lab/bbs/audit_serial_io_evidence.py COHORT
+./tools/modem-dev --command node lab/bbs/diagnose_audio_caller.js RUNTIME COHORT
+./tools/bbs-dev --command python3 lab/bbs/audit_synchronet_upload_metadata.py COHORT
+# Only after every gate passes:
+./tools/modem-dev --command python3 lab/bbs/record_synchronet_upload_audio.py COHORT \
+  --output docs/validation/synthmodem-synchronet-upload-audio-NEW.json
+```
+
+Existing uploads are retained. After a target has been used, select fresh
+reference/actual basenames and corresponding deterministic payload, helper keys
+and exact-input oracle before collecting another run. A new output label does
+not authorize replacement of server files. Preparations alone grant no actual
+audio/DOS upload, cancellation/loss or physical acceptance.
