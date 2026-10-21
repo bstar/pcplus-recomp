@@ -19,7 +19,7 @@ from directory_test_support import accounting_check
 from test_terminal import SAMPLER
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--receive-trace',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--carrier-trace',action='store_true');p.add_argument('--key-framing',action='store_true');p.add_argument('--key-framing-trace',action='store_true');p.add_argument('--syscall-trace',action='store_true');p.add_argument('--route',choices=['menus','editor','download'],default='menus');a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--receive-trace',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--carrier-trace',action='store_true');p.add_argument('--key-framing',action='store_true');p.add_argument('--key-framing-trace',action='store_true');p.add_argument('--syscall-trace',action='store_true');p.add_argument('--route',choices=['menus','editor','download','upload'],default='menus');a=p.parse_args()
  assert sum(bool(v) for v in (a.lifecycle,a.carrier,a.carrier_trace,a.key_framing,a.key_framing_trace,a.receive_trace,a.dmodem))<=1,'Choose one pinned runtime profile'
  a.key_framing=a.key_framing or a.key_framing_trace
  trace=a.receive_trace or a.carrier_trace or a.key_framing_trace
@@ -41,6 +41,7 @@ def main():
  assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=enigma.SOURCE,text=True).strip()==enigma.COMMIT
  assert not subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],cwd=enigma.SOURCE,text=True).strip()
  server_names=['main.js','core/client.js','package-lock.json','config/config.hjson']+[str(p.relative_to(enigma.SOURCE)) for p in sorted((enigma.SOURCE/'config/menus').glob('*.hjson'))]
+ if a.route=='upload':server_names+=['core/upload.js','core/file_transfer.js','core/file_entry.js','core/view_controller.js','core/toggle_menu_view.js']+['art/themes/luciano_blocktronics/'+n+'.ANS' for n in ['ULOPTS','ULDETAIL','ULCHECK','ULDUPES']]
  server_inputs={n:sha(enigma.SOURCE/n) for n in server_names}
  names=['lab/bbs/synthmodem_audio_dos.py','lab/bbs/synthmodem_audio_serial.js','lab/bbs/serial_io_evidence.js','lab/bbs/check_serial_io_evidence.js','docs/validation/synthmodem-serial-io-evidence.json','lab/bbs/audio_exit_keys.asm','lab/bbs/audio_get_vector.asm',
   'lab/bbs/synthmodem_bbs_dos.py','lab/bbs/enigma.py','lab/bbs/synthmodem_sparse_runtime.py','lab/bbs/synthmodem_vm_control.py','docs/validation/synthmodem-sparse.json','standalone/modem_fixtures.py','standalone/directory_fixtures.py',
@@ -55,10 +56,16 @@ def main():
  if a.key_framing_trace:names+=['docs/validation/synthmodem-key-framing-trace-runtime.json','lab/bbs/synthmodem_carrier_trace_runtime.py','docs/validation/synthmodem-carrier-trace-runtime.json']
  if a.dmodem:names+=['docs/validation/synthmodem-jitter-policy.json','nix/dmodem.nix','tools/build-dmodem']
  download_path=download_before=None
+ upload_before=None
  if a.route=='download':
   import audio_download
   download_path,download_before=audio_download.source()
   names+=['lab/bbs/audio_download.py','lab/bbs/audio_download_keys.asm','lab/bbs/check_audio_download_keys.py','docs/validation/audio-download-keys.json','lab/bbs/enigma_transfer.py',str(download_path.relative_to(ROOT)),str(audio_download.HELPER.relative_to(ROOT))]
+ if a.route=='upload':
+  import audio_upload
+  upload_before=audio_upload.prepare(out)
+  names+=['lab/bbs/audio_upload.py','lab/bbs/audio_upload_keys.asm','lab/bbs/check_audio_upload_keys.py','lab/bbs/check_audio_upload_navigation.py','docs/validation/audio-upload-keys.json','docs/validation/audio-upload-navigation.json','lab/bbs/enigma_upload_dos.py','lab/bbs/enigma_transfer.py',str(Path(upload_before['source_path']).relative_to(ROOT)),str(audio_upload.HELPER.relative_to(ROOT))]
+ if a.route in ('download','upload'):
   names+=['src/terminal/transfer_actions.asm','standalone/check_carrier_transfer_deadline.py','docs/validation/carrier-transfer-deadline-fixed.json']
   names+=['src/transfer/zmodem.c','src/transfer/zmodem.h','src/transfer/zmodem_wire.c','src/transfer/zmodem_wire.h','standalone/check_zmodem_completed_replay.py','standalone/check_zmodem_completion_bounds.py','docs/validation/zmodem-completed-replay-fixed.json']
  names+=['src/terminal/connection.asm','standalone/check_online_exit.py','docs/validation/online-exit.json']
@@ -83,6 +90,7 @@ def main():
  script+='attempts=0\nwhile attempts < 240\nwaitfor "Main Menu" 1\nif waitfor\nmain_seen=1\nendif\nif main_seen\nexitwhile\nendif\nattempts += 1\nendwhile\nif attempts == 240\n'+mark('FAIL-MAIN')+'exit\nendif\n'
  script+='waitquiet 2 120\ncwhen 0\ncwhen 1\ncwhen 2\n'+mark('MAIN')
  if a.route=='download':script+=audio_download.navigation(wait,mark)
+ elif a.route=='upload':script+=audio_upload.navigation(wait,mark)
  else:
   script+='transmit "M^M"\n'+wait('MESSAGE AREA',150,'MESSAGES')+'waitquiet 2 120\n'+mark('MESSAGES')
   if a.route=='menus':
@@ -101,7 +109,7 @@ def main():
  (out/'MODEM.PRM').write_bytes(profile)
  contact=bytearray(directory(entry=1,target=b'1',port=1,baud=6));contact[250+52:250+61]=b'AUDIO\0\0\0\0';contact=bytes(contact);(out/'CALL.DIR').write_bytes(contact)
  (out/'sampler.asm').write_text(SAMPLER);subprocess.run(['nasm','-fbin',str(out/'sampler.asm'),'-o',str(out/'SNAP.COM')],check=True)
- for name,leaf in [('audio_editor_keys.asm' if a.route=='editor' else 'audio_download_keys.asm' if a.route=='download' else 'audio_exit_keys.asm','EXITKEY.COM'),('audio_get_vector.asm','KEYVEC.COM')]:subprocess.run(['nasm','-fbin',str(ROOT/'lab/bbs'/name),'-o',str(stage/leaf)],check=True)
+ for name,leaf in [('audio_editor_keys.asm' if a.route=='editor' else 'audio_download_keys.asm' if a.route=='download' else 'audio_upload_keys.asm' if a.route=='upload' else 'audio_exit_keys.asm','EXITKEY.COM'),('audio_get_vector.asm','KEYVEC.COM')]:subprocess.run(['nasm','-fbin',str(ROOT/'lab/bbs'/name),'-o',str(stage/leaf)],check=True)
  generated={str(p.relative_to(out)):sha(p) for p in stage.iterdir()}
  log=enigma.SOURCE/'logs/enigma-bbs.log';boundary=(log.stat().st_ino,log.stat().st_size)
  tool_inputs={str(Path(shutil.which(n)).resolve()):sha(Path(shutil.which(n))) for n in (['dosbox-x','nasm','strace'] if a.syscall_trace else ['dosbox-x','nasm'])}
@@ -154,7 +162,7 @@ exit
    if a.syscall_trace:command=['strace','--seccomp-bpf','-f','-ttt','-yy','-e','trace=network,close','-o',str(out/'DOS-syscalls.log')]+command
    clock_anchor('before-DOS-launch')
    dos=subprocess.Popen(command,stdout=dl,stderr=dl,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),start_new_session=True)
-   doscode=dos.wait(timeout=1220 if a.route=='download' else 720 if a.route=='editor' else 600);clock_anchor('after-DOS-exit');node.wait(timeout=60)
+   doscode=dos.wait(timeout=1220 if a.route in ('download','upload') else 720 if a.route=='editor' else 600);clock_anchor('after-DOS-exit');node.wait(timeout=60)
   finally:
    relay.stop.set();relay.thread.join(3)
    if dos is not None and dos.poll() is None:
@@ -180,6 +188,7 @@ exit
  from modem import Telnet
  sent,_=Telnet().feed(relay.to_bbs);display,_=Telnet().feed(relay.from_bbs)
  wanted=['mainMenu','fileBaseMainMenu','fileBaseSearch','fileBaseListEntries','fileBaseDownloadManager','fileTransferProtocolSelection','sendFilesToUser'] if a.route=='download' else ['mainMenu','messageBaseMainMenu','messageBaseNewPost'] if a.route=='editor' else ['mainMenu','messageBaseMainMenu','mainMenu','fileBaseMainMenu'];at=0
+ if a.route=='upload':wanted=['mainMenu','fileBaseMainMenu','fileBaseUploadFiles','fileTransferProtocolSelection','recvFilesFromUser']
  for m in menus:
   if at<len(wanted) and m==wanted[at]:at+=1
  screen=read('SCREEN.BIN');text='\n'.join(screen[r*160:r*160+160:2].decode('cp437') for r in range(25)) if len(screen)==4000 else ''
@@ -207,13 +216,18 @@ exit
   checks.update(editor_entered='messageBaseNewPost' in menus,typed_draft_sent=b'ABCDE' in sent,all_editor_keys_emitted=all(observed.values()),
    home_moves_before_marker=positions[:7]==[(1,2),(1,3),(1,4),(1,5),(1,6),(1,1),(1,2)],insert_toggles_overtype='OVR ' in body)
  download=None
+ upload=None
  if a.route=='download':
   checks.pop('final_file_menu')
   extra,download=audio_download.check(out,rows,download_path,download_before);checks.update(extra)
   checks['posttransfer_filename_visible']='PCXTEST.BIN' in text
+ if a.route=='upload':
+  checks.pop('final_file_menu')
+  extra,upload=audio_upload.check(out,rows,upload_before);checks.update(extra)
+  checks['posttransfer_filename_visible']=audio_upload.NAME in text
  result={'passed':all(checks.values()),'checks':checks,'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'server_inputs':server_inputs,
   'generated_inputs':generated,'tool_inputs':tool_inputs,'syscall_trace':a.syscall_trace,'clock_anchors':clock_anchors,'server_revision':enigma.COMMIT,'server_menus':menus,'script_stages':read('STAGES.LOG').decode('ascii'),'login_readiness':'WAITFOR plus reused one-shot WHEN latch','receive_trace':a.receive_trace,'dmodem_variant':a.dmodem,'lifecycle':a.lifecycle,'carrier':a.carrier,'carrier_trace':a.carrier_trace,'key_framing_trace':a.key_framing_trace,'input_sequence_timeout_ms':250 if a.key_framing else 0,
-  'DOS_screen':text,'gateway':n,'route':a.route,'editor':editor,'download':download,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
+  'DOS_screen':text,'gateway':n,'route':a.route,'editor':editor,'download':download,'upload':upload,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
   'scope':'Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to owned stock ENiGMA. No physical modem/ATA/UART acceptance.'}
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'passed':result['passed'],'checks':checks,'result':str(out/'result.json')},indent=2));return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

@@ -1,0 +1,27 @@
+{
+  "passed": false,
+  "counterexample_reproduced": true,
+  "cases": [
+    {
+      "case": "immediate-response",
+      "completed": true,
+      "ACK_delay_ticks": 0,
+      "ACK_tick": 120
+    },
+    {
+      "case": "ten-second-response",
+      "counterexample_reproduced": true,
+      "witness": {
+        "packet_tick": 120,
+        "ACK_due_tick": 302,
+        "premature_output_tick": 177,
+        "attempted_prefix_hex": "2a18430a",
+        "expected_after_ACK_hex": "2a18430b00040000d06efbb6"
+      },
+      "scope": "Stopped by test assertion at premature wire output; no cleanup or final transfer claim."
+    }
+  ],
+  "binary_sha256": "b98232749ccd42b902467f06c62b39207083701cf42c0871165cd53b51a5569e",
+  "checker_sha256": "50a1dd2e4faaf4d49a6ff50830746cc6759b192bf1b921069954a7c9d24cf898",
+  "scope": "Linked original-free DOS sender with fixed38400 DTE and modeled ten-second ACK delivery. Peer accepts exact CRC-framed source; no product instruction/callback patched. BIOS timing model is not an audio or physical test. Current response policy remains defective."
+}

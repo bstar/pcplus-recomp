@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "checks": {
+    "observed_stock_protocol_selection": true,
+    "actual_upload_options_and_protocol_menus": true,
+    "receive_helper_never_started": true,
+    "no_installed_upload": true,
+    "server_configuration_unchanged": true,
+    "maintained_upload_route_compiles": true,
+    "binary_fixture_covers_all_octets": true
+  },
+  "menus": [
+    "telnetConnected",
+    "matrix",
+    "login",
+    "fullLoginSequenceLoginArt",
+    "fullLoginSequenceLastCallers",
+    "fullLoginSequenceWhosOnline",
+    "fullLoginSequenceOnelinerz",
+    "fullLoginSequenceNewScanConfirm",
+    "fullLoginSequenceUserStats",
+    "mainMenu",
+    "fileBaseMainMenu",
+    "fileBaseUploadFiles",
+    "fileTransferProtocolSelection"
+  ],
+  "server_PID": 3135978,
+  "server_config_sha256": "daae39792955eaf7b99c45fc936d54b153f62ea0d3f77672f45a8ace756a7dbc",
+  "server_rows_sha256": "f7ee7c65a16ea74509cf8980cab694a5882e4070bda55a3100276aeef84e21fa",
+  "script_sha256": "8184092febf6a7d30cae239357dc853c39e0fd0c1ec452ebde580de99b563a1a",
+  "source_sha256": {
+    "lab/bbs/check_audio_upload_navigation.py": "45ffc354a31ee52ea70d29833633e009c7d0722ae7fd5475ee8ac3cf4f12eb56",
+    "lab/bbs/audio_upload.py": "798a901a22d344ea3b29f5e6879d77d2d3034f8a39dd9bff52f6100efa35d473",
+    "lab/bbs/enigma_transfer.py": "12fd33f7c97c9279c622dd2baa32978d386d1153ab98d553402157e7c5069692"
+  },
+  "scope": "Stock ENiGMA upload-options/protocol navigation via independent fast TCP reference, plus ASPECT compilation and fixture preconditions. Stops before selecting protocol/launching helper; no real upload, native DOS, modem audio or physical acceptance."
+}

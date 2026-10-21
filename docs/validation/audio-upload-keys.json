@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "mode": "success",
+      "passed": true,
+      "checks": {
+        "probe_normal_exit": true,
+        "exact_phased_BIOS_keys": true,
+        "timer_vector_restored": true
+      },
+      "expected_words": 45,
+      "probe_source_sha256": "9c20774190c84710d2f8254f70a8f2c2fc4ad8d96a483c2deb57d79d46ec985b"
+    },
+    {
+      "mode": "failure",
+      "passed": true,
+      "checks": {
+        "probe_normal_exit": true,
+        "exact_phased_BIOS_keys": true,
+        "timer_vector_restored": true
+      },
+      "expected_words": 24,
+      "probe_source_sha256": "5cd180d0ad2d76d5fcc1c7fb7a98b76ef957c59cd233da26d15deb3075229a7d"
+    }
+  ],
+  "inputs": {
+    "lab/bbs/check_audio_upload_keys.py": "916362a0bf6b9df5c761ef661af79c425480a7700024523bc3f044b4047aeb92",
+    "lab/bbs/audio_upload_keys.asm": "a6fe17955ae809a606c5558bca7565d25f8e9541a72709afb47218207021ec09",
+    "lab/bbs/audio_get_vector.asm": "a4dcbe3717c43f5914ee3503099d250fd7810610b8c25f4c0c18c2d4d403e817"
+  },
+  "scope": "Actual DOS BIOS-only observer test with independent synthetic visible phases/cursor and shortened test-only delays. No premature login/active-transfer keys, exact local selection/form/post-search sequence, bounded visible-failure exit and timer restoration. No product-state access, real upload, BBS/audio or physical acceptance."
+}

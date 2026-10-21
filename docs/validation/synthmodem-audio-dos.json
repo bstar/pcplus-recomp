@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Normal audio download03 passes25 producer,26 independent byte/cleanup,15 protocol/file/resume and12 ownership checks:exact11521-byte file,205 exact online bytes,full89233-byte BBS display,literal OO,actual post-helper search/list and normal DOS/UART/IRQ/timer return. No post-commit ZNAKs or protocol controls after helper exit. This one V22/1200/stock-ENiGMA/framed-runtime download is accepted. Earlier failures/intermittent insertions,uploads/cancel/loss/pressure/other peers,physical hardware and all F01-F16 remain open.",
+  "status": "Accepted editor07 and download03 remain scoped checkpoints. Upload01 failed: fixed38400 DTE queues retries before a valid slow-carrier ACK. Exact upstream prefixes, preserved source and normal DOS cleanup; no official installed file or resumed search. Receiver later retired naturally with exit255. A linked delayed-ACK counterexample reproduces premature replay. Response timing, upload acceptance, other peers, physical hardware and F01-F16 remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3643,6 +3643,15 @@
       },
       "receipt": "docs/validation/synthmodem-audio-download-03.json",
       "receipt_sha256": "3bb60e7f314da807aa3f5acaa02f486e6030dd065010c43ccddd6e48cc4bb727"
+    },
+    "synthmodem-audio-upload-01": {
+      "status": "failed",
+      "acceptance": "Failed native TX timeout; no installed file, finish or resumed search",
+      "navigation_receipt": "docs/validation/audio-upload-navigation.json",
+      "BIOS_helper_receipt": "docs/validation/audio-upload-keys.json",
+      "passed": false,
+      "receipt": "docs/validation/synthmodem-audio-upload-01.json",
+      "receipt_sha256": "95d016473938dcf30d504560dd293faf03a5cc2655755378c7e6f4d45acdd43c"
     }
   },
   "diagnosis": {
@@ -3694,8 +3703,8 @@
     "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
     "Validate actual fixed-DTE slow-carrier upload/backpressure and response timing; retain every CRC/finish,storage,post-helper input and cleanup gate."
   ],
-  "current_cohort": "synthmodem-audio-download-03",
-  "latest_cohort_passed": true,
+  "current_cohort": "synthmodem-audio-upload-01",
+  "latest_cohort_passed": false,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
     "offline_caller_equals_DOS_online": true,
@@ -3738,5 +3747,7 @@
   "carrier_deadline_regression_receipt": "docs/validation/carrier-transfer-deadline-regression.json",
   "completion_receipt": "docs/validation/zmodem-completed-replay-fixed.json",
   "completion_regression_receipt": "docs/validation/zmodem-completion-regression.json",
-  "accepted_download_cohort": "synthmodem-audio-download-03"
+  "accepted_download_cohort": "synthmodem-audio-download-03",
+  "audio_upload_receipt": "docs/validation/synthmodem-audio-upload-01.json",
+  "upload_response_receipt": "docs/validation/zmodem-upload-response-counterexample.json"
 }

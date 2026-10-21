@@ -187,6 +187,25 @@ negatives. This accepts one V22/1200/framed-runtime download. Uploads, sustained
 pressure/cancellation/loss, other peers, physical hardware and all F01-F16
 remain open.
 
+The [stock audio upload route](lab/bbs/audio-upload.md) now has seven real-server
+navigation prerequisites and six actual DOS BIOS-helper checks, including
+failure exit and timer restoration. The fresh11521-byte all-octet AUDIOUP.BIN
+fixture refuses existing names and preserves source identity/stat. Its ASPECT
+child selects the stock blind/ZedZap route, then the BIOS observer drives local
+upload selection, visible checker/details forms and post-transfer search.
+The [first normal audio upload01](docs/validation/synthmodem-audio-upload-01.json)
+failed with TX timeout. The sender replayed about3.1 seconds after its first
+packet, before the valid slow-link ACK arrived about9.5 seconds after that
+packet. A linked production-DOS regression reproduces premature replay with a
+ten-second delayed ACK while its immediate-ACK control completes. The upstream
+captures are exact native prefixes, truncated at call termination; they do not
+show inserted/corrupted bytes. Source data/stat and DOS/UART/IRQ/timer cleanup
+survive. The receiver later exited naturally with255, leaving a preserved1024-byte
+temporary prefix and no official installed file. Frozen inputs/server/runtime
+remain unchanged. Next: derive a bounded sender response allowance for queued
+fixed-DTE modem data, retain cancellation and accepted-progress bounds, then
+repeat the unchanged stock audio upload with all CRC/finish/storage/return gates.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal
