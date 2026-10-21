@@ -7,10 +7,11 @@ from synthmodem_synchronet_retry_startup_audio_dos import script,compile_source
 
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--reference',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--reference',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--slot',type=int,choices=range(1,10),default=3);a=p.parse_args()
  reference=a.reference.resolve();out=a.output.resolve();assert reference.is_relative_to(ROOT/'build') and out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
  ref=json.loads((reference/'result.json').read_text());assert ref['passed']
- source=script(12345);wire=compile_source(source)
+ from audio_synchronet_retry_startup import names_for
+ name,retry=names_for(a.slot);source=script(12345,name);wire=compile_source(source)
  phases=['login','password','welcome','bulletins','scan','pause','main','files','join','area','upload','upload-name','upload-confirm','description','protocol']
  needles=re.findall(r'^waitfor "([^"]*)"',source,re.M);assert needles.pop(0)=='CONNECT> ' and len(needles)==len(phases)
  cases=[]
@@ -18,7 +19,7 @@ def main():
   raw=(reference/(phase+'.bin')).read_bytes()
   cases.append({'phase':phase,'needle':token,'raw_match_possible':token.encode('ascii') in raw})
  sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
- result={'passed':all(c['raw_match_possible'] for c in cases),'cases':cases,'compiled_bytes':len(wire),
+ result={'passed':all(c['raw_match_possible'] for c in cases),'cases':cases,'compiled_bytes':len(wire),'upload_name':name,'retry_name':retry,
   'inputs':{str(p.relative_to(ROOT)):sha(p) for p in [Path(__file__).resolve(),ROOT/'lab/bbs/synthmodem_synchronet_retry_startup_audio_dos.py',reference/'result.json',*[reference/(phase+'.bin') for phase in dict.fromkeys(phases)]]},
   'scope':'Generated ASPECT recipe compiles and every remote wait token is checked against its corresponding independent raw BBS capture. Bridge prompt is outside this peer reference. Missing literal tokens identify fragile/invalid raw-match assumptions; this is neither DOS execution nor audio/native compatibility acceptance.'}
  (out/'SCRIPT.ASP').write_text(source);(out/'SCRIPT.ASX').write_bytes(wire);(out/'result.json').write_text(json.dumps(result,indent=2)+'\n')

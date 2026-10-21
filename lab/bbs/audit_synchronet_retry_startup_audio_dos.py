@@ -7,7 +7,9 @@ from synthmodem_gateway import records
 
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 
-def retry_protocol(sent,display,trace,expected):
+def retry_protocol(sent,display,trace,expected,retry_name='SXRUP003.BIN'):
+ from audio_synchronet_retry_startup import names_for
+ assert retry_name in {names_for(slot)[1] for slot in range(1,10)}
  from test_transfer_dos import packet_at,audit_protocol,timestamp
  from audit_indexed_controls import audit_controls
  frames=[];first=None
@@ -29,7 +31,7 @@ def retry_protocol(sent,display,trace,expected):
  assert retry['crc'] and retry['accepted_blocks']==len(retry['frames'])==14 and retry['eots']==2
  assert len(retry['padded_payload'])==11648
  transition=re.sub(rb'\x1b\[(?:\?1;2c|\d+;\d+R)',b'',sent[cancel+2:retry['start']])
- assert transition==b' USXRUP003.BIN\rySynthetic PCPlus audio retry\r1n','Exact real menu and same-call retry input required'
+ assert transition==b' U'+retry_name.encode()+b'\rySynthetic PCPlus audio retry\r1n','Exact real menu and same-call retry input required'
  assert sent[retry['end']:]==b' Q'
  post_time=timestamp(trace,'dos',retry['end'])
  retry['controls']=audit_controls(retry,sent,display,trace,'dos',post_time,ack_timeout=30)
@@ -83,18 +85,19 @@ def main():
   cursor=found+len(token)
  checks['ordered_actual_Synchronet_prompts']=ordered
  checks['one_authoritative_synthetic_login']=len(re.findall(rb'LABUSER\s+Logon ',(out/'server-session.log').read_bytes()))==1
- from audio_synchronet_retry_startup import NAME,RETRY,AREA,payload,stored_files
+ from audio_synchronet_retry_startup import AREA,payload,stored_files,names_for
+ NAME,RETRY=r['upload']['name'],r['retry']['name'];assert (NAME,RETRY) in {names_for(slot) for slot in range(1,10)}
  from audit_audio_download import frontend_trace
  expected=payload(NAME);protocol=None;errors=[]
  checks.update(CRC_ACK_before_CAN_and_complete_boundary=False,full_CRC_same_call_retry=False,exact_menu_and_protocol_input=False,partial_and_retry_storage_correct=False)
  try:
   timing,provenance=frontend_trace(out,sent,display,len(bridge))
-  protocol=retry_protocol(sent,display,timing,expected)
+  protocol=retry_protocol(sent,display,timing,expected,RETRY)
   first=protocol['first_frames'][0]['offset'];at=protocol['cancel_offset']
   checks['CRC_ACK_before_CAN_and_complete_boundary']=True
   checks['full_CRC_same_call_retry']=True
   initial=re.sub(rb'\x1b\[(?:\?1;2c|\d+;\d+R)',b'',sent[:first])
-  checks['exact_menu_and_protocol_input']=initial==b'LABUSER\rLABPASS42\r Qn\r TJ11\rUSXRCN003.BIN\rySynthetic PCPlus audio cancel\r1n'
+  checks['exact_menu_and_protocol_input']=initial==b'LABUSER\rLABPASS42\r Qn\r TJ11\rU'+NAME.encode()+b'\rySynthetic PCPlus audio cancel\r1n'
   target=AREA/NAME;partial=target.read_bytes() if target.exists() else b''
   checks['partial_and_retry_storage_correct']=len(partial)==protocol['canceled_source_bytes'] and expected.startswith(partial) and (AREA/RETRY).read_bytes()==expected+b'\x1a'*127
   protocol['retained_partial_bytes']=len(partial)

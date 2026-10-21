@@ -9,21 +9,29 @@ from synchronet import ENV
 NAME='SXRCN003.BIN';RETRY='SXRUP003.BIN';REFNAME='SXQRF005.BIN';REFRETRY='SXQRF006.BIN'
 DESCRIPTION='Synthetic PCPlus audio cancel';RETRY_DESCRIPTION='Synthetic PCPlus audio retry'
 
+def names_for(slot,reference=False):
+ assert type(slot) is int and 1<=slot<=9
+ return (f'SXQRF{slot*2-1:03d}.BIN',f'SXQRF{slot*2:03d}.BIN') if reference else (f'SXRCN{slot:03d}.BIN',f'SXRUP{slot:03d}.BIN')
+
+def owned_name(name):
+ return name in {n for slot in range(1,10) for ref in (False,True) for n in names_for(slot,ref)}
+
 def payload(name=NAME):
- assert name in (NAME,REFNAME)
+ assert name in {names_for(slot,ref)[0] for slot in range(1,10) for ref in (False,True)}
  return hashlib.sha256(name.encode()).digest()+bytes(((i*73+(i>>8)*19)&255)^0x5a for i in range(11521-32))
 
 def stored_files():return {p.name:sha(p) for p in sorted(AREA.iterdir()) if p.is_file()}
 
 def metadata(out,name,label):
- assert name in (NAME,RETRY,REFNAME,REFRETRY) and label in ('before','after')
+ assert owned_name(name) and label in ('before','after')
  prefix='metadata-'+name[:-4]+'-'+label;path=out/(prefix+'.js');assert not path.exists()
  path.write_text("var f=new FileBase('pcplab');if(!f.open())throw Error(f.last_error);print('PCPLAB_JSON:'+JSON.stringify(f.get('"+name+"')));f.close();\n")
  r=subprocess.run([str(RUNTIME/'exec/jsexec'),'-n',str(path)],env=ENV(),capture_output=True,text=True,check=True)
  (out/(prefix+'.stdout')).write_text(r.stdout);(out/(prefix+'.stderr')).write_text(r.stderr)
  value=json.loads(r.stdout.split('PCPLAB_JSON:',1)[1].splitlines()[0]);(out/(prefix+'.json')).write_text(json.dumps(value,indent=2)+'\n');return value
 
-def reference(out):
+def reference(out,slot=3):
+ REFNAME,REFRETRY=names_for(slot,True)
  out=out.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
  before=snapshot();bodies=message_bodies();stats=statistics();files=stored_files();data=payload(REFNAME)
  (out/'source.bin').write_bytes(data)
@@ -77,10 +85,10 @@ def reference(out):
  after=statistics();checks.update(server_inputs_preserved=before==snapshot(),message_bodies_preserved=bodies==message_bodies(),
   existing_files_preserved=all(stored_files().get(n)==h for n,h in files.items()),only_expected_new_files=set(stored_files())==set(files)|{REFNAME,REFRETRY},
   no_message_mail_download_writes=all(stats['Total'][k]==after['Total'][k] for k in ('posts','email','feedback','dnloads','dnloadb')))
- result=dict(passed=all(checks.values()),checks=checks,error=error,server=before,frames=frames,statistics_before=stats,statistics_after=after,source_sha256=hashlib.sha256(data).hexdigest(),existing_files=files,
+ result=dict(passed=all(checks.values()),checks=checks,error=error,server=before,frames=frames,statistics_before=stats,statistics_after=after,source_sha256=hashlib.sha256(data).hexdigest(),existing_files=files,partial_name=REFNAME,retry_name=REFRETRY,
   reference_inputs={str(p.relative_to(ROOT)):sha(p) for p in [Path(__file__).resolve(),ROOT/'lab/bbs/audio_synchronet.py',ROOT/'lab/bbs/synchronet.py',ROOT/'lab/bbs/synchronet_transfer.py']},
   scope='One owned stock TCP connection: CRC block/ACK/CAN cancellation, Files, full14-block same-source retry under a fresh remote name, EOT NAK/ACK and Files/Main. Original partial and all prior files preserved. Reference fixed CPR; not DOS/audio/physical or server partial cleanup acceptance.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({k:result[k] for k in ('passed','checks','error')}));assert result['passed']
 
 if __name__=='__main__':
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);reference(p.parse_args().output)
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);p.add_argument('--slot',type=int,choices=range(1,10),default=3);a=p.parse_args();reference(a.output,a.slot)

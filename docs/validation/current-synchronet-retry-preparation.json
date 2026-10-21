@@ -1,0 +1,87 @@
+{
+  "passed": true,
+  "preparation_only": true,
+  "actual_same_call_audio_retry_accepted": false,
+  "slot": 4,
+  "first_remote_name": "SXRCN004.BIN",
+  "retry_remote_name": "SXRUP004.BIN",
+  "local_source": "SEND/RETRY.BIN",
+  "reference_names": [
+    "SXQRF007.BIN",
+    "SXQRF008.BIN"
+  ],
+  "check_counts": {
+    "reference": 11,
+    "BIOS_key_checks": 6,
+    "recipe": 15,
+    "preflight": 4,
+    "control_selfcheck": 13
+  },
+  "default_comparison": {
+    "passed": true,
+    "comparison_revision": "f38ee4b45e2fa76a163c17f5b333b2eab7e3a4c7",
+    "default_helper_identical": true,
+    "default_helper_sha256": "147615cfc221ce544a5f74155cddd62fc53e8433cf3636b574bc0d2213e1471d",
+    "selected_helper_sha256": "433a90dba07fecde535f6a8adc5ee9f3824107dd6c567e443b79c05ac0dd556d",
+    "selected_helper_changed_offsets": [
+      167,
+      320,
+      321
+    ],
+    "default_payloads_and_script_identical": true,
+    "selected_script_changes_only_first_remote_name": true,
+    "invalid_helper_slots_rejected": [
+      0,
+      10
+    ],
+    "scope": "Static default compatibility and selected-name assembly checks only. Actual BIOS probe, BBS reference and DOS/audio workflow are separate evidence."
+  },
+  "prerequisites": {
+    "reference": {
+      "path": "build/bbs-lab/current-synchronet-retry-reference-01/result.json",
+      "sha256": "8b9ae612dc7bb405067f5ea59987413bd435d2ae1057ed96d0ee8bc24836c521"
+    },
+    "keys": {
+      "path": "build/bbs-lab/current-synchronet-retry-keys-01/result.json",
+      "sha256": "44efbb1b1f2d1fd06790cad8cc5c770d4f10d86b4678e1442c0f3c325ef7088e"
+    },
+    "recipe": {
+      "path": "build/bbs-lab/current-synchronet-retry-recipe-01/result.json",
+      "sha256": "acb721c21c70b7d52f6b3fd2b92bc33776d40edb400650150dc714b80d7063bc"
+    },
+    "preflight": {
+      "path": "build/bbs-lab/current-synchronet-retry-preflight-01/result.json",
+      "sha256": "1a9612e055704ba51d6217027145ae3cb33bb2f1ce5f0bd21f9ae7c4d5a190d2"
+    },
+    "defaults": {
+      "path": "build/bbs-lab/current-synchronet-retry-defaults-01/result.json",
+      "sha256": "fe2f33699181e05aac8be5d003673d5b226043b8bca6ec8b4e951e569eff18a3"
+    },
+    "control_selfcheck": {
+      "path": "build/bbs-lab/current-synchronet-retry-controls-01.json",
+      "sha256": "d0f4608a9e36e5433b72cb363aaa414c720497503cd671e4b0dec3bf2398aa8e"
+    },
+    "startup_component": {
+      "path": "docs/validation/current-terminal-upload-startup-01.json",
+      "sha256": "797ae7b8029431cedaeb3229a64e2e8b1249a79e3134d6c4903730676b62faf4"
+    },
+    "buffered_runtime": {
+      "path": "build/bbs-lab/synthmodem-buffered-runtime-01/result.json",
+      "sha256": "fcfc4e91b2d8b0e80caf8b837bffe8ae67fad81e9ce6b59793e02e6b6fb2c2dd"
+    }
+  },
+  "inputs": {
+    "lab/bbs/audio_synchronet_retry_startup.py": "815d67708d2c3bec5c599ae28748194b206fdf5b003a0ffd6fab443d27d985e8",
+    "lab/bbs/check_audio_synchronet_retry_startup_keys.py": "04fcf4d8044d46812a7ee8a90a239f96adfbcbdb2b2664ba468424df65f84476",
+    "lab/bbs/check_synchronet_retry_startup_audio_recipe.py": "6b694210511300c8e757e45c15d84467bc5311975d5bfc97fb15e5ab2450de2b",
+    "lab/bbs/synthmodem_synchronet_retry_startup_audio_dos.py": "4c8424080b29ecd19ad6f31306541ed5117ba134d3590ac1f7c562d96cc7fb85",
+    "lab/bbs/audit_synchronet_retry_startup_audio_dos.py": "43bb59fa3e0254a5616789f2c715ce16c3abd662774ac4d6e5de0ab5ee680945",
+    "lab/bbs/check_synchronet_retry_startup_controls.py": "c2bb5f5f10cc6efe41d7eabe7b194523a8a00dfdc4168d7ea978aebda1aa45f1",
+    "lab/bbs/observe_synchronet_retry_startup_partial.py": "3b2ee1ce0a3a2635f0d8747ab9fbefff0ba9d3a8e5772824284e3fd9263646a8",
+    "lab/bbs/audit_synchronet_retry_startup_metadata.py": "ebc5d5abd6fe7d5bab31eb3d10a84bfb1b34e777ce0d25757b80622e3edb3519",
+    "lab/bbs/record_synchronet_retry_startup_audio.py": "8c6e42bd77741294ecebfa1e788c888f92866b964057aaf59d717dc43e238197",
+    "lab/bbs/prepare_synchronet_audio_retry_startup.py": "5f3a2a9328d8048369ac57463058388de102ee1c2e632c43607940f6f84a68d3",
+    "lab/bbs/audio_synchronet_retry_startup_keys.asm": "d9349e72ee261729287e4b01247dadd34222df2d1533aaf78e2a0d96117790a6"
+  },
+  "scope": "Fresh stock TCP cancel/retry reference and two absent DOS/audio targets; selected filename verified through actual8086 BIOS reads, raw recipe waits and synthetic protocol rejection controls. Default helper/payload/script exact, selected helper differs in three filename bytes only. Binds current976 startup component and normal200ms runtime. No actual same-call DOS/audio retry acceptance, stock indexed-partial cleanup or physical hardware claim. Existing files/captures preserved."
+}

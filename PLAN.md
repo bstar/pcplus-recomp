@@ -144,9 +144,21 @@ also passes three actual DOS independent-peer cases: plain CRC over10KiB, ANSI
 CRC and split-CSI checksum. No premature packets, exact source/padding/finish,
 keyboard recovery and UART/IRQ/PIC cleanup pass. Its43 linked startup cases and
 54-upload/37-boundary/44-receive regressions bind the current976 binary. This is
-neither a BBS nor an audio retry run. The retry runner still defaults to the old
-3b component receipt; bind the fresh proof explicitly while adding unused target
-slots and the200ms runtime before the next same-call audio campaign.
+neither a BBS nor an audio retry run. The retry runner retains the old3b
+component receipt as its default and now accepts an explicit current proof,
+with all nested source/capture hashes and binary identity verified.
+
+The [current same-call retry preparation](docs/validation/current-synchronet-retry-preparation.json)
+passes11 stock TCP reference checks,6 actual8086 BIOS checks,15 raw script waits,
+4 official/disk absence checks and13 synthetic control checks (baseline plus12
+rejections). Unused actual names `SXRCN004.BIN`/`SXRUP004.BIN` and reference names
+`SXQRF007.BIN`/`SXQRF008.BIN` preserve all earlier files. The default BIOS helper
+is byte-identical; selected slot4 changes only its filename character and BIOS
+key word (three bytes), retaining the original early-start timing. The local
+source remains `SEND/RETRY.BIN`. The current976/200ms actual audio run and
+read-only pre-completion partial observer are running. Full same-call wire,
+source/CRC/ACK/EOT, partial custody, metadata, Files/Main and cleanup acceptance
+remain pending terminal evidence; no current retry or server cleanup is claimed.
 
 The hardware target's [work order and completion gates](docs/ANALOG_MODEM_INTEGRATION.md#work-order-and-completion-gates)
 prioritize carrier/data separation and full audio-path pressure/editor/transfer

@@ -4,7 +4,7 @@ import argparse,json,os,subprocess
 from pathlib import Path
 from audio_synchronet import ROOT,sha
 
-def run(out,watchdog):
+def run(out,watchdog,slot=3):
  out.mkdir()
  phases="""mov si,hangup
 call screen
@@ -179,8 +179,11 @@ description_keys:dw 0x1f53,0x1579,0x316e,0x1474,0x2368,0x1265,0x1474,0x1769,0x2e
 passfile:db 'PASS.TXT',0
 failfile:db 'FAIL.TXT',0
 '''
+ from audio_synchronet_retry_startup import names_for
+ retry=names_for(slot)[1]
+ source=source.replace('SXRUP003.BIN',retry).replace('0xb30,0xb30,0x433,','0xb30,0xb30,'+hex(((slot+1)<<8)+ord('0')+slot)+',')
  (out/'probe.asm').write_text(source)
- subprocess.run(['nasm','-fbin','-DAUDIO_SYNC_RETRY_FAST',f'-DAUDIO_SYNC_RETRY_WATCHDOG={36 if watchdog else 720}',str(ROOT/'lab/bbs/audio_synchronet_retry_startup_keys.asm'),'-o',str(out/'EXITKEY.COM')],check=True)
+ subprocess.run(['nasm','-fbin','-DAUDIO_SYNC_RETRY_FAST',f'-DAUDIO_SYNC_RETRY_SLOT={slot}',f'-DAUDIO_SYNC_RETRY_WATCHDOG={36 if watchdog else 720}',str(ROOT/'lab/bbs/audio_synchronet_retry_startup_keys.asm'),'-o',str(out/'EXITKEY.COM')],check=True)
  for src,leaf in [(out/'probe.asm','PROBE.COM'),(ROOT/'lab/bbs/audio_get_vector.asm','KEYVEC.COM')]:subprocess.run(['nasm','-fbin',str(src),'-o',str(out/leaf)],check=True)
  (out/'dosbox.conf').write_text(f'''[sdl]
 output=surface
@@ -205,8 +208,8 @@ exit
  return dict(mode='watchdog' if watchdog else 'phases_with_partial_markers',passed=all(checks.values()),checks=checks,probe_sha256=sha(out/'probe.asm'))
 
 if __name__=='__main__':
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True,type=Path);out=p.parse_args().output.resolve()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True,type=Path);p.add_argument('--slot',type=int,choices=range(1,10),default=3);a=p.parse_args();out=a.output.resolve()
  assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
- cases=[run(out/name,flag) for name,flag in [('phases',False),('watchdog',True)]]
- result=dict(passed=all(c['passed'] for c in cases),cases=cases,inputs={str(p.relative_to(ROOT)):sha(p) for p in [Path(__file__).resolve(),ROOT/'lab/bbs/audio_synchronet_retry_startup_keys.asm',ROOT/'lab/bbs/audio_get_vector.asm']},scope='Actual DOS 8086 BIOS key reads: cancel only after visible ACKed progress, require TX canceled and actual pause/fresh Files; type a second filename/confirmation/description/protocol, start ordinary sender again with the same local path, and do not Escape at retry progress. Completion pause/Files/Main/footer precede Alt-X. Partial menus emit no premature keys; independent watchdog and timer restoration. Normal path must finish before360ticks, below720tick watchdog; shortened test delays only, no audio or application acceptance.')
+ cases=[run(out/name,flag,a.slot) for name,flag in [('phases',False),('watchdog',True)]]
+ result=dict(passed=all(c['passed'] for c in cases),cases=cases,slot=a.slot,inputs={str(p.relative_to(ROOT)):sha(p) for p in [Path(__file__).resolve(),ROOT/'lab/bbs/audio_synchronet_retry_startup_keys.asm',ROOT/'lab/bbs/audio_get_vector.asm',ROOT/'lab/bbs/audio_synchronet_retry_startup.py']},scope='Actual DOS 8086 BIOS key reads: cancel only after visible ACKed progress, require TX canceled and actual pause/fresh Files; type a second filename/confirmation/description/protocol, start ordinary sender again with the same local path, and do not Escape at retry progress. Completion pause/Files/Main/footer precede Alt-X. Partial menus emit no premature keys; independent watchdog and timer restoration. Normal path must finish before360ticks, below720tick watchdog; shortened test delays only, no audio or application acceptance.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result));assert result['passed']

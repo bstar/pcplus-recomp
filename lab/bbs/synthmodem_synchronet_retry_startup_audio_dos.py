@@ -14,24 +14,33 @@ from test_terminal import SAMPLER
 from modem import Telnet
 
 
-def script(port):
+def script(port,name='SXRCN003.BIN'):
+ from audio_synchronet_retry_startup import names_for
+ assert name in {names_for(slot)[0] for slot in range(1,10)}
  def mark(label):return f'fopen 0 "D:\\STAGES.LOG" "ab"\nfputs 0 "{label}|"\nfclose 0\n'
  def wait(token,label,timeout=180,quiet=True):return f'waitfor "{token}" {timeout}\nif waitfor == 0\n'+mark('FAIL-'+label)+'exit\nendif\n'+('waitquiet 2 120\n' if quiet else '')+mark(label)
  s='proc main\n'+wait('CONNECT> ','BRIDGE',45)+f'transmit "127.0.0.1:{port}^M"\n'
- for token,label,data in [('Login:','LOGIN','LABUSER^M'),('Password:','PASSWORD','LABPASS42^M'),('[Hit a key]','WELCOME',' '),('Enter number of bulletin or [','BULLETINS','Q'),('Search all groups for new messages?','SCAN','n^M'),('[Hit a key]','PAUSE',' '),('Read/Post Messages','MAIN','T'),('List Files in dir','FILES','J'),('Which, ','JOIN','11^M'),('PCPlus Lab:','AREA','U'),('Filename:','FILENAME','SXRCN003.BIN^M'),('to Main PCPlus Lab?','CONFIRM','y'),('Enter a description now.','DESCRIPTION','Synthetic PCPlus audio cancel^M'),('Protocol, ','PROTOCOL','1')]:s+=wait(token,label)+f'transmit "{data}"\n'
+ for token,label,data in [('Login:','LOGIN','LABUSER^M'),('Password:','PASSWORD','LABPASS42^M'),('[Hit a key]','WELCOME',' '),('Enter number of bulletin or [','BULLETINS','Q'),('Search all groups for new messages?','SCAN','n^M'),('[Hit a key]','PAUSE',' '),('Read/Post Messages','MAIN','T'),('List Files in dir','FILES','J'),('Which, ','JOIN','11^M'),('PCPlus Lab:','AREA','U'),('Filename:','FILENAME',name+'^M'),('to Main PCPlus Lab?','CONFIRM','y'),('Enter a description now.','DESCRIPTION','Synthetic PCPlus audio cancel^M'),('Protocol, ','PROTOCOL','1')]:s+=wait(token,label)+f'transmit "{data}"\n'
  s+=wait('Hang up after transfer?','HANGUP')+'transmit "n"\n'+'fopen 0 "D:\\SCRIPT.OK" "wb"\nfputs 0 "PASS"\nfclose 0\nendproc\n'
  return s
 
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--reference',type=Path,required=True);p.add_argument('--key-checks',type=Path,required=True);p.add_argument('--recipe-checks',type=Path,required=True);p.add_argument('--preflight',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--reference',type=Path,required=True);p.add_argument('--key-checks',type=Path,required=True);p.add_argument('--recipe-checks',type=Path,required=True);p.add_argument('--preflight',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
+ p.add_argument('--slot',type=int,choices=range(1,10),default=3);p.add_argument('--buffered-runtime-proof',type=Path);p.add_argument('--startup-component-proof',type=Path,default=ROOT/'docs/validation/terminal-upload-startup-fixed.json');a=p.parse_args()
  out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
- runtime=a.runtime.resolve();runtime_inputs=validate_runtime(runtime);server=snapshot();bodies=message_bodies();stats=statistics()
+ runtime=a.runtime.resolve()
+ if a.buffered_runtime_proof:
+  from synthmodem_buffered_runtime import validate as validate_buffered
+  runtime_inputs=validate_buffered(runtime,a.buffered_runtime_proof)
+ else:runtime_inputs=validate_runtime(runtime)
+ server=snapshot();bodies=message_bodies();stats=statistics()
  reference=a.reference.resolve();keys=a.key_checks.resolve();assert reference.is_relative_to(ROOT/'build') and keys.is_relative_to(ROOT/'build')
  ref=json.loads(reference.read_text());kr=json.loads(keys.read_text());assert ref['passed'] and kr['passed'] and ref['server']==server
  assert all(sha(ROOT/n)==h for n,h in ref['reference_inputs'].items())
  assert {r['mode'] for r in kr['cases']}=={'phases_with_partial_markers','watchdog'}
  assert all(sha(ROOT/n)==h for n,h in kr['inputs'].items())
+ assert kr.get('slot',3)==a.slot
  recipe=a.recipe_checks.resolve();assert recipe.is_relative_to(ROOT/'build')
  rc=json.loads(recipe.read_text());assert rc['passed'] and all(c['raw_match_possible'] for c in rc['cases'])
  assert all(sha(ROOT/n)==h for n,h in rc['inputs'].items())
@@ -43,16 +52,21 @@ def main():
  preflight=a.preflight.resolve();assert preflight.is_relative_to(ROOT/'build')
  pf=json.loads(preflight.read_text());assert pf['passed'] and pf['server']==server and all(sha(ROOT/n)==h for n,h in pf['inputs'].items())
  assert all(sha(preflight.parent/n)==h for n,h in pf['captures_sha256'].items())
- from audio_synchronet_retry_startup import NAME,RETRY,AREA,payload,stored_files
+ from audio_synchronet_retry_startup import AREA,payload,stored_files,names_for
+ NAME,RETRY=names_for(a.slot);assert pf['name']==rc.get('upload_name',NAME)==NAME and pf['retry_name']==rc.get('retry_name',RETRY)==RETRY
  assert NAME not in stored_files() and RETRY not in stored_files() and stored_files()==pf['existing_files']
  names+=['lab/bbs/audit_indexed_controls.py','lab/bbs/observe_synchronet_retry_startup_partial.py','lab/bbs/audit_synchronet_retry_startup_metadata.py','lab/bbs/check_synchronet_retry_startup_controls.py','src/terminal/upload_actions.asm','src/terminal/transfer_actions.asm','standalone/check_terminal_upload_cancel_boundary.py','build/terminal/terminal-upload-cancel-boundary.json','build/terminal/terminal-upload-live-checks.json','build/terminal/terminal-transfer-live-checks.json']
  for n in names[-3:]:
   proof=json.loads((ROOT/n).read_text());assert proof['passed'] and proof['binary_sha256']==sha(ROOT/'build/terminal/TERMINAL.EXE')
  startup_proof=json.loads((ROOT/'build/terminal/terminal-upload-startup.json').read_text());assert startup_proof['passed'] and len(startup_proof['cases'])==43 and startup_proof['binary_sha256']==sha(ROOT/'build/terminal/TERMINAL.EXE')
- component=json.loads((ROOT/'docs/validation/terminal-upload-startup-fixed.json').read_text());assert component['passed'] and component['actual_DOS_startup_accepted'] and component['binary_sha256']==sha(ROOT/'build/terminal/TERMINAL.EXE')
+ component_path=a.startup_component_proof.resolve();assert component_path.is_relative_to(ROOT/'docs/validation')
+ component=json.loads(component_path.read_text());assert component['passed'] and component['actual_DOS_startup_accepted'] and component['binary_sha256']==sha(ROOT/'build/terminal/TERMINAL.EXE')
+ for group in ('product_inputs','checker_inputs','DOS_inputs','capture_sha256'):
+  for n,h in component[group].items():assert sha(ROOT/n)==h,n
  names+=['src/terminal/upload_startup.asm','src/terminal/upload_startup_bridge.asm','standalone/check_terminal_upload_startup.py','build/terminal/terminal-upload-startup.json']
- names+=['docs/validation/terminal-upload-startup-fixed.json','standalone/record_terminal_upload_startup.py']
+ names+=[str(component_path.relative_to(ROOT)),'standalone/record_terminal_upload_startup.py']
  names+=[str(preflight.relative_to(ROOT)),'lab/bbs/prepare_synchronet_audio_retry_startup.py','lab/bbs/synchronet_transfer.py','lab/bbs/test_transfer_dos.py','lab/bbs/audit_audio_download.py','lab/bbs/enigma_transfer.py']
+ if a.buffered_runtime_proof:names+=['lab/bbs/synthmodem_buffered_runtime.py','lab/bbs/check_buffered_dmodem_build.py','nix/dmodem.nix','tools/build-dmodem',str(a.buffered_runtime_proof.resolve().relative_to(ROOT))]
  frozen={n:sha(ROOT/n) for n in names};out.mkdir(parents=True)
  (out/'SEND').mkdir();upload_path=out/'SEND'/'RETRY.BIN';upload_path.write_bytes(payload(NAME))
  assert sha(upload_path)==pf['source_sha256']
@@ -61,11 +75,11 @@ def main():
  stage=out/'program';stage.mkdir()
  for source,leaf in [('build/terminal/TERMINAL.EXE','TERMINAL.EXE'),('build/aspect-runner/ASPECT.EXE','ASPECT.EXE')]:shutil.copyfile(ROOT/source,stage/leaf)
  relay=Relay(PORT);relay.thread.start()
- source=script(relay.port);(stage/'AUDIO.ASP').write_text(source);(stage/'AUDIO.ASX').write_bytes(compile_source(source))
+ source=script(relay.port,NAME);(stage/'AUDIO.ASP').write_text(source);(stage/'AUDIO.ASX').write_bytes(compile_source(source))
  profile=bytearray(fixture(timeout=60,autobaud=0));profile[0x79:0x79+25]=bytes(25);profile=bytes(profile);(out/'MODEM.PRM').write_bytes(profile)
  contact=bytearray(directory(entry=1,target=b'1',port=1,baud=6));contact[250+52:250+61]=b'AUDIO\0\0\0\0';contact=bytes(contact);(out/'CALL.DIR').write_bytes(contact)
  (out/'sampler.asm').write_text(SAMPLER)
- for src,leaf in [(out/'sampler.asm',out/'SNAP.COM'),(ROOT/'lab/bbs/audio_synchronet_retry_startup_keys.asm',stage/'EXITKEY.COM'),(ROOT/'lab/bbs/audio_get_vector.asm',stage/'KEYVEC.COM')]:subprocess.run(['nasm','-fbin',str(src),'-o',str(leaf)],check=True)
+ for src,leaf in [(out/'sampler.asm',out/'SNAP.COM'),(ROOT/'lab/bbs/audio_synchronet_retry_startup_keys.asm',stage/'EXITKEY.COM'),(ROOT/'lab/bbs/audio_get_vector.asm',stage/'KEYVEC.COM')]:subprocess.run(['nasm','-fbin',*([f'-DAUDIO_SYNC_RETRY_SLOT={a.slot}'] if leaf.name=='EXITKEY.COM' else []),str(src),'-o',str(leaf)],check=True)
  generated={str(p.relative_to(out)):sha(p) for p in stage.iterdir()}
  date=datetime.datetime.strptime(stats['Global']['date'],'%b %d %Y');log=RUNTIME/'data/logs'/date.strftime('%m%d%y.log');boundary=(log.stat().st_ino,log.stat().st_size)
  tools={str(Path(shutil.which(n)).resolve()):sha(Path(shutil.which(n))) for n in ('dosbox-x','nasm')}
@@ -135,7 +149,7 @@ exit
   'numeric_AT_only':n['commands']==['ATZ','ATD1'],'real_DSP_CONNECT':n.get('callerInfo',{}).get('bps')==n.get('answerInfo',{}).get('bps')==1200,
   'actual_synthetic_login_in_server_log':len(re.findall(rb'LABUSER\s+Logon ',server_log))==1,
   'native_terminal_replies':b'\x1b[?1;2c' in sent and bool(re.search(rb'\x1b\[\d+;\d+R',sent)),
-  'stock_upload_requested':'SXRCN003.BIN' in clean and 'Hang up after transfer?' in clean,
+  'stock_upload_requested':NAME in clean and 'Hang up after transfer?' in clean,
   'final_DOS_main_menu':'Read/Post Messages' in text and 'Main' in text,'no_unrecognized_command':'Unrecognized command' not in clean,
   'profile_unchanged':read('MODEM.PRM')==profile,'directory_accounting':accounting_check(contact,read('CALL.DIR'),1),
   'message_bodies_preserved':message_bodies()==bodies,'no_message_mail_or_download_writes':all(stats['Total'][k]==after_stats['Total'][k] for k in ('dnloads','dnloadb','posts','email','feedback')),
@@ -147,7 +161,7 @@ exit
   only_expected_new_server_files=set(files)==set(pf['existing_files'])|{NAME,RETRY},
   exact_same_source_retry=(AREA/RETRY).is_file() and (AREA/RETRY).read_bytes()==expected+b'\x1a'*127,existing_server_files_preserved=all(files.get(n)==h for n,h in pf['existing_files'].items()),
   DOS_source_unchanged=upload_path.read_bytes()==expected and upload_stat==(upload_path.stat().st_ino,upload_path.stat().st_size,upload_path.stat().st_mtime_ns))
- result={'passed':all(checks.values()),'checks':{k:bool(v) for k,v in checks.items()},'peer':'synchronet','route':'xmodem-cancel-retry','server_partial_cleanup_accepted':not target.exists(),'posttrain_hold':True,'input_sequence_timeout_ms':250,
+ result={'passed':all(checks.values()),'checks':{k:bool(v) for k,v in checks.items()},'peer':'synchronet','route':'xmodem-cancel-retry','server_partial_cleanup_accepted':not target.exists(),'posttrain_hold':True,'input_sequence_timeout_ms':250,'slot':a.slot,'startup_component_proof':str(component_path.relative_to(ROOT)),'buffered_runtime_proof':str(a.buffered_runtime_proof.resolve().relative_to(ROOT)) if a.buffered_runtime_proof else None,
   'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'tool_inputs':tools,'generated_inputs':generated,'server':server,'message_bodies':bodies,'statistics_before':stats,'statistics_after':after_stats,
   'upload':{'name':NAME,'source_path':str(upload_path.relative_to(ROOT)),'source_sha256':sha(upload_path),'source_stat':upload_stat,'source_bytes':len(expected),'target_path':str(target.relative_to(ROOT)),'stored_sha256':sha(target) if target.is_file() else None,'stored_bytes':target.stat().st_size if target.is_file() else None,'existing_files_before':pf['existing_files']},
   'retry':{'name':RETRY,'target_path':str((AREA/RETRY).relative_to(ROOT)),'stored_sha256':sha(AREA/RETRY) if (AREA/RETRY).is_file() else None},

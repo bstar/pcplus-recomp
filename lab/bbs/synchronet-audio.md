@@ -235,6 +235,58 @@ After natural exit, use the `cancel_fixed` byte/metadata/control auditors, seria
 audit, independent caller decoder and boundary diagnosis before recording client
 acceptance. Any retained or indexed partial keeps server cleanup unaccepted.
 
+## Current-build same-call early-start retry
+
+The [preparation record](../../docs/validation/current-synchronet-retry-preparation.json)
+binds unused actual slot4 (`SXRCN004.BIN` then `SXRUP004.BIN`) and a fresh stock
+TCP reference (`SXQRF007.BIN` then `SXQRF008.BIN`). Reference cancellation/full
+retry, exact storage/padding and original partial preservation pass11 checks.
+Both actual destinations are absent from disk and the official FileBase API.
+The selected script compiles and15 raw wait tokens match captured prompts.
+
+The BIOS helper now accepts `AUDIO_SYNC_RETRY_SLOT`1..9 for its remote retry
+name and numeric key. Default slot3 assembles byte-identically to the prior
+helper; slot4 changes exactly three filename/key bytes. Six actual8086 BIOS
+checks cover the selected name/confirmation, partial-menu guards, no second
+Escape, watchdog and timer restoration. The local source path remains
+`D:\SEND\RETRY.BIN`. Early-start timing is preserved: second Alt-S follows N by
+three BIOS ticks, without waiting for the complete receiver-ready banner.
+The selected control selfcheck passes a synthetic baseline and rejects twelve
+timing/source/finish/menu counterexamples; these are not actual audio results.
+
+The actual producer accepts an explicit `--startup-component-proof` and binds
+its binary, nested source and captured DOS evidence. The current proof is
+[current-terminal-upload-startup-01.json](../../docs/validation/current-terminal-upload-startup-01.json);
+the older3b proof remains the default for historical recipes. The normal200ms
+runtime requires its explicit stage proof. The current cohort was launched as:
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/synthmodem_synchronet_retry_startup_audio_dos.py \
+  --slot 4 --runtime build/bbs-lab/synthmodem-buffered-runtime-01/runtime \
+  --buffered-runtime-proof build/bbs-lab/synthmodem-buffered-runtime-01/result.json \
+  --startup-component-proof docs/validation/current-terminal-upload-startup-01.json \
+  --reference build/bbs-lab/current-synchronet-retry-reference-01/result.json \
+  --key-checks build/bbs-lab/current-synchronet-retry-keys-01/result.json \
+  --recipe-checks build/bbs-lab/current-synchronet-retry-recipe-01/result.json \
+  --preflight build/bbs-lab/current-synchronet-retry-preflight-01/result.json \
+  --output build/bbs-lab/current-synchronet-retry-audio-01
+./tools/bbs-dev --command python3 lab/bbs/observe_synchronet_retry_startup_partial.py \
+  build/bbs-lab/current-synchronet-retry-audio-01 --slot 4
+```
+
+Start the read-only observer after the producer creates its output directory
+and before retry completion. It requires the retry to remain unindexed while
+capturing the first partial's exact bytes, inode, size, timestamp and official
+metadata. The final audit requires those to survive the full retry unchanged.
+After natural exit, run the `retry_startup` full byte, official metadata and
+control auditors, independent caller decode and serial-write audit before the
+recorder. Full CRC/ACK/two-EOT finish, exact online/display streams, Files/Main
+and DOS/UART/IRQ/PIC/timer/SIP cleanup remain mandatory. Both actual run and
+observer are currently in progress; preparation grants no actual same-call
+audio acceptance. Retained/indexed stock partials keep overall/server cleanup
+false even if the client workflow succeeds. These occupied output paths are
+documentation, not commands to overwrite or restart the current cohort.
+
 
 ## First actual failure
 
