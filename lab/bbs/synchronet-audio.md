@@ -115,3 +115,46 @@ message bodies/counters, all original acceptance checks, raw recipe/reference/
 observer prerequisites, full independent offline decode and native/guest/BBS/
 caller identity. Its positive result grants no broader application or hardware
 acceptance. The sealed first failure remains separate.
+
+## Unsaved editor workflow
+
+The separate editor recipe uses the owned Local General area. It enters the
+stock FSEditor with subject KEYTEST, clears any prior synthetic line, types
+ABCDE, then exercises Home/End/Left/Delete/Insert/Tab/PgUp/PgDn/Ctrl-Y. It types
+UNSAVED and sends Ctrl-Q, dismisses the abort pause and returns to Main. No
+editor save command is sent. Page keys cover one-line boundary responses only.
+
+The reference records raw responses and checks actual cursor/erase/mode/bell
+behavior. The BIOS helper requires both the visible subject and Insert Mode;
+neither marker alone can start its input sequence. Its independent DOS probe
+reads every BIOS key and verifies timer restoration and the watchdog path.
+Raw ASPECT wait tokens must match independent captures before the audio run.
+
+```sh
+./tools/bbs-dev --command python3 lab/bbs/audio_synchronet_editor.py \
+  --output build/bbs-lab/synchronet-audio-editor-reference-NEW
+./tools/modem-dev --command python3 lab/bbs/check_audio_synchronet_editor_keys.py \
+  --output build/bbs-lab/audio-synchronet-editor-keys-NEW
+./tools/modem-dev --command python3 lab/bbs/check_synchronet_editor_audio_recipe.py \
+  --reference build/bbs-lab/synchronet-audio-editor-reference-NEW \
+  --output build/bbs-lab/synchronet-editor-audio-recipe-NEW
+./tools/modem-dev --command python3 lab/bbs/synthmodem_synchronet_editor_audio_dos.py \
+  --runtime build/bbs-lab/synthmodem-posttrain-runtime-01/runtime \
+  --reference build/bbs-lab/synchronet-audio-editor-reference-NEW/result.json \
+  --key-checks build/bbs-lab/audio-synchronet-editor-keys-NEW/result.json \
+  --recipe-checks build/bbs-lab/synchronet-editor-audio-recipe-NEW/result.json \
+  --output build/bbs-lab/synthmodem-synchronet-editor-audio-NEW
+# After natural producer exit:
+./tools/modem-dev --command python3 lab/bbs/audit_synchronet_editor_audio_dos.py COHORT
+./tools/modem-dev --command python3 lab/bbs/audit_serial_io_evidence.py COHORT
+./tools/modem-dev --command node lab/bbs/diagnose_audio_caller.js RUNTIME COHORT
+# Only after all acceptance checks pass:
+./tools/modem-dev --command python3 lab/bbs/record_synchronet_editor_audio.py COHORT \
+  --output docs/validation/synthmodem-synchronet-editor-audio-NEW.json
+```
+
+The editor audit preserves keyboard CSI sequences while removing only native
+DA/CPR replies, requiring the complete exact application input. It retains the
+whole-caller/guest/Telnet, RTP/SIP, server/message/counter and native cleanup
+gates from the navigation audit. Successful unsaved editing grants no transfer,
+multiline editor, sustained pressure/loss or physical hardware acceptance.
