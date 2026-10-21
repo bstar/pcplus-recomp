@@ -523,19 +523,38 @@ Real native/UI/read-only file/UARTISR code plus modeled hardware/kernel and an
 independent physical-byte peer reproduce unfinished/invalid frames before CAN.
 Run `./tools/dev --command python3 standalone/check_terminal_upload_cancel_boundary.py`.
 
-Immediate next work is the maintained ordinary-sender adapter repair:
+The maintained ordinary-sender adapter repair is now implemented and verified:
 
-- Track an in-flight frame from the native first-header-byte callback
+- It tracks an in-flight frame from the native first-header-byte callback
   (return IP send_at_e132) through its shared final checksum/CRC callback
   (return IP send_at_e1b6). Preserve recovered flat native instruction bytes.
-- Latch ordinary local Escape while that frame is in flight; finish only that
+- It latches ordinary local Escape while that frame is in flight, finishes that
   frame, then unwind/cancel at its control boundary. Preserve immediate Alt-X,
   carrier loss, CTS/THRE stall, overflow and existing independent deadlines.
-- Reset pending/frame state on every admission and all exits. Verify source
+- It resets pending/frame state on every admission and all exits. Verified source
   close/identity, pending ACK handling, IRQ/ABI/DS=SS and next-session ownership.
-- Make the16 edge regressions pass, extend physical/carrier/stall fault cases,
-  run existing linked upload/transfer tests, then repeat on a fresh stock audio
-  target. Keep this66-second failure intact and measure the new peer response.
+- The16edges now pass, extended to37physical-fault/wrap/midnight/late-ACK and
+  next-session cases. Existing54upload/44receive/23YMODEM/78ZMODEM and five ZMODEM
+  cancel cases pass. A fresh stock audio target measures the new response while
+  preserving the66-second baseline. See the receipts below.
+
+The [linked repair proof](docs/validation/terminal-upload-cancel-boundary-fixed.json)
+and [fresh audio proof](docs/validation/synthmodem-synchronet-cancel-fixed-audio-01.json)
+bind new terminal54d53c72 with DS=SS/64832bytes and unchanged recovered flat native
+instructions. In actual SIP/RTP/V22-1200 audio, two complete CRC frames precede
+CAN, no next-frame prefix is interrupted, and the peer pause returns in11.525s
+instead of66.192s, within the15-second measured-rate scope budget. All89 byte/
+control/cleanup/preservation checks pass: exact2189 upstream bytes and34160
+display/control bytes,6001ms hold,34369 completed frontend bytes and no gateway
+errors. Actual Files/Main, native IRQ/UART/PIC/timer/SIP restoration and source/
+existing-file preservation hold. The original midframe pattern now rejects.
+
+Only responsive client cancellation is accepted in this scope. The stock peer
+retains/indexes2048bytes and reports expected E/3startup errors, so server partial
+cleanup and the receipt's overall `passed` remain false. Keep both old and new
+partials/captures intact; no remote cleanup behavior is implied by the native fix.
+Next: same-call cancellation/retry with explicit partial accounting, actual
+carrier-loss/reconnect, then broader pressure/protocol/profile coverage.
 
 Stock partial publication remains a separately documented server-side behavior;
 same-call retry, carrier-loss/reconnect, other protocols, pressure, physical

@@ -115,11 +115,50 @@ through modeled BIOS keys, with real native/UI/file/UARTISR code. Most cases
 leave an incomplete packet before CAN; trailer edges can produce bad CRC/data.
 Run `./tools/dev --command python3 standalone/check_terminal_upload_cancel_boundary.py`.
 
-Next repair: defer local ordinary-XMODEM Escape across an in-flight frame through
+The required repair was to defer local ordinary-XMODEM Escape through
 its checksum/CRC trailer, then emit CAN at the control boundary. Maintain bounded
 service and immediate physical/carrier/deadline fault handling. Verify header,
 payload, trailer, checksum/CRC, CTS stalls, loss, source ownership, next-session
 state and a fresh actual audio run before granting cancellation acceptance.
+
+### Verified packet-boundary repair
+
+The maintained sender now tracks the native first-header-byte and final
+checksum/CRC callbacks. Escape becomes pending while that frame is transmitted;
+the owner then cancels at a control boundary. Admission and every exit reset
+the pending state. Alt-X, carrier loss, real ISR overflow, CTS/THRE stalls and
+the independent progress deadline still abort immediately and boundedly.
+The recovered flat native instructions remain unchanged. The Nix source build
+preserves DS=SS/64832bytes; the new terminal SHA256 is
+54d53c72acc15a406a203fcf3a41e983916b308a0671093c693daf34b7e67e2e.
+
+The [linked regression](../../docs/validation/terminal-upload-cancel-boundary-fixed.json)
+passes37cases:16 checksum/CRC edges,18 pending-Escape fault cases across clock
+wrap/midnight and three next uploads retaining a late ACK without resetting the
+application. Existing54upload/44receive/23YMODEM/78ZMODEM and five ZMODEM cancel
+cases pass. The boundary regression is included in `test-terminal`.
+
+The [fresh audio test](../../docs/validation/synthmodem-synchronet-cancel-fixed-audio-01.json)
+verifies two complete CRC-valid frames before CAN, with zero incomplete next
+frame bytes. The peer pause arrives11.525seconds after CAN, versus66.192seconds
+in the preserved baseline. This is within the15-second scope budget (one full
+1029-byte8N1 frame at1200bps plus6seconds for response). All89 byte/control/
+ownership/partial-accounting checks pass:2189 upstream bytes,34160 display/control
+bytes,34369 completed frontend bytes with no skipped/failed/pending bytes,
+6001ms hold, no gateway errors, real Files/Main and normal native hardware/timer/
+SIP cleanup. The old midframe cancellation pattern now rejects.
+
+Responsive **client** cancellation is accepted for this captured workflow.
+Stock retains/indexes the expected2048-byte prefix and reports E/3startup errors;
+there is no full-file success claim or server cleanup acceptance. The overall
+receipt remains `passed:false` for that separate retained-partial gate. Both the
+original1024-byte/66-second failure and all previous captures are preserved.
+The fresh-case helpers use SXCAN002.BIN and the `cancel_fixed` counterparts of
+the baseline tools; `record_synchronet_cancel_fixed_audio.py` validates the paired
+baseline and measured response budget. Same-call retry, actual carrier loss/
+reconnect, sustained pressure, other profiles and physical hardware remain open.
+Earlier audio receipts retain their original frozen executable identities; this
+new binary's audio proof covers the cancellation workflow described here.
 
 
 ## First actual failure
