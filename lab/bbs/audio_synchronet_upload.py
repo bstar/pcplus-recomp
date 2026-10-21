@@ -9,24 +9,32 @@ NAME="SXAUDIO1.BIN"
 REFNAME="SXAUREF2.BIN"
 DESCRIPTION="Synthetic PCPlus audio upload"
 
+def name_for(slot,reference=False):
+ assert type(slot) is int and 1<=slot<=9
+ return f'{"SXAUREF" if reference else "SXAUDIO"}{slot}.BIN'
+
+def owned_name(name):
+ return name in {name_for(slot,ref) for slot in range(1,10) for ref in (False,True)}
+
 def payload(name):
- assert name in (NAME,REFNAME)
+ assert owned_name(name)
  return hashlib.sha256(name.encode()).digest()+bytes(((i*73+(i>>8)*19)&255)^0x5a for i in range(11521-32))
 
 def stored_files():
  return {p.name:sha(p) for p in sorted(AREA.iterdir()) if p.is_file()}
 
 def metadata(out,name,label):
- assert name in (NAME,REFNAME) and label in ('before','after')
+ assert owned_name(name) and label in ('before','after')
  path=out/('metadata-'+label+'.js');assert not path.exists()
  path.write_text("var f=new FileBase('pcplab');if(!f.open())throw Error(f.last_error);print('PCPLAB_JSON:'+JSON.stringify(f.get('"+name+"')));f.close();\n")
  r=subprocess.run([str(RUNTIME/'exec/jsexec'),'-n',str(path)],env=ENV(),capture_output=True,text=True,check=True)
  (out/('metadata-'+label+'.stdout')).write_text(r.stdout);(out/('metadata-'+label+'.stderr')).write_text(r.stderr)
  value=json.loads(r.stdout.split('PCPLAB_JSON:',1)[1].splitlines()[0]);(out/('metadata-'+label+'.json')).write_text(json.dumps(value,indent=2)+'\n');return value
 
-def reference(out):
+def reference(out,name=REFNAME):
+ assert name in {name_for(slot,True) for slot in range(1,10)}
  out=out.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
- server=snapshot();bodies=message_bodies();before=statistics();name=REFNAME;data=payload(name);(out/'source.bin').write_bytes(data);files=stored_files();assert name not in files and metadata(out,name,'before') is None;checks={};frames=[];error=None;after_meta=None
+ server=snapshot();bodies=message_bodies();before=statistics();data=payload(name);(out/'source.bin').write_bytes(data);files=stored_files();assert name not in files and metadata(out,name,'before') is None;checks={};frames=[];error=None;after_meta=None
  with BinaryPeer() as peer:
   def phase(label,data=b'',needle=None):
    peer.text.clear();peer.scan_from=0
@@ -77,4 +85,4 @@ def reference(out):
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({k:result[k] for k in ('passed','checks','error','frames')}));assert result['passed']
 
 if __name__=='__main__':
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True,type=Path);reference(p.parse_args().output)
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True,type=Path);p.add_argument('--slot',type=int,choices=range(1,10),default=2);a=p.parse_args();reference(a.output,name_for(a.slot,True))

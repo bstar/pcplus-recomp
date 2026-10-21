@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Current976/source-built200ms runtime has scoped accepted stock Synchronet two-call loss/redial/XMODEM retry and owned ENiGMA paced plus rapid single-line editing and automatic ZMODEM download. Rapid editing passes23 producer,39 independent and12 serial checks: the same43-byte body spans1.32s instead of about71s, with exact119 upstream/48245 display bytes, correct cursor/mode effects and normal cleanup. Download passes full11521-byte CRC/finish/helper/menu/accounting gates, retaining eight verified completed-file retransmissions. Multiline/longer input, sustained/general audio integrity, long-lived bridge reuse, current upload/cancel/retry, stock receiver cleanup, physical Boca/SPA2102 and all F01-F16 remain open.",
+  "status": "Current976/source-built200ms runtime has scoped accepted stock Synchronet two-call loss/redial/XMODEM retry and owned ENiGMA paced plus rapid single-line editing and automatic ZMODEM download. Rapid editing passes23 producer,39 independent and12 serial checks: the same43-byte body spans1.32s instead of about71s, with exact119 upstream/48245 display bytes, correct cursor/mode effects and normal cleanup. Download passes full11521-byte CRC/finish/helper/menu/accounting gates, retaining eight verified completed-file retransmissions. Multiline/longer input, sustained/general audio integrity, long-lived bridge reuse, current cancellation/retry, stock receiver cleanup, physical Boca/SPA2102 and all F01-F16 remain open. Current stock Synchronet upload also passes92 checks: exact11849 online/38172 display bytes,14 unreplayed CRC frames, exact stored source/padding, official metadata, two-EOT finish, Files/Main and normal cleanup. Three startup no-input timeouts remain explicitly attributed; seven rehashed policy counterexamples reject.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3901,16 +3901,16 @@
     "offline_evidence_sha256": "fb6931b33b5382e73b5ac3e99a5becacdc23ac13d120ab8d58c392db1706aea1"
   },
   "remaining": [
-    "Extend accepted rapid single-line ENiGMA interaction to multiline/longer input and sustained timing/pressure. Current paced/rapid editing, automatic ZMODEM download and separate stock Synchronet bridge-process recovery pass their scoped full audits. Eight completed-file download replays remain observations for pressure/efficiency work; current upload/cancel/retry and full F01-F16 scope remain required.",
+    "Extend accepted rapid single-line ENiGMA interaction to multiline/longer input and sustained timing/pressure. Current paced/rapid editing, automatic ZMODEM download and separate stock Synchronet bridge-process recovery pass their scoped full audits. Eight completed-file download replays remain observations for pressure/efficiency work; current cancellation/retry and full F01-F16 scope remain required.",
     "Historical in-session insertions lack complete diagnostic evidence; clean editor07/download03 runs do not establish their cause or a general correction.",
     "Ordinary stock Synchronet XMODEM upload/download, scoped cancellation, receiver-ready-gated same-call retry and current200ms bridge-process recovery have scoped receipts. Analog waveform-loss detection, long-lived bridge reuse, sustained pressure, other protocols, stock ZMODEM closing/cleanup and physical Boca/SPA2102 still require their own passing gates.",
     "All F01-F16 whole-application completion gates remain open.",
     "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
     "Extend the accepted modified-helper fixed-DTE slow-carrier upload to pressure/cancel/loss and other peers; retain every CRC/finish,storage,post-helper input and cleanup gate.",
     "Stock Synchronet published/indexed a1024-byte failed-reference partial despite E/helper error. Preserve evidence; cancellation/loss cleanup and trustworthy completion require full wire/source/finish accounting. Accepted upload has3 source-attributed startup retries, not zero startup retries.",
-    "Current976 has scoped accepted stock Synchronet XMODEM download/200ms audio recovery and owned ENiGMA paced/rapid single-line editor plus automatic ZMODEM download. Native midframe Escape and same-call startup retry retain historical3b acceptance. Current upload/cancel/retry, multiline/longer input, pressure/retransmission efficiency, stock indexed-partial cleanup, handshake ambiguity and broader profile/protocol/hardware gates remain open."
+    "Current976 has scoped accepted stock Synchronet XMODEM download/200ms audio recovery and owned ENiGMA paced/rapid single-line editor plus automatic ZMODEM download. Native midframe Escape and same-call startup retry retain historical3b acceptance. Current cancellation/retry, multiline/longer input, pressure/retransmission efficiency, stock indexed-partial cleanup, handshake ambiguity and broader profile/protocol/hardware gates remain open."
   ],
-  "current_cohort": "current-enigma-editor-burst-audio-01",
+  "current_cohort": "current-synchronet-upload-audio-01",
   "latest_cohort_passed": true,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
@@ -3975,7 +3975,7 @@
   "audio_upload_retry_receipt": "docs/validation/synthmodem-audio-upload-retry-02.json",
   "audio_upload_retry_receipt_sha256": "e553eaee6e41126abfaf876825bb9a69929fede92a19a174977fade67892a8be",
   "posttrain_candidate_receipt": "docs/validation/synthmodem-posttrain-runtime.json",
-  "latest_completed_cohort": "current-enigma-editor-burst-audio-01",
+  "latest_completed_cohort": "current-synchronet-upload-audio-01",
   "latest_completed_cohort_passed": true,
   "audio_upload_retry_failure_receipt": "docs/validation/synthmodem-audio-upload-retry-01.json",
   "accepted_candidate_retry_cohort": "synthmodem-audio-upload-retry-02",
@@ -4033,7 +4033,7 @@
   "current_synchronet_reconnect_audio_receipt": "docs/validation/current-synchronet-reconnect-audio-04.json",
   "current_synchronet_reconnect_audio_receipt_sha256": "a56f16e0d6c99760a44d3909ec057b3035104f25b09a1140b478f64be29f5952",
   "active_cohort": null,
-  "active_cohort_status": "Preparing next current-build compatibility/pressure case",
+  "active_cohort_status": "No active audio run; current stock Synchronet upload accepted, current cancellation/retry and multiline/pressure work remain.",
   "buffered_timing_receipt": "docs/validation/synthmodem-buffered-timing.json",
   "buffered_timing_receipt_sha256": "f263725327f61163ffe91386ff6861fb2a890a9994812c519fb076fb61316505",
   "current_enigma_editor_audio_receipt": "docs/validation/current-enigma-editor-audio-01.json",
@@ -4044,5 +4044,10 @@
   "current_enigma_download_accepted": true,
   "current_enigma_editor_burst_audio_receipt": "docs/validation/current-enigma-editor-burst-audio-01.json",
   "current_enigma_editor_burst_audio_receipt_sha256": "0a09daafcced89709d504b0018545b1b57f447714c36957bc59341ae13b29ec6",
-  "current_enigma_editor_burst_accepted": true
+  "current_enigma_editor_burst_accepted": true,
+  "current_synchronet_upload_audio_receipt": "docs/validation/current-synchronet-upload-audio-01.json",
+  "current_synchronet_upload_audio_receipt_sha256": "15cf87698e77a1083ee54fb2da6890f06c54aad0e08ca78d4a1347793bdce689",
+  "current_synchronet_upload_accepted": true,
+  "current_synchronet_upload_attribution_negative_receipt": "docs/validation/current-synchronet-upload-attribution-negative.json",
+  "current_synchronet_upload_attribution_negative_receipt_sha256": "bd76d9f2599bacff3605640c04a518c95a0731074d552bf0acb778e88d1de314"
 }

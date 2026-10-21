@@ -51,7 +51,8 @@ def main():
   cursor=found+len(token)
  checks['ordered_actual_Synchronet_prompts']=ordered
  checks['one_authoritative_synthetic_login']=len(re.findall(rb'LABUSER\s+Logon ',(out/'server-session.log').read_bytes()))==1
- from audio_synchronet_upload import NAME,AREA,payload,stored_files
+ from audio_synchronet_upload import AREA,payload,stored_files,name_for
+ NAME=r['upload']['name'];assert NAME in {name_for(slot) for slot in range(1,10)}
  from test_transfer_dos import audit_protocol,audit_controls,timestamp
  from audit_audio_download import frontend_trace
  expected=payload(NAME);protocol=None;errors=[]
@@ -64,7 +65,7 @@ def main():
   checks['complete_XMODEM_CRC_and_ACK_finish']=protocol['crc'] and len(protocol['padded_payload'])==11648 and protocol['eots']==2 and [c['response'] for c in protocol['controls']]==[6]*14+[21,6]
   checks['exact_stored_file_and_padding']=(AREA/NAME).read_bytes()==protocol['padded_payload']==expected+b'\x1a'*127
   initial=re.sub(rb'\x1b\[(?:\?1;2c|\d+;\d+R)',b'',sent[:protocol['start']])
-  checks['exact_menu_and_protocol_input']=initial==b'LABUSER\rLABPASS42\r Qn\r TJ11\rUSXAUDIO1.BIN\rySynthetic PCPlus audio upload\r1n' and sent[protocol['end']:]==b' Q'
+  checks['exact_menu_and_protocol_input']=initial==b'LABUSER\rLABPASS42\r Qn\r TJ11\rU'+NAME.encode()+b'\rySynthetic PCPlus audio upload\r1n' and sent[protocol['end']:]==b' Q'
  except Exception as error:errors.append(repr(error))
  if protocol:protocol.pop('padded_payload',None)
  files=stored_files();before_files=r['upload']['existing_files_before']

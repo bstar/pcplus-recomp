@@ -18,7 +18,7 @@ timer restore pass. Two13-check serial audits,7 official metadata checks and31
 damaged-evidence rejections pass. The earlier18/19 missing-notice run and helper/
 ACK/media failures remain retained. Current paced/rapid ENiGMA editing and
 automatic download also pass below; next complete multiline/longer input,
-current upload/cancel/retry, sustained/protocol/profile and all F01–F16 work. This is
+current cancellation/retry, sustained/protocol/profile and all F01–F16 work. This is
 scoped bridge-process recovery acceptance, not general/physical completion.
 
 The [retained failed repeat](docs/validation/current-synchronet-reconnect-audio-03.json)
@@ -102,6 +102,27 @@ audio, with the same correct editor key/cursor/mode and unsaved-draft behavior.
 All119 authored upstream and48245 BBS display bytes remain exact; DOS/hardware/
 SIP/VM cleanup passes. This accepts one rapid single-line sequence, not display
 latency, multiline input or sustained pressure.
+
+The [current Synchronet upload preparation](docs/validation/current-synchronet-upload-preparation.json)
+passes a fresh native TCP reference, official target-absence preflight and raw
+ASPECT wait checks. Fresh slot-based remote names preserve all earlier files;
+the local BIOS-helper path remains fixed because XMODEM carries no filename.
+Default payloads/recipe remain exact and the prior key proof still validates.
+The [current source-built976 upload](docs/validation/current-synchronet-upload-audio-01.json)
+now passes92 checks with the normal200ms runtime and remote `SXAUDIO2.BIN`:
+25 producer,35 independent,12 serial,11 official/source-backed metadata,
+4 original timing and5 indexed timing checks. All11849 online bytes and38172
+BBS display bytes are exact. Fourteen unreplayed CRC blocks store11521 source
+bytes plus127SUB padding, with two-EOT NAK/ACK, Files/Main return and normal
+DOS/UART/IRQ/PIC/timer/SIP cleanup. Four CRC requests account for three startup
+no-input timeouts; zero data-block errors are established, not zero startup
+retries. The original failed zero-total-errors audit stays retained. Seven
+[rehashed attribution counterexamples](docs/validation/current-synchronet-upload-attribution-negative.json)
+reject extra/missing error counts, failed receive status, missing startup
+request, data NAK, replayed frame and an additional failed metadata gate.
+Original evidence and all earlier files remain unchanged. Current cancellation/
+retry, multiline editing, sustained pressure, physical hardware and all F01–F16
+work remain required; this accepts one stock upload workflow only.
 
 The hardware target's [work order and completion gates](docs/ANALOG_MODEM_INTEGRATION.md#work-order-and-completion-gates)
 prioritize carrier/data separation and full audio-path pressure/editor/transfer

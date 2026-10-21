@@ -1,0 +1,109 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "extra_DSZ_error",
+      "passed": true,
+      "checks": {
+        "nonzero_exit": true,
+        "expected_policy_guard": true,
+        "assertion_rejection": true,
+        "no_acceptance_written": true
+      },
+      "returncode": 1,
+      "stderr_sha256": "b522659e9440198efab57af3298115d4908a483c9e9f0efca98e7f1d657edc69"
+    },
+    {
+      "name": "missing_DSZ_error",
+      "passed": true,
+      "checks": {
+        "nonzero_exit": true,
+        "expected_policy_guard": true,
+        "assertion_rejection": true,
+        "no_acceptance_written": true
+      },
+      "returncode": 1,
+      "stderr_sha256": "b522659e9440198efab57af3298115d4908a483c9e9f0efca98e7f1d657edc69"
+    },
+    {
+      "name": "failed_receive_status",
+      "passed": true,
+      "checks": {
+        "nonzero_exit": true,
+        "expected_policy_guard": true,
+        "assertion_rejection": true,
+        "no_acceptance_written": true
+      },
+      "returncode": 1,
+      "stderr_sha256": "b522659e9440198efab57af3298115d4908a483c9e9f0efca98e7f1d657edc69"
+    },
+    {
+      "name": "missing_startup_request",
+      "passed": true,
+      "checks": {
+        "nonzero_exit": true,
+        "expected_policy_guard": true,
+        "assertion_rejection": true,
+        "no_acceptance_written": true
+      },
+      "returncode": 1,
+      "stderr_sha256": "b522659e9440198efab57af3298115d4908a483c9e9f0efca98e7f1d657edc69"
+    },
+    {
+      "name": "data_NAK",
+      "passed": true,
+      "checks": {
+        "nonzero_exit": true,
+        "expected_policy_guard": true,
+        "assertion_rejection": true,
+        "no_acceptance_written": true
+      },
+      "returncode": 1,
+      "stderr_sha256": "05708576f357b7c7c6bd1930486caa22b039693a1028e13f04802163ce447caa"
+    },
+    {
+      "name": "replayed_frame",
+      "passed": true,
+      "checks": {
+        "nonzero_exit": true,
+        "expected_policy_guard": true,
+        "assertion_rejection": true,
+        "no_acceptance_written": true
+      },
+      "returncode": 1,
+      "stderr_sha256": "2b63c3f8966efb026163baa6c403d1b59b6e2c6fce065d6c93b64347e37f9c92"
+    },
+    {
+      "name": "additional_failed_metadata_gate",
+      "passed": true,
+      "checks": {
+        "nonzero_exit": true,
+        "expected_policy_guard": true,
+        "assertion_rejection": true,
+        "no_acceptance_written": true
+      },
+      "returncode": 1,
+      "stderr_sha256": "310d8163868f3c1eaf0b817801ba38443383a3d2a462c01362ca68dc870da376"
+    }
+  ],
+  "original_captures_unchanged": true,
+  "baseline_sha256": {
+    "upload-metadata-audit.json": "5ed4822a25e60a78ffdf3d526b0206513aa4841855a43478596e90fe2e540ae8",
+    "independent-audit.json": "032e0c68b2c91cdfab755fc1e4f1475480a032e76255ef333e2fa7413e00d723",
+    "result.json": "5e03688afecd20402a10abe8598da0bb1391273cee3be18517371d31757fbfff",
+    "server-session.log": "83e04bc28e47d4934d2e3083df2d17dfeb292f23d405306031f1837a58acba69",
+    "bbs-output.bin": "13685af693fed587e534bdd4550ec6534425b1c6b6d74463e107ccda37a1db07",
+    "receiver-installed.bin": "7556b7dd81ca2118844b57dcf446bc3e7dc28fe207f259e6d79f937c543a033b",
+    "metadata-after.js": "dbd726c384f93ff0e2da7b961afeaa07548f177ce422bbe4f576cf493e555e94",
+    "metadata-after.json": "f5f9232a8103f1169ab50de3bbf7639bfc785553f91220b2164c47b04251679c",
+    "metadata-after.stdout": "b8c72757ccc59a8d4b87507baa3b6fa1f9421a511f663223677eac7a9fc00902",
+    "metadata-after.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "upload-metadata-audit-v2.json": "1dc7c5f761a4611429ed7979f35c6fa9795ec0e04cbb9285fe12e053f0ae2cf3"
+  },
+  "source_cohort": "build/bbs-lab/current-synchronet-upload-audio-01",
+  "inputs": {
+    "lab/bbs/check_synchronet_upload_startup_attribution.py": "134a0fb9e8d084561ee90200ec008e10a30d3c44ca863cb11b4f1fb33940c649",
+    "lab/bbs/audit_synchronet_upload_metadata_v2.py": "3416922869ada8d06b45a567cf4996c21d6dcb90fc32a3a7f280fb7b854a6065"
+  },
+  "scope": "Seven attribution-policy counterexamples on separate rehashed copies of actual upload evidence. Not new DOS/audio or physical hardware runs. The original failed zero-error audit and accepted captures remain exact."
+}

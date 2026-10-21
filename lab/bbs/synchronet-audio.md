@@ -421,6 +421,32 @@ before launch. The deterministic11521-byte payload is unique per target name;
 the original DOS inode/size/mtime and all existing server files must preserve.
 XMODEM's127SUB padding remains part of the official11648-byte stored file.
 
+The [current-build preparation](../../docs/validation/current-synchronet-upload-preparation.json)
+uses a fresh `SXAUDIO2.BIN` destination and `SXAUREF3.BIN` TCP reference, retaining
+the earlier stored fixtures. `--slot` selects registered eight-character test
+basenames; target absence on disk and in FileBase remains mandatory. The local
+BIOS-helper path stays `D:\SEND\SXAUDIO1.BIN`, containing the selected target's
+deterministic payload. XMODEM transmits data without a filename, so its BBS-side
+name can differ from the local source alias. Default slot1 payloads and the
+ASPECT recipe remain exact, and the existing BIOS-key proof is still valid.
+
+The normal200ms runtime is selected through `--buffered-runtime-proof`. The
+[current source-built976 DOS upload](../../docs/validation/current-synchronet-upload-audio-01.json)
+passes all92 producer/audit checks:11849 exact online bytes,38172 exact BBS
+display bytes,14 unreplayed CRC blocks, exact11521-byte source plus127SUB padding,
+two-EOT NAK/ACK, official storage/metadata and post-transfer Files/Main. Normal
+DOS/UART/IRQ/PIC/timer/SIP cleanup, all earlier files and frozen source/runtime
+identities preserve. All38381 frontend bytes complete without skipped/failed/
+pending writes. Four CRC requests account for three stock initial no-input
+timeouts, with no data-block errors. Both timing oracles reject early/late ACKs.
+The original zero-total-errors failure is retained alongside the source-backed
+interpretation. Seven [attribution mutants](../../docs/validation/current-synchronet-upload-attribution-negative.json)
+refresh relevant hashes in separate ignored copies and reject at the intended
+policy gates: higher/lower DSZ count, failed receive status, missing CRC request,
+data NAK, replayed frame and another failed metadata gate. Original captures
+remain exact. This grants one current DOS/audio upload acceptance; cancellation,
+retry, sustained pressure and physical hardware still require their own tests.
+
 The [first reference](../../docs/validation/synchronet-audio-upload-reference-01.json)
 misread a C within the CRC banner as the standalone CRC startup signal. It
 transmitted one valid block, then misread remaining text as ACK and closed.
@@ -442,16 +468,21 @@ the diagnostic does not remove or replace the partial or its metadata.
 
 ```sh
 ./tools/bbs-dev --command python3 lab/bbs/audio_synchronet_upload.py \
+  --slot 3 \
   --output build/bbs-lab/synchronet-audio-upload-reference-NEW
 ./tools/bbs-dev --command python3 lab/bbs/prepare_synchronet_audio_upload.py \
+  --slot 2 \
   --output build/bbs-lab/synchronet-audio-upload-preflight-NEW
 ./tools/modem-dev --command python3 lab/bbs/check_audio_synchronet_upload_keys.py \
   --output build/bbs-lab/audio-synchronet-upload-keys-NEW
 ./tools/modem-dev --command python3 lab/bbs/check_synchronet_upload_audio_recipe.py \
+  --slot 2 \
   --reference build/bbs-lab/synchronet-audio-upload-reference-NEW \
   --output build/bbs-lab/synchronet-upload-audio-recipe-NEW
 ./tools/modem-dev --command python3 lab/bbs/synthmodem_synchronet_upload_audio_dos.py \
-  --runtime build/bbs-lab/synthmodem-posttrain-runtime-01/runtime \
+  --runtime build/bbs-lab/synthmodem-buffered-runtime-01/runtime \
+  --buffered-runtime-proof build/bbs-lab/synthmodem-buffered-runtime-01/result.json \
+  --slot 2 \
   --reference build/bbs-lab/synchronet-audio-upload-reference-NEW/result.json \
   --key-checks build/bbs-lab/audio-synchronet-upload-keys-NEW/result.json \
   --recipe-checks build/bbs-lab/synchronet-upload-audio-recipe-NEW/result.json \
@@ -462,7 +493,7 @@ the diagnostic does not remove or replace the partial or its metadata.
 ./tools/modem-dev --command python3 lab/bbs/audit_serial_io_evidence.py COHORT
 ./tools/modem-dev --command node lab/bbs/diagnose_audio_caller.js RUNTIME COHORT
 ./tools/bbs-dev --command python3 lab/bbs/audit_synchronet_upload_metadata.py COHORT
-# Preserve the original zero-total-errors check; diagnose startup-only retries separately.
+# If only the zero-total-errors gate fails, retain it and diagnose startup-only retries.
 ./tools/bbs-dev --command python3 lab/bbs/audit_synchronet_upload_metadata_v2.py COHORT
 ./tools/modem-dev --command python3 lab/bbs/check_synchronet_upload_control_timing.py COHORT
 ./tools/modem-dev --command python3 lab/bbs/check_synchronet_upload_control_timing_indexed.py COHORT
@@ -471,11 +502,16 @@ the diagnostic does not remove or replace the partial or its metadata.
   --output docs/validation/synthmodem-synchronet-upload-audio-NEW.json
 ```
 
-Existing uploads are retained. After a target has been used, select fresh
-reference/actual basenames and corresponding deterministic payload, helper keys
-and exact-input oracle before collecting another run. A new output label does
-not authorize replacement of server files. Preparations alone grant no actual
-audio/DOS upload, cancellation/loss or physical acceptance.
+Choose unused reference/actual slots; the example pairing records the current
+preparation. Existing uploads are retained. A new output label does not
+authorize replacement of server files. The selected destination is bound into
+the payload, preflight, script and exact-input/storage oracle while local helper
+keys remain unchanged. Preparations alone grant no actual
+audio/DOS upload, cancellation/loss or physical acceptance. The source-backed
+startup audit now requires the reported DSZ error count to equal captured CRC
+startup requests minus one, with fourteen valid unreplayed blocks and no data
+NAK. It preserves the failed zero-total-errors record and accepts no other
+failed metadata gate; it does not assume a fixed count for future calls.
 
 The [completed audio upload01](../../docs/validation/synthmodem-synchronet-upload-audio-01.json)
 passes87 checks:25 producer,35 independent,12 ownership,11 source-backed metadata

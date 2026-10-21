@@ -1,0 +1,124 @@
+{
+  "passed": true,
+  "preparation_only": true,
+  "actual_DOS_audio_upload_accepted": false,
+  "active_cohort": "build/bbs-lab/current-synchronet-upload-audio-01",
+  "remote_name": "SXAUDIO2.BIN",
+  "local_DOS_name": "SXAUDIO1.BIN",
+  "reference_name": "SXAUREF3.BIN",
+  "reference_checks": {
+    "complete_CRC_frames_and_two_EOT_finish": true,
+    "exact_source_and_SUB_padding": true,
+    "official_metadata": true,
+    "post_transfer_file_and_main": true,
+    "server_inputs_preserved": true,
+    "message_bodies_preserved": true,
+    "source_unchanged": true,
+    "existing_files_preserved": true,
+    "only_new_expected_file": true,
+    "no_message_mail_or_download_writes": true
+  },
+  "absence_checks": {
+    "target_absent_on_disk": true,
+    "target_absent_from_official_metadata": true,
+    "existing_files_unchanged": true,
+    "server_inputs_preserved": true
+  },
+  "recipe_checks": [
+    {
+      "phase": "login",
+      "needle": "Login:",
+      "raw_match_possible": true
+    },
+    {
+      "phase": "password",
+      "needle": "Password:",
+      "raw_match_possible": true
+    },
+    {
+      "phase": "welcome",
+      "needle": "[Hit a key]",
+      "raw_match_possible": true
+    },
+    {
+      "phase": "bulletins",
+      "needle": "Enter number of bulletin or [",
+      "raw_match_possible": true
+    },
+    {
+      "phase": "scan",
+      "needle": "Search all groups for new messages?",
+      "raw_match_possible": true
+    },
+    {
+      "phase": "pause",
+      "needle": "[Hit a key]",
+      "raw_match_possible": true
+    },
+    {
+      "phase": "main",
+      "needle": "Read/Post Messages",
+      "raw_match_possible": true
+    },
+    {
+      "phase": "files",
+      "needle": "List Files in dir",
+      "raw_match_possible": true
+    },
+    {
+      "phase": "join",
+      "needle": "Which, ",
+      "raw_match_possible": true
+    },
+    {
+      "phase": "area",
+      "needle": "PCPlus Lab:",
+      "raw_match_possible": true
+    },
+    {
+      "phase": "upload",
+      "needle": "Filename:",
+      "raw_match_possible": true
+    },
+    {
+      "phase": "upload-name",
+      "needle": "to Main PCPlus Lab?",
+      "raw_match_possible": true
+    },
+    {
+      "phase": "upload-confirm",
+      "needle": "Enter a description now.",
+      "raw_match_possible": true
+    },
+    {
+      "phase": "description",
+      "needle": "Protocol, ",
+      "raw_match_possible": true
+    },
+    {
+      "phase": "protocol",
+      "needle": "Hang up after transfer?",
+      "raw_match_possible": true
+    }
+  ],
+  "default_payloads_and_recipe_exact": true,
+  "default_source_revision": "887ac9fa0cf4add24cf9216c6f542ac25d690613",
+  "existing_BIOS_key_proof_still_valid": true,
+  "proofs_sha256": {
+    "build/bbs-lab/current-synchronet-upload-reference-01/result.json": "d95464ada019d1474c59bb3e241bcbbf8e352763d5ff7769db7a911f2cf66840",
+    "build/bbs-lab/current-synchronet-upload-preflight-01/result.json": "62c5d0e411dd4027065053180d9da47aef35be33e88167fe92878f5f18a94050",
+    "build/bbs-lab/current-synchronet-upload-recipe-01/result.json": "aa58ed994c949b6317f3fd9e0967d387b6550ffa1b944d8a973e8a4293110495",
+    "build/bbs-lab/audio-synchronet-upload-keys-01/result.json": "c55d7443c6e4cc639182db5f9c29c941543ddae019c5f5153c6dde4525a4ef15"
+  },
+  "inputs": {
+    "lab/bbs/audio_synchronet_upload.py": "3b080cf9e3f04c9302cdd9840e6e5737d9a5f82536a18f4fe22634fd9a12229d",
+    "lab/bbs/prepare_synchronet_audio_upload.py": "98a7306c6e34f3980ea0033e319def113e736806de2c08782301616abf6d89d0",
+    "lab/bbs/synthmodem_synchronet_upload_audio_dos.py": "92b136f2b7a8220517b891b7bc76f38d238c0ac85bf03f2683a8b80a865509e1",
+    "lab/bbs/check_synchronet_upload_audio_recipe.py": "8dbb75e1aefbb6d0191547c359ccd6b694f4247cadfb35035076c6d9df5d69b3",
+    "lab/bbs/audit_synchronet_upload_audio_dos.py": "759a2faecf5bdb7eaa0c3b431e5709b8aa0de81e3e872450cfd4b7cf451fb399",
+    "lab/bbs/audit_synchronet_upload_metadata.py": "dd19ad36cf3154683c7cd0bbb7eb755dc413f4c0fd22168d2d681040a4a23e56",
+    "lab/bbs/audit_synchronet_upload_metadata_v2.py": "3416922869ada8d06b45a567cf4996c21d6dcb90fc32a3a7f280fb7b854a6065",
+    "lab/bbs/check_synchronet_upload_control_timing.py": "f11eef4229dfff0f0e603276b2653622ccf77ce8e25107b55fd38f30a5e2903a"
+  },
+  "scope": "Fresh native TCP reference, read-only official target-absence check, raw-wait recipe and existing real BIOS-key preparation only. Prior files/fixtures remain stored. XMODEM carries data without a filename, so the unchanged local helper path sends the unique slot2 payload to the BBS-requested new remote name. Default slot1 payload/recipe remain exact. The current DOS/audio upload is live, not yet accepted; all CRC/ACK/metadata/byte/cleanup gates remain required."
+}
