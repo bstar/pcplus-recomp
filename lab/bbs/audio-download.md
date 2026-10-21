@@ -55,6 +55,21 @@ the DOS screen shows RX timeout. Post-helper input, normal DOS return and
 UART/timer restoration fail. The ownership audit passes all12 consistency
 checks, without implying application acceptance. No gateway error is logged.
 
+The42-byte restoration aggregate includes the test helper's INT1C vector.
+Detailed comparison shows that only bytes32..35 differ: actual IRQ vectors and
+the six UART/PIC bytes restore exactly, while the test helper remains installed
+on premature exit. Both original aggregate/timer gates remain false. This is
+not evidence of a separate UART register-cleanup defect.
+
+`diagnose_audio_download.py COHORT` reconstructs packet CRC/source matches and
+frontend timing without writing to the modem or BBS. On this failure it verifies
+eight observed sender packets and independently reproduces the66,060-byte exact
+caller prefix and29.618-second cancellation interval after the previous complete
+packet's CRC. The [diagnostic receipt](../../docs/validation/audio-download-diagnostics.json)
+also records the split hardware snapshot. These are evidence-consistency checks,
+not transfer acceptance. Frontend CRC arrival is not an application-consumption
+timestamp or proof that storage accepted that packet.
+
 All167 online DOS bytes match the independent caller decoder, guest frames and
 Telnet stream. The downstream caller is an exact66,060-byte prefix of the
 82,294-byte BBS stream, so complete downstream acceptance remains false.
@@ -78,3 +93,14 @@ Keep the original fixture, full artwork, CRC/control/finish, return-input and
 cleanup gates. Do not rerun merely because an observation times out. Uploads,
 cancellation, retry/fault behavior, sustained pressure, other peers and physical
 hardware acceptance remain open.
+
+## Corrected deadline and completion follow-up
+
+Audio download02 now stores the exact file, preserves all360 online bytes and
+the full83244-byte BBS display, and exits with restored IRQ/UART/PIC/timer state.
+Its [retained failure](../../docs/validation/synthmodem-audio-download-02.json)
+is the missing final `OO` and corrupted post-helper command input. Actual BIOS
+`S`/Enter is sent, but late protocol controls have already reached the BBS menu.
+The [completed-replay correction](zmodem-completed-replay.md) reproduces and fixes
+the queued-data/closing-header behavior in the linked receiver. Audio download03
+is the unchanged full-workflow repeat; its independent acceptance is pending.

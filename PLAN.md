@@ -158,10 +158,24 @@ silent peer's bounded failure. The actual DOS automatic ZedZap regression passes
 all14 checks with three exact files including65797 bytes and resumed DSR/input,
 normal return and UART restoration. The78 linked ZMODEM workflows, five
 cancellation cases and three far-call/IRQ/layout groups also pass on this build.
-Normal audio download02 is running with the
-unchanged fixture/server/full artwork; its independent acceptance remains
-pending. Stock peer retry/finish timing, broader pressure and physical hardware
-remain separate gates.
+Normal audio download02 stores the exact11521-byte file and preserves all360
+online bytes and the complete83244-byte BBS display. Normal DOS return and full
+IRQ/UART/PIC/timer restoration pass. Its [retained failure](docs/validation/synthmodem-audio-download-02.json)
+is missing final OO and post-helper command contamination: eight ZNAKs respond
+to already queued data after commit; three ZNAKs and a late ZFIN reach the BBS
+menu after the helper exits. Actual BIOS S/Enter is sent but cannot enter Search.
+
+The [native completion correction](lab/bbs/zmodem-completed-replay.md) now drains
+CRC-framed completed-file retransmissions silently, without another write or
+ACK/NAK, and consumes bounded valid closing headers before literal OO. Three
+linked counterexamples become21 passing checks with one file install, confirmed
+success and an intact application tail. Thirteen error/bound tests,92 component
+cases and24 independent helper sessions pass. Normal audio download03 is running
+after all78 linked workflows, five cancellation cases, three ABI groups, the
+slow-carrier recheck and14 actual DOS automatic-transfer checks also pass
+with frozen corrected inputs and the unchanged fixture/server/art/bridge.
+Independent full-workflow acceptance, broader pressure/peers, physical hardware
+and all F01-F16 remain open.
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,

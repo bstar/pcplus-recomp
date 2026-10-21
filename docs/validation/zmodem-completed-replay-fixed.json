@@ -1,0 +1,355 @@
+{
+  "passed": true,
+  "counterexample_reproduced": false,
+  "cases": [
+    {
+      "case": "replay-True-closing-False",
+      "passed": true,
+      "checks": {
+        "no_fault": true,
+        "exact_single_file": true,
+        "checked_create_and_install_once": true,
+        "handles_closed": true,
+        "peer_script_completed": true,
+        "confirmed_success_notice": true,
+        "only_application_tail_after_owner": true
+      },
+      "fault": 0,
+      "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333030303430303030333231320d0a2a2a184230313030323030303233333839360d0a112a2a184230383030303030303030303232640d0a",
+      "remaining_peer_steps": 0,
+      "post_owner_bytes_hex": "415050",
+      "finish_unconfirmed_notice": false
+    },
+    {
+      "case": "replay-False-closing-True",
+      "passed": true,
+      "checks": {
+        "no_fault": true,
+        "exact_single_file": true,
+        "checked_create_and_install_once": true,
+        "handles_closed": true,
+        "peer_script_completed": true,
+        "confirmed_success_notice": true,
+        "only_application_tail_after_owner": true
+      },
+      "fault": 0,
+      "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333030303430303030333231320d0a2a2a184230313030323030303233333839360d0a112a2a184230383030303030303030303232640d0a",
+      "remaining_peer_steps": 0,
+      "post_owner_bytes_hex": "415050",
+      "finish_unconfirmed_notice": false
+    },
+    {
+      "case": "replay-True-closing-True",
+      "passed": true,
+      "checks": {
+        "no_fault": true,
+        "exact_single_file": true,
+        "checked_create_and_install_once": true,
+        "handles_closed": true,
+        "peer_script_completed": true,
+        "confirmed_success_notice": true,
+        "only_application_tail_after_owner": true
+      },
+      "fault": 0,
+      "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333030303430303030333231320d0a2a2a184230313030323030303233333839360d0a112a2a184230383030303030303030303232640d0a",
+      "remaining_peer_steps": 0,
+      "post_owner_bytes_hex": "415050",
+      "finish_unconfirmed_notice": false
+    }
+  ],
+  "binary_sha256": "b98232749ccd42b902467f06c62b39207083701cf42c0871165cd53b51a5569e",
+  "checker_sha256": "f5fef3a333015d6e536a253fec2aed5852062f508b9387d2a6260b7732104a45",
+  "scope": "Source-built native completion correction: three linked cases/21 checks, same-checker predecessor counterexamples,13 strict C89 error/bound cases and slow-carrier recheck. Checked file installs once; post-commit retransmissions are CRC-drained without new writes/ACKs; bounded valid closing headers and literal OO are consumed before APP resumes. Initial abort, corruption, limits and missing-OO failure remain explicit. No actual audio/BBS or physical acceptance.",
+  "baseline": {
+    "passed": false,
+    "counterexample_reproduced": true,
+    "cases": [
+      {
+        "case": "replay-True-closing-False",
+        "passed": false,
+        "checks": {
+          "no_fault": true,
+          "exact_single_file": true,
+          "checked_create_and_install_once": true,
+          "handles_closed": true,
+          "peer_script_completed": false,
+          "confirmed_success_notice": false,
+          "only_application_tail_after_owner": false
+        },
+        "fault": 0,
+        "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333030303430303030333231320d0a2a2a184230313030323030303233333839360d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230383030303030303030303232640d0a",
+        "remaining_peer_steps": 1,
+        "post_owner_bytes_hex": "",
+        "finish_unconfirmed_notice": true
+      },
+      {
+        "case": "replay-False-closing-True",
+        "passed": false,
+        "checks": {
+          "no_fault": true,
+          "exact_single_file": true,
+          "checked_create_and_install_once": true,
+          "handles_closed": true,
+          "peer_script_completed": true,
+          "confirmed_success_notice": false,
+          "only_application_tail_after_owner": false
+        },
+        "fault": 0,
+        "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333030303430303030333231320d0a2a2a184230313030323030303233333839360d0a112a2a184230383030303030303030303232640d0a",
+        "remaining_peer_steps": 0,
+        "post_owner_bytes_hex": "303030303232640d0a2a2a184230373030303030303030363764340d0a112a2a184230383030303030303030303232640d0a2a2a184230373030303030303030363764340d0a112a2a184230383030303030303030303232640d0a2a2a184230373030303030303030363764340d0a112a2a184230383030303030303030303232640d0a4f4f415050",
+        "finish_unconfirmed_notice": true
+      },
+      {
+        "case": "replay-True-closing-True",
+        "passed": false,
+        "checks": {
+          "no_fault": true,
+          "exact_single_file": true,
+          "checked_create_and_install_once": true,
+          "handles_closed": true,
+          "peer_script_completed": false,
+          "confirmed_success_notice": false,
+          "only_application_tail_after_owner": false
+        },
+        "fault": 0,
+        "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333030303430303030333231320d0a2a2a184230313030323030303233333839360d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230383030303030303030303232640d0a",
+        "remaining_peer_steps": 1,
+        "post_owner_bytes_hex": "",
+        "finish_unconfirmed_notice": true
+      }
+    ],
+    "binary_sha256": "55bf93854d90db35761936c7cbc09ba4e83f080cfa97f9c52700a96584e1fa9d",
+    "checker_sha256": "f5fef3a333015d6e536a253fec2aed5852062f508b9387d2a6260b7732104a45",
+    "scope": "Actual linked receiver, file owners, UART ISR and bounded owner. Peer requires no replies to already committed in-flight data, full closing-header/OO consumption, one install and intact APP tail. Hardware/kernel and carrier pacing modeled. No real audio/BBS or physical acceptance.",
+    "baseline_source_sha256": "6c2b636ac18fb29788864ccde5a16c76deca5362c25e18761660d9ce1198a542",
+    "audio_failure_receipt": "docs/validation/synthmodem-audio-download-02.json"
+  },
+  "component_bounds": {
+    "passed": true,
+    "cases": [
+      {
+        "case": "initial-post-EOF-abort-remains-fatal",
+        "passed": true,
+        "status": 5,
+        "checks": {
+          "expected_status": true,
+          "installed_file_preserved": true,
+          "one_open_write_commit": true,
+          "no_unresolved_stage": true
+        },
+        "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333034303030303030323432330d0a2a2a184230313030323030303233333839360d0a11181818181818181808080808080808080808"
+      },
+      {
+        "case": "bad-CRC-replay-does-not-write",
+        "passed": true,
+        "status": 6,
+        "checks": {
+          "expected_status": true,
+          "installed_file_preserved": true,
+          "one_open_write_commit": true,
+          "no_unresolved_stage": true
+        },
+        "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333034303030303030323432330d0a2a2a184230313030323030303233333839360d0a11181818181818181808080808080808080808"
+      },
+      {
+        "case": "replay-beyond-committed-range-rejected",
+        "passed": true,
+        "status": 6,
+        "checks": {
+          "expected_status": true,
+          "installed_file_preserved": true,
+          "one_open_write_commit": true,
+          "no_unresolved_stage": true
+        },
+        "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333034303030303030323432330d0a2a2a184230313030323030303233333839360d0a11181818181818181808080808080808080808"
+      },
+      {
+        "case": "empty-continuing-replay-bounded",
+        "passed": true,
+        "status": 6,
+        "checks": {
+          "expected_status": true,
+          "installed_file_preserved": true,
+          "one_open_write_commit": true,
+          "no_unresolved_stage": true
+        },
+        "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333034303030303030323432330d0a2a2a184230313030323030303233333839360d0a11181818181818181808080808080808080808"
+      },
+      {
+        "case": "ten-replay-frame-ceiling",
+        "passed": true,
+        "status": 4,
+        "checks": {
+          "expected_status": true,
+          "installed_file_preserved": true,
+          "one_open_write_commit": true,
+          "no_unresolved_stage": true
+        },
+        "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333034303030303030323432330d0a2a2a184230313030323030303233333839360d0a11181818181818181808080808080808080808"
+      },
+      {
+        "case": "ten-closing-header-ceiling",
+        "passed": true,
+        "status": 8,
+        "checks": {
+          "expected_status": true,
+          "installed_file_preserved": true,
+          "one_open_write_commit": true,
+          "no_unresolved_stage": true
+        },
+        "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333034303030303030323432330d0a2a2a184230313030323030303233333839360d0a112a2a184230383030303030303030303232640d0a"
+      },
+      {
+        "case": "bad-CRC-closing-header-not-OO",
+        "passed": true,
+        "status": 8,
+        "checks": {
+          "expected_status": true,
+          "installed_file_preserved": true,
+          "one_open_write_commit": true,
+          "no_unresolved_stage": true
+        },
+        "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333034303030303030323432330d0a2a2a184230313030323030303233333839360d0a112a2a184230383030303030303030303232640d0a"
+      },
+      {
+        "case": "nonzero-closing-position-rejected",
+        "passed": true,
+        "status": 8,
+        "checks": {
+          "expected_status": true,
+          "installed_file_preserved": true,
+          "one_open_write_commit": true,
+          "no_unresolved_stage": true
+        },
+        "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333034303030303030323432330d0a2a2a184230313030323030303233333839360d0a112a2a184230383030303030303030303232640d0a"
+      },
+      {
+        "case": "unrelated-closing-header-rejected",
+        "passed": true,
+        "status": 8,
+        "checks": {
+          "expected_status": true,
+          "installed_file_preserved": true,
+          "one_open_write_commit": true,
+          "no_unresolved_stage": true
+        },
+        "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333034303030303030323432330d0a2a2a184230313030323030303233333839360d0a112a2a184230383030303030303030303232640d0a"
+      },
+      {
+        "case": "noise-containing-OO-not-success",
+        "passed": true,
+        "status": 8,
+        "checks": {
+          "expected_status": true,
+          "installed_file_preserved": true,
+          "one_open_write_commit": true,
+          "no_unresolved_stage": true
+        },
+        "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333034303030303030323432330d0a2a2a184230313030323030303233333839360d0a112a2a184230383030303030303030303232640d0a"
+      },
+      {
+        "case": "flow-between-literal-Os",
+        "passed": true,
+        "status": 0,
+        "checks": {
+          "expected_status": true,
+          "installed_file_preserved": true,
+          "one_open_write_commit": true,
+          "no_unresolved_stage": true,
+          "application_tail_unconsumed": true
+        },
+        "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333034303030303030323432330d0a2a2a184230313030323030303233333839360d0a112a2a184230383030303030303030303232640d0a"
+      },
+      {
+        "case": "five-CANs-still-cancel-closing",
+        "passed": true,
+        "status": 5,
+        "checks": {
+          "expected_status": true,
+          "installed_file_preserved": true,
+          "one_open_write_commit": true,
+          "no_unresolved_stage": true
+        },
+        "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333034303030303030323432330d0a2a2a184230313030323030303233333839360d0a112a2a184230383030303030303030303232640d0a181818181818181808080808080808080808"
+      },
+      {
+        "case": "missing-OO-after-valid-close-headers-unconfirmed",
+        "passed": true,
+        "status": 8,
+        "checks": {
+          "expected_status": true,
+          "installed_file_preserved": true,
+          "one_open_write_commit": true,
+          "no_unresolved_stage": true
+        },
+        "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333034303030303030323432330d0a2a2a184230313030323030303233333839360d0a112a2a184230383030303030303030303232640d0a"
+      }
+    ],
+    "source_sha256": {
+      "src/transfer/zmodem.c": "ff58e813651695c6618393e11c1329e5a66bdf9ed628bcec68cc1564d12d3c87",
+      "src/transfer/zmodem_wire.c": "fdae5d7c899ac2b32efe4b2f9d14d6c66ca323263b2fff5bf5da33f5915c1a6b",
+      "src/transfer/zmodem_name.c": "7720ba62c132c79b57fc329de0f8afc30312756ed5e9e6610345e03298478b2c",
+      "src/transfer/batch_header.c": "5003de29446cc1ec3a3776dcb1798b2763a6f1d556e866abe7e207cc39b49aa5"
+    },
+    "checker_sha256": "59b1bf50ae1af992386aaadb1483d17ae5f547ee153e5a0d349c13298f82ac9d",
+    "scope": "Maintained C component compiled with strict C89 in pinned Nix; ctypes file/transport callbacks modeled. Thirteen rejection/limit/flow cases preserve one checked file and cannot infer actual DOS/audio or physical acceptance."
+  },
+  "carrier_deadline_rechecked": {
+    "counterexample_reproduced": false,
+    "passed": true,
+    "cases": [
+      {
+        "DTE_bps": 38400,
+        "modeled_carrier_bps": 1200,
+        "deadline_ticks": 17280,
+        "fault": 0,
+        "installed_exact": true,
+        "delivered_wire_bytes": 4329,
+        "elapsed_ticks": 794,
+        "handles_closed": true,
+        "remaining_peer_steps": 0
+      },
+      {
+        "DTE_bps": 1200,
+        "modeled_carrier_bps": 1200,
+        "deadline_ticks": 17280,
+        "fault": 0,
+        "installed_exact": true,
+        "delivered_wire_bytes": 4329,
+        "elapsed_ticks": 794,
+        "handles_closed": true,
+        "remaining_peer_steps": 0
+      },
+      {
+        "case": "fully-quoted8KiB-before-first-confirmed-progress",
+        "passed": true,
+        "modeled_carrier_bps": 300,
+        "wire_bytes": 16472,
+        "elapsed_ticks": 10168
+      },
+      {
+        "case": "direct-budget-preserved-and-peer-silence-bounded",
+        "passed": true,
+        "elapsed_ticks": 612
+      }
+    ],
+    "binary_sha256": "b98232749ccd42b902467f06c62b39207083701cf42c0871165cd53b51a5569e",
+    "checker_sha256": "c82fed5686f141ea84d7036b5da3dfed8bdca0301a3149b682526d5f202aea07",
+    "scope": "Linked production receiver, watchdog, UART ISR and storage. Hardware/kernel boundaries modeled. Quantized1200/300-bps wire time plus idle clock, not audio or physical acceptance. Fixed DTE remains unchanged; unknown modem carrier uses bounded300bps packet allowance, direct sessions retain UART allowance. Historical failure retained separately."
+  },
+  "map_sha256": "d011ff5a5d9c17fb7de589579925b477f89f0fe3aa52636886e8dc14ec7041d6",
+  "source_sha256": {
+    "src/transfer/zmodem.c": "ff58e813651695c6618393e11c1329e5a66bdf9ed628bcec68cc1564d12d3c87",
+    "src/transfer/zmodem.h": "cfd8eb86ae05928b672a46e45af87f080595b7d46472780bef3c31e7aff07f05",
+    "src/transfer/zmodem_wire.c": "fdae5d7c899ac2b32efe4b2f9d14d6c66ca323263b2fff5bf5da33f5915c1a6b",
+    "src/transfer/zmodem_wire.h": "3dd5631882942ee5eaf195ff00dc7e838828ae0a6ecd89a8fa7eeef4511ddd68"
+  },
+  "component_regression": {
+    "scripted_cases": 92,
+    "independent_peer_sessions": 24,
+    "passed": true,
+    "report_sha256": "8ad05756635910b41354d588af0ea4f7023d269595abc060dad869cf1b326efb",
+    "scope": "Maintained session engine with host transport/storage callbacks and independent pinned lrzsz pipes; optional selected stock Synchronet sexyz stdio helper uses two nonempty files only. No DOS filesystem/16-bit callback ABI, terminal UART/UI, physical modem or BBS session claim."
+  }
+}

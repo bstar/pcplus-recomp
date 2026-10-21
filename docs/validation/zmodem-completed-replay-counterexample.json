@@ -1,0 +1,65 @@
+{
+  "passed": false,
+  "counterexample_reproduced": true,
+  "cases": [
+    {
+      "case": "replay-True-closing-False",
+      "passed": false,
+      "checks": {
+        "no_fault": true,
+        "exact_single_file": true,
+        "checked_create_and_install_once": true,
+        "handles_closed": true,
+        "peer_script_completed": false,
+        "confirmed_success_notice": false,
+        "only_application_tail_after_owner": false
+      },
+      "fault": 0,
+      "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333030303430303030333231320d0a2a2a184230313030323030303233333839360d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230383030303030303030303232640d0a",
+      "remaining_peer_steps": 1,
+      "post_owner_bytes_hex": "",
+      "finish_unconfirmed_notice": true
+    },
+    {
+      "case": "replay-False-closing-True",
+      "passed": false,
+      "checks": {
+        "no_fault": true,
+        "exact_single_file": true,
+        "checked_create_and_install_once": true,
+        "handles_closed": true,
+        "peer_script_completed": true,
+        "confirmed_success_notice": false,
+        "only_application_tail_after_owner": false
+      },
+      "fault": 0,
+      "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333030303430303030333231320d0a2a2a184230313030323030303233333839360d0a112a2a184230383030303030303030303232640d0a",
+      "remaining_peer_steps": 0,
+      "post_owner_bytes_hex": "303030303232640d0a2a2a184230373030303030303030363764340d0a112a2a184230383030303030303030303232640d0a2a2a184230373030303030303030363764340d0a112a2a184230383030303030303030303232640d0a2a2a184230373030303030303030363764340d0a112a2a184230383030303030303030303232640d0a4f4f415050",
+      "finish_unconfirmed_notice": true
+    },
+    {
+      "case": "replay-True-closing-True",
+      "passed": false,
+      "checks": {
+        "no_fault": true,
+        "exact_single_file": true,
+        "checked_create_and_install_once": true,
+        "handles_closed": true,
+        "peer_script_completed": false,
+        "confirmed_success_notice": false,
+        "only_application_tail_after_owner": false
+      },
+      "fault": 0,
+      "actual_wire_hex": "2a2a184230313030323030303233333839360d0a112a2a184230393030303030303030613837630d0a112a2a184230333030303430303030333231320d0a2a2a184230313030323030303233333839360d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230363030303030303030636438350d0a112a2a184230383030303030303030303232640d0a",
+      "remaining_peer_steps": 1,
+      "post_owner_bytes_hex": "",
+      "finish_unconfirmed_notice": true
+    }
+  ],
+  "binary_sha256": "55bf93854d90db35761936c7cbc09ba4e83f080cfa97f9c52700a96584e1fa9d",
+  "checker_sha256": "f5fef3a333015d6e536a253fec2aed5852062f508b9387d2a6260b7732104a45",
+  "scope": "Actual linked receiver, file owners, UART ISR and bounded owner. Peer requires no replies to already committed in-flight data, full closing-header/OO consumption, one install and intact APP tail. Hardware/kernel and carrier pacing modeled. No real audio/BBS or physical acceptance.",
+  "baseline_source_sha256": "6c2b636ac18fb29788864ccde5a16c76deca5362c25e18761660d9ce1198a542",
+  "audio_failure_receipt": "docs/validation/synthmodem-audio-download-02.json"
+}

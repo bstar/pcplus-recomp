@@ -224,5 +224,23 @@
     "bbs-output.bin": "b2c1e85ca21141f8b1b3fb980010e6faf75ae8035213ee8c335a9489c29d032a",
     "server-session.jsonl": "6c3c17dcfe6e82fd66b924dfd5eca1388856b1e089814c86689c9722d52a8768"
   },
-  "scope": "Failed actual DOS automatic download through normal V22/1200 software audio path and stock ENiGMA. Login/navigation/signature entry and exact upstream/prefix observations only. No completed file, helper success, post-transfer input, normal DOS/UART/timer restoration, physical or whole-application acceptance."
+  "scope": "Failed actual DOS automatic download through normal V22/1200 software audio path and stock ENiGMA. Login/navigation/signature entry and exact upstream/prefix observations only. No completed file, helper success, post-transfer input, normal DOS/UART/timer restoration, physical or whole-application acceptance.",
+  "hardware_snapshot_analysis": {
+    "sampler_source": "standalone/test_terminal.py:SAMPLER",
+    "sampler_source_sha256": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+    "bytes": 42,
+    "IRQ_vectors_restored": true,
+    "INT1C_timer_restored": false,
+    "UART_and_PIC_restored": true,
+    "differing_offsets": [
+      32,
+      33,
+      34,
+      35
+    ],
+    "before_hex": "a5fe00f087e900f055ff00f060ce00f060ce00f060ce00f0c0cc00f00e007000e0cb00f00300000c00f8",
+    "after_hex": "a5fe00f087e900f055ff00f060ce00f060ce00f060ce00f0c0cc00f00e007000830114080300000c00f8",
+    "interpretation": "The legacy UART_restored check compares all42 bytes, including the test BIOS-key helper INT1C vector. Only offsets32..35 differ. Actual IRQ vectors and UART/PIC registers restore; the BIOS-key helper does not retire on this premature failure. The original aggregate and timer acceptance gates remain failed."
+  },
+  "timing_diagnostic_receipt": "docs/validation/audio-download-diagnostics.json"
 }

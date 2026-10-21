@@ -60,6 +60,7 @@ def main():
   download_path,download_before=audio_download.source()
   names+=['lab/bbs/audio_download.py','lab/bbs/audio_download_keys.asm','lab/bbs/check_audio_download_keys.py','docs/validation/audio-download-keys.json','lab/bbs/enigma_transfer.py',str(download_path.relative_to(ROOT)),str(audio_download.HELPER.relative_to(ROOT))]
   names+=['src/terminal/transfer_actions.asm','standalone/check_carrier_transfer_deadline.py','docs/validation/carrier-transfer-deadline-fixed.json']
+  names+=['src/transfer/zmodem.c','src/transfer/zmodem.h','src/transfer/zmodem_wire.c','src/transfer/zmodem_wire.h','standalone/check_zmodem_completed_replay.py','standalone/check_zmodem_completion_bounds.py','docs/validation/zmodem-completed-replay-fixed.json']
  names+=['src/terminal/connection.asm','standalone/check_online_exit.py','docs/validation/online-exit.json']
  names+=['lab/bbs/check_audio_login_readiness.py','docs/validation/synthmodem-audio-login-readiness.json']
  if a.syscall_trace:names+=['lab/bbs/check_dosbox_socket_close.py','lab/bbs/dosbox_socket_close_probe.asm','docs/validation/dosbox-socket-close.json']

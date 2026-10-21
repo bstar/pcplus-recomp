@@ -1,0 +1,64 @@
+{
+  "passed": true,
+  "binary_sha256": "b98232749ccd42b902467f06c62b39207083701cf42c0871165cd53b51a5569e",
+  "cases": [
+    {
+      "passed": true,
+      "case": "rx-default",
+      "checks": {
+        "actual_terminal_ready": true,
+        "independent_peer_exit_zero": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "no_peer_errors": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "exact_destination": true,
+        "source_unchanged": true,
+        "screen_restored": true,
+        "no_stages": true,
+        "binary_unchanged": true,
+        "saved_preferences_unchanged": true,
+        "no_manual_transfer_keys": true
+      },
+      "errors": [],
+      "binary_sha256": "b98232749ccd42b902467f06c62b39207083701cf42c0871165cd53b51a5569e",
+      "peer_command": [
+        "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/sz",
+        "-b",
+        "-q",
+        "-8",
+        "-L",
+        "8192",
+        "EMPTY.BIN",
+        "ODD.BIN",
+        "ALL.BIN"
+      ],
+      "peer_exit": 0,
+      "keys": [
+        "p30000",
+        "r",
+        "e",
+        "a",
+        "d",
+        "y",
+        "p1500",
+        "a-x"
+      ],
+      "recipe_bounds": {
+        "after_ms": 30000,
+        "transfer_timeout": 65,
+        "resume_timeout": 40.0,
+        "DOS_timeout": 100
+      },
+      "files": {
+        "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+      },
+      "scope": "Actual DOSBox-X saved automatic invitation without transfer keys;  maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with independent pinned lrzsz stdio peer. Synthetic local media, no BBS login or physical modem claim."
+    }
+  ],
+  "cohort": "build/terminal-zmodem-dos/completed-replay-auto01",
+  "scope": "Actual DOS automatic ZedZap receive of empty,one-byte and65797-byte files through pinned lrzsz/direct emulated serial. Fourteen checks include exact files,post-transfer DSR/keyboard,normal exit and restored UART. No audio/BBS or physical acceptance."
+}

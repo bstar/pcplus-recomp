@@ -698,6 +698,7 @@ test-zmodem-autostart:
 .PHONY: test-zmodem
 test: test-zmodem
 test-zmodem: test-zmodem-wire test-zmodem-autostart
+	python3 standalone/check_zmodem_completion_bounds.py
 	python3 standalone/check_zmodem_window.py
 	python3 standalone/check_zmodem.py
 	python3 standalone/test_zmodem_dos.py
@@ -707,6 +708,7 @@ test-terminal: test-terminal-zmodem-live
 test-terminal-zmodem-live: terminal
 	python3 standalone/check_terminal_zmodem_live.py
 	python3 standalone/check_carrier_transfer_deadline.py
+	python3 standalone/check_zmodem_completed_replay.py
 	python3 standalone/check_terminal_zmodem_cancel.py
 	python3 standalone/check_zmodem_name_ui.py
 

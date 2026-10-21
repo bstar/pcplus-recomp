@@ -50,18 +50,55 @@ static unsigned receive_init(zm_session *s)
  * a fast TCP peer queue retransmissions/EOF ahead of a slow DOS receiver's
  * replies, even when the UART honors RTS. Request a checkpoint within8KiB. */
 {return header(s,ZRINIT,0x23002000UL,ZW_HEX);}
+/* A slow bridge can still hold timeout-driven data retransmissions when our
+ * checked EOF/ZRINIT reaches the sender. The file is already installed: consume
+ * those CRC-framed, in-range bytes without reopening, writing or acknowledging
+ * them. ZNAK replies here can exhaust the sender's closing attempts and then
+ * become keyboard input after its external helper retires. No discarded byte
+ * advances position/files or the live accepted-progress watchdog. */
+static unsigned completed_replay(zm_session *s,zw_u32 at)
+{
+ unsigned r,count,ending;
+ zw_data(&s->decoder);
+ for(;;){
+  r=event(s);
+  if(r!=ZW_DATA)return s->status?s->status:fail(s,ZM_PROTOCOL);
+  count=s->decoder.count;ending=s->decoder.ending;
+  if(at>s->position || count>s->position-at)return fail(s,ZM_PROTOCOL);
+  at+=count;
+  if(ending==ZW_CRCE || ending==ZW_CRCW)return 0;
+  if(!count)return fail(s,ZM_PROTOCOL);
+ }
+}
 static unsigned finish(zm_session *s)
 {
- unsigned i,r,v,previous=0;
+ unsigned i,r,v,previous=0,closing=0;
  zw_headers(&s->decoder);
  if(!s->sending){
   if(header(s,ZFIN,0,ZW_HEX))return s->status;
-  /* Lost OO must not leave an otherwise complete receiver waiting forever. */
-  for(i=0;i<32;++i){
+  /* The sender may have queued closing retries before our ZFIN crosses the
+   * slow carrier. Drain bounded, CRC-valid ZFIN/ZABORT headers before literal
+   * OO, not32 raw bytes followed by leaked protocol text. SEXYZ alternates the
+   * two headers during get_zfin; an initial abort outside this closing state
+   * remains fatal. Send one response, avoiding a second command-input tail
+   * after the peer has already accepted it. Per-byte idle and total bounds
+   * still report an unconfirmed finish if OO never arrives. */
+  for(i=0;i<512;++i){
    v=s->ops->read_byte(s->context,1);
    if(v==ZM_WAIT)return fail(s,ZM_END_UNCONFIRMED);
    if(v==ZM_ABORT || v==ZM_BROKEN)return fail(s,v==ZM_ABORT?ZM_CANCEL:ZM_IO);
-   if(v=='O' && previous=='O')return 0;previous=v;
+   if((v&127)==17 || (v&127)==19)continue;
+   if(previous=='O')return v=='O'?0:fail(s,ZM_END_UNCONFIRMED);
+   if(s->decoder.phase==0){
+    if(v=='O'){previous=v;continue;}
+    if(v!=42 && v!=24 && v!=13 && v!=10)return fail(s,ZM_END_UNCONFIRMED);
+   }
+   r=zw_feed(&s->decoder,v);
+   if(r==ZW_CANCEL)return fail(s,ZM_CANCEL);
+   if(r==ZW_HEADER){
+    if((s->decoder.header[0]!=ZFIN && s->decoder.header[0]!=ZABORT) || position(s)!=0 || ++closing>=LIMIT)
+     return fail(s,ZM_END_UNCONFIRMED);
+   }else if(r!=ZW_MORE)return fail(s,ZM_END_UNCONFIRMED);
   }
   return fail(s,ZM_END_UNCONFIRMED);
  }
@@ -121,6 +158,11 @@ static unsigned receive(zm_session *s)
    if(s->files==0xffffffffUL || 0xffffffffUL-s->bytes<s->position)return fail(s,ZM_PROTOCOL);
    if(s->ops->commit_received(s->context))return fail(s,ZM_FILE);
    s->owned=0;++s->files;s->bytes+=s->position;s->retries=0;receive_init(s);continue;
+  }
+  if(type==ZDATA && !s->owned && s->files && position(s)<=s->position){
+   ++s->retries;
+   if(completed_replay(s,position(s)))return s->status;
+   continue;
   }
   if(type!=ZDATA || !s->owned || position(s)!=s->position){
    ++s->retries;zw_headers(&s->decoder);

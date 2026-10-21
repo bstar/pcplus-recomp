@@ -24,13 +24,17 @@ def main():
         streams[d].extend(data)
     assert all(ends[d]==len(raw[d]) for d in raw)
     sent=bytes(streams['to_bbs']);display=bytes(streams['from_bbs'])
-    source=STORAGE/'PCXTEST.BIN';expected=source.read_bytes();checks={};errors=[];protocol=None
+    source=STORAGE/'PCXTEST.BIN';expected=source.read_bytes();checks={'post_protocol_search_key_observed':False};errors=[];protocol=None
     checks['source_unchanged']=len(expected)==11521 and sha(source)==r['download']['expected_sha256']
     try:
         protocol=audit_batch(display,{'PCXTEST.BIN':expected})
         end_time=timestamp(trace,'bbs',protocol['end']-1)
-        post=next(v for v in trace if v['direction']=='dos' and v['seconds']>end_time and b'S\r' in sent[v['offset']:v['offset']+v['size']+1])
-        protocol['controls']=audit_controls(protocol,sent,trace,'bbs',post['seconds'])
+        post=next((v for v in trace if v['direction']=='dos' and v['seconds']>end_time and b'S\r' in sent[v['offset']:v['offset']+v['size']+1]),None)
+        checks['post_protocol_search_key_observed']=post is not None
+        # Preserve the mandatory search-key gate separately from wire finish.
+        # If input never resumes, the complete capture bounds control diagnosis;
+        # that cannot make the run pass because this added gate remains false.
+        protocol['controls']=audit_controls(protocol,sent,trace,'bbs',post['seconds'] if post else max(v['seconds'] for v in trace)+1)
         checks['complete_CRC_ZMODEM_and_opposite_controls']=True
     except Exception as e:
         errors.append(repr(e));checks['complete_CRC_ZMODEM_and_opposite_controls']=False

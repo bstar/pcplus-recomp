@@ -56,11 +56,13 @@ transfer keys, three exact files including65797 bytes, subsequent DSR/keyboard,
 normal return and restored UART state. This is a fast direct link, separate
 from slower-carrier acceptance.
 
-The normal audio repeat is `synthmodem-audio-download-02`, using the unchanged
-11521-byte BBS fixture, full artwork and stock helper. Its producer freezes the
-corrected source, executable/map, checker and native receipt. No audio acceptance
-is established until the complete same-run byte, CRC/control/finish, file,
-post-helper input and cleanup audits pass. The
+The normal audio repeat `synthmodem-audio-download-02` stores the exact11521-byte
+file and preserves the full byte streams and normal DOS/hardware return. It
+exposes the separate [queued completion-traffic defect](zmodem-completed-replay.md):
+missing `OO` and late protocol controls in the BBS command prompt. That native
+correction is now being repeated in audio download03. No audio acceptance is
+established until complete same-run byte, CRC/control/finish, file, post-helper
+input and cleanup audits pass. The
 [stock helper's pinned source](https://github.com/SynchronetBBS/sbbs/blob/e7a825704ef5329c7ef8408749671291a85ef7f2/src/sbbs3/zmodem.c)
 also has its own receive/retry deadlines. A local correction alone does not
 prove the peer's delayed replies, retransmissions or finish will succeed.

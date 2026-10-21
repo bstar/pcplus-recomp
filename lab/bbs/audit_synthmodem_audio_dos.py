@@ -67,7 +67,14 @@ def main():
    'scope':'Actual BIOS-to-serial key sequence and authoritative editor cursor/mode responses. Page keys cover a one-line boundary only; connection closes without Save.'}
  checks['script_and_normal_DOS_return']=(out/'SCRIPT.OK').is_file() and (out/'SCRIPT.OK').read_bytes()==b'PASS' and (out/'PASS.TXT').is_file() and not (out/'FAIL.TXT').exists()
  def read(name):return (out/name).read_bytes() if (out/name).is_file() else b''
- checks['actual_UART_restored']=len(read('BEFORE.BIN'))==42 and read('BEFORE.BIN')==read('AFTER.BIN')
+ before=read('BEFORE.BIN');after=read('AFTER.BIN');snapshots_valid=len(before)==len(after)==42
+ # Keep the original42-byte aggregate gate. The independent sampler includes
+ # IRQ vectors0x08..0x0f, the test helper's INT1C vector, then six UART/PIC bytes.
+ # Report those parts separately so a helper retirement failure is not mistaken
+ # for a UART register-cleanup defect.
+ checks['actual_UART_restored']=snapshots_valid and before==after
+ checks['actual_IRQ_vectors_restored']=snapshots_valid and before[:32]==after[:32]
+ checks['actual_UART_PIC_restored']=snapshots_valid and before[36:]==after[36:]
  checks['keyboard_timer_vector_restored']=len(read('KEYOLD.BIN'))==4 and read('KEYOLD.BIN')==read('KEYNEW.BIN')
  for name in ('rtp-from-answer.bin','rtp-from-caller.bin'):
   headers=[]
@@ -89,6 +96,8 @@ def main():
    'BBS_input_sha256':hashlib.sha256(sent).hexdigest(),'BBS_display_sha256':hashlib.sha256(display).hexdigest(),
    'display_offset_in_caller':display_at,'expected_bridge_bytes':len(bridge),'full_caller_sha256':hashlib.sha256(caller).hexdigest(),'guest_DATA_RX_bytes':len(data),'pre_proxy_training_tail_bytes':dropped,
    'pre_proxy_training_tail_hex':bytes(data[:dropped]).hex(),'unadjusted_serial_guest_identity':online==data},
+  'hardware_snapshot':{'layout':'32 IRQ-vector bytes,4 INT1C bytes,6 UART/PIC bytes','INT1C_restored':snapshots_valid and before[32:36]==after[32:36],
+   'differing_offsets':[i for i,(a,b) in enumerate(zip(before,after)) if a!=b] if snapshots_valid else None},
   'editor':editor,'scope':'Independent read-only actual DOS/ASPECT, BBS authoritative logs, guest frames, serial/Telnet byte identity, RTP continuity, SIP and cleanup audit. No physical modem/ATA claim.'}
  (out/'independent-audit.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2));return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

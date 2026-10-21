@@ -1,0 +1,255 @@
+{
+  "diagnostics_consistent": true,
+  "checks": {
+    "eight_source_exact_CRC_packets": true,
+    "exact_prefix_reproduced": true,
+    "no_packet_parse_error": true,
+    "cancel_timing_reproduced": true,
+    "previous_wire_verified_position_3072": true
+  },
+  "cohort": "build/bbs-lab/synthmodem-audio-download-01",
+  "diagnostic": {
+    "diagnostic_only": true,
+    "caller_BBS_exact_prefix_bytes": 66060,
+    "caller_BBS_bytes": 66060,
+    "BBS_display_bytes": 82294,
+    "caller_is_exact_BBS_prefix": true,
+    "source_offer_found": true,
+    "packets": [
+      {
+        "offset": 58125,
+        "end": 59189,
+        "crc_end": 59188,
+        "ending": 107,
+        "length": 1024,
+        "sha256": "1a4ef89b50f6077813e6dc7e67ba1f2b00df10876e26b86fc143d9bc7b19697e",
+        "position": 1024,
+        "source_exact": true,
+        "caller_start_seconds": 553.104864209,
+        "caller_CRC_seconds": 561.965012883,
+        "caller_duration_seconds": 8.860148674000015
+      },
+      {
+        "offset": 59202,
+        "end": 61320,
+        "crc_end": 61320,
+        "ending": 105,
+        "length": 2048,
+        "sha256": "b2ad568adb6eefd8da9e2420256f6989a7d9e5e2bbb7d01b0835b0a96a9c9aaa",
+        "position": 3072,
+        "source_exact": true,
+        "caller_start_seconds": 562.404232844,
+        "caller_CRC_seconds": 580.044768818,
+        "caller_duration_seconds": 17.64053597399993
+      },
+      {
+        "offset": 61320,
+        "end": 65550,
+        "crc_end": 65550,
+        "ending": 105,
+        "length": 4096,
+        "sha256": "393c9c945ec79f2c616fc381a5b9218ad961c57cc3eed36abd1b7412e66eccb1",
+        "position": 7168,
+        "source_exact": true,
+        "caller_start_seconds": 580.064107987,
+        "caller_CRC_seconds": 615.303801144,
+        "caller_duration_seconds": 35.23969315699992
+      },
+      {
+        "offset": 65550,
+        "end": 70045,
+        "crc_end": 70045,
+        "ending": 104,
+        "length": 4353,
+        "sha256": "8bb482c2bcad16b9140ba45d823e9bb5e8d854d4e0c00526f84cbc5ed5fc03ee",
+        "position": 11521,
+        "source_exact": true,
+        "caller_start_seconds": 615.303818076,
+        "caller_CRC_seconds": null,
+        "caller_duration_seconds": null
+      },
+      {
+        "offset": 70079,
+        "end": 74310,
+        "crc_end": 74309,
+        "ending": 107,
+        "length": 4096,
+        "sha256": "5b318daed8ac8f708dfaba4aa602f6fdb91c3eb328d8b47b7ac53363ea9a960a",
+        "position": 5120,
+        "source_exact": true,
+        "caller_start_seconds": null,
+        "caller_CRC_seconds": null,
+        "caller_duration_seconds": null
+      },
+      {
+        "offset": 74323,
+        "end": 76442,
+        "crc_end": 76441,
+        "ending": 107,
+        "length": 2048,
+        "sha256": "17e11dd7988204cd04e8b64309443c4eb818f17d6a3724353f63f9afcdd97876",
+        "position": 3072,
+        "source_exact": true,
+        "caller_start_seconds": null,
+        "caller_CRC_seconds": null,
+        "caller_duration_seconds": null
+      },
+      {
+        "offset": 76455,
+        "end": 77518,
+        "crc_end": 77517,
+        "ending": 107,
+        "length": 1024,
+        "sha256": "84562e4d425f809275c268cc618c1c9fc0957ef4e2600eff2d390fecb0bb291b",
+        "position": 2048,
+        "source_exact": true,
+        "caller_start_seconds": null,
+        "caller_CRC_seconds": null,
+        "caller_duration_seconds": null
+      },
+      {
+        "offset": 77531,
+        "end": 78066,
+        "crc_end": 78065,
+        "ending": 107,
+        "length": 512,
+        "sha256": "b19989032a294c1ae9dd99eb71818e60b7b0e82aecb850b6966a4a7a422b1d0c",
+        "position": 1536,
+        "source_exact": true,
+        "caller_start_seconds": null,
+        "caller_CRC_seconds": null,
+        "caller_duration_seconds": null
+      }
+    ],
+    "sender_headers": [
+      {
+        "offset": 58047,
+        "end": 58061,
+        "format": 67,
+        "type": 4,
+        "position": 16908288,
+        "header": "0400000201"
+      },
+      {
+        "offset": 58112,
+        "end": 58125,
+        "format": 67,
+        "type": 10,
+        "position": 0,
+        "header": "0a00000000"
+      },
+      {
+        "offset": 59189,
+        "end": 59202,
+        "format": 67,
+        "type": 10,
+        "position": 1024,
+        "header": "0a00040000"
+      },
+      {
+        "offset": 70045,
+        "end": 70066,
+        "format": 66,
+        "type": 11,
+        "position": 11521,
+        "header": "0b012d0000"
+      },
+      {
+        "offset": 70066,
+        "end": 70079,
+        "format": 67,
+        "type": 10,
+        "position": 1024,
+        "header": "0a00040000"
+      },
+      {
+        "offset": 74310,
+        "end": 74323,
+        "format": 67,
+        "type": 10,
+        "position": 1024,
+        "header": "0a00040000"
+      },
+      {
+        "offset": 76442,
+        "end": 76455,
+        "format": 67,
+        "type": 10,
+        "position": 1024,
+        "header": "0a00040000"
+      },
+      {
+        "offset": 77518,
+        "end": 77531,
+        "format": 67,
+        "type": 10,
+        "position": 1024,
+        "header": "0a00040000"
+      }
+    ],
+    "receiver_controls": [
+      {
+        "offset": 96,
+        "end": 117,
+        "format": 66,
+        "type": 1,
+        "position": 587210752,
+        "header": "0100200023",
+        "frontend_read_seconds": 551.774114669
+      },
+      {
+        "offset": 117,
+        "end": 138,
+        "format": 66,
+        "type": 9,
+        "position": 0,
+        "header": "0900000000",
+        "frontend_read_seconds": 552.6533599
+      },
+      {
+        "offset": 138,
+        "end": 158,
+        "format": 66,
+        "type": 3,
+        "position": 1024,
+        "header": "0300040000",
+        "frontend_read_seconds": 561.9683720090001
+      }
+    ],
+    "packet_parse_errors": [],
+    "cancel_frontend_seconds": 609.6629179390001,
+    "cancel_after_previous_CRC_seconds": 29.6181491210001,
+    "previous_CRC_packet_position": 3072,
+    "captures_sha256": {
+      "result.json": "d322b2ea35edd9c22cdbe0ee971861582778b41abed344033d386ebe97fd478e",
+      "independent-audit.json": "cf1881b2f4b011e83f9a18142f9d53539ca1963ba807c4ebd120e87933e62e52",
+      "node-result.json": "46cc3279935433f274cf77a7894d8cfa049ecfd3cfab32ec0488cd6a3cd3c713",
+      "caller-decoded.bin": "867be6e82d46ff2cfe1477eeb4432996d67dcd73c5ba644decde715c1b51f537",
+      "serial-in.bin": "ecd17c913eb23bd51ab3ab3382047ab77d22548a3aa8bb5cc8e9ad4e26817c23",
+      "serial-out.bin": "f1329e562f1cad9ed6e7ba1257c516afc068c550bb2a7e7030504e93c9a904e0",
+      "bbs-output.bin": "b2c1e85ca21141f8b1b3fb980010e6faf75ae8035213ee8c335a9489c29d032a",
+      "serial-write-events.jsonl": "54f37badfe0cd9124a7e64d78af4400ae67480e377c39cd978e73fb837824c96",
+      "serial-input-events.jsonl": "3153c8459c7aa8ea457dc1f5de98690aa9935050483e210e367dd44bbd50dd2e"
+    },
+    "checker_sha256": "c8cd27e19d8e92e90e074b6ea6de814de964c96b705beca717bb07a74d678469",
+    "scope": "CRC/source-verified sender packets and observed frontend byte times only. Node monotonic reads are approximately aligned through one event anchor. Successful local write callbacks and CRC arrival do not prove application consumption or storage acceptance. No complete protocol/finish, cleanup or compatibility pass follows; use the independent transfer and ownership audits."
+  },
+  "hardware_snapshot_analysis": {
+    "sampler_source": "standalone/test_terminal.py:SAMPLER",
+    "sampler_source_sha256": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+    "bytes": 42,
+    "IRQ_vectors_restored": true,
+    "INT1C_timer_restored": false,
+    "UART_and_PIC_restored": true,
+    "differing_offsets": [
+      32,
+      33,
+      34,
+      35
+    ],
+    "before_hex": "a5fe00f087e900f055ff00f060ce00f060ce00f060ce00f0c0cc00f00e007000e0cb00f00300000c00f8",
+    "after_hex": "a5fe00f087e900f055ff00f060ce00f060ce00f060ce00f0c0cc00f00e007000830114080300000c00f8",
+    "interpretation": "The legacy UART_restored check compares all42 bytes, including the test BIOS-key helper INT1C vector. Only offsets32..35 differ. Actual IRQ vectors and UART/PIC registers restore; the BIOS-key helper does not retire on this premature failure. The original aggregate and timer acceptance gates remain failed."
+  },
+  "scope": "Read-only diagnosis of retained failed audio download01. Positive evidence consistency does not make the failed transfer pass. No complete file/finish/resume/normal-return acceptance."
+}
