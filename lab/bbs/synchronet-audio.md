@@ -158,3 +158,19 @@ DA/CPR replies, requiring the complete exact application input. It retains the
 whole-caller/guest/Telnet, RTP/SIP, server/message/counter and native cleanup
 gates from the navigation audit. Successful unsaved editing grants no transfer,
 multiline editor, sustained pressure/loss or physical hardware acceptance.
+
+The [first editor audio run](../../docs/validation/synthmodem-synchronet-editor-audio-01.json)
+passes every measured editing operation and Ctrl-Q abort. Its fixed20-second
+final delay exits before the complete Main menu arrives at1200bps: the caller
+preserves an exact prefix, missing1011 display bytes. The final DOS screen and
+complete-display gates fail, and the frontend read ECONNRESET remains retained.
+All130 upstream native/offline/guest/Telnet bytes match; no message is saved.
+Normal DOS/UART/PIC/IRQ/timer/SIP restoration passes. This grants no acceptance.
+The original captures/audits are unchanged; checkpoint5fe8fac contains their
+frozen test sources, before the observer correction.
+
+The corrected observer waits for both the rendered Read/Post Messages title and
+Local-area footer before its final drain and Alt-X. The shortened DOS probe
+requires normal completion before120ticks, below its180tick watchdog, so fallback
+cannot hide failed observation. A partial Main title emits no exit key. The
+independent watchdog and original INT1C restoration remain verified.

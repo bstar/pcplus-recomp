@@ -1,6 +1,7 @@
 ; Test-only BIOS keyboard helper for an unsaved editor draft. Wait for the
 ; KEYTEST subject and Synchronet Insert Mode status, then inject real BIOS keys.
 ; No application state, serial bytes or terminal replies are injected.
+; Final Alt-X waits for the rendered Main menu AND its footer, then drains.
 bits 16
 cpu 8086
 org 100h
@@ -12,12 +13,12 @@ jmp install
 %define AUDIO_SYNC_EDITOR_KEY_WAIT 54
 %endif
 %ifndef AUDIO_SYNC_EDITOR_FINAL_WAIT
-%define AUDIO_SYNC_EDITOR_FINAL_WAIT 360
+%define AUDIO_SYNC_EDITOR_FINAL_WAIT 180
 %endif
 old_vector: dd 0
 state: db 0
 ; Bound failed prerequisites too: return via the product's actual Alt-X path
-; before the outer720s watchdog. No editor/pass marker is synthesized.
+; before the outer950s watchdog. No editor/pass marker is synthesized.
 %ifndef AUDIO_SYNC_EDITOR_WATCHDOG_TICKS
 %define AUDIO_SYNC_EDITOR_WATCHDOG_TICKS 16200
 %endif
@@ -26,6 +27,8 @@ ticks: dw 0
 key_at: dw keys
 prompt: db 'KEYTEST',0
 footer: db 'Insert Mode',0
+main_prompt: db 'Read/Post Messages',0
+main_footer: db 'Local [',0
 keys: dw 1519h,1e41h,3042h,2e43h,2044h,1245h,4700h,2348h,4f00h,1245h
       dw 4b00h,5300h,5200h,2c5ah,0f09h,1454h,4900h,5100h,1519h
       dw 1655h,314eh,1f53h,1e41h,2f56h,1245h,2044h,1011h,3920h,2d00h,0
@@ -68,6 +71,18 @@ handler:
 .count:
  cmp byte [state],1
  jne .done
+ mov bx,[key_at]
+ cmp word [bx],2d00h
+ jne .tick
+ ; The editor/abort clears old Main text. Neither a partial menu nor an
+ ; elapsed fixed delay proves its final3500-byte screen has arrived.
+ mov si,main_prompt
+ call visible
+ jnc .done
+ mov si,main_footer
+ call visible
+ jnc .done
+.tick:
  dec word [ticks]
  jnz .done
  mov bx,[key_at]

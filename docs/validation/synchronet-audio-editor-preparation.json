@@ -1,0 +1,103 @@
+{
+  "passed": true,
+  "actual_Synchronet_audio_accepted": false,
+  "components": {
+    "build/bbs-lab/synchronet-audio-editor-reference-01/result.json": {
+      "sha256": "61aed10312dc51e3de583bb97f236765ebf59847e10192b4a6190079c778a182",
+      "checks": {
+        "stock_editor_entered": true,
+        "draft_aborted": true,
+        "insert_toggled_overtype": true,
+        "home_marker_at_line_start": true,
+        "end_marker_at_line_end": true,
+        "delete_erases_final_character": true,
+        "tab_advances_to_next_stop": true,
+        "page_keys_report_document_boundaries": true,
+        "ctrl_y_delete_line_response": true,
+        "complete_reference_route": true,
+        "pinned_server_inputs_preserved": true,
+        "message_bodies_preserved": true,
+        "no_message_mail_or_transfer_writes": true
+      },
+      "scope": "Independent TCP reference with declared fixed CPR. Synthetic one-line draft is cleared first, exercises editing keys and Ctrl-Q abort; no save command. Page keys test one-line boundaries only. No DOS/audio/physical acceptance."
+    },
+    "build/bbs-lab/audio-synchronet-editor-keys-02/result.json": {
+      "sha256": "28bb995754ef8b700ffe8d7580d0a3d895dfa064621d681a11f892eede102584",
+      "checks": [
+        {
+          "mode": "phases_with_partial_markers",
+          "passed": true,
+          "checks": {
+            "normal_DOS_return": true,
+            "exact_BIOS_keys": true,
+            "timer_restored": true
+          },
+          "probe_sha256": "48b20e3189a21637d1abcb94aa35cc555e34d5288a0581bdbeec1c58dbfa4c54"
+        },
+        {
+          "mode": "watchdog",
+          "passed": true,
+          "checks": {
+            "normal_DOS_return": true,
+            "exact_BIOS_keys": true,
+            "timer_restored": true
+          },
+          "probe_sha256": "9fe8502981f1a7528330cccdc9372b6015545df4311d3173efabf00a16e93a18"
+        }
+      ],
+      "scope": "Actual DOS 8086 BIOS reads: neither marker alone starts input; both markers emit the exact clear/body/edit/abort/Space sequence once. Partial Main emits no Alt-X; Main plus footer permits it. The normal path must finish before120ticks, below the180tick watchdog, so fallback cannot mask observer failure. Separate watchdog emits only Alt-X. Shortened delays; no audio or application acceptance."
+    },
+    "build/bbs-lab/synchronet-editor-audio-recipe-01/result.json": {
+      "sha256": "9005dc807309dc4b6ff424bdaa9e05205f71dfc79be781ca520f332fc648e6c6",
+      "checks": [
+        {
+          "phase": "login",
+          "needle": "Login:",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "password",
+          "needle": "Password:",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "welcome",
+          "needle": "[Hit a key]",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "bulletins",
+          "needle": "Enter number of bulletin or [",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "scan",
+          "needle": "Search all groups for new messages?",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "pause",
+          "needle": "[Hit a key]",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "main",
+          "needle": "Read/Post Messages",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "post",
+          "needle": "Subject:",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "subject",
+          "needle": "FSEditor v1.105",
+          "raw_match_possible": true
+        }
+      ],
+      "scope": "Generated ASPECT recipe compiles and every remote wait token is checked against its corresponding independent raw BBS capture. Bridge prompt is outside this peer reference. Missing literal tokens identify fragile/invalid raw-match assumptions; this is neither DOS execution nor audio/native compatibility acceptance."
+    }
+  },
+  "scope": "Preparation only:13 owned TCP reference editor/preservation checks,6 actual DOS BIOS sequence/footer/watchdog/restoration checks,9 raw ASPECT-token matches. Corrected observer waits for the rendered Main title and footer. Does not accept an actual audio/DOS editor cohort or physical hardware."
+}

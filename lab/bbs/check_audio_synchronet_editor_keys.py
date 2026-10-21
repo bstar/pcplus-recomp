@@ -18,11 +18,34 @@ call quiet
 mov si,both
 call screen
 '''
+ final_phases='' if watchdog else '''cmp word [si],2d00h
+jne .read
+mov si,partial_main
+call screen
+call quiet
+mov si,final_main
+call screen
+xor ah,ah
+int 16h
+cmp ax,2d00h
+jne fail
+mov ax,40h
+mov es,ax
+mov ax,[es:6ch]
+sub ax,[started]
+cmp ax,120
+jae fail
+jmp checked
+'''
  source='''bits 16
 cpu 8086
 org 100h
 mov ax,3
 int 10h
+mov ax,40h
+mov es,ax
+mov ax,[es:6ch]
+mov [started],ax
 '''+phases+'''mov si,expected
 .read:
 xor ah,ah
@@ -30,8 +53,9 @@ int 16h
 cmp ax,[si]
 jne fail
 add si,2
-cmp word [si],0
+'''+final_phases+'''cmp word [si],0
 jne .read
+checked:
 mov ah,1
 int 16h
 jnz fail
@@ -80,6 +104,9 @@ jmp .text
 subject:db 'Subj: KEYTEST',0
 footer:db 'FSEditor Insert Mode',0
 both:db 'Subj: KEYTEST FSEditor Insert Mode',0
+partial_main:db 'Read/Post Messages',0
+final_main:db 'Read/Post Messages Main Local [2] General:',0
+started:dw 0
 passfile:db 'PASS.TXT',0
 failfile:db 'FAIL.TXT',0
 expected:dw '''+','.join(hex(k) for k in ([0x2d00] if watchdog else keys))+',0\n'
@@ -112,5 +139,5 @@ if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True,type=Path);out=p.parse_args().output.resolve()
  assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
  cases=[run(out/name,flag) for name,flag in [('phases',False),('watchdog',True)]]
- result=dict(passed=all(c['passed'] for c in cases),cases=cases,inputs={str(p.relative_to(ROOT)):sha(p) for p in [Path(__file__).resolve(),ROOT/'lab/bbs/audio_synchronet_editor_keys.asm',ROOT/'lab/bbs/audio_get_vector.asm']},scope='Actual DOS 8086 BIOS reads: neither marker alone starts input; both markers emit the exact clear/body/edit/abort/Space/Alt-X sequence once. Watchdog only emits Alt-X. Shortened test delays; no audio or application acceptance.')
+ result=dict(passed=all(c['passed'] for c in cases),cases=cases,inputs={str(p.relative_to(ROOT)):sha(p) for p in [Path(__file__).resolve(),ROOT/'lab/bbs/audio_synchronet_editor_keys.asm',ROOT/'lab/bbs/audio_get_vector.asm']},scope='Actual DOS 8086 BIOS reads: neither marker alone starts input; both markers emit the exact clear/body/edit/abort/Space sequence once. Partial Main emits no Alt-X; Main plus footer permits it. The normal path must finish before120ticks, below the180tick watchdog, so fallback cannot mask observer failure. Separate watchdog emits only Alt-X. Shortened delays; no audio or application acceptance.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result));assert result['passed']
