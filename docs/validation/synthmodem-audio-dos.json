@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Scoped Synchronet navigation, editor interaction, ordinary XMODEM upload/download, responsive cancellation and same-call same-source retry have accepted client receipts. Retry-ready01 passes all100 client gates, preserving the failed early-start attempt and indexed2048-byte partial. Overall success remains false: stock partial cleanup, native startup-banner tolerance, stock ZMODEM closing, pressure/loss/reconnect, physical Boca/SPA2102 and full F01-F16 completion remain open.",
+  "status": "Native ordinary startup filtering is accepted for43 linked cases,3 actual DOS banner scenarios and the original early-start same-call audio retry, with all100 client audio gates passing. Original early-start failure and receiver-ready workaround remain preserved. Indexed partial cleanup, resident capacity for mouse variants, pressure/loss/reconnect, stock ZMODEM closing, physical Boca/SPA2102 and F01-F16 remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3842,6 +3842,20 @@
       "DTE_bps": 38400,
       "software_carrier_bps": 1200,
       "acceptance": "All100 client checks pass: two completeCRCframes beforeCAN, live Files and fresh-name14-block full same-source CRC retry,14ACK/twoEOT/NAK/ACK finish, official metadata and original partial custody, exact13956/52099-byte online/display streams, no frontend/gateway errors, actual Files/Main and normal UART/IRQ/PIC/timer/SIP cleanup. Revised BIOS-only recipe waits for full remote ready banner; native executable unchanged. Stock2048-byte partial remains indexed, so overall passed stays false."
+    },
+    "synthmodem-synchronet-retry-startup-audio-01": {
+      "status": "accepted_native_startup_and_early_same_call_retry_scope_server_partial_cleanup_still_failed",
+      "passed": false,
+      "client_workflow_passed": true,
+      "actual_same_call_retry_accepted": true,
+      "actual_audio_startup_accepted": true,
+      "server_partial_cleanup_accepted": false,
+      "receipt": "docs/validation/synthmodem-synchronet-retry-startup-audio-01.json",
+      "receipt_sha256": "d024b0136573f344dd882e2dd8e77e9ffc427f79ac470f21d04188f3c56b4468",
+      "peer": "Synchronet official archived3.22a snapshot",
+      "DTE_bps": 38400,
+      "software_carrier_bps": 1200,
+      "acceptance": "Native3b0deeeb filters startup text/ANSI for the original early second Alt-S sequence.43 linked startup cases,3 actual DOS scenarios,135 transfer regressions and100 client audio gates pass. Exact13956/42947-byte online/display streams, complete14-block CRC/source/EOT finish, original partial custody, actual Files/Main and normal UART/IRQ/PIC/timer/SIP cleanup. Stock2048-byte partial remains indexed, so overall passed stays false."
     }
   },
   "diagnosis": {
@@ -3893,9 +3907,9 @@
     "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
     "Extend the accepted modified-helper fixed-DTE slow-carrier upload to pressure/cancel/loss and other peers; retain every CRC/finish,storage,post-helper input and cleanup gate.",
     "Stock Synchronet published/indexed a1024-byte failed-reference partial despite E/helper error. Preserve evidence; cancellation/loss cleanup and trustworthy completion require full wire/source/finish accounting. Accepted upload has3 source-attributed startup retries, not zero startup retries.",
-    "Native midframe Escape defect is fixed and scoped responsive cancellation plus receiver-ready-gated same-call retry accepted; preserve66-second cancellation and zero-byte early-start retry failures. Native startup-banner tolerance is still limited. Stock indexed partial cleanup and broader pressure/profile/protocol/hardware gates remain open. Original insertion/stock receiver gaps remain independent."
+    "Native midframe Escape and scoped uninterrupted startup-banner handling are fixed and accepted in actual software audio. Preserve66-second cancellation and zero-byte early-start failures. Stock indexed partial cleanup, arbitrary paused-text handshake ambiguity, resident code capacity for mouse variants and broader pressure/profile/protocol/hardware gates remain open. Original insertion/stock receiver gaps remain independent."
   ],
-  "current_cohort": "synthmodem-synchronet-retry-ready-audio-01",
+  "current_cohort": "synthmodem-synchronet-retry-startup-audio-01",
   "latest_cohort_passed": false,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
@@ -3960,7 +3974,7 @@
   "audio_upload_retry_receipt": "docs/validation/synthmodem-audio-upload-retry-02.json",
   "audio_upload_retry_receipt_sha256": "e553eaee6e41126abfaf876825bb9a69929fede92a19a174977fade67892a8be",
   "posttrain_candidate_receipt": "docs/validation/synthmodem-posttrain-runtime.json",
-  "latest_completed_cohort": "synthmodem-synchronet-retry-ready-audio-01",
+  "latest_completed_cohort": "synthmodem-synchronet-retry-startup-audio-01",
   "latest_completed_cohort_passed": false,
   "audio_upload_retry_failure_receipt": "docs/validation/synthmodem-audio-upload-retry-01.json",
   "accepted_candidate_retry_cohort": "synthmodem-audio-upload-retry-02",
@@ -3992,5 +4006,9 @@
   "synchronet_retry_audio_failure_receipt_sha256": "cb18ab7fc2ba2f31480655da9ae8a1de3bf6c281b1aaeb898517e903a64c4ac6",
   "synchronet_retry_ready_audio_receipt": "docs/validation/synthmodem-synchronet-retry-ready-audio-01.json",
   "synchronet_retry_ready_audio_receipt_sha256": "d1a371f269c6eff54d25b10c3344f053bec4d40604069309fb428ef29e857a74",
-  "accepted_synchronet_same_call_retry_cohort": "synthmodem-synchronet-retry-ready-audio-01"
+  "accepted_synchronet_same_call_retry_cohort": "synthmodem-synchronet-retry-ready-audio-01",
+  "native_upload_startup_receipt": "docs/validation/terminal-upload-startup-fixed.json",
+  "synchronet_startup_audio_receipt": "docs/validation/synthmodem-synchronet-retry-startup-audio-01.json",
+  "synchronet_startup_audio_receipt_sha256": "d024b0136573f344dd882e2dd8e77e9ffc427f79ac470f21d04188f3c56b4468",
+  "accepted_synchronet_early_start_retry_cohort": "synthmodem-synchronet-retry-startup-audio-01"
 }

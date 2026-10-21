@@ -13,7 +13,8 @@ ANSI sequences before selecting the native handshake. The recovered sender
 instructions remain unchanged. The
 [same-call audio retry work](SYNCHRONET_AUDIO_RETRY.md) preserves a failed early
 start and an accepted recipe that waits for the complete remote banner; a
-fresh early-start audio run tests the new native adapter separately.
+fresh early-start audio run also passes all 100 client gates with the native
+adapter. The stock indexed partial remains a separate cleanup gap.
 
 The source is opened read-only and remains unchanged. The maintained bridge
 supplies the recovered sender with one checked physical handle, full32-bit

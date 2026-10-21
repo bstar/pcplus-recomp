@@ -101,4 +101,6 @@ The startup limitation above describes the frozen `54d53c72` executable.
 [New maintained startup filtering](UPLOAD_STARTUP.md) passes linked and actual
 DOS banner tests in `3b0deeeb`. A separate fresh audio attempt restores the
 original early-start keyboard sequence to test that code change independently
-of the receiver-ready workaround. Its audio acceptance is still pending.
+of the receiver-ready workaround. [That fresh audio run](validation/synthmodem-synchronet-retry-startup-audio-01.json)
+passes all 100 client gates with native `3b0deeeb`; the indexed partial and
+physical/full-application requirements remain open.
