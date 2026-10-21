@@ -9,7 +9,8 @@ bottom two screen rows retain their existing near ownership.
 The pre-change source at `c154f20` reproduces the accepted `3b0deeeb` plain
 executable but fails both mouse builds with resident code 146 bytes over 64 KB.
 Moving the UI body frees 622 resident bytes. The
-[validation receipt](validation/transfer-ui-bank.json) records these builds:
+[validation receipt](validation/transfer-ui-bank.json) at `4c90c33` records these
+frozen builds:
 
 | Build | Executable SHA prefix | Resident bytes free | DS=SS bytes |
 | --- | --- | ---: | ---: |
@@ -38,5 +39,6 @@ scenarios. Recovered ordinary sender/cancel flat instructions are unchanged.
 
 The prior audio result remains bound to `3b0deeeb`; it is not silently applied
 to these new binaries. Physical Boca/SPA2102 and whole-application acceptance
-remain open. A separate ANSI-startup ESC-restart counterexample is captured for
-follow-up; it concerns handshake filtering, not UI relocation.
+remain open. The subsequent [ANSI-startup ESC-restart correction](UPLOAD_STARTUP_RESTART.md)
+has its own baseline, new binaries and linked/actual DOS evidence. It preserves
+this UI placement and resident headroom.

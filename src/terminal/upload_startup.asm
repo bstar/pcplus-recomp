@@ -37,20 +37,24 @@ terminal_upload_startup_byte:
  mov bx,ax
  mov word [bp-2],0xffff
  mov ax,[terminal_upload_startup_ansi]
- cmp ax,1
- je .escape
- cmp ax,2
- je .csi
+ ; Strings own ESC/ST. Elsewhere a fresh ESC cancels the incomplete ANSI
+ ; sequence and begins another; its eventual C/G final is never a handshake.
  cmp ax,3
  je .string
  cmp ax,4
  je .string_escape
- cmp ax,5
- je .normal
  cmp bl,0x1b
- jne .candidate
+ jne .sequence
  mov word [terminal_upload_startup_ansi],1
  jmp .budget
+.sequence:
+ cmp ax,1
+ je .escape
+ cmp ax,2
+ je .csi
+ cmp ax,5
+ je .normal
+ jmp .candidate
 .escape:
  cmp bl,'['
  je .begin_csi

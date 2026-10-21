@@ -74,5 +74,6 @@ and the full application inventory remain separate requirements.
 The subsequent [transfer-UI banking change](TRANSFER_UI_BANK.md) fixes the
 146-byte resident overflow in both mouse variants and adds build-time far
 bridge/relocation guards. Its new binaries have separate linked and actual DOS
-validation; the accepted audio executable above is unchanged. A separately
-captured ESC-restart edge in startup filtering remains under investigation.
+validation; the accepted audio executable above is unchanged. The subsequently
+captured [ESC-restart edge](UPLOAD_STARTUP_RESTART.md) is now corrected, with six
+linked and six actual DOS cases and separately identified new binaries.

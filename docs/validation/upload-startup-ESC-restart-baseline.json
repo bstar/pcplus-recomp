@@ -1,0 +1,79 @@
+{
+  "passed": false,
+  "binary_sha256": "257014091813f95b6bda0621be6fc81be400677d5b4bd0609a0d6f24b6e600ab",
+  "cases": [
+    {
+      "name": "CSI_restarted_by_ESC",
+      "passed": false,
+      "checks": {
+        "native_workflow_completed": false
+      },
+      "error": "Sender transmitted before independent receiver handshake",
+      "handshake_offered": false,
+      "elapsed_ticks": 3
+    },
+    {
+      "name": "ESC_restarted_by_ESC",
+      "passed": false,
+      "checks": {
+        "native_workflow_completed": false
+      },
+      "error": "Sender transmitted before independent receiver handshake",
+      "handshake_offered": false,
+      "elapsed_ticks": 3
+    },
+    {
+      "name": "charset_restarted_by_ESC",
+      "passed": false,
+      "checks": {
+        "native_workflow_completed": false
+      },
+      "error": "Sender transmitted before independent receiver handshake",
+      "handshake_offered": false,
+      "elapsed_ticks": 3
+    },
+    {
+      "name": "CSI_restarted_as_OSC",
+      "passed": false,
+      "checks": {
+        "native_workflow_completed": false
+      },
+      "error": "Sender transmitted before independent receiver handshake",
+      "handshake_offered": false,
+      "elapsed_ticks": 3
+    },
+    {
+      "name": "OSC_preserves_embedded_ESC_CSI",
+      "passed": true,
+      "checks": {
+        "receiver_handshake_precedes_transmission": true,
+        "complete_native_transfer": true,
+        "source_closed": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "handshake_offered": true,
+      "elapsed_ticks": 96
+    },
+    {
+      "name": "restarted_CSI_then_checksum",
+      "passed": false,
+      "checks": {
+        "native_workflow_completed": false
+      },
+      "error": "Sender transmitted before independent receiver handshake",
+      "handshake_offered": false,
+      "elapsed_ticks": 3
+    }
+  ],
+  "inputs": {
+    "standalone/check_upload_startup_restart.py": "956f74eee7bd74950fbc495dbe9f64503b7eb9801f2db97525e86b955934a7ff",
+    "standalone/check_terminal_upload_startup.py": "8814a77f3b29085319d9af49da01132ea7ed3178e4689de24b8b020ed1cfd451",
+    "standalone/check_terminal_upload_live.py": "656f15252963cc630f88cb39ba1166126eaeb7af687a5c27802b9d95c9310f12",
+    "standalone/check_terminal_transfer_live.py": "7080c84249b3296463cac411e3b5ec0ec4cbf4ac6183fed7d557753eaf16b020"
+  },
+  "scope": "Actual linked native sender and real UART ISR with independent modeled receiver holding its handshake until60ticks. A restarted CSI/ESC/charset or CSI-to-OSC must not expose an ANSI final C/G as a protocol control. OSC/ST handling and checksum selection are separate cases. No product callback replaced; not actual DOS/audio/physical evidence.",
+  "baseline_source_checkpoint": "4c90c33",
+  "baseline_capture_sha256": "2e25fde14fa75f3f4635757561097c73224489a1bcefe9d1c6e990d790acea66",
+  "baseline_capture": "build/bbs-lab/upload-startup-ESC-restart-baseline-02.json"
+}
