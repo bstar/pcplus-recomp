@@ -45,8 +45,8 @@ do not remove prior files to rerun setup. All output paths must be fresh.
   --route download \
   --runtime build/bbs-lab/synthmodem-buffered-runtime-01/runtime \
   --buffered-runtime-proof build/bbs-lab/synthmodem-buffered-runtime-01/result.json \
-  --download-pressure-preparation build/bbs-lab/audio-pressure-download-preparation-02.json \
-  --output build/bbs-lab/current-enigma-pressure-download-audio-01
+  --download-pressure-preparation build/bbs-lab/audio-pressure-download-preparation-03.json \
+  --output build/bbs-lab/current-enigma-pressure-download-audio-new
 ```
 
 Actual audio acceptance requires the complete producer, independent full-stream/
@@ -101,3 +101,10 @@ protocol failures to that text: it does not prove a DOS storage failure. The
 engine explicitly rejects ZFIN while an incomplete receive is owned. Sender
 queuing/checkpoints and active-file stale-frame handling need controlled tests;
 no exclusive timing cause or correction is claimed here.
+
+The [stock credit experiment and isolated sender candidate](sexyz-send-credit.md)
+now measure the packet/group gap directly. The [EOF response auditor correction](zmodem-response-end.md)
+preserves mandatory-byte timing while allowing a reply before optional flow.
+A fresh stock TCP reference03 and nine protocol counterexamples pass with that
+auditor; preparation03 replaces02 for future launches. Earlier proof/source
+snapshots and the failed audio run are retained. No new audio pass is implied.

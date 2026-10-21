@@ -1,0 +1,2207 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "credit1-flags1-size1",
+      "passed": true,
+      "credit": 1,
+      "CANOVIO": false,
+      "source_bytes": 1,
+      "source_sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1,
+      "max_group": 1,
+      "packet_lengths": [
+        1,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+        "helper.stderr": "35c56e5131292a4bb16145821f568ffa2874730b7426b9076cd88ed137ec76b7",
+        "sender.bin": "d337636d279919b06a0c4bbc1b90920bb651e14dc6839917f2aee8d25f9d2c64",
+        "receiver.bin": "7192f94b3fa9300964f42b0f346a21e5815e684b716a6b12312277cb585483ef",
+        "engine-input.bin": "d337636d279919b06a0c4bbc1b90920bb651e14dc6839917f2aee8d25f9d2c64",
+        "trace.json": "7c4a4781e12d1044c687f0d2cf091cd34e89507bbeaf05fed164cfb4738659e4",
+        "protocol.json": "70a51229bee2866ebd2329224963e3f6246c27832968c2f9bf6e0fcfb00f7752"
+      }
+    },
+    {
+      "name": "credit1-flags1-size2",
+      "passed": true,
+      "credit": 1,
+      "CANOVIO": false,
+      "source_bytes": 2,
+      "source_sha256": "b413f47d13ee2fe6c845b2ee141af81de858df4ec549a58b7970bb96645bc8d2",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1,
+      "max_group": 1,
+      "packet_lengths": [
+        1,
+        1,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "b413f47d13ee2fe6c845b2ee141af81de858df4ec549a58b7970bb96645bc8d2",
+        "helper.stderr": "c1d3fb01cb5eeaac91d396bcdc84edb73f9b8484b8c9239384bae62935ce8fce",
+        "sender.bin": "8350bba08a984f0acd85017557bfd00738dedec53b410c052ed64079aec6fdae",
+        "receiver.bin": "71903bfa0352252436a97c8d6c85d3a137f2260cf410c95b59c0a39d2818ccc9",
+        "engine-input.bin": "8350bba08a984f0acd85017557bfd00738dedec53b410c052ed64079aec6fdae",
+        "trace.json": "d8aa13ad267920efc8354317a910fe4e43b8a80bae2a08b3949a0dfb9cd27bcc",
+        "protocol.json": "8fd55de7f4366a78ea4f5ed2076e982181547cd5ef3ff6eae4f1a4d47ced0b97"
+      }
+    },
+    {
+      "name": "credit1-flags1-size5",
+      "passed": true,
+      "credit": 1,
+      "CANOVIO": false,
+      "source_bytes": 5,
+      "source_sha256": "08bb5e5d6eaac1049ede0893d30ed022b1a4d9b5b48db414871f51c9cb35283d",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1,
+      "max_group": 1,
+      "packet_lengths": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "08bb5e5d6eaac1049ede0893d30ed022b1a4d9b5b48db414871f51c9cb35283d",
+        "helper.stderr": "d275fbaf2de57517ba9048b26284d36450d33e93c04bc020a09b00155cbe0dcd",
+        "sender.bin": "0dbd57980deafae094857e78c9c787e6aa4b4905e482151f7e544426244031c8",
+        "receiver.bin": "504dce81e31765567388d495387646d85e103e3bdd2aa0f479038b7c3a95b3a1",
+        "engine-input.bin": "0dbd57980deafae094857e78c9c787e6aa4b4905e482151f7e544426244031c8",
+        "trace.json": "c2da0d7d69481b5df1f6bca75eea1ef0a1bf4194f86bef715c514f6a23b127bf",
+        "protocol.json": "dc5aadeca600c89d1034902735c015dcb26f3c86133b8d029412d6f782bf6afa"
+      }
+    },
+    {
+      "name": "credit1-flags3-size1",
+      "passed": true,
+      "credit": 1,
+      "CANOVIO": true,
+      "source_bytes": 1,
+      "source_sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1,
+      "max_group": 1,
+      "packet_lengths": [
+        1,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+        "helper.stderr": "5b2c9ae8d861a2a2a3da9dc2b8bde95b75a76767b14dbf393139ddeefcb29c6f",
+        "sender.bin": "d337636d279919b06a0c4bbc1b90920bb651e14dc6839917f2aee8d25f9d2c64",
+        "receiver.bin": "68974eb9ee16ac734e8278c8a4e24ed346ee362893973e2748e1d4e23bf9aca5",
+        "engine-input.bin": "d337636d279919b06a0c4bbc1b90920bb651e14dc6839917f2aee8d25f9d2c64",
+        "trace.json": "3303b74176d1217492bf57fa258f20833fa9c8d85802bc63b3f5712b73837c8c",
+        "protocol.json": "4ac791236c5d57d4a1b40e1b5e0afbaaa15a502fd7a1fb70c85cf52c03685885"
+      }
+    },
+    {
+      "name": "credit1-flags3-size2",
+      "passed": true,
+      "credit": 1,
+      "CANOVIO": true,
+      "source_bytes": 2,
+      "source_sha256": "b413f47d13ee2fe6c845b2ee141af81de858df4ec549a58b7970bb96645bc8d2",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1,
+      "max_group": 1,
+      "packet_lengths": [
+        1,
+        1,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "b413f47d13ee2fe6c845b2ee141af81de858df4ec549a58b7970bb96645bc8d2",
+        "helper.stderr": "57f6bd29fd400e52ddd6fff6fa936a98a9924e90d6261ba3059a43a175b17132",
+        "sender.bin": "8350bba08a984f0acd85017557bfd00738dedec53b410c052ed64079aec6fdae",
+        "receiver.bin": "a8591288fd27d5bf4558f10c4377b92fa9da0e8e4ca16a3552dfc824565c4585",
+        "engine-input.bin": "8350bba08a984f0acd85017557bfd00738dedec53b410c052ed64079aec6fdae",
+        "trace.json": "a8b46deb0b28428da53082387dbfa6b6254d872321c86bac757d559e93d41baa",
+        "protocol.json": "4fd32dbe1b7c90807c870fab7ac57185286bcbfc5789e07d7ba76241b9620a60"
+      }
+    },
+    {
+      "name": "credit1-flags3-size5",
+      "passed": true,
+      "credit": 1,
+      "CANOVIO": true,
+      "source_bytes": 5,
+      "source_sha256": "08bb5e5d6eaac1049ede0893d30ed022b1a4d9b5b48db414871f51c9cb35283d",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1,
+      "max_group": 1,
+      "packet_lengths": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "08bb5e5d6eaac1049ede0893d30ed022b1a4d9b5b48db414871f51c9cb35283d",
+        "helper.stderr": "ffdcfbd8e014578ceca18fcbe9d600ef1dc19f76241e5541a60f9473379649ec",
+        "sender.bin": "0dbd57980deafae094857e78c9c787e6aa4b4905e482151f7e544426244031c8",
+        "receiver.bin": "2d3f74ce0e2d9baf17a1088734d86f9730be4ce8e6937407400c72a08cd5f68f",
+        "engine-input.bin": "0dbd57980deafae094857e78c9c787e6aa4b4905e482151f7e544426244031c8",
+        "trace.json": "3f910d27ba4b98d947ea56ca4708e2338735ecd1ef59225f5b64a242a5035d06",
+        "protocol.json": "b4b60b553404647df30de50deabd411165b4895ca0968eefface92d3a9392b67"
+      }
+    },
+    {
+      "name": "credit7-flags1-size6",
+      "passed": true,
+      "credit": 7,
+      "CANOVIO": false,
+      "source_bytes": 6,
+      "source_sha256": "17e88db187afd62c16e5debf3e6527cd006bc012bc90b51a810cd80c2d511f43",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 6,
+      "max_group": 6,
+      "packet_lengths": [
+        6
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "17e88db187afd62c16e5debf3e6527cd006bc012bc90b51a810cd80c2d511f43",
+        "helper.stderr": "a5b1059e10dbce290974a1bec17a0918612001f88f923a8874c2960f4dc78bb8",
+        "sender.bin": "e847d054f51094dba9ef376d450ee394d60a901a842005926c7b81f3a3cad724",
+        "receiver.bin": "fdc5e2147c13fc33ac16c711763496f1d6281249696a165825e241790ee621b1",
+        "engine-input.bin": "e847d054f51094dba9ef376d450ee394d60a901a842005926c7b81f3a3cad724",
+        "trace.json": "cbe1a1bab29f1b1d0d8f02a7933bf827525c4a5e132cab7b97d21fc0f20fa1fd",
+        "protocol.json": "fc171ccd12aa9f3b8b748c211d2c514c559812eecb25210cdeb65d18e24e0e7e"
+      }
+    },
+    {
+      "name": "credit7-flags1-size7",
+      "passed": true,
+      "credit": 7,
+      "CANOVIO": false,
+      "source_bytes": 7,
+      "source_sha256": "57355ac3303c148f11aef7cb179456b9232cde33a818dfda2c2fcb9325749a6b",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 7,
+      "max_group": 7,
+      "packet_lengths": [
+        7,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "57355ac3303c148f11aef7cb179456b9232cde33a818dfda2c2fcb9325749a6b",
+        "helper.stderr": "8065aa4353a6999a0981f3447b0464930f54b85dcd5bd982b443b7a7ad8fbec1",
+        "sender.bin": "a249827787d4e0331b12f019690e0111b335066dcc3d32fbce52356590ad155f",
+        "receiver.bin": "092f98a364c13f799eca3dee8a6024599a630786649111d1fced4123e9e9712a",
+        "engine-input.bin": "a249827787d4e0331b12f019690e0111b335066dcc3d32fbce52356590ad155f",
+        "trace.json": "6ae1867facd02be44175e0a0b8a127e46312541d0c93e4174d872cce98584b34",
+        "protocol.json": "d77a1b559de1e900428f0aaccb2ff6813dea11dbdf262d51cb7d0628691d81dd"
+      }
+    },
+    {
+      "name": "credit7-flags1-size8",
+      "passed": true,
+      "credit": 7,
+      "CANOVIO": false,
+      "source_bytes": 8,
+      "source_sha256": "8a851ff82ee7048ad09ec3847f1ddf44944104d2cbd17ef4e3db22c6785a0d45",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 7,
+      "max_group": 7,
+      "packet_lengths": [
+        7,
+        1
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "8a851ff82ee7048ad09ec3847f1ddf44944104d2cbd17ef4e3db22c6785a0d45",
+        "helper.stderr": "31d07b57fa726512ba5fe81a695b44d09e7cda6ee85df85440c3f457d64f2dd5",
+        "sender.bin": "594a99660ec5b3fe4c1644c6737ae68314028a79a5919829fdfa2691d6a13638",
+        "receiver.bin": "092f98a364c13f799eca3dee8a6024599a630786649111d1fced4123e9e9712a",
+        "engine-input.bin": "594a99660ec5b3fe4c1644c6737ae68314028a79a5919829fdfa2691d6a13638",
+        "trace.json": "9523a8cf22e25f92931a1300485c9e16e9039700c5a7a1eda56303521627d7ee",
+        "protocol.json": "dc7bbbd81fd01a3495065b1bed995599467170e6763cdde8954e9e189b68a5e8"
+      }
+    },
+    {
+      "name": "credit7-flags1-size17",
+      "passed": true,
+      "credit": 7,
+      "CANOVIO": false,
+      "source_bytes": 17,
+      "source_sha256": "3e5718fea51a8f3f5baca61c77afab473c1810f8b9db330273b4011ce92c787e",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 7,
+      "max_group": 7,
+      "packet_lengths": [
+        7,
+        7,
+        3
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "3e5718fea51a8f3f5baca61c77afab473c1810f8b9db330273b4011ce92c787e",
+        "helper.stderr": "f9fba136ea941918dec8de15fa449370e8ef13df2de957ff6ab6711c467ccaed",
+        "sender.bin": "52de34599abfe3782e7057e3b4452108a491a5169d7bc5393979dc04ff9b7e6f",
+        "receiver.bin": "66a964028c7268bf2fb9535f5ba55fbf2dfc93b8fe310643a1d231557b69dd32",
+        "engine-input.bin": "52de34599abfe3782e7057e3b4452108a491a5169d7bc5393979dc04ff9b7e6f",
+        "trace.json": "1c233c5e18c3e25da0af843ef3c677d78ba42bf7e9585c89c893221bb06d983d",
+        "protocol.json": "07834761e79a7fceab66b7e06351acb184eff3e0073b8e3ace63974d114cc1e3"
+      }
+    },
+    {
+      "name": "credit7-flags3-size6",
+      "passed": true,
+      "credit": 7,
+      "CANOVIO": true,
+      "source_bytes": 6,
+      "source_sha256": "17e88db187afd62c16e5debf3e6527cd006bc012bc90b51a810cd80c2d511f43",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 6,
+      "max_group": 6,
+      "packet_lengths": [
+        6
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "17e88db187afd62c16e5debf3e6527cd006bc012bc90b51a810cd80c2d511f43",
+        "helper.stderr": "8b1917d3a4586d29922c9f7949a458d86ffcbdb18a455c8b23f3835813b3f8b5",
+        "sender.bin": "e847d054f51094dba9ef376d450ee394d60a901a842005926c7b81f3a3cad724",
+        "receiver.bin": "9f30a587dacf980d6887dfa278125837d4e66392d12bfb3dc2554302beb4da1c",
+        "engine-input.bin": "e847d054f51094dba9ef376d450ee394d60a901a842005926c7b81f3a3cad724",
+        "trace.json": "8914a48b726e76c395403d7d6dea6161301cf8eef28c5c86c4c4eac5d4e72f6f",
+        "protocol.json": "fd7ad240b4c96860bacaeb22706743a469217100e04714f9f2a9b92eec09f08a"
+      }
+    },
+    {
+      "name": "credit7-flags3-size7",
+      "passed": true,
+      "credit": 7,
+      "CANOVIO": true,
+      "source_bytes": 7,
+      "source_sha256": "57355ac3303c148f11aef7cb179456b9232cde33a818dfda2c2fcb9325749a6b",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 7,
+      "max_group": 7,
+      "packet_lengths": [
+        7,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "57355ac3303c148f11aef7cb179456b9232cde33a818dfda2c2fcb9325749a6b",
+        "helper.stderr": "df3d5090fcecd1fd7abd26c97bb7b2a539877f62abffc0602552c46cedb3668d",
+        "sender.bin": "a249827787d4e0331b12f019690e0111b335066dcc3d32fbce52356590ad155f",
+        "receiver.bin": "dd32cf54ae896bb8af836a4fa6db9ef41758ba19642bc87b0ff0453a07f31f34",
+        "engine-input.bin": "a249827787d4e0331b12f019690e0111b335066dcc3d32fbce52356590ad155f",
+        "trace.json": "15732625b92e2fa5f19b718301b48e35fee28dad77a493190e9da224e8b01c34",
+        "protocol.json": "5169fa9a2f0ed61b1f9761d3235b404132a992d8766ef7aae3a24a2b6ee5cb7c"
+      }
+    },
+    {
+      "name": "credit7-flags3-size8",
+      "passed": true,
+      "credit": 7,
+      "CANOVIO": true,
+      "source_bytes": 8,
+      "source_sha256": "8a851ff82ee7048ad09ec3847f1ddf44944104d2cbd17ef4e3db22c6785a0d45",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 7,
+      "max_group": 7,
+      "packet_lengths": [
+        7,
+        1
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "8a851ff82ee7048ad09ec3847f1ddf44944104d2cbd17ef4e3db22c6785a0d45",
+        "helper.stderr": "c5f8447a3356b6b6801fd19984466a5cd0d9159ab08fcbc65bc16a4679428f24",
+        "sender.bin": "594a99660ec5b3fe4c1644c6737ae68314028a79a5919829fdfa2691d6a13638",
+        "receiver.bin": "dd32cf54ae896bb8af836a4fa6db9ef41758ba19642bc87b0ff0453a07f31f34",
+        "engine-input.bin": "594a99660ec5b3fe4c1644c6737ae68314028a79a5919829fdfa2691d6a13638",
+        "trace.json": "8cdfa8429ed651d774f145a07fff87443ff043ff7afe6528ec23ac0fb4f7b207",
+        "protocol.json": "dad8449dabe7f4dbd15ac2bfe51d38bd3e8c1761c03efd82fc822106780cb350"
+      }
+    },
+    {
+      "name": "credit7-flags3-size17",
+      "passed": true,
+      "credit": 7,
+      "CANOVIO": true,
+      "source_bytes": 17,
+      "source_sha256": "3e5718fea51a8f3f5baca61c77afab473c1810f8b9db330273b4011ce92c787e",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 7,
+      "max_group": 7,
+      "packet_lengths": [
+        7,
+        7,
+        3
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "3e5718fea51a8f3f5baca61c77afab473c1810f8b9db330273b4011ce92c787e",
+        "helper.stderr": "c640d353652bcdce6dc4cba210bc4ce3ced68dbd2d23125d9e99dc88c9502c14",
+        "sender.bin": "52de34599abfe3782e7057e3b4452108a491a5169d7bc5393979dc04ff9b7e6f",
+        "receiver.bin": "e86177d04ecfd543e149275311268cb4e4eb89cf9df34ae3d790d383fbb317d7",
+        "engine-input.bin": "52de34599abfe3782e7057e3b4452108a491a5169d7bc5393979dc04ff9b7e6f",
+        "trace.json": "e9ac4a68aa3ffe47b3040bda4a328d9a8b593c2de9fa0f209deafb786a41ff92",
+        "protocol.json": "59429ed67508d2da2be4d584d658df9392784eff722aeb2698aa715b908e510c"
+      }
+    },
+    {
+      "name": "credit127-flags1-size126",
+      "passed": true,
+      "credit": 127,
+      "CANOVIO": false,
+      "source_bytes": 126,
+      "source_sha256": "5dda7cb7c2282a55676f8ad5c448092f4a9ebd65338b07ed224fcd7b6c73f5ef",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 126,
+      "max_group": 126,
+      "packet_lengths": [
+        126
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "5dda7cb7c2282a55676f8ad5c448092f4a9ebd65338b07ed224fcd7b6c73f5ef",
+        "helper.stderr": "78acbbce7ea5bb7192d8ddd0889b558799c36b676510cf32de55874d0d13ea99",
+        "sender.bin": "3a7337eefa9b49bef75d797235760c17d932392fd1d8319a06fb5355c69a07c6",
+        "receiver.bin": "0556ee2b81fe87dd441de01afe999d1f811620f914a3d353c8f3f25b0c6fdc02",
+        "engine-input.bin": "3a7337eefa9b49bef75d797235760c17d932392fd1d8319a06fb5355c69a07c6",
+        "trace.json": "fb773a57d9c6695b06a1c384c6ddab76eb830650c412dd73af59f3e9da718ec0",
+        "protocol.json": "bfd3734c11c874a8133d60324ae2993947e914f8bba9f4ef363834eea5835453"
+      }
+    },
+    {
+      "name": "credit127-flags1-size127",
+      "passed": true,
+      "credit": 127,
+      "CANOVIO": false,
+      "source_bytes": 127,
+      "source_sha256": "92ca0fa6651ee2f97b884b7246a562fa71250fedefe5ebf270d31c546bfea976",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 127,
+      "max_group": 127,
+      "packet_lengths": [
+        127,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "92ca0fa6651ee2f97b884b7246a562fa71250fedefe5ebf270d31c546bfea976",
+        "helper.stderr": "f695833b55fc20261d6195e85dc5d3a1bf5afc85d74f836afda798632ef309be",
+        "sender.bin": "79cb0e6b49a3277377884570aa2309fdbd30a25799aeff1b3c564782df9c730f",
+        "receiver.bin": "09701ed59de03782e3569afc9bde63a6dcb06a0529144aafaca7914a7a9a40d4",
+        "engine-input.bin": "79cb0e6b49a3277377884570aa2309fdbd30a25799aeff1b3c564782df9c730f",
+        "trace.json": "ed43760f80b32e40a52578affcc73e73fb3df0bf0a2332ef5c75afd114b99961",
+        "protocol.json": "37d530c46ed35d546c03cffd80561f88b4371758fbfc9c9d69c5f3f9496f3c79"
+      }
+    },
+    {
+      "name": "credit127-flags1-size128",
+      "passed": true,
+      "credit": 127,
+      "CANOVIO": false,
+      "source_bytes": 128,
+      "source_sha256": "471fb943aa23c511f6f72f8d1652d9c880cfa392ad80503120547703e56a2be5",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 127,
+      "max_group": 127,
+      "packet_lengths": [
+        127,
+        1
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "471fb943aa23c511f6f72f8d1652d9c880cfa392ad80503120547703e56a2be5",
+        "helper.stderr": "714a7ad3423d8c0fe4d6d0da74e05443c5f64378384779e85be754b72827bd86",
+        "sender.bin": "ffbff956ea4b6122b95260d4dca4c3dc4bb1dbbe09e9e202a602fa841f7f7cb4",
+        "receiver.bin": "09701ed59de03782e3569afc9bde63a6dcb06a0529144aafaca7914a7a9a40d4",
+        "engine-input.bin": "ffbff956ea4b6122b95260d4dca4c3dc4bb1dbbe09e9e202a602fa841f7f7cb4",
+        "trace.json": "eae11c666d36d6d3c82ae921f03ac11109cafc276b5f86af71ec28e50e35e124",
+        "protocol.json": "3d6176cd26fb1943c9d2a42c6f8a8605c741e8839ca27f69c508837702159f8a"
+      }
+    },
+    {
+      "name": "credit127-flags1-size257",
+      "passed": true,
+      "credit": 127,
+      "CANOVIO": false,
+      "source_bytes": 257,
+      "source_sha256": "54acfbfedc4d8da40f76f275e1a98f10af8ef1fb9fb39e5a67a00aabcbe6597c",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 127,
+      "max_group": 127,
+      "packet_lengths": [
+        127,
+        127,
+        3
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "54acfbfedc4d8da40f76f275e1a98f10af8ef1fb9fb39e5a67a00aabcbe6597c",
+        "helper.stderr": "d9b27820019acaa4446a8f1d4d42272226548374bb45b95ea8e9ee5a567a247d",
+        "sender.bin": "bb65025bcb4df50613e4c2ddf653db34e2940cac60c2a3e6a521a1e4eb0feb0e",
+        "receiver.bin": "7fdb168e130c322a232ba38eb536d71b4eb8277cf8b7a448ef975e18d337e4f2",
+        "engine-input.bin": "bb65025bcb4df50613e4c2ddf653db34e2940cac60c2a3e6a521a1e4eb0feb0e",
+        "trace.json": "7a73de974bdbbbdf9e3f2c5319efecd465c93c94dcddef70b1a5822c4b348ee5",
+        "protocol.json": "d638e2fa9dac607cddea02976d1de643b4acdc7f3e2dbf08dce4300b1672d026"
+      }
+    },
+    {
+      "name": "credit127-flags3-size126",
+      "passed": true,
+      "credit": 127,
+      "CANOVIO": true,
+      "source_bytes": 126,
+      "source_sha256": "5dda7cb7c2282a55676f8ad5c448092f4a9ebd65338b07ed224fcd7b6c73f5ef",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 126,
+      "max_group": 126,
+      "packet_lengths": [
+        126
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "5dda7cb7c2282a55676f8ad5c448092f4a9ebd65338b07ed224fcd7b6c73f5ef",
+        "helper.stderr": "f030b4068af2f35bc49047ce2e23c3a0fd63c4c4ace9379b4655983d6c23fc7d",
+        "sender.bin": "3a7337eefa9b49bef75d797235760c17d932392fd1d8319a06fb5355c69a07c6",
+        "receiver.bin": "9b5c92d89cb758e867958678ea27ee5c2b10026fa08371adfc850f7e54c61511",
+        "engine-input.bin": "3a7337eefa9b49bef75d797235760c17d932392fd1d8319a06fb5355c69a07c6",
+        "trace.json": "97821b2704f3eb6b87f57b378aab99e9a8c2e084e758c5435c50b0f9dfd9eb8a",
+        "protocol.json": "78c77659920cfccf114d754131a4e2a62cfbe0619f9e2849f2aa735d101f1c27"
+      }
+    },
+    {
+      "name": "credit127-flags3-size127",
+      "passed": true,
+      "credit": 127,
+      "CANOVIO": true,
+      "source_bytes": 127,
+      "source_sha256": "92ca0fa6651ee2f97b884b7246a562fa71250fedefe5ebf270d31c546bfea976",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 127,
+      "max_group": 127,
+      "packet_lengths": [
+        127,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "92ca0fa6651ee2f97b884b7246a562fa71250fedefe5ebf270d31c546bfea976",
+        "helper.stderr": "f1b39ddad70818dbb046bec26545c390bc545c063c1bdf3df22b89e4e5a4081d",
+        "sender.bin": "79cb0e6b49a3277377884570aa2309fdbd30a25799aeff1b3c564782df9c730f",
+        "receiver.bin": "acc4aba2a0d4b91d0f0b487ea2e86ede2bf0480291fbfc60f1c5b02235ba56b6",
+        "engine-input.bin": "79cb0e6b49a3277377884570aa2309fdbd30a25799aeff1b3c564782df9c730f",
+        "trace.json": "5ec52cd0246cb05e0b1f103048ff93d3510104e6a93f93bd6b542284080d81a0",
+        "protocol.json": "69d414a8898e014840e730c0bc24ad4c05dcc7005cad38b51711d076c7034447"
+      }
+    },
+    {
+      "name": "credit127-flags3-size128",
+      "passed": true,
+      "credit": 127,
+      "CANOVIO": true,
+      "source_bytes": 128,
+      "source_sha256": "471fb943aa23c511f6f72f8d1652d9c880cfa392ad80503120547703e56a2be5",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 127,
+      "max_group": 127,
+      "packet_lengths": [
+        127,
+        1
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "471fb943aa23c511f6f72f8d1652d9c880cfa392ad80503120547703e56a2be5",
+        "helper.stderr": "ad74d153046d8c4ccf717b5275bb82171e13c5e6f93deddc9405e3e0e8929594",
+        "sender.bin": "ffbff956ea4b6122b95260d4dca4c3dc4bb1dbbe09e9e202a602fa841f7f7cb4",
+        "receiver.bin": "acc4aba2a0d4b91d0f0b487ea2e86ede2bf0480291fbfc60f1c5b02235ba56b6",
+        "engine-input.bin": "ffbff956ea4b6122b95260d4dca4c3dc4bb1dbbe09e9e202a602fa841f7f7cb4",
+        "trace.json": "0d68137b6b7b735aa6c9137f4eda6cb9e0c0fc017c9daa23e311866397a00aa8",
+        "protocol.json": "a4b756568a4370d68e5d858d81dd0967ea56da8db6da8e6d7728b3c2624fd927"
+      }
+    },
+    {
+      "name": "credit127-flags3-size257",
+      "passed": true,
+      "credit": 127,
+      "CANOVIO": true,
+      "source_bytes": 257,
+      "source_sha256": "54acfbfedc4d8da40f76f275e1a98f10af8ef1fb9fb39e5a67a00aabcbe6597c",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 127,
+      "max_group": 127,
+      "packet_lengths": [
+        127,
+        127,
+        3
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "54acfbfedc4d8da40f76f275e1a98f10af8ef1fb9fb39e5a67a00aabcbe6597c",
+        "helper.stderr": "f3e8345661fdb8dd2329a91c78427fab62065cc0ca4b8914dbb7aef22150b1c2",
+        "sender.bin": "bb65025bcb4df50613e4c2ddf653db34e2940cac60c2a3e6a521a1e4eb0feb0e",
+        "receiver.bin": "a69725e7f5655e986b2932ff02c2db4a2a7a896f0d6038a2b531c1ebfd3c1951",
+        "engine-input.bin": "bb65025bcb4df50613e4c2ddf653db34e2940cac60c2a3e6a521a1e4eb0feb0e",
+        "trace.json": "ffb62507e6cf77b55537725432d6738b8f8b635a3e31c63e14118b111c4291b9",
+        "protocol.json": "ee19587963a26cac80c24ce49f6018d6e7dd788dcdf32a5fb97d9ce7286f42da"
+      }
+    },
+    {
+      "name": "credit128-flags1-size127",
+      "passed": true,
+      "credit": 128,
+      "CANOVIO": false,
+      "source_bytes": 127,
+      "source_sha256": "92ca0fa6651ee2f97b884b7246a562fa71250fedefe5ebf270d31c546bfea976",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 127,
+      "max_group": 127,
+      "packet_lengths": [
+        127
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "92ca0fa6651ee2f97b884b7246a562fa71250fedefe5ebf270d31c546bfea976",
+        "helper.stderr": "2e72d408c49d09ff48b21c9f8c3befd6eca690e7c38541e6d69f4a758d14a816",
+        "sender.bin": "f265ddc5a051f09bde212e194315b9425f34da58082ba4527186f6aa39ba1477",
+        "receiver.bin": "0d2de0913bf3b0c45d67be6c7d56881a8d7935725ada7f935a4cfb35f70d0d8c",
+        "engine-input.bin": "f265ddc5a051f09bde212e194315b9425f34da58082ba4527186f6aa39ba1477",
+        "trace.json": "1ed4ee51066500937f6a19ec6b8ed8a75c14ed81db8ed9fa6434533809efeb3f",
+        "protocol.json": "1d5304c9f04cec6c0ea046e367c24952200cdb2e13202592e2a9ceee68f3c1e6"
+      }
+    },
+    {
+      "name": "credit128-flags1-size128",
+      "passed": true,
+      "credit": 128,
+      "CANOVIO": false,
+      "source_bytes": 128,
+      "source_sha256": "471fb943aa23c511f6f72f8d1652d9c880cfa392ad80503120547703e56a2be5",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 128,
+      "max_group": 128,
+      "packet_lengths": [
+        128,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "471fb943aa23c511f6f72f8d1652d9c880cfa392ad80503120547703e56a2be5",
+        "helper.stderr": "5416aeca46f9f992796900aea3ee907cb498b63b7967337da140cba1bcb93bf2",
+        "sender.bin": "7d9f84af753dc829cb38fbda1becc9d5e48cd1c80c55b0b36be63622819cdabb",
+        "receiver.bin": "67229a689f43cfc7bbc3263930df922bbe625b258fad598bc715148bdda8c05a",
+        "engine-input.bin": "7d9f84af753dc829cb38fbda1becc9d5e48cd1c80c55b0b36be63622819cdabb",
+        "trace.json": "d97fbf8b0568e7668864691bc0a625b7feff988611e1d262a9bfa15b27e9e380",
+        "protocol.json": "03f5f21a4343753373c743542503e92d9ab50cdace1138c04e94065b97b3ef6f"
+      }
+    },
+    {
+      "name": "credit128-flags1-size129",
+      "passed": true,
+      "credit": 128,
+      "CANOVIO": false,
+      "source_bytes": 129,
+      "source_sha256": "5099c6a56203f9687f7d33f4bfdf576d31dc91f6b695ecea38b2770c87631135",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 128,
+      "max_group": 128,
+      "packet_lengths": [
+        128,
+        1
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "5099c6a56203f9687f7d33f4bfdf576d31dc91f6b695ecea38b2770c87631135",
+        "helper.stderr": "416c4b8611b862baa7b38c3aaa22239bd9baf70b2e019f44542f18d8d718a408",
+        "sender.bin": "197a8dbbcb815917f688b0559ee608df9c647a03e073a397707689cec9466ed2",
+        "receiver.bin": "67229a689f43cfc7bbc3263930df922bbe625b258fad598bc715148bdda8c05a",
+        "engine-input.bin": "197a8dbbcb815917f688b0559ee608df9c647a03e073a397707689cec9466ed2",
+        "trace.json": "ae787a74d212a520a0167dabd6791488de1ca664700c7689d5adf363c5c5a190",
+        "protocol.json": "29f768075505795288ad4f1d463426f43be9dc5575920b1dafb6c122a3a330e3"
+      }
+    },
+    {
+      "name": "credit128-flags1-size259",
+      "passed": true,
+      "credit": 128,
+      "CANOVIO": false,
+      "source_bytes": 259,
+      "source_sha256": "c38540a189764c27bd40bee5e0719f51455107734ef5ac97c6dc7fc0295a3046",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 128,
+      "max_group": 128,
+      "packet_lengths": [
+        128,
+        128,
+        3
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "c38540a189764c27bd40bee5e0719f51455107734ef5ac97c6dc7fc0295a3046",
+        "helper.stderr": "d755f945cba830101b8ab08e6b50f2317a206d47288b010ba5d42f7200944a11",
+        "sender.bin": "6a32944440acf754c8846c6edfa1635b89e0db465fd55d73e4b5f020de0584b7",
+        "receiver.bin": "9e5fb6b1a15a4e984e1016cf1c558c02d71ba9462e845a1c7837150f97669ef4",
+        "engine-input.bin": "6a32944440acf754c8846c6edfa1635b89e0db465fd55d73e4b5f020de0584b7",
+        "trace.json": "d77d7bb7a2a0da972c3c9818a1d26d4be7566cc9993863fdb248ef28da9ae2ae",
+        "protocol.json": "57bd469d4ad5305dbbea48aa9c6a5182ae574d32276954b4ace630da2f5dfec9"
+      }
+    },
+    {
+      "name": "credit128-flags3-size127",
+      "passed": true,
+      "credit": 128,
+      "CANOVIO": true,
+      "source_bytes": 127,
+      "source_sha256": "92ca0fa6651ee2f97b884b7246a562fa71250fedefe5ebf270d31c546bfea976",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 127,
+      "max_group": 127,
+      "packet_lengths": [
+        127
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "92ca0fa6651ee2f97b884b7246a562fa71250fedefe5ebf270d31c546bfea976",
+        "helper.stderr": "b42bed0620ced4e3551e96a6108c3a7a192b617bbee48417875f31e0578d1d64",
+        "sender.bin": "f265ddc5a051f09bde212e194315b9425f34da58082ba4527186f6aa39ba1477",
+        "receiver.bin": "52652ff4732eeaf8f921cc93342af5c8873450807441f28d3a515a6c4dda5de9",
+        "engine-input.bin": "f265ddc5a051f09bde212e194315b9425f34da58082ba4527186f6aa39ba1477",
+        "trace.json": "4ac1ee0d123640c8fed3b8fc8417a54517c252d5c66a0be19b1c23011d2cba1d",
+        "protocol.json": "9867c9176c87b27ae9a761e16fe4291308f855e7346b5cc7635ebb0101a4b0d7"
+      }
+    },
+    {
+      "name": "credit128-flags3-size128",
+      "passed": true,
+      "credit": 128,
+      "CANOVIO": true,
+      "source_bytes": 128,
+      "source_sha256": "471fb943aa23c511f6f72f8d1652d9c880cfa392ad80503120547703e56a2be5",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 128,
+      "max_group": 128,
+      "packet_lengths": [
+        128,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "471fb943aa23c511f6f72f8d1652d9c880cfa392ad80503120547703e56a2be5",
+        "helper.stderr": "31fd93e6deb32d4c159ebb43bf84ccadefebdc4759d471b98838b4b5cecd7391",
+        "sender.bin": "7d9f84af753dc829cb38fbda1becc9d5e48cd1c80c55b0b36be63622819cdabb",
+        "receiver.bin": "6f3d28647754b20d89a59dcac45a50e1afbddc8f584e6b24d35f7346fbb28987",
+        "engine-input.bin": "7d9f84af753dc829cb38fbda1becc9d5e48cd1c80c55b0b36be63622819cdabb",
+        "trace.json": "167d30b728706ad808bcca7d8fb8f3697b1fac680f5ce10eafd76e67df8cc8d2",
+        "protocol.json": "d91c91fa4cc9fc29acd8809d5ee3f29f7854edbd0020c722037d747602516b3d"
+      }
+    },
+    {
+      "name": "credit128-flags3-size129",
+      "passed": true,
+      "credit": 128,
+      "CANOVIO": true,
+      "source_bytes": 129,
+      "source_sha256": "5099c6a56203f9687f7d33f4bfdf576d31dc91f6b695ecea38b2770c87631135",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 128,
+      "max_group": 128,
+      "packet_lengths": [
+        128,
+        1
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "5099c6a56203f9687f7d33f4bfdf576d31dc91f6b695ecea38b2770c87631135",
+        "helper.stderr": "2e576ff4e6b9ac85483dfb822086b6e7e92aa2565a15054e253d447cd39db3c1",
+        "sender.bin": "197a8dbbcb815917f688b0559ee608df9c647a03e073a397707689cec9466ed2",
+        "receiver.bin": "6f3d28647754b20d89a59dcac45a50e1afbddc8f584e6b24d35f7346fbb28987",
+        "engine-input.bin": "197a8dbbcb815917f688b0559ee608df9c647a03e073a397707689cec9466ed2",
+        "trace.json": "f0a1ccaab543ed05d74c19bf1ccffbe3089c1df53fa9dd9b892d9b905b931daf",
+        "protocol.json": "37b05295425420500729bc17967034d1f2119b675aa71bd1fc7cf0c3b9b27301"
+      }
+    },
+    {
+      "name": "credit128-flags3-size259",
+      "passed": true,
+      "credit": 128,
+      "CANOVIO": true,
+      "source_bytes": 259,
+      "source_sha256": "c38540a189764c27bd40bee5e0719f51455107734ef5ac97c6dc7fc0295a3046",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 128,
+      "max_group": 128,
+      "packet_lengths": [
+        128,
+        128,
+        3
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "c38540a189764c27bd40bee5e0719f51455107734ef5ac97c6dc7fc0295a3046",
+        "helper.stderr": "1a01747acf2d7d9e6f99012c7f81366ff2bfa4bbb87f2caa797da687f4a4c8b6",
+        "sender.bin": "6a32944440acf754c8846c6edfa1635b89e0db465fd55d73e4b5f020de0584b7",
+        "receiver.bin": "74dbb24ca20cc202ed8bee8df443cdebf5ad4e9a4ad745feaf31ad6152765d2f",
+        "engine-input.bin": "6a32944440acf754c8846c6edfa1635b89e0db465fd55d73e4b5f020de0584b7",
+        "trace.json": "c571669f626ebfa88984f4e2a4e435e3c8b9a554cb77a3847693304ca8c13a98",
+        "protocol.json": "b018a647a2be075f40447ec68d70a78da71a67b821e50701e21b03202bf6f592"
+      }
+    },
+    {
+      "name": "credit256-flags1-size255",
+      "passed": true,
+      "credit": 256,
+      "CANOVIO": false,
+      "source_bytes": 255,
+      "source_sha256": "3f8591112c6bbe5c963965954e293108b7208ed2af893e500d859368c654eabe",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 255,
+      "max_group": 255,
+      "packet_lengths": [
+        255
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "3f8591112c6bbe5c963965954e293108b7208ed2af893e500d859368c654eabe",
+        "helper.stderr": "154fcb16b740015249180276f04cea5748e3cf9cfdd94969b2c9f24f2048fe59",
+        "sender.bin": "c85b4dd8a68c757041d6d540db3e3598bb18761dfe9eb2f07a75270f8fdee90e",
+        "receiver.bin": "65692e27a15ad475bfed14cbdc1d1afe5615bf3b395903a374f694cb33db9156",
+        "engine-input.bin": "c85b4dd8a68c757041d6d540db3e3598bb18761dfe9eb2f07a75270f8fdee90e",
+        "trace.json": "8cd32cd4f5cc78d4e015db7fe670d9f9c52b125f417d606accb14692a2d9dd6c",
+        "protocol.json": "003256de57a0487d3ef159ed183eb848383aac619db3dc1fbc2daa2a83a8b24e"
+      }
+    },
+    {
+      "name": "credit256-flags1-size256",
+      "passed": true,
+      "credit": 256,
+      "CANOVIO": false,
+      "source_bytes": 256,
+      "source_sha256": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 256,
+      "max_group": 256,
+      "packet_lengths": [
+        256,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+        "helper.stderr": "fd5fad625fc4347cd4b9d93581988db906e147dac0a0599bba6511014777dbac",
+        "sender.bin": "d7a7bcdf372fd41924b0762a291887df0fea15bf0a8e9a915abeb0ad35a4632f",
+        "receiver.bin": "425830006bcad73a1b66d74781add0f6406ccbef99ddb4475fa11ec700f59119",
+        "engine-input.bin": "d7a7bcdf372fd41924b0762a291887df0fea15bf0a8e9a915abeb0ad35a4632f",
+        "trace.json": "ec26685c14e9c895a5c91a29cdbd510222e68ffee79185c60549eb53ce2c1b97",
+        "protocol.json": "549f20d32f19bd3ddfcf0769e707306b652ffdbe503ea173622cdf6667fbec51"
+      }
+    },
+    {
+      "name": "credit256-flags1-size257",
+      "passed": true,
+      "credit": 256,
+      "CANOVIO": false,
+      "source_bytes": 257,
+      "source_sha256": "54acfbfedc4d8da40f76f275e1a98f10af8ef1fb9fb39e5a67a00aabcbe6597c",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 256,
+      "max_group": 256,
+      "packet_lengths": [
+        256,
+        1
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "54acfbfedc4d8da40f76f275e1a98f10af8ef1fb9fb39e5a67a00aabcbe6597c",
+        "helper.stderr": "3da2c1c2f446430e9c23216b0c912153738524ffc295e51282259a4b61239780",
+        "sender.bin": "7e5cd52c91b96654a8934f9bdd9c408cefc32fe3c7eb935bf1215f8774e1fc44",
+        "receiver.bin": "425830006bcad73a1b66d74781add0f6406ccbef99ddb4475fa11ec700f59119",
+        "engine-input.bin": "7e5cd52c91b96654a8934f9bdd9c408cefc32fe3c7eb935bf1215f8774e1fc44",
+        "trace.json": "f2a198002214b90dba93ac98de7d553d4ddf878aeb8ec144ea09325fef0cb4de",
+        "protocol.json": "dcad501b562a8814317b53ee8668c3fbef3128b328ce9d131556fed1a033aade"
+      }
+    },
+    {
+      "name": "credit256-flags1-size515",
+      "passed": true,
+      "credit": 256,
+      "CANOVIO": false,
+      "source_bytes": 515,
+      "source_sha256": "87cb471831d76279b4f17f7c516e05b529caaf21abe13c10fda2b49d72a5f84f",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 256,
+      "max_group": 256,
+      "packet_lengths": [
+        256,
+        256,
+        3
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "87cb471831d76279b4f17f7c516e05b529caaf21abe13c10fda2b49d72a5f84f",
+        "helper.stderr": "410d14ed107f64410a7011f7b8ce28f091845d223176d9357b79b19f7a7ebbcf",
+        "sender.bin": "166f2fe2cf234cd2081fc60bc57c4850281945202a0fa6d44bcad78be471d1cc",
+        "receiver.bin": "c42cc0a51bafae5ddf69dc8a9578db7e40a0306d81ad8d7b465f2264e45b5199",
+        "engine-input.bin": "166f2fe2cf234cd2081fc60bc57c4850281945202a0fa6d44bcad78be471d1cc",
+        "trace.json": "31615ca122fc1a04c52da13a0b0044e398b8763e3f95c89cbd771b12f4df5ca0",
+        "protocol.json": "4239bdc8b56daa136a89576af298dcf1299011a97c00d80b6f022565c69cecf4"
+      }
+    },
+    {
+      "name": "credit256-flags3-size255",
+      "passed": true,
+      "credit": 256,
+      "CANOVIO": true,
+      "source_bytes": 255,
+      "source_sha256": "3f8591112c6bbe5c963965954e293108b7208ed2af893e500d859368c654eabe",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 255,
+      "max_group": 255,
+      "packet_lengths": [
+        255
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "3f8591112c6bbe5c963965954e293108b7208ed2af893e500d859368c654eabe",
+        "helper.stderr": "3b2e34168bf27e7089a153a9f21e9c342a22ebbf42b00d79344a0c68babe2c65",
+        "sender.bin": "c85b4dd8a68c757041d6d540db3e3598bb18761dfe9eb2f07a75270f8fdee90e",
+        "receiver.bin": "b59556453f9166262494e7272f9395dc21965df3a83201192c3787f139ff9a7b",
+        "engine-input.bin": "c85b4dd8a68c757041d6d540db3e3598bb18761dfe9eb2f07a75270f8fdee90e",
+        "trace.json": "ffc687f1aff176f8a69b1e061bd1c69c67cacd7622a88bce03d866c8f3dcd177",
+        "protocol.json": "ba95bb521e73c482ada448520c0ebc66e30437c40fd7e2feacfef7815fa8851d"
+      }
+    },
+    {
+      "name": "credit256-flags3-size256",
+      "passed": true,
+      "credit": 256,
+      "CANOVIO": true,
+      "source_bytes": 256,
+      "source_sha256": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 256,
+      "max_group": 256,
+      "packet_lengths": [
+        256,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+        "helper.stderr": "0d1498bcedae5bc8b0533dcb25b9e08da6777d1c11ad2ec89bfb68ebb84db1cb",
+        "sender.bin": "d7a7bcdf372fd41924b0762a291887df0fea15bf0a8e9a915abeb0ad35a4632f",
+        "receiver.bin": "cc29fcee4d1cc7bb0e5e41cc2a59cab68aeefc9c08580fe05bbf48e6def8e1d8",
+        "engine-input.bin": "d7a7bcdf372fd41924b0762a291887df0fea15bf0a8e9a915abeb0ad35a4632f",
+        "trace.json": "5c9ccb8d93b610abd7031cb74487c22977a847f15f5a172d843ec2a507d097e9",
+        "protocol.json": "061ba611737f39f634ce8b893352bd91ec2a7fe7ce6f74babeb7d2e87dc6a955"
+      }
+    },
+    {
+      "name": "credit256-flags3-size257",
+      "passed": true,
+      "credit": 256,
+      "CANOVIO": true,
+      "source_bytes": 257,
+      "source_sha256": "54acfbfedc4d8da40f76f275e1a98f10af8ef1fb9fb39e5a67a00aabcbe6597c",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 256,
+      "max_group": 256,
+      "packet_lengths": [
+        256,
+        1
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "54acfbfedc4d8da40f76f275e1a98f10af8ef1fb9fb39e5a67a00aabcbe6597c",
+        "helper.stderr": "c55b120d015c75b1837928019f7818495b5c757dc5291e1db04ff5792485338f",
+        "sender.bin": "7e5cd52c91b96654a8934f9bdd9c408cefc32fe3c7eb935bf1215f8774e1fc44",
+        "receiver.bin": "cc29fcee4d1cc7bb0e5e41cc2a59cab68aeefc9c08580fe05bbf48e6def8e1d8",
+        "engine-input.bin": "7e5cd52c91b96654a8934f9bdd9c408cefc32fe3c7eb935bf1215f8774e1fc44",
+        "trace.json": "4898bc45171ac04fef695cc4bef45f90ab368f6242b2acb941f892596c5259e4",
+        "protocol.json": "47ba252c673a68a287be0df15f7602a04e6350a8ddb9279e01e2c48addc23947"
+      }
+    },
+    {
+      "name": "credit256-flags3-size515",
+      "passed": true,
+      "credit": 256,
+      "CANOVIO": true,
+      "source_bytes": 515,
+      "source_sha256": "87cb471831d76279b4f17f7c516e05b529caaf21abe13c10fda2b49d72a5f84f",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 256,
+      "max_group": 256,
+      "packet_lengths": [
+        256,
+        256,
+        3
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "87cb471831d76279b4f17f7c516e05b529caaf21abe13c10fda2b49d72a5f84f",
+        "helper.stderr": "d418ea29a4e1f3753041d00bca7d013714706e73cbf4b981965b1f4a1f0262b4",
+        "sender.bin": "166f2fe2cf234cd2081fc60bc57c4850281945202a0fa6d44bcad78be471d1cc",
+        "receiver.bin": "c7ba62a72ff7797ae01816c26afffdecca87a0beee89720d05e630a66d80018e",
+        "engine-input.bin": "166f2fe2cf234cd2081fc60bc57c4850281945202a0fa6d44bcad78be471d1cc",
+        "trace.json": "ed887af083abf0dc95761162f3bdb103d819bc6b7748485fa72e5ebd49951bb8",
+        "protocol.json": "7dfd08d99ce9ad5347f86495f855e0fd70c2a56c212c3cbb7779cc7b58acbb14"
+      }
+    },
+    {
+      "name": "credit1024-flags1-size1023",
+      "passed": true,
+      "credit": 1024,
+      "CANOVIO": false,
+      "source_bytes": 1023,
+      "source_sha256": "84d353b0e5a01f3e12370cd86b340c1fa07fd8a91490d67eb06b91206df54bc4",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1023,
+      "max_group": 1023,
+      "packet_lengths": [
+        1023
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "84d353b0e5a01f3e12370cd86b340c1fa07fd8a91490d67eb06b91206df54bc4",
+        "helper.stderr": "beb6bea1b64f0d5f6fd42fed2d581dbafa6fcde087139ade47f0e432102256b7",
+        "sender.bin": "95f943f9bd568f65c4f8dfebec628848f12f5a59c80982b9e54e82b480d70762",
+        "receiver.bin": "37ef54b1cb7fbd4a6319da6966684ca46e1f4dad2d9ae5fb11ec35e14c80a9f4",
+        "engine-input.bin": "95f943f9bd568f65c4f8dfebec628848f12f5a59c80982b9e54e82b480d70762",
+        "trace.json": "fb88e7082a2bb4022441cc8a83af73d53bd6164b4097d778dc48813a6a80f20c",
+        "protocol.json": "eaf185f6bb094bc440203506a084c5c8be821fe376a07a1004bf2d2d9e2a7000"
+      }
+    },
+    {
+      "name": "credit1024-flags1-size1024",
+      "passed": true,
+      "credit": 1024,
+      "CANOVIO": false,
+      "source_bytes": 1024,
+      "source_sha256": "785b0751fc2c53dc14a4ce3d800e69ef9ce1009eb327ccf458afe09c242c26c9",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1024,
+      "max_group": 1024,
+      "packet_lengths": [
+        1024,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "785b0751fc2c53dc14a4ce3d800e69ef9ce1009eb327ccf458afe09c242c26c9",
+        "helper.stderr": "707a8bcd919df617085b9626aa738431a214c00ce2901aa3c32f70affe951fac",
+        "sender.bin": "9d247c2e7bee8dcbd8cee7a0f57ec9cb2793838cce6cb79230f960f555ce22df",
+        "receiver.bin": "7567af6820f7121e0f776f541dbb53d289387c621ffe4e0c7a17bd1dbc04a4cf",
+        "engine-input.bin": "9d247c2e7bee8dcbd8cee7a0f57ec9cb2793838cce6cb79230f960f555ce22df",
+        "trace.json": "eae432b82d6fd2c46e8072df07122a5d06362ea27c2d01a176daf2f5e788c3be",
+        "protocol.json": "c787c770cdd712c3f2160fd01e952d1675ca8e93b8e12bdafd5f4a1dca40cf67"
+      }
+    },
+    {
+      "name": "credit1024-flags1-size1025",
+      "passed": true,
+      "credit": 1024,
+      "CANOVIO": false,
+      "source_bytes": 1025,
+      "source_sha256": "b3981d93eeb64aa900f3e48cfcd48e9bbc89b77732c49ea201c93656c62b6a09",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1024,
+      "max_group": 1024,
+      "packet_lengths": [
+        1024,
+        1
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "b3981d93eeb64aa900f3e48cfcd48e9bbc89b77732c49ea201c93656c62b6a09",
+        "helper.stderr": "0e0be3c9fb61e716563f09e6f5e2a87c30c88d75c2681e44062313e058562a97",
+        "sender.bin": "6c23b8dd9144840e0cdc8babc367a696050c31f5db27ff4226f1ec6811c230fa",
+        "receiver.bin": "7567af6820f7121e0f776f541dbb53d289387c621ffe4e0c7a17bd1dbc04a4cf",
+        "engine-input.bin": "6c23b8dd9144840e0cdc8babc367a696050c31f5db27ff4226f1ec6811c230fa",
+        "trace.json": "dbe08615678a2a4ffde410c2b087222da8179d281f33eb097ae6d4c8c32cf07c",
+        "protocol.json": "13e228a573d03f2d50a0add540bccbcc35609ee377eb364fdfeaf9a56c3b8d78"
+      }
+    },
+    {
+      "name": "credit1024-flags1-size2051",
+      "passed": true,
+      "credit": 1024,
+      "CANOVIO": false,
+      "source_bytes": 2051,
+      "source_sha256": "67060da644f4b4c17a08c6e8c62e2f11c40251a030a936ed0e6bfb1084075945",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1024,
+      "max_group": 1024,
+      "packet_lengths": [
+        1024,
+        1024,
+        3
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "67060da644f4b4c17a08c6e8c62e2f11c40251a030a936ed0e6bfb1084075945",
+        "helper.stderr": "269d52234db13bf7e8f90db35811fa15800881ee8c9182247468ba7e91c8b168",
+        "sender.bin": "0951a05f65c333a3cd0d81711d61f9f5bf0bd51308799ed948f51a567ea66b01",
+        "receiver.bin": "9f1c7afadbbe7f9401005e47cf946547125bb144cfb63958259154b90b3b60fd",
+        "engine-input.bin": "0951a05f65c333a3cd0d81711d61f9f5bf0bd51308799ed948f51a567ea66b01",
+        "trace.json": "c1a98801a963e767c190e5ff9a6b7e7567db78a42df227a76dff4e6e4af94fe6",
+        "protocol.json": "45a5ede1333e330d817af5fea8bb4b4edd78149aa14733b4bd0a665850424bbf"
+      }
+    },
+    {
+      "name": "credit1024-flags3-size1023",
+      "passed": true,
+      "credit": 1024,
+      "CANOVIO": true,
+      "source_bytes": 1023,
+      "source_sha256": "84d353b0e5a01f3e12370cd86b340c1fa07fd8a91490d67eb06b91206df54bc4",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1023,
+      "max_group": 1023,
+      "packet_lengths": [
+        1023
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "84d353b0e5a01f3e12370cd86b340c1fa07fd8a91490d67eb06b91206df54bc4",
+        "helper.stderr": "c689f7519d36108827937b9039d49aeefb23efa55d28be01104d236fdab5abae",
+        "sender.bin": "95f943f9bd568f65c4f8dfebec628848f12f5a59c80982b9e54e82b480d70762",
+        "receiver.bin": "6ccae5e4628f6918e281ab95530ae192aa4d99d574ac2f4d63b713806d598484",
+        "engine-input.bin": "95f943f9bd568f65c4f8dfebec628848f12f5a59c80982b9e54e82b480d70762",
+        "trace.json": "6df6c6045ab39bafeee140bbbdaa2f8e69e7fb0ced91cdad3857514a74b942d6",
+        "protocol.json": "85e0ab9460b5af0c47f804230a4e876b967d8bc06f7cfe57b93d2a14e6976b14"
+      }
+    },
+    {
+      "name": "credit1024-flags3-size1024",
+      "passed": true,
+      "credit": 1024,
+      "CANOVIO": true,
+      "source_bytes": 1024,
+      "source_sha256": "785b0751fc2c53dc14a4ce3d800e69ef9ce1009eb327ccf458afe09c242c26c9",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1024,
+      "max_group": 1024,
+      "packet_lengths": [
+        1024,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "785b0751fc2c53dc14a4ce3d800e69ef9ce1009eb327ccf458afe09c242c26c9",
+        "helper.stderr": "ffb96ff8e8175e8a126f21d189f8b2338569baf8552ae2d5e9f8b9b3063716a3",
+        "sender.bin": "9d247c2e7bee8dcbd8cee7a0f57ec9cb2793838cce6cb79230f960f555ce22df",
+        "receiver.bin": "8e31476e17f699aea23db6a425a1360f7d03f809f9b6fff0f09c80d9b18f8134",
+        "engine-input.bin": "9d247c2e7bee8dcbd8cee7a0f57ec9cb2793838cce6cb79230f960f555ce22df",
+        "trace.json": "c3dbcf434799df64a4ed1ed7bc3ab6815e8f2aaca8d0595a0d097f0d57a62ae8",
+        "protocol.json": "15a3c6c66107bfd60a5f74668fa700734df6197e1d734b9bb679b23ea7605db3"
+      }
+    },
+    {
+      "name": "credit1024-flags3-size1025",
+      "passed": true,
+      "credit": 1024,
+      "CANOVIO": true,
+      "source_bytes": 1025,
+      "source_sha256": "b3981d93eeb64aa900f3e48cfcd48e9bbc89b77732c49ea201c93656c62b6a09",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1024,
+      "max_group": 1024,
+      "packet_lengths": [
+        1024,
+        1
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "b3981d93eeb64aa900f3e48cfcd48e9bbc89b77732c49ea201c93656c62b6a09",
+        "helper.stderr": "5e44e02da3be176bfa2f7aa7549467f7387c33759539ab047887f72c55f4ee67",
+        "sender.bin": "6c23b8dd9144840e0cdc8babc367a696050c31f5db27ff4226f1ec6811c230fa",
+        "receiver.bin": "8e31476e17f699aea23db6a425a1360f7d03f809f9b6fff0f09c80d9b18f8134",
+        "engine-input.bin": "6c23b8dd9144840e0cdc8babc367a696050c31f5db27ff4226f1ec6811c230fa",
+        "trace.json": "e24a65d8b405910303cf2ecaa78f02d60285b8578e87751b41ec1d4efc8072c8",
+        "protocol.json": "3167d6276e9a3e50067f7f430e82ad170d3107bf5f609de29242b210fbfb2fb9"
+      }
+    },
+    {
+      "name": "credit1024-flags3-size2051",
+      "passed": true,
+      "credit": 1024,
+      "CANOVIO": true,
+      "source_bytes": 2051,
+      "source_sha256": "67060da644f4b4c17a08c6e8c62e2f11c40251a030a936ed0e6bfb1084075945",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1024,
+      "max_group": 1024,
+      "packet_lengths": [
+        1024,
+        1024,
+        3
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "67060da644f4b4c17a08c6e8c62e2f11c40251a030a936ed0e6bfb1084075945",
+        "helper.stderr": "cd9413083e0303c9a458c232b01142642ead5efa24040a05f2f730116051f9b7",
+        "sender.bin": "0951a05f65c333a3cd0d81711d61f9f5bf0bd51308799ed948f51a567ea66b01",
+        "receiver.bin": "2df0db8d878f88b9878ad6b9fe5ae725cc7e69e092dcdba6aadd4f8801cfc1e0",
+        "engine-input.bin": "0951a05f65c333a3cd0d81711d61f9f5bf0bd51308799ed948f51a567ea66b01",
+        "trace.json": "2f2ee0f8d67c83f9517d4484b662f973b9fbb8c814f4e3f4292d52834ebe0ec5",
+        "protocol.json": "62d14fa8b4f437f3e7c75702620f66d43cd291598e50cc8cee25598fc1ffc099"
+      }
+    },
+    {
+      "name": "credit1025-flags1-size1024",
+      "passed": true,
+      "credit": 1025,
+      "CANOVIO": false,
+      "source_bytes": 1024,
+      "source_sha256": "785b0751fc2c53dc14a4ce3d800e69ef9ce1009eb327ccf458afe09c242c26c9",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1024,
+      "max_group": 1024,
+      "packet_lengths": [
+        1024,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "785b0751fc2c53dc14a4ce3d800e69ef9ce1009eb327ccf458afe09c242c26c9",
+        "helper.stderr": "eee8105c60efebabb5e957bc125f144a124939fa063734fd597441faca816113",
+        "sender.bin": "9d247c2e7bee8dcbd8cee7a0f57ec9cb2793838cce6cb79230f960f555ce22df",
+        "receiver.bin": "038e0d5213a4a7a584083c3a4fc794e14bfb477eff8e1716992d4e671cefd2f8",
+        "engine-input.bin": "9d247c2e7bee8dcbd8cee7a0f57ec9cb2793838cce6cb79230f960f555ce22df",
+        "trace.json": "aa98613b2c9b661d1b043417514cbe0894e5d25c26ede46f2750abf6dcea482d",
+        "protocol.json": "fe237e34a4f3d64bf7d8cc15b2643351eac4e81a6f1a34e3deaea1cccbc1e650"
+      }
+    },
+    {
+      "name": "credit1025-flags1-size1025",
+      "passed": true,
+      "credit": 1025,
+      "CANOVIO": false,
+      "source_bytes": 1025,
+      "source_sha256": "b3981d93eeb64aa900f3e48cfcd48e9bbc89b77732c49ea201c93656c62b6a09",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1024,
+      "max_group": 1024,
+      "packet_lengths": [
+        1024,
+        1
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "b3981d93eeb64aa900f3e48cfcd48e9bbc89b77732c49ea201c93656c62b6a09",
+        "helper.stderr": "8a181193af7cc570ee5934faf16d15f11dd54a61678b3b338c9eb71ee28c5fd8",
+        "sender.bin": "6c23b8dd9144840e0cdc8babc367a696050c31f5db27ff4226f1ec6811c230fa",
+        "receiver.bin": "038e0d5213a4a7a584083c3a4fc794e14bfb477eff8e1716992d4e671cefd2f8",
+        "engine-input.bin": "6c23b8dd9144840e0cdc8babc367a696050c31f5db27ff4226f1ec6811c230fa",
+        "trace.json": "73b2bbefd0badbd721f037eeff4a131d4129a5b50ddcb59335670db7e89de40e",
+        "protocol.json": "ae43901fce2a66ab9bfb81ae8b880ce6109a50ea74f864ed472722cfc617e82a"
+      }
+    },
+    {
+      "name": "credit1025-flags1-size1026",
+      "passed": true,
+      "credit": 1025,
+      "CANOVIO": false,
+      "source_bytes": 1026,
+      "source_sha256": "7d9e87a6b0191fd6e08ba2295e60a3287e27d54015514c24c38ff7865b660c66",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1024,
+      "max_group": 1024,
+      "packet_lengths": [
+        1024,
+        2
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "7d9e87a6b0191fd6e08ba2295e60a3287e27d54015514c24c38ff7865b660c66",
+        "helper.stderr": "e30a70684dc577665f68869c897fa44f9a3285bdbe530d897fe42ae5754104d9",
+        "sender.bin": "1e05ca05ed3e4ba58cff8e1fdfe855a11bdf90155e95c63bd3ecef53a90bbfb8",
+        "receiver.bin": "038e0d5213a4a7a584083c3a4fc794e14bfb477eff8e1716992d4e671cefd2f8",
+        "engine-input.bin": "1e05ca05ed3e4ba58cff8e1fdfe855a11bdf90155e95c63bd3ecef53a90bbfb8",
+        "trace.json": "be6483ab8751fdc1efe501036ae710eeeb7779ef1749e6c0534f02e7eb9c8eef",
+        "protocol.json": "a9c7e3acbf24d0a0566d648c10f6f762d4be87f94024f7ff2f5485b7968a5806"
+      }
+    },
+    {
+      "name": "credit1025-flags1-size2053",
+      "passed": true,
+      "credit": 1025,
+      "CANOVIO": false,
+      "source_bytes": 2053,
+      "source_sha256": "28746c80c2c6f3b8aca03d0427ab7d8d71ebf70e9cb893957707fa7c1384b2a3",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1025,
+      "max_group": 1025,
+      "packet_lengths": [
+        1024,
+        1025,
+        4
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "28746c80c2c6f3b8aca03d0427ab7d8d71ebf70e9cb893957707fa7c1384b2a3",
+        "helper.stderr": "1e5941e8859dd069996d7f708feb5da7531eeff4b7d0341a5e61e12752f0219a",
+        "sender.bin": "b597a3d83ddccd9ffa9423535d4438cdd42149c9c5511a2e2ecc901e7a764e9b",
+        "receiver.bin": "d86cea82f44db305954a35e5f6b01ca669a2a7451424257526984b367a2f3c1c",
+        "engine-input.bin": "b597a3d83ddccd9ffa9423535d4438cdd42149c9c5511a2e2ecc901e7a764e9b",
+        "trace.json": "10036ca8d916e03978e3ed1f76930c3fc470573c2dcf583e47ef5c5e9029774c",
+        "protocol.json": "0ed4c23ba808989885d306122705db2442010a7f91f041d1099c412f8bfbdfbe"
+      }
+    },
+    {
+      "name": "credit1025-flags3-size1024",
+      "passed": true,
+      "credit": 1025,
+      "CANOVIO": true,
+      "source_bytes": 1024,
+      "source_sha256": "785b0751fc2c53dc14a4ce3d800e69ef9ce1009eb327ccf458afe09c242c26c9",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1024,
+      "max_group": 1024,
+      "packet_lengths": [
+        1024,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "785b0751fc2c53dc14a4ce3d800e69ef9ce1009eb327ccf458afe09c242c26c9",
+        "helper.stderr": "2e00648a854987ffbc007ec39e1cf6b99621dcbe48979c138cff9da2e3a7d08c",
+        "sender.bin": "9d247c2e7bee8dcbd8cee7a0f57ec9cb2793838cce6cb79230f960f555ce22df",
+        "receiver.bin": "55cbd2d1300a9ced08764baba4c4ea8c427490be2a5f2d26402e4ca1ae74158a",
+        "engine-input.bin": "9d247c2e7bee8dcbd8cee7a0f57ec9cb2793838cce6cb79230f960f555ce22df",
+        "trace.json": "954b90251fd14dfb3dd2fadc2dc3c8ac48b96a1b27cf80cabf1dc29385188042",
+        "protocol.json": "933d7fa5c92973bacf9d3f8fecf6f71f2537e30dadea549ab2a3f17b05fb0d0d"
+      }
+    },
+    {
+      "name": "credit1025-flags3-size1025",
+      "passed": true,
+      "credit": 1025,
+      "CANOVIO": true,
+      "source_bytes": 1025,
+      "source_sha256": "b3981d93eeb64aa900f3e48cfcd48e9bbc89b77732c49ea201c93656c62b6a09",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1024,
+      "max_group": 1024,
+      "packet_lengths": [
+        1024,
+        1
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "b3981d93eeb64aa900f3e48cfcd48e9bbc89b77732c49ea201c93656c62b6a09",
+        "helper.stderr": "cf41847a0d5c91823142446354d4c06e003ff966b78dbc5089e5f03b18ada653",
+        "sender.bin": "6c23b8dd9144840e0cdc8babc367a696050c31f5db27ff4226f1ec6811c230fa",
+        "receiver.bin": "55cbd2d1300a9ced08764baba4c4ea8c427490be2a5f2d26402e4ca1ae74158a",
+        "engine-input.bin": "6c23b8dd9144840e0cdc8babc367a696050c31f5db27ff4226f1ec6811c230fa",
+        "trace.json": "5fd0d406e13d2c2a80f5b0ffab63daa81647569400745d237fa2e6963f44dfda",
+        "protocol.json": "c0b8500c213ecc959df4a7a85477a18327fa6269eff126a0010c6443ec044c91"
+      }
+    },
+    {
+      "name": "credit1025-flags3-size1026",
+      "passed": true,
+      "credit": 1025,
+      "CANOVIO": true,
+      "source_bytes": 1026,
+      "source_sha256": "7d9e87a6b0191fd6e08ba2295e60a3287e27d54015514c24c38ff7865b660c66",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1024,
+      "max_group": 1024,
+      "packet_lengths": [
+        1024,
+        2
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "7d9e87a6b0191fd6e08ba2295e60a3287e27d54015514c24c38ff7865b660c66",
+        "helper.stderr": "289db51e4c6e823b9854b38df2a321a912506d8af86a85a1dba014674a3c0aa4",
+        "sender.bin": "1e05ca05ed3e4ba58cff8e1fdfe855a11bdf90155e95c63bd3ecef53a90bbfb8",
+        "receiver.bin": "55cbd2d1300a9ced08764baba4c4ea8c427490be2a5f2d26402e4ca1ae74158a",
+        "engine-input.bin": "1e05ca05ed3e4ba58cff8e1fdfe855a11bdf90155e95c63bd3ecef53a90bbfb8",
+        "trace.json": "3084ea15c8f1033ec09a7c5e2cf1415ebb026e3a8de3d4e2849afd71685fe23f",
+        "protocol.json": "c4a3ea68eed3ff6f826d472e1d7dd2e783d4e0fc06399cdaafd11ced0748ba3e"
+      }
+    },
+    {
+      "name": "credit1025-flags3-size2053",
+      "passed": true,
+      "credit": 1025,
+      "CANOVIO": true,
+      "source_bytes": 2053,
+      "source_sha256": "28746c80c2c6f3b8aca03d0427ab7d8d71ebf70e9cb893957707fa7c1384b2a3",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1025,
+      "max_group": 1025,
+      "packet_lengths": [
+        1024,
+        1025,
+        4
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "28746c80c2c6f3b8aca03d0427ab7d8d71ebf70e9cb893957707fa7c1384b2a3",
+        "helper.stderr": "9c5a9456a87a80e285160ae42eeb2de8d24127527bae7605cd9932b843420b52",
+        "sender.bin": "b597a3d83ddccd9ffa9423535d4438cdd42149c9c5511a2e2ecc901e7a764e9b",
+        "receiver.bin": "b81a5cdd370247b644b3f3ed2c5133729a72ef862d752ab03bf7599f1da2420e",
+        "engine-input.bin": "b597a3d83ddccd9ffa9423535d4438cdd42149c9c5511a2e2ecc901e7a764e9b",
+        "trace.json": "d9cc184a1428cff765b65c9ddd60f827e416fe96457b04830ec340051fce22ab",
+        "protocol.json": "579ceab2f180d0bf6f3a376d4f4b04b5386c9951610da3028bbff3261ad049b4"
+      }
+    },
+    {
+      "name": "credit8192-flags1-size8191",
+      "passed": true,
+      "credit": 8192,
+      "CANOVIO": false,
+      "source_bytes": 8191,
+      "source_sha256": "b7df6856454480f5f474e69991e5a45f76f627b4750d4869c040d9d50c21f0ff",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 4096,
+      "max_group": 4096,
+      "packet_lengths": [
+        1024,
+        2048,
+        4096,
+        1023
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "b7df6856454480f5f474e69991e5a45f76f627b4750d4869c040d9d50c21f0ff",
+        "helper.stderr": "c06d903e78530a10bf605960d7aed884410f72760fb2620c12c3036fcbfdd8f6",
+        "sender.bin": "2050493fe49283454651c8a60d76dc8a38a71d393e2a5a7eca6f5890cc8addd6",
+        "receiver.bin": "02187b0e355ff3e7059eadb8577258dd14a6ce075e4d3701d28b53fa263c0f43",
+        "engine-input.bin": "2050493fe49283454651c8a60d76dc8a38a71d393e2a5a7eca6f5890cc8addd6",
+        "trace.json": "61399a42d82fadfb92034a711a8824029f6461d527f7b32ee7adba85b3506a87",
+        "protocol.json": "c1f08930e4eb4618a72105fe359c11c20ebd5487a56bb07cf33b8733c044c218"
+      }
+    },
+    {
+      "name": "credit8192-flags1-size8192",
+      "passed": true,
+      "credit": 8192,
+      "CANOVIO": false,
+      "source_bytes": 8192,
+      "source_sha256": "dc404a613fedaeb54034514bc6505f56b933caa5250299ba7d094377a51caa46",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 4096,
+      "max_group": 4096,
+      "packet_lengths": [
+        1024,
+        2048,
+        4096,
+        1024
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "dc404a613fedaeb54034514bc6505f56b933caa5250299ba7d094377a51caa46",
+        "helper.stderr": "051ed35fa94254240e1fe4bda5a867306f1e5902b292cef73b4f88a441dc8253",
+        "sender.bin": "9feeeade368babc42834e0c2e0103b4873de55ba78a6bf19e05918ab7e75ad87",
+        "receiver.bin": "02187b0e355ff3e7059eadb8577258dd14a6ce075e4d3701d28b53fa263c0f43",
+        "engine-input.bin": "9feeeade368babc42834e0c2e0103b4873de55ba78a6bf19e05918ab7e75ad87",
+        "trace.json": "cfb81b9ed28be3a837bd32802edee9c4b86158c72950150d910a008f85499fe1",
+        "protocol.json": "9ff1b3f22f8cce2b35f67b36dba28bf7320bd17e5402ac29339876f9078ef621"
+      }
+    },
+    {
+      "name": "credit8192-flags1-size8193",
+      "passed": true,
+      "credit": 8192,
+      "CANOVIO": false,
+      "source_bytes": 8193,
+      "source_sha256": "db8e82fcacaeceb336ecb8be90fad31da698c72a6c10fd1ea68a2e5874b78b17",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 4096,
+      "max_group": 4096,
+      "packet_lengths": [
+        1024,
+        2048,
+        4096,
+        1025
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "db8e82fcacaeceb336ecb8be90fad31da698c72a6c10fd1ea68a2e5874b78b17",
+        "helper.stderr": "c6c9552dd0cbbbb93016aa73f6780d9a3ab38faf30cd52be0ab675e151834b6d",
+        "sender.bin": "19de652c328ca848d81bd4c32ed10a4f67111e34482623b955bfd75761b6bbcc",
+        "receiver.bin": "02187b0e355ff3e7059eadb8577258dd14a6ce075e4d3701d28b53fa263c0f43",
+        "engine-input.bin": "19de652c328ca848d81bd4c32ed10a4f67111e34482623b955bfd75761b6bbcc",
+        "trace.json": "52a47e651d1942e39c323d7abf71b5e041c0077430354e8921c5c68a8008929d",
+        "protocol.json": "0299a4e0af3aa4fc159e1c06d608c367964b6ffed4b5e73c49af45f89e7f8f36"
+      }
+    },
+    {
+      "name": "credit8192-flags1-size16387",
+      "passed": true,
+      "credit": 8192,
+      "CANOVIO": false,
+      "source_bytes": 16387,
+      "source_sha256": "3fc12eaeba40cfc3e8fc2615bc587c415ab83d1567403fb2e115eeb6722491e2",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 8192,
+      "max_group": 8192,
+      "packet_lengths": [
+        1024,
+        2048,
+        4096,
+        8192,
+        1027
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "3fc12eaeba40cfc3e8fc2615bc587c415ab83d1567403fb2e115eeb6722491e2",
+        "helper.stderr": "bdf60ec6eacfa117343bf9d3d1c9b456eafaf64fdb787cfb14a1bca91f5a6212",
+        "sender.bin": "78629474a1b81cc0ade7c4d00376510b951d3f85e6ee52a00271b68e6b2eb20b",
+        "receiver.bin": "7df72a12f292b49816694763ce445f46d25a5f037d1a89520d51924095057b26",
+        "engine-input.bin": "78629474a1b81cc0ade7c4d00376510b951d3f85e6ee52a00271b68e6b2eb20b",
+        "trace.json": "eb807acd833e2be235384a590855eac8e6303707de78af56411fb1fccb48cd8f",
+        "protocol.json": "de5abd31310af525e64c55ef54ffc3f2514e3ee0f7a098f9923a26f280acdde0"
+      }
+    },
+    {
+      "name": "credit8192-flags3-size8191",
+      "passed": true,
+      "credit": 8192,
+      "CANOVIO": true,
+      "source_bytes": 8191,
+      "source_sha256": "b7df6856454480f5f474e69991e5a45f76f627b4750d4869c040d9d50c21f0ff",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 4096,
+      "max_group": 7167,
+      "packet_lengths": [
+        1024,
+        2048,
+        4096,
+        1023
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "b7df6856454480f5f474e69991e5a45f76f627b4750d4869c040d9d50c21f0ff",
+        "helper.stderr": "540c70b3f187147d74a1797fe2576f532e207ed94f1680f2bdbfb37eebe3571d",
+        "sender.bin": "d34823a78110623b025bd1e15b887feb63359616a7368a1491c2dd5eb005ec47",
+        "receiver.bin": "a695d765ca6a88e825745413575a81251ba2e9aec7123bc2ec537109ab26985d",
+        "engine-input.bin": "d34823a78110623b025bd1e15b887feb63359616a7368a1491c2dd5eb005ec47",
+        "trace.json": "c2972fa36d751595e59011314b463af52a13e051a358e3db618e29065783b6f6",
+        "protocol.json": "0ad68eab760808d71a1a5f405078008eb628ec53441fda3aecdc2289c611e72e"
+      }
+    },
+    {
+      "name": "credit8192-flags3-size8192",
+      "passed": true,
+      "credit": 8192,
+      "CANOVIO": true,
+      "source_bytes": 8192,
+      "source_sha256": "dc404a613fedaeb54034514bc6505f56b933caa5250299ba7d094377a51caa46",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 4096,
+      "max_group": 7168,
+      "packet_lengths": [
+        1024,
+        2048,
+        4096,
+        1024
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "dc404a613fedaeb54034514bc6505f56b933caa5250299ba7d094377a51caa46",
+        "helper.stderr": "9707d1a018818d3495bbf2b650baf77c6fc9d8636c61f9a3dc98ef4c87934e4c",
+        "sender.bin": "cf94d7e7ebe9b5b943cb1db9edffe915ed522f6e9ee3d21a6217bf48e37ae02d",
+        "receiver.bin": "a695d765ca6a88e825745413575a81251ba2e9aec7123bc2ec537109ab26985d",
+        "engine-input.bin": "cf94d7e7ebe9b5b943cb1db9edffe915ed522f6e9ee3d21a6217bf48e37ae02d",
+        "trace.json": "6105b3a1cd1e79b817beea622b2d303c5bea3c7538fe715d113e05e8a3bf90fc",
+        "protocol.json": "f4c7b98e0c407abe22985c437ffe0e25f83daacd6c6e6fbb962d0729ad466814"
+      }
+    },
+    {
+      "name": "credit8192-flags3-size8193",
+      "passed": true,
+      "credit": 8192,
+      "CANOVIO": true,
+      "source_bytes": 8193,
+      "source_sha256": "db8e82fcacaeceb336ecb8be90fad31da698c72a6c10fd1ea68a2e5874b78b17",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 4096,
+      "max_group": 7169,
+      "packet_lengths": [
+        1024,
+        2048,
+        4096,
+        1025
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "db8e82fcacaeceb336ecb8be90fad31da698c72a6c10fd1ea68a2e5874b78b17",
+        "helper.stderr": "6f0ae4d9a602746c3725abe69ff6867426c8376d1dc0d636e9235af36c8de130",
+        "sender.bin": "9f8f7f4c0328056b19ecfb13d29528d10f7a7efcb04f278350b22b6c08045943",
+        "receiver.bin": "a695d765ca6a88e825745413575a81251ba2e9aec7123bc2ec537109ab26985d",
+        "engine-input.bin": "9f8f7f4c0328056b19ecfb13d29528d10f7a7efcb04f278350b22b6c08045943",
+        "trace.json": "98261ee0cc61b690c1074ec3b5e62d3347a0e18fe9bb0af2e7cac0301a6b3054",
+        "protocol.json": "e75cc46dc374ae717642b8c8fe4048528077e10613b49ea2b074b9392908dd1e"
+      }
+    },
+    {
+      "name": "credit8192-flags3-size16387",
+      "passed": true,
+      "credit": 8192,
+      "CANOVIO": true,
+      "source_bytes": 16387,
+      "source_sha256": "3fc12eaeba40cfc3e8fc2615bc587c415ab83d1567403fb2e115eeb6722491e2",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 7171,
+      "max_group": 8192,
+      "packet_lengths": [
+        1024,
+        2048,
+        4096,
+        2048,
+        7171
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "3fc12eaeba40cfc3e8fc2615bc587c415ab83d1567403fb2e115eeb6722491e2",
+        "helper.stderr": "c1ee7bc9ccffd969868a2d745d765119a21eb39126d0fa4af04fe0594e5dfc47",
+        "sender.bin": "ca665881eb4f966d3b1d93d79c659d02a9d961fd63573913aceb52248a694643",
+        "receiver.bin": "27b905a02d7b27716a63e4c44a40e09f4987b8651302210e6be9fe083296dffa",
+        "engine-input.bin": "ca665881eb4f966d3b1d93d79c659d02a9d961fd63573913aceb52248a694643",
+        "trace.json": "6db74b71c5723d6a31beacffb196a0f1b427f14c319ca22bd4a83490d0a39821",
+        "protocol.json": "56def09a6f083c0176002e7172cb1d962555cfa1b0559b8eaef10a1cef3c1cdb"
+      }
+    },
+    {
+      "name": "unlimited-stock-1",
+      "passed": true,
+      "credit": 0,
+      "CANOVIO": true,
+      "source_bytes": 1,
+      "source_sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "d1aeb1347fee332be75dd638dd4cb10a1bf7c418d96d0ebb79ca90470b0ed4bd",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1,
+      "max_group": 1,
+      "packet_lengths": [
+        1
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+        "helper.stderr": "463c55298d907547acc7ab55f1e6402354375d0f81d1e93a14a34f6a14f8b0f2",
+        "sender.bin": "1411cd2c65d9891a129888391f30537fc3fd6ab87b989f1ae7d10a661822df4b",
+        "receiver.bin": "d44978422f2431c822c7ef9de00879ec866b2af6732700f32adbb00c748eb9c0",
+        "engine-input.bin": "1411cd2c65d9891a129888391f30537fc3fd6ab87b989f1ae7d10a661822df4b",
+        "trace.json": "3365cb2de1da3c7692926f4af165e2ee4fcfffd0e5992d709beb27854c33ef33",
+        "protocol.json": "235f603349ec269e506e17186c545f205a334629ba20324ae4c473d188cdd3c3"
+      }
+    },
+    {
+      "name": "unlimited-candidate-1",
+      "passed": true,
+      "credit": 0,
+      "CANOVIO": true,
+      "source_bytes": 1,
+      "source_sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1,
+      "max_group": 1,
+      "packet_lengths": [
+        1
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+        "helper.stderr": "62f49bee6e445e56d48545a69b512bfad10e31b1c6b01d2f231083d652b8173b",
+        "sender.bin": "1411cd2c65d9891a129888391f30537fc3fd6ab87b989f1ae7d10a661822df4b",
+        "receiver.bin": "d44978422f2431c822c7ef9de00879ec866b2af6732700f32adbb00c748eb9c0",
+        "engine-input.bin": "1411cd2c65d9891a129888391f30537fc3fd6ab87b989f1ae7d10a661822df4b",
+        "trace.json": "ccc2a19c9288136ffe0aa363c30a57b61fab9cab8037cea3c82147b9f4628f21",
+        "protocol.json": "0d2889a72b08bfcc407bad8f149c62c0995907155ef53cf2b87a363e82621c7c"
+      }
+    },
+    {
+      "name": "unlimited-stock-1024",
+      "passed": true,
+      "credit": 0,
+      "CANOVIO": true,
+      "source_bytes": 1024,
+      "source_sha256": "785b0751fc2c53dc14a4ce3d800e69ef9ce1009eb327ccf458afe09c242c26c9",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "d1aeb1347fee332be75dd638dd4cb10a1bf7c418d96d0ebb79ca90470b0ed4bd",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1024,
+      "max_group": 1024,
+      "packet_lengths": [
+        1024,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "785b0751fc2c53dc14a4ce3d800e69ef9ce1009eb327ccf458afe09c242c26c9",
+        "helper.stderr": "059cf2e752275c9a17743599b0608b236c491fe9a15d2b8a8a56d0f9c39a65d3",
+        "sender.bin": "9d247c2e7bee8dcbd8cee7a0f57ec9cb2793838cce6cb79230f960f555ce22df",
+        "receiver.bin": "7da45a0adf32b79bf6c85f576b3ce91ce72f053c6557a0629ef6b208f94bd16f",
+        "engine-input.bin": "9d247c2e7bee8dcbd8cee7a0f57ec9cb2793838cce6cb79230f960f555ce22df",
+        "trace.json": "af6fbdb3638e21b64fa47c60c4ac1e375b4a9d0b3c701268b3b02f99abf9402a",
+        "protocol.json": "f8e2a1fe467a7bf66cd8ee8b899fe3dfc6fff11a6c6095215ae9a153b0aa0dbd"
+      }
+    },
+    {
+      "name": "unlimited-candidate-1024",
+      "passed": true,
+      "credit": 0,
+      "CANOVIO": true,
+      "source_bytes": 1024,
+      "source_sha256": "785b0751fc2c53dc14a4ce3d800e69ef9ce1009eb327ccf458afe09c242c26c9",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1024,
+      "max_group": 1024,
+      "packet_lengths": [
+        1024,
+        0
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "785b0751fc2c53dc14a4ce3d800e69ef9ce1009eb327ccf458afe09c242c26c9",
+        "helper.stderr": "5a8f7836c2ec674bdd8108e78b8d7e32d3ce420f367048a07762d56519321fd7",
+        "sender.bin": "9d247c2e7bee8dcbd8cee7a0f57ec9cb2793838cce6cb79230f960f555ce22df",
+        "receiver.bin": "7da45a0adf32b79bf6c85f576b3ce91ce72f053c6557a0629ef6b208f94bd16f",
+        "engine-input.bin": "9d247c2e7bee8dcbd8cee7a0f57ec9cb2793838cce6cb79230f960f555ce22df",
+        "trace.json": "c91c3e3f1d9bf697f84009d84150fc29c55132887b3a8d6d75da740b298611ee",
+        "protocol.json": "6002e0c74c13a0d2aec484270db5ba83c5aee05e2bf1fa76e4938a6e1d1e515d"
+      }
+    },
+    {
+      "name": "unlimited-stock-8192",
+      "passed": true,
+      "credit": 0,
+      "CANOVIO": true,
+      "source_bytes": 8192,
+      "source_sha256": "dc404a613fedaeb54034514bc6505f56b933caa5250299ba7d094377a51caa46",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "d1aeb1347fee332be75dd638dd4cb10a1bf7c418d96d0ebb79ca90470b0ed4bd",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 4096,
+      "max_group": 7168,
+      "packet_lengths": [
+        1024,
+        2048,
+        4096,
+        1024
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "dc404a613fedaeb54034514bc6505f56b933caa5250299ba7d094377a51caa46",
+        "helper.stderr": "60a4148cbfe2fb929881a7763c7fa093ff5ae694e7a3c70e4a80a6394c3a6e64",
+        "sender.bin": "cf94d7e7ebe9b5b943cb1db9edffe915ed522f6e9ee3d21a6217bf48e37ae02d",
+        "receiver.bin": "7da45a0adf32b79bf6c85f576b3ce91ce72f053c6557a0629ef6b208f94bd16f",
+        "engine-input.bin": "cf94d7e7ebe9b5b943cb1db9edffe915ed522f6e9ee3d21a6217bf48e37ae02d",
+        "trace.json": "91b5546b6268eaf019ce5db0a16a0ec8bdf493c4dcb557ce12ffb38bc4c125a7",
+        "protocol.json": "23e700f49fea20737f802f72a5770109ff2360fb6d2c9613a1d2104e42d9ba88"
+      }
+    },
+    {
+      "name": "unlimited-candidate-8192",
+      "passed": true,
+      "credit": 0,
+      "CANOVIO": true,
+      "source_bytes": 8192,
+      "source_sha256": "dc404a613fedaeb54034514bc6505f56b933caa5250299ba7d094377a51caa46",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 4096,
+      "max_group": 7168,
+      "packet_lengths": [
+        1024,
+        2048,
+        4096,
+        1024
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "dc404a613fedaeb54034514bc6505f56b933caa5250299ba7d094377a51caa46",
+        "helper.stderr": "4298df737f23bcc7aa1dadfbf95b5e535dddc22443a5a9863b994c7958d8bb93",
+        "sender.bin": "cf94d7e7ebe9b5b943cb1db9edffe915ed522f6e9ee3d21a6217bf48e37ae02d",
+        "receiver.bin": "7da45a0adf32b79bf6c85f576b3ce91ce72f053c6557a0629ef6b208f94bd16f",
+        "engine-input.bin": "cf94d7e7ebe9b5b943cb1db9edffe915ed522f6e9ee3d21a6217bf48e37ae02d",
+        "trace.json": "51b361d01d140a95eee0f62ddc382409405e644bd7c890ac6450971f7da2a50c",
+        "protocol.json": "afa3c946cc7a9a4e203c324b5182d34ec2f286e42e220b2abce608eb16ac4740"
+      }
+    },
+    {
+      "name": "unlimited-stock-16387",
+      "passed": true,
+      "credit": 0,
+      "CANOVIO": true,
+      "source_bytes": 16387,
+      "source_sha256": "3fc12eaeba40cfc3e8fc2615bc587c415ab83d1567403fb2e115eeb6722491e2",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "d1aeb1347fee332be75dd638dd4cb10a1bf7c418d96d0ebb79ca90470b0ed4bd",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 8192,
+      "max_group": 15363,
+      "packet_lengths": [
+        1024,
+        2048,
+        4096,
+        8192,
+        1027
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "3fc12eaeba40cfc3e8fc2615bc587c415ab83d1567403fb2e115eeb6722491e2",
+        "helper.stderr": "55b041c862f3ef3510ced2b0110c8697718538ca193ebe2ee34f764adcdecf14",
+        "sender.bin": "53a1da97fd20e64febeb7a018bc45623daed33185da3799968250dc68cb8cb5a",
+        "receiver.bin": "7da45a0adf32b79bf6c85f576b3ce91ce72f053c6557a0629ef6b208f94bd16f",
+        "engine-input.bin": "53a1da97fd20e64febeb7a018bc45623daed33185da3799968250dc68cb8cb5a",
+        "trace.json": "ef314b73cd1ed01607aaa2d562b5197202c1c15ba86e275767d7e07a1c961c41",
+        "protocol.json": "e7e127aa9ff9a5d46dd3fc4ff88662ec6a9da938245cb8eb18b55b8fa721dbda"
+      }
+    },
+    {
+      "name": "unlimited-candidate-16387",
+      "passed": true,
+      "credit": 0,
+      "CANOVIO": true,
+      "source_bytes": 16387,
+      "source_sha256": "3fc12eaeba40cfc3e8fc2615bc587c415ab83d1567403fb2e115eeb6722491e2",
+      "injected_engine_byte_errors": 0,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 8192,
+      "max_group": 15363,
+      "packet_lengths": [
+        1024,
+        2048,
+        4096,
+        8192,
+        1027
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "3fc12eaeba40cfc3e8fc2615bc587c415ab83d1567403fb2e115eeb6722491e2",
+        "helper.stderr": "cf2c5aac7a97e2fe5b9baa538eae18fa39f25ec048d13aa523aa29fc719e1827",
+        "sender.bin": "53a1da97fd20e64febeb7a018bc45623daed33185da3799968250dc68cb8cb5a",
+        "receiver.bin": "7da45a0adf32b79bf6c85f576b3ce91ce72f053c6557a0629ef6b208f94bd16f",
+        "engine-input.bin": "53a1da97fd20e64febeb7a018bc45623daed33185da3799968250dc68cb8cb5a",
+        "trace.json": "403002faffc2dabd5f3498457e6d1d3e2e99ab40240f83e293817a02a547c185",
+        "protocol.json": "e437e8fc3299db54c12e698e857518729343720b4ddb5ff3ce796b048fcf8b12"
+      }
+    },
+    {
+      "name": "CRC-recovery-credit256",
+      "passed": true,
+      "credit": 256,
+      "CANOVIO": true,
+      "source_bytes": 1284,
+      "source_sha256": "7ae500ad1fe232d07a371933b0824c41d7a557905e2234ae6093d4b4e957a43f",
+      "injected_engine_byte_errors": 1,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 256,
+      "max_group": 256,
+      "packet_lengths": [
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        4
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "7ae500ad1fe232d07a371933b0824c41d7a557905e2234ae6093d4b4e957a43f",
+        "helper.stderr": "9c5e1875920fd44b70e9a830d454b0746fd4d9169c60e81c6a572489d58b1074",
+        "sender.bin": "98e524bff76f744a8383521229db5fe3e370148890704723af592a3871496e59",
+        "receiver.bin": "de8dbc3dedf68d2148b5787ccc7ccc300a7c0b140144bed729407a28cc6ba3d8",
+        "engine-input.bin": "6b2cfeaf29c985ef8fea2875d4fbfcc3c86ad88d28437a019b2dadcaf0a10d69",
+        "trace.json": "62d610cd30f3bb4c89462f3ea09944c4b4e9441634f409881289a7cf3786d296",
+        "protocol.json": "e24774c311ce1be677787e594837176e47d7455a718a9a1394cdbe0f84c4d8c6"
+      }
+    },
+    {
+      "name": "CRC-recovery-credit1024",
+      "passed": true,
+      "credit": 1024,
+      "CANOVIO": true,
+      "source_bytes": 1284,
+      "source_sha256": "7ae500ad1fe232d07a371933b0824c41d7a557905e2234ae6093d4b4e957a43f",
+      "injected_engine_byte_errors": 1,
+      "helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+      "native_status": 0,
+      "helper_exit": 0,
+      "max_packet": 1024,
+      "max_group": 1024,
+      "packet_lengths": [
+        1024,
+        512,
+        772
+      ],
+      "source_preserved": true,
+      "captures_sha256": {
+        "CREDIT.BIN": "7ae500ad1fe232d07a371933b0824c41d7a557905e2234ae6093d4b4e957a43f",
+        "helper.stderr": "27649e0d2a1a54c55629784d087a1ddaa9f5b397bafa514e873ed714e6dd12f1",
+        "sender.bin": "ff2904b82e60f769727e003b6b4c647814733309a77e42015b07fb3cda5aee4e",
+        "receiver.bin": "291419d2151901cb73b6dea9d567686723965c0822265e82a92c6b53671e5aa4",
+        "engine-input.bin": "1a9482408c7b0f4e8b94c25564302528c292593fea85f7a043d99ae40c2bdcd8",
+        "trace.json": "16df8eda3ef6000b361ead4d3660432c67d04cdb90fabad33fbd30f4acb391b9",
+        "protocol.json": "285dbec836a22cf43905c038584b0ea939fa88f5397b5eb6dd3992339b4b79e4"
+      }
+    }
+  ],
+  "case_count": 72,
+  "changed_C_headers": [
+    "zmodem.c"
+  ],
+  "all_source_files_except_one_unchanged": true,
+  "only_send_function_changed": true,
+  "stock_proof": "build/bbs-lab/sexyz-receive-credit-06/result.json",
+  "stock_proof_sha256": "ab68ec525016bd56b5807d62fadbac79c016e1a812fcc5b92306450fbaef80c3",
+  "candidate_proof": "build/bbs-lab/sexyz-send-credit-candidate-02/result.json",
+  "candidate_proof_sha256": "e0438a82fcca42a1d59d292b5a2a19e1c61819a78a208ed55001c262072f6874",
+  "baseline_helper": "/nix/store/ciyv5h7i640zycxi3932x4ifmi9c6w57-sexyz-source-baseline-3.6-e7a8257/bin/sexyz",
+  "baseline_helper_sha256": "c842cf425dc9bbd3189a8a0d9aee222cf8f6eac26cc250ae2d3baba4d1ef0a7d",
+  "candidate_helper": "/nix/store/5hmjm9kfndlmvivfcnj8j4sc84w8dpmk-sexyz-send-credit-candidate-3.6-e7a8257/bin/sexyz",
+  "candidate_helper_sha256": "bae4154666cb78a6568b88b2c6590c3a453d7b665794ed1633c255d5e2c83db8",
+  "patch_manifest": {
+    "upstream_commit": "e7a825704ef5329c7ef8408749671291a85ef7f2",
+    "original_source_digest": "79bbd980581e7b90c4bc4506d948b0554919e40634b0bde84b3e67d76c660455",
+    "file": "zmodem.c",
+    "before_sha256": "a9ae09a60b5b34d7add66a1f04c7a841a865bbc02c23ad94e2faebc3f64739fa",
+    "after_sha256": "dd0c098dba1692616ef53e1c336bb2a8c40238ddcf09b3a0746c2332a1e4f7a7",
+    "changed_function": "zmodem_send_from",
+    "changes": [
+      {
+        "needle": "unsigned subpkts_sent = 0;",
+        "count": 1
+      },
+      {
+        "needle": "len = fread(zm->tx_data_subpacket, sizeof(BYTE), zm->block_size, fp);",
+        "count": 1
+      },
+      {
+        "needle": "len < zm->block_size",
+        "count": 3
+      },
+      {
+        "needle": "zm->max_window_size / zm->block_size / 4",
+        "count": 1
+      },
+      {
+        "needle": "else    /* Send a ZCRCW frame */\n\t\t\t\t\tbuf_sent = 0;",
+        "count": 1
+      },
+      {
+        "needle": "\t\tlprintf(zm, LOG_DEBUG, \"%lu Sending %s data subpacket",
+        "count": 1
+      },
+      {
+        "needle": "buf_sent += len;",
+        "count": 1
+      }
+    ],
+    "patcher_sha256": "59694f6b54d59623aa816ffa82820c5e6ff49e3fc7bb32ca36763c996e944b81",
+    "scope": "Isolated sender candidate only. Enforce finite ZRINIT packet and synchronous-group credit, compare EOF against actual read limit, and release credit after verified ZCRCW acknowledgment. No change to default zero-credit/unlimited capability, receive/finish implementation, DOS client, live BBS or compatibility acceptance."
+  },
+  "source_files": {
+    "conwrap.h": "da2d732aab844669a60604a85ec7e41c99c1e7ac7b1cb2ab2b9317c1e9b3219e",
+    "cp437defs.h": "b564ff3df3546e973e2b575f1d87ace2b1937e6e0d997b9f891ae5957bc8da68",
+    "crc16.c": "72a133371f90b98a5b2ff29de6fca4141a916d93056fcf78eba3517113f72645",
+    "crc16.h": "534b3f169347aff93dc4f7b2c6c57ddb4a764c63bd38467e59034c560f811de3",
+    "crc32.c": "b05410620a98460ed8f64637f724d4fb892bd29d5924895b711cb4b525cbfacc",
+    "crc32.h": "8d9c620146aadb7daf57f6655949043666f2cf69cc46169c67832f04efaf89c3",
+    "date_str.c": "4fe6738ed32cd113309be67877e2d23774a54a120583394458fdf98d035e909e",
+    "date_str.h": "30c5b14a8b54bc9444c6fb468911f4a023fd1ed146e4e0eea9b81ce237dcd4cf",
+    "datewrap.c": "120e6b9b18c4882f6fcd6ac7951cb2b974d8a6096d89e70863bcfd015a966ff5",
+    "datewrap.h": "0195016c6c2d24b47aed3c8ff78bf24329bb47edeef74e0fb201711cf33d0838",
+    "dirwrap.c": "394235e7dd33a928490203b258b63980ad17136250039afad3832badadd5a8ea",
+    "dirwrap.h": "f7732d601752842981cec8035a9aa825a86447fb9d3150136b5ac6075f6968c5",
+    "dllexport.h": "fa8d841ce15a0e1df893a5b67076da02b28f387454872ea38f73e5f504df831c",
+    "eventwrap.h": "5b25500c3c9885ae0cffee9d9e8b4e8a921a60ca9c6c193fab539d8bae9b721a",
+    "fidodefs.h": "f3c0c999ee745f8e49c93bd7eb3fce3d61668838183f599ecc76811f6d1eed4e",
+    "filewrap.c": "5ad54c7404def9a1d96be8d6c85a8fe0ad69002def3c8e365e6f151fe782d612",
+    "filewrap.h": "daa9ab0a0b179aeccbab7edf56b9ff6f3127d5cf5bcdafc23b5ec1a643b7f4a3",
+    "gen_defs.h": "0fb4d4763e2275246c5840618ca5907dc2ca611e27f6d6e05b340b1f1ee06e4d",
+    "genwrap.c": "811b26c86bcf9a594fb216090c85e1457eb2fef691fdd2c91007f3ea1fd0d1b7",
+    "genwrap.h": "ee5cd90b264bc32ade08b166c8b2d7c30de9b76aaa22502cebb108324a792d7d",
+    "git_branch.h": "6ce0c538e54c2d8f041290cb2ff1dcdb4b19c08ac5bb2cb56b3538ebdfb9472c",
+    "git_hash.h": "47b47b29cf5ddc97d65e9fbf60e8a2579448526750d9d611ccdb6fd7f746df03",
+    "ini_file.c": "8b17143d805057534e93dab21be368a819f38f9595fb647ef4eb5e7e5241c08d",
+    "ini_file.h": "469121013ce5ca22d296d3a348647cf37615cb5d66243f8a9dfe2098a3d645b2",
+    "md5.h": "e9cd8ea4df2728558cadf22a4b58efa5ab38bd3ec33d8c3883529123e7421261",
+    "netwrap.c": "e6a01b702220db8ca1f168f6846986799eb611ccec528513f0943a9acc056a06",
+    "netwrap.h": "bb062a9581b850b8a4b3b3097e535a9bf285661f5b3f8a93bf6568000e3b05bd",
+    "nodedefs.h": "ddea4c939f6f09442f7605923dea1f15c9d8725138552346d7735b528b5e53dd",
+    "nopen.c": "8da23237eca19172627da12ebbada7cf7e89cdfa26b78ccfef329eeba04897c6",
+    "nopen.h": "2526da2cc866930345e7952287d99f60595dfcc1668c57e043bb6df4d32fd4b3",
+    "os_info.c": "2778c96059cea5b570135e61221e540bc53874b8cbd27984d1057275638b498a",
+    "os_info.h": "74b8dd1c08c1541a2f2c6f7a1b4675771fcc94b39696ef0dc10ce2b014bbef48",
+    "ringbuf.c": "5377ae875f9378792ca9bbc93436f11bbd3f0b852f47e87e33c1e662104a2afb",
+    "ringbuf.h": "863d5b796e6675c1b6c1f5289bfd299e844fe5516187910bee8dd5db939a1067",
+    "sbbsdefs.h": "1c9484f04d9c157a7928be5359f3bd68d220dd69f11942f533707bb3727be351",
+    "scfgdefs.h": "a08dafb8b912a8fa2176c875924c548eff42b75494e868edd45f8581ae151c4e",
+    "semwrap.h": "117e14c8ff5a28cb92e380e2aebc4b179f052f640133777de4b551cf232f3730",
+    "sexyz.c": "4200ee429ef648e1cb89fdb24c8a59f374ed2b081a0d29c4b62c586a2c3ee03d",
+    "sexyz.h": "43d725aeb076a077a468cd5c171cf84221381156083c7789c0b7f8c4ddf0b6b2",
+    "sha1.h": "acb88751fb567f56fd618f36515c7aa5bfa6d7a15b2d996e90f67270e7078896",
+    "smbdefs.h": "427509280621692bd653bf469065054021d7bf01bacf180b5bb4dc967d97216c",
+    "sockwrap.c": "6d58f130a0b308a2dda47373a3ba6408005e95316c6a6d3ebed2339f7871da50",
+    "sockwrap.h": "7667b0739aa4cdd14c3d320f3d7dfb45e45027608ea6435fd29ed0ea159c3071",
+    "str_list.c": "dbfb3deff0f0da01ef2629b176f18839ec4c2861e581927bc1d5df77ca2ef5dc",
+    "str_list.h": "6933adb658ee5f76a1609da83bfd10da79a2ed7a568982f8586adec157d6cdb5",
+    "strwrap.h": "4f992dc2853770817c26ec4fee4a6882cb67fd66d74865aedc8435aa706156f6",
+    "telnet.c": "6d676d7761d00c3f94c346f25099e02816b9bc92732cc2a9844129dadcd5f949",
+    "telnet.h": "a07664551c62620248025e8d0398a66080d6928cf2d7f6b5af08f7b7dbd9252d",
+    "text.h": "e700a7e6fdb763317d774c8c2860a17820928f08cc702a251d6ad06f17613389",
+    "threadwrap.c": "756b52d59610465c05cf4b50512165c492cf6ffe4d46f20757fd4832da21ee6b",
+    "threadwrap.h": "93bc461f157e5a9597a4fde7aa7c3181ef3aa63508910b7dd29ec0d0bbbd40b8",
+    "wrapdll.h": "c34e6ad4c4906412ce4e1ab4335398346de6895c63bc4a88eed64ebf289a0ec3",
+    "xmodem.c": "8ed06418d501bf5c7b4020a9c8c370adf2fb4ebb4515d8bd728a4e9fcefc0638",
+    "xmodem.h": "d96a11e86fecea757350e4bcc615c77c2045aee45ce05fdafea0fec0c1fa8313",
+    "xpbeep.h": "844d49c8141335e2d73e95fac1b16f93f2f450a5c5cd356e7f0ab65044db5b8e",
+    "xpdatetime.c": "03c1f75ca94d6a90898351f27edbc0abe26d92a14bd7332bbc56f88f43165f87",
+    "xpdatetime.h": "7b9c4fc9be51ca277e2516900171c9a214718ddc08a51ccb99881629d8ba505d",
+    "xpendian.h": "b21b3138ef813492aa67b61250151404f9499ef18635d4b2d48870edd0c75b87",
+    "xpevent.c": "1c57f614f5c0f3e6220a6abb074a4078c1a6eea4702c312de8902d918a56938e",
+    "xpevent.h": "edffa97fe2f32ac76c6cc1f4dbd36d85925ee0d72dfbdfb694fcc3f2608638f7",
+    "xpprintf.c": "fefb08455858c6192e949f90c21cd9efcb19b06fe6bbf1171c20047dc12238b4",
+    "xpprintf.h": "8f336cc5795f3c11e8590bc428a4b94a41d39a895dc0ec742619251d045b0f2c",
+    "zmodem.c": "dd0c098dba1692616ef53e1c336bb2a8c40238ddcf09b3a0746c2332a1e4f7a7",
+    "zmodem.h": "d9167ce9b2472984eb8e7d41c86d1182b8281da6dae8fd8e323f86372bf4c976"
+  },
+  "inputs": {
+    "lab/bbs/check_sexyz_send_credit.py": "57e4527aedcf4651fd99343ca111035ff1a0fa62ff52756ff3735616c960f5f9",
+    "lab/bbs/probe_sexyz_receive_credit.py": "d0858e3362894ee55f6cdbd98a12163d59f699bb05524894ec4f0301b072a576",
+    "lab/bbs/audit_zmodem.py": "21915f685657722a5ea4b0149c5c8a8492bb79c311b8ec319000b6e47d966452",
+    "tools/patch-sexyz-send-credit.py": "59694f6b54d59623aa816ffa82820c5e6ff49e3fc7bb32ca36763c996e944b81",
+    "nix/sexyz-send-credit.nix": "cff6dfb2e6a4486af794e970d8753bab915a2b9d99cff2427e2539ceb3a21252",
+    "tools/build-sexyz-send-credit": "5d7bbb365c2797f5150ca9e7509522bb2cea8483befd75f3313ee367b0464b1f"
+  },
+  "scope": "Isolated source-built sender candidate only. Pinned62-file source closure changes only zmodem_send_from in zmodem.c. Real helper/maintained host receiver transfers cover finite credit1..8192, overlap on/off, short/exact/oversize file boundaries and two injected receive-byte CRC recoveries. Four zero-credit candidate/stock packet/group comparisons preserve unlimited framing. Native callbacks use in-memory storage; no actual DOS/16-bit ABI/BBS/audio/slow timing/physical or application acceptance follows.",
+  "source_receipt": "build/bbs-lab/sexyz-send-credit-boundaries-01/result.json",
+  "source_receipt_sha256": "1f236eb80c3b52a7425fd3563fa48c0a93afa4125dff6e7593c0eaae8a9704aa",
+  "actual_DOS_audio_accepted": false,
+  "installed_on_live_BBS": false,
+  "nix_build": [
+    {
+      "drvPath": "/nix/store/wrg7hj6p35yynxj0aky4skxsk76zchrz-sexyz-send-credit-candidate-3.6-e7a8257.drv",
+      "outputs": {
+        "out": "/nix/store/5hmjm9kfndlmvivfcnj8j4sc84w8dpmk-sexyz-send-credit-candidate-3.6-e7a8257"
+      }
+    }
+  ],
+  "nix_build_receipt_sha256": "58fff745c87f5a944c9bc7f3c068055ef8812a2ff383c6a3e46886cf0679dcff"
+}

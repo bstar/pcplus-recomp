@@ -1,0 +1,56 @@
+{
+  "passed": true,
+  "real_pipe_counterexample_reproduced": true,
+  "corrected_full_protocol_and_controls_pass": true,
+  "premature_mandatory_byte_reply_rejected": true,
+  "protocol_fields_other_than_response_end_unchanged": true,
+  "predecessor_error": "('Missing opposite header', 1, None, 964203.769298964, 964204.769360591)",
+  "negative_error": "('Missing opposite header', 1, None, 964203.769264018, 964204.769360591)",
+  "mandatory_EOF_end_seconds": 964203.769264018,
+  "completion_reply_seconds": 964203.769297151,
+  "optional_XON_read_seconds": 964203.769298964,
+  "inputs": {
+    "lab/bbs/check_zmodem_response_end.py": "e5f4660b1f1cf032e311e384687e8f3bcdc4e3dfc27785e8cae58d275d0b77ba",
+    "lab/bbs/audit_zmodem.py": "21915f685657722a5ea4b0149c5c8a8492bb79c311b8ec319000b6e47d966452",
+    "build/bbs-lab/zmodem-response-end-baseline-01/audit_zmodem.py": "510ad0fd519c8fa279599956d13852f984a1e32e49e4588e1c482749829d5ad9"
+  },
+  "captures_sha256": {
+    "build/bbs-lab/sexyz-receive-credit-02/baseline8KiB-overlap/sender.bin": "70e35e038f409a0378ea7a06bdaf9876e131ed7aabd275e55a7dd68415708a8a",
+    "build/bbs-lab/sexyz-receive-credit-02/baseline8KiB-overlap/receiver.bin": "e9c437bb2f4ea026c0b1f07303d62cafe7db9078b69c2b5c3a1b49c2a9a40798",
+    "build/bbs-lab/sexyz-receive-credit-02/baseline8KiB-overlap/trace.json": "c53185e8ab878a2020db2daf6ca298d0f601bdf55d5097d9a34f6fb66debda90",
+    "build/bbs-lab/sexyz-receive-credit-02/baseline8KiB-overlap/control-timing-failure.json": "f2196a270b77517ef1f3d8d7dc725a9a0c34065aad9e93690996dd020636b515",
+    "build/bbs-lab/sexyz-receive-credit-02/baseline8KiB-overlap/PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+  },
+  "scope": "Verifier timing correction on retained real stock-helper/native-host pipe bytes. Predecessor rejects an actual reply after CRC-checked EOF/LF but before optional XON read; corrected auditor passes unchanged full source/CRC/EOF/ZFIN/OO/controls and rejects a copied premature-required-byte timestamp. Only parser response_end metadata is added; full stream accounting stays intact. No product/BBS/audio/pressure compatibility acceptance follows.",
+  "source_receipt": "build/bbs-lab/zmodem-response-end-real-02.json",
+  "source_receipt_sha256": "16f50e898d6ec9c33383476a0ca850587c43109f9bf1319e4b74bdaedb6225f4",
+  "passive_check_count": 94,
+  "empty_check_count": 2,
+  "normal_download_checks": {
+    "post_protocol_search_key_observed": true,
+    "source_unchanged": true,
+    "complete_CRC_ZMODEM_and_opposite_controls": true,
+    "exact_DOS_file": true,
+    "only_expected_DOS_file": true,
+    "no_receive_staging": true,
+    "real_owned_helper": true,
+    "real_helper_exit_zero": true,
+    "post_helper_keyboard_search_and_list": true,
+    "official_file_and_counter": true,
+    "automatic_receive_profile": true,
+    "base_byte_and_cleanup_audit": true,
+    "frontend_ownership_audit": true,
+    "no_gateway_errors": true,
+    "producer_hashes": true
+  },
+  "additional_proofs_sha256": {
+    "build/bbs-lab/zmodem-response-end-02.json": "8412d79cc0567d398bb2654cf53bffc99a76306accd6c4d1c2100344cfb0b468",
+    "build/bbs-lab/empty-zmodem-audit/response-end-02/checks.json": "7695845acf8956e2191c1a9a9e7453f9645d284a1bfe8aa8fc4f6d0de7f8e9b3",
+    "build/bbs-lab/current-enigma-download-audio-01/response-end-audit.json": "85ab880ad72279dad779c652387311e3c97f24005f6aaa58438cdad181a5efad"
+  },
+  "failed_larger_transfer_still_rejected": true,
+  "failed_larger_transfer_rejection": "File never reached a verified final EOF",
+  "failed_larger_captures_sha256": {
+    "build/bbs-lab/current-enigma-pressure-download-audio-01/bbs-output.bin": "9f6b80cf8489997be5973ed183644a0db00ab85cbced5e2da373d80326f21262"
+  }
+}

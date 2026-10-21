@@ -7,6 +7,23 @@ data, reconnect and transfer runs. No physical compatibility or 14400-bps claim
 is established; the adapter has not arrived. PCPlus remains a serial terminal,
 with SIP/audio/Telnet handled by the Linux bridge.
 
+The [isolated sender-credit candidate](docs/validation/sexyz-send-credit-candidate.json)
+now passes four65797-byte host transfers and72 credit/boundary/CRC-recovery
+cases. Stock SEXYZ still sends8192-byte packets for1024/256-byte offers and can
+form a14336-byte synchronous group. The pinned Nix candidate changes only its
+sender function, caps both packets and groups, compares EOF against the actual
+read limit and releases credit after verified ACK. Unlimited framing comparisons
+preserve. It is not installed on the BBS and has no DOS/audio pass. Next pair a
+tested configurable modem receive-credit policy with an isolated helper/server
+candidate; keep stock and broader compatibility/hardware requirements open.
+
+The [EOF optional-flow auditor correction](docs/validation/zmodem-response-end.json)
+passes94 passive checks, a real stock-pipe counterexample and mandatory-byte
+negative, two empty-file ACK controls and15 retained normal-download checks.
+Full stream/source/CRC/finish gates stay required. Stock TCP reference03 and nine
+damaged-evidence controls refresh preparation03 without changing the live BBS or
+granting audio acceptance. See [credit notes](lab/bbs/sexyz-send-credit.md).
+
 The [native ASPECT recorder recovery](docs/ASPECT_RECORDER_NATIVE.md) now has five
 REA function dossiers and28 original-instruction probes. Receive sliding/prompt
 filtering, key capture/backspace/normalized CR, transmit expansion and active

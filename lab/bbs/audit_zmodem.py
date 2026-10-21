@@ -3,7 +3,7 @@
 Input is decoded observed stream bytes, owned expected files and chunk times.
 No maintained C codec/parser or session engine is an audit dependency.
 """
-import binascii,hashlib,zlib
+import binascii,bisect,hashlib,zlib
 FLOW={17,19,145,147}
 def crc(data,fmt):
  return zlib.crc32(data).to_bytes(4,'little') if fmt==67 else binascii.crc_hqx(data,0).to_bytes(2,'big')
@@ -30,12 +30,14 @@ def header(stream,at):
   raw=bytes.fromhex(text.decode('ascii'));at+=14
   if stream[at:at+1]==b'\r':at+=1
   assert at<len(stream) and stream[at]&127==10;at+=1
+  response_end=at
   if at<len(stream) and stream[at] in FLOW:at+=1
  else:
   raw=bytearray()
   for _ in range(9 if fmt==67 else 7):value,at,_=octet(stream,at);raw.append(value)
  raw=bytes(raw);assert raw[5:]==crc(raw[:5],fmt),'Header CRC mismatch'
- return dict(offset=start,end=at,format=fmt,type=raw[0],position=int.from_bytes(raw[1:5],'little'),header=raw[:5].hex())
+ if fmt!=66:response_end=at
+ return dict(offset=start,end=at,response_end=response_end,format=fmt,type=raw[0],position=int.from_bytes(raw[1:5],'little'),header=raw[:5].hex())
 def scan(stream,minimum=0):
  at=minimum
  while at<len(stream):
@@ -118,14 +120,29 @@ def audit_batch(stream,expected,minimum=0):
  assert finish and seen==set(expected),'Incomplete files or missing ZFIN/OO'
  return dict(start=first['offset'],end=at,files=files,events=events,finish=finish)
 def audit_controls(audit,opposite,trace,sender,post_time,unused=False):
- from test_transfer_dos import timestamp
  assert not unused
+ indices={}
+ for direction in ('bbs','dos'):
+  rows=sorted((e for e in trace if e['direction']==direction),key=lambda e:e['offset'])
+  assert all(e['size']>0 for e in rows),'Empty observed chunk'
+  assert all(a['offset']+a['size']<=b['offset'] for a,b in zip(rows,rows[1:])),'Overlapping observed chunks'
+  indices[direction]=([e['offset'] for e in rows],rows)
+ def timestamp(_trace,direction,offset):
+  starts,rows=indices[direction];at=bisect.bisect_right(starts,offset)-1
+  assert at>=0 and rows[at]['offset']<=offset<rows[at]['offset']+rows[at]['size'],('No observed chunk for offset',direction,offset)
+  return rows[at]['seconds']
  other='dos' if sender=='bbs' else 'bbs';headers=list(scan(opposite));records=[]
  def match(kind,pos,lower,upper):
   selected=[h for h in headers if h['type']==kind and (pos is None or h['position']==pos) and lower<=timestamp(trace,other,h['offset'])<=upper]
   assert selected,('Missing opposite header',kind,pos,lower,upper)
   result=selected[0];records.append(dict(type=kind,position=result['position'],offset=result['offset'],seconds=timestamp(trace,other,result['offset'])));return result
  for f in audit['files']:
+  eof=next(e for e in audit['events'] if e['kind']=='header' and e['type']==11 and e['end']==f['end'])
+  # Hex headers may carry a trailing XON/XOFF after their required LF. A
+  # receiver can respond after the CRC-checked header/LF without reading that
+  # optional flow byte. Keep full stream accounting and use only the proven
+  # mandatory header end for this response's lower time bound.
+  eof_time=timestamp(trace,sender,eof.get('response_end',eof['end'])-1)
   lower=timestamp(trace,sender,f['start']);upper=timestamp(trace,sender,f['end']-1)
   match(9,0,lower,upper)
   for p in f['packets']:
@@ -133,7 +150,7 @@ def audit_controls(audit,opposite,trace,sender,post_time,unused=False):
     # Already committed, byte-exact replay may still be in flight. Require
     # the observed completion reply before that replay packet finishes;
     # an ACK to a closed file is not a required receiver response.
-    match(1,None,timestamp(trace,sender,f['end']-1),timestamp(trace,sender,p['crc_end']-1))
+    match(1,None,eof_time,timestamp(trace,sender,p['crc_end']-1))
     continue
    if p['ending'] in (106,107):
     lower=timestamp(trace,sender,p['crc_end']-1)
@@ -164,7 +181,7 @@ def audit_controls(audit,opposite,trace,sender,post_time,unused=False):
                 (valid_ack(h) or (h['type']==9 and h['position']<=p['position']-p['length']))]
     assert candidates,('No ACK or verified-position recovery for subpacket',p['offset'],p['position'])
     item=candidates[0];records.append(dict(type=item['type'],position=item['position'],offset=item['offset'],seconds=timestamp(trace,other,item['offset']),recovery=item['type']==9))
-  match(1,None,timestamp(trace,sender,f['end']-1),post_time)
+  match(1,None,eof_time,post_time)
  # A sender can emit OO even when its get_zfin retry budget expires. Require
  # the actual receiver's ZFIN before those OO bytes, not merely before a later
  # menu key. Exact stored bytes alone do not confirm the final handshake.

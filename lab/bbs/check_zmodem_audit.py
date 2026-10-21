@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Exercise passive audit against independent fixtures and malformed captures."""
-import hashlib,json,sys
+import argparse,hashlib,json,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'standalone'))
 from check_zmodem import h,meta,offer,payload
 from check_zmodem_wire import packet
 from audit_zmodem import audit_batch,audit_controls
 def main():
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path);args=parser.parse_args()
  cases=[]
  def good(name,wire,expected):
   d=audit_batch(wire,expected);assert {f['name']:f['source'] for f in d['files']}==expected
@@ -62,8 +63,39 @@ def main():
   except AssertionError:assert not accepted,name
   else:assert accepted,name
   cases.append(dict(case=name,passed=True))
+ # Required EOF bytes and its optional trailing flow octet are separate input
+ # observations. Replying after LF but before XON is valid; before LF is not.
+ for flow in (17,19):
+  wire=offer('TEST.BIN',3)+payload(b'ABC')+h(11,3)+h(8)+b'OO'
+  a=audit_batch(wire,{'TEST.BIN':b'ABC'});eof=next(e for e in a['events'] if e['kind']=='header' and e['type']==11)
+  assert eof['response_end']==eof['end']-1 and wire[eof['end']-1]==17
+  wire=wire[:eof['end']-1]+bytes([flow])+wire[eof['end']:];a=audit_batch(wire,{'TEST.BIN':b'ABC'})
+  trace=[]
+  for i,e in enumerate(a['events']):
+   if e['kind']=='header' and e['type']==11:
+    trace.append(dict(direction='bbs',seconds=1+2*i,offset=e['offset'],size=e['response_end']-e['offset']))
+    trace.append(dict(direction='bbs',seconds=10.5,offset=e['response_end'],size=e['end']-e['response_end']))
+   else:trace.append(dict(direction='bbs',seconds=1+2*i,offset=e['offset'],size=e['end']-e['offset']))
+  trace.append(dict(direction='bbs',seconds=13,offset=a['end']-2,size=2))
+  assert controls(standard);cases.append(dict(case='EOF-reply-before-optional-flow-'+str(flow),passed=True))
+  premature=[(kind,pos,8.5 if kind==1 else when) for kind,pos,when in standard]
+  try:controls(premature)
+  except AssertionError:cases.append(dict(case='EOF-reply-before-required-LF-'+str(flow),passed=True))
+  else:raise AssertionError('Accepted completion before mandatory EOF header bytes')
+ # Older retained protocols lack response_end; keep their conservative bound.
+ wire=offer('TEST.BIN',3)+payload(b'ABC')+h(11,3)+h(8)+b'OO';a=audit_batch(wire,{'TEST.BIN':b'ABC'})
+ for event in a['events']:event.pop('response_end',None)
+ trace=[dict(direction='bbs',seconds=1+2*i,offset=e['offset'],size=e['end']-e['offset']) for i,e in enumerate(a['events'])]
+ trace.append(dict(direction='bbs',seconds=13,offset=a['end']-2,size=2))
+ assert controls(standard);cases.append(dict(case='legacy-protocol-without-response-end',passed=True))
+ trace.append(dict(trace[0]))
+ try:controls(standard)
+ except AssertionError as error:assert str(error)=='Overlapping observed chunks';cases.append(dict(case='overlapping-timing-rows-reject',passed=True))
+ else:raise AssertionError('Accepted ambiguous overlapping trace rows')
  # Retained actual DOS lrzsz captures are optional corroboration, not test inputs.
  out=ROOT/'build/bbs-lab/zmodem-audit';out.mkdir(parents=True,exist_ok=True)
  report=dict(passed=True,checks=len(cases),cases=cases,sources={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [Path(__file__).resolve(),ROOT/'lab/bbs/audit_zmodem.py',ROOT/'standalone/check_zmodem.py',ROOT/'standalone/check_zmodem_wire.py']},scope='Independent passive audit fixture/negative checks. No real BBS session or C codec execution.')
- (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n');print('Passed',len(cases),'passive ZMODEM audit checks')
+ target=args.output.resolve() if args.output else out/'checks.json'
+ if args.output:assert target.is_relative_to(ROOT/'build') and not target.exists();target.parent.mkdir(parents=True,exist_ok=True)
+ target.write_text(json.dumps(report,indent=2)+'\n');print('Passed',len(cases),'passive ZMODEM audit checks')
 if __name__=='__main__':main()
