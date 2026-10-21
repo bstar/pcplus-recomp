@@ -1,0 +1,1952 @@
+{
+  "passed": true,
+  "checks": {
+    "multiline_sequence_complete": true,
+    "actual_editor_entered": true,
+    "seed30_position": true,
+    "up_position": true,
+    "home_position": true,
+    "insert-H_position": true,
+    "delete_position": true,
+    "end_position": true,
+    "down_position": true,
+    "backspace_position": true,
+    "split-newline_position": true,
+    "tail_position": true,
+    "page_up_crosses_real_lines": true,
+    "second_page_up_reaches_top_viewport": true,
+    "third_page_up_reaches_start": true,
+    "page_down_crosses_real_lines": true,
+    "second_page_down_reaches_line29": true,
+    "third_page_down_returns_to_tail": true,
+    "edited_line29_reappears_on_scroll": true,
+    "backspaced_line30_reappears_on_scroll": true,
+    "new_line31_reappears_on_scroll": true,
+    "no_post_logged": true,
+    "message_count_preserved": true,
+    "source_and_configuration_preserved": true
+  },
+  "error": null,
+  "steps": [
+    {
+      "name": "matrix",
+      "sent_hex": "",
+      "menu": "matrix",
+      "positions": [],
+      "bytes": 5661
+    },
+    {
+      "name": "login",
+      "sent_hex": "0d",
+      "menu": "login",
+      "positions": [],
+      "bytes": 3395
+    },
+    {
+      "name": "username",
+      "sent_hex": "6c6f636c61620d",
+      "menu": "login",
+      "positions": [],
+      "bytes": 151
+    },
+    {
+      "name": "password",
+      "sent_hex": "4c6f432d4c61622d32303236210d",
+      "menu": "fullLoginSequenceLoginArt",
+      "positions": [],
+      "bytes": 3256
+    },
+    {
+      "name": "advance-0",
+      "sent_hex": "0d",
+      "menu": "fullLoginSequenceLastCallers",
+      "positions": [],
+      "bytes": 4212
+    },
+    {
+      "name": "advance-1",
+      "sent_hex": "0d",
+      "menu": "fullLoginSequenceWhosOnline",
+      "positions": [],
+      "bytes": 3575
+    },
+    {
+      "name": "advance-2",
+      "sent_hex": "0d",
+      "menu": "fullLoginSequenceOnelinerz",
+      "positions": [],
+      "bytes": 3872
+    },
+    {
+      "name": "advance-3",
+      "sent_hex": "1b",
+      "menu": "fullLoginSequenceNewScanConfirm",
+      "positions": [],
+      "bytes": 233
+    },
+    {
+      "name": "advance-4",
+      "sent_hex": "4e",
+      "menu": "fullLoginSequenceUserStats",
+      "positions": [],
+      "bytes": 6114
+    },
+    {
+      "name": "advance-5",
+      "sent_hex": "0d",
+      "menu": "mainMenu",
+      "positions": [],
+      "bytes": 4186
+    },
+    {
+      "name": "messages",
+      "sent_hex": "4d0d",
+      "menu": "messageBaseMainMenu",
+      "positions": [],
+      "bytes": 4459
+    },
+    {
+      "name": "conferences",
+      "sent_hex": "4a0d",
+      "menu": "messageBaseChangeCurrentConference",
+      "positions": [],
+      "bytes": 4490
+    },
+    {
+      "name": "conference",
+      "sent_hex": "0d",
+      "menu": "messageBaseMainMenu",
+      "positions": [],
+      "bytes": 4458
+    },
+    {
+      "name": "areas",
+      "sent_hex": "430d",
+      "menu": "messageBaseChangeCurrentArea",
+      "positions": [],
+      "bytes": 4469
+    },
+    {
+      "name": "area",
+      "sent_hex": "0d",
+      "menu": "messageBaseMainMenu",
+      "positions": [],
+      "bytes": 4458
+    },
+    {
+      "name": "new-post",
+      "sent_hex": "500d",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          1,
+          1
+        ],
+        [
+          "INS",
+          1,
+          1
+        ]
+      ],
+      "bytes": 4383
+    },
+    {
+      "name": "to",
+      "sent_hex": "0d",
+      "menu": "messageBaseNewPost",
+      "positions": [],
+      "bytes": 206
+    },
+    {
+      "name": "subject",
+      "sent_hex": "4b455954455354204d554c54494c494e450d",
+      "menu": "messageBaseNewPost",
+      "positions": [],
+      "bytes": 187
+    },
+    {
+      "name": "seed30",
+      "sent_hex": "4c30313a414243440d4c30323a414243440d4c30333a414243440d4c30343a414243440d4c30353a414243440d4c30363a414243440d4c30373a414243440d4c30383a414243440d4c30393a414243440d4c31303a414243440d4c31313a414243440d4c31323a414243440d4c31333a414243440d4c31343a414243440d4c31353a414243440d4c31363a414243440d4c31373a414243440d4c31383a414243440d4c31393a414243440d4c32303a414243440d4c32313a414243440d4c32323a414243440d4c32333a414243440d4c32343a414243440d4c32353a414243440d4c32363a414243440d4c32373a414243440d4c32383a414243440d4c32393a414243440d4c33303a41424344",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          1,
+          2
+        ],
+        [
+          "INS",
+          1,
+          3
+        ],
+        [
+          "INS",
+          1,
+          4
+        ],
+        [
+          "INS",
+          1,
+          5
+        ],
+        [
+          "INS",
+          1,
+          6
+        ],
+        [
+          "INS",
+          1,
+          7
+        ],
+        [
+          "INS",
+          1,
+          8
+        ],
+        [
+          "INS",
+          1,
+          9
+        ],
+        [
+          "INS",
+          2,
+          1
+        ],
+        [
+          "INS",
+          2,
+          1
+        ],
+        [
+          "INS",
+          2,
+          2
+        ],
+        [
+          "INS",
+          2,
+          3
+        ],
+        [
+          "INS",
+          2,
+          4
+        ],
+        [
+          "INS",
+          2,
+          5
+        ],
+        [
+          "INS",
+          2,
+          6
+        ],
+        [
+          "INS",
+          2,
+          7
+        ],
+        [
+          "INS",
+          2,
+          8
+        ],
+        [
+          "INS",
+          2,
+          9
+        ],
+        [
+          "INS",
+          3,
+          1
+        ],
+        [
+          "INS",
+          3,
+          1
+        ],
+        [
+          "INS",
+          3,
+          2
+        ],
+        [
+          "INS",
+          3,
+          3
+        ],
+        [
+          "INS",
+          3,
+          4
+        ],
+        [
+          "INS",
+          3,
+          5
+        ],
+        [
+          "INS",
+          3,
+          6
+        ],
+        [
+          "INS",
+          3,
+          7
+        ],
+        [
+          "INS",
+          3,
+          8
+        ],
+        [
+          "INS",
+          3,
+          9
+        ],
+        [
+          "INS",
+          4,
+          1
+        ],
+        [
+          "INS",
+          4,
+          1
+        ],
+        [
+          "INS",
+          4,
+          2
+        ],
+        [
+          "INS",
+          4,
+          3
+        ],
+        [
+          "INS",
+          4,
+          4
+        ],
+        [
+          "INS",
+          4,
+          5
+        ],
+        [
+          "INS",
+          4,
+          6
+        ],
+        [
+          "INS",
+          4,
+          7
+        ],
+        [
+          "INS",
+          4,
+          8
+        ],
+        [
+          "INS",
+          4,
+          9
+        ],
+        [
+          "INS",
+          5,
+          1
+        ],
+        [
+          "INS",
+          5,
+          1
+        ],
+        [
+          "INS",
+          5,
+          2
+        ],
+        [
+          "INS",
+          5,
+          3
+        ],
+        [
+          "INS",
+          5,
+          4
+        ],
+        [
+          "INS",
+          5,
+          5
+        ],
+        [
+          "INS",
+          5,
+          6
+        ],
+        [
+          "INS",
+          5,
+          7
+        ],
+        [
+          "INS",
+          5,
+          8
+        ],
+        [
+          "INS",
+          5,
+          9
+        ],
+        [
+          "INS",
+          6,
+          1
+        ],
+        [
+          "INS",
+          6,
+          1
+        ],
+        [
+          "INS",
+          6,
+          2
+        ],
+        [
+          "INS",
+          6,
+          3
+        ],
+        [
+          "INS",
+          6,
+          4
+        ],
+        [
+          "INS",
+          6,
+          5
+        ],
+        [
+          "INS",
+          6,
+          6
+        ],
+        [
+          "INS",
+          6,
+          7
+        ],
+        [
+          "INS",
+          6,
+          8
+        ],
+        [
+          "INS",
+          6,
+          9
+        ],
+        [
+          "INS",
+          7,
+          1
+        ],
+        [
+          "INS",
+          7,
+          1
+        ],
+        [
+          "INS",
+          7,
+          2
+        ],
+        [
+          "INS",
+          7,
+          3
+        ],
+        [
+          "INS",
+          7,
+          4
+        ],
+        [
+          "INS",
+          7,
+          5
+        ],
+        [
+          "INS",
+          7,
+          6
+        ],
+        [
+          "INS",
+          7,
+          7
+        ],
+        [
+          "INS",
+          7,
+          8
+        ],
+        [
+          "INS",
+          7,
+          9
+        ],
+        [
+          "INS",
+          8,
+          1
+        ],
+        [
+          "INS",
+          8,
+          1
+        ],
+        [
+          "INS",
+          8,
+          2
+        ],
+        [
+          "INS",
+          8,
+          3
+        ],
+        [
+          "INS",
+          8,
+          4
+        ],
+        [
+          "INS",
+          8,
+          5
+        ],
+        [
+          "INS",
+          8,
+          6
+        ],
+        [
+          "INS",
+          8,
+          7
+        ],
+        [
+          "INS",
+          8,
+          8
+        ],
+        [
+          "INS",
+          8,
+          9
+        ],
+        [
+          "INS",
+          9,
+          1
+        ],
+        [
+          "INS",
+          9,
+          1
+        ],
+        [
+          "INS",
+          9,
+          2
+        ],
+        [
+          "INS",
+          9,
+          3
+        ],
+        [
+          "INS",
+          9,
+          4
+        ],
+        [
+          "INS",
+          9,
+          5
+        ],
+        [
+          "INS",
+          9,
+          6
+        ],
+        [
+          "INS",
+          9,
+          7
+        ],
+        [
+          "INS",
+          9,
+          8
+        ],
+        [
+          "INS",
+          9,
+          9
+        ],
+        [
+          "INS",
+          10,
+          1
+        ],
+        [
+          "INS",
+          10,
+          1
+        ],
+        [
+          "INS",
+          10,
+          2
+        ],
+        [
+          "INS",
+          10,
+          3
+        ],
+        [
+          "INS",
+          10,
+          4
+        ],
+        [
+          "INS",
+          10,
+          5
+        ],
+        [
+          "INS",
+          10,
+          6
+        ],
+        [
+          "INS",
+          10,
+          7
+        ],
+        [
+          "INS",
+          10,
+          8
+        ],
+        [
+          "INS",
+          10,
+          9
+        ],
+        [
+          "INS",
+          11,
+          1
+        ],
+        [
+          "INS",
+          11,
+          1
+        ],
+        [
+          "INS",
+          11,
+          2
+        ],
+        [
+          "INS",
+          11,
+          3
+        ],
+        [
+          "INS",
+          11,
+          4
+        ],
+        [
+          "INS",
+          11,
+          5
+        ],
+        [
+          "INS",
+          11,
+          6
+        ],
+        [
+          "INS",
+          11,
+          7
+        ],
+        [
+          "INS",
+          11,
+          8
+        ],
+        [
+          "INS",
+          11,
+          9
+        ],
+        [
+          "INS",
+          12,
+          1
+        ],
+        [
+          "INS",
+          12,
+          1
+        ],
+        [
+          "INS",
+          12,
+          2
+        ],
+        [
+          "INS",
+          12,
+          3
+        ],
+        [
+          "INS",
+          12,
+          4
+        ],
+        [
+          "INS",
+          12,
+          5
+        ],
+        [
+          "INS",
+          12,
+          6
+        ],
+        [
+          "INS",
+          12,
+          7
+        ],
+        [
+          "INS",
+          12,
+          8
+        ],
+        [
+          "INS",
+          12,
+          9
+        ],
+        [
+          "INS",
+          13,
+          1
+        ],
+        [
+          "INS",
+          13,
+          1
+        ],
+        [
+          "INS",
+          13,
+          2
+        ],
+        [
+          "INS",
+          13,
+          3
+        ],
+        [
+          "INS",
+          13,
+          4
+        ],
+        [
+          "INS",
+          13,
+          5
+        ],
+        [
+          "INS",
+          13,
+          6
+        ],
+        [
+          "INS",
+          13,
+          7
+        ],
+        [
+          "INS",
+          13,
+          8
+        ],
+        [
+          "INS",
+          13,
+          9
+        ],
+        [
+          "INS",
+          14,
+          1
+        ],
+        [
+          "INS",
+          14,
+          1
+        ],
+        [
+          "INS",
+          14,
+          2
+        ],
+        [
+          "INS",
+          14,
+          3
+        ],
+        [
+          "INS",
+          14,
+          4
+        ],
+        [
+          "INS",
+          14,
+          5
+        ],
+        [
+          "INS",
+          14,
+          6
+        ],
+        [
+          "INS",
+          14,
+          7
+        ],
+        [
+          "INS",
+          14,
+          8
+        ],
+        [
+          "INS",
+          14,
+          9
+        ],
+        [
+          "INS",
+          15,
+          1
+        ],
+        [
+          "INS",
+          15,
+          1
+        ],
+        [
+          "INS",
+          15,
+          2
+        ],
+        [
+          "INS",
+          15,
+          3
+        ],
+        [
+          "INS",
+          15,
+          4
+        ],
+        [
+          "INS",
+          15,
+          5
+        ],
+        [
+          "INS",
+          15,
+          6
+        ],
+        [
+          "INS",
+          15,
+          7
+        ],
+        [
+          "INS",
+          15,
+          8
+        ],
+        [
+          "INS",
+          15,
+          9
+        ],
+        [
+          "INS",
+          16,
+          1
+        ],
+        [
+          "INS",
+          16,
+          1
+        ],
+        [
+          "INS",
+          16,
+          2
+        ],
+        [
+          "INS",
+          16,
+          3
+        ],
+        [
+          "INS",
+          16,
+          4
+        ],
+        [
+          "INS",
+          16,
+          5
+        ],
+        [
+          "INS",
+          16,
+          6
+        ],
+        [
+          "INS",
+          16,
+          7
+        ],
+        [
+          "INS",
+          16,
+          8
+        ],
+        [
+          "INS",
+          16,
+          9
+        ],
+        [
+          "INS",
+          17,
+          1
+        ],
+        [
+          "INS",
+          17,
+          1
+        ],
+        [
+          "INS",
+          17,
+          2
+        ],
+        [
+          "INS",
+          17,
+          3
+        ],
+        [
+          "INS",
+          17,
+          4
+        ],
+        [
+          "INS",
+          17,
+          5
+        ],
+        [
+          "INS",
+          17,
+          6
+        ],
+        [
+          "INS",
+          17,
+          7
+        ],
+        [
+          "INS",
+          17,
+          8
+        ],
+        [
+          "INS",
+          17,
+          9
+        ],
+        [
+          "INS",
+          18,
+          1
+        ],
+        [
+          "INS",
+          18,
+          1
+        ],
+        [
+          "INS",
+          18,
+          2
+        ],
+        [
+          "INS",
+          18,
+          3
+        ],
+        [
+          "INS",
+          18,
+          4
+        ],
+        [
+          "INS",
+          18,
+          5
+        ],
+        [
+          "INS",
+          18,
+          6
+        ],
+        [
+          "INS",
+          18,
+          7
+        ],
+        [
+          "INS",
+          18,
+          8
+        ],
+        [
+          "INS",
+          18,
+          9
+        ],
+        [
+          "INS",
+          19,
+          1
+        ],
+        [
+          "INS",
+          19,
+          1
+        ],
+        [
+          "INS",
+          19,
+          2
+        ],
+        [
+          "INS",
+          19,
+          3
+        ],
+        [
+          "INS",
+          19,
+          4
+        ],
+        [
+          "INS",
+          19,
+          5
+        ],
+        [
+          "INS",
+          19,
+          6
+        ],
+        [
+          "INS",
+          19,
+          7
+        ],
+        [
+          "INS",
+          19,
+          8
+        ],
+        [
+          "INS",
+          19,
+          9
+        ],
+        [
+          "INS",
+          20,
+          1
+        ],
+        [
+          "INS",
+          20,
+          1
+        ],
+        [
+          "INS",
+          20,
+          2
+        ],
+        [
+          "INS",
+          20,
+          3
+        ],
+        [
+          "INS",
+          20,
+          4
+        ],
+        [
+          "INS",
+          20,
+          5
+        ],
+        [
+          "INS",
+          20,
+          6
+        ],
+        [
+          "INS",
+          20,
+          7
+        ],
+        [
+          "INS",
+          20,
+          8
+        ],
+        [
+          "INS",
+          20,
+          9
+        ],
+        [
+          "INS",
+          21,
+          1
+        ],
+        [
+          "INS",
+          21,
+          1
+        ],
+        [
+          "INS",
+          21,
+          2
+        ],
+        [
+          "INS",
+          21,
+          3
+        ],
+        [
+          "INS",
+          21,
+          4
+        ],
+        [
+          "INS",
+          21,
+          5
+        ],
+        [
+          "INS",
+          21,
+          6
+        ],
+        [
+          "INS",
+          21,
+          7
+        ],
+        [
+          "INS",
+          21,
+          8
+        ],
+        [
+          "INS",
+          21,
+          9
+        ],
+        [
+          "INS",
+          22,
+          1
+        ],
+        [
+          "INS",
+          22,
+          1
+        ],
+        [
+          "INS",
+          22,
+          2
+        ],
+        [
+          "INS",
+          22,
+          3
+        ],
+        [
+          "INS",
+          22,
+          4
+        ],
+        [
+          "INS",
+          22,
+          5
+        ],
+        [
+          "INS",
+          22,
+          6
+        ],
+        [
+          "INS",
+          22,
+          7
+        ],
+        [
+          "INS",
+          22,
+          8
+        ],
+        [
+          "INS",
+          22,
+          9
+        ],
+        [
+          "INS",
+          23,
+          1
+        ],
+        [
+          "INS",
+          23,
+          1
+        ],
+        [
+          "INS",
+          23,
+          2
+        ],
+        [
+          "INS",
+          23,
+          3
+        ],
+        [
+          "INS",
+          23,
+          4
+        ],
+        [
+          "INS",
+          23,
+          5
+        ],
+        [
+          "INS",
+          23,
+          6
+        ],
+        [
+          "INS",
+          23,
+          7
+        ],
+        [
+          "INS",
+          23,
+          8
+        ],
+        [
+          "INS",
+          23,
+          9
+        ],
+        [
+          "INS",
+          24,
+          1
+        ],
+        [
+          "INS",
+          24,
+          1
+        ],
+        [
+          "INS",
+          24,
+          2
+        ],
+        [
+          "INS",
+          24,
+          3
+        ],
+        [
+          "INS",
+          24,
+          4
+        ],
+        [
+          "INS",
+          24,
+          5
+        ],
+        [
+          "INS",
+          24,
+          6
+        ],
+        [
+          "INS",
+          24,
+          7
+        ],
+        [
+          "INS",
+          24,
+          8
+        ],
+        [
+          "INS",
+          24,
+          9
+        ],
+        [
+          "INS",
+          25,
+          1
+        ],
+        [
+          "INS",
+          25,
+          1
+        ],
+        [
+          "INS",
+          25,
+          2
+        ],
+        [
+          "INS",
+          25,
+          3
+        ],
+        [
+          "INS",
+          25,
+          4
+        ],
+        [
+          "INS",
+          25,
+          5
+        ],
+        [
+          "INS",
+          25,
+          6
+        ],
+        [
+          "INS",
+          25,
+          7
+        ],
+        [
+          "INS",
+          25,
+          8
+        ],
+        [
+          "INS",
+          25,
+          9
+        ],
+        [
+          "INS",
+          26,
+          1
+        ],
+        [
+          "INS",
+          26,
+          1
+        ],
+        [
+          "INS",
+          26,
+          2
+        ],
+        [
+          "INS",
+          26,
+          3
+        ],
+        [
+          "INS",
+          26,
+          4
+        ],
+        [
+          "INS",
+          26,
+          5
+        ],
+        [
+          "INS",
+          26,
+          6
+        ],
+        [
+          "INS",
+          26,
+          7
+        ],
+        [
+          "INS",
+          26,
+          8
+        ],
+        [
+          "INS",
+          26,
+          9
+        ],
+        [
+          "INS",
+          27,
+          1
+        ],
+        [
+          "INS",
+          27,
+          1
+        ],
+        [
+          "INS",
+          27,
+          2
+        ],
+        [
+          "INS",
+          27,
+          3
+        ],
+        [
+          "INS",
+          27,
+          4
+        ],
+        [
+          "INS",
+          27,
+          5
+        ],
+        [
+          "INS",
+          27,
+          6
+        ],
+        [
+          "INS",
+          27,
+          7
+        ],
+        [
+          "INS",
+          27,
+          8
+        ],
+        [
+          "INS",
+          27,
+          9
+        ],
+        [
+          "INS",
+          28,
+          1
+        ],
+        [
+          "INS",
+          28,
+          1
+        ],
+        [
+          "INS",
+          28,
+          2
+        ],
+        [
+          "INS",
+          28,
+          3
+        ],
+        [
+          "INS",
+          28,
+          4
+        ],
+        [
+          "INS",
+          28,
+          5
+        ],
+        [
+          "INS",
+          28,
+          6
+        ],
+        [
+          "INS",
+          28,
+          7
+        ],
+        [
+          "INS",
+          28,
+          8
+        ],
+        [
+          "INS",
+          28,
+          9
+        ],
+        [
+          "INS",
+          29,
+          1
+        ],
+        [
+          "INS",
+          29,
+          1
+        ],
+        [
+          "INS",
+          29,
+          2
+        ],
+        [
+          "INS",
+          29,
+          3
+        ],
+        [
+          "INS",
+          29,
+          4
+        ],
+        [
+          "INS",
+          29,
+          5
+        ],
+        [
+          "INS",
+          29,
+          6
+        ],
+        [
+          "INS",
+          29,
+          7
+        ],
+        [
+          "INS",
+          29,
+          8
+        ],
+        [
+          "INS",
+          29,
+          9
+        ],
+        [
+          "INS",
+          30,
+          1
+        ],
+        [
+          "INS",
+          30,
+          1
+        ],
+        [
+          "INS",
+          30,
+          2
+        ],
+        [
+          "INS",
+          30,
+          3
+        ],
+        [
+          "INS",
+          30,
+          4
+        ],
+        [
+          "INS",
+          30,
+          5
+        ],
+        [
+          "INS",
+          30,
+          6
+        ],
+        [
+          "INS",
+          30,
+          7
+        ],
+        [
+          "INS",
+          30,
+          8
+        ],
+        [
+          "INS",
+          30,
+          9
+        ]
+      ],
+      "bytes": 77807
+    },
+    {
+      "name": "up",
+      "sent_hex": "1b5b41",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          29,
+          9
+        ]
+      ],
+      "bytes": 85
+    },
+    {
+      "name": "home",
+      "sent_hex": "1b5b48",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          29,
+          1
+        ]
+      ],
+      "bytes": 85
+    },
+    {
+      "name": "insert-H",
+      "sent_hex": "48",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          29,
+          2
+        ]
+      ],
+      "bytes": 193
+    },
+    {
+      "name": "delete",
+      "sent_hex": "1b5b337e",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          29,
+          2
+        ]
+      ],
+      "bytes": 309
+    },
+    {
+      "name": "end",
+      "sent_hex": "1b5b46",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          29,
+          9
+        ]
+      ],
+      "bytes": 85
+    },
+    {
+      "name": "down",
+      "sent_hex": "1b5b42",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          30,
+          9
+        ]
+      ],
+      "bytes": 85
+    },
+    {
+      "name": "backspace",
+      "sent_hex": "08",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          30,
+          8
+        ]
+      ],
+      "bytes": 213
+    },
+    {
+      "name": "split-newline",
+      "sent_hex": "0d",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          31,
+          1
+        ],
+        [
+          "INS",
+          31,
+          1
+        ]
+      ],
+      "bytes": 1706
+    },
+    {
+      "name": "tail",
+      "sent_hex": "5441494c",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          31,
+          2
+        ],
+        [
+          "INS",
+          31,
+          3
+        ],
+        [
+          "INS",
+          31,
+          4
+        ],
+        [
+          "INS",
+          31,
+          5
+        ]
+      ],
+      "bytes": 766
+    },
+    {
+      "name": "page-up",
+      "sent_hex": "1b5b357e",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          17,
+          5
+        ]
+      ],
+      "bytes": 1500
+    },
+    {
+      "name": "page-up-top-visible",
+      "sent_hex": "1b5b357e",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          14,
+          5
+        ]
+      ],
+      "bytes": 1500
+    },
+    {
+      "name": "page-up-start",
+      "sent_hex": "1b5b357e",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          1,
+          5
+        ]
+      ],
+      "bytes": 85
+    },
+    {
+      "name": "page-down",
+      "sent_hex": "1b5b367e",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          15,
+          5
+        ]
+      ],
+      "bytes": 1500
+    },
+    {
+      "name": "page-down-late",
+      "sent_hex": "1b5b367e",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          29,
+          5
+        ]
+      ],
+      "bytes": 1390
+    },
+    {
+      "name": "page-down-end",
+      "sent_hex": "1b5b367e",
+      "menu": "messageBaseNewPost",
+      "positions": [
+        [
+          "INS",
+          31,
+          5
+        ]
+      ],
+      "bytes": 1370
+    }
+  ],
+  "source_commit": "6c25317168b762f7d9088a54d3f8295438827a0e",
+  "server_inputs": {
+    "build/bbs-lab/enigma/source/main.js": "1b2f4c9747380dbd77ddfbc918d24c4ce225c7dd51331e75d8c2102d852bfda9",
+    "build/bbs-lab/enigma/source/core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+    "build/bbs-lab/enigma/source/core/multi_line_edit_text_view.js": "687eb7ae3355cea0e91a30f80134a87b9060bc26f11f1661c7c4f7cfb0d47ce7",
+    "build/bbs-lab/enigma/source/config/config.hjson": "daae39792955eaf7b99c45fc936d54b153f62ea0d3f77672f45a8ace756a7dbc",
+    "build/bbs-lab/enigma/source/config/menus/loc-activitypub.hjson": "82861725a47e5892bbfd2251feb02ca0bb46707516a872cf373b350b704c9fe7",
+    "build/bbs-lab/enigma/source/config/menus/loc-doors.hjson": "fb012c018ec054a7e3261f2b4ef28dc568742b0936bfc56ba9377745f8c43530",
+    "build/bbs-lab/enigma/source/config/menus/loc-file_base.hjson": "9d9a02672bcd18b122827e6112ecfd99a4e7ff2916052847de26a87c6808f6c2",
+    "build/bbs-lab/enigma/source/config/menus/loc-login.hjson": "215f943d381a2acc4c1713ff14331efaee19c474218428eac6b64f77b9355f18",
+    "build/bbs-lab/enigma/source/config/menus/loc-main.hjson": "dc2fd404bbb8a35bc5c8bb43b3fe66378173cd8d87d0ab25978af16bda15d227",
+    "build/bbs-lab/enigma/source/config/menus/loc-message_base.hjson": "607939acb6818c7c5fb50a2d90b04fed1b92d50f51fb9ca4215cef06644d2540",
+    "build/bbs-lab/enigma/source/config/menus/loc-new_user.hjson": "04f466f10cc5c169c03186bc8a7fde7b18d5d938e7f0b70873d74bae15161cec",
+    "build/bbs-lab/enigma/source/config/menus/loc-private_mail.hjson": "ffb59f0d6f2d592181d2bc304d46e9e2a3b71a14c2d6cd65a639f6b0c6f3d382"
+  },
+  "message_count_before": 1,
+  "message_count_after": 1,
+  "inputs": {
+    "lab/bbs/enigma_multiline_reference.py": "07b4d0098b44bf4383e44c99c4fddff4634484af124b2b7684b1af1e9259a446",
+    "lab/bbs/synchronet.py": "974117a9b4971bb1a13dc9483aee08b77bcc4895097133dc7147c18150300dcc",
+    "lab/bbs/enigma.py": "526fcd6eb468ec7a85630685872d27a937abbc6b61f48ad8391a2353e5686017"
+  },
+  "captures_sha256": {
+    "matrix.bin": "da30b9cd7a8d934f9c477f60f2206deb944dfd90dfebc75b48da086cdfaada76",
+    "login.bin": "06af3ae2c6519d95240910b3b9a5feea7bc39251f365db63ed642d15fdeeb902",
+    "username.bin": "cb8d8d366ec56ea23174ca85c7e2c04397835b25fffc9bdbde55352ac6d1985c",
+    "password.bin": "ef8ee4bdfd44d6e481bd4242308c6da557242a722537ad07a862528ae0fcf9a5",
+    "advance-0.bin": "3f571b1eb7b2f4a8438f48d6a01498d1681e0fa81313cf0fde0a25871e7c612f",
+    "advance-1.bin": "aab8bbcab4cfd570f79633c573653928f5561b8e2c0693c28d50e960d1412eec",
+    "advance-2.bin": "0fc9b8da7d146fc598427aa98d5e5f9497c1e65d78127c1d3819f411c0a457de",
+    "advance-3.bin": "b3f733ab28bb39e69f88c3a8b8217b49da84d09e860f4df68ec273d2d396c059",
+    "advance-4.bin": "ba9cd6ea2a0356f69f4dc030cbc39c1b6bc7157625a86b0a35fe4b6f20905850",
+    "advance-5.bin": "f0b1f451b88fe5446b5ecc7b96b37bea90fc4b4c720e4636e4ec5496c728fe0b",
+    "messages.bin": "9511a43a25dab513af6c80d7b36b89052efe711c923209c46b6ff946f1aa96fa",
+    "conferences.bin": "90c523f8272ac52c5767294251453e24f43d587b270dbb8645be669bcae477f9",
+    "conference.bin": "b2e435c51c71568e7b1342fd130f55dc1776bb32454a2a041e355eb4e6b11559",
+    "areas.bin": "d0e41fc2f413b83e4ef443b6247ae2e1f92ad1ddb124bc1d11a3ba6525cfd472",
+    "area.bin": "b2e435c51c71568e7b1342fd130f55dc1776bb32454a2a041e355eb4e6b11559",
+    "new-post.bin": "7ea09ba175e7f5294c4b087077e4a4e68a63cbbbcc2bdd502205b47a93f7a790",
+    "to.bin": "1b8288f772e76594b2542b0faf399c978f02dbf66be22803489fe8ac359733b4",
+    "subject.bin": "50e8be427882c6349285bf8b1375f40771adf61ef3f2a8970e9cebe1f1dd1cb3",
+    "seed30.bin": "7ba78d1e94122a593f1b639d8d09362126a3f8e24a188e8edae2abff70b06e58",
+    "up.bin": "f8d753a45c34fa0b4d1c5368cba83d37c1b19ecced33c03cda10ba20966977e1",
+    "home.bin": "11beab337fee93c2a9f2d3e80fe7bb8bb83f560ac736dd8b8e026af366d96c11",
+    "insert-H.bin": "5befe3486cfdaf60edac8d2b112269465178561e9910097fd2a9084b64f877bc",
+    "delete.bin": "bf4fb3b5f146f921439104a9e25ad9f2d572d1d441e82681a6afdfccd33ee2cd",
+    "end.bin": "f8d753a45c34fa0b4d1c5368cba83d37c1b19ecced33c03cda10ba20966977e1",
+    "down.bin": "0a648bfea2cf61c1508d259660805060151054e8a881e843f90ab5fb31463f7c",
+    "backspace.bin": "f2a1596c5dd20f2f22dcc07f606fecf851a95b315ffe92a2b49576bffebb0ef0",
+    "split-newline.bin": "a26c628491287ed7e2f6b16f5fa2692ae43c43797b27aecaf7282483c1316718",
+    "tail.bin": "fcfa4505d1d3aa3158bbcec6793056a35b896ba45dec5d57839bc0a503d6010c",
+    "page-up.bin": "61ff97d9f87cc4f27aaa41bc080ea51ce76c9d6af1b4c3e345125a70380914b2",
+    "page-up-top-visible.bin": "5ba39c3ae884469a410144853ca2f7d16de1794b06f5167581b01de53ee453a1",
+    "page-up-start.bin": "93b26091e3f49ad3426993a4ff63db14d1709cc27567dbb5a2f68e2a130d2b04",
+    "page-down.bin": "cc3fb76c62234f8fb47c4c6df5485404c591e5ff2e6aa4f6cd55bdc514fd6bd0",
+    "page-down-late.bin": "11f872430edd362d1b72ce5e775b1d2be26389ec354900531deba60921f741b3",
+    "page-down-end.bin": "67123253809155e2c43f5fb65ac7331428972cd68df83f7e67f7c32128255f53",
+    "server-wire.bin": "8b6d024209b0cf5d1cf26a829fd2c028b928120b027746be13991811cfe7fcd5",
+    "client-wire.bin": "e7752c1ff2e8e88b1535381519a7124291c7656ef23de3b1793674f334162f2b",
+    "events.json": "46851ba2514ef0ee1952726a82c211c6cde09a65c1a4b60486f6aef8c27d3b98",
+    "server-session.json": "fb5172a6f2a6c4baecab29c519cd5cba076becf4d2bd66db59196055ece9b2b5"
+  },
+  "scope": "Independent loopback TCP reference on pinned stock owned ENiGMA: thirty-line unsaved draft, up/down/Home/End/insert/Delete/Backspace/newline and three PageUp/three PageDown operations with edited text redisplay in the80x25/14-line viewport. Declared fixed CPRhome reference, not DOS rendering, BIOS mapping, SIP/audio, latency or physical hardware acceptance. Connection closes without saving; source/config and message count preserved.",
+  "cohort": "build/bbs-lab/current-enigma-multiline-reference-03",
+  "preparation_only": true,
+  "actual_TCP_editor_reference_accepted": true,
+  "actual_DOS_audio_accepted": false,
+  "retained_source_path": "build/bbs-lab/current-enigma-multiline-reference-03/frozen-source/lab/bbs/enigma_multiline_reference.py",
+  "retained_source_sha256": "07b4d0098b44bf4383e44c99c4fddff4634484af124b2b7684b1af1e9259a446",
+  "corrected_position_decode": "Fixed two-digit row/column fields prevent typed digits following removed ANSI movement from extending a column.287 keys produce317 position reports, including duplicate newline reports. Earlier02 raw data and final-position checks remain retained; its intermediate variable-width parsed columns are not an oracle."
+}

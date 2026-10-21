@@ -170,8 +170,8 @@ this scope. Stock retains/indexes the partial, keeping server cleanup and overal
 receipt false. Multiline DOS/audio, sustained pressure, bridge reuse, physical
 hardware and all F01–F16 remain required.
 
-The [multiline ENiGMA TCP reference](docs/validation/current-enigma-multiline-reference-02.json)
-now passes24 checks on the pinned stock80x25 editor. A30-line draft extends to
+The [multiline ENiGMA TCP reference](docs/validation/current-enigma-multiline-reference-04.json)
+now passes25 checks on the pinned stock80x25 editor. A30-line draft extends to
 31 after a real newline; Up/Down/Home/End, insertion/Delete and Backspace have
 exact cursor effects. Three PageUp operations reach line1, three PageDown return
 to31, and the edited line29, shortened line30 and new tail redisplay correctly.
@@ -182,7 +182,24 @@ checks pass. The14-line viewport moves31->17->14->1, which the corrected recipe
 requires exactly. This prepares a real scrolling oracle only; actual DOS BIOS
 keys, renderer/cursor effects and complete SIP/audio/cleanup evidence still
 require a distinct multiline campaign. Existing single-line acceptance remains
-scoped as recorded.
+scoped as recorded. The [fixed-width parser reference](docs/validation/current-enigma-multiline-reference-03.json)
+also preserves a fresh24-check run correcting intermediate column extraction:
+after removing ANSI movement, a following typed digit could extend a variable-
+width column match. Fixed two-digit footer fields now retain all responses.
+The latest reference adds a final Insert to OVR31,05, unique after the six page
+operations; the earlier INS31,05 tail screen cannot release the exit guard.
+
+The [multiline preparation](docs/validation/current-enigma-multiline-preparation.json)
+now passes20 actual8086 BIOS checks,25 TCP reference checks and ten damaged-
+evidence rejections against eleven semantic baseline gates. Both prior helper
+binaries remain exact. The selected helper types288 body keys, and the audit
+requires all318 position responses (newlines report twice), exact authored bytes,
+edited-text redisplay, TAIL/OVR31,05 DOS video and unchanged message count.
+Production helper identity is checked against the independently assembled proof;
+initial/key delays are360/3 BIOS ticks with21600-tick watchdog and1220-second
+outer bound. The current976/200ms actual multiline audio run is now in progress.
+This is preparation only; byte integrity, actual rendering, complete SIP/audio
+and normal hardware cleanup remain pending its terminal evidence.
 
 The hardware target's [work order and completion gates](docs/ANALOG_MODEM_INTEGRATION.md#work-order-and-completion-gates)
 prioritize carrier/data separation and full audio-path pressure/editor/transfer

@@ -22,7 +22,13 @@ def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--receive-trace',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--carrier-trace',action='store_true');p.add_argument('--key-framing',action='store_true');p.add_argument('--key-framing-trace',action='store_true');p.add_argument('--syscall-trace',action='store_true');p.add_argument('--route',choices=['menus','editor','download','upload'],default='menus');p.add_argument('--fixture-lab',type=Path);p.add_argument('--upload-cancel',action='store_true');p.add_argument('--upload-cancel-retry',action='store_true');p.add_argument('--upload-key-checks',type=Path);p.add_argument('--posttrain-hold',action='store_true')
  p.add_argument('--buffered-runtime-proof',type=Path,help='Validated normal200ms d-modem runtime receipt')
  p.add_argument('--editor-burst-checks',type=Path,help='Enable one-tick editor BIOS keys using a passing guarded-helper probe')
+ p.add_argument('--editor-multiline-checks',type=Path,help='Enable30-line BIOS draft and page movement with a passing helper/TCP proof')
  a=p.parse_args()
+ if a.editor_multiline_checks:
+  assert a.route=='editor' and not a.editor_burst_checks,'Choose one editor sequence'
+  from editor_multiline_evidence import load as load_multiline,message_count
+  multiline_proof=a.editor_multiline_checks.resolve();multiline,_,_,_=load_multiline(multiline_proof)
+  multiline_messages_before=message_count()
  if a.editor_burst_checks:
   assert a.route=='editor','Burst editor keys require the editor route'
   burst_proof=a.editor_burst_checks.resolve();assert burst_proof.is_relative_to(ROOT/'build')
@@ -123,6 +129,7 @@ def main():
  if a.syscall_trace:names+=['lab/bbs/check_dosbox_socket_close.py','lab/bbs/dosbox_socket_close_probe.asm','docs/validation/dosbox-socket-close.json']
  if a.route=='editor':names+=['lab/bbs/audio_editor_keys.asm','lab/bbs/check_audio_editor_watchdog.py','docs/validation/synthmodem-audio-editor-watchdog.json']
  if a.editor_burst_checks:names+=['lab/bbs/check_audio_editor_burst_keys.py',str(burst_proof.relative_to(ROOT))]
+ if a.editor_multiline_checks:names+=['lab/bbs/editor_multiline_evidence.py','lab/bbs/check_editor_multiline_evidence.py','lab/bbs/audit_synthmodem_audio_dos.py','lab/bbs/audit_serial_io_evidence.py','lab/bbs/diagnose_audio_caller.js',str(multiline_proof.relative_to(ROOT)),*multiline['inputs']]
  frozen={n:sha(ROOT/n) for n in names}
  stage=out/'program';stage.mkdir()
  for n,leaf in [('build/terminal/TERMINAL.EXE','TERMINAL.EXE'),('build/aspect-runner/ASPECT.EXE','ASPECT.EXE')]:shutil.copyfile(ROOT/n,stage/leaf)
@@ -166,7 +173,9 @@ def main():
    if a.upload_cancel:flags+=['-DAUDIO_UPLOAD_CANCEL=1']
    if a.upload_cancel_retry:flags+=['-DAUDIO_UPLOAD_RETRY=1']
    if a.editor_burst_checks:flags+=['-DAUDIO_EDITOR_BURST=1','-DAUDIO_EDITOR_KEY_TICKS=1']
+   if a.editor_multiline_checks:flags+=['-DAUDIO_EDITOR_MULTILINE=1','-DAUDIO_EDITOR_KEY_TICKS=3']
   subprocess.run(['nasm','-fbin',*flags,str(ROOT/'lab/bbs'/name),'-o',str(stage/leaf)],check=True)
+ if a.editor_multiline_checks:assert sha(stage/'EXITKEY.COM')==multiline['production_helper_sha256']
  generated={str(p.relative_to(out)):sha(p) for p in stage.iterdir()}
  log=enigma.SOURCE/'logs/enigma-bbs.log';boundary=(log.stat().st_ino,log.stat().st_size)
  tool_inputs={str(Path(shutil.which(n)).resolve()):sha(Path(shutil.which(n))) for n in (['dosbox-x','nasm','strace'] if a.syscall_trace else ['dosbox-x','nasm'])}
@@ -219,7 +228,7 @@ exit
    if a.syscall_trace:command=['strace','--seccomp-bpf','-f','-ttt','-yy','-e','trace=network,close','-o',str(out/'DOS-syscalls.log')]+command
    clock_anchor('before-DOS-launch')
    dos=subprocess.Popen(command,stdout=dl,stderr=dl,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),start_new_session=True)
-   doscode=dos.wait(timeout=1220 if a.route in ('download','upload') else 720 if a.route=='editor' else 600);clock_anchor('after-DOS-exit');node.wait(timeout=60)
+   doscode=dos.wait(timeout=1220 if a.route in ('download','upload') or a.editor_multiline_checks else 720 if a.route=='editor' else 600);clock_anchor('after-DOS-exit');node.wait(timeout=60)
   finally:
    relay.stop.set();relay.thread.join(3)
    if dos is not None and dos.poll() is None:
@@ -263,7 +272,7 @@ exit
   'server_unchanged':all(sha(enigma.SOURCE/n)==h for n,h in server_inputs.items())}
  checks={k:bool(v) for k,v in checks.items()}
  editor=None
- if a.route=='editor':
+ if a.route=='editor' and not a.editor_multiline_checks:
   del checks['final_file_menu']
   clean=re.sub(rb'\x1b\[[0-?]*[ -/]*[@-~]',b'',display).decode('cp437')
   body=clean[clean.find('KEYTEST'):];positions=[(int(row),int(col)) for row,col in re.findall(r'(?:INS|OVR) (\d+),(\d+)',body)]
@@ -272,6 +281,13 @@ exit
   editor={'positions':positions,'keys_emitted':observed,'key_spacing_BIOS_ticks':1 if a.editor_burst_checks else 54,'final_screen_guard':bool(a.editor_burst_checks),'scope':'Actual BIOS editor keys; one-line page keys test boundaries, no multiline scrolling. Connection closes with an unsaved draft; no Save command is sent.'}
   checks.update(editor_entered='messageBaseNewPost' in menus,typed_draft_sent=b'ABCDE' in sent,all_editor_keys_emitted=all(observed.values()),
    home_moves_before_marker=positions[:7]==[(1,2),(1,3),(1,4),(1,5),(1,6),(1,1),(1,2)],insert_toggles_overtype='OVR ' in body)
+ if a.editor_multiline_checks:
+  from editor_multiline_evidence import check as check_multiline
+  del checks['final_file_menu']
+  checks['editor_entered']='messageBaseNewPost' in menus
+  extra,editor=check_multiline(display,sent,read('SCREEN.BIN'),multiline_proof);checks.update(extra)
+  editor['message_count_before']=multiline_messages_before;editor['message_count_after']=message_count()
+  checks['multiline_message_count_preserved']=editor['message_count_before']==editor['message_count_after']
  download=None
  upload=None
  if a.route=='download':
@@ -291,7 +307,7 @@ exit
   checks['posttransfer_filename_visible']=('PCXTEST.BIN' if a.upload_cancel and not a.upload_cancel_retry else audio_upload.NAME) in text
  result={'passed':all(checks.values()),'checks':checks,'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'server_inputs':server_inputs,'server_root':str(enigma.SOURCE),'server_fixture':server_fixture,
   'generated_inputs':generated,'tool_inputs':tool_inputs,'syscall_trace':a.syscall_trace,'clock_anchors':clock_anchors,'server_revision':enigma.COMMIT,'server_menus':menus,'script_stages':read('STAGES.LOG').decode('ascii'),'login_readiness':'WAITFOR plus reused one-shot WHEN latch','receive_trace':a.receive_trace,'dmodem_variant':a.dmodem,'lifecycle':a.lifecycle,'carrier':a.carrier,'carrier_trace':a.carrier_trace,'key_framing_trace':a.key_framing_trace,'input_sequence_timeout_ms':250 if a.key_framing else 0,
-  'DOS_screen':text,'gateway':n,'route':a.route,'upload_cancel':a.upload_cancel,'upload_cancel_retry':a.upload_cancel_retry,'posttrain_hold':a.posttrain_hold,'buffered_runtime_proof':str(a.buffered_runtime_proof.resolve().relative_to(ROOT)) if a.buffered_runtime_proof else None,'editor_burst_checks':str(burst_proof.relative_to(ROOT)) if a.editor_burst_checks else None,'editor':editor,'download':download,'upload':upload,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
+  'DOS_screen':text,'gateway':n,'route':a.route,'upload_cancel':a.upload_cancel,'upload_cancel_retry':a.upload_cancel_retry,'posttrain_hold':a.posttrain_hold,'buffered_runtime_proof':str(a.buffered_runtime_proof.resolve().relative_to(ROOT)) if a.buffered_runtime_proof else None,'editor_burst_checks':str(burst_proof.relative_to(ROOT)) if a.editor_burst_checks else None,'editor_multiline_checks':str(multiline_proof.relative_to(ROOT)) if a.editor_multiline_checks else None,'editor':editor,'download':download,'upload':upload,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
   'scope':'Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to the explicitly recorded owned ENiGMA board. Any receiver candidate is separately identified; no unmodified-stock, physical modem/ATA/UART or whole-application claim follows from a candidate result.'}
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'passed':result['passed'],'checks':checks,'result':str(out/'result.json')},indent=2));return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "preparation_only": true,
+  "actual_DOS_audio_multiline_accepted": false,
+  "body_key_count": 288,
+  "position_response_count": 318,
+  "check_counts": {
+    "actual_DOS_BIOS": 20,
+    "TCP_reference": 25,
+    "evidence_baseline": 11,
+    "evidence_counterexamples": 10
+  },
+  "prerequisites": {
+    "build/bbs-lab/editor-multiline-keys-04/result.json": "69bda3c4f30925f42d1438fc4c3a3e271c4e8a98f43d576e55562ee25e6e39ae",
+    "docs/validation/audio-editor-multiline-keys.json": "adb0673f42ef70481da496159a57c3aa7053571d1c48ec0142696d8909e81010",
+    "build/bbs-lab/editor-multiline-evidence-03.json": "5d51f0e20b7fee8d50ee480f01b1b69bc807c4f216f456092bd4f33ded9b8ee7",
+    "docs/validation/editor-multiline-evidence-controls.json": "abe880a31784c8d2fb41e1cd171602301c3a84d809ee0408d8d339c51375eeee",
+    "docs/validation/current-enigma-multiline-reference-04.json": "9f7ed554819eb20f907ea1b33ca359b2cd90de68b01b5fdb0a40db6a0ea2dc5b",
+    "build/bbs-lab/synthmodem-buffered-runtime-01/result.json": "fcfc4e91b2d8b0e80caf8b837bffe8ae67fad81e9ce6b59793e02e6b6fb2c2dd"
+  },
+  "inputs": {
+    "lab/bbs/audio_editor_keys.asm": "83e271b3405087f7d1230e45c0d4a713c63a09beb09142bee30a972d5807cf7c",
+    "lab/bbs/check_audio_editor_multiline_keys.py": "7f299d81b6680163ddc86fa859409516de268e58b317caa8cf10393a66282ead",
+    "lab/bbs/check_editor_multiline_evidence.py": "0b307eebb3fe03144889653ff345e2b72671bf75a840771632c086641e66cfce",
+    "lab/bbs/editor_multiline_evidence.py": "b806dc34c5b924c332f1ab2b0bfa143d302330f60fc68e6580eac504be915530",
+    "lab/bbs/enigma_multiline_reference.py": "22d171e91e31af7c3f0a58cf26c23382bebf33d9bfc5a74fdbeac150e8cb4272",
+    "lab/bbs/synthmodem_audio_dos.py": "7776fd8a6e595b5c250543e79872e69ff6c086483efb948e0eb08324dd1911b5",
+    "lab/bbs/audit_synthmodem_audio_dos.py": "4b479e5259059f9d277f17b9c8b9fd941281a9b272199af81bfcb09edb212ead"
+  },
+  "terminal_sha256": "976ba8d0c7681b9727389e3f91e80e463738602b857130da491c249d6988e145",
+  "ASPECT_sha256": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+  "scope": "Preparation for one actual DOS/audio30-line editor draft plus newline31, cross-line edits, three PageUp/three PageDown and final Insert. Both original helper binaries remain exact. Final TAIL/OVR31,05 gate is unique after all page operations; initial/key delays360/3 ticks, watchdog21600ticks, outer1220seconds. Exact generated production helper hash is required. Fixed-width footer decoding and all318 position responses match the independent TCP reference. Actual DOS/audio byte integrity, rendering and cleanup acceptance remain pending."
+}

@@ -37,7 +37,7 @@ def main():
    start=len(peer.text)
    if data:peer.send(data,name)
    peer.pump(delay);chunk=bytes(peer.text[start:]);clean=peer.cleaned(chunk)
-   positions=[(m,int(r),int(c)) for m,r,c in re.findall(r'(INS|OVR) (\d+),(\d+)',clean)]
+   positions=[(m,int(r),int(c)) for m,r,c in re.findall(r'(INS|OVR) (\d{2}),(\d{2})',clean)]
    row=dict(name=name,sent_hex=data.hex(),menu=menu(),positions=positions,bytes=len(chunk))
    steps.append(row);(out/(name+'.bin')).write_bytes(chunk)
    print(json.dumps(dict(step=name,position=positions[-1] if positions else None)),flush=True)
@@ -68,6 +68,7 @@ def main():
    checks['edited_line29_reappears_on_scroll']='H29:ABCD' in redraw
    checks['backspaced_line30_reappears_on_scroll']='L30:ABC' in redraw and 'L30:ABCD' not in redraw
    checks['new_line31_reappears_on_scroll']='TAIL' in redraw
+   checks['unique_final_overtype_mode']=step('final-insert-mode',b'\x1b[2~')==('OVR',31,5)
    checks['multiline_sequence_complete']=True
   except Exception as exc:error=repr(exc)
   finally:

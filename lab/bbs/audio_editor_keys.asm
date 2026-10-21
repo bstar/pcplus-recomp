@@ -10,7 +10,17 @@ state: db 0
 ; Bound failed prerequisites too: return via the product's actual Alt-X path
 ; before the outer720s watchdog. No editor/pass marker is synthesized.
 %ifndef AUDIO_EDITOR_WATCHDOG_TICKS
+%ifdef AUDIO_EDITOR_MULTILINE
+%define AUDIO_EDITOR_WATCHDOG_TICKS 21600
+%else
 %define AUDIO_EDITOR_WATCHDOG_TICKS 12600
+%endif
+%endif
+%ifdef AUDIO_EDITOR_MULTILINE
+%ifdef AUDIO_EDITOR_BURST
+%error "Choose multiline or single-line burst keys"
+%endif
+%define AUDIO_EDITOR_BURST 1
 %endif
 %ifndef AUDIO_EDITOR_KEY_TICKS
 %define AUDIO_EDITOR_KEY_TICKS 54
@@ -24,12 +34,45 @@ key_at: dw keys
 prompt: db 'KEYTEST',0
 footer: db 'INS 01,01',0
 %ifdef AUDIO_EDITOR_BURST
+%ifdef AUDIO_EDITOR_MULTILINE
+final_text: db 'TAIL',0
+final_footer: db 'OVR 31,05',0
+%else
 final_text: db 'UNSAVED',0
 final_footer: db 'OVR 01,08',0
 %endif
+%endif
+%ifdef AUDIO_EDITOR_MULTILINE
+keys:
+%assign line 1
+%rep 30
+%assign tens line/10
+%assign units line-(line/10)*10
+ dw 264ch
+%if tens == 0
+ dw 0b30h
+%else
+ dw ((tens+1)<<8)+'0'+tens
+%endif
+%if units == 0
+ dw 0b30h
+%else
+ dw ((units+1)<<8)+'0'+units
+%endif
+ dw 273ah,1e41h,3042h,2e43h,2044h
+%if line < 30
+ dw 1c0dh
+%endif
+%assign line line+1
+%endrep
+ dw 4800h,4700h,2348h,5300h,4f00h,5000h,0e08h,1c0dh
+ dw 1454h,1e41h,1749h,264ch
+ dw 4900h,4900h,4900h,5100h,5100h,5100h,5200h,2d00h,0
+%else
 keys: dw 1e41h,3042h,2e43h,2044h,1245h,4700h,2348h,4f00h,1245h
       dw 4b00h,5300h,5200h,2c5ah,0f09h,1454h,4900h,5100h,1519h
       dw 1655h,314eh,1f53h,1e41h,2f56h,1245h,2044h,2d00h,0
+%endif
 handler:
  pushf
  push ax

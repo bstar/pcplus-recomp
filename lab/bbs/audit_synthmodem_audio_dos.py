@@ -52,7 +52,7 @@ def main():
   if index<len(wanted) and m==wanted[index]:index+=1
  checks['authoritative_menu_order']=index==len(wanted)
  editor=None
- if editor_route:
+ if editor_route and not r.get('editor_multiline_checks'):
   clean=re.sub(rb'\x1b\[[0-?]*[ -/]*[@-~]',b'',display).decode('cp437');body=clean[clean.find('KEYTEST'):]
   positions=[(mode,int(row),int(col)) for mode,row,col in re.findall(r'(INS|OVR) (\d+),(\d+)',body)]
   expected_body=b'ABCDE\x1b[HH\x1b[FE\x1b[D\x1b[3~\x1b[2~Z\tT\x1b[5~\x1b[6~\x19UNSAVED'
@@ -91,6 +91,13 @@ def main():
    checks['burst_audio_body_within_four_seconds']=0<=audio_seconds<=4
    editor['burst_timing']={'body_bytes':len(expected_body),'serial_body_seconds':serial_seconds,'independent_caller_audio_body_seconds':audio_seconds,
     'scope':'Complete editor-body span at observed frontend input and independently decoded caller RTP packet bounds. Four-second ceiling distinguishes the one-tick burst from the paced baseline; this is not display-response latency.'}
+ if r.get('editor_multiline_checks'):
+  assert editor_route and not r.get('editor_burst_checks')
+  from editor_multiline_evidence import check as check_multiline,message_count
+  extra,editor=check_multiline(display,online,(out/'SCREEN.BIN').read_bytes(),Path(__file__).resolve().parents[2]/r['editor_multiline_checks']);checks.update(extra)
+  checks['multiline_helper_configuration']=r['editor']['key_spacing_BIOS_ticks']==3 and r['editor']['final_screen_guard'] is True
+  checks['multiline_message_count_preserved']=r['editor']['message_count_before']==r['editor']['message_count_after']==message_count()
+  checks['draft_never_saved']=not any('posted message to' in v.get('msg','') for v in rows)
  checks['script_and_normal_DOS_return']=(out/'SCRIPT.OK').is_file() and (out/'SCRIPT.OK').read_bytes()==b'PASS' and (out/'PASS.TXT').is_file() and not (out/'FAIL.TXT').exists()
  def read(name):return (out/name).read_bytes() if (out/name).is_file() else b''
  before=read('BEFORE.BIN');after=read('AFTER.BIN');snapshots_valid=len(before)==len(after)==42
@@ -127,5 +134,6 @@ def main():
   'hardware_snapshot':{'layout':'32 IRQ-vector bytes,4 INT1C bytes,6 UART/PIC bytes','INT1C_restored':snapshots_valid and before[32:36]==after[32:36],
    'differing_offsets':[i for i,(a,b) in enumerate(zip(before,after)) if a!=b] if snapshots_valid else None},
   'editor':editor,'scope':'Independent read-only actual DOS/ASPECT, BBS authoritative logs, guest frames, serial/Telnet byte identity, RTP continuity, SIP and cleanup audit. No physical modem/ATA claim.'}
+ if r.get('editor_multiline_checks'):result['audit_inputs']['lab/bbs/editor_multiline_evidence.py']=sha(root/'lab/bbs/editor_multiline_evidence.py')
  (out/'independent-audit.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2));return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

@@ -1,0 +1,112 @@
+{
+  "passed": true,
+  "baseline_checks": {
+    "multiline_subject_observed": true,
+    "multiline_exact_BIOS_to_serial_body": true,
+    "multiline_all318_cursor_effects_match_TCP": true,
+    "multiline_seed30_hard_lines": true,
+    "multiline_cross_line_edit_effects": true,
+    "multiline_page_start_and_end": true,
+    "multiline_edited_line29_redisplayed": true,
+    "multiline_shortened_line30_redisplayed": true,
+    "multiline_tail_redisplayed": true,
+    "multiline_unique_final_mode": true,
+    "multiline_actual_DOS_tail_and_cursor_visible": true
+  },
+  "cases": [
+    {
+      "name": "missing_body_byte",
+      "passed": true,
+      "expected_failed_gate": "multiline_exact_BIOS_to_serial_body",
+      "failed_gates": [
+        "multiline_exact_BIOS_to_serial_body"
+      ]
+    },
+    {
+      "name": "wrong_page_key",
+      "passed": true,
+      "expected_failed_gate": "multiline_exact_BIOS_to_serial_body",
+      "failed_gates": [
+        "multiline_exact_BIOS_to_serial_body"
+      ]
+    },
+    {
+      "name": "wrong_page_position",
+      "passed": true,
+      "expected_failed_gate": "multiline_page_start_and_end",
+      "failed_gates": [
+        "multiline_all318_cursor_effects_match_TCP",
+        "multiline_page_start_and_end"
+      ]
+    },
+    {
+      "name": "missing_edited_line29",
+      "passed": true,
+      "expected_failed_gate": "multiline_edited_line29_redisplayed",
+      "failed_gates": [
+        "multiline_edited_line29_redisplayed"
+      ]
+    },
+    {
+      "name": "missing_shortened_line30",
+      "passed": true,
+      "expected_failed_gate": "multiline_shortened_line30_redisplayed",
+      "failed_gates": [
+        "multiline_shortened_line30_redisplayed"
+      ]
+    },
+    {
+      "name": "missing_tail_redisplay",
+      "passed": true,
+      "expected_failed_gate": "multiline_tail_redisplayed",
+      "failed_gates": [
+        "multiline_tail_redisplayed"
+      ]
+    },
+    {
+      "name": "missing_DOS_tail",
+      "passed": true,
+      "expected_failed_gate": "multiline_actual_DOS_tail_and_cursor_visible",
+      "failed_gates": [
+        "multiline_actual_DOS_tail_and_cursor_visible"
+      ]
+    },
+    {
+      "name": "missing_DOS_cursor",
+      "passed": true,
+      "expected_failed_gate": "multiline_actual_DOS_tail_and_cursor_visible",
+      "failed_gates": [
+        "multiline_actual_DOS_tail_and_cursor_visible"
+      ]
+    },
+    {
+      "name": "earlier_tail_screen_cannot_finish",
+      "passed": true,
+      "expected_failed_gate": "multiline_actual_DOS_tail_and_cursor_visible",
+      "failed_gates": [
+        "multiline_actual_DOS_tail_and_cursor_visible"
+      ]
+    },
+    {
+      "name": "missing_position_response",
+      "passed": true,
+      "expected_failed_gate": "multiline_all318_cursor_effects_match_TCP",
+      "failed_gates": [
+        "multiline_all318_cursor_effects_match_TCP",
+        "multiline_seed30_hard_lines",
+        "multiline_cross_line_edit_effects",
+        "multiline_page_start_and_end"
+      ]
+    }
+  ],
+  "original_TCP_captures_unchanged": true,
+  "inputs": {
+    "lab/bbs/check_editor_multiline_evidence.py": "0b307eebb3fe03144889653ff345e2b72671bf75a840771632c086641e66cfce",
+    "lab/bbs/editor_multiline_evidence.py": "b806dc34c5b924c332f1ab2b0bfa143d302330f60fc68e6580eac504be915530",
+    "build/bbs-lab/editor-multiline-keys-04/result.json": "69bda3c4f30925f42d1438fc4c3a3e271c4e8a98f43d576e55562ee25e6e39ae",
+    "docs/validation/current-enigma-multiline-reference-04.json": "9f7ed554819eb20f907ea1b33ca359b2cd90de68b01b5fdb0a40db6a0ea2dc5b"
+  },
+  "scope": "Semantic audit controls only: real retained TCP display and typed body, explicitly synthetic final DOS video, and ten damaged copies. Missing/wrong keys, positions, edited redisplay, either final-video marker and the earlier INS31,05 tail screen must reject. No new DOS application, audio or hardware acceptance.",
+  "source_receipt": "build/bbs-lab/editor-multiline-evidence-03.json",
+  "source_receipt_sha256": "5d51f0e20b7fee8d50ee480f01b1b69bc807c4f216f456092bd4f33ded9b8ee7"
+}

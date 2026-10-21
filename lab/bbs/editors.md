@@ -33,15 +33,17 @@ confirms Home changes cursor column6 to1, End to7, Delete removes the final E,
 Insert changes INS to OVR, Tab advances to a tabstop, and Ctrl-Y clears the
 line. Escape/Right/Enter returns to `messageBaseMainMenu` through Discard.
 The one-line PageUp/Down checks exercise only document boundaries. The separate
-[multiline TCP reference](../../docs/validation/current-enigma-multiline-reference-02.json)
-now passes24 checks on the same pinned stock editor with a14-line viewport.
+[multiline TCP reference](../../docs/validation/current-enigma-multiline-reference-04.json)
+now passes25 checks on the same pinned stock editor with a14-line viewport.
 It types30 hard lines (`L01:ABCD` through `L30:ABCD`), edits line29 through
 Up/Home/H/Delete/End, shortens line30 through Down/Backspace, then creates line31
 with Enter and `TAIL`. Exact cursor responses pass. Three PageUp operations
 move31->17->14->1 and three PageDown move1->15->29->31, retaining column5.
 The changed `H29:ABCD`, shortened `L30:ABC` and new `TAIL` reappear on scrolling.
 The message count and source/configuration remain unchanged; the connection
-closes without Save. The [first failed expectation](../../docs/validation/current-enigma-multiline-reference-failure-01.json)
+closes without Save. A final Insert changes the status to OVR31,05; this unique
+mode/status follows every page operation and can gate actual DOS exit without
+matching the earlier INS31,05 tail screen. The [first failed expectation](../../docs/validation/current-enigma-multiline-reference-failure-01.json)
 and its source/captures stay preserved: two PageUp presses reach line14, not1.
 This is TCP reference evidence; actual DOS/audio multiline acceptance is pending.
 
@@ -52,6 +54,37 @@ This is TCP reference evidence; actual DOS/audio multiline acceptance is pending
 
 Use a fresh output directory. Captures include each operation, exact wire/event
 streams, bounded server rows, cursor positions and source/config identities.
+The [corrected parser capture](../../docs/validation/current-enigma-multiline-reference-03.json)
+retains the intermediate fixed-width footer correction. The older02 capture's
+final-position checks and raw bytes remain preserved, but its variable-width
+intermediate column parsing is not the current oracle.
+
+The [multiline BIOS preparation](../../docs/validation/audio-editor-multiline-keys.json)
+passes five actual8086 cases/20 checks: exact288 body keys and Alt-X, independent
+text/cursor final guards, missing-prerequisite/final-output watchdogs and timer/
+hardware restoration. Both earlier paced/rapid helpers assemble byte-identically.
+The [semantic controls](../../docs/validation/editor-multiline-evidence-controls.json)
+reject ten changed copies, including the earlier INS31,05 tail screen. Their
+final video is explicitly synthetic; they grant no application/audio acceptance.
+Fixed two-digit footer parsing requires all318 position responses, including
+each newline's duplicate report, rather than absorbing adjoining typed digits.
+
+The opt-in actual audio route is:
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/synthmodem_audio_dos.py \
+  --route editor --runtime build/bbs-lab/synthmodem-buffered-runtime-01/runtime \
+  --buffered-runtime-proof build/bbs-lab/synthmodem-buffered-runtime-01/result.json \
+  --editor-multiline-checks build/bbs-lab/editor-multiline-keys-04/result.json \
+  --output build/bbs-lab/current-enigma-editor-multiline-audio-NEW
+```
+
+Use fresh output; the current `-01` run is active. Normal helper delays360/3
+ticks, a21600-tick watchdog and1220-second host bound allow the larger draft and
+redraw stream to drain. The generated helper must match the proof's production
+binary hash. Source/runtime hashes, independent caller bytes, full display,
+all cursor/redisplay effects, final DOS video, message count and normal hardware/
+SIP cleanup still require actual-run audits before any multiline audio acceptance.
 
 Synchronet commit `9de2c48d0265b07e1a8406d8a55d31df4fad7ee8`:
 `ctrl/xtrn.ini` registers FSEDITOR as `?fseditor %f`;
