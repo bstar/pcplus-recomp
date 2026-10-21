@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Synchronet audio02 is running after correcting two ANSI-split raw wait needles; all13 remote wait tokens match independent raw captures and the prerequisite is frozen. Original acceptance gates unchanged. First audio01 recipe failure and prior ENiGMA accepted/failed evidence preserved. No new Synchronet audio acceptance yet; remaining workflows, pressure/loss, physical and F01-F16 stay open.",
+  "status": "Synchronet audio02 passes all65 producer/whole-stream/ownership gates for read-only login/bulletin/files/empty-message/final-main navigation with exact81/26919-byte streams and normal cleanup. First recipe failure and earlier ENiGMA evidence remain preserved. Editors/transfers, sustained pressure/loss, stock closing/cleanup, physical and F01-F16 remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3742,13 +3742,15 @@
       "receipt_sha256": "ca351284abf622ad99729dade25f832c1d4c07812ef0da971528a704c4fe6e49"
     },
     "synthmodem-synchronet-audio-02": {
-      "status": "running",
-      "passed": null,
+      "status": "accepted_read_only_audio_navigation_scope",
+      "passed": true,
       "peer": "Synchronet official archived3.22a snapshot",
       "raw_recipe_receipt": "docs/validation/synchronet-audio-recipe-02.json",
-      "acceptance": "Pending all original producer/full-stream/route/native-input/server-preservation/minimum-hold/RTP/SIP/hardware-cleanup gates; two raw needles corrected only",
+      "acceptance": "All65 producer/independent/ownership checks pass: complete read-only route, exact81/26919-byte streams,6000ms minimum, preserved server/message/counters and normal DOS/hardware/SIP cleanup. Scoped navigation acceptance only.",
       "DTE_bps": 38400,
-      "software_carrier_bps": 1200
+      "software_carrier_bps": 1200,
+      "receipt": "docs/validation/synthmodem-synchronet-audio-02.json",
+      "receipt_sha256": "37b7595b4127247adc503aec05cead4c1e66b205e94fb018e99af83903fe4e18"
     }
   },
   "diagnosis": {
@@ -3795,13 +3797,13 @@
   },
   "remaining": [
     "Historical in-session insertions lack complete diagnostic evidence; clean editor07/download03 runs do not establish their cause or a general correction.",
-    "Unmodified-stock uploads,transfer cancellation/loss/sustained pressure,Synchronet through audio and physical Boca/SPA2102 acceptance remain required.",
+    "Unmodified-stock uploads,transfer cancellation/loss/sustained pressure,Synchronet editor/transfer workflows through audio and physical Boca/SPA2102 acceptance remain required.",
     "All F01-F16 whole-application completion gates remain open.",
     "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
     "Extend the accepted modified-helper fixed-DTE slow-carrier upload to pressure/cancel/loss and other peers; retain every CRC/finish,storage,post-helper input and cleanup gate."
   ],
   "current_cohort": "synthmodem-synchronet-audio-02",
-  "latest_cohort_passed": null,
+  "latest_cohort_passed": true,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
     "offline_caller_equals_DOS_online": true,
@@ -3865,11 +3867,13 @@
   "audio_upload_retry_receipt": "docs/validation/synthmodem-audio-upload-retry-02.json",
   "audio_upload_retry_receipt_sha256": "e553eaee6e41126abfaf876825bb9a69929fede92a19a174977fade67892a8be",
   "posttrain_candidate_receipt": "docs/validation/synthmodem-posttrain-runtime.json",
-  "latest_completed_cohort": "synthmodem-synchronet-audio-01",
-  "latest_completed_cohort_passed": false,
+  "latest_completed_cohort": "synthmodem-synchronet-audio-02",
+  "latest_completed_cohort_passed": true,
   "audio_upload_retry_failure_receipt": "docs/validation/synthmodem-audio-upload-retry-01.json",
   "accepted_candidate_retry_cohort": "synthmodem-audio-upload-retry-02",
   "posttrain_audio_receipt": "docs/validation/synthmodem-audio-upload-retry-02.json",
   "synchronet_audio_failure_receipt": "docs/validation/synthmodem-synchronet-audio-01.json",
-  "active_peer_cohort": "synthmodem-synchronet-audio-02"
+  "synchronet_audio_receipt": "docs/validation/synthmodem-synchronet-audio-02.json",
+  "synchronet_audio_receipt_sha256": "37b7595b4127247adc503aec05cead4c1e66b205e94fb018e99af83903fe4e18",
+  "accepted_synchronet_audio_cohort": "synthmodem-synchronet-audio-02"
 }

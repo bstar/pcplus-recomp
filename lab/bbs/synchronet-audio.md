@@ -87,8 +87,31 @@ reference phases. The producer requires `--recipe-checks`, validates every
 recorded source/capture hash and freezes that prerequisite alongside the
 reference and observer checks.
 
-Fresh audio02 is running with the unchanged DOS binary, timer/key-framing
-runtime, DTE, DSP and BBS listener/config/account policy. Every original gate
-remains active. The first failed audio capture, reports and raw-token diagnostic
-stay unchanged (source checkpoint d03c179). No new audio acceptance follows until
-natural producer exit and all same-run independent audits pass.
+The [completed audio02](../../docs/validation/synthmodem-synchronet-audio-02.json)
+passes all65 producer, independent and ownership checks with the unchanged DOS
+binary, timer/key-framing runtime, DTE, DSP and BBS listener/config/account
+policy. Exact81 online bytes,26919 display bytes,6000ms minimum, real native
+replies/input and the complete read-only route validate. All27128 frontend
+bytes complete with no skipped/failed/pending bytes. The official archived ELF,
+877 code/config/menu files, loaded libraries and message bodies preserve, while
+message/mail/transfer counters remain unchanged. Normal DOS/UART/PIC/IRQ/timer/
+SIP restoration passes. The independent offline caller matches every byte.
+
+The first failed audio capture, reports and raw-token diagnostic stay unchanged
+(source checkpoint d03c179). Acceptance is limited to this captured navigation
+workflow; editor/transfer, sustained pressure/loss, arbitrary-peer, physical and
+F01-F16 application gates remain open.
+
+
+Seal a fully audited navigation run after all independent checks:
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/record_synchronet_audio.py COHORT \
+  --output docs/validation/synthmodem-synchronet-audio-NEW.json
+```
+
+The recorder requires exact frozen source/runtime/tool/server inputs, unchanged
+message bodies/counters, all original acceptance checks, raw recipe/reference/
+observer prerequisites, full independent offline decode and native/guest/BBS/
+caller identity. Its positive result grants no broader application or hardware
+acceptance. The sealed first failure remains separate.
