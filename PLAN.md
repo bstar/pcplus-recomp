@@ -7,23 +7,25 @@ data, reconnect and transfer runs. No physical compatibility or 14400-bps claim
 is established; the adapter has not arrived. PCPlus remains a serial terminal,
 with SIP/audio/Telnet handled by the Linux bridge.
 
-The [current reconnect campaign](lab/bbs/synchronet-reconnect-audio.md) now
-completes a real software-audio bridge restart and exact download retry with the
-unchanged DOS terminal/ASPECT. A stale-screen BIOS-helper key injection was
-isolated and corrected. The completed run passes18 of19 producer gates plus
-scoped independent protocol, serial, metadata and damaged-evidence checks; its
-loss-notice screen capture remains missing, so overall acceptance stays false.
-A full-screen observer passes its actual DOS regression, and the fresh audio
-run must capture loss before completion. Next revalidate current ENiGMA audio
-interaction/transfer, then continue sustained/protocol/profile and the complete
-F01–F16 application work. These scoped results do not close the full plan.
+The [current reconnect campaign](docs/validation/current-synchronet-reconnect-audio-04.json)
+now passes all19 producer gates and the independent full protocol/byte/notice
+audit with the source-built200ms no-discard runtime and unchanged976 terminal.
+After an exact8192-byte partial and delivered ACK, real bridge shutdown drops
+emulated DCD; the same DOS process redials and receives the exact11521-byte
+source plus127 padding bytes across14 CRC blocks. Both113/121-byte upstream
+streams, loss-before-completion capture, Files/Main return,42 hardware bytes and
+timer restore pass. Two13-check serial audits,7 official metadata checks and31
+damaged-evidence rejections pass. The earlier18/19 missing-notice run and helper/
+ACK/media failures remain retained. Next complete current ENiGMA audio editor/
+transfer, sustained/protocol/profile and all F01–F16 application work. This is
+scoped bridge-process recovery acceptance, not general/physical completion.
 
-The [next audio repeat](docs/validation/current-synchronet-reconnect-audio-03.json)
-adds a mandatory integrity investigation:119 exact DOS/caller-waveform bytes
+The [retained failed repeat](docs/validation/current-synchronet-reconnect-audio-03.json)
+exposed an integrity counterexample:119 exact DOS/caller-waveform bytes
 become123 guest/BBS bytes before file selection. The strict stop barrier refuses
 the mismatch, so the completed first file is not a reconnect pass. Preserve the
-counterexample and add guest PCM/arrival-timing observations to isolate the
-media/DSP/helper boundary before repeating loss/retry and claiming reliability.
+counterexample alongside the subsequent guest PCM and controlled timing evidence;
+a later passing run does not establish this untraced event's exact cause.
 
 The [guest PCM diagnostic](docs/validation/synchronet-audio-integrity-trace-01.json)
 now proves a media discontinuity in a fresh current-terminal run:39,948 exact,
@@ -34,9 +36,8 @@ the RTP prefix plus three startup silence frames. The caller decoder recovers
 guest-PCM decoder emits110, with unwanted bytes at authored offset76. This
 diagnostic exits normally via the keyboard watchdog and restores DOS hardware,
 but no transfer or reconnect completes; an ASPECT error and the adapter's delayed
-frontend-exit error remain retained. Next isolate buffering/clock scheduling with
-a controlled delay increase, then validate a source-built bridge correction
-before repeating the full current DOS workflows. This does not establish the
+frontend-exit error remain retained. The controlled delay increase below
+reproduces the silence-insertion class. This does not establish the
 exact cause of the earlier untraced four-byte event.
 
 A [bounded120ms delay-growth diagnostic](docs/validation/synthmodem-delay-increase.json)
@@ -45,8 +46,8 @@ candidate. Its27 independent checks verify real training, exact caller payload,
 unchanged continuous delivered RTP prefixes and full guest waveform
 reconstruction. Six in-call silence frames corrupt34 authored bytes into38
 guest bytes; the reverse6000 bytes stay exact. This is a retained failure, not
-acceptance. Next test a separately built buffering/timing candidate against
-both growth and shrinkage before current DOS/BBS repeats. The first fixture's
+acceptance. The separately built candidate below passes both timing directions.
+The first fixture's
 empty-delay-queue mistake is preserved separately.
 
 The [200ms no-discard candidate](docs/validation/synthmodem-buffered-timing.json)
@@ -57,16 +58,17 @@ with constant220ms/520ms delays. Independent raw-sample checks reject a changed
 PCM sample despite refreshed manifest/decoder identities and a stale analyzer
 claim; rehashed framed-data damage also rejects. A separately verified normal
 runtime changes only d-modem. The full current DOS/Synchronet reconnect campaign
-`current-synchronet-reconnect-audio-04` is running with that explicit stage proof;
-it has no acceptance result yet. ENiGMA, sustained timing, physical commissioning
+`current-synchronet-reconnect-audio-04` now has scoped acceptance with that stage
+proof. ENiGMA, sustained timing, physical commissioning
 and all F01–F16 application gates remain required.
 
 The ENiGMA runner now accepts the same explicit buffered-runtime proof for its
 existing editor/download/menu/upload routes. A
 [read-only preparation record](docs/validation/buffered-enigma-preflight.json)
 verifies the42 runtime files, live owned pinned/clean ENiGMA tree and CLI profile
-selection/rejection. It starts no audio or DOS session and closes no ENiGMA gate;
-the actual editor/transfer repeats follow the active Synchronet campaign.
+selection/rejection. The preparation starts no audio or DOS session and closes
+no ENiGMA gate. The actual current editor campaign is now running and has no
+acceptance result yet; the transfer repeat follows it.
 
 The hardware target's [work order and completion gates](docs/ANALOG_MODEM_INTEGRATION.md#work-order-and-completion-gates)
 prioritize carrier/data separation and full audio-path pressure/editor/transfer

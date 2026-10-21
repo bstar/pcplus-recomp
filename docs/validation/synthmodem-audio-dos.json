@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Current976 stock Synchronet XMODEM-CRC download has scoped acceptance. One corrected recovery run completes exact retry, menus and cleanup with18 of19 producer gates; its loss-notice capture is missing. The next normal repeat reveals intermittent upstream corruption:119 exact DOS/caller-audio bytes become123 guest/BBS bytes, with four inserted bytes at authored offset77 before file selection. Its strict stop barrier refuses the mismatch; no loss/retry is injected, and the owned failed test is stopped without a normal-cleanup claim. Guest PCM/arrival timing must isolate the media/DSP/helper cause. Earlier helper/ACK failures and the completed diagnostic retry remain retained. Overall audio integrity/reconnect, current ENiGMA/upload/cancel/retry, sustained pressure, stock receiver cleanup/closing, physical Boca/SPA2102 and F01-F16 remain open.",
+  "status": "Current976 stock Synchronet XMODEM bridge-process recovery has scoped acceptance with the source-built200ms DISCARD_NONE runtime:19 producer gates, exact113/121-byte upstream streams and complete retry display,14 CRC source blocks, loss-before-completion capture, normal DOS/hardware cleanup, official metadata count23->24 and31 damaged-evidence rejections. Controlled growth/shrinkage and guest PCM evidence are retained separately. Earlier failed/incomplete cohorts remain historical counterexamples. Current ENiGMA editor is running without acceptance yet. General/sustained audio integrity, live bridge reuse, current upload/cancel/retry, stock receiver closing/cleanup, physical Boca/SPA2102 and F01-F16 remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3901,17 +3901,17 @@
     "offline_evidence_sha256": "fb6931b33b5382e73b5ac3e99a5becacdc23ac13d120ab8d58c392db1706aea1"
   },
   "remaining": [
-    "Diagnose current976 second ASPECT invocation after actual audio bridge restart: unsupported command/service error3, opcodeD4, step2; observed status label57600.ASX. Both DSPs retrain but no BBS address is sent. Preserve all four failed producer gates and the first call's one-ACK shutdown tail loss. Short linked queue probe does not reproduce the live failure; isolate actual DOS script/transfer state before changing product behavior.",
+    "Complete current976 ENiGMA editor/download and broader normal-runtime repeats. Stock Synchronet bridge-process loss/redial/exact XMODEM retry now passes with the200ms runtime, full notices/CRC/ACK/menu/cleanup and independent metadata/evidence checks. Preserve the original helper, in-flight ACK and media-corruption failures as historical evidence; no whole-application gate closes.",
     "Historical in-session insertions lack complete diagnostic evidence; clean editor07/download03 runs do not establish their cause or a general correction.",
-    "Ordinary stock Synchronet XMODEM upload/download, scoped cancellation and receiver-ready-gated same-call same-source retry have accepted audio receipts. Actual carrier loss/reconnect, sustained pressure, other protocol families, stock ZMODEM closing/cleanup and physical Boca/SPA2102 still require their own passing gates.",
+    "Ordinary stock Synchronet XMODEM upload/download, scoped cancellation, receiver-ready-gated same-call retry and current200ms bridge-process recovery have scoped receipts. Analog waveform-loss detection, long-lived bridge reuse, sustained pressure, other protocols, stock ZMODEM closing/cleanup and physical Boca/SPA2102 still require their own passing gates.",
     "All F01-F16 whole-application completion gates remain open.",
     "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
     "Extend the accepted modified-helper fixed-DTE slow-carrier upload to pressure/cancel/loss and other peers; retain every CRC/finish,storage,post-helper input and cleanup gate.",
     "Stock Synchronet published/indexed a1024-byte failed-reference partial despite E/helper error. Preserve evidence; cancellation/loss cleanup and trustworthy completion require full wire/source/finish accounting. Accepted upload has3 source-attributed startup retries, not zero startup retries.",
-    "Current976 stock Synchronet XMODEM-CRC download is audio-validated in its separate receipt; emulated-DCD ENiGMA loss/redial/retry and clean-source rebuild also pass. Native midframe Escape and scoped same-call startup retry retain historical3b audio acceptance. Current-build SIP/audio carrier-loss/reconnect/pressure, current upload/cancel/retry and current ENiGMA editor/transfer coverage remain required. Preserve all prior failures; stock indexed partial cleanup, arbitrary paused-text handshake ambiguity and broader profile/protocol/hardware gates remain open."
+    "Current976 stock Synchronet XMODEM-CRC download and source-built200ms SIP/audio bridge-process loss/redial/retry are accepted in separate receipts; emulated-DCD ENiGMA retry and clean-source rebuild also pass. Native midframe Escape and scoped same-call startup retry retain historical3b audio acceptance. Current ENiGMA editor/transfer, current upload/cancel/retry, sustained pressure, stock indexed-partial cleanup, arbitrary paused-text handshake ambiguity and broader profile/protocol/hardware gates remain open."
   ],
-  "current_cohort": "synthmodem-synchronet-retry-startup-audio-01",
-  "latest_cohort_passed": false,
+  "current_cohort": "current-synchronet-reconnect-audio-04",
+  "latest_cohort_passed": true,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
     "offline_caller_equals_DOS_online": true,
@@ -3975,8 +3975,8 @@
   "audio_upload_retry_receipt": "docs/validation/synthmodem-audio-upload-retry-02.json",
   "audio_upload_retry_receipt_sha256": "e553eaee6e41126abfaf876825bb9a69929fede92a19a174977fade67892a8be",
   "posttrain_candidate_receipt": "docs/validation/synthmodem-posttrain-runtime.json",
-  "latest_completed_cohort": "synthmodem-synchronet-retry-startup-audio-01",
-  "latest_completed_cohort_passed": false,
+  "latest_completed_cohort": "current-synchronet-reconnect-audio-04",
+  "latest_completed_cohort_passed": true,
   "audio_upload_retry_failure_receipt": "docs/validation/synthmodem-audio-upload-retry-01.json",
   "accepted_candidate_retry_cohort": "synthmodem-audio-upload-retry-02",
   "posttrain_audio_receipt": "docs/validation/synthmodem-audio-upload-retry-02.json",
@@ -4026,8 +4026,14 @@
   "current_synchronet_reconnect_audio_workflow_receipt_sha256": "b3f2f1915298561cb6cd87852a49b9626e14f6ba7694f760d6d1b8b89dcde560",
   "reconnect_helper_diagnosis_receipt": "docs/validation/reconnect-stale-prompt-diagnosis.json",
   "reconnect_helper_diagnosis_receipt_sha256": "72dfad4201e8d6c20b6a832242f16dd0dd45640f7445e710d56d4fd7426ad09c",
-  "current_audio_reconnect_accepted": false,
+  "current_audio_reconnect_accepted": true,
   "current_synchronet_reconnect_audio_integrity_failure_receipt": "docs/validation/current-synchronet-reconnect-audio-03.json",
   "current_synchronet_reconnect_audio_integrity_failure_receipt_sha256": "f62d3cd9d2df42a889716bfdb674d0e6ab6f0afd8876ddf46058ae90357ae2b4",
-  "current_audio_integrity_open": true
+  "current_audio_integrity_open": true,
+  "current_synchronet_reconnect_audio_receipt": "docs/validation/current-synchronet-reconnect-audio-04.json",
+  "current_synchronet_reconnect_audio_receipt_sha256": "a56f16e0d6c99760a44d3909ec057b3035104f25b09a1140b478f64be29f5952",
+  "active_cohort": "current-enigma-editor-audio-01",
+  "active_cohort_status": "running; no acceptance result",
+  "buffered_timing_receipt": "docs/validation/synthmodem-buffered-timing.json",
+  "buffered_timing_receipt_sha256": "f263725327f61163ffe91386ff6861fb2a890a9994812c519fb076fb61316505"
 }

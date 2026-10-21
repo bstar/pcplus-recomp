@@ -3,9 +3,11 @@
 This campaign combines the current source-built terminal, source-built DOS
 ASPECT compiler/runner, DOSBox-X's built-in Hayes modem, the pinned real
 SIP/RTP/V.22-1200 software audio path and the unchanged owned stock Synchronet
-server. The [first retained run](../../docs/validation/current-synchronet-reconnect-audio-01.json)
-fails reconnect acceptance; the failure is described below. Neither the producer
-nor the complete independent acceptance audit has passed this campaign.
+server. The [current200ms run](../../docs/validation/current-synchronet-reconnect-audio-04.json)
+passes all19 producer gates, the complete independent audit,7 official metadata
+checks and31 damaged-evidence controls. The
+[first retained failure](../../docs/validation/current-synchronet-reconnect-audio-01.json)
+and subsequent helper/media counterexamples are preserved below.
 
 One DOS process authenticates and starts the ordinary XMODEM download. The host
 observer reads the actual partial file and requires an exact, incomplete source
@@ -96,6 +98,29 @@ and no PCM exporter. Use the explicit stage receipt for a full DOS repeat:
 These controlled audio and staging results do not accept the DOS reconnect
 workflow. Retain all nineteen producer checks and the independent full byte,
 CRC, loss-notice, metadata and cleanup audits on the actual new run.
+
+The completed `current-synchronet-reconnect-audio-04` supplies that separate
+normal-DOS acceptance. Its first call preserves113 authored online bytes across
+DOS, independent caller audio, guest DATA_RX and the BBS input. Ten CRC source
+blocks verify10240 bytes; the observer stops the actual bridge after an8192-byte
+partial and a delivered ACK. The partial is removed before the second call.
+Both DSPs train again, and all121 retry input bytes and the complete49675-byte
+BBS display survive. Fourteen CRC frames yield11521 source bytes plus127 SUB
+padding bytes, followed by the required two EOT responses, Files/Main input,
+normal DOS exit and restored UART/PIC/vector/timer state.
+
+The observer captures `Carrier lost` before `RX complete`; its raw loss row,
+including a trailing `t`, is retained verbatim. Official FileBase counts are23
+before both attempts and24 afterward, with one successful download log. Eight
+new controls reject missing/reversed/disagreeing/truncated/invalid notice
+captures in addition to the23 adapter/audio/protocol/boundary controls. The
+independent positive audit reads the same notice validator. No missing notice
+or other gate is waived.
+
+This accepts one software bridge-process failure/restart with fresh per-call
+VMs and emulated DCD. Long-lived bridge reuse, analog waveform-loss behavior,
+broader timing/protocol/profile/UI coverage, ENiGMA and physical hardware remain
+separate requirements.
 
 ## Guest audio diagnosis
 

@@ -4,7 +4,7 @@ import argparse,copy,json,struct
 from pathlib import Path
 from audio_synchronet import ROOT,sha
 from audio_synchronet_download import source
-from audit_synchronet_reconnect_audio import verify_streams,verify_stop_boundary
+from audit_synchronet_reconnect_audio import verify_streams,verify_stop_boundary,verify_notices
 from audit_audio_download import frontend_trace
 from test_transfer_dos import audit_protocol,audit_controls,timestamp
 from synthmodem_gateway import records
@@ -27,6 +27,22 @@ def main():
         try:fn()
         except (AssertionError,ValueError,KeyError,StopIteration) as e:cases.append(dict(case=name,rejected=True,reason=str(e)))
         else:raise AssertionError('Damaged audio reconnect evidence accepted: '+name)
+    if not a.diagnostic:
+        raw=(cohort/'LABELS.BIN').read_bytes();notices=verify_notices(raw,r['notices'])
+        loss=next(i for i,s in enumerate(notices) if 'RX carrier lost' in s or 'Carrier lost' in s)
+        complete=next(i for i,s in enumerate(notices) if 'RX complete' in s)
+        def rows(indices):
+            changed=bytearray(raw[:6]+bytes(2560));struct.pack_into('<H',changed,2,len(indices))
+            for index,original in enumerate(indices):changed[6+index*160:6+(index+1)*160]=raw[6+original*160:6+(original+1)*160]
+            return bytes(changed),[notices[i] for i in indices]
+        for name,indices in [('missing-loss-notice',[complete]),('missing-completion-notice',[loss]),('completion-before-loss',[complete,loss])]:
+            damaged,claimed=rows(indices)
+            reject(name,lambda damaged=damaged,claimed=claimed:verify_notices(damaged,claimed))
+        reject('notice-claims-disagree-with-raw',lambda:verify_notices(raw,notices+['fabricated']))
+        reject('truncated-notice-capture',lambda:verify_notices(raw[:-1],notices))
+        for name,offset,value in [('wrong-notice-magic',0,0),('empty-notice-count',2,0),('oversized-notice-count',2,17)]:
+            damaged=bytearray(raw);struct.pack_into('<H',damaged,offset,value)
+            reject(name,lambda damaged=bytes(damaged):verify_notices(damaged,notices))
     def mutate(name,leaf,data,remote=False):
         folder=out/name;folder.mkdir();c=folder/'call';b=folder/'bbs';c.mkdir();b.mkdir()
         for src,dst in ((call,c),(bbs,b)):
@@ -91,7 +107,7 @@ def main():
     result=dict(passed=True,diagnostic=a.diagnostic,compatibility_accepted=False,cases=cases,cohort=str(cohort.relative_to(ROOT)),
         inputs={n:sha(ROOT/n) for n in ('lab/bbs/check_synchronet_reconnect_controls.py','lab/bbs/audit_synchronet_reconnect_audio.py','lab/bbs/test_transfer_dos.py','lab/bbs/audit_audio_download.py')},
         accepted_audit_sha256=sha(audit),
-        scope='Read-only replay of accepted call2 plus isolated damaged symlink-copy fixtures and interrupted-call stop-boundary controls. Missing/extra adapter/audio/Telnet bytes, wrong decoder, missing actual BYE, broken RTP sequence, missing/duplicate/late stop barriers, changed observed prefixes, CRC/source corruption and early/late ACK timing must reject. Original captures remain unchanged; no new DOS/audio execution.')
+        scope='Read-only replay of accepted call2 plus isolated damaged symlink-copy fixtures, mandatory loss/completion notices and interrupted-call stop-boundary controls. Missing/reversed/invalid notices, missing/extra adapter/audio/Telnet bytes, wrong decoder, missing actual BYE, broken RTP sequence, missing/duplicate/late stop barriers, changed observed prefixes, CRC/source corruption and early/late ACK timing must reject. Original captures remain unchanged; no new DOS/audio execution.')
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(dict(passed=True,rejected=len(cases))))
 
 if __name__=='__main__':main()

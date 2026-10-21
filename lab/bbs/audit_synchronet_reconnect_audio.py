@@ -11,6 +11,16 @@ from synchronet import Peer
 from audit_audio_download import frontend_trace
 from test_transfer_dos import audit_protocol,audit_controls,timestamp,packet_at
 
+def verify_notices(raw,claimed):
+    assert len(raw)==2566
+    magic,count,_=struct.unpack_from('<3H',raw);assert magic==0x4e5a and 0<count<=16
+    notices=[raw[6+i*160:6+(i+1)*160:2].decode('cp437') for i in range(count)]
+    assert notices==claimed
+    loss=next(i for i,s in enumerate(notices) if 'RX carrier lost' in s or 'Carrier lost' in s)
+    complete=next(i for i,s in enumerate(notices) if 'RX complete' in s)
+    assert loss<complete
+    return notices
+
 def verify_stop_boundary(adapter,partial,online,sent):
     stops=[e for e in adapter['events'] if e['event']=='owned-frontend-SIGTERM']
     connects=[e for e in adapter['events'] if e['event']=='both-DSP-CONNECT']
@@ -88,13 +98,7 @@ def main():
     if args.diagnostic:assert not r['passed'] and failed==['carrier_loss_observed']
     else:
         assert r['passed'] and not failed
-        raw=(out/'LABELS.BIN').read_bytes();assert len(raw)==2566
-        magic,count,_=struct.unpack_from('<3H',raw);assert magic==0x4e5a and 0<count<=16
-        notices=[raw[6+i*160:6+(i+1)*160:2].decode('cp437') for i in range(count)]
-        assert notices==r['notices']
-        loss=next(i for i,s in enumerate(notices) if 'RX carrier lost' in s or 'Carrier lost' in s)
-        complete=next(i for i,s in enumerate(notices) if 'RX complete' in s)
-        assert loss<complete
+        verify_notices((out/'LABELS.BIN').read_bytes(),r['notices'])
     expected=source().read_bytes();assert sha(source())==r['source_sha256']
     decoder_sha=next(h for n,h in r['runtime_inputs'].items() if n.endswith('/src/dsp/protocols/V22Demodulator.js'))
     one=verify_streams(out/'call-1',out/'bbs-1',complete=False,decoder_sha=decoder_sha)

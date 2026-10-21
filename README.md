@@ -26,19 +26,16 @@ now passes complete file/CRC/finish checks, a fresh BBS search and clean DOS
 return at V.22/1200 with fixed38400 DTE. Uploads and broader audio-path/hardware
 acceptance remain separate.
 
-A [later current-build audio repeat](docs/validation/current-synchronet-reconnect-audio-03.json)
-retains four extra guest-decoded input bytes despite exact caller audio. The
-file recovers, but audio integrity and reliable reconnect remain unverified.
-A [fresh guest-audio trace](docs/validation/synchronet-audio-integrity-trace-01.json)
-localizes another failure to two inserted silence frames in the guest waveform;
-both answering and independent waveform decoders produce unwanted bytes. The
-caller RTP remains exact. A bridge correction and full workflow repeat remain
-required.
-
 The [source-built200ms buffering candidate](docs/validation/synthmodem-buffered-timing.json)
-now preserves exact bytes and raw waveform samples through separate controlled
-delay-growth and backlog-release tests. Full DOS/BBS and physical compatibility
-remain unverified; a normal-startup current DOS reconnect repeat is underway.
+preserves exact bytes/waveforms through controlled delay growth and backlog
+release. The [current DOS reconnect run](docs/validation/current-synchronet-reconnect-audio-04.json)
+now passes19 producer gates, complete CRC/ACK/menu/loss-notice and cleanup audits,
+official download accounting and31 evidence-corruption checks. One DOS process
+recovers after actual software bridge shutdown and retries an exact download.
+Earlier [input-corruption](docs/validation/current-synchronet-reconnect-audio-03.json)
+and [guest silence-insertion](docs/validation/synchronet-audio-integrity-trace-01.json)
+counterexamples remain retained. Current ENiGMA, sustained/general audio and
+physical compatibility remain open; the ENiGMA editor repeat is underway.
 
 ASPECT recovery now includes a [literal codec](docs/ASPECT_LITERAL.md),
 [native dispatcher](docs/ASPECT_DISPATCH.md) and
