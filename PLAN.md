@@ -216,6 +216,10 @@ lrzsz/SEXYZ peers, existing receive/completion/cancel and ABI regressions pass;
 an actual DOS automatic three-file download passes14 checks. DS=SS remains64832
 bytes. These checks accept the native change at their stated scopes; a new
 unchanged stock audio upload still needs every CRC/finish/storage/return gate.
+Upload02 is now running with that native build, the original11521-byte source,
+fixed38400 DTE and unchanged stock ENiGMA/V22-1200 framed runtime. Actual DSP
+CONNECT is observed. Keep inputs frozen until the producer and independent
+same-run byte/CRC/control/storage/return/cleanup audits finish; no pass is claimed.
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
