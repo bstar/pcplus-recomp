@@ -232,6 +232,18 @@ bounded receiver closing fix, isolated stock/candidate/reference tests and then
 a fresh owned audio fixture. No protocol shortcut or gate waiver is authorized
 by these results; unmodified-peer, physical and F01-F16 requirements stay open.
 
+The [receiver candidate](docs/validation/sexyz-receive-finish-candidate.json)
+now builds reproducibly in pinned Nix beside a same-source stock baseline.
+Its original62 C/header files reproduce the shipped source digest.24 C-owner
+bound cases, four real receiver comparisons and ten real candidate fault cases
+pass: delayed OO is consumed, queued closing headers/flow remain bounded,
+corruption/noise/incomplete closure fail, and cancellation/disconnect/deadline
+checks remain active. Every subprocess uses the original11521-byte workload.
+The candidate has not been configured in the BBS; DOS bytes, stock server/helper
+and SIP/DSP runtime remain unchanged. Next is a separately identified candidate
+board/audio run with fresh storage and all original gates. No stock or candidate
+audio upload acceptance follows from the isolated tests.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

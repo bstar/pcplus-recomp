@@ -1,0 +1,612 @@
+{
+  "passed": true,
+  "candidate_audio_accepted": false,
+  "stock_audio_upload_accepted": false,
+  "upstream_commit": "e7a825704ef5329c7ef8408749671291a85ef7f2",
+  "standalone_source_digest": "79bbd980581e7b90c4bc4506d948b0554919e40634b0bde84b3e67d76c660455",
+  "original_source_files": 62,
+  "changed_upstream_C_headers": [
+    "sexyz.c"
+  ],
+  "packages": {
+    "info": {
+      "ciyv5h7i640zycxi3932x4ifmi9c6w57-sexyz-source-baseline-3.6-e7a8257": {
+        "ca": null,
+        "deriver": "h9h4cc5jh0nld9jwyqwx23izcf453k61-sexyz-source-baseline-3.6-e7a8257.drv",
+        "narHash": "sha256-O+mbYQdvSxBL0sTkZ+6wzNMAtVnPDEbpWNyh7sIHzpc=",
+        "narSize": 1144400,
+        "references": [
+          "qqiqd3ah10x8hzsif4j1y4xc1miw23nx-glibc-2.42-67"
+        ],
+        "registrationTime": 1792561150,
+        "signatures": [],
+        "storeDir": "/nix/store",
+        "ultimate": true,
+        "version": 2
+      },
+      "y3l8kl9v0w1hv8hv6lv81ssz9jpdnz9q-sexyz-receive-finish-candidate-3.6-e7a8257": {
+        "ca": null,
+        "deriver": "8qbgwpyrlcwk5k1yh0rc0a84848acxjm-sexyz-receive-finish-candidate-3.6-e7a8257.drv",
+        "narHash": "sha256-DGsdkdDt7IR6cCnElrQ3qm4BVpfs3V6f3YNAa91rXco=",
+        "narSize": 1162744,
+        "references": [
+          "qqiqd3ah10x8hzsif4j1y4xc1miw23nx-glibc-2.42-67"
+        ],
+        "registrationTime": 1792561148,
+        "signatures": [],
+        "storeDir": "/nix/store",
+        "ultimate": true,
+        "version": 2
+      }
+    },
+    "storeDir": "/nix/store",
+    "version": 2
+  },
+  "baseline_sha256": "c842cf425dc9bbd3189a8a0d9aee222cf8f6eac26cc250ae2d3baba4d1ef0a7d",
+  "candidate_sha256": "3485669f1df011640667e2111de08d32478f2d64941af0ea02bfa13492909b52",
+  "Nix_rebuild_check": {
+    "command": "nix build ./nix#sexyz-receive-finish-candidate --rebuild --no-link",
+    "observed_exit_code": 0,
+    "stderr_sha256": "b3e32cce2dc55c6a8e37454e54728c1e7ad1a0f1ad47149bc6a2cf707721e9f9"
+  },
+  "checks": {
+    "bounds": {
+      "passed": true,
+      "cases": [
+        {
+          "case": "literal-OO-retains-app",
+          "passed": true,
+          "status": 1,
+          "consumed": 2,
+          "polls": 2,
+          "modeled_elapsed_ms": 0,
+          "cancelled": false
+        },
+        {
+          "case": "flow-between-Os",
+          "passed": true,
+          "status": 1,
+          "consumed": 4,
+          "polls": 4,
+          "modeled_elapsed_ms": 0,
+          "cancelled": false
+        },
+        {
+          "case": "queued-hex-FIN-and-ABORT",
+          "passed": true,
+          "status": 1,
+          "consumed": 43,
+          "polls": 43,
+          "modeled_elapsed_ms": 0,
+          "cancelled": false
+        },
+        {
+          "case": "queued-binary-closing",
+          "passed": true,
+          "status": 1,
+          "consumed": 24,
+          "polls": 24,
+          "modeled_elapsed_ms": 0,
+          "cancelled": false
+        },
+        {
+          "case": "nine-closing-headers",
+          "passed": true,
+          "status": 1,
+          "consumed": 182,
+          "polls": 182,
+          "modeled_elapsed_ms": 0,
+          "cancelled": false
+        },
+        {
+          "case": "ten-closing-headers-bounded",
+          "passed": true,
+          "status": 0,
+          "consumed": 200,
+          "polls": 200,
+          "modeled_elapsed_ms": 0,
+          "cancelled": false
+        },
+        {
+          "case": "bad-CRC-not-OO",
+          "passed": true,
+          "status": 0,
+          "consumed": 18,
+          "polls": 18,
+          "modeled_elapsed_ms": 0,
+          "cancelled": false
+        },
+        {
+          "case": "nonzero-position-rejected",
+          "passed": true,
+          "status": 0,
+          "consumed": 20,
+          "polls": 20,
+          "modeled_elapsed_ms": 0,
+          "cancelled": false
+        },
+        {
+          "case": "unrelated-header-rejected",
+          "passed": true,
+          "status": 0,
+          "consumed": 20,
+          "polls": 20,
+          "modeled_elapsed_ms": 0,
+          "cancelled": false
+        },
+        {
+          "case": "noise-containing-OO-rejected",
+          "passed": true,
+          "status": 0,
+          "consumed": 1,
+          "polls": 1,
+          "modeled_elapsed_ms": 0,
+          "cancelled": false
+        },
+        {
+          "case": "wrong-second-O-rejected",
+          "passed": true,
+          "status": 0,
+          "consumed": 2,
+          "polls": 2,
+          "modeled_elapsed_ms": 0,
+          "cancelled": false
+        },
+        {
+          "case": "raw-five-CAN-cancels",
+          "passed": true,
+          "status": 0,
+          "consumed": 5,
+          "polls": 5,
+          "modeled_elapsed_ms": 0,
+          "cancelled": true
+        },
+        {
+          "case": "missing-OO-timeout",
+          "passed": true,
+          "status": 0,
+          "consumed": 0,
+          "polls": 10,
+          "modeled_elapsed_ms": 10000,
+          "cancelled": false
+        },
+        {
+          "case": "single-O-timeout",
+          "passed": true,
+          "status": 0,
+          "consumed": 1,
+          "polls": 11,
+          "modeled_elapsed_ms": 10000,
+          "cancelled": false
+        },
+        {
+          "case": "byte-ceiling-for-endless-flow",
+          "passed": true,
+          "status": 0,
+          "consumed": 512,
+          "polls": 512,
+          "modeled_elapsed_ms": 0,
+          "cancelled": false
+        },
+        {
+          "case": "trickle-does-not-reset-deadline",
+          "passed": true,
+          "status": 0,
+          "consumed": 100,
+          "polls": 100,
+          "modeled_elapsed_ms": 10000,
+          "cancelled": false
+        },
+        {
+          "case": "OO-at-deadline-rejected",
+          "passed": true,
+          "status": 0,
+          "consumed": 2,
+          "polls": 2,
+          "modeled_elapsed_ms": 1000,
+          "cancelled": false
+        },
+        {
+          "case": "zero-timeout-clamped",
+          "passed": true,
+          "status": 0,
+          "consumed": 0,
+          "polls": 1,
+          "modeled_elapsed_ms": 1000,
+          "cancelled": false
+        },
+        {
+          "case": "huge-timeout-clamped",
+          "passed": true,
+          "status": 0,
+          "consumed": 0,
+          "polls": 60,
+          "modeled_elapsed_ms": 60000,
+          "cancelled": false
+        },
+        {
+          "case": "clock-error-rejected",
+          "passed": true,
+          "status": 0,
+          "consumed": 0,
+          "polls": 0,
+          "modeled_elapsed_ms": 0,
+          "cancelled": false
+        },
+        {
+          "case": "backward-clock-rejected",
+          "passed": true,
+          "status": 0,
+          "consumed": 1,
+          "polls": 1,
+          "modeled_elapsed_ms": 0,
+          "cancelled": false
+        },
+        {
+          "case": "disconnect-during-second-O",
+          "passed": true,
+          "status": 0,
+          "consumed": 2,
+          "polls": 2,
+          "modeled_elapsed_ms": 0,
+          "cancelled": false
+        },
+        {
+          "case": "cancel-during-second-O",
+          "passed": true,
+          "status": 0,
+          "consumed": 2,
+          "polls": 2,
+          "modeled_elapsed_ms": 0,
+          "cancelled": true
+        },
+        {
+          "case": "local-abort-before-input",
+          "passed": true,
+          "status": 0,
+          "consumed": 0,
+          "polls": 0,
+          "modeled_elapsed_ms": 0,
+          "cancelled": true
+        }
+      ],
+      "checker_sha256": "d4c55be83cfe8343ec054b98fdf00fdaad07533001314e13a54cb9b6a76bb331",
+      "upstream_header_sha256": {
+        "genwrap.h": "ee5cd90b264bc32ade08b166c8b2d7c30de9b76aaa22502cebb108324a792d7d",
+        "dirwrap.h": "f7732d601752842981cec8035a9aa825a86447fb9d3150136b5ac6075f6968c5",
+        "zmodem.h": "d9167ce9b2472984eb8e7d41c86d1182b8281da6dae8fd8e323f86372bf4c976"
+      },
+      "module_sha256": {
+        "lab/bbs/patches/sexyz-receive-finish/receive_finish.c": "633191753a58b2e3393a51c3a3e260e5da4b3a838509660f698063b2ee098cc9",
+        "lab/bbs/patches/sexyz-receive-finish/receive_finish.h": "03521e38067c73f7cde5b6f84dbb2f04a536a38a6b11e27dad762c52d0004bdb",
+        "src/transfer/zmodem_wire.c": "fdae5d7c899ac2b32efe4b2f9d14d6c66ca323263b2fff5bf5da33f5915c1a6b",
+        "src/transfer/zmodem_wire.h": "3dd5631882942ee5eaf195ff00dc7e838828ae0a6ecd89a8fa7eeef4511ddd68"
+      },
+      "scope": "Actual candidate receive-finish C owner and maintained codec, real pinned upstream zmodem_t ABI. Only byte input, monotonic clock and cancellation/disconnect callbacks modeled. Independent Python CRC/header vectors, exact APP suffix, bounded retries/flow/noise/timeout and fail-closed clocks. Not actual helper subprocess, DOS, audio, BBS or physical acceptance."
+    },
+    "peers": {
+      "evidence_consistent": true,
+      "stock_counterexample_reproduced": true,
+      "cases": [
+        {
+          "receiver": "stock-SEXYZ",
+          "counterexample_reproduced": true,
+          "receiver_exited_while_OO_withheld": true,
+          "withheld_observation_ns": 1086963,
+          "host_sender_status": 3,
+          "receiver_exit": 0,
+          "file_bytes": 11521,
+          "file_sha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+          "source_closed_once": true,
+          "command": [
+            "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+            "-telnet",
+            "-8",
+            "rz",
+            "/home/bstar/projects/pcplus-recomp/build/bbs-lab/sexyz-receive-finish-candidate-01/stock-SEXYZ/"
+          ],
+          "receiver_sha256": "d1aeb1347fee332be75dd638dd4cb10a1bf7c418d96d0ebb79ca90470b0ed4bd",
+          "attempted_wire_bytes": 12245,
+          "delivered_wire_bytes": 12225,
+          "wire_sha256": {
+            "sender-attempted.bin": "f42518285ed02445d0cbb2d54fea4043c5fc438627b93c6c85e51d8f8b7f7232",
+            "sender-delivered.bin": "d46b56f3a5200c5e484176c3d04296a5268d823c7ceb4035ef1107d863cc1c11",
+            "receiver-consumed.bin": "bfdf4fd6ad38011684cb4a23a69d4172695b8c1d7f3fc327c7196b4e07d9dc70",
+            "receiver-unconsumed.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr.log": "15c6bdff21fb478a7be61283ce891f0582402853d32563c6e4f4e1d3c1fe4be3"
+          }
+        },
+        {
+          "receiver": "source-SEXYZ",
+          "counterexample_reproduced": true,
+          "receiver_exited_while_OO_withheld": true,
+          "withheld_observation_ns": 1069881,
+          "host_sender_status": 3,
+          "receiver_exit": 0,
+          "file_bytes": 11521,
+          "file_sha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+          "source_closed_once": true,
+          "command": [
+            "/nix/store/ciyv5h7i640zycxi3932x4ifmi9c6w57-sexyz-source-baseline-3.6-e7a8257/bin/sexyz",
+            "-telnet",
+            "-8",
+            "rz",
+            "/home/bstar/projects/pcplus-recomp/build/bbs-lab/sexyz-receive-finish-candidate-01/source-SEXYZ/"
+          ],
+          "receiver_sha256": "c842cf425dc9bbd3189a8a0d9aee222cf8f6eac26cc250ae2d3baba4d1ef0a7d",
+          "attempted_wire_bytes": 12245,
+          "delivered_wire_bytes": 12225,
+          "wire_sha256": {
+            "sender-attempted.bin": "f42518285ed02445d0cbb2d54fea4043c5fc438627b93c6c85e51d8f8b7f7232",
+            "sender-delivered.bin": "d46b56f3a5200c5e484176c3d04296a5268d823c7ceb4035ef1107d863cc1c11",
+            "receiver-consumed.bin": "bfdf4fd6ad38011684cb4a23a69d4172695b8c1d7f3fc327c7196b4e07d9dc70",
+            "receiver-unconsumed.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr.log": "1910eac4a6db246ea322fdbf9f1942c299c0efde748cabaca41bcddbeb9f5019"
+          }
+        },
+        {
+          "receiver": "candidate-SEXYZ",
+          "counterexample_reproduced": false,
+          "receiver_exited_while_OO_withheld": false,
+          "withheld_observation_ns": 350092312,
+          "host_sender_status": 0,
+          "receiver_exit": 0,
+          "file_bytes": 11521,
+          "file_sha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+          "source_closed_once": true,
+          "command": [
+            "/nix/store/y3l8kl9v0w1hv8hv6lv81ssz9jpdnz9q-sexyz-receive-finish-candidate-3.6-e7a8257/bin/sexyz",
+            "-telnet",
+            "-8",
+            "rz",
+            "/home/bstar/projects/pcplus-recomp/build/bbs-lab/sexyz-receive-finish-candidate-01/candidate-SEXYZ/"
+          ],
+          "receiver_sha256": "3485669f1df011640667e2111de08d32478f2d64941af0ea02bfa13492909b52",
+          "attempted_wire_bytes": 12227,
+          "delivered_wire_bytes": 12227,
+          "wire_sha256": {
+            "sender-attempted.bin": "d325a17aee526648ddf5090c1e9f291a0047326d5151cc06358da8ebc878e4e3",
+            "sender-delivered.bin": "d325a17aee526648ddf5090c1e9f291a0047326d5151cc06358da8ebc878e4e3",
+            "receiver-consumed.bin": "bfdf4fd6ad38011684cb4a23a69d4172695b8c1d7f3fc327c7196b4e07d9dc70",
+            "receiver-unconsumed.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr.log": "80143c42a37400f20fd16b889d723a146568d9c20708157361f46cb2a26aa7d8"
+          }
+        },
+        {
+          "receiver": "reference-lrzsz",
+          "counterexample_reproduced": false,
+          "receiver_exited_while_OO_withheld": false,
+          "withheld_observation_ns": 350093174,
+          "host_sender_status": 0,
+          "receiver_exit": 0,
+          "file_bytes": 11521,
+          "file_sha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+          "source_closed_once": true,
+          "command": [
+            "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/rz",
+            "-b",
+            "-q"
+          ],
+          "receiver_sha256": "b494265acac463036658b11552e0be35fff29b919e6fa036fae57a6ba44afbd2",
+          "attempted_wire_bytes": 14566,
+          "delivered_wire_bytes": 14566,
+          "wire_sha256": {
+            "sender-attempted.bin": "74e19a7f1193fdf786f97f9ed33cdd9c6bff6c0e191a494d9178bfcaebb3a333",
+            "sender-delivered.bin": "74e19a7f1193fdf786f97f9ed33cdd9c6bff6c0e191a494d9178bfcaebb3a333",
+            "receiver-consumed.bin": "c5f0af372082e7f44a81c97fe8698f70b24d687dc954a91327ac6f22ed80b9bc",
+            "receiver-unconsumed.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      ],
+      "candidate_waits_for_OO": true,
+      "library_sha256": "c49d51e642c638e54fa1446353d2da3ae159a22865a240fa020b952379413179",
+      "source_sha256": {
+        "src/transfer/zmodem.c": "c951bd5c8a4e185fe20f0282f6ff03b09809684cd22de84161bc43ef26f66631",
+        "src/transfer/zmodem_wire.c": "fdae5d7c899ac2b32efe4b2f9d14d6c66ca323263b2fff5bf5da33f5915c1a6b",
+        "src/transfer/zmodem_name.c": "7720ba62c132c79b57fc329de0f8afc30312756ed5e9e6610345e03298478b2c",
+        "src/transfer/batch_header.c": "5003de29446cc1ec3a3776dcb1798b2763a6f1d556e866abe7e207cc39b49aa5"
+      },
+      "checker_sha256": "2547744150682038e2fc6fea1274d2896bec705ee174015caa3148138c840879",
+      "scope": "Real shipped stock SEXYZ3.6, optional same-source baseline/candidate, and independent pinned lrzsz receiver subprocesses; unchanged maintained host C sender. Same11521-byte all-octet file, actual receiver ZFIN then350ms withheld OO. Exact files and single source close in every case. Stock exits before OO; candidate when selected and reference stay live and consume OO. Closed-pipe host status is not a DOS status or an audio result. No server/runtime/DOS-product modification, fabricated receiver replies or acceptance-gate waiver."
+    },
+    "integration": {
+      "passed": true,
+      "cases": [
+        {
+          "case": "queued-closing-headers",
+          "passed": true,
+          "expected_receiver_exit": 0,
+          "receiver_exit": 0,
+          "actual_retirement_wait_seconds": 0.0010752140078693628,
+          "host_sender_status": 0,
+          "source_closed_once": true,
+          "installed_exact_bytes": 11521,
+          "installed_sha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+          "wire_and_log_sha256": {
+            "sender-attempted.bin": "d325a17aee526648ddf5090c1e9f291a0047326d5151cc06358da8ebc878e4e3",
+            "sender-delivered.bin": "fbdcb9bc8e314a458530cabac13750006daa71fe9166d65c8d098eef132fb36f",
+            "stderr.log": "1632929108cb7d22ae935b68a8d48da550867e60d3790e64aebe582bf8e5ee7f"
+          }
+        },
+        {
+          "case": "flow-between-Os",
+          "passed": true,
+          "expected_receiver_exit": 0,
+          "receiver_exit": 0,
+          "actual_retirement_wait_seconds": 0.0010693320073187351,
+          "host_sender_status": 0,
+          "source_closed_once": true,
+          "installed_exact_bytes": 11521,
+          "installed_sha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+          "wire_and_log_sha256": {
+            "sender-attempted.bin": "d325a17aee526648ddf5090c1e9f291a0047326d5151cc06358da8ebc878e4e3",
+            "sender-delivered.bin": "9b194c85163b3257a62c8397a69f9f00362a786b8b3e192775d047174a7e4cda",
+            "stderr.log": "138c50b4fcc39247069ab9be5379f50249942940f68f514d25f9b1da443e9569"
+          }
+        },
+        {
+          "case": "bad-CRC",
+          "passed": true,
+          "expected_receiver_exit": 1,
+          "receiver_exit": 1,
+          "actual_retirement_wait_seconds": 0.001080192974768579,
+          "host_sender_status": 0,
+          "source_closed_once": true,
+          "installed_exact_bytes": 11521,
+          "installed_sha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+          "wire_and_log_sha256": {
+            "sender-attempted.bin": "d325a17aee526648ddf5090c1e9f291a0047326d5151cc06358da8ebc878e4e3",
+            "sender-delivered.bin": "82babefaf9cf98d377cd84cdcd82725c00e7d0c680b092f93fc6b5ca8eff69c8",
+            "stderr.log": "f844b246f0b5a51d9f332df38b41d14da0e95974a9cc5bca2ef7ed29804ae622"
+          }
+        },
+        {
+          "case": "nonzero-position",
+          "passed": true,
+          "expected_receiver_exit": 1,
+          "receiver_exit": 1,
+          "actual_retirement_wait_seconds": 0.0010662960121408105,
+          "host_sender_status": 0,
+          "source_closed_once": true,
+          "installed_exact_bytes": 11521,
+          "installed_sha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+          "wire_and_log_sha256": {
+            "sender-attempted.bin": "d325a17aee526648ddf5090c1e9f291a0047326d5151cc06358da8ebc878e4e3",
+            "sender-delivered.bin": "85fc0e4a0497970503a9a206abd14f16a89974022d47294d5f16628a1bec8dff",
+            "stderr.log": "9145c787d014c3cd2bb1f60846ff99f054c7e982b3a364633e79c08abbae76b3"
+          }
+        },
+        {
+          "case": "noise-containing-OO",
+          "passed": true,
+          "expected_receiver_exit": 1,
+          "receiver_exit": 1,
+          "actual_retirement_wait_seconds": 0.001063541043549776,
+          "host_sender_status": 0,
+          "source_closed_once": true,
+          "installed_exact_bytes": 11521,
+          "installed_sha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+          "wire_and_log_sha256": {
+            "sender-attempted.bin": "d325a17aee526648ddf5090c1e9f291a0047326d5151cc06358da8ebc878e4e3",
+            "sender-delivered.bin": "ce1244e73fa625e556b422b1fe8bd0104bea91c2c3341e0d66f8f7226ad58975",
+            "stderr.log": "194aa8a67ab6a09f3ca7365c5c7f1021c60515b9fcb3d8950b2b9475a8c73298"
+          }
+        },
+        {
+          "case": "single-O",
+          "passed": true,
+          "expected_receiver_exit": 1,
+          "receiver_exit": 1,
+          "actual_retirement_wait_seconds": 1.0145349421072751,
+          "host_sender_status": 0,
+          "source_closed_once": true,
+          "installed_exact_bytes": 11521,
+          "installed_sha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+          "wire_and_log_sha256": {
+            "sender-attempted.bin": "d325a17aee526648ddf5090c1e9f291a0047326d5151cc06358da8ebc878e4e3",
+            "sender-delivered.bin": "5ac6bffaa6b45c86f5f1609977b14f5cc8ecce6d9db8943cc76784751db3b75e",
+            "stderr.log": "e5181c65381eb9810922852610af1e1e3f2426c41db1f5ab089700c1490f1bf8"
+          }
+        },
+        {
+          "case": "missing-OO",
+          "passed": true,
+          "expected_receiver_exit": 1,
+          "receiver_exit": 1,
+          "actual_retirement_wait_seconds": 1.0146451719338074,
+          "host_sender_status": 0,
+          "source_closed_once": true,
+          "installed_exact_bytes": 11521,
+          "installed_sha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+          "wire_and_log_sha256": {
+            "sender-attempted.bin": "d325a17aee526648ddf5090c1e9f291a0047326d5151cc06358da8ebc878e4e3",
+            "sender-delivered.bin": "d46b56f3a5200c5e484176c3d04296a5268d823c7ceb4035ef1107d863cc1c11",
+            "stderr.log": "58ecc669fb39fbc3e4d296a6a4277a819a90acc4efcc944d5e5f1395350bc6bd"
+          }
+        },
+        {
+          "case": "five-CANs",
+          "passed": true,
+          "expected_receiver_exit": 1,
+          "receiver_exit": 1,
+          "actual_retirement_wait_seconds": 0.0010790600208565593,
+          "host_sender_status": 0,
+          "source_closed_once": true,
+          "installed_exact_bytes": 11521,
+          "installed_sha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+          "wire_and_log_sha256": {
+            "sender-attempted.bin": "d325a17aee526648ddf5090c1e9f291a0047326d5151cc06358da8ebc878e4e3",
+            "sender-delivered.bin": "4ddab5bbcc58210c44e96b2e16e31b01560476a5071e8459a9ba44d56da95f95",
+            "stderr.log": "c43b359fb47588e02a2fdeb9806d5084b94ef17c363c7bf7573f743fb5050651"
+          }
+        },
+        {
+          "case": "ten-closing-headers",
+          "passed": true,
+          "expected_receiver_exit": 1,
+          "receiver_exit": 1,
+          "actual_retirement_wait_seconds": 0.0010681500425562263,
+          "host_sender_status": 0,
+          "source_closed_once": true,
+          "installed_exact_bytes": 11521,
+          "installed_sha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+          "wire_and_log_sha256": {
+            "sender-attempted.bin": "d325a17aee526648ddf5090c1e9f291a0047326d5151cc06358da8ebc878e4e3",
+            "sender-delivered.bin": "afe28a4685a74f4f94434c868f04864e6aa33acfdc3301c33a0b0424967a9cb4",
+            "stderr.log": "80774b787c0a88a598ca9ffb040a6d9ccca0c1e67fa8b2b4e8f4868f06a48ee5"
+          }
+        },
+        {
+          "case": "endless-flow-byte-ceiling",
+          "passed": true,
+          "expected_receiver_exit": 1,
+          "receiver_exit": 1,
+          "actual_retirement_wait_seconds": 0.0010606360156089067,
+          "host_sender_status": 0,
+          "source_closed_once": true,
+          "installed_exact_bytes": 11521,
+          "installed_sha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+          "wire_and_log_sha256": {
+            "sender-attempted.bin": "d325a17aee526648ddf5090c1e9f291a0047326d5151cc06358da8ebc878e4e3",
+            "sender-delivered.bin": "caa9fbc59ad6f22894c27f3a94fc80d74142c9b30301e9e3176fd80615b5efe5",
+            "stderr.log": "3cd34b586796d50c9593f6b3eef2b1b8a31bb0acf651a18f35f317eb3edb4f70"
+          }
+        }
+      ],
+      "candidate_sha256": "3485669f1df011640667e2111de08d32478f2d64941af0ea02bfa13492909b52",
+      "isolated_copy_sha256": "3485669f1df011640667e2111de08d32478f2d64941af0ea02bfa13492909b52",
+      "ini_sha256": "4da3171c8692e6695b622aefea4e01793b34a51fc688f5a03e9ad65215b1481b",
+      "checker_sha256": "7c76ee4057c94a92d327fd116b7908b62ce9314d56c909e55dc3502d8bd0dab5",
+      "source_sha256": {
+        "src/transfer/zmodem.c": "c951bd5c8a4e185fe20f0282f6ff03b09809684cd22de84161bc43ef26f66631",
+        "src/transfer/zmodem_wire.c": "fdae5d7c899ac2b32efe4b2f9d14d6c66ca323263b2fff5bf5da33f5915c1a6b",
+        "src/transfer/zmodem_name.c": "7720ba62c132c79b57fc329de0f8afc30312756ed5e9e6610345e03298478b2c",
+        "src/transfer/batch_header.c": "5003de29446cc1ec3a3776dcb1798b2763a6f1d556e866abe7e207cc39b49aa5"
+      },
+      "scope": "Actual Nix candidate receiver subprocesses and unchanged maintained host C sender, full11521-byte all-octet upload per case. Only the final closing transport is fault-injected. Candidate accepts queued valid closing headers/flow and rejects corrupt, missing, canceled or over-limit tails within its configured bound. Sender fixture success alone does not confirm delivery or receiver success; both are recorded. Isolated adjacent INI and binary copy, no server/runtime/DOS-product change. Not DOS/audio/BBS/physical acceptance."
+    }
+  },
+  "source_sha256": {
+    "nix/flake.nix": "e7291a75d578ce04fffc090ba804f4ae35e3fce295d5eecbbac369e481e9cba0",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+    "nix/sexyz-receive-finish.nix": "41149504c0b5bd307195b79d1396e600575d99decbaa7aff6c83426af14e6ba4",
+    "tools/cut-sexyz-source.py": "857be7a7518de76c75cf5f94fe02c483de075b2d5ed883c17941d162188e4e2f",
+    "lab/bbs/check_sexyz_finish_bounds.py": "d4c55be83cfe8343ec054b98fdf00fdaad07533001314e13a54cb9b6a76bb331",
+    "lab/bbs/check_sexyz_receive_finish.py": "2547744150682038e2fc6fea1274d2896bec705ee174015caa3148138c840879",
+    "lab/bbs/check_sexyz_finish_integration.py": "7c76ee4057c94a92d327fd116b7908b62ce9314d56c909e55dc3502d8bd0dab5",
+    "lab/bbs/record_sexyz_finish_candidate.py": "d86377b0e74e2b91dfec724bf0ab3b940ab83808bada0aa08bf82387fdc0d693",
+    "lab/bbs/patches/sexyz-receive-finish/receive_finish.c": "633191753a58b2e3393a51c3a3e260e5da4b3a838509660f698063b2ee098cc9",
+    "lab/bbs/patches/sexyz-receive-finish/receive_finish.h": "03521e38067c73f7cde5b6f84dbb2f04a536a38a6b11e27dad762c52d0004bdb",
+    "src/transfer/zmodem_wire.c": "fdae5d7c899ac2b32efe4b2f9d14d6c66ca323263b2fff5bf5da33f5915c1a6b",
+    "src/transfer/zmodem_wire.h": "3dd5631882942ee5eaf195ff00dc7e838828ae0a6ecd89a8fa7eeef4511ddd68"
+  },
+  "receipt_sha256": {
+    "build/bbs-lab/sexyz-finish-bounds-03/checks.json": "69c44cc341e9410f8f86d2a96418af7cb5c903efc4551477213808315d941595",
+    "build/bbs-lab/sexyz-receive-finish-candidate-01/checks.json": "822f1584e1fd33ff854ae93cbfda1fabdc254e72a608808c1a44f35abea39a5f",
+    "build/bbs-lab/sexyz-finish-integration-02/checks.json": "b53c41fee2cf8d1a600a933ca2ff3e74c11e7d09f4fe959c913617c4d3c1cb0f"
+  },
+  "stock_server_and_runtime_inputs_unchanged": true,
+  "DOS_binary_unchanged": "a656cf665f3d3cb81bdd06b738bb72b6ed230d299244d4ae12c1c0336f280a89",
+  "scope": "Pinned Nix source-built baseline/candidate with exact shipped source digest and successful Nix reproducibility check.24 modeled-boundary C-owner cases, four real receiver comparisons and ten real candidate fault cases. Every peer case uses the original11521-byte all-octet workload. Stock early retirement remains reproduced; no acceptance gate waived. Candidate is isolated, not configured in the BBS; DOS binary, stock server/helper and SIP/DSP runtime remain unchanged. No new audio/BBS or physical/F01-F16 acceptance."
+}

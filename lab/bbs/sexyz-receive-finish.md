@@ -58,22 +58,72 @@ The ordinary DOS sender cannot ensure OO precedes receiver retirement when the
 receiver exits before its reply has traversed the slow link. Omitting OO or
 emitting it before the peer's ZFIN would fail the required finish checks.
 
+## Isolated source candidate
+
+The [candidate receipt](../../docs/validation/sexyz-receive-finish-candidate.json)
+binds a source-built baseline and closing-owner candidate to the same pinned
+upstream commit. The62 original C/header files reproduce the shipped standalone
+source digest exactly. Only `sexyz.c` changes among those files; the candidate
+adds the closing owner and the maintained framing codec. Full corresponding
+source and LICENSE accompany each Nix output. A Nix `--rebuild` check succeeds.
+
+The candidate's ZFIN receive branch retains exclusive protocol ownership until
+literal OO, with a total monotonic deadline using RecvTimeout clamped to1..60
+seconds. It polls in one-second pieces, checks cancellation/disconnect both
+before and after polling, and fails closed on timer errors/backward time.
+Incoming bytes cannot reset the deadline. At most512 bytes and nine CRC-valid,
+zero-position queued closing headers may precede OO. It does not send extra
+replies to already queued retries, which could otherwise leak to the sender's
+resumed display. Unexpected headers, bad CRC, nonzero positions, noise and an
+incomplete closing pair remain failures. Loss recovery beyond this bounded
+queued-retry policy is not accepted by these checks.
+
+The receipt includes24 real C-owner cases with modeled boundary callbacks,
+four real receiver comparisons, and ten actual candidate subprocess cases with
+closing-tail faults. The shipped and same-source stock builds both retire
+before delayed OO; the candidate and independent lrzsz reference remain live
+and consume it. Every subprocess case transfers the original11521-byte payload.
+Real candidate tests accept queued closing headers/flow, reject corrupt or
+over-limit tails, and honor a one-second configured timeout for missing OO.
+
+Build and test isolated outputs with pinned Nix:
+
+```sh
+nix --extra-experimental-features 'nix-command flakes' build \
+  ./nix#sexyz-source-baseline ./nix#sexyz-receive-finish-candidate \
+  --out-link build/bbs-lab/sexyz-finish-build
+
+./tools/dev --command python3 lab/bbs/check_sexyz_finish_bounds.py \
+  --source build/bbs-lab/sexyz-finish-build-1/share/sexyz-source \
+  --output build/bbs-lab/sexyz-finish-bounds-NEW
+
+./tools/dev --command python3 lab/bbs/check_sexyz_receive_finish.py \
+  --source-baseline build/bbs-lab/sexyz-finish-build/bin/sexyz \
+  --candidate build/bbs-lab/sexyz-finish-build-1/bin/sexyz \
+  --output build/bbs-lab/sexyz-receive-finish-candidate-NEW
+
+./tools/dev --command python3 lab/bbs/check_sexyz_finish_integration.py \
+  --candidate build/bbs-lab/sexyz-finish-build-1/bin/sexyz \
+  --output build/bbs-lab/sexyz-finish-integration-NEW
+```
+
+Each result directory must be fresh. The INI override in real fault tests lives
+beside an exact isolated copy of the candidate; neither global configuration
+nor the existing BBS helper is replaced. The DOS executable, stock server inputs
+and SIP/DSP runtime remain unchanged. The candidate is identified by its Nix
+package path and recorded binary hash, separate from the shipped helper.
+
 ## Next integration step
 
-Keep the unmodified stock result as an open compatibility gap. Prepare a
-separately identified receiver candidate that retains protocol ownership for a
-bounded closing handshake after ZFIN. It must consume the exact closing pair,
-preserve any legitimate closing retries, service disconnect/cancel, and reject
-corruption, incomplete closure and endless flow/noise without an unbounded
-purge. Reuse the configured timeout rather than assuming a fast TCP round trip.
-
-Use the existing Nix toolchain for the source build. Compare stock, candidate
-and reference in the isolated delayed-OO test before configuring the owned
-loopback lab. Any candidate audio run must use a fresh owned fixture, retain
-all existing data/control/storage/return/cleanup gates, and be labeled as using
-a modified helper. Preserve AUDIOUP.BIN and its official metadata from upload02.
-The user's LAN server and global modem runtime remain unchanged. No upstream
-issue or message has been sent.
+Keep the unmodified stock result as an open compatibility gap. The next test is
+a separately identified candidate BBS fixture and real audio upload, retaining
+the full-size source, unchanged DOS binary, DTE, modem runtime, artwork and all
+data/control/storage/return/cleanup gates. Candidate helper results cannot be
+reported as unmodified stock compatibility. Preserve AUDIOUP.BIN, its official
+metadata and the existing stock server; use fresh isolated storage rather than
+overwriting the accepted file or weakening duplicate protection. The user's LAN
+server and global modem runtime remain unchanged. No upstream issue or message
+has been sent.
 
 Physical Boca/SPA2102, other peers, pressure/cancel/loss and all F01–F16 gates
 remain open.

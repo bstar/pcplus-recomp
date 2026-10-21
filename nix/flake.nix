@@ -71,6 +71,8 @@
         default = rea;
         watcom = pkgs.open-watcom-v2;
         synthmodem-control-i386 = controlI386;
+        sexyz-source-baseline = import ./sexyz-receive-finish.nix { inherit pkgs; candidate = false; };
+        sexyz-receive-finish-candidate = import ./sexyz-receive-finish.nix { inherit pkgs; };
       };
       apps.${system}.rea = {
         type = "app";

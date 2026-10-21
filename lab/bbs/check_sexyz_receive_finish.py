@@ -39,7 +39,8 @@ class ClosingProbe(Fixture):
 
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True)
- out=p.parse_args().output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
+ p.add_argument('--candidate',type=Path);p.add_argument('--source-baseline',type=Path)
+ a=p.parse_args();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
  out.mkdir(parents=True)
  sources=[ROOT/'src/transfer'/n for n in ('zmodem.c','zmodem_wire.c','zmodem_name.c','batch_header.c')]
  library=out/'session.so'
@@ -47,9 +48,13 @@ def main():
   '-shared','-fPIC',*[str(p) for p in sources],'-o',str(library)],check=True)
  lib=C.CDLL(str(library));lib.zm_run.argtypes=[P,P,P,U]
  rows=[];expected=payload();sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
- for kind in ('stock-SEXYZ','reference-lrzsz'):
+ receivers=[('stock-SEXYZ',HELPER)]
+ if a.source_baseline:receivers.append(('source-SEXYZ',a.source_baseline.resolve()))
+ if a.candidate:receivers.append(('candidate-SEXYZ',a.candidate.resolve()))
+ receivers.append(('reference-lrzsz',Path(shutil.which('rz'))))
+ for kind,executable in receivers:
   folder=out/kind;folder.mkdir()
-  command=[str(HELPER),'-telnet','-8','rz',str(folder)+'/'] if kind=='stock-SEXYZ' else [shutil.which('rz'),'-b','-q']
+  command=[str(executable),'-telnet','-8','rz',str(folder)+'/'] if kind!='reference-lrzsz' else [str(executable),'-b','-q']
   with (folder/'stderr.log').open('xb') as log:
    peer=subprocess.Popen(command,cwd=folder,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=log,bufsize=0)
    try:
@@ -59,7 +64,7 @@ def main():
     assert fixture.OO_attempted and not fixture.source and fixture.session.files==1
     assert target.read_bytes()==expected and peer.returncode==0
     assert sum(e[0]=='close' for e in fixture.events)==1
-    early=kind=='stock-SEXYZ'
+    early=kind in ('stock-SEXYZ','source-SEXYZ')
     assert fixture.exited_before_OO==early
     assert status==(3 if early else 0),(kind,status)
     assert (fixture.delivered[-2:]!=b'OO') if early else fixture.delivered[-2:]==b'OO'
@@ -76,9 +81,10 @@ def main():
    finally:
     if peer.poll() is None:peer.terminate();peer.wait(timeout=5)
  result={'evidence_consistent':True,'stock_counterexample_reproduced':True,'cases':rows,
+  'candidate_waits_for_OO':None if not a.candidate else not next(r for r in rows if r['receiver']=='candidate-SEXYZ')['receiver_exited_while_OO_withheld'],
   'library_sha256':sha(library),'source_sha256':{str(p.relative_to(ROOT)):sha(p) for p in sources},
   'checker_sha256':sha(Path(__file__)),
-  'scope':'Real pinned stock SEXYZ3.6 and independent pinned lrzsz receiver subprocesses, unchanged maintained host C sender. Same11521-byte all-octet file, actual receiver ZFIN then350ms withheld OO. Exact files and single source close in both. Stock exits before OO; reference stays live and consumes OO. Closed-pipe host status is not a DOS status or an audio result. No server/runtime/product modification, fabricated receiver replies or acceptance-gate waiver.'}
+  'scope':'Real shipped stock SEXYZ3.6, optional same-source baseline/candidate, and independent pinned lrzsz receiver subprocesses; unchanged maintained host C sender. Same11521-byte all-octet file, actual receiver ZFIN then350ms withheld OO. Exact files and single source close in every case. Stock exits before OO; candidate when selected and reference stay live and consume OO. Closed-pipe host status is not a DOS status or an audio result. No server/runtime/DOS-product modification, fabricated receiver replies or acceptance-gate waiver.'}
  with (out/'checks.json').open('x') as f:f.write(json.dumps(result,indent=2)+'\n')
  print(json.dumps({'counterexample_reproduced':True,'cases':[{k:r[k] for k in ['receiver','receiver_exited_while_OO_withheld','host_sender_status','receiver_exit','file_bytes']} for r in rows]},indent=2))
 

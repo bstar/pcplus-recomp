@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Upload02 completes exact11521-byte official storage, all12330 online DOS bytes,full66879 BBS bytes,12 exact packets/opposite controls/FIN/OO and post-form search/list with normal cleanup.81 of82 checks pass; required late-tail gate fails because stock SEXYZ retires before its reply reaches DOS and closing OO arrives afterward. Independent real-helper/reference test reproduces the receiver gap. Native sender response fix remains verified. No full upload/physical/F01-F16 acceptance.",
+  "status": "Upload02 completes exact11521-byte official storage, all12330 online DOS bytes,full66879 BBS bytes,12 exact packets/opposite controls/FIN/OO and post-form search/list with normal cleanup.81 of82 checks pass; required late-tail gate fails because stock SEXYZ retires before its reply reaches DOS and closing OO arrives afterward. Independent real-helper/reference test reproduces the receiver gap. Native sender response fix remains verified. No full upload/physical/F01-F16 acceptance. Separate pinned Nix receiver candidate now passes24 C-owner bounds,4 real receiver comparisons and10 real candidate fault cases; not installed in the BBS and no candidate audio acceptance.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3766,5 +3766,7 @@
   "upload_response_fixed_receipt": "docs/validation/zmodem-upload-response-fixed.json",
   "upload_response_fixed_receipt_sha256": "1ea384f4792df0e2ee6e6528cde0545840b5517f58dd803e8103291067ac57fe",
   "stock_receiver_finish_receipt": "docs/validation/sexyz-receive-finish.json",
-  "control_timing_duplex_receipt": "docs/validation/audio-control-timing-duplex.json"
+  "control_timing_duplex_receipt": "docs/validation/audio-control-timing-duplex.json",
+  "receiver_finish_candidate_receipt": "docs/validation/sexyz-receive-finish-candidate.json",
+  "receiver_finish_candidate_receipt_sha256": "d8c4319068ec7ebf1252c273ea543749a7cf0dbec71b6ca211633b7551700856"
 }
