@@ -539,7 +539,20 @@ and negotiated higher-speed compatibility remain unverified.
 The [first combined audio bridge-restart campaign](../lab/bbs/synchronet-reconnect-audio.md)
 now records a current-build failure: DOS observes emulated carrier loss, removes
 the partial and redials; both DSPs train again, but the second ASPECT invocation
-reports unsupported opcode D4 at step2 and sends no BBS address. The final
+reports an unsupported command or service at opcode D4, step2 and sends no BBS address. The final
 watchdog exit restores UART/timer state. The failed receipt retains the missing
 retry and the first call's one-ACK in-flight tail loss. This is diagnostic
 progress, not accepted audio reconnect or an identified product fix.
+
+The [helper diagnosis](validation/reconnect-stale-prompt-diagnosis.json) identifies
+stale transfer text causing the test helper to inject Alt-R into the second
+ASPECT invocation. The corrected helper passes actual DOS regressions and a
+two-script replay with unchanged production binaries. A subsequent
+[real audio run](validation/current-synchronet-reconnect-audio-02.json) completes
+the exact retry and menus with clean DOS/UART/timer return:14 CRC blocks, full
+upstream byte identity,26 serial checks,7 official metadata checks and23
+damaged-evidence rejections. It still fails one of19 producer gates because
+the footer-only observer missed the loss notice. A tested full-screen observer
+and fresh real audio run are required before overall reconnect acceptance.
+Physical modem/ATA, waveform-loss, sustained pressure and higher-rate acceptance
+remain separate.

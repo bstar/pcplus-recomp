@@ -1,0 +1,365 @@
+{
+  "passed": false,
+  "actual_audio_reconnect_accepted": false,
+  "cohort": "build/bbs-lab/current-synchronet-reconnect-audio-02",
+  "terminal_sha256": "976ba8d0c7681b9727389e3f91e80e463738602b857130da491c249d6988e145",
+  "ASPECT_sha256": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+  "DOS_compiler_sha256": "3470c718df0d21fad4635b99f6c3b2e5d307637581728bdb639e6e9521a9c931",
+  "producer_checks": {
+    "normal_DOS_exit": true,
+    "hardware_restored": true,
+    "timer_restored": true,
+    "DOS_compiler_exact": true,
+    "two_calls": true,
+    "first_bridge_interrupted": true,
+    "partial_removed_before_second_call": true,
+    "carrier_loss_observed": false,
+    "complete_retry_observed": true,
+    "exact_retry": true,
+    "only_expected_receive": true,
+    "two_BBS_connections": true,
+    "profile_unchanged": true,
+    "directory_two_calls": true,
+    "source_unchanged": true,
+    "server_inputs_preserved": true,
+    "message_bodies_preserved": true,
+    "no_message_mail_upload_writes": true,
+    "inputs_preserved": true
+  },
+  "failed_checks": [
+    "carrier_loss_observed"
+  ],
+  "notices": [
+    " RX complete                                                                    "
+  ],
+  "protocol_diagnostic_verified": true,
+  "interrupted_partial_bytes": 8192,
+  "CRC_verified_interrupted_bytes": 10240,
+  "acknowledged_stop_prefix": {
+    "online_bytes": 113,
+    "bbs_online_bytes": 97,
+    "online_sha256": "fd2e8b0b4a5a91c728e75d324d6e0e49e0315d3bf85db59060ccc1a1262e9700",
+    "bbs_online_sha256": "d5498d44ead25590683ea4e0d37671f50b5cf1986e5eec96c1807da370716ee4",
+    "last_control_hex": "06"
+  },
+  "exact_online_bytes": [
+    113,
+    121
+  ],
+  "decoded_BBS_bytes": [
+    39783,
+    50847
+  ],
+  "retry": {
+    "source_bytes": 11521,
+    "DOS_bytes": 11648,
+    "CRC_blocks": 14,
+    "frame_sizes": [
+      1024,
+      1024,
+      1024,
+      1024,
+      1024,
+      1024,
+      1024,
+      1024,
+      1024,
+      1024,
+      1024,
+      128,
+      128,
+      128
+    ],
+    "EOT_controls": [
+      21,
+      6
+    ],
+    "DOS_sha256": "ca9202d2cf9a78a776de8d719e8aec1eb6c2688c7aba1c1db0868fbc5dda8da7"
+  },
+  "serial_ownership_checks": [
+    {
+      "complete_contiguous_attempt_manifest": true,
+      "submitted_artifact_matches_original_attempt_offsets": true,
+      "completed_artifact_matches_original_attempt_offsets": true,
+      "skipped_artifact_matches_original_attempt_offsets": true,
+      "all_final_counters_match_manifest": true,
+      "all_submissions_have_final_callback": true,
+      "snapshot_is_exact_log_event_prefix": true,
+      "legacy_errors_preserved_in_structured_events": true,
+      "one_observed_frontend_close_and_shutdown": true,
+      "declared_shutdown_order": true,
+      "no_write_submission_after_observed_close": true,
+      "observed_frontend_input_matches_capture_size": true,
+      "clean_adapter_exit": true
+    },
+    {
+      "complete_contiguous_attempt_manifest": true,
+      "submitted_artifact_matches_original_attempt_offsets": true,
+      "completed_artifact_matches_original_attempt_offsets": true,
+      "skipped_artifact_matches_original_attempt_offsets": true,
+      "all_final_counters_match_manifest": true,
+      "all_submissions_have_final_callback": true,
+      "snapshot_is_exact_log_event_prefix": true,
+      "legacy_errors_preserved_in_structured_events": true,
+      "one_observed_frontend_close_and_shutdown": true,
+      "declared_shutdown_order": true,
+      "no_write_submission_after_observed_close": true,
+      "observed_frontend_input_matches_capture_size": true,
+      "clean_adapter_exit": true
+    }
+  ],
+  "metadata_checks": {
+    "official_name_and_size": true,
+    "official_payload_hashes": true,
+    "interrupted_call_did_not_advance_count": true,
+    "completed_retry_advanced_count_once": true,
+    "one_authoritative_success_log": true,
+    "source_still_exact": true,
+    "server_inputs_preserved": true
+  },
+  "displayed_download_counts": [
+    21,
+    21
+  ],
+  "final_download_count": 22,
+  "negative_control_count": 23,
+  "negative_controls": [
+    {
+      "case": "missing-adapter-input-byte",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "extra-adapter-output-byte",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "invalid-local-result-prefix",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "extra-decoded-audio-byte",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "extra-Telnet-input-byte",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "extra-Telnet-output-byte",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "wrong-offline-decoder",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "missing-real-SIP-BYE",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "noncontinuous-actual-RTP",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "missing-stop-barrier",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "duplicate-stop-barrier",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "barrier-after-SIGTERM",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "partial-after-barrier",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "partial-before-DSP-CONNECT",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "wrong-observed-online-hash",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "wrong-observed-BBS-length",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "inflight-ACK-still-missing",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "extra-authored-ACK-after-boundary",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "CRC-damaged-source-block",
+      "rejected": true,
+      "reason": "No integrity-validated sequence1 frame matching fixture after start"
+    },
+    {
+      "case": "wrong-expected-source",
+      "rejected": true,
+      "reason": "No integrity-validated sequence1 frame matching fixture after start"
+    },
+    {
+      "case": "early-final-ACK",
+      "rejected": true,
+      "reason": "Missing required ACK before next frame/menu/deadline"
+    },
+    {
+      "case": "late-final-ACK",
+      "rejected": true,
+      "reason": "Missing required ACK before next frame/menu/deadline"
+    },
+    {
+      "case": "early-block-ACK",
+      "rejected": true,
+      "reason": "Missing required ACK before next frame/menu/deadline"
+    }
+  ],
+  "observer_regression": {
+    "old_failed": true,
+    "new_passed": true,
+    "identical_probe": true,
+    "checks": {
+      "normal_DOS_return": true,
+      "hardware_and_INT1C_restored": true,
+      "keyboard_untouched": true,
+      "off_footer_carrier_loss_captured": true,
+      "stale_top_notice_does_not_hide_footer_completion": true,
+      "only_exact_unique_notices": true
+    },
+    "notices": [
+      "Carrier lost",
+      "RX carrier lost",
+      "RX complete"
+    ]
+  },
+  "producer_source_archive": "producer-before-full-screen-observer.py",
+  "capture_sha256": {
+    "sampler.asm": "fb3429d6c0651f11d940875555979a6e66108c8b8c0cd6d2531d3123b7dca4a1",
+    "SNAP.COM": "8ecfccba41e18e3ed1375af6a11eae7d5cf94098cb4ddd3a128aaace8fbd05e5",
+    "MODEM.PRM": "935254d66c2c94a06781705a4de5bf74eccfdd10d6cf9216b5f663fff941a42f",
+    "dosbox.conf": "a37235ca49ed7815104742d7a0bcdd08029ae5127433a41c7317e91b64d7bb44",
+    "dosbox.log": "9b3ab75cbc1e853230a6232e7aa6d1031ae4fec87f54c7aba9431172e97c1868",
+    "COMPILE.TXT": "7c5b399708ccaf36357295797b73a2fe064afd643aa754622ffa08acbaae6588",
+    "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "KEYOLD.BIN": "2b959ac48145bfc6e4e05fdc43e185b5abf5389daccf2c7fbf09c24a7571493e",
+    "STAGES.LOG": "7067e5ff72ce5a944b041de77f05353ba140a528f0a0a22a96fe6d26df626f13",
+    "SCRIPT.OK": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+    "interrupted-partial.bin": "fb9cf86a6d62ee2f4f3487d8d456b85ea8a1705effa59e3dfe7af6e214857994",
+    "CALL.DIR": "6331791f3d1d264f804f505e6920480fe5e9de4564582b64c5dee477662e4186",
+    "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "KEYNEW.BIN": "2b959ac48145bfc6e4e05fdc43e185b5abf5389daccf2c7fbf09c24a7571493e",
+    "SCREEN.BIN": "710ed1eb94912d7077ddf828358710e1d37fd08cc98642e7306cc9e92de7e370",
+    "LABELS.BIN": "a8d7a5dbda6131e342265bcce0df35819eb082d93b40549aae64351d3860003b",
+    "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "server-session.log": "f71a36bfc30212f13ac9cbd30272e7ea3cec94737dd6c9944d2bbee5fa554e1b",
+    "result.json": "74222590cffaacebb4a29308e63c4e2346ed8453a8838d3f9185a0d8b57904dd",
+    "reconnect-metadata.js": "ef5543b3d2346c801860e2f8664a0d306860fc365e7fd5d60b8f0a7975dbf685",
+    "reconnect-metadata-audit.json": "2f4aa307a7097f6fb9d96dffb11c5a84b8539c736f73e88126f7fd664ce38cff",
+    "reconnect-diagnostic-audit-stale-cli-log-hash.json": "3e12d4c38740de9d6703e369975fb9cd6f4b17ef7d1e1168553479ce3cb1024e",
+    "cli-log-manifest-failure.json": "fd6f9f3ce1090b9ea9035a317124570c6f77c88fd4edacb8b6a13522763d2bf7",
+    "audit-before-cli-log-exclusion.py": "274c094c837380f41f08d83ff05a1a5639ad9de88795ed82f0dc9234ea5121db",
+    "program/TERMINAL.EXE": "976ba8d0c7681b9727389e3f91e80e463738602b857130da491c249d6988e145",
+    "program/ASPECT.EXE": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+    "program/ASPCOMP.EXE": "3470c718df0d21fad4635b99f6c3b2e5d307637581728bdb639e6e9521a9c931",
+    "program/EXITKEY.COM": "52531504f356428733091304fbbaf3d125119e855ac152b0ecbe7677e3f37d10",
+    "program/KEYVEC.COM": "fcbe508ffd8e54b24db8e77ce1b70a32917097cf6d21a0a3bb8bb229aa3ffd91",
+    "program/AUDIO.ASP": "b628461abb0b17606765cbfa9de5a3596273846656d2261b9a30bccf9d13ad11",
+    "program/AUDIO.ASX": "33796ec106e1661b3d535816bcc8031031dc38b69919ff7ae6208ee993307ce1",
+    "RECV/SYNC.BIN": "ca9202d2cf9a78a776de8d719e8aec1eb6c2688c7aba1c1db0868fbc5dda8da7",
+    "call-1/node.log": "bea155ca0e8c506aac9b54291bb7fc6b9b23641d6f17aa14b7dd9dbce0c3f179",
+    "call-1/qemu-0.log": "e28a9a14a269b254ccac21203db00da4a12985a5ccb5d072d0e9f07bb162d72d",
+    "call-1/serial-port.json": "752ad2d82c56c93abbf72292a50d95478545e918fddcf68b982a48cec4882324",
+    "call-1/internal-from-guest.bin": "3af7bcf9a14ee446a310d7f4b63dc475d99d8e40d4fdb0876291b62c2fb27a04",
+    "call-1/internal-to-guest.bin": "8da45fc55f55f6a9f77f68626f9323a3c6d6b4284153eb83585cbad3fa666088",
+    "call-1/serial-submitted.bin": "603ee6ea09a25c69af630b509bee24e935dc8e2cf91fd9f91d724957de9bce21",
+    "call-1/serial-completed.bin": "603ee6ea09a25c69af630b509bee24e935dc8e2cf91fd9f91d724957de9bce21",
+    "call-1/serial-skipped.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "call-1/serial-write-events.jsonl": "23b54c3d5ae1720c03a566818422b7e585a28ba3126fcb811b6dd1a5600a3b8c",
+    "call-1/serial-input-events.jsonl": "17402bc32a01c5642d7a85056b1fde024f02b9f28d5e7506e814c7ecc33eb3f3",
+    "call-1/serial-in.bin": "dd8947025ee09e0ff14acec8cbe2a3399b85cfcbbf1022e956294b65dd0bfbf9",
+    "call-1/serial-out.bin": "603ee6ea09a25c69af630b509bee24e935dc8e2cf91fd9f91d724957de9bce21",
+    "call-1/caller-decoded.bin": "297e5e15ef9f4d03f93e7b67cd234b5e8170cb157880bfa72788d5e07a2a86a9",
+    "call-1/control-wire.bin": "890bf027c57a294075d68078c5cd940088738dc477ed8b7c34719edcda996675",
+    "call-1/rtp-from-answer.bin": "849729f289efdd3c8eed89859d2f561737c25f04622d70f92f6339abe6b8e3a2",
+    "call-1/rtp-from-caller.bin": "c65393f39931eeba934d5be16867cccc936ce6e6b859f27d18da84efe1dafa8a",
+    "call-1/sip-to-server.bin": "767a5ccf9aa3f356050b2ce433544b8224b0d2c75ef91080b770c3f0e94b5a55",
+    "call-1/sip-to-caller.bin": "f77a681b5d82cb51035f3f4773c8db56e028cdcb6b5c4dfd4302345185b3dc9b",
+    "call-1/node-result.json": "6d69f68c94bdc78a9695378ab3b3e0411e600578cfaa1db6e5bfc5458b8f0d9e",
+    "call-1/adapter-up.bin": "fd2e8b0b4a5a91c728e75d324d6e0e49e0315d3bf85db59060ccc1a1262e9700",
+    "call-1/adapter-down.bin": "297e5e15ef9f4d03f93e7b67cd234b5e8170cb157880bfa72788d5e07a2a86a9",
+    "call-1/adapter.json": "30ba1c7973704e1ae5e74eab195af674992cef23a6a460bc158909f21d6427b5",
+    "call-1/serial-io-audit.json": "05e3e22d8e3e2050e2be4b5746eec1a943a8a553b16a2878c476ff30cfd65ee9",
+    "call-1/offline-caller.json": "1398683bfbe104304f90308b42dfaf6a7228b4dfcf4e551e3a2530aeafa06ac7",
+    "call-2/node.log": "61f043eea2e83cafad1a59b255a2af0dd97976c8e3ca4fc4e6f8b03d3065118b",
+    "call-2/qemu-0.log": "affaf61defb1b3857dcf6be896a118735f6093506a8966fd3455f470d6709c2b",
+    "call-2/serial-port.json": "f88ca544e79af1c9d793c7c9ba6fa9fa51837d9d35234e20b28e18a7ab1183c4",
+    "call-2/internal-from-guest.bin": "c4863c76a7b2fb6371d0c95f2a31f74b10d2febbf67acb75e8b54da97387976d",
+    "call-2/internal-to-guest.bin": "87e36ea9f23fbecc07c6f7cec1d7766780044cfc33620610c68e05053226d265",
+    "call-2/serial-submitted.bin": "f7ec7915f9f0837ffedff51269bb7e600bae641fec12648183be549929f0651e",
+    "call-2/serial-completed.bin": "f7ec7915f9f0837ffedff51269bb7e600bae641fec12648183be549929f0651e",
+    "call-2/serial-skipped.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "call-2/serial-write-events.jsonl": "402ee427da2a60f9fa49c88500a2570dacca00c91638d7dce29b8655a52a541c",
+    "call-2/serial-input-events.jsonl": "e7de647d175781b3d3b8f1d4193d7b227e333aaae093d6f57e8e7c1d5d59e14b",
+    "call-2/serial-in.bin": "00e8e7e4cd65352462d33c8d646b163c9e27283d4d81709fa90092a1bb2bbeea",
+    "call-2/serial-out.bin": "f7ec7915f9f0837ffedff51269bb7e600bae641fec12648183be549929f0651e",
+    "call-2/caller-decoded.bin": "136af98309c052ae886e0e74681467770995647b6c61d4db91b58b3010a02e33",
+    "call-2/control-wire.bin": "e163aaae9f0e9120b8f911bcc287d132790276aa760ab41bb9c1ff36b07aa2c8",
+    "call-2/rtp-from-answer.bin": "b12db25b9c3f714caf3013abe13dc0052e84466bf8d7c8b2a245ac6f2dde4e13",
+    "call-2/rtp-from-caller.bin": "318584689b17986325e415d97bd2df72557ebe23d1d17f2f74533cce6837d4f8",
+    "call-2/sip-to-server.bin": "62ad14035355d45448936e735eadaebeb1939c5b50e0d483f885d2b5fe390a25",
+    "call-2/sip-to-caller.bin": "54a9aea77e3bde6aee83245b2734b2630dbe2dd9ae95aefca0536bf23db10695",
+    "call-2/node-result.json": "44bc5f23fd38306527fa181db6805bd3d50fd767273c94518a00b452cc9700a6",
+    "call-2/adapter-up.bin": "795d8e7789b8a0f5809a7052241979f6c7abcae0d93cb4f0ba3d5c54500b2242",
+    "call-2/adapter-down.bin": "136af98309c052ae886e0e74681467770995647b6c61d4db91b58b3010a02e33",
+    "call-2/adapter.json": "0549dfa869c70f1983d81a75953d510763832921e4e2811a142e338b7ef8f80c",
+    "call-2/offline-caller.json": "41e52f3dc895c3b7b98076b84307e98f7a7d234d4751e1f2d2e1f04adbf789df",
+    "call-2/serial-io-audit.json": "d3fae3ebe4333aed733a12798eec215e9616d1e2995b4ad5c100e4fe7e8cad7c",
+    "bbs-1/input.bin": "5cb4a707991cd86e598f5919fc1610c6029937eb4ec8861c1af02b7f972d537f",
+    "bbs-1/output.bin": "bcd775aabe917a825f6fa618c0b517daef0876731cd08e7ee4131acdd131f2aa",
+    "bbs-1/relay.json": "5db75cc04b0acd2541f875d2d42f61b3456c921d4affeb2bb7a25a5a79655018",
+    "bbs-2/input.bin": "9718f63885dfaed2768a4c52728c6b56ec8d464ae4a8338a44747c65768429a9",
+    "bbs-2/output.bin": "8588f928fb2cbb5e7b949c99cc9587b97952eaaecbe49db462944bbf3de2937e",
+    "bbs-2/relay.json": "7a9772da12513acfe58312d0702f4e5c053fcf9f4dfdd6b3cfd3d1f4ee6b0ef1",
+    "reconnect-diagnostic-audit.json": "dca5b20eefa6f35c98aa3c42e454e095c1d0099b3d6cf5fd42a5b295eb9ab78f",
+    "reconnect-metadata.stdout": "34d71d77f9114efa77e6c19842d28772a3f4bf6607b9598d14cef5db83e8df18",
+    "reconnect-metadata.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "producer-before-full-screen-observer.py": "8751e086d35176523ebd0baff0eecbc8dae7e5e4bed34d5ebba690b0a17cc7c7"
+  },
+  "external_evidence_sha256": {
+    "build/bbs-lab/reconnect-audio-controls-01/result.json": "2cabd606576e9872c86deccc099804f9c39fe9c50c4e33f097faba37f8d02cfc",
+    "build/bbs-lab/reconnect-notice-old-01/result.json": "db3b089640e9d2405503eac32961f90f0b6ff64144c1fbba44d95021f4debe64",
+    "build/bbs-lab/reconnect-notice-01/result.json": "bae809705fae0c293a6ddd8fdac8b7dcbce0c5826fb39abe70b513293d445fd5"
+  },
+  "current_auditor_inputs": {
+    "lab/bbs/audit_synchronet_reconnect_audio.py": "2694c51c9ec078ce2e9d2b71e483bb82194ffadf78b2679b4a731821ba2a5948",
+    "lab/bbs/audit_synchronet_reconnect_metadata.py": "cf1bbb0bb718262eded6f535db9fbdd75ec6c01cae00b8aad31dcf73afc03b85",
+    "lab/bbs/check_synchronet_reconnect_controls.py": "d97f2a11a15cfe38aacae9692af660a90e5e7d7dd50bbdebcbc4580483c67bff"
+  },
+  "scope": "Unchanged normal source-built DOS terminal/ASPECT; real SIP/RTP/V22-1200 software audio, forced first bridge-process stop after actual delivered ACK prefix, same DOS process redial, exact completed retry and menus/normal cleanup.18 of19 producer gates pass. Independent diagnostic stream/CRC/control/cleanup checks,26 serial checks,7 official metadata checks and23 damaged-evidence rejections pass. Only completion was captured by the footer-only observer; the mandatory loss-notice gate remains unverified. This receipt explicitly does not accept reconnect compatibility. A new full-screen observer passes its separate DOS regression and a fresh actual audio run is required. No physical modem/ATA,14400,long-lived bridge reuse,waveform-loss or full F01-F16 acceptance."
+}

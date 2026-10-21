@@ -9,7 +9,7 @@ from audio_synchronet_download import source as download_source
 from audio_carrier_adapter import audio_carrier_adapter,PREFIX
 from audio_reconnect_bbs_relay import relay
 from audio_reconnect_boundary import acknowledged_prefix
-from carrier_notice_watch import SAMPLER
+from reconnect_notice_watch import SAMPLER
 sys.path.insert(0,str(ROOT/'standalone'));sys.path.insert(0,str(ROOT/'src/aspect'))
 from directory_fixtures import prm,directory
 from directory_test_support import accounting_check
@@ -24,15 +24,20 @@ async def run(a):
     runtime_inputs=validate(runtime);server=snapshot();bodies=message_bodies();stats=statistics()
     keys=json.loads(a.key_checks.read_text());assert keys['passed']
     assert all(sha(ROOT/n)==h for n,h in keys['inputs'].items())
+    notice=json.loads(a.notice_checks.read_text());assert notice['passed'] and not notice['old_observer']
+    assert all(sha(ROOT/n)==h for n,h in notice['inputs'].items())
+    proofs=[a.key_checks.resolve(),a.notice_checks.resolve()]
+    assert all(p.is_relative_to(ROOT/'build') for p in proofs)
     names=['lab/bbs/synthmodem_synchronet_reconnect_dos.py','lab/bbs/audio_carrier_adapter.py',
         'lab/bbs/audio_reconnect_bbs_relay.py','lab/bbs/audio_synchronet_reconnect_keys.asm',
         'lab/bbs/audio_reconnect_boundary.py','lab/bbs/modem.py',
+        'lab/bbs/reconnect_notice_watch.py','lab/bbs/check_reconnect_notice_watch.py',
         'lab/bbs/synthmodem_audio_serial.js','lab/bbs/serial_io_evidence.js','lab/bbs/internal_sip_capture.js',
         'lab/bbs/synthmodem_synchronet_download_audio_dos.py','lab/bbs/audio_synchronet.py',
         'lab/bbs/audio_synchronet_download.py','lab/bbs/synchronet.py','lab/bbs/carrier_notice_watch.py',
         'lab/bbs/zmodem_label_watch.py','standalone/test_terminal.py','lab/bbs/audio_get_vector.asm',
         'standalone/directory_fixtures.py','standalone/modem_fixtures.py','standalone/directory_test_support.py',
-        'src/aspect/compiler.py','nix/flake.nix','nix/flake.lock','tools/modem-dev']
+        'src/aspect/compiler.py','nix/flake.nix','nix/flake.lock','tools/modem-dev']+[str(p.relative_to(ROOT)) for p in proofs]
     frozen={n:sha(ROOT/n) for n in names};source=download_source();expected=source.read_bytes();source_sha=sha(source)
     out.mkdir(parents=True);stage=out/'program';stage.mkdir();recv=out/'RECV';recv.mkdir()
     for rel in ('terminal/TERMINAL.EXE','aspect-runner/ASPECT.EXE','aspect-compiler-dos/ASPCOMP.EXE'):
@@ -137,7 +142,7 @@ exit
         two_calls=len(calls)==2 and all(c.done and not c.errors and c.process.returncode==0 for c in calls),
         first_bridge_interrupted=len(calls)==2 and calls[0].interrupted and not calls[1].interrupted,
         partial_removed_before_second_call=len(partials)==2 and partials[1]['files']==[],
-        carrier_loss_observed=any('RX carrier lost' in s for s in notices),
+        carrier_loss_observed=any('RX carrier lost' in s or 'Carrier lost' in s for s in notices),
         complete_retry_observed=any('RX complete' in s for s in notices),
         exact_retry=read('RECV/SYNC.BIN')==expected+b'\x1a'*127,
         only_expected_receive={p.name for p in recv.iterdir()}=={'SYNC.BIN'},
@@ -159,6 +164,7 @@ exit
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True)
     p.add_argument('--key-checks',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--notice-checks',type=Path,required=True,help='Passing actual-DOS full-screen notice observer proof')
     p.add_argument('--diagnostic-terminal',type=Path,help='Instrumented terminal under ignored build storage; result cannot count as compatibility acceptance')
     p.add_argument('--diagnostic-watchdog',type=int,help='Diagnostic-only BIOS watchdog ticks (3600..21600)')
     asyncio.run(run(p.parse_args()))

@@ -34,9 +34,12 @@ all 256 online byte values, successive raw captures and EOF cleanup.
   --output build/bbs-lab/audio-carrier-adapter-NEW
 ./tools/dev --command python3 lab/bbs/check_audio_reconnect_relay.py \
   --output build/bbs-lab/audio-reconnect-relay-NEW
+./tools/dev --command python3 lab/bbs/check_reconnect_notice_watch.py \
+  --output build/bbs-lab/reconnect-notice-NEW
 ./tools/modem-dev --command python3 lab/bbs/synthmodem_synchronet_reconnect_dos.py \
   --runtime build/bbs-lab/synthmodem-posttrain-runtime-01/runtime \
   --key-checks build/bbs-lab/audio-reconnect-keys-NEW/result.json \
+  --notice-checks build/bbs-lab/reconnect-notice-NEW/result.json \
   --output build/bbs-lab/current-synchronet-reconnect-audio-NEW
 ```
 
@@ -47,6 +50,9 @@ and offline caller decoder on each `COHORT/call-1` and `COHORT/call-2`, then:
 ./tools/modem-dev --command python3 lab/bbs/audit_audio_reconnect_io.py CALL
 ./tools/modem-dev --command node lab/bbs/diagnose_audio_caller.js RUNTIME CALL
 ./tools/modem-dev --command python3 lab/bbs/audit_synchronet_reconnect_audio.py COHORT
+./tools/bbs-dev --command python3 lab/bbs/audit_synchronet_reconnect_metadata.py COHORT
+./tools/modem-dev --command python3 lab/bbs/check_synchronet_reconnect_controls.py \
+  COHORT --output build/bbs-lab/reconnect-controls-NEW
 ```
 
 The interrupted first call must preserve exact upstream bytes and an independently
@@ -196,3 +202,39 @@ opcode, step, serial owner, render attachment, serial/pacing errors, RX count,
 last key and the low/high BIOS tick words. `AARGS.LOG` records each invocation's
 actual command-line arguments. These formats apply to the final builder's
 optional instrumentation; earlier retained builds identify their own schema.
+
+## Complete retry with a missing loss-notice capture
+
+The [second normal-binary run](../../docs/validation/current-synchronet-reconnect-audio-02.json)
+passes18 of19 producer gates. The partial file contains8,192 exact source bytes;
+the audio contains10,240 verified source bytes before the first bridge stops.
+Both calls preserve every authored upstream byte:113 on the interrupted call,
+121 on retry. The retry validates fourteen CRC blocks, EOT NAK/ACK, the exact
+11,521-byte source plus127 padding bytes, Files/Main and normal DOS/UART/timer
+return. Both independent serial audits pass13 checks each. Official FileBase
+metadata passes seven checks: both calls display download count21, the final
+count is22, and exactly one successful download is logged. Twenty-three damaged
+byte, audio, protocol, timing and stop-boundary variants reject.
+
+This run remains `passed:false`. The footer-only timer recorded `RX complete`
+but missed the loss notice on another row. The explicit `--diagnostic` audit
+verifies the completed transport/protocol path only when that is the sole failed
+producer gate. It writes a separate `reconnect-diagnostic-audit.json` with
+`passed:false`; neither that audit nor diagnostic negative controls accepts
+overall compatibility. The normal positive auditor still requires a passed
+producer and independently parses ordered loss/completion frames.
+
+The replacement observer scans every row for the complete `RX carrier lost`,
+`Carrier lost` and `RX complete` prefixes, deduplicates retained rows and keeps
+scanning after an old notice. An actual8086 DOS regression shows the old observer
+missing row22 loss and accepting partial/wrong prefixes. The same probe with
+the replacement passes all six checks, captures simultaneous row0 loss/row24
+completion, leaves the keyboard untouched and restores all42 hardware/vector
+bytes. The producer requires that tested observer's proof before execution.
+A fresh real audio campaign remains mandatory.
+
+The diagnostic audit's first recursive manifest also hashed its own redirected
+CLI output before the final print. That stale-hash record and source are retained
+in the cohort. CLI logs are now excluded from the protocol manifest; all actual
+byte/event/JSON inputs remain hashed. The corrected86-file manifest is verified
+after process exit. This repair does not waive the missing loss-notice gate.

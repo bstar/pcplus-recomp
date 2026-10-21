@@ -11,6 +11,20 @@ from synchronet import Peer
 from audit_audio_download import frontend_trace
 from test_transfer_dos import audit_protocol,audit_controls,timestamp,packet_at
 
+def verify_stop_boundary(adapter,partial,online,sent):
+    stops=[e for e in adapter['events'] if e['event']=='owned-frontend-SIGTERM']
+    connects=[e for e in adapter['events'] if e['event']=='both-DSP-CONNECT']
+    barriers=[e for e in adapter['events'] if e['event']=='acknowledged-prefix-before-stop']
+    assert len(stops)==len(barriers)==len(connects)==1
+    stop=int(stops[0]['monotonic_ns'])
+    assert int(connects[0]['monotonic_ns'])<=int(partial['monotonic_ns'])<=int(barriers[0]['monotonic_ns'])<=stop
+    observed=partial['acknowledged_prefix']
+    for key,value in observed.items():assert barriers[0][key]==value,key
+    assert observed['online_bytes']==len(online) and observed['online_sha256']==hashlib.sha256(online).hexdigest()
+    assert observed['bbs_online_bytes']==len(sent) and observed['bbs_online_sha256']==hashlib.sha256(sent).hexdigest()
+    assert observed['last_control_hex']=='06' and online.endswith(b'\x06')
+    return stop
+
 def verify_streams(call,bbs,*,complete,decoder_sha):
     node=json.loads((call/'node-result.json').read_text())
     adapter=json.loads((call/'adapter.json').read_text())
@@ -63,9 +77,24 @@ def verify_streams(call,bbs,*,complete,decoder_sha):
     return sent,display,caller[len(bridge):],len(bridge),adapter,node
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path);out=p.parse_args().cohort.resolve()
-    assert out.is_relative_to(ROOT/'build') and not (out/'reconnect-audit.json').exists()
-    r=json.loads((out/'result.json').read_text());assert r['passed'] and all(r['checks'].values())
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path)
+    p.add_argument('--diagnostic',action='store_true',help='Verify a completed run whose sole failed gate is the missing loss notice; never accept compatibility')
+    args=p.parse_args();out=args.cohort.resolve()
+    destination=out/('reconnect-diagnostic-audit.json' if args.diagnostic else 'reconnect-audit.json')
+    assert out.is_relative_to(ROOT/'build') and not destination.exists()
+    r=json.loads((out/'result.json').read_text())
+    failed=[k for k,v in r['checks'].items() if not v]
+    assert not r['diagnostic']
+    if args.diagnostic:assert not r['passed'] and failed==['carrier_loss_observed']
+    else:
+        assert r['passed'] and not failed
+        raw=(out/'LABELS.BIN').read_bytes();assert len(raw)==2566
+        magic,count,_=struct.unpack_from('<3H',raw);assert magic==0x4e5a and 0<count<=16
+        notices=[raw[6+i*160:6+(i+1)*160:2].decode('cp437') for i in range(count)]
+        assert notices==r['notices']
+        loss=next(i for i,s in enumerate(notices) if 'RX carrier lost' in s or 'Carrier lost' in s)
+        complete=next(i for i,s in enumerate(notices) if 'RX complete' in s)
+        assert loss<complete
     expected=source().read_bytes();assert sha(source())==r['source_sha256']
     decoder_sha=next(h for n,h in r['runtime_inputs'].items() if n.endswith('/src/dsp/protocols/V22Demodulator.js'))
     one=verify_streams(out/'call-1',out/'bbs-1',complete=False,decoder_sha=decoder_sha)
@@ -74,15 +103,8 @@ def main():
     assert adapter['interrupted'] and not two[4]['interrupted']
     names=[e['event'] for e in adapter['events']]
     assert names.index('both-DSP-CONNECT')<names.index('owned-frontend-SIGTERM')<names.index('frontend-EOF')<names.index('DOSBox-TCP-closed')
-    stop=next(int(e['monotonic_ns']) for e in adapter['events'] if e['event']=='owned-frontend-SIGTERM')
-    barriers=[e for e in adapter['events'] if e['event']=='acknowledged-prefix-before-stop']
-    assert len(barriers)==1 and int(barriers[0]['monotonic_ns'])<=stop
-    observed=r['partials'][0]['acknowledged_prefix']
-    for key,value in observed.items():assert barriers[0][key]==value,key
     online=(out/'call-1/adapter-up.bin').read_bytes()
-    assert observed['online_bytes']==len(online) and observed['online_sha256']==hashlib.sha256(online).hexdigest()
-    assert observed['bbs_online_bytes']==len(first_sent) and observed['bbs_online_sha256']==hashlib.sha256(first_sent).hexdigest()
-    assert observed['last_control_hex']=='06' and online.endswith(b'\x06')
+    stop=verify_stop_boundary(adapter,r['partials'][0],online,first_sent)
     down=next(e for e in node['events'] if e['type']=='shutdown')
     ended=next(e for e in node['events'] if e['type']=='session-ended')
     eof=next(int(e['monotonic_ns']) for e in adapter['events'] if e['event']=='frontend-EOF')
@@ -121,16 +143,21 @@ def main():
     for n,h in r['runtime_inputs'].items():assert sha(Path(n))==h,n
     assert (out/'BEFORE.BIN').read_bytes()==(out/'AFTER.BIN').read_bytes() and len((out/'BEFORE.BIN').read_bytes())==42
     assert (out/'KEYOLD.BIN').read_bytes()==(out/'KEYNEW.BIN').read_bytes() and len((out/'KEYOLD.BIN').read_bytes())==4
-    captures={str(p.relative_to(out)):sha(p) for p in out.rglob('*') if p.is_file()}
+    # Redirected CLI logs are not audit inputs and may still be written by the
+    # invoking process after this manifest is sealed. Byte captures and their
+    # explicit JSON/event manifests remain bound here and by the component audits.
+    captures={str(p.relative_to(out)):sha(p) for p in out.rglob('*') if p.is_file() and p.suffix not in ('.stdout','.stderr')}
     input_names=['lab/bbs/audit_synchronet_reconnect_audio.py','lab/bbs/audio_carrier_adapter.py',
         'lab/bbs/audio_synchronet.py','lab/bbs/audio_synchronet_download.py','lab/bbs/synchronet.py',
         'lab/bbs/modem.py','lab/bbs/synthmodem_gateway.py','lab/bbs/audit_audio_download.py',
         'lab/bbs/test_transfer_dos.py','lab/bbs/audit_audio_reconnect_io.py','lab/bbs/diagnose_audio_caller.js']
-    result=dict(passed=True,producer_sha256=sha(out/'result.json'),protocol=protocol,interrupted_verified_bytes=len(verified),
+    result=dict(passed=not args.diagnostic,diagnostic_verification_passed=True,
+        unverified_producer_checks=failed,producer_sha256=sha(out/'result.json'),protocol=protocol,interrupted_verified_bytes=len(verified),
         exact_online_bytes=[len((out/f'call-{i}/adapter-up.bin').read_bytes()) for i in (1,2)],
         decoded_BBS_bytes=[len(first_decoded),len(display)],timing=provenance,
         auditor_sha256=sha(Path(__file__)),inputs={n:sha(ROOT/n) for n in input_names},capture_sha256=captures,
         scope='Actual two-call SIP/audio/DOS bridge-process failure and fresh-call retry. Both calls have exact upstream/offline audio identity, separate real DSP/SIP/RTP/cleanup; first downstream is an explicitly interrupted verified prefix, second is the complete stream with strict CRC/ACK/EOT/menu finish. Actual frontend SIGTERM shutdown and session end precede EOF-induced emulated DCD loss. Fresh Linux frontend/VM per call; no long-lived bridge reuse, analog waveform-loss detection, physical modem/DCD/DTR or whole-application acceptance.')
-    (out/'reconnect-audit.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(dict(passed=True,interrupted_verified_bytes=len(verified),retry_blocks=protocol['accepted_blocks'])))
+    if args.diagnostic:result['scope']='Diagnostic verification only: the mandatory loss-notice capture remains missing and compatibility is not accepted. '+result['scope']
+    destination.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(dict(passed=result['passed'],diagnostic_verification_passed=True,interrupted_verified_bytes=len(verified),retry_blocks=protocol['accepted_blocks'])))
 
 if __name__=='__main__':main()

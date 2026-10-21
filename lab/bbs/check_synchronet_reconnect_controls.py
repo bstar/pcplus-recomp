@@ -4,16 +4,21 @@ import argparse,copy,json,struct
 from pathlib import Path
 from audio_synchronet import ROOT,sha
 from audio_synchronet_download import source
-from audit_synchronet_reconnect_audio import verify_streams
+from audit_synchronet_reconnect_audio import verify_streams,verify_stop_boundary
 from audit_audio_download import frontend_trace
 from test_transfer_dos import audit_protocol,audit_controls,timestamp
 from synthmodem_gateway import records
+from modem import Telnet
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path);p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--diagnostic',action='store_true',help='Use the scoped diagnostic audit; does not accept compatibility');a=p.parse_args()
     cohort=a.cohort.resolve();out=a.output.resolve()
     assert cohort.is_relative_to(ROOT/'build') and out.is_relative_to(ROOT/'build') and not out.exists()
-    accepted=json.loads((cohort/'reconnect-audit.json').read_text());assert accepted['passed']
+    audit=cohort/('reconnect-diagnostic-audit.json' if a.diagnostic else 'reconnect-audit.json')
+    accepted=json.loads(audit.read_text())
+    if a.diagnostic:assert not accepted['passed'] and accepted['diagnostic_verification_passed'] and accepted['unverified_producer_checks']==['carrier_loss_observed']
+    else:assert accepted['passed']
     r=json.loads((cohort/'result.json').read_text())
     decoder=next(h for n,h in r['runtime_inputs'].items() if n.endswith('/src/dsp/protocols/V22Demodulator.js'))
     call=cohort/'call-2';bbs=cohort/'bbs-2';expected=source().read_bytes();cases=[];out.mkdir(parents=True)
@@ -41,6 +46,28 @@ def main():
     mutate('missing-real-SIP-BYE','sip-to-caller.bin',b''.join(struct.pack('<I',len(v))+v for v in sip))
     rtp=bytearray((call/'rtp-from-caller.bin').read_bytes());rtp[4+172+4+3]^=1
     mutate('noncontinuous-actual-RTP','rtp-from-caller.bin',bytes(rtp))
+    first=cohort/'call-1'
+    first_adapter=json.loads((first/'adapter.json').read_text())
+    first_online=(first/'adapter-up.bin').read_bytes()
+    first_sent,_=Telnet().feed((cohort/'bbs-1/input.bin').read_bytes())
+    partial=r['partials'][0]
+    stop=verify_stop_boundary(first_adapter,partial,first_online,first_sent)
+    def boundary_damage(name,change):
+        adapter=copy.deepcopy(first_adapter);observed=copy.deepcopy(partial)
+        change(adapter,observed)
+        reject(name,lambda:verify_stop_boundary(adapter,observed,first_online,first_sent))
+    def change_claim(adapter,partial,key,value):
+        partial['acknowledged_prefix'][key]=value
+        next(e for e in adapter['events'] if e['event']=='acknowledged-prefix-before-stop')[key]=value
+    boundary_damage('missing-stop-barrier',lambda a,p:a.update(events=[e for e in a['events'] if e['event']!='acknowledged-prefix-before-stop']))
+    boundary_damage('duplicate-stop-barrier',lambda a,p:a['events'].append(copy.deepcopy(next(e for e in a['events'] if e['event']=='acknowledged-prefix-before-stop'))))
+    boundary_damage('barrier-after-SIGTERM',lambda a,p:next(e for e in a['events'] if e['event']=='acknowledged-prefix-before-stop').update(monotonic_ns=str(stop+1)))
+    boundary_damage('partial-after-barrier',lambda a,p:p.update(monotonic_ns=str(stop+1)))
+    boundary_damage('partial-before-DSP-CONNECT',lambda a,p:p.update(monotonic_ns=str(int(next(e for e in a['events'] if e['event']=='both-DSP-CONNECT')['monotonic_ns'])-1)))
+    boundary_damage('wrong-observed-online-hash',lambda a,p:change_claim(a,p,'online_sha256','0'*64))
+    boundary_damage('wrong-observed-BBS-length',lambda a,p:change_claim(a,p,'bbs_online_bytes',len(first_sent)-1))
+    reject('inflight-ACK-still-missing',lambda:verify_stop_boundary(first_adapter,partial,first_online,first_sent[:-1]))
+    reject('extra-authored-ACK-after-boundary',lambda:verify_stop_boundary(first_adapter,partial,first_online+b'\x06',first_sent))
     sent,display,_,bridge,_,_=positive
     protocol=audit_protocol(display,expected);changed=bytearray(display)
     changed[protocol['frames'][0]['offset']+3]^=1
@@ -61,10 +88,10 @@ def main():
             altered.append(dict(row,offset=offset,size=1,seconds=when))
             if offset+1<stop:altered.append(dict(row,offset=offset+1,size=stop-offset-1))
         reject(name,lambda:audit_controls(protocol,display,sent,altered,'bbs',post['seconds'],ack_timeout=30))
-    result=dict(passed=True,cases=cases,cohort=str(cohort.relative_to(ROOT)),
+    result=dict(passed=True,diagnostic=a.diagnostic,compatibility_accepted=False,cases=cases,cohort=str(cohort.relative_to(ROOT)),
         inputs={n:sha(ROOT/n) for n in ('lab/bbs/check_synchronet_reconnect_controls.py','lab/bbs/audit_synchronet_reconnect_audio.py','lab/bbs/test_transfer_dos.py','lab/bbs/audit_audio_download.py')},
-        accepted_audit_sha256=sha(cohort/'reconnect-audit.json'),
-        scope='Read-only replay of accepted call2 plus isolated damaged symlink-copy fixtures. Missing/extra adapter/audio/Telnet bytes, wrong decoder, missing actual BYE, broken RTP sequence, CRC/source corruption and early/late ACK timing must reject. Original captures remain unchanged; no new DOS/audio execution.')
+        accepted_audit_sha256=sha(audit),
+        scope='Read-only replay of accepted call2 plus isolated damaged symlink-copy fixtures and interrupted-call stop-boundary controls. Missing/extra adapter/audio/Telnet bytes, wrong decoder, missing actual BYE, broken RTP sequence, missing/duplicate/late stop barriers, changed observed prefixes, CRC/source corruption and early/late ACK timing must reject. Original captures remain unchanged; no new DOS/audio execution.')
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(dict(passed=True,rejected=len(cases))))
 
 if __name__=='__main__':main()

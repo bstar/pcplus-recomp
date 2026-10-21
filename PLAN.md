@@ -7,6 +7,17 @@ data, reconnect and transfer runs. No physical compatibility or 14400-bps claim
 is established; the adapter has not arrived. PCPlus remains a serial terminal,
 with SIP/audio/Telnet handled by the Linux bridge.
 
+The [current reconnect campaign](lab/bbs/synchronet-reconnect-audio.md) now
+completes a real software-audio bridge restart and exact download retry with the
+unchanged DOS terminal/ASPECT. A stale-screen BIOS-helper key injection was
+isolated and corrected. The completed run passes18 of19 producer gates plus
+scoped independent protocol, serial, metadata and damaged-evidence checks; its
+loss-notice screen capture remains missing, so overall acceptance stays false.
+A full-screen observer passes its actual DOS regression, and the fresh audio
+run must capture loss before completion. Next revalidate current ENiGMA audio
+interaction/transfer, then continue sustained/protocol/profile and the complete
+F01–F16 application work. These scoped results do not close the full plan.
+
 The hardware target's [work order and completion gates](docs/ANALOG_MODEM_INTEGRATION.md#work-order-and-completion-gates)
 prioritize carrier/data separation and full audio-path pressure/editor/transfer
 checks before physical commissioning. Boca identification and adapter arrival
