@@ -353,6 +353,22 @@ sustained pressure/loss, other peers, physical and F01-F16 remain open. Next
 software work is actual Synchronet through SIP/audio/DOS and broader pressure/
 carrier-loss workflows using the pinned runtime.
 
+The [Synchronet audio preparation](docs/validation/synchronet-audio-preparation.json)
+now passes seven real read-only reference checks and six actual DOS observer
+checks. The archived official server ELF matches exactly and the existing owned
+loopback listener stays unchanged. The route logs in, reads bulletin1, visits
+Files, returns, reads an empty local message area and returns to fresh Main.
+The first reference's immutable-config assumption included the official daily
+statistics file; its successful route/failed preservation report stays retained.
+The corrected reference separates those counters and verifies no message/mail/
+transfer writes. Code/config/menu/library and message-body bytes preserve.
+AUDIO Synchronet cohort01 is now running with the same pinned minimum-hold/key-
+framing runtime,38400 DTE and V22/1200 DSP, with all inputs/auditors frozen.
+Independent exact whole-stream, native reply/input, official login, minimum-
+hold, RTP/SIP and hardware/timer cleanup gates remain mandatory. Preparation
+is not actual DOS/audio acceptance; editors, transfers, pressure/loss, physical
+and F01-F16 remain open. See [run instructions](lab/bbs/synchronet-audio.md).
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

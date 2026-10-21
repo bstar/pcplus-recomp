@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Actual audio retry02 passes all81 producer and independent workflow gates with the explicit monotonic-hold runtime and receiver candidate:6002ms minimum, exact bytes/file/source, valid cancel/retry/closing, resumed search/list and normal cleanup. This accepts only that modified workflow; prior retry01 and stock upload02 failures remain recorded. Unmodified-stock closing, receiver cleanup, sustained pressure/loss, other peers including Synchronet audio, physical and F01-F16 remain open.",
+  "status": "Synchronet audio/DOS cohort01 is running after seven real reference and six observer prerequisites. Prior explicit ENiGMA timer/receiver cancel-retry02 acceptance remains scoped and unchanged. No new Synchronet audio acceptance yet. Editors/transfers, pressure/loss, stock closing/cleanup, physical and F01-F16 remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3729,6 +3729,15 @@
       "minimum_post_train_hold_passed": true,
       "receipt": "docs/validation/synthmodem-audio-upload-retry-02.json",
       "receipt_sha256": "e553eaee6e41126abfaf876825bb9a69929fede92a19a174977fade67892a8be"
+    },
+    "synthmodem-synchronet-audio-01": {
+      "status": "running",
+      "passed": null,
+      "peer": "Synchronet official archived3.22a snapshot",
+      "preparation_receipt": "docs/validation/synchronet-audio-preparation.json",
+      "acceptance": "Pending every same-run producer, exact whole-stream, native replies/read-only route, minimum-hold, input preservation and hardware/SIP cleanup gate",
+      "DTE_bps": 38400,
+      "software_carrier_bps": 1200
     }
   },
   "diagnosis": {
@@ -3849,5 +3858,6 @@
   "latest_completed_cohort_passed": true,
   "audio_upload_retry_failure_receipt": "docs/validation/synthmodem-audio-upload-retry-01.json",
   "accepted_candidate_retry_cohort": "synthmodem-audio-upload-retry-02",
-  "posttrain_audio_receipt": "docs/validation/synthmodem-audio-upload-retry-02.json"
+  "posttrain_audio_receipt": "docs/validation/synthmodem-audio-upload-retry-02.json",
+  "active_peer_cohort": "synthmodem-synchronet-audio-01"
 }

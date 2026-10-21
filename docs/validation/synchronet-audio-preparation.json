@@ -1,0 +1,60 @@
+{
+  "passed": true,
+  "actual_Synchronet_audio_accepted": false,
+  "reference_checks": {
+    "read_only_bulletin": true,
+    "owned_empty_message_area": true,
+    "complete_reference_route": true,
+    "no_unrecognized_command": true,
+    "pinned_server_inputs_preserved": true,
+    "message_bodies_preserved": true,
+    "no_message_mail_or_transfer_writes": true
+  },
+  "observer_cases": [
+    {
+      "mode": "phases_with_stale_main",
+      "passed": true,
+      "checks": {
+        "normal_DOS_return": true,
+        "actual_BIOS_Alt_X": true,
+        "timer_restored": true
+      },
+      "probe_sha256": "e6d4f8d0ed944b4e7f2ffd17f9a87ee1b76d2fc57abf7fd1d990af94028fe9dc"
+    },
+    {
+      "mode": "watchdog",
+      "passed": true,
+      "checks": {
+        "normal_DOS_return": true,
+        "actual_BIOS_Alt_X": true,
+        "timer_restored": true
+      },
+      "probe_sha256": "d6addc79d9e46b0b8b1ad6c2e41bda2f305bfcfb935818657c207d9ba82e8ba9"
+    }
+  ],
+  "source_commit": "9de2c48d0265b07e1a8406d8a55d31df4fad7ee8",
+  "official_server_binary_sha256": "055fbcd075af32394a3a891051b173008146901c2ab4b144709ffac4999f8c24",
+  "archive_sha256": {
+    "sbbs_dev.tgz": "e2d2d763c2913281fa5b40f12d9d82d5d4972b78f8676a618eabde112fd99b89",
+    "sbbs_run.tgz": "ef12ec76ebe4bf64eac2fc4fb098c5b4f4b30f33c96ace46dffd75eba5fb4e54",
+    "sbbs_src.tgz": "b6c1ccc4a6b0eaeb38acd2c3e8f02a7e8cfaaaade6bc7ccf72e85aa1161f94a4"
+  },
+  "immutable_server_file_count": 877,
+  "loaded_library_count": 34,
+  "reference_result_sha256": "d38c8e84a0d792f2ea918672cedf026bd68c7e772a034b748df1061e53585031",
+  "observer_result_sha256": "17be589a590e3faad7f893d0855fe50af85030791fcb297b65afb2500c270762",
+  "source_sha256": {
+    "lab/bbs/audio_synchronet.py": "2d9d3b8bc9bfb44b7a07d8f8b6bc5abea0393588948af1e4984ca138cbffbb38",
+    "lab/bbs/audio_bbs_relay.py": "f1c9101f4859f10b1cd3cde1dde0cdcb1b58d04614db953ff0bfe531feda3e15",
+    "lab/bbs/audio_synchronet_keys.asm": "1b3ecad00d951631b6b9406ed5fc4bca409380090be5033cc9bf772ae71ccbb6",
+    "lab/bbs/check_audio_synchronet_keys.py": "c11846c2e784de1fc4eebf66e0bef9a600448dfcfd5ad0fe300891819d9c697b",
+    "lab/bbs/synthmodem_synchronet_audio_dos.py": "69e05374462f2bbccfdfcd228482fbebe5d4f3442854449f8c5251ae76142ed0",
+    "lab/bbs/audit_synchronet_audio_dos.py": "566f45083d5b819db750e64c62b34de11574432ae2ea0384e479f3d23e81e591"
+  },
+  "prior_reference_diagnostic": "build/bbs-lab/synchronet-audio-reference-01/result.json",
+  "scope": "Preparation only: seven real read-only reference navigation checks, six actual DOS BIOS-observer checks and compiled ASPECT recipe. Official archived Synchronet ELF matches exactly; current code/config/menu/library inputs and message bodies preserve. ctrl/dsts.ini is official daily runtime statistics, tracked separately with message/mail/transfer counters unchanged. Original reference01 mistakenly included it as immutable config; its route passed and initial report is preserved. Audio cohort01 is running with all inputs/auditors frozen; no actual DOS/audio/physical acceptance follows from these prerequisites.",
+  "official_statistics_source_sha256": {
+    "src/sbbs3/getstats.c": "d68be7d0092684ef2ba647be4ee714f9d38c6e83b43b8c7c39410da237255758",
+    "src/sbbs3/logon.cpp": "39e26128dc9617c2cc5b73ebc48cbefa5d5f6be8fc0e2a18a0acf55e86ef0b25"
+  }
+}
