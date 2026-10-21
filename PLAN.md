@@ -1,5 +1,19 @@
 # Complete DOS rebuild plan
 
+Machine startup profiles now select [ZMODEM receive credit](docs/ZMODEM_RECEIVE_CREDIT.md)
+with `/Z:1..8192`, preserving8192 by default. The core API passes77 host cases,
+the linked parser633 inputs, foreground/UART/file owners31 credit cases and
+the actual DOS component83 cases. Ten actual DOS/lrzsz workflows cover manual,
+automatic, default and above64KiB transfers; independent retained-wire audits
+verify source/CRC/EOF/ZFIN/OO. The direct native `/Z:256` pairing exposed the
+credit-only sender's empty-file ZRPOS rejection. A separate Nix EOF-position
+candidate passes170 guard cases and the complete empty/one-byte/65797-byte
+DOS batch, with packets and synchronous groups measured at256 bytes. The
+failed predecessor batch remains retained. Neither helper is installed on a
+live BBS, and BBS/audio/physical acceptance remains open. Next bind the tested
+policy and EOF-capable sender to an isolated BBS fixture before retrying the
+failed larger-file audio workflow; keep stock server state unchanged.
+
 The ordered Boca / SPA2102 hardware path remains an integration target within
 this plan. The [commissioning worksheet](docs/BOCA_COMMISSIONING.md) records
 identity/configuration prerequisites and separate connection, display, sustained

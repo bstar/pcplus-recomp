@@ -1,0 +1,344 @@
+{
+  "passed": true,
+  "binary_sha256": "a838265ab1231435fbc7cedde4d86049188d2ccf704c8c30c0ca315b8eae97dc",
+  "DS_SS_bytes": 64896,
+  "host_cases": 77,
+  "linked_parser_inputs": 633,
+  "DOS_component_cases": 83,
+  "linked_credit_cases": 31,
+  "linked_normal_workflows": 78,
+  "actual_DOS_lrzsz_cases": [
+    {
+      "label": "receive-credit256-large-01",
+      "case": "rx-default",
+      "checks": {
+        "actual_terminal_ready": true,
+        "independent_peer_exit_zero": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "no_peer_errors": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "exact_destination": true,
+        "source_unchanged": true,
+        "screen_restored": true,
+        "no_stages": true,
+        "binary_unchanged": true,
+        "requested_credit_on_wire": true,
+        "default_credit_not_on_wire": true
+      },
+      "receive_credit": 256,
+      "files": {
+        "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+      },
+      "harness_sha256": "564270523a4eeb1b516ed84c0a51ce12a6d69dcb0b2c2809448bc703077a276f",
+      "result_sha256": "e4a4c6bb7a0c9165685514e17e408aad604c2cbdb9facf45eeab11e69944cf27",
+      "wire_audit": "build/terminal-zmodem-dos/receive-credit256-large-01/rx-default/passive-source-CRC-audit.json",
+      "wire_audit_sha256": "3cedad3bdfc24b72021c9ad9719c8a5ac34b4b01d64c395654be7164e1917ce1"
+    },
+    {
+      "label": "receive-credit256-large-01",
+      "case": "rx-crc16",
+      "checks": {
+        "actual_terminal_ready": true,
+        "independent_peer_exit_zero": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "no_peer_errors": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "exact_destination": true,
+        "source_unchanged": true,
+        "screen_restored": true,
+        "no_stages": true,
+        "binary_unchanged": true,
+        "requested_credit_on_wire": true,
+        "default_credit_not_on_wire": true
+      },
+      "receive_credit": 256,
+      "files": {
+        "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+      },
+      "harness_sha256": "564270523a4eeb1b516ed84c0a51ce12a6d69dcb0b2c2809448bc703077a276f",
+      "result_sha256": "9738b6a6b521b533e49c54de4464724c23af0b00ab7ab7538c90e07dfd6164b5",
+      "wire_audit": "build/terminal-zmodem-dos/receive-credit256-large-01/rx-crc16/passive-source-CRC-audit.json",
+      "wire_audit_sha256": "0f8af5d49182592456f1b4b8d57bb0e69dca2f2ec3bee5b2558ea15144df9f91"
+    },
+    {
+      "label": "receive-credit256-large-01",
+      "case": "tx-default",
+      "checks": {
+        "actual_terminal_ready": true,
+        "independent_peer_exit_zero": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "no_peer_errors": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "exact_destination": true,
+        "source_unchanged": true,
+        "screen_restored": true,
+        "no_stages": true,
+        "binary_unchanged": true
+      },
+      "receive_credit": 256,
+      "files": {
+        "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+      },
+      "harness_sha256": "564270523a4eeb1b516ed84c0a51ce12a6d69dcb0b2c2809448bc703077a276f",
+      "result_sha256": "66b923862b721936e554db3d499e85514034012b63d30dfc0bb584d8315fe3b4",
+      "wire_audit": "build/terminal-zmodem-dos/receive-credit256-large-01/tx-default/passive-source-CRC-audit.json",
+      "wire_audit_sha256": "b6aed5c9b20706ff32d1f9571b44773815a852e4b637ea803edbe5a293b38b2e"
+    },
+    {
+      "label": "receive-credit256-large-01",
+      "case": "tx-escape",
+      "checks": {
+        "actual_terminal_ready": true,
+        "independent_peer_exit_zero": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "no_peer_errors": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "exact_destination": true,
+        "source_unchanged": true,
+        "screen_restored": true,
+        "no_stages": true,
+        "binary_unchanged": true
+      },
+      "receive_credit": 256,
+      "files": {
+        "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+      },
+      "harness_sha256": "564270523a4eeb1b516ed84c0a51ce12a6d69dcb0b2c2809448bc703077a276f",
+      "result_sha256": "9008c29d5144d0db0548b18fdff1f5c6ab9ee53e417b849d114cd584a7aebd95",
+      "wire_audit": "build/terminal-zmodem-dos/receive-credit256-large-01/tx-escape/passive-source-CRC-audit.json",
+      "wire_audit_sha256": "67e0c4eced7381d27f51557b7edcd6de833e8b3c50f753d782e905f04f789492"
+    },
+    {
+      "label": "receive-credit256-auto-large-01",
+      "case": "rx-default",
+      "checks": {
+        "actual_terminal_ready": true,
+        "independent_peer_exit_zero": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "no_peer_errors": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "exact_destination": true,
+        "source_unchanged": true,
+        "screen_restored": true,
+        "no_stages": true,
+        "binary_unchanged": true,
+        "saved_preferences_unchanged": true,
+        "no_manual_transfer_keys": true,
+        "requested_credit_on_wire": true,
+        "default_credit_not_on_wire": true
+      },
+      "receive_credit": 256,
+      "files": {
+        "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+      },
+      "harness_sha256": "564270523a4eeb1b516ed84c0a51ce12a6d69dcb0b2c2809448bc703077a276f",
+      "result_sha256": "7fbccc759a2597661015861208e53aeec109f5d4f547a537a759b4259a951ca0",
+      "wire_audit": "build/terminal-zmodem-dos/receive-credit256-auto-large-01/rx-default/passive-source-CRC-audit.json",
+      "wire_audit_sha256": "3423862034e73795dea10c96c0b0d2d1396e32ef5c603a03549455f29d284440"
+    },
+    {
+      "label": "receive-credit256-auto-large-01",
+      "case": "rx-crc16",
+      "checks": {
+        "actual_terminal_ready": true,
+        "independent_peer_exit_zero": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "no_peer_errors": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "exact_destination": true,
+        "source_unchanged": true,
+        "screen_restored": true,
+        "no_stages": true,
+        "binary_unchanged": true,
+        "saved_preferences_unchanged": true,
+        "no_manual_transfer_keys": true,
+        "requested_credit_on_wire": true,
+        "default_credit_not_on_wire": true
+      },
+      "receive_credit": 256,
+      "files": {
+        "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+      },
+      "harness_sha256": "564270523a4eeb1b516ed84c0a51ce12a6d69dcb0b2c2809448bc703077a276f",
+      "result_sha256": "c235fe40199f913a518a95b73b6db0925890eac5cc747a15722c924a2d1c4a9b",
+      "wire_audit": "build/terminal-zmodem-dos/receive-credit256-auto-large-01/rx-crc16/passive-source-CRC-audit.json",
+      "wire_audit_sha256": "1b5466907037f2ff1e23254efe1879b003db7b5b83a1a1c5dccc1606b6ae32f0"
+    },
+    {
+      "label": "receive-credit-default-regression-02",
+      "case": "rx-default",
+      "checks": {
+        "actual_terminal_ready": true,
+        "independent_peer_exit_zero": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "no_peer_errors": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "exact_destination": true,
+        "source_unchanged": true,
+        "screen_restored": true,
+        "no_stages": true,
+        "binary_unchanged": true,
+        "requested_credit_on_wire": true
+      },
+      "receive_credit": null,
+      "files": {
+        "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "4a52d18f2409cca12e871a1095c79105803fc511852579d1884fa96f52ace240"
+      },
+      "harness_sha256": "e2ddae28d4188daf5b0ec80473784888d3df93f9bddd9ea9cbc3dca996b4f317",
+      "result_sha256": "831bff3a12cb67f3dd51e30b91ea0c44c13b1b292cd2808cc46acca7071565dc",
+      "wire_audit": "build/terminal-zmodem-dos/receive-credit-default-regression-02/rx-default/passive-source-CRC-audit.json",
+      "wire_audit_sha256": "4d227a7142713756d52bdb1676748cd6d91e9f3f1cdf7848516f9db3ace9a715"
+    },
+    {
+      "label": "receive-credit-default-regression-02",
+      "case": "rx-crc16",
+      "checks": {
+        "actual_terminal_ready": true,
+        "independent_peer_exit_zero": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "no_peer_errors": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "exact_destination": true,
+        "source_unchanged": true,
+        "screen_restored": true,
+        "no_stages": true,
+        "binary_unchanged": true,
+        "requested_credit_on_wire": true
+      },
+      "receive_credit": null,
+      "files": {
+        "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "4a52d18f2409cca12e871a1095c79105803fc511852579d1884fa96f52ace240"
+      },
+      "harness_sha256": "e2ddae28d4188daf5b0ec80473784888d3df93f9bddd9ea9cbc3dca996b4f317",
+      "result_sha256": "8c7ecb66e7e9d6890c80f1f418f5833b6e5bf32e453336e76501353e8dcf3e2b",
+      "wire_audit": "build/terminal-zmodem-dos/receive-credit-default-regression-02/rx-crc16/passive-source-CRC-audit.json",
+      "wire_audit_sha256": "094b21aab8933e4611347b28d953dc0db3756a555fafd90e8b444485095f4e10"
+    },
+    {
+      "label": "receive-credit-default-regression-02",
+      "case": "tx-default",
+      "checks": {
+        "actual_terminal_ready": true,
+        "independent_peer_exit_zero": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "no_peer_errors": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "exact_destination": true,
+        "source_unchanged": true,
+        "screen_restored": true,
+        "no_stages": true,
+        "binary_unchanged": true
+      },
+      "receive_credit": null,
+      "files": {
+        "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "4a52d18f2409cca12e871a1095c79105803fc511852579d1884fa96f52ace240"
+      },
+      "harness_sha256": "e2ddae28d4188daf5b0ec80473784888d3df93f9bddd9ea9cbc3dca996b4f317",
+      "result_sha256": "4d42cb91627ee1b7f60198e73b32c5a84d7715d1dec600c2290d67cd4bac56a5",
+      "wire_audit": "build/terminal-zmodem-dos/receive-credit-default-regression-02/tx-default/passive-source-CRC-audit.json",
+      "wire_audit_sha256": "66bbca06d9edcad08bcd295ece0b6ee17b29b86199a47cff903b9e9aa0b32155"
+    },
+    {
+      "label": "receive-credit-default-regression-02",
+      "case": "tx-escape",
+      "checks": {
+        "actual_terminal_ready": true,
+        "independent_peer_exit_zero": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "no_peer_errors": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "exact_destination": true,
+        "source_unchanged": true,
+        "screen_restored": true,
+        "no_stages": true,
+        "binary_unchanged": true
+      },
+      "receive_credit": null,
+      "files": {
+        "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "4a52d18f2409cca12e871a1095c79105803fc511852579d1884fa96f52ace240"
+      },
+      "harness_sha256": "e2ddae28d4188daf5b0ec80473784888d3df93f9bddd9ea9cbc3dca996b4f317",
+      "result_sha256": "2276ac71266634c17858bb75771abff69b0c082922eff2ccdf8b5084364568b0",
+      "wire_audit": "build/terminal-zmodem-dos/receive-credit-default-regression-02/tx-escape/passive-source-CRC-audit.json",
+      "wire_audit_sha256": "2a9a1c97b0498e2e7fd516b5999e683f53ccf7fe49eafc2c6cf0a1f56687a754"
+    }
+  ],
+  "source_receipts_sha256": {
+    "build/zmodem-receive-credit/host-02/result.json": "60e3156f5189043af8a23c9f475b7cda0a8db8d3c276e0d68d8b5c827d5dd58c",
+    "build/terminal-options/checks.json": "0d59175c2a236c8c98fd24538e67fb67838f1aa0b9195b21f4cb8e6ee6278c0d",
+    "build/zmodem-dos/checks.json": "55b3a41d1bc139a1edbd06aa89a3e58d684037a2091a85023a80c8df3fcae642",
+    "build/terminal/terminal-zmodem-receive-credit-checks.json": "2a869e93200eebe4425236aa7938724395a6e7498a3f49b8d9054296414c5188",
+    "build/terminal/terminal-zmodem-live-checks.json": "3e536aab3f454e38e7f26852acf7627aa16cee7e654ae0c2ff55a9c70149363a",
+    "build/terminal/manifest.json": "663aab7d6ec9b941bfcfd6621e9abef33532868e6e90737ad07c677dc6ba5b01",
+    "build/terminal-zmodem-dos/receive-credit256-large-01/checks.json": "cc97d2e5155fad2f3a1ebfe4ac3d6fc085ace6d0b56c7ead92ff3a1247028c26",
+    "build/terminal-zmodem-dos/receive-credit256-auto-large-01/checks.json": "4bdc7bed6f92f9bad180080116225d6531dd1ae4242b6b38d67b81b741dd97a0",
+    "build/terminal-zmodem-dos/receive-credit-default-regression-02/checks.json": "18ab2889436c1f5c8858ac6aef887ff203812a3ecee77581dc38238ace731343"
+  },
+  "pre_helper_extension_harness": {
+    "path": "build/bbs-lab/receive-credit-terminal-dos-harness-01.py",
+    "sha256": "564270523a4eeb1b516ed84c0a51ce12a6d69dcb0b2c2809448bc703077a276f"
+  },
+  "inputs": {
+    "Makefile": "694e1902d7fff5a7abef643031d600f789beab5eff3d244cac7a000970ede40c",
+    "src/terminal/options.asm": "d3261b0169e039761c06964140d0744f1135815b7e7b9b06a196a1cb19d42c3f",
+    "src/transfer/zmodem.c": "4872c97039c5dd725aaf1e9d68177c2c966b88596dafa55574b23abdb0b487dd",
+    "src/transfer/zmodem.h": "105c079af8c3cb0be727b2b42d414b9708e617a726e2d046b8e1b6042a3a666f",
+    "src/transfer/terminal_zmodem.c": "e22361a70328ed49ed253d9ff2175f36f9ca96e0cfa021adb0a46210ee686b5c",
+    "standalone/check_zmodem_receive_credit.py": "d33d37cd6d1defc479794b345307407794065df64946973d11c4bee1fa0bc000",
+    "standalone/check_terminal_zmodem_receive_credit.py": "31bb9759a39b5c2be0b9b1e44ffe643ecf6ddfc98d2b1fd9be1ed5406d20a4c9",
+    "standalone/check_terminal_options.py": "d305bc65a212436e8e0d3ab6aeb3de3f43eac679d0a0a2e5ff5c7cef5b3bddb2",
+    "standalone/test_zmodem_dos.py": "8c449f21a8c2907a3a4cc64a6a26ce27ad915a03d9bbafe641002b44242d0f17",
+    "standalone/zmodem_host.c": "32de66127f1af8b3928031f0c763dd3abe47903c413f05789bc6c11dad1e37b0",
+    "standalone/test_terminal_zmodem_dos.py": "e2ddae28d4188daf5b0ec80473784888d3df93f9bddd9ea9cbc3dca996b4f317"
+  },
+  "regression_commands": [
+    "./tools/build test-zmodem test-terminal-zmodem-live"
+  ],
+  "regression_logs_sha256": {
+    "build/bbs-lab/receive-credit-regression-01.stdout": "2e3024ba9fd54b3b60695f9c8cf537ea0748ac6f059de69fc18e59d9bba1cc81",
+    "build/bbs-lab/receive-credit-regression-01.stderr": "b7bee0aaae040256ada0e07a31bfff9f82f7f3c5e5f5b674367f1fa895eb8464"
+  },
+  "scope": "Configurable source-owned receive credit, default preservation and tested host/linked/actual DOS boundaries only. Ten full DOS/lrzsz cases retain exact files, serial credit, hardware/screen restoration, normal exit and post-transfer DSR/keyboard; independent passive source/CRC/EOF/ZFIN/OO audits pass. Six cases used the retained pre-helper-extension harness; four default cases use the current harness. No BBS/audio/sustained-pressure/physical or whole-application acceptance.",
+  "actual_audio_accepted": false,
+  "physical_modem_accepted": false
+}

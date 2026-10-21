@@ -3,6 +3,8 @@
 An incremental source reconstruction of ProComm Plus 2.01, focused first on
 serial communication, ANSI terminal handling and BBS compatibility.
 The complete task list and current work are tracked in [PLAN.md](PLAN.md).
+Machine launch profiles can select [ZMODEM receive credit](docs/ZMODEM_RECEIVE_CREDIT.md)
+with `/Z:1..8192`; omission preserves the existing8192-byte offer.
 The planned [Boca / SPA2102 / SynthModem integration](docs/ANALOG_MODEM_INTEGRATION.md)
 retains real analog handshakes while Linux bridges to Telnet BBSes; hardware
 compatibility and 14.4 negotiation remain unverified.

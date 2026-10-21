@@ -60,10 +60,11 @@ static unsigned data(zm_session *s,unsigned n,unsigned ending)
  return length?put(s,s->io.wire,length):fail(s,ZM_PROTOCOL);
 }
 static unsigned receive_init(zm_session *s)
-/* A finite credit matches the actual packet workspace. Unlimited overlap lets
+/* A finite credit defaults to the packet workspace; a machine profile can
+ * request smaller checkpoints without shrinking that workspace. Overlap lets
  * a fast TCP peer queue retransmissions/EOF ahead of a slow DOS receiver's
  * replies, even when the UART honors RTS. Request a checkpoint within8KiB. */
-{return header(s,ZRINIT,0x23002000UL,ZW_HEX);}
+{return header(s,ZRINIT,0x23000000UL|(s->capacity?s->capacity:8192U),ZW_HEX);}
 /* A slow bridge can still hold timeout-driven data retransmissions when our
  * checked EOF/ZRINIT reaches the sender. The file is already installed: consume
  * those CRC-framed, in-range bytes without reopening, writing or acknowledging
@@ -395,9 +396,12 @@ static unsigned send(zm_session *s)
 unsigned __cdecl zm_run(zm_session *s,const zm_ops *ops,void *context,unsigned sending)
 {return zm_run_link(s,ops,context,sending,0);}
 unsigned __cdecl zm_run_link(zm_session *s,const zm_ops *ops,void *context,unsigned sending,unsigned response_bps)
+{return zm_run_profile(s,ops,context,sending,response_bps,0);}
+unsigned __cdecl zm_run_profile(zm_session *s,const zm_ops *ops,void *context,unsigned sending,unsigned response_bps,unsigned receive_credit)
 {
  unsigned r,i;unsigned char cancel[18];
- if(!s || !ops || sending>1 || (response_bps && response_bps<300))return ZM_ARGUMENT;
+ if(!s || !ops || sending>1 || (response_bps && response_bps<300) || receive_credit>8192 ||
+  (sending && receive_credit))return ZM_ARGUMENT;
 #ifdef __WATCOMC__
  if((unsigned long)(unsigned)s+sizeof(*s)>65536UL || (unsigned long)(unsigned)ops+sizeof(*ops)>65536UL ||
   !((unsigned long)(unsigned)s+sizeof(*s)<=(unsigned)ops || (unsigned long)(unsigned)ops+sizeof(*ops)<=(unsigned)s))return ZM_ARGUMENT;
@@ -407,7 +411,7 @@ unsigned __cdecl zm_run_link(zm_session *s,const zm_ops *ops,void *context,unsig
 #endif
  if(!ops->read_byte || !ops->write_wire || (sending?(!ops->next || !ops->seek || !ops->read_file || !ops->close_source):
   (!ops->open_received || !ops->write_received || !ops->commit_received || !ops->abort_received)))return ZM_ARGUMENT;
- memset(s,0,sizeof(*s));s->ops=ops;s->context=context;s->sending=sending;s->response_bps=response_bps;
+ memset(s,0,sizeof(*s));s->ops=ops;s->context=context;s->sending=sending;s->response_bps=response_bps;s->capacity=receive_credit;
  zw_init(&s->decoder,s->io.rx,sizeof(s->io.rx),0);r=sending?send(s):receive(s);
  if(s->owned==1){
   s->cleanup_status=sending?ops->close_source(context,0):ops->abort_received(context);

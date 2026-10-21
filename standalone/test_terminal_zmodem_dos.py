@@ -24,8 +24,12 @@ class ZPeer(Peer):
      assert b'\x18' in self.pending,'No actual DOS ZMODEM start'
     self.log('protocol-start')
     sending=self.recipe['direction']=='tx'
-    self.command=[shutil.which('rz' if sending else 'sz'),'-b','-q']+self.recipe['flags']
-    if not sending:self.command+=(['-8','-L','8192'] if self.recipe.get('zedzap') else ['-L','1024'])+[n for n,_ in self.recipe['files']]
+    if self.recipe.get('sender_helper'):
+     assert not sending and not self.recipe['flags']
+     self.command=[self.recipe['sender_helper'],'-raw','-8','sz']+[n for n,_ in self.recipe['files']]
+    else:
+     self.command=[shutil.which('rz' if sending else 'sz'),'-b','-q']+self.recipe['flags']
+     if not sending:self.command+=(['-8','-L','8192'] if self.recipe.get('zedzap') else ['-L','1024'])+[n for n,_ in self.recipe['files']]
     with (self.path/'peer-stderr.log').open('wb') as log:
      self.child=subprocess.Popen(self.command,cwd=self.path/'PEER',stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=log,bufsize=0)
      self.child.stdin.write(self.pending);self.pending.clear();deadline=time.monotonic()+max(65,self.recipe.get('transfer_timeout',65))
@@ -68,6 +72,7 @@ def run_case(r,a):
   config_image=image(port=1,autodownload=1,download=b'D:\\RECV\\')
   (out/'AUTO.PRM').write_bytes(config_image);arguments=' @AUTO.PRM'
   keys=['p'+str(a.after_ms),'r','e','a','d','y','p1500','a-x']
+ if a.receive_credit is not None:arguments+=' /Z:'+str(a.receive_credit)
  serial='\n'.join(f'serial{i}='+(f'nullmodem server:127.0.0.1 port:{peer.port} transparent:1 rxdelay:200 txdelay:1' if i==1 else 'disabled') for i in range(1,5))
  conf=f'''[sdl]
 output=surface
@@ -120,18 +125,33 @@ exit
  if r_automatic(r):
   checks['saved_preferences_unchanged']=read('AUTO.PRM')==config_image
   checks['no_manual_transfer_keys']='a-r' not in keys and 'f2' not in keys and 'enter' not in keys
+ if r['direction']=='rx':
+  from check_zmodem import h
+  checks['requested_credit_on_wire']=bytes(peer.wire).count(h(1,0x23000000|(a.receive_credit or 8192)))>=len(r['files'])+1
+  if a.receive_credit is not None and a.receive_credit!=8192:
+   checks['default_credit_not_on_wire']=h(1,0x23002000) not in peer.wire
+ if r.get('sender_helper'):
+  checks['explicit_helper_unchanged']=hashlib.sha256(Path(r['sender_helper']).read_bytes()).hexdigest()==a.sender_helper_sha256
  (out/'events.json').write_text(json.dumps(peer.events,indent=2)+'\n')
  (out/'serial.bin').write_bytes(peer.wire);(out/'peer.bin').write_bytes(peer.sent)
  result=dict(passed=all(checks.values()),case=r['name'],checks=checks,errors=peer.errors,binary_sha256=a.sha256,peer_command=getattr(peer,'command',None),peer_exit=peer.peer_exit,
-  keys=keys,recipe_bounds=dict(after_ms=a.after_ms,transfer_timeout=r['transfer_timeout'],resume_timeout=r['resume_timeout'],DOS_timeout=a.timeout),files={n:hashlib.sha256(d).hexdigest() for n,d in r['files']},scope=('Actual DOSBox-X saved automatic invitation without transfer keys; ' if r_automatic(r) else 'Actual DOSBox-X BIOS F2 protocol selection; ')+ ' maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with independent pinned lrzsz stdio peer. Synthetic local media, no BBS login or physical modem claim.')
+  keys=keys,terminal_arguments=arguments,receive_credit=a.receive_credit,sender_helper_sha256=a.sender_helper_sha256,
+  harness_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+  recipe_bounds=dict(after_ms=a.after_ms,transfer_timeout=r['transfer_timeout'],resume_timeout=r['resume_timeout'],DOS_timeout=a.timeout),files={n:hashlib.sha256(d).hexdigest() for n,d in r['files']},scope=('Actual DOSBox-X saved automatic invitation without transfer keys; ' if r_automatic(r) else 'Actual DOSBox-X BIOS F2 protocol selection; ')+ ' maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with '+('explicitly selected SHA-pinned SEXYZ sender' if r.get('sender_helper') else 'independent pinned lrzsz stdio peer')+'. Synthetic local media, no BBS login or physical modem claim.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(r['name'],json.dumps(result),flush=True);return result
 def main():
- p=argparse.ArgumentParser();p.add_argument('--sha256',required=True);p.add_argument('--label',required=True);p.add_argument('--jobs',type=int,default=2,choices=(1,2));p.add_argument('--after-ms',type=int,default=15000);p.add_argument('--large',action='store_true');p.add_argument('--case',action='append');p.add_argument('--timeout',type=int,default=100);p.add_argument('--zedzap',action='store_true');p.add_argument('--automatic',action='store_true');a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--sha256',required=True);p.add_argument('--label',required=True);p.add_argument('--jobs',type=int,default=2,choices=(1,2));p.add_argument('--after-ms',type=int,default=15000);p.add_argument('--large',action='store_true');p.add_argument('--case',action='append');p.add_argument('--timeout',type=int,default=100);p.add_argument('--zedzap',action='store_true');p.add_argument('--automatic',action='store_true');p.add_argument('--receive-credit',type=int);p.add_argument('--sender-helper',type=Path);p.add_argument('--sender-helper-sha256');a=p.parse_args()
+ if a.receive_credit is not None and not 1<=a.receive_credit<=8192:p.error('--receive-credit must be in 1..8192')
+ if bool(a.sender_helper)!=bool(a.sender_helper_sha256):p.error('--sender-helper requires --sender-helper-sha256 and conversely')
+ if a.sender_helper:
+  if a.case!=['rx-default'] or a.zedzap:p.error('explicit SEXYZ helper requires exactly --case rx-default and no --zedzap')
+  a.sender_helper=a.sender_helper.resolve()
+  assert a.sender_helper.is_file() and hashlib.sha256(a.sender_helper.read_bytes()).hexdigest()==a.sender_helper_sha256
  assert a.label.replace('-','').replace('_','').isalnum();assert hashlib.sha256(BINARY.read_bytes()).hexdigest()==a.sha256
  OUT.mkdir(exist_ok=True);files=[('EMPTY.BIN',b''),('ODD.BIN',b'A'),('ALL.BIN',bytes(range(256))*(257 if a.large else 4)+b'\0\x1a\xff@\r')]
  rows=[dict(name='rx-default',direction='rx',flags=[],files=files),dict(name='rx-crc16',direction='rx',flags=['-o'],files=files),dict(name='tx-default',direction='tx',flags=[],files=files),dict(name='tx-escape',direction='tx',flags=['-e'],files=files)]
  rows=[r for r in rows if (not a.case or r['name'] in a.case) and (not a.automatic or r['direction']=='rx')];assert rows
- for r in rows:r['automatic']=a.automatic
+ for r in rows:r['automatic']=a.automatic;r['sender_helper']=str(a.sender_helper) if a.sender_helper else None
  for r in rows:r['transfer_timeout']=max(65,a.after_ms/1000+10);r['zedzap']=a.zedzap;r['resume_timeout']=min(a.timeout,max(10,a.after_ms/1000+10))
  with (OUT/'.lock').open('w') as lock:
   fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)

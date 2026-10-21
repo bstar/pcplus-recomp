@@ -46,11 +46,11 @@
       "verified_replays": 0,
       "captures_sha256": {
         "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
-        "helper.stderr": "67b78afe9f74e16bc0bad17c64ddeecb3d492f90a10d563e36360d46165c20e5",
-        "sender.bin": "ede10d6507a6cedb46461eaccf76343c9224aa9b60fd35aa2c614caca41e75c9",
+        "helper.stderr": "ecf170e03014f14795513985170c9cb213caa11fb5070bd10db86809ea430ea9",
+        "sender.bin": "a47273cfa07fd00212936ededb048a810c1717044784fd12cfb5136e8005c7c2",
         "receiver.bin": "e9c437bb2f4ea026c0b1f07303d62cafe7db9078b69c2b5c3a1b49c2a9a40798",
-        "trace.json": "33a0d23715e6b5a9486621dabac184ad16ab2ffd3a97c408627207679dd23cbb",
-        "protocol.json": "a3cbdf42ba9985480dd1d004ea8ad214b6eac2b66e88a2def8ba21b47bf87322"
+        "trace.json": "6d387e3822b72cf8806ce1516f2fbe71293ca96263a1e90590299221b6921c46",
+        "protocol.json": "38f8825de0299351437e75bf1bd0eeed2cbf9392b52881dddb6ffb61c6c487de"
       }
     },
     {
@@ -95,16 +95,16 @@
         8192,
         1285
       ],
-      "protocol_received_bytes": 67950,
+      "protocol_received_bytes": 67951,
       "protocol_reply_bytes": 304,
       "verified_replays": 0,
       "captures_sha256": {
         "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
         "helper.stderr": "a20442d6732e7a30a691f3a2b4a3db0909eeddbb2a57ff73ec4eccf1ec29593b",
-        "sender.bin": "c8d31663b390c702603b75c4147e5db762191e2e6ca0757c91dd98da45be646b",
+        "sender.bin": "30283aba1aca67ee4fa20d6bdec7611cd863f2d5a06642a6f225cfb3b1b28999",
         "receiver.bin": "feb2ae4e184ff4c30c29e987758e291183b6845b9c5cd5e2e085b6a6211b5289",
-        "trace.json": "e56ae21b64303ea134318cfbb8e78cfb664326a807b67dac27af15662a800f8d",
-        "protocol.json": "3198bafe3ac498a5bf04fc853b11f3474e24d0dcab793486462ce6d0c4bf0fb4"
+        "trace.json": "7fb2c412e37f66dd328ccb86f69e6be456c2af45b41b0d718f00a50f19eed2d4",
+        "protocol.json": "1c9bc3d78908ae4ff2ce28e7ba8e3930f424d64a60c30376f1e8eda392951c8a"
       }
     },
     {
@@ -149,16 +149,16 @@
         8192,
         1285
       ],
-      "protocol_received_bytes": 67950,
+      "protocol_received_bytes": 67951,
       "protocol_reply_bytes": 304,
       "verified_replays": 0,
       "captures_sha256": {
         "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
         "helper.stderr": "25443992c23db6cd207fdd37bbadbdbe8273ff9fb51a63b1696ce85084f0e534",
-        "sender.bin": "c8d31663b390c702603b75c4147e5db762191e2e6ca0757c91dd98da45be646b",
+        "sender.bin": "30283aba1aca67ee4fa20d6bdec7611cd863f2d5a06642a6f225cfb3b1b28999",
         "receiver.bin": "93a458d1fcfa07a7b15d0743d3fe746772ae528808aefd07ef2e425925e4feeb",
-        "trace.json": "b9bc19864bd78b85d26e230f9a1eb1b49fc9a1be3670e0ae3af1e2275dbcae63",
-        "protocol.json": "03a317d10aa4924e2824830869c9bedcc0846deef6547b91d5f7a9a5f611dde9"
+        "trace.json": "cd80c83d1c8ba39acb8e699d907a827c7c3ba68ebb151c7009b141ae3bfbb176",
+        "protocol.json": "09473e786735f4c3e4888ab1897dabfc92cba62835ecd7e592d396d5120c1819"
       }
     },
     {
@@ -209,10 +209,10 @@
       "captures_sha256": {
         "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
         "helper.stderr": "34ef76cfe0d7ca6e25d3576455e9862011638b5e1b0f36b8af4c753f46f3c569",
-        "sender.bin": "c8d31663b390c702603b75c4147e5db762191e2e6ca0757c91dd98da45be646b",
+        "sender.bin": "0fd932c8e32d836e82a04ce0c1fd9a3b25d2cbae79299224f4ba61329bd975ca",
         "receiver.bin": "68b1b4f58c68e07849a643455aed5da276eaf217396df4a200a76db57fd9c325",
-        "trace.json": "091890a3ef36509cacda2250e0a3e74882cdef52b5fa03221c9876fdcecdd26b",
-        "protocol.json": "bd314f1ee33969b304893400816f106f5032476f2f06a668e89dc843d5778a66"
+        "trace.json": "d8d5491b7666a63cf937cebfecfb9cce400b4c79ef827be884b8b161cf8e655c",
+        "protocol.json": "a85df6f2282234aa1665760d2a384238f22e36fbd41a7aebd103ef15598b66f0"
       }
     }
   ],
@@ -225,11 +225,11 @@
   "compiler_version": "gcc (GCC) 15.3.0",
   "inputs": {
     "lab/bbs/probe_sexyz_receive_credit.py": "d0858e3362894ee55f6cdbd98a12163d59f699bb05524894ec4f0301b072a576",
-    "src/transfer/zmodem.c": "c951bd5c8a4e185fe20f0282f6ff03b09809684cd22de84161bc43ef26f66631",
+    "src/transfer/zmodem.c": "4872c97039c5dd725aaf1e9d68177c2c966b88596dafa55574b23abdb0b487dd",
     "src/transfer/zmodem_wire.c": "fdae5d7c899ac2b32efe4b2f9d14d6c66ca323263b2fff5bf5da33f5915c1a6b",
     "src/transfer/zmodem_name.c": "7720ba62c132c79b57fc329de0f8afc30312756ed5e9e6610345e03298478b2c",
     "src/transfer/batch_header.c": "5003de29446cc1ec3a3776dcb1798b2763a6f1d556e866abe7e207cc39b49aa5",
-    "src/transfer/zmodem.h": "183fc3ce55253fd9b732575d8c56cc5376fb6128c5a28ae0db1d298f7837530f",
+    "src/transfer/zmodem.h": "105c079af8c3cb0be727b2b42d414b9708e617a726e2d046b8e1b6042a3a666f",
     "src/transfer/zmodem_wire.h": "3dd5631882942ee5eaf195ff00dc7e838828ae0a6ecd89a8fa7eeef4511ddd68",
     "src/transfer/zmodem_name.h": "b63f56b0c01b40dc0e4a75e0a7f0bd2c3ae2ae04c3724cda01037a38ad02e3f5",
     "src/transfer/batch_header.h": "90b6691b30d0b60018bc05fe9b72932a2e913806913b326a15ab1ab15c69ad0b",
@@ -241,9 +241,11 @@
     "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
     "tools/dev": "abbf4bd3a4d6cb91b5f7eecc3919ccbccd15e472bc49463e9d2669adc67e0bca"
   },
-  "library_sha256": "c49d51e642c638e54fa1446353d2da3ae159a22865a240fa020b952379413179",
+  "library_sha256": "6223e4cf90785e95430dc06239778eb37f7480d717014c44ac95c44c936fca8c",
   "scope": "Capability experiment with unchanged stock BBS helper. Helper uses -raw -8 sz, maintained host C receiver and in-memory storage callbacks. Wrapper changes only complete ZRINIT offers, retaining all source/CRC/finish/control checks. No DOS/BBS/audio/timing/pressure/physical acceptance; packet/group sizes describe fast local pipes. A small advertised credit or cleared CANOVIO is not assumed to cap the sender packet; measured behavior guides the next slow-path candidate.",
-  "source_receipt": "build/bbs-lab/sexyz-receive-credit-06/result.json",
-  "source_receipt_sha256": "ab68ec525016bd56b5807d62fadbac79c016e1a812fcc5b92306450fbaef80c3",
-  "actual_DOS_audio_accepted": false
+  "actual_DOS_audio_accepted": false,
+  "predecessor_source_receipt": "build/bbs-lab/sexyz-receive-credit-06/result.json",
+  "predecessor_source_receipt_sha256": "ab68ec525016bd56b5807d62fadbac79c016e1a812fcc5b92306450fbaef80c3",
+  "source_receipt": "build/bbs-lab/sexyz-receive-credit-07/result.json",
+  "source_receipt_sha256": "d1e1e9c3b45383446137635992cfad16b4024e2f1a2a9e3a2b9c995fd2a33ebf"
 }

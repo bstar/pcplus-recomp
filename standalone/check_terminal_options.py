@@ -7,7 +7,7 @@ from unicorn.x86_const import UC_X86_REG_AX,UC_X86_REG_ES,UC_X86_REG_EFLAGS,UC_X
 from dos_image import DosImage
 ROOT=Path(__file__).resolve().parents[1]
 SERIAL_FIELDS=['terminal_baud_low','terminal_baud_high','terminal_parity','terminal_data_bits','terminal_stop_bits','terminal_irq_vector','terminal_port_number','uart_port_index','uart_irq_indices','uart_port_rbr','uart_port_thr','uart_port_ier','uart_port_lcr','uart_port_mcr','uart_port_lsr','uart_port_msr','uart_software_flow','uart_hardware_flow']
-FIELDS=SERIAL_FIELDS+['terminal_option_mask','terminal_directory_entry','terminal_directory_codes','terminal_keyboard_bios_selection','terminal_ansi_m_policy']
+FIELDS=SERIAL_FIELDS+['terminal_option_mask','terminal_directory_entry','terminal_directory_codes','terminal_keyboard_bios_selection','terminal_ansi_m_policy','terminal_zmodem_receive_credit']
 RATES=[300,1200,2400,4800,9600,19200,38400,57600,115200]
 
 def fixture():
@@ -36,10 +36,10 @@ class Options(DosImage):
   assert self.uc.reg_read(UC_X86_REG_ES)==0x6666
   return status,self.uc.reg_read(UC_X86_REG_EFLAGS)&1
  def snapshot(self):return {**{name:self.get(name) for name in FIELDS},'terminal_config_path':bytes(self.uc.mem_read(self.symbols['terminal_config_path'],64)),'terminal_dial_target':bytes(self.uc.mem_read(self.symbols['terminal_dial_target'],64)),'terminal_directory_path':bytes(self.uc.mem_read(self.symbols['terminal_directory_path'],64)),'terminal_keyboard_path':bytes(self.uc.mem_read(self.symbols['terminal_keyboard_path'],64)),'terminal_actions_path':bytes(self.uc.mem_read(self.symbols['terminal_actions_path'],64)),'terminal_translation_path':bytes(self.uc.mem_read(self.symbols['terminal_translation_path'],64))}
- def expected(self,port=1,rate=38400,parity=0,bits=8,stop=1,flow='NONE',mask=0,path=b'',dial=b'',directory=b'',entry=0,codes=0,keyboard=b'',bios=2,ansi_m=0,actions=b'',translation=b''):
+ def expected(self,port=1,rate=38400,parity=0,bits=8,stop=1,flow='NONE',mask=0,path=b'',dial=b'',directory=b'',entry=0,codes=0,keyboard=b'',bios=2,ansi_m=0,actions=b'',translation=b'',receive_credit=0):
   base=[0x3f8,0x2f8,0x3e8,0x2e8][port-1];irq=[4,3,4,3][port-1]
   expected=dict(zip(SERIAL_FIELDS,[rate&65535,rate>>16,parity,bits,stop,irq+8,port,0,irq,base,base,base+1,base+3,base+4,base+5,base+6,int(flow=='SOFT'),int(flow=='HARD')]))
-  expected.update(terminal_translation_path=translation+bytes(64-len(translation)),terminal_option_mask=mask,terminal_actions_path=actions+bytes(64-len(actions)),terminal_config_path=path+bytes(64-len(path)),terminal_dial_target=dial+bytes(64-len(dial)),terminal_directory_path=directory+bytes(64-len(directory)),terminal_keyboard_path=keyboard+bytes(64-len(keyboard)),terminal_directory_entry=entry,terminal_directory_codes=codes,terminal_keyboard_bios_selection=bios,terminal_ansi_m_policy=ansi_m)
+  expected.update(terminal_translation_path=translation+bytes(64-len(translation)),terminal_option_mask=mask,terminal_actions_path=actions+bytes(64-len(actions)),terminal_config_path=path+bytes(64-len(path)),terminal_dial_target=dial+bytes(64-len(dial)),terminal_directory_path=directory+bytes(64-len(directory)),terminal_keyboard_path=keyboard+bytes(64-len(keyboard)),terminal_directory_entry=entry,terminal_directory_codes=codes,terminal_keyboard_bios_selection=bios,terminal_ansi_m_policy=ansi_m,terminal_zmodem_receive_credit=receive_credit)
   assert self.snapshot()==expected,(self.snapshot(),expected)
 
 def main():
@@ -261,6 +261,18 @@ def main():
   assert o.parse(b'/S /?')==(1,1) and o.snapshot()==before;count[0]+=1
   assert o.parse(b'@KEEP.PRM')==(0,0);o.expected(mask=16,path=b'KEEP.PRM');count[0]+=1
  check('setup-before-connect-explicit-leaf-dependency-atomic-rollback-and-reset',startup_setup)
+ def receive_credit():
+  o=Options(binary,map_path)
+  for credit in (1,7,127,128,255,256,511,512,1023,1024,1025,4096,8191,8192):
+   assert o.parse(('/z:'+str(credit)).encode())==(0,0);o.expected(mask=32768,receive_credit=credit);count[0]+=1
+  assert o.parse(b'COM2 /z:0000256 @KEEP.PRM 19200 HARD')==(0,0)
+  o.expected(port=2,rate=19200,flow='HARD',mask=32795,path=b'KEEP.PRM',receive_credit=256);count[0]+=1
+  before=o.snapshot()
+  for tail in [b'/Z:',b'/Z:0',b'/Z:8193',b'/Z:65535',b'/Z:65536',b'/Z:655360',b'/Z:99999999',b'/Z:1.0',b'/Z:-1',b'/Z:+256',b'/Z:0x100',b'/Z:1 /z:2',b'/Z:256 JUNK',b'COM3 /Z:256 /Z:512']:
+   assert o.parse(tail)==(2,1) and o.snapshot()==before,tail;count[0]+=1
+  assert o.parse(b'/Z:256 /?')==(1,1) and o.snapshot()==before;count[0]+=1
+  assert o.parse(b'')==(0,0);o.expected();count[0]+=1
+ check('ZMODEM-credit-range-overflow-duplicates-atomic-commit-and-default-reset',receive_credit)
  out=ROOT/'build/terminal-options';out.mkdir(parents=True,exist_ok=True)
  result={'binary_sha256':hashlib.sha256(binary.read_bytes()).hexdigest(),'options_source_sha256':hashlib.sha256((ROOT/'src/terminal/options.asm').read_bytes()).hexdigest(),'passed':True,'cases':cases,'inputs':count[0],'scope':'Actual linked source-only 8086 option parser; command tails synthetic, every interrupt/port-IO forbidden, no UART installation.'}
  (out/'checks.json').write_text(json.dumps(result,indent=2)+'\n')

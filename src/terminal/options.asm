@@ -49,6 +49,7 @@ terminal_parse_options:
  mov word [options_codes_stage],0
  mov word [options_keyboard_mode_stage],2
  mov word [options_ansi_m_stage],0
+ mov word [options_receive_credit_stage],0
  mov es,dx
  xor cx,cx
  mov cl,[es:0x80]
@@ -261,6 +262,8 @@ terminal_parse_options:
  mov [terminal_keyboard_bios_selection],ax
  mov ax,[options_ansi_m_stage]
  mov [terminal_ansi_m_policy],ax
+ mov ax,[options_receive_credit_stage]
+ mov [terminal_zmodem_receive_credit],ax
  xor ax,ax
  mov ax,[options_seen]
  mov [terminal_option_mask],ax
@@ -348,15 +351,52 @@ options_process_token:
  jmp .path_start
 .actions_option:
  cmp word [options_token],'/T'
- jne .ansi_option
+ jne .credit_option
  cmp byte [options_token+2],':'
- jne .ansi_option
+ jne .credit_option
  test word [options_seen],4096
  jnz .bad
  mov si,options_token+3
  mov di,options_actions_stage
  mov dx,4096
  jmp .path_start
+.credit_option:
+ cmp word [options_token],'/Z'
+ jne .ansi_option
+ cmp byte [options_token+2],':'
+ jne .ansi_option
+ test word [options_seen],32768
+ jnz .bad
+ mov si,options_token+3
+ cmp byte [si],0
+ je .bad
+ xor bx,bx
+.credit_digit:
+ lodsb
+ or al,al
+ jz .credit_done
+ sub al,'0'
+ cmp al,9
+ ja .bad
+ xor ah,ah
+ mov cx,ax
+ mov ax,bx
+ mov dx,10
+ mul dx
+ or dx,dx
+ jnz .bad
+ add ax,cx
+ jc .bad
+ cmp ax,8192
+ ja .bad
+ mov bx,ax
+ jmp .credit_digit
+.credit_done:
+ or bx,bx
+ jz .bad
+ mov [options_receive_credit_stage],bx
+ or word [options_seen],32768
+ jmp .good
 .ansi_option:
  cmp word [options_token],'/A'
  jne .bios_option
@@ -647,6 +687,7 @@ global terminal_keyboard_bios_selection
 global terminal_ansi_m_policy
 global terminal_actions_path
 global terminal_translation_path
+global terminal_zmodem_receive_credit,_terminal_zmodem_receive_credit
 terminal_config_path: times 64 db 0
 terminal_dial_target: times 64 db 0
 terminal_directory_path: times 64 db 0
@@ -658,6 +699,8 @@ terminal_ansi_m_policy: dw 0
 terminal_directory_entry: dw 0
 terminal_directory_codes: dw 0
 terminal_option_mask: dw 0
+terminal_zmodem_receive_credit:
+_terminal_zmodem_receive_credit: dw 0
 terminal_usage:
  db 'PCPLUS terminal lab',13,10
  db 'Usage: TERMINAL [@FILE.PRM] [/D:target] [COM1..COM4] [baud] [serial] [flow]',13,10
@@ -672,6 +715,7 @@ terminal_usage:
  db 'Monitor: Ctrl-backslash; Y replaces PCPLUS.DMP; Escape returns.',13,10
  db 'Keyboard BIOS: /B:AUTO (default), /B:STANDARD or /B:ENHANCED.',13,10
  db 'ANSI CSI M: /A:NETWORK (delete lines, default) or /A:ORIGINAL (wait).',13,10
+ db 'ZMODEM receive credit: /Z:1..8192 bytes (default 8192).',13,10
  db 'Setup: /S @FILE.PRM runs local PRMEDIT.EXE before connecting; 8.3 leaf only.',13,10
  db 'Alt-F10 edits @8.3 PRM; Y confirms serial/profile changes. COM changes need restart.',13,10
  db 'PRM path: explicit only, max 63 bytes; no spaces, quotes or wildcards.',13,10
@@ -701,6 +745,7 @@ options_actions_stage: times 64 db 0
 options_translation_stage: times 64 db 0
 options_keyboard_mode_stage: dw 2
 options_ansi_m_stage: dw 0
+options_receive_credit_stage: dw 0
 options_ansi_network: db '/A:NETWORK',0
 options_ansi_original: db '/A:ORIGINAL',0
 options_bios_auto: db '/B:AUTO',0

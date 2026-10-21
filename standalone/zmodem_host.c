@@ -62,7 +62,8 @@ int main(int argc,char **argv)
  incoming=fopen("IN.BIN","rb");outgoing=fopen("OUT.BIN","wb");
  if(!incoming || !outgoing)return 2;
  list=fopen("LIST.TXT","r");
- r=zm_run(&session,&ops,0,argv[1][0]=='S');
+ r=argc>3?zm_run_profile(&session,&ops,0,argv[1][0]=='S',0,(unsigned)atoi(argv[3])):
+  zm_run(&session,&ops,0,argv[1][0]=='S');
  fclose(incoming);fclose(outgoing);if(list)fclose(list);
  printf("status=%u files=%lu bytes=%lu cleanup=%u owned=%u closes=%u uncertain=%u stage=%u workspace=%u ops=%u\n",
   r,session.files,session.bytes,session.cleanup_status,session.owned,physical_closes,uncertain,transfer_download_result.stage_exists,sizeof(session),sizeof(ops));

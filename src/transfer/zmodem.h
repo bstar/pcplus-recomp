@@ -67,4 +67,11 @@ unsigned __cdecl zm_run(zm_session *,const zm_ops *,void *,unsigned sending);
  * beyond30 seconds while continuing cancellation and its verified-progress
  * watchdog. This does not change receive timing or confirm attempted output. */
 unsigned __cdecl zm_run_link(zm_session *,const zm_ops *,void *,unsigned sending,unsigned response_bps);
+/* Explicit receive credit1..8192; zero retains the historical8192 offer.
+ * Sending requires zero credit and keeps peer negotiation unchanged. This
+ * requests a sender checkpoint policy, not a smaller decoder workspace: peers
+ * ignoring the offer may still send valid packets up to8192 bytes. Invalid
+ * policy returns ZM_ARGUMENT before touching the session or callbacks. */
+unsigned __cdecl zm_run_profile(zm_session *,const zm_ops *,void *,unsigned sending,
+ unsigned response_bps,unsigned receive_credit);
 #endif

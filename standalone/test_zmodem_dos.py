@@ -28,13 +28,13 @@ def main():
     if run.exists():shutil.rmtree(run)
     run.mkdir();shutil.copy2(OUT/'SESSION.EXE',run/'SESSION.EXE')
     cases=[];commands=[];body=bytes(range(256))*257+b'\x1a\0\xff@\r'
-    def case(label,sending,wire,expected_files,expected_status=0,expected_wire=None,source_files=None,preexisting=None,fault=0,checks=None):
+    def case(label,sending,wire,expected_files,expected_status=0,expected_wire=None,source_files=None,preexisting=None,fault=0,checks=None,receive_credit=None):
         name=f'T{len(cases):03}';path=run/name;path.mkdir()
         (path/'IN.BIN').write_bytes(b''.join(struct.pack('<H',v) for v in wire))
         for filename,data in (preexisting or {}).items():(path/filename).write_bytes(data)
         for filename,data in (source_files or {}).items():(path/filename).write_bytes(data)
         (path/'LIST.TXT').write_text(''.join(n+'\n' for n in (source_files or {})))
-        commands.extend([f'cd \\{name}',f'..\\SESSION {"S" if sending else "R"} {fault} >RESULT.TXT'])
+        commands.extend([f'cd \\{name}',f'..\\SESSION {"S" if sending else "R"} {fault}'+('' if receive_credit is None else f' {receive_credit}')+' >RESULT.TXT'])
         cases.append(dict(label=label,path=path,status=expected_status,files=expected_files,wire=expected_wire,source=source_files or {},preexisting=preexisting or {},extra=checks or {}))
     for fmt in (65,67):
         for n in (0,1,1023,1024,1025,len(body)):
@@ -48,6 +48,17 @@ def main():
             for off in range(0,n,1024):rx+=h(3,min(off+1024,n));tx+=payload(data[off:off+1024],off,fmt)
             rx+=h(1,0x22000000 if fmt==67 else 0x02000000)+h(8);tx+=h(11,n,fmt)+h(8)+b'OO'
             case(f'send-{fmt}-{n}',True,rx,{},expected_wire=tx,source_files={'TEST.BIN':data},checks={'closes':1,'uncertain':0})
+    for fmt in (65,67):
+        for credit in (0,1,128,256,1024,8192):
+            data=body if (credit==256 and fmt==67) else body[:257]
+            wire=offer('CREDIT.BIN',len(data),fmt);expected=h(1,0x23000000|(credit or 8192))+h(9)
+            for off in range(0,len(data),8192):
+                wire+=payload(data[off:off+8192],off,fmt);expected+=h(3,min(off+8192,len(data)))
+            wire+=h(11,len(data),fmt)+h(8)+b'OO';expected+=h(1,0x23000000|(credit or 8192))+h(8)
+            case(f'receive-credit-{fmt}-{credit}',False,wire,{'CREDIT.BIN':data},expected_wire=expected,receive_credit=credit)
+    for credit in (8193,65535):
+        case('invalid-receive-credit-'+str(credit),False,b'',{},expected_status=2,expected_wire=b'',receive_credit=credit)
+    case('send-rejects-receive-only-credit',True,b'',{},expected_status=2,expected_wire=b'',receive_credit=256)
     for fmt in (65,67):
         name='PCPLUS PROBE 01 (1991).ZIP';local=alias(name.encode()).decode()
         wire=offer(name,6,fmt)+payload(b'ABC',0,fmt)+offer(name,6,fmt)+payload(b'DEF',3,fmt)+h(11,6,fmt)+h(8)+b'OO'

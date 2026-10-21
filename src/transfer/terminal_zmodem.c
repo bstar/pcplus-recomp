@@ -12,6 +12,7 @@
 extern char terminal_transfer_filename[64];
 extern unsigned char terminal_transfer_ui_visible;
 extern unsigned terminal_transfer_fault,terminal_transfer_cleanup_status;
+extern unsigned terminal_zmodem_receive_credit;
 unsigned terminal_zmodem_kbytes;
 unsigned long terminal_zmodem_files;
 typedef struct live_zmodem {
@@ -115,6 +116,9 @@ unsigned __cdecl terminal_zmodem_store(unsigned sending)
 {
  live_zmodem *p=(live_zmodem *)terminal_batch_buffer;unsigned status;
  terminal_zmodem_kbytes=0;terminal_zmodem_files=0;
+ if(!sending && terminal_zmodem_receive_credit>8192){
+  if(!terminal_transfer_fault)terminal_transfer_fault=7;return 1;
+ }
  if(upload_source_result.handle_open || upload_source_result.handle_uncertain ||
   transfer_download_result.stage_exists || transfer_download_result.handle_open || transfer_download_result.handle_uncertain){
   terminal_transfer_cleanup_status=1;if(!terminal_transfer_fault)terminal_transfer_fault=7;return 1;
@@ -123,7 +127,8 @@ unsigned __cdecl terminal_zmodem_store(unsigned sending)
   if(!terminal_transfer_fault)terminal_transfer_fault=7;return 1;
  }
  p->observed=p->files=0;
- status=zm_run_link(&p->session,&terminal_zmodem_ops,p,sending,ymodem_io_modem()?300:0);progress(p);
+ status=zm_run_profile(&p->session,&terminal_zmodem_ops,p,sending,ymodem_io_modem()?300:0,
+  sending?0:terminal_zmodem_receive_credit);progress(p);
  if(upload_source_result.handle_uncertain || batch_download_result.file.handle_uncertain || batch_download_result.file.stage_exists)
   terminal_transfer_cleanup_status=1;
  if(!status)return 0;
