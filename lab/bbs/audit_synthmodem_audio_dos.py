@@ -42,7 +42,7 @@ def main():
  rows=[json.loads(b) for b in (out/'server-session.jsonl').read_text().splitlines()]
  checks['authoritative_login']=sum(v.get('msg')=='User "loclab" successfully logged in' for v in rows)==1
  menus=[v['menuName'] for v in rows if v.get('menuName')];editor_route=r.get('route')=='editor'
- wanted=['mainMenu','messageBaseMainMenu','messageBaseNewPost'] if editor_route else ['mainMenu','messageBaseMainMenu','mainMenu','fileBaseMainMenu'];index=0
+ wanted=['mainMenu','fileBaseMainMenu','fileBaseSearch','fileBaseListEntries','fileBaseDownloadManager','fileTransferProtocolSelection','sendFilesToUser','fileBaseMainMenu','fileBaseSearch','fileBaseListEntries'] if r.get('route')=='download' else ['mainMenu','messageBaseMainMenu','messageBaseNewPost'] if editor_route else ['mainMenu','messageBaseMainMenu','mainMenu','fileBaseMainMenu'];index=0
  for m in menus:
   if index<len(wanted) and m==wanted[index]:index+=1
  checks['authoritative_menu_order']=index==len(wanted)

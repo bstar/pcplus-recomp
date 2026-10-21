@@ -129,6 +129,27 @@ editor route is accepted for its frozen V.22/1200/framed-runtime scope. Earlier
 intermittent guest insertions, transfers/pressure/Synchronet, physical hardware
 and all F01-F16 remain open; no acceptance gate was relaxed.
 
+The [automatic audio download route](lab/bbs/audio-download.md) now targets the
+existing11,521-byte ENiGMA fixture through the stock helper and full artwork.
+The test-only BIOS helper passes three actual DOS checks for phased input and
+timer restoration; a failed probe-assembly prerequisite remains recorded.
+An independent transfer auditor requires CRC/payload/offset/EOF/finish and
+opposite-direction controls, exact DOS bytes, genuine helper success and a new
+post-transfer keyboard search. Its protocol/timing logic passes the preserved
+direct-download capture with four corroborated controls. The first actual
+audio download is a [retained failure](docs/validation/synthmodem-audio-download.json):
+the real helper exits255, no file installs and post-transfer input/normal return/
+restoration fail. All167 online bytes are exact through the independent caller,
+guest and Telnet paths; downstream is an exact66,060-byte prefix of82,294 BBS
+bytes. No gateway errors are filtered or waived. The receiver cancels29.62s
+after its previous verified packet while the next4KiB packet takes35.24s.
+The [linked counterexample](docs/validation/carrier-transfer-deadline.json)
+reproduces the DTE-derived deadline: identical modeled1200-bps carrier input
+fails at fixed38400 DTE but installs exactly at1200 DTE. Product remains unfixed.
+Next correct the fixed-DTE/slow-carrier deadline policy without unbounded
+unverified progress, and investigate stock sender retry/finish deadlines versus
+the audio queue. Keep the same file and complete protocol/return gates mandatory.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

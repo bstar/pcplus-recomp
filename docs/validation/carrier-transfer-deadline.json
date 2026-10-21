@@ -1,0 +1,47 @@
+{
+  "counterexample_reproduced": true,
+  "cases": [
+    {
+      "DTE_bps": 38400,
+      "modeled_carrier_bps": 1200,
+      "deadline_ticks": 540,
+      "fault": 3,
+      "installed_exact": false,
+      "delivered_wire_bytes": 4291,
+      "elapsed_ticks": 667,
+      "handles_closed": true,
+      "remaining_peer_steps": 3
+    },
+    {
+      "DTE_bps": 1200,
+      "modeled_carrier_bps": 1200,
+      "deadline_ticks": 4320,
+      "fault": 0,
+      "installed_exact": true,
+      "delivered_wire_bytes": 4329,
+      "elapsed_ticks": 794,
+      "handles_closed": true,
+      "remaining_peer_steps": 0
+    }
+  ],
+  "binary_sha256": "a24e562845bcc028595745fa7eaf8b516d8ba8e26499609dbac632d8a74b1a00",
+  "checker_sha256": "92ff14dd4259b4dece573c3b01210e910b1714442c121980470ec6b0ca0e341f",
+  "scope": "Linked production receiver, watchdog, UART ISR and storage. Hardware/kernel boundaries modeled. Quantized 1200-bps wire time, not an audio or physical test. High fixed DTE falsely expires before a valid 4KiB carrier packet completes; matched DTE succeeds. Product remains unfixed.",
+  "retained_probe_failures": [
+    {
+      "attempt": 1,
+      "classification": "Probe clock advanced only on received bytes, freezing the cancel-drain quiet timer. Explicitly terminated owned checker; no acceptance result.",
+      "checker_sha256": "5527b438119bff12b7b6d3a1b0b0b32f4f2797aa06339a9492964c86f2ce5f73"
+    },
+    {
+      "attempt": 2,
+      "classification": "Probe subclass clock fields initialized after base constructor callbacks; AttributeError before transfer.",
+      "checker_sha256": "11b5215223a8aedf579a85c18eb91f304ea24912d56d79da8d4febc99f6dcd7f"
+    },
+    {
+      "attempt": 3,
+      "classification": "Probe HARD peer enabled but product hardware flow flag omitted; matched-rate control overflowed. Fixed fixture configuration without changing product.",
+      "checker_sha256": "3da080c5f13bf9cce7912a153ac462278f05bd5c67ef53f902600b76b00ef0ee"
+    }
+  ]
+}

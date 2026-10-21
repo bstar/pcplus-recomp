@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "checks": {
+    "normal_DOS_exit": true,
+    "exact_phased_BIOS_keys": true,
+    "timer_vector_restored": true
+  },
+  "inputs": {
+    "lab/bbs/check_audio_download_keys.py": "f64a327c633369ae6a2e2f15eb0188850ba3917f142f82985ed7ffd54a55d410",
+    "lab/bbs/audio_download_keys.asm": "b0f984d174f0c836e8c3ca34655c72e85d1ecde2efe5b1f7275fd9579326571f",
+    "lab/bbs/audio_get_vector.asm": "a4dcbe3717c43f5914ee3503099d250fd7810610b8c25f4c0c18c2d4d403e817"
+  },
+  "scope": "Actual DOS BIOS helper test with independent synthetic video phases and shortened test-only delays. No keys during the receive phase; exact post-menu/search/exit keys and INT1C restoration. No product-state, real transfer, serial or BBS acceptance claim.",
+  "retained_failed_attempts": [
+    {
+      "cohort": "build/bbs-lab/audio-download-keys-01",
+      "classification": "Probe assembly prerequisite failed: label at collided with a NASM macro; no product or BBS run occurred.",
+      "probe_source_sha256": "8df3a280331416c402d6f98b3821e73f195216ce71a181b7a6d752a251a71b78"
+    }
+  ]
+}
