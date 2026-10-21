@@ -55,3 +55,18 @@ Retaining an indexed partial is a separate server cleanup gap even if a later
 full retry succeeds. Neither an upload log entry nor an indexed filename alone
 proves successful delivery. No test deletes the partial or changes the receiver
 to make that gate pass.
+
+Run official FileBase reference, preflight, observer and metadata commands in
+`./tools/bbs-dev --command`; that pinned shell provides the official server's
+shared libraries. Run the audio producer and offline Node decoder through
+`./tools/modem-dev --command`, and linked native reproductions and DOS BIOS
+probes through `./tools/dev --command`. A missing shared library is a lab setup
+failure and does not establish a terminal compatibility defect.
+
+After a fresh producer exits, the audit order is frontend ownership, offline
+caller decoding, independent byte/protocol audit, official metadata and partial
+custody, actual-capture counterexamples, then the public recorder. Each report
+must pass its declared client gates before `record_synchronet_retry_ready_audio.py`
+can accept that workflow. The recorder keeps overall success false while the
+cancelled partial remains indexed. Original failed capture files are never
+edited, and all subsequent attempts use fresh remote names and output folders.
