@@ -1,0 +1,1920 @@
+{
+  "passed": true,
+  "actual_ENiGMA_multiline_audio_accepted": true,
+  "cohort": "build/bbs-lab/current-enigma-editor-multiline-audio-01",
+  "check_counts": {
+    "producer": 31,
+    "independent": 40,
+    "serial": 12,
+    "BIOS_helper": 20,
+    "TCP_reference": 25,
+    "evidence_counterexamples": 10
+  },
+  "producer_checks": {
+    "DOS_normal_exit": true,
+    "script_completed": true,
+    "UART_restored": true,
+    "keyboard_helper_retired": true,
+    "numeric_AT_only": true,
+    "real_DSP_CONNECT": true,
+    "authenticated": true,
+    "ordered_menus": true,
+    "DOS_DA": true,
+    "DOS_CPR": true,
+    "profile_unchanged": true,
+    "directory_accounting": true,
+    "no_relay_errors": true,
+    "no_gateway_errors": true,
+    "VM_exited": true,
+    "no_post_saved": true,
+    "inputs_unchanged": true,
+    "server_unchanged": true,
+    "editor_entered": true,
+    "multiline_subject_observed": true,
+    "multiline_exact_BIOS_to_serial_body": true,
+    "multiline_all318_cursor_effects_match_TCP": true,
+    "multiline_seed30_hard_lines": true,
+    "multiline_cross_line_edit_effects": true,
+    "multiline_page_start_and_end": true,
+    "multiline_edited_line29_redisplayed": true,
+    "multiline_shortened_line30_redisplayed": true,
+    "multiline_tail_redisplayed": true,
+    "multiline_unique_final_mode": true,
+    "multiline_actual_DOS_tail_and_cursor_visible": true,
+    "multiline_message_count_preserved": true
+  },
+  "independent_checks": {
+    "numeric_command_prefix": true,
+    "single_normal_post_train_hold": true,
+    "serial_equals_post_hold_guest_decode": true,
+    "online_target_after_numeric_call": true,
+    "guest_equals_Telnet_application_input": true,
+    "decoded_audio_equals_serial_output": true,
+    "complete_BBS_display_survives_DSP": true,
+    "complete_caller_stream_equals_bridge_plus_BBS_display": true,
+    "single_real_carrier": true,
+    "real_DOS_terminal_replies": true,
+    "authoritative_login": true,
+    "authoritative_menu_order": true,
+    "multiline_subject_observed": true,
+    "multiline_exact_BIOS_to_serial_body": true,
+    "multiline_all318_cursor_effects_match_TCP": true,
+    "multiline_seed30_hard_lines": true,
+    "multiline_cross_line_edit_effects": true,
+    "multiline_page_start_and_end": true,
+    "multiline_edited_line29_redisplayed": true,
+    "multiline_shortened_line30_redisplayed": true,
+    "multiline_tail_redisplayed": true,
+    "multiline_unique_final_mode": true,
+    "multiline_actual_DOS_tail_and_cursor_visible": true,
+    "multiline_helper_configuration": true,
+    "multiline_message_count_preserved": true,
+    "draft_never_saved": true,
+    "script_and_normal_DOS_return": true,
+    "actual_UART_restored": true,
+    "actual_IRQ_vectors_restored": true,
+    "actual_UART_PIC_restored": true,
+    "keyboard_timer_vector_restored": true,
+    "continuous_rtp-from-answer.bin": true,
+    "continuous_rtp-from-caller.bin": true,
+    "actual_external_SIP": true,
+    "actual_internal_BYE": true,
+    "capture_hashes": true,
+    "runtime_inputs_unchanged": true,
+    "producer_inputs_unchanged": true,
+    "explicit_key_framing_configuration": true,
+    "stock_BBS_inputs_unchanged": true
+  },
+  "serial_checks": {
+    "complete_contiguous_attempt_manifest": true,
+    "submitted_artifact_matches_original_attempt_offsets": true,
+    "completed_artifact_matches_original_attempt_offsets": true,
+    "skipped_artifact_matches_original_attempt_offsets": true,
+    "all_final_counters_match_manifest": true,
+    "all_submissions_have_final_callback": true,
+    "legacy_errors_preserved_in_structured_events": true,
+    "one_observed_frontend_close_and_shutdown": true,
+    "observed_close_precedes_shutdown": true,
+    "no_write_submission_after_observed_close": true,
+    "observed_frontend_input_matches_capture_size": true,
+    "producer_capture_hashes": true
+  },
+  "editor": {
+    "positions": [
+      [
+        "INS",
+        1,
+        2
+      ],
+      [
+        "INS",
+        1,
+        3
+      ],
+      [
+        "INS",
+        1,
+        4
+      ],
+      [
+        "INS",
+        1,
+        5
+      ],
+      [
+        "INS",
+        1,
+        6
+      ],
+      [
+        "INS",
+        1,
+        7
+      ],
+      [
+        "INS",
+        1,
+        8
+      ],
+      [
+        "INS",
+        1,
+        9
+      ],
+      [
+        "INS",
+        2,
+        1
+      ],
+      [
+        "INS",
+        2,
+        1
+      ],
+      [
+        "INS",
+        2,
+        2
+      ],
+      [
+        "INS",
+        2,
+        3
+      ],
+      [
+        "INS",
+        2,
+        4
+      ],
+      [
+        "INS",
+        2,
+        5
+      ],
+      [
+        "INS",
+        2,
+        6
+      ],
+      [
+        "INS",
+        2,
+        7
+      ],
+      [
+        "INS",
+        2,
+        8
+      ],
+      [
+        "INS",
+        2,
+        9
+      ],
+      [
+        "INS",
+        3,
+        1
+      ],
+      [
+        "INS",
+        3,
+        1
+      ],
+      [
+        "INS",
+        3,
+        2
+      ],
+      [
+        "INS",
+        3,
+        3
+      ],
+      [
+        "INS",
+        3,
+        4
+      ],
+      [
+        "INS",
+        3,
+        5
+      ],
+      [
+        "INS",
+        3,
+        6
+      ],
+      [
+        "INS",
+        3,
+        7
+      ],
+      [
+        "INS",
+        3,
+        8
+      ],
+      [
+        "INS",
+        3,
+        9
+      ],
+      [
+        "INS",
+        4,
+        1
+      ],
+      [
+        "INS",
+        4,
+        1
+      ],
+      [
+        "INS",
+        4,
+        2
+      ],
+      [
+        "INS",
+        4,
+        3
+      ],
+      [
+        "INS",
+        4,
+        4
+      ],
+      [
+        "INS",
+        4,
+        5
+      ],
+      [
+        "INS",
+        4,
+        6
+      ],
+      [
+        "INS",
+        4,
+        7
+      ],
+      [
+        "INS",
+        4,
+        8
+      ],
+      [
+        "INS",
+        4,
+        9
+      ],
+      [
+        "INS",
+        5,
+        1
+      ],
+      [
+        "INS",
+        5,
+        1
+      ],
+      [
+        "INS",
+        5,
+        2
+      ],
+      [
+        "INS",
+        5,
+        3
+      ],
+      [
+        "INS",
+        5,
+        4
+      ],
+      [
+        "INS",
+        5,
+        5
+      ],
+      [
+        "INS",
+        5,
+        6
+      ],
+      [
+        "INS",
+        5,
+        7
+      ],
+      [
+        "INS",
+        5,
+        8
+      ],
+      [
+        "INS",
+        5,
+        9
+      ],
+      [
+        "INS",
+        6,
+        1
+      ],
+      [
+        "INS",
+        6,
+        1
+      ],
+      [
+        "INS",
+        6,
+        2
+      ],
+      [
+        "INS",
+        6,
+        3
+      ],
+      [
+        "INS",
+        6,
+        4
+      ],
+      [
+        "INS",
+        6,
+        5
+      ],
+      [
+        "INS",
+        6,
+        6
+      ],
+      [
+        "INS",
+        6,
+        7
+      ],
+      [
+        "INS",
+        6,
+        8
+      ],
+      [
+        "INS",
+        6,
+        9
+      ],
+      [
+        "INS",
+        7,
+        1
+      ],
+      [
+        "INS",
+        7,
+        1
+      ],
+      [
+        "INS",
+        7,
+        2
+      ],
+      [
+        "INS",
+        7,
+        3
+      ],
+      [
+        "INS",
+        7,
+        4
+      ],
+      [
+        "INS",
+        7,
+        5
+      ],
+      [
+        "INS",
+        7,
+        6
+      ],
+      [
+        "INS",
+        7,
+        7
+      ],
+      [
+        "INS",
+        7,
+        8
+      ],
+      [
+        "INS",
+        7,
+        9
+      ],
+      [
+        "INS",
+        8,
+        1
+      ],
+      [
+        "INS",
+        8,
+        1
+      ],
+      [
+        "INS",
+        8,
+        2
+      ],
+      [
+        "INS",
+        8,
+        3
+      ],
+      [
+        "INS",
+        8,
+        4
+      ],
+      [
+        "INS",
+        8,
+        5
+      ],
+      [
+        "INS",
+        8,
+        6
+      ],
+      [
+        "INS",
+        8,
+        7
+      ],
+      [
+        "INS",
+        8,
+        8
+      ],
+      [
+        "INS",
+        8,
+        9
+      ],
+      [
+        "INS",
+        9,
+        1
+      ],
+      [
+        "INS",
+        9,
+        1
+      ],
+      [
+        "INS",
+        9,
+        2
+      ],
+      [
+        "INS",
+        9,
+        3
+      ],
+      [
+        "INS",
+        9,
+        4
+      ],
+      [
+        "INS",
+        9,
+        5
+      ],
+      [
+        "INS",
+        9,
+        6
+      ],
+      [
+        "INS",
+        9,
+        7
+      ],
+      [
+        "INS",
+        9,
+        8
+      ],
+      [
+        "INS",
+        9,
+        9
+      ],
+      [
+        "INS",
+        10,
+        1
+      ],
+      [
+        "INS",
+        10,
+        1
+      ],
+      [
+        "INS",
+        10,
+        2
+      ],
+      [
+        "INS",
+        10,
+        3
+      ],
+      [
+        "INS",
+        10,
+        4
+      ],
+      [
+        "INS",
+        10,
+        5
+      ],
+      [
+        "INS",
+        10,
+        6
+      ],
+      [
+        "INS",
+        10,
+        7
+      ],
+      [
+        "INS",
+        10,
+        8
+      ],
+      [
+        "INS",
+        10,
+        9
+      ],
+      [
+        "INS",
+        11,
+        1
+      ],
+      [
+        "INS",
+        11,
+        1
+      ],
+      [
+        "INS",
+        11,
+        2
+      ],
+      [
+        "INS",
+        11,
+        3
+      ],
+      [
+        "INS",
+        11,
+        4
+      ],
+      [
+        "INS",
+        11,
+        5
+      ],
+      [
+        "INS",
+        11,
+        6
+      ],
+      [
+        "INS",
+        11,
+        7
+      ],
+      [
+        "INS",
+        11,
+        8
+      ],
+      [
+        "INS",
+        11,
+        9
+      ],
+      [
+        "INS",
+        12,
+        1
+      ],
+      [
+        "INS",
+        12,
+        1
+      ],
+      [
+        "INS",
+        12,
+        2
+      ],
+      [
+        "INS",
+        12,
+        3
+      ],
+      [
+        "INS",
+        12,
+        4
+      ],
+      [
+        "INS",
+        12,
+        5
+      ],
+      [
+        "INS",
+        12,
+        6
+      ],
+      [
+        "INS",
+        12,
+        7
+      ],
+      [
+        "INS",
+        12,
+        8
+      ],
+      [
+        "INS",
+        12,
+        9
+      ],
+      [
+        "INS",
+        13,
+        1
+      ],
+      [
+        "INS",
+        13,
+        1
+      ],
+      [
+        "INS",
+        13,
+        2
+      ],
+      [
+        "INS",
+        13,
+        3
+      ],
+      [
+        "INS",
+        13,
+        4
+      ],
+      [
+        "INS",
+        13,
+        5
+      ],
+      [
+        "INS",
+        13,
+        6
+      ],
+      [
+        "INS",
+        13,
+        7
+      ],
+      [
+        "INS",
+        13,
+        8
+      ],
+      [
+        "INS",
+        13,
+        9
+      ],
+      [
+        "INS",
+        14,
+        1
+      ],
+      [
+        "INS",
+        14,
+        1
+      ],
+      [
+        "INS",
+        14,
+        2
+      ],
+      [
+        "INS",
+        14,
+        3
+      ],
+      [
+        "INS",
+        14,
+        4
+      ],
+      [
+        "INS",
+        14,
+        5
+      ],
+      [
+        "INS",
+        14,
+        6
+      ],
+      [
+        "INS",
+        14,
+        7
+      ],
+      [
+        "INS",
+        14,
+        8
+      ],
+      [
+        "INS",
+        14,
+        9
+      ],
+      [
+        "INS",
+        15,
+        1
+      ],
+      [
+        "INS",
+        15,
+        1
+      ],
+      [
+        "INS",
+        15,
+        2
+      ],
+      [
+        "INS",
+        15,
+        3
+      ],
+      [
+        "INS",
+        15,
+        4
+      ],
+      [
+        "INS",
+        15,
+        5
+      ],
+      [
+        "INS",
+        15,
+        6
+      ],
+      [
+        "INS",
+        15,
+        7
+      ],
+      [
+        "INS",
+        15,
+        8
+      ],
+      [
+        "INS",
+        15,
+        9
+      ],
+      [
+        "INS",
+        16,
+        1
+      ],
+      [
+        "INS",
+        16,
+        1
+      ],
+      [
+        "INS",
+        16,
+        2
+      ],
+      [
+        "INS",
+        16,
+        3
+      ],
+      [
+        "INS",
+        16,
+        4
+      ],
+      [
+        "INS",
+        16,
+        5
+      ],
+      [
+        "INS",
+        16,
+        6
+      ],
+      [
+        "INS",
+        16,
+        7
+      ],
+      [
+        "INS",
+        16,
+        8
+      ],
+      [
+        "INS",
+        16,
+        9
+      ],
+      [
+        "INS",
+        17,
+        1
+      ],
+      [
+        "INS",
+        17,
+        1
+      ],
+      [
+        "INS",
+        17,
+        2
+      ],
+      [
+        "INS",
+        17,
+        3
+      ],
+      [
+        "INS",
+        17,
+        4
+      ],
+      [
+        "INS",
+        17,
+        5
+      ],
+      [
+        "INS",
+        17,
+        6
+      ],
+      [
+        "INS",
+        17,
+        7
+      ],
+      [
+        "INS",
+        17,
+        8
+      ],
+      [
+        "INS",
+        17,
+        9
+      ],
+      [
+        "INS",
+        18,
+        1
+      ],
+      [
+        "INS",
+        18,
+        1
+      ],
+      [
+        "INS",
+        18,
+        2
+      ],
+      [
+        "INS",
+        18,
+        3
+      ],
+      [
+        "INS",
+        18,
+        4
+      ],
+      [
+        "INS",
+        18,
+        5
+      ],
+      [
+        "INS",
+        18,
+        6
+      ],
+      [
+        "INS",
+        18,
+        7
+      ],
+      [
+        "INS",
+        18,
+        8
+      ],
+      [
+        "INS",
+        18,
+        9
+      ],
+      [
+        "INS",
+        19,
+        1
+      ],
+      [
+        "INS",
+        19,
+        1
+      ],
+      [
+        "INS",
+        19,
+        2
+      ],
+      [
+        "INS",
+        19,
+        3
+      ],
+      [
+        "INS",
+        19,
+        4
+      ],
+      [
+        "INS",
+        19,
+        5
+      ],
+      [
+        "INS",
+        19,
+        6
+      ],
+      [
+        "INS",
+        19,
+        7
+      ],
+      [
+        "INS",
+        19,
+        8
+      ],
+      [
+        "INS",
+        19,
+        9
+      ],
+      [
+        "INS",
+        20,
+        1
+      ],
+      [
+        "INS",
+        20,
+        1
+      ],
+      [
+        "INS",
+        20,
+        2
+      ],
+      [
+        "INS",
+        20,
+        3
+      ],
+      [
+        "INS",
+        20,
+        4
+      ],
+      [
+        "INS",
+        20,
+        5
+      ],
+      [
+        "INS",
+        20,
+        6
+      ],
+      [
+        "INS",
+        20,
+        7
+      ],
+      [
+        "INS",
+        20,
+        8
+      ],
+      [
+        "INS",
+        20,
+        9
+      ],
+      [
+        "INS",
+        21,
+        1
+      ],
+      [
+        "INS",
+        21,
+        1
+      ],
+      [
+        "INS",
+        21,
+        2
+      ],
+      [
+        "INS",
+        21,
+        3
+      ],
+      [
+        "INS",
+        21,
+        4
+      ],
+      [
+        "INS",
+        21,
+        5
+      ],
+      [
+        "INS",
+        21,
+        6
+      ],
+      [
+        "INS",
+        21,
+        7
+      ],
+      [
+        "INS",
+        21,
+        8
+      ],
+      [
+        "INS",
+        21,
+        9
+      ],
+      [
+        "INS",
+        22,
+        1
+      ],
+      [
+        "INS",
+        22,
+        1
+      ],
+      [
+        "INS",
+        22,
+        2
+      ],
+      [
+        "INS",
+        22,
+        3
+      ],
+      [
+        "INS",
+        22,
+        4
+      ],
+      [
+        "INS",
+        22,
+        5
+      ],
+      [
+        "INS",
+        22,
+        6
+      ],
+      [
+        "INS",
+        22,
+        7
+      ],
+      [
+        "INS",
+        22,
+        8
+      ],
+      [
+        "INS",
+        22,
+        9
+      ],
+      [
+        "INS",
+        23,
+        1
+      ],
+      [
+        "INS",
+        23,
+        1
+      ],
+      [
+        "INS",
+        23,
+        2
+      ],
+      [
+        "INS",
+        23,
+        3
+      ],
+      [
+        "INS",
+        23,
+        4
+      ],
+      [
+        "INS",
+        23,
+        5
+      ],
+      [
+        "INS",
+        23,
+        6
+      ],
+      [
+        "INS",
+        23,
+        7
+      ],
+      [
+        "INS",
+        23,
+        8
+      ],
+      [
+        "INS",
+        23,
+        9
+      ],
+      [
+        "INS",
+        24,
+        1
+      ],
+      [
+        "INS",
+        24,
+        1
+      ],
+      [
+        "INS",
+        24,
+        2
+      ],
+      [
+        "INS",
+        24,
+        3
+      ],
+      [
+        "INS",
+        24,
+        4
+      ],
+      [
+        "INS",
+        24,
+        5
+      ],
+      [
+        "INS",
+        24,
+        6
+      ],
+      [
+        "INS",
+        24,
+        7
+      ],
+      [
+        "INS",
+        24,
+        8
+      ],
+      [
+        "INS",
+        24,
+        9
+      ],
+      [
+        "INS",
+        25,
+        1
+      ],
+      [
+        "INS",
+        25,
+        1
+      ],
+      [
+        "INS",
+        25,
+        2
+      ],
+      [
+        "INS",
+        25,
+        3
+      ],
+      [
+        "INS",
+        25,
+        4
+      ],
+      [
+        "INS",
+        25,
+        5
+      ],
+      [
+        "INS",
+        25,
+        6
+      ],
+      [
+        "INS",
+        25,
+        7
+      ],
+      [
+        "INS",
+        25,
+        8
+      ],
+      [
+        "INS",
+        25,
+        9
+      ],
+      [
+        "INS",
+        26,
+        1
+      ],
+      [
+        "INS",
+        26,
+        1
+      ],
+      [
+        "INS",
+        26,
+        2
+      ],
+      [
+        "INS",
+        26,
+        3
+      ],
+      [
+        "INS",
+        26,
+        4
+      ],
+      [
+        "INS",
+        26,
+        5
+      ],
+      [
+        "INS",
+        26,
+        6
+      ],
+      [
+        "INS",
+        26,
+        7
+      ],
+      [
+        "INS",
+        26,
+        8
+      ],
+      [
+        "INS",
+        26,
+        9
+      ],
+      [
+        "INS",
+        27,
+        1
+      ],
+      [
+        "INS",
+        27,
+        1
+      ],
+      [
+        "INS",
+        27,
+        2
+      ],
+      [
+        "INS",
+        27,
+        3
+      ],
+      [
+        "INS",
+        27,
+        4
+      ],
+      [
+        "INS",
+        27,
+        5
+      ],
+      [
+        "INS",
+        27,
+        6
+      ],
+      [
+        "INS",
+        27,
+        7
+      ],
+      [
+        "INS",
+        27,
+        8
+      ],
+      [
+        "INS",
+        27,
+        9
+      ],
+      [
+        "INS",
+        28,
+        1
+      ],
+      [
+        "INS",
+        28,
+        1
+      ],
+      [
+        "INS",
+        28,
+        2
+      ],
+      [
+        "INS",
+        28,
+        3
+      ],
+      [
+        "INS",
+        28,
+        4
+      ],
+      [
+        "INS",
+        28,
+        5
+      ],
+      [
+        "INS",
+        28,
+        6
+      ],
+      [
+        "INS",
+        28,
+        7
+      ],
+      [
+        "INS",
+        28,
+        8
+      ],
+      [
+        "INS",
+        28,
+        9
+      ],
+      [
+        "INS",
+        29,
+        1
+      ],
+      [
+        "INS",
+        29,
+        1
+      ],
+      [
+        "INS",
+        29,
+        2
+      ],
+      [
+        "INS",
+        29,
+        3
+      ],
+      [
+        "INS",
+        29,
+        4
+      ],
+      [
+        "INS",
+        29,
+        5
+      ],
+      [
+        "INS",
+        29,
+        6
+      ],
+      [
+        "INS",
+        29,
+        7
+      ],
+      [
+        "INS",
+        29,
+        8
+      ],
+      [
+        "INS",
+        29,
+        9
+      ],
+      [
+        "INS",
+        30,
+        1
+      ],
+      [
+        "INS",
+        30,
+        1
+      ],
+      [
+        "INS",
+        30,
+        2
+      ],
+      [
+        "INS",
+        30,
+        3
+      ],
+      [
+        "INS",
+        30,
+        4
+      ],
+      [
+        "INS",
+        30,
+        5
+      ],
+      [
+        "INS",
+        30,
+        6
+      ],
+      [
+        "INS",
+        30,
+        7
+      ],
+      [
+        "INS",
+        30,
+        8
+      ],
+      [
+        "INS",
+        30,
+        9
+      ],
+      [
+        "INS",
+        29,
+        9
+      ],
+      [
+        "INS",
+        29,
+        1
+      ],
+      [
+        "INS",
+        29,
+        2
+      ],
+      [
+        "INS",
+        29,
+        2
+      ],
+      [
+        "INS",
+        29,
+        9
+      ],
+      [
+        "INS",
+        30,
+        9
+      ],
+      [
+        "INS",
+        30,
+        8
+      ],
+      [
+        "INS",
+        31,
+        1
+      ],
+      [
+        "INS",
+        31,
+        1
+      ],
+      [
+        "INS",
+        31,
+        2
+      ],
+      [
+        "INS",
+        31,
+        3
+      ],
+      [
+        "INS",
+        31,
+        4
+      ],
+      [
+        "INS",
+        31,
+        5
+      ],
+      [
+        "INS",
+        17,
+        5
+      ],
+      [
+        "INS",
+        14,
+        5
+      ],
+      [
+        "INS",
+        1,
+        5
+      ],
+      [
+        "INS",
+        15,
+        5
+      ],
+      [
+        "INS",
+        29,
+        5
+      ],
+      [
+        "INS",
+        31,
+        5
+      ],
+      [
+        "OVR",
+        31,
+        5
+      ]
+    ],
+    "expected_body_hex": "4c30313a414243440d4c30323a414243440d4c30333a414243440d4c30343a414243440d4c30353a414243440d4c30363a414243440d4c30373a414243440d4c30383a414243440d4c30393a414243440d4c31303a414243440d4c31313a414243440d4c31323a414243440d4c31333a414243440d4c31343a414243440d4c31353a414243440d4c31363a414243440d4c31373a414243440d4c31383a414243440d4c31393a414243440d4c32303a414243440d4c32313a414243440d4c32323a414243440d4c32333a414243440d4c32343a414243440d4c32353a414243440d4c32363a414243440d4c32373a414243440d4c32383a414243440d4c32393a414243440d4c33303a414243441b5b411b5b48481b5b337e1b5b461b5b42080d5441494c1b5b357e1b5b357e1b5b357e1b5b367e1b5b367e1b5b367e1b5b327e",
+    "actual_DOS_body_hex": "4c30313a414243440d4c30323a414243440d4c30333a414243440d4c30343a414243440d4c30353a414243440d4c30363a414243440d4c30373a414243440d4c30383a414243440d4c30393a414243440d4c31303a414243440d4c31313a414243440d4c31323a414243440d4c31333a414243440d4c31343a414243440d4c31353a414243440d4c31363a414243440d4c31373a414243440d4c31383a414243440d4c31393a414243440d4c32303a414243440d4c32313a414243440d4c32323a414243440d4c32333a414243440d4c32343a414243440d4c32353a414243440d4c32363a414243440d4c32373a414243440d4c32383a414243440d4c32393a414243440d4c33303a414243441b5b411b5b48481b5b337e1b5b461b5b42080d5441494c1b5b357e1b5b357e1b5b357e1b5b367e1b5b367e1b5b367e1b5b327e",
+    "body_keys": 288,
+    "reference": "docs/validation/current-enigma-multiline-reference-04.json",
+    "reference_source_commit": "6c25317168b762f7d9088a54d3f8295438827a0e",
+    "key_spacing_BIOS_ticks": 3,
+    "final_screen_guard": true,
+    "scope": "Thirty seeded hard lines, real cross-line edits and newline31, three PageUp/three PageDown operations against the independently checked80x25/14-line TCP reference. Every cursor/mode response, exact authored body and edited-text redisplay are required; final DOS video must show TAIL and OVR31,05. Unsaved connection exit only; not arbitrary geometry, timing/pressure or physical hardware."
+  },
+  "body_BIOS_keys": 288,
+  "exact_position_responses": 318,
+  "exact_online_bytes": 396,
+  "exact_BBS_display_bytes": 132058,
+  "payloads": {
+    "BBS_input_bytes": 380,
+    "BBS_display_bytes": 132058,
+    "BBS_input_sha256": "94c643e3ea5d9c3b8ae45288ce930ad36ee3f7fd8a0b959c5f504c1665405321",
+    "BBS_display_sha256": "3b1f9c41492944f1daa0f1d398a967a222ccfc5ebf31d978e7119bcfc605036e",
+    "display_offset_in_caller": 187,
+    "expected_bridge_bytes": 187,
+    "full_caller_sha256": "ba9cb11c02590176fe648b7470bc318ae78b0b2b35d42d922cc5b3f065f5e0f2",
+    "guest_DATA_RX_bytes": 396,
+    "pre_proxy_training_tail_bytes": 0,
+    "pre_proxy_training_tail_hex": "",
+    "unadjusted_serial_guest_identity": true
+  },
+  "hardware_snapshot": {
+    "layout": "32 IRQ-vector bytes,4 INT1C bytes,6 UART/PIC bytes",
+    "INT1C_restored": true,
+    "differing_offsets": []
+  },
+  "serial_counters": {
+    "attemptedBytes": 132267,
+    "submittedBytes": 132267,
+    "completedBytes": 132267,
+    "skippedBytes": 0,
+    "failedCallbackBytes": 0,
+    "pendingBytes": 0,
+    "writeCalls": 132247
+  },
+  "message_count_before": 1,
+  "message_count_after": 1,
+  "terminal_sha256": "976ba8d0c7681b9727389e3f91e80e463738602b857130da491c249d6988e145",
+  "ASPECT_sha256": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+  "server_revision": "6c25317168b762f7d9088a54d3f8295438827a0e",
+  "server_root": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/source",
+  "server_inputs": {
+    "main.js": "1b2f4c9747380dbd77ddfbc918d24c4ce225c7dd51331e75d8c2102d852bfda9",
+    "core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+    "package-lock.json": "8fcaecda3a4b1756ad295be95486cbdd5b9afea005949ac3da8822224c822d56",
+    "config/config.hjson": "daae39792955eaf7b99c45fc936d54b153f62ea0d3f77672f45a8ace756a7dbc",
+    "config/menus/loc-activitypub.hjson": "82861725a47e5892bbfd2251feb02ca0bb46707516a872cf373b350b704c9fe7",
+    "config/menus/loc-doors.hjson": "fb012c018ec054a7e3261f2b4ef28dc568742b0936bfc56ba9377745f8c43530",
+    "config/menus/loc-file_base.hjson": "9d9a02672bcd18b122827e6112ecfd99a4e7ff2916052847de26a87c6808f6c2",
+    "config/menus/loc-login.hjson": "215f943d381a2acc4c1713ff14331efaee19c474218428eac6b64f77b9355f18",
+    "config/menus/loc-main.hjson": "dc2fd404bbb8a35bc5c8bb43b3fe66378173cd8d87d0ab25978af16bda15d227",
+    "config/menus/loc-message_base.hjson": "607939acb6818c7c5fb50a2d90b04fed1b92d50f51fb9ca4215cef06644d2540",
+    "config/menus/loc-new_user.hjson": "04f466f10cc5c169c03186bc8a7fde7b18d5d938e7f0b70873d74bae15161cec",
+    "config/menus/loc-private_mail.hjson": "ffb59f0d6f2d592181d2bc304d46e9e2a3b71a14c2d6cd65a639f6b0c6f3d382"
+  },
+  "buffered_runtime_proof": "build/bbs-lab/synthmodem-buffered-runtime-01/result.json",
+  "helper_proof": "build/bbs-lab/editor-multiline-keys-04/result.json",
+  "helper_proof_sha256": "69bda3c4f30925f42d1438fc4c3a3e271c4e8a98f43d576e55562ee25e6e39ae",
+  "TCP_reference": "docs/validation/current-enigma-multiline-reference-04.json",
+  "TCP_reference_sha256": "9f7ed554819eb20f907ea1b33ca359b2cd90de68b01b5fdb0a40db6a0ea2dc5b",
+  "controls_receipt": "build/bbs-lab/editor-multiline-evidence-03.json",
+  "controls_receipt_sha256": "5d51f0e20b7fee8d50ee480f01b1b69bc807c4f216f456092bd4f33ded9b8ee7",
+  "control_inputs": {
+    "lab/bbs/check_editor_multiline_evidence.py": "0b307eebb3fe03144889653ff345e2b72671bf75a840771632c086641e66cfce",
+    "lab/bbs/editor_multiline_evidence.py": "b806dc34c5b924c332f1ab2b0bfa143d302330f60fc68e6580eac504be915530",
+    "build/bbs-lab/editor-multiline-keys-04/result.json": "69bda3c4f30925f42d1438fc4c3a3e271c4e8a98f43d576e55562ee25e6e39ae",
+    "docs/validation/current-enigma-multiline-reference-04.json": "9f7ed554819eb20f907ea1b33ca359b2cd90de68b01b5fdb0a40db6a0ea2dc5b"
+  },
+  "producer_inputs": {
+    "lab/bbs/synthmodem_audio_dos.py": "7776fd8a6e595b5c250543e79872e69ff6c086483efb948e0eb08324dd1911b5",
+    "lab/bbs/synthmodem_audio_serial.js": "25b8bb30341d1f443b18530f9dae464ada29a45564c80df1fd21441957c2acf8",
+    "lab/bbs/serial_io_evidence.js": "fbaddb3e9449fe9da3663cae376880ebb69ec453229ea9b7bbdb18b3a2b3a21b",
+    "lab/bbs/check_serial_io_evidence.js": "e93747b7e61f1d76d12cc0887f738f57bfb239c9430bd04ab1b08a390f85f0bd",
+    "docs/validation/synthmodem-serial-io-evidence.json": "39c6d75f8d306e9d6de318b8cf56e8b4397d58f13d9e7891321c5fec8686025d",
+    "lab/bbs/audio_exit_keys.asm": "d6cfd993351d3bc6fdfed133e0a20a137c3a882988ee65dcef38c80d15b7ecd9",
+    "lab/bbs/audio_get_vector.asm": "a4dcbe3717c43f5914ee3503099d250fd7810610b8c25f4c0c18c2d4d403e817",
+    "lab/bbs/synthmodem_bbs_dos.py": "893aab32ed579264d1818daa493447684013094dfb821d59336cf97b9abc7f77",
+    "lab/bbs/enigma.py": "526fcd6eb468ec7a85630685872d27a937abbc6b61f48ad8391a2353e5686017",
+    "lab/bbs/synthmodem_sparse_runtime.py": "f3743c82c191e70bb233b08623a08a545b0e7b7d1d15759af18312ec0cffad42",
+    "lab/bbs/synthmodem_vm_control.py": "7eb30e96af9a7e7cd319cd645a68331c0386aa3dda3e9eba68ca5563b5b8a456",
+    "docs/validation/synthmodem-sparse.json": "c1af9919cb1ec643fd2fc2cc236ed8c304d8050790ca6033fb0589e074c9002c",
+    "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+    "standalone/directory_fixtures.py": "e4b0cf7ad4a2c408f2a11d093b2c568633aa8bed6ff62cb53f6f67ff3aa5962c",
+    "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+    "src/aspect/compiler.py": "a9785fb90db89da8d4c423d2737f5143a2da75e4e41605a5d97f3ebf7b9c4f01",
+    "nix/flake.nix": "e7291a75d578ce04fffc090ba804f4ae35e3fce295d5eecbbac369e481e9cba0",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+    "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
+    "build/terminal/TERMINAL.EXE": "976ba8d0c7681b9727389e3f91e80e463738602b857130da491c249d6988e145",
+    "build/terminal/terminal.map": "84a28d0ac1290ae02104b194ce20b3f5ed280aa0201693d92154aab43a651907",
+    "build/aspect-runner/ASPECT.EXE": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+    "docs/validation/synthmodem-gateway.json": "b45a3889492327899bdaa5817b4951da95b81bb07bdd69319b4814008504a6a0",
+    "lab/bbs/synthmodem_jitter_runtime.py": "8f3ddf164a4ec7f0b36fa8efbdd51265149b17c8f0c02ba5ee45d78de537a618",
+    "lab/bbs/synthmodem_lifecycle_runtime.py": "744a68ba9763f1dc0f2d5fe4df780cbbe63708ccb9246ef56ce3f7113cb4b88e",
+    "lab/bbs/internal_sip_capture.js": "c86a76da0e8cc39a9e3372df18cd22517db1096feaccb5cfcc7399dfc8b6d847",
+    "docs/validation/synthmodem-pool.json": "34ebd9e183e6c52698908fb05207fed9e862afab008321d9104c72ea1d5ead3c",
+    "docs/validation/synthmodem-registrar.json": "00e54f863dd8cdc100c3b7f52139b83eaf1fa168f3a2f7d6dcd52ae895005fd8",
+    "docs/validation/synthmodem-jitter-policy.json": "4850cb6e88bf6edfb9831065d1acae1c7ea29f20cd56f92fc0a09b3c1af73278",
+    "lab/bbs/synthmodem_carrier_runtime.py": "73fbf7361ca756e89ce40f174a91ae60f7da7276d8f9c5e1258cc978ac58e642",
+    "docs/validation/synthmodem-carrier-runtime.json": "a7fdea361d8d0fdbaf81e6c69fcd2eaf032b32037c6c7778818a3748cb2985d2",
+    "lab/bbs/synthmodem_key_framing_runtime.py": "50afafa706ae910ebc495466a85207381f089b21d967987001667797aff85786",
+    "docs/validation/synthmodem-key-framing-runtime.json": "4b24c87f14ec17ce48fabf9fe0359b785bbf595c1d0dec358f2068929878707b",
+    "lab/bbs/patches/synthmodem-key-framing/InputSequenceFramer.js": "00f00af6e692c42426f85121317117367e3ae43fae97f48f08d34252f90f850a",
+    "lab/bbs/patches/synthmodem-key-framing/proxy.patch": "433504c6b3b2a2bdc35b66f4560b70dcb0ff6e0c1e3d7e776dac7b86b2e7f19c",
+    "lab/bbs/synthmodem_posttrain_runtime.py": "576bb915a7215800a5a9d3beffbf77b134cbedf6a480b701447fe948a7196255",
+    "lab/bbs/synthmodem_posttrain_validation.py": "90cb3deac08e84c8b3996678ab1bc605ed9b1a4973034dd7ea99a0686a25e08b",
+    "lab/bbs/check_posttrain_hold.js": "59e45c52c78a52adaf76f89202ca9918257cc46abee657efd07f3bbca03fbd32",
+    "docs/validation/synthmodem-posttrain-runtime.json": "b28d5fa30ef335d503b2ac053cf1f72a36acf408161aa28e88d5961920ceace7",
+    "lab/bbs/synthmodem_buffered_runtime.py": "8b915beae3bd098b1f5da9f402572d8bc1f0f0f4d5946a10b98de40d435b74ad",
+    "lab/bbs/check_buffered_dmodem_build.py": "6158623ee144ec3b650a2131d83489f64987be6f7c6b331c8a48acd4fd384200",
+    "nix/dmodem.nix": "ffdcfd5d47753e3de927d6cf72ea11387f28b240d3f06432e1b1ef57a5ed0c42",
+    "tools/build-dmodem": "02779717db4ce7e1e75fd4b9eeed1a1db1164d50245d6bf32d5991120ace554a",
+    "build/bbs-lab/synthmodem-buffered-runtime-01/result.json": "fcfc4e91b2d8b0e80caf8b837bffe8ae67fad81e9ce6b59793e02e6b6fb2c2dd",
+    "src/terminal/connection.asm": "3e3a2fa5b0e667b99395cf7c628d088b1677a9d5b003bf6a4ce6e49530695f1f",
+    "standalone/check_online_exit.py": "31ee62e4a44d817b9f27beb27a2e4ad846d4c31c9c2e206ede0374cb5170a5b1",
+    "docs/validation/online-exit.json": "a3aaa3084bad3f024c4d7041525844b07203776e7e046377c24e7807f356d879",
+    "lab/bbs/check_audio_login_readiness.py": "3e768102bcdaa93cc51053cc700a46f8b34f2aa69f2ce765f23a4abebd8f823f",
+    "docs/validation/synthmodem-audio-login-readiness.json": "26f1f0118a2363151a3136c63f0ab4a9a099d93aa8137239e8ba32f4b2ead4fe",
+    "lab/bbs/audio_editor_keys.asm": "83e271b3405087f7d1230e45c0d4a713c63a09beb09142bee30a972d5807cf7c",
+    "lab/bbs/check_audio_editor_watchdog.py": "04f973f6032f7ec84384d67bce75d13c1aca9eff2c17a67709e96d7e222eaa08",
+    "docs/validation/synthmodem-audio-editor-watchdog.json": "53382ae67567629c02580bb89429c99792fbdbb9c51fa521f920a6ade065c3f0",
+    "lab/bbs/editor_multiline_evidence.py": "b806dc34c5b924c332f1ab2b0bfa143d302330f60fc68e6580eac504be915530",
+    "lab/bbs/check_editor_multiline_evidence.py": "0b307eebb3fe03144889653ff345e2b72671bf75a840771632c086641e66cfce",
+    "lab/bbs/audit_synthmodem_audio_dos.py": "4b479e5259059f9d277f17b9c8b9fd941281a9b272199af81bfcb09edb212ead",
+    "lab/bbs/audit_serial_io_evidence.py": "f5e6bf127277fbf256676bcf491903a06e3b3214e8c1276658e62bf15a7a4f8b",
+    "lab/bbs/diagnose_audio_caller.js": "384c5ff4036f90afdf3afa9174ef7c780c503a2541a6d5d6b55210856ae884ef",
+    "build/bbs-lab/editor-multiline-keys-04/result.json": "69bda3c4f30925f42d1438fc4c3a3e271c4e8a98f43d576e55562ee25e6e39ae",
+    "lab/bbs/check_audio_editor_multiline_keys.py": "7f299d81b6680163ddc86fa859409516de268e58b317caa8cf10393a66282ead",
+    "lab/bbs/check_audio_editor_burst_keys.py": "d6b0c4b7b71c0bf847f4fd5033ac25da60be37ec89c3c8103b11ee400233e865",
+    "docs/validation/current-enigma-multiline-reference-04.json": "9f7ed554819eb20f907ea1b33ca359b2cd90de68b01b5fdb0a40db6a0ea2dc5b"
+  },
+  "runtime_inputs": {
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/bzImage": "2bac10d87a024026de6c00539ea70d19194169b6b99111d9178815b470d77dbe",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/candidate.cpio.gz": "e44fb53975b34b73f646af6b930ecb252e1ddcd94608c06c097a7737fb56c5a2",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/config.js": "6cfa6057b31bebb90d52f12956a3166a389308b703c17480acdc59fdb05f681f",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/index.js": "8aac80d7f4e68c25d02f29b16d2dc82b78d3f5ecee57562315fda4efb3494791",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/vm/qemu-runner/QemuVM.js": "2b15088c2a4d8a2002bcd4b153d38d06fc6e9863cb7a9990dbcac1875b082a76",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/vm/qemu-runner/SlmodemVM.js": "8578c0d7fcb5b96648856422ef56a9178f155ddb86321300b8e63f3220c61cdc",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/vm/qemu-runner/qemu-args.js": "61975545b19201092d3e0f53dd324e46a05e432f0ace7ac3bc3c0f63abf1b3ea",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/vm/qemu-runner/transport.js": "54cec57e3b78a5b4a82e3289dac645be4b7d49da5f2ed697f3a9d5e0e4742570",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/backends/ModemBackendPool.js": "97836fc1e9c31fcad7e8bfbfba8d11e8c25bef44302d50a88441f4c554e0b156",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/backends/PjsipBackend.js": "742fcf2fd70f5b05e166c96ece48887843c24a23300e173b30324f1db40d4ef6",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/dsp/AudioCapture.js": "843dc3267c927cdb07d46d299613228508a71f85180bc76f46931d27bf196965",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/dsp/Handshake.js": "2c8e9bf37157159ebee8d441e15b1b241bb46233c6d36f710d77c3cedee2d97b",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/dsp/ModemDSP.js": "18986bc99ba59756e7841902dcc93ccf328bb59e4e0671446be286695882e967",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/dsp/Primitives.js": "f63b3e3fcee64169af3343ea7ef73ffb68fff24356c021564f62b7e4c8a434af",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/dsp/V8.js": "145c661bbbff383cc7af622b98fcd423f1d66fae2d2e464b308cf3a2c0edcb40",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/dsp/V8Sequencer.js": "3379d253f990a83d1dd3612383a17b5534c47d1635870fb16177a8e1c3e36452",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/rtp/Codec.js": "ffe6cacafda853769e3cbd8e532e3d36213a85ed04042eaebc57ba54155e5256",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/rtp/RtpBridge.js": "3cc7626381626e764344621bd52c3c0ffb1dfe203bbcf7047437914af0fbe6e9",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/rtp/RtpSession.js": "72d6298f50c0823fa1a42a8eaf234885809ae08cb477b2b17bfdef6241aefe44",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/session/CallSession.js": "7ccb61304e28462e6139dd3fac6415e1d38e4e2bd614dd6f8b88e8cc1a7aa4a3",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/sip/PublicHostResolver.js": "5431bacf4dcd1c4027c467d28db8e3d510b700ecc8d441a9d0b0316580b6ffea",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/sip/SipDialog.js": "571440469511a3861a5faae9cf805b1f6555bc2ee1f95cc5b6b8a9dcae9aa4fd",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/sip/SipParser.js": "e5a5dae109bc251acb7623d922dd8bc9284f14f8221bb16f7b0a82846dac8cc8",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/sip/SipServer.js": "7a8971607c0b285b97941d28ba1462db8a0eabdc39997189d4f977b315b624ec",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/sip/SipUacInternal.js": "89e0fd9a27e8960bd2a989942d0671d3dc7526b98c6447246d9b80bf28ecffff",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/sip/VmRegistrar.js": "d91cfe3c3faca7637ced5d2119d61d2ceedc5b1f8964973abaccc07b43d1cc08",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/telnet/TelnetProxy.js": "39128877bc1d7c7011ce55ecdc06c3e45063ae28d6502a51c9972aa014096172",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/telnet/InputSequenceFramer.js": "00f00af6e692c42426f85121317117367e3ae43fae97f48f08d34252f90f850a",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/tunnel/UdpTcpTunnel.js": "4f0b49567a7041a375da96a527d258c8e47a7cc521c08748c46b1eb194901b7a",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/dsp/protocols/Bell103.js": "d7d1ae488e24da9e54e6fc5a586287045d25fe321f81821ea62b8fb25dd7379a",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/dsp/protocols/FskCommon.js": "27ee865d11b747aeace4e6acbc4daae2c38efab3ca9c09cdad9bc567fbfb60a7",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/dsp/protocols/V21.js": "00473e940f46f754e4397f41dcee2e70b17bd679f694d7e13eb542f2a270e864",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/dsp/protocols/V22Common.js": "51a473f0b638691c8c81048236e2e72dca2993a5d0240229cd07bf9c436b1123",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/dsp/protocols/V22Demodulator.js": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/dsp/protocols/V22RxRRC.js": "42d6d85522a4e26b6d92f70e344b4f65d7d31cd579e2283811899b9ea878fe2b",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/dsp/protocols/V23.js": "54af2ce2d86726c84424dc033637efcb2d0cf79c9a5b63e680f1ad4e0b7d93a9",
+    "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-buffered-runtime-01/runtime/source/src/dsp/protocols/V22.js": "1bd6cb66be0033bde88e52b03ca923fab2181ae9343ac5db2569eb34c9fec45a"
+  },
+  "audit_inputs": {
+    "lab/bbs/audit_synthmodem_audio_dos.py": "4b479e5259059f9d277f17b9c8b9fd941281a9b272199af81bfcb09edb212ead",
+    "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+    "lab/bbs/synthmodem_gateway.py": "0fdefd2022087d9427b091caab378123f7cc3f0123113bdcbf3966e72a08afcc",
+    "lab/bbs/editor_multiline_evidence.py": "b806dc34c5b924c332f1ab2b0bfa143d302330f60fc68e6580eac504be915530"
+  },
+  "tool_inputs": {
+    "/nix/store/cb0mas86nyk9lgzjas06nr688dpwbs86-dosbox-x-2026.07.02/bin/dosbox-x": "cf90648a5e2a7821a385aa4feaef1b161d8e1b46c5aa11092a1e8b51e10971c5",
+    "/nix/store/l54xicbgjfxvqiv1x4jk83i0nhfrrz38-nasm-3.02/bin/nasm": "86010d0df9528258197f59d9b28af253bb37563d0e2267b4bd33dec4fbdb9a94"
+  },
+  "captures_sha256": {
+    "node.log": "4c90608026c78598a74db9ccf9fea95842d66bb6732438964d1652e5523bc888",
+    "dosbox.log": "5769ce618b9c648246c5286e76b3e6859c0874851c61f378532bf87e92bff402",
+    "qemu-0.log": "a585106a14e003c10060e597acf2a9541e29c8e155ddec3f261220d4df5dc4e4",
+    "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "KEYOLD.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+    "KEYNEW.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+    "SCREEN.BIN": "d2b2afa35615c4c0ac64a258cd41637cc07d6129a410fd33ace54e075228ef03",
+    "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "internal-from-guest.bin": "8aa2c6c1cd8a0bb9ba7acb1570d4cbba6bb71a4f60d138d16f5c446af00d4b64",
+    "internal-to-guest.bin": "ba938354c0bd3d073e7c4604e1dc909a607622df20519f2ea2e23937772a4234",
+    "serial-submitted.bin": "894c450a547fcde91277e5506d720e04751e223e1e6f5ade4117d07c27cf28ef",
+    "serial-completed.bin": "894c450a547fcde91277e5506d720e04751e223e1e6f5ade4117d07c27cf28ef",
+    "serial-skipped.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "serial-write-events.jsonl": "08312328fbb3ec89513ae0e20130f1aff581f92ac78563b7613a99cda6a351a9",
+    "serial-input-events.jsonl": "9468b9fa5a0732a179f5efccdb3de5c9447fe2857534ac528d3811cbc41a99fa",
+    "serial-in.bin": "5c699ed0e6530456717a1c0a407b0d9ee5dddb9d162e2dce9c8a77c6c116fed7",
+    "serial-out.bin": "894c450a547fcde91277e5506d720e04751e223e1e6f5ade4117d07c27cf28ef",
+    "caller-decoded.bin": "ba9cb11c02590176fe648b7470bc318ae78b0b2b35d42d922cc5b3f065f5e0f2",
+    "control-wire.bin": "e0ac1acf08e034c2ffda1e728678bb653b0716e04b765cd36177c5873f2a46c1",
+    "rtp-from-answer.bin": "de9c7837f5fbf599b1462861d8a48d230d3a832e8168b845d2ee5c531676e657",
+    "rtp-from-caller.bin": "17209664c3aa9dd91f8b3afe13ae5927eee7e7aaa75643fb14300e9451c36a6a",
+    "sip-to-server.bin": "3005d5d7d89423b97185f827545e44dde4007492fbdd9b8dc41b425b2a7fe0a7",
+    "sip-to-caller.bin": "6b12cf3795acfc0fcd45ad70861aab55f83565706e640256f669fab2c32d8a35",
+    "server-session.jsonl": "a0eea88acb98d8dc88a6a7346afd846e6e5a0709c9880b134908cc74323bc7a1",
+    "bbs-input.bin": "2ca8d14d1613c12ef9690468490b10f0b6c7517c92b89f1526236ab92e6675a0",
+    "bbs-output.bin": "130e6b231c99b7b2f1e8ab853c7e7571d2deb82deb6314dd70b5dd7e65656ae0",
+    "BBS-relay-events.jsonl": "69b66e52768bbebe8788750c012b5eb41004c3f4f3c205d58c8e1331bd6b8ae6",
+    "result.json": "bb303f7215cea2a00167e3b9d666b32f12db7163b1e500929fde6cc66014e687",
+    "independent-audit.json": "0546e86784850e5a12719c467e00fb7bd41faf3e4c4c468a09de791ef4ac43d0",
+    "serial-io-audit.json": "f571fff28a2a17aa77177ebf55e78d85c686ff896a4945bf5de28a88bf112101",
+    "offline-caller.json": "c3cc2ee372f4e5a965f790a2ddf9a5d2271c23e6f5440e5af4a89b1875c1727f"
+  },
+  "recorder_sha256": "5bca9836caadba9dc59674d372ffe313b3d5d7bbce70c8acb13566aa3e63d306",
+  "scope": "One source-built DOS/ASPECT unsaved30-line draft plus newline31 on pinned stock owned ENiGMA through real software SIP/RTP/V22-1200 DSP/Telnet at38400DTE.288 actual BIOS body keys, all318 cursor/mode responses, exact authored and complete display streams, cross-line edits, three PageUp/three PageDown operations and edited-text redisplay pass. Unique TAIL/OVR31,05 DOS video precedes exit. Full byte/serial/cleanup audits and independent caller waveform match; source/runtime identity and message count preserve. This is the80x25/14-line viewport only, not sustained pressure/latency, other profiles/peers, physical Boca/SPA2102 or F01-F16 whole-application completion."
+}

@@ -1,5 +1,35 @@
 # Local full-screen editor probes
 
+## Current multiline DOS/audio acceptance
+
+The [current multiline run](../../docs/validation/current-enigma-editor-multiline-audio-01.json)
+passes31 producer,40 independent and12 serial-ownership checks on stock owned
+ENiGMA through the source-built200ms software SIP/RTP/V22-1200 path. The current
+976 terminal emits288 actual BIOS body keys. It creates30 hard lines, edits
+across lines29/30, adds line31, traverses three PageUp/three PageDown operations,
+then switches to OVR31,05. All318 cursor/mode responses match the independently
+checked TCP reference. Edited lines redisplay correctly, and the real DOS final
+screen contains TAIL and the unique final mode/position before exit.
+
+The396 online input bytes and132058 display bytes survive exactly. Independent
+caller decoding matches the entire online input; all132267 serial output bytes
+complete without skipped, failed or pending bytes. The full42-byte hardware
+snapshot and helper/timer restoration pass. The draft is unsaved and the server
+message count remains1. Source/runtime/helper identities and the20 BIOS helper,
+25 TCP-reference and ten damaged-evidence preparation checks are retained.
+
+This proves the named80x25/14-line-viewport workflow. It does not establish
+sustained latency/pressure, arbitrary geometry, other peers, physical hardware
+or full-application completion. The accepted rapid-input latency measurements
+below remain an open responsiveness issue.
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/record_editor_multiline_audio.py \
+  build/bbs-lab/current-enigma-editor-multiline-audio-01 \
+  --controls build/bbs-lab/editor-multiline-evidence-03.json \
+  --output docs/validation/multiline-audio-new.json
+```
+
 These probes enter the actual stock editors on the owned loopback servers with
 synthetic accounts. Independent reference peers use **Discard** (ENiGMA) or
 **Ctrl-Q Abort** (Synchronet). Current DOS ENiGMA probes close the unsaved

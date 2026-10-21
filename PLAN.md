@@ -7,6 +7,19 @@ data, reconnect and transfer runs. No physical compatibility or 14400-bps claim
 is established; the adapter has not arrived. PCPlus remains a serial terminal,
 with SIP/audio/Telnet handled by the Linux bridge.
 
+The [current multiline ENiGMA audio workflow](docs/validation/current-enigma-editor-multiline-audio-01.json)
+now passes31 producer,40 independent and12 serial-ownership checks. The source-
+built976 terminal and unchanged200ms runtime handle288 actual BIOS body keys:
+30 seeded hard lines, cross-line editing, newline31, three PageUp/three PageDown
+operations and final Insert. All318 cursor/mode responses match the independent
+TCP reference, with edited lines redisplayed and actual final DOS TAIL/OVR31,05
+video. All396 online bytes and132058 BBS display bytes are exact; independent
+caller-waveform decoding, hardware/timer restoration and unchanged message count
+also pass. Twenty BIOS helper checks,25 TCP reference gates and ten damaged-
+evidence counterexamples remain bound to the receipt. This closes this specific
+80x25 multiline workflow; sustained pressure, responsiveness, other profiles/
+protocols, server partial cleanup, physical hardware and F01–F16 remain open.
+
 The [current ENiGMA download queue diagnosis](docs/validation/current-enigma-download-queue-01.json)
 reproduces all source/CRC packets and exact relay/frontend manifests. All eight
 verified replays enter the bridge before the original EOF reaches the decoded
@@ -44,8 +57,8 @@ streams, loss-before-completion capture, Files/Main return,42 hardware bytes and
 timer restore pass. Two13-check serial audits,7 official metadata checks and31
 damaged-evidence rejections pass. The earlier18/19 missing-notice run and helper/
 ACK/media failures remain retained. Current paced/rapid ENiGMA editing and
-automatic download also pass below; next complete multiline/longer input,
-current cancellation/retry, sustained/protocol/profile and all F01–F16 work. This is
+automatic download, multiline editing and current cancellation/retry also pass
+below; next complete sustained/protocol/profile and all F01–F16 work. This is
 scoped bridge-process recovery acceptance, not general/physical completion.
 
 The [retained failed repeat](docs/validation/current-synchronet-reconnect-audio-03.json)
@@ -224,9 +237,9 @@ requires all318 position responses (newlines report twice), exact authored bytes
 edited-text redisplay, TAIL/OVR31,05 DOS video and unchanged message count.
 Production helper identity is checked against the independently assembled proof;
 initial/key delays are360/3 BIOS ticks with21600-tick watchdog and1220-second
-outer bound. The current976/200ms actual multiline audio run is now in progress.
-This is preparation only; byte integrity, actual rendering, complete SIP/audio
-and normal hardware cleanup remain pending its terminal evidence.
+outer bound. This preparation remains distinct from actual audio acceptance.
+The completed current976/200ms run and its independent byte, display and cleanup
+acceptance are recorded at the beginning of this plan.
 
 The hardware target's [work order and completion gates](docs/ANALOG_MODEM_INTEGRATION.md#work-order-and-completion-gates)
 prioritize carrier/data separation and full audio-path pressure/editor/transfer
