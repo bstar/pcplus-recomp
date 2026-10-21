@@ -15,15 +15,33 @@ files. This is a TCP reference, not evidence that the DOS/audio route passes.
 The DOS keyboard probe passes six checks; fifteen initial ASPECT waits also
 match the reference's raw bytes. Those are preparation checks only.
 
-The actual audio attempt is
-`build/bbs-lab/synthmodem-synchronet-retry-audio-01`. A read-only observer has
-captured the first 2,048-byte partial, including its inode, modification time,
-content and complete official FileBase metadata, before the second target was
-indexed. Actual retry acceptance remains pending. The watchdog is intended to
-return normally to DOS and capture the final visible screen if automation
-cannot advance.
+The first actual audio attempt,
+`build/bbs-lab/synthmodem-synchronet-retry-audio-01`, failed. The sender cancelled
+after two complete CRC frames, but its second attempt sent no data and showed
+`TX timeout`. Synchronet reported a zero-length upload and later disconnected
+the inactive session. The watchdog returned normally to DOS with UART, IRQ,
+PIC and timer state restored. The [failed receipt](validation/synthmodem-synchronet-retry-audio-01.json)
+preserves all three failed producer gates and the independent audit failures.
+A read-only observer captured the first 2,048-byte partial, its inode,
+modification time, content and complete official metadata before retry indexing.
 
-The producer and independent audit bind the native executable, source,
+The original recipe queues the second Alt-S three BIOS ticks after `n`, without
+waiting for the receiver-ready banner. The decoded banner finishes 1.099 seconds
+after that `n`. A separate linked native reproduction accepts a quiet CRC
+handshake and two bytes of noise, but a 55-byte receiver banner exhausts startup
+attempts with no data sent. Local application-consumption timestamps were not
+captured, so this supports a sequencing diagnosis without proving the sole
+cause of the failed audio run. Native startup noise tolerance remains a gap.
+
+The revised `*_retry_ready*` harness waits for the complete
+`transfer now (Ctrl-X to abort):` marker before opening the second local sender.
+Its six DOS BIOS checks explicitly prohibit Alt-S at an incomplete banner;
+the new TCP reference passes eleven checks and all fifteen ASPECT waits match
+raw reference bytes. The fresh actual attempt is
+`build/bbs-lab/synthmodem-synchronet-retry-ready-audio-01`; acceptance remains
+pending. Separate source files preserve the original frozen failing recipe.
+
+The producers and independent audits bind the native executable, source,
 ASPECT compiler and script, keyboard helper, runtime, server inputs and raw
 transport captures. `audit_synchronet_retry_metadata.py` compares the retained
 partial against that live snapshot and checks the full retry's bytes, padding,
