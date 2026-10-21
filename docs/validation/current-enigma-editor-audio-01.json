@@ -1,0 +1,281 @@
+{
+  "passed": true,
+  "actual_ENiGMA_editor_accepted": true,
+  "cohort": "build/bbs-lab/current-enigma-editor-audio-01",
+  "server_revision": "6c25317168b762f7d9088a54d3f8295438827a0e",
+  "server_unchanged": true,
+  "terminal_sha256": "976ba8d0c7681b9727389e3f91e80e463738602b857130da491c249d6988e145",
+  "ASPECT_sha256": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+  "runtime_receipt": "docs/validation/synthmodem-buffered-runtime.json",
+  "runtime_receipt_sha256": "fcfc4e91b2d8b0e80caf8b837bffe8ae67fad81e9ce6b59793e02e6b6fb2c2dd",
+  "prefetch_ms": 200,
+  "producer_checks": {
+    "DOS_normal_exit": true,
+    "script_completed": true,
+    "UART_restored": true,
+    "keyboard_helper_retired": true,
+    "numeric_AT_only": true,
+    "real_DSP_CONNECT": true,
+    "authenticated": true,
+    "ordered_menus": true,
+    "DOS_DA": true,
+    "DOS_CPR": true,
+    "profile_unchanged": true,
+    "directory_accounting": true,
+    "no_relay_errors": true,
+    "no_gateway_errors": true,
+    "VM_exited": true,
+    "no_post_saved": true,
+    "inputs_unchanged": true,
+    "server_unchanged": true,
+    "editor_entered": true,
+    "typed_draft_sent": true,
+    "all_editor_keys_emitted": true,
+    "home_moves_before_marker": true,
+    "insert_toggles_overtype": true
+  },
+  "independent_checks": {
+    "numeric_command_prefix": true,
+    "single_normal_post_train_hold": true,
+    "serial_equals_post_hold_guest_decode": true,
+    "online_target_after_numeric_call": true,
+    "guest_equals_Telnet_application_input": true,
+    "decoded_audio_equals_serial_output": true,
+    "complete_BBS_display_survives_DSP": true,
+    "complete_caller_stream_equals_bridge_plus_BBS_display": true,
+    "single_real_carrier": true,
+    "real_DOS_terminal_replies": true,
+    "authoritative_login": true,
+    "authoritative_menu_order": true,
+    "all_actual_BIOS_editor_keys_in_order": true,
+    "Home_changes_cursor_before_H": true,
+    "End_and_Delete_apply_to_draft": true,
+    "Insert_changes_to_overtype": true,
+    "Tab_advances_and_page_keys_preserve_boundary": true,
+    "CtrlY_clears_line_before_final_text": true,
+    "unsaved_final_line_visible": true,
+    "draft_never_saved": true,
+    "script_and_normal_DOS_return": true,
+    "actual_UART_restored": true,
+    "actual_IRQ_vectors_restored": true,
+    "actual_UART_PIC_restored": true,
+    "keyboard_timer_vector_restored": true,
+    "continuous_rtp-from-answer.bin": true,
+    "continuous_rtp-from-caller.bin": true,
+    "actual_external_SIP": true,
+    "actual_internal_BYE": true,
+    "capture_hashes": true,
+    "runtime_inputs_unchanged": true,
+    "producer_inputs_unchanged": true,
+    "explicit_key_framing_configuration": true,
+    "stock_BBS_inputs_unchanged": true
+  },
+  "serial_ownership_checks": {
+    "complete_contiguous_attempt_manifest": true,
+    "submitted_artifact_matches_original_attempt_offsets": true,
+    "completed_artifact_matches_original_attempt_offsets": true,
+    "skipped_artifact_matches_original_attempt_offsets": true,
+    "all_final_counters_match_manifest": true,
+    "all_submissions_have_final_callback": true,
+    "legacy_errors_preserved_in_structured_events": true,
+    "one_observed_frontend_close_and_shutdown": true,
+    "observed_close_precedes_shutdown": true,
+    "no_write_submission_after_observed_close": true,
+    "observed_frontend_input_matches_capture_size": true,
+    "producer_capture_hashes": true
+  },
+  "payloads": {
+    "BBS_input_bytes": 103,
+    "BBS_display_bytes": 48245,
+    "BBS_input_sha256": "c96b647118cfacf58db250e61aebfc079540f0f9a799756f13ee690a687f2ab2",
+    "BBS_display_sha256": "07226e5d91b69cef00fec1e6c4ab3d31aefe163666c820cd86d9818fa96bba71",
+    "display_offset_in_caller": 187,
+    "expected_bridge_bytes": 187,
+    "full_caller_sha256": "bad5f469c84c702d6e0a705d90b0fca23130af0933911c7202a5fbd4021f450c",
+    "guest_DATA_RX_bytes": 119,
+    "pre_proxy_training_tail_bytes": 0,
+    "pre_proxy_training_tail_hex": "",
+    "unadjusted_serial_guest_identity": true
+  },
+  "authored_online_bytes": 119,
+  "independent_caller_decode_exact": true,
+  "editor": {
+    "positions": [
+      [
+        "INS",
+        1,
+        2
+      ],
+      [
+        "INS",
+        1,
+        3
+      ],
+      [
+        "INS",
+        1,
+        4
+      ],
+      [
+        "INS",
+        1,
+        5
+      ],
+      [
+        "INS",
+        1,
+        6
+      ],
+      [
+        "INS",
+        1,
+        1
+      ],
+      [
+        "INS",
+        1,
+        2
+      ],
+      [
+        "INS",
+        1,
+        7
+      ],
+      [
+        "INS",
+        1,
+        8
+      ],
+      [
+        "INS",
+        1,
+        7
+      ],
+      [
+        "INS",
+        1,
+        7
+      ],
+      [
+        "OVR",
+        1,
+        7
+      ],
+      [
+        "OVR",
+        1,
+        8
+      ],
+      [
+        "OVR",
+        1,
+        9
+      ],
+      [
+        "OVR",
+        1,
+        10
+      ],
+      [
+        "OVR",
+        1,
+        10
+      ],
+      [
+        "OVR",
+        1,
+        10
+      ],
+      [
+        "OVR",
+        1,
+        1
+      ],
+      [
+        "OVR",
+        1,
+        2
+      ],
+      [
+        "OVR",
+        1,
+        3
+      ],
+      [
+        "OVR",
+        1,
+        4
+      ],
+      [
+        "OVR",
+        1,
+        5
+      ],
+      [
+        "OVR",
+        1,
+        6
+      ],
+      [
+        "OVR",
+        1,
+        7
+      ],
+      [
+        "OVR",
+        1,
+        8
+      ]
+    ],
+    "expected_body_hex": "41424344451b5b48481b5b46451b5b441b5b337e1b5b327e5a09541b5b357e1b5b367e19554e5341564544",
+    "actual_DOS_body_hex": "41424344451b5b48481b5b46451b5b441b5b337e1b5b327e5a09541b5b357e1b5b367e19554e5341564544",
+    "post_keyboard_DOS_tail_hex": "",
+    "scope": "Actual BIOS-to-serial key sequence and authoritative editor cursor/mode responses. Page keys cover a one-line boundary only; connection closes without Save."
+  },
+  "keyboard_pacing_seconds": 3,
+  "page_key_scope": "One-line boundary only; no multiline scrolling or rapid-input claim.",
+  "post_saved": false,
+  "proofs_sha256": {
+    "build/bbs-lab/current-enigma-editor-audio-01/result.json": "94ae0074d16ccf6a7e3a7acd216fa01f8d6da63ea3733a40f306c9202b1fe1d1",
+    "build/bbs-lab/current-enigma-editor-audio-01/independent-audit.json": "d48e83820ba82f8fd60e2e1cb15f8090ade6f06c71415a6272036bf963f2e4bd",
+    "build/bbs-lab/current-enigma-editor-audio-01/serial-io-audit.json": "6dfc07fd403dc0114bb7e4605b94c9e4e33781eb0931c164e24fc0f23b9ad42d",
+    "build/bbs-lab/current-enigma-editor-audio-01/offline-caller.json": "e773a8af3c66ce960689e71db5ccd30dffa2c635650fccb202e6ea07a9a9b135"
+  },
+  "captures_sha256": {
+    "node.log": "b9d376c246068442d1f11cb8ee72a1c52a9176b64822d825cc08265df55506e3",
+    "dosbox.log": "59fb3257f34b3b77aab200707710a8cd0165ac6e78975ce29be95cbef7bda3a2",
+    "qemu-0.log": "53c95558245378cad8958aaf367c3de82c1066bf8dd2dd79c4a2254bfac0d530",
+    "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "KEYOLD.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+    "KEYNEW.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+    "SCREEN.BIN": "51df36cfab8b83cd62e2cd111149cbdde1107b33b37bcc3c6407ae789313d714",
+    "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "internal-from-guest.bin": "02d61af5cf11466473b1dcf9fd0fa48b1a7830d4bd019f4e060fdee1475656cc",
+    "internal-to-guest.bin": "d798d606cf40338a2f44b506b5ad24ce78feebe2d0e3716ae253d898f4f91795",
+    "serial-submitted.bin": "64b45d117cef77fffb7893244dc95f734c47ab3967e2ae11f578d2205941881b",
+    "serial-completed.bin": "64b45d117cef77fffb7893244dc95f734c47ab3967e2ae11f578d2205941881b",
+    "serial-skipped.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "serial-write-events.jsonl": "b2cf1a6d1b9e4452739ca49f7ad2648548388d5a3968e742d72eba1ad507aae7",
+    "serial-input-events.jsonl": "42f3acb49042f4e5e46e6ea7cdb68db08cb4e45a02592906b0328d1a5baa45af",
+    "serial-in.bin": "3e327cd310043506c3b7d96bfc469aafab47b03c917d9f4fd390fa1f2df7fb86",
+    "serial-out.bin": "64b45d117cef77fffb7893244dc95f734c47ab3967e2ae11f578d2205941881b",
+    "caller-decoded.bin": "bad5f469c84c702d6e0a705d90b0fca23130af0933911c7202a5fbd4021f450c",
+    "control-wire.bin": "8ef5981f4975b97f05fa74a44d27da4095954d143e6ab58da6015205cc4614e2",
+    "rtp-from-answer.bin": "6369844d33bce3f6da58b72490a6aef9c2a5f3fddaed7aa215d512ee61378f5f",
+    "rtp-from-caller.bin": "c38c3e188e2e832ec86d3618bddfb55bf258a1a48a1a6782fbdd96ee03c93448",
+    "sip-to-server.bin": "51160970120554d04c3c771df0d2a849df51ef56f7bef82a7b87721f32ca215d",
+    "sip-to-caller.bin": "d6696b865e065a366a462b375bf20407c12608009cf83dfe372d0c618463ac25",
+    "server-session.jsonl": "b7eeea9885f211a37a92d2e3fb9bf69a4496423fbafe4c43c1d2ae9126c86a0c",
+    "bbs-input.bin": "8b1bc3044ecdd7def84da500e0119840d35dc823c9b616b7d065b2428c715111",
+    "bbs-output.bin": "48eab0840d6034d966dfc3c92846e14d6d8c3435e4c9f5e60a8f088f771c8813",
+    "BBS-relay-events.jsonl": "03fa20f0d2c7f3bf80f7658c451bd9774b1ad37bc2a749251c210d52a257ee12"
+  },
+  "source_inputs": {
+    "lab/bbs/audit_synthmodem_audio_dos.py": "03d180ffb10bc054ecd306adfef93dbdfd56c35bcf6707af4cd134f0b2f581af",
+    "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+    "lab/bbs/synthmodem_gateway.py": "0fdefd2022087d9427b091caab378123f7cc3f0123113bdcbf3966e72a08afcc",
+    "lab/bbs/audit_serial_io_evidence.py": "f5e6bf127277fbf256676bcf491903a06e3b3214e8c1276658e62bf15a7a4f8b",
+    "lab/bbs/diagnose_audio_caller.js": "384c5ff4036f90afdf3afa9174ef7c780c503a2541a6d5d6b55210856ae884ef"
+  },
+  "scope": "Current source-built976 terminal and ASPECT against the owned pinned/clean ENiGMA board through normal200ms post-training SIP/RTP/V22-1200 software audio.23 producer,34 independent and12 serial checks pass. Exact119 authored upstream bytes,103 BBS input bytes,48245 display bytes and187 bridge bytes; real BIOS edit keys and authoritative cursor/mode responses, unsaved final line, no posted message, normal DOS/UART/PIC/vector/timer/SIP/VM cleanup. One paced single-line editor workflow only; rapid/multiline interaction, transfer/pressure, other protocols/profiles, physical modem/ATA and full F01-F16 remain open."
+}

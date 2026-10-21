@@ -27,7 +27,18 @@ starting audio. The same option supports the other existing routes. Run audio
 cohorts sequentially and keep the existing byte, editor, server, SIP and cleanup
 gates. Runtime/CLI preparation alone does not establish current ENiGMA acceptance.
 
-The preferred normal test image now combines the Nix-built DISCARD_NONE d-modem,
+The [current976 editor receipt](../../docs/validation/current-enigma-editor-audio-01.json)
+now supplies separate actual-run acceptance:23 producer,34 independent and12
+serial checks pass. The119 authored online bytes match both actual guest DATA_RX
+and an independent caller-waveform decode. All103 BBS input bytes and48245
+display bytes plus187 bridge bytes remain exact. Authoritative editor responses
+confirm Home/End, Delete, Insert/overtype, Tab, one-line page boundaries and
+Ctrl-Y line deletion, with `UNSAVED` visible at exit. No message is posted;
+normal DOS return, UART/PIC/vector/timer restoration and real SIP/VM retirement
+pass. This helper paces keys three seconds apart. Rapid/multiline interaction
+and the current transfer repeat remain separate requirements.
+
+The earlier menu-only baseline combined the Nix-built DISCARD_NONE d-modem,
 [lifecycle fixes](synthmodem-lifecycle.md) and
 [carrier-channel integration](synthmodem-carrier.md). Cohort -09 passes 19 producer,
 22 byte/cleanup and 13 SIP/archive checks with 64 exact DOS online bytes and

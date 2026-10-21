@@ -16,8 +16,9 @@ source plus127 padding bytes across14 CRC blocks. Both113/121-byte upstream
 streams, loss-before-completion capture, Files/Main return,42 hardware bytes and
 timer restore pass. Two13-check serial audits,7 official metadata checks and31
 damaged-evidence rejections pass. The earlier18/19 missing-notice run and helper/
-ACK/media failures remain retained. Next complete current ENiGMA audio editor/
-transfer, sustained/protocol/profile and all F01–F16 application work. This is
+ACK/media failures remain retained. The current paced ENiGMA editor also passes
+below; next complete its transfer repeat, rapid/multiline interaction,
+sustained/protocol/profile and all F01–F16 application work. This is
 scoped bridge-process recovery acceptance, not general/physical completion.
 
 The [retained failed repeat](docs/validation/current-synchronet-reconnect-audio-03.json)
@@ -67,8 +68,15 @@ existing editor/download/menu/upload routes. A
 [read-only preparation record](docs/validation/buffered-enigma-preflight.json)
 verifies the42 runtime files, live owned pinned/clean ENiGMA tree and CLI profile
 selection/rejection. The preparation starts no audio or DOS session and closes
-no ENiGMA gate. The actual current editor campaign is now running and has no
-acceptance result yet; the transfer repeat follows it.
+no ENiGMA gate. The
+[current editor campaign](docs/validation/current-enigma-editor-audio-01.json)
+now passes23 producer,34 independent and12 serial checks:119 exact authored
+online bytes,103 BBS input bytes,48245 display bytes and187 bridge bytes, with
+actual Home/End/Insert/Delete/Tab/page-boundary/Ctrl-Y cursor/mode behavior.
+The final unsaved line is visible, no post is saved and DOS/hardware/SIP cleanup
+passes. Keys are paced three seconds apart and page keys cover one line;
+rapid input and multiline scrolling remain unverified. The current ENiGMA
+ZMODEM download campaign is running without acceptance yet.
 
 The hardware target's [work order and completion gates](docs/ANALOG_MODEM_INTEGRATION.md#work-order-and-completion-gates)
 prioritize carrier/data separation and full audio-path pressure/editor/transfer

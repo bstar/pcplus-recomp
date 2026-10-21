@@ -34,8 +34,11 @@ official download accounting and31 evidence-corruption checks. One DOS process
 recovers after actual software bridge shutdown and retries an exact download.
 Earlier [input-corruption](docs/validation/current-synchronet-reconnect-audio-03.json)
 and [guest silence-insertion](docs/validation/synchronet-audio-integrity-trace-01.json)
-counterexamples remain retained. Current ENiGMA, sustained/general audio and
-physical compatibility remain open; the ENiGMA editor repeat is underway.
+counterexamples remain retained. The
+[current ENiGMA editor](docs/validation/current-enigma-editor-audio-01.json)
+also passes exact-byte, cursor/mode and cleanup checks for a paced unsaved
+single-line draft. Rapid/multiline editing, sustained/general audio and physical
+compatibility remain open; the current ENiGMA download repeat is underway.
 
 ASPECT recovery now includes a [literal codec](docs/ASPECT_LITERAL.md),
 [native dispatcher](docs/ASPECT_DISPATCH.md) and
