@@ -3751,6 +3751,26 @@
       "software_carrier_bps": 1200,
       "receipt": "docs/validation/synthmodem-synchronet-audio-02.json",
       "receipt_sha256": "37b7595b4127247adc503aec05cead4c1e66b205e94fb018e99af83903fe4e18"
+    },
+    "synthmodem-synchronet-editor-audio-01": {
+      "status": "failed_test_helper_final_menu_drain",
+      "passed": false,
+      "peer": "Synchronet official archived3.22a snapshot",
+      "receipt": "docs/validation/synthmodem-synchronet-editor-audio-01.json",
+      "receipt_sha256": "1873a33fab28cb3bd2ac1e3aec7f989fe453fe8385a204dd48e1d7cd6e4f1727",
+      "DTE_bps": 38400,
+      "software_carrier_bps": 1200,
+      "acceptance": "Editing keys and abort pass; final helper exits with1011 display bytes undelivered and retained frontend reset. No acceptance."
+    },
+    "synthmodem-synchronet-editor-audio-02": {
+      "status": "accepted_one_line_editor_abort_audio_scope",
+      "passed": true,
+      "peer": "Synchronet official archived3.22a snapshot",
+      "receipt": "docs/validation/synthmodem-synchronet-editor-audio-02.json",
+      "receipt_sha256": "763478602b345e7d346b23b16177214785a718062e211875adc5795eb07ba78e",
+      "DTE_bps": 38400,
+      "software_carrier_bps": 1200,
+      "acceptance": "All81 checks pass; exact130/23529-byte streams, native editing keys, Ctrl-Q abort, unchanged messages/counters and normal restoration. Scoped one-line editor acceptance only."
     }
   },
   "diagnosis": {
@@ -3797,12 +3817,12 @@
   },
   "remaining": [
     "Historical in-session insertions lack complete diagnostic evidence; clean editor07/download03 runs do not establish their cause or a general correction.",
-    "Unmodified-stock uploads,transfer cancellation/loss/sustained pressure,Synchronet editor/transfer workflows through audio and physical Boca/SPA2102 acceptance remain required.",
+    "Unmodified-stock uploads,transfer cancellation/loss/sustained pressure,Synchronet multiline-editor/transfer workflows through audio and physical Boca/SPA2102 acceptance remain required.",
     "All F01-F16 whole-application completion gates remain open.",
     "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
     "Extend the accepted modified-helper fixed-DTE slow-carrier upload to pressure/cancel/loss and other peers; retain every CRC/finish,storage,post-helper input and cleanup gate."
   ],
-  "current_cohort": "synthmodem-synchronet-audio-02",
+  "current_cohort": "synthmodem-synchronet-editor-audio-02",
   "latest_cohort_passed": true,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
@@ -3867,7 +3887,7 @@
   "audio_upload_retry_receipt": "docs/validation/synthmodem-audio-upload-retry-02.json",
   "audio_upload_retry_receipt_sha256": "e553eaee6e41126abfaf876825bb9a69929fede92a19a174977fade67892a8be",
   "posttrain_candidate_receipt": "docs/validation/synthmodem-posttrain-runtime.json",
-  "latest_completed_cohort": "synthmodem-synchronet-audio-02",
+  "latest_completed_cohort": "synthmodem-synchronet-editor-audio-02",
   "latest_completed_cohort_passed": true,
   "audio_upload_retry_failure_receipt": "docs/validation/synthmodem-audio-upload-retry-01.json",
   "accepted_candidate_retry_cohort": "synthmodem-audio-upload-retry-02",
@@ -3875,5 +3895,9 @@
   "synchronet_audio_failure_receipt": "docs/validation/synthmodem-synchronet-audio-01.json",
   "synchronet_audio_receipt": "docs/validation/synthmodem-synchronet-audio-02.json",
   "synchronet_audio_receipt_sha256": "37b7595b4127247adc503aec05cead4c1e66b205e94fb018e99af83903fe4e18",
-  "accepted_synchronet_audio_cohort": "synthmodem-synchronet-audio-02"
+  "accepted_synchronet_audio_cohort": "synthmodem-synchronet-audio-02",
+  "synchronet_editor_audio_failure_receipt": "docs/validation/synthmodem-synchronet-editor-audio-01.json",
+  "synchronet_editor_audio_receipt": "docs/validation/synthmodem-synchronet-editor-audio-02.json",
+  "synchronet_editor_audio_receipt_sha256": "763478602b345e7d346b23b16177214785a718062e211875adc5795eb07ba78e",
+  "accepted_synchronet_editor_audio_cohort": "synthmodem-synchronet-editor-audio-02"
 }

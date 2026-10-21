@@ -397,6 +397,32 @@ This accepts only this read-only audio navigation workflow. Next is unsaved
 Synchronet editor entry/key/abort, followed by audio transfers and broader
 pressure/loss; physical and F01-F16 remain open.
 
+The [editor preparation](docs/validation/synchronet-audio-editor-preparation.json)
+passes13 independent TCP editor/preservation, six actual DOS BIOS helper and
+nine raw ASPECT wait-token checks. The
+[first editor audio run](docs/validation/synthmodem-synchronet-editor-audio-01.json)
+passes all nine stock-editor semantics and exact130-byte upstream identity,
+including Ctrl-Q abort without saving. Its fixed final20-second helper delay
+exits during the returning Main screen: the caller is an exact prefix missing
+1011 display bytes, the final screen/whole-display gates fail and frontend
+ECONNRESET remains recorded. No acceptance is granted. Original captures and
+frozen sources at5fe8fac are retained. The observer now requires both the
+rendered Main title and Local-area footer before draining/exiting; its normal
+DOS probe must finish before the watchdog can mask failure. Rerun every original
+stream/editor/cleanup gate on fresh audio evidence.
+
+The [corrected editor audio02](docs/validation/synthmodem-synchronet-editor-audio-02.json)
+passes all81 checks (30 producer,39 independent,12 ownership). The exact130-byte
+native/offline/guest/Telnet upstream and complete23529-byte BBS display survive;
+6000ms minimum hold and all23738 frontend bytes complete without error/loss.
+All nine editor key semantics, exact native input, Ctrl-Q abort, final Main and
+normal DOS/UART/PIC/IRQ/timer/SIP restoration pass. Server code/config/menu/
+library/message bytes and message/mail/transfer counters preserve. This accepts
+only this captured one-line unsaved editor workflow, with unchanged DOS binaries.
+The first failed drain and all prior evidence remain retained. Next: Synchronet
+audio transfers, then sustained pressure/carrier-loss/reconnect; multiline editor,
+other profiles/peers, physical Boca/SPA2102 and all F01-F16 gates remain open.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

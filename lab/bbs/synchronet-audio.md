@@ -174,3 +174,19 @@ Local-area footer before its final drain and Alt-X. The shortened DOS probe
 requires normal completion before120ticks, below its180tick watchdog, so fallback
 cannot hide failed observation. A partial Main title emits no exit key. The
 independent watchdog and original INT1C restoration remain verified.
+
+The [corrected editor audio02](../../docs/validation/synthmodem-synchronet-editor-audio-02.json)
+passes all81 checks:30 producer,39 independent whole-stream/editor/cleanup and
+12 frontend ownership. Every130 upstream byte matches the native sender,
+independent offline decode, actual guest and Telnet input. All23529 BBS display
+bytes match the complete caller stream after the exact187-byte bridge preamble.
+The minimum hold is6000ms. All23738 frontend bytes complete with zero skipped,
+failed or pending bytes; there are no gateway errors. All nine editor semantics,
+the exact key sequence, Ctrl-Q abort, final rendered Main and normal DOS/UART/
+PIC/IRQ/timer/SIP restoration pass. Code/config/menu/library/message bodies and
+message/mail/transfer counters preserve. The DOS application binary is unchanged.
+
+This accepts this captured one-line editor/abort workflow only. The first failed
+drain remains preserved. Multiline scrolling, Synchronet audio transfers,
+sustained pressure/carrier loss, other profiles/peers, physical Boca/SPA2102 and
+F01-F16 whole-application gates remain open.
