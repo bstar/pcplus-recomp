@@ -635,3 +635,26 @@ and retain the complete byte, cursor, redisplay and cleanup gates.
   --receipt docs/validation/current-enigma-editor-burst-audio-01.json \
   --output build/bbs-lab/editor-latency-new.json
 ```
+
+The [relay-boundary decomposition](../../docs/validation/current-enigma-editor-queue-01.json)
+reproduces those same25 pairs and adds the hash-verified full relay manifests.
+Frontend-to-relay key delivery takes0.204..0.244 seconds. The relay's matching
+footer observations follow the complete key by0.354..0.586 milliseconds,
+including loopback forwarding, server work and response observation. The
+remaining return path takes1.556..35.276 seconds. This localizes the measured
+backlog downstream of the server response observation; it does not identify an
+exclusive modulation, queuing or DOS paint defect.
+
+For the next latency campaign, measure isolated keys as well as bursts and
+report server turnaround and return-path delay separately. Compare controlled
+output pressure and supported line rates while retaining every exact-byte and
+editor-effect check. The current originating JavaScript lab implements V22/1200;
+raising the DOS DTE setting alone does not increase that negotiated audio rate.
+Faster physical/backend paths require their own negotiation and integrity proof
+before using them to establish a response budget.
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/diagnose_audio_editor_queue.py \
+  --latency-receipt docs/validation/current-enigma-editor-latency-02.json \
+  --output build/bbs-lab/editor-queue-new.json
+```

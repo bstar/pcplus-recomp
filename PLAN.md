@@ -26,6 +26,14 @@ responsiveness. Define and test an explicit response budget separately from
 integrity; actual DOS paint timing and physical14.4-kbps performance remain
 unmeasured. The active multiline campaign and its inputs are unchanged.
 
+The [relay decomposition](docs/validation/current-enigma-editor-queue-01.json)
+places that observed burst backlog after the server's response observation:
+outbound key delivery0.204..0.244 seconds, server/loopback roundtrip0.354..0.586ms,
+return transport1.556..35.276 seconds. Do not infer a PCPlus rendering defect from
+the total alone. Next measure isolated-key and burst response under controlled
+output pressure. The current originating V22/1200 lab cannot gain audio bandwidth
+by changing DOS DTE speed; higher-rate negotiation needs a separately proven path.
+
 The [current reconnect campaign](docs/validation/current-synchronet-reconnect-audio-04.json)
 now passes all19 producer gates and the independent full protocol/byte/notice
 audit with the source-built200ms no-discard runtime and unchanged976 terminal.

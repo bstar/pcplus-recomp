@@ -1,0 +1,353 @@
+{
+  "passed": true,
+  "checks": {
+    "prior_latency_and_capture_hashes_exact": true,
+    "complete_frontend_and_relay_manifests": true,
+    "all25_keys_and_verified_footers_correspond": true,
+    "prior_frontend_measurements_reproduced": true,
+    "every_observed_phase_nonnegative": true,
+    "phase_sum_matches_total": true,
+    "original_captures_preserved": true
+  },
+  "latency_receipt": "docs/validation/current-enigma-editor-latency-02.json",
+  "latency_receipt_sha256": "ac2acee3d180ff2b606a6c61c58655868896a5cba6511efbb5d4cea399f6bd8f",
+  "accepted_receipt": "docs/validation/current-enigma-editor-burst-audio-01.json",
+  "accepted_receipt_sha256": "0a09daafcced89709d504b0018545b1b57f447714c36957bc59341ae13b29ec6",
+  "cohort": "build/bbs-lab/current-enigma-editor-burst-audio-01",
+  "rows": [
+    {
+      "key": 1,
+      "key_frontend_seconds": 439.517567062,
+      "key_relay_seconds": 439.72491591703147,
+      "footer_relay_seconds": 439.7253296270501,
+      "footer_frontend_seconds": 441.280873594,
+      "outbound_seconds": 0.20734885503145506,
+      "server_roundtrip_seconds": 0.000413710018619895,
+      "return_path_seconds": 1.5555439669499265,
+      "total_seconds": 1.7633065320000014
+    },
+    {
+      "key": 2,
+      "key_frontend_seconds": 439.571759122,
+      "key_relay_seconds": 439.7839766460238,
+      "footer_relay_seconds": 439.7843978899764,
+      "footer_frontend_seconds": 442.88161079,
+      "outbound_seconds": 0.21221752402379934,
+      "server_roundtrip_seconds": 0.0004212439525872469,
+      "return_path_seconds": 3.097212900023635,
+      "total_seconds": 3.3098516680000216
+    },
+    {
+      "key": 3,
+      "key_frontend_seconds": 439.626949936,
+      "key_relay_seconds": 439.84487188304774,
+      "footer_relay_seconds": 439.84525295195635,
+      "footer_frontend_seconds": 444.481682193,
+      "outbound_seconds": 0.21792194704772783,
+      "server_roundtrip_seconds": 0.00038106890860944986,
+      "return_path_seconds": 4.636429241043629,
+      "total_seconds": 4.8547322569999665
+    },
+    {
+      "key": 4,
+      "key_frontend_seconds": 439.682259363,
+      "key_relay_seconds": 439.9049033320043,
+      "footer_relay_seconds": 439.9053142260527,
+      "footer_frontend_seconds": 446.061027146,
+      "outbound_seconds": 0.22264396900430938,
+      "server_roundtrip_seconds": 0.00041089404840022326,
+      "return_path_seconds": 6.155712919947291,
+      "total_seconds": 6.378767783000001
+    },
+    {
+      "key": 5,
+      "key_frontend_seconds": 439.73671464,
+      "key_relay_seconds": 439.9445181619376,
+      "footer_relay_seconds": 439.9450813039439,
+      "footer_frontend_seconds": 447.621267746,
+      "outbound_seconds": 0.207803521937592,
+      "server_roundtrip_seconds": 0.0005631420062854886,
+      "return_path_seconds": 7.676186442056121,
+      "total_seconds": 7.8845531059999985
+    },
+    {
+      "key": 6,
+      "key_frontend_seconds": 439.792032442,
+      "key_relay_seconds": 440.02475862798747,
+      "footer_relay_seconds": 440.0251829579938,
+      "footer_frontend_seconds": 448.341773148,
+      "outbound_seconds": 0.23272618598747385,
+      "server_roundtrip_seconds": 0.0004243300063535571,
+      "return_path_seconds": 8.316590190006195,
+      "total_seconds": 8.549740706000023
+    },
+    {
+      "key": 7,
+      "key_frontend_seconds": 439.847238845,
+      "key_relay_seconds": 440.0644075629534,
+      "footer_relay_seconds": 440.0648127159802,
+      "footer_frontend_seconds": 449.941157905,
+      "outbound_seconds": 0.2171687179534274,
+      "server_roundtrip_seconds": 0.00040515302680432796,
+      "return_path_seconds": 9.876345189019787,
+      "total_seconds": 10.093919060000019
+    },
+    {
+      "key": 8,
+      "key_frontend_seconds": 439.902057848,
+      "key_relay_seconds": 440.12449807301164,
+      "footer_relay_seconds": 440.1249295360176,
+      "footer_frontend_seconds": 450.660804419,
+      "outbound_seconds": 0.22244022501160998,
+      "server_roundtrip_seconds": 0.00043146300595253706,
+      "return_path_seconds": 10.535874882982398,
+      "total_seconds": 10.75874657099996
+    },
+    {
+      "key": 9,
+      "key_frontend_seconds": 439.957534169,
+      "key_relay_seconds": 440.1650537670357,
+      "footer_relay_seconds": 440.16545977198984,
+      "footer_frontend_seconds": 452.221271031,
+      "outbound_seconds": 0.20751959803573072,
+      "server_roundtrip_seconds": 0.0004060049541294575,
+      "return_path_seconds": 12.05581125901017,
+      "total_seconds": 12.26373686200003
+    },
+    {
+      "key": 10,
+      "key_frontend_seconds": 440.012559411,
+      "key_relay_seconds": 440.24427031201776,
+      "footer_relay_seconds": 440.2446906949626,
+      "footer_frontend_seconds": 452.921979676,
+      "outbound_seconds": 0.23171090101777736,
+      "server_roundtrip_seconds": 0.0004203829448670149,
+      "return_path_seconds": 12.67728898103735,
+      "total_seconds": 12.909420264999994
+    },
+    {
+      "key": 11,
+      "key_frontend_seconds": 440.066985973,
+      "key_relay_seconds": 440.3040742720477,
+      "footer_relay_seconds": 440.304549998953,
+      "footer_frontend_seconds": 454.701004732,
+      "outbound_seconds": 0.2370882990477412,
+      "server_roundtrip_seconds": 0.0004757269052788615,
+      "return_path_seconds": 14.396454733046994,
+      "total_seconds": 14.634018759000014
+    },
+    {
+      "key": 12,
+      "key_frontend_seconds": 440.122302153,
+      "key_relay_seconds": 440.34387458197307,
+      "footer_relay_seconds": 440.34425567102153,
+      "footer_frontend_seconds": 455.341733596,
+      "outbound_seconds": 0.2215724289730474,
+      "server_roundtrip_seconds": 0.0003810890484601259,
+      "return_path_seconds": 14.997477924978455,
+      "total_seconds": 15.219431442999962
+    },
+    {
+      "key": 13,
+      "key_frontend_seconds": 440.17673352500003,
+      "key_relay_seconds": 440.383782965946,
+      "footer_relay_seconds": 440.38418274896685,
+      "footer_frontend_seconds": 456.08175289,
+      "outbound_seconds": 0.20704944094597977,
+      "server_roundtrip_seconds": 0.0003997830208390951,
+      "return_path_seconds": 15.697570141033168,
+      "total_seconds": 15.905019364999987
+    },
+    {
+      "key": 14,
+      "key_frontend_seconds": 440.232114366,
+      "key_relay_seconds": 440.4442373319762,
+      "footer_relay_seconds": 440.4446761889849,
+      "footer_frontend_seconds": 457.641470347,
+      "outbound_seconds": 0.21212296597616387,
+      "server_roundtrip_seconds": 0.000438857008703053,
+      "return_path_seconds": 17.19679415801511,
+      "total_seconds": 17.409355980999976
+    },
+    {
+      "key": 15,
+      "key_frontend_seconds": 440.28642673400003,
+      "key_relay_seconds": 440.5040249209851,
+      "footer_relay_seconds": 440.504399277037,
+      "footer_frontend_seconds": 458.381062678,
+      "outbound_seconds": 0.2175981869850716,
+      "server_roundtrip_seconds": 0.0003743560519069433,
+      "return_path_seconds": 17.87666340096297,
+      "total_seconds": 18.094635943999947
+    },
+    {
+      "key": 16,
+      "key_frontend_seconds": 440.340818671,
+      "key_relay_seconds": 440.58472259901464,
+      "footer_relay_seconds": 440.58523139799945,
+      "footer_frontend_seconds": 459.101336099,
+      "outbound_seconds": 0.24390392801461758,
+      "server_roundtrip_seconds": 0.00050879898481071,
+      "return_path_seconds": 18.51610470100053,
+      "total_seconds": 18.760517427999957
+    },
+    {
+      "key": 17,
+      "key_frontend_seconds": 440.396671082,
+      "key_relay_seconds": 440.62479108397383,
+      "footer_relay_seconds": 440.6252712300047,
+      "footer_frontend_seconds": 459.760804824,
+      "outbound_seconds": 0.22812000197382076,
+      "server_roundtrip_seconds": 0.00048014603089541197,
+      "return_path_seconds": 19.135533593995262,
+      "total_seconds": 19.36413374199998
+    },
+    {
+      "key": 18,
+      "key_frontend_seconds": 440.451027663,
+      "key_relay_seconds": 440.6645654150052,
+      "footer_relay_seconds": 440.6650249119848,
+      "footer_frontend_seconds": 471.121976707,
+      "outbound_seconds": 0.21353775200520886,
+      "server_roundtrip_seconds": 0.00045949697960168123,
+      "return_path_seconds": 30.456951795015186,
+      "total_seconds": 30.670949043999997
+    },
+    {
+      "key": 19,
+      "key_frontend_seconds": 440.506525585,
+      "key_relay_seconds": 440.7241650900105,
+      "footer_relay_seconds": 440.7245445159497,
+      "footer_frontend_seconds": 471.881334728,
+      "outbound_seconds": 0.21763950501048157,
+      "server_roundtrip_seconds": 0.00037942593917250633,
+      "return_path_seconds": 31.15679021205034,
+      "total_seconds": 31.374809142999993
+    },
+    {
+      "key": 20,
+      "key_frontend_seconds": 440.561082574,
+      "key_relay_seconds": 440.7843734129565,
+      "footer_relay_seconds": 440.7848086330341,
+      "footer_frontend_seconds": 472.620883585,
+      "outbound_seconds": 0.22329083895647273,
+      "server_roundtrip_seconds": 0.0004352200776338577,
+      "return_path_seconds": 31.836074951965884,
+      "total_seconds": 32.05980101099999
+    },
+    {
+      "key": 21,
+      "key_frontend_seconds": 440.615782051,
+      "key_relay_seconds": 440.8242651550099,
+      "footer_relay_seconds": 440.82462522399146,
+      "footer_frontend_seconds": 473.361746511,
+      "outbound_seconds": 0.20848310400992887,
+      "server_roundtrip_seconds": 0.00036006898153573275,
+      "return_path_seconds": 32.53712128700852,
+      "total_seconds": 32.74596445999998
+    },
+    {
+      "key": 22,
+      "key_frontend_seconds": 440.671600488,
+      "key_relay_seconds": 440.88494200003333,
+      "footer_relay_seconds": 440.8853188609937,
+      "footer_frontend_seconds": 474.10217085,
+      "outbound_seconds": 0.21334151203330975,
+      "server_roundtrip_seconds": 0.0003768609603866935,
+      "return_path_seconds": 33.21685198900627,
+      "total_seconds": 33.43057036199997
+    },
+    {
+      "key": 23,
+      "key_frontend_seconds": 440.726161033,
+      "key_relay_seconds": 440.94460900197737,
+      "footer_relay_seconds": 440.9451946360059,
+      "footer_frontend_seconds": 474.841562132,
+      "outbound_seconds": 0.2184479689773866,
+      "server_roundtrip_seconds": 0.0005856340285390615,
+      "return_path_seconds": 33.89636749599407,
+      "total_seconds": 34.115401098999996
+    },
+    {
+      "key": 24,
+      "key_frontend_seconds": 440.780618574,
+      "key_relay_seconds": 440.98425280698575,
+      "footer_relay_seconds": 440.9846910230117,
+      "footer_frontend_seconds": 475.580901707,
+      "outbound_seconds": 0.2036342329857348,
+      "server_roundtrip_seconds": 0.0004382160259410739,
+      "return_path_seconds": 34.59621068398832,
+      "total_seconds": 34.80028313299999
+    },
+    {
+      "key": 25,
+      "key_frontend_seconds": 440.836129671,
+      "key_relay_seconds": 441.0450339289382,
+      "footer_relay_seconds": 441.0453876759857,
+      "footer_frontend_seconds": 476.321121962,
+      "outbound_seconds": 0.20890425793822942,
+      "server_roundtrip_seconds": 0.00035374704748392105,
+      "return_path_seconds": 35.27573428601431,
+      "total_seconds": 35.484992291000026
+    }
+  ],
+  "phase_ranges": {
+    "outbound_seconds": {
+      "minimum": 0.2036342329857348,
+      "maximum": 0.24390392801461758
+    },
+    "server_roundtrip_seconds": {
+      "minimum": 0.00035374704748392105,
+      "maximum": 0.0005856340285390615
+    },
+    "return_path_seconds": {
+      "minimum": 1.5555439669499265,
+      "maximum": 35.27573428601431
+    },
+    "total_seconds": {
+      "minimum": 1.7633065320000014,
+      "maximum": 35.484992291000026
+    }
+  },
+  "clock_provenance": {
+    "directions": {
+      "dos": {
+        "bytes": 103,
+        "chunks": 49,
+        "raw_prefix_bytes": 25
+      },
+      "bbs": {
+        "bytes": 48245,
+        "chunks": 48245,
+        "raw_prefix_bytes": 209
+      }
+    },
+    "clock_anchor": {
+      "type": "ready",
+      "seconds": 4.125726326,
+      "monotonicNs": "956658604451942",
+      "wallTimeMs": 1792616726789
+    },
+    "scope": "One Node monotonic timeline: completed local socket-write invocations for decoded BBS bytes and observed DOS-input reads. Clipped manifests cover exact full canonical streams. These are transport observations, not application-consumption timestamps."
+  },
+  "inputs": {
+    "lab/bbs/diagnose_audio_editor_queue.py": "d200f80659dda04314325188fed7a16b131e9f2d09f8228f78d5bccd708b1693",
+    "lab/bbs/diagnose_audio_editor_latency.py": "32a6755c39568888bd5801355c40c48e9fb4ccc5adde26313b3f32eba68a8699",
+    "lab/bbs/diagnose_audio_download_queue.py": "931bb28229ef74475be625f7921798a1748d4934a1e63a325f903390fce94c08",
+    "lab/bbs/audit_audio_download.py": "452febcc4561fbc9aabca30007da931be55afc07b0938cee9a72c5d802407d85",
+    "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f"
+  },
+  "captures_sha256": {
+    "independent-audit.json": "bbf68c02e7081eec0286b4ff1bfa8b36ccdc80ee4e8e4c10279e7ef0a6e99e6d",
+    "bbs-input.bin": "8b1bc3044ecdd7def84da500e0119840d35dc823c9b616b7d065b2428c715111",
+    "bbs-output.bin": "e043e1984a6d326eec98701d522d15cd68b8c9041b99c0bf9f85195ed767b1f5",
+    "serial-in.bin": "6eab1e589a15b74faa793cd148a823f6324b80757dc373db6b2c07d3132ccc9e",
+    "serial-out.bin": "16b34076664296579cc6ee3e7f5abe064419674a4b2f8a0ef545c22f09bd786a",
+    "caller-decoded.bin": "8b50c065f4c3426e655783eb2f0c9414038c1275db0b45d5478d16779616884b",
+    "serial-input-events.jsonl": "d13e983a48f55107344c1d9c959c8bda01cba72f4577893a5b0ae5d7dcbc5aa1",
+    "serial-write-events.jsonl": "21df1b232a0a6c5425d41da38a6589aba13ee6de9bc58196392ed899b02c91f6",
+    "node-result.json": "01c84da318769304704672e19cd2ae969c2469e6b7607ead7862ca16a7914346",
+    "BBS-relay-events.jsonl": "66c5bc8c2cef9a8badcc8d59acba1512a7c0063818c9ad4271ca44f8ba288fbc"
+  },
+  "scope": "Read-only decomposition of the accepted25-key V22/1200 burst capture using exact complete streams and aligned host monotonic observations. Outbound is frontend input read to relay input read; server roundtrip includes relay forwarding, stock server processing and response socket observation; return path includes all downstream queuing, modulation, demodulation and frontend submission. No instrumentation of server internals or DOS application paint, no exclusive component cause, no performance correction/new audio run/physical14.4-kbps acceptance. Next compare supported negotiated line rates and controlled output pressure with an explicit response budget while preserving byte/cursor/cleanup gates."
+}
