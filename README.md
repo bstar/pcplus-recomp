@@ -26,6 +26,10 @@ now passes complete file/CRC/finish checks, a fresh BBS search and clean DOS
 return at V.22/1200 with fixed38400 DTE. Uploads and broader audio-path/hardware
 acceptance remain separate.
 
+A [later current-build audio repeat](docs/validation/current-synchronet-reconnect-audio-03.json)
+retains four extra guest-decoded input bytes despite exact caller audio. The
+file recovers, but audio integrity and reliable reconnect remain unverified.
+
 ASPECT recovery now includes a [literal codec](docs/ASPECT_LITERAL.md),
 [native dispatcher](docs/ASPECT_DISPATCH.md) and
 [global-string primitives](docs/ASPECT_GLOBAL_STRINGS.md).

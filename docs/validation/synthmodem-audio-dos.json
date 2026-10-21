@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Current976 stock Synchronet XMODEM-CRC download audio has scoped acceptance. The corrected reconnect helper now permits real SIP/audio bridge restart, exact retry, menus and clean DOS return:18 of19 producer gates pass, with full diagnostic stream/CRC/control identity,26 serial checks,7 official metadata checks and23 damaged-evidence rejections. The footer-only observer missed the loss notice, so overall reconnect acceptance remains false. A full-screen observer passes its actual DOS regression; a fresh actual-audio run is required. Earlier ASPECT/in-flight-ACK failures are retained. Current upload/cancel/retry, current ENiGMA audio, sustained pressure, stock receiver cleanup/closing, physical Boca/SPA2102 and F01-F16 remain open.",
+  "status": "Current976 stock Synchronet XMODEM-CRC download has scoped acceptance. One corrected recovery run completes exact retry, menus and cleanup with18 of19 producer gates; its loss-notice capture is missing. The next normal repeat reveals intermittent upstream corruption:119 exact DOS/caller-audio bytes become123 guest/BBS bytes, with four inserted bytes at authored offset77 before file selection. Its strict stop barrier refuses the mismatch; no loss/retry is injected, and the owned failed test is stopped without a normal-cleanup claim. Guest PCM/arrival timing must isolate the media/DSP/helper cause. Earlier helper/ACK failures and the completed diagnostic retry remain retained. Overall audio integrity/reconnect, current ENiGMA/upload/cancel/retry, sustained pressure, stock receiver cleanup/closing, physical Boca/SPA2102 and F01-F16 remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -4026,5 +4026,8 @@
   "current_synchronet_reconnect_audio_workflow_receipt_sha256": "b3f2f1915298561cb6cd87852a49b9626e14f6ba7694f760d6d1b8b89dcde560",
   "reconnect_helper_diagnosis_receipt": "docs/validation/reconnect-stale-prompt-diagnosis.json",
   "reconnect_helper_diagnosis_receipt_sha256": "72dfad4201e8d6c20b6a832242f16dd0dd45640f7445e710d56d4fd7426ad09c",
-  "current_audio_reconnect_accepted": false
+  "current_audio_reconnect_accepted": false,
+  "current_synchronet_reconnect_audio_integrity_failure_receipt": "docs/validation/current-synchronet-reconnect-audio-03.json",
+  "current_synchronet_reconnect_audio_integrity_failure_receipt_sha256": "f62d3cd9d2df42a889716bfdb674d0e6ab6f0afd8876ddf46058ae90357ae2b4",
+  "current_audio_integrity_open": true
 }

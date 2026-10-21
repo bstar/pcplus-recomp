@@ -238,3 +238,29 @@ CLI output before the final print. That stale-hash record and source are retaine
 in the cohort. CLI logs are now excluded from the protocol manifest; all actual
 byte/event/JSON inputs remain hashed. The corrected86-file manifest is verified
 after process exit. This repair does not waive the missing loss-notice gate.
+
+## Repeat exposes an upstream integrity failure
+
+The [next normal-binary repeat](../../docs/validation/current-synchronet-reconnect-audio-03.json)
+never reached the planned interruption: its strict stop condition refused a
+mismatched upstream stream. DOS authored119 online bytes, and independent caller
+audio decoding recovers exactly those119 bytes. The guest DATA_RX records and
+BBS input instead contain123 bytes. Four bytes, `3c d2 25 fc`, appear at authored
+offset77 after `TJ` and before area selection. They arrive as four separate
+one-byte guest data records. Both captured external RTP streams retain sequence,
+timestamp and SSRC continuity, and all13 serial-ownership checks pass.
+
+The first download still recovers the exact source plus padding. That does not
+repair terminal-input integrity or make this a reconnect pass. No first-call
+fault was injected and no second call started. The owned DOS test was stopped
+after the complete first file established that the required partial-fault route
+could no longer occur; normal DOS/UART/timer cleanup is not claimed. The stop
+decision, actual signals and unchanged input identities are retained.
+
+This localizes the first observed discrepancy after the caller waveform and
+before BBS input. It does not distinguish guest media alteration, datapump
+decoding or helper framing. This normal run has no guest PCM/arrival-timing
+export, so the next investigation must retain those boundaries before blaming
+packet loss, jitter discard or a DOS defect. The tested full-screen observer
+still needs an actual loss/completion run. Overall audio integrity and reconnect
+acceptance remain open alongside current ENiGMA and physical commissioning.

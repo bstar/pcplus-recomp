@@ -556,3 +556,12 @@ the footer-only observer missed the loss notice. A tested full-screen observer
 and fresh real audio run are required before overall reconnect acceptance.
 Physical modem/ATA, waveform-loss, sustained pressure and higher-rate acceptance
 remain separate.
+
+The [latest repeat](validation/current-synchronet-reconnect-audio-03.json) exposes
+an intermittent integrity failure before the intended stop:119 DOS/caller-audio
+bytes become123 guest/BBS bytes, with four inserted bytes before file selection.
+The first file recovers exactly, but the strict stop observer correctly refuses
+the mismatched stream. This run has no injected loss, retry or normal-cleanup
+acceptance. Guest PCM and media-arrival evidence are needed to distinguish the
+media/DSP/helper cause. A successful earlier retry does not establish reliability
+against this counterexample.

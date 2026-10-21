@@ -18,6 +18,13 @@ run must capture loss before completion. Next revalidate current ENiGMA audio
 interaction/transfer, then continue sustained/protocol/profile and the complete
 F01–F16 application work. These scoped results do not close the full plan.
 
+The [next audio repeat](docs/validation/current-synchronet-reconnect-audio-03.json)
+adds a mandatory integrity investigation:119 exact DOS/caller-waveform bytes
+become123 guest/BBS bytes before file selection. The strict stop barrier refuses
+the mismatch, so the completed first file is not a reconnect pass. Preserve the
+counterexample and add guest PCM/arrival-timing observations to isolate the
+media/DSP/helper boundary before repeating loss/retry and claiming reliability.
+
 The hardware target's [work order and completion gates](docs/ANALOG_MODEM_INTEGRATION.md#work-order-and-completion-gates)
 prioritize carrier/data separation and full audio-path pressure/editor/transfer
 checks before physical commissioning. Boca identification and adapter arrival
