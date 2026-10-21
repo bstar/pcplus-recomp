@@ -136,8 +136,12 @@ client/helper pair on real host PTYs. The candidate also preserves literal
 carrier-like payload at the CONNECT boundary. The separate
 [VM/Node integration](../lab/bbs/synthmodem-carrier.md) now passes real waveform-loss
 and complete gateway checks, with the pending writer retired before notification
-and no modem result text leaking into online data. Actual DOS/BBS routes through
-this candidate and physical carrier acceptance remain open.
+and no modem result text leaking into online data. The
+[actual DOS/ASPECT ENiGMA menu route](../lab/bbs/synthmodem-audio-dos.md) now passes
+19 producer, 22 byte/cleanup and 13 SIP/archive checks on that candidate. It
+preserves 64 online and 47,454 display bytes, restores UART/vector state and
+receives exactly one successful real registration-refresh response. Editors,
+transfers, Synchronet over audio and physical carrier acceptance remain open.
 The
 [combined lifecycle runtime](../lab/bbs/synthmodem-lifecycle.md) now verifies
 the pool-timer and REGISTER-ownership fixes through the actual VM/DSP path.

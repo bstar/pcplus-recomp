@@ -3,7 +3,7 @@
 const fs=require('fs'),path=require('path'),net=require('net'),dgram=require('dgram');
 const runtime=path.resolve(process.argv[2]),out=path.resolve(process.argv[3]),src=n=>path.join(runtime,'source',n);
 const trace=process.argv[4]==='--receive-trace'?new (require('./receive_trace_io.js').ReceiveTrace)(out):null;
-const internal=process.argv.includes('--lifecycle')?new (require('./internal_sip_capture.js').InternalSipCapture)(out):null;
+const internal=process.argv.some(v=>v==='--lifecycle'||v==='--carrier')?new (require('./internal_sip_capture.js').InternalSipCapture)(out):null;
 const cfg=require(src('config.js'));
 cfg.logging.level='info';cfg.logging.colorize=false;cfg.modem.backend='slmodemd-pjsip';cfg.modem.captureAudio=false;
 cfg.modem.native.forceProtocol='V22';cfg.rtp.bindAddress='127.0.0.1';cfg.rtp.portMin=42000;cfg.rtp.portMax=42100;

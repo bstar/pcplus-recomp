@@ -3,8 +3,9 @@
 The carrier-channel candidate now composes the client/helper with the Node
 backend and normal VM startup. Actual software-DSP carrier loss and the complete
 SIP/CallSession/Telnet gateway pass. This remains a separate lab runtime: no
-installed service changes, physical acceptance or complete DOS/BBS audio
-workflow is established by this checkpoint.
+installed service changes or physical acceptance are established. The subsequent
+DOS menu-route checkpoint below preserves those integration results and adds
+actual terminal/ASPECT/BBS acceptance for that route.
 
 ## Runtime and backend
 
@@ -93,8 +94,17 @@ The runtime commands use the accepted files pinned by the
 See the [integration receipt](../../docs/validation/synthmodem-carrier.json) and
 [client/helper groundwork](synthmodem-slmodem.md).
 
-Next run actual DOS/ASPECT and stock BBS routes through this candidate, then
-complete editors, sustained pressure and transfers across the audio path.
+The [subsequent DOS/ENiGMA route](synthmodem-audio-dos.md) now passes 19 producer,
+22 independent byte/cleanup and 13 SIP/archive checks in cohort -09. It preserves
+all 64 online DOS bytes and 47,454 BBS display bytes, with authentication,
+Main -> Messages -> Main -> Files, normal DOS return and UART/vector restoration.
+The real guest registration refresh receives one successful response during the
+active call. That [DOS receipt](../../docs/validation/synthmodem-carrier-dos.json)
+extends the historical integration receipt's scope; it does not turn the
+synthetic gateway peer into an actual BBS test.
+
+Next complete editors, sustained pressure and transfers across the audio path,
+including Synchronet and the existing ENiGMA key-fragmentation cases.
 Physical Boca identity, SPA2102 commissioning, DCD/DTR behavior, V.8 compatibility
 and negotiated 14,400-bps connectivity remain open. All full-application gates
 remain open; this bridge checkpoint preserves the PCPlus rebuild objective.

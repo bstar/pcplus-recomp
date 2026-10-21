@@ -7,21 +7,25 @@ byte passes through the real originating DSP, PCMU/RTP, external/internal SIP,
 CallSession, pool, guest answering DSP, rebuilt helper and Telnet proxy.
 There is no direct DOS-to-BBS data shortcut.
 
-The preferred normal test image now combines the Nix-built DISCARD_NONE d-modem
-with the [lifecycle fixes](synthmodem-lifecycle.md). Cohort -08 passes 19 producer,
-19 byte-audit and 11 SIP-ownership checks with 64 exact DOS online bytes and
-46,908 exact BBS display bytes. It uses normal init and no extra diagnostic
+The preferred normal test image now combines the Nix-built DISCARD_NONE d-modem,
+[lifecycle fixes](synthmodem-lifecycle.md) and
+[carrier-channel integration](synthmodem-carrier.md). Cohort -09 passes 19 producer,
+22 byte/cleanup and 13 SIP/archive checks with 64 exact DOS online bytes and
+47,454 exact BBS display bytes. It uses normal init and no extra diagnostic
 ports. The [paired VM counterexample](synthmodem-jitter-vm.md)
 separately establishes the discard-policy correction under a lossless timing
 change; broader BBS/hardware acceptance remains open.
 
 ```sh
 ./tools/modem-dev --command python3 lab/bbs/synthmodem_audio_dos.py \
-  --runtime build/bbs-lab/synthmodem-lifecycle-runtime-01/runtime --lifecycle \
+  --runtime build/bbs-lab/synthmodem-carrier-runtime-01/runtime --carrier \
   --output build/bbs-lab/synthmodem-audio-dos-new
 
 ./tools/modem-dev --command python3 lab/bbs/audit_synthmodem_audio_dos.py \
   build/bbs-lab/synthmodem-audio-dos-new
+./tools/modem-dev --command python3 lab/bbs/audit_lifecycle_sip.py --carrier \
+  build/bbs-lab/synthmodem-audio-dos-new \
+  --baseline build/bbs-lab/synthmodem-audio-dos-07
 ```
 
 Use a fresh directory and the owned ENiGMA process on127.0.0.1:23233. The runner
@@ -159,6 +163,23 @@ normal run verifies that candidate in the full DOS path. The exact historical
 
 ## Limits and remaining tasks
 
+The [carrier DOS receipt](../../docs/validation/synthmodem-carrier-dos.json)
+records the -09 route through the actual source-built terminal and ASPECT child.
+All menus, normal return, 42-byte UART snapshot, four-byte timer-vector snapshot,
+profile identity and directory accounting pass. The independent audit now
+requires the entire caller stream to equal the declared bridge messages plus
+the complete same-run BBS display; it cannot hide extra bytes before/after a
+matching display substring. The current bridge CRCRLF line-ending quirk is
+accounted for explicitly rather than normalized away. Runtime and producer
+identities are rechecked independently.
+
+The actual guest refresh CSeq8035 receives exactly one 200 during the active
+dialog. The SIP audit also verifies that only the lifecycle/carrier source
+files differ from baseline -07, and only modem/helper/init bodies differ inside
+the archive, with entry identities/metadata preserved. The historical -07
+200/405 duplicate remains retained as the counterexample. The earlier -08
+lifecycle-only receipt keeps its original 19/19/11 scope and 46,908 display bytes.
+
 This is a fixed V.22/1200 software line with38400 8N1 HARD on the emulated DOS
 UART. DOSBox-X holds modem status/CTS ready; physical IRQ/CTS/DCD/DTR behavior
 is not established. The front end does not emulate a Boca command set beyond
@@ -176,5 +197,6 @@ cleanup in those preserved baseline images. The [combined lifecycle runtime](syn
 now fixes that ownership: -08 passes the full 19 producer/19 byte checks and
 11 additional SIP checks, with exactly one successful real refresh response.
 Its paired fresh-VM recycle test also verifies the timer fix, reducing process
-exit lag from 40.53 seconds to 39.8 ms. Status CRCRLF normalization and
-carrier/data ambiguity remain open.
+exit lag from 40.53 seconds to 39.8 ms. The separate carrier runtime above now
+resolves the tested payload/status collision and passes this DOS menu route.
+Status CRCRLF normalization remains open alongside the broader tests above.

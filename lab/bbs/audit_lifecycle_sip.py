@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Audit real guest REGISTER refresh ownership on the captured tunnel stream."""
-import argparse,collections,json,re,struct
+import argparse,collections,gzip,json,re,struct
 from pathlib import Path
-from synthmodem_vm_control import ROOT,sha
+from synthmodem_vm_control import ROOT,sha,records
 from synthmodem_lifecycle_runtime import validate
+from synthmodem_carrier_runtime import validate as validate_carrier
 
 def sip_frames(path):
  raw=path.read_bytes();at=0;result=[];count=0
@@ -19,11 +20,11 @@ def sip_frames(path):
  return result,count
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path);p.add_argument('--baseline',type=Path,required=True);a=p.parse_args();out=a.cohort.resolve();baseline=a.baseline.resolve()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path);p.add_argument('--baseline',type=Path,required=True);p.add_argument('--carrier',action='store_true');a=p.parse_args();out=a.cohort.resolve();baseline=a.baseline.resolve()
  r=json.loads((out/'result.json').read_text());base=json.loads((baseline/'result.json').read_text());checks={}
  def runtime_root(receipt):return next(Path(n).parent for n in receipt if Path(n).name=='candidate.cpio.gz')
- inputs=validate(runtime_root(r['runtime_inputs']))
- checks['validated_lifecycle_runtime']=inputs==r['runtime_inputs'] and r['lifecycle'] and r['passed']
+ inputs=(validate_carrier if a.carrier else validate)(runtime_root(r['runtime_inputs']))
+ checks['validated_carrier_runtime' if a.carrier else 'validated_lifecycle_runtime']=inputs==r['runtime_inputs'] and r.get('carrier' if a.carrier else 'lifecycle',False) and r['passed']
  checks['capture_hashes']=all(sha(out/n)==h for n,h in r['captures_sha256'].items())
  checks['baseline_qemu_hash']=sha(baseline/'qemu-0.log')==base['captures_sha256']['qemu-0.log']
  incoming,rx_count=sip_frames(out/'internal-from-guest.bin');outgoing,tx_count=sip_frames(out/'internal-to-guest.bin')
@@ -47,10 +48,19 @@ def main():
  # Runtime roots are external staging directories; compare their relative files.
  old_root=runtime_root(base['runtime_inputs']);new_root=runtime_root(r['runtime_inputs'])
  old_files={str(Path(n).relative_to(old_root)):h for n,h in base['runtime_inputs'].items()};new_files={str(Path(n).relative_to(new_root)):h for n,h in r['runtime_inputs'].items()}
- changed=sorted(n for n in old_files if old_files[n]!=new_files[n]);checks['only_three_lifecycle_files_change']=set(old_files)==set(new_files) and changed==['source/src/backends/ModemBackendPool.js','source/src/sip/VmRegistrar.js','source/src/tunnel/UdpTcpTunnel.js']
+ changed=sorted(n for n in old_files if old_files[n]!=new_files[n])
+ expected=['source/src/backends/ModemBackendPool.js','source/src/sip/VmRegistrar.js','source/src/tunnel/UdpTcpTunnel.js']
+ if a.carrier:expected+=['candidate.cpio.gz','source/src/backends/PjsipBackend.js']
+ checks['only_lifecycle_and_carrier_files_change' if a.carrier else 'only_three_lifecycle_files_change']=set(old_files)==set(new_files) and changed==sorted(expected)
+ if a.carrier:
+  old_entries=records(gzip.decompress((old_root/'candidate.cpio.gz').read_bytes()));new_entries=records(gzip.decompress((new_root/'candidate.cpio.gz').read_bytes()))
+  checks['archive_entry_names_and_metadata_unchanged']=len(old_entries)==len(new_entries) and all(n==nn and f[:6]+f[7:]==ff[:6]+ff[7:] for (n,f,b),(nn,ff,bb) in zip(old_entries,new_entries))
+  entry_changes=[n for (n,f,b),(nn,ff,bb) in zip(old_entries,new_entries) if b!=bb]
+  checks['only_modem_helper_and_init_archive_changes']=sorted(entry_changes)==['etc/init.d/S99modem-pjsip','usr/local/bin/modemd-ctrl','usr/local/bin/slmodemd']
  result={'passed':all(checks.values()),'checks':checks,'refresh_transactions':summaries,'baseline_REGISTER_responses':dict(old),'changed_runtime_files':changed,
   'tunnel_frames':{'from_guest':rx_count,'to_guest':tx_count},'producer_sha256':sha(out/'result.json'),'auditor_sha256':sha(Path(__file__)),
-  'raw_capture_sha256':{n:sha(out/n) for n in ('internal-from-guest.bin','internal-to-guest.bin','qemu-0.log','node.log')},
+  'audit_inputs':{name:sha(ROOT/name) for name in ('lab/bbs/audit_lifecycle_sip.py','lab/bbs/synthmodem_vm_control.py','lab/bbs/synthmodem_lifecycle_runtime.py','lab/bbs/synthmodem_carrier_runtime.py')},
+  'raw_capture_sha256':{n:sha(out/n) for n in ('internal-from-guest.bin','internal-to-guest.bin','qemu-0.log','node.log')},'carrier':a.carrier,
   'scope':'Independent actual guest tunnel SIP transaction/peer-log audit and exact runtime source comparison. Full DOS/menu/byte audit is separate; no physical ATA/modem acceptance.'}
  (out/'lifecycle-sip-audit.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2));return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

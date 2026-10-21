@@ -74,6 +74,8 @@ It does not trim online corruption or accept authentication alone as compatibili
 See the [combined receipt](../../docs/validation/synthmodem-lifecycle.json).
 The earlier isolated [pool](patches/synthmodem-pool/README.md) and
 [registrar](patches/synthmodem-registrar/README.md) receipts retain their scopes.
-Editor/file-transfer workflows through this complete audio stack, carrier/data
-ambiguity, sustained pressure/faults, all whole-application gates and physical
+The separate [carrier runtime](synthmodem-carrier.md) now resolves the tested
+carrier/data ambiguity and passes the actual DOS menu route. This lifecycle-only
+image retains its original scope. Editor/file-transfer workflows through audio,
+sustained pressure/faults, all whole-application gates and physical
 Boca/SPA2102 acceptance remain open. No negotiated 14.4 kbps claim is made.

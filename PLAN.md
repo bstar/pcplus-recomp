@@ -28,9 +28,13 @@ backend checks, 15 actual VM/DSP carrier-loss checks and 26 complete gateway
 checks. An independent frame/audio/log audit confirms exact 287/289-byte data,
 real waveform-loss detection, helper retirement before modem result text and
 pending-writer cleanup. The gateway retains CONNECT> TCP reconnection on the
-same carrier and replacement-VM startup. DOS/ASPECT/BBS audio routes through
-this candidate remain next; physical acceptance, broader pressure/transfers and
-all F01-F16 remain open.
+same carrier and replacement-VM startup. The actual DOS/ASPECT ENiGMA menu route
+now also passes in cohort -09: 19 producer, 22 byte/cleanup and 13 SIP/archive
+checks, 64 exact online bytes and 47,454 exact display bytes. Normal DOS return,
+UART/vector restoration and a single real refresh response are verified.
+The preferred lab runtime is now `build/bbs-lab/synthmodem-carrier-runtime-01/runtime`
+with `--carrier`. Editors, transfers, Synchronet over audio, broader pressure,
+physical acceptance and all F01-F16 remain open.
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,

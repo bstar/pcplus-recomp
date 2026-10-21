@@ -30,6 +30,13 @@ def main():
  checks['decoded_audio_equals_serial_output']=(out/'serial-out.bin').read_bytes()==b'\r\nOK\r\n\r\nCONNECT 1200\r\n'+caller
  display_at=caller.find(display) if display else -1
  checks['complete_BBS_display_survives_DSP']=display_at>=0
+ # Require the entire caller stream, including the bridge preamble and EOF.
+ # A substring match alone could hide extra decoded bytes before/after display.
+ # CRCRLF is the bridge's current _sendLine behavior, retained explicitly here.
+ address=target[:-1]
+ bridge=(b'PCPLUS DSP LAB V22 1200\r\nCONNECT> Connecting to '+address+b'...\r\r\nConnected to '+address+
+  b'.\r\r\nIn-band menu escape disabled; remote close returns to menu. QUIT there hangs up.\r\r\n\r\r\n')
+ checks['complete_caller_stream_equals_bridge_plus_BBS_display']=caller==bridge+display
  checks['single_real_carrier']=sum(s.get('event')=='connect' and s.get('rate')==1200 for s in status)==1
  checks['real_DOS_terminal_replies']=b'\x1b[?1;2c' in sent and bool(re.search(rb'\x1b\[\d+;\d+R',sent))
  rows=[json.loads(b) for b in (out/'server-session.jsonl').read_text().splitlines()]
@@ -51,10 +58,13 @@ def main():
  checks['actual_external_SIP']=any(b.startswith(b'INVITE ') for b in requests) and any(b.startswith(b'ACK ') for b in requests) and any(b.startswith(b'BYE ') for b in responses) and any(b.startswith(b'SIP/2.0 200') and b' BYE\r\n' in b for b in requests)
  checks['actual_internal_BYE']='Response msg 200/BYE' in (out/'qemu-0.log').read_text()
  checks['capture_hashes']=all(sha(out/name)==h for name,h in r['captures_sha256'].items())
+ root=Path(__file__).resolve().parents[2]
+ checks['runtime_inputs_unchanged']=all(sha(Path(name))==h for name,h in r['runtime_inputs'].items())
+ checks['producer_inputs_unchanged']=all(sha(root/name)==h for name,h in r['frozen_inputs'].items())
  result={'passed':all(checks.values()),'checks':checks,'producer_sha256':sha(out/'result.json'),
-  'auditor_sha256':sha(Path(__file__)),'payloads':{'BBS_input_bytes':len(sent),'BBS_display_bytes':len(display),
+  'auditor_sha256':sha(Path(__file__)),'audit_inputs':{name:sha(root/name) for name in ('lab/bbs/audit_synthmodem_audio_dos.py','lab/bbs/modem.py','lab/bbs/synthmodem_gateway.py')},'payloads':{'BBS_input_bytes':len(sent),'BBS_display_bytes':len(display),
    'BBS_input_sha256':hashlib.sha256(sent).hexdigest(),'BBS_display_sha256':hashlib.sha256(display).hexdigest(),
-   'display_offset_in_caller':display_at,'guest_DATA_RX_bytes':len(data),'pre_proxy_training_tail_bytes':dropped,
+   'display_offset_in_caller':display_at,'expected_bridge_bytes':len(bridge),'full_caller_sha256':hashlib.sha256(caller).hexdigest(),'guest_DATA_RX_bytes':len(data),'pre_proxy_training_tail_bytes':dropped,
    'pre_proxy_training_tail_hex':bytes(data[:dropped]).hex(),'unadjusted_serial_guest_identity':online==data},
   'scope':'Independent read-only actual DOS/ASPECT, BBS authoritative logs, guest frames, serial/Telnet byte identity, RTP continuity, SIP and cleanup audit. No physical modem/ATA claim.'}
  (out/'independent-audit.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2));return 0 if result['passed'] else 1
