@@ -506,6 +506,41 @@ and official partial metadata. Retained/indexed server data leaves cleanup open
 even if the client recovers normally. No actual audio cancellation or physical
 claim is granted by these preparations.
 
+The [completed native cancellation01](docs/validation/synthmodem-synchronet-cancel-audio-01.json)
+retains **failed responsive-cancellation and server-cleanup gates**. Its87
+transport/recovery/preservation/control checks pass: exact1238 upstream bytes,
+37896 display/control bytes,6001ms hold,38105 completed frontend bytes, no gateway
+errors and eventual Files/Main/normal DOS/UART/PIC/IRQ/timer/SIP restoration.
+CAN follows an ACK by27ms, but follows78bytes of the next frame. The stock peer
+then takes66.192seconds to return its pause, reports E/10errors and indexes the
+exact1024-byte first-block partial. Eventual interaction is not responsive
+cancellation acceptance. Five timing/byte counterexamples reject. Preserve all
+original bytes, partials and metadata; no app/server/source/config changes occur.
+
+The [linked native packet-boundary regression](docs/validation/terminal-upload-cancel-boundary-01.json)
+fails all16 header/payload/checksum/CRC positions with the same native binary.
+Real native/UI/read-only file/UARTISR code plus modeled hardware/kernel and an
+independent physical-byte peer reproduce unfinished/invalid frames before CAN.
+Run `./tools/dev --command python3 standalone/check_terminal_upload_cancel_boundary.py`.
+
+Immediate next work is the maintained ordinary-sender adapter repair:
+
+- Track an in-flight frame from the native first-header-byte callback
+  (return IP send_at_e132) through its shared final checksum/CRC callback
+  (return IP send_at_e1b6). Preserve recovered flat native instruction bytes.
+- Latch ordinary local Escape while that frame is in flight; finish only that
+  frame, then unwind/cancel at its control boundary. Preserve immediate Alt-X,
+  carrier loss, CTS/THRE stall, overflow and existing independent deadlines.
+- Reset pending/frame state on every admission and all exits. Verify source
+  close/identity, pending ACK handling, IRQ/ABI/DS=SS and next-session ownership.
+- Make the16 edge regressions pass, extend physical/carrier/stall fault cases,
+  run existing linked upload/transfer tests, then repeat on a fresh stock audio
+  target. Keep this66-second failure intact and measure the new peer response.
+
+Stock partial publication remains a separately documented server-side behavior;
+same-call retry, carrier-loss/reconnect, other protocols, pressure, physical
+Boca/SPA2102 and all F01-F16 requirements remain open.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

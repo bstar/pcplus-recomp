@@ -1,0 +1,308 @@
+{
+  "passed": false,
+  "binary_sha256": "a656cf665f3d3cb81bdd06b738bb72b6ed230d299244d4ae12c1c0336f280a89",
+  "cases": [
+    {
+      "crc": true,
+      "cancel_after_second_frame_bytes": 1,
+      "passed": false,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": false,
+        "no_extra_third_frame": true,
+        "read_only_source": true
+      },
+      "error": null,
+      "complete_frames": 1,
+      "incomplete_frame_bytes": 3,
+      "accepted_by_peer": 1,
+      "wire_bytes": 1032,
+      "wire_sha256": "ea47c037fdb37f3d828e1ed7b24f9c57e437eb93fe406fa9fb042128395d4598"
+    },
+    {
+      "crc": true,
+      "cancel_after_second_frame_bytes": 2,
+      "passed": false,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": false,
+        "no_extra_third_frame": true,
+        "read_only_source": true
+      },
+      "error": null,
+      "complete_frames": 1,
+      "incomplete_frame_bytes": 4,
+      "accepted_by_peer": 1,
+      "wire_bytes": 1033,
+      "wire_sha256": "2175fc7f44236d03241c8a74dfd5b8680ddf5c0efd76391504db05230934c59c"
+    },
+    {
+      "crc": true,
+      "cancel_after_second_frame_bytes": 3,
+      "passed": false,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": false,
+        "no_extra_third_frame": true,
+        "read_only_source": true
+      },
+      "error": null,
+      "complete_frames": 1,
+      "incomplete_frame_bytes": 5,
+      "accepted_by_peer": 1,
+      "wire_bytes": 1034,
+      "wire_sha256": "09bb9cc5f97c1fbb056365ac8107a988f860e5033a36c893dd5d7d70e2fb4cb6"
+    },
+    {
+      "crc": true,
+      "cancel_after_second_frame_bytes": 4,
+      "passed": false,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": false,
+        "no_extra_third_frame": true,
+        "read_only_source": true
+      },
+      "error": null,
+      "complete_frames": 1,
+      "incomplete_frame_bytes": 6,
+      "accepted_by_peer": 1,
+      "wire_bytes": 1035,
+      "wire_sha256": "7360c5e37f989cf88e2fae784a5db13b1a146483136fe21cd1fffa37d0ec8ce3"
+    },
+    {
+      "crc": true,
+      "cancel_after_second_frame_bytes": 78,
+      "passed": false,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": false,
+        "no_extra_third_frame": true,
+        "read_only_source": true
+      },
+      "error": null,
+      "complete_frames": 1,
+      "incomplete_frame_bytes": 80,
+      "accepted_by_peer": 1,
+      "wire_bytes": 1109,
+      "wire_sha256": "920fad24ddef8d8f06d5c7be3b7c1062d63cf6701f467b922be0ddb1982822e5"
+    },
+    {
+      "crc": true,
+      "cancel_after_second_frame_bytes": 1025,
+      "passed": false,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": false,
+        "no_extra_third_frame": true,
+        "read_only_source": true
+      },
+      "error": null,
+      "complete_frames": 1,
+      "incomplete_frame_bytes": 1027,
+      "accepted_by_peer": 1,
+      "wire_bytes": 2056,
+      "wire_sha256": "b76e162d0d98b793796519b728aff203227c4b3da00b90c95177622ee79c0c3d"
+    },
+    {
+      "crc": true,
+      "cancel_after_second_frame_bytes": 1027,
+      "passed": false,
+      "checks": {
+        "native_case_completed": false
+      },
+      "error": "AssertionError('Checksum/CRC mismatch')",
+      "complete_frames": 1,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 1,
+      "wire_bytes": 2058,
+      "wire_sha256": "0a8ab9cd80a7cada73870b2215e91f968bb783d1eaa3824bce56293bab7c17d8"
+    },
+    {
+      "crc": true,
+      "cancel_after_second_frame_bytes": 1028,
+      "passed": false,
+      "checks": {
+        "native_case_completed": false
+      },
+      "error": "AssertionError('Checksum/CRC mismatch')",
+      "complete_frames": 1,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 1,
+      "wire_bytes": 2058,
+      "wire_sha256": "f6624a4b3ad0aebe187486a1f3706bff7845b666c05f46af9922d404c9cefc2e"
+    },
+    {
+      "crc": false,
+      "cancel_after_second_frame_bytes": 1,
+      "passed": false,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": false,
+        "no_extra_third_frame": true,
+        "read_only_source": true
+      },
+      "error": null,
+      "complete_frames": 1,
+      "incomplete_frame_bytes": 3,
+      "accepted_by_peer": 1,
+      "wire_bytes": 1031,
+      "wire_sha256": "a1795f07d0477a174695e0937f7534ba75f9e76970d9f198a183f6988e16f28b"
+    },
+    {
+      "crc": false,
+      "cancel_after_second_frame_bytes": 2,
+      "passed": false,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": false,
+        "no_extra_third_frame": true,
+        "read_only_source": true
+      },
+      "error": null,
+      "complete_frames": 1,
+      "incomplete_frame_bytes": 4,
+      "accepted_by_peer": 1,
+      "wire_bytes": 1032,
+      "wire_sha256": "3940d091045710b048d3d6cd61566eef015035e5d4cfbac79aa846777945dd3f"
+    },
+    {
+      "crc": false,
+      "cancel_after_second_frame_bytes": 3,
+      "passed": false,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": false,
+        "no_extra_third_frame": true,
+        "read_only_source": true
+      },
+      "error": null,
+      "complete_frames": 1,
+      "incomplete_frame_bytes": 5,
+      "accepted_by_peer": 1,
+      "wire_bytes": 1033,
+      "wire_sha256": "8aa840571ece96bf2f021f0090d4fcb2c59e154115148c05aa954649d5e576f7"
+    },
+    {
+      "crc": false,
+      "cancel_after_second_frame_bytes": 4,
+      "passed": false,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": false,
+        "no_extra_third_frame": true,
+        "read_only_source": true
+      },
+      "error": null,
+      "complete_frames": 1,
+      "incomplete_frame_bytes": 6,
+      "accepted_by_peer": 1,
+      "wire_bytes": 1034,
+      "wire_sha256": "30927644a4d562387227b6786c4198f799c3b4821531892212802161e21bd1c2"
+    },
+    {
+      "crc": false,
+      "cancel_after_second_frame_bytes": 78,
+      "passed": false,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": false,
+        "no_extra_third_frame": true,
+        "read_only_source": true
+      },
+      "error": null,
+      "complete_frames": 1,
+      "incomplete_frame_bytes": 80,
+      "accepted_by_peer": 1,
+      "wire_bytes": 1108,
+      "wire_sha256": "6b5835241220decb60408a8febd548a16e0c04a7896f23b356836e0e70f3a6bf"
+    },
+    {
+      "crc": false,
+      "cancel_after_second_frame_bytes": 1025,
+      "passed": false,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": false,
+        "no_extra_third_frame": true,
+        "read_only_source": true
+      },
+      "error": null,
+      "complete_frames": 1,
+      "incomplete_frame_bytes": 1027,
+      "accepted_by_peer": 1,
+      "wire_bytes": 2055,
+      "wire_sha256": "708f8ed940f178f81be7121dcb40522303c76e350fa9184ded11361f9cf42018"
+    },
+    {
+      "crc": false,
+      "cancel_after_second_frame_bytes": 1026,
+      "passed": false,
+      "checks": {
+        "native_case_completed": false
+      },
+      "error": "AssertionError(('Binary/padding mismatch', 1024, 1024))",
+      "complete_frames": 1,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 1,
+      "wire_bytes": 2056,
+      "wire_sha256": "23399f47b91c2c042fb9bb93b19701cee38e6bd4565784eb1aef623e9e7fdb99"
+    },
+    {
+      "crc": false,
+      "cancel_after_second_frame_bytes": 1027,
+      "passed": false,
+      "checks": {
+        "native_case_completed": false
+      },
+      "error": "AssertionError('Checksum/CRC mismatch')",
+      "complete_frames": 1,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 1,
+      "wire_bytes": 2056,
+      "wire_sha256": "37b4bb7cff53a60c910fe610c43dca5f52af35d154d11920b95d0a83af2c3dfc"
+    }
+  ],
+  "inputs": {
+    "standalone/check_terminal_upload_cancel_boundary.py": "484d735c598151e3e69cac2bb67b599f8046b11e551524969be642ab40f4680d",
+    "standalone/check_terminal_upload_live.py": "0617c0e0a0c774e7f3d0b43c01d8c21aa7b70cb821335f7f79133db122280c90",
+    "standalone/check_terminal_transfer_live.py": "7080c84249b3296463cac411e3b5ec0ec4cbf4ac6183fed7d557753eaf16b020"
+  },
+  "scope": "Actual source-built linked native sender/UI/read-only file owner/UARTISR, with modeled hardware/kernel and independent physical-byte peer. Escape after one peer-ACKed frame at second header/payload/checksum/CRC edges must leave only complete frames before CAN. No product callback is patched or skipped. Not real DOS/audio/physical proof."
+}

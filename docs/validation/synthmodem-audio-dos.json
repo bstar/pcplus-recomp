@@ -3791,6 +3791,19 @@
       "DTE_bps": 38400,
       "software_carrier_bps": 1200,
       "acceptance": "All87 checks pass: exact11521 source +127SUB,14 unreplayed CRC blocks, EOT NAK/ACK, full success/log/metadata and menu/cleanup. Three initial no-input retries are source-attributed; zero data-block errors. Original zero-total-errors metadata report retained. Partial-publication cleanup remains open."
+    },
+    "synthmodem-synchronet-cancel-audio-01": {
+      "status": "failed_native_midframe_Escape_cancellation_and_server_partial_cleanup",
+      "passed": false,
+      "eventual_client_recovery_verified": true,
+      "responsive_cancellation_accepted": false,
+      "server_partial_cleanup_accepted": false,
+      "peer": "Synchronet official archived3.22a snapshot",
+      "receipt": "docs/validation/synthmodem-synchronet-cancel-audio-01.json",
+      "receipt_sha256": "579ef137d3424334cc5a72d22d26411856fc10f1d3fd4839466a4eb6cc1356f8",
+      "DTE_bps": 38400,
+      "software_carrier_bps": 1200,
+      "diagnosis": "CAN follows78bytes of the second frame after a real first ACK; peer pause arrives66.192seconds later and stock E/10errors publishes/indexes1024-byte partial. Exact streams/menu/cleanup preserve; no responsive-cancellation acceptance.16 linked native edge regressions reproduce."
     }
   },
   "diagnosis": {
@@ -3841,10 +3854,11 @@
     "All F01-F16 whole-application completion gates remain open.",
     "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
     "Extend the accepted modified-helper fixed-DTE slow-carrier upload to pressure/cancel/loss and other peers; retain every CRC/finish,storage,post-helper input and cleanup gate.",
-    "Stock Synchronet published/indexed a1024-byte failed-reference partial despite E/helper error. Preserve evidence; cancellation/loss cleanup and trustworthy completion require full wire/source/finish accounting. Accepted upload has3 source-attributed startup retries, not zero startup retries."
+    "Stock Synchronet published/indexed a1024-byte failed-reference partial despite E/helper error. Preserve evidence; cancellation/loss cleanup and trustworthy completion require full wire/source/finish accounting. Accepted upload has3 source-attributed startup retries, not zero startup retries.",
+    "Immediate: ordinary-XMODEM Escape can interrupt packet transmission before CAN; observed66.192-second stock peer stall and16 failing linked boundary cases. Defer local Escape until checksum/CRC boundary while preserving all physical-fault bounds, then validate new target/audio latency and ownership."
   ],
-  "current_cohort": "synthmodem-synchronet-upload-audio-01",
-  "latest_cohort_passed": true,
+  "current_cohort": "synthmodem-synchronet-cancel-audio-01",
+  "latest_cohort_passed": false,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
     "offline_caller_equals_DOS_online": true,
@@ -3908,8 +3922,8 @@
   "audio_upload_retry_receipt": "docs/validation/synthmodem-audio-upload-retry-02.json",
   "audio_upload_retry_receipt_sha256": "e553eaee6e41126abfaf876825bb9a69929fede92a19a174977fade67892a8be",
   "posttrain_candidate_receipt": "docs/validation/synthmodem-posttrain-runtime.json",
-  "latest_completed_cohort": "synthmodem-synchronet-upload-audio-01",
-  "latest_completed_cohort_passed": true,
+  "latest_completed_cohort": "synthmodem-synchronet-cancel-audio-01",
+  "latest_completed_cohort_passed": false,
   "audio_upload_retry_failure_receipt": "docs/validation/synthmodem-audio-upload-retry-01.json",
   "accepted_candidate_retry_cohort": "synthmodem-audio-upload-retry-02",
   "posttrain_audio_receipt": "docs/validation/synthmodem-audio-upload-retry-02.json",
@@ -3927,5 +3941,9 @@
   "synchronet_upload_audio_receipt": "docs/validation/synthmodem-synchronet-upload-audio-01.json",
   "synchronet_upload_audio_receipt_sha256": "7d32baebf65040025582394c0a21c6d9ba341042e9bc22c66f5a0b9ad4d1dd08",
   "accepted_synchronet_upload_audio_cohort": "synthmodem-synchronet-upload-audio-01",
-  "synchronet_partial_publication_receipt": "docs/validation/synchronet-upload-partial-publication.json"
+  "synchronet_partial_publication_receipt": "docs/validation/synchronet-upload-partial-publication.json",
+  "synchronet_cancel_audio_failure_receipt": "docs/validation/synthmodem-synchronet-cancel-audio-01.json",
+  "synchronet_cancel_audio_failure_receipt_sha256": "579ef137d3424334cc5a72d22d26411856fc10f1d3fd4839466a4eb6cc1356f8",
+  "open_cancellation_failure_cohort": "synthmodem-synchronet-cancel-audio-01",
+  "native_upload_cancel_boundary_receipt": "docs/validation/terminal-upload-cancel-boundary-01.json"
 }

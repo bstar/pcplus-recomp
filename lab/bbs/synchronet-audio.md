@@ -90,6 +90,37 @@ teardown from retained/indexed server partials; partial cleanup cannot pass
 merely because client recovery does. Fresh output names never authorize
 overwriting an existing reference or server payload.
 
+The [completed cancellation01](../../docs/validation/synthmodem-synchronet-cancel-audio-01.json)
+is **not accepted for responsive cancellation or server cleanup**. Its87
+producer/independent/ownership/partial-accounting/negative-control checks verify
+exact1238 upstream bytes,37896 display/control bytes, real ACK before CAN, no
+EOF/full-source publication, eventual Files/Main and normal DOS/UART/PIC/IRQ/
+timer/SIP restoration. The hold is6001ms; all38105 frontend bytes complete with
+zero skipped/failed/pending bytes and no gateway errors. Source identity,
+existing files and server code/config/library/message bytes preserve.
+
+The failure is concrete: Escape follows the first ACK by27ms, but78bytes of the
+next frame have already been transmitted before CAN/CAN. The source/CRC-checked
+first1024bytes remain officially stored/indexed; the stock receiver reports E
+and10errors, and takes66.192seconds after CAN to return its pause. Five negative
+counterexamples reject false ACK/CAN/menu timing, corrupt source and EOF posing
+as cancellation. Eventual interaction does not establish responsive recovery.
+The passive boundary diagnosis and exact original captures are sealed in the
+receipt; no files or metadata are deleted and no failing outcome is waived.
+
+The [linked-native regression](../../docs/validation/terminal-upload-cancel-boundary-01.json)
+fails16cases at second-frame header/payload/checksum/CRC edges against the exact
+same binary. The peer checks actual physical TX bytes; Escape is injected only
+through modeled BIOS keys, with real native/UI/file/UARTISR code. Most cases
+leave an incomplete packet before CAN; trailer edges can produce bad CRC/data.
+Run `./tools/dev --command python3 standalone/check_terminal_upload_cancel_boundary.py`.
+
+Next repair: defer local ordinary-XMODEM Escape across an in-flight frame through
+its checksum/CRC trailer, then emit CAN at the control boundary. Maintain bounded
+service and immediate physical/carrier/deadline fault handling. Verify header,
+payload, trailer, checksum/CRC, CTS stalls, loss, source ownership, next-session
+state and a fresh actual audio run before granting cancellation acceptance.
+
 
 ## First actual failure
 
