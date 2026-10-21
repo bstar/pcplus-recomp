@@ -20,6 +20,7 @@ extern _terminal_zmodem_store,_terminal_zmodem_files
 extern _ymodem_current
 extern terminal_upload_blocks_accepted
 extern terminal_upload_accepted_bytes
+extern terminal_upload_frame_active,terminal_upload_cancel_pending
 extern _transfer_native_open,_transfer_native_write,_transfer_native_close,_transfer_download_result
 extern session_setjmp,session_longjmp,session_blocks_accepted
 extern terminal_monitor_active
@@ -112,6 +113,8 @@ terminal_transfer_poll:
  mov word [terminal_upload_blocks_accepted],0
  mov word [terminal_upload_accepted_bytes],0
  mov word [terminal_upload_accepted_bytes+2],0
+ mov word [terminal_upload_frame_active],0
+ mov word [terminal_upload_cancel_pending],0
  call terminal_transfer_set_budget
  call terminal_connection_notice_restore
  call terminal_clock_ticks
@@ -315,6 +318,8 @@ terminal_transfer_poll:
  jne .draw_notice
  mov byte [si],'T'
 .draw_notice:
+ mov word [terminal_upload_frame_active],0
+ mov word [terminal_upload_cancel_pending],0
  call terminal_transfer_ui_restore
  mov word [terminal_transfer_phase],0
  mov word [terminal_transfer_active],0
@@ -401,6 +406,13 @@ terminal_transfer_service:
 .escape:
  cmp al,27
  jne .done
+ ; Only local Escape in an ordinary sender packet is deferred. Carrier,
+ ; overflow, progress deadlines, physical TX bounds and Alt-X stay immediate.
+ cmp word [terminal_upload_frame_active],0
+ je .cancel_now
+ mov word [terminal_upload_cancel_pending],1
+ jmp .done
+.cancel_now:
  mov ax,2
 .fault:
  cmp word [terminal_transfer_fault],0

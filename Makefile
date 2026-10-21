@@ -454,6 +454,7 @@ test-terminal: terminal
 	python3 standalone/test_far_storage_dos.py
 	python3 standalone/check_terminal_transfer_live.py
 	python3 standalone/check_terminal_upload_live.py
+	python3 standalone/check_terminal_upload_cancel_boundary.py
 	python3 standalone/check_program_actions_live.py
 	python3 standalone/check_terminal_reset_live.py
 	python3 standalone/test_program_actions_dos.py

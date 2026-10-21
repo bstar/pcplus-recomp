@@ -10,6 +10,7 @@ extern terminal_transfer_carrier_present,terminal_transfer_status
 extern terminal_transfer_display_path,terminal_transfer_unsupported
 extern terminal_transfer_ui_progress,terminal_transfer_accepted_progress
 extern uart_receive_byte,session_payload,send_at_e1ca
+extern send_at_e132,send_at_e1b6
 extern send_block_size
 extern _terminal_upload_open,_terminal_upload_read,_terminal_upload_close
 
@@ -17,10 +18,23 @@ GLOBAL terminal_upload_transmit_byte,terminal_upload_transmit_buffer
 terminal_upload_transmit_byte:
  push bp
  mov bp,sp
+ ; The alias JMP preserves the native return IP. Start the boundary before
+ ; SOH/STX, and finish it after the shared last checksum/CRC byte. Escape
+ ; remains pending while a complete packet is physically transmitted.
+ cmp word [bp+2],send_at_e132
+ jne .emit
+ mov word [terminal_upload_frame_active],1
+.emit:
  mov ax,[bp+4]
  call transfer_emit
  jc .failed
  mov word [transfer_protocol_started],1
+ cmp word [bp+2],send_at_e1b6
+ jne .failed
+ mov word [terminal_upload_frame_active],0
+ cmp word [terminal_upload_cancel_pending],0
+ je .failed
+ mov word [terminal_transfer_fault],2
 .failed:
  call transfer_maybe_unwind
  pop bp
@@ -110,6 +124,9 @@ terminal_upload_status: jmp terminal_transfer_status
 terminal_upload_filename_display: jmp terminal_transfer_display_path
 terminal_upload_unsupported: jmp terminal_transfer_unsupported
 SEGMENT _DATA public class=DATA use16
+GLOBAL terminal_upload_frame_active,terminal_upload_cancel_pending
+terminal_upload_frame_active: dw 0
+terminal_upload_cancel_pending: dw 0
 terminal_upload_blocks_accepted: dw 0
 GLOBAL terminal_upload_accepted_bytes,_terminal_upload_accepted_bytes
 _terminal_upload_accepted_bytes:

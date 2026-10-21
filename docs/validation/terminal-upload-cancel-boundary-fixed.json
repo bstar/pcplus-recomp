@@ -1,0 +1,657 @@
+{
+  "passed": true,
+  "actual_audio_accepted": false,
+  "binary_sha256": "54d53c72acc15a406a203fcf3a41e983916b308a0671093c693daf34b7e67e2e",
+  "cases": [
+    {
+      "crc": true,
+      "cancel_after_second_frame_bytes": 1,
+      "passed": true,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": true,
+        "no_extra_third_frame": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null,
+      "complete_frames": 2,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 2,
+      "wire_bytes": 2060,
+      "wire_sha256": "66e175043cc96916facca38e82d5fd7ea191979b2dcb3f9a9dff59f3a6ac83fc"
+    },
+    {
+      "crc": true,
+      "cancel_after_second_frame_bytes": 2,
+      "passed": true,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": true,
+        "no_extra_third_frame": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null,
+      "complete_frames": 2,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 2,
+      "wire_bytes": 2060,
+      "wire_sha256": "66e175043cc96916facca38e82d5fd7ea191979b2dcb3f9a9dff59f3a6ac83fc"
+    },
+    {
+      "crc": true,
+      "cancel_after_second_frame_bytes": 3,
+      "passed": true,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": true,
+        "no_extra_third_frame": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null,
+      "complete_frames": 2,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 2,
+      "wire_bytes": 2060,
+      "wire_sha256": "66e175043cc96916facca38e82d5fd7ea191979b2dcb3f9a9dff59f3a6ac83fc"
+    },
+    {
+      "crc": true,
+      "cancel_after_second_frame_bytes": 4,
+      "passed": true,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": true,
+        "no_extra_third_frame": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null,
+      "complete_frames": 2,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 2,
+      "wire_bytes": 2060,
+      "wire_sha256": "66e175043cc96916facca38e82d5fd7ea191979b2dcb3f9a9dff59f3a6ac83fc"
+    },
+    {
+      "crc": true,
+      "cancel_after_second_frame_bytes": 78,
+      "passed": true,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": true,
+        "no_extra_third_frame": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null,
+      "complete_frames": 2,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 2,
+      "wire_bytes": 2060,
+      "wire_sha256": "66e175043cc96916facca38e82d5fd7ea191979b2dcb3f9a9dff59f3a6ac83fc"
+    },
+    {
+      "crc": true,
+      "cancel_after_second_frame_bytes": 1025,
+      "passed": true,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": true,
+        "no_extra_third_frame": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null,
+      "complete_frames": 2,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 2,
+      "wire_bytes": 2060,
+      "wire_sha256": "66e175043cc96916facca38e82d5fd7ea191979b2dcb3f9a9dff59f3a6ac83fc"
+    },
+    {
+      "crc": true,
+      "cancel_after_second_frame_bytes": 1027,
+      "passed": true,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": true,
+        "no_extra_third_frame": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null,
+      "complete_frames": 2,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 2,
+      "wire_bytes": 2060,
+      "wire_sha256": "66e175043cc96916facca38e82d5fd7ea191979b2dcb3f9a9dff59f3a6ac83fc"
+    },
+    {
+      "crc": true,
+      "cancel_after_second_frame_bytes": 1028,
+      "passed": true,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": true,
+        "no_extra_third_frame": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null,
+      "complete_frames": 2,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 2,
+      "wire_bytes": 2060,
+      "wire_sha256": "66e175043cc96916facca38e82d5fd7ea191979b2dcb3f9a9dff59f3a6ac83fc"
+    },
+    {
+      "crc": false,
+      "cancel_after_second_frame_bytes": 1,
+      "passed": true,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": true,
+        "no_extra_third_frame": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null,
+      "complete_frames": 2,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 2,
+      "wire_bytes": 2058,
+      "wire_sha256": "8d6b5e5cb128b9ee3d42a970a3b150518ec8f689b63a38d1ec3b1b3cb56525b6"
+    },
+    {
+      "crc": false,
+      "cancel_after_second_frame_bytes": 2,
+      "passed": true,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": true,
+        "no_extra_third_frame": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null,
+      "complete_frames": 2,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 2,
+      "wire_bytes": 2058,
+      "wire_sha256": "8d6b5e5cb128b9ee3d42a970a3b150518ec8f689b63a38d1ec3b1b3cb56525b6"
+    },
+    {
+      "crc": false,
+      "cancel_after_second_frame_bytes": 3,
+      "passed": true,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": true,
+        "no_extra_third_frame": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null,
+      "complete_frames": 2,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 2,
+      "wire_bytes": 2058,
+      "wire_sha256": "8d6b5e5cb128b9ee3d42a970a3b150518ec8f689b63a38d1ec3b1b3cb56525b6"
+    },
+    {
+      "crc": false,
+      "cancel_after_second_frame_bytes": 4,
+      "passed": true,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": true,
+        "no_extra_third_frame": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null,
+      "complete_frames": 2,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 2,
+      "wire_bytes": 2058,
+      "wire_sha256": "8d6b5e5cb128b9ee3d42a970a3b150518ec8f689b63a38d1ec3b1b3cb56525b6"
+    },
+    {
+      "crc": false,
+      "cancel_after_second_frame_bytes": 78,
+      "passed": true,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": true,
+        "no_extra_third_frame": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null,
+      "complete_frames": 2,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 2,
+      "wire_bytes": 2058,
+      "wire_sha256": "8d6b5e5cb128b9ee3d42a970a3b150518ec8f689b63a38d1ec3b1b3cb56525b6"
+    },
+    {
+      "crc": false,
+      "cancel_after_second_frame_bytes": 1025,
+      "passed": true,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": true,
+        "no_extra_third_frame": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null,
+      "complete_frames": 2,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 2,
+      "wire_bytes": 2058,
+      "wire_sha256": "8d6b5e5cb128b9ee3d42a970a3b150518ec8f689b63a38d1ec3b1b3cb56525b6"
+    },
+    {
+      "crc": false,
+      "cancel_after_second_frame_bytes": 1026,
+      "passed": true,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": true,
+        "no_extra_third_frame": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null,
+      "complete_frames": 2,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 2,
+      "wire_bytes": 2058,
+      "wire_sha256": "8d6b5e5cb128b9ee3d42a970a3b150518ec8f689b63a38d1ec3b1b3cb56525b6"
+    },
+    {
+      "crc": false,
+      "cancel_after_second_frame_bytes": 1027,
+      "passed": true,
+      "checks": {
+        "Escape_injected_after_first_peer_ACK": true,
+        "local_cancel_and_source_closed": true,
+        "no_EOT": true,
+        "native_CAN_pair": true,
+        "complete_frame_before_CAN": true,
+        "no_extra_third_frame": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null,
+      "complete_frames": 2,
+      "incomplete_frame_bytes": 0,
+      "accepted_by_peer": 2,
+      "wire_bytes": 2058,
+      "wire_sha256": "8d6b5e5cb128b9ee3d42a970a3b150518ec8f689b63a38d1ec3b1b3cb56525b6"
+    },
+    {
+      "fault": "cts",
+      "initial_tick": 0,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "thre",
+      "initial_tick": 0,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "carrier",
+      "initial_tick": 0,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "overflow",
+      "initial_tick": 0,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "deadline",
+      "initial_tick": 0,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "altx",
+      "initial_tick": 0,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "cts",
+      "initial_tick": 65520,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "thre",
+      "initial_tick": 65520,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "carrier",
+      "initial_tick": 65520,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "overflow",
+      "initial_tick": 65520,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "deadline",
+      "initial_tick": 65520,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "altx",
+      "initial_tick": 65520,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "cts",
+      "initial_tick": 1573020,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "thre",
+      "initial_tick": 1573020,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "carrier",
+      "initial_tick": 1573020,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "overflow",
+      "initial_tick": 1573020,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "deadline",
+      "initial_tick": 1573020,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "fault": "altx",
+      "initial_tick": 1573020,
+      "passed": true,
+      "checks": {
+        "pending_Escape_existed_before_fault": true,
+        "physical_fault_wins": true,
+        "bounded_abort": true,
+        "source_closed_no_EOT": true,
+        "read_only_source": true,
+        "deferred_state_retired": true
+      },
+      "error": null
+    },
+    {
+      "next_session_initial_tick": 0,
+      "passed": true,
+      "checks": {
+        "late_ACK_retained_before_next_session": true,
+        "next_upload_success": true,
+        "no_stale_deferred_cancel": true,
+        "source_closed": true,
+        "late_ACK_consumed": true
+      },
+      "error": null
+    },
+    {
+      "next_session_initial_tick": 65520,
+      "passed": true,
+      "checks": {
+        "late_ACK_retained_before_next_session": true,
+        "next_upload_success": true,
+        "no_stale_deferred_cancel": true,
+        "source_closed": true,
+        "late_ACK_consumed": true
+      },
+      "error": null
+    },
+    {
+      "next_session_initial_tick": 1573020,
+      "passed": true,
+      "checks": {
+        "late_ACK_retained_before_next_session": true,
+        "next_upload_success": true,
+        "no_stale_deferred_cancel": true,
+        "source_closed": true,
+        "late_ACK_consumed": true
+      },
+      "error": null
+    }
+  ],
+  "inputs": {
+    "standalone/check_terminal_upload_cancel_boundary.py": "7df0668786c64616fafa33f659f5c2b35d93f8c94fa15d0ddfdfbaa6afb70d4e",
+    "standalone/check_terminal_upload_live.py": "0617c0e0a0c774e7f3d0b43c01d8c21aa7b70cb821335f7f79133db122280c90",
+    "standalone/check_terminal_transfer_live.py": "7080c84249b3296463cac411e3b5ec0ec4cbf4ac6183fed7d557753eaf16b020",
+    "src/terminal/upload_actions.asm": "fbd3c2f776bd2899b86dff01ef3e277e44fd47d60fceac31c999faf8bfad4907",
+    "src/terminal/transfer_actions.asm": "228aa64793896292358878c1513fe5be3f14e8097448d7ac05a1620e69809dd7"
+  },
+  "scope": "Linked native regression:16 CRC/checksum header/body/trailer Escape edges,18 pending-Escape physical/carrier/overflow/deadline/Alt-X cases across wrap/midnight,3 subsequent uploads retaining a late ACK without application reset. Contiguous complete frames precede CAN for ordinary Escape; other faults remain bounded and may abort a frame. Actual source/native/UI/UARTISR executes, only BIOS/UART/kernel modeled. Original failing16-case baseline remains preserved. Real audio response and physical hardware are separate gates.",
+  "additional_regressions": {
+    "terminal-upload-live-checks.json": {
+      "sha256": "fd90e5291ba3fcf660be4597a7a86b8b95ab658df7d47be59e094a44dae0524c",
+      "cases": 54
+    },
+    "terminal-transfer-live-checks.json": {
+      "sha256": "4361386e21e4c0caf081c67a4a057d7ff2a329989adda6be47274173d71fbb0f",
+      "cases": 44
+    },
+    "terminal-ymodem-live-checks.json": {
+      "sha256": "66e4752e4fe4dd38d90c4dad8a9cce2b08f336878246261e644c4eab69462df9",
+      "cases": 23
+    },
+    "terminal-zmodem-live-checks.json": {
+      "sha256": "fe14f5c2b911dce50e6e1c9634dff6456e558d8726522631e3b75ba7973873bf",
+      "cases": 78
+    }
+  }
+}
