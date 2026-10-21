@@ -535,3 +535,11 @@ Remote Telnet close is a different case: the bridge may return to `CONNECT>`
 while the analog carrier remains up. Do not convert that event into a modem
 hangup merely to reuse the emulated-DCD test. Physical Boca/SPA2102 commissioning
 and negotiated higher-speed compatibility remain unverified.
+
+The [first combined audio bridge-restart campaign](../lab/bbs/synchronet-reconnect-audio.md)
+now records a current-build failure: DOS observes emulated carrier loss, removes
+the partial and redials; both DSPs train again, but the second ASPECT invocation
+reports unsupported opcode D4 at step2 and sends no BBS address. The final
+watchdog exit restores UART/timer state. The failed receipt retains the missing
+retry and the first call's one-ACK in-flight tail loss. This is diagnostic
+progress, not accepted audio reconnect or an identified product fix.

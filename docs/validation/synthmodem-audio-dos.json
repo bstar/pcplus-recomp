@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Current976 passes stock Synchronet XMODEM-CRC download through real SIP/RTP/V22-1200 audio, with 25 producer,34 independent,12 ownership,6 metadata and4 control-timing checks. Current976 also passes emulated-DCD ENiGMA partial-loss/redial/retry/NFO and a 31-product clean-source rebuild. Historical native3b startup/cancel/same-call retry audio keeps its frozen scope. Current-build SIP/audio loss/reconnect, indexed partial cleanup, sustained pressure, stock ZMODEM closing, physical Boca/SPA2102 and F01-F16 remain open.",
+  "status": "Current976 stock Synchronet XMODEM-CRC download audio passes its scoped receipt. Its first combined bridge-restart campaign fails: emulated DCD loss, partial cleanup and redial occur and both DSPs train again, but the second ASPECT invocation reports error3/opcodeD4/step2 and sends no BBS address. First-call final ACK tail loss is retained. Normal watchdog exit restores UART/timer state. Root cause and audio reconnect acceptance remain open, alongside current upload/cancel/retry, sustained pressure, stock receiver cleanup/closing, physical Boca/SPA2102 and F01-F16.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3901,6 +3901,7 @@
     "offline_evidence_sha256": "fb6931b33b5382e73b5ac3e99a5becacdc23ac13d120ab8d58c392db1706aea1"
   },
   "remaining": [
+    "Diagnose current976 second ASPECT invocation after actual audio bridge restart: unsupported command/service error3, opcodeD4, step2; observed status label57600.ASX. Both DSPs retrain but no BBS address is sent. Preserve all four failed producer gates and the first call's one-ACK shutdown tail loss. Short linked queue probe does not reproduce the live failure; isolate actual DOS script/transfer state before changing product behavior.",
     "Historical in-session insertions lack complete diagnostic evidence; clean editor07/download03 runs do not establish their cause or a general correction.",
     "Ordinary stock Synchronet XMODEM upload/download, scoped cancellation and receiver-ready-gated same-call same-source retry have accepted audio receipts. Actual carrier loss/reconnect, sustained pressure, other protocol families, stock ZMODEM closing/cleanup and physical Boca/SPA2102 still require their own passing gates.",
     "All F01-F16 whole-application completion gates remain open.",
@@ -4018,5 +4019,7 @@
   "current_DOS_carrier_retry_receipt": "docs/validation/current-DOS-carrier-retry.json",
   "current_DOS_carrier_retry_receipt_sha256": "1c62a9791f0ba8021bc2388575b9a906373bc8441586299401bcc08da7a455ca",
   "current_synchronet_download_audio_receipt": "docs/validation/current-synchronet-download-audio-01.json",
-  "current_synchronet_download_audio_receipt_sha256": "9f99d69ddd22cc1eae1062ece580ff028f743c2fecdcd85685b1b3ced154921d"
+  "current_synchronet_download_audio_receipt_sha256": "9f99d69ddd22cc1eae1062ece580ff028f743c2fecdcd85685b1b3ced154921d",
+  "current_synchronet_reconnect_audio_failure_receipt": "docs/validation/current-synchronet-reconnect-audio-01.json",
+  "current_synchronet_reconnect_audio_failure_receipt_sha256": "a3338fe66c924c75b82900dfa3516b91d176616f1c1e4638d1e23bc772c63198"
 }
