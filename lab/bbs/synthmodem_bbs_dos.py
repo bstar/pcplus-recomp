@@ -42,7 +42,7 @@ class Relay:
   self.to_bbs=bytearray();self.from_bbs=bytearray();self.trace=[]
   self.thread=threading.Thread(target=self.run,daemon=True)
  def run(self):
-  start=time.monotonic()
+  start_ns=time.monotonic_ns()
   try:
    client,_=self.server.accept()
    with client,socket.create_connection(('127.0.0.1',enigma.PORT),timeout=3) as bbs:
@@ -52,7 +52,8 @@ class Relay:
       data=source.recv(4096)
       if not data:return
       target,stream,direction=(bbs,self.to_bbs,'to_bbs') if source is client else (client,self.from_bbs,'from_bbs')
-      self.trace.append(dict(direction=direction,offset=len(stream),count=len(data),seconds=time.monotonic()-start))
+      observed_ns=time.monotonic_ns()
+      self.trace.append(dict(direction=direction,offset=len(stream),count=len(data),seconds=(observed_ns-start_ns)/1e9,monotonic_ns=str(observed_ns)))
       stream.extend(data);target.sendall(data)
   except Exception as error:
    if not self.stop.is_set():self.errors.append(repr(error))

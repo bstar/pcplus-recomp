@@ -477,6 +477,7 @@ test-terminal: terminal
 	python3 standalone/check_terminal_config.py
 	python3 standalone/check_startup_import.py --check-invalid-abi
 	python3 standalone/check_connection.py
+	python3 standalone/check_online_exit.py
 	python3 standalone/check_analog_modem.py
 	python3 standalone/check_directory_live.py
 	python3 standalone/check_directory_context.py

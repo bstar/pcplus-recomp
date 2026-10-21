@@ -1,0 +1,385 @@
+{
+  "passed": true,
+  "fixed_linked_cases": {
+    "passed": true,
+    "cases": [
+      {
+        "name": "online-configured",
+        "passed": true,
+        "checks": {
+          "exact_selected_modem_operation": true,
+          "bounded_completion": true,
+          "DTR_restored": true,
+          "typed_completion_status": true
+        },
+        "expected_wire_hex": "2b2b2b4154480d",
+        "actual_wire_hex": "2b2b2b4154480d",
+        "final_state": 0,
+        "final_status": 5,
+        "modem_control_writes": [
+          10,
+          11
+        ]
+      },
+      {
+        "name": "online-empty",
+        "passed": true,
+        "checks": {
+          "exact_selected_modem_operation": true,
+          "bounded_completion": true,
+          "DTR_restored": true,
+          "typed_completion_status": true
+        },
+        "expected_wire_hex": "",
+        "actual_wire_hex": "",
+        "final_state": 0,
+        "final_status": 5,
+        "modem_control_writes": [
+          10,
+          11
+        ]
+      },
+      {
+        "name": "dialing",
+        "passed": true,
+        "checks": {
+          "exact_selected_modem_operation": true,
+          "bounded_completion": true,
+          "DTR_restored": true,
+          "typed_completion_status": true
+        },
+        "expected_wire_hex": "1b",
+        "actual_wire_hex": "1b",
+        "final_state": 0,
+        "final_status": 4,
+        "modem_control_writes": [
+          10,
+          11
+        ]
+      },
+      {
+        "name": "hangup-in-progress",
+        "passed": true,
+        "checks": {
+          "exact_selected_modem_operation": true,
+          "bounded_completion": true,
+          "DTR_restored": true,
+          "typed_completion_status": true
+        },
+        "expected_wire_hex": "2b2b2b4154480d",
+        "actual_wire_hex": "2b2b2b4154480d",
+        "final_state": 0,
+        "final_status": 5,
+        "modem_control_writes": [
+          10,
+          11
+        ]
+      },
+      {
+        "name": "online-CTS-stall",
+        "passed": true,
+        "checks": {
+          "exact_selected_modem_operation": true,
+          "bounded_completion": true,
+          "DTR_restored": true,
+          "typed_completion_status": true
+        },
+        "expected_wire_hex": "",
+        "actual_wire_hex": "",
+        "final_state": 0,
+        "final_status": 3,
+        "modem_control_writes": [
+          10,
+          11
+        ]
+      }
+    ],
+    "inputs": {
+      "standalone/check_online_exit.py": "31ee62e4a44d817b9f27beb27a2e4ad846d4c31c9c2e206ede0374cb5170a5b1",
+      "standalone/check_connection.py": "db8a9c90049679d3d075e8bdbcec230a788a5c69b19a1987001468ffca39abcb",
+      "standalone/check_transport.py": "55cf5fabdae9f6d5f56085d9127e5e81656c2651283042fb81473c56b4c45b69",
+      "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+      "build/terminal/TERMINAL.EXE": "a24e562845bcc028595745fa7eaf8b516d8ba8e26499609dbac632d8a74b1a00",
+      "build/terminal/terminal.map": "d0a96da8f0daaace54ce1d09bcc1c425e6eb606187abbb159a2ee7576096db21"
+    },
+    "scope": "Actual linked keyboard/connection/sender/UART instructions. Hardware-only BIOS tick, keyboard, CTS/DCD and port models. Online Alt-X selects configured hangup (or DTR-only empty string), retains an in-progress hangup, and never turns a hangup timeout into a dial-abort byte. Dialing keeps the configured abort character. No exact-original-UI or physical modem claim."
+  },
+  "connection_regression": {
+    "passed": true,
+    "binary_sha256": "a24e562845bcc028595745fa7eaf8b516d8ba8e26499609dbac632d8a74b1a00",
+    "cases": [
+      {
+        "case": "actual-port-command-wire-partial-connect-and-DCD-transition",
+        "passed": true,
+        "inputs": 2
+      },
+      {
+        "case": "four-failure-responses-timeout-and-CTS-stalled-bounded-cleanup",
+        "passed": true,
+        "inputs": 6
+      },
+      {
+        "case": "actual-BIOS-Escape-AltX-AltH-AltD-through-stalled-sender-and-hangup",
+        "passed": true,
+        "inputs": 8
+      },
+      {
+        "case": "original-response-autobaud-policy-and-actual-UART-divisor-setter",
+        "passed": true,
+        "inputs": 15
+      },
+      {
+        "case": "TX-ownership-and-real-recovered-XOFF-CTS-backpressure",
+        "passed": true,
+        "inputs": 4
+      },
+      {
+        "case": "live-pause-sentinel-expanded-zero-and-THRE-deadline",
+        "passed": true,
+        "inputs": 4
+      },
+      {
+        "case": "full-32bit-PIT-derived-deadlines-and-low-tick-wrap",
+        "passed": true,
+        "inputs": 6
+      },
+      {
+        "case": "notice-exact-cell-restore-and-partial-parser-yields-modem-RX",
+        "passed": true,
+        "inputs": 1
+      }
+    ],
+    "scope": "Actual linked connection state machine, decoder, expansion, matcher, keyboard and UART instructions; only port/BIOS clock/keyboard hardware boundaries modeled. Live main/RX/postmatch behavior additionally needs real DOS tests."
+  },
+  "far_ABI_regression": {
+    "passed": true,
+    "binary_sha256": "a24e562845bcc028595745fa7eaf8b516d8ba8e26499609dbac632d8a74b1a00",
+    "groups": [
+      {
+        "case": "real-one-through-four-word-adapters-arguments-errors-registers-FLAGS",
+        "passed": true,
+        "detail": {
+          "copied_word_counts": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "expansion_samples": [
+            {
+              "source_hex": "41545e4d00",
+              "status": 3,
+              "carry": false
+            },
+            {
+              "source_hex": "5e405e5e5e00",
+              "status": 2,
+              "carry": false
+            },
+            {
+              "source_hex": "41414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414100",
+              "status": 51,
+              "carry": false
+            },
+            {
+              "source_hex": "4241445e00",
+              "status": 3,
+              "carry": true
+            },
+            {
+              "source_hex": "4e4f2d4e554c",
+              "status": 2,
+              "carry": true
+            },
+            {
+              "source_hex": "41545e4d00",
+              "status": 4,
+              "carry": true
+            }
+          ],
+          "classification_inputs": 390,
+          "response_inputs": 5,
+          "baud_inputs": 9,
+          "returned_registers": "AX/BX/CX/DX/BP/SI/DI/ES identical across direct and bridged calls, except volatile baud BX. Expander compares declared CF across frames; other targets compare all FLAGS. Every actual target RET separately proves complete FLAGS preservation through the bridge.",
+          "original_argument_slots_unchanged": true
+        }
+      },
+      {
+        "case": "all-eight-public-entry-frames-real-dial-response-autobaud-hangup",
+        "passed": true,
+        "detail": {
+          "far_entries": [
+            "terminal_connection_cancel",
+            "terminal_connection_exit",
+            "terminal_connection_poll",
+            "terminal_connection_prepare",
+            "terminal_connection_receive",
+            "terminal_connection_start",
+            "terminal_modem_send_poll",
+            "terminal_modem_send_start"
+          ],
+          "observed_stack_bytes": 48,
+          "actual_command_prefix": true
+        }
+      },
+      {
+        "case": "nested-print-resident-modem-CS-and-real-UART-ISR-IRET",
+        "passed": true,
+        "detail": {
+          "actual_IRQ_frames": [
+            [
+              444,
+              11569,
+              582
+            ]
+          ],
+          "modem_CS": 11569,
+          "controller_CS": 11664,
+          "resumed_near_CS": 4096
+        }
+      },
+      {
+        "case": "nine-malformed-modem-frames-relocations-and-layouts-rejected",
+        "passed": true,
+        "detail": {
+          "rejected": [
+            "terminal_connection_poll",
+            "terminal_connection_poll_far",
+            "connection_expand_resident",
+            "connection_classify_resident",
+            "connection_set_baud_resident",
+            "connection_responses_feed_resident",
+            "missing-modem-MZ-relocation",
+            "oversized",
+            "missing-class"
+          ]
+        }
+      }
+    ],
+    "source_sha256": {
+      "standalone/check_modem_far_live.py": "7eec1bb832b2d432fb85e5df97cb9db6b2a418b2a18632aa8affa6a3580c0d90",
+      "standalone/terminal_memory.py": "8f1d2ac9563b9da9518addb6a0530f86ffc013ef2916b81d16369f2cd2dacf08",
+      "src/terminal/far_bridge.inc": "67436d9af9b878d7203851594c59d1a4a83ab89a8285882b906c6814ec970f45",
+      "src/terminal/modem_abi.inc": "8e31794dee81e3bd23e205473038af44cf3ee9869cd0e32076f03bb08b857b7b",
+      "src/terminal/modem_bridge.asm": "59c7ad22f397e9aac5acd302c9d49e5b68c3806d8d86e10d598c17cec9aa50e3",
+      "src/terminal/connection.asm": "3e3a2fa5b0e667b99395cf7c628d088b1677a9d5b003bf6a4ce6e49530695f1f",
+      "src/terminal/modem_sender.asm": "82ec6ea7b4160e6b60a936ec5d4c2cc916116ecd755c41b5e984602fe9c9d53a"
+    },
+    "scope": "Actual linked static modem CS, near public entries, named resident callbacks and explicit1..4-word caller-cleaned adapters. Direct-target comparisons isolate ABI effects; existing independent connection tests supply behavior oracles. Nested PRINT/MODEM transitions and actual UART ISR/IRET execute under modeled hardware; DOS child retention remains separate. No general C callback/function-pointer ABI, callee-cleaned stack forwarding, dynamic overlays or physical modem proof."
+  },
+  "baseline_counterexample": {
+    "passed": false,
+    "cases": [
+      {
+        "name": "online-configured",
+        "passed": false,
+        "checks": {
+          "exact_selected_modem_operation": false,
+          "bounded_completion": true,
+          "DTR_restored": true,
+          "typed_completion_status": false
+        },
+        "expected_wire_hex": "2b2b2b4154480d",
+        "actual_wire_hex": "1b",
+        "final_state": 0,
+        "final_status": 4,
+        "modem_control_writes": [
+          10,
+          11
+        ]
+      },
+      {
+        "name": "online-empty",
+        "passed": false,
+        "checks": {
+          "exact_selected_modem_operation": false,
+          "bounded_completion": true,
+          "DTR_restored": true,
+          "typed_completion_status": false
+        },
+        "expected_wire_hex": "",
+        "actual_wire_hex": "1b",
+        "final_state": 0,
+        "final_status": 4,
+        "modem_control_writes": [
+          10,
+          11
+        ]
+      },
+      {
+        "name": "dialing",
+        "passed": true,
+        "checks": {
+          "exact_selected_modem_operation": true,
+          "bounded_completion": true,
+          "DTR_restored": true,
+          "typed_completion_status": true
+        },
+        "expected_wire_hex": "1b",
+        "actual_wire_hex": "1b",
+        "final_state": 0,
+        "final_status": 4,
+        "modem_control_writes": [
+          10,
+          11
+        ]
+      },
+      {
+        "name": "hangup-in-progress",
+        "passed": false,
+        "checks": {
+          "exact_selected_modem_operation": false,
+          "bounded_completion": true,
+          "DTR_restored": true,
+          "typed_completion_status": false
+        },
+        "expected_wire_hex": "2b2b2b4154480d",
+        "actual_wire_hex": "2b1b",
+        "final_state": 0,
+        "final_status": 4,
+        "modem_control_writes": [
+          10,
+          11
+        ]
+      },
+      {
+        "name": "online-CTS-stall",
+        "passed": false,
+        "checks": {
+          "exact_selected_modem_operation": true,
+          "bounded_completion": true,
+          "DTR_restored": true,
+          "typed_completion_status": false
+        },
+        "expected_wire_hex": "",
+        "actual_wire_hex": "",
+        "final_state": 0,
+        "final_status": 4,
+        "modem_control_writes": [
+          10,
+          11
+        ]
+      }
+    ],
+    "inputs": {
+      "standalone/check_online_exit.py": "9328932ed6fdb1021f1d9397bf18c589cc44328447b2db43377cb15b29dd36cc",
+      "standalone/check_connection.py": "9098b1ffa848dd82739484ac37841180f0e83880b3da1894b0389632fb307fb7",
+      "standalone/check_transport.py": "55cf5fabdae9f6d5f56085d9127e5e81656c2651283042fb81473c56b4c45b69",
+      "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+      "build/terminal/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+      "build/terminal/terminal.map": "8b1f7f07d7f617936765de21fed74a71ec28c7c5ce45e8519802cf62689c86b1"
+    },
+    "scope": "Actual linked keyboard/connection/sender/UART instructions. Hardware-only BIOS tick, keyboard, CTS/DCD and port models. Online Alt-X selects configured hangup (or DTR-only empty string), retains an in-progress hangup, and never turns a hangup timeout into a dial-abort byte. Dialing keeps the configured abort character. No exact-original-UI or physical modem claim."
+  },
+  "source_sha256": {
+    "src/terminal/connection.asm": "3e3a2fa5b0e667b99395cf7c628d088b1677a9d5b003bf6a4ce6e49530695f1f",
+    "standalone/check_online_exit.py": "31ee62e4a44d817b9f27beb27a2e4ad846d4c31c9c2e206ede0374cb5170a5b1",
+    "standalone/check_connection.py": "db8a9c90049679d3d075e8bdbcec230a788a5c69b19a1987001468ffca39abcb",
+    "Makefile": "afc75db4ec5904feb65bd030417336ea28aae97f97a080c00a013525c64cbb16",
+    "standalone/build_terminal.py": "8ba5e3a704271fe98ed1b29544e1fd22e0d602fe7e9f0b388949a8a8bb3fb6dd"
+  },
+  "fixed_product_sha256": "a24e562845bcc028595745fa7eaf8b516d8ba8e26499609dbac632d8a74b1a00",
+  "fixed_map_sha256": "d0a96da8f0daaace54ce1d09bcc1c425e6eb606187abbb159a2ee7576096db21",
+  "build_manifest_sha256": "ee6374aa5edc8fce9aeec5c07dde319acb67a528feb5cea72070671577c15d07",
+  "scope": "Maintained online Alt-X policy correction, not a claim of recovered original UI behavior. Five linked cases/20 checks,46 existing connection inputs in8 groups and4 far-ABI groups pass. Online exit uses configured hangup or DTR-only empty string, preserves an active hangup, and drops DTR on hangup timeout without injecting dial abort. Dial cancellation remains unchanged. Full DOS/audio repeat and physical hardware acceptance remain separate."
+}

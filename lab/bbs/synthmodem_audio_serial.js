@@ -22,11 +22,11 @@ const {SerialIoEvidence}=require('./serial_io_evidence');
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function until(fn,ms,label){const end=Date.now()+ms;while(!fn()){if(Date.now()>=end)throw Error(label);await sleep(20);}}
 const record=b=>{const h=Buffer.alloc(4);h.writeUInt32LE(b.length);return Buffer.concat([h,b]);};
-const serialIn=[],serialOut=[],callerData=[],control=[],rtpRx=[],rtpTx=[],sipRx=[],sipTx=[],commands=[],events=[],errors=[],backends=[];
+const serialInputEvents=[],serialIn=[],serialOut=[],callerData=[],control=[],rtpRx=[],rtpTx=[],sipRx=[],sipTx=[],commands=[],events=[],errors=[],backends=[];
 const sip=new SipServer(),dsp=new ModemDSP('originate'),rtp=new RtpSession({playoutMode:'immediate'});
 const atInit=['ATE0','AT&K0','AT+MS=22,0,1200,1200','AT\\N0','AT%C0'];
-let session,serial,callerSock,sipSock,uac,line=[],mode='command',callerInfo,answerInfo,ending,ended,negotiated,stats,child,phase='startup';
-const event=(type,extra={})=>{const e={type,seconds:process.uptime(),...extra};events.push(e);trace?.event(type,extra);console.log(JSON.stringify(e));};
+let session,serial,callerSock,sipSock,uac,line=[],mode='command',callerInfo,answerInfo,ending,ended,negotiated,stats,child,phase='startup',serialInputOffset=0;
+const event=(type,extra={})=>{const e={type,seconds:process.uptime(),monotonicNs:process.hrtime.bigint().toString(),wallTimeMs:Date.now(),...extra};events.push(e);trace?.event(type,extra);console.log(JSON.stringify(e));};
 function endpointState(p){return p?{destroyed:p.destroyed,readableEnded:p.readableEnded,writableEnded:p.writableEnded,
  writableLength:p.writableLength,bytesRead:p.bytesRead,bytesWritten:p.bytesWritten}:null;}
 function observeError(source,e,endpoint=null,extra={}){
@@ -74,6 +74,7 @@ const server=net.createServer(p=>{
  p.on('end',()=>event('serial-end',{phase,endpoint:endpointState(p),serialIo:serialIo.snapshot()}));
  p.on('close',hadError=>{event('serial-close',{phase,hadError,endpoint:endpointState(p),serialIo:serialIo.snapshot()});shutdown('serial-close').catch(fatal);});
  p.on('data',data=>{
+  serialInputEvents.push({offset:serialInputOffset,length:data.length,monotonicNs:process.hrtime.bigint().toString(),wallTimeMs:Date.now(),phase,mode});serialInputOffset+=data.length;
   serialIn.push(Buffer.from(data));
   trace?.event('serial-input',{hex:data.toString('hex'),mode});
   if(mode==='online'){dsp.write(data);return;}
@@ -102,6 +103,7 @@ async function shutdown(reason){
   if(child)await until(()=>child.exitCode!==null || child.signalCode!==null,5000,'VM exit deadline');
   if(trace)await trace.close();
   internal?.save();phase='stopped';serialIo.save(out);
+  fs.writeFileSync(path.join(out,'serial-input-events.jsonl'),serialInputEvents.map(e=>JSON.stringify(e)+'\n').join(''));
   for(const [n,b] of Object.entries({'serial-in.bin':Buffer.concat(serialIn),'serial-out.bin':Buffer.concat(serialOut),
    'caller-decoded.bin':Buffer.concat(callerData),'control-wire.bin':Buffer.concat(control),
    'rtp-from-answer.bin':Buffer.concat(rtpRx.map(record)),'rtp-from-caller.bin':Buffer.concat(rtpTx.map(record)),

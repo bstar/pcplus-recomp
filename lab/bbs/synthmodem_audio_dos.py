@@ -19,7 +19,7 @@ from directory_test_support import accounting_check
 from test_terminal import SAMPLER
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--receive-trace',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--carrier-trace',action='store_true');p.add_argument('--key-framing',action='store_true');p.add_argument('--key-framing-trace',action='store_true');p.add_argument('--route',choices=['menus','editor'],default='menus');a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--receive-trace',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--carrier-trace',action='store_true');p.add_argument('--key-framing',action='store_true');p.add_argument('--key-framing-trace',action='store_true');p.add_argument('--syscall-trace',action='store_true');p.add_argument('--route',choices=['menus','editor'],default='menus');a=p.parse_args()
  assert sum(bool(v) for v in (a.lifecycle,a.carrier,a.carrier_trace,a.key_framing,a.key_framing_trace,a.receive_trace,a.dmodem))<=1,'Choose one pinned runtime profile'
  a.key_framing=a.key_framing or a.key_framing_trace
  trace=a.receive_trace or a.carrier_trace or a.key_framing_trace
@@ -54,7 +54,9 @@ def main():
  if a.key_framing:names+=['lab/bbs/synthmodem_key_framing_runtime.py','docs/validation/synthmodem-key-framing-runtime.json','lab/bbs/patches/synthmodem-key-framing/InputSequenceFramer.js','lab/bbs/patches/synthmodem-key-framing/proxy.patch']
  if a.key_framing_trace:names+=['docs/validation/synthmodem-key-framing-trace-runtime.json','lab/bbs/synthmodem_carrier_trace_runtime.py','docs/validation/synthmodem-carrier-trace-runtime.json']
  if a.dmodem:names+=['docs/validation/synthmodem-jitter-policy.json','nix/dmodem.nix','tools/build-dmodem']
+ names+=['src/terminal/connection.asm','standalone/check_online_exit.py','docs/validation/online-exit.json']
  names+=['lab/bbs/check_audio_login_readiness.py','docs/validation/synthmodem-audio-login-readiness.json']
+ if a.syscall_trace:names+=['lab/bbs/check_dosbox_socket_close.py','lab/bbs/dosbox_socket_close_probe.asm','docs/validation/dosbox-socket-close.json']
  if a.route=='editor':names+=['lab/bbs/audio_editor_keys.asm','lab/bbs/check_audio_editor_watchdog.py','docs/validation/synthmodem-audio-editor-watchdog.json']
  frozen={n:sha(ROOT/n) for n in names}
  stage=out/'program';stage.mkdir()
@@ -91,6 +93,11 @@ def main():
  for name,leaf in [('audio_editor_keys.asm' if a.route=='editor' else 'audio_exit_keys.asm','EXITKEY.COM'),('audio_get_vector.asm','KEYVEC.COM')]:subprocess.run(['nasm','-fbin',str(ROOT/'lab/bbs'/name),'-o',str(stage/leaf)],check=True)
  generated={str(p.relative_to(out)):sha(p) for p in stage.iterdir()}
  log=enigma.SOURCE/'logs/enigma-bbs.log';boundary=(log.stat().st_ino,log.stat().st_size)
+ tool_inputs={str(Path(shutil.which(n)).resolve()):sha(Path(shutil.which(n))) for n in (['dosbox-x','nasm','strace'] if a.syscall_trace else ['dosbox-x','nasm'])}
+ clock_anchors=[]
+ def clock_anchor(label):
+  before=time.monotonic_ns();wall=time.time_ns();after=time.monotonic_ns()
+  clock_anchors.append(dict(label=label,monotonic_before_ns=str(before),wall_ns=str(wall),monotonic_after_ns=str(after)))
  node=None;dos=None;doscode=None
  with (out/'node.log').open('w') as nl,(out/'dosbox.log').open('w') as dl:
   try:
@@ -132,8 +139,11 @@ D:\\SNAP A
 exit
 '''
    (out/'dosbox.conf').write_text(cfg)
-   dos=subprocess.Popen(['dosbox-x','-fastlaunch','-nogui','-conf',str(out/'dosbox.conf')],stdout=dl,stderr=dl,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),start_new_session=True)
-   doscode=dos.wait(timeout=720 if a.route=='editor' else 600);node.wait(timeout=60)
+   command=['dosbox-x','-fastlaunch','-nogui','-conf',str(out/'dosbox.conf')]
+   if a.syscall_trace:command=['strace','--seccomp-bpf','-f','-ttt','-yy','-e','trace=network,close','-o',str(out/'DOS-syscalls.log')]+command
+   clock_anchor('before-DOS-launch')
+   dos=subprocess.Popen(command,stdout=dl,stderr=dl,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),start_new_session=True)
+   doscode=dos.wait(timeout=720 if a.route=='editor' else 600);clock_anchor('after-DOS-exit');node.wait(timeout=60)
   finally:
    relay.stop.set();relay.thread.join(3)
    if dos is not None and dos.poll() is None:
@@ -153,6 +163,8 @@ exit
  rows=[r for r in rows if r.get('sessionId') in sessions];menus=[r['menuName'] for r in rows if r.get('menuName')]
  (out/'server-session.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in rows))
  (out/'bbs-input.bin').write_bytes(relay.to_bbs);(out/'bbs-output.bin').write_bytes(relay.from_bbs)
+ (out/'BBS-relay-events.jsonl').write_text(''.join(json.dumps(e)+'\n' for e in relay.trace))
+ (out/'clock-anchors.json').write_text(json.dumps(clock_anchors,indent=2)+'\n')
  n=json.loads((out/'node-result.json').read_text())
  from modem import Telnet
  sent,_=Telnet().feed(relay.to_bbs);display,_=Telnet().feed(relay.from_bbs)
@@ -170,7 +182,7 @@ exit
   'directory_accounting':accounting_check(contact,read('CALL.DIR'),1),'no_relay_errors':not relay.errors and not relay.thread.is_alive(),
   'no_gateway_errors':not n['errors'],'VM_exited':n['VM_exited'] and n['pool']=='stopped',
   'no_post_saved':not any('posted message to' in r.get('msg','') for r in rows),
-  'inputs_unchanged':all(sha(ROOT/n)==h for n,h in frozen.items()) and all(sha(Path(n))==h for n,h in runtime_inputs.items()),
+  'inputs_unchanged':all(sha(ROOT/n)==h for n,h in frozen.items()) and all(sha(Path(n))==h for n,h in runtime_inputs.items()) and all(sha(Path(n))==h for n,h in tool_inputs.items()),
   'server_unchanged':all(sha(enigma.SOURCE/n)==h for n,h in server_inputs.items())}
  checks={k:bool(v) for k,v in checks.items()}
  editor=None
@@ -184,7 +196,7 @@ exit
   checks.update(editor_entered='messageBaseNewPost' in menus,typed_draft_sent=b'ABCDE' in sent,all_editor_keys_emitted=all(observed.values()),
    home_moves_before_marker=positions[:7]==[(1,2),(1,3),(1,4),(1,5),(1,6),(1,1),(1,2)],insert_toggles_overtype='OVR ' in body)
  result={'passed':all(checks.values()),'checks':checks,'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'server_inputs':server_inputs,
-  'generated_inputs':generated,'server_revision':enigma.COMMIT,'server_menus':menus,'script_stages':read('STAGES.LOG').decode('ascii'),'login_readiness':'WAITFOR plus reused one-shot WHEN latch','receive_trace':a.receive_trace,'dmodem_variant':a.dmodem,'lifecycle':a.lifecycle,'carrier':a.carrier,'carrier_trace':a.carrier_trace,'key_framing_trace':a.key_framing_trace,'input_sequence_timeout_ms':250 if a.key_framing else 0,
+  'generated_inputs':generated,'tool_inputs':tool_inputs,'syscall_trace':a.syscall_trace,'clock_anchors':clock_anchors,'server_revision':enigma.COMMIT,'server_menus':menus,'script_stages':read('STAGES.LOG').decode('ascii'),'login_readiness':'WAITFOR plus reused one-shot WHEN latch','receive_trace':a.receive_trace,'dmodem_variant':a.dmodem,'lifecycle':a.lifecycle,'carrier':a.carrier,'carrier_trace':a.carrier_trace,'key_framing_trace':a.key_framing_trace,'input_sequence_timeout_ms':250 if a.key_framing else 0,
   'DOS_screen':text,'gateway':n,'route':a.route,'editor':editor,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
   'scope':'Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to owned stock ENiGMA. No physical modem/ATA/UART acceptance.'}
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'passed':result['passed'],'checks':checks,'result':str(out/'result.json')},indent=2));return 0 if result['passed'] else 1

@@ -320,6 +320,9 @@ terminal_connection_poll_impl:
  mov word [connection_status],3
  mov si,message_timeout
  call connection_notice_service
+ ; A failed online hangup must not inject the dial-abort character into data.
+ cmp word [connection_state],9
+ je .drop_dtr
  jmp .begin_abort
 .failure:
  mov word [connection_status],2
@@ -441,8 +444,19 @@ terminal_connection_exit_impl:
  cmp word [connection_state],0
  je .immediate
  mov byte [connection_exit_pending],1
+ ; Online exit uses the same configured operation as Alt-H. A hangup already
+ ; in progress retains its sender/deadline; dialing alone uses abort policy.
+ cmp word [connection_state],9
+ je .waiting_hangup
+ cmp word [connection_state],6
+ je .hangup_online
  xor ax,ax
  jmp terminal_connection_cancel_impl
+.hangup_online:
+ mov ax,1
+ jmp terminal_connection_cancel_impl
+.waiting_hangup:
+ ret
 .immediate:
  mov word [terminal_quit],1
  ret

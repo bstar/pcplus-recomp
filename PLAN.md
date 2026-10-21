@@ -106,6 +106,22 @@ acceptance stays false. Correlate input, BBS-output and close timing and inspect
 the actual emulator close path; do not trim the suffix or waive the reset.
 Earlier uninstrumented resets/insertions and broader acceptance remain open.
 
+The [online-exit correction](lab/bbs/online-exit.md) now has a native linked
+counterexample and a rebuilt source-only product. Alt-X used the dial-cancel
+operation even online, emitting the configured Escape and interrupting an active
+hangup. Online exit now selects configured hangup, preserves an existing hangup
+and uses DTR cleanup on hangup timeout without injecting dial abort. Five new
+cases/20 checks,46 existing connection inputs and four far-ABI groups pass.
+This is a maintained policy correction, not a recovered original UI claim.
+
+Pre-fix syscall-traced editor06 has clean FIN and exact47983 socket reads but
+still loses the616-byte suffix: its relay observations occur297ms after the
+unwanted exit Escape,714ms before close. The controlled pinned-emulator pair
+also proves drained EOF versus unread-network-data reset. Neither observation
+retroactively establishes editor05's kernel reset reason. The untraced fixed
+editor07 run is pending. Its full byte/editor/error/cleanup gates remain required;
+no original failure, physical requirement or F01-F16 gate is closed by the fix.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

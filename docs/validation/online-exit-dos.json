@@ -1,0 +1,158 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "fast-connect-banner",
+      "passed": true,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true
+      },
+      "commands": [
+        "ATZ",
+        "ATDCaseTest:23"
+      ],
+      "errors": [],
+      "seconds": 6.076,
+      "binary_sha256": "a24e562845bcc028595745fa7eaf8b516d8ba8e26499609dbac632d8a74b1a00",
+      "command": "@D:\\TEST.PRM /D:CaseTest:23",
+      "expected_exit": 0,
+      "working_drive": "c",
+      "environment": {},
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "busy-abort",
+      "passed": true,
+      "checks": {
+        "configured_abort_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true
+      },
+      "commands": [
+        "ATZ",
+        "ATDCaseTest:23"
+      ],
+      "errors": [],
+      "seconds": 4.186,
+      "binary_sha256": "a24e562845bcc028595745fa7eaf8b516d8ba8e26499609dbac632d8a74b1a00",
+      "command": "@D:\\TEST.PRM /D:CaseTest:23",
+      "expected_exit": 0,
+      "working_drive": "c",
+      "environment": {},
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "timeout-abort",
+      "passed": true,
+      "checks": {
+        "configured_abort_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true
+      },
+      "commands": [
+        "ATZ",
+        "ATDCaseTest:23"
+      ],
+      "errors": [],
+      "seconds": 4.171,
+      "binary_sha256": "a24e562845bcc028595745fa7eaf8b516d8ba8e26499609dbac632d8a74b1a00",
+      "command": "@D:\\TEST.PRM /D:CaseTest:23",
+      "expected_exit": 0,
+      "working_drive": "c",
+      "environment": {},
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "configured-hangup",
+      "passed": true,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true
+      },
+      "commands": [
+        "ATZ",
+        "ATDCaseTest:23"
+      ],
+      "errors": [],
+      "seconds": 5.438,
+      "binary_sha256": "a24e562845bcc028595745fa7eaf8b516d8ba8e26499609dbac632d8a74b1a00",
+      "command": "@D:\\TEST.PRM /D:CaseTest:23",
+      "expected_exit": 0,
+      "working_drive": "c",
+      "environment": {},
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    },
+    {
+      "case": "explicit-redial",
+      "passed": true,
+      "checks": {
+        "configured_abort_reached_wire": true,
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "second_configured_attempt": true
+      },
+      "commands": [
+        "ATZ",
+        "ATDCaseTest:23",
+        "ATZ",
+        "ATDCaseTest:23"
+      ],
+      "errors": [],
+      "seconds": 9.093,
+      "binary_sha256": "a24e562845bcc028595745fa7eaf8b516d8ba8e26499609dbac632d8a74b1a00",
+      "command": "@D:\\TEST.PRM /D:CaseTest:23",
+      "expected_exit": 0,
+      "working_drive": "c",
+      "environment": {},
+      "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+    }
+  ],
+  "binary_sha256": "a24e562845bcc028595745fa7eaf8b516d8ba8e26499609dbac632d8a74b1a00",
+  "inputs": {
+    "standalone/test_connection_dos.py": "438162021da140fda6b5b3ce9eea971ef5659b7216bd89df80fcab441096cdf3",
+    "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+    "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+    "build/terminal/TERMINAL.EXE": "a24e562845bcc028595745fa7eaf8b516d8ba8e26499609dbac632d8a74b1a00",
+    "build/terminal/terminal.map": "d0a96da8f0daaace54ce1d09bcc1c425e6eb606187abbb159a2ee7576096db21"
+  },
+  "result_sha256": "a905c874b884b8690631286578f2299b78872e1fc5ed99d4988e2ef73fdc6d7b",
+  "scope": "Five actual DOS automatic-dial cases on the corrected source-built terminal, against an owned synthetic serial modem: connect/banner, busy, timeout, configured hangup and redial, including normal exit, hardware snapshots and profile checks. Real ENiGMA audio/editor07, hardware and whole-application acceptance remain separate."
+}

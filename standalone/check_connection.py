@@ -81,7 +81,9 @@ def main():
    if state!='initialization':m.waiting()
    if state in ('online','hangup'):m.receive(b'CONNECT');m.poll()
    if state=='hangup':m.keys.append(0x2300);m.poll();assert m.state()==9
-   m.cts=False;m.keys.append(0x2d00);m.poll(40)
+   # Established/in-progress hangup retains its configured3s send deadline;
+   # dialing cancellation retains its shorter abort-character deadline.
+   m.cts=False;m.keys.append(0x2d00);m.poll(100 if state in ('online','hangup') else 40)
    assert m.state()==0 and m.get('terminal_quit')==1 and m.controls==[10,11],state
   m=Connection();m.start();m.cts=False;m.keys.append(0x011b);m.poll(40)
   assert m.state()==0 and m.get('connection_status')==4 and not m.get('terminal_quit')

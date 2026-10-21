@@ -33,7 +33,7 @@
     "lab/bbs/serial_io_evidence.js": "fbaddb3e9449fe9da3663cae376880ebb69ec453229ea9b7bbdb18b3a2b3a21b",
     "lab/bbs/check_serial_io_evidence.js": "e93747b7e61f1d76d12cc0887f738f57bfb239c9430bd04ab1b08a390f85f0bd",
     "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
-    "nix/flake.nix": "7cda07d3ab9fb050ef3c959781e4cb93ab2fab72f915d6206d980458ab297aa0",
+    "nix/flake.nix": "029bf800d2088a22b2959660ffc46461ed4539ffc611057a9806182bcc83e13b",
     "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
   },
   "result_sha256": "d3e4e249c7e368742d823f925c1feb5cc8fd1e67c13714f43b983cbed89a4de8"
