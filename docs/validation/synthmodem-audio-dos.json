@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Synchronet audio02 passes all65 producer/whole-stream/ownership gates for read-only login/bulletin/files/empty-message/final-main navigation with exact81/26919-byte streams and normal cleanup. First recipe failure and earlier ENiGMA evidence remain preserved. Editors/transfers, sustained pressure/loss, stock closing/cleanup, physical and F01-F16 remain open.",
+  "status": "Scoped Synchronet navigation, editor interaction, ordinary XMODEM upload/download, responsive cancellation and same-call same-source retry have accepted client receipts. Retry-ready01 passes all100 client gates, preserving the failed early-start attempt and indexed2048-byte partial. Overall success remains false: stock partial cleanup, native startup-banner tolerance, stock ZMODEM closing, pressure/loss/reconnect, physical Boca/SPA2102 and full F01-F16 completion remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3817,6 +3817,31 @@
       "DTE_bps": 38400,
       "software_carrier_bps": 1200,
       "acceptance": "New native54d53c72 finishes checksum/CRC frame before CAN.37 linked edges/faults/next-session cases and89 actual audio checks pass. Peer pause11.525s versus66.192s, exact2189/34160-byte streams, normal cleanup. Stock2048-byte partial remains indexed, so overall passed stays false."
+    },
+    "synthmodem-synchronet-retry-audio-01": {
+      "status": "failed_second_sender_startup_zero_bytes",
+      "passed": false,
+      "actual_same_call_retry_accepted": false,
+      "server_partial_cleanup_accepted": false,
+      "receipt": "docs/validation/synthmodem-synchronet-retry-audio-01.json",
+      "receipt_sha256": "cb18ab7fc2ba2f31480655da9ae8a1de3bf6c281b1aaeb898517e903a64c4ac6",
+      "peer": "Synchronet official archived3.22a snapshot",
+      "DTE_bps": 38400,
+      "software_carrier_bps": 1200,
+      "diagnosis": "First attempt ends after two complete CRC/source frames and CAN; second request gets zero data, native TX timeout and remote zero-length upload. Receiver-banner startup sensitivity reproduced in linked sender; 24/27 producer checks and all12 frontend ownership checks pass, but independent overall audit remains false. Preserved raw captures and normal UART/IRQ/PIC/timer cleanup."
+    },
+    "synthmodem-synchronet-retry-ready-audio-01": {
+      "status": "accepted_same_call_same_source_client_retry_server_partial_cleanup_still_failed",
+      "passed": false,
+      "client_workflow_passed": true,
+      "actual_same_call_retry_accepted": true,
+      "server_partial_cleanup_accepted": false,
+      "receipt": "docs/validation/synthmodem-synchronet-retry-ready-audio-01.json",
+      "receipt_sha256": "d1a371f269c6eff54d25b10c3344f053bec4d40604069309fb428ef29e857a74",
+      "peer": "Synchronet official archived3.22a snapshot",
+      "DTE_bps": 38400,
+      "software_carrier_bps": 1200,
+      "acceptance": "All100 client checks pass: two completeCRCframes beforeCAN, live Files and fresh-name14-block full same-source CRC retry,14ACK/twoEOT/NAK/ACK finish, official metadata and original partial custody, exact13956/52099-byte online/display streams, no frontend/gateway errors, actual Files/Main and normal UART/IRQ/PIC/timer/SIP cleanup. Revised BIOS-only recipe waits for full remote ready banner; native executable unchanged. Stock2048-byte partial remains indexed, so overall passed stays false."
     }
   },
   "diagnosis": {
@@ -3863,14 +3888,14 @@
   },
   "remaining": [
     "Historical in-session insertions lack complete diagnostic evidence; clean editor07/download03 runs do not establish their cause or a general correction.",
-    "Unmodified-stock uploads,transfer cancellation/loss/sustained pressure,Synchronet multiline-editor/other-protocol/cancellation/carrier-loss/reconnect workflows through audio and physical Boca/SPA2102 acceptance remain required.",
+    "Ordinary stock Synchronet XMODEM upload/download, scoped cancellation and receiver-ready-gated same-call same-source retry have accepted audio receipts. Actual carrier loss/reconnect, sustained pressure, other protocol families, stock ZMODEM closing/cleanup and physical Boca/SPA2102 still require their own passing gates.",
     "All F01-F16 whole-application completion gates remain open.",
     "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
     "Extend the accepted modified-helper fixed-DTE slow-carrier upload to pressure/cancel/loss and other peers; retain every CRC/finish,storage,post-helper input and cleanup gate.",
     "Stock Synchronet published/indexed a1024-byte failed-reference partial despite E/helper error. Preserve evidence; cancellation/loss cleanup and trustworthy completion require full wire/source/finish accounting. Accepted upload has3 source-attributed startup retries, not zero startup retries.",
-    "Native midframe Escape defect is fixed and scoped responsive cancellation accepted; preserve66-second failure. Stock indexed partial cleanup, same-call retry, actual carrier loss/reconnect and broader pressure/profile/protocol/hardware gates remain open. Original open insertion/stock receiver gaps remain independent."
+    "Native midframe Escape defect is fixed and scoped responsive cancellation plus receiver-ready-gated same-call retry accepted; preserve66-second cancellation and zero-byte early-start retry failures. Native startup-banner tolerance is still limited. Stock indexed partial cleanup and broader pressure/profile/protocol/hardware gates remain open. Original insertion/stock receiver gaps remain independent."
   ],
-  "current_cohort": "synthmodem-synchronet-cancel-fixed-audio-01",
+  "current_cohort": "synthmodem-synchronet-retry-ready-audio-01",
   "latest_cohort_passed": false,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
@@ -3935,7 +3960,7 @@
   "audio_upload_retry_receipt": "docs/validation/synthmodem-audio-upload-retry-02.json",
   "audio_upload_retry_receipt_sha256": "e553eaee6e41126abfaf876825bb9a69929fede92a19a174977fade67892a8be",
   "posttrain_candidate_receipt": "docs/validation/synthmodem-posttrain-runtime.json",
-  "latest_completed_cohort": "synthmodem-synchronet-cancel-fixed-audio-01",
+  "latest_completed_cohort": "synthmodem-synchronet-retry-ready-audio-01",
   "latest_completed_cohort_passed": false,
   "audio_upload_retry_failure_receipt": "docs/validation/synthmodem-audio-upload-retry-01.json",
   "accepted_candidate_retry_cohort": "synthmodem-audio-upload-retry-02",
@@ -3962,5 +3987,10 @@
   "synchronet_cancel_fixed_audio_receipt": "docs/validation/synthmodem-synchronet-cancel-fixed-audio-01.json",
   "synchronet_cancel_fixed_audio_receipt_sha256": "e7fa6f8b7567d28882e146de1ec3a40297498e0047a3a83afc6e9f6f4ebfc3cd",
   "accepted_responsive_cancellation_cohort": "synthmodem-synchronet-cancel-fixed-audio-01",
-  "native_upload_cancel_boundary_fixed_receipt": "docs/validation/terminal-upload-cancel-boundary-fixed.json"
+  "native_upload_cancel_boundary_fixed_receipt": "docs/validation/terminal-upload-cancel-boundary-fixed.json",
+  "synchronet_retry_audio_failure_receipt": "docs/validation/synthmodem-synchronet-retry-audio-01.json",
+  "synchronet_retry_audio_failure_receipt_sha256": "cb18ab7fc2ba2f31480655da9ae8a1de3bf6c281b1aaeb898517e903a64c4ac6",
+  "synchronet_retry_ready_audio_receipt": "docs/validation/synthmodem-synchronet-retry-ready-audio-01.json",
+  "synchronet_retry_ready_audio_receipt_sha256": "d1a371f269c6eff54d25b10c3344f053bec4d40604069309fb428ef29e857a74",
+  "accepted_synchronet_same_call_retry_cohort": "synthmodem-synchronet-retry-ready-audio-01"
 }

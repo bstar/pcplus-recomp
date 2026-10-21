@@ -37,9 +37,35 @@ The revised `*_retry_ready*` harness waits for the complete
 `transfer now (Ctrl-X to abort):` marker before opening the second local sender.
 Its six DOS BIOS checks explicitly prohibit Alt-S at an incomplete banner;
 the new TCP reference passes eleven checks and all fifteen ASPECT waits match
-raw reference bytes. The fresh actual attempt is
-`build/bbs-lab/synthmodem-synchronet-retry-ready-audio-01`; acceptance remains
-pending. Separate source files preserve the original frozen failing recipe.
+raw reference bytes. The fresh actual attempt,
+`build/bbs-lab/synthmodem-synchronet-retry-ready-audio-01`, passes all 100 client
+workflow checks. Separate source files preserve the original failing recipe.
+
+The [accepted client retry receipt](validation/synthmodem-synchronet-retry-ready-audio-01.json)
+binds 27 producer checks, 36 independent whole-stream/protocol checks, twelve
+frontend ownership checks, twelve official metadata/custody checks and thirteen
+control baseline/counterexample checks. The first attempt ends after two
+complete CRC frames and CAN; the second sends fourteen unreplayed CRC frames,
+all fourteen data ACKs and the two-EOT NAK/ACK finish. Both attempts use the same
+11,521-byte local source and open application. The completed receiver file has
+127 bytes of SUB padding, for 11,648 bytes total. Files/Main and normal DOS return
+are verified, with identical before/after UART, PIC, IRQ and timer snapshots.
+
+The exact online stream is 13,956 bytes, and the complete BBS display is 52,099
+bytes. All 52,308 frontend bytes, including Hayes results and bridge text, have
+successful local write callbacks with no skips, pending writes or gateway
+errors. Caller audio is independently decoded; guest/Telnet byte identity,
+continuous RTP and SIP cleanup also pass. The receiver records three startup
+timeouts on the cancelled attempt and two on the retry, matching four and three
+CRC requests respectively; no data-block errors occur. These are software
+audio results at 1,200-bps carrier and 38,400-bps DTE.
+
+The original 2,048-byte partial retains exactly the observed bytes, inode,
+modification time and complete official metadata. It remains indexed, so the
+receipt deliberately has `actual_same_call_retry_accepted: true` and
+`server_partial_cleanup_accepted: false`, with overall `passed: false`. This
+does not resolve native startup noise tolerance, carrier loss/reconnect,
+sustained pressure, other protocol families or physical hardware acceptance.
 
 The producers and independent audits bind the native executable, source,
 ASPECT compiler and script, keyboard helper, runtime, server inputs and raw
