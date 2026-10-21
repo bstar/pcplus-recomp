@@ -10,7 +10,7 @@ from synthmodem_posttrain_validation import validate as validate_runtime
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path);p.add_argument('--output',type=Path,required=True);a=p.parse_args();out=a.cohort.resolve();target=a.output.resolve()
  assert out.is_relative_to(ROOT/'build') and target.is_relative_to(ROOT/'docs/validation') and not target.exists()
- read=lambda n:json.loads((out/n).read_text());r=read('result.json');base=read('independent-audit.json');io=read('serial-io-audit.json')
+ read=lambda n:json.loads((out/n).read_text());r=read('result.json');base=read('independent-audit-v2.json');io=read('serial-io-audit.json')
  assert r['peer']=='synchronet' and r['route']=='xmodem-download' and r['posttrain_hold'] and r['input_sequence_timeout_ms']==250
  for data in (r,base,io):assert data.get('passed',data.get('evidence_consistent')) and all(data['checks'].values())
  for group in ('frozen_inputs','runtime_inputs','tool_inputs'):
@@ -41,6 +41,13 @@ def main():
  prerequisites={n:h for n,h in r['frozen_inputs'].items() if n.endswith('/result.json')};assert len(prerequisites)==3
  for n in prerequisites:assert json.loads((ROOT/n).read_text())['passed']
  recipe=[json.loads((ROOT/n).read_text()) for n in prerequisites if 'recipe' in n];assert len(recipe)==1 and all(c['raw_match_possible'] for c in recipe[0]['cases'])
+ original=read('independent-audit.json');assert not original['passed'] and {k for k,v in original['checks'].items() if not v}=={'exact_menu_and_protocol_input'}
+ assert base['original_audit_sha256']==sha(out/'independent-audit.json')
+ assert base['auditor_sha256']==sha(ROOT/'lab/bbs/audit_synchronet_download_audio_dos_v2.py')
+ for n,h in base['audit_inputs'].items():assert sha(ROOT/n)==h,n
+ timing=read('download-control-timing.json');assert timing['passed'] and all(timing['checks'].values())
+ for n,h in timing['inputs'].items():assert sha(ROOT/n)==h,n
+ for n,h in timing['captures_sha256'].items():assert sha(out/n)==h,n
  metadata=read('download-metadata-audit.json');assert metadata['passed'] and all(metadata['checks'].values())
  for n,h in metadata['inputs'].items():assert sha(ROOT/n)==h,n
  for n,h in metadata['captures_sha256'].items():assert sha(out/n)==h,n
@@ -48,10 +55,10 @@ def main():
  assert (out/'RECV/SYNC.BIN').read_bytes()==source.read_bytes()+b'\x1a'*127
  assert sha(out/'RECV/SYNC.BIN')==r['download']['received_sha256']
  assert len(base['protocol']['frames'])==base['protocol']['accepted_blocks']==14 and base['protocol']['crc']
- names=list(dict.fromkeys([*r['captures_sha256'],'result.json','independent-audit.json','serial-io-audit.json','offline-caller.json','server-inputs.json','RECV/SYNC.BIN','download-metadata-audit.json','download-metadata.js','download-metadata.stdout','download-metadata.stderr']))
+ names=list(dict.fromkeys([*r['captures_sha256'],'result.json','independent-audit.json','independent-audit-v2.json','serial-io-audit.json','offline-caller.json','server-inputs.json','RECV/SYNC.BIN','download-control-timing.json','download-metadata-audit.json','download-metadata.js','download-metadata.stdout','download-metadata.stderr']))
  server=r['server'];tree_hash=lambda value:hashlib.sha256(json.dumps(value,sort_keys=True).encode()).hexdigest()
  result={'passed':True,'actual_Synchronet_audio_accepted':True,'cohort':str(out.relative_to(ROOT)),'route':'login/stock-XMODEM-CRC-download/post-transfer-Files/Main',
-  'check_counts':{'producer':len(r['checks']),'independent':len(base['checks']),'ownership':len(io['checks']),'official_metadata':len(metadata['checks'])},'producer_checks':r['checks'],'independent_checks':base['checks'],'ownership_checks':io['checks'],'metadata_checks':metadata['checks'],'metadata':metadata['metadata'],'download':r['download'],'protocol':base['protocol'],
+  'check_counts':{'producer':len(r['checks']),'independent':len(base['checks']),'ownership':len(io['checks']),'official_metadata':len(metadata['checks']),'control_timing':len(timing['checks'])},'producer_checks':r['checks'],'independent_checks':base['checks'],'ownership_checks':io['checks'],'metadata_checks':metadata['checks'],'control_timing_checks':timing['checks'],'control_timing_inputs':timing['inputs'],'metadata':metadata['metadata'],'download':r['download'],'protocol':base['protocol'],'original_audit_sha256':base['original_audit_sha256'],'auditor_correction':base['correction'],'corrected_auditor_inputs':base['audit_inputs'],
   'terminal_sha256':sha(out/'program/TERMINAL.EXE'),'ASPECT_sha256':sha(out/'program/ASPECT.EXE'),'observed_hold_ms':int(holds[0][0]),'exact_online_bytes':len(online),'exact_BBS_display_bytes':len(display),
   'payloads':base['payloads'],'serial_counters':io['counters'],'hardware_snapshot':base['hardware_snapshot'],'script_stages':r['script_stages'],
   'server_source_commit':server['source_commit'],'official_server_binary_sha256':server['binary_sha256'],'server_archives':server['archives'],

@@ -3771,6 +3771,16 @@
       "DTE_bps": 38400,
       "software_carrier_bps": 1200,
       "acceptance": "All81 checks pass; exact130/23529-byte streams, native editing keys, Ctrl-Q abort, unchanged messages/counters and normal restoration. Scoped one-line editor acceptance only."
+    },
+    "synthmodem-synchronet-download-audio-01": {
+      "status": "accepted_stock_XMODEM_CRC_audio_download_scope",
+      "passed": true,
+      "peer": "Synchronet official archived3.22a snapshot",
+      "receipt": "docs/validation/synthmodem-synchronet-download-audio-01.json",
+      "receipt_sha256": "0ba0491e6e89853620ee868c7760bae9f9a862aa9cb3e0c7317b543d9ca09999",
+      "DTE_bps": 38400,
+      "software_carrier_bps": 1200,
+      "acceptance": "All81 checks pass: exact11521-byte source plus127SUB padding in14 unreplayed CRC blocks, EOT NAK/ACK, official log/metadata/count, exact121/49730-byte streams and normal cleanup. Original single-EOT literal-count audit retained; v2 and timing mutants validate two-EOT behavior. Download scope only."
     }
   },
   "diagnosis": {
@@ -3817,12 +3827,12 @@
   },
   "remaining": [
     "Historical in-session insertions lack complete diagnostic evidence; clean editor07/download03 runs do not establish their cause or a general correction.",
-    "Unmodified-stock uploads,transfer cancellation/loss/sustained pressure,Synchronet multiline-editor/transfer workflows through audio and physical Boca/SPA2102 acceptance remain required.",
+    "Unmodified-stock uploads,transfer cancellation/loss/sustained pressure,Synchronet multiline-editor/uploads/other-protocol workflows through audio and physical Boca/SPA2102 acceptance remain required.",
     "All F01-F16 whole-application completion gates remain open.",
     "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
     "Extend the accepted modified-helper fixed-DTE slow-carrier upload to pressure/cancel/loss and other peers; retain every CRC/finish,storage,post-helper input and cleanup gate."
   ],
-  "current_cohort": "synthmodem-synchronet-editor-audio-02",
+  "current_cohort": "synthmodem-synchronet-download-audio-01",
   "latest_cohort_passed": true,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
@@ -3887,7 +3897,7 @@
   "audio_upload_retry_receipt": "docs/validation/synthmodem-audio-upload-retry-02.json",
   "audio_upload_retry_receipt_sha256": "e553eaee6e41126abfaf876825bb9a69929fede92a19a174977fade67892a8be",
   "posttrain_candidate_receipt": "docs/validation/synthmodem-posttrain-runtime.json",
-  "latest_completed_cohort": "synthmodem-synchronet-editor-audio-02",
+  "latest_completed_cohort": "synthmodem-synchronet-download-audio-01",
   "latest_completed_cohort_passed": true,
   "audio_upload_retry_failure_receipt": "docs/validation/synthmodem-audio-upload-retry-01.json",
   "accepted_candidate_retry_cohort": "synthmodem-audio-upload-retry-02",
@@ -3899,5 +3909,8 @@
   "synchronet_editor_audio_failure_receipt": "docs/validation/synthmodem-synchronet-editor-audio-01.json",
   "synchronet_editor_audio_receipt": "docs/validation/synthmodem-synchronet-editor-audio-02.json",
   "synchronet_editor_audio_receipt_sha256": "763478602b345e7d346b23b16177214785a718062e211875adc5795eb07ba78e",
-  "accepted_synchronet_editor_audio_cohort": "synthmodem-synchronet-editor-audio-02"
+  "accepted_synchronet_editor_audio_cohort": "synthmodem-synchronet-editor-audio-02",
+  "synchronet_download_audio_receipt": "docs/validation/synthmodem-synchronet-download-audio-01.json",
+  "synchronet_download_audio_receipt_sha256": "0ba0491e6e89853620ee868c7760bae9f9a862aa9cb3e0c7317b543d9ca09999",
+  "accepted_synchronet_download_audio_cohort": "synthmodem-synchronet-download-audio-01"
 }

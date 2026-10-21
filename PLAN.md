@@ -423,6 +423,36 @@ The first failed drain and all prior evidence remain retained. Next: Synchronet
 audio transfers, then sustained pressure/carrier-loss/reconnect; multiline editor,
 other profiles/peers, physical Boca/SPA2102 and all F01-F16 gates remain open.
 
+The [stock Synchronet download preparation](docs/validation/synchronet-audio-download-preparation.json)
+passes seven real TCP XMODEM-1K/CRC reference checks, six actual DOS BIOS helper
+checks and13 raw ASPECT wait-token checks. It preserves the existing official
+server/helper/config/source, validates all14 reference blocks and the exact11521
+source bytes plus127SUB padding, and returns through Files/Main. The original
+raw-token diagnostic caught ANSI-split Which/Quit and Protocol/Batch; stable raw
+prefixes pass before any audio attempt. The BIOS helper drives the actual Alt-R
+filename UI, observes receiving/completion/fresh Files/Main and restores INT1C;
+partial and paused menus cannot trigger premature keys. Actual audio acceptance
+still requires all whole-stream/protocol/control/file/official-metadata/cleanup
+gates. No unpadded-length, upload, other-protocol or physical claim is granted
+by these preparations. See the [run instructions](lab/bbs/synchronet-audio.md).
+
+The [completed stock Synchronet audio download](docs/validation/synthmodem-synchronet-download-audio-01.json)
+passes81 producer/independent/ownership/official-metadata/control-timing checks.
+All121 upstream bytes and49730 display/binary bytes survive exactly;6100ms hold,
+zero frontend/gateway loss/errors and normal DOS/UART/PIC/IRQ/timer/SIP cleanup
+hold. Fourteen unreplayed CRC-valid blocks preserve11521 source bytes plus127SUB
+padding in the actual DOS file, followed by real Files/Main interaction. The
+official success log, FileBase hashes and one per-file counter advance19 to20
+confirm stock-helper success. DIR_NOSTAT explains unchanged global counters.
+No message/mail/upload writes or code/config/library/source/body changes occur.
+The original audit's single-EOT input assumption fails: native14 block ACKs are
+followed by EOT NAK/ACK. A separate v2 auditor verifies that exact sequence;
+original capture/report/source e498ec5 stays retained. Early block ACK, early
+final ACK and post-menu final ACK mutants all reject. Unchanged DOS binaries;
+acceptance is only this stock XMODEM-CRC download workflow. Next: Synchronet
+audio uploads and other protocols, then sustained pressure/carrier-loss/reconnect.
+Physical Boca/SPA2102, multiline editor and all F01-F16 gates remain open.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

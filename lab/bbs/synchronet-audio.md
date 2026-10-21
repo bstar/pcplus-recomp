@@ -227,9 +227,12 @@ the displayed pre-transfer count. No messages, mail or uploads are requested.
   --output build/bbs-lab/synthmodem-synchronet-download-audio-NEW
 # After natural producer exit:
 ./tools/modem-dev --command python3 lab/bbs/audit_synchronet_download_audio_dos.py COHORT
+# Preserve the original audit; its single-EOT input assumption fails this native receiver.
+./tools/modem-dev --command python3 lab/bbs/audit_synchronet_download_audio_dos_v2.py COHORT
 ./tools/modem-dev --command python3 lab/bbs/audit_serial_io_evidence.py COHORT
 ./tools/modem-dev --command node lab/bbs/diagnose_audio_caller.js RUNTIME COHORT
 ./tools/bbs-dev --command python3 lab/bbs/audit_synchronet_download_metadata.py COHORT
+./tools/modem-dev --command python3 lab/bbs/check_synchronet_download_control_timing.py COHORT
 # Only after all gates pass:
 ./tools/modem-dev --command python3 lab/bbs/record_synchronet_download_audio.py COHORT \
   --output docs/validation/synthmodem-synchronet-download-audio-NEW.json
@@ -240,3 +243,30 @@ Protocol/Batch. Stable raw prefixes correct these before the first audio run;
 the original failed token-check artifacts remain retained. Every remote wait
 must pass its independent raw-capture check. Preparatory results grant no actual
 audio/DOS download, upload, other-protocol or physical acceptance.
+
+The [completed download audio01](../../docs/validation/synthmodem-synchronet-download-audio-01.json)
+passes81 checks:25 producer,34 independent,12 ownership, six official metadata
+and four control-timing checks. All121 upstream bytes and49730 display/binary
+bytes survive exactly. All49939 frontend bytes complete with zero skipped,
+failed or pending bytes. The observed minimum hold is6100ms. Fourteen unreplayed
+CRC-valid blocks preserve the exact source plus127SUB padding; native final
+ACK follows publication. The actual Files/Main return and normal DOS/UART/PIC/
+IRQ/timer/SIP restoration pass. No gateway errors, message/mail/upload writes
+or code/config/library/source/message-body changes occur. Official FileBase
+hashes match and its download count advances once,19 to20; the stock server log
+reports the successful11521-byte download. The area has DIR_NOSTAT, so global
+transfer counters do not provide this per-file evidence.
+
+The original independent audit's only failure is its incorrect literal input
+assumption of15ACKs. Existing native receiver regressions exercise EOT NAK/ACK;
+this capture contains14 block ACKs, NAK to the first EOT and ACK to the second.
+The separate v2 audit requires that exact sequence and preserves every original
+CRC, control-timing, full-stream, file and cleanup gate. Original report and
+frozen auditor at e498ec5 remain unchanged and are hashed in the receipt. Three
+timing-only mutants (early block ACK, early final ACK and final ACK after menu
+input) reject; this correction does not waive the mandatory final ACK.
+
+Acceptance is limited to this stock XMODEM-CRC download over the explicit
+monotonic-hold/key-framing audio runtime, with unchanged DOS binaries. Uploads,
+other Synchronet audio protocols, sustained pressure/carrier-loss/reconnect,
+physical Boca/SPA2102 and F01-F16 application gates remain open.
