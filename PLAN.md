@@ -465,10 +465,32 @@ reference consumes the full banner, then verifies14 blocks, EOT NAK/ACK, exact
 The [read-only diagnosis](docs/validation/synchronet-upload-partial-publication.json)
 confirms stock indexing/U+ publication of that partial despite a helper E/error
 record. Metadata or upload labels alone cannot prove completion. Require full
-CRC/control/finish, exact full source, complete zero-error helper receive and
+CRC/control/finish, exact full source, successful helper receive with source-
+backed attribution of any reported retries, and
 ordinary whole-stream/cleanup gates on actual audio evidence. Cancellation/loss
 cleanup remains open; preserve both the partial and its metadata. Preparations
 do not grant actual audio/DOS upload or physical acceptance.
+
+The [completed stock Synchronet audio upload](docs/validation/synthmodem-synchronet-upload-audio-01.json)
+passes87 checks: exact11849 upstream bytes,46799 display/control bytes and47008
+completed frontend bytes;6001ms hold, no gateway loss/errors and normal native
+hardware/timer/SIP cleanup. Fourteen unreplayed CRC-valid blocks, two-EOT NAK/ACK,
+exact11521-byte source plus127SUB padding, official owner/description/hashes,
+actual Files/Main interaction, source identity and existing-file preservation
+hold with unchanged DOS binaries/server/config/library/message bodies.
+The original metadata check's zero-total-errors assumption fails: R/11648 and
+3reported errors are exactly four startup C requests/three first-block no-input
+timeouts. Pinned official source verifies cumulative error accounting and the
+3-second initial wait. Separate v2 validation requires that exact startup-only
+attribution and zero malformed/replayed data or failed finish; no E/helper error
+is waived. Original report stays preserved. Both original and indexed timing
+oracles reject early block ACK, early final ACK and post-menu final ACK; indexed
+lookup reproduces the original baseline without quadratic prefix scans.
+This accepts only delayed-start stock XMODEM-CRC upload compatibility, not zero
+startup retries, partial-publication cleanup, other protocols, sustained pressure/
+carrier-loss/reconnect, physical hardware or F01-F16 completion. Next: test
+cancellation/carrier-loss/reconnect with explicit stock partial-file accounting,
+then broaden Synchronet audio protocol/profile coverage.
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,

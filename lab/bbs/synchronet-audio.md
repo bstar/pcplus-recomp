@@ -298,8 +298,9 @@ confirms that this failed reference's1024-byte partial is officially indexed,
 and has an upload-success entry despite the helper's E/one-error record. Thus
 storage, metadata and U+ alone cannot establish full transfer success. Actual
 acceptance additionally requires complete wire frames/CRC/sequence, all opposite
-ACKs and final EOT finish, exact full known source/padding, and the helper's
-complete zero-error receive record. Cancellation/loss cleanup remains open;
+ACKs and final EOT finish, exact full known source/padding, and a successful
+helper receive with any reported errors explained by complete wire evidence.
+Cancellation/loss cleanup remains open;
 the diagnostic does not remove or replace the partial or its metadata.
 
 ```sh
@@ -324,6 +325,10 @@ the diagnostic does not remove or replace the partial or its metadata.
 ./tools/modem-dev --command python3 lab/bbs/audit_serial_io_evidence.py COHORT
 ./tools/modem-dev --command node lab/bbs/diagnose_audio_caller.js RUNTIME COHORT
 ./tools/bbs-dev --command python3 lab/bbs/audit_synchronet_upload_metadata.py COHORT
+# Preserve the original zero-total-errors check; diagnose startup-only retries separately.
+./tools/bbs-dev --command python3 lab/bbs/audit_synchronet_upload_metadata_v2.py COHORT
+./tools/modem-dev --command python3 lab/bbs/check_synchronet_upload_control_timing.py COHORT
+./tools/modem-dev --command python3 lab/bbs/check_synchronet_upload_control_timing_indexed.py COHORT
 # Only after every gate passes:
 ./tools/modem-dev --command python3 lab/bbs/record_synchronet_upload_audio.py COHORT \
   --output docs/validation/synthmodem-synchronet-upload-audio-NEW.json
@@ -334,3 +339,38 @@ reference/actual basenames and corresponding deterministic payload, helper keys
 and exact-input oracle before collecting another run. A new output label does
 not authorize replacement of server files. Preparations alone grant no actual
 audio/DOS upload, cancellation/loss or physical acceptance.
+
+The [completed audio upload01](../../docs/validation/synthmodem-synchronet-upload-audio-01.json)
+passes87 checks:25 producer,35 independent,12 ownership,11 source-backed metadata
+and four ACK-timing checks. All11849 upstream bytes and46799 display/control
+bytes survive exactly; all47008 frontend bytes complete without skipped, failed
+or pending bytes. The minimum hold is6001ms, with no gateway errors. Fourteen
+unreplayed CRC-valid native blocks preserve11521 source bytes plus127SUB padding
+in official storage and metadata. Both EOTs, NAK/ACK, actual Files/Main return,
+normal DOS/UART/PIC/IRQ/timer/SIP restoration, source identity, existing files
+and server code/config/library/message bodies preserve. No message/mail/download
+writes occur. DOS application binaries remain unchanged.
+
+The original metadata audit fails only its zero-total-errors assumption. The
+stock helper reports successful R/11648 and three cumulative errors. Exact
+CCCC startup requests followed by14ACKs and EOT NAK/ACK account for those three
+initial no-input timeouts; the pinned official sexyz.c/xmodem.c sources match
+their archive exactly and establish the3-second first-block wait and cumulative
+counter. Complete native prefix/frame/suffix and opposite-control validation
+exclude malformed/replayed data or failed finish. The separate v2 metadata audit
+requires this exact attribution: four startup requests, three startup timeouts,
+zero data-block errors. Original zero-total-errors report stays retained and
+hashed. This accepts delayed-start stock upload compatibility; it does not claim
+zero startup retries or waive a failed receive/helper E record.
+
+All three ACK timing mutants reject in both the original linear oracle and the
+[indexed lookup validation](../../docs/validation/synchronet-upload-control-index.json).
+The latter uses exact contiguous offset manifests with the same control-policy
+function and reproduces its original baseline, avoiding quadratic pre-protocol
+display scans. The original checker was allowed to finish and its artifacts
+remain preserved. Index validation is a component check, not separate audio
+acceptance.
+
+The failed reference/partial publication remain separate known evidence.
+Other protocols, cancellation/loss cleanup, sustained pressure/reconnect,
+physical Boca/SPA2102 and F01-F16 whole-application requirements remain open.

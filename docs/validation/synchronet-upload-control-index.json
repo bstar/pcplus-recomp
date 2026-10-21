@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "checks": {
+    "actual14_block_ACKs_then_EOT_NAK_ACK": true,
+    "indexed_baseline_equals_original_oracle": true,
+    "final_ACK_before_second_EOT_rejected": true,
+    "final_ACK_after_menu_input_rejected": true,
+    "first_ACK_before_complete_block_rejected": true
+  },
+  "inputs": {
+    "lab/bbs/check_synchronet_upload_control_timing_indexed.py": "b0d8c42fecc18ecd115036eef07cd4cc6a728c57b8681225ad2e2f402831ed68",
+    "lab/bbs/audit_indexed_controls.py": "bbe8ba1f2b04eed0845032a7c69d77e1100c4a18b79eb9485eed060bbaca0beb",
+    "lab/bbs/audit_audio_download.py": "452febcc4561fbc9aabca30007da931be55afc07b0938cee9a72c5d802407d85",
+    "lab/bbs/audit_audio_upload.py": "7b3efa5477be125509b726a437b6e909c14b525605cddd6b0c58c34f5105864c",
+    "lab/bbs/test_transfer_dos.py": "d8cbd432c3b1e9dab4dd7fc841defff5b18e379592a935b43a010657cd967964"
+  },
+  "captures_sha256": {
+    "result.json": "be040cb7c235506a68a7e0c0717d209aa967f2c1a39aecb90e3fcdd146b837f4",
+    "independent-audit.json": "5ea841191d1f9884e815ccaf164bbbb69cc03ef685747c488700a0059e75c0fb",
+    "bbs-input.bin": "9026e068e0a789eb445a5991e7de63c916d435326c1737554e5e3cff292d77f1",
+    "bbs-output.bin": "e49fb3d84ed535d11d62a09b6ccf124651f5ecf412a3636fa2a3376edd5e7d8b",
+    "serial-input-events.jsonl": "2963d8307174577a0b138f44be72aaddd8c556e9ec8415ac39474e50dbd9048d",
+    "serial-write-events.jsonl": "2e8ebbea0462ebb32074b99727b4944b9ef4ab7a664245345e6726e099964569"
+  },
+  "scope": "Actual full XMODEM control timeline passes14 block ACKs and two-EOT NAK/ACK. Three timing-only counterexamples must reject: early block ACK, early final ACK and final ACK after post-transfer input. Original captures are unchanged; counterexamples alter only reconstructed receive-ACK timestamps. Indexed byte lookup retains the original control oracle and requires exact contiguous manifests; its baseline equals the original independent audit. This avoids repeated linear scanning of the entire pre-protocol display for every byte.",
+  "cohort": "build/bbs-lab/synthmodem-synchronet-upload-audio-01",
+  "actual_audio_accepted": false
+}
