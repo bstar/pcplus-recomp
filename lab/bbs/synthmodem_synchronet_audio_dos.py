@@ -18,15 +18,15 @@ def script(port):
  def mark(label):return f'fopen 0 "D:\\STAGES.LOG" "ab"\nfputs 0 "{label}|"\nfclose 0\n'
  def wait(token,label,timeout=180,quiet=True):return f'waitfor "{token}" {timeout}\nif waitfor == 0\n'+mark('FAIL-'+label)+'exit\nendif\n'+('waitquiet 2 120\n' if quiet else '')+mark(label)
  s='proc main\n'+wait('CONNECT> ','BRIDGE',45)+f'transmit "127.0.0.1:{port}^M"\n'
- for token,label,data in [('Login:','LOGIN','LABUSER^M'),('Password:','PASSWORD','LABPASS42^M'),('[Hit a key]','WELCOME',' '),('Enter number of bulletin or [Quit]','BULLETINS','1^M')]:s+=wait(token,label)+f'transmit "{data}"\n'
- s+=wait('System Totals:','STATISTICS',quiet=False)+wait('Enter number of bulletin or [Quit]','BULLETINS-RETURN')+'transmit "Q"\n'
+ for token,label,data in [('Login:','LOGIN','LABUSER^M'),('Password:','PASSWORD','LABPASS42^M'),('[Hit a key]','WELCOME',' '),('Enter number of bulletin or [','BULLETINS','1^M')]:s+=wait(token,label)+f'transmit "{data}"\n'
+ s+=wait('System Totals:','STATISTICS',quiet=False)+wait('Enter number of bulletin or [','BULLETINS-RETURN')+'transmit "Q"\n'
  for token,label,data in [('Search all groups for new messages?','SCAN','n^M'),('[Hit a key]','PAUSE',' '),('Read/Post Messages','MAIN','T'),('List Files in dir','FILES','Q'),('Read/Post Messages','RETURN','R'),('No messages have been posted on ','MESSAGES','Q')]:s+=wait(token,label)+f'transmit "{data}"\n'
  s+=wait('Read/Post Messages','FINAL')+'fopen 0 "D:\\SCRIPT.OK" "wb"\nfputs 0 "PASS"\nfclose 0\nendproc\n'
  return s
 
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--reference',type=Path,required=True);p.add_argument('--key-checks',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--reference',type=Path,required=True);p.add_argument('--key-checks',type=Path,required=True);p.add_argument('--recipe-checks',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
  out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
  runtime=a.runtime.resolve();runtime_inputs=validate_runtime(runtime);server=snapshot();bodies=message_bodies();stats=statistics()
  reference=a.reference.resolve();keys=a.key_checks.resolve();assert reference.is_relative_to(ROOT/'build') and keys.is_relative_to(ROOT/'build')
@@ -34,11 +34,14 @@ def main():
  assert all(sha(ROOT/n)==h for n,h in ref['reference_inputs'].items())
  assert {r['mode'] for r in kr['cases']}=={'phases_with_stale_main','watchdog'}
  assert all(sha(ROOT/n)==h for n,h in kr['inputs'].items())
+ recipe=a.recipe_checks.resolve();assert recipe.is_relative_to(ROOT/'build')
+ rc=json.loads(recipe.read_text());assert rc['passed'] and all(c['raw_match_possible'] for c in rc['cases'])
+ assert all(sha(ROOT/n)==h for n,h in rc['inputs'].items())
  names=['lab/bbs/synthmodem_synchronet_audio_dos.py','lab/bbs/audio_synchronet.py','lab/bbs/audio_bbs_relay.py','lab/bbs/synchronet.py','lab/bbs/audio_synchronet_keys.asm','lab/bbs/check_audio_synchronet_keys.py','lab/bbs/audio_get_vector.asm',
   'lab/bbs/synthmodem_audio_serial.js','lab/bbs/serial_io_evidence.js','lab/bbs/internal_sip_capture.js','lab/bbs/synthmodem_posttrain_validation.py','docs/validation/synthmodem-posttrain-runtime.json',
   'standalone/modem_fixtures.py','standalone/directory_fixtures.py','standalone/directory_test_support.py','standalone/test_terminal.py','src/aspect/compiler.py',
   'lab/bbs/audit_synchronet_audio_dos.py','lab/bbs/audit_serial_io_evidence.py','lab/bbs/diagnose_audio_caller.js','lab/bbs/modem.py','lab/bbs/synthmodem_gateway.py',
-  'nix/flake.nix','nix/flake.lock','tools/modem-dev','build/terminal/TERMINAL.EXE','build/terminal/terminal.map','build/aspect-runner/ASPECT.EXE',str(reference.relative_to(ROOT)),str(keys.relative_to(ROOT))]
+  'nix/flake.nix','nix/flake.lock','tools/modem-dev','build/terminal/TERMINAL.EXE','build/terminal/terminal.map','build/aspect-runner/ASPECT.EXE',str(reference.relative_to(ROOT)),str(keys.relative_to(ROOT)),str(recipe.relative_to(ROOT)),'lab/bbs/check_synchronet_audio_recipe.py']
  frozen={n:sha(ROOT/n) for n in names};out.mkdir(parents=True)
  (out/'server-inputs.json').write_text(json.dumps(server,indent=2)+'\n')
  stage=out/'program';stage.mkdir()

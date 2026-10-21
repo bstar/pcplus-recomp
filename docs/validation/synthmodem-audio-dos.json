@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Synchronet audio01 failed its raw coloured-prompt recipe after reaching the bulletin menu. Exact57-byte upstream and10542-byte display plus source-defined remote-close tail, no gateway errors and normal cleanup preserved. Fix two invalid literal waits, require raw-token consistency and rerun fresh. Prior ENiGMA acceptance unchanged; remaining peers/workflows, pressure/loss, physical and F01-F16 stay open.",
+  "status": "Synchronet audio02 is running after correcting two ANSI-split raw wait needles; all13 remote wait tokens match independent raw captures and the prerequisite is frozen. Original acceptance gates unchanged. First audio01 recipe failure and prior ENiGMA accepted/failed evidence preserved. No new Synchronet audio acceptance yet; remaining workflows, pressure/loss, physical and F01-F16 stay open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3740,6 +3740,15 @@
       "software_carrier_bps": 1200,
       "receipt": "docs/validation/synthmodem-synchronet-audio-01.json",
       "receipt_sha256": "ca351284abf622ad99729dade25f832c1d4c07812ef0da971528a704c4fe6e49"
+    },
+    "synthmodem-synchronet-audio-02": {
+      "status": "running",
+      "passed": null,
+      "peer": "Synchronet official archived3.22a snapshot",
+      "raw_recipe_receipt": "docs/validation/synchronet-audio-recipe-02.json",
+      "acceptance": "Pending all original producer/full-stream/route/native-input/server-preservation/minimum-hold/RTP/SIP/hardware-cleanup gates; two raw needles corrected only",
+      "DTE_bps": 38400,
+      "software_carrier_bps": 1200
     }
   },
   "diagnosis": {
@@ -3791,8 +3800,8 @@
     "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
     "Extend the accepted modified-helper fixed-DTE slow-carrier upload to pressure/cancel/loss and other peers; retain every CRC/finish,storage,post-helper input and cleanup gate."
   ],
-  "current_cohort": "synthmodem-synchronet-audio-01",
-  "latest_cohort_passed": false,
+  "current_cohort": "synthmodem-synchronet-audio-02",
+  "latest_cohort_passed": null,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
     "offline_caller_equals_DOS_online": true,
@@ -3861,5 +3870,6 @@
   "audio_upload_retry_failure_receipt": "docs/validation/synthmodem-audio-upload-retry-01.json",
   "accepted_candidate_retry_cohort": "synthmodem-audio-upload-retry-02",
   "posttrain_audio_receipt": "docs/validation/synthmodem-audio-upload-retry-02.json",
-  "synchronet_audio_failure_receipt": "docs/validation/synthmodem-synchronet-audio-01.json"
+  "synchronet_audio_failure_receipt": "docs/validation/synthmodem-synchronet-audio-01.json",
+  "active_peer_cohort": "synthmodem-synchronet-audio-02"
 }

@@ -33,10 +33,14 @@ frozen through producer exit and every same-run independent audit.
   --reference-output build/bbs-lab/synchronet-audio-reference-NEW
 ./tools/dev --command python3 lab/bbs/check_audio_synchronet_keys.py \
   --output build/bbs-lab/audio-synchronet-keys-NEW
+./tools/modem-dev --command python3 lab/bbs/check_synchronet_audio_recipe.py \
+  --reference build/bbs-lab/synchronet-audio-reference-NEW \
+  --output build/bbs-lab/synchronet-audio-recipe-check-NEW
 ./tools/modem-dev --command python3 lab/bbs/synthmodem_synchronet_audio_dos.py \
   --runtime build/bbs-lab/synthmodem-posttrain-runtime-01/runtime \
   --reference build/bbs-lab/synchronet-audio-reference-NEW/result.json \
   --key-checks build/bbs-lab/audio-synchronet-keys-NEW/result.json \
+  --recipe-checks build/bbs-lab/synchronet-audio-recipe-check-NEW/result.json \
   --output build/bbs-lab/synthmodem-synchronet-audio-NEW
 # After natural producer exit:
 ./tools/modem-dev --command python3 lab/bbs/audit_synchronet_audio_dos.py COHORT
@@ -72,3 +76,19 @@ The configured watchdog ends this failed test; no running input was changed.
 Fix both waits to a stable raw prefix and require every generated wait token to
 appear in its independent raw phase capture before a fresh audio run. Keep
 all original acceptance gates and the first failed report/captures unchanged.
+
+
+## Corrected raw-token run
+
+Both bulletin needles now stop at the opening bracket before ANSI highlight
+codes. The [recipe proof](../../docs/validation/synchronet-audio-recipe-02.json)
+compiles and matches all13 remote wait tokens against their corresponding raw
+reference phases. The producer requires `--recipe-checks`, validates every
+recorded source/capture hash and freezes that prerequisite alongside the
+reference and observer checks.
+
+Fresh audio02 is running with the unchanged DOS binary, timer/key-framing
+runtime, DTE, DSP and BBS listener/config/account policy. Every original gate
+remains active. The first failed audio capture, reports and raw-token diagnostic
+stay unchanged (source checkpoint d03c179). No new audio acceptance follows until
+natural producer exit and all same-run independent audits pass.

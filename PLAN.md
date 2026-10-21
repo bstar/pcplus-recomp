@@ -378,6 +378,17 @@ against the independent capture, then rerun every original route/stream/cleanup
 gate on fresh evidence. Editors/transfers, pressure/loss, physical and F01-F16
 remain open. See [run instructions](lab/bbs/synchronet-audio.md).
 
+Both bulletin waits now use the stable raw prefix ending at the opening
+bracket. The [corrected recipe proof](docs/validation/synchronet-audio-recipe-02.json)
+compiles and finds all13 remote wait tokens in their corresponding independent
+raw capture phases. The producer requires and freezes this explicit recipe
+prerequisite, including its source/capture hashes, before starting. Fresh
+Synchronet audio02 is now running with the same DOS binary, modem runtime,
+38400 DTE, V22/1200 DSP and unchanged BBS listener/config/account policy. All
+original route/whole-stream/native reply/input/minimum-hold/server preservation/
+RTP/SIP and hardware/timer cleanup gates remain mandatory. The first failure
+and raw-token diagnostic stay unchanged; no new audio acceptance is claimed yet.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal
