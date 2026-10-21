@@ -36,6 +36,18 @@ The preferred lab runtime is now `build/bbs-lab/synthmodem-carrier-runtime-01/ru
 with `--carrier`. Editors, transfers, Synchronet over audio, broader pressure,
 physical acceptance and all F01-F16 remain open.
 
+The first [actual audio editor run](lab/bbs/synthmodem-audio-dos.md#actual-editor-counterexample)
+now exposes a current failure: all BIOS key sequences are emitted, but Home/Insert
+semantics fail and the guest receives 126 bytes for 114 DOS bytes. An independent
+caller waveform decode matches all 114; three four-byte insertions appear before
+the Telnet application stream. The first Home fails before the first insertion.
+Normal DOS return, UART/timer restoration and unsaved-draft behavior pass;
+ECONNRESET and a 206-byte downstream close suffix remain recorded. Collect guest
+PCM/timing on this same route and isolate both receive integrity and editor
+fragmentation before claiming editor/transfer compatibility. The successful
+menu -09 checkpoint remains valid for its recorded scope; overall acceptance stays
+false.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

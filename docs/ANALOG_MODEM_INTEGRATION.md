@@ -142,6 +142,10 @@ and no modem result text leaking into online data. The
 preserves 64 online and 47,454 display bytes, restores UART/vector state and
 receives exactly one successful real registration-refresh response. Editors,
 transfers, Synchronet over audio and physical carrier acceptance remain open.
+The first actual audio editor run now fails key semantics and upstream integrity:
+the independent caller decode matches 114 DOS bytes while the guest receives 126.
+The [retained counterexample](../lab/bbs/synthmodem-audio-dos.md#actual-editor-counterexample)
+requires guest PCM/timing investigation before sustained hardware acceptance.
 The
 [combined lifecycle runtime](../lab/bbs/synthmodem-lifecycle.md) now verifies
 the pool-timer and REGISTER-ownership fixes through the actual VM/DSP path.

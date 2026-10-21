@@ -163,6 +163,58 @@ normal run verifies that candidate in the full DOS path. The exact historical
 
 ## Limits and remaining tasks
 
+### Actual editor counterexample
+
+`synthmodem-audio-editor-01` now reaches the actual stock message editor through
+the same carrier runtime. The ASPECT child handles login and the header, then
+returns. A test-only BIOS keyboard helper waits for the KEYTEST subject and
+initial INS status on the actual screen, and injects the existing editor recipe
+with three seconds between keys. It writes no product memory or serial replies.
+The final Alt-X closes the connection without a Save command. UART and timer
+vectors restore, the profile/server stay unchanged, and no draft is saved.
+
+This run fails acceptance. Home/End/Insert and later editing responses are wrong.
+Every requested BIOS key is emitted in order, but the guest receives 126 online
+bytes for 114 authored DOS bytes. Independent offline decoding of the captured
+caller waveform matches all 114 DOS bytes exactly. The guest inserts four bytes
+at each authored offset 90 (`67c26279`), 105 (`93da79a6`) and 112 (`811f37c0`). The
+complete guest stream still matches the Telnet application input, placing these
+extra bytes before that proxy's output. The first Home is at source offset75,
+before the first insertion, and its server cursor response already fails.
+This preserves distinct key-handling and receive-integrity questions rather
+than attributing every editor error to one cause.
+
+The downstream comparison finds an exact 48,781-byte prefix and a missing
+206-byte suffix at connection close. `read ECONNRESET` is retained in gateway
+errors. The current capture cannot establish whether that close/reset is solely
+an expected user-exit consequence. An additional terminal-originated Escape
+after the requested key recipe is recorded separately rather than trimmed.
+There is no guest PCM/arrival timing in this normal-image capture, so the cause
+of the upstream insertions is still unproven; NoDiscard's earlier controlled
+fix does not establish complete receive-path integrity.
+
+See the [failing editor receipt](../../docs/validation/synthmodem-audio-editor.json).
+Next collect actual guest PCM and timing on this editor route, isolate the
+receive failure and key-fragmentation behavior, then repeat editor and transfer
+acceptance. No keyboard buffering/server patch is silently substituted.
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/synthmodem_audio_dos.py \
+  --carrier --route editor \
+  --runtime build/bbs-lab/synthmodem-carrier-runtime-01/runtime \
+  --output build/bbs-lab/synthmodem-audio-editor-new
+./tools/modem-dev --command python3 lab/bbs/audit_synthmodem_audio_dos.py \
+  build/bbs-lab/synthmodem-audio-editor-new
+./tools/modem-dev --command node lab/bbs/diagnose_audio_caller.js \
+  build/bbs-lab/synthmodem-carrier-runtime-01/runtime \
+  build/bbs-lab/synthmodem-audio-editor-new
+./tools/modem-dev --command python3 lab/bbs/analyze_audio_integrity.py \
+  build/bbs-lab/synthmodem-audio-editor-new
+```
+
+The producer/auditor return failure for this retained counterexample. The
+integrity analyzer verifies the negative diagnosis, not a passing transport.
+
 The [carrier DOS receipt](../../docs/validation/synthmodem-carrier-dos.json)
 records the -09 route through the actual source-built terminal and ASPECT child.
 All menus, normal return, 42-byte UART snapshot, four-byte timer-vector snapshot,

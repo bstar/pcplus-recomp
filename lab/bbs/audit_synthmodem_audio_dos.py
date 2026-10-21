@@ -41,10 +41,29 @@ def main():
  checks['real_DOS_terminal_replies']=b'\x1b[?1;2c' in sent and bool(re.search(rb'\x1b\[\d+;\d+R',sent))
  rows=[json.loads(b) for b in (out/'server-session.jsonl').read_text().splitlines()]
  checks['authoritative_login']=sum(v.get('msg')=='User "loclab" successfully logged in' for v in rows)==1
- menus=[v['menuName'] for v in rows if v.get('menuName')];wanted=['mainMenu','messageBaseMainMenu','mainMenu','fileBaseMainMenu'];index=0
+ menus=[v['menuName'] for v in rows if v.get('menuName')];editor_route=r.get('route')=='editor'
+ wanted=['mainMenu','messageBaseMainMenu','messageBaseNewPost'] if editor_route else ['mainMenu','messageBaseMainMenu','mainMenu','fileBaseMainMenu'];index=0
  for m in menus:
   if index<len(wanted) and m==wanted[index]:index+=1
  checks['authoritative_menu_order']=index==len(wanted)
+ editor=None
+ if editor_route:
+  clean=re.sub(rb'\x1b\[[0-?]*[ -/]*[@-~]',b'',display).decode('cp437');body=clean[clean.find('KEYTEST'):]
+  positions=[(mode,int(row),int(col)) for mode,row,col in re.findall(r'(INS|OVR) (\d+),(\d+)',body)]
+  expected_body=b'ABCDE\x1b[HH\x1b[FE\x1b[D\x1b[3~\x1b[2~Z\tT\x1b[5~\x1b[6~\x19UNSAVED'
+  start=online.find(b'ABCDE');keyboard=online[start:] if start>=0 else b''
+  checks['all_actual_BIOS_editor_keys_in_order']=start>=0 and keyboard.startswith(expected_body)
+  checks['Home_changes_cursor_before_H']=positions[:7]==[('INS',1,col) for col in (2,3,4,5,6,1,2)]
+  checks['End_and_Delete_apply_to_draft']=positions[7:11]==[('INS',1,col) for col in (7,8,7,7)]
+  checks['Insert_changes_to_overtype']=positions[11:13]==[('OVR',1,col) for col in (7,8)]
+  checks['Tab_advances_and_page_keys_preserve_boundary']=positions[13:17]==[('OVR',1,col) for col in (9,10,10,10)]
+  checks['CtrlY_clears_line_before_final_text']=positions[17:25]==[('OVR',1,col) for col in range(1,9)]
+  screen=(out/'SCREEN.BIN').read_bytes();last='\n'.join(screen[i*160:i*160+160:2].decode('cp437') for i in range(25)) if len(screen)==4000 else ''
+  checks['unsaved_final_line_visible']='UNSAVED' in last
+  checks['draft_never_saved']=not any('posted message to' in v.get('msg','') for v in rows)
+  editor={'positions':positions,'expected_body_hex':expected_body.hex(),'actual_DOS_body_hex':keyboard.hex(),
+   'post_keyboard_DOS_tail_hex':keyboard[len(expected_body):].hex() if keyboard.startswith(expected_body) else None,
+   'scope':'Actual BIOS-to-serial key sequence and authoritative editor cursor/mode responses. Page keys cover a one-line boundary only; connection closes without Save.'}
  checks['script_and_normal_DOS_return']=(out/'SCRIPT.OK').is_file() and (out/'SCRIPT.OK').read_bytes()==b'PASS' and (out/'PASS.TXT').is_file() and not (out/'FAIL.TXT').exists()
  def read(name):return (out/name).read_bytes() if (out/name).is_file() else b''
  checks['actual_UART_restored']=len(read('BEFORE.BIN'))==42 and read('BEFORE.BIN')==read('AFTER.BIN')
@@ -66,6 +85,6 @@ def main():
    'BBS_input_sha256':hashlib.sha256(sent).hexdigest(),'BBS_display_sha256':hashlib.sha256(display).hexdigest(),
    'display_offset_in_caller':display_at,'expected_bridge_bytes':len(bridge),'full_caller_sha256':hashlib.sha256(caller).hexdigest(),'guest_DATA_RX_bytes':len(data),'pre_proxy_training_tail_bytes':dropped,
    'pre_proxy_training_tail_hex':bytes(data[:dropped]).hex(),'unadjusted_serial_guest_identity':online==data},
-  'scope':'Independent read-only actual DOS/ASPECT, BBS authoritative logs, guest frames, serial/Telnet byte identity, RTP continuity, SIP and cleanup audit. No physical modem/ATA claim.'}
+  'editor':editor,'scope':'Independent read-only actual DOS/ASPECT, BBS authoritative logs, guest frames, serial/Telnet byte identity, RTP continuity, SIP and cleanup audit. No physical modem/ATA claim.'}
  (out/'independent-audit.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2));return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())
