@@ -61,6 +61,13 @@ runtime changes only d-modem. The full current DOS/Synchronet reconnect campaign
 it has no acceptance result yet. ENiGMA, sustained timing, physical commissioning
 and all F01–F16 application gates remain required.
 
+The ENiGMA runner now accepts the same explicit buffered-runtime proof for its
+existing editor/download/menu/upload routes. A
+[read-only preparation record](docs/validation/buffered-enigma-preflight.json)
+verifies the42 runtime files, live owned pinned/clean ENiGMA tree and CLI profile
+selection/rejection. It starts no audio or DOS session and closes no ENiGMA gate;
+the actual editor/transfer repeats follow the active Synchronet campaign.
+
 The hardware target's [work order and completion gates](docs/ANALOG_MODEM_INTEGRATION.md#work-order-and-completion-gates)
 prioritize carrier/data separation and full audio-path pressure/editor/transfer
 checks before physical commissioning. Boca identification and adapter arrival

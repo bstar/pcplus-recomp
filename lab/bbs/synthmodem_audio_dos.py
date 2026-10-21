@@ -19,7 +19,14 @@ from directory_test_support import accounting_check
 from test_terminal import SAMPLER
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--receive-trace',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--carrier-trace',action='store_true');p.add_argument('--key-framing',action='store_true');p.add_argument('--key-framing-trace',action='store_true');p.add_argument('--syscall-trace',action='store_true');p.add_argument('--route',choices=['menus','editor','download','upload'],default='menus');p.add_argument('--fixture-lab',type=Path);p.add_argument('--upload-cancel',action='store_true');p.add_argument('--upload-cancel-retry',action='store_true');p.add_argument('--upload-key-checks',type=Path);p.add_argument('--posttrain-hold',action='store_true');a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--receive-trace',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--carrier-trace',action='store_true');p.add_argument('--key-framing',action='store_true');p.add_argument('--key-framing-trace',action='store_true');p.add_argument('--syscall-trace',action='store_true');p.add_argument('--route',choices=['menus','editor','download','upload'],default='menus');p.add_argument('--fixture-lab',type=Path);p.add_argument('--upload-cancel',action='store_true');p.add_argument('--upload-cancel-retry',action='store_true');p.add_argument('--upload-key-checks',type=Path);p.add_argument('--posttrain-hold',action='store_true')
+ p.add_argument('--buffered-runtime-proof',type=Path,help='Validated normal200ms d-modem runtime receipt')
+ a=p.parse_args()
+ # The buffered image has the same normal post-training/key-framing sources;
+ # its explicit receipt selects only the different d-modem binary.
+ if a.buffered_runtime_proof:
+  assert not any((a.lifecycle,a.carrier,a.carrier_trace,a.key_framing,a.key_framing_trace,a.receive_trace,a.dmodem)),'Choose one pinned runtime profile'
+  a.posttrain_hold=True
  if a.posttrain_hold:a.key_framing=True
  a.upload_cancel=a.upload_cancel or a.upload_cancel_retry
  if a.upload_cancel:assert a.route=='upload' and a.fixture_lab and a.upload_key_checks,'Cancellation requires an explicit isolated upload fixture'
@@ -33,7 +40,10 @@ def main():
  trace=a.receive_trace or a.carrier_trace or a.key_framing_trace
  runtime=a.runtime.resolve();out=a.output.resolve();assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
  ledger=ROOT/'docs/validation/synthmodem-gateway.json';prior=json.loads(ledger.read_text());assert prior['passed']
- if a.posttrain_hold:
+ if a.buffered_runtime_proof:
+  from synthmodem_buffered_runtime import validate as validate_buffered
+  runtime_inputs=validate_buffered(runtime,a.buffered_runtime_proof)
+ elif a.posttrain_hold:
   from synthmodem_posttrain_validation import validate as validate_posttrain
   runtime_inputs=validate_posttrain(runtime)
  elif a.key_framing:runtime_inputs=validate_key_framing_runtime(runtime,trace=a.key_framing_trace)
@@ -65,6 +75,7 @@ def main():
  if a.carrier_trace:names+=['lab/bbs/synthmodem_carrier_trace_runtime.py','docs/validation/synthmodem-carrier-trace-runtime.json']
  if a.key_framing:names+=['lab/bbs/synthmodem_key_framing_runtime.py','docs/validation/synthmodem-key-framing-runtime.json','lab/bbs/patches/synthmodem-key-framing/InputSequenceFramer.js','lab/bbs/patches/synthmodem-key-framing/proxy.patch']
  if a.posttrain_hold:names+=['lab/bbs/synthmodem_posttrain_runtime.py','lab/bbs/synthmodem_posttrain_validation.py','lab/bbs/check_posttrain_hold.js','docs/validation/synthmodem-posttrain-runtime.json']
+ if a.buffered_runtime_proof:names+=['lab/bbs/synthmodem_buffered_runtime.py','lab/bbs/check_buffered_dmodem_build.py','nix/dmodem.nix','tools/build-dmodem',str(a.buffered_runtime_proof.resolve().relative_to(ROOT))]
  if a.key_framing_trace:names+=['docs/validation/synthmodem-key-framing-trace-runtime.json','lab/bbs/synthmodem_carrier_trace_runtime.py','docs/validation/synthmodem-carrier-trace-runtime.json']
  if a.dmodem:names+=['docs/validation/synthmodem-jitter-policy.json','nix/dmodem.nix','tools/build-dmodem']
  download_path=download_before=None
@@ -265,7 +276,7 @@ exit
   checks['posttransfer_filename_visible']=('PCXTEST.BIN' if a.upload_cancel and not a.upload_cancel_retry else audio_upload.NAME) in text
  result={'passed':all(checks.values()),'checks':checks,'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'server_inputs':server_inputs,'server_root':str(enigma.SOURCE),'server_fixture':server_fixture,
   'generated_inputs':generated,'tool_inputs':tool_inputs,'syscall_trace':a.syscall_trace,'clock_anchors':clock_anchors,'server_revision':enigma.COMMIT,'server_menus':menus,'script_stages':read('STAGES.LOG').decode('ascii'),'login_readiness':'WAITFOR plus reused one-shot WHEN latch','receive_trace':a.receive_trace,'dmodem_variant':a.dmodem,'lifecycle':a.lifecycle,'carrier':a.carrier,'carrier_trace':a.carrier_trace,'key_framing_trace':a.key_framing_trace,'input_sequence_timeout_ms':250 if a.key_framing else 0,
-  'DOS_screen':text,'gateway':n,'route':a.route,'upload_cancel':a.upload_cancel,'upload_cancel_retry':a.upload_cancel_retry,'posttrain_hold':a.posttrain_hold,'editor':editor,'download':download,'upload':upload,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
+  'DOS_screen':text,'gateway':n,'route':a.route,'upload_cancel':a.upload_cancel,'upload_cancel_retry':a.upload_cancel_retry,'posttrain_hold':a.posttrain_hold,'buffered_runtime_proof':str(a.buffered_runtime_proof.resolve().relative_to(ROOT)) if a.buffered_runtime_proof else None,'editor':editor,'download':download,'upload':upload,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
   'scope':'Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to the explicitly recorded owned ENiGMA board. Any receiver candidate is separately identified; no unmodified-stock, physical modem/ATA/UART or whole-application claim follows from a candidate result.'}
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'passed':result['passed'],'checks':checks,'result':str(out/'result.json')},indent=2));return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "audio_run": false,
+  "compatibility_accepted": false,
+  "owned_ENiGMA_pid": 3135978,
+  "server_revision": "6c25317168b762f7d9088a54d3f8295438827a0e",
+  "runtime_files_verified": 42,
+  "checks": {
+    "runtime_receipt_valid": true,
+    "owned_server_live_at_recording": true,
+    "server_tracked_tree_clean": true,
+    "CLI_accepts_buffered_option": true,
+    "conflicting_profile_rejected_before_output_or_audio": true
+  },
+  "inputs": {
+    "lab/bbs/synthmodem_audio_dos.py": "9489f2e3944fd379aa6321d083a6caf2c2dddfe6b6efff43560b37c078faea10",
+    "lab/bbs/synthmodem_buffered_runtime.py": "8b915beae3bd098b1f5da9f402572d8bc1f0f0f4d5946a10b98de40d435b74ad",
+    "lab/bbs/check_buffered_dmodem_build.py": "6158623ee144ec3b650a2131d83489f64987be6f7c6b331c8a48acd4fd384200",
+    "lab/bbs/enigma.py": "526fcd6eb468ec7a85630685872d27a937abbc6b61f48ad8391a2353e5686017",
+    "build/bbs-lab/synthmodem-buffered-runtime-01/result.json": "fcfc4e91b2d8b0e80caf8b837bffe8ae67fad81e9ce6b59793e02e6b6fb2c2dd"
+  },
+  "scope": "Read-only runtime/server preparation plus actual CLI help/conflict checks. No new audio/DOS/ENiGMA compatibility acceptance; the current Synchronet audio run is left alone."
+}

@@ -7,6 +7,26 @@ byte passes through the real originating DSP, PCMU/RTP, external/internal SIP,
 CallSession, pool, guest answering DSP, rebuilt helper and Telnet proxy.
 There is no direct DOS-to-BBS data shortcut.
 
+The200ms no-discard candidate has a separate
+[controlled timing record](../../docs/validation/synthmodem-buffered-timing.json).
+To repeat the editor workflow with that validated normal runtime:
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/synthmodem_audio_dos.py \
+  --runtime build/bbs-lab/synthmodem-buffered-runtime-01/runtime \
+  --buffered-runtime-proof build/bbs-lab/synthmodem-buffered-runtime-01/result.json \
+  --route editor --output build/bbs-lab/current-enigma-editor-audio-NEW
+./tools/modem-dev --command python3 lab/bbs/audit_synthmodem_audio_dos.py \
+  build/bbs-lab/current-enigma-editor-audio-NEW
+```
+
+The explicit proof validates the selected binary and every runtime file. It
+selects the normal post-training hold and250ms key framer; combining it with
+an alternative carrier, trace or d-modem profile is rejected before opening an output directory or
+starting audio. The same option supports the other existing routes. Run audio
+cohorts sequentially and keep the existing byte, editor, server, SIP and cleanup
+gates. Runtime/CLI preparation alone does not establish current ENiGMA acceptance.
+
 The preferred normal test image now combines the Nix-built DISCARD_NONE d-modem,
 [lifecycle fixes](synthmodem-lifecycle.md) and
 [carrier-channel integration](synthmodem-carrier.md). Cohort -09 passes 19 producer,
