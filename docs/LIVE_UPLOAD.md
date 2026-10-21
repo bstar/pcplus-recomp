@@ -5,6 +5,14 @@ at most63 bytes. Use HARD or NONE to match the modem; SOFT is rejected before
 prompting or opening because its ISR consumes valid binary flow-control bytes.
 Escape cancels, and Alt-X cancels then exits through normal cleanup.
 
+Select the remote upload protocol and wait for the complete receiver-ready
+message before pressing Alt-S. The recovered initial handshake has a bounded
+attempt count that can be exhausted by a receiver's banner if the local sender
+starts too early. A linked reproduction confirms this sensitivity; it has not
+been fixed by changing the native sender. The
+[same-call audio retry work](SYNCHRONET_AUDIO_RETRY.md) preserves a failed early
+start and tests a recipe that waits for the complete remote banner.
+
 The source is opened read-only and remains unchanged. The maintained bridge
 supplies the recovered sender with one checked physical handle, full32-bit
 length/read accounting and exactly-once close. See [source ownership and
