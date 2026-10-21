@@ -185,10 +185,19 @@ helper retirement and real postcancel input, in addition to complete stream and
 hardware/ownership audits. No successful file upload is expected or claimed.
 
 The [preparation receipt](../../docs/validation/audio-upload-cancel-preparation.json)
-accepts only the observer and isolated-board prerequisites. Audio cohort01 is
-running; no actual cancellation acceptance follows yet. Inputs stay frozen
-through producer exit and all independent same-run audits. Temporary receiver
-files and retry need separate evidence.
+accepts only the observer and isolated-board prerequisites. The
+[completed cancellation01](../../docs/validation/synthmodem-audio-upload-cancel-01.json)
+passes all75 producer/byte/ownership/client-cancellation gates and four control-
+time negative mutants. Exact1976 DOS online bytes and56270 display bytes survive;
+source/stat, real postcancel search/list and normal hardware/timer restoration
+pass. All56479 frontend bytes complete with zero skipped/failed/pending bytes.
+
+Overall cancellation acceptance remains false. The helper exits1/signal0 and
+leaves an exact1024-byte source prefix in its logged receive temporary path.
+The observation and exclusive ignored backup preserve it without deleting the
+original. No official file is installed. The recorder verifies the original
+stock source/helper/upload, complete offline decode and frozen inputs/captures.
+Retry and temporary cleanup remain separate open requirements.
 
 ```sh
 ./tools/dev --command python3 lab/bbs/check_audio_upload_keys.py \
@@ -202,3 +211,23 @@ files and retry need separate evidence.
 # After natural producer exit: run independent byte/cleanup and ownership
 # audits, then audio_upload_cancel.py on that same fresh cohort.
 ```
+
+
+After the producer exits naturally, run the independent audits on its cohort:
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/audit_synthmodem_audio_dos.py COHORT
+./tools/modem-dev --command python3 lab/bbs/audit_serial_io_evidence.py COHORT
+./tools/modem-dev --command node lab/bbs/diagnose_audio_caller.js RUNTIME COHORT
+./tools/modem-dev --command python3 lab/bbs/audio_upload_cancel.py COHORT
+./tools/dev --command python3 lab/bbs/check_audio_upload_cancel_timing.py COHORT
+./tools/dev --command python3 lab/bbs/record_audio_upload_cancel.py COHORT \
+  --output docs/validation/synthmodem-audio-upload-cancel-NEW.json
+```
+
+The timing verifier checks metadata/ZRPOS/data/ACK/CAN/search causality on one
+actual frontend timeline. Premature ZRPOS, premature ACK, ACK after cancellation
+and cancellation before valid data must all fail when only copied times change.
+The recorder additionally requires the retained-temp observation/backup made
+from the exact session-log path after helper exit. Its zero exit means this
+mixed result is consistent; the canonical receipt keeps `passed: false`.

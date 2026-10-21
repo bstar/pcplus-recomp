@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Upload03 passes all82 producer and independent checks on the explicitly isolated ENiGMA receiver-finish candidate: exact11521-byte file,12 unreplayed packets, complete bidirectional bytes, closing ownership, actual return workflow and normal cleanup. Candidate acceptance is scoped to this modified helper and V22/1200 software audio runtime at fixed38400 DTE. Stock upload02 retains its late-OO failure. Physical, other-peer, pressure/cancel/loss and F01-F16 requirements remain open.",
+  "status": "Latest audio cancellation01 passes all75 client producer/byte/ownership/cancellation gates and four timing negatives, with responsive same-session search/list and normal DOS cleanup. Overall cancellation remains false: receiver-owned1024-byte partial retained after helper exit1. Prior modified-helper upload03 and stock download03 acceptance remain scoped and unchanged. Stock upload closing, receiver cleanup/retry, pressure/loss, other peers, physical and F01-F16 gates remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3681,16 +3681,20 @@
       "receipt_sha256": "fffc423ecd8ddc5e182efe1c4c5ef2eb65b19b11959dbad5f176ce0c94841d2d"
     },
     "synthmodem-audio-upload-cancel-01": {
-      "status": "running",
-      "passed": null,
+      "status": "client_recovery_passed_receiver_temp_cleanup_failed",
+      "passed": false,
       "variant": "isolated ENiGMA with Nix receiver-finish candidate; progress-triggered BIOS Escape",
       "fixture_lab": "build/bbs-lab/enigma-audio-cancel-candidate-01",
       "preparation_receipt": "docs/validation/audio-upload-cancel-preparation.json",
-      "acceptance": "Pending actual producer and independent CRC/ACK/CAN, complete stream, source/storage, return and cleanup gates",
+      "acceptance": "All75 client workflow gates and four timing negatives pass; retained1024-byte receiver partial keeps overall cancellation acceptance false.",
       "binary_sha256": "a656cf665f3d3cb81bdd06b738bb72b6ed230d299244d4ae12c1c0336f280a89",
       "source_bytes": 11521,
       "DTE_bps": 38400,
-      "software_carrier_bps": 1200
+      "software_carrier_bps": 1200,
+      "client_cancellation_workflow_passed": true,
+      "receiver_temporary_cleanup_passed": false,
+      "receipt": "docs/validation/synthmodem-audio-upload-cancel-01.json",
+      "receipt_sha256": "24c73f8171eaee9ba30a90aaa0edf4cb030c9f7771fc11d5758e826e31194fde"
     }
   },
   "diagnosis": {
@@ -3742,8 +3746,8 @@
     "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
     "Extend the accepted modified-helper fixed-DTE slow-carrier upload to pressure/cancel/loss and other peers; retain every CRC/finish,storage,post-helper input and cleanup gate."
   ],
-  "current_cohort": "synthmodem-audio-upload-03",
-  "latest_cohort_passed": true,
+  "current_cohort": "synthmodem-audio-upload-cancel-01",
+  "latest_cohort_passed": false,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
     "offline_caller_equals_DOS_online": true,
@@ -3802,5 +3806,6 @@
   "accepted_candidate_upload_cohort": "synthmodem-audio-upload-03",
   "upload_response_fault_receipt": "docs/validation/zmodem-upload-response-faults.json",
   "upload_response_fault_receipt_sha256": "f4c1538a3a53640d0d09e5ee37a4519c4e7e3f69452cea4ecfe73fb8e359b7e9",
-  "active_fault_cohort": "synthmodem-audio-upload-cancel-01"
+  "audio_upload_cancellation_receipt": "docs/validation/synthmodem-audio-upload-cancel-01.json",
+  "audio_upload_cancellation_receipt_sha256": "24c73f8171eaee9ba30a90aaa0edf4cb030c9f7771fc11d5758e826e31194fde"
 }

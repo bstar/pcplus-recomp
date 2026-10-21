@@ -286,10 +286,19 @@ unchanged. The opt-in `--upload-cancel` mode waits for visible confirmed KiB,
 injects BIOS Escape, then requires a real PCXTEST search/list. A dedicated
 passive auditor requires CRC-valid source data and a peer ACK before CAN, no
 premature EOF, absent official installation, exact complete streams and normal
-cleanup. Full-upload auditors explicitly reject cancellation cohorts. Actual
-audio cancellation cohort01 is running with all source/runtime/auditor inputs
-frozen; preparation grants no actual cancellation acceptance. Retry, temporary
-server-file cleanup, pressure/loss, physical and F01-F16 gates remain open.
+cleanup. Full-upload auditors explicitly reject cancellation cohorts. The
+[completed cancellation01](docs/validation/synthmodem-audio-upload-cancel-01.json)
+passes all75 client workflow checks and four control-time negative mutants:
+CRC-valid1024-byte source and peer ACK precede CAN, all1976 online DOS bytes and
+56270 display bytes survive exactly, actual search/list resumes, source/stat
+remain unchanged and normal DOS/UART/PIC/IRQ/timer restoration passes. All56479
+frontend bytes complete with no skipped/failed/pending bytes. Overall
+cancellation acceptance stays false: after helper exit1/signal0, the exact1024-
+byte source prefix remains in its receiver-owned temporary directory. An
+exclusive ignored copy preserves that partial and the original is untouched.
+The recorder revalidates frozen inputs, raw captures, complete independent
+caller decode, current official absence and stock preservation. Retry,
+receiver cleanup, pressure/loss, physical and F01-F16 gates remain open.
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
