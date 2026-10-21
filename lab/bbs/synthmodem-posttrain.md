@@ -42,8 +42,9 @@ application requirements remain open.
 ## Fresh audio retry
 
 The [fresh board preparation](../../docs/validation/audio-posttrain-retry-preparation.json)
-passes navigation/isolation and binds the sealed component runtime. Audio
-retry02 is running. The explicit profile includes the existing key framing;
+passes navigation/isolation and binds the sealed component runtime. The
+[completed retry02](../../docs/validation/synthmodem-audio-upload-retry-02.json)
+passes all81 producer and independent workflow gates. The explicit profile includes the existing key framing;
 the DOS binary, source size, DTE, DSP and receiver helper are unchanged.
 
 ```sh
@@ -59,4 +60,14 @@ Use a fresh prepared board and cohort. After natural producer exit, run the
 independent complete byte/cleanup, ownership, offline caller, v2 retry, control-
 time and final relay-closure audits. Passing cohorts use the timing verifier
 without `--protocol-only`; failed cohorts retain any separate failure. Inputs
-stay frozen through all audits. No new audio/physical acceptance is recorded yet.
+stay frozen through all audits. Retry02 logs6002ms, preserves exact14361 online
+DOS and78322 display bytes, completes12 unreplayed data packets and the exact
+11521-byte official file, then resumes real search/list with normal hardware/
+timer restoration. All78531 frontend bytes complete without skipped/failed/
+pending bytes. Final OO reaches the relay before helper exit, with both
+premature-control mutants rejected under full passing transfer audit. Stock
+helper/upload and prior captures remain unchanged.
+
+This accepts this explicit timer/receiver candidate audio workflow. It does not
+close unmodified-stock behavior, receiver partial cleanup, broader sustained
+pressure/cancel/loss, Synchronet audio, physical or F01-F16 gates.

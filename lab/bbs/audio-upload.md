@@ -304,3 +304,26 @@ The isolated [minimum-hold candidate](../../docs/validation/synthmodem-posttrain
 now passes15 actual-method checks, including a real default6000ms Node timer.
 Only CallSession changes in the separately staged runtime. See
 [minimum-hold repair](synthmodem-posttrain.md); no new audio acceptance follows.
+
+
+## Accepted candidate cancel/retry
+
+[Retry02](../../docs/validation/synthmodem-audio-upload-retry-02.json) passes all81
+producer/byte/ownership/retry gates on the explicitly isolated receiver and
+monotonic minimum-hold runtime. Hold6002ms, exact14361 online DOS bytes and78322
+display bytes, full11521-byte official file,12 unreplayed retry packets, source/
+stat preservation, normal hardware/timer cleanup and actual search/list all
+validate. Both timing negatives reject without protocol-only mode, and required
+OO reaches the actual relay before final helper retirement. Original stock
+source/helper/upload and previous captures remain preserved. The old5999ms
+retry01 failure stays unchanged.
+
+The new recorder seals only this modified-runtime/helper workflow:
+
+```sh
+./tools/dev --command python3 lab/bbs/record_candidate_audio_retry.py COHORT \
+  --output docs/validation/synthmodem-audio-upload-retry-NEW.json
+```
+
+Unmodified-stock closing, receiver temporary cleanup, sustained pressure/loss,
+other peers, physical Boca/SPA2102 and full application requirements remain open.

@@ -336,12 +336,22 @@ and F01-F16 requirements remain open.
 The [fresh post-training retry prerequisites](docs/validation/audio-posttrain-retry-preparation.json)
 now pass navigation/isolation on another private board. `--posttrain-hold`
 selects the exact sealed timer candidate with the same key framing, DOS binary,
-payload,38400 DTE, V22/1200 DSP and receiver helper. Audio retry02 is running;
-all inputs/auditors remain frozen. The timing verifier supports passing retry
-cohorts without protocol-only mode and still rejects both premature controls
-on the retained failed retry01 under explicit protocol-only mode. All previous
-receipts/captures remain unchanged. No new audio acceptance follows until every
-same-run byte/protocol/source/storage/return/cleanup and minimum-hold gate passes.
+payload,38400 DTE, V22/1200 DSP and receiver helper. The
+[completed retry02](docs/validation/synthmodem-audio-upload-retry-02.json) now
+passes all81 producer/independent workflow gates: valid first data/ACK/CAN,
+full11521-byte retry with12 unreplayed packets, exact official storage/source/
+stat, actual search/list and normal DOS/UART/PIC/IRQ/timer restoration. The
+minimum hold logs6002ms; all14361 online DOS bytes and78322 display bytes
+survive exactly. All78531 frontend bytes complete with no skipped/failed/pending
+bytes. Required OO reaches the relay before final helper retirement, and both
+premature-control mutants reject without protocol-only mode. The recorder
+revalidates every frozen input/capture, exact offline caller identity, sealed
+timer runtime and original stock/helper/upload preservation. Prior failed and
+accepted receipts/captures stay unchanged. This accepts only the explicit
+modified timer/receiver audio workflow; stock closing, temporary cleanup,
+sustained pressure/loss, other peers, physical and F01-F16 remain open. Next
+software work is actual Synchronet through SIP/audio/DOS and broader pressure/
+carrier-loss workflows using the pinned runtime.
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
