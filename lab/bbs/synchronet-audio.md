@@ -1,5 +1,37 @@
 # Actual DOS through audio to Synchronet
 
+## Current terminal download repeat
+
+The [current-build receipt](../../docs/validation/current-synchronet-download-audio-01.json)
+validates terminal `976ba8d0` with source-built ASPECT `aef146fd` through the
+normal, untraced SIP/RTP/V.22-1200 runtime and unchanged owned stock Synchronet.
+All 25 producer, 34 independent, 12 serial ownership, six official metadata and
+four control-timing checks pass. The received 11,521 source bytes plus 127 SUB
+padding bytes are exact; fourteen integrity-checked blocks and the two-EOT
+NAK/ACK finish precede return through Files/Main and normal DOS cleanup.
+All 121 upstream online bytes and 47,237 BBS display bytes match across their
+independent stream checks. Offline caller decoding independently matches DOS
+input. This current-version result does not extend historical upload/cancel/retry
+or ENiGMA results to the current terminal, nor establish loss/reconnect, sustained
+pressure or physical modem compatibility.
+
+The [retained environment diagnosis](../../docs/validation/current-audio-metadata-environment.json)
+records the first read-only metadata command's exit 127: the modem shell lacks
+`libmosquitto.so.1` for the official Synchronet `jsexec`. Run that check with the
+BBS shell; the protocol/audio producer remains in the modem shell:
+
+```sh
+./tools/bbs-dev --command python3 lab/bbs/audit_synchronet_download_metadata.py COHORT
+```
+
+The original literal-count auditor still rejects its known EOT-count assumption;
+the existing corrected auditor passes the complete wire/control accounting.
+Both reports and the failed environment command remain retained. The central
+[audio ledger](../../docs/validation/synthmodem-audio-dos.json) distinguishes
+these current and historical acceptance scopes.
+
+## Original preparation and navigation
+
 The owned official archived Synchronet snapshot remains on127.0.0.1:23231.
 The independent reference route logs in with the synthetic account, reads
 bulletin1, visits Files, returns to Main, reads the empty Local General/Notices

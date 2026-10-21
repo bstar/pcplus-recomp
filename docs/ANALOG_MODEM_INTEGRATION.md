@@ -438,7 +438,7 @@ this order; completing a software gate never checks off a hardware gate.
 
 | Order | Work item | Evidence needed to close it |
 | --- | --- | --- |
-| 1 — software | Separate carrier status from online payload in the VM helper. | Literal `NO CARRIER` and fragmented status-like bytes survive binary payloads; actual carrier loss stops queued transmission and ends the session without replaying stale bytes. The current in-band matcher remains a concrete open defect. |
+| 1 — software | Separate carrier status from online payload in the VM helper. | The [structured carrier checkpoint](validation/synthmodem-carrier.json) verifies literal status text as payload, real software waveform loss, and retirement of queued writes. Full current DOS/SIP/audio loss and redial remain separate acceptance work. |
 | 2 — software | Complete flow-pressure and BBS workflow coverage on the combined runtime. | Sustained duplex counts/hashes, bounded queues, recovery after stalls, and actual Synchronet/ENiGMA editor and upload/download sessions through SIP/audio/DSP. Separate synthetic transport results do not close this gate. |
 | 3 — hardware identification | Identify the Boca and obtain matching documentation. | Model/chipset/firmware, UART, COM/base/IRQ, supported modulation and documented initialization, speaker, fixed-DTE, flow and carrier commands. Leave the Boca initialization profile unset until those facts are available. |
 | 4 — adapter commissioning | Save the SPA2102 configuration and configure PHONE 1 routing/audio using existing firmware. | Recorded firmware/settings and a reachable Linux SIP endpoint, then a real audible handshake, modem CONNECT, DCD assertion and `CONNECT>` in PCPlus. Adapter arrival is required. |
@@ -462,7 +462,7 @@ acceptance; historical checkpoint sections above describe their own frozen input
 | Area | Software evidence available | Still required |
 | --- | --- | --- |
 | Serial/controller | Linked and DOS synthetic-call tests cover selectable DTE, numeric dialing, DCD history/loss, DTR cleanup and timeout budgets. | Actual Boca identity/results, COM/IRQ, CTS/RTS, DCD/DTR and UART load. |
-| Telnet/CP437/binary transport | Codec/gateway all-byte checks and rebuilt DOS/audio main/message/file route pass; synthetic-call BBS transfer receipts exist. | Editors/transfers over the complete audio path; helper status/data ambiguity; physical display and transfers. |
+| Telnet/CP437/binary transport | Codec/gateway all-byte checks, scoped ENiGMA editor/download audio, Synchronet editor/download/upload audio and same-call retry receipts exist. Structured carrier status has separate software evidence. | Revalidate exact current binaries per workflow, broader display/transfer cases, sustained load, audio loss/reconnect and physical display/transfers. Historical receipts are not implicit current-version passes. |
 | Modem data pressure | Node writer and booted i386 helper pass separate and composed pressure checks; normal software gateway runs. | Sustained pressure through normal DSP; resolve native DSP flow credit and serial-to-BBS TCP pressure. |
 | Answering protocol | Actual native/VM software training and exact data pass at V.22/1200; explicit V32bis profile enters datapump132 directly. | A shared protocol with this Boca, physical training, V.8 and negotiated V.32bis/14400 connectivity. |
 | Hardware/audio | Equipment and topology selected; adapter ordered. | All analog connection, audible handshake and end-to-end acceptance. |
@@ -504,3 +504,34 @@ redacted private settings, COM/base/IRQ/UART, DTE/8N1/flow, modem identity/resul
 ATA settings/firmware, bridge backend/revision, BBS version, topology, timestamps,
 byte counts/hashes and observed failures. Keep credentials, private dialing
 files, disk images and raw private session captures outside the public repo.
+
+## Current software acceptance boundary
+
+The [central audio ledger](validation/synthmodem-audio-dos.json) is the current
+index of version-bound software results and remaining failures. Historical
+sections above retain the scope of their original runs. In particular,
+Synchronet uploads, cancellation and same-call retry now have scoped audio
+evidence; indexed partial-file cleanup remains failed. These results do not
+close the entire sustained-data or transfer matrix.
+
+The [current Synchronet download repeat](validation/current-synchronet-download-audio-01.json)
+now validates terminal `976ba8d0` over actual software SIP/RTP/V.22-1200 audio:
+exact source/CRC/control finish, Files/Main, complete upstream/downstream byte
+identity, official metadata and DOS/UART/timer cleanup. Current upload, cancellation,
+same-call retry and ENiGMA audio workflows still need their own current-version
+results. This is a download baseline for the next audio fault campaign.
+
+The [current DOS carrier checkpoint](CURRENT_DOS_CARRIER.md) accepts terminal
+`976ba8d0` losing a connection after a real partial receive, observing emulated
+DCD loss, redialing and completing the exact retry through ENiGMA. DOSBox-X's
+built-in modem supplies that DCD transition. The existing SIP/audio DOS fixture
+instead uses a null-modem UART and synthetic Hayes responses; its DCD is held
+ready. A successful audio transfer through that fixture cannot prove the DOS
+carrier-loss path. A combined test must derive the DOS carrier transition from
+actual audio/SIP failure, retain the interrupted-transfer evidence, and verify
+fresh training, login and retry on a subsequent call.
+
+Remote Telnet close is a different case: the bridge may return to `CONNECT>`
+while the analog carrier remains up. Do not convert that event into a modem
+hangup merely to reuse the emulated-DCD test. Physical Boca/SPA2102 commissioning
+and negotiated higher-speed compatibility remain unverified.

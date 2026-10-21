@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "modem_shell_metadata_exit": 127,
+  "missing_library": "libmosquitto.so.1",
+  "bbs_shell_metadata_passed": true,
+  "metadata_checks": {
+    "official_name_and_size": true,
+    "official_payload_hashes": true,
+    "official_download_count_advanced_once": true,
+    "authoritative_success_log": true,
+    "source_still_exact": true,
+    "server_inputs_preserved": true
+  },
+  "capture_sha256": {
+    "build/bbs-lab/current-synchronet-download-audio-01/metadata-modem-shell-failure.json": "4c6402c3b3f65190590c2138270ef1db9c83f987cc12394b874b4bd68843046a",
+    "build/bbs-lab/current-synchronet-download-audio-01/audit_synchronet_download_metadata.py.stderr": "4f78baa3d4d8c70adc8a59b9025a2bdbcb44a155464740c748b759594ba1fa5a",
+    "build/bbs-lab/current-synchronet-download-audio-01/metadata-bbs-shell.stdout": "0ad31ad0e6edded144df42c8be3fde95ba3bed232f969271194baceb96ea0056",
+    "build/bbs-lab/current-synchronet-download-audio-01/download-metadata-audit.json": "0ad31ad0e6edded144df42c8be3fde95ba3bed232f969271194baceb96ea0056"
+  },
+  "toolchain_inputs": {
+    "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
+    "tools/bbs-dev": "8b612f697c23466c10f48f31370afa469dce4331e5af6aca971f4fecf34388fa",
+    "nix/flake.nix": "e7291a75d578ce04fffc090ba804f4ae35e3fce295d5eecbbac369e481e9cba0",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+  },
+  "scope": "Retained lab command-environment failure; the read-only official Synchronet metadata tool requires the BBS Nix shell. The real audio/DOS producer and its independent protocol checks were already complete and are unchanged."
+}

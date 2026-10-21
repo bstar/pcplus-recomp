@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Native3b startup and early-start same-call audio retry remain accepted at their frozen scope. UI banking and current976 startup ESC-restart have separate component/DOS evidence. Current976 also passes emulated-DCD ENiGMA partial-loss/redial/retry/NFO and a 31-product clean-source rebuild. This does not validate current-build SIP/audio loss/reconnect. Indexed partial cleanup, sustained pressure, stock ZMODEM closing, physical Boca/SPA2102 and F01-F16 remain open.",
+  "status": "Current976 passes stock Synchronet XMODEM-CRC download through real SIP/RTP/V22-1200 audio, with 25 producer,34 independent,12 ownership,6 metadata and4 control-timing checks. Current976 also passes emulated-DCD ENiGMA partial-loss/redial/retry/NFO and a 31-product clean-source rebuild. Historical native3b startup/cancel/same-call retry audio keeps its frozen scope. Current-build SIP/audio loss/reconnect, indexed partial cleanup, sustained pressure, stock ZMODEM closing, physical Boca/SPA2102 and F01-F16 remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3907,7 +3907,7 @@
     "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
     "Extend the accepted modified-helper fixed-DTE slow-carrier upload to pressure/cancel/loss and other peers; retain every CRC/finish,storage,post-helper input and cleanup gate.",
     "Stock Synchronet published/indexed a1024-byte failed-reference partial despite E/helper error. Preserve evidence; cancellation/loss cleanup and trustworthy completion require full wire/source/finish accounting. Accepted upload has3 source-attributed startup retries, not zero startup retries.",
-    "Native midframe Escape and scoped startup handling remain accepted in actual3b software audio. UI resident capacity and ANSI startup ESC-restart handling are fixed with separate version-bound component/DOS evidence. Current976 emulated-DCD ENiGMA loss/redial/retry and clean-source rebuild pass in their separate receipt. A fresh current-build SIP/audio carrier-loss/reconnect/pressure campaign remains required. Preserve all prior failures; stock indexed partial cleanup, arbitrary paused-text handshake ambiguity and broader profile/protocol/hardware gates remain open."
+    "Current976 stock Synchronet XMODEM-CRC download is audio-validated in its separate receipt; emulated-DCD ENiGMA loss/redial/retry and clean-source rebuild also pass. Native midframe Escape and scoped same-call startup retry retain historical3b audio acceptance. Current-build SIP/audio carrier-loss/reconnect/pressure, current upload/cancel/retry and current ENiGMA editor/transfer coverage remain required. Preserve all prior failures; stock indexed partial cleanup, arbitrary paused-text handshake ambiguity and broader profile/protocol/hardware gates remain open."
   ],
   "current_cohort": "synthmodem-synchronet-retry-startup-audio-01",
   "latest_cohort_passed": false,
@@ -4016,5 +4016,7 @@
   "native_upload_startup_restart_receipt": "docs/validation/upload-startup-ESC-restart-fixed.json",
   "native_upload_startup_restart_receipt_sha256": "6c80a6f77eeaeab204e87824e731a162a1e2bbd83bc48284265ccf3dfe9356af",
   "current_DOS_carrier_retry_receipt": "docs/validation/current-DOS-carrier-retry.json",
-  "current_DOS_carrier_retry_receipt_sha256": "1c62a9791f0ba8021bc2388575b9a906373bc8441586299401bcc08da7a455ca"
+  "current_DOS_carrier_retry_receipt_sha256": "1c62a9791f0ba8021bc2388575b9a906373bc8441586299401bcc08da7a455ca",
+  "current_synchronet_download_audio_receipt": "docs/validation/current-synchronet-download-audio-01.json",
+  "current_synchronet_download_audio_receipt_sha256": "9f99d69ddd22cc1eae1062ece580ff028f743c2fecdcd85685b1b3ced154921d"
 }
