@@ -1,0 +1,652 @@
+{
+  "passed": true,
+  "binary_sha256": "a656cf665f3d3cb81bdd06b738bb72b6ed230d299244d4ae12c1c0336f280a89",
+  "map_sha256": "9cb28d503c8467568132f0508884d8da3b7c3af6bc2789f9e9d307ace4ca0b43",
+  "DS_equals_SS_bytes": 64832,
+  "timing_cases": [
+    {
+      "case": "immediate",
+      "status": 0,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": 0,
+      "final_tick": 0,
+      "delay_ticks": 0,
+      "noise_bytes": 0,
+      "first_fault_tick": null,
+      "interrupt_tick": null,
+      "interrupt_reaction_ticks": null,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "ten-second-data-ACK",
+      "status": 0,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": 182,
+      "final_tick": 182,
+      "delay_ticks": 182,
+      "noise_bytes": 0,
+      "first_fault_tick": null,
+      "interrupt_tick": null,
+      "interrupt_reaction_ticks": null,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "metadata-reply",
+      "status": 0,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": 200,
+      "final_tick": 200,
+      "delay_ticks": 200,
+      "noise_bytes": 0,
+      "first_fault_tick": null,
+      "interrupt_tick": null,
+      "interrupt_reaction_ticks": null,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "EOF-reply",
+      "status": 0,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": 100,
+      "final_tick": 100,
+      "delay_ticks": 100,
+      "noise_bytes": 0,
+      "first_fault_tick": null,
+      "interrupt_tick": null,
+      "interrupt_reaction_ticks": null,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "stopwait-reply",
+      "status": 0,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": 182,
+      "final_tick": 182,
+      "delay_ticks": 182,
+      "noise_bytes": 0,
+      "first_fault_tick": null,
+      "interrupt_tick": null,
+      "interrupt_reaction_ticks": null,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "over-thirty-second-read",
+      "status": 0,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": 1092,
+      "final_tick": 1092,
+      "delay_ticks": 1092,
+      "noise_bytes": 0,
+      "first_fault_tick": null,
+      "interrupt_tick": null,
+      "interrupt_reaction_ticks": null,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "fully-quoted8KiB-at300bps",
+      "status": 0,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": 10000,
+      "final_tick": 10000,
+      "delay_ticks": 10000,
+      "noise_bytes": 0,
+      "first_fault_tick": null,
+      "interrupt_tick": null,
+      "interrupt_reaction_ticks": null,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "midnight",
+      "status": 0,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 1572960,
+      "reply_delivered": 102,
+      "final_tick": 102,
+      "delay_ticks": 182,
+      "noise_bytes": 0,
+      "first_fault_tick": null,
+      "interrupt_tick": null,
+      "interrupt_reaction_ticks": null,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "direct-policy-unchanged",
+      "status": null,
+      "expected_early_replay": true,
+      "witness": {
+        "wait_start_tick": 0,
+        "ACK_delay_ticks": 182,
+        "premature_elapsed_ticks": 75,
+        "attempted_prefix_hex": "2a18430a"
+      },
+      "wait_start": 0,
+      "reply_delivered": null,
+      "final_tick": 75,
+      "delay_ticks": 182,
+      "noise_bytes": 0,
+      "first_fault_tick": null,
+      "interrupt_tick": null,
+      "interrupt_reaction_ticks": null,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "disconnected-policy-unchanged",
+      "status": null,
+      "expected_early_replay": true,
+      "witness": {
+        "wait_start_tick": 0,
+        "ACK_delay_ticks": 182,
+        "premature_elapsed_ticks": 75,
+        "attempted_prefix_hex": "2a18430a"
+      },
+      "wait_start": 0,
+      "reply_delivered": null,
+      "final_tick": 75,
+      "delay_ticks": 182,
+      "noise_bytes": 0,
+      "first_fault_tick": null,
+      "interrupt_tick": null,
+      "interrupt_reaction_ticks": null,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "silent-peer",
+      "status": 3,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": null,
+      "final_tick": 17311,
+      "delay_ticks": null,
+      "noise_bytes": 0,
+      "first_fault_tick": 17280,
+      "interrupt_tick": null,
+      "interrupt_reaction_ticks": null,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "noise-without-accepted-progress",
+      "status": 3,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": null,
+      "final_tick": 17484,
+      "delay_ticks": null,
+      "noise_bytes": 17484,
+      "first_fault_tick": 17280,
+      "interrupt_tick": null,
+      "interrupt_reaction_ticks": null,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "escape-during-extended-wait",
+      "status": 2,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": null,
+      "final_tick": 214,
+      "delay_ticks": null,
+      "noise_bytes": 0,
+      "first_fault_tick": 182,
+      "interrupt_tick": 182,
+      "interrupt_reaction_ticks": 32,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "carrier-loss-during-extended-wait",
+      "status": 4,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": null,
+      "final_tick": 212,
+      "delay_ticks": null,
+      "noise_bytes": 0,
+      "first_fault_tick": 182,
+      "interrupt_tick": 182,
+      "interrupt_reaction_ticks": 30,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "escape-offer-after-read-chunk",
+      "status": 2,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": null,
+      "final_tick": 1123,
+      "delay_ticks": null,
+      "noise_bytes": 0,
+      "first_fault_tick": 1092,
+      "interrupt_tick": 1092,
+      "interrupt_reaction_ticks": 31,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "carrier-offer-after-read-chunk",
+      "status": 4,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": null,
+      "final_tick": 1122,
+      "delay_ticks": null,
+      "noise_bytes": 0,
+      "first_fault_tick": 1092,
+      "interrupt_tick": 1092,
+      "interrupt_reaction_ticks": 30,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "escape-EOF-after-read-chunk",
+      "status": 2,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": null,
+      "final_tick": 1124,
+      "delay_ticks": null,
+      "noise_bytes": 0,
+      "first_fault_tick": 1092,
+      "interrupt_tick": 1092,
+      "interrupt_reaction_ticks": 32,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "carrier-EOF-after-read-chunk",
+      "status": 4,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": null,
+      "final_tick": 1122,
+      "delay_ticks": null,
+      "noise_bytes": 0,
+      "first_fault_tick": 1092,
+      "interrupt_tick": 1092,
+      "interrupt_reaction_ticks": 30,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "escape-data-after-read-chunk",
+      "status": 2,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": null,
+      "final_tick": 1124,
+      "delay_ticks": null,
+      "noise_bytes": 0,
+      "first_fault_tick": 1092,
+      "interrupt_tick": 1092,
+      "interrupt_reaction_ticks": 32,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "carrier-data-after-read-chunk",
+      "status": 4,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 0,
+      "reply_delivered": null,
+      "final_tick": 1122,
+      "delay_ticks": null,
+      "noise_bytes": 0,
+      "first_fault_tick": 1092,
+      "interrupt_tick": 1092,
+      "interrupt_reaction_ticks": 30,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "escape-metadata-across-midnight",
+      "status": 2,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 1572960,
+      "reply_delivered": null,
+      "final_tick": 134,
+      "delay_ticks": null,
+      "noise_bytes": 0,
+      "first_fault_tick": 102,
+      "interrupt_tick": 102,
+      "interrupt_reaction_ticks": 32,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    },
+    {
+      "case": "carrier-metadata-across-midnight",
+      "status": 4,
+      "expected_early_replay": false,
+      "witness": null,
+      "wait_start": 1572960,
+      "reply_delivered": null,
+      "final_tick": 132,
+      "delay_ticks": null,
+      "noise_bytes": 0,
+      "first_fault_tick": 102,
+      "interrupt_tick": 102,
+      "interrupt_reaction_ticks": 30,
+      "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+    }
+  ],
+  "compiler_helpers": {
+    "import_counts": {
+      "__U4D": 1,
+      "__U4M": 1
+    },
+    "compiler_object_sha256": "ac4955d28b68aeced38728c36f763a06abb92f2728fda0d8328a7058f2a128ca",
+    "normalized_object_sha256": "c46519966fb89b940224ae99d5f8b966fce03e04e4b3d7e20ae694e346b36e42",
+    "exact_OMF_roundtrip": true
+  },
+  "predecessor": {
+    "passed": false,
+    "counterexample_reproduced": true,
+    "cases": [
+      {
+        "case": "immediate",
+        "status": 0,
+        "expected_early_replay": false,
+        "witness": null,
+        "wait_start": 0,
+        "reply_delivered": 0,
+        "final_tick": 0,
+        "delay_ticks": 0,
+        "noise_bytes": 0,
+        "first_fault_tick": null,
+        "interrupt_tick": null,
+        "interrupt_reaction_ticks": null,
+        "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+      },
+      {
+        "case": "ten-second-data-ACK",
+        "status": null,
+        "expected_early_replay": true,
+        "witness": {
+          "wait_start_tick": 0,
+          "ACK_delay_ticks": 182,
+          "premature_elapsed_ticks": 75,
+          "attempted_prefix_hex": "2a18430a"
+        },
+        "wait_start": 0,
+        "reply_delivered": null,
+        "final_tick": 75,
+        "delay_ticks": 182,
+        "noise_bytes": 0,
+        "first_fault_tick": null,
+        "interrupt_tick": null,
+        "interrupt_reaction_ticks": null,
+        "scope": "Assertion stops expected premature-output cases; only completed native runs prove cleanup."
+      }
+    ],
+    "compiler_helpers": null,
+    "binary_sha256": "b98232749ccd42b902467f06c62b39207083701cf42c0871165cd53b51a5569e",
+    "checker_sha256": "79062a8d8923e3015eb783a3964682474faf1bcb55a62649872dad85706c8ab8",
+    "source_sha256": {
+      "build/terminal/upload-response-baseline/zmodem.c": "ff58e813651695c6618393e11c1329e5a66bdf9ed628bcec68cc1564d12d3c87",
+      "build/terminal/upload-response-baseline/zmodem.h": "cfd8eb86ae05928b672a46e45af87f080595b7d46472780bef3c31e7aff07f05",
+      "build/terminal/upload-response-baseline/terminal_zmodem.c": "559088d84833087344d8c8819a57bcbdc1cb351cc987c7247f01a6a5f72be973",
+      "build/terminal/upload-response-baseline/ymodem_actions.asm": "65b803f3e7ef7b319ae374e6f1fa7c606b667eaad5364107a1d218d7ed18e741"
+    },
+    "scope": "Actual linked DOS engine/adapter/file owner/watchdog/UART ISR with modeled BIOS clock, serial peer and DOS kernel. Fixed38400 DTE; no instruction/callback replacement. Immediate, delayed, quoted full-window, direct, cancellation, loss and no-progress bounds. Not an actual audio, BBS or physical acceptance."
+  },
+  "host_policy_cases": [
+    {
+      "flags": 2,
+      "carrier_floor": 0,
+      "passed": true,
+      "packets": 19,
+      "max_outstanding": 1024,
+      "requested_blocking_seconds": [
+        3
+      ],
+      "genuine_zero_wait_polls": 0
+    },
+    {
+      "flags": 2,
+      "carrier_floor": 300,
+      "passed": true,
+      "packets": 19,
+      "max_outstanding": 1024,
+      "requested_blocking_seconds": [
+        7,
+        24,
+        75
+      ],
+      "genuine_zero_wait_polls": 0
+    },
+    {
+      "flags": 2,
+      "carrier_floor": 1200,
+      "passed": true,
+      "packets": 19,
+      "max_outstanding": 1024,
+      "requested_blocking_seconds": [
+        4,
+        9,
+        21
+      ],
+      "genuine_zero_wait_polls": 0
+    },
+    {
+      "flags": 2,
+      "carrier_floor": 65535,
+      "passed": true,
+      "packets": 19,
+      "max_outstanding": 1024,
+      "requested_blocking_seconds": [
+        4
+      ],
+      "genuine_zero_wait_polls": 0
+    },
+    {
+      "flags": 3,
+      "carrier_floor": 0,
+      "passed": true,
+      "packets": 19,
+      "max_outstanding": 8192,
+      "requested_blocking_seconds": [
+        3
+      ],
+      "genuine_zero_wait_polls": 16
+    },
+    {
+      "flags": 3,
+      "carrier_floor": 300,
+      "passed": true,
+      "packets": 19,
+      "max_outstanding": 8192,
+      "requested_blocking_seconds": [
+        75,
+        93,
+        560
+      ],
+      "genuine_zero_wait_polls": 16
+    },
+    {
+      "flags": 3,
+      "carrier_floor": 1200,
+      "passed": true,
+      "packets": 19,
+      "max_outstanding": 8192,
+      "requested_blocking_seconds": [
+        21,
+        26,
+        143
+      ],
+      "genuine_zero_wait_polls": 16
+    },
+    {
+      "flags": 3,
+      "carrier_floor": 65535,
+      "passed": true,
+      "packets": 19,
+      "max_outstanding": 8192,
+      "requested_blocking_seconds": [
+        4,
+        6
+      ],
+      "genuine_zero_wait_polls": 16
+    },
+    {
+      "case": "invalid-policy-before-side-effects",
+      "floor": 1,
+      "sending": 1,
+      "passed": true
+    },
+    {
+      "case": "invalid-policy-before-side-effects",
+      "floor": 299,
+      "sending": 1,
+      "passed": true
+    },
+    {
+      "case": "invalid-policy-before-side-effects",
+      "floor": 300,
+      "sending": 2,
+      "passed": true
+    }
+  ],
+  "regressions": {
+    "build/terminal/zmodem-upload-response-checks.json": {
+      "passed": true,
+      "receipt_sha256": "253d7322ae7bdbc4d6d95cc9a20b696ebbd41425def402afa81cf2509597692e",
+      "scope": "Actual linked DOS engine/adapter/file owner/watchdog/UART ISR with modeled BIOS clock, serial peer and DOS kernel. Fixed38400 DTE; no instruction/callback replacement. Immediate, delayed, quoted full-window, direct, cancellation, loss and no-progress bounds. Not an actual audio, BBS or physical acceptance.",
+      "case_count": 22
+    },
+    "build/terminal/config-far-checks.json": {
+      "passed": true,
+      "receipt_sha256": "77c5c661ac800cdd90e2ece7c41fc7721acd8b2817dfcc69d872fa9f02b78fa7",
+      "scope": "Serialized DOS MZ and linker-map validation of 34 explicit near-cdecl entries including zero and ten arguments, ten compiler register callbacks, 24 resident word-cdecl callbacks and twelve explicit zero-argument callbacks and ten typed far ZMODEM callback pointers; exact argument-copy frames, target calls/returns, relocations and full configuration C extent. Independent CPU candidate/directory/owner suites and actual DOS child allocation exercise behavior.",
+      "case_count": null
+    },
+    "build/terminal/far-code-live-checks.json": {
+      "passed": true,
+      "receipt_sha256": "95adf111f21370850e43bddac584976d93143ef465c9a6d2477d2cc8c4354d95",
+      "scope": "Actual linked near/far bridges, controller, PRN queue and UART ISR; kernel/hardware modeled. MZ pointer/return/relocation and segment bounds checked independently, including rejection mutations. DOS child memory retention is a separate actual DOS test. Not arbitrary C stack-argument bridging or full application segmentation.",
+      "case_count": 3
+    },
+    "build/terminal/ymodem-far-checks.json": {
+      "passed": true,
+      "receipt_sha256": "750de553b630b698d287912f22b9a4db5d85f51fcb23c733ae930d1044e5bbd1",
+      "scope": "Actual linked migrated codec/framing and source-owned adapters. Independent decimal/CRC peers, actual register/FLAGS and stack observations at C/near/far returns. Compiler object import normalization checked by inverse transform and independent Open Watcom disassembly; malformed records fail closed. Only DOS/BIOS/UART boundaries modeled; actual DOS and source-only rebuild evidence remain separate.",
+      "case_count": 6
+    },
+    "build/terminal/terminal-zmodem-live-checks.json": {
+      "passed": true,
+      "receipt_sha256": "c70746d9126d8aa493e099f63db6fb558857a58a44eec88b66ebacab8038f7bb",
+      "scope": "Actual linked CONFIG_CODE engine/codec/far callback table, checked batch storage/source seek, serviced physical UART ISR and foreground owner. Independent exact Python wire scripts; only hardware/BIOS/DOS kernel boundaries modeled. Not actual DOS/BBS or physical modem evidence.",
+      "case_count": 78
+    },
+    "build/terminal/zmodem-cancel-checks.json": {
+      "passed": true,
+      "receipt_sha256": "c66c5da6c655073f15c35123a0c43b971134221cb410d12cab16b6797b886846",
+      "scope": "Actual linked foreground owner, ZMODEM engine, storage, UART ISR and cancel writer; BIOS clock/keyboard/ports and DOS filesystem boundaries modeled. Late input and endless-input deadline checked; real BBS cancellation is separate.",
+      "case_count": 5
+    },
+    "build/terminal/zmodem-completed-replay-checks.json": {
+      "passed": true,
+      "receipt_sha256": "c73fd726a17cad8c08358c75cc8506b193e1c486a68ff753d95c29d919059fd8",
+      "scope": "Actual linked receiver, file owners, UART ISR and bounded owner. Peer requires no replies to already committed in-flight data, full closing-header/OO consumption, one install and intact APP tail. Hardware/kernel and carrier pacing modeled. No real audio/BBS or physical acceptance.",
+      "case_count": 3
+    },
+    "build/terminal/carrier-transfer-deadline-checks.json": {
+      "passed": true,
+      "receipt_sha256": "3e141125252886e41e29685c856a2ae39ecd0078fb971fbab52a0b5d33817a02",
+      "scope": "Linked production receiver, watchdog, UART ISR and storage. Hardware/kernel boundaries modeled. Quantized1200/300-bps wire time plus idle clock, not audio or physical acceptance. Fixed DTE remains unchanged; unknown modem carrier uses bounded300bps packet allowance, direct sessions retain UART allowance. Historical failure retained separately.",
+      "case_count": 4
+    },
+    "build/zmodem-link-policy/checks.json": {
+      "passed": true,
+      "receipt_sha256": "94d69fe2123e87557562d960cff2560574a9982f3a625a9579d5f95c63313226",
+      "scope": "Strict C89 host engine, typed carrier-floor ABI and independent reactive Python wire/CRC peer. Exact file, bounded overlap, genuine polls, reply requests at zero/300/1200/65535bps policies, invalid policy rejects before side effects. Not DOS, audio or physical evidence.",
+      "case_count": 11
+    },
+    "build/zmodem-completion-bounds/checks.json": {
+      "passed": true,
+      "receipt_sha256": "8d462165b1b9c3cba9f1c7a91f6f9421f81ac08121e52e608824460b55973b28",
+      "scope": "Maintained C component compiled with strict C89 in pinned Nix; ctypes file/transport callbacks modeled. Thirteen rejection/limit/flow cases preserve one checked file and cannot infer actual DOS/audio or physical acceptance.",
+      "case_count": 13
+    },
+    "build/zmodem-session/checks.json": {
+      "passed": true,
+      "receipt_sha256": "a4a321a1e46d152d087e8dea4b142edb37c2a639244a9ab1f506176c764ba5ae",
+      "scope": "Maintained session engine with host transport/storage callbacks and independent pinned lrzsz pipes; optional selected stock Synchronet sexyz stdio helper uses two nonempty files only. No DOS filesystem/16-bit callback ABI, terminal UART/UI, physical modem or BBS session claim.",
+      "case_count": 92
+    },
+    "build/zmodem-window/checks.json": {
+      "passed": true,
+      "receipt_sha256": "bd666e76ada55deb9081bacb5f1095bea1b7e633b1e686e465d4c068e68717c9",
+      "scope": "Independent reactive Python CRC/header/data peer; host C callbacks, full duplex/overlap and finite-capacity policy, delayed/fragmented/stale ACK, window and buffer invariants, midstream/EOF recovery, future ACK, raw CAN and confirmed-progress separation. No actual DOS/UART/BBS or physical timing claim.",
+      "case_count": 79
+    },
+    "build/zmodem-dos/checks.json": {
+      "passed": true,
+      "receipt_sha256": "8424ad1225bd190aefc3c481003510e8a9498206400e3862ab0112a003e30556",
+      "scope": "Actual source-built 8086 DOS session engine with far callbacks and real checked receive filesystem owner. Wire input is scripted, source callbacks diagnostic stdio; not the terminal source/transport/UI adapter or a live DOS UART/BBS session.",
+      "case_count": 68
+    },
+    "build/terminal-zmodem-dos/upload-response-auto/checks.json": {
+      "passed": true,
+      "receipt_sha256": "db0151e96f4f3cdb9491d2977a56cfd3518c7088c9d37ca5231cf85a84728f56",
+      "scope": null,
+      "case_count": 1
+    }
+  },
+  "independent_peer_count": 24,
+  "source_sha256": {
+    "src/transfer/zmodem.c": "c951bd5c8a4e185fe20f0282f6ff03b09809684cd22de84161bc43ef26f66631",
+    "src/transfer/zmodem.h": "183fc3ce55253fd9b732575d8c56cc5376fb6128c5a28ae0db1d298f7837530f",
+    "src/transfer/terminal_zmodem.c": "64fc7823e7d9597830d0ffde9d3ab6dbfcdb4e03341f70fe57a1d7ee9a883a1b",
+    "src/transfer/ymodem.h": "5db9181b3aa80c4004b99a35f0f2409460acc5339045ff3b910cd2aaa9f8790c",
+    "src/terminal/ymodem_actions.asm": "25c4757b6aa94eb8d5c4fb3822cf1e3d3988db1523898610d70b018df08237cf",
+    "src/terminal/config_abi.inc": "108f0e043205ff49218f2a0435315e471b3bbc4315be55975ca6cc37ea7b2efe",
+    "standalone/build_terminal.py": "3c48896b78708753a3f1b35916501b34420d81b9cf2f9a8d0d9bfac594180243",
+    "standalone/terminal_memory.py": "fd5daffdda439bbb647b965b6b623dd472993c622c3ca3dd5705f293d766b929",
+    "standalone/check_zmodem.py": "76ac0c78fe6d7f64cd1f15cddf8f670c09f82d00ba174d3a9e596066a5446252",
+    "standalone/check_zmodem_link_policy.py": "a58440001edf348df70de8867e44c3bd4427a8ccc5c2712422f5b83ae318a303",
+    "standalone/check_zmodem_upload_timing.py": "79062a8d8923e3015eb783a3964682474faf1bcb55a62649872dad85706c8ab8",
+    "standalone/check_config_far_live.py": "8fd7fdaaad13ee8d758d7ef77f539a7b93fff00424ad26d15f7a266566194219",
+    "standalone/check_far_code_live.py": "448e21817a00d247b4347701bedcc7fe332091cfe55f7557e30d7296a0ea53ad",
+    "standalone/record_zmodem_upload_timing.py": "be69cf1378915506a14d083b47e6c0c8a34ec4c2f9224317102a7b188f203af7",
+    "docs/ZMODEM_MODEM_RESPONSE.md": "a7d6620f8167fe4be13e3aaefbd53cbfd6280145201ef2ca6125a56477aaf799",
+    "Makefile": "55c9852fa91004f8b7764ded2dbc37356f67d7ccbf6ef355404aabb903f08136",
+    "nix/flake.nix": "e7291a75d578ce04fffc090ba804f4ae35e3fce295d5eecbbac369e481e9cba0",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+  },
+  "artifact_sha256": {
+    "build/terminal/zmodem-upload-response-checks.json": "253d7322ae7bdbc4d6d95cc9a20b696ebbd41425def402afa81cf2509597692e",
+    "build/terminal/config-far-checks.json": "77c5c661ac800cdd90e2ece7c41fc7721acd8b2817dfcc69d872fa9f02b78fa7",
+    "build/terminal/far-code-live-checks.json": "95adf111f21370850e43bddac584976d93143ef465c9a6d2477d2cc8c4354d95",
+    "build/terminal/ymodem-far-checks.json": "750de553b630b698d287912f22b9a4db5d85f51fcb23c733ae930d1044e5bbd1",
+    "build/terminal/terminal-zmodem-live-checks.json": "c70746d9126d8aa493e099f63db6fb558857a58a44eec88b66ebacab8038f7bb",
+    "build/terminal/zmodem-cancel-checks.json": "c66c5da6c655073f15c35123a0c43b971134221cb410d12cab16b6797b886846",
+    "build/terminal/zmodem-completed-replay-checks.json": "c73fd726a17cad8c08358c75cc8506b193e1c486a68ff753d95c29d919059fd8",
+    "build/terminal/carrier-transfer-deadline-checks.json": "3e141125252886e41e29685c856a2ae39ecd0078fb971fbab52a0b5d33817a02",
+    "build/zmodem-link-policy/checks.json": "94d69fe2123e87557562d960cff2560574a9982f3a625a9579d5f95c63313226",
+    "build/zmodem-completion-bounds/checks.json": "8d462165b1b9c3cba9f1c7a91f6f9421f81ac08121e52e608824460b55973b28",
+    "build/zmodem-session/checks.json": "a4a321a1e46d152d087e8dea4b142edb37c2a639244a9ab1f506176c764ba5ae",
+    "build/zmodem-window/checks.json": "bd666e76ada55deb9081bacb5f1095bea1b7e633b1e686e465d4c068e68717c9",
+    "build/zmodem-dos/checks.json": "8424ad1225bd190aefc3c481003510e8a9498206400e3862ab0112a003e30556",
+    "build/terminal-zmodem-dos/upload-response-auto/checks.json": "db0151e96f4f3cdb9491d2977a56cfd3518c7088c9d37ca5231cf85a84728f56",
+    "build/terminal/zmodem-upload-response-counterexample-recheck.json": "a621fbbe2b0d3be7e4c54952f352588958bb2d590d2bca523d554ffd12e9052b",
+    "build/terminal/manifest.json": "0c1e9c2637fe9578785731cc75f7616350f048bd6b602c1689b41f292ed625f2",
+    "build/terminal/zmodem-compiler-helper-adapters.json": "149936330ce83e81e5b894034f7a1744d1754302c87a38cd8cf742ab5f7730c6"
+  },
+  "scope": "Native buffered-modem sender response fix with linked hardware/kernel models, strict C89 independent wire peers, retained real DOS component and automatic three-file evidence.22 timing cases include10 completed Escape/carrier-loss runs across metadata/data/EOF, serviced read chunks and midnight, two timeout/noise cases, eight successful response cases and two deliberately stopped unchanged-policy witnesses. Every interruption retains source/file-owner cleanup and a bounded reaction. Same checker reproduces the predecessor failure. Original fixed-policy and audio receipts remain unchanged. No new actual audio fault, physical or F01-F16 acceptance."
+}

@@ -17,10 +17,11 @@ class PrematureReply(Exception):
 
 class BufferedReply(LiveZmodem):
  def __init__(self,delay,*,window=False,phase='data',direct=False,connected=True,
-              stopwait=False,interrupt=None,noise=False,initial=0):
+              stopwait=False,interrupt=None,interrupt_after=182,noise=False,initial=0):
   self.delay=delay;self.wait_start=None;self.delivered=None;self.witness=None
   self.fault_tick=None
-  self.interrupt_kind=interrupt;self.injected=False;self.noise=noise;self.noise_bytes=0
+  self.interrupt_kind=interrupt;self.interrupt_after=interrupt_after
+  self.injected=False;self.interrupt_tick=None;self.noise=noise;self.noise_bytes=0
   self.deferred=None;self.phase=phase
   body=b'\x18'*(9216 if window else 1024)
   super().__init__(sending=True,source=body)
@@ -57,8 +58,9 @@ class BufferedReply(LiveZmodem):
    self.tick=(self.tick+1)%DAY
   if self.deferred is not None:
    elapsed=(self.tick-self.wait_start)%DAY
-   if self.interrupt_kind and not self.injected and elapsed>=182:
-    self.injected=True;self.deferred=None;self.script_enabled=False;self.strict=False
+   if self.interrupt_kind and not self.injected and elapsed>=self.interrupt_after:
+    self.injected=True;self.interrupt_tick=self.tick
+    self.deferred=None;self.script_enabled=False;self.strict=False
     if self.interrupt_kind=='escape':self.keys.append(0x011b)
     else:self.carrier=False
    elif self.delay is not None and elapsed>=self.delay:
@@ -115,6 +117,16 @@ def main():
    ('silent-peer',None,{}),('noise-without-accepted-progress',None,{'noise':True}),
    ('escape-during-extended-wait',None,{'interrupt':'escape'}),
    ('carrier-loss-during-extended-wait',None,{'interrupt':'carrier'})]
+  # Exercise the actual linked owners at each extended-wait site. Delaying
+  # interruption beyond30 seconds crosses the adapter's serviced read chunks;
+  # midnight cases also prove reaction bounds do not depend on clock ordering.
+  for phase,extra in [('offer',{}),('EOF',{}),('data',{'window':True})]:
+   for kind in ('escape','carrier'):
+    cases.append((f'{kind}-{phase}-after-read-chunk',None,
+     dict(extra,phase=phase,interrupt=kind,interrupt_after=1092)))
+  for kind in ('escape','carrier'):
+   cases.append((f'{kind}-metadata-across-midnight',None,
+    dict(phase='offer',interrupt=kind,initial=DAY-80)))
  rows=[]
  for name,delay,kw in cases:
   m=BufferedReply(delay,**kw);early=False
@@ -140,7 +152,9 @@ def main():
     #180-tick drain. Include their existing per-byte36-tick limits and a
     #64-query allowance for this deliberately accelerated clock model.
     assert elapsed<17280+18*36+180+64,(name,elapsed)
-    if kw.get('interrupt'):assert m.injected and elapsed<220
+    if kw.get('interrupt'):
+     assert m.injected and m.interrupt_tick is not None
+     assert kw.get('interrupt_after',182)<=elapsed<kw.get('interrupt_after',182)+38
     if kw.get('noise'):
      assert m.noise_bytes>100 and 17280<=(m.fault_tick-m.wait_start)%DAY<=17282
      assert m.get('terminal_quit')==1 and m.get('terminal_exit_code')==14
@@ -148,6 +162,8 @@ def main():
    wait_start=m.wait_start,reply_delivered=m.delivered,final_tick=m.tick,
    delay_ticks=delay,noise_bytes=m.noise_bytes,
    first_fault_tick=m.fault_tick,
+   interrupt_tick=m.interrupt_tick,
+   interrupt_reaction_ticks=(m.tick-m.interrupt_tick)%DAY if m.interrupt_tick is not None else None,
    scope='Assertion stops expected premature-output cases; only completed native runs prove cleanup.')
   rows.append(row);print(name,'passed',flush=True)
  source_base=ROOT/'build/terminal/upload-response-baseline' if a.counterexample else ROOT

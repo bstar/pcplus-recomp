@@ -3787,5 +3787,7 @@
   "receiver_finish_instance_receipt_sha256": "f033995b70dcf8b8c082ba25ab23c9b3c70be59b161acddbcd4597b7dbf765e1",
   "candidate_audio_upload_receipt": "docs/validation/synthmodem-audio-upload-03.json",
   "candidate_audio_upload_receipt_sha256": "fffc423ecd8ddc5e182efe1c4c5ef2eb65b19b11959dbad5f176ce0c94841d2d",
-  "accepted_candidate_upload_cohort": "synthmodem-audio-upload-03"
+  "accepted_candidate_upload_cohort": "synthmodem-audio-upload-03",
+  "upload_response_fault_receipt": "docs/validation/zmodem-upload-response-faults.json",
+  "upload_response_fault_receipt_sha256": "f4c1538a3a53640d0d09e5ee37a4519c4e7e3f69452cea4ecfe73fb8e359b7e9"
 }

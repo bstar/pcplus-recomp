@@ -232,6 +232,18 @@ bounded receiver closing fix, isolated stock/candidate/reference tests and then
 a fresh owned audio fixture. No protocol shortcut or gate waiver is authorized
 by these results; unmodified-peer, physical and F01-F16 requirements stay open.
 
+The [extended sender fault receipt](docs/validation/zmodem-upload-response-faults.json)
+now passes22 linked timing cases, including10 Escape/carrier-loss runs. New
+cases interrupt metadata, EOF and quoted8KiB data after60 seconds (across
+serviced read chunks), and metadata across BIOS midnight. Every completed
+interruption preserves source bytes, closes all handles, releases active/
+pending transfer ownership and returns cleanly within30–32 modeled BIOS ticks
+of the event. The unchanged DOS binary and prior ABI/24-peer/actual DOS evidence
+are revalidated; the same updated checker reproduces the predecessor failure.
+This extends native fault evidence only. Actual audio pressure/cancel/loss and
+physical DCD tests remain required; original fixed-policy/audio receipts stay
+unchanged.
+
 The [receiver candidate](docs/validation/sexyz-receive-finish-candidate.json)
 now builds reproducibly in pinned Nix beside a same-source stock baseline.
 Its original62 C/header files reproduce the shipped source digest.24 C-owner

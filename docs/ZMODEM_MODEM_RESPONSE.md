@@ -57,3 +57,26 @@ checks. Full stock audio upload acceptance still requires a fresh complete run
 and all CRC/control/finish, exact official storage, post-form search/list and
 cleanup checks. Physical Boca/SPA2102, other peers, pressure/loss and all
 F01–F16 application gates remain separate.
+
+
+The extended [interruption receipt](validation/zmodem-upload-response-faults.json)
+adds Escape and carrier loss at metadata, EOF and fully quoted8KiB data waits,
+including interruption after60 seconds (across serviced read chunks), plus
+metadata interruption across BIOS midnight. The linked production engine,
+UART ISR, adapter and file owner execute without callback substitution. All
+completed interruptions must leave the source intact, close every file handle,
+clear active/pending transfer ownership, report clean cleanup and return within
+38 modeled BIOS ticks after the injected event. These model checks do not
+establish actual audio fault recovery or physical DCD behavior.
+
+Reproduce in the pinned toolchain:
+
+```sh
+./tools/dev --command python3 standalone/check_zmodem_upload_timing.py
+./tools/dev --command python3 standalone/check_zmodem_upload_timing.py --counterexample
+./tools/dev --command python3 standalone/record_zmodem_upload_timing.py
+```
+
+The recorder writes a separate extended receipt and preserves the original
+fixed-policy and audio receipts. It also verifies the retained broader ABI,
+protocol peer and actual DOS evidence against the unchanged executable.

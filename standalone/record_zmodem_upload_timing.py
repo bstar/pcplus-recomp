@@ -22,7 +22,9 @@ def main():
   assert d['passed'],name
   if name.startswith('build/terminal/') or name.startswith('build/terminal-zmodem-dos/'):
    assert d['binary_sha256']==digest,name
- current=checks[names[0]];assert len(current['cases'])==14
+ current=checks[names[0]];assert len(current['cases'])==22
+ faults=[row for row in current['cases'] if row['interrupt_tick'] is not None]
+ assert len(faults)==10 and all(0<=row['interrupt_reaction_ticks']<38 for row in faults)
  assert current['compiler_helpers']['exact_OMF_roundtrip']
  assert current['checker_sha256']==sha(ROOT/'standalone/check_zmodem_upload_timing.py')
  for name,value in current['source_sha256'].items():assert sha(ROOT/name)==value,name
@@ -54,9 +56,9 @@ def main():
    'scope':d.get('scope'),'case_count':len(d['cases']) if isinstance(d.get('cases'),list) else d.get('inputs')} for n,d in checks.items()},
   'independent_peer_count':24,'source_sha256':{n:sha(ROOT/n) for n in sources},
   'artifact_sha256':{n:sha(ROOT/n) for n in [*names,predecessor_name,'build/terminal/manifest.json','build/terminal/zmodem-compiler-helper-adapters.json']},
-  'scope':'Native buffered-modem sender response fix with linked hardware/kernel models, strict C89 independent wire peers, real DOS component and actual DOS automatic three-file checks. Eight delayed/immediate completion cases, four native timeout/cancel/loss cleanup cases and two deliberately stopped unchanged-policy witnesses. Same checker reproduces the predecessor failure. All original capture failures remain failures. No new actual audio upload, physical or F01-F16 acceptance.'}
- (ROOT/'docs/validation/zmodem-upload-response-fixed.json').write_text(json.dumps(result,indent=2)+'\n')
- print(json.dumps({'passed':True,'binary_sha256':digest,'timing_cases':14,'host_policy_cases':11,'independent_peers':24}))
+  'scope':'Native buffered-modem sender response fix with linked hardware/kernel models, strict C89 independent wire peers, retained real DOS component and automatic three-file evidence.22 timing cases include10 completed Escape/carrier-loss runs across metadata/data/EOF, serviced read chunks and midnight, two timeout/noise cases, eight successful response cases and two deliberately stopped unchanged-policy witnesses. Every interruption retains source/file-owner cleanup and a bounded reaction. Same checker reproduces the predecessor failure. Original fixed-policy and audio receipts remain unchanged. No new actual audio fault, physical or F01-F16 acceptance.'}
+ (ROOT/'docs/validation/zmodem-upload-response-faults.json').write_text(json.dumps(result,indent=2)+'\n')
+ print(json.dumps({'passed':True,'binary_sha256':digest,'timing_cases':22,'interruption_cases':10,'host_policy_cases':11,'independent_peers':24}))
 
 
 if __name__=='__main__':main()
