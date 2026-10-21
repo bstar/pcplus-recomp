@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Pre-fix syscall-traced editor06 has clean FIN and exact47983 socket reads but still misses616 bytes, all observed after the exit Escape. Native linked regressions reproduce the incorrect online Alt-X dial-abort path; corrected product passes5 cases/20 checks plus existing connection/far-ABI checks. Untraced fixed editor07 is pending; no whole-application/physical acceptance claim.",
+  "status": "Corrected normal framed editor07 passes23 producer,32 byte/editor/cleanup and12 ownership checks:119 exact upstream bytes, full48247-byte BBS display plus187-byte bridge, no reset/suffix loss/exit Escape, normal DOS return and hardware restoration. This local editor route is accepted for its frozen scope. Overall acceptance remainsfalse for historical intermittent receive insertions, transfers/pressure/other peers, physical hardware and all F01-F16.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3337,6 +3337,84 @@
       "receipt": "docs/validation/synthmodem-exit-diagnosis.json",
       "receipt_sha256": "b11009616d04bb102856af265122334c5a49a0a94e08b6ae9c4ce44c13f855a4",
       "close_timing_evidence_consistent": true
+    },
+    "synthmodem-audio-editor-07": {
+      "passed": true,
+      "checks": {
+        "DOS_normal_exit": true,
+        "script_completed": true,
+        "UART_restored": true,
+        "keyboard_helper_retired": true,
+        "numeric_AT_only": true,
+        "real_DSP_CONNECT": true,
+        "authenticated": true,
+        "ordered_menus": true,
+        "DOS_DA": true,
+        "DOS_CPR": true,
+        "profile_unchanged": true,
+        "directory_accounting": true,
+        "no_relay_errors": true,
+        "no_gateway_errors": true,
+        "VM_exited": true,
+        "no_post_saved": true,
+        "inputs_unchanged": true,
+        "server_unchanged": true,
+        "editor_entered": true,
+        "typed_draft_sent": true,
+        "all_editor_keys_emitted": true,
+        "home_moves_before_marker": true,
+        "insert_toggles_overtype": true
+      },
+      "independent_checks": {
+        "numeric_command_prefix": true,
+        "single_normal_post_train_hold": true,
+        "serial_equals_post_hold_guest_decode": true,
+        "online_target_after_numeric_call": true,
+        "guest_equals_Telnet_application_input": true,
+        "decoded_audio_equals_serial_output": true,
+        "complete_BBS_display_survives_DSP": true,
+        "complete_caller_stream_equals_bridge_plus_BBS_display": true,
+        "single_real_carrier": true,
+        "real_DOS_terminal_replies": true,
+        "authoritative_login": true,
+        "authoritative_menu_order": true,
+        "all_actual_BIOS_editor_keys_in_order": true,
+        "Home_changes_cursor_before_H": true,
+        "End_and_Delete_apply_to_draft": true,
+        "Insert_changes_to_overtype": true,
+        "Tab_advances_and_page_keys_preserve_boundary": true,
+        "CtrlY_clears_line_before_final_text": true,
+        "unsaved_final_line_visible": true,
+        "draft_never_saved": true,
+        "script_and_normal_DOS_return": true,
+        "actual_UART_restored": true,
+        "keyboard_timer_vector_restored": true,
+        "continuous_rtp-from-answer.bin": true,
+        "continuous_rtp-from-caller.bin": true,
+        "actual_external_SIP": true,
+        "actual_internal_BYE": true,
+        "capture_hashes": true,
+        "runtime_inputs_unchanged": true,
+        "producer_inputs_unchanged": true,
+        "explicit_key_framing_configuration": true,
+        "stock_BBS_inputs_unchanged": true
+      },
+      "serial_ownership_checks": {
+        "complete_contiguous_attempt_manifest": true,
+        "submitted_artifact_matches_original_attempt_offsets": true,
+        "completed_artifact_matches_original_attempt_offsets": true,
+        "skipped_artifact_matches_original_attempt_offsets": true,
+        "all_final_counters_match_manifest": true,
+        "all_submissions_have_final_callback": true,
+        "legacy_errors_preserved_in_structured_events": true,
+        "one_observed_frontend_close_and_shutdown": true,
+        "observed_close_precedes_shutdown": true,
+        "no_write_submission_after_observed_close": true,
+        "observed_frontend_input_matches_capture_size": true,
+        "producer_capture_hashes": true
+      },
+      "receipt": "docs/validation/online-exit-audio-dos.json",
+      "receipt_sha256": "20c7b495f49fe1ff14e9b12aad2cf069038261f5c23c168d5cd121825cd46584"
     }
   },
   "diagnosis": {
@@ -3385,10 +3463,10 @@
     "The historical six-byte event lacks guest PCM/timing; its exact association remains unproven. A controlled same-boundary discard-policy failure is reproduced and fixed in the tested candidate.",
     "Editors/transfers/Synchronet through the rebuilt audio path, sustained pressure, loss/fault behavior and physical Boca/SPA2102 acceptance remain open.",
     "All F01-F16 whole-application completion gates remain open.",
-    "Complete the pending untraced fixed editor07 repeat with unchanged full byte/editor/error/cleanup gates. Preserve original reset/downstream/guest-insertion failures. Corrected online Alt-X uses hangup; native checks do not prove full DOS/audio or physical acceptance."
+    "The online Alt-X fix is verified in untraced normal editor07 with unchanged full byte/editor/error/cleanup gates. Preserve prior reset/downstream/insertion failures; this source fix does not establish a remedy for intermittent guest-decoded insertions during a session. Continue transfers/pressure/Synchronet, broader UI/protocols and physical acceptance."
   ],
-  "current_cohort": "synthmodem-audio-editor-06",
-  "latest_cohort_passed": false,
+  "current_cohort": "synthmodem-audio-editor-07",
+  "latest_cohort_passed": true,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
     "offline_caller_equals_DOS_online": true,
@@ -3422,7 +3500,8 @@
   "key_framing_receipt": "docs/validation/synthmodem-key-framing.json",
   "key_framing_trace_receipt": "docs/validation/synthmodem-key-framing-trace.json",
   "serial_frontend_receipt": "docs/validation/synthmodem-serial-frontend-dos.json",
-  "pending_cohort": "synthmodem-audio-editor-07",
   "exit_diagnosis_receipt": "docs/validation/synthmodem-exit-diagnosis.json",
-  "online_exit_component_receipt": "docs/validation/online-exit.json"
+  "online_exit_component_receipt": "docs/validation/online-exit.json",
+  "accepted_editor_cohort": "synthmodem-audio-editor-07",
+  "online_exit_audio_receipt": "docs/validation/online-exit-audio-dos.json"
 }

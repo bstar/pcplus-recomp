@@ -118,9 +118,16 @@ Pre-fix syscall-traced editor06 has clean FIN and exact47983 socket reads but
 still loses the616-byte suffix: its relay observations occur297ms after the
 unwanted exit Escape,714ms before close. The controlled pinned-emulator pair
 also proves drained EOF versus unread-network-data reset. Neither observation
-retroactively establishes editor05's kernel reset reason. The untraced fixed
-editor07 run is pending. Its full byte/editor/error/cleanup gates remain required;
-no original failure, physical requirement or F01-F16 gate is closed by the fix.
+retroactively establishes editor05's kernel reset reason. The
+[untraced fixed editor07](docs/validation/online-exit-audio-dos.json) now passes
+all23 producer,32 independent byte/editor/cleanup and12 ownership checks. All119
+online bytes and the complete48247-byte BBS display plus187 bridge bytes are
+exact, no exit Escape is appended, and the frontend has clean FIN with no reset
+or suffix loss. Every exercised editor semantic, no saved post, normal DOS
+return, unchanged server/profile and hardware restoration passes. This local
+editor route is accepted for its frozen V.22/1200/framed-runtime scope. Earlier
+intermittent guest insertions, transfers/pressure/Synchronet, physical hardware
+and all F01-F16 remain open; no acceptance gate was relaxed.
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,

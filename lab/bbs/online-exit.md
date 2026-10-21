@@ -74,6 +74,27 @@ reply. These are observed relay timings, not internal server-generation clocks.
 This explains why eliminating the reset alone cannot establish full delivery.
 It also supports removing the unintended exit Escape. The syscall-traced call
 has different scheduling and does not retroactively prove why editor05 reset.
-The untraced fixed-product editor07 repeat is the next actual DOS/audio gate.
+That pre-fix evidence required an untraced fixed-product repeat, recorded below.
 Neither the reset nor complete-downstream checks are waived, and the previous
 intermittent guest-decoded insertions remain unresolved.
+
+## Verified untraced editor repeat
+
+The [fixed editor07 receipt](../../docs/validation/online-exit-audio-dos.json)
+now passes all23 producer,32 independent byte/editor/cleanup and12 ownership
+checks on the normal framed runtime. All119 online DOS bytes equal the guest,
+Telnet input and independent caller waveform decode. The entire48247-byte BBS
+display plus187 bridge bytes equals the48434-byte caller stream. No closing
+suffix is lost and no abort Escape follows the actual editor recipe.
+
+Home/End/Delete/Insert/overtype, Tab, one-line page boundaries, Ctrl-Y, visible
+UNSAVED and no saved post all pass. DOS returns normally, UART/timer state
+restores, the server/profile stay unchanged and the frontend ends cleanly with
+no error. All48456 frontend write bytes complete locally without failed,
+skipped or pending writes. This repeat uses neither syscall tracing nor guest
+PCM export, and no existing acceptance gate was relaxed.
+
+This verifies the local online-exit correction and this one-line ENiGMA editor
+workflow at V.22/1200. It does not fix the earlier intermittent in-session guest
+insertions or establish transfers, pressure, arbitrary remote TCP boundaries,
+physical modem compatibility or a complete PCPlus application.

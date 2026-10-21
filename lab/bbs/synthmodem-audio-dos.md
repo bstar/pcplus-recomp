@@ -304,6 +304,24 @@ Escape-menu output; both complete-downstream checks stay false. The
 retains those failures and the positive DOS/editor/restoration checks. Correlate
 the missing suffix with actual input/BBS/close timing before changing acceptance.
 
+### Corrected online exit: accepted local editor checkpoint
+
+The [online Alt-X correction](online-exit.md) removes the dial-abort Escape from
+an established session's exit and preserves configured hangup. Its normal,
+untraced editor07 repeat now passes23 producer,32 independent byte/editor/cleanup
+and12 ownership checks. The complete48247-byte BBS display plus187 bridge bytes
+survives exactly; all119 online DOS bytes match the guest, Telnet input and
+independent caller decode. The editor recipe has no extra exit character.
+
+All tested cursor/overtype/editing responses and final UNSAVED text pass, no post
+is saved, hardware state restores and DOS returns normally. The frontend closes
+with FIN, without reset or failed/pending/skipped writes. The
+[accepted scoped receipt](../../docs/validation/online-exit-audio-dos.json)
+retains all original byte/error requirements and all prior counterexamples.
+This accepts this local one-line ENiGMA editor workflow at V.22/1200 with explicit
+bridge framing. Earlier intermittent in-session insertions, transfers, pressure,
+other peers, physical hardware and whole-application completion remain open.
+
 The [carrier DOS receipt](../../docs/validation/synthmodem-carrier-dos.json)
 records the -09 route through the actual source-built terminal and ASPECT child.
 All menus, normal return, 42-byte UART snapshot, four-byte timer-vector snapshot,
