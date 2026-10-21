@@ -190,3 +190,53 @@ This accepts this captured one-line editor/abort workflow only. The first failed
 drain remains preserved. Multiline scrolling, Synchronet audio transfers,
 sustained pressure/carrier loss, other profiles/peers, physical Boca/SPA2102 and
 F01-F16 whole-application gates remain open.
+
+## Stock XMODEM-CRC download
+
+The download route uses the existing owned PCPlus Lab area and unchanged stock
+Synchronet/sexyz. It selects directory11, PCXTEST.BIN and protocol1, declines
+hangup with a single N, then releases ASPECT ownership. A BIOS-only helper opens
+the native Alt-R prompt and supplies D:\RECV\SYNC.BIN. It waits for actual
+Receiving XMODEM, completion and the remote pause before Space, requires the
+File menu and PCPlus Lab footer before Q, and waits for complete Main/footer
+before Alt-X. The watchdog cannot grant workflow acceptance.
+
+The source is11521 synthetic bytes including NUL/SUB/IAC/XON/XOFF. Stock XMODEM
+has no original-length field: the verified reference delivers11648bytes in
+eleven1024-byte and three128-byte blocks, including127SUB padding. The DOS file
+must preserve that padding; it must not claim exact unpadded length from this
+protocol. All frame CRCs, sequence/complements, opposite ACKs and final EOT/ACK,
+the exact receive file, complete audio streams, post-transfer interaction and
+cleanup are independently audited. A separate read-only official FileBase audit
+checks hashes, the server success log and one download-count advancement from
+the displayed pre-transfer count. No messages, mail or uploads are requested.
+
+```sh
+./tools/bbs-dev --command python3 lab/bbs/audio_synchronet_download.py \
+  --output build/bbs-lab/synchronet-audio-download-reference-NEW
+./tools/modem-dev --command python3 lab/bbs/check_audio_synchronet_download_keys.py \
+  --output build/bbs-lab/audio-synchronet-download-keys-NEW
+./tools/modem-dev --command python3 lab/bbs/check_synchronet_download_audio_recipe.py \
+  --reference build/bbs-lab/synchronet-audio-download-reference-NEW \
+  --output build/bbs-lab/synchronet-download-audio-recipe-NEW
+./tools/modem-dev --command python3 lab/bbs/synthmodem_synchronet_download_audio_dos.py \
+  --runtime build/bbs-lab/synthmodem-posttrain-runtime-01/runtime \
+  --reference build/bbs-lab/synchronet-audio-download-reference-NEW/result.json \
+  --key-checks build/bbs-lab/audio-synchronet-download-keys-NEW/result.json \
+  --recipe-checks build/bbs-lab/synchronet-download-audio-recipe-NEW/result.json \
+  --output build/bbs-lab/synthmodem-synchronet-download-audio-NEW
+# After natural producer exit:
+./tools/modem-dev --command python3 lab/bbs/audit_synchronet_download_audio_dos.py COHORT
+./tools/modem-dev --command python3 lab/bbs/audit_serial_io_evidence.py COHORT
+./tools/modem-dev --command node lab/bbs/diagnose_audio_caller.js RUNTIME COHORT
+./tools/bbs-dev --command python3 lab/bbs/audit_synchronet_download_metadata.py COHORT
+# Only after all gates pass:
+./tools/modem-dev --command python3 lab/bbs/record_synchronet_download_audio.py COHORT \
+  --output docs/validation/synthmodem-synchronet-download-audio-NEW.json
+```
+
+The raw recipe check caught ANSI highlights splitting both Which/Quit and
+Protocol/Batch. Stable raw prefixes correct these before the first audio run;
+the original failed token-check artifacts remain retained. Every remote wait
+must pass its independent raw-capture check. Preparatory results grant no actual
+audio/DOS download, upload, other-protocol or physical acceptance.
