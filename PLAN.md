@@ -254,6 +254,11 @@ row preservation, leaving the original board/file untouched. Explicit fixture
 selection binds producer and independent metadata/storage audits to this
 instance and freezes both prerequisites and auditors. The next full-size audio
 run uses the unchanged DOS executable, DTE, modem runtime and upload recipe.
+Upload03 is now running on that isolated receiver candidate. Actual V22/1200
+DSP CONNECT is observed; the original11521-byte payload and38400 DTE are
+unchanged. Keep all inputs/prerequisites/auditors frozen until producer and
+independent same-run data/control/storage/return/cleanup audits complete. Stock
+upload02's late-OO gap stays open; no candidate audio result is accepted yet.
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,

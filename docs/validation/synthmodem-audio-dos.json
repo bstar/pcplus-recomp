@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Upload02 completes exact11521-byte official storage, all12330 online DOS bytes,full66879 BBS bytes,12 exact packets/opposite controls/FIN/OO and post-form search/list with normal cleanup.81 of82 checks pass; required late-tail gate fails because stock SEXYZ retires before its reply reaches DOS and closing OO arrives afterward. Independent real-helper/reference test reproduces the receiver gap. Native sender response fix remains verified. No full upload/physical/F01-F16 acceptance. Separate pinned Nix receiver candidate now passes24 C-owner bounds,4 real receiver comparisons and10 real candidate fault cases; not installed in the BBS and no candidate audio acceptance.",
+  "status": "Upload03 is running on the explicitly isolated ENiGMA receiver candidate; actual V22/1200 DSP CONNECT observed, original11521-byte workload and fixed38400 DTE with unchanged DOS binary/runtime. Seven navigation and thirteen isolation prerequisites pass. All data/control/storage/return/cleanup gates and auditors remain frozen; no candidate audio acceptance yet. Stock upload02 retains its late-OO failure. Physical, arbitrary-peer and F01-F16 requirements remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3665,6 +3665,18 @@
       "producer_passed": true,
       "receipt": "docs/validation/synthmodem-audio-upload-02.json",
       "receipt_sha256": "6c69470a3672d6e80df8489fda9bdbb6b5430d54a3393d762aed8d9bd7ee3bef"
+    },
+    "synthmodem-audio-upload-03": {
+      "status": "running",
+      "passed": null,
+      "variant": "isolated ENiGMA with Nix receiver-finish candidate",
+      "acceptance": "Pending terminal producer and all frozen independent same-run gates",
+      "binary_sha256": "a656cf665f3d3cb81bdd06b738bb72b6ed230d299244d4ae12c1c0336f280a89",
+      "source_bytes": 11521,
+      "DTE_bps": 38400,
+      "software_carrier_bps": 1200,
+      "fixture_receipt": "docs/validation/enigma-receive-finish-instance.json",
+      "fixture_lab": "build/bbs-lab/enigma-rxfinish-candidate-01"
     }
   },
   "diagnosis": {
@@ -3716,8 +3728,8 @@
     "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
     "Validate actual fixed-DTE slow-carrier upload/backpressure and response timing; retain every CRC/finish,storage,post-helper input and cleanup gate."
   ],
-  "current_cohort": "synthmodem-audio-upload-02",
-  "latest_cohort_passed": false,
+  "current_cohort": "synthmodem-audio-upload-03",
+  "latest_cohort_passed": null,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
     "offline_caller_equals_DOS_online": true,
