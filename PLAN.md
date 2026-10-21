@@ -17,8 +17,10 @@ then Nixpkgs, as the workstation dependency policy; do not use AUR/yay/paru.
 The [rebuilt software-modem baseline](lab/bbs/synthmodem-slmodem.md) now trains
 through the actual V.22/1200 software DSP path and preserves 34 upstream/6,000
 downstream bytes, with independent PCM/decoder checks. The opt-in carrier-channel
-client builds separately; helper integration and actual callback/carrier-loss
-tests remain open. The normal lifecycle runtime is unchanged.
+client and helper receiver now pass paired host tests: 29 new checks, the
+existing 16 fault cases and 12 PTY checks. A CONNECT/payload boundary collision
+is reproduced and corrected in the candidate. VM/Node integration and actual
+callback/carrier-loss tests remain open. The normal lifecycle runtime is unchanged.
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,

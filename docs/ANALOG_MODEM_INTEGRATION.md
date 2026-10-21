@@ -132,7 +132,9 @@ be consumed as status, while a slowly fragmented real result can become data.
 Out-of-band carrier reporting remains required. The
 [rebuilt modem-wrapper checkpoint](../lab/bbs/synthmodem-slmodem.md) establishes
 a Nix-built baseline through actual V.22 DSP and tests the opt-in carrier-channel
-client; its helper receiver and real carrier-loss integration remain unfinished.
+client/helper pair on real host PTYs. The candidate also preserves literal
+carrier-like payload at the CONNECT boundary; real VM/Node carrier-loss
+integration remains unfinished.
 The
 [combined lifecycle runtime](../lab/bbs/synthmodem-lifecycle.md) now verifies
 the pool-timer and REGISTER-ownership fixes through the actual VM/DSP path.

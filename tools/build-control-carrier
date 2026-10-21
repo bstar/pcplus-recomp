@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eu
+pcplus_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+cd "$pcplus_root"
+exec nix --extra-experimental-features 'nix-command flakes' build --impure --expr \
+  'let locked = builtins.getFlake (toString ./nix); local = (import ./nix/flake.nix).outputs { self = {}; nixpkgs = locked.inputs.nixpkgs; }; in import ./nix/control-carrier.nix { baseline = local.packages.x86_64-linux.synthmodem-control-i386; }' "$@"

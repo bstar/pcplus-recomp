@@ -1,0 +1,145 @@
+--- a/vm/ctrl/modemd-ctrl.c
++++ b/vm/ctrl/modemd-ctrl.c
+@@ -87,6 +87,7 @@
+ #include <unistd.h>
+ 
+ #include "wire.h"
++#include "carrier_server.h"
+ 
+ /* ──────────────────────────────────────────────────────────────────────
+  * Logging
+@@ -590,10 +591,11 @@
+     /* Look for NO CARRIER first (takes precedence even in command
+      * mode — slmodemd emits it on failed-handshake hangup). */
+     size_t nc_idx = find_keyword(work, tot, "NO CARRIER");
+-    size_t cn_idx = (size_t)-1;
+-    if (nc_idx == (size_t)-1) {
+-        cn_idx = find_keyword(work, tot, "CONNECT");
+-    }
++    size_t cn_idx = find_keyword(work, tot, "CONNECT");
++    if (!C.enabled && nc_idx != (size_t)-1) cn_idx = (size_t)-1;
++    /* A single read can contain CONNECT plus literal NO CARRIER payload.
++     * The earliest transition owns the boundary in status-channel mode. */
++    if (C.enabled && cn_idx < nc_idx) nc_idx = (size_t)-1;
+ 
+     if (nc_idx != (size_t)-1) {
+         /* NO CARRIER is in the buffer. Need to find the line's \n
+@@ -854,7 +856,9 @@
+      * emit MODEM_STATUS, and flip data_mode. They never call back
+      * into the poll loop. */
+     bool was_data_mode = S.data_mode;
+-    if (S.data_mode) {
++    if (S.data_mode && C.enabled) {
++        if (wire_write(S.host_control_fd, WIRE_TYPE_DATA_RX, buf, (size_t)n) < 0) return -1;
++    } else if (S.data_mode) {
+         process_data_mode_bytes(buf, (size_t)n);
+     } else {
+         process_command_mode_bytes(buf, (size_t)n);
+@@ -870,7 +874,7 @@
+ }
+ 
+ static int dispatch_host_frames(void) {
+-    while (!pty_busy() && !S.hangup_phase) {
++    while (!C.retiring && !pty_busy() && !S.hangup_phase) {
+         uint8_t type = 0, *payload = NULL;
+         size_t plen = 0;
+         int r = wire_try_parse(S.ctrl_rx_buf, &S.ctrl_rx_len, &type, &payload, &plen);
+@@ -917,6 +921,8 @@
+  * Main
+  * ────────────────────────────────────────────────────────────────── */
+ 
++#include "carrier_server.inc"
++
+ static void usage(const char *p) {
+     fprintf(stderr,
+         "Usage: %s\n"
+@@ -976,6 +982,12 @@
+     S.host_control_fd = open_host_path(control_path);
+     if (S.host_control_fd < 0) return 1;
+ 
++    /* Establish the status channel before waiting for the modem's PTY. */
++    if (carrier_start() < 0) {
++        LOGE("Carrier status startup: %s", strerror(errno));
++        carrier_close(); close(S.host_control_fd); return 1;
++    }
++
+     /* Open PTY. In production this is a character device (slmodemd's
+      * /dev/ttySL0 typically); in tests it may be a Unix socket as a
+      * stand-in. open_host_path handles both. Non-fatal on failure so
+@@ -988,6 +1000,10 @@
+         LOGI("opened PTY %s as fd %d", pty_path, S.pty_fd);
+     }
+ 
++    if (C.enabled && S.pty_fd < 0) {
++        carrier_close(); close(S.host_control_fd); return 1;
++    }
++
+     /* Send HELLO. */
+     {
+         char hello[128];
+@@ -1005,17 +1021,21 @@
+ 
+     int status = 0;
+     while (!g_quit) {
+-        if (S.host_tx_failed || progress_data_pending() < 0 || progress_hangup() < 0 || dispatch_host_frames() < 0) { status = 1; break; }
+-        struct pollfd pfds[2];
++        if (S.host_tx_failed || carrier_progress() < 0) { status = 1; break; }
++        if (C.retiring) {
++            if (!host_busy()) break;
++            if (monotonic_ms() >= C.retire_deadline) { LOGE("Carrier status output drain timed out"); status = 1; break; }
++        } else if (progress_data_pending() < 0 || progress_hangup() < 0 || dispatch_host_frames() < 0) { status = 1; break; }
++        struct pollfd pfds[3];
+         int nfds = 0;
+ 
+         pfds[nfds].fd     = S.host_control_fd;
+-        pfds[nfds].events = ((!pty_busy() && !S.hangup_phase) ? POLLIN : 0) |
++        pfds[nfds].events = ((!C.retiring && !pty_busy() && !S.hangup_phase) ? POLLIN : 0) |
+                              (host_busy() ? POLLOUT : 0);
+         int idx_ctrl = nfds++;
+ 
+         int idx_pty = -1;
+-        if (S.pty_fd >= 0) {
++        if (S.pty_fd >= 0 && !C.retiring) {
+             pfds[nfds].fd     = S.pty_fd;
+             /* One PTY input batch at a time bounds status/frame expansion.
+              * Keep PTY writes enabled independently of host-output pressure. */
+@@ -1023,7 +1043,16 @@
+             idx_pty = nfds++;
+         }
+ 
++        int idx_carrier = -1;
++        if (C.enabled && !C.retiring) {
++            pfds[nfds] = (struct pollfd){ C.peer, POLLIN, 0 };
++            idx_carrier = nfds++;
++        }
+         int timeout = S.hangup_phase ? 10 : 1000;
++        if (C.retiring) {
++            long long left = C.retire_deadline - monotonic_ms();
++            timeout = left > 0 ? (int)left : 0;
++        }
+         if (S.data_mode && S.pending_len && S.data_pending_deadline && !host_busy()) {
+             long long left = S.data_pending_deadline - monotonic_ms();
+             if (left < 0) left = 0;
+@@ -1036,11 +1065,14 @@
+             status = 1; break;
+         }
+         if (pr == 0) continue;
++        if (idx_carrier >= 0 && (pfds[idx_carrier].revents & POLLNVAL)) { status = 1; break; }
++        if (carrier_progress() < 0) { status = 1; break; }
+         if ((pfds[idx_ctrl].revents & (POLLERR | POLLNVAL)) ||
+             (idx_pty >= 0 && (pfds[idx_pty].revents & (POLLERR | POLLNVAL)))) { status = 1; break; }
+         if (pfds[idx_ctrl].revents & POLLOUT) {
+             if (flush_host() < 0) { status = 1; break; }
+         }
++        if (C.retiring) continue;
+         /* Observe carrier/mode transitions before writing pending data. */
+         if (idx_pty >= 0 &&
+             (pfds[idx_pty].revents & (POLLIN | POLLHUP))) {
+@@ -1054,6 +1086,7 @@
+         }
+     }
+ 
++    carrier_close();
+     LOGI("modemd-ctrl exiting");
+     if (S.pty_fd >= 0)          close(S.pty_fd);
+     if (S.host_control_fd >= 0) close(S.host_control_fd);

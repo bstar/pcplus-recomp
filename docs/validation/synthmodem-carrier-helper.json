@@ -1,0 +1,124 @@
+{
+  "passed": true,
+  "checks": {
+    "paired_HELLO_before_PTY_exists": true,
+    "CONNECT_line_precedes_status": true,
+    "CONNECT_and_carrier_like_payload_in_same_read": true,
+    "literal_fragmented_and_sparse_payload_exact": true,
+    "no_inband_carrier_status": true,
+    "PTY_transmission_stalled_before_DOWN": true,
+    "paired_DOWN_clears_kernel_PTY_input": true,
+    "DOWN_status_once_and_clean_helper_exit": true,
+    "DOWN_bounded_while_transmission_stalled": true,
+    "retired_session_does_not_forward_result_text": true,
+    "owned_socket_path_removed": true,
+    "hello_short": true,
+    "hello_version": true,
+    "hello_oversize": true,
+    "hello_DOWN": true,
+    "online_short": true,
+    "online_version": true,
+    "online_oversize": true,
+    "online_duplicate_HELLO": true,
+    "online_closed": true,
+    "command_DOWN": true,
+    "occupied_path": true,
+    "missing_peer_timeout": true,
+    "HELLO_timeout": true,
+    "signal_during_accept": true,
+    "replaced_path": true,
+    "blocked_host_status_drain_fails_within_budget": true,
+    "blocked_host_failure_is_explicit": true,
+    "blocked_host_cleans_owned_path": true
+  },
+  "reports": {
+    "legacy_faults": {
+      "passed": true,
+      "fault_cases": 16
+    },
+    "legacy_actual_PTY": {
+      "passed": true,
+      "checks": {
+        "coalesced_AT_payload_and_CR_order": true,
+        "host_sender_backpressured": true,
+        "full_binary_payload_exact": true,
+        "writer_completed": true,
+        "paused_host_backpressures_PTY_writer": true,
+        "opposite_direction_live_during_host_stall": true,
+        "reverse_payload_exact": true,
+        "reverse_writer_completed": true,
+        "PTY_read_serviced_during_hangup_guard": true,
+        "hangup_bytes_and_guards": true,
+        "both_directions_stalled_before_signal": true,
+        "signal_responsive_with_both_outputs_pending": true
+      },
+      "payload_size": 262147,
+      "payload_sha256": "e8b225397fcc2e3120be1f8355ea9bd59fe95acf2851b5d2a538524f9813d904",
+      "reverse_payload_size": 1048579,
+      "reverse_payload_sha256": "7d2cacea0e70b5043e18887a0ab05359d0e6ef3c45cc561349c31447e090bf31",
+      "scope": "Actual host-built helper process, Linux raw PTY and Unix control socket. No VM, slmodemd, DSP, SIP/audio or DOS."
+    },
+    "paired_control_reset_on_unread_stale_input": true
+  },
+  "helper": "/nix/store/pmzns9r3j7wc5fg2qfmwvrszdvr2qb9i-synthmodem-control-carrier-b1752e4-pcplus/bin/modemd-ctrl",
+  "helper_sha256": "29288a07e48f53d6d38c42c596b77679147b75bf052279ea287a561aefc47117",
+  "client_probe_sha256": "edc53193ed175f9c89ea8aeb6556e38b0bdece8b2d5fcceb818b93949186da5c",
+  "candidate_source_sha256": "02c18eff7aba34b0bcf568bea6eeddb8a0273297e8c32f919be04a82c0d26a75",
+  "frozen_inputs": {
+    "lab/bbs/patches/synthmodem-carrier/control.patch": "13147cbe77868e55fe99851b7c797a4f782d05adac9d81e54d372fa40ad9fc99",
+    "lab/bbs/patches/synthmodem-carrier/carrier_server.h": "b38fd86a6041495a9bb4c79c4e9350ed1ee30b6c5bc1b2c5823daaca1c36064c",
+    "lab/bbs/patches/synthmodem-carrier/carrier_server.inc": "8d995389fa935b3d302b78320189e00b98047c1e67d80d2e708c68c077f3406a",
+    "lab/bbs/patches/synthmodem-carrier/carrier_protocol.h": "2242d0963d602470fc547e1ebd06bf95a84c24863a689cdf5de4aaf8ab35057a",
+    "lab/bbs/test_carrier_helper.py": "7c71aa39dc6c3217c5049d763befd90920af0ec46df64d69cc5db6ed58739f16",
+    "lab/bbs/patches/synthmodem-control/check.py": "e6c224ee9787e51d7adefd1f1d0453560e3cc9691ba64cf0908c86a2e1bd3151",
+    "lab/bbs/patches/synthmodem-control/faults.c": "bf5db1532ab604b9ef867088ce5cf2ab8221e6d5d343520674ca07730bd395ab",
+    "nix/control-carrier.nix": "4bb103ad1c6e843fc000c1849ccc14dc81052ce1f6e14faf5d2d86453c4412ee",
+    "tools/build-control-carrier": "092e8f81ea00f5a613914fbdc41ef586f20d97180718281cef197d124773e0b4",
+    "nix/flake.nix": "7cda07d3ab9fb050ef3c959781e4cb93ab2fab72f915d6206d980458ab297aa0",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+    "tools/bbs-dev": "8b612f697c23466c10f48f31370afa469dce4331e5af6aca971f4fecf34388fa"
+  },
+  "scope": "Actual static i386 helper, production modem carrier client, Linux PTY and Unix sockets. No real modem_stop callback, VM/SIP/DSP integration or physical hardware.",
+  "Nix_build": [
+    {
+      "drvPath": "/nix/store/s23yi3n3kgbsz3vbckzpa1rzbizww182-synthmodem-control-carrier-b1752e4-pcplus.drv",
+      "outputs": {
+        "out": "/nix/store/pmzns9r3j7wc5fg2qfmwvrszdvr2qb9i-synthmodem-control-carrier-b1752e4-pcplus"
+      }
+    }
+  ],
+  "ELF32_i386_static": true,
+  "CONNECT_tail_collision_before_correction": {
+    "helper_sha256": "dfab9eefaad802d963b77cc3516a8166528ed7936cd7cbc551b4b3493f9aac73",
+    "frames": [
+      [
+        16,
+        "6d6f64656d642d6374726c207631206275696c643d756e6b6e6f776e"
+      ],
+      [
+        18,
+        "0d0a434f4e4e45435420313230300d0a66697273742062616e6e65720d0a4e4f20434152524945520d0a"
+      ],
+      [
+        19,
+        "7b226576656e74223a226e6f63617272696572227d"
+      ],
+      [
+        18,
+        "00ff"
+      ]
+    ],
+    "payload_hex": "66697273742062616e6e65720d0a4e4f20434152524945520d0a00ff",
+    "received_hex": "",
+    "collision_reproduced": true,
+    "Nix_build": [
+      {
+        "drvPath": "/nix/store/22646v2g8rqkvwxisliywn3v5mckxn2c-synthmodem-control-carrier-b1752e4-pcplus.drv",
+        "outputs": {
+          "out": "/nix/store/1bi5ccny04jbgflpzx0rrfh7pfb6g26p-synthmodem-control-carrier-b1752e4-pcplus"
+        }
+      }
+    ]
+  },
+  "producer_result_sha256": "eb198712be8ef61d85072adee673692aab9b84b7c3060b7c5d836c048cecc587"
+}
