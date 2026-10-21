@@ -362,12 +362,21 @@ The first reference's immutable-config assumption included the official daily
 statistics file; its successful route/failed preservation report stays retained.
 The corrected reference separates those counters and verifies no message/mail/
 transfer writes. Code/config/menu/library and message-body bytes preserve.
-AUDIO Synchronet cohort01 is now running with the same pinned minimum-hold/key-
-framing runtime,38400 DTE and V22/1200 DSP, with all inputs/auditors frozen.
-Independent exact whole-stream, native reply/input, official login, minimum-
-hold, RTP/SIP and hardware/timer cleanup gates remain mandatory. Preparation
-is not actual DOS/audio acceptance; editors, transfers, pressure/loss, physical
-and F01-F16 remain open. See [run instructions](lab/bbs/synchronet-audio.md).
+The [completed Synchronet01 failure](docs/validation/synthmodem-synchronet-audio-01.json)
+reaches the real bulletin menu but the recipe waits for a raw literal containing
+visible [Quit]. Actual SGR escapes split that word; the
+[raw-reference recipe check](docs/validation/synchronet-audio-recipe-01.json)
+finds both bulletin wait tokens absent. All57 native/offline/guest/BBS online
+bytes match and all10542 display bytes survive. The caller also retains the
+exact source-defined remote-close/menu suffix after server inactivity; the
+original full-caller gate remains failed. No gateway errors occur, and the
+configured watchdog yields normal DOS/UART/PIC/IRQ/timer/SIP cleanup. All missing
+route gates remain failures. The recorder preserves frozen inputs/captures and
+source-defined suffix identity; it grants no audio navigation acceptance.
+Correct the literal waits to the stable raw prefix, verify every wait token
+against the independent capture, then rerun every original route/stream/cleanup
+gate on fresh evidence. Editors/transfers, pressure/loss, physical and F01-F16
+remain open. See [run instructions](lab/bbs/synchronet-audio.md).
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
