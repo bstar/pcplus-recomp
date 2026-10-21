@@ -20,6 +20,13 @@ campaign has a54000-tick watchdog and3020-second outer bound, with unchanged976
 DOS terminal and200ms runtime. Actual slow-audio sustained/integrity/efficiency
 acceptance remains pending; this preparation closes no application/hardware gate.
 
+The [larger-file verifier controls](docs/validation/audio-pressure-download-protocol-controls.json)
+also reproduce the full real TCP reference and reject nine damaged copies,
+including corruption above64KiB, a CRC-valid16-bit-wrapped EOF, missing literal
+OO/finish/receiver ZFIN and premature ACK/ZFIN/ZRINIT. Original captures preserve;
+this strengthens the pending audio campaign's verifier without granting actual
+audio/pressure or full-application acceptance.
+
 The [current multiline ENiGMA audio workflow](docs/validation/current-enigma-editor-multiline-audio-01.json)
 now passes31 producer,40 independent and12 serial-ownership checks. The source-
 built976 terminal and unchanged200ms runtime handle288 actual BIOS body keys:

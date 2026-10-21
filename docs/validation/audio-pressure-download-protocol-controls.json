@@ -1,0 +1,111 @@
+{
+  "passed": true,
+  "reference": "build/bbs-lab/audio-pressure-download-reference-02/result.json",
+  "reference_sha256": "bd566e028e6bae93a8a6d19b1116cff90c78f6942ed0a9206dc12055dbc98f34",
+  "source_bytes": 65797,
+  "source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+  "real_reference_baseline_protocol_exact": true,
+  "baseline_opposite_controls": 4,
+  "cases": [
+    {
+      "name": "corrupted_packet_CRC",
+      "rejected": true,
+      "failure": "Data CRC mismatch",
+      "display_sha256": "818efbbed3e43672399ddc7979e6852e7a0d799ea3878e5c1cda502027d03b46",
+      "opposite_sha256": "0f41760dcdbab78bf0fcde9f37011209937377f4d8034840310a082d95710dd0",
+      "expected_source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+    },
+    {
+      "name": "wrong_source_byte_above64KiB",
+      "rejected": true,
+      "failure": "Transferred bytes differ",
+      "display_sha256": "d9b09d51612a82295eefdd6bf2b5a7678a054b3e995e2ed3d6fd7d7238329338",
+      "opposite_sha256": "0f41760dcdbab78bf0fcde9f37011209937377f4d8034840310a082d95710dd0",
+      "expected_source_sha256": "a96179f11094d403e722f4b67a476506c0f8e37242f64ffaac469979f2d9ef5d"
+    },
+    {
+      "name": "CRC_valid_EOF_position_wrapped_to16bits",
+      "rejected": true,
+      "failure": "Unverified/mismatched EOF",
+      "display_sha256": "eb7e499bd054c189df4883558665ad51760c331b1ac176baa8dc25548078c1f7",
+      "opposite_sha256": "0f41760dcdbab78bf0fcde9f37011209937377f4d8034840310a082d95710dd0",
+      "expected_source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+    },
+    {
+      "name": "exact_file_but_missing_finish",
+      "rejected": true,
+      "failure": "Incomplete files or missing ZFIN/OO",
+      "display_sha256": "c2c3d559a70cce8351b1e0b3a4edb8eebe5586ef9cc66d626a1f047bcb2b70d9",
+      "opposite_sha256": "0f41760dcdbab78bf0fcde9f37011209937377f4d8034840310a082d95710dd0",
+      "expected_source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+    },
+    {
+      "name": "missing_literal_OO",
+      "rejected": true,
+      "failure": "Missing complete protocol header",
+      "display_sha256": "ffae02fa487d15aa0f78a3e47113eb2133c36eb9fe3eedcdbd22ead9b9adfa9d",
+      "opposite_sha256": "0f41760dcdbab78bf0fcde9f37011209937377f4d8034840310a082d95710dd0",
+      "expected_source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+    },
+    {
+      "name": "CRC_valid_ACK_instead_of_receiver_ZFIN",
+      "rejected": true,
+      "failure": "('Missing opposite header', 8, 0, 962628.278395532, 962628.479857506)",
+      "display_sha256": "d9b09d51612a82295eefdd6bf2b5a7678a054b3e995e2ed3d6fd7d7238329338",
+      "opposite_sha256": "0af198f79d5bc40d9fe82b7e53df0b631c4ef4878cc7c554876c0d0bcaafa149",
+      "expected_source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+    },
+    {
+      "name": "ACK_before_complete_packet_CRC",
+      "rejected": true,
+      "failure": "('No ACK or verified-position recovery for subpacket', 58701, 1024)",
+      "display_sha256": "d9b09d51612a82295eefdd6bf2b5a7678a054b3e995e2ed3d6fd7d7238329338",
+      "opposite_sha256": "0f41760dcdbab78bf0fcde9f37011209937377f4d8034840310a082d95710dd0",
+      "expected_source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+    },
+    {
+      "name": "receiver_ZFIN_before_sender_ZFIN",
+      "rejected": true,
+      "failure": "('Missing opposite header', 8, 0, 962628.278395532, 962628.479857506)",
+      "display_sha256": "d9b09d51612a82295eefdd6bf2b5a7678a054b3e995e2ed3d6fd7d7238329338",
+      "opposite_sha256": "0f41760dcdbab78bf0fcde9f37011209937377f4d8034840310a082d95710dd0",
+      "expected_source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+    },
+    {
+      "name": "completion_ZRINIT_before_EOF",
+      "rejected": true,
+      "failure": "('Missing opposite header', 1, None, 962628.077157548, 962630.69075215)",
+      "display_sha256": "d9b09d51612a82295eefdd6bf2b5a7678a054b3e995e2ed3d6fd7d7238329338",
+      "opposite_sha256": "0f41760dcdbab78bf0fcde9f37011209937377f4d8034840310a082d95710dd0",
+      "expected_source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+    }
+  ],
+  "original_reference_captures_unchanged": true,
+  "inputs": {
+    "lab/bbs/check_pressure_download_protocol.py": "824af1899b9b94b4c12da05bd6f1507179fa9ffd9035223966cf3f8a5610a906",
+    "lab/bbs/audio_pressure_download.py": "fdd7a29ec4e7fcb6eac97ff8649e49f32acb1151da25f63d40db301b860bc382",
+    "lab/bbs/prepare_audio_pressure_download.py": "d6d30701931cc316fec32e2e16ac3c05576a02ddc9051c5ef627fae77465c663",
+    "lab/bbs/audit_zmodem.py": "510ad0fd519c8fa279599956d13852f984a1e32e49e4588e1c482749829d5ad9",
+    "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+    "lab/bbs/test_transfer_dos.py": "d8cbd432c3b1e9dab4dd7fc841defff5b18e379592a935b43a010657cd967964",
+    "standalone/check_zmodem_wire.py": "ced7cec6ed33f9b2b9e8056893398b7d394aeaaa5b95c21f7f7e2ca8bc328c94"
+  },
+  "captures_sha256": {
+    "receiver.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "server-wire.bin": "9b9d02f15775bfbfb508a985c13d94ea00dd70af931f5d8f8a4d08f453ab51ed",
+    "client-wire.bin": "beef74e2b7eb8233d17cb9a266af533f01c453c681a8ca26ae191a681cfeea78",
+    "receiver-input.bin": "42bd30e62c7b04738e29b9575098e50411f3a96b832db28c0a2ff460388f20e4",
+    "receiver-output.bin": "c63f2f11ce45f4a03ade3a1504aced4da6b8e3c2b14d0d83fc3d77608dc1f404",
+    "events.json": "8b30cbcdf4c24f27a7901a6cf61bb80fa4f1b5df08e42e216aaa477f8226e859",
+    "server-session.json": "8659dda999e269860396abd8f1f76247366cf8d27e98bc1d44743c9e8914dcbe",
+    "metadata-after.json": "8255bbfddef9229fd6b5b04704fdaf93a7920066f719d80aa39e6dcf8190b5e8",
+    "RECV/PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+  },
+  "scope": "Verifier controls only using copied bytes/times from the real65797-byte lrzsz/stock ENiGMA TCP reference. Baseline complete source/CRC/EOF/finish/opposite controls must reproduce exactly. Nine corruptions cover CRC, source content above64KiB, EOF position wrapped to16 bits with valid CRC, missing finish/OO/receiver-ZFIN and premature ACK/ZFIN/ZRINIT. No live DOS/audio product/pressure/hardware acceptance follows; original captures are preserved.",
+  "source_receipt": "build/bbs-lab/audio-pressure-download-protocol-controls-02.json",
+  "source_receipt_sha256": "bca007d016901887a6e64327650a45df3afcb17b5ceecd344a553fd13a74204c",
+  "initial_expectation_failure": {
+    "source": "build/bbs-lab/audio-pressure-download-protocol-controls-01.source.py",
+    "reason": "Truncated stream is rejected by the final missing-ZFIN/OO assertion rather than the expected inner missing-header assertion. Only the expected diagnostic changed; the same rejection gate remains."
+  }
+}

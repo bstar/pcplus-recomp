@@ -56,3 +56,23 @@ Measure retransmissions and queued timing separately; a completed file alone
 cannot establish transfer acceptance or efficiency. This is one larger-file
 campaign, not arbitrary-duration pressure, other directions/protocols/profiles,
 physical Boca/SPA2102 or full-application completion.
+
+## Damaged-evidence controls
+
+The [nine protocol controls](../../docs/validation/audio-pressure-download-protocol-controls.json)
+reproduce the real65797-byte reference protocol and opposite controls exactly,
+then reject copied evidence with a corrupt packet CRC, wrong source byte above
+64KiB, CRC-valid EOF position wrapped to16 bits, missing finish, missing literal
+OO, ACK substituted for receiver ZFIN, premature data ACK, premature receiver
+ZFIN, or completion ZRINIT before EOF. Original reference captures stay exact.
+These are verifier tests; the live DOS/audio campaign remains separate.
+
+The first checker expected the truncated stream's error at an inner parser gate.
+The parser correctly rejected it at its final missing-ZFIN/OO gate. That source
+is retained; only the expected diagnostic changed in the passing checker.
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/check_pressure_download_protocol.py \
+  --reference build/bbs-lab/audio-pressure-download-reference-02/result.json \
+  --output build/bbs-lab/pressure-protocol-controls-new.json
+```
