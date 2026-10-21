@@ -62,3 +62,9 @@ binaries, source rebuild, transfer regressions, socket-unit tests and retained
 failures. Modules/selected menus are copied from the board; users, archives and
 mutable runtime are synthetic. Live deployment/catalog acceptance, physical
 modem testing and the wider application requirements remain open.
+
+The [current-build repeat](../../docs/CURRENT_DOS_CARRIER.md) validates `976ba8d0`
+with a fresh partial-loss/redial/retry/NFO capture, thirteen strengthened
+capture controls and a byte-identical 31-product source proof. Its separate
+receipt preserves the earlier acceptance record and the original negative
+control that did not remove a second valid NFO redraw.

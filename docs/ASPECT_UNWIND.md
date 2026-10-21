@@ -145,3 +145,11 @@ ownership, broader views, full UI/language coverage, current live ENiGMA and
 Synchronet workflows, loaded-input behavior, actual DOS kernels and physical
 RS-232 Wi-Fi modem/hardware validation. The separate ENiGMA input-decoder defect
 is unchanged by this interpreter work.
+
+The [current source/carrier checkpoint](CURRENT_DOS_CARRIER.md) refreshes stale
+helper manifests, fixes the fault diagnostic's five-byte code overflow with an
+equivalent interrupt-number table, and validates seventeen ordinary plus five
+guarded recovery/control cases. The canonical mouse source-proof Make target
+now declares its required diagnostic and reproduces all 31 products without
+manual helper preparation. These are separate current-version results; the
+older checkpoint's hashes and broader requirements above remain explicit.

@@ -37,11 +37,16 @@ static unsigned psp;
 static unsigned char jft_before[20];
 static unsigned char __far *jft;
 static void (__interrupt __far *vectors[VECTOR_COUNT])(void);
+static const unsigned char vector_numbers[VECTOR_COUNT]={0,0x23,0x24
+#if defined(NATIVE_PROGRAM_BREAK_OWNER)
+ ,0x1b
+#endif
+};
 extern unsigned __cdecl aspect_serial_psp(void);
 static unsigned clean(void)
 {
  unsigned i;
- for(i=0;i<VECTOR_COUNT;++i)if(vectors[i]!=_dos_getvect(i==3?0x1b:i?0x22+i:0))return 0;
+ for(i=0;i<VECTOR_COUNT;++i)if(vectors[i]!=_dos_getvect(vector_numbers[i]))return 0;
 #if defined(NATIVE_PROGRAM_BREAK_OWNER)
  if(native_break_phase()!=BREAK_CLOSED||query_break()!=0)return 0;
 #endif
@@ -59,7 +64,7 @@ static unsigned fault_run(const char *path,unsigned limit)
  set_break(0);
 #endif
  psp=aspect_serial_psp();jft=MK_FP(psp,0x18);_fmemcpy(jft_before,jft,20);
- for(i=0;i<VECTOR_COUNT;++i)vectors[i]=_dos_getvect(i==3?0x1b:i?0x22+i:0);
+ for(i=0;i<VECTOR_COUNT;++i)vectors[i]=_dos_getvect(vector_numbers[i]);
  first=aspect_runtime_run(path,limit);
  report[3]=first;report[5]=runtime_external_fault_fired;report[6]=runtime_external_recoveries;
  report[7]=runtime_external_cleanup_error;report[8]=runtime_external_arena_ok;

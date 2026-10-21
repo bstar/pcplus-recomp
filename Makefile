@@ -1340,6 +1340,7 @@ test-terminal-mouse: terminal-mouse
 	python3 standalone/check_terminal_mouse.py
 	python3 standalone/test_terminal_mouse_dos.py
 test-terminal-mouse-source: terminal-mouse terminal-mouse-process setup aspect-external-unwind aspect-process aspect-runner aspect-compiler-dos terminal
+	python3 -c 'import sys; sys.path.insert(0,"standalone"); import build_aspect_process as p; p.main(p.ROOT/"standalone/aspect_process_diagnostic.c")'
 	python3 standalone/check_aspect_unwind_source.py --mouse
 test-terminal-mouse-unwind: terminal-mouse-process aspect-external-unwind
 	python3 standalone/test_aspect_unwind_dos.py --mouse --kind D --kind A --kind F --kind L --control
