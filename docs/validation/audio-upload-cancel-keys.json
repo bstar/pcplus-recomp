@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "mode": "success",
+      "passed": true,
+      "checks": {
+        "probe_normal_exit": true,
+        "exact_phased_BIOS_keys": true,
+        "timer_vector_restored": true
+      },
+      "expected_words": 45,
+      "probe_source_sha256": "5beb7e39dd6f404f2111a6048003a8d741d641e04613295b627751efc711d4ef"
+    },
+    {
+      "mode": "failure",
+      "passed": true,
+      "checks": {
+        "probe_normal_exit": true,
+        "exact_phased_BIOS_keys": true,
+        "timer_vector_restored": true
+      },
+      "expected_words": 24,
+      "probe_source_sha256": "bb8442ba1a063a012fcbce720a092414500dadf3df343512ac8cc6f08aacc45a"
+    },
+    {
+      "mode": "cancel",
+      "passed": true,
+      "checks": {
+        "probe_normal_exit": true,
+        "exact_phased_BIOS_keys": true,
+        "timer_vector_restored": true
+      },
+      "expected_words": 41,
+      "probe_source_sha256": "acc3c6dd4c7a54235e6c23d8c864e0f93febda0f5523e0ca2bbb750707e23c3a"
+    }
+  ],
+  "inputs": {
+    "lab/bbs/check_audio_upload_keys.py": "3f4c0433c7e22f5b941414fcd0f3423a7f141c2100658238d9222f0313989a2a",
+    "lab/bbs/audio_upload_keys.asm": "0ac37cc2d7a72269d7e73a41c5b974a9d472171a5ead147b690920258e8091a8",
+    "lab/bbs/audio_get_vector.asm": "a4dcbe3717c43f5914ee3503099d250fd7810610b8c25f4c0c18c2d4d403e817"
+  },
+  "scope": "Actual DOS BIOS-only observer tests for normal success, failure exit and progress-triggered cancellation. Cancellation requires visible confirmed KiB before Escape, observes TX canceled, then emits the exact remote cancel and PCXTEST search/list key sequence. All9 phase/key/vector checks pass. Synthetic screen phases test the observer only; no BBS/audio/physical cancellation acceptance.",
+  "raw_result_sha256": "2f3d51cfbb189a71a4144f98f37a3d989d5bba4f8d1229687f5c981fc386ab7a"
+}

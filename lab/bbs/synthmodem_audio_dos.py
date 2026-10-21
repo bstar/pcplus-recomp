@@ -19,7 +19,8 @@ from directory_test_support import accounting_check
 from test_terminal import SAMPLER
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--receive-trace',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--carrier-trace',action='store_true');p.add_argument('--key-framing',action='store_true');p.add_argument('--key-framing-trace',action='store_true');p.add_argument('--syscall-trace',action='store_true');p.add_argument('--route',choices=['menus','editor','download','upload'],default='menus');p.add_argument('--fixture-lab',type=Path);a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--receive-trace',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--carrier-trace',action='store_true');p.add_argument('--key-framing',action='store_true');p.add_argument('--key-framing-trace',action='store_true');p.add_argument('--syscall-trace',action='store_true');p.add_argument('--route',choices=['menus','editor','download','upload'],default='menus');p.add_argument('--fixture-lab',type=Path);p.add_argument('--upload-cancel',action='store_true');a=p.parse_args()
+ if a.upload_cancel:assert a.route=='upload' and a.fixture_lab,'Cancellation requires an explicit isolated upload fixture'
  server_fixture=None
  if a.fixture_lab:
   assert a.route=='upload','The explicit receiver candidate is an upload-only fixture'
@@ -69,6 +70,11 @@ def main():
  if a.route=='upload':
   import audio_upload
   upload_before=audio_upload.prepare(out)
+  if a.upload_cancel:
+   key_receipt=ROOT/'build/bbs-lab/audio-upload-cancel-keys-01/result.json';kr=json.loads(key_receipt.read_text())
+   assert kr['passed'] and {c['mode'] for c in kr['cases']}=={'success','failure','cancel'}
+   assert all(sha(ROOT/n)==h for n,h in kr['inputs'].items())
+   names+=['lab/bbs/audio_upload_cancel.py','lab/bbs/check_audio_upload_keys.py',str(key_receipt.relative_to(ROOT))]
   names+=['lab/bbs/audio_upload.py','lab/bbs/audio_upload_keys.asm','lab/bbs/check_audio_upload_keys.py','lab/bbs/check_audio_upload_navigation.py','docs/validation/audio-upload-keys.json','docs/validation/audio-upload-navigation.json','lab/bbs/enigma_upload_dos.py','lab/bbs/enigma_transfer.py',str(Path(upload_before['source_path']).relative_to(ROOT)),str(audio_upload.helper().relative_to(ROOT))]
  if server_fixture:
   navigation=a.fixture_lab.resolve()/'navigation/result.json';nav=json.loads(navigation.read_text())
@@ -126,7 +132,7 @@ def main():
  (out/'MODEM.PRM').write_bytes(profile)
  contact=bytearray(directory(entry=1,target=b'1',port=1,baud=6));contact[250+52:250+61]=b'AUDIO\0\0\0\0';contact=bytes(contact);(out/'CALL.DIR').write_bytes(contact)
  (out/'sampler.asm').write_text(SAMPLER);subprocess.run(['nasm','-fbin',str(out/'sampler.asm'),'-o',str(out/'SNAP.COM')],check=True)
- for name,leaf in [('audio_editor_keys.asm' if a.route=='editor' else 'audio_download_keys.asm' if a.route=='download' else 'audio_upload_keys.asm' if a.route=='upload' else 'audio_exit_keys.asm','EXITKEY.COM'),('audio_get_vector.asm','KEYVEC.COM')]:subprocess.run(['nasm','-fbin',str(ROOT/'lab/bbs'/name),'-o',str(stage/leaf)],check=True)
+ for name,leaf in [('audio_editor_keys.asm' if a.route=='editor' else 'audio_download_keys.asm' if a.route=='download' else 'audio_upload_keys.asm' if a.route=='upload' else 'audio_exit_keys.asm','EXITKEY.COM'),('audio_get_vector.asm','KEYVEC.COM')]:subprocess.run(['nasm','-fbin']+(['-DAUDIO_UPLOAD_CANCEL=1'] if a.upload_cancel and leaf=='EXITKEY.COM' else [])+[str(ROOT/'lab/bbs'/name),'-o',str(stage/leaf)],check=True)
  generated={str(p.relative_to(out)):sha(p) for p in stage.iterdir()}
  log=enigma.SOURCE/'logs/enigma-bbs.log';boundary=(log.stat().st_ino,log.stat().st_size)
  tool_inputs={str(Path(shutil.which(n)).resolve()):sha(Path(shutil.which(n))) for n in (['dosbox-x','nasm','strace'] if a.syscall_trace else ['dosbox-x','nasm'])}
@@ -240,11 +246,15 @@ exit
   checks['posttransfer_filename_visible']='PCXTEST.BIN' in text
  if a.route=='upload':
   checks.pop('final_file_menu')
-  extra,upload=audio_upload.check(out,rows,upload_before);checks.update(extra)
-  checks['posttransfer_filename_visible']=audio_upload.NAME in text
+  if a.upload_cancel:
+   import audio_upload_cancel
+   extra,upload=audio_upload_cancel.check(out,rows,upload_before)
+  else:extra,upload=audio_upload.check(out,rows,upload_before)
+  checks.update(extra)
+  checks['posttransfer_filename_visible']=('PCXTEST.BIN' if a.upload_cancel else audio_upload.NAME) in text
  result={'passed':all(checks.values()),'checks':checks,'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'server_inputs':server_inputs,'server_root':str(enigma.SOURCE),'server_fixture':server_fixture,
   'generated_inputs':generated,'tool_inputs':tool_inputs,'syscall_trace':a.syscall_trace,'clock_anchors':clock_anchors,'server_revision':enigma.COMMIT,'server_menus':menus,'script_stages':read('STAGES.LOG').decode('ascii'),'login_readiness':'WAITFOR plus reused one-shot WHEN latch','receive_trace':a.receive_trace,'dmodem_variant':a.dmodem,'lifecycle':a.lifecycle,'carrier':a.carrier,'carrier_trace':a.carrier_trace,'key_framing_trace':a.key_framing_trace,'input_sequence_timeout_ms':250 if a.key_framing else 0,
-  'DOS_screen':text,'gateway':n,'route':a.route,'editor':editor,'download':download,'upload':upload,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
+  'DOS_screen':text,'gateway':n,'route':a.route,'upload_cancel':a.upload_cancel,'editor':editor,'download':download,'upload':upload,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
   'scope':'Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to the explicitly recorded owned ENiGMA board. Any receiver candidate is separately identified; no unmodified-stock, physical modem/ATA/UART or whole-application claim follows from a candidate result.'}
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'passed':result['passed'],'checks':checks,'result':str(out/'result.json')},indent=2));return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

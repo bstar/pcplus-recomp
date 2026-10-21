@@ -41,7 +41,11 @@ sending: db 'Sending ZMODEM',0
 checker: db 'UPLOAD CHECKER',0
 pause_text: db 'smash your keyboard',0
 details: db 'UPLOAD DETAILS - ',0
+%ifdef AUDIO_UPLOAD_CANCEL
+filename_marker: db 'PCXTEST.BIN',0
+%else
 filename_marker: db 'AUDIOUP.BIN',0
+%endif
 button: db 'CONTINUE',0
 file_menu: db 'File Base',0
 menu_footer: db '...cmd:',0
@@ -54,7 +58,12 @@ start_keys: dw 1f00h,0
 file_keys: dw 3c00h,3c00h,2044h,273ah,2b5ch,1f53h,1245h,314eh,2044h,2b5ch,1e41h,1655h,2044h,1749h,184fh,1655h,1950h,342eh,3042h,1749h,314eh,1c0dh,0
 enter_keys: dw 1c0dh,0
 search_keys: dw 1f53h,1c0dh,0
+%ifdef AUDIO_UPLOAD_CANCEL
+query_keys: dw 1950h,2e43h,2d58h,1454h,1245h,1f53h,1454h,342eh,3042h,1749h,314eh,1c0dh,1c0dh,0
+cancel_keys: dw 011bh,0
+%else
 query_keys: dw 1e41h,1655h,2044h,1749h,184fh,1655h,1950h,342eh,3042h,1749h,314eh,1c0dh,1c0dh,0
+%endif
 exit_keys: dw 2d00h,0
 handler:
  pushf
@@ -97,6 +106,10 @@ handler:
  je .emit
  cmp al,13
  je .emit
+%ifdef AUDIO_UPLOAD_CANCEL
+ cmp al,15
+ je .canceled
+%endif
  cmp al,0
  jne .local
  mov si,banner
@@ -121,6 +134,24 @@ handler:
 .checker:
  cmp al,5
  jne .details
+%ifdef AUDIO_UPLOAD_CANCEL
+ ; Only visible confirmed KiB progress permits Escape. No product memory,
+ ; UART inspection, timer-only trigger or invented peer response.
+ mov si,sending
+ call visible
+ jnc .done
+ cmp word [es:3680+70*2],1f31h
+ jb .done
+ cmp word [es:3680+70*2],1f39h
+ ja .done
+ keys 6,cancel_keys,15,LOCAL_WAIT,LOCAL_WAIT
+.canceled:
+ mov si,failure_cancel
+ call visible
+ jnc .done
+ ; Leave the remote upload form, then require an actual file search/list.
+ keys 6,cancel_keys,8,LOCAL_WAIT,FIELD_WAIT
+%else
  mov si,failure_timeout
  call visible
  jc .failed
@@ -137,6 +168,7 @@ handler:
  call visible
  jnc .done
  keys 6,enter_keys,7,REMOTE_WAIT,FIELD_WAIT
+%endif
 .details:
  cmp al,7
  jne .menu

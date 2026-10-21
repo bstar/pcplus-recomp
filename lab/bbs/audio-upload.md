@@ -170,3 +170,35 @@ preserved. The sealed receipt binds raw captures, frozen inputs and all audits.
 Acceptance covers this modified-helper workflow. Stock upload02 remains failed
 at closing ownership; pressure, cancellation/loss, arbitrary peers, physical
 Boca/SPA2102 and F01-F16 whole-application acceptance remain open.
+
+
+## Audio cancellation experiment
+
+The isolated cancellation recipe uses the original11521-byte source and same
+DOS binary, fixed DTE and V22/1200 runtime. `--upload-cancel` requires an explicit
+fresh fixture. The observer waits for the actual confirmed KiB footer before
+BIOS Escape, observes TX canceled and then tries the remote cancel and PCXTEST
+search/list. Normal full-upload gates retain their meaning and reject this mode.
+The separate `audio_upload_cancel.py` auditor checks valid source/ACK before
+CAN, absence of EOF before cancel, source/stat, no official installed file,
+helper retirement and real postcancel input, in addition to complete stream and
+hardware/ownership audits. No successful file upload is expected or claimed.
+
+The [preparation receipt](../../docs/validation/audio-upload-cancel-preparation.json)
+accepts only the observer and isolated-board prerequisites. Audio cohort01 is
+running; no actual cancellation acceptance follows yet. Inputs stay frozen
+through producer exit and all independent same-run audits. Temporary receiver
+files and retry need separate evidence.
+
+```sh
+./tools/dev --command python3 lab/bbs/check_audio_upload_keys.py \
+  --output build/bbs-lab/audio-upload-cancel-keys-01
+# Prepare/start a fresh receiver candidate and run navigation/isolation above.
+./tools/modem-dev --command python3 lab/bbs/synthmodem_audio_dos.py \
+  --key-framing --route upload --upload-cancel \
+  --fixture-lab build/bbs-lab/enigma-audio-cancel-candidate-01 \
+  --runtime build/bbs-lab/synthmodem-key-framing-runtime-01/runtime \
+  --output build/bbs-lab/synthmodem-audio-upload-cancel-NEW
+# After natural producer exit: run independent byte/cleanup and ownership
+# audits, then audio_upload_cancel.py on that same fresh cohort.
+```

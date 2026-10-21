@@ -17,7 +17,7 @@ def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path);out=p.parse_args().cohort.resolve()
     read=lambda name:json.loads((out/name).read_text())
-    r=read('result.json');assert r['route']=='upload'
+    r=read('result.json');assert r['route']=='upload' and not r.get('upload_cancel')
     from enigma_receive_finish_instance import from_result
     server_fixture=from_result(r)
     base=read('independent-audit.json');io=read('serial-io-audit.json')

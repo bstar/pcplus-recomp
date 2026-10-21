@@ -11,7 +11,7 @@ def main():
  a=p.parse_args();out=a.cohort.resolve();target=a.output.resolve()
  assert out.is_relative_to(ROOT/'build') and target.is_relative_to(ROOT/'docs/validation') and not target.exists()
  read=lambda n:json.loads((out/n).read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
- r=read('result.json');context=from_result(r);assert context and r['route']=='upload'
+ r=read('result.json');context=from_result(r);assert context and r['route']=='upload' and not r.get('upload_cancel')
  base=read('independent-audit.json');io=read('serial-io-audit.json');upload=read('upload-audit.json')
  verifier=read('control-timing-verifier.json');finish=read('upload-finish-diagnosis.json')
  assert r['passed'] and base['passed'] and io['evidence_consistent'] and upload['passed']

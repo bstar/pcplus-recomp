@@ -278,6 +278,19 @@ this receiver candidate, V22/1200 runtime and fixed38400 DTE workflow. Stock
 upload02 retains its late-OO failure; arbitrary peers, pressure/cancel/loss,
 physical Boca/SPA2102 and all F01-F16 requirements remain open.
 
+The [audio cancellation preparation](docs/validation/audio-upload-cancel-preparation.json)
+passes9 actual DOS observer checks,7 navigation and13 isolation checks on a
+fresh private receiver-candidate board. The previous candidate listener is
+stopped with its completed file/receipt retained; stock and user LAN boards are
+unchanged. The opt-in `--upload-cancel` mode waits for visible confirmed KiB,
+injects BIOS Escape, then requires a real PCXTEST search/list. A dedicated
+passive auditor requires CRC-valid source data and a peer ACK before CAN, no
+premature EOF, absent official installation, exact complete streams and normal
+cleanup. Full-upload auditors explicitly reject cancellation cohorts. Actual
+audio cancellation cohort01 is running with all source/runtime/auditor inputs
+frozen; preparation grants no actual cancellation acceptance. Retry, temporary
+server-file cleanup, pressure/loss, physical and F01-F16 gates remain open.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

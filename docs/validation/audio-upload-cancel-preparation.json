@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "actual_audio_cancellation_accepted": false,
+  "checks": {
+    "observer_nine_DOS_checks": true,
+    "navigation_seven_checks": true,
+    "isolation_thirteen_checks": true
+  },
+  "server_fixture": {
+    "kind": "sexyz-receive-finish-candidate",
+    "lab": "build/bbs-lab/enigma-audio-cancel-candidate-01",
+    "manifest": "build/bbs-lab/enigma-audio-cancel-candidate-01/receive-finish-instance.json",
+    "manifest_sha256": "34c9a810035805e7296ccca2326c9e41889d67d001671f7570de2d509aaae05d",
+    "helper_sha256": "3485669f1df011640667e2111de08d32478f2d64941af0ea02bfa13492909b52",
+    "source": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma-audio-cancel-candidate-01/source"
+  },
+  "inputs": {
+    "build/bbs-lab/enigma-audio-cancel-candidate-01/navigation/result.json": "72a0ed2fdbdbe48f60c07d51016ebb6621990dc497cfb787dac877ccba1a3898",
+    "build/bbs-lab/enigma-audio-cancel-candidate-01/isolation/result.json": "77730d44f595838c85f90546f3ef5ccf981ce85871db93376de06413ababeadd",
+    "docs/validation/audio-upload-cancel-keys.json": "f53990fd4f36b6a38d4834c300762e945c564ca7fda5cc46579321e710e38ec6"
+  },
+  "scope": "Preparation only: fresh private board, no installed AUDIOUP, preserved original stock and completed candidate upload; tested BIOS observer. Audio cancellation cohort01 is running and all transfer/byte/cleanup gates remain required. No actual cancellation, retry, pressure/loss or physical acceptance."
+}
