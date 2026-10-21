@@ -101,6 +101,52 @@ with this candidate and make login-ready detection tolerate asynchronous art
 callbacks while retaining actual main-menu/editor entry requirements. Do not
 trim the extra bytes, patch the stock BBS or shorten its art to obtain a pass.
 
+## Traced editor04: semantic pass, overall reset failure
+
+The traced candidate adds only the previously tested export image relative to
+normal framing. Every JavaScript source, modem binary, backend and kernel stays
+identical to that candidate. The [readiness latch and probe watchdog](../../audio-login-readiness.md)
+allow this follow-up to preserve the existing Main Menu match during deferred
+art callbacks and collect normal cleanup even if prerequisites fail.
+
+The actual DOS/audio route now reaches the stock ENiGMA editor and all32
+independent checks pass. Home, End, Delete, Insert/overtype, Tab, the one-line
+page boundaries and Ctrl-Y behave as predicted. The final actual DOS screen
+contains UNSAVED at OVR01,08. No post is saved. All120 authored online DOS bytes
+match the caller waveform decoder, actual guest DATA_RX, guest-PCM decoder and
+Telnet application input. The captured downstream caller stream equals the
+entire48936-byte BBS display plus187 bridge bytes. UART/timer restoration,
+normal DOS return, directory accounting and server/profile identities pass.
+
+The PCM trace has4116000 exact overlapping samples at480 samples/60ms delay.
+All1083 unique waveform anchors agree; no overlap sample differs. The longer
+RTP tail continues during export/shutdown and is not claimed as exported guest
+PCM. The serial-output observer records frontend send attempts; post-close DSP
+output is not proof that a closed DOS serial connection received later bytes.
+The screen snapshot validates the pre-close editor state.
+
+The [combined trace receipt](../../../../docs/validation/synthmodem-key-framing-trace.json)
+still has passed=false. Producer checks pass22/23; read ECONNRESET remains
+unclassified. No error filter or acceptance threshold was weakened. This is a
+local editor semantic checkpoint, not complete transport, arbitrary-network,
+transfer, physical modem or application acceptance. The earlier normal-image
+insertions remain unresolved, and this diagnostic run cannot establish a fix.
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/synthmodem_key_framing_runtime.py \
+  --receive-trace --output build/bbs-lab/key-framing-trace-new
+./tools/modem-dev --command python3 lab/bbs/synthmodem_audio_dos.py \
+  --key-framing-trace --route editor \
+  --runtime build/bbs-lab/key-framing-trace-new/runtime \
+  --output build/bbs-lab/audio-key-framing-trace-new
+```
+
+Run the same independent audit/caller decoder, plus diagnose_receive_pcm.js and
+analyze_receive_trace.py against the new cohort. The recorder accepts
+--receipt docs/validation/synthmodem-key-framing-trace.json to retain this scope
+separately from the failed normal-image prerequisite receipt. Use fresh outputs;
+the actual trace cohort is not overwritten to hide its reset failure.
+
 The patch contains excerpts of GPL-2.0-or-later SynthModem source. Original
 notices are retained in [the shared upstream notice file](../synthmodem-telnet/UPSTREAM-NOTICES.txt).
 Maintained candidate and test JavaScript is GPL-2.0-or-later.

@@ -1,0 +1,110 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "MISSED",
+      "passed": true,
+      "checks": {
+        "dos_parent_pass": true,
+        "status_uart_asio": true,
+        "exact_transmit": true,
+        "exact_stdout": true,
+        "exact_returned_unread": true,
+        "stderr": true,
+        "peer_no_error": true,
+        "input_delivered": true
+      },
+      "dependency_scripts": {},
+      "source_sha256": "62e69a6c20b1927f8c776ff91866946a6c21829943fb8fe5b16b2afec0be83cf",
+      "asx_sha256": "34b5deaa7d007ee1f81bb4a13bfb9b01e6363795a3ea8e7dd8b1a9d8e8aadfc7",
+      "binary_sha256": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+      "parent_binary_sha256": "8d5d413c1677b0d026f72a4ec1e0d3af6ff49921bb6ad0a827774bd1bbc496a9",
+      "config_sha256": "bf483544f052763ae26080c62936c4feb0c4ff3594725b13c60eac0ac690c304",
+      "handoff_header_sha256": "51db79078c78294d7f247da793839d8114ae6680e8fa5798b681b1c32648e7eb",
+      "tx_hex": "524541445948414e444c45524d4953534544",
+      "input_hex": "50415553454d61696e204d656e75",
+      "stdout_hex": "",
+      "stderr_hex": "",
+      "status": "exit=0 vector=1 mask=1 mcr=1 returned=1 count=0 lease=0 guard=1",
+      "returned_hex": "",
+      "descriptor_hex": "4153494f01001c001408e70ba00300100000000043a5010000000000",
+      "elapsed_seconds": 3.322,
+      "peer_errors": []
+    },
+    {
+      "name": "LATCHED",
+      "passed": true,
+      "checks": {
+        "dos_parent_pass": true,
+        "status_uart_asio": true,
+        "exact_transmit": true,
+        "exact_stdout": true,
+        "exact_returned_unread": true,
+        "stderr": true,
+        "peer_no_error": true,
+        "input_delivered": true
+      },
+      "dependency_scripts": {},
+      "source_sha256": "d20ea747d01320236a9574fe25fd005a17dc0a5f1e8ee8c298f5afc39ecf00fc",
+      "asx_sha256": "fbf74672c642ea9b924ea5729e945f1c180a82ad6491aeefa7d12b633b7cdf42",
+      "binary_sha256": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+      "parent_binary_sha256": "8d5d413c1677b0d026f72a4ec1e0d3af6ff49921bb6ad0a827774bd1bbc496a9",
+      "config_sha256": "e6b38e94690ea466243343cd862ee6cdc91802f5e7a89b59d69994be36a20bed",
+      "handoff_header_sha256": "51db79078c78294d7f247da793839d8114ae6680e8fa5798b681b1c32648e7eb",
+      "tx_hex": "524541445948414e444c45525345454e",
+      "input_hex": "50415553454d61696e204d656e75",
+      "stdout_hex": "",
+      "stderr_hex": "",
+      "status": "exit=0 vector=1 mask=1 mcr=1 returned=1 count=0 lease=0 guard=1",
+      "returned_hex": "",
+      "descriptor_hex": "4153494f01001c001408e70ba00300100000000043a5010000000000",
+      "elapsed_seconds": 3.322,
+      "peer_errors": []
+    },
+    {
+      "name": "REUSED",
+      "passed": true,
+      "checks": {
+        "dos_parent_pass": true,
+        "status_uart_asio": true,
+        "exact_transmit": true,
+        "exact_stdout": true,
+        "exact_returned_unread": true,
+        "stderr": true,
+        "peer_no_error": true,
+        "input_delivered": true
+      },
+      "dependency_scripts": {},
+      "source_sha256": "2a2004787a899d642d9f2628f0e082c634b45fdd1ba5d8bfeb3247f3cf552cd9",
+      "asx_sha256": "91f847391212d7c418b75e28c59c66cbf7d91df848e214e73b00f8df25e62eaa",
+      "binary_sha256": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+      "parent_binary_sha256": "8d5d413c1677b0d026f72a4ec1e0d3af6ff49921bb6ad0a827774bd1bbc496a9",
+      "config_sha256": "9bdf3dedbcd20bf3c3b8e463c4a499f1ac0830b3b6555098608c8c94265897d4",
+      "handoff_header_sha256": "51db79078c78294d7f247da793839d8114ae6680e8fa5798b681b1c32648e7eb",
+      "tx_hex": "524541445948414e444c45525345454e",
+      "input_hex": "50415553454d61696e204d656e75",
+      "stdout_hex": "",
+      "stderr_hex": "",
+      "status": "exit=0 vector=1 mask=1 mcr=1 returned=1 count=0 lease=0 guard=1",
+      "returned_hex": "",
+      "descriptor_hex": "4153494f01001c001408e70ba00300100000000043a5010000000000",
+      "elapsed_seconds": 3.373,
+      "peer_errors": []
+    }
+  ],
+  "inputs": {
+    "lab/bbs/check_audio_login_readiness.py": "3e768102bcdaa93cc51053cc700a46f8b34f2aa69f2ce765f23a4abebd8f823f",
+    "standalone/test_aspect_script_serial_dos.py": "78861acd500c0d408b7ba39b66b7b6e4e935f6ede1c67cde6b543d2d8e8fa11f",
+    "src/aspect/compiler.py": "a9785fb90db89da8d4c423d2737f5143a2da75e4e41605a5d97f3ebf7b9c4f01",
+    "build/aspect-runner/ASPECT.EXE": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5"
+  },
+  "predictions_sha256": "6b316f7ff8897e9aed90f21bcbc9d8f13c496c68cba6aa95580cd5a269657bc4",
+  "scope": "Actual DOS ASIOv1 UART child and independent phased peer. Main Menu arrives only after a deferred art callback starts its WAITQUIET. Immediate WAITFOR-result testing misses it; active WHEN readiness latches observe it, including reuse of an existing one-shot slot while all three native slots were occupied. This proves a script race mechanism, not the exact cause of audio editor03 or a BBS/editor/hardware pass.",
+  "retained_failed_attempts": [
+    {
+      "cohort": "build/bbs-lab/audio-login-readiness-01",
+      "classification": "Invalid probe prerequisite: WHEN slot3 is unsupported; no compatibility result.",
+      "result_sha256": "d4e58b4ee98a975b840be8988dfd8b2e418c44fa27eb2bf4c0a4c0681a565dbe"
+    }
+  ]
+}

@@ -73,6 +73,26 @@ interaction with asynchronous art callbacks; keep actual entry, byte identity
 and all editor semantics mandatory. This lab option replaces no accepted runtime
 and cannot guarantee TCP event boundaries on arbitrary remote networks.
 
+The [readiness follow-up](lab/bbs/audio-login-readiness.md) now proves, in actual
+DOS, a title consumed inside a deferred art callback's WAITQUIET and a persistent
+WHEN latch that observes it, including reuse of one of the three native slots.
+The generated login script uses that latch without changing its title or entry
+requirements. A tested BIOS Alt-X watchdog bounds failed editor prerequisites
+while preserving real cleanup and all failed script/editor gates.
+
+The [traced framing editor04](docs/validation/synthmodem-key-framing-trace.json)
+now reaches the real stock editor and passes all32 independent checks, including
+every exercised key/cursor/overtype response, visible UNSAVED text, no post,
+normal DOS return, UART/timer restoration and unchanged server/profile. Both
+independent waveform decoders match all120 DOS online bytes; guest/Telnet
+identity and the complete48936-byte BBS display plus187-byte bridge prefix pass.
+4116000 overlapping guest PCM samples are exact at a fixed60ms delay. Producer
+acceptance remains false solely for read ECONNRESET (22/23 checks). Its source,
+phase and expected-versus-error meaning must be established rather than ignored.
+This clean diagnostic call does not fix the retained normal-image insertions.
+Repeat the normal framed runtime with error provenance and continue receive,
+transfer/pressure/Synchronet and hardware acceptance. All F01-F16 remain open.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

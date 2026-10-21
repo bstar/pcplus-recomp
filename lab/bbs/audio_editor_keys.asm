@@ -7,6 +7,12 @@ org 100h
 jmp install
 old_vector: dd 0
 state: db 0
+; Bound failed prerequisites too: return via the product's actual Alt-X path
+; before the outer720s watchdog. No editor/pass marker is synthesized.
+%ifndef AUDIO_EDITOR_WATCHDOG_TICKS
+%define AUDIO_EDITOR_WATCHDOG_TICKS 12600
+%endif
+watchdog: dw AUDIO_EDITOR_WATCHDOG_TICKS
 ticks: dw 0
 key_at: dw keys
 prompt: db 'KEYTEST',0
@@ -27,6 +33,18 @@ handler:
  push cs
  pop ds
  cld
+ cmp byte [state],2
+ je .done
+ dec word [watchdog]
+ jnz .watching
+ mov cx,2d00h
+ mov ah,5
+ int 16h
+ or al,al
+ jz .restore
+ inc word [watchdog] ; BIOS queue full: retry without inventing success
+ jmp .done
+.watching:
  cmp byte [state],0
  jne .count
  mov si,prompt

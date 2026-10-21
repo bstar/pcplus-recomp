@@ -1,0 +1,72 @@
+{
+  "passed": true,
+  "input_bytes": 35360,
+  "error": null,
+  "unimplemented_service": 0,
+  "remaining_UART_bytes": 0,
+  "cursor_shape_BIOS_calls": [
+    9743,
+    15,
+    8207,
+    8207,
+    15,
+    15,
+    15,
+    15,
+    8207,
+    15,
+    8207,
+    15,
+    8207,
+    15,
+    8207,
+    8207,
+    15,
+    8207,
+    15,
+    8207,
+    8207,
+    15,
+    8207,
+    15,
+    8207,
+    8207,
+    15,
+    8207,
+    8207,
+    15,
+    8207,
+    15,
+    8207,
+    15,
+    8207,
+    15,
+    15,
+    8207,
+    15
+  ],
+  "retained_failed_attempts": [
+    {
+      "path": "display-replay-attempt-01.json",
+      "sha256": "bbaaa217b9dfdf34e1ed1e128565cda1abf76d70287c734231c21b92e084a238"
+    },
+    {
+      "path": "display-replay-attempt-01.py",
+      "sha256": "3ebab61cabd0a475875818ce629f775bbb84600dc882d22b893e2804028e50a0"
+    }
+  ],
+  "binary_sha256": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+  "capture_sha256": "f2b7a1e74c307e81122bfca18b60594679aafd69d98fe81b0b83d028f6ade0b5",
+  "inputs": {
+    "lab/bbs/check_audio_display_replay.py": "71878dc05861d9b32d2f4f4712f963ef0d2e2b3ed14523f0804f1a5797340a54",
+    "standalone/check_line_edit_live.py": "3e8b69c1f89d8aba47f2d05ab3eb6a76eb4154bc56979d4561743a6fcaf769eb",
+    "standalone/check_transport.py": "55cf5fabdae9f6d5f56085d9127e5e81656c2651283042fb81473c56b4c45b69",
+    "standalone/check_scroll.py": "6fbc0355135d8170b0e29425694e8c73a487c67f0459cb5137c8b6400903d516",
+    "standalone/dos_image.py": "319e92316365f6acbdb406eb964dab1a22bc2e6ca57e3062e085527a17d2822c",
+    "build/terminal/terminal.map": "8b1f7f07d7f617936765de21fed74a71ec28c7c5ce45e8519802cf62689c86b1"
+  },
+  "scope": "Actual linked UART/receive/CSI/video instructions over the complete recorded caller stream. Hardware-only modeled BIOS/video/clock; no DOS/ASPECT scheduler, live media or original-screen-state claim. A pass excludes an unsupported CSI stop in this explicit replay environment, not every reason for a failed live script.",
+  "cohort": "build/bbs-lab/synthmodem-audio-editor-03",
+  "producer_sha256": "7eb245a89e2204228d6270c401d4e26f5dbb92dbdd87e7bf1538512039bb2f2a",
+  "initial_probe_failure": "Hardware model omitted BIOS INT10 AH01 cursor-shape service. Add only that BIOS boundary with BDA shape-word storage; original failed result and checker are retained. No product instruction or CSI handler was replaced."
+}

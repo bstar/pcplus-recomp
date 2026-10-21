@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "checks": {
+    "normal_DOS_return": true,
+    "actual_BIOS_Alt_X": true,
+    "timer_vector_restored": true
+  },
+  "inputs": {
+    "lab/bbs/check_audio_editor_watchdog.py": "04f973f6032f7ec84384d67bce75d13c1aca9eff2c17a67709e96d7e222eaa08",
+    "lab/bbs/audio_editor_keys.asm": "f0833729e3e0b0e064dcb9e4f1a4e572d89f7da4f2cbe9df1c73705e0c84918a",
+    "lab/bbs/audio_get_vector.asm": "a4dcbe3717c43f5914ee3503099d250fd7810610b8c25f4c0c18c2d4d403e817"
+  },
+  "scope": "Actual DOS BIOS-key and timer restoration test with36-tick test-only deadline and no KEYTEST screen. Production lab deadline remains12600ticks. A guard exit provides no script/editor acceptance; no product or UART behavior is replaced."
+}

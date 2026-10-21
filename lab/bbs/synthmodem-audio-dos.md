@@ -271,6 +271,26 @@ only some keys; the complete editor recipe remains the acceptance target.
   build/bbs-lab/audio-editor-trace-new
 ```
 
+### Framed trace editor checkpoint
+
+The [optional framing follow-up](patches/synthmodem-key-framing/README.md#traced-editor04-semantic-pass-overall-reset-failure)
+uses the same stock server and full artwork. A separately proved readiness
+latch catches the existing Main Menu literal during deferred art callbacks.
+Actual editor04 now passes all32 independent byte, editor and cleanup checks:
+all exercised key semantics, final UNSAVED/OVR state, no saved post, normal DOS
+return, UART/timer restoration and unchanged source/configuration. All120 online
+DOS bytes are exact through independent caller/guest decoders and the Telnet
+input;4116000 guest PCM overlap samples are exact at60ms. Captured downstream
+identity covers48936 BBS bytes plus187 bridge bytes. Post-close DSP output in
+the frontend recorder is not a claim that closed DOS received those later bytes.
+
+The [trace receipt](../../docs/validation/synthmodem-key-framing-trace.json) stays
+false because the producer retains read ECONNRESET. Its source and phase are
+unproven. The normal editor03 nine-byte insertion and earlier failures remain
+open. This establishes one-line local editor semantics with explicit framing,
+not normal-image receive integrity, full transfers, arbitrary TCP packetization,
+physical hardware or whole-application acceptance.
+
 The [carrier DOS receipt](../../docs/validation/synthmodem-carrier-dos.json)
 records the -09 route through the actual source-built terminal and ASPECT child.
 All menus, normal return, 42-byte UART snapshot, four-byte timer-vector snapshot,

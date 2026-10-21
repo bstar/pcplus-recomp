@@ -51,13 +51,18 @@ def main():
             'entire_caller_stream_compared':True}
     names=('serial-in.bin','control-wire.bin','bbs-input.bin','bbs-output.bin',
            'caller-decoded.bin','rtp-from-caller.bin','offline-caller.json','node.log','result.json')
+    has_pcm=all((out/n).is_file() for n in ('modem_rx_8k.raw','timing.jsonl'))
     result={'diagnosis_verified':all(checks.values()),'checks':checks,
             'DOS_online_bytes':len(expected),'offline_caller_bytes':len(decoded),'guest_DATA_RX_bytes':len(guest),
             'upstream_changes':upstream,'downstream_changes':downstream,
             'unexpected_upstream_bytes':sum(len(bytes.fromhex(x['actual_hex'])) for x in upstream),
             'captured_BBS_display_bytes':len(display),'caller_decoded_bytes':len(caller),
             'capture_sha256':{name:sha(out/name) for name in names},'analyzer_sha256':sha(Path(__file__)),
-            'scope':'Read-only actual serial/guest/Telnet comparison and independent captured-caller QAM decode. Diagnosis verification means a reproduced failure, not transport acceptance. No guest PCM/arrival timing exists in this normal capture, so jitter, DSP and resampling causes remain unproven; terminal-close truncation is not automatically acoustic corruption.'}
+            'guest_PCM_and_timing_present':has_pcm,
+            'scope':'Read-only actual serial/guest/Telnet comparison and independent captured-caller QAM decode. Diagnosis verification means a reproduced failure, not transport acceptance. '+
+                    ('Guest PCM/arrival timing are captured and require their separate waveform analysis; this byte comparison alone does not establish a media cause. ' if has_pcm else
+                     'No guest PCM/arrival timing exists in this normal capture, so jitter, DSP and resampling causes remain unproven. ')+
+                    'Terminal-close truncation is not automatically acoustic corruption.'}
     (out/'integrity-diagnosis.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result,indent=2))
 

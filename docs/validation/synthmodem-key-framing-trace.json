@@ -1,0 +1,1779 @@
+{
+  "passed": false,
+  "checks": {
+    "component_checks": true,
+    "real_TCP_comparison": true,
+    "actual_DOS_producer": false,
+    "actual_DOS_independent_audit": true,
+    "offline_caller_matches_all_DOS_bytes": true,
+    "trace_export_complete": true,
+    "offline_guest_matches_all_DOS_bytes": true,
+    "guest_PCM_equals_delayed_RTP_prefix": true
+  },
+  "editor_semantic_checks_passed": true,
+  "open_gateway_errors": [
+    "read ECONNRESET"
+  ],
+  "cohort": "build/bbs-lab/synthmodem-audio-editor-04",
+  "staging": "build/bbs-lab/synthmodem-key-framing-trace-runtime-01",
+  "component": {
+    "passed": true,
+    "checks": {
+      "complete_keys_DA_CPR_all_splits_and_1200_baud_pacing": true,
+      "plain_input_immediate_and_lone_escape_deadline": true,
+      "trickle_does_not_extend_absolute_deadline": true,
+      "invalid_oversize_and_repeated_escape_preserve_bytes": true,
+      "all_256_bytes_all_two_part_splits_and_singletons": true,
+      "close_cancels_pending_and_rejects_later_bytes": true,
+      "invalid_bounds_rejected": true,
+      "actual_proxy_default_unchanged": true,
+      "actual_proxy_opt_in_assembles_key": true,
+      "actual_proxy_binary_codec_preserves_every_byte": true,
+      "actual_proxy_close_does_not_leak_pending_to_reconnect": true
+    }
+  },
+  "loopback": {
+    "passed": true,
+    "baseline": {
+      "timeout_ms": 0,
+      "application_bytes": 259,
+      "echo_bytes": 259,
+      "upstream_exact": true,
+      "downstream_exact": true,
+      "Home_delivery_events": [
+        {
+          "hex": "1b"
+        },
+        {
+          "hex": "5b"
+        },
+        {
+          "hex": "48"
+        }
+      ],
+      "Home_in_one_actual_TCP_delivery": false
+    },
+    "candidate": {
+      "timeout_ms": 250,
+      "application_bytes": 259,
+      "echo_bytes": 259,
+      "upstream_exact": true,
+      "downstream_exact": true,
+      "Home_delivery_events": [
+        {
+          "hex": "1b5b48"
+        }
+      ],
+      "Home_in_one_actual_TCP_delivery": true
+    },
+    "scope": "Actual local TCP/codec readback of paced Home and all256 bytes in both directions. Local event boundaries are observed, never guaranteed for arbitrary networks. No modem, DOS, BBS editor or physical hardware claim."
+  },
+  "actual_DOS": {
+    "passed": false,
+    "checks": {
+      "DOS_normal_exit": true,
+      "script_completed": true,
+      "UART_restored": true,
+      "keyboard_helper_retired": true,
+      "numeric_AT_only": true,
+      "real_DSP_CONNECT": true,
+      "authenticated": true,
+      "ordered_menus": true,
+      "DOS_DA": true,
+      "DOS_CPR": true,
+      "profile_unchanged": true,
+      "directory_accounting": true,
+      "no_relay_errors": true,
+      "no_gateway_errors": false,
+      "VM_exited": true,
+      "no_post_saved": true,
+      "inputs_unchanged": true,
+      "server_unchanged": true,
+      "editor_entered": true,
+      "typed_draft_sent": true,
+      "all_editor_keys_emitted": true,
+      "home_moves_before_marker": true,
+      "insert_toggles_overtype": true
+    },
+    "frozen_inputs": {
+      "lab/bbs/synthmodem_audio_dos.py": "fd9d20f70f306852aceeb8988581219d5738a7ab84e472c4f6488b880459702d",
+      "lab/bbs/synthmodem_audio_serial.js": "bd232307171e3486d6957fe2cec9f0a265e9445eaacdb99f28a34801f9382a58",
+      "lab/bbs/audio_exit_keys.asm": "d6cfd993351d3bc6fdfed133e0a20a137c3a882988ee65dcef38c80d15b7ecd9",
+      "lab/bbs/audio_get_vector.asm": "a4dcbe3717c43f5914ee3503099d250fd7810610b8c25f4c0c18c2d4d403e817",
+      "lab/bbs/synthmodem_bbs_dos.py": "0e6a302d5a5ecb124689c8c3989d2efe8ab210eaa982991d088778d126c18fb2",
+      "lab/bbs/enigma.py": "526fcd6eb468ec7a85630685872d27a937abbc6b61f48ad8391a2353e5686017",
+      "lab/bbs/synthmodem_sparse_runtime.py": "f3743c82c191e70bb233b08623a08a545b0e7b7d1d15759af18312ec0cffad42",
+      "lab/bbs/synthmodem_vm_control.py": "7eb30e96af9a7e7cd319cd645a68331c0386aa3dda3e9eba68ca5563b5b8a456",
+      "docs/validation/synthmodem-sparse.json": "c1af9919cb1ec643fd2fc2cc236ed8c304d8050790ca6033fb0589e074c9002c",
+      "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+      "standalone/directory_fixtures.py": "e4b0cf7ad4a2c408f2a11d093b2c568633aa8bed6ff62cb53f6f67ff3aa5962c",
+      "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+      "src/aspect/compiler.py": "a9785fb90db89da8d4c423d2737f5143a2da75e4e41605a5d97f3ebf7b9c4f01",
+      "nix/flake.nix": "7cda07d3ab9fb050ef3c959781e4cb93ab2fab72f915d6206d980458ab297aa0",
+      "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+      "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
+      "build/terminal/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+      "build/terminal/terminal.map": "8b1f7f07d7f617936765de21fed74a71ec28c7c5ce45e8519802cf62689c86b1",
+      "build/aspect-runner/ASPECT.EXE": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+      "docs/validation/synthmodem-gateway.json": "b45a3889492327899bdaa5817b4951da95b81bb07bdd69319b4814008504a6a0",
+      "lab/bbs/receive_trace_io.js": "1fa50062eb7f962bc57d575fdd3381f8dd402e532b8251069296e8f04c3f7f56",
+      "lab/bbs/qemu_trace_wrapper.py": "f1cdbcceef18e389d3625378d5d7567d398cdaa4f330cf82ae6d89372dff98f0",
+      "lab/bbs/receive_trace_export.sh": "3f6c38c30c3f4624319814e4601e290cad6cee89d5bc82bc6ee6fad17457cdea",
+      "lab/bbs/synthmodem_jitter_runtime.py": "8f3ddf164a4ec7f0b36fa8efbdd51265149b17c8f0c02ba5ee45d78de537a618",
+      "lab/bbs/synthmodem_lifecycle_runtime.py": "744a68ba9763f1dc0f2d5fe4df780cbbe63708ccb9246ef56ce3f7113cb4b88e",
+      "lab/bbs/internal_sip_capture.js": "c86a76da0e8cc39a9e3372df18cd22517db1096feaccb5cfcc7399dfc8b6d847",
+      "docs/validation/synthmodem-pool.json": "34ebd9e183e6c52698908fb05207fed9e862afab008321d9104c72ea1d5ead3c",
+      "docs/validation/synthmodem-registrar.json": "00e54f863dd8cdc100c3b7f52139b83eaf1fa168f3a2f7d6dcd52ae895005fd8",
+      "docs/validation/synthmodem-jitter-policy.json": "4850cb6e88bf6edfb9831065d1acae1c7ea29f20cd56f92fc0a09b3c1af73278",
+      "lab/bbs/synthmodem_carrier_runtime.py": "73fbf7361ca756e89ce40f174a91ae60f7da7276d8f9c5e1258cc978ac58e642",
+      "docs/validation/synthmodem-carrier-runtime.json": "a7fdea361d8d0fdbaf81e6c69fcd2eaf032b32037c6c7778818a3748cb2985d2",
+      "lab/bbs/synthmodem_key_framing_runtime.py": "50afafa706ae910ebc495466a85207381f089b21d967987001667797aff85786",
+      "docs/validation/synthmodem-key-framing-runtime.json": "4b24c87f14ec17ce48fabf9fe0359b785bbf595c1d0dec358f2068929878707b",
+      "lab/bbs/patches/synthmodem-key-framing/InputSequenceFramer.js": "00f00af6e692c42426f85121317117367e3ae43fae97f48f08d34252f90f850a",
+      "lab/bbs/patches/synthmodem-key-framing/proxy.patch": "433504c6b3b2a2bdc35b66f4560b70dcb0ff6e0c1e3d7e776dac7b86b2e7f19c",
+      "docs/validation/synthmodem-key-framing-trace-runtime.json": "acb030f0a08f4331b611bca44fc7e771ba00d3f1a56dc83e0891cf5a8f9e851a",
+      "lab/bbs/synthmodem_carrier_trace_runtime.py": "8c6011d4923a1db676308e9bfa9ec967cc740b5f78ca0b35db6b3f58ee81d87b",
+      "docs/validation/synthmodem-carrier-trace-runtime.json": "871f2c7eec56ebd8ae267490813dfd447b721c3ca00d643e1edc2725c105edec",
+      "lab/bbs/check_audio_login_readiness.py": "3e768102bcdaa93cc51053cc700a46f8b34f2aa69f2ce765f23a4abebd8f823f",
+      "docs/validation/synthmodem-audio-login-readiness.json": "26f1f0118a2363151a3136c63f0ab4a9a099d93aa8137239e8ba32f4b2ead4fe",
+      "lab/bbs/audio_editor_keys.asm": "f0833729e3e0b0e064dcb9e4f1a4e572d89f7da4f2cbe9df1c73705e0c84918a",
+      "lab/bbs/check_audio_editor_watchdog.py": "04f973f6032f7ec84384d67bce75d13c1aca9eff2c17a67709e96d7e222eaa08",
+      "docs/validation/synthmodem-audio-editor-watchdog.json": "53382ae67567629c02580bb89429c99792fbdbb9c51fa521f920a6ade065c3f0"
+    },
+    "runtime_inputs": {
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/bzImage": "2bac10d87a024026de6c00539ea70d19194169b6b99111d9178815b470d77dbe",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/candidate.cpio.gz": "3b19f323825df5fb788ff0bd93128e2fc34e13018990bb8c1e2752da497a4971",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/config.js": "6cfa6057b31bebb90d52f12956a3166a389308b703c17480acdc59fdb05f681f",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/index.js": "8aac80d7f4e68c25d02f29b16d2dc82b78d3f5ecee57562315fda4efb3494791",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/vm/qemu-runner/QemuVM.js": "2b15088c2a4d8a2002bcd4b153d38d06fc6e9863cb7a9990dbcac1875b082a76",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/vm/qemu-runner/SlmodemVM.js": "8578c0d7fcb5b96648856422ef56a9178f155ddb86321300b8e63f3220c61cdc",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/vm/qemu-runner/qemu-args.js": "61975545b19201092d3e0f53dd324e46a05e432f0ace7ac3bc3c0f63abf1b3ea",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/vm/qemu-runner/transport.js": "54cec57e3b78a5b4a82e3289dac645be4b7d49da5f2ed697f3a9d5e0e4742570",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/vm/qemu-runner/wire.js": "756da9800874b12cd97197537671171283054a976461ced2e4928369e4baf4c3",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/backends/at-result-line.js": "28d50f2744192ed21fad459a8f84ec73aaf8ea0144b82c73043a97abfa136c89",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/backends/ModemBackendPool.js": "97836fc1e9c31fcad7e8bfbfba8d11e8c25bef44302d50a88441f4c554e0b156",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/backends/PjsipBackend.js": "742fcf2fd70f5b05e166c96ece48887843c24a23300e173b30324f1db40d4ef6",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/dsp/AudioCapture.js": "843dc3267c927cdb07d46d299613228508a71f85180bc76f46931d27bf196965",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/dsp/Handshake.js": "2c8e9bf37157159ebee8d441e15b1b241bb46233c6d36f710d77c3cedee2d97b",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/dsp/ModemDSP.js": "18986bc99ba59756e7841902dcc93ccf328bb59e4e0671446be286695882e967",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/dsp/Primitives.js": "f63b3e3fcee64169af3343ea7ef73ffb68fff24356c021564f62b7e4c8a434af",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/dsp/V8.js": "145c661bbbff383cc7af622b98fcd423f1d66fae2d2e464b308cf3a2c0edcb40",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/dsp/V8Sequencer.js": "3379d253f990a83d1dd3612383a17b5534c47d1635870fb16177a8e1c3e36452",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/rtp/Codec.js": "ffe6cacafda853769e3cbd8e532e3d36213a85ed04042eaebc57ba54155e5256",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/rtp/RtpBridge.js": "3cc7626381626e764344621bd52c3c0ffb1dfe203bbcf7047437914af0fbe6e9",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/rtp/RtpSession.js": "72d6298f50c0823fa1a42a8eaf234885809ae08cb477b2b17bfdef6241aefe44",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/session/CallSession.js": "4122886fc628ebabc03bdd4b622de163926d55c0db6199c2b47ea75dacfbf49c",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/sip/PublicHostResolver.js": "5431bacf4dcd1c4027c467d28db8e3d510b700ecc8d441a9d0b0316580b6ffea",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/sip/SipDialog.js": "571440469511a3861a5faae9cf805b1f6555bc2ee1f95cc5b6b8a9dcae9aa4fd",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/sip/SipParser.js": "e5a5dae109bc251acb7623d922dd8bc9284f14f8221bb16f7b0a82846dac8cc8",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/sip/SipServer.js": "7a8971607c0b285b97941d28ba1462db8a0eabdc39997189d4f977b315b624ec",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/sip/SipUacInternal.js": "89e0fd9a27e8960bd2a989942d0671d3dc7526b98c6447246d9b80bf28ecffff",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/sip/VmRegistrar.js": "d91cfe3c3faca7637ced5d2119d61d2ceedc5b1f8964973abaccc07b43d1cc08",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/telnet/TelnetProxy.js": "39128877bc1d7c7011ce55ecdc06c3e45063ae28d6502a51c9972aa014096172",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/telnet/InputSequenceFramer.js": "00f00af6e692c42426f85121317117367e3ae43fae97f48f08d34252f90f850a",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/tunnel/UdpTcpTunnel.js": "4f0b49567a7041a375da96a527d258c8e47a7cc521c08748c46b1eb194901b7a",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/dsp/protocols/Bell103.js": "d7d1ae488e24da9e54e6fc5a586287045d25fe321f81821ea62b8fb25dd7379a",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/dsp/protocols/FskCommon.js": "27ee865d11b747aeace4e6acbc4daae2c38efab3ca9c09cdad9bc567fbfb60a7",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/dsp/protocols/V21.js": "00473e940f46f754e4397f41dcee2e70b17bd679f694d7e13eb542f2a270e864",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/dsp/protocols/V22Common.js": "51a473f0b638691c8c81048236e2e72dca2993a5d0240229cd07bf9c436b1123",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/dsp/protocols/V22Demodulator.js": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/dsp/protocols/V22RxRRC.js": "42d6d85522a4e26b6d92f70e344b4f65d7d31cd579e2283811899b9ea878fe2b",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/dsp/protocols/V23.js": "54af2ce2d86726c84424dc033637efcb2d0cf79c9a5b63e680f1ad4e0b7d93a9",
+      "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-trace-runtime-01/runtime/source/src/dsp/protocols/V22.js": "1bd6cb66be0033bde88e52b03ca923fab2181ae9343ac5db2569eb34c9fec45a"
+    },
+    "server_inputs": {
+      "main.js": "1b2f4c9747380dbd77ddfbc918d24c4ce225c7dd51331e75d8c2102d852bfda9",
+      "core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+      "package-lock.json": "8fcaecda3a4b1756ad295be95486cbdd5b9afea005949ac3da8822224c822d56",
+      "config/config.hjson": "daae39792955eaf7b99c45fc936d54b153f62ea0d3f77672f45a8ace756a7dbc",
+      "config/menus/loc-activitypub.hjson": "82861725a47e5892bbfd2251feb02ca0bb46707516a872cf373b350b704c9fe7",
+      "config/menus/loc-doors.hjson": "fb012c018ec054a7e3261f2b4ef28dc568742b0936bfc56ba9377745f8c43530",
+      "config/menus/loc-file_base.hjson": "9d9a02672bcd18b122827e6112ecfd99a4e7ff2916052847de26a87c6808f6c2",
+      "config/menus/loc-login.hjson": "215f943d381a2acc4c1713ff14331efaee19c474218428eac6b64f77b9355f18",
+      "config/menus/loc-main.hjson": "dc2fd404bbb8a35bc5c8bb43b3fe66378173cd8d87d0ab25978af16bda15d227",
+      "config/menus/loc-message_base.hjson": "607939acb6818c7c5fb50a2d90b04fed1b92d50f51fb9ca4215cef06644d2540",
+      "config/menus/loc-new_user.hjson": "04f466f10cc5c169c03186bc8a7fde7b18d5d938e7f0b70873d74bae15161cec",
+      "config/menus/loc-private_mail.hjson": "ffb59f0d6f2d592181d2bc304d46e9e2a3b71a14c2d6cd65a639f6b0c6f3d382"
+    },
+    "generated_inputs": {
+      "program/TERMINAL.EXE": "c4f7e525740d2e9c12d424a59c12e539ca2ecee80d5b6e619a9a426c26cd587c",
+      "program/ASPECT.EXE": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+      "program/AUDIO.ASP": "8d460e82e3f5aa55e0847b789d30e990df25a82f0e89d34b4a6dcc46e79eef29",
+      "program/AUDIO.ASX": "36a50d7ef88199d994b9b9c8c6d44a03242ee9d89413085d29eb9ef9222e1e1c",
+      "program/EXITKEY.COM": "29e1ab0f3567844acc60f17d174e44898dde740596e74cb16cbd6ada60a909ce",
+      "program/KEYVEC.COM": "fcbe508ffd8e54b24db8e77ce1b70a32917097cf6d21a0a3bb8bb229aa3ffd91"
+    },
+    "server_revision": "6c25317168b762f7d9088a54d3f8295438827a0e",
+    "server_menus": [
+      "telnetConnected",
+      "matrix",
+      "login",
+      "fullLoginSequenceLoginArt",
+      "fullLoginSequenceLastCallers",
+      "fullLoginSequenceWhosOnline",
+      "fullLoginSequenceOnelinerz",
+      "fullLoginSequenceNewScanConfirm",
+      "fullLoginSequenceUserStats",
+      "mainMenu",
+      "messageBaseMainMenu",
+      "messageBaseNewPost"
+    ],
+    "script_stages": "BRIDGE|FORM|MAIN|MESSAGES|EDITOR|",
+    "login_readiness": "WAITFOR plus reused one-shot WHEN latch",
+    "receive_trace": false,
+    "dmodem_variant": null,
+    "lifecycle": false,
+    "carrier": false,
+    "carrier_trace": false,
+    "key_framing_trace": true,
+    "input_sequence_timeout_ms": 250,
+    "gateway": {
+      "commands": [
+        "ATZ",
+        "ATD1"
+      ],
+      "events": [
+        {
+          "type": "ready",
+          "seconds": 4.828164411
+        },
+        {
+          "type": "serial-client",
+          "seconds": 5.121425576
+        },
+        {
+          "type": "command",
+          "seconds": 5.292253731,
+          "command": "ATZ"
+        },
+        {
+          "type": "command",
+          "seconds": 5.621395059,
+          "command": "ATD1"
+        },
+        {
+          "type": "numeric-call",
+          "seconds": 5.621760478
+        },
+        {
+          "type": "answer-CONNECT",
+          "seconds": 9.784232067,
+          "bps": 1200,
+          "protocol": "V22"
+        },
+        {
+          "type": "caller-CONNECT",
+          "seconds": 10.151089353,
+          "bps": 1200,
+          "protocol": "V22"
+        },
+        {
+          "type": "serial-CONNECT",
+          "seconds": 10.151202205
+        },
+        {
+          "type": "shutdown",
+          "seconds": 519.739593588,
+          "reason": "serial-close"
+        },
+        {
+          "type": "session-ended",
+          "seconds": 528.656488852,
+          "callId": "rffiv9w6b0c@127.0.0.1",
+          "reason": "serial-close"
+        }
+      ],
+      "errors": [
+        "read ECONNRESET"
+      ],
+      "ended": {
+        "callId": "rffiv9w6b0c@127.0.0.1",
+        "reason": "serial-close"
+      },
+      "callerInfo": {
+        "bps": 1200,
+        "protocol": "V22"
+      },
+      "answerInfo": {
+        "bps": 1200,
+        "protocol": "V22"
+      },
+      "stats": {
+        "extToInt": {
+          "packets": 25686,
+          "bytes": 4417992
+        },
+        "intToExt": {
+          "packets": 25687,
+          "bytes": 4418164
+        },
+        "extToIntDrops": 0,
+        "intToExtDrops": 0,
+        "extFirstSrc": "127.0.0.1:44251",
+        "intFirstSrc": "127.0.0.1:10002"
+      },
+      "negotiated": {
+        "remoteRtpAddr": "127.0.0.1",
+        "remoteRtpPort": 42000,
+        "codec": {
+          "codec": "PCMU",
+          "rate": 8000
+        }
+      },
+      "inputSequenceTimeoutMs": 250,
+      "pool": "stopped",
+      "backendStates": [
+        "STOPPED"
+      ],
+      "VM_exited": true,
+      "receiveTrace": {
+        "exported": true,
+        "scope": "Diagnostic export daemon/chardev added; existing DSP dumps and host timestamps, no DSP binary changes."
+      },
+      "sourceScope": "Synthetic ATZ/ATD1 front end only; online bytes cross actual external/internal SIP, CallSession/pool, RTP, originating and guest answering DSP, and Telnet. DOSBox UART/modem status lines remain emulated."
+    },
+    "route": "editor",
+    "editor": {
+      "positions": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          10
+        ],
+        [
+          1,
+          10
+        ],
+        [
+          1,
+          10
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "keys_emitted": {
+        "home": true,
+        "end": true,
+        "insert": true,
+        "delete": true,
+        "page_up": true,
+        "page_down": true,
+        "tab": true,
+        "delete_line": true
+      },
+      "scope": "Actual BIOS editor keys; one-line page keys test boundaries, no multiline scrolling. Connection closes with an unsaved draft; no Save command is sent."
+    },
+    "captures_sha256": {
+      "node.log": "dad3167eaa81a643b8d64612b678d7e6a210aef751df8eb5e7fefca25f66283f",
+      "dosbox.log": "08f58a0ca082e4322e867e3e5c03ec9f7cc9511b929143b0aa3200237c5ea431",
+      "qemu-0.log": "81bcae5d59c1a44abd8fe385237d95ff20f7dd25d972b97681254f8344cddf2c",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "KEYOLD.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+      "KEYNEW.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+      "SCREEN.BIN": "95ed5f6c1ff5557e5ccd75735358b0f28810fd5303e28e5f275064d8eef1dbec",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "guest-workload.bin": "313a80ccdbb4555f8e599852c3991dfebac5b0dcab626770adbbe3f5faafda2e",
+      "expected-upstream.bin": "313a80ccdbb4555f8e599852c3991dfebac5b0dcab626770adbbe3f5faafda2e",
+      "rtp-to-guest.bin": "0f8ca9fbccc6c19fa10bb52c1c0a7b7f38f3c496d7f240b4e582b593ae1fb7fc",
+      "timing.jsonl": "67a653c4cc6c3bba7337f194f4adc2d82d6d9a4724f09d1e964b65c14f4ac8c4",
+      "internal-from-guest.bin": "0b37c137e5751d3ce215dde402f602fe68c20f46ee95dd782ab2b2d85d1407f3",
+      "internal-to-guest.bin": "72415f0cc2db07ed79e0efcf7c5f50ac3e926dde1022ddead96f256fe9f110d6",
+      "serial-in.bin": "43e6a8bbda9f3818074e2b542c4616141b0e88252d62ccab883f40ce7c765c2e",
+      "serial-out.bin": "b8b5ef69dc889ed88e3fd79ce161bc9b55d07fd42cbc808bf941b6ae7d4e371f",
+      "caller-decoded.bin": "26a6c773459fbea96188d4bbf85648e4aa2070b1c2c1c1783f05490f704214c1",
+      "control-wire.bin": "970f8f9d07e34676bf9d8d35fe1e97d4d583416ef8e83ec8ce40781eba4b2850",
+      "rtp-from-answer.bin": "adb96e502b01c28a6a9906b4888863f6a918b4ae875dd016d149353cadc903c8",
+      "rtp-from-caller.bin": "02e2e0c5da97194b64ce7001e76dbd49809e6819ae4939ae82108009ab233384",
+      "sip-to-server.bin": "6df4672ee6b7a67be48d8e3c2d95d2a5d89dd76da545815e973185d473e273d0",
+      "sip-to-caller.bin": "103c7563b9c8b07bd810d5863e267a1eb6a58330373f38d38fbf1f583001149a",
+      "server-session.jsonl": "c64ad4ff794f41c55c97a95b965e336b66b9f80a77219c5b9791dada4ccc6751",
+      "bbs-input.bin": "44c61f34e9520b78f2e423d21c5c65bfdc5e42cffabdd617adf9cbdc2f7cde04",
+      "bbs-output.bin": "08b66ef251076d1fb82008c6cc154f6b53ba83f788a1eab2d3a7f049a34dcadf"
+    },
+    "scope": "Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to owned stock ENiGMA. No physical modem/ATA/UART acceptance."
+  },
+  "independent_audit": {
+    "passed": true,
+    "checks": {
+      "numeric_command_prefix": true,
+      "single_normal_post_train_hold": true,
+      "serial_equals_post_hold_guest_decode": true,
+      "online_target_after_numeric_call": true,
+      "guest_equals_Telnet_application_input": true,
+      "decoded_audio_equals_serial_output": true,
+      "complete_BBS_display_survives_DSP": true,
+      "complete_caller_stream_equals_bridge_plus_BBS_display": true,
+      "single_real_carrier": true,
+      "real_DOS_terminal_replies": true,
+      "authoritative_login": true,
+      "authoritative_menu_order": true,
+      "all_actual_BIOS_editor_keys_in_order": true,
+      "Home_changes_cursor_before_H": true,
+      "End_and_Delete_apply_to_draft": true,
+      "Insert_changes_to_overtype": true,
+      "Tab_advances_and_page_keys_preserve_boundary": true,
+      "CtrlY_clears_line_before_final_text": true,
+      "unsaved_final_line_visible": true,
+      "draft_never_saved": true,
+      "script_and_normal_DOS_return": true,
+      "actual_UART_restored": true,
+      "keyboard_timer_vector_restored": true,
+      "continuous_rtp-from-answer.bin": true,
+      "continuous_rtp-from-caller.bin": true,
+      "actual_external_SIP": true,
+      "actual_internal_BYE": true,
+      "capture_hashes": true,
+      "runtime_inputs_unchanged": true,
+      "producer_inputs_unchanged": true,
+      "explicit_key_framing_configuration": true,
+      "stock_BBS_inputs_unchanged": true
+    },
+    "producer_sha256": "68f307f44886839bd064ce279d4d7a757f1b068acd3fe8e5a907f5d1b40a030e",
+    "auditor_sha256": "a54440126b96fb4c4591331fe554df06aa6890bfb509e4409e2bf26e69720aaa",
+    "audit_inputs": {
+      "lab/bbs/audit_synthmodem_audio_dos.py": "a54440126b96fb4c4591331fe554df06aa6890bfb509e4409e2bf26e69720aaa",
+      "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+      "lab/bbs/synthmodem_gateway.py": "0fdefd2022087d9427b091caab378123f7cc3f0123113bdcbf3966e72a08afcc"
+    },
+    "payloads": {
+      "BBS_input_bytes": 104,
+      "BBS_display_bytes": 48936,
+      "BBS_input_sha256": "26c049e0e26a5d62b5056963bdab9729d5d7c753e519428e687c550dd2c87955",
+      "BBS_display_sha256": "be9cbfc0a23634c2fbf3c8fad1a71f3897de384c9150dbe869c918262af5926d",
+      "display_offset_in_caller": 187,
+      "expected_bridge_bytes": 187,
+      "full_caller_sha256": "26a6c773459fbea96188d4bbf85648e4aa2070b1c2c1c1783f05490f704214c1",
+      "guest_DATA_RX_bytes": 120,
+      "pre_proxy_training_tail_bytes": 0,
+      "pre_proxy_training_tail_hex": "",
+      "unadjusted_serial_guest_identity": true
+    },
+    "editor": {
+      "positions": [
+        [
+          "INS",
+          1,
+          2
+        ],
+        [
+          "INS",
+          1,
+          3
+        ],
+        [
+          "INS",
+          1,
+          4
+        ],
+        [
+          "INS",
+          1,
+          5
+        ],
+        [
+          "INS",
+          1,
+          6
+        ],
+        [
+          "INS",
+          1,
+          1
+        ],
+        [
+          "INS",
+          1,
+          2
+        ],
+        [
+          "INS",
+          1,
+          7
+        ],
+        [
+          "INS",
+          1,
+          8
+        ],
+        [
+          "INS",
+          1,
+          7
+        ],
+        [
+          "INS",
+          1,
+          7
+        ],
+        [
+          "OVR",
+          1,
+          7
+        ],
+        [
+          "OVR",
+          1,
+          8
+        ],
+        [
+          "OVR",
+          1,
+          9
+        ],
+        [
+          "OVR",
+          1,
+          10
+        ],
+        [
+          "OVR",
+          1,
+          10
+        ],
+        [
+          "OVR",
+          1,
+          10
+        ],
+        [
+          "OVR",
+          1,
+          1
+        ],
+        [
+          "OVR",
+          1,
+          2
+        ],
+        [
+          "OVR",
+          1,
+          3
+        ],
+        [
+          "OVR",
+          1,
+          4
+        ],
+        [
+          "OVR",
+          1,
+          5
+        ],
+        [
+          "OVR",
+          1,
+          6
+        ],
+        [
+          "OVR",
+          1,
+          7
+        ],
+        [
+          "OVR",
+          1,
+          8
+        ]
+      ],
+      "expected_body_hex": "41424344451b5b48481b5b46451b5b441b5b337e1b5b327e5a09541b5b357e1b5b367e19554e5341564544",
+      "actual_DOS_body_hex": "41424344451b5b48481b5b46451b5b441b5b337e1b5b327e5a09541b5b357e1b5b367e19554e53415645441b",
+      "post_keyboard_DOS_tail_hex": "1b",
+      "scope": "Actual BIOS-to-serial key sequence and authoritative editor cursor/mode responses. Page keys cover a one-line boundary only; connection closes without Save."
+    },
+    "scope": "Independent read-only actual DOS/ASPECT, BBS authoritative logs, guest frames, serial/Telnet byte identity, RTP continuity, SIP and cleanup audit. No physical modem/ATA claim."
+  },
+  "offline_caller": {
+    "packets": 26131,
+    "received": [
+      {
+        "packet": 507,
+        "hex": "31"
+      },
+      {
+        "packet": 507,
+        "hex": "32"
+      },
+      {
+        "packet": 507,
+        "hex": "37"
+      },
+      {
+        "packet": 508,
+        "hex": "2e"
+      },
+      {
+        "packet": 508,
+        "hex": "30"
+      },
+      {
+        "packet": 509,
+        "hex": "2e"
+      },
+      {
+        "packet": 509,
+        "hex": "30"
+      },
+      {
+        "packet": 510,
+        "hex": "2e"
+      },
+      {
+        "packet": 510,
+        "hex": "31"
+      },
+      {
+        "packet": 511,
+        "hex": "3a"
+      },
+      {
+        "packet": 511,
+        "hex": "34"
+      },
+      {
+        "packet": 512,
+        "hex": "39"
+      },
+      {
+        "packet": 512,
+        "hex": "35"
+      },
+      {
+        "packet": 513,
+        "hex": "33"
+      },
+      {
+        "packet": 513,
+        "hex": "33"
+      },
+      {
+        "packet": 513,
+        "hex": "0d"
+      },
+      {
+        "packet": 587,
+        "hex": "1b"
+      },
+      {
+        "packet": 587,
+        "hex": "5b"
+      },
+      {
+        "packet": 587,
+        "hex": "3f"
+      },
+      {
+        "packet": 588,
+        "hex": "31"
+      },
+      {
+        "packet": 588,
+        "hex": "3b"
+      },
+      {
+        "packet": 589,
+        "hex": "32"
+      },
+      {
+        "packet": 589,
+        "hex": "63"
+      },
+      {
+        "packet": 602,
+        "hex": "1b"
+      },
+      {
+        "packet": 602,
+        "hex": "5b"
+      },
+      {
+        "packet": 602,
+        "hex": "31"
+      },
+      {
+        "packet": 603,
+        "hex": "3b"
+      },
+      {
+        "packet": 603,
+        "hex": "31"
+      },
+      {
+        "packet": 604,
+        "hex": "52"
+      },
+      {
+        "packet": 618,
+        "hex": "1b"
+      },
+      {
+        "packet": 618,
+        "hex": "5b"
+      },
+      {
+        "packet": 618,
+        "hex": "31"
+      },
+      {
+        "packet": 619,
+        "hex": "3b"
+      },
+      {
+        "packet": 619,
+        "hex": "32"
+      },
+      {
+        "packet": 620,
+        "hex": "52"
+      },
+      {
+        "packet": 3076,
+        "hex": "0d"
+      },
+      {
+        "packet": 4600,
+        "hex": "6c"
+      },
+      {
+        "packet": 4600,
+        "hex": "6f"
+      },
+      {
+        "packet": 4600,
+        "hex": "63"
+      },
+      {
+        "packet": 4601,
+        "hex": "6c"
+      },
+      {
+        "packet": 4601,
+        "hex": "61"
+      },
+      {
+        "packet": 4602,
+        "hex": "62"
+      },
+      {
+        "packet": 4602,
+        "hex": "0d"
+      },
+      {
+        "packet": 4812,
+        "hex": "4c"
+      },
+      {
+        "packet": 4812,
+        "hex": "6f"
+      },
+      {
+        "packet": 4812,
+        "hex": "43"
+      },
+      {
+        "packet": 4813,
+        "hex": "2d"
+      },
+      {
+        "packet": 4813,
+        "hex": "4c"
+      },
+      {
+        "packet": 4814,
+        "hex": "61"
+      },
+      {
+        "packet": 4814,
+        "hex": "62"
+      },
+      {
+        "packet": 4815,
+        "hex": "2d"
+      },
+      {
+        "packet": 4815,
+        "hex": "32"
+      },
+      {
+        "packet": 4816,
+        "hex": "30"
+      },
+      {
+        "packet": 4816,
+        "hex": "32"
+      },
+      {
+        "packet": 4817,
+        "hex": "36"
+      },
+      {
+        "packet": 4817,
+        "hex": "21"
+      },
+      {
+        "packet": 4818,
+        "hex": "0d"
+      },
+      {
+        "packet": 6306,
+        "hex": "0d"
+      },
+      {
+        "packet": 8176,
+        "hex": "0d"
+      },
+      {
+        "packet": 9821,
+        "hex": "0d"
+      },
+      {
+        "packet": 11551,
+        "hex": "1b"
+      },
+      {
+        "packet": 11809,
+        "hex": "4e"
+      },
+      {
+        "packet": 14468,
+        "hex": "0d"
+      },
+      {
+        "packet": 16346,
+        "hex": "4d"
+      },
+      {
+        "packet": 16346,
+        "hex": "0d"
+      },
+      {
+        "packet": 18362,
+        "hex": "50"
+      },
+      {
+        "packet": 18362,
+        "hex": "0d"
+      },
+      {
+        "packet": 20328,
+        "hex": "0d"
+      },
+      {
+        "packet": 20537,
+        "hex": "4b"
+      },
+      {
+        "packet": 20537,
+        "hex": "45"
+      },
+      {
+        "packet": 20537,
+        "hex": "59"
+      },
+      {
+        "packet": 20538,
+        "hex": "54"
+      },
+      {
+        "packet": 20538,
+        "hex": "45"
+      },
+      {
+        "packet": 20539,
+        "hex": "53"
+      },
+      {
+        "packet": 20539,
+        "hex": "54"
+      },
+      {
+        "packet": 20540,
+        "hex": "0d"
+      },
+      {
+        "packet": 21580,
+        "hex": "41"
+      },
+      {
+        "packet": 21729,
+        "hex": "42"
+      },
+      {
+        "packet": 21877,
+        "hex": "43"
+      },
+      {
+        "packet": 22025,
+        "hex": "44"
+      },
+      {
+        "packet": 22174,
+        "hex": "45"
+      },
+      {
+        "packet": 22322,
+        "hex": "1b"
+      },
+      {
+        "packet": 22322,
+        "hex": "5b"
+      },
+      {
+        "packet": 22322,
+        "hex": "48"
+      },
+      {
+        "packet": 22470,
+        "hex": "48"
+      },
+      {
+        "packet": 22618,
+        "hex": "1b"
+      },
+      {
+        "packet": 22618,
+        "hex": "5b"
+      },
+      {
+        "packet": 22618,
+        "hex": "46"
+      },
+      {
+        "packet": 22767,
+        "hex": "45"
+      },
+      {
+        "packet": 22915,
+        "hex": "1b"
+      },
+      {
+        "packet": 22915,
+        "hex": "5b"
+      },
+      {
+        "packet": 22915,
+        "hex": "44"
+      },
+      {
+        "packet": 23063,
+        "hex": "1b"
+      },
+      {
+        "packet": 23063,
+        "hex": "5b"
+      },
+      {
+        "packet": 23063,
+        "hex": "33"
+      },
+      {
+        "packet": 23064,
+        "hex": "7e"
+      },
+      {
+        "packet": 23212,
+        "hex": "1b"
+      },
+      {
+        "packet": 23212,
+        "hex": "5b"
+      },
+      {
+        "packet": 23212,
+        "hex": "32"
+      },
+      {
+        "packet": 23213,
+        "hex": "7e"
+      },
+      {
+        "packet": 23360,
+        "hex": "5a"
+      },
+      {
+        "packet": 23508,
+        "hex": "09"
+      },
+      {
+        "packet": 23657,
+        "hex": "54"
+      },
+      {
+        "packet": 23805,
+        "hex": "1b"
+      },
+      {
+        "packet": 23805,
+        "hex": "5b"
+      },
+      {
+        "packet": 23805,
+        "hex": "35"
+      },
+      {
+        "packet": 23806,
+        "hex": "7e"
+      },
+      {
+        "packet": 23953,
+        "hex": "1b"
+      },
+      {
+        "packet": 23953,
+        "hex": "5b"
+      },
+      {
+        "packet": 23953,
+        "hex": "36"
+      },
+      {
+        "packet": 23954,
+        "hex": "7e"
+      },
+      {
+        "packet": 24102,
+        "hex": "19"
+      },
+      {
+        "packet": 24250,
+        "hex": "55"
+      },
+      {
+        "packet": 24398,
+        "hex": "4e"
+      },
+      {
+        "packet": 24546,
+        "hex": "53"
+      },
+      {
+        "packet": 24695,
+        "hex": "41"
+      },
+      {
+        "packet": 24843,
+        "hex": "56"
+      },
+      {
+        "packet": 24991,
+        "hex": "45"
+      },
+      {
+        "packet": 25140,
+        "hex": "44"
+      },
+      {
+        "packet": 25637,
+        "hex": "1b"
+      }
+    ],
+    "checker_sha256": "384c5ff4036f90afdf3afa9174ef7c780c503a2541a6d5d6b55210856ae884ef",
+    "capture_sha256": "02e2e0c5da97194b64ce7001e76dbd49809e6819ae4939ae82108009ab233384",
+    "decoder_sha256": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+    "scope": "Offline native QAM receiver over the observed external caller RTP packets. This does not establish what the in-VM PJSIP jitter buffer or proprietary receiver consumed."
+  },
+  "integrity_diagnosis": {
+    "diagnosis_verified": false,
+    "checks": {
+      "offline_caller_matches_all_DOS_bytes": true,
+      "guest_matches_exact_BBS_input": true,
+      "extra_upstream_bytes_reproduced": false,
+      "entire_caller_stream_compared": true
+    },
+    "DOS_online_bytes": 120,
+    "offline_caller_bytes": 120,
+    "guest_DATA_RX_bytes": 120,
+    "upstream_changes": [],
+    "downstream_changes": [],
+    "unexpected_upstream_bytes": 0,
+    "captured_BBS_display_bytes": 48936,
+    "caller_decoded_bytes": 49123,
+    "capture_sha256": {
+      "serial-in.bin": "43e6a8bbda9f3818074e2b542c4616141b0e88252d62ccab883f40ce7c765c2e",
+      "control-wire.bin": "970f8f9d07e34676bf9d8d35fe1e97d4d583416ef8e83ec8ce40781eba4b2850",
+      "bbs-input.bin": "44c61f34e9520b78f2e423d21c5c65bfdc5e42cffabdd617adf9cbdc2f7cde04",
+      "bbs-output.bin": "08b66ef251076d1fb82008c6cc154f6b53ba83f788a1eab2d3a7f049a34dcadf",
+      "caller-decoded.bin": "26a6c773459fbea96188d4bbf85648e4aa2070b1c2c1c1783f05490f704214c1",
+      "rtp-from-caller.bin": "02e2e0c5da97194b64ce7001e76dbd49809e6819ae4939ae82108009ab233384",
+      "offline-caller.json": "1631abb6df3dbfe0201a19d25fd3f27b5cf439309413b42a056829b3bbf571aa",
+      "node.log": "dad3167eaa81a643b8d64612b678d7e6a210aef751df8eb5e7fefca25f66283f",
+      "result.json": "68f307f44886839bd064ce279d4d7a757f1b068acd3fe8e5a907f5d1b40a030e"
+    },
+    "analyzer_sha256": "a47974a9901aeda790b11ab72f9191a4a325e3d6736f548bdc62147af0ed5d16",
+    "guest_PCM_and_timing_present": true,
+    "scope": "Read-only actual serial/guest/Telnet comparison and independent captured-caller QAM decode. Diagnosis verification means a reproduced failure, not transport acceptance. Guest PCM/arrival timing are captured and require their separate waveform analysis; this byte comparison alone does not establish a media cause. Terminal-close truncation is not automatically acoustic corruption."
+  },
+  "explicit_test_stop": null,
+  "PCM_analysis": {
+    "external_RTP_equals_tunnel_RTP": true,
+    "common_RTP_prefix_exact": true,
+    "external_packets": 26131,
+    "tunnel_packets": 26131,
+    "guest_frames": 25728,
+    "exact_PCM_frame_matches": 25725,
+    "guest_frames_not_found_in_RTP": 0,
+    "frame_alignment_changes": [
+      {
+        "operation": "insert",
+        "RTP_frame_start": 0,
+        "RTP_frame_end": 0,
+        "guest_frame_start": 0,
+        "guest_frame_end": 3
+      },
+      {
+        "operation": "delete",
+        "RTP_frame_start": 25725,
+        "RTP_frame_end": 26131,
+        "guest_frame_start": 25728,
+        "guest_frame_end": 25728
+      }
+    ],
+    "packet_arrival_gaps": {
+      "rtp-from-caller": {
+        "packets": 26131,
+        "max_gap_ms": 34.896119,
+        "over40ms": 0,
+        "over100ms": 0
+      },
+      "rtp-to-guest": {
+        "packets": 26131,
+        "max_gap_ms": 34.853248,
+        "over40ms": 0,
+        "over100ms": 0
+      }
+    },
+    "upstream_changes": [],
+    "sample_alignment": {
+      "unique_anchors": 1083,
+      "offset_histogram": {
+        "480": 1083
+      },
+      "offset_changes": [
+        {
+          "RTP_frame": 150,
+          "guest_sample": 24480,
+          "offset_samples": 480
+        }
+      ],
+      "dominant_offset_samples": 480,
+      "dominant_offset_ms": 60.0,
+      "compared_samples": 4116000,
+      "differing_samples": 0,
+      "first_difference_sample": null,
+      "last_difference_sample": null,
+      "leading_padding_is_silence": true,
+      "guest_PCM_equals_delayed_RTP_prefix": true
+    },
+    "pre_workload_guest_bytes": 0,
+    "frozen_inputs": {
+      "rtp-from-caller.bin": "02e2e0c5da97194b64ce7001e76dbd49809e6819ae4939ae82108009ab233384",
+      "rtp-to-guest.bin": "0f8ca9fbccc6c19fa10bb52c1c0a7b7f38f3c496d7f240b4e582b593ae1fb7fc",
+      "modem_rx_8k.raw": "9b0ec4ba0f4ac279f1b17b2422709d2ab2f86d48720112bb56692b33f480ecf1",
+      "timing.jsonl": "67a653c4cc6c3bba7337f194f4adc2d82d6d9a4724f09d1e964b65c14f4ac8c4",
+      "expected-upstream.bin": "313a80ccdbb4555f8e599852c3991dfebac5b0dcab626770adbbe3f5faafda2e",
+      "guest-workload.bin": "313a80ccdbb4555f8e599852c3991dfebac5b0dcab626770adbbe3f5faafda2e",
+      "result.json": "68f307f44886839bd064ce279d4d7a757f1b068acd3fe8e5a907f5d1b40a030e"
+    },
+    "analyzer_sha256": "cb9ba521f16018e368601e2b696814acc5d2da3567ea41ad6905d7bfc5d564c1",
+    "scope": "Exact G.711 decoding/frame-hash alignment and observed host UDP arrival times. Changed guest PCM proves a media-path difference, not its internal cause. No physical modem/ATA."
+  },
+  "offline_guest": {
+    "samples": 4116480,
+    "decoded_bytes": 120,
+    "equals_authored_upstream": true,
+    "received": [
+      {
+        "sample": 81600,
+        "hex": "31"
+      },
+      {
+        "sample": 81600,
+        "hex": "32"
+      },
+      {
+        "sample": 81600,
+        "hex": "37"
+      },
+      {
+        "sample": 81760,
+        "hex": "2e"
+      },
+      {
+        "sample": 81760,
+        "hex": "30"
+      },
+      {
+        "sample": 81920,
+        "hex": "2e"
+      },
+      {
+        "sample": 81920,
+        "hex": "30"
+      },
+      {
+        "sample": 82080,
+        "hex": "2e"
+      },
+      {
+        "sample": 82080,
+        "hex": "31"
+      },
+      {
+        "sample": 82240,
+        "hex": "3a"
+      },
+      {
+        "sample": 82240,
+        "hex": "34"
+      },
+      {
+        "sample": 82400,
+        "hex": "39"
+      },
+      {
+        "sample": 82400,
+        "hex": "35"
+      },
+      {
+        "sample": 82560,
+        "hex": "33"
+      },
+      {
+        "sample": 82560,
+        "hex": "33"
+      },
+      {
+        "sample": 82560,
+        "hex": "0d"
+      },
+      {
+        "sample": 94400,
+        "hex": "1b"
+      },
+      {
+        "sample": 94400,
+        "hex": "5b"
+      },
+      {
+        "sample": 94400,
+        "hex": "3f"
+      },
+      {
+        "sample": 94560,
+        "hex": "31"
+      },
+      {
+        "sample": 94560,
+        "hex": "3b"
+      },
+      {
+        "sample": 94720,
+        "hex": "32"
+      },
+      {
+        "sample": 94720,
+        "hex": "63"
+      },
+      {
+        "sample": 96800,
+        "hex": "1b"
+      },
+      {
+        "sample": 96800,
+        "hex": "5b"
+      },
+      {
+        "sample": 96800,
+        "hex": "31"
+      },
+      {
+        "sample": 96960,
+        "hex": "3b"
+      },
+      {
+        "sample": 96960,
+        "hex": "31"
+      },
+      {
+        "sample": 97120,
+        "hex": "52"
+      },
+      {
+        "sample": 99360,
+        "hex": "1b"
+      },
+      {
+        "sample": 99360,
+        "hex": "5b"
+      },
+      {
+        "sample": 99360,
+        "hex": "31"
+      },
+      {
+        "sample": 99520,
+        "hex": "3b"
+      },
+      {
+        "sample": 99520,
+        "hex": "32"
+      },
+      {
+        "sample": 99680,
+        "hex": "52"
+      },
+      {
+        "sample": 492640,
+        "hex": "0d"
+      },
+      {
+        "sample": 736480,
+        "hex": "6c"
+      },
+      {
+        "sample": 736480,
+        "hex": "6f"
+      },
+      {
+        "sample": 736480,
+        "hex": "63"
+      },
+      {
+        "sample": 736640,
+        "hex": "6c"
+      },
+      {
+        "sample": 736640,
+        "hex": "61"
+      },
+      {
+        "sample": 736800,
+        "hex": "62"
+      },
+      {
+        "sample": 736800,
+        "hex": "0d"
+      },
+      {
+        "sample": 770400,
+        "hex": "4c"
+      },
+      {
+        "sample": 770400,
+        "hex": "6f"
+      },
+      {
+        "sample": 770400,
+        "hex": "43"
+      },
+      {
+        "sample": 770560,
+        "hex": "2d"
+      },
+      {
+        "sample": 770560,
+        "hex": "4c"
+      },
+      {
+        "sample": 770720,
+        "hex": "61"
+      },
+      {
+        "sample": 770720,
+        "hex": "62"
+      },
+      {
+        "sample": 770880,
+        "hex": "2d"
+      },
+      {
+        "sample": 770880,
+        "hex": "32"
+      },
+      {
+        "sample": 771040,
+        "hex": "30"
+      },
+      {
+        "sample": 771040,
+        "hex": "32"
+      },
+      {
+        "sample": 771200,
+        "hex": "36"
+      },
+      {
+        "sample": 771200,
+        "hex": "21"
+      },
+      {
+        "sample": 771360,
+        "hex": "0d"
+      },
+      {
+        "sample": 1009440,
+        "hex": "0d"
+      },
+      {
+        "sample": 1308640,
+        "hex": "0d"
+      },
+      {
+        "sample": 1571840,
+        "hex": "0d"
+      },
+      {
+        "sample": 1848640,
+        "hex": "1b"
+      },
+      {
+        "sample": 1889920,
+        "hex": "4e"
+      },
+      {
+        "sample": 2315360,
+        "hex": "0d"
+      },
+      {
+        "sample": 2615840,
+        "hex": "4d"
+      },
+      {
+        "sample": 2615840,
+        "hex": "0d"
+      },
+      {
+        "sample": 2938400,
+        "hex": "50"
+      },
+      {
+        "sample": 2938400,
+        "hex": "0d"
+      },
+      {
+        "sample": 3252960,
+        "hex": "0d"
+      },
+      {
+        "sample": 3286400,
+        "hex": "4b"
+      },
+      {
+        "sample": 3286400,
+        "hex": "45"
+      },
+      {
+        "sample": 3286400,
+        "hex": "59"
+      },
+      {
+        "sample": 3286560,
+        "hex": "54"
+      },
+      {
+        "sample": 3286560,
+        "hex": "45"
+      },
+      {
+        "sample": 3286720,
+        "hex": "53"
+      },
+      {
+        "sample": 3286720,
+        "hex": "54"
+      },
+      {
+        "sample": 3286880,
+        "hex": "0d"
+      },
+      {
+        "sample": 3453280,
+        "hex": "41"
+      },
+      {
+        "sample": 3477120,
+        "hex": "42"
+      },
+      {
+        "sample": 3500800,
+        "hex": "43"
+      },
+      {
+        "sample": 3524480,
+        "hex": "44"
+      },
+      {
+        "sample": 3548320,
+        "hex": "45"
+      },
+      {
+        "sample": 3572000,
+        "hex": "1b"
+      },
+      {
+        "sample": 3572000,
+        "hex": "5b"
+      },
+      {
+        "sample": 3572000,
+        "hex": "48"
+      },
+      {
+        "sample": 3595680,
+        "hex": "48"
+      },
+      {
+        "sample": 3619360,
+        "hex": "1b"
+      },
+      {
+        "sample": 3619360,
+        "hex": "5b"
+      },
+      {
+        "sample": 3619360,
+        "hex": "46"
+      },
+      {
+        "sample": 3643200,
+        "hex": "45"
+      },
+      {
+        "sample": 3666880,
+        "hex": "1b"
+      },
+      {
+        "sample": 3666880,
+        "hex": "5b"
+      },
+      {
+        "sample": 3666880,
+        "hex": "44"
+      },
+      {
+        "sample": 3690560,
+        "hex": "1b"
+      },
+      {
+        "sample": 3690560,
+        "hex": "5b"
+      },
+      {
+        "sample": 3690560,
+        "hex": "33"
+      },
+      {
+        "sample": 3690720,
+        "hex": "7e"
+      },
+      {
+        "sample": 3714400,
+        "hex": "1b"
+      },
+      {
+        "sample": 3714400,
+        "hex": "5b"
+      },
+      {
+        "sample": 3714400,
+        "hex": "32"
+      },
+      {
+        "sample": 3714560,
+        "hex": "7e"
+      },
+      {
+        "sample": 3738080,
+        "hex": "5a"
+      },
+      {
+        "sample": 3761760,
+        "hex": "09"
+      },
+      {
+        "sample": 3785600,
+        "hex": "54"
+      },
+      {
+        "sample": 3809280,
+        "hex": "1b"
+      },
+      {
+        "sample": 3809280,
+        "hex": "5b"
+      },
+      {
+        "sample": 3809280,
+        "hex": "35"
+      },
+      {
+        "sample": 3809440,
+        "hex": "7e"
+      },
+      {
+        "sample": 3832960,
+        "hex": "1b"
+      },
+      {
+        "sample": 3832960,
+        "hex": "5b"
+      },
+      {
+        "sample": 3832960,
+        "hex": "36"
+      },
+      {
+        "sample": 3833120,
+        "hex": "7e"
+      },
+      {
+        "sample": 3856800,
+        "hex": "19"
+      },
+      {
+        "sample": 3880480,
+        "hex": "55"
+      },
+      {
+        "sample": 3904160,
+        "hex": "4e"
+      },
+      {
+        "sample": 3927840,
+        "hex": "53"
+      },
+      {
+        "sample": 3951680,
+        "hex": "41"
+      },
+      {
+        "sample": 3975360,
+        "hex": "56"
+      },
+      {
+        "sample": 3999040,
+        "hex": "45"
+      },
+      {
+        "sample": 4022880,
+        "hex": "44"
+      },
+      {
+        "sample": 4102400,
+        "hex": "1b"
+      }
+    ],
+    "checker_sha256": "cf790f59a84746f0bd2e8cea1f85b4643a34746bd31e9bc2daa7cd845e51c829",
+    "capture_sha256": "9b0ec4ba0f4ac279f1b17b2422709d2ab2f86d48720112bb56692b33f480ecf1",
+    "decoder_sha256": "e3edf16ef86ad76c10963db6352ddf6319d00268d7f34a2272d47487322ceb1e",
+    "scope": "Offline native QAM decode of actual guest pre-resampling 8kHz PCM. Distinct from the proprietary guest DSP; no injected live bytes or connection flags."
+  },
+  "editor_result_classification": "entered_inspect_semantic_gates",
+  "evidence_sha256": {
+    "build/bbs-lab/synthmodem-audio-editor-04/result.json": "68f307f44886839bd064ce279d4d7a757f1b068acd3fe8e5a907f5d1b40a030e",
+    "build/bbs-lab/synthmodem-audio-editor-04/independent-audit.json": "4d23b736aa10a9045e14c07cefc0e858a3eed2e6ca1aff8324510a258a9d256d",
+    "build/bbs-lab/synthmodem-audio-editor-04/offline-caller.json": "1631abb6df3dbfe0201a19d25fd3f27b5cf439309413b42a056829b3bbf571aa",
+    "build/bbs-lab/synthmodem-audio-editor-04/integrity-diagnosis.json": "30e782520e957fa6308004636d3d38d399cae1930eb1ddc7b38107dc65d89df3",
+    "build/bbs-lab/synthmodem-key-framing-trace-runtime-01/result.json": "acb030f0a08f4331b611bca44fc7e771ba00d3f1a56dc83e0891cf5a8f9e851a",
+    "build/bbs-lab/synthmodem-key-framing-trace-runtime-01/checks.json": "32dde00013f960e4426b4a27db0b2fafb4c4e60127c3cd61a6f9865f25737343",
+    "build/bbs-lab/synthmodem-key-framing-trace-runtime-01/loopback.json": "2e048835013e9c1be0f68ec74f6b1363f5636d47fd4ed53c7e92f18e5a8cc6c9",
+    "lab/bbs/patches/synthmodem-key-framing/check_loopback.js": "640365abe486a20ea7dbee8e3e7ae9bc6222820ebfe4b9f48e61cf2ef5cfd1b1",
+    "lab/bbs/record_synthmodem_key_framing.py": "8593fd36704de96b475c59966d2646b7f783ca0f2c309cdd74f9f7cec79cba2d",
+    "build/bbs-lab/synthmodem-audio-editor-04/PCM-analysis.json": "256aa20003e5532fa7475a24c94cf3f63fe600f28c2bf6ed9b482849060a768c",
+    "build/bbs-lab/synthmodem-audio-editor-04/offline-guest.json": "026f28072d2a5fcdbd72b535ee19e55f2db0532bb453e9bde09daaed82ab0be6"
+  },
+  "limitations": [
+    "The serial-output recorder represents frontend send attempts. Screen snapshots validate the pre-close DOS editor state; DSP output during diagnostic export after serial-close is not proof DOS received those later bytes.",
+    "One-line page keys exercise document boundaries, not multiline scrolling. No post is saved and no file transfer is attempted.",
+    "A clean traced call does not fix the preserved normal-image byte-insertion failures. Complete editor/reset/receive acceptance remains separate."
+  ],
+  "scope": "Opt-in250ms bridge key framing on the carrier image (with existing diagnostic PCM export only when declared), actual local stock ENiGMA one-line editor recipe, loopback byte readback and independent captures. PCM identity covers its recorded overlap, not the longer RTP export/shutdown tail. A scoped pass does not guarantee arbitrary remote TCP chunking, physical hardware, transfers, other rates or complete application functionality. Earlier receive-corruption failures remain unresolved."
+}

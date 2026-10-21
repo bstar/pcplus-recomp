@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Carrier DOS menu09 remains accepted for its scope. Traced editor02 has exact114-byte upstream and PCM overlap but failed key semantics. Opt-in key-framing editor03 fails its Main Menu script prerequisite and never enters the editor: independent caller decode matches63 DOS bytes, guest emits72. Full35173-byte BBS display is exact downstream. Explicit test stop means no normal DOS return/restoration claim. All acceptance remains open.",
+  "status": "Framed traced editor04 passes32 independent checks: all exercised editor semantics, exact120 upstream bytes and4116000 PCM overlap samples at60ms, normal DOS return/restoration and no post. Producer passes22/23 but read ECONNRESET remains; overall acceptance staysfalse. Earlier normal-image insertions remain unresolved. Carrier menu09 remains accepted only for its scope.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3138,6 +3138,74 @@
         "signal": "SIGKILL",
         "normal_DOS_exit_claimed": false
       }
+    },
+    "synthmodem-audio-editor-04": {
+      "passed": false,
+      "checks": {
+        "DOS_normal_exit": true,
+        "script_completed": true,
+        "UART_restored": true,
+        "keyboard_helper_retired": true,
+        "numeric_AT_only": true,
+        "real_DSP_CONNECT": true,
+        "authenticated": true,
+        "ordered_menus": true,
+        "DOS_DA": true,
+        "DOS_CPR": true,
+        "profile_unchanged": true,
+        "directory_accounting": true,
+        "no_relay_errors": true,
+        "no_gateway_errors": false,
+        "VM_exited": true,
+        "no_post_saved": true,
+        "inputs_unchanged": true,
+        "server_unchanged": true,
+        "editor_entered": true,
+        "typed_draft_sent": true,
+        "all_editor_keys_emitted": true,
+        "home_moves_before_marker": true,
+        "insert_toggles_overtype": true
+      },
+      "independent_checks": {
+        "numeric_command_prefix": true,
+        "single_normal_post_train_hold": true,
+        "serial_equals_post_hold_guest_decode": true,
+        "online_target_after_numeric_call": true,
+        "guest_equals_Telnet_application_input": true,
+        "decoded_audio_equals_serial_output": true,
+        "complete_BBS_display_survives_DSP": true,
+        "complete_caller_stream_equals_bridge_plus_BBS_display": true,
+        "single_real_carrier": true,
+        "real_DOS_terminal_replies": true,
+        "authoritative_login": true,
+        "authoritative_menu_order": true,
+        "all_actual_BIOS_editor_keys_in_order": true,
+        "Home_changes_cursor_before_H": true,
+        "End_and_Delete_apply_to_draft": true,
+        "Insert_changes_to_overtype": true,
+        "Tab_advances_and_page_keys_preserve_boundary": true,
+        "CtrlY_clears_line_before_final_text": true,
+        "unsaved_final_line_visible": true,
+        "draft_never_saved": true,
+        "script_and_normal_DOS_return": true,
+        "actual_UART_restored": true,
+        "keyboard_timer_vector_restored": true,
+        "continuous_rtp-from-answer.bin": true,
+        "continuous_rtp-from-caller.bin": true,
+        "actual_external_SIP": true,
+        "actual_internal_BYE": true,
+        "capture_hashes": true,
+        "runtime_inputs_unchanged": true,
+        "producer_inputs_unchanged": true,
+        "explicit_key_framing_configuration": true,
+        "stock_BBS_inputs_unchanged": true
+      },
+      "receipt": "docs/validation/synthmodem-key-framing-trace.json",
+      "receipt_sha256": "501b071ec004c8897d996b76ce71424b27ac1dfc5987a1a4e32e2955ce25d300",
+      "editor_semantic_checks_passed": true,
+      "open_gateway_errors": [
+        "read ECONNRESET"
+      ]
     }
   },
   "diagnosis": {
@@ -3186,9 +3254,9 @@
     "The historical six-byte event lacks guest PCM/timing; its exact association remains unproven. A controlled same-boundary discard-policy failure is reproduced and fixed in the tested candidate.",
     "Editors/transfers/Synchronet through the rebuilt audio path, sustained pressure, loss/fault behavior and physical Boca/SPA2102 acceptance remain open.",
     "All F01-F16 whole-application completion gates remain open.",
-    "Normal audio editor01 inserts12 guest bytes; traced editor02 does not reproduce them. Key-framing editor03 inserts9 before the proxy, fails Main Menu script readiness and never reaches editing. Collect candidate PCM/timing, isolate readiness/art callback behavior, and retain full byte/editor/transfer gates. Hold5999ms and ECONNRESET from02 remain recorded."
+    "Normal editor01 inserts12 guest bytes; normal framing editor03 inserts9. Traced framing editor04 is clean and passes all local editor semantics with the readiness latch. Identify reset source/phase, repeat normal framed runtime, and reproduce receive corruption with PCM/timing before claiming a fix. Hold5999ms/ECONNRESET from02 remain preserved."
   ],
-  "current_cohort": "synthmodem-audio-editor-03",
+  "current_cohort": "synthmodem-audio-editor-04",
   "latest_cohort_passed": false,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
@@ -3220,5 +3288,6 @@
   "accepted_menu_cohort": "synthmodem-audio-dos-09",
   "editor_receipt": "docs/validation/synthmodem-audio-editor.json",
   "editor_trace_receipt": "docs/validation/synthmodem-audio-editor-trace.json",
-  "key_framing_receipt": "docs/validation/synthmodem-key-framing.json"
+  "key_framing_receipt": "docs/validation/synthmodem-key-framing.json",
+  "key_framing_trace_receipt": "docs/validation/synthmodem-key-framing-trace.json"
 }
