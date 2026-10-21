@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Native ordinary startup filtering is accepted for43 linked cases,3 actual DOS banner scenarios and the original early-start same-call audio retry, with all100 client audio gates passing. Original early-start failure and receiver-ready workaround remain preserved. Indexed partial cleanup, resident capacity for mouse variants, pressure/loss/reconnect, stock ZMODEM closing, physical Boca/SPA2102 and F01-F16 remain open.",
+  "status": "Native3b startup and early-start same-call audio retry remain accepted at their frozen scope. Transfer-UI banking restores four builds, adds7 bridge invariants/18 rejection controls per build and passes284 linked transfer/31 mouse/six actual DOS cases; new banked binaries are not declared audio-validated. ANSI startup ESC-restart handling, indexed partial cleanup, pressure/loss/reconnect, stock ZMODEM closing, physical Boca/SPA2102 and F01-F16 remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3907,7 +3907,7 @@
     "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
     "Extend the accepted modified-helper fixed-DTE slow-carrier upload to pressure/cancel/loss and other peers; retain every CRC/finish,storage,post-helper input and cleanup gate.",
     "Stock Synchronet published/indexed a1024-byte failed-reference partial despite E/helper error. Preserve evidence; cancellation/loss cleanup and trustworthy completion require full wire/source/finish accounting. Accepted upload has3 source-attributed startup retries, not zero startup retries.",
-    "Native midframe Escape and scoped uninterrupted startup-banner handling are fixed and accepted in actual software audio. Preserve66-second cancellation and zero-byte early-start failures. Stock indexed partial cleanup, arbitrary paused-text handshake ambiguity, resident code capacity for mouse variants and broader pressure/profile/protocol/hardware gates remain open. Original insertion/stock receiver gaps remain independent."
+    "Native midframe Escape and scoped uninterrupted startup-banner handling are accepted in actual3b software audio. Transfer-UI resident capacity is fixed and separately validated for four builds. An independently reproduced ANSI ESC-restart edge can trigger a premature C/G handshake and requires correction. Preserve all prior failures; stock indexed partial cleanup, arbitrary paused-text handshake ambiguity and broader pressure/profile/protocol/hardware gates remain open."
   ],
   "current_cohort": "synthmodem-synchronet-retry-startup-audio-01",
   "latest_cohort_passed": false,
@@ -4010,5 +4010,7 @@
   "native_upload_startup_receipt": "docs/validation/terminal-upload-startup-fixed.json",
   "synchronet_startup_audio_receipt": "docs/validation/synthmodem-synchronet-retry-startup-audio-01.json",
   "synchronet_startup_audio_receipt_sha256": "d024b0136573f344dd882e2dd8e77e9ffc427f79ac470f21d04188f3c56b4468",
-  "accepted_synchronet_early_start_retry_cohort": "synthmodem-synchronet-retry-startup-audio-01"
+  "accepted_synchronet_early_start_retry_cohort": "synthmodem-synchronet-retry-startup-audio-01",
+  "transfer_ui_bank_receipt": "docs/validation/transfer-ui-bank.json",
+  "transfer_ui_bank_receipt_sha256": "b24d973b2f1d359a7eb92df33a1f5477d783d4f7669f0074599da6a6259ab6ef"
 }

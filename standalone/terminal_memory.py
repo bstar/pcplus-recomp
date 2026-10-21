@@ -250,6 +250,20 @@ def inspect_terminal_memory(binary,map_path):
   assert config_bridges==80,'Incomplete configuration ABI validation'
   bridges+=config_bridges
   extra['configuration_bridge_pairs_verified']=config_bridges
+ # Four unchanged resident no-argument APIs now enter the banked transfer UI.
+ # Its BIOS keyboard/service callbacks must return to the bank with RETF.
+ transfer_entries=('open','receiving','progress','restore')
+ for suffix in transfer_entries:
+  name='terminal_transfer_ui_'+suffix
+  assert symbols[name][0]==near_code['relative_segment']
+  assert symbols[name+'_impl'][0]==config_seg,(name,'UI outside CONFIG_CODE')
+  far_call(name,name+'_impl')
+ for suffix,target in (('service','terminal_transfer_service'),('keyboard','keyboard_poll'),('read','terminal_read_key')):
+  name='terminal_transfer_ui_'+suffix+'_far'
+  assert symbols[name][0]==symbols[target][0]==near_code['relative_segment']
+  near_call(name,target)
+ bridges+=7
+ extra.update(transfer_ui_far_entries_verified=4,transfer_ui_resident_callbacks_verified=3)
  redisplay_bridges=0
  for name in ('terminal_redisplay_key','terminal_redisplay_before','terminal_redisplay_idle','terminal_redisplay_stop'):
   assert symbols[name][0]==near_code['relative_segment']

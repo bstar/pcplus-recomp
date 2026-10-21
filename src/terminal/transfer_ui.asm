@@ -1,18 +1,18 @@
 ; Maintained80x25 transfer prompt/progress. Own bottomtwo rows only; no DOSIO.
 BITS 16
 CPU 8086
-SEGMENT _TEXT public class=CODE use16
-extern terminal_transfer_service,terminal_transfer_fault,terminal_quit
-extern keyboard_poll,terminal_read_key,terminal_transfer_filename
+SEGMENT CONFIG_CODE public align=16 class=FARCODE use16
+extern terminal_transfer_ui_service_far,terminal_transfer_fault,terminal_quit
+extern terminal_transfer_ui_keyboard_far,terminal_transfer_ui_read_far,terminal_transfer_filename
 extern session_blocks_accepted
 extern terminal_transfer_direction,terminal_upload_blocks_accepted
 extern terminal_transfer_protocol,_ymodem_current
 extern _terminal_zmodem_kbytes
 extern terminal_transfer_automatic
-GLOBAL terminal_transfer_ui_open,terminal_transfer_ui_restore,terminal_transfer_ui_progress
-GLOBAL terminal_transfer_ui_receiving
+GLOBAL terminal_transfer_ui_open_impl,terminal_transfer_ui_restore_impl,terminal_transfer_ui_progress_impl
+GLOBAL terminal_transfer_ui_receiving_impl
 GLOBAL _terminal_transfer_ui_visible
-terminal_transfer_ui_open:
+terminal_transfer_ui_open_impl:
  push bp
  push bx
  push si
@@ -62,13 +62,13 @@ terminal_transfer_ui_open:
  int 0x10
 .input:
  call ui_cursor
- call terminal_transfer_service
+ call far terminal_transfer_ui_service_far
  cmp word [terminal_transfer_fault],0
  jne .cancel
- call keyboard_poll
+ call far terminal_transfer_ui_keyboard_far
  or ax,ax
  jz .input
- call terminal_read_key
+ call far terminal_transfer_ui_read_far
  cmp ax,0x3c00 ;F2 toggles protocol, typed field retained
  je .protocol
  cmp ax,0x2d00
@@ -139,7 +139,7 @@ terminal_transfer_ui_open:
  pop si
  pop bx
  pop bp
- ret
+ retf
 ui_cursor:
  mov dx,[transfer_ui_length]
  mov dh,24
@@ -183,7 +183,7 @@ ui_text:
  stosw
  jmp ui_text
 .done: ret
-terminal_transfer_ui_receiving:
+terminal_transfer_ui_receiving_impl:
  push ax
  push cx
  push si
@@ -222,8 +222,8 @@ terminal_transfer_ui_receiving:
  pop si
  pop cx
  pop ax
- ret
-terminal_transfer_ui_progress:
+ retf
+terminal_transfer_ui_progress_impl:
  push ax
  push bx
  push cx
@@ -263,8 +263,8 @@ terminal_transfer_ui_progress:
  pop cx
  pop bx
  pop ax
- ret
-terminal_transfer_ui_restore:
+ retf
+terminal_transfer_ui_restore_impl:
  push ax
  push bx
  push cx
@@ -296,7 +296,7 @@ terminal_transfer_ui_restore:
  pop cx
  pop bx
  pop ax
- ret
+ retf
 SEGMENT _DATA public class=DATA use16
 transfer_ui_saved: times 320 db 0
 transfer_ui_cursor: dw 0

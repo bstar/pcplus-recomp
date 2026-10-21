@@ -1,0 +1,35 @@
+; Preserve the resident no-argument transfer UI API while its body is banked.
+BITS 16
+CPU 8086
+SEGMENT _TEXT public class=CODE use16
+GLOBAL terminal_transfer_ui_open
+extern terminal_transfer_ui_open_impl
+terminal_transfer_ui_open:
+ call far terminal_transfer_ui_open_impl
+ ret
+GLOBAL terminal_transfer_ui_receiving
+extern terminal_transfer_ui_receiving_impl
+terminal_transfer_ui_receiving:
+ call far terminal_transfer_ui_receiving_impl
+ ret
+GLOBAL terminal_transfer_ui_progress
+extern terminal_transfer_ui_progress_impl
+terminal_transfer_ui_progress:
+ call far terminal_transfer_ui_progress_impl
+ ret
+GLOBAL terminal_transfer_ui_restore
+extern terminal_transfer_ui_restore_impl
+terminal_transfer_ui_restore:
+ call far terminal_transfer_ui_restore_impl
+ ret
+extern terminal_transfer_service,keyboard_poll,terminal_read_key
+GLOBAL terminal_transfer_ui_service_far,terminal_transfer_ui_keyboard_far,terminal_transfer_ui_read_far
+terminal_transfer_ui_service_far:
+ call terminal_transfer_service
+ retf
+terminal_transfer_ui_keyboard_far:
+ call keyboard_poll
+ retf
+terminal_transfer_ui_read_far:
+ call terminal_read_key
+ retf

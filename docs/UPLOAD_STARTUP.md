@@ -71,8 +71,8 @@ The 2,048-byte partial remains indexed, so overall success and server cleanup
 stay false despite accepted audio startup/retry. Physical Boca/SPA2102 testing
 and the full application inventory remain separate requirements.
 
-The current mouse and mouse/process variants exceed resident code capacity by
-146 bytes. An isolated transfer-UI banking candidate links those variants and
-the mouse/trap build, and passes the startup component and actual DOS cases.
-That candidate still needs its broader transfer regressions before integration;
-the accepted audio executable above is unchanged.
+The subsequent [transfer-UI banking change](TRANSFER_UI_BANK.md) fixes the
+146-byte resident overflow in both mouse variants and adds build-time far
+bridge/relocation guards. Its new binaries have separate linked and actual DOS
+validation; the accepted audio executable above is unchanged. A separately
+captured ESC-restart edge in startup filtering remains under investigation.
