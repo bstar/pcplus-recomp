@@ -170,12 +170,22 @@ CRC-framed completed-file retransmissions silently, without another write or
 ACK/NAK, and consumes bounded valid closing headers before literal OO. Three
 linked counterexamples become21 passing checks with one file install, confirmed
 success and an intact application tail. Thirteen error/bound tests,92 component
-cases and24 independent helper sessions pass. Normal audio download03 is running
-after all78 linked workflows, five cancellation cases, three ABI groups, the
-slow-carrier recheck and14 actual DOS automatic-transfer checks also pass
-with frozen corrected inputs and the unchanged fixture/server/art/bridge.
-Independent full-workflow acceptance, broader pressure/peers, physical hardware
-and all F01-F16 remain open.
+cases and24 independent helper sessions pass. All78 linked workflows, five
+cancellation cases, three ABI groups, the slow-carrier recheck and14 actual DOS
+automatic-transfer checks also pass on the corrected executable.
+
+The [normal audio download03 receipt](docs/validation/synthmodem-audio-download-03.json)
+now accepts the unchanged file/server/full-art/bridge workflow:25 producer,
+26 independent byte/cleanup,15 protocol/file/resume and12 ownership checks pass.
+All205 online bytes and89233 BBS bytes are exact, the11521-byte file installs
+once, literal OO and opposite controls validate, and actual BIOS S/Enter plus
+filename input reaches a new search/list. No ZNAK or protocol control reaches
+the BBS after helper retirement. DOS/UART/IRQ/timer state restores normally.
+Control timing now uses exact decoded frontend manifests on one Node clock,
+with a retained queued-emission counterexample and two premature-reply verifier
+negatives. This accepts one V22/1200/framed-runtime download. Uploads, sustained
+pressure/cancellation/loss, other peers, physical hardware and all F01-F16
+remain open.
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,

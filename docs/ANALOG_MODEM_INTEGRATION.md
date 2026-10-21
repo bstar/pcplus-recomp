@@ -59,6 +59,14 @@ failures remain open; a buffered or patched-server pass is separate evidence.
 
 ## SynthModem backend investigation
 
+The [accepted normal software audio download](validation/synthmodem-audio-download-03.json)
+now verifies one11521-byte automatic ENiGMA transfer at V.22/1200 with fixed38400
+DTE: complete file/CRC/ZFIN/OO, actual post-helper search/list, full byte identity
+and normal DOS/UART/IRQ/timer return. It uses the unchanged stock local BBS and
+explicit250ms bridge key framing. The earlier deadline and queued-completion
+failures remain retained. Uploads, cancellation/loss/pressure and Synchronet over
+audio remain software work items; this closes no physical commissioning gate.
+
 Upstream reviewed at commit `b1752e4d0039e0cff72735924e03aa99922723a8`.
 Links below pin the reviewed source; future versions require rechecking.
 

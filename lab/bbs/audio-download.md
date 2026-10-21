@@ -30,10 +30,18 @@ audit, using the pinned Nix environment:
 ./tools/modem-dev --command python3 lab/bbs/audit_synthmodem_audio_dos.py COHORT
 ./tools/modem-dev --command python3 lab/bbs/audit_serial_io_evidence.py COHORT
 ./tools/modem-dev --command python3 lab/bbs/audit_audio_download.py COHORT
+./tools/modem-dev --command python3 lab/bbs/check_audio_control_timing.py COHORT
 ```
 
 The transfer audit reconstructs both Telnet application streams from recorded
-relay events. It requires source-matching ZFILE metadata, every data CRC and
+relay events. It validates the complete decoded frontend write/input manifests
+against those same streams and checks control timing on one Node monotonic
+clock. BBS emission can precede DOS delivery by many seconds on the audio link;
+it cannot supply a receiver-delivery deadline. The
+[retained queue/timing witness](../../docs/validation/audio-transfer-clock.json)
+matches12 independently diagnosed CRC arrivals and13 DOS controls on audio02.
+These are transport-boundary times, not application-consumption timestamps.
+The audit requires source-matching ZFILE metadata, every data CRC and
 payload, verified offsets, ZEOF, opposite-direction control responses and the
 ZFIN/OO finish handshake. It also requires the exact DOS file, absence of receive
 staging files, one genuine helper with successful exit, official server metadata
@@ -102,5 +110,29 @@ Its [retained failure](../../docs/validation/synthmodem-audio-download-02.json)
 is the missing final `OO` and corrupted post-helper command input. Actual BIOS
 `S`/Enter is sent, but late protocol controls have already reached the BBS menu.
 The [completed-replay correction](zmodem-completed-replay.md) reproduces and fixes
-the queued-data/closing-header behavior in the linked receiver. Audio download03
-is the unchanged full-workflow repeat; its independent acceptance is pending.
+the queued-data/closing-header behavior in the linked receiver.
+
+## Accepted normal audio download03
+
+The [unchanged full-workflow repeat](../../docs/validation/synthmodem-audio-download-03.json)
+passes25 producer,26 independent byte/cleanup,15 protocol/file/resume and12
+ownership checks. All205 online DOS bytes match the independent caller decoder,
+guest and Telnet input. The entire89233-byte BBS stream plus187 bridge bytes
+survives exactly. The installed11521-byte file matches its source SHA-256.
+
+Every observed data/replay CRC, offset, EOF, required opposite-direction control
+and literal ZFIN/OO finish passes. No post-commit ZNAK or late protocol control
+reaches the returned BBS menu. Actual BIOS S/Enter and filename input enters
+Search and displays the file list. The terminal exits normally, restoring the
+IRQ vectors, UART/PIC and keyboard-helper timer vector. The frontend has no
+gateway error, skipped write, failed callback or pending output.
+
+The timing verifier retains the original successful captures and rejects copied
+ACK and ZFIN times moved before the corresponding decoded data. Its two
+negative cases do not generate protocol replies or modify the product capture.
+
+This accepts one automatic download on the frozen V.22/1200 software SIP/RTP/DSP
+path, unchanged stock local ENiGMA/full artwork, explicit250ms bridge key framing
+and38400/8N1/HARD emulated UART. Uploads, transfer cancellation/loss/pressure,
+Synchronet over audio, arbitrary remote TCP fragmentation, physical Boca/SPA2102
+and14400-bps or whole-application acceptance remain separate requirements.

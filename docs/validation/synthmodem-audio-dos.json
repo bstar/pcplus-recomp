@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Audio02 stores the exact file and preserves full bytes/cleanup but fails final OO and resumed BBS input. The source-built completion correction now passes same-checker predecessor/candidate cases,all78 linked workflows,13 error/bound cases,92 component/24 pipe sessions,cancellation/ABI/deadline checks and14 actual DOS automatic-transfer checks. Normal audio03 is live with frozen corrected inputs and unchanged stock server/art/bridge. End-to-end acceptance remains pending; retained failures,uploads/pressure/other peers,physical hardware and all F01-F16 remain open.",
+  "status": "Normal audio download03 passes25 producer,26 independent byte/cleanup,15 protocol/file/resume and12 ownership checks:exact11521-byte file,205 exact online bytes,full89233-byte BBS display,literal OO,actual post-helper search/list and normal DOS/UART/IRQ/timer return. No post-commit ZNAKs or protocol controls after helper exit. This one V22/1200/stock-ENiGMA/framed-runtime download is accepted. Earlier failures/intermittent insertions,uploads/cancel/loss/pressure/other peers,physical hardware and all F01-F16 remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3568,9 +3568,81 @@
       "receipt_sha256": "681b6b41ce6c45193bd813b23a6312867d87c268bb3fabae40cc2d1726edaa61"
     },
     "synthmodem-audio-download-03": {
-      "status": "running",
-      "acceptance": "pending independent same-run audits",
-      "native_prerequisites_passed": true
+      "passed": true,
+      "checks": {
+        "DOS_normal_exit": true,
+        "script_completed": true,
+        "UART_restored": true,
+        "keyboard_helper_retired": true,
+        "numeric_AT_only": true,
+        "real_DSP_CONNECT": true,
+        "authenticated": true,
+        "ordered_menus": true,
+        "DOS_DA": true,
+        "DOS_CPR": true,
+        "profile_unchanged": true,
+        "directory_accounting": true,
+        "no_relay_errors": true,
+        "no_gateway_errors": true,
+        "VM_exited": true,
+        "no_post_saved": true,
+        "inputs_unchanged": true,
+        "server_unchanged": true,
+        "exact_download": true,
+        "only_expected_download": true,
+        "no_receive_stage": true,
+        "actual_helper_exit_zero": true,
+        "posttransfer_search_and_list": true,
+        "official_download_counter_advanced": true,
+        "posttransfer_filename_visible": true
+      },
+      "independent_checks": {
+        "numeric_command_prefix": true,
+        "single_normal_post_train_hold": true,
+        "serial_equals_post_hold_guest_decode": true,
+        "online_target_after_numeric_call": true,
+        "guest_equals_Telnet_application_input": true,
+        "decoded_audio_equals_serial_output": true,
+        "complete_BBS_display_survives_DSP": true,
+        "complete_caller_stream_equals_bridge_plus_BBS_display": true,
+        "single_real_carrier": true,
+        "real_DOS_terminal_replies": true,
+        "authoritative_login": true,
+        "authoritative_menu_order": true,
+        "script_and_normal_DOS_return": true,
+        "actual_UART_restored": true,
+        "actual_IRQ_vectors_restored": true,
+        "actual_UART_PIC_restored": true,
+        "keyboard_timer_vector_restored": true,
+        "continuous_rtp-from-answer.bin": true,
+        "continuous_rtp-from-caller.bin": true,
+        "actual_external_SIP": true,
+        "actual_internal_BYE": true,
+        "capture_hashes": true,
+        "runtime_inputs_unchanged": true,
+        "producer_inputs_unchanged": true,
+        "explicit_key_framing_configuration": true,
+        "stock_BBS_inputs_unchanged": true
+      },
+      "transfer_checks": {
+        "post_protocol_search_key_observed": true,
+        "source_unchanged": true,
+        "complete_CRC_ZMODEM_and_opposite_controls": true,
+        "exact_DOS_file": true,
+        "only_expected_DOS_file": true,
+        "no_receive_staging": true,
+        "real_owned_helper": true,
+        "real_helper_exit_zero": true,
+        "post_helper_keyboard_search_and_list": true,
+        "official_file_and_counter": true,
+        "automatic_receive_profile": true,
+        "base_byte_and_cleanup_audit": true,
+        "frontend_ownership_audit": true,
+        "no_gateway_errors": true,
+        "producer_hashes": true
+      },
+      "receipt": "docs/validation/synthmodem-audio-download-03.json",
+      "receipt_sha256": "3bb60e7f314da807aa3f5acaa02f486e6030dd065010c43ccddd6e48cc4bb727"
     }
   },
   "diagnosis": {
@@ -3616,14 +3688,14 @@
     "offline_evidence_sha256": "fb6931b33b5382e73b5ac3e99a5becacdc23ac13d120ab8d58c392db1706aea1"
   },
   "remaining": [
-    "The historical six-byte event lacks guest PCM/timing; its exact association remains unproven. A controlled same-boundary discard-policy failure is reproduced and fixed in the tested candidate.",
-    "Editors/transfers/Synchronet through the rebuilt audio path, sustained pressure, loss/fault behavior and physical Boca/SPA2102 acceptance remain open.",
+    "Historical in-session insertions lack complete diagnostic evidence; clean editor07/download03 runs do not establish their cause or a general correction.",
+    "Uploads,transfer cancellation/loss/sustained pressure,Synchronet through audio and physical Boca/SPA2102 acceptance remain required.",
     "All F01-F16 whole-application completion gates remain open.",
-    "The online Alt-X fix is verified in untraced normal editor07 with unchanged full byte/editor/error/cleanup gates. Preserve prior reset/downstream/insertion failures; this source fix does not establish a remedy for intermittent guest-decoded insertions during a session. Continue transfers/pressure/Synchronet, broader UI/protocols and physical acceptance.",
-    "Correct fixed-DTE/slow-carrier verified-progress deadlines and investigate stock sender retry/finish timing versus queued audio; repeat unchanged 11521-byte audio download with every CRC/control/finish/return/restoration gate."
+    "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
+    "Validate actual fixed-DTE slow-carrier upload/backpressure and response timing; retain every CRC/finish,storage,post-helper input and cleanup gate."
   ],
   "current_cohort": "synthmodem-audio-download-03",
-  "latest_cohort_passed": null,
+  "latest_cohort_passed": true,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
     "offline_caller_equals_DOS_online": true,
@@ -3661,9 +3733,10 @@
   "online_exit_component_receipt": "docs/validation/online-exit.json",
   "accepted_editor_cohort": "synthmodem-audio-editor-07",
   "online_exit_audio_receipt": "docs/validation/online-exit-audio-dos.json",
-  "audio_download_receipt": "docs/validation/synthmodem-audio-download-02.json",
+  "audio_download_receipt": "docs/validation/synthmodem-audio-download-03.json",
   "carrier_deadline_receipt": "docs/validation/carrier-transfer-deadline-fixed.json",
   "carrier_deadline_regression_receipt": "docs/validation/carrier-transfer-deadline-regression.json",
   "completion_receipt": "docs/validation/zmodem-completed-replay-fixed.json",
-  "completion_regression_receipt": "docs/validation/zmodem-completion-regression.json"
+  "completion_regression_receipt": "docs/validation/zmodem-completion-regression.json",
+  "accepted_download_cohort": "synthmodem-audio-download-03"
 }

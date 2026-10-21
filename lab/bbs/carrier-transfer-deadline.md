@@ -60,9 +60,9 @@ The normal audio repeat `synthmodem-audio-download-02` stores the exact11521-byt
 file and preserves the full byte streams and normal DOS/hardware return. It
 exposes the separate [queued completion-traffic defect](zmodem-completed-replay.md):
 missing `OO` and late protocol controls in the BBS command prompt. That native
-correction is now being repeated in audio download03. No audio acceptance is
-established until complete same-run byte, CRC/control/finish, file, post-helper
-input and cleanup audits pass. The
+correction now passes [audio download03](../../docs/validation/synthmodem-audio-download-03.json),
+including complete same-run byte, CRC/control/OO, file, post-helper search/list
+and clean-return audits. This accepts one frozen V22/1200 workflow. The
 [stock helper's pinned source](https://github.com/SynchronetBBS/sbbs/blob/e7a825704ef5329c7ef8408749671291a85ef7f2/src/sbbs3/zmodem.c)
-also has its own receive/retry deadlines. A local correction alone does not
-prove the peer's delayed replies, retransmissions or finish will succeed.
+also has its own receive/retry deadlines. Other directions, pressure/loss and
+physical carrier behavior still need separate tests.

@@ -1,0 +1,61 @@
+{
+  "evidence_consistent": true,
+  "cohort": "build/bbs-lab/synthmodem-audio-download-02",
+  "complete_manifest_comparison": {
+    "passed": true,
+    "directions": {
+      "dos": {
+        "bytes": 344,
+        "chunks": 109,
+        "raw_prefix_bytes": 25
+      },
+      "bbs": {
+        "bytes": 83244,
+        "chunks": 83244,
+        "raw_prefix_bytes": 209
+      }
+    },
+    "CRC_arrival_comparisons": 12,
+    "DOS_control_comparisons": 13,
+    "scope": "Read-only timing-plane verification against the separately recorded complete audio02 diagnostic. Same full-stream bytes and sub-millisecond agreement with12 CRC arrivals/13 actual DOS controls; no finish/transfer pass follows."
+  },
+  "first_queued_replay_CRC_minus_receiver_completion_reply_seconds": {
+    "BBS_emission_plane": -79.76951644999997,
+    "decoded_frontend_plane": 35.354795474999946
+  },
+  "control_timing": {
+    "directions": {
+      "dos": {
+        "bytes": 344,
+        "chunks": 109,
+        "raw_prefix_bytes": 25
+      },
+      "bbs": {
+        "bytes": 83244,
+        "chunks": 83244,
+        "raw_prefix_bytes": 209
+      }
+    },
+    "clock_anchor": {
+      "type": "ready",
+      "seconds": 4.194871386,
+      "monotonicNs": "891410292100153",
+      "wallTimeMs": 1792551478477
+    },
+    "scope": "One Node monotonic timeline: completed local socket-write invocations for decoded BBS bytes and observed DOS-input reads. Clipped manifests cover exact full canonical streams. These are transport observations, not application-consumption timestamps."
+  },
+  "auditor_sha256": "452febcc4561fbc9aabca30007da931be55afc07b0938cee9a72c5d802407d85",
+  "captures_sha256": {
+    "result.json": "fc827220700384bf9eb63c63772f297677554e6068e416611cabce96fd4e3c59",
+    "BBS-relay-events.jsonl": "39363d1a6b45dfda560f59cd2d82ea0a27e2e66a01ae2e272a9819d7af9f2681",
+    "bbs-input.bin": "e0ed037a7bbec58ee0ea07575e25a591bade51d7132e8a1e3302e27b8429203c",
+    "bbs-output.bin": "aff70ef507c7ea4f35e0433d15b788a33818e1aa924cadb8e855fba68021bc11",
+    "serial-in.bin": "8fecd5ed83d61bc58f08f97b9b9fbc4fc86f2153689df4292efd98757cd75a17",
+    "serial-out.bin": "e68c12b7945d0084035e722cf0a90a58c4cc23bcc40e761f65477a33ae81f8f6",
+    "serial-input-events.jsonl": "2c9eefa1bae2f052e41c8727e2c37ace565e26da4a3819510768fd6bbbafbc3c",
+    "serial-write-events.jsonl": "ff204eb51afeac0ced686e1e6117fed9acf99a024a06edf8e934434950412fdb",
+    "node-result.json": "1e2a3b5b62bb31f4822f017277bd24d72b58d79abb74171aaf4c98a5589fb001",
+    "download-timing.json": "c3a0f8444801d6d8787e8062090c3bdff789a1fd2df7ae364b34c9bcc7852a10"
+  },
+  "scope": "Recorded queue counterexample: peer emission precedes delivery over the software audio modem. The original mixed protocol boundary falsely requires a completion response before already queued bytes were emitted. One-clock decoded-boundary trace covers exact streams and strengthens ACK lower bounds; CRC/payload/offset/EOF/ZFIN/OO and actual post-helper input/cleanup requirements are unchanged. Audio02 remains failed for missing OO and corrupted command input; this is not a transfer pass."
+}

@@ -76,9 +76,12 @@ The optional counterexample command uses only the ignored source-built
 predecessor under `build/terminal/completed-replay-baseline`. The default checks
 are in `test-terminal-zmodem-live` and `test-zmodem` respectively.
 
-Normal audio download03 repeats the unchanged file, full artwork, stock server
-and modem bridge with the corrected executable. Its producer freezes the new
-core source and native proof. Full same-run CRC/control/OO, byte identity,
-actual resumed search/list and clean return must pass before accepting it.
+The [normal audio download03](../../docs/validation/synthmodem-audio-download-03.json)
+repeat now passes25 producer,26 independent byte/cleanup,15 protocol/file/resume
+and12 ownership checks on the unchanged file/art/server/bridge. The full205-byte
+online input and89233-byte BBS stream are exact; checked file, CRC/control/OO,
+actual resumed search/list and clean DOS/UART/IRQ/timer return all pass. No ZNAK
+or protocol control follows helper retirement. The new core/native proof and
+runtime inputs remain independently verified against their frozen hashes.
 Uploads, cancellation/loss/pressure, other peers, physical Boca/SPA2102 tests
 and full-application completion remain separate requirements.

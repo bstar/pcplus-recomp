@@ -21,6 +21,11 @@ including 8 KiB reception and bounded windowed sending.
 Saved Auto Download and Download directory now support
 [automatic ZMODEM reception](docs/ZMODEM_AUTOSTART.md) on both local BBS fixtures.
 
+An [automatic ENiGMA download through the software modem audio path](lab/bbs/audio-download.md)
+now passes complete file/CRC/finish checks, a fresh BBS search and clean DOS
+return at V.22/1200 with fixed38400 DTE. Uploads and broader audio-path/hardware
+acceptance remain separate.
+
 ASPECT recovery now includes a [literal codec](docs/ASPECT_LITERAL.md),
 [native dispatcher](docs/ASPECT_DISPATCH.md) and
 [global-string primitives](docs/ASPECT_GLOBAL_STRINGS.md).
