@@ -54,7 +54,12 @@ def main():
   rows=[v for v in timings if v['type']==kind and v['sequence'] is not None]
   deltas=[(int(b['ns'])-int(a['ns']))/1e6 for a,b in zip(rows,rows[1:])]
   gaps[kind]={'packets':len(rows),'max_gap_ms':max(deltas,default=0),'over40ms':sum(x>40 for x in deltas),'over100ms':sum(x>100 for x in deltas)}
- r=json.loads((out/'result.json').read_text());expected_up=(out/'expected-upstream.bin').read_bytes()
+ # Standalone probes use result.json; calls nested in a DOS workflow retain
+ # their frontend receipt as node-result.json. Bind the actual receipt rather
+ # than copying/renaming evidence to fit the analyzer.
+ receipt=out/'result.json'
+ if not receipt.is_file():receipt=out/'node-result.json'
+ r=json.loads(receipt.read_text());expected_up=(out/'expected-upstream.bin').read_bytes()
  if 'onlineStart' in r:prefix=r['onlineStart']
  else:
   holds=re.findall(r'Post-train hold complete .*dropped (\d+) bytes\)',(out/'node.log').read_text());assert len(holds)==1;prefix=int(holds[0])
@@ -67,7 +72,7 @@ def main():
   'exact_PCM_frame_matches':matches,'guest_frames_not_found_in_RTP':sum(x not in expected_set for x in actual),
   'frame_alignment_changes':changes,'packet_arrival_gaps':gaps,'upstream_changes':upstream,
   'sample_alignment':alignment,'pre_workload_guest_bytes':prefix,
-  'frozen_inputs':{n:sha(out/n) for n in ('rtp-from-caller.bin','rtp-to-guest.bin','modem_rx_8k.raw','timing.jsonl','expected-upstream.bin','guest-workload.bin','result.json')},
+  'frozen_inputs':{n:sha(out/n) for n in ('rtp-from-caller.bin','rtp-to-guest.bin','modem_rx_8k.raw','timing.jsonl','expected-upstream.bin','guest-workload.bin',receipt.name,'node.log')},
   'analyzer_sha256':sha(Path(__file__)),'scope':'Exact G.711 decoding/frame-hash alignment and observed host UDP arrival times. Changed guest PCM proves a media-path difference, not its internal cause. No physical modem/ATA.'}
  (out/'PCM-analysis.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
 if __name__=='__main__':main()

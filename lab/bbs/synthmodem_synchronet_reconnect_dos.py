@@ -18,10 +18,17 @@ from compiler import compile_source
 async def run(a):
     out=a.output.resolve();runtime=a.runtime.resolve()
     assert out.is_relative_to(ROOT/'build') and not out.exists()
-    diagnostic=a.diagnostic_terminal is not None
+    diagnostic=a.diagnostic_terminal is not None or a.receive_trace
     assert diagnostic or a.diagnostic_watchdog is None
     assert a.diagnostic_watchdog is None or 3600<=a.diagnostic_watchdog<=21600
-    runtime_inputs=validate(runtime);server=snapshot();bodies=message_bodies();stats=statistics()
+    if a.receive_trace:
+        from synthmodem_posttrain_trace_runtime import validate as validate_trace
+        assert a.trace_runtime_proof is not None
+        runtime_inputs=validate_trace(runtime,a.trace_runtime_proof)
+    else:
+        assert a.trace_runtime_proof is None
+        runtime_inputs=validate(runtime)
+    server=snapshot();bodies=message_bodies();stats=statistics()
     keys=json.loads(a.key_checks.read_text());assert keys['passed']
     assert all(sha(ROOT/n)==h for n,h in keys['inputs'].items())
     notice=json.loads(a.notice_checks.read_text());assert notice['passed'] and not notice['old_observer']
@@ -38,11 +45,13 @@ async def run(a):
         'lab/bbs/zmodem_label_watch.py','standalone/test_terminal.py','lab/bbs/audio_get_vector.asm',
         'standalone/directory_fixtures.py','standalone/modem_fixtures.py','standalone/directory_test_support.py',
         'src/aspect/compiler.py','nix/flake.nix','nix/flake.lock','tools/modem-dev']+[str(p.relative_to(ROOT)) for p in proofs]
+    if a.receive_trace:
+        names+=['lab/bbs/synthmodem_posttrain_trace_runtime.py','lab/bbs/receive_trace_io.js','lab/bbs/qemu_trace_wrapper.py','lab/bbs/receive_trace_export.sh',str(a.trace_runtime_proof.resolve().relative_to(ROOT))]
     frozen={n:sha(ROOT/n) for n in names};source=download_source();expected=source.read_bytes();source_sha=sha(source)
     out.mkdir(parents=True);stage=out/'program';stage.mkdir();recv=out/'RECV';recv.mkdir()
     for rel in ('terminal/TERMINAL.EXE','aspect-runner/ASPECT.EXE','aspect-compiler-dos/ASPCOMP.EXE'):
         p=ROOT/'build'/rel;frozen['build/'+rel]=sha(p);shutil.copyfile(p,stage/p.name)
-    if diagnostic:
+    if a.diagnostic_terminal:
         terminal=a.diagnostic_terminal.resolve()
         assert terminal.is_relative_to(ROOT/'build') and terminal.name=='TERMINAL.EXE'
         frozen[str(terminal.relative_to(ROOT))]=sha(terminal)
@@ -54,7 +63,7 @@ async def run(a):
     date=datetime.datetime.strptime(stats['Global']['date'],'%b %d %Y')
     log=RUNTIME/'data/logs'/date.strftime('%m%d%y.log');boundary=(log.stat().st_ino,log.stat().st_size)
     partials=[];finished=asyncio.Event();code=None
-    async with relay(PORT,out) as (bbs_port,bbs),audio_carrier_adapter(ROOT,runtime,out) as (port,calls):
+    async with relay(PORT,out) as (bbs_port,bbs),audio_carrier_adapter(ROOT,runtime,out,receive_trace=a.receive_trace) as (port,calls):
         asp=script(bbs_port);(stage/'AUDIO.ASP').write_text(asp)
         profile=bytearray(prm(port=1,baud=6,soft=0,hard=1))
         struct.pack_into('<H',profile,10,120)
@@ -153,7 +162,7 @@ exit
         no_message_mail_upload_writes=all(stats['Total'][k]==after['Total'][k] for k in ('uploads','uploadb','posts','email','feedback')),
         inputs_preserved=all(sha(ROOT/n)==h for n,h in frozen.items()) and all(sha(Path(n))==h for n,h in runtime_inputs.items()))
     checks={k:bool(v) for k,v in checks.items()}
-    result=dict(passed=all(checks.values()) and not diagnostic,diagnostic=diagnostic,
+    result=dict(passed=all(checks.values()) and not diagnostic,diagnostic=diagnostic,receive_trace=a.receive_trace,
         diagnostic_watchdog=a.diagnostic_watchdog,checks=checks,notices=notices,partials=partials,
         frozen_inputs=frozen,runtime_inputs=runtime_inputs,server=server,statistics_before=stats,statistics_after=after,
         source_sha256=source_sha,source_bytes=len(expected),stages=read('STAGES.LOG').decode(),
@@ -167,4 +176,6 @@ if __name__=='__main__':
     p.add_argument('--notice-checks',type=Path,required=True,help='Passing actual-DOS full-screen notice observer proof')
     p.add_argument('--diagnostic-terminal',type=Path,help='Instrumented terminal under ignored build storage; result cannot count as compatibility acceptance')
     p.add_argument('--diagnostic-watchdog',type=int,help='Diagnostic-only BIOS watchdog ticks (3600..21600)')
+    p.add_argument('--receive-trace',action='store_true',help='Diagnostic guest PCM/RTP timing export; never compatibility acceptance')
+    p.add_argument('--trace-runtime-proof',type=Path,help='Validated post-training trace runtime staging receipt')
     asyncio.run(run(p.parse_args()))

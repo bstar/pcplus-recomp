@@ -77,6 +77,47 @@ DTR/CTS/IRQ behavior, analog waveform-loss detection, arbitrary network faults,
 other protocols, sustained pressure or F01–F16 whole-application completion.
 Those requirements remain alongside this test in the full plan.
 
+## Guest audio diagnosis
+
+`synthmodem_posttrain_trace_runtime.py` stages the normal pinned post-training
+runtime with the existing PCM-export daemon. It verifies every runtime file and
+every initramfs entry: the only changed existing archive body is the daemon's
+init hook, and the only added entry is the exporter. JavaScript, kernel and modem
+binaries retain their normal identities. The QEMU wrapper supplies a separate
+export channel; it does not replace online serial bytes.
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/synthmodem_posttrain_trace_runtime.py \
+  --output build/bbs-lab/synthmodem-posttrain-trace-runtime-NEW
+./tools/modem-dev --command python3 lab/bbs/synthmodem_synchronet_reconnect_dos.py \
+  --runtime build/bbs-lab/synthmodem-posttrain-trace-runtime-NEW/runtime \
+  --trace-runtime-proof build/bbs-lab/synthmodem-posttrain-trace-runtime-NEW/result.json \
+  --key-checks build/bbs-lab/audio-reconnect-keys-NEW/result.json \
+  --notice-checks build/bbs-lab/reconnect-notice-NEW/result.json \
+  --receive-trace --diagnostic-watchdog 14400 \
+  --output build/bbs-lab/synchronet-audio-integrity-trace-NEW
+```
+
+This mode always records `diagnostic: true` and `passed: false`, and exits
+unsuccessfully even if every workflow check passes. Exporting PCM before SIP
+shutdown changes failure timing. The shorter diagnostic watchdog also keeps each
+raw PCM export within the existing 16 MiB per-file limit. Neither change belongs
+to production compatibility acceptance.
+
+After a call exits and exports its captures, analyze its actual `CALL` directory:
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/analyze_receive_trace.py CALL
+./tools/modem-dev --command node lab/bbs/diagnose_audio_caller.js RUNTIME CALL
+./tools/modem-dev --command node lab/bbs/diagnose_receive_pcm.js RUNTIME CALL
+```
+
+The analyzer binds the actual frontend receipt (`node-result.json` for nested
+calls), its prefix-count log, host RTP/tunnel packets, guest PCM and byte captures.
+Comparison with guest PCM separates a changed media waveform from later decoder
+or framing errors. A clean diagnostic call does not resolve an intermittent
+failure observed in a different call; retain both captures and their scope.
+
 ## Retained failure: second ASPECT invocation
 
 Terminal `976ba8d0` passes fifteen of the nineteen producer gates. The first

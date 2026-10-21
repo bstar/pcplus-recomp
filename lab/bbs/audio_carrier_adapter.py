@@ -36,7 +36,7 @@ class Call:
             frontend_exit=self.process.returncode if self.process else None),indent=2)+'\n')
 
 @asynccontextmanager
-async def audio_carrier_adapter(root,runtime,out):
+async def audio_carrier_adapter(root,runtime,out,*,receive_trace=False):
     root=Path(root);calls=[];owners=set()
     async def accept(reader,serial):
         owner=asyncio.current_task();owners.add(owner)
@@ -46,7 +46,7 @@ async def audio_carrier_adapter(root,runtime,out):
             call.event('DOSBox-TCP-connected')
             with (folder/'node.log').open('wb') as log:
                 call.process=await asyncio.create_subprocess_exec('node',str(root/'lab/bbs/synthmodem_audio_serial.js'),
-                    str(runtime),str(folder),'--carrier','--key-framing',stdout=log,stderr=log)
+                    str(runtime),str(folder),*(['--receive-trace'] if receive_trace else []),'--carrier','--key-framing',stdout=log,stderr=log)
                 deadline=time.monotonic()+60
                 while not (folder/'serial-port.json').exists():
                     assert call.process.returncode is None and time.monotonic()<deadline,'Frontend readiness'

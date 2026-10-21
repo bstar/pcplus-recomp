@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "stage_only": true,
+  "actual_audio_reconnect_accepted": false,
+  "cohort": "build/bbs-lab/synthmodem-posttrain-trace-runtime-01",
+  "runtime_files_verified": 42,
+  "changed_files_vs_normal": [
+    "candidate.cpio.gz"
+  ],
+  "changed_archive_entries": [
+    "etc/init.d/S99modem-pjsip"
+  ],
+  "added_archive_entries": [
+    "lab-trace-export.sh"
+  ],
+  "adapter_fixture_checks": [
+    {
+      "mode": "fragmented-prefix",
+      "passed": true,
+      "checks": {
+        "result_correct": true,
+        "exact_commands": true,
+        "all_online_bytes_preserved": true,
+        "no_peer_errors": true
+      }
+    },
+    {
+      "mode": "invalid-reset-result",
+      "passed": true,
+      "checks": {
+        "result_correct": true,
+        "exact_commands": true,
+        "all_online_bytes_preserved": true,
+        "no_peer_errors": true
+      }
+    },
+    {
+      "mode": "short-connect-result",
+      "passed": true,
+      "checks": {
+        "result_correct": true,
+        "exact_commands": true,
+        "all_online_bytes_preserved": true,
+        "no_peer_errors": true
+      }
+    }
+  ],
+  "analyzer_layout_checks": {
+    "standalone_historical_measurements_preserved": true,
+    "standalone_actual_receipt_bound": true,
+    "standalone_prefix_log_bound": true,
+    "nested_historical_measurements_preserved": true,
+    "nested_actual_receipt_bound": true,
+    "nested_prefix_log_bound": true
+  },
+  "proofs_sha256": {
+    "build/bbs-lab/synthmodem-posttrain-trace-runtime-01/result.json": "ea012d1798520003ed098c70564a61b44f6266af124986460352c190dc36ca7f",
+    "build/bbs-lab/audio-carrier-adapter-02/result.json": "f2c0b12417d8b539661e2c53dd568e1b68c7c4772d3627cfb9bc711870a46682",
+    "build/bbs-lab/receive-analyzer-layouts-01/result.json": "1afccc0a68cb9acd2f98ce2b350ab3e95682e9c51c6a0422ea8094296caf71bf"
+  },
+  "inputs": {
+    "lab/bbs/synthmodem_posttrain_trace_runtime.py": "4ede3efad4b635a6ceef66255c5134cbecb8c451a899075cd4fa0ad7413e5ff2",
+    "lab/bbs/audio_carrier_adapter.py": "2198f768e65107d57dc9363671216071a869ff63c069de6c3cfe5035929428fa",
+    "lab/bbs/synthmodem_synchronet_reconnect_dos.py": "f68269c30b5c16787ff4c834dd22be2426aab2f907aacc69abf10e56953e4e07",
+    "lab/bbs/analyze_receive_trace.py": "916c08caabcf3e9239f58c810b04ff28751f5e16324edbe20efe3944b855c0ed",
+    "lab/bbs/receive_trace_io.js": "1fa50062eb7f962bc57d575fdd3381f8dd402e532b8251069296e8f04c3f7f56",
+    "lab/bbs/receive_trace_export.sh": "3f6c38c30c3f4624319814e4601e290cad6cee89d5bc82bc6ee6fad17457cdea",
+    "lab/bbs/qemu_trace_wrapper.py": "f1cdbcceef18e389d3625378d5d7567d398cdaa4f330cf82ae6d89372dff98f0"
+  },
+  "scope": "Diagnostic stage identity and existing-capture analyzer/loopback adapter regression only. Normal modem binaries/kernel/JavaScript are preserved; the PCM-export init hook/daemon and separate chardev change diagnostic teardown timing. No new DOS/audio/BBS/physical acceptance. Trace producer always returns passed:false; the intermittent guest insertion remains unresolved."
+}
