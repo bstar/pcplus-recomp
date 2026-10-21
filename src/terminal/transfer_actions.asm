@@ -21,6 +21,7 @@ extern _ymodem_current
 extern terminal_upload_blocks_accepted
 extern terminal_upload_accepted_bytes
 extern terminal_upload_frame_active,terminal_upload_cancel_pending
+extern terminal_upload_startup_ansi
 extern _transfer_native_open,_transfer_native_write,_transfer_native_close,_transfer_download_result
 extern session_setjmp,session_longjmp,session_blocks_accepted
 extern terminal_monitor_active
@@ -320,6 +321,7 @@ terminal_transfer_poll:
 .draw_notice:
  mov word [terminal_upload_frame_active],0
  mov word [terminal_upload_cancel_pending],0
+ mov word [terminal_upload_startup_ansi],0
  call terminal_transfer_ui_restore
  mov word [terminal_transfer_phase],0
  mov word [terminal_transfer_active],0

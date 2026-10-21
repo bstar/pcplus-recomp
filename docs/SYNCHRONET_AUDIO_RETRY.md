@@ -96,3 +96,9 @@ must pass its declared client gates before `record_synchronet_retry_ready_audio.
 can accept that workflow. The recorder keeps overall success false while the
 cancelled partial remains indexed. Original failed capture files are never
 edited, and all subsequent attempts use fresh remote names and output folders.
+
+The startup limitation above describes the frozen `54d53c72` executable.
+[New maintained startup filtering](UPLOAD_STARTUP.md) passes linked and actual
+DOS banner tests in `3b0deeeb`. A separate fresh audio attempt restores the
+original early-start keyboard sequence to test that code change independently
+of the receiver-ready workaround. Its audio acceptance is still pending.

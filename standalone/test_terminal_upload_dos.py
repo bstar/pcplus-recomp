@@ -149,7 +149,7 @@ def keys_for(r,after_ms):
  if r.get('cancel')=='exit':return ' '.join(keys+['p1500','a-x'])
  return ' '.join(keys+['p'+str(after_ms),'r','e','a','d','y','p1500','a-x'])
 
-def run_case(r,*,sha,label,com=1,flow='HARD',after_ms=None,dos_timeout=None):
+def run_case(r,*,sha,label,com=1,flow='HARD',after_ms=None,dos_timeout=None,peer_class=UploadPeer):
  out=OUT/label/r['name'];out.mkdir(parents=True,exist_ok=True)
  assert not (out/'result.json').exists(),'Use a fresh label to retain previous artifacts'
  data=r.get('data');source=out/'SEND.BIN'
@@ -163,7 +163,7 @@ def run_case(r,*,sha,label,com=1,flow='HARD',after_ms=None,dos_timeout=None):
  sampler=SAMPLER;base=(0x3f8,0x2f8,0x3e8,0x2e8)[com-1]
  for off in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+off),hex(base+off))
  (out/'sampler.asm').write_text(sampler);subprocess.run(['nasm','-fbin',str(out/'sampler.asm'),'-o',str(out/'SNAP.COM')],check=True)
- peer=UploadPeer(r);peer.resume_timeout=max(10,after_ms/1000+4);peer.thread.start()
+ peer=peer_class(r);peer.resume_timeout=max(10,after_ms/1000+4);peer.thread.start()
  serial='\n'.join('serial'+str(i)+'='+(f'nullmodem server:127.0.0.1 port:{peer.port} transparent:1 rxdelay:200 txdelay:1' if i==com else 'disabled') for i in range(1,5))
  args='COM'+str(com)+' 38400 8N1 '+r.get('flow',flow);keys=keys_for(r,after_ms)
  config=f'''[sdl]

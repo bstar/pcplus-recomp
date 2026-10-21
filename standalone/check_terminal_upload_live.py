@@ -134,12 +134,18 @@ def main():
   m=LiveUpload(bytes(range(128)),reject=1);m.upload()
   assert len(m.frames)==2 and m.frames[0]==m.frames[1] and m.accepted==1
   assert m.get('terminal_upload_blocks_accepted')==1 and not m.get('terminal_transfer_fault')
+  class FrozenPacketClock(LiveUpload):
+   def output_port(self,u,port,size,value,data):
+    if port==self.get('uart_port_thr') and not self.lcr&0x80 and not self.tx and value&255 in (1,2):
+     self.advance_ticks=False
+    super().output_port(u,port,size,value,data)
   for data in (bytes(range(128)),bytes(range(256))*44):
-   m=LiveUpload(data,reject=-1)
-   # Immediate synthetic NAKs can arrive faster than a BIOS tick. Freeze this
-   # hardware clock to isolate the actual15-attempt native boundary; the
-   # separate whole-owner watchdog group exercises real clock advancement.
-   m.advance_ticks=False;m.upload()
+   m=FrozenPacketClock(data,reject=-1)
+   # Startup's quiet interval needs the BIOS clock. Freeze only after the
+   # first physical packet begins to isolate the actual15-attempt native
+   # boundary under immediate synthetic NAKs. Deadline tests advance time.
+   m.upload()
+   assert m.advance_ticks is False
    assert len(m.frames)==15 and not m.accepted and not m.get('terminal_upload_blocks_accepted')
    assert m.get('send_blocks_counted')==1 and m.get('terminal_transfer_fault')==3 and not m.eots
    assert m.get('terminal_upload_accepted_bytes',4)==0 and not m.handles

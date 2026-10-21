@@ -1,0 +1,942 @@
+{
+  "passed": true,
+  "component_startup_accepted": true,
+  "actual_DOS_startup_accepted": true,
+  "actual_audio_startup_accepted": false,
+  "binary_sha256": "3b0deeeb05e618a31af87a9b38fc4f55e858f10c6b4036fe9361137fb76c1541",
+  "baseline_binary_sha256": "54d53c72acc15a406a203fcf3a41e983916b308a0671093c693daf34b7e67e2e",
+  "baseline_source_checkpoint": "9537481ddfaf557a7a71115bc2ffa6347449817c",
+  "baseline_failures": [
+    "plain_CRC",
+    "ANSI_cursor_CRC",
+    "OSC_string_CRC",
+    "plain_checksum",
+    "ANSI_cursor_checksum",
+    "OSC_string_checksum",
+    "DCS_string_checksum",
+    "charset_checksum"
+  ],
+  "linked_cases": 43,
+  "actual_DOS_cases": 3,
+  "linked_checks": [
+    {
+      "label": "quiet_CRC",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 0,
+      "elapsed_ticks": 36
+    },
+    {
+      "label": "plain_CRC",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 0,
+      "elapsed_ticks": 43
+    },
+    {
+      "label": "ANSI_cursor_CRC",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 0,
+      "elapsed_ticks": 41
+    },
+    {
+      "label": "OSC_string_CRC",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 0,
+      "elapsed_ticks": 39
+    },
+    {
+      "label": "DCS_string_CRC",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 0,
+      "elapsed_ticks": 39
+    },
+    {
+      "label": "charset_CRC",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 0,
+      "elapsed_ticks": 39
+    },
+    {
+      "label": "quiet_checksum",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 133,
+      "initial_tick": 0,
+      "elapsed_ticks": 35
+    },
+    {
+      "label": "plain_checksum",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 133,
+      "initial_tick": 0,
+      "elapsed_ticks": 41
+    },
+    {
+      "label": "ANSI_cursor_checksum",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 133,
+      "initial_tick": 0,
+      "elapsed_ticks": 39
+    },
+    {
+      "label": "OSC_string_checksum",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 133,
+      "initial_tick": 0,
+      "elapsed_ticks": 37
+    },
+    {
+      "label": "DCS_string_checksum",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 133,
+      "initial_tick": 0,
+      "elapsed_ticks": 37
+    },
+    {
+      "label": "charset_checksum",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 133,
+      "initial_tick": 0,
+      "elapsed_ticks": 38
+    },
+    {
+      "label": "quiet_G_selects_nonstreaming_CRC",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 0,
+      "elapsed_ticks": 36
+    },
+    {
+      "label": "quiet_U_explicit_unsupported",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 10,
+      "physical_TX_bytes": 0,
+      "initial_tick": 0,
+      "elapsed_ticks": 2
+    },
+    {
+      "label": "quiet_W_explicit_unsupported",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 10,
+      "physical_TX_bytes": 0,
+      "initial_tick": 0,
+      "elapsed_ticks": 2
+    },
+    {
+      "label": "peer_CAN_pair",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 2,
+      "physical_TX_bytes": 0,
+      "initial_tick": 0,
+      "elapsed_ticks": 2
+    },
+    {
+      "label": "peer_CAN_inside_incomplete_CSI",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 2,
+      "physical_TX_bytes": 0,
+      "initial_tick": 0,
+      "elapsed_ticks": 1
+    },
+    {
+      "label": "unclosed_OSC_times_out",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 3,
+      "physical_TX_bytes": 0,
+      "initial_tick": 0,
+      "elapsed_ticks": 540
+    },
+    {
+      "label": "same_instance_after_unclosed_OSC",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 540,
+      "elapsed_ticks": 36
+    },
+    {
+      "label": "banner_across_clock_boundary",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 0,
+      "elapsed_ticks": 43
+    },
+    {
+      "label": "CSI_across_read_timeouts",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 0,
+      "elapsed_ticks": 96
+    },
+    {
+      "label": "OSC_across_read_timeouts",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 0,
+      "elapsed_ticks": 96
+    },
+    {
+      "label": "continuous_noise_deadline",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "whole_owner_noise_deadline": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 3,
+      "physical_TX_bytes": 0,
+      "initial_tick": 0,
+      "elapsed_ticks": 540
+    },
+    {
+      "label": "escape_during_noise",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "real_fault_injected": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 2,
+      "physical_TX_bytes": 0,
+      "initial_tick": 0,
+      "elapsed_ticks": 6
+    },
+    {
+      "label": "altx_during_noise",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "real_fault_injected": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 2,
+      "physical_TX_bytes": 0,
+      "initial_tick": 0,
+      "elapsed_ticks": 6
+    },
+    {
+      "label": "carrier_during_noise",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "real_fault_injected": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 4,
+      "physical_TX_bytes": 0,
+      "initial_tick": 0,
+      "elapsed_ticks": 6
+    },
+    {
+      "label": "overflow_during_noise",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "real_fault_injected": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 5,
+      "physical_TX_bytes": 0,
+      "initial_tick": 0,
+      "elapsed_ticks": 6
+    },
+    {
+      "label": "banner_across_clock_boundary",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 65520,
+      "elapsed_ticks": 43
+    },
+    {
+      "label": "CSI_across_read_timeouts",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 65520,
+      "elapsed_ticks": 96
+    },
+    {
+      "label": "OSC_across_read_timeouts",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 65520,
+      "elapsed_ticks": 96
+    },
+    {
+      "label": "continuous_noise_deadline",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "whole_owner_noise_deadline": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 3,
+      "physical_TX_bytes": 0,
+      "initial_tick": 65520,
+      "elapsed_ticks": 540
+    },
+    {
+      "label": "escape_during_noise",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "real_fault_injected": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 2,
+      "physical_TX_bytes": 0,
+      "initial_tick": 65520,
+      "elapsed_ticks": 6
+    },
+    {
+      "label": "altx_during_noise",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "real_fault_injected": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 2,
+      "physical_TX_bytes": 0,
+      "initial_tick": 65520,
+      "elapsed_ticks": 6
+    },
+    {
+      "label": "carrier_during_noise",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "real_fault_injected": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 4,
+      "physical_TX_bytes": 0,
+      "initial_tick": 65520,
+      "elapsed_ticks": 6
+    },
+    {
+      "label": "overflow_during_noise",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "real_fault_injected": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 5,
+      "physical_TX_bytes": 0,
+      "initial_tick": 65520,
+      "elapsed_ticks": 6
+    },
+    {
+      "label": "banner_across_clock_boundary",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 1573020,
+      "elapsed_ticks": 43
+    },
+    {
+      "label": "CSI_across_read_timeouts",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 1573020,
+      "elapsed_ticks": 96
+    },
+    {
+      "label": "OSC_across_read_timeouts",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 0,
+      "physical_TX_bytes": 134,
+      "initial_tick": 1573020,
+      "elapsed_ticks": 96
+    },
+    {
+      "label": "continuous_noise_deadline",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "whole_owner_noise_deadline": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 3,
+      "physical_TX_bytes": 0,
+      "initial_tick": 1573020,
+      "elapsed_ticks": 540
+    },
+    {
+      "label": "escape_during_noise",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "real_fault_injected": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 2,
+      "physical_TX_bytes": 0,
+      "initial_tick": 1573020,
+      "elapsed_ticks": 6
+    },
+    {
+      "label": "altx_during_noise",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "real_fault_injected": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 2,
+      "physical_TX_bytes": 0,
+      "initial_tick": 1573020,
+      "elapsed_ticks": 6
+    },
+    {
+      "label": "carrier_during_noise",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "real_fault_injected": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 4,
+      "physical_TX_bytes": 0,
+      "initial_tick": 1573020,
+      "elapsed_ticks": 6
+    },
+    {
+      "label": "overflow_during_noise",
+      "passed": true,
+      "checks": {
+        "expected_fault": true,
+        "source_closed": true,
+        "source_unchanged": true,
+        "exact_completion": true,
+        "real_fault_injected": true,
+        "ANSI_state_retired": true
+      },
+      "error": null,
+      "fault": 5,
+      "physical_TX_bytes": 0,
+      "initial_tick": 1573020,
+      "elapsed_ticks": 6
+    }
+  ],
+  "actual_DOS_checks": [
+    {
+      "case": "plain-CRC-over10K",
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "no_packet_during_banner": true,
+        "actual_upload_started": true,
+        "EOT_NAK_then_ACK": true,
+        "exact_source_and_padding": true,
+        "expected_block_count": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "no_peer_errors": true,
+        "binary_unchanged": true,
+        "actual_ready": true,
+        "source_bytes_unchanged": true,
+        "source_metadata_unchanged": true,
+        "required_started": true,
+        "required_complete_EOT": true,
+        "required_exact_source": true,
+        "required_count": true,
+        "required_resume_DSR": true,
+        "required_resume_keyboard": true,
+        "posttransfer_screen": true,
+        "no_other_files_created": true
+      },
+      "errors": [],
+      "binary_sha256": "3b0deeeb05e618a31af87a9b38fc4f55e858f10c6b4036fe9361137fb76c1541",
+      "command": "COM1 38400 8N1 HARD",
+      "keys": "p1500 a-s p300 D : \\ S E N D . B I N enter p10000 r e a d y p1500 a-x",
+      "source_size": 11521,
+      "source_sha256": "7ce51a14505efa4b1baa89573960d91c6ca7cf9c170825ae428e870dd9e0182b",
+      "validated_frames": 14,
+      "accepted_blocks": 14,
+      "eots": 2,
+      "seconds": 13.489,
+      "scope": "Actual DOS AltS/native sender, independent binaryframe peer, unchanged ownedsource, real UART/IRQ/files and hardware/parser/keyboard resume. Loopback model, not physicalCTS/DCD or cable timing."
+    },
+    {
+      "case": "ANSI-CRC",
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "no_packet_during_banner": true,
+        "actual_upload_started": true,
+        "EOT_NAK_then_ACK": true,
+        "exact_source_and_padding": true,
+        "expected_block_count": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "no_peer_errors": true,
+        "binary_unchanged": true,
+        "actual_ready": true,
+        "source_bytes_unchanged": true,
+        "source_metadata_unchanged": true,
+        "required_started": true,
+        "required_complete_EOT": true,
+        "required_exact_source": true,
+        "required_count": true,
+        "required_resume_DSR": true,
+        "required_resume_keyboard": true,
+        "posttransfer_screen": true,
+        "no_other_files_created": true
+      },
+      "errors": [],
+      "binary_sha256": "3b0deeeb05e618a31af87a9b38fc4f55e858f10c6b4036fe9361137fb76c1541",
+      "command": "COM1 38400 8N1 HARD",
+      "keys": "p1500 a-s p300 D : \\ S E N D . B I N enter p10000 r e a d y p1500 a-x",
+      "source_size": 120,
+      "source_sha256": "f941f824ef7ffaf313fdac3301f32796fa46d05388c3e2686970049f5e316e27",
+      "validated_frames": 1,
+      "accepted_blocks": 1,
+      "eots": 2,
+      "seconds": 13.49,
+      "scope": "Actual DOS AltS/native sender, independent binaryframe peer, unchanged ownedsource, real UART/IRQ/files and hardware/parser/keyboard resume. Loopback model, not physicalCTS/DCD or cable timing."
+    },
+    {
+      "case": "split-CSI-checksum",
+      "passed": true,
+      "checks": {
+        "actual_terminal_ready": true,
+        "no_packet_during_banner": true,
+        "actual_upload_started": true,
+        "EOT_NAK_then_ACK": true,
+        "exact_source_and_padding": true,
+        "expected_block_count": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "no_peer_errors": true,
+        "binary_unchanged": true,
+        "actual_ready": true,
+        "source_bytes_unchanged": true,
+        "source_metadata_unchanged": true,
+        "required_started": true,
+        "required_complete_EOT": true,
+        "required_exact_source": true,
+        "required_count": true,
+        "required_resume_DSR": true,
+        "required_resume_keyboard": true,
+        "posttransfer_screen": true,
+        "no_other_files_created": true
+      },
+      "errors": [],
+      "binary_sha256": "3b0deeeb05e618a31af87a9b38fc4f55e858f10c6b4036fe9361137fb76c1541",
+      "command": "COM1 38400 8N1 HARD",
+      "keys": "p1500 a-s p300 D : \\ S E N D . B I N enter p10000 r e a d y p1500 a-x",
+      "source_size": 1024,
+      "source_sha256": "85c1a4ba1d2345309bd0038e835f0536a88851fbd14c7ed266b958bd5180898f",
+      "validated_frames": 1,
+      "accepted_blocks": 1,
+      "eots": 2,
+      "seconds": 13.489,
+      "scope": "Actual DOS AltS/native sender, independent binaryframe peer, unchanged ownedsource, real UART/IRQ/files and hardware/parser/keyboard resume. Loopback model, not physicalCTS/DCD or cable timing."
+    }
+  ],
+  "regressions": {
+    "terminal-upload-live-checks.json": {
+      "cases": 54,
+      "sha256": "1753e968b4e5e2f784d5b582cf89eccf891e277f1d9283d55fad380932e16116"
+    },
+    "terminal-upload-cancel-boundary.json": {
+      "cases": 37,
+      "sha256": "9fc67b33d1c7db9d1174e4e5004e8534b081fb9c4c70854125808c2a39f23b3f"
+    },
+    "terminal-transfer-live-checks.json": {
+      "cases": 44,
+      "sha256": "535efa9abd3bcb662994bf0f47737e53a619b81da096bcd0f9002dff858fabec"
+    }
+  },
+  "unchanged_native_flat_sha256": {
+    "session": "86038c95216a54048757b3b1434df2b73e6fc346e0dbcf049c63f7aefda39879",
+    "cancel": "f38eb063e5128a75136b1f19c82988cda3d12d009d0a28e00ede10570869c344"
+  },
+  "near_code_bytes": 65534,
+  "near_code_spare_bytes": 2,
+  "data_stack_bytes": 64832,
+  "product_inputs": {
+    "src/terminal/upload_actions.asm": "05ad5bd7f0549d9469fc659bdf3c639cfe59c0316603276c9f78d47dce528619",
+    "src/terminal/transfer_actions.asm": "8b78db703befa9a422cee1876846c7564db7173590d0b0b8b7c00285efa5912f",
+    "src/terminal/upload_startup.asm": "784dcfa85b367bf2a7168c61a68e85a187e4d19c549561e15eb2705c057ce396",
+    "src/terminal/upload_startup_bridge.asm": "ab9c40ae7df541104eb2eab89d9b4af6c7ce6b92c9afef9f5a0e57f70adfbdb1",
+    "reconstruction/transfer_send/session.asm": "559f40abb2abd6724e22f71580c52fd8d15ec773b51347ac91bda02e045b220b",
+    "reconstruction/transfer_send/cancel.asm": "9324066078aff11935a1bc5e315598344b182c1fae8077611e2c4af1aa652762"
+  },
+  "checker_inputs": {
+    "standalone/check_terminal_upload_startup.py": "8814a77f3b29085319d9af49da01132ea7ed3178e4689de24b8b020ed1cfd451",
+    "standalone/check_terminal_upload_live.py": "656f15252963cc630f88cb39ba1166126eaeb7af687a5c27802b9d95c9310f12",
+    "standalone/check_terminal_transfer_live.py": "7080c84249b3296463cac411e3b5ec0ec4cbf4ac6183fed7d557753eaf16b020"
+  },
+  "DOS_inputs": {
+    "standalone/test_terminal_upload_startup_dos.py": "aa76ed918bcd5006944b42f430afecfe70c18cecb5e78311e358d2341c03da9d",
+    "standalone/test_terminal_upload_dos.py": "ec2a647d2a1ae88ec85f5cc928c77f8059dee6e3ee7d8b1f0bc6500bc3f160e2",
+    "standalone/test_terminal_transfer_dos.py": "1d9922cd2dea880a6559afdd86aceaa878937148846eaffc150bf8de5123bc76",
+    "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2"
+  },
+  "capture_sha256": {
+    "build/bbs-lab/terminal-upload-startup-baseline-05.json": "7cbb32eeb7f15efd218adb7cf5fcc3093ebfc9313417b4d447e4d16bd453e444",
+    "build/terminal-upload-dos/startup-filter-01/startup-checks.json": "cc8a5e03e9afbba38210ec2df4946f7759da1253a48afa97eacf8084386b7241",
+    "build/terminal/terminal-upload-startup.json": "f61d9529fc0079535bfcb766d60a31316fc5ddd12f476ca237d1593a5a95934f",
+    "build/terminal/manifest.json": "86b70882f55082797631c98138f044d0867c31ecc35a8b264b599c22f0495489",
+    "build/terminal/terminal.map": "4974719d09c5b7d0e5ea54329e33a877279c206abad439635fb02a7d23e07c08",
+    "build/terminal-upload-dos/startup-filter-01/plain-CRC-over10K/SEND.BIN": "7ce51a14505efa4b1baa89573960d91c6ca7cf9c170825ae428e870dd9e0182b",
+    "build/terminal-upload-dos/startup-filter-01/plain-CRC-over10K/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/terminal-upload-dos/startup-filter-01/plain-CRC-over10K/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/terminal-upload-dos/startup-filter-01/plain-CRC-over10K/dosbox.conf": "a68bb62cc88c6fc305afce4f286308144ae981828b97424df278082fa988c56b",
+    "build/terminal-upload-dos/startup-filter-01/plain-CRC-over10K/dosbox.log": "d49bb06ce6a6d57f592ab4166ebe83450a2011b25b81c1a5035e79c5f9371140",
+    "build/terminal-upload-dos/startup-filter-01/plain-CRC-over10K/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/terminal-upload-dos/startup-filter-01/plain-CRC-over10K/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/terminal-upload-dos/startup-filter-01/plain-CRC-over10K/SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+    "build/terminal-upload-dos/startup-filter-01/plain-CRC-over10K/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/terminal-upload-dos/startup-filter-01/plain-CRC-over10K/serial.bin": "05f4864c21c37719459b36c8917769c84045eb50e089de6d1b9864be08f20f19",
+    "build/terminal-upload-dos/startup-filter-01/plain-CRC-over10K/peer.bin": "2847dad421feaa4c98d98396e0e08ee33e410d093089c125d7942912ad6f939f",
+    "build/terminal-upload-dos/startup-filter-01/plain-CRC-over10K/events.json": "1ed0f70697d6fc147bd571c284390d18b4aeef6fe67f5af7bf6960067fcae9ef",
+    "build/terminal-upload-dos/startup-filter-01/plain-CRC-over10K/frames.json": "4ddfcd66efff1717bf0c766e56d9a53a574de9e15289122a31f0ddf8a47b4292",
+    "build/terminal-upload-dos/startup-filter-01/plain-CRC-over10K/screen.txt": "5cace6c084fbbe0ed66d1b34cb1037327be5ce549314074406ce9c962ccdb705",
+    "build/terminal-upload-dos/startup-filter-01/plain-CRC-over10K/result.json": "dce3ebb774f3b061f87714a923edd6e87db9703c0d4f8cf5f2062ec6ae83d56f",
+    "build/terminal-upload-dos/startup-filter-01/ANSI-CRC/SEND.BIN": "f941f824ef7ffaf313fdac3301f32796fa46d05388c3e2686970049f5e316e27",
+    "build/terminal-upload-dos/startup-filter-01/ANSI-CRC/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/terminal-upload-dos/startup-filter-01/ANSI-CRC/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/terminal-upload-dos/startup-filter-01/ANSI-CRC/dosbox.conf": "dc70fed555c111c8fc199d5ffd7324eb99de1d8ea4ae443d555cad0db028a70d",
+    "build/terminal-upload-dos/startup-filter-01/ANSI-CRC/dosbox.log": "08d3bc64f486ec4c263bcd176ba4e8633c292deb566c0e9a6db06b4f97aa6e53",
+    "build/terminal-upload-dos/startup-filter-01/ANSI-CRC/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/terminal-upload-dos/startup-filter-01/ANSI-CRC/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/terminal-upload-dos/startup-filter-01/ANSI-CRC/SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+    "build/terminal-upload-dos/startup-filter-01/ANSI-CRC/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/terminal-upload-dos/startup-filter-01/ANSI-CRC/serial.bin": "f9765aa0e477a1be124557255b9b1e759e4c9d9416b2973b658623b9124c531b",
+    "build/terminal-upload-dos/startup-filter-01/ANSI-CRC/peer.bin": "1536c8ca5562b37abf523f04da3b07cf8972a96ed02e033211d6f068e281c8df",
+    "build/terminal-upload-dos/startup-filter-01/ANSI-CRC/events.json": "1aa63f47e12a2b5504640974c55571cac298ebc81e30b16ad94a6074297959cd",
+    "build/terminal-upload-dos/startup-filter-01/ANSI-CRC/frames.json": "052f3d647d2f530ca8aec60096b15100a668fc317f072b9f80bf9e001fa8d3bf",
+    "build/terminal-upload-dos/startup-filter-01/ANSI-CRC/screen.txt": "5cace6c084fbbe0ed66d1b34cb1037327be5ce549314074406ce9c962ccdb705",
+    "build/terminal-upload-dos/startup-filter-01/ANSI-CRC/result.json": "516bc5b33c45ec9234a6503332f1cf914d56944204ac32726c77b173029a7cce",
+    "build/terminal-upload-dos/startup-filter-01/split-CSI-checksum/SEND.BIN": "85c1a4ba1d2345309bd0038e835f0536a88851fbd14c7ed266b958bd5180898f",
+    "build/terminal-upload-dos/startup-filter-01/split-CSI-checksum/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/terminal-upload-dos/startup-filter-01/split-CSI-checksum/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/terminal-upload-dos/startup-filter-01/split-CSI-checksum/dosbox.conf": "6d5e2090ada9a097d3d2001b742189d0aa7f9ad11ee15c2422596edfb3729bac",
+    "build/terminal-upload-dos/startup-filter-01/split-CSI-checksum/dosbox.log": "4f69cae9ead3e4b5233fc111bf1d2e4fc3009c8e7e7c52b7165638607bb1b781",
+    "build/terminal-upload-dos/startup-filter-01/split-CSI-checksum/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/terminal-upload-dos/startup-filter-01/split-CSI-checksum/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/terminal-upload-dos/startup-filter-01/split-CSI-checksum/SCREEN.BIN": "e9f2d2419807bd356dae8e19883e89ebc696bf7fdd563bf3a3c6a62e97109eae",
+    "build/terminal-upload-dos/startup-filter-01/split-CSI-checksum/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/terminal-upload-dos/startup-filter-01/split-CSI-checksum/serial.bin": "f6477290e1e7272b139111fc0d25f402761f0ef640e7a5bdd192a0d0ad69944b",
+    "build/terminal-upload-dos/startup-filter-01/split-CSI-checksum/peer.bin": "b6b684f08e31f46fd5f42f29577b9731607b1156bec85f9447e822d9df2d1d78",
+    "build/terminal-upload-dos/startup-filter-01/split-CSI-checksum/events.json": "a40abcc937029c358dd1b035f86b321a0bde9fee77020c3a9d837e4b86db9ecd",
+    "build/terminal-upload-dos/startup-filter-01/split-CSI-checksum/frames.json": "18bb9a96d935099b6188e7333d2ff5f1d1c3586b022e1c98c716563d3b5bd1d0",
+    "build/terminal-upload-dos/startup-filter-01/split-CSI-checksum/screen.txt": "5cace6c084fbbe0ed66d1b34cb1037327be5ce549314074406ce9c962ccdb705",
+    "build/terminal-upload-dos/startup-filter-01/split-CSI-checksum/result.json": "a018f82d69eeebe6dec24c3fc68526444b42d86fc6d7bf38f8c6f42409f08602"
+  },
+  "recorder_sha256": "b5f1359c360c4e2c779e831fb2d08969aade2b2b02961f2df9e06662d66ea95c",
+  "scope": "Maintained initial-handshake adapter only, identified by native send_at_df9a return IP. Exact recovered sender/cancel flat instructions are unchanged. Two quiet BIOS ticks distinguish uninterrupted banner letters from raw C/G/U/W; ANSI CSI/strings/charset state persists across bounded reads and retires at notice. NAK/CAN remain immediate; normal ACK/EOT read paths and watchdogs retain their policy.43 linked cases,54 upload/37 boundary/44 receive regressions and3 actual DOS independent-peer startup/transfer/recovery cases pass. Retry-counter fixture advances time through startup, then freezes only after first physical packet to retain15-attempt isolation. Audio, physical hardware and full application completion are not accepted by this component receipt. Arbitrarily paused plain-text handshake letters remain ambiguous on the unframed startup channel."
+}
