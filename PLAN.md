@@ -25,6 +25,30 @@ the mismatch, so the completed first file is not a reconnect pass. Preserve the
 counterexample and add guest PCM/arrival-timing observations to isolate the
 media/DSP/helper boundary before repeating loss/retry and claiming reliability.
 
+The [guest PCM diagnostic](docs/validation/synchronet-audio-integrity-trace-01.json)
+now proves a media discontinuity in a fresh current-terminal run:39,948 exact,
+continuous caller/tunnel RTP packets become a guest waveform with two additional
+20ms silence frames. All other captured guest samples reconstruct exactly from
+the RTP prefix plus three startup silence frames. The caller decoder recovers
+101 authored bytes; the guest answering decoder emits109 and the independent
+guest-PCM decoder emits110, with unwanted bytes at authored offset76. This
+diagnostic exits normally via the keyboard watchdog and restores DOS hardware,
+but no transfer or reconnect completes; an ASPECT error and the adapter's delayed
+frontend-exit error remain retained. Next isolate buffering/clock scheduling with
+a controlled delay increase, then validate a source-built bridge correction
+before repeating the full current DOS workflows. This does not establish the
+exact cause of the earlier untraced four-byte event.
+
+A [bounded120ms delay-growth diagnostic](docs/validation/synthmodem-delay-increase.json)
+now reproduces the silence-insertion class with the existing40ms DISCARD_NONE
+candidate. Its27 independent checks verify real training, exact caller payload,
+unchanged continuous delivered RTP prefixes and full guest waveform
+reconstruction. Six in-call silence frames corrupt34 authored bytes into38
+guest bytes; the reverse6000 bytes stay exact. This is a retained failure, not
+acceptance. Next test a separately built buffering/timing candidate against
+both growth and shrinkage before current DOS/BBS repeats. The first fixture's
+empty-delay-queue mistake is preserved separately.
+
 The hardware target's [work order and completion gates](docs/ANALOG_MODEM_INTEGRATION.md#work-order-and-completion-gates)
 prioritize carrier/data separation and full audio-path pressure/editor/transfer
 checks before physical commissioning. Boca identification and adapter arrival

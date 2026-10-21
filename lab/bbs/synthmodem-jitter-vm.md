@@ -1,5 +1,53 @@
 # Rebuilt d-modem and controlled network timing
 
+The current DOS [guest-audio diagnostic](../../docs/validation/synchronet-audio-integrity-trace-01.json)
+also exposes delay growth: two in-call silence frames interrupt an otherwise
+exact caller waveform, and both answering and independent guest-PCM decoders
+produce unwanted data. DISCARD_NONE prevents the shrinkage case below; it does
+not prevent silence insertion when playback runs short of audio.
+
+The additional `--network-profile buffered-increase` diagnostic begins without
+artificial delay, then adds a persistent120ms FIFO delay after the caller's
+destination/DA/CPR sequence. It keeps the packets' original contents and order.
+Unlike `buffered-release`, its queue legitimately retains a bounded trailing
+window while the caller continues transmitting. The check therefore requires
+an exact delivered prefix and at most eight queued packets, rather than an empty
+queue. Neither profile represents a physical network or hardware acceptance.
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/synthmodem_receive_trace.py \
+  --runtime build/bbs-lab/synthmodem-sparse-runtime-01/runtime \
+  --dmodem candidate --network-profile buffered-increase \
+  --output build/bbs-lab/jitter-increase-new
+```
+
+Retain a failed upstream-integrity result as a counterexample. Analyze its
+captures with the PCM and two independent decoder commands below; a successful
+producer process exit alone does not make the bytes exact.
+
+The [retained delay-growth counterexample](../../docs/validation/synthmodem-delay-increase.json)
+passes27 independent evidence checks while retaining failed upstream integrity:
+34 exact caller bytes become38 guest bytes, with four inserted bytes after CPR
+at authored offset29. The independent decoder of guest PCM emits36 bytes and
+also fails identity. Every guest PCM sample reconstructs exactly from the
+delivered RTP prefix plus three startup silence frames and six additional
+silence frames at RTP frame647. Thus the guest delay grows from60ms to180ms.
+The reverse6000-byte all-value payload stays exact. The delivered relay/tunnel
+packets are unaltered, continuous prefixes, and real training/export/teardown
+complete without modem errors. The initial run's incorrect empty-queue predicate
+and its source remain retained separately.
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/audit_jitter_increase.py \
+  build/bbs-lab/jitter-increase-new
+```
+
+This demonstrates that the40ms DISCARD_NONE candidate does not absorb a120ms
+increase in packet delay. A separately identified larger-buffer or timing
+correction must preserve both delay-growth and delay-shrinkage cases before
+normal DOS/BBS repetition. No production default or installed bridge is changed
+by this diagnostic.
+
 The paired Nix source builds now boot in the actual answering VM. Both baseline
 and DISCARD_NONE candidate register, answer SIP, train at V.22/1200, exchange34
 authored upstream bytes and6000 all-byte downstream bytes, export guest PCM and

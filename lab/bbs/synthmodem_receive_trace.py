@@ -7,7 +7,7 @@ from synthmodem_sparse_runtime import validate
 
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
- p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--slmodem',choices=['baseline']);p.add_argument('--network-profile',choices=['direct','buffered-release'],default='direct');a=p.parse_args()
+ p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--slmodem',choices=['baseline']);p.add_argument('--network-profile',choices=['direct','buffered-release','buffered-increase'],default='direct');a=p.parse_args()
  runtime=a.runtime.resolve();out=a.output.resolve();assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
  inputs=validate(runtime)
  names=['lab/bbs/synthmodem_receive_trace.py','lab/bbs/synthmodem_receive_trace.js','lab/bbs/receive_trace_export.sh',

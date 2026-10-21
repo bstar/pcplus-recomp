@@ -1,0 +1,173 @@
+{
+  "passed": false,
+  "diagnostic_verification_passed": true,
+  "actual_audio_reconnect_accepted": false,
+  "cohort": "build/bbs-lab/synchronet-audio-integrity-trace-01",
+  "terminal_sha256": "976ba8d0c7681b9727389e3f91e80e463738602b857130da491c249d6988e145",
+  "producer_checks": {
+    "normal_DOS_exit": true,
+    "hardware_restored": true,
+    "timer_restored": true,
+    "DOS_compiler_exact": true,
+    "two_calls": false,
+    "first_bridge_interrupted": false,
+    "partial_removed_before_second_call": false,
+    "carrier_loss_observed": false,
+    "complete_retry_observed": false,
+    "exact_retry": false,
+    "only_expected_receive": false,
+    "two_BBS_connections": false,
+    "profile_unchanged": true,
+    "directory_two_calls": false,
+    "source_unchanged": true,
+    "server_inputs_preserved": true,
+    "message_bodies_preserved": true,
+    "no_message_mail_upload_writes": true,
+    "inputs_preserved": true
+  },
+  "external_RTP_equals_tunnel_RTP": true,
+  "RTP_sequence_timestamp_SSRC_continuous": true,
+  "RTP_packets": 39948,
+  "guest_PCM_exact_reconstruction": true,
+  "startup_silence_frames": 3,
+  "additional_silence_frames": [
+    {
+      "guest_frame": 9070,
+      "before_RTP_frame": 9067,
+      "samples": 160,
+      "ms": 20
+    },
+    {
+      "guest_frame": 9073,
+      "before_RTP_frame": 9069,
+      "samples": 160,
+      "ms": 20
+    }
+  ],
+  "remaining_PCM_is_exact_RTP_prefix_frames": 39245,
+  "guest_PCM_samples": 6280000,
+  "packet_arrival_gaps": {
+    "rtp-from-caller": {
+      "packets": 39948,
+      "max_gap_ms": 34.415109,
+      "over40ms": 0,
+      "over100ms": 0
+    },
+    "rtp-to-guest": {
+      "packets": 39948,
+      "max_gap_ms": 34.413657,
+      "over40ms": 0,
+      "over100ms": 0
+    }
+  },
+  "authored_bytes": 101,
+  "guest_decoded_bytes": 109,
+  "guest_extra_hex": "a1874bed1a4f70de",
+  "extra_authored_offset": 76,
+  "offline_decoders": {
+    "offline-caller": {
+      "bytes": 101,
+      "exact_authored": true,
+      "changes": []
+    },
+    "offline-guest": {
+      "bytes": 110,
+      "exact_authored": false,
+      "changes": [
+        {
+          "operation": "insert",
+          "authored_start": 76,
+          "authored_end": 76,
+          "decoded_start": 76,
+          "decoded_end": 85,
+          "authored_hex": "",
+          "decoded_hex": "25ae025e4dc87b66ff"
+        }
+      ]
+    }
+  },
+  "serial_ownership_checks": {
+    "complete_contiguous_attempt_manifest": true,
+    "submitted_artifact_matches_original_attempt_offsets": true,
+    "completed_artifact_matches_original_attempt_offsets": true,
+    "skipped_artifact_matches_original_attempt_offsets": true,
+    "all_final_counters_match_manifest": true,
+    "all_submissions_have_final_callback": true,
+    "snapshot_is_exact_log_event_prefix": true,
+    "legacy_errors_preserved_in_structured_events": true,
+    "one_observed_frontend_close_and_shutdown": true,
+    "declared_shutdown_order": true,
+    "no_write_submission_after_observed_close": true,
+    "observed_frontend_input_matches_capture_size": true,
+    "clean_adapter_exit": false
+  },
+  "adapter_errors": [
+    "Frontend did not exit after serial close"
+  ],
+  "ASPECT_error": "unsupported command or service (error 3, opcode D4, step 106)",
+  "normal_DOS_cleanup": true,
+  "workflow_complete": false,
+  "root_cause_scope": "Media discontinuity proven in this diagnostic: two in-call 160-sample silence frames interrupt an otherwise exact caller waveform. Independent caller decode is exact; independent guest PCM decode and actual answering decoder both insert garbage at authored offset76. Specific internal scheduling/buffering cause is not yet proven. Earlier untraced four-byte failure has no guest PCM, so its exact cause is not established by this run.",
+  "limitations": [
+    "One call; no partial file or injected recovery fault; no completed transfer/retry.",
+    "Keyboard watchdog returns normally with DOS/UART/timer restored, but ASPECT error remains observed.",
+    "Adapter reports frontend failed to exit within15s after serial close; preserve the failed clean-adapter gate despite successful PCM export and VM retirement.",
+    "Diagnostic export adds init hook/chardev and changes shutdown timing. No physical hardware or full application acceptance."
+  ],
+  "captures_sha256": {
+    "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "KEYNEW.BIN": "2b959ac48145bfc6e4e05fdc43e185b5abf5389daccf2c7fbf09c24a7571493e",
+    "KEYOLD.BIN": "2b959ac48145bfc6e4e05fdc43e185b5abf5389daccf2c7fbf09c24a7571493e",
+    "LABELS.BIN": "381781149757d1d10aadeb9479d963aac796cd438cdfb7ee63da0f7628990f22",
+    "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "SCREEN.BIN": "47a44ecd1c2bdb65e976b6650c488a69e2cfc032416891c5cf527a9270df483f",
+    "STAGES.LOG": "5390d98908bd8a5927b46da6058d738fb3883cd00f976d5c493ff202031572a5",
+    "bbs-1/input.bin": "ff1e4ecc3e54b50d040fdde0c29e65a44618387a3f4629e25a81a566f285907a",
+    "bbs-1/output.bin": "4b3bb13279497bf83e2130adb2566e2bdf4924f6b07cf74b3f4cb4561abe325b",
+    "bbs-1/relay.json": "578c61fd363295c89c4b35be36d9f3174edc9652276eff171269de43f297206f",
+    "call-1/PCM-analysis.json": "689b9d0abc5bc7b43a7dcc0493a5a61b8403673cc652ae347cad82028b3c879b",
+    "call-1/adapter-down.bin": "c9ac3ea66953f1ca818907c8846a618c6e398d4c1d78bf93ab75d75e0d288802",
+    "call-1/adapter-up.bin": "b661d5227e7228d9630a1adfd20effdc0591b4f00087ddfbc1b1187594503422",
+    "call-1/adapter.json": "0ff79eecd952c944538d65d2d0c66d88123e64460035dbaeed02d2da591af52d",
+    "call-1/caller-decoded.bin": "c9ac3ea66953f1ca818907c8846a618c6e398d4c1d78bf93ab75d75e0d288802",
+    "call-1/control-wire.bin": "637f1a95520c772a7bc878312120002b43d42aefdee6e5a82a197cafc743e9ec",
+    "call-1/expected-upstream.bin": "b661d5227e7228d9630a1adfd20effdc0591b4f00087ddfbc1b1187594503422",
+    "call-1/guest-workload.bin": "90437d9b2645c00e0ee4f7a1496d4139dfc87a7f956be405cdf66c615ca858e2",
+    "call-1/internal-from-guest.bin": "df4a02e64419b6e4d123a8bdd99d359549a28bb9fa63c46da00fb07fe8a1daa1",
+    "call-1/internal-to-guest.bin": "b58b85b19f1d0e72f091a223d2ca9b748a00e22d43ee912340c42b4d6f9035ae",
+    "call-1/modem_rx.raw": "fe0964be7afd1229664e902bfe6b122d9bdf56b49e735ac45076a8d74b246d0c",
+    "call-1/modem_rx_8k.raw": "61ad5746a5c9dce7c22aa3918cc14a8ec4af91fb9bded0f1799c36a4601f34af",
+    "call-1/modem_tx.raw": "b9d328b437d1b0040ca20a03a5167b9f5fd5928405dc1450bd8904edc37e3c97",
+    "call-1/node-result.json": "7d320ed15d08a4e2a0a23e3a719d930251a65c4675814c2e88d041f383a3a889",
+    "call-1/node.log": "dbd20448e25486100fc7da8c99694b881d5b4d97d36ec8171691c21a6aee1594",
+    "call-1/offline-caller.json": "dd5745bee9b37d1bbadfb289ba97dc153d076148160a17cedd0d3a0158fc04be",
+    "call-1/offline-guest.json": "60519d247b44bb9cabeb223eabb0fa04f4566eaef30db584b3230f05bcf9db4c",
+    "call-1/qemu-0.log": "38bfc919ea5cbbec68f83c68628237e8a1dd242000c32b24ae8b2815eb790bdc",
+    "call-1/rtp-from-answer.bin": "61db07314d25671dbe0fee01e58dc6ffb180d649d80e7693c84d4f3bf80b23b2",
+    "call-1/rtp-from-caller.bin": "7f34e921212eaf86a456e3210c38d254a254e32696472d8d1adf647a7cc9ebc4",
+    "call-1/rtp-to-guest.bin": "6d99a34239d406d5ffd50f8d76f81d932ffe7e3ecc85bc3865e3d33771f5ee9e",
+    "call-1/serial-completed.bin": "04ae44366c18276ac63e8ec5ebb5ddaafe03953e094d51612e6c4a09ec182c2f",
+    "call-1/serial-in.bin": "2d86c15215d0feb6edfe01ade39fc4a0b27f67d34dcf2dca568fbbcfaa71d391",
+    "call-1/serial-input-events.jsonl": "95806c0fa640f09697b9a43280f00b215e2b61e6e66cb6344a695be4151ec03b",
+    "call-1/serial-io-audit.json": "54ab494a63f057981813ef25b177e9e768b17df47d1084d950e4e0333f08f9af",
+    "call-1/serial-out.bin": "04ae44366c18276ac63e8ec5ebb5ddaafe03953e094d51612e6c4a09ec182c2f",
+    "call-1/serial-port.json": "3d5b4740d6755b757292b5fc0866f7a7179281f457a68b4dacad6f0a65fad112",
+    "call-1/serial-skipped.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "call-1/serial-submitted.bin": "04ae44366c18276ac63e8ec5ebb5ddaafe03953e094d51612e6c4a09ec182c2f",
+    "call-1/serial-write-events.jsonl": "13d69ce46b048b2060733573a7af9e4a8ea5cb8b3d95d2280c7ae4d20315b001",
+    "call-1/sip-to-caller.bin": "2b7bb900c6143cdb41e46b7a134c53756c2cf5b8f67205d9dfe17729add755b9",
+    "call-1/sip-to-server.bin": "fca3a9840742d5feac3eed5e636465b4199bb51acaa0607d391937fb07becfa3",
+    "call-1/timing.jsonl": "03c7171802de894d29e6c7a1c6990becf0bc72fedafeaf469b676f8fd58498a6",
+    "result.json": "cedec7a0f8c9a0f745071d6a46b7b9357fe6010f14ef4c9383320d6e0a3597fd",
+    "server-session.log": "2591224b8a2a918f2335d3226a03376a80e9e6b3e4212b6674809428595c12c8"
+  },
+  "inputs": {
+    "lab/bbs/synthmodem_synchronet_reconnect_dos.py": "f68269c30b5c16787ff4c834dd22be2426aab2f907aacc69abf10e56953e4e07",
+    "lab/bbs/analyze_receive_trace.py": "916c08caabcf3e9239f58c810b04ff28751f5e16324edbe20efe3944b855c0ed",
+    "lab/bbs/diagnose_audio_caller.js": "384c5ff4036f90afdf3afa9174ef7c780c503a2541a6d5d6b55210856ae884ef",
+    "lab/bbs/diagnose_receive_pcm.js": "cf790f59a84746f0bd2e8cea1f85b4643a34746bd31e9bc2daa7cd845e51c829",
+    "lab/bbs/audit_audio_reconnect_io.py": "0937f81469cc65ded14092fbb6eb8bf3d9df725c97ecd06275d6bde7cef86f2a",
+    "docs/validation/posttrain-receive-trace-runtime.json": "191e00df55d90a902a802f2b7fb66671f7ea484c82a7b15904ab2648db2e59ea"
+  }
+}

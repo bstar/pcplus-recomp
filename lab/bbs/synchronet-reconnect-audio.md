@@ -118,6 +118,29 @@ Comparison with guest PCM separates a changed media waveform from later decoder
 or framing errors. A clean diagnostic call does not resolve an intermittent
 failure observed in a different call; retain both captures and their scope.
 
+The [first current-terminal trace](../../docs/validation/synchronet-audio-integrity-trace-01.json)
+exports successfully and exits naturally through its14400-tick keyboard
+watchdog. DOS, all42 hardware bytes and the timer vector restore. It does not
+receive a file or inject the intended bridge-stop/retry fault. The final screen
+retains an ASPECT error3/D4/step106, and the adapter retains its error that the
+frontend did not exit within15s after serial close. VM retirement/export still
+finish; these observations do not waive either workflow or adapter acceptance.
+
+All39,948 caller and tunnel RTP packets are identical and sequence/timestamp/SSRC
+continuous, with no observed host arrival gap above35ms. The entire6,280,000-sample
+guest waveform reconstructs exactly as three startup silence frames, the first
+9067 RTP frames, one160-sample silence frame, two more RTP frames, another silence
+frame, and the remaining RTP prefix through frame39244. These two in-call20ms
+silences shift the audio delay from60ms to100ms. The caller decoder recovers
+all101 authored bytes; the actual guest emits109 bytes and an independent native
+decoder of the guest PCM emits110. Both corruptions occur at authored offset76.
+The two decoders need not make identical decisions on a damaged waveform.
+
+This proves a media discontinuity before decoded-byte framing in this call.
+It does not yet identify the internal buffering/scheduling cause, prove the
+earlier untraced event had the same cause, or resolve the ASPECT error. Controlled
+delay growth is the next diagnostic; normal full DOS acceptance remains separate.
+
 ## Retained failure: second ASPECT invocation
 
 Terminal `976ba8d0` passes fifteen of the nineteen producer gates. The first

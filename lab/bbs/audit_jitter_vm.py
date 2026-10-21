@@ -11,7 +11,7 @@ DOWN=(bytes(range(256))*24)[:6000]
 def decode(path):
  r=json.loads(path.read_text());return bytes.fromhex(''.join(v['hex'] for v in r['received']))
 
-def inspect(out,variant,builds):
+def inspect(out,variant,builds,network_profile='buffered-release'):
  r=json.loads((out/'result.json').read_text());analysis=json.loads((out/'PCM-analysis.json').read_text());checks={}
  checks['immutable_source']=all(sha(ROOT/n)==h for n,h in r['frozen_inputs'].items())
  checks['immutable_runtime']=all(sha(Path(n))==h for n,h in r['tested_inputs'].items())
@@ -24,7 +24,7 @@ def inspect(out,variant,builds):
  for name,source in [('offline-caller.json','diagnose_audio_caller.js'),('offline-guest.json','diagnose_receive_pcm.js')]:
   d=json.loads((out/name).read_text());checks[name+'_identity']=d['checker_sha256']==sha(ROOT/'lab/bbs'/source) and d['capture_sha256']==sha(out/('rtp-from-caller.bin' if name=='offline-caller.json' else 'modem_rx_8k.raw')) and d['decoder_sha256']==sha(out/'runtime/source/src/dsp/protocols/V22Demodulator.js')
  checks['real_training_and_cleanup']=all(r['checks'][n] for n in ('registered','real_RING_and_init_OK','both_DSP_CONNECT','teardown','no_errors','guest_PCM_export'))
- checks['correct_variant']=r['dmodem_variant']==variant and r['networkProfile']=='buffered-release'
+ checks['correct_variant']=r['dmodem_variant']==variant and r['networkProfile']==network_profile
  raw=(out/'control-wire.bin').read_bytes();at=0;data=bytearray();statuses=[];responses=bytearray()
  while at<len(raw):
   assert at+3<=len(raw);n,k=struct.unpack_from('<HB',raw,at);assert 1<=n<=4094 and at+n+2<=len(raw)
@@ -36,7 +36,12 @@ def inspect(out,variant,builds):
  checks['guest_frames_equal_observed_data']=bytes(data)==(out/'guest-decoded.bin').read_bytes()
  workload=(out/'guest-workload.bin').read_bytes();checks['workload_is_actual_guest_prefix']=bytes(data).startswith(workload)
  timeline=[json.loads(v) for v in (out/'timing.jsonl').read_text().splitlines()];release=[v for v in timeline if v['type']=='network-delay-release']
- checks['one_bounded_lossless_release']=len(release)==1 and release[0]['previousDelayMs']==300 and 12<=release[0]['bufferedPackets']<64 and r['checks']['delay_route_preserves_order_and_payload']
+ if network_profile=='buffered-release':
+  checks['one_bounded_lossless_release']=len(release)==1 and release[0]['previousDelayMs']==300 and 12<=release[0]['bufferedPackets']<64 and r['checks']['delay_route_preserves_order_and_payload']
+ else:
+  assert network_profile=='buffered-increase'
+  increase=[v for v in timeline if v['type']=='network-delay-increase']
+  checks['one_bounded_delay_increase']=not release and len(increase)==1 and increase[0]['previousDelayMs']==0 and increase[0]['nextDelayMs']==120 and increase[0]['bufferedPackets']==0 and 0<=r['networkPendingPackets']<=8 and r['checks']['delay_route_preserves_order_and_payload']
  start=[v for v in timeline if v['type']=='workload-start'];connect=[int(v['ns']) for v in timeline if v['type'] in ('caller-CONNECT','guest-CONNECT')]
  checks['declared_post_training_idle']=len(start)==1 and len(connect)==2 and int(start[0]['ns'])-max(connect)>=6400000000
  streams={n:packets(out/n) for n in ('rtp-from-caller.bin','rtp-after-delay.bin','rtp-to-guest.bin')}

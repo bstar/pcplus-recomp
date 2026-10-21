@@ -29,6 +29,11 @@ acceptance remain separate.
 A [later current-build audio repeat](docs/validation/current-synchronet-reconnect-audio-03.json)
 retains four extra guest-decoded input bytes despite exact caller audio. The
 file recovers, but audio integrity and reliable reconnect remain unverified.
+A [fresh guest-audio trace](docs/validation/synchronet-audio-integrity-trace-01.json)
+localizes another failure to two inserted silence frames in the guest waveform;
+both answering and independent waveform decoders produce unwanted bytes. The
+caller RTP remains exact. A bridge correction and full workflow repeat remain
+required.
 
 ASPECT recovery now includes a [literal codec](docs/ASPECT_LITERAL.md),
 [native dispatcher](docs/ASPECT_DISPATCH.md) and
