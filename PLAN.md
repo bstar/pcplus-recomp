@@ -300,6 +300,26 @@ The recorder revalidates frozen inputs, raw captures, complete independent
 caller decode, current official absence and stock preservation. Retry,
 receiver cleanup, pressure/loss, physical and F01-F16 gates remain open.
 
+The [same-session retry preparation](docs/validation/audio-upload-retry-preparation.json)
+passes12 actual DOS observer checks and20 fresh board navigation/isolation
+checks. `--upload-cancel-retry` uses visible confirmed progress for the first
+Escape, returns through the actual remote menu stack, opens a second upload and
+retains the selected native ZMODEM protocol. Its new passive auditor requires a
+valid source/ACK before CAN and a complete11521-byte retry with every CRC,
+opposite-control/FIN/OO, official-storage, source/stat and post-return gate.
+Exactly two real helpers must retire in order (cancel1, success0) in one BBS
+connection. Audio retry01 is now running with all inputs/auditors frozen;
+preparation grants no actual retry acceptance. This run logs5999ms against the
+unchanged6000ms post-training gate. The
+[timer counterexample](docs/validation/posttrain-minimum-counterexample.json)
+executes the retained CallSession method with modeled clock/timer boundaries:
+a5999ms timer callback attaches prematurely; the6000ms control attaches once.
+The minimum callback trusts delivery rather than checking elapsed time. No
+running input/runtime is changed; retain this gate failure even if the retry
+workflow completes. Previous partials and receipts remain preserved. Timer
+correction, temporary cleanup, pressure/loss, other peers, physical and F01-F16
+requirements remain open.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

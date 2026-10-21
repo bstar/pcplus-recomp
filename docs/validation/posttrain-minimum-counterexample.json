@@ -1,0 +1,23 @@
+{
+  "passed": false,
+  "counterexample_reproduced": true,
+  "cases": [
+    {
+      "elapsed_ms": 5999,
+      "attached": true,
+      "minimum_satisfied": false,
+      "counterexample_reproduced": true
+    },
+    {
+      "elapsed_ms": 6000,
+      "attached": true,
+      "minimum_satisfied": true,
+      "counterexample_reproduced": false
+    }
+  ],
+  "source_path": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/synthmodem-key-framing-runtime-01/runtime/source/src/session/CallSession.js",
+  "source_sha256": "4122886fc628ebabc03bdd4b622de163926d55c0db6199c2b47ea75dacfbf49c",
+  "checker_sha256": "00fdec82d788bd7c00ca17e81af408ab11a6e745c239942d44385af4489a89ce",
+  "scope": "Actual retained CallSession._onModemConnected with modeled timer/Date boundaries and EventEmitter DSP/Telnet boundaries. Early5999ms timer attaches despite configured6000ms minimum;6000ms control attaches once. No actual clock precision, waveform, caller compatibility, new runtime or physical acceptance is established.",
+  "raw_result_sha256": "df901d896be5e9f3e19708bc1156e752434e7fbc5d45236b92c417b7a2ba0641"
+}

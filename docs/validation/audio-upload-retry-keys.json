@@ -1,0 +1,58 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "mode": "success",
+      "passed": true,
+      "checks": {
+        "probe_normal_exit": true,
+        "exact_phased_BIOS_keys": true,
+        "timer_vector_restored": true
+      },
+      "expected_words": 45,
+      "probe_source_sha256": "fe961e26a07bf0be3a03c6b3218288f3e73416b8e3e857e9d6d0a44a5699d2c6"
+    },
+    {
+      "mode": "failure",
+      "passed": true,
+      "checks": {
+        "probe_normal_exit": true,
+        "exact_phased_BIOS_keys": true,
+        "timer_vector_restored": true
+      },
+      "expected_words": 24,
+      "probe_source_sha256": "a1e2d87abaf6854ba0e7556d2b0dbc52e0d1f4b9eb3f80e647023ac74373a391"
+    },
+    {
+      "mode": "cancel",
+      "passed": true,
+      "checks": {
+        "probe_normal_exit": true,
+        "exact_phased_BIOS_keys": true,
+        "timer_vector_restored": true
+      },
+      "expected_words": 41,
+      "probe_source_sha256": "03082847e34b823782fc5ecf5919364e09a2e30ec00a428ac4917be8d7460b06"
+    },
+    {
+      "mode": "retry",
+      "passed": true,
+      "checks": {
+        "probe_normal_exit": true,
+        "exact_phased_BIOS_keys": true,
+        "timer_vector_restored": true
+      },
+      "expected_words": 75,
+      "probe_source_sha256": "1176fd6213001c359fdd17215321c33d189908e65aede43ff78e40f18700a44e"
+    }
+  ],
+  "inputs": {
+    "lab/bbs/check_audio_upload_keys.py": "c2b7b3d2f820a4b17846c39c24e6148c19927a3f2129dfdaeb5f77396c0832c5",
+    "lab/bbs/audio_upload_keys.asm": "3686710a386148e6583008fc53b5e270185362011d98ce374d79109f40a6d521",
+    "lab/bbs/audio_get_vector.asm": "a4dcbe3717c43f5914ee3503099d250fd7810610b8c25f4c0c18c2d4d403e817"
+  },
+  "scope": "Actual DOS BIOS observer tests for success, failure, progress-triggered cancel, and cancel/retry using retained ZMODEM. All12 exact-key/normal-exit/vector checks pass. Synthetic visible phases verify no premature keys and full second upload/form/search sequence; no actual audio retry acceptance.",
+  "raw_result_sha256": "5281bd817be9d641ae476cc763320cec41adfc19532dde88e512429b2412935a",
+  "default_full_upload_helper_unchanged": true,
+  "default_helper_sha256": "5f8f4bafb8e9203b3db13da0e15f38de893e25fe304640a67308667fb9424a7d"
+}

@@ -3695,6 +3695,20 @@
       "receiver_temporary_cleanup_passed": false,
       "receipt": "docs/validation/synthmodem-audio-upload-cancel-01.json",
       "receipt_sha256": "24c73f8171eaee9ba30a90aaa0edf4cb030c9f7771fc11d5758e826e31194fde"
+    },
+    "synthmodem-audio-upload-retry-01": {
+      "status": "running",
+      "passed": null,
+      "variant": "isolated ENiGMA receiver candidate; actual progress-triggered cancellation and same-call retry",
+      "fixture_lab": "build/bbs-lab/enigma-audio-retry-candidate-01",
+      "preparation_receipt": "docs/validation/audio-upload-retry-preparation.json",
+      "acceptance": "Pending producer and complete independent same-run first-cancel/second-upload CRC/control/storage/source/return/cleanup gates",
+      "source_bytes": 11521,
+      "DTE_bps": 38400,
+      "software_carrier_bps": 1200,
+      "observed_post_train_hold_ms": 5999,
+      "required_minimum_hold_ms": 6000,
+      "hold_counterexample_receipt": "docs/validation/posttrain-minimum-counterexample.json"
     }
   },
   "diagnosis": {
@@ -3807,5 +3821,6 @@
   "upload_response_fault_receipt": "docs/validation/zmodem-upload-response-faults.json",
   "upload_response_fault_receipt_sha256": "f4c1538a3a53640d0d09e5ee37a4519c4e7e3f69452cea4ecfe73fb8e359b7e9",
   "audio_upload_cancellation_receipt": "docs/validation/synthmodem-audio-upload-cancel-01.json",
-  "audio_upload_cancellation_receipt_sha256": "24c73f8171eaee9ba30a90aaa0edf4cb030c9f7771fc11d5758e826e31194fde"
+  "audio_upload_cancellation_receipt_sha256": "24c73f8171eaee9ba30a90aaa0edf4cb030c9f7771fc11d5758e826e31194fde",
+  "active_retry_cohort": "synthmodem-audio-upload-retry-01"
 }

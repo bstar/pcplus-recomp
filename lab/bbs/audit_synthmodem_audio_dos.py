@@ -47,6 +47,7 @@ def main():
  wanted=['mainMenu','fileBaseMainMenu','fileBaseSearch','fileBaseListEntries','fileBaseDownloadManager','fileTransferProtocolSelection','sendFilesToUser','fileBaseMainMenu','fileBaseSearch','fileBaseListEntries'] if r.get('route')=='download' else ['mainMenu','messageBaseMainMenu','messageBaseNewPost'] if editor_route else ['mainMenu','messageBaseMainMenu','mainMenu','fileBaseMainMenu'];index=0
  if r.get('route')=='upload':wanted=['mainMenu','fileBaseMainMenu','fileBaseUploadFiles','fileTransferProtocolSelection','recvFilesFromUser','fileBaseUploadFiles','fileBaseMainMenu','fileBaseSearch','fileBaseListEntries']
  if r.get('upload_cancel'):wanted=['mainMenu','fileBaseMainMenu','fileBaseUploadFiles','fileTransferProtocolSelection','recvFilesFromUser','fileBaseMainMenu','fileBaseSearch','fileBaseListEntries']
+ if r.get('upload_cancel_retry'):wanted=['mainMenu','fileBaseMainMenu','fileBaseUploadFiles','fileTransferProtocolSelection','recvFilesFromUser','fileBaseMainMenu','fileBaseUploadFiles','fileTransferProtocolSelection','recvFilesFromUser','fileBaseUploadFiles','fileBaseMainMenu','fileBaseSearch','fileBaseListEntries']
  for m in menus:
   if index<len(wanted) and m==wanted[index]:index+=1
  checks['authoritative_menu_order']=index==len(wanted)

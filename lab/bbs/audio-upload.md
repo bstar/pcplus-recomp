@@ -205,6 +205,7 @@ Retry and temporary cleanup remain separate open requirements.
 # Prepare/start a fresh receiver candidate and run navigation/isolation above.
 ./tools/modem-dev --command python3 lab/bbs/synthmodem_audio_dos.py \
   --key-framing --route upload --upload-cancel \
+  --upload-key-checks build/bbs-lab/audio-upload-cancel-keys-01/result.json \
   --fixture-lab build/bbs-lab/enigma-audio-cancel-candidate-01 \
   --runtime build/bbs-lab/synthmodem-key-framing-runtime-01/runtime \
   --output build/bbs-lab/synthmodem-audio-upload-cancel-NEW
@@ -231,3 +232,58 @@ and cancellation before valid data must all fail when only copied times change.
 The recorder additionally requires the retained-temp observation/backup made
 from the exact session-log path after helper exit. Its zero exit means this
 mixed result is consistent; the canonical receipt keeps `passed: false`.
+
+
+## Cancel and retry on the same call
+
+The [retry observer receipt](../../docs/validation/audio-upload-retry-keys.json)
+adds a fourth actual DOS probe: cancel after confirmed KiB, leave the remote
+protocol selector, navigate another upload, reuse retained ZMODEM, complete
+forms and search for AUDIOUP.BIN. All12 observer checks pass. These synthetic
+screen probes verify the BIOS observer; they do not prove a real transfer.
+
+The [fresh-board prerequisites](../../docs/validation/audio-upload-retry-preparation.json)
+pass seven navigation and thirteen isolation checks. Audio retry01 is running;
+all frozen producer and independent transfer/stream/cleanup gates remain
+required. The previous cancellation's source-prefix backup and receipts remain
+preserved. No actual retry or temporary-cleanup acceptance is claimed yet.
+
+```sh
+./tools/dev --command python3 lab/bbs/check_audio_upload_keys.py \
+  --output build/bbs-lab/audio-upload-retry-keys-NEW
+# Prepare/start a fresh isolated board and its navigation/isolation checks.
+./tools/modem-dev --command python3 lab/bbs/synthmodem_audio_dos.py \
+  --key-framing --route upload --upload-cancel-retry \
+  --upload-key-checks build/bbs-lab/audio-upload-retry-keys-NEW/result.json \
+  --fixture-lab build/bbs-lab/enigma-audio-retry-candidate-NEW \
+  --runtime build/bbs-lab/synthmodem-key-framing-runtime-01/runtime \
+  --output build/bbs-lab/synthmodem-audio-upload-retry-NEW
+# After natural exit and the independent byte/cleanup and ownership audits:
+./tools/modem-dev --command python3 lab/bbs/audio_upload_retry.py COHORT
+```
+
+The observer prerequisite is explicit through `--upload-key-checks`; its source
+hashes must match before the producer starts. Full-upload and cancellation-only
+workflows keep their distinct gates. The retry auditor requires exactly two
+helper executions, cancellation1 then success0, valid first data/ACK/CAN and
+complete second source/control/finish/storage/resume validation. Receiver
+partial cleanup, faults during retry and physical tests remain open.
+
+
+Retry01 logs a5999ms minimum hold, below the unchanged6000ms gate. The
+[actual-method counterexample](../../docs/validation/posttrain-minimum-counterexample.json)
+reproduces attachment when a modeled timer callback arrives at5999ms;6000ms is
+its successful control. It replaces only timer/clock and DSP/Telnet boundaries,
+starts no VM and changes no running runtime. This demonstrates missing elapsed-
+time validation in the minimum callback, without claiming the precision of the
+actual logged interval. Preserve the audio run and retain its strict gate;
+correction requires a separately staged and validated runtime.
+
+```sh
+./tools/modem-dev --command node lab/bbs/check_posttrain_minimum.js \
+  build/bbs-lab/synthmodem-key-framing-runtime-01/runtime \
+  build/bbs-lab/posttrain-minimum-counterexample-NEW
+```
+
+The counterexample command exits zero when the defect is reproduced; its
+receipt keeps `passed: false`.

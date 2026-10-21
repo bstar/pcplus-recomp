@@ -42,7 +42,11 @@ checker: db 'UPLOAD CHECKER',0
 pause_text: db 'smash your keyboard',0
 details: db 'UPLOAD DETAILS - ',0
 %ifdef AUDIO_UPLOAD_CANCEL
+%ifdef AUDIO_UPLOAD_RETRY
+filename_marker: db 'AUDIOUP.BIN',0
+%else
 filename_marker: db 'PCXTEST.BIN',0
+%endif
 %else
 filename_marker: db 'AUDIOUP.BIN',0
 %endif
@@ -59,7 +63,16 @@ file_keys: dw 3c00h,3c00h,2044h,273ah,2b5ch,1f53h,1245h,314eh,2044h,2b5ch,1e41h,
 enter_keys: dw 1c0dh,0
 search_keys: dw 1f53h,1c0dh,0
 %ifdef AUDIO_UPLOAD_CANCEL
+%ifdef AUDIO_UPLOAD_RETRY
+query_keys: dw 1e41h,1655h,2044h,1749h,184fh,1655h,1950h,342eh,3042h,1749h,314eh,1c0dh,1c0dh,0
+retry_upload: dw 1655h,1c0dh,0
+retry_options: dw 0f09h,0f09h,0f09h,1c0dh,0
+retry_prompt: db 'ZMODEM filespec:',0
+upload_options: db '(blind - filename ignored)',0
+protocol_title: db 'PROTOCOL SELECTION',0
+%else
 query_keys: dw 1950h,2e43h,2d58h,1454h,1245h,1f53h,1454h,342eh,3042h,1749h,314eh,1c0dh,1c0dh,0
+%endif
 cancel_keys: dw 011bh,0
 %else
 query_keys: dw 1e41h,1655h,2044h,1749h,184fh,1655h,1950h,342eh,3042h,1749h,314eh,1c0dh,1c0dh,0
@@ -110,6 +123,12 @@ handler:
  cmp al,15
  je .canceled
 %endif
+%ifdef AUDIO_UPLOAD_RETRY
+ cmp al,17
+ je .emit
+ cmp al,16
+ jae .retry_path
+%endif
  cmp al,0
  jne .local
  mov si,banner
@@ -150,8 +169,13 @@ handler:
  call visible
  jnc .done
  ; Leave the remote upload form, then require an actual file search/list.
- keys 6,cancel_keys,8,LOCAL_WAIT,FIELD_WAIT
+%ifdef AUDIO_UPLOAD_RETRY
+ keys 6,cancel_keys,16,LOCAL_WAIT,FIELD_WAIT
 %else
+ keys 6,cancel_keys,8,LOCAL_WAIT,FIELD_WAIT
+%endif
+%endif
+.success_checker:
  mov si,failure_timeout
  call visible
  jc .failed
@@ -168,6 +192,58 @@ handler:
  call visible
  jnc .done
  keys 6,enter_keys,7,REMOTE_WAIT,FIELD_WAIT
+%ifdef AUDIO_UPLOAD_RETRY
+.retry_path:
+ cmp al,16
+ jne .retry_options
+ mov si,file_menu
+ call visible
+ jnc .done
+ mov si,menu_footer
+ call visible
+ jnc .done
+ keys 17,retry_upload,18,REMOTE_WAIT,FIELD_WAIT
+.retry_options:
+ cmp al,18
+ jne .retry_protocol
+ mov si,upload_options
+ call visible
+ jnc .done
+ keys 17,retry_options,19,FIELD_WAIT,FIELD_WAIT
+.retry_protocol:
+ cmp al,19
+ jne .retry_banner
+ mov si,protocol_title
+ call visible
+ jnc .done
+ keys 17,enter_keys,20,LOCAL_WAIT,FIELD_WAIT
+.retry_banner:
+ cmp al,20
+ jne .retry_local
+ mov si,banner
+ call visible
+ jnc .done
+ keys 17,start_keys,21,LOCAL_WAIT,FIELD_WAIT
+.retry_local:
+ cmp al,21
+ jne .retry_sending
+ mov si,retry_prompt
+ call visible
+ jnc .done
+ ; F2 is omitted: the terminal retains ZMODEM across cancellation.
+ keys 17,file_keys+4,22,LOCAL_WAIT,LOCAL_WAIT
+.retry_sending:
+ cmp al,22
+ jne .retry_finish
+ mov si,sending
+ call visible
+ jnc .done
+ mov byte [state],23
+ jmp .done
+.retry_finish:
+ cmp al,23
+ je .success_checker
+ jmp .done
 %endif
 .details:
  cmp al,7

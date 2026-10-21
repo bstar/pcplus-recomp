@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "actual_audio_retry_accepted": false,
+  "checks": {
+    "twelve_DOS_observer_checks": true,
+    "seven_navigation_checks": true,
+    "thirteen_isolation_checks": true
+  },
+  "server_fixture": {
+    "kind": "sexyz-receive-finish-candidate",
+    "lab": "build/bbs-lab/enigma-audio-retry-candidate-01",
+    "manifest": "build/bbs-lab/enigma-audio-retry-candidate-01/receive-finish-instance.json",
+    "manifest_sha256": "7dcb5abb344a199d8d4d520b807ce2338f563e8f1f3280b5ab0da84782b048d1",
+    "helper_sha256": "3485669f1df011640667e2111de08d32478f2d64941af0ea02bfa13492909b52",
+    "source": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma-audio-retry-candidate-01/source"
+  },
+  "inputs": {
+    "build/bbs-lab/enigma-audio-retry-candidate-01/navigation/result.json": "4040a7bb2b761a74f3472315cc943de979249118729860886a704117a238f846",
+    "build/bbs-lab/enigma-audio-retry-candidate-01/isolation/result.json": "88512f95bbd9619f70988d4c842061917a8a9d876724d626acdddf3df0f7ec4c",
+    "docs/validation/audio-upload-retry-keys.json": "a799d8e5d1817a40448d132e960e7fbc3e60033fb10badf41e3daa438d67e961"
+  },
+  "scope": "Preparation only: fresh private receiver-candidate board with absent upload target; same-session cancel/retry BIOS observer verified. Previous cancellation partial/receipts preserved. Actual audio retry01 is running with every original CRC/control/storage/source/return/cleanup gate. No actual retry, temporary cleanup, loss/pressure or physical acceptance."
+}
