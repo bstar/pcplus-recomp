@@ -12,11 +12,21 @@ state: db 0
 %ifndef AUDIO_EDITOR_WATCHDOG_TICKS
 %define AUDIO_EDITOR_WATCHDOG_TICKS 12600
 %endif
+%ifndef AUDIO_EDITOR_KEY_TICKS
+%define AUDIO_EDITOR_KEY_TICKS 54
+%endif
+%ifndef AUDIO_EDITOR_INITIAL_TICKS
+%define AUDIO_EDITOR_INITIAL_TICKS 360
+%endif
 watchdog: dw AUDIO_EDITOR_WATCHDOG_TICKS
 ticks: dw 0
 key_at: dw keys
 prompt: db 'KEYTEST',0
 footer: db 'INS 01,01',0
+%ifdef AUDIO_EDITOR_BURST
+final_text: db 'UNSAVED',0
+final_footer: db 'OVR 01,08',0
+%endif
 keys: dw 1e41h,3042h,2e43h,2044h,1245h,4700h,2348h,4f00h,1245h
       dw 4b00h,5300h,5200h,2c5ah,0f09h,1454h,4900h,5100h,1519h
       dw 1655h,314eh,1f53h,1e41h,2f56h,1245h,2044h,2d00h,0
@@ -45,6 +55,10 @@ handler:
  inc word [watchdog] ; BIOS queue full: retry without inventing success
  jmp .done
 .watching:
+%ifdef AUDIO_EDITOR_BURST
+ cmp byte [state],3
+ je .final_screen
+%endif
  cmp byte [state],0
  jne .count
  mov si,prompt
@@ -54,7 +68,7 @@ handler:
  call visible
  jnc .done
  mov byte [state],1
- mov word [ticks],360 ; 20 seconds for header/body completion and child return
+ mov word [ticks],AUDIO_EDITOR_INITIAL_TICKS ; default: 20 seconds for header/body completion and child return
  jmp .done
 .count:
  cmp byte [state],1
@@ -74,11 +88,27 @@ handler:
  mov bx,[key_at]
  cmp word [bx],0
  je .restore
- mov word [ticks],54 ; three seconds between keys
+ mov word [ticks],AUDIO_EDITOR_KEY_TICKS ; default: three seconds between keys
  cmp word [bx],2d00h
  jne .done
+%ifdef AUDIO_EDITOR_BURST
+ mov byte [state],3 ; wait for actual final text/cursor, not a fixed send delay
+%else
  mov word [ticks],180 ; drain the final editor response before Alt-X
+%endif
  jmp .done
+%ifdef AUDIO_EDITOR_BURST
+.final_screen:
+ mov si,final_text
+ call visible
+ jnc .done
+ mov si,final_footer
+ call visible
+ jnc .done
+ mov byte [state],1
+ mov word [ticks],36 ; drain the remainder of the final response before Alt-X
+ jmp .done
+%endif
 .restore:
  mov byte [state],2
  pushf

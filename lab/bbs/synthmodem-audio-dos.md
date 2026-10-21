@@ -38,6 +38,22 @@ normal DOS return, UART/PIC/vector/timer restoration and real SIP/VM retirement
 pass. This helper paces keys three seconds apart. Rapid/multiline interaction
 and the current transfer repeat remain separate requirements.
 
+The [burst-helper probe](../../docs/validation/audio-editor-burst-keys.json)
+prepares the rapid-input follow-up. With `AUDIO_EDITOR_BURST` and
+`AUDIO_EDITOR_KEY_TICKS=1`, the test helper sends BIOS keys one tick apart and
+requires both visible `UNSAVED` text and the final `OVR 01,08` cursor status
+before its normal exit key. Missing prerequisites or final output remain bounded
+by the watchdog. Five actual8086 DOS cases pass20 checks: full final output,
+each missing marker independently, initial-prerequisite timeout and final-screen
+timeout, all with restored hardware/timer state. The default helper remains
+byte-identical to the accepted paced helper. This is helper validation only;
+the runner integration and actual BBS burst test remain pending.
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/check_audio_editor_burst_keys.py \
+  --output build/bbs-lab/editor-burst-keys-NEW
+```
+
 The earlier menu-only baseline combined the Nix-built DISCARD_NONE d-modem,
 [lifecycle fixes](synthmodem-lifecycle.md) and
 [carrier-channel integration](synthmodem-carrier.md). Cohort -09 passes 19 producer,

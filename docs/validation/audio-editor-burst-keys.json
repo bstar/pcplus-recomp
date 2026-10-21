@@ -1,0 +1,98 @@
+{
+  "passed": true,
+  "default_helper_binary_exact": true,
+  "default_helper_sha256": "29e1ab0f3567844acc60f17d174e44898dde740596e74cb16cbd6ada60a909ce",
+  "cases": [
+    {
+      "mode": "complete-final-screen",
+      "checks": {
+        "actual_BIOS_sequence_and_final_guard": true,
+        "normal_DOS_exit": true,
+        "hardware_and_timer_restored": true,
+        "original_INT1C_restored": true
+      },
+      "captures_sha256": {
+        "KEYS.BIN": "c07c5d5b544a413080908febbc0a3c734f06d6d72e1467fc331fcc0e7e5c7485",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "KEYOLD.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+        "KEYNEW.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07"
+      }
+    },
+    {
+      "mode": "text-only-blocks-exit",
+      "checks": {
+        "actual_BIOS_sequence_and_final_guard": true,
+        "normal_DOS_exit": true,
+        "hardware_and_timer_restored": true,
+        "original_INT1C_restored": true
+      },
+      "captures_sha256": {
+        "KEYS.BIN": "c07c5d5b544a413080908febbc0a3c734f06d6d72e1467fc331fcc0e7e5c7485",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "KEYOLD.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+        "KEYNEW.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07"
+      }
+    },
+    {
+      "mode": "cursor-only-blocks-exit",
+      "checks": {
+        "actual_BIOS_sequence_and_final_guard": true,
+        "normal_DOS_exit": true,
+        "hardware_and_timer_restored": true,
+        "original_INT1C_restored": true
+      },
+      "captures_sha256": {
+        "KEYS.BIN": "c07c5d5b544a413080908febbc0a3c734f06d6d72e1467fc331fcc0e7e5c7485",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "KEYOLD.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+        "KEYNEW.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07"
+      }
+    },
+    {
+      "mode": "prerequisite-watchdog",
+      "checks": {
+        "actual_BIOS_sequence_and_final_guard": true,
+        "normal_DOS_exit": true,
+        "hardware_and_timer_restored": true,
+        "original_INT1C_restored": true
+      },
+      "captures_sha256": {
+        "KEYS.BIN": "50370e36b4952b59654148674fafada508972b5c90de162a29ba3383a360a789",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "KEYOLD.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+        "KEYNEW.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07"
+      }
+    },
+    {
+      "mode": "final-screen-watchdog",
+      "checks": {
+        "actual_BIOS_sequence_and_final_guard": true,
+        "normal_DOS_exit": true,
+        "hardware_and_timer_restored": true,
+        "original_INT1C_restored": true
+      },
+      "captures_sha256": {
+        "KEYS.BIN": "c07c5d5b544a413080908febbc0a3c734f06d6d72e1467fc331fcc0e7e5c7485",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "KEYOLD.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+        "KEYNEW.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07"
+      }
+    }
+  ],
+  "inputs": {
+    "lab/bbs/check_audio_editor_burst_keys.py": "d6b0c4b7b71c0bf847f4fd5033ac25da60be37ec89c3c8103b11ee400233e865",
+    "lab/bbs/audio_editor_keys.asm": "27e45f3e130613db015166accccd763426485686d43ec963fcd90388f4a8571d",
+    "lab/bbs/audio_get_vector.asm": "a4dcbe3717c43f5914ee3503099d250fd7810610b8c25f4c0c18c2d4d403e817",
+    "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2"
+  },
+  "scope": "Actual8086 DOS/BIOS probe only. One-tick key delivery; either missing final-screen marker blocks exit for36 ticks, both markers release before watchdog, prerequisite or final-screen failure exits via the bounded watchdog. All hardware/vector state restores. Default paced helper is byte-identical to the accepted editor helper. Test-only initial wait reduced to4 ticks; no product/serial/BBS burst acceptance.",
+  "BBS_burst_accepted": false,
+  "actual_BBS_burst_run": false,
+  "cohort": "build/bbs-lab/editor-burst-keys-02",
+  "proof_sha256": "bf66c3f137dbdf8a5dbbae98a1260958874bf6b3746e41db5ba12fb732b28075"
+}

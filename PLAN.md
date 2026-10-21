@@ -78,6 +78,14 @@ passes. Keys are paced three seconds apart and page keys cover one line;
 rapid input and multiline scrolling remain unverified. The current ENiGMA
 ZMODEM download campaign is running without acceptance yet.
 
+The [burst-input helper](docs/validation/audio-editor-burst-keys.json) is prepared
+for the next editor interaction test: five actual DOS/BIOS cases pass20 checks,
+including independent final-text/cursor gates and prerequisite/final-output
+watchdogs. Its default binary remains identical to the accepted paced helper.
+The fast mode sends keys one BIOS tick apart; actual BBS burst and multiline
+behavior remain unaccepted. Integrate the opt-in runner mode after the active
+download's frozen producer exits, then use the same full stream/editor audits.
+
 The hardware target's [work order and completion gates](docs/ANALOG_MODEM_INTEGRATION.md#work-order-and-completion-gates)
 prioritize carrier/data separation and full audio-path pressure/editor/transfer
 checks before physical commissioning. Boca identification and adapter arrival
