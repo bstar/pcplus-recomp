@@ -52,7 +52,10 @@ def frontend_trace(out,sent,display,bridge_bytes):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path)
-    out=p.parse_args().cohort.resolve();r=json.loads((out/'result.json').read_text());assert r['route']=='download'
+    p.add_argument('--output',type=Path,help='Fresh alternate result within the cohort; preserve prior audit receipts')
+    a=p.parse_args();out=a.cohort.resolve();result_path=a.output.resolve() if a.output else out/'download-audit.json'
+    if a.output:assert result_path.is_relative_to(out) and not result_path.exists()
+    r=json.loads((out/'result.json').read_text());assert r['route']=='download'
     events=[json.loads(v) for v in (out/'BBS-relay-events.jsonl').read_text().splitlines()]
     raw={'to_bbs':(out/'bbs-input.bin').read_bytes(),'from_bbs':(out/'bbs-output.bin').read_bytes()}
     decoders={d:Telnet() for d in raw};streams={d:bytearray() for d in raw};ends={d:0 for d in raw};trace=[]
@@ -66,10 +69,15 @@ def main():
     relay_trace_rows=len(trace)
     base=json.loads((out/'independent-audit.json').read_text());io=json.loads((out/'serial-io-audit.json').read_text())
     trace,timing=frontend_trace(out,sent,display,base['payloads']['expected_bridge_bytes'])
-    source=STORAGE/'PCXTEST.BIN';expected=source.read_bytes();checks={'post_protocol_search_key_observed':False};errors=[];protocol=None
-    checks['source_unchanged']=len(expected)==11521 and sha(source)==r['download']['expected_sha256']
+    name='PCXTEST.BIN';size=11521
+    if r.get('download_pressure_preparation'):
+        from audio_pressure_download import PressureDownload,NAME,SIZE,ROOT
+        pressure=PressureDownload(ROOT/r['download_pressure_preparation']);name=NAME;size=SIZE
+        assert sha(out/'program/EXITKEY.COM')==pressure.production_helper_sha256
+    source=STORAGE/name;expected=source.read_bytes();checks={'post_protocol_search_key_observed':False};errors=[];protocol=None
+    checks['source_unchanged']=len(expected)==size and sha(source)==r['download']['expected_sha256']
     try:
-        protocol=audit_batch(display,{'PCXTEST.BIN':expected})
+        protocol=audit_batch(display,{name:expected})
         end_time=timestamp(trace,'bbs',protocol['end']-1)
         post=next((v for v in trace if v['direction']=='dos' and v['seconds']>end_time and b'S\r' in sent[v['offset']:v['offset']+v['size']+1]),None)
         checks['post_protocol_search_key_observed']=post is not None
@@ -80,9 +88,9 @@ def main():
         checks['complete_CRC_ZMODEM_and_opposite_controls']=True
     except Exception as e:
         errors.append(repr(e));checks['complete_CRC_ZMODEM_and_opposite_controls']=False
-    target=out/'RECV/PCXTEST.BIN'
+    target=out/'RECV'/name
     checks['exact_DOS_file']=target.is_file() and target.read_bytes()==expected
-    checks['only_expected_DOS_file']={p.name for p in (out/'RECV').iterdir()}=={'PCXTEST.BIN'}
+    checks['only_expected_DOS_file']={p.name for p in (out/'RECV').iterdir()}=={name}
     checks['no_receive_staging']=not any(p.name.startswith(('PCRX.','PCZRX.')) for p in out.rglob('*'))
     rows=[json.loads(v) for v in (out/'server-session.jsonl').read_text().splitlines()]
     executions=[i for i,v in enumerate(rows) if v.get('msg')=='Executing external protocol']
@@ -96,7 +104,11 @@ def main():
         tail.index('fileBaseListEntries',search+1);resumed=True
     except ValueError:pass
     checks['post_helper_keyboard_search_and_list']=resumed
-    after=metadata('PCXTEST.BIN');before=r['download']['metadata_before']
+    if r.get('download_pressure_preparation'):
+        from prepare_audio_pressure_download import entries
+        after=[e for e in entries() if e['fileName']==name]
+    else:after=metadata(name)
+    before=r['download']['metadata_before']
     checks['official_file_and_counter']=len(after)==len(before)==1 and after[0]['fileSha256']==sha(source) and Path(after[0]['filePath']).resolve()==source.resolve() and after[0]['meta'].get('dl_count',0)>=before[0]['meta'].get('dl_count',0)+1
     prm=(out/'MODEM.PRM').read_bytes()
     checks['automatic_receive_profile']=prm[0x42c:0x42e]==b'\x01\0' and prm[0x31c:].split(b'\0',1)[0]==b'D:\\RECV\\'
@@ -112,7 +124,7 @@ def main():
             'capture_sha256':{name:sha(out/name) for name in ['result.json','BBS-relay-events.jsonl','bbs-input.bin','bbs-output.bin','server-session.jsonl','MODEM.PRM','independent-audit.json','serial-io-audit.json','node-result.json','serial-in.bin','serial-out.bin','caller-decoded.bin','serial-input-events.jsonl','serial-write-events.jsonl']},
             'auditor_sha256':sha(Path(__file__)),'protocol_auditor_sha256':sha(Path(__file__).with_name('audit_zmodem.py')),
             'scope':'Actual normal audio/stock BBS download: independent passive CRC/sequence/payload/EOF/finish and opposite-direction control audit, exact installed DOS bytes, official server API and post-helper input/menu sequence. No generated protocol replies or altered BBS. Single file/direction only; no upload/cancel/retry/fault/pressure/physical or whole-application claim.'}
-    (out/'download-audit.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2));assert result['passed']
+    result_path.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2));assert result['passed']
 
 
 if __name__=='__main__':main()

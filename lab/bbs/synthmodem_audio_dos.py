@@ -23,7 +23,13 @@ def main():
  p.add_argument('--buffered-runtime-proof',type=Path,help='Validated normal200ms d-modem runtime receipt')
  p.add_argument('--editor-burst-checks',type=Path,help='Enable one-tick editor BIOS keys using a passing guarded-helper probe')
  p.add_argument('--editor-multiline-checks',type=Path,help='Enable30-line BIOS draft and page movement with a passing helper/TCP proof')
+ p.add_argument('--download-pressure-preparation',type=Path,help='Explicit >64KiB fixture/reference/BIOS preparation proof')
  a=p.parse_args()
+ pressure_download=None
+ if a.download_pressure_preparation:
+  assert a.route=='download','Pressure preparation requires the download route'
+  from audio_pressure_download import PressureDownload,OUTER_TIMEOUT
+  pressure_download=PressureDownload(a.download_pressure_preparation)
  if a.editor_multiline_checks:
   assert a.route=='editor' and not a.editor_burst_checks,'Choose one editor sequence'
   from editor_multiline_evidence import load as load_multiline,message_count
@@ -96,8 +102,10 @@ def main():
  upload_before=None
  if a.route=='download':
   import audio_download
+  if pressure_download:audio_download=pressure_download
   download_path,download_before=audio_download.source()
   names+=['lab/bbs/audio_download.py','lab/bbs/audio_download_keys.asm','lab/bbs/check_audio_download_keys.py','docs/validation/audio-download-keys.json','lab/bbs/enigma_transfer.py',str(download_path.relative_to(ROOT)),str(audio_download.HELPER.relative_to(ROOT))]
+  if pressure_download:names+=pressure_download.frozen_inputs+['lab/bbs/audit_audio_download.py','lab/bbs/audit_synthmodem_audio_dos.py','lab/bbs/audit_serial_io_evidence.py','lab/bbs/diagnose_audio_caller.js','lab/bbs/audit_zmodem.py']
  if a.route=='upload':
   import audio_upload
   upload_before=audio_upload.prepare(out)
@@ -174,8 +182,10 @@ def main():
    if a.upload_cancel_retry:flags+=['-DAUDIO_UPLOAD_RETRY=1']
    if a.editor_burst_checks:flags+=['-DAUDIO_EDITOR_BURST=1','-DAUDIO_EDITOR_KEY_TICKS=1']
    if a.editor_multiline_checks:flags+=['-DAUDIO_EDITOR_MULTILINE=1','-DAUDIO_EDITOR_KEY_TICKS=3']
+   if pressure_download:flags+=['-DAUDIO_DOWNLOAD_PRESSURE=1']
   subprocess.run(['nasm','-fbin',*flags,str(ROOT/'lab/bbs'/name),'-o',str(stage/leaf)],check=True)
  if a.editor_multiline_checks:assert sha(stage/'EXITKEY.COM')==multiline['production_helper_sha256']
+ if pressure_download:assert sha(stage/'EXITKEY.COM')==pressure_download.production_helper_sha256
  generated={str(p.relative_to(out)):sha(p) for p in stage.iterdir()}
  log=enigma.SOURCE/'logs/enigma-bbs.log';boundary=(log.stat().st_ino,log.stat().st_size)
  tool_inputs={str(Path(shutil.which(n)).resolve()):sha(Path(shutil.which(n))) for n in (['dosbox-x','nasm','strace'] if a.syscall_trace else ['dosbox-x','nasm'])}
@@ -228,7 +238,7 @@ exit
    if a.syscall_trace:command=['strace','--seccomp-bpf','-f','-ttt','-yy','-e','trace=network,close','-o',str(out/'DOS-syscalls.log')]+command
    clock_anchor('before-DOS-launch')
    dos=subprocess.Popen(command,stdout=dl,stderr=dl,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),start_new_session=True)
-   doscode=dos.wait(timeout=1220 if a.route in ('download','upload') or a.editor_multiline_checks else 720 if a.route=='editor' else 600);clock_anchor('after-DOS-exit');node.wait(timeout=60)
+   doscode=dos.wait(timeout=OUTER_TIMEOUT if pressure_download else 1220 if a.route in ('download','upload') or a.editor_multiline_checks else 720 if a.route=='editor' else 600);clock_anchor('after-DOS-exit');node.wait(timeout=60)
   finally:
    relay.stop.set();relay.thread.join(3)
    if dos is not None and dos.poll() is None:
@@ -293,7 +303,7 @@ exit
  if a.route=='download':
   checks.pop('final_file_menu')
   extra,download=audio_download.check(out,rows,download_path,download_before);checks.update(extra)
-  checks['posttransfer_filename_visible']='PCXTEST.BIN' in text
+  checks['posttransfer_filename_visible']=('PCPRESS.BIN' if pressure_download else 'PCXTEST.BIN') in text
  if a.route=='upload':
   checks.pop('final_file_menu')
   if a.upload_cancel_retry:
@@ -307,7 +317,7 @@ exit
   checks['posttransfer_filename_visible']=('PCXTEST.BIN' if a.upload_cancel and not a.upload_cancel_retry else audio_upload.NAME) in text
  result={'passed':all(checks.values()),'checks':checks,'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'server_inputs':server_inputs,'server_root':str(enigma.SOURCE),'server_fixture':server_fixture,
   'generated_inputs':generated,'tool_inputs':tool_inputs,'syscall_trace':a.syscall_trace,'clock_anchors':clock_anchors,'server_revision':enigma.COMMIT,'server_menus':menus,'script_stages':read('STAGES.LOG').decode('ascii'),'login_readiness':'WAITFOR plus reused one-shot WHEN latch','receive_trace':a.receive_trace,'dmodem_variant':a.dmodem,'lifecycle':a.lifecycle,'carrier':a.carrier,'carrier_trace':a.carrier_trace,'key_framing_trace':a.key_framing_trace,'input_sequence_timeout_ms':250 if a.key_framing else 0,
-  'DOS_screen':text,'gateway':n,'route':a.route,'upload_cancel':a.upload_cancel,'upload_cancel_retry':a.upload_cancel_retry,'posttrain_hold':a.posttrain_hold,'buffered_runtime_proof':str(a.buffered_runtime_proof.resolve().relative_to(ROOT)) if a.buffered_runtime_proof else None,'editor_burst_checks':str(burst_proof.relative_to(ROOT)) if a.editor_burst_checks else None,'editor_multiline_checks':str(multiline_proof.relative_to(ROOT)) if a.editor_multiline_checks else None,'editor':editor,'download':download,'upload':upload,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
+  'DOS_screen':text,'gateway':n,'route':a.route,'upload_cancel':a.upload_cancel,'upload_cancel_retry':a.upload_cancel_retry,'posttrain_hold':a.posttrain_hold,'buffered_runtime_proof':str(a.buffered_runtime_proof.resolve().relative_to(ROOT)) if a.buffered_runtime_proof else None,'editor_burst_checks':str(burst_proof.relative_to(ROOT)) if a.editor_burst_checks else None,'editor_multiline_checks':str(multiline_proof.relative_to(ROOT)) if a.editor_multiline_checks else None,'download_pressure_preparation':str(a.download_pressure_preparation.resolve().relative_to(ROOT)) if pressure_download else None,'editor':editor,'download':download,'upload':upload,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
   'scope':'Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to the explicitly recorded owned ENiGMA board. Any receiver candidate is separately identified; no unmodified-stock, physical modem/ATA/UART or whole-application claim follows from a candidate result.'}
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'passed':result['passed'],'checks':checks,'result':str(out/'result.json')},indent=2));return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

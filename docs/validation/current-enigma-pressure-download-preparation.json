@@ -1,0 +1,86 @@
+{
+  "passed": true,
+  "preparation_only": true,
+  "actual_DOS_audio_accepted": false,
+  "fixture": "build/bbs-lab/audio-pressure-download-fixture-01/result.json",
+  "reference": "build/bbs-lab/audio-pressure-download-reference-02/result.json",
+  "keys": "build/bbs-lab/audio-pressure-download-keys-02/result.json",
+  "source": "build/bbs-lab/enigma/source/file_base/pcplus_transfer/PCPRESS.BIN",
+  "bytes": 65797,
+  "sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+  "watchdog_BIOS_ticks": 54000,
+  "outer_timeout_seconds": 3020,
+  "production_helper_sha256": "0098179242555bc66c10ba8155450c7f61003fece503bc88779fb7747f5dc2d4",
+  "default_helper_binary_exact": true,
+  "inputs": {
+    "build/bbs-lab/audio-pressure-download-fixture-01/result.json": "10b912a4d635a9901465b2f0c6829213ecdce70b4092ccc2a92110869c50817e",
+    "build/bbs-lab/audio-pressure-download-reference-02/result.json": "bd566e028e6bae93a8a6d19b1116cff90c78f6942ed0a9206dc12055dbc98f34",
+    "build/bbs-lab/audio-pressure-download-keys-02/result.json": "dd462389450abeb44fc20856059f3734720c1ccefd88ceed9e43f49fd10cd437",
+    "lab/bbs/prepare_audio_pressure_download.py": "d6d30701931cc316fec32e2e16ac3c05576a02ddc9051c5ef627fae77465c663",
+    "lab/bbs/enigma.py": "526fcd6eb468ec7a85630685872d27a937abbc6b61f48ad8391a2353e5686017",
+    "lab/bbs/enigma_transfer.py": "12fd33f7c97c9279c622dd2baa32978d386d1153ab98d553402157e7c5069692",
+    "lab/bbs/reference_audio_pressure_download.py": "b9576aa9f64782b5af196a0d71ecf7f0f51d1e8472b5761a74e56be01a569c6a",
+    "lab/bbs/synchronet.py": "974117a9b4971bb1a13dc9483aee08b77bcc4895097133dc7147c18150300dcc",
+    "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+    "lab/bbs/audit_zmodem.py": "510ad0fd519c8fa279599956d13852f984a1e32e49e4588e1c482749829d5ad9",
+    "lab/bbs/check_audio_download_keys.py": "033fa1268b299742cc09be98398e8bc4dc997fde8dcf8cb5481c8ab51ab49cc0",
+    "lab/bbs/audio_download_keys.asm": "072c9b9b97b0dda3fdb465828db653aa88c13dfa5064b62950e39cd7212d7fd5",
+    "lab/bbs/audio_get_vector.asm": "a4dcbe3717c43f5914ee3503099d250fd7810610b8c25f4c0c18c2d4d403e817",
+    "build/bbs-lab/current-enigma-download-audio-01/program/EXITKEY.COM": "d7e42358bd0025e94d92565936e0b4f0f212cfc4c23779fbf2d46b6bff733393",
+    "lab/bbs/audio_pressure_download.py": "fdd7a29ec4e7fcb6eac97ff8649e49f32acb1151da25f63d40db301b860bc382",
+    "lab/bbs/audio_download.py": "4400986becf78aea7db1162128e5c65ac7a6b8d30ca6db2e861498d2efc6e208"
+  },
+  "check_counts": {
+    "fixture": 9,
+    "reference": 9,
+    "BIOS_helper": 6
+  },
+  "scope": "Preparation only for one actual DOS/audio stock ENiGMA65797-byte automatic ZMODEM download and post-helper Search/List. Default helper binary remains exact; pressure helper changes only its explicit filename/BIOS words and watchdog. Existing fixture custody, real independent reference transfer, full CRC/finish and BIOS guard are prerequisites. Slow-path integrity/efficiency/cleanup, physical hardware and all application gates remain unverified.",
+  "source_receipt": "build/bbs-lab/audio-pressure-download-preparation-02.json",
+  "source_receipt_sha256": "207dbb9179546d5c6176ccf99382117af9e4a9fdb99250ef50f10c399a9d1274",
+  "proofs_sha256": {
+    "build/bbs-lab/audio-pressure-download-fixture-01/result.json": "10b912a4d635a9901465b2f0c6829213ecdce70b4092ccc2a92110869c50817e",
+    "build/bbs-lab/audio-pressure-download-reference-02/result.json": "bd566e028e6bae93a8a6d19b1116cff90c78f6942ed0a9206dc12055dbc98f34",
+    "build/bbs-lab/audio-pressure-download-keys-02/result.json": "dd462389450abeb44fc20856059f3734720c1ccefd88ceed9e43f49fd10cd437",
+    "build/bbs-lab/audio-pressure-default-keys-02/result.json": "9ecbf1a57ae01114131e80915712cffdb0976cbb2f185bf32a59fa28a7779702",
+    "build/bbs-lab/current-enigma-download-audio-01/pressure-default-audit.json": "8c7aae4bfd754fa36df46f945924fdf383149c793d12ba1c81ce0b6fe5ccd16d"
+  },
+  "default_BIOS_checks": {
+    "normal_DOS_exit": true,
+    "exact_phased_BIOS_keys": true,
+    "timer_vector_restored": true,
+    "default_production_helper_binary_exact": true
+  },
+  "legacy_download_audit_checks": {
+    "post_protocol_search_key_observed": true,
+    "source_unchanged": true,
+    "complete_CRC_ZMODEM_and_opposite_controls": true,
+    "exact_DOS_file": true,
+    "only_expected_DOS_file": true,
+    "no_receive_staging": true,
+    "real_owned_helper": true,
+    "real_helper_exit_zero": true,
+    "post_helper_keyboard_search_and_list": true,
+    "official_file_and_counter": true,
+    "automatic_receive_profile": true,
+    "base_byte_and_cleanup_audit": true,
+    "frontend_ownership_audit": true,
+    "no_gateway_errors": true,
+    "producer_hashes": true
+  },
+  "default_capture_preservation": true,
+  "legacy_accepted_receipt_sha256": "fb2cf5b8445b47bf58ee78f6b7b59285637d9627aee99bbd7e51eb4c8c38cac3",
+  "terminal_sha256": "976ba8d0c7681b9727389e3f91e80e463738602b857130da491c249d6988e145",
+  "ASPECT_sha256": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+  "campaign_sources": {
+    "lab/bbs/synthmodem_audio_dos.py": "f77f0abd289bdbfb589f716f98f995afc0e8882ebcfb024c869d911eefc8a6dc",
+    "lab/bbs/audit_audio_download.py": "5eda917dea0e4566f474a6e245645dc6957ecdd047f467221badef43d48e7150",
+    "lab/bbs/audio_pressure_download.py": "fdd7a29ec4e7fcb6eac97ff8649e49f32acb1151da25f63d40db301b860bc382",
+    "lab/bbs/audio_download_keys.asm": "072c9b9b97b0dda3fdb465828db653aa88c13dfa5064b62950e39cd7212d7fd5",
+    "lab/bbs/check_audio_download_keys.py": "033fa1268b299742cc09be98398e8bc4dc997fde8dcf8cb5481c8ab51ab49cc0"
+  },
+  "reference_prerequisite_failure": {
+    "cohort": "build/bbs-lab/audio-pressure-download-reference-01",
+    "reason": "Initial modem shell lacks lrzsz; failure occurred before any connection. Corrected launch uses existing pinned default Nix shell through tools/dev. Original stderr and source retained."
+  }
+}

@@ -7,7 +7,8 @@ from synthmodem_vm_control import ROOT,sha
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True)
-    out=p.parse_args().output.resolve();assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
+    p.add_argument('--pressure',action='store_true',help='Explicit PCPRESS.BIN helper and wrong-filename guard check')
+    a=p.parse_args();out=a.output.resolve();assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
     source='''bits 16
 cpu 8086
 org 100h
@@ -88,8 +89,25 @@ key_cursor: dw values
 values: times32 db0
 filename: db 'KEYS.BIN',0
 '''.replace('times32 db0','times 32 db 0')
+    if a.pressure:
+        source=source.replace("fourth: db 'QUEUED PCXTEST.BIN',0","fourth: db 'QUEUED PCPRESS.BIN',0\nbadfourth: db 'QUEUED PCXTEST.BIN',0")
+        source=source.replace('mov si,fourth\ncall screen','''mov si,badfourth
+call screen
+mov ax,40h
+mov es,ax
+mov dx,[es:6ch]
+.wrong_filename:
+mov ax,[es:6ch]
+sub ax,dx
+cmp ax,8
+jb .wrong_filename
+mov ah,1
+int 16h
+jnz fail
+mov si,fourth
+call screen''')
     (out/'probe.asm').write_text(source)
-    for flags,asm,leaf in [(['-DAUDIO_DOWNLOAD_FAST_TEST=1'],ROOT/'lab/bbs/audio_download_keys.asm','EXITKEY.COM'),([],out/'probe.asm','PROBE.COM'),([],ROOT/'lab/bbs/audio_get_vector.asm','KEYVEC.COM')]:
+    for flags,asm,leaf in [(['-DAUDIO_DOWNLOAD_FAST_TEST=1']+(['-DAUDIO_DOWNLOAD_PRESSURE=1'] if a.pressure else []),ROOT/'lab/bbs/audio_download_keys.asm','EXITKEY.COM'),([],out/'probe.asm','PROBE.COM'),([],ROOT/'lab/bbs/audio_get_vector.asm','KEYVEC.COM')]:
         subprocess.run(['nasm','-fbin',*flags,str(asm),'-o',str(out/leaf)],check=True)
     (out/'dosbox.conf').write_text(f'''[sdl]
 output=surface
@@ -117,10 +135,29 @@ exit
         run=subprocess.run(['dosbox-x','-fastlaunch','-nogui','-conf',str(out/'dosbox.conf')],stdout=log,stderr=log,timeout=15,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'))
     read=lambda n:(out/n).read_bytes() if (out/n).exists() else b''
     expected=[0x1f53,0x1c0d,0x1950,0x2e43,0x2d58,0x1454,0x1245,0x1f53,0x1454,0x342e,0x3042,0x1749,0x314e,0x1c0d,0x1c0d,0x2d00]
+    if a.pressure:expected[4:9]=[0x1950,0x1352,0x1245,0x1f53,0x1f53]
     checks={'normal_DOS_exit':run.returncode==0 and (out/'PASS.TXT').exists() and not (out/'FAIL.TXT').exists(),
             'exact_phased_BIOS_keys':read('KEYS.BIN')==struct.pack('<16H',*expected),
             'timer_vector_restored':len(read('KEYOLD.BIN'))==4 and read('KEYOLD.BIN')==read('KEYNEW.BIN')}
-    r={'passed':all(checks.values()),'checks':checks,'inputs':{str(n.relative_to(ROOT)):sha(n) for n in [Path(__file__).resolve(),ROOT/'lab/bbs/audio_download_keys.asm',ROOT/'lab/bbs/audio_get_vector.asm']},
+    gold=ROOT/'build/bbs-lab/current-enigma-download-audio-01/program/EXITKEY.COM'
+    for leaf,flags in [('DEFAULT.COM',[]),('PRODUCTION.COM',['-DAUDIO_DOWNLOAD_PRESSURE=1'] if a.pressure else [])]:
+        subprocess.run(['nasm','-fbin',*flags,str(ROOT/'lab/bbs/audio_download_keys.asm'),'-o',str(out/leaf)],check=True)
+    checks['default_production_helper_binary_exact']=gold.read_bytes()==read('DEFAULT.COM')
+    if a.pressure:
+        checks['wrong_filename_does_not_release_exit']=checks['normal_DOS_exit'] and checks['exact_phased_BIOS_keys']
+        patched=gold.read_bytes()
+        old_words=[0x1950,0x2e43,0x2d58,0x1454,0x1245,0x1f53,0x1454,0x342e,0x3042,0x1749,0x314e,0x1c0d,0x1c0d,0]
+        for old,new in [(b'PCXTEST.BIN\0',b'PCPRESS.BIN\0'),
+                        (struct.pack('<14H',*old_words),struct.pack('<14H',*(expected[2:15]+[0]))),
+                        (struct.pack('<H',21240),struct.pack('<H',54000))]:
+            assert patched.count(old)==1 and len(old)==len(new)
+            patched=patched.replace(old,new)
+        checks['production_changes_only_name_BIOS_words_watchdog']=patched==read('PRODUCTION.COM')
+    r={'passed':all(checks.values()),'checks':checks,'pressure':a.pressure,'production_helper_sha256':sha(out/'PRODUCTION.COM'),
+       'default_helper_sha256':sha(out/'DEFAULT.COM'),'gold_helper_sha256':sha(gold),'expected_BIOS_words':expected,
+       'watchdog_BIOS_ticks':54000 if a.pressure else 21240,
+       'captures_sha256':{q.name:sha(q) for q in out.iterdir() if q.is_file()},
+       'inputs':{str(n.relative_to(ROOT)):sha(n) for n in [Path(__file__).resolve(),ROOT/'lab/bbs/audio_download_keys.asm',ROOT/'lab/bbs/audio_get_vector.asm',gold]},
        'scope':'Actual DOS BIOS helper test with independent synthetic video phases and shortened test-only delays. No keys during the receive phase; exact post-menu/search/exit keys and INT1C restoration. No product-state, real transfer, serial or BBS acceptance claim.'}
     (out/'result.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps(r,indent=2));assert r['passed']
 

@@ -17,7 +17,11 @@ jmp install
 %endif
 old_vector: dd 0
 state: db 0
+%ifdef AUDIO_DOWNLOAD_PRESSURE
+watchdog: dw 54000 ; bounded before the3020s pressure outer deadline
+%else
 watchdog: dw 21240 ; bounded before the1200s outer deadline
+%endif
 ticks: dw 0
 key_at: dw menu_keys
 receiving: db 'Receiving ZMODEM',0
@@ -26,9 +30,17 @@ menu_footer: db '...cmd:',0
 search_title: db 'FILE SEARCH',0
 search_footer: db 'ESC : cancel',0
 list_title: db 'QUEUED',0
+%ifdef AUDIO_DOWNLOAD_PRESSURE
+filename_marker: db 'PCPRESS.BIN',0
+%else
 filename_marker: db 'PCXTEST.BIN',0
+%endif
 menu_keys: dw 1f53h,1c0dh,0
+%ifdef AUDIO_DOWNLOAD_PRESSURE
+search_keys: dw 1950h,2e43h,1950h,1352h,1245h,1f53h,1f53h,342eh,3042h,1749h,314eh,1c0dh,1c0dh,0
+%else
 search_keys: dw 1950h,2e43h,2d58h,1454h,1245h,1f53h,1454h,342eh,3042h,1749h,314eh,1c0dh,1c0dh,0
+%endif
 exit_keys: dw 2d00h,0
 handler:
  pushf

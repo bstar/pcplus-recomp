@@ -7,6 +7,19 @@ data, reconnect and transfer runs. No physical compatibility or 14400-bps claim
 is established; the adapter has not arrived. PCPlus remains a serial terminal,
 with SIP/audio/Telnet handled by the Linux bridge.
 
+The [larger download preparation](docs/validation/current-enigma-pressure-download-preparation.json)
+now registers a fresh65797-byte PCPRESS.BIN through the owned stock ENiGMA CLI/API,
+preserving existing files (bytes/inode/size/mtime), selected metadata, server
+source/config/menus and helper. Nine fixture checks, nine real independent lrzsz
+TCP transfer checks and six actual BIOS helper checks pass. The reference verifies
+source/CRC/EOF/ZFIN/OO/opposite controls, official download count and post-helper
+Search/List. Four default BIOS checks and15 retained normal-download audit checks
+also pass without overwriting original receipts. The default helper remains exact;
+the pressure helper changes only filename/BIOS words/watchdog. The opt-in audio
+campaign has a54000-tick watchdog and3020-second outer bound, with unchanged976
+DOS terminal and200ms runtime. Actual slow-audio sustained/integrity/efficiency
+acceptance remains pending; this preparation closes no application/hardware gate.
+
 The [current multiline ENiGMA audio workflow](docs/validation/current-enigma-editor-multiline-audio-01.json)
 now passes31 producer,40 independent and12 serial-ownership checks. The source-
 built976 terminal and unchanged200ms runtime handle288 actual BIOS body keys:
