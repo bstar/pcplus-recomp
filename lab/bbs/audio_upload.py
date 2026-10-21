@@ -4,12 +4,15 @@ No server configuration changes, file replacement or invented protocol replies.
 Actual audio acceptance additionally requires independent wire/control audits.
 """
 from pathlib import Path
-from enigma_transfer import STORAGE,HELPER
+import enigma_transfer
 from enigma_upload_dos import metadata as file_metadata
 from synthmodem_vm_control import ROOT,sha
 import enigma
 
 NAME='AUDIOUP.BIN'
+
+def helper():return enigma_transfer.HELPER
+def storage():return enigma_transfer.STORAGE
 
 
 def payload():
@@ -25,12 +28,12 @@ def metadata():
 def prepare(out):
     out=Path(out).resolve();assert out.is_relative_to(ROOT/'build')
     before=metadata()
-    assert not before and not (STORAGE/NAME).exists(),'Preserve existing uploads; this first-run fixture must be absent'
+    assert not before and not (storage()/NAME).exists(),'Preserve existing uploads; this first-run fixture must be absent'
     send=out/'SEND';send.mkdir()
     path=send/NAME;path.write_bytes(payload())
     return {'source_path':str(path),'source_bytes':path.stat().st_size,'source_sha256':sha(path),
         'source_stat':[path.stat().st_ino,path.stat().st_size,path.stat().st_mtime_ns],
-        'metadata_before':before,'target_path':str(STORAGE/NAME)}
+        'metadata_before':before,'target_path':str(storage()/NAME)}
 
 
 def navigation(wait,mark):
@@ -51,7 +54,7 @@ def check(out,rows,before):
     if len(entries)==1:
         entry=entries[0];target=Path(entry['filePath'])
         installed=(entry['fileName']==NAME and entry['areaTag']==entry['storageTag']=='pcplus_transfer'
-            and target.resolve()==(STORAGE/NAME).resolve() and target.is_file() and target.read_bytes()==expected
+            and target.resolve()==(storage()/NAME).resolve() and target.is_file() and target.read_bytes()==expected
             and entry['fileSha256']==before['source_sha256'] and entry['meta'].get('byte_size')==len(expected)
             and entry['meta'].get('upload_by_username')=='loclab')
     executions=[i for i,r in enumerate(rows) if r.get('msg')=='Executing external protocol']
@@ -66,7 +69,7 @@ def check(out,rows,before):
         'exact_official_installed_file':installed,
         'unchanged_DOS_source':source.is_file() and source.read_bytes()==expected and sha(source)==before['source_sha256']
             and [source.stat().st_ino,source.stat().st_size,source.stat().st_mtime_ns]==before['source_stat'],
-        'real_owned_receive_helper':len(executions)==1 and rows[executions[0]].get('cmd')==str(HELPER)
+        'real_owned_receive_helper':len(executions)==1 and rows[executions[0]].get('cmd')==str(helper())
             and rows[executions[0]].get('direction')=='recv',
         'helper_exit_zero':len(executions)==len(exits)==1 and executions[0]<exits[0],
         'postupload_search_and_list':resumed}

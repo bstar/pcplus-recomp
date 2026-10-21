@@ -3768,5 +3768,7 @@
   "stock_receiver_finish_receipt": "docs/validation/sexyz-receive-finish.json",
   "control_timing_duplex_receipt": "docs/validation/audio-control-timing-duplex.json",
   "receiver_finish_candidate_receipt": "docs/validation/sexyz-receive-finish-candidate.json",
-  "receiver_finish_candidate_receipt_sha256": "d8c4319068ec7ebf1252c273ea543749a7cf0dbec71b6ca211633b7551700856"
+  "receiver_finish_candidate_receipt_sha256": "d8c4319068ec7ebf1252c273ea543749a7cf0dbec71b6ca211633b7551700856",
+  "receiver_finish_instance_receipt": "docs/validation/enigma-receive-finish-instance.json",
+  "receiver_finish_instance_receipt_sha256": "f033995b70dcf8b8c082ba25ab23c9b3c70be59b161acddbcd4597b7dbf765e1"
 }

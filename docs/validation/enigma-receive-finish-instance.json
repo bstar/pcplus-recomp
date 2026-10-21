@@ -1,0 +1,183 @@
+{
+  "passed": true,
+  "candidate_audio_accepted": false,
+  "instance": {
+    "kind": "sexyz-receive-finish-candidate",
+    "source": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma-rxfinish-candidate-01/source",
+    "port": 23235,
+    "helper": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma-rxfinish-candidate-01/helpers/sexyz-rxfinish",
+    "helper_sha256": "3485669f1df011640667e2111de08d32478f2d64941af0ea02bfa13492909b52",
+    "candidate_package": "/nix/store/y3l8kl9v0w1hv8hv6lv81ssz9jpdnz9q-sexyz-receive-finish-candidate-3.6-e7a8257",
+    "config_sha256": "4cff2c10ba61341f79cb6a89ad63033706fe8e3db334d8fffaa23bbfcbbaba97",
+    "database_initial_snapshots": {
+      "db/activitypub.sqlite3": "6acb65e07d323c447a571576aeef295e9e5a8caccdc3259f57bff6629bbac661",
+      "db/file.sqlite3": "e691672e5129cfb88688039a935c7f6724aa9df2e0a789651b90451676e1846e",
+      "db/message.sqlite3": "6a956d15b44b32c88c89bdd443285962633ff65aa63f5881ba227f79819788f4",
+      "db/mods/codes.l33t.enigma.onelinerz.sqlite3": "63a51ef3631b6d96886a1319c8fdd68353d8c32c05890ff211ff7b1dd684d42b",
+      "db/system.sqlite3": "ec5e65853945e7f5d7cf7f54cee807946fee6a725b5e51028ac49617b076503e",
+      "db/user.sqlite3": "13d1bfe7210ca3e263183a95261ceb7110840e30d804169e6d71e6edd5280a36"
+    },
+    "stock_server_inputs": {
+      "main.js": "1b2f4c9747380dbd77ddfbc918d24c4ce225c7dd51331e75d8c2102d852bfda9",
+      "core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+      "package-lock.json": "8fcaecda3a4b1756ad295be95486cbdd5b9afea005949ac3da8822224c822d56",
+      "config/config.hjson": "daae39792955eaf7b99c45fc936d54b153f62ea0d3f77672f45a8ace756a7dbc",
+      "config/menus/loc-activitypub.hjson": "82861725a47e5892bbfd2251feb02ca0bb46707516a872cf373b350b704c9fe7",
+      "config/menus/loc-doors.hjson": "fb012c018ec054a7e3261f2b4ef28dc568742b0936bfc56ba9377745f8c43530",
+      "config/menus/loc-file_base.hjson": "9d9a02672bcd18b122827e6112ecfd99a4e7ff2916052847de26a87c6808f6c2",
+      "config/menus/loc-login.hjson": "215f943d381a2acc4c1713ff14331efaee19c474218428eac6b64f77b9355f18",
+      "config/menus/loc-main.hjson": "dc2fd404bbb8a35bc5c8bb43b3fe66378173cd8d87d0ab25978af16bda15d227",
+      "config/menus/loc-message_base.hjson": "607939acb6818c7c5fb50a2d90b04fed1b92d50f51fb9ca4215cef06644d2540",
+      "config/menus/loc-new_user.hjson": "04f466f10cc5c169c03186bc8a7fde7b18d5d938e7f0b70873d74bae15161cec",
+      "config/menus/loc-private_mail.hjson": "ffb59f0d6f2d592181d2bc304d46e9e2a3b71a14c2d6cd65a639f6b0c6f3d382",
+      "core/upload.js": "3b9289a322b482950a5c4b5680e62bf646dc2f863e220f583babcf29bd996ffe",
+      "core/file_transfer.js": "a6e1e8b02947b9c2ac6eb7adff695f2633f445d749aedb874ffb5242f1aaba8e",
+      "core/file_entry.js": "618516d4c7db0fa6b26edf241ac0313e46eb8839f18a472af136ff56e11e0aa0",
+      "core/view_controller.js": "1e6a626ea891d0ded98e56a19f226411a65a83207cb64a0c26f58e2cc7e9ac85",
+      "core/toggle_menu_view.js": "688b85aa694b89d463e66f3134d2630387676995b8de680042d6836ed5589bbf",
+      "art/themes/luciano_blocktronics/ULOPTS.ANS": "dafc74ba436d1bef750757c7a67b81d8987f6433e27ccdc0d4cd5cf28793641e",
+      "art/themes/luciano_blocktronics/ULDETAIL.ANS": "0debfdd1dda1dff2cad897927c67bacea7bf91b756681c8aebb6ffa7cee0febc",
+      "art/themes/luciano_blocktronics/ULCHECK.ANS": "414258b1fd9fff099fda7adb1f934e31eb4981b372b3c5397fc22d2e3dc53049",
+      "art/themes/luciano_blocktronics/ULDUPES.ANS": "6f648ab491b1f9343096427aee5e9d1891d74813492f6c2943cd4b573baaaf94"
+    },
+    "stock_helper_sha256": "d1aeb1347fee332be75dd638dd4cb10a1bf7c418d96d0ebb79ca90470b0ed4bd",
+    "stock_upload": [
+      {
+        "name": "AUDIOUP.BIN",
+        "entries": [
+          {
+            "fileId": 13,
+            "fileName": "AUDIOUP.BIN",
+            "areaTag": "pcplus_transfer",
+            "storageTag": "pcplus_transfer",
+            "filePath": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/source/file_base/pcplus_transfer/AUDIOUP.BIN",
+            "fileSha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+            "meta": {
+              "dl_count": 0,
+              "byte_size": 11521,
+              "file_crc32": "c1cc84b",
+              "file_md5": "e3efcaea264d93e82d0a639595e17124",
+              "file_sha1": "a1fc9fcc13b73a06de1547a627f16947382fd1e6",
+              "upload_by_user_id": 2,
+              "upload_by_username": "loclab"
+            },
+            "desc": "AUDIOUP"
+          }
+        ]
+      }
+    ],
+    "copied_fixture_retirement": {
+      "entry": {
+        "fileId": 13,
+        "fileName": "AUDIOUP.BIN",
+        "areaTag": "pcplus_transfer",
+        "storageTag": "pcplus_transfer",
+        "filePath": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma-rxfinish-candidate-01/source/file_base/pcplus_transfer/AUDIOUP.BIN",
+        "fileSha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+        "meta": {
+          "dl_count": 0,
+          "byte_size": 11521,
+          "file_crc32": "c1cc84b",
+          "file_md5": "e3efcaea264d93e82d0a639595e17124",
+          "file_sha1": "a1fc9fcc13b73a06de1547a627f16947382fd1e6",
+          "upload_by_user_id": 2,
+          "upload_by_username": "loclab"
+        },
+        "desc": "AUDIOUP"
+      },
+      "preserved_bytes": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma-rxfinish-candidate-01/copied-AUDIOUP-preserved.bin",
+      "preserved_sha256": "499b8a2275751d0d48fcc01ac96a9571dc368538198f448dafa25db2fbaf60af",
+      "official_cli_stdout": "Removing /home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma-rxfinish-candidate-01/source/file_base/pcplus_transfer/AUDIOUP.BIN (including physical file)... Done\n"
+    },
+    "scope": "Separate loopback source-identical ENiGMA board, consistent synthetic DB snapshots and private writable storage. Only ZedZap receive command selects the candidate; stock board/helper/upload and SIP/DSP runtime remain unchanged. Copied AUDIOUP entry/bytes are preserved then retired in this clone only; fresh same-size/same-payload upload required."
+  },
+  "navigation": {
+    "passed": true,
+    "checks": {
+      "observed_stock_protocol_selection": true,
+      "actual_upload_options_and_protocol_menus": true,
+      "receive_helper_never_started": true,
+      "no_installed_upload": true,
+      "server_configuration_unchanged": true,
+      "maintained_upload_route_compiles": true,
+      "binary_fixture_covers_all_octets": true
+    },
+    "menus": [
+      "telnetConnected",
+      "matrix",
+      "login",
+      "fullLoginSequenceLoginArt",
+      "fullLoginSequenceLastCallers",
+      "fullLoginSequenceWhosOnline",
+      "fullLoginSequenceOnelinerz",
+      "fullLoginSequenceNewScanConfirm",
+      "fullLoginSequenceUserStats",
+      "mainMenu",
+      "fileBaseMainMenu",
+      "fileBaseUploadFiles",
+      "fileTransferProtocolSelection"
+    ],
+    "server_PID": 1626716,
+    "server_config_sha256": "4cff2c10ba61341f79cb6a89ad63033706fe8e3db334d8fffaa23bbfcbbaba97",
+    "server_fixture": {
+      "kind": "sexyz-receive-finish-candidate",
+      "lab": "build/bbs-lab/enigma-rxfinish-candidate-01",
+      "manifest": "build/bbs-lab/enigma-rxfinish-candidate-01/receive-finish-instance.json",
+      "manifest_sha256": "b3754f8543b1c68a366a4e7a90eaf08be993cb118ca8d7034d9f56675ebb5bb1",
+      "helper_sha256": "3485669f1df011640667e2111de08d32478f2d64941af0ea02bfa13492909b52",
+      "source": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma-rxfinish-candidate-01/source"
+    },
+    "server_rows_sha256": "32b554c4dcea4ab2e3e854f80e0d9db8257f459f3f32c27bbe7ab53d9767d1b8",
+    "script_sha256": "8184092febf6a7d30cae239357dc853c39e0fd0c1ec452ebde580de99b563a1a",
+    "source_sha256": {
+      "lab/bbs/check_audio_upload_navigation.py": "672275570d59835a0ce3cddc9bfb8f37314dea1904e890158965e36cd4c1d34d",
+      "lab/bbs/audio_upload.py": "b2e071d15cbd57d845cc96dddc864c28ff7d1bf69f45ed508f739f08f73ac304",
+      "lab/bbs/enigma_transfer.py": "12fd33f7c97c9279c622dd2baa32978d386d1153ab98d553402157e7c5069692"
+    },
+    "scope": "Unchanged ENiGMA upload-options/protocol navigation on the explicitly recorded server via independent fast TCP reference, plus ASPECT compilation and fixture preconditions. A modified receiver candidate is identified separately when selected. Stops before selecting protocol/launching helper; no real upload, native DOS, modem audio or physical acceptance."
+  },
+  "isolation": {
+    "passed": true,
+    "checks": {
+      "stock_entry_unchanged": true,
+      "stock_source_inputs_unchanged": true,
+      "stock_helper_unchanged": true,
+      "clone_has_no_upload": true,
+      "clone_source_equals_stock": true,
+      "exact_full_size_original_payload": true,
+      "retired_clone_bytes_preserved": true,
+      "only_declared_configuration_differences": true,
+      "private_runtime_and_consistent_database_snapshots": true,
+      "candidate_stock_context_roundtrip": true,
+      "reject_wrong-root": true,
+      "reject_wrong-manifest-hash": true,
+      "actual_navigation_prerequisite": true
+    },
+    "server_fixture": {
+      "kind": "sexyz-receive-finish-candidate",
+      "lab": "build/bbs-lab/enigma-rxfinish-candidate-01",
+      "manifest": "build/bbs-lab/enigma-rxfinish-candidate-01/receive-finish-instance.json",
+      "manifest_sha256": "b3754f8543b1c68a366a4e7a90eaf08be993cb118ca8d7034d9f56675ebb5bb1",
+      "helper_sha256": "3485669f1df011640667e2111de08d32478f2d64941af0ea02bfa13492909b52",
+      "source": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma-rxfinish-candidate-01/source"
+    },
+    "source_sha256": {
+      "lab/bbs/check_receive_finish_instance.py": "69060903e29a2c6f04ed4d7088570f5b99bc68dfc11b24bf4bd9eead62e8cfec",
+      "lab/bbs/enigma_receive_finish_instance.py": "35c932ee553d6350dc3c5eb51041ff011032d3fb24902aad6cc971528449d9ee",
+      "lab/bbs/audio_upload.py": "b2e071d15cbd57d845cc96dddc864c28ff7d1bf69f45ed508f739f08f73ac304"
+    },
+    "scope": "Read-only actual prepared fixture, official metadata and SQLite integrity, declared config diff, namespace round-trip and malformed-context rejection. Stock upload/helper/code preserved; private runtime verified and navigation prerequisite retained. No actual upload/audio or physical acceptance."
+  },
+  "source_sha256": {
+    "lab/bbs/enigma_receive_finish_instance.py": "35c932ee553d6350dc3c5eb51041ff011032d3fb24902aad6cc971528449d9ee",
+    "lab/bbs/check_receive_finish_instance.py": "69060903e29a2c6f04ed4d7088570f5b99bc68dfc11b24bf4bd9eead62e8cfec",
+    "lab/bbs/check_audio_upload_navigation.py": "672275570d59835a0ce3cddc9bfb8f37314dea1904e890158965e36cd4c1d34d",
+    "lab/bbs/audio_upload.py": "b2e071d15cbd57d845cc96dddc864c28ff7d1bf69f45ed508f739f08f73ac304"
+  },
+  "artifacts": {
+    "build/bbs-lab/enigma-rxfinish-candidate-01/receive-finish-instance.json": "b3754f8543b1c68a366a4e7a90eaf08be993cb118ca8d7034d9f56675ebb5bb1",
+    "build/bbs-lab/enigma-rxfinish-candidate-01/navigation/result.json": "6fd289e9a0832ad3c69ed402dd06746f5aeceb1497632a68b3bd81fabf08ae03",
+    "build/bbs-lab/enigma-rxfinish-candidate-01/isolation/result.json": "a1ef120d14e3480e54269779bb2e05af395d704f99df78135b9621862cb5f0d6"
+  },
+  "scope": "Prerequisites only: separate source-identical ENiGMA board at127.0.0.1:23235, pinned receiver candidate, consistent synthetic DB snapshots, exact declared config diff, actual navigation and namespace/isolation guards. Stock server/helper/upload remain preserved. No candidate upload, audio, physical or F01-F16 acceptance."
+}

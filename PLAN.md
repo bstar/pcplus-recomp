@@ -244,6 +244,17 @@ and SIP/DSP runtime remain unchanged. Next is a separately identified candidate
 board/audio run with fresh storage and all original gates. No stock or candidate
 audio upload acceptance follows from the isolated tests.
 
+The [candidate board prerequisites](docs/validation/enigma-receive-finish-instance.json)
+now pass seven actual navigation and thirteen isolation/namespace checks on a
+separate loopback instance. Tracked application source matches stock; only
+declared path/port relocation and the ZedZap receive command differ. Consistent
+synthetic DB snapshots and private writable runtime/storage preserve stock
+state. Its copied upload entry is retired through the official API after byte/
+row preservation, leaving the original board/file untouched. Explicit fixture
+selection binds producer and independent metadata/storage audits to this
+instance and freezes both prerequisites and auditors. The next full-size audio
+run uses the unchanged DOS executable, DTE, modem runtime and upload recipe.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

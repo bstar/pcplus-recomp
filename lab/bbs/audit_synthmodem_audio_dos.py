@@ -9,6 +9,8 @@ def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path);a=p.parse_args();out=a.cohort.resolve()
  r=json.loads((out/'result.json').read_text());n=json.loads((out/'node-result.json').read_text())
+ from enigma_receive_finish_instance import from_result
+ server_fixture=from_result(r)
  checks={};serial=(out/'serial-in.bin').read_bytes();wire=(out/'control-wire.bin').read_bytes();at=0;data=bytearray();status=[]
  while at<len(wire):
   assert at+3<=len(wire);size,kind=struct.unpack_from('<HB',wire,at);assert 1<=size<=4094 and at+size+2<=len(wire)
@@ -91,7 +93,9 @@ def main():
  checks['producer_inputs_unchanged']=all(sha(root/name)==h for name,h in r['frozen_inputs'].items())
  if r.get('input_sequence_timeout_ms',0):
   checks['explicit_key_framing_configuration']=r['input_sequence_timeout_ms']==250 and n.get('inputSequenceTimeoutMs')==250
-  checks['stock_BBS_inputs_unchanged']=bool(r.get('server_inputs')) and all(sha(root/'build/bbs-lab/enigma/source'/name)==h for name,h in r['server_inputs'].items())
+  server_root=Path(r.get('server_root',str(root/'build/bbs-lab/enigma/source')))
+  key='configured_BBS_inputs_unchanged' if server_fixture else 'stock_BBS_inputs_unchanged'
+  checks[key]=bool(r.get('server_inputs')) and all(sha(server_root/name)==h for name,h in r['server_inputs'].items())
  result={'passed':all(checks.values()),'checks':checks,'producer_sha256':sha(out/'result.json'),
   'auditor_sha256':sha(Path(__file__)),'audit_inputs':{name:sha(root/name) for name in ('lab/bbs/audit_synthmodem_audio_dos.py','lab/bbs/modem.py','lab/bbs/synthmodem_gateway.py')},'payloads':{'BBS_input_bytes':len(sent),'BBS_display_bytes':len(display),
    'BBS_input_sha256':hashlib.sha256(sent).hexdigest(),'BBS_display_sha256':hashlib.sha256(display).hexdigest(),

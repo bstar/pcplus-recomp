@@ -125,5 +125,38 @@ overwriting the accepted file or weakening duplicate protection. The user's LAN
 server and global modem runtime remain unchanged. No upstream issue or message
 has been sent.
 
+The [prepared candidate board](../../docs/validation/enigma-receive-finish-instance.json)
+now runs separately at127.0.0.1:23235 from the same tracked ENiGMA commit. It
+has consistent snapshots of synthetic databases and private logs/drop/storage.
+Only its ZedZap receive command selects the candidate; all other configuration
+differences are the declared local path/port relocation. The copied AUDIOUP
+entry is preserved and removed through the official CLI inside this clone;
+the original board's entry/file/helper/code remain unchanged. Seven actual
+navigation prerequisites and thirteen read-only isolation/namespace checks pass.
+
+The audio driver accepts this instance only through explicit `--fixture-lab`,
+records its manifest/helper hash and freezes the prerequisites, candidate source
+and independent auditors. Audit metadata/storage queries bind to that recorded
+instance and reject mismatched roots/manifests. Default runs retain the stock
+namespace. This preparation grants no candidate audio acceptance.
+
+```sh
+./tools/bbs-dev --command python3 lab/bbs/enigma_receive_finish_instance.py setup \
+  --lab build/bbs-lab/enigma-rxfinish-candidate-NEW
+./tools/bbs-dev --command python3 lab/bbs/enigma_receive_finish_instance.py start \
+  --lab build/bbs-lab/enigma-rxfinish-candidate-NEW
+./tools/dev --command python3 lab/bbs/check_audio_upload_navigation.py \
+  --fixture-lab build/bbs-lab/enigma-rxfinish-candidate-NEW \
+  --output build/bbs-lab/enigma-rxfinish-candidate-NEW/navigation
+./tools/dev --command python3 lab/bbs/check_receive_finish_instance.py \
+  --lab build/bbs-lab/enigma-rxfinish-candidate-NEW \
+  --output build/bbs-lab/enigma-rxfinish-candidate-NEW/isolation
+```
+
+The fixture owns one fixed loopback port. A fresh setup refuses an existing
+directory or occupied port; it does not stop another listener. The prepared
+instance can be reused for read-only checks while its upload target is absent.
+After upload, preserve the receipt and file before considering another fixture.
+
 Physical Boca/SPA2102, other peers, pressure/cancel/loss and all F01–F16 gates
 remain open.

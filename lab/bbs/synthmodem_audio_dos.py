@@ -19,7 +19,12 @@ from directory_test_support import accounting_check
 from test_terminal import SAMPLER
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--receive-trace',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--carrier-trace',action='store_true');p.add_argument('--key-framing',action='store_true');p.add_argument('--key-framing-trace',action='store_true');p.add_argument('--syscall-trace',action='store_true');p.add_argument('--route',choices=['menus','editor','download','upload'],default='menus');a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--receive-trace',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--carrier-trace',action='store_true');p.add_argument('--key-framing',action='store_true');p.add_argument('--key-framing-trace',action='store_true');p.add_argument('--syscall-trace',action='store_true');p.add_argument('--route',choices=['menus','editor','download','upload'],default='menus');p.add_argument('--fixture-lab',type=Path);a=p.parse_args()
+ server_fixture=None
+ if a.fixture_lab:
+  assert a.route=='upload','The explicit receiver candidate is an upload-only fixture'
+  from enigma_receive_finish_instance import bind
+  server_fixture=bind(a.fixture_lab)
  assert sum(bool(v) for v in (a.lifecycle,a.carrier,a.carrier_trace,a.key_framing,a.key_framing_trace,a.receive_trace,a.dmodem))<=1,'Choose one pinned runtime profile'
  a.key_framing=a.key_framing or a.key_framing_trace
  trace=a.receive_trace or a.carrier_trace or a.key_framing_trace
@@ -64,7 +69,18 @@ def main():
  if a.route=='upload':
   import audio_upload
   upload_before=audio_upload.prepare(out)
-  names+=['lab/bbs/audio_upload.py','lab/bbs/audio_upload_keys.asm','lab/bbs/check_audio_upload_keys.py','lab/bbs/check_audio_upload_navigation.py','docs/validation/audio-upload-keys.json','docs/validation/audio-upload-navigation.json','lab/bbs/enigma_upload_dos.py','lab/bbs/enigma_transfer.py',str(Path(upload_before['source_path']).relative_to(ROOT)),str(audio_upload.HELPER.relative_to(ROOT))]
+  names+=['lab/bbs/audio_upload.py','lab/bbs/audio_upload_keys.asm','lab/bbs/check_audio_upload_keys.py','lab/bbs/check_audio_upload_navigation.py','docs/validation/audio-upload-keys.json','docs/validation/audio-upload-navigation.json','lab/bbs/enigma_upload_dos.py','lab/bbs/enigma_transfer.py',str(Path(upload_before['source_path']).relative_to(ROOT)),str(audio_upload.helper().relative_to(ROOT))]
+ if server_fixture:
+  navigation=a.fixture_lab.resolve()/'navigation/result.json';nav=json.loads(navigation.read_text())
+  assert nav['passed'] and nav['server_fixture']==server_fixture
+  isolation=a.fixture_lab.resolve()/'isolation/result.json';isolated=json.loads(isolation.read_text())
+  assert isolated['passed'] and isolated['server_fixture']==server_fixture
+  names+=['lab/bbs/enigma_receive_finish_instance.py',server_fixture['manifest'],str(navigation.relative_to(ROOT)),
+   'lab/bbs/check_receive_finish_instance.py',str(isolation.relative_to(ROOT)),
+   'docs/validation/sexyz-receive-finish-candidate.json','nix/sexyz-receive-finish.nix','tools/cut-sexyz-source.py',
+   'lab/bbs/patches/sexyz-receive-finish/receive_finish.c','lab/bbs/patches/sexyz-receive-finish/receive_finish.h']
+  names+=['lab/bbs/audit_audio_upload.py','lab/bbs/audit_synthmodem_audio_dos.py','lab/bbs/audit_serial_io_evidence.py',
+   'lab/bbs/audit_audio_download.py','lab/bbs/audit_zmodem.py','lab/bbs/check_audio_control_timing.py']
  if a.route in ('download','upload'):
   names+=['src/terminal/transfer_actions.asm','standalone/check_carrier_transfer_deadline.py','docs/validation/carrier-transfer-deadline-fixed.json']
   names+=['src/transfer/zmodem.c','src/transfer/zmodem.h','src/transfer/zmodem_wire.c','src/transfer/zmodem_wire.h','standalone/check_zmodem_completed_replay.py','standalone/check_zmodem_completion_bounds.py','docs/validation/zmodem-completed-replay-fixed.json']
@@ -226,9 +242,9 @@ exit
   checks.pop('final_file_menu')
   extra,upload=audio_upload.check(out,rows,upload_before);checks.update(extra)
   checks['posttransfer_filename_visible']=audio_upload.NAME in text
- result={'passed':all(checks.values()),'checks':checks,'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'server_inputs':server_inputs,
+ result={'passed':all(checks.values()),'checks':checks,'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'server_inputs':server_inputs,'server_root':str(enigma.SOURCE),'server_fixture':server_fixture,
   'generated_inputs':generated,'tool_inputs':tool_inputs,'syscall_trace':a.syscall_trace,'clock_anchors':clock_anchors,'server_revision':enigma.COMMIT,'server_menus':menus,'script_stages':read('STAGES.LOG').decode('ascii'),'login_readiness':'WAITFOR plus reused one-shot WHEN latch','receive_trace':a.receive_trace,'dmodem_variant':a.dmodem,'lifecycle':a.lifecycle,'carrier':a.carrier,'carrier_trace':a.carrier_trace,'key_framing_trace':a.key_framing_trace,'input_sequence_timeout_ms':250 if a.key_framing else 0,
   'DOS_screen':text,'gateway':n,'route':a.route,'editor':editor,'download':download,'upload':upload,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
-  'scope':'Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to owned stock ENiGMA. No physical modem/ATA/UART acceptance.'}
+  'scope':'Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to the explicitly recorded owned ENiGMA board. Any receiver candidate is separately identified; no unmodified-stock, physical modem/ATA/UART or whole-application claim follows from a candidate result.'}
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'passed':result['passed'],'checks':checks,'result':str(out/'result.json')},indent=2));return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

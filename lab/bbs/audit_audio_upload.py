@@ -3,7 +3,7 @@
 import argparse,datetime,hashlib,json
 from pathlib import Path
 import enigma
-from enigma_transfer import STORAGE,HELPER
+import enigma_transfer
 from enigma_upload_dos import metadata
 from modem import Telnet
 from audit_audio_download import frontend_trace
@@ -18,6 +18,8 @@ def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path);out=p.parse_args().cohort.resolve()
     read=lambda name:json.loads((out/name).read_text())
     r=read('result.json');assert r['route']=='upload'
+    from enigma_receive_finish_instance import from_result
+    server_fixture=from_result(r)
     base=read('independent-audit.json');io=read('serial-io-audit.json')
     before=r['upload']['prepared'];source=out/'SEND/AUDIOUP.BIN';expected=source.read_bytes()
     sent,_=Telnet().feed((out/'bbs-input.bin').read_bytes());display,_=Telnet().feed((out/'bbs-output.bin').read_bytes())
@@ -38,7 +40,7 @@ def main():
     except Exception as error:
         errors.append(repr(error));checks['complete_CRC_ZMODEM_and_opposite_controls']=False
     entries=metadata(enigma.SOURCE,['AUDIOUP.BIN']);assert len(entries)==1
-    entries=entries[0]['entries'];target=STORAGE/'AUDIOUP.BIN'
+    entries=entries[0]['entries'];target=enigma_transfer.STORAGE/'AUDIOUP.BIN'
     checks['one_official_entry']=len(entries)==1
     checks['exact_installed_server_file']=target.is_file() and target.read_bytes()==expected
     checks['official_metadata_matches']=len(entries)==1 and entries[0]['fileName']=='AUDIOUP.BIN' and entries[0]['areaTag']==entries[0]['storageTag']=='pcplus_transfer' and Path(entries[0]['filePath']).resolve()==target.resolve() and entries[0]['fileSha256']==sha(source) and entries[0]['meta'].get('byte_size')==len(expected) and entries[0]['meta'].get('upload_by_username')=='loclab'
@@ -47,7 +49,7 @@ def main():
     rows=[json.loads(s) for s in (out/'server-session.jsonl').read_text().splitlines()]
     executes=[i for i,e in enumerate(rows) if e.get('msg')=='Executing external protocol']
     exits=[i for i,e in enumerate(rows) if e.get('msg')=='Process exited' and e.get('exitCode')==0]
-    checks['actual_owned_receiver_helper']=len(executes)==1 and rows[executes[0]].get('cmd')==str(HELPER) and rows[executes[0]].get('direction')=='recv'
+    checks['actual_owned_receiver_helper']=len(executes)==1 and rows[executes[0]].get('cmd')==str(enigma_transfer.HELPER) and rows[executes[0]].get('direction')=='recv'
     checks['helper_exit_zero']=len(executes)==len(exits)==1 and executes[0]<exits[0]
     tail=[e.get('menuName') for e in rows[exits[-1]+1:]] if exits else []
     resumed=False
@@ -76,11 +78,11 @@ def main():
     if protocol:
         for file in protocol['files']:file.pop('source',None)
     names=['result.json','independent-audit.json','serial-io-audit.json','bbs-input.bin','bbs-output.bin','server-session.jsonl','serial-in.bin','serial-out.bin','serial-input-events.jsonl','serial-write-events.jsonl','node-result.json','caller-decoded.bin']
-    report={'passed':all(checks.values()),'checks':checks,'protocol':protocol,'errors':errors,'control_timing':timing,
+    report={'passed':all(checks.values()),'checks':checks,'protocol':protocol,'errors':errors,'control_timing':timing,'server_fixture':server_fixture,
         'official_metadata':entries,'source_bytes':len(expected),'source_sha256':sha(source),'stored_sha256':sha(target) if target.is_file() else None,
         'late_protocol_controls':late,'capture_sha256':{name:sha(out/name) for name in names},
         'auditor_sha256':sha(Path(__file__)),'protocol_auditor_sha256':sha(Path(__file__).with_name('audit_zmodem.py')),
-        'scope':'Single actual DOS-to-stock-ENiGMA upload through software SIP/RTP/DSP. Independent passive CRC/payload/offset/EOF/opposite-controls/FIN/OO, exact official storage and timestamp, preserved source, post-form search/list, transport identity and DOS cleanup. No synthetic peer replies or changed server. No cancellation/loss/pressure/physical or whole-application acceptance.'}
+        'scope':'Single actual DOS-to-explicitly-recorded-ENiGMA upload through software SIP/RTP/DSP. Independent passive CRC/payload/offset/EOF/opposite-controls/FIN/OO, exact official storage and timestamp, preserved source, post-form search/list, transport identity and DOS cleanup. Any modified receiver fixture is labeled separately; no input changes during the run or synthetic peer replies. No cancellation/loss/pressure/physical or whole-application acceptance.'}
     (out/'upload-audit.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2));assert report['passed']
 
 
