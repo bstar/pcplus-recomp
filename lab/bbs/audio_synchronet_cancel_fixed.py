@@ -9,15 +9,22 @@ NAME="SXCAN002.BIN"
 REFNAME="SXCRF002.BIN"
 DESCRIPTION="Synthetic PCPlus audio cancel"
 
+def name_for(slot,reference=False):
+ assert type(slot) is int and 1<=slot<=999
+ return f'{"SXCRF" if reference else "SXCAN"}{slot:03d}.BIN'
+
+def owned_name(name):
+ return name in {name_for(slot,ref) for slot in range(1,1000) for ref in (False,True)}
+
 def payload(name):
- assert name in (NAME,REFNAME)
+ assert owned_name(name)
  return hashlib.sha256(name.encode()).digest()+bytes(((i*73+(i>>8)*19)&255)^0x5a for i in range(11521-32))
 
 def stored_files():
  return {p.name:sha(p) for p in sorted(AREA.iterdir()) if p.is_file()}
 
 def metadata(out,name,label):
- assert name in (NAME,REFNAME) and label in ('before','after')
+ assert owned_name(name) and label in ('before','after')
  path=out/('metadata-'+label+'.js');assert not path.exists()
  path.write_text("var f=new FileBase('pcplab');if(!f.open())throw Error(f.last_error);print('PCPLAB_JSON:'+JSON.stringify(f.get('"+name+"')));f.close();\n")
  r=subprocess.run([str(RUNTIME/'exec/jsexec'),'-n',str(path)],env=ENV(),capture_output=True,text=True,check=True)

@@ -1,0 +1,51 @@
+{
+  "passed": true,
+  "preparation_only": true,
+  "actual_DOS_audio_cancellation_accepted": false,
+  "source_comparison_revision": "6752d7fe925f7d05b36596a527bb05e066cbdc04",
+  "remote_name": "SXCAN003.BIN",
+  "local_alias": "SEND/SXCAN002.BIN",
+  "reference_reused": true,
+  "key_proof_reused": true,
+  "prerequisites": {
+    "reference": {
+      "path": "build/bbs-lab/synchronet-audio-cancel-reference-01/result.json",
+      "sha256": "02d086a11a605ebfa6483b2287f56338b206bcf660c0805d00403a336a645ae6"
+    },
+    "keys": {
+      "path": "build/bbs-lab/audio-synchronet-cancel-fixed-keys-01/result.json",
+      "sha256": "2792e56e3673d7eae20f31d241cbd17482003bf95556856864db59a41bb3cdb2"
+    },
+    "recipe": {
+      "path": "build/bbs-lab/current-synchronet-cancel-recipe-01/result.json",
+      "sha256": "198a15a46032ac7833515df4b2d7440738184195698c7280efd91bf23e75831d"
+    },
+    "preflight": {
+      "path": "build/bbs-lab/current-synchronet-cancel-preflight-01/result.json",
+      "sha256": "d4bdfc1afad56928ad1a37206215e246bddf554f7ec70ea58bacafdc8c44d62d"
+    },
+    "buffered_runtime": {
+      "path": "build/bbs-lab/synthmodem-buffered-runtime-01/result.json",
+      "sha256": "fcfc4e91b2d8b0e80caf8b837bffe8ae67fad81e9ce6b59793e02e6b6fb2c2dd"
+    }
+  },
+  "check_counts": {
+    "reference": 10,
+    "BIOS_key_cases": 2,
+    "recipe": 15,
+    "preflight": 4
+  },
+  "default_payloads_and_script_unchanged": true,
+  "selected_script_changes_only_remote_name": true,
+  "inputs": {
+    "lab/bbs/audio_synchronet_cancel_fixed.py": "da16212235bd00bf8de70b9592e434edd7d082bf0a16a1b7e025f54f70a31933",
+    "lab/bbs/prepare_synchronet_audio_cancel_fixed.py": "5a829368b400272ce581562486b9e43d54901f9344c12177ca8e81f08a1b7551",
+    "lab/bbs/synthmodem_synchronet_cancel_fixed_audio_dos.py": "66da279a781b1d27684dd1d1626122cb69b89f12a0f3d58d7cd29fc1b46f450f",
+    "lab/bbs/check_synchronet_cancel_fixed_audio_recipe.py": "b1902f554dc5a0934e578348d111a43f29e274917a8b29402bffcc79538977e4",
+    "lab/bbs/audit_synchronet_cancel_fixed_audio_dos.py": "b0a540ecee9db8e5b17181095b831ae6c7b003b465dd49e1345f29b0648fe3ad",
+    "lab/bbs/audit_synchronet_cancel_fixed_metadata.py": "78759fd78048c7de373e1d27a421a19f38a22beeea790d38d943123229c54e44",
+    "lab/bbs/check_synchronet_cancel_fixed_controls.py": "dd1d16a4bb21f1bf42d159087f55bd393892aff0cfd8f890b85c2803afe4068e",
+    "lab/bbs/record_synchronet_cancel_fixed_audio.py": "16550f847380aed198dafb73855321ec79c5d438b12f312550a7246e7f70c150"
+  },
+  "scope": "Fresh target absence through disk and official API, maintained current-binary regression identity and unchanged default payload/script/BIOS helper. Existing pinned reference and six-check BIOS proof reused with source hashes verified. A fresh recipe checks15 raw wait tokens. Preparation alone establishes neither DOS/audio cancellation nor stock partial cleanup. Preserve all earlier files/captures; no physical modem claim."
+}

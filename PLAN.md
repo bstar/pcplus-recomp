@@ -124,6 +124,30 @@ Original evidence and all earlier files remain unchanged. Current cancellation/
 retry, multiline editing, sustained pressure, physical hardware and all F01–F16
 work remain required; this accepts one stock upload workflow only.
 
+The [current cancellation preparation](docs/validation/current-synchronet-cancel-preparation.json)
+now checks a fresh `SXCAN003.BIN` destination while retaining the proven local
+`SEND/SXCAN002.BIN` BIOS-helper alias. Default payloads/script and all helper
+inputs remain exact; current-binary37-case boundary/54-upload/44-receive proofs
+retain their identities. The pinned reference/key proofs are reused with their
+input hashes verified;15 selected-script wait tokens and4 official/disk absence
+checks pass. The [current976/200ms audio run](docs/validation/current-synchronet-cancel-audio-01.json)
+now passes89 client/protocol/partial-accounting checks:2189 exact online and35634
+exact BBS display bytes, two complete CRC frames before CAN, zero split-frame
+bytes, real Files/Main and normal DOS/UART/IRQ/PIC/timer/SIP cleanup. Remote pause
+arrives11.685seconds after CAN, within the15-second bound versus66.192seconds in
+the original failure. All35843 frontend bytes complete without failed/skipped/
+pending writes. Client cancellation is accepted for this workflow; stock retains
+and indexes the exact2048-byte prefix, so server cleanup and overall receipt
+remain false. Earlier files/captures are retained. The
+[fresh current startup component proof](docs/validation/current-terminal-upload-startup-01.json)
+also passes three actual DOS independent-peer cases: plain CRC over10KiB, ANSI
+CRC and split-CSI checksum. No premature packets, exact source/padding/finish,
+keyboard recovery and UART/IRQ/PIC cleanup pass. Its43 linked startup cases and
+54-upload/37-boundary/44-receive regressions bind the current976 binary. This is
+neither a BBS nor an audio retry run. The retry runner still defaults to the old
+3b component receipt; bind the fresh proof explicitly while adding unused target
+slots and the200ms runtime before the next same-call audio campaign.
+
 The hardware target's [work order and completion gates](docs/ANALOG_MODEM_INTEGRATION.md#work-order-and-completion-gates)
 prioritize carrier/data separation and full audio-path pressure/editor/transfer
 checks before physical commissioning. Boca identification and adapter arrival

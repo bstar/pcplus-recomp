@@ -81,7 +81,8 @@ def main():
   cursor=found+len(token)
  checks['ordered_actual_Synchronet_prompts']=ordered
  checks['one_authoritative_synthetic_login']=len(re.findall(rb'LABUSER\s+Logon ',(out/'server-session.log').read_bytes()))==1
- from audio_synchronet_cancel_fixed import NAME,AREA,payload,stored_files
+ from audio_synchronet_cancel_fixed import AREA,payload,stored_files,name_for
+ NAME=r['upload']['name'];assert NAME in {name_for(slot) for slot in range(1,1000)}
  from audit_audio_download import frontend_trace
  expected=payload(NAME);protocol=None;errors=[]
  checks.update(CRC_progress_ACK_before_CAN=False,no_EOT_or_complete_upload=False,exact_menu_and_protocol_input=False,retained_partial_accounted=False)
@@ -93,7 +94,7 @@ def main():
   checks['CAN_at_complete_packet_boundary']=protocol['incomplete_next_frame_bytes']==0
   checks['no_EOT_or_complete_upload']=True
   initial=re.sub(rb'\x1b\[(?:\?1;2c|\d+;\d+R)',b'',sent[:first])
-  checks['exact_menu_and_protocol_input']=initial==b'LABUSER\rLABPASS42\r Qn\r TJ11\rUSXCAN002.BIN\rySynthetic PCPlus audio cancel\r1n' and sent[at:]==b'\x18\x18 Q'
+  checks['exact_menu_and_protocol_input']=initial==b'LABUSER\rLABPASS42\r Qn\r TJ11\rU'+NAME.encode()+b'\rySynthetic PCPlus audio cancel\r1n' and sent[at:]==b'\x18\x18 Q'
   target=AREA/NAME;partial=target.read_bytes() if target.exists() else b''
   checks['retained_partial_accounted']=expected.startswith(partial) and len(partial)<len(expected) and len(partial)<=protocol['complete_source_bytes']
   protocol['retained_bytes']=len(partial)

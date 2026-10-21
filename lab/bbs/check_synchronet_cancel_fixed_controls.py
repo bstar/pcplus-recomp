@@ -3,7 +3,7 @@
 import argparse,json
 from pathlib import Path
 from audio_synchronet import ROOT,sha
-from audio_synchronet_cancel_fixed import NAME,payload
+from audio_synchronet_cancel_fixed import payload,name_for
 from audit_synchronet_cancel_fixed_audio_dos import cancel_protocol
 from audit_audio_download import frontend_trace
 from modem import Telnet
@@ -12,6 +12,7 @@ if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path);out=p.parse_args().cohort.resolve()
  assert out.is_relative_to(ROOT/'build') and not (out/'cancel-control-checks.json').exists()
  base=json.loads((out/'independent-audit.json').read_text());assert base['passed']
+ run=json.loads((out/'result.json').read_text());NAME=run['upload']['name'];assert NAME in {name_for(slot) for slot in range(1,1000)}
  sent,_=Telnet().feed((out/'bbs-input.bin').read_bytes());display,_=Telnet().feed((out/'bbs-output.bin').read_bytes())
  trace,_=frontend_trace(out,sent,display,base['payloads']['expected_bridge_bytes']);expected=payload(NAME)
  protocol=cancel_protocol(sent,display,trace,expected);checks={'actual_CRC_ACK_CAN_and_live_menu':True}

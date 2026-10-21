@@ -3,10 +3,10 @@
 import argparse,json
 from pathlib import Path
 from audio_synchronet import ROOT,snapshot,sha
-from audio_synchronet_cancel_fixed import NAME,AREA,payload,metadata,stored_files
+from audio_synchronet_cancel_fixed import AREA,payload,metadata,stored_files,name_for
 
 if __name__=='__main__':
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);out=p.parse_args().output.resolve()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);p.add_argument('--slot',type=int,choices=range(1,1000),default=2);a=p.parse_args();out=a.output.resolve();NAME=name_for(a.slot)
  assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
  before=snapshot();files=stored_files();assert NAME not in files and not (AREA/NAME).exists()
  value=metadata(out,NAME,'before');assert value is None

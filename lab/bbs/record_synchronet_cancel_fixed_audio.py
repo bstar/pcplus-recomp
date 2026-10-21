@@ -22,7 +22,11 @@ def main():
  assert sha(out/'program/TERMINAL.EXE')==r['frozen_inputs']['build/terminal/TERMINAL.EXE']
  assert sha(out/'program/ASPECT.EXE')==r['frozen_inputs']['build/aspect-runner/ASPECT.EXE']
  runtime=Path(next(iter(r['runtime_inputs'])))
- runtime=next(p for p in runtime.parents if (p/'source/config.js').is_file());assert validate_runtime(runtime)==r['runtime_inputs']
+ runtime=next(p for p in runtime.parents if (p/'source/config.js').is_file())
+ if r.get('buffered_runtime_proof'):
+  from synthmodem_buffered_runtime import validate as validate_buffered
+  assert validate_buffered(runtime,ROOT/r['buffered_runtime_proof'])==r['runtime_inputs']
+ else:assert validate_runtime(runtime)==r['runtime_inputs']
  assert snapshot()==r['server'] and message_bodies()==r['message_bodies']
  for k in ('dnloads','dnloadb','posts','email','feedback'):assert r['statistics_before']['Total'][k]==r['statistics_after']['Total'][k]
  prefix=b'ATZ\rATD1\r';serial=(out/'serial-in.bin').read_bytes();assert serial.startswith(prefix);online=serial[len(prefix):]
@@ -38,7 +42,7 @@ def main():
  bridge=(b'PCPLUS DSP LAB V22 1200\r\nCONNECT> Connecting to '+address+b'...\r\r\nConnected to '+address+b'.\r\r\nIn-band menu escape disabled; remote close returns to menu. QUIT there hangs up.\r\r\n\r\r\n')
  assert (out/'caller-decoded.bin').read_bytes()==bridge+display
  holds=re.findall(r'Post-train hold complete .*waited (\d+)ms, dropped (\d+) bytes\)',(out/'node.log').read_text());assert len(holds)==1 and 6000<=int(holds[0][0])<=15500 and holds[0][1]=='0'
- prerequisites={n:h for n,h in r['frozen_inputs'].items() if n.endswith('/result.json')};assert len(prerequisites)==4
+ prerequisites={n:h for n,h in r['frozen_inputs'].items() if n.endswith('/result.json')};assert len(prerequisites)==4+bool(r.get('buffered_runtime_proof'))
  for n in prerequisites:assert json.loads((ROOT/n).read_text())['passed']
  recipe=[json.loads((ROOT/n).read_text()) for n in prerequisites if 'recipe' in n];assert len(recipe)==1 and all(c['raw_match_possible'] for c in recipe[0]['cases'])
  timing=read('cancel-control-checks.json');assert timing['passed'] and all(timing['checks'].values())
@@ -47,7 +51,8 @@ def main():
  metadata=read('cancel-metadata-audit.json');assert metadata['passed'] and all(metadata['checks'].values())
  for n,h in metadata['inputs'].items():assert sha(ROOT/n)==h,n
  for n,h in metadata['captures_sha256'].items():assert sha(out/n)==h,n
- from audio_synchronet_cancel_fixed import NAME,AREA,payload,stored_files
+ from audio_synchronet_cancel_fixed import AREA,payload,stored_files,name_for
+ NAME=r['upload']['name'];assert NAME in {name_for(slot) for slot in range(1,1000)}
  source=ROOT/r['upload']['source_path'];assert source.read_bytes()==payload(NAME) and sha(source)==r['upload']['source_sha256']
  partial=(AREA/NAME).read_bytes() if (AREA/NAME).exists() else b''
  assert partial==(out/'receiver-partial.bin').read_bytes() and payload(NAME).startswith(partial) and len(partial)<11521
@@ -68,7 +73,7 @@ def main():
  assert new_delay<=response_budget and new_delay<old_delay/2
  proof=json.loads((ROOT/'build/terminal/terminal-upload-cancel-boundary.json').read_text())
  assert proof['passed'] and len(proof['cases'])==37 and proof['binary_sha256']==r['frozen_inputs']['build/terminal/TERMINAL.EXE']
- names=list(dict.fromkeys([*r['captures_sha256'],'result.json','independent-audit.json','serial-io-audit.json','offline-caller.json','server-inputs.json','SEND/SXCAN002.BIN','receiver-partial.bin','cancel-control-checks.json','cancel-boundary-diagnosis.json','cancel-metadata-audit.json','metadata-after.js','metadata-after.json','metadata-after.stdout','metadata-after.stderr']))
+ names=list(dict.fromkeys([*r['captures_sha256'],'result.json','independent-audit.json','serial-io-audit.json','offline-caller.json','server-inputs.json',str(source.relative_to(out)),'receiver-partial.bin','cancel-control-checks.json','cancel-boundary-diagnosis.json','cancel-metadata-audit.json','metadata-after.js','metadata-after.json','metadata-after.stdout','metadata-after.stderr']))
  server=r['server'];tree_hash=lambda value:hashlib.sha256(json.dumps(value,sort_keys=True).encode()).hexdigest()
  result={'passed':False,'client_workflow_passed':True,'eventual_client_recovery_verified':True,'responsive_cancellation_accepted':True,'actual_Synchronet_audio_accepted':False,'actual_client_cancellation_accepted':True,'server_partial_cleanup_accepted':cleanup,'cohort':str(out.relative_to(ROOT)),'route':'login/native-Escape-after-ACK/CAN/post-cancel-Files/Main',
   'check_counts':{'producer':len(r['checks']),'independent':len(base['checks']),'ownership':len(io['checks']),'official_partial_accounting':len(metadata['checks']),'negative_controls':len(timing['checks'])},'producer_checks':r['checks'],'independent_checks':base['checks'],'ownership_checks':io['checks'],'partial_accounting_checks':metadata['checks'],'metadata':metadata['metadata'],'receiver_records':metadata['receiver_records'],'server_published_partial_upload':metadata['server_published_partial_upload'],'control_checks':timing['checks'],'control_inputs':timing['inputs'],'upload':r['upload'],'protocol':base['protocol'],'boundary_diagnosis':diagnosis,'baseline_failure_receipt':str(baseline_path.relative_to(ROOT)),'baseline_failure_sha256':sha(baseline_path),'prior_peer_response_seconds':old_delay,'new_peer_response_seconds':new_delay,'peer_response_budget_seconds':response_budget,'linked_boundary_cases':37,
@@ -76,7 +81,7 @@ def main():
   'payloads':base['payloads'],'serial_counters':io['counters'],'hardware_snapshot':base['hardware_snapshot'],'script_stages':r['script_stages'],
   'server_source_commit':server['source_commit'],'official_server_binary_sha256':server['binary_sha256'],'server_archives':server['archives'],
   'immutable_server_file_count':len(server['server_inputs']),'server_input_tree_sha256':tree_hash(server['server_inputs']),'loaded_library_sha256':server['server_libraries'],
-  'statistics_before':r['statistics_before'],'statistics_after':r['statistics_after'],'prerequisite_inputs':prerequisites,'producer_inputs':r['frozen_inputs'],'runtime_inputs':r['runtime_inputs'],
+  'statistics_before':r['statistics_before'],'statistics_after':r['statistics_after'],'prerequisite_inputs':prerequisites,'producer_inputs':r['frozen_inputs'],'runtime_inputs':r['runtime_inputs'],'buffered_runtime_proof':r.get('buffered_runtime_proof'),
   'capture_sha256':{n:sha(out/n) for n in names},'recorder_sha256':sha(Path(__file__)),
   'scope':'Actual source-built DOS/ASPECT Escape cancellation through stock Synchronet and real SIP/RTP/V22-1200 audio at38400DTE. Complete CRC/source frame and received ACK precede native CAN; exact partial-next-frame bytes, no EOF/full-source success, subsequent actual Files/Main and normal UART/IRQ/PIC/timer/SIP cleanup are independently audited. Source identity and existing files preserve. Maintained ordinary sender defers Escape through the current checksum/CRC; complete frames precede CAN. The measured stock peer response is within a conservative full-frame carrier-time budget and less than half the preserved66-second baseline. Linked37-case edge/fault/late-ACK checks pass. Responsive client cancellation is accepted only for this scoped audio workflow. Any retained/indexed partial keeps server cleanup and overall passed false; the original baseline is preserved. No retry, carrier-loss/reconnect, pressure, physical Boca/SPA2102 or F01-F16 completion.'}
 

@@ -192,6 +192,49 @@ reconnect, sustained pressure, other profiles and physical hardware remain open.
 Earlier audio receipts retain their original frozen executable identities; this
 new binary's audio proof covers the cancellation workflow described here.
 
+The [current-build preparation](../../docs/validation/current-synchronet-cancel-preparation.json)
+preserves that history and selects unused remote slot3, `SXCAN003.BIN`.
+`--slot` accepts registered eight-character names and binds the chosen name into
+the preflight, recipe, deterministic payload and audits. The unchanged helper
+still types local `D:\SEND\SXCAN002.BIN`; XMODEM carries no filename, so only the
+BBS-side name changes. Default slot2 behavior remains exact. Existing reference
+and BIOS-key proofs remain valid by their unchanged input identities. The fresh
+selected recipe checks15 raw prompts and the preflight confirms disk/API absence.
+The [current976 run](../../docs/validation/current-synchronet-cancel-audio-01.json)
+uses the validated200ms runtime and now passes89 checks. Its2189 online bytes
+and35634 BBS display bytes remain exact; two complete CRC frames precede CAN
+with zero split-frame bytes. The remote pause arrives11.685seconds after CAN,
+within the15-second response budget; actual Files/Main and normal DOS/UART/IRQ/
+PIC/timer/SIP cleanup pass. All35843 frontend bytes complete without failed,
+skipped or pending writes. Seven controls include the old midframe pattern and
+timing/corruption/false-EOT mutants, all correctly rejected. The official API and
+helper E record account for the exact2048-byte retained/indexed partial.
+Responsive client cancellation is accepted; server cleanup and overall receipt
+stay false. No earlier file is removed or overwritten. Same-call retry and
+physical hardware require separate current-build tests.
+
+```sh
+./tools/bbs-dev --command python3 lab/bbs/prepare_synchronet_audio_cancel_fixed.py \
+  --slot 3 --output build/bbs-lab/current-synchronet-cancel-preflight-01
+./tools/modem-dev --command python3 lab/bbs/check_synchronet_cancel_fixed_audio_recipe.py \
+  --slot 3 --reference build/bbs-lab/synchronet-audio-cancel-reference-01 \
+  --output build/bbs-lab/current-synchronet-cancel-recipe-01
+./tools/modem-dev --command python3 lab/bbs/synthmodem_synchronet_cancel_fixed_audio_dos.py \
+  --slot 3 --runtime build/bbs-lab/synthmodem-buffered-runtime-01/runtime \
+  --buffered-runtime-proof build/bbs-lab/synthmodem-buffered-runtime-01/result.json \
+  --reference build/bbs-lab/synchronet-audio-cancel-reference-01/result.json \
+  --key-checks build/bbs-lab/audio-synchronet-cancel-fixed-keys-01/result.json \
+  --recipe-checks build/bbs-lab/current-synchronet-cancel-recipe-01/result.json \
+  --preflight build/bbs-lab/current-synchronet-cancel-preflight-01/result.json \
+  --output build/bbs-lab/current-synchronet-cancel-audio-01
+```
+
+These commands document the current cohort, whose outputs must not be rerun or
+overwritten. Later tests require fresh output paths and an unused remote slot.
+After natural exit, use the `cancel_fixed` byte/metadata/control auditors, serial
+audit, independent caller decoder and boundary diagnosis before recording client
+acceptance. Any retained or indexed partial keeps server cleanup unaccepted.
+
 
 ## First actual failure
 
