@@ -58,7 +58,8 @@ def main():
   checks['Insert_changes_to_overtype']=positions[11:13]==[('OVR',1,col) for col in (7,8)]
   checks['Tab_advances_and_page_keys_preserve_boundary']=positions[13:17]==[('OVR',1,col) for col in (9,10,10,10)]
   checks['CtrlY_clears_line_before_final_text']=positions[17:25]==[('OVR',1,col) for col in range(1,9)]
-  screen=(out/'SCREEN.BIN').read_bytes();last='\n'.join(screen[i*160:i*160+160:2].decode('cp437') for i in range(25)) if len(screen)==4000 else ''
+  screen=(out/'SCREEN.BIN').read_bytes() if (out/'SCREEN.BIN').is_file() else b''
+  last='\n'.join(screen[i*160:i*160+160:2].decode('cp437') for i in range(25)) if len(screen)==4000 else ''
   checks['unsaved_final_line_visible']='UNSAVED' in last
   checks['draft_never_saved']=not any('posted message to' in v.get('msg','') for v in rows)
   editor={'positions':positions,'expected_body_hex':expected_body.hex(),'actual_DOS_body_hex':keyboard.hex(),
@@ -80,6 +81,9 @@ def main():
  root=Path(__file__).resolve().parents[2]
  checks['runtime_inputs_unchanged']=all(sha(Path(name))==h for name,h in r['runtime_inputs'].items())
  checks['producer_inputs_unchanged']=all(sha(root/name)==h for name,h in r['frozen_inputs'].items())
+ if r.get('input_sequence_timeout_ms',0):
+  checks['explicit_key_framing_configuration']=r['input_sequence_timeout_ms']==250 and n.get('inputSequenceTimeoutMs')==250
+  checks['stock_BBS_inputs_unchanged']=bool(r.get('server_inputs')) and all(sha(root/'build/bbs-lab/enigma/source'/name)==h for name,h in r['server_inputs'].items())
  result={'passed':all(checks.values()),'checks':checks,'producer_sha256':sha(out/'result.json'),
   'auditor_sha256':sha(Path(__file__)),'audit_inputs':{name:sha(root/name) for name in ('lab/bbs/audit_synthmodem_audio_dos.py','lab/bbs/modem.py','lab/bbs/synthmodem_gateway.py')},'payloads':{'BBS_input_bytes':len(sent),'BBS_display_bytes':len(display),
    'BBS_input_sha256':hashlib.sha256(sent).hexdigest(),'BBS_display_sha256':hashlib.sha256(display).hexdigest(),

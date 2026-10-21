@@ -10,7 +10,7 @@ cfg.modem.native.forceProtocol='V22';cfg.rtp.bindAddress='127.0.0.1';cfg.rtp.por
 cfg.sip.host='127.0.0.1';cfg.sip.publicHost='127.0.0.1';
 Object.assign(cfg.terminal,{banner:'PCPLUS DSP LAB {{protocol}} {{bps}}\n',prompt:'CONNECT> ',lineEnding:'\r\n',localEcho:false});
 Object.assign(cfg.telnet,{terminalType:'ANSI',terminalCols:80,terminalRows:25,allowedHosts:['127.0.0.1'],blockedHosts:[],
- idleTimeoutMs:0,menuIdleHeartbeatMs:0,proxyEscapeByte:null,negotiateOptions:true});
+ idleTimeoutMs:0,menuIdleHeartbeatMs:0,proxyEscapeByte:null,negotiateOptions:true,inputSequenceTimeoutMs:process.argv.includes('--key-framing')?250:0});
 const {SipServer}=require(src('src/sip/SipServer.js'));
 const {SipUacInternal}=require(src('src/sip/SipUacInternal.js'));
 const {CallSession}=require(src('src/session/CallSession.js'));
@@ -97,6 +97,7 @@ async function shutdown(reason){
    'rtp-from-answer.bin':Buffer.concat(rtpRx.map(record)),'rtp-from-caller.bin':Buffer.concat(rtpTx.map(record)),
    'sip-to-server.bin':Buffer.concat(sipRx.map(record)),'sip-to-caller.bin':Buffer.concat(sipTx.map(record))}))fs.writeFileSync(path.join(out,n),b);
   fs.writeFileSync(path.join(out,'node-result.json'),JSON.stringify({commands,events,errors,ended,callerInfo,answerInfo,stats,negotiated,
+   inputSequenceTimeoutMs:cfg.telnet.inputSequenceTimeoutMs,
    pool:pool.state,backendStates:backends.map(b=>b.state),VM_exited:!child || child.exitCode!==null || child.signalCode!==null,
    receiveTrace:trace?{exported:!!trace.exported,scope:'Diagnostic export daemon/chardev added; existing DSP dumps and host timestamps, no DSP binary changes.'}:null,
    sourceScope:'Synthetic ATZ/ATD1 front end only; online bytes cross actual external/internal SIP, CallSession/pool, RTP, originating and guest answering DSP, and Telnet. DOSBox UART/modem status lines remain emulated.'},null,2)+'\n');

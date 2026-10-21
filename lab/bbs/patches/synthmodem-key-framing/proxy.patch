@@ -1,0 +1,53 @@
+--- a/src/telnet/TelnetProxy.js
++++ b/src/telnet/TelnetProxy.js
+@@ -14,6 +14,7 @@
+ const dns            = require('dns');
+ const { EventEmitter } = require('events');
+ const { TelnetCodec } = require('./TelnetCodec');
++const { InputSequenceFramer } = require('./InputSequenceFramer');
+ const config         = require('../../config');
+ const { makeLogger } = require('../logger');
+ 
+@@ -54,6 +55,7 @@
+     this._idleTimer    = null;
+     this._connectTimer = null;
+     this._telnet = null;
++    this._inputFramer = null;
+     this._outputBlocked = false;
+ 
+     // Menu-idle heartbeat — see _scheduleMenuHeartbeat for rationale.
+@@ -134,7 +136,8 @@
+ 
+   _forwardInput(data) {
+     if (data.length && this._tcpSocket && !this._tcpSocket.destroyed) {
+-      this._tcpSocket.write(this._telnet.encode(data));
++      if (this._inputFramer) this._inputFramer.feed(data);
++      else this._tcpSocket.write(this._telnet.encode(data));
+       this._resetIdleTimer();
+     }
+   }
+@@ -317,6 +320,15 @@
+         terminalCols: cfg.terminalCols,
+         terminalRows: cfg.terminalRows,
+       });
++      // Explicit opt-in only. Default byte-transparent/BINARY transport is unchanged.
++      const timeout = cfg.inputSequenceTimeoutMs;
++      if (Number.isInteger(timeout) && timeout >= 1 && timeout <= 2000) {
++        this._inputFramer = new InputSequenceFramer(data => {
++          if (this._tcpSocket === socket && !socket.destroyed && this._telnet) {
++            socket.write(this._telnet.encode(data));
++          }
++        }, {timeout});
++      }
+       // Parsing is still required when unsolicited initial offers are disabled.
+       if (cfg.negotiateOptions) this._telnet.start();
+     });
+@@ -466,6 +478,8 @@
+   // ─── Return to menu ───────────────────────────────────────────────────────────
+ 
+   _closeConnection() {
++    this._inputFramer?.close();
++    this._inputFramer = null;
+     if (this._connectTimer) { clearTimeout(this._connectTimer); this._connectTimer = null; }
+     this._telnet = null;
+     if (this._idleTimer) { clearTimeout(this._idleTimer); this._idleTimer = null; }

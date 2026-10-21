@@ -57,6 +57,22 @@ keys unresolved and are not a substitute for that requirement. The successful
 menu -09 checkpoint remains valid for its recorded scope; overall acceptance stays
 false.
 
+An [opt-in bridge key-framing candidate](lab/bbs/patches/synthmodem-key-framing/README.md)
+now passes11 component checks and an actual TCP comparison: paced Home arrives
+whole with framing enabled, while all256 byte values remain exact in both
+directions. Only the proxy and one added module differ from the normal carrier
+runtime; defaults remain unframed. Actual audio editor03 is **not accepted**:
+the server reaches Main Menu but the script records FAIL-MAIN and never enters
+the editor. Independent caller decoding matches63 DOS online bytes; the guest
+emits72, with nine inserted bytes before proxy output. The complete35173-byte
+BBS display survives downstream. The owned failed emulator is explicitly
+stopped, so normal return and hardware restoration are not claimed. Preserve
+this [failed prerequisite/receive receipt](docs/validation/synthmodem-key-framing.json).
+Next collect PCM/timing for this candidate and isolate the readiness wait's
+interaction with asynchronous art callbacks; keep actual entry, byte identity
+and all editor semantics mandatory. This lab option replaces no accepted runtime
+and cannot guarantee TCP event boundaries on arbitrary remote networks.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

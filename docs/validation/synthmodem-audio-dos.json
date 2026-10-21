@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Carrier DOS menu09 remains accepted for its scope. Traced audio editor02 has exact114-byte upstream, exact complete downstream and4116160 exact guest PCM overlap samples at60ms; Home/Insert still fail, hold5999ms fails the6000ms gate, and ECONNRESET remains. Normal editor01 extra12-byte failure is retained and unresolved. Whole acceptance remains open.",
+  "status": "Carrier DOS menu09 remains accepted for its scope. Traced editor02 has exact114-byte upstream and PCM overlap but failed key semantics. Opt-in key-framing editor03 fails its Main Menu script prerequisite and never enters the editor: independent caller decode matches63 DOS bytes, guest emits72. Full35173-byte BBS display is exact downstream. Explicit test stop means no normal DOS return/restoration claim. All acceptance remains open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3067,6 +3067,77 @@
       },
       "receipt": "docs/validation/synthmodem-audio-editor-trace.json",
       "receipt_sha256": "982205840911e376277406e018b954afd5b7947edbf2f3d6e1c10facb95ddda2"
+    },
+    "synthmodem-audio-editor-03": {
+      "passed": false,
+      "checks": {
+        "DOS_normal_exit": false,
+        "script_completed": false,
+        "UART_restored": false,
+        "keyboard_helper_retired": false,
+        "numeric_AT_only": true,
+        "real_DSP_CONNECT": true,
+        "authenticated": true,
+        "ordered_menus": false,
+        "DOS_DA": true,
+        "DOS_CPR": true,
+        "profile_unchanged": true,
+        "directory_accounting": false,
+        "no_relay_errors": true,
+        "no_gateway_errors": true,
+        "VM_exited": true,
+        "no_post_saved": true,
+        "inputs_unchanged": true,
+        "server_unchanged": true,
+        "editor_entered": false,
+        "typed_draft_sent": false,
+        "all_editor_keys_emitted": false,
+        "home_moves_before_marker": false,
+        "insert_toggles_overtype": false
+      },
+      "independent_checks": {
+        "numeric_command_prefix": true,
+        "single_normal_post_train_hold": true,
+        "serial_equals_post_hold_guest_decode": false,
+        "online_target_after_numeric_call": true,
+        "guest_equals_Telnet_application_input": true,
+        "decoded_audio_equals_serial_output": true,
+        "complete_BBS_display_survives_DSP": true,
+        "complete_caller_stream_equals_bridge_plus_BBS_display": true,
+        "single_real_carrier": true,
+        "real_DOS_terminal_replies": true,
+        "authoritative_login": true,
+        "authoritative_menu_order": false,
+        "all_actual_BIOS_editor_keys_in_order": false,
+        "Home_changes_cursor_before_H": false,
+        "End_and_Delete_apply_to_draft": false,
+        "Insert_changes_to_overtype": false,
+        "Tab_advances_and_page_keys_preserve_boundary": false,
+        "CtrlY_clears_line_before_final_text": false,
+        "unsaved_final_line_visible": false,
+        "draft_never_saved": true,
+        "script_and_normal_DOS_return": false,
+        "actual_UART_restored": false,
+        "keyboard_timer_vector_restored": false,
+        "continuous_rtp-from-answer.bin": true,
+        "continuous_rtp-from-caller.bin": true,
+        "actual_external_SIP": true,
+        "actual_internal_BYE": true,
+        "capture_hashes": true,
+        "runtime_inputs_unchanged": true,
+        "producer_inputs_unchanged": true,
+        "explicit_key_framing_configuration": true,
+        "stock_BBS_inputs_unchanged": true
+      },
+      "receipt": "docs/validation/synthmodem-key-framing.json",
+      "receipt_sha256": "ff367f1346e3f1456b1043d1667970fe2a8fdb34638608262858859ca7905266",
+      "editor_result_classification": "not_reached",
+      "explicit_test_stop": {
+        "reason": "ASPECT script has authoritative FAIL-MAIN; BIOS helper cannot reach its KEYTEST trigger. Stop this failed prerequisite instead of waiting for an unrelated outer watchdog.",
+        "pid": 1390333,
+        "signal": "SIGKILL",
+        "normal_DOS_exit_claimed": false
+      }
     }
   },
   "diagnosis": {
@@ -3115,9 +3186,9 @@
     "The historical six-byte event lacks guest PCM/timing; its exact association remains unproven. A controlled same-boundary discard-policy failure is reproduced and fixed in the tested candidate.",
     "Editors/transfers/Synchronet through the rebuilt audio path, sustained pressure, loss/fault behavior and physical Boca/SPA2102 acceptance remain open.",
     "All F01-F16 whole-application completion gates remain open.",
-    "Audio editor01 has12 extra guest upstream bytes. Traced editor02 does not reproduce them:114 exact upstream bytes and4116160 exact guest PCM samples at60ms. Editor fragmentation, intermittent receive integrity, post-training hold boundary, ECONNRESET and full editor/transfer acceptance remain open."
+    "Normal audio editor01 inserts12 guest bytes; traced editor02 does not reproduce them. Key-framing editor03 inserts9 before the proxy, fails Main Menu script readiness and never reaches editing. Collect candidate PCM/timing, isolate readiness/art callback behavior, and retain full byte/editor/transfer gates. Hold5999ms and ECONNRESET from02 remain recorded."
   ],
-  "current_cohort": "synthmodem-audio-editor-02",
+  "current_cohort": "synthmodem-audio-editor-03",
   "latest_cohort_passed": false,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
@@ -3148,5 +3219,6 @@
   "carrier_receipt": "docs/validation/synthmodem-carrier-dos.json",
   "accepted_menu_cohort": "synthmodem-audio-dos-09",
   "editor_receipt": "docs/validation/synthmodem-audio-editor.json",
-  "editor_trace_receipt": "docs/validation/synthmodem-audio-editor-trace.json"
+  "editor_trace_receipt": "docs/validation/synthmodem-audio-editor-trace.json",
+  "key_framing_receipt": "docs/validation/synthmodem-key-framing.json"
 }
