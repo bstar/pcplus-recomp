@@ -1,0 +1,259 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "rx_rolling_0",
+      "passed": true,
+      "retained_hex": ""
+    },
+    {
+      "name": "rx_rolling_1",
+      "passed": true,
+      "retained_hex": "28"
+    },
+    {
+      "name": "rx_rolling_15",
+      "passed": true,
+      "retained_hex": "28292a2b2c2d2e2f30313233343536"
+    },
+    {
+      "name": "rx_rolling_16",
+      "passed": true,
+      "retained_hex": "28292a2b2c2d2e2f3031323334353637"
+    },
+    {
+      "name": "rx_rolling_17",
+      "passed": true,
+      "retained_hex": "292a2b2c2d2e2f303132333435363738"
+    },
+    {
+      "name": "rx_rolling_32",
+      "passed": true,
+      "retained_hex": "38393a3b3c3d3e3f4041424344454647"
+    },
+    {
+      "name": "rx_rolling_60",
+      "passed": true,
+      "retained_hex": "5455565758595a5b5c5d5e5f60616263"
+    },
+    {
+      "name": "rx_prompt_",
+      "passed": true,
+      "formatted_hex": ""
+    },
+    {
+      "name": "rx_prompt_0d0a4c6f67696e3a",
+      "passed": true,
+      "formatted_hex": "4c6f67696e3a"
+    },
+    {
+      "name": "rx_prompt_000d0a",
+      "passed": true,
+      "formatted_hex": "5e4d5e4a"
+    },
+    {
+      "name": "rx_prompt_0d200a41",
+      "passed": true,
+      "formatted_hex": "205e4a41"
+    },
+    {
+      "name": "rx_prompt_0d0a202020",
+      "passed": true,
+      "formatted_hex": "5e4d5e4a202020"
+    },
+    {
+      "name": "rx_prompt_225eff",
+      "passed": true,
+      "formatted_hex": "225eff"
+    },
+    {
+      "name": "rx_prompt_0102030405060708090a0b0c0d0e0f10",
+      "passed": true,
+      "formatted_hex": "5e415e425e435e445e455e465e475e485e495e4a5e4b5e4c5e4d5e4e5e4f5e50"
+    },
+    {
+      "name": "tx_format_0_",
+      "passed": true,
+      "formatted_hex": ""
+    },
+    {
+      "name": "tx_format_3_414243",
+      "passed": true,
+      "formatted_hex": "414243"
+    },
+    {
+      "name": "tx_format_2_0d0a",
+      "passed": true,
+      "formatted_hex": "5e4d5e4a"
+    },
+    {
+      "name": "tx_format_3_225eff",
+      "passed": true,
+      "formatted_hex": "225eff"
+    },
+    {
+      "name": "tx_format_41_414141",
+      "passed": true,
+      "formatted_hex": "4141414141414141414141414141414141414141414141414141414141414141414141414141414141"
+    },
+    {
+      "name": "tx_format_29_010101",
+      "passed": true,
+      "formatted_hex": "5e415e415e415e415e415e415e415e415e415e415e415e415e415e415e415e415e415e415e415e415e415e415e415e415e415e415e415e415e41"
+    },
+    {
+      "name": "native_stack_overwrite_30_controls",
+      "passed": true,
+      "emitted_text_bytes": 60,
+      "local_buffer_bytes": 60,
+      "saved_BP_before_hex": "efbe",
+      "saved_BP_after_hex": "00be",
+      "stopped_before_damaged_return": true
+    },
+    {
+      "name": "native_stack_overwrite_40_controls",
+      "passed": true,
+      "emitted_text_bytes": 80,
+      "local_buffer_bytes": 60,
+      "saved_BP_before_hex": "efbe",
+      "saved_BP_after_hex": "5e41",
+      "stopped_before_damaged_return": true
+    },
+    {
+      "name": "native_stack_overwrite_41_controls",
+      "passed": true,
+      "emitted_text_bytes": 82,
+      "local_buffer_bytes": 60,
+      "saved_BP_before_hex": "efbe",
+      "saved_BP_after_hex": "5e41",
+      "stopped_before_damaged_return": true
+    },
+    {
+      "name": "prompt_then_keys_backspace_and_CR",
+      "passed": true,
+      "calls": [
+        {
+          "handle": 4660,
+          "format": 16990,
+          "text_hex": "4c6f67696e3a"
+        },
+        {
+          "handle": 4660,
+          "format": 16958,
+          "text_hex": "41435e4d"
+        }
+      ],
+      "calibrated_wait_arguments": [
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "name": "unstripped_BIOS_CR_word_does_not_flush",
+      "passed": true,
+      "pending_bytes": 1
+    },
+    {
+      "name": "41_raw_bytes_flush_before42nd_key",
+      "passed": true,
+      "pending_bytes": 1
+    },
+    {
+      "name": "stop_discards_pending_0_0",
+      "passed": true,
+      "calls": [
+        {
+          "handle": 4660,
+          "format": 9644,
+          "text_hex": null
+        },
+        {
+          "close_handle": 4660
+        }
+      ],
+      "mode_after": 0,
+      "mode_ignores_modeled_CRT_failure": true
+    },
+    {
+      "name": "stop_discards_pending_7_3",
+      "passed": true,
+      "calls": [
+        {
+          "handle": 4660,
+          "format": 9644,
+          "text_hex": null
+        },
+        {
+          "close_handle": 4660
+        }
+      ],
+      "mode_after": 0,
+      "mode_ignores_modeled_CRT_failure": true
+    }
+  ],
+  "original_cases": 28,
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "name": "rx",
+      "overlay": 12,
+      "relative_address": "0xdb28",
+      "file_offset": 92120,
+      "bytes": 53,
+      "sha256": "b74af0fe0265ff21f6c791596961d18751a40b9944a15e82857c99d7883e6730"
+    },
+    {
+      "name": "key",
+      "overlay": 12,
+      "relative_address": "0xdb5e",
+      "file_offset": 92174,
+      "bytes": 80,
+      "sha256": "b5a0d23908f4d0280f470c7d8e70a4018b3029030572beb1729ca0cbcce0507b"
+    },
+    {
+      "name": "tx_flush",
+      "overlay": 12,
+      "relative_address": "0xdbae",
+      "file_offset": 92254,
+      "bytes": 91,
+      "sha256": "09c8cc1b54ff5dc2f800310606b91ac05d8d7eb2310eb4d47aa67949920f0473"
+    },
+    {
+      "name": "rx_flush",
+      "overlay": 12,
+      "relative_address": "0xdc0a",
+      "file_offset": 92346,
+      "bytes": 147,
+      "sha256": "8d2ac6f8f16c5271dba0ca94b5f897d72b8bd8072c31c62644b57575e0a869fe"
+    },
+    {
+      "name": "mode",
+      "overlay": 16,
+      "relative_address": "0xe1b4",
+      "file_offset": 113508,
+      "bytes": 421,
+      "sha256": "77087142224933dfd250c95405612241e09da26df06692c2ac1698339404ca3a"
+    }
+  ],
+  "checker_sha256": "c54d231760b242ae8841bd40d9eb0c07190ba2ee2790a10f82bb2860eb69f956",
+  "manifest_sha256": "f3ee2e96c5891c17e279e22d8192d447f306f2f08a533f1e22e178975f18a0d4",
+  "scope": "Explicit opt-in replay of verified original instruction ranges under Unicorn with controlled DS=SS, stack and memory CRT/calibrated-wait callbacks. No analysis EXE is executed, no original DOS application/real file/UI/UART/audio run occurs. Three overflow cases stop at the formatting callback before damaged return. Normal cases verify BP/SI/DI, DS/SS and stack return. Observations establish native byte/queue/stop behavior and defects only; maintained recorder, source build/compiler/replay integration and F13 remain unfinished.",
+  "source_receipt": "build/aspect-recorder/native-original-02.json",
+  "source_receipt_sha256": "a022e7eca022c2ece5f61274a7ef4156c58741189018d18b223fb38cb90ee05c",
+  "REA_evidence": {
+    "mode": "ev_90f1a568008bbd188ea0d87f6c1a68087edee61ecaf61647b45fae6192214683",
+    "rx_append": "ev_cdc10a9614446380a4b5ee9b67dfb0fab4b0759f93897f71fd6ecbf10a59c5ed",
+    "key_capture": "ev_65c4af158df89f29fc47c8867ad021ecc82ad05468ccf84c08c7e436c2793d76",
+    "tx_format": "ev_1ea1ae1accd530fc6d19e3a03684fbec3955a784cd85800315695b03c3ff17e2",
+    "rx_format": "ev_80c59c2666e6eaf42494c60f2e0b9d55eee35ccf2c88e0ddf3bf471b9cde55f8"
+  },
+  "retained_REA_bundles": {
+    "analysis/pcplus-recorder-native-01/overlay16-evidence.json": "dd5f277d8883c80f9b94e646e6735dde15246fa853163cac7e24e5a954d6bac0",
+    "analysis/pcplus-recorder-native-01/overlay12-evidence.json": "f1216b925a9b8dda902f7a81ce31b04e97d488bccef19ebcb795818cda4e614d"
+  },
+  "original_application_recompiled": false,
+  "maintained_recorder_implemented": false,
+  "initial_probe_failure": "Initial test supplied BIOS1C0D where native flush compares the entire normalized word000D. Original source is retained under build/aspect-recorder/native-original-01.source.py; corrected probe tests both words separately."
+}

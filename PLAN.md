@@ -7,6 +7,16 @@ data, reconnect and transfer runs. No physical compatibility or 14400-bps claim
 is established; the adapter has not arrived. PCPlus remains a serial terminal,
 with SIP/audio/Telnet handled by the Linux bridge.
 
+The [native ASPECT recorder recovery](docs/ASPECT_RECORDER_NATIVE.md) now has five
+REA function dossiers and28 original-instruction probes. Receive sliding/prompt
+filtering, key capture/backspace/normalized CR, transmit expansion and active
+stop behavior are observed with controlled memory callbacks. Three probes
+reproduce writes beyond the60-byte transmit local; stop drops pending text and
+ignores modeled CRT failures. This is explicit original replay only, not a source-
+built recorder or actual DOS file/UI evidence. Next implement a bounded checked
+source owner, verify compiler/replay byte round trips, and bind terminal/UI/file
+ownership without adopting the native defects. Full F13 remains open.
+
 The [first larger-file audio attempt](docs/validation/current-enigma-pressure-download-failure-01.json)
 fails at verified extent15360, before64KiB: nine CRC/source-verified old-data
 replays, repeated receiver position15360 requests, no sender EOF and helper
