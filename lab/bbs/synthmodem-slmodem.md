@@ -131,10 +131,10 @@ the helper acknowledges admission of the carrier status, then logs a drain
 timeout and exits with failure if output cannot drain. The host must handle
 that failure as session termination.
 
-The next integration must enable the same path in both VM processes, preserve
-the normal init contract, and teach the Node backend to retire its writer on
-structured nocarrier, SIP termination and control failure without duplicate
-hangups or late CONNECT resurrection. Actual modem-stop callback ordering,
-queued transmission under real carrier loss, normal SIP/DSP cleanup, TCP-only
-reconnect and complete DOS/BBS audio workflows remain open. The host checkpoint
-does not close those gates.
+The [subsequent runtime integration](synthmodem-carrier.md) now enables the same
+path in both VM processes and retires the Node writer on carrier loss without
+duplicate hangups or late CONNECT resurrection. Its receipt covers actual
+modem-stop ordering, queued Node writer retirement under waveform loss, normal
+SIP/DSP cleanup and TCP-only reconnect. Complete DOS/BBS audio workflows and
+physical acceptance remain open. The host checkpoint alone does not close
+those gates.

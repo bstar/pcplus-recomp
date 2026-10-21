@@ -5,6 +5,7 @@ from pathlib import Path
 from synthmodem_vm_control import ROOT,sha
 from synthmodem_jitter_runtime import validate as validate_jitter
 from synthmodem_lifecycle_runtime import validate as validate_lifecycle
+from synthmodem_carrier_runtime import validate as validate_carrier
 
 def telnet(wire):
  data=bytearray();sub=[];commands=[];at=0
@@ -36,13 +37,14 @@ def records(wire):
 
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
- p.add_argument('--lifecycle',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate'])
- a=p.parse_args();assert not(a.lifecycle and a.dmodem);runtime=a.runtime.resolve();out=a.output.resolve();assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
+ p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate'])
+ a=p.parse_args();assert sum(bool(v) for v in (a.lifecycle,a.carrier,a.dmodem))<=1;runtime=a.runtime.resolve();out=a.output.resolve();assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
  names=['lab/bbs/synthmodem_gateway.py','lab/bbs/synthmodem_gateway.js','lab/bbs/synthmodem_vm_control.py','lab/bbs/synthmodem_jitter_runtime.py','lab/bbs/synthmodem_sparse_runtime.py','lab/bbs/synthmodem_lifecycle_runtime.py','nix/flake.lock','tools/modem-dev']
- if a.lifecycle or a.dmodem:
-  inputs=validate_lifecycle(runtime) if a.lifecycle else validate_jitter(runtime,a.dmodem)
+ if a.lifecycle or a.carrier or a.dmodem:
+  inputs=validate_carrier(runtime) if a.carrier else validate_lifecycle(runtime) if a.lifecycle else validate_jitter(runtime,a.dmodem)
   tested=runtime;changed=[];names+=['docs/validation/synthmodem-gateway.json','docs/validation/synthmodem-sparse.json','docs/validation/synthmodem-jitter-policy.json']
   if a.lifecycle:names+=['docs/validation/synthmodem-pool.json','docs/validation/synthmodem-registrar.json']
+  if a.carrier:names+=['lab/bbs/synthmodem_carrier_runtime.py','docs/validation/synthmodem-carrier-runtime.json','docs/validation/synthmodem-carrier-client.json','docs/validation/synthmodem-carrier-helper.json']
  else:
   ledger=ROOT/'docs/validation/synthmodem-training.json';prior=json.loads(ledger.read_text())['cohorts']['candidate'];assert prior['passed']
   reference=ROOT/'build/bbs-lab'/prior['cohort']/'runtime'
@@ -69,7 +71,7 @@ def main():
    raise
  r=json.loads((out/'node-result.json').read_text());pattern=bytes(range(256))*2
  timing=json.loads((out/'cleanup-time.json').read_text());timing['actual_process_exit_lag_ms']=(exited_ns-int(timing['resources_closed_ns']))/1e6
- if a.lifecycle:r['checks']['warmup_timer_released']=0<=timing['before_exit_lag_ms']<2000 and 0<=timing['actual_process_exit_lag_ms']<2000
+ if a.lifecycle or a.carrier:r['checks']['warmup_timer_released']=0<=timing['before_exit_lag_ms']<2000 and 0<=timing['actual_process_exit_lag_ms']<2000
  up=b'GATEWAY-UP\r\n'+pattern+b'\r\nEND-UP\r\n';down=b'GATEWAY-DOWN\r\n'+pattern[::-1]+b'\r\nEND-DOWN\r\n'
  if r['passed']:
   decoded,subs,commands=telnet((out/'peer-0-input.bin').read_bytes())
@@ -106,7 +108,7 @@ def main():
  captures={p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.log')}
  r.update({'passed':proc.returncode==0 and all(r['checks'].values()),'frozen_inputs':frozen,'runtime_inputs':inputs,'tested_inputs':tested_inputs,
   'changed_runtime_files':changed,'captures_sha256':captures,'up_bytes':len(up),'down_bytes':len(down),'cleanup_timing':timing,'cleanup_timing_sha256':sha(out/'cleanup-time.json'),'lifecycle':a.lifecycle,'dmodem_variant':a.dmodem,
-  'up_sha256':hashlib.sha256(up).hexdigest(),'down_sha256':hashlib.sha256(down).hexdigest()})
+  'up_sha256':hashlib.sha256(up).hexdigest(),'down_sha256':hashlib.sha256(down).hexdigest(),'carrier':a.carrier})
  (out/'result.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps({'passed':r['passed'],'checks':r['checks'],'result':str(out/'result.json')},indent=2))
  return 0 if r['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

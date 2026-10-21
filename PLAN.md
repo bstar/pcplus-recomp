@@ -20,7 +20,17 @@ downstream bytes, with independent PCM/decoder checks. The opt-in carrier-channe
 client and helper receiver now pass paired host tests: 29 new checks, the
 existing 16 fault cases and 12 PTY checks. A CONNECT/payload boundary collision
 is reproduced and corrected in the candidate. VM/Node integration and actual
-callback/carrier-loss tests remain open. The normal lifecycle runtime is unchanged.
+callback/carrier-loss tests are now exercised below. The normal lifecycle
+runtime is unchanged.
+
+The [carrier runtime integration](lab/bbs/synthmodem-carrier.md) now passes 12
+backend checks, 15 actual VM/DSP carrier-loss checks and 26 complete gateway
+checks. An independent frame/audio/log audit confirms exact 287/289-byte data,
+real waveform-loss detection, helper retirement before modem result text and
+pending-writer cleanup. The gateway retains CONNECT> TCP reconnection on the
+same carrier and replacement-VM startup. DOS/ASPECT/BBS audio routes through
+this candidate remain next; physical acceptance, broader pressure/transfers and
+all F01-F16 remain open.
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,

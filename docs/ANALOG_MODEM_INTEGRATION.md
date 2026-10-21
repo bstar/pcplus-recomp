@@ -127,14 +127,17 @@ Editors, broader loss/timing, sustained data, transfers and physical acceptance
 remain separate. This does not prove the exact historical
 six-byte event's cause. See [the VM receipt](validation/synthmodem-jitter-vm.json).
 
-The helper still has an in-band carrier/data ambiguity: literal NO CARRIER can
+The normal helper still has an in-band carrier/data ambiguity: literal NO CARRIER can
 be consumed as status, while a slowly fragmented real result can become data.
 Out-of-band carrier reporting remains required. The
 [rebuilt modem-wrapper checkpoint](../lab/bbs/synthmodem-slmodem.md) establishes
 a Nix-built baseline through actual V.22 DSP and tests the opt-in carrier-channel
 client/helper pair on real host PTYs. The candidate also preserves literal
-carrier-like payload at the CONNECT boundary; real VM/Node carrier-loss
-integration remains unfinished.
+carrier-like payload at the CONNECT boundary. The separate
+[VM/Node integration](../lab/bbs/synthmodem-carrier.md) now passes real waveform-loss
+and complete gateway checks, with the pending writer retired before notification
+and no modem result text leaking into online data. Actual DOS/BBS routes through
+this candidate and physical carrier acceptance remain open.
 The
 [combined lifecycle runtime](../lab/bbs/synthmodem-lifecycle.md) now verifies
 the pool-timer and REGISTER-ownership fixes through the actual VM/DSP path.

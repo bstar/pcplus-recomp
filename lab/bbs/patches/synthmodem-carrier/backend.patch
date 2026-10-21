@@ -1,0 +1,200 @@
+--- a/src/backends/PjsipBackend.js
++++ b/src/backends/PjsipBackend.js
+@@ -262,6 +262,7 @@
+                                           that arrived without a \r\n
+                                           terminator — see _onPtyText */
+     this._connected       = false;  /* has CONNECT been seen? */
++    this._carrierEnded    = false;  /* one physical call per backend instance */
+     this._currentBps      = 0;      /* CONNECT rate, informational */
+     this._currentProtocol = null;   /* e.g. 'V32bis' */
+ 
+@@ -387,7 +388,7 @@
+     this._uac.on('ended', info => {
+       /* Peer-initiated BYE. Treat as remote hangup. */
+       log.info(`peer hangup (${info.initiator})`);
+-      this.emit('silenceHangup');   /* reuse the existing event */
++      this._retireCarrier('internal SIP ended');
+     });
+     this._uac.on('error', err => this.emit('error', err));
+ 
+@@ -523,8 +524,11 @@
+    * Shut down the dialog and the VM. Idempotent.
+    */
+   async stop() {
+-    if (this.state === 'STOPPED' || this.state === 'IDLE') return;
+-    this._clearDataWriter();
++    if (this.state === 'STOPPED' || this.state === 'IDLE') {
++      this._retireCarrier('stopped', false);
++      return;
++    }
++    this._retireCarrier('stopped', false);
+     this._transition('STOPPED');
+ 
+     /* Stop the periodic control-chardev instrumentation timer. */
+@@ -696,11 +700,8 @@
+      * surface CallSession expects from a backend with `mode: 'b2bua'`. */
+     if (this.controlSocket) {
+       this._setupControlParser();
+-      this.controlSocket.on('close', () => {
+-        if (this.state !== 'STOPPED') {
+-          this.emit('error', new Error('control chardev closed unexpectedly'));
+-        }
+-      });
++      this.controlSocket.on('close', () => this._controlFailed(new Error('control chardev closed unexpectedly')));
++      this.controlSocket.on('error', error => this._controlFailed(error));
+     }
+ 
+     await this._bindTunnelUdp();
+@@ -931,6 +932,7 @@
+     this._ctrlParser.on('frame', f => this._onCtrlFrame(f));
+     this._ctrlParser.on('error', err => {
+       log.warn(`wire.Parser error on control socket: ${err.message}`);
++      this._controlFailed(err);
+     });
+     this.controlSocket.on('data', chunk => {
+       /* --- instrumentation: raw byte delivery ---
+@@ -965,6 +967,7 @@
+       try { this._ctrlParser.feed(chunk); }
+       catch (e) {
+         log.error(`control wire parse failed: ${e.message}`);
++        this._controlFailed(e);
+       }
+     });
+ 
+@@ -1035,6 +1038,7 @@
+   }
+ 
+   _onCtrlFrame(frame) {
++    if (this._carrierEnded) return;
+     /* --- instrumentation: count each frame by wire type so the
+      * periodic summary can report (e.g.) "AT_RESPONSE+3 DATA_RX+127".
+      * Human-readable name mapping done here (not in summary) so
+@@ -1065,25 +1069,9 @@
+         break;
+ 
+       case wire.TYPE.MODEM_STATUS: {
+-        /* Structured state events from modemd-ctrl. Payload is JSON
+-         * (same convention as the deprecated modemd-shim once used). Today's
+-         * production modemd-ctrl does NOT emit MODEM_STATUS frames,
+-         * but a planned rebuild will add CONNECT-with-rate and
+-         * NO CARRIER status events so Node gets reliable programmatic
+-         * state regardless of PTY read-splitting. Handling the frame
+-         * type now means the next modemd-ctrl.bin can light this up
+-         * without any further Node changes.
+-         *
+-         * First-wins semantics: if the PTY-
+-         * text path (_handleResultLine) already fired 'connected',
+-         * we ignore a late status 'connect' — de-dup is the same
+-         * _connected flag. The reverse is true too. Benefit in
+-         * the backend-B case: when the PTY read splits CONNECT from
+-         * its \r\n and the bare "CONNECT" flush fires with rate=0,
+-         * a subsequent MODEM_STATUS frame can still carry the real
+-         * rate. We update _currentBps/_currentProtocol and log the
+-         * rate, but do NOT re-emit 'connected' (that's the de-dup).
+-         */
++        /* CONNECT and carrier-loss events from the helper. Text/status
++         * CONNECT duplicates may complete rate information, but no event may
++         * resurrect a retired physical session. */
+         let ev = null;
+         try { ev = JSON.parse(frame.payload.toString('utf8')); }
+         catch (_) { /* malformed — log and drop */ }
+@@ -1120,9 +1108,7 @@
+           /* If already connected WITH a rate, ignore — status
+            * arrived late with no new info. */
+         }
+-        /* Other ev.event values (e.g. 'nocarrier') deferred until
+-         * the VM side actually emits them — historically the synthmodem stack only
+-         * uses status for 'connect'. Extend here when needed. */
++        if (ev.event === 'nocarrier') this._retireCarrier('modem carrier lost');
+         break;
+       }
+ 
+@@ -1131,10 +1117,7 @@
+          * PTY closes). Treated the same as silence hangup by
+          * CallSession. */
+         log.info('control HANGUP from modemd-ctrl');
+-        if (this._connected) {
+-          this._connected = false;
+-          this.emit('silenceHangup');
+-        }
++        this._retireCarrier('control HANGUP');
+         break;
+ 
+       default:
+@@ -1269,6 +1252,7 @@
+   }
+ 
+   _handleResultLine(line) {
++    if (this._carrierEnded) return;
+     const res = parseResultLine(line);
+     if (!res) return;
+     switch (res.event) {
+@@ -1289,15 +1273,7 @@
+       case 'nocarrier':
+       case 'busy':
+       case 'nodialtone':
+-        if (this._connected) {
+-          log.info(`Connection ended: ${res.event.toUpperCase()}`);
+-          this._connected = false;
+-          this._currentBps = 0;
+-          this._currentProtocol = null;
+-        } else {
+-          log.info(`Handshake failed: ${res.event.toUpperCase()}`);
+-        }
+-        this.emit('silenceHangup');
++        this._retireCarrier(`modem result ${res.event}`);
+         break;
+       case 'error':
+         /* Benign AT-level errors; don't tear down. Later CONNECT/
+@@ -1318,6 +1294,7 @@
+    * @param {string} cmd  AT command, without CR
+    */
+   sendAt(cmd) {
++    if (this._carrierEnded) throw new Error('Modem session retired');
+     if (!this.controlSocket) {
+       throw new Error('sendAt: control channel not enabled');
+     }
+@@ -1333,13 +1310,33 @@
+    *
+    * @param {Buffer} buf  data-mode bytes
+    */
++  _retireCarrier(reason, notify = true) {
++    if (this._carrierEnded) return false;
++    this._carrierEnded = true;
++    this._connected = false;
++    this._currentBps = 0;
++    this._currentProtocol = null;
++    this._cancelUnterminatedFlush();
++    this._ptyLineBuf = '';
++    this._clearDataWriter();
++    log.info(`Modem session retired: ${reason}`);
++    if (notify) this.emit('silenceHangup');
++    return true;
++  }
++
++  _controlFailed(error) {
++    if (this._carrierEnded || this.state === 'STOPPED') return;
++    this._retireCarrier('control channel failure', false);
++    this.emit('error', error);
++  }
++
+   _clearDataWriter() {
+     if (this._dataWriter) this._dataWriter.destroy();
+     this._dataWriter = null;
+   }
+ 
+   write(buf) {
+-    if (!this._connected || !this.controlSocket || this.controlSocket.destroyed) {
++    if (this._carrierEnded || !this._connected || !this.controlSocket || this.controlSocket.destroyed) {
+       throw new Error('Modem control channel unavailable');
+     }
+     if (this._dataWriter && this._dataWriter.socket !== this.controlSocket) {
+@@ -1353,7 +1350,7 @@
+         if (this._dataWriter === writer && this.controlSocket === socket) this.emit('drain');
+       });
+       writer.on('error', error => {
+-        if (this._dataWriter === writer && this.controlSocket === socket) this.emit('error', error);
++        if (this._dataWriter === writer && this.controlSocket === socket) this._controlFailed(error);
+       });
+     }
+     return this._dataWriter.write(buf);
