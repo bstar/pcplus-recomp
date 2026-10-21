@@ -202,9 +202,20 @@ captures are exact native prefixes, truncated at call termination; they do not
 show inserted/corrupted bytes. Source data/stat and DOS/UART/IRQ/timer cleanup
 survive. The receiver later exited naturally with255, leaving a preserved1024-byte
 temporary prefix and no official installed file. Frozen inputs/server/runtime
-remain unchanged. Next: derive a bounded sender response allowance for queued
-fixed-DTE modem data, retain cancellation and accepted-progress bounds, then
-repeat the unchanged stock audio upload with all CRC/finish/storage/return gates.
+remain unchanged.
+
+The [native sender response fix](docs/ZMODEM_MODEM_RESPONSE.md) now derives its
+reply allowance from unacknowledged bytes, quoting/frame overhead and a300-bps
+minimum carrier, independently of fixed DTE. Direct/default reads remain three
+seconds; extended reads run in serviced30-second pieces. Its
+[receipt](docs/validation/zmodem-upload-response-fixed.json) passes14 linked
+timing cases and11 host API/policy cases, including quoted8KiB, midnight,
+silence/noise, cancellation, carrier loss and unchanged direct mode. The same
+checker retains the predecessor failure. All78 linked workflows,24 independent
+lrzsz/SEXYZ peers, existing receive/completion/cancel and ABI regressions pass;
+an actual DOS automatic three-file download passes14 checks. DS=SS remains64832
+bytes. These checks accept the native change at their stated scopes; a new
+unchanged stock audio upload still needs every CRC/finish/storage/return gate.
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,

@@ -68,6 +68,7 @@ def main():
  if a.route in ('download','upload'):
   names+=['src/terminal/transfer_actions.asm','standalone/check_carrier_transfer_deadline.py','docs/validation/carrier-transfer-deadline-fixed.json']
   names+=['src/transfer/zmodem.c','src/transfer/zmodem.h','src/transfer/zmodem_wire.c','src/transfer/zmodem_wire.h','standalone/check_zmodem_completed_replay.py','standalone/check_zmodem_completion_bounds.py','docs/validation/zmodem-completed-replay-fixed.json']
+  names+=['src/transfer/terminal_zmodem.c','src/transfer/ymodem.h','src/terminal/ymodem_actions.asm','src/terminal/config_abi.inc','standalone/build_terminal.py','standalone/terminal_memory.py','standalone/check_zmodem_upload_timing.py','standalone/check_zmodem_link_policy.py','standalone/record_zmodem_upload_timing.py','docs/ZMODEM_MODEM_RESPONSE.md','docs/validation/zmodem-upload-response-fixed.json']
  names+=['src/terminal/connection.asm','standalone/check_online_exit.py','docs/validation/online-exit.json']
  names+=['lab/bbs/check_audio_login_readiness.py','docs/validation/synthmodem-audio-login-readiness.json']
  if a.syscall_trace:names+=['lab/bbs/check_dosbox_socket_close.py','lab/bbs/dosbox_socket_close_probe.asm','docs/validation/dosbox-socket-close.json']

@@ -7,8 +7,20 @@ extern terminal_transfer_timed_byte,terminal_transfer_service,terminal_transfer_
 extern terminal_transfer_accepted_progress,terminal_transfer_ui_progress
 extern transfer_emit,transfer_protocol_started
 extern uart_rx_buffer,uart_rx_read,uart_rx_count
+extern connection_state,terminal_directory_mode
 GLOBAL _ymodem_io_read,_ymodem_io_put,_ymodem_io_poll,_ymodem_io_progress
 GLOBAL _ymodem_io_unread
+GLOBAL _ymodem_io_modem
+; Buffered connected modem, independently of the configured DTE divisor.
+; Direct connections retain the ordinary protocol reply policy.
+_ymodem_io_modem:
+ xor ax,ax
+ cmp word [connection_state],6
+ jne .done
+ cmp word [terminal_directory_mode],1
+ je .done
+ inc ax
+.done: ret
 _ymodem_io_read:
  push bp
  mov bp,sp

@@ -147,12 +147,12 @@ config_aliases.update({'terminal_zmodem_store':'terminal_zmodem_store_impl','str
  'batch_download_exact':'config_bd_exact_service'})
 config_aliases.update({name:'config_'+short+'_service' for name,short in {
  'transfer_crc_buffer_original':'ym_crc','ymodem_io_read':'ym_read','ymodem_io_put':'ym_put','ymodem_io_unread':'ym_unread',
- 'ymodem_io_poll':'ym_poll','ymodem_io_progress':'ym_progress',
+ 'ymodem_io_poll':'ym_poll','ymodem_io_progress':'ym_progress','ymodem_io_modem':'ym_modem',
  'batch_download_begin':'bd_begin','batch_download_open':'bd_open','batch_download_append':'bd_append',
  'batch_download_finish':'bd_finish','batch_download_cleanup':'bd_cleanup',
  'batch_upload_begin':'bu_begin','batch_upload_read':'bu_read','batch_upload_next':'bu_next',
  'batch_upload_close':'bu_close','batch_upload_abort':'bu_abort'}.items()})
-helper_adapters={}
+helper_adapters={};zmodem_helper_adapters={}
 for source in c_sources:
  obj=OUT/(source.stem+'.obj');objects.append(str(obj))
  options=['-nt=CONFIG_CODE','-nc=FARCODE']+['-d'+name+'='+alias for name,alias in config_aliases.items()] if source in config_sources else []
@@ -166,10 +166,12 @@ for source in c_sources:
    options+=['-nt=MOUSE_CODE','-nc=FARCODE','-ecc','-dMOUSE_DOS_PLATFORM',*['-d'+n+'='+n+'_impl' for n in mouse_names]]
  if source==ROOT/'src/status/status_formatter.c':options=['-ecc']
  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we',*options,'-i='+str(ROOT/'src/config'),'-i='+str(ROOT/'src/directory'),'-i='+str(ROOT/'src/key_mapping'),'-i='+str(ROOT/'src/process'),'-i='+str(ROOT/'src/transfer'),'-fo='+str(obj),str(source)],cwd=OUT,check=True)
- if source==ROOT/'src/transfer/batch_header.c':
+ if source in (ROOT/'src/transfer/batch_header.c',ROOT/'src/transfer/zmodem.c'):
   before=obj.read_bytes();normalized,counts=rename_imports(before,{'__U4D':'config_u4div_service_','__U4M':'config_u4mul_service_'})
-  (OUT/'batch-header-compiler.obj').write_bytes(before);obj.write_bytes(normalized)
-  helper_adapters=dict(import_counts=counts,compiler_object_sha256=hashlib.sha256(before).hexdigest(),normalized_object_sha256=hashlib.sha256(normalized).hexdigest())
+  (OUT/('batch-header-compiler.obj' if source.stem=='batch_header' else 'zmodem-compiler.obj')).write_bytes(before);obj.write_bytes(normalized)
+  record=dict(import_counts=counts,compiler_object_sha256=hashlib.sha256(before).hexdigest(),normalized_object_sha256=hashlib.sha256(normalized).hexdigest())
+  if source.stem=='batch_header':helper_adapters=record
+  else:zmodem_helper_adapters=record
 config_end=ROOT/'src/config/far_end.asm';config_end_obj=OUT/'config-end.obj'
 subprocess.run(['nasm','-f','obj',str(config_end),'-o',str(config_end_obj)],check=True)
 objects.append(str(config_end_obj));sources.append(config_end)
@@ -209,6 +211,8 @@ manifest['limitations'].append('Alt-Z opens a source-owned five-group command me
 manifest['limitations'].append('An otherwise eligible Alt-Z read during normal parser ownership is retained until a distinct resident foreground service can recheck all guards. All BIOS key values, including AX0, retain their key meaning. Subsequent keys remain in the existing32-word typeahead FIFO; repeated Alt-Z coalesces. Escape cancels locally; Alt-X/Alt-H cancel then use normal dispatch. Changed owners/geometry or foreground stop discard the owned pending typeahead. Overflow retains the existing explicit exit3 policy. This is maintained behavior; it does not identify the cause of the earlier unobserved Synchronet refusal.')
 manifest['compiler_helper_adapters']={'import_counts':helper_adapters['import_counts'],'record_policy':'Only EXTDEF names/record lengths/checksums change; symbol indices, code, data, local symbols and fixups are preserved.'}
 (OUT/'compiler-helper-adapters.json').write_text(json.dumps({'binary_sha256':manifest['binary_sha256'],**helper_adapters},indent=2)+'\n')
+manifest['zmodem_compiler_helper_adapters']=zmodem_helper_adapters
+(OUT/'zmodem-compiler-helper-adapters.json').write_text(json.dumps({'binary_sha256':manifest['binary_sha256'],**zmodem_helper_adapters},indent=2)+'\n')
 manifest['limitations'].append('Maintained YMODEM framing and header codec execute in CONFIG_CODE with unchanged near data and protocol logic. Explicit callbacks bridge resident UART/CRC/file owners; zero-argument callbacks have their own declared family. Newly compiled batch_header OMF imports for Watcom32-bit arithmetic are renamed to local register adapters; all code/data/fixup records and external indices are preserved. Original ordinary XMODEM modules remain resident and unchanged.')
 manifest['experimental_external_render']=args.external_render
 manifest['experimental_mouse']=args.mouse

@@ -110,12 +110,15 @@ partial. Its zero exit means the failure evidence is consistent; its receipt
 has `passed: false`. It requires the original ignored local cohort and receiver
 temporary file; it is not a portable acceptance test.
 
-Next is a bounded response allowance for fixed-DTE modem output already queued
-ahead of a reply. Merely increasing three seconds to thirty for this1200-bps
-case would not cover the supported300-bps floor and quoted outstanding windows.
-Keep independent accepted-progress, cancellation and loss bounds, preserve the
-existing download behavior, then repeat the original owned upload without
-slowing DTE, shrinking the fixture or changing the stock receiver.
+The [native response fix](../../docs/ZMODEM_MODEM_RESPONSE.md) now calculates
+the allowance from unacknowledged payload and quoted framing at a300-bps carrier
+floor; the DTE divisor stays fixed. Its
+[receipt](../../docs/validation/zmodem-upload-response-fixed.json) verifies14
+linked timing cases,11 host API/policy cases and the broader protocol/ABI/DOS
+regressions. The same timing checker retains a predecessor failure. Independent
+accepted-progress, cancellation and loss bounds remain active. The next step is
+the original owned audio upload, with the same fixture, DTE, receiver and full
+acceptance gates. Native checks do not establish actual audio upload acceptance.
 
 Physical Boca/SPA2102, cancellation/loss, other peers and full-application gates
 remain separate.

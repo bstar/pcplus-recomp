@@ -38,7 +38,7 @@ typedef struct zm_session {
  const zm_ops *ops;void *context;
  /* owned: 0 resolved, 1 active, 2 source close failed (never called again). */
  unsigned status,cleanup_status,sending,owned,format,control,block,retries;
- unsigned phase,skipped,window,capacity;
+ unsigned phase,skipped,window,capacity,response_bps;
  zw_u32 position,size,files,bytes;
  /* Full bounded remote identity on receive; next() still supplies DOS83 on send. */
  char name[ZM_WIRE_NAME_MAX+1];
@@ -60,4 +60,11 @@ typedef struct zm_session {
  * ZCRCW packets. Receiver accepts all four endings.
  */
 unsigned __cdecl zm_run(zm_session *,const zm_ops *,void *,unsigned sending);
+/* Optional minimum carrier rate for a buffered serial modem, independently of
+ * DTE speed. Zero preserves ordinary three-second protocol reads; a nonzero
+ * floor must be at least300bps. Sender reply reads include worst-case quoted
+ * outstanding bytes and frame/control overhead. The adapter must honor waits
+ * beyond30 seconds while continuing cancellation and its verified-progress
+ * watchdog. This does not change receive timing or confirm attempted output. */
+unsigned __cdecl zm_run_link(zm_session *,const zm_ops *,void *,unsigned sending,unsigned response_bps);
 #endif

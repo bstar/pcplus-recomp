@@ -27,7 +27,7 @@ class Ops(C.Structure):
 class PacketIO(C.Union):
     _fields_=[('rx',C.c_ubyte*8192),('wire',C.c_ubyte*8192)]
 class Session(C.Structure):
-    _fields_=[('ops',P),('context',P)]+[(n,U) for n in ('status','cleanup_status','sending','owned','format','control','block','retries','phase','skipped','window','capacity')]+[
+    _fields_=[('ops',P),('context',P)]+[(n,U) for n in ('status','cleanup_status','sending','owned','format','control','block','retries','phase','skipped','window','capacity','response_bps')]+[
         (n,D) for n in ('position','size','files','bytes')]+[('name',C.c_char*256),('decoder',Decoder),('data',C.c_ubyte*1024),('io',PacketIO)]
 
 def h(t,pos=0,fmt=66):return header(bytes([t])+pos.to_bytes(4,'little'),fmt,0)

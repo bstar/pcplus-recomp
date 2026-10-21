@@ -27,6 +27,20 @@ static unsigned event_for(zm_session *s,unsigned seconds)
  return ZW_FORMAT;
 }
 static unsigned event(zm_session *s){return event_for(s,3);}
+/* Fixed DTE output can be queued behind a much slower modem carrier. Allow
+ * its unacknowledged payload to cross before replaying it. Each payload byte
+ * can quote to two; a binary/hex header is at most21 octets and a packet's
+ * ending/quoted CRC/XON at most11. Another64 octets cover EOF and the reply.
+ * Ten8N1 bits per octet, rounded up, plus the ordinary three-second idle slack.
+ * All arithmetic is32-bit even with16-bit unsigned. Direct/default sessions
+ * keep their existing policy. No attempted byte counts as accepted progress. */
+static unsigned reply(zm_session *s,unsigned pending,unsigned frames)
+{
+ unsigned long octets;
+ if(!s->response_bps)return event(s);
+ octets=2UL*pending+32UL*frames+64UL;
+ return event_for(s,3+(unsigned)((octets*10+s->response_bps-1)/s->response_bps));
+}
 static zw_u32 position(zm_session *s)
 {
  unsigned char *h=s->decoder.header;
@@ -104,7 +118,7 @@ static unsigned finish(zm_session *s)
  }
  for(i=0;i<LIMIT && !s->status;++i){
   if(header(s,ZFIN,0,ZW_HEX))break;
-  r=event(s);
+  r=reply(s,0,0);
   if(r==ZW_HEADER && s->decoder.header[0]==ZFIN)return put(s,"OO",2);
   zw_headers(&s->decoder);
  }
@@ -228,7 +242,7 @@ static unsigned offer(zm_session *s)
   s->data[r++]=' ';s->data[r]='0';
   if(header(s,ZFILE,0x01000000UL,s->format) || data(s,128,ZW_CRCW))break;
   for(;;){
-   r=event(s);if(r!=ZW_HEADER)break;type=s->decoder.header[0];
+   r=reply(s,128,1);if(r!=ZW_HEADER)break;type=s->decoder.header[0];
    if(type==ZRPOS)return seek(s,position(s));
    if(type==ZSKIP)return ZM_DONE;
    if(type==ZCRC){if(source_crc(s,position(s)))return s->status;if(++s->retries>=LIMIT)break;continue;}
@@ -274,7 +288,8 @@ static unsigned send_stream(zm_session *s)
   }
   for(;;){
    /* Empty polls retain partial headers, including a split ZDLE. */
-   r=event_for(s,waiting?3:0);
+   r=waiting?reply(s,(unsigned)(sent-s->position),
+    ((unsigned)(sent-s->position)+s->block-1)/s->block):event_for(s,0);
    if(r==ZM_WAIT && !waiting)break;
    if(r!=ZW_HEADER){
     if(s->status)break;
@@ -332,7 +347,7 @@ static unsigned send_file(zm_session *s)
    if(header(s,ZDATA,s->position,s->format) || data(s,n,ZW_CRCW))break;
   }
   for(;;){
-   r=event(s);if(r!=ZW_HEADER)break;type=s->decoder.header[0];
+   r=reply(s,(unsigned)(next-s->position),1);if(r!=ZW_HEADER)break;type=s->decoder.header[0];
    if(type==ZACK && next>s->position && position(s)==next){
     s->position=next;if(next>verified){verified=next;s->retries=0;}break;
    }
@@ -356,7 +371,7 @@ static unsigned send(zm_session *s)
  unsigned r,i;
  for(i=0;i<LIMIT && !s->status;++i){
   if(header(s,ZRQINIT,0,ZW_HEX))break;
-  r=event(s);
+  r=reply(s,0,0);
   if(r==ZW_HEADER && s->decoder.header[0]==ZRINIT){negotiate(s);break;}
   if(r==ZW_HEADER && s->decoder.header[0]==ZCHALLENGE)header(s,ZACK,position(s),ZW_HEX);
   zw_headers(&s->decoder);
@@ -378,9 +393,11 @@ static unsigned send(zm_session *s)
  }
 }
 unsigned __cdecl zm_run(zm_session *s,const zm_ops *ops,void *context,unsigned sending)
+{return zm_run_link(s,ops,context,sending,0);}
+unsigned __cdecl zm_run_link(zm_session *s,const zm_ops *ops,void *context,unsigned sending,unsigned response_bps)
 {
  unsigned r,i;unsigned char cancel[18];
- if(!s || !ops || sending>1)return ZM_ARGUMENT;
+ if(!s || !ops || sending>1 || (response_bps && response_bps<300))return ZM_ARGUMENT;
 #ifdef __WATCOMC__
  if((unsigned long)(unsigned)s+sizeof(*s)>65536UL || (unsigned long)(unsigned)ops+sizeof(*ops)>65536UL ||
   !((unsigned long)(unsigned)s+sizeof(*s)<=(unsigned)ops || (unsigned long)(unsigned)ops+sizeof(*ops)<=(unsigned)s))return ZM_ARGUMENT;
@@ -390,7 +407,7 @@ unsigned __cdecl zm_run(zm_session *s,const zm_ops *ops,void *context,unsigned s
 #endif
  if(!ops->read_byte || !ops->write_wire || (sending?(!ops->next || !ops->seek || !ops->read_file || !ops->close_source):
   (!ops->open_received || !ops->write_received || !ops->commit_received || !ops->abort_received)))return ZM_ARGUMENT;
- memset(s,0,sizeof(*s));s->ops=ops;s->context=context;s->sending=sending;
+ memset(s,0,sizeof(*s));s->ops=ops;s->context=context;s->sending=sending;s->response_bps=response_bps;
  zw_init(&s->decoder,s->io.rx,sizeof(s->io.rx),0);r=sending?send(s):receive(s);
  if(s->owned==1){
   s->cleanup_status=sending?ops->close_source(context,0):ops->abort_received(context);

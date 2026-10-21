@@ -57,10 +57,17 @@ static void progress(live_zmodem *p)
 }
 unsigned ZM_FAR __cdecl terminal_zmodem_input(void *ctx,unsigned seconds)
 {
- unsigned value;live_zmodem *p=ctx;progress(p);
- value=ymodem_io_read(seconds);
- if(ymodem_io_poll())return terminal_transfer_fault==2?ZM_ABORT:ZM_BROKEN;
- return value;
+ unsigned value,chunk;live_zmodem *p=ctx;progress(p);
+ /* The shared UART adapter caps each read at30 seconds. Honor longer
+  * carrier allowances in serviced pieces, retaining fault/cancel checks and
+  * the independent accepted-progress watchdog. Zero remains a genuine poll. */
+ for(;;){
+  chunk=seconds>30?30:seconds;
+  value=ymodem_io_read(chunk);
+  if(ymodem_io_poll())return terminal_transfer_fault==2?ZM_ABORT:ZM_BROKEN;
+  if(value!=ZM_WAIT || seconds<=chunk)return value;
+  seconds-=chunk;
+ }
 }
 unsigned ZM_FAR __cdecl terminal_zmodem_output(void *ctx,const void *data,unsigned n)
 {
@@ -116,7 +123,7 @@ unsigned __cdecl terminal_zmodem_store(unsigned sending)
   if(!terminal_transfer_fault)terminal_transfer_fault=7;return 1;
  }
  p->observed=p->files=0;
- status=zm_run(&p->session,&terminal_zmodem_ops,p,sending);progress(p);
+ status=zm_run_link(&p->session,&terminal_zmodem_ops,p,sending,ymodem_io_modem()?300:0);progress(p);
  if(upload_source_result.handle_uncertain || batch_download_result.file.handle_uncertain || batch_download_result.file.stage_exists)
   terminal_transfer_cleanup_status=1;
  if(!status)return 0;

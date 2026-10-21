@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Accepted editor07 and download03 remain scoped checkpoints. Upload01 failed: fixed38400 DTE queues retries before a valid slow-carrier ACK. Exact upstream prefixes, preserved source and normal DOS cleanup; no official installed file or resumed search. Receiver later retired naturally with exit255. A linked delayed-ACK counterexample reproduces premature replay. Response timing, upload acceptance, other peers, physical hardware and F01-F16 remain open.",
+  "status": "Accepted editor07 and download03 remain scoped checkpoints. Upload01 failed with premature replay before a valid slow-carrier ACK. Native response fix now passes14 linked timing,11 host policy/API cases and protocol/ABI/actual-DOS regressions; these do not accept a new audio upload. Upload acceptance, other peers, pressure/loss, physical hardware and F01-F16 remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3749,5 +3749,7 @@
   "completion_regression_receipt": "docs/validation/zmodem-completion-regression.json",
   "accepted_download_cohort": "synthmodem-audio-download-03",
   "audio_upload_receipt": "docs/validation/synthmodem-audio-upload-01.json",
-  "upload_response_receipt": "docs/validation/zmodem-upload-response-counterexample.json"
+  "upload_response_receipt": "docs/validation/zmodem-upload-response-counterexample.json",
+  "upload_response_fixed_receipt": "docs/validation/zmodem-upload-response-fixed.json",
+  "upload_response_fixed_receipt_sha256": "1ea384f4792df0e2ee6e6528cde0545840b5517f58dd803e8103291067ac57fe"
 }

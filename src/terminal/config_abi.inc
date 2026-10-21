@@ -58,6 +58,7 @@ CONFIG_CDECL _config_ym_put,_ymodem_io_put,1
 CONFIG_CDECL _config_ym_unread,_ymodem_io_unread,1
 CONFIG_ZERO _config_ym_poll,_ymodem_io_poll
 CONFIG_ZERO _config_ym_progress,_ymodem_io_progress
+CONFIG_ZERO _config_ym_modem,_ymodem_io_modem
 CONFIG_CDECL _config_bd_begin,_batch_download_begin,1
 CONFIG_CDECL _config_bd_open,_batch_download_open,1
 CONFIG_CDECL _config_bd_append,_batch_download_append,2

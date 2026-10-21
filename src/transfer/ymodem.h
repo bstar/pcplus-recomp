@@ -17,6 +17,7 @@ unsigned __cdecl ymodem_run(const char *path,unsigned sending);
 unsigned __cdecl ymodem_io_read(unsigned seconds);
 unsigned __cdecl ymodem_io_put(unsigned value);
 unsigned __cdecl ymodem_io_poll(void);
+unsigned __cdecl ymodem_io_modem(void);
 unsigned __cdecl ymodem_io_unread(unsigned count);
 void __cdecl ymodem_io_progress(void);
 #endif
