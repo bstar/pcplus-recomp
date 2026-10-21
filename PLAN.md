@@ -308,17 +308,30 @@ retains the selected native ZMODEM protocol. Its new passive auditor requires a
 valid source/ACK before CAN and a complete11521-byte retry with every CRC,
 opposite-control/FIN/OO, official-storage, source/stat and post-return gate.
 Exactly two real helpers must retire in order (cancel1, success0) in one BBS
-connection. Audio retry01 is now running with all inputs/auditors frozen;
-preparation grants no actual retry acceptance. This run logs5999ms against the
-unchanged6000ms post-training gate. The
-[timer counterexample](docs/validation/posttrain-minimum-counterexample.json)
-executes the retained CallSession method with modeled clock/timer boundaries:
-a5999ms timer callback attaches prematurely; the6000ms control attaches once.
-The minimum callback trusts delivery rather than checking elapsed time. No
-running input/runtime is changed; retain this gate failure even if the retry
-workflow completes. Previous partials and receipts remain preserved. Timer
-correction, temporary cleanup, pressure/loss, other peers, physical and F01-F16
-requirements remain open.
+connection. The [completed retry01](docs/validation/synthmodem-audio-upload-retry-01.json)
+passes the client workflow: exact14459 online DOS bytes and78868 display bytes,
+12 unreplayed retry packets, exact official storage/source/stat, two actual
+helper exits1/0, real search/list and normal DOS/UART/PIC/IRQ/timer restoration.
+All79077 frontend bytes complete with no skipped/failed/pending bytes. Required
+OO reaches the relay before final helper retirement; both premature-control
+timestamp mutants are rejected in explicit protocol-only mode. Overall
+acceptance remains false:5999ms violates the unchanged6000ms hold gate. The
+original frozen auditor mistakenly required one ZFILE announcement per helper;
+its report stays retained, and a separate read-only auditor validates both
+retry announcements through the existing CRC/control parser. Helper-count and
+all transfer/storage/return gates remain intact.
+
+The [timer counterexample](docs/validation/posttrain-minimum-counterexample.json)
+executes the retained CallSession method at modeled5999/6000ms timer boundaries.
+The [isolated repair](docs/validation/synthmodem-posttrain-runtime.json) now
+changes only CallSession source in a separate exact-file runtime: monotonic
+minimum/quiescence clocks, elapsed checks on both callback paths and integer
+logging. Minimum hold dominates a shorter cap. All15 actual-method checks pass,
+including14 modeled boundary cases and one real default6000ms Node timer run.
+The original runtime/config/kernel/initrd/DSP/helper/backend/Telnet files remain
+unchanged. This accepts only staging/component tests; a fresh SIP/audio/DOS/BBS
+run is still required. Temporary cleanup, pressure/loss, other peers, physical
+and F01-F16 requirements remain open.
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,

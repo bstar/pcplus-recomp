@@ -243,10 +243,21 @@ forms and search for AUDIOUP.BIN. All12 observer checks pass. These synthetic
 screen probes verify the BIOS observer; they do not prove a real transfer.
 
 The [fresh-board prerequisites](../../docs/validation/audio-upload-retry-preparation.json)
-pass seven navigation and thirteen isolation checks. Audio retry01 is running;
-all frozen producer and independent transfer/stream/cleanup gates remain
-required. The previous cancellation's source-prefix backup and receipts remain
-preserved. No actual retry or temporary-cleanup acceptance is claimed yet.
+pass seven navigation and thirteen isolation checks. The
+[completed retry01](../../docs/validation/synthmodem-audio-upload-retry-01.json)
+passes its client transfer/recovery workflow, with exact14459 online DOS bytes,
+78868 display bytes,12 unreplayed retry data packets, exact official11521-byte
+file, source/stat preservation, real postretry search/list and normal native
+cleanup. All79077 frontend bytes complete without skipped/failed/pending bytes.
+The original strict-count auditor report remains preserved: there are two
+metadata announcements within the single retry. The separate v2 auditor uses
+the existing CRC/control parser to validate both and still requires exactly two
+actual helper executions (cancel1 then success0).
+
+Overall acceptance stays false:5999ms misses the unchanged6000ms hold minimum.
+Independent protocol-only negatives reject premature ACK/FIN, and actual relay
+OO precedes final helper retirement. Previous partial/receipt evidence remains
+unchanged. Timer correction and receiver cleanup remain open.
 
 ```sh
 ./tools/dev --command python3 lab/bbs/check_audio_upload_keys.py \
@@ -259,7 +270,7 @@ preserved. No actual retry or temporary-cleanup acceptance is claimed yet.
   --runtime build/bbs-lab/synthmodem-key-framing-runtime-01/runtime \
   --output build/bbs-lab/synthmodem-audio-upload-retry-NEW
 # After natural exit and the independent byte/cleanup and ownership audits:
-./tools/modem-dev --command python3 lab/bbs/audio_upload_retry.py COHORT
+./tools/modem-dev --command python3 lab/bbs/audit_audio_upload_retry.py COHORT
 ```
 
 The observer prerequisite is explicit through `--upload-key-checks`; its source
@@ -287,3 +298,9 @@ correction requires a separately staged and validated runtime.
 
 The counterexample command exits zero when the defect is reproduced; its
 receipt keeps `passed: false`.
+
+
+The isolated [minimum-hold candidate](../../docs/validation/synthmodem-posttrain-runtime.json)
+now passes15 actual-method checks, including a real default6000ms Node timer.
+Only CallSession changes in the separately staged runtime. See
+[minimum-hold repair](synthmodem-posttrain.md); no new audio acceptance follows.
