@@ -24,6 +24,7 @@ extern _transfer_native_open,_transfer_native_write,_transfer_native_close,_tran
 extern session_setjmp,session_longjmp,session_blocks_accepted
 extern terminal_monitor_active
 extern terminal_controller_active
+extern terminal_directory_mode
 extern terminal_printer_barrier
 GLOBAL terminal_transfer_start,terminal_transfer_poll,terminal_transfer_service
 GLOBAL terminal_upload_start,terminal_transfer_direction
@@ -842,8 +843,23 @@ terminal_transfer_filter:
 ; Accepted-progress deadline, not an idle-byte timer. ZedZap can contain8192
 ; payload bytes plus quoting before a verified packet exists. Allow the worst
 ; quoted packet on a slow UART without treating unverified bytes as progress.
+; A connected modem's DTE baud is not a carrier-speed lower bound. The legacy
+; first-completion CONNECT matcher supplies no reliable DCE rate, so cover the
+; supported300bps floor for that context. Direct-directory/raw serial sessions
+; retain their UART-based budget. Per-read idle/retry and physical TX/flow stall
+; bounds remain independent; unverified input never refreshes this deadline.
 GLOBAL terminal_transfer_set_budget,transfer_progress_budget
 terminal_transfer_set_budget:
+ cmp word [connection_state],6
+ jne .uart_rate
+ cmp word [terminal_directory_mode],1
+ je .uart_rate
+ mov word [transfer_progress_budget],2160
+ cmp word [terminal_transfer_protocol],2
+ jne .done
+ mov word [transfer_progress_budget],17280
+ ret
+.uart_rate:
  mov word [transfer_progress_budget],540
  cmp word [terminal_baud_high],0
  jne .done

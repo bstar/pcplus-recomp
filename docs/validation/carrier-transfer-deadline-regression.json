@@ -1,0 +1,856 @@
+{
+  "passed": true,
+  "binary_sha256": "55bf93854d90db35761936c7cbc09ba4e83f080cfa97f9c52700a96584e1fa9d",
+  "map_sha256": "f3b5bf4e53c6349312981a3239e13396e3b0c743e440056cf0427890cf43517c",
+  "reports": {
+    "linked_ZMODEM": {
+      "passed": true,
+      "binary_sha256": "55bf93854d90db35761936c7cbc09ba4e83f080cfa97f9c52700a96584e1fa9d",
+      "inputs": 78,
+      "cases": [
+        {
+          "case": "bridge-False-65-0",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-65-1",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-65-1023",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-65-1024",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-65-1025",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-65-65539",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-67-0",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-67-1",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-67-1023",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-67-1024",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-67-1025",
+          "passed": true
+        },
+        {
+          "case": "bridge-False-67-65539",
+          "passed": true
+        },
+        {
+          "case": "foreground-owner-False",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-65-0",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-65-1",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-65-1023",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-65-1024",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-65-1025",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-65-65539",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-67-0",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-67-1",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-67-1023",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-67-1024",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-67-1025",
+          "passed": true
+        },
+        {
+          "case": "bridge-True-67-65539",
+          "passed": true
+        },
+        {
+          "case": "foreground-owner-True",
+          "passed": true
+        },
+        {
+          "case": "checked-source-resume-0",
+          "passed": true
+        },
+        {
+          "case": "checked-source-resume-3",
+          "passed": true
+        },
+        {
+          "case": "checked-source-resume-8",
+          "passed": true
+        },
+        {
+          "case": "file-fault-False-write",
+          "passed": true
+        },
+        {
+          "case": "file-fault-False-short",
+          "passed": true
+        },
+        {
+          "case": "file-fault-False-close",
+          "passed": true
+        },
+        {
+          "case": "file-fault-False-install",
+          "passed": true
+        },
+        {
+          "case": "file-fault-True-open",
+          "passed": true
+        },
+        {
+          "case": "file-fault-True-seek",
+          "passed": true
+        },
+        {
+          "case": "file-fault-True-read",
+          "passed": true
+        },
+        {
+          "case": "file-fault-True-short",
+          "passed": true
+        },
+        {
+          "case": "file-fault-True-close",
+          "passed": true
+        },
+        {
+          "case": "ZedZap-HARD-CRC-65-length-2048",
+          "passed": true,
+          "clock": "Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time."
+        },
+        {
+          "case": "ZedZap-HARD-CRC-65-length-4096",
+          "passed": true,
+          "clock": "Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time."
+        },
+        {
+          "case": "ZedZap-HARD-CRC-65-length-8192",
+          "passed": true,
+          "clock": "Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time."
+        },
+        {
+          "case": "ZedZap-HARD-CRC-65-length-16385",
+          "passed": true,
+          "clock": "Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time."
+        },
+        {
+          "case": "ZedZap-HARD-CRC-67-length-2048",
+          "passed": true,
+          "clock": "Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time."
+        },
+        {
+          "case": "ZedZap-HARD-CRC-67-length-4096",
+          "passed": true,
+          "clock": "Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time."
+        },
+        {
+          "case": "ZedZap-HARD-CRC-67-length-8192",
+          "passed": true,
+          "clock": "Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time."
+        },
+        {
+          "case": "ZedZap-HARD-CRC-67-length-16385",
+          "passed": true,
+          "clock": "Frozen BIOS ticks isolate packet memory/RTS behavior; separate real DOS tests use actual BIOS time."
+        },
+        {
+          "case": "windowed-65-delayed-full-window",
+          "passed": true
+        },
+        {
+          "case": "windowed-65-capacity-independent-of-ACK",
+          "passed": true
+        },
+        {
+          "case": "windowed-65-open-frame-reposition",
+          "passed": true
+        },
+        {
+          "case": "windowed-67-delayed-full-window",
+          "passed": true
+        },
+        {
+          "case": "windowed-67-capacity-independent-of-ACK",
+          "passed": true
+        },
+        {
+          "case": "windowed-67-open-frame-reposition",
+          "passed": true
+        },
+        {
+          "case": "paced-accepted-prefix-replay",
+          "passed": true,
+          "status": 0,
+          "fault": 0,
+          "budget": 540,
+          "modeled_ticks_per_ACK": 100,
+          "replay_start": 800,
+          "replay_ACK_ticks": [
+            900,
+            1000,
+            1100,
+            1200,
+            1300,
+            1400,
+            1500,
+            1600
+          ],
+          "native_refreshes": [
+            {
+              "tick": 0,
+              "kbytes": 0,
+              "replay": false
+            },
+            {
+              "tick": 100,
+              "kbytes": 1,
+              "replay": false
+            },
+            {
+              "tick": 200,
+              "kbytes": 2,
+              "replay": false
+            },
+            {
+              "tick": 300,
+              "kbytes": 3,
+              "replay": false
+            },
+            {
+              "tick": 400,
+              "kbytes": 4,
+              "replay": false
+            },
+            {
+              "tick": 500,
+              "kbytes": 5,
+              "replay": false
+            },
+            {
+              "tick": 600,
+              "kbytes": 6,
+              "replay": false
+            },
+            {
+              "tick": 700,
+              "kbytes": 7,
+              "replay": false
+            },
+            {
+              "tick": 800,
+              "kbytes": 8,
+              "replay": false
+            },
+            {
+              "tick": 900,
+              "kbytes": 1,
+              "replay": true
+            },
+            {
+              "tick": 1000,
+              "kbytes": 2,
+              "replay": true
+            },
+            {
+              "tick": 1100,
+              "kbytes": 3,
+              "replay": true
+            },
+            {
+              "tick": 1200,
+              "kbytes": 4,
+              "replay": true
+            },
+            {
+              "tick": 1300,
+              "kbytes": 5,
+              "replay": true
+            },
+            {
+              "tick": 1400,
+              "kbytes": 6,
+              "replay": true
+            },
+            {
+              "tick": 1500,
+              "kbytes": 7,
+              "replay": true
+            },
+            {
+              "tick": 1600,
+              "kbytes": 8,
+              "replay": true
+            },
+            {
+              "tick": 1600,
+              "kbytes": 8,
+              "replay": true
+            }
+          ],
+          "remaining_script": 0,
+          "scope": "Linked production engine/adapter/UART/watchdog. Only BIOS clock schedule and peer/kernel hardware modeled. Whole replay exceeds inactivity budget; each confirmed-ACK interval is below it. No physical timing claim."
+        },
+        {
+          "case": "accepted-progress-budget-0-300",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-0-600",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-0-1200",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-0-2400",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-0-4800",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-0-9600",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-0-19200",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-0-115200",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-1-300",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-1-600",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-1-1200",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-1-2400",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-1-4800",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-1-9600",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-1-19200",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-1-115200",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-2-300",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-2-600",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-2-1200",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-2-2400",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-2-4800",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-2-9600",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-2-19200",
+          "passed": true
+        },
+        {
+          "case": "accepted-progress-budget-2-115200",
+          "passed": true
+        },
+        {
+          "case": "saved-receive-with-missing-OO-honest-footer",
+          "passed": true
+        }
+      ],
+      "test_sha256": "1cd9a67e0222bfafda5ee5a506daed0e25930979659803af6436be987050823c",
+      "scope": "Actual linked CONFIG_CODE engine/codec/far callback table, checked batch storage/source seek, serviced physical UART ISR and foreground owner. Independent exact Python wire scripts; only hardware/BIOS/DOS kernel boundaries modeled. Not actual DOS/BBS or physical modem evidence."
+    },
+    "cancellation": {
+      "passed": true,
+      "cases": [
+        {
+          "case": "quiet",
+          "passed": true,
+          "elapsed_modeled_ticks": 12,
+          "late_bursts": 0
+        },
+        {
+          "case": "late",
+          "passed": true,
+          "elapsed_modeled_ticks": 15,
+          "late_bursts": 2
+        },
+        {
+          "case": "continuous",
+          "passed": true,
+          "elapsed_modeled_ticks": 183,
+          "late_bursts": 183
+        },
+        {
+          "case": "quiet-upload",
+          "passed": true,
+          "elapsed_modeled_ticks": 11,
+          "late_bursts": 0
+        },
+        {
+          "case": "clock-jump",
+          "passed": true,
+          "elapsed_modeled_ticks": 65540,
+          "late_bursts": 0
+        }
+      ],
+      "binary_sha256": "55bf93854d90db35761936c7cbc09ba4e83f080cfa97f9c52700a96584e1fa9d",
+      "checker_sha256": "d9be484cf2b0e08d7d5cf9af15e89c52acc84c7a63fce3b94febac26c8be5a00",
+      "scope": "Actual linked foreground owner, ZMODEM engine, storage, UART ISR and cancel writer; BIOS clock/keyboard/ports and DOS filesystem boundaries modeled. Late input and endless-input deadline checked; real BBS cancellation is separate."
+    },
+    "far_ABI": {
+      "passed": true,
+      "binary_sha256": "55bf93854d90db35761936c7cbc09ba4e83f080cfa97f9c52700a96584e1fa9d",
+      "cases": [
+        {
+          "case": "MZ-relocations-128-bridge-pairs-and-six-invalid-images-rejected",
+          "passed": true,
+          "detail": {
+            "layout": {
+              "near_bytes": 64832,
+              "near_spare_bytes": 704,
+              "near_relative_segment": 7661,
+              "far_relative_segment": 17057,
+              "shadow_offset": 0,
+              "history_offset": 0,
+              "far_bytes": 71192,
+              "history_relative_segment": 17569,
+              "history_bytes": 63000,
+              "far_end_linear": 344104,
+              "stack_end_linear": 187408,
+              "loaded_module_bytes": 156296,
+              "minimum_allocated_module_bytes": 344112,
+              "retained_parent_paragraphs": 21523,
+              "far_pointer_relocations_verified": true,
+              "snapshot_relative_segment": 12963,
+              "snapshot_image_offset": 63504,
+              "snapshot_bytes": 2000,
+              "snapshot_end_linear": 272912,
+              "ui_screen_buffers": {
+                "browser_screen": {
+                  "relative_segment": 11713,
+                  "offset": 0,
+                  "bytes": 4000,
+                  "start_linear": 187408,
+                  "end_linear": 191408
+                },
+                "ed_screen": {
+                  "relative_segment": 11713,
+                  "offset": 4000,
+                  "bytes": 4000,
+                  "start_linear": 191408,
+                  "end_linear": 195408
+                },
+                "program_screen": {
+                  "relative_segment": 11713,
+                  "offset": 8000,
+                  "bytes": 4000,
+                  "start_linear": 195408,
+                  "end_linear": 199408
+                },
+                "redisplay_live": {
+                  "relative_segment": 11713,
+                  "offset": 12000,
+                  "bytes": 4000,
+                  "start_linear": 199408,
+                  "end_linear": 203408
+                },
+                "redisplay_view": {
+                  "relative_segment": 11713,
+                  "offset": 16000,
+                  "bytes": 4000,
+                  "start_linear": 203408,
+                  "end_linear": 207408
+                }
+              },
+              "far_ui_storage_bytes": 20000,
+              "redisplay_snapshot_bytes": 63000,
+              "redisplay_snapshot_end_linear": 270408,
+              "redisplay_row_index_bytes": 494,
+              "redisplay_row_index_relative_segment": 12963,
+              "redisplay_row_index_offset": 63000,
+              "redisplay_row_index_end_linear": 270902,
+              "controller_bridge_pairs_verified": 22,
+              "modem_bridge_pairs_verified": 23,
+              "command_menu_far_code_verified": true,
+              "ymodem_far_code_verified": true,
+              "zmodem_far_callbacks_verified": 10,
+              "configuration_bridge_pairs_verified": 79,
+              "redisplay_bridge_pairs_verified": 4,
+              "aspect_far_services_verified": 16,
+              "aspect_resident_far_references_verified": 20,
+              "aspect_controller_read_references_verified": 1,
+              "aspect_emit_cdecl_bridge_verified": true,
+              "aspect_handoff_bytes": 48,
+              "aspect_renderer_state_bytes": 4,
+              "line_attribute_far_entries_verified": 2,
+              "line_attribute_controller_references_verified": 3,
+              "line_attribute_video_callbacks_verified": 2,
+              "line_controller_entry_pairs_verified": 4,
+              "line_controller_register_callbacks_verified": 3,
+              "line_controller_code_bytes": 335,
+              "status_far_bridge_pairs_verified": 5,
+              "status_script_label_bytes": 15,
+              "resident_code_bytes": 65402,
+              "resident_code_spare_bytes": 134,
+              "code_segments": [
+                {
+                  "name": "_TEXT",
+                  "kind": "CODE",
+                  "relative_segment": 0,
+                  "offset": 0,
+                  "bytes": 65402
+                },
+                {
+                  "name": "ASPECT_CODE",
+                  "kind": "FARCODE",
+                  "relative_segment": 4088,
+                  "offset": 0,
+                  "bytes": 6332
+                },
+                {
+                  "name": "CONFIG_CODE",
+                  "kind": "FARCODE",
+                  "relative_segment": 4484,
+                  "offset": 0,
+                  "bytes": 47844
+                },
+                {
+                  "name": "MODEM_CODE",
+                  "kind": "FARCODE",
+                  "relative_segment": 7475,
+                  "offset": 0,
+                  "bytes": 1515
+                },
+                {
+                  "name": "PRINT_CODE",
+                  "kind": "FARCODE",
+                  "relative_segment": 7570,
+                  "offset": 0,
+                  "bytes": 1449
+                }
+              ],
+              "far_code_bridge_pairs_verified": 128
+            },
+            "rejected_mutations": [
+              "terminal_controller_start",
+              "terminal_controller_start_far",
+              "terminal_printer_put_raw_resident",
+              "missing-MZ-far-call-relocation",
+              "oversized-code-segment",
+              "far-code-merged-into-resident-CS"
+            ]
+          }
+        },
+        {
+          "case": "all-seven-far-entry-paths-real-PRN-stack-adapter-and-DS-equals-SS",
+          "passed": true,
+          "detail": {
+            "visited": [
+              "far",
+              "terminal_controller_filter_far",
+              "terminal_controller_key_far",
+              "terminal_controller_poll_far",
+              "terminal_controller_receive_hold_far",
+              "terminal_controller_run_far",
+              "terminal_controller_shutdown_far",
+              "terminal_controller_start_far"
+            ],
+            "observed_stack_bytes": 302
+          }
+        },
+        {
+          "case": "actual-UART-ISR-and-IRET-return-to-interrupted-far-code",
+          "passed": true,
+          "detail": {
+            "actual_IRQ_frames": [
+              [
+                469,
+                11666,
+                514
+              ],
+              [
+                20101,
+                4096,
+                514
+              ]
+            ],
+            "far_CS": 11666,
+            "printed_hex": "4152"
+          }
+        }
+      ],
+      "source_sha256": {
+        "standalone/check_far_code_live.py": "4920f0a503e21062ec36b875b7e9bf3fe992d5cc4440131a9b5b1d9773b7ff36",
+        "standalone/terminal_memory.py": "8f1d2ac9563b9da9518addb6a0530f86ffc013ef2916b81d16369f2cd2dacf08",
+        "standalone/dos_image.py": "319e92316365f6acbdb406eb964dab1a22bc2e6ca57e3062e085527a17d2822c",
+        "standalone/check_transport.py": "55cf5fabdae9f6d5f56085d9127e5e81656c2651283042fb81473c56b4c45b69",
+        "standalone/check_terminal_capture_live.py": "e9140d084d577cfea1727582b7607aeb6a22c0518e1a408bc68378674f6b3b5a"
+      },
+      "scope": "Actual linked near/far bridges, controller, PRN queue and UART ISR; kernel/hardware modeled. MZ pointer/return/relocation and segment bounds checked independently, including rejection mutations. DOS child memory retention is a separate actual DOS test. Not arbitrary C stack-argument bridging or full application segmentation."
+    },
+    "actual_DOS": {
+      "passed": true,
+      "binary_sha256": "55bf93854d90db35761936c7cbc09ba4e83f080cfa97f9c52700a96584e1fa9d",
+      "cases": [
+        {
+          "passed": true,
+          "case": "rx-default",
+          "checks": {
+            "actual_terminal_ready": true,
+            "independent_peer_exit_zero": true,
+            "posttransfer_DSR": true,
+            "posttransfer_keyboard": true,
+            "no_peer_errors": true,
+            "DOS_normal_exit": true,
+            "hardware_restored": true,
+            "exact_destination": true,
+            "source_unchanged": true,
+            "screen_restored": true,
+            "no_stages": true,
+            "binary_unchanged": true,
+            "saved_preferences_unchanged": true,
+            "no_manual_transfer_keys": true
+          },
+          "errors": [],
+          "binary_sha256": "55bf93854d90db35761936c7cbc09ba4e83f080cfa97f9c52700a96584e1fa9d",
+          "peer_command": [
+            "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/sz",
+            "-b",
+            "-q",
+            "-8",
+            "-L",
+            "8192",
+            "EMPTY.BIN",
+            "ODD.BIN",
+            "ALL.BIN"
+          ],
+          "peer_exit": 0,
+          "keys": [
+            "p30000",
+            "r",
+            "e",
+            "a",
+            "d",
+            "y",
+            "p1500",
+            "a-x"
+          ],
+          "recipe_bounds": {
+            "after_ms": 30000,
+            "transfer_timeout": 65,
+            "resume_timeout": 40.0,
+            "DOS_timeout": 100
+          },
+          "files": {
+            "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+            "ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+          },
+          "scope": "Actual DOSBox-X saved automatic invitation without transfer keys;  maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with independent pinned lrzsz stdio peer. Synthetic local media, no BBS login or physical modem claim."
+        }
+      ],
+      "cohort": "build/terminal-zmodem-dos/carrier-deadline-auto01",
+      "map_sha256": "f3b5bf4e53c6349312981a3239e13396e3b0c743e440056cf0427890cf43517c",
+      "capture_sha256": {
+        "checks.json": "5eb582ab65a292ddcb0565ee55fd550fc1c643fb35923dcfb489127ef843c417",
+        "rx-default/dosbox.log": "6b2c4fc71ad6c7869977a719ec1b35ca3ed27eed43d43d9d33647ae591b2f6ec",
+        "rx-default/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "rx-default/peer-stderr.log": "72cd96d243f85a3d1e30f2f036d4dc3171e5d6836cb8f90187ca5cbac74a74e3",
+        "rx-default/SCREEN.BIN": "c8974c95c464968622087a53983e68dd67fbe4c56f26602a9e676712b51de822",
+        "rx-default/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "rx-default/events.json": "ea1f2099c27e934e18518a1d3c19f0139356a624db712afd93801a71b2b6e804",
+        "rx-default/serial.bin": "fcf4f97303ba5d867ec525689b77b92e7e3ab025ecb34c06945e5412599366b6",
+        "rx-default/peer.bin": "a5e4b01d03a18e5dacef8f3752f6e3587bed0bcd6ddafad6d728bcfb573c976f",
+        "rx-default/result.json": "0dd1c2b27e7caaa9d99bfd3d3077c061e7286028a805c39e34097b8a92b77465",
+        "rx-default/RECV/EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "rx-default/RECV/ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "rx-default/RECV/ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607",
+        "rx-default/PEER/EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "rx-default/PEER/ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "rx-default/PEER/ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+      },
+      "scope": "Actual DOS automatic ZedZap receive with pinned independent lrzsz: empty, one byte and65797 bytes, exact files, genuine post-transfer DSR/keyboard, normal DOS return and UART restoration. Fast direct emulated serial link, not slower modem-carrier/audio or physical acceptance."
+    },
+    "paired_deadline": {
+      "counterexample_reproduced": false,
+      "passed": true,
+      "cases": [
+        {
+          "DTE_bps": 38400,
+          "modeled_carrier_bps": 1200,
+          "deadline_ticks": 17280,
+          "fault": 0,
+          "installed_exact": true,
+          "delivered_wire_bytes": 4329,
+          "elapsed_ticks": 794,
+          "handles_closed": true,
+          "remaining_peer_steps": 0
+        },
+        {
+          "DTE_bps": 1200,
+          "modeled_carrier_bps": 1200,
+          "deadline_ticks": 17280,
+          "fault": 0,
+          "installed_exact": true,
+          "delivered_wire_bytes": 4329,
+          "elapsed_ticks": 794,
+          "handles_closed": true,
+          "remaining_peer_steps": 0
+        },
+        {
+          "case": "fully-quoted8KiB-before-first-confirmed-progress",
+          "passed": true,
+          "modeled_carrier_bps": 300,
+          "wire_bytes": 16472,
+          "elapsed_ticks": 10168
+        },
+        {
+          "case": "direct-budget-preserved-and-peer-silence-bounded",
+          "passed": true,
+          "elapsed_ticks": 612
+        }
+      ],
+      "binary_sha256": "55bf93854d90db35761936c7cbc09ba4e83f080cfa97f9c52700a96584e1fa9d",
+      "checker_sha256": "c82fed5686f141ea84d7036b5da3dfed8bdca0301a3149b682526d5f202aea07",
+      "scope": "Linked production receiver, watchdog, UART ISR and storage. Hardware/kernel boundaries modeled. Quantized1200/300-bps wire time plus idle clock, not audio or physical acceptance. Fixed DTE remains unchanged; unknown modem carrier uses bounded300bps packet allowance, direct sessions retain UART allowance. Historical failure retained separately.",
+      "baseline": {
+        "counterexample_reproduced": true,
+        "passed": false,
+        "cases": [
+          {
+            "DTE_bps": 38400,
+            "modeled_carrier_bps": 1200,
+            "deadline_ticks": 540,
+            "fault": 3,
+            "installed_exact": false,
+            "delivered_wire_bytes": 4291,
+            "elapsed_ticks": 667,
+            "handles_closed": true,
+            "remaining_peer_steps": 3
+          },
+          {
+            "DTE_bps": 1200,
+            "modeled_carrier_bps": 1200,
+            "deadline_ticks": 4320,
+            "fault": 0,
+            "installed_exact": true,
+            "delivered_wire_bytes": 4329,
+            "elapsed_ticks": 794,
+            "handles_closed": true,
+            "remaining_peer_steps": 0
+          }
+        ],
+        "binary_sha256": "a24e562845bcc028595745fa7eaf8b516d8ba8e26499609dbac632d8a74b1a00",
+        "checker_sha256": "c82fed5686f141ea84d7036b5da3dfed8bdca0301a3149b682526d5f202aea07",
+        "scope": "Linked production receiver, watchdog, UART ISR and storage. Hardware/kernel boundaries modeled. Quantized1200/300-bps wire time plus idle clock, not audio or physical acceptance. Fixed DTE remains unchanged; unknown modem carrier uses bounded300bps packet allowance, direct sessions retain UART allowance. Historical failure retained separately."
+      },
+      "map_sha256": "f3b5bf4e53c6349312981a3239e13396e3b0c743e440056cf0427890cf43517c",
+      "product_source_sha256": "bc91495baec1c696aed7fa834701f7878899d2e1e01b1a4f098ab00a950c9fad",
+      "policy": {
+        "context": "connection_state6 with terminal_directory_mode other than direct1",
+        "carrier_lower_bound_bps": 300,
+        "ZMODEM_accepted_progress_ticks": 17280,
+        "XYMODEM_accepted_progress_ticks": 2160,
+        "direct_or_raw_policy": "Existing UART-rate budgets retained.",
+        "DTE_or_driver_change": false,
+        "unverified_byte_refresh": false,
+        "independent_bounds": "Protocol idle reads/retries, physical TX/CTS stalls, cancellation and storage gates unchanged."
+      },
+      "retained_fixture_failure": {
+        "path": "build/terminal/carrier-deadline-fixed-probe-01/checker.py",
+        "sha256": "9fbf5f682249237a861324d87cf02756af6a94412fd32521a033cbe01bae13b7",
+        "classification": "Positive transfer cases finished, but final fixture check referenced an internal, unexported phase symbol. Replaced with a real silent-peer session; no product symbol was added or storage exposed."
+      }
+    }
+  },
+  "report_sha256": {
+    "linked_ZMODEM": "ab6fa8c06bff4dbbc28f933bed47b55089f8acb7004b8a4425eb66ba328af86c",
+    "cancellation": "541601bb5176f9d89460fd312c049a50f86a05275cb724c04a4b1a3c88f6fa5f",
+    "far_ABI": "4881dbd578294c5a8fed6100c499379df9dd9f0c070c6c0e3a60ea783f997619",
+    "actual_DOS": "d4b4492da7f6615acd7bb06dcdde95042656aee514dd5a2f9f5cd2dfe675d2ea",
+    "paired_deadline": "344ee6a158f0cc35e63160165fc719600917484c51d0f91f8d6811d36dfa812a"
+  },
+  "scope": "Corrected source-built native modem packet-deadline checkpoint: 78 linked ZMODEM workflows, five foreground cancellation cases, three far-call/IRQ/layout groups, paired slow-carrier counterexample/correction and one actual DOS automatic three-file session with14 checks. No full-audio/BBS or physical acceptance follows from these checks."
+}

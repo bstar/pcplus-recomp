@@ -56,6 +56,10 @@ advances. Source CRC rereads and retransmitting an old position do not create
 accepted progress. The display shows the current file's KiB, bounded to a word;
 larger files keep full DWORD offsets internally.
 
+Connected modem sessions use a bounded allowance for an unknown carrier speed,
+independent of fixed DTE. Direct/raw UART-derived deadlines remain unchanged;
+see the [deadline correction and paired proofs](../lab/bbs/carrier-transfer-deadline.md).
+
 The current runtime has 65,056 near data/stack bytes (480 free), 62,946 resident
 code bytes and 37,578 CONFIG_CODE bytes. It retains 20,313 paragraphs including
 the PSP for PROGRAM children. Compared with the preceding 61db runtime, this

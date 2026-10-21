@@ -1,0 +1,83 @@
+{
+  "passed": true,
+  "binary_sha256": "55bf93854d90db35761936c7cbc09ba4e83f080cfa97f9c52700a96584e1fa9d",
+  "cases": [
+    {
+      "passed": true,
+      "case": "rx-default",
+      "checks": {
+        "actual_terminal_ready": true,
+        "independent_peer_exit_zero": true,
+        "posttransfer_DSR": true,
+        "posttransfer_keyboard": true,
+        "no_peer_errors": true,
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "exact_destination": true,
+        "source_unchanged": true,
+        "screen_restored": true,
+        "no_stages": true,
+        "binary_unchanged": true,
+        "saved_preferences_unchanged": true,
+        "no_manual_transfer_keys": true
+      },
+      "errors": [],
+      "binary_sha256": "55bf93854d90db35761936c7cbc09ba4e83f080cfa97f9c52700a96584e1fa9d",
+      "peer_command": [
+        "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/sz",
+        "-b",
+        "-q",
+        "-8",
+        "-L",
+        "8192",
+        "EMPTY.BIN",
+        "ODD.BIN",
+        "ALL.BIN"
+      ],
+      "peer_exit": 0,
+      "keys": [
+        "p30000",
+        "r",
+        "e",
+        "a",
+        "d",
+        "y",
+        "p1500",
+        "a-x"
+      ],
+      "recipe_bounds": {
+        "after_ms": 30000,
+        "transfer_timeout": 65,
+        "resume_timeout": 40.0,
+        "DOS_timeout": 100
+      },
+      "files": {
+        "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        "ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+      },
+      "scope": "Actual DOSBox-X saved automatic invitation without transfer keys;  maintained terminal CONFIG_CODE/far callbacks, UART ISR, checked batch source seek/read and staged receive files with independent pinned lrzsz stdio peer. Synthetic local media, no BBS login or physical modem claim."
+    }
+  ],
+  "cohort": "build/terminal-zmodem-dos/carrier-deadline-auto01",
+  "map_sha256": "f3b5bf4e53c6349312981a3239e13396e3b0c743e440056cf0427890cf43517c",
+  "capture_sha256": {
+    "checks.json": "5eb582ab65a292ddcb0565ee55fd550fc1c643fb35923dcfb489127ef843c417",
+    "rx-default/dosbox.log": "6b2c4fc71ad6c7869977a719ec1b35ca3ed27eed43d43d9d33647ae591b2f6ec",
+    "rx-default/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "rx-default/peer-stderr.log": "72cd96d243f85a3d1e30f2f036d4dc3171e5d6836cb8f90187ca5cbac74a74e3",
+    "rx-default/SCREEN.BIN": "c8974c95c464968622087a53983e68dd67fbe4c56f26602a9e676712b51de822",
+    "rx-default/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "rx-default/events.json": "ea1f2099c27e934e18518a1d3c19f0139356a624db712afd93801a71b2b6e804",
+    "rx-default/serial.bin": "fcf4f97303ba5d867ec525689b77b92e7e3ab025ecb34c06945e5412599366b6",
+    "rx-default/peer.bin": "a5e4b01d03a18e5dacef8f3752f6e3587bed0bcd6ddafad6d728bcfb573c976f",
+    "rx-default/result.json": "0dd1c2b27e7caaa9d99bfd3d3077c061e7286028a805c39e34097b8a92b77465",
+    "rx-default/RECV/EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "rx-default/RECV/ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+    "rx-default/RECV/ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607",
+    "rx-default/PEER/EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "rx-default/PEER/ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+    "rx-default/PEER/ALL.BIN": "f8d68c56b68cf660f628956792b1cb0488302c7d8428deb1510a14b6022a7607"
+  },
+  "scope": "Actual DOS automatic ZedZap receive with pinned independent lrzsz: empty, one byte and65797 bytes, exact files, genuine post-transfer DSR/keyboard, normal DOS return and UART restoration. Fast direct emulated serial link, not slower modem-carrier/audio or physical acceptance."
+}

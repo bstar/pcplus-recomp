@@ -1,0 +1,91 @@
+{
+  "counterexample_reproduced": false,
+  "passed": true,
+  "cases": [
+    {
+      "DTE_bps": 38400,
+      "modeled_carrier_bps": 1200,
+      "deadline_ticks": 17280,
+      "fault": 0,
+      "installed_exact": true,
+      "delivered_wire_bytes": 4329,
+      "elapsed_ticks": 794,
+      "handles_closed": true,
+      "remaining_peer_steps": 0
+    },
+    {
+      "DTE_bps": 1200,
+      "modeled_carrier_bps": 1200,
+      "deadline_ticks": 17280,
+      "fault": 0,
+      "installed_exact": true,
+      "delivered_wire_bytes": 4329,
+      "elapsed_ticks": 794,
+      "handles_closed": true,
+      "remaining_peer_steps": 0
+    },
+    {
+      "case": "fully-quoted8KiB-before-first-confirmed-progress",
+      "passed": true,
+      "modeled_carrier_bps": 300,
+      "wire_bytes": 16472,
+      "elapsed_ticks": 10168
+    },
+    {
+      "case": "direct-budget-preserved-and-peer-silence-bounded",
+      "passed": true,
+      "elapsed_ticks": 612
+    }
+  ],
+  "binary_sha256": "55bf93854d90db35761936c7cbc09ba4e83f080cfa97f9c52700a96584e1fa9d",
+  "checker_sha256": "c82fed5686f141ea84d7036b5da3dfed8bdca0301a3149b682526d5f202aea07",
+  "scope": "Linked production receiver, watchdog, UART ISR and storage. Hardware/kernel boundaries modeled. Quantized1200/300-bps wire time plus idle clock, not audio or physical acceptance. Fixed DTE remains unchanged; unknown modem carrier uses bounded300bps packet allowance, direct sessions retain UART allowance. Historical failure retained separately.",
+  "baseline": {
+    "counterexample_reproduced": true,
+    "passed": false,
+    "cases": [
+      {
+        "DTE_bps": 38400,
+        "modeled_carrier_bps": 1200,
+        "deadline_ticks": 540,
+        "fault": 3,
+        "installed_exact": false,
+        "delivered_wire_bytes": 4291,
+        "elapsed_ticks": 667,
+        "handles_closed": true,
+        "remaining_peer_steps": 3
+      },
+      {
+        "DTE_bps": 1200,
+        "modeled_carrier_bps": 1200,
+        "deadline_ticks": 4320,
+        "fault": 0,
+        "installed_exact": true,
+        "delivered_wire_bytes": 4329,
+        "elapsed_ticks": 794,
+        "handles_closed": true,
+        "remaining_peer_steps": 0
+      }
+    ],
+    "binary_sha256": "a24e562845bcc028595745fa7eaf8b516d8ba8e26499609dbac632d8a74b1a00",
+    "checker_sha256": "c82fed5686f141ea84d7036b5da3dfed8bdca0301a3149b682526d5f202aea07",
+    "scope": "Linked production receiver, watchdog, UART ISR and storage. Hardware/kernel boundaries modeled. Quantized1200/300-bps wire time plus idle clock, not audio or physical acceptance. Fixed DTE remains unchanged; unknown modem carrier uses bounded300bps packet allowance, direct sessions retain UART allowance. Historical failure retained separately."
+  },
+  "map_sha256": "f3b5bf4e53c6349312981a3239e13396e3b0c743e440056cf0427890cf43517c",
+  "product_source_sha256": "bc91495baec1c696aed7fa834701f7878899d2e1e01b1a4f098ab00a950c9fad",
+  "policy": {
+    "context": "connection_state6 with terminal_directory_mode other than direct1",
+    "carrier_lower_bound_bps": 300,
+    "ZMODEM_accepted_progress_ticks": 17280,
+    "XYMODEM_accepted_progress_ticks": 2160,
+    "direct_or_raw_policy": "Existing UART-rate budgets retained.",
+    "DTE_or_driver_change": false,
+    "unverified_byte_refresh": false,
+    "independent_bounds": "Protocol idle reads/retries, physical TX/CTS stalls, cancellation and storage gates unchanged."
+  },
+  "retained_fixture_failure": {
+    "path": "build/terminal/carrier-deadline-fixed-probe-01/checker.py",
+    "sha256": "9fbf5f682249237a861324d87cf02756af6a94412fd32521a033cbe01bae13b7",
+    "classification": "Positive transfer cases finished, but final fixture check referenced an internal, unexported phase symbol. Replaced with a real silent-peer session; no product symbol was added or storage exposed."
+  }
+}

@@ -41,6 +41,10 @@ Prior queued text drains before negotiation. Only actual transmission progress
 refreshes the36-tick stall deadline. Native timed reads use19 BIOS ticks per
 requested second, clipped to30 seconds. A separate no-progress deadline is540
 BIOS ticks, extended to2160 below1200baud. Midnight wrap is handled explicitly.
+Connected modem sessions now use the separate bounded slow-carrier allowance
+described in [fixed-DTE packet deadlines](../lab/bbs/carrier-transfer-deadline.md);
+the UART rate alone is not a carrier-speed lower bound. Direct/raw sessions
+retain the policy above. ZMODEM additionally accounts for quoted8KiB packets.
 The unresolved native calibrated delay6b72 is replaced by a serviced two-tick
 quiet interval; this is a documented maintained timing choice, not recovered
 original timing. The native6b98 BIOS-tick wait remains a distinct callback.

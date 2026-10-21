@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Normal framed editor07 remains accepted for its scoped 119-byte upstream/full-display/editor/cleanup proof. Latest automatic audio download01 fails: premature DTE-derived deadline on a 1200-bps carrier, no installed file, helper exit255, incomplete downstream/return/restoration. Linked matched-carrier comparison reproduces the deadline coupling; product is not yet corrected. Overall acceptance remainsfalse for this failure, historical intermittent insertions, broader protocols/pressure/peers, physical hardware and all F01-F16.",
+  "status": "Normal framed editor07 remains accepted for its scoped workflow. The modem deadline correction now passes the paired native slow-carrier tests,78 linked ZMODEM workflows,five cancellation cases,far ABI checks and14 actual DOS automatic-transfer checks. Audio download02 is running with frozen corrected inputs; its acceptance remains pending. Failed download01, historical intermittent insertions, broader protocols/pressure/peers, physical hardware and all F01-F16 remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3489,6 +3489,11 @@
       },
       "receipt": "docs/validation/synthmodem-audio-download.json",
       "receipt_sha256": "a7c68c4aee121e5684b733056d8b5aab3c8de04918197908ded750ef33d50f15"
+    },
+    "synthmodem-audio-download-02": {
+      "status": "running",
+      "acceptance": "pending independent same-run audits",
+      "native_prerequisites_passed": true
     }
   },
   "diagnosis": {
@@ -3540,8 +3545,8 @@
     "The online Alt-X fix is verified in untraced normal editor07 with unchanged full byte/editor/error/cleanup gates. Preserve prior reset/downstream/insertion failures; this source fix does not establish a remedy for intermittent guest-decoded insertions during a session. Continue transfers/pressure/Synchronet, broader UI/protocols and physical acceptance.",
     "Correct fixed-DTE/slow-carrier verified-progress deadlines and investigate stock sender retry/finish timing versus queued audio; repeat unchanged 11521-byte audio download with every CRC/control/finish/return/restoration gate."
   ],
-  "current_cohort": "synthmodem-audio-download-01",
-  "latest_cohort_passed": false,
+  "current_cohort": "synthmodem-audio-download-02",
+  "latest_cohort_passed": null,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
     "offline_caller_equals_DOS_online": true,
@@ -3579,5 +3584,7 @@
   "online_exit_component_receipt": "docs/validation/online-exit.json",
   "accepted_editor_cohort": "synthmodem-audio-editor-07",
   "online_exit_audio_receipt": "docs/validation/online-exit-audio-dos.json",
-  "audio_download_receipt": "docs/validation/synthmodem-audio-download.json"
+  "audio_download_receipt": "docs/validation/synthmodem-audio-download.json",
+  "carrier_deadline_receipt": "docs/validation/carrier-transfer-deadline-fixed.json",
+  "carrier_deadline_regression_receipt": "docs/validation/carrier-transfer-deadline-regression.json"
 }

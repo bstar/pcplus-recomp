@@ -145,10 +145,23 @@ bytes. No gateway errors are filtered or waived. The receiver cancels29.62s
 after its previous verified packet while the next4KiB packet takes35.24s.
 The [linked counterexample](docs/validation/carrier-transfer-deadline.json)
 reproduces the DTE-derived deadline: identical modeled1200-bps carrier input
-fails at fixed38400 DTE but installs exactly at1200 DTE. Product remains unfixed.
-Next correct the fixed-DTE/slow-carrier deadline policy without unbounded
-unverified progress, and investigate stock sender retry/finish deadlines versus
-the audio queue. Keep the same file and complete protocol/return gates mandatory.
+fails at fixed38400 DTE but installs exactly at1200 DTE. That receipt predates
+the correction below. Keep the same file and complete protocol/return gates mandatory.
+
+The [fixed-DTE deadline correction](lab/bbs/carrier-transfer-deadline.md) now uses
+the existing bounded300-bps packet allowance for connected modem sessions whose
+carrier rate is unknown. Direct/raw budgets, actual DTE, idle/retry/CTS bounds
+and CRC-accepted progress ownership remain unchanged. The paired linked checker
+reproduces the old timeout and passes the corrected38400/1200-DTE cases, a
+fully quoted8KiB first packet at300-bps modeled carrier, direct budgets and a
+silent peer's bounded failure. The actual DOS automatic ZedZap regression passes
+all14 checks with three exact files including65797 bytes and resumed DSR/input,
+normal return and UART restoration. The78 linked ZMODEM workflows, five
+cancellation cases and three far-call/IRQ/layout groups also pass on this build.
+Normal audio download02 is running with the
+unchanged fixture/server/full artwork; its independent acceptance remains
+pending. Stock peer retry/finish timing, broader pressure and physical hardware
+remain separate gates.
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
