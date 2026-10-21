@@ -17,6 +17,15 @@ Next compare bounded checkpoint/receive capabilities on the same slow path;
 small advertised credit alone does not necessarily bound the peer's block size.
 See the [measurement and experiment notes](lab/bbs/zmodem-completed-replay.md).
 
+The [accepted burst editor latency measurement](docs/validation/current-enigma-editor-latency-02.json)
+pairs all25 actual BIOS-to-serial keys with their independently verified cursor/
+mode footer responses. The input spans1.319 seconds; frontend response delays
+range1.763..35.485 seconds, with35.040 seconds between first and last footers at
+laboratory V22/1200. Burst correctness therefore does not establish interactive
+responsiveness. Define and test an explicit response budget separately from
+integrity; actual DOS paint timing and physical14.4-kbps performance remain
+unmeasured. The active multiline campaign and its inputs are unchanged.
+
 The [current reconnect campaign](docs/validation/current-synchronet-reconnect-audio-04.json)
 now passes all19 producer gates and the independent full protocol/byte/notice
 audit with the source-built200ms no-discard runtime and unchanged976 terminal.

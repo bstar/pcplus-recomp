@@ -614,3 +614,24 @@ seven editor/eight wire checks and closes unsaved. No decoder or recipe changed.
 `record_packetization.py --prior-prerequisite` retains that failed prerequisite
 separately while preserving the editor-entry requirement for both selected runs.
 The editor recorder now avoids duplicating identical selected/history entries.
+## Measured burst response timing
+
+The [current burst latency diagnostic](../../docs/validation/current-enigma-editor-latency-02.json)
+rechecks the accepted capture hashes and complete frontend manifests, then pairs
+each of the25 complete serial key sequences with its verified cursor/mode footer
+in order. ANSI removal retains original display byte offsets. The input spans
+1.319 seconds, while the responses span35.040 seconds. Individual key-to-footer
+transport delays range from1.763 to35.485 seconds at laboratory V22/1200.
+
+The earlier burst acceptance proves correct handling of rapid keys; it does not
+prove a response-time budget. These timestamps cover frontend input reads and
+decoded display socket-write submissions, rather than BIOS keypresses or actual
+DOS consumption/painting. No physical14.4-kbps performance follows from this
+measurement. Add an explicit response budget to the sustained/latency campaign
+and retain the complete byte, cursor, redisplay and cleanup gates.
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/diagnose_audio_editor_latency.py \
+  --receipt docs/validation/current-enigma-editor-burst-audio-01.json \
+  --output build/bbs-lab/editor-latency-new.json
+```

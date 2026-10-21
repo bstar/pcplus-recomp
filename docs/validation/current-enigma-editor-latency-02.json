@@ -1,0 +1,360 @@
+{
+  "passed": true,
+  "checks": {
+    "accepted_capture_hashes_exact": true,
+    "accepted_independent_checks_pass": true,
+    "exact_full_frontend_manifests": true,
+    "all25_BIOS_keys_and_footer_effects_correspond": true,
+    "every_footer_follows_its_complete_key": true,
+    "original_captures_preserved": true
+  },
+  "accepted_receipt": "docs/validation/current-enigma-editor-burst-audio-01.json",
+  "accepted_receipt_sha256": "0a09daafcced89709d504b0018545b1b57f447714c36957bc59341ae13b29ec6",
+  "cohort": "build/bbs-lab/current-enigma-editor-burst-audio-01",
+  "key_count": 25,
+  "rows": [
+    {
+      "key": 1,
+      "key_serial_hex": "41",
+      "position": [
+        "INS",
+        1,
+        2
+      ],
+      "key_last_byte_frontend_seconds": 439.517567062,
+      "footer_last_byte_frontend_seconds": 441.280873594,
+      "key_to_footer_transport_seconds": 1.7633065320000014
+    },
+    {
+      "key": 2,
+      "key_serial_hex": "42",
+      "position": [
+        "INS",
+        1,
+        3
+      ],
+      "key_last_byte_frontend_seconds": 439.571759122,
+      "footer_last_byte_frontend_seconds": 442.88161079,
+      "key_to_footer_transport_seconds": 3.3098516680000216
+    },
+    {
+      "key": 3,
+      "key_serial_hex": "43",
+      "position": [
+        "INS",
+        1,
+        4
+      ],
+      "key_last_byte_frontend_seconds": 439.626949936,
+      "footer_last_byte_frontend_seconds": 444.481682193,
+      "key_to_footer_transport_seconds": 4.8547322569999665
+    },
+    {
+      "key": 4,
+      "key_serial_hex": "44",
+      "position": [
+        "INS",
+        1,
+        5
+      ],
+      "key_last_byte_frontend_seconds": 439.682259363,
+      "footer_last_byte_frontend_seconds": 446.061027146,
+      "key_to_footer_transport_seconds": 6.378767783000001
+    },
+    {
+      "key": 5,
+      "key_serial_hex": "45",
+      "position": [
+        "INS",
+        1,
+        6
+      ],
+      "key_last_byte_frontend_seconds": 439.73671464,
+      "footer_last_byte_frontend_seconds": 447.621267746,
+      "key_to_footer_transport_seconds": 7.8845531059999985
+    },
+    {
+      "key": 6,
+      "key_serial_hex": "1b5b48",
+      "position": [
+        "INS",
+        1,
+        1
+      ],
+      "key_last_byte_frontend_seconds": 439.792032442,
+      "footer_last_byte_frontend_seconds": 448.341773148,
+      "key_to_footer_transport_seconds": 8.549740706000023
+    },
+    {
+      "key": 7,
+      "key_serial_hex": "48",
+      "position": [
+        "INS",
+        1,
+        2
+      ],
+      "key_last_byte_frontend_seconds": 439.847238845,
+      "footer_last_byte_frontend_seconds": 449.941157905,
+      "key_to_footer_transport_seconds": 10.093919060000019
+    },
+    {
+      "key": 8,
+      "key_serial_hex": "1b5b46",
+      "position": [
+        "INS",
+        1,
+        7
+      ],
+      "key_last_byte_frontend_seconds": 439.902057848,
+      "footer_last_byte_frontend_seconds": 450.660804419,
+      "key_to_footer_transport_seconds": 10.75874657099996
+    },
+    {
+      "key": 9,
+      "key_serial_hex": "45",
+      "position": [
+        "INS",
+        1,
+        8
+      ],
+      "key_last_byte_frontend_seconds": 439.957534169,
+      "footer_last_byte_frontend_seconds": 452.221271031,
+      "key_to_footer_transport_seconds": 12.26373686200003
+    },
+    {
+      "key": 10,
+      "key_serial_hex": "1b5b44",
+      "position": [
+        "INS",
+        1,
+        7
+      ],
+      "key_last_byte_frontend_seconds": 440.012559411,
+      "footer_last_byte_frontend_seconds": 452.921979676,
+      "key_to_footer_transport_seconds": 12.909420264999994
+    },
+    {
+      "key": 11,
+      "key_serial_hex": "1b5b337e",
+      "position": [
+        "INS",
+        1,
+        7
+      ],
+      "key_last_byte_frontend_seconds": 440.066985973,
+      "footer_last_byte_frontend_seconds": 454.701004732,
+      "key_to_footer_transport_seconds": 14.634018759000014
+    },
+    {
+      "key": 12,
+      "key_serial_hex": "1b5b327e",
+      "position": [
+        "OVR",
+        1,
+        7
+      ],
+      "key_last_byte_frontend_seconds": 440.122302153,
+      "footer_last_byte_frontend_seconds": 455.341733596,
+      "key_to_footer_transport_seconds": 15.219431442999962
+    },
+    {
+      "key": 13,
+      "key_serial_hex": "5a",
+      "position": [
+        "OVR",
+        1,
+        8
+      ],
+      "key_last_byte_frontend_seconds": 440.17673352500003,
+      "footer_last_byte_frontend_seconds": 456.08175289,
+      "key_to_footer_transport_seconds": 15.905019364999987
+    },
+    {
+      "key": 14,
+      "key_serial_hex": "09",
+      "position": [
+        "OVR",
+        1,
+        9
+      ],
+      "key_last_byte_frontend_seconds": 440.232114366,
+      "footer_last_byte_frontend_seconds": 457.641470347,
+      "key_to_footer_transport_seconds": 17.409355980999976
+    },
+    {
+      "key": 15,
+      "key_serial_hex": "54",
+      "position": [
+        "OVR",
+        1,
+        10
+      ],
+      "key_last_byte_frontend_seconds": 440.28642673400003,
+      "footer_last_byte_frontend_seconds": 458.381062678,
+      "key_to_footer_transport_seconds": 18.094635943999947
+    },
+    {
+      "key": 16,
+      "key_serial_hex": "1b5b357e",
+      "position": [
+        "OVR",
+        1,
+        10
+      ],
+      "key_last_byte_frontend_seconds": 440.340818671,
+      "footer_last_byte_frontend_seconds": 459.101336099,
+      "key_to_footer_transport_seconds": 18.760517427999957
+    },
+    {
+      "key": 17,
+      "key_serial_hex": "1b5b367e",
+      "position": [
+        "OVR",
+        1,
+        10
+      ],
+      "key_last_byte_frontend_seconds": 440.396671082,
+      "footer_last_byte_frontend_seconds": 459.760804824,
+      "key_to_footer_transport_seconds": 19.36413374199998
+    },
+    {
+      "key": 18,
+      "key_serial_hex": "19",
+      "position": [
+        "OVR",
+        1,
+        1
+      ],
+      "key_last_byte_frontend_seconds": 440.451027663,
+      "footer_last_byte_frontend_seconds": 471.121976707,
+      "key_to_footer_transport_seconds": 30.670949043999997
+    },
+    {
+      "key": 19,
+      "key_serial_hex": "55",
+      "position": [
+        "OVR",
+        1,
+        2
+      ],
+      "key_last_byte_frontend_seconds": 440.506525585,
+      "footer_last_byte_frontend_seconds": 471.881334728,
+      "key_to_footer_transport_seconds": 31.374809142999993
+    },
+    {
+      "key": 20,
+      "key_serial_hex": "4e",
+      "position": [
+        "OVR",
+        1,
+        3
+      ],
+      "key_last_byte_frontend_seconds": 440.561082574,
+      "footer_last_byte_frontend_seconds": 472.620883585,
+      "key_to_footer_transport_seconds": 32.05980101099999
+    },
+    {
+      "key": 21,
+      "key_serial_hex": "53",
+      "position": [
+        "OVR",
+        1,
+        4
+      ],
+      "key_last_byte_frontend_seconds": 440.615782051,
+      "footer_last_byte_frontend_seconds": 473.361746511,
+      "key_to_footer_transport_seconds": 32.74596445999998
+    },
+    {
+      "key": 22,
+      "key_serial_hex": "41",
+      "position": [
+        "OVR",
+        1,
+        5
+      ],
+      "key_last_byte_frontend_seconds": 440.671600488,
+      "footer_last_byte_frontend_seconds": 474.10217085,
+      "key_to_footer_transport_seconds": 33.43057036199997
+    },
+    {
+      "key": 23,
+      "key_serial_hex": "56",
+      "position": [
+        "OVR",
+        1,
+        6
+      ],
+      "key_last_byte_frontend_seconds": 440.726161033,
+      "footer_last_byte_frontend_seconds": 474.841562132,
+      "key_to_footer_transport_seconds": 34.115401098999996
+    },
+    {
+      "key": 24,
+      "key_serial_hex": "45",
+      "position": [
+        "OVR",
+        1,
+        7
+      ],
+      "key_last_byte_frontend_seconds": 440.780618574,
+      "footer_last_byte_frontend_seconds": 475.580901707,
+      "key_to_footer_transport_seconds": 34.80028313299999
+    },
+    {
+      "key": 25,
+      "key_serial_hex": "44",
+      "position": [
+        "OVR",
+        1,
+        8
+      ],
+      "key_last_byte_frontend_seconds": 440.836129671,
+      "footer_last_byte_frontend_seconds": 476.321121962,
+      "key_to_footer_transport_seconds": 35.484992291000026
+    }
+  ],
+  "minimum_transport_seconds": 1.7633065320000014,
+  "maximum_transport_seconds": 35.484992291000026,
+  "body_input_span_seconds": 1.3185626089999687,
+  "footer_output_span_seconds": 35.04024836799999,
+  "clock_provenance": {
+    "directions": {
+      "dos": {
+        "bytes": 103,
+        "chunks": 49,
+        "raw_prefix_bytes": 25
+      },
+      "bbs": {
+        "bytes": 48245,
+        "chunks": 48245,
+        "raw_prefix_bytes": 209
+      }
+    },
+    "clock_anchor": {
+      "type": "ready",
+      "seconds": 4.125726326,
+      "monotonicNs": "956658604451942",
+      "wallTimeMs": 1792616726789
+    },
+    "scope": "One Node monotonic timeline: completed local socket-write invocations for decoded BBS bytes and observed DOS-input reads. Clipped manifests cover exact full canonical streams. These are transport observations, not application-consumption timestamps."
+  },
+  "inputs": {
+    "lab/bbs/diagnose_audio_editor_latency.py": "32a6755c39568888bd5801355c40c48e9fb4ccc5adde26313b3f32eba68a8699",
+    "lab/bbs/audit_audio_download.py": "452febcc4561fbc9aabca30007da931be55afc07b0938cee9a72c5d802407d85",
+    "lab/bbs/diagnose_audio_download_queue.py": "931bb28229ef74475be625f7921798a1748d4934a1e63a325f903390fce94c08",
+    "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f"
+  },
+  "captures_sha256": {
+    "independent-audit.json": "bbf68c02e7081eec0286b4ff1bfa8b36ccdc80ee4e8e4c10279e7ef0a6e99e6d",
+    "bbs-input.bin": "8b1bc3044ecdd7def84da500e0119840d35dc823c9b616b7d065b2428c715111",
+    "bbs-output.bin": "e043e1984a6d326eec98701d522d15cd68b8c9041b99c0bf9f85195ed767b1f5",
+    "serial-in.bin": "6eab1e589a15b74faa793cd148a823f6324b80757dc373db6b2c07d3132ccc9e",
+    "serial-out.bin": "16b34076664296579cc6ee3e7f5abe064419674a4b2f8a0ef545c22f09bd786a",
+    "caller-decoded.bin": "8b50c065f4c3426e655783eb2f0c9414038c1275db0b45d5478d16779616884b",
+    "serial-input-events.jsonl": "d13e983a48f55107344c1d9c959c8bda01cba72f4577893a5b0ae5d7dcbc5aa1",
+    "serial-write-events.jsonl": "21df1b232a0a6c5425d41da38a6589aba13ee6de9bc58196392ed899b02c91f6",
+    "node-result.json": "01c84da318769304704672e19cd2ae969c2469e6b7607ead7862ca16a7914346"
+  },
+  "scope": "Read-only measurement on the accepted25-key rapid single-line editor capture at laboratory V22/1200. Complete key bytes are paired with all independently verified ordered cursor/mode footer responses. One frontend clock measures input reads to decoded display socket-write submissions. These are transport observations, not BIOS keypress or actual DOS consumption/paint timestamps. No responsiveness budget is imposed or passed, no new audio run, no multiline/general performance or physical14.4-kbps claim."
+}
