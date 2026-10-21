@@ -55,6 +55,41 @@ continuous RTP, SIP teardown and frozen inputs. This grants no audio acceptance
 until all gates pass. Editor/transfer workflows, sustained pressure/loss,
 physical Boca/SPA2102 and F01-F16 whole-application requirements remain open.
 
+## Native Escape cancellation
+
+The cancellation cohort uses a fresh unique SXCAN001.BIN payload and unchanged
+stock board/helper. Its reference sends one valid1024-byte CRC block, receives
+the real ACK, then sends CAN/CAN before EOT and returns through Files/Main. Stock
+retains/indexes that partial. Preparatory success is separate from server cleanup.
+The [preparation receipt](../../docs/validation/synchronet-audio-cancel-preparation.json)
+also binds the fresh official target/source preflight,15 raw ASPECT prompt
+matches and six actual DOS helper checks. The first synthetic helper probe wrote
+its progress digit using the BIOS timer's ES; its failed artifacts and checker
+source are retained. The corrected probe selects video memory explicitly.
+
+The test-only BIOS helper drives ordinary Alt-S and the actual filename field.
+Zero displayed ACKed blocks cannot trigger Escape. After a visible acknowledged
+block, it presses Escape, requires the local TX canceled notice, waits for the
+real remote pause, then exercises Files/Main and normal Alt-X restoration. The
+independent audit must separately prove a complete source/CRC frame and received
+ACK before CAN. It accounts for any exact source-derived partial next frame
+before CAN, excludes EOT/full-source success, checks all bytes through DSP and
+requires real subsequent menu input. Source identity and all existing server
+files preserve. No product state or UART/protocol bytes are injected.
+
+Use the cancellation counterparts of the upload commands: `audio_synchronet_cancel.py`,
+`prepare_synchronet_audio_cancel.py`, `check_audio_synchronet_cancel_keys.py`,
+`check_synchronet_cancel_audio_recipe.py` and `synthmodem_synchronet_cancel_audio_dos.py`.
+The producer takes the same runtime/reference/key-checks/recipe-checks/preflight/
+fresh-output arguments. After its natural exit run
+`audit_synchronet_cancel_audio_dos.py`, `audit_serial_io_evidence.py`,
+`diagnose_audio_caller.js`, `audit_synchronet_cancel_metadata.py` (BBS Nix shell)
+and `check_synchronet_cancel_controls.py`. These preserve exact partial bytes and
+official metadata. The recorder must distinguish client cancellation/menu/
+teardown from retained/indexed server partials; partial cleanup cannot pass
+merely because client recovery does. Fresh output names never authorize
+overwriting an existing reference or server payload.
+
 
 ## First actual failure
 

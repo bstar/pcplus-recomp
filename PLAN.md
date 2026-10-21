@@ -492,6 +492,20 @@ carrier-loss/reconnect, physical hardware or F01-F16 completion. Next: test
 cancellation/carrier-loss/reconnect with explicit stock partial-file accounting,
 then broaden Synchronet audio protocol/profile coverage.
 
+The [native Escape cancellation preparation](docs/validation/synchronet-audio-cancel-preparation.json)
+passes a real one-block CRC/ACK/CAN reference with Files/Main return, six actual
+DOS BIOS observer/watchdog checks,15 raw waits and four fresh official target/
+source preflight checks. Reference and actual targets are unique; existing
+server files and source identity must preserve. Zero visible acknowledged blocks
+cannot trigger Escape; observed progress can, followed by required local TX
+canceled, remote pause and actual Files/Main interaction. The synthetic first
+probe's wrong ES for its progress write is retained and corrected before audio.
+Actual acceptance requires independent ACK-before-CAN, exact complete frames/
+partial-next-frame accounting, no EOF/full-source claim, all bytes/DSP/cleanup
+and official partial metadata. Retained/indexed server data leaves cleanup open
+even if the client recovers normally. No actual audio cancellation or physical
+claim is granted by these preparations.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

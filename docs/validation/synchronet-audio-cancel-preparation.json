@@ -1,0 +1,141 @@
+{
+  "passed": true,
+  "actual_audio_accepted": false,
+  "server_partial_cleanup_accepted": false,
+  "components": {
+    "build/bbs-lab/synchronet-audio-cancel-reference-01/result.json": {
+      "sha256": "02d086a11a605ebfa6483b2287f56338b206bcf660c0805d00403a336a645ae6",
+      "checks": {
+        "first_CRC_frame_ACK_then_CAN": true,
+        "partial_exact_source_prefix": true,
+        "official_metadata": true,
+        "post_transfer_file_and_main": true,
+        "server_inputs_preserved": true,
+        "message_bodies_preserved": true,
+        "source_unchanged": true,
+        "existing_files_preserved": true,
+        "only_new_expected_file": true,
+        "no_message_mail_or_download_writes": true
+      },
+      "scope": "Owned stock Synchronet/sexyz TCP cancellation reference: one valid1024-byte CRC block ACKed, then CAN pair before EOT; real Files/Main return and source/existing-file preservation. Stock partial publication is recorded as a separate server gap, not successful upload or partial cleanup acceptance. Reference fixed CPR; not DOS/audio/physical acceptance."
+    },
+    "build/bbs-lab/audio-synchronet-cancel-keys-02/result.json": {
+      "sha256": "a749eddf5d74d8dcc3645fbe0d8041b255ebf48013449e9ca22fd4614dacdbfe",
+      "checks": [
+        {
+          "mode": "phases_with_partial_markers",
+          "passed": true,
+          "checks": {
+            "normal_DOS_return": true,
+            "exact_BIOS_keys": true,
+            "timer_restored": true
+          },
+          "probe_sha256": "054b2c36ca5f4e8ee3d3e8ebcb67c07c3f29277a1d84a56547a677dfa7790a3d"
+        },
+        {
+          "mode": "watchdog",
+          "passed": true,
+          "checks": {
+            "normal_DOS_return": true,
+            "exact_BIOS_keys": true,
+            "timer_restored": true
+          },
+          "probe_sha256": "920f24c6113f81b4f04d3f981285abc14a1423bb8c6422f4cd84a9d961f478a3"
+        }
+      ],
+      "scope": "Actual DOS 8086 BIOS reads: observed hangup prompt leads to Alt-S; actual filename prompt receives exact local path; zero ACKed blocks produce no Escape; one visible ACKed block produces Escape, TX canceled must appear before the remote pause permits Space, fresh Files to Q, and complete Main/footer to Alt-X. Partial/paused menus emit no premature keys. Normal path bounded below watchdog; separate watchdog and timer restoration verified. Shortened test delays, no audio or application acceptance."
+    },
+    "build/bbs-lab/synchronet-cancel-audio-recipe-01/result.json": {
+      "sha256": "15ee765f63cde5e4b1a59e7131c2239db6778c29fe4b179e4fe931712a1df0d1",
+      "checks": [
+        {
+          "phase": "login",
+          "needle": "Login:",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "password",
+          "needle": "Password:",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "welcome",
+          "needle": "[Hit a key]",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "bulletins",
+          "needle": "Enter number of bulletin or [",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "scan",
+          "needle": "Search all groups for new messages?",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "pause",
+          "needle": "[Hit a key]",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "main",
+          "needle": "Read/Post Messages",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "files",
+          "needle": "List Files in dir",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "join",
+          "needle": "Which, ",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "area",
+          "needle": "PCPlus Lab:",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "upload",
+          "needle": "Filename:",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "upload-name",
+          "needle": "to Main PCPlus Lab?",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "upload-confirm",
+          "needle": "Enter a description now.",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "description",
+          "needle": "Protocol, ",
+          "raw_match_possible": true
+        },
+        {
+          "phase": "protocol",
+          "needle": "Hang up after transfer?",
+          "raw_match_possible": true
+        }
+      ],
+      "scope": "Generated ASPECT recipe compiles and every remote wait token is checked against its corresponding independent raw BBS capture. Bridge prompt is outside this peer reference. Missing literal tokens identify fragile/invalid raw-match assumptions; this is neither DOS execution nor audio/native compatibility acceptance."
+    },
+    "build/bbs-lab/synchronet-audio-cancel-preflight-01/result.json": {
+      "sha256": "72113b5ff29d09495aaeabaf24c1439601483e336d42d6a629700d56a7d81a78",
+      "checks": {
+        "target_absent_on_disk": true,
+        "target_absent_from_official_metadata": true,
+        "existing_files_unchanged": true,
+        "server_inputs_preserved": true
+      },
+      "scope": "Read-only FileBase.get confirms fresh target is absent; source is unique deterministic11521 bytes under ignored build storage. No server/account/config change and no actual audio/DOS upload acceptance."
+    }
+  },
+  "scope": "Preparation only: one independently CRC-validated1024-byte TCP reference block ACKed before CAN, actual Files/Main return, retained/indexed stock partial recorded. Six actual DOS BIOS cancellation observer/watchdog checks,15 raw ASPECT matches and four official target/source preflight checks. The first helper probe wrote progress through the wrong ES after reading the BIOS timer; original failure and checker-source.py retained. Corrected probe explicitly selects video memory. No actual audio/DOS or physical acceptance."
+}
