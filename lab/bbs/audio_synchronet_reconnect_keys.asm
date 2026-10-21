@@ -22,6 +22,7 @@ ticks:dw 0
 watchdog:dw AUDIO_SYNC_DOWNLOAD_WATCHDOG
 key_at:dw filename_keys
 carrier_lost:db 'RX carrier lost',0
+connection_lost:db 'Carrier lost',0
 hangup:db 'Hang up after transfer?',0
 download:db 'Download: XMODEM',0
 receiving:db 'Receiving XMODEM',0
@@ -56,6 +57,16 @@ handler:
  inc word [watchdog]
  jmp .done
 .watching:
+ ; A redial can retain the first download prompt while the next script logs in.
+ ; Require its disappearance before accepting a new transfer prompt.
+ cmp byte [state],11
+ jne .fresh_prompt
+ mov si,hangup
+ call visible
+ jc .done
+ mov byte [state],0
+ jmp .done
+.fresh_prompt:
  cmp byte [state],0
  jne .initial
  mov si,hangup
@@ -116,7 +127,7 @@ handler:
  call queue
  jnc .retry
  mov byte [attempt],1
- mov byte [state],0
+ mov byte [state],11
  mov word [key_at],filename_keys
  jmp .done
 .pause:
@@ -126,7 +137,11 @@ handler:
  jne .retry_completion
  mov si,carrier_lost
  call visible
+ jc .lost
+ mov si,connection_lost
+ call visible
  jnc .done
+.lost:
  mov byte [state],10
  mov word [ticks],INITIAL_WAIT
  jmp .done

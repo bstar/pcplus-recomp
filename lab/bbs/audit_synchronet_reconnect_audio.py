@@ -75,6 +75,14 @@ def main():
     names=[e['event'] for e in adapter['events']]
     assert names.index('both-DSP-CONNECT')<names.index('owned-frontend-SIGTERM')<names.index('frontend-EOF')<names.index('DOSBox-TCP-closed')
     stop=next(int(e['monotonic_ns']) for e in adapter['events'] if e['event']=='owned-frontend-SIGTERM')
+    barriers=[e for e in adapter['events'] if e['event']=='acknowledged-prefix-before-stop']
+    assert len(barriers)==1 and int(barriers[0]['monotonic_ns'])<=stop
+    observed=r['partials'][0]['acknowledged_prefix']
+    for key,value in observed.items():assert barriers[0][key]==value,key
+    online=(out/'call-1/adapter-up.bin').read_bytes()
+    assert observed['online_bytes']==len(online) and observed['online_sha256']==hashlib.sha256(online).hexdigest()
+    assert observed['bbs_online_bytes']==len(first_sent) and observed['bbs_online_sha256']==hashlib.sha256(first_sent).hexdigest()
+    assert observed['last_control_hex']=='06' and online.endswith(b'\x06')
     down=next(e for e in node['events'] if e['type']=='shutdown')
     ended=next(e for e in node['events'] if e['type']=='session-ended')
     eof=next(int(e['monotonic_ns']) for e in adapter['events'] if e['event']=='frontend-EOF')

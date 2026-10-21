@@ -12,8 +12,10 @@ observer reads the actual partial file and requires an exact, incomplete source
 prefix before sending SIGTERM to that call's owned Linux audio frontend. The
 frontend shuts down its real SIP/audio session and closes its TCP connection.
 Only that EOF closes the adapter's DOSBox connection, producing emulated DCD
-loss. A test-only BIOS helper waits for the visible `RX carrier lost` notice,
-then presses Alt-D. The fresh call starts another frontend/VM and trains both
+loss. A test-only BIOS helper waits for the visible `RX carrier lost` notice
+or persistent `Carrier lost`, then presses Alt-D. It waits for the old transfer
+prompt to disappear before accepting a fresh download prompt. The fresh call
+starts another frontend/VM and trains both
 real DSPs again; the DOS ASPECT script authenticates and repeats the download.
 The helper completes the receive and visits Files/Main before normal exit.
 
@@ -101,6 +103,14 @@ remains unaccepted; it is not hidden by trimming or waived because the first
 login worked. A future interrupted-stream policy needs explicit failure-boundary
 timing and negative controls before accepting an in-flight suffix loss.
 
+The current producer instead waits until the passive BBS relay has received the
+entire authored online prefix ending in ACK, while DOS still has an incomplete
+source file. It records that boundary before stopping the bridge. Seven observer
+checks retain the original in-flight-ACK mismatch, reject wrong/duplicate/missing
+bytes, and release only the delivered prefix. The independent audit retains its
+full upstream identity requirement and also verifies the recorded boundary's
+hashes and ordering. This changes fault timing; it does not permit missing bytes.
+
 Both serial ownership audits pass their byte/callback/error accounting with the
 declared shutdown directions. On the interrupted call, the original JSON
 snapshot was saved before its socket-close callback. The independent audit uses
@@ -118,3 +128,71 @@ then observe the selected script path, command tail and directory/renderer state
 across the first transfer. Fix only the demonstrated cause and repeat the actual
 audio campaign with all failed gates retained. The complete positive auditor
 and its corruption controls remain pending a passing campaign.
+
+## Captured-transport diagnosis
+
+`replay_reconnect_dos.py` replays the first call's captured online output and
+waits for its recorded DOS input in causal order. It shortens transmission and
+idle time; it is not a live BBS or audio acceptance test. `--flex-cpr` allows
+bounded native cursor-position replies to differ on the second screen, recording
+each difference. All other expected input and all remote output remain exact.
+Without that option, a legitimate changed cursor position stops the fixture.
+
+The isolated `build_renderer_rejection_diagnostic.py` builder starts from a
+Git archive and retains every renderer rejection. Optional boundary, key and
+ASPECT first-error traces identify foreground failure state. The production
+terminal and runner stay untouched. Additional DOS logging changes timing and
+code layout, so diagnostic binaries cannot count as production acceptance.
+
+The replay exposed a keyboard-helper defect: after Alt-D, the old transfer
+prompt can remain visible while the second script logs in. The helper accepts
+that stale prompt and queues Alt-R. The traced parent receives raw key `1300`
+(record `5300`, with the diagnostic key tag), and the child's first error is
+unsupported3 during WAITQUIET/D5 at step13 with last key `1300`. Both interpreter
+invocations receive `AUDIO.ASX`; the `57600.ASX` display observation in the older
+run does not establish an opened filename. This identifies a replay failure
+caused by the test helper, not an unsupported WAITQUIET opcode.
+
+A [retained diagnostic receipt](../../docs/validation/reconnect-stale-prompt-diagnosis.json)
+binds the trace, command lines, normal cleanup and regression artifacts.
+A separate actual-DOS fixture retains the old transfer prompt after redial,
+requires silence, clears it, and then presents a fresh prompt. The old helper
+fails both carrier-notice variants; waiting for disappearance before rearming
+passes both plus the independent watchdog/timer-restoration case. With unchanged
+production terminal/ASPECT, the corrected helper completes both captured login
+and partial-transfer sequences with exact input apart from one recorded native
+cursor-position reply. Both intentionally interrupted captures contain113 input
+and39,662 output bytes, and DOS/hardware/timer cleanup passes. This is not a
+complete retry. The original audio campaign still requires a repeat with the corrected helper before its
+failure can be attributed to the same cause or reconnect can be accepted.
+
+To reproduce the instrumented build and replay:
+
+```sh
+./tools/dev --command python3 lab/bbs/build_renderer_rejection_diagnostic.py \
+  --revision 8246dbb --boundary --keys --runner \
+  --output build/bbs-lab/render-diagnostic-NEW
+./tools/dev --command python3 lab/bbs/replay_reconnect_dos.py \
+  --cohort build/bbs-lab/current-synchronet-reconnect-audio-01 \
+  --terminal build/bbs-lab/render-diagnostic-NEW/source/build/terminal/TERMINAL.EXE \
+  --runner build/bbs-lab/render-diagnostic-NEW/source/build/aspect-runner/ASPECT.EXE \
+  --flex-cpr --output build/bbs-lab/reconnect-replay-NEW
+```
+
+The replay uses the current helper by default. The retained failure uses the
+older helper identity recorded in its receipt. `--keys` accepts an isolated
+helper under build storage to compare that identity against a candidate fix.
+The real producer also accepts `--diagnostic-terminal` and a diagnostic-only
+watchdog override; those runs always have `passed:false` regardless of other
+checks, and cannot be promoted to production compatibility acceptance.
+
+`RGUARD.BIN` contains 64-byte records. The first word is a policy source line,
+`8000 | service` at a native unsupported boundary, or `4000 | raw-key` at key
+dispatch. The next thirteen words record terminal ID, cursor row/column,
+video/attribute offset, connection state, parser/wait/transfer owners and
+program/ASPECT owners. Bytes28–43 retain the queued script, bytes44–56 its label.
+`AERROR.BIN` contains thirteen-word records: magic4152, first error, prior error,
+opcode, step, serial owner, render attachment, serial/pacing errors, RX count,
+last key and the low/high BIOS tick words. `AARGS.LOG` records each invocation's
+actual command-line arguments. These formats apply to the final builder's
+optional instrumentation; earlier retained builds identify their own schema.

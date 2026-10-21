@@ -8,6 +8,7 @@ from synthmodem_synchronet_download_audio_dos import script
 from audio_synchronet_download import source as download_source
 from audio_carrier_adapter import audio_carrier_adapter,PREFIX
 from audio_reconnect_bbs_relay import relay
+from audio_reconnect_boundary import acknowledged_prefix
 from carrier_notice_watch import SAMPLER
 sys.path.insert(0,str(ROOT/'standalone'));sys.path.insert(0,str(ROOT/'src/aspect'))
 from directory_fixtures import prm,directory
@@ -17,11 +18,15 @@ from compiler import compile_source
 async def run(a):
     out=a.output.resolve();runtime=a.runtime.resolve()
     assert out.is_relative_to(ROOT/'build') and not out.exists()
+    diagnostic=a.diagnostic_terminal is not None
+    assert diagnostic or a.diagnostic_watchdog is None
+    assert a.diagnostic_watchdog is None or 3600<=a.diagnostic_watchdog<=21600
     runtime_inputs=validate(runtime);server=snapshot();bodies=message_bodies();stats=statistics()
     keys=json.loads(a.key_checks.read_text());assert keys['passed']
     assert all(sha(ROOT/n)==h for n,h in keys['inputs'].items())
     names=['lab/bbs/synthmodem_synchronet_reconnect_dos.py','lab/bbs/audio_carrier_adapter.py',
         'lab/bbs/audio_reconnect_bbs_relay.py','lab/bbs/audio_synchronet_reconnect_keys.asm',
+        'lab/bbs/audio_reconnect_boundary.py','lab/bbs/modem.py',
         'lab/bbs/synthmodem_audio_serial.js','lab/bbs/serial_io_evidence.js','lab/bbs/internal_sip_capture.js',
         'lab/bbs/synthmodem_synchronet_download_audio_dos.py','lab/bbs/audio_synchronet.py',
         'lab/bbs/audio_synchronet_download.py','lab/bbs/synchronet.py','lab/bbs/carrier_notice_watch.py',
@@ -32,9 +37,15 @@ async def run(a):
     out.mkdir(parents=True);stage=out/'program';stage.mkdir();recv=out/'RECV';recv.mkdir()
     for rel in ('terminal/TERMINAL.EXE','aspect-runner/ASPECT.EXE','aspect-compiler-dos/ASPCOMP.EXE'):
         p=ROOT/'build'/rel;frozen['build/'+rel]=sha(p);shutil.copyfile(p,stage/p.name)
+    if diagnostic:
+        terminal=a.diagnostic_terminal.resolve()
+        assert terminal.is_relative_to(ROOT/'build') and terminal.name=='TERMINAL.EXE'
+        frozen[str(terminal.relative_to(ROOT))]=sha(terminal)
+        shutil.copyfile(terminal,stage/'TERMINAL.EXE')
     (out/'sampler.asm').write_text(SAMPLER)
     for p,dst in [(out/'sampler.asm',out/'SNAP.COM'),(ROOT/'lab/bbs/audio_synchronet_reconnect_keys.asm',stage/'EXITKEY.COM'),(ROOT/'lab/bbs/audio_get_vector.asm',stage/'KEYVEC.COM')]:
-        subprocess.run(['nasm','-fbin',str(p),'-o',str(dst)],check=True)
+        flags=['-DAUDIO_SYNC_DOWNLOAD_WATCHDOG='+str(a.diagnostic_watchdog)] if p.name=='audio_synchronet_reconnect_keys.asm' and a.diagnostic_watchdog else []
+        subprocess.run(['nasm','-fbin',*flags,str(p),'-o',str(dst)],check=True)
     date=datetime.datetime.strptime(stats['Global']['date'],'%b %d %Y')
     log=RUNTIME/'data/logs'/date.strftime('%m%d%y.log');boundary=(log.stat().st_ino,log.stat().st_size)
     partials=[];finished=asyncio.Event();code=None
@@ -51,9 +62,13 @@ async def run(a):
                 p=recv/'PCRX.$$$'
                 if len(calls)==1 and not calls[0].interrupted and p.is_file() and p.stat().st_size>=1024:
                     value=p.read_bytes();assert expected.startswith(value) and len(value)<len(expected)
-                    partials.append(dict(kind='before-bridge-stop',bytes=len(value),sha256=sha(p),files=sorted(x.name for x in recv.iterdir()),monotonic_ns=str(time.monotonic_ns())))
-                    (out/'interrupted-partial.bin').write_bytes(value)
-                    calls[0].interrupt()
+                    delivered=acknowledged_prefix(calls[0].up,bbs[0]['input']) if len(bbs)==1 else None
+                    if delivered:
+                        ns=str(time.monotonic_ns())
+                        calls[0].event('acknowledged-prefix-before-stop',**delivered)
+                        partials.append(dict(kind='before-bridge-stop',bytes=len(value),sha256=sha(p),files=sorted(x.name for x in recv.iterdir()),monotonic_ns=ns,acknowledged_prefix=delivered))
+                        (out/'interrupted-partial.bin').write_bytes(value)
+                        calls[0].interrupt()
                 if len(calls)==2 and len(partials)==1:
                     partials.append(dict(kind='before-second-audio-training',files=sorted(x.name for x in recv.iterdir()),monotonic_ns=str(time.monotonic_ns())))
                 await asyncio.sleep(.05)
@@ -133,7 +148,8 @@ exit
         no_message_mail_upload_writes=all(stats['Total'][k]==after['Total'][k] for k in ('uploads','uploadb','posts','email','feedback')),
         inputs_preserved=all(sha(ROOT/n)==h for n,h in frozen.items()) and all(sha(Path(n))==h for n,h in runtime_inputs.items()))
     checks={k:bool(v) for k,v in checks.items()}
-    result=dict(passed=all(checks.values()),checks=checks,notices=notices,partials=partials,
+    result=dict(passed=all(checks.values()) and not diagnostic,diagnostic=diagnostic,
+        diagnostic_watchdog=a.diagnostic_watchdog,checks=checks,notices=notices,partials=partials,
         frozen_inputs=frozen,runtime_inputs=runtime_inputs,server=server,statistics_before=stats,statistics_after=after,
         source_sha256=source_sha,source_bytes=len(expected),stages=read('STAGES.LOG').decode(),
         scope='One source-built DOS process; DOSBox built-in Hayes/DCD and test-only TCP-to-real-SIP/audio adapter. Stop first owned bridge with SIGTERM only after verified partial file write; actual frontend shutdown EOF drops emulated DCD. Each call has a fresh frontend/VM and real DSP training. Numeric lab network dialing is not a Boca profile. This producer alone is not independent protocol/byte/audio acceptance, waveform-loss detection, physical DCD/DTR or F01-F16 completion.')
@@ -143,4 +159,6 @@ exit
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True)
     p.add_argument('--key-checks',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--diagnostic-terminal',type=Path,help='Instrumented terminal under ignored build storage; result cannot count as compatibility acceptance')
+    p.add_argument('--diagnostic-watchdog',type=int,help='Diagnostic-only BIOS watchdog ticks (3600..21600)')
     asyncio.run(run(p.parse_args()))
