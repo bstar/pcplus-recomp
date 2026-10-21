@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Upload03 is running on the explicitly isolated ENiGMA receiver candidate; actual V22/1200 DSP CONNECT observed, original11521-byte workload and fixed38400 DTE with unchanged DOS binary/runtime. Seven navigation and thirteen isolation prerequisites pass. All data/control/storage/return/cleanup gates and auditors remain frozen; no candidate audio acceptance yet. Stock upload02 retains its late-OO failure. Physical, arbitrary-peer and F01-F16 requirements remain open.",
+  "status": "Upload03 passes all82 producer and independent checks on the explicitly isolated ENiGMA receiver-finish candidate: exact11521-byte file,12 unreplayed packets, complete bidirectional bytes, closing ownership, actual return workflow and normal cleanup. Candidate acceptance is scoped to this modified helper and V22/1200 software audio runtime at fixed38400 DTE. Stock upload02 retains its late-OO failure. Physical, other-peer, pressure/cancel/loss and F01-F16 requirements remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3667,16 +3667,18 @@
       "receipt_sha256": "6c69470a3672d6e80df8489fda9bdbb6b5430d54a3393d762aed8d9bd7ee3bef"
     },
     "synthmodem-audio-upload-03": {
-      "status": "running",
-      "passed": null,
+      "status": "accepted_modified_receiver_scope",
+      "passed": true,
       "variant": "isolated ENiGMA with Nix receiver-finish candidate",
-      "acceptance": "Pending terminal producer and all frozen independent same-run gates",
+      "acceptance": "All25 producer,26 independent byte/cleanup,12 ownership and19 transfer gates pass; stock receiver acceptance remains false.",
       "binary_sha256": "a656cf665f3d3cb81bdd06b738bb72b6ed230d299244d4ae12c1c0336f280a89",
       "source_bytes": 11521,
       "DTE_bps": 38400,
       "software_carrier_bps": 1200,
       "fixture_receipt": "docs/validation/enigma-receive-finish-instance.json",
-      "fixture_lab": "build/bbs-lab/enigma-rxfinish-candidate-01"
+      "fixture_lab": "build/bbs-lab/enigma-rxfinish-candidate-01",
+      "receipt": "docs/validation/synthmodem-audio-upload-03.json",
+      "receipt_sha256": "fffc423ecd8ddc5e182efe1c4c5ef2eb65b19b11959dbad5f176ce0c94841d2d"
     }
   },
   "diagnosis": {
@@ -3723,13 +3725,13 @@
   },
   "remaining": [
     "Historical in-session insertions lack complete diagnostic evidence; clean editor07/download03 runs do not establish their cause or a general correction.",
-    "Uploads,transfer cancellation/loss/sustained pressure,Synchronet through audio and physical Boca/SPA2102 acceptance remain required.",
+    "Unmodified-stock uploads,transfer cancellation/loss/sustained pressure,Synchronet through audio and physical Boca/SPA2102 acceptance remain required.",
     "All F01-F16 whole-application completion gates remain open.",
     "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
-    "Validate actual fixed-DTE slow-carrier upload/backpressure and response timing; retain every CRC/finish,storage,post-helper input and cleanup gate."
+    "Extend the accepted modified-helper fixed-DTE slow-carrier upload to pressure/cancel/loss and other peers; retain every CRC/finish,storage,post-helper input and cleanup gate."
   ],
   "current_cohort": "synthmodem-audio-upload-03",
-  "latest_cohort_passed": null,
+  "latest_cohort_passed": true,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
     "offline_caller_equals_DOS_online": true,
@@ -3782,5 +3784,8 @@
   "receiver_finish_candidate_receipt": "docs/validation/sexyz-receive-finish-candidate.json",
   "receiver_finish_candidate_receipt_sha256": "d8c4319068ec7ebf1252c273ea543749a7cf0dbec71b6ca211633b7551700856",
   "receiver_finish_instance_receipt": "docs/validation/enigma-receive-finish-instance.json",
-  "receiver_finish_instance_receipt_sha256": "f033995b70dcf8b8c082ba25ab23c9b3c70be59b161acddbcd4597b7dbf765e1"
+  "receiver_finish_instance_receipt_sha256": "f033995b70dcf8b8c082ba25ab23c9b3c70be59b161acddbcd4597b7dbf765e1",
+  "candidate_audio_upload_receipt": "docs/validation/synthmodem-audio-upload-03.json",
+  "candidate_audio_upload_receipt_sha256": "fffc423ecd8ddc5e182efe1c4c5ef2eb65b19b11959dbad5f176ce0c94841d2d",
+  "accepted_candidate_upload_cohort": "synthmodem-audio-upload-03"
 }

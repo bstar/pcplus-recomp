@@ -160,3 +160,26 @@ After upload, preserve the receipt and file before considering another fixture.
 
 Physical Boca/SPA2102, other peers, pressure/cancel/loss and all F01–F16 gates
 remain open.
+
+## Completed candidate audio run
+
+[Upload03](../../docs/validation/synthmodem-audio-upload-03.json) passes all82
+producer and independent gates on the explicitly isolated ENiGMA board with the
+pinned Nix receiver-finish candidate. The DOS binary, software modem runtime,
+38400 DTE and full11521-byte source are unchanged. Twelve data packets have no
+replay; official storage matches the source SHA256. All12331 online DOS bytes
+and66887 display bytes survive exactly. The frontend completes67096 bytes with
+zero skipped, failed or pending bytes.
+
+The final OO is observed at the relay before normal helper retirement (about
+0.813ms, with maximum clock-anchor sampling interval2.214us). Frontend OO
+submission precedes retirement by63ms. These are transport timestamps; they do
+not measure DOS application consumption. The timing verifier runs with the full
+transfer audit passing and rejects both premature-control mutants. Actual
+post-transfer details/search/list and normal DOS, UART/PIC/IRQ/timer cleanup
+pass. The original source/stat and stock server/helper/official upload remain
+preserved. The sealed receipt binds raw captures, frozen inputs and all audits.
+
+Acceptance covers this modified-helper workflow. Stock upload02 remains failed
+at closing ownership; pressure, cancellation/loss, arbitrary peers, physical
+Boca/SPA2102 and F01-F16 whole-application acceptance remain open.

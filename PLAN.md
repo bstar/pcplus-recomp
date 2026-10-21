@@ -239,10 +239,9 @@ bound cases, four real receiver comparisons and ten real candidate fault cases
 pass: delayed OO is consumed, queued closing headers/flow remain bounded,
 corruption/noise/incomplete closure fail, and cancellation/disconnect/deadline
 checks remain active. Every subprocess uses the original11521-byte workload.
-The candidate has not been configured in the BBS; DOS bytes, stock server/helper
-and SIP/DSP runtime remain unchanged. Next is a separately identified candidate
-board/audio run with fresh storage and all original gates. No stock or candidate
-audio upload acceptance follows from the isolated tests.
+Those isolated tests alone grant no audio acceptance. The separately identified
+candidate board and completed audio run below retain unchanged DOS bytes, stock
+server/helper and SIP/DSP runtime.
 
 The [candidate board prerequisites](docs/validation/enigma-receive-finish-instance.json)
 now pass seven actual navigation and thirteen isolation/namespace checks on a
@@ -254,11 +253,18 @@ row preservation, leaving the original board/file untouched. Explicit fixture
 selection binds producer and independent metadata/storage audits to this
 instance and freezes both prerequisites and auditors. The next full-size audio
 run uses the unchanged DOS executable, DTE, modem runtime and upload recipe.
-Upload03 is now running on that isolated receiver candidate. Actual V22/1200
-DSP CONNECT is observed; the original11521-byte payload and38400 DTE are
-unchanged. Keep all inputs/prerequisites/auditors frozen until producer and
-independent same-run data/control/storage/return/cleanup audits complete. Stock
-upload02's late-OO gap stays open; no candidate audio result is accepted yet.
+The [completed upload03](docs/validation/synthmodem-audio-upload-03.json) now
+accepts that explicitly modified-helper audio workflow: all25 producer,26
+independent byte/cleanup,12 ownership and19 transfer checks pass (82 total).
+The original11521-byte source matches official storage;12 packets have no replay.
+All12331 online DOS bytes and66887 display bytes survive exactly. Required OO
+reaches the relay before normal helper exit; both premature-control timing
+mutants are rejected. Actual details/search/list and normal DOS/UART/PIC/IRQ/
+timer restoration pass, with zero skipped/failed/pending frontend bytes. Original
+source/stat and stock server/helper/upload remain preserved. This accepts only
+this receiver candidate, V22/1200 runtime and fixed38400 DTE workflow. Stock
+upload02 retains its late-OO failure; arbitrary peers, pressure/cancel/loss,
+physical Boca/SPA2102 and all F01-F16 requirements remain open.
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
