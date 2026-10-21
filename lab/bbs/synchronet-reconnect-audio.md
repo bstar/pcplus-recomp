@@ -77,6 +77,26 @@ DTR/CTS/IRQ behavior, analog waveform-loss detection, arbitrary network faults,
 other protocols, sustained pressure or F01–F16 whole-application completion.
 Those requirements remain alongside this test in the full plan.
 
+The separately built200ms DISCARD_NONE candidate now passes
+[controlled delay growth and shrinkage](../../docs/validation/synthmodem-buffered-timing.json).
+Its normal runtime replaces only d-modem, with exact normal init/kernel/JavaScript
+and no PCM exporter. Use the explicit stage receipt for a full DOS repeat:
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/synthmodem_buffered_runtime.py \
+  --output build/bbs-lab/synthmodem-buffered-runtime-NEW
+./tools/modem-dev --command python3 lab/bbs/synthmodem_synchronet_reconnect_dos.py \
+  --runtime build/bbs-lab/synthmodem-buffered-runtime-NEW/runtime \
+  --buffered-runtime-proof build/bbs-lab/synthmodem-buffered-runtime-NEW/result.json \
+  --key-checks build/bbs-lab/audio-reconnect-keys-NEW/result.json \
+  --notice-checks build/bbs-lab/reconnect-notice-NEW/result.json \
+  --output build/bbs-lab/current-synchronet-reconnect-audio-NEW
+```
+
+These controlled audio and staging results do not accept the DOS reconnect
+workflow. Retain all nineteen producer checks and the independent full byte,
+CRC, loss-notice, metadata and cleanup audits on the actual new run.
+
 ## Guest audio diagnosis
 
 `synthmodem_posttrain_trace_runtime.py` stages the normal pinned post-training

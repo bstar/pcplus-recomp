@@ -23,8 +23,12 @@ async def run(a):
     assert a.diagnostic_watchdog is None or 3600<=a.diagnostic_watchdog<=21600
     if a.receive_trace:
         from synthmodem_posttrain_trace_runtime import validate as validate_trace
-        assert a.trace_runtime_proof is not None
+        assert a.trace_runtime_proof is not None and a.buffered_runtime_proof is None
         runtime_inputs=validate_trace(runtime,a.trace_runtime_proof)
+    elif a.buffered_runtime_proof:
+        from synthmodem_buffered_runtime import validate as validate_buffered
+        assert a.trace_runtime_proof is None
+        runtime_inputs=validate_buffered(runtime,a.buffered_runtime_proof)
     else:
         assert a.trace_runtime_proof is None
         runtime_inputs=validate(runtime)
@@ -47,6 +51,8 @@ async def run(a):
         'src/aspect/compiler.py','nix/flake.nix','nix/flake.lock','tools/modem-dev']+[str(p.relative_to(ROOT)) for p in proofs]
     if a.receive_trace:
         names+=['lab/bbs/synthmodem_posttrain_trace_runtime.py','lab/bbs/receive_trace_io.js','lab/bbs/qemu_trace_wrapper.py','lab/bbs/receive_trace_export.sh',str(a.trace_runtime_proof.resolve().relative_to(ROOT))]
+    if a.buffered_runtime_proof:
+        names+=['lab/bbs/synthmodem_buffered_runtime.py','lab/bbs/check_buffered_dmodem_build.py','nix/dmodem.nix','tools/build-dmodem',str(a.buffered_runtime_proof.resolve().relative_to(ROOT))]
     frozen={n:sha(ROOT/n) for n in names};source=download_source();expected=source.read_bytes();source_sha=sha(source)
     out.mkdir(parents=True);stage=out/'program';stage.mkdir();recv=out/'RECV';recv.mkdir()
     for rel in ('terminal/TERMINAL.EXE','aspect-runner/ASPECT.EXE','aspect-compiler-dos/ASPCOMP.EXE'):
@@ -162,7 +168,7 @@ exit
         no_message_mail_upload_writes=all(stats['Total'][k]==after['Total'][k] for k in ('uploads','uploadb','posts','email','feedback')),
         inputs_preserved=all(sha(ROOT/n)==h for n,h in frozen.items()) and all(sha(Path(n))==h for n,h in runtime_inputs.items()))
     checks={k:bool(v) for k,v in checks.items()}
-    result=dict(passed=all(checks.values()) and not diagnostic,diagnostic=diagnostic,receive_trace=a.receive_trace,
+    result=dict(passed=all(checks.values()) and not diagnostic,diagnostic=diagnostic,receive_trace=a.receive_trace,buffered_runtime=a.buffered_runtime_proof is not None,
         diagnostic_watchdog=a.diagnostic_watchdog,checks=checks,notices=notices,partials=partials,
         frozen_inputs=frozen,runtime_inputs=runtime_inputs,server=server,statistics_before=stats,statistics_after=after,
         source_sha256=source_sha,source_bytes=len(expected),stages=read('STAGES.LOG').decode(),
@@ -178,4 +184,5 @@ if __name__=='__main__':
     p.add_argument('--diagnostic-watchdog',type=int,help='Diagnostic-only BIOS watchdog ticks (3600..21600)')
     p.add_argument('--receive-trace',action='store_true',help='Diagnostic guest PCM/RTP timing export; never compatibility acceptance')
     p.add_argument('--trace-runtime-proof',type=Path,help='Validated post-training trace runtime staging receipt')
+    p.add_argument('--buffered-runtime-proof',type=Path,help='Validated normal startup with the source-built200ms d-modem candidate')
     asyncio.run(run(p.parse_args()))

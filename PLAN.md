@@ -49,6 +49,18 @@ acceptance. Next test a separately built buffering/timing candidate against
 both growth and shrinkage before current DOS/BBS repeats. The first fixture's
 empty-delay-queue mistake is preserved separately.
 
+The [200ms no-discard candidate](docs/validation/synthmodem-buffered-timing.json)
+now passes fresh paired growth and shrinkage experiments. Only three prefetch
+constants differ from the40ms source-built candidate. Both runs preserve all34
+upstream and6000 downstream bytes and486240 overlapping raw PCM samples each,
+with constant220ms/520ms delays. Independent raw-sample checks reject a changed
+PCM sample despite refreshed manifest/decoder identities and a stale analyzer
+claim; rehashed framed-data damage also rejects. A separately verified normal
+runtime changes only d-modem. The full current DOS/Synchronet reconnect campaign
+`current-synchronet-reconnect-audio-04` is running with that explicit stage proof;
+it has no acceptance result yet. ENiGMA, sustained timing, physical commissioning
+and all F01–F16 application gates remain required.
+
 The hardware target's [work order and completion gates](docs/ANALOG_MODEM_INTEGRATION.md#work-order-and-completion-gates)
 prioritize carrier/data separation and full audio-path pressure/editor/transfer
 checks before physical commissioning. Boca identification and adapter arrival

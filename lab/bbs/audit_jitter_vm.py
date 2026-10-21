@@ -3,13 +3,22 @@
 import argparse,gzip,hashlib,json,struct
 from pathlib import Path
 from synthmodem_vm_control import ROOT,sha,records
-from analyze_receive_trace import packets
+from analyze_receive_trace import packets,pcm
 
 UP=b'127.0.0.1:45505\r\x1b[?1;2c\x1b[1;1RNEXT\r'
 DOWN=(bytes(range(256))*24)[:6000]
 
 def decode(path):
  r=json.loads(path.read_text());return bytes.fromhex(''.join(v['hex'] for v in r['received']))
+
+def raw_PCM_prefix_exact(out,summary):
+ # Recompute from raw captures. Refreshed manifest hashes must not make a stale
+ # analyzer's zero-difference claim sufficient after its PCM has changed.
+ source=b''.join(pcm(v) for v in packets(out/'rtp-to-guest.bin'))
+ guest=(out/'modem_rx_8k.raw').read_bytes();offset=summary['PCM'].get('dominant_offset_samples')
+ if not isinstance(offset,int) or not 0<=offset<len(guest)//2:return False
+ shift=offset*2;overlap=len(guest)-shift
+ return overlap>0 and overlap<=len(source) and overlap//2==summary['PCM'].get('compared_samples') and not any(guest[:shift]) and guest[shift:]==source[:overlap]
 
 def inspect(out,variant,builds,network_profile='buffered-release'):
  r=json.loads((out/'result.json').read_text());analysis=json.loads((out/'PCM-analysis.json').read_text());checks={}
@@ -60,10 +69,18 @@ def inspect(out,variant,builds,network_profile='buffered-release'):
  return summary,entries,r
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--baseline',type=Path,required=True);p.add_argument('--candidate',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--baseline',type=Path,required=True);p.add_argument('--candidate',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
+ p.add_argument('--baseline-variant',choices=['baseline','candidate'],default='baseline')
+ p.add_argument('--candidate-variant',choices=['candidate','buffered'],default='candidate')
+ p.add_argument('--network-profile',choices=['buffered-release','buffered-increase'],default='buffered-release');a=p.parse_args()
  out=a.output.resolve();assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
  ledger=ROOT/'docs/validation/synthmodem-jitter-policy.json';builds=json.loads(ledger.read_text())['builds'];reports={};images={};results={}
- for name,cohort in [('baseline',a.baseline),('candidate',a.candidate)]:reports[name],images[name],results[name]=inspect(cohort.resolve(),name,builds)
+ buffered_build=None
+ if a.candidate_variant=='buffered':
+  from check_buffered_dmodem_build import verify
+  buffered_build=verify(json.loads((a.candidate/'result.json').read_text())['dmodem_build'])
+  builds['buffered']=buffered_build
+ for name,cohort,variant in [('baseline',a.baseline,a.baseline_variant),('candidate',a.candidate,a.candidate_variant)]:reports[name],images[name],results[name]=inspect(cohort.resolve(),variant,builds,a.network_profile)
  changed=[];assert len(images['baseline'])==len(images['candidate'])
  metadata_equal=True
  for (n,f,b),(nn,ff,bb) in zip(images['baseline'],images['candidate']):
@@ -77,7 +94,9 @@ def main():
  checks['only_dmodem_differs_in_boot_archives']=metadata_equal and changed==['usr/local/bin/d-modem']
  checks['baseline_counterexample_reproduced']=not reports['baseline']['upstream_exact'] and reports['baseline']['PCM'].get('differing_samples',0)>0
  checks['candidate_preserves_upstream_and_PCM']=reports['candidate']['upstream_exact'] and reports['candidate']['offline_guest_exact'] and reports['candidate']['PCM'].get('guest_PCM_equals_delayed_RTP_prefix') is True
+ checks['candidate_raw_PCM_matches_RTP_prefix']=raw_PCM_prefix_exact(a.candidate.resolve(),reports['candidate'])
  r={'passed':all(checks.values()),'checks':checks,'cohorts':reports,'changed_archive_bodies':changed,'auditor_sha256':sha(Path(__file__)),'build_ledger_sha256':sha(ledger),
+  'network_profile':a.network_profile,'baseline_variant':a.baseline_variant,'candidate_variant':a.candidate_variant,'buffered_build':buffered_build,
   'scope':'Independent actual-VM binary/source/archive identities, framed guest data, exact caller payload, RTP continuity and lossless timing-route comparison. Candidate acceptance is limited to this controlled V22/1200 diagnostic, not full DOS/BBS/hardware or proof of the earlier intermittent event.'}
  (out/'result.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps({'passed':r['passed'],'checks':checks,'result':str(out/'result.json')},indent=2));return 0 if r['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

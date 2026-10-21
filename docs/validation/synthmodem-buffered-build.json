@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "build_only": true,
+  "compatibility_accepted": false,
+  "buffered": {
+    "build": {
+      "drvPath": "/nix/store/lf1ixx9mam7zsk6r9p2h6f7gs58j2m3f-pcplus-dmodem-no-discard-200ms-i386-b1752e4d0039e0cff72735924e03aa99922723a8.drv",
+      "outputs": {
+        "out": "/nix/store/yylsav45msmza84rd5d6a64l3nkqp71v-pcplus-dmodem-no-discard-200ms-i386-b1752e4d0039e0cff72735924e03aa99922723a8"
+      }
+    },
+    "executable": "/nix/store/yylsav45msmza84rd5d6a64l3nkqp71v-pcplus-dmodem-no-discard-200ms-i386-b1752e4d0039e0cff72735924e03aa99922723a8/bin/d-modem",
+    "executable_sha256": "ee2faf06422441d77250437b1a70a4cc187fcf14f246900cb864c76d4df32c5b",
+    "source_sha256": "d3fd9b99ce85feef6b19c70f1a52dbb0b95f7b4f9839f8e8041f16005d160925",
+    "reference_ledger_sha256": "4850cb6e88bf6edfb9831065d1acae1c7ea29f20cd56f92fc0a09b3c1af73278",
+    "reference_candidate": {
+      "build": {
+        "drvPath": "/nix/store/k88d8ybm1k7mvkk3bixnw5y3gwbs2fz9-pcplus-dmodem-no-discard-i386-b1752e4d0039e0cff72735924e03aa99922723a8.drv",
+        "outputs": {
+          "out": "/nix/store/030qklysscnn8qri19s8zwjbynbzv9a2-pcplus-dmodem-no-discard-i386-b1752e4d0039e0cff72735924e03aa99922723a8"
+        }
+      },
+      "executable_sha256": "913f2d1dddfddb94dd466e2cf23969b5a3e7e9fe31e21ab361cf1d567832ecc4",
+      "executable": "/nix/store/030qklysscnn8qri19s8zwjbynbzv9a2-pcplus-dmodem-no-discard-i386-b1752e4d0039e0cff72735924e03aa99922723a8/bin/d-modem",
+      "ELF32_i386_static": true,
+      "source_sha256": "13df3312a5e5d568d0f92083a97081c737466c53ba11d08277b3035f8b81e657"
+    },
+    "ELF32_i386_static": true,
+    "prefetch_ms": 200,
+    "discard_policy": "PJMEDIA_JB_DISCARD_NONE",
+    "only_source_changes": [
+      "jb_min_pre:40->200",
+      "jb_max_pre:40->200",
+      "jb_init:40->200"
+    ]
+  },
+  "inputs": {
+    "lab/bbs/check_buffered_dmodem_build.py": "6158623ee144ec3b650a2131d83489f64987be6f7c6b331c8a48acd4fd384200",
+    "nix/dmodem.nix": "ffdcfd5d47753e3de927d6cf72ea11387f28b240d3f06432e1b1ef57a5ed0c42",
+    "tools/build-dmodem": "02779717db4ce7e1e75fd4b9eeed1a1db1164d50245d6bf32d5991120ace554a",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+  },
+  "scope": "Source/build identity only. Same pinned toolchain, PJSIP and no-discard candidate source except three40->200ms prefetch constants; static i386 ELF and identical modem headers. No runtime/DOS/BBS/physical acceptance or installed/default change."
+}

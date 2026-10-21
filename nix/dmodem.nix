@@ -88,4 +88,18 @@ let
       cp jitter-check "$out/bin/"
     '';
   };
-in { baseline = build false; candidate = build true; jitter-check = jitterCheck; inherit pjproject; }
+in {
+  baseline = build false;
+  candidate = build true;
+  buffered = (build true).overrideAttrs (previous: {
+    pname = "pcplus-dmodem-no-discard-200ms-i386";
+    postPatch = previous.postPatch + ''
+      substituteInPlace d-modem.c \
+        --replace-fail 'med_cfg.jb_min_pre = 40;' 'med_cfg.jb_min_pre = 200;' \
+        --replace-fail 'med_cfg.jb_max_pre = 40;' 'med_cfg.jb_max_pre = 200;' \
+        --replace-fail 'med_cfg.jb_init = 40;' 'med_cfg.jb_init = 200;'
+    '';
+  });
+  jitter-check = jitterCheck;
+  inherit pjproject;
+}

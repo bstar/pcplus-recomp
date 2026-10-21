@@ -48,6 +48,55 @@ correction must preserve both delay-growth and delay-shrinkage cases before
 normal DOS/BBS repetition. No production default or installed bridge is changed
 by this diagnostic.
 
+## 200ms prefetch candidate
+
+`./tools/build-dmodem buffered --no-link --json` builds an isolated200ms
+DISCARD_NONE variant with the same pinned i386 toolchain and PJSIP. The
+[build identity](../../docs/validation/synthmodem-buffered-build.json) verifies
+that its source differs from the40ms no-discard candidate only in `jb_min_pre`,
+`jb_max_pre` and `jb_init`. All modem headers are identical and the result is a
+static32-bit i386 executable. Build identity alone is not runtime acceptance.
+
+The [paired timing receipt](../../docs/validation/synthmodem-buffered-timing.json)
+verifies separate growth and shrinkage experiments. The fresh delay-growth pair
+uses identical fixture sources and kernel/JavaScript
+files. The40ms control again emits four extra bytes after CPR. The200ms candidate
+preserves all34 upstream and6000 downstream bytes; an independent decoder of
+guest PCM agrees. Its486240 overlapping PCM samples equal the caller waveform
+at a constant220ms offset, with no inserted in-call silence or sample difference.
+The larger initial audio delay is the cost of this bounded timing margin. This
+does not provide unlimited jitter tolerance or prove sustained physical timing.
+In the shrinkage case, releasing the300ms packet backlog preserves the same
+486240 overlapping samples at a constant520ms offset, while the progressive
+discard control corrupts the waveform and upstream data. Independent raw-sample
+comparison verifies both results in addition to the analyzer's report. A pristine
+cloned cohort passes; rehashed guest-data damage and one altered PCM sample with
+stale zero-difference/decoder claims are rejected by their semantic checks.
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/synthmodem_receive_trace.py \
+  --runtime build/bbs-lab/synthmodem-sparse-runtime-01/runtime \
+  --dmodem buffered --network-profile buffered-increase \
+  --output build/bbs-lab/jitter-growth-200ms-new
+# Use a fresh --dmodem candidate control made with the same fixture sources.
+./tools/modem-dev --command python3 lab/bbs/audit_jitter_vm.py \
+  --baseline build/bbs-lab/jitter-growth-40ms-new \
+  --candidate build/bbs-lab/jitter-growth-200ms-new \
+  --baseline-variant candidate --candidate-variant buffered \
+  --network-profile buffered-increase \
+  --output build/bbs-lab/jitter-growth-pair-new
+```
+
+The normal-runtime stager `synthmodem_buffered_runtime.py` replaces only
+`usr/local/bin/d-modem` in the pinned normal post-training image. It verifies
+all archive metadata and every other body, plus the kernel and JavaScript.
+Normal startup has no PCM-export daemon or extra chardev. The separate
+`--buffered-runtime-proof` reconnect option requires that stage receipt and
+keeps all normal DOS/protocol/byte/notice/cleanup gates. The
+[stage receipt](../../docs/validation/synthmodem-buffered-runtime.json) closes no
+DOS gate. Full current DOS/BBS repeats and sustained timing/hardware tests remain
+required before claiming reliable compatibility.
+
 The paired Nix source builds now boot in the actual answering VM. Both baseline
 and DISCARD_NONE candidate register, answer SIP, train at V.22/1200, exchange34
 authored upstream bytes and6000 all-byte downstream bytes, export guest PCM and

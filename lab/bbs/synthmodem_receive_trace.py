@@ -7,7 +7,7 @@ from synthmodem_sparse_runtime import validate
 
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
- p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--slmodem',choices=['baseline']);p.add_argument('--network-profile',choices=['direct','buffered-release','buffered-increase'],default='direct');a=p.parse_args()
+ p.add_argument('--dmodem',choices=['baseline','candidate','buffered']);p.add_argument('--slmodem',choices=['baseline']);p.add_argument('--network-profile',choices=['direct','buffered-release','buffered-increase'],default='direct');a=p.parse_args()
  runtime=a.runtime.resolve();out=a.output.resolve();assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
  inputs=validate(runtime)
  names=['lab/bbs/synthmodem_receive_trace.py','lab/bbs/synthmodem_receive_trace.js','lab/bbs/receive_trace_export.sh',
@@ -18,7 +18,18 @@ def main():
   names+=['nix/dmodem.nix','tools/build-dmodem','docs/validation/synthmodem-jitter-policy.json']
   accepted=json.loads((ROOT/'docs/validation/synthmodem-jitter-policy.json').read_text());assert accepted['passed']
   built=json.loads(subprocess.check_output([str(ROOT/'tools/build-dmodem'),a.dmodem,'--no-link','--json'],text=True))
-  helper=Path(built[0]['outputs']['out'])/'bin/d-modem';assert sha(helper)==accepted['builds'][a.dmodem]['executable_sha256']
+  helper=Path(built[0]['outputs']['out'])/'bin/d-modem'
+  if a.dmodem=='buffered':
+   reference=accepted['builds']['candidate']
+   source_name='share/pcplus-dmodem/d-modem.c'
+   reference_source=Path(reference['build']['outputs']['out'])/source_name
+   assert sha(reference_source)==reference['source_sha256']
+   expected_source=reference_source.read_bytes()
+   for field in ('jb_min_pre','jb_max_pre','jb_init'):
+    old=f'med_cfg.{field} = 40;'.encode();assert expected_source.count(old)==1
+    expected_source=expected_source.replace(old,f'med_cfg.{field} = 200;'.encode())
+   assert (helper.parent.parent/source_name).read_bytes()==expected_source
+  else:assert sha(helper)==accepted['builds'][a.dmodem]['executable_sha256']
   elf=helper.read_bytes();assert elf[:5]==b'\x7fELF\x01' and int.from_bytes(elf[18:20],'little')==3
   assert 'INTERP' not in subprocess.check_output(['readelf','-l',str(helper)],text=True)
  if a.slmodem:

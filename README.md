@@ -35,6 +35,11 @@ both answering and independent waveform decoders produce unwanted bytes. The
 caller RTP remains exact. A bridge correction and full workflow repeat remain
 required.
 
+The [source-built200ms buffering candidate](docs/validation/synthmodem-buffered-timing.json)
+now preserves exact bytes and raw waveform samples through separate controlled
+delay-growth and backlog-release tests. Full DOS/BBS and physical compatibility
+remain unverified; a normal-startup current DOS reconnect repeat is underway.
+
 ASPECT recovery now includes a [literal codec](docs/ASPECT_LITERAL.md),
 [native dispatcher](docs/ASPECT_DISPATCH.md) and
 [global-string primitives](docs/ASPECT_GLOBAL_STRINGS.md).
