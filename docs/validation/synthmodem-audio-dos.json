@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Carrier DOS menu route09 passes19/22/13 checks. Actual audio editor01 fails Home/Insert semantics and upstream byte integrity: caller decode matches114 DOS bytes, guest receives126. Whole acceptance remains open.",
+  "status": "Carrier DOS menu09 remains accepted for its scope. Traced audio editor02 has exact114-byte upstream, exact complete downstream and4116160 exact guest PCM overlap samples at60ms; Home/Insert still fail, hold5999ms fails the6000ms gate, and ECONNRESET remains. Normal editor01 extra12-byte failure is retained and unresolved. Whole acceptance remains open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3005,6 +3005,68 @@
         "scope": "Independent read-only actual DOS/ASPECT, BBS authoritative logs, guest frames, serial/Telnet byte identity, RTP continuity, SIP and cleanup audit. No physical modem/ATA claim."
       },
       "independent_audit_sha256": "2402472dd0120bca51c18b2e526c94692eb7ffcf2ad4ef6fe385da9f1812fdd0"
+    },
+    "synthmodem-audio-editor-02": {
+      "passed": false,
+      "checks": {
+        "DOS_normal_exit": true,
+        "script_completed": true,
+        "UART_restored": true,
+        "keyboard_helper_retired": true,
+        "numeric_AT_only": true,
+        "real_DSP_CONNECT": true,
+        "authenticated": true,
+        "ordered_menus": true,
+        "DOS_DA": true,
+        "DOS_CPR": true,
+        "profile_unchanged": true,
+        "directory_accounting": true,
+        "no_relay_errors": true,
+        "no_gateway_errors": false,
+        "VM_exited": true,
+        "no_post_saved": true,
+        "inputs_unchanged": true,
+        "server_unchanged": true,
+        "editor_entered": true,
+        "typed_draft_sent": true,
+        "all_editor_keys_emitted": true,
+        "home_moves_before_marker": false,
+        "insert_toggles_overtype": false
+      },
+      "independent_checks": {
+        "numeric_command_prefix": true,
+        "single_normal_post_train_hold": false,
+        "serial_equals_post_hold_guest_decode": true,
+        "online_target_after_numeric_call": true,
+        "guest_equals_Telnet_application_input": true,
+        "decoded_audio_equals_serial_output": true,
+        "complete_BBS_display_survives_DSP": true,
+        "complete_caller_stream_equals_bridge_plus_BBS_display": true,
+        "single_real_carrier": true,
+        "real_DOS_terminal_replies": true,
+        "authoritative_login": true,
+        "authoritative_menu_order": true,
+        "all_actual_BIOS_editor_keys_in_order": true,
+        "Home_changes_cursor_before_H": false,
+        "End_and_Delete_apply_to_draft": false,
+        "Insert_changes_to_overtype": false,
+        "Tab_advances_and_page_keys_preserve_boundary": false,
+        "CtrlY_clears_line_before_final_text": false,
+        "unsaved_final_line_visible": false,
+        "draft_never_saved": true,
+        "script_and_normal_DOS_return": true,
+        "actual_UART_restored": true,
+        "keyboard_timer_vector_restored": true,
+        "continuous_rtp-from-answer.bin": true,
+        "continuous_rtp-from-caller.bin": true,
+        "actual_external_SIP": true,
+        "actual_internal_BYE": true,
+        "capture_hashes": true,
+        "runtime_inputs_unchanged": true,
+        "producer_inputs_unchanged": true
+      },
+      "receipt": "docs/validation/synthmodem-audio-editor-trace.json",
+      "receipt_sha256": "982205840911e376277406e018b954afd5b7947edbf2f3d6e1c10facb95ddda2"
     }
   },
   "diagnosis": {
@@ -3053,9 +3115,9 @@
     "The historical six-byte event lacks guest PCM/timing; its exact association remains unproven. A controlled same-boundary discard-policy failure is reproduced and fixed in the tested candidate.",
     "Editors/transfers/Synchronet through the rebuilt audio path, sustained pressure, loss/fault behavior and physical Boca/SPA2102 acceptance remain open.",
     "All F01-F16 whole-application completion gates remain open.",
-    "Audio editor01 reproduces12 extra guest-decoded upstream bytes plus failed key semantics and shutdown reset. Collect actual guest PCM/arrival timing, isolate receive-path corruption and editor fragmentation, then repeat editor and transfer workflows."
+    "Audio editor01 has12 extra guest upstream bytes. Traced editor02 does not reproduce them:114 exact upstream bytes and4116160 exact guest PCM samples at60ms. Editor fragmentation, intermittent receive integrity, post-training hold boundary, ECONNRESET and full editor/transfer acceptance remain open."
   ],
-  "current_cohort": "synthmodem-audio-editor-01",
+  "current_cohort": "synthmodem-audio-editor-02",
   "latest_cohort_passed": false,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
@@ -3085,5 +3147,6 @@
   "lifecycle_receipt": "docs/validation/synthmodem-lifecycle.json",
   "carrier_receipt": "docs/validation/synthmodem-carrier-dos.json",
   "accepted_menu_cohort": "synthmodem-audio-dos-09",
-  "editor_receipt": "docs/validation/synthmodem-audio-editor.json"
+  "editor_receipt": "docs/validation/synthmodem-audio-editor.json",
+  "editor_trace_receipt": "docs/validation/synthmodem-audio-editor-trace.json"
 }

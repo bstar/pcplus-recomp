@@ -215,6 +215,62 @@ acceptance. No keyboard buffering/server patch is silently substituted.
 The producer/auditor return failure for this retained counterexample. The
 integrity analyzer verifies the negative diagnosis, not a passing transport.
 
+### Traced editor follow-up
+
+`synthmodem-audio-editor-02` repeats the same actual DOS BIOS-key recipe against
+the unchanged stock ENiGMA server. The diagnostic carrier runtime changes only
+the init hook and adds the existing PCM-export script; the kernel, DSPs, helper,
+backend and all other runtime files retain their normal-carrier identities.
+No installed service or BBS configuration changes.
+
+The trace exports successfully. Independent caller and guest-PCM QAM decoders
+both recover all114 DOS online bytes. The actual guest DATA_RX also contains
+exactly114 bytes and matches the serial and Telnet application streams. The
+entire downstream caller stream equals the declared bridge messages plus all
+46716 bytes of same-run BBS display. This time there is no upstream insertion
+and no missing downstream close suffix. The earlier normal editor01 failures
+remain retained; this clean diagnostic observation does not identify or fix
+their intermittent cause.
+
+The PCM comparison finds4116160 exact overlapping samples at a constant480-sample
+(60ms) delay, with three leading silent frames. All1090 unique waveform anchors
+agree on that offset. There are no changed samples within the overlap. The
+longer RTP tail continues during trace export/shutdown, so the overlap comparison
+does not claim to cover that unexported tail. Observed caller/tunnel arrival
+gaps peak at35.91ms/35.89ms; none exceed40ms in this run.
+
+Overall acceptance remains false. Home/End/Insert and subsequent editor semantics
+still fail despite exact upstream bytes. The final screen shows the editor's
+cancelled prompt rather than the expected UNSAVED line. No post is saved, DOS
+returns normally, and UART/timer vectors restore. `read ECONNRESET` remains in
+gateway errors. The logged post-training wait is5999ms against the existing
+6000ms minimum; the independent auditor explicitly rejects that gate. Neither
+the threshold nor failed checks have been weakened.
+
+The [traced receipt](../../docs/validation/synthmodem-audio-editor-trace.json)
+binds the23 producer checks,30 independent checks, PCM analysis and both offline
+decoders to their actual captures. It closes no editor, transfer, hardware or
+whole-application gate. Next separate the stock server's incomplete-escape
+handling from receive-path intermittency. Existing single-byte key aliases fix
+only some keys; the complete editor recipe remains the acceptance target.
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/synthmodem_carrier_trace_runtime.py \
+  --output build/bbs-lab/carrier-trace-new
+./tools/modem-dev --command python3 lab/bbs/synthmodem_audio_dos.py \
+  --carrier-trace --route editor \
+  --runtime build/bbs-lab/carrier-trace-new/runtime \
+  --output build/bbs-lab/audio-editor-trace-new
+./tools/modem-dev --command python3 lab/bbs/audit_synthmodem_audio_dos.py \
+  build/bbs-lab/audio-editor-trace-new
+./tools/modem-dev --command node lab/bbs/diagnose_audio_caller.js \
+  build/bbs-lab/carrier-trace-new/runtime build/bbs-lab/audio-editor-trace-new
+./tools/modem-dev --command node lab/bbs/diagnose_receive_pcm.js \
+  build/bbs-lab/carrier-trace-new/runtime build/bbs-lab/audio-editor-trace-new
+./tools/modem-dev --command python3 lab/bbs/analyze_receive_trace.py \
+  build/bbs-lab/audio-editor-trace-new
+```
+
 The [carrier DOS receipt](../../docs/validation/synthmodem-carrier-dos.json)
 records the -09 route through the actual source-built terminal and ASPECT child.
 All menus, normal return, 42-byte UART snapshot, four-byte timer-vector snapshot,

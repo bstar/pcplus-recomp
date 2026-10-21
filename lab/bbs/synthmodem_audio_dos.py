@@ -9,6 +9,7 @@ from synthmodem_sparse_runtime import validate as validate_runtime
 from synthmodem_jitter_runtime import validate as validate_jitter_runtime
 from synthmodem_lifecycle_runtime import validate as validate_lifecycle_runtime
 from synthmodem_carrier_runtime import validate as validate_carrier_runtime
+from synthmodem_carrier_trace_runtime import validate as validate_carrier_trace_runtime
 sys.path.insert(0,str(ROOT/'standalone'));sys.path.insert(0,str(ROOT/'src/aspect'))
 from compiler import compile_source
 from modem_fixtures import fixture
@@ -17,11 +18,12 @@ from directory_test_support import accounting_check
 from test_terminal import SAMPLER
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--receive-trace',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--route',choices=['menus','editor'],default='menus');a=p.parse_args()
- assert sum(bool(v) for v in (a.lifecycle,a.carrier,a.receive_trace,a.dmodem))<=1,'Choose one pinned runtime profile'
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--receive-trace',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--carrier-trace',action='store_true');p.add_argument('--route',choices=['menus','editor'],default='menus');a=p.parse_args()
+ assert sum(bool(v) for v in (a.lifecycle,a.carrier,a.carrier_trace,a.receive_trace,a.dmodem))<=1,'Choose one pinned runtime profile'
  runtime=a.runtime.resolve();out=a.output.resolve();assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
  ledger=ROOT/'docs/validation/synthmodem-gateway.json';prior=json.loads(ledger.read_text());assert prior['passed']
- if a.carrier:runtime_inputs=validate_carrier_runtime(runtime)
+ if a.carrier_trace:runtime_inputs=validate_carrier_trace_runtime(runtime)
+ elif a.carrier:runtime_inputs=validate_carrier_runtime(runtime)
  elif a.lifecycle:runtime_inputs=validate_lifecycle_runtime(runtime)
  elif a.receive_trace:
   trace_ledger=ROOT/'docs/validation/synthmodem-receive-trace.json';tr=json.loads(trace_ledger.read_text());assert tr['passed']
@@ -39,10 +41,12 @@ def main():
  names=['lab/bbs/synthmodem_audio_dos.py','lab/bbs/synthmodem_audio_serial.js','lab/bbs/audio_exit_keys.asm','lab/bbs/audio_get_vector.asm',
   'lab/bbs/synthmodem_bbs_dos.py','lab/bbs/enigma.py','lab/bbs/synthmodem_sparse_runtime.py','lab/bbs/synthmodem_vm_control.py','docs/validation/synthmodem-sparse.json','standalone/modem_fixtures.py','standalone/directory_fixtures.py',
   'standalone/test_terminal.py','src/aspect/compiler.py','nix/flake.nix','nix/flake.lock','tools/modem-dev','build/terminal/TERMINAL.EXE','build/terminal/terminal.map','build/aspect-runner/ASPECT.EXE',str(ledger.relative_to(ROOT))]
- if a.receive_trace:names+=['docs/validation/synthmodem-receive-trace.json','lab/bbs/receive_trace_io.js','lab/bbs/qemu_trace_wrapper.py','lab/bbs/receive_trace_export.sh']
+ if a.receive_trace:names+=['docs/validation/synthmodem-receive-trace.json']
+ if a.receive_trace or a.carrier_trace:names+=['lab/bbs/receive_trace_io.js','lab/bbs/qemu_trace_wrapper.py','lab/bbs/receive_trace_export.sh']
  names+=['lab/bbs/synthmodem_jitter_runtime.py','lab/bbs/synthmodem_lifecycle_runtime.py']
- if a.lifecycle or a.carrier:names+=['lab/bbs/internal_sip_capture.js','docs/validation/synthmodem-pool.json','docs/validation/synthmodem-registrar.json','docs/validation/synthmodem-jitter-policy.json']
- if a.carrier:names+=['lab/bbs/synthmodem_carrier_runtime.py','docs/validation/synthmodem-carrier-runtime.json']
+ if a.lifecycle or a.carrier or a.carrier_trace:names+=['lab/bbs/internal_sip_capture.js','docs/validation/synthmodem-pool.json','docs/validation/synthmodem-registrar.json','docs/validation/synthmodem-jitter-policy.json']
+ if a.carrier or a.carrier_trace:names+=['lab/bbs/synthmodem_carrier_runtime.py','docs/validation/synthmodem-carrier-runtime.json']
+ if a.carrier_trace:names+=['lab/bbs/synthmodem_carrier_trace_runtime.py','docs/validation/synthmodem-carrier-trace-runtime.json']
  if a.dmodem:names+=['docs/validation/synthmodem-jitter-policy.json','nix/dmodem.nix','tools/build-dmodem']
  if a.route=='editor':names+=['lab/bbs/audio_editor_keys.asm']
  frozen={n:sha(ROOT/n) for n in names}
@@ -80,7 +84,7 @@ def main():
  node=None;dos=None;doscode=None
  with (out/'node.log').open('w') as nl,(out/'dosbox.log').open('w') as dl:
   try:
-   node=subprocess.Popen(['node',str(ROOT/'lab/bbs/synthmodem_audio_serial.js'),str(runtime),str(out)]+(['--receive-trace'] if a.receive_trace else [])+(['--lifecycle'] if a.lifecycle else [])+(['--carrier'] if a.carrier else []),stdout=nl,stderr=nl,start_new_session=True)
+   node=subprocess.Popen(['node',str(ROOT/'lab/bbs/synthmodem_audio_serial.js'),str(runtime),str(out)]+(['--receive-trace'] if a.receive_trace or a.carrier_trace else [])+(['--lifecycle'] if a.lifecycle else [])+(['--carrier'] if a.carrier or a.carrier_trace else []),stdout=nl,stderr=nl,start_new_session=True)
    end=time.monotonic()+60
    while not (out/'serial-port.json').exists():
     assert node.poll() is None and time.monotonic()<end,'Audio gateway startup deadline';time.sleep(.1)
@@ -170,7 +174,7 @@ exit
   checks.update(editor_entered='messageBaseNewPost' in menus,typed_draft_sent=b'ABCDE' in sent,all_editor_keys_emitted=all(observed.values()),
    home_moves_before_marker=positions[:7]==[(1,2),(1,3),(1,4),(1,5),(1,6),(1,1),(1,2)],insert_toggles_overtype='OVR ' in body)
  result={'passed':all(checks.values()),'checks':checks,'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'server_inputs':server_inputs,
-  'generated_inputs':generated,'server_revision':enigma.COMMIT,'server_menus':menus,'script_stages':read('STAGES.LOG').decode('ascii'),'receive_trace':a.receive_trace,'dmodem_variant':a.dmodem,'lifecycle':a.lifecycle,'carrier':a.carrier,
+  'generated_inputs':generated,'server_revision':enigma.COMMIT,'server_menus':menus,'script_stages':read('STAGES.LOG').decode('ascii'),'receive_trace':a.receive_trace,'dmodem_variant':a.dmodem,'lifecycle':a.lifecycle,'carrier':a.carrier,'carrier_trace':a.carrier_trace,
   'DOS_screen':text,'gateway':n,'route':a.route,'editor':editor,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
   'scope':'Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to owned stock ENiGMA. No physical modem/ATA/UART acceptance.'}
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'passed':result['passed'],'checks':checks,'result':str(out/'result.json')},indent=2));return 0 if result['passed'] else 1

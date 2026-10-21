@@ -42,9 +42,18 @@ semantics fail and the guest receives 126 bytes for 114 DOS bytes. An independen
 caller waveform decode matches all 114; three four-byte insertions appear before
 the Telnet application stream. The first Home fails before the first insertion.
 Normal DOS return, UART/timer restoration and unsaved-draft behavior pass;
-ECONNRESET and a 206-byte downstream close suffix remain recorded. Collect guest
-PCM/timing on this same route and isolate both receive integrity and editor
-fragmentation before claiming editor/transfer compatibility. The successful
+ECONNRESET and a 206-byte downstream close suffix remain recorded. The new
+diagnostic editor02 exports guest PCM/timing on the same route: all114 upstream
+bytes and the complete downstream stream are exact, with4116160 overlapping
+guest PCM samples equal to RTP after a constant60ms delay. It does not reproduce
+the insertion failure and therefore does not establish its cause or correction.
+Home/Insert still fail; the logged5999ms post-training hold also fails the
+unchanged6000ms gate, and ECONNRESET remains. The
+[traced editor receipt](docs/validation/synthmodem-audio-editor-trace.json)
+preserves those failures. Isolate receive-integrity intermittency and implement
+and test complete escape-sequence handling before claiming editor/transfer
+compatibility. Existing single-byte Home/End/Insert aliases leave other editor
+keys unresolved and are not a substitute for that requirement. The successful
 menu -09 checkpoint remains valid for its recorded scope; overall acceptance stays
 false.
 
