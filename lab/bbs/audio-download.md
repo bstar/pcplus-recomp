@@ -6,6 +6,18 @@ It uses the existing 11,521-byte `PCXTEST.BIN` fixture, full server artwork and
 the server's configured SEXYZ ZedZap helper. It does not inject protocol replies
 or modify server code. Physical Boca/SPA2102 compatibility is a separate gate.
 
+The [current976 buffered-runtime receipt](../../docs/validation/current-enigma-download-audio-01.json)
+passes25 producer,26 full byte/cleanup,12 serial and15 download gates, with two
+premature-control timing cases rejected. Automatic receive installs the exact
+11521-byte source, removes all staging files and returns to a fresh search/list.
+All205 authored upstream bytes,89229 BBS display bytes and187 bridge bytes remain
+exact; an independent caller-waveform decoder agrees. The real helper exits0 and
+official download accounting advances20->21. Eight CRC/source-verified data
+retransmissions occur after EOF, totaling8320 replay bytes; they do not change
+the installed file. These are retained efficiency/pressure observations, not a
+zero-retry claim. Broader protocols, uploads, faults, sustained timing and
+physical acceptance remain separate.
+
 The `download` route in `synthmodem_audio_dos.py` enables automatic receive in
 the isolated test profile and selects `D:\RECV\`. Its ASPECT child logs in,
 finds and tags the fixture, selects the download and exits after starting the

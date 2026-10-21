@@ -35,8 +35,10 @@ display bytes plus187 bridge bytes remain exact. Authoritative editor responses
 confirm Home/End, Delete, Insert/overtype, Tab, one-line page boundaries and
 Ctrl-Y line deletion, with `UNSAVED` visible at exit. No message is posted;
 normal DOS return, UART/PIC/vector/timer restoration and real SIP/VM retirement
-pass. This helper paces keys three seconds apart. Rapid/multiline interaction
-and the current transfer repeat remain separate requirements.
+pass. This helper paces keys three seconds apart. The
+[current automatic download](../../docs/validation/current-enigma-download-audio-01.json)
+has its own complete protocol/byte/menu/cleanup receipt. The rapid single-line
+case below also passes; multiline and longer interaction remain separate.
 
 The [burst-helper probe](../../docs/validation/audio-editor-burst-keys.json)
 prepares the rapid-input follow-up. With `AUDIO_EDITOR_BURST` and
@@ -46,13 +48,42 @@ before its normal exit key. Missing prerequisites or final output remain bounded
 by the watchdog. Five actual8086 DOS cases pass20 checks: full final output,
 each missing marker independently, initial-prerequisite timeout and final-screen
 timeout, all with restored hardware/timer state. The default helper remains
-byte-identical to the accepted paced helper. This is helper validation only;
-the runner integration and actual BBS burst test remain pending.
+byte-identical to the accepted paced helper. This is helper validation only.
+The runner's `--editor-burst-checks` option now validates that receipt and
+compiles the guarded one-tick mode. The
+[actual BBS burst receipt](../../docs/validation/current-enigma-editor-burst-audio-01.json)
+now passes23 producer,39 independent and12 serial checks. The same43-byte body
+spans1.3186 seconds at frontend input and1.32 seconds in independent caller
+audio. All119 upstream and48245 display bytes remain exact, with the expected
+key/cursor/mode effects and final unsaved line, no saved post, and normal
+DOS/UART/timer/SIP cleanup. This is input-cadence and functional evidence for one
+single-line sequence; it does not measure display latency or multiline behavior.
 
 ```sh
 ./tools/modem-dev --command python3 lab/bbs/check_audio_editor_burst_keys.py \
   --output build/bbs-lab/editor-burst-keys-NEW
+./tools/modem-dev --command python3 lab/bbs/synthmodem_audio_dos.py \
+  --runtime build/bbs-lab/synthmodem-buffered-runtime-01/runtime \
+  --buffered-runtime-proof build/bbs-lab/synthmodem-buffered-runtime-01/result.json \
+  --editor-burst-checks build/bbs-lab/editor-burst-keys-NEW/result.json \
+  --route editor --output build/bbs-lab/current-enigma-editor-burst-NEW
+./tools/modem-dev --command node lab/bbs/diagnose_audio_caller.js \
+  build/bbs-lab/synthmodem-buffered-runtime-01/runtime \
+  build/bbs-lab/current-enigma-editor-burst-NEW
+./tools/modem-dev --command python3 lab/bbs/audit_serial_io_evidence.py \
+  build/bbs-lab/current-enigma-editor-burst-NEW
+./tools/modem-dev --command python3 lab/bbs/audit_synthmodem_audio_dos.py \
+  build/bbs-lab/current-enigma-editor-burst-NEW
 ```
+
+Run the offline caller decoder before the burst byte audit. Besides the original
+key/cursor/mode/unsaved/cleanup gates, that audit requires the43-byte editor body
+within four seconds at both frontend input and independent caller-audio packet
+bounds. The [cadence negative](../../docs/validation/editor-burst-cadence-negative.json)
+relabels the accepted paced capture and refreshes its claimed configuration/source
+identities; both measured spans of about71 seconds reject while every other gate stays
+true. Accepted captures remain unchanged. This adds a measured input-cadence
+requirement, not a claim of display latency or multiline scrolling.
 
 The earlier menu-only baseline combined the Nix-built DISCARD_NONE d-modem,
 [lifecycle fixes](synthmodem-lifecycle.md) and

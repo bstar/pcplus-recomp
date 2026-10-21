@@ -16,9 +16,9 @@ source plus127 padding bytes across14 CRC blocks. Both113/121-byte upstream
 streams, loss-before-completion capture, Files/Main return,42 hardware bytes and
 timer restore pass. Two13-check serial audits,7 official metadata checks and31
 damaged-evidence rejections pass. The earlier18/19 missing-notice run and helper/
-ACK/media failures remain retained. The current paced ENiGMA editor also passes
-below; next complete its transfer repeat, rapid/multiline interaction,
-sustained/protocol/profile and all F01–F16 application work. This is
+ACK/media failures remain retained. Current paced/rapid ENiGMA editing and
+automatic download also pass below; next complete multiline/longer input,
+current upload/cancel/retry, sustained/protocol/profile and all F01–F16 work. This is
 scoped bridge-process recovery acceptance, not general/physical completion.
 
 The [retained failed repeat](docs/validation/current-synchronet-reconnect-audio-03.json)
@@ -75,16 +75,33 @@ online bytes,103 BBS input bytes,48245 display bytes and187 bridge bytes, with
 actual Home/End/Insert/Delete/Tab/page-boundary/Ctrl-Y cursor/mode behavior.
 The final unsaved line is visible, no post is saved and DOS/hardware/SIP cleanup
 passes. Keys are paced three seconds apart and page keys cover one line;
-rapid input and multiline scrolling remain unverified. The current ENiGMA
-ZMODEM download campaign is running without acceptance yet.
+the separate rapid result follows below; multiline scrolling remains unverified. The
+[current ZMODEM download](docs/validation/current-enigma-download-audio-01.json)
+also passes25 producer,26 byte/cleanup,12 serial and15 transfer gates plus two
+premature-control rejections. Its11521-byte file,205 upstream bytes and89229
+display bytes remain exact, with a successful helper exit, count20->21 and
+post-transfer search/list. Eight completed-file data retransmissions total8320
+verified replay bytes; zero-retry efficiency is not claimed.
 
 The [burst-input helper](docs/validation/audio-editor-burst-keys.json) is prepared
 for the next editor interaction test: five actual DOS/BIOS cases pass20 checks,
 including independent final-text/cursor gates and prerequisite/final-output
 watchdogs. Its default binary remains identical to the accepted paced helper.
 The fast mode sends keys one BIOS tick apart; actual BBS burst and multiline
-behavior remain unaccepted. Integrate the opt-in runner mode after the active
-download's frozen producer exits, then use the same full stream/editor audits.
+behavior required a separate real BBS run. The opt-in `--editor-burst-checks`
+runner requires that probe. Its audit adds
+independent four-second limits on the43-byte key body at frontend input and
+decoded caller waveform. A
+[mislabeled paced capture](docs/validation/editor-burst-cadence-negative.json)
+fails only those two cadence gates at about71 seconds while all other acceptance
+checks remain true. The
+[actual fast BBS run](docs/validation/current-enigma-editor-burst-audio-01.json)
+now passes23 producer,39 independent and12 serial checks. Its43-byte body spans
+1.3186 seconds at frontend input and1.32 seconds in independently decoded caller
+audio, with the same correct editor key/cursor/mode and unsaved-draft behavior.
+All119 authored upstream and48245 BBS display bytes remain exact; DOS/hardware/
+SIP/VM cleanup passes. This accepts one rapid single-line sequence, not display
+latency, multiline input or sustained pressure.
 
 The hardware target's [work order and completion gates](docs/ANALOG_MODEM_INTEGRATION.md#work-order-and-completion-gates)
 prioritize carrier/data separation and full audio-path pressure/editor/transfer

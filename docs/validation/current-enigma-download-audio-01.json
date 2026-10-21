@@ -1,0 +1,823 @@
+{
+  "passed": true,
+  "actual_ENiGMA_download_accepted": true,
+  "cohort": "build/bbs-lab/current-enigma-download-audio-01",
+  "server_revision": "6c25317168b762f7d9088a54d3f8295438827a0e",
+  "terminal_sha256": "976ba8d0c7681b9727389e3f91e80e463738602b857130da491c249d6988e145",
+  "ASPECT_sha256": "aef146fdf62846a2dfc5d73413f435a8bfe68ca4f68d639178083d4d21e559f5",
+  "runtime_receipt": "docs/validation/synthmodem-buffered-runtime.json",
+  "runtime_receipt_sha256": "fcfc4e91b2d8b0e80caf8b837bffe8ae67fad81e9ce6b59793e02e6b6fb2c2dd",
+  "prefetch_ms": 200,
+  "producer_checks": {
+    "DOS_normal_exit": true,
+    "script_completed": true,
+    "UART_restored": true,
+    "keyboard_helper_retired": true,
+    "numeric_AT_only": true,
+    "real_DSP_CONNECT": true,
+    "authenticated": true,
+    "ordered_menus": true,
+    "DOS_DA": true,
+    "DOS_CPR": true,
+    "profile_unchanged": true,
+    "directory_accounting": true,
+    "no_relay_errors": true,
+    "no_gateway_errors": true,
+    "VM_exited": true,
+    "no_post_saved": true,
+    "inputs_unchanged": true,
+    "server_unchanged": true,
+    "exact_download": true,
+    "only_expected_download": true,
+    "no_receive_stage": true,
+    "actual_helper_exit_zero": true,
+    "posttransfer_search_and_list": true,
+    "official_download_counter_advanced": true,
+    "posttransfer_filename_visible": true
+  },
+  "independent_checks": {
+    "numeric_command_prefix": true,
+    "single_normal_post_train_hold": true,
+    "serial_equals_post_hold_guest_decode": true,
+    "online_target_after_numeric_call": true,
+    "guest_equals_Telnet_application_input": true,
+    "decoded_audio_equals_serial_output": true,
+    "complete_BBS_display_survives_DSP": true,
+    "complete_caller_stream_equals_bridge_plus_BBS_display": true,
+    "single_real_carrier": true,
+    "real_DOS_terminal_replies": true,
+    "authoritative_login": true,
+    "authoritative_menu_order": true,
+    "script_and_normal_DOS_return": true,
+    "actual_UART_restored": true,
+    "actual_IRQ_vectors_restored": true,
+    "actual_UART_PIC_restored": true,
+    "keyboard_timer_vector_restored": true,
+    "continuous_rtp-from-answer.bin": true,
+    "continuous_rtp-from-caller.bin": true,
+    "actual_external_SIP": true,
+    "actual_internal_BYE": true,
+    "capture_hashes": true,
+    "runtime_inputs_unchanged": true,
+    "producer_inputs_unchanged": true,
+    "explicit_key_framing_configuration": true,
+    "stock_BBS_inputs_unchanged": true
+  },
+  "serial_ownership_checks": {
+    "complete_contiguous_attempt_manifest": true,
+    "submitted_artifact_matches_original_attempt_offsets": true,
+    "completed_artifact_matches_original_attempt_offsets": true,
+    "skipped_artifact_matches_original_attempt_offsets": true,
+    "all_final_counters_match_manifest": true,
+    "all_submissions_have_final_callback": true,
+    "legacy_errors_preserved_in_structured_events": true,
+    "one_observed_frontend_close_and_shutdown": true,
+    "observed_close_precedes_shutdown": true,
+    "no_write_submission_after_observed_close": true,
+    "observed_frontend_input_matches_capture_size": true,
+    "producer_capture_hashes": true
+  },
+  "download_checks": {
+    "post_protocol_search_key_observed": true,
+    "source_unchanged": true,
+    "complete_CRC_ZMODEM_and_opposite_controls": true,
+    "exact_DOS_file": true,
+    "only_expected_DOS_file": true,
+    "no_receive_staging": true,
+    "real_owned_helper": true,
+    "real_helper_exit_zero": true,
+    "post_helper_keyboard_search_and_list": true,
+    "official_file_and_counter": true,
+    "automatic_receive_profile": true,
+    "base_byte_and_cleanup_audit": true,
+    "frontend_ownership_audit": true,
+    "no_gateway_errors": true,
+    "producer_hashes": true
+  },
+  "payloads": {
+    "BBS_input_bytes": 189,
+    "BBS_display_bytes": 89229,
+    "BBS_input_sha256": "62b98097f0a693b08e53f67b7066f51919b889c75b3ff939e0bad909e6c8c2a6",
+    "BBS_display_sha256": "a874f15ed3c61fb284ed71d70b376e26a1db2ff54a3e787ab71a7a2db7b735a1",
+    "display_offset_in_caller": 187,
+    "expected_bridge_bytes": 187,
+    "full_caller_sha256": "80a166c959b2e50f56bc9eade1778e1c42811de6bc598ea2dca5180d3a0099b9",
+    "guest_DATA_RX_bytes": 205,
+    "pre_proxy_training_tail_bytes": 0,
+    "pre_proxy_training_tail_hex": "",
+    "unadjusted_serial_guest_identity": true
+  },
+  "authored_online_bytes": 205,
+  "independent_caller_decode_exact": true,
+  "source_bytes": 11521,
+  "source_sha256": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6",
+  "received_sha256": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6",
+  "protocol": {
+    "start": 58044,
+    "end": 78975,
+    "files": [
+      {
+        "name": "PCXTEST.BIN",
+        "length": 11521,
+        "start": 58044,
+        "end": 70063,
+        "sha256": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6",
+        "packets": [
+          {
+            "offset": 58122,
+            "end": 59186,
+            "crc_end": 59185,
+            "ending": 107,
+            "length": 1024,
+            "sha256": "1a4ef89b50f6077813e6dc7e67ba1f2b00df10876e26b86fc143d9bc7b19697e",
+            "verified_before": 0,
+            "replayed": false,
+            "position": 1024,
+            "after_eof": false
+          },
+          {
+            "offset": 59199,
+            "end": 61317,
+            "crc_end": 61317,
+            "ending": 105,
+            "length": 2048,
+            "sha256": "b2ad568adb6eefd8da9e2420256f6989a7d9e5e2bbb7d01b0835b0a96a9c9aaa",
+            "verified_before": 1024,
+            "replayed": false,
+            "position": 3072,
+            "after_eof": false
+          },
+          {
+            "offset": 61317,
+            "end": 65547,
+            "crc_end": 65547,
+            "ending": 105,
+            "length": 4096,
+            "sha256": "393c9c945ec79f2c616fc381a5b9218ad961c57cc3eed36abd1b7412e66eccb1",
+            "verified_before": 3072,
+            "replayed": false,
+            "position": 7168,
+            "after_eof": false
+          },
+          {
+            "offset": 65547,
+            "end": 70042,
+            "crc_end": 70042,
+            "ending": 104,
+            "length": 4353,
+            "sha256": "8bb482c2bcad16b9140ba45d823e9bb5e8d854d4e0c00526f84cbc5ed5fc03ee",
+            "verified_before": 7168,
+            "replayed": false,
+            "position": 11521,
+            "after_eof": false
+          },
+          {
+            "offset": 70076,
+            "end": 74307,
+            "crc_end": 74306,
+            "ending": 107,
+            "length": 4096,
+            "sha256": "5b318daed8ac8f708dfaba4aa602f6fdb91c3eb328d8b47b7ac53363ea9a960a",
+            "verified_before": 11521,
+            "replayed": true,
+            "position": 5120,
+            "after_eof": true
+          },
+          {
+            "offset": 74320,
+            "end": 76439,
+            "crc_end": 76438,
+            "ending": 107,
+            "length": 2048,
+            "sha256": "17e11dd7988204cd04e8b64309443c4eb818f17d6a3724353f63f9afcdd97876",
+            "verified_before": 11521,
+            "replayed": true,
+            "position": 3072,
+            "after_eof": true
+          },
+          {
+            "offset": 76452,
+            "end": 77515,
+            "crc_end": 77514,
+            "ending": 107,
+            "length": 1024,
+            "sha256": "84562e4d425f809275c268cc618c1c9fc0957ef4e2600eff2d390fecb0bb291b",
+            "verified_before": 11521,
+            "replayed": true,
+            "position": 2048,
+            "after_eof": true
+          },
+          {
+            "offset": 77528,
+            "end": 78063,
+            "crc_end": 78062,
+            "ending": 107,
+            "length": 512,
+            "sha256": "b19989032a294c1ae9dd99eb71818e60b7b0e82aecb850b6966a4a7a422b1d0c",
+            "verified_before": 11521,
+            "replayed": true,
+            "position": 1536,
+            "after_eof": true
+          },
+          {
+            "offset": 78076,
+            "end": 78347,
+            "crc_end": 78346,
+            "ending": 107,
+            "length": 256,
+            "sha256": "4caa1b2dd084caafd19e55b92115902b5d8305107077fd40e268d34960dfcb00",
+            "verified_before": 11521,
+            "replayed": true,
+            "position": 1280,
+            "after_eof": true
+          },
+          {
+            "offset": 78360,
+            "end": 78501,
+            "crc_end": 78500,
+            "ending": 107,
+            "length": 128,
+            "sha256": "3bbd3bf2b2e5a41234398fdc268aeff723b0bdb6111dab63eaa562668d5bc2ed",
+            "verified_before": 11521,
+            "replayed": true,
+            "position": 1152,
+            "after_eof": true
+          },
+          {
+            "offset": 78514,
+            "end": 78655,
+            "crc_end": 78654,
+            "ending": 107,
+            "length": 128,
+            "sha256": "3bbd3bf2b2e5a41234398fdc268aeff723b0bdb6111dab63eaa562668d5bc2ed",
+            "verified_before": 11521,
+            "replayed": true,
+            "position": 1152,
+            "after_eof": true
+          },
+          {
+            "offset": 78668,
+            "end": 78809,
+            "crc_end": 78808,
+            "ending": 107,
+            "length": 128,
+            "sha256": "3bbd3bf2b2e5a41234398fdc268aeff723b0bdb6111dab63eaa562668d5bc2ed",
+            "verified_before": 11521,
+            "replayed": true,
+            "position": 1152,
+            "after_eof": true
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "kind": "header",
+        "offset": 58044,
+        "end": 58058,
+        "format": 67,
+        "type": 4,
+        "position": 16908288,
+        "header": "0400000201"
+      },
+      {
+        "kind": "metadata",
+        "name": "PCXTEST.BIN",
+        "offset": 58058,
+        "end": 58109,
+        "crc_end": 58108,
+        "ending": 107,
+        "length": 44,
+        "sha256": "9bc36315042f475a78586dd231bf213c45dc8a12688da9bbe318c311273e52de"
+      },
+      {
+        "kind": "header",
+        "offset": 58109,
+        "end": 58122,
+        "format": 67,
+        "type": 10,
+        "position": 0,
+        "header": "0a00000000"
+      },
+      {
+        "kind": "data",
+        "name": "PCXTEST.BIN",
+        "offset": 58122,
+        "end": 59186,
+        "crc_end": 59185,
+        "ending": 107,
+        "length": 1024,
+        "sha256": "1a4ef89b50f6077813e6dc7e67ba1f2b00df10876e26b86fc143d9bc7b19697e",
+        "verified_before": 0,
+        "replayed": false,
+        "position": 1024,
+        "after_eof": false
+      },
+      {
+        "kind": "header",
+        "offset": 59186,
+        "end": 59199,
+        "format": 67,
+        "type": 10,
+        "position": 1024,
+        "header": "0a00040000"
+      },
+      {
+        "kind": "data",
+        "name": "PCXTEST.BIN",
+        "offset": 59199,
+        "end": 61317,
+        "crc_end": 61317,
+        "ending": 105,
+        "length": 2048,
+        "sha256": "b2ad568adb6eefd8da9e2420256f6989a7d9e5e2bbb7d01b0835b0a96a9c9aaa",
+        "verified_before": 1024,
+        "replayed": false,
+        "position": 3072,
+        "after_eof": false
+      },
+      {
+        "kind": "data",
+        "name": "PCXTEST.BIN",
+        "offset": 61317,
+        "end": 65547,
+        "crc_end": 65547,
+        "ending": 105,
+        "length": 4096,
+        "sha256": "393c9c945ec79f2c616fc381a5b9218ad961c57cc3eed36abd1b7412e66eccb1",
+        "verified_before": 3072,
+        "replayed": false,
+        "position": 7168,
+        "after_eof": false
+      },
+      {
+        "kind": "data",
+        "name": "PCXTEST.BIN",
+        "offset": 65547,
+        "end": 70042,
+        "crc_end": 70042,
+        "ending": 104,
+        "length": 4353,
+        "sha256": "8bb482c2bcad16b9140ba45d823e9bb5e8d854d4e0c00526f84cbc5ed5fc03ee",
+        "verified_before": 7168,
+        "replayed": false,
+        "position": 11521,
+        "after_eof": false
+      },
+      {
+        "kind": "header",
+        "offset": 70042,
+        "end": 70063,
+        "format": 66,
+        "type": 11,
+        "position": 11521,
+        "header": "0b012d0000"
+      },
+      {
+        "kind": "header",
+        "offset": 70063,
+        "end": 70076,
+        "format": 67,
+        "type": 10,
+        "position": 1024,
+        "header": "0a00040000"
+      },
+      {
+        "kind": "data",
+        "name": "PCXTEST.BIN",
+        "offset": 70076,
+        "end": 74307,
+        "crc_end": 74306,
+        "ending": 107,
+        "length": 4096,
+        "sha256": "5b318daed8ac8f708dfaba4aa602f6fdb91c3eb328d8b47b7ac53363ea9a960a",
+        "verified_before": 11521,
+        "replayed": true,
+        "position": 5120,
+        "after_eof": true
+      },
+      {
+        "kind": "header",
+        "offset": 74307,
+        "end": 74320,
+        "format": 67,
+        "type": 10,
+        "position": 1024,
+        "header": "0a00040000"
+      },
+      {
+        "kind": "data",
+        "name": "PCXTEST.BIN",
+        "offset": 74320,
+        "end": 76439,
+        "crc_end": 76438,
+        "ending": 107,
+        "length": 2048,
+        "sha256": "17e11dd7988204cd04e8b64309443c4eb818f17d6a3724353f63f9afcdd97876",
+        "verified_before": 11521,
+        "replayed": true,
+        "position": 3072,
+        "after_eof": true
+      },
+      {
+        "kind": "header",
+        "offset": 76439,
+        "end": 76452,
+        "format": 67,
+        "type": 10,
+        "position": 1024,
+        "header": "0a00040000"
+      },
+      {
+        "kind": "data",
+        "name": "PCXTEST.BIN",
+        "offset": 76452,
+        "end": 77515,
+        "crc_end": 77514,
+        "ending": 107,
+        "length": 1024,
+        "sha256": "84562e4d425f809275c268cc618c1c9fc0957ef4e2600eff2d390fecb0bb291b",
+        "verified_before": 11521,
+        "replayed": true,
+        "position": 2048,
+        "after_eof": true
+      },
+      {
+        "kind": "header",
+        "offset": 77515,
+        "end": 77528,
+        "format": 67,
+        "type": 10,
+        "position": 1024,
+        "header": "0a00040000"
+      },
+      {
+        "kind": "data",
+        "name": "PCXTEST.BIN",
+        "offset": 77528,
+        "end": 78063,
+        "crc_end": 78062,
+        "ending": 107,
+        "length": 512,
+        "sha256": "b19989032a294c1ae9dd99eb71818e60b7b0e82aecb850b6966a4a7a422b1d0c",
+        "verified_before": 11521,
+        "replayed": true,
+        "position": 1536,
+        "after_eof": true
+      },
+      {
+        "kind": "header",
+        "offset": 78063,
+        "end": 78076,
+        "format": 67,
+        "type": 10,
+        "position": 1024,
+        "header": "0a00040000"
+      },
+      {
+        "kind": "data",
+        "name": "PCXTEST.BIN",
+        "offset": 78076,
+        "end": 78347,
+        "crc_end": 78346,
+        "ending": 107,
+        "length": 256,
+        "sha256": "4caa1b2dd084caafd19e55b92115902b5d8305107077fd40e268d34960dfcb00",
+        "verified_before": 11521,
+        "replayed": true,
+        "position": 1280,
+        "after_eof": true
+      },
+      {
+        "kind": "header",
+        "offset": 78347,
+        "end": 78360,
+        "format": 67,
+        "type": 10,
+        "position": 1024,
+        "header": "0a00040000"
+      },
+      {
+        "kind": "data",
+        "name": "PCXTEST.BIN",
+        "offset": 78360,
+        "end": 78501,
+        "crc_end": 78500,
+        "ending": 107,
+        "length": 128,
+        "sha256": "3bbd3bf2b2e5a41234398fdc268aeff723b0bdb6111dab63eaa562668d5bc2ed",
+        "verified_before": 11521,
+        "replayed": true,
+        "position": 1152,
+        "after_eof": true
+      },
+      {
+        "kind": "header",
+        "offset": 78501,
+        "end": 78514,
+        "format": 67,
+        "type": 10,
+        "position": 1024,
+        "header": "0a00040000"
+      },
+      {
+        "kind": "data",
+        "name": "PCXTEST.BIN",
+        "offset": 78514,
+        "end": 78655,
+        "crc_end": 78654,
+        "ending": 107,
+        "length": 128,
+        "sha256": "3bbd3bf2b2e5a41234398fdc268aeff723b0bdb6111dab63eaa562668d5bc2ed",
+        "verified_before": 11521,
+        "replayed": true,
+        "position": 1152,
+        "after_eof": true
+      },
+      {
+        "kind": "header",
+        "offset": 78655,
+        "end": 78668,
+        "format": 67,
+        "type": 10,
+        "position": 1024,
+        "header": "0a00040000"
+      },
+      {
+        "kind": "data",
+        "name": "PCXTEST.BIN",
+        "offset": 78668,
+        "end": 78809,
+        "crc_end": 78808,
+        "ending": 107,
+        "length": 128,
+        "sha256": "3bbd3bf2b2e5a41234398fdc268aeff723b0bdb6111dab63eaa562668d5bc2ed",
+        "verified_before": 11521,
+        "replayed": true,
+        "position": 1152,
+        "after_eof": true
+      },
+      {
+        "kind": "header",
+        "offset": 78809,
+        "end": 78829,
+        "format": 66,
+        "type": 8,
+        "position": 0,
+        "header": "0800000000"
+      },
+      {
+        "kind": "header",
+        "offset": 78829,
+        "end": 78850,
+        "format": 66,
+        "type": 7,
+        "position": 0,
+        "header": "0700000000"
+      },
+      {
+        "kind": "header",
+        "offset": 78850,
+        "end": 78870,
+        "format": 66,
+        "type": 8,
+        "position": 0,
+        "header": "0800000000"
+      },
+      {
+        "kind": "header",
+        "offset": 78870,
+        "end": 78891,
+        "format": 66,
+        "type": 7,
+        "position": 0,
+        "header": "0700000000"
+      },
+      {
+        "kind": "header",
+        "offset": 78891,
+        "end": 78911,
+        "format": 66,
+        "type": 8,
+        "position": 0,
+        "header": "0800000000"
+      },
+      {
+        "kind": "header",
+        "offset": 78911,
+        "end": 78932,
+        "format": 66,
+        "type": 7,
+        "position": 0,
+        "header": "0700000000"
+      },
+      {
+        "kind": "header",
+        "offset": 78932,
+        "end": 78952,
+        "format": 66,
+        "type": 8,
+        "position": 0,
+        "header": "0800000000"
+      },
+      {
+        "kind": "header",
+        "offset": 78952,
+        "end": 78973,
+        "format": 66,
+        "type": 7,
+        "position": 0,
+        "header": "0700000000"
+      }
+    ],
+    "finish": {
+      "offset": 78809,
+      "last_header_offset": 78952,
+      "end": 78975
+    },
+    "controls": [
+      {
+        "type": 9,
+        "position": 0,
+        "offset": 92,
+        "seconds": 556.215668586
+      },
+      {
+        "type": 3,
+        "position": 1024,
+        "offset": 113,
+        "seconds": 565.6725320850001,
+        "recovery": false
+      },
+      {
+        "type": 1,
+        "position": 587210752,
+        "offset": 133,
+        "seconds": 656.792390098
+      },
+      {
+        "type": 1,
+        "position": 587210752,
+        "offset": 133,
+        "seconds": 656.792390098
+      },
+      {
+        "type": 1,
+        "position": 587210752,
+        "offset": 133,
+        "seconds": 656.792390098
+      },
+      {
+        "type": 1,
+        "position": 587210752,
+        "offset": 133,
+        "seconds": 656.792390098
+      },
+      {
+        "type": 1,
+        "position": 587210752,
+        "offset": 133,
+        "seconds": 656.792390098
+      },
+      {
+        "type": 1,
+        "position": 587210752,
+        "offset": 133,
+        "seconds": 656.792390098
+      },
+      {
+        "type": 1,
+        "position": 587210752,
+        "offset": 133,
+        "seconds": 656.792390098
+      },
+      {
+        "type": 1,
+        "position": 587210752,
+        "offset": 133,
+        "seconds": 656.792390098
+      },
+      {
+        "type": 1,
+        "position": 587210752,
+        "offset": 133,
+        "seconds": 656.792390098
+      },
+      {
+        "type": 8,
+        "position": 0,
+        "offset": 154,
+        "seconds": 729.852006627
+      }
+    ]
+  },
+  "verified_post_EOF_retransmissions": [
+    {
+      "length": 4096,
+      "position": 5120,
+      "after_eof": true
+    },
+    {
+      "length": 2048,
+      "position": 3072,
+      "after_eof": true
+    },
+    {
+      "length": 1024,
+      "position": 2048,
+      "after_eof": true
+    },
+    {
+      "length": 512,
+      "position": 1536,
+      "after_eof": true
+    },
+    {
+      "length": 256,
+      "position": 1280,
+      "after_eof": true
+    },
+    {
+      "length": 128,
+      "position": 1152,
+      "after_eof": true
+    },
+    {
+      "length": 128,
+      "position": 1152,
+      "after_eof": true
+    },
+    {
+      "length": 128,
+      "position": 1152,
+      "after_eof": true
+    }
+  ],
+  "verified_post_EOF_retransmitted_bytes": 8320,
+  "download_counts": {
+    "before": 20,
+    "after": 21
+  },
+  "control_timing_negative_cases": [
+    {
+      "case": "ACK-before-delivered-packet-CRC",
+      "rejected": true,
+      "failure": "('No ACK or verified-position recovery for subpacket', 58122, 1024)",
+      "controls_moved": 1,
+      "trace_chunks_moved": 5
+    },
+    {
+      "case": "ZFIN-before-delivered-sender-ZFIN",
+      "rejected": true,
+      "failure": "('Missing opposite header', 8, 0, 729.689342673, 731.048646463)",
+      "controls_moved": 1,
+      "trace_chunks_moved": 5
+    }
+  ],
+  "proofs_sha256": {
+    "build/bbs-lab/current-enigma-download-audio-01/result.json": "864063ad2db4fe260d9279731640f75d7f1e96587fe980de22d2304a66a83e51",
+    "build/bbs-lab/current-enigma-download-audio-01/independent-audit.json": "e9079b9b2a3555174965cf9ed4ca879a4dd99e101710ddcf55ecc87698b2093f",
+    "build/bbs-lab/current-enigma-download-audio-01/serial-io-audit.json": "b398fd683ced157790c0769c29fdd0ddc312dd7b656e4fd0cd08bb66b3b1bee6",
+    "build/bbs-lab/current-enigma-download-audio-01/offline-caller.json": "2f3e504277a6f40f713c52e9928d93f416674db89905ea0e12a321f7637e3aad",
+    "build/bbs-lab/current-enigma-download-audio-01/download-audit.json": "f4189863c66b4d1ed7cd22a044b6c52b8ceddafe44ced62261e1afeac5aef7eb",
+    "build/bbs-lab/current-enigma-download-audio-01/control-timing-verifier.json": "6a027353cae4ece980a40142377afc5e9f3ed6bc96933e0522dd67271eb35bd1"
+  },
+  "captures_sha256": {
+    "node.log": "55c6e91242f878eb1330573d000916160ef7625b4419ff4f0488c2a85213e451",
+    "dosbox.log": "2f4c95f3e1ca3fa0707a301d21d3557dfd7a920eec29b99e1be75604c046a231",
+    "qemu-0.log": "4312db829c6211a855f523613e408495900b8047993862accfd324177259ff45",
+    "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "KEYOLD.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+    "KEYNEW.BIN": "effaf0e9612be527118cfe481b20007eb4708257869faae3e9c03d80e162dd07",
+    "SCREEN.BIN": "78c68d5426c3d0a4335e77a955a2840ef5e06cdb5553dffeedb8b6654c8cd057",
+    "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "internal-from-guest.bin": "f7269640c67469dd80a1ec97c4f1f7129a8e0999386f864a31b39c2f2d7f40ba",
+    "internal-to-guest.bin": "73b243253057a7259c285531597fa8601f28407fdcea36539e53f8a1991c1432",
+    "serial-submitted.bin": "c160eab52a4da30d1488a05647d9fd74594d9b734fe9525c951da2510eeeb025",
+    "serial-completed.bin": "c160eab52a4da30d1488a05647d9fd74594d9b734fe9525c951da2510eeeb025",
+    "serial-skipped.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "serial-write-events.jsonl": "929119ee0d099dc7fa1a29d0ab6708210539dc7a6a79061d47e32cc3a28ebda5",
+    "serial-input-events.jsonl": "4096217b733a3044445827a1a4476e2f215627c16eb829b471cea2980e913f39",
+    "serial-in.bin": "063e90f805111a1ee35e9669d6b30be11120f1325baa6649efa8c8bde393c006",
+    "serial-out.bin": "c160eab52a4da30d1488a05647d9fd74594d9b734fe9525c951da2510eeeb025",
+    "caller-decoded.bin": "80a166c959b2e50f56bc9eade1778e1c42811de6bc598ea2dca5180d3a0099b9",
+    "control-wire.bin": "13c71bcd02bc7ab7b94d69c0adfe5a87af2782351d804e7b33d8c97880fcdf8f",
+    "rtp-from-answer.bin": "750517263cc9dff4853701a17adb77788f5558af75a8ec9e64ff35810b5bd660",
+    "rtp-from-caller.bin": "b4364b1180048e6de3993149f708a90da2aadb2a4a86d93934e3fe85c796e369",
+    "sip-to-server.bin": "bff97cedcdf71ed1730337cc56019703f482850f548a7377af55a6bc8c0cacce",
+    "sip-to-caller.bin": "5141c5f30c6ffaadca953f850cc6ac93ceb8b2b9ed88e49b14735dbe5418606e",
+    "server-session.jsonl": "31387ebe9542f388941415cc36daee1088701ae1d185628751842b2266f477d6",
+    "bbs-input.bin": "69f70e93c54f8c28312e313ab62f0ab13f7194a442b4e071c9a10167f72c172a",
+    "bbs-output.bin": "42fc00c3772cf99522d0d30baee4f5abc11860b272917c670e3827dbb9e791ba",
+    "BBS-relay-events.jsonl": "2f3c5bd1c5cf7d56db2f1c4973c882f01b44805b2fbf0867f7584c45cb61ca73"
+  },
+  "source_inputs": {
+    "lab/bbs/audit_synthmodem_audio_dos.py": "03d180ffb10bc054ecd306adfef93dbdfd56c35bcf6707af4cd134f0b2f581af",
+    "lab/bbs/audit_serial_io_evidence.py": "f5e6bf127277fbf256676bcf491903a06e3b3214e8c1276658e62bf15a7a4f8b",
+    "lab/bbs/diagnose_audio_caller.js": "384c5ff4036f90afdf3afa9174ef7c780c503a2541a6d5d6b55210856ae884ef",
+    "lab/bbs/audit_audio_download.py": "452febcc4561fbc9aabca30007da931be55afc07b0938cee9a72c5d802407d85",
+    "lab/bbs/audit_zmodem.py": "510ad0fd519c8fa279599956d13852f984a1e32e49e4588e1c482749829d5ad9",
+    "lab/bbs/check_audio_control_timing.py": "4c0fdc948ea5460c623867db266ae9bb1be27639003b475fbc2a8a3186adcf4c"
+  },
+  "scope": "Current976 DOS/ASPECT and normal200ms V22-1200 audio against owned pinned/clean ENiGMA.25 producer,26 full byte/cleanup,12 serial and15 download gates pass, with two premature-control timing cases rejected. Exact11521-byte automatic ZMODEM receive, official count20->21, real helper exit0 and post-helper search/list.205 authored upstream bytes and89229 BBS display bytes plus187 bridge bytes are exact. Eight CRC/source-verified completed-file retransmissions are retained; zero-retry efficiency is not claimed. Upload/cancel/retry, rapid/multiline input, sustained/other profiles, physical hardware and F01-F16 remain open."
+}

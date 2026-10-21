@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "actual_BBS_burst_accepted": false,
+  "case": "paced-capture-mislabeled-as-burst",
+  "failed_acceptance_checks": [
+    "burst_serial_body_within_four_seconds",
+    "burst_audio_body_within_four_seconds"
+  ],
+  "measured": {
+    "body_bytes": 43,
+    "serial_body_seconds": 71.185255185,
+    "independent_caller_audio_body_seconds": 71.18,
+    "scope": "Complete editor-body span at observed frontend input and independently decoded caller RTP packet bounds. Four-second ceiling distinguishes the one-tick burst from the paced baseline; this is not display-response latency."
+  },
+  "original_captures_unchanged": true,
+  "auditor_sha256": "58bcea87680a269f7ab2bcec87cc21dc7ee35d4bdee20be6766fa925bf3de664",
+  "proofs_sha256": {
+    "build/bbs-lab/editor-burst-cadence-negative-01/result.json": "3844f9dd01f96a8e8815ce766f6794e463baef9e02b067354fb90bec575358cd",
+    "build/bbs-lab/editor-burst-cadence-negative-01/independent-audit.json": "b2c73d78d17d426dcb64f9d40a9def85ec5cc55f79d1c4cff5b8f7fa3384f669",
+    "build/bbs-lab/current-enigma-editor-audio-01/result.json": "94ae0074d16ccf6a7e3a7acd216fa01f8d6da63ea3733a40f306c9202b1fe1d1",
+    "build/bbs-lab/current-enigma-editor-audio-01/independent-audit.json": "d48e83820ba82f8fd60e2e1cb15f8090ade6f06c71415a6272036bf963f2e4bd"
+  },
+  "scope": "Read-only semantic negative over a retained real paced BBS/editor capture. Configuration/source claims are refreshed while input events and caller waveform remain paced; both independently measured four-second gates reject and all other acceptance checks stay true. No new audio/BBS run and no mutation of accepted captures."
+}

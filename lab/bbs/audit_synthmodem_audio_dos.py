@@ -70,6 +70,27 @@ def main():
   editor={'positions':positions,'expected_body_hex':expected_body.hex(),'actual_DOS_body_hex':keyboard.hex(),
    'post_keyboard_DOS_tail_hex':keyboard[len(expected_body):].hex() if keyboard.startswith(expected_body) else None,
    'scope':'Actual BIOS-to-serial key sequence and authoritative editor cursor/mode responses. Page keys cover a one-line boundary only; connection closes without Save.'}
+  if r.get('editor_burst_checks'):
+   checks['burst_helper_configuration']=r['editor']['key_spacing_BIOS_ticks']==1 and r['editor']['final_screen_guard'] is True
+   assert start>=0 and keyboard.startswith(expected_body)
+   input_events=[json.loads(v) for v in (out/'serial-input-events.jsonl').read_text().splitlines()]
+   def input_time(offset):return int(next(v['monotonicNs'] for v in input_events if v['offset']<=offset<v['offset']+v['length']))
+   first=len(prefix)+start;last=first+len(expected_body)-1
+   serial_seconds=(input_time(last)-input_time(first))/1e9
+   offline=json.loads((out/'offline-caller.json').read_text());decoded=bytearray();packet_at_byte=[]
+   for row in offline['received']:
+    value=bytes.fromhex(row['hex']);decoded.extend(value);packet_at_byte.extend([row['packet']]*len(value))
+   root=Path(__file__).resolve().parents[2]
+   checks['burst_independent_caller_identity']=offline['checker_sha256']==sha(root/'lab/bbs/diagnose_audio_caller.js') and offline['capture_sha256']==sha(out/'rtp-from-caller.bin') and offline['decoder_sha256']==next(h for n,h in r['runtime_inputs'].items() if n.endswith('/src/dsp/protocols/V22Demodulator.js'))
+   checks['burst_independent_caller_bytes_exact']=bytes(decoded)==online
+   assert bytes(decoded)==online
+   # Actual packet sequence/timestamp continuity is verified below. Packet
+   # bounds measure the modulation duration independently of host read times.
+   audio_seconds=(packet_at_byte[start+len(expected_body)-1]-packet_at_byte[start])*.020
+   checks['burst_serial_body_within_four_seconds']=0<=serial_seconds<=4
+   checks['burst_audio_body_within_four_seconds']=0<=audio_seconds<=4
+   editor['burst_timing']={'body_bytes':len(expected_body),'serial_body_seconds':serial_seconds,'independent_caller_audio_body_seconds':audio_seconds,
+    'scope':'Complete editor-body span at observed frontend input and independently decoded caller RTP packet bounds. Four-second ceiling distinguishes the one-tick burst from the paced baseline; this is not display-response latency.'}
  checks['script_and_normal_DOS_return']=(out/'SCRIPT.OK').is_file() and (out/'SCRIPT.OK').read_bytes()==b'PASS' and (out/'PASS.TXT').is_file() and not (out/'FAIL.TXT').exists()
  def read(name):return (out/name).read_bytes() if (out/name).is_file() else b''
  before=read('BEFORE.BIN');after=read('AFTER.BIN');snapshots_valid=len(before)==len(after)==42

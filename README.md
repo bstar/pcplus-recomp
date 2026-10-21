@@ -37,8 +37,13 @@ and [guest silence-insertion](docs/validation/synchronet-audio-integrity-trace-0
 counterexamples remain retained. The
 [current ENiGMA editor](docs/validation/current-enigma-editor-audio-01.json)
 also passes exact-byte, cursor/mode and cleanup checks for a paced unsaved
-single-line draft. Rapid/multiline editing, sustained/general audio and physical
-compatibility remain open; the current ENiGMA download repeat is underway.
+single-line draft. The [current automatic ENiGMA download](docs/validation/current-enigma-download-audio-01.json)
+also passes full CRC/finish, exact-file and post-transfer input/cleanup audits;
+eight verified completed-file retransmissions remain recorded. The
+[rapid single-line editor run](docs/validation/current-enigma-editor-burst-audio-01.json)
+also passes, with its43-byte input sequence measured at1.32 seconds and correct
+editor results. Multiline/longer input, sustained/general audio and physical
+compatibility remain open.
 
 ASPECT recovery now includes a [literal codec](docs/ASPECT_LITERAL.md),
 [native dispatcher](docs/ASPECT_DISPATCH.md) and
