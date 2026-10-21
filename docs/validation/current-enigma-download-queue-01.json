@@ -1,0 +1,151 @@
+{
+  "passed": true,
+  "checks": {
+    "original_CRC_source_protocol_reproduced": true,
+    "exact_full_relay_and_frontend_manifests": true,
+    "eight_source_verified_replays": true,
+    "replayed_payload_bytes_match_receipt": true,
+    "every_replay_enters_before_first_EOF_decoded": true,
+    "every_replay_decoded_after_first_EOF": true,
+    "only_initial_zero_position_request": true,
+    "original_captures_preserved": true
+  },
+  "accepted_receipt": "docs/validation/current-enigma-download-audio-01.json",
+  "accepted_receipt_sha256": "fb2cf5b8445b47bf58ee78f6b7b59285637d9627aee99bbd7e51eb4c8c38cac3",
+  "cohort": "build/bbs-lab/current-enigma-download-audio-01",
+  "first_EOF_bridge_entry_seconds": 566.0732397789834,
+  "first_EOF_decoded_frontend_seconds": 656.789123458,
+  "first_EOF_queue_seconds": 90.71588367901654,
+  "replay_packets": [
+    {
+      "bytes": 4096,
+      "position": 5120,
+      "packet_sha256": "5b318daed8ac8f708dfaba4aa602f6fdb91c3eb328d8b47b7ac53363ea9a960a",
+      "bridge_entry_first_seconds": 577.0836653989973,
+      "bridge_entry_last_seconds": 577.0837814470287,
+      "decoded_frontend_first_seconds": 656.909430518,
+      "decoded_frontend_last_seconds": 692.168814792
+    },
+    {
+      "bytes": 2048,
+      "position": 3072,
+      "packet_sha256": "17e11dd7988204cd04e8b64309443c4eb818f17d6a3724353f63f9afcdd97876",
+      "bridge_entry_first_seconds": 588.0945894379402,
+      "bridge_entry_last_seconds": 588.0945894379402,
+      "decoded_frontend_first_seconds": 692.268143129,
+      "decoded_frontend_last_seconds": 709.928277571
+    },
+    {
+      "bytes": 1024,
+      "position": 2048,
+      "packet_sha256": "84562e4d425f809275c268cc618c1c9fc0957ef4e2600eff2d390fecb0bb291b",
+      "bridge_entry_first_seconds": 599.1055706799962,
+      "bridge_entry_last_seconds": 599.1055706799962,
+      "decoded_frontend_first_seconds": 710.048890303,
+      "decoded_frontend_last_seconds": 718.888462837
+    },
+    {
+      "bytes": 512,
+      "position": 1536,
+      "packet_sha256": "b19989032a294c1ae9dd99eb71818e60b7b0e82aecb850b6966a4a7a422b1d0c",
+      "bridge_entry_first_seconds": 610.116718810983,
+      "bridge_entry_last_seconds": 610.116718810983,
+      "decoded_frontend_first_seconds": 719.008670341,
+      "decoded_frontend_last_seconds": 723.467983715
+    },
+    {
+      "bytes": 256,
+      "position": 1280,
+      "packet_sha256": "4caa1b2dd084caafd19e55b92115902b5d8305107077fd40e268d34960dfcb00",
+      "bridge_entry_first_seconds": 621.1275710730115,
+      "bridge_entry_last_seconds": 621.1275710730115,
+      "decoded_frontend_first_seconds": 723.567953277,
+      "decoded_frontend_last_seconds": 725.828104387
+    },
+    {
+      "bytes": 128,
+      "position": 1152,
+      "packet_sha256": "3bbd3bf2b2e5a41234398fdc268aeff723b0bdb6111dab63eaa562668d5bc2ed",
+      "bridge_entry_first_seconds": 632.1386327010114,
+      "bridge_entry_last_seconds": 632.1386327010114,
+      "decoded_frontend_first_seconds": 725.947843114,
+      "decoded_frontend_last_seconds": 727.108256013
+    },
+    {
+      "bytes": 128,
+      "position": 1152,
+      "packet_sha256": "3bbd3bf2b2e5a41234398fdc268aeff723b0bdb6111dab63eaa562668d5bc2ed",
+      "bridge_entry_first_seconds": 643.1495588480029,
+      "bridge_entry_last_seconds": 643.1495588480029,
+      "decoded_frontend_first_seconds": 727.228554504,
+      "decoded_frontend_last_seconds": 728.388841163
+    },
+    {
+      "bytes": 128,
+      "position": 1152,
+      "packet_sha256": "3bbd3bf2b2e5a41234398fdc268aeff723b0bdb6111dab63eaa562668d5bc2ed",
+      "bridge_entry_first_seconds": 654.1605769760208,
+      "bridge_entry_last_seconds": 654.1605769760208,
+      "decoded_frontend_first_seconds": 728.508698334,
+      "decoded_frontend_last_seconds": 729.668240138
+    }
+  ],
+  "replay_payload_bytes": 8320,
+  "replay_entry_intervals_seconds": [
+    11.010924038942903,
+    11.010981242056005,
+    11.01114813098684,
+    11.010852262028493,
+    11.01106162799988,
+    11.010926146991551,
+    11.011018128017895
+  ],
+  "opposite_ZRPOS": [
+    {
+      "type": 9,
+      "position": 0,
+      "seconds": 556.221311204
+    }
+  ],
+  "clock_provenance": {
+    "directions": {
+      "dos": {
+        "bytes": 189,
+        "chunks": 74,
+        "raw_prefix_bytes": 25
+      },
+      "bbs": {
+        "bytes": 89229,
+        "chunks": 89229,
+        "raw_prefix_bytes": 209
+      }
+    },
+    "clock_anchor": {
+      "type": "ready",
+      "seconds": 4.213207332,
+      "monotonicNs": "955468246848868",
+      "wallTimeMs": 1792615536432
+    },
+    "scope": "One Node monotonic timeline: completed local socket-write invocations for decoded BBS bytes and observed DOS-input reads. Clipped manifests cover exact full canonical streams. These are transport observations, not application-consumption timestamps."
+  },
+  "inputs": {
+    "lab/bbs/diagnose_audio_download_queue.py": "931bb28229ef74475be625f7921798a1748d4934a1e63a325f903390fce94c08",
+    "lab/bbs/audit_audio_download.py": "452febcc4561fbc9aabca30007da931be55afc07b0938cee9a72c5d802407d85",
+    "lab/bbs/audit_zmodem.py": "510ad0fd519c8fa279599956d13852f984a1e32e49e4588e1c482749829d5ad9",
+    "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f"
+  },
+  "captures_sha256": {
+    "result.json": "864063ad2db4fe260d9279731640f75d7f1e96587fe980de22d2304a66a83e51",
+    "independent-audit.json": "e9079b9b2a3555174965cf9ed4ca879a4dd99e101710ddcf55ecc87698b2093f",
+    "bbs-input.bin": "69f70e93c54f8c28312e313ab62f0ab13f7194a442b4e071c9a10167f72c172a",
+    "bbs-output.bin": "42fc00c3772cf99522d0d30baee4f5abc11860b272917c670e3827dbb9e791ba",
+    "BBS-relay-events.jsonl": "2f3c5bd1c5cf7d56db2f1c4973c882f01b44805b2fbf0867f7584c45cb61ca73",
+    "serial-input-events.jsonl": "4096217b733a3044445827a1a4476e2f215627c16eb829b471cea2980e913f39",
+    "serial-write-events.jsonl": "929119ee0d099dc7fa1a29d0ab6708210539dc7a6a79061d47e32cc3a28ebda5",
+    "serial-in.bin": "063e90f805111a1ee35e9669d6b30be11120f1325baa6649efa8c8bde393c006",
+    "serial-out.bin": "c160eab52a4da30d1488a05647d9fd74594d9b734fe9525c951da2510eeeb025",
+    "caller-decoded.bin": "80a166c959b2e50f56bc9eade1778e1c42811de6bc598ea2dca5180d3a0099b9",
+    "node-result.json": "e1d0ab87b581e8975d2fc73a42def6d16dd5bec34c624633eed28e91b4743892"
+  },
+  "scope": "Read-only timing diagnosis of the previously accepted source/CRC-verified download. Absolute host monotonic bridge observations are aligned to the frontend clock. All eight replay packets enter the bridge before the first EOF is decoded at the frontend; their roughly11-second entry cadence and90-second EOF backlog are observations. No DOS application-consumption timestamps, exclusive timeout cause, correction, new BBS/audio run or physical hardware claim. Next compare bounded receive credit/acknowledgment timing on the same slow audio path while preserving full integrity/finish/storage/cleanup gates."
+}

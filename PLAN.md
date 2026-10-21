@@ -7,6 +7,16 @@ data, reconnect and transfer runs. No physical compatibility or 14400-bps claim
 is established; the adapter has not arrived. PCPlus remains a serial terminal,
 with SIP/audio/Telnet handled by the Linux bridge.
 
+The [current ENiGMA download queue diagnosis](docs/validation/current-enigma-download-queue-01.json)
+reproduces all source/CRC packets and exact relay/frontend manifests. All eight
+verified replays enter the bridge before the original EOF reaches the decoded
+frontend; that EOF has90.716 seconds of queued transport delay. Replay entry
+cadence is about11.011 seconds and only the initial ZRPOS0 is observed. This is
+retained-capture evidence, not a new audio pass or an efficiency correction.
+Next compare bounded checkpoint/receive capabilities on the same slow path;
+small advertised credit alone does not necessarily bound the peer's block size.
+See the [measurement and experiment notes](lab/bbs/zmodem-completed-replay.md).
+
 The [current reconnect campaign](docs/validation/current-synchronet-reconnect-audio-04.json)
 now passes all19 producer gates and the independent full protocol/byte/notice
 audit with the source-built200ms no-discard runtime and unchanged976 terminal.

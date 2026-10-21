@@ -85,3 +85,38 @@ or protocol control follows helper retirement. The new core/native proof and
 runtime inputs remain independently verified against their frozen hashes.
 Uploads, cancellation/loss/pressure, other peers, physical Boca/SPA2102 tests
 and full-application completion remain separate requirements.
+
+## Current download queue measurements
+
+The [current-terminal timing diagnosis](../../docs/validation/current-enigma-download-queue-01.json)
+rechecks the accepted download's complete canonical streams, all packet CRCs and
+source bytes, and both relay/frontend manifests without modifying the captures.
+It aligns the relay's absolute host monotonic timestamps with the frontend's
+Node clock. The first EOF enters the bridge at566.073s and reaches the decoded
+frontend at656.789s: a90.716-second queue interval. These are transport
+observations, not timestamps of DOS application consumption.
+
+All eight verified replay packets (8320 payload bytes) have already entered the
+bridge before that EOF reaches the frontend. They enter at approximately
+11.011-second intervals, with lengths4096,2048,1024,512,256,128,128,128. They all
+reach the frontend after the original EOF. The reverse stream contains only the
+initial ZRPOS0; these replays are not responses to additional observed receiver
+ZRPOS requests. This narrows the efficiency investigation without proving an
+exclusive timeout cause or changing the existing successful transfer result.
+
+The next controlled comparison should bound data queued between checkpoints
+on the same slow audio path. The current receiver advertises8192 bytes with
+CANOVIO enabled. Reducing that value alone needs care: the inspected Synchronet
+sender chooses a checkpoint based on its current block length, but still reads
+and sends a whole block and grows the block after successful delivery. Receive
+credit therefore must not be assumed to cap individual packets or guarantee a
+reply before a1200-bps path drains them. Compare receiver capability/credit and
+observed acknowledgment timing against the unchanged peer, retaining every
+CRC/source/finish/file/menu/cleanup gate. No candidate has yet passed this audio
+comparison, and the active multiline editor campaign retains its frozen inputs.
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/diagnose_audio_download_queue.py \
+  --receipt docs/validation/current-enigma-download-audio-01.json \
+  --output build/bbs-lab/download-queue-new.json
+```
