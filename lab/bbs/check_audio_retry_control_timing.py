@@ -20,8 +20,11 @@ def main():
     receipt='upload-retry-audit-v2.json'
     sender='dos' if route=='upload' else 'bbs';other='bbs' if sender=='dos' else 'dos'
     r=json.loads((out/receipt).read_text())
-    assert a.protocol_only and not r['passed'] and r['checks']['complete_retry_CRC_controls_FIN_OO']
-    assert {k for k,v in r['checks'].items() if not v}=={'whole_stream_and_cleanup'}
+    assert r['checks']['complete_retry_CRC_controls_FIN_OO']
+    if r['passed']:assert all(r['checks'].values())
+    else:
+        assert a.protocol_only
+        assert {k for k,v in r['checks'].items() if not v}=={'whole_stream_and_cleanup'}
     sent,_=Telnet().feed((out/'bbs-input.bin').read_bytes());display,_=Telnet().feed((out/'bbs-output.bin').read_bytes())
     base=json.loads((out/'independent-audit.json').read_text())
     trace,_=frontend_trace(out,sent,display,base['payloads']['expected_bridge_bytes']);protocol=r['retry_protocol']
@@ -55,7 +58,7 @@ def main():
         'checker_sha256':sha(Path(__file__)),'auditor_sha256':sha(Path(__file__).with_name('audit_audio_download.py')),
         'protocol_auditor_sha256':sha(Path(__file__).with_name('audit_zmodem.py')),
         'capture_sha256':{name:sha(out/name) for name in [receipt,'independent-audit.json','bbs-input.bin','bbs-output.bin','serial-input-events.jsonl','serial-write-events.jsonl','serial-in.bin','serial-out.bin','node-result.json']},
-        'scope':'Retry verifier only; overall minimum-hold failure remains unaccepted. Original successful bytes/capture files are unchanged; only copied in-memory control-event times move before observed decoded-data delivery. Real baseline must pass and both premature replies must fail. No new product, BBS or hardware run.'}
+        'scope':'Retry verifier only; any separate acceptance failure remains unaccepted. Original successful bytes/capture files are unchanged; only copied in-memory control-event times move before observed decoded-data delivery. Real baseline must pass and both premature replies must fail. No new product, BBS or hardware run.'}
     with result_path.open('x') as output:output.write(json.dumps(result,indent=2)+'\n')
     print(json.dumps({'passed':True,'actual_control_records':len(actual),'rejected_negative_cases':len(rows)}))
 

@@ -333,6 +333,16 @@ unchanged. This accepts only staging/component tests; a fresh SIP/audio/DOS/BBS
 run is still required. Temporary cleanup, pressure/loss, other peers, physical
 and F01-F16 requirements remain open.
 
+The [fresh post-training retry prerequisites](docs/validation/audio-posttrain-retry-preparation.json)
+now pass navigation/isolation on another private board. `--posttrain-hold`
+selects the exact sealed timer candidate with the same key framing, DOS binary,
+payload,38400 DTE, V22/1200 DSP and receiver helper. Audio retry02 is running;
+all inputs/auditors remain frozen. The timing verifier supports passing retry
+cohorts without protocol-only mode and still rejects both premature controls
+on the retained failed retry01 under explicit protocol-only mode. All previous
+receipts/captures remain unchanged. No new audio acceptance follows until every
+same-run byte/protocol/source/storage/return/cleanup and minimum-hold gate passes.
+
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
 source-built terminal/ASPECT login, Main -> Messages -> Main -> Files, normal

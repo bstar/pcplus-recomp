@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "actual_audio_retry_accepted": false,
+  "checks": {
+    "fresh_board_navigation": true,
+    "fresh_board_isolation": true,
+    "sealed_posttrain_component": true
+  },
+  "server_fixture": {
+    "kind": "sexyz-receive-finish-candidate",
+    "lab": "build/bbs-lab/enigma-posttrain-retry-candidate-01",
+    "manifest": "build/bbs-lab/enigma-posttrain-retry-candidate-01/receive-finish-instance.json",
+    "manifest_sha256": "3f45d245cd95da821e7cc3e72db8fa0b52aaeefe004c63c48d598dc820dec8e6",
+    "helper_sha256": "3485669f1df011640667e2111de08d32478f2d64941af0ea02bfa13492909b52",
+    "source": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma-posttrain-retry-candidate-01/source"
+  },
+  "inputs": {
+    "build/bbs-lab/enigma-posttrain-retry-candidate-01/navigation/result.json": "e09796c1bccf0640a00689d1d2ce44e5eef6cae1fa7df085995334003fa8ee39",
+    "build/bbs-lab/enigma-posttrain-retry-candidate-01/isolation/result.json": "7ef061a003986daea131c178a90929ee38e2fd89c641bcbdc55eb72253e4c1e7",
+    "docs/validation/synthmodem-posttrain-runtime.json": "b28d5fa30ef335d503b2ac053cf1f72a36acf408161aa28e88d5961920ceace7",
+    "docs/validation/audio-upload-retry-keys.json": "a799d8e5d1817a40448d132e960e7fbc3e60033fb10badf41e3daa438d67e961"
+  },
+  "scope": "Preparation only: separate candidate board, exact sealed monotonic-hold runtime and retained12-check BIOS retry observer. All original acceptance gates required; audio retry02 now running with frozen source/runtime/auditors. Prior failed retry01 and accepted upload/download captures preserved. No new audio or physical acceptance."
+}

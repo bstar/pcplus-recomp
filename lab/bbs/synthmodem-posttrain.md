@@ -37,3 +37,26 @@ SIP/audio/DOS/BBS retry run must keep all original byte, CRC/control/storage,
 closing ownership, source/stat, post-transfer input and cleanup gates. Receiver
 temporary cleanup, pressure/loss, other peers, physical Boca/SPA2102 and F01-F16
 application requirements remain open.
+
+
+## Fresh audio retry
+
+The [fresh board preparation](../../docs/validation/audio-posttrain-retry-preparation.json)
+passes navigation/isolation and binds the sealed component runtime. Audio
+retry02 is running. The explicit profile includes the existing key framing;
+the DOS binary, source size, DTE, DSP and receiver helper are unchanged.
+
+```sh
+./tools/modem-dev --command python3 lab/bbs/synthmodem_audio_dos.py \
+  --posttrain-hold --route upload --upload-cancel-retry \
+  --upload-key-checks build/bbs-lab/audio-upload-retry-keys-01/result.json \
+  --fixture-lab build/bbs-lab/enigma-posttrain-retry-candidate-NEW \
+  --runtime build/bbs-lab/synthmodem-posttrain-runtime-01/runtime \
+  --output build/bbs-lab/synthmodem-audio-upload-retry-NEW
+```
+
+Use a fresh prepared board and cohort. After natural producer exit, run the
+independent complete byte/cleanup, ownership, offline caller, v2 retry, control-
+time and final relay-closure audits. Passing cohorts use the timing verifier
+without `--protocol-only`; failed cohorts retain any separate failure. Inputs
+stay frozen through all audits. No new audio/physical acceptance is recorded yet.

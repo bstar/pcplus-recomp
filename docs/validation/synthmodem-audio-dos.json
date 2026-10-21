@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Actual same-call audio retry01 validates client cancellation/retry/source/storage/control/return/cleanup, but overall acceptance remains false:5999ms violates the6000ms minimum hold. Isolated monotonic timer candidate passes15 actual-method checks and awaits a fresh audio/DOS/BBS run. Receiver cleanup, stock upload closing, pressure/loss, other peers, physical and F01-F16 gates stay open.",
+  "status": "Fresh audio retry02 is running with the exact isolated monotonic minimum-hold candidate and all original gates; no new acceptance yet. Prior retry01 retains its5999ms minimum-hold failure despite passing client transfer/recovery. Receiver cleanup, stock closing, pressure/loss, other peers, physical and F01-F16 remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3713,6 +3713,18 @@
       "minimum_post_train_hold_passed": false,
       "receipt": "docs/validation/synthmodem-audio-upload-retry-01.json",
       "receipt_sha256": "4c75d927d9e1d26b2cac990d1432f95122e7487dd7b4947c45d671fc94a868ec"
+    },
+    "synthmodem-audio-upload-retry-02": {
+      "status": "running",
+      "passed": null,
+      "variant": "explicit monotonic post-training minimum candidate and same-call cancel/retry on isolated receiver board",
+      "fixture_lab": "build/bbs-lab/enigma-posttrain-retry-candidate-01",
+      "preparation_receipt": "docs/validation/audio-posttrain-retry-preparation.json",
+      "acceptance": "Pending every producer, complete byte/cleanup, ownership, offline caller, CRC/control/storage/source/return/closing and minimum-hold gate",
+      "source_bytes": 11521,
+      "DTE_bps": 38400,
+      "software_carrier_bps": 1200,
+      "observed_post_train_hold_ms": 6002
     }
   },
   "diagnosis": {
@@ -3764,8 +3776,8 @@
     "Keep the accepted online-exit/editor and single-download scopes separate from broader UI/protocol/profile/ASPECT and hardware requirements.",
     "Extend the accepted modified-helper fixed-DTE slow-carrier upload to pressure/cancel/loss and other peers; retain every CRC/finish,storage,post-helper input and cleanup gate."
   ],
-  "current_cohort": "synthmodem-audio-upload-retry-01",
-  "latest_cohort_passed": false,
+  "current_cohort": "synthmodem-audio-upload-retry-02",
+  "latest_cohort_passed": null,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
     "offline_caller_equals_DOS_online": true,
@@ -3828,5 +3840,8 @@
   "audio_upload_cancellation_receipt_sha256": "24c73f8171eaee9ba30a90aaa0edf4cb030c9f7771fc11d5758e826e31194fde",
   "audio_upload_retry_receipt": "docs/validation/synthmodem-audio-upload-retry-01.json",
   "audio_upload_retry_receipt_sha256": "4c75d927d9e1d26b2cac990d1432f95122e7487dd7b4947c45d671fc94a868ec",
-  "posttrain_candidate_receipt": "docs/validation/synthmodem-posttrain-runtime.json"
+  "posttrain_candidate_receipt": "docs/validation/synthmodem-posttrain-runtime.json",
+  "latest_completed_cohort": "synthmodem-audio-upload-retry-01",
+  "latest_completed_cohort_passed": false,
+  "active_retry_cohort": "synthmodem-audio-upload-retry-02"
 }
