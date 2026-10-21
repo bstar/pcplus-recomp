@@ -281,11 +281,23 @@ metadata. The final audit requires those to survive the full retry unchanged.
 After natural exit, run the `retry_startup` full byte, official metadata and
 control auditors, independent caller decode and serial-write audit before the
 recorder. Full CRC/ACK/two-EOT finish, exact online/display streams, Files/Main
-and DOS/UART/IRQ/PIC/timer/SIP cleanup remain mandatory. Both actual run and
-observer are currently in progress; preparation grants no actual same-call
-audio acceptance. Retained/indexed stock partials keep overall/server cleanup
-false even if the client workflow succeeds. These occupied output paths are
-documentation, not commands to overwrite or restart the current cohort.
+and DOS/UART/IRQ/PIC/timer/SIP cleanup remain mandatory.
+
+The [current actual audio result](../../docs/validation/current-synchronet-retry-audio-01.json)
+passes100 scoped client/protocol/metadata checks:27 producer,36 independent,
+12 serial,12 official metadata and13 control checks. Two complete CRC frames
+precede CAN; the full retry has14 unreplayed CRC frames, exact11521 source bytes
+plus127SUB padding and two-EOT NAK/ACK. All13956 online bytes and40056 BBS display
+bytes survive exactly. Actual Files/Main, normal DOS exit and UART/IRQ/PIC/timer/
+SIP cleanup pass. The observer's first2048-byte partial retains its exact bytes,
+inode, size, timestamp and metadata after retry completion. Four initial CRC
+requests and two retry requests account for3/1 startup no-input errors, with
+zero data-block errors. All twelve damaged timing/source/menu/finish cases reject.
+Current early-start same-call client retry is accepted for this captured run.
+Stock retains/indexes the partial, so overall and server cleanup stay false.
+Physical hardware, sustained pressure and other profiles remain unverified.
+These occupied output paths document a completed cohort and must not be
+overwritten or restarted.
 
 
 ## First actual failure

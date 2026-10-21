@@ -155,10 +155,34 @@ rejections). Unused actual names `SXRCN004.BIN`/`SXRUP004.BIN` and reference nam
 `SXQRF007.BIN`/`SXQRF008.BIN` preserve all earlier files. The default BIOS helper
 is byte-identical; selected slot4 changes only its filename character and BIOS
 key word (three bytes), retaining the original early-start timing. The local
-source remains `SEND/RETRY.BIN`. The current976/200ms actual audio run and
-read-only pre-completion partial observer are running. Full same-call wire,
-source/CRC/ACK/EOT, partial custody, metadata, Files/Main and cleanup acceptance
-remain pending terminal evidence; no current retry or server cleanup is claimed.
+source remains `SEND/RETRY.BIN`. The
+[current976/200ms actual audio retry](docs/validation/current-synchronet-retry-audio-01.json)
+now passes100 checks:27 producer,36 independent,12 serial,12 official metadata
+and13 control checks (baseline plus12 rejections). All13956 online bytes and
+40056 BBS display bytes remain exact. Two complete frames precede CAN; the same
+call then receives all14 unreplayed CRC retry frames and two-EOT NAK/ACK, with
+Files/Main and normal DOS/UART/IRQ/PIC/timer/SIP cleanup. The read-only observer
+captures the first2048-byte partial before retry indexing; its bytes, inode,
+size, timestamp and metadata remain unchanged after the exact11521+127SUB retry.
+First/retry CRC requests4/2 account for3/1 startup no-input errors; no data-block
+errors are accepted. Current client early-start same-call retry is accepted at
+this scope. Stock retains/indexes the partial, keeping server cleanup and overall
+receipt false. Multiline DOS/audio, sustained pressure, bridge reuse, physical
+hardware and all F01–F16 remain required.
+
+The [multiline ENiGMA TCP reference](docs/validation/current-enigma-multiline-reference-02.json)
+now passes24 checks on the pinned stock80x25 editor. A30-line draft extends to
+31 after a real newline; Up/Down/Home/End, insertion/Delete and Backspace have
+exact cursor effects. Three PageUp operations reach line1, three PageDown return
+to31, and the edited line29, shortened line30 and new tail redisplay correctly.
+Message count and source/configuration preserve; nothing is saved. The
+[first failed reference](docs/validation/current-enigma-multiline-reference-failure-01.json)
+retains its wrong two-PageUp expectation and exact source/captures;21 other
+checks pass. The14-line viewport moves31->17->14->1, which the corrected recipe
+requires exactly. This prepares a real scrolling oracle only; actual DOS BIOS
+keys, renderer/cursor effects and complete SIP/audio/cleanup evidence still
+require a distinct multiline campaign. Existing single-line acceptance remains
+scoped as recorded.
 
 The hardware target's [work order and completion gates](docs/ANALOG_MODEM_INTEGRATION.md#work-order-and-completion-gates)
 prioritize carrier/data separation and full audio-path pressure/editor/transfer

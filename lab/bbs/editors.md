@@ -32,8 +32,26 @@ implements the editing operations and Tab/Ctrl-Y. Actual reference output
 confirms Home changes cursor column6 to1, End to7, Delete removes the final E,
 Insert changes INS to OVR, Tab advances to a tabstop, and Ctrl-Y clears the
 line. Escape/Right/Enter returns to `messageBaseMainMenu` through Discard.
-The one-line PageUp/Down checks exercise only document boundaries; scrolling
-requires a separate multiline fixture.
+The one-line PageUp/Down checks exercise only document boundaries. The separate
+[multiline TCP reference](../../docs/validation/current-enigma-multiline-reference-02.json)
+now passes24 checks on the same pinned stock editor with a14-line viewport.
+It types30 hard lines (`L01:ABCD` through `L30:ABCD`), edits line29 through
+Up/Home/H/Delete/End, shortens line30 through Down/Backspace, then creates line31
+with Enter and `TAIL`. Exact cursor responses pass. Three PageUp operations
+move31->17->14->1 and three PageDown move1->15->29->31, retaining column5.
+The changed `H29:ABCD`, shortened `L30:ABC` and new `TAIL` reappear on scrolling.
+The message count and source/configuration remain unchanged; the connection
+closes without Save. The [first failed expectation](../../docs/validation/current-enigma-multiline-reference-failure-01.json)
+and its source/captures stay preserved: two PageUp presses reach line14, not1.
+This is TCP reference evidence; actual DOS/audio multiline acceptance is pending.
+
+```sh
+./tools/bbs-dev --command python3 lab/bbs/enigma_multiline_reference.py \
+  --output build/bbs-lab/current-enigma-multiline-reference-NEW
+```
+
+Use a fresh output directory. Captures include each operation, exact wire/event
+streams, bounded server rows, cursor positions and source/config identities.
 
 Synchronet commit `9de2c48d0265b07e1a8406d8a55d31df4fad7ee8`:
 `ctrl/xtrn.ini` registers FSEDITOR as `?fseditor %f`;
