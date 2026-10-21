@@ -76,3 +76,28 @@ is retained; only the expected diagnostic changed in the passing checker.
   --reference build/bbs-lab/audio-pressure-download-reference-02/result.json \
   --output build/bbs-lab/pressure-protocol-controls-new.json
 ```
+
+## First actual audio failure
+
+The [retained actual run](../../docs/validation/current-enigma-pressure-download-failure-01.json)
+fails before64KiB, at verified source extent15360. The receiver ACKs1024 and15360,
+then requests position15360 nine times while old data at1024 is replayed. All
+observed packets have valid CRCs and exact source bytes. The sender emits no EOF,
+begins closing with an incomplete file and its stock helper exits255. No installed
+file or download-count advancement follows. This is a failure, not a larger-file
+acceptance result or evidence of a64KiB arithmetic defect.
+
+All394 online bytes match the independent caller waveform decode. The decoded
+84648 display bytes are an exact prefix of89316 emitted bytes; the remaining4668
+bytes are not delivered before DOS closes. The normal full-stream auditor rejects
+this mismatch, and the download auditor stops at that same identity prerequisite.
+The separate failure diagnostic validates the clipped prefix explicitly without
+allowing it to satisfy the full-stream gate.
+
+The product's32 IRQ-vector bytes and six UART/PIC bytes restore exactly; only
+the test helper's four INT1C bytes differ. The helper had not reached its guarded
+post-transfer exit. DOS reports `RX file error`, but the adapter maps multiple
+protocol failures to that text: it does not prove a DOS storage failure. The
+engine explicitly rejects ZFIN while an incomplete receive is owned. Sender
+queuing/checkpoints and active-file stale-frame handling need controlled tests;
+no exclusive timing cause or correction is claimed here.

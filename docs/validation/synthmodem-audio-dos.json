@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Current976/source-built200ms runtime has scoped accepted stock Synchronet XMODEM download/upload, responsive client Escape cancellation, early-start same-call retry and two-call bridge-process loss/redial recovery; owned ENiGMA paced/rapid single-line and30-line multiline editing plus automatic ZMODEM download also pass. Latest multiline passes31 producer/40 independent/12 serial checks with288 BIOS body keys,318 exact cursor responses,396 exact online/132058 display bytes, final TAIL/OVR31,05 DOS video, independent caller decode and complete normal cleanup. Eight CRC/source-verified completed-file download replays total8320 bytes; their original EOF has90.716 seconds of measured queued delay. Rapid single-line key-to-footer delay reaches35.485 seconds at laboratory1200bps, largely after the server response observation. Sustained pressure/responsiveness, long-lived bridge reuse, historical audio-integrity gaps, stock indexed-partial cleanup, broader profiles/protocols, physical Boca/SPA2102 and all F01-F16 remain open. Overall acceptance remains false. A separate65797-byte stock ENiGMA automatic-download audio campaign is now running; preparation/reference/BIOS passes do not grant audio or sustained-pressure acceptance.",
+  "status": "Current976/source-built200ms runtime has scoped accepted stock Synchronet XMODEM download/upload, responsive client Escape cancellation, early-start same-call retry and two-call bridge-process loss/redial recovery; owned ENiGMA paced/rapid single-line and30-line multiline editing plus automatic ZMODEM download also pass. Latest multiline passes31 producer/40 independent/12 serial checks with288 BIOS body keys,318 exact cursor responses,396 exact online/132058 display bytes, final TAIL/OVR31,05 DOS video, independent caller decode and complete normal cleanup. Eight CRC/source-verified completed-file download replays total8320 bytes; their original EOF has90.716 seconds of measured queued delay. Rapid single-line key-to-footer delay reaches35.485 seconds at laboratory1200bps, largely after the server response observation. Sustained pressure/responsiveness, long-lived bridge reuse, historical audio-integrity gaps, stock indexed-partial cleanup, broader profiles/protocols, physical Boca/SPA2102 and all F01-F16 remain open. Overall acceptance remains false. The65797-byte pressure attempt failed below64KiB at verified extent15360, with nine CRC/source-verified old-data replays, no EOF and stock helper exit255. The exact decoded prefix and online/caller identity do not grant full transfer acceptance. Negotiation/queue and active-replay recovery remain open.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3901,6 +3901,7 @@
     "offline_evidence_sha256": "fb6931b33b5382e73b5ac3e99a5becacdc23ac13d120ab8d58c392db1706aea1"
   },
   "remaining": [
+    "Resolve the retained larger-file stock ENiGMA audio failure at extent15360: no EOF, nine old-data replays and sender exit255. Investigate negotiated window/checkpoint behavior and active-file replay handling. Preserve full file/protocol/stream/accounting/cleanup gates; failure precedes64KiB.",
     "Extend accepted paced/rapid single-line and30-line multiline ENiGMA interaction to sustained timing/pressure and explicit response budgets. Accepted burst transport latency reaches35.485 seconds; downstream/relay decomposition and90.716-second download EOF queue are retained. Preserve every exact-byte, editor-effect, finish/storage and cleanup gate.",
     "Historical in-session insertions lack complete diagnostic evidence; clean editor07/download03 runs do not establish their cause or a general correction.",
     "Ordinary stock Synchronet XMODEM upload/download, scoped cancellation, receiver-ready-gated same-call retry and current200ms bridge-process recovery have scoped receipts. Analog waveform-loss detection, long-lived bridge reuse, sustained pressure, other protocols, stock ZMODEM closing/cleanup and physical Boca/SPA2102 still require their own passing gates.",
@@ -3910,8 +3911,8 @@
     "Stock Synchronet published/indexed a1024-byte failed-reference partial despite E/helper error. Preserve evidence; cancellation/loss cleanup and trustworthy completion require full wire/source/finish accounting. Accepted upload has3 source-attributed startup retries, not zero startup retries.",
     "Current976 has scoped accepted stock Synchronet transfer/cancel/retry/process-recovery and owned ENiGMA single-line/multiline editing/download receipts. Pressure/retransmission efficiency, long-lived bridge reuse, stock indexed-partial cleanup, handshake ambiguity and broader profile/protocol/hardware gates remain open. The25-check multiline TCP reference is distinct from the accepted actual DOS/audio run."
   ],
-  "current_cohort": "current-enigma-editor-multiline-audio-01",
-  "latest_cohort_passed": true,
+  "current_cohort": "current-enigma-pressure-download-audio-01",
+  "latest_cohort_passed": false,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
     "offline_caller_equals_DOS_online": true,
@@ -3975,8 +3976,8 @@
   "audio_upload_retry_receipt": "docs/validation/synthmodem-audio-upload-retry-02.json",
   "audio_upload_retry_receipt_sha256": "e553eaee6e41126abfaf876825bb9a69929fede92a19a174977fade67892a8be",
   "posttrain_candidate_receipt": "docs/validation/synthmodem-posttrain-runtime.json",
-  "latest_completed_cohort": "current-enigma-editor-multiline-audio-01",
-  "latest_completed_cohort_passed": true,
+  "latest_completed_cohort": "current-enigma-pressure-download-audio-01",
+  "latest_completed_cohort_passed": false,
   "audio_upload_retry_failure_receipt": "docs/validation/synthmodem-audio-upload-retry-01.json",
   "accepted_candidate_retry_cohort": "synthmodem-audio-upload-retry-02",
   "posttrain_audio_receipt": "docs/validation/synthmodem-audio-upload-retry-02.json",
@@ -4033,7 +4034,7 @@
   "current_synchronet_reconnect_audio_receipt": "docs/validation/current-synchronet-reconnect-audio-04.json",
   "current_synchronet_reconnect_audio_receipt_sha256": "a56f16e0d6c99760a44d3909ec057b3035104f25b09a1140b478f64be29f5952",
   "active_cohort": "current-enigma-pressure-download-audio-01",
-  "active_cohort_status": "Current976/200ms stock ENiGMA65797-byte automatic ZMODEM pressure download running. Nine fixture/nine real lrzsz reference/six BIOS helper prerequisites pass, plus four default BIOS/fifteen retained normal-download audit checks.54000 BIOS tick watchdog/3020-second outer bound. Actual DOS/audio/protocol/byte/cleanup/efficiency acceptance pending.",
+  "active_cohort_status": "Terminal failure of current-enigma-pressure-download-audio-01: no EOF/installed file/accounting success, source extent15360, nine verified old-data replays, stock helper exit255.394 online bytes exact;84648 decoded display bytes exactly prefix89316 emitted. Product IRQ/UART/PIC restored; test helper INT1C remains. No transfer acceptance.",
   "buffered_timing_receipt": "docs/validation/synthmodem-buffered-timing.json",
   "buffered_timing_receipt_sha256": "f263725327f61163ffe91386ff6861fb2a890a9994812c519fb076fb61316505",
   "current_enigma_editor_audio_receipt": "docs/validation/current-enigma-editor-audio-01.json",
@@ -4065,5 +4066,7 @@
   "current_enigma_multiline_audio_receipt_sha256": "555cb0510e8b0dacf16955115ce00c761f5250aab5717b0c94b05efeee99c129",
   "current_enigma_pressure_download_preparation": "docs/validation/current-enigma-pressure-download-preparation.json",
   "current_enigma_pressure_download_preparation_sha256": "88592c5d670df2b9b4597097511592c1a1b0c33638291679216cc25d4322b61e",
-  "current_enigma_pressure_download_audio_accepted": false
+  "current_enigma_pressure_download_audio_accepted": false,
+  "current_enigma_pressure_download_failure_receipt": "docs/validation/current-enigma-pressure-download-failure-01.json",
+  "current_enigma_pressure_download_failure_receipt_sha256": "3a9a6269f353ed203b290f942695857fab50fef707b2c4ac4d82d5649328b165"
 }

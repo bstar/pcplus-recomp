@@ -7,6 +7,16 @@ data, reconnect and transfer runs. No physical compatibility or 14400-bps claim
 is established; the adapter has not arrived. PCPlus remains a serial terminal,
 with SIP/audio/Telnet handled by the Linux bridge.
 
+The [first larger-file audio attempt](docs/validation/current-enigma-pressure-download-failure-01.json)
+fails at verified extent15360, before64KiB: nine CRC/source-verified old-data
+replays, repeated receiver position15360 requests, no sender EOF and helper
+exit255. All394 online bytes match independent caller decoding;84648 decoded
+display bytes exactly prefix89316 emitted bytes, leaving4668 undelivered at DOS
+close. Product IRQ/UART/PIC state restores, while the test helper INT1C remains.
+Full transfer/file/accounting/normal-exit gates stay false. Investigate negotiated
+window/checkpoints and active-file stale-frame recovery; do not treat the generic
+RX file error notice as proof of storage failure or this attempt as a64KiB pass.
+
 The [larger download preparation](docs/validation/current-enigma-pressure-download-preparation.json)
 now registers a fresh65797-byte PCPRESS.BIN through the owned stock ENiGMA CLI/API,
 preserving existing files (bytes/inode/size/mtime), selected metadata, server
