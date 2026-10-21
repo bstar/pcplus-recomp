@@ -122,3 +122,28 @@ acceptance gates. Native checks do not establish actual audio upload acceptance.
 
 Physical Boca/SPA2102, cancellation/loss, other peers and full-application gates
 remain separate.
+
+## Second actual run
+
+[Upload02](../../docs/validation/synthmodem-audio-upload-02.json) completes the
+exact11521-byte upload, official metadata/details workflow, fresh search/list
+and normal DOS/hardware/timer return. All25 producer,26 independent byte/cleanup
+and12 ownership checks pass. Twelve exact data packets and all required
+opposite controls/FIN/OO pass with no retransmitted packet. All12330 online DOS
+bytes and66879 BBS display bytes survive the software modem exactly.
+
+The full upload audit remains false:18 of19 transfer gates pass, but literal OO
+reaches the relay about319ms after stock SEXYZ has exited. Its final reply
+itself reaches the DOS frontend after that exit, so this is not a sender that
+waited too long after receiving it. The
+[receiver diagnosis and isolated counterexample](sexyz-receive-finish.md) bind
+that timing and reproduce stock early retirement against a reference receiver.
+No gate is removed and no stock audio upload acceptance is claimed.
+
+The timing verifier now supports either transfer direction. For upload02,
+`--protocol-only` tests its validated protocol while explicitly retaining the
+failed overall transfer result. Both premature-ACK and premature-ZFIN timestamp
+mutants are rejected; this verifier result grants no transfer acceptance.
+The original accepted download03 artifacts remain byte-identical, including its
+old verifier receipt. New verifier results use fresh filenames and cannot
+overwrite retained evidence.

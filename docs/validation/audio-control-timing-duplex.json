@@ -1,0 +1,83 @@
+{
+  "passed": true,
+  "download": {
+    "passed": true,
+    "route": "download",
+    "sender": "bbs",
+    "protocol_only": false,
+    "input_transfer_audit_passed": true,
+    "baseline_control_records": 12,
+    "negative_cases": [
+      {
+        "case": "ACK-before-delivered-packet-CRC",
+        "rejected": true,
+        "failure": "('No ACK or verified-position recovery for subpacket', 58125, 1024)",
+        "controls_moved": 1,
+        "trace_chunks_moved": 5
+      },
+      {
+        "case": "ZFIN-before-delivered-sender-ZFIN",
+        "rejected": true,
+        "failure": "('Missing opposite header', 8, 0, 724.423760689, 725.78312348)",
+        "controls_moved": 1,
+        "trace_chunks_moved": 5
+      }
+    ],
+    "checker_sha256": "4c0fdc948ea5460c623867db266ae9bb1be27639003b475fbc2a8a3186adcf4c",
+    "auditor_sha256": "452febcc4561fbc9aabca30007da931be55afc07b0938cee9a72c5d802407d85",
+    "protocol_auditor_sha256": "510ad0fd519c8fa279599956d13852f984a1e32e49e4588e1c482749829d5ad9",
+    "capture_sha256": {
+      "download-audit.json": "34e1e1ffb8d73c2d7bb58c3d12e178e66b9c4a56448c0b57a659595e22b08770",
+      "independent-audit.json": "a6e78cd085ae36115b96febae835f7f0b41c46f872323c2da32c565d704eb594",
+      "bbs-input.bin": "69f70e93c54f8c28312e313ab62f0ab13f7194a442b4e071c9a10167f72c172a",
+      "bbs-output.bin": "217d4e5205328e300aad4b9a052044d7f466edc7cd8de8c01b3fef254010ff62",
+      "serial-input-events.jsonl": "124343cba2f3b0f23ea6854dcd827dc9cabd4f390149a6a4d65a33fc88464676",
+      "serial-write-events.jsonl": "195feb84216d5305ac7baa8d32f6eb72ac2d78e526b70388608bd6eac39bdddd",
+      "serial-in.bin": "116274fe0440b6abf00b6bba7d99296c6214f2e379a843ee936f5c87eb2e7949",
+      "serial-out.bin": "d66ba53cdabf9a5fbfe46eaade16be7cb6a72c0f511c545bc632065fc71eec6e",
+      "node-result.json": "f188440b05f0892a37e6259e09573ee89bb086e21d489610839a6ad28546dd13"
+    },
+    "scope": "Verifier test only. Original successful bytes/capture files are unchanged; only copied in-memory control-event times move before observed decoded-data delivery. Real baseline must pass and both premature replies must fail. No new product, BBS or hardware run."
+  },
+  "upload": {
+    "passed": true,
+    "route": "upload",
+    "sender": "dos",
+    "protocol_only": true,
+    "input_transfer_audit_passed": false,
+    "baseline_control_records": 9,
+    "negative_cases": [
+      {
+        "case": "ACK-before-delivered-packet-CRC",
+        "rejected": true,
+        "failure": "('No ACK or verified-position recovery for subpacket', 236, 1024)",
+        "controls_moved": 1,
+        "trace_chunks_moved": 20
+      },
+      {
+        "case": "ZFIN-before-delivered-sender-ZFIN",
+        "rejected": true,
+        "failure": "('Missing opposite header', 8, 0, 548.9426440479999, 549.443683772)",
+        "controls_moved": 1,
+        "trace_chunks_moved": 20
+      }
+    ],
+    "checker_sha256": "4c0fdc948ea5460c623867db266ae9bb1be27639003b475fbc2a8a3186adcf4c",
+    "auditor_sha256": "452febcc4561fbc9aabca30007da931be55afc07b0938cee9a72c5d802407d85",
+    "protocol_auditor_sha256": "510ad0fd519c8fa279599956d13852f984a1e32e49e4588e1c482749829d5ad9",
+    "capture_sha256": {
+      "upload-audit.json": "861f79173a822f1d513fdec65d9b427103109906308edf53135a6a3ff1079b37",
+      "independent-audit.json": "db0661e8287b1d9bd2fb3ecb928f97f5e125b4b07c3d64a0d8076fa10d7dc2e9",
+      "bbs-input.bin": "43f0d9cf91b725c6b81b37e22700506acea23b62af785999d8693e61018fe605",
+      "bbs-output.bin": "be5647dca3a12e25820b2fac2da51083c139cb1f593fa30a6504b12461947ed5",
+      "serial-input-events.jsonl": "39f23e4ae8b8e74610b3b29f7bc7ad371c003eccfad822486238066faf2cb812",
+      "serial-write-events.jsonl": "e174f063f77b59a6c84a94e9d813ec90def8d30e6382b173cfe88092db29a198",
+      "serial-in.bin": "0b4df032a7224eebf94a3af9de4f225389d940b7bfa55f9bc36ccca93250a3b1",
+      "serial-out.bin": "350166e04e2361572ebe7a3713604f4d31fe8e6af749ad26cb7be27c1564698a",
+      "node-result.json": "ae1c0f46c0c10297e59fd63ee401d1b99d529f253dcf00156d84a73ec31a7a23"
+    },
+    "scope": "Verifier test only. Original successful bytes/capture files are unchanged; only copied in-memory control-event times move before observed decoded-data delivery. Real baseline must pass and both premature replies must fail. No new product, BBS or hardware run."
+  },
+  "original_download_artifacts_unchanged": true,
+  "scope": "Verifier only. Both directions reject premature control times in copied traces. Upload02 overall acceptance remains false; no transfer gate is waived."
+}

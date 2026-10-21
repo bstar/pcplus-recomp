@@ -1,6 +1,6 @@
 {
   "passed": false,
-  "status": "Accepted editor07 and download03 remain scoped checkpoints. Native sender response fix passes scoped timing/protocol/ABI/DOS regressions. Upload02 is now running with fixed38400 DTE, the original11521-byte fixture and unchanged stock ENiGMA/V22-1200 framed runtime. Actual DSP CONNECT is observed; CRC/finish/storage/return and complete byte/cleanup acceptance are pending. Upload01 remains failed. Other peers, pressure/loss, physical hardware and F01-F16 remain open.",
+  "status": "Upload02 completes exact11521-byte official storage, all12330 online DOS bytes,full66879 BBS bytes,12 exact packets/opposite controls/FIN/OO and post-form search/list with normal cleanup.81 of82 checks pass; required late-tail gate fails because stock SEXYZ retires before its reply reaches DOS and closing OO arrives afterward. Independent real-helper/reference test reproduces the receiver gap. Native sender response fix remains verified. No full upload/physical/F01-F16 acceptance.",
   "cohorts": {
     "synthmodem-audio-dos-02": {
       "passed": false,
@@ -3654,14 +3654,17 @@
       "receipt_sha256": "95d016473938dcf30d504560dd293faf03a5cc2655755378c7e6f4d45acdd43c"
     },
     "synthmodem-audio-upload-02": {
-      "status": "running",
-      "passed": null,
-      "acceptance": "Pending terminal producer and independent same-run audits",
+      "status": "terminal; late receiver-tail gate failed",
+      "passed": false,
+      "acceptance": "Not accepted: required OO reaches relay after stock receiver retirement",
       "binary_sha256": "a656cf665f3d3cb81bdd06b738bb72b6ed230d299244d4ae12c1c0336f280a89",
       "source_bytes": 11521,
       "DTE_bps": 38400,
       "software_carrier_bps": 1200,
-      "native_response_receipt": "docs/validation/zmodem-upload-response-fixed.json"
+      "native_response_receipt": "docs/validation/zmodem-upload-response-fixed.json",
+      "producer_passed": true,
+      "receipt": "docs/validation/synthmodem-audio-upload-02.json",
+      "receipt_sha256": "6c69470a3672d6e80df8489fda9bdbb6b5430d54a3393d762aed8d9bd7ee3bef"
     }
   },
   "diagnosis": {
@@ -3714,7 +3717,7 @@
     "Validate actual fixed-DTE slow-carrier upload/backpressure and response timing; retain every CRC/finish,storage,post-helper input and cleanup gate."
   ],
   "current_cohort": "synthmodem-audio-upload-02",
-  "latest_cohort_passed": null,
+  "latest_cohort_passed": false,
   "open_failure_cohort": "synthmodem-audio-dos-05",
   "open_failure_diagnosis": {
     "offline_caller_equals_DOS_online": true,
@@ -3758,8 +3761,10 @@
   "completion_receipt": "docs/validation/zmodem-completed-replay-fixed.json",
   "completion_regression_receipt": "docs/validation/zmodem-completion-regression.json",
   "accepted_download_cohort": "synthmodem-audio-download-03",
-  "audio_upload_receipt": "docs/validation/synthmodem-audio-upload-01.json",
+  "audio_upload_receipt": "docs/validation/synthmodem-audio-upload-02.json",
   "upload_response_receipt": "docs/validation/zmodem-upload-response-counterexample.json",
   "upload_response_fixed_receipt": "docs/validation/zmodem-upload-response-fixed.json",
-  "upload_response_fixed_receipt_sha256": "1ea384f4792df0e2ee6e6528cde0545840b5517f58dd803e8103291067ac57fe"
+  "upload_response_fixed_receipt_sha256": "1ea384f4792df0e2ee6e6528cde0545840b5517f58dd803e8103291067ac57fe",
+  "stock_receiver_finish_receipt": "docs/validation/sexyz-receive-finish.json",
+  "control_timing_duplex_receipt": "docs/validation/audio-control-timing-duplex.json"
 }

@@ -216,10 +216,21 @@ lrzsz/SEXYZ peers, existing receive/completion/cancel and ABI regressions pass;
 an actual DOS automatic three-file download passes14 checks. DS=SS remains64832
 bytes. These checks accept the native change at their stated scopes; a new
 unchanged stock audio upload still needs every CRC/finish/storage/return gate.
-Upload02 is now running with that native build, the original11521-byte source,
-fixed38400 DTE and unchanged stock ENiGMA/V22-1200 framed runtime. Actual DSP
-CONNECT is observed. Keep inputs frozen until the producer and independent
-same-run byte/CRC/control/storage/return/cleanup audits finish; no pass is claimed.
+The [completed upload02](docs/validation/synthmodem-audio-upload-02.json) passes
+81 of82 checks: all12330 online DOS bytes and66879 BBS display bytes are exact,
+12 packets have no replay, opposite controls and FIN/OO validate, the11521-byte
+official file and source/stat match, actual details/search/list work and native
+hardware/timer cleanup is normal. Full acceptance stays false: stock SEXYZ exits
+before its final reply reaches DOS, and required OO reaches the relay319ms after
+helper retirement. PCPlus emits it about2ms after the reply's final byte reaches
+its frontend. The [receiver counterexample](lab/bbs/sexyz-receive-finish.md)
+reproduces early stock exit against a reference receiver that retains ownership
+until OO. The duplex timing verifier rejects premature control times in both
+directions while explicitly retaining upload02's failed overall result. Original
+accepted download artifacts remain exact. Next is a separately identified,
+bounded receiver closing fix, isolated stock/candidate/reference tests and then
+a fresh owned audio fixture. No protocol shortcut or gate waiver is authorized
+by these results; unmodified-peer, physical and F01-F16 requirements stay open.
 
 The [actual DOS/ENiGMA audio path](lab/bbs/synthmodem-audio-dos.md) now passes
 all19 producer checks: numeric ATD1, real V.22/1200 DSP CONNECT, CONNECT> entry,
