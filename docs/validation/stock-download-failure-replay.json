@@ -1,0 +1,145 @@
+{
+  "passed": true,
+  "counterexample_reproduced": true,
+  "transfer_accepted": false,
+  "checks": {
+    "cached_libraries_verified_and_campaign_core_codec_inputs_match": true,
+    "current_and_campaign_core_same_failure_and_response": true,
+    "retained_capture_hashes_exact": true,
+    "unique_expected_ZFILE": true,
+    "protocol_failure_reproduced": true,
+    "verified_extent_15360": true,
+    "staged_prefix_exact": true,
+    "exact_original_packet_write_lengths": true,
+    "no_commit_or_installed_file": true,
+    "single_checked_abort": true,
+    "callback_errors_absent": true,
+    "nine_recovery_requests_at_verified_position": true
+  },
+  "cohort": "build/bbs-lab/current-enigma-pressure-download-audio-01",
+  "producer_sha256": "42578138622b3676121c58c79c12b62a37f7a97e6abaa2f04d9f6b32eda55805",
+  "library_proof": "build/bbs-lab/sexyz-receive-credit-07/result.json",
+  "library_proof_sha256": "d1e1e9c3b45383446137635992cfad16b4024e2f1a2a9e3a2b9c995fd2a33ebf",
+  "library_sha256": "6223e4cf90785e95430dc06239778eb37f7480d717014c44ac95c44c936fca8c",
+  "campaign_library_proof": "build/bbs-lab/sexyz-receive-credit-06/result.json",
+  "campaign_library_proof_sha256": "ab68ec525016bd56b5807d62fadbac79c016e1a812fcc5b92306450fbaef80c3",
+  "campaign_library_sha256": "c49d51e642c638e54fa1446353d2da3ae159a22865a240fa020b952379413179",
+  "source_bytes": 65797,
+  "source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+  "normalized_input_offset": 58777,
+  "replayed_bytes": 24875,
+  "unread_bytes": 1183,
+  "status": 6,
+  "verified_position": 15360,
+  "retries": 9,
+  "events": [
+    [
+      "open",
+      "PCPRESS.BIN"
+    ],
+    [
+      "append",
+      1024
+    ],
+    [
+      "append",
+      2048
+    ],
+    [
+      "append",
+      4096
+    ],
+    [
+      "append",
+      8192
+    ],
+    [
+      "abort",
+      "PCPRESS.BIN"
+    ]
+  ],
+  "response_headers": [
+    {
+      "type": 1,
+      "position": 587210752
+    },
+    {
+      "type": 9,
+      "position": 0
+    },
+    {
+      "type": 3,
+      "position": 1024
+    },
+    {
+      "type": 3,
+      "position": 15360
+    },
+    {
+      "type": 9,
+      "position": 15360
+    },
+    {
+      "type": 9,
+      "position": 15360
+    },
+    {
+      "type": 9,
+      "position": 15360
+    },
+    {
+      "type": 9,
+      "position": 15360
+    },
+    {
+      "type": 9,
+      "position": 15360
+    },
+    {
+      "type": 9,
+      "position": 15360
+    },
+    {
+      "type": 9,
+      "position": 15360
+    },
+    {
+      "type": 9,
+      "position": 15360
+    },
+    {
+      "type": 9,
+      "position": 15360
+    }
+  ],
+  "response_sha256": "16db1d78682b8193ee0d4ef21f0d4f8cca476ed4f7eddfc6c0749c9c69238d4a",
+  "staged_prefix_sha256": "c9c886dfc58d6ddba05bc904210d33fa77a62bc6b5117a8ee7b20b0673bb74f4",
+  "capture_sha256": {
+    "caller-decoded.bin": "d4a34cf78039afbc9b7b1250cd4a5677bb6591e502c69cb1935ec20748199c61",
+    "serial-in.bin": "ffbaafbc6a6a80a8eca5acb559bbedf37334f22a2bdfc9684e92433d42fe63cb",
+    "serial-out.bin": "5334f18e84720d67e6fd6905059860c1e3f6e901227e85bbd9fb8ac41a162065"
+  },
+  "inputs": {
+    "src/transfer/zmodem.c": "4872c97039c5dd725aaf1e9d68177c2c966b88596dafa55574b23abdb0b487dd",
+    "src/transfer/zmodem_wire.c": "fdae5d7c899ac2b32efe4b2f9d14d6c66ca323263b2fff5bf5da33f5915c1a6b",
+    "src/transfer/zmodem_name.c": "7720ba62c132c79b57fc329de0f8afc30312756ed5e9e6610345e03298478b2c",
+    "src/transfer/batch_header.c": "5003de29446cc1ec3a3776dcb1798b2763a6f1d556e866abe7e207cc39b49aa5",
+    "src/transfer/zmodem.h": "105c079af8c3cb0be727b2b42d414b9708e617a726e2d046b8e1b6042a3a666f",
+    "src/transfer/zmodem_wire.h": "3dd5631882942ee5eaf195ff00dc7e838828ae0a6ecd89a8fa7eeef4511ddd68",
+    "src/transfer/zmodem_name.h": "b63f56b0c01b40dc0e4a75e0a7f0bd2c3ae2ae04c3724cda01037a38ad02e3f5",
+    "src/transfer/batch_header.h": "90b6691b30d0b60018bc05fe9b72932a2e913806913b326a15ab1ab15c69ad0b",
+    "standalone/check_zmodem.py": "76ac0c78fe6d7f64cd1f15cddf8f670c09f82d00ba174d3a9e596066a5446252",
+    "standalone/check_zmodem_wire.py": "ced7cec6ed33f9b2b9e8056893398b7d394aeaaa5b95c21f7f7e2ca8bc328c94",
+    "lab/bbs/replay_stock_download_failure.py": "9e0d1dc4f2adf401188e9769d4ab9d53b41411a5491ee09016cb828537af2b23",
+    "lab/bbs/audit_zmodem.py": "21915f685657722a5ea4b0149c5c8a8492bb79c311b8ec319000b6e47d966452"
+  },
+  "scope": "Replay retained stock-sender audio bytes through a verified cached C receiver.\n\nThis is a timing-free counterexample, not a fresh DOS/audio/BBS acceptance test.\nTransport and checked storage are host fixtures; captured peer bytes are fixed.\n",
+  "limitations": [
+    "No elapsed-time model or new peer response; this does not reproduce sender scheduling.",
+    "Campaign freezes core/codec C and headers, not name/metadata sources; the latter match both cached library manifests and current files.",
+    "Core failure with identical byte input does not prove complete DOS/UI failure causality.",
+    "No recovery fix, unmodified-server compatibility or physical hardware acceptance."
+  ],
+  "result": "build/bbs-lab/stock-download-failure-replay-03/result.json",
+  "result_sha256": "38f8fdec1b08203972173620c6c2cd85aeee1c805607c7d12fb5ee4a33ebcee2"
+}
