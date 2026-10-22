@@ -9,6 +9,15 @@ each plus connection/carrier/retry regressions; both source-only products
 reproduce from398 admitted files. Initial/successful always-high DCD policies
 remain unchanged. This closes the selected gap, not full F03 or hardware.
 
+[Current-parent regressions](validation/hangup-policy-regressions.json) accept four independently audited
+Synchronet/ENiGMA recorder/DOS compilation/replay/manual-navigation sessions
+and two script reference/help/continuation/parent-menu workflows. The synthetic
+Synchronet quota exemption is declared and restored. Six startup groups include
+eight invalid ABI cases (45 total inputs);13 attached DOS PROGRAM cases retain
+10,278 exact parent bytes and restore UART ownership on the rebuilt external
+parentd688f4a4. This remains selected software evidence; fresh current-parent
+normal SIP/audio, sustained pressure and physical/full application gates remain open.
+
 [Preceding-parent normal recorder audio](validation/recording-footer-audio.json) passes26
 producer/34 independent/12 serial checks with77 waveform-decoded online bytes,
 actual DOS ASP compilation/replay, manual Search and normal hardware/timer/SIP/VM

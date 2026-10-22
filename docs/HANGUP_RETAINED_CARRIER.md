@@ -31,8 +31,17 @@ XON. Its failed cohort is retained; the second cohort checks resumed flow and
 the exact subsequent hangup/redial/manual stream. No product correction was
 needed between those recovery cohorts.
 
+[Current-parent stock BBS and application regressions](validation/hangup-policy-regressions.json)
+now accept four Synchronet/ENiGMA recorder/compile/replay/manual sessions and two
+script reference/help/continuation/parent-menu workflows, with independent raw
+custody audits. Six startup groups (45 inputs, including eight invalid ABI cases)
+and13 attached DOS PROGRAM cases pass on rebuilt external parentd688f4a4.
+The retained region is10,278 bytes:10,152 fixed resource bytes plus63 two-byte
+renderer policy words, each compared before/after child execution. The existing
+older recorder ledger's hard-coded10,276-byte expectation is not reused.
+
 Physical modem behavior, broader initialization/results/flow-pressure policies,
-current-parent BBS/audio validation and all full application gates remain open.
+current-parent normal SIP/audio validation and all full application gates remain open.
 
 ## Preserved baseline
 

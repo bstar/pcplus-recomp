@@ -9,6 +9,15 @@ each plus connection/carrier/retry regressions; both source-only products
 reproduce from398 admitted files. Initial/successful always-high DCD policies
 remain unchanged. This closes the selected gap, not full F03 or hardware.
 
+[Current-parent regressions](docs/validation/hangup-policy-regressions.json) accept four independently audited
+Synchronet/ENiGMA recorder/DOS compilation/replay/manual-navigation sessions
+and two script reference/help/continuation/parent-menu workflows. The synthetic
+Synchronet quota exemption is declared and restored. Six startup groups include
+eight invalid ABI cases (45 total inputs);13 attached DOS PROGRAM cases retain
+10,278 exact parent bytes and restore UART ownership on the rebuilt external
+parentd688f4a4. This remains selected software evidence; fresh current-parent
+normal SIP/audio, sustained pressure and physical/full application gates remain open.
+
 [Normal ENiGMA recorder audio](docs/validation/recording-footer-audio.json) now
 passes26 producer/34 independent/12 serial checks on preceding parent1cbb4f8f,
 with unchanged ASPECT183f852d and source-built DOS compiler. All77 online guest
@@ -24,7 +33,7 @@ and13 connected TCP controls support the diagnosis. The raw-ANSI gate failure,
 placement-only intentional stop and76-sample diagnostic remain separate failed
 or diagnostic evidence; none was promoted to normal acceptance.
 
-Next: broader current-parent BBS recorder/window/audio regression, then
+Next: current-parent normal SIP/audio regression, then
 remaining modem initialization/result handling and sustained flow-pressure work.
 Other application, physical Boca/SPA2102 and all full F01–F16 requirements remain open.
 
