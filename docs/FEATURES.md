@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+The [recorder publisher component](RECORDING_FILE.md) passes31 host-model cases
+and16 actual DOS publication/compiler/UART sessions. It reserves canonical
+target/scratch/backup identities, implements explicit NEW/REPLACE and retains
+original backup plus complete stage if restoration fails. The terminal still
+needs code-bank integration, Record UI, foreground taps and owner exclusions.
+This component closes no full F01–F16 gate.
+
 The [source-owned recorder core](ASPECT_RECORDER_SOURCE.md) now passes17 host,
 six actual DOS recording/file/compiler/UART and six production raw-UART cases.
 An explicit maintained TRANSMITRAW extension preserves all256 output bytes;

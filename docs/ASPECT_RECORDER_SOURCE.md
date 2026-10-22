@@ -46,7 +46,8 @@ script. The first write failure remains primary when close also fails. Repeated
 stop/cancel does not close again. Reentry and active-session replacement reject.
 Callers must use unpublished scratch output and publish only after successful
 stop. The diagnostic DOS publisher follows that contract; the production shared
-file owner still needs integration.
+file owner is now implemented and separately tested in the
+[checked publisher](RECORDING_FILE.md). Terminal integration remains required.
 
 | Evidence | Scope |
 | --- | --- |

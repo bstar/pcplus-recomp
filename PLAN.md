@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+The [checked recorder publisher](docs/RECORDING_FILE.md) now passes31 host-model
+and16 actual DOS publication/compiler/UART cases. NEW refuses existing targets;
+explicit REPLACE preserves the original through recording and uses checked
+backup/install/restoration. Failed restoration retains the original backup,
+complete stage and canonical claims. Real DOS races, shared owners, changed
+directories, scratch collisions and exact replay pass. The326-byte owner and
+far-cdecl DOS adapter are component-only; the default terminal is unchanged.
+Next integrate the publisher/core into code banks, verify the memory/ABI budget,
+then add Record UI, foreground taps, exclusions and recovery notices. Full F13,
+current-binary BBS/audio and physical acceptance remain open.
+
 The [shared recorder file-reservation checkpoint](docs/CAPTURE_RESERVATION.md)
 now passes302 actual DOS/kernel-model assertions across resident and genuinely
 separate code-bank layouts. Target/scratch identities exclude all four binary
@@ -9,9 +20,9 @@ reentry reject. Snapshot/descriptors retain96/134-byte ABIs; eight initialized
 DATA bytes hold the external guard. The current terminal passes24 linked capture,
 27 history,78 ZMODEM and five actual DOS capture scenarios, plus409 ABI/layout
 negatives. Near-code overflow was resolved by banking reservation operations;
-current code/data spare is200/624 bytes. Implement the exclusive recorder scratch
-publisher and replacement recovery next, then Record UI/foreground taps and all
-owner exclusions. The reservation is a prerequisite, not recorder/F13 acceptance.
+current code/data spare is200/624 bytes. The publisher component above now uses
+this reservation. Terminal integration, Record UI/foreground taps and all owner
+exclusions remain required. The reservation does not establish full F13 acceptance.
 
 The [source-owned recorder core and replay path](docs/ASPECT_RECORDER_SOURCE.md)
 now pass17 host cases, six actual DOS recorder/file/compiler/UART sessions and

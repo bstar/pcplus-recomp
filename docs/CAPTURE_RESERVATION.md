@@ -3,8 +3,9 @@
 The [reservation checkpoint](validation/capture-reservation.json) adds one stable
 external file owner to the canonical identity checks shared by capture, screen,
 monitor and history output. The recorder's eventual destination, scratch and
-backup identities can use this interface. The actual recorder publisher and
-Record UI remain unimplemented; this checkpoint does not accept those features.
+backup identities use this interface in the separately tested
+[publisher component](RECORDING_FILE.md). Terminal Record UI and foreground
+integration remain unfinished; this reservation checkpoint accepts neither.
 
 The API accepts a pure far probe and a near context. The probe returns nonzero
 for an absolute DOS identity it owns. Registration first checks all currently

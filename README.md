@@ -36,8 +36,11 @@ byte-exact production UART replay, including all256 bytes. Its explicit
 TRANSMITRAW extension preserves existing formatted TRANSMIT behavior. The
 terminal's Record UI and shared file/foreground ownership still need integration.
 [Canonical file reservations](docs/CAPTURE_RESERVATION.md) now protect its future
-target/scratch identities alongside capture, screen, monitor and history sinks;
-the recorder scratch publisher and replacement recovery remain to implement.
+target/scratch identities alongside capture, screen, monitor and history sinks.
+The [checked recorder publisher](docs/RECORDING_FILE.md) now passes31 modeled
+host cases and16 actual DOS publication/compiler/UART sessions, including
+replacement and retained recovery files. Terminal Record UI, foreground taps
+and code-bank integration remain required.
 
 The [experimental attached PROGRAM binding](docs/ASPECT_PARENT_PROCESS.md) now
 preserves actual parent rendering, selected resources, script streams and VM
