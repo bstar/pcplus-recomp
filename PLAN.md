@@ -14,6 +14,13 @@ unchanged production binaries. Continue remaining original application services,
 including local UI during ASPECT, broader profiles/peers and physical hardware;
 all full F01–F16 gates remain open. Entries below retain historical scope.
 
+The next [ASPECT local-interaction investigation](docs/ASPECT_LOCAL_UI.md)
+binds fresh REA dispatcher/window dossiers, a verified original load image and
+the original Alt-Z table word. Current shared-key output rejects local commands;
+the child UART lease and bounded renderer callback cannot simply become a modal
+menu loop. Original key-consumption replay, a dedicated interaction lifetime,
+full menu-action ownership and actual DOS/BBS validation remain required.
+
 The [final-page audio correction](lab/bbs/audio-recording.md) passes seven actual
 8086 BIOS probes and all13 actual DOS/Telnet recorder-control checks. The second
 audio run completed recording, DOS compilation/replay and normal restoration,
