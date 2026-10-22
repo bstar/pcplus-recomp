@@ -15,8 +15,17 @@ and two script reference/help/continuation/parent-menu workflows. The synthetic
 Synchronet quota exemption is declared and restored. Six startup groups include
 eight invalid ABI cases (45 total inputs);13 attached DOS PROGRAM cases retain
 10,278 exact parent bytes and restore UART ownership on the rebuilt external
-parentd688f4a4. This remains selected software evidence; fresh current-parent
-normal SIP/audio, sustained pressure and physical/full application gates remain open.
+parentd688f4a4. This remains selected software evidence; audio acceptance follows below.
+Sustained pressure and physical/full application gates remain open.
+
+[Receive pressure](docs/UART_RECEIVE_PRESSURE.md) adds26 linked normal/mouse cases: twenty exact
+65,536-byte streams plus six uncooperative-peer overflow cases. Reactive peer,
+registers and scheduling remain modeled; this is not DOS foreground or physical
+flow timing. Separate independently audited8086/386 DOS sessions each log65,536
+exact bytes, resume normal ANSI/keyboard and restore UART/observer ownership.
+The collector's missing CPU8086 declaration caused386-only near Jcc encodings;
+a four-case source-only fixture reproduces and verifies its correction. No
+application binary changed; actual DOS watermark/physical timing remains open.
 
 [Current-parent normal audio](docs/validation/recording-hangup-policy-audio.json) now accepts parent3b453f2b for
 recording, actual DOS compilation/replay and manual Search on one ENiGMA

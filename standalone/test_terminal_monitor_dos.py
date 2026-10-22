@@ -15,6 +15,7 @@ ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EX
 RAW=bytes(range(256));SEED=b'OLD DUMP\x1aMUST BE REPLACED\r\n';AFTER=b'\x1b[2J\x1b[HNORMAL PARSER RESUMED\r\n\x1b[31mRED\x1b[0m\n';AFTER_LOG=b'NORMAL PARSER RESUMED\r\nRED\r\n'
 OBSERVER=r'''
 bits 16
+CPU 8086
 org 100h
 jmp install
 old16 dd 0
@@ -131,7 +132,7 @@ install:
  int 0x21
 resident_end:
 '''
-OBSERVER_DUMP=TRACE_DUMP.replace('0xd7c1','0xd7c3').replace('0x4c43','0x4d4f').replace('0xc51a','0xc53a').replace('0x3521','0x3516').replace('0x2521','0x2516').replace('660','4028').replace('666','4034').replace("'CT21'","'MV16'").replace("'TRACE.BIN'","'MONVIEW.BIN'")
+OBSERVER_DUMP=TRACE_DUMP.replace('0xd7c1','0xd7c3').replace('0x4c43','0x4d4f').replace('0xc51a','0xc53a').replace('0x3521','0x3516').replace('0x2521','0x2516').replace('660','4028').replace('666','4034').replace("'CT21'","'MV16'").replace("'TRACE.BIN'","'MONVIEW.BIN'").replace('bits 16','bits 16\nCPU 8086')
 def recipes():
  return [dict(name='all256-Y-replace',choice='y',seed=SEED),dict(name='all256-N-no-log',choice='n',seed=SEED),dict(name='all256-N-no-create',choice='n'),dict(name='all256-Enter-no-log',choice='enter',seed=SEED),dict(name='all256-Esc-no-log',choice='escape',seed=SEED),dict(name='raw-over256-buffer',choice='y',data=RAW+RAW+b'BINARY\x00\xff'),dict(name='periodic-raw-flush',choice='y',data=b'RAW\x00\x1b\xffPERIOD',periodic=True),dict(name='keyboard-bindings-owner-denials',choice='y',keyboard=True),dict(name='capture-active-bypass-and-resume',choice='y',capture=True),dict(name='capture-held-bypass-and-resume',choice='y',capture=True,hold=True),dict(name='capture-active-DMP-conflict',choice='y',capture=True,conflict=True),dict(name='capture-held-DMP-conflict',choice='y',capture=True,hold=True,conflict=True),dict(name='readonly-DMP-denied-view-only',choice='y',seed=SEED,readonly=True),dict(name='AltX-closes-active-monitor',choice='y',exit=True),dict(name='explicit-PRM-all256',choice='y',prm=True)]
 class MonitorPeer(TerminalPeer):
