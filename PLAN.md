@@ -18,6 +18,14 @@ eight invalid ABI cases (45 total inputs);13 attached DOS PROGRAM cases retain
 parentd688f4a4. This remains selected software evidence; fresh current-parent
 normal SIP/audio, sustained pressure and physical/full application gates remain open.
 
+[Current-parent audio preparation](docs/validation/recording-hangup-policy-audio-preparation.json) seals the unchanged seven
+BIOS helper cases/56 checks,13 fresh DOS/TCP controls and606 frozen admission
+inputs. Normal recording audio cohortcurrent-enigma-recording-audio-hangup-policy-01
+is running; producer session47431/PID3596437 remains the exact job to poll.
+Preparation is not audio acceptance. After terminal, decode the caller waveform
+and audit serial/producer captures before attempting the final receipt; preserve
+any failure and never restart merely because an observation expires.
+
 [Normal ENiGMA recorder audio](docs/validation/recording-footer-audio.json) now
 passes26 producer/34 independent/12 serial checks on preceding parent1cbb4f8f,
 with unchanged ASPECT183f852d and source-built DOS compiler. All77 online guest

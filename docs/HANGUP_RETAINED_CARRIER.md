@@ -40,6 +40,12 @@ The retained region is10,278 bytes:10,152 fixed resource bytes plus63 two-byte
 renderer policy words, each compared before/after child execution. The existing
 older recorder ledger's hard-coded10,276-byte expectation is not reused.
 
+[Fresh audio preparation](validation/recording-hangup-policy-audio-preparation.json)
+seals the unchanged BIOS helper proof and13 fresh current-parent DOS/TCP checks.
+The normal audio call is in progress, with frozen admission inputs; preparation
+is not audio acceptance. Independent waveform/serial/producer audits remain
+required after that job terminates.
+
 Physical modem behavior, broader initialization/results/flow-pressure policies,
 current-parent normal SIP/audio validation and all full application gates remain open.
 
