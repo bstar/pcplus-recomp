@@ -85,10 +85,13 @@ also pass independent raw verification on parentdd86139f/child183f852d.
 
 [Four recorder/replay sessions](validation/bbs-offline-program-compat.json)
 and [two script-window workflows](validation/bbs-offline-program-window.json)
-pass on owned stock Synchronet/ENiGMA. The current normal ENiGMA recorder audio
-run is live, with [sealed preparation](validation/recording-offline-program-audio-preparation.json)
-and a passing current-parent DOS/Telnet helper control. No current-parent audio
-outcome is claimed yet.
+pass on owned stock Synchronet/ENiGMA. [Current normal ENiGMA recorder audio](validation/recording-offline-program-audio.json)
+passes26 producer/34 independent/12 serial checks, including77 online bytes
+decoded independently from the caller waveform and normal hardware/timer/SIP/VM
+cleanup. Its [sealed preparation](validation/recording-offline-program-audio-preparation.json)
+retains the current-parent DOS/Telnet helper control and immutable inputs.
+This is one normal V22/1200 software route; script-window audio and physical
+Boca/SPA2102 remain separate requirements.
 
 ## Offline launch failures
 
@@ -116,7 +119,7 @@ Normal parent: dd86139f44a98279c08ccd003a880aebc3a5341cda079dfea9e9d448a84c69e4.
 Mouse parent: 28a80b378a1efbfdcfaf7943be65e434786a61be09ce4e34b3e1fcab05cdb91b.
 The ASPECT child remains183f852d, ASIOv6/capabilities12/13 unchanged.
 
-Current-parent audio acceptance, remaining helper/allocation/media error paths,
+Remaining helper/allocation/media error paths,
 initially-low/transient DCD, manual hangup/cancel, sustained flow pressure and
 physical UART/modem acceptance remain open. This does not close a full F01–F16
 application gate.

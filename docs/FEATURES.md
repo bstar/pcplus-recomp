@@ -16,8 +16,10 @@ DOS SOFT/BOTH comparisons, four linked inputs, 60 PROGRAM inputs and fresh
 audio receipt above retains the preceding parent6075bc18 identity. New-parent
 source-bound File/A launch after loss passes two actual DOS cases; independent
 10 confirmation/four carrier/twelve XOFF-CTS and fresh stock BBS recorder/window
-checks pass. Its normal audio run is live with sealed preparation; outcome and
-physical hardware acceptance remain open. Six independently audited SOFT/BOTH
+checks pass. Its normal recording audio passes26 producer/34 independent/12
+serial checks and77 independently waveform-decoded online bytes on one ENiGMA
+V22/1200 software route. Script-window audio and physical hardware acceptance
+remain open. Six independently audited SOFT/BOTH
 offline launch failures now cover absent runner, absent script and invalid
 header, with actual DOS/child errors, cleanup and clean redial. Allocation,
 media and other helper-error families remain required.

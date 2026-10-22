@@ -11,8 +11,9 @@ near-data remains112/64. Source-bound File/A Script after loss passes two DOS
 cases, exact marker/bytecode regeneration and clean redial with handle cleanup.
 Fresh independent10 confirmation/four carrier/twelve XOFF-CTS regressions pass,
 as do four Synchronet/ENiGMA recorder/replay and two stock script-window sessions.
-Current-parent normal ENiGMA recording audio is live with sealed admission;
-its outcome remains pending. Six source-bound offline launch-error workflows
+Current-parent normal ENiGMA recording audio passes26 producer/34 independent/
+12 serial checks,77 waveform-decoded online bytes and normal cleanup on one
+V22/1200 software route, with sealed admission. Six source-bound offline launch-error workflows
 now pass independent raw audit: absent helper (actual DOS EXEC CF1/error2, no
 child exit), absent ASX (child1), invalid header (child2), SOFT/BOTH. Each restores
 owners/hardware and cleanly redials. Remaining allocation/media/helper errors, sustained pressure,
