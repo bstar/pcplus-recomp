@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Startup retention placement](PROGRAM_STARTUP_BANK.md) now frees164 near-code
+bytes, leaving318/170 normal/mouse bytes spare with near-data112/64 unchanged.
+Eight linked ABI cases,60 PROGRAM inputs,13 attached DOS PROGRAM and two DOS
+offline helper/redial cases pass;26 source products reproduce without originals.
+This is a limited placement component; current-parent broader validation and
+all full application/physical gates remain open. Earlier audio retains its own
+parent identity.
+
 The [configurable transmit wait](ASPECT_TRANSMIT_WAIT.md) adds
 PCPLUS_TXWAIT=1..3600 (default 30 seconds) and standard-BIOS queued Escape
 cancellation. Focused DOS, linked ownership, 56 process, 13 attached PROGRAM

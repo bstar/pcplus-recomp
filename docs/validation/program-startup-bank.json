@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "startup_placement_component_accepted": true,
+  "full_application_accepted": false,
+  "physical_hardware_accepted": false,
+  "baseline_products": {
+    "terminal": "dd86139f44a98279c08ccd003a880aebc3a5341cda079dfea9e9d448a84c69e4",
+    "terminal-mouse": "28a80b378a1efbfdcfaf7943be65e434786a61be09ce4e34b3e1fcab05cdb91b"
+  },
+  "products": {
+    "terminal": "a31eb517eab4732c73b71808fb7c794948bed2368f8e616d0bc3e2e7ce076ca2",
+    "terminal-mouse": "5aecd64fe37394c1b902e9c77aa687515f206e66fe2f929fcb534caef50f711e"
+  },
+  "capacity": {
+    "terminal": {
+      "near_code_spare_before": 154,
+      "near_code_spare_after": 318,
+      "bytes_freed": 164,
+      "near_data_spare": 112
+    },
+    "terminal-mouse": {
+      "near_code_spare_before": 6,
+      "near_code_spare_after": 170,
+      "bytes_freed": 164,
+      "near_data_spare": 64
+    }
+  },
+  "linked_ABI_cases": 8,
+  "existing_PROGRAM_inputs": 60,
+  "source_products": 26,
+  "cohort": "build/program-startup-bank/accepted-01",
+  "files_manifest_sha256": "7a1def50f3c8be3c405c8ea9bfca4a63ea8c1df7c2442a5092b5e451a641743a",
+  "auditor_sha256": "14424c3be4e4101caef7976cb92795f0dec508da63ff3704182526f09221e57a",
+  "scope": "Pure startup retention body moved from _TEXT to CONFIG_CODE behind a stable near/far wrapper. Source instruction sequence is identical except outer RET becomes RETF. Normal/mouse linked ABI, IF/DF, stack canary, retained-size and DS=SS checks, 60 existing linked PROGRAM inputs and 26 original-free product rebuilds pass. This is limited code headroom, not a complete placement/memory solution. Current DOS/BBS/audio and physical/full F01-F16 requirements remain separate."
+}

@@ -42,6 +42,14 @@ global terminal_program_prepare_link
 ; AX startup PSP. Retain every static segment, including far metadata/history.
 ; Preserve all registers, including AX needed by command-tail parsing next.
 terminal_program_initialize:
+ call far terminal_program_initialize_far
+ ret
+
+; Pure startup retention arithmetic has no near-code imports. Keep the public
+; near entry stable while moving its body out of the full resident code bank.
+SEGMENT CONFIG_CODE public align=16 class=FARCODE use16
+global terminal_program_initialize_far
+terminal_program_initialize_far:
  push ax
  push bx
  push cx
@@ -76,7 +84,7 @@ terminal_program_initialize:
  pop cx
  pop bx
  pop ax
- ret
+ retf
 .paragraphs:
  ; Round OFFSET upward without overflowing a near16-bit addition.
  mov cx,bx
@@ -90,6 +98,7 @@ terminal_program_initialize:
 .rounded:
  ret
 
+SEGMENT _TEXT
 ; AX near stored command1..51.0 queued,1 invalid,2 busy,3 modem owns RX.
 terminal_program_start:
  extern terminal_recording_owned_far

@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Startup retention code placement](docs/PROGRAM_STARTUP_BANK.md) moves the pure
+initializer body to CONFIG_CODE behind its unchanged near entry. Independent
+source/ABI/map audit frees164 resident-code bytes: normal318 spare, mouse170;
+near data remains112/64. Eight normal/mouse ABI cases,60 PROGRAM inputs,13
+attached DOS PROGRAM cases and two offline DOS helper/redial cases pass;26
+products reproduce without originals. Parent identities are nowa31eb517/
+5aecd64f/0b5006ff, with unchanged child183f852d. Broader current-parent validation
+remains open. This is limited headroom, not complete application placement.
+The accepted audio below retains the preceding parentdd86139f identity.
+
 The [offline PROGRAM carrier correction](docs/PROGRAM_OFFLINE_CARRIER.md)
 passes independent old/new actual DOS SOFT/BOTH comparisons plus four linked
 cases: proactive XOFF is suppressed after observed MODEM carrier loss, so the
