@@ -36,10 +36,17 @@ def file_entries(name):
 
 class Relay:
  """Byte-transparent loopback observer; no batching timer or protocol replies."""
- def __init__(self):
+ def __init__(self,capture_dir=None):
   self.server=socket.socket();self.server.bind(('127.0.0.1',0));self.server.listen(1);self.server.settimeout(12)
   self.port=self.server.getsockname()[1];self.stop=threading.Event();self.errors=[]
   self.to_bbs=bytearray();self.from_bbs=bytearray();self.trace=[]
+  self.capture_raw={};self.capture_trace=None
+  if capture_dir is not None:
+   capture_dir=Path(capture_dir)
+   paths={'to_bbs':capture_dir/'bbs-input.bin','from_bbs':capture_dir/'bbs-output.bin'}
+   assert not any(p.exists() for p in [*paths.values(),capture_dir/'BBS-relay-events.jsonl'])
+   self.capture_raw={name:path.open('xb',buffering=0) for name,path in paths.items()}
+   self.capture_trace=(capture_dir/'BBS-relay-events.jsonl').open('x',buffering=1)
   self.thread=threading.Thread(target=self.run,daemon=True)
  def run(self):
   start_ns=time.monotonic_ns()
@@ -53,11 +60,18 @@ class Relay:
       if not data:return
       target,stream,direction=(bbs,self.to_bbs,'to_bbs') if source is client else (client,self.from_bbs,'from_bbs')
       observed_ns=time.monotonic_ns()
-      self.trace.append(dict(direction=direction,offset=len(stream),count=len(data),seconds=(observed_ns-start_ns)/1e9,monotonic_ns=str(observed_ns)))
+      event=dict(direction=direction,offset=len(stream),count=len(data),seconds=(observed_ns-start_ns)/1e9,monotonic_ns=str(observed_ns))
+      self.trace.append(event)
+      if self.capture_trace is not None:
+       assert self.capture_raw[direction].write(data)==len(data)
+       self.capture_trace.write(json.dumps(event)+'\n')
       stream.extend(data);target.sendall(data)
   except Exception as error:
    if not self.stop.is_set():self.errors.append(repr(error))
-  finally:self.server.close()
+  finally:
+   self.server.close()
+   for f in self.capture_raw.values():f.close()
+   if self.capture_trace is not None:self.capture_trace.close()
 
 
 def main():

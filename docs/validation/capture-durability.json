@@ -1,0 +1,134 @@
+{
+  "passed": true,
+  "case_count": 14,
+  "cases": [
+    {
+      "case": "actual-numeric-rename-0",
+      "passed": true,
+      "records": 1
+    },
+    {
+      "case": "actual-numeric-rename-1",
+      "passed": true,
+      "records": 2
+    },
+    {
+      "case": "actual-numeric-rename-2",
+      "passed": true,
+      "records": 3
+    },
+    {
+      "case": "partial-initial-record-completes-after-boundary",
+      "passed": true
+    },
+    {
+      "case": "reject-changed-prefix",
+      "passed": true
+    },
+    {
+      "case": "reject-truncated-original",
+      "passed": true
+    },
+    {
+      "case": "reject-missing-original",
+      "passed": true
+    },
+    {
+      "case": "reject-missing-intermediate",
+      "passed": true
+    },
+    {
+      "case": "reject-partial-record",
+      "passed": true
+    },
+    {
+      "case": "reject-invalid-record",
+      "passed": true
+    },
+    {
+      "case": "reject-duplicate-original",
+      "passed": true
+    },
+    {
+      "case": "real-loopback-relay-False",
+      "passed": true,
+      "request_bytes": 4359,
+      "response_bytes": 4872
+    },
+    {
+      "case": "real-loopback-relay-True",
+      "passed": true,
+      "request_bytes": 4359,
+      "response_bytes": 4872
+    },
+    {
+      "case": "retained-real-journal-content-with-synthetic-boundary",
+      "passed": true,
+      "exact_actual_session_records": 32,
+      "limitation": "A synthetic test boundary reproduces the preserved rotated journal content; it does not restore the lost original boundary/relay capture or grant acceptance to the failed producer."
+    }
+  ],
+  "inputs": {
+    "lab/bbs/check_capture_durability.py": "33a5cae906242101b2afd2fd1a65d4e7770e3ac37b02babe3f708f09799ab0dc",
+    "lab/bbs/bbs_log_capture.py": "1e018ccbd9c2f93aa13c6d455451d8b0e6dbd6afee357cad1f3ec93c0dd841c4",
+    "lab/bbs/synthmodem_bbs_dos.py": "c09bfce0acee8903c071b0ce9e52335d3f248576fee511151955855425a80910"
+  },
+  "retained_inputs": {
+    "build/bbs-lab/current-enigma-credit-pressure-download-audio-01/preserved-server-logs/enigma-bbs.log.0": "4709253401a3c72b8da12df9ca1738a399754bbde7068a4dc4f53de62954b53a",
+    "build/bbs-lab/current-enigma-credit-pressure-download-audio-01/preserved-server-logs/enigma-bbs.log": "52c31178332ffdbf72081bb65d1b72628132979f5829fcf73f5c6b65b3458819",
+    "build/bbs-lab/current-enigma-credit-pressure-download-audio-01/recovered-server-session.jsonl": "44500653e4fd725938f465583e8f1ec1d1986aca566bec478bb7f7c0ed1e73fc"
+  },
+  "captures_sha256": {
+    "rotation-0/bbs.log": "5e13cebee36503c21d3d7e2c8d53c0d2b37e7f1d9227fd60da8d562998788057",
+    "rotation-0/boundary.json": "76b71038f0870c7bb59718e0d3f271a1b3f9370de5918dec28d5d132be01af8b",
+    "rotation-1/boundary.json": "e1cadd3fc249685e1caaeb9666f8a0d421c622049cfbddbe5d1485f8dbe11def",
+    "rotation-1/bbs.log.0": "5e13cebee36503c21d3d7e2c8d53c0d2b37e7f1d9227fd60da8d562998788057",
+    "rotation-1/bbs.log": "f0d4148a846c3f31901429aeef911865a2816aec19094ea876aa1ecec84f8a83",
+    "rotation-2/boundary.json": "e1d6f8ddcde4513a3ed5c43018897ce01d92a2783792f2e4bd9a24eb97f07c4e",
+    "rotation-2/bbs.log.1": "5e13cebee36503c21d3d7e2c8d53c0d2b37e7f1d9227fd60da8d562998788057",
+    "rotation-2/bbs.log.0": "f0d4148a846c3f31901429aeef911865a2816aec19094ea876aa1ecec84f8a83",
+    "rotation-2/bbs.log": "96fb9e6e767318ecafc223c6657c14bb0692c099449a95a9ec2a00e01eb460be",
+    "partial-at-boundary/bbs.log": "78766881d4b78e74a0410c7730e7cd0bb1c7f12fdbb563d181718fa4f721e95e",
+    "partial-at-boundary/boundary.json": "394df63f0d6905b2da96092b7128b9cf10d47f07b8554d2e739e52c4d0197678",
+    "changed-prefix/bbs.log": "d5b7b783d5bf970f734c93bfd099c0a4341aacf0d4c1224e981a5cb244d10208",
+    "changed-prefix/boundary.json": "01874d60f551b955c03578fdae9f63ded9f8e8e4bd8281b5026424b7d36049fa",
+    "truncated-original/bbs.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "truncated-original/boundary.json": "b8101aa39d23c13fad4e47c4093540ee558769cedcdf1692fdca5144ce4c01c6",
+    "missing-original/boundary.json": "e1a9b7fa732ec85f041b577c2ccdd2978c744abeb7e21336f0527bf4c329dacc",
+    "missing-original/bbs.log": "36dded9079a2a7b3279ae826b71ed5eb0594506e2d4aadba165d99a27136813a",
+    "missing-intermediate/boundary.json": "2196c3360e94e65abacbaac6b1b5db87996eacb888ff246573fab1ab4ee42ed3",
+    "missing-intermediate/bbs.log.1": "834c0345a63031b9aa756002acbdb84d8fcb58f20a119f689f135bea531ab996",
+    "missing-intermediate/bbs.log": "f0d4148a846c3f31901429aeef911865a2816aec19094ea876aa1ecec84f8a83",
+    "partial-record/bbs.log": "03844be9568496b9e4803b47e97c2f8141c1ad207b18ea7caefd6b33563d23a6",
+    "partial-record/boundary.json": "2345c9199f1a4d0c6f66c46c85e1879b2cf79c4d5c239a63e9dbdc7464494a46",
+    "invalid-record/bbs.log": "1e8a4d7339e6fd8d0f72ed6e0c982b9188dc1a59294e7c487ed169a9737c0994",
+    "invalid-record/boundary.json": "5ebef46dc6481d49a489abd24770149e97c136d06c01d2cbf2dd006e83460275",
+    "duplicate-original/bbs.log": "834c0345a63031b9aa756002acbdb84d8fcb58f20a119f689f135bea531ab996",
+    "duplicate-original/boundary.json": "15ac4fed89a2c7c71e8ab1fc8dbc0c0255ec9bbd2ebac8edc0f10b4aec8731e3",
+    "duplicate-original/bbs.log.0": "834c0345a63031b9aa756002acbdb84d8fcb58f20a119f689f135bea531ab996",
+    "relay-durable/bbs-input.bin": "ac92a6149c021da29fd3160827b3c9d1a5e54654cc32ddc15041586d10ba686f",
+    "relay-durable/bbs-output.bin": "a593ba4c898d3d2a0c69f01b8a6cfa6c6a97d4dded1154740c5db85a1905edf7",
+    "relay-durable/BBS-relay-events.jsonl": "654a07fcff64ae7fab820f0150a8b0f2c31158c3a3c3ed8904339c345d0ac414",
+    "retained-journal-replay/boundary.json": "e5c6beec4f419d4e64cdb688c85cec5dda02683f6e2ef8a1a51ac52e5d25a392",
+    "retained-journal-replay/bbs.log.0": "4709253401a3c72b8da12df9ca1738a399754bbde7068a4dc4f53de62954b53a",
+    "retained-journal-replay/bbs.log": "52c31178332ffdbf72081bb65d1b72628132979f5829fcf73f5c6b65b3458819",
+    "retained-journal-replay/capture/segment-0000.jsonl": "74cb098c7813c920ee598cdcbee0fa574327ac2e3a5a4d4abbc1e52f86ad9dec",
+    "retained-journal-replay/capture/segment-0001.jsonl": "52c31178332ffdbf72081bb65d1b72628132979f5829fcf73f5c6b65b3458819",
+    "retained-journal-replay/capture/result.json": "6898dfb9ba86b2ebcbd8b5e6d7964919bd9029c433cfc4e012e6070b0a4bc142",
+    "partial-at-boundary/capture/segment-0000.jsonl": "98eedfcc7e4628693a8a8daa6da45cf1a4c8ab21380412e2c612e356dbf0d415",
+    "partial-at-boundary/capture/result.json": "506c4f714047454ff924d4a09c4c6efca8109dee40d9292bce8259313fc2c582",
+    "rotation-2/capture/segment-0000.jsonl": "36dded9079a2a7b3279ae826b71ed5eb0594506e2d4aadba165d99a27136813a",
+    "rotation-2/capture/segment-0001.jsonl": "f0d4148a846c3f31901429aeef911865a2816aec19094ea876aa1ecec84f8a83",
+    "rotation-2/capture/segment-0002.jsonl": "96fb9e6e767318ecafc223c6657c14bb0692c099449a95a9ec2a00e01eb460be",
+    "rotation-2/capture/result.json": "4aa6d2e31a6e984ccc06c7dd77beb7b01786792199878cd6aa54259eefeda4df",
+    "rotation-1/capture/segment-0000.jsonl": "36dded9079a2a7b3279ae826b71ed5eb0594506e2d4aadba165d99a27136813a",
+    "rotation-1/capture/segment-0001.jsonl": "f0d4148a846c3f31901429aeef911865a2816aec19094ea876aa1ecec84f8a83",
+    "rotation-1/capture/result.json": "02c440b17f3eab9cf7bebaca541be5982c64fd77940af1888d3fe9b984042c32",
+    "rotation-0/capture/segment-0000.jsonl": "36dded9079a2a7b3279ae826b71ed5eb0594506e2d4aadba165d99a27136813a",
+    "rotation-0/capture/result.json": "3651991588c5914feb9a47765552e5cecd8a00aee990b8b8cc6b834dabba6265"
+  },
+  "scope": "Actual temporary file append/rename rotations and rejected damaged histories, plus real bidirectional loopback TCP with unmodified binary/control octets. Capture-enabled/default relays preserve observed streams; a modeled later finalizer exception cannot erase disk evidence. No live BBS/DOS/audio or power-loss acceptance.",
+  "source_receipt": "build/bbs-lab/capture-durability-03/result.json",
+  "source_receipt_sha256": "f7852bca55ee6f2fd7f294864c2387ef907d616139295f80364aedb20965ce12",
+  "actual_audio_accepted": false
+}
