@@ -13,7 +13,11 @@ offline PROGRAM baseline reproduces a distinct pre-launch XOFF/ATZ defect;
 see PROGRAM_OFFLINE_CARRIER.md. The correction now passes independent old/new
 DOS SOFT/BOTH comparisons, four linked inputs, 60 PROGRAM inputs and fresh
 26-product source rebuild. Broader new-parent acceptance is in progress; the
-audio receipt above retains the preceding parent6075bc18 identity.
+audio receipt above retains the preceding parent6075bc18 identity. New-parent
+source-bound File/A launch after loss passes two actual DOS cases; independent
+10 confirmation/four carrier/twelve XOFF-CTS and fresh stock BBS recorder/window
+checks pass. Its normal audio run is live with sealed preparation; outcome and
+physical hardware acceptance remain open.
 No full feature or hardware gate closes.
 
 The [modem command-mode checkpoint](validation/modem-reconnect.json) accepts

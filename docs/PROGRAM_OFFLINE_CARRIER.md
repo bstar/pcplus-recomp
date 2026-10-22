@@ -60,11 +60,41 @@ Both existing modem-reconnect DOS cases also pass with the new parent.
 All 13 actual DOS attached PROGRAM cases pass on the new external-render
 parent; raw results are build/aspect-parent-process/offline-program-01/result.json.
 
+## Local Script and current-parent regressions
+
+The [source-bound local Script audit](validation/script-offline-carrier-source.json)
+adds two actual DOS File/A workflows after observed MODEM loss. A passive
+direct-EXEC snapshot records state0/status6/carrier-seen1/XOFF-sent0. The real
+ASPECT child writes its local marker and returns0, with JFT/file-owner and UART
+restoration. Redial then gets clean ATZ/OK, and both complete BBS streams and
+manual ANSI queries match. The saved compiler regenerates GO.ASX exactly from
+GO.ASP before the independent raw audit accepts the captures.
+
+The first fixture incorrectly sent an acknowledgement space after adopted-render
+return, where no prompt owns that key. It reached command mode and prefixed ATZ.
+That failed run is preserved under script-offline-modem-dos/offline-program-01;
+no product fix was made for it. The second run removes only that fixture key.
+The third additionally binds the compiler source and bytecode regeneration;
+its two cases are the accepted source-bound evidence.
+
+[Ten confirmation cases](validation/program-offline-confirmation.json) pass
+with refreshed child support and normal/mouse parent-frame checks, including
+44 exact pressure replies within58.3ms. [Four carrier-loss cases](validation/program-offline-carrier-regression.json)
+and [twelve XOFF/CTS cases](validation/program-offline-flow-regression.json)
+also pass independent raw verification on parentdd86139f/child183f852d.
+
+[Four recorder/replay sessions](validation/bbs-offline-program-compat.json)
+and [two script-window workflows](validation/bbs-offline-program-window.json)
+pass on owned stock Synchronet/ENiGMA. The current normal ENiGMA recorder audio
+run is live, with [sealed preparation](validation/recording-offline-program-audio-preparation.json)
+and a passing current-parent DOS/Telnet helper control. No current-parent audio
+outcome is claimed yet.
+
 Normal parent: dd86139f44a98279c08ccd003a880aebc3a5341cda079dfea9e9d448a84c69e4.
 Mouse parent: 28a80b378a1efbfdcfaf7943be65e434786a61be09ce4e34b3e1fcab05cdb91b.
 The ASPECT child remains183f852d, ASIOv6/capabilities12/13 unchanged.
 
-Broader current-product acceptance, local Script launch after loss, other helper/error paths,
+Current-parent audio acceptance, other helper/error paths,
 initially-low/transient DCD, manual hangup/cancel, sustained flow pressure and
 physical UART/modem acceptance remain open. This does not close a full F01–F16
 application gate.

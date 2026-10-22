@@ -1,0 +1,83 @@
+{
+  "passed": true,
+  "parent_sha256": "dd86139f44a98279c08ccd003a880aebc3a5341cda079dfea9e9d448a84c69e4",
+  "runner_sha256": "183f852dfe0a992faa29515e124eb3b6570e44578bdc25880a8a792a2bf7da3f",
+  "cases": {
+    "TX-No": {
+      "passed": true,
+      "child_exit": 0,
+      "query_reply_seconds": 0.008843170013278723,
+      "prompt_ticks": 90,
+      "carrier": {
+        "carrier_armed_seen": 1,
+        "carrier_cleared_seen": 1,
+        "carrier_pending_seen": 0,
+        "carrier_error_seen": 0,
+        "carrier_clear_ticks": 43,
+        "carrier_depth_seen": 0,
+        "carrier_last_key_seen": 1,
+        "carrier_tx_paused_seen": 0
+      },
+      "wire_sha256": "ce216e3cc1652ed27d4cd5c40ed3026735cd61942f04b2ef9767f6e0c1464af7",
+      "stale_ON_LINE_label": false
+    },
+    "CALL-No": {
+      "passed": true,
+      "child_exit": 0,
+      "query_reply_seconds": 0.008336171042174101,
+      "prompt_ticks": 90,
+      "carrier": {
+        "carrier_armed_seen": 1,
+        "carrier_cleared_seen": 1,
+        "carrier_pending_seen": 1,
+        "carrier_error_seen": 0,
+        "carrier_clear_ticks": 43,
+        "carrier_depth_seen": 1,
+        "carrier_last_key_seen": 1,
+        "carrier_tx_paused_seen": 0
+      },
+      "wire_sha256": "ce216e3cc1652ed27d4cd5c40ed3026735cd61942f04b2ef9767f6e0c1464af7",
+      "stale_ON_LINE_label": false
+    },
+    "CALL-Yes": {
+      "passed": true,
+      "child_exit": 13,
+      "query_reply_seconds": 0.007818721001967788,
+      "prompt_ticks": 90,
+      "carrier": {
+        "carrier_armed_seen": 1,
+        "carrier_cleared_seen": 1,
+        "carrier_pending_seen": 1,
+        "carrier_error_seen": 0,
+        "carrier_clear_ticks": 43,
+        "carrier_depth_seen": 1,
+        "carrier_last_key_seen": 1,
+        "carrier_tx_paused_seen": 0
+      },
+      "wire_sha256": "ce216e3cc1652ed27d4cd5c40ed3026735cd61942f04b2ef9767f6e0c1464af7",
+      "stale_ON_LINE_label": false
+    },
+    "XOFF-error": {
+      "passed": true,
+      "child_exit": 14,
+      "query_reply_seconds": 0.008401902974583209,
+      "prompt_ticks": 85,
+      "carrier": {
+        "carrier_armed_seen": 1,
+        "carrier_cleared_seen": 0,
+        "carrier_pending_seen": 0,
+        "carrier_error_seen": 0,
+        "carrier_clear_ticks": 0,
+        "carrier_depth_seen": 0,
+        "carrier_last_key_seen": 1,
+        "carrier_tx_paused_seen": 1
+      },
+      "wire_sha256": "731a8a3168faaec1c14f46bd214d0356854a71decd5606612318cd588d9cf8b9",
+      "stale_ON_LINE_label": false
+    }
+  },
+  "cohort": "build/program-offline-flow/carrier-regression-accepted-01",
+  "files_manifest_sha256": "8c27ec75c85cd3eab3ede3081bfc2e65ff9f56df0ffa12e4264d275d83007c2d",
+  "auditor_sha256": "5f07aacacfc685d9a952c7f0991e58f8bf2ebdabea8da9b2f9cc1ae8851add47",
+  "scope": "Four current-parent actual8086 virtual-modem carrier-loss confirmation regressions. Existing independent raw verify_modem(parent_status=True) checks action/frame/error/cleanup and OFF-LINE policy. No physical or complete application acceptance."
+}

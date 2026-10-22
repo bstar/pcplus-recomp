@@ -7,7 +7,13 @@ next ATZ gets OK rather than ERROR. Complete BBS streams stay unchanged.
 The new parentdd86139f passes60 existing linked PROGRAM inputs,42 carrier-policy
 cases, two reconnect cases and13 attached DOS PROGRAM cases;26 products
 reproduce without originals. Normal/mouse near-code spare is154/6 bytes;
-near-data remains112/64. Broader current-product regression is in progress.
+near-data remains112/64. Source-bound File/A Script after loss passes two DOS
+cases, exact marker/bytecode regeneration and clean redial with handle cleanup.
+Fresh independent10 confirmation/four carrier/twelve XOFF-CTS regressions pass,
+as do four Synchronet/ENiGMA recorder/replay and two stock script-window sessions.
+Current-parent normal ENiGMA recording audio is live with sealed admission;
+its outcome remains pending. Helper errors/missing children, sustained pressure,
+other DCD/hangup/cancel paths and further code placement remain required.
 The completed transmit-wait audio below retains parent6075bc18, not this new
 parent. All full F01–F16 and physical requirements remain open.
 

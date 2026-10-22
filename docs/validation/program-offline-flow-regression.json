@@ -1,0 +1,143 @@
+{
+  "passed": true,
+  "transmit_stall_component_accepted": true,
+  "physical_hardware_accepted": false,
+  "full_application_accepted": false,
+  "parent_sha256": "dd86139f44a98279c08ccd003a880aebc3a5341cda079dfea9e9d448a84c69e4",
+  "runner_sha256": "183f852dfe0a992faa29515e124eb3b6570e44578bdc25880a8a792a2bf7da3f",
+  "software": {
+    "default-long": {
+      "passed": true,
+      "child_exit": 0,
+      "configured_seconds": null,
+      "wire_bytes": 2113,
+      "wire_sha256": "cc4de1cc450ca817e7e479b853da492a83d317dbb9b5d7fab030bd5bcfef2caa",
+      "hold_seconds": 4.005011879955418,
+      "status_frames": 0,
+      "ordinary_q_retained": false
+    },
+    "configured-long": {
+      "passed": true,
+      "child_exit": 0,
+      "configured_seconds": "6",
+      "wire_bytes": 2113,
+      "wire_sha256": "cc4de1cc450ca817e7e479b853da492a83d317dbb9b5d7fab030bd5bcfef2caa",
+      "hold_seconds": 4.004709008033387,
+      "status_frames": 0,
+      "ordinary_q_retained": false
+    },
+    "cancel-behind-key": {
+      "passed": true,
+      "child_exit": 13,
+      "configured_seconds": "30",
+      "wire_bytes": 65,
+      "wire_sha256": "6b9b6425572749552a0489c39ecc97b00fd8b9b1028919d532b8b7a42f2330a6",
+      "hold_seconds": 4.013712196960114,
+      "status_frames": 0,
+      "ordinary_q_retained": true
+    },
+    "short-timeout": {
+      "passed": true,
+      "child_exit": 14,
+      "configured_seconds": "2",
+      "wire_bytes": 64,
+      "wire_sha256": "0a0b5cdf7d83d1767c4e182616334bdca6aeae60597fac4769d813f5f866abe0",
+      "hold_seconds": 4.008729045977816,
+      "status_frames": 0,
+      "ordinary_q_retained": false
+    },
+    "maximum-long": {
+      "passed": true,
+      "child_exit": 0,
+      "configured_seconds": "3600",
+      "wire_bytes": 2113,
+      "wire_sha256": "cc4de1cc450ca817e7e479b853da492a83d317dbb9b5d7fab030bd5bcfef2caa",
+      "hold_seconds": 4.005059142014943,
+      "status_frames": 0,
+      "ordinary_q_retained": false
+    },
+    "cancel-long": {
+      "passed": true,
+      "child_exit": 13,
+      "configured_seconds": "30",
+      "wire_bytes": 64,
+      "wire_sha256": "84ddf8ed0463d46d6142f5412929377723b1d5ae4826b1bbb69cccbb8b779cad",
+      "hold_seconds": 4.014458770980127,
+      "status_frames": 0,
+      "ordinary_q_retained": false
+    }
+  },
+  "CTS": {
+    "resume-hard": {
+      "passed": true,
+      "child_exit": 0,
+      "configured_seconds": "30",
+      "wire_bytes": 2109,
+      "wire_sha256": "dc28d2fd1524804ba14c4e1e1c0abdf5ad717100d2a20e26f79fd980404c03fa",
+      "hold_seconds": 4.003906692028977,
+      "status_frames": 11,
+      "ordinary_q_retained": false
+    },
+    "resume-both": {
+      "passed": true,
+      "child_exit": 0,
+      "configured_seconds": "30",
+      "wire_bytes": 2113,
+      "wire_sha256": "cc4de1cc450ca817e7e479b853da492a83d317dbb9b5d7fab030bd5bcfef2caa",
+      "hold_seconds": 4.003413019934669,
+      "status_frames": 11,
+      "ordinary_q_retained": false
+    },
+    "timeout-hard": {
+      "passed": true,
+      "child_exit": 14,
+      "configured_seconds": "2",
+      "wire_bytes": 60,
+      "wire_sha256": "82c422e32f96cb1a1e458706fd4806bede439f62ed135aebb76106cf1630c681",
+      "hold_seconds": 4.027705225045793,
+      "status_frames": 11,
+      "ordinary_q_retained": false
+    },
+    "timeout-both": {
+      "passed": true,
+      "child_exit": 14,
+      "configured_seconds": "2",
+      "wire_bytes": 64,
+      "wire_sha256": "0a0b5cdf7d83d1767c4e182616334bdca6aeae60597fac4769d813f5f866abe0",
+      "hold_seconds": 4.008247710065916,
+      "status_frames": 11,
+      "ordinary_q_retained": false
+    },
+    "cancel-hard": {
+      "passed": true,
+      "child_exit": 13,
+      "configured_seconds": "30",
+      "wire_bytes": 61,
+      "wire_sha256": "c5dd96d4b080555cc2edbad3aa777fa8d51a9ad92b3bb82436ef475a8871350e",
+      "hold_seconds": 4.014553410001099,
+      "status_frames": 11,
+      "ordinary_q_retained": true
+    },
+    "cancel-both": {
+      "passed": true,
+      "child_exit": 13,
+      "configured_seconds": "30",
+      "wire_bytes": 65,
+      "wire_sha256": "6b9b6425572749552a0489c39ecc97b00fd8b9b1028919d532b8b7a42f2330a6",
+      "hold_seconds": 4.01290976407472,
+      "status_frames": 11,
+      "ordinary_q_retained": true
+    }
+  },
+  "linked_policy_cases": [
+    3619,
+    18,
+    8704,
+    9
+  ],
+  "CLI_cases": 23,
+  "cohort": "build/program-offline-flow/flow-regression-accepted-01",
+  "files_manifest_sha256": "7e784f8093b45c86b306cfff8829618db3a5528ad65ba4f7877cf97d55408160",
+  "auditor_sha256": "59eaa074b3a3472a9f97dbcfe6e575c503799d9038720baae757f47befe47127",
+  "scope": "Twelve actual8086 DOS cases: four-second XOFF and CTS stalls, 2048-byte resume, short expiry and Escape cancellation with ordinary-key retention. Independent raw wire, DOS return, owner/hardware and transport-framing verification. Linked parser/ring/clock checks remain modeled at BIOS/UART boundaries; CLI uses real DOS inheritance. Maximum3600 is not an hour-long wall-time claim. Separate BBS/audio/process receipts and full F01-F16/hardware acceptance remain required."
+}
