@@ -1,0 +1,57 @@
+{
+  "passed": true,
+  "offline_PROGRAM_component_accepted": true,
+  "physical_hardware_accepted": false,
+  "full_application_accepted": false,
+  "baseline_parent_sha256": "6075bc182ae9821ae077e78a56a42741d81016cb82e79365556c36ee4782f62a",
+  "parent_sha256": "dd86139f44a98279c08ccd003a880aebc3a5341cda079dfea9e9d448a84c69e4",
+  "baseline": {
+    "soft": {
+      "passed": true,
+      "child_parent_state": 0,
+      "child_parent_status": 6,
+      "child_parent_carrier_seen": 1,
+      "child_parent_xoff": 1,
+      "modem_ERROR_count": 1,
+      "connections": 2,
+      "wire_sha256": "e060a88f547e93aaac0700d0b7e7f27ff95123aa821ae3180d2d0d569a4d885f"
+    },
+    "both": {
+      "passed": true,
+      "child_parent_state": 0,
+      "child_parent_status": 6,
+      "child_parent_carrier_seen": 1,
+      "child_parent_xoff": 1,
+      "modem_ERROR_count": 1,
+      "connections": 2,
+      "wire_sha256": "e060a88f547e93aaac0700d0b7e7f27ff95123aa821ae3180d2d0d569a4d885f"
+    }
+  },
+  "fixed": {
+    "soft": {
+      "passed": true,
+      "child_parent_state": 0,
+      "child_parent_status": 6,
+      "child_parent_carrier_seen": 1,
+      "child_parent_xoff": 0,
+      "modem_ERROR_count": 0,
+      "connections": 2,
+      "wire_sha256": "e060a88f547e93aaac0700d0b7e7f27ff95123aa821ae3180d2d0d569a4d885f"
+    },
+    "both": {
+      "passed": true,
+      "child_parent_state": 0,
+      "child_parent_status": 6,
+      "child_parent_carrier_seen": 1,
+      "child_parent_xoff": 0,
+      "modem_ERROR_count": 0,
+      "connections": 2,
+      "wire_sha256": "e060a88f547e93aaac0700d0b7e7f27ff95123aa821ae3180d2d0d569a4d885f"
+    }
+  },
+  "linked_cases": 4,
+  "cohort": "build/program-offline-flow/accepted-01",
+  "files_manifest_sha256": "906e48a8756d5ef35c0ea8c705a6033449c227e3320db9a350fa67833162492a",
+  "auditor_sha256": "45f81a425a8fe8efe5cbaba5e823f68260ed9a37d13692c541de804817e139a9",
+  "scope": "Independent modem-command and child-observed offline PROGRAM audit. Actual8086 DOS SOFT/BOTH old/new comparison. Real socket disconnect precedes helper; child observes offline parent and released UART, parent restores and redials. Corrected command stream removes isolated XOFF from second ATZ and ERROR becomes OK while both BBS byte streams stay exact. General helper/Script, sustained pressure, other DCD transitions and physical acceptance remain separate."
+}

@@ -10,7 +10,10 @@ pass. Normal ENiGMA V22/1200 recording audio passes26 producer/34 independent/
 12 serial checks and77 independently waveform-decoded online bytes. This is
 one software route; physical and script-window audio remain separate. A new
 offline PROGRAM baseline reproduces a distinct pre-launch XOFF/ATZ defect;
-see PROGRAM_OFFLINE_CARRIER.md. Its correction remains pending.
+see PROGRAM_OFFLINE_CARRIER.md. The correction now passes independent old/new
+DOS SOFT/BOTH comparisons, four linked inputs, 60 PROGRAM inputs and fresh
+26-product source rebuild. Broader new-parent acceptance is in progress; the
+audio receipt above retains the preceding parent6075bc18 identity.
 No full feature or hardware gate closes.
 
 The [modem command-mode checkpoint](validation/modem-reconnect.json) accepts

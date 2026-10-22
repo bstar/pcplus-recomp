@@ -217,6 +217,12 @@ terminal_program_poll:
  jne .done
  cmp word [uart_software_flow],0
  je .launch
+ ; A local helper may be launched after the controller observed carrier loss.
+ ; Do not introduce a new XOFF into MODEM command mode. The shared policy
+ ; preserves online/DIRECT/untracked behavior and retires only known loss.
+ call far terminal_connection_flow_alive
+ or ax,ax
+ jz .launch
  cmp byte [uart_xoff_sent],0
  jne .launch
  ; THRE/TEMT are ready. Control flow bypasses peer CTS/XOFF restrictions.

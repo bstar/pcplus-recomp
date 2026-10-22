@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+The [offline PROGRAM carrier correction](docs/PROGRAM_OFFLINE_CARRIER.md)
+passes independent old/new actual DOS SOFT/BOTH comparisons plus four linked
+cases: proactive XOFF is suppressed after observed MODEM carrier loss, so the
+next ATZ gets OK rather than ERROR. Complete BBS streams stay unchanged.
+The new parentdd86139f passes60 existing linked PROGRAM inputs,42 carrier-policy
+cases, two reconnect cases and13 attached DOS PROGRAM cases;26 products
+reproduce without originals. Normal/mouse near-code spare is154/6 bytes;
+near-data remains112/64. Broader current-product regression is in progress.
+The completed transmit-wait audio below retains parent6075bc18, not this new
+parent. All full F01–F16 and physical requirements remain open.
+
 [Configurable ASPECT transmit stalls](docs/ASPECT_TRANSMIT_WAIT.md) now pass
 independent raw audit of twelve actual DOS XOFF/CTS cases and eight semantic
 corruption controls. Default30 seconds, PCPLUS_TXWAIT=1..3600; queued Escape
