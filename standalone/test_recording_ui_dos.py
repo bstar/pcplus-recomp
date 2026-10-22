@@ -43,7 +43,7 @@ def main():
     subprocess.run(['nasm','-fbin',str(out/'setup.asm'),'-o',str(out/'SETUP.COM')],check=True)
     server=socket.socket();server.bind(('127.0.0.1',0));server.listen(1);server.settimeout(15)
     wire=bytearray();sent=bytearray();events=[];errors=[];stop=threading.Event()
-    prompt=b'Name? \x1b[6n';dsr=re.compile(rb'\x1b\[[0-9]+;[0-9]+R')
+    prompt=b'\x1b[6nName? ';dsr=re.compile(rb'\x1b\[[0-9]+;[0-9]+R')
     def peer():
         try:
             conn,_=server.accept()

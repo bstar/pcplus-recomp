@@ -15,7 +15,7 @@ def main():
     assert output.is_relative_to(ROOT/'docs/validation') and not output.exists()
     selected={Path(__file__).resolve(),ROOT/'standalone/record_recording_file.py',ROOT/'Makefile'}
     variants={}
-    for name,data_spare,code_spare in (('terminal',96,356),('terminal-mouse',48,206)):
+    for name,data_spare,code_spare in (('terminal',112,366),('terminal-mouse',64,216)):
         directory=ROOT/'build'/name;manifest=read(directory/'manifest.json')
         assert manifest['kind']=='source-only-interactive-dos-terminal'
         assert sha(directory/'TERMINAL.EXE')==manifest['binary_sha256']
@@ -25,7 +25,7 @@ def main():
             selected.add(ROOT/source)
         memory=manifest['memory_layout']
         assert memory['near_spare_bytes']==data_spare and memory['resident_code_spare_bytes']==code_spare
-        assert memory['recording_terminal_state_bytes']==396
+        assert memory['recording_terminal_state_bytes']==392
         assert len(memory['recording_actor_guard_sites'])==9
         assert len(memory['recording_UI_boundary_sites'])==3 and len(memory['recording_UI_optimized_sites'])==2
         variants[name]=dict(binary_sha256=manifest['binary_sha256'],memory_layout=memory,
@@ -36,7 +36,7 @@ def main():
         ('Record UI','recording-ui-checks.json',10,'cases'),('Menu','command-menu-checks.json',153,'inputs'),
         ('TX','recording-tx-checks.json',10,'cases'),('RX','recording-rx-checks.json',10,'cases'),
         ('PROGRAM','program-actions-live-checks.json',60,'inputs'),('Autostart','autostart-live-checks.json',5,'cases'),
-        ('ZMODEM','terminal-zmodem-live-checks.json',78,'inputs'),('ABI','config-far-checks.json',629,'mutations')):
+        ('ZMODEM','terminal-zmodem-live-checks.json',78,'inputs'),('ABI','config-far-checks.json',623,'mutations')):
         path=ROOT/'build/terminal'/filename;proof=read(path)
         assert proof['passed'] and proof['binary_sha256']==binary_sha256
         if kind=='mutations':

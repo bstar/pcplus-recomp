@@ -196,7 +196,7 @@ def inspect_terminal_memory(binary,map_path):
   if 'terminal_record_receive_far' in symbols:
    lo=near_code['relative_segment']*16
    body=image[start+lo:start+lo+near_code['bytes']];sites=[]
-   for name,count in (('terminal_record_receive_far',2),('terminal_record_unread_far',1)):
+   for name,count in (('terminal_record_receive_far',1),):
     assert symbols[name][0]==config_seg and symbols[name][1]<config_code['bytes'],(name,'RX recorder outside bank')
     pattern=b'\x9a'+struct.pack('<HH',symbols[name][1],config_seg)
     assert body.count(pattern)==count,(name,'RX binding count')
@@ -205,6 +205,13 @@ def inspect_terminal_memory(binary,map_path):
      site=lo+body.index(pattern,offset);offset=site-lo+5
      assert site+3 in relocations,(name,'RX binding relocation')
      sites.append(site)
+   # WAITFOR sees mapped normal leads. Parser continuations bypass it, so
+   # recording before translation or inside the parser produces unmatchable
+   # scripts even though every raw UART byte was faithfully captured.
+   lead=address('terminal_receive_input');mapped=address('terminal_translate_input')
+   assert image[start+lead:start+lead+3]==b'\xe8'+struct.pack('<H',(mapped-lead-3)&65535),'Record lead translation order'
+   assert sites==[lead+3],'Recorder must follow translation at the sole normal lead boundary'
+   extra['recording_matcher_lead_site']=lead
    auto_site=address('_terminal_auto_allowed')
    assert symbols['terminal_recording_owned_far'][0]==config_seg and symbols['terminal_recording_owned_far'][1]<config_code['bytes']
    assert image[start+auto_site:start+auto_site+5]==b'\x9a'+struct.pack('<HH',symbols['terminal_recording_owned_far'][1],config_seg)
@@ -282,8 +289,7 @@ def inspect_terminal_memory(binary,map_path):
     name='_recording_terminal_'+suffix
     assert symbols[name][0]==config_seg and symbols[name][1]<config_code['bytes'],(name,'foreground recorder outside bank')
    ranges=[]
-   for name,length in (('_recording_terminal_owner',326),('_recording_terminal_path',64),('_recording_terminal_cookie',2),
-                       ('_recording_terminal_replay',2),('_recording_terminal_unread_pointer',2)):
+   for name,length in (('_recording_terminal_owner',326),('_recording_terminal_path',64),('_recording_terminal_cookie',2)):
     lo=address(name);hi=lo+length
     assert symbols[name][0]==ds and near_start<=lo and hi<=near_start+near_size,(name,'foreground state outside DGROUP')
     assert all(hi<=other_lo or lo>=other_hi for other_lo,other_hi in ranges),(name,'foreground state alias')
@@ -308,7 +314,7 @@ def inspect_terminal_memory(binary,map_path):
     assert code.count(pattern)==1,('Recorder code template absent/duplicated',i)
     if i:assert pattern not in near,('Recorder template remains near',i)
     literal_sites.append(config_seg*16+code.index(pattern))
-   extra.update(recording_terminal_state_bytes=396,recording_terminal_bank_functions_verified=9,
+   extra.update(recording_terminal_state_bytes=392,recording_terminal_bank_functions_verified=9,
     recording_terminal_far_call_sites=sites,recorder_code_literal_bytes_verified=sum(len(x)+1 for x in literals),
     recorder_code_literal_sites=literal_sites)
   if '_recording_file_begin' in symbols:

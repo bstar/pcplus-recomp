@@ -1,5 +1,11 @@
 # PCPlus DOS reconstruction
 
+The [current recorder/BBS investigation](docs/BBS_RECORDING.md) fixes recording
+of ANSI parser continuations that native WAITFOR cannot match. The selected
+DOS Record controls and compiler/replay tests pass; fresh-session replay on
+Synchronet and ENiGMA remains incomplete and is documented with retained failures.
+
+
 An incremental source reconstruction of ProComm Plus 2.01, focused first on
 serial communication, ANSI terminal handling and BBS compatibility.
 The complete task list and current work are tracked in [PLAN.md](PLAN.md).

@@ -1,5 +1,18 @@
 # Complete DOS rebuild plan
 
+The [BBS recorder investigation](docs/BBS_RECORDING.md) now preserves six actual
+recording attempts and four failed fresh-session replays. Recording/compilation
+succeed on both servers. A concrete mismatch is corrected: normal prompts now
+follow input translation and exclude parser continuations, matching native
+WAITFOR. Current linked RX10/TX10/UI10, menu153, PROGRAM60, autostart5,
+ZMODEM78, ABI623 and eleven DOS capture checks pass; actual DOS new/replace/cancel
+workflows pass. Keyboard/mouse data spare112/64; resident code spare366/216.
+Synchronet replay improves, but final prompts vary across sessions; ENiGMA still
+misses a recorded return command. Neither BBS replay has normal exit/cleanup
+acceptance. Next capture actual matcher bytes/outcomes and distinguish dynamic
+prompts from renderer behavior. All full F01–F16 and physical gates stay open.
+
+
 The [foreground Record menu](docs/RECORDING_UI.md) now starts/saves recordings,
 confirms replacement and cancellation, and exposes retained-file status/cleanup.
 Ten linked UI campaigns and actual DOS new/replacement/cancel workflows pass;

@@ -12,8 +12,8 @@ global terminal_load_translation,terminal_translate_input
 global terminal_receive_input
 ; Normal main-loop receive owner; raw monitor/controller/transfers filter first.
 terminal_receive_input:
- call far terminal_record_receive_far
  call terminal_translate_input
+ call far terminal_record_receive_far
  push ax
  inc word [terminal_parser_active]
  call terminal_receive_character

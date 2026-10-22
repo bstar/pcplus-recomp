@@ -36,7 +36,6 @@ extern terminal_key_output
 global terminal_menu_pending_poll
 global terminal_poll_io,terminal_enqueue_al,terminal_enqueue_user_al,terminal_tick_low,terminal_clock_ticks
 extern terminal_tx_origin_set_far,terminal_tx_origin_delivered_far
-extern terminal_record_receive_far,terminal_record_unread_far
 global ansi_next_byte,ansi_unread_byte,csi_transmit_byte,csi_transmit_string
 
 ; Read only the low BIOS tick word. Unsigned subtraction handles 16-bit wrap.
@@ -92,7 +91,6 @@ ansi_next_byte:
  call uart_receive_byte
  cmp ax,0xffff
  je .empty
- call far terminal_record_receive_far
  jmp .done
 .empty:
  call terminal_tick_low
@@ -115,7 +113,6 @@ ansi_unread_byte:
  call far terminal_render_unread
  ret
 .ordinary:
- call far terminal_record_unread_far
  jmp uart_unreceive_byte
 
 ; AL -> bounded TX queue. No busy wait, no local echo. AX is preserved.

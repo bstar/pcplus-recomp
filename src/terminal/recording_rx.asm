@@ -1,13 +1,12 @@
-; Record ordinary raw receive bytes before translation, and parser continuation
-; bytes. A parser lookahead unreceive is observed once, never duplicated.
+; Record mapped normal receive leads, exactly the native WAITFOR matcher stream.
+; Parser continuation reads bypass matching and must not enter recorded prompts.
 BITS 16
 CPU 8086
 SEGMENT CONFIG_CODE public align=16 class=FARCODE use16
 GROUP CONFIG_GROUP CONFIG_CODE
 extern _recording_terminal_cookie,_recording_terminal_owner
-extern _recording_terminal_receive,_recording_terminal_replay,_recording_terminal_unread_pointer
-extern uart_rx_read
-global terminal_record_receive_far,terminal_record_unread_far,terminal_recording_owned_far
+extern _recording_terminal_receive
+global terminal_record_receive_far,terminal_recording_owned_far
 global _recording_ui_ready
 extern _terminal_autostart_busy
 extern terminal_tx_count,terminal_macro_active,terminal_parser_active,terminal_quit
@@ -66,7 +65,7 @@ _recording_ui_ready:
  retf
 %endmacro
 ; AX=actual ordinary byte. Preserve all registers and flags, including before
-; entering native parsing. The script prompt matches the raw UART byte stream.
+; entering native parsing. The script prompt matches translated leads only.
 terminal_record_receive_far:
  save
  cmp ax,255
@@ -75,29 +74,9 @@ terminal_record_receive_far:
  jne .done
  cmp word [_recording_terminal_owner+136],1
  jne .done
- cmp word [_recording_terminal_replay],0
- je .record
- mov word [_recording_terminal_replay],0
- mov bx,[uart_rx_read]
- cmp bx,[_recording_terminal_unread_pointer]
- je .done
-.record:
  push ax
  call far _recording_terminal_receive
  add sp,2
-.done:
- restore
-; Called before the actual native unreceive. Save the post-consumption cursor
-; expected when that same byte is read again, including a ring wrap.
-terminal_record_unread_far:
- save
- cmp word [_recording_terminal_cookie],0x5244
- jne .done
- cmp word [_recording_terminal_owner+136],1
- jne .done
- mov ax,[uart_rx_read]
- mov [_recording_terminal_unread_pointer],ax
- mov word [_recording_terminal_replay],1
 .done:
  restore
 ; AX=1 while the recorder owns active/recovery files, otherwise0. Other

@@ -10,9 +10,7 @@ from check_recording_foreground_live import Recorder, ROOT, BINARY
 
 def ready():
     m=Recorder();m.advance_ticks=True
-    m.put('_recording_terminal_replay',0xdead);m.put('_recording_terminal_unread_pointer',0xbeef)
     m.initialize()
-    assert m.get('_recording_terminal_replay')==m.get('_recording_terminal_unread_pointer')==0
     assert m.begin_recording()==0
     return m
 
@@ -39,38 +37,38 @@ def main():
         m=ready();table=bytes((v+17)&255 for v in range(256))
         m.uc.mem_write(m.symbols['terminal_translation_table'],table);m.put('terminal_translation_enabled',1)
         ordinary(m,b'ABC> ')
-        assert received(m)==5 and tail(m)==b'ABC> '
+        assert received(m)==5 and tail(m)==bytes((v+17)&255 for v in b'ABC> ')
         assert m.far('transmit',[ord('!')])==0 and m.far('stop')==0
-        assert b'strcpy loc_prompt "ABC> "' in m.files['PCPLUS.ASP']
-    check('normal-RX-is-recorded-before-input-translation',raw_translation)
+        assert b'strcpy loc_prompt "RSTO1"' in m.files['PCPLUS.ASP']
+    check('normal-RX-records-the-mapped-WAITFOR-stream',raw_translation)
 
     def parser():
         m=ready();data=b'A\x1b[31mHELLO\x1b[0m> '
         ordinary(m,data)
-        assert received(m)==len(data) and tail(m)==data[-16:]
+        assert received(m)==10 and tail(m)==b'A\x1bHELLO\x1b> '
         assert m.far('stop')==0
-    check('native-ANSI-parser-continuations-retain-exact-sliding-raw-prompt',parser)
+        assert b'strcpy loc_prompt "A^[HELLO^[> "' in m.files['PCPLUS.ASP']
+        assert b'[31m' not in m.files['PCPLUS.ASP'] and b'[0m' not in m.files['PCPLUS.ASP']
+    check('native-ANSI-continuations-bypass-the-recorded-matcher-stream',parser)
 
     def replay(wrap=False,normal=False):
         m=ready()
         if wrap:
             last=m.get('uart_rx_last');m.put('uart_rx_read',last);m.put('uart_rx_write',last)
         inject(m,b'AB')
-        assert m.call('ansi_next_byte')==65
+        assert m.call('ansi_next_byte')==65 and not received(m)
         m.call('ansi_unread_byte')
-        assert m.get('_recording_terminal_replay')==1
-        before=m.state()
-        assert m.far('initialize')==2 and m.state()==before and m.get('_recording_terminal_replay')==1
+        before=m.state();assert m.far('initialize')==2 and m.state()==before
         if normal:
             value=m.call('uart_receive_byte');assert value==65
             m.call('terminal_receive_input',ax=value)
         else:assert m.call('ansi_next_byte')==65
         assert m.call('ansi_next_byte')==66
-        assert received(m)==2 and tail(m)==b'AB' and not m.get('_recording_terminal_replay')
-        assert m.far('stop')==0 and b'strcpy loc_prompt "AB"' in m.files['PCPLUS.ASP']
-    check('parser-unreceive-is-observed-once',replay)
-    check('parser-unreceive-across-physical-ring-wrap',lambda:replay(wrap=True))
-    check('parser-unreceive-returning-to-normal-owner-is-observed-once',lambda:replay(normal=True))
+        assert received(m)==int(normal) and tail(m)==(b'A' if normal else b'')
+        assert m.far('stop')==0
+    check('parser-only-lookahead-never-enters-WAITFOR-prompt',replay)
+    check('parser-only-lookahead-across-physical-ring-wrap',lambda:replay(wrap=True))
+    check('parser-unreceive-returning-to-normal-owner-is-recorded-once',lambda:replay(normal=True))
 
     def identical():
         m=ready();ordinary(m,b'AAAA')
@@ -86,12 +84,13 @@ def main():
 
     def lifecycle():
         m=ready();inject(m,b'A');assert m.call('ansi_next_byte')==65
-        m.call('ansi_unread_byte');assert m.get('_recording_terminal_replay')==1
-        assert m.far('cancel')==14 and not m.get('_recording_terminal_replay')
-        assert m.begin_recording()==0 and m.call('ansi_next_byte')==65
+        m.call('ansi_unread_byte');assert not received(m)
+        assert m.far('cancel')==14 and m.begin_recording()==0
+        value=m.call('uart_receive_byte');assert value==65
+        m.call('terminal_receive_input',ax=value)
         assert received(m)==1 and tail(m)==b'A'
         assert m.far('stop')==0
-    check('new-session-does-not-inherit-parser-replay-marker',lifecycle)
+    check('new-session-records-only-the-new-normal-lead',lifecycle)
 
     def autostart():
         m=ready();m.put('_terminal_transfer_preferences',1)
@@ -105,7 +104,7 @@ def main():
     def query_and_user():
         m=ready();data=b'\x1b[6nName? '
         ordinary(m,data)
-        assert received(m)==len(data) and tail(m)==data
+        assert received(m)==7 and tail(m)==b'\x1bName? '
         m.call('terminal_enqueue_user_al',ax=ord('U'));m.drain()
         assert bytes(m.tx).startswith(b'\x1b[') and bytes(m.tx).endswith(b'U')
         assert m.far('stop')==0
