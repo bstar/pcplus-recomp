@@ -1,5 +1,25 @@
 # Complete DOS rebuild plan
 
+The [cooperative-window load audit](docs/validation/aspect-window-pressure.json)
+accepts9,114 paced ANSI bytes during WAITFOR/help:44 distinct CPR replies all
+arrive within59.4ms, and every one of1,408 character/attribute cells matches.
+The timer samples96 visible-window ticks and a26-byte RX peak; transparent
+socket UART testing does not establish CTS/RTS or XOFF/XON pressure behavior.
+Fresh [four-session recorder/replay](docs/validation/bbs-cooperative-window-compat.json)
+and [two-session stock-window](docs/validation/bbs-cooperative-window.json)
+audits accept the unchanged0eff2348/fa026aa8 pair on Synchronet and ENiGMA.
+Reference/help appears for133 ticks on each board; script navigation, the
+post-EXEC ordinary menu, exact typed streams and sampled hardware/timer cleanup
+pass. The BBS window fixture now takes an explicit matching baseline label.
+A separate [PAUSE-context query failure](docs/validation/aspect-window-pause-query-failure.json)
+remains: after HOLD is received with help open, PAUSE4 delays the next CPR reply
+by3.188 seconds. Its exact wire/cursor/normal return checks pass, but the declared
+one-second deadline fails. Next investigate delay-time receive/WHEN scheduling
+without substituting a query recognizer or breaking script waits. Continue real
+flow/carrier/cancel/fault tests, affected software audio, full command actions
+and all remaining application requirements. No F01–F16 or physical gate closes.
+
+
 The [cooperative script-window checkpoint](docs/validation/aspect-cooperative-window.json)
 replaces the production blocking Alt-Z scheduler while retaining the recovered
 native component as a separate oracle. Normal capability10 and experimental11

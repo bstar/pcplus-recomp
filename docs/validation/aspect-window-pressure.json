@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "payload_bytes": 9114,
+  "packet_count": 44,
+  "verified_character_cells": 1408,
+  "verified_attribute_cells": 1408,
+  "max_reply_delay_seconds": 0.05930530990008265,
+  "child_ring_peak": 26,
+  "window_visible_ticks": 96,
+  "parent_sha256": "0eff2348bacea6fbb1f56cf3446e56df53cf3ec7b1b29a35a711061d5fd023ea",
+  "runner_sha256": "fa026aa8c17452cdff1dc03907f14d05ee4601a7287db93d38d93ab76de11926",
+  "producer_receipt_sha256": "466161e11ea4085f9f8c80c5332ff5f0a473ea3d0195723051e36b80a5694900",
+  "whole_wire_sha256": "32201e39c0c2da8f97dbcccf608fec7d95aaa23e551920065ff835a6d02993a7",
+  "physical_flow_accepted": false,
+  "cohort": "build/aspect-window-pressure-accepted-01",
+  "frozen_files": 33,
+  "files_manifest_sha256": "f0ef00049a7aa66c1736914cc3abae538cef1550f1f359e83daa5b19ed00a91e",
+  "auditor_sha256": "4fe78674570d63c533f7a36f5a61c4c3e8d1544ed17b2136f699153aa3915c7f",
+  "scope": "Actual DOS parent/ASPECT at fixed6000 DOSBox-X cycles, COM1/38400/HARD fixture with an owned paced TCP modem peer. All44 independent tile/CPR responses,1408 characters/colors, exact whole wire, window/render witnesses, normal child exit and42-byte hardware restoration verified. UART CTS/RTS stalling is not represented by this transparent socket peer; physical flow, software XOFF/XON pressure, transfers, other wait contexts and full application remain unaccepted."
+}

@@ -1,0 +1,41 @@
+{
+  "evidence_verified": true,
+  "query_deadline_accepted": false,
+  "context": "ASPECT PAUSE4 entered after HOLD is received while help is already open",
+  "reply_delay_seconds": 3.188267900957726,
+  "checks": {
+    "DOS_functional_checks": true,
+    "window_observed": true,
+    "window_stays_open_beyond_deadline": true,
+    "live_render_advances_while_window_open": true,
+    "reply_matches_logical_BBS_cursor": true,
+    "peer_complete_reply_within_one_second": false
+  },
+  "window_observation": [
+    1,
+    0,
+    99,
+    4,
+    0
+  ],
+  "parent_sha256": "0eff2348bacea6fbb1f56cf3446e56df53cf3ec7b1b29a35a711061d5fd023ea",
+  "runner_sha256": "fa026aa8c17452cdff1dc03907f14d05ee4601a7287db93d38d93ab76de11926",
+  "independent_audit": {
+    "path": "build/aspect-window-pause-query-dos/pause-query-01",
+    "reply_delay_seconds": 3.188267900957726,
+    "retained_files_verified": 25,
+    "receipt_sha256": "5beec6239d66c75f42173e0b306dd5d88fbeadd8a637b760f19ab61c195d4a2a",
+    "parent_sha256": "0eff2348bacea6fbb1f56cf3446e56df53cf3ec7b1b29a35a711061d5fd023ea",
+    "runner_sha256": "fa026aa8c17452cdff1dc03907f14d05ee4601a7287db93d38d93ab76de11926",
+    "defect_reproduced": true,
+    "query_deadline_accepted": false,
+    "broad_compatibility_accepted": false
+  },
+  "auditor_sha256": "cb07eebef68a10b7d0a6e0b33bc643fc3fe18d9a1f0a49030f54417271a8e74e",
+  "cohort": "build/aspect-window-pause-query-failure-01",
+  "frozen_files": 40,
+  "files_manifest_sha256": "03b182f89ea5f22f6f04a227c032024654efacbba79aaeeba60c24fc40f188eb",
+  "source_inspection": "runtime_serial_wait_second calls runtime_serial_pause(18). Its loop calls runtime_console_cancel_poll, which delegates to transport-only runtime_when_transport_poll; this does not perform normal receive/parser work. The later WAITFOR handles the queued CPR. This source path is consistent with the observed delay; no separate query parser has been substituted.",
+  "next_work": "Investigate receive/WHEN scheduling during explicit delays and preserve normal script matching, cancellation, window keys and UART/lease ownership. Add actual DOS regressions before claiming a general pause-time reply fix.",
+  "scope": "Actual DOS parent/ASPECT/cooperative window and emulated UART. Owned peer sends HOLD at2 seconds after connect, then CPR at3 seconds; the script executes PAUSE4 between the HOLD and END waits. Correct logical cursor reply, window/render witnesses, exact whole wire and42-byte before/after hardware restoration verified independently. The declared one-second query deadline fails. Not stock-BBS timeout, SIP/audio or physical modem evidence."
+}

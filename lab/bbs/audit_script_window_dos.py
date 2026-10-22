@@ -8,9 +8,9 @@ sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 read=lambda p:json.loads(p.read_text())
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--label',required=True)
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--label',required=True);p.add_argument('--baseline-label',default='script-window-compat-02')
  p.add_argument('--cohort',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
- assert re.fullmatch(r'[A-Za-z0-9_-]+',a.label)
+ assert re.fullmatch(r'[A-Za-z0-9_-]+',a.label) and re.fullmatch(r'[A-Za-z0-9_-]+',a.baseline_label)
  cohort=a.cohort.resolve();target=a.output.resolve()
  assert cohort.is_relative_to(ROOT/'build') and not cohort.exists()
  assert target.is_relative_to(ROOT/'docs/validation') and not target.exists()
@@ -43,7 +43,7 @@ def main():
     product=Path(directory)/binary
     subprocess.run(['nasm','-fbin',*flags,str(stage/source),'-o',str(product)],check=True)
     assert sha(product)==sha(stage/binary)
-  baseline=read(ROOT/'build/bbs-lab/recording'/name/'script-window-compat-02/result.json')
+  baseline=read(ROOT/'build/bbs-lab/recording'/name/a.baseline_label/'result.json')
   previous=bytes.fromhex(baseline['sessions']['record']['user_hex']);suffix=payload+b'+++ATH\r';assert previous.endswith(suffix)
   expected=previous[:-len(suffix)]+payload
   sent,_=Telnet().feed((out/'bbs-sent.bin').read_bytes())
@@ -77,7 +77,7 @@ def main():
  result=dict(passed=True,selected_stock_BBS_script_window_accepted=True,current_audio_accepted=False,
   full_local_command_actions_accepted=False,full_F02_accepted=False,full_F13_accepted=False,
   servers=servers,earlier_attempts=prior,custody_sha256=kept,
-  scope='Two production DOS sessions on the existing owned stock Synchronet/ENiGMA fixtures. Actual native reference/help, script continuation through read-only board navigation and regular menu after actual child exit pass. Entire typed streams, generated completion-gated BIOS keys, no relay errors, restored timer/DOS/UART and frozen source/binary custody checked. Blank hangup fixture matches the non-escape-aware test modem. Sustained/query/flow pressure during windows, broader scripts/actions, SIP/audio, physical Boca/SPA2102 and every full application gate remain open.')
+  scope='Two production DOS sessions on the existing owned stock Synchronet/ENiGMA fixtures. Actual script-time reference/help, script continuation through read-only board navigation and regular menu after actual child exit pass. Entire typed streams, generated completion-gated BIOS keys, no relay errors, restored timer/DOS/UART and frozen source/binary custody checked. Blank hangup fixture matches the non-escape-aware test modem. Sustained/query/flow pressure during windows, broader scripts/actions, SIP/audio, physical Boca/SPA2102 and every full application gate remain open.')
  with target.open('x') as f:f.write(json.dumps(result,indent=2)+'\n')
  print(json.dumps(dict(passed=True,servers=list(servers),custody_files=len(kept))))
 

@@ -5,9 +5,56 @@ actual VM, native receive/matcher path and terminal parser running while the
 reference/help window owns local dismissal keys. The
 [cooperative validation](validation/aspect-cooperative-window.json) records the
 current products and selected acceptance; the older capability8/9 window and
-stock BBS receipts below retain their historical product identities. Full local
-command actions, sustained-traffic coverage, fresh stock BBS/audio acceptance
-and physical modem integration remain open.
+stock BBS receipts below retain their historical product identities. New
+[load](validation/aspect-window-pressure.json),
+[recorder/replay](validation/bbs-cooperative-window-compat.json) and
+[stock-window](validation/bbs-cooperative-window.json) audits now cover the
+unchanged capability10 pair. Explicit PAUSE timing, real flow control, affected
+software audio, full local command actions and physical modem integration
+remain open.
+
+## Current load and stock BBS checks
+
+The owned pressure peer sends44 packets containing9,114 ANSI bytes. Each packet
+paints a separate32-cell tile with alternating red/green text and requests CPR.
+An independent audit reconstructs every packet, all44 reply positions/timings,
+all1,408 final characters and attributes, the complete outbound wire, normal
+child exit and42-byte hardware restoration. The slowest reply takes59.31ms.
+The passive observer samples96 visible-window ticks and a maximum26 queued
+bytes while the window is visible; these samples do not prove the absolute
+ring high-water mark. This is a paced COM1/38400 emulated-UART workload during
+WAITFOR. Transparent sockets do not represent real CTS/RTS stalls, and this
+campaign does not force software XOFF/XON thresholds or prove other waits.
+
+Fresh production runs on both existing owned stock BBS fixtures also pass:
+File/C recording, DOS ASPCOMP compilation, unedited replay and manual navigation
+in four sessions; reference/help, resumed scripted navigation and an ordinary
+menu after actual child exit in two more. Each BBS window is observed for133
+BIOS ticks. Independent audits check the actual server route, whole typed stream,
+normal UART/DOS return, timer restoration, generated BIOS driver and frozen
+source/binary captures. `lab/bbs/script_window_dos.py` and its auditor accept
+`--baseline-label` so a new product pair uses its own recorder/login evidence;
+the default historical label still requires identical parent/runner hashes.
+These window sessions pause before BBS navigation, so the owned pressure test
+provides separate evidence for incoming traffic during the open window.
+
+## Confirmed PAUSE-context deadline gap
+
+A separate actual DOS test first waits for HOLD with help open, executes PAUSE4,
+then waits for END. The peer sends a CPR query one second after HOLD. The correct
+reply is delayed3.188 seconds and misses the declared one-second deadline.
+[Failure evidence](validation/aspect-window-pause-query-failure.json) preserves
+exact wire/cursor behavior, normal child return and hardware restoration. This
+is a current failure on the same0eff2348/fa026aa8 pair, not an old blocking-window
+receipt or evidence that a particular stock BBS uses that timeout.
+
+Source inspection shows `runtime_serial_wait_second()` using
+`runtime_serial_pause(18)`. Its loop invokes transport-only cancellation/service,
+which leaves receive/parser work for a later ordinary wait. The queued query is
+processed when WAITFOR resumes. Next constrain any delay-time receive/WHEN
+change with actual DOS tests for matching, raw input, cancellation, local keys,
+carrier/error handling and the existing UART/renderer lifetime. The separate
+passing WAITFOR load test must not be presented as a general PAUSE-time fix.
 
 ## Cooperative production interaction
 

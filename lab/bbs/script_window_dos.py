@@ -20,7 +20,7 @@ def source(name):
   'fputs 5 "OK"\nfclose 5\nmessage "WINDOW DONE"\nendif\nendif\nendproc\n')
 
 async def main(a):
- assert re.fullmatch(r'[A-Za-z0-9_-]+',a.label)
+ assert re.fullmatch(r'[A-Za-z0-9_-]+',a.label) and re.fullmatch(r'[A-Za-z0-9_-]+',a.baseline_label)
  stage=ROOT/'build/bbs-lab/script-window'/a.name/a.label
  out=ROOT/'build/bbs-lab/results'/a.name/a.label
  assert not stage.exists() and not out.exists();stage.mkdir(parents=True);out.mkdir(parents=True)
@@ -34,7 +34,7 @@ async def main(a):
  # Freeze the independently accepted login prefix; require every subsequent
  # byte, including window dismissals and modeled hangup, rather than stripping
  # arbitrary controls to make the navigation tail match.
- baseline=ROOT/'build/bbs-lab/recording'/a.name/'script-window-compat-02/result.json'
+ baseline=ROOT/'build/bbs-lab/recording'/a.name/a.baseline_label/'result.json'
  prior=read(baseline);assert prior['passed'] and prior['binary_sha256']==sha(stage/'TERMINAL.EXE')
  assert prior['runner_sha256']==sha(stage/'ASPECT.EXE')
  payload=b'TQ' if a.name=='synchronet' else b'M\rQ\r';hangup=b'+++ATH\r'
@@ -148,5 +148,5 @@ async def main(a):
  assert result['passed'],'Preserve the failed BBS window attempt and inspect its artifacts'
 
 if __name__=='__main__':
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('name',choices=('enigma','synchronet'));p.add_argument('--label',required=True)
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('name',choices=('enigma','synchronet'));p.add_argument('--label',required=True);p.add_argument('--baseline-label',default='script-window-compat-02')
  asyncio.run(main(p.parse_args()))
