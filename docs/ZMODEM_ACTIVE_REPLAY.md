@@ -26,6 +26,14 @@ current DOS-to-stock-BBS software-audio acceptance remains a separate campaign.
 The counts and wrapper-selected1200bps experiment below describe the earlier
 [active-recovery checkpoint](validation/zmodem-active-replay.json).
 
+The [independent lrzsz follow-up](validation/zmodem-native-conservative-lrzsz.json)
+adds two actual DOS automatic-receive sessions for this same terminal binary.
+CRC16 and CRC32 each pass empty, one-byte and65797-byte all-octet files with
+native256-byte synchronous offers, exact passive source/CRC/EOF/finish checks,
+post-transfer keyboard/DSR and normal DOS/UART/IRQ restoration. It is separate
+from the stock-helper host experiments and current stock ENiGMA audio campaign;
+the direct harness has no per-byte opposite-control timing evidence.
+
 The opt-in `zm_run_checked_profile` API accepts a far readback verifier in
 addition to the existing callback table. Legacy APIs pass no verifier and keep
 their existing mismatch policy. The normal terminal selects the checked API.

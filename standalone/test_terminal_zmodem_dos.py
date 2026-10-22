@@ -127,9 +127,11 @@ exit
   checks['no_manual_transfer_keys']='a-r' not in keys and 'f2' not in keys and 'enter' not in keys
  if r['direction']=='rx':
   from check_zmodem import h
-  checks['requested_credit_on_wire']=bytes(peer.wire).count(h(1,0x23000000|(a.receive_credit or 8192)))>=len(r['files'])+1
+  receive_flags=33 if a.receive_credit is not None and a.receive_credit<8192 else 35
+  checks['requested_credit_on_wire']=bytes(peer.wire).count(h(1,(receive_flags<<24)|(a.receive_credit or 8192)))>=len(r['files'])+1
   if a.receive_credit is not None and a.receive_credit!=8192:
    checks['default_credit_not_on_wire']=h(1,0x23002000) not in peer.wire
+   checks['overlap_not_offered']=h(1,0x23000000|a.receive_credit) not in peer.wire
  if r.get('sender_helper'):
   checks['explicit_helper_unchanged']=hashlib.sha256(Path(r['sender_helper']).read_bytes()).hexdigest()==a.sender_helper_sha256
  (out/'events.json').write_text(json.dumps(peer.events,indent=2)+'\n')

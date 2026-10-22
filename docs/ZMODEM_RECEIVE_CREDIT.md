@@ -45,6 +45,16 @@ experiment forbids rewriting any complete offer and passes independent
 source/CRC/EOF/ZFIN/OO/opposite-control audits. These host experiments do not
 establish the current DOS-to-stock-BBS audio workflow or physical acceptance.
 
+The [fresh independent DOS interoperability record](validation/zmodem-native-conservative-lrzsz.json)
+also passes two full automatic-receive sessions against pinned lrzsz, one with
+CRC16 and one with CRC32. Each receives empty, one-byte and65797-byte all-octet
+files with native credit256/flags33, then returns to keyboard/DSR interaction
+and normal DOS/UART/IRQ restoration. A separate passive audit checks exact
+source bytes, CRCs, file positions, EOF/ZFIN/OO and every actual receive offer.
+The harness has no per-byte timestamps, so it supplies no opposite-control
+causality or audio/BBS/hardware acceptance. The older linked/DOS validation
+record above retains its earlier binary, offer flags and case counts.
+
 Small advertised credit alone is insufficient for the stock SEXYZ sender:
 the [stock measurements](validation/sexyz-receive-credit-stock.json) show that
 it can still send8192-byte packets after a256-byte offer. The separately pinned

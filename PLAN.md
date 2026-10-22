@@ -16,6 +16,13 @@ host cases,99 actual DOS cases,64 file-owner fault assertions,14 linked recovery
 cases and160 ordinary linked cases. The strict helper experiments reject any
 rewritten offer. Full recorder/application work and F01–F16 remain open.
 
+The [native conservative independent DOS follow-up](docs/validation/zmodem-native-conservative-lrzsz.json)
+passes full automatic reception against pinned lrzsz in both CRC16 and CRC32.
+Each receives empty, one-byte and65797-byte all-octet files, with native credit256/
+flags33 verified on the wire. Passive exact-source/CRC/position/EOF/ZFIN/OO,
+post-transfer keyboard/DSR and normal DOS/UART/IRQ checks pass. Its transport
+has no per-byte timing; stock-BBS/audio and physical acceptance remain separate.
+
 The [fresh isolated ENiGMA larger-file audio run](docs/validation/current-enigma-credit-pressure-download-audio-02.json)
 now passes78 producer/independent checks and11 verifier negatives. That campaign's
 source-built DOS terminal installs65797 exact bytes with native `/Z:256`, full
