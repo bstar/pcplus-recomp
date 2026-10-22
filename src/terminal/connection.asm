@@ -438,6 +438,13 @@ terminal_connection_poll_impl:
  out dx,al
 .finished:
  call connection_uart_clear_service
+ ; This MODEM attempt/session is complete, including cancellation before DCD
+ ; was ever observed. Its peer pause and driver-owned flow must not leak into
+ ; the next initialization. Retire metadata atomically; send no XON/XOFF here.
+ pushf
+ cli
+ call connection_flow_retire
+ popf
  mov word [connection_state],0
  cmp word [connection_status],5
  jne .done

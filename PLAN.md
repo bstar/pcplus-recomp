@@ -1,5 +1,18 @@
 # Complete DOS rebuild plan
 
+[Manual reconnect flow lifetime](docs/MANUAL_RECONNECT.md) now passes an
+independent old/new actual DOS SOFT/BOTH audit. Alt-H under XOFF times out and
+drops DTR; the old parent then sends no retry init, while the corrected parent
+opens a second connection with exact modem/manual/query/accounting and hardware
+cleanup. Four linked cases also cover canceled initialization before DCD high.
+Completed MODEM attempts retire old flow atomically without sending control
+bytes. Existing46 connection/42 carrier/eight startup ABI/13 attached PROGRAM
+cases pass;26 products rebuild without originals. Current parents1600a5b3/
+2d59d6fc/0acebeaf retain318/170 code and112/64 data spare, child183f852d unchanged.
+Actual DOS canceled initialization, DTR-disabled/ineffective hangup, other DCD/
+flow pressure, current-parent broader acceptance and all full F01–F16/physical
+requirements remain open. Earlier checkpoints retain their recorded products.
+
 [Startup retention code placement](docs/PROGRAM_STARTUP_BANK.md) moves the pure
 initializer body to CONFIG_CODE behind its unchanged near entry. Independent
 source/ABI/map audit frees164 resident-code bytes: normal318 spare, mouse170;

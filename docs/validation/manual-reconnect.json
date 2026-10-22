@@ -1,0 +1,54 @@
+{
+  "passed": true,
+  "manual_hangup_reconnect_component_accepted": true,
+  "physical_hardware_accepted": false,
+  "full_application_accepted": false,
+  "baseline_parent_sha256": "a31eb517eab4732c73b71808fb7c794948bed2368f8e616d0bc3e2e7ce076ca2",
+  "parent_sha256": "1600a5b37094d5a3b666ffee6bf1da387dad7a7435a332be76618975c47bcdab",
+  "baseline": {
+    "soft": {
+      "passed": true,
+      "connections": 1,
+      "accounting_delta": 1,
+      "modem_commands": 2,
+      "wire_sha256": "1ee1b6007181903add727b08ade14080a868da623249fc1500ccc97a694c134d",
+      "DTR_close_after_XOFF_seconds": 2.5984208170557395,
+      "manual_query_seconds": null
+    },
+    "both": {
+      "passed": true,
+      "connections": 1,
+      "accounting_delta": 1,
+      "modem_commands": 2,
+      "wire_sha256": "1ee1b6007181903add727b08ade14080a868da623249fc1500ccc97a694c134d",
+      "DTR_close_after_XOFF_seconds": 2.597557891975157,
+      "manual_query_seconds": null
+    }
+  },
+  "fixed": {
+    "soft": {
+      "passed": true,
+      "connections": 2,
+      "accounting_delta": 2,
+      "modem_commands": 4,
+      "wire_sha256": "b5a62b7e19cabee3c7f4cf33001fd49573034c0bdaaa04801db3cea22c501ab4",
+      "DTR_close_after_XOFF_seconds": 2.5980146339861676,
+      "manual_query_seconds": 0.00780078605748713
+    },
+    "both": {
+      "passed": true,
+      "connections": 2,
+      "accounting_delta": 2,
+      "modem_commands": 4,
+      "wire_sha256": "b5a62b7e19cabee3c7f4cf33001fd49573034c0bdaaa04801db3cea22c501ab4",
+      "DTR_close_after_XOFF_seconds": 2.5974523030454293,
+      "manual_query_seconds": 0.007776008918881416
+    }
+  },
+  "linked_hangup_cancel_cases": 4,
+  "source_products": 26,
+  "cohort": "build/manual-reconnect-flow/accepted-01",
+  "files_manifest_sha256": "2ee6d7ed38557da8b81b08b9a7c68a0bccfa521105d12932932f9d79e97e229d",
+  "auditor_sha256": "9266ec7e027b97b72c0dedacb0b70d76a4fea64a9656a07ad82aa81ab6c600a0",
+  "scope": "Two old/new actual8086 SOFT/BOTH Alt-H under XOFF cases. Configured sender timeout then DTR drop closes first BBS socket; no peer XON or first-session close. Old parent cannot start second init, corrected parent opens second socket with exact init/dial/manual/query/accounting and full hardware cleanup. Four linked cases also cover canceled initialization before DCD high; that cancellation path is hardware-modeled, not actual DOS. Existing APIs and DIRECT lifetime remain separate regressions. No physical or full F01-F16 acceptance."
+}

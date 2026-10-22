@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Manual reconnect](MANUAL_RECONNECT.md) now retires completed MODEM flow state
+before idle. Independent old/new actual DOS SOFT/BOTH cases reproduce the old
+missing second dial after blocked Alt-H/DTR completion and accept the corrected
+second connection/manual query. Four linked cases also cover pre-DCD dial
+cancellation;46 connection/42 carrier/eight startup ABI/13 attached PROGRAM and
+26-product source rebuilds pass. Actual DOS canceled initialization, other
+abort/DCD/pressure policies and broader current-parent acceptance stay open.
+No full application or hardware gate closes.
+
 [Startup retention placement](PROGRAM_STARTUP_BANK.md) now frees164 near-code
 bytes, leaving318/170 normal/mouse bytes spare with near-data112/64 unchanged.
 Eight linked ABI cases,60 PROGRAM inputs,13 attached DOS PROGRAM and two DOS
