@@ -65,11 +65,11 @@ segments, missing relocations and non-idle initialized fields.
 ./tools/build test-capture-reservation
 ```
 
-The next implementation step is a production recorder file adapter: exclusive
-sibling scratch creation, certain close before publication, explicit replacement
-consent, preserved originals and checked backup/restore cleanup. Its private
-probe must remain installed while any handle or recovery path is unresolved.
-Then connect Record start/cancel/stop and foreground RX/successful user TX to
+The [production recorder adapter](RECORDING_FILE.md) now implements exclusive
+sibling scratch creation, checked publication and backup/restore cleanup. Its
+private probe stays installed while any handle or recovery path is unresolved.
+Its [bank integration](RECORDING_BANK.md) is verified separately. Next make room
+for foreground owner state and connect Record start/cancel/stop and RX/successful user TX to
 the existing recorder core, with explicit transfer/script/child/setup/port/exit
 guards and actual DOS compiler/replay tests. Current-binary BBS/audio and physical
 acceptance, the full recorder and all F01–F16 application gates remain open.

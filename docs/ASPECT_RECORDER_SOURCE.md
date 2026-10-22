@@ -74,10 +74,11 @@ This target builds the maintained compiler/runner and creates fresh owned test
 directories. The [shared canonical reservation prerequisite](CAPTURE_RESERVATION.md) now
 supports recorder target/scratch identities alongside all four existing sinks.
 It preserves their ABIs and tests real separate-bank calls, aliases, reentry and
-modeled uncertain ownership. The scratch publisher itself remains to implement.
+modeled uncertain ownership. The [checked publisher](RECORDING_FILE.md) and its
+[code-bank integration](RECORDING_BANK.md) now pass separate component campaigns.
 
 The component is not yet connected to the terminal's Record command.
-Remaining work is the exclusive source-file adapter, start/cancel/stop UI and
+Remaining work is foreground owner storage, start/cancel/stop UI and
 foreground taps for received prompts and successfully emitted user/binding data.
 Transfers, scripts, child programs, setup/port moves and error/exit paths need
 explicit owner exclusion and cleanup tests before normal publication. Modem/BBS

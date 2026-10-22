@@ -1,5 +1,17 @@
 # Complete DOS rebuild plan
 
+The [recorder bank integration](docs/RECORDING_BANK.md) now places the core and
+publisher in CONFIG_CODE with resident DOS callbacks. Sixteen ordinary and16
+distinct-bank actual DOS cases preserve identical statuses/source/ASX/wire data.
+Processed-text capture uses eight public near/far entries and five resident
+services. The rebuilt terminal passes11 actual DOS capture scenarios,24 linked
+capture inputs,27 history inputs,78 ZMODEM workflows,518 ABI mutations and three
+far-code runtime cases. There are150 checked bridge pairs. Resident code has506
+bytes spare; near data has272 before allocating the326-byte recorder owner.
+Next resolve that data budget, then add initialized foreground owner state,
+Record UI/recovery notices, taps and exclusions. No foreground Record or full
+F01–F16 gate is accepted by this checkpoint.
+
 The [checked recorder publisher](docs/RECORDING_FILE.md) now passes31 host-model
 and16 actual DOS publication/compiler/UART cases. NEW refuses existing targets;
 explicit REPLACE preserves the original through recording and uses checked

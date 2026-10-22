@@ -86,3 +86,18 @@ CONFIG_ZERO _config_terminal_auto_start,_terminal_auto_start
 CONFIG_ZERO _config_terminal_auto_ticks,_terminal_auto_ticks
 CONFIG_REGISTER config_memmove_service_,memmove_
 CONFIG_ENTRY _live_setup_transfer_settings,1
+; Processed-text capture retains its public near ABI and near ownership state.
+CONFIG_ENTRY _capture_session_initialize,0
+CONFIG_ENTRY _capture_session_begin,3
+CONFIG_ENTRY _capture_session_put,2
+CONFIG_ENTRY _capture_session_flush,0
+CONFIG_ENTRY _capture_session_stop,0
+CONFIG_ENTRY _capture_session_pause,0
+CONFIG_ENTRY _capture_session_poll,2
+CONFIG_ENTRY _capture_session_shutdown,0
+CONFIG_ZERO _config_capture_initialize,_capture_file_initialize
+CONFIG_CDECL _config_capture_validate,_capture_file_validate_path,2
+CONFIG_CDECL _config_capture_begin,_capture_file_begin,2
+CONFIG_CDECL _config_capture_append,_capture_file_append,2
+CONFIG_ZERO _config_capture_cleanup,_capture_file_cleanup
+CONFIG_REGISTER config_strlen_service_,strlen_

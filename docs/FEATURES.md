@@ -4,7 +4,10 @@ The [recorder publisher component](RECORDING_FILE.md) passes31 host-model cases
 and16 actual DOS publication/compiler/UART sessions. It reserves canonical
 target/scratch/backup identities, implements explicit NEW/REPLACE and retains
 original backup plus complete stage if restoration fails. The terminal still
-needs code-bank integration, Record UI, foreground taps and owner exclusions.
+needs Record UI, foreground taps and owner exclusions. The
+[bank integration](RECORDING_BANK.md) links the recorder/publisher with14 public
+banked functions, nine resident callbacks and checked call relocations. Actual
+ordinary/banked DOS output matches; near-data allocation remains required.
 This component closes no full F01–F16 gate.
 
 The [source-owned recorder core](ASPECT_RECORDER_SOURCE.md) now passes17 host,

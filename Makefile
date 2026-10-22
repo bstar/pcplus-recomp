@@ -1363,6 +1363,7 @@ test: test-recording-file
 test-recording-file: aspect-runner aspect-compiler-dos
 	python3 standalone/check_recording_file.py --output build/recording-file/host-make-$(shell date +%s%N)
 	python3 standalone/test_recording_file_dos.py --output build/recording-file/DOS-make-$(shell date +%s%N)
+	python3 standalone/test_recording_file_dos.py --banked --output build/recording-file/banked-DOS-make-$(shell date +%s%N)
 test: test-aspect-recorder
 test-aspect-recorder: aspect-runner aspect-compiler-dos
 	python3 standalone/check_aspect_recorder.py --output build/aspect-recorder/host-make-$(shell date +%s%N)

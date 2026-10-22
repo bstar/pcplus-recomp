@@ -111,6 +111,8 @@ c_sources += [ROOT/'src/transfer'/name for name in ['zmodem_autostart.c','termin
 c_sources += sorted((ROOT/'src/capture').glob('*.c'))
 c_sources += sorted((ROOT/'src/printer').glob('*.c'))
 c_sources += [ROOT/'src/aspect/renderer_client.c',ROOT/'src/aspect/renderer_policy.c']
+c_sources += [ROOT/'src/aspect/recorder.c']
+c_sources += sorted((ROOT/'src/recording').glob('*.c'))
 c_sources += [ROOT/'src/status/status_formatter.c']
 if args.mouse:c_sources += [ROOT/'src/mouse/owner.c',ROOT/'src/mouse/terminal.c']
 config_sources={ROOT/'src/directory/directory_live.c',ROOT/'src/config/live_configuration.c',ROOT/'src/config/live_setup_owner.c'}
@@ -128,13 +130,20 @@ config_sources.update({ROOT/'src/transfer/ymodem.c',ROOT/'src/transfer/batch_hea
 config_sources.update({ROOT/'src/transfer'/name for name in ['zmodem.c','zmodem_wire.c','zmodem_name.c','terminal_zmodem.c']})
 config_sources.add(ROOT/'src/transfer/download_compare.c')
 config_sources.add(ROOT/'src/capture/capture_reservation.c')
+config_sources.add(ROOT/'src/capture/capture_session.c')
+config_sources.update({ROOT/'src/recording/file.c',ROOT/'src/aspect/recorder.c'})
 config_aliases={'terminal_script_prepare':'terminal_script_prepare_impl'}
 config_aliases.update({name:name+'_impl' for name in ['directory_live_decode','directory_live_read','directory_live_read_context','directory_live_context_matches','live_configuration_decode','live_setup_bind','live_setup_begin','live_setup_finish','live_setup_abort','live_setup_finish_policy','live_setup_acknowledge']})
 config_aliases.update({name:'config_'+name+'_service' for name in ['memcpy','memset','memcmp','strchr','strcmp']})
 config_aliases.update({name:name+'_impl' for name in ['terminal_preferences_read','terminal_directory_preferences_read','live_setup_transfer_settings']})
+config_aliases.update({name:name+'_impl' for name in ['capture_session_initialize','capture_session_begin','capture_session_put','capture_session_flush','capture_session_stop','capture_session_pause','capture_session_poll','capture_session_shutdown']})
+config_aliases.update({name:'config_capture_'+short+'_service' for name,short in {
+ 'capture_file_initialize':'initialize','capture_file_validate_path':'validate',
+ 'capture_file_begin':'begin','capture_file_append':'append','capture_file_cleanup':'cleanup'}.items()})
 config_aliases.update({name:name+'_impl' for name in ['terminal_autostart_initialize','terminal_autostart_flush','terminal_autostart_poll','terminal_autostart_input']})
 config_aliases.update({name:'config_'+name+'_service' for name in ['terminal_auto_deliver','terminal_auto_allowed','terminal_auto_start','terminal_auto_ticks']})
 config_aliases['memmove']='config_memmove_service'
+config_aliases['strlen']='config_strlen_service'
 config_aliases.update({'terminal_import_decode':'config_terminal_decode_service','modem_import_decode':'config_modem_decode_service','prm_dos_load':'config_prm_read_service','directory_dos_read':'config_directory_read_service','directory_number_expand':'config_number_expand_service'})
 config_aliases.update({'capture_fs_canonical':'config_canonical_service','live_modem_expand':'config_live_expand_service'})
 config_aliases.update({'xlt_dos_read':'xlt_dos_read_impl',
@@ -159,7 +168,7 @@ helper_adapters={};zmodem_helper_adapters={}
 for source in c_sources:
  obj=OUT/(source.stem+'.obj');objects.append(str(obj))
  options=['-nt=CONFIG_CODE','-nc=FARCODE']+['-d'+name+'='+alias for name,alias in config_aliases.items()] if source in config_sources else []
- if source.parent==ROOT/'src/aspect':options=['-nt=ASPECT_CODE','-nc=FARCODE']
+ if source.parent==ROOT/'src/aspect' and source not in config_sources:options=['-nt=ASPECT_CODE','-nc=FARCODE']
  if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
  if args.mouse:
   options+=['-dTERMINAL_MOUSE']
@@ -198,6 +207,7 @@ inputs += [ROOT/'src/config/resource_path.h']
 inputs += sorted((ROOT/'src/directory').glob('*.h'))+sorted((ROOT/'src/directory').glob('*.inc'))
 inputs += sorted((ROOT/'src/process').glob('*.h'))
 inputs += sorted((ROOT/'src/capture').glob('*.h'))
+inputs += sorted((ROOT/'src/recording').glob('*.h'))+[ROOT/'src/aspect/recorder.h']
 inputs += sorted((ROOT/'src/printer').glob('*.h'))
 inputs += sorted((ROOT/'src/clipboard').glob('*.h'))
 inputs += sorted((ROOT/'src/redisplay').glob('*.h'))

@@ -7,9 +7,10 @@ ASP source. Positive DOS sessions compile that source with the maintained DOS
 compiler and replay it through the production UART runner, including all256
 byte values and a2048-byte payload.
 
-This is a component checkpoint. The default terminal does not yet link the
-publisher or expose its Record command. Foreground taps, owner exclusions and
-code-bank integration remain required; all F01–F16 application gates remain open.
+This is a component checkpoint. The default terminal now
+[links the banked publisher](RECORDING_BANK.md), but has no foreground recorder
+owner or Record command. Foreground taps and owner exclusions remain required;
+all F01–F16 application gates remain open.
 
 `src/recording/file.h` exposes begin, receive, transmit, flush, stop, cancel and
 explicit cleanup operations. Initialize the owner to zero once. Callback and
@@ -43,8 +44,9 @@ Recovery is observable through phase, ownership flags and separate error fields:
 | Reservation release fails | Keep the claim and recovery state; explicit cleanup can retry release. |
 
 The first error stays primary. DOS errors, close/cleanup/publication/restoration
-errors and reservation statuses remain separate. A counter-limit failure is
-`RF_OVERFLOW`, with no fabricated DOS error. Cancellation can retain its primary
+errors and reservation statuses remain separate. An input-byte counter limit
+reports `RF_OVERFLOW`; the recorder's source-output limit reports `RF_WRITE`.
+Neither fabricates a DOS error. Cancellation can retain its primary
 `RF_CANCELLED` return while cleanup fails; callers must inspect phase and flags.
 Repeated stop after save performs no further IO.
 
@@ -68,8 +70,9 @@ Run fresh component campaigns with the pinned toolchain:
 ./tools/build test-recording-file
 ```
 
-Next, place the implementation in the terminal's code banks, verify its ABI and
-memory budget, bind foreground received prompts and successfully emitted user
-or binding bytes, add Record UI/recovery notices, and enforce transfer, script,
+The [bank integration](RECORDING_BANK.md) now verifies the compiled ABI and
+code layout. Next make room for foreground owner state, bind received prompts
+and successfully emitted user or binding bytes, add Record UI/recovery notices,
+and enforce transfer, script,
 child, setup, port-change and exit guards. Then test recording, DOS compilation
 and replay from the actual foreground terminal before new BBS acceptance.

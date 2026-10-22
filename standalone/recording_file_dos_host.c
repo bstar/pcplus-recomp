@@ -47,6 +47,15 @@ int main(int argc,char **argv)
  before=_dos_getvect(0);ops.write=output;ops.close=close_output;
  if(_chdrive(3)||chdir("\\"))return 89;
  if(!freopen("C:\\ERROR.TXT","wb",stderr))return 90;
+#ifdef RECORDING_BANKED
+ report=fopen("C:\\BANK.TXT","w");if(!report)return 110;
+ fprintf(report,"%u %u %u %u\n",FP_SEG(main),FP_SEG(recording_file_begin),
+  FP_SEG(aspect_recorder_start),FP_SEG(ops.close));
+ fclose(report);
+ if(FP_SEG(main)==FP_SEG(recording_file_begin)||
+    FP_SEG(recording_file_begin)!=FP_SEG(aspect_recorder_start)||
+    FP_SEG(main)!=FP_SEG(ops.close))return 111;
+#endif
  if(capture_file_initialize()||snapshot_file_initialize()||monitor_file_initialize())return 91;
  if(!strcmp(name,"replace")||!strcmp(name,"readonly-target")||!strcmp(name,"restore-race")){
   if(seed("C:\\CASE.ASP","ORIGINAL"))return 92;mode=RF_REPLACE;

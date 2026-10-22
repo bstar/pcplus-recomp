@@ -27,6 +27,7 @@ DRIVER = (ROOT / 'standalone/recording_file_dos_host.c').read_text()
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--banked', action='store_true')
     args = parser.parse_args()
     out = args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
@@ -47,6 +48,8 @@ def main():
              ROOT / 'src/aspect/recorder.c', ROOT / 'src/aspect/recorder.h', ROOT / 'standalone/test_terminal.py',
              *sorted((ROOT / 'src/recording').glob('*.[ch]')),
              *[ROOT / 'src/capture' / name for name in ('capture_file.c', 'capture_file.h', 'capture_fs.c', 'capture_fs.h', 'capture_reservation.c', 'capture_reservation.h')]]
+    if args.banked:
+        extra += [ROOT / 'src/terminal/config_abi.inc', ROOT / 'src/terminal/far_bridge.inc']
     for path in extra:
         frozen[str(path.relative_to(ROOT))] = sha(path)
     for name, digest in frozen.items():
@@ -56,10 +59,42 @@ def main():
         assert sha(copy) == digest
     (out / 'start.json').write_text(json.dumps(dict(inputs=frozen), indent=2) + '\n')
     (out / 'driver.c').write_text(DRIVER)
-    subprocess.run(['wcl', '-q', '-bt=dos', '-0', '-ms', '-ecc', '-s', '-w4', '-we', '-k8192',
-                    '-i=' + str(ROOT / 'src/aspect'), '-i=' + str(ROOT / 'src/recording'),
-                    '-i=' + str(ROOT / 'src/capture'), '-i=' + str(ROOT), '-fm=RECORD.map', '-fe=RECORD.EXE',
-                    str(out / 'driver.c'), *[str(path) for path in extra if path.suffix == '.c' and path.name != 'recording_file_dos_host.c']], cwd=out, check=True)
+    base = ['-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we',
+            '-i=' + str(ROOT / 'src/aspect'), '-i=' + str(ROOT / 'src/recording'),
+            '-i=' + str(ROOT / 'src/capture'), '-i=' + str(ROOT)]
+    sources = [out / 'driver.c', *[p for p in extra if p.suffix == '.c' and p.name != 'recording_file_dos_host.c']]
+    if args.banked:
+        # Reuse the production declared CRT services and exact bridge macros.
+        names = ('memcpy', 'memset', 'memcmp', 'strchr', 'strcmp', 'strcpy', 'strlen')
+        abi = (ROOT / 'src/terminal/config_abi.inc').read_text()
+        declarations = []
+        for name in names:
+            line = f'CONFIG_REGISTER config_{name}_service_,{name}_'
+            assert line in abi.splitlines()
+            declarations.append(line)
+        bridge = ('BITS 16\nCPU 8086\n%include "far_bridge.inc"\n'
+                  'SEGMENT _TEXT public class=CODE use16\n'
+                  '%define CONFIG_REGISTER NEAR_NAMED_SERVICE\n' + '\n'.join(declarations) + '\n'
+                  'SEGMENT CONFIG_CODE public align=16 class=FARCODE use16\n'
+                  'GROUP CONFIG_GROUP CONFIG_CODE\n'
+                  '%undef CONFIG_REGISTER\n%macro CONFIG_REGISTER 2\n global %1\n'
+                  ' %1:\n call far %1 %+ _resident\n ret\n%endmacro\n' + '\n'.join(declarations) + '\n')
+        (out / 'bank.asm').write_text(bridge)
+        subprocess.run(['nasm', '-fobj', '-I' + str(ROOT / 'src/terminal') + '/',
+                        str(out / 'bank.asm'), '-o', str(out / 'bank.obj')], check=True)
+        objects = [out / 'bank.obj']
+        for source in sources:
+            obj = out / (source.stem + '.o')
+            flags = ['-ecc']
+            if source in (ROOT / 'src/aspect/recorder.c', ROOT / 'src/recording/file.c'):
+                flags = ['-nt=CONFIG_CODE', '-nc=FARCODE', *['-d' + n + '=config_' + n + '_service' for n in names]]
+            if source == out / 'driver.c':
+                flags += ['-dRECORDING_BANKED']
+            subprocess.run(['wcc', *base, *flags, '-fo=' + str(obj), str(source)], cwd=out, check=True)
+            objects.append(obj)
+        subprocess.run(['wcl', *base, '-k8192', '-fm=RECORD.map', '-fe=RECORD.EXE', *map(str, objects)], cwd=out, check=True)
+    else:
+        subprocess.run(['wcl', *base, '-ecc', '-k8192', '-fm=RECORD.map', '-fe=RECORD.EXE', *map(str, sources)], cwd=out, check=True)
     (out / 'sampler.asm').write_text(SAMPLER)
     (out / 'setup.asm').write_text('BITS 16\nCPU 8086\nORG 100h\nmov dx,3fbh\nmov al,80h\nout dx,al\nmov dx,3f8h\nmov al,12\nout dx,al\ninc dx\nxor al,al\nout dx,al\nmov dx,3fbh\nmov al,3\nout dx,al\nmov dx,3fch\nmov al,1\nout dx,al\nmov ax,4c00h\nint 21h\n')
     for source, binary in [('sampler', 'SNAP'), ('setup', 'SETUP')]:
@@ -167,6 +202,11 @@ exit
         checks['publisher_ownership_resolved_or_recovery_retained'] = status[8:11] == ([1, 1, 1] if name == 'restore-race' else [0, 0, 0])
         checks['publisher_probe_and_reentry_guards'] = status[13] == 0
         checks['DOS_owner_size_and_closed_handle'] = status[18] == 326 and status[15] == 0
+        if args.banked:
+            segments = list(map(int, (folder / 'BANK.TXT').read_text().split()))
+            checks['distinct_publisher_core_CS_and_resident_callbacks'] = (
+                len(segments) == 4 and segments[0] == segments[3] and
+                segments[1] == segments[2] and segments[0] != segments[1])
         temporary = {path.name for path in folder.glob('LPR*.TMP')}
         checks['only_owned_stage_removed_or_complete_recovery_retained'] = temporary == ({'LPR00001.TMP'} if name in ('scratch-collision', 'restore-race') else set())
         checks['no_unexpected_backup'] = len(list(folder.glob('LPR*.BAK'))) == (1 if name == 'restore-race' else 0)
@@ -201,7 +241,7 @@ exit
         print(json.dumps(dict(case=name, passed=result['passed'], bytes=len(wire))), flush=True)
     for name, digest in frozen.items():
         assert sha(ROOT / name) == sha(out / 'frozen-source' / name) == digest, name
-    result = dict(passed=all(case['passed'] for case in results), cases=results, inputs=frozen,
+    result = dict(passed=all(case['passed'] for case in results), banked=args.banked, cases=results, inputs=frozen,
                   binary_sha256=sha(out / 'RECORD.EXE'), captures_sha256={str(path.relative_to(out)): sha(path) for path in out.rglob('*')
                                   if path.is_file() and not path.is_relative_to(out / 'frozen-source')}, scope=__doc__)
     with (out / 'result.json').open('x') as stream:

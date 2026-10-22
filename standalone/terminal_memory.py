@@ -193,6 +193,32 @@ def inspect_terminal_memory(binary,map_path):
   assert all(c['relative_segment']!=config_seg for c in code_segments if c['name']!='CONFIG_CODE'),'Configuration CS aliases other code'
   assert address('terminal_config_code_start')==config_seg*16
   assert address('terminal_config_code_end')-address('terminal_config_code_start')==config_code['bytes'],'Incomplete configuration extent'
+  if '_recording_file_begin' in symbols:
+   publisher_names=['_recording_file_'+n for n in ('begin','transmit','receive','flush','stop','cancel','cleanup','conflict')]
+   core_names=['_aspect_recorder_'+n for n in ('start','transmit','receive','flush','stop','cancel')]
+   for name in publisher_names+core_names:
+    assert symbols[name][0]==config_seg,(name,'recording implementation outside CONFIG_CODE')
+    assert symbols[name][1]<config_code['bytes'],(name,'recording function outside bank extent')
+   table=address('_recording_dos_ops')
+   assert near_start<=table and table+36<=near_start+near_size
+   assert table+36<=module_bytes,'Recorder callback table relies on dirty BSS'
+   callbacks=struct.unpack('<18H',raw('_recording_dos_ops',36))
+   for i in range(9):
+    off,seg=callbacks[2*i:2*i+2]
+    assert seg==near_code['relative_segment'] and off<near_code['bytes'],('Recorder resident callback',i)
+    assert table+4*i+2 in relocations,('Recorder callback relocation',i)
+   # The DOS probe calls the far publisher; adapter reserve/release call their
+   # far canonical owner APIs. Check actual compiled targets and relocations.
+   body=image[start+near_code['relative_segment']*16:start+near_code['relative_segment']*16+near_code['bytes']]
+   sites=[]
+   for name in ('_recording_file_conflict','_capture_file_reserve','_capture_file_release'):
+    pattern=b'\x9a'+struct.pack('<HH',symbols[name][1],symbols[name][0])
+    assert body.count(pattern)==1,(name,'missing/duplicated recorder adapter call')
+    site=near_code['relative_segment']*16+body.index(pattern)
+    assert site+3 in relocations,(name,'recorder adapter relocation')
+    sites.append(site)
+   extra.update(recording_bank_functions_verified=14,recording_resident_callbacks_verified=9,
+                recording_adapter_far_call_sites=sites)
   if '_capture_file_reserved' in symbols or '_capture_reservation' in symbols:
    for name in ('_capture_file_reserve','_capture_file_release','_capture_file_reserved'):
     assert symbols[name][0]==config_seg,(name,'reservation operation outside CONFIG_CODE')
@@ -267,7 +293,7 @@ def inspect_terminal_memory(binary,map_path):
     else:assert len(fields)==3
     near_call(name+'_resident',target,prefix=prefix,suffix=suffix)
    config_bridges+=1
-  assert config_bridges==80,'Incomplete configuration ABI validation'
+  assert config_bridges==94,'Incomplete configuration ABI validation'
   bridges+=config_bridges
   extra['configuration_bridge_pairs_verified']=config_bridges
  # Four unchanged resident no-argument APIs now enter the banked transfer UI.
