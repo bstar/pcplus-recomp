@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "baseline",
+      "passed": true,
+      "parent_sha256": "1600a5b37094d5a3b666ffee6bf1da387dad7a7435a332be76618975c47bcdab",
+      "commands_hex": [
+        "415420202020202020202020202020202020201b41542020202020202020202020202020202020202020202020202020202020205a",
+        "4154443132372e302e302e313a3335343435"
+      ],
+      "responses": [
+        "ERROR",
+        "CONNECT 57600",
+        "NO CARRIER"
+      ],
+      "captures": {
+        "TEST.PRM": "fb1d6601d220e7ba52b0ceee93076a6acd56b3f1a526cfe64bb780d9291250d1",
+        "sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "dosbox.conf": "d681dec05a192e2e19ecea70bfc7461bd98230c8f5f320ef75ece91edad86f1b",
+        "dosbox.log": "ac8d52d2bd9cade220b2b6c3badd9ae6428b30a0b225abacfae92eecbb2969da",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "SCREEN.BIN": "3ad984ab960e50526cf0c2ebc65828621369311f255dd39f6935b6eb198e0a0a",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "87cdec505ad782ffb616db2f8048cd4c1149fcaf1ff0d7809c1665433db38865",
+        "screen.txt": "67263c8d56335bb376d09f63c16b14ee031bc96bc477319f422d0d68f8935a02",
+        "result.json": "09bcc68228c4ab97f34fd54afbddf0d4e9a4729f5f61a5ed03053533429a41e8",
+        "admitted-product/TERMINAL.EXE": "1600a5b37094d5a3b666ffee6bf1da387dad7a7435a332be76618975c47bcdab"
+      }
+    },
+    {
+      "case": "candidate",
+      "passed": true,
+      "parent_sha256": "1cbb4f8fa243f9ce63c3a2d0788d0f039c3cb481f8e03d267f77e039823a6ba0",
+      "commands_hex": [
+        "415420202020202020202020202020202020201b",
+        "41542020202020202020202020202020202020202020202020202020202020205a",
+        "4154443132372e302e302e313a3533343237"
+      ],
+      "responses": [
+        "OK",
+        "OK",
+        "CONNECT 57600",
+        "NO CARRIER"
+      ],
+      "captures": {
+        "TEST.PRM": "fb1d6601d220e7ba52b0ceee93076a6acd56b3f1a526cfe64bb780d9291250d1",
+        "sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "dosbox.conf": "bdf47de5975fc22e98398214487f40bb67d53fa37915ada0a3c72ebd13f8f865",
+        "dosbox.log": "0c2af81705308c5818d638e6b03f0131369e02f886db845d776d9e8049da215a",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "SCREEN.BIN": "3ad984ab960e50526cf0c2ebc65828621369311f255dd39f6935b6eb198e0a0a",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "87cdec505ad782ffb616db2f8048cd4c1149fcaf1ff0d7809c1665433db38865",
+        "screen.txt": "67263c8d56335bb376d09f63c16b14ee031bc96bc477319f422d0d68f8935a02",
+        "result.json": "83a793d73b8329ef95544cd6fe207597775c0f0e0dc2e0fa95558e2433906141",
+        "admitted-product/TERMINAL.EXE": "1cbb4f8fa243f9ce63c3a2d0788d0f039c3cb481f8e03d267f77e039823a6ba0"
+      }
+    }
+  ],
+  "checker_sha256": "9c9155da11d2535d762b4746b43294994813c856ebb628c589c6d17332f7c8af",
+  "base_checker_sha256": "438162021da140fda6b5b3ce9eea971ef5659b7216bd89df80fcab441096cdf3",
+  "scope": "Actual stock DOSBox-X modem parser; timed Escape during long configured initialization, followed by retry and ANSI replies. Old joins partial command and gets ERROR; candidate gets clean initialization OK. SOFTWARE backend accepts loopback address dialing; no such command is assumed for physical Boca. No physical modem acceptance."
+}

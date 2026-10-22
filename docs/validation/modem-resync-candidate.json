@@ -1,0 +1,54 @@
+{
+  "passed": true,
+  "candidate_only": true,
+  "canonical_accepted": false,
+  "physical_hardware_accepted": false,
+  "stock_backend_accepted": false,
+  "baseline_parent_sha256": "1600a5b37094d5a3b666ffee6bf1da387dad7a7435a332be76618975c47bcdab",
+  "parent_sha256": "1cbb4f8fa243f9ce63c3a2d0788d0f039c3cb481f8e03d267f77e039823a6ba0",
+  "cases": [
+    {
+      "case": "soft",
+      "parser_policy": "retained",
+      "passed": true,
+      "first_DCD_high_samples": 0,
+      "idle_pause": 0,
+      "online_ticks": 138,
+      "wire_sha256": "c8bc2522051469683dac16243d1d30fd35d30d2af40faf6edeb880fa405f607a"
+    },
+    {
+      "case": "both",
+      "parser_policy": "retained",
+      "passed": true,
+      "first_DCD_high_samples": 0,
+      "idle_pause": 0,
+      "online_ticks": 138,
+      "wire_sha256": "c8bc2522051469683dac16243d1d30fd35d30d2af40faf6edeb880fa405f607a"
+    },
+    {
+      "case": "soft",
+      "parser_policy": "cleared",
+      "passed": true,
+      "first_DCD_high_samples": 0,
+      "idle_pause": 0,
+      "online_ticks": 138,
+      "wire_sha256": "c8bc2522051469683dac16243d1d30fd35d30d2af40faf6edeb880fa405f607a"
+    },
+    {
+      "case": "both",
+      "parser_policy": "cleared",
+      "passed": true,
+      "first_DCD_high_samples": 0,
+      "idle_pause": 0,
+      "online_ticks": 138,
+      "wire_sha256": "c8bc2522051469683dac16243d1d30fd35d30d2af40faf6edeb880fa405f607a"
+    }
+  ],
+  "changed_product_sources": [
+    "src/terminal/connection.asm",
+    "src/terminal/modem_sender.asm"
+  ],
+  "patch_sha256": "43902ca6ae0ba79662c3882f898bd56ed8baa2660a601f5441d112adcdc6823e",
+  "auditor_sha256": "465d2b0491b8d822830320ac78155a30a2d3c38ef4c0e3e6741e94fc71be4d4b",
+  "scope": "Independently compare retained-parser failure with isolated retry-separator captures. Four actual DOS patched-DCD-lab SOFT/BOTH cases; source-bound unchanged configured initialization, exact UART stream, separate stale/empty command termination, no corrupted ATZ, hardware/vectors/accounting restored. Broader admission and physical validation remain open."
+}

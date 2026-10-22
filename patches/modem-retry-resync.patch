@@ -1,0 +1,95 @@
+--- a/src/terminal/connection.asm
++++ b/src/terminal/connection.asm
+@@ -11,6 +11,7 @@
+ extern terminal_option_mask,terminal_dial_target,terminal_modem_settings
+ extern terminal_directory_mode
+ extern terminal_modem_send_start_impl,terminal_modem_send_poll_impl
++extern terminal_modem_send_resync_start_impl
+ extern modem_response_slots
+ extern uart_port_msr,uart_port_mcr
+ extern uart_tx_paused,uart_flow_pending,uart_xoff_sent,uart_rts_lowered
+@@ -177,6 +178,12 @@
+  call start_dial
+  jmp .done
+ .send:
++ cmp byte [connection_resync],0
++ je .send_clean
++ mov byte [connection_resync],0
++ call terminal_modem_send_resync_start_impl
++ jmp .done
++.send_clean:
+  call terminal_modem_send_start_impl
+ .done:
+  restore
+@@ -396,6 +403,7 @@
+ .internal:
+  mov word [connection_status],7
+ .begin_abort:
++ mov byte [connection_resync],1
+  mov word [connection_state],7
+  call reset_clock
+  jmp .done
+@@ -507,6 +515,7 @@
+  call reset_clock
+  jmp .done
+ .cancel:
++ mov byte [connection_resync],1
+  mov word [connection_state],7
+  call reset_clock
+ .done:
+@@ -589,6 +598,7 @@
+ connection_carrier_seen: db 0
+ connection_mcr: db 0
+ connection_exit_pending: db 0
++connection_resync: db 0
+ connection_state: dw 0
+ ; Status0idle/1online/2responsefailure/3timeout/4cancel/5hangup/6carrierlost/7internal.
+ connection_status: dw 0
+--- a/src/terminal/modem_sender.asm
++++ b/src/terminal/modem_sender.asm
+@@ -9,7 +9,13 @@
+ GROUP MODEM_GROUP MODEM_CODE
+ extern connection_uart_write_service,connection_elapsed,terminal_modem_pause
+ global terminal_modem_send_start_impl,terminal_modem_send_poll_impl
++global terminal_modem_send_resync_start_impl
++terminal_modem_send_resync_start_impl:
++ call terminal_modem_send_start_impl
++ mov byte [sender_resync],1
++ ret
+ terminal_modem_send_start_impl:
++ mov byte [sender_resync],0
+  mov [sender_cursor],si
+  mov word [sender_delay],0
+  ret
+@@ -23,6 +29,8 @@
+  sub ax,[sender_tick]
+  cmp ax,[sender_delay]
+  jb .busy
++ cmp byte [sender_resync],0
++ jne .resync
+  mov si,[sender_cursor]
+  xor ax,ax
+  mov al,[si]
+@@ -36,6 +44,14 @@
+  jc .busy
+  mov word [sender_delay],1
+  jmp .accepted
++.resync:
++ mov al,13
++ call connection_uart_write_service
++ jc .busy
++ mov byte [sender_resync],0
++ mov [sender_tick],cx
++ mov word [sender_delay],1
++ jmp .busy
+ .nul:
+  xor al,al
+  call connection_uart_write_service
+@@ -62,6 +78,7 @@
+ global terminal_modem_code_end
+ terminal_modem_code_end:
+ SEGMENT _DATA public class=DATA use16
++sender_resync: db 0
+ sender_cursor: dw 0
+ sender_tick: dw 0
+ sender_delay: dw 0

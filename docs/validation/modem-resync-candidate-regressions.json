@@ -1,0 +1,77 @@
+{
+  "passed": true,
+  "candidate_only": true,
+  "canonical_accepted": false,
+  "physical_hardware_accepted": false,
+  "products": {
+    "terminal": {
+      "sha256": "1cbb4f8fa243f9ce63c3a2d0788d0f039c3cb481f8e03d267f77e039823a6ba0",
+      "resident_code_spare_bytes": 318,
+      "near_data_spare_bytes": 112
+    },
+    "terminal-mouse": {
+      "sha256": "b14074ec58869fe93bd56f3945cedecb825a0cfca958f5922efd4e8ec359edbc",
+      "resident_code_spare_bytes": 170,
+      "near_data_spare_bytes": 64
+    }
+  },
+  "reports": {
+    "normal_linked": {
+      "passed": true,
+      "report": "build/manual-resync-candidate-01/linked-resync-01.json",
+      "report_sha256": "be91b68fa7d72a79416a53b5c59f942219338225bc2fd695630967696d9e8c04",
+      "cases": 17
+    },
+    "mouse_linked": {
+      "passed": true,
+      "report": "build/manual-resync-candidate-01/linked-resync-mouse-01.json",
+      "report_sha256": "2e904a9dff4ad045e28bfea784653f51a59d554acd7e3ca82970414a30ea7bd0",
+      "cases": 17
+    },
+    "stock_DOS": {
+      "passed": true,
+      "report": "build/manual-resync-candidate-01/stock-connection-01/checks.json",
+      "report_sha256": "3e875ad77c2bba6ae3e1fae1919b43a5a0e25a72d2fc54b89aea841a5d43ea38",
+      "cases": 5
+    },
+    "existing_connection": {
+      "passed": true,
+      "report": "build/manual-resync-candidate-01/build/terminal/connection-checks.json",
+      "report_sha256": "953bf600b9e5fcb5a257a70890f8d6e86ecda5ec3c48371531526a37b1b1a5f4",
+      "cases": 8,
+      "inputs": 46
+    },
+    "fresh_source": {
+      "passed": true,
+      "report": "build/manual-resync-candidate-01/source-proof-01/result.json",
+      "report_sha256": "f8b1ac8803dbcce8aad56d3ee5933a7345058b99fc9f7650dbd884bb4d2fe6df",
+      "cases": 0,
+      "products": {
+        "terminal": "1cbb4f8fa243f9ce63c3a2d0788d0f039c3cb481f8e03d267f77e039823a6ba0",
+        "terminal-mouse": "b14074ec58869fe93bd56f3945cedecb825a0cfca958f5922efd4e8ec359edbc"
+      },
+      "source_files": 398,
+      "original_inputs": []
+    },
+    "carrier_flow_policy": {
+      "passed": true,
+      "cases": 42,
+      "report": "build/manual-resync-candidate-01/build/carrier-policy-01/checks.json",
+      "report_sha256": "295396296549542475ed0df8af9cea4ad2cbb6f99b35d464d416b61b5a83b95a"
+    },
+    "stock_softmodem_old_new": {
+      "passed": true,
+      "cases": 2,
+      "report": "build/manual-resync-candidate-01/stock-softmodem-03/checks.json",
+      "report_sha256": "ac463d7015ff2faa9b025a82f9e60f9377227f489f8a263b5db1793ca7aaccef"
+    }
+  },
+  "tools": {
+    "standalone/check_modem_resync.py": "bfe6582a8181d5a18e55c25b3db29dc86fe7bf0d5fef7d26668f20bd60de6d9a",
+    "standalone/test_modem_resync_connection_dos.py": "c10f01c031d1065e7eae94e4b6672cedd216ef9b7c865a6450d5bda7733e637f",
+    "standalone/prove_modem_resync_candidate.py": "b6cccdcff1a6625556805c47f36d487f0f09a034d41341947dcbe3faf3a49e76",
+    "standalone/test_modem_resync_softmodem_dos.py": "9c9155da11d2535d762b4746b43294994813c856ebb628c589c6d17332f7c8af"
+  },
+  "patch_sha256": "43902ca6ae0ba79662c3882f898bd56ed8baa2660a601f5441d112adcdc6823e",
+  "scope": "Regression report inventory, distinct from independent raw DOS candidate audit. Linked UART/BIOS boundaries modeled; stock DOS cases use an owned peer. Fresh normal/mouse source builds reproduce two products, not the entire application."
+}

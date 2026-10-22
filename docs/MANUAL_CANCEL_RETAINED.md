@@ -18,7 +18,7 @@ The owned peer policy is motivated by pinned DOSBox-X 2026.07.02 softmodem
 source: `setDTR` starts hangup handling only when connected; `DoCommand` resets
 the parser on command termination, rejecting input without an AT prefix.
 See [upstream source](https://github.com/joncampbell123/dosbox-x/blob/dosbox-x-v2026.07.02/src/hardware/serialport/softmodem.cpp).
-This source observation does not establish an actual stock-backend or Boca
+This source observation alone does not establish an actual stock-backend or Boca
 result. The tests use the separately pinned patched DCD lab and an explicit
 owned peer, as documented in the earlier acceptance.
 
@@ -52,10 +52,57 @@ declared hashes before any candidate edits.
 Recovery is in progress in an isolated candidate tree. Its hypothesis is one
 paced carriage return before retry initialization following an aborted MODEM
 attempt, keeping the configured initialization string intact. The isolated
-`build/manual-resync-candidate-01` passes two retained-parser SOFT/BOTH DOS
-producer cases: the stale `A` terminates separately, then clean `ATZ` and dialing
-proceed. This is preliminary producer evidence, pending independent audit.
-It is not yet accepted or installed in the main build. Retained/cleared parser policies,
-stall/cancellation during synchronization, ordinary first connections and
-configured initialization behavior need validation before adoption. Full modem
-and application requirements, and physical Boca/SPA2102 testing, remain open.
+`build/manual-resync-candidate-01` passes four retained/cleared-parser SOFT/BOTH
+DOS cases: the stale `A` or empty command terminates separately, then clean
+`ATZ` and dialing proceed. The [independent candidate audit](validation/modem-resync-candidate.json)
+checks both parser policies and binds the exact [proposed patch](../patches/modem-retry-resync.patch)
+to the admitted old/new product sources. It accepts these candidate cases only;
+the main build remains unchanged while an earlier frozen audio run is active.
+
+Normal and mouse candidates each pass 17 linked instruction cases covering
+CTS/THRE/XOFF stalls before the separator, repeated cancellation, configurable
+initialization, a CR pause character, and the configured high-carrier skip.
+The existing 46-input connection suite and 42 carrier-flow policy cases also
+pass on the normal candidate.
+Five stock-backend DOS cases cover first connection, BUSY, timeout, normal
+hangup and redial, checking that first initialization has no extra separator
+and BUSY retry sends one separator followed by the configured commands.
+These use an owned peer explicitly ignoring empty modem command lines; they
+are distinct from stock softmodem backend or physical-modem acceptance.
+
+The separate [stock modem parser comparison](validation/modem-resync-stock-softmodem.json)
+now exercises the actual stock DOSBox-X modem backend, with no patched DCD
+transport or owned command parser. Timed Escape interrupts a long configured
+`AT` + spaces + `Z` initialization. The unchanged parent joins its partial
+command, abort character and retry initialization, receives `ERROR`, and still
+connects. The candidate terminates the partial command separately, then the
+configured initialization receives `OK` before `CONNECT`. Both render the
+immediate ANSI banner/replies and restore hardware on exit. This establishes
+the specific software-modem cancellation/retry behavior; it does not establish
+physical Boca behavior or sustained/other modem policies. Loopback Internet
+address dialing here belongs to the emulator's modem implementation; physical
+Boca connections still use numeric dialing through the planned SIP/audio bridge.
+
+~~~sh
+./tools/dev --command python3 standalone/test_modem_resync_softmodem_dos.py \
+  --baseline-product build/terminal \
+  --candidate-product build/manual-resync-candidate-01/build/terminal \
+  --output build/manual-resync-candidate-01/stock-softmodem-new
+~~~
+
+Keep the baseline product at the recorded old identity when repeating this
+comparison after adoption. The test preserves both executable copies, config,
+modem command/result logs, peer bytes and guest hardware/screen captures.
+
+Normal candidate SHA256 is
+`1cbb4f8fa243f9ce63c3a2d0788d0f039c3cb481f8e03d267f77e039823a6ba0`.
+Resident code spare remains 318/170 bytes and near data spare 112/64 bytes for
+normal/mouse. The new internal sender entry preserves pacing and leaves the
+configured initialization buffer intact. Candidate captures and linked reports
+are retained under its ignored build directory. A fresh source-only tree of
+398 declared files reproduces both normal/mouse executables byte-for-byte,
+with no originals or prebuilt inputs. The [regression inventory](validation/modem-resync-candidate-regressions.json)
+records product identities, tool hashes and individual report hashes.
+Broader current-product regressions and application/BBS admission remain
+required before adoption. Full modem and application requirements, and physical
+Boca/SPA2102 testing, remain open.
