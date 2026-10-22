@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "first-DCD-high",
+      "rejected": true,
+      "producer_declared_failure_preserved": true,
+      "changed_hashes_updated": true
+    },
+    {
+      "case": "retained-flow-pause",
+      "rejected": true,
+      "producer_declared_failure_preserved": true,
+      "changed_hashes_updated": true
+    },
+    {
+      "case": "changed-wire",
+      "rejected": true,
+      "producer_declared_failure_preserved": true,
+      "changed_hashes_updated": true
+    },
+    {
+      "case": "missing-initialization-error",
+      "rejected": true,
+      "producer_declared_failure_preserved": true,
+      "changed_hashes_updated": true
+    },
+    {
+      "case": "bad-vector-restore",
+      "rejected": true,
+      "producer_declared_failure_preserved": true,
+      "changed_hashes_updated": true
+    },
+    {
+      "case": "stock-backend-label",
+      "rejected": true,
+      "producer_declared_failure_preserved": true,
+      "changed_hashes_updated": true
+    }
+  ],
+  "auditor_sha256": "5e9297ab0b6197e0608adbd80993abe3802254d26d58fc034064f4a975fbd442",
+  "checker_sha256": "6900b44d5a0fa4ea24d63e5798db0df0dc074f2a0a6f0dc8573e1aa40c336ded"
+}

@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "gap_reproduced": true,
+  "compatibility_accepted": false,
+  "physical_hardware_accepted": false,
+  "stock_backend_accepted": false,
+  "parent_sha256": "1600a5b37094d5a3b666ffee6bf1da387dad7a7435a332be76618975c47bcdab",
+  "cases": [
+    {
+      "case": "soft",
+      "initialization_command": "AATZ",
+      "retry_initialization_failed": true,
+      "reconnected": true,
+      "first_DCD_high_samples": 0,
+      "idle_pause": 0,
+      "online_ticks": 139,
+      "wire_sha256": "6cb356404b9e77b7b84aa2cd9f8f9d46d9c74cbe44a27b7262328b9ccc4b1a86"
+    },
+    {
+      "case": "both",
+      "initialization_command": "AATZ",
+      "retry_initialization_failed": true,
+      "reconnected": true,
+      "first_DCD_high_samples": 0,
+      "idle_pause": 0,
+      "online_ticks": 139,
+      "wire_sha256": "6cb356404b9e77b7b84aa2cd9f8f9d46d9c74cbe44a27b7262328b9ccc4b1a86"
+    }
+  ],
+  "producer_receipt_sha256": "c35659500c618f11a456fb72394a44cef190c06f2954cd98c7467d14daed927e",
+  "auditor_sha256": "5e9297ab0b6197e0608adbd80993abe3802254d26d58fc034064f4a975fbd442",
+  "scope": "Owned retained-parser peer on explicit patched DCD lab. Cancellation retires flow but fails to terminate partial initialization; later CONNECT does not establish successful initialization. No physical Boca or stock-emulator acceptance."
+}
